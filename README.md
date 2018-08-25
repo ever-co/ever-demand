@@ -1,6 +1,6 @@
-# Ever® - Open-Source On-Demand Commerce Platform
+# Ever - Open-Source On-Demand Commerce Platform
 
-[Ever](https://ever.co) is Open-Source, Real-Time, Reactive, On-Demand Commerce Platform build with TypeScript.
+[Ever](https://ever.co)® is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform build with TypeScript.
 
 Out-of-the-box Ever Platform provides everything required to quickly build Multi-Store (Marketplace) or Single-Store **On-Demand** Platform with customized e-commerce Websites (shops), Mobile ordering apps, Carrier (Driver) apps, Merchant apps and Admin website. 
 
@@ -39,6 +39,17 @@ So, if you need to build next "Uber for X", Ever Platform is your right choice!
 * For production, we integrate and recommend to use [PM2](https://github.com/Unitech/pm2)
 
 #### See also README.md and CREDITS.md files in relevant folders for lists of libraries and software included in the Platform, information about licenses and other details.
+
+## Contribute
+
+* Please give us :star: on Github, it **really** helps!
+* You are more than welcome to submit feature requests in the separate repo: [https://github.com/ever-co/feature-requests/issues](https://github.com/ever-co/feature-requests/issues)
+
+## Contact Us
+
+* [Ever Platform Gitter Chat](https://gitter.im/ever-co/ever)
+* For business inquiries: <mailto:ever@ever.co>
+* Please report security vulnerabilities to <mailto:security@ever.co>
 
 ## License
 
