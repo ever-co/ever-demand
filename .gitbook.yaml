@@ -1,9 +1,8 @@
+--- 
 root: ./.docs/
-​
-structure:
-  readme: README.md
-​
-redirects:
+​redirects: 
+  changelog: ./CHANGELOG.md
   help: ./SUPPORT.md
   help/contact: ./CONTACT.md
-  changelog: ./CHANGELOG.md
+​structure: 
+  readme: README.md
