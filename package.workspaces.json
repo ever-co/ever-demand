@@ -1,0 +1,15 @@
+{
+	"name": "ever",
+	"version": "0.2.0",
+	"repository": "https://github.com/ever-co/ever.git",
+	"private": true,
+	"resolutions": {},
+	"workspaces": [
+		"shared/*",
+		"admin/*",
+		"backend/*",
+		"carrier/*",
+		"merchant/*",
+		"shop/*"
+	]
+}

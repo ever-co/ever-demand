@@ -1,0 +1,370 @@
+version: 2
+
+aliases:
+  - &install-chrome
+      name: Install Chrome
+      command: |
+        sudo apt install -y libappindicator3-1
+        curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        sudo dpkg -i google-chrome.deb
+        sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
+        rm google-chrome.deb
+        
+defaults: &defaults
+    # put here anything which is common between all jobs
+    # we define default work dir, however almost every job redefine it
+    working_directory: /tmp/workspace
+        
+jobs:
+    build-backend-api:
+        <<: *defaults
+        working_directory: /tmp/workspace/backend/api
+        docker:
+            - image: circleci/node:10.9.0
+        steps:
+            - checkout
+            - run:
+                  name: 'Pull Submodules'
+                  command: |
+                      git submodule init
+                      git submodule update --remote
+            - restore_cache:
+                  name: Restore Yarn Package Cache
+                  keys:
+                      - yarn-packages-backend-api-{{ checksum "yarn.lock" }}
+            - run:
+                  name: Install Dependencies
+                  command: cd backend/api && yarn install
+            - run:
+                  name: Run Build
+                  command: cd backend/api && yarn build
+            - save_cache:
+                  name: Save Yarn Package Cache
+                  key: yarn-packages-backend-api-{{ checksum "yarn.lock" }}
+                  paths:
+                      - ~/.cache/yarn
+            - persist_to_workspace:
+                root: /tmp/workspace/backend/api
+                paths:
+                    - "*"         
+    build-admin-website-angular:
+        <<: *defaults
+        working_directory: /tmp/workspace/admin/website-angular
+        docker:
+            - image: circleci/node:10.9.0
+        steps:
+            - checkout
+            - run:
+                  name: 'Pull Submodules'
+                  command: |
+                      git submodule init
+                      git submodule update --remote
+            - restore_cache:
+                  name: Restore Yarn Package Cache
+                  keys:
+                      - yarn-packages-admin-website-angular-{{ checksum "yarn.lock" }}
+            - run:
+                  name: Install Dependencies
+                  command: cd admin/website-angular && yarn install
+            - run:
+                  name: Run Build
+                  command: cd admin/website-angular && yarn build
+            - save_cache:
+                  name: Save Yarn Package Cache
+                  key: yarn-packages-admin-website-angular-{{ checksum "yarn.lock" }}
+                  paths:
+                      - ~/.cache/yarn
+            - persist_to_workspace:
+                root: /tmp/workspace/admin/website-angular
+                paths:
+                    - "*"
+    build-carrier-mobile-ionic:
+        <<: *defaults
+        working_directory: /tmp/workspace/carrier/mobile-ionic
+        docker:
+            - image: circleci/node:10.9.0
+        steps:
+            - checkout
+            - run:
+                  name: 'Pull Submodules'
+                  command: |
+                      git submodule init
+                      git submodule update --remote
+            - restore_cache:
+                  name: Restore Yarn Package Cache
+                  keys:
+                      - yarn-packages-carrier-mobile-ionic-{{ checksum "yarn.lock" }}
+            - run:
+                  name: Install Dependencies
+                  command: cd carrier/mobile-ionic && yarn install
+            - run:
+                  name: Run Build
+                  command: cd carrier/mobile-ionic && yarn build
+            - save_cache:
+                  name: Save Yarn Package Cache
+                  key: yarn-packages-carrier-mobile-ionic-{{ checksum "yarn.lock" }}
+                  paths:
+                      - ~/.cache/yarn
+            - persist_to_workspace:
+                root: /tmp/workspace/carrier/mobile-ionic
+                paths:
+                    - "*"                      
+    build-shop-mobile-ionic:
+        <<: *defaults
+        working_directory: /tmp/workspace/shop/mobile-ionic
+        docker:
+            - image: circleci/node:10.9.0
+        steps:
+            - checkout
+            - run:
+                  name: 'Pull Submodules'
+                  command: |
+                      git submodule init
+                      git submodule update --remote
+            - restore_cache:
+                  name: Restore Yarn Package Cache
+                  keys:
+                      - yarn-packages-shop-mobile-ionic-{{ checksum "yarn.lock" }}
+            - run:
+                  name: Install Dependencies
+                  command: cd shop/mobile-ionic && yarn install
+            - run:
+                  name: Run Build
+                  command: cd shop/mobile-ionic && yarn build
+            - save_cache:
+                  name: Save Yarn Package Cache
+                  key: yarn-packages-shop-mobile-ionic-{{ checksum "yarn.lock" }}
+                  paths:
+                      - ~/.cache/yarn
+            - persist_to_workspace:
+                root: /tmp/workspace/shop/mobile-ionic
+                paths:
+                    - "*"                      
+    build-shop-website-angular:
+        <<: *defaults
+        working_directory: /tmp/workspace/shop/website-angular
+        docker:
+            - image: circleci/node:10.9.0
+        steps:
+            - checkout
+            - run:
+                  name: 'Pull Submodules'
+                  command: |
+                      git submodule init
+                      git submodule update --remote
+            - restore_cache:
+                  name: Restore Yarn Package Cache
+                  keys:
+                      - yarn-packages-shop-website-angular-{{ checksum "yarn.lock" }}
+            - run:
+                  name: Install Dependencies
+                  command: cd shop/website-angular && yarn install
+            - run:
+                  name: Run Build
+                  command: cd shop/website-angular && yarn build
+            - save_cache:
+                  name: Save Yarn Package Cache
+                  key: yarn-packages-shop-website-angular-{{ checksum "yarn.lock" }}
+                  paths:
+                      - ~/.cache/yarn
+            - persist_to_workspace:
+                root: /tmp/workspace/shop/website-angular
+                paths:
+                    - "*"                                            
+    build-merchant-tablet-ionic:
+        <<: *defaults
+        working_directory: /tmp/workspace/merchant/tablet-ionic
+        docker:
+            - image: circleci/node:10.9.0
+        steps:
+            - checkout
+            - run:
+                  name: 'Pull Submodules'
+                  command: |
+                      git submodule init
+                      git submodule update --remote
+            - restore_cache:
+                  name: Restore Yarn Package Cache
+                  keys:
+                      - yarn-packages-merchant-tablet-ionic-{{ checksum "yarn.lock" }}
+            - run:
+                  name: Install Dependencies
+                  command: cd merchant/tablet-ionic && yarn install
+            - run:
+                  name: Run Build
+                  command: cd merchant/tablet-ionic && yarn build
+            - save_cache:
+                  name: Save Yarn Package Cache
+                  key: yarn-packages-merchant-tablet-ionic-{{ checksum "yarn.lock" }}
+                  paths:
+                      - ~/.cache/yarn
+            - persist_to_workspace:
+                root: /tmp/workspace/merchant/tablet-ionic
+                paths:
+                    - "*"                                                                  
+    test-carrier-mobile-ionic:
+        <<: *defaults
+        working_directory: /tmp/workspace/carrier/mobile-ionic
+        docker:
+            - image: circleci/node:10.9.0-browsers
+        steps:
+            - run: *install-chrome
+            - attach_workspace:
+                at: /tmp/workspace/carrier/mobile-ionic
+            - run:
+                  name: 'Pull Submodules'
+                  command: |
+                      git submodule init
+                      git submodule update --remote
+            - restore_cache:
+                  name: Restore Yarn Package Cache
+                  keys:
+                      - yarn-packages-carrier-mobile-ionic-{{ checksum "yarn.lock" }}
+            - run:
+                  name: Install Dependencies
+                  command: cd carrier/mobile-ionic && yarn install
+            - run:
+                  name: test
+                  command: cd carrier/mobile-ionic && yarn test
+    test-shop-mobile-ionic:
+        <<: *defaults
+        working_directory: /tmp/workspace/shop/mobile-ionic
+        docker:
+            - image: circleci/node:10.9.0-browsers
+        steps:
+            - run: *install-chrome
+            - attach_workspace:
+                at: /tmp/workspace/shop/mobile-ionic
+            - run:
+                  name: 'Pull Submodules'
+                  command: |
+                      git submodule init
+                      git submodule update --remote
+            - restore_cache:
+                  name: Restore Yarn Package Cache
+                  keys:
+                      - yarn-packages-shop-mobile-ionic-{{ checksum "yarn.lock" }}
+            - run:
+                  name: Install Dependencies
+                  command: cd shop/mobile-ionic && yarn install
+            - run:
+                  name: test
+                  command: cd shop/mobile-ionic && yarn test
+    test-shop-website-angular:
+        <<: *defaults
+        working_directory: /tmp/workspace/shop/website-angular
+        docker:
+            - image: circleci/node:10.9.0-browsers
+        steps:
+            - run: *install-chrome
+            - attach_workspace:
+                at: /tmp/workspace/shop/website-angular
+            - run:
+                  name: 'Pull Submodules'
+                  command: |
+                      git submodule init
+                      git submodule update --remote
+            - restore_cache:
+                  name: Restore Yarn Package Cache
+                  keys:
+                      - yarn-packages-shop-website-angular-{{ checksum "yarn.lock" }}
+            - run:
+                  name: Install Dependencies
+                  command: cd shop/website-angular && yarn install
+            - run:
+                  name: test
+                  command: cd shop/website-angular && yarn test
+    test-admin-website-angular:
+        <<: *defaults
+        working_directory: /tmp/workspace/admin/website-angular
+        docker:
+            - image: circleci/node:10.9.0-browsers
+        steps:
+            - run: *install-chrome
+            - attach_workspace:
+                at: /tmp/workspace/admin/website-angular
+            - run:
+                  name: 'Pull Submodules'
+                  command: |
+                      git submodule init
+                      git submodule update --remote
+            - restore_cache:
+                  name: Restore Yarn Package Cache
+                  keys:
+                      - yarn-packages-admin-website-angular-{{ checksum "yarn.lock" }}
+            - run:
+                  name: Install Dependencies
+                  command: cd admin/website-angular && yarn install
+            - run:
+                  name: test
+                  command: cd admin/website-angular && yarn test
+    test-backend-api:
+        <<: *defaults
+        working_directory: /tmp/workspace/backend/api
+        docker:
+            - image: circleci/node:10.9.0-browsers
+        steps:
+            - run: *install-chrome
+            - attach_workspace:
+                at: /tmp/workspace/backend/api
+            - run:
+                  name: 'Pull Submodules'
+                  command: |
+                      git submodule init
+                      git submodule update --remote
+            - restore_cache:
+                  name: Restore Yarn Package Cache
+                  keys:
+                      - yarn-packages-backend-api-{{ checksum "yarn.lock" }}
+            - run:
+                  name: Install Dependencies
+                  command: cd backend/api && yarn install
+            - run:
+                  name: test
+                  command: cd backend/api && yarn test
+workflows:
+    version: 2
+    build_and_test:
+        jobs:
+            - build-backend-api
+            - build-admin-website-angular
+            - build-merchant-tablet-ionic
+            - build-shop-mobile-ionic
+            - build-shop-website-angular
+            - build-carrier-mobile-ionic
+            # - test-admin-website-angular:
+                  # requires:
+                      # - build-admin-website-angular
+                  # filters:
+                      # branches:
+                          # only: master
+            # - test-backend-api:
+                  # requires:
+                      # - build-backend-api
+                  # filters:
+                      # branches:
+                          # only: master
+            # - test-merchant-tablet-ionic:
+                  # requires:
+                      # - build-merchant-tablet-ionic
+                  # filters:
+                      # branches:
+                          # only: master
+            # - test-carrier-mobile-ionic:
+                  # requires:
+                      # - build-carrier-mobile-ionic
+                  # filters:
+                      # branches:
+                          # only: master
+            # - test-shop-mobile-ionic:
+                  # requires:
+                      # - build-shop-mobile-ionic
+                  # filters:
+                      # branches:
+                          # only: master
+            # - test-shop-website-angular:
+                  # requires:
+                      # - build-shop-website-angular
+                  # filters:
+                      # branches:
+                          # only: master

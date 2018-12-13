@@ -1,0 +1,24 @@
+{
+	"lerna": "2.11.0",
+	"version": "0.2.0",
+	"changelog": {
+		"repo": "ever-co/ever",
+		"cacheDir": ".changelog",
+		"labels": {}
+	},
+	"command": {
+		"publish": {
+			"ignoreChanges": ["*.md", "test/**"]
+		}
+	},
+	"packages": [
+		"backend/api",
+		"admin/website-angular",
+		"carrier/mobile-ionic",
+		"merchant/tablet-ionic",
+		"shop/mobile-ionic",
+		"shop/website-angular"
+	],
+	"npmClient": "yarn",
+	"useWorkspaces": false
+}

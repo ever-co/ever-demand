@@ -1,0 +1,175 @@
+{
+	"name": "ever-merchant",
+	"version": "0.2.0",
+	"description": "Ever Merchant Tablet App",
+	"license": "AGPL-3.0",
+	"homepage": "https://ever.co",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ever-co/ever.git"
+	},
+	"private": false,
+	"author": {
+		"name": "Ever Co. LTD",
+		"email": "ever@ever.co",
+		"url": "https://ever.co"
+	},
+	"contributors": [
+		{
+			"name": "Ruslan Konviser (Evereq)",
+			"email": "ruslan@ever.co",
+			"url": "https://ever.co"
+		},
+		{
+			"name": "Michael Konviser (Komish)",
+			"email": "michael@ever.co",
+			"url": "https://ever.co"
+		}
+	],
+	"bugs": {
+		"url": "https://github.com/ever-co/ever/issues"
+	},
+	"scripts": {
+		"clean": "ionic-app-scripts clean",
+		"build": "ionic-app-scripts build",
+		"start": "yarn run build && yarn run ionic:serve",
+		"start:pm2": "yarn tsc && node --harmony app.js",
+		"start:prod": "node --harmony ./pm2bootstrap.js",
+		"test": "ionic-app-scripts build",
+		"lint": "ionic-app-scripts lint",
+		"ionic:build": "ionic-app-scripts build",
+		"ionic:serve": "ionic-app-scripts serve",
+		"docs": "compodoc -p tsconfig.json -d docs",
+		"docs:serve": "compodoc -p tsconfig.json -d docs -s"
+	},
+	"dependencies": {
+		"@angular/animations": "5.2.10",
+		"@angular/common": "5.2.10",
+		"@angular/compiler": "5.2.10",
+		"@angular/compiler-cli": "5.2.10",
+		"@angular/core": "5.2.10",
+		"@angular/forms": "5.2.10",
+		"@angular/http": "5.2.10",
+		"@angular/platform-browser": "5.2.10",
+		"@angular/platform-browser-dynamic": "5.2.10",
+		"@ionic-native/call-number": "^4.11.0",
+		"@ionic-native/camera": "^4.9.2",
+		"@ionic-native/core": "4.7.0",
+		"@ionic-native/device": "^4.7.0",
+		"@ionic-native/email-composer": "^4.12.0",
+		"@ionic-native/file-transfer": "^4.7.0",
+		"@ionic-native/globalization": "^4.7.0",
+		"@ionic-native/google-analytics": "^4.7.0",
+		"@ionic-native/intercom": "^4.7.0",
+		"@ionic-native/mixpanel": "^4.7.0",
+		"@ionic-native/network": "^4.7.0",
+		"@ionic-native/open-native-settings": "^4.7.0",
+		"@ionic-native/screen-orientation": "^4.7.0",
+		"@ionic-native/splash-screen": "4.7.0",
+		"@ionic-native/status-bar": "4.7.0",
+		"@ionic/storage": "2.1.3",
+		"@ngx-translate/core": "9.1.1",
+		"@ngx-translate/http-loader": "^3.0.1",
+		"angular2-logger": "^0.7.0",
+		"angular2-wizard": "^0.4.0",
+		"apollo-angular": "1.1.2",
+		"apollo-angular-link-http": "^1.1.1",
+		"apollo-cache-inmemory": "^1.2.7",
+		"apollo-client": "^2.3.5",
+		"apollo-link-context": "^1.0.8",
+		"call-number": "^1.0.1",
+		"connect": "^3.6.6",
+		"cordova-android": "7.1.1",
+		"cordova-browser": "5.0.3",
+		"cordova-open-native-settings": "^1.5.1",
+		"cordova-plugin-camera": "^4.0.3",
+		"cordova-plugin-device": "^2.0.2",
+		"cordova-plugin-email-composer": "^0.8.15",
+		"cordova-plugin-globalization": "^1.11.0",
+		"cordova-plugin-google-analytics": "^1.8.6",
+		"cordova-plugin-intercom": "^5.1.1",
+		"cordova-plugin-ionic-keyboard": "^2.1.2",
+		"cordova-plugin-ionic-webview": "^1.2.1",
+		"cordova-plugin-mixpanel": "^4.4.1",
+		"cordova-plugin-network-information": "^2.0.1",
+		"cordova-plugin-screen-orientation": "^3.0.1",
+		"cordova-plugin-splashscreen": "^5.0.2",
+		"cordova-plugin-statusbar": "^2.4.2",
+		"cordova-plugin-whitelist": "^1.3.3",
+		"es6-promise-plugin": "^4.2.2",
+		"font-awesome": "^4.7.0",
+		"graphql": "^0.13.2",
+		"graphql-tag": "^2.9.2",
+		"ionic-angular": "^3.9.2",
+		"ionicons": "3.0.0",
+		"lodash": "^4.17.10",
+		"mongoose": "^5.2.9",
+		"mx.ferreyra.callnumber": "0.0.2",
+		"ng2-completer": "^2.0.8",
+		"ng2-file-upload": "^1.3.0",
+		"ng2-smart-table": "^1.3.5",
+		"node-uuid": "^1.4.8",
+		"pm2": "^3.2.2",
+		"rxjs": "^6.2.2",
+		"rxjs-compat": "^6.2.2",
+		"socket.io-client": "^2.1.1",
+		"stripe": "^6.5.0",
+		"sw-toolbox": "3.6.0",
+		"symbol-observable": "^1.2.0",
+		"time-ago-pipe": "^1.3.2",
+		"uuid": "^3.3.2",
+		"zone.js": "0.8.26"
+	},
+	"devDependencies": {
+		"@ionic/app-scripts": "^3.2.0",
+		"@types/d3-color": "1.0.5",
+		"@types/googlemaps": "3.30.4",
+		"@types/jasmine": "2.5.54",
+		"@types/jasminewd2": "2.0.3",
+		"@types/leaflet": "1.2.3",
+		"@types/mongoose": "^5.2.17",
+		"@types/node": "6.0.90",
+		"@types/reflect-metadata": "^0.1.0",
+		"@types/socket.io-client": "^1.4.32",
+		"@types/stripe": "^5.0.19",
+		"@types/uuid": "^3.4.4",
+		"@compodoc/compodoc": "^1.1.5",
+		"typescript": "~2.6.2"
+	},
+	"config": {
+		"ionic_webpack": "./config/webpack.config.js"
+	},
+	"cordova": {
+		"platforms": [
+			"browser",
+			"android"
+		],
+		"plugins": {
+			"cordova-open-native-settings": {},
+			"cordova-plugin-whitelist": {},
+			"cordova-plugin-device": {},
+			"cordova-plugin-ionic-webview": {},
+			"cordova-plugin-ionic-keyboard": {},
+			"cordova-plugin-google-analytics": {
+				"GMS_VERSION": "11.0.1"
+			},
+			"cordova-plugin-network-information": {},
+			"cordova-plugin-mixpanel": {
+				"PLAY_SERVICES_VERSION": "+"
+			},
+			"cordova-plugin-intercom": {},
+			"cordova-plugin-screen-orientation": {},
+			"cordova-plugin-globalization": {},
+			"cordova-plugin-statusbar": {},
+			"cordova-plugin-camera": {},
+			"cordova-plugin-splashscreen": {},
+			"mx.ferreyra.callnumber": {},
+			"cordova-plugin-geolocation": {
+				"GEOLOCATION_USAGE_DESCRIPTION": "To locate you"
+			},
+			"cordova-plugin-email-composer": {},
+			"cordova-plugin-vibration": {},
+			"cordova-plugin-local-notification": {}
+		}
+	}
+}

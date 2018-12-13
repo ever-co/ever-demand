@@ -1,0 +1,84 @@
+{
+	"extends": ["tslint:latest", "tslint-config-prettier"],
+	"rulesDirectory": ["node_modules/codelyzer"],
+	"linterOptions": {
+		"exclude": ["node_modules", "dist"]
+	},
+	"rules": {
+		"trailing-comma": [
+			false,
+			{
+				"multiline": "always",
+				"singleline": "never"
+			}
+		],
+		"interface-name": [false, "always-prefix"],
+		"arrow-return-shorthand": true,
+		"callable-types": true,
+		"class-name": true,
+		"comment-format": [true, "check-space"],
+		"forin": true,
+		"import-blacklist": [true],
+		"ordered-imports": false,
+		"interface-over-type-literal": true,
+		"label-position": true,
+		"max-line-length": [true, 120],
+		"member-access": false,
+		"no-arg": true,
+		"no-console": [false],
+		"no-construct": true,
+		"no-debugger": true,
+		"no-duplicate-super": true,
+		"no-empty": false,
+		"no-empty-interface": true,
+		"no-eval": true,
+		"no-misused-new": true,
+		"no-non-null-assertion": true,
+		"no-shadowed-variable": true,
+		"no-string-literal": false,
+		"no-string-throw": true,
+		"no-switch-case-fall-through": true,
+		"no-unnecessary-initializer": true,
+		"no-use-before-declare": true,
+		"no-var-keyword": true,
+		"object-literal-sort-keys": false,
+		"prefer-const": false,
+		"object-literal-key-quotes": false,
+		"no-angle-bracket-type-assertion": false,
+		"member-ordering": false,
+		"no-consecutive-blank-lines": false,
+		"radix": true,
+		"semicolon": [true, "always"],
+		"triple-equals": [true, "allow-null-check"],
+		"typeof-compare": true,
+		"unified-signatures": true,
+		"variable-name": false,
+		"directive-selector": [true, "attribute", "ngx", "camelCase"],
+		"component-selector": [
+			true,
+			"element",
+			[
+				"ngx",
+				"ea" // ea = ever admin
+			],
+			"kebab-case"
+		],
+		"no-attribute-parameter-decorator": true,
+		"no-forward-ref": true,
+		"no-input-rename": true,
+		"no-output-rename": true,
+		"only-arrow-functions": false,
+		"pipe-naming": [true, "camelCase", "my"],
+		"use-host-property-decorator": true,
+		"ban": [
+			true,
+			"eval",
+			"fit",
+			"fdescribe",
+			{
+				"name": "$",
+				"message": "please don't"
+			}
+		]
+	}
+}

@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "admin"
+		},
+		{
+			"path": "backend"
+		},
+		{
+			"path": "carrier"
+		},
+		{
+			"path": "merchant"
+		},
+		{
+			"path": "shared"
+		},
+		{
+			"path": "shop"
+		}
+	],
+	"settings": {}
+}
