@@ -146,6 +146,26 @@ You can use credentials above to login into Platform Admin App, which available 
 
 -   Please give us :star: on Github, it **really** helps!
 -   You are more than welcome to submit feature requests in the separate repo: [https://github.com/ever-co/feature-requests/issues](https://github.com/ever-co/feature-requests/issues)
+-   Pull requests are always welcome! Please base pull requests against the _develop_ branch and follow the [contributing guide](.github/CONTRIBUTING.md).
+
+## Collaborators and Contributors 
+
+### Development Team
+
+#### Core
+
+- Ruslan Konviser ([Evereq](https://github.com/evereq))
+- Michael Konviser ([Komish](https://github.com/MrKomish))
+
+#### Developers
+
+- Alish Meklyov ([Alish](https://github.com/AlishMekliov931))
+- Blagovest Gerov ([BlagovestGerov](https://github.com/BlagovestGerov))
+- Elvis Arabadjiyski ([Dreemsuncho](https://github.com/Dreemsuncho))
+
+### Contributors
+
+- View all of our [contributors](https://github.com/ever-co/ever/graphs/contributors)
 
 ## Contact Us
 
