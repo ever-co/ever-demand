@@ -48,9 +48,6 @@ So, if you need to build the next "Uber for X", Ever Platform is your right choi
 
 #### See also README.md and CREDITS.md files in relevant folders for lists of libraries and software included in the Platform, information about licenses and other details.
 
-
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fever.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fever?ref=badge_large)
-
 ## Documentation
 
 Please refer to https://docs.ever.co for the Platform Documentation (work in progress)
@@ -194,6 +191,8 @@ Different parts of the Platform are made available under the terms of the separa
 #### Please see [LICENSE.md](LICENSE.md) for more information on licenses.
 
 #### See also individual files and LICENSE.md files in corresponding sub-folders for more licenses related details for corresponding Platform parts.
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fever.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fever?ref=badge_large)
 
 ## Trademarks
 
