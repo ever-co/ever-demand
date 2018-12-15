@@ -4,8 +4,9 @@
 [![codecov](https://codecov.io/gh/ever-co/ever/branch/master/graph/badge.svg)](https://codecov.io/gh/ever-co/ever)
 [![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/ever-co/ever?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/evereq?utm_source=github&utm_medium=button&utm_term=evereq&utm_campaign=github)
-
-<!---[![Known Vulnerabilities](https://snyk.io/test/github/ever-co/ever/badge.svg)](https://snyk.io/test/github/ever-co/ever) [![Greenkeeper badge](https://badges.greenkeeper.io/ever-co/ever.svg)](https://greenkeeper.io/)--->
+[![Known Vulnerabilities](https://snyk.io/test/github/ever-co/ever/badge.svg)](https://snyk.io/test/github/ever-co/ever)
+[![Greenkeeper badge](https://badges.greenkeeper.io/ever-co/ever.svg)](https://greenkeeper.io)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fever.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fever?ref=badge_shield)
 
 [Ever](https://ever.co)® is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform build with TypeScript.
 
@@ -80,9 +81,9 @@ git config --global submodule.recurse true
 
 Notes:
 
-- to setup Symlinks & Submodules recurse locally only (for Ever repo), remove ```--global``` in the commands above  
-- for older Git versions see https://stackoverflow.com/questions/4611512/is-there-a-way-to-make-git-pull-automatically-update-submodules/4611550#4611550  
-- at the moment we are not using Git sub-modules, but it may change in the future  
+-   to setup Symlinks & Submodules recurse locally only (for Ever repo), remove `--global` in the commands above
+-   for older Git versions see https://stackoverflow.com/questions/4611512/is-there-a-way-to-make-git-pull-automatically-update-submodules/4611550#4611550
+-   at the moment we are not using Git sub-modules, but it may change in the future
 
 ### Lerna
 
@@ -146,6 +147,26 @@ You can use credentials above to login into Platform Admin App, which available 
 
 -   Please give us :star: on Github, it **really** helps!
 -   You are more than welcome to submit feature requests in the separate repo: [https://github.com/ever-co/feature-requests/issues](https://github.com/ever-co/feature-requests/issues)
+-   Pull requests are always welcome! Please base pull requests against the _develop_ branch and follow the [contributing guide](.github/CONTRIBUTING.md).
+
+## Collaborators and Contributors
+
+### Development Team
+
+#### Core
+
+-   Ruslan Konviser ([Evereq](https://github.com/evereq))
+-   Michael Konviser ([Komish](https://github.com/MrKomish))
+
+#### Developers
+
+-   Alish Meklyov ([Alish](https://github.com/AlishMekliov931))
+-   Blagovest Gerov ([BlagovestGerov](https://github.com/BlagovestGerov))
+-   Elvis Arabadjiyski ([Dreemsuncho](https://github.com/Dreemsuncho))
+
+### Contributors
+
+-   View all of our [contributors](https://github.com/ever-co/ever/graphs/contributors)
 
 ## Contact Us
 
@@ -170,6 +191,8 @@ Different parts of the Platform are made available under the terms of the separa
 #### Please see [LICENSE.md](LICENSE.md) for more information on licenses.
 
 #### See also individual files and LICENSE.md files in corresponding sub-folders for more licenses related details for corresponding Platform parts.
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fever.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fever?ref=badge_large)
 
 ## Trademarks
 
