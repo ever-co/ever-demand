@@ -14,7 +14,8 @@ Out-of-the-box Ever Platform provides everything required to quickly build Multi
 
 So, if you need to build the next "Uber for X", Ever Platform is your right choice!
 
-#### NOTE: We are in α (alpha). Expect lots of changes and please be nice! ;)
+### Disclaimer 
+*A word of caution*: We are in α (alpha), i.e. Ever Platform is very much under development. Expect *lots* of changes and some :bug: and please be nice! :stuck_out_tongue_winking_eye:
 
 ## Features
 
