@@ -1,26 +1,26 @@
 version: 2
 
 aliases:
-  - &install-chrome
+    - &install-chrome
       name: Install Chrome
       command: |
-        sudo apt install -y libappindicator3-1
-        curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-        sudo dpkg -i google-chrome.deb
-        sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
-        rm google-chrome.deb
-        
+          sudo apt install -y libappindicator3-1
+          curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo dpkg -i google-chrome.deb
+          sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
+          rm google-chrome.deb
+
 defaults: &defaults
     # put here anything which is common between all jobs
     # we define default work dir, however almost every job redefine it
     working_directory: /tmp/workspace
-        
+
 jobs:
     build-backend-api:
         <<: *defaults
         working_directory: /tmp/workspace/backend/api
         docker:
-            - image: circleci/node:10.9.0
+            - image: circleci/node:10.14.2
         steps:
             - checkout
             - run:
@@ -44,14 +44,14 @@ jobs:
                   paths:
                       - ~/.cache/yarn
             - persist_to_workspace:
-                root: /tmp/workspace/backend/api
-                paths:
-                    - "*"         
+                  root: /tmp/workspace/backend/api
+                  paths:
+                      - '*'
     build-admin-website-angular:
         <<: *defaults
         working_directory: /tmp/workspace/admin/website-angular
         docker:
-            - image: circleci/node:10.9.0
+            - image: circleci/node:10.14.2
         steps:
             - checkout
             - run:
@@ -75,14 +75,14 @@ jobs:
                   paths:
                       - ~/.cache/yarn
             - persist_to_workspace:
-                root: /tmp/workspace/admin/website-angular
-                paths:
-                    - "*"
+                  root: /tmp/workspace/admin/website-angular
+                  paths:
+                      - '*'
     build-carrier-mobile-ionic:
         <<: *defaults
         working_directory: /tmp/workspace/carrier/mobile-ionic
         docker:
-            - image: circleci/node:10.9.0
+            - image: circleci/node:10.14.2
         steps:
             - checkout
             - run:
@@ -106,14 +106,14 @@ jobs:
                   paths:
                       - ~/.cache/yarn
             - persist_to_workspace:
-                root: /tmp/workspace/carrier/mobile-ionic
-                paths:
-                    - "*"                      
+                  root: /tmp/workspace/carrier/mobile-ionic
+                  paths:
+                      - '*'
     build-shop-mobile-ionic:
         <<: *defaults
         working_directory: /tmp/workspace/shop/mobile-ionic
         docker:
-            - image: circleci/node:10.9.0
+            - image: circleci/node:10.14.2
         steps:
             - checkout
             - run:
@@ -137,14 +137,14 @@ jobs:
                   paths:
                       - ~/.cache/yarn
             - persist_to_workspace:
-                root: /tmp/workspace/shop/mobile-ionic
-                paths:
-                    - "*"                      
+                  root: /tmp/workspace/shop/mobile-ionic
+                  paths:
+                      - '*'
     build-shop-website-angular:
         <<: *defaults
         working_directory: /tmp/workspace/shop/website-angular
         docker:
-            - image: circleci/node:10.9.0
+            - image: circleci/node:10.14.2
         steps:
             - checkout
             - run:
@@ -168,14 +168,14 @@ jobs:
                   paths:
                       - ~/.cache/yarn
             - persist_to_workspace:
-                root: /tmp/workspace/shop/website-angular
-                paths:
-                    - "*"                                            
+                  root: /tmp/workspace/shop/website-angular
+                  paths:
+                      - '*'
     build-merchant-tablet-ionic:
         <<: *defaults
         working_directory: /tmp/workspace/merchant/tablet-ionic
         docker:
-            - image: circleci/node:10.9.0
+            - image: circleci/node:10.14.2
         steps:
             - checkout
             - run:
@@ -199,18 +199,18 @@ jobs:
                   paths:
                       - ~/.cache/yarn
             - persist_to_workspace:
-                root: /tmp/workspace/merchant/tablet-ionic
-                paths:
-                    - "*"                                                                  
+                  root: /tmp/workspace/merchant/tablet-ionic
+                  paths:
+                      - '*'
     test-carrier-mobile-ionic:
         <<: *defaults
         working_directory: /tmp/workspace/carrier/mobile-ionic
         docker:
-            - image: circleci/node:10.9.0-browsers
+            - image: circleci/node:10.14.2-browsers
         steps:
             - run: *install-chrome
             - attach_workspace:
-                at: /tmp/workspace/carrier/mobile-ionic
+                  at: /tmp/workspace/carrier/mobile-ionic
             - run:
                   name: 'Pull Submodules'
                   command: |
@@ -230,11 +230,11 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/shop/mobile-ionic
         docker:
-            - image: circleci/node:10.9.0-browsers
+            - image: circleci/node:10.14.2-browsers
         steps:
             - run: *install-chrome
             - attach_workspace:
-                at: /tmp/workspace/shop/mobile-ionic
+                  at: /tmp/workspace/shop/mobile-ionic
             - run:
                   name: 'Pull Submodules'
                   command: |
@@ -254,11 +254,11 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/shop/website-angular
         docker:
-            - image: circleci/node:10.9.0-browsers
+            - image: circleci/node:10.14.2-browsers
         steps:
             - run: *install-chrome
             - attach_workspace:
-                at: /tmp/workspace/shop/website-angular
+                  at: /tmp/workspace/shop/website-angular
             - run:
                   name: 'Pull Submodules'
                   command: |
@@ -278,11 +278,11 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/admin/website-angular
         docker:
-            - image: circleci/node:10.9.0-browsers
+            - image: circleci/node:10.14.2-browsers
         steps:
             - run: *install-chrome
             - attach_workspace:
-                at: /tmp/workspace/admin/website-angular
+                  at: /tmp/workspace/admin/website-angular
             - run:
                   name: 'Pull Submodules'
                   command: |
@@ -302,11 +302,11 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/backend/api
         docker:
-            - image: circleci/node:10.9.0-browsers
+            - image: circleci/node:10.14.2-browsers
         steps:
             - run: *install-chrome
             - attach_workspace:
-                at: /tmp/workspace/backend/api
+                  at: /tmp/workspace/backend/api
             - run:
                   name: 'Pull Submodules'
                   command: |
@@ -333,38 +333,38 @@ workflows:
             - build-shop-website-angular
             - build-carrier-mobile-ionic
             # - test-admin-website-angular:
-                  # requires:
-                      # - build-admin-website-angular
-                  # filters:
-                      # branches:
-                          # only: master
+            # requires:
+            # - build-admin-website-angular
+            # filters:
+            # branches:
+            # only: master
             # - test-backend-api:
-                  # requires:
-                      # - build-backend-api
-                  # filters:
-                      # branches:
-                          # only: master
+            # requires:
+            # - build-backend-api
+            # filters:
+            # branches:
+            # only: master
             # - test-merchant-tablet-ionic:
-                  # requires:
-                      # - build-merchant-tablet-ionic
-                  # filters:
-                      # branches:
-                          # only: master
+            # requires:
+            # - build-merchant-tablet-ionic
+            # filters:
+            # branches:
+            # only: master
             # - test-carrier-mobile-ionic:
-                  # requires:
-                      # - build-carrier-mobile-ionic
-                  # filters:
-                      # branches:
-                          # only: master
+            # requires:
+            # - build-carrier-mobile-ionic
+            # filters:
+            # branches:
+            # only: master
             # - test-shop-mobile-ionic:
-                  # requires:
-                      # - build-shop-mobile-ionic
-                  # filters:
-                      # branches:
-                          # only: master
+            # requires:
+            # - build-shop-mobile-ionic
+            # filters:
+            # branches:
+            # only: master
             # - test-shop-website-angular:
-                  # requires:
-                      # - build-shop-website-angular
-                  # filters:
-                      # branches:
-                          # only: master
+            # requires:
+            # - build-shop-website-angular
+            # filters:
+            # branches:
+            # only: master
