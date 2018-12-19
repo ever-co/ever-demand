@@ -82,9 +82,9 @@ git config --global submodule.recurse true
 
 Notes:
 
-- to setup Symlinks & Submodules recurse locally only (for Ever repo), remove ```--global``` in the commands above  
-- for older Git versions see https://stackoverflow.com/questions/4611512/is-there-a-way-to-make-git-pull-automatically-update-submodules/4611550#4611550  
-- at the moment we are not using Git sub-modules, but it may change in the future  
+-   to setup Symlinks & Submodules recurse locally only (for Ever repo), remove `--global` in the commands above
+-   for older Git versions see https://stackoverflow.com/questions/4611512/is-there-a-way-to-make-git-pull-automatically-update-submodules/4611550#4611550
+-   at the moment we are not using Git sub-modules, but it may change in the future
 
 ### Lerna
 
@@ -150,24 +150,24 @@ You can use credentials above to login into Platform Admin App, which available 
 -   You are more than welcome to submit feature requests in the separate repo: [https://github.com/ever-co/feature-requests/issues](https://github.com/ever-co/feature-requests/issues)
 -   Pull requests are always welcome! Please base pull requests against the _develop_ branch and follow the [contributing guide](.github/CONTRIBUTING.md).
 
-## Collaborators and Contributors 
+## Collaborators and Contributors
 
 ### Development Team
 
 #### Core
 
-- Ruslan Konviser ([Evereq](https://github.com/evereq))
-- Michael Konviser ([Komish](https://github.com/MrKomish))
+-   Ruslan Konviser ([Evereq](https://github.com/evereq))
+-   Michael Konviser ([Komish](https://github.com/MrKomish))
 
 #### Developers
 
-- Alish Meklyov ([Alish](https://github.com/AlishMekliov931))
-- Blagovest Gerov ([BlagovestGerov](https://github.com/BlagovestGerov))
-- Elvis Arabadjiyski ([Dreemsuncho](https://github.com/Dreemsuncho))
+-   Alish Meklyov ([Alish](https://github.com/AlishMekliov931))
+-   Blagovest Gerov ([BlagovestGerov](https://github.com/BlagovestGerov))
+-   Elvis Arabadjiyski ([Dreemsuncho](https://github.com/Dreemsuncho))
 
 ### Contributors
 
-- View all of our [contributors](https://github.com/ever-co/ever/graphs/contributors)
+-   View all of our [contributors](https://github.com/ever-co/ever/graphs/contributors)
 
 ## Contact Us
 

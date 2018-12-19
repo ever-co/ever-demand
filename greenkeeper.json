@@ -1,0 +1,15 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "admin/website-angular/package.json",
+        "backend/api/package.json",
+        "carrier/mobile-ionic/package.json",
+        "merchant/tablet-ionic/package.json",
+        "package.json",
+        "shop/mobile-ionic/package.json",
+        "shop/website-angular/package.json"
+      ]
+    }
+  }
+}
