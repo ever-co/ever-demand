@@ -150,7 +150,7 @@
 		"@angular/compiler-cli": "^6.0.6",
 		"@angular/language-service": "^6.0.6",
 		"@compodoc/compodoc": "^1.1.3",
-		"@ngtools/webpack": "^6.2.1",
+		"@ngtools/webpack": "^7.1.4",
 		"@types/hammerjs": "^2.0.35",
 		"@types/jasmine": "^2.8.8",
 		"@types/mongoose": "^5.2.17",
