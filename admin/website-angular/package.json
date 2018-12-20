@@ -133,7 +133,7 @@
 		"typeface-exo": "^0.0.61",
 		"uuid": "^3.3.2",
 		"web-animations-js": "^2.3.1",
-		"webpack": "^3.11.0",
+		"webpack": "^4.28.1",
 		"zen-observable": "^0.8.8",
 		"zone.js": "^0.8.26"
 	},
