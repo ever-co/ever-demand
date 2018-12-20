@@ -981,9 +981,10 @@ apollo-link-dedup@^1.0.0:
   dependencies:
     apollo-link "^1.2.6"
 
-apollo-link-http-common@^0.2.5:
+apollo-link-http-common@^0.2.8:
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/apollo-link-http-common/-/apollo-link-http-common-0.2.8.tgz#c6deedfc2739db8b11013c3c2d2ccd657152941f"
+  integrity sha512-gGmXZN8mr7e9zjopzKQfZ7IKnh8H12NxBDzvp9nXI3U82aCVb72p+plgoYLcpMY8w6krvoYjgicFmf8LO20TCQ==
   dependencies:
     apollo-link "^1.2.6"
 
@@ -993,20 +994,21 @@ apollo-link-ws@^1.0.8:
   dependencies:
     apollo-link "^1.2.6"
 
-apollo-link@^1.0.0, apollo-link@^1.2.2, apollo-link@^1.2.3, apollo-link@^1.2.6:
+apollo-link@^1.0.0, apollo-link@^1.2.2, apollo-link@^1.2.6:
   version "1.2.6"
   resolved "https://registry.yarnpkg.com/apollo-link/-/apollo-link-1.2.6.tgz#d9b5676d79c01eb4e424b95c7171697f6ad2b8da"
   dependencies:
     apollo-utilities "^1.0.0"
     zen-observable-ts "^0.8.13"
 
-apollo-upload-client@^9.1.0:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/apollo-upload-client/-/apollo-upload-client-9.1.0.tgz#13191714ae07388088f2c773ebbfd53ba2f64c53"
+apollo-upload-client@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/apollo-upload-client/-/apollo-upload-client-10.0.0.tgz#6cc3d0ea2aef40bc237b655f5042809cacee1859"
+  integrity sha512-N0SENiEkZXoY4nl9xxrXFcj/cL0AVkSNQ4aYXSaruCBWE0aKpK6aCe4DBmiEHrK3FAsMxZPEJxBRIWNbsXT8dw==
   dependencies:
-    apollo-link "^1.2.3"
-    apollo-link-http-common "^0.2.5"
-    extract-files "^4.0.0"
+    apollo-link "^1.2.6"
+    apollo-link-http-common "^0.2.8"
+    extract-files "^5.0.0"
 
 apollo-utilities@1.0.26, apollo-utilities@^1.0.0, apollo-utilities@^1.0.26:
   version "1.0.26"
@@ -3596,9 +3598,10 @@ extglob@^2.0.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-extract-files@^4.0.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/extract-files/-/extract-files-4.1.0.tgz#2d5b64af688dfd030274ca542c43fabba325019a"
+extract-files@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/extract-files/-/extract-files-5.0.0.tgz#750f1e969b79b8e67a0ac40268dc6346fc339a3a"
+  integrity sha512-mTMXDGagB142JLMIbGRc11sNLPuN6G8qj5lRMx9T41Fkt3ot0OPkehcsLw05uT98LGEae2A1wFFDMkY4VEpbqg==
 
 extsprintf@1.3.0:
   version "1.3.0"
