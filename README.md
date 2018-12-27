@@ -14,8 +14,9 @@ Out-of-the-box Ever Platform provides everything required to quickly build Multi
 
 So, if you need to build the next "Uber for X", Ever Platform is your right choice!
 
-### Disclaimer 
-*A word of caution*: We are in α (alpha), i.e. Ever Platform is very much under development. Expect *lots* of changes and some :bug: and please be nice! :stuck_out_tongue_winking_eye:
+### Disclaimer
+
+_A word of caution_: We are in α (alpha), i.e. Ever Platform is very much under development. Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_winking_eye:
 
 ## Features
 
@@ -176,6 +177,14 @@ You can use credentials above to login into Platform Admin App, which available 
 -   [CodeMentor](https://www.codementor.io/evereq)
 -   For business inquiries: <mailto:ever@ever.co>
 -   Please report security vulnerabilities to <mailto:security@ever.co>
+
+## Security
+
+Ever Platform follows good security practices, but 100% security cannot be guaranteed in any software!  
+Ever Platform is provided AS IS without any warranty. Use at your own risk!  
+See more details in the [LICENSE.md](LICENSE.md).  
+
+In production setup, all client-side to server-side (backend, APIs) communications should be encrypted using HTTPS/WSS/SSL (REST APIs, GraphQL endpoint, Socket.io WebSockets, etc).
 
 ## License
 
