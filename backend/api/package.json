@@ -43,7 +43,7 @@
 		"@nestjs/common": "^5.5.0",
 		"@nestjs/core": "^5.5.0",
 		"@nestjs/cqrs": "^5.1.1",
-		"@nestjs/graphql": "^3.0.0",
+		"@nestjs/graphql": "^5.5.0",
 		"@nestjs/microservices": "^5.5.0",
 		"@nestjs/passport": "^5.1.0",
 		"@nestjs/swagger": "^2.5.1",
