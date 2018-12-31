@@ -747,10 +747,10 @@
   version "1.4.32"
   resolved "https://registry.yarnpkg.com/@types/socket.io-client/-/socket.io-client-1.4.32.tgz#988a65a0386c274b1c22a55377fab6a30789ac14"
 
-"@types/stripe@^6.0.4":
-  version "6.0.4"
-  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-6.0.4.tgz#7afbf06415f594c8b314ff342ba2ad6a8fdb271f"
-  integrity sha512-iZckSARstWAfo3BBwQxx62BR/2PhA23kA94LRpZ3nsUytk6dedGuAC2XFFCKkRt2a+kRldzuuiCPcdlhA6n+vg==
+"@types/stripe@^6.19.0":
+  version "6.19.0"
+  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-6.19.0.tgz#10f925742fb86fd5e7fcdc2eff864c2de24be5e1"
+  integrity sha512-pWqHgZ4X6EioM6jKvNlNj8lohhqhQjB3lGwVwY/fqH5dfETknw0vmvvJ5YU15mtS5F9P2p18xI2iPTSuWwn+QQ==
   dependencies:
     "@types/node" "*"
 
