@@ -154,7 +154,7 @@
 		"@types/mongoose": "^5.2.17",
 		"@types/node": "^10.12.15",
 		"@types/socket.io-client": "^1.4.32",
-		"@types/stripe": "^6.0.4",
+		"@types/stripe": "^6.19.0",
 		"@types/uuid": "^3.4.4",
 		"@types/highlight.js": "^9.12.3",
 		"codelyzer": "^4.5.0",
