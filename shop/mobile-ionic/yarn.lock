@@ -745,9 +745,10 @@
   version "1.4.32"
   resolved "https://registry.yarnpkg.com/@types/socket.io-client/-/socket.io-client-1.4.32.tgz#988a65a0386c274b1c22a55377fab6a30789ac14"
 
-"@types/stripe@^5.0.19":
-  version "5.0.19"
-  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-5.0.19.tgz#58e24596cad3103e66d36812c4631584d1a67438"
+"@types/stripe@^6.19.0":
+  version "6.19.0"
+  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-6.19.0.tgz#10f925742fb86fd5e7fcdc2eff864c2de24be5e1"
+  integrity sha512-pWqHgZ4X6EioM6jKvNlNj8lohhqhQjB3lGwVwY/fqH5dfETknw0vmvvJ5YU15mtS5F9P2p18xI2iPTSuWwn+QQ==
   dependencies:
     "@types/node" "*"
 
@@ -2477,13 +2478,6 @@ cosmiconfig@^5.0.6:
     js-yaml "^3.9.0"
     parse-json "^4.0.0"
 
-cp-cli@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/cp-cli/-/cp-cli-1.1.2.tgz#b24e1fdb8b07a27ce3879995c8c0c6d67caa8b86"
-  dependencies:
-    fs-extra "5.0.0"
-    yargs "11.0.0"
-
 cpr@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/cpr/-/cpr-3.0.1.tgz#b9a55038b7cd81a35c17b9761895bd8496aef1e5"
@@ -3781,14 +3775,6 @@ fs-access@^1.0.0:
   resolved "https://registry.yarnpkg.com/fs-access/-/fs-access-1.0.1.tgz#d6a87f262271cefebec30c553407fb995da8777a"
   dependencies:
     null-check "^1.0.0"
-
-fs-extra@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-5.0.0.tgz#414d0110cdd06705734d055652c5411260c31abd"
-  dependencies:
-    graceful-fs "^4.1.2"
-    jsonfile "^4.0.0"
-    universalify "^0.1.0"
 
 fs-extra@^4.0.1, fs-extra@^4.0.2:
   version "4.0.3"
