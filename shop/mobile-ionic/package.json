@@ -147,7 +147,7 @@
 		"@types/node": "~10.9.2",
 		"@types/reflect-metadata": "^0.1.0",
 		"@types/socket.io-client": "^1.4.32",
-		"@types/stripe": "^5.0.19",
+		"@types/stripe": "^6.19.0",
 		"@types/swiper": "4.2.1",
 		"@types/uuid": "^3.4.4",
 		"codelyzer": "^4.4.4",
