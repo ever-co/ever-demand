@@ -212,7 +212,7 @@
 		"tslib": "^1.9.3",
 		"tslint": "^5.10.0",
 		"tslint-loader": "^3.6.0",
-		"typedoc": "^0.13.0",
+		"typedoc": "^0.14.0",
 		"typescript": "~2.7.2",
 		"uglifyjs-webpack-plugin": "^1.2.6",
 		"url-loader": "^1.0.1",
