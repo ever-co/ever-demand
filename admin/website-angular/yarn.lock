@@ -3781,9 +3781,10 @@ findit2@^2.2.3:
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/findit2/-/findit2-2.2.3.tgz#58a466697df8a6205cdfdbf395536b8bd777a5f6"
 
-fingerprintjs2@^1.8.1:
-  version "1.8.6"
-  resolved "https://registry.yarnpkg.com/fingerprintjs2/-/fingerprintjs2-1.8.6.tgz#ac92bd3f9965b51f5bf1b2d2d6f4bcc44ac89aab"
+fingerprintjs2@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/fingerprintjs2/-/fingerprintjs2-2.0.6.tgz#24b3ad6f541834833c44b5d81f27c5fd11144898"
+  integrity sha512-ga84FInnM1gPc39rA88SPyHVdeGOc2soRGhLJQFOxANkeD792M97maGHBK3b8zoVM5tPULS0NvSJ4DM7DXkviA==
 
 flat-cache@^1.2.1:
   version "1.3.4"
