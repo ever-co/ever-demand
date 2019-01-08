@@ -95,7 +95,7 @@
 		"core-js": "^2.6.0",
 		"echarts": "^4.0.2",
 		"faker": "^4.1.0",
-		"fingerprintjs2": "^1.8.1",
+		"fingerprintjs2": "^2.0.6",
 		"font-awesome": "^4.7.0",
 		"global": "^4.3.2",
 		"graphql": "^0.13.2",
