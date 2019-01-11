@@ -35,12 +35,17 @@ install:
     - yarn install
     - yarn bootstrap
 
-before_script:
+matrix:
+    include:
+        - env: PROJECT=backend/api
+        - env: PROJECT=admin/website-angular
+        - env: PROJECT=carrier/mobile-ionic
+        - env: PROJECT=shop/mobile-ionic
+        - env: PROJECT=shop/website-angular
+        - env: PROJECT=merchant/tablet-ionic
+        
+before_script: 
+    - cd $PROJECT
 
 script:
-    - cd backend/api && yarn build
-    - cd admin/website-angular && yarn build
-    - cd carrier/mobile-ionic && yarn build
-    - cd shop/mobile-ionic && yarn build
-    - cd shop/website-angular && yarn build
-    - cd merchant/tablet-ionic && yarn build
+    - yarn build
