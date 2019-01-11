@@ -8,51 +8,59 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/ever-co/ever.svg)](https://greenkeeper.io)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fever.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fever?ref=badge_shield)
 
-[Ever](https://ever.co)® is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform build with TypeScript.
+[Ever](https://ever.co)® is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform build with [TypeScript](http://www.typescriptlang.org).
 
-Out-of-the-box Ever Platform provides everything required to quickly build Multi-Store (Marketplace) or Single-Store **On-Demand** Platform with customized e-commerce Websites (shops), Mobile ordering apps, Carrier (Driver) apps, Merchant apps and Admin website.
+Out-of-the-box Ever Platform provides everything required to quickly build, manage and expand Multi-Store (Multi-Vendor Marketplace) or Single-Store **On-Demand** Commerce Solutions with customized e-commerce Websites (shops), Mobile ordering apps (Hybrid and PWA), Carrier (Driver) apps, Merchant apps and Admin interface website.
 
 So, if you need to build the next "Uber for X", Ever Platform is your right choice!
 
 ### Disclaimer
 
-_A word of caution_: We are in α (alpha), i.e. Ever Platform is very much under development. Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_winking_eye:
+_A word of caution_: We are in α (alpha), i.e. Ever Platform is very much under development (work in progress, WIP).  
+Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_winking_eye:
+
+### 
 
 ## Features
 
 -   Open Platform (every part is Open-Source)
+-   Everything Reactive, Real-Time and Blazing Fast!
 -   Shopping Mobile App for customers to make On-Demand orders (iOS and Android using Ionic / Ionic Native)
 -   Carrier Mobile App for carriers, drivers or delivery service providers (iOS and Android using Ionic / Ionic Native)
 -   Shopping e-commerce Website for customers to make in-browser On-Demand purchases of food, goods or services
 -   Merchant Tablet App used by Stores/Merchants/Warehouses to manage & track orders, organize deliveries, etc.
 -   Admin Website used to manage all platform features and settings in the single Web-based interface
--   Multi-language and culture settings accross (i18N) Platform
+-   Multi-language and culture settings accross Platform (i18N)
 -   Products Catalogs (global and per Merchant) with Multiple Product Images
--   Inventory Management and Real-time Order Management accross Platform
--   Deliveries processing accross Platform (shipping with real-time location tracking)
+-   Inventory Management and Real-time Order Management/Processing accross the Platform
+-   Deliveries/Shipping management and processing accross Platform (shipping with real-time location tracking)
 -   Real-Time discounts, promotions and products/services availability updates
--   Payments (currently supported Payments Gateway - [Stripe](https://stripe.com))
+-   Customers registration, Guest Checkouts, Invitations (optional)
+-   Gateway and Payment Processing (currently supported Payments Gateway - [Stripe](https://stripe.com))
+-   Rich GraphQL, REST and WS APIs
+-   Plugins / Extensions / Custom Fields (WIP)
 
 ## Technology Stack and Requirements
 
--   Almost every part of the Platform developed using [TypeScript](https://www.typescriptlang.org) language (version >=2.9)
--   Most of projects require [Node.js](https://nodejs.org) (version >=8)
+-   Almost every part of the Platform build using [TypeScript](https://www.typescriptlang.org) language (version >=2.9)
+-   Most of projects require [Node.js](https://nodejs.org) (version >=10)
 -   Shopping Mobile App developed using [Ionic](https://ionicframework.com) version 4
 -   Carrier Mobile App developed using [Ionic](https://ionicframework.com) version 3
--   Shopping Website developed with [Angular](https://angular.io) 6 using [Angular Starter](https://github.com/gdi2290/angular-starter)
+-   Shopping Website developed with [Angular](https://angular.io) 7 using [Angular Starter](https://github.com/gdi2290/angular-starter)
 -   Merchant Tablet App developed using [Ionic](https://ionicframework.com) version 3
--   Admin Website developed with [Angular](https://angular.io) version 6 using [ngx-admin](https://github.com/akveo/ngx-admin)
--   Backend Api (Server) developed using [Nest](https://github.com/nestjs/nest) with heavy use of our own Pyro module. We support both REST and GraphQL APIs. Real-Time communications use [Socket.io](https://socket.io) library
+-   Admin Website developed with [Angular](https://angular.io) version 7 using [ngx-admin](https://github.com/akveo/ngx-admin)
+-   Backend Api (Server) developed using [Nest](https://github.com/nestjs/nest) with heavy use of our own Pyro module. Supports GraphQL, REST and WS Real-Time APIs (WebSockets using [Socket.io](https://socket.io) library)
 -   [RxJS](http://reactivex.io/rxjs) library used heavy in every part of the Platform
 -   [InversifyJS](http://inversify.io) used for Inversion Control / Dependency Injection in most parts of the Platform. On the Backend/API we also use DI provided by [Nest](https://github.com/nestjs/nest)
 -   [MongoDB](https://www.mongodb.com) Database used with [Mongoose](https://mongoosejs.com) ORM (supported MongoDB version >= 3.2; we recommend version >=4)
+-   We have ongoing effort to add support for other databases using TypeORM (https://github.com/typeorm/typeorm, WIP) and Prisma (https://github.com/prisma/prisma, to be decided on integration)
 -   For production, we integrate and recommend to use [PM2](https://github.com/Unitech/pm2)
 
 #### See also README.md and CREDITS.md files in relevant folders for lists of libraries and software included in the Platform, information about licenses and other details.
 
 ## Documentation
 
-Please refer to https://docs.ever.co for the Platform Documentation (work in progress)
+Please refer to https://docs.ever.co for the Platform Documentation (WIP)
 
 For quick overview of each project in the Platform (Server, Admin, Shops, etc), you can search for README.md file in the root of the projects folders. For example, see [./backend/api/README.md](backend/api/README.md) for Server (Backend) related overview.
 
@@ -66,6 +74,9 @@ After installation, make sure MongoDB service is running and accepting connectio
 
 To manage database, you can use free [MongoDB Compass Community Edition available](https://www.mongodb.com/download-center/v2/compass) or some other GUI for MongoDB, e.g. Studio 3T (https://studio3t.com)
 
+For production, we recommend MongoDB Atlas (https://www.mongodb.com/cloud/atlas).  
+It is also possible to use AWS DocumentDB (https://aws.amazon.com/documentdb) or Azure Cosmos DB (https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction)
+
 ### Clone Repo
 
 Clone the Ever Platform Git repo:
@@ -74,7 +85,9 @@ Clone the Ever Platform Git repo:
 git clone -c core.symlinks=true --recursive git@github.com:ever-co/ever.git
 ```
 
-If you use Git >= v2.14, it could be make sense to setup following globally:
+Note: it's important to enable Git symlinks because they are used for shared modules (every project have symlinks to common shared modules in the /shared folder)
+
+If you use Git >= v2.14, it probably make sense to setup following globally:
 
 ```
 git config --global core.symlinks true
@@ -85,21 +98,37 @@ Notes:
 
 -   to setup Symlinks & Submodules recurse locally only (for Ever repo), remove `--global` in the commands above
 -   for older Git versions see https://stackoverflow.com/questions/4611512/is-there-a-way-to-make-git-pull-automatically-update-submodules/4611550#4611550
--   at the moment we are not using Git sub-modules, but it may change in the future
+-   at the moment we are not using Git sub-modules, but it may change in the future (we were using them, but decided to drop for now in favor of symlinks)
+
+### Yarn
+
+Currently we are using Yarn (instead of npm), so make sure you have latest Yarn version installed before running Ever Platform:
+
+```
+npm install -g yarn@latest
+```
 
 ### Lerna
 
-We are using Lerna (https://github.com/lerna/lerna), so you may want to install it globally (recommended):
+We are using Lerna (https://github.com/lerna/lerna), so you need to run the following command from working folder where you cloned Ever git repo (this will install Lerna and other packages):
+
+```
+yarn install
+```
+
+You may instead install Lerna globally (recommended) and let Lerna install everything for you:
 
 ```
 npm install lerna@latest -g
 ```
 
-Next you need to Bootstrap all dependencies:
+Now, after Lerna installed (locally or globally), you need to Bootstrap all dependencies:
 
 ```
 yarn bootstrap
 ```
+
+The command above will install all required packages for every sub-project of the Ever Platform.
 
 ### Platform Configuration
 
@@ -182,7 +211,7 @@ You can use credentials above to login into Platform Admin App, which available 
 
 Ever Platform follows good security practices, but 100% security cannot be guaranteed in any software!  
 Ever Platform is provided AS IS without any warranty. Use at your own risk!  
-See more details in the [LICENSE.md](LICENSE.md).  
+See more details in the [LICENSE.md](LICENSE.md).
 
 In production setup, all client-side to server-side (backend, APIs) communications should be encrypted using HTTPS/WSS/SSL (REST APIs, GraphQL endpoint, Socket.io WebSockets, etc).
 
