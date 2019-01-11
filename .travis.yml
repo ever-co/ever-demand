@@ -1,0 +1,46 @@
+language: node_js
+
+sudo: false
+dist: trusty
+
+git:
+    depth: 3
+
+node_js:
+    - '10'
+
+cache:
+    directories:
+        - node_modules
+        - backend/api/node_modules
+        - admin/website-angular/node_modules
+        - carrier/mobile-ionic/node_modules
+        - shop/mobile-ionic/node_modules
+        - shop/website-angular/node_modules
+        - merchant/tablet-ionic/node_modules
+
+addons:
+    apt:
+        sources:
+            - ubuntu-toolchain-r-test
+        packages:
+            - g++-4.8
+
+before_install:
+    - npm i -g npm@latest
+    - npm i -g yarn@latest
+    - npm i -g lerna@latest
+
+install:
+    - yarn install
+    - yarn bootstrap
+
+before_script:
+
+script:
+    - cd backend/api && yarn build
+    - cd admin/website-angular && yarn build
+    - cd carrier/mobile-ionic && yarn build
+    - cd shop/mobile-ionic && yarn build
+    - cd shop/website-angular && yarn build
+    - cd merchant/tablet-ionic && yarn build
