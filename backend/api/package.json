@@ -161,7 +161,7 @@
 		"@types/socket.io": "^2.1.2",
 		"@types/socket.io-client": "^1.4.32",
 		"@types/source-map-support": "^0.4.1",
-		"@types/stripe": "^6.19.1",
+		"@types/stripe": "^6.19.2",
 		"@types/uuid": "^3.4.4",
 		"@types/ws": "^6.0.1",
 		"concurrently": "^4.1.0",
