@@ -19,8 +19,6 @@ So, if you need to build the next "Uber for X", Ever Platform is your right choi
 _A word of caution_: We are in α (alpha), i.e. Ever Platform is very much under development (work in progress, WIP).  
 Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_winking_eye:
 
-### 
-
 ## Features
 
 -   Open Platform (every part is Open-Source)
@@ -53,7 +51,7 @@ Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_wi
 -   [RxJS](http://reactivex.io/rxjs) library used heavy in every part of the Platform
 -   [InversifyJS](http://inversify.io) used for Inversion Control / Dependency Injection in most parts of the Platform. On the Backend/API we also use DI provided by [Nest](https://github.com/nestjs/nest)
 -   [MongoDB](https://www.mongodb.com) Database used with [Mongoose](https://mongoosejs.com) ORM (supported MongoDB version >= 3.2; we recommend version >=4)
--   We have ongoing effort to add support for other databases using TypeORM (https://github.com/typeorm/typeorm, WIP) and Prisma (https://github.com/prisma/prisma, to be decided on integration)
+-   We have ongoing effort (WIP) to add support for other databases using [TypeORM](https://github.com/typeorm/typeorm) and [Prisma](https://github.com/prisma/prisma). Following additional DBs will be fully supported: MySQL, PostgreSQL, MariaDB, SQLite, MS SQL Server and Oracle.
 -   For production, we integrate and recommend to use [PM2](https://github.com/Unitech/pm2)
 
 #### See also README.md and CREDITS.md files in relevant folders for lists of libraries and software included in the Platform, information about licenses and other details.
@@ -74,8 +72,8 @@ After installation, make sure MongoDB service is running and accepting connectio
 
 To manage database, you can use free [MongoDB Compass Community Edition available](https://www.mongodb.com/download-center/v2/compass) or some other GUI for MongoDB, e.g. Studio 3T (https://studio3t.com)
 
-For production, we recommend MongoDB Atlas (https://www.mongodb.com/cloud/atlas).  
-It is also possible to use AWS DocumentDB (https://aws.amazon.com/documentdb) or Azure Cosmos DB (https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction)
+For production, we recommend [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).  
+It is also possible to use [AWS DocumentDB](https://aws.amazon.com/documentdb) or [Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction)
 
 ### Clone Repo
 
@@ -97,7 +95,7 @@ git config --global submodule.recurse true
 Notes:
 
 -   to setup Symlinks & Submodules recurse locally only (for Ever repo), remove `--global` in the commands above
--   for older Git versions see https://stackoverflow.com/questions/4611512/is-there-a-way-to-make-git-pull-automatically-update-submodules/4611550#4611550
+-   for older Git versions see [this](https://stackoverflow.com/questions/4611512/is-there-a-way-to-make-git-pull-automatically-update-submodules/4611550#4611550)
 -   at the moment we are not using Git sub-modules, but it may change in the future (we were using them, but decided to drop for now in favor of symlinks)
 
 ### Yarn
@@ -110,7 +108,7 @@ npm install -g yarn@latest
 
 ### Lerna
 
-We are using Lerna (https://github.com/lerna/lerna), so you need to run the following command from working folder where you cloned Ever git repo (this will install Lerna and other packages):
+We are using [Lerna](https://github.com/lerna/lerna), so you need to run the following command from working folder where you cloned Ever git repo (this will install Lerna and other packages):
 
 ```
 yarn install
@@ -206,6 +204,8 @@ You can use credentials above to login into Platform Admin App, which available 
 -   [CodeMentor](https://www.codementor.io/evereq)
 -   For business inquiries: <mailto:ever@ever.co>
 -   Please report security vulnerabilities to <mailto:security@ever.co>
+-   [Ever Platform @ Twitter](https://twitter.com/everplatform)
+-   [Ever Platform @ Facebook](https://www.facebook.com/everplatform)
 
 ## Security
 
