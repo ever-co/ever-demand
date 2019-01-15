@@ -2494,11 +2494,12 @@ graphql-tag@^2.9.2:
   version "2.9.2"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.9.2.tgz#2f60a5a981375f430bf1e6e95992427dc18af686"
 
-graphql@^0.13.2:
-  version "0.13.2"
-  resolved "http://registry.npmjs.org/graphql/-/graphql-0.13.2.tgz#4c740ae3c222823e7004096f832e7b93b2108270"
+graphql@^14.1.0:
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.1.0.tgz#f38eb11bf9b4678a9a7741de795a3d25d46a7490"
+  integrity sha512-1dFYdyjS3A2BmoYXXwmpNIr2SoSpcPkF6gXB4UqZh2mWKBLfyUaQbk2POigqrKvlCimphJoPgkb0SFxDgJwSXQ==
   dependencies:
-    iterall "^1.2.1"
+    iterall "^1.2.2"
 
 handlebars@4.0.10:
   version "4.0.10"
@@ -3058,9 +3059,10 @@ isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
 
-iterall@^1.2.1:
+iterall@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.2.2.tgz#92d70deb8028e0c39ff3164fdbf4d8b088130cd7"
+  integrity sha512-yynBb1g+RFUPY64fTrFv7nsjRrENBQJaX2UL+2Szc9REFrSNm1rpSXHGzhmAy7a9uv3vlvgBlXnf9RqmPH1/DA==
 
 js-base64@^2.1.8:
   version "2.4.9"
