@@ -1,6 +1,12 @@
-# Software License Agreement
+# License
 
 Copyright © 2016-present, Ever Co. LTD. All rights reserved.
+
+This software is available under different licenses
+
+### _Ever Platform Community Edition_ License for for Backend Api (Server)
+
+If you decide to choose the Ever Platform Community Edition License for for Backend Api (Server), you must comply with the following terms:
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License, version 3,
@@ -13,6 +19,16 @@ GNU Affero General Public License for more details.
 
 You should have received a copy of the GNU Affero General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+[GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.txt)
+
+### _Ever Platform Enterprise_ License
+
+Alternatively, commercial versions of the software must be used in accordance with the terms and conditions of separate written agreement between you and Ever Co. LTD.
+
+For more information about Ever Platform Enterprise License please contact <mailto:ever@ever.co>.
+
+#### The default Ever Platform license, without a valid Ever Platform Enterprise License agreement, is the Ever Platform Community Edition License.
 
 ## Credits
 
