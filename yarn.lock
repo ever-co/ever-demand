@@ -752,10 +752,10 @@
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-3.3.0.tgz#6b0e4b0192367d77e438ff660ccc4487c9602e7b"
 
-"@types/jasmine@^3.3.5":
-  version "3.3.5"
-  resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-3.3.5.tgz#3738ffbf34dffae9ecaac4503d7d969744f0e1d7"
-  integrity sha512-LJtc52O1PNUffMvH6Q3fS0BOhQWYlkh3SVu/Jc4GoPgJkUytk5Y6YPbw+6lZK2mWWvG62BtVyOFw0ih7r8STsw==
+"@types/jasmine@^3.3.6":
+  version "3.3.6"
+  resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-3.3.6.tgz#6d84212a0db569666f20a83abc22be8608ca16c7"
+  integrity sha512-gTUdNF4imreXYPyXDr+Ebq+JXGbTW+Xyw4k6HVrxj6HZlwv9Y+zurgRhzuQT3OFQNiVomiXc7GX1Xr2UPuUsoQ==
 
 "@types/jasminewd2@^2.0.6":
   version "2.0.6"
