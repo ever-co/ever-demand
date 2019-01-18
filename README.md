@@ -230,11 +230,11 @@ Different parts of the Platform are made available under the terms of the separa
 
 If you decide to choose the Ever Platform Community Edition License, you must comply with the following terms:
 
-    This program is free software: you can redistribute it and/or modify it under the terms of the corresponding licenses described in the LICENSE.md files located in software sub-folders and under the terms of licenses described in individual files.
+This program is free software: you can redistribute it and/or modify it under the terms of the corresponding licenses described in the LICENSE.md files located in software sub-folders and under the terms of licenses described in individual files.
 
-    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-    You should have received a copy of the relevant GNU Licenses along with this program. If not, see http://www.gnu.org/licenses/.
+You should have received a copy of the relevant GNU Licenses along with this program. If not, see http://www.gnu.org/licenses/.
 
 ### _Ever Platform Enterprise_ License
 
