@@ -14,7 +14,6 @@ It includes/has features of:
 -   [TypeScript](https://www.typescriptlang.org) - Main Programming Language.
 -   [NodeJS](https://nodejs.org) - Run-time environment.
 -   [NestJS](https://nestjs.com) - A progressive Node.js framework for building efficient, reliable and scalable server-side applications.
-
 -   [MongoDB](https://www.mongodb.com/) - Database.
 -   [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/) - Hosting (optionally).
 -   [Stripe API](https://stripe.com/docs/api/node) - Payments accepting.
@@ -36,7 +35,7 @@ It includes/has features of:
     ```
     $ yarn install
     ```
-2. Take a look on `.env.template` file, create `.env` file with the same variables and fill them appropriately.
+2. Take a look for `.env.template` file, create `.env` file with the same variables and fill them appropriately.
 
 ### Starting
 
@@ -164,23 +163,30 @@ To make any method of the `DBService` publicly available as part of the API plea
 
 ### Pyro IO
 
-Allows declaring routers with auto generated Socket.io API.
+#### Overview
+
+Allows declaring routers with auto generated Socket.io API right inside existed Services.
+That makes it possible to execute corresponding Service methods from incoming WebSocket messages and reply back without the need to create additional Controllers on top of Services
 
 ```javascript
 @routerName('users')
 class UsersService {
-    @observableListener()
-    get(id: string): Observable<User> {
-        // ...
-    }
+	// returns Observable!
+	@observableListener()
+	get(id: string): Observable<User> {
+		// ...
+	}
 
-    @asyncListener()
-    public register(user: IUserCreateObject): Promise<User> {
-        // ...
-    }
+	// returns Promise!
+	@asyncListener()
+	async register(user: IUserCreateObject): Promise<User> {
+		// ...
+	}
 }
 ```
 
--   `@routerName` marks the class as a router.
+#### Decorators
+
+-   `@routerName` - marks the class as a router. That makes it possible to call Service methods via WebSockets connection.
 -   `@observableListener()` is used to mark methods that return observable which allows real-time data-transfer to the client.
 -   `@asyncListener()` is used to mark methods that return promise, which allows returning one time response to the client.
