@@ -1383,10 +1383,15 @@
   resolved "https://registry.yarnpkg.com/@types/highlight.js/-/highlight.js-9.12.3.tgz#b672cfaac25cbbc634a0fd92c515f66faa18dbca"
   integrity sha512-pGF/zvYOACZ/gLGWdQH8zSwteQS1epp68yRcVLJMgUck/MjEn/FBYmPub9pXT8C1e4a8YZfHo1CKyV8q1vKUnQ==
 
-"@types/jasmine@*", "@types/jasmine@^3.3.5":
+"@types/jasmine@*":
   version "3.3.5"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-3.3.5.tgz#3738ffbf34dffae9ecaac4503d7d969744f0e1d7"
   integrity sha512-LJtc52O1PNUffMvH6Q3fS0BOhQWYlkh3SVu/Jc4GoPgJkUytk5Y6YPbw+6lZK2mWWvG62BtVyOFw0ih7r8STsw==
+
+"@types/jasmine@^3.3.6":
+  version "3.3.6"
+  resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-3.3.6.tgz#6d84212a0db569666f20a83abc22be8608ca16c7"
+  integrity sha512-gTUdNF4imreXYPyXDr+Ebq+JXGbTW+Xyw4k6HVrxj6HZlwv9Y+zurgRhzuQT3OFQNiVomiXc7GX1Xr2UPuUsoQ==
 
 "@types/jasminewd2@^2.0.6":
   version "2.0.6"
