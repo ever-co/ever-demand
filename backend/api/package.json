@@ -4,7 +4,12 @@
 	"description": "Ever API",
 	"license": "AGPL-3.0",
 	"homepage": "https://ever.co",
-	"repository": "https://bitbucket.org/ever-co/ever",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ever-co/ever.git"
+	},
+7
+    "repository": "https://bitbucket.org/ever-co/ever",
 	"private": false,
 	"author": {
 		"name": "Ever Co. LTD",
