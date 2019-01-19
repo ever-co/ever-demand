@@ -43,8 +43,8 @@ matrix:
         - env: PROJECT=shop/mobile-ionic
         - env: PROJECT=shop/website-angular
         - env: PROJECT=merchant/tablet-ionic
-        
-before_script: 
+
+before_script:
     - cd $PROJECT
 
 script:

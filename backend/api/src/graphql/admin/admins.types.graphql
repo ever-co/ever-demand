@@ -1,0 +1,53 @@
+type Admin {
+	_id: String!
+	id: String!
+	name: String!
+	email: String!
+	pictureUrl: String!
+	firstName: String
+	lastName: String
+}
+
+input AdminCreateInput {
+	name: String!
+	email: String!
+	pictureUrl: String!
+	firstName: String
+	lastName: String
+}
+
+input AdminUpdateInput {
+	name: String
+	email: String
+	pictureUrl: String
+	firstName: String
+	lastName: String
+}
+
+type AdminLoginInfo {
+	admin: Admin!
+	token: String!
+}
+
+input AdminRegisterInput {
+	admin: AdminCreateInput!
+	password: String!
+}
+
+input AdminPasswordUpdateInput {
+	current: String!
+	new: String!
+}
+
+type Query {
+	adminByEmail(email: String!): Admin
+	admin(id: String!): Admin
+	adminAuthenticated: Boolean!
+}
+
+type Mutation {
+	registerAdmin(registerInput: AdminRegisterInput!): Admin!
+	adminLogin(email: String!, password: String!): AdminLoginInfo
+	updateAdmin(id: String!, updateInput: AdminUpdateInput!): Admin!
+	updateAdminPassword(id: String!, password: AdminPasswordUpdateInput!): Void
+}

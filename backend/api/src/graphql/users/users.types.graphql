@@ -1,0 +1,142 @@
+type User {
+	_id: String!
+	id: String!
+	geoLocation: GeoLocation!
+	apartment: String!
+	firstName: String
+	lastName: String
+	email: String
+	phone: String
+	devicesIds: [String!]!
+
+	# Resolved
+	devices: [Device!]!
+
+	# URL of the image
+	image: String
+
+	fullAddress: String
+
+	createdAt: Date
+}
+
+input UserCreateInput {
+	email: String
+	firstName: String
+	lastName: String
+	phone: String
+
+	# URL of the image
+	image: String
+	geoLocation: GeoLocationCreateInput!
+	apartment: String!
+}
+
+input UserFindInput {
+	firstName: String
+	lastName: String
+	email: String
+	phone: String
+	apartment: String
+
+	# URL of the image
+	image: String
+
+	# TODO geoLocation
+}
+
+type Query {
+	user(id: String!): User
+
+	users(findInput: UserFindInput, pagingOptions: PagingOptionsInput): [User]!
+
+	getOrders(userId: String!): [Order!]!
+
+	isUserExists(conditions: UserMemberInput!): Boolean!
+
+	getSocial(socialId: String!): User
+
+	isUserEmailExists(email: String!): Boolean!
+
+	generate1000Customers(
+		defaultLng: Float!
+		defaultLat: Float!
+	): ResponseGenerate1000Customers
+
+	getCountOfUsers: Int!
+}
+
+type ResponseGenerate1000Customers {
+	success: Boolean!
+	message: String
+}
+
+type UserLoginInfo {
+	user: User!
+	token: String!
+}
+
+input UserMemberInput {
+	exceptCustomerId: String
+	memberKey: String!
+	memberValue: String!
+}
+
+input UserRegisterInput {
+	user: UserCreateInput!
+	password: String
+}
+
+input UserPasswordUpdateInput {
+	current: String!
+	new: String!
+}
+
+input AdditionalUserRegistrationInfo {
+	email: String!
+	password: String!
+	firstName: String
+	lastName: String
+	phone: String
+}
+
+input GeoLocationUpdateObjectInput {
+	loc: Location!
+}
+
+input UserUpdateObjectInput {
+	geoLocation: GeoLocationUpdateObjectInput!
+	devicesIds: [String!]
+	apartment: String
+	stripeCustomerId: String
+}
+
+input PagingOptionsInput {
+	sort: PagingSortInput
+	limit: Int
+	skip: Int
+}
+
+input PagingSortInput {
+	field: String!
+	sortBy: String!
+}
+
+type Mutation {
+	updateUser(id: String!, updateObject: UserUpdateObjectInput!): User!
+
+	updateEmail(userId: String!, email: String!): User!
+
+	registerUser(registerInput: UserRegisterInput!): User!
+
+	userLogin(email: String!, password: String!): UserLoginInfo
+
+	removeUsersByIds(ids: [String]!): String!
+
+	updateUserPassword(id: String!, password: UserPasswordUpdateInput!): Void
+
+	addUserRegistrationInfo(
+		id: String!
+		registrationInfo: AdditionalUserRegistrationInfo!
+	): Void
+}

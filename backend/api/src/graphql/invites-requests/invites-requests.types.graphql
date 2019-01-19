@@ -1,0 +1,76 @@
+type InviteRequest {
+	_id: String!
+	id: String!
+	apartment: String!
+	geoLocation: GeoLocation!
+	isManual: Boolean
+	isInvited: Boolean
+	invitedDate: Date
+}
+
+input InvitesRequestsFindInput {
+	apartment: String
+	isManual: Boolean
+	isInvited: Boolean
+	invitedDate: Date
+	# todo GeoLocation
+}
+
+type Query {
+	inviteRequest(id: String!): InviteRequest
+
+	invitesRequests(
+		findInput: InvitesRequestsFindInput
+		pagingOptions: PagingOptionsInput
+		invited: Boolean
+	): [InviteRequest!]
+
+	notifyAboutLaunch(invite: InviteInput, devicesIds: [String!]!): Void
+
+	generate1000InviteRequests(defaultLng: Float!, defaultLat: Float!): Void
+
+	getCountOfInvitesRequests(invited: Boolean): Int!
+}
+
+input InviteInput {
+	code: String!
+	apartment: String!
+	geoLocation: GeoLocationInput!
+	isDeleted: Boolean!
+}
+
+input GeoLocationInput {
+	countryId: Int!
+	countryName: String
+	city: String!
+	streetAddress: String!
+	house: String!
+	postcode: String
+	loc: Location!
+}
+
+input InviteRequestCreateInput {
+	apartment: String!
+	geoLocation: GeoLocationCreateInput!
+	isManual: Boolean
+	invitedDate: Date
+	isInvited: Boolean
+}
+
+input InviteRequestUpdateInput {
+	apartment: String
+	geoLocation: GeoLocationUpdateInput
+	isManual: Boolean
+	invitedDate: Date
+	isInvited: Boolean
+}
+
+type Mutation {
+	createInviteRequest(createInput: InviteRequestCreateInput!): InviteRequest!
+	updateInviteRequest(
+		id: String!
+		updateInput: InviteRequestUpdateInput!
+	): InviteRequest!
+	removeInviteRequest(id: String!): Void
+	removeInvitesRequestsByIds(ids: [String!]!): Remove
+}

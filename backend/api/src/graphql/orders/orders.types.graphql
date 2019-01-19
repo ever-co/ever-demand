@@ -1,0 +1,181 @@
+type Order {
+	_id: String!
+	id: String!
+	user: User!
+	warehouse: Warehouse!
+	warehouseId: String!
+
+	# Some carrier which responsible to deliver order to the client
+	# (can be empty if order is not planed for delivery yet)
+	carrier: Carrier
+	carrierId: String
+
+	# products: [Any!]!
+	products: [OrderProduct!]!
+
+	isConfirmed: Boolean!
+	isCancelled: Boolean!
+	isPaid: Boolean!
+	isCompleted: Boolean!
+	totalPrice: Float!
+
+	# DateTime when order was actually delivered to customer
+	deliveryTime: Date
+
+	finishedProcessingTime: Date
+	startDeliveryTime: Date
+
+	# how many seconds more it should take to delivery order to customer
+	deliveryTimeEstimate: Int
+
+	warehouseStatus: Int!
+	carrierStatus: Int!
+
+	# Used for quick destinction between orders made in the same day (For packaging and etc)
+	orderNumber: Int!
+
+	carrierStatusText: String!
+	warehouseStatusText: String!
+
+	status: Int
+
+	createdAt: Date
+	_createdAt: Date
+	updatedAt: Date
+	_updatedAt: Date
+}
+
+type OrderProduct {
+	_id: String!
+	count: Int!
+	isManufacturing: Boolean!
+	isCarrierRequired: Boolean!
+	isDeliveryRequired: Boolean!
+	isTakeaway: Boolean
+	initialPrice: Float!
+	price: Float!
+	product: Product!
+}
+
+input OrdersFindInput {
+	user: String
+
+	# Warehouse id
+	warehouse: String
+
+	# Carrier id
+	carrier: String
+
+	## products: TODO complex filter
+
+	isConfirmed: Boolean
+	isCancelled: Boolean
+	isPaid: Boolean
+	warehouseStatus: Int!
+	carrierStatus: Int!
+	orderNumber: Int
+}
+
+type OrderChartPanel {
+	isCancelled: Boolean!
+	isCompleted: Boolean!
+	totalPrice: Float!
+	_createdAt: Date!
+}
+
+type DashboardCompletedOrder {
+	warehouseId: String!
+	totalPrice: Float!
+}
+
+type CompletedOrderInfo {
+	totalOrders: Int!
+	totalRevenue: Float!
+}
+
+type OrderedUserInfo {
+	user: User!
+	ordersCount: Int!
+	totalPrice: Float!
+}
+
+type OrderCountTnfo {
+	id: String
+	ordersCount: Int
+}
+
+type GenerateOrdersResponse {
+	error: Boolean!
+	message: String
+}
+
+type Query {
+	# If order query doesn't work for you it may be that you use 'order' instead 'getOrder' query
+	getOrder(id: String!): Order
+
+	orders(findInput: OrdersFindInput): [Order!]!
+
+	getDashboardCompletedOrders: [DashboardCompletedOrder!]!
+
+	getDashboardCompletedOrdersToday: [Order!]!
+
+	getOrdersChartTotalOrders: [OrderChartPanel!]!
+
+	getCompletedOrdersInfo(storeId: String): CompletedOrderInfo!
+
+	getOrderedUsersInfo(storeId: String!): [OrderedUserInfo!]!
+
+	generateOrdersByCustomerId(numberOfOrders: Int!, customerId: String!): Void
+
+	addTakenOrders(carrierIds: [String!]!): Void
+
+	addOrdersToTake: Void
+
+	generateRandomOrdersPerStore(ordersLimit: Int!): GenerateOrdersResponse
+
+	generateActiveAndAvailableOrdersPerCarrier: Void
+
+	generatePastOrdersPerCarrier: Void
+
+	getUsersOrdersCountInfo(usersIds: [String!]): [OrderCountTnfo]
+
+	getMerchantsOrdersCountInfo(merchantsIds: [String!]): [OrderCountTnfo]
+}
+
+type Mutation {
+	updateOrderCarrierStatus(
+		orderId: String!
+		status: OrderCarrierStatus!
+	): Order!
+
+	updateOrderWarehouseStatus(
+		orderId: String!
+		status: OrderWarehouseStatus!
+	): Order
+
+	payOrderWithStripe(orderId: String!, cardId: String!): Order
+}
+
+enum OrderWarehouseStatus {
+	NoStatus #0
+	ReadyForProcessing #1
+	WarehouseStartedProcessing #2
+	AllocationStarted #3
+	AllocationFinished #4
+	PackagingStarted #5
+	PackagingFinished #6
+	GivenToCarrier #7
+	AllocationFailed #200
+	PackagingFailed #201
+}
+
+enum OrderCarrierStatus {
+	NoCarrier #0
+	CarrierSelectedOrder #1
+	CarrierPickedUpOrder #2
+	CarrierStartDelivery #3
+	CarrierArrivedToCustomer #4
+	DeliveryCompleted #5
+	IssuesDuringDelivery #204
+	ClientRefuseTakingOrder #205
+}

@@ -1,0 +1,73 @@
+type Invite {
+	_id: String!
+	id: String!
+	code: String!
+	apartment: String!
+	geoLocation: GeoLocation!
+}
+
+input InvitesFindInput {
+	code: String
+	apartment: String
+	# todo GeoLocation
+}
+
+input Location {
+	type: String!
+	coordinates: [Float!]!
+}
+
+input InviteByCodeInput {
+	location: Location!
+	inviteCode: String!
+	firstName: String
+	lastName: String
+}
+
+input InviteByLocationInput {
+	countryId: Int!
+	city: String!
+	streetAddress: String!
+	house: String!
+	apartment: String!
+	postcode: String
+}
+
+type Query {
+	invite(id: String!): Invite
+
+	invites(
+		findInput: InvitesFindInput
+		pagingOptions: PagingOptionsInput
+	): [Invite!]!
+
+	getInviteByCode(info: InviteByCodeInput!): Invite
+
+	getInviteByLocation(info: InviteByLocationInput): Invite
+
+	generate1000InvitesConnectedToInviteRequests(
+		defaultLng: Float!
+		defaultLat: Float!
+	): Void
+
+	getCountOfInvites: Int!
+}
+
+input InviteCreateInput {
+	code: String
+	apartment: String!
+	geoLocation: GeoLocationCreateInput!
+}
+
+input InviteUpdateInput {
+	code: String
+	apartment: String
+	geoLocation: GeoLocationUpdateInput
+}
+
+type Mutation {
+	createInvite(createInput: InviteCreateInput!): Invite!
+	updateInvite(id: String!, updateInput: InviteUpdateInput!): Invite!
+	removeInvite(id: String!): Void
+	removeInvitesByIds(ids: [String!]!): Remove
+}

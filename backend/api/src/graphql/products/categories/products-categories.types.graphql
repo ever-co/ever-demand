@@ -1,0 +1,47 @@
+type ProductsCategory {
+	_id: String!
+	id: String!
+	name: [TranslateType!]!
+	image: String
+	_createdAt: Date
+	_updatedAt: Date
+}
+
+input ProductsCategoryInput {
+	_id: String!
+	name: [TranslateInput!]
+}
+
+input ProductsCategoriesFindInput {
+	noop: Void # placeholder
+}
+
+type Query {
+	productsCategory(id: String!): ProductsCategory
+
+	productsCategories(
+		findInput: ProductsCategoriesFindInput
+	): [ProductsCategory!]!
+}
+
+input ProductsCategoriesCreateInput {
+	name: [TranslateInput!]!
+	image: String
+}
+
+input ProductsCategoriesUpdatenput {
+	name: [TranslateInput!]
+}
+
+type Mutation {
+	createProductsCategory(
+		createInput: ProductsCategoriesCreateInput
+	): ProductsCategory!
+
+	updateProductsCategory(
+		id: String!
+		updateInput: ProductsCategoriesCreateInput!
+	): ProductsCategory!
+
+	removeProductsCategoriesByIds(ids: [String!]!): Remove
+}

@@ -1,0 +1,25 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"lib": ["dom", "esnext", "es2017.object"],
+		"baseUrl": "./src",
+		"outDir": "build",
+		"target": "es6",
+		"moduleResolution": "node",
+		"preserveConstEnums": true,
+		"emitDecoratorMetadata": true,
+		"allowSyntheticDefaultImports": true,
+		"experimentalDecorators": true,
+		"sourceMap": true,
+		"skipLibCheck": true,
+		"strictNullChecks": false,
+		"typeRoots": ["node_modules/@types"],
+		"types": ["node", "reflect-metadata", "jest"],
+		"paths": {
+			"@pyro/*": ["@pyro/*", "./modules/server.common/@pyro/*"],
+			"@modules/*": ["./modules/*"]
+		}
+	},
+	"include": ["src/**/*.ts", "./*.ts"],
+	"exclude": ["backup", "backup/TrackingService", "node_modules"]
+}

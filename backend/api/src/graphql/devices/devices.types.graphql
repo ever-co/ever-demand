@@ -1,0 +1,61 @@
+type Device {
+	_id: String!
+	id: String!
+
+	# for push notifications
+	channelId: String
+
+	# 'android', 'ios' or 'browser'
+	type: String!
+
+	uuid: String!
+	language: String
+}
+
+input DeviceFindInput {
+	channelId: String
+	language: String
+	type: String
+	uuid: String
+}
+
+type Query {
+	device(id: String): Device
+	devices(findInput: DeviceFindInput): [Device!]!
+}
+
+input DeviceCreateInput {
+	channelId: String!
+
+	# default en-US
+	language: String
+
+	type: String!
+	uuid: String!
+}
+
+input DeviceUpdateInput {
+	channelId: String
+	language: String
+	type: String
+	uuid: String
+}
+
+type Mutation {
+	createDevice(createInput: DeviceCreateInput!): Device!
+	updateDevice(id: String!, updateInput: DeviceUpdateInput!): Device!
+	removeDevice(id: String!): Void
+	removeDeviceByIds(ids: [String!]!): Remove
+	updateDeviceLanguage(deviceId: String!, language: Language!): Device!
+}
+
+type Subscription {
+	deviceCreated: Device!
+}
+
+enum Language {
+	he_IL
+	en_US
+	ru_RU
+	bg_BG
+}
