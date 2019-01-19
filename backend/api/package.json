@@ -8,7 +8,6 @@
 		"type": "git",
 		"url": "git+https://github.com/ever-co/ever.git"
 	},
-7
     "repository": "https://bitbucket.org/ever-co/ever",
 	"private": false,
 	"author": {
