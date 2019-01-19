@@ -1,0 +1,130 @@
+type Carrier {
+	_id: String!
+	id: String!
+	firstName: String!
+	lastName: String!
+	username: String!
+	phone: String!
+	logo: String!
+	email: String
+	numberOfDeliveries: Int!
+	skippedOrderIds: [String!]
+	status: Int!
+	geoLocation: GeoLocation!
+	devicesIds: [String!]!
+
+	# Resolved
+	devices: [Device!]!
+
+	# True carrier enabled in system, False carrier completely disabled in the system (e.g. was fired).
+	# This setting is set by Admin, not by carrier itself
+	isDeleted: Boolean!
+}
+
+input CarriersFindInput {
+	firstName: String
+	lastName: String
+	email: String
+	phone: String
+	isDeleted: Boolean
+	status: Int
+	# TODO geoLocation
+}
+
+type Query {
+	getCarrierByUsername(username: String!): Carrier
+	getCarrier(id: String!): Carrier
+	getCarriers(
+		carriersFindInput: CarriersFindInput
+		pagingOptions: PagingOptionsInput
+	): [Carrier!]!
+	getActiveCarriers: [Carrier]!
+	getCountOfCarriers: Int!
+}
+
+input CarrierCreateInput {
+	email: String
+	firstName: String!
+	lastName: String!
+	geoLocation: GeoLocationCreateInput!
+
+	# Current carrier status (set via his mobile app), e.g. Online or Offline
+	status: Int
+	username: String!
+	password: String!
+	phone: String!
+	logo: String!
+	numberOfDeliveries: Int
+	skippedOrderIds: [String!]
+	deliveriesCountToday: Int
+	totalDistanceToday: Float
+	devicesIds: [String!]
+
+	# True carrier enabled in system, False carrier completely disabled in the system (e.g. was fired).
+	# This setting is set by Admin, not by carrier itself
+	isDeleted: Boolean
+}
+
+input CarrierUpdateInput {
+	firstName: String
+	lastName: String
+	geoLocation: GeoLocationUpdateInput
+
+	# Current carrier status (set via his mobile app), e.g. Online or Offline
+	status: Int
+
+	username: String
+	phone: String
+	logo: String
+	numberOfDeliveries: Int
+	skippedOrderIds: [String!]
+	deliveriesCountToday: Int
+	totalDistanceToday: Float
+	devicesIds: [String!]
+
+	# True carrier enabled in system, False carrier completely disabled in the system (e.g. was fired).
+	# This setting is set by Admin, not by carrier itself
+	isActive: Boolean
+}
+
+type CarrierLoginInfo {
+	carrier: Carrier!
+	token: String!
+}
+
+input CarrierRegisterInput {
+	carrier: CarrierCreateInput!
+	password: String!
+}
+
+input CarrierPasswordUpdateInput {
+	current: String!
+	new: String!
+}
+
+type Mutation {
+	registerCarrier(registerInput: CarrierRegisterInput!): Carrier!
+
+	updateEmail(id: String!, email: String!): Carrier!
+
+	updateCarrier(id: String!, updateInput: CarrierUpdateInput!): Carrier!
+
+	removeCarrier(id: String!): Void
+
+	carrierLogin(username: String!, password: String!): CarrierLoginInfo
+
+	updateCarrierPassword(
+		id: String!
+		password: CarrierPasswordUpdateInput!
+	): Void
+
+	removeCarriersByIds(ids: [String!]!): String
+
+	updateCarrierStatus(id: String!, status: CarrierStatus): Carrier
+}
+
+enum CarrierStatus {
+	Online
+	Offline
+	Blocked
+}

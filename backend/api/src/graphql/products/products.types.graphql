@@ -1,0 +1,96 @@
+type Product {
+	_id: String!
+	id: String!
+	title: [TranslateType!]!
+	description: [TranslateType!]!
+	details: [TranslateType!]!
+	images: [ImageType!]!
+	categories: [String]
+	detailsHTML: [TranslateType!]!
+	descriptionHTML: [TranslateType!]!
+	_createdAt: Date
+	_updatedAt: Date
+}
+
+type Category {
+	id: String
+	name: [TranslateType!]!
+}
+
+type TranslateType {
+	locale: String!
+	value: String!
+}
+
+type ImageType {
+	locale: String!
+	url: String!
+	width: Int!
+	height: Int!
+	orientation: Int!
+}
+
+type Query {
+	product(id: String!): Product
+
+	products(
+		findInput: ProductsFindInput
+		pagingOptions: PagingOptionsInput
+		existedProductsIds: [String]
+	): [Product!]
+
+	getCountOfProducts(existedProductsIds: [String]): Int!
+}
+
+input ProductsFindInput {
+	title: TranslateInput
+	description: TranslateInput
+	details: TranslateInput
+	image: ImageInput
+}
+
+input TranslateInput {
+	locale: String!
+	value: String!
+}
+
+input ImageInput {
+	locale: String!
+	url: String!
+	width: Int!
+	height: Int!
+	orientation: Int!
+}
+
+input ProductCreateInput {
+	title: [TranslateInput!]!
+	description: [TranslateInput!]!
+	details: [TranslateInput!]
+	images: [ImageInput!]!
+	categories: [ProductsCategoryInput!]
+	detailsHTML: [TranslateInput!]
+	descriptionHTML: [TranslateInput!]
+}
+
+input ProductSaveInput {
+	_id: String!
+	id: String
+	title: [TranslateInput!]!
+	description: [TranslateInput!]!
+	details: [TranslateInput!]
+	images: [ImageInput!]!
+	categories: [ProductsCategoryInput!]
+	detailsHTML: [TranslateInput!]
+	descriptionHTML: [TranslateInput!]
+}
+
+type Mutation {
+	createProduct(product: ProductCreateInput!): Product!
+	saveProduct(product: ProductSaveInput!): Product!
+	removeProductsByIds(ids: [String!]!): Remove
+}
+
+type Remove {
+	n: Int
+	ok: Int
+}

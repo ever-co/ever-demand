@@ -1,0 +1,75 @@
+type CarrierOrder {
+	_id: String!
+	id: String!
+	isConfirmed: Boolean!
+	isCancelled: Boolean!
+	isPaid: Boolean!
+	warehouseStatus: Int!
+	carrierStatus: Int!
+	orderNumber: Int!
+	_createdAt: Date
+	user: CarrierOrderUser!
+	warehouse: CarrierOrderWarehouse!
+	carrier: CarrierOrderCarrier!
+	products: [CarrierOrderProducts!]!
+}
+
+type CarrierOrderUser {
+	_id: String!
+	firstName: String
+	lastName: String
+	geoLocation: GeoLocation!
+}
+
+type CarrierOrderWarehouse {
+	# Url of the logo
+	logo: String!
+	name: String!
+	geoLocation: GeoLocation!
+}
+
+type CarrierOrderCarrier {
+	id: String!
+}
+
+type CarrierOrderProducts {
+	count: Int!
+	isManufacturing: Boolean!
+	isCarrierRequired: Boolean!
+	isDeliveryRequired: Boolean!
+	isTakeaway: Boolean
+	initialPrice: Float!
+	price: Float!
+	product: CarrierOrderProductsProduct!
+}
+
+type CarrierOrderProductsProduct {
+	_id: String!
+	id: String!
+	title: [TranslateType!]!
+	description: [TranslateType!]!
+	details: [TranslateType!]!
+	images: [ImageType!]!
+	categories: [String]
+}
+
+type Query {
+	getCarrierOrders(
+		carrierId: String!
+		options: CarrierOrdersOptions
+	): [CarrierOrder!]!
+
+	getCarrierCurrentOrder(carrierId: String!): Order
+
+	getCarrierOrdersHistory(
+		carrierId: String!
+		options: GeoLocationOrdersOptions
+	): [Order]!
+
+	getCountOfCarrierOrdersHistory(carrierId: String!): Int!
+}
+
+input CarrierOrdersOptions {
+	populateWarehouse: Boolean!
+	completion: String!
+}

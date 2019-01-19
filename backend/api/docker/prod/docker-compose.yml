@@ -1,0 +1,8 @@
+version: "3.2"
+
+services:
+  api:
+    build: ../..
+    container_name: ever-api
+    ports:
+      - 5577:5577
