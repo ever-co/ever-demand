@@ -37,7 +37,7 @@
 		"prod": "cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=4096 node ./build/pm2bootstrap.js",
 		"nestjs": "cross-env NODE_OPTIONS=--max_old_space_size=4096 node ./dist/server",
 		"webpack": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 webpack --config webpack.config.js",
-		"lint": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 tslint -p tsconfig.json -c tslint.json \"packages/**/*.ts\" -e \"*.spec.ts\"",
+		"lint": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 tslint -p tsconfig.json -c tslint.json",
 		"format": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 prettier **/**/*.ts --ignore-path ./.prettierignore --write && git status",
 		"docs": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 typedoc --out docs --mode modules"
 	},

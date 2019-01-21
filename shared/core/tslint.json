@@ -1,6 +1,5 @@
 {
 	"extends": ["tslint:latest", "tslint-config-prettier"],
-	"rulesDirectory": ["node_modules/codelyzer", "node_modules/rxjs-tslint"],
 	"linterOptions": {
 		"exclude": ["node_modules", "dist"]
 	},

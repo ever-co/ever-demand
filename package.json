@@ -94,6 +94,7 @@
 		"pretty-quick": "^1.10.0",
 		"tslint": "^5.12.0",
 		"tslint-config-prettier": "^1.17.0",
+		"rxjs-tslint": "0.1.5",
 		"typescript": "^2.9.2"
 	},
 	"husky": {
