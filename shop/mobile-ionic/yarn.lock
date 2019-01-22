@@ -407,11 +407,13 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic/angular@4.0.0-beta.17":
-  version "4.0.0-beta.17"
-  resolved "https://registry.yarnpkg.com/@ionic/angular/-/angular-4.0.0-beta.17.tgz#27e50c703d8e29c53120a5ce3f96afb3d1609b09"
+"@ionic/angular@4.0.0-rc.3":
+  version "4.0.0-rc.3"
+  resolved "https://registry.yarnpkg.com/@ionic/angular/-/angular-4.0.0-rc.3.tgz#4c6e8552ecc0a6542775835f4b2df54cd0f584ef"
+  integrity sha512-OvLSGkkEvhBrsUh4IlVsMWagdyT0wgOCp+BlP9CkavpKBEHRoVFjBKMgZlsUYejzjGNOcbVFdTNPN0rWmzqKQA==
   dependencies:
-    "@ionic/core" "4.0.0-beta.17"
+    "@ionic/core" "4.0.0-rc.3"
+    tslib "^1.9.3"
 
 "@ionic/app-scripts@3.1.9":
   version "3.1.9"
@@ -487,12 +489,12 @@
     wrap-ansi "^4.0.0"
     write-file-atomic "^2.3.0"
 
-"@ionic/core@4.0.0-beta.17":
-  version "4.0.0-beta.17"
-  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-4.0.0-beta.17.tgz#a817ba7193dbae92c9e0a65df9481f9c9e767c50"
+"@ionic/core@4.0.0-rc.3":
+  version "4.0.0-rc.3"
+  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-4.0.0-rc.3.tgz#2780b256a3a839b61f2192cd69892751119088e1"
+  integrity sha512-3tqLiMmDk1jSgvCNLDjLN1aakOthTzNjWphadWksA6HKajgPt4SxLGHXTnLS29p8ziF3XVAwE2kxFX2kQL4EGw==
   dependencies:
-    "@types/node" "10.11.0"
-    ionicons "4.4.8"
+    ionicons "4.5.5"
 
 "@ionic/discover@1.0.8":
   version "1.0.8"
@@ -714,10 +716,6 @@
 "@types/node@*":
   version "10.5.4"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.4.tgz#6eccc158504357d1da91434d75e86acde94bb10b"
-
-"@types/node@10.11.0":
-  version "10.11.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.11.0.tgz#ddd0d67a3b6c3810dd1a59e36675fa82de5e19ae"
 
 "@types/node@^6.0.46":
   version "6.0.114"
@@ -2477,13 +2475,6 @@ cosmiconfig@^5.0.6:
     js-yaml "^3.9.0"
     parse-json "^4.0.0"
 
-cp-cli@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/cp-cli/-/cp-cli-1.1.2.tgz#b24e1fdb8b07a27ce3879995c8c0c6d67caa8b86"
-  dependencies:
-    fs-extra "5.0.0"
-    yargs "11.0.0"
-
 cpr@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/cpr/-/cpr-3.0.1.tgz#b9a55038b7cd81a35c17b9761895bd8496aef1e5"
@@ -3782,14 +3773,6 @@ fs-access@^1.0.0:
   dependencies:
     null-check "^1.0.0"
 
-fs-extra@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-5.0.0.tgz#414d0110cdd06705734d055652c5411260c31abd"
-  dependencies:
-    graceful-fs "^4.1.2"
-    jsonfile "^4.0.0"
-    universalify "^0.1.0"
-
 fs-extra@^4.0.1, fs-extra@^4.0.2:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-4.0.3.tgz#0d852122e5bc5beb453fb028e9c0c9bf36340c94"
@@ -4595,9 +4578,10 @@ ionic@^4.5.0:
     update-notifier "^2.3.0"
     uuid "^3.2.1"
 
-ionicons@4.4.8:
-  version "4.4.8"
-  resolved "https://registry.yarnpkg.com/ionicons/-/ionicons-4.4.8.tgz#68982aa789eba3b47949d857ae458d10988a43bb"
+ionicons@4.5.5:
+  version "4.5.5"
+  resolved "https://registry.yarnpkg.com/ionicons/-/ionicons-4.5.5.tgz#b059958a54dd45cfa127acc0baf11503b8671e51"
+  integrity sha512-dIGI73XG6Fg2Ps77ry5Ywe36Pq7wUGkDkl0pBhC4uhsiyoW+oXe+pplmarXEnKEcB5fmlkRrBOxYYzZaoRiUGw==
 
 ionicons@~4.2.5:
   version "4.2.5"
