@@ -71,7 +71,7 @@
 		"@types/mongoose": "^5.3.7",
 		"@types/node": "^10.12.18",
 		"@types/socket.io-client": "^1.4.32",
-		"@types/stripe": "^6.19.1",
+		"@types/stripe": "^6.19.4",
 		"@types/uuid": "^3.4.4",
 		"codelyzer": "^4.5.0",
 		"concurrently": "^4.1.0",
