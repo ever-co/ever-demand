@@ -776,9 +776,10 @@
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.12.tgz#7e0ced251fa94c3bc2d1023d4b84b2992fa06376"
   integrity sha512-/kQvbVzdEpOq4tEWT79yAHSM4nH4xMlhJv2GrLVQt4Qmo8yYsPdioBM1QpN/2GX1wkfMnyXvdoftvLUr0LBj7Q==
 
-"@types/leaflet@^1.2.14":
-  version "1.2.14"
-  resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.2.14.tgz#912bcacdc2cfa62787573a27ca617ffb67f89614"
+"@types/leaflet@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.4.0.tgz#08caffafdad23fcdd6bbe3f91c25a0c688e4310e"
+  integrity sha512-ZA+g6XyK/00labaNCWhbhahAOwEf9X4v9cAB0ZBwWjGOj5ewPC8qcdN/M2VsIAfP699Yz3+E7zaaClxmRaf4BQ==
   dependencies:
     "@types/geojson" "*"
 
