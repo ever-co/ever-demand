@@ -1307,10 +1307,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/stripe@^6.19.1":
-  version "6.19.1"
-  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-6.19.1.tgz#62264970a4076ccec7daaef421eee8a593d469c3"
-  integrity sha512-VQjQpY+lhLsnG1rxRexoY3exfccf55pGcLIiw+fLKhyFzQJjIB21vP9NWVxVT37ZqZ2ir8BaFGJlINq28h/S4Q==
+"@types/stripe@^6.19.4":
+  version "6.19.4"
+  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-6.19.4.tgz#37b76cabfc8dd8db7dd352941f3e6877360ccba9"
+  integrity sha512-+oy8t6bPA68WTyBVAzi59NUwBOWj/lXqolbO0SuX22a306V6Ba9tqxIiO/alTop/V3VD7sKaUgHJ61vsoMDZGA==
   dependencies:
     "@types/node" "*"
 
