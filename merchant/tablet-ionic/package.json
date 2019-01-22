@@ -126,7 +126,7 @@
 		"@types/googlemaps": "3.30.4",
 		"@types/jasmine": "2.5.54",
 		"@types/jasminewd2": "2.0.3",
-		"@types/leaflet": "1.2.3",
+		"@types/leaflet": "1.4.0",
 		"@types/mongoose": "^5.2.17",
 		"@types/node": "6.0.90",
 		"@types/reflect-metadata": "^0.1.0",
