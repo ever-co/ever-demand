@@ -365,9 +365,10 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/local-notifications@~5.0.0-beta.17":
-  version "5.0.0-beta.17"
-  resolved "https://registry.yarnpkg.com/@ionic-native/local-notifications/-/local-notifications-5.0.0-beta.17.tgz#df2f43124074c0447863a88490cd5fd4b1fd3865"
+"@ionic-native/local-notifications@~5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/local-notifications/-/local-notifications-5.0.0.tgz#a67e825bbf73c268643baf8bc572d88ea335dd1b"
+  integrity sha512-lKdZ60rJncgCwwVeCYSfhHJGtrFUBqj9FkJpRcLUxeOZSxp9EVCN/ZGoGyeTlOKwunNBaw8a77hBZ7lbriBW6w==
   dependencies:
     "@types/cordova" latest
 
@@ -2477,13 +2478,6 @@ cosmiconfig@^5.0.6:
     js-yaml "^3.9.0"
     parse-json "^4.0.0"
 
-cp-cli@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/cp-cli/-/cp-cli-1.1.2.tgz#b24e1fdb8b07a27ce3879995c8c0c6d67caa8b86"
-  dependencies:
-    fs-extra "5.0.0"
-    yargs "11.0.0"
-
 cpr@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/cpr/-/cpr-3.0.1.tgz#b9a55038b7cd81a35c17b9761895bd8496aef1e5"
@@ -3781,14 +3775,6 @@ fs-access@^1.0.0:
   resolved "https://registry.yarnpkg.com/fs-access/-/fs-access-1.0.1.tgz#d6a87f262271cefebec30c553407fb995da8777a"
   dependencies:
     null-check "^1.0.0"
-
-fs-extra@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-5.0.0.tgz#414d0110cdd06705734d055652c5411260c31abd"
-  dependencies:
-    graceful-fs "^4.1.2"
-    jsonfile "^4.0.0"
-    universalify "^0.1.0"
 
 fs-extra@^4.0.1, fs-extra@^4.0.2:
   version "4.0.3"
