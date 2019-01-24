@@ -81,7 +81,7 @@
 		"cordova-open-native-settings": "^1.5.1",
 		"cordova-plugin-badge": "^0.8.7",
 		"cordova-plugin-device": "^2.0.2",
-		"cordova-plugin-email-composer": "^0.8.15",
+		"cordova-plugin-email-composer": "^0.9.2",
 		"cordova-plugin-geolocation": "^4.0.1",
 		"cordova-plugin-globalization": "^1.11.0",
 		"cordova-plugin-google-analytics": "^1.8.6",
