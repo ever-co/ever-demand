@@ -57,7 +57,7 @@
 		"@ionic-native/core": "4.7.0",
 		"@ionic-native/device": "^4.7.0",
 		"@ionic-native/email-composer": "^4.12.0",
-		"@ionic-native/file-transfer": "^4.7.0",
+		"@ionic-native/file-transfer": "^5.0.0",
 		"@ionic-native/globalization": "^4.7.0",
 		"@ionic-native/google-analytics": "^4.7.0",
 		"@ionic-native/intercom": "^4.7.0",
