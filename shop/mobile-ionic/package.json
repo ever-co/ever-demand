@@ -55,7 +55,7 @@
 		"@ionic-native/core": "~5.0.0-beta.17",
 		"@ionic-native/device": "~5.0.0-beta.17",
 		"@ionic-native/dialogs": "~5.0.0-beta.17",
-		"@ionic-native/geolocation": "~5.0.0-beta.17",
+		"@ionic-native/geolocation": "~5.0.0",
 		"@ionic-native/globalization": "~5.0.0-beta.17",
 		"@ionic-native/google-analytics": "~5.0.0-beta.17",
 		"@ionic-native/google-maps": "~5.0.0-beta.6",
