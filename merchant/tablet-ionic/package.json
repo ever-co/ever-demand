@@ -61,7 +61,7 @@
 		"@ionic-native/globalization": "^4.7.0",
 		"@ionic-native/google-analytics": "^4.7.0",
 		"@ionic-native/intercom": "^4.7.0",
-		"@ionic-native/mixpanel": "^4.7.0",
+		"@ionic-native/mixpanel": "^5.0.0",
 		"@ionic-native/network": "^4.7.0",
 		"@ionic-native/open-native-settings": "^4.7.0",
 		"@ionic-native/screen-orientation": "^4.7.0",
