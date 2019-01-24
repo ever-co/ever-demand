@@ -1360,9 +1360,10 @@ cordova-plugin-device@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/cordova-plugin-device/-/cordova-plugin-device-2.0.2.tgz#fc08f3722e67eef7b6c67bfc99a83df6add0baba"
 
-cordova-plugin-email-composer@^0.8.15:
-  version "0.8.15"
-  resolved "https://registry.yarnpkg.com/cordova-plugin-email-composer/-/cordova-plugin-email-composer-0.8.15.tgz#d952b5b588996915fb332f7f464812757f170688"
+cordova-plugin-email-composer@^0.9.2:
+  version "0.9.2"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-email-composer/-/cordova-plugin-email-composer-0.9.2.tgz#264c66d45679acf2781c2cec54e32b2c1facfdb8"
+  integrity sha512-w8eQZ6lbYWut13o/Cprixmacfyq5hds7DAjuTL34eQhyWWd/DA/o6ziiyY3So2ZOozeQ4DxQpyPN4BiqUKcyew==
 
 cordova-plugin-geolocation@^4.0.1:
   version "4.0.1"
