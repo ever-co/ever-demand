@@ -173,9 +173,12 @@
   version "4.12.2"
   resolved "https://registry.yarnpkg.com/@ionic-native/status-bar/-/status-bar-4.12.2.tgz#cd140592f2e3739a6f83872819ed5b440fc8fd85"
 
-"@ionic-native/vibration@^4.12.2":
-  version "4.12.2"
-  resolved "https://registry.yarnpkg.com/@ionic-native/vibration/-/vibration-4.12.2.tgz#fa735ff373f3c0332e3e6935dc7202c302fa401b"
+"@ionic-native/vibration@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/vibration/-/vibration-5.0.0.tgz#76c7b2051133daf5d1674e60658f28a2a3223daf"
+  integrity sha512-XIAfp3oeizseetvnYPAMZ0kK+nyh2i/0Vy0FJkcEGM0fCD36PZkyNpx1Ai1bk3/Ln3nTMZddoBZket1aTXetNA==
+  dependencies:
+    "@types/cordova" latest
 
 "@ionic/app-scripts@^3.2.0":
   version "3.2.0"
@@ -247,6 +250,11 @@
   resolved "https://registry.yarnpkg.com/@types/bson/-/bson-1.0.11.tgz#c95ad69bb0b3f5c33b4bb6cc86d86cafb273335c"
   dependencies:
     "@types/node" "*"
+
+"@types/cordova@latest":
+  version "0.0.34"
+  resolved "https://registry.yarnpkg.com/@types/cordova/-/cordova-0.0.34.tgz#ea7addf74ecec3d7629827a0c39e2c9addc73d04"
+  integrity sha1-6nrd907Ow9dimCegw54smt3HPQQ=
 
 "@types/d3-color@1.0.5":
   version "1.0.5"
