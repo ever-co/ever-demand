@@ -51,7 +51,7 @@
 		"@angular/pwa": "^0.11.0",
 		"@angular/router": "~6.1.1",
 		"@angular/service-worker": "^6.1.1",
-		"@ionic-native/call-number": "~5.0.0-beta.17",
+		"@ionic-native/call-number": "~5.0.0",
 		"@ionic-native/core": "~5.0.0-beta.17",
 		"@ionic-native/device": "~5.0.0-beta.17",
 		"@ionic-native/dialogs": "~5.0.0-beta.17",
