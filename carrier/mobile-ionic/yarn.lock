@@ -145,9 +145,12 @@
   version "4.12.2"
   resolved "https://registry.yarnpkg.com/@ionic-native/globalization/-/globalization-4.12.2.tgz#cbcc68a08a46238a49e9a7487c30070384d5fa9e"
 
-"@ionic-native/google-analytics@^4.12.2":
-  version "4.12.2"
-  resolved "https://registry.yarnpkg.com/@ionic-native/google-analytics/-/google-analytics-4.12.2.tgz#227d2767882a75a3310477b80f5b202094127ffe"
+"@ionic-native/google-analytics@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/google-analytics/-/google-analytics-5.0.0.tgz#844387f24961d9f83864045da53e2e38e1bddb3d"
+  integrity sha512-mYeP9QmHfjjJe3y5uHUz4atfR2EuRCf5TFRCyi+yoCs5WEwC4JbM7k4GxGyx6YY1MHqNDoUrDZu5F0NypqxsKg==
+  dependencies:
+    "@types/cordova" latest
 
 "@ionic-native/google-maps@^4.12.0":
   version "4.14.0"
@@ -247,6 +250,11 @@
   resolved "https://registry.yarnpkg.com/@types/bson/-/bson-1.0.11.tgz#c95ad69bb0b3f5c33b4bb6cc86d86cafb273335c"
   dependencies:
     "@types/node" "*"
+
+"@types/cordova@latest":
+  version "0.0.34"
+  resolved "https://registry.yarnpkg.com/@types/cordova/-/cordova-0.0.34.tgz#ea7addf74ecec3d7629827a0c39e2c9addc73d04"
+  integrity sha1-6nrd907Ow9dimCegw54smt3HPQQ=
 
 "@types/d3-color@1.0.5":
   version "1.0.5"
