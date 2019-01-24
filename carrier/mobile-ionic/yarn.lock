@@ -125,9 +125,12 @@
   version "4.12.2"
   resolved "https://registry.yarnpkg.com/@ionic-native/call-number/-/call-number-4.12.2.tgz#75fcbbcbab38c79152ba6b2e76019fadadb2e368"
 
-"@ionic-native/camera@^4.12.2":
-  version "4.12.2"
-  resolved "https://registry.yarnpkg.com/@ionic-native/camera/-/camera-4.12.2.tgz#8ac620b25208511d8d43f7dcfee47dd65fc87e6a"
+"@ionic-native/camera@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/camera/-/camera-5.0.0.tgz#4732b318ae57a6bb76c48364525c9cb27924d87a"
+  integrity sha512-KmWLIwJ9EDpA5IyuwgdhdXQDVpiTnep7tSM84Yt5O+t6kdjgPsF2zn4qo4k99Esf2H2KlAytCP31eswLtrnAJw==
+  dependencies:
+    "@types/cordova" latest
 
 "@ionic-native/core@^4.12.2":
   version "4.12.2"
@@ -247,6 +250,11 @@
   resolved "https://registry.yarnpkg.com/@types/bson/-/bson-1.0.11.tgz#c95ad69bb0b3f5c33b4bb6cc86d86cafb273335c"
   dependencies:
     "@types/node" "*"
+
+"@types/cordova@latest":
+  version "0.0.34"
+  resolved "https://registry.yarnpkg.com/@types/cordova/-/cordova-0.0.34.tgz#ea7addf74ecec3d7629827a0c39e2c9addc73d04"
+  integrity sha1-6nrd907Ow9dimCegw54smt3HPQQ=
 
 "@types/d3-color@1.0.5":
   version "1.0.5"
