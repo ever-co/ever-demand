@@ -371,9 +371,10 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/mixpanel@~5.0.0-beta.17":
-  version "5.0.0-beta.17"
-  resolved "https://registry.yarnpkg.com/@ionic-native/mixpanel/-/mixpanel-5.0.0-beta.17.tgz#b687c9a291e0cc8f522b8a45d6df853b8a33cc79"
+"@ionic-native/mixpanel@~5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/mixpanel/-/mixpanel-5.0.0.tgz#9354a04093d3e0ff0c7f123aea8a205c01a66d05"
+  integrity sha512-SqKHc5yCTJ2qnX1bk7GFcNQCpDzIqzg0+CNWptSkFPBxtais3qw07GYTASaEzQM1kjmPSPD++avkfWmUXT2CXg==
   dependencies:
     "@types/cordova" latest
 
@@ -2477,13 +2478,6 @@ cosmiconfig@^5.0.6:
     js-yaml "^3.9.0"
     parse-json "^4.0.0"
 
-cp-cli@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/cp-cli/-/cp-cli-1.1.2.tgz#b24e1fdb8b07a27ce3879995c8c0c6d67caa8b86"
-  dependencies:
-    fs-extra "5.0.0"
-    yargs "11.0.0"
-
 cpr@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/cpr/-/cpr-3.0.1.tgz#b9a55038b7cd81a35c17b9761895bd8496aef1e5"
@@ -3781,14 +3775,6 @@ fs-access@^1.0.0:
   resolved "https://registry.yarnpkg.com/fs-access/-/fs-access-1.0.1.tgz#d6a87f262271cefebec30c553407fb995da8777a"
   dependencies:
     null-check "^1.0.0"
-
-fs-extra@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-5.0.0.tgz#414d0110cdd06705734d055652c5411260c31abd"
-  dependencies:
-    graceful-fs "^4.1.2"
-    jsonfile "^4.0.0"
-    universalify "^0.1.0"
 
 fs-extra@^4.0.1, fs-extra@^4.0.2:
   version "4.0.3"
