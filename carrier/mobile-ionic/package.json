@@ -54,7 +54,7 @@
 		"@ionic-native/camera": "^4.12.2",
 		"@ionic-native/core": "^4.12.2",
 		"@ionic-native/device": "^4.12.2",
-		"@ionic-native/geolocation": "^4.12.2",
+		"@ionic-native/geolocation": "^5.0.0",
 		"@ionic-native/globalization": "^4.12.2",
 		"@ionic-native/google-analytics": "^4.12.2",
 		"@ionic-native/google-maps": "^4.12.0",
