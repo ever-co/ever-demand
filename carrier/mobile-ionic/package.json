@@ -51,7 +51,7 @@
 		"@angular/platform-browser": "5.2.10",
 		"@angular/platform-browser-dynamic": "5.2.10",
 		"@ionic-native/call-number": "^4.12.2",
-		"@ionic-native/camera": "^4.12.2",
+		"@ionic-native/camera": "^5.0.0",
 		"@ionic-native/core": "^4.12.2",
 		"@ionic-native/device": "^4.12.2",
 		"@ionic-native/geolocation": "^4.12.2",
