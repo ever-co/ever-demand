@@ -58,7 +58,7 @@
 		"@ionic-native/globalization": "^4.12.2",
 		"@ionic-native/google-analytics": "^4.12.2",
 		"@ionic-native/google-maps": "^4.12.0",
-		"@ionic-native/local-notifications": "^4.12.2",
+		"@ionic-native/local-notifications": "^5.0.0",
 		"@ionic-native/mixpanel": "^4.12.2",
 		"@ionic-native/network": "^4.12.2",
 		"@ionic-native/splash-screen": "4.12.2",
