@@ -153,9 +153,12 @@
   version "4.14.0"
   resolved "https://registry.yarnpkg.com/@ionic-native/google-maps/-/google-maps-4.14.0.tgz#40ea01bc66663bf3d385df273ceaa3d9b3ee731f"
 
-"@ionic-native/local-notifications@^4.12.2":
-  version "4.12.2"
-  resolved "https://registry.yarnpkg.com/@ionic-native/local-notifications/-/local-notifications-4.12.2.tgz#71eb8e1baff4e3b5004195d0cbacfd0a1ba22a5d"
+"@ionic-native/local-notifications@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/local-notifications/-/local-notifications-5.0.0.tgz#a67e825bbf73c268643baf8bc572d88ea335dd1b"
+  integrity sha512-lKdZ60rJncgCwwVeCYSfhHJGtrFUBqj9FkJpRcLUxeOZSxp9EVCN/ZGoGyeTlOKwunNBaw8a77hBZ7lbriBW6w==
+  dependencies:
+    "@types/cordova" latest
 
 "@ionic-native/mixpanel@^4.12.2":
   version "4.12.2"
@@ -247,6 +250,11 @@
   resolved "https://registry.yarnpkg.com/@types/bson/-/bson-1.0.11.tgz#c95ad69bb0b3f5c33b4bb6cc86d86cafb273335c"
   dependencies:
     "@types/node" "*"
+
+"@types/cordova@latest":
+  version "0.0.34"
+  resolved "https://registry.yarnpkg.com/@types/cordova/-/cordova-0.0.34.tgz#ea7addf74ecec3d7629827a0c39e2c9addc73d04"
+  integrity sha1-6nrd907Ow9dimCegw54smt3HPQQ=
 
 "@types/d3-color@1.0.5":
   version "1.0.5"
