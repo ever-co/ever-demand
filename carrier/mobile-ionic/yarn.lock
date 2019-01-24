@@ -137,9 +137,12 @@
   version "4.12.2"
   resolved "https://registry.yarnpkg.com/@ionic-native/device/-/device-4.12.2.tgz#e57ade40d67908bf09e9820d30f9e085d1af490c"
 
-"@ionic-native/geolocation@^4.12.2":
-  version "4.12.2"
-  resolved "https://registry.yarnpkg.com/@ionic-native/geolocation/-/geolocation-4.12.2.tgz#69090a615dc1c59a5c9b3b26adc222842dc812fc"
+"@ionic-native/geolocation@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/geolocation/-/geolocation-5.0.0.tgz#8516d8e4b0b9941fe94ab0f02b9bf463cf634b52"
+  integrity sha512-gU3GNCEJgh+2KpK0Tg9l85HDMRkUWO9FAszF4UDnqAUihTQGCM0Nl+hpmEQowkM9+Him8FJ83rT82pPmnGERCA==
+  dependencies:
+    "@types/cordova" latest
 
 "@ionic-native/globalization@^4.12.2":
   version "4.12.2"
@@ -247,6 +250,11 @@
   resolved "https://registry.yarnpkg.com/@types/bson/-/bson-1.0.11.tgz#c95ad69bb0b3f5c33b4bb6cc86d86cafb273335c"
   dependencies:
     "@types/node" "*"
+
+"@types/cordova@latest":
+  version "0.0.34"
+  resolved "https://registry.yarnpkg.com/@types/cordova/-/cordova-0.0.34.tgz#ea7addf74ecec3d7629827a0c39e2c9addc73d04"
+  integrity sha1-6nrd907Ow9dimCegw54smt3HPQQ=
 
 "@types/d3-color@1.0.5":
   version "1.0.5"
