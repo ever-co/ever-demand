@@ -162,7 +162,7 @@
 		"karma-jasmine": "~1.1.1",
 		"karma-jasmine-html-reporter": "^0.2.2",
 		"protractor": "~5.4.0",
-		"ts-node": "~7.0.0",
+		"ts-node": "~8.0.2",
 		"tslint": "~5.11.0",
 		"typescript": "~2.9.2",
 		"webpack-bundle-analyzer": "^2.13.1"
