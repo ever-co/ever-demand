@@ -181,7 +181,7 @@
 		"protractor": "^5.4.2",
 		"rimraf": "^2.6.3",
 		"stylelint": "^9.9.0",
-		"ts-node": "^7.0.1",
+		"ts-node": "^8.0.2",
 		"tslint": "^5.12.1",
 		"tslint-language-service": "^0.9.9",
 		"typescript": "~3.1.6"
