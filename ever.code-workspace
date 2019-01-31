@@ -19,5 +19,7 @@
 			"path": "shop"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"search.usePCRE2": true
+	}
 }

@@ -226,6 +226,10 @@ export class OrdersService extends DBService<Order>
 		if (finishedProcessingStatuses.includes(status)) {
 			updateObj.finishedProcessingTime = Date.now();
 		}
+		if (status === OrderWarehouseStatus.GivenToCustomer) {
+			updateObj.isPaid = true;
+			updateObj.finishedProcessingTime = Date.now();
+		}
 		return this.update(orderId, updateObj);
 	}
 

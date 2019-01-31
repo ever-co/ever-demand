@@ -6,6 +6,7 @@ import * as bcrypt from 'bcrypt';
 import { injectable, interfaces } from 'inversify';
 import { RawObject } from '@pyro/db/db-raw-object';
 
+// have to combine the two imports
 import * as jwt from 'jsonwebtoken';
 import { JsonWebTokenError } from 'jsonwebtoken';
 

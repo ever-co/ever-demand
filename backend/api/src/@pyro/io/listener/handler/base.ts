@@ -27,13 +27,13 @@ export abstract class BaseListenerHandler<T> implements IListenerHandler<T> {
 		this.serializer = getListenerSerializer(_listener);
 	}
 
-	public handle(): void {
+	handle(): void {
 		this._socket.on(this._listener.name, (...args: any[]) => {
 			this.handleRequest(args);
 		});
 	}
 
-	public abstract handleRequest(args: any[]): void;
+	abstract handleRequest(args: any[]): void;
 
 	protected baseLogDetails = {
 		socketId: this._socket.id,

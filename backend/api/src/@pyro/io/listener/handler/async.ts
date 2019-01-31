@@ -17,7 +17,7 @@ export class AsyncListenerHandler<T> extends BaseListenerHandler<T>
 		super(router, listener, socket, log);
 	}
 
-	public async handleRequest(_args: any[]): Promise<void> {
+	async handleRequest(_args: any[]): Promise<void> {
 		const callId = uuid();
 
 		const callback: (err: Error | null, data?) => void = _.last(_args);

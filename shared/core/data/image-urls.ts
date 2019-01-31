@@ -100,7 +100,8 @@ export const images = {
 		'https://images.pexels.com/photos/299352/pexels-photo-299352.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350',
 		'https://images.pexels.com/photos/370015/pexels-photo-370015.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350',
 		'https://images.pexels.com/photos/764925/pexels-photo-764925.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350',
-		'https://images.pexels.com/photos/56014/pizza-pizza-service-italian-eat-56014.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350',
+		'https://images.pexels.com/photos/56014/pizza-pizza-' +
+			'service-italian-eat-56014.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350',
 		'https://images.pexels.com/photos/2215/food-salad-healthy-vegetables.jpg?auto=compress&cs=tinysrgb&dpr=2&h=350',
 		'https://images.pexels.com/photos/257816/pexels-photo-257816.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350'
 	],

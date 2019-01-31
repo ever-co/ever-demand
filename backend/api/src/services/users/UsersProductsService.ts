@@ -13,8 +13,7 @@ import {
 	share,
 	switchMap
 } from 'rxjs/operators';
-import { combineLatest, of, throwError } from 'rxjs';
-import { Observable } from 'rxjs';
+import { combineLatest, of, throwError, Observable } from 'rxjs';
 
 @injectable()
 @routerName('user-products')
@@ -58,10 +57,7 @@ export class UsersProductsService implements IUserProductsRouter, IService {
 	 * @memberof UsersProductsService
 	 */
 	@observableListener()
-	public getPlaceholder(
-		userId: string,
-		deviceId: string
-	): Observable<string> {
+	getPlaceholder(userId: string, deviceId: string): Observable<string> {
 		return this.devicesService.get(deviceId).pipe(
 			exhaustMap((device) => {
 				if (device === null) {

@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import Order from '../entities/Order';
 import Product from '../entities/Product';
+import DeliveryType from '../enums/DeliveryType';
 
 export interface IWarehouseOrdersRouterGetOptions {
 	populateWarehouse?: boolean;
@@ -22,6 +23,7 @@ export interface IOrderCreateInput {
 	warehouseId: string;
 	products: IOrderCreateInputProduct[];
 
+	orderType?: DeliveryType;
 	options?: IWarehouseOrdersRouterCreateOptions;
 }
 

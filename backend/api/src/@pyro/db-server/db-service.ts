@@ -34,7 +34,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 		this.existence = new Subject<ExistenceEvent<T>>();
 	}
 
-	public get(id: T['id']): Observable<T | null> {
+	get(id: T['id']): Observable<T | null> {
 		const callId = uuid();
 
 		this.log.info({ objectId: id, callId }, '.get(id) called');
@@ -72,7 +72,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 		);
 	}
 
-	public async getCurrent(id: T['id']): Promise<T | null> {
+	async getCurrent(id: T['id']): Promise<T | null> {
 		const callId = uuid();
 
 		this.log.info({ objectId: id, callId }, '.getCurrent(id) called');
@@ -84,7 +84,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 		return this.parse(obj as RawObject<T>);
 	}
 
-	public getMultiple(ids: Array<T['id']>): Observable<T[]> {
+	getMultiple(ids: Array<T['id']>): Observable<T[]> {
 		const callId = uuid();
 
 		this.log.info({ objectIds: ids, callId }, '.getMultiple(ids) called');
@@ -114,7 +114,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 		);
 	}
 
-	public async getCurrentMultiple(ids: Array<T['id']>): Promise<T[]> {
+	async getCurrentMultiple(ids: Array<T['id']>): Promise<T[]> {
 		const callId = uuid();
 
 		this.log.info(

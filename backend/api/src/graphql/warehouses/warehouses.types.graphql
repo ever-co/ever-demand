@@ -137,6 +137,12 @@ type Query {
 	hasExistingStores: Boolean!
 
 	getCountOfMerchants: Int!
+	getAllStores: [Warehouse!]!
+
+	getMerchantsBuyName(
+		searchName: String!
+		geoLocation: GeoLocationFindInput
+	): [Warehouse]!
 }
 
 type ExistingCustomersByStores {

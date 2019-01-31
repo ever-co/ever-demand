@@ -14,8 +14,13 @@ import { UsersService } from '../../services/users';
 import { GeoLocationsWarehousesService } from '../../services/geo-locations';
 import { first } from 'rxjs/operators';
 import { IWarehouseRegistrationInput } from '@modules/server.common/routers/IWarehouseRouter';
-import { IGeoLocationCreateObject } from '@modules/server.common/interfaces/IGeoLocation';
+import IGeoLocation, {
+	IGeoLocationCreateObject,
+	ILocation
+} from '@modules/server.common/interfaces/IGeoLocation';
 import User from '@modules/server.common/entities/User';
+import Utils from '@modules/server.common/utils';
+import GeoLocation from '@modules/server.common/entities/GeoLocation';
 
 @Resolver('Warehouse')
 export class WarehouseResolver {
@@ -169,6 +174,11 @@ export class WarehouseResolver {
 			.toPromise();
 	}
 
+	@Query()
+	async getAllStores() {
+		return this._warehousesService.find({ isDeleted: { $eq: false } });
+	}
+
 	@Query('warehouses')
 	async getWarehouses(_, { findInput, pagingOptions = {} }) {
 		if (!pagingOptions || (pagingOptions && !pagingOptions['sort'])) {
@@ -196,6 +206,42 @@ export class WarehouseResolver {
 		return this._warehousesService.Model.find({ isDeleted: { $eq: false } })
 			.countDocuments()
 			.exec();
+	}
+
+	@Query()
+	async getMerchantsBuyName(
+		_,
+		{
+			searchName,
+			geoLocation
+		}: { searchName: string; geoLocation: IGeoLocation }
+	) {
+		const count = await this._warehousesService.Model.find({
+			name: { $regex: searchName, $options: 'i' }
+		})
+			.countDocuments()
+			.exec();
+
+		let merchants = await this._warehousesService.getMerchants(
+			{ name: { $regex: searchName, $options: 'i' } },
+			{ skip: 0, limit: count }
+		);
+
+		if (geoLocation) {
+			merchants = merchants.sort(
+				(m1, m2) =>
+					Utils.getDistance(
+						new GeoLocation(m1.geoLocation),
+						new GeoLocation(geoLocation)
+					) -
+					Utils.getDistance(
+						new GeoLocation(m2.geoLocation),
+						new GeoLocation(geoLocation)
+					)
+			);
+		}
+
+		return merchants.map((m) => new Warehouse(m));
 	}
 
 	@Mutation()

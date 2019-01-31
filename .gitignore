@@ -40,3 +40,6 @@ testem.log
 .DS_Store
 Thumbs.db
 /admin/website-angular/yarn-error.log
+
+yarn.lock
+/yarn-error.log

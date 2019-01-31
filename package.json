@@ -46,32 +46,32 @@
 	},
 	"resolutions": {},
 	"dependencies": {
-		"@angular/core": "^7.1.4",
+		"@angular/core": "^7.2.1",
 		"@captemulation/get-parameter-names": "^1.2.0",
 		"@nestjs/typeorm": "^5.2.2",
 		"angular2-logger": "^0.7.0",
-		"npm": "^6.5.0",
+		"npm": "^6.6.0",
 		"rxjs": "^6.3.3",
 		"rxjs-compat": "^6.3.3",
 		"socket.io-client": "^2.2.0",
-		"stripe": "^6.20.0",
-		"typeorm": "^0.2.11",
+		"stripe": "^6.20.1",
+		"typeorm": "^0.2.12",
 		"uuid": "^3.3.2"
 	},
 	"devDependencies": {
-		"@types/async": "^2.0.50",
+		"@types/async": "^2.4.0",
 		"@types/d3-color": "^1.2.1",
-		"@types/faker": "^4.1.4",
+		"@types/faker": "^4.1.5",
 		"@types/googlemaps": "^3.30.16",
-		"@types/jasmine": "^3.3.5",
+		"@types/jasmine": "^3.3.7",
 		"@types/jasminewd2": "^2.0.6",
-		"@types/jest": "^23.3.12",
-		"@types/leaflet": "^1.2.14",
-		"@types/mongodb": "^3.1.18",
-		"@types/mongoose": "^5.3.7",
+		"@types/jest": "^23.3.13",
+		"@types/leaflet": "^1.4.0",
+		"@types/mongodb": "^3.1.19",
+		"@types/mongoose": "^5.3.9",
 		"@types/node": "^10.12.18",
 		"@types/socket.io-client": "^1.4.32",
-		"@types/stripe": "^6.19.1",
+		"@types/stripe": "^6.19.4",
 		"@types/uuid": "^3.4.4",
 		"codelyzer": "^4.5.0",
 		"concurrently": "^4.1.0",
@@ -84,18 +84,18 @@
 		"karma-coverage-istanbul-reporter": "^2.0.4",
 		"karma-jasmine": "^2.0.1",
 		"karma-jasmine-html-reporter": "^1.4.0",
-		"lerna": "^3.8.5",
+		"lerna": "^3.10.6",
 		"lerna-changelog": "^0.8.2",
-		"lighthouse": "^4.0.0-alpha.2-3.2.1",
+		"lighthouse": "^4.0.0",
 		"lint-staged": "^8.1.0",
 		"npm-check-updates": "^2.15.0",
-		"prettier": "^1.15.3",
+		"prettier": "^1.16.1",
 		"prettier-tslint": "^0.4.2",
 		"pretty-quick": "^1.10.0",
-		"tslint": "^5.12.0",
+		"tslint": "^5.12.1",
 		"tslint-config-prettier": "^1.17.0",
 		"rxjs-tslint": "0.1.5",
-		"typescript": "^2.9.2"
+		"typescript": "~3.1.6"
 	},
 	"husky": {
 		"hooks": {
@@ -103,7 +103,7 @@
 		}
 	},
 	"engines": {
-		"node": ">=10.14.2",
-		"yarn": ">=1.7.0"
+		"node": ">=10.15.0",
+		"yarn": ">=1.13.0"
 	}
 }

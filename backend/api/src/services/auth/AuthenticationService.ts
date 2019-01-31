@@ -7,9 +7,17 @@ import { WarehousesService } from '../warehouses';
 import { CarriersService } from '../carriers';
 import { env } from '../../env';
 
+const jwtSecret = env.JWT_SECRET;
+
+if (jwtSecret === 'default') {
+	console.log(
+		'Warning: default JWT_SECRET used. Please add your own to config!'
+	);
+}
+
 export const createJwtData = {
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-	secretOrKey: env.JWT_SECRET
+	secretOrKey: jwtSecret
 };
 
 export interface JwtPayload {

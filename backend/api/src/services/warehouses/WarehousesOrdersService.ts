@@ -196,6 +196,7 @@ export class WarehousesOrdersService
 		warehouseId,
 		userId,
 		products,
+		orderType,
 		options
 	}: IOrderCreateInput): Promise<Order> {
 		if (!options) {
@@ -270,6 +271,7 @@ export class WarehousesOrdersService
 			products: orderProducts,
 			warehouse: warehouseId,
 			orderNumber: await this.getNextOrderNumber(warehouseId),
+			orderType,
 			...(options.autoConfirm ? { isConfirmed: true } : {})
 		});
 
@@ -542,7 +544,7 @@ export function getStoreOrdersFingObj(storeId: string, status: string) {
 				},
 				{
 					warehouseStatus: {
-						$lt: OrderWarehouseStatus.AllocationFailed
+						$lt: OrderWarehouseStatus.GivenToCustomer
 					}
 				},
 				{
