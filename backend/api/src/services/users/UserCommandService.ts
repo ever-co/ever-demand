@@ -10,6 +10,22 @@ import { UsersService } from './UsersService';
 import IService from 'services/IService';
 
 /**
+ * AboutUs Command
+ * In this experiment, we assume that text of about us could depend on userId and his device :)
+ * E.g. to user A we could respond "We are Ever!", to user B we could respond "We are Ever Platform!", etc.
+ *
+ * @export
+ * @class GetAboutUsCommand
+ * @implements {ICommand}
+ */
+export class GetAboutUsCommand implements ICommand {
+	constructor(
+		public readonly userId: string,
+		public readonly deviceId: string
+	) {}
+}
+
+/**
  * CQRS experimental integration
  * This service basically just listen on 'userCommandService' and execute command 'GetAboutUsCommand'
  *
@@ -28,22 +44,6 @@ export class UserCommandService implements IService {
 			new GetAboutUsCommand(userId, deviceId)
 		);
 	}
-}
-
-/**
- * AboutUs Command
- * In this experiment, we assume that text of about us could depend on userId and his device :)
- * E.g. to user A we could respond "We are Ever!", to user B we could respond "We are Ever Platform!", etc.
- *
- * @export
- * @class GetAboutUsCommand
- * @implements {ICommand}
- */
-export class GetAboutUsCommand implements ICommand {
-	constructor(
-		public readonly userId: string,
-		public readonly deviceId: string
-	) {}
 }
 
 /**

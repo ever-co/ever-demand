@@ -38,11 +38,11 @@ install:
 matrix:
     include:
         - env: PROJECT=backend/api
-        - env: PROJECT=admin/website-angular
-        - env: PROJECT=carrier/mobile-ionic
-        - env: PROJECT=shop/mobile-ionic
-        - env: PROJECT=shop/website-angular
-        - env: PROJECT=merchant/tablet-ionic
+        # - env: PROJECT=admin/website-angular
+        # - env: PROJECT=carrier/mobile-ionic
+        # - env: PROJECT=shop/mobile-ionic
+        # - env: PROJECT=shop/website-angular
+        # - env: PROJECT=merchant/tablet-ionic
 
 before_script:
     - cd $PROJECT

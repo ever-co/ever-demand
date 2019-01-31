@@ -7,7 +7,6 @@ import Warehouse from '../../modules/server.common/entities/Warehouse';
 import { default as IWarehouse } from '../../modules/server.common/interfaces/IWarehouse';
 import { IGeoLocationCreateObject } from '@modules/server.common/interfaces/IGeoLocation';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 import IWarehouseRouter, {
 	IWarehouseRegistrationInput
 } from '../../modules/server.common/routers/IWarehouseRouter';
@@ -18,7 +17,7 @@ import {
 	serialization
 } from '@pyro/io';
 import IService from '../IService';
-import { concat, exhaustMap, tap, first, map } from 'rxjs/operators';
+import { concat, exhaustMap, tap, first, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { DBService } from '@pyro/db-server';
 import { IWarehouseLoginResponse } from '@modules/server.common/routers/IWarehouseRouter';

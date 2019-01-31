@@ -1,11 +1,13 @@
 import { cleanEnv, num, port, str, ValidatorSpec, bool } from 'envalid';
 
+export type Environments = 'production' | 'development' | 'test';
+
 export type Env = Readonly<{
 	isDev: boolean;
 	isTest: boolean;
 	isProd: boolean;
 
-	NODE_ENV: 'production' | 'development' | 'test';
+	NODE_ENV: Environments;
 
 	WEB_CONCURRENCY: number;
 	WEB_MEMORY: number;
@@ -58,6 +60,10 @@ export type Env = Readonly<{
 	IP_STACK_API_KEY?: string;
 
 	LOG_LEVEL?: string;
+
+	ENGINE_API_KEY?: string;
+
+	MAX_SOCKETS?: number;
 }>;
 
 export const env: Env = cleanEnv(
@@ -71,61 +77,65 @@ export const env: Env = cleanEnv(
 		WEB_CONCURRENCY: num({ default: 1 }),
 		WEB_MEMORY: num({ default: 2048 }),
 
-		HTTPSPORT: port(),
-		HTTPPORT: port(),
-		GQLPORT: port(),
-		GQLPORT_SUBSCRIPTIONS: port(),
+		HTTPSPORT: port({ default: 5501 }),
+		HTTPPORT: port({ default: 5500 }),
+		GQLPORT: port({ default: 5555 }),
+		GQLPORT_SUBSCRIPTIONS: port({ default: 5050 }),
 
-		HTTPS_CERT_PATH: str(),
-		HTTPS_KEY_PATH: str(),
+		HTTPS_CERT_PATH: str({ default: 'certificates/https/cert.pem' }),
+		HTTPS_KEY_PATH: str({ default: 'certificates/https/key.pem' }),
 
-		LOGS_PATH: str(),
+		LOGS_PATH: str({ default: './tmp/logs' }),
 
-		DB_URI: str(),
-		TESTING_DB_URI: str(),
+		DB_URI: str({ default: 'mongodb://localhost/ever_development' }),
+		TESTING_DB_URI: str({ default: 'mongodb://localhost/ever_testing' }),
 
-		STRIPE_SECRET_KEY: str(),
+		STRIPE_SECRET_KEY: str({ default: '' }),
 
-		URBAN_AIRSHIP_KEY: str(),
-		URBAN_AIRSHIP_SECRET: str(),
+		URBAN_AIRSHIP_KEY: str({ default: '' }),
+		URBAN_AIRSHIP_SECRET: str({ default: '' }),
 
-		AWS_ACCESS_KEY_ID: str(),
-		AWS_SECRET_ACCESS_KEY: str(),
+		AWS_ACCESS_KEY_ID: str({ default: '' }),
+		AWS_SECRET_ACCESS_KEY: str({ default: '' }),
 
-		KEYMETRICS_MACHINE_NAME: str(),
-		KEYMETRICS_SECRET_KEY: str(),
-		KEYMETRICS_PUBLIC_KEY: str(),
+		KEYMETRICS_MACHINE_NAME: str({ default: '' }),
+		KEYMETRICS_SECRET_KEY: str({ default: '' }),
+		KEYMETRICS_PUBLIC_KEY: str({ default: '' }),
 
-		GOOGLE_APP_ID: str(),
-		GOOGLE_APP_SECRET: str(),
+		GOOGLE_APP_ID: str({ default: '' }),
+		GOOGLE_APP_SECRET: str({ default: '' }),
 
-		FACEBOOK_APP_ID: str(),
-		FACEBOOK_APP_SECRET: str(),
+		FACEBOOK_APP_ID: str({ default: '' }),
+		FACEBOOK_APP_SECRET: str({ default: '' }),
 
-		JWT_SECRET: str(),
+		JWT_SECRET: str({ default: 'default' }),
 
 		ADMIN_PASSWORD_BCRYPT_SALT_ROUNDS: num({
 			desc: 'Used for passwords encryption, recommended value: 12',
 			docs:
-				'https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt'
+				'https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt',
+			default: 12
 		}),
 
 		WAREHOUSE_PASSWORD_BCRYPT_SALT_ROUNDS: num({
 			desc: 'Used for passwords encryption, recommended value: 12',
 			docs:
-				'https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt'
+				'https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt',
+			default: 12
 		}),
 
 		CARRIER_PASSWORD_BCRYPT_SALT_ROUNDS: num({
 			desc: 'Used for passwords encryption, recommended value: 12',
 			docs:
-				'https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt'
+				'https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt',
+			default: 12
 		}),
 
 		USER_PASSWORD_BCRYPT_SALT_ROUNDS: num({
 			desc: 'Used for passwords encryption, recommended value: 10',
 			docs:
-				'https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt'
+				'https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt',
+			default: 10
 		}),
 
 		SETTING_INVITES_ENABLED: bool({ default: false }),
@@ -133,13 +143,19 @@ export const env: Env = cleanEnv(
 
 		FAKE_INVITE_CODE: num({ default: 0 }),
 
-		ARCGIS_CLIENT_ID: str(),
-		ARCGIS_CLIENT_SECRET: str(),
+		ARCGIS_CLIENT_ID: str({ default: '' }),
+		ARCGIS_CLIENT_SECRET: str({ default: '' }),
 		IP_STACK_API_KEY: str({ default: '' }),
 		LOG_LEVEL: str({
 			choices: ['trace', 'debug', 'info', 'warn', 'error', 'fatal'],
 			default: 'error'
-		})
+		}),
+		ENGINE_API_KEY: str({
+			desc:
+				'Apollo Engine Key (optional, see https://www.apollographql.com/docs/platform/schema-registry)',
+			default: ''
+		}),
+		MAX_SOCKETS: num({ default: Infinity })
 	},
 	{ strict: true, dotEnvPath: __dirname + '/../.env' }
 );

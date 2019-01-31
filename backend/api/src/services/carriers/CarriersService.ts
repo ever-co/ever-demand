@@ -3,7 +3,6 @@ import CarrierStatus from '../../modules/server.common/enums/CarrierStatus';
 import Carrier from '../../modules/server.common/entities/Carrier';
 import { createEverLogger } from '../../helpers/Log';
 import { DBService } from '@pyro/db-server';
-import { Observable } from 'rxjs';
 import { inject, injectable } from 'inversify';
 import ICarrierRouter, {
 	ICarrierLoginResponse,
@@ -18,7 +17,7 @@ import {
 import IService from '../IService';
 import GeoLocation from '../../modules/server.common/entities/GeoLocation';
 import IGeoLocation from '../../modules/server.common/interfaces/IGeoLocation';
-import { concat, of } from 'rxjs';
+import { concat, of, Observable } from 'rxjs';
 import { exhaustMap, filter, first, map, switchMap } from 'rxjs/operators';
 import { env } from '../../env';
 import { AuthService, AuthServiceFactory } from '../auth';
@@ -48,7 +47,7 @@ export class CarriersService extends DBService<Carrier>
 	}
 
 	@observableListener()
-	public get(id: Carrier['id']) {
+	get(id: Carrier['id']) {
 		return super.get(id).pipe(
 			map(async (carrier) => {
 				await this.throwIfNotExists(id);
@@ -61,7 +60,7 @@ export class CarriersService extends DBService<Carrier>
 	}
 
 	@observableListener()
-	public getAllActive(): Observable<Carrier[]> {
+	getAllActive(): Observable<Carrier[]> {
 		return concat(of(null), this.existence).pipe(
 			exhaustMap(() => this._getAllActive())
 		);
@@ -184,7 +183,7 @@ export class CarriersService extends DBService<Carrier>
 		}
 	}
 
-	public async getCarriers(findInput, pagingOptions: IPagingOptions) {
+	async getCarriers(findInput, pagingOptions: IPagingOptions) {
 		const sortObj = {};
 		if (pagingOptions.sort) {
 			sortObj[pagingOptions.sort.field] = pagingOptions.sort.sortBy;

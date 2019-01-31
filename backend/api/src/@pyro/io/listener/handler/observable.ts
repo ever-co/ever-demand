@@ -16,7 +16,7 @@ export class ObservableListenerHandler<T> extends BaseListenerHandler<T>
 		super(router, listener, socket, log);
 	}
 
-	public async handleRequest(_args: any[]): Promise<void> {
+	async handleRequest(_args: any[]): Promise<void> {
 		const callId: string = _.last(_args);
 
 		const args: any[] = this.serializer(_.initial(_args));

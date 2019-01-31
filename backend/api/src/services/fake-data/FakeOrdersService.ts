@@ -14,15 +14,15 @@ export class FakeOrdersService {
 	getOrderRaw(
 		orderNumber: number,
 		storeId: string,
+		storeCreatedAt: Date,
 		carrierId: string,
 		customers: User[],
-		products: Product[],
-		store: Warehouse
+		products: Product[]
 	) {
 		this._orderNumber = orderNumber;
 		this._storeId = storeId;
 		this._carrierId = carrierId;
-		this._orderCreatedAt = this.getOrderDate(store.createdAt);
+		this._orderCreatedAt = this.getOrderDate(storeCreatedAt);
 
 		switch (true) {
 			case orderNumber <= 25:
@@ -82,15 +82,15 @@ export class FakeOrdersService {
 	}
 
 	getOrderDate(startDate: Date): Date {
-		let now = new Date();
+		const now = new Date();
 
-		let orderYear = _.random(startDate.getFullYear(), now.getFullYear());
-		let orderMonth = _.random(11);
-		let orderDate = _.random(31);
-		let orderHours = _.random(23);
-		let orderMinutes = _.random(59);
+		const orderYear = _.random(startDate.getFullYear(), now.getFullYear());
+		const orderMonth = _.random(11);
+		const orderDate = _.random(31);
+		const orderHours = _.random(23);
+		const orderMinutes = _.random(59);
 
-		let orderCreatedAt = new Date(
+		const orderCreatedAt = new Date(
 			orderYear,
 			orderMonth,
 			orderDate,
@@ -99,7 +99,7 @@ export class FakeOrdersService {
 		);
 
 		if (orderCreatedAt < startDate || orderCreatedAt > now) {
-			let diff = now.getTime() - startDate.getTime();
+			const diff = now.getTime() - startDate.getTime();
 			orderCreatedAt.setTime(startDate.getTime() + _.random(diff));
 		}
 

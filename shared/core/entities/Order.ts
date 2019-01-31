@@ -25,6 +25,7 @@ import OrderStatus from '../enums/OrderStatus';
 import ILanguage from '../interfaces/ILanguage';
 import { Entity, Column } from 'typeorm';
 import IOrderProduct from '../interfaces/IOrderProduct';
+import DeliveryType from '../enums/DeliveryType';
 
 /**
  * Customer Order (for some products or services)
@@ -255,6 +256,16 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 	@Types.Number()
 	@Column()
 	orderNumber: number;
+
+	/**
+	 * Type of the order: Delivery or Takeaway
+	 *
+	 * @type {DeliveryType}
+	 * @memberof Order
+	 */
+	@Types.Number(DeliveryType.Delivery)
+	@Column()
+	orderType: DeliveryType;
 
 	get carrierId(): string | null {
 		if (this.carrier == null) {

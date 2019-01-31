@@ -37,9 +37,9 @@ import { AdminsModule } from './graphql/admin/admins.module';
 import { DataModule } from './graphql/data/data.module';
 import { CarriersOrdersModule } from './graphql/carriers-orders/carriers-orders.module';
 import { GeoLocationOrdersModule } from './graphql/geo-locations/orders/geo-location-orders.module';
-import { ApolloServer } from 'apollo-server-express';
+import { GeoLocationMerchantsModule } from './graphql/geo-locations/merchants/geo-location-merchants.module';
+import { ApolloServer, makeExecutableSchema } from 'apollo-server-express';
 import { fileLoader, mergeTypes } from 'merge-graphql-schemas';
-import { makeExecutableSchema } from 'apollo-server-express';
 import { GetAboutUsHandler } from './services/users';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServicesModule } from './services/services.module';
@@ -108,7 +108,8 @@ const entities = ServicesApp.getEntities();
 		WarehousesOrdersModule,
 		WarehousesCarriersModule,
 		InvitesRequestsModule,
-		GeoLocationOrdersModule
+		GeoLocationOrdersModule,
+		GeoLocationMerchantsModule
 	]
 })
 export class ApplicationModule implements NestModule, OnModuleInit {

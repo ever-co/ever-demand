@@ -350,7 +350,7 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 		defaultLng: number,
 		defaultLat: number
 	): IGeoLocationCreateObject {
-		return {
+		const GeoLocation: IGeoLocationCreateObject = {
 			countryId: faker.random.number(Country.ZW) as Country,
 			city: faker.address.city(),
 			house: houseNumber,
@@ -359,6 +359,7 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 				coordinates: [defaultLng, defaultLat]
 			},
 			streetAddress: faker.address.streetAddress()
-		} as IGeoLocationCreateObject;
+		};
+		return GeoLocation;
 	}
 }

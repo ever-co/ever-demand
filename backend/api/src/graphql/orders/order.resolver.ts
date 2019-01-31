@@ -129,7 +129,6 @@ export class OrderResolver {
 	) => {
 		const orders = [];
 
-		// for (let orderNumber = 1; orderNumber <= 100; orderNumber += 1) {
 		for (let orderNumber = 1; orderNumber <= 30; orderNumber += 1) {
 			const orderStore = stores[_.random(stores.length - 1)];
 
@@ -168,7 +167,6 @@ export class OrderResolver {
 			OrderCarrierStatus.ClientRefuseTakingOrder
 		];
 
-		// for (let i = 1; i <= 30; i += 1) {
 		for (let i = 1; i <= 12; i += 1) {
 			const orderStore = stores[_.random(stores.length - 1)];
 
@@ -296,7 +294,7 @@ export class OrderResolver {
 	}
 
 	@Query()
-	async addTakenOrders(_, { carrierIds }: { carrierIds: string[] }) {
+	async addTakenOrders(_context, { carrierIds }: { carrierIds: string[] }) {
 		const commonOptionsFlag = { isDeleted: { $eq: false } };
 
 		const stores: Warehouse[] = await this._warehousesService.find(
@@ -428,16 +426,17 @@ export class OrderResolver {
 	}
 
 	@Query()
-	async generateRandomOrdersPerStore(
-		_,
-		{ ordersLimit }: { ordersLimit: number }
-	): Promise<{ error: boolean; message: string }> {
+	async generateRandomOrdersCurrentStore(
+		_context,
+		{
+			storeId,
+			storeCreatedAt,
+			ordersLimit
+		}: { storeId: string; storeCreatedAt: Date; ordersLimit: number }
+	) {
 		const commonOptionsFlag = { isDeleted: { $eq: false } };
 
 		const customers: User[] = await this._usersService.find(
-			commonOptionsFlag
-		);
-		const stores: Warehouse[] = await this._warehousesService.find(
 			commonOptionsFlag
 		);
 		const carriers: Carrier[] = await this._carriersService.find(
@@ -450,34 +449,32 @@ export class OrderResolver {
 		let response = { error: false, message: null };
 
 		try {
-			for (const store of stores) {
-				const storeId = store.id;
-				const currentStoreOrders = [];
+			const currentStoreOrders = [];
+			let storeCreatedDate = new Date(storeCreatedAt);
 
-				for (
-					let orderNumber = 1;
-					orderNumber <= ordersLimit;
-					orderNumber += 1
-				) {
-					const carrierId = this._getRandomCarrierId(
-						orderNumber,
-						carriers
-					);
+			for (
+				let orderNumber = 1;
+				orderNumber <= ordersLimit;
+				orderNumber += 1
+			) {
+				const carrierId = this._getRandomCarrierId(
+					orderNumber,
+					carriers
+				);
 
-					const orderRaw = this._fakeOrdersService.getOrderRaw(
-						orderNumber,
-						storeId,
-						carrierId,
-						customers,
-						products,
-						store
-					);
+				const orderRaw = this._fakeOrdersService.getOrderRaw(
+					orderNumber,
+					storeId,
+					storeCreatedDate,
+					carrierId,
+					customers,
+					products
+				);
 
-					currentStoreOrders.push(orderRaw);
-				}
-
-				await this._ordersService.Model.insertMany(currentStoreOrders);
+				currentStoreOrders.push(orderRaw);
 			}
+
+			await this._ordersService.Model.insertMany(currentStoreOrders);
 		} catch (err) {
 			response = { error: true, message: err.message };
 		}
@@ -487,7 +484,7 @@ export class OrderResolver {
 
 	@Query()
 	async generateOrdersByCustomerId(
-		_,
+		_context,
 		{
 			numberOfOrders,
 			customerId
@@ -588,7 +585,7 @@ export class OrderResolver {
 	}
 
 	@Query()
-	async getCompletedOrdersInfo(_, { storeId }: { storeId: string }) {
+	async getCompletedOrdersInfo(_context, { storeId }: { storeId: string }) {
 		const orders = await this._ordersService.getDashboardCompletedOrders(
 			storeId
 		);
@@ -611,7 +608,7 @@ export class OrderResolver {
 	}
 
 	@Query('getOrder')
-	async getOrder(_, { id }: { id: string }): Promise<Order> {
+	async getOrder(_context, { id }: { id: string }): Promise<Order> {
 		return this._ordersService
 			.get(id)
 			.pipe(first())
@@ -619,7 +616,7 @@ export class OrderResolver {
 	}
 
 	@Query('orders')
-	async getOrders(_, { findInput }): Promise<Order[]> {
+	async getOrders(_context, { findInput }): Promise<Order[]> {
 		return this._ordersService.find({
 			...findInput,
 			isDeleted: { $eq: false }
@@ -627,12 +624,15 @@ export class OrderResolver {
 	}
 
 	@Query()
-	async getOrderedUsersInfo(_, { storeId }: { storeId: string }) {
+	async getOrderedUsersInfo(_context, { storeId }: { storeId: string }) {
 		return this._ordersService.getOrderedUsersInfo(storeId);
 	}
 
 	@Query()
-	async getUsersOrdersCountInfo(_, { usersIds }: { usersIds: string[] }) {
+	async getUsersOrdersCountInfo(
+		_context,
+		{ usersIds }: { usersIds: string[] }
+	) {
 		const ordersInfo = await this._ordersService.Model.aggregate([
 			{
 				$match: {
@@ -666,7 +666,7 @@ export class OrderResolver {
 
 	@Query()
 	async getMerchantsOrdersCountInfo(
-		_,
+		_context,
 		{ merchantsIds }: { merchantsIds: string[] }
 	) {
 		const ordersInfo = await this._ordersService.Model.aggregate([
@@ -694,7 +694,7 @@ export class OrderResolver {
 
 	@Mutation()
 	async updateOrderCarrierStatus(
-		_,
+		_context,
 		{
 			orderId,
 			status
@@ -711,7 +711,7 @@ export class OrderResolver {
 
 	@Mutation()
 	async updateOrderWarehouseStatus(
-		_,
+		_context,
 		{
 			orderId,
 			status
@@ -728,7 +728,7 @@ export class OrderResolver {
 
 	@Mutation()
 	async payOrderWithStripe(
-		_,
+		_context,
 		{
 			orderId,
 			cardId

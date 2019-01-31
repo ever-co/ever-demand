@@ -18,6 +18,7 @@ type Order {
 	isPaid: Boolean!
 	isCompleted: Boolean!
 	totalPrice: Float!
+	orderType: Int
 
 	# DateTime when order was actually delivered to customer
 	deliveryTime: Date
@@ -131,8 +132,6 @@ type Query {
 
 	addOrdersToTake: Void
 
-	generateRandomOrdersPerStore(ordersLimit: Int!): GenerateOrdersResponse
-
 	generateActiveAndAvailableOrdersPerCarrier: Void
 
 	generatePastOrdersPerCarrier: Void
@@ -140,6 +139,12 @@ type Query {
 	getUsersOrdersCountInfo(usersIds: [String!]): [OrderCountTnfo]
 
 	getMerchantsOrdersCountInfo(merchantsIds: [String!]): [OrderCountTnfo]
+
+	generateRandomOrdersCurrentStore(
+		storeId: String!
+		storeCreatedAt: Date!
+		ordersLimit: Int!
+	): GenerateOrdersResponse!
 }
 
 type Mutation {

@@ -21,7 +21,7 @@ export class ConnectionHandler {
 		private readonly log: Logger
 	) {}
 
-	public handle() {
+	handle() {
 		this.log.info(
 			{
 				socketId: this.socket.id,

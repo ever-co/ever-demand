@@ -5,13 +5,13 @@ import GeoLocation from '../../modules/server.common/entities/GeoLocation';
 import * as _ from 'lodash';
 import * as Logger from 'bunyan';
 import Order from '../../modules/server.common/entities/Order';
-import { WarehousesService } from '../warehouses';
 import { createEverLogger } from '../../helpers/Log';
 import { GeoLocationsWarehousesService } from './GeoLocationsWarehousesService';
 import * as Bluebird from 'bluebird';
 import {
 	WarehousesProductsService,
-	WarehousesOrdersService
+	WarehousesOrdersService,
+	WarehousesService
 } from '../warehouses';
 import {
 	observableListener,
@@ -51,7 +51,7 @@ export class GeoLocationsOrdersService
 	) {}
 
 	@observableListener()
-	public get(
+	get(
 		@serialization(
 			(geoLocationParam: IGeoLocation) =>
 				new GeoLocation(geoLocationParam)

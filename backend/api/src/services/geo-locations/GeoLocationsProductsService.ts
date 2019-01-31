@@ -30,7 +30,7 @@ export class GeoLocationsProductsService
 	) {}
 
 	@observableListener()
-	public get(
+	get(
 		@serialization((g: IGeoLocation) => new GeoLocation(g))
 		geoLocation: GeoLocation,
 		options?: { isDeliveryRequired?: boolean; isTakeaway?: boolean }

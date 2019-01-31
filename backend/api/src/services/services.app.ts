@@ -36,6 +36,7 @@ import Product from '@modules/server.common/entities/Product';
 import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import User from '@modules/server.common/entities/User';
 import Warehouse from '@modules/server.common/entities/Warehouse';
+import { ConfigService } from '../config/config.service';
 
 // local IPs
 const INTERNAL_IPS = ['127.0.0.1', '::1'];
@@ -58,17 +59,24 @@ export class ServicesApp {
 	private static _connectTimeoutMS: number = 40000;
 
 	constructor(
-		@multiInject(ServiceSymbol) protected services: IService[],
-		@inject('RoutersManager') protected routersManager: IRoutersManager,
+		@multiInject(ServiceSymbol)
+		protected services: IService[],
+		@inject('RoutersManager')
+		protected routersManager: IRoutersManager,
 		@inject(WarehousesService)
 		protected warehousesService: WarehousesService,
 		@inject(SocialStrategiesService)
 		protected socialStrategiesService: SocialStrategiesService,
-		private readonly _adminsService: AdminsService
+		@inject(AdminsService)
+		private readonly _adminsService: AdminsService,
+		@inject(ConfigService)
+		_configService: ConfigService
 	) {
+		const maxSockets = _configService.Env.MAX_SOCKETS;
+
 		// see https://webapplog.com/seven-things-you-should-stop-doing-with-node-js
-		https.globalAgent.maxSockets = Infinity;
-		http.globalAgent.maxSockets = Infinity;
+		https.globalAgent.maxSockets = maxSockets;
+		http.globalAgent.maxSockets = maxSockets;
 
 		this._configDB();
 	}
@@ -241,10 +249,16 @@ export class ServicesApp {
 		});
 
 		// Google Strategy
-		passport.use(this.socialStrategiesService.getGoogleStrategy());
+		const googleStrategy = this.socialStrategiesService.getGoogleStrategy();
+		if (googleStrategy != null) {
+			passport.use(googleStrategy);
+		}
 
 		// Facebook Strategy
-		passport.use(this.socialStrategiesService.getFacebookStrategy());
+		const facebookStrategy = this.socialStrategiesService.getFacebookStrategy();
+		if (facebookStrategy != null) {
+			passport.use(facebookStrategy);
+		}
 	}
 
 	private async _registerModels() {
@@ -288,6 +302,12 @@ export class ServicesApp {
 		);
 
 		this.httpServer = http.createServer(this.expressApp);
+
+		// TODO: add to settings file
+		// set connections timeouts to 30 minutes (for long running requests)
+		const timeout = 30 * 60 * 1000;
+		this.httpsServer.setTimeout(timeout);
+		this.httpServer.setTimeout(timeout);
 
 		this.expressApp.set('httpsPort', env.HTTPSPORT);
 		this.expressApp.set('httpPort', env.HTTPPORT);

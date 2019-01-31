@@ -15,7 +15,7 @@ export class RoutersManager implements IRoutersManager {
 
 	protected io: SocketIO.Server;
 
-	public startListening(io: SocketIO.Server) {
+	startListening(io: SocketIO.Server) {
 		this.io = io;
 
 		this.routers.forEach((router) => {

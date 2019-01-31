@@ -311,7 +311,7 @@ export class UsersService extends DBService<User>
 	 * @memberof UsersService
 	 */
 	@asyncListener()
-	public async updateEmail(userId: string, email: string): Promise<User> {
+	async updateEmail(userId: string, email: string): Promise<User> {
 		await this.throwIfNotExists(userId);
 		return this.update(userId, { email });
 	}
@@ -325,7 +325,7 @@ export class UsersService extends DBService<User>
 	 * @memberof UsersService
 	 */
 	@asyncListener()
-	public async updateGeoLocation(
+	async updateGeoLocation(
 		userId: string,
 		@serialization((g: IGeoLocation) => new GeoLocation(g))
 		geoLocation: GeoLocation
@@ -343,7 +343,7 @@ export class UsersService extends DBService<User>
 	 * @returns HTML representation of About Us
 	 */
 	@observableListener()
-	public getAboutUs(
+	getAboutUs(
 		userId: string,
 		deviceId: string
 	): Observable<string> /*returns html*/ {
@@ -373,7 +373,7 @@ export class UsersService extends DBService<User>
 	 * @returns HTML representation of Terms Of Use
 	 */
 	@observableListener()
-	public getTermsOfUse(userId: string, deviceId: string): Observable<string> {
+	getTermsOfUse(userId: string, deviceId: string): Observable<string> {
 		return this.devicesService.get(deviceId).pipe(
 			exhaustMap((device) => {
 				if (device === null) {
@@ -402,7 +402,7 @@ export class UsersService extends DBService<User>
 	 * @returns HTML representation of privacy policy
 	 */
 	@observableListener()
-	public getPrivacy(userId: string, deviceId: string): Observable<string> {
+	getPrivacy(userId: string, deviceId: string): Observable<string> {
 		return this.devicesService.get(deviceId).pipe(
 			exhaustMap((device) => {
 				if (device === null) {
@@ -431,7 +431,7 @@ export class UsersService extends DBService<User>
 	 * @returns {Promise<IUserCreateObject[]>}
 	 * @memberof UsersService
 	 */
-	public async generate1000Customers(
+	async generate1000Customers(
 		defaultLng: number,
 		defaultLat: number
 	): Promise<IUserCreateObject[]> {

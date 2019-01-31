@@ -6,6 +6,7 @@ import OrderCarrierStatus from '../enums/OrderCarrierStatus';
 import OrderWarehouseStatus from '../enums/OrderWarehouseStatus';
 import { DBCreateObject, DBRawObject, PyroObjectId } from '../@pyro/db';
 import Carrier from '../entities/Carrier';
+import DeliveryType from '../enums/DeliveryType';
 
 export interface IOrderCreateObject extends DBCreateObject {
 	/**
@@ -130,6 +131,14 @@ export interface IOrderCreateObject extends DBCreateObject {
 	 * @memberof IOrderCreateObject
 	 */
 	orderNumber?: number;
+
+	/**
+	 * Check out DeliveryType
+	 *
+	 * @type {DeliveryType}
+	 * @memberof IOrderCreateObject
+	 */
+	orderType?: DeliveryType;
 }
 
 interface IOrder extends IOrderCreateObject, DBRawObject {

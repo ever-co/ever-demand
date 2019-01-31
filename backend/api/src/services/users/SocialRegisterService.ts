@@ -16,11 +16,9 @@ export class SocialRegisterService implements IService {
 		let redirectUrl = '';
 
 		if (currentUser) {
-			if (currentUser.isRegistrationCompleted) {
-				redirectUrl = 'login/socie/' + currentUser['_id'];
-			} else {
-				redirectUrl = 'login/byLocation/' + currentUser['_id'];
-			}
+			currentUser.isRegistrationCompleted
+				? (redirectUrl = 'login/socie/' + currentUser['_id'])
+				: (redirectUrl = 'login/byLocation/' + currentUser['_id']);
 		} else {
 			const [firstname, lastname] = profileInfo['displayName'].split(' ');
 

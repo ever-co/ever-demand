@@ -1,7 +1,6 @@
 import { inject, injectable, LazyServiceIdentifer } from 'inversify';
 import Carrier from '@modules/server.common/entities/Carrier';
-import { of } from 'rxjs';
-import { Observable } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { CarriersService } from '../carriers';
 import { WarehousesService } from './WarehousesService';
 import Warehouse from '@modules/server.common/entities/Warehouse';
