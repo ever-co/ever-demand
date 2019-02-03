@@ -20,6 +20,7 @@
 		}
 	],
 	"settings": {
-		"search.usePCRE2": true
+		"search.usePCRE2": true,
+		"git.ignoreLimitWarning": true
 	}
 }

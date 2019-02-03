@@ -4,6 +4,7 @@ import IWarehouseProduct, {
 import IGeoLocation, { IGeoLocationCreateObject } from './IGeoLocation';
 import { DBCreateObject, DBRawObject, PyroObjectId } from '../@pyro/db';
 import ForwardOrdersMethod from '../enums/ForwardOrdersMethod';
+import OrderBarcodeTypes from '../enums/OrderBarcodeTypes';
 
 export interface IWarehouseCreateObject extends DBCreateObject {
 	/**
@@ -109,6 +110,7 @@ export interface IWarehouseCreateObject extends DBCreateObject {
 
 	productsDelivery?: boolean;
 	productsTakeaway?: boolean;
+	orderBarcodeType?: OrderBarcodeTypes;
 }
 
 interface IWarehouse extends IWarehouseCreateObject, DBRawObject {

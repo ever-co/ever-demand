@@ -6,6 +6,7 @@ import IWarehouse, { IWarehouseCreateObject } from '../interfaces/IWarehouse';
 import ForwardOrdersMethod from '../enums/ForwardOrdersMethod';
 import { Entity, Column } from 'typeorm';
 import IWarehouseProduct from '../interfaces/IWarehouseProduct';
+import OrderBarcodeTypes from '../enums/OrderBarcodeTypes';
 
 /**
  * Warehouse / Merchant / Store
@@ -248,6 +249,16 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	@Schema({ type: Boolean, required: false })
 	@Column()
 	productsTakeaway?: boolean;
+
+	/**
+	 * The type of order barcode
+	 *
+	 * @type {Number}
+	 * @memberof Warehouse
+	 */
+	@Schema({ type: Number, required: false })
+	@Column()
+	orderBarcodeType?: OrderBarcodeTypes;
 }
 
 export type WithFullProducts = Warehouse & {

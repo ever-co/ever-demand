@@ -42,6 +42,7 @@ type Warehouse {
 	hasRestrictedCarriers: Boolean
 	usedCarriersIds: [String!]
 	carriers: [Carrier!] # Resolved, if hasRestrictedCarriers is false -> returns null
+	orderBarcodeType: Int
 }
 
 input WarehouseCreateInput {
