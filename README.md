@@ -8,7 +8,7 @@
 
 Out-of-the-box Ever Platform provides everything required to quickly build, manage and expand Multi-Store (Multi-Vendor Marketplace) or Single-Store **On-Demand** Commerce Solutions with customized e-commerce Websites (shops), Mobile ordering apps (Hybrid and PWA), Carrier (Driver) apps, Merchant apps and Admin interface website.
 
-So, if you need to build the next "Uber for X", Ever Platform is your right choice!
+![overview](https://docs.ever.co/docs/assets/overview.jpg)
 
 ### Disclaimer
 
