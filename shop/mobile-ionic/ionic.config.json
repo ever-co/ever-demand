@@ -1,0 +1,7 @@
+{
+	"name": "ever.shop.mobile",
+	"type": "angular",
+	"integrations": {
+		"cordova": {}
+	}
+}
