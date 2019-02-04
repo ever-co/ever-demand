@@ -131,7 +131,7 @@
 		"@types/node": "6.0.90",
 		"@types/reflect-metadata": "^0.1.0",
 		"@types/socket.io-client": "^1.4.32",
-		"@types/stripe": "^5.0.19",
+		"@types/stripe": "^6.19.6",
 		"@types/uuid": "^3.4.4",
 		"@compodoc/compodoc": "^1.1.5",
 		"typescript": "~2.6.2"
