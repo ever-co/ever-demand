@@ -80,7 +80,7 @@
 		"call-number": "^1.0.1",
 		"connect": "^3.6.6",
 		"cordova-android": "7.1.1",
-		"cordova-browser": "5.0.3",
+		"cordova-browser": "6.0.0",
 		"cordova-open-native-settings": "^1.5.1",
 		"cordova-plugin-camera": "^4.0.3",
 		"cordova-plugin-device": "^2.0.2",
