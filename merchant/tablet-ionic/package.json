@@ -89,7 +89,7 @@
 		"cordova-plugin-google-analytics": "^1.8.6",
 		"cordova-plugin-intercom": "^5.1.1",
 		"cordova-plugin-ionic-keyboard": "^2.1.2",
-		"cordova-plugin-ionic-webview": "^1.2.1",
+		"cordova-plugin-ionic-webview": "^3.1.2",
 		"cordova-plugin-mixpanel": "^4.4.1",
 		"cordova-plugin-network-information": "^2.0.1",
 		"cordova-plugin-screen-orientation": "^3.0.1",
