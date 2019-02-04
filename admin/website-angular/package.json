@@ -133,7 +133,7 @@
 		"socket.io-client": "^2.2.0",
 		"stripe": "^6.20.0",
 		"subscriptions-transport-ws": "^0.9.15",
-		"tinymce": "^4.9.2",
+		"tinymce": "^5.0.0",
 		"tslib": "^1.9.3",
 		"typeface-exo": "^0.0.61",
 		"uuid": "^3.3.2",
