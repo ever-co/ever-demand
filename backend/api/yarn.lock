@@ -1328,10 +1328,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/stripe@^6.19.4":
-  version "6.19.4"
-  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-6.19.4.tgz#37b76cabfc8dd8db7dd352941f3e6877360ccba9"
-  integrity sha512-+oy8t6bPA68WTyBVAzi59NUwBOWj/lXqolbO0SuX22a306V6Ba9tqxIiO/alTop/V3VD7sKaUgHJ61vsoMDZGA==
+"@types/stripe@^6.19.6":
+  version "6.19.6"
+  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-6.19.6.tgz#395b06c4b319d5299037a794cde14fe3b1739c75"
+  integrity sha512-JOqN2W/3dhj8o67zOXAZFH6NeECwtMuSc6jQ7DtGuYw8WaHHGjtaFHFpnPczCY5TE/qHpGSs5QIrbrE2jfCb0w==
   dependencies:
     "@types/node" "*"
 
