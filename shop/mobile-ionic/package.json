@@ -94,7 +94,7 @@
 		"call-number": "~0.0.2",
 		"cordova-android": "^7.1.4",
 		"cordova-android-support-gradle-release": "^2.0.1",
-		"cordova-browser": "5.0.4",
+		"cordova-browser": "6.0.0",
 		"cordova-plugin-appavailability": "^0.4.2",
 		"cordova-plugin-device": "^2.0.2",
 		"cordova-plugin-dialogs": "^2.0.1",
