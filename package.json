@@ -65,7 +65,7 @@
 		"@types/googlemaps": "^3.30.16",
 		"@types/jasmine": "^3.3.7",
 		"@types/jasminewd2": "^2.0.6",
-		"@types/jest": "^23.3.13",
+		"@types/jest": "^24.0.0",
 		"@types/leaflet": "^1.4.0",
 		"@types/mongodb": "^3.1.19",
 		"@types/mongoose": "^5.3.9",
