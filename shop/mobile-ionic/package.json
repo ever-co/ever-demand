@@ -46,7 +46,7 @@
 		"cordova:run:prod:device": "ionic cordova run android --prod --release --device"
 	},
 	"dependencies": {
-		"@angular-builders/custom-webpack": "7.2.0",
+		"@angular-builders/custom-webpack": "7.4.0",
 		"@angular-builders/dev-server": "7.2.1",
 		"@angular/animations": "^7.2.3",
 		"@angular/common": "~7.2.3",
