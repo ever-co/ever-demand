@@ -47,7 +47,7 @@
 	},
 	"dependencies": {
 		"@angular-builders/custom-webpack": "7.2.0",
-		"@angular-builders/dev-server": "7.2.1",
+		"@angular-builders/dev-server": "7.3.1",
 		"@angular/animations": "^7.2.3",
 		"@angular/common": "~7.2.3",
 		"@angular/core": "~7.2.3",
