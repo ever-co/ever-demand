@@ -144,7 +144,7 @@
 		"@types/google-maps": "^3.2.0",
 		"@types/handlebars": "^4.0.40",
 		"@types/inversify": "^2.0.33",
-		"@types/jest": "^23.3.13",
+		"@types/jest": "^24.0.0",
 		"@types/jsonwebtoken": "^8.3.0",
 		"@types/kafka-node": "^2.0.7",
 		"@types/lodash": "^4.14.120",
