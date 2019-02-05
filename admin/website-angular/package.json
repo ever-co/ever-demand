@@ -158,7 +158,7 @@
 		"@types/highlight.js": "^9.12.3",
 		"@types/jasmine": "^3.3.5",
 		"@types/jasminewd2": "^2.0.6",
-		"@types/leaflet": "^1.2.14",
+		"@types/leaflet": "^1.4.1",
 		"@types/mongodb": "^3.1.18",
 		"@types/mongoose": "^5.3.7",
 		"@types/node": "^10.12.18",
