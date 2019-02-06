@@ -189,7 +189,7 @@
 		"typedoc": "^0.14.2",
 		"typemoq": "^2.1.0",
 		"typescript": "~3.1.6",
-		"webpack": "^4.29.0",
+		"webpack": "^4.29.2",
 		"webpack-cli": "^3.2.1",
 		"webpack-command": "^0.4.2",
 		"webpack-graphql-loader": "^1.0.0",
