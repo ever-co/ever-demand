@@ -1,0 +1,4 @@
+option_settings:
+  - namespace: aws:elasticbeanstalk:container:nodejs
+    option_name: NodeCommand
+    value: "npm start"

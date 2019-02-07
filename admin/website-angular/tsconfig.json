@@ -1,0 +1,33 @@
+{
+	"compileOnSave": false,
+	"compilerOptions": {
+		"outDir": "./dist/out-tsc",
+		"sourceMap": true,
+		"declaration": false,
+		"moduleResolution": "node",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"noImplicitAny": false,
+		"preserveConstEnums": true,
+		"allowSyntheticDefaultImports": true,
+		"target": "es5",
+		"typeRoots": ["node_modules/@types"],
+		"baseUrl": "./src",
+		"paths": {
+			"@angular/*": ["../node_modules/@angular/*"],
+			"@nebular/*": ["../node_modules/@nebular/*"],
+			"@modules/*": ["./modules/*"],
+			"@pyro/*": ["./modules/server.common/@pyro/*"],
+			"mongoose": [
+				"./modules/client.common.angular2/mongoose-placeholder"
+			],
+			"typeorm": ["./modules/client.common.angular2/typeorm-placeholder"]
+		},
+		"lib": ["es2017", "dom", "esnext"]
+		/*"plugins": [
+		      {
+		        "name": "tslint-language-service"
+		      }
+		]*/
+	}
+}
