@@ -158,7 +158,7 @@
 		"@types/node-uuid": "^0.0.28",
 		"@types/socket.io-client": "^1.4.32",
 		"@types/source-map": "^0.5.2",
-		"@types/stripe": "^5.0.19",
+		"@types/stripe": "^6.19.7",
 		"@types/stripe-node": "^4.7.1",
 		"@types/uglify-js": "^3.0.2",
 		"@types/uuid": "^3.4.4",
