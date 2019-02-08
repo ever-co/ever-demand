@@ -160,7 +160,7 @@
 		"@types/leaflet": "1.4.0",
 		"@types/mongodb": "^3.1.19",
 		"@types/mongoose": "^5.3.12",
-		"@types/node": "~10.12.21",
+		"@types/node": "~10.12.24",
 		"@types/reflect-metadata": "^0.1.0",
 		"@types/socket.io-client": "^1.4.32",
 		"@types/stripe": "^6.19.5",
