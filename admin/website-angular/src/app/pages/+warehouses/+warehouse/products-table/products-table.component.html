@@ -1,0 +1,34 @@
+<nb-card [nbSpinner]="loading">
+	<nb-card-header>
+		<button
+			class="btn btn-sm btn-success btn-icon d-inline-block mr-2"
+			(click)="addProducts.emit()"
+		>
+			<i class="ion-md-add active button-icon"></i>
+			{{ 'WAREHOUSE_VIEW.PRODUCTS_TAB.ADD_PRODUCTS' | translate }}
+		</button>
+		<button
+			class="btn btn-sm btn-danger btn-icon d-inline-block"
+			[disabled]="!hasSelectedProducts"
+			(click)="deleteSelectedRows()"
+		>
+			<i class="ion-md-trash button-icon"></i>
+			{{ 'WAREHOUSE_VIEW.PRODUCTS_TAB.DELETE' | translate }}
+		</button>
+		<small class="pull-right">{{
+			'WAREHOUSE_VIEW.PRODUCTS_TAB.CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY'
+				| translate
+		}}</small>
+	</nb-card-header>
+
+	<nb-card-body>
+		<ng2-smart-table
+			[settings]="settingsSmartTable"
+			[source]="sourceSmartTable"
+			(userRowSelect)="selectProductTmp($event)"
+			(edit)="editProduct($event)"
+			(delete)="removeProduct($event)"
+		>
+		</ng2-smart-table>
+	</nb-card-body>
+</nb-card>

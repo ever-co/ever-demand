@@ -1,0 +1,66 @@
+<div class="modal-header" [nbSpinner]="loading">
+	<span class="modal-title">{{
+		'WAREHOUSE_VIEW.MUTATION.TITLE' | translate
+	}}</span>
+	<button class="close" aria-label="Close" (click)="cancel()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+
+<form-wizard
+	class="form-horizontal"
+	[formGroup]="form"
+	[buttonDone]="buttonDone"
+	[buttonNext]="buttonNext"
+	[buttonPrevious]="buttonPrevious"
+>
+	<wizard-step
+		[title]="'WAREHOUSE_VIEW.MUTATION.WIZARD_TITLES.BASIC_INFO' | translate"
+		[isValid]="basicInfo.valid"
+	>
+		<div class="pt-5"></div>
+		<ea-warehouse-basic-info-form
+			#basicInfoForm
+			[form]="basicInfo"
+			[password]="password"
+		></ea-warehouse-basic-info-form>
+	</wizard-step>
+
+	<wizard-step
+		[title]="
+			'WAREHOUSE_VIEW.MUTATION.WIZARD_TITLES.CONTACT_INFO' | translate
+		"
+		[isValid]="contactInfo.valid"
+	>
+		<div class="pt-5"></div>
+		<ea-warehouse-contact-info-form
+			#contactInfoForm
+			[form]="contactInfo"
+		></ea-warehouse-contact-info-form>
+	</wizard-step>
+
+	<wizard-step
+		[title]="'WAREHOUSE_VIEW.MUTATION.WIZARD_TITLES.LOCATION' | translate"
+		[isValid]="location.valid"
+		(onComplete)="createWarehouse()"
+	>
+		<div class="pt-4"></div>
+
+		<ea-location-form
+			#locationForm
+			[form]="location"
+			[showAutocompleteSearch]="true"
+			(mapCoordinatesEmitter)="onCoordinatesChanges($event)"
+			(mapGeometryEmitter)="onGeometrySend($event)"
+		>
+		</ea-location-form>
+
+		<div class="py-3">
+			<google-map
+				[mapCoordEvent]="mapCoordEmitter"
+				[mapGeometryEvent]="mapGeometryEmitter"
+			>
+			</google-map>
+		</div>
+	</wizard-step>
+</form-wizard>

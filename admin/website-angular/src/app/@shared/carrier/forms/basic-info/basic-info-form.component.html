@@ -1,0 +1,227 @@
+<nb-card class="basic-info">
+	<div class="col-sm-12" [formGroup]="form" *ngIf="form">
+		<br />
+
+		<fieldset>
+			<div class="form-group row">
+				<label class="col-sm-2 control-label">{{
+					'Name' | translate
+				}}</label>
+
+				<div class="col-sm-5">
+					<input
+						type="text"
+						class="form-control"
+						placeholder="{{
+							'CARRIERS_VIEW.EDIT.FIRST_NAME' | translate
+						}}"
+						formControlName="firstName"
+					/>
+					<div
+						*ngIf="isFirstNameValid && firstName.errors.required"
+						class="alert alert-danger"
+					>
+						{{
+							'SHARED.FORMS.ERRORS.FIRST_NAME_REQUIRED'
+								| translate
+						}}!
+					</div>
+					<div
+						*ngIf="isFirstNameValid && firstName.errors.pattern"
+						class="alert alert-danger"
+					>
+						{{
+							'SHARED.FORMS.ERRORS.MUST_CONTAIN_ONLY_LETTERS'
+								| translate
+						}}!
+					</div>
+				</div>
+
+				<div class="col-sm-5">
+					<input
+						type="text"
+						class="form-control"
+						placeholder="{{
+							'CARRIERS_VIEW.EDIT.LAST_NAME' | translate
+						}}"
+						formControlName="lastName"
+					/>
+					<div
+						*ngIf="isLastNameValid && lastName.errors.required"
+						class="alert alert-danger"
+					>
+						{{
+							'SHARED.FORMS.ERRORS.LAST_NAME_REQUIRED'
+								| translate
+						}}!
+					</div>
+					<div
+						*ngIf="isLastNameValid && lastName.errors.pattern"
+						class="alert alert-danger"
+					>
+						{{
+							'SHARED.FORMS.ERRORS.MUST_CONTAIN_ONLY_LETTERS'
+								| translate
+						}}!
+					</div>
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<div class="form-group row">
+				<label class="col-sm-2 control-label">{{
+					'Username' | translate
+				}}</label>
+				<div class="col-sm-10">
+					<input
+						type="text"
+						class="form-control"
+						placeholder="{{ 'Username' | translate }}"
+						formControlName="username"
+					/>
+
+					<div *ngIf="isUsernameValid" class="alert alert-danger">
+						{{
+							'SHARED.FORMS.ERRORS.USERNAME_REQUIRED' | translate
+						}}!
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group row" *ngIf="password">
+				<label class="col-sm-2 control-label">{{
+					'Password' | translate
+				}}</label>
+				<div class="col-sm-10">
+					<input
+						type="password"
+						class="form-control"
+						placeholder="{{ 'Password' | translate }}"
+						required
+						[formControl]="password"
+					/>
+
+					<div *ngIf="isPasswordValid" class="alert alert-danger">
+						{{
+							'SHARED.FORMS.ERRORS.PASSWORD_REQUIRED' | translate
+						}}!
+					</div>
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<div class="form-group row">
+				<label class="col-sm-2 control-label">{{
+					'Phone' | translate
+				}}</label>
+				<div class="col-sm-10">
+					<input
+						type="text"
+						class="form-control"
+						placeholder="{{
+							'CARRIERS_VIEW.EDIT.CONTACT_PHONE' | translate
+						}}"
+						formControlName="phone"
+					/>
+
+					<div *ngIf="isPhoneValid" class="alert alert-danger">
+						<div [hidden]="!phone.hasError('pattern')">
+							{{
+								'SHARED.FORMS.ERRORS.PHONE_MUST_CONTAINS_ONLY(specail_signs)AND_DIGIT_CHARACTER'
+									| translate
+							}}
+						</div>
+						<div [hidden]="!phone.hasError('required')">
+							{{
+								'SHARED.FORMS.ERRORS.PHONE_REQUIRED'
+									| translate
+							}}!
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label class="col-sm-2 control-label">
+					{{ 'CARRIERS_VIEW.EDIT.PHOTO_URL' | translate }}
+				</label>
+
+				<div class="col-sm-10">
+					<div class="row upload-img">
+						<input
+							[hidden]="true"
+							(change)="imageUrlChanged()"
+							#fileInput
+							type="file"
+							id="fileInput"
+							ng2FileSelect
+							[uploader]="uploader"
+						/>
+
+						<input
+							type="text"
+							class="form-control col-10"
+							placeholder="{{
+								'CARRIERS_VIEW.EDIT.PHOTO_URL' | translate
+							}} (optional)"
+							formControlName="logo"
+						/>
+
+						<button
+							(click)="fileInput.click()"
+							class="btn btn-primary btn-rectangle col-2"
+						>
+							{{ 'BROWSE' | translate }}
+						</button>
+					</div>
+
+					<div *ngIf="isLogoValid" class="alert alert-danger">
+						{{
+							'SHARED.FORMS.ERRORS.LOGO_URL_REQUIRED' | translate
+						}}!
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group row" [hidden]="logo.invalid">
+				<label class="col-sm-2 control-label"></label>
+				<div class="col-sm-10">
+					<div class="row preview-img">
+						<div
+							[hidden]="!showLogoMeta"
+							class="remove-icon"
+							(click)="deleteImg()"
+						>
+							<img
+								#logoImagePreview
+								src="{{ logo.value }}"
+								alt="Invalid image"
+								class="img-rounded"
+							/>
+
+							<span
+								class="ion-md-remove-circle text-danger pl-2"
+								title="Remove"
+							></span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label class="col-sm-2 control-label pt-1" for="is-active-radio"
+					>{{ 'CARRIERS_VIEW.CARRIER_PAGE.ACTIVE' | translate }}
+				</label>
+				<div class="col-sm-1">
+					<nb-checkbox formControlName="isActive"></nb-checkbox>
+
+					<div *ngIf="isActiveValid" class="alert alert-danger">
+						{{ 'SHARED.FORMS.ERRORS.IS_ACTIVE' | translate }}!
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+</nb-card>

@@ -1,0 +1,176 @@
+<div class="col-sm-12 pt-0" [formGroup]="form" *ngIf="form">
+	<fieldset>
+		<div class="form-group row" *ngIf="showAutocompleteSearch">
+			<label class="col-sm-2 control-label"> </label>
+
+			<div class="col-sm-9 input-group">
+				<div class="input-group-addon search-addon-wrapper">
+					<i class="fa fa-search"></i>
+				</div>
+				<input
+					#autocomplete
+					type="text"
+					class="form-control"
+					placeholder="{{ 'PLACEHOLDER.FIND_ADDRESS' | translate }}"
+				/>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-sm-2 control-label"
+				>* {{ 'WAREHOUSE_VIEW.MUTATION.ADDRESS' | translate }}</label
+			>
+
+			<div class="col-sm-3">
+				<select
+					(change)="onAddressChanges()"
+					class="form-control"
+					formControlName="countryId"
+				>
+					<option [disabled]="true" [selected]="true"
+						>{{
+							'WAREHOUSE_VIEW.MUTATION.COUNTRY' | translate
+						}}...</option
+					>
+					<option
+						*ngFor="let country of countries"
+						value="{{ country.id }}"
+						>{{ country.name }}</option
+					>
+				</select>
+
+				<div *ngIf="isCountryValid" class="alert alert-danger">
+					{{ 'SHARED.FORMS.ERRORS.COUNTRY_REQUIRED' | translate }}!
+				</div>
+			</div>
+
+			<div class="col-sm-3">
+				<input
+					(blur)="onAddressChanges()"
+					type="text"
+					class="form-control"
+					placeholder="{{ 'PLACEHOLDER.CITY' | translate }}"
+					formControlName="city"
+				/>
+
+				<div *ngIf="isCityValid" class="alert alert-danger">
+					{{ 'SHARED.FORMS.ERRORS.CITY_REQUIRED' | translate }}!
+				</div>
+			</div>
+
+			<div class="col-sm-3">
+				<input
+					(blur)="onAddressChanges()"
+					type="text"
+					class="form-control"
+					placeholder="{{ 'PLACEHOLDER.ZIP' | translate }}"
+					formControlName="postcode"
+				/>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-sm-2 control-label"></label>
+
+			<div class="col-sm-9">
+				<input
+					(blur)="onAddressChanges()"
+					type="text"
+					class="form-control"
+					placeholder="{{ 'PLACEHOLDER.STREET' | translate }}"
+					formControlName="streetAddress"
+				/>
+
+				<div *ngIf="isStreetAddressValid" class="alert alert-danger">
+					{{
+						'SHARED.FORMS.ERRORS.STREET_ADDRESS_REQUIRED'
+							| translate
+					}}!
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<label class="col-sm-2 control-label"></label>
+
+			<div class="col-sm-9">
+				<div class="form-group row">
+					<div [ngClass]="apartment ? 'col-sm-6' : 'col-sm-12'">
+						<input
+							(blur)="onAddressChanges()"
+							type="text"
+							class="form-control"
+							placeholder="{{ 'PLACEHOLDER.HOUSE' | translate }}"
+							formControlName="house"
+						/>
+
+						<div *ngIf="isHouseValid" class="alert alert-danger">
+							{{
+								'SHARED.FORMS.ERRORS.HOUSE_REQUIRED'
+									| translate
+							}}!
+						</div>
+					</div>
+
+					<div
+						*ngIf="apartment"
+						[ngClass]="apartment ? 'col-sm-6' : 'col-sm-12'"
+					>
+						<input
+							type="text"
+							class="form-control"
+							placeholder="{{
+								'PLACEHOLDER.APARTMENT' | translate
+							}}"
+							[formControl]="apartment"
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<label class="col-sm-2 control-label">
+				<span class="ml-1"
+					>{{ 'WAREHOUSE_VIEW.MUTATION.COORDINATES' | translate }}
+				</span>
+			</label>
+			<div class="col-sm-9">
+				<input (change)="toggleShowCoordinates()" type="checkbox" />
+			</div>
+		</div>
+
+		<div class="row" *ngIf="showCoordinates">
+			<label class="col-sm-2 control-label"></label>
+			<div class="col-sm-9 coordinates-position">
+				<div class="form-group row" formGroupName="loc">
+					<div class="col-sm-6" formArrayName="coordinates">
+						<input
+							(blur)="onCoordinatesChanged()"
+							type="number"
+							class="form-control"
+							placeholder="{{
+								'PLACEHOLDER.LATITUDE' | translate
+							}}"
+							formControlName="0"
+							step="0.1"
+						/>
+					</div>
+
+					<div class="col-sm-6" formArrayName="coordinates">
+						<input
+							(blur)="onCoordinatesChanged()"
+							type="number"
+							class="form-control"
+							placeholder="{{
+								'PLACEHOLDER.LONGITUDE' | translate
+							}}"
+							formControlName="1"
+							step="0.1"
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</fieldset>
+</div>

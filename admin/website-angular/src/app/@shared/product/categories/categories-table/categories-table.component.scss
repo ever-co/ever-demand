@@ -1,0 +1,11 @@
+:host /deep/ ng2-smart-table table {
+	th.image {
+		text-align: center;
+	}
+	th.ng2-smart-actions {
+		text-align: center;
+	}
+	tr > td:nth-child(3) {
+		text-align: center;
+	}
+}

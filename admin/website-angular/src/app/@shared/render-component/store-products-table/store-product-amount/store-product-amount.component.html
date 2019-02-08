@@ -1,0 +1,19 @@
+<div class="order-input-wrapper text-center" [nbSpinner]="loading">
+	<button
+		(click)="addProduct()"
+		class="btn btn-sm btn-secondary p-2 text-center btn-increase"
+	>
+		+
+	</button>
+	<div class="p-2">
+		<span class="badge-dark">{{ productAmount }}</span>
+	</div>
+
+	<button
+		(click)="removeProduct()"
+		[disabled]="productAmount <= 0"
+		class="btn btn-sm btn-secondary p-2 text-center btn-decrease"
+	>
+		-
+	</button>
+</div>

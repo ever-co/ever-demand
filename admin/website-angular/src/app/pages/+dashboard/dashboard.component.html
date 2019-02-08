@@ -1,0 +1,273 @@
+<div class="row">
+	<div class="col-9">
+		<div class="row">
+			<div class="col">
+				<nb-card size="medium">
+					<nb-card-body>
+						<div class="progress-info">
+							<div class="title">
+								{{
+									'DASHBOARD_VIEW.TOTAL_CUSTOMER' | translate
+								}}
+							</div>
+							<div class="value">
+								<span
+									[ngClass]="
+										loading.totalInfo.customers
+											? 'waiting'
+											: ''
+									"
+								>
+									{{
+										totalInfo.customers | myNumberWithCommas
+									}}
+								</span>
+								<span
+									class="loading-placeholder"
+									[nbSpinner]="loading.totalInfo.customers"
+								>
+								</span>
+							</div>
+
+							<div class="description">
+								<bdi>{{
+									'DASHBOARD_VIEW.TOTAL_QUANTITY_OF_EXISTING_CUSTOMERS'
+										| translate
+								}}</bdi>
+							</div>
+						</div>
+
+						<div class="progress-info">
+							<div class="title">
+								{{
+									'DASHBOARD_VIEW.TOTAL_COMPLETED_ORDERS'
+										| translate
+								}}
+							</div>
+							<div class="value">
+								<span
+									[ngClass]="
+										loading.totalInfo.orders
+											? 'waiting'
+											: ''
+									"
+								>
+									{{ totalInfo.orders | myNumberWithCommas }}
+								</span>
+								<span
+									class="loading-placeholder"
+									[nbSpinner]="loading.totalInfo.orders"
+								>
+								</span>
+							</div>
+
+							<div class="description">
+								<bdi>{{
+									'DASHBOARD_VIEW.TOTAL_QUANTITY_OF_COMPLETED_ORDERS'
+										| translate
+								}}</bdi>
+							</div>
+						</div>
+
+						<div class="progress-info">
+							<div class="title">
+								{{ 'DASHBOARD_VIEW.TOTAL_REVENUE' | translate }}
+							</div>
+							<div class="value">
+								<span
+									[ngClass]="
+										loading.totalInfo.revenue
+											? 'waiting'
+											: ''
+									"
+								>
+									${{
+										totalInfo.revenue | myNumberWithCommas
+									}}
+								</span>
+								<span
+									class="loading-placeholder"
+									[nbSpinner]="loading.totalInfo.revenue"
+								>
+								</span>
+							</div>
+
+							<div class="description">
+								<bdi>{{
+									'DASHBOARD_VIEW.TOTAL_SUM_SUM_OF_ALL_COMPLETED_ORDERS'
+										| translate
+								}}</bdi>
+							</div>
+						</div>
+					</nb-card-body>
+				</nb-card>
+			</div>
+
+			<div class="col">
+				<nb-card size="medium">
+					<nb-card-body>
+						<div class="progress-info">
+							<div class="title">
+								{{
+									'DASHBOARD_VIEW.TODAYs_CUSTOMERS'
+										| translate
+								}}
+							</div>
+							<div class="value">
+								<span
+									[ngClass]="
+										loading.todayInfo.customers
+											? 'waiting'
+											: ''
+									"
+								>
+									{{
+										todayInfo.customers | myNumberWithCommas
+									}}
+								</span>
+								<span
+									class="loading-placeholder"
+									[nbSpinner]="loading.todayInfo.customers"
+								>
+								</span>
+							</div>
+
+							<ngb-progressbar
+								[value]="averageRateCustomersToday.value"
+							></ngb-progressbar>
+
+							<div class="description">
+								<bdi>
+									<small>
+										{{
+											'DASHBOARD_VIEW.TODAYs_QUANTITY_OF_REGISTERED_CUSTOMERS'
+												| translate
+										}}
+										<span class="float-right">
+											{{ labelAvgPercent.customers }} ({{
+												averageRateCustomersToday.value.toFixed(
+													2
+												)
+											}}%)
+										</span>
+									</small>
+								</bdi>
+							</div>
+						</div>
+
+						<div class="progress-info">
+							<div class="title">
+								{{
+									'DASHBOARD_VIEW.TODAYs_COMPLETED_ORDERS'
+										| translate
+								}}
+							</div>
+							<div class="value">
+								<span
+									[ngClass]="
+										loading.todayInfo.orders
+											? 'waiting'
+											: ''
+									"
+								>
+									{{ todayInfo.orders | myNumberWithCommas }}
+								</span>
+								<span
+									class="loading-placeholder"
+									[nbSpinner]="loading.todayInfo.orders"
+								>
+								</span>
+							</div>
+
+							<ngb-progressbar
+								[value]="averageRateOrdersToday.value"
+							></ngb-progressbar>
+
+							<div class="description">
+								<bdi>
+									<small>
+										{{
+											'DASHBOARD_VIEW.TODAYs_QUANTITY_OF_NEW_COMPLETED_ORDERS'
+												| translate
+										}}
+										<span class="float-right">
+											{{ labelAvgPercent.orders }} ({{
+												averageRateOrdersToday.value.toFixed(
+													2
+												)
+											}}%)</span
+										>
+									</small>
+								</bdi>
+							</div>
+						</div>
+
+						<div class="progress-info">
+							<div class="title">
+								{{
+									'DASHBOARD_VIEW.TODAYs_REVENUE' | translate
+								}}
+							</div>
+							<div class="value">
+								<span
+									[ngClass]="
+										loading.todayInfo.revenue
+											? 'waiting'
+											: ''
+									"
+								>
+									${{
+										todayInfo.revenue | myNumberWithCommas
+									}}
+								</span>
+								<span
+									class="loading-placeholder"
+									[nbSpinner]="loading.todayInfo.revenue"
+								>
+								</span>
+							</div>
+
+							<ngb-progressbar
+								[value]="averageRateRevenueToday.value"
+							></ngb-progressbar>
+
+							<div class="description">
+								<bdi>
+									<small>
+										{{
+											'DASHBOARD_VIEW.TODAYs_SUM_OF_COMPLETED_ORDERS'
+												| translate
+										}}
+										<span class="float-right">
+											{{ labelAvgPercent.revenue }} ({{
+												averageRateRevenueToday.value.toFixed(
+													2
+												)
+											}}%)</span
+										>
+									</small>
+								</bdi>
+							</div>
+						</div>
+					</nb-card-body>
+				</nb-card>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<ea-ecommerce-charts
+					[orders]="chartPanelOrders"
+					[isOrdersLoad]="isChartPanelOrdersLoad"
+				></ea-ecommerce-charts>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-3">
+		<ea-dashboard-select-store
+			[stores]="stores"
+			(selectedStoreEmitter)="onSelectStore($event)"
+		></ea-dashboard-select-store>
+	</div>
+</div>

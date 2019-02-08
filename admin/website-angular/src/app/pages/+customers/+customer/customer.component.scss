@@ -1,0 +1,34 @@
+@import '../../../@theme/styles/themes';
+@import '../../../@shared/styles/control-icon.shared';
+
+@include nb-install-component() {
+	@include control-icon;
+
+	.btn-color {
+		background: #4caf50;
+		cursor: pointer;
+	}
+	.btn-color:hover {
+		background: #4caf50;
+		cursor: pointer;
+	}
+
+	.btn-color.btn-outline-success {
+		background: #4caf50;
+		cursor: pointer;
+	}
+	.btn-color.btn-outline-success:hover {
+		background: #4caf50;
+		cursor: pointer;
+	}
+
+	.edit-wrapper {
+		button {
+			float: right;
+		}
+	}
+
+	.control-icon-left {
+		margin: 0 !important;
+	}
+}

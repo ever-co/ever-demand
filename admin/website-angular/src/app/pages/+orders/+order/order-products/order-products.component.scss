@@ -1,0 +1,17 @@
+:host /deep/ .order-product ng2-smart-table {
+	.ng2-smart-th.qty input {
+		text-align: center;
+	}
+
+	.ng2-smart-titles.ng-star-inserted:first-child {
+		text-align: center;
+	}
+}
+
+.order-product {
+	.break-line {
+		border-bottom: 1px solid #ebeef2;
+		margin-top: 1.2rem;
+		margin-bottom: 1.25rem;
+	}
+}

@@ -1,0 +1,106 @@
+<toaster-container> </toaster-container>
+
+<div *ngIf="(user$ | async) as user" class="row">
+	<div class="col-md-8">
+		<nb-card>
+			<nb-card-header class="row">
+				<!-- BACK BTN -->
+				<svg
+					viewBox="0 0 24 24"
+					class="col-sm-1 control-icon control-icon-left"
+					[routerLink]="['/customers/list']"
+				>
+					<path
+						d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"
+					/>
+				</svg>
+
+				<div class="col-sm-8">
+					<h1>
+						{{
+							'CUSTOMERS_VIEW.CUSTOMER_VIEW.CUSTOMER' | translate
+						}}
+					</h1>
+					<h4>
+						{{
+							'CUSTOMERS_VIEW.CUSTOMER_VIEW.MANAGE_CUSTOMER'
+								| translate
+						}}
+					</h4>
+				</div>
+				<div class="col-3 edit-wrapper">
+					<button
+						type="button"
+						class="btn btn-primary active"
+						[routerLink]="['./edit']"
+					>
+						<i class="nb-edit button-icon"></i>
+						<small>{{
+							'CUSTOMERS_VIEW.CUSTOMER_VIEW.EDIT' | translate
+						}}</small>
+					</button>
+				</div>
+			</nb-card-header>
+
+			<nb-card-body class="customer-tables">
+				<nb-tabset fullWidth>
+					<nb-tab
+						tabTitle="{{
+							'CUSTOMERS_VIEW.ORDERS_HISTORY' | translate
+						}}"
+					>
+						<ea-customer-orders></ea-customer-orders>
+					</nb-tab>
+					<nb-tab
+						tabTitle="{{
+							'CUSTOMERS_VIEW.AVAILABLE_PRODUCTS' | translate
+						}}"
+					>
+						<ea-customer-products></ea-customer-products>
+					</nb-tab>
+					<nb-tab
+						tabTitle="{{
+							'CUSTOMERS_VIEW.NEARBY_STORES' | translate
+						}}"
+					>
+						<ea-customer-stores [currentUser]="selectedUser">
+						</ea-customer-stores>
+					</nb-tab>
+				</nb-tabset>
+			</nb-card-body>
+		</nb-card>
+	</div>
+
+	<div class="col-md-4">
+		<nb-card>
+			<nb-card-header class="header-color">
+				{{ 'CUSTOMERS_VIEW.CUSTOMER_VIEW.CUSTOMER' | translate }}
+			</nb-card-header>
+
+			<nb-card-body>
+				<select
+					class="col-sm-8"
+					class="btn btn-color btn-outline-success"
+					class="form-control"
+					[ngModel]="selectedUser"
+					(ngModelChange)="customerSelect($event)"
+				>
+					<option [ngValue]="undefined" disabled selected
+						>Select customer...</option
+					>
+					<option *ngFor="let user of users" [ngValue]="user">
+						{{ user.firstName }}
+						{{ user.firstName && user.lastName }}
+						{{ user.firstName ? '' : '# ' + user.id }}
+					</option>
+				</select>
+			</nb-card-body>
+		</nb-card>
+
+		<ea-customer-info></ea-customer-info>
+
+		<ea-customer-metrics></ea-customer-metrics>
+
+		<ea-customer-location></ea-customer-location>
+	</div>
+</div>

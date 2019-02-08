@@ -1,0 +1,34 @@
+:host /deep/ ng2-smart-table {
+	tr {
+		th {
+			padding: 18px !important;
+		}
+		td {
+			padding: 17px !important;
+		}
+	}
+
+	text-align: center;
+
+	td.ng2-smart-actions.ng2-smart-action-multiple-select {
+		text-align: center;
+		cursor: pointer;
+	}
+
+	tr.ng2-smart-filters th {
+		text-align: center;
+	}
+
+	// tr td, th {
+	// 	&:first-of-type {
+	// 		border-left: none;
+	// 	}
+	// 	&:last-of-type {
+	// 		border-right: none;
+	// 	}
+	// }
+
+	tr.ng2-smart-filters > th:nth-child(1) {
+		text-align: center !important;
+	}
+}

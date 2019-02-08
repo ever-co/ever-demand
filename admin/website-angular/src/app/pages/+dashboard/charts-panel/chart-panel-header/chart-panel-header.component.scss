@@ -1,0 +1,77 @@
+@import '../../../../@theme/styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+
+@include nb-install-component() {
+	a.close {
+		color: red;
+		opacity: 0.3;
+		padding-left: 3px;
+		font-size: 16px;
+	}
+	a.close:hover {
+		opacity: 1;
+	}
+
+	.chart-header {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 2.125rem;
+		align-items: center;
+		padding-right: 5%;
+	}
+
+	.dropdown {
+		min-width: 8.125rem;
+	}
+
+	div.custom-range {
+		input {
+			display: block !important;
+			height: auto !important;
+			margin-bottom: 4px !important;
+		}
+		div {
+			padding-top: 7px;
+			padding-bottom: 4px;
+			text-align: center;
+		}
+	}
+
+	@include media-breakpoint-down(is) {
+		.chart-header {
+			flex-direction: column-reverse;
+		}
+
+		ea-legend-chart {
+			align-self: flex-start;
+
+			/deep/ .legends {
+				padding-left: 0;
+				font-size: nb-theme(font-size-sm);
+			}
+
+			/deep/ .legend {
+				margin-left: 1rem;
+			}
+		}
+
+		.dropdown {
+			margin-top: 1.5rem;
+			margin-bottom: 1.5rem;
+			align-self: flex-end;
+		}
+	}
+
+	.range-period-container {
+		display: flex;
+		width: 100%;
+		padding-right: 2%;
+		padding-left: 7%;
+		button,
+		small {
+			white-space: nowrap;
+			margin-left: auto;
+		}
+	}
+}

@@ -1,0 +1,118 @@
+<div class="modal-header">
+	<span>{{ 'CATEGORY_VIEW.CREATE.CREATE_CATEGORY' | translate }}</span>
+	<button class="close" aria-label="Close" (click)="cancel()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+
+<div class="modal-body" [nbSpinner]="loading">
+	<form class="form-horizontal pt-4 pb-0" [formGroup]="form">
+		<div class="form-group row">
+			<label class="col-sm-2 control-label">{{
+				'CATEGORY_VIEW.CREATE.CATEGORY_NAME' | translate
+			}}</label>
+			<div class="col-sm-9">
+				<input
+					type="text"
+					class="form-control"
+					placeholder="{{
+						'CATEGORY_VIEW.CREATE.CATEGORY_NAME' | translate
+					}}"
+					formControlName="name"
+				/>
+
+				<div
+					*ngIf="name.invalid && (name.dirty || name.touched)"
+					class="alert alert-danger"
+				>
+					{{
+						'CATEGORY_VIEW.CREATE.ENTER_THE_CATEGORY_NAME'
+							| translate
+					}}!
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-sm-2 control-label">{{
+				'CATEGORY_VIEW.CREATE.PHOTO' | translate
+			}}</label>
+
+			<div class="col-sm-9">
+				<div class="row upload-img">
+					<input
+						[hidden]="true"
+						(change)="imageUrlChanged()"
+						type="file"
+						id="fileInput"
+						ng2FileSelect
+						[uploader]="uploader"
+						#fileInput
+					/>
+
+					<input
+						type="text"
+						class="form-control col-10"
+						placeholder="{{
+							'CATEGORY_VIEW.CREATE.PHOTO_OPTIONAL' | translate
+						}}"
+						formControlName="image"
+					/>
+
+					<button
+						(click)="fileInput.click()"
+						class="btn btn-primary btn-rectangle col-2"
+					>
+						{{ 'CATEGORY_VIEW.CREATE.BROWSE' | translate }}
+					</button>
+				</div>
+
+				<div
+					*ngIf="image.errors && (image.dirty || image.touched)"
+					class="alert alert-danger"
+				>
+					{{ 'CATEGORY_VIEW.CREATE.INVALID_URL' | translate }}!
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row" [hidden]="image.invalid">
+			<label class="col-sm-2 control-label"></label>
+			<div class="col-sm-9">
+				<div class="row preview-img" [hidden]="!showImageMeta">
+					<div>
+						<img
+							#imagePreview
+							src="{{ image.value }}"
+							alt="Invalid image"
+							class="img-rounded"
+						/>
+					</div>
+					<div class="remove-icon text-danger" (click)="deleteImg()">
+						<div
+							class="ion-md-remove-circle"
+							placeholder="Remove image"
+							title="{{
+								'CATEGORY_VIEW.CREATE.REMOVE_IMAGE' | translate
+							}}"
+						></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="modal-footer row">
+	<div class="col-sm-9"></div>
+	<div class="col">
+		<button
+			class="btn btn-success"
+			type="button"
+			(click)="createCategory()"
+			[disabled]="!isFormModelValid"
+		>
+			{{ 'CATEGORY_VIEW.CREATE.DONE' | translate }}
+		</button>
+	</div>
+</div>

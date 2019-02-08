@@ -1,0 +1,36 @@
+<nb-card>
+	<toaster-container></toaster-container>
+	<nb-card-header>
+		<h1>{{ 'CUSTOMERS_VIEW.DEVICE.CUSTOMERS_DEVICES' | translate }}</h1>
+	</nb-card-header>
+</nb-card>
+
+<nb-card>
+	<nb-card-header>
+		<div class="row">
+			<div class="col">
+				<button
+					class="btn btn-danger active"
+					[disabled]="!hasSelectedDevices"
+					(click)="deleteSelectedDevices()"
+				>
+					<i class="ion-md-trash button-icon"></i>
+					<small _ngcontent-c55="">{{
+						'CUSTOMERS_VIEW.DEVICE.DELETE' | translate
+					}}</small>
+				</button>
+			</div>
+		</div>
+	</nb-card-header>
+
+	<nb-card-body [nbSpinner]="loading">
+		<ng2-smart-table
+			[settings]="settingsSmartTable"
+			[source]="sourceSmartTable"
+			(edit)="edit($event)"
+			(delete)="deleteDevice($event)"
+			(userRowSelect)="selectProductTmp($event)"
+		>
+		</ng2-smart-table>
+	</nb-card-body>
+</nb-card>

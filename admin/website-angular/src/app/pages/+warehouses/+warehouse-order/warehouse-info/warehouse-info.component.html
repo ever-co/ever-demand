@@ -1,0 +1,48 @@
+<div class="modal-header">
+	<h3>{{ 'CUSTOMERS_VIEW.WAREHOUSE.WAREHOUSE_INFO' | translate }}</h3>
+	<button class="close" aria-label="Close" (click)="cancel()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body customer-warehouse-info">
+	<h6>
+		<strong
+			>{{ 'CUSTOMERS_VIEW.WAREHOUSE.WAREHOUSE_ID' | translate }}:</strong
+		>
+		<div (click)="redirectToWarehousePage()" class="warehouse-redirect">
+			{{ warehouseId }}
+		</div>
+	</h6>
+	<h6>
+		<strong
+			>{{
+				'CUSTOMERS_VIEW.WAREHOUSE.WAREHOUSE_NAME' | translate
+			}}:</strong
+		>
+		<div (click)="redirectToWarehousePage()" class="warehouse-redirect">
+			{{ selectedWarehouse.name }}
+		</div>
+	</h6>
+
+	<div>
+		<button
+			(click)="showCode = !showCode"
+			class="btn btn-dark btn-icon pull-left"
+			type="button"
+		>
+			<svg viewBox="0 0 24 24" width="24px">
+				<path
+					_ngcontent-c20=""
+					d="M14.6,16.6L19.2,12L14.6,7.4L16,6L22,12L16,18L14.6,16.6M9.4,16.6L4.8,12L9.4,7.4L8,6L2,12L8,18L9.4,16.6Z"
+					fill="#fff"
+				></path>
+			</svg>
+		</button>
+
+		<div class="json-info" *ngIf="showCode">
+			<div>
+				<pre><code highlight [language]="['json']" [code]="selectedWarehouse | json" class="iconInfo"></code></pre>
+			</div>
+		</div>
+	</div>
+</div>

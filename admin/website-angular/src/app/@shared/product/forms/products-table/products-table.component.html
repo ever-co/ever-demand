@@ -1,0 +1,5 @@
+<nb-card [nbSpinner]="loading">
+	<ng2-smart-table class="products-table" [settings]="settingsSmartTable" [source]="sourceSmartTable" (userRowSelect)="selectProductTmp($event)"
+	 (edit)="edit($event)" (delete)="deleteProduct($event)">
+	</ng2-smart-table>
+</nb-card>

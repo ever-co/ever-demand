@@ -1,0 +1,29 @@
+<nb-card>
+	<toaster-container></toaster-container>
+
+	<nb-card-header>
+		<button
+			class="btn btn-icon btn-success btn-sm mr-2 d-inline-block"
+			(click)="openWizardNewCarrier()"
+		>
+			<i class="ion-md-add button-icon"></i>
+			{{ 'CARRIERS_VIEW.CREATE_BUTTON' | translate }}
+		</button>
+		<button
+			class="btn btn-icon btn-danger btn-sm mr-2 d-inline-block"
+			[disabled]="!hasSelectedCarriers"
+			(click)="deleteSelectedCarriers()"
+		>
+			<i class="ion-md-trash button-icon"></i>
+			{{ 'CARRIERS_VIEW.DELETE' | translate }}
+		</button>
+	</nb-card-header>
+	<nb-card-body [nbSpinner]="loading">
+		<ng2-smart-table
+			[settings]="settingsSmartTable"
+			[source]="sourceSmartTable"
+			(userRowSelect)="selectCarrierTmp($event)"
+		>
+		</ng2-smart-table>
+	</nb-card-body>
+</nb-card>

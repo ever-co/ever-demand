@@ -1,0 +1,18 @@
+<div *ngIf="rowData?.user" (click)="redirect()" class="redirectBtn">
+	<strong class="d-block">
+		<img
+			*ngIf="rowData?.user?.image"
+			class="user-image"
+			alt=""
+			src="{{ rowData?.user?.image }}"
+		/>
+		<i>{{ rowData?.user?.firstName }}</i>
+		<i>{{ rowData?.user?.lastName }}</i>
+	</strong>
+	<span>
+		{{ rowData?.user?.geoLocation?.city }}, {{
+		rowData?.user?.geoLocation?.house }}, {{
+		rowData?.user?.geoLocation?.postcode }}, {{
+		rowData?.user?.geoLocation?.countryName }}
+	</span>
+</div>

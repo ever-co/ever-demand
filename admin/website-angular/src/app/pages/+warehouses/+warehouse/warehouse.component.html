@@ -1,0 +1,164 @@
+<div class="row">
+	<toaster-container></toaster-container>
+	<div class="col-md-9">
+		<ea-warehouse-main-info
+			[selectedWarehouse]="selectedWarehouse"
+		></ea-warehouse-main-info>
+
+		<div>
+			<div *ngIf="selectedOrder">
+				<ea-warehouse-order-view
+					[selectedOrder]="selectedOrder"
+				></ea-warehouse-order-view>
+			</div>
+
+			<nb-tabset fullWidth>
+				<nb-tab tabTitle="{{ 'WAREHOUSE_VIEW.ORDERS' | translate }}">
+					<nb-card>
+						<nb-card-header class="header-color">
+							<div class="row">
+								<div class="col-md-12">
+									<button
+										class="btn btn-icon btn-sm btn-success"
+										(click)="
+											openWarehouseOrderCreateModal()
+										"
+									>
+										<i class="ion-md-add button-icon"></i>
+										{{
+											'WAREHOUSE_VIEW.CREATE_ORDER'
+												| translate
+										}}
+									</button>
+								</div>
+							</div>
+						</nb-card-header>
+
+						<nb-card-body style="overflow: hidden;">
+							<div
+								ngbRadioGroup
+								[(ngModel)]="filterMode"
+								class="row orders-filters btn-group btn-group-toggle btn-outline-toggle-group btn-toggle-radio-group"
+							>
+								<label
+									ngbButtonLabel
+									class="btn-outline-secondary btn-tn"
+								>
+									<input
+										ngbButton
+										type="radio"
+										value="all"
+										(click)="filterOrders('all')"
+									/>
+									{{ 'All' | translate }}
+								</label>
+
+								<label
+									ngbButtonLabel
+									class="btn btn-outline-secondary btn-tn"
+								>
+									<input
+										ngbButton
+										type="radio"
+										value="not_confirmed"
+										(click)="filterOrders('not_confirmed')"
+									/>
+									{{ 'Not Confirmed' | translate }}
+								</label>
+
+								<label
+									ngbButtonLabel
+									class="btn btn-outline-secondary btn-tn"
+								>
+									<input
+										ngbButton
+										type="radio"
+										value="confirmed"
+										(click)="filterOrders('confirmed')"
+									/>
+									{{ 'Confirmed' | translate }}
+								</label>
+
+								<label
+									ngbButtonLabel
+									class="btn btn-outline-secondary btn-tn"
+								>
+									<input
+										ngbButton
+										type="radio"
+										value="not_paid"
+										(click)="filterOrders('not_paid')"
+									/>
+									{{ 'Not paid' | translate }}
+								</label>
+
+								<label
+									ngbButtonLabel
+									class="btn btn-outline-secondary btn-tn"
+								>
+									<input
+										ngbButton
+										type="radio"
+										value="cancelled"
+										(click)="filterOrders('cancelled')"
+									/>
+									{{ 'Cancelled' | translate }}
+								</label>
+
+								<label
+									ngbButtonLabel
+									class="btn btn-outline-secondary btn-tn"
+								>
+									<input
+										ngbButton
+										type="radio"
+										value="in_delivery"
+										(click)="filterOrders('in_delivery')"
+									/>
+									{{ 'In Delivery' | translate }}
+								</label>
+							</div>
+						</nb-card-body>
+
+						<nb-card-footer>
+							<!-- <ea-warehouse-orders-table #warehouseOrdersTable (createOrder)='openWarehouseOrderCreateModal()'></ea-warehouse-orders-table> -->
+
+							<ng2-smart-table
+								[settings]="settingsSmartTable"
+								[source]="sourceSmartTable"
+								(userRowSelect)="selectOrder($event)"
+							>
+							</ng2-smart-table>
+						</nb-card-footer>
+					</nb-card>
+				</nb-tab>
+				<nb-tab tabTitle="{{ 'WAREHOUSE_VIEW.PRODUCTS' | translate }}">
+					<ea-store-products-table
+						#productsTable
+						[warehouse]="warehouse"
+						(addProducts)="openAddProductTypeModel()"
+					></ea-store-products-table>
+				</nb-tab>
+			</nb-tabset>
+		</div>
+	</div>
+
+	<div class="col-md-3">
+		<ea-warehouse-select-view
+			#warehouseSelectView
+			[warehouses]="warehouses"
+			[selectedWarehouse]="selectedWarehouse"
+			(selectWarehouseEvent)="selectWarehouseEvent($event)"
+		></ea-warehouse-select-view>
+
+		<div class="panel">
+			<div class="panel-heading">
+				<div *ngIf="warehouse">
+					<ea-warehouse-products-view
+						[warehouse]="warehouse"
+					></ea-warehouse-products-view>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

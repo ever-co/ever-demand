@@ -1,0 +1,38 @@
+<nb-card id="make-order" [nbSpinner]="loading">
+	<nb-card-header class="header-color">
+		<span *ngIf="showOrderAction && !modalTitle">
+			{{ TRANSLATE_PREFIXES.MAKE_ORDER | translate }}
+		</span>
+		<span *ngIf="showOrderAction && modalTitle"> {{ modalTitle }} </span>
+		<button class="close" aria-label="Close" (click)="cancel()">
+			<span aria-hidden=" true ">&times;</span>
+		</button>
+
+		<div class="checkbox" *ngIf="!showOrderAction">
+			<label>
+				<input type="checkbox" (change)="toggleAvalableProducts()" />
+				{{ TRANSLATE_PREFIXES.ONLY_AVAILABLE | translate }}
+			</label>
+		</div>
+	</nb-card-header>
+
+	<nb-card-body>
+		<ng2-smart-table
+			[settings]="settingsSmartTable"
+			[source]="sourceSmartTable"
+		></ng2-smart-table>
+	</nb-card-body>
+
+	<nb-card-footer *ngIf="showOrderAction">
+		<button
+			(click)="makeOrder()"
+			[disabled]="!canOrder"
+			class="btn btn-sm btn-primary"
+		>
+			<span *ngIf="!actionBtnText">{{
+				TRANSLATE_PREFIXES.ORDER | translate
+			}}</span>
+			<span *ngIf="actionBtnText">{{ actionBtnText }}</span>
+		</button>
+	</nb-card-footer>
+</nb-card>

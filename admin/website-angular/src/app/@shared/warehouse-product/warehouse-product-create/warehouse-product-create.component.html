@@ -1,0 +1,69 @@
+<div class="modal-header">
+	<span class="modal-title">{{
+		'WAREHOUSE_VIEW.NEW_PRODUCT.ADD_PRODUCTS_TO_STORE' | translate
+	}}</span>
+	<button class="close" aria-label="Close" (click)="cancel()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<nb-card class="add-products-to-store-modal">
+	<form-wizard
+		#wizzardFrom
+		class="form-horizontal"
+		[formGroup]="form"
+		[buttonDone]="buttonDone"
+		[buttonNext]="buttonNext"
+		[buttonPrevious]="buttonPrevious"
+		[nbSpinner]="loading"
+	>
+		<wizard-step
+			#wizzardFromStep1
+			(onNext)="onStep1Next()"
+			[title]="'WAREHOUSE_VIEW.NEW_PRODUCT.HOW_TO_ADD' | translate"
+			[isValid]="hasCoiced"
+		>
+			<hr />
+			<ea-warehouse-add-choice
+				(click)="selectedChoice()"
+				#warehouseAddChoice
+				class="warehouse-add-choice"
+			></ea-warehouse-add-choice>
+		</wizard-step>
+
+		<wizard-step
+			[title]="'WAREHOUSE_VIEW.NEW_PRODUCT.ADD' | translate"
+			(onComplete)="createProduct()"
+			[isValid]="basicInfo.valid || hasSelectedProducts() || false"
+			(onNext)="onStep2Next()"
+			(onPrev)="onStep2Prev()"
+		>
+			<hr class="hr-line" />
+			<ea-product-basic-info-form
+				*ngIf="hasCoiced === 'new'"
+				[productCategories]="productsCategories"
+				#basicInfoForm
+				[form]="basicInfo"
+			>
+			</ea-product-basic-info-form>
+
+			<ea-products-table
+				[perPage]="perPage"
+				[hiddenTableActions]="true"
+				*ngIf="hasCoiced === 'existing'"
+				#productsTable
+			>
+			</ea-products-table>
+		</wizard-step>
+
+		<wizard-step
+			[title]="'WAREHOUSE_VIEW.NEW_PRODUCT.SAVE' | translate"
+			[isValid]="validAllProducts()"
+			(onComplete)="addProducts()"
+		>
+			<hr />
+			<ea-warehouse-products-table
+				#warehouseProductsTable
+			></ea-warehouse-products-table>
+		</wizard-step>
+	</form-wizard>
+</nb-card>

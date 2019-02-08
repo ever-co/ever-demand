@@ -1,0 +1,48 @@
+<nb-card *ngIf="user">
+	<nb-card-header>
+		{{ 'CUSTOMERS_VIEW.CUSTOMER' | translate }} #{{ user.id }}
+	</nb-card-header>
+	<nb-card-body>
+		<div class="pull-left">
+			<div class="info">
+				<div>
+					<strong>{{ user.firstName }} {{ user.lastName }}</strong>
+				</div>
+				<div>{{ user.email }}</div>
+				<div>{{ user.phone }}</div>
+			</div>
+
+			<div class="locInfo">
+				<div>
+					{{ user.geoLocation.streetAddress }},
+					{{ user.geoLocation.house }}
+					{{ user.apartment && ', Ap.' + user.apartment }}
+				</div>
+				<div>
+					{{ user.geoLocation.city }}
+					{{
+						user.geoLocation.countryName &&
+							', ' + user.geoLocation.countryName
+					}}
+				</div>
+			</div>
+		</div>
+
+		<button
+			type="button"
+			class="btn btn-dark btn-icon pull-right"
+			(click)="showCode = !showCode"
+		>
+			<svg width="24px" viewBox="0 0 24 24">
+				<path
+					fill="#fff"
+					d="M14.6,16.6L19.2,12L14.6,7.4L16,6L22,12L16,18L14.6,16.6M9.4,16.6L4.8,12L9.4,7.4L8,6L2,12L8,18L9.4,16.6Z"
+				/>
+			</svg>
+		</button>
+	</nb-card-body>
+
+	<nb-card-footer *ngIf="showCode">
+		<pre><code highlight [language]="['json']" [code]="user | json"></code></pre>
+	</nb-card-footer>
+</nb-card>

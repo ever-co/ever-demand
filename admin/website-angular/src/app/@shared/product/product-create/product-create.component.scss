@@ -1,0 +1,15 @@
+:host /deep/ .card-footer button {
+	background-color: #111111 !important;
+	border: none !important;
+	color: white !important;
+	cursor: pointer !important;
+}
+
+:host /deep/ .card-footer button:hover {
+	background-color: #bebebe !important;
+	color: #111111 !important;
+}
+
+:host /deep/ nb-card {
+	background-color: white !important;
+}

@@ -1,0 +1,32 @@
+<nb-card>
+	<toaster-container></toaster-container>
+
+	<nb-card-header>
+		<button
+			class="btn btn-success mr-2 d-inline-block"
+			(click)="openWizardNewProduct()"
+		>
+			<i class="ion-md-add button-icon"></i>
+			<small _ngcontent-c55="">{{
+				'PRODUCTS_VIEW.CREATE' | translate
+			}}</small>
+		</button>
+		<button
+			class="btn btn-danger mr-2 d-inline-block"
+			[disabled]="!hasSelectedProducts"
+			(click)="deleteSelectedRows()"
+		>
+			<i class="ion-md-trash button-icon"></i>
+			<small _ngcontent-c55="">{{
+				'PRODUCTS_VIEW.DELETE' | translate
+			}}</small>
+		</button>
+	</nb-card-header>
+
+	<nb-card-body [nbSpinner]="loading">
+		<ea-products-table
+			[perPage]="perPage"
+			#productsTable
+		></ea-products-table>
+	</nb-card-body>
+</nb-card>

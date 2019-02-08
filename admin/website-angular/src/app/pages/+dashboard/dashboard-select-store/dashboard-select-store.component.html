@@ -1,0 +1,43 @@
+<nb-card size="medium" class="h-auto">
+	<nb-card-header>
+		<h5>{{"DASHBOARD_VIEW.SELECT_COMPONENT.STORES" | translate}}</h5>
+	</nb-card-header>
+
+	<nb-card-body>
+		<select class="form-control" (change)="selectNewStore($event)">
+			<option [value]="undefined" disabled selected>
+				{{"DASHBOARD_VIEW.SELECT_COMPONENT.SELECT_STORE" | translate}}...
+			</option>
+			<option [value]="store.id" *ngFor="let store of stores">{{ store.name }}</option>
+		</select>
+
+		<div *ngIf="selectedStore">
+			<div class="mt-4">
+				<h5>
+					{{"DASHBOARD_VIEW.SELECT_COMPONENT.CONTACT_DETAILS" | translate}}
+				</h5>
+				<ul>
+					<li>
+						{{"DASHBOARD_VIEW.SELECT_COMPONENT.PHONE" | translate}}: <strong>{{ selectedStore.contactPhone }}</strong> </li>
+					<li>
+						{{"DASHBOARD_VIEW.SELECT_COMPONENT.EMAIL" | translate}}: <strong>{{ selectedStore.contactEmail }}</strong> </li>
+					<li>
+
+						{{"DASHBOARD_VIEW.SELECT_COMPONENT.ORDERS_FORWARDING_WITH" | translate}}
+
+						<strong>
+							{{"DASHBOARD_VIEW.SELECT_COMPONENT.PHONE" | translate}}
+						</strong>
+						<strong>
+							{{"DASHBOARD_VIEW.SELECT_COMPONENT.EMAIL" | translate}}
+						</strong>
+					</li>
+				</ul>
+			</div>
+
+			<div class="mt-4">
+				<img src="{{ selectedStore.logo }}" class="mb-2" width="40%" />
+			</div>
+		</div>
+	</nb-card-body>
+</nb-card>

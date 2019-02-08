@@ -1,0 +1,181 @@
+<div class="col-sm-12" [formGroup]="form" *ngIf="form">
+	<fieldset>
+		<div class="form-group row">
+			<label class="col-sm-2 control-label">{{
+				'WAREHOUSE_VIEW.MUTATION.NAME' | translate
+			}}</label>
+
+			<div class="col-sm-9">
+				<input
+					type="text"
+					class="form-control"
+					placeholder="{{
+						'WAREHOUSE_VIEW.MUTATION.NAME' | translate
+					}}"
+					formControlName="name"
+				/>
+
+				<div
+					*ngIf="name.errors && (name.dirty || name.touched)"
+					class="alert alert-danger"
+				>
+					<div [hidden]="!name.hasError('required')">
+						{{
+							'WAREHOUSE_VIEW.MUTATION.ERRORS.NAME_IS_REQUIRED'
+								| translate
+						}}!
+					</div>
+					<div [hidden]="!name.hasError('minlength')">
+						{{
+							'WAREHOUSE_VIEW.MUTATION.ERRORS.NAME_ATLEAST_3_CHARS'
+								| translate
+						}}!
+					</div>
+					<div [hidden]="!name.hasError('maxlength')">
+						{{
+							'WAREHOUSE_VIEW.MUTATION.ERRORS.NAME_MORE_THAN_30_CHARS'
+								| translate
+						}}!
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-sm-2 control-label">{{
+				'WAREHOUSE_VIEW.MUTATION.PHOTO' | translate
+			}}</label>
+
+			<div class="col-sm-9">
+				<div class="row upload-img">
+					<input
+						[hidden]="true"
+						(change)="imageUrlChanged()"
+						#fileInput
+						type="file"
+						id="fileInput"
+						ng2FileSelect
+						[uploader]="uploader"
+					/>
+					<input
+						type="text"
+						class="form-control col-10"
+						placeholder="{{
+							'WAREHOUSE_VIEW.MUTATION.PHOTO' | translate
+						}} ({{ 'OPTIONAL' | translate }})"
+						formControlName="logo"
+					/>
+
+					<button
+						(click)="fileInput.click()"
+						class="btn btn-primary btn-rectangle col-2"
+					>
+						{{ 'BROWSE' | translate }}
+					</button>
+				</div>
+
+				<div
+					*ngIf="logo.errors && (logo.dirty || logo.touched)"
+					class="alert alert-danger"
+				>
+					{{
+						'WAREHOUSE_VIEW.MUTATION.ERRORS.INVALID_URL'
+							| translate
+					}}!
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row" [hidden]="logo.invalid">
+			<label class="col-sm-2 control-label"></label>
+			<div class="col-sm-9">
+				<div class="row preview-img" [hidden]="!showLogoMeta">
+					<div>
+						<img
+							#logoPreview
+							src="{{ logo.value }}"
+							alt="Invalid image"
+							class="img-rounded"
+						/>
+					</div>
+					<div class="removeIcon" (click)="deleteImg()">
+						<div
+							class="ion-md-remove-circle"
+							placeholder="Remove image"
+							title="{{ 'PLACEHOLDER.REMOVE_IMAGE' | translate }}"
+						></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-sm-9 offset-sm-2">
+				<div class="checkbox">
+					<nb-checkbox status="success" formControlName="isActive">{{
+						'WAREHOUSE_VIEW.MUTATION.IS_ACTIVE' | translate
+					}}</nb-checkbox>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-sm-9 offset-sm-2">
+				<div class="checkbox">
+					<nb-checkbox
+						status="success"
+						formControlName="isManufacturing"
+						>{{
+							'WAREHOUSE_VIEW.MUTATION.PRODUCTS_MANUFACTURING'
+								| translate
+						}}</nb-checkbox
+					>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-sm-9 offset-sm-2">
+				<div class="checkbox">
+					<nb-checkbox
+						status="success"
+						formControlName="isCarrierRequired"
+						>{{
+							'WAREHOUSE_VIEW.MUTATION.CARRIER_REQUIRED'
+								| translate
+						}}</nb-checkbox
+					>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-sm-2 control-label">{{
+				'WAREHOUSE_VIEW.MUTATION.CARRIERS' | translate
+			}}</label>
+
+			<div class="col-sm-9">
+				<div class="checkbox">
+					<nb-checkbox
+						status="success"
+						formControlName="hasRestrictedCarriers"
+						>{{
+							'WAREHOUSE_VIEW.MUTATION.USE_ONLY_SPECIFIC_CARRIERS'
+								| translate
+						}}</nb-checkbox
+					>
+				</div>
+
+				<div *ngIf="hasRestrictedCarriers.value">
+					<ss-multiselect-dropdown
+						[options]="carriersOptions$ | async"
+						[settings]="{ displayAllSelectedText: true }"
+						formControlName="usedCarriersIds"
+						class="carriers-dropdown"
+					>
+					</ss-multiselect-dropdown>
+				</div>
+			</div>
+		</div>
+	</fieldset>
+</div>

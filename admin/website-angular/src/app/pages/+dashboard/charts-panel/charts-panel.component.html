@@ -1,0 +1,60 @@
+<toaster-container></toaster-container>
+
+<nb-card size="large">
+	<nb-tabset #ordersProfitTab fullWidth (changeTab)="changeTab($event)">
+		<nb-tab tabTitle="{{ 'DASHBOARD_VIEW.CHARTS.ORDERS' | translate }}">
+			<div class="chart-container">
+				<ea-chart-panel-summary
+					[summary]="chartPanelSummary"
+					[isLoading]="loading.chartPanelSummary"
+				></ea-chart-panel-summary>
+
+				<ea-chart-panel-header
+					[preservedRangeEvent]="preservedRanges$"
+					[clearRangeFromParent]="clearRange$"
+					[type]="period"
+					(periodChange)="setPeriodAndGetChartData($event)"
+					(customRangeDaysDiff)="selectDateRangeOrderCharts($event)"
+					(clearSelectedRange)="clearRange()"
+				>
+				</ea-chart-panel-header>
+
+				<ea-orders-chart
+					#ordersChart
+					[ordersChartData]="ordersChartData"
+					[nbSpinner]="loading.chart"
+					nbSpinnerSize="xxlarge"
+				></ea-orders-chart>
+			</div>
+		</nb-tab>
+
+		<nb-tab
+			tabTitle="{{ 'DASHBOARD_VIEW.CHARTS.PROFIT' | translate }}"
+			[lazyLoad]="true"
+		>
+			<div class="chart-container">
+				<ea-chart-panel-summary
+					[summary]="chartPanelSummary"
+					[isLoading]="loading.chartPanelSummary"
+				></ea-chart-panel-summary>
+
+				<ea-chart-panel-header
+					[preservedRangeEvent]="preservedRanges$"
+					[clearRangeFromParent]="clearRange$"
+					[type]="period"
+					(periodChange)="setPeriodAndGetChartData($event)"
+					(customRangeDaysDiff)="selectDateRangeOrderCharts($event)"
+					(clearSelectedRange)="clearRange()"
+				>
+				</ea-chart-panel-header>
+
+				<ea-profit-chart
+					#profitChart
+					[profitChartData]="profitChartData"
+					[nbSpinner]="loading.chart"
+					nbSpinnerSize="xxlarge"
+				></ea-profit-chart>
+			</div>
+		</nb-tab>
+	</nb-tabset>
+</nb-card>
