@@ -395,9 +395,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/stripe@^5.0.19":
-  version "5.0.24"
-  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-5.0.24.tgz#3cec83275822f3e157f13eb7da36ed45f39e0dd1"
+"@types/stripe@^6.19.7":
+  version "6.19.7"
+  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-6.19.7.tgz#a04c50d519ec50d820f72d12e31351f845c583fe"
+  integrity sha512-e4it4GNSZ+lrQth+2/7TDw0FVWmLcM4t/m+bDF8DhEwD17JmSKWnUNvPYbcafoeai4rI1i4RKmTeHuzB3IquRQ==
   dependencies:
     "@types/node" "*"
 
