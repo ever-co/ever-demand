@@ -836,10 +836,10 @@
   version "1.4.32"
   resolved "https://registry.yarnpkg.com/@types/socket.io-client/-/socket.io-client-1.4.32.tgz#988a65a0386c274b1c22a55377fab6a30789ac14"
 
-"@types/stripe@^6.19.4":
-  version "6.19.4"
-  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-6.19.4.tgz#37b76cabfc8dd8db7dd352941f3e6877360ccba9"
-  integrity sha512-+oy8t6bPA68WTyBVAzi59NUwBOWj/lXqolbO0SuX22a306V6Ba9tqxIiO/alTop/V3VD7sKaUgHJ61vsoMDZGA==
+"@types/stripe@^6.19.7":
+  version "6.19.7"
+  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-6.19.7.tgz#a04c50d519ec50d820f72d12e31351f845c583fe"
+  integrity sha512-e4it4GNSZ+lrQth+2/7TDw0FVWmLcM4t/m+bDF8DhEwD17JmSKWnUNvPYbcafoeai4rI1i4RKmTeHuzB3IquRQ==
   dependencies:
     "@types/node" "*"
 
