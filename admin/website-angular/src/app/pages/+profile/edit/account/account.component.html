@@ -1,0 +1,94 @@
+<nb-card [nbSpinner]="loading">
+	<div class="container">
+		<form [formGroup]="accountForm">
+			<div class="form-group">
+				<label for="old-password">
+					{{ 'PROFILE_VIEW.OLD_PASSWORD' | translate }}</label
+				>
+				<input
+					id="old-password"
+					type="password"
+					class="form-control"
+					[ngClass]="
+						oldPassword.dirty || oldPassword.touched
+							? oldPassword.errors
+								? 'form-control-danger'
+								: 'form-control-success'
+							: ''
+					"
+					formControlName="oldPassword"
+					placeholder="{{&quot;PROFILE_VIEW.OLD_PASSWORD&quot; | translate}}"
+				/>
+				<span *ngIf="oldPasswordErrorMsg">
+					<strong class="text-danger">
+						{{ 'PROFILE_VIEW.ERROR' | translate }}:
+						{{ oldPasswordErrorMsg }}</strong
+					></span
+				>
+			</div>
+			<div class="form-group">
+				<label for="id-password">{{
+					'PROFILE_VIEW.NEW_PASSWORD' | translate
+				}}</label>
+				<input
+					id="id-password"
+					type="password"
+					class="form-control"
+					[ngClass]="
+						password.dirty || password.touched
+							? password.errors
+								? 'form-control-danger'
+								: 'form-control-success'
+							: ''
+					"
+					formControlName="password"
+					placeholder="{{&quot;PROFILE_VIEW.NEW_PASSWORD&quot; | translate}}"
+				/>
+				<span *ngIf="passwordErrorMsg">
+					<strong class="text-danger">
+						{{ 'PROFILE_VIEW.ERROR' | translate }}:
+						{{ passwordErrorMsg }}</strong
+					></span
+				>
+			</div>
+			<div class="form-group">
+				<label for="repeat-password">
+					{{ 'PROFILE_VIEW.REPEAT_NEW_PASSWORD' | translate }}</label
+				>
+				<input
+					id="repeat-password"
+					type="password"
+					class="form-control"
+					[ngClass]="
+						repeatPassword.dirty || repeatPassword.touched
+							? password.value === repeatPassword.value
+								? 'form-control-success'
+								: 'form-control-danger'
+							: ''
+					"
+					formControlName="repeatPassword"
+					placeholder="{{&quot;PROFILE_VIEW.REPEAT_NEW_PASSWORD&quot; | translate}}"
+				/>
+				<span *ngIf="repeatPasswordErrorMsg">
+					<strong class="text-danger">
+						{{ 'PROFILE_VIEW.ERROR' | translate }}:
+						{{ repeatPasswordErrorMsg }}</strong
+					></span
+				>
+			</div>
+			<button
+				class="btn btn-with-icon btn-outline-success btn-lg float-right save-button-profile"
+				[disabled]="
+					!accountForm.valid ||
+					((password.dirty || password.touched) &&
+						password.value !== repeatPassword.value)
+				"
+				type="button"
+				(click)="saveChanges()"
+			>
+				<i class="nb-checkmark"></i>
+				<span> {{ 'PROFILE_VIEW.SAVE' | translate }} </span>
+			</button>
+		</form>
+	</div>
+</nb-card>

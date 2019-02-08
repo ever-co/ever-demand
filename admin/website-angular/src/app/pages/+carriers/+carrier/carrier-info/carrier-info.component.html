@@ -1,0 +1,41 @@
+<nb-card>
+	<nb-card-header>
+		{{carrier.firstName}} {{carrier.firstName && carrier.lastName}} {{carrier.firstName ? '' : '# ' + carrier.id }}
+		<span class="isActive" [ngSwitch]="carrier.isActive">
+			<span *ngSwitchCase="true" class="label-is-active label-success">{{"CARRIERS_VIEW.CARRIER_PAGE.ACTIVE" | translate}}</span>
+			<span *ngSwitchCase="false" class="label-is-active label-warning">{{"CARRIERS_VIEW.CARRIER_PAGE.NOT_ACTIVE" | translate}}
+			</span>
+		</span>
+		<span class="pull-right carrierStatus" [ngSwitch]="carrier.status">
+			<button *ngSwitchCase="0" (click)='toogleStatus()' class="btn btn-success carrierStatus" [nbSpinner]="loading" nbSpinnerStatus="success">{{"CARRIERS_VIEW.CARRIER_PAGE.WORKING"
+				| translate}}</button>
+			<button *ngSwitchCase="1" (click)='toogleStatus()' class="btn btn-danger carrierStatus" [nbSpinner]="loading" nbSpinnerStatus="danger">{{"CARRIERS_VIEW.CARRIER_PAGE.NOT_WORKING"
+				| translate}}</button>
+		</span>
+	</nb-card-header>
+	<nb-card-body>
+		<div class="pull-left">
+			<div>
+				<strong>
+					{{ carrier.firstName }} {{ carrier.lastName }}
+				</strong>
+			</div>
+			<div>
+				{{ carrier.geoLocation.streetAddress }}, {{ carrier.geoLocation.house }}
+			</div>
+			<div>
+				{{ carrier.geoLocation.city }} {{ carrier.geoLocation.postcode }}, {{ carrier.geoLocation.countryName }}
+			</div>
+		</div>
+
+		<button type="button" class="btn btn-dark btn-icon pull-right" (click)="showCode = !showCode">
+			<svg width="24px" viewBox="0 0 24 24">
+				<path fill="#fff" d="M14.6,16.6L19.2,12L14.6,7.4L16,6L22,12L16,18L14.6,16.6M9.4,16.6L4.8,12L9.4,7.4L8,6L2,12L8,18L9.4,16.6Z"
+				/>
+			</svg>
+		</button>
+	</nb-card-body>
+	<nb-card-footer *ngIf="showCode">
+		<pre><code highlight [language]="['json']" [code]="carrier | json"></code></pre>
+	</nb-card-footer>
+</nb-card>

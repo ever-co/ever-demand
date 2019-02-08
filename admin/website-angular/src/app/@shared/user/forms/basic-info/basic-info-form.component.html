@@ -1,0 +1,139 @@
+<div class="col-sm-12" [formGroup]="form" *ngIf="form">
+	<br />
+
+	<fieldset>
+		<div class="form-group row">
+			<label class="col-sm-2 control-label">
+				<span *ngIf="showBasicInfoLabel">{{
+					'SHARED.USER.FORMS.BASIC_INFO.TITLE' | translate
+				}}</span>
+			</label>
+
+			<div class="col-sm-5">
+				<input
+					type="text"
+					class="form-control"
+					placeholder="{{
+						'SHARED.USER.FORMS.BASIC_INFO.FIRST_NAME_OPTIONAL'
+							| translate
+					}}"
+					formControlName="firstName"
+				/>
+			</div>
+
+			<div class="col-sm-5">
+				<input
+					type="text"
+					class="form-control"
+					placeholder="{{
+						'SHARED.USER.FORMS.BASIC_INFO.LAST_NAME_OPTIONAL'
+							| translate
+					}}"
+					formControlName="lastName"
+				/>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-sm-2 control-label">{{
+				'SHARED.USER.FORMS.BASIC_INFO.EMAIL' | translate
+			}}</label>
+
+			<div class="col-sm-10">
+				<input
+					type="text"
+					class="form-control"
+					placeholder="{{
+						'SHARED.USER.FORMS.BASIC_INFO.EMAIL_OPTIONAL'
+							| translate
+					}}"
+					formControlName="email"
+				/>
+
+				<div
+					*ngIf="email.errors && (email.dirty || email.touched)"
+					class="alert alert-danger"
+				>
+					<div [hidden]="!email.hasError('email')">
+						{{
+							'SHARED.USER.FORMS.BASIC_INFO.ERRORS.INVALID_EMAIL'
+								| translate
+						}}!
+					</div>
+					<div [hidden]="!email.hasError('emailTaken')">
+						{{
+							'SHARED.USER.FORMS.BASIC_INFO.ERRORS.EMAIL_IS_ALREADY_IN_USE'
+								| translate
+						}}!
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-sm-2 control-label">
+				{{ 'SHARED.USER.FORMS.BASIC_INFO.PHOTO_URL' | translate }}
+			</label>
+
+			<div class="col-sm-10">
+				<div class="row upload-img">
+					<input
+						[hidden]="true"
+						(change)="imageUrlChanged()"
+						#fileInput
+						type="file"
+						id="fileInput"
+						ng2FileSelect
+						[uploader]="uploader"
+					/>
+
+					<input
+						type="text"
+						class="form-control col-10"
+						placeholder="{{
+							'SHARED.USER.FORMS.BASIC_INFO.PICTURE_URL'
+								| translate
+						}}"
+						formControlName="image"
+					/>
+
+					<button
+						(click)="fileInput.click()"
+						class="btn btn-primary btn-rectangle col-2"
+					>
+						{{ 'BROWSE' | translate }}
+					</button>
+				</div>
+
+				<div *ngIf="isLogoValid" class="alert alert-danger">
+					{{ 'SHARED.FORMS.ERRORS.LOGO_URL_REQUIRED' | translate }}!
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row" [hidden]="image.invalid">
+			<label class="col-sm-2 control-label"></label>
+			<div class="col-sm-10">
+				<div class="row preview-img">
+					<div
+						[hidden]="!showLogoMeta"
+						class="remove-icon"
+						(click)="deleteImg()"
+					>
+						<img
+							#logoImagePreview
+							src="{{ image.value }}"
+							alt="Invalid image"
+							class="img-rounded"
+						/>
+
+						<span
+							class="ion-md-remove-circle text-danger pl-2"
+							title="Remove"
+						></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</fieldset>
+</div>

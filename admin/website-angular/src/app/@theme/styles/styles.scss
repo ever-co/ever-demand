@@ -1,0 +1,179 @@
+// themes - our custom or/and out of the box themes
+
+// framework component themes (styles tied to theme variables)
+@import '~@nebular/theme/styles/globals';
+@import '~@nebular/auth/styles/all';
+@import '~@nebular/bootstrap/styles/globals';
+//angular2-toaster
+@import 'node_modules/angular2-toaster/toaster';
+// global app font size
+@import './font-size';
+// custom global ng-bootstrap modal
+@import './ng-bootstrap.modal';
+// loading progress bar theme
+@import './pace.theme';
+// custom btn styles
+@import './global-btn';
+@import './bootstrap-rtl';
+@import './menu.scss';
+// Smart table custom global styles
+@import './smart-table-global';
+// Angular2 wizard custom globals.
+@import './angular2-wizard';
+@import './google-map';
+
+// In the future versions of ngx-highlight we need to import theme globally
+// @import 'node_modules/highlight.js/styles/github';
+// install the framework and custom global styles
+@include nb-install() {
+	// framework global styles
+	@include nb-bootstrap-global();
+	@include nb-auth-global();
+	@include nb-theme-global();
+
+	// loading progress bar
+	@include ngx-pace-theme();
+	// fixed in rc.9 and can be removed after upgrade
+	.custom-control .custom-control-indicator {
+		border-radius: 50%; // TODO: quickfix for https://github.com/akveo/nebular/issues/275
+	}
+	@include bootstrap-rtl();
+	.nb-theme-cosmic .whiteDiv {
+		color: white !important;
+	}
+	pre {
+		text-align: left;
+	}
+	hr {
+		margin: 3% 0;
+	}
+	div.alert.alert-danger {
+		margin-top: 1%;
+	}
+	input[type='checkbox'] {
+		cursor: pointer;
+	}
+	select,
+	input:not([type='checkbox']) {
+		height: 50px !important;
+	}
+	ng2-smart-table {
+		input[type='checkbox'] {
+			transform: scale(1.4) !important;
+		}
+		th[ng2-st-checkbox-select-all] {
+			cursor: pointer !important;
+			input[type='checkbox'] {
+				margin-top: 4px;
+			}
+		}
+	}
+}
+
+// Smart table styles
+.products-table td.ng2-smart-actions.ng-star-inserted {
+	padding: 0 !important;
+}
+
+ea-warehouse-product-create {
+	max-height: 800px;
+	// overflow: scroll;
+}
+
+// ss-multiselect-dropdown style
+.dropdown.dropdown-inline {
+	width: 100%;
+}
+
+nb-card.no-margin {
+	margin: 0;
+}
+
+.no-padding {
+	padding: 0 !important;
+}
+
+.no-margin {
+	margin: 0 !important;
+}
+
+.no-text-transform {
+	text-transform: none !important;
+}
+
+// .specific-header-color {
+// 	color: rgb(24, 22, 22);
+// 	background-color: rgb(241, 239, 239);
+// }
+.content-center {
+	display: flex !important;
+	align-content: center !important;
+	align-items: center !important;
+}
+
+.button-icon {
+	margin-right: 3px;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.badge-dark {
+	background: black;
+	color: white;
+	padding: 5px 8px;
+	border-radius: 50%;
+}
+
+ea-product-create {
+	li.nav-item.active.enabled.ng-star-inserted {
+		display: none;
+	}
+	.ng-star-inserted {
+		margin-top: 30px;
+	}
+}
+
+.maintenance-message-container {
+	color: white !important;
+	padding: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	height: 100%;
+	background: #2a2c39;
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		color: white !important;
+	}
+}
+
+.nb-theme-default nb-spinner {
+	background-color: transparent !important;
+}
+
+ea-product-create .card-footer {
+	padding: 1% 11.1% 4% 11.1% !important;
+}
+
+.pull-right {
+	float: right !important;
+}
+
+.card,
+.card-footer,
+.card-header {
+	background-color: transparent !important;
+}
+
+.nb-theme-everdark {
+	.popover {
+		background-color: #1f212a !important;
+		border: 2px solid white;
+	}
+}

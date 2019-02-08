@@ -1,0 +1,39 @@
+<nb-card>
+	<nb-card-header class="row page-header">
+		<div class="col-md-2 warehouseImg">
+			<img src="{{ selectedWarehouse?.logo }}" />
+		</div>
+
+		<h2 class="col-md-8">{{ selectedWarehouse?.name }}</h2>
+		<div class="col-md-2">
+			<div class="row store-info" [hidden]="!isManufacturing">
+				<div class="col-md-3 content-center">
+					<i class="fa fa-industry store-info-img"></i>
+				</div>
+
+				<div class="col-md-9 content-center">
+					<h6>
+						{{
+							'WAREHOUSE_VIEW.PRODUCTS_MANUFACTURING' | translate
+						}}
+					</h6>
+				</div>
+			</div>
+			<div class="row store-info" [hidden]="!isCarrierRequired">
+				<div class="col-md-3 content-center">
+					<i class="fa fa-motorcycle store-info-img"></i>
+				</div>
+
+				<div class="col-md-9 content-center">
+					<h6>{{ 'WAREHOUSE_VIEW.CARRIER_REQUIRED' | translate }}</h6>
+				</div>
+			</div>
+		</div>
+	</nb-card-header>
+
+	<nb-card-body>
+		<h4>
+			{{ 'WAREHOUSE_VIEW.MANAGE_STORE_PRODUCTS_&_ORDERS' | translate }}
+		</h4>
+	</nb-card-body>
+</nb-card>

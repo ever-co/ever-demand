@@ -1,0 +1,59 @@
+<nb-card [nbSpinner]="loading" class="user-modal">
+	<div class="modal-header">
+		<span class="modal-title">{{
+			'SIMULATION_VIEW.USER_MUTATION.TITLE' | translate
+		}}</span>
+		<button class="close" aria-label="Close" (click)="cancel()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+
+	<form-wizard
+		class="form-horizontal"
+		[formGroup]="form"
+		[buttonDone]="buttonDone"
+		[buttonNext]="buttonNext"
+		[buttonPrevious]="buttonPrevious"
+	>
+		<wizard-step
+			[title]="
+				'SIMULATION_VIEW.USER_MUTATION.WIZARD_TITLES.ADDITIONAL_INFO'
+					| translate
+			"
+			[isValid]="basicInfo.valid"
+		>
+			<br />
+			<ea-user-basic-info-form
+				#basicInfoForm
+				[form]="basicInfo"
+				[showBasicInfoLabel]="true"
+			></ea-user-basic-info-form>
+		</wizard-step>
+
+		<wizard-step
+			[title]="
+				'SIMULATION_VIEW.USER_MUTATION.WIZARD_TITLES.LOCATION'
+					| translate
+			"
+			(onComplete)="create()"
+			[isValid]="location.valid"
+		>
+			<br />
+			<ea-location-form
+				#locationForm
+				[form]="location"
+				[apartment]="apartment"
+				[showAutocompleteSearch]="true"
+				(mapCoordinatesEmitter)="onCoordinatesChanges($event)"
+				(mapGeometryEmitter)="onGeometrySend($event)"
+			>
+			</ea-location-form>
+
+			<google-map
+				[mapCoordEvent]="mapCoordEmitter"
+				[mapGeometryEvent]="mapGeometryEmitter"
+			>
+			</google-map>
+		</wizard-step>
+	</form-wizard>
+</nb-card>

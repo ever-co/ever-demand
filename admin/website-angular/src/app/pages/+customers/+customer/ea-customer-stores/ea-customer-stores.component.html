@@ -1,0 +1,21 @@
+<nb-card>
+	<!-- <nb-card-header class="header-color">
+		<div class="pull-left title">Nearby Stores</div>
+
+		<div class="btn-group btn-divided-group pull-right">
+			<button class="btn btn-icon btn-success active" (click)="createWarehouseModel()">
+				<i class="nb-plus"></i>
+			</button>
+			<button class="btn btn-icon btn-danger active" [disabled]="!hasSelectedWarehouses" (click)="deleteSelectedRows()">
+				<i class="nb-trash"></i>
+			</button>
+		</div>
+	</nb-card-header> -->
+
+	<nb-card-body>
+		<ea-customer-warehouses-table
+			[sourceEvent]="sourceEventEmitter"
+			[selectWarehouseTmp]="selectWarehouseTmp.bind(this)"
+		></ea-customer-warehouses-table>
+	</nb-card-body>
+</nb-card>

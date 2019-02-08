@@ -1,0 +1,27 @@
+@import '../../../../@theme/styles/themes';
+@import '../../../../@shared/styles/control-icon.shared';
+
+@include nb-install-component() {
+	@include control-icon;
+
+	.basic-info {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+	}
+
+	.edit-product {
+		position: relative;
+		height: 100%;
+		margin: 0;
+		padding: 0;
+	}
+
+	.body-header {
+		text-align: center;
+	}
+
+	.control-icon-left {
+		cursor: pointer;
+	}
+}

@@ -8,6 +8,9 @@
 		"type": "git",
 		"url": "git+https://github.com/ever-co/ever.git"
 	},
+	"bugs": {
+		"url": "https://github.com/ever-co/ever/issues"
+	},
 	"private": false,
 	"author": {
 		"name": "Ever Co. LTD",
@@ -26,9 +29,6 @@
 			"url": "https://ever.co"
 		}
 	],
-	"bugs": {
-		"url": "https://github.com/ever-co/ever/issues"
-	},
 	"browserslist": [
 		"> 1%",
 		"last 2 versions",

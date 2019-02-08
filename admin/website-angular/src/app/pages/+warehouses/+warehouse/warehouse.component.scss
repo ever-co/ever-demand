@@ -1,0 +1,273 @@
+@import '../../../@theme/styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+$brand: #2a2c39;
+$brand-lighted: #353748;
+$brand-darken: darken($brand, 5%);
+.btnManage {
+	padding-top: 1.25rem;
+	padding-bottom: 1.25rem;
+}
+
+.btnOrders {
+	padding: 10px;
+}
+
+.btn {
+	cursor: pointer;
+}
+
+.btn:hover {
+	cursor: pointer;
+}
+
+.btn-startProcessing {
+	color: #333;
+	background-color: #fff;
+	border-color: #ccc;
+	margin-bottom: 5px;
+}
+
+.btn-startProcessing:hover {
+	color: rgb(24, 22, 22);
+	background-color: rgb(241, 239, 239);
+	border-color: rgb(182, 176, 176);
+	cursor: pointer;
+}
+
+.toggle-types {
+	.btn-toggle-radio-group {
+		margin-bottom: 1rem;
+	}
+}
+
+.subheader {
+	margin-bottom: 0.75rem;
+	font-size: 0.875rem;
+	font-weight: nb-theme(font-weight-bolder);
+	color: nb-theme(color-fg-heading);
+}
+
+.example-container:not(:last-child) {
+	margin-bottom: 1.5rem;
+}
+
+.warehouse-product-image {
+	max-width: 100%;
+	max-height: 300px;
+}
+
+.list-group-item:hover {
+	cursor: pointer;
+}
+
+nb-card {
+	transform: translate3d(0, 0, 0);
+}
+
+.btn-danger {
+	color: #fff;
+	background-color: #d9534f;
+	border-color: #d43f3a;
+}
+
+.btnOrder {
+	padding: 3px;
+}
+
+.warehouseImg {
+	padding-right: 0;
+
+	img {
+		width: 100%;
+		max-height: 130px;
+	}
+}
+
+:host /deep/ .productsContainer a {
+	border: none;
+	background-color: rgba(182, 176, 176, 0.05) !important;
+	color: #111111 !important;
+
+	.warehouse-product-image {
+		text-align: center;
+		span {
+			text-align: left !important;
+			padding: 0 !important;
+		}
+		span.badge {
+			padding: 5px !important;
+		}
+	}
+}
+
+:host /deep/ ng2-smart-table {
+	.tableImg {
+		height: 100px;
+		width: 100px;
+	}
+}
+
+.nb-theme-cosmic .whiteDiv {
+	color: white !important;
+}
+
+.product-info {
+	padding-top: 10px;
+}
+
+nb-card {
+	transform: translate3d(0, 0, 0);
+}
+
+button:disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+}
+
+nb-card-footer {
+	border: none;
+}
+
+nb-card-header {
+	.store-info {
+		margin-left: 0;
+		margin-bottom: 5px;
+	}
+
+	.store-info-img {
+		padding: 3px;
+		font-size: 18px;
+		color: rgb(161, 161, 161);
+	}
+}
+
+.page-header {
+	padding: 1.25rem !important;
+}
+
+.products {
+	list-style-type: none;
+	height: inherit !important;
+	max-width: 80%;
+	margin: 0 auto;
+	.product-card-container {
+		border: 0;
+		padding-bottom: 0;
+		margin-bottom: 1.25rem;
+		.product-card {
+			margin: 0;
+			padding: 0;
+			text-align: center;
+			.product-image-container {
+				cursor: pointer;
+			}
+			.product-image-container:active {
+				background: #000;
+				.product-image {
+					opacity: 0.8;
+				}
+			}
+			.product-buttons {
+				position: absolute;
+				top: 20px;
+				right: 20px;
+				.add-button {
+					padding: 0;
+					font-size: 30px;
+					color: #fff;
+				}
+			}
+			.product-image {
+				width: 100%;
+			}
+			.product-actions-info-bar {
+				background-color: $brand-darken;
+				color: white;
+				margin-bottom: 0;
+				padding-top: 5px;
+				padding-bottom: 5px;
+				margin-top: -6px;
+				.actions {
+					a {
+						margin-top: -2px;
+						border-radius: 3px;
+						color: $brand-lighted;
+						float: right;
+						border-color: #ccc;
+						color: white;
+						margin-right: 10px;
+						padding: 4px;
+						font-size: 18px;
+						line-height: 0;
+					}
+				}
+				.info {
+					span {
+						margin-top: -2px;
+						border-radius: 3px;
+						color: $brand-lighted;
+						float: left;
+						border-color: #ccc;
+						color: rgb(161, 161, 161);
+						margin-left: 10px;
+						padding: 4px;
+						font-size: 18px;
+						line-height: 0;
+					}
+				}
+			}
+			.product-mini-bar {
+				font-size: 17px;
+				background-color: $brand-lighted;
+				color: white;
+				text-align: center;
+				margin-bottom: 0;
+				padding-top: 11px;
+				padding-bottom: 11px;
+				margin-top: -6px;
+				.count {
+					background: #fff;
+					margin-top: -2px;
+					padding: 2px;
+					border-radius: 3px;
+					color: $brand-lighted;
+					float: right;
+					margin-right: 10px;
+				}
+			}
+		}
+
+		.name {
+			width: 75%;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: inline-block;
+		}
+	}
+}
+
+.progress-bar-danger {
+	background: #d9534f !important;
+	color: white !important;
+}
+
+.progress-bar-warning {
+	background: #f0ad4e !important;
+	color: white !important;
+}
+
+//  added for the Cosmic theme
+
+.list-group-item {
+	background-color: transparent;
+}
+
+.store-details {
+	padding-bottom: 0;
+}
+
+.orders-filters {
+	padding: 0 1.25rem;
+}

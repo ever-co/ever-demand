@@ -1,0 +1,6 @@
+@import '../../../../../@theme/styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+$brand: #2a2c39;
+$brand-lighted: #353748;
+$brand-darken: darken($brand, 5%);

@@ -1,0 +1,57 @@
+<nb-card>
+	<nb-card-header class="header-color">
+		<span> {{ "WAREHOUSE_VIEW.WAREHOUSE" | translate}}</span>
+
+	</nb-card-header>
+
+	<nb-card-body class="store-details">
+		<div class="row">
+			<div class="col-md-12">
+				<select class="col-sm-8" class="form-control" [ngModel]="selectedWarehouse" (ngModelChange)="selectWarehouse($event)" name="sel3">
+					<option [ngValue]="undefined" disabled selected>Select warehouse...</option>
+					<option *ngFor="let warehouse of warehouses" [ngValue]="warehouse">{{ warehouse.name }}</option>
+				</select>
+
+				<div class="btnManage">
+					<button type="button" class="btn btn-sm btn-success" [routerLink]="['./manage']">
+						{{ "WAREHOUSE_VIEW.MANAGE_STORE" | translate}}
+					</button>
+
+					<button title='JSON' type="button" class="btn btn-sm btn-dark btn-icon pull-right" (click)="openInfo()">
+						<svg width="15px" viewBox="0 0 24 24">
+							<path fill="#fff" d="M14.6,16.6L19.2,12L14.6,7.4L16,6L22,12L16,18L14.6,16.6M9.4,16.6L4.8,12L9.4,7.4L8,6L2,12L8,18L9.4,16.6Z"
+							/>
+						</svg>
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div [hidden]="!warehouse">
+			<div *ngIf="selectedWarehouse?.contactPhone && warehouse?.contactEmail">
+				<h5>{{ "WAREHOUSE_VIEW.CONTACT_DETAILS" | translate}}</h5>
+				<ul>
+					<li> {{ "WAREHOUSE_VIEW.PHONE" | translate}}: {{ warehouse?.contactPhone }} </li>
+					<li> {{ "WAREHOUSE_VIEW.EMAIL" | translate}}: {{ warehouse?.contactEmail }} </li>
+					<li>
+						{{ "WAREHOUSE_VIEW.ORDERS_FORWARDING_WITH" | translate}}
+						<strong ng-if="warehouse.forwardOrdersUsing == warehouseCtrl.ForwardOrdersMethod.Phone">
+							{{ "WAREHOUSE_VIEW.PHONE" | translate}}
+						</strong>
+						<strong ng-if="warehouse.forwardOrdersUsing == warehouseCtrl.ForwardOrdersMethod.Email">
+							{{ "WAREHOUSE_VIEW.EMAIL" | translate}}
+						</strong>
+					</li>
+				</ul>
+			</div>
+
+			<div *ngIf="selectedWarehouse?.ordersPhone && warehouse?.ordersEmail">
+				<h5>{{ "WAREHOUSE_VIEW.ORDERS_FORWARDING_DETAILS" | translate}}</h5>
+				<ul>
+					<li> {{ "WAREHOUSE_VIEW.PHONE" | translate}}: {{ warehouse?.ordersPhone }} </li>
+					<li> {{ "WAREHOUSE_VIEW.EMAIL" | translate}}: {{ warehouse?.ordersEmail }} </li>
+				</ul>
+			</div>
+		</div>
+	</nb-card-body>
+</nb-card>

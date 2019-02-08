@@ -1,0 +1,81 @@
+<nb-card>
+	<nb-card-body>
+		<div class="pull-left"></div>
+		{{ 'CARRIERS_VIEW.CARRIER_PAGE.AVAIBLE_ORDER_TO_PICK_UP' | translate }}
+	</nb-card-body>
+
+	<nb-card-footer>
+		<div
+			*ngIf="
+				canControl && selectedCarrier?.status === carrierOnlineStatus
+			"
+			class="padding-bottom pull-right"
+		>
+			<div *ngIf="isCarrierPickupOrder" class="row carrier-buttons">
+				<a
+					class="btn btn-sm btn-outline-success col margin d-inline-block"
+					(click)="
+						updateOrderCarrierStatus(
+							enumOrderCarrierStatus.CarrierArrivedToCustomer
+						)
+					"
+				>
+					<i
+						class="ion-md-log-in"
+						name="thumbs-up"
+						aria-hidden="true"
+					></i
+					>{{
+						'CARRIERS_VIEW.CARRIER_PAGE.ARRIVED_TO_CUSTOMER'
+							| translate
+					}}
+				</a>
+				<a
+					class="btn btn-sm btn-outline-danger col margin d-inline-block"
+					(click)="
+						updateOrderCarrierStatus(
+							enumOrderCarrierStatus.IssuesDuringDelivery
+						)
+					"
+				>
+					<i class="ion-md-alert" aria-hidden="true"></i>
+					{{ 'CARRIERS_VIEW.CARRIER_PAGE.FAILED' | translate }}
+				</a>
+			</div>
+
+			<div *ngIf="isCarrierArrivedToCustomer" class="row carrier-buttons">
+				<a
+					class="btn btn-sm btn-outline-success col margin d-inline-block"
+					(click)="
+						updateOrderCarrierStatus(
+							enumOrderCarrierStatus.DeliveryCompleted
+						)
+					"
+				>
+					<i class="ion-md-log-in" aria-hidden="true"></i
+					>{{ 'CARRIERS_VIEW.CARRIER_PAGE.DELIVERED' | translate }}
+				</a>
+				<a
+					class="btn btn-sm btn-outline-danger col margin d-inline-block"
+					(click)="
+						updateOrderCarrierStatus(
+							enumOrderCarrierStatus.ClientRefuseTakingOrder
+						)
+					"
+				>
+					<i class="ion-md-alert" aria-hidden="true"></i>
+					{{
+						'CARRIERS_VIEW.CARRIER_PAGE.CLIENT_REFUSE_ORDER'
+							| translate
+					}}
+				</a>
+			</div>
+		</div>
+
+		<ng2-smart-table
+			[settings]="settingsSmartTable"
+			[source]="sourceSmartTable"
+			(userRowSelect)="selectOrder($event)"
+		></ng2-smart-table>
+	</nb-card-footer>
+</nb-card>

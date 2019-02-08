@@ -1,0 +1,16 @@
+ng2-smart-table thead tr.ng2-smart-filters {
+	th {
+		border: none !important;
+		margin: auto !important;
+		padding: 1.5% 1% !important;
+	}
+}
+
+.ng2-smart-actions.ng2-smart-action-multiple-select.ng-star-inserted {
+	text-align: center;
+	input.form-control {
+		display: inline-block;
+		width: 0.9rem;
+		margin: 0 auto;
+	}
+}

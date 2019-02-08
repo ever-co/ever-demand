@@ -60,6 +60,7 @@
 			true,
 			"element",
 			[
+				"google",
 				"e-cu", // e-cu = ever customer
 				"ngx",
 				"ea", // ea = ever admin

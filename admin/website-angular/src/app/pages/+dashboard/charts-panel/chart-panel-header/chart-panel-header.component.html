@@ -1,0 +1,76 @@
+<div class="chart-header">
+	<ea-legend-chart [legendItems]="chartLegend"></ea-legend-chart>
+
+	<ng-template #popContent>
+		<div class="p-1">
+			<div class="form-group">
+				{{ 'DASHBOARD_VIEW.CHARTS.FROM' | translate }}:
+				<input
+					[(ngModel)]="fromDate"
+					class="form-control"
+					type="date"
+				/>
+			</div>
+			<div class="form-group">
+				{{ 'DASHBOARD_VIEW.CHARTS.TO' | translate }}:
+				<input [(ngModel)]="toDate" class="form-control" type="date" />
+			</div>
+			<button
+				nbButton
+				outline
+				class="btn btn-sm btn-hero-primary w-100"
+				(click)="selectDateRange()"
+			>
+				{{ 'DASHBOARD_VIEW.CHARTS.SELECT' | translate }}
+			</button>
+		</div>
+	</ng-template>
+
+	<div class="range-period-container">
+		<button
+			#customDateRangeButton
+			*ngIf="!isDateRangeSelected"
+			class="btn btn-outline-secondary"
+			[ngbPopover]="popContent"
+			[autoClose]="false"
+			placement="bottom"
+		>
+			{{ 'DASHBOARD_VIEW.CHARTS.CUSTOM_PERIOD' | translate }}
+		</button>
+		<small *ngIf="isDateRangeSelected" class="w-auto">
+			<a class="close" (click)="clearRangeAndSendEvent()">x</a>
+			<strong>{{ 'DASHBOARD_VIEW.CHARTS.FROM' | translate }}: </strong
+			>{{ fromDate | myReplacePipe: '-':'.' }}<br />
+			<strong>{{ 'DASHBOARD_VIEW.CHARTS.TO' | translate }}: </strong
+			>{{ toDate | myReplacePipe: '-':'.' }}
+		</small>
+	</div>
+
+	<div
+		class="dropdown w-auto"
+		[ngClass]="{ 'ghost-dropdown': currentTheme === 'corporate' }"
+		ngbDropdown
+	>
+		<button
+			type="button"
+			ngbDropdownToggle
+			class="btn w-auto"
+			[ngClass]="{
+				'btn-outline-success': currentTheme === 'default',
+				'btn-primary': currentTheme !== 'default',
+				'btn-sm': breakpoint.width <= breakpoints.is
+			}"
+		>
+			{{ periodText }} &nbsp;
+		</button>
+		<ul class="dropdown-menu w-auto" ngbDropdownMenu>
+			<li
+				class="dropdown-item"
+				*ngFor="let period of types"
+				(click)="changePeriod(period.key)"
+			>
+				{{ period.value }}
+			</li>
+		</ul>
+	</div>
+</div>

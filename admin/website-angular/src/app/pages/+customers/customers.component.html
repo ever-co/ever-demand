@@ -1,0 +1,45 @@
+<nb-card>
+	<toaster-container></toaster-container>
+
+	<nb-card-header>
+		<button
+			class="btn btn-success mr-2 d-inline-block"
+			(click)="showCreateUserModal()"
+		>
+			<i class="ion-md-add button-icon"></i>
+
+			<small _ngcontent-c55="">{{
+				'CUSTOMERS_VIEW.CREATE' | translate
+			}}</small>
+		</button>
+
+		<button
+			class="btn btn-danger mr-2 d-inline-block"
+			[disabled]="!hasSelectedCustomers"
+			(click)="deleteSelectedRows()"
+		>
+			<i class="ion-md-trash button-icon"></i>
+
+			<small _ngcontent-c55="">{{
+				'CUSTOMERS_VIEW.DELETE' | translate
+			}}</small>
+		</button>
+
+		<button
+			class="btn btn-info mr-2 d-inline-block"
+			[routerLink]="['/devices']"
+		>
+			<i class="ion-md-phone-portrait"></i>&nbsp;&nbsp;
+			{{ 'CUSTOMERS_VIEW.CUSTOMERS_DEVICES' | translate }}
+		</button>
+	</nb-card-header>
+
+	<nb-card-body [nbSpinner]="loading">
+		<ng2-smart-table
+			[settings]="settingsSmartTable"
+			[source]="sourceSmartTable"
+			(userRowSelect)="selectCustomerTmp($event)"
+		>
+		</ng2-smart-table>
+	</nb-card-body>
+</nb-card>

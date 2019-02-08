@@ -1,0 +1,19 @@
+<div class="order-input-wrapper">
+	<button
+		(click)="productAmount = productAmount - 1"
+		[disabled]="productAmount <= 0"
+		class="btn btn-sm btn-secondary p-2"
+	>
+		-
+	</button>
+
+	<span class="mx-2">{{ productAmount }}</span>
+
+	<button
+		(click)="productAmount = productAmount + 1"
+		[disabled]="!warehouseHasAvailable"
+		class="btn btn-sm btn-secondary p-2"
+	>
+		+
+	</button>
+</div>

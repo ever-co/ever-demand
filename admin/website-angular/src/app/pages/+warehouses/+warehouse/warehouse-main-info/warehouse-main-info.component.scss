@@ -1,0 +1,89 @@
+@import '../../../../@theme/styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+$brand: #2a2c39;
+$brand-lighted: #353748;
+$brand-darken: darken($brand, 5%);
+
+.example-container:not(:last-child) {
+	margin-bottom: 1.5rem;
+}
+
+.list-group-item:hover {
+	cursor: pointer;
+}
+
+nb-card {
+	transform: translate3d(0, 0, 0);
+}
+
+.warehouseImg {
+	padding-right: 0;
+
+	img {
+		width: 100%;
+		max-height: 130px;
+	}
+}
+
+:host /deep/ .productsContainer a {
+	border: none;
+	background-color: rgba(182, 176, 176, 0.05) !important;
+	color: #111111 !important;
+
+	.warehouse-product-image {
+		text-align: center;
+		span {
+			text-align: left !important;
+			padding: 0 !important;
+		}
+		span.badge {
+			padding: 5px !important;
+		}
+	}
+}
+
+:host /deep/ ng2-smart-table {
+	.tableImg {
+		height: 100px;
+		width: 100px;
+	}
+}
+
+.nb-theme-cosmic .whiteDiv {
+	color: white !important;
+}
+
+.product-info {
+	padding-top: 10px;
+}
+
+nb-card {
+	transform: translate3d(0, 0, 0);
+}
+
+button:disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+}
+
+nb-card-footer {
+	border: none;
+}
+
+nb-card-header {
+	.store-info {
+		margin-left: 0;
+		margin-bottom: 5px;
+	}
+
+	.store-info-img {
+		padding: 3px;
+		font-size: 18px;
+		color: black;
+	}
+}
+
+.store-details {
+	padding-bottom: 0;
+}

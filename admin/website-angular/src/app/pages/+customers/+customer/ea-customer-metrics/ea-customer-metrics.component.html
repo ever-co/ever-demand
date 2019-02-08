@@ -1,0 +1,21 @@
+<nb-card *ngIf="userMetrics">
+	<nb-card-header>
+		{{ 'CUSTOMERS_VIEW.ORDERS_STATISTICS' | translate }}
+	</nb-card-header>
+	<nb-card-body>
+		<div>
+			<p>
+				{{ 'CUSTOMERS_VIEW.NUMBER_OF_ORDERS' | translate }}:
+				<b>{{ userMetrics.totalOrders }}</b>
+			</p>
+			<p>
+				{{ 'CUSTOMERS_VIEW.CANCELED_ORDERS' | translate }}:
+				<b>{{ userMetrics.canceledOrders }}</b>
+			</p>
+			<p>
+				{{ 'CUSTOMERS_VIEW.COMPLETED_ORDERS_TOTAL' | translate }}:
+				<b>${{ userMetrics.completedOrdersTotalSum }}</b>
+			</p>
+		</div>
+	</nb-card-body>
+</nb-card>

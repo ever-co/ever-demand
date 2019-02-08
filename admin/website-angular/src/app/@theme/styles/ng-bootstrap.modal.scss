@@ -1,0 +1,36 @@
+.ng-custom {
+	div.modal-content {
+		width: 80%;
+		margin: auto;
+
+		.card {
+			border: none;
+			.card-block {
+				wizard-step div {
+					ea-location-form,
+					ea-user-basic-info-form,
+					ea-carrier-basic-info-form {
+						div {
+							padding-right: 3%;
+						}
+					}
+				}
+			}
+
+			.card-footer {
+				padding: 3% 6.7%;
+			}
+
+			ea-product-create .card-footer {
+				padding: 1% 11.1% 4% 11.1% !important;
+			}
+
+			label.control-label {
+				padding-left: 3.3%;
+				padding-right: 0;
+				margin: auto 0;
+				text-align: left;
+			}
+		}
+	}
+}

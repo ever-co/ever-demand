@@ -1,0 +1,11 @@
+<nb-card-header class="header">
+	<div class="title">
+		{{ title | translate }}
+		<span *ngIf="subTitle" class="product-title">"{{ subTitle }}"</span>
+		{{ 'Details' | translate }}
+	</div>
+</nb-card-header>
+
+<nb-card-body class="body">
+	<pre><code highlight [language]="['json']" [code]="obj | json" class="iconInfo"></code></pre>
+</nb-card-body>

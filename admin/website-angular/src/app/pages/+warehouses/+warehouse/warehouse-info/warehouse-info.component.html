@@ -1,0 +1,32 @@
+<div class="modal-header">
+	<div class="title">{{ 'WAREHOUSES_VIEW.INFO.STORE_INFO' | translate }}</div>
+	<button class="close" aria-label="Close" (click)="cancel()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body">
+	<h6>
+		<strong>{{ 'WAREHOUSES_VIEW.INFO.STORE_ID' | translate }}: </strong>
+		<span (click)="redirectToWarehousePage()" class="warehouse-redirect">{{
+			warehouse.id
+		}}</span>
+	</h6>
+	<div>
+		<h6>
+			<strong
+				>{{ 'WAREHOUSES_VIEW.INFO.STORE_NAME' | translate }}:
+			</strong>
+			<span
+				(click)="redirectToWarehousePage()"
+				class="warehouse-redirect"
+			>
+				{{ warehouse.name }}
+			</span>
+		</h6>
+	</div>
+</div>
+<div>
+	<div>
+		<pre><code highlight [language]="['json']" [code]="warehouse | json" class="iconInfo"></code></pre>
+	</div>
+</div>

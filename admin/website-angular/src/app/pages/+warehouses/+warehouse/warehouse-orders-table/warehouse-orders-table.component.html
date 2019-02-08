@@ -1,0 +1,99 @@
+<div>Orders table view</div>
+
+<nb-card>
+	<nb-card-header class="header-color">
+		<div class="row">
+			<div class="col-md-12">
+				<button
+					class="btn btn-icon btn-sm btn-success"
+					(click)="openWarehouseOrderCreateModal()"
+				>
+					<i class="ion-md-add button-icon"></i>
+					{{ 'WAREHOUSE_VIEW.CREATE_ORDER' | translate }}
+				</button>
+			</div>
+		</div>
+	</nb-card-header>
+
+	<nb-card-body style="overflow: hidden;">
+		<div class="row">
+			<div class="col-md-4">
+				<div
+					ngbRadioGroup
+					class="btn-group btn-group-toggle btn-outline-toggle-group btn-group-full-width btn-toggle-radio-group"
+				>
+					<label
+						ngbButtonLabel
+						class="btn btn-outline-secondary btn-tn"
+					>
+						<input
+							ngbButton
+							type="radio"
+							value="ready"
+							(click)="filterOrders('ready')"
+						/>
+						{{ 'Confirmed' | translate }}
+					</label>
+
+					<label
+						ngbButtonLabel
+						class="btn btn-outline-secondary btn-tn"
+					>
+						<input
+							ngbButton
+							type="radio"
+							value="in_delivery"
+							(click)="filterOrders('in_delivery')"
+						/>
+						{{ 'In Delivery' | translate }}
+					</label>
+
+					<label
+						ngbButtonLabel
+						class="btn btn-outline-secondary btn-tn"
+					>
+						<input
+							ngbButton
+							type="radio"
+							value="not_confirmed"
+							(click)="filterOrders('not_confirmed')"
+						/>
+						{{ 'Not Confirmed' | translate }}
+					</label>
+
+					<label
+						ngbButtonLabel
+						class="btn btn-outline-secondary btn-tn"
+					>
+						<input
+							ngbButton
+							type="radio"
+							value="cancelled"
+							(click)="filterOrders('cancelled')"
+						/>
+						{{ 'Cancelled' | translate }}
+					</label>
+
+					<label ngbButtonLabel class="btn-outline-secondary btn-tn">
+						<input
+							ngbButton
+							type="radio"
+							value="all"
+							(click)="filterOrders('all')"
+						/>
+						{{ 'All' | translate }}
+					</label>
+				</div>
+			</div>
+		</div>
+	</nb-card-body>
+
+	<nb-card-footer>
+		<ng2-smart-table
+			[settings]="settingsSmartTable"
+			[source]="sourceSmartTable"
+			(userRowSelect)="selectOrder($event)"
+		>
+		</ng2-smart-table>
+	</nb-card-footer>
+</nb-card>

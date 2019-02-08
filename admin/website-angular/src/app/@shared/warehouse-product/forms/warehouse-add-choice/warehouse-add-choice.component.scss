@@ -1,0 +1,41 @@
+.option {
+	width: 200px;
+	height: 150px;
+	border: 2px solid #dadfe6;
+	margin: 0 auto;
+	position: relative;
+	text-align: center;
+	color: #2a2a2a;
+	text-transform: uppercase;
+	letter-spacing: 0.4px;
+	font-weight: 500;
+	font-family: Exo;
+	-webkit-transition: none;
+	transition: none;
+	cursor: default;
+	padding: 0.75rem 1.5rem;
+	font-size: 1rem;
+	line-height: 1.25;
+	border-radius: 0.375rem;
+	padding-top: 63px;
+}
+
+.option:hover {
+	background: #dadfe6;
+}
+
+.selected {
+	background: #dadfe6;
+}
+
+.add-products-modal {
+	font-size: 0.95rem;
+
+	button {
+		margin: 10%;
+		margin-top: 11%;
+		margin: auto !important !important;
+		width: 244px;
+		white-space: normal;
+	}
+}

@@ -1,0 +1,21 @@
+@import '../../../../@theme/styles/themes';
+@import '../../../../@shared/styles/control-icon.shared';
+
+@include nb-install-component() {
+	@include control-icon;
+}
+
+nb-card-header {
+	min-height: 71px;
+	position: relative;
+
+	.text {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+
+	#map-type {
+		float: right;
+	}
+}

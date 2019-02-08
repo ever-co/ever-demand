@@ -1,0 +1,83 @@
+nb-card-header {
+	border-bottom: 0;
+}
+
+nb-card-body {
+	padding: 0;
+	border-bottom-left-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
+}
+
+:host /deep/ ng2-smart-table {
+	tr {
+		th {
+			padding: 18px !important;
+		}
+		td {
+			padding: 17px !important;
+		}
+	}
+
+	tr.ng2-smart-titles > th:nth-child(1) {
+		text-align: center;
+		cursor: pointer;
+
+		input {
+			margin-left: 1px !important;
+			cursor: pointer;
+		}
+	}
+
+	td.ng2-smart-actions.ng2-smart-action-multiple-select {
+		text-align: center;
+		cursor: pointer;
+	}
+
+	tr.ng2-smart-filters th {
+		text-align: center;
+	}
+
+	tr td,
+	th {
+		&:first-of-type {
+			border-left: none;
+		}
+		&:last-of-type {
+			border-right: none;
+		}
+	}
+
+	input[type='checkbox'] {
+		cursor: pointer;
+	}
+
+	.warehouse-name {
+		width: 17%;
+	}
+	.warehouse-email {
+		width: 17%;
+	}
+	.warehouse-phone {
+		width: 17%;
+	}
+	.warehouse-city {
+		width: 17%;
+	}
+	.warehouse-address {
+		width: 32%;
+	}
+	// .warehouse-qty {
+	// 	width: 5%;
+	// }
+	// .warehouse-actions {
+	// 	width: 5%;
+	// }
+}
+
+:host /deep/ ng2-smart-table .warehouse-image {
+	width: 74px;
+}
+
+.ng2-smart-th.qty {
+	text-align: center;
+}

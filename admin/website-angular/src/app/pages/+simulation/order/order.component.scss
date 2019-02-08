@@ -1,0 +1,69 @@
+@keyframes blinking {
+	0% {
+		color: black;
+	}
+	50% {
+		color: #9a9a9a;
+	}
+}
+.order-info {
+	text-align: center;
+
+	background: #ebeef2;
+	.row {
+		margin-top: 1rem;
+	}
+	.col {
+		padding: 0 !important;
+	}
+	margin-top: 1.25rem;
+	.delivery-status {
+		margin-top: 20px;
+		margin-bottom: 20px;
+		text-align: center;
+		font-size: 36px;
+		display: flex;
+		.status {
+			display: inline-block;
+		}
+
+		.align-end {
+			align-self: flex-end;
+		}
+
+		* {
+			color: #9a9a9a !important;
+		}
+
+		.activated {
+			&,
+			* {
+				color: black !important;
+			}
+		}
+
+		.current {
+			&,
+			* {
+				animation: blinking 1s ease-in-out infinite !important;
+			}
+		}
+	}
+
+	.order-img {
+		padding-right: 0;
+		img {
+			max-height: 350px;
+			max-width: 100%;
+		}
+	}
+
+	.order-map {
+		min-height: 300px;
+		padding: 0;
+	}
+
+	.no-padding {
+		padding: 0 !important;
+	}
+}

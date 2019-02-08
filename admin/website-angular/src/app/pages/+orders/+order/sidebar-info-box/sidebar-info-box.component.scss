@@ -1,0 +1,11 @@
+.order-sidebar-info-box {
+	position: relative !important;
+	overflow-x: hidden !important;
+	.img-container {
+		height: 80px;
+		img {
+			max-height: 100%;
+			max-width: 100%;
+		}
+	}
+}

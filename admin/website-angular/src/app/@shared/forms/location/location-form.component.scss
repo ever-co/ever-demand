@@ -1,0 +1,22 @@
+.search-addon-wrapper {
+	position: relative;
+	width: 46px;
+
+	i {
+		font-size: 0.8em;
+		color: black;
+		opacity: 0.6;
+		width: 46px;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+}
+
+ul {
+	padding-left: 0 !important !important;
+}
+
+.control-label {
+	cursor: pointer;
+}

@@ -1,0 +1,19 @@
+.order-page {
+	.order-map {
+		height: 25rem;
+		.sub-title {
+			height: 10%;
+
+			:first-child {
+				width: 100%;
+				text-align: right;
+				margin: 0;
+				padding: 0 1.25rem;
+			}
+		}
+
+		.map {
+			height: 90%;
+		}
+	}
+}

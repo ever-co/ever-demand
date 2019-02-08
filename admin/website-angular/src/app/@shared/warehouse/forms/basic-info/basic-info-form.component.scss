@@ -1,0 +1,38 @@
+/deep/ .carriers-dropdown {
+	.dropdown {
+		width: 100%;
+	}
+}
+
+.row.upload-img {
+	padding-left: 14px;
+	padding-right: 16px;
+
+	button {
+		padding: 0 !important;
+		border-radius: 0px;
+		border-top-right-radius: 0.375rem;
+		border-bottom-right-radius: 0.375rem;
+	}
+
+	input {
+		border-radius: 0px !important;
+		border-top-left-radius: 0.375rem !important;
+		border-bottom-left-radius: 0.375rem !important;
+	}
+}
+
+.preview-img {
+	padding-left: 14px;
+	padding-right: 16px;
+}
+
+.img-rounded {
+	// width: 70px;
+	max-height: 70px;
+}
+
+.removeIcon {
+	padding-left: 4px;
+	padding-right: 4px;
+}

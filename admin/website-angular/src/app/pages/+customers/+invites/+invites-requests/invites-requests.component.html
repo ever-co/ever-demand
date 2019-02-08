@@ -1,0 +1,46 @@
+<nb-card class="no-margin">
+	<nb-card-header>
+		<button
+			class="btn btn-icon btn-danger btn-sm mr-2 d-inline-block"
+			[disabled]="!hasSelectedInvitesRequests"
+			(click)="deleteSelectedRows()"
+		>
+			<i class="ion-md-trash button-icon"></i>
+			<small>{{
+				'CUSTOMERS_VIEW.INVITES_VIEW.DELETE' | translate
+			}}</small>
+		</button>
+		<button
+			class="btn btn-info btn-sm mr-2 d-inline-block"
+			[disabled]="!hasSelectedInvitesRequestsForInvite"
+			(click)="inviteSelectedRows()"
+		>
+			<i class="fa fa-envelope-open-o button-icon"></i>
+			<small>{{
+				'CUSTOMERS_VIEW.INVITES_VIEW.INVITE' | translate
+			}}</small>
+		</button>
+
+		<div class="pull-right right-actions">
+			<nb-checkbox
+				[value]="notInvitedOnly"
+				(change)="notInvitedOnlyChanged()"
+				status="success"
+			>
+				{{ 'CUSTOMERS_VIEW.NOT_INVITED_ONLY' | translate }}
+			</nb-checkbox>
+		</div>
+	</nb-card-header>
+
+	<nb-card-body>
+		<ng2-smart-table
+			[settings]="settingsSmartTable"
+			[source]="sourceSmartTable"
+			(createConfirm)="createConfirm($event)"
+			(editConfirm)="editConfirm($event)"
+			(deleteConfirm)="deleteConfirm($event)"
+			(userRowSelect)="selectInvitesRequestsTmp($event)"
+		>
+		</ng2-smart-table>
+	</nb-card-body>
+</nb-card>

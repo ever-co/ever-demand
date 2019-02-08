@@ -1,0 +1,31 @@
+$gray: #888;
+$danger: #ce4843;
+$success: #47d26f;
+$dark: hsl(234, 26, 25);
+$nb-themes: nb-register-theme(
+	(
+		color-success: #47d26f,
+		color-fg-highlight: #47d26f,
+		color-primary: #888,
+		color-danger: #ce4843,
+		color-info: #888,
+		layout-bg: rgb(235, 235, 235),
+		sidebar-bg: #1f212a,
+		menu-bg: transparent,
+		menu-item-separator: transparent,
+		drops-icon-line-gadient: -webkit-linear-gradient(white, gray),
+		menu-fg: #8b8b8b,
+		menu-submenu-bg: #2a2c39,
+		menu-submenu-fg: white,
+		menu-active-fg: white,
+		menu-active-bg: #2a2c39,
+		menu-icon-active-color: white,
+		menu-icon-color: #8b8b8b,
+		header-bg: #1f212a,
+		header-fg: #fff,
+		menu-submenu-active-bg: #2a2c39,
+		menu-submenu-active-fg: #8b8b8b
+	),
+	everlight,
+	default
+);

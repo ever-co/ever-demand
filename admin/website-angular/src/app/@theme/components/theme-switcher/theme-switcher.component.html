@@ -1,0 +1,13 @@
+<div
+	class="themes-switcher"
+	[nbPopover]="switcherListComponent"
+	nbPopoverPlacement="bottom"
+	[nbPopoverContext]="{ popover: popover }"
+>
+	<i class="nb-drops"></i>
+	<span *ngIf="activeTheme === 'everdark'" style="color: white;">Dark</span>
+	<span *ngIf="activeTheme === 'everlight'">Light</span>
+	<span *ngIf="activeTheme === 'default'">White</span>
+	<span *ngIf="activeTheme === 'cosmic'">Cosmic</span>
+	<span *ngIf="activeTheme === 'corporate'">Corporate</span>
+</div>

@@ -1,0 +1,74 @@
+:host /deep/ .ng2-smart-titles:first-child {
+	text-align: center !important;
+}
+
+.simulation-products-table {
+	text-align: center !important;
+}
+
+:host /deep/ ng2-smart-table .tableImg {
+	height: 100px;
+	width: 100px;
+}
+
+nb-card {
+	transform: translate3d(0, 0, 0);
+}
+
+.tableImg {
+	height: 100px;
+	width: 100px;
+}
+
+.tableImg:hover {
+	cursor: pointer;
+}
+
+.ion-clipboard {
+	padding-left: 20px;
+}
+
+.ion-clipboard:hover {
+	cursor: pointer;
+}
+
+pre {
+	background-color: #f4f4f4;
+	padding: 1%;
+}
+
+a {
+	background-color: yellow;
+	font-size: 120px;
+}
+
+.hid {
+	visibility: hidden;
+}
+
+.body-title {
+	margin-top: 1.25rem;
+	margin-bottom: 10px;
+}
+
+#simulations-buttons {
+	text-align: left !important;
+
+	div {
+		text-align: left !important;
+	}
+}
+
+.order-info {
+	display: inline-block;
+	margin-left: 15px;
+
+	h6 {
+		color: white !important;
+		margin-bottom: 0 !important;
+	}
+
+	padding: 0.5rem;
+	border-bottom-left-radius: 0.375rem;
+	border-bottom-right-radius: 0.375rem;
+}

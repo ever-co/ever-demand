@@ -1,0 +1,53 @@
+@import '../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+
+	/*@include nb-for-theme(default) {
+		.header-color {
+			color: rgb(24, 22, 22);
+			background-color: rgb(241, 239, 239);
+		}
+	}*/
+
+	.padding {
+		padding: 2%;
+	}
+
+	.padding-bottom {
+		padding-bottom: 2%;
+	}
+	.margin {
+		margin: 1%;
+	}
+
+	nb-card-footer {
+		padding: 0;
+	}
+
+	/deep/ ng2-smart-table {
+		th {
+			border-top: 0;
+		}
+
+		th, td {
+			&:first-of-type {
+				border-left: none;
+			}
+			&:last-of-type {
+				border-right: none;
+			}
+		}
+
+		tr:last-of-type {
+			th, td {
+				border-bottom: none;
+			}
+		}
+  }
+
+  .carrier-buttons{
+    width: 100%;
+    margin: 0; 
+  }
+
+}

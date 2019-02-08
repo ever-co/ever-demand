@@ -1,0 +1,29 @@
+<nb-card>
+	<div class="container pt-2 row add-products-modal">
+		<div class="col-6">
+			<button
+				[ngClass]="choiceType == 1 ? 'selected' : ''"
+				class="option"
+				(click)="changeChoice('existing')"
+				class="btn btn-outline-secondary p-5"
+			>
+				{{
+					'WAREHOUSE_VIEW.NEW_PRODUCT.SELECT_FROM_PRODUCTS_CATALOG'
+						| translate
+				}}
+			</button>
+		</div>
+		<div class="col-6">
+			<button
+				[ngClass]="choiceType == 2 ? 'selected' : ''"
+				class="option"
+				(click)="changeChoice('new')"
+				class="btn btn-outline-secondary p-5 "
+			>
+				{{
+					'WAREHOUSE_VIEW.NEW_PRODUCT.CREATE_NEW_PRODUCT' | translate
+				}}
+			</button>
+		</div>
+	</div>
+</nb-card>
