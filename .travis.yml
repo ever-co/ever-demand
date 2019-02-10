@@ -32,7 +32,7 @@ before_install:
     - npm i -g lerna@latest
 
 install:
-    - git clone -c core.symlinks=true --recursive --depth=3 https://github.com/$TRAVIS_REPO_SLUG.git $TRAVIS_REPO_SLUG  
+    - git clone -c core.symlinks=true --recursive --depth=3 --branch=$TRAVIS_BRANCH https://github.com/$TRAVIS_REPO_SLUG.git $TRAVIS_REPO_SLUG  
     - cd $TRAVIS_REPO_SLUG
     - git checkout -qf $TRAVIS_COMMIT
     - yarn install
