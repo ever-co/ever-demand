@@ -187,7 +187,13 @@ You can use credentials above to login into Platform Admin App, which available 
 
 -   Alish Meklyov ([Alish](https://github.com/AlishMekliov931))
 -   Blagovest Gerov ([BlagovestGerov](https://github.com/BlagovestGerov))
+-   Boyan Stanchev ([boyanstanchev](https://github.com/boyanstanchev))
 -   Elvis Arabadjiyski ([Dreemsuncho](https://github.com/Dreemsuncho))
+-   Emil Momchilov ([jew-er](https://github.com/jew-er))
+
+#### QA
+
+-   Julia Konviser
 
 ### Contributors
 
