@@ -155,7 +155,7 @@
 		"@storybook/addon-actions": "^4.1.6",
 		"@storybook/angular": "^4.1.6",
 		"@types/async": "^2.0.50",
-		"@types/d3-color": "^1.2.1",
+		"@types/d3-color": "^1.2.2",
 		"@types/faker": "^4.1.4",
 		"@types/googlemaps": "^3.30.16",
 		"@types/highlight.js": "^9.12.3",
