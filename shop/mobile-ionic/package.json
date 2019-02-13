@@ -152,7 +152,7 @@
 		"@ionic/lab": "^1.0.20",
 		"@ionic/ng-toolkit": "^1.1.0",
 		"@ionic/schematics-angular": "^1.0.7",
-		"@types/d3-color": "1.2.1",
+		"@types/d3-color": "1.2.2",
 		"@types/googlemaps": "3.30.16",
 		"@types/graphql": "^14.0.5",
 		"@types/jasmine": "^3.3.8",
