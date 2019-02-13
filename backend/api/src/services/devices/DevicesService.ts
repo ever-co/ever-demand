@@ -55,7 +55,7 @@ export class DevicesService extends DBService<Device>
 		await this.throwIfNotExists(deviceId);
 
 		return this.update(deviceId, {
-			language: language.substr(0, 2)
+			language
 		});
 	}
 

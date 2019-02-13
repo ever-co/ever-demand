@@ -1,35 +1,79 @@
-<nb-card size="medium" class="h-auto">
+<nb-card id="dashboard-select-stores" size="medium" class="h-auto">
 	<nb-card-header>
-		<h5>{{"DASHBOARD_VIEW.SELECT_COMPONENT.STORES" | translate}}</h5>
+		<h5>{{ 'DASHBOARD_VIEW.SELECT_COMPONENT.STORES' | translate }}</h5>
 	</nb-card-header>
 
 	<nb-card-body>
-		<select class="form-control" (change)="selectNewStore($event)">
-			<option [value]="undefined" disabled selected>
-				{{"DASHBOARD_VIEW.SELECT_COMPONENT.SELECT_STORE" | translate}}...
-			</option>
-			<option [value]="store.id" *ngFor="let store of stores">{{ store.name }}</option>
-		</select>
+		<ng-select
+			(change)="selectNewStore($event)"
+			[items]="stores"
+			placeholder="{{
+				'DASHBOARD_VIEW.SELECT_COMPONENT.SELECT_STORE' | translate
+			}}"
+			bindLabel="name"
+			bindValue="name"
+		>
+			<ng-template ng-label-tmp let-item="item">
+				<img
+					*ngIf="item.logo"
+					height="15"
+					width="15"
+					class="mr-2"
+					[src]="item.logo"
+				/>
+				<b>{{ item.name }}</b>
+			</ng-template>
+			<ng-template ng-option-tmp let-item="item" let-index="index">
+				<h6 class="card-title">
+					<img
+						*ngIf="item.logo"
+						height="40"
+						width="40"
+						class="mr-1"
+						[src]="item.logo"
+					/>
+
+					{{ item.name }}
+				</h6>
+			</ng-template>
+		</ng-select>
 
 		<div *ngIf="selectedStore">
 			<div class="mt-4">
 				<h5>
-					{{"DASHBOARD_VIEW.SELECT_COMPONENT.CONTACT_DETAILS" | translate}}
+					{{
+						'DASHBOARD_VIEW.SELECT_COMPONENT.CONTACT_DETAILS'
+							| translate
+					}}
 				</h5>
 				<ul>
 					<li>
-						{{"DASHBOARD_VIEW.SELECT_COMPONENT.PHONE" | translate}}: <strong>{{ selectedStore.contactPhone }}</strong> </li>
+						{{
+							'DASHBOARD_VIEW.SELECT_COMPONENT.PHONE' | translate
+						}}: <strong>{{ selectedStore.contactPhone }}</strong>
+					</li>
 					<li>
-						{{"DASHBOARD_VIEW.SELECT_COMPONENT.EMAIL" | translate}}: <strong>{{ selectedStore.contactEmail }}</strong> </li>
+						{{
+							'DASHBOARD_VIEW.SELECT_COMPONENT.EMAIL' | translate
+						}}: <strong>{{ selectedStore.contactEmail }}</strong>
+					</li>
 					<li>
-
-						{{"DASHBOARD_VIEW.SELECT_COMPONENT.ORDERS_FORWARDING_WITH" | translate}}
+						{{
+							'DASHBOARD_VIEW.SELECT_COMPONENT.ORDERS_FORWARDING_WITH'
+								| translate
+						}}
 
 						<strong>
-							{{"DASHBOARD_VIEW.SELECT_COMPONENT.PHONE" | translate}}
+							{{
+								'DASHBOARD_VIEW.SELECT_COMPONENT.PHONE'
+									| translate
+							}}
 						</strong>
 						<strong>
-							{{"DASHBOARD_VIEW.SELECT_COMPONENT.EMAIL" | translate}}
+							{{
+								'DASHBOARD_VIEW.SELECT_COMPONENT.EMAIL'
+									| translate
+							}}
 						</strong>
 					</li>
 				</ul>

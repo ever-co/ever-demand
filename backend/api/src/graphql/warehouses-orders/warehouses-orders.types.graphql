@@ -23,6 +23,11 @@ type MerchantsOrders {
 	ordersCount: Int
 }
 
+type StoreOrdersTableData {
+	orders: [Order]!
+	page: Int!
+}
+
 type Query {
 	getStoreOrders(storeId: String!): [Order!]!
 
@@ -36,7 +41,7 @@ type Query {
 		storeId: String!
 		pagingOptions: PagingOptionsInput
 		status: String
-	): [Order]!
+	): StoreOrdersTableData!
 
 	getCountOfStoreOrders(storeId: String!, status: String!): Int!
 }

@@ -22,6 +22,8 @@ import { CarriersService } from '../../../@core/data/carriers.service';
 import { GeoLocationOrdersService } from '../../../@core/data/geo-location-orders.service';
 import { CarriersOrdersService } from '../../../@core/data/carriers-orders.service';
 import { CarrierOrdersTableModule } from '../../../@shared/render-component/carrier-orders-table/carrier-orders-table.module';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
 	imports: [
@@ -38,7 +40,9 @@ import { CarrierOrdersTableModule } from '../../../@shared/render-component/carr
 		RouterModule.forChild(routes),
 		HighlightModule.forRoot({ theme: 'github' }),
 		NbSpinnerModule,
-		CarrierOrdersTableModule
+		CarrierOrdersTableModule,
+		NgSelectModule,
+		FormsModule
 	],
 	declarations: [
 		CarrierComponent,

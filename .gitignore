@@ -43,3 +43,4 @@ Thumbs.db
 
 yarn.lock
 /yarn-error.log
+*.lerna_backup

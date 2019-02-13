@@ -57,7 +57,7 @@ export class ProductLocalesService {
 			);
 		}
 
-		if (valueMember === undefined) {
+		if (valueMember === undefined && productMember) {
 			// Or use first
 			valueMember = productMember[0];
 		}
@@ -108,11 +108,13 @@ export class ProductLocalesService {
 		productMember: ILocaleMember[],
 		defaultLocale?: boolean
 	) {
-		return productMember.find(
-			(t) =>
-				t.locale ===
-				(defaultLocale ? this._defaultLocale : this.currentLocale)
-		);
+		if (productMember) {
+			return productMember.find(
+				(t) =>
+					t.locale ===
+					(defaultLocale ? this._defaultLocale : this.currentLocale)
+			);
+		}
 	}
 }
 

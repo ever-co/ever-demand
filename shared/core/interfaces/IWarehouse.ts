@@ -111,6 +111,7 @@ export interface IWarehouseCreateObject extends DBCreateObject {
 	productsDelivery?: boolean;
 	productsTakeaway?: boolean;
 	orderBarcodeType?: OrderBarcodeTypes;
+	barcodeData?: string;
 }
 
 interface IWarehouse extends IWarehouseCreateObject, DBRawObject {
@@ -123,6 +124,7 @@ interface IWarehouse extends IWarehouseCreateObject, DBRawObject {
 	devicesIds?: string[];
 	usedCarriersIds: string[];
 	hasRestrictedCarriers: boolean;
+	barcodeData?: string;
 }
 
 export default IWarehouse;

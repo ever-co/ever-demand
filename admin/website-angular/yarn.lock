@@ -1032,6 +1032,13 @@
   dependencies:
     tslib "^1.9.0"
 
+"@ng-select/ng-select@^2.15.3":
+  version "2.15.3"
+  resolved "https://registry.yarnpkg.com/@ng-select/ng-select/-/ng-select-2.15.3.tgz#4ceb91cb34f03c8c4ec79ff7ebf0b880273617d1"
+  integrity sha512-q0yA2iY4NHToi92Dw8115gxMhvXjsMgyNUwhE3cXFYMM0T6kX/q1puSHdQXlwd3ap0xTi+CmBZuvJpA/4WbEmw==
+  dependencies:
+    tslib "^1.9.0"
+
 "@ngtools/webpack@7.2.1":
   version "7.2.1"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-7.2.1.tgz#8b801b93697fdeff348b0ffa6a440b42a91f8395"
@@ -1428,10 +1435,15 @@
     "@types/mongodb" "*"
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^10.12.18":
+"@types/node@*":
   version "10.12.18"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.18.tgz#1d3ca764718915584fcd9f6344621b7672665c67"
   integrity sha512-fh+pAqt4xRzPfqA6eh3Z2y6fyZavRIumvjhaCL753+TVkGKGhpPeyrJG2JftD0T9q4GF00KjefsQ+PQNDdWQaQ==
+
+"@types/node@^11.9.3":
+  version "11.9.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.3.tgz#14adbb5ab8cd563f549fbae8dbe92e0b7d6e76cc"
+  integrity sha512-DMiqG51GwES/c4ScBY0u5bDlH44+oY8AeYHjY1SGCWidD7h08o1dfHue/TGK7REmif2KiJzaUskO+Q0eaeZ2fQ==
 
 "@types/q@^0.0.32":
   version "0.0.32"

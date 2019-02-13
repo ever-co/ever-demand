@@ -6001,10 +6001,10 @@ js-yaml@3.x, js-yaml@^3.12.0, js-yaml@^3.7.0, js-yaml@^3.9.0:
     argparse "^1.0.7"
     esprima "^4.0.0"
 
-jsbarcode@4.0.0-alpha.5:
-  version "4.0.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/jsbarcode/-/jsbarcode-4.0.0-alpha.5.tgz#d9b9c25adff19280e02e20f92d72a440490cb3d1"
-  integrity sha512-YVBAjFgNKGzUGmSAmzU1dsNTR5omfwWhvusKR+SRRXcuSg4xT3Wl7hYfovt8eZK2LZyFJviQ+Glt9W6T7caQYw==
+jsbarcode@3.8.0:
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/jsbarcode/-/jsbarcode-3.8.0.tgz#a290379a7449fb927f26d26b319c24bf2debc8fc"
+  integrity sha1-opA3mnRJ+5J/JtJrMZwkvy3ryPw=
 
 jsbn@~0.1.0:
   version "0.1.1"

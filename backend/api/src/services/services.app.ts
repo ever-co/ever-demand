@@ -1,6 +1,7 @@
 import { inject, injectable, multiInject } from 'inversify';
 import * as https from 'https';
 import * as http from 'http';
+import * as path from 'path';
 import * as fs from 'fs';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
@@ -278,15 +279,17 @@ export class ServicesApp {
 
 		this.expressApp = express();
 
+		const hbs = exphbs.create({
+			extname: '.hbs',
+			defaultLayout: 'main',
+			layoutsDir: path.join('res', 'views', 'layouts'),
+			partialsDir: path.join('res', 'templates')
+		});
+
 		// configure Handlebars templates
-		this.expressApp.engine(
-			'.hbs',
-			exphbs({
-				extname: '.hbs',
-				defaultLayout: 'main',
-				partialsDir: 'res/templates'
-			})
-		);
+		this.expressApp.engine('.hbs', hbs.engine);
+
+		this.expressApp.set('views', path.join('res', 'views'));
 
 		this.expressApp.set('view engine', '.hbs');
 
@@ -408,11 +411,13 @@ export class ServicesApp {
 				{ port: httpsPort },
 				'Express https server listening'
 			);
+			console.log(`Express https server listening on port ${httpsPort}`);
 		});
 
 		// app listen on http
 		this.httpServer.listen(httpPort, () => {
 			this.log.info({ port: httpPort }, 'Express http server listening');
+			console.log(`Express http server listening on port ${httpPort}`);
 		});
 	}
 

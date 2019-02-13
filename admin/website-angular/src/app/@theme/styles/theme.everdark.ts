@@ -166,8 +166,8 @@ export const EVERDARK_THEME = {
 			secondLineGradFrom: 'orange',
 			secondLineGradTo: 'red',
 
-			secondAreaGradFrom: 'orange',
-			secondAreaGradTo: 'red',
+			secondAreaGradFrom: '#ce4843',
+			secondAreaGradTo: 'orange',
 			secondShadowLineDarkBg: '#2c5a85',
 
 			// third line
@@ -206,9 +206,10 @@ export const EVERDARK_THEME = {
 		},
 
 		orderProfitLegend: {
-			firstItem: 'linear-gradient(90deg, #00c7c7 0%, #00d977 100%)',
-			secondItem: 'linear-gradient(90deg, #a454ff 0%, #7659ff 100%)',
-			thirdItem: '#4e40a4'
+			firstItem:
+				'linear-gradient(90deg, #47d26f 0%, mediumspringgreen 100%)',
+			secondItem: 'linear-gradient(90deg, #ce4843 0%, orange 100%)',
+			thirdItem: 'linear-gradient(90deg, gray 0%, lightgray 100%)'
 		},
 
 		visitors: {

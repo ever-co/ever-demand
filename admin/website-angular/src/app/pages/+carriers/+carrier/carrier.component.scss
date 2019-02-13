@@ -2,25 +2,29 @@
 @import '../../../@shared/styles/control-icon.shared';
 
 @include nb-install-component() {
-
 	@include control-icon;
 
 	.btn-color {
-		background: #4CAF50;
+		background: #4caf50;
 		cursor: pointer;
 	}
 	.btn-color:hover {
-		background: #4CAF50;
+		background: #4caf50;
 		cursor: pointer;
 	}
 
 	.btn-color.btn-outline-success {
-		background: #4CAF50;
+		background: #4caf50;
 		cursor: pointer;
 	}
 	.btn-color.btn-outline-success:hover {
-		background: #4CAF50;
+		background: #4caf50;
 		cursor: pointer;
 	}
+}
 
+nb-card#carrier-select-carriers {
+	nb-card-body {
+		overflow: inherit !important;
+	}
 }

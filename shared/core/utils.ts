@@ -139,6 +139,11 @@ export const generateObjectIdString = (
 };
 
 export function getIdFromTheDate(order: Order): string {
+	if (!order['createdAt'] || !order.orderNumber) {
+		throw `Can't use getIdFromTheDate function. Property ${
+			!order['createdAt'] ? 'createdAt' : 'orderNumber'
+		} is missing!`;
+	}
 	const [day, month, year] = new Date(order['createdAt'])
 		.toLocaleDateString()
 		.split('/');
@@ -148,7 +153,7 @@ export function getIdFromTheDate(order: Order): string {
 	let m = ('0' + month).slice(-2);
 	m = m.substr(-2);
 
-	return `${d}${m}${year}${order.orderNumber ? '-' + order.orderNumber : ''}`;
+	return `${d}${m}${year}-${order.orderNumber}`;
 }
 
 export default Utils;

@@ -1,13 +1,29 @@
-import { Mutation, Resolver } from '@nestjs/graphql';
+import { Mutation, Resolver, Query } from '@nestjs/graphql';
 import { IWarehouseProductCreateObject } from '@modules/server.common/interfaces/IWarehouseProduct';
 import { WarehousesProductsService } from '../../services/warehouses';
 import { Exception } from 'handlebars';
+import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 
 @Resolver('Warehouse-products')
 export class WarehouseProductsResolver {
 	constructor(
 		private readonly _warehousesProductsService: WarehousesProductsService
 	) {}
+
+	@Query()
+	async getProductsWithPagination(_, { id, pagingOptions = {} }) {
+		const warehouseProducts = await this._warehousesProductsService.getProductsWithPagination(
+			id,
+			pagingOptions
+		);
+
+		return warehouseProducts.map((p) => new WarehouseProduct(p));
+	}
+
+	@Query()
+	async getProductsCount(_, { id }: { id: string }) {
+		return this._warehousesProductsService.getProductsCount(id);
+	}
 
 	@Mutation()
 	async addWarehouseProducts(

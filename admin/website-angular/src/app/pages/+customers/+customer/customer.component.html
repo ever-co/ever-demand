@@ -72,28 +72,53 @@
 	</div>
 
 	<div class="col-md-4">
-		<nb-card>
+		<nb-card id="user-select-users">
 			<nb-card-header class="header-color">
 				{{ 'CUSTOMERS_VIEW.CUSTOMER_VIEW.CUSTOMER' | translate }}
 			</nb-card-header>
 
 			<nb-card-body>
-				<select
-					class="col-sm-8"
-					class="btn btn-color btn-outline-success"
-					class="form-control"
-					[ngModel]="selectedUser"
-					(ngModelChange)="customerSelect($event)"
+				<ng-select
+					*ngIf="selectedUser"
+					(change)="customerSelect($event)"
+					[items]="users"
+					[(ngModel)]="selectedUser.id"
+					[clearable]="false"
+					placeholder="Select customer"
+					bindLabel="id"
+					bindValue="id"
 				>
-					<option [ngValue]="undefined" disabled selected
-						>Select customer...</option
+					<ng-template ng-label-tmp let-item="item">
+						<img
+							*ngIf="item.image"
+							height="15"
+							width="15"
+							class="mr-2"
+							[src]="item.image"
+						/>
+						{{ item.firstName }}
+						{{ item.firstName && item.lastName }}
+						{{ item.firstName ? '' : '# ' + item.id }}
+					</ng-template>
+					<ng-template
+						ng-option-tmp
+						let-item="item"
+						let-index="index"
 					>
-					<option *ngFor="let user of users" [ngValue]="user">
-						{{ user.firstName }}
-						{{ user.firstName && user.lastName }}
-						{{ user.firstName ? '' : '# ' + user.id }}
-					</option>
-				</select>
+						<h6 class="card-title">
+							<img
+								*ngIf="item.image"
+								height="40"
+								width="40"
+								class="mr-1"
+								[src]="item.image"
+							/>
+							{{ item.firstName }}
+							{{ item.firstName && item.lastName }}
+							{{ item.firstName ? '' : '# ' + item.id }}
+						</h6>
+					</ng-template>
+				</ng-select>
 			</nb-card-body>
 		</nb-card>
 

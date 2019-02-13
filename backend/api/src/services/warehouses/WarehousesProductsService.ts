@@ -9,7 +9,7 @@ import IWarehouseProduct, {
 import * as _ from 'lodash';
 import Warehouse from '../../modules/server.common/entities/Warehouse';
 import IWarehouse from '../../modules/server.common/interfaces/IWarehouse';
-import { ExistenceEventType } from '@pyro/db-server';
+import { ExistenceEventType, DBService } from '@pyro/db-server';
 import { Observable } from 'rxjs';
 import IWarehouseProductsRouter from '../../modules/server.common/routers/IWarehouseProductsRouter';
 import {
@@ -24,6 +24,8 @@ import { exhaustMap, first, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { _throw } from 'rxjs/observable/throw';
 import mongoose = require('mongoose');
+import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
+import { async } from 'rxjs/internal/scheduler/async';
 
 const noGetProductTypeMessage = `There should be true at least one of the two - "isCarrierRequired" or "isTakeaway"!`;
 
@@ -72,6 +74,44 @@ export class WarehousesProductsService
 			}),
 			map((warehouse) => warehouse.products)
 		);
+	}
+
+	@asyncListener()
+	async getProductsWithPagination(
+		id: string,
+		pagingOptions: IPagingOptions
+	): Promise<WarehouseProduct[]> {
+		const allProducts = await this.get(id)
+			.pipe(first())
+			.toPromise();
+
+		const products = [...allProducts];
+
+		if (pagingOptions.limit && pagingOptions.skip) {
+			return products
+				.slice(pagingOptions.skip)
+				.slice(0, pagingOptions.limit)
+				.sort((a, b) => b.soldCount - a.soldCount);
+		} else if (pagingOptions.limit) {
+			return products
+				.slice(0, pagingOptions.limit)
+				.sort((a, b) => b.soldCount - a.soldCount);
+		} else if (pagingOptions.skip) {
+			return products
+				.slice(pagingOptions.skip)
+				.sort((a, b) => b.soldCount - a.soldCount);
+		}
+
+		return products.sort((a, b) => b.soldCount - a.soldCount);
+	}
+
+	@asyncListener()
+	async getProductsCount(id: string) {
+		const allProducts = await this.get(id)
+			.pipe(first())
+			.toPromise();
+
+		return allProducts.length;
 	}
 
 	/**

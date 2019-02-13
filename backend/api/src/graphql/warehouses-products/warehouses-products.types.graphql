@@ -1,7 +1,17 @@
+type Query {
+	getProductsWithPagination(
+		id: String!
+		pagingOptions: PagingOptionsInput
+	): [WarehouseProduct!]
+
+	getProductsCount(id: String!): Int
+}
+
 type WarehouseProduct {
 	price: Int!
 	initialPrice: Int!
 	count: Int
+	soldCount: Int!
 	product: Product!
 	isManufacturing: Boolean
 	isCarrierRequired: Boolean

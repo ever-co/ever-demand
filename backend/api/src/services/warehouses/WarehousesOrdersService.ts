@@ -583,6 +583,26 @@ export function getStoreOrdersFingObj(storeId: string, status: string) {
 		case 'cancelled':
 			findObj['isCancelled'] = true;
 			break;
+		case 'relevant':
+			findObj['$and'] = [
+				{
+					warehouseStatus: {
+						$gte: OrderWarehouseStatus.NoStatus
+					}
+				},
+				{
+					warehouseStatus: {
+						$lt: OrderWarehouseStatus.GivenToCustomer
+					}
+				},
+				{
+					carrierStatus: {
+						$lte: OrderCarrierStatus.CarrierSelectedOrder
+					}
+				}
+			];
+			findObj['isCancelled'] = false;
+			break;
 		default:
 			break;
 	}

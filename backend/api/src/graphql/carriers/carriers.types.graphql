@@ -12,7 +12,7 @@ type Carrier {
 	status: Int!
 	geoLocation: GeoLocation!
 	devicesIds: [String!]!
-
+	apartment: String
 	# Resolved
 	devices: [Device!]!
 

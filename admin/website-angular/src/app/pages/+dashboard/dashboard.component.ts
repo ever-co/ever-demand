@@ -114,6 +114,33 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
+		this.loadAllStoresData();
+	}
+
+	async onSelectStore(storeId: string) {
+		if (storeId) {
+			this.hasSelectedStore = true;
+			this.selectedStoreId = storeId;
+
+			this._toggleLoadingDashboardMetrics(true);
+
+			this._displayTotalCustomers();
+			this._displayTotalCustomersToday();
+
+			await this._calculatePerMerchantMetrics();
+			this._calculatePerMerchantMetricsToday();
+			this._calculateAveragePercentagesToday();
+
+			this._toggleLoadingDashboardMetrics(false);
+
+			this._listenChartPanelPerStoreOrders();
+		} else {
+			this.hasSelectedStore = false;
+			this.loadAllStoresData();
+		}
+	}
+
+	private loadAllStoresData() {
 		this._listenChartPanelTotalOrders();
 
 		this._listenTotalStores();
@@ -123,24 +150,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 		this._listenTotalOrders();
 		this._listenTotalOrdersToday();
-	}
-
-	async onSelectStore(storeId: string) {
-		this.hasSelectedStore = true;
-		this.selectedStoreId = storeId;
-
-		this._toggleLoadingDashboardMetrics(true);
-
-		this._displayTotalCustomers();
-		this._displayTotalCustomersToday();
-
-		await this._calculatePerMerchantMetrics();
-		this._calculatePerMerchantMetricsToday();
-		this._calculateAveragePercentagesToday();
-
-		this._toggleLoadingDashboardMetrics(false);
-
-		this._listenChartPanelPerStoreOrders();
 	}
 
 	private _listenTotalStores() {

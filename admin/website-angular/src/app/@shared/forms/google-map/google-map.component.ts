@@ -10,14 +10,15 @@ import { takeUntil } from 'rxjs/operators';
 	`
 })
 export class GoogleMapComponent implements OnInit, OnDestroy {
-	//
 	@ViewChild('gmap')
 	mapElement: any;
 
 	@Input()
 	mapTypeEvent: Observable<string>;
+
 	@Input()
 	mapCoordEvent: Observable<google.maps.LatLng | google.maps.LatLngLiteral>;
+
 	@Input()
 	mapGeometryEvent: Observable<
 		google.maps.places.PlaceGeometry | google.maps.GeocoderGeometry

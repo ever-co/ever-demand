@@ -66,4 +66,10 @@ input GeoLocationFindInput {
 
 type Query {
 	geoLocationProducts(geoLocation: GeoLocationFindInput!): [ProductInfo]
+	geoLocationProductsByPaging(
+		geoLocation: GeoLocationFindInput!
+		pagingOptions: PagingOptionsInput
+	): [ProductInfo]!
+
+	getCountOfGeoLocationProducts(geoLocation: GeoLocationFindInput!): Int!
 }

@@ -22,6 +22,8 @@
 @import './angular2-wizard';
 @import './google-map';
 
+@import '~@ng-select/ng-select/themes/default.theme.css';
+
 // In the future versions of ngx-highlight we need to import theme globally
 // @import 'node_modules/highlight.js/styles/github';
 // install the framework and custom global styles
@@ -176,4 +178,8 @@ ea-product-create .card-footer {
 		background-color: #1f212a !important;
 		border: 2px solid white;
 	}
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-input > input {
+	height: auto !important;
 }

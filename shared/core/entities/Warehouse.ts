@@ -39,6 +39,10 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 					}
 				);
 			}
+
+			if (!warehouse.barcodeData) {
+				this.barcodeData = warehouse._id.toString();
+			}
 		}
 	}
 
@@ -259,6 +263,16 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	@Schema({ type: Number, required: false })
 	@Column()
 	orderBarcodeType?: OrderBarcodeTypes;
+
+	/**
+	 * Unique data for generate on barcode
+	 *
+	 * @type {string}
+	 * @memberof Warehouse
+	 */
+	@Schema({ type: String, unique: true, sparse: true })
+	@Column()
+	barcodeData: string;
 }
 
 export type WithFullProducts = Warehouse & {
