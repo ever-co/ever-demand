@@ -282,9 +282,10 @@
   dependencies:
     "@types/jasmine" "*"
 
-"@types/leaflet@1.2.3":
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.2.3.tgz#b21da59fa9f446c8efedefbd343496ccea5933b4"
+"@types/leaflet@1.4.2":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.4.2.tgz#28a95f45e71d8f3e44b1d95f64deb5f05e739e04"
+  integrity sha512-iRyUFh6m5OSbhekHxlZb5SkdfUVpaXhk+e8fgQviZL6iZ1chV3Q030/+M6jO2A6VM235A1hYuUmBMVsrLAvKEA==
   dependencies:
     "@types/geojson" "*"
 
