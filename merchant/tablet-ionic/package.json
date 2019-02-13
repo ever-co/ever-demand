@@ -122,7 +122,7 @@
 	},
 	"devDependencies": {
 		"@ionic/app-scripts": "^3.2.0",
-		"@types/d3-color": "1.0.5",
+		"@types/d3-color": "1.2.2",
 		"@types/googlemaps": "3.30.4",
 		"@types/jasmine": "2.5.54",
 		"@types/jasminewd2": "2.0.3",
