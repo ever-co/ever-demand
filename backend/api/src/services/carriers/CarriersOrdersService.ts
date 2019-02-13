@@ -424,7 +424,12 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 					OrderCarrierStatus.DeliveryCompleted
 				]
 			},
-			warehouseStatus: OrderWarehouseStatus.PackagingFinished,
+			warehouseStatus: {
+				$in: [
+					OrderWarehouseStatus.PackagingFinished,
+					OrderWarehouseStatus.GivenToCarrier
+				]
+			},
 			$or: [{ carrier: null }, { carrier: carrierId }]
 		};
 	}

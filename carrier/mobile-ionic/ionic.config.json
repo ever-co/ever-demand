@@ -1,0 +1,7 @@
+{
+	"name": "ever-carrier",
+	"integrations": {
+		"cordova": {}
+	},
+	"type": "ionic-angular"
+}

@@ -19,6 +19,8 @@ import { WarehouseMutationModule } from '../../../@shared/warehouse/warehouse-mu
 import { WarehouseOrderModalModule } from '../../../@shared/warehouse/+warehouse-order-modal/warehouse-order-modal.module';
 import { CustomerOrdersModule } from './ea-customer-orders/ea-customer-orders.module';
 import { CustomerMetricsComponent } from './ea-customer-metrics/ea-customer-metrics.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
 
 const routes = [
 	{
@@ -46,7 +48,9 @@ const routes = [
 		CustomerProductsTableModule,
 		CustomerWarehousesTableModule,
 		WarehouseOrderModalModule,
-		CustomerOrdersModule
+		CustomerOrdersModule,
+		NgSelectModule,
+		FormsModule
 	],
 	declarations: [
 		CustomerComponent,

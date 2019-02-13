@@ -32,12 +32,15 @@ before_install:
     - npm i -g lerna@latest
 
 install:
+    - git clone -c core.symlinks=true --recursive --depth=3 --branch=$TRAVIS_BRANCH https://github.com/$TRAVIS_REPO_SLUG.git $TRAVIS_REPO_SLUG
+    - cd $TRAVIS_REPO_SLUG
+    - git checkout -qf $TRAVIS_COMMIT
     - yarn install
     - yarn bootstrap
 
 matrix:
     include:
-        - env: PROJECT=backend/api
+        # - env: PROJECT=backend/api
         # - env: PROJECT=admin/website-angular
         # - env: PROJECT=carrier/mobile-ionic
         # - env: PROJECT=shop/mobile-ionic

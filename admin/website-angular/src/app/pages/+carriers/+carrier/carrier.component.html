@@ -67,34 +67,55 @@
 	</div>
 
 	<div class="col-md-4">
-		<nb-card>
+		<nb-card id="carrier-select-carriers">
 			<nb-card-header class="header-color">
 				{{ 'Carrier' | translate }}
 			</nb-card-header>
 
 			<nb-card-body>
-				<select
-					class="col-sm-8"
-					class="btn btn-color btn-outline-success"
-					class="form-control"
-					[ngModel]="selectedCarrier"
-					(ngModelChange)="carrierSelect($event)"
+				<ng-select
+					*ngIf="selectedCarrier"
+					(change)="carrierSelect($event)"
+					[items]="carriers"
+					[(ngModel)]="selectedCarrier.id"
+					[clearable]="false"
+					placeholder="{{
+						'CARRIERS_VIEW.CARRIER_PAGE.SELECT_CARRIER' | translate
+					}}"
+					bindLabel="id"
+					bindValue="id"
 				>
-					<option [ngValue]="undefined" disabled selected
-						>{{
-							'CARRIERS_VIEW.CARRIER_PAGE.SELECT_CARRIER'
-								| translate
-						}}...</option
+					<ng-template ng-label-tmp let-item="item">
+						<img
+							*ngIf="item.logo"
+							height="15"
+							width="15"
+							class="mr-2"
+							[src]="item.logo"
+						/>
+						{{ item.firstName }}
+						{{ item.firstName && item.lastName }}
+						{{ item.firstName ? '' : '# ' + item.id }}
+					</ng-template>
+					<ng-template
+						ng-option-tmp
+						let-item="item"
+						let-index="index"
 					>
-					<option
-						*ngFor="let carrier of carriers"
-						[ngValue]="carrier"
-					>
-						{{ carrier.firstName }}
-						{{ carrier.firstName && carrier.lastName }}
-						{{ carrier.firstName ? '' : '# ' + carrier.id }}
-					</option>
-				</select>
+						<h6 class="card-title">
+							<img
+								*ngIf="item.logo"
+								height="40"
+								width="40"
+								class="mr-1"
+								[src]="item.logo"
+							/>
+							{{ item.firstName }}
+							{{ item.firstName && item.lastName }}
+							{{ item.firstName ? '' : '# ' + item.id }}
+						</h6>
+					</ng-template>
+				</ng-select>
 			</nb-card-body>
 		</nb-card>
 

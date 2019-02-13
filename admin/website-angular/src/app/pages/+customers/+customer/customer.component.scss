@@ -32,3 +32,9 @@
 		margin: 0 !important;
 	}
 }
+
+nb-card#user-select-users {
+	nb-card-body {
+		overflow: inherit !important;
+	}
+}

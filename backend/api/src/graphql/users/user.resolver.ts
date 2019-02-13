@@ -118,6 +118,11 @@ export class UserResolver {
 			.exec();
 	}
 
+	@Query()
+	async getCustomerMetrics(_, { id }: { id: string }) {
+		return this._usersOrdersService.getCustomerMetrics(id);
+	}
+
 	@Mutation()
 	async updateUser(
 		_,

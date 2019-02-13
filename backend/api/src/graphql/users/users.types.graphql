@@ -64,6 +64,8 @@ type Query {
 	): ResponseGenerate1000Customers
 
 	getCountOfUsers: Int!
+
+	getCustomerMetrics(id: String!): CustomerMetrics
 }
 
 type ResponseGenerate1000Customers {
@@ -74,6 +76,12 @@ type ResponseGenerate1000Customers {
 type UserLoginInfo {
 	user: User!
 	token: String!
+}
+
+type CustomerMetrics {
+	totalOrders: Int
+	canceledOrders: Int
+	completedOrdersTotalSum: Float
 }
 
 input UserMemberInput {

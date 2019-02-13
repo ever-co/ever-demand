@@ -19,6 +19,7 @@ Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_wi
 
 -   Open Platform (every part is Open-Source)
 -   Everything Reactive, Real-Time and Blazing Fast!
+-   Headless Commerce framework, which allows different implementations of store-fronts, Admin UIs and client apps. Exposes rich GraphQL, REST and WS APIs.
 -   Shopping Mobile App for customers to make On-Demand orders (iOS and Android using Ionic / Ionic Native)
 -   Carrier Mobile App for carriers, drivers or delivery service providers (iOS and Android using Ionic / Ionic Native)
 -   Shopping e-commerce Website for customers to make in-browser On-Demand purchases of food, goods or services
@@ -26,24 +27,30 @@ Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_wi
 -   Admin Website used to manage all platform features and settings in the single Web-based interface
 -   Multi-language and culture settings accross Platform (i18N)
 -   Products Catalogs (global and per Merchant) with Multiple Product Images
--   Inventory Management and Real-time Order Management/Processing accross the Platform
--   Deliveries/Shipping management and processing accross Platform (shipping with real-time location tracking)
+-   Inventory/Stock Management and Real-time Order Management/Processing accross the Platform
+-   Deliveries/Shipping management and processing accross Platform (shipping with real-time location tracking for On-Demand orders)
 -   Real-Time discounts, promotions and products/services availability updates
 -   Customers registration, Guest Checkouts, Invitations (optional)
 -   Gateway and Payment Processing (currently supported Payments Gateway - [Stripe](https://stripe.com))
--   Rich GraphQL, REST and WS APIs
 -   Plugins / Extensions / Custom Fields (WIP)
+
+## Planned Features
+
+-   Tax Calculations
+-   Third-party Shipping providers integrations
+-   Users Roles / Permissions accross Platform
+-   Large products catalogs with products variants, facets and full-text search
+
+You can also track feature requests from the community in the [separate repo](https://github.com/ever-co/feature-requests/issues).
 
 ## Technology Stack and Requirements
 
--   Almost every part of the Platform build using [TypeScript](https://www.typescriptlang.org) language (version >=2.9)
--   Most of projects require [Node.js](https://nodejs.org) (version >=10)
--   Shopping Mobile App developed using [Ionic](https://ionicframework.com) version 4
--   Carrier Mobile App developed using [Ionic](https://ionicframework.com) version 3
+-   [TypeScript](https://www.typescriptlang.org) language (version >=2.9)
+-   [Node.js](https://nodejs.org) (version >=10)
+-   [Ionic](https://ionicframework.com) (version 4) for Shopping Mobile App, Carrier Mobile App and Merchant Tablet App
 -   Shopping Website developed with [Angular](https://angular.io) 7 using [Angular Starter](https://github.com/gdi2290/angular-starter)
--   Merchant Tablet App developed using [Ionic](https://ionicframework.com) version 3
 -   Admin Website developed with [Angular](https://angular.io) version 7 using [ngx-admin](https://github.com/akveo/ngx-admin)
--   Backend Api (Server) developed using [Nest](https://github.com/nestjs/nest) with heavy use of our own Pyro module. Supports GraphQL, REST and WS Real-Time APIs (WebSockets using [Socket.io](https://socket.io) library)
+-   Headless Commerce framework (Backend APIs/Server) developed using [Nest](https://github.com/nestjs/nest) with heavy use of our own Pyro module. Supports GraphQL, REST and WS Real-Time APIs (WebSockets using [Socket.io](https://socket.io) library)
 -   [RxJS](http://reactivex.io/rxjs) library used heavy in every part of the Platform
 -   [InversifyJS](http://inversify.io) used for Inversion Control / Dependency Injection in most parts of the Platform. On the Backend/API we also use DI provided by [Nest](https://github.com/nestjs/nest)
 -   [MongoDB](https://www.mongodb.com) Database used with [Mongoose](https://mongoosejs.com) ORM (supported MongoDB version >= 3.2; we recommend version >=4)
@@ -59,17 +66,6 @@ Please refer to https://docs.ever.co for the Platform Documentation (WIP)
 For quick overview of each project in the Platform (Server, Admin, Shops, etc), you can search for README.md file in the root of the projects folders. For example, see [./backend/api/README.md](backend/api/README.md) for Server (Backend) related overview.
 
 ## Getting Started
-
-### MongoDB
-
-You can download and install free Community version of MongoDB from the [official MongoDB download center](https://www.mongodb.com/download-center/v2/community).
-
-After installation, make sure MongoDB service is running and accepting connections on default `localhost:27017` (change connection parameters in the ./backend/api/.env file if you run on different location/port)
-
-To manage database, you can use free [MongoDB Compass Community Edition available](https://www.mongodb.com/download-center/v2/compass) or some other GUI for MongoDB, e.g. Studio 3T (https://studio3t.com)
-
-For production, we recommend [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).  
-It is also possible to use [AWS DocumentDB](https://aws.amazon.com/documentdb) or [Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction)
 
 ### Clone Repo
 
@@ -96,43 +92,69 @@ Notes:
 
 ### Yarn
 
-Currently we are using Yarn (instead of npm), so make sure you have latest Yarn version installed before running Ever Platform:
+Currently we are using `Yarn` (instead of `npm`), so make sure you have latest Yarn version installed before running Ever Platform:
 
 ```
 npm install -g yarn@latest
 ```
 
-### Lerna
+### Quick installation
 
-We are using [Lerna](https://github.com/lerna/lerna), so you need to run the following command from working folder where you cloned Ever git repo (this will install Lerna and other packages):
-
-```
-yarn install
-```
-
-You may instead install Lerna globally (recommended) and let Lerna install everything for you:
-
-```
-npm install lerna@latest -g
-```
-
-Now, after Lerna installed (locally or globally), you need to Bootstrap all dependencies:
+After git repo is cloned, just run following command to install/bootstrap all dependencies:
 
 ```
 yarn bootstrap
 ```
 
+This will install required packages in all Platform projects using Lerna
+
+### Lerna (manual installation)
+
+We are using [Lerna](https://github.com/lerna/lerna) for mono-repo management.
+You need to run the following command from working folder where you cloned Ever git repo, which will install Lerna together with other packages:
+
+```
+yarn install
+```
+
+You may instead install Lerna globally:
+
+```
+npm install lerna@latest -g
+```
+
+Now, after Lerna installed (locally or globally), you need to Bootstrap all dependencies manually:
+
+```
+yarn lerna bootstrap
+```
+
 The command above will install all required packages for every sub-project of the Ever Platform.
 
-### Platform Configuration
+### MongoDB
 
-We created template & initial configuration files (with reasonable defaults) for each project in the Platform, to save your time and keep things simple:
+You can download and install free Community version of MongoDB from the [official MongoDB download center](https://www.mongodb.com/download-center/v2/community).
+
+After installation, make sure MongoDB service is running and accepting connections on default `localhost:27017` (change connection parameters in the ./backend/api/.env file if you run on different location/port)
+
+To manage database, you can use free [MongoDB Compass Community Edition available](https://www.mongodb.com/download-center/v2/compass) or some other GUI for MongoDB, e.g. Studio 3T (https://studio3t.com)
+
+For production, we recommend [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).  
+It is also possible to use [AWS DocumentDB](https://aws.amazon.com/documentdb) or [Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction)
+
+_Note: we currently integrating [Mongo Memory Server](https://github.com/nodkz/mongodb-memory-server) which will allow to test Platform without need to install MongoDB locally._
+
+### Platform Configuration (optional)
+
+We created templates & initial configuration files (with reasonable defaults) for each project in the Platform, to save your time and keep things simple:
 
 -   For _Backend (API)_ configuration, the `./backend/api/.env.template` file should be copied into `./backend/api/.env` and relevant changes should (optionally) be done.
 
-    **IMPORTANT**: you should have `./backend/api/.env` file in place to be able to run the Platform on developer machine
+    **IMPORTANT**: you should have `./backend/api/.env` file in place to be able to run the Platform on developer machine if you want to use different settings to our defaults.
 
--   For _Admin_ Angular App configuration, see `./admin/website-angular/src/environments/environment.ts` and `./admin/website-angular/src/environments/environment.prod.ts` files
+-   For _Admin_ Angular App configuration, the `./admin/website-angular/.env.template` file should be copied into `./admin/website-angular/.env` and relevant changes should (optionally) be done.
+
+    Note: the "Standard" Angular environment configuration files `./admin/website-angular/src/environments/environment.ts` and `./admin/website-angular/src/environments/environment.prod.ts` will be auto-generated from .env file (if it's exists) or from default settings on the first app run
 
 -   For _Merchant_ Ionic App configuration, see `./merchant/tablet-ionic/src/environments/environment.ts` and `./merchant/tablet-ionic/src/environments/environment.prod.ts` files. If you need to run Merchant App using PM2 (as Web app, not Tablet App), needs copy `./merchant/tablet-ionic/.env.template` to `./merchant/tablet-ionic/.env` and make relevant changes (if required)
 
@@ -144,9 +166,9 @@ We created template & initial configuration files (with reasonable defaults) for
 
 Notes:
 
--   for initial development run no changes required in the `environment.ts` files, unless changes were done to the Backend (API) configuration. However, to enable some of the Platform features, you may need to change relevant configurations at corresponding files.
+-   for initial development run no changes required in the `.env` or `environment.ts` files in the projects, unless some manual changes were done to the Backend (API) configuration. However, to enable some of the Platform features, you may need to change relevant configurations at corresponding files.
 
--   files environment.prod.ts are configurations for production environments/builds only (you should probably not publish them, unless you removed all private/secure parameters).
+-   files `.env`, `environment.ts`, `environment.prod.ts` are configurations you should never make public, unless you removed all private/secure parameters from them.
 
 ### Run Platform Projects
 
@@ -171,7 +193,7 @@ You can use credentials above to login into Platform Admin App, which available 
 ## Contribute
 
 -   Please give us :star: on Github, it **really** helps!
--   You are more than welcome to submit feature requests in the separate repo: [https://github.com/ever-co/feature-requests/issues](https://github.com/ever-co/feature-requests/issues)
+-   You are more than welcome to submit feature requests in the [separate repo](https://github.com/ever-co/feature-requests/issues)
 -   Pull requests are always welcome! Please base pull requests against the _develop_ branch and follow the [contributing guide](.github/CONTRIBUTING.md).
 
 ## Collaborators and Contributors
@@ -187,7 +209,13 @@ You can use credentials above to login into Platform Admin App, which available 
 
 -   Alish Meklyov ([Alish](https://github.com/AlishMekliov931))
 -   Blagovest Gerov ([BlagovestGerov](https://github.com/BlagovestGerov))
+-   Boyan Stanchev ([boyanstanchev](https://github.com/boyanstanchev))
 -   Elvis Arabadjiyski ([Dreemsuncho](https://github.com/Dreemsuncho))
+-   Emil Momchilov ([jew-er](https://github.com/jew-er))
+
+#### Graphic Designer & QA
+
+-   Julia Konviser
 
 ### Contributors
 

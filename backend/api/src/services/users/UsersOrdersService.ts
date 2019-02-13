@@ -12,6 +12,9 @@ import { concat, of, Observable } from 'rxjs';
 import { exhaustMap, filter, share } from 'rxjs/operators';
 import User from '../../modules/server.common/entities/User';
 import mongoose = require('mongoose');
+import { ObjectId } from 'mongodb';
+import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
+import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
 
 /**
  * Customers Orders Service
@@ -74,6 +77,52 @@ export class UsersOrdersService implements IUserOrdersRouter, IService {
 			[(order) => order.createdAt, (order) => order.orderNumber],
 			['desc', 'desc']
 		);
+	}
+
+	async getCustomerMetrics(id: string) {
+		const completedUserOrders = await this.ordersService.Model.find({
+			$and: [
+				{ 'user._id': id },
+				{
+					$or: [
+						{ carrierStatus: OrderCarrierStatus.DeliveryCompleted },
+						{
+							warehouseStatus:
+								OrderWarehouseStatus.GivenToCustomer
+						}
+					]
+				},
+				{ isCancelled: false }
+			]
+		}).select({ products: 1 });
+
+		const completedOrdersTotalSum = completedUserOrders
+			.map((o) => {
+				return o.products
+					.map((p) => {
+						return p.price * p.count;
+					})
+					.reduce((a, b) => a + b, 0);
+			})
+			.reduce((a, b) => a + b, 0);
+
+		const totalOrders = await this.ordersService.Model.find({
+			'user._id': id
+		})
+			.countDocuments()
+			.exec();
+
+		const canceledOrders = await this.ordersService.Model.find({
+			$and: [{ 'user._id': id }, { isCancelled: true }]
+		})
+			.countDocuments()
+			.exec();
+
+		return {
+			totalOrders,
+			canceledOrders,
+			completedOrdersTotalSum
+		};
 	}
 
 	private _shouldPull(userId: User['id'], event) {

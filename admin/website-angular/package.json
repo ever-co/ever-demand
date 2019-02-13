@@ -75,6 +75,7 @@
 		"@nebular/security": "^3.1.0",
 		"@nebular/theme": "^3.1.0",
 		"@ng-bootstrap/ng-bootstrap": "^4.0.1",
+		"@ng-select/ng-select": "^2.15.3",
 		"@ngx-translate/core": "^11.0.1",
 		"@ngx-translate/http-loader": "^4.0.0",
 		"@swimlane/ngx-charts": "^10.0.0",
@@ -164,7 +165,7 @@
 		"@types/leaflet": "^1.2.14",
 		"@types/mongodb": "^3.1.18",
 		"@types/mongoose": "^5.3.7",
-		"@types/node": "^10.12.18",
+		"@types/node": "^11.9.3",
 		"@types/socket.io-client": "^1.4.32",
 		"@types/stripe": "^6.19.1",
 		"@types/uuid": "^3.4.4",
@@ -172,6 +173,7 @@
 		"babel-loader": "^8.0.5",
 		"codelyzer": "^4.5.0",
 		"conventional-changelog-cli": "^2.0.11",
+		"cross-env": "^5.2.0",
 		"dotenv": "^6.2.0",
 		"envalid": "^4.2.1",
 		"husky": "^1.3.1",
@@ -192,7 +194,6 @@
 		"tslint": "^5.12.1",
 		"tslint-language-service": "^0.9.9",
 		"typescript": "~3.1.6",
-		"cross-env": "^5.2.0",
 		"yargs": "^12.0.5"
 	},
 	"engines": {

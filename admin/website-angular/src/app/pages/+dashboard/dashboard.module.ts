@@ -20,6 +20,8 @@ import { ProfitChartService } from 'app/@core/services/dashboard/profit-chart.se
 import { ToasterModule } from 'angular2-toaster';
 import { NbSpinnerModule } from '@nebular/theme';
 import { PipesModule } from '@modules/client.common.angular2/pipes/pipes.module';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
 
 export const routes: Routes = [
 	{
@@ -37,7 +39,9 @@ export const routes: Routes = [
 		TranslateModule.forChild(),
 		RouterModule.forChild(routes),
 		NbSpinnerModule,
-		PipesModule
+		PipesModule,
+		NgSelectModule,
+		FormsModule
 	],
 	declarations: [
 		DashboardComponent,

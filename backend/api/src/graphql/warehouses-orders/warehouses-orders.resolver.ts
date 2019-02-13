@@ -71,7 +71,15 @@ export class WarehouseOrdersResolver {
 			status
 		);
 
-		return orders.map((o) => new Order(o));
+		let page = 1;
+
+		if (pagingOptions) {
+			page = Math.ceil(
+				pagingOptions['skip'] / pagingOptions['limit'] + 1
+			);
+		}
+
+		return { orders: orders.map((o) => new Order(o)), page };
 	}
 
 	@Query()
