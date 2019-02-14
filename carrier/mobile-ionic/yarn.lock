@@ -387,10 +387,10 @@
   version "10.9.4"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.9.4.tgz#0f4cb2dc7c1de6096055357f70179043c33e9897"
 
-"@types/node@^11.9.0":
-  version "11.9.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.0.tgz#35fea17653490dab82e1d5e69731abfdbf13160d"
-  integrity sha512-ry4DOrC+xenhQbzk1iIPzCZGhhPGEFv7ia7Iu6XXSLVluiJIe9FfG7Iu3mObH9mpxEXCWLCMU4JWbCCR9Oy1Zg==
+"@types/node@^11.9.3":
+  version "11.9.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.4.tgz#ceb0048a546db453f6248f2d1d95e937a6f00a14"
+  integrity sha512-Zl8dGvAcEmadgs1tmSPcvwzO1YRsz38bVJQvH1RvRqSR9/5n61Q1ktcDL0ht3FXWR+ZpVmXVwN1LuH4Ax23NsA==
 
 "@types/reflect-metadata@^0.1.0":
   version "0.1.0"
@@ -5547,15 +5547,16 @@ rxjs-compat@^6.4.0:
   resolved "https://registry.yarnpkg.com/rxjs-compat/-/rxjs-compat-6.4.0.tgz#800923c15697948e1f30f18c531b12b49451c75c"
   integrity sha512-eo/O8RS83hJdJukCtA+IF6qnqa8FPOuVo+OPCzgVi+dbTle9KCdNv97IcQO0WwNVik7DJLKmf0F8uwzc0q40vw==
 
-rxjs-tslint@0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/rxjs-tslint/-/rxjs-tslint-0.1.5.tgz#9cddba80633e155fb47f7f0a25a6e33971f7dbf9"
-  integrity sha512-odvEAx6VoZSJs5o9gWZ7SxgTuS8ldq0mr4qnprbr6flNtIt4DtNJSYJpBK0WEy0o+f1oe92XVHrmgco1e7Cpdw==
+rxjs-tslint@0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/rxjs-tslint/-/rxjs-tslint-0.1.7.tgz#5ed841d1837cc0dc2187e5b57a2d45aa2af337e4"
+  integrity sha512-NnOfqutNfdT7VQnQm32JLYh2gDZjc0gdWZFtrxf/czNGkLKJ1nOO6jbKAFI09W0f9lCtv6P2ozxjbQH8TSPPFQ==
   dependencies:
     chalk "^2.4.0"
     optimist "^0.6.1"
     tslint "^5.9.1"
     tsutils "^2.25.0"
+    typescript ">=2.8.3"
 
 rxjs@^6.4.0:
   version "6.4.0"
@@ -6387,14 +6388,14 @@ typescript@2.9.1:
   version "2.9.1"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.1.tgz#fdb19d2c67a15d11995fd15640e373e09ab09961"
 
-typescript@^2.4.2:
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
-
-typescript@^3.3.3:
+typescript@>=2.8.3, typescript@^3.3.3:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.3.3.tgz#f1657fc7daa27e1a8930758ace9ae8da31403221"
   integrity sha512-Y21Xqe54TBVp+VDSNbuDYdGw0BpoR/Q6wo/+35M8PAU0vipahnyduJWirxxdxjsAkS7hue53x2zp8gz7F05u0A==
+
+typescript@^2.4.2:
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
 
 typescript@~2.6.1:
   version "2.6.2"
