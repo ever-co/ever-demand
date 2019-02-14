@@ -168,7 +168,7 @@
 		"@types/reflect-metadata": "^0.1.0",
 		"@types/socket.io-client": "^1.4.32",
 		"@types/stripe": "^6.19.5",
-		"@types/swiper": "4.4.1",
+		"@types/swiper": "4.4.2",
 		"@types/uuid": "^3.4.4",
 		"codelyzer": "^4.5.0",
 		"cpr": "^3.0.1",
