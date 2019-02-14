@@ -53,7 +53,7 @@
 		"@ionic-native/call-number": "^5.0.0",
 		"@ionic-native/camera": "^5.0.0",
 		"@ionic-native/core": "^5.0.0",
-		"@ionic-native/device": "^5.0.0",
+		"@ionic-native/device": "^5.1.0",
 		"@ionic-native/geolocation": "^5.0.0",
 		"@ionic-native/globalization": "^5.0.0",
 		"@ionic-native/google-analytics": "^5.0.0",
