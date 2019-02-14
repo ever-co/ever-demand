@@ -182,7 +182,7 @@
 		"karma-jasmine": "~2.0.1",
 		"karma-jasmine-html-reporter": "^1.4.0",
 		"protractor": "~5.4.2",
-		"rxjs-tslint": "0.1.5",
+		"rxjs-tslint": "0.1.7",
 		"terser": "3.14.1",
 		"terser-webpack-plugin": "^1.2.1",
 		"ts-node": "~8.0.2",
