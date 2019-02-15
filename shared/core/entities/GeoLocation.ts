@@ -13,13 +13,6 @@ export const locationPreSchema = {
 	coordinates: [Number]
 };
 
-export function getCountryName(country: null): null;
-export function getCountryName(country: Country): CountryName;
-export function getCountryName(country: Country | null): CountryName | null;
-export function getCountryName(country: Country | null): CountryName | null {
-	return countries[Country[country]] || null;
-}
-
 /**
  * Stores Geo Location (Address) of some physical entity (Customer, Warehouse, Carrier, etc)
  *
@@ -601,6 +594,13 @@ export type CountryName =
 	| 'Zambia'
 	| 'Zimbabwe'
 	| null;
+
+export function getCountryName(country: null): null;
+export function getCountryName(country: Country): CountryName;
+export function getCountryName(country: Country | null): CountryName | null;
+export function getCountryName(country: Country | null): CountryName | null {
+	return countries[Country[country]] || null;
+}
 
 export const countriesIdsToNamesArray: Array<{
 	id: Country;

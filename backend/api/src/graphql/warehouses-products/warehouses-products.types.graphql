@@ -5,9 +5,15 @@ type Query {
 	): [WarehouseProduct!]
 
 	getProductsCount(id: String!): Int
+
+	getWarehouseProduct(
+		warehouseId: String!
+		warehouseProductId: String!
+	): WarehouseProduct
 }
 
 type WarehouseProduct {
+	id: String!
 	price: Int!
 	initialPrice: Int!
 	count: Int

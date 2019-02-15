@@ -3,6 +3,7 @@ import { IWarehouseProductCreateObject } from '@modules/server.common/interfaces
 import { WarehousesProductsService } from '../../services/warehouses';
 import { Exception } from 'handlebars';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
+import { first } from 'rxjs/operators';
 
 @Resolver('Warehouse-products')
 export class WarehouseProductsResolver {
@@ -23,6 +24,20 @@ export class WarehouseProductsResolver {
 	@Query()
 	async getProductsCount(_, { id }: { id: string }) {
 		return this._warehousesProductsService.getProductsCount(id);
+	}
+
+	@Query()
+	async getWarehouseProduct(
+		_,
+		{
+			warehouseId,
+			warehouseProductId
+		}: { warehouseId: string; warehouseProductId: string }
+	) {
+		return await this._warehousesProductsService
+			.getProduct(warehouseId, warehouseProductId)
+			.pipe(first())
+			.toPromise();
 	}
 
 	@Mutation()

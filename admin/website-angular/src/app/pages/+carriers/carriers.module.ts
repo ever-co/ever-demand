@@ -11,6 +11,7 @@ import { CarriersRoutingModule } from './carriers-routing.module';
 import { RenderComponentsModule } from '../../@shared/render-component/render-components.module';
 import { CarriersTableModule } from '../../@shared/render-component/carriers-table/carriers-table.module';
 import { NbSpinnerModule } from '@nebular/theme';
+import { CarrierMapModule } from './+carrier/carrier-map/carrier-map.module';
 
 @NgModule({
 	imports: [
@@ -24,7 +25,8 @@ import { NbSpinnerModule } from '@nebular/theme';
 		TranslateModule.forChild(),
 		RenderComponentsModule,
 		CarriersTableModule,
-		NbSpinnerModule
+		NbSpinnerModule,
+		CarrierMapModule
 	],
 	declarations: [CarriersComponent]
 })
