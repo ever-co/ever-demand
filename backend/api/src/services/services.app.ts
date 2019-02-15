@@ -180,6 +180,7 @@ export class ServicesApp {
 					useCreateIndex: true,
 					useNewUrlParser: true,
 					autoReconnect: true,
+					useFindAndModify: false,
 					reconnectTries: Number.MAX_VALUE,
 					poolSize: ServicesApp._poolSize,
 					connectTimeoutMS: ServicesApp._connectTimeoutMS

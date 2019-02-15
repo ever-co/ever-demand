@@ -25,7 +25,6 @@ import { of } from 'rxjs/observable/of';
 import { _throw } from 'rxjs/observable/throw';
 import mongoose = require('mongoose');
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
-import { async } from 'rxjs/internal/scheduler/async';
 
 const noGetProductTypeMessage = `There should be true at least one of the two - "isCarrierRequired" or "isTakeaway"!`;
 
@@ -634,6 +633,29 @@ export class WarehousesProductsService
 
 				return _.take(topProducts, quantity);
 			})
+		);
+	}
+
+	@observableListener()
+	getProduct(
+		warehouseId: string,
+		warehouseProductId: string
+	): Observable<WarehouseProduct> {
+		return this.warehousesService.get(warehouseId, true).pipe(
+			exhaustMap((warehouse) => {
+				if (warehouse === null) {
+					return _throw(
+						new Error(
+							`Warehouse with the id ${warehouseId} doesn't exist`
+						)
+					);
+				} else {
+					return of(warehouse);
+				}
+			}),
+			map((warehouse) =>
+				warehouse.products.find((p) => p.id === warehouseProductId)
+			)
 		);
 	}
 }

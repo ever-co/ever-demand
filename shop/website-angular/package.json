@@ -142,6 +142,7 @@
 		"masonry-layout": "^4.2.2",
 		"mdi-svg": "^2.2.43",
 		"ng-lazyload-image": "^5.0.0",
+		"ngx-infinite-scroll": "^7.0.1",
 		"reflect-metadata": "^0.1.13",
 		"rxjs": "^6.4.0",
 		"rxjs-compat": "^6.4.0",

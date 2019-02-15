@@ -433,9 +433,8 @@ export abstract class DBService<T extends DBObject<any, any>>
 		try {
 			lastValues = await this.find(findObj);
 
-			await this.Model.update(findObj, updateObj, {
-				new: true,
-				mutlti: true
+			await this.Model.updateMany(findObj, updateObj, {
+				new: true
 			}).exec();
 
 			updatedObjects = await this.getCurrentMultiple(

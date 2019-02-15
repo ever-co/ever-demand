@@ -17,6 +17,7 @@ import { RedirectNameComponent } from '../../@shared/render-component/name-redir
 import { CarrierActionsComponent } from '../../@shared/render-component/carriers-table/carrier-actions.component';
 import { CarrierImageComponent } from '../../@shared/render-component/carriers-table/carrier-image/carrier-image.component';
 import { CarrierPhoneComponent } from '../../@shared/render-component/carriers-table/carrier-phone/carrier-phone.component';
+import { CarrierMapComponent } from './+carrier/carrier-map/carrier-map.component';
 
 const perPage = 5;
 
@@ -98,6 +99,15 @@ export class CarriersComponent implements OnDestroy, AfterViewInit {
 			this.loading = false;
 			this._toasterService.pop(`error`, `${error.message}`);
 		}
+	}
+
+	protected revealSelectedCarriers() {
+		this.modalService.open(CarrierMapComponent, {
+			size: 'lg',
+			container: 'nb-layout',
+			windowClass: 'ng-custom'
+			//backdrop: 'static'
+		});
 	}
 
 	private _applyTranslationOnSmartTable() {

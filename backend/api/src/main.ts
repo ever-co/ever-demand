@@ -42,7 +42,7 @@ process.on('uncaughtException', (err) => {
 		try {
 			console.error("Can't write to log!!!!!!");
 			console.error(logWritingErr);
-		} catch (consoleWritingError) {}
+		} catch (consoleWritingError) { }
 	}
 
 	console.error(err);
@@ -55,7 +55,7 @@ process.on('unhandledRejection', (err, promise) => {
 		try {
 			console.error("Can't write to log!!!!!!");
 			console.error(logWritingErr);
-		} catch (consoleWritingError) {}
+		} catch (consoleWritingError) { }
 	}
 
 	console.error(err);
