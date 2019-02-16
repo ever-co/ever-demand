@@ -8725,10 +8725,10 @@ ngx-echarts@^4.1.0:
   dependencies:
     tslib "^1.9.0"
 
-ngx-highlightjs@^2.1.4:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/ngx-highlightjs/-/ngx-highlightjs-2.1.4.tgz#65e01ffac1980bef42cfd2e021a468fcba3e03a0"
-  integrity sha512-MYPWdKg1hQhVrsPTNRhUP0n+dTxVIeuiGPLttkO3v1au9+ytk/AbFO8qtDZSMYhUZHVER+16t9M74pJFM5AXeQ==
+ngx-highlightjs@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/ngx-highlightjs/-/ngx-highlightjs-3.0.3.tgz#06105191fbd29abbc0b7ea1446c87fa4547e445b"
+  integrity sha512-/Eh+uJL9CiePWXzyT7VpLaQoWQyyNEUQaHhJ4faUBQZLBpachCBY55iDX0mi50zG9dapTiiapH5Vz/sL2GDxlg==
   dependencies:
     tslib "^1.9.0"
 
