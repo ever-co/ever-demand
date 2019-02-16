@@ -80,7 +80,7 @@
 		"apollo-link-context": "1.0.12",
 		"call-number": "^1.0.1",
 		"connect": "^3.6.6",
-		"cordova-android": "^7.1.4",
+		"cordova-android": "^8.0.0",
 		"cordova-browser": "^6.0.0",
 		"cordova-open-native-settings": "^1.5.2",
 		"cordova-plugin-badge": "0.8.8",
