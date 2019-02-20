@@ -147,10 +147,10 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/call-number@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/call-number/-/call-number-5.0.0.tgz#a1c46ddf3e384cd1c2fbe12d5f2c6f5a2541bb91"
-  integrity sha512-kzIAMs7+hTRL2A2wO6PyIOVAJYxhBFNDsYyuE5vLmDs1Um74mFq62CFdYhLNpF+/wovbuNG3+u/b1BFToXIUWw==
+"@ionic-native/call-number@^5.2.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/call-number/-/call-number-5.2.0.tgz#afa90099b3a6b96543b762b1aecb66ff7ebbb9b7"
+  integrity sha512-za61/CsaMiXGI3Lnj4Rx9T5Cf7ZPe+1rZql0MjNK1z3JHJ1NIscoqE6RrnEwniHJac/AXRVe92F+uEjNVkl52g==
   dependencies:
     "@types/cordova" latest
 
@@ -448,10 +448,10 @@
   version "10.9.3"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.9.3.tgz#85f288502503ade0b3bfc049fe1777b05d0327d5"
 
-"@types/node@^11.9.0":
-  version "11.9.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.0.tgz#35fea17653490dab82e1d5e69731abfdbf13160d"
-  integrity sha512-ry4DOrC+xenhQbzk1iIPzCZGhhPGEFv7ia7Iu6XXSLVluiJIe9FfG7Iu3mObH9mpxEXCWLCMU4JWbCCR9Oy1Zg==
+"@types/node@^11.9.3":
+  version "11.9.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.4.tgz#ceb0048a546db453f6248f2d1d95e937a6f00a14"
+  integrity sha512-Zl8dGvAcEmadgs1tmSPcvwzO1YRsz38bVJQvH1RvRqSR9/5n61Q1ktcDL0ht3FXWR+ZpVmXVwN1LuH4Ax23NsA==
 
 "@types/reflect-metadata@^0.1.0":
   version "0.1.0"
