@@ -56,7 +56,7 @@
 		"@ionic-native/call-number": "^5.0.0",
 		"@ionic-native/camera": "^5.0.0",
 		"@ionic-native/core": "^5.0.0",
-		"@ionic-native/device": "^5.0.0",
+		"@ionic-native/device": "^5.2.0",
 		"@ionic-native/email-composer": "^5.0.0",
 		"@ionic-native/file-transfer": "^5.0.0",
 		"@ionic-native/globalization": "^5.0.0",
