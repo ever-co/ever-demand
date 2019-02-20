@@ -210,10 +210,10 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/mixpanel@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/mixpanel/-/mixpanel-5.0.0.tgz#9354a04093d3e0ff0c7f123aea8a205c01a66d05"
-  integrity sha512-SqKHc5yCTJ2qnX1bk7GFcNQCpDzIqzg0+CNWptSkFPBxtais3qw07GYTASaEzQM1kjmPSPD++avkfWmUXT2CXg==
+"@ionic-native/mixpanel@^5.2.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/mixpanel/-/mixpanel-5.2.0.tgz#a39fde1da7c0f01adfa0a5377fbae58b9a4e746c"
+  integrity sha512-zMC/3pG1cbnwbtwRgkebkBy8uf2p47cXa5ZwZy6ZjJshCcv9YLyU5sa5TyDzGRuGeq2v8fDDSiRCiwL7ka2OVQ==
   dependencies:
     "@types/cordova" latest
 
@@ -448,10 +448,10 @@
   version "10.9.3"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.9.3.tgz#85f288502503ade0b3bfc049fe1777b05d0327d5"
 
-"@types/node@^11.9.0":
-  version "11.9.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.0.tgz#35fea17653490dab82e1d5e69731abfdbf13160d"
-  integrity sha512-ry4DOrC+xenhQbzk1iIPzCZGhhPGEFv7ia7Iu6XXSLVluiJIe9FfG7Iu3mObH9mpxEXCWLCMU4JWbCCR9Oy1Zg==
+"@types/node@^11.9.3":
+  version "11.9.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.4.tgz#ceb0048a546db453f6248f2d1d95e937a6f00a14"
+  integrity sha512-Zl8dGvAcEmadgs1tmSPcvwzO1YRsz38bVJQvH1RvRqSR9/5n61Q1ktcDL0ht3FXWR+ZpVmXVwN1LuH4Ax23NsA==
 
 "@types/reflect-metadata@^0.1.0":
   version "0.1.0"
