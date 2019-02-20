@@ -231,10 +231,10 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/vibration@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/vibration/-/vibration-5.0.0.tgz#76c7b2051133daf5d1674e60658f28a2a3223daf"
-  integrity sha512-XIAfp3oeizseetvnYPAMZ0kK+nyh2i/0Vy0FJkcEGM0fCD36PZkyNpx1Ai1bk3/Ln3nTMZddoBZket1aTXetNA==
+"@ionic-native/vibration@^5.2.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/vibration/-/vibration-5.2.0.tgz#6015c17f27cf78e7750ed069e56aff3df619d048"
+  integrity sha512-GVHEcm/+0d8MZDX4rsKN16trK1LwtdLCiGnd6dKrOBFg0czgH3hfsFQqO3efF4ZWLb+nr/qBOl8MN//YC/SA2Q==
   dependencies:
     "@types/cordova" latest
 
@@ -387,10 +387,10 @@
   version "10.9.4"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.9.4.tgz#0f4cb2dc7c1de6096055357f70179043c33e9897"
 
-"@types/node@^11.9.0":
-  version "11.9.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.0.tgz#35fea17653490dab82e1d5e69731abfdbf13160d"
-  integrity sha512-ry4DOrC+xenhQbzk1iIPzCZGhhPGEFv7ia7Iu6XXSLVluiJIe9FfG7Iu3mObH9mpxEXCWLCMU4JWbCCR9Oy1Zg==
+"@types/node@^11.9.3":
+  version "11.9.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.4.tgz#ceb0048a546db453f6248f2d1d95e937a6f00a14"
+  integrity sha512-Zl8dGvAcEmadgs1tmSPcvwzO1YRsz38bVJQvH1RvRqSR9/5n61Q1ktcDL0ht3FXWR+ZpVmXVwN1LuH4Ax23NsA==
 
 "@types/reflect-metadata@^0.1.0":
   version "0.1.0"
