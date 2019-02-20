@@ -196,10 +196,10 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/google-analytics@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/google-analytics/-/google-analytics-5.0.0.tgz#844387f24961d9f83864045da53e2e38e1bddb3d"
-  integrity sha512-mYeP9QmHfjjJe3y5uHUz4atfR2EuRCf5TFRCyi+yoCs5WEwC4JbM7k4GxGyx6YY1MHqNDoUrDZu5F0NypqxsKg==
+"@ionic-native/google-analytics@^5.2.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/google-analytics/-/google-analytics-5.2.0.tgz#00318ef0bac7e87db98e68418241ad6329d7779b"
+  integrity sha512-mm9bjn743Or5XQzVCepxZzvE1B2ImdmgFTsbyrM7d0WFfyeHjvZjwjTjCRR0YXlO2MBjb2FjgpDgvWOdyfdVoQ==
   dependencies:
     "@types/cordova" latest
 
@@ -448,10 +448,10 @@
   version "10.9.3"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.9.3.tgz#85f288502503ade0b3bfc049fe1777b05d0327d5"
 
-"@types/node@^11.9.0":
-  version "11.9.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.0.tgz#35fea17653490dab82e1d5e69731abfdbf13160d"
-  integrity sha512-ry4DOrC+xenhQbzk1iIPzCZGhhPGEFv7ia7Iu6XXSLVluiJIe9FfG7Iu3mObH9mpxEXCWLCMU4JWbCCR9Oy1Zg==
+"@types/node@^11.9.3":
+  version "11.9.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.4.tgz#ceb0048a546db453f6248f2d1d95e937a6f00a14"
+  integrity sha512-Zl8dGvAcEmadgs1tmSPcvwzO1YRsz38bVJQvH1RvRqSR9/5n61Q1ktcDL0ht3FXWR+ZpVmXVwN1LuH4Ax23NsA==
 
 "@types/reflect-metadata@^0.1.0":
   version "0.1.0"
