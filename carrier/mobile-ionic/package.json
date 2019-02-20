@@ -50,7 +50,7 @@
 		"@angular/http": "^7.2.4",
 		"@angular/platform-browser": "^7.2.4",
 		"@angular/platform-browser-dynamic": "^7.2.4",
-		"@ionic-native/call-number": "^5.0.0",
+		"@ionic-native/call-number": "^5.2.0",
 		"@ionic-native/camera": "^5.0.0",
 		"@ionic-native/core": "^5.0.0",
 		"@ionic-native/device": "^5.0.0",
