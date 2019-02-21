@@ -143,7 +143,7 @@
 		"@types/googlemaps": "^3.30.16",
 		"@types/jasmine": "^3.3.8",
 		"@types/jasminewd2": "^2.0.6",
-		"@types/leaflet": "^1.4.1",
+		"@types/leaflet": "^1.4.3",
 		"@types/mongoose": "^5.3.12",
 		"@types/node": "^11.9.3",
 		"@types/reflect-metadata": "^0.1.0",
