@@ -352,10 +352,10 @@
   dependencies:
     "@types/jasmine" "*"
 
-"@types/leaflet@^1.4.1":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.4.1.tgz#5807f53b06d13dd2755426b7b4d48000e7c36a91"
-  integrity sha512-2Z4AM/kf8Yif7i0YazjG/ures+0zIarc4BDP8QqvcCIiI8GWbCxkfJLf7DWMtMPRZv0bh+a1ZSJRTuSwOtPzzQ==
+"@types/leaflet@^1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.4.3.tgz#62638cb73770eeaed40222042afbcc7b495f0cc4"
+  integrity sha512-jFRBSsPHi1EwQSwrN0cOJLdPhwOZsRl4IMxvm/2ShLh0YM5GfCtQXCzsrv8RE7DWL+AykXdYSAd9bFLWbZT4CQ==
   dependencies:
     "@types/geojson" "*"
 
@@ -387,10 +387,10 @@
   version "10.9.4"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.9.4.tgz#0f4cb2dc7c1de6096055357f70179043c33e9897"
 
-"@types/node@^11.9.0":
-  version "11.9.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.0.tgz#35fea17653490dab82e1d5e69731abfdbf13160d"
-  integrity sha512-ry4DOrC+xenhQbzk1iIPzCZGhhPGEFv7ia7Iu6XXSLVluiJIe9FfG7Iu3mObH9mpxEXCWLCMU4JWbCCR9Oy1Zg==
+"@types/node@^11.9.3":
+  version "11.9.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.4.tgz#ceb0048a546db453f6248f2d1d95e937a6f00a14"
+  integrity sha512-Zl8dGvAcEmadgs1tmSPcvwzO1YRsz38bVJQvH1RvRqSR9/5n61Q1ktcDL0ht3FXWR+ZpVmXVwN1LuH4Ax23NsA==
 
 "@types/reflect-metadata@^0.1.0":
   version "0.1.0"
