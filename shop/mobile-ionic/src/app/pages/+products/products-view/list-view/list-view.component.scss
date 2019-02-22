@@ -1,0 +1,115 @@
+img {
+	width: 100%;
+}
+
+.swiper-slide img {
+	width: 100% !important;
+}
+
+#pageLoader {
+	border: 16px solid #f3f3f3;
+	border-top: 16px solid #3498db;
+	border-radius: 50%;
+	width: 120px;
+	height: 120px;
+	animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.disabled {
+	background: #cccccc !important;
+	border: 1px solid #999999 !important;
+	color: #666666 !important;
+}
+
+.productCard {
+	background-color: white;
+	border-radius: 5px;
+	margin: 6px;
+	width: 97%;
+}
+
+.products-view {
+	height: 100%;
+}
+
+.icon {
+	border: 1px solid #95989a;
+	padding: 5px;
+}
+
+.productDescription {
+	color: #d0d0d0;
+}
+
+.productDetails {
+	color: red;
+	font-size: 60%;
+	margin-left: 35px;
+	cursor: pointer;
+}
+
+.btn-sm {
+	font-size: 60%;
+}
+
+.productImage {
+	width: 410px;
+	height: 280px;
+}
+.text-content {
+	padding-left: 10px;
+	line-height: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+.productTitle {
+	color: white;
+	font-size: 16px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: inline-block;
+}
+
+ion-col {
+	padding: 2px;
+}
+
+ion-row {
+	padding: 0;
+}
+
+.list-buttons {
+	button {
+		padding: 15px;
+		border-radius: 5px;
+		display: flex !important;
+		align-content: center !important;
+		align-items: center !important;
+		position: relative;
+		text-align: center;
+		height: 100%;
+		color: white;
+		text-align: center;
+		span {
+			margin: 0 auto;
+		}
+	}
+}
+
+.image-content {
+	position: relative;
+}
+e-cu-delivery-info {
+	margin: auto;
+}

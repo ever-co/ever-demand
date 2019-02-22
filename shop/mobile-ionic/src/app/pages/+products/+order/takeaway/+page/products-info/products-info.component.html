@@ -1,0 +1,58 @@
+<div class="products-info all">
+	<div
+		class="products-image-content box box-brand text-align-center {{
+			listView ? 'products-list-image' : 'products-slides-image'
+		}}"
+	>
+		<img src="{{ localeTranslate((order?.products)[0].product.images) }}" />
+	</div>
+	<div class="bottom-container box box-brand-light">
+		<div class="actions">
+			<div class="box box-brand-light box-small-padding actions-content">
+				<div class="order-info">
+					<e-cu-order-takeaway-info-order-info
+						[order]="order"
+					></e-cu-order-takeaway-info-order-info>
+				</div>
+
+				<div
+					class="box box-brand-light buttons-bottom"
+					dir="{{ 'CURRENT_DIRECTION' | translate }}"
+				>
+					<div class="row">
+						<span class="waves-effect waves-classic col-3">
+							<button
+								class="button button-brand col-100"
+								(click)="undo.emit(true)"
+							>
+								<span>{{
+									'BUY_POPUP.BUTTONS.CANCEL' | translate
+								}}</span>
+							</button>
+						</span>
+
+						<span
+							class="waves-effect waves-classic pl-5px {{
+								paymentsEnabled ? 'col-4' : 'col-9'
+							}}"
+						>
+							<button
+								class="button button-balanced border-color-brand col-100"
+								(click)="complete.emit(true)"
+							>
+								<span>{{
+									'BUY_POPUP.BUTTONS.GOT_IT' | translate
+								}}</span>
+							</button>
+						</span>
+						<e-cu-payment
+							class="waves-effect waves-classic col-5 pl-5px p-0"
+							*ngIf="paymentsEnabled && order"
+							[order]="order"
+						></e-cu-payment>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,78 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-buttons slot="start">
+			<ion-menu-button autoHide="false"></ion-menu-button>
+		</ion-buttons>
+		<ion-row nowrap>
+			<ion-col *ngIf="inStore" class="col-9 p-1 header-title">
+				<ion-label>
+					<strong class="products-title">
+						<span class="merchant-name pr-1">
+							{{ merchant?.name }}
+						</span>
+						<span
+							>{{ 'PRODUCTS_VIEW.TITLE' | translate }}
+						</span></strong
+					></ion-label
+				>
+			</ion-col>
+			<ion-col class="header-actions">
+				<ion-label
+					*ngIf="!inStore"
+					(click)="isDeliveryRequired = !isDeliveryRequired"
+				>
+					<small [ngClass]="{ 'no-select': isDeliveryRequired }">
+						{{ 'PRODUCTS_VIEW.TAKEAWAY' | translate }}</small
+					></ion-label
+				>
+				<ion-toggle
+					*ngIf="!inStore"
+					color="secondary"
+					class="toggleDeliveryType pr-5px pl-5px"
+					(ionChange)="toggleGetProductsType()"
+					[(ngModel)]="isDeliveryRequired"
+				></ion-toggle>
+				<ion-label
+					*ngIf="!inStore"
+					(click)="isDeliveryRequired = !isDeliveryRequired"
+					class="pr-14px"
+				>
+					<small [ngClass]="{ 'no-select': !isDeliveryRequired }">
+						{{ 'PRODUCTS_VIEW.DELIVERY' | translate }}
+					</small></ion-label
+				>
+				<ion-label
+					*ngIf="!navigateToMerchants"
+					(click)="changeStoreMode()"
+				>
+					<e-cu-store-sign [inStore]="inStore"></e-cu-store-sign>
+				</ion-label>
+				<ion-label
+					*ngIf="navigateToMerchants"
+					routerLink="{{ !inStore ? '/merchants' : '' }}"
+					routerDirection="root"
+				>
+					<e-cu-store-sign [inStore]="inStore"></e-cu-store-sign>
+				</ion-label>
+			</ion-col>
+		</ion-row>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content color="black" [ngClass]="{ 'blur-filter': modalOpen }">
+	<ion-spinner
+		*ngIf="!areProductsLoaded && products_placeholder == null"
+	></ion-spinner>
+	<div *ngIf="modalOpen" class="blur-lighter"></div>
+
+	<e-cu-products-view
+		*ngIf="areProductsLoaded"
+		[placeholder]="products_placeholder"
+		[products]="products"
+		(buy)="buyItem($event)"
+		[type]="viewType"
+	>
+	</e-cu-products-view>
+</ion-content>
+
+<router-outlet></router-outlet>

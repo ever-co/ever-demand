@@ -92,7 +92,15 @@
 						"polyfills": "src/polyfills.ts",
 						"tsConfig": "src/tsconfig.spec.json",
 						"karmaConfig": "src/karma.conf.js",
-						"styles": ["styles.css"],
+						"styles": [
+							"node_modules/bootstrap/dist/css/bootstrap.min.css",
+							{
+								"input": "src/theme/variables.scss"
+							},
+							{
+								"input": "src/global.scss"
+							}
+						],
 						"scripts": [],
 						"assets": [
 							{

@@ -1,0 +1,36 @@
+@keyframes blinking {
+	0% {
+		color: #fff;
+	}
+	50% {
+		color: #9a9a9a;
+	}
+}
+
+.delivery-status {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	text-align: center;
+	font-size: 36px;
+	.status {
+		display: inline-block;
+	}
+
+	* {
+		color: #9a9a9a !important;
+	}
+
+	.activated {
+		&,
+		* {
+			color: #fff !important;
+		}
+	}
+
+	.current {
+		&,
+		* {
+			animation: blinking 1s ease-in-out infinite;
+		}
+	}
+}

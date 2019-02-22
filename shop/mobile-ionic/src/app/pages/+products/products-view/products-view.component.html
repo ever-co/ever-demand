@@ -1,0 +1,17 @@
+<div [ngSwitch]="type" class="container">
+	<e-cu-products-slides-view
+		[placeholder]="placeholder"
+		[products]="products"
+		(buy)="buyProduct($event)"
+		*ngSwitchCase="'slides'"
+	>
+	</e-cu-products-slides-view>
+
+	<e-cu-products-list-view
+		[placeholder]="placeholder"
+		[products]="products"
+		(buy)="buyProduct($event)"
+		*ngSwitchCase="'list'"
+	>
+	</e-cu-products-list-view>
+</div>

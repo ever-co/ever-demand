@@ -1,0 +1,26 @@
+<div class="container">
+	<div class="test">
+		<section class="product-image">
+			<ion-img [src]="image.url" [ngClass]="imageClass"></ion-img>
+		</section>
+
+		<section class="product-content">
+			<div class="title">
+				<span class="text"> {{ title }} </span>&nbsp;&nbsp;
+				<small class="qty rounded"> {{ count }}</small>
+			</div>
+
+			<div class="description">{{ description }}</div>
+
+			<div class="details" *ngIf="showInsideDetailsButton">
+				<a href="#">{{ 'ORDER_HISTORY_VIEW.DETAILS' | translate }}</a>
+			</div>
+		</section>
+	</div>
+	<div class="details-outer" *ngIf="showOutsideDetailsButton">
+		<a [ngClass]="imageClass" href="#">{{
+			'ORDER_HISTORY_VIEW.DETAILS' | translate
+		}}</a>
+	</div>
+	<section class="products-price">${{ price }}</section>
+</div>

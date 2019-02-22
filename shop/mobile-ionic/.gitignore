@@ -29,3 +29,9 @@ $RECYCLE.BIN/
 Thumbs.db
 UserInterfaceState.xcuserstate
 docs/
+
+# environment files
+.env
+.env.prod
+/src/environments/environment.ts
+/src/environments/environment.prod.ts

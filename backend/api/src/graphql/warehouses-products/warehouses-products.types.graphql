@@ -14,6 +14,7 @@ type Query {
 
 type WarehouseProduct {
 	id: String!
+	_id: String!
 	price: Int!
 	initialPrice: Int!
 	count: Int

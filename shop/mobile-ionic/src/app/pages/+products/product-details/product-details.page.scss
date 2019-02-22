@@ -1,0 +1,213 @@
+.disabled {
+	background: #cccccc !important;
+	color: #666666 !important;
+}
+
+.product-card {
+	border-radius: 0px;
+	margin: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+.icon {
+	border: 1px solid #95989a;
+	padding: 5px;
+}
+
+.product-description {
+	color: #d0d0d0;
+}
+
+.btn-sm {
+	font-size: 60%;
+}
+
+ion-slide {
+	display: block;
+	height: 100vh;
+}
+
+.product-details {
+	ion-title.title-ios.hydrated {
+		padding: 0;
+	}
+
+	.title-content {
+		width: 100%;
+		.ios-arrow-round-back {
+			height: 35px;
+			width: 35px;
+			float: left;
+			margin-right: 50px;
+		}
+
+		span {
+			margin-top: 4px;
+			float: left;
+		}
+	}
+}
+
+.slide-content {
+	max-height: 180px;
+}
+
+ion-slide.swiper-slide {
+	display: flex !important;
+	align-content: center !important;
+	align-items: center !important;
+}
+
+ion-slides.hydrated {
+	min-width: 100%;
+}
+
+.list-content {
+	margin-top: 10px;
+	padding-top: 10px;
+}
+
+.list {
+	max-height: 17em;
+	overflow: scroll;
+	padding-left: 20px;
+	padding-right: 20px;
+	list-style-type: none;
+	margin-bottom: 10px !important;
+}
+
+.reviews-content {
+	height: 70px;
+}
+
+.icon-cicle {
+	height: 130px;
+}
+
+.single-image {
+	width: 100%;
+}
+
+.all-space {
+	width: 100%;
+}
+
+.half-space {
+	width: 30%;
+	margin: 0 auto;
+}
+
+.back-btn {
+	font-size: 30px;
+	margin-right: 10px;
+	margin-bottom: 4px;
+}
+
+.title-text {
+	color: white;
+}
+
+.description-text {
+	color: #d0d0d0;
+}
+
+.delivery-sign {
+	font-size: 18px;
+}
+
+.delivery-info {
+	text-align: center;
+	line-height: 1;
+	padding-right: 5px;
+	color: white;
+	.delivery-lines {
+		font-size: 80%;
+		small {
+			display: block;
+		}
+	}
+}
+
+.discount-circle {
+	z-index: 1000;
+	opacity: 0.8;
+	position: absolute;
+	right: 13px;
+	top: 10px;
+	font-size: 15px;
+	border-radius: 5px;
+	color: white;
+	padding: 5px;
+
+	line-height: 1;
+	text-align: center;
+
+	.price-initial {
+		font-size: 14px;
+		text-decoration: line-through;
+	}
+}
+
+.images {
+	position: relative;
+}
+
+.details-buttons {
+	position: absolute;
+	padding-right: 5px;
+	padding-left: 5px;
+	bottom: 5px;
+	button {
+		padding: 15px;
+		border-radius: 5px;
+		display: flex !important;
+		align-content: center !important;
+		align-items: center !important;
+		position: relative;
+		text-align: center;
+		height: 100%;
+		color: white;
+		text-align: center;
+		span {
+			margin: 0 auto;
+		}
+	}
+
+	.disabled {
+		background: #cccccc !important;
+		border: 1px solid #999999 !important;
+		color: #666666 !important;
+	}
+}
+
+.text-content {
+	padding-left: 10px;
+	line-height: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: inline-block;
+}
+
+.text {
+	margin: 0;
+	color: white;
+	font-size: 16px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.productDescription {
+	color: #d0d0d0;
+	margin: 0 !important;
+}
+
+ion-col {
+	padding: 2px;
+}
+
+.header-container {
+	display: flex !important;
+	padding: 5px;
+}

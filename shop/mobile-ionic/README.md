@@ -1,1 +1,1 @@
-# Ever Ionic Mobile App
+# Ever Shop Mobile App (Ionic)

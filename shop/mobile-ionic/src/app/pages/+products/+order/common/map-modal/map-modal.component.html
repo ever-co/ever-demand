@@ -1,0 +1,21 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-title>{{ 'MAP' | translate }}</ion-title>
+		<ion-buttons slot="end">
+			<ion-button (click)="closeModal()">
+				<span>
+					<i class="fa fa-times back-btn"></i>
+					<span>{{ 'CLOSE' | translate }}</span>
+				</span>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="map-modal">
+	<e-cu-directions-location
+		class="map"
+		[origin]="origin"
+		[destination]="destination"
+	></e-cu-directions-location>
+</ion-content>

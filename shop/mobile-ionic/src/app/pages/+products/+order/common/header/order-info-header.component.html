@@ -1,0 +1,15 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-buttons slot="start">
+			<ion-menu-button autoHide="false"></ion-menu-button>
+		</ion-buttons>
+
+		<ion-title>{{ 'ORDER_INFO' | translate }}</ion-title>
+		<ion-buttons slot="end">
+			<ion-button (click)="back.emit()">
+				<i class="fa fa-angle-left back-btn"></i>
+				<span>{{ 'BACK' | translate }}</span>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>

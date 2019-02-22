@@ -1,0 +1,63 @@
+.order-header {
+	font-size: 0.8em;
+	padding: 10px;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	width: 100%;
+
+	.logo {
+		// padding-left: 0%;
+		padding-right: 4%;
+	}
+
+	.address {
+		flex: 2 0 auto;
+		font-size: 14px;
+
+		.top {
+			color: #000000;
+			opacity: 0.87;
+		}
+
+		.bottom {
+			display: inline-block;
+			color: #000000;
+			opacity: 0.54;
+		}
+
+		.delivery-time {
+			color: #008f0e;
+			opacity: 0.73;
+		}
+
+		.order-issue {
+			color: #ff0000;
+			opacity: 0.73;
+		}
+	}
+
+	.total-price {
+		font-size: 18px;
+		color: #000000;
+		opacity: 0.8;
+	}
+}
+
+.hr {
+	border-bottom: 1px solid #ccc;
+	width: 100%;
+}
+
+.order-body {
+	padding: 15px;
+
+	.product-container {
+		padding-bottom: 15px;
+
+		&:last-of-type {
+			padding-bottom: 0;
+		}
+	}
+}

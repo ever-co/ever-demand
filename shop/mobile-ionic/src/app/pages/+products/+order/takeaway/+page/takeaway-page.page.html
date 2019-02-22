@@ -1,0 +1,30 @@
+<e-cu-order-info-header (back)="undo()"></e-cu-order-info-header>
+
+<ion-content
+	class="info-container brand-dark"
+	[ngClass]="{ 'blur-filter': modalOpen }"
+	no-padding
+>
+	<div class="money-amount-container" *ngIf="order?.isPaid">
+		<div class="money-amount">
+			{{ ('BUY_POPUP.ORDER_PAID' | translate) + order?.totalPrice }}!
+		</div>
+	</div>
+	<e-cu-order-store-info
+		*ngIf="!productsInfo"
+		#storeInfo
+		(undo)="undo()"
+		(imHere)="productsInfo = true"
+		(complete)="completeOrder()"
+		[order]="order"
+		[paymentsEnabled]="paymentsEnabled && !order?.isPaid"
+	></e-cu-order-store-info>
+
+	<e-cu-order-produts-info
+		*ngIf="productsInfo"
+		[order]="order"
+		(undo)="undo()"
+		(complete)="completeOrder()"
+		[paymentsEnabled]="paymentsEnabled && !order?.isPaid"
+	></e-cu-order-produts-info>
+</ion-content>

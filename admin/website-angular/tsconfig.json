@@ -21,13 +21,27 @@
 			"mongoose": [
 				"./modules/client.common.angular2/mongoose-placeholder"
 			],
-			"typeorm": ["./modules/client.common.angular2/typeorm-placeholder"]
+			"typeorm": ["./modules/client.common.angular2/typeorm-placeholder"],
+			"environment": ["./environments/environment"]
 		},
-		"lib": ["es2017", "dom", "esnext"]
+		"lib": ["es2017", "dom", "esnext"],
+		"noUnusedLocals": false,
+		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"]
 		/*"plugins": [
 		      {
 		        "name": "tslint-language-service"
 		      }
 		]*/
-	}
+	},
+	"include": [
+		"src/**/*.ts",
+		"./*.ts",
+		"./node_modules/angular2-logger/app/core/level.ts",
+		"./node_modules/angular2-logger/app/core/logger.ts",
+		"./node_modules/angular2-logger/app/core/providers.ts",
+		"src/modules/client.common.angular2/mongoose-placeholder.ts",
+		"src/modules/client.common.angular2/typeorm-placeholder.ts",
+		"src/modules/**/*.ts"
+	],
+	"exclude": ["node_modules"]
 }

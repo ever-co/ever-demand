@@ -6345,6 +6345,11 @@ ngc-webpack@~4.1.2:
     source-map "^0.5.6"
     ts-node "^3.2.0"
 
+ngx-drag-scroll@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/ngx-drag-scroll/-/ngx-drag-scroll-7.1.0.tgz#946552354c62673c88dacaba5dd298ef3392d9f9"
+  integrity sha512-PmF+f65OmrvdxCqVQRbjWMXeM/K/eCsgU77gRdcAjlzinlAxljl9L5J/9mWPdYPhKWuPwikdEwSBPseQ9qdoYA==
+
 ngx-infinite-scroll@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/ngx-infinite-scroll/-/ngx-infinite-scroll-7.0.1.tgz#59472108f5b6960519c269d6997fe3ae0961be07"

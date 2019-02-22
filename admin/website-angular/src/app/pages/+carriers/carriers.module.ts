@@ -11,7 +11,8 @@ import { CarriersRoutingModule } from './carriers-routing.module';
 import { RenderComponentsModule } from '../../@shared/render-component/render-components.module';
 import { CarriersTableModule } from '../../@shared/render-component/carriers-table/carriers-table.module';
 import { NbSpinnerModule } from '@nebular/theme';
-import { CarrierMapModule } from './+carrier/carrier-map/carrier-map.module';
+import { TrackModule } from './track/track.module';
+import { CarrierLocationModule } from './+carrier/location/carrier-location.module';
 
 @NgModule({
 	imports: [
@@ -26,7 +27,8 @@ import { CarrierMapModule } from './+carrier/carrier-map/carrier-map.module';
 		RenderComponentsModule,
 		CarriersTableModule,
 		NbSpinnerModule,
-		CarrierMapModule
+		CarrierLocationModule,
+		TrackModule
 	],
 	declarations: [CarriersComponent]
 })

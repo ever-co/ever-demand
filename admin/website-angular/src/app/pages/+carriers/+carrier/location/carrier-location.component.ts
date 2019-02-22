@@ -18,7 +18,7 @@ const directionsService = new google.maps.DirectionsService();
 	selector: 'ea-carrier-location',
 	styleUrls: ['./carrier-location.component.scss'],
 	template: `
-		<nb-card>
+		<nb-card [ngClass]="{ 'modal-style': carrierId }">
 			<nb-card-header class="header-color">{{
 				'CARRIERS_VIEW.CARRIER_PAGE.LOCATION' | translate
 			}}</nb-card-header>
@@ -39,6 +39,7 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 	interval: NodeJS.Timer;
 	isReverted: boolean = true;
 	params$: any;
+	carrierId: string;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -54,7 +55,7 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 
 	async _subscribeCarrier() {
 		this.params$ = this.route.params.subscribe((res) => {
-			const carrierId = res.id;
+			const carrierId = res.id || this.carrierId;
 
 			this.carrierSub$ = this.carrierRouter
 				.get(carrierId)
@@ -69,13 +70,13 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 					if (this.marker) {
 						this.marker.setMap(null);
 					}
-
 					let isWorking = false;
 
 					this.interval = setInterval(async () => {
 						const order = await this.carriersService.getCarrierCurrentOrder(
 							carrierId
 						);
+
 						if (order) {
 							if (!isWorking) {
 								const user = order.user;
@@ -107,6 +108,33 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 									this.map,
 									warehouseIcon
 								);
+								const start = new google.maps.LatLng(
+									user.geoLocation.coordinates.lat,
+									user.geoLocation.coordinates.lng
+								);
+								const end = new google.maps.LatLng(
+									warehouse['geoLocation'].coordinates.lat,
+									warehouse['geoLocation'].coordinates.lng
+								);
+								const request = {
+									origin: start,
+									destination: end,
+									travelMode: 'DRIVING'
+								};
+
+								console.log(request);
+								directionsService.route(request, function(
+									res,
+									stat
+								) {
+									if (stat === 'OK') {
+										directionsDisplay.setDirections(res);
+									}
+								});
+								directionsDisplay.setOptions({
+									suppressMarkers: true
+								});
+								directionsDisplay.setMap(this.map);
 
 								const bounds = new google.maps.LatLngBounds();
 								bounds.extend(this.marker.getPosition());

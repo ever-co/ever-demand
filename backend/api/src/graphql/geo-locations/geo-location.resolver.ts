@@ -26,24 +26,34 @@ export class GeoLocationResolver {
 		_,
 		{
 			geoLocation,
+			options,
 			pagingOptions = {}
 		}: {
 			geoLocation;
+			options?: { isDeliveryRequired?: boolean; isTakeaway?: boolean };
 			pagingOptions;
 		}
 	) {
 		return this.geoLocationsProductsService.geoLocationProductsByPaging(
 			geoLocation,
-			pagingOptions
+			pagingOptions,
+			options
 		);
 	}
 	@Query()
 	async getCountOfGeoLocationProducts(
 		_,
-		{ geoLocation }: { geoLocation: IGeoLocation }
+		{
+			geoLocation,
+			options
+		}: {
+			geoLocation: IGeoLocation;
+			options?: { isDeliveryRequired?: boolean; isTakeaway?: boolean };
+		}
 	) {
 		return this.geoLocationsProductsService.getCountOfGeoLocationProducts(
-			geoLocation
+			geoLocation,
+			options
 		);
 	}
 }

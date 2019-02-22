@@ -1,0 +1,10 @@
+<ion-card>
+	<e-cu-order [order]="order"></e-cu-order>
+
+	<div class="actions text-center" *ngIf="notDisplayedProductsAmount > 0">
+		<a [routerLink]="['orders-history', order.id]">
+			<ion-icon name="ios-arrow-down" class="more"></ion-icon>
+			{{ notDisplayedProductsAmount }} {{ 'MORE' | translate }}
+		</a>
+	</div>
+</ion-card>

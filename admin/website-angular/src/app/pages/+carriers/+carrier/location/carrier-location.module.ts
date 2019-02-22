@@ -21,6 +21,7 @@ import { environment } from 'environments/environment';
 		NgxEchartsModule
 	],
 	declarations: [CarrierLocationComponent],
-	exports: [CarrierLocationComponent]
+	exports: [CarrierLocationComponent],
+	entryComponents: [CarrierLocationComponent]
 })
 export class CarrierLocationModule {}

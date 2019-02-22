@@ -35,6 +35,7 @@ import _ = require('lodash');
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
+import DeliveryType from '@modules/server.common/enums/DeliveryType';
 
 /**
  * Warehouses Orders Service
@@ -330,7 +331,8 @@ export class WarehousesOrdersService
 	async createByProductType(
 		userId: string,
 		warehouseId: string,
-		productId: string
+		productId: string,
+		orderType?: DeliveryType
 	): Promise<Order> {
 		await this.usersService.throwIfNotExists(userId);
 		await this.warehousesService.throwIfNotExists(warehouseId);
@@ -339,6 +341,7 @@ export class WarehousesOrdersService
 		return this.create({
 			userId,
 			warehouseId,
+			orderType,
 			products: [
 				{
 					productId,

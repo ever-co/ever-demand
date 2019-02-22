@@ -1,0 +1,115 @@
+<!-- <ion-list>
+	<ion-grid no-padding>
+		<ion-row *ngFor="let productInfo of products">
+			<ion-col no-padding size="12">
+				<img src="{{productInfo?.product.images[0].url}}" alt="">
+			</ion-col>
+			<ion-col no-padding size="12">
+				<div class="name-price-buy">
+					<div class="buy">
+						<div class="waves-effect waves-classic col-100"
+							 (click)="!soldOut && buyProduct(productInfo)">
+							<a class="button button-assertive buy-button" [ngClass]="{'disabled': soldOut}">
+								{{ !soldOut ? ('PRODUCTS_VIEW.BUY_BUTTON.PRE' | translate) : ('Product not
+								available')
+								}}
+								<span *ngIf="!soldOut" class="price">
+                   ₪{{ productInfo.warehouseProduct?.price || ''}}
+                  </span>
+								{{ 'PRODUCTS_VIEW.BUY_BUTTON.SUF' | translate }}
+							</a>
+						</div>
+					</div>
+				</div>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-list> -->
+<!--
+{{ productInfo.warehouseProduct.product.images[0].url }}
+{{ productInfo.warehouseProduct?.price || ''}}
+{{ 'PRODUCTS_VIEW.BUY_BUTTON.SUF' | translate }} -->
+
+<div class="brand-dark products-view">
+	<ion-card *ngFor="let productInfo of products" class="productCard">
+		<ion-grid class="brand-light">
+			<ion-row no-padding align-items-center>
+				<ion-col class="col-2">
+					<e-cu-warehouse-logo
+						[logo]="productInfo?.warehouseLogo"
+						class="icon"
+					></e-cu-warehouse-logo>
+				</ion-col>
+				<ion-col class="col-8">
+					<ion-label class="text-content">
+						<h2 class="productTitle">
+							{{
+								localeTranslate(
+									productInfo.warehouseProduct.product.title
+								)
+							}}
+						</h2>
+						<h6 class="productDescription">
+							{{
+								shortenDescription(
+									localeTranslate(
+										productInfo.warehouseProduct.product
+											.description
+									)
+								)
+							}}
+						</h6>
+					</ion-label>
+				</ion-col>
+				<ion-col class="col-2">
+					<e-cu-delivery-info
+						[currentProduct]="productInfo.warehouseProduct"
+					></e-cu-delivery-info>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+		<div class="image-content">
+			<e-cu-discount
+				[currentProduct]="productInfo.warehouseProduct"
+			></e-cu-discount>
+			<img
+				src="{{ localeTranslate(productInfo?.product.images) }}"
+				alt=""
+				class="productImage"
+			/>
+		</div>
+		<ion-grid class="brand-light">
+			<ion-row class="list-buttons">
+				<ion-col class="box col-8">
+					<button
+						class="button button-assertive border-color-brand col-100"
+						(click)="buyProduct(productInfo)"
+					>
+						<span
+							>{{ 'PRODUCTS_VIEW.BUY_BUTTON.PRE' | translate }}
+							<span class="price">
+								${{ productInfo.warehouseProduct?.price || '' }}
+							</span>
+							{{ 'PRODUCTS_VIEW.BUY_BUTTON.SUF' | translate }}
+						</span>
+					</button>
+				</ion-col>
+				<ion-col class="box col-4">
+					<button
+						class="button button-brand border-color-brand col-100"
+						(click)="goToDetailsPage(productInfo)"
+					>
+						<span>{{
+							'PRODUCTS_VIEW.DETAILS.DETAILS' | translate
+						}}</span>
+					</button>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</ion-card>
+
+	<div
+		*ngIf="products.length === 0 && placeholder"
+		[innerHTML]="placeholder | safe: 'html'"
+	></div>
+</div>

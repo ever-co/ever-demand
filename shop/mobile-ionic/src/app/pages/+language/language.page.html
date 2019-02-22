@@ -1,0 +1,40 @@
+<!-- this files uses translations from ./language.i18n.json -->
+
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-buttons slot="start">
+			<ion-menu-button autoHide="false"></ion-menu-button>
+		</ion-buttons>
+
+		<ion-title>{{ 'LANGUAGE_VIEW.TITLE' | translate }}</ion-title>
+		<ion-buttons slot="end">
+			<ion-button (click)="goBack()">
+				<i class="fa fa-angle-left back-btn"></i>
+				<span>{{ 'BACK' | translate }}</span>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content scroll="false">
+	<ion-list>
+		<ion-radio-group [(ngModel)]="language">
+			<ion-item>
+				<ion-label>English</ion-label>
+				<ion-radio value="en-US"></ion-radio>
+			</ion-item>
+			<ion-item>
+				<ion-label>Български</ion-label>
+				<ion-radio value="bg-BG"></ion-radio>
+			</ion-item>
+			<ion-item>
+				<ion-label>עברית</ion-label>
+				<ion-radio value="he-IL"></ion-radio>
+			</ion-item>
+			<ion-item>
+				<ion-label>Русский</ion-label>
+				<ion-radio value="ru-RU"></ion-radio>
+			</ion-item>
+		</ion-radio-group>
+	</ion-list>
+</ion-content>

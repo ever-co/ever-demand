@@ -1,0 +1,20 @@
+.discount-circle {
+	opacity: 0.8;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	font-size: 15px;
+	border-radius: 5px;
+	color: white;
+	padding: 5px;
+	z-index: 9999;
+
+	line-height: 1;
+	text-align: center;
+
+	width: 70px;
+	.price-initial {
+		font-size: 15px;
+		text-decoration: line-through;
+	}
+}

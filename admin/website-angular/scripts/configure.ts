@@ -48,7 +48,7 @@ export const environment: Environment = {
 
   CURRENCY_SYMBOL: '${env.CURRENCY_SYMBOL}',
 
-  // For maintenance micro service
+  // For maintenance micro service. Ever maintanance API URL: https://maintenance.ever.co/status
   SETTINGS_APP_TYPE: '${env.SETTINGS_APP_TYPE}',
   SETTINGS_MAINTENANCE_API_URL: '${env.SETTINGS_MAINTENANCE_API_URL}'
 };
@@ -59,5 +59,7 @@ const envFileDest: string = isProd ? 'environment.prod.ts' : 'environment.ts';
 writeFile(`./src/environments/${envFileDest}`, envFileContent, function(err) {
 	if (err) {
 		console.log(err);
+	} else {
+		console.log(`Generated Angular environment file: ${envFileDest}`);
 	}
 });

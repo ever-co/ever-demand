@@ -1,0 +1,43 @@
+<div class="order-header">
+	<section class="logo">
+		<e-cu-warehouse-logo [logo]="warehouseLogo"></e-cu-warehouse-logo>
+	</section>
+
+	<section class="address">
+		<div class="top">{{ 'TO' | translate }}: {{ customerAddress }}</div>
+		<div class="bottom">{{ createdAt | date: 'short' }}</div>
+		<span *ngIf="!isTakeaway">
+			<small *ngIf="deliveryTime" class="delivery-time">
+				{{ deliveryTime }}</small
+			>
+			<small
+				*ngIf="!deliveryTime && !isCanceled && !isFailed"
+				class="delivery-time"
+			>
+				{{ 'IN_DELIVERY' | translate }}</small
+			>
+			<small *ngIf="!deliveryTime && isCanceled" class="order-issue">
+				{{ 'CANCELED' | translate }}</small
+			>
+			<small *ngIf="!deliveryTime && isFailed" class="order-issue">
+				{{ 'FAILED' | translate }}</small
+			>
+		</span>
+		<small *ngIf="isTakeaway" class="delivery-time">{{
+			'COMPLETED' | translate
+		}}</small>
+	</section>
+
+	<section class="total-price">${{ totalPrice || '0' }}</section>
+</div>
+
+<div class="hr"></div>
+
+<div class="order-body">
+	<div class="product-container" *ngFor="let product of order.products">
+		<e-cu-order-product
+			[orderProduct]="product"
+			[showDetailsButton]="showDetailsButton"
+		></e-cu-order-product>
+	</div>
+</div>
