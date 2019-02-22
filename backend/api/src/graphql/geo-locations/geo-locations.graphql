@@ -69,7 +69,16 @@ type Query {
 	geoLocationProductsByPaging(
 		geoLocation: GeoLocationFindInput!
 		pagingOptions: PagingOptionsInput
+		options: GetGeoLocationProductsOptions
 	): [ProductInfo]!
 
-	getCountOfGeoLocationProducts(geoLocation: GeoLocationFindInput!): Int!
+	getCountOfGeoLocationProducts(
+		geoLocation: GeoLocationFindInput!
+		options: GetGeoLocationProductsOptions
+	): Int!
+}
+
+input GetGeoLocationProductsOptions {
+	isDeliveryRequired: Boolean
+	isTakeaway: Boolean
 }

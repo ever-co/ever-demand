@@ -97,6 +97,7 @@ export class WarehousesService {
 							contactPhone
 							logo
 							username
+							usedCarriersIds
 							geoLocation {
 								city
 								streetAddress

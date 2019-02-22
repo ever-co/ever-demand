@@ -1,0 +1,13 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-buttons slot="start">
+			<ion-menu-button autoHide="false"></ion-menu-button>
+		</ion-buttons>
+
+		<ion-title>{{ 'ABOUT_VIEW.TITLE' | translate }}</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<e-cu-loaded-information [html]="html$ | async"></e-cu-loaded-information>
+</ion-content>

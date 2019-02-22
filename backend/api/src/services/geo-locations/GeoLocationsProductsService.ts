@@ -56,7 +56,8 @@ export class GeoLocationsProductsService
 
 	@asyncListener()
 	async getCountOfGeoLocationProducts(
-		geoLocation: IGeoLocation
+		geoLocation: IGeoLocation,
+		options?: { isDeliveryRequired?: boolean; isTakeaway?: boolean }
 	): Promise<number> {
 		const merchants = await this.geoLocationsWarehousesService.getMerchants(
 			geoLocation,
@@ -65,7 +66,12 @@ export class GeoLocationsProductsService
 		);
 
 		return merchants
-			.map((m) => m.products.length)
+			.map(
+				(m) =>
+					m.products.filter((wProduct) =>
+						this.productsFilter(wProduct, options)
+					).length
+			)
 			.reduce((a, b) => a + b, 0);
 	}
 
@@ -73,7 +79,8 @@ export class GeoLocationsProductsService
 	async geoLocationProductsByPaging(
 		@serialization((g: IGeoLocation) => new GeoLocation(g))
 		geoLocation: GeoLocation,
-		pagingOptions
+		pagingOptions,
+		options?: { isDeliveryRequired?: boolean; isTakeaway?: boolean }
 	): Promise<ProductInfo[]> {
 		const merchants = await this.geoLocationsWarehousesService
 			.get(geoLocation, { fullProducts: true, activeOnly: true })
@@ -82,7 +89,8 @@ export class GeoLocationsProductsService
 
 		const products = this._getProductsFromWarehouses(
 			geoLocation,
-			merchants
+			merchants,
+			options
 		);
 
 		return products.slice(pagingOptions.skip).slice(0, pagingOptions.limit);
@@ -101,12 +109,7 @@ export class GeoLocationsProductsService
 				);
 				if (options) {
 					warehouse.products = warehouse.products.filter((wProduct) =>
-						options.isDeliveryRequired
-							? wProduct.isDeliveryRequired ===
-							  options.isDeliveryRequired
-							: true && options.isTakeaway
-							? wProduct.isTakeaway === options.isTakeaway
-							: true
+						this.productsFilter(wProduct, options)
 					);
 				}
 				return warehouse;
@@ -135,5 +138,16 @@ export class GeoLocationsProductsService
 			.filter((productInfo) => !_.isUndefined(productInfo))
 			.map((productInfo) => productInfo as ProductInfo)
 			.value();
+	}
+
+	private productsFilter(wProduct, options) {
+		if (!options) {
+			return true;
+		}
+		return options.isDeliveryRequired
+			? wProduct.isDeliveryRequired === options.isDeliveryRequired
+			: true && options.isTakeaway
+			? wProduct.isTakeaway === options.isTakeaway
+			: true;
 	}
 }

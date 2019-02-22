@@ -37,7 +37,7 @@
 	"scripts": {
 		"ng": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run config:dev && ng",
 		"conventional-changelog": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 conventional-changelog",
-		"config": "ts-node ./scripts/configure.ts",
+		"config": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn ts-node ./scripts/configure.ts",
 		"config:dev": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run config -- --environment=dev",
 		"config:prod": "cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=4096 yarn run config -- --environment=prod",
 		"start": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run config:dev && yarn build && ng serve",

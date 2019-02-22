@@ -1,0 +1,10 @@
+<div class="in-store">
+	<div class="store-sign {{ inStore ? 'exit-store-sign' : 'in-store-sign' }}">
+		<i class="fa {{ inStore ? 'fa-sign-out' : 'fa-sign-in' }} "></i>
+	</div>
+
+	<div class="in-store-lines">
+		<small *ngIf="inStore">{{ 'EXIT_STORE' | translate }}</small>
+		<small *ngIf="!inStore">{{ 'IN_STORE' | translate }}</small>
+	</div>
+</div>

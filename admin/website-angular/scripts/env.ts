@@ -88,9 +88,10 @@ export const env: Env = cleanEnv(
 
 		CURRENCY_SYMBOL: str({ default: '$' }),
 
+		// For maintenance micro service. Ever maintanance API URL: https://maintenance.ever.co/status
 		SETTINGS_APP_TYPE: str({ default: 'admin' }),
 		SETTINGS_MAINTENANCE_API_URL: str({
-			default: 'https://maintenance.ever.co/status'
+			default: ''
 		})
 	},
 	{ strict: true, dotEnvPath: __dirname + '/../.env' }

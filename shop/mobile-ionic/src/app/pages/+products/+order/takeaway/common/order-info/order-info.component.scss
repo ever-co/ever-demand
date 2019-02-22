@@ -1,0 +1,25 @@
+.takeaway-order-info {
+	height: 100%;
+	.qr-code-container {
+		height: 70%;
+		img {
+			height: 100%;
+		}
+	}
+
+	.qr-code-container.moreInfo {
+		height: 60%;
+	}
+
+	.info {
+		position: absolute;
+
+		left: 1rem;
+		right: 1rem;
+		bottom: 0rem;
+
+		.right-text {
+			text-align: right;
+		}
+	}
+}

@@ -20,3 +20,18 @@
 	width: 100%;
 	height: 200px !important;
 }
+
+.modal-style {
+	background: white;
+	width: 60vw;
+	position: absolute;
+	top: 10%;
+	left: calc(50% - 30vw);
+	nb-card-header {
+		background: white;
+	}
+	.googleMap {
+		width: 100%;
+		height: 400px !important;
+	}
+}

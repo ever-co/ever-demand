@@ -1,0 +1,32 @@
+<div class="takeaway-order-info">
+	<div
+		class="qr-code-container text-align-center {{
+			!lessInfo ? 'moreInfo' : ''
+		}}"
+	>
+		<img *ngIf="!bcFormat" src="{{ barcodetDataUrl }}" alt="" />
+		<ngx-barcode
+			*ngIf="bcFormat"
+			[bc-value]="order.id"
+			[bc-format]="orderBarcodeTypesToString(bcFormat)"
+			[bc-display-value]="true"
+			[bc-element-type]="img"
+			[bc-height]="20"
+			[bc-width]="bcWidth"
+			[bc-font-size]="16"
+			[bc-margin-top]="25"
+			[bc-margin-bottom]="25"
+		></ngx-barcode>
+	</div>
+	<div class="info row">
+		<span *ngIf="!lessInfo" class="left-info col-7">
+			{{ localeTranslate((order?.products)[0]?.product?.title) }}
+		</span>
+		<span
+			class="{{
+				lessInfo ? 'col-12 text-align-center' : 'col-5 right-text'
+			}} "
+			>#{{ orderId }}</span
+		>
+	</div>
+</div>

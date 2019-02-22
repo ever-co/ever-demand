@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ViewCell } from 'ng2-smart-table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CarrierTableInfoComponent } from '../../../pages/+carriers/+carrier/carrier-info.component';
-import { CarrierMapComponent } from 'app/pages/+carriers/+carrier/carrier-map/carrier-map.component';
+import { CarrierLocationComponent } from 'app/pages/+carriers/+carrier/location/carrier-location.component';
 
 @Component({
 	template: `
@@ -34,10 +34,11 @@ export class CarrierActionsComponent implements ViewCell, OnInit {
 		modalComponent.carrierId = this.rowData.id;
 	}
 	openMap() {
-		const activeModal = this.modalService.open(CarrierMapComponent, {
-			size: 'sm'
+		const activeModal = this.modalService.open(CarrierLocationComponent, {
+			size: 'sm',
+			windowClass: 'map-modal'
 		});
-		const modalComponent: CarrierMapComponent =
+		const modalComponent: CarrierLocationComponent =
 			activeModal.componentInstance;
 		modalComponent.carrierId = this.rowData.id;
 	}

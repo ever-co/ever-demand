@@ -1,0 +1,117 @@
+<ng-progress
+	#progressBar
+	[min]="0"
+	[max]="100"
+	ease="linear"
+	[trickleSpeed]="null"
+	[speed]="200"
+	[spinner]="false"
+	[meteor]="false"
+	[thick]="false"
+	[color]="null"
+	positionUsing="translate3d"
+	[direction]="('CURRENT_DIRECTION' | translate) + '+'"
+>
+</ng-progress>
+
+<div class="brand-dark products-view">
+	<!-- This menu-button is used when on the page no have title bar -->
+	<!-- <ion-menu-button color="light" autoHide="false"></ion-menu-button> -->
+
+	<!-- TODO dir="{{ 'CURRENT_DIRECTION' | translate }}" -->
+	<ion-slides *ngIf="done" [options]="swiperOptions" class="max-height">
+		<ion-slide
+			class="product-card max-height"
+			*ngFor="let productInfo of products"
+		>
+			<div class="image">
+				<e-cu-discount
+					[currentProduct]="productInfo.warehouseProduct"
+					#discount
+				>
+				</e-cu-discount>
+
+				<e-cu-delivery-info
+					[currentProduct]="productInfo.warehouseProduct"
+					[overImage]="true"
+					[hasDiscount]="discount.getDiscount()"
+				></e-cu-delivery-info>
+				<img src="{{ localeTranslate(productInfo.product.images) }}" />
+			</div>
+			<div class="info">
+				<div class="bottom">
+					<e-cu-warehouse-logo
+						[logo]="productInfo.warehouseLogo"
+						[light]="true"
+					></e-cu-warehouse-logo>
+					<div class="info-bottom">
+						<div class="text-wrapper">
+							<h1 class="title">
+								{{ localeTranslate(productInfo.product.title) }}
+							</h1>
+							<h2 class="description">
+								{{
+									shortenDescription(
+										localeTranslate(
+											productInfo.product.description
+										)
+									)
+								}}
+							</h2>
+						</div>
+						<ion-row class="slides-buttons">
+							<ion-col class="box col-8 purchase-button">
+								<button
+									class="button button-assertive border-color-brand col-100"
+									[ngClass]="{ disabled: soldOut }"
+									(click)="
+										!soldOut && buyProduct(productInfo)
+									"
+								>
+									<span
+										>{{
+											!soldOut
+												? ('PRODUCTS_VIEW.BUY_BUTTON.PRE'
+												  | translate)
+												: ('PRODUCTS_VIEW.NOT_AVAILABLE'
+												  | translate)
+										}}
+										{{
+											!soldOut
+												? productInfo.warehouseProduct
+														.price + '$'
+												: ''
+										}}
+										{{
+											!soldOut
+												? ('PRODUCTS_VIEW.BUY_BUTTON.SUF'
+												  | translate)
+												: ''
+										}}</span
+									>
+								</button>
+							</ion-col>
+							<ion-col class="box col-4 details-button">
+								<button
+									[disabled]="soldOut"
+									class="button button-brand border-color-brand col-100"
+									(click)="goToDetailsPage(productInfo)"
+								>
+									<span>{{
+										'PRODUCTS_VIEW.DETAILS.DETAILS'
+											| translate
+									}}</span>
+								</button>
+							</ion-col>
+						</ion-row>
+					</div>
+				</div>
+			</div>
+		</ion-slide>
+	</ion-slides>
+
+	<div
+		*ngIf="products.length === 0 && placeholder"
+		[innerHTML]="placeholder | safe: 'html'"
+	></div>
+</div>

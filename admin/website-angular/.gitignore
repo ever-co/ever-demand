@@ -50,8 +50,10 @@ Thumbs.db
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 
+/package-lock.json
+
 # environment files
 .env
-/package-lock.json
+.env.prod
 /src/environments/environment.ts
 /src/environments/environment.prod.ts

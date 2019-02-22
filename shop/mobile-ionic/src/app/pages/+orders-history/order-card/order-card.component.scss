@@ -1,0 +1,33 @@
+html,
+body {
+	width: 100%;
+	height: 100%;
+}
+
+#ceil {
+	padding-bottom: 1px;
+}
+
+ion-card {
+	width: 100%;
+	margin: 0;
+	background-color: #fff;
+}
+
+.actions {
+	margin-bottom: 10px;
+
+	font-size: 10px;
+	color: #000000;
+	opacity: 0.8;
+	filter: Alpha(opacity=80); /* IE8 and earlier */
+
+	a ion-icon {
+		font-size: 1.4em;
+		margin-bottom: -4px;
+	}
+	.more,
+	.less {
+		margin-bottom: -7px;
+	}
+}

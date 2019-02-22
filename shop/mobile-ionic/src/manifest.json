@@ -1,0 +1,46 @@
+{
+	"name": "ever-shop",
+	"short_name": "ever-shop",
+	"start_url": "index.html",
+	"display": "standalone",
+	"gcm_sender_id": "103953800507",
+	"icons": [
+		{
+			"src": "assets/icon/favicon72x72.png",
+			"sizes": "72x72",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/icon/favicon96x96.png",
+			"sizes": "96x96",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/icon/favicon128x128.png",
+			"sizes": "128x128",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/icon/favicon144x144.png",
+			"sizes": "144x144",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/icon/favicon152x152.png",
+			"sizes": "152x152",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/icon/favicon192x192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/icon/favicon512x512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+	],
+	"background_color": "#4e8ef7",
+	"theme_color": "#4e8ef7"
+}

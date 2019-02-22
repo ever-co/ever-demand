@@ -1,11 +1,20 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CarriersComponent } from './carriers.component';
+import { TrackComponent } from './track/track.component';
 
 const routes: Routes = [
 	{
 		path: '',
 		component: CarriersComponent
+	},
+	{
+		path: 'track',
+		component: TrackComponent
+	},
+	{
+		path: 'track/:id',
+		component: TrackComponent
 	},
 	{
 		path: ':id',
@@ -14,8 +23,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [ RouterModule.forChild(routes) ],
-	exports: [ RouterModule ]
+	imports: [RouterModule.forChild(routes)],
+	exports: [RouterModule]
 })
 export class CarriersRoutingModule {
 	public static routes = routes;

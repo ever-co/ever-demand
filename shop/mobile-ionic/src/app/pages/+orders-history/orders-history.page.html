@@ -1,0 +1,38 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-buttons slot="start">
+			<ion-menu-button autoHide="false"></ion-menu-button>
+		</ion-buttons>
+		<ion-title>{{ 'ORDER_HISTORY_VIEW.TITLE' | translate }}</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content dir="{{ 'CURRENT_DIRECTION' | translate }}">
+	<div *ngIf="!(orders$ | async)">
+		<div id="ceil">
+			<ion-spinner></ion-spinner>
+		</div>
+
+		<div class="no-orders-message">
+			<i class="fa fa-shopping-bag"></i>
+
+			<h2>{{ 'LAST_PURCHASES_VIEW.NOTHING_ORDERED' | translate }}</h2>
+
+			<ion-button
+				class="button button-assertive"
+				size="small"
+				[routerLink]="['/products']"
+			>
+				{{ 'LAST_PURCHASES_VIEW.TO_PRODUCTS' | translate }}
+			</ion-button>
+		</div>
+	</div>
+
+	<div class="orders">
+		<div *ngIf="orders$ | async as orders">
+			<div class="order-container" *ngFor="let order of orders">
+				<e-cu-order-card [order]="order"></e-cu-order-card>
+			</div>
+		</div>
+	</div>
+</ion-content>

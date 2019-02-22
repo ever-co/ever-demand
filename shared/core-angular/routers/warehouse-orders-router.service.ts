@@ -9,6 +9,7 @@ import IWarehouseOrdersRouter, {
 	IWarehouseOrdersRouterGetOptions,
 	IOrderCreateInput
 } from '@modules/server.common/routers/IWarehouseOrdersRouter';
+import DeliveryType from '@modules/server.common/enums/DeliveryType';
 
 @Injectable()
 export class WarehouseOrdersRouter implements IWarehouseOrdersRouter {
@@ -44,13 +45,15 @@ export class WarehouseOrdersRouter implements IWarehouseOrdersRouter {
 	async createByProductType(
 		userId: string,
 		warehouseId: string,
-		productId: string
+		productId: string,
+		orderType?: DeliveryType
 	): Promise<Order> {
 		const order = await this.router.run<IOrder>(
 			'createByProductType',
 			userId,
 			warehouseId,
-			productId
+			productId,
+			orderType
 		);
 		return this._orderFactory(order);
 	}
