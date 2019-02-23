@@ -223,6 +223,7 @@ You can use credentials above to login into Platform Admin App, which available 
 
 ## Contact Us
 
+-   [Spectrum Community](https://spectrum.chat/ever)
 -   [Gitter Chat](https://gitter.im/ever-co/ever)
 -   [Discord Chat](https://discord.gg/msqRJ4w)
 -   [CodeMentor](https://www.codementor.io/evereq)
