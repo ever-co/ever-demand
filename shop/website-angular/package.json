@@ -126,7 +126,7 @@
 		"apollo-angular": "^1.5.0",
 		"apollo-angular-link-http": "1.4.0",
 		"apollo-cache-inmemory": "^1.4.2",
-		"apollo-client": "2.4.8",
+		"apollo-client": "2.5.0",
 		"apollo-link-context": "1.0.12",
 		"bootstrap": "^4.2.1",
 		"browser-detect": "^0.2.28",
