@@ -87,7 +87,7 @@
 		"angular2-wizard": "github:maiyaporn/angular2-wizard#pull/56/head",
 		"apollo-angular": "^1.5.0",
 		"apollo-angular-link-http": "^1.4.0",
-		"apollo-cache-inmemory": "^1.4.3",
+		"apollo-cache-inmemory": "^1.5.0",
 		"apollo-client": "^2.4.13",
 		"apollo-link": "^1.2.8",
 		"apollo-link-context": "^1.0.14",
