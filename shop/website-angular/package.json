@@ -169,7 +169,7 @@
 		"@types/hammerjs": "^2.0.36",
 		"@types/jasmine": "^3.3.8",
 		"@types/mongoose": "^5.3.12",
-		"@types/node": "^11.9.3",
+		"@types/node": "^11.10.0",
 		"@types/socket.io-client": "^1.4.32",
 		"@types/source-map": "^0.5.7",
 		"@types/stripe": "^6.19.7",
