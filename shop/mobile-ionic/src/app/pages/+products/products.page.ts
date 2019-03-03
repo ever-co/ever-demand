@@ -1,4 +1,4 @@
-import { Component, OnDestroy, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, EventEmitter, OnInit } from '@angular/core';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { UserProductsRouter } from '@modules/client.common.angular2/routers/user-products-router.service';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
@@ -16,42 +16,56 @@ import { GeoLocationService } from '../../services/geo-location';
 import RegistrationSystem from '@modules/server.common/enums/RegistrationSystem';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 
-import { GeoLocationProductsRouter } from '@modules/client.common.angular2/routers/geo-location-products-router.service';
 import { OrderTakeawayInfoPopup } from './+order/takeaway/popup/popup.component';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
+import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
+import { GeoLocationProductsService } from 'app/services/geo-location/geo-location-products';
+import { WarehouseProductsService } from 'app/services/merchants/warehouse-products';
+
+const initializeProductsNumber: number = 10;
 
 @Component({
 	selector: 'e-cu-products',
 	templateUrl: './products.page.html',
 	styleUrls: ['./products.page.scss']
 })
-export class ProductsPage implements OnDestroy {
-	public viewType: string = environment.PRODUCTS_VIEW_TYPE;
-	public products: ProductInfo[] = [];
-	public areProductsLoaded: boolean;
-	public soldOut: boolean;
-	public products_placeholder: string = '';
-	public modalOpen: boolean;
-	public modalChange = new EventEmitter<boolean>();
-	public isDeliveryRequired: boolean;
+export class ProductsPage implements OnInit, OnDestroy {
+	viewType: string = environment.PRODUCTS_VIEW_TYPE;
+	products: ProductInfo[] = [];
+	areProductsLoaded: boolean = false;
+	soldOut: boolean;
+	products_placeholder: string = '';
+	modalOpen: boolean;
+	modalChange = new EventEmitter<boolean>();
+	isDeliveryRequired: boolean;
 	merchant: Warehouse;
+	productsCount: number;
+	$areProductsLoaded = new EventEmitter<boolean>();
+
+	changePage: boolean;
 
 	private readonly ngDestroy$ = new Subject<void>();
-	private $products: any;
+	private getOrdersGeoObj: { loc: ILocation };
+	private lastLoadProductsCount: number;
+	private lastImageOrientation: number;
+	private productsLocale: string;
 
 	constructor(
 		private store: Store,
 		private userRouter: UserRouter,
-		private geoLocationProductsRouter: GeoLocationProductsRouter,
+		private geoLocationProductsService: GeoLocationProductsService,
 		private warehouseOrdersRouter: WarehouseOrdersRouter,
 		private userProductsRouter: UserProductsRouter,
 		private router: Router,
-		public modalController: ModalController,
-		public geoLocationService: GeoLocationService,
-		public navCtrl: NavController,
-		public warehouseRouter: WarehouseRouter
+		private modalController: ModalController,
+		private geoLocationService: GeoLocationService,
+		private navCtrl: NavController,
+		private warehouseRouter: WarehouseRouter,
+		private warehouseProductsService: WarehouseProductsService
 	) {
+		this.productsLocale = this.store.language || environment.DEFAULT_LOCALE;
+
 		if (this.inStore) {
 			this.store.deliveryType = DeliveryType.Takeaway;
 			this.loadMerchant();
@@ -60,7 +74,7 @@ export class ProductsPage implements OnDestroy {
 			this.store.deliveryType === DeliveryType.Delivery;
 
 		this._subscribeProductsPlaceholder();
-		this._subscribeGeoLocationProducts(this.isDeliveryRequired);
+		this.loadGeoLocationProducts();
 		this.hasOrder();
 		this.getModalChange();
 	}
@@ -75,6 +89,10 @@ export class ProductsPage implements OnDestroy {
 		return (!merchantIds || merchantIds.length < 1) && !this.inStore;
 	}
 
+	ngOnInit(): void {
+		this.continueOrder();
+	}
+
 	async buyItem(currentProduct: ProductInfo) {
 		if (
 			!this.store.userId &&
@@ -82,11 +100,20 @@ export class ProductsPage implements OnDestroy {
 		) {
 			this.store.registrationSystem = RegistrationSystem.Once;
 			this.store.buyProduct = currentProduct.warehouseProduct.id;
+			this.store.warehouseId = currentProduct.warehouseId;
 			this.navCtrl.navigateRoot('/invite');
 		} else {
 			const orderCreateInput: IOrderCreateInput = {
-				warehouseId: currentProduct.warehouseId,
-				products: [{ count: 1, productId: currentProduct.product.id }],
+				warehouseId:
+					currentProduct.warehouseId || this.store.warehouseId,
+				products: [
+					{
+						count: 1,
+						productId: currentProduct.warehouseProduct
+							? currentProduct.warehouseProduct.product['id']
+							: currentProduct.product.id
+					}
+				],
 				userId: this.store.userId,
 				orderType: this.store.deliveryType,
 				options: { autoConfirm: true }
@@ -117,7 +144,12 @@ export class ProductsPage implements OnDestroy {
 	}
 
 	toggleGetProductsType() {
-		this._subscribeGeoLocationProducts(this.isDeliveryRequired);
+		this.changePage = true;
+		this.products = [];
+		this.loadProducts({
+			count: this.lastLoadProductsCount,
+			imageOrientation: this.lastImageOrientation
+		});
 	}
 
 	changeStoreMode() {
@@ -131,7 +163,13 @@ export class ProductsPage implements OnDestroy {
 				this.loadMerchant();
 			}
 		}
-		this._subscribeGeoLocationProducts(this.isDeliveryRequired);
+
+		this.changePage = true;
+		this.products = [];
+		this.loadProducts({
+			count: this.lastLoadProductsCount,
+			imageOrientation: this.lastImageOrientation
+		});
 	}
 
 	ngOnDestroy() {
@@ -155,16 +193,7 @@ export class ProductsPage implements OnDestroy {
 		return modal.present();
 	}
 
-	private async _subscribeGeoLocationProducts(isDeliveryRequired: boolean) {
-		this.areProductsLoaded = false;
-		if (this.$products) {
-			this.$products.unsubscribe();
-		}
-
-		this.store.deliveryType = this.isDeliveryRequired
-			? DeliveryType.Delivery
-			: DeliveryType.Takeaway;
-
+	private async loadGeoLocationProducts() {
 		let geoLocationForProducts: GeoLocation;
 
 		if (this.store.userId) {
@@ -175,32 +204,99 @@ export class ProductsPage implements OnDestroy {
 
 			geoLocationForProducts = user.geoLocation;
 		} else {
-			geoLocationForProducts = await this.geoLocationService.getCurrentGeoLocation();
+			try {
+				geoLocationForProducts = await this.geoLocationService.getCurrentGeoLocation();
+			} catch (error) {
+				console.warn(error);
+				this.store.registrationSystem = RegistrationSystem.Once;
+				this.router.navigate(['/invite']);
+			}
 		}
 
-		this.$products = this.geoLocationProductsRouter
-			.get(geoLocationForProducts, {
-				isDeliveryRequired,
-				isTakeaway: !isDeliveryRequired
-			})
-			.pipe(takeUntil(this.ngDestroy$))
-			.subscribe((products = []) => {
-				this.areProductsLoaded = true;
-				let merchantIds = environment['MERCHANT_IDS'];
-				if (!merchantIds && this.inStore) {
-					merchantIds = [this.inStore];
+		if (geoLocationForProducts) {
+			this.getOrdersGeoObj = {
+				loc: {
+					type: 'Point',
+					coordinates: geoLocationForProducts.loc.coordinates
 				}
-				if (merchantIds && merchantIds.length > 0) {
-					this.products = products.filter((product: ProductInfo) => {
-						return merchantIds.includes(
-							product.warehouseId.toString()
-						);
-					});
-				} else {
-					this.products = products;
+			};
+		}
+	}
+
+	private async loadProducts(options = {}) {
+		this.store.deliveryType = this.isDeliveryRequired
+			? DeliveryType.Delivery
+			: DeliveryType.Takeaway;
+
+		const count = options['count'];
+		const imageOrientation = options['imageOrientation'];
+
+		this.lastLoadProductsCount = count;
+		this.lastImageOrientation = imageOrientation;
+		this.areProductsLoaded = false;
+		let merchantIds = environment['MERCHANT_IDS'];
+		if ((!merchantIds || merchantIds.length === 0) && this.inStore) {
+			merchantIds = [this.inStore];
+		}
+
+		await this.loadProductsCount(merchantIds, imageOrientation);
+		this.changePage = false;
+		if (this.productsCount > this.products.length) {
+			if (this.getOrdersGeoObj) {
+				const isDeliveryRequired =
+					this.store.deliveryType === DeliveryType.Delivery;
+				const isTakeaway =
+					this.store.deliveryType === DeliveryType.Takeaway;
+
+				let products = await this.geoLocationProductsService
+					.geoLocationProductsByPaging(
+						this.getOrdersGeoObj,
+						{
+							skip: this.products.length,
+							limit: count ? count : initializeProductsNumber
+						},
+						{
+							isDeliveryRequired,
+							isTakeaway,
+							merchantIds,
+							imageOrientation,
+							locale: this.productsLocale
+						}
+					)
+					.pipe(first())
+					.toPromise();
+				this.products.push(...products);
+			} else {
+				this.store.registrationSystem = RegistrationSystem.Once;
+				this.router.navigate(['/invite']);
+			}
+		}
+
+		this.$areProductsLoaded.emit();
+		this.areProductsLoaded = true;
+	}
+
+	private async loadProductsCount(
+		merchantIds?: string[],
+		imageOrientation?: number
+	) {
+		if (this.getOrdersGeoObj) {
+			const isDeliveryRequired =
+				this.store.deliveryType === DeliveryType.Delivery;
+			const isTakeaway =
+				this.store.deliveryType === DeliveryType.Takeaway;
+
+			this.productsCount = await this.geoLocationProductsService.getCountOfGeoLocationProducts(
+				this.getOrdersGeoObj,
+				{
+					isDeliveryRequired,
+					isTakeaway,
+					merchantIds,
+					imageOrientation,
+					locale: this.productsLocale
 				}
-				this.continueOrder();
-			});
+			);
+		}
 	}
 
 	private _subscribeProductsPlaceholder() {
@@ -230,24 +326,26 @@ export class ProductsPage implements OnDestroy {
 			});
 	}
 
-	private continueOrder() {
-		const buyProductId = this.store.buyProduct;
+	private async continueOrder() {
+		const buyProduct = this.store.buyProduct;
 
-		if (buyProductId && buyProductId !== 'null') {
-			const products = this.products.filter(
-				(p: ProductInfo) => p.warehouseProduct.id === buyProductId
-			);
+		if (buyProduct) {
+			const userId = this.store.userId;
+			const mechantId = this.store.warehouseId;
 
-			// "[0]" is used because filter return array but we filter by id
-			// and we are sure that will return product or undefined
-			const productForBuy = products[0];
-			if (this.store.userId) {
+			if (userId && mechantId) {
+				const productForBuy = await this.warehouseProductsService.getWarehouseProduct(
+					mechantId,
+					buyProduct
+				);
 				if (productForBuy) {
 					this.buyItem(productForBuy);
-					this.store.buyProduct = null;
+					this.store.buyProduct = '';
+					this.store.warehouseId = '';
 				}
 			} else {
-				this.store.buyProduct = null;
+				this.store.buyProduct = '';
+				this.store.warehouseId = '';
 			}
 		}
 	}

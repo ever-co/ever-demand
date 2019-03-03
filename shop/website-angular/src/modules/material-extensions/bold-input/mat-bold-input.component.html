@@ -1,0 +1,19 @@
+<div
+	matRipple
+	[matRippleColor]="focusedColor"
+	[matRippleDisabled]="this.isFocused"
+	style="position: relative;"
+>
+	<input
+		#input
+		matInput
+		[disabled]="disabled"
+		[placeholder]="placeholder"
+		[type]="type"
+		[(ngModel)]="value"
+		(focus)="onFocus($event)"
+		(blur)="onBlur()"
+		[style.background-color]="isFocused ? focusedColor : 'transparent'"
+		[style.border]="'1px solid ' + color"
+	/>
+</div>

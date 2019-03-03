@@ -1,0 +1,32 @@
+@import '../../../styles/variables';
+@import '~@angular/material/theming';
+
+.location-modal-card {
+	i.material-icons {
+		cursor: pointer;
+	}
+	margin: -24px;
+	padding: 24px;
+	background-color: $brand;
+	mat-card-title {
+		color: white;
+		margin-bottom: 24px;
+	}
+
+	.location-form {
+		height: 400px;
+		.title {
+			color: white;
+			text-align: center;
+			margin-top: 8px;
+		}
+	}
+
+	form.location-form {
+		box-shadow: none !important;
+	}
+}
+
+/deep/ input[type='text'] {
+	color: #333 !important;
+}

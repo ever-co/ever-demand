@@ -23,6 +23,11 @@ export class PagesModuleGuard implements CanActivate {
 			this.router.navigate(['maintenance-info']);
 			return false;
 		}
+		const serverConnection = Number(this.store.serverConnection);
+		if (serverConnection === 0) {
+			this.router.navigate(['server-down']);
+			return false;
+		}
 		return true;
 	}
 }

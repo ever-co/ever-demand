@@ -1,0 +1,29 @@
+.list-view {
+	:host {
+		background-color: #eeeeee;
+	}
+
+	.products-content {
+		width: 100%;
+
+		masonry {
+			margin: auto;
+		}
+
+		.brick {
+			width: 350px;
+		}
+	}
+
+	.view-type-container {
+		text-align: right;
+		width: 91%;
+		margin: auto;
+	}
+
+	.container {
+		.view-type-container {
+			width: 92.8% !important;
+		}
+	}
+}

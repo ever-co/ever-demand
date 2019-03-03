@@ -1,5 +1,5 @@
 require('dotenv').config();
-var pm2 = require('pm2');
+const pm2 = require('pm2');
 
 const MACHINE_NAME = process.env.KEYMETRICS_MACHINE_NAME;
 const PRIVATE_KEY = process.env.KEYMETRICS_SECRET_KEY;

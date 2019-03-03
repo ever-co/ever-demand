@@ -25,6 +25,6 @@ ADD . /usr/src/app
 
 RUN $(npm bin)/tsc
 
-EXPOSE 5577
+EXPOSE 5501
 
 CMD [ "npm", "run", "prod" ]

@@ -1,0 +1,37 @@
+<mat-card class="location-modal-card auth">
+	<mat-card-title>
+		<h4 class="d-flex">
+			<span class="m-auto"> What is your address?</span>
+			<i
+				md-raised-button
+				md-dialog-close
+				(click)="close()"
+				class="material-icons"
+			>
+				close
+			</i>
+		</h4>
+	</mat-card-title>
+
+	<mat-card-content>
+		<div class="row ml-0">
+			<div class="col-6 location-form">
+				<es-location-form
+					(continue)="updateLocation()"
+					#locationForm
+					[coordinates]="coordinates"
+					[place]="place"
+					(mapGeometryEmitter)="onGeometrySend($event)"
+					(mapCoordinatesEmitter)="onCoordinatesChanges($event)"
+				></es-location-form>
+			</div>
+
+			<div class="col-6">
+				<ngx-google-map
+					[mapCoordEvent]="mapCoordEmitter"
+					[mapGeometryEvent]="mapGeometryEmitter"
+				></ngx-google-map>
+			</div>
+		</div>
+	</mat-card-content>
+</mat-card>

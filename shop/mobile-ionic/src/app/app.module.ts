@@ -1,14 +1,10 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
-import {
-	HttpClient,
-	HttpClientModule,
-	HttpHeaders
-} from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { RouteReuseStrategy } from '@angular/router';
+import { RouteReuseStrategy, Router } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage';
@@ -57,7 +53,7 @@ import { Device } from '@ionic-native/device/ngx';
 			}
 		}),
 		CommonModule.forRoot({
-			apiUrl: environment.servicesEndpoint
+			apiUrl: environment.SERVICES_ENDPOINT
 		}),
 		ServiceWorkerModule.register('ngsw-worker.js', {
 			enabled: environment.production
@@ -102,22 +98,20 @@ export class AppModule {
 	constructor(
 		private readonly apollo: Apollo,
 		private readonly httpLink: HttpLink,
-		private readonly store: Store,
-		private readonly http: HttpClient
+		private readonly store: Store
 	) {
-		this.checkServerConnection();
 		this._setupApolloAngular();
 	}
 
 	private _setupApolloAngular() {
 		// Create an http link
 		const http = this.httpLink.create({
-			uri: environment.gqlEndpoint
+			uri: environment.GQL_ENDPOINT
 		});
 
 		// Create a WebSocket link
 		const ws = new WebSocketLink({
-			uri: environment.gqlSubscriptionsEndpoint,
+			uri: environment.GQL_SUBSCRIPTIONS_ENDPOINT,
 			options: {
 				reconnect: true,
 				lazy: true
@@ -165,18 +159,6 @@ export class AppModule {
 			},
 			cache: new InMemoryCache()
 		});
-	}
-
-	private checkServerConnection() {
-		const $servicesEndpoint = this.http
-			.get(environment.servicesEndpoint)
-			.subscribe(
-				(data) => {},
-				(error) => {
-					this.store.serverConnection = error.status;
-					$servicesEndpoint.unsubscribe();
-				}
-			);
 	}
 }
 

@@ -1,17 +1,17 @@
 version: '3'
 services:
-    angular-starter:
+    shop-website-angular:
         build:
             context: .
             dockerfile: Dockerfile-dev
         container_name: ever-shop
         networks:
-            - angular-starter
+            - shop-website-angular
         ports:
             - '3000:3000'
         environment:
             - HOST=0.0.0.0
         command: npm run start
 networks:
-    angular-starter:
+    shop-website-angular:
         driver: bridge

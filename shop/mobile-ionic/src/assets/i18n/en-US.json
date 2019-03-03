@@ -201,6 +201,9 @@
 		"NAME": "Merchant name",
 		"WITH_NAME": "Merchants with name"
 	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Server connection is lost"
+	},
 	"OR": "Or",
 	"OR_LOWERCASE": "or",
 	"YES": "Yes",

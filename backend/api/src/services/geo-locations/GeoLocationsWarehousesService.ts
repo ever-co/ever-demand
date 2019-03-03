@@ -140,8 +140,13 @@ export class GeoLocationsWarehousesService
 	async getMerchants(
 		geoLocation: IGeoLocation,
 		maxDistance: number,
-		options: { fullProducts: boolean; activeOnly: boolean }
+		options: {
+			fullProducts: boolean;
+			activeOnly: boolean;
+			merchantsIds?: string[];
+		}
 	): Promise<IWarehouse[]> {
+		const merchantsIds = options.merchantsIds;
 		const merchants = (await this.warehousesService.Model.find(
 			_.assign(
 				{
@@ -155,7 +160,12 @@ export class GeoLocationsWarehousesService
 						}
 					}
 				},
-				options.activeOnly ? { isActive: true } : {}
+				options.activeOnly ? { isActive: true } : {},
+				merchantsIds && merchantsIds.length > 0
+					? {
+							_id: { $in: merchantsIds }
+					  }
+					: {}
 			)
 		)
 			.populate(options.fullProducts ? 'products.product' : '')

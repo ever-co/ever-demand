@@ -1,0 +1,11 @@
+<div *ngIf="getDiscount() != 0" class="discount-circle brand-light">
+	<div class="price-initial">
+		{{ currentProduct ? '$' + currentProduct.initialPrice : '' }}
+	</div>
+	<span>
+		<i class="material-icons" aria-hidden="true">
+			trending_down
+		</i>
+		{{ getDiscount() }}%</span
+	>
+</div>

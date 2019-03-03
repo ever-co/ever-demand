@@ -2,6 +2,7 @@ export interface Environment {
 	production: boolean;
 
 	SERVICES_ENDPOINT: string;
+	HTTPS_SERVICES_ENDPOINT: string;
 	GQL_ENDPOINT: string;
 	GQL_SUBSCRIPTIONS_ENDPOINT: string;
 

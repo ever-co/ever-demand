@@ -124,3 +124,10 @@ ion-menu-button {
 .pl-5px {
 	padding-left: 5px !important;
 }
+
+.brand-dark.products-view {
+	ion-spinner,
+	.infinite-loading-text {
+		color: white !important;
+	}
+}

@@ -201,6 +201,9 @@
 		"NAME": "שם סוחר",
 		"WITH_NAME": "סוחרים עם שם"
 	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "השרת נפל"
+	},
 	"OR": "או",
 	"OR_LOWERCASE": "או",
 	"YES": "כן",

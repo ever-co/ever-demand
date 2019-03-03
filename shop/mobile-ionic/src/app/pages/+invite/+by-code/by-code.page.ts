@@ -63,9 +63,11 @@ export class ByCodePage implements OnDestroy {
 	private _hasNewcustomer: boolean = false;
 
 	async onCodeInserted() {
+		const code = this.code;
+		this.code = null;
 		if (!this._hasNewcustomer) {
 			const fakeInvite = environment['FAKE_INVITE'];
-			if (fakeInvite && this.code === fakeInvite.CODE) {
+			if (fakeInvite && code === fakeInvite.CODE) {
 				const invite: IInvite = {
 					_id: fakeInvite.ID,
 					geoLocation: {
@@ -90,11 +92,6 @@ export class ByCodePage implements OnDestroy {
 					_createdAt: fakeInvite.CREATED_AT,
 					_updatedAt: fakeInvite.UPDATED_AT
 				};
-				if (this.store.backToDetails) {
-					await this.goToDetailsPage();
-					this.store.backToDetails = null;
-					return;
-				}
 
 				await this.register(invite as Invite);
 				this._addOrdersToNewUser();
@@ -118,7 +115,7 @@ export class ByCodePage implements OnDestroy {
 				const invite = await this.inviteRouter
 					.getByCode({
 						location,
-						inviteCode: this.code.toString()
+						inviteCode: code.toString()
 					})
 					.pipe(first())
 					.toPromise();
@@ -126,14 +123,11 @@ export class ByCodePage implements OnDestroy {
 				if (invite != null) {
 					await this.register(invite);
 				} else {
-					this.code = null;
 					alert('Wrong code!');
 				}
 			} catch (err) {
 				console.error(err);
 			}
-
-			this.code = null;
 		}
 	}
 
