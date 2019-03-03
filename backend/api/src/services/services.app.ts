@@ -406,20 +406,31 @@ export class ServicesApp {
 			'Express server prepare to listen'
 		);
 
-		// app listen on https
-		this.httpsServer.listen(httpsPort, () => {
-			this.log.info(
-				{ port: httpsPort },
-				'Express https server listening'
-			);
-			console.log(`Express https server listening on port ${httpsPort}`);
-		});
+		if (httpsPort && httpsPort > 0) {
+			// app listen on https
+			this.httpsServer.listen(httpsPort, () => {
+				this.log.info(
+					{ port: httpsPort },
+					'Express https server listening'
+				);
+				console.log(
+					`Express https server listening on port ${httpsPort}`
+				);
+			});
+		}
 
-		// app listen on http
-		this.httpServer.listen(httpPort, () => {
-			this.log.info({ port: httpPort }, 'Express http server listening');
-			console.log(`Express http server listening on port ${httpPort}`);
-		});
+		if (httpPort && httpPort > 0) {
+			// app listen on http
+			this.httpServer.listen(httpPort, () => {
+				this.log.info(
+					{ port: httpPort },
+					'Express http server listening'
+				);
+				console.log(
+					`Express http server listening on port ${httpPort}`
+				);
+			});
+		}
 	}
 
 	private _startSocketIO() {

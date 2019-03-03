@@ -2,7 +2,11 @@
 	<e-cu-products-slides-view
 		[placeholder]="placeholder"
 		[products]="products"
-		(buy)="buyProduct($event)"
+		(buy)="buy.emit($event)"
+		(goToDetailsPage)="goToDetailsPage($event)"
+		(loadProducts)="loadProducts.emit($event)"
+		[areProductsLoaded]="areProductsLoaded"
+		[$areProductsLoaded]="$areProductsLoaded"
 		*ngSwitchCase="'slides'"
 	>
 	</e-cu-products-slides-view>
@@ -10,7 +14,12 @@
 	<e-cu-products-list-view
 		[placeholder]="placeholder"
 		[products]="products"
-		(buy)="buyProduct($event)"
+		(buy)="buy.emit($event)"
+		(goToDetailsPage)="goToDetailsPage($event)"
+		(loadProducts)="loadProducts.emit($event)"
+		[areProductsLoaded]="areProductsLoaded"
+		[productsCount]="productsCount"
+		[$areProductsLoaded]="$areProductsLoaded"
 		*ngSwitchCase="'list'"
 	>
 	</e-cu-products-list-view>

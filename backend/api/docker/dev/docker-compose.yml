@@ -5,7 +5,7 @@ services:
         build: ../..
         container_name: ever-api-dev
         ports:
-            - 5577:5577
+            - 5501:5501
         environment:
             - DB_URI=mongodb://mongodb/ever_development
         links:

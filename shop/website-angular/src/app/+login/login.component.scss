@@ -1,0 +1,99 @@
+@import '../../styles/variables';
+@import '~@angular/material/theming';
+
+:host {
+	width: 100%;
+	height: 100%;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	background-color: $brand-darken;
+	display: flex;
+
+	justify-content: center;
+	align-items: center;
+}
+
+.content {
+	background-color: $brand;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 40px 70px;
+	border-radius: 3px;
+}
+
+.invite-code-input {
+	margin-top: 0;
+	margin-bottom: 20px;
+	width: 100%;
+}
+.or {
+	color: white;
+	font-size: 1.05em;
+	font-weight: bold;
+}
+
+.another-option-wrapper {
+	text-align: center;
+	margin-bottom: 50px;
+}
+
+.iconsContainer {
+	margin: 0 !important;
+}
+
+.auth {
+	.fbIcon,
+	.googleIcon {
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		width: 50%;
+
+		margin-bottom: 0;
+	}
+	.fbIcon {
+		-moz-box-shadow: inset 0px 1px 0px 0px #6cc0cf;
+		-webkit-box-shadow: inset 0px 1px 0px 0px #6cc0cf;
+		box-shadow: inset 0px 1px 0px 0px #6cc0cf;
+		background: -webkit-gradient(
+			linear,
+			left top,
+			left bottom,
+			color-stop(0.05, #1b4bd0),
+			color-stop(1, #399bdd)
+		);
+		background: -moz-linear-gradient(top, #1b4bd0 5%, #399bdd 100%);
+		background: -webkit-linear-gradient(top, #1b4bd0 5%, #399bdd 100%);
+		background: -o-linear-gradient(top, #1b4bd0 5%, #399bdd 100%);
+		background: -ms-linear-gradient(top, #1b4bd0 5%, #399bdd 100%);
+		background: linear-gradient(to bottom, #1b4bd0 5%, 399bdd#399bdd 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1b4bd0', endColorstr='#399bdd',GradientType=0);
+		background-color: #1b4bd0;
+		border: 1px solid #113494;
+		text-shadow: 0px 1px 0px #298576;
+
+		&:hover {
+			background: -webkit-gradient(
+				linear,
+				left top,
+				left bottom,
+				color-stop(0.05, #1b3cd0),
+				color-stop(1, #399bdd)
+			);
+			background: -moz-linear-gradient(top, #1b3cd0 5%, #399bdd 100%);
+			background: -webkit-linear-gradient(top, #1b3cd0 5%, #399bdd 100%);
+			background: -o-linear-gradient(top, #1b3cd0 5%, #399bdd 100%);
+			background: -ms-linear-gradient(top, #1b3cd0 5%, #399bdd 100%);
+			background: linear-gradient(to bottom, #1b3cd0 5%, #399bdd 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1b3cd0', endColorstr='#399bdd',GradientType=0);
+			background-color: #1b3cd0;
+		}
+	}
+}

@@ -59,18 +59,26 @@
 	</ion-toolbar>
 </ion-header>
 
-<ion-content color="black" [ngClass]="{ 'blur-filter': modalOpen }">
+<ion-content
+	*ngIf="!changePage"
+	color="black"
+	[ngClass]="{ 'blur-filter': modalOpen }"
+>
 	<ion-spinner
 		*ngIf="!areProductsLoaded && products_placeholder == null"
 	></ion-spinner>
 	<div *ngIf="modalOpen" class="blur-lighter"></div>
 
 	<e-cu-products-view
-		*ngIf="areProductsLoaded"
+		*ngIf="getOrdersGeoObj"
 		[placeholder]="products_placeholder"
 		[products]="products"
 		(buy)="buyItem($event)"
 		[type]="viewType"
+		(loadProducts)="loadProducts($event)"
+		[productsCount]="productsCount"
+		[areProductsLoaded]="areProductsLoaded"
+		[$areProductsLoaded]="$areProductsLoaded"
 	>
 	</e-cu-products-view>
 </ion-content>

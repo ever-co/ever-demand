@@ -51,7 +51,10 @@ export default class FakeDataCarriers {
 									) as Country,
 									loc: {
 										type: 'Point',
-										coordinates: [lng, lat]
+										coordinates: [
+											this.getCloseCoordinate(lng),
+											this.getCloseCoordinate(lat)
+										]
 									}
 								}
 							},
@@ -84,7 +87,10 @@ export default class FakeDataCarriers {
 								countryId: Country.IL,
 								loc: {
 									type: 'Point',
-									coordinates: [lng, lat]
+									coordinates: [
+										this.getCloseCoordinate(lng),
+										this.getCloseCoordinate(lat)
+									]
 								}
 							}
 						},
@@ -116,7 +122,10 @@ export default class FakeDataCarriers {
 								countryId: Country.IL,
 								loc: {
 									type: 'Point',
-									coordinates: [lng, lat]
+									coordinates: [
+										this.getCloseCoordinate(lng),
+										this.getCloseCoordinate(lat)
+									]
 								}
 							}
 						},
@@ -147,7 +156,10 @@ export default class FakeDataCarriers {
 								countryId: Country.IL,
 								loc: {
 									type: 'Point',
-									coordinates: [lng, lat]
+									coordinates: [
+										this.getCloseCoordinate(lng),
+										this.getCloseCoordinate(lat)
+									]
 								}
 							}
 						},
@@ -155,4 +167,11 @@ export default class FakeDataCarriers {
 					}
 			  }
 			: null;
+
+	private getCloseCoordinate(coord) {
+		const num = Math.floor(Math.random() * (9 - 0 + 1)) + 0;
+		const num2 = Math.floor(Math.random() * (9 - 0 + 1)) + 0;
+
+		return coord + num * 0.01 + num2 * 0.001;
+	}
 }

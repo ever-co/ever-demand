@@ -1,0 +1,43 @@
+<mat-card-content *ngIf="products.length" class="carousel-view p-0">
+	<div class="text-right">
+		<view-type class="view-type"></view-type>
+	</div>
+
+	<ngx-hm-carousel
+		[(ngModel)]="currentIndex"
+		[show-num]="4"
+		[drag-many]="true"
+		[data]="products"
+		[disable-drag]="true"
+		class="carousel c-accent"
+	>
+		<section ngx-hm-carousel-container class="content">
+			<article
+				class="item cursor-pointer"
+				ngx-hm-carousel-item
+				*ngFor="let p of products; let i = index"
+				[ngClass]="{ visible: currentIndex === i }"
+			>
+				<product class="product" [info]="p"></product>
+			</article>
+		</section>
+
+		<ng-template #carouselPrev>
+			<div
+				[ngClass]="{ disabled: currentIndex === 0 }"
+				class="click-area"
+			>
+				<i class="material-icons">keyboard_arrow_left</i>
+			</div>
+		</ng-template>
+		<ng-template #carouselNext>
+			<div
+				(click)="showRight()"
+				class="click-area"
+				[ngClass]="{ disabled: currentIndex === products.length - 1 }"
+			>
+				<i class="material-icons">keyboard_arrow_right</i>
+			</div>
+		</ng-template>
+	</ngx-hm-carousel>
+</mat-card-content>

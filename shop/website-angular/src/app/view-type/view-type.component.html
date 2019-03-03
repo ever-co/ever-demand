@@ -1,0 +1,95 @@
+<!-- TODO add translate -->
+<span class="view-settings">
+	<span *ngIf="showTuneButton" class="tune-settings">
+		<mat-button-toggle-group>
+			<mat-button-toggle
+				matTooltip="Tune buttons"
+				[matTooltipPosition]="'above'"
+				(click)="showTuneButton = !showTuneButton"
+				value="list"
+			>
+				<i class="material-icons">
+					tune
+				</i>
+			</mat-button-toggle>
+		</mat-button-toggle-group>
+	</span>
+
+	<span *ngIf="!showTuneButton" class="settings-buttons">
+		<mat-button-toggle-group
+			class="mr-1"
+			(change)="viewTypeChange()"
+			[(ngModel)]="viewType"
+		>
+			<mat-button-toggle
+				matTooltip="List View"
+				[matTooltipPosition]="'above'"
+				value="list"
+			>
+				<i class="material-icons">
+					view_comfy
+				</i>
+			</mat-button-toggle>
+
+			<!-- Enabled when the "Carousel" View is ready. -->
+			<mat-button-toggle
+				matTooltip="Carousel View"
+				[matTooltipPosition]="'above'"
+				value="carousel"
+				[disabled]="false"
+			>
+				<i class="material-icons">
+					view_carousel
+				</i>
+			</mat-button-toggle>
+		</mat-button-toggle-group>
+
+		<mat-button-toggle-group
+			class="mr-1"
+			(change)="listViewTypeChange()"
+			[(ngModel)]="listViewType"
+		>
+			<mat-button-toggle
+				matTooltip="Masonry View"
+				[matTooltipPosition]="'above'"
+				class="masonry-button"
+				[disabled]="!isListView"
+				value="masonry"
+			>
+				<img src="../../assets/img/masonry.png" alt="" />
+			</mat-button-toggle>
+
+			<mat-button-toggle
+				matTooltip="Grid View"
+				[matTooltipPosition]="'above'"
+				[disabled]="!isListView"
+				value="grid"
+			>
+				<fa-icon [icon]="['fas', 'th-large']"></fa-icon>
+			</mat-button-toggle>
+		</mat-button-toggle-group>
+
+		<mat-button-toggle-group
+			(change)="listViewSpaceChange()"
+			[(ngModel)]="listViewSpace"
+		>
+			<mat-button-toggle
+				matTooltip="Normal View"
+				[matTooltipPosition]="'above'"
+				[disabled]="!isListView"
+				value="normal"
+			>
+				<fa-icon [icon]="['fas', 'compress']"></fa-icon>
+			</mat-button-toggle>
+
+			<mat-button-toggle
+				matTooltip="Wide View"
+				[matTooltipPosition]="'above'"
+				[disabled]="!isListView"
+				value="wide"
+			>
+				<fa-icon [icon]="['fas', 'expand']"></fa-icon>
+			</mat-button-toggle>
+		</mat-button-toggle-group>
+	</span>
+</span>

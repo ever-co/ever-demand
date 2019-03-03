@@ -6,7 +6,9 @@ import { cleanEnv, num, str, bool } from 'envalid';
 
 export type Env = Readonly<{
 	production: boolean;
+
 	SERVICES_ENDPOINT: string;
+	HTTPS_SERVICES_ENDPOINT: string;
 	GQL_ENDPOINT: string;
 	GQL_SUBSCRIPTIONS_ENDPOINT: string;
 
@@ -44,6 +46,7 @@ export const env: Env = cleanEnv(
 		production: bool({ default: false }),
 
 		SERVICES_ENDPOINT: str({ default: 'http://localhost:5500' }),
+		HTTPS_SERVICES_ENDPOINT: str({ default: 'https://localhost:5501' }),
 		GQL_ENDPOINT: str({ default: 'http://localhost:5555/graphql' }),
 		GQL_SUBSCRIPTIONS_ENDPOINT: str({
 			default: 'ws://localhost:5050/subscriptions'

@@ -158,7 +158,7 @@ export class GeoLocationsOrdersService
 			{ fullProducts: false, activeOnly: true }
 		);
 
-		const merchantsIds = merchants.map((m) => m._id);
+		const merchantsIds = merchants.map((m) => m._id.toString());
 
 		let searchByRegex = [];
 
@@ -168,30 +168,35 @@ export class GeoLocationsOrdersService
 			});
 		}
 
-		const orders = await this.ordersService.Model.find(
-			_.assign(
-				{
-					warehouse: { $in: merchantsIds },
-					warehouseStatus: {
-						$eq: OrderWarehouseStatus.PackagingFinished
+		const orders = await this.ordersService.Model.aggregate([
+			{
+				$match: _.assign(
+					{
+						warehouse: { $in: merchantsIds },
+						warehouseStatus: {
+							$eq: OrderWarehouseStatus.PackagingFinished
+						},
+						carrierStatus: {
+							$lte: OrderCarrierStatus.CarrierSelectedOrder
+						},
+						_id: { $nin: skippedOrderIds }
 					},
-					carrierStatus: {
-						$lte: OrderCarrierStatus.CarrierSelectedOrder
-					},
-					_id: { $nin: skippedOrderIds }
-				},
-				...searchByRegex
-			)
-		)
-			.sort({
-				_createdAt:
-					options.sort && options.sort.toLowerCase().includes('desc')
-						? 'desc'
-						: 'asc'
-			})
+					...searchByRegex
+				)
+			},
+			{
+				$sort: {
+					_createdAt:
+						options.sort &&
+						options.sort.toLowerCase().includes('desc')
+							? -1
+							: 1
+				}
+			}
+		])
+			.allowDiskUse(true)
 			.skip(options.skip || 0)
 			.limit(options.limit || 1)
-			.lean()
 			.exec();
 
 		return orders.filter((o) => o !== null).map((o) => new Order(o));

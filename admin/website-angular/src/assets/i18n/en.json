@@ -558,7 +558,8 @@
 				"TO_CONTINUE_ITs_REQUIRED_TO_BE_INVITED_IN_THE_SYSTEM": "To continue it's required to be invited in the system:",
 				"SEND_INVITE_REQUEST": "Send 'Invite Request' to the system from the form which will be opened after pressing Invite Request button.",
 				"ALL_INVITE_REQUESTS_ARE_REVIEWED": "All invite requests are reviewed by admin and they can be invited if the system is available near your location (for test you can do immediately form Invite User button).",
-				"AFTER_YOU_GET_INVITED": "After you get invite you can easy login the system, just have to enter your invite code, which will be provided from the system (you will see here {{inviteCode ? inviteCode : '...'}} code after press Invite button, and can enter it when press Create User button)."
+				"AFTER_YOU_GET_INVITED_BEFORE": "After you get invite you can easy login the system, just have to enter your invite code, which will be provided from the system (you will see here",
+				"AFTER_YOU_GET_INVITED_AFTER": "code after press Invite button, and can enter it when press Create User button)."
 			}
 		}
 	},

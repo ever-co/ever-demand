@@ -1,0 +1,30 @@
+:host {
+	background-color: #eeeeee;
+}
+
+.container {
+	width: 51vw;
+	margin: auto;
+}
+
+@media screen and (min-width: 1500px) /* Desktop */ {
+	.container {
+		width: 51vw;
+	}
+}
+
+@media screen and (max-width: 1499px) /* Tablet */ {
+	.container {
+		width: 70vw;
+	}
+}
+
+@media screen and (max-width: 500px) /* Mobile */ {
+	.container {
+		width: 100vw;
+	}
+}
+
+masonry {
+	margin: auto;
+}

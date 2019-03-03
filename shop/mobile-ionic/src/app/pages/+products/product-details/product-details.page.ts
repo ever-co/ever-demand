@@ -199,7 +199,6 @@ export class ProductDetailsPage implements AfterViewInit, OnDestroy {
 
 	private continueOrder() {
 		const buyProductId = this.store.buyProduct;
-
 		if (this.store.userId) {
 			if (buyProductId && buyProductId !== 'null') {
 				this.buyItem(this.product.product as Product);

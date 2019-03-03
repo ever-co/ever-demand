@@ -19,6 +19,8 @@ import { ProductsModule } from '../../components/products/products.module';
 import { PipesModule } from '@modules/client.common.angular2/pipes/pipes.module';
 import { OrderTakeawayInfoPopupModule } from './+order/takeaway/popup/popup.module';
 import { CommonProducts } from './common/common-products.module';
+import { GeoLocationProductsService } from 'app/services/geo-location/geo-location-products';
+import { WarehouseProductsService } from 'app/services/merchants/warehouse-products';
 
 const routes: Routes = [
 	{
@@ -51,7 +53,13 @@ const routes: Routes = [
 		OrderTakeawayInfoPopupModule,
 		CommonProducts
 	],
-	providers: [ProductsPageGuard, OrderModuleGuard, GeoLocationService],
+	providers: [
+		ProductsPageGuard,
+		OrderModuleGuard,
+		GeoLocationService,
+		GeoLocationProductsService,
+		WarehouseProductsService
+	],
 	declarations: [
 		ProductsPage,
 		ProductsSlidesViewComponent,

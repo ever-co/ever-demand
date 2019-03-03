@@ -52,9 +52,10 @@ export type Env = Readonly<{
 	DEFAULT_LONGITUDE: number;
 
 	// Graphql endpoints for apollo services
-	gqlEndpoint: string;
-	gqlSubscriptionsEndpoint: string;
-	servicesEndpoint: string;
+	GQL_ENDPOINT: string;
+	GQL_SUBSCRIPTIONS_ENDPOINT: string;
+	SERVICES_ENDPOINT: string;
+	HTTPS_SERVICES_ENDPOINT: string;
 
 	FAKE_INVITE_ID: string;
 	FAKE_INVITE_CITY: string;
@@ -137,11 +138,12 @@ export const env: Env = cleanEnv(
 		DEFAULT_LONGITUDE: num({ default: 23.3332736 }),
 
 		// Graphql endpoints for apollo services
-		gqlEndpoint: str({ default: 'http://localhost:5555/graphql' }),
-		gqlSubscriptionsEndpoint: str({
+		GQL_ENDPOINT: str({ default: 'http://localhost:5555/graphql' }),
+		GQL_SUBSCRIPTIONS_ENDPOINT: str({
 			default: 'ws://localhost:5050/subscriptions'
 		}),
-		servicesEndpoint: str({ default: 'http://localhost:5500' }),
+		SERVICES_ENDPOINT: str({ default: 'http://localhost:5500' }),
+		HTTPS_SERVICES_ENDPOINT: str({ default: 'https://localhost:5501' }),
 
 		FAKE_INVITE_ID: str({ default: '1ae9d04f9010d834f8906881' }),
 		FAKE_INVITE_CITY: str({ default: 'Sofia' }),

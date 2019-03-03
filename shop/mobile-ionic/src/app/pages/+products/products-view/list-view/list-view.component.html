@@ -73,7 +73,11 @@
 				[currentProduct]="productInfo.warehouseProduct"
 			></e-cu-discount>
 			<img
-				src="{{ localeTranslate(productInfo?.product.images) }}"
+				src="{{
+					localeTranslate(
+						productInfo?.warehouseProduct.product.images
+					)
+				}}"
 				alt=""
 				class="productImage"
 			/>
@@ -83,7 +87,7 @@
 				<ion-col class="box col-8">
 					<button
 						class="button button-assertive border-color-brand col-100"
-						(click)="buyProduct(productInfo)"
+						(click)="buy.emit(productInfo)"
 					>
 						<span
 							>{{ 'PRODUCTS_VIEW.BUY_BUTTON.PRE' | translate }}
@@ -97,7 +101,7 @@
 				<ion-col class="box col-4">
 					<button
 						class="button button-brand border-color-brand col-100"
-						(click)="goToDetailsPage(productInfo)"
+						(click)="goToDetailsPage.emit(productInfo)"
 					>
 						<span>{{
 							'PRODUCTS_VIEW.DETAILS.DETAILS' | translate
@@ -108,8 +112,23 @@
 		</ion-grid>
 	</ion-card>
 
+	<!-- TODO add transalte -->
+	<ion-infinite-scroll
+		[disabled]="productsCount <= products?.length"
+		threshold="100px"
+		(ionInfinite)="loadData($event)"
+		position="bottom"
+	>
+		<ion-infinite-scroll-content
+			loadingSpinner="bubbles"
+			color="light"
+			loadingText="Loading more data..."
+		>
+		</ion-infinite-scroll-content>
+	</ion-infinite-scroll>
+
 	<div
-		*ngIf="products.length === 0 && placeholder"
+		*ngIf="products.length === 0 && placeholder && areProductsLoaded"
 		[innerHTML]="placeholder | safe: 'html'"
 	></div>
 </div>

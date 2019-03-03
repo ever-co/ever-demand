@@ -1,119 +1,230 @@
 <nb-card>
 	<nb-card-header class="specific-header-color">
-		{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.INSTRUTIONS" | translate}}
+		{{ 'SIMULATION_VIEW.INSTRUCTIONS_STEPS.INSTRUTIONS' | translate }}
 	</nb-card-header>
 
 	<nb-card-body>
 		<div>
-			<div *ngIf='step === stepTypes.one' class="row">
+			<div *ngIf="step === stepTypes.one" class="row">
 				<h4 class="col-md-8">
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.CREATE_USER_STEP.CREATE_USER" | translate}}
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.CREATE_USER_STEP.CREATE_USER'
+							| translate
+					}}
 				</h4>
 				<span class="col-md-4 text-right">
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.CREATE_USER_STEP.STEP_1" | translate}}
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.CREATE_USER_STEP.STEP_1'
+							| translate
+					}}
 				</span>
 			</div>
-			<div *ngIf='step === stepTypes.two' class="row">
-				<h4 class="col-md-8"><strong>
-						{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.CREATE_USER_STEP.ORDER" | translate}}
-					</strong></h4>
+			<div *ngIf="step === stepTypes.two" class="row">
+				<h4 class="col-md-8">
+					<strong>
+						{{
+							'SIMULATION_VIEW.INSTRUCTIONS_STEPS.CREATE_USER_STEP.ORDER'
+								| translate
+						}}
+					</strong>
+				</h4>
 				<span class="col-md-4 text-right">
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.ORDER_STEP.STEP_2" | translate}}
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.ORDER_STEP.STEP_2'
+							| translate
+					}}
 				</span>
 			</div>
-			<div *ngIf='step === stepTypes.three' class="row">
-				<h4 class="col-md-8"><strong>
-						{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.CONFIRM_CANCEL_ORDER" | translate}}</strong></h4>
+			<div *ngIf="step === stepTypes.three" class="row">
+				<h4 class="col-md-8">
+					<strong>
+						{{
+							'SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.CONFIRM_CANCEL_ORDER'
+								| translate
+						}}</strong
+					>
+				</h4>
 				<span class="col-md-4 text-right">
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.STEP_3" | translate}}</span>
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.STEP_3'
+							| translate
+					}}</span
+				>
 			</div>
 		</div>
 
-		<div *ngIf='step === stepTypes.one'>
-			<ul *ngIf='inviteSystem'>
+		<div *ngIf="step === stepTypes.one">
+			<ul *ngIf="inviteSystem">
 				<h5>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.INVITE_STEP.TO_CONTINUE_ITs_REQUIRED_TO_BE_INVITED_IN_THE_SYSTEM" | translate}}
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.INVITE_STEP.TO_CONTINUE_ITs_REQUIRED_TO_BE_INVITED_IN_THE_SYSTEM'
+							| translate
+					}}
 				</h5>
 				<li>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.INVITE_STEP.SEND_INVITE_REQUEST" | translate}}
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.INVITE_STEP.SEND_INVITE_REQUEST'
+							| translate
+					}}
 				</li>
 				<li>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.INVITE_STEP.ALL_INVITE_REQUESTS_ARE_REVIEWED" | translate}}
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.INVITE_STEP.ALL_INVITE_REQUESTS_ARE_REVIEWED'
+							| translate
+					}}
 				</li>
 				<li>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.INVITE_STEP.AFTER_YOU_GET_INVITED" | translate}}
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.INVITE_STEP.AFTER_YOU_GET_INVITED_BEFORE'
+							| translate
+					}}
+					{{ inviteCode ? inviteCode : '...' }}
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.INVITE_STEP.AFTER_YOU_GET_INVITED_AFTER'
+							| translate
+					}}
 				</li>
 			</ul>
-			<ul *ngIf='!inviteSystem'>
+			<ul *ngIf="!inviteSystem">
 				<h5>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.CREATE_USER_STEP.TO_CONTINUE_IS_REQUIRED_TO_REGISTER_IN_THE_SYSTEM" | translate}}</h5>
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.CREATE_USER_STEP.TO_CONTINUE_IS_REQUIRED_TO_REGISTER_IN_THE_SYSTEM'
+							| translate
+					}}
+				</h5>
 				<li>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.CREATE_USER_STEP.CLICK_ON_BUTTON_CREATE_USER" | translate}}
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.CREATE_USER_STEP.CLICK_ON_BUTTON_CREATE_USER'
+							| translate
+					}}
 				</li>
 				<li>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.CREATE_USER_STEP.FILL_THE_FORM_FOR_ADDITIONAL_INFO" | translate}}</li>
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.CREATE_USER_STEP.FILL_THE_FORM_FOR_ADDITIONAL_INFO'
+							| translate
+					}}
+				</li>
 				<li>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.CREATE_USER_STEP.FILL_THE_FORM_FOR_LOCATION_AND_PRESS_DONE_BUTTON" | translate}}
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.CREATE_USER_STEP.FILL_THE_FORM_FOR_LOCATION_AND_PRESS_DONE_BUTTON'
+							| translate
+					}}
 				</li>
 			</ul>
 		</div>
 
-		<div *ngIf='step === stepTypes.two'>
+		<div *ngIf="step === stepTypes.two">
 			<ul>
 				<h5>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.ORDER_STEP.CREATE_ORDER" | translate}}</h5>
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.ORDER_STEP.CREATE_ORDER'
+							| translate
+					}}
+				</h5>
 				<li>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.ORDER_STEP.CHOICE_SOME_PRODUCTS_FROM_THE_TABLE" | translate}}</li>
-				<li>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.ORDER_STEP.SELECT_PRODUCT" | translate}}
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.ORDER_STEP.CHOICE_SOME_PRODUCTS_FROM_THE_TABLE'
+							| translate
+					}}
 				</li>
 				<li>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.ORDER_STEP.SELECT_BUTTON_ORDER_TO_CREATE_ORDER" | translate}}
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.ORDER_STEP.SELECT_PRODUCT'
+							| translate
+					}}
+				</li>
+				<li>
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.ORDER_STEP.SELECT_BUTTON_ORDER_TO_CREATE_ORDER'
+							| translate
+					}}
 				</li>
 			</ul>
 			<ul>
 				<h5>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.ORDER_STEP.REVIEW_ORDER_HISTORY" | translate}}</h5>
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.ORDER_STEP.REVIEW_ORDER_HISTORY'
+							| translate
+					}}
+				</h5>
 				<li>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.ORDER_STEP.ON_PRESS_ORDER_HISTORY_TAB" | translate}}
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.ORDER_STEP.ON_PRESS_ORDER_HISTORY_TAB'
+							| translate
+					}}
 				</li>
 				<li>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.ORDER_STEP.HERE_YOU_CAN_SEE_DETAILS_ABOUT_EACH_ORDER" | translate}}
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.ORDER_STEP.HERE_YOU_CAN_SEE_DETAILS_ABOUT_EACH_ORDER'
+							| translate
+					}}
 				</li>
 				<li>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.ORDER_STEP.PRESS_ON_CARRIER_ORDER_OR_PRODUCT_NAME" | translate}}
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.ORDER_STEP.PRESS_ON_CARRIER_ORDER_OR_PRODUCT_NAME'
+							| translate
+					}}
 				</li>
 			</ul>
 		</div>
 
-		<div *ngIf='step === stepTypes.three'>
+		<div *ngIf="step === stepTypes.three">
 			<ul>
 				<h5>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.REAL_TIME" | translate}}</h5>
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.REAL_TIME'
+							| translate
+					}}
+				</h5>
 				<li>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.TRACK_STATUS_ON_YOUR_ORDER" | translate}}</li>
-				<li>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.ELAPSED_TIME_FROM_CREATE_TO_DELIVERED" | translate}}</li>
-				<li>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.SHOWS_MERCHANT_LOCATION" | translate}}
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.TRACK_STATUS_ON_YOUR_ORDER'
+							| translate
+					}}
 				</li>
 				<li>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.SHOWS_CARRIER_LOCATION" | translate}}
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.ELAPSED_TIME_FROM_CREATE_TO_DELIVERED'
+							| translate
+					}}
+				</li>
+				<li>
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.SHOWS_MERCHANT_LOCATION'
+							| translate
+					}}
+				</li>
+				<li>
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.SHOWS_CARRIER_LOCATION'
+							| translate
+					}}
 				</li>
 			</ul>
 			<ul>
 				<h5>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.POSSIBILITIES" | translate}}
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.POSSIBILITIES'
+							| translate
+					}}
 				</h5>
 				<li>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.SLIDER_REVIEW_OF_THE_ALL_PRODUCTS" | translate}}
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.SLIDER_REVIEW_OF_THE_ALL_PRODUCTS'
+							| translate
+					}}
 				</li>
 				<li>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.CAN_CANCEL_IT_WITH_ORDER_CANCEL_BUTTON" | translate}}
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.CAN_CANCEL_IT_WITH_ORDER_CANCEL_BUTTON'
+							| translate
+					}}
 				</li>
 				<li>
-					{{"SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.AFTER_THE_ORDER_IS_DELIVER_USER_CAN_CLICK_BUTTON_ORDER_CONFIRM_TO_CONTINUE"
-					| translate}}
+					{{
+						'SIMULATION_VIEW.INSTRUCTIONS_STEPS.CONFIRM_OR_CANCEL_STEP.AFTER_THE_ORDER_IS_DELIVER_USER_CAN_CLICK_BUTTON_ORDER_CONFIRM_TO_CONTINUE'
+							| translate
+					}}
 				</li>
 			</ul>
 		</div>

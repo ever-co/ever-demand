@@ -1,0 +1,65 @@
+<mat-toolbar class="toolbar" color="primary">
+	<div mat-button class="logo" [routerLink]="['/']">
+		<img src="assets/img/ever-logo.svg" />
+	</div>
+
+	<div class="menu-brand-separator"></div>
+
+	<span class="nav">
+		<button
+			mat-button
+			class="nav-option"
+			[routerLink]="['/products']"
+			[routerLinkActive]="'active-option'"
+		>
+			<ever-icon type="basket" class="nav-icon"></ever-icon>
+			{{ 'Products' | translate }}
+		</button>
+		<button
+			mat-button
+			class="nav-option"
+			[routerLink]="['/orders']"
+			[routerLinkActive]="'active-option'"
+		>
+			<ever-icon type="history" class="nav-icon"></ever-icon>
+			{{ 'Orders' | translate }}
+		</button>
+	</span>
+
+	<!-- TODO add translate -->
+	<section class="right-elements">
+		<span class="toggle-order-type">
+			<small
+				(click)="toggleGetProductsType()"
+				[ngClass]="{ 'no-select': isDeliveryRequired }"
+				class="ml-3"
+				>Takeout</small
+			>
+			<mat-slide-toggle
+				class="example-margin mr-2 ml-2"
+				(change)="toggleGetProductsType()"
+				[checked]="isDeliveryRequired"
+			>
+			</mat-slide-toggle>
+			<small
+				(click)="toggleGetProductsType()"
+				[ngClass]="{ 'no-select': !isDeliveryRequired }"
+				class="mr-3"
+				>Delivery</small
+			>
+		</span>
+		<mat-search
+			#matSearch
+			[color]="styleVariables.brandLighted"
+			focusedColor="#f1f1f1"
+			(searchLocation)="tryFindNewAddress($event)"
+			(detectLocation)="laodAddress(true)"
+		></mat-search>
+	</section>
+
+	<div class="nav">
+		<button mat-button class="nav-option" [routerLink]="['/settings']">
+			<ever-icon type="settings" class="nav-icon"></ever-icon>
+		</button>
+	</div>
+</mat-toolbar>

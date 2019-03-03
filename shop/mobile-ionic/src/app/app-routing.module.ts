@@ -16,6 +16,10 @@ const routes: Routes = [
 		canActivate: [MaintenanceModuleGuard]
 	},
 	{
+		path: 'server-down',
+		loadChildren: './+server-down/server-down.module#ServerDownPageModule'
+	},
+	{
 		path: '**',
 		pathMatch: 'full',
 		redirectTo: ''

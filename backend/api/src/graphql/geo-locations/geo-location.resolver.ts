@@ -4,6 +4,14 @@ import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { first } from 'rxjs/operators';
 import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 
+export interface IGetGeoLocationProductsOptions {
+	isDeliveryRequired?: boolean;
+	isTakeaway?: boolean;
+	merchantIds?: string[];
+	imageOrientation?: number;
+	locale?: string;
+}
+
 @Resolver('GeoLocation')
 export class GeoLocationResolver {
 	constructor(
@@ -27,17 +35,20 @@ export class GeoLocationResolver {
 		{
 			geoLocation,
 			options,
-			pagingOptions = {}
+			pagingOptions = {},
+			searchText
 		}: {
 			geoLocation;
-			options?: { isDeliveryRequired?: boolean; isTakeaway?: boolean };
+			options?: IGetGeoLocationProductsOptions;
 			pagingOptions;
+			searchText?: string;
 		}
 	) {
 		return this.geoLocationsProductsService.geoLocationProductsByPaging(
 			geoLocation,
 			pagingOptions,
-			options
+			options,
+			searchText
 		);
 	}
 	@Query()
@@ -45,15 +56,18 @@ export class GeoLocationResolver {
 		_,
 		{
 			geoLocation,
-			options
+			options,
+			searchText
 		}: {
 			geoLocation: IGeoLocation;
-			options?: { isDeliveryRequired?: boolean; isTakeaway?: boolean };
+			options?: IGetGeoLocationProductsOptions;
+			searchText?: string;
 		}
 	) {
 		return this.geoLocationsProductsService.getCountOfGeoLocationProducts(
 			geoLocation,
-			options
+			options,
+			searchText
 		);
 	}
 }

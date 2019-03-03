@@ -46,9 +46,10 @@ export interface Environment {
 	DEFAULT_LATITUDE: number;
 	DEFAULT_LONGITUDE: number;
 
-	gqlEndpoint: string;
-	gqlSubscriptionsEndpoint: string;
-	servicesEndpoint: string;
+	GQL_ENDPOINT: string;
+	GQL_SUBSCRIPTIONS_ENDPOINT: string;
+	SERVICES_ENDPOINT: string;
+	HTTPS_SERVICES_ENDPOINT: string;
 
 	FAKE_INVITE: {
 		ID: string;

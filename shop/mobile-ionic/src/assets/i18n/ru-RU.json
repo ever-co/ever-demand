@@ -200,6 +200,9 @@
 		"NAME": "Имя продавца",
 		"WITH_NAME": "Торговцы с именем"
 	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Сервер упал"
+	},
 	"OR": "Или",
 	"OR_LOWERCASE": "или",
 	"YES": "Да",

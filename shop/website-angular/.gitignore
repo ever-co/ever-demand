@@ -78,3 +78,9 @@ webpack-cache
 *.css.shim.ts
 *.ngsummary.json
 *.shim.ngstyle.ts
+
+# environment files
+.env
+.env.prod
+/src/environments/environment.ts
+/src/environments/environment.prod.ts

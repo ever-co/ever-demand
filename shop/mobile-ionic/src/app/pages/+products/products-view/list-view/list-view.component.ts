@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
-import { Router } from '../../../../../../node_modules/@angular/router';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
-import { Store } from 'app/services/store.service';
-import { environment } from 'environment';
+import { first } from 'rxjs/operators';
+
+const initializeProductsNumber: number = 10;
 
 @Component({
 	selector: 'e-cu-products-list-view',
@@ -20,34 +20,41 @@ export class ProductsListViewComponent implements OnInit {
 	@Input()
 	placeholder: string;
 
+	@Input()
+	areProductsLoaded: boolean;
+
+	@Input()
+	productsCount: number;
+
 	@Output()
 	buy = new EventEmitter<ProductInfo>();
 
+	@Input()
+	$areProductsLoaded: EventEmitter<boolean>;
+
+	@Output()
+	goToDetailsPage = new EventEmitter<ProductInfo>();
+
+	@Output()
+	loadProducts = new EventEmitter<{
+		count?: number;
+		imageOrientation?: number;
+	}>();
+
+	imageOrientation: number = 0;
+	onChange = new EventEmitter<boolean>();
+
 	constructor(
-		private router: Router,
-		private readonly translateProductLocales: ProductLocalesService,
-		private readonly store: Store
+		private readonly translateProductLocales: ProductLocalesService
 	) {}
 
 	ngOnInit(): void {
-		const correctProducts = this.products.map((p: ProductInfo) => {
-			const product = p;
-			product.product['images'] = p.product['images'].filter(
-				(i) =>
-					(i.orientation === 0 || i.orientation === 2) &&
-					(i.locale === this.store.language ||
-						i.locale === environment.DEFAULT_LOCALE)
-			);
-			return product;
+		this.loadProducts.emit({
+			count: initializeProductsNumber,
+			imageOrientation: this.imageOrientation
 		});
-		this.products = correctProducts.filter(
-			(p) => p.product['images'].length > 0
-		);
 	}
 
-	buyProduct(product: ProductInfo) {
-		this.buy.emit(product);
-	}
 	shortenDescription(desc: string) {
 		return desc.length < ProductsListViewComponent.MAX_DESCRIPTION_LENGTH
 			? desc
@@ -56,30 +63,19 @@ export class ProductsListViewComponent implements OnInit {
 					ProductsListViewComponent.MAX_DESCRIPTION_LENGTH - 3
 			  ) + '...';
 	}
-	goToDetailsPage(product: ProductInfo) {
-		this.router.navigate(
-			[
-				`/products/product-details/${
-					product.warehouseProduct.product['_id']
-				}`
-			],
-			{
-				queryParams: {
-					backUrl: '/products',
-					warehouseId: product.warehouseId
-				}
-			}
-		);
-	}
-
-	sortByOrientation(i1, i2) {
-		if (i1.orientation === 2 || i2.orientation === 2) {
-			return i1.orientation < i2.orientation ? 1 : -1;
-		}
-		return i1.orientation === 0 ? -1 : 1;
-	}
 
 	localeTranslate(member: ILocaleMember[]): string {
 		return this.translateProductLocales.getTranslate(member);
+	}
+
+	async loadData(event) {
+		await this.loadProducts.emit({
+			count: initializeProductsNumber,
+			imageOrientation: this.imageOrientation
+		});
+
+		await this.$areProductsLoaded.pipe(first()).toPromise();
+
+		event.target.complete();
 	}
 }

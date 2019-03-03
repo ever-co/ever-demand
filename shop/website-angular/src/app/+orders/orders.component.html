@@ -1,0 +1,15 @@
+<div class="payment">
+	<button class="payment-button" mat-raised-button color="accent">
+		<svg class="payment-button-icon" viewBox="0 0 24 24">
+			<path
+				d="M20,8H4V6H20M20,18H4V12H20M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"
+			/>
+		</svg>
+		{{ 'ORDER_VIEW.PAY_NOW' | translate }} - ${{ ordersSum }}
+	</button>
+	<p class="payment-note">{{ 'ORDER_VIEW.PAY' | translate }}</p>
+</div>
+
+<div class="orders" *ngFor="let order of orders">
+	<order [order]="order"></order>
+</div>

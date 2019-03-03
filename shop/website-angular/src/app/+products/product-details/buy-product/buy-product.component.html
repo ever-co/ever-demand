@@ -1,0 +1,19 @@
+<div class="modal-header">
+	<span>Buy Product</span>
+
+	<button class="close" aria-label="Close" (click)="cancel()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+
+<div class="modal-body">
+	Are you sure you want to buy
+	<span class="alert-success">
+		{{ localeTranslate(warehouseProduct?.product?.title) }} </span
+	>? <br />
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-md btn-primary" (click)="cancel()">Cancel</button>
+	<button class="btn btn-md btn-success" (click)="createOrder()">Buy</button>
+</div>

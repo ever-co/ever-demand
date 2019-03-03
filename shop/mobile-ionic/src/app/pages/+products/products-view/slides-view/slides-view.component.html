@@ -19,7 +19,7 @@
 	<!-- <ion-menu-button color="light" autoHide="false"></ion-menu-button> -->
 
 	<!-- TODO dir="{{ 'CURRENT_DIRECTION' | translate }}" -->
-	<ion-slides *ngIf="done" [options]="swiperOptions" class="max-height">
+	<ion-slides *ngIf="products" [options]="swiperOptions" class="max-height">
 		<ion-slide
 			class="product-card max-height"
 			*ngFor="let productInfo of products"
@@ -36,7 +36,13 @@
 					[overImage]="true"
 					[hasDiscount]="discount.getDiscount()"
 				></e-cu-delivery-info>
-				<img src="{{ localeTranslate(productInfo.product.images) }}" />
+				<img
+					src="{{
+						localeTranslate(
+							productInfo.warehouseProduct.product.images
+						)
+					}}"
+				/>
 			</div>
 			<div class="info">
 				<div class="bottom">
@@ -47,13 +53,19 @@
 					<div class="info-bottom">
 						<div class="text-wrapper">
 							<h1 class="title">
-								{{ localeTranslate(productInfo.product.title) }}
+								{{
+									localeTranslate(
+										productInfo.warehouseProduct.product
+											.title
+									)
+								}}
 							</h1>
 							<h2 class="description">
 								{{
 									shortenDescription(
 										localeTranslate(
-											productInfo.product.description
+											productInfo.warehouseProduct.product
+												.description
 										)
 									)
 								}}
@@ -64,9 +76,7 @@
 								<button
 									class="button button-assertive border-color-brand col-100"
 									[ngClass]="{ disabled: soldOut }"
-									(click)="
-										!soldOut && buyProduct(productInfo)
-									"
+									(click)="!soldOut && buy.emit(productInfo)"
 								>
 									<span
 										>{{
@@ -95,7 +105,7 @@
 								<button
 									[disabled]="soldOut"
 									class="button button-brand border-color-brand col-100"
-									(click)="goToDetailsPage(productInfo)"
+									(click)="goToDetailsPage.emit(productInfo)"
 								>
 									<span>{{
 										'PRODUCTS_VIEW.DETAILS.DETAILS'
@@ -111,7 +121,7 @@
 	</ion-slides>
 
 	<div
-		*ngIf="products.length === 0 && placeholder"
+		*ngIf="products.length === 0 && placeholder && areProductsLoaded"
 		[innerHTML]="placeholder | safe: 'html'"
 	></div>
 </div>

@@ -19,6 +19,13 @@ import IGeoLocationProductsRouter from '../../modules/server.common/routers/IGeo
 import IService from '../IService';
 import { map, first } from 'rxjs/operators';
 import IWarehouseProduct from '@modules/server.common/interfaces/IWarehouseProduct';
+import {
+	IProductTitle,
+	IProductDescription,
+	IProductDetails
+} from '@modules/server.common/interfaces/IProduct';
+import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
+import { IGetGeoLocationProductsOptions } from 'graphql/geo-locations/geo-location.resolver';
 
 @injectable()
 @routerName('geo-location-products')
@@ -39,7 +46,7 @@ export class GeoLocationsProductsService
 	get(
 		@serialization((g: IGeoLocation) => new GeoLocation(g))
 		geoLocation: GeoLocation,
-		options?: { isDeliveryRequired?: boolean; isTakeaway?: boolean }
+		options?: IGetGeoLocationProductsOptions
 	) {
 		return this.geoLocationsWarehousesService
 			.get(geoLocation, { fullProducts: true, activeOnly: true })
@@ -57,22 +64,33 @@ export class GeoLocationsProductsService
 	@asyncListener()
 	async getCountOfGeoLocationProducts(
 		geoLocation: IGeoLocation,
-		options?: { isDeliveryRequired?: boolean; isTakeaway?: boolean }
+		options?: IGetGeoLocationProductsOptions,
+		searchText?: string
 	): Promise<number> {
 		const merchants = await this.geoLocationsWarehousesService.getMerchants(
 			geoLocation,
 			GeoLocationsWarehousesService.TrackingDistance,
-			{ fullProducts: true, activeOnly: true }
+			{
+				fullProducts: true,
+				activeOnly: true,
+				merchantsIds: options ? options.merchantIds : null
+			}
 		);
 
-		return merchants
-			.map(
-				(m) =>
-					m.products.filter((wProduct) =>
-						this.productsFilter(wProduct, options)
-					).length
-			)
-			.reduce((a, b) => a + b, 0);
+		const productsIds = merchants.map((m) =>
+			m.products
+				.filter((wProduct) => this.productsFilter(wProduct, options))
+				.filter((wProduct) =>
+					this.filterBySearchText(wProduct, searchText)
+				)
+				.filter((wProduct) => wProduct.count > 0)
+				.map((p) => new WarehouseProduct(p).productId)
+		);
+
+		return (
+			productsIds.flat().filter((x, i, a) => a.indexOf(x) == i).length ||
+			0
+		);
 	}
 
 	@asyncListener()
@@ -80,17 +98,24 @@ export class GeoLocationsProductsService
 		@serialization((g: IGeoLocation) => new GeoLocation(g))
 		geoLocation: GeoLocation,
 		pagingOptions,
-		options?: { isDeliveryRequired?: boolean; isTakeaway?: boolean }
+		options?: IGetGeoLocationProductsOptions,
+		searchText?: string
 	): Promise<ProductInfo[]> {
-		const merchants = await this.geoLocationsWarehousesService
-			.get(geoLocation, { fullProducts: true, activeOnly: true })
-			.pipe(first())
-			.toPromise();
+		const merchants = await this.geoLocationsWarehousesService.getMerchants(
+			geoLocation,
+			GeoLocationsWarehousesService.TrackingDistance,
+			{
+				fullProducts: true,
+				activeOnly: true,
+				merchantsIds: options ? options.merchantIds : null
+			}
+		);
 
 		const products = this._getProductsFromWarehouses(
 			geoLocation,
-			merchants,
-			options
+			merchants.map((m) => new Warehouse(m)),
+			options,
+			searchText
 		);
 
 		return products.slice(pagingOptions.skip).slice(0, pagingOptions.limit);
@@ -99,7 +124,8 @@ export class GeoLocationsProductsService
 	private _getProductsFromWarehouses(
 		geoLocation: GeoLocation,
 		warehouses: Warehouse[],
-		options?: { isDeliveryRequired?: boolean; isTakeaway?: boolean }
+		options?: IGetGeoLocationProductsOptions,
+		searchText?: string
 	): ProductInfo[] {
 		return _(warehouses)
 			.map((_warehouse) => {
@@ -112,6 +138,11 @@ export class GeoLocationsProductsService
 						this.productsFilter(wProduct, options)
 					);
 				}
+
+				warehouse.products = warehouse.products.filter((wProduct) =>
+					this.filterBySearchText(wProduct, searchText)
+				);
+
 				return warehouse;
 			}) // remove all warehouse products which count is 0.
 			.map((warehouse) =>
@@ -144,10 +175,61 @@ export class GeoLocationsProductsService
 		if (!options) {
 			return true;
 		}
+
+		wProduct.product.images = wProduct.product.images.filter((i) => {
+			return (
+				(options.imageOrientation !== undefined
+					? options.imageOrientation === 1
+						? i.orientation === 1
+						: i.orientation === 0 || i.orientation === 2
+					: true) &&
+				(options.locale !== undefined
+					? i.locale === options.locale
+					: true)
+			);
+		});
+
+		if (!wProduct.product.images || wProduct.product.images.length === 0) {
+			return false;
+		}
+
 		return options.isDeliveryRequired
 			? wProduct.isDeliveryRequired === options.isDeliveryRequired
 			: true && options.isTakeaway
 			? wProduct.isTakeaway === options.isTakeaway
 			: true;
+	}
+
+	private filterBySearchText(wProduct, searchText) {
+		if (!searchText) {
+			return true;
+		}
+
+		let titles = wProduct.product['title'];
+		titles = titles ? titles.map((t: IProductTitle) => t.value) : [];
+		let descriptions = wProduct.product['description'];
+		descriptions = descriptions
+			? descriptions.map((d: IProductDescription) => d.value)
+			: [];
+		let details = wProduct.product['details'];
+		details = details ? details.map((d: IProductDetails) => d.value) : [];
+
+		return (
+			(titles &&
+				titles
+					.join()
+					.toLocaleLowerCase()
+					.includes(searchText.toLocaleLowerCase())) ||
+			(descriptions &&
+				descriptions
+					.join()
+					.toLocaleLowerCase()
+					.includes(searchText.toLocaleLowerCase())) ||
+			(details &&
+				details
+					.join()
+					.toLocaleLowerCase()
+					.includes(searchText.toLocaleLowerCase()))
+		);
 	}
 }

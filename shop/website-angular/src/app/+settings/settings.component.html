@@ -1,0 +1,17 @@
+<mat-card>
+	<h1>{{ 'SETTINGS_VIEW.SETTINGS' | translate }}</h1>
+</mat-card>
+
+<mat-card>
+	<mat-form-field>
+		<h5>{{ 'SETTINGS_VIEW.LANGUAGE' | translate }}</h5>
+		<mat-select [(value)]="selectedLang">
+			<mat-option
+				*ngFor="let lang of translateService.getLangs()"
+				[value]="lang"
+				(click)="switchLanguage(selectedLang)"
+				>{{ lang }}
+			</mat-option>
+		</mat-select>
+	</mat-form-field>
+</mat-card>

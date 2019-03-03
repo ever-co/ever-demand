@@ -27,7 +27,8 @@ import { Store } from '../../../../services/store.service';
 import { takeUntil } from 'rxjs/operators';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 import { IonSlides } from '@ionic/angular';
-import { environment } from 'environment';
+
+const initializeProductsNumber: number = 10;
 
 @Component({
 	selector: 'e-cu-products-slides-view',
@@ -37,6 +38,7 @@ import { environment } from 'environment';
 export class ProductsSlidesViewComponent
 	implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 	private static MAX_DESCRIPTION_LENGTH: number = 45;
+
 	@Input()
 	products: ProductInfo[];
 
@@ -46,25 +48,36 @@ export class ProductsSlidesViewComponent
 	@Output()
 	buy = new EventEmitter<ProductInfo>();
 
+	@Input()
+	$areProductsLoaded: EventEmitter<boolean>;
+
+	@Input()
+	areProductsLoaded: boolean;
+
+	@Output()
+	loadProducts = new EventEmitter<{
+		count?: number;
+		imageOrientation?: number;
+	}>();
+
+	@Output()
+	goToDetailsPage = new EventEmitter<ProductInfo>();
+
 	@ViewChild(IonSlides)
 	slides: IonSlides;
 
-	public done: boolean;
-
-	private swiper: Swiper;
-	private readonly swiperEvents$ = new Subject<'init' | 'next' | 'prev'>();
-
-	private readonly ngDestroy$ = new Subject<void>();
+	imageOrientation: number = 1;
+	product: ProductInfo;
+	soldOut: boolean;
 
 	// http://idangero.us/swiper/api/#events
 	readonly swiperOptions: SwiperOptions;
 
+	private swiper: Swiper;
+	private readonly swiperEvents$ = new Subject<'init' | 'next' | 'prev'>();
+	private readonly ngDestroy$ = new Subject<void>();
 	private slides$: any;
-
-	warehouseProduct: ProductInfo;
 	private warehouseProduct$;
-
-	soldOut: boolean;
 
 	constructor(
 		// TODO Fix Progress Bar
@@ -106,52 +119,39 @@ export class ProductsSlidesViewComponent
 	}
 
 	ngOnInit() {
-		const correctProducts = this.products.map((p: ProductInfo) => {
-			const product = p;
-			product.product['images'] = p.product['images'].filter(
-				(i) =>
-					i.orientation === 1 &&
-					(i.locale === this.store.language ||
-						i.locale === environment.DEFAULT_LOCALE)
-			);
-			return product;
+		this.loadProducts.emit({
+			count: initializeProductsNumber,
+			imageOrientation: this.imageOrientation
 		});
-		this.products = correctProducts.filter(
-			(p) => p.product['images'].length > 0
-		);
-
-		this.done = true;
 	}
 
 	ngOnChanges({ products }: { products: SimpleChange }) {
-		if (!products || products.isFirstChange()) {
-			return;
+		if (products && products.currentValue.length === 0 && this.slides) {
+			this.slides.slideTo(0);
 		}
 
-		const previousProducts = products.previousValue as ProductInfo[];
-		const currentProducts = products.currentValue as ProductInfo[];
-
-		const removedProducts: ProductInfo[] = differenceBy(
-			previousProducts,
-			currentProducts,
-			'warehouseProduct.id'
-		);
-		const newProducts: ProductInfo[] = differenceBy(
-			currentProducts,
-			previousProducts,
-			'warehouseProduct.id'
-		);
-
-		pullAllBy(
-			currentProducts,
-			removedProducts /*TODO without(removedProducts, this.currentProduct)*/,
-			'warehouseProduct.id'
-		); // remove all removed products that are not the one shown
-		currentProducts.push(...newProducts); // add all the new products at the end
-	}
-
-	buyProduct(prod: ProductInfo) {
-		this.buy.emit(prod);
+		//This logic works when all products are loaded in the begin
+		// if (!products || products.isFirstChange()) {
+		// 	return;
+		// }
+		// const previousProducts = products.previousValue as ProductInfo[];
+		// const currentProducts = products.currentValue as ProductInfo[];
+		// const removedProducts: ProductInfo[] = differenceBy(
+		// 	previousProducts,
+		// 	currentProducts,
+		// 	'warehouseProduct.id'
+		// );
+		// const newProducts: ProductInfo[] = differenceBy(
+		// 	currentProducts,
+		// 	previousProducts,
+		// 	'warehouseProduct.id'
+		// );
+		// pullAllBy(
+		// 	currentProducts,
+		// 	removedProducts /*TODO without(removedProducts, this.currentProduct)*/,
+		// 	'warehouseProduct.id'
+		// ); // remove all removed products that are not the one shown
+		// currentProducts.push(...newProducts); // add all the new products at the end
 	}
 
 	ngAfterViewInit() {
@@ -163,6 +163,14 @@ export class ProductsSlidesViewComponent
 		this._subscribeWarehouseProduct();
 		this.slides$ = this.slides.ionSlideWillChange.subscribe(async () => {
 			const index = await this.slides.getActiveIndex();
+
+			if (this.products.length - 1 <= index + 1) {
+				this.loadProducts.emit({
+					count: initializeProductsNumber,
+					imageOrientation: this.imageOrientation
+				});
+			}
+
 			this._loadData(index);
 			this._subscribeWarehouseProduct();
 		});
@@ -180,24 +188,8 @@ export class ProductsSlidesViewComponent
 		return this.translateProductLocales.getTranslate(member);
 	}
 
-	goToDetailsPage(product: ProductInfo) {
-		this.router.navigate(
-			[
-				`/products/product-details/${
-					product.warehouseProduct.product['_id']
-				}`
-			],
-			{
-				queryParams: {
-					backUrl: '/products',
-					warehouseId: product.warehouseId
-				}
-			}
-		);
-	}
-
 	private _loadData(index: number) {
-		this.warehouseProduct = this.products[index];
+		this.product = this.products[index];
 	}
 
 	private _subscribeWarehouseProduct() {
@@ -205,14 +197,15 @@ export class ProductsSlidesViewComponent
 			this.warehouseProduct$.unsubscribe();
 		}
 
-		if (this.warehouseProduct) {
+		if (this.product) {
 			this.warehouseProduct$ = this.warehouseProductsRouter
-				.get(this.warehouseProduct.warehouseId, false)
+				.get(this.product.warehouseId, false)
 				.pipe(takeUntil(this.ngDestroy$))
 				.subscribe((r) => {
 					const prod = r.filter(
 						(p) =>
-							p.productId === this.warehouseProduct.product['id']
+							p.productId ===
+							this.product.warehouseProduct.product['id']
 					)[0];
 					this.soldOut = !prod || prod.count <= 0;
 				});

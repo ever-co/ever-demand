@@ -1,0 +1,115 @@
+@import '../../styles/styles';
+@import '~@angular/material/theming';
+
+.toolbar {
+	min-height: 54px !important;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.1),
+		0 6px 10px 0 rgba(0, 0, 0, 0.07), 0 1px 18px 0 rgba(0, 0, 0, 0.06);
+
+	.menu-brand-separator {
+		width: 16px;
+	}
+
+	small {
+		font-size: 14px;
+	}
+
+	.menu-button {
+		margin-right: 20px;
+	}
+
+	// .logo {
+	// 	margin-left: 20px;
+	// 	font-size: 30px;
+	// 	font-family: "Pluto Heavy", sans-serif;
+	// }
+
+	.logo {
+		margin-top: 20px;
+		margin-bottom: 10px;
+		margin-left: 20px;
+		margin-right: 20px;
+		outline: none;
+		// text-align: center;
+
+		// color: #ffffff;
+		// font-size: 80px;
+		// font-family: "Pluto Heavy", sans-serif;
+		// position: absolute;
+		// 	top: calc(50% - 280px / 2);
+		color: #fff;
+		position: relative;
+		img {
+			margin-bottom: 0;
+			width: 80px;
+		}
+	}
+
+	.logo:hover {
+		// background: transparent !important;
+		// 	opacity: 1 ;
+		cursor: pointer;
+	}
+
+	.nav {
+		margin-left: 5px;
+
+		.nav-option {
+			padding-top: 2px;
+			margin-right: 0;
+			margin-left: 0;
+			user-select: none;
+			color: #c8c8c8;
+			text-decoration: none;
+
+			&.active-option {
+				color: #fff;
+			}
+
+			.nav-icon {
+				fill: #c8c8c8;
+				font-size: 19px;
+				width: 19px;
+				height: 19px;
+				display: inline-block;
+				position: relative;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+				margin-right: 2px;
+				top: -1px;
+			}
+
+			.nav-icon:not(:first-child) {
+				margin-left: -5px;
+			}
+
+			&.active-option svg.nav-icon {
+				fill: #fff;
+			}
+		}
+	}
+
+	.right-elements {
+		display: flex;
+		margin-left: auto;
+		align-items: center;
+	}
+
+	.toggle-order-type {
+		small {
+			cursor: pointer;
+		}
+	}
+
+	.no-select {
+		color: #d0d0d0;
+	}
+}
+
+.mat-toolbar-row {
+	height: 54px !important;
+}

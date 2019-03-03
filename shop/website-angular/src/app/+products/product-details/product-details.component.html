@@ -1,0 +1,130 @@
+<mat-card *ngIf="warehouseProduct" class="product-details container">
+	<mat-card-content>
+		<div class="row m-0">
+			<div class="col-6 product-details-container brand-dark">
+				<button
+					mat-icon-button
+					class="back-button"
+					[routerLink]="['/products']"
+				>
+					<svg viewBox="0 0 24 24">
+						<path
+							fill="#000000"
+							fill-opacity="0.54"
+							d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"
+						/>
+					</svg>
+				</button>
+
+				<div class="product-details-content">
+					<div class="warehouse">
+						<warehouse-logo
+							[logo]="warehouse?.logo"
+							[border]="true"
+							[light]="true"
+						></warehouse-logo>
+						<h2 class="warehouse-name">{{ warehouse?.name }}</h2>
+					</div>
+
+					<div class="product">
+						<h1 class="title">
+							{{
+								localeTranslate(
+									warehouseProduct?.product?.title
+								)
+							}}
+						</h1>
+
+						<h2 class="description">
+							{{
+								localeTranslate(
+									warehouseProduct?.product?.description
+								)
+							}}
+						</h2>
+
+						<h3 class="details">
+							{{
+								localeTranslate(
+									warehouseProduct?.product?.details
+								)
+							}}
+						</h3>
+					</div>
+
+					<button
+						class="purchase-button"
+						(click)="createOrder()"
+						mat-raised-button
+						color="accent"
+					>
+						{{
+							'PRODUCTS_VIEW.PRODUCT_DETAILS_VIEW.BUY_FOR'
+								| translate
+						}}
+						{{ warehouseProduct?.price }}$
+					</button>
+
+					<div class="delivery-address">
+						<mat-icon *ngIf="!isTakeaway">directions_bike</mat-icon>
+						<mat-icon *ngIf="isTakeaway">flash_on</mat-icon>
+						{{ getDeliveryTime() }}
+						<span *ngIf="!isTakeaway">{{
+							'PRODUCTS_VIEW.PRODUCT_DETAILS_VIEW.DELIVERY_FROM'
+								| translate
+						}}</span>
+						<span *ngIf="isTakeaway">{{
+							'PRODUCTS_VIEW.PRODUCT_DETAILS_VIEW.TAKEOUT_FROM'
+								| translate
+						}}</span>
+
+						{{ warehouse?.geoLocation?.streetAddress }}
+						{{ warehouse?.geoLocation?.house }},
+						{{ warehouse?.geoLocation?.city }}
+					</div>
+				</div>
+			</div>
+			<div *ngIf="images.length" class="product-image col-6 p-0">
+				<product-discount [currentProduct]="warehouseProduct">
+				</product-discount>
+				<div
+					class="top-image"
+					[ngClass]="{ 'single-image': images.length == 1 }"
+				>
+					<img #topImage [src]="images[0].url" />
+				</div>
+				<div *ngIf="images.length > 1" class="bottom-images">
+					<drag-scroll
+						#dragScroll
+						[drag-scroll-disabled]="true"
+						class="image-slide"
+					>
+						<img
+							*ngFor="let image of images"
+							drag-scroll-item
+							class="scroll-image"
+							(click)="topImage.src = image.url"
+							src="{{ image.url }}"
+						/>
+					</drag-scroll>
+					<button
+						class="drag-button left"
+						(click)="dragScroll.moveLeft()"
+					>
+						<i class="material-icons">
+							keyboard_arrow_left
+						</i>
+					</button>
+					<button
+						class="drag-button right"
+						(click)="dragScroll.moveRight()"
+					>
+						<i class="material-icons">
+							keyboard_arrow_right
+						</i>
+					</button>
+				</div>
+			</div>
+		</div>
+	</mat-card-content>
+</mat-card>

@@ -1,0 +1,99 @@
+<form [formGroup]="formControl" class="location-form">
+	<mat-form-field class="search-input">
+		<span matPrefix>
+			<i class="material-icons">
+				{{ 'LOG_IN_VIEW.BY_LOCATION_VIEW.SEARCH' | translate }}
+			</i>
+		</span>
+		<input matInput #autocomplete dividerColor="primary" />
+	</mat-form-field>
+
+	<mat-select
+		placeholder="Country..."
+		formControlName="countryId"
+		class="invite-code-input"
+		(change)="onAddressChanges()"
+	>
+		<mat-option [disabled]="true">
+			{{ 'LOG_IN_VIEW.BY_LOCATION_VIEW.COUNTRY' | translate }}
+		</mat-option>
+		<mat-option
+			*ngFor="let country of countries"
+			value="{{ country.id }}"
+			>{{ country.name }}</mat-option
+		>
+	</mat-select>
+
+	<mat-bold-input
+		(change)="onAddressChanges()"
+		class="invite-code-input blackInput"
+		color="#f1f1f1"
+		focusedColor="#f1f1f1"
+		placeholder="{{
+			'LOG_IN_VIEW.BY_LOCATION_VIEW.PLACEHOLDER.SELECTED_CITY' | translate
+		}}"
+		formControlName="city"
+	></mat-bold-input>
+	<mat-bold-input
+		(change)="onAddressChanges()"
+		class="invite-code-input blackInput"
+		color="#f1f1f1"
+		focusedColor="#f1f1f1"
+		placeholder="{{
+			'LOG_IN_VIEW.BY_LOCATION_VIEW.PLACEHOLDER.SELECTED_STREET'
+				| translate
+		}}"
+		formControlName="streetAddress"
+	></mat-bold-input>
+	<div class="row m-0">
+		<div class="col-6 p-0 pr-2">
+			<mat-bold-input
+				(change)="onAddressChanges()"
+				class="invite-code-input blackInput d-inline-block"
+				color="#f1f1f1"
+				focusedColor="#f1f1f1"
+				placeholder="{{
+					'LOG_IN_VIEW.BY_LOCATION_VIEW.PLACEHOLDER.HOUSE' | translate
+				}}"
+				type="number"
+				formControlName="house"
+			></mat-bold-input>
+		</div>
+
+		<div class="col-6 p-0 pl-2">
+			<mat-bold-input
+				(change)="onAddressChanges()"
+				*ngIf="isApartment?.value"
+				class="invite-code-input blackInput d-inline-block"
+				color="#f1f1f1"
+				focusedColor="#f1f1f1"
+				type="number"
+				placeholder="{{
+					'LOG_IN_VIEW.BY_LOCATION_VIEW.PLACEHOLDER.APARTMENT_OPTIONAL'
+						| translate
+				}}"
+				formControlName="apartament"
+			></mat-bold-input>
+			<mat-checkbox
+				*ngIf="!apartament?.value"
+				class="invite-code-input"
+				formControlName="isApartment"
+				[labelPosition]="'before'"
+			>
+				<span class="label">{{
+					'LOG_IN_VIEW.BY_LOCATION_VIEW.APARTMENT' | translate
+				}}</span>
+			</mat-checkbox>
+		</div>
+	</div>
+
+	<button
+		class="login-button m-0"
+		mat-button
+		color="accent"
+		(click)="continue.emit()"
+		[hidden]="!statusForm"
+	>
+		{{ 'LOG_IN_VIEW.BY_LOCATION_VIEW.CONTINUE' | translate }}
+	</button>
+</form>
