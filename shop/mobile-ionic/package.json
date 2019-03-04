@@ -52,7 +52,7 @@
 		"cordova:run:prod:device": "cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=4096 yarn run config:prod && yarn ionic cordova run android --prod --release --device"
 	},
 	"dependencies": {
-		"@angular-builders/custom-webpack": "7.2.0",
+		"@angular-builders/custom-webpack": "7.4.1",
 		"@angular-builders/dev-server": "7.2.1",
 		"@angular/animations": "^7.2.3",
 		"@angular/common": "~7.2.3",
