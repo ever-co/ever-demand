@@ -1004,9 +1004,10 @@
   version "7946.0.4"
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.4.tgz#4e049756383c3f055dd8f3d24e63fb543e98eb07"
 
-"@types/googlemaps@^3.30.16":
-  version "3.30.16"
-  resolved "https://registry.yarnpkg.com/@types/googlemaps/-/googlemaps-3.30.16.tgz#3264d5ef7c3a92fab2a9f00e09e3247866ff3532"
+"@types/googlemaps@^3.30.17":
+  version "3.30.17"
+  resolved "https://registry.yarnpkg.com/@types/googlemaps/-/googlemaps-3.30.17.tgz#e84d5ad4a113b800f933e7d7298b545e0ca1530d"
+  integrity sha512-uDgTDiBYTcTqDQ/00FVCmnkhC8ANMkSInepjiNaoA45smGqbZHHgBMqRtyGZ6TjNaO5CP2TqxbvRDPJLFL8VtA==
 
 "@types/jasmine@*":
   version "3.3.0"
