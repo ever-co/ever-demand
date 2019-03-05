@@ -169,7 +169,7 @@
 		"@angular/language-service": "^7.2.7",
 		"@compodoc/compodoc": "^1.1.9",
 		"@ngtools/webpack": "^7.3.4",
-		"@types/googlemaps": "^3.30.16",
+		"@types/googlemaps": "^3.30.17",
 		"@types/hammerjs": "^2.0.36",
 		"@types/jasmine": "^3.3.9",
 		"@types/mongoose": "^5.3.20",
