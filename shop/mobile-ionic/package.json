@@ -94,7 +94,7 @@
 		"apollo-cache-inmemory": "^1.4.2",
 		"apollo-client": "^2.4.12",
 		"apollo-link": "^1.2.8",
-		"apollo-link-context": "^1.0.14",
+		"apollo-link-context": "^1.0.15",
 		"apollo-link-ws": "^1.0.14",
 		"bootstrap": "^4.2.1",
 		"call-number": "~0.0.2",
