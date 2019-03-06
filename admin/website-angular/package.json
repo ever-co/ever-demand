@@ -90,7 +90,7 @@
 		"apollo-cache-inmemory": "^1.4.3",
 		"apollo-client": "^2.4.13",
 		"apollo-link": "^1.2.8",
-		"apollo-link-context": "^1.0.14",
+		"apollo-link-context": "^1.0.15",
 		"apollo-link-ws": "^1.0.14",
 		"apollo-upload-client": "^10.0.0",
 		"bootstrap": "^4.3.1",
