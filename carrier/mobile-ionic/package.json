@@ -81,7 +81,7 @@
 		"apollo-cache-inmemory": "^1.4.3",
 		"apollo-client": "^2.4.13",
 		"apollo-link": "^1.2.8",
-		"apollo-link-context": "^1.0.14",
+		"apollo-link-context": "^1.0.15",
 		"call-number": "1.0.1",
 		"connect": "^3.6.6",
 		"cordova-android": "^7.1.4",
