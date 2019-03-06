@@ -129,7 +129,7 @@
 		"apollo-angular-link-http": "^1.5.0",
 		"apollo-cache-inmemory": "^1.5.1",
 		"apollo-client": "^2.5.1",
-		"apollo-link-context": "^1.0.14",
+		"apollo-link-context": "^1.0.15",
 		"bootstrap": "^4.3.1",
 		"browser-detect": "^0.2.28",
 		"bson-objectid": "^1.2.4",
