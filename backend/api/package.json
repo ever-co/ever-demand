@@ -106,7 +106,7 @@
 		"on-finished": "^2.3.0",
 		"passport": "^0.4.0",
 		"passport-facebook": "^3.0.0",
-		"passport-google-oauth20": "^1.0.0",
+		"passport-google-oauth20": "^2.0.0",
 		"passport-http-bearer": "^1.0.1",
 		"passport-jwt": "^4.0.0",
 		"passport-local": "^1.0.0",
