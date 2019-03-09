@@ -188,7 +188,7 @@
 		"prettier-tslint": "^0.4.2",
 		"pretty-quick": "^1.10.0",
 		"require-directory": "^2.1.1",
-		"supertest": "^3.4.2",
+		"supertest": "^4.0.0",
 		"ts-jest": "^23.10.5",
 		"ts-loader": "^5.3.3",
 		"ts-node": "^8.0.2",
