@@ -7,8 +7,11 @@
 	"Products": "Продукти",
 	"Orders": "Поръчки",
 	"Buy for": "Купи за",
+	"DELIVERY": "Доставка",
+	"TAKEAWAY": "За вкъщи",
 	"Details": "Детайли",
 	"Delivery from": "Доставка от",
+	"WHAT_IS_YOUR_ADDRESS": "Какъв е Вашият адрес?",
 	"FOR": "за",
 	"MESSAGE_POP_UP": {
 		"CANCEL_ORDER": "Само за 5-10 минути ще ядете това вкусно ястие! Ако го анулирате, ще пропуснете страхотна и вкусна храна и вероятно ще трябва да я хвърлим",
@@ -29,6 +32,8 @@
 		"DELIVERY": "Доставка",
 		"TAKEAWAY": "За вкъщи",
 		"READYFOR": "Готов за",
+		"NO_PRODUCTS_FOUND": "Няма намерени продукти за",
+		"NO_PRODUCTS": "Няма продукти",
 		"PRODUCT_DETAILS_VIEW": {
 			"BUY_FOR": "Купи за",
 			"DETAILS": "Детайли",

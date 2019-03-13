@@ -33,7 +33,7 @@
 				(click)="toggleGetProductsType()"
 				[ngClass]="{ 'no-select': isDeliveryRequired }"
 				class="ml-3"
-				>Takeout</small
+				>{{ 'TAKEAWAY' | translate }}</small
 			>
 			<mat-slide-toggle
 				class="example-margin mr-2 ml-2"
@@ -45,7 +45,7 @@
 				(click)="toggleGetProductsType()"
 				[ngClass]="{ 'no-select': !isDeliveryRequired }"
 				class="mr-3"
-				>Delivery</small
+				>{{ 'DELIVERY' | translate }}</small
 			>
 		</span>
 		<mat-search

@@ -1,5 +1,5 @@
 <div>
-	<a href="tel:{{ rowData.phone }}">
+	<a href="tel:{{ rowData.phone }}" *ngIf="rowData.phone.length > 0">
 		<i class="fas fa-phone-square"></i> <span>{{ rowData.phone }}</span>
 	</a>
 </div>

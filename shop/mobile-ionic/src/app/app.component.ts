@@ -73,9 +73,9 @@ export class AppComponent {
 	}
 
 	private _watchNetworkConnection() {
-		this.network.onDisconnect().subscribe(() => {
+		this.network.onDisconnect().subscribe(async () => {
 			console.error('Network was disconnected!');
-			this.router.navigate(['errors', 'connection-lost']);
+			await this.router.navigate(['errors', 'connection-lost']);
 		});
 		this.network.onConnect().subscribe(() => {
 			console.warn('Network connected!');

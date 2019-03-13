@@ -152,15 +152,18 @@ export class CarriersService {
 							finishedProcessingTime
 							user {
 								id
+								phone
+								email
+								apartment
 								firstName
 								lastName
 								image
 								geoLocation {
-									streetAddress
 									house
 									postcode
 									countryName
 									city
+									streetAddress
 									loc {
 										coordinates
 										type
@@ -171,11 +174,14 @@ export class CarriersService {
 								id
 								name
 								logo
+								contactEmail
+								contactPhone
 								geoLocation {
 									house
 									postcode
 									countryName
 									city
+									streetAddress
 									loc {
 										coordinates
 										type

@@ -1,7 +1,9 @@
 {
-	"name": "ever.shop.mobile",
-	"type": "angular",
+	"name": "ever-shop-mobile",
 	"integrations": {
 		"cordova": {}
-	}
+	},
+	"type": "ionic-angular",
+	"pro_id": "897e13e3",
+	"id": "897e13e3"
 }

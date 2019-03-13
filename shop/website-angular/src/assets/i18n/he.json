@@ -7,8 +7,11 @@
 	"Products": "מוצרים",
 	"Orders": "הזמנות",
 	"Buy for": "לקנות ל",
+	"DELIVERY": "משלוח",
+	"TAKEAWAY": "להסיר",
 	"Details": "פרטים",
 	"Delivery from": "משלוח מ",
+	"WHAT_IS_YOUR_ADDRESS": "מה הכתבת שלך?",
 	"FOR": "ל",
 	"MESSAGE_POP_UP": {
 		"CANCEL_ORDER": "בתוך 5-10 דקות תוכלו לאכול ארוחה טעימה זו! על ידי ביטול זה אתה מתגעגע אוכל נהדר וטעים, ואנחנו כנראה צריך לזרוק אותו",
@@ -29,6 +32,8 @@
 		"DELIVERY": "משלוח",
 		"TAKEAWAY": "להסיר",
 		"READYFOR": "מוכן ל-",
+		"NO_PRODUCTS_FOUND": "לא נמצאו מוצרים עבור",
+		"NO_PRODUCTS": "אין מוצרים",
 		"PRODUCT_DETAILS_VIEW": {
 			"BUY_FOR": "לקנות ל",
 			"DETAILS": "פרטים",

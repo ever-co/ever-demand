@@ -1,5 +1,5 @@
 <div>
-	<a href="mailto:{{ rowData.email }}">
+	<a href="mailto:{{ rowData.email }}" *ngIf="rowData.email.length > 0">
 		<i class="fas fa-envelope"></i> <span>{{ rowData.email }}</span>
 	</a>
 </div>

@@ -38,5 +38,8 @@
 		"src/modules/client.common.angular2/typeorm-placeholder.ts",
 		"src/modules/**/*.ts"
 	],
-	"exclude": ["node_modules"]
+	"exclude": ["node_modules"],
+	"atom": {
+		"rewriteTsconfig": false
+	}
 }

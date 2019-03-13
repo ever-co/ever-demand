@@ -1,9 +1,4 @@
-<ion-menu
-	(ionWillOpen)="menuOpened()"
-	[hidden]="maintenanceMode"
-	contentId="pageContainer"
-	side="start"
->
+<ion-menu (ionWillOpen)="menuOpened()" contentId="pageContainer" side="start">
 	<ion-header>
 		<ion-toolbar color="secondary">
 			<ion-title>{{ 'SIDE_MENU.TITLE' | translate }}</ion-title>

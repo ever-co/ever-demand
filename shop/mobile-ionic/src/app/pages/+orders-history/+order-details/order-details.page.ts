@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
-import Order from 'modules/server.common/entities/Order';
+import Order from '@modules/server.common/entities/Order';
 import { Apollo } from 'apollo-angular';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { OrderDetailsQuery } from './order-details.model';
