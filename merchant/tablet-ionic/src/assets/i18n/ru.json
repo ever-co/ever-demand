@@ -1,0 +1,408 @@
+{
+	"LANGUAGE": {
+		"ID": "ru-RU",
+		"NAME": "Русский"
+	},
+	"DASHBOARD": "Панель",
+	"CURRENT_DIRECTION": "ltr",
+	"SIDEBAR_SIDE": "left",
+	"SIDE_MENU": {
+		"TITLE": "Ever Продавцы",
+		"GROUPS": {
+			"NO_TITLE": {
+				"DIVER_TITLE": "",
+				"ITEMS": {
+					"WAREHOUSE": "Панель приборов"
+				}
+			},
+			"SETTINGS": {
+				"SETTINGS": "Настройки",
+				"DIVER_TITLE": "Настройки",
+				"ITEMS": {
+					"LANGUAGE": "Язык",
+					"SIGN_OUT": "Выход"
+				}
+			},
+			"INFO": {
+				"DIVER_TITLE": "Информация",
+				"ITEMS": {
+					"ABOUT_US": "О нас",
+					"TERMS_OF_USE": "Условия эксплуатации"
+				}
+			}
+		}
+	},
+	"CUSTOMERS_VIEW": {
+		"CUSTOMERS": "Клиенты",
+		"ADD_CUSTOMER": "Добавить клиента",
+		"IMAGE": "Образ",
+		"NAME": "Имя",
+		"PHONE_NUMBER": "Номер телефона",
+		"ADDRESSES": "Адреса",
+		"ORDERS": "Заказы",
+		"TOTAL": "Всего",
+		"E_MAIL": "Эл. почта",
+		"ADDRESS_POP_UP": {
+			"CUSTOMER_ADDRESS": "Адрес клиента",
+			"COUNTRY": "Страна",
+			"STREET": "Улица",
+			"HOUSE": "Жилой дом",
+			"APARTMENT": "Квартира",
+			"COORDINATES": "Координаты"
+		},
+		"EMAIL_POP_UP": {
+			"CUSTOMER_EMAIL": "Электронная почта клиента",
+			"SEND_E_MAIL": "Отправить E-mail"
+		},
+		"ORDERS_POP_UP": {
+			"CUSTOMER_ORDERS": "Заказы клиентов",
+			"ALL_ORDERS": "Все заказы",
+			"TOTAL_ORDERS_SUM": "Общая сумма заказов",
+			"COMPLATED": "Завършен",
+			"PAID": "Оплаченный"
+		}
+	},
+	"CARRIERS_VIEW": {
+		"CARRIERS_CATALOG": {
+			"IMAGE": "Образ",
+			"NAME": "Имя",
+			"PHONE": "Телефон",
+			"ADDRESS": "Адрес",
+			"LOGO": "Логотип"
+		},
+		"CARRIERS": "Носители",
+		"ADD_CARRIERS": "Добавить носители",
+		"IMAGE": "Образ",
+		"NAME": "Имя",
+		"PHONE_NUMBER": "Номер телефона",
+		"ADDRESSES": "Адрес",
+		"STATUS": "Положение дел",
+		"DELIVERIES": "Поставки",
+		"NO_CARRIERS": "Нет носителей",
+		"WORKING": "За работой",
+		"NOT_WORKING": "Не работает",
+		"BLOCKED": "Блокированный",
+		"DELIVERIES_POP_UP": {
+			"CARRIER_DELIVERIES": "Поставки перевозчика",
+			"ALL_DELIVERIES": "Все поставки",
+			"DELIVERIES_TODAY": "Поставки сегодня",
+			"TOTAL_DISTANCE_TODAY": "Общая дистанция сегодня",
+			"CUSTOMER": "Клиент",
+			"WAREHOUSE": "Склад",
+			"STATUS": "Положение дел",
+			"DELIVERY": "Доставка",
+			"NO_DELIVERIES": "Нет поставок",
+			"COMPLETED": "Завершенный",
+			"PAID": "Оплаченный"
+		},
+		"ADDRESS": {
+			"CARRIER_ADDRESS": "Адрес перевозчика",
+			"COUNTRY": "Страна",
+			"HOUSE": "Дом",
+			"COORDINATES": "Координаты"
+		},
+		"ADD_CARRIER": {
+			"ADD_CARRIER": "Добавить перевозчика",
+			"HOW_TO_ADD": "Как добавить",
+			"SELECT_HOW_TO_ADD": "Выберите, как добавить",
+			"ADD": "Добавить",
+			"CARRIERS_CATALOG": "Каталог носителей",
+			"SELECT_FROM_CARRIERS_CATALOG": "Выберите из каталога носителей",
+			"ADD_NEW_CARRIER": "Добавить нового оператора",
+			"FIRST_NAME": "Имя",
+			"LAST_NAME": "Фамилия",
+			"EMAIL": "Эл. адрес",
+			"USERNAME": "Имя пользователя",
+			"PASSWORD": "Пароль",
+			"NAME": "Имя",
+			"PHONE": "Телефон",
+			"ADDRESS": "Адрес",
+			"LOGO": "Логотип",
+			"IS_ACTIVE": "Активен",
+			"CITY": "Город",
+			"STREET": "Улица",
+			"HOUSE": "Дом",
+			"LATITUDE": "Географическая широта",
+			"LONGITUDE": "Географическая длина",
+			"COUNTRY": "Страна",
+			"OK": "Хорошо",
+			"CANCEL": "ОТМЕНИТЬ",
+			"PREVIOUS": "ПРЕДЫДУЩИЙ",
+			"BACK": "НАЗАД",
+			"NEXT": "СЛЕДУЮЩИЙ",
+			"DONE": "СДЕЛАННЫЙ",
+			"LOCATION": "МЕСТО НАХОЖДЕНИЯ",
+			"ZIP": "ZIP",
+			"PROFILE_DETAILS": "ПРОФИЛЬНЫЕ ДЕТАЛИ",
+			"BROWSE": "ПРОСМАТРИВАТЬ",
+			"DRAG_AND_DROP_FILE_HERE": "Фото Drag & Drop здесь",
+			"PICTURE_URL": "Фото гиперссылка",
+			"ACCOUNT": "УЧЕТНАЯ ЗАПИСЬ",
+			"REPEAT": "Повторение",
+			"REPEAT_PASSWORD": "Повторите пароль",
+			"PASSWORD_DO_NOT_MATCH": "Пароль не подходит",
+			"FIND_ADDRESS": "Найти адрес",
+			"FORMS": {
+				"ERRORS": {
+					"FIRST_NAME_REQUIRED": "Имя требуется",
+					"LAST_NAME_REQUIRED": "Фамилия обязательна",
+					"PHONE_REQUIRED": "Требуется телефон",
+					"EMAIL_IS_REQUIRED": "Требуется электронная почта",
+					"MUST_CONTAIN_ONLY_LETTERS": "Должен содержать только буквы",
+					"PHONE_MUST_CONTAINS_ONLY(special_signs)AND_DIGIT_CHARACTER": "Номер телефона может начинаться с '+' и должен содержать только: '-,., (Пробел), #' и цифры символов"
+				}
+			}
+		},
+		"SELECT LANGUAGE": {
+			"USA": "США",
+			"ISRAEL": "Израиль",
+			"BULGARIA": "Болгария"
+		}
+	},
+	"SETTINGS_VIEW": {
+		"SETTINGS": "Настройки",
+		"OPTIONS": "Oпции",
+		"COMMON": "Общий",
+		"LOCATION": "Mесто нахождения",
+		"ACCOUNT": "Счет",
+		"NEW_USERNAME": "Новое имя пользователя",
+		"NAME_MUST_BE_AT_LEAST_4_CHARACTERS_LONG": "Имя должно содержать не менее 4 символов",
+		"OLD_PASSWORD": "Прежний пароль",
+		"NEW_PASSWORD": "новый пароль",
+		"REPEAT_NEW_PASSWORD": "Повторите новый пароль",
+		"PASSWORDS_DO_NOT_MATCH": "Пароли не совпадают",
+		"SAVE_CHANGES": "Сохранить изменения",
+		"SAVE": "Сохранить",
+		"CHANGES": "Изменения",
+		"BASIC_INFO": "Базовая информация",
+		"NAME": "название",
+		"NAME_IS_REQUIRED": "Требуется имя",
+		"LOGO": "логотип",
+		"BROWSE": "Просматривать",
+		"CONTACT_INFO": "Контактная информация",
+		"E_MAIL": "Эл. почта",
+		"PHON_NUMBER": "Номер телефона",
+		"COUNTRY": "Страна",
+		"CITY": "город",
+		"CITY_IS_REQUIRED": "Город требуется",
+		"POSTCODE_optional": "Почтовый индекс (необязательно)",
+		"STREET": "улица",
+		"STREET_IS_REQUIRED": "Улица необходима",
+		"HOUSE": "жилой дом",
+		"HOUSE_IS_REQUIRED": "Требуется дом",
+		"APARTMENT_optional": "Апартаменты (по желанию)",
+		"AUTO_DETECT_COORDINATES": "Автоматическое определение координат",
+		"LATITUDE": "широта",
+		"LATITUDE_IS_REQUIRED": "Широта требуется",
+		"LONGITUDE": "Долгота",
+		"LONGITUDE_IS_REQUIRED": "Долгота требуется",
+		"FIND_ADDRESS": "Найти адрес",
+		"SELECT_CATEGORIES": "Выбрать категории",
+		"OK": "Хорошо",
+		"CANCEL": "ОТМЕНИТЬ",
+		"ALLOW_ONLINE_PAYMENTS": "Разрешить онлайн-платежи"
+	},
+	"LOGIN_VIEW": {
+		"LOGIN": "Авторизоваться"
+	},
+	"LANGUAGE_VIEW": {
+		"TITLE": "Выбор языка",
+		"OK": "Хорошо",
+		"CANCEL": "ОТМЕНИТЬ"
+	},
+	"ABOUT_VIEW": {
+		"TITLE": "О Нас",
+		"APP_VERSION": "Версия приложения"
+	},
+	"TERMS_OF_USE_VIEW": {
+		"TITLE": "Правила Использования"
+	},
+	"WAREHOUSE_VIEW": {
+		"RELEVANT": "Соответствующий",
+		"ALL": "Все",
+		"ORDERS": "Заказы",
+		"NEW_ORDER": "Новый порядок",
+		"PRODUCTS": "Лучшие продукты",
+		"SELECT_POP_UP": {
+			"SELECT_CATEGORIES": "Выбрать категории",
+			"OK": "Хорошо",
+			"CANCEL": "ОТМЕНИТЬ"
+		},
+		"ORDER_WAREHOUSE_STATUSES": {
+			"CREATED": "Созданный",
+			"CONFIRMED": "Подтвердил",
+			"PROCESSING": "Обработка",
+			"ALLOCATION_STARTED": "Началось распределение",
+			"ALLOCATION_FINISHED": "Выделение завершено",
+			"PACKAGING_STARTED": "Начало упаковки",
+			"PACKAGED": "В упаковке",
+			"GIVEN_TO_CARRIER": "Предоставлено перевозчику",
+			"TAKEN": "Взятый",
+			"ALLOCATION_FAILED": "Не удалось выполнить распределение",
+			"PACKAGING_FAILED": "Ошибка упаковки",
+			"BAD_STATUS": "Плохой статус",
+			"NO_ACTIVE_ORDERS": "Нет активных заказов",
+			"NO_ORDERS": "Нет заказов",
+			"NO_PRODUCTS": "Нет продуктов"
+		},
+		"CREATE_PRODUCTS_POPUP": {
+			"NEW_PRODUCT_TYPE": "Новый тип продукта",
+			"CREATE_NEW_PRODUCT_TYPE": "Создать новый тип продукта",
+			"TITLE": "Заглавие",
+			"DESCRIPTION": "Описание",
+			"CATEGORIES": "Категории",
+			"PRICE": "Цена",
+			"COUNT": "Подсчитывать",
+			"LANGUAGE": "Язык",
+			"DRAG&DROP_FILE_HERE": "Файл Drag & Drop здесь",
+			"DRAG&DROP_PICTURE_HERE": "Изображение Drag & Drop здесь",
+			"OR_BROWSE": "or browse",
+			"COUNT_PLACEHOLDER": "0",
+			"CLICK_TO_UPLOAD_PICTURE": "Нажмите, чтобы загрузить изображение",
+			"CANCEL": "Отмена",
+			"CREATE": "Создайте",
+			"ENGLISH": "Английский",
+			"HEBREW": "Иврит",
+			"RUSSIAN": "Русский",
+			"BULGARIAN": "Болгарский",
+			"OPTIONAL": "необязательный"
+		},
+		"NEW_ORDER_VIEW": {
+			"NEW_MANUAL_ORDER": "Новый ручной порядок",
+			"SELECT_EXISTING_CUSTOMER": "Выбрать существующего клиента",
+			"ADD_NEW_CUSTOMER": "Добавить нового клиента",
+			"FULL_NAME": "ФИО",
+			"EMAIL": "Эл. адрес",
+			"PHONE": "Телефон",
+			"ADDRESS": "Адрес",
+			"IMAGE": "Образ",
+			"PRODUCT": "Товар",
+			"PRICE": "Цена",
+			"AVAILABLE": "Имеется в наличии",
+			"AMOUNT": "Количество",
+			"MAKE_ORDER": "Сделать заказ",
+			"BASIC_INFO": "Базовая информация",
+			"FIRST_NAME": "Имя",
+			"LAST_NAME": "Фамилия",
+			"EMAIL_IS_INVALID": "Недействительный адрес электронной почты",
+			"EMAIL_IS_ALREADY_IN_USE": "Email уже используется",
+			"NEXT": "следующий",
+			"ADD_CUSTOMER": "Добавить клиента",
+			"BACK": "назад",
+			"FIND_ADDRESS": "Найти адрес",
+			"COUNTRY": "Страна",
+			"CITY": "город",
+			"COUNTRY_IS_INVALID": "Страна недействительна.",
+			"CITY_IS_REQUIRED": "Город требуется",
+			"ZIP": "ZIP",
+			"STREET_ADDRESS": "Адрес улицы",
+			"STREET_ADDRESS_IS_REQUIRED": "Требуется адрес улицы",
+			"HOUSE_№": "Дом №",
+			"APARTMENT": "квартира",
+			"SHOW_COORDINATES": "Показать координаты",
+			"LATITUDE": "широта",
+			"LONGITUTE": "Долгота",
+			"HOUSE_IS_REQUIRED": "Требуется дом"
+		},
+		"MISC_TEXT": {
+			"CREATE_NEW_ORDER": "Создать новый заказ",
+			"ADD_NEW_PRODUCT": "Добавить новый продукт"
+		}
+	},
+	"EDIT_PRODUCT_POP_UP": {
+		"EDIT_PRODUCT_TYPE": "Изменить тип продукта",
+		"UPDATE_AN_EXISTING_PRODUCT": "Обновление существующего продукта",
+		"TITLE": "Заглавие",
+		"DESCRIPTION": "Описание",
+		"CATEGORIES": "Категории",
+		"PRICE": "Цена",
+		"COUNT": "Подсчитывать",
+		"LANGUAGE": "Язык",
+		"DRAG&DROP_FILE_HERE": "Файл Drag & Drop здесь",
+		"OR_BROWSE": "or browse",
+		"CLICK_TO_UPLAOD_PICTURE": "Нажмите, чтобы загрузить изображение",
+		"CANCEL": "Отмена",
+		"UPDATE": "Обновить",
+		"ENGLISH": "Английский",
+		"HEBREW": "Иврит",
+		"RUSSIAN": "Русский",
+		"BULGARIAN": "Болгарский"
+	},
+	"ORDER_CANCELED_COMPONENT": {
+		"CANCELED": "отменен",
+		"ORDER_CANCELED": "Поръчката е анулирана",
+		"DELIVERED": "Доставени",
+		"CREATED_AT": "Създаден в"
+	},
+	"ORDER_CONTROL_BUTTONS_COMPONENT": {
+		"CONFIRM": "подтвердить",
+		"START_PROCESSING": "Начать обработку",
+		"START_ALLOCATION": "Начать распределение",
+		"ALLOCATED": "Выделено",
+		"START_PACKAGING": "Начало упаковки",
+		"PACKAGED": "В упаковке",
+		"FAILED": "Не смогли",
+		"GIVEN_TO_CARRIER": "Предоставлено перевозчику",
+		"GIVEN_TO_CUSTOMER": "Передано клиенту"
+	},
+	"ORDER_CONTROL_BUTTONS": {
+		"CONFIRM": "подтвердить",
+		"START_PROCESSING": "Начать обработку",
+		"START_ALLOCATION": "Начать распределение",
+		"ALLOCATED": "Выделено",
+		"START_PACKAGING": "Начало упаковки",
+		"PACKAGED": "В упаковке",
+		"FAILED": "Не смогли",
+		"GIVEN_TO_CARRIER": "Предоставлено перевозчику"
+	},
+	"ORDER_DELIVERED_COMPONENT": {
+		"DELIVERED": "Доставлен",
+		"CREATED_AT": "Создан в",
+		"DELIVERED_AT": "Поставляется в",
+		"DELIVERED_TO": "Доставлен в"
+	},
+	"ORDER_DELIVERY_PROBLEM_COMPONENT": {
+		"DELIVERY_ISSUES": "Проблемы с доставкой",
+		"ISSUES_DURING_DELIVERY_TO": "Проблемы при доставке",
+		"BY": "От",
+		"CREATED_AT": "Создан в"
+	},
+	"ORDER_WAREHOUSE_PREPARATION_PROBLEM_COMPONENT": {
+		"CREATED_AT": "Создан в"
+	},
+	"ORDER_WITH_CARRIER_COMPONENT": {
+		"IN_DELIVERY_TO": "В Доставка до",
+		"BY": "От",
+		"CREATED_AT": "Создан в"
+	},
+	"ORDER_WITHOUT_CARRIER_COMPONENT": {
+		"CREATED_AT": "Создан в",
+		"CANT_PROCESSING_WITHOUT_PRODUCTS": "Невозможно обработать заказ без продуктов."
+	},
+	"ORDER_TITLE_COMPONENT": {
+		"ORDER": "порядок",
+		"FROM": "от"
+	},
+	"TRACK_ORDER_POP_UP": {
+		"CARRIER": "Перевозчик",
+		"TRACK": "трек",
+		"CUSTOMER": "Покупатель"
+	},
+	"CONNECTION_ERROR_VIEW": {
+		"TITLE": "Не удалось подключиться к Ever",
+		"DESCRIPTION": [
+			"Проверьте подключение к",
+			"Интернету и повторите попытку.",
+			""
+		]
+	},
+	"CUSTOMER_ORDERS_POP_UP": {
+		"ORDER_ID": "Номер заказа",
+		"DELIVERY": "Доставка",
+		"ADDRESS": "Адрес",
+		"STATUS": "Положение дел"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Сервер упал"
+	}
+}

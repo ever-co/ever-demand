@@ -1,0 +1,181 @@
+.page-carriers {
+	background-color: white;
+	min-height: 100%;
+	overflow-y: scroll;
+
+	#contentWrapper {
+		margin-top: 45px;
+	}
+	a.button {
+		font-size: 0.8em;
+	}
+	.icon.button-icon.plus-navbar-button {
+		color: white;
+	}
+	.allowOverflow {
+		a {
+			overflow: unset !important;
+			padding: 0 !important;
+			border: 1px solid #242530 !important;
+		}
+		width: 130px;
+		position: absolute;
+		right: 10px !important;
+	}
+
+	.scroll-content {
+		padding: 0 !important;
+		padding-top: 16px !important;
+	}
+	#customersTable {
+		display: block;
+		width: 100%;
+		text-align: left;
+	}
+	.grid {
+		padding: 0px !important;
+	}
+	.ordersCount {
+		background-color: #111111;
+		width: 40px;
+		text-align: center;
+		border-radius: 50px;
+		font-weight: bold;
+		color: #fff;
+	}
+
+	.call-icon {
+		margin-right: 7px;
+		&:before {
+			font-size: 1.3em;
+			cursor: pointer;
+			margin-left: 5px;
+			position: relative;
+			top: 3px;
+		}
+	}
+
+	.work {
+		color: green;
+	}
+
+	.notWork {
+		color: red;
+	}
+
+	ion-icon {
+		font-size: 24px;
+	}
+
+	ion-icon.call-icon.icon.icon-md.ion-md-call.can-call {
+		color: green !important;
+	}
+
+	.add-wrapper {
+		position: relative;
+	}
+
+	.add-carriers {
+		border-radius: 50%;
+		background: rgb(255, 184, 51);
+		position: absolute;
+		width: 50px;
+		height: 50px;
+		right: 10px;
+		top: 10px;
+		filter: drop-shadow(3px 3px 3px rgb(182, 184, 182));
+	}
+
+	.add-carriers:hover {
+		background: rgb(255, 202, 105) !important;
+	}
+
+	.ng2-smart-pagination-nav {
+		li {
+			width: 50% !important;
+		}
+	}
+
+	.ng2-smart-titles {
+		height: 55px !important;
+	}
+
+	.pagination {
+		line-height: 1 !important;
+		margin: 0 10px !important;
+	}
+
+	table {
+		margin-bottom: 25px !important;
+	}
+}
+
+#headerRow {
+	font-weight: bolder;
+	text-align: left;
+	border-bottom: 1px solid #fff;
+	font-size: 1.1em;
+	padding-top: 15px;
+	padding-bottom: 5px;
+	padding-left: 15px;
+	padding-right: 15px;
+	background: #333;
+	color: white;
+}
+
+.ng2-smart-th.status input,
+.ng2-smart-th.deliveries input {
+	text-align: center;
+}
+
+.ng2-smart-actions-title a {
+	padding: 0 !important;
+}
+
+.ng2-smart-actions {
+	display: flex;
+	align-items: center;
+}
+
+.ng2-smart-actions {
+	display: flex;
+	justify-content: space-between;
+	height: 83px;
+	border-bottom: none !important;
+	i {
+		font-size: 1.4em;
+		padding: 0;
+		margin: 0;
+	}
+	a {
+		padding: 0 !important;
+		margin: 0;
+		height: 23px !important;
+		width: 23px !important;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	ng2-st-tbody-custom {
+		width: calc(33% + 0.5%);
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+	}
+	ng2-st-tbody-edit-delete {
+		width: calc(66% + 0.5%);
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		a:nth-child(1) {
+			transform: translateY(1px);
+			i {
+				font-size: 1.55em;
+			}
+		}
+	}
+}
+
+.track-btn {
+	transform: translateX(-130px);
+}

@@ -1,0 +1,38 @@
+.carrier-edit-wrapper {
+	display: flex !important;
+	.modal-wrapper {
+		width: 650px;
+		height: auto;
+		display: inline-table;
+		left: calc(50% - (650px / 2));
+		top: calc(50% - (600px / 2));
+		.ion-page {
+			display: contents;
+			.carrier-edit {
+				border: 1px solid rgba(0, 0, 0, 0.125);
+				background: white;
+				width: 100%;
+				height: 100%;
+				border-radius: 5px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: space-between;
+
+				ion-button {
+					border: none;
+				}
+				.close {
+					position: absolute;
+					right: 20px;
+					top: 20px;
+					z-index: 1;
+					background: none;
+					color: black;
+					font-size: 2em;
+					cursor: pointer;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,42 @@
+.user-mutation-component {
+	ion-item {
+		// padding: 2% 5% !important;
+		// padding-top: 0 !important !important !important !important;
+
+		padding-left: 19px !important;
+		padding-right: 19px !important;
+		padding-bottom: 9px !important;
+		padding-top: 0px !important;
+
+		border-radius: 3px !important;
+
+		transform: scale(1, 0.9);
+		font-size: 1.3em !important;
+		background: #ffffffc9 !important;
+	}
+	ion-col {
+		padding: 0 5px !important;
+	}
+	ion-row {
+		background: transparent !important;
+		padding: 0 !important;
+	}
+
+	button {
+		margin-top: 2% !important;
+		margin-bottom: 2.4% !important;
+	}
+
+	h5 {
+		margin-top: 0 !important;
+		margin-bottom: 2.5% !important;
+	}
+
+	h2 {
+		padding: 0 !important;
+	}
+
+	button {
+		text-transform: none !important;
+	}
+}

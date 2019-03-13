@@ -1,0 +1,32 @@
+.select-add-customer-component {
+	.customers-table {
+		background: white !important;
+		table {
+			margin: 0px auto;
+
+			td {
+				text-align: left;
+			}
+		}
+
+		.ng2-smart-titles {
+			height: 50px !important;
+		}
+
+		nav.ng2-smart-pagination-nav {
+			margin: 0 auto;
+		}
+
+		li {
+			width: 50% !important;
+		}
+
+		.ng2-smart-titles {
+			height: 50px !important;
+		}
+
+		.pagination {
+			line-height: 1 !important;
+		}
+	}
+}

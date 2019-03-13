@@ -1,0 +1,116 @@
+.edit-product-type-popup {
+	#fileInput {
+		visibility: hidden;
+	}
+	.popup-input {
+		display: block;
+		margin-top: 1vh !important;
+		width: 100%;
+	}
+	.upload-text,
+	.upload-icon {
+		&:hover {
+			cursor: pointer;
+		}
+	}
+
+	.dragDrop {
+		position: absolute;
+		top: 15px;
+		width: 90%;
+		margin: 10 auto;
+	}
+
+	.select {
+		font-size: 14px;
+	}
+
+	.popup-half {
+		.title-popup {
+			margin-top: 10px;
+		}
+
+		label {
+			width: 100%;
+			span {
+				font-size: 14px;
+			}
+		}
+	}
+
+	.radio-list,
+	.getProductType {
+		.item-inner {
+			border: 0 !important;
+		}
+
+		ion-radio.radio.radio-md {
+			margin-right: 0 !important;
+		}
+
+		.coord-box {
+			font-size: 14px;
+		}
+	}
+
+	.pl-0 {
+		padding-left: 0 !important;
+		.item-inner,
+		.item-cover,
+		ion-item {
+			padding-left: 0 !important;
+		}
+	}
+	.pr-0 {
+		padding-right: 0 !important;
+		.item-inner,
+		.item-cover,
+		ion-item {
+			padding-right: 0 !important;
+		}
+	}
+
+	.d-inline-block {
+		display: inline-block;
+	}
+
+	#image-holder {
+		height: 78%;
+		border-radius: 3px;
+		padding-top: 12%;
+		padding-bottom: 13%;
+		margin-bottom: 6%;
+
+		.dragDrop {
+			margin: auto !important;
+			position: relative;
+		}
+
+		+ div.button-bar {
+			button.button-assertive {
+				border-top-left-radius: 3px !important;
+				border-bottom-left-radius: 3px !important;
+			}
+			button.button-brand {
+				border-top-right-radius: 3px !important;
+				border-bottom-right-radius: 3px !important;
+			}
+			button:disabled {
+				cursor: default;
+				opacity: 0.4;
+				pointer-events: none;
+			}
+		}
+	}
+
+	#multiple-select {
+		margin-top: 10px;
+		border: 2px solid #ddd;
+		height: auto !important;
+		border-bottom: 1px solid #ddd !important;
+		padding: 0;
+		div.item-inner {
+			border: none !important;
+		}
+	}
+}

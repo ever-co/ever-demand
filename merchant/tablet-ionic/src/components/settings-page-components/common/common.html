@@ -1,0 +1,120 @@
+<form action="" [formGroup]="commonForm">
+	<div class="basicInfo">
+		<h1 class="text-header">
+			{{ 'SETTINGS_VIEW.BASIC_INFO' | translate }}
+		</h1>
+
+		<ion-item mode="ios">
+			<ion-label class="labels" position="floating">
+				{{ 'SETTINGS_VIEW.NAME' | translate }}</ion-label
+			>
+			<ion-input type="text" formControlName="name"></ion-input>
+		</ion-item>
+
+		<span *ngIf="name.invalid && (name.dirty || name.touched)">
+			<span [hidden]="!name.errors.required">
+				<small style="color: red; margin-left: 16px;">
+					{{ 'SETTINGS_VIEW.NAME_IS_REQUIRED' | translate }}.
+				</small>
+			</span>
+		</span>
+
+		<div class="row m-0">
+			<ion-item mode="ios" class="upload-input col-10 p-0">
+				<ion-label class="labels" position="floating">
+					{{ 'SETTINGS_VIEW.LOGO' | translate }}</ion-label
+				>
+				<ion-input
+					ng2FileDrop
+					[uploader]="uploader"
+					(onFileDrop)="imageUrlChanged()"
+					[placeholder]="
+						isBrowser ? 'Drag & Drop File here' : 'Picture url'
+					"
+					type="text"
+					formControlName="logo"
+				></ion-input>
+			</ion-item>
+			<label class="browseBtnOut col-2" for="fileInput">
+				<div *ngIf="isBrowser" class="browseBtnIn">
+					{{ 'SETTINGS_VIEW.BROWSE' | translate }}
+				</div>
+				<button
+					*ngIf="!isBrowser"
+					class="browseBtnIn"
+					(click)="presentActionSheet()"
+					ion-button
+				>
+					{{ 'SETTINGS_VIEW.BROWSE' | translate }}
+				</button>
+			</label>
+			<input
+				[hidden]="true"
+				(change)="imageUrlChanged()"
+				type="file"
+				id="fileInput"
+				ng2FileSelect
+				[uploader]="uploader"
+			/>
+		</div>
+
+		<div class="form-group row m-0" *ngIf="logo">
+			<div class="col-12">
+				<div class="row m-0 mt-1">
+					<div>
+						<img
+							src="{{ logo.value }}"
+							alt="Invalid image"
+							class="img-rounded"
+						/>
+					</div>
+
+					<div class="removeIcon" (click)="deleteImg()">
+						<ion-icon
+							ios="ios-remove-circle"
+							id="remove-circle"
+							md="md-remove-circle"
+						></ion-icon>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="contactInfo">
+		<h1 class="text-header">
+			{{ 'SETTINGS_VIEW.CONTACT_INFO' | translate }}
+		</h1>
+		<ion-item mode="ios">
+			<ion-label class="labels" position="floating">
+				{{ 'SETTINGS_VIEW.E_MAIL' | translate }}</ion-label
+			>
+			<ion-input
+				type="text"
+				#warehouseEmailInput
+				id="warehouseEmailInput"
+				formControlName="email"
+			></ion-input>
+		</ion-item>
+		<ion-item mode="ios">
+			<ion-label class="labels" position="floating">
+				{{ 'SETTINGS_VIEW.PHON_NUMBER' | translate }}</ion-label
+			>
+			<ion-input
+				type="text"
+				#warehousePhoneInput
+				id="warehousePhoneInput"
+				formControlName="phone"
+			></ion-input>
+		</ion-item>
+	</div>
+
+	<ion-button
+		class="save-button"
+		[disabled]="!commonForm.valid"
+		(click)="saveChanges()"
+		color="success"
+	>
+		{{ 'SETTINGS_VIEW.SAVE_CHANGES' | translate }}
+	</ion-button>
+</form>

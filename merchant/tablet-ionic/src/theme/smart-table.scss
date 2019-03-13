@@ -1,0 +1,171 @@
+.smart-table {
+	table {
+		// width: 90% !important;
+		margin: 20px auto;
+		line-height: 1.5em;
+		border-collapse: collapse;
+		border-spacing: 0;
+		display: table;
+		width: 100%;
+		max-width: 100%;
+		overflow: auto;
+		word-break: normal;
+		word-break: keep-all;
+
+		tbody tr:nth-child(odd) {
+			background-color: #f5f7fc;
+		}
+
+		input {
+			line-height: normal;
+			height: 40px !important;
+			color: #2a2a2a;
+			display: block;
+			padding: 0.25rem 0.65rem;
+			line-height: 1.5;
+			color: #495057;
+			background-color: #fff;
+			background-clip: padding-box;
+			border: 1.5px solid #ced4da;
+			border-radius: 0.375rem;
+			transition: border-color 0.15s ease-in-out,
+				box-shadow 0.15s ease-in-out;
+		}
+
+		input:focus {
+			// border-color: #40dc7e;
+		}
+		a {
+			position: relative;
+			padding: 0.475rem 1rem;
+			vertical-align: middle;
+			line-height: 1.25;
+			color: #2a2a2a !important;
+
+			font-family: Exo;
+			font-weight: 600;
+		}
+
+		.nb-theme-default,
+		th,
+		.nb-theme-default,
+		ng2-smart-table,
+		table,
+		tr,
+		td {
+			position: relative;
+			padding: 0.8rem 1rem !important;
+			border: 1px solid #ebeef2;
+			vertical-align: middle;
+			line-height: 1.25;
+			color: #2a2a2a !important;
+
+			div {
+				text-align: left;
+			}
+
+			font-family: Exo;
+		}
+		tbody {
+			display: table-row-group;
+			vertical-align: middle;
+			border-color: inherit;
+			font-size: 1rem;
+
+			.nb-theme-default,
+			tbody,
+			tr.selected,
+			.nb-theme-default,
+			tr:hover,
+			tr:focus {
+				background: #e6f3ff !important;
+			}
+		}
+		thead {
+			display: table-header-group;
+			vertical-align: middle;
+			border-color: inherit;
+			font-size: 1.1rem;
+			text-align: left;
+		}
+	}
+
+	nav.ng2-smart-pagination-nav .pagination {
+		font-family: Exo;
+		font-size: 1rem;
+		line-height: 1.25;
+		border: #ebeef2 solid 1px;
+		border-radius: 0.375rem;
+	}
+
+	.pagination li:not(:last-child) {
+		border-right: 1px solid #ebeef2;
+	}
+
+	.pagination li a,
+	.pagination li > span {
+		// background: transparent;
+		color: #2a2a2a;
+		border: none;
+	}
+
+	.pagination li.active > span {
+		color: #ffffff;
+	}
+
+	nav.ng2-smart-pagination-nav {
+		display: block;
+		margin: 0 auto 10px auto;
+	}
+
+	li {
+		padding: 0.3rem 0 !important;
+
+		a {
+			text-decoration: none !important;
+			padding: 0.3rem 1.7rem !important;
+			margin: 0 !important;
+			font-size: 16px !important;
+		}
+	}
+
+	li.disabled {
+		background-color: rgba(0, 0, 0, 0.05);
+
+		a {
+			background: none !important;
+		}
+	}
+
+	li.active {
+		padding: 0.3rem 0 !important;
+		z-index: 9999;
+		border-top: 1px solid #40dc7e;
+		border-bottom: 1px solid #40dc7e;
+		border-right: 1px solid #40dc7e !important;
+		text-align: center;
+		background-color: #40dc7e;
+		white-space: normal;
+		.page-link {
+			white-space: normal;
+			background-color: #40dc7e !important;
+			text-decoration: none !important;
+			padding: 0.3rem 1.7rem !important;
+			margin: 0 !important;
+		}
+	}
+
+	li.active:hover {
+		background-color: #40dc7e !important;
+	}
+
+	li:hover {
+		background: rgba(0, 0, 0, 0.05);
+	}
+
+	.logo {
+		width: 42px;
+		height: 42px;
+		border-radius: 50%;
+	}
+}

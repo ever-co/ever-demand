@@ -52,8 +52,6 @@
 		"cordova:run:prod:device": "cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=4096 yarn run config:prod && yarn ionic cordova run android --prod --release --device"
 	},
 	"dependencies": {
-		"@angular-builders/custom-webpack": "7.2.0",
-		"@angular-builders/dev-server": "7.2.1",
 		"@angular/animations": "^7.2.3",
 		"@angular/common": "~7.2.3",
 		"@angular/core": "~7.2.3",
@@ -144,6 +142,8 @@
 		"zone.js": "^0.8.29"
 	},
 	"devDependencies": {
+		"@angular-builders/custom-webpack": "^7.3.1",
+		"@angular-builders/dev-server": "^7.3.1",
 		"@angular-devkit/architect": "~0.13.0",
 		"@angular-devkit/build-angular": "~0.13.0",
 		"@angular-devkit/core": "~7.3.0",
@@ -166,7 +166,7 @@
 		"@types/leaflet": "1.4.0",
 		"@types/mongodb": "^3.1.19",
 		"@types/mongoose": "^5.3.12",
-		"@types/node": "~11.9.3",
+		"@types/node": "^11.9.3",
 		"@types/reflect-metadata": "^0.1.0",
 		"@types/socket.io-client": "^1.4.32",
 		"@types/stripe": "^6.19.5",

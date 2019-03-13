@@ -44,7 +44,8 @@ export class CarrierTrackingComponent implements OnInit, OnDestroy {
 	interval: NodeJS.Timer;
 	isReverted: boolean = true;
 	params$: any;
-	selectedCarrier: string;
+	selectedCarrierName: string;
+	selectedCarrier: Carrier;
 	hasFilteredByMerchant = false;
 	carriers: Carrier[] = [];
 	selectedStore: Warehouse;
@@ -71,6 +72,7 @@ export class CarrierTrackingComponent implements OnInit, OnDestroy {
 		this.carriersService.getAllCarriers().subscribe((carriers) => {
 			this.carriers = carriers.filter((carrier) => carrier.status === 0);
 			this._subscribeCarrier(this.carriers);
+			this.filteredCarriersList = this.carriers;
 		});
 	}
 	public stores: Warehouse[] = [];
@@ -91,23 +93,21 @@ export class CarrierTrackingComponent implements OnInit, OnDestroy {
 	}
 	filterCarriers() {
 		this.revertMap();
-		console.log(this.carriers);
 		this.filteredCarriersList = this.carriers.filter((x) =>
 			this.selectedStore.usedCarriersIds.includes(x.id)
 		);
 		this.hasFilteredByMerchant = true;
-		this.selectedCarrier = undefined;
-		console.log(this.filteredCarriersList);
+		this.selectedCarrierName = undefined;
 		this._subscribeCarrier(this.filteredCarriersList);
 	}
 	filterByCarrierId() {
-		if (this.selectedCarrier !== undefined) {
+		if (this.selectedCarrierName !== undefined) {
 			this.revertMap();
 
-			console.log(this.selectedCarrier);
 			const FilteredList = this.filteredCarriersList.filter(
-				(x) => x.fullName === this.selectedCarrier
+				(x) => x.fullName === this.selectedCarrierName
 			);
+			this.selectedCarrier = FilteredList[0];
 			this._subscribeCarrier(FilteredList);
 		}
 	}
@@ -140,7 +140,6 @@ export class CarrierTrackingComponent implements OnInit, OnDestroy {
 					});
 			});
 		});
-		console.log(carrierList);
 	}
 
 	revertMap() {

@@ -1,0 +1,64 @@
+<form [formGroup]="accountForm">
+	<div class="basicInfo">
+		<ion-item mode="ios">
+			<ion-label class="labels" position="floating">
+				{{ 'SETTINGS_VIEW.NEW_USERNAME' | translate }}</ion-label
+			>
+			<ion-input type="text" formControlName="username"> </ion-input>
+		</ion-item>
+		<span *ngIf="username.invalid && (username.dirty || username.touched)">
+			<span [hidden]="!username.errors.minlength">
+				<small style="color: red; margin-left: 16px;">
+					{{ 'SETTINGS_VIEW.NAME_MUST_BE_AT_LEAST_4_CHARACTERS_LONG' |
+					translate }}.
+				</small>
+			</span>
+		</span>
+	</div>
+	<div class="contactInfo">
+		<ion-item mode="ios">
+			<ion-label class="labels" position="floating">
+				{{ 'SETTINGS_VIEW.OLD_PASSWORD' | translate }}</ion-label
+			>
+			<ion-input
+				type="password"
+				formControlName="oldPassword"
+			></ion-input>
+		</ion-item>
+		<ion-item mode="ios">
+			<ion-label class="labels" position="floating">
+				{{ 'SETTINGS_VIEW.NEW_PASSWORD' | translate }}</ion-label
+			>
+			<ion-input type="password" formControlName="password"></ion-input>
+		</ion-item>
+		<ion-item mode="ios">
+			<ion-label class="labels" position="floating">
+				{{ 'SETTINGS_VIEW.REPEAT_NEW_PASSWORD' | translate }}</ion-label
+			>
+			<ion-input
+				type="password"
+				formControlName="repeatPassword"
+			></ion-input>
+		</ion-item>
+		<span *ngIf="repeatPassword.dirty || repeatPassword.touched">
+			<span [hidden]="password.value === repeatPassword.value">
+				<small style="color: red; margin-left: 16px;">
+					{{ 'SETTINGS_VIEW.PASSWORDS_DO_NOT_MATCH' | translate }}.
+				</small>
+			</span>
+		</span>
+	</div>
+
+	<ion-button
+		class="save-button"
+		[disabled]="
+			!accountForm.valid ||
+			((password.dirty || password.touched) &&
+				password.value !== repeatPassword.value)
+		"
+		(click)="saveChanges()"
+		color="success"
+	>
+		{{ 'SETTINGS_VIEW.SAVE_CHANGES' | translate }}
+	</ion-button>
+</form>

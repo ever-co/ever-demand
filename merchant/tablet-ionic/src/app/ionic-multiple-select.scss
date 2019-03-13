@@ -1,0 +1,18 @@
+body > ion-app > ion-alert > div > div.alert-head {
+	padding: 19px 12px !important;
+}
+
+ion-item#multiple-select {
+	padding-left: 6px;
+
+	ion-select {
+		max-width: none !important;
+		width: 100% !important;
+		padding-left: 0 !important;
+
+		> div.select-icon div.select-icon-inner {
+			color: #000;
+			opacity: 0.7;
+		}
+	}
+}

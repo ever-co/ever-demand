@@ -7,8 +7,11 @@
 	"Products": "Продукты",
 	"Orders": "Заказы",
 	"Buy for": "Купить для",
+	"DELIVERY": "Доставка",
+	"TAKEAWAY": "Навынос",
 	"Details": "Детали",
 	"Delivery from": "Доставка из",
+	"WHAT_IS_YOUR_ADDRESS": "Какой у Вас адрес?",
 	"FOR": "за",
 	"MESSAGE_POP_UP": {
 		"CANCEL_ORDER": "Всего через 5-10 минут вы будете есть эту вкусную еду! Отменив его, вы пропустите отличную и вкусную еду, и нам, вероятно, придется ее бросить",
@@ -29,6 +32,8 @@
 		"DELIVERY": "Доставка",
 		"TAKEAWAY": "Takeaway",
 		"READYFOR": "Готово для",
+		"NO_PRODUCTS_FOUND": "Продукты не найдены для",
+		"NO_PRODUCTS": "Нет товаров",
 		"PRODUCT_DETAILS_VIEW": {
 			"BUY_FOR": "Купить для",
 			"DETAILS": "Детали",

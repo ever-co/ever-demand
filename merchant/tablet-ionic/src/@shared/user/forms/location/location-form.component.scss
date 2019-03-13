@@ -1,0 +1,29 @@
+.coord-box {
+	margin: auto !important;
+
+	background: transparent !important;
+	div.item-inner {
+		border: none !important;
+	}
+}
+
+.search-bar-wrapper {
+	margin: auto !important;
+
+	padding-top: 0% !important;
+	padding-bottom: 0.4% !important;
+}
+
+ion-searchbar {
+	div.searchbar-input-container {
+		input.searchbar-input {
+			border-radius: 3px !important;
+		}
+	}
+}
+
+.wrapper-err {
+	padding: 0 19px;
+	text-align: left;
+	font-size: 14px;
+}

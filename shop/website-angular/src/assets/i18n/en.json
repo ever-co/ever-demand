@@ -8,8 +8,11 @@
 	"Products": "Products",
 	"Orders": "Orders",
 	"Buy for": "Buy for",
+	"DELIVERY": "Delivery",
+	"TAKEAWAY": "Takeout",
 	"Details": "Details",
 	"Delivery from": "Delivery from",
+	"WHAT_IS_YOUR_ADDRESS": "What is your address?",
 	"FOR": "for",
 	"MESSAGE_POP_UP": {
 		"CANCEL_ORDER": "In just 5-10 minutes you will be eating this delicious meal! By canceling it you will miss a great and tasty food, and we will likely have to throw it",
@@ -30,6 +33,8 @@
 		"DELIVERY": "Delivery",
 		"TAKEAWAY": "Takeout",
 		"READYFOR": "Ready for",
+		"NO_PRODUCTS_FOUND": "No products found for",
+		"NO_PRODUCTS": "No products.",
 		"PRODUCT_DETAILS_VIEW": {
 			"BUY_FOR": "Buy for",
 			"DETAILS": "Details",

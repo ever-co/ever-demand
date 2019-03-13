@@ -1,0 +1,32 @@
+<ion-content scroll="false">
+	<div class="login-view">
+		<div class="login-view-content">
+			<div class="logo">
+				<img src="{{ loginLogo }}" />
+			</div>
+
+			<div class="login-form">
+				<div>
+					<input
+						class="login-input"
+						placeholder="Username"
+						[(ngModel)]="username"
+					/>
+				</div>
+				<div>
+					<input
+						class="login-input"
+						type="password"
+						placeholder="Password"
+						[(ngModel)]="password"
+					/>
+				</div>
+				<div>
+					<button class="login-button" (click)="login()">
+						{{ 'LOGIN_VIEW.LOGIN' | translate }}
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</ion-content>

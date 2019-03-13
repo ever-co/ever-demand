@@ -1,0 +1,28 @@
+<ion-grid class="carriers-add-choice">
+	<ion-row>
+		<ion-col>
+			<div
+				[ngClass]="choiceType == 1 ? 'selected' : ''"
+				class="option option2"
+				(click)="changeChoice('existing')"
+			>
+				<span>
+					{{ 'CARRIERS_VIEW.ADD_CARRIER.SELECT_FROM_CARRIERS_CATALOG'
+					| translate }}</span
+				>
+			</div>
+		</ion-col>
+		<ion-col>
+			<div
+				[ngClass]="choiceType == 2 ? 'selected' : ''"
+				class="option option1"
+				(click)="changeChoice('new')"
+			>
+				<span
+					>{{ 'CARRIERS_VIEW.ADD_CARRIER.ADD_NEW_CARRIER' | translate
+					}}</span
+				>
+			</div>
+		</ion-col>
+	</ion-row>
+</ion-grid>

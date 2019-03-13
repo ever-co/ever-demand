@@ -1,0 +1,171 @@
+.page-settings {
+	background: #fff;
+	min-height: 100%;
+	overflow-y: scroll !important;
+	overflow-x: hidden;
+	margin: 0;
+	padding: 0;
+	ion-segment {
+		margin-top: 60px !important;
+	}
+	ion-label {
+		display: inline !important;
+	}
+
+	input::placeholder {
+		padding-left: 50px !important;
+	}
+	.select-md {
+		padding-top: 14.5px !important;
+	}
+	.segmentDivs {
+		font-size: 1.2rem;
+		// text-align: center;
+		padding-right: 16px;
+	}
+	#special-label {
+		height: 24px !important;
+		margin: 16px;
+	}
+
+	.map-wrapper {
+		margin-top: 10px;
+	}
+
+	#common,
+	#location,
+	#account {
+		padding-top: 10px;
+
+		div.row {
+			ion-item {
+				padding: 5px 15px;
+			}
+			section.col {
+				margin-top: 15px;
+			}
+		}
+
+		h1 {
+			margin-bottom: 2vh;
+		}
+		.labels {
+			display: inline-block;
+			font-size: 1em;
+			color: gray;
+			opacity: 0.8;
+		}
+	}
+	input {
+		font-size: 1em;
+		&:focus {
+			color: black;
+			font-size: 1em;
+		}
+	}
+	.warning {
+		font-size: 1em;
+		color: orange;
+		font-weight: bold;
+	}
+	.success {
+		font-size: 1em;
+		color: yellowgreen;
+		font-weight: bold;
+	}
+	.save-location {
+		margin-top: 15px !important;
+	}
+
+	ion-row.row {
+		background: white;
+		i {
+			&:before {
+				margin-right: 5px;
+			}
+		}
+	}
+
+	.location-find {
+		padding-top: 3%;
+		padding-bottom: 3%;
+
+		width: 50%;
+		margin: auto;
+	}
+
+	.preview-img {
+		padding-left: 14px;
+		padding-right: 16px;
+		text-align: center;
+	}
+
+	.removeIcon {
+		padding-left: 4px;
+	}
+
+	.upload-input {
+		padding-right: 0 !important;
+	}
+
+	#remove-circle {
+		font-size: 1em;
+	}
+
+	.text-header {
+		margin-left: 16px;
+		border-bottom: 1px solid black;
+	}
+
+	.save-button {
+		margin-left: 16px;
+		margin-top: 16px;
+		border: none;
+	}
+
+	.invalid {
+		border-bottom: 1px solid red;
+		padding-left: 0px !important;
+	}
+}
+.success-info {
+	.alert-message {
+		color: green;
+		border-bottom: 0.5px solid black;
+		padding-top: 20px !important;
+		padding-bottom: 20px;
+		text-align: center;
+	}
+
+	.alert-head {
+		display: none;
+	}
+
+	.alert-button {
+		margin: 0 auto;
+	}
+	.alert-button-group {
+		padding: 0;
+	}
+}
+
+.error-info {
+	.alert-message {
+		text-align: center;
+		color: red;
+		border-bottom: 0.5px solid black;
+		padding-top: 20px !important;
+		padding-bottom: 20px;
+	}
+
+	.alert-head {
+		display: none;
+	}
+
+	.alert-button {
+		margin: 0 auto;
+	}
+	.alert-button-group {
+		padding: 0;
+	}
+}

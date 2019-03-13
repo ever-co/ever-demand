@@ -1,0 +1,38 @@
+<div class="customer-addr-popup">
+	<h4 class="custom-title-popup">
+		{{ 'CUSTOMERS_VIEW.ADDRESS_POP_UP.CUSTOMER_ADDRESS' | translate }}
+	</h4>
+	<div class="addrInfo">
+		<span *ngIf="country" class="infoRow">
+			<div class="label">
+				{{ 'CUSTOMERS_VIEW.ADDRESS_POP_UP.COUNTRY' | translate }}:
+			</div>
+			<div class="info">{{ country }}</div>
+		</span>
+		<span *ngIf="street" class="infoRow">
+			<div class="label">
+				{{ 'CUSTOMERS_VIEW.ADDRESS_POP_UP.STREET' | translate }}:
+			</div>
+			<div class="info">{{ street }}</div>
+		</span>
+		<span *ngIf="house" class="infoRow">
+			<div class="label">
+				{{ 'CUSTOMERS_VIEW.ADDRESS_POP_UP.HOUSE' | translate }}:
+			</div>
+			<div class="info">{{ house }}</div>
+		</span>
+		<span *ngIf="apartment" class="infoRow">
+			<div class="label">
+				{{ 'CUSTOMERS_VIEW.ADDRESS_POP_UP.APARTMENT' | translate }}:
+			</div>
+			<div class="info">{{ apartment }}</div>
+		</span>
+		<span *ngIf="coordinates" class="infoRow">
+			<div class="label">
+				{{ 'CUSTOMERS_VIEW.ADDRESS_POP_UP.COORDINATES' | translate }}:
+			</div>
+			<div class="info">{{ coordinates }}</div>
+		</span>
+	</div>
+	<div #gmap id="mapDiv" class="map"></div>
+</div>

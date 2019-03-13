@@ -29,10 +29,12 @@
 	></carousel-view>
 	<mat-card-content *ngIf="!products.length && !productsLoading" class="p-3">
 		<h4 *ngIf="searchText" class="text-center">
-			No have products with name "{{ searchText }}"!
+			{{ 'PRODUCTS_VIEW.NO_PRODUCTS_FOUND' | translate }} "{{
+				searchText
+			}}"!
 		</h4>
 		<h4 *ngIf="!searchText" class="text-center">
-			No have products!
+			{{ 'PRODUCTS_VIEW.NO_PRODUCTS' | translate }}
 		</h4>
 	</mat-card-content>
 </mat-card>

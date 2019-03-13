@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import Order from 'modules/server.common/entities/Order';
+import Order from '@modules/server.common/entities/Order';
 import IUser from '@modules/server.common/interfaces/IUser';
 
 @Component({

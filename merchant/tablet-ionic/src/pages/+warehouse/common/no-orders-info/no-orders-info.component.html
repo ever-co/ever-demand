@@ -1,0 +1,17 @@
+<div class="no-orders-message">
+	<i class="fa fa-shopping-bag"></i>
+	<div *ngIf="filterMode === 'ready'">
+		<h2>
+			{{
+				'WAREHOUSE_VIEW.ORDER_WAREHOUSE_STATUSES.NO_ACTIVE_ORDERS'
+					| translate
+			}}
+		</h2>
+		<h3 (click)="toggleOrderContainer.emit()">
+			{{ 'WAREHOUSE_VIEW.MISC_TEXT.CREATE_NEW_ORDER' | translate }}
+		</h3>
+	</div>
+	<h2 *ngIf="filterMode === 'all'">
+		{{ 'WAREHOUSE_VIEW.ORDER_WAREHOUSE_STATUSES.NO_ORDERS' | translate }}
+	</h2>
+</div>

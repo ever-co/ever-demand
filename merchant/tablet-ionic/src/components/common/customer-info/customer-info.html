@@ -1,0 +1,19 @@
+<div *ngIf="user" class="customer-info">
+	<div class="header">
+		<h5>
+			<ion-icon ios="ios-person" md="md-person"></ion-icon>
+			<span> {{ 'TRACK_ORDER_POP_UP.CUSTOMER' | translate }} </span>
+		</h5>
+	</div>
+	<div class="body">
+		<div *ngIf="user.image" class="customer-image">
+			<img src="{{ user.image }}" alt="" />
+		</div>
+		<div class="customer-details">
+			<div>{{ userFullName }}</div>
+			<user-phone [user]="user"></user-phone>
+			<div>{{ user.email }}</div>
+			<div>{{ fullAddress }}</div>
+		</div>
+	</div>
+</div>

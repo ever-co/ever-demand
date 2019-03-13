@@ -75,6 +75,7 @@
 				"select",
 				"e-cu", // e-cu = ever customer
 				"ngx",
+				"google-map",
 				"ea", // ea = ever admin
 				"es" // es = ever store
 			],

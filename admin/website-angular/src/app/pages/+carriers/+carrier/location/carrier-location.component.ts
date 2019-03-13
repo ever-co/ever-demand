@@ -122,7 +122,6 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 									travelMode: 'DRIVING'
 								};
 
-								console.log(request);
 								directionsService.route(request, function(
 									res,
 									stat
@@ -146,6 +145,67 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 
 								isWorking = true;
 								this.isReverted = false;
+
+								const userInfoContent = `
+									<h3>  ${order.user.firstName + ' ' + order.user.lastName}</h3>
+									<ul>
+										<li><i style='margin-right:5px;' class="ion-md-mail"></i>${
+											order.user.email
+										}</li>
+										<li><i style='margin-right:5px;' class="ion-md-call"></i>${
+											order.user.phone
+										}</li>
+										<li><i style='margin-right:5px;' class="ion-md-locate"></i>${
+											order.user.geoLocation.streetAddress
+										}</li>
+									</ul>
+									`;
+
+								const userInfoWindow = new google.maps.InfoWindow(
+									{
+										content: userInfoContent
+									}
+								);
+
+								this.userMarker.addListener('click', () => {
+									userInfoWindow.open(
+										this.map,
+										this.userMarker
+									);
+								});
+								const warehouseInfoContent = `
+									<h3>  ${order.warehouse.name}</h3>
+									<ul>
+										<li>
+											<i style='margin-right:5px;' class="ion-md-mail"></i>
+											${order.warehouse.contactEmail}
+										</li>
+										<li>
+											<i style='margin-right:5px;' class="ion-md-phone"></i><i class="ion-md-call"></i>
+											${order.warehouse.contactPhone}
+										</li>
+										<li>
+											<i style='margin-right:5px;' class="ion-md-locate"></i>
+											${order.warehouse.geoLocation.streetAddress}
+										</li>
+									</ul>
+									`;
+
+								const warehouseInfoWindow = new google.maps.InfoWindow(
+									{
+										content: warehouseInfoContent
+									}
+								);
+
+								this.warehouseMarker.addListener(
+									'click',
+									() => {
+										warehouseInfoWindow.open(
+											this.map,
+											this.warehouseMarker
+										);
+									}
+								);
 							}
 						} else {
 							if (isWorking) {
@@ -167,6 +227,24 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 						this.map,
 						carierIcon
 					);
+					const carrierInfoContent = `
+					<h3>  ${carrier.fullName}</h3>
+					<ul>
+						<li>${carrier.username}</li>
+						<li><i style='margin-right:5px;' class="ion-md-call"></i>${carrier.phone}</li>
+						<li><i style='margin-right:5px;' class="ion-md-locate"></i>${
+							carrier.geoLocation.streetAddress
+						}</li>
+					</ul>
+					`;
+
+					const carrierInfoWindow = new google.maps.InfoWindow({
+						content: carrierInfoContent
+					});
+
+					this.marker.addListener('click', () => {
+						carrierInfoWindow.open(this.map, this.marker);
+					});
 				});
 		});
 	}

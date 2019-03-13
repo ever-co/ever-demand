@@ -1,0 +1,35 @@
+<div class="page-add-carriers-popup">
+	<h4 class="custom-title-popup">
+		{{ 'CARRIERS_VIEW.ADD_CARRIER.ADD_CARRIER' | translate }}
+	</h4>
+	<button class="close" (click)="cancelModal()">
+		<i class="fa fa-close"></i>
+	</button>
+	<form-wizard #wizzardFrom [ngClass]="{ 'second-step': choicedNew }">
+		<wizard-step
+			#wizzardFromStep1
+			[isValid]="choiced"
+			[title]="wizardStepsTitle.step1"
+		>
+			<add-choice #addChoice (click)="onStep1Next(choiced)"></add-choice>
+		</wizard-step>
+
+		<wizard-step
+			[title]="wizardStepsTitle.step2"
+			[isValid]="isDone"
+			(onComplete)="add()"
+			#wizardFormStep2
+		>
+			<add-new-carrier
+				#addNewCarrier
+				*ngIf="choiced === 'new'"
+				(onCompleteEvent)="completeCreateCarrier($event)"
+				(buttonClickEvent)="buttonClickEvent($event)"
+			></add-new-carrier>
+			<carriers-catalog
+				#carriersCatalog
+				*ngIf="choiced === 'existing'"
+			></carriers-catalog>
+		</wizard-step>
+	</form-wizard>
+</div>

@@ -1,0 +1,26 @@
+<nb-card id="make-order">
+
+    <nb-card-header class="header-color">
+        <div class="pull-left" *ngIf="showOrderAction">
+            {{ TRANSLATE_PREFIXES.MAKE_ORDER | translate }}
+        </div>
+
+        <div class="checkbox" *ngIf="!showOrderAction">
+            <label>
+                <input type="checkbox" (change)="toggleAvalableProducts()">
+                {{ TRANSLATE_PREFIXES.ONLY_AVAILABLE | translate }}
+            </label>
+        </div>
+    </nb-card-header>
+
+    <nb-card-body>
+        <ng2-smart-table [settings]="settingsSmartTable" [source]="sourceSmartTable"></ng2-smart-table>
+    </nb-card-body>
+
+    <nb-card-footer *ngIf="showOrderAction">
+        <button (click)="makeOrder()" [disabled]="!canOrder" class="btn btn-sm btn-primary">
+            {{ TRANSLATE_PREFIXES.ORDER | translate }}
+        </button>
+    </nb-card-footer>
+
+</nb-card>

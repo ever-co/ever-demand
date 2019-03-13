@@ -1,0 +1,60 @@
+<ion-grid class="user-mutation-component">
+	<ion-row class="crete-user">
+		<ion-col [hidden]="isNextStepAvailable">
+			<basic-info-form
+				#basicInfoForm
+				[form]="basicInfo"
+			></basic-info-form>
+		</ion-col>
+
+		<ion-col [hidden]="!isNextStepAvailable">
+			<location-form
+				#locationForm
+				[form]="location"
+				[apartment]="apartment"
+				[showAutocompleteSearch]="true"
+				(mapCoordinatesEmitter)="onCoordinatesChanges($event)"
+				(mapGeometryEmitter)="onGeometrySend($event)"
+			>
+			</location-form>
+		</ion-col>
+	</ion-row>
+
+	<ion-row>
+		<ion-col class="text-center mb-3">
+			<ion-button
+				color="light"
+				class="mr-2"
+				*ngIf="isNextStepAvailable"
+				(click)="isNextStepAvailable = false"
+			>
+				{{ 'WAREHOUSE_VIEW.NEW_ORDER_VIEW.BACK' | translate }}
+			</ion-button>
+			<ion-button
+				color="dark"
+				*ngIf="!isNextStepAvailable"
+				(click)="isNextStepAvailable = true"
+				[disabled]="basicInfo.invalid"
+			>
+				{{ 'WAREHOUSE_VIEW.NEW_ORDER_VIEW.NEXT' | translate }}
+			</ion-button>
+			<ion-button
+				color="dark"
+				*ngIf="isNextStepAvailable"
+				(click)="createCustomer()"
+				[disabled]="form.invalid"
+			>
+				{{ 'WAREHOUSE_VIEW.NEW_ORDER_VIEW.ADD_CUSTOMER' | translate }}
+			</ion-button>
+		</ion-col>
+	</ion-row>
+
+	<ion-row [hidden]="!isNextStepAvailable">
+		<ion-col>
+			<google-map
+				[mapCoordEvent]="mapCoordinatesEmitter"
+				[mapGeometryEvent]="mapGeometryEmitter"
+			></google-map>
+		</ion-col>
+	</ion-row>
+</ion-grid>

@@ -1,0 +1,17 @@
+.carrier-basic-info {
+	.email-err-wrapper {
+		padding: 0 19px;
+		text-align: left;
+		font-size: 14px;
+	}
+
+	.validation-errors {
+		display: flex;
+		justify-content: flex-start;
+		padding-left: 20px;
+		box-sizing: border-box;
+		span {
+			color: red;
+		}
+	}
+}

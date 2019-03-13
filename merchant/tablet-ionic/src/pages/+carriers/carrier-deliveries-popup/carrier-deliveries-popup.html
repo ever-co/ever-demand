@@ -1,0 +1,48 @@
+<ion-grid class="carrier-deliveries-popup" id="carriersTable">
+	<h4 class="custom-title-popup">
+		{{ 'CARRIERS_VIEW.DELIVERIES_POP_UP.CARRIER_DELIVERIES' | translate }}
+	</h4>
+	<ion-row id="basicInfo">
+		<ion-col size="4">
+			<span
+				>{{ 'CARRIERS_VIEW.DELIVERIES_POP_UP.ALL_DELIVERIES' | translate
+				}}:
+			</span>
+			<span class="info">{{ carrier?.numberOfDeliveries }}</span>
+		</ion-col>
+		<ion-col size="4">
+			<span
+				>{{ 'CARRIERS_VIEW.DELIVERIES_POP_UP.DELIVERIES_TODAY' |
+				translate }}:</span
+			>
+			<span class="info">{{ carrier?.deliveriesCountToday }}</span>
+		</ion-col>
+		<ion-col size="4">
+			<span
+				>{{ 'CARRIERS_VIEW.DELIVERIES_POP_UP.TOTAL_DISTANCE_TODAY' |
+				translate }}:</span
+			>
+			<span class="info">{{ carrier?.totalDistanceToday }}</span>
+		</ion-col>
+	</ion-row>
+	<div class="body">
+		<ng2-smart-table
+			*ngIf="!showNoDeliveryIcon"
+			class="smart-table"
+			[settings]="settingsSmartTable"
+			[source]="sourceSmartTable"
+		>
+		</ng2-smart-table>
+
+		<div *ngIf="showNoDeliveryIcon">
+			<div class="no-orders-message">
+				<i class="fa fa-truck"></i>
+
+				<h2>
+					{{ 'CARRIERS_VIEW.DELIVERIES_POP_UP.NO_DELIVERIES' |
+					translate }}
+				</h2>
+			</div>
+		</div>
+	</div>
+</ion-grid>

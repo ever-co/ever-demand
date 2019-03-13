@@ -1,0 +1,69 @@
+.customer-addr-popup {
+	background-color: #fff;
+	height: 100%;
+	display: flex !important;
+	flex-direction: column;
+	.infoRow {
+		display: block;
+		// width:80%;
+		margin: 0 auto;
+		margin-bottom: 11px;
+		line-height: 18px;
+		.label,
+		.info {
+			display: inline-block;
+			width: 48%;
+			font-size: 1.2em;
+		}
+		.label {
+			font-style: italic;
+		}
+		.info {
+			color: #0074d9;
+			font-weight: bold;
+		}
+	}
+
+	.infoRowTitle {
+		text-align: center;
+		display: block;
+		width: 80%;
+		line-height: 18px;
+		.label,
+		.info {
+			display: inline-block;
+			width: 48%;
+			font-size: 1.2em;
+		}
+		.label {
+			font-style: italic;
+		}
+		.info {
+			color: #0074d9;
+			font-weight: bold;
+		}
+	}
+
+	.addrInfo {
+		// padding-left: 50px;
+		// min-height: 50% !important;
+		margin: 0 auto;
+		width: 90%;
+	}
+
+	.map {
+		min-height: 50% !important;
+	}
+}
+
+// .modal-wrapper {
+// 	width: 650px;
+// 	height: 400px;
+// 	height: auto;
+// 	display: inline-table;
+// 	left: calc(50% - (650px / 2));
+// 	top: calc(50% - (600px / 2));
+// 	.show-page {
+// 		display: contents;
+// 	}
+// }

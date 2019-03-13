@@ -1,0 +1,31 @@
+<ion-grid class="customer-deliveries-popup" id="customersTable">
+	<h4 class="custom-title-popup">
+		{{ 'CUSTOMERS_VIEW.ORDERS_POP_UP.CUSTOMER_ORDERS' | translate }}
+	</h4>
+
+	<ion-row id="basicInfo">
+		<ion-col size="6">
+			<span
+				>{{ 'CUSTOMERS_VIEW.ORDERS_POP_UP.ALL_ORDERS' | translate }}:
+			</span>
+			<span class="info">{{ ordersCurrentWarehouse?.length }}</span>
+		</ion-col>
+		<ion-col size="6">
+			<span
+				>{{ 'CUSTOMERS_VIEW.ORDERS_POP_UP.TOTAL_ORDERS_SUM' | translate
+				}}:</span
+			>
+			<span class="info">{{ totalOrdersSum }}</span>
+		</ion-col>
+	</ion-row>
+
+	<div class="body">
+		<ng2-smart-table
+			*ngIf="!showNoDeliveryIcon"
+			class="smart-table"
+			[settings]="settingsSmartTable"
+			[source]="sourceSmartTable"
+		>
+		</ng2-smart-table>
+	</div>
+</ion-grid>

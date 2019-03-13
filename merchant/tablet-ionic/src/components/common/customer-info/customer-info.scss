@@ -1,0 +1,39 @@
+.customer-info {
+	.customer-image {
+		width: 15%;
+	}
+
+	.header {
+		text-align: left;
+		margin: 0px 10px 0 10px;
+		padding-top: 10px;
+		:first-child {
+			display: flex;
+			margin: 0;
+			margin-bottom: 5px;
+		}
+
+		ion-icon {
+			font-size: 1.8rem;
+			margin-bottom: 0 !important;
+			margin-right: 5px !important;
+		}
+
+		border-bottom: 1px solid #dedede;
+	}
+
+	.body {
+		display: flex;
+		align-items: flex-start;
+		.customer-image,
+		.customer-details {
+			padding: 10px;
+			text-align: left;
+			line-height: 1.6;
+
+			.call-icon {
+				font-size: 1.4rem;
+			}
+		}
+	}
+}

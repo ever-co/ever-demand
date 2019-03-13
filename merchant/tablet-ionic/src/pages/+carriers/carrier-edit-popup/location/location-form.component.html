@@ -1,0 +1,176 @@
+<div class="carrier-location-form">
+	<form [formGroup]="form">
+		<ion-row text-center class="crete-carrier-location-title">
+			<ion-col>
+				<h5>{{ 'CARRIERS_VIEW.ADD_CARRIER.LOCATION' | translate }}</h5>
+			</ion-col>
+		</ion-row>
+
+		<ion-row class="search-find">
+			<ion-col>
+				<ion-item>
+					<div class="location-find">
+						<ion-searchbar
+							#autocomplete
+							type="text"
+							placeholder="{{
+								'CARRIERS_VIEW.ADD_CARRIER.FIND_ADDRESS'
+									| translate
+							}}"
+						></ion-searchbar>
+					</div>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col class="col-4" text-center>
+				<ion-item>
+					<ion-label class="labels" position="floating">{{
+						'CARRIERS_VIEW.ADD_CARRIER.COUNTRY' | translate
+					}}</ion-label>
+					<ion-select
+						formControlName="country"
+						[cancelText]="buttonCancel"
+						[okText]="buttonOK"
+						(ionChange)="textInputChange(country, 'country')"
+					>
+						<ion-select-option
+							*ngFor="let country of countries"
+							value="{{ country.id }}"
+							>{{ country.name }}</ion-select-option
+						>
+					</ion-select>
+				</ion-item>
+			</ion-col>
+
+			<ion-col class="col-4" text-center>
+				<ion-item>
+					<ion-label position="floating">
+						{{
+							'CARRIERS_VIEW.ADD_CARRIER.CITY' | translate
+						}}</ion-label
+					>
+					<ion-input
+						type="text"
+						formControlName="city"
+						(change)="textInputChange(city, 'city')"
+					></ion-input>
+				</ion-item>
+			</ion-col>
+
+			<ion-col class="col-4">
+				<ion-item>
+					<ion-label position="floating">{{
+						'CARRIERS_VIEW.ADD_CARRIER.HOUSE' | translate
+					}}</ion-label>
+					<ion-input
+						type="number"
+						formControlName="house"
+						(change)="textInputChange(house, 'house')"
+					></ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col class="col-8">
+				<ion-item>
+					<ion-label position="floating">{{
+						'CARRIERS_VIEW.ADD_CARRIER.STREET' | translate
+					}}</ion-label>
+					<ion-input
+						type="text"
+						formControlName="street"
+						(change)="textInputChange(street, 'street')"
+					></ion-input>
+				</ion-item>
+			</ion-col>
+
+			<ion-col class="col-4">
+				<ion-item>
+					<ion-label class="labels" position="floating">{{
+						'CARRIERS_VIEW.ADD_CARRIER.ZIP' | translate
+					}}</ion-label>
+					<ion-input
+						type="text"
+						formControlName="postcode"
+						(change)="textInputChange(postcode, 'postcode')"
+					></ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+
+		<ion-row class="row">
+			<ion-col class="col-4">
+				<ion-item class="coord-box">
+					<ion-label>
+						{{
+							'WAREHOUSE_VIEW.NEW_ORDER_VIEW.SHOW_COORDINATES'
+								| translate
+						}}
+					</ion-label>
+					<ion-checkbox
+						color="secondary"
+						(ionChange)="toggleCoordinates()"
+					></ion-checkbox>
+				</ion-item>
+			</ion-col>
+
+			<ion-col class="col-4" [hidden]="!showCoordinates">
+				<ion-item>
+					<ion-label position="floating">{{
+						'CARRIERS_VIEW.ADD_CARRIER.LATITUDE' | translate
+					}}</ion-label>
+					<ion-input
+						type="number"
+						formControlName="lat"
+						(change)="textInputChange(lat, 'lat')"
+					></ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col class="col-4" [hidden]="!showCoordinates">
+				<ion-item>
+					<ion-label position="floating">{{
+						'CARRIERS_VIEW.ADD_CARRIER.LONGITUDE' | translate
+					}}</ion-label>
+					<ion-input
+						type="text"
+						formControlName="lng"
+						(change)="textInputChange(lng, 'lng')"
+					></ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+	</form>
+	<ion-grid class="buttons-back-done">
+		<ion-row>
+			<ion-col text-center>
+				<ion-button color="light" class="mr-2" (click)="toStep2()">
+					{{ 'CARRIERS_VIEW.ADD_CARRIER.BACK' | translate }}
+				</ion-button>
+
+				<ion-button
+					color="dark"
+					(click)="clickComplete()"
+					[disabled]="!form.valid"
+				>
+					{{ 'CARRIERS_VIEW.ADD_CARRIER.DONE' | translate }}
+				</ion-button>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+	<ion-grid class="google-map-frame">
+		<ion-row>
+			<ion-col>
+				<div class="map-wrapper">
+					<google-map
+						[mapCoordEvent]="mapCoordEmitter"
+						[mapGeometryEvent]="mapGeometryEmitter"
+					>
+					</google-map>
+				</div>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</div>

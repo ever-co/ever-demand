@@ -1,0 +1,37 @@
+.carrier-addr-popup {
+	background-color: #fff;
+	height: 100%;
+	display: flex !important;
+	flex-direction: column;
+	.infoRow {
+		display: block;
+		// width:80%;
+		margin: 0 auto;
+		margin-bottom: 10px;
+		line-height: 25px;
+	}
+
+	.label,
+	.info {
+		display: inline-block;
+		// width:48%;
+		font-size: 1.2em;
+	}
+	.label {
+		width: 25%;
+		font-style: italic;
+	}
+	.info {
+		color: #0074d9 !important;
+		font-weight: bold;
+	}
+
+	.addrInfo {
+		margin: 0 auto;
+		width: 90%;
+	}
+
+	.map {
+		min-height: 50% !important;
+	}
+}
