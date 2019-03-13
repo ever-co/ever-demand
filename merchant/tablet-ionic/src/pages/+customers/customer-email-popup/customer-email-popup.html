@@ -1,0 +1,13 @@
+<div class="customer-email-popup" id="popupWrapper">
+	<h4 class="custom-title-popup">
+		{{ 'CUSTOMERS_VIEW.EMAIL_POP_UP.CUSTOMER_EMAIL' | translate }}
+	</h4>
+	<div *ngIf="email" class="emailInfo">
+		<span class="emailAddr">
+			{{ email }}
+		</span>
+		<span class="btn sendEmail" (click)="attemptSendMail()">
+			{{ 'CUSTOMERS_VIEW.EMAIL_POP_UP.SEND_E_MAIL' | translate }}
+		</span>
+	</div>
+</div>

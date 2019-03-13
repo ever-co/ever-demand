@@ -1,0 +1,50 @@
+<div class="page-carriers">
+	<div id="header" class="bar bar-header bar-brand">
+		<h1 class="title">{{ 'CARRIERS_VIEW.CARRIERS' | translate }}</h1>
+		<div class="buttons buttons-left header-item">
+			<span class="left-buttons">
+				<div class="waves-effect waves-classic">
+					<ion-menu-toggle class="button-icon">
+						<ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+					</ion-menu-toggle>
+				</div>
+			</span>
+		</div>
+		<div class="button-bar-right-container allowOverflow">
+			<div class="button-bar">
+				<a class="button button-brand" (click)="openAddCarriers()">
+					{{ 'CARRIERS_VIEW.ADD_CARRIERS' | translate }}
+				</a>
+			</div>
+		</div>
+		<!-- TODO Add translate -->
+		<div class="button-bar-right-container allowOverflow track-btn">
+			<div class="button-bar">
+				<a class="button button-brand" (click)="goToTrackPage()">
+					Track Carrier
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div id="contentWrapper" scroll="false">
+		<ng2-smart-table
+			*ngIf="!showNoDeliveryIcon"
+			class="smart-table"
+			[settings]="settingsSmartTable"
+			[source]="sourceSmartTable"
+			(edit)="editCarrier($event)"
+			(delete)="deleteCarrier($event)"
+			(custom)="trackCarrier($event)"
+		>
+		</ng2-smart-table>
+
+		<div *ngIf="showNoDeliveryIcon">
+			<div class="no-orders-message">
+				<i class="fa fa-truck"></i>
+
+				<h2>{{ 'CARRIERS_VIEW.NO_CARRIERS' | translate }}</h2>
+			</div>
+		</div>
+	</div>
+</div>

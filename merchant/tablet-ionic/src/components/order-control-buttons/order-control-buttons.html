@@ -1,0 +1,80 @@
+<div class="order-control-buttons">
+	<a
+		class="button button-brand"
+		*ngIf="warehouseStatus == 0"
+		(click)="onUpdateWarehouseStatus(orderId, 1)"
+	>
+		{{ 'ORDER_CONTROL_BUTTONS_COMPONENT.CONFIRM' | translate }}
+	</a>
+
+	<a
+		class="button button-brand"
+		*ngIf="warehouseStatus == 1"
+		(click)="onUpdateWarehouseStatus(orderId, 2)"
+	>
+		{{ 'ORDER_CONTROL_BUTTONS_COMPONENT.START_PROCESSING' | translate }}
+	</a>
+
+	<a
+		class="button button-brand"
+		*ngIf="warehouseStatus == 2"
+		(click)="onUpdateWarehouseStatus(orderId, 3)"
+	>
+		{{ 'ORDER_CONTROL_BUTTONS_COMPONENT.START_ALLOCATION' | translate }}
+	</a>
+
+	<a
+		class="button button-brand mr-1"
+		*ngIf="warehouseStatus == 3"
+		(click)="onUpdateWarehouseStatus(orderId, 4)"
+	>
+		{{ 'ORDER_CONTROL_BUTTONS_COMPONENT.ALLOCATED' | translate }}
+	</a>
+
+	<a
+		class="button button-assertive"
+		*ngIf="warehouseStatus == 3"
+		(click)="onUpdateWarehouseStatus(orderId, 200)"
+	>
+		{{ 'ORDER_CONTROL_BUTTONS_COMPONENT.FAILED' | translate }}
+	</a>
+
+	<a
+		class="button button-brand"
+		*ngIf="warehouseStatus == 4"
+		(click)="onUpdateWarehouseStatus(orderId, 5)"
+	>
+		{{ 'ORDER_CONTROL_BUTTONS_COMPONENT.START_PACKAGING' | translate }}
+	</a>
+
+	<a
+		class="button button-brand mr-1"
+		*ngIf="warehouseStatus == 5"
+		(click)="onUpdateWarehouseStatus(orderId, 6)"
+	>
+		{{ 'ORDER_CONTROL_BUTTONS_COMPONENT.PACKAGED' | translate }}
+	</a>
+
+	<a
+		class="button button-assertive"
+		*ngIf="warehouseStatus == 5"
+		(click)="onUpdateWarehouseStatus(orderId, 201)"
+	>
+		{{ 'ORDER_CONTROL_BUTTONS_COMPONENT.FAILED' | translate }}
+	</a>
+	<button
+		class="button button-brand {{ carrierStatus < 2 ? 'disabled' : '' }}"
+		[disabled]="carrierStatus < 2"
+		*ngIf="warehouseStatus == 6 && orderType === orderTypeDelivery"
+		(click)="onUpdateWarehouseStatus(orderId, 7)"
+	>
+		{{ 'ORDER_CONTROL_BUTTONS_COMPONENT.GIVEN_TO_CARRIER' | translate }}
+	</button>
+	<button
+		class="button button-brand"
+		*ngIf="warehouseStatus == 6 && orderType === orderTypeTakeaway"
+		(click)="onUpdateWarehouseStatus(orderId, 8)"
+	>
+		{{ 'ORDER_CONTROL_BUTTONS_COMPONENT.GIVEN_TO_CUSTOMER' | translate }}
+	</button>
+</div>

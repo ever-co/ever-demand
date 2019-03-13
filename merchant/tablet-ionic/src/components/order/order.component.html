@@ -1,0 +1,41 @@
+<span class="order-component">
+	<h2 text-center class="order-segment-title">
+		{{ 'WAREHOUSE_VIEW.NEW_ORDER_VIEW.NEW_MANUAL_ORDER' | translate }}
+	</h2>
+
+	<ion-segment [(ngModel)]="segmentSection" color="dark">
+		<ion-segment-button value="options">
+			<ion-icon name="options"></ion-icon>
+		</ion-segment-button>
+
+		<ion-segment-button value="select/add">
+			<ion-icon name="person-add"></ion-icon>
+		</ion-segment-button>
+
+		<ion-segment-button value="order">
+			<ion-icon name="cart"></ion-icon>
+		</ion-segment-button>
+	</ion-segment>
+
+	<div [ngSwitch]="segmentSection" text-center class="segment-content">
+		<div *ngSwitchCase="availSegmentOptions.options">
+			<choose-customer-option
+				(optionEmitter)="onOptionSelected($event)"
+			></choose-customer-option>
+		</div>
+
+		<div *ngSwitchCase="availSegmentOptions.selectAdd">
+			<select-add-customer
+				[customerOptionSelected]="selectAddCustomerOption"
+				(customerIdEmitter)="onCustomerSelected($event)"
+			></select-add-customer>
+		</div>
+
+		<div *ngSwitchCase="availSegmentOptions.order">
+			<make-order
+				[customerId]="customerIdToOrder"
+				[orderFinishedEmitter]="orderFinishedEmitter"
+			></make-order>
+		</div>
+	</div>
+</span>

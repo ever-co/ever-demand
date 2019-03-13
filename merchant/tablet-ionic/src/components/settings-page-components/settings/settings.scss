@@ -1,0 +1,39 @@
+.merchant-settings {
+	.input-with-checkbox {
+		padding-left: 16px;
+	}
+
+	ion-item {
+		padding: 0 !important;
+	}
+
+	#scanBtnOut {
+		padding: 0 !important;
+		margin: 0 !important;
+		display: flex;
+		align-items: flex-end;
+		justify-content: center;
+		.button {
+			padding: 0 !important;
+			margin: 0 !important;
+		}
+	}
+
+	.barcode-container {
+		padding: 16px;
+		margin: 8px 0 0 16px;
+		background: #dedede;
+		display: flex;
+		align-content: center;
+		align-items: center;
+	}
+
+	.row-title {
+		margin-left: 1rem;
+	}
+
+	.align-with-label-input {
+		margin-top: 25px;
+		padding-left: 0;
+	}
+}

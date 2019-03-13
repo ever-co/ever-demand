@@ -1,0 +1,32 @@
+<div class="carrier-addr-popup">
+	<h4 class="custom-title-popup">
+		{{ 'CARRIERS_VIEW.ADDRESS.CARRIER_ADDRESS' | translate }}
+	</h4>
+	<div class="addrInfo">
+		<span *ngIf="country" class="infoRow">
+			<div class="label">
+				{{ 'CARRIERS_VIEW.ADDRESS.COUNTRY' | translate }}:
+			</div>
+			<div class="info">{{ country }}</div>
+		</span>
+		<span *ngIf="street" class="infoRow">
+			<div class="label">
+				{{ 'CARRIERS_VIEW.ADD_CARRIER.STREET' | translate }}:
+			</div>
+			<div class="info">{{ street }}</div>
+		</span>
+		<span *ngIf="house" class="infoRow">
+			<div class="label">
+				{{ 'CARRIERS_VIEW.ADD_CARRIER.HOUSE' | translate }}:
+			</div>
+			<div class="info">{{ house }}</div>
+		</span>
+		<span *ngIf="coordinates" class="infoRow">
+			<div class="label">
+				{{ 'CARRIERS_VIEW.ADDRESS.COORDINATES' | translate }}:
+			</div>
+			<div class="info">{{ coordinates }}</div>
+		</span>
+	</div>
+	<div #gmap id="mapDiv" class="map"></div>
+</div>

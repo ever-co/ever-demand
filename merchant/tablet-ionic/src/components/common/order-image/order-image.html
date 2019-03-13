@@ -1,0 +1,24 @@
+<div class="order-image-container">
+	<p class="order-image-header order-header">
+		#{{ order.orderNumber }}
+		<span class="date">
+			{{ getOrderDate(order.createdAt) }}/{{
+			getOrderMonth(order.createdAt) }}
+		</span>
+	</p>
+
+	<div class="product-info">
+		<div *ngFor="let product of order.products" class="order-image">
+			<div class="image">
+				<span class="product-count"> {{ product.count }} </span>
+				<img
+					src="{{ productLocalesService.getTranslate(getProductImages(product.product.images)) }}"
+					alt="Product Image"
+				/>
+			</div>
+			<div class="name">
+				{{ productLocalesService.getTranslate(product.product.title) }}
+			</div>
+		</div>
+	</div>
+</div>

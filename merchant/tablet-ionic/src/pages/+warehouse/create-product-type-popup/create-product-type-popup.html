@@ -1,0 +1,231 @@
+<div class="app-view popup-view create-product-type-popup">
+	<h4 class="custom-title-popup">
+		{{ 'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.NEW_PRODUCT_TYPE' | translate
+		}}
+	</h4>
+
+	<ion-row>
+		<div class="col popup-half">
+			<div class="title-popup popup-input-container">
+				<label>
+					<span class="popup-input-description"
+						>{{ 'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.TITLE' |
+						translate }}</span
+					>
+					<input class="popup-input" [(ngModel)]="productTitle" />
+				</label>
+			</div>
+
+			<div class="popup-input-container">
+				<label>
+					<span class="popup-input-description"
+						>{{ 'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.DESCRIPTION' |
+						translate }}</span
+					>
+					<textarea
+						class="popup-input"
+						rows="4"
+						[(ngModel)]="productDescription"
+					></textarea>
+				</label>
+			</div>
+
+			<div class="popup-input-container">
+				<label>
+					<span>
+						{{ 'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.CATEGORIES' |
+						translate }}
+					</span>
+					<ion-item id="multiple-select">
+						<ion-select
+							[(ngModel)]="selectedProductCategories"
+							multiple="true"
+							[interfaceOptions]="selectOptionTitle"
+							[okText]="buttonOK"
+							[cancelText]="buttonCancel"
+						>
+							<ion-select-option
+								[value]="category.id"
+								*ngFor="let category of productsCategories"
+							>
+								{{ localeTranslateService.getTranslate(
+								category.name ) }}
+							</ion-select-option>
+						</ion-select>
+					</ion-item>
+				</label>
+			</div>
+
+			<ion-row class="bottom-inputs no-padding">
+				<div class="col no-padding-left pl-0 pr-0">
+					<div class="popup-input-container">
+						<label>
+							<span class="popup-input-description"
+								>{{ 'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.PRICE'
+								| translate }}</span
+							>
+							<input
+								class="popup-input"
+								type="number"
+								placeholder="$"
+								[(ngModel)]="warehouseProductCreateObject.price"
+							/>
+						</label>
+					</div>
+				</div>
+
+				<div class="col no-padding-right">
+					<div class="popup-input-container">
+						<label>
+							<span class="popup-input-description"
+								>{{ 'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.COUNT'
+								| translate }} ({{
+								'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.OPTIONAL'
+								| translate }})</span
+							>
+							<input
+								class="popup-input"
+								type="number"
+								oninput="validity.valid||(value='');"
+								min="0"
+								placeholder="{{
+									'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.COUNT_PLACEHOLDER'
+										| translate
+								}}"
+								[(ngModel)]="warehouseProductCreateObject.count"
+							/>
+						</label>
+					</div>
+				</div>
+
+				<div class="col no-padding-right pr-0">
+					<div class="popup-input-container">
+						<label>
+							<span class="popup-input-description"
+								>{{
+								'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.LANGUAGE'
+								| translate }}</span
+							>
+							<select
+								class="popup-input select"
+								[(ngModel)]="currentLocale"
+							>
+								<option value="en-US"
+									>{{
+									'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.ENGLISH'
+									| translate }}</option
+								>
+								<option value="he-IL"
+									>{{
+									'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.HEBREW'
+									| translate }}</option
+								>
+								<option value="ru-RU"
+									>{{
+									'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.RUSSIAN'
+									| translate }}</option
+								>
+								<option value="bg-BG"
+									>{{
+									'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.BULGARIAN'
+									| translate }}</option
+								>
+							</select>
+						</label>
+					</div>
+				</div>
+			</ion-row>
+
+			<!-- TODO Add translate -->
+			<ion-row class="row getProductType">
+				<ion-col class="pl-0 col-6">
+					<ion-item class="coord-box">
+						<ion-checkbox
+							class="mr-3"
+							[(ngModel)]="takaProductDelivery"
+							(ionChange)="getProductTypeChange('Delivery')"
+						></ion-checkbox>
+						<ion-label>Delivery</ion-label>
+					</ion-item>
+				</ion-col>
+				<ion-col class="pl-0 col-6">
+					<ion-item class="coord-box">
+						<ion-checkbox
+							class="mr-3"
+							[(ngModel)]="takaProductTakeaway"
+							(ionChange)="getProductTypeChange('Takeaway')"
+						></ion-checkbox>
+						<ion-label>Takeaway</ion-label>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+		</div>
+
+		<div ng2FileDrop [uploader]="uploader" class="col popup-half">
+			<div
+				ngf-select="imageSelected($file)"
+				ngf-pattern="'image/*'"
+				class="upload-button"
+				#imageHolder
+				id="image-holder"
+			>
+				<h6 *ngIf="isBrowser" class="dragDrop">
+					{{
+					'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.DRAG&DROP_PICTURE_HERE'
+					| translate }}
+					<br />
+				</h6>
+
+				<input
+					type="file"
+					(change)="imageUrlChanged($event)"
+					id="fileInput"
+					ng2FileSelect
+					[uploader]="uploader"
+				/>
+
+				<label *ngIf="!isBrowser">
+					<ion-icon
+						(click)="presentActionSheet()"
+						class="upload-icon"
+						ios="ios-cloud-upload"
+						md="md-cloud-upload"
+					></ion-icon>
+					<h3 class="upload-text">
+						{{
+						'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.CLICK_TO_UPLOAD_PICTURE'
+						| translate }}
+					</h3>
+				</label>
+				<label *ngIf="isBrowser" for="fileInput">
+					<ion-icon
+						class="upload-icon"
+						ios="ios-cloud-upload"
+						md="md-cloud-upload"
+					></ion-icon>
+					<h3 class="upload-text">
+						{{
+						'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.CLICK_TO_UPLOAD_PICTURE'
+						| translate }}
+					</h3>
+				</label>
+			</div>
+
+			<div class="button-bar padding-top">
+				<button class="button button-assertive" (click)="cancelModal()">
+					{{ 'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.CANCEL' | translate
+					}}
+				</button>
+
+				<button
+					class="button button-brand"
+					[disabled]="!isReadyToCreate"
+					(click)="createProduct()"
+				>
+					{{ 'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.CREATE' | translate
+					}}
+				</button>
+			</div>
+		</div>
+	</ion-row>
+</div>

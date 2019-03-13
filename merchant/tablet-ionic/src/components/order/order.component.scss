@@ -1,0 +1,12 @@
+.order-component {
+	background-color: #f3f3f3;
+	.order-segment-title {
+		margin-bottom: 15px;
+		margin-top: 0;
+		padding: 0;
+	}
+
+	ion-segment-button.segment-button-checked {
+		opacity: 1 !important;
+	}
+}

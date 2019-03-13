@@ -1,0 +1,205 @@
+<form [formGroup]="locationForm">
+	<ion-grid>
+		<ion-row>
+			<ion-col class="col-4">
+				<ion-item mode="ios">
+					<ion-label class="labels" position="floating"
+						>{{ 'SETTINGS_VIEW.COUNTRY' | translate }}</ion-label
+					>
+					<ion-select
+						formControlName="country"
+						(ionChange)="textInputChange(country, 'country')"
+						[cancelText]="buttonCancel"
+						[okText]="buttonOK"
+					>
+						<ion-select-option
+							*ngFor="let country of countries"
+							value="{{ country.id }}"
+						>
+							{{ country.name }}
+						</ion-select-option>
+					</ion-select>
+				</ion-item>
+			</ion-col>
+			<ion-col class="col-4">
+				<ion-item mode="ios">
+					<ion-label class="labels" position="floating">
+						{{ 'SETTINGS_VIEW.CITY' | translate }}
+					</ion-label>
+					<ion-input
+						type="text"
+						formControlName="city"
+						(change)="textInputChange(city, 'city')"
+					></ion-input>
+				</ion-item>
+				<span *ngIf="city.invalid && (city.dirty || city.touched)">
+					<span [hidden]="!city.errors.required">
+						<small style="color: red; margin-left: 16px;">
+							{{ 'SETTINGS_VIEW.CITY_IS_REQUIRED' | translate }}.
+						</small>
+					</span>
+				</span>
+			</ion-col>
+			<ion-col class="col-4">
+				<ion-item mode="ios">
+					<ion-label class="labels" position="floating">
+						{{ 'SETTINGS_VIEW.POSTCODE_optional' | translate
+						}}</ion-label
+					>
+					<ion-input
+						type="text"
+						formControlName="postcode"
+						(change)="textInputChange(postcode, 'postcode')"
+					></ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col class="col-4">
+				<ion-item mode="ios">
+					<ion-label class="labels" position="floating">
+						{{ 'SETTINGS_VIEW.STREET' | translate }}</ion-label
+					>
+					<ion-input
+						type="text"
+						formControlName="street"
+						(change)="textInputChange(street, 'street')"
+					></ion-input>
+				</ion-item>
+				<span
+					*ngIf="street.invalid && (street.dirty || street.touched)"
+				>
+					<span [hidden]="!street.errors.required">
+						<small style="color: red; margin-left: 16px;">
+							{{ 'SETTINGS_VIEW.STREET_IS_REQUIRED' | translate
+							}}.
+						</small>
+					</span>
+				</span>
+			</ion-col>
+			<ion-col class="col-4">
+				<ion-item mode="ios">
+					<ion-label class="labels" position="floating">
+						{{ 'SETTINGS_VIEW.HOUSE' | translate }}</ion-label
+					>
+					<ion-input
+						type="number"
+						formControlName="house"
+						(change)="textInputChange(house, 'house')"
+					></ion-input>
+				</ion-item>
+				<span *ngIf="house.invalid && (house.dirty || house.touched)">
+					<span [hidden]="!house.errors.required">
+						<small style="color: red; margin-left: 16px;">
+							{{ 'SETTINGS_VIEW.HOUSE_IS_REQUIRED' | translate }}.
+						</small>
+					</span>
+				</span>
+			</ion-col>
+			<ion-col class="col-4">
+				<ion-item mode="ios">
+					<ion-label class="labels" position="floating">
+						{{ 'SETTINGS_VIEW.APARTMENT_optional' | translate
+						}}</ion-label
+					>
+					<ion-input
+						type="number"
+						formControlName="apartment"
+					></ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col class="col-4">
+				<span class="labels" id="special-label">
+					{{ 'SETTINGS_VIEW.AUTO_DETECT_COORDINATES' | translate
+					}}</span
+				>
+				<ion-checkbox formControlName="autodetectCoordinates" checked>
+				</ion-checkbox>
+			</ion-col>
+
+			<ion-col *ngIf="!autodetectCoordinates.value" class="col-4">
+				<ion-item mode="ios">
+					<ion-label class="labels" position="floating">
+						{{ 'SETTINGS_VIEW.LATITUDE' | translate }}
+					</ion-label>
+					<ion-input
+						type="number"
+						formControlName="latitude"
+						(change)="textInputChange(latitude, 'latitude')"
+					></ion-input>
+				</ion-item>
+				<span
+					*ngIf="
+						latitude.invalid && (latitude.dirty || latitude.touched)
+					"
+				>
+					<span [hidden]="!latitude.errors.required">
+						<small style="color: red; margin-left: 16px;">
+							{{ 'SETTINGS_VIEW.LATITUDE_IS_REQUIRED' | translate
+							}}.
+						</small>
+					</span>
+				</span>
+			</ion-col>
+
+			<ion-col *ngIf="!autodetectCoordinates.value" class="col-4">
+				<ion-item mode="ios">
+					<ion-label class="labels" position="floating">
+						{{ 'SETTINGS_VIEW.LONGITUDE' | translate }}
+					</ion-label>
+					<ion-input
+						type="number"
+						formControlName="longitude"
+						(change)="textInputChange(longitude, 'longitude')"
+					></ion-input>
+				</ion-item>
+				<span
+					*ngIf="
+						longitude.invalid &&
+						(longitude.dirty || longitude.touched)
+					"
+				>
+					<span [hidden]="!longitude.errors.required">
+						<small style="color: red; margin-left: 16px;">
+							{{ 'SETTINGS_VIEW.LONGITUDE_IS_REQUIRED' | translate
+							}}.
+						</small>
+					</span>
+				</span>
+			</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col>
+				<ion-button
+					class="save-button"
+					[disabled]="!locationForm.valid"
+					(click)="saveChanges()"
+					color="success"
+				>
+					{{ 'SETTINGS_VIEW.SAVE_CHANGES' | translate }}
+				</ion-button>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</form>
+
+<div class="location-find">
+	<ion-searchbar
+		#autocomplete
+		type="text"
+		placeholder="{{ 'SETTINGS_VIEW.FIND_ADDRESS' | translate }}"
+	></ion-searchbar>
+</div>
+
+<div class="map-wrapper">
+	<google-map
+		[mapCoordEvent]="mapCoordEmitter"
+		[mapGeometryEvent]="mapGeometryEmitter"
+	>
+	</google-map>
+</div>

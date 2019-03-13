@@ -1,0 +1,41 @@
+<div class="order-map-component">
+	<h4 class="custom-title-popup d-flex">
+		<span class="ml-auto">Track order</span>
+		<span class="ml-auto"
+			><ion-icon (click)="cancelModal()" name="close"></ion-icon
+		></span>
+	</h4>
+	<div class="addrInfo">
+		<div *ngIf="warehouse" class="row m-0">
+			<div>
+				<img *ngIf="merchantIcon" src="{{ merchantIcon }}" alt="" />
+				<strong> Shop -</strong>
+				<span class="text"
+					>{{ getfullAddress(warehouse.geoLocation) }}</span
+				>
+			</div>
+		</div>
+		<div *ngIf="order?.user" class="row m-0">
+			<div>
+				<img *ngIf="userIcon" src="{{ userIcon }}" alt="" />
+				<strong> Customer -</strong>
+				<span class="text"
+					>{{ getfullAddress(order.user.geoLocation) }}
+				</span>
+			</div>
+		</div>
+		<div *ngIf="order?.carrier" class="row m-0">
+			<div>
+				<img
+					*ngIf="carrierIcon"
+					src="{{ carrierIcon }}"
+					alt=""
+				/><strong> Carrier -</strong>
+				<span class="text"
+					>{{ getfullAddress(order.carrier.geoLocation) }}
+				</span>
+			</div>
+		</div>
+	</div>
+	<div #gmap id="mapDiv" class="map"></div>
+</div>

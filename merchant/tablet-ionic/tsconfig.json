@@ -1,26 +1,31 @@
 {
 	"compileOnSave": false,
 	"compilerOptions": {
-		"allowSyntheticDefaultImports": true,
+		"sourceMap": true,
 		"declaration": false,
+		"moduleResolution": "node",
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-		"lib": ["dom", "es2015", "esnext"],
-		"module": "es2015",
-		"moduleResolution": "node",
-		"sourceMap": true,
+		"noImplicitAny": false,
+		"preserveConstEnums": true,
+		"allowSyntheticDefaultImports": true,
 		"target": "es5",
 		"typeRoots": ["node_modules/@types"],
-		"baseUrl": "./",
-		"types": ["node", "googlemaps"],
+		"baseUrl": "./src",
 		"paths": {
-			"@pyro/*": ["./modules/server.common/@pyro/*"],
+			"@ionic-native/*": ["../node_modules/@ionic-native/*"],
+			"@angular/*": ["../node_modules/@angular/*"],
 			"@modules/*": ["./modules/*"],
+			"@pyro/*": ["./modules/server.common/@pyro/*"],
 			"mongoose": [
 				"./modules/client.common.angular2/mongoose-placeholder"
 			],
-			"typeorm": ["./modules/client.common.angular2/typeorm-placeholder"]
-		}
+			"typeorm": ["./modules/client.common.angular2/typeorm-placeholder"],
+			"environment": ["./environments/environment"]
+		},
+		"lib": ["es2017", "dom", "esnext"],
+		"noUnusedLocals": false,
+		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"]
 	},
 	"include": [
 		"src/**/*.ts",

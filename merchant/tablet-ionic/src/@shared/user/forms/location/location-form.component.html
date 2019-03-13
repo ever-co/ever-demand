@@ -1,0 +1,234 @@
+<form [formGroup]="form" *ngIf="form">
+	<ion-grid>
+		<ion-row>
+			<ion-col>
+				<h5 class="text-center">
+					{{ 'WAREHOUSE_VIEW.NEW_ORDER_VIEW.ADDRESS' | translate }}
+				</h5>
+			</ion-col>
+		</ion-row>
+
+		<ion-row *ngIf="showAutocompleteSearch">
+			<ion-col class="search-bar-wrapper col-8">
+				<ion-searchbar
+					#autocomplete
+					placeholder="{{
+						'WAREHOUSE_VIEW.NEW_ORDER_VIEW.FIND_ADDRESS' | translate
+					}}"
+				></ion-searchbar>
+			</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating">
+						{{
+							'WAREHOUSE_VIEW.NEW_ORDER_VIEW.COUNTRY' | translate
+						}}...</ion-label
+					>
+					<ion-select
+						formControlName="countryId"
+						(ionChange)="onAddressChanges()"
+						[cancelText]="buttonCancel"
+						[okText]="buttonOK"
+					>
+						<ion-select-option
+							*ngFor="let country of countries"
+							value="{{ country.id }}"
+						>
+							{{ country.name }}
+						</ion-select-option>
+					</ion-select>
+				</ion-item>
+
+				<div
+					*ngIf="isCountryValid"
+					ion-text
+					color="danger"
+					class="wrapper-err"
+				>
+					{{
+						'WAREHOUSE_VIEW.NEW_ORDER_VIEW.COUNTRY_IS_INVALID'
+							| translate
+					}}!
+				</div>
+			</ion-col>
+
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating"
+						>*
+						{{ 'WAREHOUSE_VIEW.NEW_ORDER_VIEW.CITY' | translate }}
+					</ion-label>
+					<ion-input
+						type="text"
+						(ionBlur)="onAddressChanges()"
+						formControlName="city"
+					>
+					</ion-input>
+				</ion-item>
+
+				<div
+					*ngIf="isCityValid"
+					color="danger"
+					ion-text
+					class="wrapper-err"
+				>
+					{{
+						'WAREHOUSE_VIEW.NEW_ORDER_VIEW.CITY_IS_REQUIRED'
+							| translate
+					}}!
+				</div>
+			</ion-col>
+
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating">
+						{{
+							'WAREHOUSE_VIEW.NEW_ORDER_VIEW.ZIP' | translate
+						}}</ion-label
+					>
+					<ion-input
+						type="text"
+						(ionBlur)="onAddressChanges()"
+						formControlName="postcode"
+					>
+					</ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating"
+						>*
+						{{
+							'WAREHOUSE_VIEW.NEW_ORDER_VIEW.STREET_ADDRESS'
+								| translate
+						}}</ion-label
+					>
+					<ion-input
+						type="text"
+						(ionBlur)="onAddressChanges()"
+						formControlName="streetAddress"
+					>
+					</ion-input>
+				</ion-item>
+
+				<div
+					*ngIf="isStreetAddressValid"
+					ion-text
+					color="danger"
+					class="wrapper-err"
+				>
+					{{
+						'WAREHOUSE_VIEW.NEW_ORDER_VIEW.STREET_ADDRESS_IS_REQUIRED'
+							| translate
+					}}!
+				</div>
+			</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating"
+						>*
+						{{
+							'WAREHOUSE_VIEW.NEW_ORDER_VIEW.HOUSE_№' | translate
+						}}</ion-label
+					>
+					<ion-input
+						type="text"
+						(ionBlur)="onAddressChanges()"
+						formControlName="house"
+					>
+					</ion-input>
+				</ion-item>
+
+				<div
+					*ngIf="isHouseValid"
+					ion-text
+					color="danger"
+					class="wrapper-err"
+				>
+					{{
+						'WAREHOUSE_VIEW.NEW_ORDER_VIEW.HOUSE_IS_REQUIRED'
+							| translate
+					}}!
+				</div>
+			</ion-col>
+
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating">
+						{{
+							'WAREHOUSE_VIEW.NEW_ORDER_VIEW.APARTMENT'
+								| translate
+						}}
+					</ion-label>
+					<ion-input
+						type="text"
+						(ionBlur)="onAddressChanges()"
+						[formControl]="apartment"
+					>
+					</ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col size="4">
+				<ion-item id="test" class="coord-box">
+					<ion-label>
+						{{
+							'WAREHOUSE_VIEW.NEW_ORDER_VIEW.SHOW_COORDINATES'
+								| translate
+						}}</ion-label
+					>
+					<ion-checkbox
+						slot="start"
+						(ionChange)="toggleCoordinates()"
+					></ion-checkbox>
+				</ion-item>
+			</ion-col>
+
+			<ion-col [hidden]="!showCoordinates" formGroupName="loc">
+				<ion-item formArrayName="coordinates">
+					<ion-label class="labels" position="floating">
+						{{
+							'WAREHOUSE_VIEW.NEW_ORDER_VIEW.LATITUDE' | translate
+						}}
+					</ion-label>
+					<ion-input
+						type="number"
+						(ionBlur)="onCoordinatesChanged()"
+						formControlName="0"
+						step="0.1"
+					>
+					</ion-input>
+				</ion-item>
+			</ion-col>
+
+			<ion-col [hidden]="!showCoordinates" formGroupName="loc">
+				<ion-item formArrayName="coordinates">
+					<ion-label class="labels" position="floating">
+						{{
+							'WAREHOUSE_VIEW.NEW_ORDER_VIEW.LONGITUTE'
+								| translate
+						}}
+					</ion-label>
+					<ion-input
+						type="number"
+						(ionBlur)="onCoordinatesChanged()"
+						formControlName="1"
+						step="0.1"
+					>
+					</ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</form>

@@ -1,0 +1,42 @@
+{
+	"project_info": {
+		"project_number": "XXXXXXXXXXXXXXXXXXXXX",
+		"firebase_url": "https://ever-merchants.firebaseio.com",
+		"project_id": "ever-merchants",
+		"storage_bucket": "ever-merchants.appspot.com"
+	},
+	"client": [
+		{
+			"client_info": {
+				"mobilesdk_app_id": "XXXXXXXXXXXXXXXXXXXXX",
+				"android_client_info": {
+					"package_name": "co.ever.merchants"
+				}
+			},
+			"oauth_client": [
+				{
+					"client_id": "XXXXXXXXXXXXXXXXXXXXX",
+					"client_type": 3
+				}
+			],
+			"api_key": [
+				{
+					"current_key": "XXXXXXXXXXXXXXXXXXXXX"
+				}
+			],
+			"services": {
+				"analytics_service": {
+					"status": 1
+				},
+				"appinvite_service": {
+					"status": 1,
+					"other_platform_oauth_client": []
+				},
+				"ads_service": {
+					"status": 2
+				}
+			}
+		}
+	],
+	"configuration_version": "1"
+}

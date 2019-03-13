@@ -1,0 +1,143 @@
+<ion-menu
+	(ionWillOpen)="menuOpened()"
+	[hidden]="maintenanceMode"
+	contentId="pageContainer"
+	side="start"
+	class="menu-left"
+>
+	<ion-header class="bar-assertive bar bar-header disable-user-behavior">
+		<h1 class="title header-bar-big-title">
+			<!-- <img ng-if="sideMenuCtrl.titleImageSrc" ng-src="{{sideMenuCtrl.titleImageSrc}}" style="height: 15px;"/> -->
+			<span>
+				{{ 'SIDE_MENU.TITLE' | translate }}
+			</span>
+		</h1>
+	</ion-header>
+
+	<ion-content>
+		<ion-list>
+			<ion-item-group>
+				<ion-menu-toggle [autoHide]="true">
+					<ion-item
+						routerLink="/warehouse"
+						routerDirection="root"
+						routerLinkActive="activated"
+					>
+						<ion-icon
+							ios="ios-cart-outline"
+							md="md-cart"
+						></ion-icon>
+						<ion-label>{{
+							'SIDE_MENU.GROUPS.NO_TITLE.ITEMS.WAREHOUSE'
+								| translate
+						}}</ion-label>
+					</ion-item>
+
+					<ion-item
+						routerLink="/customers"
+						routerDirection="root"
+						routerLinkActive="activated"
+					>
+						<ion-icon
+							ios="ios-globe-outline"
+							md="md-globe"
+						></ion-icon>
+						<ion-label>{{
+							'CUSTOMERS_VIEW.CUSTOMERS' | translate
+						}}</ion-label>
+					</ion-item>
+
+					<ion-item
+						routerLink="/carriers"
+						routerDirection="root"
+						routerLinkActive="activated"
+					>
+						<ion-icon
+							ios="ios-globe-outline"
+							md="md-car"
+						></ion-icon>
+						<ion-label>{{
+							'CARRIERS_VIEW.CARRIERS' | translate
+						}}</ion-label>
+					</ion-item>
+
+					<ion-item disabled="true">
+						<ion-label>{{
+							'SIDE_MENU.GROUPS.INFO.DIVER_TITLE' | translate
+						}}</ion-label>
+					</ion-item>
+
+					<ion-item
+						routerLink="/info/about"
+						routerDirection="root"
+						routerLinkActive="activated"
+					>
+						<ion-icon
+							ios="ios-information-circle-outline"
+							md="md-information-circle"
+						></ion-icon>
+						<ion-label>{{
+							'SIDE_MENU.GROUPS.INFO.ITEMS.ABOUT_US' | translate
+						}}</ion-label>
+					</ion-item>
+
+					<ion-item
+						routerLink="/info/terms-of-use"
+						routerDirection="root"
+						routerLinkActive="activated"
+					>
+						<ion-icon
+							ios="ios-paper-outline"
+							md="md-paper"
+						></ion-icon>
+						<ion-label>{{
+							'SIDE_MENU.GROUPS.INFO.ITEMS.TERMS_OF_USE'
+								| translate
+						}}</ion-label>
+					</ion-item>
+
+					<ion-item
+						routerLink="/settings"
+						routerDirection="root"
+						routerLinkActive="activated"
+					>
+						<ion-icon md="md-settings"></ion-icon>
+						<ion-label>{{
+							'SIDE_MENU.GROUPS.SETTINGS.SETTINGS' | translate
+						}}</ion-label>
+					</ion-item>
+
+					<ion-item
+						routerLink="/language"
+						routerDirection="root"
+						routerLinkActive="activated"
+					>
+						<ion-icon
+							ios="ios-globe-outline"
+							md="md-globe"
+						></ion-icon>
+						<ion-label>{{
+							'SIDE_MENU.GROUPS.SETTINGS.ITEMS.LANGUAGE'
+								| translate
+						}}</ion-label>
+					</ion-item>
+
+					<ion-item
+						routerLink="/login"
+						routerDirection="root"
+						routerLinkActive="activated"
+					>
+						<ion-icon
+							ios="ios-log-out-outline"
+							md="md-log-out"
+						></ion-icon>
+						<ion-label>{{
+							'SIDE_MENU.GROUPS.SETTINGS.ITEMS.SIGN_OUT'
+								| translate
+						}}</ion-label>
+					</ion-item>
+				</ion-menu-toggle>
+			</ion-item-group>
+		</ion-list>
+	</ion-content>
+</ion-menu>

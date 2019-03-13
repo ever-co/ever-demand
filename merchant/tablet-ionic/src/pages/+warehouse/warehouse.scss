@@ -1,0 +1,87 @@
+.warehouse-view {
+	.redbar {
+		padding: 0 !important;
+
+		ion-icon {
+			font-size: 32px;
+		}
+
+		div {
+			.text {
+				font-size: 1.2em;
+			}
+			.all {
+				font-size: 1em;
+				text-transform: uppercase;
+				min-height: 43px !important;
+				border: none;
+			}
+
+			display: flex;
+			align-items: center;
+			justify-content: space-evenly;
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	.products-spinner {
+		top: calc(50% - 30px);
+	}
+
+	.warehouse-view {
+		height: 100%;
+
+		.orders {
+			min-height: 100%;
+			background-color: #f3f3f3;
+			order.card {
+				border: 0;
+				box-shadow: none;
+			}
+		}
+	}
+
+	ion-row.warehouse-view {
+		padding: 0px;
+	}
+
+	div.scroll-content {
+		overflow-y: hidden;
+	}
+
+	a.button {
+		font-size: 0.8em;
+	}
+	.icon.button-icon.plus-navbar-button {
+		color: white;
+	}
+
+	.allowOverflow {
+		a {
+			overflow: unset !important;
+			padding: 0 !important;
+		}
+	}
+
+	.order-header {
+		height: 50px;
+	}
+
+	.button-bar-right-container {
+		width: 330px !important;
+	}
+}
+
+.order-timer-container {
+	.order-header {
+		min-height: 50px;
+		height: auto;
+	}
+}
+// This apply for create and edit product type category
+// header title of select category option
+[id^='alert-subhdr'] {
+	text-align: center;
+	font-size: 17px;
+}

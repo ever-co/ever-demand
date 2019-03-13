@@ -1,0 +1,9 @@
+<h4 class="product-name order-title order-header">
+	<span *ngIf="order">
+		{{ 'ORDER_TITLE_COMPONENT.ORDER' | translate }} #{{ orderName }}
+		<span *ngIf="userFullName">
+			{{ 'ORDER_TITLE_COMPONENT.FROM' | translate }} {{ userFullName
+			}}</span
+		>
+	</span>
+</h4>

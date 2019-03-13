@@ -1,0 +1,19 @@
+.pagination {
+	text-align: center;
+	padding-bottom: 10px;
+	padding-left: 0 !important;
+	font-size: 1em;
+	display: block !important;
+}
+
+ion-spinner {
+	width: 40px !important;
+	height: 40px !important;
+	left: calc(50% - 20px);
+	position: absolute;
+	zoom: 2;
+}
+
+.orders-spinner {
+	top: 40%;
+}

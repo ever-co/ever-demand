@@ -1,0 +1,29 @@
+{
+	"ORDER_WAREHOUSE_STATUSES": {
+		"CREATED_AT": "Créé à",
+		"CREATED": "Créé",
+		"CONFIRMED": "Confirmé",
+		"PROCESSING": "En traitement",
+		"ALLOCATION_STARTED": "Allocation commencée",
+		"ALLOCATION_FINISHED": "Allocation terminée",
+		"PACKAGING_STARTED": "Emballage commencé",
+		"PACKAGED": "Emballé",
+		"GIVEN_TO_CARRIER": "Donné au transporteur",
+		"ALLOCATION_FAILED": "Échec de l'allocation",
+		"PACKAGING_FAILED": "L'emballage a échoué",
+		"BAD_STATUS": "Mauvais statut",
+		"TAKEN": "Pris"
+	},
+	"CUSTOMER_ORDERS_POP_UP": {
+		"ORDER_ID": "Numéro de commande",
+		"DELIVERY": "Livraison",
+		"ADDRESS": "Adresse",
+		"STATUS": "Statut"
+	},
+	"ORDER_WITHOUT_CARRIER_COMPONENT": {
+		"CANT_PROCESSING_WITHOUT_PRODUCTS": "Impossible de traiter la commande sans les produits."
+	},
+	"WAREHOUSE_VIEW": {
+		"PRODUCTS": "Top produits"
+	}
+}

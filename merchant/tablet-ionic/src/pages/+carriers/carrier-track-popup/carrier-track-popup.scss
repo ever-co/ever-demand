@@ -1,0 +1,47 @@
+.carrier-track-wrapper {
+	display: flex !important;
+	.modal-wrapper {
+		width: 500px;
+		height: 500px;
+		left: calc(50% - (500px / 2));
+		top: calc(50% - (500px / 2));
+		carrier-track-popup {
+			border: 1px solid rgba(0, 0, 0, 0.125);
+			background: white;
+			width: 100%;
+			height: 100%;
+			border-radius: 5px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: space-evenly;
+			.map {
+				width: 100%;
+				height: 100%;
+			}
+		}
+	}
+}
+
+.carrier-track-carrier-info {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	h3,
+	ul,
+	li {
+		margin: 0;
+		padding: 0;
+	}
+
+	h3 {
+		margin-bottom: 10px;
+	}
+	li {
+		margin-left: 5px;
+		margin-bottom: 3px;
+	}
+}

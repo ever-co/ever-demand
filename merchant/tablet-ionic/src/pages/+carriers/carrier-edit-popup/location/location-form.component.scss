@@ -1,0 +1,53 @@
+.carrier-location-form {
+	ion-item {
+		.location-find {
+			padding-top: 0px !important;
+			margin-top: 0px !important;
+			padding-bottom: 0px !important;
+			margin-bottom: 0px !important;
+			width: 70%;
+			margin: auto;
+		}
+	}
+
+	ion-button {
+		border: none;
+	}
+
+	.search-find {
+		ion-col.col {
+			div.input-wrapper {
+				ion-label.label.label-md {
+					padding-top: 0px;
+					padding-bottom: 0px;
+					margin-bottom: 0px;
+					margin-top: 0px;
+				}
+			}
+		}
+		div.item-inner {
+			border-bottom: 0px !important;
+		}
+	}
+
+	.crete-carrier-location-title {
+		ion-col.col {
+			h5 {
+				padding-top: 0px !important;
+				padding-bottom: 0px !important;
+				margin-bottom: 0px !important;
+				margin-top: 0px !important;
+			}
+		}
+	}
+
+	ion-grid.buttons-back-done {
+		padding-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-bottom: 0px !important;
+		margin-top: 0px !important;
+	}
+	.g-map {
+		height: 190px !important;
+	}
+}

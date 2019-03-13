@@ -1,0 +1,159 @@
+<form class="edit-carrier-basic-info" [formGroup]="form">
+	<ion-grid>
+		<ion-row text-center class="crete-carrier">
+			<ion-col>
+				<h5>
+					{{
+						'CARRIERS_VIEW.ADD_CARRIER.PROFILE_DETAILS' | translate
+					}}
+				</h5>
+			</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col text-center>
+				<ion-item>
+					<ion-label class="labels" position="floating">{{
+						'CARRIERS_VIEW.ADD_CARRIER.FIRST_NAME' | translate
+					}}</ion-label>
+					<ion-input
+						type="text"
+						formControlName="firstName"
+					></ion-input>
+				</ion-item>
+				<div *ngIf="isFirstNameValid" class="validation-errors">
+					<span *ngIf="firstName.errors.required">{{
+						'CARRIERS_VIEW.ADD_CARRIER.FORMS.ERRORS.FIRST_NAME_REQUIRED'
+							| translate
+					}}</span>
+					<span *ngIf="firstName.errors.pattern">{{
+						'CARRIERS_VIEW.ADD_CARRIER.FORMS.ERRORS.MUST_CONTAIN_ONLY_LETTERS'
+							| translate
+					}}</span>
+				</div>
+			</ion-col>
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating">{{
+						'CARRIERS_VIEW.ADD_CARRIER.LAST_NAME' | translate
+					}}</ion-label>
+					<ion-input
+						type="text"
+						formControlName="lastName"
+					></ion-input>
+				</ion-item>
+				<div *ngIf="isLastNameValid" class="validation-errors">
+					<span *ngIf="lastName.errors.required">
+						{{
+							'CARRIERS_VIEW.ADD_CARRIER.FORMS.ERRORS.LAST_NAME_REQUIRED'
+								| translate
+						}}
+					</span>
+					<span *ngIf="lastName.errors.pattern">{{
+						'CARRIERS_VIEW.ADD_CARRIER.FORMS.ERRORS.MUST_CONTAIN_ONLY_LETTERS'
+							| translate
+					}}</span>
+				</div>
+			</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating">{{
+						'CARRIERS_VIEW.ADD_CARRIER.PHONE' | translate
+					}}</ion-label>
+					<ion-input type="text" formControlName="phone"></ion-input>
+				</ion-item>
+				<div *ngIf="isPhoneValid" class="validation-errors">
+					<span [hidden]="!phone.hasError('required')">
+						{{
+							'CARRIERS_VIEW.ADD_CARRIER.FORMS.ERRORS.LAST_NAME_REQUIRED'
+								| translate
+						}}
+					</span>
+					<span [hidden]="!phone.hasError('pattern')">
+						{{
+							'CARRIERS_VIEW.ADD_CARRIER.FORMS.ERRORS.PHONE_MUST_CONTAINS_ONLY(special_signs)AND_DIGIT_CHARACTER'
+								| translate
+						}}
+					</span>
+				</div>
+			</ion-col>
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating">
+						{{ 'CARRIERS_VIEW.ADD_CARRIER.EMAIL' | translate }}
+					</ion-label>
+					<ion-input type="text" formControlName="email"></ion-input>
+				</ion-item>
+				<div *ngIf="isEmailValid" class="validation-errors">
+					<span *ngIf="email.errors != null">{{
+						'CARRIERS_VIEW.ADD_CARRIER.FORMS.ERRORS.EMAIL_IS_REQUIRED'
+							| translate
+					}}</span>
+				</div>
+			</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col id="common">
+				<ion-row>
+					<ion-item class="upload-input col-10 p-0">
+						<ion-input
+							ng2FileDrop
+							[uploader]="uploader"
+							(onFileDrop)="imageUrlChanged()"
+							[placeholder]="isBrowser ? dragAndDrob : pictureURL"
+							type="text"
+							formControlName="logo"
+						></ion-input>
+					</ion-item>
+					<label class="browseBtnOut col-2" for="fileInput">
+						<div *ngIf="isBrowser" class="browseBtnIn" ion-button>
+							{{ 'CARRIERS_VIEW.ADD_CARRIER.BROWSE' | translate }}
+						</div>
+						<button
+							*ngIf="!isBrowser"
+							class="browseBtnIn"
+							(click)="presentActionSheet()"
+							ion-button
+						>
+							{{ 'CARRIERS_VIEW.ADD_CARRIER.BROWSE' | translate }}
+						</button>
+					</label>
+					<input
+						[hidden]="true"
+						(change)="imageUrlChanged()"
+						type="file"
+						id="fileInput"
+						ng2FileSelect
+						[uploader]="uploader"
+					/>
+				</ion-row>
+
+				<ion-row class="form-group" *ngIf="logo.value">
+					<div class="col-12 p-0">
+						<ion-row class="preview-img pt-1">
+							<div>
+								<img
+									src="{{ logo.value }}"
+									alt="Invalid image"
+									class="img-rounded"
+								/>
+							</div>
+
+							<div class="removeIcon" (click)="deleteImg()">
+								<ion-icon
+									ios="ios-remove-circle"
+									id="remove-circle"
+									md="md-remove-circle"
+								></ion-icon>
+							</div>
+						</ion-row>
+					</div>
+				</ion-row>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</form>

@@ -1,0 +1,137 @@
+<form class="col-sm-12" [formGroup]="form" *ngIf="form">
+	<ion-grid>
+		<ion-row>
+			<ion-col>
+				<h5 class="text-center">
+					{{ 'WAREHOUSE_VIEW.NEW_ORDER_VIEW.BASIC_INFO' | translate }}
+				</h5>
+			</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating"
+						>{{
+							'WAREHOUSE_VIEW.NEW_ORDER_VIEW.FIRST_NAME'
+								| translate
+						}}
+					</ion-label>
+					<ion-input type="text" formControlName="firstName">
+					</ion-input>
+				</ion-item>
+			</ion-col>
+
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating">
+						{{
+							'WAREHOUSE_VIEW.NEW_ORDER_VIEW.LAST_NAME'
+								| translate
+						}}
+					</ion-label>
+					<ion-input type="text" formControlName="lastName">
+					</ion-input>
+				</ion-item>
+			</ion-col>
+
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating">
+						{{ 'WAREHOUSE_VIEW.NEW_ORDER_VIEW.EMAIL' | translate }}
+					</ion-label>
+					<ion-input type="text" formControlName="email"> </ion-input>
+				</ion-item>
+
+				<div
+					*ngIf="email.errors && (email.dirty || email.touched)"
+					ion-text
+					color="danger"
+					class="email-err-wrapper"
+				>
+					<div [hidden]="!this.email.hasError('email')">
+						{{
+							'WAREHOUSE_VIEW.NEW_ORDER_VIEW.EMAIL_IS_INVALID'
+								| translate
+						}}
+					</div>
+					<div [hidden]="!email.hasError('emailTaken')">
+						{{
+							'WAREHOUSE_VIEW.NEW_ORDER_VIEW.EMAIL_IS_ALREADY_IN_USE'
+								| translate
+						}}!
+					</div>
+				</div>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col id="common">
+				<ion-row>
+					<ion-item class="upload-input col-10">
+						<ion-input
+							ng2FileDrop
+							[uploader]="uploader"
+							(onFileDrop)="imageUrlChanged()"
+							[placeholder]="isBrowser ? dragAndDrob : pictureURL"
+							type="text"
+							formControlName="image"
+						></ion-input>
+					</ion-item>
+					<label class="browseBtnOut col-2">
+						<label
+							*ngIf="isBrowser"
+							class="browseBtnIn"
+							for="fileInput"
+						>
+							<span>
+								{{
+									'CARRIERS_VIEW.ADD_CARRIER.BROWSE'
+										| translate
+								}}</span
+							>
+						</label>
+						<button
+							*ngIf="!isBrowser"
+							class="browseBtnIn"
+							(click)="presentActionSheet()"
+						>
+							<span>{{
+								'CARRIERS_VIEW.ADD_CARRIER.BROWSE' | translate
+							}}</span>
+						</button>
+					</label>
+					<input
+						[hidden]="true"
+						(change)="imageUrlChanged()"
+						type="file"
+						id="fileInput"
+						ng2FileSelect
+						[uploader]="uploader"
+					/>
+				</ion-row>
+
+				<ion-row class="form-group" *ngIf="image.value">
+					<div class="col-12">
+						<div class="row preview-img">
+							<div>
+								<img
+									src="{{ image.value }}"
+									alt="Invalid image"
+									class="img-rounded"
+								/>
+							</div>
+
+							<div class="removeIcon" (click)="deleteImg()">
+								<ion-icon
+									ios="ios-remove-circle"
+									id="remove-circle"
+									md="md-remove-circle"
+								></ion-icon>
+							</div>
+						</div>
+					</div>
+				</ion-row>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</form>

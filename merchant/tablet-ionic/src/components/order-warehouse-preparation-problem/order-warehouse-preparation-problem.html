@@ -1,0 +1,30 @@
+<div class="card order-card">
+	<div class="row m-0">
+		<order-image class="col-2 p-0" [order]="order"></order-image>
+
+		<div class="order-main-container warehouse-issues col-8">
+			<order-title [order]="order"></order-title>
+			<div class="order-main">
+				<div class="delivery-details">
+					<customer-info [user]="order?.user"></customer-info>
+				</div>
+			</div>
+		</div>
+
+		<div class="order-timer-container col-2">
+			<h4 class="status order-header danger">
+				{{ getWarehouseStatus.call(null, order.warehouseStatus) |
+				translate }}
+			</h4>
+
+			<div class="times">
+				<div class="time-big">
+					{{
+					'ORDER_WAREHOUSE_PREPARATION_PROBLEM_COMPONENT.CREATED_AT' |
+					translate }}
+					<div class="big">{{ order.createdAt | date: 'HH:mm' }}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

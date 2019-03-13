@@ -1,0 +1,21 @@
+.order-without-carrier {
+	order-control-buttons {
+		margin: auto;
+		margin-bottom: 10px;
+	}
+	.no-processing {
+		width: 100%;
+		height: 160px;
+		display: flex !important;
+		align-content: center !important;
+		align-items: center !important;
+
+		.no-processing-text {
+			margin: 0;
+			width: 100%;
+			padding: 0 20px;
+			color: #bd4742;
+			text-align: center;
+		}
+	}
+}

@@ -1,0 +1,44 @@
+.carriers-add-choice {
+	ion-grid,
+	ion-row,
+	ion-col {
+		background: white;
+	}
+
+	.option {
+		margin-top: 20px !important;
+		position: absolute;
+		width: 200px;
+		height: 150px;
+		border: 2px solid #dadfe6;
+		margin: 0 auto;
+		position: relative;
+		text-align: center;
+		color: #2a2a2a;
+
+		// text-transform: uppercase;
+		letter-spacing: 0.4px;
+		font-weight: 500;
+		font-family: Exo;
+		-webkit-transition: none;
+		transition: none;
+		cursor: default;
+		padding: 0.75rem 1.5rem;
+		font-size: 0.9rem;
+		line-height: 1.25;
+		border-radius: 0.375rem;
+		padding-top: 63px;
+		font-weight: bold;
+		span {
+			// filter: drop-shadow(3px 3px 3px rgb(182, 184, 182));
+		}
+	}
+
+	.option:hover {
+		background: #dadfe6;
+	}
+
+	.selected {
+		background: #dadfe6;
+	}
+}

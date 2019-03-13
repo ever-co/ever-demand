@@ -1,0 +1,28 @@
+.order-map-component {
+	background-color: #fff;
+	height: 100%;
+	display: flex !important;
+	flex-direction: column;
+
+	.addrInfo {
+		height: 120px;
+
+		.row {
+			padding: 0 15px 10px 15px;
+			line-height: 1;
+			img {
+				width: 24px;
+				height: 24px;
+				margin-bottom: -2px;
+			}
+		}
+
+		.text {
+			font-style: italic;
+		}
+	}
+
+	.map {
+		min-height: 310px !important;
+	}
+}

@@ -1,0 +1,28 @@
+<div *ngIf="order" class="carrier-info">
+	<div class="header">
+		<h5>
+			<ion-icon ios="ios-car" md="md-car"></ion-icon>
+			<span> {{ 'TRACK_ORDER_POP_UP.CARRIER' | translate }}</span>
+		</h5>
+	</div>
+	<div class="body">
+		<div *ngIf="order.carrier.logo" class="carrier-image">
+			<img src="{{ order.carrier.logo }}" alt="" />
+		</div>
+		<div class="row m-0">
+			<div class="carrier-details col-9">
+				<div>{{ fullName }}</div>
+				<carrier-phone [carrier]="order.carrier"></carrier-phone>
+				<div>{{ order.carrier.email }}</div>
+				<div>{{ fullAddress }}</div>
+			</div>
+
+			<div class="treck-carrier col-3">
+				<button (click)="track()">
+					<ion-icon ios="ios-locate" md="md-locate"></ion-icon>
+					{{ 'TRACK_ORDER_POP_UP.TRACK' | translate }}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

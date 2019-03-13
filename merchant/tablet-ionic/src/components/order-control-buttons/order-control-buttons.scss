@@ -1,0 +1,19 @@
+.order-control-buttons {
+	.button:hover {
+		color: white !important;
+		opacity: 0.7;
+	}
+
+	.button {
+		color: white !important;
+
+		padding: 0.2rem 1.2rem;
+		font-size: 1.2rem;
+	}
+
+	.button.disabled {
+		cursor: default;
+		opacity: 0.4;
+		pointer-events: none;
+	}
+}

@@ -1,0 +1,34 @@
+nb-card {
+	margin: 0;
+
+	nb-card-header {
+		border: none;
+		div.checkbox label {
+			cursor: pointer;
+			display: flex;
+			align-items: flex-start;
+			margin-bottom: 0;
+			width: 40%;
+
+			input[type='checkbox'] {
+				zoom: 1.5;
+				margin-right: 2.5%;
+			}
+		}
+	}
+
+	nb-card-body {
+		padding: 0;
+
+		ng2-smart-table {
+			text-align: center;
+		}
+	}
+
+	nb-card-footer {
+		button {
+			float: right;
+			margin-right: 2%;
+		}
+	}
+}

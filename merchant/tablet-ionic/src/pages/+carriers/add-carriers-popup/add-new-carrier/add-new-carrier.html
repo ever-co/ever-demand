@@ -1,0 +1,68 @@
+<!-- <form [formGroup]="form"> -->
+<div class="add-new-carrier">
+	<ion-grid [hidden]="!isNextStepOneAvailable">
+		<ion-row>
+			<ion-col text-center>
+				<basic-info-form #basicInfoForm></basic-info-form>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+	<ion-grid [hidden]="!isNextStepTwoAvailable">
+		<ion-row>
+			<ion-col text-center>
+				<account-form #accountForm></account-form>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+	<ion-grid [hidden]="!isNextStepThreeAvailable">
+		<ion-row>
+			<ion-col text-center>
+				<carrier-location-form
+					#locationForm
+					(buttonClickEventComplete)="onClickComplete($event)"
+					(backToStep2event)="toStep2event($event)"
+				></carrier-location-form>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
+	<ion-grid>
+		<ion-row>
+			<ion-col text-center>
+				<ion-button
+					color="dark"
+					class="mr-2"
+					*ngIf="isNextStepOneAvailable"
+					(click)="clickPrevOrComplete('previous')"
+				>
+					{{ 'CARRIERS_VIEW.ADD_CARRIER.PREVIOUS' | translate }}
+				</ion-button>
+				<ion-button
+					color="light"
+					class="mr-2"
+					*ngIf="isNextStepTwoAvailable"
+					(click)="backToStep1()"
+				>
+					{{ 'CARRIERS_VIEW.ADD_CARRIER.BACK' | translate }}
+				</ion-button>
+				<ion-button
+					color="dark"
+					*ngIf="isNextStepOneAvailable"
+					(click)="nextToStep2()"
+					[disabled]="!basicInfoForm?.form.valid"
+				>
+					{{ 'CARRIERS_VIEW.ADD_CARRIER.NEXT' | translate }}
+				</ion-button>
+				<ion-button
+					color="dark"
+					*ngIf="isNextStepTwoAvailable"
+					(click)="nextToStep3()"
+					[disabled]="!accountForm?.form.valid"
+				>
+					{{ 'CARRIERS_VIEW.ADD_CARRIER.NEXT' | translate }}
+				</ion-button>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</div>
+<!-- </form> -->

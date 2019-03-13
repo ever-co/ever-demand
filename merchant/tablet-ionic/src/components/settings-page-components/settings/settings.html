@@ -1,0 +1,123 @@
+<!-- TODO Add translate -->
+<div class="merchant-settings" *ngIf="currWarehouse">
+	<ion-grid>
+		<h4 class="row-title">Delivery/Takeaway Settings</h4>
+		<ion-row>
+			<ion-col class="col-6">
+				<ion-item mode="ios">
+					<!-- TODO Add translate -->
+					<ion-label> Products Delivery (by default) </ion-label>
+					<ion-checkbox
+						slot="start"
+						#productsDelivery="ngModel"
+						[(ngModel)]="currWarehouse.productsDelivery"
+					></ion-checkbox>
+				</ion-item>
+			</ion-col>
+			<ion-col class="col-6">
+				<ion-item mode="ios">
+					<!-- TODO Add translate -->
+					<ion-label> Products Takeaway (by default) </ion-label>
+					<ion-checkbox
+						slot="start"
+						#productsTakeaway="ngModel"
+						[(ngModel)]="currWarehouse.productsTakeaway"
+					></ion-checkbox>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<br />
+		<h4 class="row-title">Payments Settings</h4>
+		<ion-row>
+			<ion-col class="col-6">
+				<ion-item mode="ios">
+					<ion-label>
+						{{ 'SETTINGS_VIEW.ALLOW_ONLINE_PAYMENTS' | translate }}?
+					</ion-label>
+					<ion-checkbox
+						slot="start"
+						#isPaymentEnabled="ngModel"
+						[(ngModel)]="currWarehouse.isPaymentEnabled"
+					></ion-checkbox>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+
+		<br />
+		<h4 class="row-title">Barcode/QR code Settings</h4>
+		<ion-row>
+			<ion-col class="col-6">
+				<ion-item
+					mode="ios"
+					class="input-with-checkbox align-with-label-input"
+				>
+					<ion-label>Order barcode type</ion-label>
+					<ion-select
+						#orderBarcodeType="ngModel"
+						[(ngModel)]="currWarehouse.orderBarcodeType"
+					>
+						<ion-select-option
+							*ngFor="let type of orderBarcodeTypes"
+							value="{{ type }}"
+							>{{ getorderBarcodeTypesToString(type)
+							}}</ion-select-option
+						>
+					</ion-select>
+				</ion-item>
+			</ion-col>
+			<!-- TODO Add translate -->
+			<ion-col class="col-6">
+				<ion-row>
+					<!-- TODO Add translate -->
+					<ion-item mode="ios" class="col-9">
+						<ion-label class="labels" position="floating"
+							>Barcode data</ion-label
+						>
+						<ion-input
+							type="text"
+							#barcodeData="ngModel"
+							[(ngModel)]="currWarehouse.barcodeData"
+							debounce="1000"
+							(ionChange)="barcodeDataChange($event)"
+						></ion-input>
+					</ion-item>
+					<label id="scanBtnOut" class="col-3">
+						<button
+							class="p-0 button button-brand-lighted col-100"
+							(click)="scan()"
+						>
+							<i class="fa fa-qrcode"></i> Scan Existed
+						</button>
+					</label>
+				</ion-row>
+				<ion-row>
+					<span *ngIf="barcodetDataUrl" class="barcode-container">
+						<img src="{{ barcodetDataUrl }}" alt=""
+					/></span>
+				</ion-row>
+			</ion-col>
+		</ion-row>
+
+		<br />
+		<ion-row>
+			<ion-col>
+				<ion-button
+					[disabled]="
+						hasChanges(
+							isPaymentEnabled.dirty,
+							productsDelivery.dirty,
+							productsTakeaway.dirty,
+							orderBarcodeType.dirty,
+							barcodeData.dirty
+						)
+					"
+					class="save-button"
+					(click)="saveChanges()"
+					color="success"
+				>
+					{{ 'SETTINGS_VIEW.SAVE_CHANGES' | translate }}
+				</ion-button>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</div>

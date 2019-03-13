@@ -1,0 +1,8 @@
+{
+  "name": "ever-merchants",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular",
+  "app_id": "4e9f4799" 
+}

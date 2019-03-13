@@ -1,0 +1,17 @@
+page-about {
+	.toolbar-title.toolbar-title-md {
+		text-align: center;
+		color: white;
+	}
+	.scroll-content {
+		padding: 0 !important;
+	}
+	.toolbar-background {
+		background-color: #2a2c39;
+	}
+	.about-us-content {
+		min-height: 90vh;
+		width: 100% !important;
+		padding-top: 50px;
+	}
+}

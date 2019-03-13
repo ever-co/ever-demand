@@ -1,0 +1,15 @@
+<div class="make-order-wrapper">
+	<ng2-smart-table
+		class="smart-table"
+		[settings]="settingsSmartTable"
+		[source]="sourceSmartTable"
+	></ng2-smart-table>
+</div>
+
+<button
+	class="order-button button button-balanced"
+	(click)="makeOrder()"
+	[disabled]="!canOrder"
+>
+	{{ 'WAREHOUSE_VIEW.NEW_ORDER_VIEW.MAKE_ORDER' | translate }}
+</button>

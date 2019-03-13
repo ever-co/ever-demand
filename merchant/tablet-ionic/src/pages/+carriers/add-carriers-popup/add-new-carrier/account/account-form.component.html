@@ -1,0 +1,69 @@
+<form class="carrier-account-form" [formGroup]="form">
+	<ion-row text-center class="crete-carrier">
+		<ion-col>
+			<h5>{{ 'CARRIERS_VIEW.ADD_CARRIER.ACCOUNT' | translate }}</h5>
+		</ion-col>
+	</ion-row>
+
+	<ion-row>
+		<ion-col col-6 text-center>
+			<ion-item mode="ios">
+				<ion-label position="floating">{{
+					'CARRIERS_VIEW.ADD_CARRIER.USERNAME' | translate
+				}}</ion-label>
+				<ion-input type="text" formControlName="userName"></ion-input>
+			</ion-item>
+		</ion-col>
+
+		<ion-col>
+			<ion-item mode="ios">
+				<ion-label position="floating">{{
+					'CARRIERS_VIEW.ADD_CARRIER.PASSWORD' | translate
+				}}</ion-label>
+				<ion-input
+					type="password"
+					formControlName="password"
+				></ion-input>
+			</ion-item>
+		</ion-col>
+	</ion-row>
+	<ion-row>
+		<ion-col>
+			<ion-item mode="ios" class="coord-box">
+				<ion-checkbox
+					class="mr-2"
+					color="success"
+					formControlName="isActive"
+				></ion-checkbox>
+
+				<ion-label>{{
+					'CARRIERS_VIEW.ADD_CARRIER.IS_ACTIVE' | translate
+				}}</ion-label>
+			</ion-item>
+		</ion-col>
+
+		<ion-col>
+			<ion-item mode="ios">
+				<ion-label position="floating">
+					{{
+						'CARRIERS_VIEW.ADD_CARRIER.REPEAT_PASSWORD' | translate
+					}}</ion-label
+				>
+				<ion-input
+					type="password"
+					formControlName="repeatPassword"
+				></ion-input>
+			</ion-item>
+			<span *ngIf="repeatPassword.dirty || repeatPassword.touched">
+				<span [hidden]="password.value === repeatPassword.value">
+					<small style="color: red; margin-left: 16px;">
+						{{
+							'CARRIERS_VIEW.ADD_CARRIER.PASSWORD_DO_NOT_MATCH'
+								| translate
+						}}.
+					</small>
+				</span>
+			</span>
+		</ion-col>
+	</ion-row>
+</form>

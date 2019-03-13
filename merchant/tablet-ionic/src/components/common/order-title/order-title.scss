@@ -1,0 +1,9 @@
+.order-title {
+	.product-name {
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
