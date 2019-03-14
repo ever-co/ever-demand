@@ -184,7 +184,7 @@
 		"@ionic/ng-toolkit": "^1.1.0",
 		"@ionic/schematics-angular": "^1.0.7",
 		"@types/d3-color": "^1.2.2",
-		"@types/googlemaps": "^3.30.16",
+		"@types/googlemaps": "^3.30.19",
 		"@types/graphql": "^14.0.5",
 		"@types/jasmine": "^3.3.9",
 		"@types/jasminewd2": "^2.0.6",
