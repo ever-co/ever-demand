@@ -147,7 +147,7 @@
 		"ngx-drag-scroll": "^7.1.3",
 		"ngx-hm-carousel": "^1.6.5-bata.1",
 		"ngx-infinite-scroll": "^7.0.1",
-		"ngx-toastr": "~9.1.2",
+		"ngx-toastr": "~10.0.2",
 		"reflect-metadata": "^0.1.13",
 		"rxjs": "^6.4.0",
 		"rxjs-compat": "^6.4.0",
