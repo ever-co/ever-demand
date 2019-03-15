@@ -8,6 +8,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { Globalization } from '@ionic-native/globalization';
 import { Platform } from '@ionic/angular';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
+import { first } from 'rxjs/operators';
+import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 
 // TODO use https://beta.ionicframework.com/docs/building/storage
 
@@ -18,7 +20,8 @@ export class Store {
 	constructor(
 		private readonly _translateService: TranslateService,
 		private readonly platform: Platform,
-		private readonly inviteRouter: InviteRouter
+		private readonly inviteRouter: InviteRouter,
+		private readonly userRouter: UserRouter
 	) {
 		this._initLanguage();
 	}
@@ -216,6 +219,25 @@ export class Store {
 
 	clear() {
 		localStorage.clear();
+	}
+
+	async isLogged() {
+		const userId = this.userId;
+
+		if (userId) {
+			try {
+				await this.userRouter
+					.get(userId)
+					.pipe(first())
+					.toPromise();
+				return true;
+			} catch (error) {
+				this.userId = null;
+			}
+		}
+
+		console.warn(`User with id '${userId}' does not exists!"`);
+		return false;
 	}
 
 	private async _initLanguage() {

@@ -31,7 +31,7 @@
 {{ 'PRODUCTS_VIEW.BUY_BUTTON.SUF' | translate }} -->
 
 <div class="brand-dark products-view">
-	<ion-card *ngFor="let productInfo of products" class="productCard">
+	<ion-card *ngFor="let productInfo of showProducts" class="productCard">
 		<ion-grid class="brand-light">
 			<ion-row no-padding align-items-center>
 				<ion-col class="col-2">
@@ -87,19 +87,37 @@
 				<ion-col class="box col-8">
 					<button
 						class="button button-assertive border-color-brand col-100"
-						(click)="buy.emit(productInfo)"
+						[ngClass]="{ disabled: productInfo.soldOut }"
+						(click)="!productInfo.soldOut && buy.emit(productInfo)"
 					>
 						<span
-							>{{ 'PRODUCTS_VIEW.BUY_BUTTON.PRE' | translate }}
+							>{{
+								!productInfo.soldOut
+									? ('PRODUCTS_VIEW.BUY_BUTTON.PRE'
+									  | translate)
+									: ('PRODUCTS_VIEW.NOT_AVAILABLE'
+									  | translate)
+							}}
 							<span class="price">
-								${{ productInfo.warehouseProduct?.price || '' }}
+								{{
+									!productInfo.soldOut
+										? productInfo.warehouseProduct?.price +
+												'$' || ''
+										: ''
+								}}
 							</span>
-							{{ 'PRODUCTS_VIEW.BUY_BUTTON.SUF' | translate }}
+							{{
+								!productInfo.soldOut
+									? ('PRODUCTS_VIEW.BUY_BUTTON.SUF'
+									  | translate)
+									: ''
+							}}
 						</span>
 					</button>
 				</ion-col>
 				<ion-col class="box col-4">
 					<button
+						[disabled]="productInfo.soldOut"
 						class="button button-brand border-color-brand col-100"
 						(click)="goToDetailsPage.emit(productInfo)"
 					>

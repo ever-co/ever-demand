@@ -27,7 +27,6 @@ export type WarehouseManageTabs = Pick<
 	templateUrl: './warehouse-manage-tabs.component.html'
 })
 export class WarehouseManageTabsComponent {
-	//
 	static buildForm(formBuilder: FormBuilder): FormGroup {
 		return formBuilder.group({
 			details: WarehouseManageTabsDetailsComponent.buildForm(formBuilder),
@@ -130,5 +129,6 @@ export class WarehouseManageTabsComponent {
 		this.tabSet.tabs._results[1].activeValue = false;
 		this.tabSet.tabs._results[2].activeValue = false;
 		this.tabSet.tabs._results[3].activeValue = false;
+		this.tabSet.tabs._results[4].activeValue = false;
 	}
 }

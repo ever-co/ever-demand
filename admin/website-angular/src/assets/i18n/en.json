@@ -239,7 +239,8 @@
 			"DETAILS": "Details",
 			"ACCOUNT": "Account",
 			"CONTACT_INFO": "Contact Info",
-			"LOCATION": "Location"
+			"LOCATION": "Location",
+			"DELIVERY_ZONES": "Delivery zones"
 		}
 	},
 	"WAREHOUSES_VIEW": {
@@ -900,6 +901,9 @@
 		"ARE_YOU_SURE_YOU_WANT_TO_DECREASE": "Are you sure you want to decrease the qty of products?",
 		"YES": "Yes",
 		"NO": "No"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Server connection is lost"
 	},
 	"BUTTON_NEXT": "Next",
 	"BUTTON_PREV": "Back",

@@ -55,6 +55,10 @@ const routes: Routes = [
 			'./pages/+maintenance-info/maintenance-info.module#MaintenanceInfoModule',
 		canActivate: [MaintenanceModuleGuard]
 	},
+	{
+		path: 'server-down',
+		loadChildren: './pages/+server-down/server-down.module#ServerDownModule'
+	},
 	{ path: '**', redirectTo: '' }
 ];
 

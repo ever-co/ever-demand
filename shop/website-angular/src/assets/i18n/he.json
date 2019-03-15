@@ -117,5 +117,8 @@
 	"SETTINGS_VIEW": {
 		"SETTINGS": "הגדרות",
 		"LANGUAGE": "שפה"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "השרת נפל"
 	}
 }

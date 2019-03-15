@@ -24,8 +24,6 @@ import { differenceBy, pullAllBy } from 'lodash';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { Router } from '@angular/router';
 import { Store } from '../../../../services/store.service';
-import { takeUntil } from 'rxjs/operators';
-import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 import { IonSlides } from '@ionic/angular';
 
 const initializeProductsNumber: number = 10;
@@ -37,8 +35,6 @@ const initializeProductsNumber: number = 10;
 })
 export class ProductsSlidesViewComponent
 	implements OnInit, AfterViewInit, OnChanges, OnDestroy {
-	private static MAX_DESCRIPTION_LENGTH: number = 45;
-
 	@Input()
 	products: ProductInfo[];
 
@@ -68,7 +64,6 @@ export class ProductsSlidesViewComponent
 
 	imageOrientation: number = 1;
 	product: ProductInfo;
-	soldOut: boolean;
 
 	// http://idangero.us/swiper/api/#events
 	readonly swiperOptions: SwiperOptions;
@@ -77,7 +72,7 @@ export class ProductsSlidesViewComponent
 	private readonly swiperEvents$ = new Subject<'init' | 'next' | 'prev'>();
 	private readonly ngDestroy$ = new Subject<void>();
 	private slides$: any;
-	private warehouseProduct$;
+	private static MAX_DESCRIPTION_LENGTH: number = 45;
 
 	constructor(
 		// TODO Fix Progress Bar
@@ -85,8 +80,7 @@ export class ProductsSlidesViewComponent
 		private readonly translateProductLocales: ProductLocalesService,
 		private readonly ngZone: NgZone,
 		private router: Router,
-		private store: Store,
-		private warehouseProductsRouter: WarehouseProductsRouter
+		private store: Store
 	) {
 		// tslint:disable-next-line:no-this-assignment
 		const self = this;
@@ -116,6 +110,10 @@ export class ProductsSlidesViewComponent
 				}
 			}
 		};
+	}
+
+	get showProducts() {
+		return this.products.filter((p) => p.warehouseProduct.count !== 0);
 	}
 
 	ngOnInit() {
@@ -160,7 +158,6 @@ export class ProductsSlidesViewComponent
 		// this.progressBar.set(100 / this.products.length);
 
 		this._loadData(0);
-		this._subscribeWarehouseProduct();
 		this.slides$ = this.slides.ionSlideWillChange.subscribe(async () => {
 			const index = await this.slides.getActiveIndex();
 
@@ -172,9 +169,9 @@ export class ProductsSlidesViewComponent
 			}
 
 			this._loadData(index);
-			this._subscribeWarehouseProduct();
 		});
 	}
+
 	shortenDescription(desc: string) {
 		return desc.length < ProductsSlidesViewComponent.MAX_DESCRIPTION_LENGTH
 			? desc
@@ -188,30 +185,6 @@ export class ProductsSlidesViewComponent
 		return this.translateProductLocales.getTranslate(member);
 	}
 
-	private _loadData(index: number) {
-		this.product = this.products[index];
-	}
-
-	private _subscribeWarehouseProduct() {
-		if (this.warehouseProduct$) {
-			this.warehouseProduct$.unsubscribe();
-		}
-
-		if (this.product) {
-			this.warehouseProduct$ = this.warehouseProductsRouter
-				.get(this.product.warehouseId, false)
-				.pipe(takeUntil(this.ngDestroy$))
-				.subscribe((r) => {
-					const prod = r.filter(
-						(p) =>
-							p.productId ===
-							this.product.warehouseProduct.product['id']
-					)[0];
-					this.soldOut = !prod || prod.count <= 0;
-				});
-		}
-	}
-
 	ngOnDestroy() {
 		this.swiperEvents$.complete();
 
@@ -221,5 +194,9 @@ export class ProductsSlidesViewComponent
 
 		this.ngDestroy$.next();
 		this.ngDestroy$.complete();
+	}
+
+	private _loadData(index: number) {
+		this.product = this.products[index];
 	}
 }

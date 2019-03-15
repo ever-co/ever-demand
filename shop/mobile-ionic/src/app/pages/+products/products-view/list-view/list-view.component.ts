@@ -15,7 +15,7 @@ export class ProductsListViewComponent implements OnInit {
 	private static MAX_DESCRIPTION_LENGTH: number = 53;
 
 	@Input()
-	public products: ProductInfo[] = [];
+	products: ProductInfo[] = [];
 
 	@Input()
 	placeholder: string;
@@ -47,6 +47,10 @@ export class ProductsListViewComponent implements OnInit {
 	constructor(
 		private readonly translateProductLocales: ProductLocalesService
 	) {}
+
+	get showProducts() {
+		return this.products.filter((p) => p.warehouseProduct.count !== 0);
+	}
 
 	ngOnInit(): void {
 		this.loadProducts.emit({

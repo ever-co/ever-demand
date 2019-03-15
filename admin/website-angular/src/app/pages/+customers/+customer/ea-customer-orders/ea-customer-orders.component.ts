@@ -5,27 +5,18 @@ import { LocalDataSource } from 'ng2-smart-table';
 import Order from '@modules/server.common/entities/Order';
 import { DatePipe } from '@angular/common';
 import { takeUntil } from 'rxjs/operators';
-import { RedirectStoreComponent } from '../../../../@shared/render-component/customer-orders-table/redirect-store.component';
-import { RedirectCarrierComponent } from '../../../../@shared/render-component/customer-orders-table/redirect-carrier.component';
+import { RedirectStoreComponent } from '../../../../@shared/render-component/customer-orders-table/redirect-store/redirect-store.component';
+import { RedirectCarrierComponent } from '../../../../@shared/render-component/customer-orders-table/redirect-carrier/redirect-carrier.component';
 import { RedirectOrderComponent } from '../../../../@shared/render-component/customer-orders-table/redirect-order.component';
-import { RedirectProductComponent } from '../../../../@shared/render-component/customer-orders-table/redirect-product.component';
-import { CustomerOrderActionsComponent } from '../../../../@shared/render-component/customer-orders-table/customer-order-actions.component';
+import { RedirectProductComponent } from '../../../../@shared/render-component/customer-orders-table/redirect-product/redirect-product.component';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin, Subject, Observable } from 'rxjs';
+import { CustomerOrderActionsComponent } from 'app/@shared/render-component/customer-orders-table/customer-order-actions/customer-order-actions.component';
 
 @Component({
 	selector: 'ea-customer-orders',
 	styleUrls: ['./ea-customer-orders.component.scss'],
-	template: `
-		<nb-card>
-			<nb-card-body>
-				<ng2-smart-table
-					[settings]="settingsSmartTable"
-					[source]="sourceSmartTable"
-				></ng2-smart-table>
-			</nb-card-body>
-		</nb-card>
-	`
+	templateUrl: './ea-customer-orders.component.html'
 })
 export class CustomerOrdersComponent implements OnDestroy, OnInit, OnChanges {
 	private ngDestroy$ = new Subject<void>();

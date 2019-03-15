@@ -10,9 +10,11 @@ export class ProductsModuleGuard implements CanLoad {
 		private readonly router: Router
 	) {}
 
-	canLoad(route: Route) {
+	async canLoad(route: Route) {
+		const isLogged = await this.store.isLogged();
+
 		if (
-			this.store.userId == null &&
+			!isLogged &&
 			this.store.registrationSystem === RegistrationSystem.Enabled
 		) {
 			this.router.navigate(['invite']);

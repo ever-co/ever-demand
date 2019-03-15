@@ -19,6 +19,7 @@ export class GeoLocationProductsService {
 			merchantIds?: string[];
 			imageOrientation?: number;
 			locale?: string;
+			withoutCount?: boolean;
 		},
 		searchText?: string
 	): Observable<ProductInfo[]> {
@@ -96,6 +97,7 @@ export class GeoLocationProductsService {
 			merchantIds?: string[];
 			imageOrientation?: number;
 			locale?: string;
+			withoutCount?: boolean;
 		},
 		searchText?: string
 	) {

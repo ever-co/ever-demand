@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, Router } from '@angular/router';
 import { PagesModuleGuard } from './pages/pages.module.guard';
 import { MaintenanceModuleGuard } from './maintenance-info/maintenance-info.module.guard';
+import { Store } from './services/store.service';
 
 const routes: Routes = [
 	{
@@ -30,4 +31,12 @@ const routes: Routes = [
 	imports: [RouterModule.forRoot(routes)],
 	exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+	constructor(private store: Store, private router: Router) {
+		const serverConnection = Number(this.store.serverConnection);
+
+		if (serverConnection === 0) {
+			this.router.navigate(['server-down']);
+		}
+	}
+}

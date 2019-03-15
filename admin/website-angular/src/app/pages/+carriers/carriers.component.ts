@@ -14,9 +14,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
 import _ from 'lodash';
 import { RedirectNameComponent } from '../../@shared/render-component/name-redirect.component';
-import { CarrierActionsComponent } from '../../@shared/render-component/carriers-table/carrier-actions.component';
 import { CarrierImageComponent } from '../../@shared/render-component/carriers-table/carrier-image/carrier-image.component';
 import { CarrierPhoneComponent } from '../../@shared/render-component/carriers-table/carrier-phone/carrier-phone.component';
+import { CarrierActionsComponent } from 'app/@shared/render-component/carriers-table/carrier-actions/carrier-actions.component';
 
 const perPage = 5;
 

@@ -20,7 +20,6 @@
 					<nb-card-body style="overflow:inherit;">
 						<div>
 							<ng-select
-								(change)="selectNewStore($event)"
 								[items]="stores"
 								placeholder="{{
 									'DASHBOARD_VIEW.SELECT_COMPONENT.SELECT_STORE'
@@ -28,10 +27,9 @@
 								}}"
 								[clearable]="false"
 								bindLabel="id"
-								bindValue="id"
 								style="width:100%;margin-bottom:30px;"
-								(change)="urlChanger($event)"
-								[(ngModel)]="selectedStoreId"
+								(change)="storeListener($event)"
+								[(ngModel)]="selectedStore"
 							>
 								<ng-template ng-label-tmp let-item="item">
 									<img
@@ -61,16 +59,15 @@
 								</ng-template>
 							</ng-select>
 							<ng-select
-								(change)="filterByCarrierId()"
+								(change)="carrierListener($event)"
 								[items]="filteredCarriersList"
-								[(ngModel)]="selectedCarrierName"
+								[(ngModel)]="selectedCarrier"
 								[clearable]="false"
 								placeholder="{{
 									'CARRIERS_VIEW.CARRIER_PAGE.SELECT_CARRIER'
 										| translate
 								}}"
 								bindLabel="fullName"
-								bindValue="fullName"
 								style="width:100%; margin-bottom:30px;"
 							>
 								<ng-template ng-label-tmp let-item="item">
@@ -125,10 +122,7 @@
 										</li>
 									</ul>
 								</div>
-								<div
-									class="carrier"
-									*ngIf="selectedCarrierName"
-								>
+								<div class="carrier" *ngIf="selectedCarrier">
 									<h5>
 										<b>{{ selectedCarrier.fullName }}</b>
 									</h5>

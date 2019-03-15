@@ -4,16 +4,16 @@ import { RedirectIdComponent } from './redirect-id';
 import { CommonModule } from '@angular/common';
 import { ThemeModule } from '../../@theme';
 import { RedirectNameComponent } from './name-redirect.component';
-import { CreatedComponent } from './created.component';
+import { CreatedComponent } from './created/created.component';
 import { ProductTitleRedirectComponent } from './product-title-redirect/product-title-redirect.component';
 import { ProductImageRedirectComponent } from './product-image-redirect/product-image-redirect.component';
 import { ProductCheckboxComponent } from './product-checkbox';
 import { MomentModule } from 'ngx-moment';
-import { CheckboxComponent } from './checkbox.component';
 import { ProductTitleComponent } from './product-title/product-title.component';
 import { ProductImageComponent } from './product-image/product-image.component';
 import { CustomerEmailComponent } from './customer-email/customer-email.component';
 import { CustomerPhoneComponent } from './customer-phone/customer-phone.component';
+import { CheckboxComponent } from './customer-orders-table/checkbox/checkbox.component';
 
 const COMPONENTS = [
 	PriceCountInputComponent,

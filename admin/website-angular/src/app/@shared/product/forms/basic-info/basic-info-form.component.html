@@ -77,20 +77,31 @@
 			</div>
 		</div>
 
-		<div class="form-group row" [hidden]="image?.invalid">
+		<div
+			class="form-group row images-container mt-0"
+			*ngIf="!image?.invalid"
+		>
 			<label class="col-sm-2 control-label"></label>
-			<div class="col-sm-9">
+			<div
+				class="mt-0 images-content mt-2"
+				*ngFor="let image of imagesArr"
+			>
 				<div class="row preview-img">
 					<div>
 						<img
 							#productImagePreview
-							src="{{ image.value }}"
+							src="{{ image }}"
 							alt="Invalid image"
 							class="img-rounded"
+							(load)="imgOnLoad()"
+							(error)="imgOnError()"
 						/>
 					</div>
 
-					<div class="removeIcon pl-2 pr-2" (click)="deleteImg()">
+					<div
+						class="removeIcon pl-2 pr-2"
+						(click)="deleteImg(image)"
+					>
 						<div
 							class="ion-md-remove-circle"
 							placeholder="Remove image"

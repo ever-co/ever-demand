@@ -239,7 +239,8 @@
 			"DETAILS": "Детали",
 			"ACCOUNT": "Счет",
 			"CONTACT_INFO": "Контактная информация",
-			"LOCATION": "Место нахождения"
+			"LOCATION": "Место нахождения",
+			"DELIVERY_ZONES": "Зоны доставки"
 		}
 	},
 	"WAREHOUSES_VIEW": {
@@ -894,6 +895,9 @@
 		"ARE_YOU_SURE_YOU_WANT_TO_DECREASE": "Вы уверены, что хотите уменьшить количество продуктов?",
 		"YES": "Да",
 		"NO": "Нет"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Сервер упал"
 	},
 	"BUTTON_NEXT": "Продолжайте",
 	"BUTTON_PREV": "Назад",

@@ -87,7 +87,8 @@
 			"WIZARD_TITLES": {
 				"BASIC_INFO": "Informations de base",
 				"CONTACT_INFO": "Informations de contact",
-				"LOCATION": "Emplacement"
+				"LOCATION": "Emplacement",
+				"DELIVERY_ZONES": "Zones de livraison"
 			}
 		},
 		"ADD_PRODUCTS": "Ajouter des produits",

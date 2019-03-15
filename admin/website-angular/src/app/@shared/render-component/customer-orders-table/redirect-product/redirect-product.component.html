@@ -1,0 +1,6 @@
+<div *ngIf="product" (click)="redirect()" class="redirectBtn productBtn">
+	<h6>
+		{{ productTitle }}
+		<span class="badge badge-secondary">{{ product.count }}</span>
+	</h6>
+</div>

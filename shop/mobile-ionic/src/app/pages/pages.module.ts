@@ -6,6 +6,8 @@ import { InfoModuleGuard } from './+info/info.module.guard';
 import { MaintenanceService } from '@modules/client.common.angular2/services/maintenance.service';
 import { OrderTakeawayInfoModuleGuard } from './+products/+order/takeaway/+page/takeaway-page.module.guard';
 import { OrderInfoPageModuleGuard } from './+products/+order/+order-info/order-info.module.guard';
+import { OrdersHistoryModuleGuard } from './+orders-history/orders-history.module.guard';
+import { MerchantsPageModuleGuard } from './+merchants/merchants.module.guard';
 
 const routes: Routes = [
 	{
@@ -22,7 +24,8 @@ const routes: Routes = [
 	{
 		path: 'orders-history',
 		loadChildren:
-			'./+orders-history/orders-history.module#OrdersHistoryPageModule'
+			'./+orders-history/orders-history.module#OrdersHistoryPageModule',
+		canLoad: [OrdersHistoryModuleGuard]
 	},
 	{
 		path: 'invite',
@@ -56,7 +59,8 @@ const routes: Routes = [
 	},
 	{
 		path: 'merchants',
-		loadChildren: './+merchants/merchants.module#MerchantsPageModule'
+		loadChildren: './+merchants/merchants.module#MerchantsPageModule',
+		canLoad: [MerchantsPageModuleGuard]
 	},
 	{
 		path: '',
@@ -73,7 +77,9 @@ const routes: Routes = [
 		InfoModuleGuard,
 		MaintenanceService,
 		OrderTakeawayInfoModuleGuard,
-		OrderInfoPageModuleGuard
+		OrderInfoPageModuleGuard,
+		OrdersHistoryModuleGuard,
+		MerchantsPageModuleGuard
 	],
 	exports: [RouterModule]
 })

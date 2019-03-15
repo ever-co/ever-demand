@@ -54,4 +54,15 @@
 		>
 		</google-map>
 	</nb-tab>
+	<nb-tab
+		tabTitle="{{
+			'WAREHOUSE_MANAGE.WIZARD_TITLES.DELIVERY_ZONES' | translate
+		}}"
+		class="pt-5 pb-3"
+	>
+		<ea-warehouse-manage-tabs-delivery-areas
+			[mapCoordEvent]="mapCoordEmitter"
+		>
+		</ea-warehouse-manage-tabs-delivery-areas>
+	</nb-tab>
 </nb-tabset>

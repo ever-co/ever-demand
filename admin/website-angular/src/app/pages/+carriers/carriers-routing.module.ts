@@ -13,7 +13,11 @@ const routes: Routes = [
 		component: TrackComponent
 	},
 	{
-		path: 'track/:id',
+		path: 'track/:storeId',
+		component: TrackComponent
+	},
+	{
+		path: 'track/:storeId/:carrierId',
 		component: TrackComponent
 	},
 	{

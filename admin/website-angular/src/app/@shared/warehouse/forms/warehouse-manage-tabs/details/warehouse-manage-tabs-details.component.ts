@@ -3,8 +3,7 @@ import {
 	Input,
 	ViewChild,
 	ElementRef,
-	AfterViewInit,
-	OnDestroy
+	AfterViewInit
 } from '@angular/core';
 import {
 	AbstractControl,

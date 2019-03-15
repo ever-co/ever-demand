@@ -239,7 +239,8 @@
 			"DETAILS": "פרטים",
 			"ACCOUNT": "חֶשְׁבּוֹן",
 			"CONTACT_INFO": "פרטים ליצירת קשר",
-			"LOCATION": "מקום"
+			"LOCATION": "מקום",
+			"DELIVERY_ZONES": "אזורי אספקה"
 		}
 	},
 	"WAREHOUSES_VIEW": {
@@ -897,6 +898,9 @@
 		"ARE_YOU_SURE_YOU_WANT_TO_DECREASE": "האם אתה בטוח שברצונך להקטין את כמות המוצרים?",
 		"YES": "כן",
 		"NO": "לא"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "השרת נפל"
 	},
 	"BUTTON_NEXT": "הַבָּא",
 	"BUTTON_PREV": "חזור",

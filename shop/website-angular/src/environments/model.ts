@@ -15,6 +15,7 @@ export interface Environment {
 	DEFAULT_LONGITUDE?: number;
 	DELIVERY_TIME_MIN?: number;
 	DELIVERY_TIME_MAX?: number;
+	NO_INTERNET_LOGO: string;
 
 	decorateModuleRef(modRef: NgModuleRef<any>): NgModuleRef<any>;
 }

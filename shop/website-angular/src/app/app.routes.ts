@@ -4,6 +4,7 @@ import { LoginModuleGuard } from './+login/login.module.guard';
 import { ProductsModuleGuard } from './+products/products.module.guard';
 import { AppModuleGuard } from './app.module.guard';
 import { MaintenanceModuleGuard } from './+maintenance-info/maintenance-info.module.guard';
+import { AuthGuard } from './authentication/auth.guard';
 
 export const ROUTES: Routes = [
 	{
@@ -22,15 +23,17 @@ export const ROUTES: Routes = [
 			{
 				path: 'products',
 				loadChildren: './+products#ProductsModule',
-				canActivate: [ProductsModuleGuard]
+				canActivate: [ProductsModuleGuard, AuthGuard]
 			},
 			{
 				path: 'orders',
-				loadChildren: './+orders#OrdersModule'
+				loadChildren: './+orders#OrdersModule',
+				canActivate: [AuthGuard]
 			},
 			{
 				path: 'settings',
-				loadChildren: './+settings#SettingsModule'
+				loadChildren: './+settings#SettingsModule',
+				canActivate: [AuthGuard]
 			}
 		],
 		canActivate: [AppModuleGuard]
@@ -40,6 +43,10 @@ export const ROUTES: Routes = [
 		loadChildren:
 			'./+maintenance-info/maintenance-info.module#MaintenanceInfoModule',
 		canActivate: [MaintenanceModuleGuard]
+	},
+	{
+		path: 'server-down',
+		loadChildren: './+server-down/server-down.module#ServerDownModule'
 	},
 	{
 		path: '**',

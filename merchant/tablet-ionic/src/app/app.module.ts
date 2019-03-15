@@ -37,7 +37,7 @@ import { MaintenanceModuleGuard } from './+maintenance-info/maintenance-info.mod
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { Network } from '@ionic-native/network/ngx';
 import { Device } from '@ionic-native/device/ngx';
-import { first } from 'rxjs/operators';
+import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -81,6 +81,13 @@ import { first } from 'rxjs/operators';
 			deps: [GoogleMapsLoader],
 			multi: true
 		},
+		ServerConnectionService,
+		{
+			provide: APP_INITIALIZER,
+			useFactory: serverConnectionFactory,
+			deps: [ServerConnectionService, Store],
+			multi: true
+		},
 		MaintenanceService,
 		{
 			provide: APP_INITIALIZER,
@@ -107,23 +114,7 @@ import { first } from 'rxjs/operators';
 	bootstrap: [AppComponent]
 })
 export class AppModule {
-	constructor(
-		private readonly http: HttpClient,
-		private readonly store: Store
-	) {
-		this.checkServerConnection();
-	}
-
-	private async checkServerConnection() {
-		try {
-			await this.http
-				.get(environment.SERVICES_ENDPOINT)
-				.pipe(first())
-				.toPromise();
-		} catch (error) {
-			this.store.serverConnection = error.status;
-		}
-	}
+	constructor() {}
 }
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -132,6 +123,13 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 export function googleMapsLoaderFactory(provider: GoogleMapsLoader) {
 	return () => provider.load(environment.GOOGLE_MAPS_API_KEY);
+}
+
+export function serverConnectionFactory(
+	provider: ServerConnectionService,
+	store: Store
+) {
+	return () => provider.load(environment.SERVICES_ENDPOINT, store);
 }
 
 export function maintenanceFactory(provider: MaintenanceService) {

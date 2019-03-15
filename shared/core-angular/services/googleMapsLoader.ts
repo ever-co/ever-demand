@@ -5,7 +5,7 @@ export class GoogleMapsLoader {
 	constructor() {}
 
 	load(googleMapsApiKey: string) {
-		const src = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&libraries=places&callback=__onGoogleLoaded`;
+		const src = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&libraries=places,drawing&callback=__onGoogleLoaded`;
 
 		return new Promise(async (resolve, reject) => {
 			window['__onGoogleLoaded'] = (ev) => {

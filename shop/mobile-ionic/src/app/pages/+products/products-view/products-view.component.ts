@@ -9,6 +9,7 @@ import {
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
 import { Store } from '../../../services/store.service';
 import { Router } from '@angular/router';
+import { WarehouseProductsService } from 'app/services/merchants/warehouse-products';
 
 @Component({
 	selector: 'e-cu-products-view',
@@ -43,7 +44,11 @@ export class ProductsViewComponent implements OnChanges {
 	@Input()
 	type: 'slides' | 'list';
 
-	constructor(private store: Store, private router: Router) {}
+	constructor(
+		private store: Store,
+		private router: Router,
+		private warehouseProductsService: WarehouseProductsService
+	) {}
 
 	ngOnChanges({ products }: { products: SimpleChange }) {
 		// This logic works when all products are loaded in the begin
@@ -69,19 +74,34 @@ export class ProductsViewComponent implements OnChanges {
 		// this._subscribeWarehouseProduct(products[ 0 ].warehouseId);
 	}
 
-	goToDetailsPage(product: ProductInfo) {
-		this.router.navigate(
-			[
-				`/products/product-details/${
-					product.warehouseProduct.product['id']
-				}`
-			],
-			{
-				queryParams: {
-					backUrl: '/products',
-					warehouseId: product.warehouseId
-				}
-			}
+	async goToDetailsPage(product: ProductInfo) {
+		const prod = await this.warehouseProductsService.getWarehouseProduct(
+			product.warehouseId,
+			product.warehouseProduct.id
 		);
+
+		if (prod) {
+			this.router.navigate(
+				[
+					`/products/product-details/${
+						product.warehouseProduct.product['id']
+					}`
+				],
+				{
+					queryParams: {
+						backUrl: '/products',
+						warehouseId: product.warehouseId
+					}
+				}
+			);
+		} else {
+			const loadedProduct = this.products.find(
+				(p) => p.warehouseProduct.id === product.warehouseProduct.id
+			);
+
+			if (loadedProduct) {
+				loadedProduct['soldOut'] = true;
+			}
+		}
 	}
 }

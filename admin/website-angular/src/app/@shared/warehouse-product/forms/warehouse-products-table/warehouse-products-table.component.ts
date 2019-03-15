@@ -6,9 +6,9 @@ import { Subject, Observable, forkJoin } from 'rxjs';
 import { PriceCountInputComponent } from '../../../render-component/price-countInput.component';
 import { TranslateService } from '@ngx-translate/core';
 import { ProductCheckboxComponent } from 'app/@shared/render-component/product-checkbox';
-import { CheckboxComponent } from 'app/@shared/render-component/checkbox.component';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
+import { CheckboxComponent } from 'app/@shared/render-component/customer-orders-table/checkbox/checkbox.component';
 
 @Component({
 	selector: 'ea-warehouse-products-table',

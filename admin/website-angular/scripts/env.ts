@@ -17,6 +17,8 @@ export type Env = Readonly<{
 	DEFAULT_LATITUDE: number;
 	DEFAULT_LONGITUDE: number;
 
+	NO_INTERNET_LOGO: string;
+
 	MAP_MERCHANT_ICON_LINK: string;
 
 	MAP_USER_ICON_LINK: string;
@@ -56,6 +58,8 @@ export const env: Env = cleanEnv(
 
 		DEFAULT_LATITUDE: num({ default: 42.6459136 }),
 		DEFAULT_LONGITUDE: num({ default: 23.3332736 }),
+
+		NO_INTERNET_LOGO: str({ default: 'assets/images/ever-logo.svg' }),
 
 		MAP_MERCHANT_ICON_LINK: str({
 			default: 'http://maps.google.com/mapfiles/kml/pal3/icon21.png'

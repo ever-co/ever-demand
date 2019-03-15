@@ -16,8 +16,16 @@ export class AppModuleGuard implements CanActivate {
 		state: RouterStateSnapshot
 	): boolean {
 		const maintenanceMode = this.store.maintenanceMode;
+
 		if (maintenanceMode) {
 			this.router.navigate(['maintenance-info']);
+			return false;
+		}
+
+		const serverConnection = Number(this.store.serverConnection);
+
+		if (serverConnection === 0) {
+			this.router.navigate(['server-down']);
 			return false;
 		}
 		return true;

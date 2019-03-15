@@ -24,17 +24,7 @@ interface ProductViewModel {
 @Component({
 	selector: 'ea-categories-table',
 	styleUrls: ['./categories-table.component.scss'],
-	template: `
-		<ng2-smart-table
-			[settings]="settingsSmartTable"
-			[source]="sourceSmartTable"
-			(userRowSelect)="selectCategoryTmp($event)"
-			(edit)="edit($event)"
-			(delete)="deleteCategory($event)"
-			[nbSpinner]="loading"
-		>
-		</ng2-smart-table>
-	`
+	templateUrl: './categories-table.component.html'
 })
 export class CategoriesTableComponent implements OnDestroy {
 	private ngDestroy$ = new Subject<void>();
