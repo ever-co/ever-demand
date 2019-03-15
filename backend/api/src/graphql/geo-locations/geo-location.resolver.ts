@@ -10,6 +10,7 @@ export interface IGetGeoLocationProductsOptions {
 	merchantIds?: string[];
 	imageOrientation?: number;
 	locale?: string;
+	withoutCount?: boolean;
 }
 
 @Resolver('GeoLocation')

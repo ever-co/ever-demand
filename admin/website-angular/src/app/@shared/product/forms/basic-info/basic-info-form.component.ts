@@ -43,22 +43,22 @@ export class BasicInfoFormComponent
 	@ViewChild('productImagePreview')
 	productImagePreview: ElementRef;
 
-	public uploader: FileUploader;
+	uploader: FileUploader;
 
 	@Input()
 	readonly form: FormGroup;
-	public product: any;
+	product: any;
 
 	@Input()
-	public productCategories: any;
+	productCategories: any;
 
-	protected title: AbstractControl;
-	protected description: AbstractControl;
-	protected details: AbstractControl;
-	protected image: AbstractControl;
-	protected locale: AbstractControl;
-	protected category: AbstractControl;
-	protected selectedProductCategories: AbstractControl;
+	title: AbstractControl;
+	description: AbstractControl;
+	details: AbstractControl;
+	image: AbstractControl;
+	locale: AbstractControl;
+	category: AbstractControl;
+	selectedProductCategories: AbstractControl;
 
 	private _selectedProductCategories: string[];
 	private actualCategories: any = [];
@@ -85,13 +85,15 @@ export class BasicInfoFormComponent
 				[
 					Validators.required,
 					(control: AbstractControl) => {
-						const imageUrl = control.value;
-
-						if (!isUrl(imageUrl) && !_.isEmpty(imageUrl)) {
+						const value = control.value;
+						const hasImage = BasicInfoFormComponent.hasValidImage(
+							value
+						);
+						if (hasImage) {
+							return null;
+						} else {
 							return { invalidImageUrl: true };
 						}
-
-						return null;
 					}
 				]
 			]
@@ -132,6 +134,16 @@ export class BasicInfoFormComponent
 		return this.form.get('image');
 	}
 
+	get imagesArr() {
+		if (this.image.value) {
+			let imageUrls = this.image.value.toString().split(/\s+/);
+			imageUrls = imageUrls.filter((a) => a.toString().trim() !== '');
+
+			return imageUrls;
+		}
+		return [];
+	}
+
 	ngOnInit() {
 		if (this.productCategories) {
 			this.categoryOptions = this.productCategories.map((category) => {
@@ -153,12 +165,10 @@ export class BasicInfoFormComponent
 		});
 	}
 
-	ngAfterViewInit() {
-		this._setupProductImageUrlValidation();
-	}
+	ngAfterViewInit() {}
 
-	deleteImg() {
-		this.image.setValue('');
+	deleteImg(image) {
+		this.image.setValue(this.image.value.toString().replace(image, ''));
 	}
 
 	imageUrlChanged() {
@@ -169,8 +179,12 @@ export class BasicInfoFormComponent
 			response: string,
 			status: number
 		) => {
+			const loadedImages = this.image.value;
 			const data = JSON.parse(response);
-			this.image.setValue(data.url);
+
+			this.image.setValue(
+				`${loadedImages ? loadedImages + ' ' : ''}${data.url}`
+			);
 		};
 	}
 
@@ -195,11 +209,11 @@ export class BasicInfoFormComponent
 		}
 		if (this.product) {
 			let image = '';
-			const img = product.images.filter(
+			const imgs = product.images.filter(
 				(i) => i.locale === this.locale.value
-			)[0];
-			if (img) {
-				image = img.url;
+			);
+			if (imgs) {
+				image = imgs.map((i) => i.url).join(' ');
 			}
 
 			const product1 = {
@@ -225,8 +239,10 @@ export class BasicInfoFormComponent
 		this._bindModelProperties();
 
 		const productLocale = this._locale;
-
-		const productImage: IProductImage = await this._setupImage();
+		const realImags = this.imagesArr.filter((i) => isUrl(i));
+		const productImages: IProductImage[] = await this._setupImage(
+			realImags
+		);
 
 		const productTitle: IProductTitle = {
 			locale: productLocale,
@@ -253,7 +269,7 @@ export class BasicInfoFormComponent
 					name: c.name
 				};
 			}),
-			images: [productImage]
+			images: productImages
 		};
 
 		if (this.product) {
@@ -292,7 +308,7 @@ export class BasicInfoFormComponent
 							width: i.width,
 							height: i.height
 						})),
-					productImage
+					...productImages
 				]
 			};
 		}
@@ -300,16 +316,21 @@ export class BasicInfoFormComponent
 		return productCreateObject;
 	}
 
-	private _setupProductImageUrlValidation() {
-		this.productImagePreview.nativeElement.onload = () => {
-			this.imageControl.setErrors(null);
-		};
+	imgOnLoad() {
+		this.imageControl.setErrors(null);
+	}
+	imgOnError() {
+		if (this.imageControl.value !== '') {
+			const hasImage = BasicInfoFormComponent.hasValidImage(
+				this.image.value
+			);
 
-		this.productImagePreview.nativeElement.onerror = () => {
-			if (this.imageControl.value !== '') {
+			if (hasImage) {
+				this.imageControl.setErrors(null);
+			} else {
 				this.imageControl.setErrors({ invalidUrl: true });
 			}
-		};
+		}
 	}
 
 	private _setDefaultLocaleValue() {
@@ -328,24 +349,30 @@ export class BasicInfoFormComponent
 		);
 	}
 
-	private async _setupImage() {
-		try {
-			const img = await this._getImageMeta(this._image);
-			const width = img['width'];
-			const height = img['height'];
-			const orientation = width !== height ? (width > height ? 2 : 1) : 0;
-			const locale = this._locale;
-			const url = this._image;
-			return {
-				locale,
-				url,
-				width,
-				height,
-				orientation
-			};
-		} catch (error) {
-			return error;
+	private async _setupImage(imgsUrls) {
+		const urls = [];
+		for await (const imgUrl of imgsUrls) {
+			try {
+				const img = await this._getImageMeta(imgUrl);
+				const width = img['width'];
+				const height = img['height'];
+				const orientation =
+					width !== height ? (width > height ? 2 : 1) : 0;
+				const locale = this._locale;
+				const url = imgUrl;
+				urls.push({
+					locale,
+					url,
+					width,
+					height,
+					orientation
+				});
+			} catch (error) {
+				return error;
+			}
 		}
+
+		return urls;
 	}
 
 	private async _getImageMeta(url) {
@@ -390,6 +417,23 @@ export class BasicInfoFormComponent
 		this._details = getInputVal('details');
 		this._image = getInputVal('image');
 		this._locale = getInputVal('locale');
+	}
+
+	static hasValidImage(images) {
+		if (images) {
+			let imageUrls = images.toString().split(/\s+/);
+			imageUrls = imageUrls.filter((a) => a.toString().trim() !== '');
+
+			if (imageUrls.length > 0) {
+				for (const imageUrl of imageUrls) {
+					if (isUrl(imageUrl)) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 
 	ngOnDestroy() {

@@ -67,30 +67,41 @@ export class GeoLocationsProductsService
 		options?: IGetGeoLocationProductsOptions,
 		searchText?: string
 	): Promise<number> {
-		const merchants = await this.geoLocationsWarehousesService.getMerchants(
-			geoLocation,
-			GeoLocationsWarehousesService.TrackingDistance,
-			{
-				fullProducts: true,
-				activeOnly: true,
-				merchantsIds: options ? options.merchantIds : null
-			}
-		);
+		try {
+			const merchants = await this.geoLocationsWarehousesService.getMerchants(
+				geoLocation,
+				GeoLocationsWarehousesService.TrackingDistance,
+				{
+					fullProducts: true,
+					activeOnly: true,
+					merchantsIds: options ? options.merchantIds : null
+				}
+			);
+			const productsIds = merchants.map((m) => {
+				let products = m.products
+					.filter((wProduct) =>
+						this.productsFilter(wProduct, options)
+					)
+					.filter((wProduct) =>
+						this.filterBySearchText(wProduct, searchText)
+					);
 
-		const productsIds = merchants.map((m) =>
-			m.products
-				.filter((wProduct) => this.productsFilter(wProduct, options))
-				.filter((wProduct) =>
-					this.filterBySearchText(wProduct, searchText)
-				)
-				.filter((wProduct) => wProduct.count > 0)
-				.map((p) => new WarehouseProduct(p).productId)
-		);
+				if (!options || !options.withoutCount) {
+					products = products.filter(
+						(wProduct) => wProduct.count > 0
+					);
+				}
 
-		return (
-			productsIds.flat().filter((x, i, a) => a.indexOf(x) == i).length ||
-			0
-		);
+				return products.map((p) => new WarehouseProduct(p).productId);
+			});
+
+			return (
+				productsIds.flat().filter((x, i, a) => a.indexOf(x) == i)
+					.length || 0
+			);
+		} catch (error) {
+			return 0;
+		}
 	}
 
 	@asyncListener()
@@ -130,9 +141,13 @@ export class GeoLocationsProductsService
 		return _(warehouses)
 			.map((_warehouse) => {
 				const warehouse = _.clone(_warehouse);
-				warehouse.products = warehouse.products.filter(
-					(wProduct) => wProduct.count > 0
-				);
+
+				if (!options || !options.withoutCount) {
+					warehouse.products = warehouse.products.filter(
+						(wProduct) => wProduct.count > 0
+					);
+				}
+
 				if (options) {
 					warehouse.products = warehouse.products.filter((wProduct) =>
 						this.productsFilter(wProduct, options)

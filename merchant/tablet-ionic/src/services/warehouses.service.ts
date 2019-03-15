@@ -217,6 +217,15 @@ export class WarehousesService {
 							id
 							name
 							logo
+							usedCarriersIds
+							geoLocation {
+								city
+								streetAddress
+								house
+								loc {
+									coordinates
+								}
+							}
 						}
 					}
 				`,

@@ -1,0 +1,68 @@
+.map-container {
+	display: flex;
+	width: 100%;
+	height: 60vh;
+
+	.g-map {
+		height: 100%;
+		width: 125%;
+	}
+
+	.zones {
+		height: 100%;
+	}
+
+	.btn-container {
+		display: flex;
+		justify-content: space-evenly;
+		width: 60px;
+	}
+
+	.zones-list {
+		color: white;
+
+		li {
+			display: flex;
+			justify-content: space-between;
+			width: 80%;
+			align-items: center;
+			background-color: #47d26f;
+			border-radius: 5px;
+			padding: 6px;
+			margin-bottom: 5px;
+			padding-left: 10px;
+			border: 2px solid transparent;
+
+			span {
+				font-size: 1.2em;
+				font-family: Exo;
+				user-select: none;
+			}
+
+			i {
+				font-size: 1em;
+				cursor: pointer;
+			}
+		}
+
+		li:hover {
+			opacity: 0.9;
+			border: 2px solid mediumseagreen;
+		}
+
+		i:hover {
+			color: dimgrey;
+		}
+
+		ul {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding-left: 0 !important;
+		}
+
+		.btn-container {
+			display: flex;
+		}
+	}
+}

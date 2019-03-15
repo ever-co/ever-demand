@@ -16,6 +16,7 @@ export type Env = Readonly<{
 	GQL_SUBSCRIPTIONS_ENDPOINT: string;
 
 	AUTH_LOGO: string;
+	NO_INTERNET_LOGO: string;
 	GOOGLE_MAPS_API_KEY: string;
 
 	DELIVERY_TIME_MIN: number;
@@ -41,6 +42,7 @@ export const env: Env = cleanEnv(
 		}),
 
 		AUTH_LOGO: str({ default: 'assets/img/ever-logo.svg' }),
+		NO_INTERNET_LOGO: str({ default: 'assets/img/ever-logo.svg' }),
 
 		GOOGLE_MAPS_API_KEY: str({ default: '' }),
 

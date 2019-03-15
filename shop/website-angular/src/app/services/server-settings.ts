@@ -16,7 +16,10 @@ export class ServerSettings {
 
 	load() {
 		return new Promise(async (resolve, reject) => {
-			if (!this.store.maintenanceMode) {
+			if (
+				!this.store.maintenanceMode &&
+				Number(this.store.serverConnection) !== 0
+			) {
 				const inviteSystem = await this.inviteRouter.getInvitesSettings();
 				const registrationSystem = await this.userAuthRouter.getRegistrationsSettings();
 

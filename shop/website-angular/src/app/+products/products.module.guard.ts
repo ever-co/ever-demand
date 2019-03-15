@@ -15,18 +15,10 @@ export class ProductsModuleGuard implements CanActivate {
 		private readonly store: Store
 	) {}
 
-	canActivate(
+	async canActivate(
 		route: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot
-	): boolean {
-		if (
-			this.store.userId == null &&
-			this.store.registrationSystem === RegistrationSystem.Enabled
-		) {
-			this.router.navigate(['login']);
-			return false;
-		}
-
+	): Promise<boolean> {
 		return true;
 	}
 }

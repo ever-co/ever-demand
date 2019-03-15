@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { RouteReuseStrategy, Router } from '@angular/router';
+import { RouteReuseStrategy } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage';
@@ -32,6 +32,7 @@ import { MaintenanceModuleGuard } from './maintenance-info/maintenance-info.modu
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { Network } from '@ionic-native/network/ngx';
 import { Device } from '@ionic-native/device/ngx';
+import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -66,6 +67,13 @@ import { Device } from '@ionic-native/device/ngx';
 		StatusBar,
 		Network,
 		Device,
+		ServerConnectionService,
+		{
+			provide: APP_INITIALIZER,
+			useFactory: serverConnectionFactory,
+			deps: [ServerConnectionService, Store],
+			multi: true
+		},
 		GoogleMapsLoader,
 		{
 			provide: APP_INITIALIZER,
@@ -180,4 +188,11 @@ export function maintenanceFactory(provider: MaintenanceService) {
 
 export function googleMapsLoaderFactory(provider: GoogleMapsLoader) {
 	return () => provider.load(environment.GOOGLE_MAPS_API_KEY);
+}
+
+export function serverConnectionFactory(
+	provider: ServerConnectionService,
+	store: Store
+) {
+	return () => provider.load(environment.SERVICES_ENDPOINT, store);
 }

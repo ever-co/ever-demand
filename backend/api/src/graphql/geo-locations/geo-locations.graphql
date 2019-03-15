@@ -86,4 +86,5 @@ input GetGeoLocationProductsOptions {
 	merchantIds: [String]
 	imageOrientation: Int
 	locale: String
+	withoutCount: Boolean
 }

@@ -8,6 +8,7 @@ import {
 import { RouterOutlet } from '@angular/router';
 import { AppState } from './app.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Store } from './services/store';
 
 export interface ToolbarController {
 	toolbarDisabled: boolean;
@@ -62,7 +63,8 @@ export class AppComponent implements OnInit {
 
 	constructor(
 		public appState: AppState,
-		private translateService: TranslateService
+		private translateService: TranslateService,
+		private store: Store
 	) {
 		// Here we initialize translates for the all app, when loads for the first time. Do not remove it
 
@@ -82,8 +84,10 @@ export class AppComponent implements OnInit {
 	}
 
 	public get isToolbarDisabled() {
+		const serverConnection = Number(this.store.serverConnection);
 		return (
 			this.routerOutlet == null ||
+			serverConnection === 0 ||
 			!this.routerOutlet.isActivated ||
 			(this.routerOutlet.component as ToolbarController)
 				.toolbarDisabled === true

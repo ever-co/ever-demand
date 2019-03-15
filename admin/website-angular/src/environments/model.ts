@@ -11,6 +11,8 @@ export interface Environment {
 	DEFAULT_LATITUDE: number;
 	DEFAULT_LONGITUDE: number;
 
+	NO_INTERNET_LOGO: string;
+
 	MAP_MERCHANT_ICON_LINK: string;
 
 	MAP_USER_ICON_LINK: string;

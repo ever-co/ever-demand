@@ -12,7 +12,6 @@ import {
 	templateUrl: './warehouse-manage-tabs-account.component.html'
 })
 export class WarehouseManageTabsAccountComponent implements OnInit, OnDestroy {
-	//
 	static password: AbstractControl;
 
 	static initialize(passwordControl: AbstractControl) {

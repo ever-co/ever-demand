@@ -119,26 +119,37 @@ export class ProductsPage implements OnInit, OnDestroy {
 				options: { autoConfirm: true }
 			};
 
-			const order = await this.warehouseOrdersRouter.create(
-				orderCreateInput
-			);
+			try {
+				const order = await this.warehouseOrdersRouter.create(
+					orderCreateInput
+				);
 
-			this.store.orderId = order.id;
+				this.store.orderId = order.id;
 
-			this.store.orderWarehouseId = order.warehouseId;
+				this.store.orderWarehouseId = order.warehouseId;
 
-			if (environment.ORDER_INFO_TYPE === 'popup') {
-				this.showOrderInfoModal();
-			}
+				if (environment.ORDER_INFO_TYPE === 'popup') {
+					this.showOrderInfoModal();
+				}
 
-			if (environment.ORDER_INFO_TYPE === 'page') {
-				this.router.navigate([
-					`${
-						this.store.deliveryType === DeliveryType.Delivery
-							? '/order-info'
-							: '/order-info-takeaway'
-					}`
-				]);
+				if (environment.ORDER_INFO_TYPE === 'page') {
+					this.router.navigate([
+						`${
+							this.store.deliveryType === DeliveryType.Delivery
+								? '/order-info'
+								: '/order-info-takeaway'
+						}`
+					]);
+				}
+			} catch (error) {
+				const loadedProduct = this.products.find(
+					(p) =>
+						p.warehouseProduct.id ===
+						currentProduct.warehouseProduct.id
+				);
+				if (loadedProduct) {
+					loadedProduct['soldOut'] = true;
+				}
 			}
 		}
 	}
@@ -241,6 +252,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 
 		await this.loadProductsCount(merchantIds, imageOrientation);
 		this.changePage = false;
+
 		if (this.productsCount > this.products.length) {
 			if (this.getOrdersGeoObj) {
 				const isDeliveryRequired =
@@ -248,7 +260,8 @@ export class ProductsPage implements OnInit, OnDestroy {
 				const isTakeaway =
 					this.store.deliveryType === DeliveryType.Takeaway;
 
-				let products = await this.geoLocationProductsService
+				let loadProducts = true;
+				this.geoLocationProductsService
 					.geoLocationProductsByPaging(
 						this.getOrdersGeoObj,
 						{
@@ -260,12 +273,32 @@ export class ProductsPage implements OnInit, OnDestroy {
 							isTakeaway,
 							merchantIds,
 							imageOrientation,
-							locale: this.productsLocale
+							locale: this.productsLocale,
+							withoutCount: true
 						}
 					)
-					.pipe(first())
-					.toPromise();
-				this.products.push(...products);
+					.pipe(takeUntil(this.ngDestroy$))
+					.subscribe((products) => {
+						if (!loadProducts) {
+							for (const product of products) {
+								const loadedProduct = this.products.find(
+									(p) =>
+										p.warehouseProduct.id ===
+										product.warehouseProduct.id
+								);
+								if (loadedProduct) {
+									loadedProduct['soldOut'] =
+										product.warehouseProduct.count === 0;
+								}
+							}
+						}
+
+						if (loadProducts) {
+							this.products.push(...products);
+						}
+
+						loadProducts = false;
+					});
 			} else {
 				this.store.registrationSystem = RegistrationSystem.Once;
 				this.router.navigate(['/invite']);
@@ -293,7 +326,8 @@ export class ProductsPage implements OnInit, OnDestroy {
 					isTakeaway,
 					merchantIds,
 					imageOrientation,
-					locale: this.productsLocale
+					locale: this.productsLocale,
+					withoutCount: true
 				}
 			);
 		}

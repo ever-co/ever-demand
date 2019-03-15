@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import User from '@modules/server.common/entities/User';
+import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
+import { first } from 'rxjs/operators';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class Store {
+	constructor(private readonly userRouter: UserRouter) {}
+
 	get userId(): User['id'] | null {
 		return localStorage.getItem('_userId') || null;
 	}
@@ -102,6 +106,32 @@ export class Store {
 		localStorage.setItem('productViewType', productViewType);
 	}
 
+	async isLogged() {
+		const userId = this.userId;
+
+		if (userId) {
+			try {
+				await this.userRouter
+					.get(userId)
+					.pipe(first())
+					.toPromise();
+				return true;
+			} catch (error) {
+				this.userId = null;
+			}
+		}
+
+		console.warn(`User with id '${userId}' does not exists!"`);
+		return false;
+	}
+
+	get serverConnection() {
+		return localStorage.getItem('serverConnection');
+	}
+
+	set serverConnection(val: string) {
+		localStorage.setItem('serverConnection', val);
+	}
 	clearMaintenanceMode() {
 		localStorage.removeItem('maintenanceMode');
 	}

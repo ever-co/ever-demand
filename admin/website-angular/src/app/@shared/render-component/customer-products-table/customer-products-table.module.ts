@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ThemeModule } from '../../../@theme';
 import { ProductOrderProductsComponent } from './product-order-products.component';
 import { StoreOrderProductsComponent } from './store-order-products.component';
-import { OrderBtnOrderProductsComponent } from './order-btn-order-products.component';
+import { OrderBtnOrderProductsComponent } from './order-btn-order-products/order-btn-order-products.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 const COMPONENTS = [
@@ -13,14 +13,9 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		ThemeModule,
-		TranslateModule.forChild(),
-	],
+	imports: [CommonModule, ThemeModule, TranslateModule.forChild()],
 	declarations: COMPONENTS,
 	entryComponents: COMPONENTS,
 	exports: COMPONENTS
 })
-export class CustomerProductsTableModule {
-}
+export class CustomerProductsTableModule {}

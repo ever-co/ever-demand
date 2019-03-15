@@ -41,6 +41,7 @@ export const environment: Environment = {
   GQL_ENDPOINT: '${env.GQL_ENDPOINT}',
   GQL_SUBSCRIPTIONS_ENDPOINT: '${env.GQL_SUBSCRIPTIONS_ENDPOINT}',
   AUTH_LOGO: '${env.AUTH_LOGO}',
+  NO_INTERNET_LOGO: '${env.NO_INTERNET_LOGO}',
 
   GOOGLE_MAPS_API_KEY: '${env.GOOGLE_MAPS_API_KEY}',
 

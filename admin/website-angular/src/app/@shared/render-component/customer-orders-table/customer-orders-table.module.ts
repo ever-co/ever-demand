@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeModule } from '../../../@theme';
-import { RedirectStoreComponent } from './redirect-store.component';
-import { RedirectCarrierComponent } from './redirect-carrier.component';
+import { RedirectStoreComponent } from './redirect-store/redirect-store.component';
+import { RedirectCarrierComponent } from './redirect-carrier/redirect-carrier.component';
 import { RedirectOrderComponent } from './redirect-order.component';
-import { RedirectProductComponent } from './redirect-product.component';
-import { CustomerOrderActionsComponent } from './customer-order-actions.component';
+import { RedirectProductComponent } from './redirect-product/redirect-product.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { CustomerOrderActionsComponent } from './customer-order-actions/customer-order-actions.component';
 
 const COMPONENTS = [
 	RedirectStoreComponent,
@@ -17,14 +17,9 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		ThemeModule,
-		TranslateModule.forChild(),
-	],
+	imports: [CommonModule, ThemeModule, TranslateModule.forChild()],
 	declarations: COMPONENTS,
 	entryComponents: COMPONENTS,
 	exports: COMPONENTS
 })
-export class CustomerOrdersTableModule {
-}
+export class CustomerOrdersTableModule {}

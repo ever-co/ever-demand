@@ -9,6 +9,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { IonicSelectableModule } from 'ionic-selectable';
 
 const routes: Routes = [
 	{
@@ -23,6 +24,7 @@ const routes: Routes = [
 		PipesModule,
 		ComponentsModule,
 		TranslateModule.forChild(),
+		IonicSelectableModule,
 		IonicModule,
 		CommonModule,
 		FormsModule,

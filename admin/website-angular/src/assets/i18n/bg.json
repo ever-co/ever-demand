@@ -240,7 +240,8 @@
 			"DETAILS": "Детайли",
 			"ACCOUNT": "Сметка",
 			"CONTACT_INFO": "Информация за контакт",
-			"LOCATION": "Местоположение"
+			"LOCATION": "Местоположение",
+			"DELIVERY_ZONES": "Зони за доставка"
 		}
 	},
 	"WAREHOUSES_VIEW": {
@@ -902,6 +903,9 @@
 		"ARE_YOU_SURE_YOU_WANT_TO_DECREASE": "Наистина ли искате да намалите количеството продукти??",
 		"YES": "Да",
 		"NO": "Не"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Няма връзка със сървъра"
 	},
 	"BUTTON_NEXT": "Продължи",
 	"BUTTON_PREV": "Обратно",

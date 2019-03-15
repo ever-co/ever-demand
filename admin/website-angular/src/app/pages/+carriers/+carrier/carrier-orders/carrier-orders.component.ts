@@ -21,7 +21,7 @@ import { Subject, Observable } from 'rxjs/Rx';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin, Subscription } from 'rxjs';
-import { CreatedComponent } from '../../../../@shared/render-component/created.component';
+import { CreatedComponent } from '../../../../@shared/render-component/created/created.component';
 import { CarriersService } from 'app/@core/data/carriers.service';
 import { GeoLocationOrdersService } from 'app/@core/data/geo-location-orders.service';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';

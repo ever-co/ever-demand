@@ -11,6 +11,7 @@ import { GoogleMapModule } from '../../forms/google-map/google-map.module';
 import { LocationFormModule } from '../../forms/location';
 import { WarehouseManageTabsDetailsComponent } from './warehouse-manage-tabs/details/warehouse-manage-tabs-details.component';
 import { WarehouseManageTabsAccountComponent } from './warehouse-manage-tabs/account/warehouse-manage-tabs-account.component';
+import { WarehouseManageTabsDeliveryAreasComponent } from './warehouse-manage-tabs/delivery-areas/warehouse-manage-tabs-delivery-areas.component';
 
 @NgModule({
 	imports: [
@@ -27,14 +28,16 @@ import { WarehouseManageTabsAccountComponent } from './warehouse-manage-tabs/acc
 		WarehouseManageTabsDetailsComponent,
 		WarehouseManageTabsAccountComponent,
 		BasicInfoFormComponent,
-		ContactInfoFormComponent
+		ContactInfoFormComponent,
+		WarehouseManageTabsDeliveryAreasComponent
 	],
 	declarations: [
 		WarehouseManageTabsComponent,
 		WarehouseManageTabsDetailsComponent,
 		WarehouseManageTabsAccountComponent,
 		BasicInfoFormComponent,
-		ContactInfoFormComponent
+		ContactInfoFormComponent,
+		WarehouseManageTabsDeliveryAreasComponent
 	]
 })
 export class WarehouseFormsModule {}

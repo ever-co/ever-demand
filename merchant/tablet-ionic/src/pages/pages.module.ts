@@ -33,6 +33,10 @@ const routes: Routes = [
 		loadChildren: './+track/track.module#TrackPageModule'
 	},
 	{
+		path: 'track/:id',
+		loadChildren: './+track/track.module#TrackPageModule'
+	},
+	{
 		path: 'settings',
 		loadChildren: './+settings/settings.module#SettingsPageModule'
 	},

@@ -9,7 +9,7 @@ import { WarehousesService } from '../../../../@core/data/warehouses.service';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
 import { ProductOrderProductsComponent } from '../../../../@shared/render-component/customer-products-table/product-order-products.component';
 import { StoreOrderProductsComponent } from '../../../../@shared/render-component/customer-products-table/store-order-products.component';
-import { OrderBtnOrderProductsComponent } from '../../../../@shared/render-component/customer-products-table/order-btn-order-products.component';
+import { OrderBtnOrderProductsComponent } from '../../../../@shared/render-component/customer-products-table/order-btn-order-products/order-btn-order-products.component';
 import { GeoLocationService } from '../../../../@core/data/geo-location.service';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin, Observable, Subject } from 'rxjs';

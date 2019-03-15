@@ -10,14 +10,19 @@ export class OrderTakeawayInfoModuleGuard implements CanLoad {
 		private readonly router: Router
 	) {}
 
-	canLoad(route: Route) {
-		if (this.store.orderId === null) {
+	async canLoad(route: Route) {
+		const isLogged = await this.store.isLogged();
+
+		if (!isLogged) {
 			this.router.navigate(['invite']);
+			return false;
 		}
+
 		if (this.store.deliveryType === DeliveryType.Delivery) {
 			this.router.navigate(['order-info']);
 			return false;
 		}
+
 		return true;
 	}
 }

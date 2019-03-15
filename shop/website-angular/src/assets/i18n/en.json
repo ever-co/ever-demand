@@ -119,5 +119,8 @@
 	"SETTINGS_VIEW": {
 		"SETTINGS": "Settings",
 		"LANGUAGE": "Language"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Server connection is lost"
 	}
 }

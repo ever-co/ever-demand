@@ -28,6 +28,8 @@ import { GoogleMapsLoader } from '@modules/client.common.angular2/services/googl
 import { MaintenanceService } from '@modules/client.common.angular2/services/maintenance.service';
 import { AppModuleGuard } from './app.module.guard';
 import { MaintenanceModuleGuard } from './pages/+maintenance-info/maintenance-info.module.guard';
+import { first } from 'rxjs/operators';
+import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
 
 // It's more 'standard' way to use Font-Awesome module and special package,
 // but for some reason ngx-admin works without it. So we leave next line commented for now.
@@ -60,6 +62,13 @@ import { MaintenanceModuleGuard } from './pages/+maintenance-info/maintenance-in
 	declarations: [AppComponent],
 	bootstrap: [AppComponent],
 	providers: [
+		ServerConnectionService,
+		{
+			provide: APP_INITIALIZER,
+			useFactory: serverConnectionFactory,
+			deps: [ServerConnectionService, Store],
+			multi: true
+		},
 		GoogleMapsLoader,
 		{
 			provide: APP_INITIALIZER,
@@ -83,7 +92,7 @@ import { MaintenanceModuleGuard } from './pages/+maintenance-info/maintenance-in
 	exports: []
 })
 export class AppModule {
-	constructor(apollo: Apollo, httpLink: HttpLink, store: Store) {
+	constructor(apollo: Apollo, httpLink: HttpLink, private store: Store) {
 		// Create an http link:
 		const http = httpLink.create({
 			uri: environment.GQL_ENDPOINT
@@ -151,6 +160,13 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 export function googleMapsLoaderFactory(provider: GoogleMapsLoader) {
 	return () => provider.load(environment.GOOGLE_MAPS_API_KEY);
+}
+
+export function serverConnectionFactory(
+	provider: ServerConnectionService,
+	store: Store
+) {
+	return () => provider.load(environment.SERVICES_ENDPOINT, store);
 }
 
 export function maintenanceFactory(provider: MaintenanceService) {

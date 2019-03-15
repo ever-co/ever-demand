@@ -42,6 +42,14 @@ export class Store {
 		return localStorage.getItem('maintenanceMode') || null;
 	}
 
+	get serverConnection() {
+		return localStorage.getItem('serverConnection');
+	}
+
+	set serverConnection(val: string) {
+		localStorage.setItem('serverConnection', val);
+	}
+
 	clearMaintenanceMode() {
 		localStorage.removeItem('maintenanceMode');
 	}

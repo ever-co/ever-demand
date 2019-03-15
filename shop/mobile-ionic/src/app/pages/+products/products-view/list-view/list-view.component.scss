@@ -24,12 +24,6 @@ img {
 	}
 }
 
-.disabled {
-	background: #cccccc !important;
-	border: 1px solid #999999 !important;
-	color: #666666 !important;
-}
-
 .productCard {
 	background-color: white;
 	border-radius: 5px;
@@ -104,6 +98,12 @@ ion-row {
 		span {
 			margin: 0 auto;
 		}
+	}
+
+	.disabled {
+		background-color: #cccccc !important;
+		border: 1px solid #999999 !important;
+		color: #666666 !important;
 	}
 }
 

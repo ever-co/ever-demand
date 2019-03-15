@@ -20,7 +20,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { Subject } from 'rxjs/Rx';
 import { takeUntil, first } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
-import { CreatedComponent } from '../../../../@shared/render-component/created.component';
+import { CreatedComponent } from '../../../../@shared/render-component/created/created.component';
 import { CarriersOrdersService } from 'app/@core/data/carriers-orders.service';
 import { StoreOrderComponent } from 'app/@shared/render-component/carrier-orders-table/store-order.component';
 import { UserOrderComponent } from 'app/@shared/render-component/carrier-orders-table/user-order-component';

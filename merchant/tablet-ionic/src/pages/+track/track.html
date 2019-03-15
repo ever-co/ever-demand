@@ -11,13 +11,19 @@
 	</div>
 </div>
 <div id="contentWrapper" scroll="false">
-	<div class="filter-box">
-		<div>
-			Filter
-		</div>
-		<div>
-			<input />
-		</div>
-	</div>
+	<ion-item>
+		<ion-label>Search for Carrier</ion-label>
+		<ionic-selectable
+			#filterComponent
+			item-content
+			[(ngModel)]="selectedCarrier"
+			[items]="carriers"
+			itemValueField="id"
+			itemTextField="fullName"
+			[canSearch]="true"
+			(onChange)="navigationHandler($event)"
+		>
+		</ionic-selectable>
+	</ion-item>
 	<div #gmap id="mapDiv" class="map"></div>
 </div>
