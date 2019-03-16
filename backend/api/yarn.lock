@@ -438,13 +438,13 @@
     ts-simple-ast "^21.0.0"
     uuid "3.3.2"
 
-"@nestjs/microservices@^5.7.2":
-  version "5.7.2"
-  resolved "https://registry.yarnpkg.com/@nestjs/microservices/-/microservices-5.7.2.tgz#afec0f945ccfc53d2e12cd5fc27e8e5e12ff83df"
-  integrity sha512-UtArBvV35UEunDwwyh9DnUMGn8zHy9cbBF3Pvc0RVTBq1J4S2JV7SfzfJ786Ip85Xx215BtxJHRQFvmBtuojaQ==
+"@nestjs/microservices@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@nestjs/microservices/-/microservices-6.0.0.tgz#1e449fa96b57f8e04f323d04ef2d128f9511c142"
+  integrity sha512-dJeg0RJKgJQgjC2cxR44WcwJGNuke+Lcj4g7ptdFesOG/oQQHj9tfxI8JExR3c99e1R0n3xMhmLRrat8hyGVgg==
   dependencies:
-    iterare "0.0.8"
-    json-socket "^0.2.1"
+    iterare "1.1.2"
+    json-socket "^0.3.0"
     optional "0.1.4"
 
 "@nestjs/passport@^5.1.0":
@@ -5600,6 +5600,11 @@ iterare@0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/iterare/-/iterare-0.0.8.tgz#a969a80a1fbff6b78f28776594d7bc2bdfab6aad"
 
+iterare@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/iterare/-/iterare-1.1.2.tgz#32e65fe03c72f727b1ae5fd002ed6a215f523ae8"
+  integrity sha512-25rVYmj/dDvTR6zOa9jY1Ihd6USLa0J508Ub2iy7Aga+xu9JMbjDds2Uh03ReDGbva/YN3s3Ybi+Do0nOX6wAg==
+
 jest-changed-files@^24.0.0:
   version "24.0.0"
   resolved "https://registry.yarnpkg.com/jest-changed-files/-/jest-changed-files-24.0.0.tgz#c02c09a8cc9ca93f513166bc773741bd39898ff7"
@@ -6025,9 +6030,10 @@ json-schema@0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/json-schema/-/json-schema-0.2.3.tgz#b480c892e59a2f05954ce727bd3f2a4e882f9e13"
 
-json-socket@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/json-socket/-/json-socket-0.2.1.tgz#26e7ed8cc131f17aa0136c32068f473b5dbefb22"
+json-socket@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/json-socket/-/json-socket-0.3.0.tgz#f4b953c685bb8e8bd0b72438f5208d9a0799ae07"
+  integrity sha512-jc8ZbUnYIWdxERFWQKVgwSLkGSe+kyzvmYxwNaRgx/c8NNyuHes4UHnPM3LUrAFXUx1BhNJ94n1h/KCRlbvV0g==
 
 json-stringify-safe@5.0.1, json-stringify-safe@^5.0.1, json-stringify-safe@~5.0.1:
   version "5.0.1"
