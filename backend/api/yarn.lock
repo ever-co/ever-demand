@@ -426,16 +426,19 @@
     reflect-metadata "^0.1.12"
     rxjs "^6.1.0"
 
-"@nestjs/graphql@^5.5.2":
-  version "5.5.2"
-  resolved "https://registry.yarnpkg.com/@nestjs/graphql/-/graphql-5.5.2.tgz#24d756ef0bc210165cd2a327d57bb5cbec3dcea6"
-  integrity sha512-wJ1TG7Q7tzwA3zYRmOsPbjJmn+t9HjRf1csJVLQAZjO8Po3QFsodoS0TpuURhRc/G0ZLxEjfNUQeFvZ18AqzPQ==
+"@nestjs/graphql@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@nestjs/graphql/-/graphql-6.0.0.tgz#3989244cba2913071645149fe46c73b6b654ccea"
+  integrity sha512-yGc7dCcBCp+VTJPGi8Nw0dmur5Ofil7oHQqJ/XnigoW1KhwLVrzaLUrDe5PnIUCqaCnppBxotKWXJKOKEDZsTg==
   dependencies:
-    glob "^7.1.3"
+    "@types/graphql" "^14.0.7"
+    chokidar "^2.1.1"
+    fast-glob "^2.2.6"
     graphql-tools "^4.0.3"
     lodash "^4.17.11"
     merge-graphql-schemas "^1.5.8"
-    ts-simple-ast "^21.0.0"
+    optional "^0.1.4"
+    ts-morph "^1.1.0"
     uuid "3.3.2"
 
 "@nestjs/microservices@^5.7.2":
@@ -488,6 +491,11 @@
 "@nodelib/fs.stat@^1.0.1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.2.tgz#54c5a964462be3d4d78af631363c18d6fa91ac26"
+
+"@nodelib/fs.stat@^1.1.2":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
+  integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
 "@nuxtjs/opencollective@0.1.0":
   version "0.1.0"
@@ -735,6 +743,11 @@
 "@types/googlemaps@*":
   version "3.30.13"
   resolved "https://registry.yarnpkg.com/@types/googlemaps/-/googlemaps-3.30.13.tgz#71220c6a0ec0b39044de71ae59d696379acebcb6"
+
+"@types/graphql@^14.0.7":
+  version "14.0.7"
+  resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-14.0.7.tgz#daa09397220a68ce1cbb3f76a315ff3cd92312f6"
+  integrity sha512-BoLDjdvLQsXPZLJux3lEZANwGr3Xag56Ngy0U3y8uoRSDdeLcn43H3oBcgZlnd++iOQElBpaRVDHPzEDekyvXQ==
 
 "@types/handlebars@^4.0.38":
   version "4.0.39"
@@ -2355,6 +2368,25 @@ chokidar@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.1.1.tgz#adc39ad55a2adf26548bd2afa048f611091f9184"
   integrity sha512-gfw3p2oQV2wEt+8VuMlNsPjCxDxvvgnm/kz+uATu805mWVF8IJN7uz9DN7iBz+RMJISmiVbCOBFs9qBGMjtPfQ==
+  dependencies:
+    anymatch "^2.0.0"
+    async-each "^1.0.1"
+    braces "^2.3.2"
+    glob-parent "^3.1.0"
+    inherits "^2.0.3"
+    is-binary-path "^1.0.0"
+    is-glob "^4.0.0"
+    normalize-path "^3.0.0"
+    path-is-absolute "^1.0.0"
+    readdirp "^2.2.1"
+    upath "^1.1.0"
+  optionalDependencies:
+    fsevents "^1.2.7"
+
+chokidar@^2.1.1:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.1.2.tgz#9c23ea40b01638439e0513864d362aeacc5ad058"
+  integrity sha512-IwXUx0FXc5ibYmPC2XeEj5mpXoV66sR+t3jqu2NS2GYwCktt3KF1/Qqjws/NkegajBA4RbZ5+DDwlOiJsxDHEg==
   dependencies:
     anymatch "^2.0.0"
     async-each "^1.0.1"
@@ -4113,6 +4145,18 @@ fast-glob@^2.0.2:
     glob-parent "^3.1.0"
     is-glob "^4.0.0"
     merge2 "^1.2.1"
+    micromatch "^3.1.10"
+
+fast-glob@^2.2.6:
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-2.2.6.tgz#a5d5b697ec8deda468d85a74035290a025a95295"
+  integrity sha512-0BvMaZc1k9F+MeWWMe8pL6YltFzZYcJsYU7D4JyDA6PAczaXvxqQQ/z+mDF7/4Mw01DeUc+i3CTKajnkANkV4w==
+  dependencies:
+    "@mrmlnc/readdir-enhanced" "^2.2.1"
+    "@nodelib/fs.stat" "^1.1.2"
+    glob-parent "^3.1.0"
+    is-glob "^4.0.0"
+    merge2 "^1.2.3"
     micromatch "^3.1.10"
 
 fast-json-stable-stringify@2.x, fast-json-stable-stringify@^2.0.0:
@@ -6623,6 +6667,11 @@ merge2@^1.2.1:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.2.2.tgz#03212e3da8d86c4d8523cebd6318193414f94e34"
 
+merge2@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.2.3.tgz#7ee99dbd69bb6481689253f018488a1b902b0ed5"
+  integrity sha512-gdUU1Fwj5ep4kplwcmftruWofEFt6lfpkkr3h860CXbAB9c3hGb55EOL2ali0Td5oebvW0E1+3Sr+Ur7XfKpRA==
+
 merge@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
@@ -7419,7 +7468,7 @@ optimist@^0.6.1:
     minimist "~0.0.1"
     wordwrap "~0.0.2"
 
-optional@0.1.4, optional@^0.1.3:
+optional@0.1.4, optional@^0.1.3, optional@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/optional/-/optional-0.1.4.tgz#cdb1a9bedc737d2025f690ceeb50e049444fd5b3"
 
@@ -9851,21 +9900,10 @@ ts-loader@^5.3.3:
     micromatch "^3.1.4"
     semver "^5.0.1"
 
-ts-node@^8.0.2:
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-8.0.2.tgz#9ecdf8d782a0ca4c80d1d641cbb236af4ac1b756"
-  integrity sha512-MosTrinKmaAcWgO8tqMjMJB22h+sp3Rd1i4fdoWY4mhBDekOwIAKI/bzmRi7IcbCmjquccYg2gcF6NBkLgr0Tw==
-  dependencies:
-    arg "^4.1.0"
-    diff "^3.1.0"
-    make-error "^1.1.1"
-    source-map-support "^0.5.6"
-    yn "^3.0.0"
-
-ts-simple-ast@^21.0.0:
-  version "21.0.0"
-  resolved "https://registry.yarnpkg.com/ts-simple-ast/-/ts-simple-ast-21.0.0.tgz#192c5bb7ba529d64faa08404e09abaeb3a5c4e4d"
-  integrity sha512-pEDK5I1KC/fqtxdoeJYYmgFzfkdfZNoO/hFUBWLWRxXwQm4HpDYk/0VHd5ZbLf5wOXRMcUxJreEL7RPNv2oX7A==
+ts-morph@^1.1.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/ts-morph/-/ts-morph-1.3.0.tgz#06cad37a9d12752be1ac3a02ae3a7067c12d7e0d"
+  integrity sha512-hpdsCl5ZtFkhpBaYtFwfXXqtNvOffURzEnCEPptC3xLlZV5nIVmu5x+OfhNa4fd+06VgdgLc9pNYWRFFBALDuw==
   dependencies:
     "@dsherret/to-absolute-glob" "^2.0.2"
     code-block-writer "^7.2.2"
@@ -9876,6 +9914,17 @@ ts-simple-ast@^21.0.0:
     multimatch "^2.1.0"
     tslib "^1.9.0"
     typescript "^3.0.1"
+
+ts-node@^8.0.2:
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-8.0.2.tgz#9ecdf8d782a0ca4c80d1d641cbb236af4ac1b756"
+  integrity sha512-MosTrinKmaAcWgO8tqMjMJB22h+sp3Rd1i4fdoWY4mhBDekOwIAKI/bzmRi7IcbCmjquccYg2gcF6NBkLgr0Tw==
+  dependencies:
+    arg "^4.1.0"
+    diff "^3.1.0"
+    make-error "^1.1.1"
+    source-map-support "^0.5.6"
+    yn "^3.0.0"
 
 tslib@1.9.3, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.9.3"
