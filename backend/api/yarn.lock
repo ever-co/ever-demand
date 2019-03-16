@@ -402,20 +402,16 @@
     path-to-regexp "2.2.1"
     uuid "3.3.2"
 
-"@nestjs/core@^5.7.2":
-  version "5.7.2"
-  resolved "https://registry.yarnpkg.com/@nestjs/core/-/core-5.7.2.tgz#680930dad64fd315bd5cbc874929f71ada30f4d5"
-  integrity sha512-mpCJENUDk9gHjyJ7tcBjIupQeMRgW0/hjB8n43raT31vcsMKHDuoC+l4ZqbMX5kM73c3olnwqUlQ4PE8iiUvGQ==
+"@nestjs/core@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@nestjs/core/-/core-6.0.0.tgz#e2bd6eaa698d97e0ea48672315d97cc2cdbe28de"
+  integrity sha512-N4RP9QreS8EJJS+BIsjqRsn7nzzxPXJZLkItnp5SipepX6bqAC+xHLXqd1qA3IIyZ4M9Ia2rs85z5yGlC3EMeQ==
   dependencies:
-    "@nuxtjs/opencollective" "0.1.0"
-    body-parser "1.18.3"
-    cors "2.8.4"
-    express "4.16.3"
-    fast-safe-stringify "1.2.0"
-    iterare "0.0.8"
-    object-hash "1.3.0"
+    "@nuxtjs/opencollective" "0.2.1"
+    fast-safe-stringify "2.0.6"
+    iterare "1.1.2"
+    object-hash "1.3.1"
     optional "0.1.4"
-    path-to-regexp "2.2.1"
     uuid "3.3.2"
 
 "@nestjs/cqrs@^5.1.1":
@@ -497,6 +493,15 @@
     consola "^1.4.3"
     esm "^3.0.79"
     node-fetch "^2.2.0"
+
+"@nuxtjs/opencollective@0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/opencollective/-/opencollective-0.2.1.tgz#ddf3e6a22990997322bc2b82e2455a7fbffc518d"
+  integrity sha512-pzSib8NKquaTt/ns5Cc2G0BGRVJXaD+p1qfF6q7vNIMvRysorn/VF3y7gAuQpcxfF7wBbGE+dXjhIieWOUsWSw==
+  dependencies:
+    chalk "^2.4.1"
+    consola "^2.3.0"
+    node-fetch "^2.3.0"
 
 "@pm2/agent-node@^1.0.9":
   version "1.0.11"
@@ -2687,6 +2692,11 @@ consola@^1.4.3:
     lodash "^4.17.5"
     std-env "^1.1.0"
 
+consola@^2.3.0:
+  version "2.5.6"
+  resolved "https://registry.yarnpkg.com/consola/-/consola-2.5.6.tgz#5ce14dbaf6f5b589c8a258ef80ed97b752fa57d5"
+  integrity sha512-DN0j6ewiNWkT09G3ZoyyzN3pSYrjxWcx49+mHu+oDI5dvW5vzmyuzYsqGS79+yQserH9ymJQbGzeqUejfssr8w==
+
 console-browserify@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/console-browserify/-/console-browserify-1.1.0.tgz#f0241c45730a9fc6323b206dbf38edc741d0bb10"
@@ -4123,9 +4133,10 @@ fast-levenshtein@~2.0.4:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
 
-fast-safe-stringify@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-1.2.0.tgz#ebd42666fd18fe4f2ba4f0d295065f3f85cade96"
+fast-safe-stringify@2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-2.0.6.tgz#04b26106cc56681f51a044cfc0d76cf0008ac2c2"
+  integrity sha512-q8BZ89jjc+mz08rSxROs8VsrBBcn1SIw1kq9NjolL509tkABRk9io01RAjSaEv1Xb2uFLt8VtRiZbGp5H8iDtg==
 
 fb-watchman@^2.0.0:
   version "2.0.0"
@@ -5600,6 +5611,11 @@ iterare@0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/iterare/-/iterare-0.0.8.tgz#a969a80a1fbff6b78f28776594d7bc2bdfab6aad"
 
+iterare@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/iterare/-/iterare-1.1.2.tgz#32e65fe03c72f727b1ae5fd002ed6a215f523ae8"
+  integrity sha512-25rVYmj/dDvTR6zOa9jY1Ihd6USLa0J508Ub2iy7Aga+xu9JMbjDds2Uh03ReDGbva/YN3s3Ybi+Do0nOX6wAg==
+
 jest-changed-files@^24.0.0:
   version "24.0.0"
   resolved "https://registry.yarnpkg.com/jest-changed-files/-/jest-changed-files-24.0.0.tgz#c02c09a8cc9ca93f513166bc773741bd39898ff7"
@@ -7046,7 +7062,7 @@ node-fetch@^1.7.3:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
-node-fetch@^2.1.2:
+node-fetch@^2.1.2, node-fetch@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.3.0.tgz#1a1d940bbfb916a1d3e0219f037e89e71f8c5fa5"
   integrity sha512-MOd8pV3fxENbryESLgVIeaGKrdl+uaYhCSSVkjeOb/31/njTpcis5aWfdqgNlHIrKOLRbMnfPINPOML2CIFeXA==
@@ -7337,6 +7353,11 @@ object-copy@^0.1.0:
 object-hash@1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/object-hash/-/object-hash-1.3.0.tgz#76d9ba6ff113cf8efc0d996102851fe6723963e2"
+
+object-hash@1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/object-hash/-/object-hash-1.3.1.tgz#fde452098a951cb145f039bb7d455449ddc126df"
+  integrity sha512-OSuu/pU4ENM9kmREg0BdNrUDIl1heYa4mBZacJc+vVWz4GtAwu7jO8s4AIt2aGRUTqxykpWzI3Oqnsm13tTMDA==
 
 object-keys@^1.0.11, object-keys@^1.0.12:
   version "1.0.12"
