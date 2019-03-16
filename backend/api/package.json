@@ -47,7 +47,7 @@
 	"dependencies": {
 		"@captemulation/get-parameter-names": "^1.2.0",
 		"@nestjs/common": "^5.7.2",
-		"@nestjs/core": "^5.7.2",
+		"@nestjs/core": "^6.0.0",
 		"@nestjs/cqrs": "^5.1.1",
 		"@nestjs/graphql": "^5.5.2",
 		"@nestjs/microservices": "^5.7.2",
