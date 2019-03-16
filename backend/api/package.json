@@ -49,7 +49,7 @@
 		"@nestjs/common": "^5.7.2",
 		"@nestjs/core": "^5.7.2",
 		"@nestjs/cqrs": "^5.1.1",
-		"@nestjs/graphql": "^5.5.2",
+		"@nestjs/graphql": "^6.0.0",
 		"@nestjs/microservices": "^5.7.2",
 		"@nestjs/passport": "^5.1.0",
 		"@nestjs/swagger": "^2.5.1",
