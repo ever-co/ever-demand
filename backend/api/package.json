@@ -51,7 +51,7 @@
 		"@nestjs/cqrs": "^5.1.1",
 		"@nestjs/graphql": "^5.5.2",
 		"@nestjs/microservices": "^5.7.2",
-		"@nestjs/passport": "^5.1.0",
+		"@nestjs/passport": "^6.0.0",
 		"@nestjs/swagger": "^2.5.1",
 		"@nestjs/testing": "^5.7.2",
 		"@nestjs/typeorm": "^5.3.0",
