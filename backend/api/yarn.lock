@@ -462,12 +462,11 @@
     "@nestjs/common" "^5.0.0"
     "@nestjs/core" "^5.0.0"
 
-"@nestjs/testing@^5.7.2":
-  version "5.7.2"
-  resolved "https://registry.yarnpkg.com/@nestjs/testing/-/testing-5.7.2.tgz#5598444d3f2d472012efc25acfbe6308381208bd"
-  integrity sha512-eTRVj13Ru31hnhwRCuzQmfDtYTBgefrvo0YTXYCUg5G05Y9ixUHfClNVArU0hlVa/ViCywSsqR5IwfQE+H/2kQ==
+"@nestjs/testing@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@nestjs/testing/-/testing-6.0.0.tgz#be921e774cfea9c321c35eea8c4f4a44f2aa14d0"
+  integrity sha512-BRsMFJKBRrFbzzdG00w5Rfz6DMews9hVs1CMpCZlo/mi5sml3O+JgM+IAkZ0+cLFmr8Ij3OQ5fh/lMWMoIDnOQ==
   dependencies:
-    deprecate "1.0.0"
     optional "0.1.4"
 
 "@nestjs/typeorm@^5.3.0":
