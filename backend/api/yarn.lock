@@ -418,13 +418,10 @@
     path-to-regexp "2.2.1"
     uuid "3.3.2"
 
-"@nestjs/cqrs@^5.1.1":
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/cqrs/-/cqrs-5.1.1.tgz#e0e6eba31765e1e91c0496d786dfa594f5611368"
-  dependencies:
-    "@nestjs/common" "^5.0.0"
-    reflect-metadata "^0.1.12"
-    rxjs "^6.1.0"
+"@nestjs/cqrs@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@nestjs/cqrs/-/cqrs-6.0.0.tgz#a9dc850e04f8bed40cad3a13106f6cb085b2b985"
+  integrity sha512-d2jKfVRJsq14VU7w8sELhROVok3X9hxeYhRkOLX8OQtD18E6PhMWsVvIY/HE0G0YHYBQmyvHpusz3iPmDmlJow==
 
 "@nestjs/graphql@^5.5.2":
   version "5.5.2"
@@ -8690,7 +8687,7 @@ rxjs-tslint@0.1.5:
     tslint "^5.9.1"
     tsutils "^2.25.0"
 
-rxjs@^6.1.0, rxjs@^6.3.3:
+rxjs@^6.3.3:
   version "6.3.3"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.3.3.tgz#3c6a7fa420e844a81390fb1158a9ec614f4bad55"
   dependencies:
