@@ -500,10 +500,10 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/vibration@~5.2.0":
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/vibration/-/vibration-5.2.0.tgz#6015c17f27cf78e7750ed069e56aff3df619d048"
-  integrity sha512-GVHEcm/+0d8MZDX4rsKN16trK1LwtdLCiGnd6dKrOBFg0czgH3hfsFQqO3efF4ZWLb+nr/qBOl8MN//YC/SA2Q==
+"@ionic-native/vibration@~5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/vibration/-/vibration-5.3.0.tgz#0c8a47ece05900e97af0843fa4e888f25b75b12e"
+  integrity sha512-q7Pcx1065xYZ5+ioN0LLGZYgkzigTOHHdn0i9cHKHo7nD+xqUOmBuiT8+sZ56P40L1Wr/CPCEBl5TbmOPrtFaw==
   dependencies:
     "@types/cordova" latest
 
