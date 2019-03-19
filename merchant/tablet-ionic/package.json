@@ -180,7 +180,7 @@
 		"@angular/compiler-cli": "^7.2.9",
 		"@angular/language-service": "^7.2.9",
 		"@compodoc/compodoc": "^1.1.9",
-		"@ionic/angular-toolkit": "^1.4.0",
+		"@ionic/angular-toolkit": "^1.4.1",
 		"@ionic/app-scripts": "^3.2.3",
 		"@ionic/lab": "^1.0.24",
 		"@ionic/ng-toolkit": "^1.1.0",
