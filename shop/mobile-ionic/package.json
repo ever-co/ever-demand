@@ -65,7 +65,7 @@
 		"@ionic-native/barcode-scanner": "^5.0.0",
 		"@ionic-native/call-number": "~5.0.0",
 		"@ionic-native/core": "~5.0.0",
-		"@ionic-native/device": "~5.0.0",
+		"@ionic-native/device": "~5.3.0",
 		"@ionic-native/dialogs": "~5.0.0",
 		"@ionic-native/geolocation": "~5.0.0",
 		"@ionic-native/globalization": "~5.0.0",
