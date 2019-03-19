@@ -527,10 +527,10 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic/angular-toolkit@1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@ionic/angular-toolkit/-/angular-toolkit-1.3.0.tgz#4d269b4ba2979ac037440fafa1d5c6d71e95bee7"
-  integrity sha512-GOoAx/cs6Hhl0FiOhZAFPCG3cgz2DbyfYflhWFbi08MLIQD2aCoVg6wIpcBoMHQf4eob5WDDIlbOO0t9LVn3dg==
+"@ionic/angular-toolkit@1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@ionic/angular-toolkit/-/angular-toolkit-1.4.1.tgz#0e26e1edb4e3e499329029c973430188a60cccb6"
+  integrity sha512-EBXDUPWD53a4upRAtGZDXP24h4FNnZlDyDplNVZOwvTv9+Izg63tPHjl1LkGYm2pPAu+LVgNF/BpNQLk8qbG9g==
   dependencies:
     "@schematics/angular" "^7.0.3"
     tslib "^1.9.0"
