@@ -437,10 +437,10 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/intercom@^5.2.0":
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/intercom/-/intercom-5.2.0.tgz#872235365808c2475d2fc03794d52ec7089b7d4f"
-  integrity sha512-aniHy0Dwqx4DxUimo6rKA0FAKQp/qwPNL+eUsRVFSB17h8iEkK+lo3izJVeIZ32vYJVcORWR3fXr5cM2cFyE9Q==
+"@ionic-native/intercom@^5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/intercom/-/intercom-5.3.0.tgz#e920f1ed774da10944424f9dfa1a89218f8b4546"
+  integrity sha512-a9W6FclBEyVhSJpC2kDjpoWla/lFby8/aRzDA5o+Vt7mEmMruf08QgH5qK+H3ohiZJpUUEULdeJR+WU6a9bqrQ==
   dependencies:
     "@types/cordova" latest
 
