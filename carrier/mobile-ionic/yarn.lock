@@ -485,10 +485,10 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/mixpanel@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/mixpanel/-/mixpanel-5.0.0.tgz#9354a04093d3e0ff0c7f123aea8a205c01a66d05"
-  integrity sha512-SqKHc5yCTJ2qnX1bk7GFcNQCpDzIqzg0+CNWptSkFPBxtais3qw07GYTASaEzQM1kjmPSPD++avkfWmUXT2CXg==
+"@ionic-native/mixpanel@^5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/mixpanel/-/mixpanel-5.3.0.tgz#9733569e19ef4268ee3ac5b765569bd1b61f68bd"
+  integrity sha512-Ha+7NxuMeRuBtPWjyL7qRx76PmqWvxtbmXseAA74PHT+e3hiGn5dBTDdFIfK/BUXhtfUde+1QU/5NK91ZhibIQ==
   dependencies:
     "@types/cordova" latest
 
