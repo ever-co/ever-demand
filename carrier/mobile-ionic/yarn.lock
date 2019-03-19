@@ -401,10 +401,10 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/call-number@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/call-number/-/call-number-5.0.0.tgz#a1c46ddf3e384cd1c2fbe12d5f2c6f5a2541bb91"
-  integrity sha512-kzIAMs7+hTRL2A2wO6PyIOVAJYxhBFNDsYyuE5vLmDs1Um74mFq62CFdYhLNpF+/wovbuNG3+u/b1BFToXIUWw==
+"@ionic-native/call-number@^5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/call-number/-/call-number-5.3.0.tgz#4a9318fecb4b1dce804786ecb78b51c84f05f06f"
+  integrity sha512-KQPPwX2DCKksX/SENRAuMopfMXpqf34v5a3jTWtNh37wKryDxNwCObjWKy3Fh6zvYQ8AlXBxKa2kmgi/14jzKA==
   dependencies:
     "@types/cordova" latest
 
