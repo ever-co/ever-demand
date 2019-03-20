@@ -55,7 +55,7 @@
 		"@nestjs/swagger": "^2.5.1",
 		"@nestjs/testing": "^5.7.2",
 		"@nestjs/typeorm": "^5.3.0",
-		"@nestjs/websockets": "^5.7.2",
+		"@nestjs/websockets": "^6.0.2",
 		"apollo-server-express": "^2.4.0",
 		"kafka-node": "^4.0.1",
 		"redis": "^2.8.0",
