@@ -80,7 +80,7 @@
 		"@ionic-native/status-bar": "~5.0.0",
 		"@ionic-native/unique-device-id": "~5.0.0",
 		"@ionic-native/vibration": "~5.0.0",
-		"@ionic/angular": "4.0.0",
+		"@ionic/angular": "4.1.2",
 		"@ionic/pro": "^2.0.4",
 		"@ionic/storage": "^2.2.0",
 		"@ngx-progressbar/core": "^5.3.1",
