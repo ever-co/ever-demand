@@ -516,12 +516,12 @@
     tslib "^1.9.0"
     typescript "^3.2.4"
 
-"@ionic/angular@^4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@ionic/angular/-/angular-4.1.1.tgz#e3823d628d5fbea2a68193b95889ca6a9cd326bf"
-  integrity sha512-5Z7/52vCzP+wcJoUfqOWBHcjeajXWGoz6AW/sOeF/RtXqkFDc7rqrpfxZCuL6FanFm/Aayh5F7O8t5/ZgeZGqA==
+"@ionic/angular@^4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@ionic/angular/-/angular-4.1.2.tgz#c14c072c5bbaa7cfc533cb6408d02e769f820776"
+  integrity sha512-GVdtpPekPjAYo/3IiRg/EoVRw1/9RwW07ITW6TRorcX1XOPJlrRXVcQyWFTbHRD9TOikgE1XmMQd/+1Lk0TQFw==
   dependencies:
-    "@ionic/core" "4.1.1"
+    "@ionic/core" "4.1.2"
     tslib "^1.9.3"
 
 "@ionic/app-scripts@^3.2.3":
@@ -606,10 +606,10 @@
     wrap-ansi "^4.0.0"
     write-file-atomic "^2.3.0"
 
-"@ionic/core@4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-4.1.1.tgz#3d0d905db06cb8308a445b9784e688a8b31fc78b"
-  integrity sha512-zmfRZ8PcVPRRx4HAUjB7VFHu5fyRaVdUy4vikkoIs4sbGvWPIbveweWn36oiSc6/sKMz+OsDB6+Suvdi1k7FVw==
+"@ionic/core@4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-4.1.2.tgz#cbabd9ae65936f56b1dc6de021cf79778dc991da"
+  integrity sha512-QVJYpDAycmXgQL3mWdvjlIgrLEG0wVl9+NGZQATEBCTEsuDHrOw7BO28FKPlFCdfTjVA6HDJnSj1HwOUi3Yp4w==
   dependencies:
     ionicons "4.5.5"
 
