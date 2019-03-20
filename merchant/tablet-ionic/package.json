@@ -88,7 +88,7 @@
 		"@ionic-native/status-bar": "^5.2.0",
 		"@ionic-native/unique-device-id": "~5.2.0",
 		"@ionic-native/vibration": "~5.2.0",
-		"@ionic/angular": "^4.1.1",
+		"@ionic/angular": "^4.1.2",
 		"@ionic/pro": "^2.0.4",
 		"@ionic/storage": "^2.2.0",
 		"@ngx-translate/core": "^11.0.1",
