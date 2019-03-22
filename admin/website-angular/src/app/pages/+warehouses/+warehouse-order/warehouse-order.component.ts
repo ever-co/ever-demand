@@ -8,19 +8,7 @@ import { WarehouseInfoComponent } from './warehouse-info/warehouse-info.componen
 
 @Component({
 	styleUrls: ['./warehouse-order.component.scss'],
-	template: `
-		<button
-			class="btn btn-sm btn-outline-secondary"
-			(click)="openWarehouseOrderModal()"
-		>
-			{{ renderValue | translate }}
-		</button>
-		<div class="iconsCont">
-			<h4 class="text-center iconBtns">
-				<i (click)="openInfo()" class="fa fa-info-circle infoBtn"></i>
-			</h4>
-		</div>
-	`
+	templateUrl: './warehouse-order.component.html'
 })
 export class WarehouseOrderComponent implements ViewCell, OnInit {
 	@Input()

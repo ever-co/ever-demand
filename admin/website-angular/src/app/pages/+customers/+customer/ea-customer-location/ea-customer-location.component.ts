@@ -7,12 +7,7 @@ declare var google: any;
 @Component({
 	selector: 'ea-customer-location',
 	styleUrls: ['./ea-customer-location.component.scss'],
-	template: `
-		<nb-card>
-			<nb-card-header class="header-color">Location</nb-card-header>
-			<nb-card-body> <div #gmap class="googleMap"></div> </nb-card-body>
-		</nb-card>
-	`
+	templateUrl: './ea-customer-location.component.html'
 })
 export class CustomerLocationComponent implements OnDestroy, OnInit {
 	@ViewChild('gmap')

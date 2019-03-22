@@ -39,34 +39,15 @@
 				'Picture Url' | translate
 			}}</label>
 			<div class="col-sm-9">
-				<div class="row upload-img">
-					<input
-						[hidden]="true"
-						(change)="imageUrlChanged()"
-						#fileInput
-						type="file"
-						id="fileInput"
-						ng2FileSelect
-						[uploader]="uploader"
-					/>
-					<input
-						type="text"
-						class="form-control col-10"
-						required
-						placeholder="{{
-							'WAREHOUSE_VIEW.PLACEHOLDER.IMAGE_URL' | translate
-						}}"
-						formControlName="image"
-					/>
-					<button
-						(click)="fileInput.click()"
-						class="btn btn-primary btn-rectangle col-2"
-					>
-						{{ 'BROWSE' | translate }}
-					</button>
-				</div>
+				<e-cu-file-uploader
+					[placeholder]="uploaderPlaceholder"
+					[fileUrl]="imagesUrls"
+					[locale]="locale.value"
+					(uploadedImgObj)="addImageObj($event)"
+				></e-cu-file-uploader>
+
 				<div
-					*ngIf="image?.invalid && (image.dirty || image.touched)"
+					*ngIf="(imagesArr || uploaderChanged) && image.invalid"
 					class="alert alert-danger"
 				>
 					{{
@@ -79,7 +60,7 @@
 
 		<div
 			class="form-group row images-container mt-0"
-			*ngIf="!image?.invalid"
+			*ngIf="imagesArr && imagesArr.length > 0"
 		>
 			<label class="col-sm-2 control-label"></label>
 			<div

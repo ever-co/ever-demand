@@ -5,6 +5,7 @@ import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 import { NgxMasonryOptions } from 'ngx-masonry';
+import { ModalController } from '@ionic/angular';
 
 @Component({
 	selector: 'merchant-all-products',
@@ -56,7 +57,8 @@ export class AllProductsComponent implements OnInit, OnDestroy {
 	constructor(
 		private warehouseProductsService: WarehouseProductsService,
 		private translateProductLocales: ProductLocalesService,
-		private warehouseProductsRouter: WarehouseProductsRouter
+		private warehouseProductsRouter: WarehouseProductsRouter,
+		private modalCtrl: ModalController
 	) {}
 
 	async ngOnInit() {

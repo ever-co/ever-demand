@@ -33,13 +33,13 @@
 		<wizard-step
 			[title]="'WAREHOUSE_VIEW.NEW_PRODUCT.ADD' | translate"
 			(onComplete)="createProduct()"
-			[isValid]="basicInfo.valid || hasSelectedProducts() || false"
+			[isValid]="isValidBasicInfoForm || hasSelectedProducts() || false"
 			(onNext)="onStep2Next()"
 			(onPrev)="onStep2Prev()"
 		>
 			<hr class="hr-line" />
 			<ea-product-basic-info-form
-				*ngIf="hasCoiced === 'new'"
+				*ngIf="hasCoiced === 'new' && isSetp2"
 				[productCategories]="productsCategories"
 				#basicInfoForm
 				[form]="basicInfo"
@@ -59,6 +59,7 @@
 			[title]="'WAREHOUSE_VIEW.NEW_PRODUCT.SAVE' | translate"
 			[isValid]="validAllProducts()"
 			(onComplete)="addProducts()"
+			(onPrev)="onStep3Prev()"
 		>
 			<hr />
 			<ea-warehouse-products-table

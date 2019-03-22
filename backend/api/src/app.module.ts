@@ -23,9 +23,9 @@ import { ProductsModule } from './graphql/products/products.module';
 import * as Logger from 'bunyan';
 import { env } from './env';
 import { createEverLogger } from './helpers/Log';
-import { CommandBus, CQRSModule, EventBus } from '@nestjs/cqrs';
+import { CommandBus, EventBus, CqrsModule } from '@nestjs/cqrs';
 import { TestController } from './controllers/test.controller';
-import { ModuleRef, HTTP_SERVER_REF } from '@nestjs/core';
+import { ModuleRef } from '@nestjs/core';
 import { GeoLocationsModule } from './graphql/geo-locations/geo-locations.module';
 import { SCALARS } from './graphql/scalars';
 import { WarehousesProductsModule } from './graphql/warehouses-products/warehouses-products.modules';
@@ -65,7 +65,7 @@ const entities = ServicesApp.getEntities();
 	imports: [
 		DataModule,
 		ServicesModule,
-		CQRSModule,
+		CqrsModule,
 		AuthModule,
 		AdminsModule,
 		ConfigModule,
@@ -114,8 +114,8 @@ const entities = ServicesApp.getEntities();
 })
 export class ApplicationModule implements NestModule, OnModuleInit {
 	constructor(
-		@Inject(HTTP_SERVER_REF)
-		private readonly httpServerRef: HttpServer,
+		// @Inject(HTTP_SERVER_REF)
+		// private readonly httpServerRef: HttpServer,
 		private readonly subscriptionsService: SubscriptionsService,
 		// Next required for NestJS CQRS (see https://docs.nestjs.com/recipes/cqrs)
 		private readonly moduleRef: ModuleRef,
@@ -125,8 +125,6 @@ export class ApplicationModule implements NestModule, OnModuleInit {
 
 	onModuleInit() {
 		// initialize CQRS
-		this.command$.setModuleRef(this.moduleRef);
-		this.event$.setModuleRef(this.moduleRef);
 		this.event$.register(EventHandlers);
 		this.command$.register(CommandHandlers);
 	}

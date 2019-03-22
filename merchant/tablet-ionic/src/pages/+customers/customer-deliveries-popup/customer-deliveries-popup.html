@@ -2,7 +2,9 @@
 	<h4 class="custom-title-popup">
 		{{ 'CUSTOMERS_VIEW.ORDERS_POP_UP.CUSTOMER_ORDERS' | translate }}
 	</h4>
-
+	<button class="close" (click)="cancelModal()">
+		<i class="fa fa-close"></i>
+	</button>
 	<ion-row id="basicInfo">
 		<ion-col size="6">
 			<span

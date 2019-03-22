@@ -2,6 +2,9 @@
 	<h4 class="custom-title-popup">
 		{{ 'CUSTOMERS_VIEW.ADDRESS_POP_UP.CUSTOMER_ADDRESS' | translate }}
 	</h4>
+	<button class="close" (click)="cancelModal()">
+		<i class="fa fa-close"></i>
+	</button>
 	<div class="addrInfo">
 		<span *ngIf="country" class="infoRow">
 			<div class="label">
@@ -31,7 +34,7 @@
 			<div class="label">
 				{{ 'CUSTOMERS_VIEW.ADDRESS_POP_UP.COORDINATES' | translate }}:
 			</div>
-			<div class="info">{{ coordinates }}</div>
+			<div class="info">{{ coordinatesStr }}</div>
 		</span>
 	</div>
 	<div #gmap id="mapDiv" class="map"></div>

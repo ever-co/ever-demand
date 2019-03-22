@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 import { NotifyService } from '../../../../@core/services/notify/notify.service';
 import { ConfimationModalComponent } from '../../../../@shared/confirmation-modal/confirmation-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { StoreProductImageComponent } from '../../../../@shared/render-component/store-products-table/store-product-image.component';
+import { StoreProductImageComponent } from '../../../../@shared/render-component/store-products-table/store-product-image/store-product-image.component';
 import { ProductTitleRedirectComponent } from '../../../../@shared/render-component/product-title-redirect/product-title-redirect.component';
 import { ProductCategoriesComponent } from '../../../../@shared/render-component/product-categories/product-categories';
 import { ProductsCategoryService } from '../../../../@core/data/productsCategory.service';

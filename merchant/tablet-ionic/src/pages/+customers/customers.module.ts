@@ -16,6 +16,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ConfirmDeletePopupModule } from 'components/confirm-delete-popup/confirm-delete-popup.module';
+import { WarehouseOrdersService } from 'services/warehouse-orders.service';
 
 const routes: Routes = [
 	{
@@ -41,7 +43,8 @@ const routes: Routes = [
 		CommonModule,
 		FormsModule,
 		TranslateModule.forChild(),
-		Ng2SmartTableModule
+		Ng2SmartTableModule,
+		ConfirmDeletePopupModule
 	],
 	entryComponents: [
 		UserPhoneComponent,
@@ -51,6 +54,6 @@ const routes: Routes = [
 		TotalComponent,
 		EmailComponent
 	],
-	providers: [WarehouseUsersService, OrdersService]
+	providers: [WarehouseUsersService, OrdersService, WarehouseOrdersService]
 })
 export class CustomersPageModule {}

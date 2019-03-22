@@ -1,0 +1,24 @@
+.file-uploader-container {
+	input {
+		border-bottom-right-radius: 0;
+		border-top-right-radius: 0;
+	}
+	button {
+		border-bottom-left-radius: 0;
+		border-top-left-radius: 0;
+	}
+
+	.button-full-space {
+		height: 100% !important;
+	}
+
+	.ion-input-custom-style {
+		border-bottom: 1px solid #dedede;
+		text-align: left;
+		background: white;
+	}
+
+	input.native-input.sc-ion-input-md {
+		padding: 10px !important;
+	}
+}

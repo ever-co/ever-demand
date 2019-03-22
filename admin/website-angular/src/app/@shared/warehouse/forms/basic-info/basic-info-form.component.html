@@ -47,37 +47,14 @@
 			}}</label>
 
 			<div class="col-sm-8">
-				<div class="row upload-img">
-					<input
-						[hidden]="true"
-						(change)="imageUrlChanged()"
-						#fileInput
-						type="file"
-						id="fileInput"
-						ng2FileSelect
-						[uploader]="uploader"
-					/>
-					<input
-						type="text"
-						class="form-control col-10"
-						placeholder="{{
-							'WAREHOUSE_VIEW.MUTATION.PHOTO' | translate
-						}} ({{ 'OPTIONAL' | translate }})"
-						formControlName="logo"
-					/>
+				<e-cu-file-uploader
+					[placeholder]="uploaderPlaceholder"
+					[name]="name?.value"
+					[fileUrl]="logo?.value"
+					(uploadedImgUrl)="logo.setValue($event)"
+				></e-cu-file-uploader>
 
-					<button
-						(click)="fileInput.click()"
-						class="btn btn-primary btn-rectangle col-2"
-					>
-						{{ 'BROWSE' | translate }}
-					</button>
-				</div>
-
-				<div
-					*ngIf="logo.errors && (logo.dirty || logo.touched)"
-					class="alert alert-danger"
-				>
+				<div *ngIf="logo.invalid" class="alert alert-danger">
 					{{
 						'WAREHOUSE_VIEW.MUTATION.ERRORS.INVALID_URL'
 							| translate

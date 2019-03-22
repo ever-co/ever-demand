@@ -6,13 +6,13 @@
 
 [Ever](https://ever.co)® is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform build with [TypeScript](http://www.typescriptlang.org).
 
-Out-of-the-box Ever Platform provides everything required to quickly build, manage and expand Multi-Store (Multi-Vendor Marketplace) or Single-Store **On-Demand** Commerce Solutions with customized e-commerce Websites (shops), Mobile ordering apps (Hybrid and PWA), Carrier (Driver) apps, Merchant apps and Admin interface website.
+Out-of-the-box Ever® Platform™ provides everything required to quickly build, manage and expand Multi-Store (Multi-Vendor Marketplace) or Single-Store **On-Demand** Commerce Solutions with customized e-commerce Websites (shops), Mobile ordering apps (Hybrid and PWA), Carrier (Driver) apps, Merchant apps and Admin interface website.
 
 ![overview](https://docs.ever.co/docs/assets/overview.jpg)
 
 ### Disclaimer
 
-_A word of caution_: We are in α (alpha), i.e. Ever Platform is very much under development (work in progress, WIP).  
+_A word of caution_: We are in α (alpha), i.e. Ever® Platform™ is very much under development (work in progress, WIP).  
 Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_winking_eye:
 
 ## Features
@@ -190,6 +190,31 @@ Note: on the first run, API Server (Backend) will create MongoDB local database 
 
 You can use credentials above to login into Platform Admin App, which available locally at http://localhost:4200 (by default)
 
+## Metrics
+
+See below aproximate source code metrics for Ever Platform using [cloc](https://github.com/AlDanial/cloc) project.
+
+```
+github.com/AlDanial/cloc v 1.80  T=5.12 s (385.5 files/s, 27882.0 lines/s)
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+TypeScript                    1145          10151           4065          73840
+HTML                           319           1005            135          15917
+Sass                           298           1969            339          12800
+JSON                            39             13              0           8258
+CSS                             95           1196            665           5650
+JavaScript                      50              8             87           3257
+Markdown                         6            554              1           1426
+GraphQL                         21            269             49           1091
+XML                              1              0              0             11
+-------------------------------------------------------------------------------
+SUM:                          1974          15165           5341         122250
+-------------------------------------------------------------------------------
+```
+
+Note: you can get latest metrics using `yarn count` from the root of mono-repo.
+
 ## Contribute
 
 -   Please give us :star: on Github, it **really** helps!
@@ -253,7 +278,7 @@ Different parts of the Platform are made available under the terms of the separa
 -   Pyro shared modules under [MIT License](https://opensource.org/licenses/MIT)
 -   Other shared modules under [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.txt)
 
-If you decide to choose the Ever Platform Community Edition License, you must comply with the following terms:
+If you decide to choose the Ever® Platform Community™ Edition License, you must comply with the following terms:
 
 This program is free software: you can redistribute it and/or modify it under the terms of the corresponding licenses described in the LICENSE.md files located in software sub-folders and under the terms of licenses described in individual files.
 
@@ -265,9 +290,9 @@ You should have received a copy of the relevant GNU Licenses along with this pro
 
 Alternatively, commercial versions of the software must be used in accordance with the terms and conditions of separate written agreement between you and Ever Co. LTD.
 
-For more information about Ever Platform Enterprise License please contact <mailto:ever@ever.co>.
+For more information about Ever® Platform Enterprise™ License please contact <mailto:ever@ever.co>.
 
-#### The default Ever Platform license, without a valid Ever Platform Enterprise License agreement, is the Ever Platform Community Edition License.
+#### The default Ever® Platform™ license, without a valid Ever® Platform Enterprise™ License agreement, is the Ever® Platform Community™ Edition License.
 
 #### Please see [LICENSE.md](LICENSE.md) for more information on licenses.
 
@@ -275,9 +300,10 @@ For more information about Ever Platform Enterprise License please contact <mail
 
 ## Trademarks
 
-**Ever**® is a registered trademark of [Ever Co. LTD](https://ever.co).
+**Ever**® is a registered trademark of [Ever Co. LTD](https://ever.co).  
+**Ever® Platform™**, **Ever® Platform Community™** and **Ever® Platform Enterprise™** are all trademarks of [Ever Co. LTD](https://ever.co).
 
-The trademark may only be used with the written permission of Ever Co. LTD. and may not be used to promote or otherwise market competitive products or services.
+The trademarks may only be used with the written permission of Ever Co. LTD. and may not be used to promote or otherwise market competitive products or services.
 
 All other brand and product names are trademarks, registered trademarks or service marks of their respective holders.
 

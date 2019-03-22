@@ -1,6 +1,6 @@
 import { Component, OnDestroy, ViewChild, OnInit, Input } from '@angular/core';
-import { OrdersChartComponent } from './charts/orders-chart.component';
-import { ProfitChartComponent } from './charts/profit-chart.component';
+import { OrdersChartComponent } from './charts/orders-chart/orders-chart.component';
+import { ProfitChartComponent } from './charts/profit-chart/profit-chart.component';
 import { TranslateService } from '@ngx-translate/core';
 import {
 	OrdersChart,

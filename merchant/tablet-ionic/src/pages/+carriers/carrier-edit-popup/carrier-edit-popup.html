@@ -1,18 +1,24 @@
 <div class="carrier-edit">
+	<h4 class="custom-title-popup mb-0">
+		{{ 'CARRIERS_VIEW.EDIT_CARRIER.EDIT_CARRIER' | translate }}
+	</h4>
 	<button class="close" (click)="cancelModal()">
 		<i class="fa fa-close"></i>
 	</button>
 	<ion-grid [hidden]="!isNextStepOneAvailable">
 		<ion-row>
 			<ion-col text-center>
-				<basic-info-form #basicInfoForm></basic-info-form>
+				<basic-info-form
+					#basicInfoForm
+					[carrier]="carrier"
+				></basic-info-form>
 			</ion-col>
 		</ion-row>
 	</ion-grid>
 	<ion-grid [hidden]="!isNextStepTwoAvailable">
 		<ion-row>
 			<ion-col text-center>
-				<account-form #accountForm></account-form>
+				<account-form #accountForm [carrier]="carrier"></account-form>
 			</ion-col>
 		</ion-row>
 	</ion-grid>
@@ -21,6 +27,7 @@
 			<ion-col text-center>
 				<carrier-location-form
 					#locationForm
+					[carrier]="carrier"
 					(buttonClickEventComplete)="onClickComplete($event)"
 					(backToStep2event)="toStep2event($event)"
 				></carrier-location-form>

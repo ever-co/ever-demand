@@ -184,4 +184,25 @@ export class WarehouseOrdersService {
 
 		return res.data['getCountOfStoreOrders'];
 	}
+
+	async removeUserOrders(storeId: string, userId: string) {
+		const res = await this._apollo
+			.query({
+				query: gql`
+					query RemoveUserOrders(
+						$storeId: String!
+						$userId: String!
+					) {
+						removeUserOrders(storeId: $storeId, userId: $userId) {
+							number
+							modified
+						}
+					}
+				`,
+				variables: { storeId, userId }
+			})
+			.toPromise();
+
+		return res.data['removeUserOrders'];
+	}
 }

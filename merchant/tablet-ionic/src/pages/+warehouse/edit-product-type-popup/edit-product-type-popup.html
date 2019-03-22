@@ -5,6 +5,9 @@
 	<p style="text-align: center;">
 		{{ 'EDIT_PRODUCT_POP_UP.UPDATE_AN_EXISTING_PRODUCT' | translate }}
 	</p>
+	<button class="close" (click)="cancelModal()">
+		<i class="fa fa-close"></i>
+	</button>
 
 	<ion-row>
 		<div class="col popup-half">
@@ -160,8 +163,9 @@
 				class="upload-button"
 				#imageHolder
 				id="image-holder"
+				(click)="hasImage && showPicturesPopup()"
 			>
-				<h6 *ngIf="isBrowser" class="dragDrop">
+				<h6 *ngIf="isBrowser && !hasImage" class="dragDrop">
 					{{ 'EDIT_PRODUCT_POP_UP.DRAG&DROP_FILE_HERE' | translate }}
 
 					<br />
@@ -169,6 +173,7 @@
 				</h6>
 
 				<input
+					*ngIf="!hasImage"
 					ng2FileSelect
 					type="file"
 					id="fileInput"
@@ -176,30 +181,36 @@
 					(change)="imageUrlChanged($event)"
 				/>
 
-				<label *ngIf="!isBrowser">
-					<ion-icon
-						(click)="presentActionSheet()"
-						class="upload-icon"
-						ios="ios-cloud-upload"
-						md="md-cloud-upload"
-					></ion-icon>
-					<h3 class="upload-text">
-						{{ 'EDIT_PRODUCT_POP_UP.CLICK_TO_UPLAOD_PICTURE' |
-						translate }}
-					</h3>
-				</label>
+				<div class="{{ hasImage ? 'no-upload-input' : '' }} ">
+					<label *ngIf="!isBrowser">
+						<ion-icon
+							(click)="!hasImage && presentActionSheet()"
+							class="upload-icon"
+							name="{{ hasImage ? 'images' : 'cloud-upload' }}"
+						></ion-icon>
+						<h3 class="upload-text">
+							{{ hasImage ?
+							('EDIT_PRODUCT_POP_UP.CLICK_TO_EDIT_PICTURES' |
+							translate) :
+							('EDIT_PRODUCT_POP_UP.CLICK_TO_UPLAOD_PICTURE' |
+							translate) }}
+						</h3>
+					</label>
 
-				<label *ngIf="isBrowser" for="fileInput">
-					<ion-icon
-						class="upload-icon"
-						ios="ios-cloud-upload"
-						md="md-cloud-upload"
-					></ion-icon>
-					<h3 class="upload-text">
-						{{ 'EDIT_PRODUCT_POP_UP.CLICK_TO_UPLAOD_PICTURE' |
-						translate }}
-					</h3>
-				</label>
+					<label *ngIf="isBrowser" for="fileInput">
+						<ion-icon
+							class="upload-icon"
+							name="{{ hasImage ? 'images' : 'cloud-upload' }}"
+						></ion-icon>
+						<h3 class="upload-text">
+							{{ hasImage ?
+							('EDIT_PRODUCT_POP_UP.CLICK_TO_EDIT_PICTURES' |
+							translate) :
+							('EDIT_PRODUCT_POP_UP.CLICK_TO_UPLAOD_PICTURE' |
+							translate) }}
+						</h3>
+					</label>
+				</div>
 			</div>
 
 			<div class="button-bar padding-top">

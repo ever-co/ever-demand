@@ -7,7 +7,7 @@ import { SimulationJsonComponent } from 'app/@shared/render-component/simulation
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
-import { ProductCheckboxComponent } from 'app/@shared/render-component/product-checkbox';
+import { ProductCheckboxComponent } from 'app/@shared/render-component/product-checkbox/product-checkbox';
 
 export interface ProductViewModel {
 	id: string;
@@ -17,15 +17,7 @@ export interface ProductViewModel {
 
 @Component({
 	selector: 'ea-simulation-products',
-	template: `
-		<ng2-smart-table
-			[settings]="settingsSmartTable"
-			[source]="sourceSmartTable"
-			id="smartTableCustomer"
-			(userRowSelect)="selectProductTmp($event)"
-		>
-		</ng2-smart-table>
-	`
+	templateUrl: './products.component.html'
 })
 export class SimulationProductsComponent implements OnDestroy {
 	protected sourceSmartTable: LocalDataSource = new LocalDataSource();

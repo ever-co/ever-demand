@@ -4,18 +4,7 @@ import { takeWhile } from 'rxjs/operators/takeWhile';
 
 @Component({
 	selector: 'ngx-layout-direction-switcher',
-	template: `
-    <ngx-switcher
-      [firstValue]="directions.RTL"
-      [secondValue]="directions.LTR"
-      [firstValueLabel]="'RTL'"
-      [secondValueLabel]="'LTR'"
-      [value]="currentDirection"
-      (valueChange)="toggleDirection($event)"
-      [vertical]="vertical"
-    >
-    </ngx-switcher>
-  `
+	templateUrl: './layout-direction-switcher.component.html'
 })
 export class LayoutDirectionSwitcherComponent implements OnDestroy {
 	directions = NbLayoutDirection;
@@ -27,9 +16,12 @@ export class LayoutDirectionSwitcherComponent implements OnDestroy {
 	constructor(private directionService: NbLayoutDirectionService) {
 		this.currentDirection = this.directionService.getDirection();
 
-		this.directionService.onDirectionChange()
+		this.directionService
+			.onDirectionChange()
 			.pipe(takeWhile(() => this.alive))
-			.subscribe((newDirection) => this.currentDirection = newDirection);
+			.subscribe(
+				(newDirection) => (this.currentDirection = newDirection)
+			);
 	}
 
 	toggleDirection(newDirection) {

@@ -10,19 +10,25 @@
 				</div>
 			</span>
 		</div>
-		<div class="button-bar-right-container allowOverflow">
-			<div class="button-bar">
-				<a class="button button-brand" (click)="openAddCarriers()">
-					{{ 'CARRIERS_VIEW.ADD_CARRIERS' | translate }}
-				</a>
+		<div class="right-container">
+			<div class="allowOverflow">
+				<div class="button-bar">
+					<a class="button button-brand" (click)="openAddCarriers()">
+						<span class="button-text">
+							{{ 'CARRIERS_VIEW.ADD_CARRIERS' | translate }}</span
+						>
+					</a>
+				</div>
 			</div>
-		</div>
-		<!-- TODO Add translate -->
-		<div class="button-bar-right-container allowOverflow track-btn">
-			<div class="button-bar">
-				<a class="button button-brand" (click)="goToTrackPage()">
-					Track Carrier
-				</a>
+			<div class="allowOverflow track-btn">
+				<div class="button-bar">
+					<a class="button button-brand" (click)="goToTrackPage()">
+						<span class="button-text">
+							{{ 'CARRIERS_VIEW.TRACK_CARRIER' | translate
+							}}</span
+						>
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -33,6 +39,7 @@
 			class="smart-table"
 			[settings]="settingsSmartTable"
 			[source]="sourceSmartTable"
+			(create)="openAddCarriers()"
 			(edit)="editCarrier($event)"
 			(delete)="deleteCarrier($event)"
 			(custom)="trackCarrier($event)"

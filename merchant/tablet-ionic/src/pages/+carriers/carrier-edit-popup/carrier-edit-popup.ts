@@ -17,6 +17,7 @@ import { LocationFormComponent } from './location/location-form.component';
 import { CarrierService } from '../../../services/carrier.service';
 import { ModalController } from '@ionic/angular';
 import Carrier from '@modules/server.common/entities/Carrier';
+import { WarehouseCarriersRouter } from '@modules/client.common.angular2/routers/warehouse-carriers-router.service';
 
 @Component({
 	selector: 'carrier-edit-popup',
@@ -59,7 +60,8 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 
 	constructor(
 		public modalCtrl: ModalController,
-		private _carrierService: CarrierService
+		private _carrierService: CarrierService,
+		private warehouseCarriersRouter: WarehouseCarriersRouter
 	) {}
 
 	ngOnInit(): void {}
@@ -76,7 +78,7 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 		};
 
 		const geoLocation = {
-			countryId: this.locationForm.country.value,
+			countryId: Number(this.locationForm.country.value),
 			city: this.locationForm.city.value,
 			streetAddress: this.locationForm.street.value,
 			postcode: this.locationForm.postcode.value,
@@ -84,8 +86,8 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 			loc: {
 				type: 'Point',
 				coordinates: [
-					Number(this.locationForm.lat.value),
-					Number(this.locationForm.lng.value)
+					Number(this.locationForm.lng.value),
+					Number(this.locationForm.lat.value)
 				]
 			}
 		};
@@ -102,18 +104,22 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 		const carrierCreateObj = {
 			firstName: basic.firstName,
 			lastName: basic.lastName,
-			geoLocation,
-			status: carrier.status,
-			username: account.username,
 			phone: basic.phone,
+			email: basic.email,
 			logo: basic.logo,
-			numberOfDeliveries: carrier.numberOfDeliveries,
-			skippedOrderIds: carrier.skippedOrderIds,
-			deliveriesCountToday: carrier.deliveriesCountToday,
-			totalDistanceToday: carrier.totalDistanceToday,
-			devicesIds: carrier.devicesIds,
-			isActive: account.isActive
+
+			username: account.username,
+			isActive: account.isActive,
+
+			geoLocation
 		};
+
+		if (account.password) {
+			await this.warehouseCarriersRouter.updatePassword(
+				carrier.id,
+				account.password
+			);
+		}
 
 		const id = await this._carrierService
 			.updateCarrier(carrier.id, carrierCreateObj)

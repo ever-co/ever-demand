@@ -18,8 +18,7 @@ import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ProductsCategoryService } from '../../../../@core/data/productsCategory.service';
 import { IProductsCategoryCreateObject } from '@modules/server.common/interfaces/IProductsCategory';
-import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
-import { environment } from 'environments/environment';
+
 import * as _ from 'lodash';
 import * as isUrl from 'is-url';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
@@ -33,16 +32,15 @@ import { NotifyService } from 'app/@core/services/notify/notify.service';
 })
 export class CategoryCreateComponent
 	implements OnInit, AfterViewInit, OnDestroy {
-	productId: any;
-	userId: any;
-	loading: boolean;
-
 	@ViewChild('imagePreview')
 	imagePreviewElement: ElementRef;
 
-	uploader: FileUploader;
+	productId: any;
+	userId: any;
+	loading: boolean;
+	uploaderPlaceholder: string;
 
-	protected readonly form: FormGroup = this.fb.group({
+	readonly form: FormGroup = this.fb.group({
 		name: ['', Validators.required],
 		image: [
 			'',
@@ -88,7 +86,7 @@ export class CategoryCreateComponent
 	}
 
 	ngOnInit() {
-		this._setupUploadFileConfig();
+		this.getUploaderPlaceholderText();
 	}
 
 	ngAfterViewInit() {
@@ -106,19 +104,6 @@ export class CategoryCreateComponent
 
 	cancel() {
 		this.activeModal.dismiss('canceled');
-	}
-
-	imageUrlChanged() {
-		this.uploader.queue[0].upload();
-
-		this.uploader.onSuccessItem = (
-			item: any,
-			response: string,
-			status: number
-		) => {
-			const data = JSON.parse(response);
-			this.image.setValue(data.url);
-		};
 	}
 
 	async createCategory() {
@@ -168,7 +153,7 @@ export class CategoryCreateComponent
 		}
 	}
 
-	protected localeTranslate(member: ILocaleMember[]) {
+	localeTranslate(member: ILocaleMember[]) {
 		return this._productLocalesService.getTranslate(member);
 	}
 
@@ -184,38 +169,10 @@ export class CategoryCreateComponent
 		};
 	}
 
-	private _setupUploadFileConfig() {
-		const uploaderOptions: FileUploaderOptions = {
-			url: environment.API_FILE_UPLOAD_URL,
-
-			isHTML5: true,
-			removeAfterUpload: true,
-			headers: [
-				{
-					name: 'X-Requested-With',
-					value: 'XMLHttpRequest'
-				}
-			]
-		};
-		this.uploader = new FileUploader(uploaderOptions);
-
-		this.uploader.onBuildItemForm = (
-			fileItem: any,
-			form: FormData
-		): any => {
-			form.append('upload_preset', 'everbie-products-images');
-			let tags = 'myphotoalbum';
-			if (this.name.value) {
-				form.append('context', `photo=${this.name.value}`);
-				tags = `myphotoalbum,${this.name.value}`;
-			}
-
-			form.append('folder', 'angular_sample');
-			form.append('tags', tags);
-			form.append('file', fileItem);
-
-			fileItem.withCredentials = false;
-			return { fileItem, form };
-		};
+	private async getUploaderPlaceholderText() {
+		this.uploaderPlaceholder = await this._langTranslateService
+			.get('CATEGORY_VIEW.CREATE.PHOTO_OPTIONAL')
+			.pipe(first())
+			.toPromise();
 	}
 }

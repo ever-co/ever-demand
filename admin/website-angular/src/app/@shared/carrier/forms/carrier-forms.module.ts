@@ -3,14 +3,14 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormWizardModule } from 'angular2-wizard';
 import { BasicInfoFormComponent } from './basic-info';
 import { ThemeModule } from '../../../@theme';
-import { FileUploadModule } from 'ng2-file-upload';
+import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.module';
 
 @NgModule({
 	imports: [
 		ThemeModule,
 		FormWizardModule,
 		TranslateModule.forChild(),
-		FileUploadModule
+		FileUploaderModule
 	],
 	exports: [BasicInfoFormComponent],
 	declarations: [BasicInfoFormComponent]

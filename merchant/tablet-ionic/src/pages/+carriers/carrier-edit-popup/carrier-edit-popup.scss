@@ -9,6 +9,11 @@
 		.ion-page {
 			display: contents;
 			.carrier-edit {
+				background: #f3f3f3 !important;
+				padding: 0 15px;
+				.custom-title-popup {
+					width: 100% !important;
+				}
 				border: 1px solid rgba(0, 0, 0, 0.125);
 				background: white;
 				width: 100%;
@@ -22,15 +27,9 @@
 				ion-button {
 					border: none;
 				}
-				.close {
-					position: absolute;
-					right: 20px;
-					top: 20px;
-					z-index: 1;
-					background: none;
-					color: black;
-					font-size: 2em;
-					cursor: pointer;
+
+				ion-grid {
+					width: 100%;
 				}
 			}
 		}

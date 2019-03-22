@@ -5,16 +5,7 @@ import { Router } from '@angular/router';
 import { Store } from 'app/@core/data/store.service';
 
 @Component({
-	template: `
-		<nb-layout>
-			<nb-layout-column
-				*ngIf="message"
-				class="maintenance-message-container"
-				[innerHTML]="message | safe: 'html'"
-			>
-			</nb-layout-column>
-		</nb-layout>
-	`
+	templateUrl: './maintenance-info.component.html'
 })
 export class MaintenanceInfoComponent {
 	public message: string;

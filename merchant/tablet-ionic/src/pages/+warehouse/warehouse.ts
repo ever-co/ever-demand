@@ -194,7 +194,7 @@ export class WarehousePage {
 	async presentCreateProductPopover() {
 		const modal = await this.modalCtrl.create({
 			component: CreateProductTypePopupPage,
-			backdropDismiss: false,
+			// backdropDismiss: false,
 			cssClass: 'mutation-product-modal'
 		});
 
@@ -204,7 +204,7 @@ export class WarehousePage {
 	async openEditProductModal(product) {
 		const modal = await this.modalCtrl.create({
 			component: EditProductTypePopupPage,
-			backdropDismiss: false,
+			// backdropDismiss: false,
 			componentProps: { warehouseProduct: product },
 			cssClass: 'mutation-product-modal'
 		});

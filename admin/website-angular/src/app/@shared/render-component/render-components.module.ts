@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
-import { PriceCountInputComponent } from './price-countInput.component';
+import { PriceCountInputComponent } from './price-countInput/price-countInput.component';
 import { RedirectIdComponent } from './redirect-id';
 import { CommonModule } from '@angular/common';
 import { ThemeModule } from '../../@theme';
-import { RedirectNameComponent } from './name-redirect.component';
+import { RedirectNameComponent } from './name-redirect/name-redirect.component';
 import { CreatedComponent } from './created/created.component';
 import { ProductTitleRedirectComponent } from './product-title-redirect/product-title-redirect.component';
 import { ProductImageRedirectComponent } from './product-image-redirect/product-image-redirect.component';
-import { ProductCheckboxComponent } from './product-checkbox';
+import { ProductCheckboxComponent } from './product-checkbox/product-checkbox';
 import { MomentModule } from 'ngx-moment';
 import { ProductTitleComponent } from './product-title/product-title.component';
 import { ProductImageComponent } from './product-image/product-image.component';

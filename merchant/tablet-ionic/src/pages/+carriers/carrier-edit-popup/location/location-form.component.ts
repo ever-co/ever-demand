@@ -9,7 +9,6 @@ import {
 	OnInit,
 	OnChanges
 } from '@angular/core';
-
 import {
 	FormBuilder,
 	FormGroup,
@@ -17,16 +16,15 @@ import {
 	AbstractControl
 } from '@angular/forms';
 
-import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import {
+import GeoLocation, {
 	countriesIdsToNamesArray,
 	CountryName,
 	Country,
 	getCountryName
 } from '@modules/server.common/entities/GeoLocation';
-
 import { isEmpty } from 'lodash';
+import Carrier from '@modules/server.common/entities/Carrier';
 
 @Component({
 	selector: 'carrier-location-form',
@@ -37,9 +35,11 @@ export class LocationFormComponent implements OnDestroy, OnInit, OnChanges {
 	@ViewChild('autocomplete')
 	searchElement: ElementRef;
 
+	@Input()
+	carrier: Carrier;
+
 	@Output()
 	buttonClickEventComplete = new EventEmitter();
-
 	@Output()
 	backToStep2event = new EventEmitter();
 
@@ -79,6 +79,7 @@ export class LocationFormComponent implements OnDestroy, OnInit, OnChanges {
 
 		this.buildForm(this.formBuilder);
 		this.bindFormControls();
+		this.loadData();
 	}
 
 	ngOnChanges(): void {}
@@ -127,7 +128,7 @@ export class LocationFormComponent implements OnDestroy, OnInit, OnChanges {
 	textInputChange(val, input) {
 		if (input === 'lat' || input === 'lng') {
 			this._tryFindNewCoordinates();
-		} else if (input !== 'apartment') {
+		} else {
 			this._tryFindNewAddress();
 		}
 	}
@@ -275,7 +276,7 @@ export class LocationFormComponent implements OnDestroy, OnInit, OnChanges {
 		postcode
 	) {
 		if (!isEmpty(country)) {
-			this.country.setValue(Country[country]);
+			this.country.setValue(Country[country].toString());
 		}
 		if (!isEmpty(city)) {
 			this.city.setValue(city);
@@ -363,6 +364,21 @@ export class LocationFormComponent implements OnDestroy, OnInit, OnChanges {
 		if (this.searchElement) {
 			const inputElement = await this.searchElement['getInputElement']();
 			inputElement.value = address;
+		}
+	}
+
+	private loadData() {
+		if (this.carrier) {
+			const carrierGeoLocation: GeoLocation = this.carrier.geoLocation;
+
+			this.city.setValue(carrierGeoLocation.city);
+			this.street.setValue(carrierGeoLocation.streetAddress);
+			this.house.setValue(carrierGeoLocation.house);
+			this.lat.setValue(carrierGeoLocation.coordinates.lat);
+			this.lng.setValue(carrierGeoLocation.coordinates.lng);
+			this.country.setValue(carrierGeoLocation.countryId.toString());
+
+			this._tryFindNewCoordinates();
 		}
 	}
 

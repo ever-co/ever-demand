@@ -57,7 +57,6 @@
 		</order-warehouse-preparation-problem>
 	</div>
 
-	<!-- TODO add transalte -->
 	<ion-infinite-scroll
 		[disabled]="ordersCount <= orders?.length"
 		threshold="100px"
@@ -66,7 +65,7 @@
 	>
 		<ion-infinite-scroll-content
 			loadingSpinner="bubbles"
-			loadingText="Loading more data..."
+			loadingText="{{ 'WAREHOUSE_VIEW.LOADING_MORE_DATA' | translate }}"
 		>
 		</ion-infinite-scroll-content>
 	</ion-infinite-scroll>

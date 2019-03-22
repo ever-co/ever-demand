@@ -114,48 +114,33 @@
 				{{ 'PROFILE_VIEW.PICTURE_URL' | translate }}</label
 			>
 			<div class="row form-group upload-img">
-				<input
-					[hidden]="true"
-					(change)="imageUrlChanged()"
-					#fileInput
-					type="file"
-					id="fileInput"
-					ng2FileSelect
-					[uploader]="uploader"
-				/>
-
-				<input
-					id="id-picture"
-					type="text"
-					class="form-control col-11"
-					[ngClass]="
-						picture.dirty ||
-						picture.touched ||
-						picture.statusChanges
-							? picture.errors
-								? 'form-control-danger'
-								: 'form-control-success'
-							: ''
-					"
-					formControlName="picture"
-					placeholder="{{ 'PROFILE_VIEW.PICTURE_URL' | translate }}"
-				/>
-				<button
-					(click)="fileInput.click()"
-					class="btn btn-primary btn-rectangle col-1"
-				>
-					{{ 'PROFILE_VIEW.BROWSE' | translate }}
-				</button>
-				<span *ngIf="pictureUrlErrorMsg">
-					<strong class="text-danger">
-						{{ 'PROFILE_VIEW.ERROR' | translate }} :
-						{{ pictureUrlErrorMsg }}</strong
-					></span
-				>
+				<div class="col-12">
+					<e-cu-file-uploader
+						[placeholder]="uploaderPlaceholder"
+						[name]="username?.value"
+						[fileUrl]="picture?.value"
+						[customClass]="
+							picture.invalid
+								? picture.errors
+									? 'form-control-danger'
+									: 'form-control-success'
+								: ''
+						"
+						(uploadedImgUrl)="picture.setValue($event)"
+					></e-cu-file-uploader>
+				</div>
+				<div class="col-12">
+					<span *ngIf="picture.invalid">
+						<strong class="text-danger">
+							{{ 'PROFILE_VIEW.ERROR' | translate }} :
+							{{ pictureUrlErrorMsg }}</strong
+						></span
+					>
+				</div>
 			</div>
 			<div
 				class="form-group"
-				[hidden]="picture.errors || picture.value === ''"
+				[hidden]="picture.invalid || picture.value === ''"
 			>
 				<div class="row preview-img">
 					<img

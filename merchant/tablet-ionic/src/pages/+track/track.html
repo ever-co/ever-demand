@@ -11,19 +11,46 @@
 	</div>
 </div>
 <div id="contentWrapper" scroll="false">
-	<ion-item>
-		<ion-label>Search for Carrier</ion-label>
-		<ionic-selectable
-			#filterComponent
-			item-content
-			[(ngModel)]="selectedCarrier"
-			[items]="carriers"
-			itemValueField="id"
-			itemTextField="fullName"
-			[canSearch]="true"
-			(onChange)="navigationHandler($event)"
-		>
-		</ionic-selectable>
-	</ion-item>
 	<div #gmap id="mapDiv" class="map"></div>
+	<div class="sidebar">
+		<ion-item class="statistics">
+			Total Active Carriers - {{ totalActiveCarriers }}
+		</ion-item>
+		<ion-item class="statistics">
+			Total Carriers - {{ totalCarriers }}
+		</ion-item>
+		<ion-item class="statistics">
+			Total Deliveries - {{ totalDeliveries }}
+		</ion-item>
+		<ion-item *ngIf="showCheckboxFilters" (click)="refreshMap();">
+			<ion-label>Show active only</ion-label>
+			<ion-checkbox
+				slot="end"
+				[disabled]="loadingMap"
+				[(ngModel)]="showActiveOnly"
+			></ion-checkbox>
+		</ion-item>
+		<ion-item *ngIf="showCheckboxFilters" (click)="refreshMap();">
+			<ion-label>Show assigned only</ion-label>
+			<ion-checkbox
+				slot="end"
+				[disabled]="loadingMap"
+				[(ngModel)]="showAssignedOnly"
+			></ion-checkbox>
+		</ion-item>
+		<ion-item>
+			<ion-label>Search for Carrier</ion-label>
+			<ionic-selectable
+				#filterComponent
+				item-content
+				[(ngModel)]="selectedCarrier"
+				[items]="carriers"
+				itemValueField="id"
+				itemTextField="fullName"
+				[canSearch]="true"
+				(onChange)="navigationHandler($event)"
+			>
+			</ionic-selectable>
+		</ion-item>
+	</div>
 </div>

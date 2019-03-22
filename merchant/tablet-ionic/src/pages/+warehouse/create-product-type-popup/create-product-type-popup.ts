@@ -18,6 +18,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 import { ModalController, ActionSheetController } from '@ionic/angular';
+import { ProductImagesPopup } from '../product-pictures-popup/product-images-popup.component';
 
 @Component({
 	selector: 'page-create-product-type-popup',
@@ -55,13 +56,12 @@ export class CreateProductTypePopupPage implements OnInit {
 
 	translLang: string;
 
+	hasImage: boolean;
+
 	@ViewChild('fileInput')
 	fileInput: ElementRef;
 
-	loadUnload(ev) {
-		console.log('Event');
-		console.warn(ev);
-	}
+	private imagesData: IProductImage[];
 
 	constructor(
 		public readonly localeTranslateService: ProductLocalesService,
@@ -141,6 +141,7 @@ export class CreateProductTypePopupPage implements OnInit {
 
 		reader.addEventListener('load', (e) => {
 			const imageBase64 = e.target['result'];
+			this.hasImage = true;
 			this._setImageHolderBackground(imageBase64);
 		});
 
@@ -174,7 +175,8 @@ export class CreateProductTypePopupPage implements OnInit {
 			this.localeTranslateService.isServiceStateValid &&
 			this.warehouseProductCreateObject.price !== null &&
 			this.warehouseProductCreateObject.price !== 0 &&
-			this.uploader.queue[0]
+			(this.uploader.queue[0] ||
+				(this.imagesData && this.imagesData.length > 0))
 		);
 	}
 
@@ -209,6 +211,45 @@ export class CreateProductTypePopupPage implements OnInit {
 		await this._loadProductsCategories();
 	}
 
+	async showPicturesPopup() {
+		let images = [];
+
+		if (!this.imagesData) {
+			this.imagesData = [await this.getProductImage()];
+		} else {
+			const imagesDataLocale = this.imagesData[0].locale;
+
+			if (imagesDataLocale === this.currentLocale) {
+				images = this.imagesData;
+			} else {
+				for (const image of this.imagesData) {
+					image.locale = this.currentLocale;
+				}
+			}
+		}
+
+		images = this.imagesData;
+
+		const modal = await this.modalCtrl.create({
+			component: ProductImagesPopup,
+			componentProps: {
+				images
+			},
+			backdropDismiss: false,
+			cssClass: 'mutation-product-images-modal'
+		});
+
+		await modal.present();
+
+		const res = await modal.onDidDismiss();
+		const imageArray = res.data;
+		if (imageArray && imageArray.length > 0) {
+			const firstImgUrl = imageArray[0].url;
+			this._setImageHolderBackground(firstImgUrl);
+			this.imagesData = imageArray;
+		}
+	}
+
 	getProductTypeChange(type: string) {
 		if (DeliveryType[type] === DeliveryType.Delivery) {
 			if (!this.takaProductDelivery && !this.takaProductTakeaway) {
@@ -221,73 +262,60 @@ export class CreateProductTypePopupPage implements OnInit {
 		}
 	}
 
-	createProduct() {
-		if (this.uploader.queue.length > 0) {
-			this.uploader.queue[this.uploader.queue.length - 1].upload();
+	async createProduct() {
+		let productImages = [];
+		if (this.imagesData && this.imagesData.length > 0) {
+			productImages = this.imagesData;
+		} else {
+			productImages = [await this.getProductImage()];
 		}
+		this.productCreateObject.images = productImages;
 
-		this.uploader.response.subscribe(async (res) => {
-			res = JSON.parse(res);
-			const locale = this.currentLocale;
-			const width = res.width;
-			const height = res.height;
-			const orientation = width !== height ? (width > height ? 2 : 1) : 0;
-			const url = res.url;
-			const productImage: IProductImage = {
-				locale,
-				url,
-				width,
-				height,
-				orientation
-			};
-			this.productCreateObject.images = [productImage];
+		this.localeTranslateService.assignPropertyValue(
+			this.productCreateObject.title,
+			'title'
+		);
+		this.localeTranslateService.assignPropertyValue(
+			this.productCreateObject.description,
+			'description'
+		);
 
-			this.localeTranslateService.assignPropertyValue(
-				this.productCreateObject.title,
-				'title'
-			);
-			this.localeTranslateService.assignPropertyValue(
-				this.productCreateObject.description,
-				'description'
-			);
+		this.productCreateObject.categories = this.productsCategories
+			.filter(
+				(category) =>
+					this.selectedProductCategories &&
+					this.selectedProductCategories.some(
+						(categoryId) => categoryId === category.id
+					)
+			)
+			.map((category) => {
+				return {
+					_id: category.id,
+					_createdAt: null,
+					_updatedAt: null,
+					name: category.name
+				};
+			});
 
-			this.productCreateObject.categories = this.productsCategories
-				.filter(
-					(category) =>
-						this.selectedProductCategories &&
-						this.selectedProductCategories.some(
-							(categoryId) => categoryId === category.id
-						)
-				)
-				.map((category) => {
-					return {
-						_id: category.id,
-						_createdAt: null,
-						_updatedAt: null,
-						name: category.name
-					};
-				});
+		const product = await this.productRouter.create(
+			this.productCreateObject
+		);
 
-			const product = await this.productRouter.create(
-				this.productCreateObject
-			);
+		this.warehouseProductCreateObject.product = product.id;
+		this.warehouseProductCreateObject.initialPrice =
+			this.warehouseProductCreateObject.price || 0;
 
-			this.warehouseProductCreateObject.product = product.id;
-			this.warehouseProductCreateObject.initialPrice =
-				this.warehouseProductCreateObject.price || 0;
+		this.warehouseProductCreateObject.count =
+			this.warehouseProductCreateObject.count || 0;
 
-			this.warehouseProductCreateObject.count =
-				this.warehouseProductCreateObject.count || 0;
+		this.warehouseProductCreateObject.isDeliveryRequired = this.takaProductDelivery;
+		this.warehouseProductCreateObject.isTakeaway = this.takaProductTakeaway;
 
-			this.warehouseProductCreateObject.isDeliveryRequired = this.takaProductDelivery;
-			this.warehouseProductCreateObject.isTakeaway = this.takaProductTakeaway;
+		await this.warehouseProductsRouter.add(this.warehouseId, [
+			this.warehouseProductCreateObject
+		]);
 
-			await this.warehouseProductsRouter.add(this.warehouseId, [
-				this.warehouseProductCreateObject
-			]);
-
-			this.cancelModal();
-		});
+		this.cancelModal();
 	}
 
 	takePicture(sourceType: number) {
@@ -398,5 +426,35 @@ export class CreateProductTypePopupPage implements OnInit {
 		if (!this.takaProductDelivery && !this.takaProductTakeaway) {
 			this.takaProductDelivery = true;
 		}
+	}
+
+	private getProductImage(): Promise<IProductImage> {
+		return new Promise(async (resolve, reject) => {
+			if (this.uploader.queue.length > 0) {
+				this.uploader.queue[this.uploader.queue.length - 1].upload();
+			}
+
+			this.uploader.onSuccessItem = (
+				item: any,
+				response: string,
+				status: number
+			) => {
+				const data = JSON.parse(response);
+				const locale = this.currentLocale;
+				const width = data.width;
+				const height = data.height;
+				const orientation =
+					width !== height ? (width > height ? 2 : 1) : 0;
+				const url = data.url;
+
+				resolve({
+					locale,
+					url,
+					width,
+					height,
+					orientation
+				});
+			};
+		});
 	}
 }

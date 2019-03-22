@@ -20,7 +20,7 @@ import { ProductsCategoryService } from '../../../../@core/data/productsCategory
 import { NotifyService } from 'app/@core/services/notify/notify.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfimationModalComponent } from '../../../confirmation-modal/confirmation-modal.component';
-import { ProductCheckboxComponent } from 'app/@shared/render-component/product-checkbox';
+import { ProductCheckboxComponent } from 'app/@shared/render-component/product-checkbox/product-checkbox';
 import { ProductTitleComponent } from 'app/@shared/render-component/product-title/product-title.component';
 import { ProductImageComponent } from 'app/@shared/render-component/product-image/product-image.component';
 
@@ -39,30 +39,24 @@ interface ProductViewModel {
 	templateUrl: 'products-table.component.html'
 })
 export class ProductsTableComponent implements OnInit, OnDestroy {
-	private ngDestroy$ = new Subject<void>();
-
-	private dataCount: number;
-
-	public confirmSub$: Subscription;
-
-	protected settingsSmartTable: object;
-	protected sourceSmartTable = new LocalDataSource();
+	confirmSub$: Subscription;
+	settingsSmartTable: object;
+	sourceSmartTable = new LocalDataSource();
+	loading: boolean;
+	selectProducts$: EventEmitter<any> = new EventEmitter();
+	$subSlectProducts: Subscription;
+	pagesChanges$: EventEmitter<number> = new EventEmitter();
+	@Input()
+	perPage: number = 0;
+	@Input()
+	hiddenTableActions: boolean;
 
 	private static noInfoSign = '';
 	private _selectedProducts: ProductViewModel[] = [];
 	private products: Product[];
 	private categoriesInfo: any;
-	public loading: boolean;
-	public selectProducts$: EventEmitter<any> = new EventEmitter();
-	public $subSlectProducts: Subscription;
-
-	public pagesChanges$: EventEmitter<number> = new EventEmitter();
-
-	@Input()
-	public perPage: number = 0;
-
-	@Input()
-	public hiddenTableActions: boolean;
+	private ngDestroy$ = new Subject<void>();
+	private dataCount: number;
 
 	constructor(
 		private readonly _sanitizer: DomSanitizer,

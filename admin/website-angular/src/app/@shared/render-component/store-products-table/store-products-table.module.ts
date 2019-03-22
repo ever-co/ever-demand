@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeModule } from '../../../@theme';
-import { StoreProductImageComponent } from './store-product-image.component';
+import { StoreProductImageComponent } from './store-product-image/store-product-image.component';
 import { StoreProductPriceComponent } from './store-product-price.component';
 import { StoreProductQtyComponent } from './store-product-qty.component';
 import { NbSpinnerModule } from '@nebular/theme';

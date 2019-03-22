@@ -3,7 +3,8 @@ import {
 	Input,
 	ViewChild,
 	ElementRef,
-	AfterViewInit
+	AfterViewInit,
+	OnInit
 } from '@angular/core';
 import {
 	AbstractControl,
@@ -15,9 +16,9 @@ import {
 import { ICarrierCreateObject } from '@modules/server.common/interfaces/ICarrier';
 import * as _ from 'lodash';
 import { FormHelpers } from '../../../forms/helpers';
-import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
-import { environment } from 'environments/environment';
 import * as isUrl from 'is-url';
+import { TranslateService } from '@ngx-translate/core';
+import { first } from 'rxjs/operators';
 
 export type CarrierBasicInfo = Pick<
 	ICarrierCreateObject,
@@ -35,11 +36,11 @@ export type CarrierBasicInfo = Pick<
 	templateUrl: 'basic-info-form.component.html',
 	styleUrls: ['basic-info-form.component.scss']
 })
-export class BasicInfoFormComponent implements AfterViewInit {
+export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 	@ViewChild('logoImagePreview')
 	logoImagePreview: ElementRef;
 
-	uploader: FileUploader;
+	uploaderPlaceholder: string;
 
 	@Input()
 	readonly form: FormGroup;
@@ -47,9 +48,7 @@ export class BasicInfoFormComponent implements AfterViewInit {
 	@Input()
 	readonly password?: AbstractControl;
 
-	constructor() {
-		this.uploaderConfig();
-	}
+	constructor(private translateService: TranslateService) {}
 
 	get isActive() {
 		return this.form.get('isActive');
@@ -169,6 +168,10 @@ export class BasicInfoFormComponent implements AfterViewInit {
 		return new FormControl('', [Validators.required]);
 	}
 
+	ngOnInit(): void {
+		this.getuploaderPlaceholderText();
+	}
+
 	ngAfterViewInit() {
 		this._setupCarrierLogoUrlValidation();
 	}
@@ -195,21 +198,18 @@ export class BasicInfoFormComponent implements AfterViewInit {
 		this.password.setValue(value);
 	}
 
-	imageUrlChanged() {
-		this.uploader.queue[0].upload();
-
-		this.uploader.onSuccessItem = (
-			item: any,
-			response: string,
-			status: number
-		) => {
-			const data = JSON.parse(response);
-			this.logo.setValue(data.url);
-		};
-	}
-
 	deleteImg() {
 		this.logo.setValue('');
+	}
+
+	async getuploaderPlaceholderText() {
+		this.uploaderPlaceholder = await this.translateService
+			.get('CARRIERS_VIEW.EDIT.PHOTO_URL')
+			.pipe(first())
+			.toPromise();
+
+		// TODO add translate
+		this.uploaderPlaceholder += ' (optional)';
 	}
 
 	private static phoneNumberRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9x]*$/;
@@ -225,44 +225,6 @@ export class BasicInfoFormComponent implements AfterViewInit {
 			if (this.showLogoMeta) {
 				this.logo.setErrors({ invalidUrl: true });
 			}
-		};
-	}
-
-	private uploaderConfig() {
-		const uploaderOptions: FileUploaderOptions = {
-			url: environment.API_FILE_UPLOAD_URL,
-
-			isHTML5: true,
-			removeAfterUpload: true,
-			headers: [
-				{
-					name: 'X-Requested-With',
-					value: 'XMLHttpRequest'
-				}
-			]
-		};
-		this.uploader = new FileUploader(uploaderOptions);
-
-		this.uploader.onBuildItemForm = (
-			fileItem: any,
-			form: FormData
-		): any => {
-			form.append('upload_preset', 'everbie-products-images');
-
-			let tags = 'myphotoalbum';
-
-			if (this.username.value) {
-				form.append('context', `photo=${this.username.value}`);
-				tags = `myphotoalbum,${this.username.value}`;
-			}
-
-			form.append('folder', 'angular_sample');
-			form.append('tags', tags);
-			form.append('file', fileItem);
-
-			fileItem.withCredentials = false;
-
-			return { fileItem, form };
 		};
 	}
 }

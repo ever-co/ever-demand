@@ -6,13 +6,7 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 
 @Component({
-	template: `
-		<div class="iconsCont">
-			<h4 class="text-center iconBtns">
-				<i (click)="openInfo()" class="fa fa-info-circle infoBtn"></i>
-			</h4>
-		</div>
-	`
+	templateUrl: './sumulation-json.component.html'
 })
 export class SimulationJsonComponent implements ViewCell, OnInit {
 	@Input()

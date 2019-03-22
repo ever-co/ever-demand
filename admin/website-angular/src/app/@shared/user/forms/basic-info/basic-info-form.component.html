@@ -76,36 +76,13 @@
 			</label>
 
 			<div class="col-sm-10">
-				<div class="row upload-img">
-					<input
-						[hidden]="true"
-						(change)="imageUrlChanged()"
-						#fileInput
-						type="file"
-						id="fileInput"
-						ng2FileSelect
-						[uploader]="uploader"
-					/>
-
-					<input
-						type="text"
-						class="form-control col-10"
-						placeholder="{{
-							'SHARED.USER.FORMS.BASIC_INFO.PICTURE_URL'
-								| translate
-						}}"
-						formControlName="image"
-					/>
-
-					<button
-						(click)="fileInput.click()"
-						class="btn btn-primary btn-rectangle col-2"
-					>
-						{{ 'BROWSE' | translate }}
-					</button>
-				</div>
-
-				<div *ngIf="isLogoValid" class="alert alert-danger">
+				<e-cu-file-uploader
+					[placeholder]="uploaderPlaceholder"
+					[name]="firstName?.value"
+					[fileUrl]="image?.value"
+					(uploadedImgUrl)="image.setValue($event)"
+				></e-cu-file-uploader>
+				<div *ngIf="image.invalid" class="alert alert-danger">
 					{{ 'SHARED.FORMS.ERRORS.LOGO_URL_REQUIRED' | translate }}!
 				</div>
 			</div>

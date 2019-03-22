@@ -18,7 +18,7 @@ import { ConfimationModalComponent } from '../../../../@shared/confirmation-moda
 import { StoreOrderProductAmountComponent } from '../../../../@shared/render-component/store-products-table/store-order-product-amount/store-order-product-amount.component';
 import { ProductTitleRedirectComponent } from '../../../../@shared/render-component/product-title-redirect/product-title-redirect.component';
 import { StoreProductPriceComponent } from '../../../../@shared/render-component/store-products-table/store-product-price.component';
-import { StoreProductImageComponent } from '../../../../@shared/render-component/store-products-table/store-product-image.component';
+import { StoreProductImageComponent } from '../../../../@shared/render-component/store-products-table/store-product-image/store-product-image.component';
 import { WarehouseOrderModalComponent } from '../../../../@shared/warehouse/+warehouse-order-modal/warehouse-order-modal.component';
 
 interface OrderProductsViewModel {

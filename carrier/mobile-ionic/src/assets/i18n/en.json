@@ -1,0 +1,72 @@
+{
+	"LANGUAGE": {
+		"ID": "en-US",
+		"NAME": "English"
+	},
+	"CURRENT_DIRECTION": "ltr",
+	"SIDEBAR_SIDE": "left",
+
+	"MAIN_VIEW": {
+		"EVERCO_DRIVER": "Carrier"
+	},
+	"DELIVERY_VIEW": {
+		"THE_CUSTOMER_HAS_TO_PAY": "The Customer has to pay",
+		"CUSTOMER_ALREADY_PAID_WITH_CARD": "Customer already paid with card!",
+		"DELIVERED": "Delivered",
+		"CANCEL": "Cancel",
+		"DELIVERIES_HISTORY": "Deliveries History",
+		"TO": "To",
+		"FROM": "From",
+		"ID": "ID",
+		"IS_PAID": "Is Paid",
+		"CANCELED": "Canceled",
+		"CONFIRMED": "Confirmed",
+		"DETAILS": "Details"
+	},
+	"DRIVE_TO_WAREHOUSE_VIEW": {
+		"TAKE_WORK": "Take work",
+		"SKIP_WORK": "Skip Work",
+		"I'M_THERE": "I'm there",
+		"CANCEL": "Cancel"
+	},
+	"HOME_VIEW": {
+		"DELIVERIES": "Deliveries",
+		"WORKING": "Working",
+		"NOT_WORKING": "Not Working",
+		"START_WORKING": "Start Working",
+		"STOP_WORKING": "Stop Working"
+	},
+	"STARTING_DELIVERY_VIEW": {
+		"START": "Start",
+		"CANCEL": "Cancel"
+	},
+	"NO_INTERNET_VIEW": {
+		"NETWORK_WAS_DISCONNECTED": "Network was disconnected"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Server connection is lost"
+	},
+	"GET_PRODUCT_VIEW": {
+		"GOT_IT": "Got It",
+		"CANCEL": "Cancel"
+	},
+	"RETURN_PRODUCT_VIEW": {
+		"RETURN_PRODUCT": "Return Product",
+		"CANCEL": "Cancel"
+	},
+	"LOGIN_VIEW": {
+		"LOGIN": "Login"
+	},
+	"ABOUT_VIEW": {
+		"TITLE": "About Us"
+	},
+	"TERMS_OF_USE_VIEW": {
+		"TITLE": "Terms of Use"
+	},
+	"LANGUAGE_VIEW": {
+		"TITLE": "Select language"
+	},
+	"LIST_VIEW": {
+		"YOU_NAVIGATED_HERE_FROM": "You navigated here from"
+	}
+}

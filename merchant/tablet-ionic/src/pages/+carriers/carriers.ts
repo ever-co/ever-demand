@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import Carrier from '@modules/server.common/entities/Carrier';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, first } from 'rxjs/operators';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Observable, Subject, forkJoin } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -14,9 +14,10 @@ import { Store } from '../../../src/services/store.service';
 import { ModalController } from '@ionic/angular';
 import { AddCarriersPopupPage } from './add-carriers-popup/add-carriers-popup';
 import { CarrierEditPopupPage } from './carrier-edit-popup/carrier-edit-popup';
-import { CarrierDeletePopupPage } from './carrier-delete-popup/carrier-delete-popup';
 import { CarrierTrackPopup } from './carrier-track-popup/carrier-track-popup';
 import { Router } from '@angular/router';
+import { ConfirmDeletePopupPage } from 'components/confirm-delete-popup/confirm-delete-popup';
+import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 
 @Component({
 	selector: 'page-carriers',
@@ -36,7 +37,8 @@ export class CarriersPage implements OnInit, OnDestroy {
 		public modalCtrl: ModalController,
 		private readonly warehouseCarriersRouter: WarehouseCarriersRouter,
 		private readonly _translateService: TranslateService,
-		private readonly store: Store
+		private readonly store: Store,
+		private warehouseRouter: WarehouseRouter
 	) {}
 
 	get deviceId() {
@@ -74,12 +76,30 @@ export class CarriersPage implements OnInit, OnDestroy {
 
 	async deleteCarrier(e) {
 		const modal = await this.modalCtrl.create({
-			component: CarrierDeletePopupPage,
-			componentProps: { carrierData: e.data },
-			cssClass: 'carrier-delete-wrapper'
+			component: ConfirmDeletePopupPage,
+			componentProps: { data: e.data },
+			cssClass: 'confirm-delete-wrapper'
 		});
 
 		await modal.present();
+
+		const res = await modal.onDidDismiss();
+		if (res.data) {
+			const carrierId = e.data.carrier.id;
+
+			const id = this.warehouseId;
+
+			const merchant = await this.warehouseRouter
+				.get(id)
+				.pipe(first())
+				.toPromise();
+
+			merchant.usedCarriersIds = merchant.usedCarriersIds.filter(
+				(x) => x !== carrierId
+			);
+
+			await this.warehouseRouter.save(merchant);
+		}
 	}
 
 	async editCarrier(e) {
@@ -123,9 +143,12 @@ export class CarriersPage implements OnInit, OnDestroy {
 	}
 
 	goToTrackPage() {
-		// TODO
-		// this.navCtrl.setRoot('TrackPage');
 		this.router.navigateByUrl('/track');
+	}
+
+	ngOnDestroy() {
+		this._ngDestroy$.next();
+		this._ngDestroy$.complete();
 	}
 
 	private _loadSettingsSmartTable() {
@@ -201,10 +224,5 @@ export class CarriersPage implements OnInit, OnDestroy {
 					};
 				}
 			);
-	}
-
-	ngOnDestroy() {
-		this._ngDestroy$.next();
-		this._ngDestroy$.complete();
 	}
 }

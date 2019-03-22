@@ -1,0 +1,72 @@
+{
+	"LANGUAGE": {
+		"ID": "ru-RU",
+		"NAME": "Русский"
+	},
+	"CURRENT_DIRECTION": "ltr",
+	"SIDEBAR_SIDE": "left",
+
+	"MAIN_VIEW": {
+		"EVERCO_DRIVER": "Курьер"
+	},
+	"DELIVERY_VIEW": {
+		"THE_CUSTOMER_HAS_TO_PAY": "Клиент должен заплатить",
+		"CUSTOMER_ALREADY_PAID_WITH_CARD": "Клиент уже заплатил карточкой!",
+		"DELIVERED": "доставлен",
+		"CANCEL": "Отмена",
+		"DELIVERIES_HISTORY": "История поставок",
+		"TO": "До",
+		"FROM": "Из",
+		"ID": "Я БЫ",
+		"CANCELED": "Отменен",
+		"CONFIRMED": "Подтвердил",
+		"IS_PAID": "Оплачивается",
+		"DETAILS": "Детали"
+	},
+	"DRIVE_TO_WAREHOUSE_VIEW": {
+		"TAKE_WORK": "Возьмите работу",
+		"SKIP_WORK": "Пропустить работу",
+		"I'M_THERE": "я там",
+		"CANCEL": "Отмена"
+	},
+	"HOME_VIEW": {
+		"DELIVERIES": "Поставки",
+		"WORKING": "За работой",
+		"NOT_WORKING": "Не работает",
+		"START_WORKING": "Начать работать",
+		"STOP_WORKING": "Прекрати работать"
+	},
+	"STARTING_DELIVERY_VIEW": {
+		"START": "Начало",
+		"CANCEL": "Отменить"
+	},
+	"NO_INTERNET_VIEW": {
+		"NETWORK_WAS_DISCONNECTED": "Сеть была отключена"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Сервер упал"
+	},
+	"GET_PRODUCT_VIEW": {
+		"GOT_IT": "Понял",
+		"CANCEL": "Отмена"
+	},
+	"RETURN_PRODUCT_VIEW": {
+		"RETURN_PRODUCT": "Вернуться",
+		"CANCEL": "Отмена"
+	},
+	"LOGIN_VIEW": {
+		"LOGIN": "Авторизоваться"
+	},
+	"ABOUT_VIEW": {
+		"TITLE": "О нас"
+	},
+	"TERMS_OF_USE_VIEW": {
+		"TITLE": "Условия эксплуатации"
+	},
+	"LANGUAGE_VIEW": {
+		"TITLE": "Выберите язык"
+	},
+	"LIST_VIEW": {
+		"YOU_NAVIGATED_HERE_FROM": "Вы перешли сюда из"
+	}
+}

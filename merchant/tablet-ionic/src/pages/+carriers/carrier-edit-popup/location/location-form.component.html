@@ -8,18 +8,16 @@
 
 		<ion-row class="search-find">
 			<ion-col>
-				<ion-item>
-					<div class="location-find">
-						<ion-searchbar
-							#autocomplete
-							type="text"
-							placeholder="{{
-								'CARRIERS_VIEW.ADD_CARRIER.FIND_ADDRESS'
-									| translate
-							}}"
-						></ion-searchbar>
-					</div>
-				</ion-item>
+				<div class="location-find">
+					<ion-searchbar
+						class="p-0"
+						#autocomplete
+						type="text"
+						placeholder="{{
+							'CARRIERS_VIEW.ADD_CARRIER.FIND_ADDRESS' | translate
+						}}"
+					></ion-searchbar>
+				</div>
 			</ion-col>
 		</ion-row>
 
@@ -101,8 +99,8 @@
 			</ion-col>
 		</ion-row>
 
-		<ion-row class="row">
-			<ion-col class="col-4">
+		<ion-row class="items-end">
+			<ion-col class="col-6">
 				<ion-item class="coord-box">
 					<ion-label>
 						{{
@@ -117,7 +115,7 @@
 				</ion-item>
 			</ion-col>
 
-			<ion-col class="col-4" [hidden]="!showCoordinates">
+			<ion-col class="col-3" [hidden]="!showCoordinates">
 				<ion-item>
 					<ion-label position="floating">{{
 						'CARRIERS_VIEW.ADD_CARRIER.LATITUDE' | translate
@@ -129,7 +127,7 @@
 					></ion-input>
 				</ion-item>
 			</ion-col>
-			<ion-col class="col-4" [hidden]="!showCoordinates">
+			<ion-col class="col-3" [hidden]="!showCoordinates">
 				<ion-item>
 					<ion-label position="floating">{{
 						'CARRIERS_VIEW.ADD_CARRIER.LONGITUDE' | translate

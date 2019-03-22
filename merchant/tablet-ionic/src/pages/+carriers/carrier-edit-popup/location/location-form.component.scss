@@ -1,17 +1,20 @@
 .carrier-location-form {
-	ion-item {
-		.location-find {
-			padding-top: 0px !important;
-			margin-top: 0px !important;
-			padding-bottom: 0px !important;
-			margin-bottom: 0px !important;
-			width: 70%;
-			margin: auto;
-		}
+	.location-find {
+		padding-top: 0px !important;
+		margin-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-bottom: 0px !important;
+		width: 70%;
+		margin: auto;
 	}
 
 	ion-button {
 		border: none;
+	}
+
+	ion-select {
+		padding: 0;
+		margin: 5px 0 6px 0;
 	}
 
 	.search-find {
@@ -49,5 +52,14 @@
 	}
 	.g-map {
 		height: 190px !important;
+	}
+
+	.items-end {
+		display: flex;
+		align-items: flex-end;
+		padding-bottom: 5px;
+		ion-item {
+			width: 100%;
+		}
 	}
 }

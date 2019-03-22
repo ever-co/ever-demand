@@ -149,33 +149,12 @@
 				</label>
 
 				<div class="col-sm-10">
-					<div class="row upload-img">
-						<input
-							[hidden]="true"
-							(change)="imageUrlChanged()"
-							#fileInput
-							type="file"
-							id="fileInput"
-							ng2FileSelect
-							[uploader]="uploader"
-						/>
-
-						<input
-							type="text"
-							class="form-control col-10"
-							placeholder="{{
-								'CARRIERS_VIEW.EDIT.PHOTO_URL' | translate
-							}} (optional)"
-							formControlName="logo"
-						/>
-
-						<button
-							(click)="fileInput.click()"
-							class="btn btn-primary btn-rectangle col-2"
-						>
-							{{ 'BROWSE' | translate }}
-						</button>
-					</div>
+					<e-cu-file-uploader
+						[placeholder]="uploaderPlaceholder"
+						[name]="username?.value"
+						[fileUrl]="logo?.value"
+						(uploadedImgUrl)="logo.setValue($event)"
+					></e-cu-file-uploader>
 
 					<div *ngIf="isLogoValid" class="alert alert-danger">
 						{{

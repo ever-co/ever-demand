@@ -10,24 +10,21 @@
 
 		<ion-row class="search-find">
 			<ion-col>
-				<ion-item mode="ios">
-					<div class="location-find">
-						<ion-searchbar
-							#autocomplete
-							type="text"
-							placeholder="{{
-								'CARRIERS_VIEW.ADD_CARRIER.FIND_ADDRESS'
-									| translate
-							}}"
-						></ion-searchbar>
-					</div>
-				</ion-item>
+				<div class="location-find">
+					<ion-searchbar
+						#autocomplete
+						type="text"
+						placeholder="{{
+							'CARRIERS_VIEW.ADD_CARRIER.FIND_ADDRESS' | translate
+						}}"
+					></ion-searchbar>
+				</div>
 			</ion-col>
 		</ion-row>
 
 		<ion-row>
 			<ion-col size="4" text-center>
-				<ion-item mode="ios">
+				<ion-item>
 					<ion-label class="labels" position="floating">{{
 						'CARRIERS_VIEW.ADD_CARRIER.COUNTRY' | translate
 					}}</ion-label>
@@ -47,7 +44,7 @@
 			</ion-col>
 
 			<ion-col size="4" text-center>
-				<ion-item mode="ios">
+				<ion-item>
 					<ion-label position="floating">
 						{{
 							'CARRIERS_VIEW.ADD_CARRIER.CITY' | translate
@@ -62,7 +59,7 @@
 			</ion-col>
 
 			<ion-col size="4">
-				<ion-item mode="ios">
+				<ion-item>
 					<ion-label position="floating">{{
 						'CARRIERS_VIEW.ADD_CARRIER.HOUSE' | translate
 					}}</ion-label>
@@ -77,7 +74,7 @@
 
 		<ion-row>
 			<ion-col size="8">
-				<ion-item mode="ios">
+				<ion-item>
 					<ion-label position="floating">{{
 						'CARRIERS_VIEW.ADD_CARRIER.STREET' | translate
 					}}</ion-label>
@@ -90,7 +87,7 @@
 			</ion-col>
 
 			<ion-col size="4">
-				<ion-item mode="ios">
+				<ion-item>
 					<ion-label class="labels" position="floating">{{
 						'CARRIERS_VIEW.ADD_CARRIER.ZIP' | translate
 					}}</ion-label>
@@ -105,7 +102,7 @@
 
 		<ion-row>
 			<ion-col size="4">
-				<ion-item mode="ios" class="coord-box">
+				<ion-item class="coord-box">
 					<ion-label>
 						{{
 							'WAREHOUSE_VIEW.NEW_ORDER_VIEW.SHOW_COORDINATES'
@@ -120,7 +117,7 @@
 			</ion-col>
 
 			<ion-col size="4" [hidden]="!showCoordinates">
-				<ion-item mode="ios">
+				<ion-item>
 					<ion-label position="floating">{{
 						'CARRIERS_VIEW.ADD_CARRIER.LATITUDE' | translate
 					}}</ion-label>
@@ -132,7 +129,7 @@
 				</ion-item>
 			</ion-col>
 			<ion-col size="4" [hidden]="!showCoordinates">
-				<ion-item mode="ios">
+				<ion-item>
 					<ion-label position="floating">{{
 						'CARRIERS_VIEW.ADD_CARRIER.LONGITUDE' | translate
 					}}</ion-label>

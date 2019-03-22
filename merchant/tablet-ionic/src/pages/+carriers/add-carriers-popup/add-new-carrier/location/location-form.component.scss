@@ -1,22 +1,17 @@
 .carrier-location-form {
-	ion-item {
-		.location-find {
-			padding-top: 0px !important;
-			margin-top: 0px !important;
-			padding-bottom: 0px !important;
-			margin-bottom: 0px !important;
-			width: 50%;
-			margin: auto;
-		}
-	}
-
-	ion-col {
-		padding: 0;
+	.location-find {
+		padding-top: 0px !important;
+		margin-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-bottom: 0px !important;
+		width: 50%;
+		margin: auto;
 	}
 
 	ion-button {
 		border: none;
 	}
+
 	.search-find {
 		ion-col.col {
 			div.input-wrapper {

@@ -769,12 +769,18 @@ export class OrdersService extends DBService<Order>
 			);
 		};
 
-		const users = orders.filter(unique).map((o) => {
+		const oUsers = orders.filter(unique).map((o) => {
 			const user: User = new User(o.user);
 			return user;
 		});
 
-		return users.map((u) => {
+		const oUserIds = oUsers.map((u) => u.id);
+		const realUsers = await this.usersService.find({
+			isDeleted: false,
+			_id: { $in: oUserIds }
+		});
+
+		return oUsers.map((u) => {
 			const userOrders = orders.filter(
 				(o) => o.user._id.toString() === u._id.toString()
 			);
@@ -790,7 +796,7 @@ export class OrdersService extends DBService<Order>
 			}
 
 			return {
-				user: u,
+				user: realUsers.find((ru) => ru.id === u.id),
 				ordersCount: userOrders.length,
 				totalPrice
 			};

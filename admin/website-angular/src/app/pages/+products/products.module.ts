@@ -5,7 +5,6 @@ import { ThemeModule } from '../../@theme';
 import { ToasterModule } from 'angular2-toaster';
 import { TranslateModule } from '@ngx-translate/core';
 import { HighlightModule } from 'ngx-highlightjs';
-import { FileUploadModule } from 'ng2-file-upload';
 import { ProductsComponent } from './products.component';
 import { CategoriesComponent } from './+categories/categories.component';
 import { ProductCreateModule } from '../../@shared/product/product-create';
@@ -16,6 +15,7 @@ import { NbSpinnerModule } from '@nebular/theme';
 import { NotifyService } from 'app/@core/services/notify/notify.service';
 import { ConfirmationModalModule } from '../../@shared/confirmation-modal/confirmation-modal.module';
 import { CategoryImageComponent } from 'app/@shared/product/categories/categories-table/category-image.component';
+import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.module';
 
 const routes: Routes = [
 	{
@@ -39,12 +39,12 @@ const routes: Routes = [
 		ToasterModule.forRoot(),
 		RouterModule.forChild(routes),
 		TranslateModule.forChild(),
-		FileUploadModule,
 		HighlightModule.forRoot({ theme: 'github' }),
 		ProductCreateModule,
 		ProductFormsModule,
 		NbSpinnerModule,
-		ConfirmationModalModule
+		ConfirmationModalModule,
+		FileUploaderModule
 	],
 	declarations: [
 		ProductsComponent,

@@ -19,7 +19,7 @@ import {
 } from '../../../ordersFilter/ordersFilter';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { RedirectOrderComponent } from '../../../../@shared/render-component/customer-orders-table/redirect-order.component';
-import { ElapsedComponent } from '../../../../@shared/render-component/warehouse-table/elapsed.component';
+import { ElapsedComponent } from '../../../../@shared/render-component/warehouse-table/elapsed/elapsed.component';
 import { DatePipe } from '@angular/common';
 import { WarehouseOrderComponent } from '../+warehouse-order/warehouse-order.component';
 

@@ -1,0 +1,50 @@
+<h4 class="custom-title-popup d-flex">
+	<span class="ml-auto">{{
+		'WAREHOUSE_VIEW.EDIT_PICTURE.PRODUCT_IMAGES' | translate
+	}}</span>
+	<span class="ml-auto"
+		><ion-icon (click)="cancelModal()" name="close"></ion-icon
+	></span>
+</h4>
+
+<div class="product-images-container p-4">
+	<ion-grid>
+		<ion-row>
+			<e-cu-file-uploader
+				[buttonFullSpace]="true"
+				[name]="firstName?.value"
+				[fileUrl]="imagesUrls"
+				[inputCustomStyle]="true"
+				(uploadedImgObj)="addImageObj($event)"
+			></e-cu-file-uploader>
+
+			<div
+				class="mt-0 images-content mt-2"
+				*ngFor="let image of imagesArr"
+			>
+				<div class="row preview-img m-0">
+					<div>
+						<img src="{{ image }}" alt="Invalid image" />
+					</div>
+
+					<div
+						class="removeIcon pl-1 pr-2"
+						(click)="deleteImg(image)"
+					>
+						<ion-icon name="remove-circle"></ion-icon>
+					</div>
+				</div>
+			</div>
+		</ion-row>
+		<ion-row class="mt-4 mb-4 actions">
+			<ion-button
+				(click)="saveImages()"
+				color="success"
+				[disabled]="images?.length === 0"
+				>{{
+					'WAREHOUSE_VIEW.EDIT_PICTURE.SAVE_IMAGES' | translate
+				}}</ion-button
+			>
+		</ion-row>
+	</ion-grid>
+</div>

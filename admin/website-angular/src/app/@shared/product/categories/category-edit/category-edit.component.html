@@ -41,38 +41,14 @@
 			}}</label>
 
 			<div class="col-sm-9">
-				<div class="row upload-img">
-					<input
-						[hidden]="true"
-						(change)="imageUrlChanged()"
-						type="file"
-						id="fileInput"
-						ng2FileSelect
-						[uploader]="uploader"
-						#fileInput
-					/>
+				<e-cu-file-uploader
+					[placeholder]="uploaderPlaceholder"
+					[name]="name?.value"
+					[fileUrl]="image?.value"
+					(uploadedImgUrl)="image.setValue($event)"
+				></e-cu-file-uploader>
 
-					<input
-						type="text"
-						class="form-control col-10"
-						placeholder="{{
-							'CATEGORY_VIEW.CREATE.PHOTO_OPTIONAL' | translate
-						}}"
-						formControlName="image"
-					/>
-
-					<button
-						(click)="fileInput.click()"
-						class="btn btn-primary btn-rectangle col-2"
-					>
-						{{ 'CATEGORY_VIEW.CREATE.BROWSE' | translate }}
-					</button>
-				</div>
-
-				<div
-					*ngIf="image.errors && (image.dirty || image.touched)"
-					class="alert alert-danger"
-				>
+				<div *ngIf="image.invalid" class="alert alert-danger">
 					{{ 'CATEGORY_VIEW.CREATE.INVALID_URL' | translate }}!
 				</div>
 			</div>

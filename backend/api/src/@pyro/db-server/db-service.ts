@@ -294,9 +294,12 @@ export abstract class DBService<T extends DBObject<any, any>>
 	 * @memberof DBService
 	 */
 	async removeMultipleByIds(ids: Array<T['id']>): Promise<void> {
-		this.Model.remove({
-			_id: { $in: ids.map((id) => this.getObjectId(id)) }
-		});
+		this.Model.update(
+			{
+				_id: { $in: ids.map((id) => this.getObjectId(id)) }
+			},
+			{ isDeleted: true }
+		).exec();
 	}
 
 	async find(conditions: FindObject<RawObject<T>>): Promise<T[]> {

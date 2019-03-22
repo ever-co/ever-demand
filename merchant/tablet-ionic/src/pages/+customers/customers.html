@@ -28,6 +28,10 @@
 			class="smart-table"
 			[settings]="settingsSmartTable"
 			[source]="sourceSmartTable"
+			(create)="showCustomerMutationModal()"
+			(edit)="editCustomer($event)"
+			(delete)="deleteCustomer($event)"
+			(custom)="showAddress($event)"
 		>
 		</ng2-smart-table>
 		<div *ngIf="showNoDeliveryIcon">

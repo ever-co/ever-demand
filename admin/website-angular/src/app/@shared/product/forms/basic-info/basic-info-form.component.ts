@@ -4,8 +4,7 @@ import {
 	OnDestroy,
 	OnInit,
 	ViewChild,
-	ElementRef,
-	AfterViewInit
+	ElementRef
 } from '@angular/core';
 import {
 	FormBuilder,
@@ -25,32 +24,30 @@ import { Subject } from 'rxjs';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { FormHelpers } from '../../../forms/helpers';
-import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
-import { environment } from 'environments/environment';
 import * as _ from 'lodash';
 import * as isUrl from 'is-url';
+import { takeUntil, first } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'ea-product-basic-info-form',
 	styleUrls: ['./basic-info-form.component.scss'],
 	templateUrl: 'basic-info-form.component.html'
 })
-export class BasicInfoFormComponent
-	implements OnDestroy, OnInit, AfterViewInit {
+export class BasicInfoFormComponent implements OnDestroy, OnInit {
 	@ViewChild('fileInput')
 	fileInput: any;
-
 	@ViewChild('productImagePreview')
 	productImagePreview: ElementRef;
 
-	uploader: FileUploader;
-
 	@Input()
 	readonly form: FormGroup;
-	product: any;
-
 	@Input()
 	productCategories: any;
+
+	uploaderPlaceholder: string;
+	product: any;
+	uploaderChanged: boolean;
 
 	title: AbstractControl;
 	description: AbstractControl;
@@ -71,6 +68,25 @@ export class BasicInfoFormComponent
 
 	private _ngDestroy$ = new Subject();
 	public categoryOptions: IMultiSelectOption[];
+	private onLocaleChanges: any;
+	private images: IProductImage[] = [];
+
+	static hasValidImage(images) {
+		if (images) {
+			let imageUrls = images.toString().split(/\s+/);
+			imageUrls = imageUrls.filter((a) => a.toString().trim() !== '');
+
+			if (imageUrls.length > 0) {
+				for (const imageUrl of imageUrls) {
+					if (isUrl(imageUrl)) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
 
 	static buildForm(formBuilder: FormBuilder): FormGroup {
 		// would be used in the parent component and injected into this.form
@@ -100,48 +116,31 @@ export class BasicInfoFormComponent
 		});
 	}
 
-	constructor(private _productLocalesService: ProductLocalesService) {
-		const uploaderOptions: FileUploaderOptions = {
-			url: environment.API_FILE_UPLOAD_URL,
-			isHTML5: true,
-			removeAfterUpload: true,
-			headers: [
-				{
-					name: 'X-Requested-With',
-					value: 'XMLHttpRequest'
-				}
-			]
-		};
-		this.uploader = new FileUploader(uploaderOptions);
-
-		this.uploader.onBuildItemForm = (
-			fileItem: any,
-			form: FormData
-		): any => {
-			const tags = 'myphotoalbum';
-
-			form.append('upload_preset', 'everbie-products-images');
-			form.append('folder', 'angular_sample');
-			form.append('tags', tags);
-			form.append('file', fileItem);
-
-			fileItem.withCredentials = false;
-			return { fileItem, form };
-		};
+	constructor(
+		private _productLocalesService: ProductLocalesService,
+		private _translateService: TranslateService
+	) {
+		this.getUploaderPlaceholderText();
 	}
 
 	get imageControl() {
 		return this.form.get('image');
 	}
 
+	get imagesUrls() {
+		return this.images ? this.images.map((i) => i.url).join(' ') : '';
+	}
+
 	get imagesArr() {
-		if (this.image.value) {
-			let imageUrls = this.image.value.toString().split(/\s+/);
-			imageUrls = imageUrls.filter((a) => a.toString().trim() !== '');
+		if (this.imagesUrls) {
+			const imagesStr = this.imagesUrls;
+
+			let imageUrls = imagesStr.split(/\s+/);
+			imageUrls = imageUrls.filter((a) => a.trim() !== '');
 
 			return imageUrls;
 		}
-		return [];
+		return null;
 	}
 
 	ngOnInit() {
@@ -157,35 +156,39 @@ export class BasicInfoFormComponent
 		this._bindFormControls();
 		this._setDefaultLocaleValue();
 
-		this.locale.valueChanges.subscribe((v) => {
-			if (v !== this._productLocalesService.currentLocale) {
-				this._productLocalesService.currentLocale = v;
-				this.setValue(this.product);
-			}
-		});
+		this.onLocaleChanges = this.locale.valueChanges
+			.pipe(takeUntil(this._ngDestroy$))
+			.subscribe((v) => {
+				if (v !== this._productLocalesService.currentLocale) {
+					this._productLocalesService.currentLocale = v;
+					this.setValue(this.product);
+				}
+			});
 	}
 
-	ngAfterViewInit() {}
+	ngOnDestroy() {
+		this.onLocaleChanges.unsubscribe();
+		this.form.reset();
+		this._ngDestroy$.next();
+		this._ngDestroy$.complete();
+	}
 
 	deleteImg(image) {
-		this.image.setValue(this.image.value.toString().replace(image, ''));
+		this.images = this.images.filter((i) => i.url !== image);
+
+		this.image.setValue(this.imagesUrls);
 	}
 
-	imageUrlChanged() {
-		this.uploader.queue[0].upload();
+	addImageObj(imgData: IProductImage) {
+		this.uploaderChanged = true;
+		if (imgData) {
+			const existData = this.images.find((i) => i.url === imgData.url);
+			if (!existData) {
+				this.images.push(imgData);
 
-		this.uploader.onSuccessItem = (
-			item: any,
-			response: string,
-			status: number
-		) => {
-			const loadedImages = this.image.value;
-			const data = JSON.parse(response);
-
-			this.image.setValue(
-				`${loadedImages ? loadedImages + ' ' : ''}${data.url}`
-			);
-		};
+				this.image.setValue(imgData.url);
+			}
+		}
 	}
 
 	getValue(): IProductCreateObject {
@@ -216,6 +219,8 @@ export class BasicInfoFormComponent
 				image = imgs.map((i) => i.url).join(' ');
 			}
 
+			this.images = imgs;
+
 			const product1 = {
 				title: this._productLocalesService.getMemberValue(
 					product.title
@@ -239,9 +244,9 @@ export class BasicInfoFormComponent
 		this._bindModelProperties();
 
 		const productLocale = this._locale;
-		const realImags = this.imagesArr.filter((i) => isUrl(i));
-		const productImages: IProductImage[] = await this._setupImage(
-			realImags
+
+		const productImages: IProductImage[] = this.images.filter(
+			(i) => i.locale === productLocale && isUrl(i.url)
 		);
 
 		const productTitle: IProductTitle = {
@@ -301,14 +306,8 @@ export class BasicInfoFormComponent
 				images: [
 					...this.product.images
 						.filter((i) => i.locale !== this._locale)
-						.map((i) => ({
-							locale: i.locale,
-							url: i.url,
-							orientation: i.orientation,
-							width: i.width,
-							height: i.height
-						})),
-					...productImages
+						.map((i) => this.getProductImage(i)),
+					...productImages.map((i) => this.getProductImage(i))
 				]
 			};
 		}
@@ -349,41 +348,6 @@ export class BasicInfoFormComponent
 		);
 	}
 
-	private async _setupImage(imgsUrls) {
-		const urls = [];
-		for await (const imgUrl of imgsUrls) {
-			try {
-				const img = await this._getImageMeta(imgUrl);
-				const width = img['width'];
-				const height = img['height'];
-				const orientation =
-					width !== height ? (width > height ? 2 : 1) : 0;
-				const locale = this._locale;
-				const url = imgUrl;
-				urls.push({
-					locale,
-					url,
-					width,
-					height,
-					orientation
-				});
-			} catch (error) {
-				return error;
-			}
-		}
-
-		return urls;
-	}
-
-	private async _getImageMeta(url) {
-		return new Promise((resolve, reject) => {
-			const img = new Image();
-			img.onload = () => resolve(img);
-			img.onerror = (err) => reject(err);
-			img.src = url;
-		});
-	}
-
 	private _getFormControlByName(controlName: string): AbstractControl {
 		return this.form.get(controlName);
 	}
@@ -396,21 +360,25 @@ export class BasicInfoFormComponent
 			'selectedProductCategories'
 		);
 		this.actualCategories = [];
-		for (const val of this._selectedProductCategories) {
-			for (const val1 of this.productCategories) {
-				if (val === val1.id) {
-					const newObj: any = {};
-					newObj.name = [];
-					newObj.id = val1.id;
-					for (let i = 0; i < val1.name.length; i++) {
-						newObj.name[i] = {};
-						newObj.name[i].locale = val1.name[i].locale;
-						newObj.name[i].value = val1.name[i].value;
+
+		if (this._selectedProductCategories) {
+			for (const val of this._selectedProductCategories) {
+				for (const val1 of this.productCategories) {
+					if (val === val1.id) {
+						const newObj: any = {};
+						newObj.name = [];
+						newObj.id = val1.id;
+						for (let i = 0; i < val1.name.length; i++) {
+							newObj.name[i] = {};
+							newObj.name[i].locale = val1.name[i].locale;
+							newObj.name[i].value = val1.name[i].value;
+						}
+						this.actualCategories.push(newObj);
 					}
-					this.actualCategories.push(newObj);
 				}
 			}
 		}
+
 		// stores the IDs of categories we've selected
 		this._title = getInputVal('title');
 		this._description = getInputVal('description');
@@ -419,25 +387,20 @@ export class BasicInfoFormComponent
 		this._locale = getInputVal('locale');
 	}
 
-	static hasValidImage(images) {
-		if (images) {
-			let imageUrls = images.toString().split(/\s+/);
-			imageUrls = imageUrls.filter((a) => a.toString().trim() !== '');
-
-			if (imageUrls.length > 0) {
-				for (const imageUrl of imageUrls) {
-					if (isUrl(imageUrl)) {
-						return true;
-					}
-				}
-			}
-		}
-
-		return false;
+	private async getUploaderPlaceholderText() {
+		this.uploaderPlaceholder = await this._translateService
+			.get('WAREHOUSE_VIEW.PLACEHOLDER.IMAGE_URL')
+			.pipe(first())
+			.toPromise();
 	}
 
-	ngOnDestroy() {
-		this._ngDestroy$.next();
-		this._ngDestroy$.complete();
+	private getProductImage(data: IProductImage): IProductImage {
+		return {
+			locale: data.locale,
+			url: data.url,
+			orientation: data.orientation,
+			width: data.width,
+			height: data.height
+		};
 	}
 }

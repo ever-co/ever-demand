@@ -77,7 +77,9 @@ export class LocationComponent implements OnInit, OnChanges, OnDestroy {
 
 	ngOnChanges(): void {
 		if (this.currWarehouse) {
-			this.country.setValue(this.currWarehouse.geoLocation.countryId);
+			this.country.setValue(
+				this.currWarehouse.geoLocation.countryId.toString()
+			);
 			this.city.setValue(this.currWarehouse.geoLocation.city);
 			this.postcode.setValue(this.currWarehouse.geoLocation.postcode);
 			this.street.setValue(this.currWarehouse.geoLocation.streetAddress);
@@ -304,7 +306,7 @@ export class LocationComponent implements OnInit, OnChanges, OnDestroy {
 		postcode
 	) {
 		if (!isEmpty(country)) {
-			this.country.setValue(Country[country]);
+			this.country.setValue(Country[country].toString());
 		}
 		if (!isEmpty(city)) {
 			this.city.setValue(city);

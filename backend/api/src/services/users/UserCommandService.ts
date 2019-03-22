@@ -36,7 +36,8 @@ export class GetAboutUsCommand implements ICommand {
 @routerName('userCommandService')
 export class UserCommandService implements IService {
 	constructor(
-		@optional() private readonly _commandBus: CommandBus = new CommandBus()
+		@optional()
+		private readonly _commandBus: CommandBus
 	) {}
 
 	async exec(userId: string, deviceId: string): Promise<string> {
@@ -58,7 +59,7 @@ export class UserCommandService implements IService {
 export class GetAboutUsHandler implements ICommandHandler<GetAboutUsCommand> {
 	constructor(private readonly _userService: UsersService) {}
 
-	execute(command: GetAboutUsCommand, resolve: (value?: any) => void) {
+	async execute(command: GetAboutUsCommand) {
 		const { userId, deviceId } = command;
 
 		console.log('COMMAND PARAM 1:', userId);
@@ -66,6 +67,6 @@ export class GetAboutUsHandler implements ICommandHandler<GetAboutUsCommand> {
 
 		const result = this._userService.getAboutUs(userId, deviceId);
 
-		resolve(result);
+		return result;
 	}
 }

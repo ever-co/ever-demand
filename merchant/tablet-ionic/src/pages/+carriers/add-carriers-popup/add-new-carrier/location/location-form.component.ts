@@ -277,7 +277,7 @@ export class LocationFormComponent implements OnDestroy, OnInit, OnChanges {
 		postcode
 	) {
 		if (!isEmpty(country)) {
-			this.country.setValue(Country[country]);
+			this.country.setValue(Country[country].toString());
 		}
 		if (!isEmpty(city)) {
 			this.city.setValue(city);

@@ -6,7 +6,7 @@ import { ToasterModule } from 'angular2-toaster';
 import { HighlightModule } from 'ngx-highlightjs';
 import { InvitesRequestsComponent } from './invites-requests.component';
 import { InvitesRequestsService } from '../../../../@core/data/invites-requests.service';
-import { CountryRenderComponent } from '../country-render.component';
+import { CountryRenderComponent } from '../country-render/country-render.component';
 import { InvitesService } from '../../../../@core/data/invites.service';
 import { DeviceService } from '../../../../@core/data/device.service';
 import { TranslateModule } from '@ngx-translate/core';

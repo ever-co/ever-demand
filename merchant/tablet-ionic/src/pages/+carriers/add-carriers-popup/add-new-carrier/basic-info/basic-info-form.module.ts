@@ -3,17 +3,17 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { BasicInfoFormComponent } from './basic-info-form.component';
-import { FileUploadModule } from 'ng2-file-upload';
 import { IonicModule } from '@ionic/angular';
+import { FileUploaderModule } from 'components/file-uploader/file-uploader.module';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		ReactiveFormsModule,
 		IonicModule,
-		FileUploadModule,
 		TranslateModule.forChild(),
-		FormsModule
+		FormsModule,
+		FileUploaderModule
 	],
 	declarations: [BasicInfoFormComponent],
 	exports: [BasicInfoFormComponent]

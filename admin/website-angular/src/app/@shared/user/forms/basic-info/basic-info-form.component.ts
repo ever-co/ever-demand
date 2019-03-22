@@ -4,7 +4,8 @@ import {
 	OnDestroy,
 	ViewChild,
 	ElementRef,
-	AfterViewInit
+	AfterViewInit,
+	OnInit
 } from '@angular/core';
 import {
 	FormBuilder,
@@ -18,9 +19,9 @@ import { IUserCreateObject } from '@modules/server.common/interfaces/IUser';
 import { UsersService } from '../../../../@core/data/users.service';
 import { FormHelpers } from '../../../forms/helpers';
 import { ActivatedRoute } from '@angular/router';
-import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
-import { environment } from 'environments/environment';
 import 'rxjs/add/operator/debounceTime';
+import { TranslateService } from '@ngx-translate/core';
+import { first, takeUntil } from 'rxjs/operators';
 
 export type CustomerBasicInfo = Pick<
 	IUserCreateObject,
@@ -32,29 +33,33 @@ export type CustomerBasicInfo = Pick<
 	styleUrls: ['./basic-info-form.component.scss'],
 	templateUrl: 'basic-info-form.component.html'
 })
-export class BasicInfoFormComponent implements OnDestroy, AfterViewInit {
+export class BasicInfoFormComponent
+	implements OnInit, OnDestroy, AfterViewInit {
 	@ViewChild('logoImagePreview')
 	logoImagePreview: ElementRef;
-
-	public uploader: FileUploader;
 
 	@Input()
 	readonly form: FormGroup;
 	@Input()
 	showBasicInfoLabel: boolean = false;
 
+	uploaderPlaceholder: string;
+
 	private _ngDestroy$ = new Subject<void>();
 	private static _usersService: UsersService;
 	private static _customerId: string;
 
 	constructor(
+		private translateService: TranslateService,
 		private readonly _usersService: UsersService,
 		private readonly _route: ActivatedRoute
 	) {
 		const customerId = this._route.snapshot.paramMap.get('id');
 		BasicInfoFormComponent.initialize(this._usersService, customerId);
+	}
 
-		this.uploaderConfig();
+	ngOnInit(): void {
+		this.getUploaderPlaceholderText();
 	}
 
 	ngAfterViewInit() {
@@ -88,10 +93,6 @@ export class BasicInfoFormComponent implements OnDestroy, AfterViewInit {
 	static destroy() {
 		BasicInfoFormComponent._usersService = null;
 		BasicInfoFormComponent._customerId = null;
-	}
-
-	get isLogoValid(): boolean {
-		return this.image.errors && (this.image.dirty || this.image.touched);
 	}
 
 	static buildForm(formBuilder: FormBuilder): FormGroup {
@@ -166,21 +167,14 @@ export class BasicInfoFormComponent implements OnDestroy, AfterViewInit {
 		});
 	}
 
-	imageUrlChanged() {
-		this.uploader.queue[0].upload();
-
-		this.uploader.onSuccessItem = (
-			item: any,
-			response: string,
-			status: number
-		) => {
-			const data = JSON.parse(response);
-			this.image.setValue(data.url);
-		};
-	}
-
 	deleteImg() {
 		this.image.setValue('');
+	}
+
+	ngOnDestroy() {
+		this._ngDestroy$.next();
+		this._ngDestroy$.complete();
+		BasicInfoFormComponent.destroy();
 	}
 
 	private _setupUserLogoUrlValidation() {
@@ -197,44 +191,10 @@ export class BasicInfoFormComponent implements OnDestroy, AfterViewInit {
 		};
 	}
 
-	private uploaderConfig() {
-		const uploaderOptions: FileUploaderOptions = {
-			url: environment.API_FILE_UPLOAD_URL,
-
-			isHTML5: true,
-			removeAfterUpload: true,
-			headers: [
-				{
-					name: 'X-Requested-With',
-					value: 'XMLHttpRequest'
-				}
-			]
-		};
-		this.uploader = new FileUploader(uploaderOptions);
-
-		this.uploader.onBuildItemForm = (
-			fileItem: any,
-			form: FormData
-		): any => {
-			form.append('upload_preset', 'everbie-products-images');
-			let tags = 'myphotoalbum';
-			if (this.firstName.value) {
-				form.append('context', `photo=${this.firstName.value}`);
-				tags = `myphotoalbum,${this.firstName.value}`;
-			}
-
-			form.append('folder', 'angular_sample');
-			form.append('tags', tags);
-			form.append('file', fileItem);
-
-			fileItem.withCredentials = false;
-			return { fileItem, form };
-		};
-	}
-
-	ngOnDestroy() {
-		this._ngDestroy$.next();
-		this._ngDestroy$.complete();
-		BasicInfoFormComponent.destroy();
+	private async getUploaderPlaceholderText() {
+		this.uploaderPlaceholder = await this.translateService
+			.get('SHARED.USER.FORMS.BASIC_INFO.PICTURE_URL')
+			.pipe(first())
+			.toPromise();
 	}
 }

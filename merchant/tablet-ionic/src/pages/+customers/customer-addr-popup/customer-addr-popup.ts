@@ -25,6 +25,15 @@ export class CustomerAddrPopupPage implements OnInit {
 
 	constructor(public modalController: ModalController) {}
 
+	get coordinatesStr() {
+		return this.user
+			? this.user.geoLocation.loc.coordinates
+					.map((c) => c.toFixed(6))
+					.reverse()
+					.join(', ')
+			: '';
+	}
+
 	ngOnInit(): void {
 		const user = this.user;
 		this.city = user.geoLocation.city;

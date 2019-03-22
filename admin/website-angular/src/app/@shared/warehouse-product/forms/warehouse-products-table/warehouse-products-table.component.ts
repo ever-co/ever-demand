@@ -3,24 +3,16 @@ import { LocalDataSource } from 'ng2-smart-table';
 import Product from '@modules/server.common/entities/Product';
 import { first, takeUntil } from 'rxjs/operators';
 import { Subject, Observable, forkJoin } from 'rxjs';
-import { PriceCountInputComponent } from '../../../render-component/price-countInput.component';
+import { PriceCountInputComponent } from '../../../render-component/price-countInput/price-countInput.component';
 import { TranslateService } from '@ngx-translate/core';
-import { ProductCheckboxComponent } from 'app/@shared/render-component/product-checkbox';
+import { ProductCheckboxComponent } from 'app/@shared/render-component/product-checkbox/product-checkbox';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { CheckboxComponent } from 'app/@shared/render-component/customer-orders-table/checkbox/checkbox.component';
 
 @Component({
 	selector: 'ea-warehouse-products-table',
-	template: `
-		<nb-card>
-			<ng2-smart-table
-				[settings]="settingsSmartTable"
-				[source]="sourceSmartTable"
-			>
-			</ng2-smart-table>
-		</nb-card>
-	`
+	templateUrl: './warehouse-products-table.component.html'
 })
 export class WarehouseProductsComponent implements OnInit, OnDestroy {
 	private ngDestroy$ = new Subject<void>();

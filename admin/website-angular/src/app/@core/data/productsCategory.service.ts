@@ -5,10 +5,15 @@ import { map, share } from 'rxjs/operators';
 import gql from 'graphql-tag';
 import { IProductsCategoryCreateObject } from '@modules/server.common/interfaces/IProductsCategory';
 import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
+import { getDummyImage } from '@modules/server.common/utils';
+import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 
 @Injectable()
 export class ProductsCategoryService {
-	constructor(private readonly apollo: Apollo) {}
+	constructor(
+		private readonly apollo: Apollo,
+		private readonly productLocalesService: ProductLocalesService
+	) {}
 
 	getCategories(): Observable<ProductsCategory[]> {
 		return this.apollo
@@ -36,6 +41,7 @@ export class ProductsCategoryService {
 	create(
 		productsCategory: IProductsCategoryCreateObject
 	): Observable<ProductsCategory> {
+		this.getDefaultImage(productsCategory);
 		return this.apollo
 			.mutate<{ productsCategory: IProductsCategoryCreateObject }>({
 				mutation: gql`
@@ -65,6 +71,7 @@ export class ProductsCategoryService {
 		id: string,
 		productsCategory: IProductsCategoryCreateObject
 	): Observable<ProductsCategory> {
+		this.getDefaultImage(productsCategory);
 		return this.apollo
 			.mutate<{
 				id: string;
@@ -109,5 +116,18 @@ export class ProductsCategoryService {
 			`,
 			variables: { ids }
 		});
+	}
+
+	private getDefaultImage(data: IProductsCategoryCreateObject) {
+		if (!data.image) {
+			data.image = getDummyImage(
+				300,
+				300,
+				this.productLocalesService
+					.getTranslate(data.name)
+					.charAt(0)
+					.toUpperCase()
+			);
+		}
 	}
 }

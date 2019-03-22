@@ -1,7 +1,19 @@
 .map {
-	width: 100vw;
-	height: calc(100vh - 93px);
+	width: calc(100vw - 375px);
+	height: calc(100vh - 43px);
 }
 #contentWrapper {
 	margin-top: 45px;
+	display: flex;
+	.sidebar {
+		width: 375px;
+		height: 100%;
+		background: white;
+		display: flex;
+		flex-direction: column;
+		.statistics {
+			//padding-left:10px;
+			//padding-top:10px;
+		}
+	}
 }

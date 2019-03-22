@@ -17,6 +17,9 @@ import { OrdersService } from '../../../src/services/orders.service';
 import { Store } from '../../../src/services/store.service';
 import { ModalController } from '@ionic/angular';
 import { takeUntil } from 'rxjs/operators';
+import { CustomerAddrPopupPage } from './customer-addr-popup/customer-addr-popup';
+import { ConfirmDeletePopupPage } from 'components/confirm-delete-popup/confirm-delete-popup';
+import { WarehouseOrdersService } from 'services/warehouse-orders.service';
 
 @Component({
 	selector: 'page-customers',
@@ -24,7 +27,6 @@ import { takeUntil } from 'rxjs/operators';
 	styleUrls: ['./customers.scss']
 })
 export class CustomersPage implements OnDestroy {
-	private orders$: any;
 	orders: Order[];
 	users: User[];
 	showNoDeliveryIcon: boolean;
@@ -32,14 +34,14 @@ export class CustomersPage implements OnDestroy {
 	sourceSmartTable = new LocalDataSource();
 
 	private _ngDestroy$ = new Subject<void>();
+	private orders$: any;
 
 	constructor(
-		// public navCtrl: NavController,
-		// public navParams: NavParams,
 		private warehouseOrdersRouter: WarehouseOrdersRouter,
 		private readonly _modalCtrl: ModalController,
 		private readonly _translateService: TranslateService,
 		private readonly ordersService: OrdersService,
+		private readonly warehouseOrdersService: WarehouseOrdersService,
 		private readonly store: Store
 	) {
 		this.loadUsers();
@@ -57,12 +59,15 @@ export class CustomersPage implements OnDestroy {
 	}
 
 	getUserName(user: User) {
-		if (user.firstName) {
-			if (user.lastName) {
-				return user.firstName + ' ' + user.lastName;
-			}
-			return user.firstName;
+		let name: string = '';
+
+		if (user) {
+			const firstName = user.firstName;
+			const lastName = user.lastName;
+			name = `${firstName ? firstName : ''} ${lastName ? lastName : ''}`;
 		}
+
+		return name.trim();
 	}
 
 	getOrdersCount(userId: string) {
@@ -82,9 +87,10 @@ export class CustomersPage implements OnDestroy {
 		return totalPrice;
 	}
 
-	async showCustomerMutationModal() {
+	async showCustomerMutationModal(user?: User) {
 		const modal = await this._modalCtrl.create({
 			component: UserMutationComponent,
+			componentProps: { user },
 			cssClass: 'customer-add-wrapper'
 		});
 
@@ -101,6 +107,38 @@ export class CustomersPage implements OnDestroy {
 
 			await this.warehouseOrdersRouter.create(orderCreateInput);
 		}
+	}
+
+	async showAddress(e) {
+		const modal = await this._modalCtrl.create({
+			component: CustomerAddrPopupPage,
+			componentProps: { user: e.data.user },
+			cssClass: 'customer-address-popup'
+		});
+		await modal.present();
+	}
+
+	async deleteCustomer(e) {
+		const modal = await this._modalCtrl.create({
+			component: ConfirmDeletePopupPage,
+			componentProps: { data: e.data },
+			cssClass: 'confirm-delete-wrapper'
+		});
+
+		await modal.present();
+
+		const res = await modal.onDidDismiss();
+		if (res.data) {
+			const userId = e.data.user.id;
+			const storeId = this.warehouseId;
+
+			await this.warehouseOrdersService.removeUserOrders(storeId, userId);
+		}
+	}
+
+	async editCustomer(e) {
+		const user = e.data.user;
+		this.showCustomerMutationModal(user);
 	}
 
 	private loadUsers() {
@@ -213,7 +251,23 @@ export class CustomersPage implements OnDestroy {
 			.subscribe(
 				([image, name, phone, addresses, orders, total, email]) => {
 					this.settingsSmartTable = {
-						actions: true,
+						mode: 'external',
+						edit: {
+							editButtonContent: '<i class="fa fa-edit"></i>',
+							confirmEdit: true
+						},
+						delete: {
+							deleteButtonContent: '<i class="fa fa-trash"></i>',
+							confirmDelete: true
+						},
+						actions: {
+							custom: [
+								{
+									name: 'track',
+									title: '<i class="fa fa-map-marker"></i>'
+								}
+							]
+						},
 						columns: {
 							image: {
 								title: image,

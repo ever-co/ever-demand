@@ -24,13 +24,13 @@ import {
 import { Subject, forkJoin, Observable } from 'rxjs';
 import { takeUntil, first } from 'rxjs/operators';
 import { WarehouseProductCreateComponent } from '../../../@shared/warehouse-product/warehouse-product-create';
-import { ElapsedComponent } from '../../../@shared/render-component/warehouse-table/elapsed.component';
+import { ElapsedComponent } from '../../../@shared/render-component/warehouse-table/elapsed/elapsed.component';
 import { WarehouseOrderComponent } from './+warehouse-order/warehouse-order.component';
 import { RedirectOrderComponent } from 'app/@shared/render-component/customer-orders-table/redirect-order.component';
 import { ProductsTableComponent } from './products-table/products-table.component';
 import { WarehouseSelectViewComponent } from './warehouse-select-view/warehouse-select-view.component';
 import { WarehouseOrdersService } from 'app/@core/data/warehouseOrders.service';
-import { StatusComponent } from 'app/@shared/render-component/warehouse-table/status.component';
+import { StatusComponent } from 'app/@shared/render-component/warehouse-table/status/status.component';
 
 const perPage = 3;
 

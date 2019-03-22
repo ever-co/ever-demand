@@ -9,6 +9,7 @@ import { ProductsCategoryService } from '../../../services/products-category.ser
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ProductImagesPopupModule } from '../product-pictures-popup/product-images-popup.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -29,7 +30,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		}),
 		CommonModule,
 		FormsModule,
-		IonicModule
+		IonicModule,
+		ProductImagesPopupModule
 	]
 })
 export class EditProductTypePopupPageModule {}

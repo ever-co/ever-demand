@@ -1,2 +1,14 @@
 .carrier-account-form {
+	.items-end {
+		display: flex;
+		align-items: flex-end;
+
+		ion-item {
+			width: 100%;
+
+			ion-checkbox {
+				margin: 25.5px 0;
+			}
+		}
+	}
 }
