@@ -13,12 +13,15 @@
 		color: white;
 	}
 	.allowOverflow {
+		display: contents !important;
 		a {
+			width: auto;
 			overflow: unset !important;
 			padding: 0 !important;
 			border: 1px solid #242530 !important;
 		}
-		width: 130px;
+		min-width: 130px !important;
+		width: auto !important;
 		position: absolute;
 		right: 10px !important;
 	}
@@ -108,6 +111,10 @@
 	table {
 		margin-bottom: 25px !important;
 	}
+
+	.button-text {
+		padding: 0 10px;
+	}
 }
 
 #headerRow {
@@ -174,6 +181,13 @@
 			}
 		}
 	}
+}
+
+.right-container {
+	position: absolute;
+	right: 0;
+	display: flex;
+	padding-right: 10px;
 }
 
 .track-btn {

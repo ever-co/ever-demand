@@ -7,6 +7,7 @@ import { ProductsCategoryService } from '../../../services/products-category.ser
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { ProductImagesPopupModule } from '../product-pictures-popup/product-images-popup.module';
 
 @NgModule({
 	declarations: [CreateProductTypePopupPage],
@@ -17,7 +18,8 @@ import { IonicModule } from '@ionic/angular';
 		TranslateModule.forChild(),
 		CommonModule,
 		FormsModule,
-		IonicModule
+		IonicModule,
+		ProductImagesPopupModule
 	]
 })
 export class CreateProductTypePopupPageModule {}

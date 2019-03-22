@@ -2,6 +2,9 @@
 	<h4 class="custom-title-popup">
 		{{ 'CUSTOMERS_VIEW.EMAIL_POP_UP.CUSTOMER_EMAIL' | translate }}
 	</h4>
+	<button class="close" (click)="cancelModal()">
+		<i class="fa fa-close"></i>
+	</button>
 	<div *ngIf="email" class="emailInfo">
 		<span class="emailAddr">
 			{{ email }}

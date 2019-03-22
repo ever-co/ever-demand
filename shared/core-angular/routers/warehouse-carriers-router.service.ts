@@ -25,6 +25,10 @@ export class WarehouseCarriersRouter implements IWarehouseCarriersRouter {
 			);
 	}
 
+	async updatePassword(id: string, password: string): Promise<void> {
+		await this.router.run('updatePassword', id, password);
+	}
+
 	protected _carrierFactory(carrier: ICarrier) {
 		return carrier == null ? null : new Carrier(carrier);
 	}

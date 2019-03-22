@@ -3,7 +3,9 @@
 		{{ 'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.NEW_PRODUCT_TYPE' | translate
 		}}
 	</h4>
-
+	<button class="close" (click)="cancelModal()">
+		<i class="fa fa-close"></i>
+	</button>
 	<ion-row>
 		<div class="col popup-half">
 			<div class="title-popup popup-input-container">
@@ -136,7 +138,6 @@
 				</div>
 			</ion-row>
 
-			<!-- TODO Add translate -->
 			<ion-row class="row getProductType">
 				<ion-col class="pl-0 col-6">
 					<ion-item class="coord-box">
@@ -145,7 +146,10 @@
 							[(ngModel)]="takaProductDelivery"
 							(ionChange)="getProductTypeChange('Delivery')"
 						></ion-checkbox>
-						<ion-label>Delivery</ion-label>
+						<ion-label
+							>{{ 'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.DELIVERY'
+							| translate }}</ion-label
+						>
 					</ion-item>
 				</ion-col>
 				<ion-col class="pl-0 col-6">
@@ -155,7 +159,10 @@
 							[(ngModel)]="takaProductTakeaway"
 							(ionChange)="getProductTypeChange('Takeaway')"
 						></ion-checkbox>
-						<ion-label>Takeaway</ion-label>
+						<ion-label
+							>{{ 'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.TAKEAWAY'
+							| translate }}</ion-label
+						>
 					</ion-item>
 				</ion-col>
 			</ion-row>
@@ -165,11 +172,12 @@
 			<div
 				ngf-select="imageSelected($file)"
 				ngf-pattern="'image/*'"
-				class="upload-button"
+				class="upload-button {{ hasImage ? 'items-center' : '' }}"
 				#imageHolder
 				id="image-holder"
+				(click)="hasImage && showPicturesPopup()"
 			>
-				<h6 *ngIf="isBrowser" class="dragDrop">
+				<h6 *ngIf="isBrowser && !hasImage" class="dragDrop">
 					{{
 					'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.DRAG&DROP_PICTURE_HERE'
 					| translate }}
@@ -177,6 +185,7 @@
 				</h6>
 
 				<input
+					*ngIf="!hasImage"
 					type="file"
 					(change)="imageUrlChanged($event)"
 					id="fileInput"
@@ -186,27 +195,27 @@
 
 				<label *ngIf="!isBrowser">
 					<ion-icon
-						(click)="presentActionSheet()"
+						(click)="!hasImage && presentActionSheet()"
 						class="upload-icon"
-						ios="ios-cloud-upload"
-						md="md-cloud-upload"
+						name="{{ hasImage ? 'images' : 'cloud-upload' }}"
 					></ion-icon>
 					<h3 class="upload-text">
-						{{
-						'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.CLICK_TO_UPLOAD_PICTURE'
-						| translate }}
+						{{ hasImage ? 'Click to Upload More Pictures' :
+						('WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.CLICK_TO_UPLOAD_PICTURE'
+						| translate) }}
 					</h3>
 				</label>
 				<label *ngIf="isBrowser" for="fileInput">
 					<ion-icon
 						class="upload-icon"
-						ios="ios-cloud-upload"
-						md="md-cloud-upload"
+						name="{{ hasImage ? 'images' : 'cloud-upload' }}"
 					></ion-icon>
 					<h3 class="upload-text">
-						{{
-						'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.CLICK_TO_UPLOAD_PICTURE'
-						| translate }}
+						{{ hasImage ?
+						('WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.CLICK_TO_UPLOAD_MORE_PICTURE'
+						| translate) :
+						('WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.CLICK_TO_UPLOAD_PICTURE'
+						| translate) }}
 					</h3>
 				</label>
 			</div>

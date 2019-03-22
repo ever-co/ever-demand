@@ -1,0 +1,26 @@
+.product-images-container {
+	e-cu-file-uploader {
+		width: 100%;
+	}
+
+	.preview-img {
+		img {
+			height: 120px;
+		}
+	}
+
+	.removeIcon {
+		ion-icon {
+			font-size: 18px;
+		}
+	}
+
+	.actions {
+		position: absolute;
+		bottom: 0;
+		ion-button {
+			border: none;
+			font-size: 14px !important;
+		}
+	}
+}

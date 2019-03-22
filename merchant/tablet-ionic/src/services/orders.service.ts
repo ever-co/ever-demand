@@ -38,7 +38,8 @@ export class OrdersService {
 						}
 					}
 				`,
-				variables: { storeId }
+				variables: { storeId },
+				pollInterval: 1000
 			})
 			.valueChanges.pipe(
 				map((res) => res.data['getOrderedUsersInfo']),

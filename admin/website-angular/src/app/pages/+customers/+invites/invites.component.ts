@@ -19,7 +19,7 @@ import {
 	Country,
 	getCountryName
 } from '@modules/server.common/entities/GeoLocation';
-import { CountryRenderComponent } from './country-render.component';
+import { CountryRenderComponent } from './country-render/country-render.component';
 import { TranslateService } from '@ngx-translate/core';
 import { NotifyService } from 'app/@core/services/notify/notify.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';

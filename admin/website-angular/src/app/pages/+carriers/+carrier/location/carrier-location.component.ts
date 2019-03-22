@@ -17,14 +17,7 @@ const directionsService = new google.maps.DirectionsService();
 @Component({
 	selector: 'ea-carrier-location',
 	styleUrls: ['./carrier-location.component.scss'],
-	template: `
-		<nb-card [ngClass]="{ 'modal-style': carrierId }">
-			<nb-card-header class="header-color">{{
-				'CARRIERS_VIEW.CARRIER_PAGE.LOCATION' | translate
-			}}</nb-card-header>
-			<nb-card-body> <div #gmap class="googleMap"></div> </nb-card-body>
-		</nb-card>
-	`
+	templateUrl: './carrier-location.component.html'
 })
 export class CarrierLocationComponent implements OnDestroy, OnInit {
 	private ngDestroy$ = new Subject();

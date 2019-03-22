@@ -62,6 +62,11 @@
 			"PAID": "Paid"
 		}
 	},
+	"FILE_UPLOADER": {
+		"DRAG_AND_DROP_FILE_HERE": "Drag & Drop Image here",
+		"PICTURE_URL": "Picture url",
+		"BROWSE": "BROWSE"
+	},
 	"CARRIERS_VIEW": {
 		"CARRIERS_CATALOG": {
 			"IMAGE": "Image",
@@ -70,6 +75,7 @@
 			"ADDRESS": "Address",
 			"LOGO": "Logo"
 		},
+		"TRACK_CARRIER": "Track Carrier",
 		"CARRIERS": "Carriers",
 		"ADD_CARRIERS": "Add Carriers",
 		"IMAGE": "Image",
@@ -100,6 +106,9 @@
 			"COUNTRY": "Country",
 			"HOUSE": "House",
 			"COORDINATES": "Coordinates"
+		},
+		"EDIT_CARRIER": {
+			"EDIT_CARRIER": "Edit carrier"
 		},
 		"ADD_CARRIER": {
 			"ADD_CARRIER": "Add carrier",
@@ -199,7 +208,17 @@
 		"FIND_ADDRESS": "Find Address",
 		"OK": "OK",
 		"CANCEL": "CANCEL",
-		"ALLOW_ONLINE_PAYMENTS": "Allow online payments"
+		"ALLOW_ONLINE_PAYMENTS": "Allow online payments",
+		"SETTINGS_SECTION": {
+			"DELIVERY_OR_TAKEAWAY_SETTINGS": "Delivery/Takeaway Settings",
+			"PRODUCTS_DELIVERY_BY_DEFAULT": "Products Delivery (by default)",
+			"PRODUCTS_TAKEAWAY_BY_DEFAULT": "Products Takeaway (by default)",
+			"PAYMENTS_SETTINGS": "Payments Settings",
+			"BARCODE_QR_CODE_SETTINGS": "Barcode/QR code Settings",
+			"ORDER_BARCODE_TYPE": "Order barcode type",
+			"BARCODE_DATA": "Barcode data",
+			"SCAN_EXISTED": "Scan Existed"
+		}
 	},
 	"LOGIN_VIEW": {
 		"LOGIN": "Login"
@@ -219,6 +238,7 @@
 	"WAREHOUSE_VIEW": {
 		"RELEVANT": "Relevant",
 		"ALL": "All",
+		"LOADING_MORE_DATA": "Loading more data...",
 		"ORDERS": "Orders",
 		"NEW_ORDER": "New Order",
 		"PRODUCTS": "Top Products",
@@ -258,13 +278,16 @@
 			"DRAG&DROP_PICTURE_HERE": "Drag & Drop Picture here",
 			"OR_BROWSE": "or browse",
 			"CLICK_TO_UPLOAD_PICTURE": "Click to Upload Picture",
+			"CLICK_TO_UPLOAD_MORE_PICTURE": "Click to Upload More Pictures",
 			"CANCEL": "Cancel",
 			"CREATE": "Create",
 			"ENGLISH": "English",
 			"HEBREW": "Hebrew",
 			"RUSSIAN": "Russian",
 			"BULGARIAN": "Bulgarian",
-			"OPTIONAL": "optional"
+			"OPTIONAL": "optional",
+			"TAKEAWAY": "Takeaway",
+			"DELIVERY": "Delivery"
 		},
 		"NEW_ORDER_VIEW": {
 			"NEW_MANUAL_ORDER": "New Manual Order",
@@ -303,6 +326,10 @@
 			"LONGITUTE": "Longitude",
 			"HOUSE_IS_REQUIRED": "House is required"
 		},
+		"EDIT_PICTURE": {
+			"PRODUCT_IMAGES": "Product images",
+			"SAVE_IMAGES": "Save images"
+		},
 		"MISC_TEXT": {
 			"CREATE_NEW_ORDER": "Create New Order",
 			"ADD_NEW_PRODUCT": "Add New Product"
@@ -311,6 +338,7 @@
 	"EDIT_PRODUCT_POP_UP": {
 		"EDIT_PRODUCT_TYPE": "Edit product type",
 		"UPDATE_AN_EXISTING_PRODUCT": "Update an existing product",
+		"CLICK_TO_EDIT_PICTURES": "Click to Edit Pictures",
 		"TITLE": "Title",
 		"DESCRIPTION": "Description",
 		"CATEGORIES": "Categories",

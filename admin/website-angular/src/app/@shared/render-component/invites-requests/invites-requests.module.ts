@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeModule } from '../../../@theme';
-import { StatusComponent } from './status.component';
+import { StatusComponent } from './status/status.component';
 import { InvitedDateComponent } from './invited-date.component';
 
 const COMPONENTS = [StatusComponent, InvitedDateComponent];

@@ -34,6 +34,9 @@
 		"READYFOR": "Готово для",
 		"NO_PRODUCTS_FOUND": "Продукты не найдены для",
 		"NO_PRODUCTS": "Нет товаров",
+		"FASTFOOD": "быстрое питание",
+		"SEARCH": "поиск",
+		"LOADING_MORE_DATA": "Загрузка дополнительных данных ...",
 		"PRODUCT_DETAILS_VIEW": {
 			"BUY_FOR": "Купить для",
 			"DETAILS": "Детали",

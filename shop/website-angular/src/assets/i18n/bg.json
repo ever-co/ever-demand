@@ -34,6 +34,9 @@
 		"READYFOR": "Готов за",
 		"NO_PRODUCTS_FOUND": "Няма намерени продукти за",
 		"NO_PRODUCTS": "Няма продукти",
+		"FASTFOOD": "бързо хранене",
+		"SEARCH": "търсене",
+		"LOADING_MORE_DATA": "Още данни се зареждат ...",
 		"PRODUCT_DETAILS_VIEW": {
 			"BUY_FOR": "Купи за",
 			"DETAILS": "Детайли",

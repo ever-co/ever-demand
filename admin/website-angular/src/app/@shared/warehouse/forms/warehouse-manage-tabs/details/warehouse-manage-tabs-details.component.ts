@@ -3,7 +3,8 @@ import {
 	Input,
 	ViewChild,
 	ElementRef,
-	AfterViewInit
+	AfterViewInit,
+	OnInit
 } from '@angular/core';
 import {
 	AbstractControl,
@@ -12,16 +13,15 @@ import {
 	Validators
 } from '@angular/forms';
 import { IWarehouseCreateObject } from '@modules/server.common/interfaces/IWarehouse';
-import { map } from 'rxjs/operators';
+import { map, first } from 'rxjs/operators';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { Observable, concat } from 'rxjs';
 import { FormHelpers } from '../../../../forms/helpers';
-import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
-import { environment } from 'environments/environment';
 import 'rxjs/add/observable/of';
 import * as _ from 'lodash';
 import * as isUrl from 'is-url';
+import { TranslateService } from '@ngx-translate/core';
 
 export type WarehouseManageTabsDetails = Pick<
 	IWarehouseCreateObject,
@@ -39,17 +39,17 @@ export type WarehouseManageTabsDetails = Pick<
 	styleUrls: ['./warehouse-manage-tabs-details.component.scss'],
 	templateUrl: './warehouse-manage-tabs-details.component.html'
 })
-export class WarehouseManageTabsDetailsComponent implements AfterViewInit {
+export class WarehouseManageTabsDetailsComponent
+	implements OnInit, AfterViewInit {
 	@ViewChild('fileInput')
 	fileInput: ElementRef;
-
 	@ViewChild('logoPreview')
 	logoPreviewElement: ElementRef;
 
-	public uploader: FileUploader;
-
 	@Input()
 	readonly form: FormGroup;
+
+	uploaderPlaceholder: string;
 
 	carriersOptions$: Observable<IMultiSelectOption[]> = concat(
 		Observable.of([]),
@@ -65,9 +65,10 @@ export class WarehouseManageTabsDetailsComponent implements AfterViewInit {
 		)
 	);
 
-	constructor(private readonly _carrierRouter: CarrierRouter) {
-		this._uploaderConfig();
-	}
+	constructor(
+		private readonly _carrierRouter: CarrierRouter,
+		private readonly _translateService: TranslateService
+	) {}
 
 	get name() {
 		return this.form.get('name');
@@ -129,6 +130,10 @@ export class WarehouseManageTabsDetailsComponent implements AfterViewInit {
 		});
 	}
 
+	ngOnInit(): void {
+		this.getUploaderPlaceholderText();
+	}
+
 	ngAfterViewInit() {
 		this._setupLogoUrlValidation();
 	}
@@ -171,19 +176,6 @@ export class WarehouseManageTabsDetailsComponent implements AfterViewInit {
 		);
 	}
 
-	imageUrlChanged() {
-		this.uploader.queue[0].upload();
-
-		this.uploader.onSuccessItem = (
-			item: any,
-			response: string,
-			status: number
-		) => {
-			const data = JSON.parse(response);
-			this.logo.setValue(data.url);
-		};
-	}
-
 	deleteImg() {
 		this.logo.setValue('');
 	}
@@ -200,38 +192,14 @@ export class WarehouseManageTabsDetailsComponent implements AfterViewInit {
 		};
 	}
 
-	private _uploaderConfig() {
-		const uploaderOptions: FileUploaderOptions = {
-			url: environment.API_FILE_UPLOAD_URL,
+	private async getUploaderPlaceholderText() {
+		const res = await this._translateService
+			.get(['WAREHOUSE_VIEW.MUTATION.PHOTO', 'OPTIONAL'])
+			.pipe(first())
+			.toPromise();
 
-			isHTML5: true,
-			removeAfterUpload: true,
-			headers: [
-				{
-					name: 'X-Requested-With',
-					value: 'XMLHttpRequest'
-				}
-			]
-		};
-		this.uploader = new FileUploader(uploaderOptions);
-
-		this.uploader.onBuildItemForm = (
-			fileItem: any,
-			form: FormData
-		): any => {
-			form.append('upload_preset', 'everbie-products-images');
-			let tags = 'myphotoalbum';
-			if (this.name.value) {
-				form.append('context', `photo=${this.name.value}`);
-				tags = `myphotoalbum,${this.name.value}`;
-			}
-
-			form.append('folder', 'angular_sample');
-			form.append('tags', tags);
-			form.append('file', fileItem);
-
-			fileItem.withCredentials = false;
-			return { fileItem, form };
-		};
+		this.uploaderPlaceholder = `${res['WAREHOUSE_VIEW.MUTATION.PHOTO']} (${
+			res['OPTIONAL']
+		})`;
 	}
 }

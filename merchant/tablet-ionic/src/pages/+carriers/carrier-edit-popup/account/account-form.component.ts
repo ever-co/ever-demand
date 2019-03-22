@@ -1,17 +1,21 @@
-import { Component, OnDestroy, OnInit, OnChanges } from '@angular/core';
+import { Component, OnDestroy, OnInit, OnChanges, Input } from '@angular/core';
 import {
 	FormBuilder,
 	FormGroup,
 	Validators,
 	AbstractControl
 } from '@angular/forms';
+import Carrier from '@modules/server.common/entities/Carrier';
 
 @Component({
 	selector: 'account-form',
-	styles: ['./account-form.component.scss'],
+	styleUrls: ['./account-form.component.scss'],
 	templateUrl: 'account-form.component.html'
 })
 export class AccountFormComponent implements OnDestroy, OnInit, OnChanges {
+	@Input()
+	carrier: Carrier;
+
 	userName: AbstractControl;
 	password: AbstractControl;
 	isActive: AbstractControl;
@@ -30,6 +34,8 @@ export class AccountFormComponent implements OnDestroy, OnInit, OnChanges {
 		this.$password = this.password.valueChanges.subscribe((res) => {
 			this.repeatPassword.setValue('');
 		});
+
+		this.loadData();
 	}
 
 	ngOnChanges(): void {}
@@ -37,7 +43,7 @@ export class AccountFormComponent implements OnDestroy, OnInit, OnChanges {
 	buildForm(formBuilder: FormBuilder) {
 		this.form = formBuilder.group({
 			userName: ['', Validators.required],
-			password: ['', Validators.required],
+			password: [''],
 			repeatPassword: [
 				'',
 				[
@@ -66,6 +72,13 @@ export class AccountFormComponent implements OnDestroy, OnInit, OnChanges {
 	ngOnDestroy(): void {
 		if (this.$password) {
 			this.$password.unsubscribe();
+		}
+	}
+
+	private loadData() {
+		if (this.carrier) {
+			this.userName.setValue(this.carrier.username);
+			this.isActive.setValue(this.carrier.isActive);
 		}
 	}
 }

@@ -1,12 +1,17 @@
-<!-- TODO Add translate -->
 <div class="merchant-settings" *ngIf="currWarehouse">
 	<ion-grid>
-		<h4 class="row-title">Delivery/Takeaway Settings</h4>
+		<h4 class="row-title">
+			{{ 'SETTINGS_VIEW.SETTINGS_SECTION.DELIVERY_OR_TAKEAWAY_SETTINGS' |
+			translate }}
+		</h4>
 		<ion-row>
 			<ion-col class="col-6">
 				<ion-item mode="ios">
-					<!-- TODO Add translate -->
-					<ion-label> Products Delivery (by default) </ion-label>
+					<ion-label>
+						{{
+						'SETTINGS_VIEW.SETTINGS_SECTION.PRODUCTS_DELIVERY_BY_DEFAULT'
+						| translate }}
+					</ion-label>
 					<ion-checkbox
 						slot="start"
 						#productsDelivery="ngModel"
@@ -16,8 +21,11 @@
 			</ion-col>
 			<ion-col class="col-6">
 				<ion-item mode="ios">
-					<!-- TODO Add translate -->
-					<ion-label> Products Takeaway (by default) </ion-label>
+					<ion-label
+						>{{
+						'SETTINGS_VIEW.SETTINGS_SECTION.PRODUCTS_TAKEAWAY_BY_DEFAULT'
+						| translate }}
+					</ion-label>
 					<ion-checkbox
 						slot="start"
 						#productsTakeaway="ngModel"
@@ -27,7 +35,9 @@
 			</ion-col>
 		</ion-row>
 		<br />
-		<h4 class="row-title">Payments Settings</h4>
+		<h4 class="row-title">
+			{{ 'SETTINGS_VIEW.SETTINGS_SECTION.PAYMENTS_SETTINGS' | translate }}
+		</h4>
 		<ion-row>
 			<ion-col class="col-6">
 				<ion-item mode="ios">
@@ -44,14 +54,20 @@
 		</ion-row>
 
 		<br />
-		<h4 class="row-title">Barcode/QR code Settings</h4>
+		<h4 class="row-title">
+			{{ 'SETTINGS_VIEW.SETTINGS_SECTION.BARCODE_QR_CODE_SETTINGS' |
+			translate }}
+		</h4>
 		<ion-row>
 			<ion-col class="col-6">
 				<ion-item
 					mode="ios"
 					class="input-with-checkbox align-with-label-input"
 				>
-					<ion-label>Order barcode type</ion-label>
+					<ion-label>
+						{{ 'SETTINGS_VIEW.SETTINGS_SECTION.ORDER_BARCODE_TYPE' |
+						translate }}</ion-label
+					>
 					<ion-select
 						#orderBarcodeType="ngModel"
 						[(ngModel)]="currWarehouse.orderBarcodeType"
@@ -65,13 +81,12 @@
 					</ion-select>
 				</ion-item>
 			</ion-col>
-			<!-- TODO Add translate -->
 			<ion-col class="col-6">
 				<ion-row>
-					<!-- TODO Add translate -->
 					<ion-item mode="ios" class="col-9">
-						<ion-label class="labels" position="floating"
-							>Barcode data</ion-label
+						<ion-label class="labels" position="floating">
+							{{ 'SETTINGS_VIEW.SETTINGS_SECTION.BARCODE_DATA' |
+							translate }}</ion-label
 						>
 						<ion-input
 							type="text"
@@ -86,7 +101,9 @@
 							class="p-0 button button-brand-lighted col-100"
 							(click)="scan()"
 						>
-							<i class="fa fa-qrcode"></i> Scan Existed
+							<i class="fa fa-qrcode"></i>
+							{{ 'SETTINGS_VIEW.SETTINGS_SECTION.SCAN_EXISTED' |
+							translate }}
 						</button>
 					</label>
 				</ion-row>

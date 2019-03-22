@@ -35,6 +35,9 @@
 		"READYFOR": "Ready for",
 		"NO_PRODUCTS_FOUND": "No products found for",
 		"NO_PRODUCTS": "No products.",
+		"FASTFOOD": "fastfood",
+		"SEARCH": "search",
+		"LOADING_MORE_DATA": "Loading more data...",
 		"PRODUCT_DETAILS_VIEW": {
 			"BUY_FOR": "Buy for",
 			"DETAILS": "Details",

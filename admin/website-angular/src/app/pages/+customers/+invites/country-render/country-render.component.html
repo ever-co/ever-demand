@@ -1,0 +1,9 @@
+<select
+	[(ngModel)]="this.cell.newValue"
+	(change)="onChanged($event)"
+	class="form-control ng-pristine ng-valid ng-touched"
+>
+	<option *ngFor="let country of countries" value="{{ country.name }}">
+		{{ country.name }}
+	</option>
+</select>

@@ -23,6 +23,11 @@ type MerchantsOrders {
 	ordersCount: Int
 }
 
+type RemovedUserOrdersObj {
+	number: Int
+	modified: Int
+}
+
 type StoreOrdersTableData {
 	orders: [Order]!
 	page: Int!
@@ -44,4 +49,6 @@ type Query {
 	): StoreOrdersTableData!
 
 	getCountOfStoreOrders(storeId: String!, status: String!): Int!
+
+	removeUserOrders(storeId: String!, userId: String!): RemovedUserOrdersObj
 }

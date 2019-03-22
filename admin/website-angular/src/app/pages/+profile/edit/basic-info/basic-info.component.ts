@@ -8,8 +8,6 @@ import {
 import Admin from '@modules/server.common/entities/Admin';
 import { takeUntil, first } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { FileUploaderOptions, FileUploader } from 'ng2-file-upload';
-import { environment } from 'environments/environment';
 import { IAdminUpdateObject } from '@modules/server.common/interfaces/IAdmin';
 import { AdminsService } from '../../../../@core/data/admins.service';
 import { getDummyImage } from '@modules/server.common/utils';
@@ -23,30 +21,27 @@ import 'rxjs/add/operator/debounceTime';
 	templateUrl: './basic-info.component.html'
 })
 export class BasicInfoComponent implements OnChanges, OnDestroy {
-	public uploader: FileUploader;
-
-	public basicInfoForm: FormGroup;
-	public username: AbstractControl;
-	public email: AbstractControl;
-	public picture: AbstractControl;
-	public firstName: AbstractControl;
-	public lastName: AbstractControl;
-
-	public usernameErrorMsg: string;
-	public emailErrorMsg: string;
-	public pictureUrlErrorMsg: string;
-	public firstNameErrorMsg: string;
-	public lastNameErrorMsg: string;
-	public INVALID_EMAIL_ADDRESS: string = 'INVALID_EMAIL_ADDRESS';
-	public INVALID_URL: string = 'INVALID_URL';
-	public NAME_MUST_CONTAIN_ONLY_LETTERS: string =
-		'NAME_MUST_CONTAIN_ONLY_LETTERS';
-	public PREFIX: string = 'PROFILE_VIEW.';
-
-	public loading: boolean;
-
 	@Input()
-	private admin: Admin;
+	admin: Admin;
+
+	uploaderPlaceholder: string;
+	basicInfoForm: FormGroup;
+	username: AbstractControl;
+	email: AbstractControl;
+	picture: AbstractControl;
+	firstName: AbstractControl;
+	lastName: AbstractControl;
+
+	usernameErrorMsg: string;
+	emailErrorMsg: string;
+	firstNameErrorMsg: string;
+	lastNameErrorMsg: string;
+	INVALID_EMAIL_ADDRESS: string = 'INVALID_EMAIL_ADDRESS';
+	INVALID_URL: string = 'INVALID_URL';
+	NAME_MUST_CONTAIN_ONLY_LETTERS: string = 'NAME_MUST_CONTAIN_ONLY_LETTERS';
+	PREFIX: string = 'PROFILE_VIEW.';
+	loading: boolean;
+
 	private ngDestroy$ = new Subject<void>();
 
 	constructor(
@@ -55,12 +50,18 @@ export class BasicInfoComponent implements OnChanges, OnDestroy {
 		private toasterService: ToasterService,
 		private _translateService: TranslateService
 	) {
-		this.uploaderConfig();
+		this.getUploaderPlaceholderText();
 		this.buildForm();
 		this.bindFormControls();
 		this._applyTranslationOnSmartTable();
 
 		this.loadControls();
+	}
+
+	get pictureUrlErrorMsg() {
+		return this.picture.errors.pattern
+			? this.invalidURL()
+			: Object.keys(this.picture.errors)[0];
 	}
 
 	ngOnChanges(): void {
@@ -72,6 +73,11 @@ export class BasicInfoComponent implements OnChanges, OnDestroy {
 			this.firstName.setValue(this.admin.firstName);
 			this.lastName.setValue(this.admin.lastName);
 		}
+	}
+
+	ngOnDestroy() {
+		this.ngDestroy$.next();
+		this.ngDestroy$.complete();
 	}
 
 	invalidEmailAddress() {
@@ -129,23 +135,8 @@ export class BasicInfoComponent implements OnChanges, OnDestroy {
 	loadControls() {
 		this.validations.usernameControl();
 		this.validations.emailControl();
-		this.validations.pictureUrlControl();
 		this.validations.firstNameControl();
 		this.validations.lastNameControl();
-	}
-
-	imageUrlChanged() {
-		this.uploader.queue[0].upload();
-
-		this.uploader.onSuccessItem = (
-			item: any,
-			response: string,
-			status: number
-		) => {
-			const data = JSON.parse(response);
-			this.picture.setValue(data.url);
-			this.basicInfoForm.markAsDirty();
-		};
 	}
 
 	deleteImg() {
@@ -183,18 +174,6 @@ export class BasicInfoComponent implements OnChanges, OnDestroy {
 						: '';
 				});
 		},
-		pictureUrlControl: () => {
-			this.picture.valueChanges
-				.debounceTime(500)
-				.pipe(takeUntil(this.ngDestroy$))
-				.subscribe((value) => {
-					this.pictureUrlErrorMsg = this.hasError(this.picture)
-						? this.picture.errors.pattern
-							? this.invalidURL()
-							: Object.keys(this.picture.errors)[0]
-						: '';
-				});
-		},
 		firstNameControl: () => {
 			this.firstName.valueChanges
 				.debounceTime(500)
@@ -225,41 +204,6 @@ export class BasicInfoComponent implements OnChanges, OnDestroy {
 		return (control.touched || control.dirty) && control.errors;
 	}
 
-	private uploaderConfig() {
-		const uploaderOptions: FileUploaderOptions = {
-			url: environment.API_FILE_UPLOAD_URL,
-
-			isHTML5: true,
-			removeAfterUpload: true,
-			headers: [
-				{
-					name: 'X-Requested-With',
-					value: 'XMLHttpRequest'
-				}
-			]
-		};
-		this.uploader = new FileUploader(uploaderOptions);
-
-		this.uploader.onBuildItemForm = (
-			fileItem: any,
-			form: FormData
-		): any => {
-			form.append('upload_preset', 'everbie-products-images');
-			let tags = 'myphotoalbum';
-			if (this.username.value) {
-				form.append('context', `photo=${this.username.value}`);
-				tags = `myphotoalbum,${this.username.value}`;
-			}
-
-			form.append('folder', 'angular_sample');
-			form.append('tags', tags);
-			form.append('file', fileItem);
-
-			fileItem.withCredentials = false;
-			return { fileItem, form };
-		};
-	}
-
 	private getAdminCreateObj(): IAdminUpdateObject {
 		if (!this.picture.value) {
 			const letter = this.username.value.charAt(0).toUpperCase();
@@ -284,8 +228,10 @@ export class BasicInfoComponent implements OnChanges, OnDestroy {
 		return translationResult;
 	}
 
-	ngOnDestroy() {
-		this.ngDestroy$.next();
-		this.ngDestroy$.complete();
+	private async getUploaderPlaceholderText() {
+		this.uploaderPlaceholder = await this._translateService
+			.get('PROFILE_VIEW.PICTURE_URL')
+			.pipe(first())
+			.toPromise();
 	}
 }

@@ -1,0 +1,72 @@
+{
+	"LANGUAGE": {
+		"ID": "he-IL",
+		"NAME": "עברית"
+	},
+	"CURRENT_DIRECTION": "rtl",
+	"SIDEBAR_SIDE": "right",
+
+	"MAIN_VIEW": {
+		"EVERCO_DRIVER": "נהג"
+	},
+	"DELIVERY_VIEW": {
+		"THE_CUSTOMER_HAS_TO_PAY": "הלקוח חייב לשלם",
+		"CUSTOMER_ALREADY_PAID_WITH_CARD": "הלקוח כבר שילם עם כרטיס!",
+		"DELIVERED": "נמסר",
+		"CANCEL": "לְבַטֵל",
+		"DELIVERIES_HISTORY": "ההיסטוריה של משלוחים",
+		"TO": "אֶל",
+		"FROM": "מ",
+		"ID": "תְעוּדַת זֶהוּת",
+		"CANCELED": "מבוטל",
+		"CONFIRMED": "מְאוּשָׁר",
+		"IS_PAID": "שולם",
+		"DETAILS": "פרטים"
+	},
+	"DRIVE_TO_WAREHOUSE_VIEW": {
+		"TAKE_WORK": "קח עבודה",
+		"SKIP_WORK": "דלג על עבודה",
+		"I'M_THERE": "אני שם",
+		"CANCEL": "לְבַטֵל"
+	},
+	"HOME_VIEW": {
+		"DELIVERIES": "משלוחים",
+		"WORKING": "עובד",
+		"NOT_WORKING": "לא עובד",
+		"START_WORKING": "תתחיל לעבוד",
+		"STOP_WORKING": "תפסיק לעבוד"
+	},
+	"STARTING_DELIVERY_VIEW": {
+		"START": "התחל",
+		"CANCEL": "בטל"
+	},
+	"NO_INTERNET_VIEW": {
+		"NETWORK_WAS_DISCONNECTED": "הרשת נותקה"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "השרת נפל"
+	},
+	"GET_PRODUCT_VIEW": {
+		"GOT_IT": "הבנתי",
+		"CANCEL": "לְבַטֵל"
+	},
+	"RETURN_PRODUCT_VIEW": {
+		"RETURN_PRODUCT": "מוצר החזרה",
+		"CANCEL": "לְבַטֵל"
+	},
+	"LOGIN_VIEW": {
+		"LOGIN": "התחברות"
+	},
+	"ABOUT_VIEW": {
+		"TITLE": "עלינו"
+	},
+	"TERMS_OF_USE_VIEW": {
+		"TITLE": "תנאי שימוש"
+	},
+	"LANGUAGE_VIEW": {
+		"TITLE": "בחירת שפה"
+	},
+	"LIST_VIEW": {
+		"YOU_NAVIGATED_HERE_FROM": "אתה מנווט כאן מ"
+	}
+}

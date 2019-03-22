@@ -7,12 +7,12 @@ import { ProductsTableComponent } from './products-table';
 import { CategoriesTableComponent } from '../categories/categories-table/categories-table.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
-import { FileUploadModule } from 'ng2-file-upload';
 import { ProductCategoriesModule } from '../../render-component/product-categories/product-categories.module';
 import { CommonModule } from '@angular/common';
 import { NbSpinnerModule } from '@nebular/theme';
 import { ConfirmationModalModule } from '../../confirmation-modal/confirmation-modal.module';
 import { RenderComponentsModule } from 'app/@shared/render-component/render-components.module';
+import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.module';
 
 @NgModule({
 	imports: [
@@ -22,7 +22,7 @@ import { RenderComponentsModule } from 'app/@shared/render-component/render-comp
 		TranslateModule.forChild(),
 		MultiselectDropdownModule,
 		Ng2SmartTableModule,
-		FileUploadModule,
+		FileUploaderModule,
 		ProductCategoriesModule,
 		NbSpinnerModule,
 		ConfirmationModalModule,

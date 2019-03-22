@@ -62,6 +62,11 @@
 			"PAID": "בתשלום"
 		}
 	},
+	"FILE_UPLOADER": {
+		"DRAG_AND_DROP_FILE_HERE": "גרור ושחרר תמונה כאן",
+		"PICTURE_URL": "כתובת אתר של תמונה",
+		"BROWSE": "דפדוף"
+	},
 	"CARRIERS_VIEW": {
 		"CARRIERS_CATALOG": {
 			"IMAGE": "תמונה",
@@ -70,6 +75,7 @@
 			"ADDRESS": "כתובת",
 			"LOGO": "סֵמֶל"
 		},
+		"TRACK_CARRIER": "עקוב אחר ספק",
 		"CARRIERS": "ספקים",
 		"ADD_CARRIERS": "הוסף ספקים",
 		"IMAGE": "תמונה",
@@ -100,6 +106,9 @@
 			"COUNTRY": "מדינה",
 			"HOUSE": "בַּיִת",
 			"COORDINATES": "קואורדינטות"
+		},
+		"EDIT_CARRIER": {
+			"EDIT_CARRIER": "ערוך ספק"
 		},
 		"ADD_CARRIER": {
 			"ADD_CARRIER": "הוסף ספק",
@@ -200,7 +209,17 @@
 		"SELECT_CATEGORIES": "בחר קטגוריות",
 		"OK": "בסדר",
 		"CANCEL": "בטל",
-		"ALLOW_ONLINE_PAYMENTS": "אפשר תשלומים מקוונים"
+		"ALLOW_ONLINE_PAYMENTS": "אפשר תשלומים מקוונים",
+		"SETTINGS_SECTION": {
+			"DELIVERY_OR_TAKEAWAY_SETTINGS": "הגדרות משלוח / תפוסה",
+			"PRODUCTS_DELIVERY_BY_DEFAULT": "משלוח מוצרים (כברירת מחדל)",
+			"PRODUCTS_TAKEAWAY_BY_DEFAULT": "מוצרים Takeaway (כברירת מחדל)",
+			"PAYMENTS_SETTINGS": "הגדרות תשלומים",
+			"BARCODE_QR_CODE_SETTINGS": "ברקוד / קוד QR הגדרות",
+			"ORDER_BARCODE_TYPE": "הקלד סוג ברקוד",
+			"BARCODE_DATA": "נתוני ברקוד",
+			"SCAN_EXISTED": "סרוק קיים"
+		}
 	},
 	"LOGIN_VIEW": {
 		"LOGIN": "התחברות"
@@ -220,6 +239,7 @@
 	"WAREHOUSE_VIEW": {
 		"RELEVANT": "רלוונטי",
 		"ALL": "את כל",
+		"LOADING_MORE_DATA": "טוען נתונים נוספים ...",
 		"ORDERS": "הזמנות",
 		"NEW_ORDER": "הזמנה חדשה",
 		"PRODUCTS": "מוצרים מובילים",
@@ -259,13 +279,16 @@
 			"DRAG&DROP_PICTURE_HERE": "גרור ושחרר תמונה כאן",
 			"OR_BROWSE": "או לגלוש",
 			"CLICK_TO_UPLOAD_PICTURE": "לחץ כדי להעלות תמונה",
+			"CLICK_TO_UPLOAD_MORE_PICTURE": "לחץ כדי להעלות תמונות נוספות",
 			"CANCEL": "לְבַטֵל",
 			"CREATE": "לִיצוֹר",
 			"ENGLISH": "אנגלית",
 			"HEBREW": "עִברִית",
 			"RUSSIAN": "רוּסִי",
 			"BULGARIAN": "בולגרית",
-			"OPTIONAL": "אופציונאלי"
+			"OPTIONAL": "אופציונאלי",
+			"TAKEAWAY": "להסיר",
+			"DELIVERY": "משלוח"
 		},
 		"NEW_ORDER_VIEW": {
 			"NEW_MANUAL_ORDER": "סדר ידני חדש",
@@ -304,6 +327,10 @@
 			"LONGITUTE": "קו האורך",
 			"HOUSE_IS_REQUIRED": "הבית נדרש"
 		},
+		"EDIT_PICTURE": {
+			"PRODUCT_IMAGES": "תמונות של מוצרים",
+			"SAVE_IMAGES": "שמור תמונות"
+		},
 		"MISC_TEXT": {
 			"CREATE_NEW_ORDER": "צור הזמנה חדשה",
 			"ADD_NEW_PRODUCT": "הוסף מוצר חדש"
@@ -312,6 +339,7 @@
 	"EDIT_PRODUCT_POP_UP": {
 		"EDIT_PRODUCT_TYPE": "ערוך את סוג המוצר",
 		"UPDATE_AN_EXISTING_PRODUCT": "עדכן מוצר קיים",
+		"CLICK_TO_EDIT_PICTURES": "לחץ כדי לערוך תמונות",
 		"TITLE": "כותרת",
 		"DESCRIPTION": "תיאור",
 		"CATEGORIES": "קטגוריות",

@@ -12,7 +12,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import {
 	IProductDescription,
-	IProductTitle
+	IProductTitle,
+	IProductImage
 } from '@modules/server.common/interfaces/IProduct';
 import { ProductRouter } from '@modules/client.common.angular2/routers/product-router.service';
 import Product from '@modules/server.common/entities/Product';
@@ -26,6 +27,7 @@ import { first } from 'rxjs/operators';
 import { ProductsCategoryService } from '../../../services/products-category.service';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 import { ModalController, ActionSheetController } from '@ionic/angular';
+import { ProductImagesPopup } from '../product-pictures-popup/product-images-popup.component';
 
 @Component({
 	selector: 'page-edit-product-type-popup',
@@ -49,11 +51,13 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 	translLang: string;
 	productsCategories: ProductsCategory[];
 	selectedProductCategories: string[] = [];
+	hasImage: boolean = true;
 
 	private lastProductTitle: IProductTitle[];
 	private lastProductDescription: IProductDescription[];
 	private lastProductPrice: number;
 	private lastProductCount: number;
+	private imagesData: IProductImage[];
 
 	@ViewChild('fileInput')
 	private fileInput: ElementRef;
@@ -123,6 +127,7 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 
 		reader.addEventListener('load', (e) => {
 			const imageBase64 = e.target['result'];
+			this.hasImage = true;
 			this._setImageHolderBackground(imageBase64);
 		});
 
@@ -208,16 +213,15 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 	}
 
 	ngAfterViewInit(): void {
-		document
-			.getElementsByClassName('modal-wrapper')[0]
-			.setAttribute(
-				'style',
-				'opacity: 1;transform: translateY(0px);min-height: 355px;height: min-content;'
-			);
-
 		const currentProductImage = this.localeTranslateService.getTranslate(
 			this.product.images
 		);
+
+		if (currentProductImage) {
+			this.hasImage = true;
+		} else {
+			this.hasImage = false;
+		}
 
 		this._setImageHolderBackground(currentProductImage);
 	}
@@ -234,8 +238,40 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 		}
 	}
 
-	protected localeTranslate(member: ILocaleMember[]): string {
+	localeTranslate(member: ILocaleMember[]): string {
 		return this.localeTranslateService.getTranslate(member);
+	}
+
+	async showPicturesPopup() {
+		let images = this.product.images.filter(
+			(i) => i.locale === this.currentLocale
+		);
+
+		if (this.imagesData) {
+			const imagesDataLocale = this.imagesData[0].locale;
+			if (imagesDataLocale === this.currentLocale) {
+				images = this.imagesData;
+			}
+		}
+
+		const modal = await this.modalController.create({
+			component: ProductImagesPopup,
+			componentProps: {
+				images
+			},
+			backdropDismiss: false,
+			cssClass: 'mutation-product-images-modal'
+		});
+
+		await modal.present();
+
+		const res = await modal.onDidDismiss();
+		const imageArray = res.data;
+		if (imageArray && imageArray.length > 0) {
+			const firstImgUrl = imageArray[0].url;
+			this._setImageHolderBackground(firstImgUrl);
+			this.imagesData = imageArray;
+		}
 	}
 
 	takePicture(sourceType: number) {
@@ -342,6 +378,18 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 	}
 
 	uploadProduct() {
+		if (this.imagesData && this.imagesData.length > 0) {
+			// Because all images in "imgLocale" has same local value we get first one
+			const imgLocale = this.imagesData[0].locale;
+			if (imgLocale === this.currentLocale) {
+				this.product.images = this.product.images.filter(
+					(i) => i.locale !== imgLocale
+				);
+
+				this.product.images.push(...this.imagesData);
+			}
+		}
+
 		this.localeTranslateService.assignPropertyValue(
 			this.product.title,
 			'title'

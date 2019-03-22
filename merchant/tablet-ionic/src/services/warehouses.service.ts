@@ -77,6 +77,15 @@ export class WarehousesService {
 						getAllStores {
 							id
 							_createdAt
+							usedCarriersIds
+							geoLocation {
+								city
+								streetAddress
+								house
+								loc {
+									coordinates
+								}
+							}
 						}
 					}
 				`

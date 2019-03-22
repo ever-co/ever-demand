@@ -18,8 +18,8 @@ import { AddCarriersPopupPageModule } from './add-carriers-popup/add-carriers-po
 import { CarrierAddrPopupPageModule } from './carrier-addr-popup/carrier-addr-popup.module';
 import { CarrierDeliveriesPopupPageModule } from './carrier-deliveries-popup/carrier-deliveries-popup.module';
 import { CarrierEditPopupModule } from './carrier-edit-popup/carrier-edit-popup.module';
-import { CarrierDeletePopupModule } from './carrier-delete-popup/carrier-delete-popup.module';
 import { CarrierTrackPopupModule } from './carrier-track-popup/carrier-track-popup.module';
+import { ConfirmDeletePopupModule } from 'components/confirm-delete-popup/confirm-delete-popup.module';
 
 const routes: Routes = [
 	{
@@ -49,7 +49,7 @@ const routes: Routes = [
 		CarrierAddrPopupPageModule,
 		CarrierDeliveriesPopupPageModule,
 		CarrierEditPopupModule,
-		CarrierDeletePopupModule,
+		ConfirmDeletePopupModule,
 		CarrierTrackPopupModule
 	],
 	entryComponents: [

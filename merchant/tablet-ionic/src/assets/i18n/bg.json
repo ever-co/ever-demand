@@ -62,6 +62,11 @@
 			"PAID": "Платен"
 		}
 	},
+	"FILE_UPLOADER": {
+		"DRAG_AND_DROP_FILE_HERE": "Завлачи и пусни Изображение тук",
+		"PICTURE_URL": "URL адрес на картинката",
+		"BROWSE": "Разгледай"
+	},
 	"CARRIERS_VIEW": {
 		"CARRIERS_CATALOG": {
 			"IMAGE": "Изображение",
@@ -70,6 +75,7 @@
 			"ADDRESS": "Адрес",
 			"LOGO": "Лого"
 		},
+		"TRACK_CARRIER": "Проследяване на доставчика",
 		"CARRIERS": "Куриери",
 		"ADD_CARRIERS": "Добавяне на превозвачи",
 		"IMAGE": "Изображение",
@@ -100,6 +106,9 @@
 			"COUNTRY": "Държава",
 			"HOUSE": "Kъща",
 			"COORDINATES": "Координати"
+		},
+		"EDIT_CARRIER": {
+			"EDIT_CARRIER": "Редактирайте носителя"
 		},
 		"ADD_CARRIER": {
 			"ADD_CARRIER": "Добавете куриер",
@@ -199,7 +208,17 @@
 		"FIND_ADDRESS": "Намерете адрес",
 		"OK": "Добре",
 		"CANCEL": "ОТКАЗ",
-		"ALLOW_ONLINE_PAYMENTS": "Разрешаване на онлайн плащания"
+		"ALLOW_ONLINE_PAYMENTS": "Разрешаване на онлайн плащания",
+		"SETTINGS_SECTION": {
+			"DELIVERY_OR_TAKEAWAY_SETTINGS": "Настройки за доставки или за взимане от място",
+			"PRODUCTS_DELIVERY_BY_DEFAULT": "Доставка на продукти (по подразбиране)",
+			"PRODUCTS_TAKEAWAY_BY_DEFAULT": "Продукти за взимане от място (по подразбиране)",
+			"PAYMENTS_SETTINGS": "Настройки за плащания",
+			"BARCODE_QR_CODE_SETTINGS": "Настройки за баркод / QR код",
+			"ORDER_BARCODE_TYPE": "Тип баркод на поръчката",
+			"BARCODE_DATA": "Данни за баркод",
+			"SCAN_EXISTED": "Сканиране на текущите"
+		}
 	},
 	"LOGIN_VIEW": {
 		"LOGIN": "Влез"
@@ -219,6 +238,7 @@
 	"WAREHOUSE_VIEW": {
 		"RELEVANT": "Приоритетни",
 		"ALL": "Всички",
+		"LOADING_MORE_DATA": "Още данни се зареждат ...",
 		"ORDERS": "Поръчки",
 		"NEW_ORDER": "Нова поръчка",
 		"PRODUCTS": "Топ Продукти",
@@ -258,13 +278,16 @@
 			"DRAG&DROP_PICTURE_HERE": "Завлачи и пусни снимката тук",
 			"OR_BROWSE": "или прегледайте",
 			"CLICK_TO_UPLOAD_PICTURE": "Качи снимка",
+			"CLICK_TO_UPLOAD_MORE_PICTURE": "Кликнете, за да качите още снимки",
 			"CANCEL": "Отказ",
 			"CREATE": "Създай",
 			"ENGLISH": "Английски",
 			"HEBREW": "Иврит",
 			"RUSSIAN": "Руски",
 			"BULGARIAN": "Български",
-			"OPTIONAL": "по избор"
+			"OPTIONAL": "по избор",
+			"DELIVERY": "Доставка",
+			"TAKEAWAY": "Вземи на място"
 		},
 		"NEW_ORDER_VIEW": {
 			"NEW_MANUAL_ORDER": "Нова ръчна поръчка",
@@ -303,6 +326,10 @@
 			"LONGITUTE": "дължина",
 			"HOUSE_IS_REQUIRED": "Къща се изисква"
 		},
+		"EDIT_PICTURE": {
+			"PRODUCT_IMAGES": "Изображения на продукти",
+			"SAVE_IMAGES": "Запазване на изображенията"
+		},
 		"MISC_TEXT": {
 			"CREATE_NEW_ORDER": "Създай Нова Поръчка",
 			"ADD_NEW_PRODUCT": "Добави Нов Продукт"
@@ -311,6 +338,7 @@
 	"EDIT_PRODUCT_POP_UP": {
 		"EDIT_PRODUCT_TYPE": "Редактиране на типа продукт",
 		"UPDATE_AN_EXISTING_PRODUCT": "Актуализиране на съществуващ продукт",
+		"CLICK_TO_EDIT_PICTURES": "Кликнете върху „Редактиране на картини“",
 		"TITLE": "Заглавие",
 		"DESCRIPTION": "Описание",
 		"CATEGORIES": "Категории",

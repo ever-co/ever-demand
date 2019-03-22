@@ -30,30 +30,28 @@ const perPage = 3;
 export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 	loading: boolean;
 
-	private ngDestroy$ = new Subject<void>();
-	private createdProduct: Product[] = [];
-	private selectedProduct: any[] = [];
-	public currentThemeCosmic: boolean = false;
+	currentThemeCosmic: boolean = false;
 
-	public warehouseId: string;
-	public BUTTON_DONE: string = 'BUTTON_DONE';
-	public BUTTON_NEXT: string = 'BUTTON_NEXT';
-	public BUTTON_PREV: string = 'BUTTON_PREV';
-	public productsCategories: ProductsCategory[];
-	public selectedWarehouse: Warehouse;
-	public perPage: number;
+	warehouseId: string;
+	BUTTON_DONE: string = 'BUTTON_DONE';
+	BUTTON_NEXT: string = 'BUTTON_NEXT';
+	BUTTON_PREV: string = 'BUTTON_PREV';
+	productsCategories: ProductsCategory[];
+	selectedWarehouse: Warehouse;
+	perPage: number;
+	choiced: string;
 
 	@ViewChild('warehouseAddChoice')
-	public warehouseAddChoice: WarehouseAddChoiceComponent;
+	warehouseAddChoice: WarehouseAddChoiceComponent;
 
 	@ViewChild('basicInfoForm')
-	public basicInfoForm: BasicInfoFormComponent;
+	basicInfoForm: BasicInfoFormComponent;
 
 	@ViewChild('productsTable')
-	public productsTable: ProductsTableComponent;
+	productsTable: ProductsTableComponent;
 
 	@ViewChild('warehouseProductsTable')
-	public warehouseProductsTable: WarehouseProductsComponent;
+	warehouseProductsTable: WarehouseProductsComponent;
 
 	@ViewChild('wizzardFrom')
 	wizzardFrom: WizardComponent;
@@ -61,16 +59,20 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 	@ViewChild('wizzardFromStep1')
 	wizzardFromStep1: any;
 
-	public choiced: string;
-	public hasSelectedProducts = () => false;
-	public validAllProducts = () => false;
+	hasSelectedProducts = () => false;
+	validAllProducts = () => false;
 
-	public readonly form: FormGroup = this._formBuilder.group({
+	readonly form: FormGroup = this._formBuilder.group({
 		basicInfo: BasicInfoFormComponent.buildForm(this._formBuilder)
 	});
 
-	public readonly basicInfo = this.form.get('basicInfo') as FormControl;
+	readonly basicInfo = this.form.get('basicInfo') as FormControl;
 	$productsTablePagesChanges: any;
+
+	private ngDestroy$ = new Subject<void>();
+	private createdProducts: Product[] = [];
+	private selectedProducts: any[] = [];
+	isSetp2: boolean;
 
 	constructor(
 		private readonly _formBuilder: FormBuilder,
@@ -113,8 +115,12 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 		return this._translate(this.BUTTON_PREV);
 	}
 
-	public get hasCoiced() {
+	get hasCoiced() {
 		return this.choiced;
+	}
+
+	get isValidBasicInfoForm() {
+		return this.basicInfo && this.basicInfo.valid && this.isSetp2;
 	}
 
 	async addProducts() {
@@ -142,6 +148,7 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 	}
 
 	async onStep1Next() {
+		this.isSetp2 = true;
 		if (this.choiced === 'existing') {
 			this.hasSelectedProducts = () => {
 				if (this.productsTable) {
@@ -154,11 +161,17 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 			}
 
 			const loadDataSmartTable = async (page = 1) => {
-				const existedProductsIds = this.selectedWarehouse.products.map(
+				let existedProductsIds = this.selectedWarehouse.products.map(
 					(product: WarehouseProduct) => product.productId
 				);
 
-				const products = await this._productsService
+				if (this.createdProducts) {
+					for (const product of this.createdProducts) {
+						existedProductsIds.push(product.id);
+					}
+				}
+
+				let products = await this._productsService
 					.getProducts(
 						{
 							skip: perPage * (page - 1),
@@ -178,11 +191,13 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 				);
 			};
 
-			this.$productsTablePagesChanges = this.productsTable.pagesChanges$
-				.pipe(takeUntil(this.ngDestroy$))
-				.subscribe((page: number) => {
-					loadDataSmartTable(page);
-				});
+			if (this.productsTable) {
+				this.$productsTablePagesChanges = this.productsTable.pagesChanges$
+					.pipe(takeUntil(this.ngDestroy$))
+					.subscribe((page: number) => {
+						loadDataSmartTable(page);
+					});
+			}
 
 			await loadDataSmartTable();
 		}
@@ -196,6 +211,7 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 	}
 
 	async onStep2Next() {
+		this.isSetp2 = false;
 		if (this.choiced === 'new') {
 			if (this.basicInfo.valid) {
 				const productCreateObject: IProductCreateObject = await this.basicInfoForm.setupProductCreateObject();
@@ -203,8 +219,7 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 					.create(productCreateObject)
 					.pipe(first())
 					.toPromise();
-				this.basicInfo.reset();
-				this.createdProduct.push(product);
+				this.createdProducts.push(product);
 
 				const message = `Product ${
 					productCreateObject.title[0].value
@@ -212,16 +227,16 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 				this._notifyService.success(message);
 			}
 		} else {
-			this.selectedProduct = this.productsTable.selectedProducts;
+			this.selectedProducts = this.productsTable.selectedProducts;
 		}
-		const newCreatedProduct = this.createdProduct.map((p) => {
+		const newCreatedProducts = this.createdProducts.map((p) => {
 			return {
 				id: p.id,
 				title: p.title[0].value
 			};
 		});
 		this.warehouseProductsTable.loadDataSmartTable(
-			[...newCreatedProduct, ...this.selectedProduct],
+			[...newCreatedProducts, ...this.selectedProducts],
 			this.warehouseId
 		);
 
@@ -230,12 +245,15 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 	}
 
 	onStep2Prev() {
-		if (this.choiced === 'new') {
-			this.basicInfo.reset();
-		} else {
-			this.productsTable.selectProductTmp({ selected: [] });
+		if (this.choiced === 'existing') {
+			this.selectedProducts = [];
+			this.hasSelectedProducts = () => true;
 		}
 		this.choiced = null;
+	}
+
+	onStep3Prev() {
+		this.isSetp2 = true;
 	}
 
 	async loadProductCategories() {

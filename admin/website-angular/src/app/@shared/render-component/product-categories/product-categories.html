@@ -1,0 +1,4 @@
+<div *ngFor="let category of categoriesArr">
+	<img src="{{ category.image }}" alt="Category Image" />
+	{{ getTranslates(category.name) }}
+</div>

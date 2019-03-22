@@ -15,12 +15,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 			}
 		`
 	],
-	template: `
-		<div *ngFor="let category of categoriesArr">
-			<img src="{{ category.image }}" alt="Category Image" />
-			{{ getTranslates(category.name) }}
-		</div>
-	`
+	templateUrl: './product-categories.html'
 })
 export class ProductCategoriesComponent implements ViewCell, OnInit {
 	value: any;

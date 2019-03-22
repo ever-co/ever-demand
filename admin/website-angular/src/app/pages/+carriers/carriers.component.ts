@@ -13,7 +13,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
 import _ from 'lodash';
-import { RedirectNameComponent } from '../../@shared/render-component/name-redirect.component';
+import { RedirectNameComponent } from '../../@shared/render-component/name-redirect/name-redirect.component';
 import { CarrierImageComponent } from '../../@shared/render-component/carriers-table/carrier-image/carrier-image.component';
 import { CarrierPhoneComponent } from '../../@shared/render-component/carriers-table/carrier-phone/carrier-phone.component';
 import { CarrierActionsComponent } from 'app/@shared/render-component/carriers-table/carrier-actions/carrier-actions.component';

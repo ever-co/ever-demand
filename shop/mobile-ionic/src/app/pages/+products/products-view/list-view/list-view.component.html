@@ -130,7 +130,6 @@
 		</ion-grid>
 	</ion-card>
 
-	<!-- TODO add transalte -->
 	<ion-infinite-scroll
 		[disabled]="productsCount <= products?.length"
 		threshold="100px"
@@ -140,7 +139,7 @@
 		<ion-infinite-scroll-content
 			loadingSpinner="bubbles"
 			color="light"
-			loadingText="Loading more data..."
+			loadingText="{{ 'PRODUCTS_VIEW.LOADING_MORE_DATA' | translate }}"
 		>
 		</ion-infinite-scroll-content>
 	</ion-infinite-scroll>

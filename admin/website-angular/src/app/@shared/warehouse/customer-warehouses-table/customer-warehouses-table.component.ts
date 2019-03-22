@@ -10,21 +10,14 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { WarehouseViewModel } from '../../../models/WarehouseViewModel';
 import { WarehouseOrderComponent } from '../../../pages/+warehouses/+warehouse-order/warehouse-order.component';
 import { Subject, forkJoin, Observable } from 'rxjs';
-import { RedirectNameComponent } from '../../render-component/name-redirect.component';
+import { RedirectNameComponent } from '../../render-component/name-redirect/name-redirect.component';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
 	selector: 'ea-customer-warehouses-table',
 	styleUrls: ['./customer-warehouses-table.component.scss'],
-	template: `
-		<ng2-smart-table
-			[settings]="settingsSmartTable"
-			[source]="sourceSmartTable"
-			(userRowSelect)="selectWarehouseTmp($event)"
-		>
-		</ng2-smart-table>
-	`
+	templateUrl: './customer-warehouses-table.component.html'
 })
 export class CustomerWarehousesTableComponent
 	implements OnInit, AfterViewInit, OnDestroy {

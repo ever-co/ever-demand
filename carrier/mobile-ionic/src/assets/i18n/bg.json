@@ -1,0 +1,72 @@
+{
+	"LANGUAGE": {
+		"ID": "bg-BG",
+		"NAME": "Български"
+	},
+	"CURRENT_DIRECTION": "ltr",
+	"SIDEBAR_SIDE": "left",
+
+	"MAIN_VIEW": {
+		"EVERCO_DRIVER": "Шофьор"
+	},
+	"DELIVERY_VIEW": {
+		"THE_CUSTOMER_HAS_TO_PAY": "Клиентът трябва да плати",
+		"CUSTOMER_ALREADY_PAID_WITH_CARD": "Клиент вече е платил с карта!",
+		"DELIVERED": "Доставени",
+		"CANCEL": "Отказ",
+		"DELIVERIES_HISTORY": "История на доставките",
+		"TO": "До",
+		"FROM": "От",
+		"ID": "ИД",
+		"CANCELED": "Отменен",
+		"IS_PAID": "Платено е",
+		"CONFIRMED": "Потвърдено",
+		"DETAILS": "Детайли"
+	},
+	"DRIVE_TO_WAREHOUSE_VIEW": {
+		"TAKE_WORK": "Вземете работа",
+		"SKIP_WORK": "Пропуснете работата",
+		"I'M_THERE": "Tам съм",
+		"CANCEL": "Отказ"
+	},
+	"HOME_VIEW": {
+		"DELIVERIES": "Доставки",
+		"WORKING": "Работещ",
+		"NOT_WORKING": "Не работи",
+		"START_WORKING": "Започнете работа",
+		"STOP_WORKING": "Спри да работиш"
+	},
+	"STARTING_DELIVERY_VIEW": {
+		"START": "Начало",
+		"CANCEL": "Отказ"
+	},
+	"NO_INTERNET_VIEW": {
+		"NETWORK_WAS_DISCONNECTED": "Мрежата е прекъсната"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Няма връзка със сървъра"
+	},
+	"GET_PRODUCT_VIEW": {
+		"GOT_IT": "Получих го",
+		"CANCEL": "Отказ"
+	},
+	"RETURN_PRODUCT_VIEW": {
+		"RETURN_PRODUCT": "Връщане на продукта",
+		"CANCEL": "Отказ"
+	},
+	"LOGIN_VIEW": {
+		"LOGIN": "Влез"
+	},
+	"ABOUT_VIEW": {
+		"TITLE": "За нас"
+	},
+	"TERMS_OF_USE_VIEW": {
+		"TITLE": "Условия за ползване"
+	},
+	"LANGUAGE_VIEW": {
+		"TITLE": "Изберете език"
+	},
+	"LIST_VIEW": {
+		"YOU_NAVIGATED_HERE_FROM": "От тук сте навигирали"
+	}
+}

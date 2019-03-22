@@ -21,8 +21,6 @@ import {
 	IProductsCategoryCreateObject,
 	IProductsCategoryName
 } from '@modules/server.common/interfaces/IProductsCategory';
-import { environment } from 'environments/environment';
-import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
 import * as isUrl from 'is-url';
@@ -36,22 +34,20 @@ import { NotifyService } from 'app/@core/services/notify/notify.service';
 	styleUrls: ['./category-edit.component.scss']
 })
 export class CategoryEditComponent implements OnInit, AfterViewInit, OnDestroy {
-	public currentCategory: {
+	@ViewChild('imagePreview')
+	imagePreviewElement: ElementRef;
+
+	currentCategory: {
 		id: string;
 		image: string;
 		title: string;
 		_nameLocaleValues: IProductsCategoryName[];
 	};
 
-	public userId: any;
-	private _ngDestroy$ = new Subject<void>();
+	userId: any;
+	uploaderPlaceholder: string;
 
-	@ViewChild('imagePreview')
-	imagePreviewElement: ElementRef;
-
-	uploader: FileUploader;
-
-	protected readonly form: FormGroup = this._formBuilder.group({
+	readonly form: FormGroup = this._formBuilder.group({
 		name: ['', Validators.required],
 		image: [
 			'',
@@ -68,6 +64,8 @@ export class CategoryEditComponent implements OnInit, AfterViewInit, OnDestroy {
 			]
 		]
 	});
+
+	private _ngDestroy$ = new Subject<void>();
 
 	constructor(
 		private readonly _activeModal: NgbActiveModal,
@@ -98,7 +96,7 @@ export class CategoryEditComponent implements OnInit, AfterViewInit, OnDestroy {
 		this.name.setValue(this.currentCategory.title);
 		this.image.setValue(this.currentCategory.image || '');
 
-		this._setupUploadFileConfig();
+		this.getUploaderPlaceholderText();
 	}
 
 	ngAfterViewInit() {
@@ -116,19 +114,6 @@ export class CategoryEditComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	deleteImg() {
 		this.image.setValue('');
-	}
-
-	imageUrlChanged() {
-		this.uploader.queue[0].upload();
-
-		this.uploader.onSuccessItem = (
-			item: any,
-			response: string,
-			status: number
-		) => {
-			const data = JSON.parse(response);
-			this.image.setValue(data.url);
-		};
 	}
 
 	async editCategory() {
@@ -169,7 +154,7 @@ export class CategoryEditComponent implements OnInit, AfterViewInit, OnDestroy {
 		}
 	}
 
-	protected localeTranslate(member: ILocaleMember[]) {
+	localeTranslate(member: ILocaleMember[]) {
 		return this._productLocalesService.getTranslate(member);
 	}
 
@@ -198,40 +183,6 @@ export class CategoryEditComponent implements OnInit, AfterViewInit, OnDestroy {
 		return categoryRaw;
 	}
 
-	private _setupUploadFileConfig() {
-		const uploaderOptions: FileUploaderOptions = {
-			url: environment.API_FILE_UPLOAD_URL,
-			isHTML5: true,
-			removeAfterUpload: true,
-			headers: [
-				{
-					name: 'X-Requested-With',
-					value: 'XMLHttpRequest'
-				}
-			]
-		};
-		this.uploader = new FileUploader(uploaderOptions);
-
-		this.uploader.onBuildItemForm = (
-			fileItem: any,
-			form: FormData
-		): any => {
-			form.append('upload_preset', 'everbie-products-images');
-			let tags = 'myphotoalbum';
-			if (this.name.value) {
-				form.append('context', `photo=${this.name.value}`);
-				tags = `myphotoalbum,${this.name.value}`;
-			}
-
-			form.append('folder', 'angular_sample');
-			form.append('tags', tags);
-			form.append('file', fileItem);
-
-			fileItem.withCredentials = false;
-			return { fileItem, form };
-		};
-	}
-
 	private _setupLogoUrlValidation() {
 		this.imagePreviewElement.nativeElement.onload = () => {
 			this.image.setErrors(null);
@@ -242,5 +193,12 @@ export class CategoryEditComponent implements OnInit, AfterViewInit, OnDestroy {
 				this.image.setErrors({ invalidUrl: true });
 			}
 		};
+	}
+
+	private async getUploaderPlaceholderText() {
+		this.uploaderPlaceholder = await this._langTranslateService
+			.get('CATEGORY_VIEW.CREATE.PHOTO_OPTIONAL')
+			.pipe(first())
+			.toPromise();
 	}
 }

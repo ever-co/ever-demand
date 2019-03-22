@@ -19,46 +19,14 @@
 			</span>
 		</span>
 
-		<div class="row m-0">
-			<ion-item mode="ios" class="upload-input col-10 p-0">
-				<ion-label class="labels" position="floating">
-					{{ 'SETTINGS_VIEW.LOGO' | translate }}</ion-label
-				>
-				<ion-input
-					ng2FileDrop
-					[uploader]="uploader"
-					(onFileDrop)="imageUrlChanged()"
-					[placeholder]="
-						isBrowser ? 'Drag & Drop File here' : 'Picture url'
-					"
-					type="text"
-					formControlName="logo"
-				></ion-input>
-			</ion-item>
-			<label class="browseBtnOut col-2" for="fileInput">
-				<div *ngIf="isBrowser" class="browseBtnIn">
-					{{ 'SETTINGS_VIEW.BROWSE' | translate }}
-				</div>
-				<button
-					*ngIf="!isBrowser"
-					class="browseBtnIn"
-					(click)="presentActionSheet()"
-					ion-button
-				>
-					{{ 'SETTINGS_VIEW.BROWSE' | translate }}
-				</button>
-			</label>
-			<input
-				[hidden]="true"
-				(change)="imageUrlChanged()"
-				type="file"
-				id="fileInput"
-				ng2FileSelect
-				[uploader]="uploader"
-			/>
-		</div>
+		<e-cu-file-uploader
+			[name]="name?.value"
+			[fileUrl]="logo?.value"
+			(uploadedImgUrl)="logo.setValue($event)"
+			itemMode="ios"
+		></e-cu-file-uploader>
 
-		<div class="form-group row m-0" *ngIf="logo">
+		<div class="form-group row m-0" *ngIf="logo.value">
 			<div class="col-12">
 				<div class="row m-0 mt-1">
 					<div>

@@ -32,8 +32,8 @@ $fa-font-path: './assets/fonts' !default;
 
 @import './pages/+carriers/carriers.scss';
 @import './pages/+carriers/carrier-edit-popup/carrier-edit-popup.scss';
-@import './pages/+carriers/carrier-delete-popup/carrier-delete-popup.scss';
 @import './pages/+carriers/carrier-track-popup/carrier-track-popup.scss';
+@import './components/confirm-delete-popup/confirm-delete-popup.scss';
 
 * {
 	font-family: 'Roboto', sans-serif;
@@ -876,16 +876,7 @@ ion-modal.customer-email {
 
 .add-carriers-popup {
 	display: flex !important;
-	.close {
-		position: absolute;
-		right: 20px;
-		top: 20px;
-		z-index: 1;
-		background: none;
-		color: black;
-		font-size: 2em;
-		cursor: pointer;
-	}
+
 	.modal-wrapper {
 		&,
 		.ion-page,
@@ -947,7 +938,7 @@ ion-modal.customer-email {
 .customer-address-popup {
 	display: flex !important;
 	.modal-wrapper {
-		max-height: 390px;
+		height: 450px;
 	}
 }
 
@@ -966,6 +957,17 @@ ion-modal.customer-email {
 	display: flex !important;
 	.modal-wrapper {
 		max-height: 420px;
+	}
+}
+
+.mutation-product-images-modal {
+	.modal-wrapper {
+		width: 820px;
+		overflow-y: scroll;
+		.ion-page {
+			display: block !important;
+			background-color: #fafafa;
+		}
 	}
 }
 
@@ -995,7 +997,7 @@ ion-modal.customer-email {
 
 ion-menu-toggle.button-icon {
 	ion-icon {
-		font-size: 2rem;
+		font-size: 2rem !important;
 	}
 }
 
@@ -1073,10 +1075,6 @@ tbody {
 		}
 	}
 
-	td.ng2-smart-actions.ng2-smart-action-multiple-select {
-		width: 10px !important;
-	}
-
 	.card-footer {
 		height: 4rem !important;
 		position: relative;
@@ -1139,7 +1137,7 @@ tbody {
 	.card-header {
 		display: block;
 		// margin-bottom: 20px;
-		padding: 10px !important;
+		padding: 0 !important;
 		border-bottom: 2px solid rgba(0, 0, 0, 0.1) !important;
 	}
 
@@ -1154,8 +1152,9 @@ tbody {
 	li {
 		float: left;
 		width: 50% !important;
-		font-size: 1.3rem;
+		font-size: 1rem;
 		text-align: center;
+		padding: 10px 0 !important;
 	}
 
 	li a {
@@ -1164,5 +1163,34 @@ tbody {
 
 	li.disablet {
 		color: #dadada;
+	}
+}
+
+.file-uploader-container {
+	input.native-input {
+		padding-right: 10px !important;
+	}
+
+	.ion-input-custom-style {
+		input.native-input {
+			padding-left: 16px !important;
+		}
+	}
+}
+
+.close {
+	position: absolute;
+	right: 20px;
+	top: 15px;
+	z-index: 1;
+	background: none;
+	color: black;
+	font-size: 1.5em;
+	cursor: pointer;
+}
+
+.carrier-location-form {
+	.map-wrapper .g-map {
+		height: 190px !important;
 	}
 }

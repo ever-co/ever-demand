@@ -1,40 +1,44 @@
 {
 	"compileOnSave": false,
 	"compilerOptions": {
-		"allowSyntheticDefaultImports": true,
+		"sourceMap": true,
 		"declaration": false,
-		"noUnusedLocals": false,
+		"moduleResolution": "node",
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-		"moduleResolution": "node",
-		"sourceMap": true,
+		"noImplicitAny": false,
+		"preserveConstEnums": true,
+		"allowSyntheticDefaultImports": true,
 		"target": "es5",
-		"module": "es2015",
 		"typeRoots": ["node_modules/@types"],
 		"baseUrl": "./src",
-		"types": ["node", "googlemaps", "jasmine"],
 		"paths": {
+			"@ionic-native/*": ["../node_modules/@ionic-native/*"],
 			"@angular/*": ["../node_modules/@angular/*"],
 			"@nebular/*": ["../node_modules/@nebular/*"],
-			"@ionic-native/*": ["../node_modules/@ionic-native/*"],
-			"@pyro/*": ["./modules/server.common/@pyro/*"],
 			"@modules/*": ["./modules/*"],
+			"@pyro/*": ["./modules/server.common/@pyro/*"],
 			"mongoose": [
 				"./modules/client.common.angular2/mongoose-placeholder"
 			],
 			"typeorm": ["./modules/client.common.angular2/typeorm-placeholder"],
 			"environment": ["./environments/environment"]
 		},
-		"lib": ["dom", "es2015", "esnext"]
+		"lib": ["es2017", "dom", "esnext"],
+		"noUnusedLocals": false,
+		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"]
 	},
 	"include": [
 		"src/**/*.ts",
 		"./*.ts",
 		"./node_modules/angular2-logger/app/core/level.ts",
 		"./node_modules/angular2-logger/app/core/logger.ts",
-		"./node_modules/angular2-logger/app/core/providers.ts"
+		"./node_modules/angular2-logger/app/core/providers.ts",
+		"src/modules/client.common.angular2/mongoose-placeholder.ts",
+		"src/modules/client.common.angular2/typeorm-placeholder.ts",
+		"src/modules/**/*.ts"
 	],
-	"exclude": ["node_modules", "src/**/*.spec.ts", "src/**/__tests__/*.ts"],
+	"exclude": ["node_modules"],
 	"atom": {
 		"rewriteTsconfig": false
 	}

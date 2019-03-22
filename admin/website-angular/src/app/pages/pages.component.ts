@@ -5,12 +5,7 @@ import { NbMenuItem } from '@nebular/theme';
 
 @Component({
 	selector: 'ea-pages',
-	template: `
-    <ngx-sample-layout>
-      <nb-menu [items]="menu"></nb-menu>
-      <router-outlet></router-outlet>
-    </ngx-sample-layout>
-  `
+	templateUrl: './pages.component.html'
 })
 export class PagesComponent {
 	menu: NbMenuItem[];

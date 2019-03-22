@@ -5,7 +5,8 @@ import {
 	Output,
 	ViewChild,
 	ElementRef,
-	AfterViewInit
+	AfterViewInit,
+	OnInit
 } from '@angular/core';
 
 import {
@@ -16,7 +17,7 @@ import {
 	Validators
 } from '@angular/forms';
 
-import {
+import GeoLocation, {
 	Country,
 	getCountryName,
 	countriesIdsToNamesArray
@@ -28,16 +29,17 @@ import { FormHelpers } from '../../../forms/helpers';
 import { TranslateService } from '@ngx-translate/core';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { AlertController } from '@ionic/angular';
+import User from '@modules/server.common/entities/User';
 
 @Component({
 	selector: 'location-form',
 	styleUrls: ['./location-form.component.scss'],
 	templateUrl: './location-form.component.html'
 })
-export class LocationFormComponent implements AfterViewInit {
-	public OK: string = 'OK';
-	public CANCEL: string = 'CANCEL';
-	public PREFIX: string = 'WAREHOUSE_VIEW.SELECT_POP_UP.';
+export class LocationFormComponent implements OnInit, AfterViewInit {
+	OK: string = 'OK';
+	CANCEL: string = 'CANCEL';
+	PREFIX: string = 'WAREHOUSE_VIEW.SELECT_POP_UP.';
 
 	@Input()
 	readonly form: FormGroup;
@@ -45,7 +47,8 @@ export class LocationFormComponent implements AfterViewInit {
 	@Input()
 	readonly apartment?: AbstractControl;
 
-	showCoordinates: boolean = false;
+	@Input()
+	userData: User;
 
 	@Input()
 	showAutocompleteSearch: boolean = false;
@@ -62,6 +65,8 @@ export class LocationFormComponent implements AfterViewInit {
 
 	@ViewChild('autocomplete')
 	searchElement: ElementRef;
+
+	showCoordinates: boolean = false;
 
 	private _lastUsedAddressText: string;
 
@@ -154,6 +159,10 @@ export class LocationFormComponent implements AfterViewInit {
 
 	static buildApartmentForm(formBuilder: FormBuilder): AbstractControl {
 		return formBuilder.control('');
+	}
+
+	ngOnInit(): void {
+		this.loadData();
 	}
 
 	ngAfterViewInit() {
@@ -450,7 +459,7 @@ export class LocationFormComponent implements AfterViewInit {
 		postcode
 	) {
 		if (!isEmpty(countryId)) {
-			this.countryId.setValue(Country[countryId]);
+			this.countryId.setValue(Country[countryId].toString());
 		}
 		if (!isEmpty(city)) {
 			this.city.setValue(city);
@@ -466,5 +475,27 @@ export class LocationFormComponent implements AfterViewInit {
 		}
 
 		this.coordinates.setValue([this._lat, this._lng]);
+	}
+
+	private loadData() {
+		if (this.userData) {
+			const userGeoLocation: GeoLocation = new GeoLocation(
+				this.userData.geoLocation
+			);
+
+			this.city.setValue(userGeoLocation.city);
+			this.streetAddress.setValue(userGeoLocation.streetAddress);
+			this.house.setValue(userGeoLocation.house);
+			this.coordinates.setValue([
+				userGeoLocation.coordinates.lat,
+				userGeoLocation.coordinates.lng
+			]);
+			this.countryId.setValue(userGeoLocation.countryId.toString());
+			this.postcode.setValue(userGeoLocation.postcode);
+
+			this.apartment.setValue(this.userData.apartment);
+
+			this._tryFindNewCoordinates();
+		}
 	}
 }

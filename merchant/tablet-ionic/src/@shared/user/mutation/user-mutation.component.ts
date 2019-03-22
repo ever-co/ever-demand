@@ -1,10 +1,19 @@
-import { Component, ViewChild, EventEmitter, Output } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	EventEmitter,
+	Output,
+	Input
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { UserAuthRouter } from '@modules/client.common.angular2/routers/user-auth-router.service';
 import { BasicInfoFormComponent } from '../forms/basic-info/basic-info-form.component';
 import { LocationFormComponent } from '../forms/location/location-form.component';
-import { AlertController, ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
+import User from '@modules/server.common/entities/User';
+import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
+import { getDummyImage } from '@modules/server.common/utils';
 
 @Component({
 	selector: 'user-mutation',
@@ -28,6 +37,9 @@ export class UserMutationComponent {
 	@ViewChild('locationForm')
 	locationForm: LocationFormComponent;
 
+	@Input()
+	user: User;
+
 	@Output()
 	customerIdEmitter = new EventEmitter<string>();
 
@@ -44,8 +56,9 @@ export class UserMutationComponent {
 	constructor(
 		private readonly _userAuthRouter: UserAuthRouter,
 		private readonly _formBuilder: FormBuilder,
-		private readonly _alertController: AlertController,
-		private readonly modalController: ModalController
+		private readonly modalController: ModalController,
+		private readonly userRouter: UserRouter,
+		private readonly toastController: ToastController
 	) {}
 
 	onCoordinatesChanges(
@@ -67,9 +80,8 @@ export class UserMutationComponent {
 	}
 
 	async createCustomer() {
-		let alert: HTMLIonAlertElement;
 		let userId: string;
-
+		let message: string;
 		try {
 			const userRegistrationInput = {
 				user: {
@@ -78,6 +90,11 @@ export class UserMutationComponent {
 					apartment: this.locationForm.getApartment()
 				}
 			};
+
+			const userData = userRegistrationInput.user;
+			if (userData) {
+				userRegistrationInput.user = this.getDefaultImage(userData);
+			}
 
 			// We reverse coordinates before create new customer, because in geoJSON standart
 			// the array of coordinates is in reverse order, instead of 'Lat' => 'Lng' the orders is 'Lng' => 'Lat'
@@ -90,19 +107,70 @@ export class UserMutationComponent {
 			userId = user.id;
 
 			this.broadcastCustomerId(user.id);
+			const firstName = user.firstName;
+			const lastName = user.lastName;
 
-			alert = await this._alertController.create({
-				message: `Customer with id '${user.id}' created.`,
-				buttons: ['OK']
-			});
+			message = `Customer ${firstName ? firstName + ' ' : ''} ${
+				lastName ? lastName + ' ' : ''
+			}(${user.id}) Created`;
 		} catch (err) {
-			alert = await this._alertController.create({
-				message: `Error in creating customer: '${err.message}'!`,
-				buttons: ['OK']
-			});
+			message = `Error in creating customer: '${err.message}'!`;
 		} finally {
-			await alert.present();
+			await this.presentToast(message);
 			await this.modalController.dismiss(userId);
 		}
+	}
+
+	async saveCustomer() {
+		const geoLocation = this.locationForm.getValue();
+		geoLocation.loc.coordinates.reverse();
+
+		let updateUpdateData = {
+			...this.basicInfoForm.getValue(),
+			geoLocation,
+			apartment: this.locationForm.getApartment()
+		};
+
+		if (updateUpdateData) {
+			updateUpdateData = this.getDefaultImage(updateUpdateData);
+		}
+
+		await this.userRouter.updateUser(this.user.id, updateUpdateData);
+		await this.modalController.dismiss();
+	}
+
+	cancelModal() {
+		this.modalController.dismiss();
+	}
+
+	private async presentToast(message: string) {
+		const toast = await this.toastController.create({
+			message,
+			duration: 2000
+		});
+		toast.present();
+	}
+
+	private getDefaultImage(user) {
+		if (user && !user.image) {
+			const firstNameLetter = user.firstName
+				? user.firstName.charAt(0).toUpperCase()
+				: '';
+
+			const lastNameLetter = user.lastName
+				? user.lastName.charAt(0).toUpperCase()
+				: '';
+			if (firstNameLetter || lastNameLetter) {
+				user.image = getDummyImage(
+					300,
+					300,
+					firstNameLetter + lastNameLetter
+				);
+			} else {
+				// TODO if first/last name not exist
+			}
+		}
+
+		return user;
 	}
 }

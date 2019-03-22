@@ -1,0 +1,4 @@
+<div *ngIf="paid || closed" class="text-center actions-invites-requests">
+	<i *ngIf="paid" class="ion-md-checkmark paid-icon"></i>
+	<i *ngIf="closed" class="ion-md-close closed-icon"></i> {{ text }}
+</div>

@@ -124,6 +124,16 @@ class Carrier extends DBObject<ICarrier, ICarrierCreateObject>
 	username: string;
 
 	/**
+	 * Shows if carrier is shared or assigned to some store
+	 *
+	 * @type {boolean}
+	 * @memberof Carrier
+	 */
+	@Schema({ type: Boolean, required: false })
+	@Column()
+	shared: boolean;
+
+	/**
 	 * Hashed password
 	 *
 	 * @type {string}
