@@ -188,7 +188,7 @@
 		"karma-coverage-istanbul-reporter": "~2.0.5",
 		"karma-jasmine": "~2.0.1",
 		"karma-jasmine-html-reporter": "^1.4.0",
-		"protractor": "^5.4.2",
+		"protractor": "^6.0.0",
 		"rxjs-tslint": "0.1.5",
 		"terser": "^3.17.0",
 		"terser-webpack-plugin": "^1.2.3",
