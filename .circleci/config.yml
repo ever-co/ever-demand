@@ -44,9 +44,9 @@ jobs:
             - run:
                   name: Install Dependencies
                   command: cd backend/api && yarn install
-            # - run:
-            #      name: Run Build
-            #      command: cd backend/api && yarn build
+            - run:
+                  name: Run Build
+                  command: cd backend/api && yarn build
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-backend-api-{{ checksum "yarn.lock" }}
@@ -84,9 +84,9 @@ jobs:
             - run:
                   name: Install Dependencies
                   command: cd admin/website-angular && yarn install
-            # - run:
-            #      name: Run Build
-            #      command: cd admin/website-angular && yarn build
+            - run:
+                  name: Run Build
+                  command: cd admin/website-angular && yarn build
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-admin-website-angular-{{ checksum "yarn.lock" }}
@@ -124,9 +124,9 @@ jobs:
             - run:
                   name: Install Dependencies
                   command: cd carrier/mobile-ionic && yarn install
-            # - run:
-            #      name: Run Build
-            #      command: cd carrier/mobile-ionic && yarn build
+            - run:
+                  name: Run Build
+                  command: cd carrier/mobile-ionic && yarn build
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-carrier-mobile-ionic-{{ checksum "yarn.lock" }}
@@ -164,9 +164,9 @@ jobs:
             - run:
                   name: Install Dependencies
                   command: cd shop/mobile-ionic && yarn install
-            # - run:
-            #      name: Run Build
-            #      command: cd shop/mobile-ionic && yarn build
+            - run:
+                  name: Run Build
+                  command: cd shop/mobile-ionic && yarn build
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-shop-mobile-ionic-{{ checksum "yarn.lock" }}
@@ -204,9 +204,9 @@ jobs:
             - run:
                   name: Install Dependencies
                   command: cd shop/website-angular && yarn install
-            # - run:
-            #      name: Run Build
-            #      command: cd shop/website-angular && yarn build
+            - run:
+                  name: Run Build
+                  command: cd shop/website-angular && yarn build
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-shop-website-angular-{{ checksum "yarn.lock" }}
@@ -244,9 +244,9 @@ jobs:
             - run:
                   name: Install Dependencies
                   command: cd merchant/tablet-ionic && yarn install
-            # - run:
-            #      name: Run Build
-            #      command: cd merchant/tablet-ionic && yarn build
+            - run:
+                  name: Run Build
+                  command: cd merchant/tablet-ionic && yarn build
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-merchant-tablet-ionic-{{ checksum "yarn.lock" }}
