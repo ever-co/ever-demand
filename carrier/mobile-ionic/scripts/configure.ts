@@ -35,6 +35,7 @@ export const environment: Environment = {
 
   GOOGLE_MAPS_API_KEY: '${env.GOOGLE_MAPS_API_KEY}',
   GOOGLE_ANALYTICS_API_KEY: '${env.GOOGLE_ANALYTICS_API_KEY}',
+  FAKE_UUID: '${env.FAKE_UUID}',
   // Not secret MixPanel Token
   MIXPANEL_API_KEY: '${env.MIXPANEL_API_KEY}',
 

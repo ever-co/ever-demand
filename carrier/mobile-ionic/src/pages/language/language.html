@@ -1,0 +1,41 @@
+<ion-header class="bar-brand bar bar-header disable-user-behavior">
+	<ion-title id="languageTitle">
+		{{ 'LANGUAGE_VIEW.TITLE' | translate }}
+	</ion-title>
+	<div class="buttons buttons-left header-item">
+		<span class="left-buttons">
+			<div class="waves-effect waves-classic">
+				<ion-menu-toggle class="button-icon">
+					<ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+				</ion-menu-toggle>
+			</div>
+		</span>
+	</div>
+</ion-header>
+
+<!-- TODO add translate -->
+<ion-content scroll="false" padding class="language-content">
+	<div class="content">
+		<ion-radio-group [(ngModel)]="language" (ionChange)="languageChange()">
+			<ion-item>
+				<ion-label>Български</ion-label>
+				<ion-radio value="bg-BG"></ion-radio>
+			</ion-item>
+
+			<ion-item>
+				<ion-label>English</ion-label>
+				<ion-radio value="en-US"></ion-radio>
+			</ion-item>
+
+			<ion-item>
+				<ion-label>עברית</ion-label>
+				<ion-radio value="he-IL"></ion-radio>
+			</ion-item>
+
+			<ion-item>
+				<ion-label>Русский</ion-label>
+				<ion-radio value="ru-RU"></ion-radio>
+			</ion-item>
+		</ion-radio-group>
+	</div>
+</ion-content>

@@ -3,6 +3,7 @@
 // This is Angular app and all settings will be loaded into the client browser!
 
 import { cleanEnv, num, str, bool } from 'envalid';
+import { v4 as uuid } from 'uuid';
 
 export type Env = Readonly<{
 	production: boolean;
@@ -17,6 +18,7 @@ export type Env = Readonly<{
 
 	GOOGLE_MAPS_API_KEY: string;
 	GOOGLE_ANALYTICS_API_KEY: string;
+	FAKE_UUID: string;
 	// Not secret MixPanel Token
 	MIXPANEL_API_KEY: string;
 
@@ -62,6 +64,7 @@ export const env: Env = cleanEnv(
 		GOOGLE_MAPS_API_KEY: str({ default: '' }),
 
 		GOOGLE_ANALYTICS_API_KEY: str({ default: '' }),
+		FAKE_UUID: str({ default: uuid() }),
 
 		// Not secret MixPanel Token
 		MIXPANEL_API_KEY: str({ default: '' }),

@@ -13,6 +13,7 @@ export interface Environment {
 	GOOGLE_MAPS_API_KEY: string;
 
 	GOOGLE_ANALYTICS_API_KEY: string;
+	FAKE_UUID: string;
 
 	// Not secret MixPanel Token
 	MIXPANEL_API_KEY: string;

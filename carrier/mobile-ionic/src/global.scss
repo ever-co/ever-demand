@@ -129,3 +129,16 @@ ion-menu-button {
 		color: white !important;
 	}
 }
+
+ion-header {
+	ion-menu-toggle {
+		display: contents;
+		ion-icon {
+			font-size: 2rem !important;
+		}
+	}
+}
+
+ion-header.bar {
+	position: relative;
+}

@@ -29,6 +29,7 @@ import { from } from 'rxjs/observable/from';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import { GeoLocationOrdersOptions } from './GeoLocationOrdersOptions';
+import { ObjectId } from 'bson';
 
 @injectable()
 @routerName('geo-location-orders')
@@ -179,7 +180,9 @@ export class GeoLocationsOrdersService
 						carrierStatus: {
 							$lte: OrderCarrierStatus.CarrierSelectedOrder
 						},
-						_id: { $nin: skippedOrderIds }
+						_id: {
+							$nin: skippedOrderIds.map((id) => new ObjectId(id))
+						}
 					},
 					...searchByRegex
 				)

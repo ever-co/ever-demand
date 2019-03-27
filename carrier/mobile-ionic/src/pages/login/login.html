@@ -1,0 +1,52 @@
+<ion-content color="primary" class="login-view" scroll="false">
+	<div class="login-view-content">
+		<div class="logo app-hide-on-keyboard-open">
+			<img src="{{ loginLogo }}" />
+		</div>
+
+		<div class="login-form">
+			<div>
+				<input
+					id="username"
+					name="username"
+					[ngClass]="
+						username.invalid && (username.dirty || username.touched)
+							? 'login-input login-input-invalid'
+							: 'login-input'
+					"
+					placeholder="Username"
+					[(ngModel)]="user.username"
+					#username="ngModel"
+					required
+					minlength="3"
+				/>
+			</div>
+			<div>
+				<input
+					id="password"
+					name="password"
+					[ngClass]="
+						password.invalid && (password.dirty || password.touched)
+							? 'login-input login-input-invalid'
+							: 'login-input'
+					"
+					type="password"
+					placeholder="Password"
+					[(ngModel)]="user.password"
+					#password="ngModel"
+					required
+					minlength="4"
+				/>
+			</div>
+			<div>
+				<button
+					class="login-button"
+					(click)="login()"
+					[disabled]="username.invalid || password.invalid"
+				>
+					{{ 'LOGIN_VIEW.LOGIN' | translate }}
+				</button>
+			</div>
+		</div>
+	</div>
+</ion-content>

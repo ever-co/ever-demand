@@ -1,0 +1,33 @@
+<carrier-map #map class="map"></carrier-map>
+
+<div class="bottom-container">
+	<div class="info">
+		{{ 'HOME_VIEW.DELIVERIES' | translate }}: {{ carrier?.numberOfDeliveries
+		}}
+		<span class="right-text" *ngIf="isWorking">
+			{{ 'HOME_VIEW.WORKING' | translate }}
+		</span>
+		<span class="right-text" *ngIf="!isWorking">
+			{{ 'HOME_VIEW.NOT_WORKING' | translate }}
+		</span>
+	</div>
+	<div class="buttons">
+		<div class="button-bar">
+			<button
+				class="button button-brand big-text"
+				*ngIf="!isWorking"
+				(click)="startWorking()"
+			>
+				{{ 'HOME_VIEW.START_WORKING' | translate }}
+			</button>
+
+			<button
+				class="button button-assertive big-text"
+				*ngIf="isWorking"
+				(click)="stopWorking()"
+			>
+				{{ 'HOME_VIEW.STOP_WORKING' | translate }}
+			</button>
+		</div>
+	</div>
+</div>
