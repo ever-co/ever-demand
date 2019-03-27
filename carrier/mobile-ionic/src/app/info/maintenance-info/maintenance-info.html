@@ -1,0 +1,5 @@
+<div
+	*ngIf="message"
+	class="maintenance-message-container"
+	[innerHTML]="message | safe: 'html'"
+></div>

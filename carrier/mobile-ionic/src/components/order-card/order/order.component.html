@@ -1,0 +1,82 @@
+<div class="order-component">
+	<div class="order-header">
+		<section *ngIf="customerLogo.length > 0" class="logo">
+			<e-cu-warehouse-logo [logo]="customerLogo"></e-cu-warehouse-logo>
+			<img src="" />
+		</section>
+		<section class="address">
+			<div class="top">
+				{{ 'DELIVERY_VIEW.TO' | translate }}: {{ customerBasicInfo }}
+			</div>
+
+			<div class="top">{{ customerAddress }}</div>
+			<small>
+				<div *ngIf="order.isCancelled">
+					{{ 'DELIVERY_VIEW.CANCELED' | translate }}
+				</div>
+				<div *ngIf="order.isPaid">
+					{{ 'DELIVERY_VIEW.IS_PAID' | translate }}
+				</div>
+				<div *ngIf="order.isConfirmed">
+					{{ 'DELIVERY_VIEW.CONFIRMED' | translate }}
+				</div>
+			</small>
+		</section>
+	</div>
+
+	<div class="hr"></div>
+
+	<div class="order-header">
+		<section *ngIf="warehouseLogo.length > 0" class="logo">
+			<e-cu-warehouse-logo [logo]="warehouseLogo"></e-cu-warehouse-logo>
+		</section>
+
+		<section class="address">
+			<span class="total-price">${{ totalPrice }}</span>
+			<div class="top">
+				{{ 'DELIVERY_VIEW.FROM' | translate }}: {{ warehouseName }}
+				<div>{{ warehouseAddress }}</div>
+			</div>
+			<div class="bottom">{{ createdAt | date: 'short' }}</div>
+			<small class="delivery-time"> {{ deliveryTime }} </small>
+		</section>
+	</div>
+
+	<div class="hr"></div>
+
+	<div class="order-body">
+		<div
+			class="product-container"
+			*ngFor="let product of orderProductsToShow"
+		>
+			<e-cu-order-product
+				[orderProduct]="product"
+				[showDetailsButton]="showDetailsButton"
+			></e-cu-order-product>
+		</div>
+	</div>
+
+	<div class="actions text-center pb-2" *ngIf="showMoreIcon">
+		<a
+			(click)="toggleOrderProducts()"
+			*ngIf="
+				showMoreIcon &&
+				orderProductsToShow.length !== order.products.length
+			"
+		>
+			<ion-icon name="ios-arrow-down" class="more"></ion-icon>
+			{{ order.products.length - productsMaxAmountToShow }}
+			{{ 'MORE' | translate }}
+		</a>
+
+		<a
+			(click)="toggleOrderProducts()"
+			*ngIf="
+				showMoreIcon &&
+				orderProductsToShow.length === order.products.length
+			"
+		>
+			<ion-icon name="ios-arrow-up" class="less"></ion-icon>
+		</a>
+	</div>
+</div>

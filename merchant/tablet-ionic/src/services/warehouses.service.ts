@@ -227,6 +227,8 @@ export class WarehousesService {
 							name
 							logo
 							usedCarriersIds
+							contactEmail
+							contactPhone
 							geoLocation {
 								city
 								streetAddress
