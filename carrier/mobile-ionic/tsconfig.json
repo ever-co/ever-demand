@@ -22,7 +22,10 @@
 				"./modules/client.common.angular2/mongoose-placeholder"
 			],
 			"typeorm": ["./modules/client.common.angular2/typeorm-placeholder"],
-			"environment": ["./environments/environment"]
+			"environment": ["./environments/environment"],
+			"core-js/es7/reflect": [
+				"node_modules/core-js/proposals/reflect-metadata"
+			]
 		},
 		"lib": ["es2017", "dom", "esnext"],
 		"noUnusedLocals": false,
