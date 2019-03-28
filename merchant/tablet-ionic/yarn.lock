@@ -5820,11 +5820,6 @@ invert-kv@^2.0.0:
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-2.0.0.tgz#7393f5afa59ec9ff5f67a27620d11c226e3eec02"
   integrity sha512-wPVv/y/QQ/Uiirj/vh3oP+1Ww+AWehmi1g5fFWGPF6IpCBCDVrhgHRMvrLfdYcwDh3QJbGXDW4JAuzxElLSqKA==
 
-ionic-angular@^3.9.4:
-  version "3.9.4"
-  resolved "https://registry.yarnpkg.com/ionic-angular/-/ionic-angular-3.9.4.tgz#4d5b94798e686a8cc45c4c2e5307400c58a4f70d"
-  integrity sha512-zuiNQqC1sQL1M4nTDnC9yyt2WITwINl8cCGnjTvGT/PlJ42ci56TN5mojarulcl+5KqA7KdqGvqouwufKwZnSg==
-
 ionic-selectable@4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/ionic-selectable/-/ionic-selectable-4.4.0.tgz#20c3279e67eabe35ac0d92981e5cd764d0b54ee9"

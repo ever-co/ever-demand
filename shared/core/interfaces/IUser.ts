@@ -28,6 +28,7 @@ interface IUser extends IUserCreateObject, IUserInitializeObject, DBRawObject {
 	_id: PyroObjectId;
 	geoLocation: IGeoLocation;
 	devicesIds: string[];
+	readonly fullAddress: string;
 }
 
 export default IUser;

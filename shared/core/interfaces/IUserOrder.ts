@@ -25,6 +25,7 @@ interface IUserOrder
 	_id: PyroObjectId;
 	geoLocation: IGeoLocation;
 	devicesIds: string[];
+	readonly fullAddress: string;
 }
 
 export default IUserOrder;

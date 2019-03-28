@@ -10,7 +10,7 @@ import { environment } from 'environment';
 	styleUrls: ['about.scss']
 })
 export class AboutPage {
-	protected aboutHtml: string;
+	aboutHtml: string;
 
 	protected appVersion: string;
 

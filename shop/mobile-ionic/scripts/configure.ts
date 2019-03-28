@@ -118,6 +118,9 @@ export const environment: Environment = {
 `;
 
 const envFileDest: string = isProd ? 'environment.prod.ts' : 'environment.ts';
+const envFileDestOther: string = !isProd
+	? 'environment.prod.ts'
+	: 'environment.ts';
 
 // we always want first to remove old generated files (one of them is not needed for current build)
 try {
@@ -132,5 +135,15 @@ writeFile(`./src/environments/${envFileDest}`, envFileContent, function(err) {
 		console.log(err);
 	} else {
 		console.log(`Generated Angular environment file: ${envFileDest}`);
+	}
+});
+
+writeFile(`./src/environments/${envFileDestOther}`, '', function(err) {
+	if (err) {
+		console.log(err);
+	} else {
+		console.log(
+			`Generated Second Empty Angular environment file: ${envFileDestOther}`
+		);
 	}
 });
