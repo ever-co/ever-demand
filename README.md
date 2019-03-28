@@ -108,13 +108,15 @@ yarn bootstrap
 
 This will install required packages in all Platform projects using Lerna
 
+Note: if above command fails for any reason, you can try to install required packages manually by running `yarn` inside every sub-folder with 'package.json' file
+
 ### Lerna (manual installation)
 
 We are using [Lerna](https://github.com/lerna/lerna) for mono-repo management.
 You need to run the following command from working folder where you cloned Ever git repo, which will install Lerna together with other packages:
 
 ```
-yarn install
+yarn
 ```
 
 You may instead install Lerna globally:
@@ -144,31 +146,50 @@ It is also possible to use [AWS DocumentDB](https://aws.amazon.com/documentdb) o
 
 _Note: we currently integrating [Mongo Memory Server](https://github.com/nodkz/mongodb-memory-server) which will allow to test Platform without need to install MongoDB locally._
 
-### Platform Configuration (optional)
+### Platform Configuration
 
-We created templates & initial configuration files (with reasonable defaults) for each project in the Platform, to save your time and keep things simple:
+#### Default
 
--   For _Backend (API)_ configuration, the `./backend/api/.env.template` file should be copied into `./backend/api/.env` and relevant changes should (optionally) be done.
+We created templates & initial configuration files (with reasonable defaults) for each project in the Platform, to save your time and keep things simple.
 
-    **IMPORTANT**: you should have `./backend/api/.env` file in place to be able to run the Platform on developer machine if you want to use different settings to our defaults.
+In the Angular based projects, the "standard" environment configuration files `environment.ts` and `environment.prod.ts` will be auto-generated from .env file (if it's exists) or from default settings on the first app run.
 
--   For _Admin_ Angular App configuration, the `./admin/website-angular/.env.template` file should be copied into `./admin/website-angular/.env` and relevant changes should (optionally) be done.
+So, the following files will be auto-generated:
 
-    Note: the "Standard" Angular environment configuration files `./admin/website-angular/src/environments/environment.ts` and `./admin/website-angular/src/environments/environment.prod.ts` will be auto-generated from .env file (if it's exists) or from default settings on the first app run
+-   in Admin UI: `./admin/website-angular/src/environments/environment.ts` and `./admin/website-angular/src/environments/environment.prod.ts`.
+-   in Mobile Shop: `./shop/mobile-ionic/src/environments/environment.ts` and `./shop/mobile-ionic/src/environments/environment.prod.ts`
+-   in Web Shop: `./shop/website-angular/src/environments/environment.ts` and `./shop/website-angular/src/environments/environment.prod.ts`
+-   in Carrier App: `./carrier/mobile-ionic/src/environments/environment.ts` and `./carrier/mobile-ionic/src/environments/environment.prod.ts`
+-   in Merchant App: `./merchant/tablet-ionic/src/environments/environment.ts` and `./merchant/tablet-ionic/src/environments/environment.prod.ts`
 
--   For _Merchant_ Ionic App configuration, see `./merchant/tablet-ionic/src/environments/environment.ts` and `./merchant/tablet-ionic/src/environments/environment.prod.ts` files. If you need to run Merchant App using PM2 (as Web app, not Tablet App), needs copy `./merchant/tablet-ionic/.env.template` to `./merchant/tablet-ionic/.env` and make relevant changes (if required)
+Note: you should never edit auto-generated files above and instead you should edit relevant .env files for custom configurations, see more details below.
 
--   For _Shopping Mobile_ App (Ionic) configuration, see `./shop/mobile-ionic/src/environments/environment.ts` and `./shop/mobile-ionic/src/environments/environment.prod.ts` files
+#### Custom / Manual
 
--   For _Shopping Website_ configuration, see `./shop/website-angular/src/environments/environment.ts` and `./shop/website-angular/src/environments/environment.prod.ts` files
+-   For _Backend (API)_ configuration, the `./backend/api/.env.template` file should be copied into `./backend/api/.env` and relevant changes should be done in the `.env` file.
+    It means you should have `./backend/api/.env` file in place to be able to run the Platform on developer machine if you want to use different settings to our defaults.
 
--   For _Carrier Mobile_ App (Ionic) configuration, see `./carrier/mobile-ionic/src/environments/environment.ts` and `./carrier/mobile-ionic/src/environments/environment.prod.ts` files
+-   For _Admin_ Angular App configuration, the `./admin/website-angular/.env.template` file should be copied into `./admin/website-angular/.env` and relevant changes should be done in the `.env` file.
+
+-   For _Merchant_ Ionic App configuration, the `./merchant/tablet-ionic/.env.template` file should be copied into `./merchant/tablet-ionic/.env` and relevant changes should be done in the `.env` file.
+    If you need to run Merchant App using PM2 (as Web app, not Tablet App), needs copy `./merchant/tablet-ionic/.env.template` to `./merchant/tablet-ionic/.env` and make relevant changes (if required)
+
+-   For _Shopping Mobile_ App (Ionic) configuration, the `./shop/mobile-ionic/.env.template` file should be copied into `./shop/mobile-ionic/.env` and relevant changes should be done in the `.env` file.
+
+-   For _Shopping Website_ configuration, the `./shop/website-angular/.env.template` file should be copied into `./shop/website-angular/.env` and relevant changes should be done in the `.env` file.
+
+-   For _Carrier Mobile_ App (Ionic) configuration, the `./carrier/mobile-ionic/.env.template` file should be copied into `./carrier/mobile-ionic/.env` and relevant changes should be done in the `.env` file.
 
 Notes:
 
--   for initial development run no changes required in the `.env` or `environment.ts` files in the projects, unless some manual changes were done to the Backend (API) configuration. However, to enable some of the Platform features, you may need to change relevant configurations at corresponding files.
+-   For initial development no changes required in the `.env` files in the projects, unless some manual changes were done to the Backend (API) configuration. However, to enable some of the Platform features, you may need to change relevant configurations in corresponding `.env` files.
 
--   files `.env`, `environment.ts`, `environment.prod.ts` are configurations you should never make public, unless you removed all private/secure parameters from them.
+-   As a general rule, files `.env` are configurations you should never make public (and of course never commit to Git repo), unless you removed all private/secure parameters from them.
+    In addition, for Angular based projects, you should never put any secure settings (e.g. Secret Keys, API Keys, etc) in `environment.ts` and `environment.prod.ts` files because all of them will be loaded into the browser and made public.
+    Because we are using auto-generated `environment.ts` and `environment.prod.ts` files, it means you should never put any secure settings into `.env` files in our Angular projects.
+    The only safe place to put your secure settings is `.env` file on the backend API/Server project!
+
+-   We are using dotenv (.env) in Angular based projects for consistency with configuration between all our Platform projects only.
 
 ### Run Platform Projects
 
