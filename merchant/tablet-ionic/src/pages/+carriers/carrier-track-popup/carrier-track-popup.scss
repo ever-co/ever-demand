@@ -49,7 +49,10 @@ $h: 570px;
 					box-sizing: border-box;
 					margin: 0;
 					border-bottom: 1px solid rgb(185, 185, 185);
-					height: 170px;
+					height: auto;
+					&:last-child {
+						border: none;
+					}
 
 					div {
 						display: flex;
@@ -72,11 +75,13 @@ $h: 570px;
 
 					h3 {
 						margin-left: 10px;
-						line-height: 0.4;
+						//line-height: 1;
 					}
 
 					small {
 						font-size: 0.7em;
+						margin-left: 10px;
+						transform: translateY(-5px);
 					}
 
 					li {
