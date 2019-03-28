@@ -252,6 +252,7 @@ Note: you can get latest metrics using `yarn count` from the root of mono-repo.
 -   [Gitter Chat](https://gitter.im/ever-co/ever)
 -   [Discord Chat](https://discord.gg/msqRJ4w)
 -   [CodeMentor](https://www.codementor.io/evereq)
+-   [Telegram](https://t.me/everplatform)
 -   For business inquiries: <mailto:ever@ever.co>
 -   Please report security vulnerabilities to <mailto:security@ever.co>
 -   [Ever Platform @ Twitter](https://twitter.com/everplatform)
