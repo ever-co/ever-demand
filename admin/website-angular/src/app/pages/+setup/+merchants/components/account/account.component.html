@@ -118,10 +118,12 @@
 					[ngClass]="{
 						'input-danger':
 							(rPassword.invalid ||
-								rPassword.value !== password.value) &&
+								rPassword.value !== password.value ||
+								password.invalid) &&
 							(rPassword.dirty || rPassword.touched),
 						'input-success':
 							rPassword.value === password.value &&
+							password.valid &&
 							(rPassword.dirty || rPassword.touched)
 					}"
 					required
