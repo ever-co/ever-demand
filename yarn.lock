@@ -1091,10 +1091,10 @@
   version "1.4.32"
   resolved "https://registry.yarnpkg.com/@types/socket.io-client/-/socket.io-client-1.4.32.tgz#988a65a0386c274b1c22a55377fab6a30789ac14"
 
-"@types/stripe@^6.19.7":
-  version "6.19.7"
-  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-6.19.7.tgz#a04c50d519ec50d820f72d12e31351f845c583fe"
-  integrity sha512-e4it4GNSZ+lrQth+2/7TDw0FVWmLcM4t/m+bDF8DhEwD17JmSKWnUNvPYbcafoeai4rI1i4RKmTeHuzB3IquRQ==
+"@types/stripe@^6.25.7":
+  version "6.25.7"
+  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-6.25.7.tgz#3d4a1b7785cc603cfb4fee0f4ca44537917ad65a"
+  integrity sha512-l1t70QWVv2LgIbv0Ol20dPA7UWyZmvGMEMfKF9EI+eGkZABNrR7BU0mJKhf+2NnLBrTtfCEPchBgRbKUi1KmIQ==
   dependencies:
     "@types/node" "*"
 

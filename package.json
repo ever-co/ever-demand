@@ -83,7 +83,7 @@
 		"@types/mongoose": "^5.3.15",
 		"@types/node": "^11.9.3",
 		"@types/socket.io-client": "^1.4.32",
-		"@types/stripe": "^6.19.7",
+		"@types/stripe": "^6.25.7",
 		"@types/uuid": "^3.4.4",
 		"cloc": "^2.4.0",
 		"cross-env": "^5.2.0",
