@@ -116,6 +116,12 @@ export class WarehouseOrdersResolver {
 		};
 	}
 
+	@Query()
+	async getOrdersInDelivery(_, { storeId }: { storeId: string }) {
+		const order = await this._ordersService.getOrdersInDelivery(storeId);
+		return order || [];
+	}
+
 	@Mutation()
 	async createOrder(
 		_,

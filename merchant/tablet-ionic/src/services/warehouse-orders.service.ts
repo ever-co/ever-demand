@@ -205,4 +205,34 @@ export class WarehouseOrdersService {
 
 		return res.data['removeUserOrders'];
 	}
+	async getOrdersInDelivery(storeId: string) {
+		const res = await this._apollo
+			.query({
+				query: gql`
+					query GetOrdersInDelivery($storeId: String!) {
+						getOrdersInDelivery(storeId: $storeId) {
+							carrier {
+								id
+								geoLocation {
+									loc {
+										coordinates
+									}
+								}
+							}
+							user {
+								geoLocation {
+									loc {
+										coordinates
+									}
+								}
+							}
+						}
+					}
+				`,
+				variables: { storeId }
+			})
+			.toPromise();
+
+		return res.data['getOrdersInDelivery'];
+	}
 }
