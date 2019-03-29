@@ -18,22 +18,24 @@
 	<div class="content">
 		<ion-radio-group [(ngModel)]="language" (ionChange)="languageChange()">
 			<ion-item>
-				<ion-label>Български</ion-label>
-				<ion-radio value="bg-BG"></ion-radio>
-			</ion-item>
-
-			<ion-item>
-				<ion-label>English</ion-label>
+				<ion-label>{{ 'LANGUAGE_VIEW.ENGLISH' | translate }}</ion-label>
 				<ion-radio value="en-US"></ion-radio>
 			</ion-item>
 
 			<ion-item>
-				<ion-label>עברית</ion-label>
+				<ion-label
+					>{{ 'LANGUAGE_VIEW.BULGARIAN' | translate }}</ion-label
+				>
+				<ion-radio value="bg-BG"></ion-radio>
+			</ion-item>
+
+			<ion-item>
+				<ion-label>{{ 'LANGUAGE_VIEW.HEBREW' | translate }}</ion-label>
 				<ion-radio value="he-IL"></ion-radio>
 			</ion-item>
 
 			<ion-item>
-				<ion-label>Русский</ion-label>
+				<ion-label>{{ 'LANGUAGE_VIEW.RUSSIAN' | translate }}</ion-label>
 				<ion-radio value="ru-RU"></ion-radio>
 			</ion-item>
 		</ion-radio-group>

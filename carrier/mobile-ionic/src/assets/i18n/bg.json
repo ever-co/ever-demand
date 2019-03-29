@@ -5,7 +5,6 @@
 	},
 	"CURRENT_DIRECTION": "ltr",
 	"SIDEBAR_SIDE": "left",
-
 	"MAIN_VIEW": {
 		"EVERCO_DRIVER": "Шофьор"
 	},
@@ -64,7 +63,11 @@
 		"TITLE": "Условия за ползване"
 	},
 	"LANGUAGE_VIEW": {
-		"TITLE": "Изберете език"
+		"TITLE": "Изберете език",
+		"ENGLISH": "Английски",
+		"BULGARIAN": "Български",
+		"HEBREW": "Иврит",
+		"RUSSIAN": "Руски"
 	},
 	"LIST_VIEW": {
 		"YOU_NAVIGATED_HERE_FROM": "От тук сте навигирали"

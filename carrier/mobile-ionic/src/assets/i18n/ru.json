@@ -5,7 +5,6 @@
 	},
 	"CURRENT_DIRECTION": "ltr",
 	"SIDEBAR_SIDE": "left",
-
 	"MAIN_VIEW": {
 		"EVERCO_DRIVER": "Курьер"
 	},
@@ -64,7 +63,11 @@
 		"TITLE": "Условия эксплуатации"
 	},
 	"LANGUAGE_VIEW": {
-		"TITLE": "Выберите язык"
+		"TITLE": "Выберите язык",
+		"ENGLISH": "Английский",
+		"BULGARIAN": "Болгарский",
+		"HEBREW": "Иврит",
+		"RUSSIAN": "Русский"
 	},
 	"LIST_VIEW": {
 		"YOU_NAVIGATED_HERE_FROM": "Вы перешли сюда из"

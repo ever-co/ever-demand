@@ -5,7 +5,6 @@
 	},
 	"CURRENT_DIRECTION": "ltr",
 	"SIDEBAR_SIDE": "left",
-
 	"MAIN_VIEW": {
 		"EVERCO_DRIVER": "Carrier"
 	},
@@ -64,7 +63,11 @@
 		"TITLE": "Terms of Use"
 	},
 	"LANGUAGE_VIEW": {
-		"TITLE": "Select language"
+		"TITLE": "Select language",
+		"ENGLISH": "English",
+		"BULGARIAN": "Bulgarian",
+		"HEBREW": "Hebrew",
+		"RUSSIAN": "Rusian"
 	},
 	"LIST_VIEW": {
 		"YOU_NAVIGATED_HERE_FROM": "You navigated here from"

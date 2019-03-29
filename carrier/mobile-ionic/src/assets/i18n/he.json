@@ -5,7 +5,6 @@
 	},
 	"CURRENT_DIRECTION": "rtl",
 	"SIDEBAR_SIDE": "right",
-
 	"MAIN_VIEW": {
 		"EVERCO_DRIVER": "נהג"
 	},
@@ -64,7 +63,11 @@
 		"TITLE": "תנאי שימוש"
 	},
 	"LANGUAGE_VIEW": {
-		"TITLE": "בחירת שפה"
+		"TITLE": "בחירת שפה",
+		"ENGLISH": "אנגלית",
+		"BULGARIAN": "בולגרית",
+		"HEBREW": "עברית",
+		"RUSSIAN": "רוסית"
 	},
 	"LIST_VIEW": {
 		"YOU_NAVIGATED_HERE_FROM": "אתה מנווט כאן מ"
