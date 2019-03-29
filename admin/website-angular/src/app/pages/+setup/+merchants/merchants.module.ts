@@ -4,6 +4,7 @@ import { ThemeModule } from 'app/@theme';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { SetupMerchantsComponent } from './merchants.component';
+import { NbStepperModule } from '@nebular/theme';
 
 const routes: Routes = [
 	{
@@ -17,7 +18,8 @@ const routes: Routes = [
 		CommonModule,
 		ThemeModule,
 		RouterModule.forChild(routes),
-		TranslateModule.forChild()
+		TranslateModule.forChild(),
+		NbStepperModule
 	],
 	declarations: [SetupMerchantsComponent]
 })
