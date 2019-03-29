@@ -18,7 +18,7 @@ import { getDummyImage } from '@modules/server.common/utils';
 @Component({
 	selector: 'user-mutation',
 	templateUrl: './user-mutation.component.html',
-	styleUrls: ['/user-mutation.component.scss']
+	styleUrls: ['./user-mutation.component.scss']
 })
 export class UserMutationComponent {
 	readonly form: FormGroup = this._formBuilder.group({

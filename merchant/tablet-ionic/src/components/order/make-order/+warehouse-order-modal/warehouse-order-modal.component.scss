@@ -1,7 +1,7 @@
-nb-card {
+.nb-card {
 	margin: 0;
 
-	nb-card-header {
+	.nb-card-header {
 		border: none;
 		div.checkbox label {
 			cursor: pointer;
@@ -17,7 +17,7 @@ nb-card {
 		}
 	}
 
-	nb-card-body {
+	.nb-card-body {
 		padding: 0;
 
 		ng2-smart-table {
@@ -25,7 +25,7 @@ nb-card {
 		}
 	}
 
-	nb-card-footer {
+	.nb-card-footer {
 		button {
 			float: right;
 			margin-right: 2%;

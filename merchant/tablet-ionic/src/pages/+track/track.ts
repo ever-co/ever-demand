@@ -29,7 +29,7 @@ export class TrackPage implements OnInit, OnDestroy {
 	map: google.maps.Map;
 
 	selectedCarrier: Carrier;
-	private carriers: Carrier[];
+	carriers: Carrier[];
 	private carriers$: Subscription;
 	private warehouse$: Subscription;
 	private params$: Subscription;

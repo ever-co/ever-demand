@@ -127,6 +127,7 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 
 		this.cancelModal();
 	}
+
 	get password() {
 		return this.accountForm.password.value;
 	}
@@ -137,8 +138,7 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 		this.isNextStepThreeAvailable = false;
 	}
 
-	toStep2event() {
-		// This is event emitter, not a function
+	toStep2event($event) {
 		this.isNextStepOneAvailable = false;
 		this.isNextStepTwoAvailable = true;
 		this.isNextStepThreeAvailable = false;
@@ -155,6 +155,7 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 		this.isNextStepTwoAvailable = false;
 		this.isNextStepThreeAvailable = true;
 	}
+
 	cancelModal() {
 		this.modalCtrl.dismiss();
 	}
@@ -163,6 +164,7 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 		const prevOrComplete = data;
 		this.buttonClickEvent.emit(prevOrComplete);
 	}
+
 	onClickComplete(data) {
 		this._updateCarrier();
 	}

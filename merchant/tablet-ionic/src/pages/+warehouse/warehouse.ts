@@ -33,7 +33,6 @@ export enum OrderState {
 })
 export class WarehousePage {
 	private warehouse$: any;
-
 	filterMode: OrdersFilterModes = 'ready';
 	warehouse: Warehouse;
 	OrderState: any = OrderState;
@@ -41,6 +40,7 @@ export class WarehousePage {
 	productsLoading: boolean = true;
 	ordersCount: number;
 	showRelevant: boolean = true;
+	showAllProducts: boolean = false;
 	focusedOrder: Order;
 	focusedOrder$: any;
 

@@ -6,8 +6,8 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 @Component({
 	template: `
 		<span class="storeAddress">
-			<strong *ngIf="order.warehouse.name">{{
-				order.warehouse.name
+			<strong *ngIf="getStoreName(order)">{{
+				getStoreName(order)
 			}}</strong>
 			<div class="address">{{ getStoreFullAddress(order) }}</div>
 		</span>
@@ -22,6 +22,14 @@ export class WarehouseComponent implements ViewCell, OnInit {
 
 	ngOnInit(): void {
 		this.order = this.rowData.order;
+	}
+
+	getStoreName(order: Order) {
+		const store: Warehouse = order.warehouse as Warehouse;
+
+		if (store) return store.name;
+
+		return null;
 	}
 
 	getStoreFullAddress(order: Order) {
