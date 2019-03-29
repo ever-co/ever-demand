@@ -3,7 +3,7 @@
 		<div class="col-md-9">
 			<nb-card>
 				<nb-card-body>
-					<nb-stepper orientation="vertical">
+					<nb-stepper #nbStepper orientation="vertical">
 						<nb-step label="Account">
 							<h3>Account</h3>
 
@@ -86,9 +86,9 @@
 		</div>
 
 		<div class="col-md-3">
-			<nb-card>
-				<nb-card-body> </nb-card-body>
-			</nb-card>
+			<ea-merchants-setup-instructions
+				[stepper]="nbStepper"
+			></ea-merchants-setup-instructions>
 		</div>
 	</div>
 </div>
