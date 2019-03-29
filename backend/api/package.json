@@ -92,7 +92,7 @@
 		"inversify": "^5.0.1",
 		"ipstack": "^0.1.1",
 		"jsonwebtoken": "^8.5.1",
-		"kafka-node": "^4.0.2",
+		"kafka-node": "^4.0.4",
 		"lodash": "^4.17.11",
 		"method-override": "^3.0.0",
 		"mkdirp": "^0.5.1",
