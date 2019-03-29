@@ -10,6 +10,10 @@ const routes: Routes = [
 	{
 		path: '',
 		component: SetupComponent
+	},
+	{
+		path: 'merchants',
+		loadChildren: './+merchants/merchants.module#SetupMerchantsModule'
 	}
 ];
 
