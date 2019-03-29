@@ -844,6 +844,27 @@ export class OrdersService extends DBService<Order>
 		return orders.filter((o) => o.isCompleted);
 	}
 
+	@asyncListener()
+	async getOrdersInDelivery(storeId: string): Promise<Order[]> {
+		const order = await this.Model.find({
+			isDeleted: false,
+			isCancelled: false,
+			warehouse: storeId,
+			carrierStatus: {
+				$in: [
+					OrderCarrierStatus.CarrierPickedUpOrder,
+					OrderCarrierStatus.CarrierStartDelivery,
+					OrderCarrierStatus.CarrierArrivedToCustomer
+				]
+			}
+		})
+			.populate('carrier user')
+			.lean()
+			.exec();
+
+		return order;
+	}
+
 	private _getOrderTotalPrice(order: Order): number {
 		return _.sum(_.map(order.products, (p) => p.count * p.price));
 	}
