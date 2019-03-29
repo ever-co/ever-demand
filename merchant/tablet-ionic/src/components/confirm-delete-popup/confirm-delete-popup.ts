@@ -4,7 +4,7 @@ import { ModalController } from '@ionic/angular';
 export interface IConfirmDeleteData {
 	image: string;
 	name: string;
-	statis?: string;
+	status?: string;
 	phone?: string;
 	addresses: string;
 }

@@ -18,8 +18,8 @@ export class LanguagePage implements OnInit {
 	selected: string;
 
 	constructor(
+		public translate: TranslateService,
 		private _deviceRouter: DeviceRouter,
-		private translate: TranslateService,
 		private store: Store
 	) {}
 

@@ -10,8 +10,9 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 export class OrderDeliveryProblemComponent {
 	@Input()
 	getWarehouseStatus: () => void;
+
 	@Input()
-	protected order: Order;
+	order: Order;
 
 	constructor(private _translateProductLocales: ProductLocalesService) {}
 

@@ -13,10 +13,10 @@ export class OrderWithoutCarrierComponent {
 	getWarehouseStatus: () => void;
 
 	@Input()
-	protected order: Order;
+	order: Order;
 
 	@Input()
-	protected onUpdateWarehouseStatus: any;
+	onUpdateWarehouseStatus: any;
 
 	constructor(private _translateProductLocales: ProductLocalesService) {}
 

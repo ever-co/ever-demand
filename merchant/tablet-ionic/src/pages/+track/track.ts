@@ -21,13 +21,7 @@ declare var google: any;
 	templateUrl: 'track.html',
 	styleUrls: ['./track.scss']
 })
-export class TrackPage implements OnInit, OnDestroy {
-	@ViewChild('gmap')
-	gmapElement: ElementRef;
-	map: google.maps.Map;
-
-	selectedCarrier: Carrier;
-	private carriers: Carrier[];
+export class TrackPage implements OnInit, OnDestroy {	    
 	private carriersOnDisplay: Carrier[];
 	private carrierListDropdown: Carrier[];
 	private carriers$: Subscription;
@@ -36,6 +30,10 @@ export class TrackPage implements OnInit, OnDestroy {
 	private warehouseCoordinates: any;
 	private orders$: Subscription;
 	private _ngDestroy$ = new Subject<void>();
+  
+	map: google.maps.Map;
+	selectedCarrier: Carrier;
+	carriers: Carrier[];    
 	markers: google.maps.Marker[] = [];
 	totalDeliveries = 0;
 	totalCarriers = 0;
@@ -50,7 +48,12 @@ export class TrackPage implements OnInit, OnDestroy {
 	userIcon = 'http://maps.google.com/mapfiles/kml/pal3/icon48.png';
 	carrierIcon = 'http://maps.google.com/mapfiles/kml/pal4/icon54.png';
 	sharedCarrierListId: string[];
-	@ViewChild('filterComponent') filterComponent: IonicSelectableComponent;
+  
+  @ViewChild('gmap')
+	gmapElement: ElementRef;
+  
+	@ViewChild('filterComponent')
+  filterComponent: IonicSelectableComponent;
 
 	constructor(
 		private carrierService: CarrierService,

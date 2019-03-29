@@ -127,6 +127,9 @@ jobs:
             - run:
                   name: Run Build
                   command: cd carrier/mobile-ionic && yarn build
+            - run:
+                  name: Run Ionic Build (Production)
+                  command: cd carrier/mobile-ionic && yarn ionic:build:prod
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-carrier-mobile-ionic-{{ checksum "yarn.lock" }}
@@ -167,6 +170,9 @@ jobs:
             - run:
                   name: Run Build
                   command: cd shop/mobile-ionic && yarn build
+            - run:
+                  name: Run Ionic Build (Production)
+                  command: cd shop/mobile-ionic && yarn ionic:build:prod
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-shop-mobile-ionic-{{ checksum "yarn.lock" }}
@@ -247,6 +253,9 @@ jobs:
             - run:
                   name: Run Build
                   command: cd merchant/tablet-ionic && yarn build
+            - run:
+                  name: Run Ionic Build (Production)
+                  command: cd merchant/tablet-ionic && yarn ionic:build:prod
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-merchant-tablet-ionic-{{ checksum "yarn.lock" }}
