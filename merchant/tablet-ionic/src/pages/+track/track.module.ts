@@ -10,6 +10,7 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicSelectableModule } from 'ionic-selectable';
+import { WarehouseOrdersService } from '../../services/warehouse-orders.service';
 
 const routes: Routes = [
 	{
@@ -30,6 +31,6 @@ const routes: Routes = [
 		FormsModule,
 		RouterModule.forChild(routes)
 	],
-	providers: [CarrierService, WarehousesService]
+	providers: [CarrierService, WarehousesService, WarehouseOrdersService]
 })
 export class TrackPageModule {}
