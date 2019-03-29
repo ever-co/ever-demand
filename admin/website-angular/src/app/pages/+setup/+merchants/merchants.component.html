@@ -5,12 +5,20 @@
 				<nb-card-body>
 					<nb-stepper #nbStepper orientation="vertical">
 						<nb-step label="Account">
-							<h3>Account</h3>
+							<ea-merchants-setup-account
+								#account
+							></ea-merchants-setup-account>
 
 							<button nbButton disabled nbStepperNext>
 								PREV
 							</button>
-							<button nbButton nbStepperNext>NEXT</button>
+							<button
+								nbButton
+								nbStepperNext
+								[disabled]="!account.formValid"
+							>
+								NEXT
+							</button>
 						</nb-step>
 						<nb-step label="Basic info">
 							<h3>Basic info</h3>
