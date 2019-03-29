@@ -14,13 +14,13 @@
 	<div #gmap id="mapDiv" class="map"></div>
 	<div class="sidebar">
 		<ion-item class="statistics">
-			Total Active Carriers - {{ totalActiveCarriers }}
+			Total Active Carriers: {{ totalActiveCarriers }}
 		</ion-item>
 		<ion-item class="statistics">
-			Total Carriers - {{ totalCarriers }}
+			Total Carriers: {{ totalCarriers }}
 		</ion-item>
 		<ion-item class="statistics">
-			Total Deliveries - {{ totalDeliveries }}
+			Total Deliveries: {{ totalDeliveries }}
 		</ion-item>
 		<ion-item *ngIf="showCheckboxFilters" (click)="refreshMap();">
 			<ion-label>Show active only</ion-label>
@@ -44,7 +44,7 @@
 				#filterComponent
 				item-content
 				[(ngModel)]="selectedCarrier"
-				[items]="carriers"
+				[items]="carrierListDropdown"
 				itemValueField="id"
 				itemTextField="fullName"
 				[canSearch]="true"
