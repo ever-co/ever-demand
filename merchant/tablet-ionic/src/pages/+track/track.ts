@@ -22,15 +22,14 @@ declare var google: any;
 	styleUrls: ['./track.scss']
 })
 export class TrackPage implements OnInit, OnDestroy {	    
-	private carriersOnDisplay: Carrier[];
-	private carrierListDropdown: Carrier[];
+	private carriersOnDisplay: Carrier[];	
 	private carriers$: Subscription;
 	private warehouse$: Subscription;
 	private params$: Subscription;
 	private warehouseCoordinates: any;
 	private orders$: Subscription;
 	private _ngDestroy$ = new Subject<void>();
-  
+	
 	map: google.maps.Map;
 	selectedCarrier: Carrier;
 	carriers: Carrier[];    
@@ -47,6 +46,7 @@ export class TrackPage implements OnInit, OnDestroy {
 	sharedCarrierIcon = 'http://maps.google.com/mapfiles/kml/pal4/icon23.png';
 	userIcon = 'http://maps.google.com/mapfiles/kml/pal3/icon48.png';
 	carrierIcon = 'http://maps.google.com/mapfiles/kml/pal4/icon54.png';
+	carrierListDropdown: Carrier[];
 	sharedCarrierListId: string[];
   
   @ViewChild('gmap')
