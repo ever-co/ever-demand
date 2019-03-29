@@ -162,7 +162,7 @@
 	},
 	"devDependencies": {
 		"@angular-devkit/build-angular": "^0.13.7",
-		"@angular-devkit/build-optimizer": "^0.13.4",
+		"@angular-devkit/build-optimizer": "^0.13.7",
 		"@angular-extensions/testing-library": "^3.1.0",
 		"@angular/cli": "^7.3.7",
 		"@angular/compiler-cli": "^7.2.7",
