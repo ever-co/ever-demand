@@ -2,5 +2,9 @@
 	<nb-card-header>
 		<h5>How to setup {{ stepper.selected.label }}?</h5>
 	</nb-card-header>
-	<nb-card-body> </nb-card-body>
+	<nb-card-body>
+		<div *ngIf="stepper.index === 0">
+			TODO add translate for Account
+		</div>
+	</nb-card-body>
 </nb-card>

@@ -5,8 +5,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { SetupMerchantsComponent } from './merchants.component';
 import { NbStepperModule } from '@nebular/theme';
-import { MerchantsSetupInstructionsComponent } from './instructions/instructions.component';
 import { SetupMerchantsComponentsModule } from './components/components.module';
+import { MerchantsSetupInstructionsComponent } from './components/instructions/instructions.component';
 
 const routes: Routes = [
 	{
