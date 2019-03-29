@@ -168,7 +168,7 @@
 		"@angular/compiler-cli": "^7.2.7",
 		"@angular/language-service": "^7.2.7",
 		"@compodoc/compodoc": "^1.1.9",
-		"@ngtools/webpack": "^7.3.4",
+		"@ngtools/webpack": "^7.3.7",
 		"@types/googlemaps": "^3.30.16",
 		"@types/hammerjs": "^2.0.36",
 		"@types/jasmine": "^3.3.9",
