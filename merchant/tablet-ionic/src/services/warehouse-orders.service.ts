@@ -205,6 +205,7 @@ export class WarehouseOrdersService {
 
 		return res.data['removeUserOrders'];
 	}
+
 	async getOrdersInDelivery(storeId: string) {
 		const res = await this._apollo
 			.query({
