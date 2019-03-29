@@ -50,5 +50,7 @@ type Query {
 
 	getCountOfStoreOrders(storeId: String!, status: String!): Int!
 
+	getOrdersInDelivery(storeId: String!): [Order]!
+
 	removeUserOrders(storeId: String!, userId: String!): RemovedUserOrdersObj
 }
