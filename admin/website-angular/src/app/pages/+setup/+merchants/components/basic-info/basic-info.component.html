@@ -1,0 +1,37 @@
+<nb-card class="setup-merchant-basic-info">
+	<nb-card-header>Basic info</nb-card-header>
+	<nb-card-body>
+		<form class="row m-0" #basicInfoForm="ngForm">
+			<div class="form-group col-md-6">
+				<label for="name">Name</label>
+				<input
+					nbInput
+					type="text"
+					class="form-control"
+					id="name"
+					name="name-input"
+					placeholder="Name"
+					[(ngModel)]="basicInfo.name"
+					#name="ngModel"
+					[ngClass]="{
+						'input-danger':
+							name.invalid && (name.dirty || name.touched),
+						'input-success':
+							name.valid && (name.dirty || name.touched)
+					}"
+					required
+					minlength="4"
+				/>
+				<small
+					class="text-danger"
+					*ngIf="name.invalid && (name.dirty || name.touched)"
+				>
+					<span *ngIf="name.errors.required">Name is required</span>
+					<span *ngIf="name.errors.minlength"
+						>Name must be at least 4 characters</span
+					>
+				</small>
+			</div>
+		</form>
+	</nb-card-body>
+</nb-card>
