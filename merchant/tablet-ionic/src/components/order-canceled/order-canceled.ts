@@ -12,7 +12,7 @@ export class OrderCanceledComponent {
 	getWarehouseStatus: Function;
 
 	@Input()
-	protected order: Order;
+	order: Order;
 
 	constructor(private _translateProductLocales: ProductLocalesService) {}
 

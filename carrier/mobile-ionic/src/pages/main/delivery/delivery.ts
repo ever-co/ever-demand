@@ -27,6 +27,10 @@ export class DeliveryPage implements AfterViewInit {
 	carrierUserDistance: string;
 	disabledButtons: boolean = true;
 
+	get fullAddress() {
+		return this.selectedOrder.user.fullAddress;
+	}
+
 	constructor(
 		private orderRouter: OrderRouter,
 		private mixpanel: Mixpanel,

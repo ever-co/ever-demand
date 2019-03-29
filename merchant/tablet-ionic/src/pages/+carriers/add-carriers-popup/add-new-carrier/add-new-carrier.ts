@@ -9,7 +9,6 @@ import {
 	OnChanges
 } from '@angular/core';
 import { ICarrierCreateObject } from '@modules/server.common/interfaces/ICarrier';
-
 import { getDummyImage } from '@modules/server.common/utils';
 import { FileUploader } from 'ng2-file-upload';
 import { BasicInfoFormComponent } from './basic-info/basic-info-form.component';
@@ -19,8 +18,8 @@ import { LocationFormComponent } from './location/location-form.component';
 
 @Component({
 	selector: 'add-new-carrier',
-	templateUrl: 'add-new-carrier.html',
-	styleUrls: ['/add-new-carrier.scss']
+	templateUrl: './add-new-carrier.html',
+	styleUrls: ['./add-new-carrier.scss']
 })
 export class AddNewCarrierComponent implements OnInit, OnDestroy, OnChanges {
 	uploader: FileUploader;
@@ -108,7 +107,7 @@ export class AddNewCarrierComponent implements OnInit, OnDestroy, OnChanges {
 		this.isNextStepThreeAvailable = false;
 	}
 
-	toStep2event(data) {
+	toStep2event($event) {
 		this.isNextStepOneAvailable = false;
 		this.isNextStepTwoAvailable = true;
 		this.isNextStepThreeAvailable = false;

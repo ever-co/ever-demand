@@ -139,7 +139,6 @@
 		"graphql": "^14.1.1",
 		"graphql-tag": "^2.10.1",
 		"imagesloaded": "^4.1.4",
-		"ionic-angular": "^3.9.4",
 		"ionic-selectable": "4.4.0",
 		"ionicons": "^4.5.5",
 		"jsbarcode": "^3.11.0",

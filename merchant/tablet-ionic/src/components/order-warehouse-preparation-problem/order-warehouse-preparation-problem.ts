@@ -12,7 +12,7 @@ export class OrderWarehousePreparationProblemComponent {
 	getWarehouseStatus: () => void;
 
 	@Input()
-	protected order: Order;
+	order: Order;
 
 	constructor(private _translateProductLocales: ProductLocalesService) {}
 
