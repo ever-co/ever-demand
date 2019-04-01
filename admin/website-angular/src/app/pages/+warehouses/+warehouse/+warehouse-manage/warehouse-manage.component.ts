@@ -17,7 +17,7 @@ import 'rxjs/add/operator/withLatestFrom';
 })
 export class WarehouseManageComponent implements OnInit {
 	loading: boolean;
-	//
+
 	@ViewChild('warehouseManageTabs')
 	warehouseManageTabs: WarehouseManageTabsComponent;
 
@@ -54,6 +54,10 @@ export class WarehouseManageComponent implements OnInit {
 
 	ngOnInit() {
 		this._loadWarehouse();
+	}
+
+	get validForm() {
+		return this.warehouseManageTabs.validForm;
 	}
 
 	async updateWarehouse() {

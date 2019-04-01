@@ -175,9 +175,9 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	 * @type {ForwardOrdersMethod}
 	 * @memberof Warehouse
 	 */
-	@Types.Number(ForwardOrdersMethod.Phone)
+	@Schema([Number])
 	@Column()
-	forwardOrdersUsing: ForwardOrdersMethod;
+	forwardOrdersUsing: ForwardOrdersMethod[];
 
 	/**
 	 * Is Warehouse products by default require manufacturing

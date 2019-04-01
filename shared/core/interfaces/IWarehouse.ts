@@ -69,7 +69,7 @@ export interface IWarehouseCreateObject extends DBCreateObject {
 	 * @type {ForwardOrdersMethod}
 	 * @memberof IWarehouseCreateObject
 	 */
-	forwardOrdersUsing: ForwardOrdersMethod;
+	forwardOrdersUsing: ForwardOrdersMethod[];
 
 	/**
 	 * Is Warehouse products by default require manufacturing

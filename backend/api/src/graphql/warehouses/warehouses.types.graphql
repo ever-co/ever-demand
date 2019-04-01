@@ -25,7 +25,7 @@ type Warehouse {
 	contactEmail: String
 	contactPhone: String
 
-	forwardOrdersUsing: Int!
+	forwardOrdersUsing: [Int!]
 	ordersEmail: String
 	ordersPhone: String
 
@@ -62,7 +62,7 @@ input WarehouseCreateInput {
 	contactEmail: String
 	contactPhone: String
 
-	forwardOrdersUsing: Int!
+	forwardOrdersUsing: [Int!]
 	ordersEmail: String
 	ordersPhone: String
 
@@ -92,7 +92,7 @@ input WarehousesFindInput {
 	contactEmail: String
 	contactPhone: String
 
-	forwardOrdersUsing: Int
+	forwardOrdersUsing: [Int]
 	ordersEmail: String
 	ordersPhone: String
 
