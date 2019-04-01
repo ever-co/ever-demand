@@ -2,4 +2,23 @@
 	nb-card-body {
 		text-align: left;
 	}
+
+	.preview-img {
+		padding-right: 16px;
+	}
+
+	.img-rounded {
+		margin-top: 3px;
+		max-height: 70px;
+	}
+
+	.remove-icon {
+		cursor: pointer;
+
+		span {
+			padding-right: 7px;
+			position: absolute;
+			font-size: 1.1em;
+		}
+	}
 }

@@ -2,7 +2,7 @@
 	<nb-card-header>Basic info</nb-card-header>
 	<nb-card-body>
 		<form class="row m-0" #basicInfoForm="ngForm">
-			<div class="form-group col-md-6">
+			<div class="form-group offset-md-2 col-md-8">
 				<label for="name">Name</label>
 				<input
 					nbInput
@@ -13,6 +13,7 @@
 					placeholder="Name"
 					[(ngModel)]="basicInfoModel.name"
 					#name="ngModel"
+					(change)="nameChange()"
 					[ngClass]="{
 						'input-danger':
 							name.invalid && (name.dirty || name.touched),
@@ -29,6 +30,90 @@
 					<span *ngIf="name.errors.required">Name is required</span>
 					<span *ngIf="name.errors.minlength"
 						>Name must be at least 4 characters</span
+					>
+				</small>
+			</div>
+			<div class="offset-md-2 col-md-8">
+				<label for="name">Photo</label>
+				<e-cu-file-uploader
+					[placeholder]="uploaderPlaceholder"
+					[name]="name.value"
+					[fileUrl]="basicInfoModel.logo"
+					(uploadedImgUrl)="basicInfoModel.logo = $event"
+					[customClass]="
+						basicInfoModel.logo !== ''
+							? invalidUrl
+								? 'form-control-danger'
+								: 'form-control-success'
+							: ''
+					"
+				></e-cu-file-uploader>
+
+				<small
+					class="text-danger"
+					*ngIf="invalidUrl && basicInfoModel.logo !== ''"
+				>
+					<span *ngIf="invalidUrl"
+						>Enter a valid logo URL or browse from a device</span
+					>
+				</small>
+			</div>
+			<div
+				class="offset-md-2 col-md-8"
+				[hidden]="basicInfoModel.logo === '' || invalidUrl"
+			>
+				<div class="col-sm-10">
+					<div class="row preview-img">
+						<div class="remove-icon" (click)="deleteImg()">
+							<img
+								src="{{ basicInfoModel.logo }}"
+								alt="Invalid image"
+								class="img-rounded"
+								(error)="invalidUrl = true"
+								(load)="invalidUrl = false"
+							/>
+
+							<span
+								class="ion-md-remove-circle text-danger pl-2"
+								title="Remove"
+							></span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group offset-md-2 col-md-8 mt-3">
+				<label for="barcodeData">Barcode Data</label>
+				<input
+					nbInput
+					type="text"
+					class="form-control"
+					id="barcodeData"
+					name="barcode-data-input"
+					placeholder="Barcode data"
+					[(ngModel)]="basicInfoModel.barcodeData"
+					#barcodeData="ngModel"
+					[ngClass]="{
+						'input-danger':
+							barcodeData.invalid &&
+							(barcodeData.dirty || barcodeData.touched),
+						'input-success':
+							barcodeData.valid &&
+							(barcodeData.dirty ||
+								barcodeData.touched ||
+								barcodeData.value)
+					}"
+					required
+				/>
+				<small
+					class="text-danger"
+					*ngIf="
+						barcodeData.invalid &&
+						(barcodeData.dirty || barcodeData.touched)
+					"
+				>
+					<span *ngIf="barcodeData.errors.required"
+						>Barcode Data is required</span
 					>
 				</small>
 			</div>

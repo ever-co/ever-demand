@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, NgModel } from '@angular/forms';
 
 @Component({
 	selector: 'ea-merchants-setup-basic-info',
@@ -10,7 +10,27 @@ export class BasicInfoComponent {
 	@ViewChild('basicInfoForm')
 	basicInfoForm: NgForm;
 
+	@ViewChild('name')
+	name: NgModel;
+
+	// TODO add translate
+	uploaderPlaceholder: string = 'Photo (optional)';
+
 	basicInfoModel = {
-		name: ''
+		name: '',
+		logo: '',
+		barcodeData: ''
 	};
+
+	invalidUrl: boolean;
+
+	deleteImg() {
+		this.basicInfoModel.logo = '';
+	}
+
+	nameChange() {
+		if (this.name.valid && this.basicInfoModel.barcodeData === '') {
+			this.basicInfoModel.barcodeData = this.name.value;
+		}
+	}
 }
