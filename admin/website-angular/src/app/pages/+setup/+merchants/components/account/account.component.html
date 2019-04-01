@@ -11,7 +11,8 @@
 					id="email"
 					name="email-input"
 					placeholder="Email"
-					[(ngModel)]="account.email"
+					[(ngModel)]="accountModel.email"
+					(change)="emailChange()"
 					#email="ngModel"
 					[ngClass]="{
 						'input-danger':
@@ -41,15 +42,19 @@
 					id="username"
 					name="username-input"
 					placeholder="Username"
-					[(ngModel)]="account.username"
+					[(ngModel)]="accountModel.username"
 					#username="ngModel"
 					[ngClass]="{
 						'input-danger':
 							username.invalid &&
-							(username.dirty || username.touched),
+							(username.dirty ||
+								username.touched ||
+								accountModel.username !== ''),
 						'input-success':
 							username.valid &&
-							(username.dirty || username.touched)
+							(username.dirty ||
+								username.touched ||
+								accountModel.username !== '')
 					}"
 					required
 					minlength="3"
@@ -76,7 +81,7 @@
 					class="form-control"
 					id="pass"
 					name="pass-input"
-					[(ngModel)]="account.password"
+					[(ngModel)]="accountModel.password"
 					#password="ngModel"
 					placeholder="Password"
 					[ngClass]="{
@@ -112,7 +117,7 @@
 					class="form-control"
 					id="rPass"
 					name="r-pass-input"
-					[(ngModel)]="account.repeatPassword"
+					[(ngModel)]="accountModel.repeatPassword"
 					#rPassword="ngModel"
 					placeholder="Repeat password"
 					[ngClass]="{

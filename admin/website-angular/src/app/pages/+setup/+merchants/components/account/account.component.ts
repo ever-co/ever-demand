@@ -10,7 +10,7 @@ export class AccountComponent {
 	@ViewChild('accountForm')
 	accountForm: NgForm;
 
-	account = {
+	accountModel = {
 		email: '',
 		username: '',
 		password: '',
@@ -20,7 +20,19 @@ export class AccountComponent {
 	get formValid() {
 		return (
 			this.accountForm.valid &&
-			this.account.password === this.account.repeatPassword
+			this.accountModel.password === this.accountModel.repeatPassword
 		);
+	}
+
+	emailChange() {
+		let targetIndex = this.accountModel.email.indexOf('@');
+		if (targetIndex > 0 && this.accountModel.username === '') {
+			let defaultUsername = this.accountModel.email.substring(
+				0,
+				targetIndex
+			);
+
+			this.accountModel.username = defaultUsername;
+		}
 	}
 }

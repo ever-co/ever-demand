@@ -10,7 +10,7 @@ export class BasicInfoComponent {
 	@ViewChild('basicInfoForm')
 	basicInfoForm: NgForm;
 
-	basicInfo = {
+	basicInfoModel = {
 		name: ''
 	};
 }
