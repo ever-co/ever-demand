@@ -7,6 +7,16 @@
 		padding-right: 16px;
 	}
 
+	.preview-barcode {
+		padding: 8px;
+		background: #dedede;
+		display: inline-block;
+		margin-top: 3px;
+		img {
+			margin: 0;
+		}
+	}
+
 	.img-rounded {
 		margin-top: 3px;
 		max-height: 70px;

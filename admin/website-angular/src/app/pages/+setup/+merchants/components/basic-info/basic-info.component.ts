@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm, NgModel } from '@angular/forms';
+import QRCode from 'qrcode';
 
 @Component({
 	selector: 'ea-merchants-setup-basic-info',
@@ -15,14 +16,13 @@ export class BasicInfoComponent {
 
 	// TODO add translate
 	uploaderPlaceholder: string = 'Photo (optional)';
-
+	barcodetDataUrl: string;
+	invalidUrl: boolean;
 	basicInfoModel = {
 		name: '',
 		logo: '',
 		barcodeData: ''
 	};
-
-	invalidUrl: boolean;
 
 	get formValid() {
 		return (
@@ -38,6 +38,18 @@ export class BasicInfoComponent {
 	nameChange() {
 		if (this.name.valid && this.basicInfoModel.barcodeData === '') {
 			this.basicInfoModel.barcodeData = this.name.value;
+
+			this.barcodeDataChange();
+		}
+	}
+
+	async barcodeDataChange() {
+		if (this.basicInfoModel.barcodeData) {
+			this.barcodetDataUrl = await QRCode.toDataURL(
+				this.basicInfoModel.barcodeData
+			);
+		} else {
+			this.barcodetDataUrl = null;
 		}
 	}
 }

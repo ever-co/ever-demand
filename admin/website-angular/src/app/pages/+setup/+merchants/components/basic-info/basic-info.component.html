@@ -64,15 +64,14 @@
 			>
 				<div class="col-sm-10">
 					<div class="row preview-img">
+						<img
+							src="{{ basicInfoModel.logo }}"
+							alt="Invalid image"
+							class="img-rounded"
+							(error)="invalidUrl = true"
+							(load)="invalidUrl = false"
+						/>
 						<div class="remove-icon" (click)="deleteImg()">
-							<img
-								src="{{ basicInfoModel.logo }}"
-								alt="Invalid image"
-								class="img-rounded"
-								(error)="invalidUrl = true"
-								(load)="invalidUrl = false"
-							/>
-
 							<span
 								class="ion-md-remove-circle text-danger pl-2"
 								title="Remove"
@@ -82,7 +81,7 @@
 				</div>
 			</div>
 
-			<div class="form-group offset-md-2 col-md-8 mt-3">
+			<div class="form-group offset-md-2 col-md-8 mt-3 mb-0">
 				<label for="barcodeData">Barcode Data</label>
 				<input
 					nbInput
@@ -92,6 +91,7 @@
 					name="barcode-data-input"
 					placeholder="Barcode data"
 					[(ngModel)]="basicInfoModel.barcodeData"
+					(change)="barcodeDataChange()"
 					#barcodeData="ngModel"
 					[ngClass]="{
 						'input-danger':
@@ -116,6 +116,17 @@
 						>Barcode Data is required</span
 					>
 				</small>
+			</div>
+			<div class="offset-md-2 col-md-8" [hidden]="!barcodetDataUrl">
+				<div class="col-sm-10">
+					<span class="row preview-barcode">
+						<img
+							src="{{ barcodetDataUrl }}"
+							alt="Invalid image"
+							class="img-rounded"
+						/>
+					</span>
+				</div>
 			</div>
 		</form>
 	</nb-card-body>
