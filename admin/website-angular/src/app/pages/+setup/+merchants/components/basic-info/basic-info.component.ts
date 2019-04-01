@@ -24,6 +24,13 @@ export class BasicInfoComponent {
 
 	invalidUrl: boolean;
 
+	get formValid() {
+		return (
+			this.basicInfoForm.valid &&
+			(this.basicInfoModel.logo === '' || !this.invalidUrl)
+		);
+	}
+
 	deleteImg() {
 		this.basicInfoModel.logo = '';
 	}
