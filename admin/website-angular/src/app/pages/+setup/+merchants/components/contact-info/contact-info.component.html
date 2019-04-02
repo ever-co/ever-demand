@@ -1,0 +1,150 @@
+<nb-card class="setup-merchant-contact-info">
+	<nb-card-header>Contact info</nb-card-header>
+	<nb-card-body>
+		<form class="row m-0" #contactInfoForm="ngForm">
+			<div class="form-group offset-md-2 col-md-8">
+				<label for="contactPhone">Contact Phone</label>
+				<input
+					nbInput
+					type="text"
+					class="form-control"
+					id="contactPhone"
+					name="contact-phone-input"
+					placeholder="Contact Phone"
+					[(ngModel)]="contactInfoModel.contactPhone"
+					#contactPhone="ngModel"
+					pattern="^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9x]*$"
+					[ngClass]="{
+						'input-danger':
+							contactPhone.invalid &&
+							(contactPhone.dirty || contactPhone.touched),
+						'input-success':
+							contactPhone.valid &&
+							contactPhone.value !== '' &&
+							(contactPhone.dirty || contactPhone.touched)
+					}"
+				/>
+				<small
+					class="text-danger"
+					*ngIf="
+						contactPhone.invalid &&
+						(contactPhone.dirty || contactPhone.touched)
+					"
+				>
+					<span *ngIf="contactPhone.errors.pattern"
+						>Invalid phone number format</span
+					>
+				</small>
+			</div>
+
+			<div class="form-group offset-md-2 col-md-4">
+				<nb-checkbox
+					[value]="forwardingEmail"
+					(change)="forwardingEmail = !forwardingEmail"
+					>Order Forwarding Email</nb-checkbox
+				>
+			</div>
+			<div class="form-group  col-md-4">
+				<nb-checkbox
+					[value]="forwardingPhone"
+					(change)="forwardingPhone = !forwardingPhone"
+					>Order Forwarding Phone</nb-checkbox
+				>
+			</div>
+
+			<div
+				*ngIf="forwardingEmail"
+				class="form-group offset-md-2 col-md-8"
+			>
+				<label for="ordersEmail">Orders Email</label>
+				<input
+					nbInput
+					type="email"
+					class="form-control"
+					id="ordersEmail"
+					name="orders-email-input"
+					placeholder="Orders Email"
+					[(ngModel)]="contactInfoModel.ordersEmail"
+					#ordersEmail="ngModel"
+					required
+					email
+					[ngClass]="{
+						'input-danger':
+							ordersEmail.invalid &&
+							(ordersEmail.dirty ||
+								ordersEmail.touched ||
+								ordersEmail.value !== ''),
+						'input-success':
+							ordersEmail.valid &&
+							(ordersEmail.dirty ||
+								ordersEmail.touched ||
+								ordersEmail.value !== '')
+					}"
+				/>
+				<small
+					class="text-danger"
+					*ngIf="
+						ordersEmail.invalid &&
+						(ordersEmail.dirty ||
+							ordersEmail.touched ||
+							ordersEmail.value !== '')
+					"
+				>
+					<span *ngIf="ordersEmail.errors.required"
+						>Orders email is required</span
+					>
+					<span *ngIf="ordersEmail.errors.email"
+						>Invalid email format</span
+					>
+				</small>
+			</div>
+
+			<div
+				*ngIf="forwardingPhone"
+				class="form-group offset-md-2 col-md-8"
+			>
+				<label for="ordersPhone">Orders Phone</label>
+				<input
+					nbInput
+					type="text"
+					class="form-control"
+					id="ordersPhone"
+					name="orders-phone-input"
+					placeholder="Orders Phone"
+					[(ngModel)]="contactInfoModel.ordersPhone"
+					#ordersPhone="ngModel"
+					required
+					pattern="^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9x]*$"
+					[ngClass]="{
+						'input-danger':
+							ordersPhone.invalid &&
+							(ordersPhone.dirty ||
+								ordersPhone.touched ||
+								ordersPhone.value !== ''),
+						'input-success':
+							ordersPhone.valid &&
+							(ordersPhone.dirty ||
+								ordersPhone.touched ||
+								ordersPhone.value !== '')
+					}"
+				/>
+				<small
+					class="text-danger"
+					*ngIf="
+						ordersPhone.invalid &&
+						(ordersPhone.dirty ||
+							ordersPhone.touched ||
+							ordersPhone.value !== '')
+					"
+				>
+					<span *ngIf="ordersPhone.errors.required"
+						>Orders phone is required</span
+					>
+					<span *ngIf="ordersPhone.errors.pattern"
+						>Invalid phone number format</span
+					>
+				</small>
+			</div>
+		</form>
+	</nb-card-body></nb-card
+>

@@ -35,10 +35,18 @@
 							</button>
 						</nb-step>
 						<nb-step label="Contact info">
-							<h3>Contact info</h3>
+							<ea-merchants-setup-contact-info
+								#contactInfo
+							></ea-merchants-setup-contact-info>
 
 							<button nbButton nbStepperPrevious>PREV</button>
-							<button nbButton nbStepperNext>NEXT</button>
+							<button
+								nbButton
+								nbStepperNext
+								[disabled]="contactInfo.contactInfoForm.invalid"
+							>
+								NEXT
+							</button>
 						</nb-step>
 						<nb-step label="Location">
 							<h3>Location</h3>

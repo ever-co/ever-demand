@@ -81,51 +81,53 @@
 				</div>
 			</div>
 
-			<div class="form-group offset-md-2 col-md-8 mt-3 mb-0">
-				<label for="barcodeData">Barcode Data</label>
-				<input
-					nbInput
-					type="text"
-					class="form-control"
-					id="barcodeData"
-					name="barcode-data-input"
-					placeholder="Barcode data"
-					[(ngModel)]="basicInfoModel.barcodeData"
-					(change)="barcodeDataChange()"
-					#barcodeData="ngModel"
-					[ngClass]="{
-						'input-danger':
+			<div class="mb-3 col-12 p-0">
+				<div class="form-group offset-md-2 col-md-8 mt-3 mb-0">
+					<label for="barcodeData">Barcode Data</label>
+					<input
+						nbInput
+						type="text"
+						class="form-control"
+						id="barcodeData"
+						name="barcode-data-input"
+						placeholder="Barcode data"
+						[(ngModel)]="basicInfoModel.barcodeData"
+						(change)="barcodeDataChange()"
+						#barcodeData="ngModel"
+						[ngClass]="{
+							'input-danger':
+								barcodeData.invalid &&
+								(barcodeData.dirty || barcodeData.touched),
+							'input-success':
+								barcodeData.valid &&
+								(barcodeData.dirty ||
+									barcodeData.touched ||
+									barcodeData.value)
+						}"
+						required
+					/>
+					<small
+						class="text-danger"
+						*ngIf="
 							barcodeData.invalid &&
-							(barcodeData.dirty || barcodeData.touched),
-						'input-success':
-							barcodeData.valid &&
-							(barcodeData.dirty ||
-								barcodeData.touched ||
-								barcodeData.value)
-					}"
-					required
-				/>
-				<small
-					class="text-danger"
-					*ngIf="
-						barcodeData.invalid &&
-						(barcodeData.dirty || barcodeData.touched)
-					"
-				>
-					<span *ngIf="barcodeData.errors.required"
-						>Barcode Data is required</span
+							(barcodeData.dirty || barcodeData.touched)
+						"
 					>
-				</small>
-			</div>
-			<div class="offset-md-2 col-md-8" [hidden]="!barcodetDataUrl">
-				<div class="col-sm-10">
-					<span class="row preview-barcode">
-						<img
-							src="{{ barcodetDataUrl }}"
-							alt="Invalid image"
-							class="img-rounded"
-						/>
-					</span>
+						<span *ngIf="barcodeData.errors.required"
+							>Barcode Data is required</span
+						>
+					</small>
+				</div>
+				<div class="offset-md-2 col-md-8" [hidden]="!barcodetDataUrl">
+					<div class="col-sm-10">
+						<span class="row preview-barcode">
+							<img
+								src="{{ barcodetDataUrl }}"
+								alt="Invalid image"
+								class="img-rounded"
+							/>
+						</span>
+					</div>
 				</div>
 			</div>
 		</form>

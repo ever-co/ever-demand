@@ -6,8 +6,15 @@ import { AccountComponent } from './account/account.component';
 import { FormsModule } from '@angular/forms';
 import { BasicInfoComponent } from './basic-info/basic-info.component';
 import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.module';
+import { MerchantsSetupInstructionsComponent } from './instructions/instructions.component';
+import { ContactInfoComponent } from './contact-info/contact-info.component';
 
-const COMPONENTS = [AccountComponent, BasicInfoComponent];
+const COMPONENTS = [
+	AccountComponent,
+	BasicInfoComponent,
+	ContactInfoComponent,
+	MerchantsSetupInstructionsComponent
+];
 
 @NgModule({
 	imports: [

@@ -28,9 +28,7 @@
 					*ngIf="email.invalid && (email.dirty || email.touched)"
 				>
 					<span *ngIf="email.errors.required">Email is required</span>
-					<span *ngIf="email.errors.email"
-						>Email must be a valid email address</span
-					>
+					<span *ngIf="email.errors.email">Invalid email format</span>
 				</small>
 			</div>
 			<div class="form-group col-md-6">

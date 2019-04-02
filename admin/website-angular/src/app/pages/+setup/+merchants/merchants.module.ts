@@ -6,7 +6,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SetupMerchantsComponent } from './merchants.component';
 import { NbStepperModule } from '@nebular/theme';
 import { SetupMerchantsComponentsModule } from './components/components.module';
-import { MerchantsSetupInstructionsComponent } from './components/instructions/instructions.component';
 
 const routes: Routes = [
 	{
@@ -24,6 +23,6 @@ const routes: Routes = [
 		NbStepperModule,
 		SetupMerchantsComponentsModule
 	],
-	declarations: [SetupMerchantsComponent, MerchantsSetupInstructionsComponent]
+	declarations: [SetupMerchantsComponent]
 })
 export class SetupMerchantsModule {}
