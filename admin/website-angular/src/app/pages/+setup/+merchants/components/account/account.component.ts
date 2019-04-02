@@ -6,7 +6,7 @@ import { NgForm } from '@angular/forms';
 	templateUrl: './account.component.html',
 	styleUrls: ['./account.component.scss']
 })
-export class AccountComponent {
+export class SetupMerchantAccountComponent {
 	@ViewChild('accountForm')
 	accountForm: NgForm;
 

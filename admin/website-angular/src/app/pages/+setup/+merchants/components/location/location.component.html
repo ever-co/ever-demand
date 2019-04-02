@@ -1,0 +1,13 @@
+<nb-card class="setup-merchant-location">
+	<nb-card-header>Location</nb-card-header>
+	<nb-card-body>
+		<ea-location-form
+			#locationForm
+			[form]="location"
+			[showAutocompleteSearch]="true"
+			(mapCoordinatesEmitter)="onCoordinatesChanges($event)"
+			(mapGeometryEmitter)="onGeometrySend($event)"
+		>
+		</ea-location-form>
+	</nb-card-body>
+</nb-card>

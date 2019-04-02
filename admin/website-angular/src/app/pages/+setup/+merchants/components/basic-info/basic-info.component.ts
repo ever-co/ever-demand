@@ -7,7 +7,7 @@ import QRCode from 'qrcode';
 	templateUrl: './basic-info.component.html',
 	styleUrls: ['./basic-info.component.scss']
 })
-export class BasicInfoComponent {
+export class SetupMerchantBasicInfoComponent {
 	@ViewChild('basicInfoForm')
 	basicInfoForm: NgForm;
 
