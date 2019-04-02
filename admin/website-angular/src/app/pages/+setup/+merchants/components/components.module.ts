@@ -11,6 +11,7 @@ import { SetupMerchantContactInfoComponent } from './contact-info/contact-info.c
 import { SetupMerchantPaymentsComponent } from './payments/payments.component';
 import { SetupMerchantManufacturingComponent } from './manufacturing/manufacturing.component';
 import { SetupMerchantDeliveryAndTakeawayComponent } from './settings/delivery-takeaway/delivery-takeaway.component';
+import { SetupMerchantOrdersSettingsComponent } from './settings/orders/orders.component';
 
 const COMPONENTS = [
 	SetupMerchantAccountComponent,
@@ -19,7 +20,8 @@ const COMPONENTS = [
 	MerchantsSetupInstructionsComponent,
 	SetupMerchantPaymentsComponent,
 	SetupMerchantManufacturingComponent,
-	SetupMerchantDeliveryAndTakeawayComponent
+	SetupMerchantDeliveryAndTakeawayComponent,
+	SetupMerchantOrdersSettingsComponent
 ];
 
 @NgModule({
