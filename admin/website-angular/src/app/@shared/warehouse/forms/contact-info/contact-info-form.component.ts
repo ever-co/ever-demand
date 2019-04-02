@@ -112,11 +112,12 @@ export class ContactInfoFormComponent {
 	}
 
 	get validForm() {
-		return this.form && this.form.valid && this.forwardingEmail
-			? this.ordersEmail.value !== ''
-			: true && this.forwardingPhone
-			? this.ordersPhone.value !== ''
-			: true;
+		return (
+			this.form &&
+			this.form.valid &&
+			(this.forwardingEmail ? this.ordersEmail.value !== '' : true) &&
+			(this.forwardingPhone ? this.ordersPhone.value !== '' : true)
+		);
 	}
 
 	forwardingPhoneChange() {
@@ -162,6 +163,10 @@ export class ContactInfoFormComponent {
 
 		if (this.forwardingPhone) {
 			forwardOrdersUsing.push(ForwardOrdersMethod.Phone);
+		}
+
+		if (!this.forwardingEmail && !this.forwardingPhone) {
+			forwardOrdersUsing.push(ForwardOrdersMethod.Unselected);
 		}
 
 		return forwardOrdersUsing;
