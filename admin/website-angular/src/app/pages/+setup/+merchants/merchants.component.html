@@ -49,10 +49,16 @@
 							</button>
 						</nb-step>
 						<nb-step label="Location">
-							<ea-merchants-setup-location></ea-merchants-setup-location>
+							<ea-merchants-setup-location
+								#location
+							></ea-merchants-setup-location>
 
 							<button nbButton nbStepperPrevious>PREV</button>
-							<button nbButton nbStepperNext>
+							<button
+								nbButton
+								nbStepperNext
+								[disabled]="location.location.invalid"
+							>
 								NEXT
 							</button>
 						</nb-step>

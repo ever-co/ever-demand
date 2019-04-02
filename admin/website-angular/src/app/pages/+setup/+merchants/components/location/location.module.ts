@@ -5,6 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { SetupMerchantLocationComponent } from './location.component';
 import { LocationFormModule } from 'app/@shared/forms/location';
+import { GoogleMapModule } from 'app/@shared/forms/google-map/google-map.module';
 
 const COMPONENTS = [SetupMerchantLocationComponent];
 
@@ -14,7 +15,8 @@ const COMPONENTS = [SetupMerchantLocationComponent];
 		ThemeModule,
 		FormsModule,
 		TranslateModule.forChild(),
-		LocationFormModule
+		LocationFormModule,
+		GoogleMapModule
 	],
 	declarations: COMPONENTS,
 	exports: COMPONENTS

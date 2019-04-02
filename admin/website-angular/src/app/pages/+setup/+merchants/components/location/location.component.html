@@ -5,9 +5,14 @@
 			#locationForm
 			[form]="location"
 			[showAutocompleteSearch]="true"
-			(mapCoordinatesEmitter)="onCoordinatesChanges($event)"
-			(mapGeometryEmitter)="onGeometrySend($event)"
+			(mapCoordinatesEmitter)="mapCoordEmitter.emit($event)"
+			(mapGeometryEmitter)="mapGeometryEmitter.emit($event)"
 		>
 		</ea-location-form>
+		<google-map
+			[mapCoordEvent]="mapCoordEmitter"
+			[mapGeometryEvent]="mapGeometryEmitter"
+		>
+		</google-map>
 	</nb-card-body>
 </nb-card>
