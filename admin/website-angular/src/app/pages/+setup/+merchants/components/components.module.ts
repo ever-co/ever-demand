@@ -9,13 +9,15 @@ import { SetupMerchantAccountComponent } from './account/account.component';
 import { SetupMerchantBasicInfoComponent } from './basic-info/basic-info.component';
 import { SetupMerchantContactInfoComponent } from './contact-info/contact-info.component';
 import { SetupMerchantPaymentsComponent } from './payments/payments.component';
+import { SetupMerchantManufacturingComponent } from './manufacturing/manufacturing.component';
 
 const COMPONENTS = [
 	SetupMerchantAccountComponent,
 	SetupMerchantBasicInfoComponent,
 	SetupMerchantContactInfoComponent,
 	MerchantsSetupInstructionsComponent,
-	SetupMerchantPaymentsComponent
+	SetupMerchantPaymentsComponent,
+	SetupMerchantManufacturingComponent
 ];
 
 @NgModule({
