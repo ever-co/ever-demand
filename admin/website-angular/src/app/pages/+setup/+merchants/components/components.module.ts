@@ -10,6 +10,7 @@ import { SetupMerchantBasicInfoComponent } from './basic-info/basic-info.compone
 import { SetupMerchantContactInfoComponent } from './contact-info/contact-info.component';
 import { SetupMerchantPaymentsComponent } from './payments/payments.component';
 import { SetupMerchantManufacturingComponent } from './manufacturing/manufacturing.component';
+import { SetupMerchantDeliveryAndTakeawayComponent } from './settings/delivery-takeaway/delivery-takeaway.component';
 
 const COMPONENTS = [
 	SetupMerchantAccountComponent,
@@ -17,7 +18,8 @@ const COMPONENTS = [
 	SetupMerchantContactInfoComponent,
 	MerchantsSetupInstructionsComponent,
 	SetupMerchantPaymentsComponent,
-	SetupMerchantManufacturingComponent
+	SetupMerchantManufacturingComponent,
+	SetupMerchantDeliveryAndTakeawayComponent
 ];
 
 @NgModule({
