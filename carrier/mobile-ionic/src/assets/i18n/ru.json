@@ -8,6 +8,14 @@
 	"MAIN_VIEW": {
 		"EVERCO_DRIVER": "Курьер"
 	},
+	"MENU": {
+		"MAIN": "Главный",
+		"DELIVERIES": "Поставки",
+		"SETTINGS": "Настройки",
+		"LANGUAGE": "Язык",
+		"ABOUT_US": "Насчет нас",
+		"TERMS_OF_USE": "Условия эксплуатации"
+	},
 	"DELIVERY_VIEW": {
 		"THE_CUSTOMER_HAS_TO_PAY": "Клиент должен заплатить",
 		"CUSTOMER_ALREADY_PAID_WITH_CARD": "Клиент уже заплатил карточкой!",

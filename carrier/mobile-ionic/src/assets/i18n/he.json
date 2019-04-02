@@ -8,6 +8,14 @@
 	"MAIN_VIEW": {
 		"EVERCO_DRIVER": "נהג"
 	},
+	"MENU": {
+		"MAIN": "ראשי",
+		"DELIVERIES": "משלוחים",
+		"SETTINGS": "הגדרות",
+		"LANGUAGE": "שפה",
+		"ABOUT_US": "עלינו",
+		"TERMS_OF_USE": "תנאי שימוש"
+	},
 	"DELIVERY_VIEW": {
 		"THE_CUSTOMER_HAS_TO_PAY": "הלקוח חייב לשלם",
 		"CUSTOMER_ALREADY_PAID_WITH_CARD": "הלקוח כבר שילם עם כרטיס!",

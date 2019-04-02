@@ -8,6 +8,14 @@
 	"MAIN_VIEW": {
 		"EVERCO_DRIVER": "Carrier"
 	},
+	"MENU": {
+		"MAIN": "Main",
+		"DELIVERIES": "Deliveries",
+		"SETTINGS": "Settings",
+		"LANGUAGE": "Language",
+		"ABOUT_US": "About Us",
+		"TERMS_OF_USE": "Terms of Use"
+	},
 	"DELIVERY_VIEW": {
 		"THE_CUSTOMER_HAS_TO_PAY": "The Customer has to pay",
 		"CUSTOMER_ALREADY_PAID_WITH_CARD": "Customer already paid with card!",

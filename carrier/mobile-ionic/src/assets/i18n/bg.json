@@ -8,6 +8,14 @@
 	"MAIN_VIEW": {
 		"EVERCO_DRIVER": "Шофьор"
 	},
+	"MENU": {
+		"MAIN": "Oсновен",
+		"DELIVERIES": "Доставките",
+		"SETTINGS": "Настройки",
+		"LANGUAGE": "Език",
+		"ABOUT_US": "За нас",
+		"TERMS_OF_USE": "Условия за ползване"
+	},
 	"DELIVERY_VIEW": {
 		"THE_CUSTOMER_HAS_TO_PAY": "Клиентът трябва да плати",
 		"CUSTOMER_ALREADY_PAID_WITH_CARD": "Клиент вече е платил с карта!",
