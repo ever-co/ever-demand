@@ -1,30 +1,37 @@
 <nb-card class="setup-merchant-delivery-takeaway">
 	<nb-card-header>Delivery & Takeaway Settings</nb-card-header>
 	<nb-card-body>
-		<div class="row">
-			<div class="form-group offset-md-2 col-md-4">
-				<nb-checkbox [(ngModel)]="isCarrierRequired">
-					Carrier required
-				</nb-checkbox>
+		<div class="main-content">
+			<div class="row">
+				<div class="form-group offset-md-2 col-md-4">
+					<nb-checkbox [(ngModel)]="isCarrierRequired">
+						Carrier required
+					</nb-checkbox>
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="form-group offset-md-2 col-md-4">
-				<nb-checkbox [(ngModel)]="productsDelivery">
-					Products Delivery (by default)
-				</nb-checkbox>
+			<div class="row">
+				<div class="form-group offset-md-2 col-md-4">
+					<nb-checkbox [(ngModel)]="productsDelivery">
+						Products Delivery (by default)
+					</nb-checkbox>
+				</div>
+				<div class="form-group  col-md-4">
+					<nb-checkbox [(ngModel)]="productsTakeaway">
+						Products Takeaway (by default)
+					</nb-checkbox>
+				</div>
 			</div>
-			<div class="form-group  col-md-4">
-				<nb-checkbox [(ngModel)]="productsTakeaway">
-					Products Takeaway (by default)
-				</nb-checkbox>
-			</div>
-		</div>
-		<div class="row">
-			<div class="form-group offset-md-2 col-md-10">
-				<nb-checkbox [(ngModel)]="hasRestrictedCarriers">
-					Restricted Carriers
-				</nb-checkbox>
+			<div *ngIf="productsDelivery" class="row actions">
+				<div class="form-group offset-md-2 col-md-4">
+					<button nbButton outline status="success">
+						Use selected shared carriers
+					</button>
+				</div>
+				<div class="form-group  col-md-4">
+					<button nbButton outline status="success">
+						Add your carriers
+					</button>
+				</div>
 			</div>
 		</div>
 	</nb-card-body>

@@ -9,5 +9,4 @@ export class SetupMerchantDeliveryAndTakeawayComponent {
 	isCarrierRequired: boolean;
 	productsDelivery: boolean;
 	productsTakeaway: boolean;
-	hasRestrictedCarriers: boolean;
 }
