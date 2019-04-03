@@ -26,6 +26,9 @@
 		</button>
 	</nb-card-header>
 	<nb-card-body [nbSpinner]="loading">
-		<ea-carriers-smart-table #carriersTable></ea-carriers-smart-table>
+		<ea-carriers-smart-table
+			[perPage]="perPage"
+			#carriersTable
+		></ea-carriers-smart-table>
 	</nb-card-body>
 </nb-card>

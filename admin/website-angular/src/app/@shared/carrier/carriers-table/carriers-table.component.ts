@@ -1,4 +1,11 @@
-import { Component, OnDestroy, AfterViewInit } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	AfterViewInit,
+	Input,
+	OnInit,
+	EventEmitter
+} from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { TranslateService } from '@ngx-translate/core';
 import { CarrierImageComponent } from 'app/@shared/render-component/carriers-table/carrier-image/carrier-image.component';
@@ -6,40 +13,53 @@ import { RedirectNameComponent } from 'app/@shared/render-component/name-redirec
 import { CarrierPhoneComponent } from 'app/@shared/render-component/carriers-table/carrier-phone/carrier-phone.component';
 import { Observable, forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CarriersService } from 'app/@core/data/carriers.service';
 import Carrier from '@modules/server.common/entities/Carrier';
-import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 import { CarrierActionsComponent } from 'app/@shared/render-component/carriers-table/carrier-actions/carrier-actions.component';
 
-const perPage = 5;
+let perPage = 5;
+
+export interface CarrierSmartTableObject {
+	id: string;
+	image: string;
+	name: string;
+	phone: string;
+	status: string;
+	address: string;
+	deliveries: number;
+}
 
 @Component({
 	selector: 'ea-carriers-smart-table',
 	templateUrl: 'carriers-table.component.html',
 	styleUrls: ['carriers-table.component.scss']
 })
-export class CarriersSmartTableComponent implements OnDestroy, AfterViewInit {
+export class CarriersSmartTableComponent
+	implements OnDestroy, OnInit, AfterViewInit {
 	static noInfoSign = '';
+
+	@Input()
+	perPage: number;
+
+	pageChange: EventEmitter<number> = new EventEmitter();
 
 	settingsSmartTable: any;
 	sourceSmartTable = new LocalDataSource();
 	selectedCarriers: Carrier[] = [];
 
-	private dataCount: number;
-	private $carriers;
 	private ngDestroy$ = new Subject<void>();
 
-	constructor(
-		private readonly _translateService: TranslateService,
-		private readonly _carriersService: CarriersService
-	) {
-		this._loadSettingsSmartTable();
-		this._loadDataSmartTable();
-		this._applyTranslationOnSmartTable();
+	constructor(private readonly _translateService: TranslateService) {
+		this.loadSettingsSmartTable();
 	}
 
 	get hasSelectedCarriers(): boolean {
 		return this.selectedCarriers.length > 0;
+	}
+
+	ngOnInit(): void {
+		if (this.perPage) {
+			perPage = this.perPage;
+		}
 	}
 
 	ngAfterViewInit() {
@@ -56,6 +76,10 @@ export class CarriersSmartTableComponent implements OnDestroy, AfterViewInit {
 		this.selectedCarriers = ev.selected;
 	}
 
+	async loadData(carriersData: CarrierSmartTableObject[]) {
+		await this.sourceSmartTable.load(carriersData);
+	}
+
 	// This is just workaround to show some search icon on smart table, in the future maybe we must find better solution.
 	private _addCustomHTMLElements(): any {
 		document.querySelector(
@@ -63,57 +87,7 @@ export class CarriersSmartTableComponent implements OnDestroy, AfterViewInit {
 		).innerHTML = '<i class="fa fa-search" style="font-size: 1.3em"/>';
 	}
 
-	private async _loadDataSmartTable(page = 1) {
-		if (this.$carriers) {
-			await this.$carriers.unsubscribe();
-		}
-
-		this.$carriers = this._carriersService
-			.getCarriers({
-				skip: perPage * (page - 1),
-				limit: perPage
-			})
-			.pipe(takeUntil(this.ngDestroy$))
-			.subscribe(async (data: Carrier[]) => {
-				const carriersVm = data.map((c) => {
-					return {
-						id: c.id,
-						image: c.logo || CarriersSmartTableComponent.noInfoSign,
-						name: `${c.firstName ||
-							CarriersSmartTableComponent.noInfoSign} ${c.lastName ||
-							CarriersSmartTableComponent.noInfoSign}`,
-						phone:
-							c.phone || CarriersSmartTableComponent.noInfoSign,
-						status: {
-							[CarrierStatus.Offline]: 'Offline',
-							[CarrierStatus.Online]: 'Online',
-							[CarrierStatus.Blocked]: 'Blocked'
-						}[c.status],
-						address: `${c.geoLocation.city ||
-							CarriersSmartTableComponent.noInfoSign} st. ${c
-							.geoLocation.streetAddress ||
-							CarriersSmartTableComponent.noInfoSign}, hse. № ${c
-							.geoLocation.house ||
-							CarriersSmartTableComponent.noInfoSign}`,
-						deliveries: c.numberOfDeliveries
-					};
-				});
-
-				await this.loadDataCount();
-
-				const carriersData = new Array(this.dataCount);
-
-				carriersData.splice(
-					perPage * (page - 1),
-					perPage,
-					...carriersVm
-				);
-
-				await this.sourceSmartTable.load(carriersData);
-			});
-	}
-
-	private _loadSettingsSmartTable() {
+	loadSettingsSmartTable() {
 		const columnTitlePrefix = 'CARRIERS_VIEW.SMART_TABLE_COLUMNS.';
 		const getTranslate = (name: string): Observable<string | any> =>
 			this._translateService.get(columnTitlePrefix + name);
@@ -176,13 +150,6 @@ export class CarriersSmartTableComponent implements OnDestroy, AfterViewInit {
 			);
 	}
 
-	private _applyTranslationOnSmartTable() {
-		this._translateService.onLangChange.subscribe(() => {
-			this._loadSettingsSmartTable();
-			this._loadDataSmartTable();
-		});
-	}
-
 	private async smartTableChange() {
 		this.sourceSmartTable
 			.onChanged()
@@ -190,12 +157,9 @@ export class CarriersSmartTableComponent implements OnDestroy, AfterViewInit {
 			.subscribe(async (event) => {
 				if (event.action === 'page') {
 					const page = event.paging.page;
-					this._loadDataSmartTable(page);
+
+					this.pageChange.emit(page);
 				}
 			});
-	}
-
-	private async loadDataCount() {
-		this.dataCount = await this._carriersService.getCountOfCarriers();
 	}
 }

@@ -1,7 +1,14 @@
 <nb-card class="setup-merchant-delivery-takeaway">
-	<nb-card-header>Delivery & Takeaway Settings</nb-card-header>
+	<nb-card-header
+		><span *ngIf="currentView == componentViews.main"
+			>Delivery & Takeaway Settings</span
+		>
+		<span *ngIf="currentView == componentViews.carriersTable"
+			>Select from shared carriers</span
+		>
+	</nb-card-header>
 	<nb-card-body>
-		<div class="main-content">
+		<div *ngIf="currentView == componentViews.main" class="main-content">
 			<div class="row">
 				<div class="form-group offset-md-2 col-md-4">
 					<nb-checkbox [(ngModel)]="isCarrierRequired">
@@ -23,7 +30,12 @@
 			</div>
 			<div *ngIf="productsDelivery" class="row actions">
 				<div class="form-group offset-md-2 col-md-4">
-					<button nbButton outline status="success">
+					<button
+						nbButton
+						outline
+						status="success"
+						(click)="currentView = componentViews.carriersTable"
+					>
 						Use selected shared carriers
 					</button>
 				</div>
@@ -33,6 +45,12 @@
 					</button>
 				</div>
 			</div>
+		</div>
+
+		<div class="row">
+			<ea-carriers-smart-table
+				*ngIf="currentView == componentViews.carriersTable"
+			></ea-carriers-smart-table>
 		</div>
 	</nb-card-body>
 </nb-card>

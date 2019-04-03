@@ -6,6 +6,12 @@ import { Component } from '@angular/core';
 	styleUrls: ['./delivery-takeaway.component.scss']
 })
 export class SetupMerchantDeliveryAndTakeawayComponent {
+	componentViews = {
+		main: 'main',
+		carriersTable: 'carriersTable'
+	};
+	currentView = this.componentViews.main;
+
 	isCarrierRequired: boolean;
 	productsDelivery: boolean;
 	productsTakeaway: boolean;

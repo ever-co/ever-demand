@@ -7,6 +7,7 @@ import { SetupMerchantsComponent } from './merchants.component';
 import { NbStepperModule } from '@nebular/theme';
 import { SetupMerchantsComponentsModule } from './components/components.module';
 import { SetupMerchantsLocationModule } from './components/location/location.module';
+import { SetupMerchantsDeliveryAndTakeawayModule } from './components/settings/delivery-takeaway/delivery-takeaway.module';
 
 const routes: Routes = [
 	{
@@ -23,7 +24,8 @@ const routes: Routes = [
 		TranslateModule.forChild(),
 		NbStepperModule,
 		SetupMerchantsComponentsModule,
-		SetupMerchantsLocationModule
+		SetupMerchantsLocationModule,
+		SetupMerchantsDeliveryAndTakeawayModule
 	],
 	declarations: [SetupMerchantsComponent]
 })

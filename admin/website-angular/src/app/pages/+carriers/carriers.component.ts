@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 
 import { CarriersService } from '../../@core/data/carriers.service';
 import { CarrierMutationComponent } from '../../@shared/carrier/carrier-mutation';
@@ -7,25 +7,37 @@ import { ToasterService } from 'angular2-toaster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import _ from 'lodash';
 import { CarriersSmartTableComponent } from 'app/@shared/carrier/carriers-table/carriers-table.component';
+import { takeUntil, first } from 'rxjs/operators';
+import Carrier from '@modules/server.common/entities/Carrier';
+import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
+import { TranslateService } from '@ngx-translate/core';
+
+const perPage = 5;
 
 @Component({
 	selector: 'ea-carriers',
 	templateUrl: 'carriers.component.html',
 	styleUrls: ['carriers.component.scss']
 })
-export class CarriersComponent implements OnDestroy {
+export class CarriersComponent implements OnDestroy, AfterViewInit {
 	@ViewChild('carriersTable')
 	carriersTable: CarriersSmartTableComponent;
 
 	loading: boolean;
+	perPage = perPage;
 
+	private dataCount: number;
+	private $carriers;
 	private ngDestroy$ = new Subject<void>();
 
 	constructor(
 		private readonly _carriersService: CarriersService,
 		private readonly _toasterService: ToasterService,
-		private readonly modalService: NgbModal
-	) {}
+		private readonly modalService: NgbModal,
+		private readonly _translateService: TranslateService
+	) {
+		this._applyTranslationOnSmartTable();
+	}
 
 	openWizardNewCarrier() {
 		this.modalService.open(CarrierMutationComponent, {
@@ -36,22 +48,26 @@ export class CarriersComponent implements OnDestroy {
 		});
 	}
 
-	deleteSelectedCarriers() {
+	async deleteSelectedCarriers() {
 		const idsForDelete: string[] = this.carriersTable.selectedCarriers.map(
 			(c) => c.id
 		);
 		this.loading = true;
 
 		try {
-			this._carriersService.removeByIds(idsForDelete).subscribe(() => {
-				this.carriersTable.selectedCarriers.forEach((carrier) =>
-					this._toasterService.pop(
-						`success`,
-						`Carrier ${carrier['name']} DELETED`
-					)
-				);
-				this.carriersTable.selectedCarriers = [];
-			});
+			await this._carriersService
+				.removeByIds(idsForDelete)
+				.pipe(first())
+				.toPromise();
+
+			this.carriersTable.selectedCarriers.forEach((carrier) =>
+				this._toasterService.pop(
+					`success`,
+					`Carrier ${carrier['name']} DELETED`
+				)
+			);
+
+			this.carriersTable.selectedCarriers = [];
 			this.loading = false;
 		} catch (error) {
 			this.loading = false;
@@ -59,8 +75,88 @@ export class CarriersComponent implements OnDestroy {
 		}
 	}
 
+	ngAfterViewInit(): void {
+		this._loadDataSmartTable();
+		this.smartTablePageChange();
+	}
+
 	ngOnDestroy() {
 		this.ngDestroy$.next();
 		this.ngDestroy$.complete();
+	}
+
+	private async _loadDataSmartTable(page = 1) {
+		if (this.$carriers) {
+			await this.$carriers.unsubscribe();
+		}
+
+		this.$carriers = this._carriersService
+			.getCarriers({
+				skip: perPage * (page - 1),
+				limit: perPage
+			})
+			.pipe(takeUntil(this.ngDestroy$))
+			.subscribe(async (data: Carrier[]) => {
+				const carriersVm = data.map((c) => {
+					return {
+						id: c.id,
+						image: c.logo || CarriersSmartTableComponent.noInfoSign,
+						name: `${c.firstName ||
+							CarriersSmartTableComponent.noInfoSign} ${c.lastName ||
+							CarriersSmartTableComponent.noInfoSign}`,
+						phone:
+							c.phone || CarriersSmartTableComponent.noInfoSign,
+						status: {
+							[CarrierStatus.Offline]: 'Offline',
+							[CarrierStatus.Online]: 'Online',
+							[CarrierStatus.Blocked]: 'Blocked'
+						}[c.status],
+						address: `${c.geoLocation.city ||
+							CarriersSmartTableComponent.noInfoSign} st. ${c
+							.geoLocation.streetAddress ||
+							CarriersSmartTableComponent.noInfoSign}, hse. № ${c
+							.geoLocation.house ||
+							CarriersSmartTableComponent.noInfoSign}`,
+						deliveries: c.numberOfDeliveries
+					};
+				});
+
+				await this.loadDataCount();
+
+				const carriersData = new Array(this.dataCount);
+
+				carriersData.splice(
+					perPage * (page - 1),
+					perPage,
+					...carriersVm
+				);
+
+				await this.carriersTable.loadData(carriersData);
+			});
+	}
+
+	private _applyTranslationOnSmartTable() {
+		this._translateService.onLangChange
+			.pipe(takeUntil(this.ngDestroy$))
+			.subscribe(() => {
+				if (this.carriersTable) {
+					this.carriersTable.loadSettingsSmartTable();
+					this._loadDataSmartTable();
+				}
+			});
+	}
+
+	private async loadDataCount() {
+		this.dataCount = await this._carriersService.getCountOfCarriers();
+	}
+
+	private async smartTablePageChange() {
+		if (this.carriersTable) {
+			this.carriersTable.pageChange
+				.pipe(takeUntil(this.ngDestroy$))
+				.subscribe((page) => {
+					this._loadDataSmartTable(page);
+				});
+		}
 	}
 }
