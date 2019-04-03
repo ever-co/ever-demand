@@ -230,6 +230,15 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	@Column()
 	hasRestrictedCarriers: boolean;
 
+	/**
+	 * IDs of carriers which are "connected" (assigned) to the Store ("own carriers").
+	 *
+	 * @type {string[]}
+	 * @memberof Warehouse
+	 */
+	@Schema([String])
+	carriersIds: string[];
+
 	@Types.Boolean(false)
 	@Column()
 	isDeleted: boolean;

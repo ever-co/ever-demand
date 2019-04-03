@@ -99,6 +99,7 @@ export interface IWarehouseCreateObject extends DBCreateObject {
 	 * @memberof IWarehouseCreateObject
 	 */
 	hasRestrictedCarriers?: boolean;
+	carriersIds?: string[];
 
 	/**
 	 * Password hash

@@ -40,6 +40,7 @@ type Warehouse {
 	orders: [Order!]! # Resolved
 	users: [User!]! # Resolved
 	hasRestrictedCarriers: Boolean
+	carriersIds: [String!]
 	usedCarriersIds: [String!]
 	carriers: [Carrier!] # Resolved, if hasRestrictedCarriers is false -> returns null
 	orderBarcodeType: Int
@@ -73,6 +74,7 @@ input WarehouseCreateInput {
 	isCarrierRequired: Boolean
 
 	hasRestrictedCarriers: Boolean
+	carriersIds: [String!]
 	usedCarriersIds: [String!]
 }
 
@@ -105,6 +107,7 @@ input WarehousesFindInput {
 	# TODO devices: Device[]
 
 	hasRestrictedCarriers: Boolean
+	carriersIds: [String!]
 	usedCarriersIds: [String!]
 }
 
