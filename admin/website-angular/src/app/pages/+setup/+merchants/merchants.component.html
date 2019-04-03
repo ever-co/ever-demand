@@ -79,12 +79,40 @@
 							</button>
 						</nb-step>
 						<nb-step label="Delivery & Takeaway Settings">
-							<ea-merchants-setup-delivery-takeaway></ea-merchants-setup-delivery-takeaway>
+							<ea-merchants-setup-delivery-takeaway
+								#deliveryAndTakeaway
+							></ea-merchants-setup-delivery-takeaway>
 
-							<button nbButton nbStepperPrevious>PREV</button>
-							<button nbButton nbStepperNext>
-								NEXT
-							</button>
+							<div
+								*ngIf="
+									deliveryAndTakeaway.currentView ===
+									deliveryAndTakeaway.componentViews.main
+								"
+							>
+								<button nbButton nbStepperPrevious>PREV</button>
+								<button nbButton nbStepperNext>
+									NEXT
+								</button>
+							</div>
+							<div
+								*ngIf="
+									deliveryAndTakeaway.currentView !==
+									deliveryAndTakeaway.componentViews.main
+								"
+							>
+								<button
+									nbButton
+									(click)="deliveryAndTakeaway.back()"
+								>
+									Back
+								</button>
+								<button
+									nbButton
+									(click)="deliveryAndTakeaway.add()"
+								>
+									Add
+								</button>
+							</div>
 						</nb-step>
 						<nb-step label="Orders Settings">
 							<ea-merchants-setup-orders-settings></ea-merchants-setup-orders-settings>

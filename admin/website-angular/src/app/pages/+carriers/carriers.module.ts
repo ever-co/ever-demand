@@ -11,6 +11,7 @@ import { NbSpinnerModule } from '@nebular/theme';
 import { TrackModule } from './track/track.module';
 import { CarrierLocationModule } from './+carrier/location/carrier-location.module';
 import { CarriersSmartTableModule } from 'app/@shared/carrier/carriers-table/carriers-table.module';
+import { CarrierMutationModule } from 'app/@shared/carrier/carrier-mutation';
 
 @NgModule({
 	imports: [
@@ -24,7 +25,8 @@ import { CarriersSmartTableModule } from 'app/@shared/carrier/carriers-table/car
 		CarrierLocationModule,
 		TrackModule,
 		CarriersSmartTableModule,
-		RenderComponentsModule
+		RenderComponentsModule,
+		CarrierMutationModule
 	],
 	declarations: [CarriersComponent]
 })

@@ -15,4 +15,14 @@ export class SetupMerchantDeliveryAndTakeawayComponent {
 	isCarrierRequired: boolean;
 	productsDelivery: boolean;
 	productsTakeaway: boolean;
+
+	add() {
+		if (this.currentView === this.componentViews.carriersTable) {
+		}
+		this.currentView = this.componentViews.main;
+	}
+
+	back() {
+		this.currentView = this.componentViews.main;
+	}
 }
