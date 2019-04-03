@@ -113,7 +113,7 @@ export class CarrierTrackingComponent implements OnInit, OnDestroy {
 			if (!res.carrierId && res.storeId) {
 				this.selectNewStore(res.storeId);
 				this.filteredCarriersList = this.carriers.filter((x) =>
-					this.selectedStore.usedCarriersIds.includes(x.id)
+					this.selectedStore.carriersIds.includes(x.id)
 				);
 				this.selectedCarrier = undefined;
 				this.revertMap();

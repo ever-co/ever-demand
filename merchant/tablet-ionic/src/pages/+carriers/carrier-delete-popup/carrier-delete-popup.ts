@@ -35,7 +35,7 @@ export class CarrierDeletePopupPage {
 			.pipe(first())
 			.toPromise();
 
-		merchant.usedCarriersIds = merchant.usedCarriersIds.filter(
+		merchant.carriersIds = merchant.carriersIds.filter(
 			(x) => x !== carrierId
 		);
 

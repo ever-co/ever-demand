@@ -94,7 +94,7 @@ export class CarriersPage implements OnInit, OnDestroy {
 				.pipe(first())
 				.toPromise();
 
-			merchant.usedCarriersIds = merchant.usedCarriersIds.filter(
+			merchant.carriersIds = merchant.carriersIds.filter(
 				(x) => x !== carrierId
 			);
 

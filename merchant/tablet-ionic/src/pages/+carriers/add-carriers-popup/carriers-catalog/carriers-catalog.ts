@@ -106,7 +106,7 @@ export class CarriersCatalogComponent implements OnDestroy {
 		this.carrierRouter.getAllActive().subscribe((carriers: Carrier[]) => {
 			loadData(
 				carriers.filter(
-					(c: Carrier) => !warehouse.usedCarriersIds.includes(c.id)
+					(c: Carrier) => !warehouse.carriersIds.includes(c.id)
 				)
 			);
 		});
