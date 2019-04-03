@@ -12,6 +12,7 @@ import { SetupMerchantPaymentsComponent } from './payments/payments.component';
 import { SetupMerchantManufacturingComponent } from './manufacturing/manufacturing.component';
 import { SetupMerchantDeliveryAndTakeawayComponent } from './settings/delivery-takeaway/delivery-takeaway.component';
 import { SetupMerchantOrdersSettingsComponent } from './settings/orders/orders.component';
+import { NbRadioModule } from '@nebular/theme';
 
 const COMPONENTS = [
 	SetupMerchantAccountComponent,
@@ -29,6 +30,7 @@ const COMPONENTS = [
 		CommonModule,
 		ThemeModule,
 		FormsModule,
+		NbRadioModule,
 		TranslateModule.forChild(),
 		FileUploaderModule
 	],
