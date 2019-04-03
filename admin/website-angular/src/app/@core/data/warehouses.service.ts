@@ -98,6 +98,7 @@ export class WarehousesService {
 							logo
 							username
 							usedCarriersIds
+							carriersIds
 							geoLocation {
 								city
 								streetAddress

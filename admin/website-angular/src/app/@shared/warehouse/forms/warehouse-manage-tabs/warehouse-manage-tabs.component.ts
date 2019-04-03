@@ -16,7 +16,7 @@ export type WarehouseManageTabs = Pick<
 	| 'isActive'
 	| 'username'
 	| 'hasRestrictedCarriers'
-	| 'usedCarriersIds'
+	| 'carriersIds'
 	| 'isManufacturing'
 	| 'isCarrierRequired'
 >;

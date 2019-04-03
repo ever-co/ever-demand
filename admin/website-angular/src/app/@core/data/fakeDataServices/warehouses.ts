@@ -78,7 +78,7 @@ export default class FakeDataWarehouses {
 							ordersPhone: null,
 							isManufacturing: true,
 							isCarrierRequired: true,
-							hasRestrictedCarriers: true,
+							hasRestrictedCarriers: false,
 							usedCarriersIds: [],
 							products: [],
 							geoLocation: {
@@ -112,7 +112,7 @@ export default class FakeDataWarehouses {
 							ordersPhone: null,
 							isManufacturing: true,
 							isCarrierRequired: true,
-							hasRestrictedCarriers: true,
+							hasRestrictedCarriers: false,
 							usedCarriersIds: [],
 							products: [],
 							geoLocation: {
@@ -146,7 +146,7 @@ export default class FakeDataWarehouses {
 							ordersPhone: null,
 							isManufacturing: false,
 							isCarrierRequired: false,
-							hasRestrictedCarriers: true,
+							hasRestrictedCarriers: false,
 							usedCarriersIds: [],
 							products: [],
 							geoLocation: {
@@ -180,7 +180,7 @@ export default class FakeDataWarehouses {
 							ordersPhone: null,
 							isManufacturing: true,
 							isCarrierRequired: true,
-							hasRestrictedCarriers: true,
+							hasRestrictedCarriers: false,
 							usedCarriersIds: [],
 							products: [],
 							geoLocation: {

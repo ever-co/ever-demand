@@ -23,7 +23,7 @@ export type WarehouseBasicInfo = Pick<
 	| 'isActive'
 	| 'username'
 	| 'hasRestrictedCarriers'
-	| 'usedCarriersIds'
+	| 'carriersIds'
 >;
 
 @Component({
@@ -42,19 +42,7 @@ export class BasicInfoFormComponent implements OnInit {
 
 	uploaderPlaceholder: string;
 
-	carriersOptions$: Observable<IMultiSelectOption[]> = concat(
-		Observable.of([]),
-		this.carrierRouter.getAllActive().pipe(
-			map((carriers) =>
-				carriers.map((c) => {
-					return {
-						id: c.id,
-						name: `${c.firstName} ${c.lastName}`
-					};
-				})
-			)
-		)
-	);
+	carriersOptions: IMultiSelectOption[];
 
 	static buildForm(formBuilder: FormBuilder): FormGroup {
 		// would be used in the parent component and injected into this.form
@@ -90,7 +78,7 @@ export class BasicInfoFormComponent implements OnInit {
 			username: ['', [Validators.required]],
 
 			hasRestrictedCarriers: [false, [Validators.required]],
-			usedCarriersIds: [[]]
+			carriersIds: [[]]
 		});
 	}
 
@@ -106,7 +94,7 @@ export class BasicInfoFormComponent implements OnInit {
 			username: string;
 
 			hasRestrictedCarriers: boolean;
-			usedCarriersIds: string[];
+			carriersIds: string[];
 		};
 
 		if (!basicInfo.logo) {
@@ -122,7 +110,7 @@ export class BasicInfoFormComponent implements OnInit {
 			...(basicInfo.hasRestrictedCarriers
 				? {
 						hasRestrictedCarriers: basicInfo.hasRestrictedCarriers,
-						usedCarriersIds: basicInfo.usedCarriersIds
+						carriersIds: basicInfo.carriersIds
 				  }
 				: {})
 		};
@@ -135,7 +123,7 @@ export class BasicInfoFormComponent implements OnInit {
 			pick(basicInfo, [
 				...Object.keys(this.getValue()),
 				'hasRestrictedCarriers',
-				'usedCarriersIds'
+				'carriersIds'
 			])
 		);
 	}
@@ -177,8 +165,8 @@ export class BasicInfoFormComponent implements OnInit {
 		return this.form.get('hasRestrictedCarriers');
 	}
 
-	get usedCarriersIds() {
-		return this.form.get('usedCarriersIds');
+	get carriersIds() {
+		return this.form.get('carriersIds');
 	}
 
 	get showLogoMeta() {
@@ -186,6 +174,7 @@ export class BasicInfoFormComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.loadCarriersOptions();
 		this.getUploaderPlaceholderText();
 	}
 
@@ -202,5 +191,18 @@ export class BasicInfoFormComponent implements OnInit {
 		this.uploaderPlaceholder = `${res['WAREHOUSE_VIEW.MUTATION.PHOTO']} (${
 			res['OPTIONAL']
 		})`;
+	}
+
+	private async loadCarriersOptions() {
+		const carriers = await this.carrierRouter
+			.getAllActive()
+			.pipe(first())
+			.toPromise();
+		this.carriersOptions = carriers.map((c) => {
+			return {
+				id: c.id,
+				name: `${c.firstName} ${c.lastName}`
+			};
+		});
 	}
 }

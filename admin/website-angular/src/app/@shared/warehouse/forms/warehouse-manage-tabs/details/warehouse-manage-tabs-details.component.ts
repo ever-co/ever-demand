@@ -29,7 +29,7 @@ export type WarehouseManageTabsDetails = Pick<
 	| 'logo'
 	| 'isActive'
 	| 'hasRestrictedCarriers'
-	| 'usedCarriersIds'
+	| 'carriersIds'
 	| 'isManufacturing'
 	| 'isCarrierRequired'
 >;
@@ -82,8 +82,8 @@ export class WarehouseManageTabsDetailsComponent
 	get hasRestrictedCarriers() {
 		return this.form.get('hasRestrictedCarriers');
 	}
-	get usedCarriersIds() {
-		return this.form.get('usedCarriersIds');
+	get carriersIds() {
+		return this.form.get('carriersIds');
 	}
 	get showLogoMeta() {
 		return this.logo && this.logo.value !== '';
@@ -126,7 +126,7 @@ export class WarehouseManageTabsDetailsComponent
 			isManufacturing: [true, [Validators.required]],
 			isCarrierRequired: [true, [Validators.required]],
 			hasRestrictedCarriers: [false, [Validators.required]],
-			usedCarriersIds: [[]]
+			carriersIds: [[]]
 		});
 	}
 
@@ -146,7 +146,7 @@ export class WarehouseManageTabsDetailsComponent
 			isManufacturing: boolean;
 			isCarrierRequired: boolean;
 			hasRestrictedCarriers: boolean;
-			usedCarriersIds: string[];
+			carriersIds: string[];
 		};
 
 		return {
@@ -158,7 +158,7 @@ export class WarehouseManageTabsDetailsComponent
 			...(basicInfo.hasRestrictedCarriers
 				? {
 						hasRestrictedCarriers: basicInfo.hasRestrictedCarriers,
-						usedCarriersIds: basicInfo.usedCarriersIds
+						carriersIds: basicInfo.carriersIds
 				  }
 				: {})
 		};
@@ -171,7 +171,7 @@ export class WarehouseManageTabsDetailsComponent
 			_.pick(basicInfo, [
 				...Object.keys(this.getValue()),
 				'hasRestrictedCarriers',
-				'usedCarriersIds'
+				'carriersIds'
 			])
 		);
 	}
