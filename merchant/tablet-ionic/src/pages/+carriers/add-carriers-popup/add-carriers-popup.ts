@@ -143,10 +143,10 @@ export class AddCarriersPopupPage implements OnInit, OnDestroy {
 			});
 
 			warehouse.hasRestrictedCarriers = true;
-			warehouse.carriersIds.push(carrier.id);
+			warehouse.usedCarriersIds.push(carrier.id);
 		} else if (this.choiced === 'existing') {
 			warehouse.hasRestrictedCarriers = true;
-			warehouse.carriersIds.push(
+			warehouse.usedCarriersIds.push(
 				...this.carriersCatalog.selecteCarriers.map((c) => c.id)
 			);
 		}

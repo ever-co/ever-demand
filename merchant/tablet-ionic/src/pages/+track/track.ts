@@ -74,18 +74,22 @@ export class TrackPage implements OnInit, OnDestroy {
 				);
 				const allAssignedCarriers = warehouse
 					.filter((wh) => wh.id !== this.warehouseId)
-					.map((wh) => wh.carriersIds);
+					.map((wh) => wh.usedCarriersIds);
 
 				this.warehouseCoordinates = {
 					lat: currentWarehouse.geoLocation.loc.coordinates[1],
 					lng: currentWarehouse.geoLocation.loc.coordinates[0]
 				};
-				this.totalCarriers = currentWarehouse.carriersIds.length;
+				this.totalCarriers = currentWarehouse.usedCarriersIds.length;
 				this.carriers$ = this.carrierService
 					.getAllCarriers()
 					.subscribe((carriers) => {
 						this.carriers = carriers.filter((car) => {
-							if (currentWarehouse.carriersIds.includes(car.id)) {
+							if (
+								currentWarehouse.usedCarriersIds.includes(
+									car.id
+								)
+							) {
 								car.shared = false;
 								return true;
 							} else {
