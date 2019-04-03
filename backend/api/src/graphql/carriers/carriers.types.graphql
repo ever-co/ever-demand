@@ -29,6 +29,7 @@ input CarriersFindInput {
 	phone: String
 	isDeleted: Boolean
 	status: Int
+	isSharedCarrier: Boolean
 	# TODO geoLocation
 }
 
@@ -59,6 +60,7 @@ input CarrierCreateInput {
 	skippedOrderIds: [String!]
 	deliveriesCountToday: Int
 	totalDistanceToday: Float
+	isSharedCarrier: Boolean
 	devicesIds: [String!]
 
 	# True carrier enabled in system, False carrier completely disabled in the system (e.g. was fired).
@@ -83,6 +85,7 @@ input CarrierUpdateInput {
 	deliveriesCountToday: Int
 	totalDistanceToday: Float
 	devicesIds: [String!]
+	isSharedCarrier: Boolean
 
 	# True carrier enabled in system, False carrier completely disabled in the system (e.g. was fired).
 	# This setting is set by Admin, not by carrier itself
