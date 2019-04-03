@@ -190,16 +190,15 @@
 			</div>
 
 			<div class="form-group row">
-				<label class="col-sm-2 control-label pt-1" for="is-active-radio"
-					>{{ 'CARRIERS_VIEW.CARRIER_PAGE.ACTIVE' | translate }}
-				</label>
-				<div class="col-sm-1">
-					<nb-checkbox formControlName="isActive"></nb-checkbox>
-
-					<div *ngIf="isActiveValid" class="alert alert-danger">
-						{{ 'SHARED.FORMS.ERRORS.IS_ACTIVE' | translate }}!
-					</div>
-				</div>
+				<!-- TODO add translate -->
+				<nb-checkbox class="col-sm-12" formControlName="isSharedCarrier"
+					>Carrier Can be Shared?</nb-checkbox
+				>
+				<nb-checkbox class="col-sm-12" formControlName="isActive">
+					{{
+						'CARRIERS_VIEW.CARRIER_PAGE.ACTIVE' | translate
+					}}</nb-checkbox
+				>
 			</div>
 		</fieldset>
 	</div>

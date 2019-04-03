@@ -13,6 +13,7 @@ type Carrier {
 	geoLocation: GeoLocation!
 	devicesIds: [String!]!
 	apartment: String
+	isSharedCarrier: Boolean
 	# Resolved
 	devices: [Device!]!
 

@@ -29,6 +29,7 @@ export type CarrierBasicInfo = Pick<
 	| 'lastName'
 	| 'logo'
 	| 'apartment'
+	| 'isSharedCarrier'
 >;
 
 @Component({
@@ -52,6 +53,10 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 
 	get isActive() {
 		return this.form.get('isActive');
+	}
+
+	get isSharedCarrier() {
+		return this.form.get('isSharedCarrier');
 	}
 
 	get username() {
@@ -139,6 +144,7 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 				]
 			],
 			isActive: [true, Validators.required],
+			isSharedCarrier: [false],
 			phone: [
 				'',
 				[
