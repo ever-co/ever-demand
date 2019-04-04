@@ -9,6 +9,9 @@
 		<span *ngIf="currentView == componentViews.addNewCarrier"
 			>Add your carrier</span
 		>
+		<span *ngIf="currentView == componentViews.editCarrier"
+			>Edir carrier</span
+		>
 	</nb-card-header>
 	<nb-card-body>
 		<div *ngIf="currentView === componentViews.main" class="main-content">
@@ -69,6 +72,7 @@
 						[actions]="'show'"
 						[loadWholeData]="restrictedCarriers"
 						(deleteRow)="removeCarrier($event)"
+						(editRow)="editCarrier($event)"
 						#carriersTable
 					></ea-carriers-smart-table>
 				</div>
@@ -86,7 +90,11 @@
 		<div class="row">
 			<ea-merchants-setup-add-new-carrier
 				#newCarrier
-				*ngIf="currentView == componentViews.addNewCarrier"
+				[carrier]="carrierData"
+				*ngIf="
+					currentView == componentViews.addNewCarrier ||
+					currentView == componentViews.editCarrier
+				"
 			></ea-merchants-setup-add-new-carrier>
 		</div>
 	</nb-card-body>

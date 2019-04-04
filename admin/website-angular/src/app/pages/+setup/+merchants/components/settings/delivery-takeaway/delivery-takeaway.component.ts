@@ -37,10 +37,12 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 	componentViews = {
 		main: 'main',
 		carriersTable: 'carriersTable',
-		addNewCarrier: 'addNewCarrier'
+		addNewCarrier: 'addNewCarrier',
+		editCarrier: 'editCarrier'
 	};
 	currentView = this.componentViews.main;
 	carriersPerPage = 3;
+	carrierData: Carrier;
 
 	isCarrierRequired: boolean;
 	productsDelivery: boolean;
@@ -133,6 +135,11 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 		}
 
 		this.carriersTable.loadData(this.restrictedCarriers);
+	}
+
+	editCarrier(e) {
+		this.carrierData = e['data'].carrier;
+		this.currentView = this.componentViews.editCarrier;
 	}
 
 	ngOnDestroy() {

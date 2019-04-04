@@ -73,6 +73,9 @@ export class CarriersService {
 							numberOfDeliveries
 							skippedOrderIds
 							status
+							isActive
+							username
+							isSharedCarrier
 							geoLocation {
 								city
 								streetAddress
