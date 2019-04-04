@@ -70,8 +70,11 @@ export class CarrierResolver {
 	 * @memberof CarrierResolver
 	 */
 	@Query('getCountOfCarriers')
-	async getCountOfCarriers(): Promise<number> {
-		return this._carriersService.Model.find({ isDeleted: { $eq: false } })
+	async getCountOfCarriers(_, { carriersFindInput }): Promise<number> {
+		return this._carriersService.Model.find({
+			...carriersFindInput,
+			isDeleted: { $eq: false }
+		})
 			.countDocuments()
 			.exec();
 	}

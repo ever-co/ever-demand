@@ -207,14 +207,19 @@ export class CarriersService {
 		return res.data['getCarrierCurrentOrder'];
 	}
 
-	async getCountOfCarriers(): Promise<any> {
+	async getCountOfCarriers(carriersFindInput?: any): Promise<any> {
 		const res = await this._apollo
 			.query({
 				query: gql`
-					query GetCountOfCarriers {
-						getCountOfCarriers
+					query GetCountOfCarriers(
+						$carriersFindInput: CarriersFindInput
+					) {
+						getCountOfCarriers(
+							carriersFindInput: $carriersFindInput
+						)
 					}
-				`
+				`,
+				variables: { carriersFindInput }
 			})
 			.toPromise();
 

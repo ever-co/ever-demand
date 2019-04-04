@@ -5,9 +5,7 @@ import {
 	CarriersSmartTableComponent,
 	CarrierSmartTableObject
 } from 'app/@shared/carrier/carriers-table/carriers-table.component';
-import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
 	selector: 'ea-merchants-setup-delivery-takeaway',
@@ -36,7 +34,7 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 
 	private ngDestroy$ = new Subject<void>();
 
-	constructor(private readonly translateService: TranslateService) {}
+	constructor() {}
 
 	get haveCarriersForAdd() {
 		let hasSelectedCarriers = false;
@@ -57,9 +55,7 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 		return ids;
 	}
 
-	ngAfterViewInit(): void {
-		this.applyTranslationOnSmartTable();
-	}
+	ngAfterViewInit(): void {}
 
 	async add() {
 		if (this.currentView === this.componentViews.carriersTable) {
@@ -70,8 +66,6 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 			this.restrictedCarriers.push(...carriers);
 		}
 		this.currentView = this.componentViews.main;
-
-		await this.loadCarriersTable();
 	}
 
 	back() {
@@ -81,12 +75,6 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 	productsDeliveryChange() {
 		if (!this.productsDelivery) {
 			this.restrictedCarriers = [];
-		}
-	}
-
-	private async loadCarriersTable() {
-		if (this.restrictedCarriers && this.restrictedCarriers.length > 0) {
-			await this.carriersTable.loadData(this.restrictedCarriers);
 		}
 	}
 
@@ -100,17 +88,6 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 			address: carriers['address'],
 			deliveries: carriers['deliveries']
 		};
-	}
-
-	private applyTranslationOnSmartTable() {
-		this.translateService.onLangChange
-			.pipe(takeUntil(this.ngDestroy$))
-			.subscribe(() => {
-				if (this.carriersTable) {
-					this.carriersTable.loadSettingsSmartTable();
-					this.loadCarriersTable();
-				}
-			});
 	}
 
 	ngOnDestroy() {

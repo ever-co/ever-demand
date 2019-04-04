@@ -140,7 +140,7 @@ export class CarriersComponent implements OnDestroy, AfterViewInit {
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(() => {
 				if (this.carriersTable) {
-					this.carriersTable.loadSettingsSmartTable();
+					this.carriersTable.loadSettingsSmartTable(this.perPage);
 					this._loadDataSmartTable();
 				}
 			});

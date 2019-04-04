@@ -113,7 +113,7 @@ export class SetupMerchantSharedCarriersComponent
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(() => {
 				if (this.carriersTable) {
-					this.carriersTable.loadSettingsSmartTable();
+					this.carriersTable.loadSettingsSmartTable(this.perPage);
 					this._loadDataSmartTable();
 				}
 			});
@@ -130,6 +130,11 @@ export class SetupMerchantSharedCarriersComponent
 	}
 
 	private async loadDataCount() {
-		this.dataCount = await this._carriersService.getCountOfCarriers();
+		this.dataCount = await this._carriersService.getCountOfCarriers({
+			isSharedCarrier: true,
+			_id: {
+				$nin: this.existedCarriersIds
+			}
+		});
 	}
 }

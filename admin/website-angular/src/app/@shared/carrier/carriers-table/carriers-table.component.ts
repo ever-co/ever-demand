@@ -4,8 +4,7 @@ import {
 	AfterViewInit,
 	Input,
 	OnInit,
-	EventEmitter,
-	Output
+	EventEmitter
 } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { TranslateService } from '@ngx-translate/core';
@@ -16,8 +15,6 @@ import { Observable, forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { CarrierActionsComponent } from 'app/@shared/render-component/carriers-table/carrier-actions/carrier-actions.component';
-
-let perPage = 5;
 
 export interface CarrierSmartTableObject {
 	id: string;
@@ -41,8 +38,8 @@ export class CarriersSmartTableComponent
 	@Input()
 	perPage: number;
 
-	@Output()
-	onLoad: EventEmitter<boolean> = new EventEmitter();
+	@Input()
+	loadWholeData: CarrierSmartTableObject[];
 
 	pageChange: EventEmitter<number> = new EventEmitter();
 
@@ -52,24 +49,22 @@ export class CarriersSmartTableComponent
 
 	private ngDestroy$ = new Subject<void>();
 
-	constructor(private readonly _translateService: TranslateService) {
-		this.loadSettingsSmartTable();
-	}
+	constructor(private readonly _translateService: TranslateService) {}
 
 	get hasSelectedCarriers(): boolean {
 		return this.selectedCarriers.length > 0;
 	}
 
 	ngOnInit(): void {
-		if (this.perPage) {
-			perPage = this.perPage;
-		}
+		this.loadSettingsSmartTable(this.perPage);
 	}
 
 	ngAfterViewInit() {
-		this.onLoad.emit();
-
-		this.smartTableChange();
+		if (this.loadWholeData) {
+			this.loadData(this.loadWholeData);
+		} else {
+			this.smartTableChange();
+		}
 	}
 
 	ngOnDestroy() {
@@ -85,7 +80,7 @@ export class CarriersSmartTableComponent
 		await this.sourceSmartTable.load(carriersData);
 	}
 
-	loadSettingsSmartTable() {
+	loadSettingsSmartTable(perPage) {
 		const columnTitlePrefix = 'CARRIERS_VIEW.SMART_TABLE_COLUMNS.';
 		const getTranslate = (name: string): Observable<string | any> =>
 			this._translateService.get(columnTitlePrefix + name);

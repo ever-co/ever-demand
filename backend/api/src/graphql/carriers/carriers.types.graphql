@@ -42,7 +42,7 @@ type Query {
 		pagingOptions: PagingOptionsInput
 	): [Carrier!]!
 	getActiveCarriers: [Carrier]!
-	getCountOfCarriers: Int!
+	getCountOfCarriers(carriersFindInput: CarriersFindInput): Int!
 }
 
 input CarrierCreateInput {

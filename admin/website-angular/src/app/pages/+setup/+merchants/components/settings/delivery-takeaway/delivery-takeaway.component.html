@@ -8,10 +8,7 @@
 		>
 	</nb-card-header>
 	<nb-card-body>
-		<div
-			[hidden]="currentView !== componentViews.main"
-			class="main-content"
-		>
+		<div *ngIf="currentView === componentViews.main" class="main-content">
 			<div class="row">
 				<div class="form-group offset-md-2 col-md-4">
 					<nb-checkbox [(ngModel)]="isCarrierRequired">
@@ -59,6 +56,7 @@
 				>
 					<ea-carriers-smart-table
 						[perPage]="carriersPerPage"
+						[loadWholeData]="restrictedCarriers"
 						#carriersTable
 					></ea-carriers-smart-table>
 				</div>
