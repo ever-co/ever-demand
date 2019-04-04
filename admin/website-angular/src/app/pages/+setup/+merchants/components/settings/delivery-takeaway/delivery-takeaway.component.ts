@@ -63,7 +63,7 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 				this.getCarrierSmartTableObject
 			);
 
-			this.restrictedCarriers.push(...carriers);
+			this.restrictedCarriers.unshift(...carriers);
 		}
 		this.currentView = this.componentViews.main;
 	}
@@ -76,6 +76,16 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 		if (!this.productsDelivery) {
 			this.restrictedCarriers = [];
 		}
+	}
+
+	removeCarrier(e) {
+		if (this.restrictedCarriers) {
+			this.restrictedCarriers = this.restrictedCarriers.filter(
+				(c) => c.id !== e.data.id
+			);
+		}
+
+		this.carriersTable.loadData(this.restrictedCarriers);
 	}
 
 	private getCarrierSmartTableObject(carriers: Carrier) {

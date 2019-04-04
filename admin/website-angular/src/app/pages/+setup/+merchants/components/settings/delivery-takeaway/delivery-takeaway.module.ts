@@ -5,8 +5,11 @@ import { ThemeModule } from 'app/@theme';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { CarriersSmartTableModule } from 'app/@shared/carrier/carriers-table/carriers-table.module';
-import { RenderComponentsModule } from 'app/@shared/render-component/render-components.module';
 import { SetupMerchantSharedCarriersComponent } from './shared-carriers/shared-carriers.component';
+import { CarrierLocationModule } from 'app/pages/+carriers/+carrier/location/carrier-location.module';
+import { TrackModule } from 'app/pages/+carriers/track/track.module';
+import { RenderComponentsModule } from 'app/@shared/render-component/render-components.module';
+import { CarrierMutationModule } from 'app/@shared/carrier/carrier-mutation';
 
 const COMPONENTS = [
 	SetupMerchantDeliveryAndTakeawayComponent,
@@ -20,7 +23,10 @@ const COMPONENTS = [
 		FormsModule,
 		TranslateModule.forChild(),
 		CarriersSmartTableModule,
-		RenderComponentsModule
+		CarrierLocationModule,
+		TrackModule,
+		RenderComponentsModule,
+		CarrierMutationModule
 	],
 	declarations: COMPONENTS,
 	exports: COMPONENTS

@@ -4,7 +4,8 @@ import {
 	AfterViewInit,
 	Input,
 	OnInit,
-	EventEmitter
+	EventEmitter,
+	Output
 } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { TranslateService } from '@ngx-translate/core';
@@ -37,9 +38,19 @@ export class CarriersSmartTableComponent
 
 	@Input()
 	perPage: number;
-
+	@Input()
+	selectMode = 'multi';
+	@Input()
+	actions: string = '';
+	@Input()
+	redirectPage = 'carriers';
 	@Input()
 	loadWholeData: CarrierSmartTableObject[];
+
+	@Output()
+	editRow = new EventEmitter();
+	@Output()
+	deleteRow = new EventEmitter();
 
 	pageChange: EventEmitter<number> = new EventEmitter();
 
@@ -98,8 +109,19 @@ export class CarriersSmartTableComponent
 			.subscribe(
 				([id, image, name, phone, status, address, deliveries]) => {
 					this.settingsSmartTable = {
-						actions: false,
-						selectMode: 'multi',
+						selectMode: this.selectMode,
+						mode: 'external',
+						actions: this.actions === 'show' && {
+							add: false
+						},
+						edit: {
+							editButtonContent: '<i class="nb-edit"></i>'
+						},
+						delete: {
+							deleteButtonContent: '<i class="nb-trash"></i>',
+							confirmDelete: true
+						},
+
 						columns: {
 							images: {
 								title: image,
@@ -107,7 +129,7 @@ export class CarriersSmartTableComponent
 								type: 'custom',
 								renderComponent: CarrierImageComponent,
 								onComponentInitFunction: (instance) => {
-									instance.redirectPage = 'carriers';
+									instance.redirectPage = this.redirectPage;
 								},
 								filter: false
 							},
@@ -116,7 +138,7 @@ export class CarriersSmartTableComponent
 								type: 'custom',
 								renderComponent: RedirectNameComponent,
 								onComponentInitFunction: (instance) => {
-									instance.redirectPage = 'carriers';
+									instance.redirectPage = this.redirectPage;
 								}
 							},
 							phone: {

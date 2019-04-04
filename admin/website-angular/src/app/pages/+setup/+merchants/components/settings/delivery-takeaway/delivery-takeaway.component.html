@@ -56,7 +56,11 @@
 				>
 					<ea-carriers-smart-table
 						[perPage]="carriersPerPage"
+						[selectMode]="null"
+						[redirectPage]="''"
+						[actions]="'show'"
 						[loadWholeData]="restrictedCarriers"
+						(deleteRow)="removeCarrier($event)"
 						#carriersTable
 					></ea-carriers-smart-table>
 				</div>
