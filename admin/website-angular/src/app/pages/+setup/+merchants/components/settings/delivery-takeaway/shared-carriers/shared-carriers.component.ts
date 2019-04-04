@@ -70,29 +70,9 @@ export class SetupMerchantSharedCarriersComponent
 			)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(async (data: Carrier[]) => {
-				const carriersVm = data.map((c) => {
-					return {
-						id: c.id,
-						image: c.logo || CarriersSmartTableComponent.noInfoSign,
-						name: `${c.firstName ||
-							CarriersSmartTableComponent.noInfoSign} ${c.lastName ||
-							CarriersSmartTableComponent.noInfoSign}`,
-						phone:
-							c.phone || CarriersSmartTableComponent.noInfoSign,
-						status: {
-							[CarrierStatus.Offline]: 'Offline',
-							[CarrierStatus.Online]: 'Online',
-							[CarrierStatus.Blocked]: 'Blocked'
-						}[c.status],
-						address: `${c.geoLocation.city ||
-							CarriersSmartTableComponent.noInfoSign} st. ${c
-							.geoLocation.streetAddress ||
-							CarriersSmartTableComponent.noInfoSign}, hse. № ${c
-							.geoLocation.house ||
-							CarriersSmartTableComponent.noInfoSign}`,
-						deliveries: c.numberOfDeliveries
-					};
-				});
+				const carriersVm = data.map(
+					CarriersSmartTableComponent.getCarrierSmartTableObject
+				);
 
 				await this.loadDataCount();
 

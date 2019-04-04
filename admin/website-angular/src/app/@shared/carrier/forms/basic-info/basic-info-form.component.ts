@@ -49,6 +49,9 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 	@Input()
 	readonly password?: AbstractControl;
 
+	@Input()
+	boxShadow;
+
 	constructor(private translateService: TranslateService) {}
 
 	get isActive() {

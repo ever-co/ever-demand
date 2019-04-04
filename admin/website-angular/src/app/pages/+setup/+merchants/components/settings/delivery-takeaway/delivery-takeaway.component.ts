@@ -1,4 +1,10 @@
-import { Component, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	OnDestroy,
+	AfterViewInit,
+	Input
+} from '@angular/core';
 import { SetupMerchantSharedCarriersComponent } from './shared-carriers/shared-carriers.component';
 import Carrier from '@modules/server.common/entities/Carrier';
 import {
@@ -6,6 +12,10 @@ import {
 	CarrierSmartTableObject
 } from 'app/@shared/carrier/carriers-table/carriers-table.component';
 import { Subject } from 'rxjs';
+import { SetupMerchantAddNewCarrierComponent } from './add-new-carrier/add-new-carrier.component';
+import { getDummyImage } from '@modules/server.common/utils';
+import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
+import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 
 @Component({
 	selector: 'ea-merchants-setup-delivery-takeaway',
@@ -14,14 +24,20 @@ import { Subject } from 'rxjs';
 })
 export class SetupMerchantDeliveryAndTakeawayComponent
 	implements AfterViewInit, OnDestroy {
+	@ViewChild('newCarrier')
+	newCarrier: SetupMerchantAddNewCarrierComponent;
 	@ViewChild('sharedCarriers')
 	sharedCarriers: SetupMerchantSharedCarriersComponent;
 	@ViewChild('carriersTable')
 	carriersTable: CarriersSmartTableComponent;
 
+	@Input()
+	locationForm: any;
+
 	componentViews = {
 		main: 'main',
-		carriersTable: 'carriersTable'
+		carriersTable: 'carriersTable',
+		addNewCarrier: 'addNewCarrier'
 	};
 	currentView = this.componentViews.main;
 	carriersPerPage = 3;
@@ -34,7 +50,7 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 
 	private ngDestroy$ = new Subject<void>();
 
-	constructor() {}
+	constructor(private carrierRouter: CarrierRouter) {}
 
 	get haveCarriersForAdd() {
 		let hasSelectedCarriers = false;
@@ -42,6 +58,13 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 		if (this.sharedCarriers) {
 			hasSelectedCarriers = this.sharedCarriers.carriersTable
 				.hasSelectedCarriers;
+		}
+
+		if (this.newCarrier) {
+			hasSelectedCarriers =
+				this.newCarrier.form.valid &&
+				this.locationForm &&
+				this.locationForm.form.valid;
 		}
 		return hasSelectedCarriers;
 	}
@@ -59,11 +82,35 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 
 	async add() {
 		if (this.currentView === this.componentViews.carriersTable) {
-			const carriers = this.sharedCarriers.carriersTable.selectedCarriers.map(
-				this.getCarrierSmartTableObject
-			);
+			const carriers = this.sharedCarriers.carriersTable.selectedCarriers
+				.map((data) => data['carrier'])
+				.map(CarriersSmartTableComponent.getCarrierSmartTableObject);
 
 			this.restrictedCarriers.unshift(...carriers);
+		} else if (this.currentView === this.componentViews.addNewCarrier) {
+			const geoLocationInput = this.locationForm.getValue();
+			geoLocationInput.loc.coordinates.reverse();
+
+			const carrierCreateObj = {
+				...this.newCarrier.basicInfoForm.getValue(),
+				geoLocation: geoLocationInput
+			};
+
+			if (!carrierCreateObj.logo) {
+				const letter = carrierCreateObj.firstName
+					.charAt(0)
+					.toUpperCase();
+				carrierCreateObj.logo = getDummyImage(300, 300, letter);
+			}
+
+			let carrier = await this.carrierRouter.register({
+				carrier: carrierCreateObj,
+				password: this.newCarrier.basicInfoForm.getPassword()
+			});
+
+			this.restrictedCarriers.unshift(
+				CarriersSmartTableComponent.getCarrierSmartTableObject(carrier)
+			);
 		}
 		this.currentView = this.componentViews.main;
 	}
@@ -86,18 +133,6 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 		}
 
 		this.carriersTable.loadData(this.restrictedCarriers);
-	}
-
-	private getCarrierSmartTableObject(carriers: Carrier) {
-		return {
-			id: carriers.id,
-			image: carriers['image'],
-			name: carriers['name'],
-			phone: carriers.phone,
-			status: carriers.status.toString(),
-			address: carriers['address'],
-			deliveries: carriers['deliveries']
-		};
 	}
 
 	ngOnDestroy() {

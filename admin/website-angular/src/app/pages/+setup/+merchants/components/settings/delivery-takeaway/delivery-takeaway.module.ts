@@ -10,10 +10,13 @@ import { CarrierLocationModule } from 'app/pages/+carriers/+carrier/location/car
 import { TrackModule } from 'app/pages/+carriers/track/track.module';
 import { RenderComponentsModule } from 'app/@shared/render-component/render-components.module';
 import { CarrierMutationModule } from 'app/@shared/carrier/carrier-mutation';
+import { SetupMerchantAddNewCarrierComponent } from './add-new-carrier/add-new-carrier.component';
+import { CarrierFormsModule } from 'app/@shared/carrier/forms';
 
 const COMPONENTS = [
 	SetupMerchantDeliveryAndTakeawayComponent,
-	SetupMerchantSharedCarriersComponent
+	SetupMerchantSharedCarriersComponent,
+	SetupMerchantAddNewCarrierComponent
 ];
 
 @NgModule({
@@ -26,7 +29,8 @@ const COMPONENTS = [
 		CarrierLocationModule,
 		TrackModule,
 		RenderComponentsModule,
-		CarrierMutationModule
+		CarrierMutationModule,
+		CarrierFormsModule
 	],
 	declarations: COMPONENTS,
 	exports: COMPONENTS

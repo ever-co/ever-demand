@@ -6,6 +6,9 @@
 		<span *ngIf="currentView == componentViews.carriersTable"
 			>Select from shared carriers</span
 		>
+		<span *ngIf="currentView == componentViews.addNewCarrier"
+			>Add your carrier</span
+		>
 	</nb-card-header>
 	<nb-card-body>
 		<div *ngIf="currentView === componentViews.main" class="main-content">
@@ -44,7 +47,12 @@
 				</div>
 
 				<div class="form-group  col-md-4">
-					<button nbButton outline status="success">
+					<button
+						nbButton
+						outline
+						status="success"
+						(click)="currentView = componentViews.addNewCarrier"
+					>
 						Add your carriers
 					</button>
 				</div>
@@ -73,6 +81,13 @@
 				[existedCarriersIds]="restrictedCarriersIds"
 				*ngIf="currentView == componentViews.carriersTable"
 			></ea-merchants-setup-shared-carriers>
+		</div>
+
+		<div class="row">
+			<ea-merchants-setup-add-new-carrier
+				#newCarrier
+				*ngIf="currentView == componentViews.addNewCarrier"
+			></ea-merchants-setup-add-new-carrier>
 		</div>
 	</nb-card-body>
 </nb-card>

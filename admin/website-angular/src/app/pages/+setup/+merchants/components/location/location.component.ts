@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, ViewChild } from '@angular/core';
 import { LocationFormComponent } from 'app/@shared/forms/location';
 import { FormBuilder } from '@angular/forms';
 
@@ -8,6 +8,9 @@ import { FormBuilder } from '@angular/forms';
 	styleUrls: ['./location.component.scss']
 })
 export class SetupMerchantLocationComponent {
+	@ViewChild('locationForm')
+	locationForm: LocationFormComponent;
+
 	location = LocationFormComponent.buildForm(this.formBuilder);
 
 	mapCoordEmitter = new EventEmitter<number[]>();

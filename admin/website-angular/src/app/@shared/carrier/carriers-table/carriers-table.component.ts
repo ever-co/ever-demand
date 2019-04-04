@@ -16,6 +16,7 @@ import { Observable, forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { CarrierActionsComponent } from 'app/@shared/render-component/carriers-table/carrier-actions/carrier-actions.component';
+import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 
 export interface CarrierSmartTableObject {
 	id: string;
@@ -176,5 +177,28 @@ export class CarriersSmartTableComponent
 					this.pageChange.emit(page);
 				}
 			});
+	}
+
+	static getCarrierSmartTableObject(c: Carrier) {
+		return {
+			id: c.id,
+			image: c.logo || CarriersSmartTableComponent.noInfoSign,
+			name: `${c.firstName ||
+				CarriersSmartTableComponent.noInfoSign} ${c.lastName ||
+				CarriersSmartTableComponent.noInfoSign}`,
+			phone: c.phone || CarriersSmartTableComponent.noInfoSign,
+			status: {
+				[CarrierStatus.Offline]: 'Offline',
+				[CarrierStatus.Online]: 'Online',
+				[CarrierStatus.Blocked]: 'Blocked'
+			}[c.status],
+			address: `${c.geoLocation.city ||
+				CarriersSmartTableComponent.noInfoSign} st. ${c.geoLocation
+				.streetAddress ||
+				CarriersSmartTableComponent.noInfoSign}, hse. № ${c.geoLocation
+				.house || CarriersSmartTableComponent.noInfoSign}`,
+			deliveries: c.numberOfDeliveries,
+			carrier: c
+		};
 	}
 }

@@ -1,4 +1,4 @@
-<nb-card class="basic-info">
+<nb-card class="basic-info {{ boxShadow === 'none' ? 'no-box-shadow' : '' }}">
 	<div class="col-sm-12" [formGroup]="form" *ngIf="form">
 		<br />
 
