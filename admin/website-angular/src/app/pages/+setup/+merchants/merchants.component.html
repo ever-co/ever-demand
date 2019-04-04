@@ -10,14 +10,18 @@
 							></ea-merchants-setup-account>
 
 							<button nbButton disabled nbStepperNext>
-								PREV
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
+								}}
 							</button>
 							<button
 								nbButton
 								nbStepperNext
 								[disabled]="!account.formValid"
 							>
-								NEXT
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
+								}}
 							</button>
 						</nb-step>
 						<nb-step label="Basic info">
@@ -25,13 +29,19 @@
 								#basicInfo
 							></ea-merchants-setup-basic-info>
 
-							<button nbButton nbStepperPrevious>PREV</button>
+							<button nbButton nbStepperPrevious>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
+								}}
+							</button>
 							<button
 								nbButton
 								nbStepperNext
 								[disabled]="!basicInfo.formValid"
 							>
-								NEXT
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
+								}}
 							</button>
 						</nb-step>
 						<nb-step label="Contact info">
@@ -39,13 +49,19 @@
 								#contactInfo
 							></ea-merchants-setup-contact-info>
 
-							<button nbButton nbStepperPrevious>PREV</button>
+							<button nbButton nbStepperPrevious>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
+								}}
+							</button>
 							<button
 								nbButton
 								nbStepperNext
 								[disabled]="contactInfo.contactInfoForm.invalid"
 							>
-								NEXT
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
+								}}
 							</button>
 						</nb-step>
 						<nb-step label="Location">
@@ -53,13 +69,19 @@
 								#location
 							></ea-merchants-setup-location>
 
-							<button nbButton nbStepperPrevious>PREV</button>
+							<button nbButton nbStepperPrevious>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
+								}}
+							</button>
 							<button
 								nbButton
 								nbStepperNext
 								[disabled]="location.location.invalid"
 							>
-								NEXT
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
+								}}
 							</button>
 						</nb-step>
 						<nb-step label="Payments">
@@ -67,15 +89,23 @@
 
 							<button nbButton nbStepperPrevious>PREV</button>
 							<button nbButton nbStepperNext>
-								NEXT
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
+								}}
 							</button>
 						</nb-step>
 						<nb-step label="Manufacturing">
 							<ea-merchants-setup-manufacturing></ea-merchants-setup-manufacturing>
 
-							<button nbButton nbStepperPrevious>PREV</button>
+							<button nbButton nbStepperPrevious>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
+								}}
+							</button>
 							<button nbButton nbStepperNext>
-								NEXT
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
+								}}
 							</button>
 						</nb-step>
 						<nb-step label="Delivery & Takeaway Settings">
@@ -90,9 +120,17 @@
 									deliveryAndTakeaway.componentViews.main
 								"
 							>
-								<button nbButton nbStepperPrevious>PREV</button>
+								<button nbButton nbStepperPrevious>
+									{{
+										'FAKE_DATA.SETUP_MERCHANTS.PREV'
+											| translate
+									}}
+								</button>
 								<button nbButton nbStepperNext>
-									NEXT
+									{{
+										'FAKE_DATA.SETUP_MERCHANTS.NEXT'
+											| translate
+									}}
 								</button>
 							</div>
 							<div
@@ -121,25 +159,43 @@
 						<nb-step label="Orders Settings">
 							<ea-merchants-setup-orders-settings></ea-merchants-setup-orders-settings>
 
-							<button nbButton nbStepperPrevious>PREV</button>
+							<button nbButton nbStepperPrevious>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
+								}}
+							</button>
 							<button nbButton nbStepperNext>
-								NEXT
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
+								}}
 							</button>
 						</nb-step>
 						<nb-step label="Product categories">
 							<h3>Product categories</h3>
 
-							<button nbButton nbStepperPrevious>PREV</button>
+							<button nbButton nbStepperPrevious>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
+								}}
+							</button>
 							<button nbButton nbStepperNext>
-								NEXT
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
+								}}
 							</button>
 						</nb-step>
 						<nb-step label="Products">
 							<h3>Products</h3>
 
-							<button nbButton nbStepperPrevious>PREV</button>
+							<button nbButton nbStepperPrevious>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
+								}}
+							</button>
 							<button nbButton disabled nbStepperNext>
-								NEXT
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
+								}}
 							</button>
 						</nb-step>
 					</nb-stepper>

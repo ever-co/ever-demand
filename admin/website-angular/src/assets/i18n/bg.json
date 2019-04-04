@@ -207,7 +207,28 @@
 		"CONFIRM_ORDER": "ПОТВЪРДИ ПОРЪЧКАТА",
 		"CREATE_ORDER": "СЪЗДАВАНЕ НА ПОРЪЧКА",
 		"CONFIMR_1st_ORDER": "Потвърдете 1-та поръчка",
-		"CONFIMR_2nd_ORDER": "Потвърдете 2-ра поръчка"
+		"CONFIMR_2nd_ORDER": "Потвърдете 2-ра поръчка",
+		"SETUP_MERCHANTS": {
+			"SETUP_MERCHANTS": "Настройки на ресторантите",
+			"PREV": "НАЗАД",
+			"NEXT": "СЛЕДВАЩИЯ",
+			"ACCOUNT": {
+				"ACCOUNT": "Сметка",
+				"EMAIL_ADDRESS": "Имейл адрес",
+				"EMAIL": "Електронна поща",
+				"PASSWORD": "Парола",
+				"REPEAT_PASSWORD": "Повтори паролата",
+				"EMAIL_IS_REQUIRED": "Изисква се имейл",
+				"INVALID_EMAIL_FORMAT": "Невалиден имейл формат",
+				"USERNAME": "Потребител",
+				"USERNAME_IS_REQUIRED": "Изисква се потребителско име",
+				"USERNAME_MUST_BE_AT_LEAST_3_CHARACTERS": "Потребителското име трябва да съдържа поне 3 знака",
+				"PASSWORD_IS_REQUIRED": "Изисква се парола",
+				"PASSWORD_MUST_BE_AT_LEAST_4_CHARACTERS": "Паролата трябва да съдържа поне 4 знака",
+				"REPEAT_PASSWORD_IS_REQUIRED": "Изисква се повторна парола",
+				"PASSWORDS_DO_NOT_MATCH": "Паролите не съвпадат"
+			}
+		}
 	},
 	"WAREHOUSE_MANAGE": {
 		"TITLE": "Управление на склада",

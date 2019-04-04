@@ -206,7 +206,28 @@
 		"CONFIRM_ORDER": "CONFIRM ORDER",
 		"CREATE_ORDER": "CREATE ORDER",
 		"CONFIMR_1st_ORDER": "Confirm 1st order",
-		"CONFIMR_2nd_ORDER": "Confirm 2nd order"
+		"CONFIMR_2nd_ORDER": "Confirm 2nd order",
+		"SETUP_MERCHANTS": {
+			"SETUP_MERCHANTS": "Setup merchants",
+			"PREV": "PREV",
+			"NEXT": "NEXT",
+			"ACCOUNT": {
+				"ACCOUNT": "Account",
+				"EMAIL_ADDRESS": "Email address",
+				"EMAIL": "Email",
+				"PASSWORD": "Password",
+				"REPEAT_PASSWORD": "Repeat password",
+				"EMAIL_IS_REQUIRED": "Email is required",
+				"INVALID_EMAIL_FORMAT": "Invalid email format",
+				"USERNAME": "Username",
+				"USERNAME_IS_REQUIRED": "Username is required",
+				"USERNAME_MUST_BE_AT_LEAST_3_CHARACTERS": "Username must be at least 3 characters",
+				"PASSWORD_IS_REQUIRED": "Password is required",
+				"PASSWORD_MUST_BE_AT_LEAST_4_CHARACTERS": "Password must be at least 4 characters",
+				"REPEAT_PASSWORD_IS_REQUIRED": "Repeat password is required",
+				"PASSWORDS_DO_NOT_MATCH": "Passwords do not match"
+			}
+		}
 	},
 	"WAREHOUSE_MANAGE": {
 		"TITLE": "Manage Warehouse",

@@ -206,7 +206,28 @@
 		"CONFIRM_ORDER": "אשר הזמנה",
 		"CREATE_ORDER": "צור הזמנה",
 		"CONFIMR_1st_ORDER": "אשר הזמנה ראשונה",
-		"CONFIMR_2nd_ORDER": "אשר את ההזמנה השנייה"
+		"CONFIMR_2nd_ORDER": "אשר את ההזמנה השנייה",
+		"SETUP_MERCHANTS": {
+			"SETUP_MERCHANTS": "הגדר סוחרים",
+			"PREV": "PREV",
+			"NEXT": "הבא",
+			"ACCOUNT": {
+				"ACCOUNT": "חשבון",
+				"EMAIL_ADDRESS": "כתובת דוא'ל",
+				"EMAIL": "דוא'ל",
+				"PASSWORD": "סיסמה",
+				"REPEAT_PASSWORD": "חזור על הסיסמה",
+				"EMAIL_IS_REQUIRED": "נדרש דוא'ל",
+				"INVALID_EMAIL_FORMAT": "פורמט דוא'ל לא חוקי",
+				"USERNAME": "שם משתמש",
+				"USERNAME_IS_REQUIRED": "נדרש שם משתמש",
+				"USERNAME_MUST_BE_AT_LEAST_3_CHARACTERS": "שם המשתמש חייב להיות לפחות 3 תווים",
+				"PASSWORD_IS_REQUIRED": "דרושה סיסמא",
+				"PASSWORD_MUST_BE_AT_LEAST_4_CHARACTERS": "הסיסמה צריכה להיות לפחות 4 תווים",
+				"REPEAT_PASSWORD_IS_REQUIRED": "נדרשת סיסמה חוזרת",
+				"PASSWORDS_DO_NOT_MATCH": "סיסמאות לא תואמות"
+			}
+		}
 	},
 	"WAREHOUSE_MANAGE": {
 		"TITLE": "ניהול מחסן",

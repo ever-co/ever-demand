@@ -206,7 +206,28 @@
 		"CONFIRM_ORDER": "ПОДТВЕРДИТЕ ЗАКАЗ",
 		"CREATE_ORDER": "СОЗДАТЬ ЗАКАЗ",
 		"CONFIMR_1st_ORDER": "Подтвердить 1 заказ",
-		"CONFIMR_2nd_ORDER": "Подтвердить второй заказ"
+		"CONFIMR_2nd_ORDER": "Подтвердить второй заказ",
+		"SETUP_MERCHANTS": {
+			"SETUP_MERCHANTS": "Настройки ресторана",
+			"PREV": "НАЗАД",
+			"NEXT": "СЛЕДУЮЩИЙ",
+			"ACCOUNT": {
+				"ACCOUNT": "Учетная запись",
+				"EMAIL_ADDRESS": "Адрес электронной почты",
+				"EMAIL": "Эл. адрес",
+				"PASSWORD": "Пароль",
+				"REPEAT_PASSWORD": "Повторите пароль",
+				"EMAIL_IS_REQUIRED": "Требуется электронная почта",
+				"INVALID_EMAIL_FORMAT": "Неверный формат электронной почты",
+				"USERNAME": "Имя пользователя",
+				"USERNAME_IS_REQUIRED": "Имя пользователя требуется",
+				"USERNAME_MUST_BE_AT_LEAST_3_CHARACTERS": "Имя пользователя должно быть не менее 3 символов",
+				"PASSWORD_IS_REQUIRED": "Необходим пароль",
+				"PASSWORD_MUST_BE_AT_LEAST_4_CHARACTERS": "Пароль должен содержать не менее 4 символов",
+				"REPEAT_PASSWORD_IS_REQUIRED": "Требуется повторный пароль",
+				"PASSWORDS_DO_NOT_MATCH": "Пароли не совпадают"
+			}
+		}
 	},
 	"WAREHOUSE_MANAGE": {
 		"TITLE": "Управление складом",
