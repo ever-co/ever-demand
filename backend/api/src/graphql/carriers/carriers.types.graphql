@@ -30,6 +30,7 @@ input CarriersFindInput {
 	isDeleted: Boolean
 	status: Int
 	isSharedCarrier: Boolean
+	_id: Any
 	# TODO geoLocation
 }
 

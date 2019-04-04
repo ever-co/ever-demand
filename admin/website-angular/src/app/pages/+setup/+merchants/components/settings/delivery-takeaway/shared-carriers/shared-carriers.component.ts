@@ -1,4 +1,10 @@
-import { Component, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	OnDestroy,
+	AfterViewInit,
+	Input
+} from '@angular/core';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { CarriersSmartTableComponent } from 'app/@shared/carrier/carriers-table/carriers-table.component';
 import { Subject } from 'rxjs';
@@ -18,8 +24,10 @@ export class SetupMerchantSharedCarriersComponent
 	@ViewChild('carriersTable')
 	carriersTable: CarriersSmartTableComponent;
 
+	@Input()
+	existedCarriersIds: string[] = [];
+
 	perPage = perPage;
-	carriers: Carrier[];
 
 	private dataCount: number;
 	private $carriers;
@@ -53,7 +61,12 @@ export class SetupMerchantSharedCarriersComponent
 					skip: perPage * (page - 1),
 					limit: perPage
 				},
-				{ isSharedCarrier: true }
+				{
+					isSharedCarrier: true,
+					_id: {
+						$nin: this.existedCarriersIds
+					}
+				}
 			)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(async (data: Carrier[]) => {

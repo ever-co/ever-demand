@@ -8,7 +8,10 @@
 		>
 	</nb-card-header>
 	<nb-card-body>
-		<div *ngIf="currentView == componentViews.main" class="main-content">
+		<div
+			[hidden]="currentView !== componentViews.main"
+			class="main-content"
+		>
 			<div class="row">
 				<div class="form-group offset-md-2 col-md-4">
 					<nb-checkbox [(ngModel)]="isCarrierRequired">
@@ -18,7 +21,10 @@
 			</div>
 			<div class="row">
 				<div class="form-group offset-md-2 col-md-4">
-					<nb-checkbox [(ngModel)]="productsDelivery">
+					<nb-checkbox
+						(change)="productsDeliveryChange()"
+						[(ngModel)]="productsDelivery"
+					>
 						Products Delivery (by default)
 					</nb-checkbox>
 				</div>
@@ -28,7 +34,7 @@
 					</nb-checkbox>
 				</div>
 			</div>
-			<div *ngIf="productsDelivery" class="row actions">
+			<div [hidden]="!productsDelivery" class="row actions">
 				<div class="form-group offset-md-2 col-md-4">
 					<button
 						nbButton
@@ -39,16 +45,30 @@
 						Use selected shared carriers
 					</button>
 				</div>
+
 				<div class="form-group  col-md-4">
 					<button nbButton outline status="success">
 						Add your carriers
 					</button>
+				</div>
+
+				<div
+					*ngIf="
+						restrictedCarriers && restrictedCarriers.length !== 0
+					"
+				>
+					<ea-carriers-smart-table
+						[perPage]="carriersPerPage"
+						#carriersTable
+					></ea-carriers-smart-table>
 				</div>
 			</div>
 		</div>
 
 		<div class="row">
 			<ea-merchants-setup-shared-carriers
+				#sharedCarriers
+				[existedCarriersIds]="restrictedCarriersIds"
 				*ngIf="currentView == componentViews.carriersTable"
 			></ea-merchants-setup-shared-carriers>
 		</div>

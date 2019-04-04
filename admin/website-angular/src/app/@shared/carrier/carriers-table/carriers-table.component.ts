@@ -4,7 +4,8 @@ import {
 	AfterViewInit,
 	Input,
 	OnInit,
-	EventEmitter
+	EventEmitter,
+	Output
 } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { TranslateService } from '@ngx-translate/core';
@@ -40,6 +41,9 @@ export class CarriersSmartTableComponent
 	@Input()
 	perPage: number;
 
+	@Output()
+	onLoad: EventEmitter<boolean> = new EventEmitter();
+
 	pageChange: EventEmitter<number> = new EventEmitter();
 
 	settingsSmartTable: any;
@@ -63,7 +67,8 @@ export class CarriersSmartTableComponent
 	}
 
 	ngAfterViewInit() {
-		this._addCustomHTMLElements();
+		this.onLoad.emit();
+
 		this.smartTableChange();
 	}
 
@@ -78,13 +83,6 @@ export class CarriersSmartTableComponent
 
 	async loadData(carriersData: CarrierSmartTableObject[]) {
 		await this.sourceSmartTable.load(carriersData);
-	}
-
-	// This is just workaround to show some search icon on smart table, in the future maybe we must find better solution.
-	private _addCustomHTMLElements(): any {
-		document.querySelector(
-			'tr.ng2-smart-filters > th:nth-child(1)'
-		).innerHTML = '<i class="fa fa-search" style="font-size: 1.3em"/>';
 	}
 
 	loadSettingsSmartTable() {
