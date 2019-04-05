@@ -238,6 +238,18 @@
 				"PHOTO_OPTIONAL": "Photo (optional)",
 				"BARCODE_DATA": "Barcode Data",
 				"BARCODE_DATA_IS_REQUIRED": "Barcode Data is required"
+			},
+			"CONTACT_INFO": {
+				"CONTACT_INFO": "Contact info",
+				"CONTACT_PHONE": "Contact Phone",
+				"INVALID_PHONE_NUMBER_FORMAT": "Invalid phone number format",
+				"ORDER_FORWARDING_EMAIL": "Order Forwarding Email",
+				"ORDER_FORWARDING_PHONE": "Order Forwarding Phone",
+				"ORDERS_EMAIL": "Orders Email",
+				"ORDERS_EMAIL_IS_REQUIRED": "Orders email is required",
+				"INVALID_EMAIL_FORMAT": "Invalid email format",
+				"ORDERS_PHONE": "Orders Phone",
+				"ORDERS_PHONE_IS_REQUIRED": "Orders phone is required"
 			}
 		}
 	},

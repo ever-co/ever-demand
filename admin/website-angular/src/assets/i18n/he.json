@@ -238,6 +238,18 @@
 				"PHOTO_OPTIONAL": "תמונה (אופציונלי)",
 				"BARCODE_DATA": "נתוני ברקוד",
 				"BARCODE_DATA_IS_REQUIRED": "נתוני ברקוד נדרשים"
+			},
+			"CONTACT_INFO": {
+				"CONTACT_INFO": "פרטים ליצירת קשר",
+				"CONTACT_PHONE": "צור קשר עם הטלפון",
+				"INVALID_PHONE_NUMBER_FORMAT": "פורמט מספר טלפון לא חוקי",
+				"ORDER_FORWARDING_EMAIL": "סדר העברת דואר אלקטרוני",
+				"ORDER_FORWARDING_PHONE": "הזמנת טלפון העברה",
+				"ORDERS_EMAIL": "דוא'ל דוא'ל",
+				"ORDERS_EMAIL_IS_REQUIRED": "יש צורך בהודעות דוא'ל",
+				"INVALID_EMAIL_FORMAT": "פורמט דוא'ל לא חוקי",
+				"ORDERS_PHONE": "טלפון הטלפונים",
+				"ORDERS_PHONE_IS_REQUIRED": "טלפון הטלפון נדרש"
 			}
 		}
 	},

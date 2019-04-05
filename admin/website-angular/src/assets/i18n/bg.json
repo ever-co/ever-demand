@@ -239,6 +239,18 @@
 				"PHOTO_OPTIONAL": "Снимка (по избор)",
 				"BARCODE_DATA": "Данни за баркод",
 				"BARCODE_DATA_IS_REQUIRED": "Необходими са данни за баркода"
+			},
+			"CONTACT_INFO": {
+				"CONTACT_INFO": "Информация за контакт",
+				"CONTACT_PHONE": "Телефон за връзка",
+				"INVALID_PHONE_NUMBER_FORMAT": "Невалиден формат на телефонния номер",
+				"ORDER_FORWARDING_EMAIL": "Избери изпращане на имейл",
+				"ORDER_FORWARDING_PHONE": "Избери изпращане телефон",
+				"ORDERS_EMAIL": "Имейл за поръчки",
+				"ORDERS_EMAIL_IS_REQUIRED": "Изисква се имейл за поръчки",
+				"INVALID_EMAIL_FORMAT": "Невалиден имейл формат",
+				"ORDERS_PHONE": "Телефон за поръчки",
+				"ORDERS_PHONE_IS_REQUIRED": "Изисква се телефонна поръчка"
 			}
 		}
 	},

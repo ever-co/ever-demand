@@ -238,6 +238,18 @@
 				"PHOTO_OPTIONAL": "Фото (необязательно)",
 				"BARCODE_DATA": "Данные штрих-кода",
 				"BARCODE_DATA_IS_REQUIRED": "Данные штрих-кода обязательны"
+			},
+			"CONTACT_INFO": {
+				"CONTACT_INFO": "Контактная информация",
+				"CONTACT_PHONE": "Контактный телефон",
+				"INVALID_PHONE_NUMBER_FORMAT": "Неверный формат номера телефона",
+				"ORDER_FORWARDING_EMAIL": "Пересылка заказа по электронной почте",
+				"ORDER_FORWARDING_PHONE": "Заказать переадресацию телефона",
+				"ORDERS_EMAIL": "Электронная почта заказов",
+				"ORDERS_EMAIL_IS_REQUIRED": "Заказы по электронной почте требуется",
+				"INVALID_EMAIL_FORMAT": "Неверный формат электронной почты",
+				"ORDERS_PHONE": "Заказ телефона",
+				"ORDERS_PHONE_IS_REQUIRED": "Заказы по телефону обязательны"
 			}
 		}
 	},
