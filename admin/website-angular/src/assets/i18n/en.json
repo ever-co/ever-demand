@@ -211,6 +211,9 @@
 			"SETUP_MERCHANTS": "Setup merchants",
 			"PREV": "PREV",
 			"NEXT": "NEXT",
+			"ADD": "Add",
+			"BACK": "Back",
+			"SAVE": "Save",
 			"ACCOUNT": {
 				"ACCOUNT": "Account",
 				"EMAIL_ADDRESS": "Email address",
@@ -253,6 +256,10 @@
 			},
 			"LOCATION": {
 				"LOCATION": "Location"
+			},
+			"PAYMENTS": {
+				"PAYMENTS": "Payments",
+				"ALLOW_ONLINE_PAYMENT": "Allow online payments?"
 			},
 			"MANUFACTURING": {
 				"MANUFACTURING": "Manufacturing",

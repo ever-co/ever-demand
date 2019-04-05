@@ -211,6 +211,9 @@
 			"SETUP_MERCHANTS": "הגדר סוחרים",
 			"PREV": "PREV",
 			"NEXT": "הבא",
+			"ADD": "הוסף",
+			"BACK": "חזור",
+			"SAVE": "להציל",
 			"ACCOUNT": {
 				"ACCOUNT": "חשבון",
 				"EMAIL_ADDRESS": "כתובת דוא'ל",
@@ -253,6 +256,10 @@
 			},
 			"LOCATION": {
 				"LOCATION": "מקום"
+			},
+			"PAYMENTS": {
+				"PAYMENTS": "תשלומים",
+				"ALLOW_ONLINE_PAYMENT": "האם לאפשר תשלומים מקוונים?"
 			},
 			"MANUFACTURING": {
 				"MANUFACTURING": "ייצור",

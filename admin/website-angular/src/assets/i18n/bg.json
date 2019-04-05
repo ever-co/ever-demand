@@ -212,6 +212,9 @@
 			"SETUP_MERCHANTS": "Настройки на ресторантите",
 			"PREV": "НАЗАД",
 			"NEXT": "СЛЕДВАЩИЯ",
+			"ADD": "Добави",
+			"BACK": "Обратно",
+			"SAVE": "Запази",
 			"ACCOUNT": {
 				"ACCOUNT": "Сметка",
 				"EMAIL_ADDRESS": "Имейл адрес",
@@ -254,6 +257,10 @@
 			},
 			"LOCATION": {
 				"LOCATION": "Место нахождения"
+			},
+			"PAYMENTS": {
+				"PAYMENTS": "Плащания",
+				"ALLOW_ONLINE_PAYMENT": "Разрешаване на онлайн плащания?"
 			},
 			"MANUFACTURING": {
 				"MANUFACTURING": "Производство",

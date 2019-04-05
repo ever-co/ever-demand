@@ -91,7 +91,11 @@
 								#payments
 							></ea-merchants-setup-payments>
 
-							<button nbButton nbStepperPrevious>PREV</button>
+							<button nbButton nbStepperPrevious>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
+								}}
+							</button>
 							<button nbButton nbStepperNext>
 								{{
 									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
@@ -149,7 +153,10 @@
 									nbButton
 									(click)="deliveryAndTakeaway.back()"
 								>
-									Back
+									{{
+										'FAKE_DATA.SETUP_MERCHANTS.BACK'
+											| translate
+									}}
 								</button>
 								<button
 									*ngIf="
@@ -163,7 +170,10 @@
 									nbButton
 									(click)="deliveryAndTakeaway.add()"
 								>
-									Add
+									{{
+										'FAKE_DATA.SETUP_MERCHANTS.ADD'
+											| translate
+									}}
 								</button>
 
 								<button
@@ -178,7 +188,10 @@
 									nbButton
 									(click)="deliveryAndTakeaway.save()"
 								>
-									Save
+									{{
+										'FAKE_DATA.SETUP_MERCHANTS.SAVE'
+											| translate
+									}}
 								</button>
 							</div>
 						</nb-step>
