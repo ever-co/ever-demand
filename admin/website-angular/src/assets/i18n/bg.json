@@ -265,6 +265,17 @@
 			"MANUFACTURING": {
 				"MANUFACTURING": "Производство",
 				"PRODUCTS_MANUFACTURING": "Продукти Производство"
+			},
+			"DELIVERY_AND_TAKEAWAY_SETTINGS": {
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "Настройки за доставка и за вкъщи",
+				"SELECT_FROM_SHARED_CARRIERS": "Изберете от споделени превозвачи",
+				"ADD_YOUR_CARRIER": "Добавете своя оператор",
+				"EDIT_CARRIER": "Редактиране на носителя",
+				"CARRIER_REQUIRED": "Необходим е превозвач",
+				"PRODUCTS_DELIVERY_BY_DEFAULT": "Доставка на продукти (по подразбиране)",
+				"PRODUCTS_TAKEAWAY_BY_DEFAULT": "Продукти за вкъщи (по подразбиране)",
+				"USE_SELECTED_SHARED_CARRIERS": "Използвайте избрани споделени оператори",
+				"ADD_YOUR_CARRIERS": "Добавете операторите си"
 			}
 		}
 	},

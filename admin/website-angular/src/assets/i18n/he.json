@@ -264,6 +264,17 @@
 			"MANUFACTURING": {
 				"MANUFACTURING": "ייצור",
 				"PRODUCTS_MANUFACTURING": "ייצור מוצרים"
+			},
+			"DELIVERY_AND_TAKEAWAY_SETTINGS": {
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "הגדרות משלוח & Takeaway",
+				"SELECT_FROM_SHARED_CARRIERS": "בחר מתוך ספקים משותפים",
+				"ADD_YOUR_CARRIER": "הוסף את הספק שלך",
+				"EDIT_CARRIER": "ערוך ספק",
+				"CARRIER_REQUIRED": "נדרש נושא",
+				"PRODUCTS_DELIVERY_BY_DEFAULT": "משלוח מוצרים (כברירת מחדל)",
+				"PRODUCTS_TAKEAWAY_BY_DEFAULT": "מוצרים Takeaway (כברירת מחדל)",
+				"USE_SELECTED_SHARED_CARRIERS": "השתמש במפעילים משותפים נבחרים",
+				"ADD_YOUR_CARRIERS": "הוסף את הספקים שלך"
 			}
 		}
 	},

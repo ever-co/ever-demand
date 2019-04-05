@@ -264,6 +264,17 @@
 			"MANUFACTURING": {
 				"MANUFACTURING": "Manufacturing",
 				"PRODUCTS_MANUFACTURING": "Products Manufacturing"
+			},
+			"DELIVERY_AND_TAKEAWAY_SETTINGS": {
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "Delivery & Takeaway Settings",
+				"SELECT_FROM_SHARED_CARRIERS": "Select from shared carriers",
+				"ADD_YOUR_CARRIER": "Add your carrier",
+				"EDIT_CARRIER": "Edit carrier",
+				"CARRIER_REQUIRED": "Carrier required",
+				"PRODUCTS_DELIVERY_BY_DEFAULT": "Products Delivery (by default)",
+				"PRODUCTS_TAKEAWAY_BY_DEFAULT": "Products Takeaway (by default)",
+				"USE_SELECTED_SHARED_CARRIERS": "Use selected shared carriers",
+				"ADD_YOUR_CARRIERS": "Add your carriers"
 			}
 		}
 	},

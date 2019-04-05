@@ -1,24 +1,39 @@
 <nb-card class="setup-merchant-delivery-takeaway">
 	<nb-card-header
-		><span *ngIf="currentView == componentViews.main"
-			>Delivery & Takeaway Settings</span
-		>
-		<span *ngIf="currentView == componentViews.carriersTable"
-			>Select from shared carriers</span
-		>
-		<span *ngIf="currentView == componentViews.addNewCarrier"
-			>Add your carrier</span
-		>
-		<span *ngIf="currentView == componentViews.editCarrier"
-			>Edir carrier</span
-		>
+		><span *ngIf="currentView == componentViews.main">
+			{{
+				'FAKE_DATA.SETUP_MERCHANTS.DELIVERY_AND_TAKEAWAY_SETTINGS.DELIVERY_AND_TAKEAWAY_SETTINGS'
+					| translate
+			}}
+		</span>
+		<span *ngIf="currentView == componentViews.carriersTable">
+			{{
+				'FAKE_DATA.SETUP_MERCHANTS.DELIVERY_AND_TAKEAWAY_SETTINGS.SELECT_FROM_SHARED_CARRIERS'
+					| translate
+			}}
+		</span>
+		<span *ngIf="currentView == componentViews.addNewCarrier">
+			{{
+				'FAKE_DATA.SETUP_MERCHANTS.DELIVERY_AND_TAKEAWAY_SETTINGS.ADD_YOUR_CARRIER'
+					| translate
+			}}
+		</span>
+		<span *ngIf="currentView == componentViews.editCarrier">
+			{{
+				'FAKE_DATA.SETUP_MERCHANTS.DELIVERY_AND_TAKEAWAY_SETTINGS.EDIT_CARRIER'
+					| translate
+			}}
+		</span>
 	</nb-card-header>
 	<nb-card-body>
 		<div *ngIf="currentView === componentViews.main" class="main-content">
 			<div class="row">
 				<div class="form-group offset-md-2 col-md-4">
 					<nb-checkbox [(ngModel)]="isCarrierRequired">
-						Carrier required
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.DELIVERY_AND_TAKEAWAY_SETTINGS.CARRIER_REQUIRED'
+								| translate
+						}}
 					</nb-checkbox>
 				</div>
 			</div>
@@ -28,12 +43,18 @@
 						(change)="productsDeliveryChange()"
 						[(ngModel)]="productsDelivery"
 					>
-						Products Delivery (by default)
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.DELIVERY_AND_TAKEAWAY_SETTINGS.PRODUCTS_DELIVERY_BY_DEFAULT'
+								| translate
+						}}
 					</nb-checkbox>
 				</div>
 				<div class="form-group  col-md-4">
 					<nb-checkbox [(ngModel)]="productsTakeaway">
-						Products Takeaway (by default)
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.DELIVERY_AND_TAKEAWAY_SETTINGS.PRODUCTS_TAKEAWAY_BY_DEFAULT'
+								| translate
+						}}
 					</nb-checkbox>
 				</div>
 			</div>
@@ -45,7 +66,10 @@
 						status="success"
 						(click)="currentView = componentViews.carriersTable"
 					>
-						Use selected shared carriers
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.DELIVERY_AND_TAKEAWAY_SETTINGS.USE_SELECTED_SHARED_CARRIERS'
+								| translate
+						}}
 					</button>
 				</div>
 
@@ -56,7 +80,10 @@
 						status="success"
 						(click)="currentView = componentViews.addNewCarrier"
 					>
-						Add your carriers
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.DELIVERY_AND_TAKEAWAY_SETTINGS.ADD_YOUR_CARRIERS'
+								| translate
+						}}
 					</button>
 				</div>
 
