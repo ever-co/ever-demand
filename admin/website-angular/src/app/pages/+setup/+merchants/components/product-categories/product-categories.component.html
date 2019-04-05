@@ -1,0 +1,28 @@
+<nb-card class="setup-merchant-product-categories">
+	<nb-card-header>
+		Product categories
+	</nb-card-header>
+	<nb-card-body>
+		<div class="row actions">
+			<div
+				*ngIf="!showCreateForm"
+				class="form-group offset-md-4 col-md-4 text-center"
+			>
+				<button
+					nbButton
+					outline
+					status="success"
+					(click)="showCreateForm = true"
+				>
+					Add own product category
+				</button>
+			</div>
+
+			<div class="offset-md-1 col-md-11" *ngIf="showCreateForm">
+				<ea-product-category-basic-info-form
+					#basicInfo
+				></ea-product-category-basic-info-form>
+			</div>
+		</div>
+	</nb-card-body>
+</nb-card>

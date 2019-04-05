@@ -12,6 +12,9 @@ import { SetupMerchantPaymentsComponent } from './payments/payments.component';
 import { SetupMerchantManufacturingComponent } from './manufacturing/manufacturing.component';
 import { SetupMerchantOrdersSettingsComponent } from './settings/orders/orders.component';
 import { NbRadioModule } from '@nebular/theme';
+import { SetupMerchantProductCategoriesComponent } from './product-categories/product-categories.component';
+import { ProductCategoriesFormsModule } from 'app/@shared/product/categories/forms/product-categories-forms.module';
+import { NotifyService } from 'app/@core/services/notify/notify.service';
 
 const COMPONENTS = [
 	SetupMerchantAccountComponent,
@@ -20,7 +23,8 @@ const COMPONENTS = [
 	MerchantsSetupInstructionsComponent,
 	SetupMerchantPaymentsComponent,
 	SetupMerchantManufacturingComponent,
-	SetupMerchantOrdersSettingsComponent
+	SetupMerchantOrdersSettingsComponent,
+	SetupMerchantProductCategoriesComponent
 ];
 
 @NgModule({
@@ -30,9 +34,11 @@ const COMPONENTS = [
 		FormsModule,
 		NbRadioModule,
 		TranslateModule.forChild(),
-		FileUploaderModule
+		FileUploaderModule,
+		ProductCategoriesFormsModule
 	],
 	declarations: COMPONENTS,
-	exports: COMPONENTS
+	exports: COMPONENTS,
+	providers: [NotifyService]
 })
 export class SetupMerchantsComponentsModule {}

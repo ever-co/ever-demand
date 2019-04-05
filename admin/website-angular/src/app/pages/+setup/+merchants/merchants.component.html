@@ -216,14 +216,38 @@
 							</button>
 						</nb-step>
 						<nb-step label="Product categories">
-							<h3>Product categories</h3>
+							<ea-merchants-setup-product-categories
+								#productCategories
+							></ea-merchants-setup-product-categories>
+							<button
+								*ngIf="productCategories.showCreateForm"
+								nbButton
+								(click)="
+									productCategories.showCreateForm = false
+								"
+							>
+								Back
+							</button>
 
-							<button nbButton nbStepperPrevious>
+							<button
+								*ngIf="!productCategories.showCreateForm"
+								nbButton
+								nbStepperPrevious
+							>
 								{{
 									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
 								}}
 							</button>
-							<button nbButton nbStepperNext>
+							<button
+								nbButton
+								nbStepperNext
+								[disabled]="
+									productCategories.showCreateForm
+										? !productCategories.isValidForm
+										: false
+								"
+								(click)="productCategories.create()"
+							>
 								{{
 									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
 								}}
