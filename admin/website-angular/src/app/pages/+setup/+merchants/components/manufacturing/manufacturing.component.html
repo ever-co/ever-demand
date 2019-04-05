@@ -1,10 +1,17 @@
 <nb-card class="setup-merchant-manufacturing">
-	<nb-card-header>Manufacturing</nb-card-header>
+	<nb-card-header>
+		{{
+			'FAKE_DATA.SETUP_MERCHANTS.MANUFACTURING.MANUFACTURING' | translate
+		}}
+	</nb-card-header>
 	<nb-card-body>
 		<div class="row m-0">
 			<div class="form-group offset-md-2 col-md-4">
 				<nb-checkbox [(ngModel)]="isManufacturing">
-					Products Manufacturing
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.MANUFACTURING.PRODUCTS_MANUFACTURING'
+							| translate
+					}}
 				</nb-checkbox>
 			</div>
 		</div>

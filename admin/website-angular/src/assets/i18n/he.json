@@ -253,6 +253,10 @@
 			},
 			"LOCATION": {
 				"LOCATION": "מקום"
+			},
+			"MANUFACTURING": {
+				"MANUFACTURING": "ייצור",
+				"PRODUCTS_MANUFACTURING": "ייצור מוצרים"
 			}
 		}
 	},

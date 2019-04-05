@@ -254,6 +254,10 @@
 			},
 			"LOCATION": {
 				"LOCATION": "Место нахождения"
+			},
+			"MANUFACTURING": {
+				"MANUFACTURING": "Производство",
+				"PRODUCTS_MANUFACTURING": "Продукти Производство"
 			}
 		}
 	},

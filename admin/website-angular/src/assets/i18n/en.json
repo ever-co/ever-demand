@@ -253,6 +253,10 @@
 			},
 			"LOCATION": {
 				"LOCATION": "Location"
+			},
+			"MANUFACTURING": {
+				"MANUFACTURING": "Manufacturing",
+				"PRODUCTS_MANUFACTURING": "Products Manufacturing"
 			}
 		}
 	},
