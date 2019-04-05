@@ -25,7 +25,7 @@ type Warehouse {
 	contactEmail: String
 	contactPhone: String
 
-	forwardOrdersUsing: Int!
+	forwardOrdersUsing: [Int!]
 	ordersEmail: String
 	ordersPhone: String
 
@@ -40,6 +40,7 @@ type Warehouse {
 	orders: [Order!]! # Resolved
 	users: [User!]! # Resolved
 	hasRestrictedCarriers: Boolean
+	carriersIds: [String!]
 	usedCarriersIds: [String!]
 	carriers: [Carrier!] # Resolved, if hasRestrictedCarriers is false -> returns null
 	orderBarcodeType: Int
@@ -62,7 +63,7 @@ input WarehouseCreateInput {
 	contactEmail: String
 	contactPhone: String
 
-	forwardOrdersUsing: Int!
+	forwardOrdersUsing: [Int!]
 	ordersEmail: String
 	ordersPhone: String
 
@@ -73,6 +74,7 @@ input WarehouseCreateInput {
 	isCarrierRequired: Boolean
 
 	hasRestrictedCarriers: Boolean
+	carriersIds: [String!]
 	usedCarriersIds: [String!]
 }
 
@@ -92,7 +94,7 @@ input WarehousesFindInput {
 	contactEmail: String
 	contactPhone: String
 
-	forwardOrdersUsing: Int
+	forwardOrdersUsing: [Int]
 	ordersEmail: String
 	ordersPhone: String
 
@@ -105,6 +107,7 @@ input WarehousesFindInput {
 	# TODO devices: Device[]
 
 	hasRestrictedCarriers: Boolean
+	carriersIds: [String!]
 	usedCarriersIds: [String!]
 }
 

@@ -1,4 +1,4 @@
-<nb-card class="basic-info">
+<nb-card class="basic-info {{ boxShadow === 'none' ? 'no-box-shadow' : '' }}">
 	<div class="col-sm-12" [formGroup]="form" *ngIf="form">
 		<br />
 
@@ -17,24 +17,31 @@
 						}}"
 						formControlName="firstName"
 					/>
-					<div
-						*ngIf="isFirstNameValid && firstName.errors.required"
-						class="alert alert-danger"
+					<span
+						*ngIf="
+							firstName.invalid &&
+							(firstName.dirty || firstName.touched)
+						"
 					>
-						{{
-							'SHARED.FORMS.ERRORS.FIRST_NAME_REQUIRED'
-								| translate
-						}}!
-					</div>
-					<div
-						*ngIf="isFirstNameValid && firstName.errors.pattern"
-						class="alert alert-danger"
-					>
-						{{
-							'SHARED.FORMS.ERRORS.MUST_CONTAIN_ONLY_LETTERS'
-								| translate
-						}}!
-					</div>
+						<div
+							*ngIf="firstName.errors.required"
+							class="alert alert-danger"
+						>
+							{{
+								'SHARED.FORMS.ERRORS.FIRST_NAME_REQUIRED'
+									| translate
+							}}!
+						</div>
+						<div
+							*ngIf="firstName.errors.pattern"
+							class="alert alert-danger"
+						>
+							{{
+								'SHARED.FORMS.ERRORS.MUST_CONTAIN_ONLY_LETTERS'
+									| translate
+							}}!
+						</div>
+					</span>
 				</div>
 
 				<div class="col-sm-5">
@@ -46,24 +53,31 @@
 						}}"
 						formControlName="lastName"
 					/>
-					<div
-						*ngIf="isLastNameValid && lastName.errors.required"
-						class="alert alert-danger"
+					<span
+						*ngIf="
+							lastName.invalid &&
+							(lastName.dirty || lastName.touched)
+						"
 					>
-						{{
-							'SHARED.FORMS.ERRORS.LAST_NAME_REQUIRED'
-								| translate
-						}}!
-					</div>
-					<div
-						*ngIf="isLastNameValid && lastName.errors.pattern"
-						class="alert alert-danger"
-					>
-						{{
-							'SHARED.FORMS.ERRORS.MUST_CONTAIN_ONLY_LETTERS'
-								| translate
-						}}!
-					</div>
+						<div
+							*ngIf="lastName.errors.required"
+							class="alert alert-danger"
+						>
+							{{
+								'SHARED.FORMS.ERRORS.LAST_NAME_REQUIRED'
+									| translate
+							}}!
+						</div>
+						<div
+							*ngIf="lastName.errors.pattern"
+							class="alert alert-danger"
+						>
+							{{
+								'SHARED.FORMS.ERRORS.MUST_CONTAIN_ONLY_LETTERS'
+									| translate
+							}}!
+						</div>
+					</span>
 				</div>
 			</div>
 		</fieldset>
@@ -81,7 +95,13 @@
 						formControlName="username"
 					/>
 
-					<div *ngIf="isUsernameValid" class="alert alert-danger">
+					<div
+						*ngIf="
+							username.invalid &&
+							(username.dirty || username.touched)
+						"
+						class="alert alert-danger"
+					>
 						{{
 							'SHARED.FORMS.ERRORS.USERNAME_REQUIRED' | translate
 						}}!
@@ -102,7 +122,13 @@
 						[formControl]="password"
 					/>
 
-					<div *ngIf="isPasswordValid" class="alert alert-danger">
+					<div
+						*ngIf="
+							password.invalid &&
+							(password.dirty || password.touched)
+						"
+						class="alert alert-danger"
+					>
 						{{
 							'SHARED.FORMS.ERRORS.PASSWORD_REQUIRED' | translate
 						}}!
@@ -126,7 +152,10 @@
 						formControlName="phone"
 					/>
 
-					<div *ngIf="isPhoneValid" class="alert alert-danger">
+					<div
+						*ngIf="phone.invalid && (phone.dirty || phone.touched)"
+						class="alert alert-danger"
+					>
 						<div [hidden]="!phone.hasError('pattern')">
 							{{
 								'SHARED.FORMS.ERRORS.PHONE_MUST_CONTAINS_ONLY(specail_signs)AND_DIGIT_CHARACTER'
@@ -156,7 +185,10 @@
 						(uploadedImgUrl)="logo.setValue($event)"
 					></e-cu-file-uploader>
 
-					<div *ngIf="isLogoValid" class="alert alert-danger">
+					<div
+						*ngIf="logo.invalid && (logo.dirty || logo.touched)"
+						class="alert alert-danger"
+					>
 						{{
 							'SHARED.FORMS.ERRORS.LOGO_URL_REQUIRED' | translate
 						}}!
@@ -190,16 +222,15 @@
 			</div>
 
 			<div class="form-group row">
-				<label class="col-sm-2 control-label pt-1" for="is-active-radio"
-					>{{ 'CARRIERS_VIEW.CARRIER_PAGE.ACTIVE' | translate }}
-				</label>
-				<div class="col-sm-1">
-					<nb-checkbox formControlName="isActive"></nb-checkbox>
-
-					<div *ngIf="isActiveValid" class="alert alert-danger">
-						{{ 'SHARED.FORMS.ERRORS.IS_ACTIVE' | translate }}!
-					</div>
-				</div>
+				<!-- TODO add translate -->
+				<nb-checkbox class="col-sm-12" formControlName="isSharedCarrier"
+					>Carrier can be shared?</nb-checkbox
+				>
+				<nb-checkbox class="col-sm-12" formControlName="isActive">
+					{{
+						'CARRIERS_VIEW.CARRIER_PAGE.ACTIVE' | translate
+					}}</nb-checkbox
+				>
 			</div>
 		</fieldset>
 	</div>

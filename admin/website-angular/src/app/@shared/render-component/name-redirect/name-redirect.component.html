@@ -1,4 +1,4 @@
-<div (click)="redirect()" class="redirectBtn">
+<div (click)="redirect()" class="{{ redirectPage ? 'redirectBtn' : '' }}">
 	<h6 class="warehouse-name-smt">
 		<strong>{{ rowData.name }}</strong>
 	</h6>

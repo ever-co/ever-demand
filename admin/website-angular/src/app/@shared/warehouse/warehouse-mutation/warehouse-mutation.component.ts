@@ -68,6 +68,12 @@ export class WarehouseMutationComponent implements AfterViewInit {
 		return this._translate(this.BUTTON_PREV);
 	}
 
+	get isValidContactInfo() {
+		return this.contactInfoForm.validForm !== undefined
+			? this.contactInfoForm.validForm
+			: true;
+	}
+
 	ngAfterViewInit() {
 		// This hack is need because the styles of 'ng-bootstrap' modal and google autocomplete api
 		// collide and autocomplete field just doesn't show without larger z-index.

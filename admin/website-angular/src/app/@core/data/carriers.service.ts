@@ -49,12 +49,21 @@ export class CarriersService {
 		return this.carriers$;
 	}
 
-	getCarriers(pagingOptions?: IPagingOptions): Observable<Carrier[]> {
+	getCarriers(
+		pagingOptions?: IPagingOptions,
+		carriersFindInput?: any
+	): Observable<Carrier[]> {
 		return this._apollo
 			.watchQuery<{ getCarriers: ICarrier[] }>({
 				query: gql`
-					query GetCarriers($pagingOptions: PagingOptionsInput) {
-						getCarriers(pagingOptions: $pagingOptions) {
+					query GetCarriers(
+						$pagingOptions: PagingOptionsInput
+						$carriersFindInput: CarriersFindInput
+					) {
+						getCarriers(
+							pagingOptions: $pagingOptions
+							carriersFindInput: $carriersFindInput
+						) {
 							_id
 							firstName
 							lastName
@@ -64,6 +73,9 @@ export class CarriersService {
 							numberOfDeliveries
 							skippedOrderIds
 							status
+							isActive
+							username
+							isSharedCarrier
 							geoLocation {
 								city
 								streetAddress
@@ -76,7 +88,7 @@ export class CarriersService {
 						}
 					}
 				`,
-				variables: { pagingOptions },
+				variables: { pagingOptions, carriersFindInput },
 				pollInterval: 2000
 			})
 			.valueChanges.pipe(
@@ -198,14 +210,19 @@ export class CarriersService {
 		return res.data['getCarrierCurrentOrder'];
 	}
 
-	async getCountOfCarriers(): Promise<any> {
+	async getCountOfCarriers(carriersFindInput?: any): Promise<any> {
 		const res = await this._apollo
 			.query({
 				query: gql`
-					query GetCountOfCarriers {
-						getCountOfCarriers
+					query GetCountOfCarriers(
+						$carriersFindInput: CarriersFindInput
+					) {
+						getCountOfCarriers(
+							carriersFindInput: $carriersFindInput
+						)
 					}
-				`
+				`,
+				variables: { carriersFindInput }
 			})
 			.toPromise();
 

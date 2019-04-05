@@ -11,7 +11,7 @@
 		</button>
 		<button
 			class="btn btn-icon btn-danger btn-sm mr-2 d-inline-block"
-			[disabled]="!hasSelectedCarriers"
+			[disabled]="!carriersTable.hasSelectedCarriers"
 			(click)="deleteSelectedCarriers()"
 		>
 			<i class="ion-md-trash button-icon"></i>
@@ -26,11 +26,9 @@
 		</button>
 	</nb-card-header>
 	<nb-card-body [nbSpinner]="loading">
-		<ng2-smart-table
-			[settings]="settingsSmartTable"
-			[source]="sourceSmartTable"
-			(userRowSelect)="selectCarrierTmp($event)"
-		>
-		</ng2-smart-table>
+		<ea-carriers-smart-table
+			[perPage]="perPage"
+			#carriersTable
+		></ea-carriers-smart-table>
 	</nb-card-body>
 </nb-card>

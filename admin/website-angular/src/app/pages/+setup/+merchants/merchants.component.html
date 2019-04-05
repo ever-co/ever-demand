@@ -1,0 +1,281 @@
+<toaster-container></toaster-container>
+
+<div class="setup-merchants-page">
+	<div class="row">
+		<div class="col-md-9">
+			<nb-card>
+				<nb-card-body>
+					<nb-stepper #nbStepper orientation="vertical">
+						<nb-step label="Account">
+							<ea-merchants-setup-account
+								#account
+							></ea-merchants-setup-account>
+
+							<button nbButton disabled nbStepperNext>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
+								}}
+							</button>
+							<button
+								nbButton
+								nbStepperNext
+								[disabled]="!account.formValid"
+							>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
+								}}
+							</button>
+						</nb-step>
+						<nb-step label="Basic info">
+							<ea-merchants-setup-basic-info
+								#basicInfo
+							></ea-merchants-setup-basic-info>
+
+							<button nbButton nbStepperPrevious>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
+								}}
+							</button>
+							<button
+								nbButton
+								nbStepperNext
+								[disabled]="!basicInfo.formValid"
+							>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
+								}}
+							</button>
+						</nb-step>
+						<nb-step label="Contact info">
+							<ea-merchants-setup-contact-info
+								#contactInfo
+							></ea-merchants-setup-contact-info>
+
+							<button nbButton nbStepperPrevious>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
+								}}
+							</button>
+							<button
+								nbButton
+								nbStepperNext
+								[disabled]="contactInfo.contactInfoForm.invalid"
+							>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
+								}}
+							</button>
+						</nb-step>
+						<nb-step label="Location">
+							<ea-merchants-setup-location
+								#location
+							></ea-merchants-setup-location>
+
+							<button nbButton nbStepperPrevious>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
+								}}
+							</button>
+							<button
+								nbButton
+								nbStepperNext
+								[disabled]="location.location.invalid"
+							>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
+								}}
+							</button>
+						</nb-step>
+						<nb-step label="Payments">
+							<ea-merchants-setup-payments
+								#payments
+							></ea-merchants-setup-payments>
+
+							<button nbButton nbStepperPrevious>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
+								}}
+							</button>
+							<button nbButton nbStepperNext>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
+								}}
+							</button>
+						</nb-step>
+						<nb-step label="Manufacturing">
+							<ea-merchants-setup-manufacturing
+								#manufacturing
+							></ea-merchants-setup-manufacturing>
+
+							<button nbButton nbStepperPrevious>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
+								}}
+							</button>
+							<button nbButton nbStepperNext>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
+								}}
+							</button>
+						</nb-step>
+						<nb-step label="Delivery & Takeaway Settings">
+							<ea-merchants-setup-delivery-takeaway
+								[locationForm]="location.locationForm"
+								#deliveryAndTakeaway
+							></ea-merchants-setup-delivery-takeaway>
+
+							<div
+								*ngIf="
+									deliveryAndTakeaway.currentView ===
+									deliveryAndTakeaway.componentViews.main
+								"
+							>
+								<button nbButton nbStepperPrevious>
+									{{
+										'FAKE_DATA.SETUP_MERCHANTS.PREV'
+											| translate
+									}}
+								</button>
+								<button nbButton nbStepperNext>
+									{{
+										'FAKE_DATA.SETUP_MERCHANTS.NEXT'
+											| translate
+									}}
+								</button>
+							</div>
+							<div
+								*ngIf="
+									deliveryAndTakeaway.currentView !==
+									deliveryAndTakeaway.componentViews.main
+								"
+							>
+								<button
+									nbButton
+									(click)="deliveryAndTakeaway.back()"
+								>
+									{{
+										'FAKE_DATA.SETUP_MERCHANTS.BACK'
+											| translate
+									}}
+								</button>
+								<button
+									*ngIf="
+										deliveryAndTakeaway.currentView !==
+										deliveryAndTakeaway.componentViews
+											.editCarrier
+									"
+									[disabled]="
+										!deliveryAndTakeaway.haveCarriersForAdd
+									"
+									nbButton
+									(click)="deliveryAndTakeaway.add()"
+								>
+									{{
+										'FAKE_DATA.SETUP_MERCHANTS.ADD'
+											| translate
+									}}
+								</button>
+
+								<button
+									*ngIf="
+										deliveryAndTakeaway.currentView ===
+										deliveryAndTakeaway.componentViews
+											.editCarrier
+									"
+									[disabled]="
+										!deliveryAndTakeaway.isBasicInfoValid
+									"
+									nbButton
+									(click)="deliveryAndTakeaway.save()"
+								>
+									{{
+										'FAKE_DATA.SETUP_MERCHANTS.SAVE'
+											| translate
+									}}
+								</button>
+							</div>
+						</nb-step>
+						<nb-step label="Orders Settings">
+							<ea-merchants-setup-orders-settings
+								#ordersSettings
+							></ea-merchants-setup-orders-settings>
+
+							<button nbButton nbStepperPrevious>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
+								}}
+							</button>
+							<button
+								nbButton
+								(click)="createMerchant()"
+								[disabled]="!canCreateMerchant"
+							>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
+								}}
+							</button>
+						</nb-step>
+						<nb-step label="Product categories">
+							<ea-merchants-setup-product-categories
+								#productCategories
+							></ea-merchants-setup-product-categories>
+							<button
+								*ngIf="productCategories.showCreateForm"
+								nbButton
+								(click)="
+									productCategories.showCreateForm = false
+								"
+							>
+								Back
+							</button>
+
+							<button
+								*ngIf="!productCategories.showCreateForm"
+								nbButton
+								nbStepperPrevious
+							>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
+								}}
+							</button>
+							<button
+								nbButton
+								nbStepperNext
+								[disabled]="
+									productCategories.showCreateForm
+										? !productCategories.isValidForm
+										: false
+								"
+								(click)="productCategories.create()"
+							>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
+								}}
+							</button>
+						</nb-step>
+						<nb-step label="Products">
+							<h3>Products</h3>
+
+							<button nbButton nbStepperPrevious>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
+								}}
+							</button>
+							<button nbButton disabled nbStepperNext>
+								{{
+									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
+								}}
+							</button>
+						</nb-step>
+					</nb-stepper>
+				</nb-card-body>
+			</nb-card>
+		</div>
+
+		<div class="col-md-3">
+			<ea-merchants-setup-instructions
+				[stepper]="nbStepper"
+			></ea-merchants-setup-instructions>
+		</div>
+	</div>
+</div>

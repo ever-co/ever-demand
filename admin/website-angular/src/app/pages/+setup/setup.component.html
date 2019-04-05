@@ -1,11 +1,17 @@
 <nb-card class="col-12" [nbSpinner]="loading">
-
 	<nb-card-header>
-		<h1>{{"FAKE_DATA.SETUP" | translate}}</h1>
+		<h1>{{ 'FAKE_DATA.SETUP' | translate }}</h1>
 	</nb-card-header>
 
 	<nb-card-body>
-		<button class="btn btn-primary" (click)="navigateToFakeDataPage()">{{"FAKE_DATA.GENERATE_INITIAL_DATA" | translate}} </button>
+		<button class="btn btn-primary mr-3" (click)="navigateToFakeDataPage()">
+			{{ 'FAKE_DATA.GENERATE_INITIAL_DATA' | translate }}
+		</button>
+		<button
+			class="btn btn-primary"
+			(click)="navigateToSetupMerchantsPage()"
+		>
+			{{ 'FAKE_DATA.SETUP_MERCHANTS.SETUP_MERCHANTS' | translate }}
+		</button>
 	</nb-card-body>
-
 </nb-card>

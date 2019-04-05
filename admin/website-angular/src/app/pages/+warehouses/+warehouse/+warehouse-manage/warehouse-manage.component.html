@@ -21,7 +21,7 @@
 				type="button"
 				class="btn btn-success pull-right text-center"
 				(click)="updateWarehouse()"
-				[disabled]="!form.valid"
+				[disabled]="!validForm"
 			>
 				<i class="ion-md-checkmark button-icon"></i>
 				<span>{{ 'WAREHOUSE_MANAGE.SAVE' | translate }}</span>

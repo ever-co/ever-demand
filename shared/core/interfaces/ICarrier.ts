@@ -32,6 +32,7 @@ export interface ICarrierCreateObject extends DBCreateObject {
 	totalDistanceToday?: number;
 
 	devicesIds?: string[];
+	isSharedCarrier: boolean;
 
 	/**
 	 * Url to Carrier logo/photo
@@ -61,6 +62,7 @@ interface ICarrier extends DBRawObject, ICarrierCreateObject {
 	totalDistanceToday: number;
 	devicesIds: string[];
 	logo: string;
+	isSharedCarrier: boolean;
 }
 
 export default ICarrier;

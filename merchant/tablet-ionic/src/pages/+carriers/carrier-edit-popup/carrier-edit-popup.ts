@@ -94,6 +94,7 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 
 		const account = {
 			isActive: this.accountForm.isActive.value,
+			isSharedCarrier: this.accountForm.isSharedCarrier.value,
 			username: this.accountForm.userName.value,
 			password: this.accountForm.password.value,
 			repeatPassword: this.accountForm.repeatPassword.value
@@ -110,6 +111,7 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 
 			username: account.username,
 			isActive: account.isActive,
+			isSharedCarrier: account.isSharedCarrier,
 
 			geoLocation
 		};

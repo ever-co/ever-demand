@@ -81,6 +81,7 @@ export class AddNewCarrierComponent implements OnInit, OnDestroy, OnChanges {
 			phone: this.basicInfoForm.phone.value,
 
 			username: this.accountForm.userName.value,
+			isSharedCarrier: this.accountForm.isSharedCarrier.value,
 
 			geoLocation: {
 				city: this.locationForm.city.value,

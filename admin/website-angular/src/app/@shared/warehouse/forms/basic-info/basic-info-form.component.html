@@ -183,9 +183,9 @@
 
 				<div *ngIf="hasRestrictedCarriers.value">
 					<ss-multiselect-dropdown
-						[options]="carriersOptions$ | async"
+						[options]="carriersOptions"
 						[settings]="{ displayAllSelectedText: true }"
-						formControlName="usedCarriersIds"
+						formControlName="carriersIds"
 						class="carriers-dropdown"
 					>
 					</ss-multiselect-dropdown>

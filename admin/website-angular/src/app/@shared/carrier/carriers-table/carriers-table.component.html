@@ -1,0 +1,8 @@
+<ng2-smart-table
+	[settings]="settingsSmartTable"
+	[source]="sourceSmartTable"
+	(userRowSelect)="selectCarrierTmp($event)"
+	(edit)="editRow.emit($event)"
+	(delete)="deleteRow.emit($event)"
+>
+</ng2-smart-table>

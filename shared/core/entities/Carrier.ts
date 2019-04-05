@@ -221,6 +221,17 @@ class Carrier extends DBObject<ICarrier, ICarrierCreateObject>
 	devicesIds: string[];
 
 	/**
+	 * Is shared the carrier, i.e if not then only merchant which already has such carrier assigned
+	 * (inside "carriersIds" array on Merchant) can use such carrier and no one else
+	 *
+	 * @type {boolean}
+	 * @memberof Carrier
+	 */
+	@Types.Boolean(false)
+	@Column()
+	isSharedCarrier: boolean;
+
+	/**
 	 * Full name of the Carrier
 	 *
 	 * @readonly

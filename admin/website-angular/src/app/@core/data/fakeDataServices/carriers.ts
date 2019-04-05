@@ -41,6 +41,7 @@ export default class FakeDataCarriers {
 									min: 0,
 									max: 60
 								}),
+								isSharedCarrier: true,
 								geoLocation: {
 									city: faker.address.city(),
 									postcode: faker.address.zipCode(),
@@ -79,6 +80,7 @@ export default class FakeDataCarriers {
 								min: 0,
 								max: 60
 							}),
+							isSharedCarrier: true,
 							geoLocation: {
 								city: 'Ashdod',
 								postcode: '77452',
@@ -114,6 +116,7 @@ export default class FakeDataCarriers {
 								min: 0,
 								max: 60
 							}),
+							isSharedCarrier: true,
 							geoLocation: {
 								city: 'Ashdod',
 								postcode: '77452',
@@ -148,6 +151,7 @@ export default class FakeDataCarriers {
 								min: 0,
 								max: 60
 							}),
+							isSharedCarrier: true,
 							geoLocation: {
 								city: 'Ashdod',
 								postcode: '77452',

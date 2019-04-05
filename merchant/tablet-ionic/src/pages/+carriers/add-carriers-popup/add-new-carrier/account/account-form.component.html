@@ -14,7 +14,8 @@
 				<ion-input type="text" formControlName="userName"></ion-input>
 			</ion-item>
 		</ion-col>
-
+	</ion-row>
+	<ion-row class="items-end">
 		<ion-col>
 			<ion-item>
 				<ion-label position="floating">{{
@@ -24,21 +25,6 @@
 					type="password"
 					formControlName="password"
 				></ion-input>
-			</ion-item>
-		</ion-col>
-	</ion-row>
-	<ion-row class="items-end">
-		<ion-col>
-			<ion-item class="coord-box">
-				<ion-checkbox
-					class="mr-2"
-					color="success"
-					formControlName="isActive"
-				></ion-checkbox>
-
-				<ion-label>{{
-					'CARRIERS_VIEW.ADD_CARRIER.IS_ACTIVE' | translate
-				}}</ion-label>
 			</ion-item>
 		</ion-col>
 
@@ -64,6 +50,35 @@
 					</small>
 				</span>
 			</span>
+		</ion-col>
+	</ion-row>
+
+	<ion-row>
+		<ion-col>
+			<ion-item class="coord-box">
+				<ion-checkbox
+					class="mr-2"
+					color="success"
+					formControlName="isSharedCarrier"
+				></ion-checkbox>
+
+				<!-- TODO add translate -->
+				<ion-label>Carrier can be shared?</ion-label>
+			</ion-item>
+		</ion-col>
+
+		<ion-col>
+			<ion-item class="coord-box">
+				<ion-checkbox
+					class="mr-2"
+					color="success"
+					formControlName="isActive"
+				></ion-checkbox>
+
+				<ion-label>{{
+					'CARRIERS_VIEW.ADD_CARRIER.IS_ACTIVE' | translate
+				}}</ion-label>
+			</ion-item>
 		</ion-col>
 	</ion-row>
 </form>

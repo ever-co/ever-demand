@@ -16,7 +16,7 @@ export type WarehouseManageTabs = Pick<
 	| 'isActive'
 	| 'username'
 	| 'hasRestrictedCarriers'
-	| 'usedCarriersIds'
+	| 'carriersIds'
 	| 'isManufacturing'
 	| 'isCarrierRequired'
 >;
@@ -70,6 +70,10 @@ export class WarehouseManageTabsComponent {
 		return this.form.get('location');
 	}
 
+	get validForm() {
+		return this.form.valid && this.contactInfoForm.validForm;
+	}
+
 	onCoordinatesChanges(coords: number[]) {
 		this.mapCoordEmitter.emit(coords);
 	}
@@ -98,7 +102,7 @@ export class WarehouseManageTabsComponent {
 			contactInfo: {
 				contactEmail: string;
 				contactPhone: string;
-				forwardOrdersUsing: ForwardOrdersMethod;
+				forwardOrdersUsing: ForwardOrdersMethod[];
 				ordersEmail: string;
 				ordersPhone: string;
 			};
