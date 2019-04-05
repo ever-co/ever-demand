@@ -250,6 +250,9 @@
 				"INVALID_EMAIL_FORMAT": "Invalid email format",
 				"ORDERS_PHONE": "Orders Phone",
 				"ORDERS_PHONE_IS_REQUIRED": "Orders phone is required"
+			},
+			"LOCATION": {
+				"LOCATION": "Location"
 			}
 		}
 	},

@@ -250,6 +250,9 @@
 				"INVALID_EMAIL_FORMAT": "Неверный формат электронной почты",
 				"ORDERS_PHONE": "Заказ телефона",
 				"ORDERS_PHONE_IS_REQUIRED": "Заказы по телефону обязательны"
+			},
+			"LOCATION": {
+				"LOCATION": "Место нахождения"
 			}
 		}
 	},

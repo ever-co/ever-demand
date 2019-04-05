@@ -250,6 +250,9 @@
 				"INVALID_EMAIL_FORMAT": "פורמט דוא'ל לא חוקי",
 				"ORDERS_PHONE": "טלפון הטלפונים",
 				"ORDERS_PHONE_IS_REQUIRED": "טלפון הטלפון נדרש"
+			},
+			"LOCATION": {
+				"LOCATION": "מקום"
 			}
 		}
 	},

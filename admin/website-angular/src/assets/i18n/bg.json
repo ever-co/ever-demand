@@ -251,6 +251,9 @@
 				"INVALID_EMAIL_FORMAT": "Невалиден имейл формат",
 				"ORDERS_PHONE": "Телефон за поръчки",
 				"ORDERS_PHONE_IS_REQUIRED": "Изисква се телефонна поръчка"
+			},
+			"LOCATION": {
+				"LOCATION": "Место нахождения"
 			}
 		}
 	},
