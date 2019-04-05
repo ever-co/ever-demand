@@ -6,7 +6,6 @@ import {
 	Input
 } from '@angular/core';
 import { SetupMerchantSharedCarriersComponent } from './shared-carriers/shared-carriers.component';
-import Carrier from '@modules/server.common/entities/Carrier';
 import {
 	CarriersSmartTableComponent,
 	CarrierSmartTableObject
@@ -15,7 +14,6 @@ import { Subject } from 'rxjs';
 import { SetupMerchantAddNewCarrierComponent } from './add-new-carrier/add-new-carrier.component';
 import { getDummyImage } from '@modules/server.common/utils';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
-import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 
 @Component({
 	selector: 'ea-merchants-setup-delivery-takeaway',
@@ -42,7 +40,7 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 	};
 	currentView = this.componentViews.main;
 	carriersPerPage = 3;
-	carrierData: Carrier;
+	carrierId: string;
 
 	isCarrierRequired: boolean;
 	productsDelivery: boolean;
@@ -69,6 +67,16 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 				this.locationForm.form.valid;
 		}
 		return hasSelectedCarriers;
+	}
+
+	get isBasicInfoValid() {
+		let res = false;
+
+		if (this.newCarrier) {
+			res = this.newCarrier.basicInfoForm.form.valid;
+		}
+
+		return res;
 	}
 
 	get restrictedCarriersIds() {
@@ -117,6 +125,24 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 		this.currentView = this.componentViews.main;
 	}
 
+	async save() {
+		const basicInfo = this.newCarrier.basicInfoForm.getValue();
+
+		const carrier = await this.carrierRouter.updateById(this.carrierId, {
+			...basicInfo
+		});
+
+		this.restrictedCarriers = this.restrictedCarriers.filter(
+			(c) => c.id !== this.carrierId
+		);
+		this.restrictedCarriers.unshift(
+			CarriersSmartTableComponent.getCarrierSmartTableObject(carrier)
+		);
+		this.carrierId = null;
+
+		this.currentView = this.componentViews.main;
+	}
+
 	back() {
 		this.currentView = this.componentViews.main;
 	}
@@ -138,7 +164,7 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 	}
 
 	editCarrier(e) {
-		this.carrierData = e['data'].carrier;
+		this.carrierId = e.data.id;
 		this.currentView = this.componentViews.editCarrier;
 	}
 

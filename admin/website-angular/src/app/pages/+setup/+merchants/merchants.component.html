@@ -146,6 +146,11 @@
 									Back
 								</button>
 								<button
+									*ngIf="
+										deliveryAndTakeaway.currentView !==
+										deliveryAndTakeaway.componentViews
+											.editCarrier
+									"
 									[disabled]="
 										!deliveryAndTakeaway.haveCarriersForAdd
 									"
@@ -153,6 +158,21 @@
 									(click)="deliveryAndTakeaway.add()"
 								>
 									Add
+								</button>
+
+								<button
+									*ngIf="
+										deliveryAndTakeaway.currentView ===
+										deliveryAndTakeaway.componentViews
+											.editCarrier
+									"
+									[disabled]="
+										!deliveryAndTakeaway.isBasicInfoValid
+									"
+									nbButton
+									(click)="deliveryAndTakeaway.save()"
+								>
+									Save
 								</button>
 							</div>
 						</nb-step>
