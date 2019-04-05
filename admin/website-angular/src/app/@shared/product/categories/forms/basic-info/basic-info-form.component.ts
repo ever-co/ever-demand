@@ -3,7 +3,8 @@ import {
 	ViewChild,
 	ElementRef,
 	OnInit,
-	AfterViewInit
+	AfterViewInit,
+	Input
 } from '@angular/core';
 import {
 	FormGroup,
@@ -25,6 +26,9 @@ import { IProductsCategoryCreateObject } from '@modules/server.common/interfaces
 export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 	@ViewChild('imagePreview')
 	imagePreviewElement: ElementRef;
+
+	@Input()
+	category: { title: string; image: string };
 
 	uploaderPlaceholder: string;
 
@@ -96,7 +100,24 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 		return categoryObject;
 	}
 
+	get editObject() {
+		const editObject = {
+			name: this.name.value
+		};
+
+		if (this.showImageMeta) {
+			editObject['image'] = this.image.value;
+		}
+
+		return editObject;
+	}
+
 	ngOnInit() {
+		if (this.category) {
+			this.name.setValue(this.category.title);
+			this.image.setValue(this.category.image);
+		}
+
 		this.getUploaderPlaceholderText();
 	}
 
