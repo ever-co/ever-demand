@@ -55,12 +55,14 @@ export class WarehouseManageTabsDetailsComponent
 		Observable.of([]),
 		this._carrierRouter.getAllActive().pipe(
 			map((carriers) =>
-				carriers.map((c) => {
-					return {
-						id: c.id,
-						name: `${c.firstName} ${c.lastName}`
-					};
-				})
+				carriers
+					.filter((c) => c.isSharedCarrier)
+					.map((c) => {
+						return {
+							id: c.id,
+							name: `${c.firstName} ${c.lastName}`
+						};
+					})
 			)
 		)
 	);

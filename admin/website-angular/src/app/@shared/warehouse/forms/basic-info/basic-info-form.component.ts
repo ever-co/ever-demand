@@ -194,10 +194,13 @@ export class BasicInfoFormComponent implements OnInit {
 	}
 
 	private async loadCarriersOptions() {
-		const carriers = await this.carrierRouter
+		let carriers = await this.carrierRouter
 			.getAllActive()
 			.pipe(first())
 			.toPromise();
+
+		carriers = carriers.filter((c) => c.isSharedCarrier);
+
 		this.carriersOptions = carriers.map((c) => {
 			return {
 				id: c.id,
