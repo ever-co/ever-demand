@@ -227,6 +227,18 @@
 				"PASSWORD_MUST_BE_AT_LEAST_4_CHARACTERS": "Паролата трябва да съдържа поне 4 знака",
 				"REPEAT_PASSWORD_IS_REQUIRED": "Изисква се повторна парола",
 				"PASSWORDS_DO_NOT_MATCH": "Паролите не съвпадат"
+			},
+			"BASIC_INFO": {
+				"BASIC_INFO": "Основна информация",
+				"NAME": "Име",
+				"NAME_IS_REQUIRED": "Изисква се име",
+				"NAME_MUST_BE_AT_LEAST_4_CHARACTERS": "Името трябва да е най-малко 4 знака",
+				"PHOTO": "Снимка",
+				"ENTER_A_VALID_LOGO_URL_OR_BROWSE_FROM_A_DEVICE": "Въведете валиден URL адрес на лого или прегледайте от устройството",
+				"REMOVE": "Премахване",
+				"PHOTO_OPTIONAL": "Снимка (по избор)",
+				"BARCODE_DATA": "Данни за баркод",
+				"BARCODE_DATA_IS_REQUIRED": "Необходими са данни за баркода"
 			}
 		}
 	},

@@ -1,16 +1,24 @@
 <nb-card class="setup-merchant-basic-info">
-	<nb-card-header>Basic info</nb-card-header>
+	<nb-card-header>
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.BASIC_INFO' | translate }}
+	</nb-card-header>
 	<nb-card-body>
 		<form class="row m-0" #basicInfoForm="ngForm">
 			<div class="form-group offset-md-2 col-md-8">
-				<label for="name">Name</label>
+				<label for="name">
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.NAME' | translate
+					}}
+				</label>
 				<input
 					nbInput
 					type="text"
 					class="form-control"
 					id="name"
 					name="name-input"
-					placeholder="Name"
+					placeholder="{{
+						'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.NAME' | translate
+					}}"
 					[(ngModel)]="basicInfoModel.name"
 					#name="ngModel"
 					(change)="nameChange()"
@@ -27,14 +35,26 @@
 					class="text-danger"
 					*ngIf="name.invalid && (name.dirty || name.touched)"
 				>
-					<span *ngIf="name.errors.required">Name is required</span>
-					<span *ngIf="name.errors.minlength"
-						>Name must be at least 4 characters</span
-					>
+					<span *ngIf="name.errors.required">
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.NAME_IS_REQUIRED'
+								| translate
+						}}
+					</span>
+					<span *ngIf="name.errors.minlength">
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.NAME_MUST_BE_AT_LEAST_4_CHARACTERS'
+								| translate
+						}}
+					</span>
 				</small>
 			</div>
 			<div class="offset-md-2 col-md-8">
-				<label for="name">Photo</label>
+				<label for="name">
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.PHOTO' | translate
+					}}
+				</label>
 				<e-cu-file-uploader
 					[placeholder]="uploaderPlaceholder"
 					[name]="name.value"
@@ -53,9 +73,12 @@
 					class="text-danger"
 					*ngIf="invalidUrl && basicInfoModel.logo !== ''"
 				>
-					<span *ngIf="invalidUrl"
-						>Enter a valid logo URL or browse from a device</span
-					>
+					<span *ngIf="invalidUrl">
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.ENTER_A_VALID_LOGO_URL_OR_BROWSE_FROM_A_DEVICE'
+								| translate
+						}}
+					</span>
 				</small>
 			</div>
 			<div
@@ -74,7 +97,10 @@
 						<div class="remove-icon" (click)="deleteImg()">
 							<span
 								class="ion-md-remove-circle text-danger pl-2"
-								title="Remove"
+								title="{{
+									'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.REMOVE'
+										| translate
+								}}"
 							></span>
 						</div>
 					</div>
@@ -83,14 +109,22 @@
 
 			<div class="mb-3 col-12 p-0">
 				<div class="form-group offset-md-2 col-md-8 mt-3 mb-0">
-					<label for="barcodeData">Barcode Data</label>
+					<label for="barcodeData">
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.BARCODE_DATA'
+								| translate
+						}}
+					</label>
 					<input
 						nbInput
 						type="text"
 						class="form-control"
 						id="barcodeData"
 						name="barcode-data-input"
-						placeholder="Barcode data"
+						placeholder="{{
+							'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.BARCODE_DATA'
+								| translate
+						}}"
 						[(ngModel)]="basicInfoModel.barcodeData"
 						(change)="barcodeDataChange()"
 						#barcodeData="ngModel"
@@ -113,9 +147,12 @@
 							(barcodeData.dirty || barcodeData.touched)
 						"
 					>
-						<span *ngIf="barcodeData.errors.required"
-							>Barcode Data is required</span
-						>
+						<span *ngIf="barcodeData.errors.required">
+							{{
+								'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.BARCODE_DATA_IS_REQUIRED'
+									| translate
+							}}
+						</span>
 					</small>
 				</div>
 				<div class="offset-md-2 col-md-8" [hidden]="!barcodetDataUrl">

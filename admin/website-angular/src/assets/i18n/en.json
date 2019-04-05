@@ -226,6 +226,18 @@
 				"PASSWORD_MUST_BE_AT_LEAST_4_CHARACTERS": "Password must be at least 4 characters",
 				"REPEAT_PASSWORD_IS_REQUIRED": "Repeat password is required",
 				"PASSWORDS_DO_NOT_MATCH": "Passwords do not match"
+			},
+			"BASIC_INFO": {
+				"BASIC_INFO": "Basic info",
+				"NAME": "Name",
+				"NAME_IS_REQUIRED": "Name is required",
+				"NAME_MUST_BE_AT_LEAST_4_CHARACTERS": "Name must be at least 4 characters",
+				"PHOTO": "Photo",
+				"ENTER_A_VALID_LOGO_URL_OR_BROWSE_FROM_A_DEVICE": "Enter a valid logo URL or browse from a device",
+				"REMOVE": "Remove",
+				"PHOTO_OPTIONAL": "Photo (optional)",
+				"BARCODE_DATA": "Barcode Data",
+				"BARCODE_DATA_IS_REQUIRED": "Barcode Data is required"
 			}
 		}
 	},

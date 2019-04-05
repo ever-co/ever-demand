@@ -226,6 +226,18 @@
 				"PASSWORD_MUST_BE_AT_LEAST_4_CHARACTERS": "הסיסמה צריכה להיות לפחות 4 תווים",
 				"REPEAT_PASSWORD_IS_REQUIRED": "נדרשת סיסמה חוזרת",
 				"PASSWORDS_DO_NOT_MATCH": "סיסמאות לא תואמות"
+			},
+			"BASIC_INFO": {
+				"BASIC_INFO": "מידע בסיסי",
+				"NAME": "שם",
+				"NAME_IS_REQUIRED": "נדרש שם",
+				"NAME_MUST_BE_AT_LEAST_4_CHARACTERS": "השם חייב להיות לפחות 4 תווים",
+				"PHOTO": "תמונה",
+				"ENTER_A_VALID_LOGO_URL_OR_BROWSE_FROM_A_DEVICE": "הזן כתובת אתר חוקית של לוגו או דפדף ממכשיר",
+				"REMOVE": "הסר",
+				"PHOTO_OPTIONAL": "תמונה (אופציונלי)",
+				"BARCODE_DATA": "נתוני ברקוד",
+				"BARCODE_DATA_IS_REQUIRED": "נתוני ברקוד נדרשים"
 			}
 		}
 	},

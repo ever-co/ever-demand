@@ -226,6 +226,18 @@
 				"PASSWORD_MUST_BE_AT_LEAST_4_CHARACTERS": "Пароль должен содержать не менее 4 символов",
 				"REPEAT_PASSWORD_IS_REQUIRED": "Требуется повторный пароль",
 				"PASSWORDS_DO_NOT_MATCH": "Пароли не совпадают"
+			},
+			"BASIC_INFO": {
+				"BASIC_INFO": "Базовая информация",
+				"NAME": "Название",
+				"NAME_IS_REQUIRED": "Имя обязательно",
+				"NAME_MUST_BE_AT_LEAST_4_CHARACTERS": "Имя должно содержать не менее 4 символов",
+				"PHOTO": "Фото",
+				"ENTER_A_VALID_LOGO_URL_OR_BROWSE_FROM_A_DEVICE": "Введите действительный URL-адрес логотипа или перейдите с устройства",
+				"REMOVE": "Удалить",
+				"PHOTO_OPTIONAL": "Фото (необязательно)",
+				"BARCODE_DATA": "Данные штрих-кода",
+				"BARCODE_DATA_IS_REQUIRED": "Данные штрих-кода обязательны"
 			}
 		}
 	},
