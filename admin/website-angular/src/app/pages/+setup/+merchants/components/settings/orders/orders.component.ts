@@ -7,7 +7,7 @@ import OrderBarcodeTypes from '@modules/server.common/enums/OrderBarcodeTypes';
 	styleUrls: ['./orders.component.scss']
 })
 export class SetupMerchantOrdersSettingsComponent {
-	iorderBarcodeType: OrderBarcodeTypes;
+	iorderBarcodeType: OrderBarcodeTypes = OrderBarcodeTypes.QR;
 
 	orderBarcodeTypes = [
 		{ label: 'QR', value: OrderBarcodeTypes.QR },

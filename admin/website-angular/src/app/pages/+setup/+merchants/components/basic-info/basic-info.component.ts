@@ -4,6 +4,7 @@ import QRCode from 'qrcode';
 import { TranslateService } from '@ngx-translate/core';
 import { first, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { getDummyImage } from '@modules/server.common/utils';
 
 @Component({
 	selector: 'ea-merchants-setup-basic-info',
@@ -23,7 +24,7 @@ export class SetupMerchantBasicInfoComponent implements OnInit, OnDestroy {
 	uploaderPlaceholder: string = 'Photo (optional)';
 	barcodetDataUrl: string;
 	invalidUrl: boolean;
-	basicInfoModel = {
+	private basicInfoModel = {
 		name: '',
 		logo: '',
 		barcodeData: ''
@@ -33,6 +34,16 @@ export class SetupMerchantBasicInfoComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		this.getUploaderPlaceholderText();
+	}
+
+	get basicInfoCreateObj() {
+		const model = { ...this.basicInfoModel };
+		if (!model.logo && model.name) {
+			const letter = model.name.charAt(0).toUpperCase();
+			const pictureUrl = getDummyImage(300, 300, letter);
+			model.logo = pictureUrl;
+		}
+		return model;
 	}
 
 	get formValid() {

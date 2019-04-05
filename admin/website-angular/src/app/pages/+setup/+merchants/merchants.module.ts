@@ -8,6 +8,7 @@ import { NbStepperModule } from '@nebular/theme';
 import { SetupMerchantsComponentsModule } from './components/components.module';
 import { SetupMerchantsLocationModule } from './components/location/location.module';
 import { SetupMerchantsDeliveryAndTakeawayModule } from './components/settings/delivery-takeaway/delivery-takeaway.module';
+import { ToasterModule } from 'angular2-toaster';
 
 const routes: Routes = [
 	{
@@ -25,7 +26,8 @@ const routes: Routes = [
 		NbStepperModule,
 		SetupMerchantsComponentsModule,
 		SetupMerchantsLocationModule,
-		SetupMerchantsDeliveryAndTakeawayModule
+		SetupMerchantsDeliveryAndTakeawayModule,
+		ToasterModule.forRoot()
 	],
 	declarations: [SetupMerchantsComponent]
 })

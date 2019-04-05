@@ -1,3 +1,5 @@
+<toaster-container></toaster-container>
+
 <div class="setup-merchants-page">
 	<div class="row">
 		<div class="col-md-9">
@@ -85,7 +87,9 @@
 							</button>
 						</nb-step>
 						<nb-step label="Payments">
-							<ea-merchants-setup-payments></ea-merchants-setup-payments>
+							<ea-merchants-setup-payments
+								#payments
+							></ea-merchants-setup-payments>
 
 							<button nbButton nbStepperPrevious>PREV</button>
 							<button nbButton nbStepperNext>
@@ -95,7 +99,9 @@
 							</button>
 						</nb-step>
 						<nb-step label="Manufacturing">
-							<ea-merchants-setup-manufacturing></ea-merchants-setup-manufacturing>
+							<ea-merchants-setup-manufacturing
+								#manufacturing
+							></ea-merchants-setup-manufacturing>
 
 							<button nbButton nbStepperPrevious>
 								{{
@@ -177,14 +183,20 @@
 							</div>
 						</nb-step>
 						<nb-step label="Orders Settings">
-							<ea-merchants-setup-orders-settings></ea-merchants-setup-orders-settings>
+							<ea-merchants-setup-orders-settings
+								#ordersSettings
+							></ea-merchants-setup-orders-settings>
 
 							<button nbButton nbStepperPrevious>
 								{{
 									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
 								}}
 							</button>
-							<button nbButton nbStepperNext>
+							<button
+								nbButton
+								(click)="createMerchant()"
+								[disabled]="!canCreateMerchant"
+							>
 								{{
 									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
 								}}
