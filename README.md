@@ -6,7 +6,7 @@
 
 [Ever](https://ever.co)® is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform build with [TypeScript](http://www.typescriptlang.org).
 
-Out-of-the-box Ever® Platform™ provides everything required to quickly build, manage and expand Multi-Store (Multi-Vendor Marketplace) or Single-Store **On-Demand** Commerce Solutions with customized e-commerce Websites (shops), Mobile ordering apps (Hybrid and PWA), Carrier (Driver) apps, Merchant apps and Admin interface website.
+Out-of-the-box Ever® Platform™ provides everything required to quickly build, manage and expand Multi-Store (Multi-Vendor / Peer-to-Peer Marketplace) or Single-Store **On-Demand** Commerce Solutions with customized e-commerce Websites (Shops), Mobile ordering Apps (Hybrid and PWA), Carrier (Driver) Mobile Apps, Merchant Apps and Admin interface Website.
 
 ![overview](https://docs.ever.co/docs/assets/overview.jpg)
 
