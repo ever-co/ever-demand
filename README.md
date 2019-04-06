@@ -67,6 +67,8 @@ For quick overview of each project in the Platform (Server, Admin, Shops, etc), 
 
 ## Getting Started
 
+We follow [Gitflow Workflow](https://nvie.com/posts/a-successful-git-branching-model) so the [`develop` branch](https://github.com/ever-co/ever/tree/develop) may be in an unstable or even broken state during development. Please use [releases](https://github.com/ever-co/ever/releases) or [`master` branch](https://github.com/ever-co/ever/tree/master) instead of the `develop` branch in order to get more stable code.
+
 ### Clone Repo
 
 Clone the Ever Platform Git repo:
