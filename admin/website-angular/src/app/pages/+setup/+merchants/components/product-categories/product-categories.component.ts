@@ -58,6 +58,7 @@ export class SetupMerchantProductCategoriesComponent {
 
 	set showMutationForm(isShow: boolean) {
 		this._showMutationForm = isShow;
+		this.currentCategory = null;
 		this.mutationType = 'add';
 		if (!isShow) {
 			this.loadCategories();
@@ -129,9 +130,9 @@ export class SetupMerchantProductCategoriesComponent {
 	}
 
 	editCategory(category) {
-		this.currentCategory = category;
 		this.showMutationForm = true;
 		this.mutationType = 'edit';
+		this.currentCategory = category;
 	}
 
 	localeTranslate(member: ILocaleMember[]) {
