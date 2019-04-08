@@ -220,17 +220,30 @@
 								#productCategories
 							></ea-merchants-setup-product-categories>
 							<button
-								*ngIf="productCategories.showCreateForm"
+								*ngIf="productCategories.showMutationForm"
 								nbButton
 								(click)="
-									productCategories.showCreateForm = false
+									productCategories.showMutationForm = false
 								"
 							>
 								Back
 							</button>
 
 							<button
-								*ngIf="!productCategories.showCreateForm"
+								*ngIf="productCategories.showMutationForm"
+								nbButton
+								[disabled]="
+									productCategories.showMutationForm
+										? !productCategories.isValidForm
+										: false
+								"
+								(click)="productCategories.add()"
+							>
+								Add
+							</button>
+
+							<button
+								*ngIf="!productCategories.showMutationForm"
 								nbButton
 								nbStepperPrevious
 							>
@@ -238,15 +251,11 @@
 									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
 								}}
 							</button>
+
 							<button
 								nbButton
 								nbStepperNext
-								[disabled]="
-									productCategories.showCreateForm
-										? !productCategories.isValidForm
-										: false
-								"
-								(click)="productCategories.create()"
+								*ngIf="!productCategories.showMutationForm"
 							>
 								{{
 									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate

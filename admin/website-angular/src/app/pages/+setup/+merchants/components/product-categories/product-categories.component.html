@@ -5,23 +5,35 @@
 	<nb-card-body>
 		<div class="row actions">
 			<div
-				*ngIf="!showCreateForm"
+				*ngIf="!showMutationForm"
 				class="form-group offset-md-4 col-md-4 text-center"
 			>
 				<button
 					nbButton
 					outline
 					status="success"
-					(click)="showCreateForm = true"
+					(click)="showMutationForm = true"
 				>
 					Add own product category
 				</button>
 			</div>
 
-			<div class="offset-md-1 col-md-11" *ngIf="showCreateForm">
+			<div class="offset-md-1 col-md-11" *ngIf="showMutationForm">
 				<ea-product-category-basic-info-form
 					#basicInfo
 				></ea-product-category-basic-info-form>
+			</div>
+
+			<div
+				[hidden]="showMutationForm || productCategories.length == 0"
+				class="col-md-12 p-0"
+			>
+				<ea-categories-table
+					[selectMode]="null"
+					[showPerPage]="showPerPage"
+					(deleteRow)="removeCategory($event)"
+					#categoriesTable
+				></ea-categories-table>
 			</div>
 		</div>
 	</nb-card-body>

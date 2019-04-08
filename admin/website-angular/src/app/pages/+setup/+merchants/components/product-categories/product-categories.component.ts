@@ -6,6 +6,8 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { BasicInfoFormComponent } from 'app/@shared/product/categories/forms/basic-info';
 import { NotifyService } from 'app/@core/services/notify/notify.service';
+import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
+import { CategoriesTableComponent } from 'app/@shared/product/categories/categories-table';
 
 @Component({
 	selector: 'ea-merchants-setup-product-categories',
@@ -16,7 +18,13 @@ export class SetupMerchantProductCategoriesComponent {
 	@ViewChild('basicInfo')
 	basicInfo: BasicInfoFormComponent;
 
-	showCreateForm: boolean = false;
+	@ViewChild('categoriesTable')
+	categoriesTable: CategoriesTableComponent;
+
+	productCategories: ProductsCategory[] = [];
+	showPerPage = 3;
+
+	private _showMutationForm: boolean = false;
 
 	constructor(
 		private productsCategoryService: ProductsCategoryService,
@@ -24,19 +32,26 @@ export class SetupMerchantProductCategoriesComponent {
 		private readonly productLocalesService: ProductLocalesService
 	) {}
 
-	async create() {
+	async add() {
 		try {
-			await this.productsCategoryService
+			const category = await this.productsCategoryService
 				.create(this.basicInfo.createObject)
 				.pipe(first())
 				.toPromise();
+			this.productCategories.unshift(category);
+
 			const message = `Category ${this.localeTranslate(
 				this.basicInfo.createObject.name
 			)} is added!`;
 			this.notifyService.success(message);
+
+			this.showMutationForm = false;
 		} catch (err) {
 			const message = `Something went wrong!`;
-			this.notifyService.error(message);
+			const body = err.message
+				? '\n' + `Error message: ${err.message}`
+				: '';
+			this.notifyService.error(message, body);
 		}
 	}
 
@@ -47,6 +62,32 @@ export class SetupMerchantProductCategoriesComponent {
 		}
 
 		return res;
+	}
+
+	get showMutationForm() {
+		return this._showMutationForm;
+	}
+
+	set showMutationForm(isShow: boolean) {
+		this._showMutationForm = isShow;
+
+		if (!isShow) {
+			this.loadCategories();
+		}
+	}
+
+	loadCategories() {
+		if (this.productCategories.length > 0) {
+			this.categoriesTable.loadDataSmartTable(this.productCategories);
+		}
+	}
+
+	removeCategory(category) {
+		this.productCategories = this.productCategories.filter(
+			(c) => c.id !== category.id
+		);
+
+		this.loadCategories();
 	}
 
 	localeTranslate(member: ILocaleMember[]) {
