@@ -87,6 +87,8 @@ export class ProductsCategoryService {
 							id: $id
 							updateInput: $productsCategory
 						) {
+							id
+							image
 							name {
 								locale
 								value

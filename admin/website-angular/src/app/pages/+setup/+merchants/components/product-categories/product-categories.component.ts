@@ -87,7 +87,32 @@ export class SetupMerchantProductCategoriesComponent {
 		}
 	}
 
-	async edit() {}
+	async edit() {
+		try {
+			const editObj = this.basicInfo.getEditObject(this.currentCategory);
+			const category = await this.productsCategoryService
+				.update(this.currentCategory.id, editObj)
+				.pipe(first())
+				.toPromise();
+			this.productCategories = this.productCategories.filter(
+				(c) => c.id !== category.id
+			);
+			this.productCategories.unshift(category);
+
+			const message = `Category ${this.localeTranslate(
+				this.basicInfo.createObject.name
+			)} is edited`;
+			this.notifyService.success(message);
+
+			this.showMutationForm = false;
+		} catch (err) {
+			const message = `Something went wrong!`;
+			const body = err.message
+				? '\n' + `Error message: ${err.message}`
+				: '';
+			this.notifyService.error(message, body);
+		}
+	}
 
 	loadCategories() {
 		if (this.productCategories.length > 0) {
@@ -104,8 +129,6 @@ export class SetupMerchantProductCategoriesComponent {
 	}
 
 	editCategory(category) {
-		console.error(category);
-		return;
 		this.currentCategory = category;
 		this.showMutationForm = true;
 		this.mutationType = 'edit';
