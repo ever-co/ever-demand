@@ -15,6 +15,7 @@ import { NbRadioModule } from '@nebular/theme';
 import { SetupMerchantProductCategoriesComponent } from './product-categories/product-categories.component';
 import { ProductCategoriesFormsModule } from 'app/@shared/product/categories/forms/product-categories-forms.module';
 import { NotifyService } from 'app/@core/services/notify/notify.service';
+import { NgxBarcodeModule } from '@modules/client.common.angular2/components/ngx-barcode/ngx-barcode.module';
 
 const COMPONENTS = [
 	SetupMerchantAccountComponent,
@@ -35,7 +36,8 @@ const COMPONENTS = [
 		NbRadioModule,
 		TranslateModule.forChild(),
 		FileUploaderModule,
-		ProductCategoriesFormsModule
+		ProductCategoriesFormsModule,
+		NgxBarcodeModule
 	],
 	declarations: COMPONENTS,
 	exports: COMPONENTS,

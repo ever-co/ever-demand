@@ -10,7 +10,9 @@ import { Types } from 'mongoose';
 })
 export class SetupMerchantOrdersSettingsComponent {
 	iorderBarcodeType: OrderBarcodeTypes = OrderBarcodeTypes.QR;
+	barcodetData: string;
 	barcodetDataUrl: string;
+	isQRCode: boolean = true;
 
 	orderBarcodeTypes = [
 		{ label: 'QR', value: OrderBarcodeTypes.QR },
@@ -20,23 +22,16 @@ export class SetupMerchantOrdersSettingsComponent {
 	];
 
 	constructor() {
-		this.loadBarcodetDataUrl(OrderBarcodeTypes.QR);
+		this.loadBarcodetDataUrl();
 	}
 
-	async loadBarcodetDataUrl(type: OrderBarcodeTypes) {
+	async loadBarcodetDataUrl() {
 		const dummyId = Date.now();
-		switch (type) {
-			case OrderBarcodeTypes.QR:
-				this.barcodetDataUrl = await QRCode.toDataURL(
-					dummyId.toString()
-				);
-				break;
+		this.barcodetDataUrl = await QRCode.toDataURL(dummyId.toString());
+		this.barcodetData = dummyId.toString();
+	}
 
-			default:
-				this.barcodetDataUrl = await QRCode.toDataURL(
-					dummyId.toString()
-				);
-				break;
-		}
+	typeChange(type) {
+		this.isQRCode = type === OrderBarcodeTypes.QR;
 	}
 }

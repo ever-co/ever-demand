@@ -4,7 +4,10 @@
 		<div class="form-group offset-md-2 col-md-8 row">
 			<div class="col">
 				<label>Order Barcode/QR code types</label>
-				<nb-radio-group [(ngModel)]="iorderBarcodeType">
+				<nb-radio-group
+					(valueChange)="typeChange($event)"
+					[(ngModel)]="iorderBarcodeType"
+				>
 					<nb-radio
 						*ngFor="let type of orderBarcodeTypes"
 						[value]="type.value"
@@ -15,7 +18,19 @@
 			</div>
 			<div class="col">
 				<div class="row preview-barcode">
-					<img src="{{ barcodetDataUrl }}" alt="Invalid image" />
+					<img
+						*ngIf="isQRCode"
+						src="{{ barcodetDataUrl }}"
+						alt="Invalid image"
+					/>
+					<ngx-barcode
+						*ngIf="!isQRCode"
+						[bc-value]="barcodetData"
+						[bc-format]="'CODE128'"
+						[bc-element-type]="img"
+						[bc-height]="30"
+						[bc-width]="1.5"
+					></ngx-barcode>
 				</div>
 			</div>
 		</div>
