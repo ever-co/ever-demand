@@ -1,16 +1,23 @@
 <nb-card class="setup-merchant-orders-settings">
 	<nb-card-header>Orders Settings</nb-card-header>
 	<nb-card-body>
-		<div class="form-group offset-md-2 col-md-8">
-			<label>Order Barcode/QR code types</label>
-			<nb-radio-group [(ngModel)]="iorderBarcodeType">
-				<nb-radio
-					*ngFor="let type of orderBarcodeTypes"
-					[value]="type.value"
-				>
-					{{ type.label }}
-				</nb-radio>
-			</nb-radio-group>
+		<div class="form-group offset-md-2 col-md-8 row">
+			<div class="col">
+				<label>Order Barcode/QR code types</label>
+				<nb-radio-group [(ngModel)]="iorderBarcodeType">
+					<nb-radio
+						*ngFor="let type of orderBarcodeTypes"
+						[value]="type.value"
+					>
+						{{ type.label }}
+					</nb-radio>
+				</nb-radio-group>
+			</div>
+			<div class="col">
+				<div class="row preview-barcode">
+					<img src="{{ barcodetDataUrl }}" alt="Invalid image" />
+				</div>
+			</div>
 		</div>
 	</nb-card-body>
 </nb-card>
