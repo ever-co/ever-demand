@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import OrderBarcodeTypes from '@modules/server.common/enums/OrderBarcodeTypes';
+import OrderBarcodeTypes, {
+	orderBarcodeTypesToString
+} from '@modules/server.common/enums/OrderBarcodeTypes';
 import QRCode from 'qrcode';
-import { Types } from 'mongoose';
 
 @Component({
 	selector: 'ea-merchants-setup-orders-settings',
@@ -13,12 +14,25 @@ export class SetupMerchantOrdersSettingsComponent {
 	barcodetData: string;
 	barcodetDataUrl: string;
 	isQRCode: boolean = true;
+	ngxBarcodeFormat: string;
 
 	orderBarcodeTypes = [
-		{ label: 'QR', value: OrderBarcodeTypes.QR },
-		{ label: 'CODE128', value: OrderBarcodeTypes.CODE128 },
-		{ label: 'CODE39', value: OrderBarcodeTypes.CODE39 },
-		{ label: 'pharmacode', value: OrderBarcodeTypes.pharmacode }
+		{
+			label: orderBarcodeTypesToString(OrderBarcodeTypes.QR),
+			value: OrderBarcodeTypes.QR
+		},
+		{
+			label: orderBarcodeTypesToString(OrderBarcodeTypes.CODE128),
+			value: OrderBarcodeTypes.CODE128
+		},
+		{
+			label: orderBarcodeTypesToString(OrderBarcodeTypes.CODE39),
+			value: OrderBarcodeTypes.CODE39
+		},
+		{
+			label: orderBarcodeTypesToString(OrderBarcodeTypes.MSI),
+			value: OrderBarcodeTypes.MSI
+		}
 	];
 
 	constructor() {
@@ -33,5 +47,8 @@ export class SetupMerchantOrdersSettingsComponent {
 
 	typeChange(type) {
 		this.isQRCode = type === OrderBarcodeTypes.QR;
+		if (!this.isQRCode) {
+			this.ngxBarcodeFormat = orderBarcodeTypesToString(type);
+		}
 	}
 }

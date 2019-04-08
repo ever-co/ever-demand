@@ -26,10 +26,10 @@
 					<ngx-barcode
 						*ngIf="!isQRCode"
 						[bc-value]="barcodetData"
-						[bc-format]="'CODE128'"
+						[bc-format]="ngxBarcodeFormat"
 						[bc-element-type]="img"
 						[bc-height]="30"
-						[bc-width]="1.5"
+						[bc-width]="1"
 					></ngx-barcode>
 				</div>
 			</div>
