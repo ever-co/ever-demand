@@ -223,14 +223,18 @@
 
 			<div class="form-group row">
 				<!-- TODO add translate -->
-				<nb-checkbox class="col-sm-12" formControlName="isSharedCarrier"
-					>Carrier can be shared?</nb-checkbox
+				<nb-checkbox
+					class="col-sm-12"
+					formControlName="isSharedCarrier"
 				>
-				<nb-checkbox class="col-sm-12" formControlName="isActive">
 					{{
-						'CARRIERS_VIEW.CARRIER_PAGE.ACTIVE' | translate
-					}}</nb-checkbox
-				>
+						'CARRIERS_VIEW.CARRIER_PAGE.CARRIER_CAN_BE_SHARED'
+							| translate
+					}}
+				</nb-checkbox>
+				<nb-checkbox class="col-sm-12" formControlName="isActive">
+					{{ 'CARRIERS_VIEW.CARRIER_PAGE.ACTIVE' | translate }}
+				</nb-checkbox>
 			</div>
 		</fieldset>
 	</div>

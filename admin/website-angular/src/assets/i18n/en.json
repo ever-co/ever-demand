@@ -771,6 +771,7 @@
 			"CLIENT_REFUSE_ORDER": "Client Refuse Order",
 			"AVAIBLE_ORDER_TO_PICK_UP": "Available Orders to pick up (each carrier can pick up multiple orders)",
 			"ACTIVE": "Active",
+			"CARRIER_CAN_BE_SHARED": "Carrier can be shared?",
 			"NOT_ACTIVE": "Not Active",
 			"WORKING": "Working",
 			"NOT_WORKING": "Not Working",

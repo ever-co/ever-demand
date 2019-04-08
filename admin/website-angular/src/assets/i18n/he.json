@@ -771,6 +771,7 @@
 			"CLIENT_REFUSE_ORDER": "הזמנת לקוח",
 			"AVAIBLE_ORDER_TO_PICK_UP": "הזמנות זמינות להרים (כל מוביל יכול לאסוף הזמנות מרובות)",
 			"ACTIVE": "פָּעִיל",
+			"CARRIER_CAN_BE_SHARED": "ניתן לשתף את המוביל?",
 			"NOT_ACTIVE": "לא פעיל",
 			"WORKING": "עובד",
 			"NOT_WORKING": "לא עובד",
