@@ -219,48 +219,64 @@
 							<ea-merchants-setup-product-categories
 								#productCategories
 							></ea-merchants-setup-product-categories>
-							<button
-								*ngIf="productCategories.showMutationForm"
-								nbButton
-								(click)="
-									productCategories.showMutationForm = false
-								"
-							>
-								Back
-							</button>
 
-							<button
-								*ngIf="productCategories.showMutationForm"
-								nbButton
-								[disabled]="
-									productCategories.showMutationForm
-										? !productCategories.isValidForm
-										: false
-								"
-								(click)="productCategories.add()"
-							>
-								Add
-							</button>
+							<div *ngIf="!productCategories.showMutationForm">
+								<button nbButton nbStepperPrevious>
+									{{
+										'FAKE_DATA.SETUP_MERCHANTS.PREV'
+											| translate
+									}}
+								</button>
 
-							<button
-								*ngIf="!productCategories.showMutationForm"
-								nbButton
-								nbStepperPrevious
-							>
-								{{
-									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
-								}}
-							</button>
+								<button nbButton nbStepperNext>
+									{{
+										'FAKE_DATA.SETUP_MERCHANTS.NEXT'
+											| translate
+									}}
+								</button>
+							</div>
 
-							<button
-								nbButton
-								nbStepperNext
-								*ngIf="!productCategories.showMutationForm"
-							>
-								{{
-									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
-								}}
-							</button>
+							<div *ngIf="productCategories.showMutationForm">
+								<button
+									nbButton
+									(click)="
+										productCategories.showMutationForm = false
+									"
+								>
+									Back
+								</button>
+
+								<button
+									*ngIf="
+										productCategories.mutationType === 'add'
+									"
+									nbButton
+									[disabled]="
+										productCategories.showMutationForm
+											? !productCategories.isValidForm
+											: false
+									"
+									(click)="productCategories.add()"
+								>
+									Add
+								</button>
+
+								<button
+									*ngIf="
+										productCategories.mutationType ===
+										'edit'
+									"
+									nbButton
+									[disabled]="
+										productCategories.showMutationForm
+											? productCategories.isInvalidValidForm
+											: false
+									"
+									(click)="productCategories.edit()"
+								>
+									Save
+								</button>
+							</div>
 						</nb-step>
 						<nb-step label="Products">
 							<h3>Products</h3>

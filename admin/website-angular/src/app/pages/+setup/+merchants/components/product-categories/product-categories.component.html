@@ -20,6 +20,7 @@
 
 			<div class="offset-md-1 col-md-11" *ngIf="showMutationForm">
 				<ea-product-category-basic-info-form
+					[category]="currentCategory"
 					#basicInfo
 				></ea-product-category-basic-info-form>
 			</div>
@@ -31,7 +32,9 @@
 				<ea-categories-table
 					[selectMode]="null"
 					[showPerPage]="showPerPage"
+					[editWithModal]="false"
 					(deleteRow)="removeCategory($event)"
+					(editRow)="editCategory($event)"
 					#categoriesTable
 				></ea-categories-table>
 			</div>

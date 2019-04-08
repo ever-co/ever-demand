@@ -19,7 +19,7 @@
 	<button
 		class="btn btn-success"
 		type="button"
-		(click)="editCategory(basicInfo.editObject)"
+		(click)="editCategory(basicInfo.getEditObject(currentCategory))"
 		[disabled]="basicInfo.form.invalid"
 	>
 		{{ 'CATEGORY_VIEW.EDIT.DONE' | translate }}!

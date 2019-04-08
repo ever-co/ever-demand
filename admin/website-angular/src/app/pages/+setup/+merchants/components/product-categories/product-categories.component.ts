@@ -21,9 +21,11 @@ export class SetupMerchantProductCategoriesComponent {
 	@ViewChild('categoriesTable')
 	categoriesTable: CategoriesTableComponent;
 
+	currentCategory: ProductsCategory;
 	productCategories: ProductsCategory[] = [];
 	showPerPage = 3;
 
+	mutationType: 'add' | 'edit' = 'add';
 	private _showMutationForm: boolean = false;
 
 	constructor(
@@ -31,6 +33,36 @@ export class SetupMerchantProductCategoriesComponent {
 		private readonly notifyService: NotifyService,
 		private readonly productLocalesService: ProductLocalesService
 	) {}
+
+	get isValidForm() {
+		let res = false;
+		if (this.basicInfo) {
+			res = this.basicInfo.form.valid;
+		}
+
+		return res;
+	}
+
+	get isInvalidValidForm() {
+		let res = false;
+		if (this.basicInfo) {
+			res = this.basicInfo.form.invalid;
+		}
+
+		return res;
+	}
+
+	get showMutationForm() {
+		return this._showMutationForm;
+	}
+
+	set showMutationForm(isShow: boolean) {
+		this._showMutationForm = isShow;
+		this.mutationType = 'add';
+		if (!isShow) {
+			this.loadCategories();
+		}
+	}
 
 	async add() {
 		try {
@@ -55,26 +87,7 @@ export class SetupMerchantProductCategoriesComponent {
 		}
 	}
 
-	get isValidForm() {
-		let res = false;
-		if (this.basicInfo) {
-			res = this.basicInfo.form.valid;
-		}
-
-		return res;
-	}
-
-	get showMutationForm() {
-		return this._showMutationForm;
-	}
-
-	set showMutationForm(isShow: boolean) {
-		this._showMutationForm = isShow;
-
-		if (!isShow) {
-			this.loadCategories();
-		}
-	}
+	async edit() {}
 
 	loadCategories() {
 		if (this.productCategories.length > 0) {
@@ -88,6 +101,14 @@ export class SetupMerchantProductCategoriesComponent {
 		);
 
 		this.loadCategories();
+	}
+
+	editCategory(category) {
+		console.error(category);
+		return;
+		this.currentCategory = category;
+		this.showMutationForm = true;
+		this.mutationType = 'edit';
 	}
 
 	localeTranslate(member: ILocaleMember[]) {

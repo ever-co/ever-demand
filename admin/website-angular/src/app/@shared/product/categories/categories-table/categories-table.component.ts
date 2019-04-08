@@ -38,6 +38,8 @@ export class CategoriesTableComponent implements OnInit, OnDestroy {
 	selectMode = 'multi';
 	@Input()
 	showPerPage = 7;
+	@Input()
+	editWithModal = true;
 
 	@Output()
 	editRow = new EventEmitter();
@@ -78,14 +80,18 @@ export class CategoriesTableComponent implements OnInit, OnDestroy {
 		this._applyTranslationOnSmartTable();
 	}
 	edit(ev) {
-		const activeModal = this._modalService.open(CategoryEditComponent, {
-			size: 'lg',
-			container: 'nb-layout',
-			backdrop: 'static'
-		});
-		const modalComponent: CategoryEditComponent =
-			activeModal.componentInstance;
-		modalComponent.currentCategory = ev.data;
+		if (this.editWithModal) {
+			const activeModal = this._modalService.open(CategoryEditComponent, {
+				size: 'lg',
+				container: 'nb-layout',
+				backdrop: 'static'
+			});
+			const modalComponent: CategoryEditComponent =
+				activeModal.componentInstance;
+			modalComponent.currentCategory = ev.data;
+		} else {
+			this.editRow.emit(ev.data);
+		}
 	}
 
 	async deleteCategory(e) {
