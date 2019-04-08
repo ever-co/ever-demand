@@ -279,18 +279,52 @@
 							</div>
 						</nb-step>
 						<nb-step label="Products">
-							<h3>Products</h3>
+							<ea-merchants-setup-products
+								#products
+							></ea-merchants-setup-products>
 
-							<button nbButton nbStepperPrevious>
-								{{
-									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
-								}}
-							</button>
-							<button nbButton disabled nbStepperNext>
-								{{
-									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
-								}}
-							</button>
+							<div
+								*ngIf="
+									products.currentView ===
+									products.componentViews.main
+								"
+							>
+								<button nbButton nbStepperPrevious>
+									{{
+										'FAKE_DATA.SETUP_MERCHANTS.PREV'
+											| translate
+									}}
+								</button>
+								<button nbButton nbStepperNext>
+									{{
+										'FAKE_DATA.SETUP_MERCHANTS.NEXT'
+											| translate
+									}}
+								</button>
+							</div>
+							<div
+								*ngIf="
+									products.currentView !==
+									products.componentViews.main
+								"
+							>
+								<button nbButton (click)="products.back()">
+									{{
+										'FAKE_DATA.SETUP_MERCHANTS.BACK'
+											| translate
+									}}
+								</button>
+								<button
+									[disabled]="!products.haveProductsForAdd"
+									nbButton
+									(click)="products.add()"
+								>
+									{{
+										'FAKE_DATA.SETUP_MERCHANTS.ADD'
+											| translate
+									}}
+								</button>
+							</div>
 						</nb-step>
 					</nb-stepper>
 				</nb-card-body>
