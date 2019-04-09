@@ -22,10 +22,12 @@ export class SetupMerchantProductsComponent {
 		createProduct: 'createProduct',
 		addProducts: 'addProducts'
 	};
-	currentView = this.componentViews.main;
 	productsPerPage = 3;
 
 	productsForAdd = [];
+
+	private _currentView = this.componentViews.main;
+	private _prevView = this.componentViews.main;
 
 	get haveProductsForAdd() {
 		let hasSelectedCarriers = false;
@@ -38,12 +40,26 @@ export class SetupMerchantProductsComponent {
 		return hasSelectedCarriers;
 	}
 
+	get currentView() {
+		return this._currentView;
+	}
+
+	set currentView(view: string) {
+		this._prevView = this.currentView;
+		this._currentView = view;
+	}
+
 	select() {
 		this.productsForAdd = this.productsCatalog.productsTable.selectedProducts;
 		this.currentView = this.componentViews.addProducts;
 	}
 
 	back() {
+		if (this.currentView === this.componentViews.addProducts) {
+			this.currentView = this._prevView;
+			return;
+		}
+
 		this.currentView = this.componentViews.main;
 	}
 }
