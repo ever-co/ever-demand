@@ -1,4 +1,11 @@
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	OnInit,
+	OnDestroy,
+	Output,
+	EventEmitter
+} from '@angular/core';
 import { NgForm, NgModel } from '@angular/forms';
 import QRCode from 'qrcode';
 import { TranslateService } from '@ngx-translate/core';
@@ -17,6 +24,11 @@ export class SetupMerchantBasicInfoComponent implements OnInit, OnDestroy {
 
 	@ViewChild('name')
 	name: NgModel;
+
+	@Output()
+	previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();
+	@Output()
+	nextStep: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 	private _ngDestroy$ = new Subject<void>();
 

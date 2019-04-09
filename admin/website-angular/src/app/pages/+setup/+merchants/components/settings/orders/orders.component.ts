@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import OrderBarcodeTypes, {
 	orderBarcodeTypesToString
 } from '@modules/server.common/enums/OrderBarcodeTypes';
@@ -10,6 +10,14 @@ import QRCode from 'qrcode';
 	styleUrls: ['./orders.component.scss']
 })
 export class SetupMerchantOrdersSettingsComponent {
+	@Output()
+	previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();
+	@Output()
+	nextStep: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+	@Input()
+	canCreateMerchant: boolean = false;
+
 	iorderBarcodeType: OrderBarcodeTypes = OrderBarcodeTypes.QR;
 	barcodetData: string;
 	barcodetDataUrl: string;

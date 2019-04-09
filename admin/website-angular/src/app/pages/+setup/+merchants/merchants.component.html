@@ -9,322 +9,74 @@
 						<nb-step label="Account">
 							<ea-merchants-setup-account
 								#account
+								(previousStep)="nbStepper.previous()"
+								(nextStep)="nbStepper.next()"
 							></ea-merchants-setup-account>
-
-							<button nbButton disabled nbStepperNext>
-								{{
-									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
-								}}
-							</button>
-							<button
-								nbButton
-								nbStepperNext
-								[disabled]="!account.formValid"
-							>
-								{{
-									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
-								}}
-							</button>
 						</nb-step>
 						<nb-step label="Basic info">
 							<ea-merchants-setup-basic-info
 								#basicInfo
+								(previousStep)="nbStepper.previous()"
+								(nextStep)="nbStepper.next()"
 							></ea-merchants-setup-basic-info>
-
-							<button nbButton nbStepperPrevious>
-								{{
-									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
-								}}
-							</button>
-							<button
-								nbButton
-								nbStepperNext
-								[disabled]="!basicInfo.formValid"
-							>
-								{{
-									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
-								}}
-							</button>
 						</nb-step>
 						<nb-step label="Contact info">
 							<ea-merchants-setup-contact-info
 								#contactInfo
+								(previousStep)="nbStepper.previous()"
+								(nextStep)="nbStepper.next()"
 							></ea-merchants-setup-contact-info>
-
-							<button nbButton nbStepperPrevious>
-								{{
-									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
-								}}
-							</button>
-							<button
-								nbButton
-								nbStepperNext
-								[disabled]="contactInfo.contactInfoForm.invalid"
-							>
-								{{
-									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
-								}}
-							</button>
 						</nb-step>
 						<nb-step label="Location">
 							<ea-merchants-setup-location
 								#location
+								(previousStep)="nbStepper.previous()"
+								(nextStep)="nbStepper.next()"
 							></ea-merchants-setup-location>
-
-							<button nbButton nbStepperPrevious>
-								{{
-									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
-								}}
-							</button>
-							<button
-								nbButton
-								nbStepperNext
-								[disabled]="location.location.invalid"
-							>
-								{{
-									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
-								}}
-							</button>
 						</nb-step>
 						<nb-step label="Payments">
 							<ea-merchants-setup-payments
 								#payments
+								(previousStep)="nbStepper.previous()"
+								(nextStep)="nbStepper.next()"
 							></ea-merchants-setup-payments>
-
-							<button nbButton nbStepperPrevious>
-								{{
-									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
-								}}
-							</button>
-							<button nbButton nbStepperNext>
-								{{
-									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
-								}}
-							</button>
 						</nb-step>
 						<nb-step label="Manufacturing">
 							<ea-merchants-setup-manufacturing
 								#manufacturing
+								(previousStep)="nbStepper.previous()"
+								(nextStep)="nbStepper.next()"
 							></ea-merchants-setup-manufacturing>
-
-							<button nbButton nbStepperPrevious>
-								{{
-									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
-								}}
-							</button>
-							<button nbButton nbStepperNext>
-								{{
-									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
-								}}
-							</button>
 						</nb-step>
 						<nb-step label="Delivery & Takeaway Settings">
 							<ea-merchants-setup-delivery-takeaway
 								[locationForm]="location.locationForm"
 								#deliveryAndTakeaway
+								(previousStep)="nbStepper.previous()"
+								(nextStep)="nbStepper.next()"
 							></ea-merchants-setup-delivery-takeaway>
-
-							<div
-								*ngIf="
-									deliveryAndTakeaway.currentView ===
-									deliveryAndTakeaway.componentViews.main
-								"
-							>
-								<button nbButton nbStepperPrevious>
-									{{
-										'FAKE_DATA.SETUP_MERCHANTS.PREV'
-											| translate
-									}}
-								</button>
-								<button nbButton nbStepperNext>
-									{{
-										'FAKE_DATA.SETUP_MERCHANTS.NEXT'
-											| translate
-									}}
-								</button>
-							</div>
-							<div
-								*ngIf="
-									deliveryAndTakeaway.currentView !==
-									deliveryAndTakeaway.componentViews.main
-								"
-							>
-								<button
-									nbButton
-									(click)="deliveryAndTakeaway.back()"
-								>
-									{{
-										'FAKE_DATA.SETUP_MERCHANTS.BACK'
-											| translate
-									}}
-								</button>
-								<button
-									*ngIf="
-										deliveryAndTakeaway.currentView !==
-										deliveryAndTakeaway.componentViews
-											.editCarrier
-									"
-									[disabled]="
-										!deliveryAndTakeaway.haveCarriersForAdd
-									"
-									nbButton
-									(click)="deliveryAndTakeaway.add()"
-								>
-									{{
-										'FAKE_DATA.SETUP_MERCHANTS.ADD'
-											| translate
-									}}
-								</button>
-
-								<button
-									*ngIf="
-										deliveryAndTakeaway.currentView ===
-										deliveryAndTakeaway.componentViews
-											.editCarrier
-									"
-									[disabled]="
-										!deliveryAndTakeaway.isBasicInfoValid
-									"
-									nbButton
-									(click)="deliveryAndTakeaway.save()"
-								>
-									{{
-										'FAKE_DATA.SETUP_MERCHANTS.SAVE'
-											| translate
-									}}
-								</button>
-							</div>
 						</nb-step>
 						<nb-step label="Orders Settings">
 							<ea-merchants-setup-orders-settings
 								#ordersSettings
+								(previousStep)="nbStepper.previous()"
+								(nextStep)="createMerchant()"
+								[canCreateMerchant]="canCreateMerchant"
 							></ea-merchants-setup-orders-settings>
-
-							<button nbButton nbStepperPrevious>
-								{{
-									'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate
-								}}
-							</button>
-							<button
-								nbButton
-								(click)="createMerchant()"
-								[disabled]="!canCreateMerchant"
-							>
-								{{
-									'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate
-								}}
-							</button>
 						</nb-step>
 						<nb-step label="Product categories">
 							<ea-merchants-setup-product-categories
 								#productCategories
+								(previousStep)="nbStepper.previous()"
+								(nextStep)="nbStepper.next()"
 							></ea-merchants-setup-product-categories>
-
-							<div *ngIf="!productCategories.showMutationForm">
-								<button nbButton nbStepperPrevious>
-									{{
-										'FAKE_DATA.SETUP_MERCHANTS.PREV'
-											| translate
-									}}
-								</button>
-
-								<button nbButton nbStepperNext>
-									{{
-										'FAKE_DATA.SETUP_MERCHANTS.NEXT'
-											| translate
-									}}
-								</button>
-							</div>
-
-							<div *ngIf="productCategories.showMutationForm">
-								<button
-									nbButton
-									(click)="
-										productCategories.showMutationForm = false
-									"
-								>
-									Back
-								</button>
-
-								<button
-									*ngIf="
-										productCategories.mutationType === 'add'
-									"
-									nbButton
-									[disabled]="
-										productCategories.showMutationForm
-											? !productCategories.isValidForm
-											: false
-									"
-									(click)="productCategories.add()"
-								>
-									Add
-								</button>
-
-								<button
-									*ngIf="
-										productCategories.mutationType ===
-										'edit'
-									"
-									nbButton
-									[disabled]="
-										productCategories.showMutationForm
-											? productCategories.isInvalidValidForm
-											: false
-									"
-									(click)="productCategories.edit()"
-								>
-									Save
-								</button>
-							</div>
 						</nb-step>
 						<nb-step label="Products">
 							<ea-merchants-setup-products
 								#products
+								(previousStep)="nbStepper.previous()"
+								(nextStep)="nbStepper.next()"
 							></ea-merchants-setup-products>
-
-							<div
-								*ngIf="
-									products.currentView ===
-									products.componentViews.main
-								"
-							>
-								<button nbButton nbStepperPrevious>
-									{{
-										'FAKE_DATA.SETUP_MERCHANTS.PREV'
-											| translate
-									}}
-								</button>
-								<button nbButton nbStepperNext>
-									{{
-										'FAKE_DATA.SETUP_MERCHANTS.NEXT'
-											| translate
-									}}
-								</button>
-							</div>
-							<div
-								*ngIf="
-									products.currentView !==
-									products.componentViews.main
-								"
-							>
-								<button nbButton (click)="products.back()">
-									{{
-										'FAKE_DATA.SETUP_MERCHANTS.BACK'
-											| translate
-									}}
-								</button>
-								<button
-									[disabled]="!products.haveProductsForAdd"
-									nbButton
-									(click)="products.add()"
-								>
-									{{
-										'FAKE_DATA.SETUP_MERCHANTS.ADD'
-											| translate
-									}}
-								</button>
-							</div>
 						</nb-step>
 					</nb-stepper>
 				</nb-card-body>

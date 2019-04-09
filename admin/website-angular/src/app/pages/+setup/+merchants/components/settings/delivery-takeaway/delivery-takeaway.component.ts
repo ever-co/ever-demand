@@ -3,7 +3,9 @@ import {
 	ViewChild,
 	OnDestroy,
 	AfterViewInit,
-	Input
+	Input,
+	Output,
+	EventEmitter
 } from '@angular/core';
 import { SetupMerchantSharedCarriersComponent } from './shared-carriers/shared-carriers.component';
 import {
@@ -28,6 +30,11 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 	sharedCarriers: SetupMerchantSharedCarriersComponent;
 	@ViewChild('carriersTable')
 	carriersTable: CarriersSmartTableComponent;
+
+	@Output()
+	previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();
+	@Output()
+	nextStep: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 	@Input()
 	locationForm: any;

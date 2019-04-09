@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
 import { SetupMerchantProductsCatalogComponent } from './products-catalog/products-catalog.component';
 import Product from '@modules/server.common/entities/Product';
 
@@ -11,11 +11,16 @@ export class SetupMerchantProductsComponent {
 	@ViewChild('productsCatalog')
 	productsCatalog: SetupMerchantProductsCatalogComponent;
 
+	@Output()
+	previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();
+	@Output()
+	nextStep: EventEmitter<boolean> = new EventEmitter<boolean>();
+
 	componentViews = {
 		main: 'main',
 		productsTable: 'productsTable',
-		addNewProduct: 'addNewProduct',
-		addWarehouseProducts: 'addWarehouseProducts'
+		createProduct: 'createProduct',
+		addProducts: 'addProducts'
 	};
 	currentView = this.componentViews.main;
 	productsPerPage = 3;
@@ -33,10 +38,9 @@ export class SetupMerchantProductsComponent {
 		return hasSelectedCarriers;
 	}
 
-	add() {
-		if (this.currentView === this.componentViews.productsTable) {
-			this.productsForAdd = this.productsCatalog.productsTable.selectedProducts;
-		}
+	select() {
+		this.productsForAdd = this.productsCatalog.productsTable.selectedProducts;
+		this.currentView = this.componentViews.addProducts;
 	}
 
 	back() {

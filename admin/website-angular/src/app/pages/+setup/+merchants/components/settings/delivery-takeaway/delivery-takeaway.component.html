@@ -126,3 +126,34 @@
 		</div>
 	</nb-card-body>
 </nb-card>
+
+<div *ngIf="currentView === componentViews.main">
+	<button nbButton (click)="previousStep.emit()">
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate }}
+	</button>
+	<button nbButton (click)="nextStep.emit()">
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate }}
+	</button>
+</div>
+<div *ngIf="currentView !== componentViews.main">
+	<button nbButton (click)="back()">
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.BACK' | translate }}
+	</button>
+	<button
+		*ngIf="currentView !== componentViews.editCarrier"
+		[disabled]="!haveCarriersForAdd"
+		nbButton
+		(click)="add()"
+	>
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.ADD' | translate }}
+	</button>
+
+	<button
+		*ngIf="currentView === componentViews.editCarrier"
+		[disabled]="!isBasicInfoValid"
+		nbButton
+		(click)="save()"
+	>
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.SAVE' | translate }}
+	</button>
+</div>

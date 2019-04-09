@@ -41,3 +41,37 @@
 		</div>
 	</nb-card-body>
 </nb-card>
+
+<div *ngIf="!showMutationForm">
+	<button nbButton (click)="previousStep.emit()">
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate }}
+	</button>
+
+	<button nbButton (click)="nextStep.emit()">
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate }}
+	</button>
+</div>
+
+<div *ngIf="showMutationForm">
+	<button nbButton (click)="showMutationForm = false">
+		Back
+	</button>
+
+	<button
+		*ngIf="mutationType === 'add'"
+		nbButton
+		[disabled]="showMutationForm ? !isValidForm : false"
+		(click)="add()"
+	>
+		Add
+	</button>
+
+	<button
+		*ngIf="mutationType === 'edit'"
+		nbButton
+		[disabled]="showMutationForm ? isInvalidValidForm : false"
+		(click)="edit()"
+	>
+		Save
+	</button>
+</div>

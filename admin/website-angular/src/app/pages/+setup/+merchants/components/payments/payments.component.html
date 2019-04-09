@@ -15,3 +15,10 @@
 		</div>
 	</nb-card-body>
 </nb-card>
+
+<button nbButton (click)="previousStep.emit()">
+	{{ 'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate }}
+</button>
+<button nbButton (click)="nextStep.emit()">
+	{{ 'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate }}
+</button>

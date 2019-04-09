@@ -1,5 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { ProductsCategoryService } from 'app/@core/data/productsCategory.service';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
@@ -20,6 +19,11 @@ export class SetupMerchantProductCategoriesComponent {
 
 	@ViewChild('categoriesTable')
 	categoriesTable: CategoriesTableComponent;
+
+	@Output()
+	previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();
+	@Output()
+	nextStep: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 	currentCategory: ProductsCategory;
 	productCategories: ProductsCategory[] = [];

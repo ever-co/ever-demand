@@ -1,4 +1,4 @@
-import { Component, EventEmitter, ViewChild } from '@angular/core';
+import { Component, EventEmitter, ViewChild, Output } from '@angular/core';
 import { LocationFormComponent } from 'app/@shared/forms/location';
 import { FormBuilder } from '@angular/forms';
 
@@ -10,6 +10,11 @@ import { FormBuilder } from '@angular/forms';
 export class SetupMerchantLocationComponent {
 	@ViewChild('locationForm')
 	locationForm: LocationFormComponent;
+
+	@Output()
+	previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();
+	@Output()
+	nextStep: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 	location = LocationFormComponent.buildForm(this.formBuilder);
 
