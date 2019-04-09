@@ -297,20 +297,25 @@ export class ServicesApp {
 		this.expressApp.set('view cache', false);
 
 		// TODO: this is probably a good place to check if Cert files exists and if not generate them for localhost
-		this.httpsServer = https.createServer(
-			{
-				cert: fs.readFileSync(env.HTTPS_CERT_PATH),
-				key: fs.readFileSync(env.HTTPS_KEY_PATH)
-			},
-			this.expressApp
-		);
+		const hasHttpsCert = fs.existsSync(env.HTTPS_CERT_PATH);
+		if (hasHttpsCert) {
+			this.httpsServer = https.createServer(
+				{
+					cert: fs.readFileSync(env.HTTPS_CERT_PATH),
+					key: fs.readFileSync(env.HTTPS_KEY_PATH)
+				},
+				this.expressApp
+			);
+		}
 
 		this.httpServer = http.createServer(this.expressApp);
 
 		// TODO: add to settings file
 		// set connections timeouts to 30 minutes (for long running requests)
 		const timeout = 30 * 60 * 1000;
-		this.httpsServer.setTimeout(timeout);
+		if (this.httpsServer) {
+			this.httpsServer.setTimeout(timeout);
+		}
 		this.httpServer.setTimeout(timeout);
 
 		this.expressApp.set('httpsPort', env.HTTPSPORT);
@@ -406,7 +411,7 @@ export class ServicesApp {
 			'Express server prepare to listen'
 		);
 
-		if (httpsPort && httpsPort > 0) {
+		if (httpsPort && httpsPort > 0 && this.httpsServer) {
 			// app listen on https
 			this.httpsServer.listen(httpsPort, () => {
 				this.log.info(
