@@ -422,6 +422,10 @@ export class ServicesApp {
 					`Express https server listening on port ${httpsPort}`
 				);
 			});
+		} else {
+			this.log.warn(
+				`No SSL Certificate exists, HTTPS endpoint will be disabled`
+			);
 		}
 
 		if (httpPort && httpPort > 0) {
