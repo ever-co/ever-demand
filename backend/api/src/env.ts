@@ -17,7 +17,6 @@ export type Env = Readonly<{
 	GQLPORT: number;
 	GQLPORT_SUBSCRIPTIONS: number;
 
-	CERTIFICATES_HTTPS_PATH: string;
 	HTTPS_CERT_PATH: string;
 	HTTPS_KEY_PATH: string;
 
@@ -83,7 +82,6 @@ export const env: Env = cleanEnv(
 		GQLPORT: port({ default: 5555 }),
 		GQLPORT_SUBSCRIPTIONS: port({ default: 5050 }),
 
-		CERTIFICATES_HTTPS_PATH: str({ default: 'certificates/https' }),
 		HTTPS_CERT_PATH: str({ default: 'certificates/https/cert.pem' }),
 		HTTPS_KEY_PATH: str({ default: 'certificates/https/key.pem' }),
 

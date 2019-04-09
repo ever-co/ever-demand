@@ -297,19 +297,22 @@ export class ServicesApp {
 
 		this.expressApp.set('view cache', false);
 
-		// TODO: this is probably a good place to check if Cert files exists and if not generate them for localhost
+		// now we check if Cert files exists and if not generate them for localhost
 		const httpsCertPath = env.HTTPS_CERT_PATH;
 		const httpsKeyPath = env.HTTPS_KEY_PATH;
 
 		const hasHttpsCert = fs.existsSync(httpsCertPath);
 		const hasHttpsKey = fs.existsSync(httpsKeyPath);
+
 		let hasDefaultHttpsCert = false;
+
 		if (!hasHttpsCert || !hasHttpsKey) {
 			hasDefaultHttpsCert = await this._getCertificates(
 				httpsCertPath,
 				httpsKeyPath
 			);
 		}
+
 		if ((hasHttpsCert && hasHttpsKey) || hasDefaultHttpsCert) {
 			this.httpsServer = https.createServer(
 				{
@@ -459,16 +462,6 @@ export class ServicesApp {
 		httpsKeyPath: string
 	) {
 		try {
-			const httpsCertificatesPath = env.CERTIFICATES_HTTPS_PATH;
-			const hasHttpsCertificatesPath = fs.existsSync(
-				httpsCertificatesPath
-			);
-			if (!hasHttpsCertificatesPath) {
-				fs.mkdirSync(httpsCertificatesPath, {
-					recursive: true
-				});
-			}
-
 			return await this._createCertificateAsync(
 				httpsCertPath,
 				httpsKeyPath
@@ -492,6 +485,22 @@ export class ServicesApp {
 					(err, keys) => {
 						if (err) {
 							reject(false);
+							return;
+						}
+
+						const httpsCertDirPath = path.dirname(httpsCertPath);
+						const httpsKeyDirPath = path.dirname(httpsKeyPath);
+
+						if (!fs.existsSync(httpsCertDirPath)) {
+							fs.mkdirSync(httpsCertDirPath, {
+								recursive: true
+							});
+						}
+
+						if (!fs.existsSync(httpsKeyDirPath)) {
+							fs.mkdirSync(httpsKeyDirPath, {
+								recursive: true
+							});
 						}
 
 						fs.writeFileSync(httpsCertPath, keys.certificate);
