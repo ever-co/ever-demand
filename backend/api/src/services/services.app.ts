@@ -462,11 +462,21 @@ export class ServicesApp {
 		httpsKeyPath: string
 	) {
 		try {
-			return await this._createCertificateAsync(
+			this.log.info('Generating SSL Certificates for HTTPS');
+
+			let { success } = await this._createCertificateAsync(
 				httpsCertPath,
 				httpsKeyPath
 			);
+
+			this.log.info('Certificates were generated');
+
+			return success;
 		} catch (error) {
+			this.log.warn(
+				`Certificates were not generated due to error: ${error.message}`
+			);
+
 			return false;
 		}
 	}
@@ -474,7 +484,7 @@ export class ServicesApp {
 	private _createCertificateAsync(
 		httpsCertPath: string,
 		httpsKeyPath: string
-	): Promise<boolean> {
+	): Promise<{ success: boolean }> {
 		return new Promise((resolve, reject) => {
 			try {
 				pem.createCertificate(
@@ -484,7 +494,7 @@ export class ServicesApp {
 					},
 					(err, keys) => {
 						if (err) {
-							reject(false);
+							reject({ success: false, message: err.message });
 							return;
 						}
 
@@ -506,11 +516,11 @@ export class ServicesApp {
 						fs.writeFileSync(httpsCertPath, keys.certificate);
 						fs.writeFileSync(httpsKeyPath, keys.serviceKey);
 
-						resolve(true);
+						resolve({ success: true });
 					}
 				);
-			} catch (error) {
-				reject(false);
+			} catch (err) {
+				reject({ success: false, message: err.message });
 			}
 		});
 	}
