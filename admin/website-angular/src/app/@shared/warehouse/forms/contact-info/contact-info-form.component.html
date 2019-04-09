@@ -1,92 +1,147 @@
 <div class="col-sm-12" [formGroup]="form" *ngIf="form">
 	<fieldset>
 		<div class="form-group row">
-			<label class="col-sm-2 control-label">{{ "WAREHOUSE_VIEW.MUTATION.CONTACT_PHONE" | translate }}</label>
+			<div class="col-sm-6">
+				<label class=" control-label">{{
+					'WAREHOUSE_VIEW.MUTATION.CONTACT_EMAIL' | translate
+				}}</label>
 
-			<div class="col-sm-9">
-				<input type="text" class="form-control" [placeholder]="'WAREHOUSE_VIEW.MUTATION.CONTACT_PHONE' | translate" formControlName="contactPhone"
+				<input
+					type="email"
+					class="form-control"
+					[placeholder]="
+						'WAREHOUSE_VIEW.MUTATION.CONTACT_EMAIL' | translate
+					"
+					formControlName="contactEmail"
 				/>
 
-				<div *ngIf="contactPhone.errors && (contactPhone.dirty || contactPhone.touched)" class="alert alert-danger">
+				<div
+					*ngIf="
+						contactEmail.errors &&
+						(contactEmail.dirty || contactEmail.touched)
+					"
+					class="alert alert-danger"
+				>
+					<div [hidden]="!contactEmail.hasError('email')">
+						{{
+							'WAREHOUSE_VIEW.MUTATION.ERRORS.INVALID_EMAIL'
+								| translate
+						}}
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<label class="control-label">{{
+					'WAREHOUSE_VIEW.MUTATION.CONTACT_PHONE' | translate
+				}}</label>
+
+				<input
+					type="text"
+					class="form-control"
+					[placeholder]="
+						'WAREHOUSE_VIEW.MUTATION.CONTACT_PHONE' | translate
+					"
+					formControlName="contactPhone"
+				/>
+
+				<div
+					*ngIf="
+						contactPhone.errors &&
+						(contactPhone.dirty || contactPhone.touched)
+					"
+					class="alert alert-danger"
+				>
 					<div [hidden]="!contactPhone.hasError('pattern')">
 						<!-- Phone number can start with "+" and must contains only only: "-, ., (space), #" and digit characters. -->
-						{{ "WAREHOUSE_VIEW.MUTATION.ERRORS.PHONE_CONTAINS_ONLY_DIGIT" | translate }}
+						{{
+							'WAREHOUSE_VIEW.MUTATION.ERRORS.PHONE_CONTAINS_ONLY_DIGIT'
+								| translate
+						}}
 					</div>
 				</div>
 			</div>
 		</div>
 
+		<!-- TODO add translate -->
 		<div class="form-group row">
-			<label class="col-sm-2 control-label">{{ "WAREHOUSE_VIEW.MUTATION.CONTACT_EMAIL" | translate }}</label>
-
-			<div class="col-sm-9">
-				<input type="email" class="form-control" [placeholder]="'WAREHOUSE_VIEW.MUTATION.CONTACT_EMAIL' | translate" formControlName="contactEmail"
+			<div class="col-sm-6">
+				<nb-checkbox
+					[value]="forwardingEmail"
+					(change)="forwardingEmailChange()"
+					>Order Forwarding Email</nb-checkbox
+				>
+				<input
+					*ngIf="forwardingEmail"
+					type="email"
+					class="form-control"
+					[placeholder]="
+						'WAREHOUSE_VIEW.MUTATION.ORDERS_EMAIL' | translate
+					"
+					formControlName="ordersEmail"
 				/>
-
-				<div *ngIf="contactEmail.errors && (contactEmail.dirty || contactEmail.touched)" class="alert alert-danger">
-					<div [hidden]="!contactEmail.hasError('email')">
-						{{ "WAREHOUSE_VIEW.MUTATION.ERRORS.INVALID_EMAIL" | translate }}
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="form-group row">
-			<label class="col-sm-2 control-label">
-				{{ "WAREHOUSE_VIEW.MUTATION.FORWARD_ORDERS_WITH" | translate }}
-			</label>
-
-			<div class="col-sm-9">
-				<select class="form-control" formControlName="forwardOrdersUsing" [value]="null">
-					<option *ngFor="let option of forwardOrdersOptions" [ngValue]="option.id">
-						{{ option.name | translate }}
-					</option>
-				</select>
-			</div>
-		</div>
-
-		<div class="form-group row">
-			<label class="col-sm-2 control-label">
-				{{ "WAREHOUSE_VIEW.MUTATION.ORDERS_PHONE" | translate }}
-			</label>
-
-			<div class="col-sm-9">
-				<input type="text" class="form-control" [placeholder]="'WAREHOUSE_VIEW.MUTATION.ORDERS_PHONE' | translate" formControlName="ordersPhone"
-				/>
-
-				<div *ngIf="(ordersPhone.errors || ordersPhone.hasError('pattern') || form.hasError('ordersPhoneRequired')) && (ordersPhone.dirty || ordersPhone.touched)"
-				 class="alert alert-danger">
-					<div [hidden]="!ordersPhone.hasError('pattern')">
-						<!-- Phone number can start with "+" and must contains only only: "-, ., (space), #" and digit characters. -->
-						{{ "WAREHOUSE_VIEW.MUTATION.ERRORS.PHONE_CONTAINS_ONLY_DIGIT" | translate }}
-					</div>
-					<div [hidden]="!form.hasError('ordersPhoneRequired')">
-						{{ "WAREHOUSE_VIEW.MUTATION.ERRORS.ORDERS_PHONE_IS_REQUIRED" | translate }}
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="form-group row">
-			<label class="col-sm-2 control-label">
-				{{ "WAREHOUSE_VIEW.MUTATION.ORDERS_EMAIL" | translate }}
-			</label>
-
-			<div class="col-sm-9">
-				<input type="email" class="form-control" [placeholder]="'WAREHOUSE_VIEW.MUTATION.ORDERS_EMAIL' | translate" formControlName="ordersEmail"
-				/>
-
-				<div *ngIf="(ordersEmail.errors || ordersEmail.errors || form.hasError('ordersEmailRequired')) && (ordersEmail.dirty || ordersEmail.touched)"
-				 class="alert alert-danger">
+				<div
+					*ngIf="
+						(ordersEmail.errors ||
+							ordersEmail.errors ||
+							(forwardingEmail && ordersEmail.value === '')) &&
+						(ordersEmail.dirty || ordersEmail.touched)
+					"
+					class="alert alert-danger"
+				>
 					<div [hidden]="!ordersEmail.hasError('email')">
-						{{ "WAREHOUSE_VIEW.MUTATION.ERRORS.INVALID_EMAIL" | translate }}
+						{{
+							'WAREHOUSE_VIEW.MUTATION.ERRORS.INVALID_EMAIL'
+								| translate
+						}}
 					</div>
-					<div [hidden]="!form.hasError('ordersEmailRequired')">
-						{{ "WAREHOUSE_VIEW.MUTATION.ERRORS.ORDERS_EMAIL_IS_REQUIRED" | translate }}
+					<div *ngIf="forwardingEmail && ordersEmail.value === ''">
+						{{
+							'WAREHOUSE_VIEW.MUTATION.ERRORS.ORDERS_EMAIL_IS_REQUIRED'
+								| translate
+						}}
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<nb-checkbox
+					[value]="forwardingPhone"
+					(change)="forwardingPhoneChange()"
+					>Order Forwarding Phone</nb-checkbox
+				>
+				<input
+					*ngIf="forwardingPhone"
+					type="text"
+					class="form-control"
+					[placeholder]="
+						'WAREHOUSE_VIEW.MUTATION.ORDERS_PHONE' | translate
+					"
+					formControlName="ordersPhone"
+				/>
+
+				<div
+					*ngIf="
+						(ordersPhone.errors ||
+							ordersPhone.hasError('pattern') ||
+							(forwardingPhone && ordersPhone.value === '')) &&
+						(ordersPhone.dirty || ordersPhone.touched)
+					"
+					class="alert alert-danger"
+				>
+					<div [hidden]="!ordersPhone.hasError('pattern')">
+						<!-- Phone number can start with "+" and must contains only only: "-, ., (space), #" and digit characters.-->
+						{{
+							'WAREHOUSE_VIEW.MUTATION.ERRORS.PHONE_CONTAINS_ONLY_DIGIT'
+								| translate
+						}}
+					</div>
+					<div *ngIf="forwardingPhone && ordersPhone.value === ''">
+						{{
+							'WAREHOUSE_VIEW.MUTATION.ERRORS.ORDERS_PHONE_IS_REQUIRED'
+								| translate
+						}}
 					</div>
 				</div>
 			</div>
 		</div>
-
 	</fieldset>
 </div>

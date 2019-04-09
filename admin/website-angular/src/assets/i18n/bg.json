@@ -207,7 +207,77 @@
 		"CONFIRM_ORDER": "ПОТВЪРДИ ПОРЪЧКАТА",
 		"CREATE_ORDER": "СЪЗДАВАНЕ НА ПОРЪЧКА",
 		"CONFIMR_1st_ORDER": "Потвърдете 1-та поръчка",
-		"CONFIMR_2nd_ORDER": "Потвърдете 2-ра поръчка"
+		"CONFIMR_2nd_ORDER": "Потвърдете 2-ра поръчка",
+		"SETUP_MERCHANTS": {
+			"SETUP_MERCHANTS": "Настройки на ресторантите",
+			"PREV": "НАЗАД",
+			"NEXT": "СЛЕДВАЩИЯ",
+			"ADD": "Добави",
+			"BACK": "Обратно",
+			"SAVE": "Запази",
+			"ACCOUNT": {
+				"ACCOUNT": "Сметка",
+				"EMAIL_ADDRESS": "Имейл адрес",
+				"EMAIL": "Електронна поща",
+				"PASSWORD": "Парола",
+				"REPEAT_PASSWORD": "Повтори паролата",
+				"EMAIL_IS_REQUIRED": "Изисква се имейл",
+				"INVALID_EMAIL_FORMAT": "Невалиден имейл формат",
+				"USERNAME": "Потребител",
+				"USERNAME_IS_REQUIRED": "Изисква се потребителско име",
+				"USERNAME_MUST_BE_AT_LEAST_3_CHARACTERS": "Потребителското име трябва да съдържа поне 3 знака",
+				"PASSWORD_IS_REQUIRED": "Изисква се парола",
+				"PASSWORD_MUST_BE_AT_LEAST_4_CHARACTERS": "Паролата трябва да съдържа поне 4 знака",
+				"REPEAT_PASSWORD_IS_REQUIRED": "Изисква се повторна парола",
+				"PASSWORDS_DO_NOT_MATCH": "Паролите не съвпадат"
+			},
+			"BASIC_INFO": {
+				"BASIC_INFO": "Основна информация",
+				"NAME": "Име",
+				"NAME_IS_REQUIRED": "Изисква се име",
+				"NAME_MUST_BE_AT_LEAST_4_CHARACTERS": "Името трябва да е най-малко 4 знака",
+				"PHOTO": "Снимка",
+				"ENTER_A_VALID_LOGO_URL_OR_BROWSE_FROM_A_DEVICE": "Въведете валиден URL адрес на лого или прегледайте от устройството",
+				"REMOVE": "Премахване",
+				"PHOTO_OPTIONAL": "Снимка (по избор)",
+				"BARCODE_DATA": "Данни за баркод",
+				"BARCODE_DATA_IS_REQUIRED": "Необходими са данни за баркода"
+			},
+			"CONTACT_INFO": {
+				"CONTACT_INFO": "Информация за контакт",
+				"CONTACT_PHONE": "Телефон за връзка",
+				"INVALID_PHONE_NUMBER_FORMAT": "Невалиден формат на телефонния номер",
+				"ORDER_FORWARDING_EMAIL": "Избери изпращане на имейл",
+				"ORDER_FORWARDING_PHONE": "Избери изпращане телефон",
+				"ORDERS_EMAIL": "Имейл за поръчки",
+				"ORDERS_EMAIL_IS_REQUIRED": "Изисква се имейл за поръчки",
+				"INVALID_EMAIL_FORMAT": "Невалиден имейл формат",
+				"ORDERS_PHONE": "Телефон за поръчки",
+				"ORDERS_PHONE_IS_REQUIRED": "Изисква се телефонна поръчка"
+			},
+			"LOCATION": {
+				"LOCATION": "Место нахождения"
+			},
+			"PAYMENTS": {
+				"PAYMENTS": "Плащания",
+				"ALLOW_ONLINE_PAYMENT": "Разрешаване на онлайн плащания?"
+			},
+			"MANUFACTURING": {
+				"MANUFACTURING": "Производство",
+				"PRODUCTS_MANUFACTURING": "Продукти Производство"
+			},
+			"DELIVERY_AND_TAKEAWAY_SETTINGS": {
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "Настройки за доставка и за вкъщи",
+				"SELECT_FROM_SHARED_CARRIERS": "Изберете от споделени превозвачи",
+				"ADD_YOUR_CARRIER": "Добавете своя оператор",
+				"EDIT_CARRIER": "Редактиране на носителя",
+				"CARRIER_REQUIRED": "Необходим е превозвач",
+				"PRODUCTS_DELIVERY_BY_DEFAULT": "Доставка на продукти (по подразбиране)",
+				"PRODUCTS_TAKEAWAY_BY_DEFAULT": "Продукти за вкъщи (по подразбиране)",
+				"USE_SELECTED_SHARED_CARRIERS": "Използвайте избрани споделени оператори",
+				"ADD_YOUR_CARRIERS": "Добавете операторите си"
+			}
+		}
 	},
 	"WAREHOUSE_MANAGE": {
 		"TITLE": "Управление на склада",

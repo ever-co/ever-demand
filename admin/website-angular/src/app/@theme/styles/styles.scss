@@ -183,3 +183,17 @@ ea-product-create .card-footer {
 .ng-select .ng-select-container .ng-value-container .ng-input > input {
 	height: auto !important;
 }
+
+.setup-merchants-page {
+	nb-stepper {
+		.step-content {
+			width: 100%;
+			text-align: center;
+
+			button {
+				margin: 8px;
+				border: 0;
+			}
+		}
+	}
+}

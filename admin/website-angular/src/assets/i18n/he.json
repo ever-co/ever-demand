@@ -206,7 +206,77 @@
 		"CONFIRM_ORDER": "אשר הזמנה",
 		"CREATE_ORDER": "צור הזמנה",
 		"CONFIMR_1st_ORDER": "אשר הזמנה ראשונה",
-		"CONFIMR_2nd_ORDER": "אשר את ההזמנה השנייה"
+		"CONFIMR_2nd_ORDER": "אשר את ההזמנה השנייה",
+		"SETUP_MERCHANTS": {
+			"SETUP_MERCHANTS": "הגדר סוחרים",
+			"PREV": "PREV",
+			"NEXT": "הבא",
+			"ADD": "הוסף",
+			"BACK": "חזור",
+			"SAVE": "להציל",
+			"ACCOUNT": {
+				"ACCOUNT": "חשבון",
+				"EMAIL_ADDRESS": "כתובת דוא'ל",
+				"EMAIL": "דוא'ל",
+				"PASSWORD": "סיסמה",
+				"REPEAT_PASSWORD": "חזור על הסיסמה",
+				"EMAIL_IS_REQUIRED": "נדרש דוא'ל",
+				"INVALID_EMAIL_FORMAT": "פורמט דוא'ל לא חוקי",
+				"USERNAME": "שם משתמש",
+				"USERNAME_IS_REQUIRED": "נדרש שם משתמש",
+				"USERNAME_MUST_BE_AT_LEAST_3_CHARACTERS": "שם המשתמש חייב להיות לפחות 3 תווים",
+				"PASSWORD_IS_REQUIRED": "דרושה סיסמא",
+				"PASSWORD_MUST_BE_AT_LEAST_4_CHARACTERS": "הסיסמה צריכה להיות לפחות 4 תווים",
+				"REPEAT_PASSWORD_IS_REQUIRED": "נדרשת סיסמה חוזרת",
+				"PASSWORDS_DO_NOT_MATCH": "סיסמאות לא תואמות"
+			},
+			"BASIC_INFO": {
+				"BASIC_INFO": "מידע בסיסי",
+				"NAME": "שם",
+				"NAME_IS_REQUIRED": "נדרש שם",
+				"NAME_MUST_BE_AT_LEAST_4_CHARACTERS": "השם חייב להיות לפחות 4 תווים",
+				"PHOTO": "תמונה",
+				"ENTER_A_VALID_LOGO_URL_OR_BROWSE_FROM_A_DEVICE": "הזן כתובת אתר חוקית של לוגו או דפדף ממכשיר",
+				"REMOVE": "הסר",
+				"PHOTO_OPTIONAL": "תמונה (אופציונלי)",
+				"BARCODE_DATA": "נתוני ברקוד",
+				"BARCODE_DATA_IS_REQUIRED": "נתוני ברקוד נדרשים"
+			},
+			"CONTACT_INFO": {
+				"CONTACT_INFO": "פרטים ליצירת קשר",
+				"CONTACT_PHONE": "צור קשר עם הטלפון",
+				"INVALID_PHONE_NUMBER_FORMAT": "פורמט מספר טלפון לא חוקי",
+				"ORDER_FORWARDING_EMAIL": "סדר העברת דואר אלקטרוני",
+				"ORDER_FORWARDING_PHONE": "הזמנת טלפון העברה",
+				"ORDERS_EMAIL": "דוא'ל דוא'ל",
+				"ORDERS_EMAIL_IS_REQUIRED": "יש צורך בהודעות דוא'ל",
+				"INVALID_EMAIL_FORMAT": "פורמט דוא'ל לא חוקי",
+				"ORDERS_PHONE": "טלפון הטלפונים",
+				"ORDERS_PHONE_IS_REQUIRED": "טלפון הטלפון נדרש"
+			},
+			"LOCATION": {
+				"LOCATION": "מקום"
+			},
+			"PAYMENTS": {
+				"PAYMENTS": "תשלומים",
+				"ALLOW_ONLINE_PAYMENT": "האם לאפשר תשלומים מקוונים?"
+			},
+			"MANUFACTURING": {
+				"MANUFACTURING": "ייצור",
+				"PRODUCTS_MANUFACTURING": "ייצור מוצרים"
+			},
+			"DELIVERY_AND_TAKEAWAY_SETTINGS": {
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "הגדרות משלוח & Takeaway",
+				"SELECT_FROM_SHARED_CARRIERS": "בחר מתוך ספקים משותפים",
+				"ADD_YOUR_CARRIER": "הוסף את הספק שלך",
+				"EDIT_CARRIER": "ערוך ספק",
+				"CARRIER_REQUIRED": "נדרש נושא",
+				"PRODUCTS_DELIVERY_BY_DEFAULT": "משלוח מוצרים (כברירת מחדל)",
+				"PRODUCTS_TAKEAWAY_BY_DEFAULT": "מוצרים Takeaway (כברירת מחדל)",
+				"USE_SELECTED_SHARED_CARRIERS": "השתמש במפעילים משותפים נבחרים",
+				"ADD_YOUR_CARRIERS": "הוסף את הספקים שלך"
+			}
+		}
 	},
 	"WAREHOUSE_MANAGE": {
 		"TITLE": "ניהול מחסן",

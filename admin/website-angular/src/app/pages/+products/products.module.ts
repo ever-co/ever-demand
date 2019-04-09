@@ -16,6 +16,7 @@ import { NotifyService } from 'app/@core/services/notify/notify.service';
 import { ConfirmationModalModule } from '../../@shared/confirmation-modal/confirmation-modal.module';
 import { CategoryImageComponent } from 'app/@shared/product/categories/categories-table/category-image.component';
 import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.module';
+import { ProductCategoriesFormsModule } from 'app/@shared/product/categories/forms/product-categories-forms.module';
 
 const routes: Routes = [
 	{
@@ -44,7 +45,8 @@ const routes: Routes = [
 		ProductFormsModule,
 		NbSpinnerModule,
 		ConfirmationModalModule,
-		FileUploaderModule
+		FileUploaderModule,
+		ProductCategoriesFormsModule
 	],
 	declarations: [
 		ProductsComponent,

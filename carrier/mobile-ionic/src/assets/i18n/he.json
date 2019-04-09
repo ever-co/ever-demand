@@ -5,9 +5,16 @@
 	},
 	"CURRENT_DIRECTION": "rtl",
 	"SIDEBAR_SIDE": "right",
-
 	"MAIN_VIEW": {
 		"EVERCO_DRIVER": "נהג"
+	},
+	"MENU": {
+		"MAIN": "ראשי",
+		"DELIVERIES": "משלוחים",
+		"SETTINGS": "הגדרות",
+		"LANGUAGE": "שפה",
+		"ABOUT_US": "עלינו",
+		"TERMS_OF_USE": "תנאי שימוש"
 	},
 	"DELIVERY_VIEW": {
 		"THE_CUSTOMER_HAS_TO_PAY": "הלקוח חייב לשלם",
@@ -64,7 +71,11 @@
 		"TITLE": "תנאי שימוש"
 	},
 	"LANGUAGE_VIEW": {
-		"TITLE": "בחירת שפה"
+		"TITLE": "בחירת שפה",
+		"ENGLISH": "אנגלית",
+		"BULGARIAN": "בולגרית",
+		"HEBREW": "עברית",
+		"RUSSIAN": "רוסית"
 	},
 	"LIST_VIEW": {
 		"YOU_NAVIGATED_HERE_FROM": "אתה מנווט כאן מ"

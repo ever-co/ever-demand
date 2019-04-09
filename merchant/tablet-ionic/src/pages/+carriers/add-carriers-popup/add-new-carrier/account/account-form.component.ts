@@ -19,6 +19,7 @@ export class AccountFormComponent implements OnDestroy, OnInit, OnChanges {
 	userName: AbstractControl;
 	password: AbstractControl;
 	isActive: AbstractControl;
+	isSharedCarrier: AbstractControl;
 	repeatPassword: AbstractControl;
 
 	$password: any;
@@ -63,15 +64,17 @@ export class AccountFormComponent implements OnDestroy, OnInit, OnChanges {
 					}
 				]
 			],
-			isActive: [true, Validators.required]
+			isActive: [true, Validators.required],
+			isSharedCarrier: [false]
 		});
 	}
 
 	bindFormControls() {
 		this.userName = this.form.get('userName');
 		this.password = this.form.get('password');
-		this.isActive = this.form.get('isActive');
 		this.repeatPassword = this.form.get('repeatPassword');
+		this.isActive = this.form.get('isActive');
+		this.isSharedCarrier = this.form.get('isSharedCarrier');
 	}
 
 	ngOnDestroy(): void {

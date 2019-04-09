@@ -5,9 +5,16 @@
 	},
 	"CURRENT_DIRECTION": "ltr",
 	"SIDEBAR_SIDE": "left",
-
 	"MAIN_VIEW": {
 		"EVERCO_DRIVER": "Курьер"
+	},
+	"MENU": {
+		"MAIN": "Главный",
+		"DELIVERIES": "Поставки",
+		"SETTINGS": "Настройки",
+		"LANGUAGE": "Язык",
+		"ABOUT_US": "Насчет нас",
+		"TERMS_OF_USE": "Условия эксплуатации"
 	},
 	"DELIVERY_VIEW": {
 		"THE_CUSTOMER_HAS_TO_PAY": "Клиент должен заплатить",
@@ -64,7 +71,11 @@
 		"TITLE": "Условия эксплуатации"
 	},
 	"LANGUAGE_VIEW": {
-		"TITLE": "Выберите язык"
+		"TITLE": "Выберите язык",
+		"ENGLISH": "Английский",
+		"BULGARIAN": "Болгарский",
+		"HEBREW": "Иврит",
+		"RUSSIAN": "Русский"
 	},
 	"LIST_VIEW": {
 		"YOU_NAVIGATED_HERE_FROM": "Вы перешли сюда из"

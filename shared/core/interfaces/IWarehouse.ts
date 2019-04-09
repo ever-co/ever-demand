@@ -69,7 +69,7 @@ export interface IWarehouseCreateObject extends DBCreateObject {
 	 * @type {ForwardOrdersMethod}
 	 * @memberof IWarehouseCreateObject
 	 */
-	forwardOrdersUsing: ForwardOrdersMethod;
+	forwardOrdersUsing: ForwardOrdersMethod[];
 
 	/**
 	 * Is Warehouse products by default require manufacturing
@@ -99,6 +99,7 @@ export interface IWarehouseCreateObject extends DBCreateObject {
 	 * @memberof IWarehouseCreateObject
 	 */
 	hasRestrictedCarriers?: boolean;
+	carriersIds?: string[];
 
 	/**
 	 * Password hash

@@ -38,9 +38,9 @@ export default class FakeDataWarehouses {
 								contactPhone: faker.phone.phoneNumber(),
 								ordersEmail: null,
 								ordersPhone: null,
-								forwardOrdersUsing: faker.random.number(
-									1
-								) as ForwardOrdersMethod,
+								forwardOrdersUsing: [
+									ForwardOrdersMethod.Unselected
+								],
 								isManufacturing: true,
 								isCarrierRequired: true,
 								usedCarriersIds: [],
@@ -71,12 +71,14 @@ export default class FakeDataWarehouses {
 							logo: getFakeImg(200, 200, 75, 'Pizza Dan'),
 							contactEmail: faker.internet.email(),
 							contactPhone: faker.phone.phoneNumber(),
-							forwardOrdersUsing: ForwardOrdersMethod.Unselected,
+							forwardOrdersUsing: [
+								ForwardOrdersMethod.Unselected
+							],
 							ordersEmail: null,
 							ordersPhone: null,
 							isManufacturing: true,
 							isCarrierRequired: true,
-							hasRestrictedCarriers: true,
+							hasRestrictedCarriers: false,
 							usedCarriersIds: [],
 							products: [],
 							geoLocation: {
@@ -103,12 +105,14 @@ export default class FakeDataWarehouses {
 							logo: getFakeImg(200, 200, 75, 'Pizza Hit'),
 							contactEmail: faker.internet.email(),
 							contactPhone: faker.phone.phoneNumber(),
-							forwardOrdersUsing: ForwardOrdersMethod.Unselected,
+							forwardOrdersUsing: [
+								ForwardOrdersMethod.Unselected
+							],
 							ordersEmail: null,
 							ordersPhone: null,
 							isManufacturing: true,
 							isCarrierRequired: true,
-							hasRestrictedCarriers: true,
+							hasRestrictedCarriers: false,
 							usedCarriersIds: [],
 							products: [],
 							geoLocation: {
@@ -135,12 +139,14 @@ export default class FakeDataWarehouses {
 							logo: getFakeImg(200, 200, 75, 'Pizza Troya'),
 							contactEmail: faker.internet.email(),
 							contactPhone: faker.phone.phoneNumber(),
-							forwardOrdersUsing: ForwardOrdersMethod.Unselected,
+							forwardOrdersUsing: [
+								ForwardOrdersMethod.Unselected
+							],
 							ordersEmail: null,
 							ordersPhone: null,
 							isManufacturing: false,
 							isCarrierRequired: false,
-							hasRestrictedCarriers: true,
+							hasRestrictedCarriers: false,
 							usedCarriersIds: [],
 							products: [],
 							geoLocation: {
@@ -167,12 +173,14 @@ export default class FakeDataWarehouses {
 							logo: getFakeImg(200, 200, 75, 'Pizza Pizza'),
 							contactEmail: faker.internet.email(),
 							contactPhone: faker.phone.phoneNumber(),
-							forwardOrdersUsing: ForwardOrdersMethod.Unselected,
+							forwardOrdersUsing: [
+								ForwardOrdersMethod.Unselected
+							],
 							ordersEmail: null,
 							ordersPhone: null,
 							isManufacturing: true,
 							isCarrierRequired: true,
-							hasRestrictedCarriers: true,
+							hasRestrictedCarriers: false,
 							usedCarriersIds: [],
 							products: [],
 							geoLocation: {

@@ -6,7 +6,7 @@
 
 [Ever](https://ever.co)® is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform build with [TypeScript](http://www.typescriptlang.org).
 
-Out-of-the-box Ever® Platform™ provides everything required to quickly build, manage and expand Multi-Store (Multi-Vendor Marketplace) or Single-Store **On-Demand** Commerce Solutions with customized e-commerce Websites (shops), Mobile ordering apps (Hybrid and PWA), Carrier (Driver) apps, Merchant apps and Admin interface website.
+Out-of-the-box Ever® Platform™ provides everything required to quickly build, manage and expand Multi-Store (Multi-Vendor / Peer-to-Peer Marketplace) or Single-Store **On-Demand** Commerce Solutions with customized e-commerce Websites (Shops), Mobile ordering Apps (Hybrid and PWA), Carrier (Driver) Mobile Apps, Merchant Apps and Admin interface Website.
 
 ![overview](https://docs.ever.co/docs/assets/overview.jpg)
 
@@ -61,11 +61,13 @@ You can also track feature requests from the community in the [separate repo](ht
 
 ## Documentation
 
-Please refer to https://docs.ever.co for the Platform Documentation (WIP)
+Please refer to our official [Platform Documentation](https://docs.ever.co) and to our [Wiki](https://github.com/ever-co/ever/wiki) (WIP).
 
 For quick overview of each project in the Platform (Server, Admin, Shops, etc), you can search for README.md file in the root of the projects folders. For example, see [./backend/api/README.md](backend/api/README.md) for Server (Backend) related overview.
 
 ## Getting Started
+
+We follow [Gitflow Workflow](https://nvie.com/posts/a-successful-git-branching-model) so the [`develop` branch](https://github.com/ever-co/ever/tree/develop) may be in an unstable or even broken state during development. Please use [releases](https://github.com/ever-co/ever/releases) or [`master` branch](https://github.com/ever-co/ever/tree/master) instead of the `develop` branch in order to get more stable code.
 
 ### Clone Repo
 
@@ -135,61 +137,11 @@ The command above will install all required packages for every sub-project of th
 
 ### MongoDB
 
-You can download and install free Community version of MongoDB from the [official MongoDB download center](https://www.mongodb.com/download-center/v2/community).
-
-After installation, make sure MongoDB service is running and accepting connections on default `localhost:27017` (change connection parameters in the ./backend/api/.env file if you run on different location/port)
-
-To manage database, you can use free [MongoDB Compass Community Edition available](https://www.mongodb.com/download-center/v2/compass) or some other GUI for MongoDB, e.g. Studio 3T (https://studio3t.com)
-
-For production, we recommend [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).  
-It is also possible to use [AWS DocumentDB](https://aws.amazon.com/documentdb) or [Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction)
-
-_Note: we currently integrating [Mongo Memory Server](https://github.com/nodkz/mongodb-memory-server) which will allow to test Platform without need to install MongoDB locally._
+Ever platform configured to use MongoDB by default and assume you have MongoDB service running and accepting connections on default `localhost:27017`. Please see relevant section in our [documentation](https://github.com/ever-co/ever/wiki/MongoDB).
 
 ### Platform Configuration
 
-#### Default
-
-We created templates & initial configuration files (with reasonable defaults) for each project in the Platform, to save your time and keep things simple.
-
-In the Angular based projects, the "standard" environment configuration files `environment.ts` and `environment.prod.ts` will be auto-generated from .env file (if it's exists) or from default settings on the first app run.
-
-So, the following files will be auto-generated:
-
--   in Admin UI: `./admin/website-angular/src/environments/environment.ts` and `./admin/website-angular/src/environments/environment.prod.ts`.
--   in Mobile Shop: `./shop/mobile-ionic/src/environments/environment.ts` and `./shop/mobile-ionic/src/environments/environment.prod.ts`
--   in Web Shop: `./shop/website-angular/src/environments/environment.ts` and `./shop/website-angular/src/environments/environment.prod.ts`
--   in Carrier App: `./carrier/mobile-ionic/src/environments/environment.ts` and `./carrier/mobile-ionic/src/environments/environment.prod.ts`
--   in Merchant App: `./merchant/tablet-ionic/src/environments/environment.ts` and `./merchant/tablet-ionic/src/environments/environment.prod.ts`
-
-Note: you should never edit auto-generated files above and instead you should edit relevant .env files for custom configurations, see more details below.
-
-#### Custom / Manual
-
--   For _Backend (API)_ configuration, the `./backend/api/.env.template` file should be copied into `./backend/api/.env` and relevant changes should be done in the `.env` file.
-    It means you should have `./backend/api/.env` file in place to be able to run the Platform on developer machine if you want to use different settings to our defaults.
-
--   For _Admin_ Angular App configuration, the `./admin/website-angular/.env.template` file should be copied into `./admin/website-angular/.env` and relevant changes should be done in the `.env` file.
-
--   For _Merchant_ Ionic App configuration, the `./merchant/tablet-ionic/.env.template` file should be copied into `./merchant/tablet-ionic/.env` and relevant changes should be done in the `.env` file.
-    If you need to run Merchant App using PM2 (as Web app, not Tablet App), needs copy `./merchant/tablet-ionic/.env.template` to `./merchant/tablet-ionic/.env` and make relevant changes (if required)
-
--   For _Shopping Mobile_ App (Ionic) configuration, the `./shop/mobile-ionic/.env.template` file should be copied into `./shop/mobile-ionic/.env` and relevant changes should be done in the `.env` file.
-
--   For _Shopping Website_ configuration, the `./shop/website-angular/.env.template` file should be copied into `./shop/website-angular/.env` and relevant changes should be done in the `.env` file.
-
--   For _Carrier Mobile_ App (Ionic) configuration, the `./carrier/mobile-ionic/.env.template` file should be copied into `./carrier/mobile-ionic/.env` and relevant changes should be done in the `.env` file.
-
-Notes:
-
--   For initial development no changes required in the `.env` files in the projects, unless some manual changes were done to the Backend (API) configuration. However, to enable some of the Platform features, you may need to change relevant configurations in corresponding `.env` files.
-
--   As a general rule, files `.env` are configurations you should never make public (and of course never commit to Git repo), unless you removed all private/secure parameters from them.
-    In addition, for Angular based projects, you should never put any secure settings (e.g. Secret Keys, API Keys, etc) in `environment.ts` and `environment.prod.ts` files because all of them will be loaded into the browser and made public.
-    Because we are using auto-generated `environment.ts` and `environment.prod.ts` files, it means you should never put any secure settings into `.env` files in our Angular projects.
-    The only safe place to put your secure settings is `.env` file on the backend API/Server project!
-
--   We are using dotenv (.env) in Angular based projects for consistency with configuration between all our Platform projects only.
+See relevant section in our [documentation](https://github.com/ever-co/ever/wiki/Ever-Platform-Configuration).
 
 ### Run Platform Projects
 
@@ -213,28 +165,7 @@ You can use credentials above to login into Platform Admin App, which available 
 
 ## Metrics
 
-See below aproximate source code metrics for Ever Platform using [cloc](https://github.com/AlDanial/cloc) project.
-
-```
-github.com/AlDanial/cloc v 1.80  T=5.12 s (385.5 files/s, 27882.0 lines/s)
--------------------------------------------------------------------------------
-Language                     files          blank        comment           code
--------------------------------------------------------------------------------
-TypeScript                    1145          10151           4065          73840
-HTML                           319           1005            135          15917
-Sass                           298           1969            339          12800
-JSON                            39             13              0           8258
-CSS                             95           1196            665           5650
-JavaScript                      50              8             87           3257
-Markdown                         6            554              1           1426
-GraphQL                         21            269             49           1091
-XML                              1              0              0             11
--------------------------------------------------------------------------------
-SUM:                          1974          15165           5341         122250
--------------------------------------------------------------------------------
-```
-
-Note: you can get latest metrics using `yarn count` from the root of mono-repo.
+According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform today has more than 120K lines of TypeScript, GraphQL, HTML / CSS and other code files. You can get more details at the relevant section of our [documentation](https://github.com/ever-co/ever/wiki/Metrics).
 
 ## Contribute
 
@@ -334,6 +265,8 @@ All other brand and product names are trademarks, registered trademarks or servi
 [![Circle CI](https://circleci.com/gh/ever-co/ever.svg?style=svg)](https://circleci.com/gh/ever-co/ever)
 [![codecov](https://codecov.io/gh/ever-co/ever/branch/master/graph/badge.svg)](https://codecov.io/gh/ever-co/ever)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e7b2b38660f44963989ac9d49ae76d4d)](https://www.codacy.com/app/Ever/ever?utm_source=github.com&utm_medium=referral&utm_content=ever-co/ever&utm_campaign=Badge_Grade)
+[![DeepScan grade](https://deepscan.io/api/teams/3293/projects/4849/branches/38566/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=3293&pid=4849&bid=38566)
 [![Known Vulnerabilities](https://snyk.io/test/github/ever-co/ever/badge.svg)](https://snyk.io/test/github/ever-co/ever)
 [![Greenkeeper badge](https://badges.greenkeeper.io/ever-co/ever.svg)](https://greenkeeper.io)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fever.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fever?ref=badge_shield)
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io)
