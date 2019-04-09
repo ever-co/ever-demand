@@ -38,6 +38,7 @@ import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import User from '@modules/server.common/entities/User';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { ConfigService } from '../config/config.service';
+import * as pem from 'pem';
 
 // local IPs
 const INTERNAL_IPS = ['127.0.0.1', '::1'];
@@ -272,7 +273,7 @@ export class ServicesApp {
 		});
 	}
 
-	private _startExpress() {
+	private async _startExpress() {
 		// that's important to see even if logs disabled, do not remove!
 		console.log('Connected to DB');
 
@@ -297,12 +298,23 @@ export class ServicesApp {
 		this.expressApp.set('view cache', false);
 
 		// TODO: this is probably a good place to check if Cert files exists and if not generate them for localhost
-		const hasHttpsCert = fs.existsSync(env.HTTPS_CERT_PATH);
-		if (hasHttpsCert) {
+		const httpsCertPath = env.HTTPS_CERT_PATH;
+		const httpsKeyPath = env.HTTPS_KEY_PATH;
+
+		const hasHttpsCert = fs.existsSync(httpsCertPath);
+		const hasHttpsKey = fs.existsSync(httpsKeyPath);
+		let hasDefaultHttpsCert = false;
+		if (!hasHttpsCert || !hasHttpsKey) {
+			hasDefaultHttpsCert = await this._getCertificates(
+				httpsCertPath,
+				httpsKeyPath
+			);
+		}
+		if ((hasHttpsCert && hasHttpsKey) || hasDefaultHttpsCert) {
 			this.httpsServer = https.createServer(
 				{
-					cert: fs.readFileSync(env.HTTPS_CERT_PATH),
-					key: fs.readFileSync(env.HTTPS_KEY_PATH)
+					cert: fs.readFileSync(httpsCertPath),
+					key: fs.readFileSync(httpsKeyPath)
 				},
 				this.expressApp
 			);
@@ -440,6 +452,58 @@ export class ServicesApp {
 				);
 			});
 		}
+	}
+
+	private async _getCertificates(
+		httpsCertPath: string,
+		httpsKeyPath: string
+	) {
+		try {
+			const httpsCertificatesPath = env.CERTIFICATES_HTTPS_PATH;
+			const hasHttpsCertificatesPath = fs.existsSync(
+				httpsCertificatesPath
+			);
+			if (!hasHttpsCertificatesPath) {
+				fs.mkdirSync(httpsCertificatesPath, {
+					recursive: true
+				});
+			}
+
+			return await this._createCertificateAsync(
+				httpsCertPath,
+				httpsKeyPath
+			);
+		} catch (error) {
+			return false;
+		}
+	}
+
+	private _createCertificateAsync(
+		httpsCertPath: string,
+		httpsKeyPath: string
+	): Promise<boolean> {
+		return new Promise((resolve, reject) => {
+			try {
+				pem.createCertificate(
+					{
+						days: 365,
+						selfSigned: true
+					},
+					(err, keys) => {
+						if (err) {
+							reject(false);
+						}
+
+						fs.writeFileSync(httpsCertPath, keys.certificate);
+						fs.writeFileSync(httpsKeyPath, keys.serviceKey);
+
+						resolve(true);
+					}
+				);
+			} catch (error) {
+				reject(false);
+			}
+		});
 	}
 
 	private _startSocketIO() {
