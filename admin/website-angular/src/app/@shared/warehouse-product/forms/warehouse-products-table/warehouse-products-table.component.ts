@@ -46,6 +46,8 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 
 	@Input()
 	perPage: number = 5;
+	@Input()
+	selectMode = 'multi';
 
 	settingsSmartTable: object;
 	sourceSmartTable = new LocalDataSource();
@@ -167,7 +169,7 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 							deleteButtonContent: '<i class="nb-trash"></i>',
 							confirmDelete: true
 						},
-						selectMode: 'multi',
+						selectMode: this.selectMode,
 						columns: {
 							image: {
 								title: image,

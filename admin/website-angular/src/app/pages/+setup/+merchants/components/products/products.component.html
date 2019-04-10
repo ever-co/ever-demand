@@ -40,12 +40,21 @@
 					</button>
 				</div>
 
-				<div *ngIf="storeProducts && storeProducts.length !== 0"></div>
+				<div [hidden]="!showProductsTable">
+					<ea-warehouse-products-table
+						#productsTable
+						[selectMode]="null"
+						[perPage]="productsPerPage"
+						(onEdit)="editProduct($event)"
+						(onDelete)="removeProduct($event)"
+					></ea-warehouse-products-table>
+				</div>
 			</div>
 		</div>
 
 		<div *ngIf="currentView == componentViews.productsTable" class="row">
 			<ea-merchants-setup-products-catalog
+				[existedProductsIds]="existedProductsIds"
 				#productsCatalog
 			></ea-merchants-setup-products-catalog>
 		</div>

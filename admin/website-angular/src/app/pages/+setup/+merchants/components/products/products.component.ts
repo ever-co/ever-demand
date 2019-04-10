@@ -7,12 +7,12 @@ import {
 	OnDestroy
 } from '@angular/core';
 import { SetupMerchantProductsCatalogComponent } from './products-catalog/products-catalog.component';
-import Product from '@modules/server.common/entities/Product';
 import { SetupMerchantAddProductsComponent } from './add-products/add-products.component';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { WarehouseProductsComponent } from 'app/@shared/warehouse-product/forms/warehouse-products-table';
 
 @Component({
 	selector: 'ea-merchants-setup-products',
@@ -24,6 +24,8 @@ export class SetupMerchantProductsComponent implements OnInit, OnDestroy {
 	productsCatalog: SetupMerchantProductsCatalogComponent;
 	@ViewChild('addProducts')
 	addProducts: SetupMerchantAddProductsComponent;
+	@ViewChild('productsTable')
+	productsTable: WarehouseProductsComponent;
 
 	@Output()
 	previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -39,6 +41,7 @@ export class SetupMerchantProductsComponent implements OnInit, OnDestroy {
 	productsPerPage = 3;
 	// TODO get real warehouse id
 	storeId = '5ca48ff5d32c2d18ac96f562';
+	showProductsTable: boolean = false;
 
 	productsForAdd = [];
 	storeProducts: WarehouseProduct[];
@@ -69,6 +72,15 @@ export class SetupMerchantProductsComponent implements OnInit, OnDestroy {
 		this._currentView = view;
 	}
 
+	get existedProductsIds() {
+		let ids = [];
+		if (this.storeProducts) {
+			ids = this.storeProducts.map((p) => p.productId);
+		}
+
+		return ids;
+	}
+
 	select() {
 		this.productsForAdd = this.productsCatalog.productsTable.selectedProducts;
 		this.currentView = this.componentViews.addProducts;
@@ -89,6 +101,15 @@ export class SetupMerchantProductsComponent implements OnInit, OnDestroy {
 				.get(this.storeId)
 				.pipe(takeUntil(this._ngDestroy$))
 				.subscribe((products) => {
+					if (products.length > 0) {
+						this.showProductsTable = true;
+					}
+
+					this.productsTable.loadDataSmartTable(
+						products,
+						this.storeId
+					);
+
 					this.storeProducts = products;
 				});
 		}
