@@ -7096,10 +7096,21 @@ mongodb-core@3.2.1:
   optionalDependencies:
     saslprep "^1.0.0"
 
-mongodb-memory-server@^4.2.1:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/mongodb-memory-server/-/mongodb-memory-server-4.2.1.tgz#214b1313804cb34a091cec83f38b4089f2f267d4"
-  integrity sha512-dEKTV07X1xs34CFJYLe6aqzhOCRnArn+tSlfKPNVp1RqJpX9cashFb9Dm+CMaPFmMEZCaEJ9Kz3uC0OmZu2Hrg==
+mongodb-core@^3.2.3:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/mongodb-core/-/mongodb-core-3.2.3.tgz#eb9bcb876f169f5843fd135f7f7686dbac0e9e34"
+  integrity sha512-UyI0rmvPPkjOJV8XGWa9VCTq7R4hBVipimhnAXeSXnuAPjuTqbyfA5Ec9RcYJ1Hhu+ISnc8bJ1KfGZd4ZkYARQ==
+  dependencies:
+    bson "^1.1.1"
+    require_optional "^1.0.1"
+    safe-buffer "^5.1.2"
+  optionalDependencies:
+    saslprep "^1.0.0"
+
+mongodb-memory-server-core@5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/mongodb-memory-server-core/-/mongodb-memory-server-core-5.0.1.tgz#36a406afcee3a512950407cd56f416f207cddd18"
+  integrity sha512-EVKXFmozAP58Mqcib/piNPM4LJhgMToM9zpqh8lx6aYKGtrulv6rVXRnENGazhZx2nkFp2CDtKiW5aSV8xNfng==
   dependencies:
     debug "^4.1.1"
     decompress "^4.2.0"
@@ -7113,6 +7124,15 @@ mongodb-memory-server@^4.2.1:
     mkdirp "^0.5.1"
     tmp "^0.0.33"
     uuid "^3.2.1"
+  optionalDependencies:
+    mongodb ">=3.0.0"
+
+mongodb-memory-server@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/mongodb-memory-server/-/mongodb-memory-server-5.0.1.tgz#0dd1aac902a808f59ed829766a0d0e638d79990e"
+  integrity sha512-R1+umOyO20bb2edWP+wBH/Locrblk/DYoTg4T817BSkA5XU9ziHsaDHO8JxDkVuOSFr1ZThzWjYgeMQjnY7qGQ==
+  dependencies:
+    mongodb-memory-server-core "5.0.1"
 
 mongodb@3.1.13:
   version "3.1.13"
@@ -7120,6 +7140,14 @@ mongodb@3.1.13:
   integrity sha512-sz2dhvBZQWf3LRNDhbd30KHVzdjZx9IKC0L+kSZ/gzYquCF5zPOgGqRz6sSCqYZtKP2ekB4nfLxhGtzGHnIKxA==
   dependencies:
     mongodb-core "3.1.11"
+    safe-buffer "^5.1.2"
+
+mongodb@>=3.0.0:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.2.3.tgz#4610ee33d300caa74329c2dd03e137210723cd91"
+  integrity sha512-jw8UyPsq4QleZ9z+t/pIVy3L++51vKdaJ2Q/XXeYxk/3cnKioAH8H6f5tkkDivrQL4PUgUOHe9uZzkpRFH1XtQ==
+  dependencies:
+    mongodb-core "^3.2.3"
     safe-buffer "^5.1.2"
 
 mongodb@^3.2.1:
