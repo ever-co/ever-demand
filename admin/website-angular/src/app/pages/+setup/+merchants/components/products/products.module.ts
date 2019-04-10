@@ -7,6 +7,7 @@ import { SetupMerchantProductsComponent } from './products.component';
 import { SetupMerchantProductsCatalogComponent } from './products-catalog/products-catalog.component';
 import { ProductFormsModule } from 'app/@shared/product/forms';
 import { SetupMerchantAddProductsComponent } from './add-products/add-products.component';
+import { WarehouseProductFormsModule } from 'app/@shared/warehouse-product/forms';
 
 const COMPONENTS = [
 	SetupMerchantProductsComponent,
@@ -20,7 +21,8 @@ const COMPONENTS = [
 		ThemeModule,
 		FormsModule,
 		TranslateModule.forChild(),
-		ProductFormsModule
+		ProductFormsModule,
+		WarehouseProductFormsModule
 	],
 	declarations: COMPONENTS,
 	exports: COMPONENTS

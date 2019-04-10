@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, EventEmitter } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	OnDestroy,
+	EventEmitter,
+	Input
+} from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import Product from '@modules/server.common/entities/Product';
 import { first, takeUntil } from 'rxjs/operators';
@@ -15,24 +21,28 @@ import { CheckboxComponent } from 'app/@shared/render-component/customer-orders-
 	templateUrl: './warehouse-products-table.component.html'
 })
 export class WarehouseProductsComponent implements OnInit, OnDestroy {
-	private ngDestroy$ = new Subject<void>();
+	@Input()
+	boxShadow: string;
+	@Input()
+	perPage = 5;
 
+	settingsSmartTable: object;
+	sourceSmartTable = new LocalDataSource();
+
+	private ngDestroy$ = new Subject<void>();
 	private warehouseProducts: any[];
 	private warehouse: Warehouse;
-
-	public settingsSmartTable: object;
-	public sourceSmartTable = new LocalDataSource();
 
 	constructor(
 		private _translateService: TranslateService,
 		private warehouseRouter: WarehouseRouter
-	) {
+	) {}
+
+	ngOnInit(): void {
 		this._loadSettingsSmartTable();
 	}
 
-	ngOnInit(): void {}
-
-	public get allWarehouseProducts() {
+	get allWarehouseProducts() {
 		return [...this.warehouseProducts];
 	}
 
@@ -203,6 +213,10 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 									});
 							}
 						}
+					},
+					pager: {
+						display: true,
+						perPage: this.perPage
 					}
 				};
 			});

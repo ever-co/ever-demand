@@ -1,3 +1,4 @@
+<!-- TODO add translate -->
 <nb-card class="setup-merchant-products">
 	<nb-card-header>
 		<span *ngIf="currentView == componentViews.main">
@@ -15,6 +16,7 @@
 	</nb-card-header>
 	<nb-card-body>
 		<div *ngIf="currentView === componentViews.main" class="main-content">
+			<!-- TODO disable if store id don't exist -->
 			<div class="row actions">
 				<div class="form-group offset-md-2 col-md-4">
 					<button
@@ -51,7 +53,12 @@
 		</div>
 
 		<div *ngIf="currentView == componentViews.addProducts" class="row">
-			<ea-merchants-setup-add-products></ea-merchants-setup-add-products>
+			<ea-merchants-setup-add-products
+				#addProducts
+				[products]="productsForAdd"
+				[storeId]="storeId"
+				(successAdd)="currentView = componentViews.main"
+			></ea-merchants-setup-add-products>
 		</div> </nb-card-body
 ></nb-card>
 
@@ -78,9 +85,18 @@
 
 	<button
 		*ngIf="currentView === componentViews.addProducts"
+		[disabled]="!addProducts?.warehouseProductsTable.productsIsValid()"
 		nbButton
-		(click)="add()"
+		(click)="addProducts.add()"
 	>
 		Add
+	</button>
+
+	<button
+		*ngIf="currentView === componentViews.createProduct"
+		nbButton
+		(click)="create()"
+	>
+		Create
 	</button>
 </div>
