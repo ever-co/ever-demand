@@ -29,7 +29,7 @@
 					</button>
 				</div>
 
-				<div class="form-group  col-md-4">
+				<div class="form-group col-md-4">
 					<button
 						nbButton
 						outline
@@ -60,7 +60,12 @@
 		</div>
 
 		<div *ngIf="currentView == componentViews.createProduct" class="row">
-			<h4>Add new product</h4>
+			<div class="form-group offset-md-2 col-md-8">
+				<ea-merchants-setup-product-mutation
+					(onCreate)="select([$event])"
+					#productMutation
+				></ea-merchants-setup-product-mutation>
+			</div>
 		</div>
 
 		<div *ngIf="currentView == componentViews.addProducts" class="row">
@@ -89,7 +94,7 @@
 		*ngIf="currentView === componentViews.productsTable"
 		[disabled]="!haveProductsForAdd"
 		nbButton
-		(click)="select()"
+		(click)="select(productsCatalog?.productsTable.selectedProducts)"
 	>
 		Select
 	</button>
@@ -106,7 +111,8 @@
 	<button
 		*ngIf="currentView === componentViews.createProduct"
 		nbButton
-		(click)="create()"
+		[disabled]="!productMutation?.basicInfo.valid || false"
+		(click)="productMutation.create()"
 	>
 		Create
 	</button>

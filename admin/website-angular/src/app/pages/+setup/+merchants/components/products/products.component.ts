@@ -13,6 +13,7 @@ import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { WarehouseProductsComponent } from 'app/@shared/warehouse-product/forms/warehouse-products-table';
+import { SetupMerchantProductMutationComponent } from './product-mutation/product-mutation.component';
 
 @Component({
 	selector: 'ea-merchants-setup-products',
@@ -26,6 +27,8 @@ export class SetupMerchantProductsComponent implements OnInit, OnDestroy {
 	addProducts: SetupMerchantAddProductsComponent;
 	@ViewChild('productsTable')
 	productsTable: WarehouseProductsComponent;
+	@ViewChild('productMutation')
+	productMutation: SetupMerchantProductMutationComponent;
 
 	@Output()
 	previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -81,8 +84,8 @@ export class SetupMerchantProductsComponent implements OnInit, OnDestroy {
 		return ids;
 	}
 
-	select() {
-		this.productsForAdd = this.productsCatalog.productsTable.selectedProducts;
+	select(products) {
+		this.productsForAdd = products;
 		this.currentView = this.componentViews.addProducts;
 	}
 
@@ -93,6 +96,14 @@ export class SetupMerchantProductsComponent implements OnInit, OnDestroy {
 		}
 
 		this.currentView = this.componentViews.main;
+	}
+
+	editProduct() {
+		console.warn('TODO edit product');
+	}
+
+	removeProduct() {
+		console.warn('TODO remove product');
 	}
 
 	ngOnInit(): void {

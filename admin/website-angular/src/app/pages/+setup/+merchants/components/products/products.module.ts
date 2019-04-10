@@ -8,11 +8,13 @@ import { SetupMerchantProductsCatalogComponent } from './products-catalog/produc
 import { ProductFormsModule } from 'app/@shared/product/forms';
 import { SetupMerchantAddProductsComponent } from './add-products/add-products.component';
 import { WarehouseProductFormsModule } from 'app/@shared/warehouse-product/forms';
+import { SetupMerchantProductMutationComponent } from './product-mutation/product-mutation.component';
 
 const COMPONENTS = [
 	SetupMerchantProductsComponent,
 	SetupMerchantProductsCatalogComponent,
-	SetupMerchantAddProductsComponent
+	SetupMerchantAddProductsComponent,
+	SetupMerchantProductMutationComponent
 ];
 
 @NgModule({
