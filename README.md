@@ -6,24 +6,18 @@
 
 [Ever](https://ever.co)® is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform build with [TypeScript](http://www.typescriptlang.org).
 
-Out-of-the-box Ever® Platform™ provides everything required to quickly build, manage and expand Multi-Store (Multi-Vendor / Peer-to-Peer Marketplace) or Single-Store **On-Demand** Commerce Solutions with customized e-commerce Websites (Shops), Mobile ordering Apps (Hybrid and PWA), Carrier (Driver) Mobile Apps, Merchant Apps and Admin interface Website.
-
-![overview](https://docs.ever.co/docs/assets/overview.jpg)
-
-### Disclaimer
-
-_A word of caution_: We are in α (alpha), i.e. Ever® Platform™ is very much under development (work in progress, WIP).  
-Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_winking_eye:
+![overview](https://docs.ever.co/docs/assets/overview_small.png)
 
 ## Features
 
--   Open Platform (every part is Open-Source)
+-   Modern & Open Platform for **On-Demand Economy**
+-   Supports Single-Store and Multi-Store / Multi-Vendor / Peer-to-Peer Marketplaces
 -   Everything Reactive, Real-Time and Blazing Fast!
 -   Headless Commerce framework, which allows different implementations of store-fronts, Admin UIs and client apps. Exposes rich GraphQL, REST and WS APIs.
--   Shopping Mobile App for customers to make On-Demand orders (iOS and Android using Ionic / Ionic Native)
--   Carrier Mobile App for carriers, drivers or delivery service providers (iOS and Android using Ionic / Ionic Native)
--   Shopping e-commerce Website for customers to make in-browser On-Demand purchases of food, goods or services
--   Merchant Tablet App used by Stores/Merchants/Warehouses to manage & track orders, organize deliveries, etc.
+-   Mobile ordering App for customers to make On-Demand orders (Hybrid / PWA, iOS and Android using Ionic / Ionic Native)
+-   Carrier (Driver) Mobile App for deliveries by carriers, drivers or service providers (iOS and Android using Ionic / Ionic Native)
+-   Customizing Shopping e-commerce Website for customers to make in-browser On-Demand purchases of food, goods or services
+-   Merchant Tablet App for Stores/Merchants/Warehouses to manage & track orders, organize deliveries, etc.
 -   Admin Website used to manage all platform features and settings in the single Web-based interface
 -   Multi-language and culture settings accross Platform (i18N)
 -   Products Catalogs (global and per Merchant) with Multiple Product Images
@@ -42,6 +36,11 @@ Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_wi
 -   Large products catalogs with products variants, facets and full-text search
 
 You can also track feature requests from the community in the [separate repo](https://github.com/ever-co/feature-requests/issues).
+
+### Disclaimer
+
+_A word of caution_: We are in α (alpha), i.e. Ever® Platform™ is very much under development (work in progress, WIP).  
+Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_winking_eye:
 
 ## Technology Stack and Requirements
 
