@@ -8,7 +8,7 @@ import { ProductsTableComponent } from '../../product/forms/products-table';
 import { ProductsService } from '../../../@core/data/products.service';
 import Product from '@modules/server.common/entities/Product';
 import { IProductCreateObject } from '@modules/server.common/interfaces/IProduct';
-import { WarehouseProductsComponent } from '../forms/warehouse-products-table';
+import { AddWarehouseProductsComponent } from '../forms/add-warehouse-products-table';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { WarehousesService } from '../../../@core/data/warehouses.service';
 import { WizardComponent } from 'angular2-wizard';
@@ -50,8 +50,8 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 	@ViewChild('productsTable')
 	productsTable: ProductsTableComponent;
 
-	@ViewChild('warehouseProductsTable')
-	warehouseProductsTable: WarehouseProductsComponent;
+	@ViewChild('addWarehouseProductsTable')
+	addWarehouseProductsTable: AddWarehouseProductsComponent;
 
 	@ViewChild('wizzardFrom')
 	wizzardFrom: WizardComponent;
@@ -126,7 +126,7 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 	async addProducts() {
 		this.loading = true;
 		try {
-			const productsForAdd = this.warehouseProductsTable
+			const productsForAdd = this.addWarehouseProductsTable
 				.allWarehouseProducts;
 			const res = await this._warehousesService
 				.addProducts(this.warehouseId, productsForAdd)
@@ -235,13 +235,13 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 				title: p.title[0].value
 			};
 		});
-		this.warehouseProductsTable.loadDataSmartTable(
+		this.addWarehouseProductsTable.loadDataSmartTable(
 			[...newCreatedProducts, ...this.selectedProducts],
 			this.warehouseId
 		);
 
 		this.validAllProducts = () =>
-			this.warehouseProductsTable.productsIsValid();
+			this.addWarehouseProductsTable.productsIsValid();
 	}
 
 	onStep2Prev() {

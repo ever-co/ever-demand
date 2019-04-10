@@ -39,6 +39,8 @@
 						Create new product
 					</button>
 				</div>
+
+				<div *ngIf="storeProducts && storeProducts.length !== 0"></div>
 			</div>
 		</div>
 
@@ -85,7 +87,7 @@
 
 	<button
 		*ngIf="currentView === componentViews.addProducts"
-		[disabled]="!addProducts?.warehouseProductsTable.productsIsValid()"
+		[disabled]="!addProducts?.addWarehouseProductsTable.productsIsValid()"
 		nbButton
 		(click)="addProducts.add()"
 	>

@@ -6,7 +6,7 @@ import {
 	Output,
 	EventEmitter
 } from '@angular/core';
-import { WarehouseProductsComponent } from 'app/@shared/warehouse-product/forms/warehouse-products-table';
+import { AddWarehouseProductsComponent } from 'app/@shared/warehouse-product/forms/add-warehouse-products-table';
 import Product from '@modules/server.common/entities/Product';
 import { WarehousesService } from 'app/@core/data/warehouses.service';
 import { first } from 'rxjs/operators';
@@ -17,8 +17,8 @@ import { NotifyService } from 'app/@core/services/notify/notify.service';
 	templateUrl: './add-products.component.html'
 })
 export class SetupMerchantAddProductsComponent implements OnInit {
-	@ViewChild('warehouseProductsTable')
-	warehouseProductsTable: WarehouseProductsComponent;
+	@ViewChild('addWarehouseProductsTable')
+	addWarehouseProductsTable: AddWarehouseProductsComponent;
 
 	@Input()
 	products: Product[];
@@ -34,7 +34,7 @@ export class SetupMerchantAddProductsComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-		this.warehouseProductsTable.loadDataSmartTable(
+		this.addWarehouseProductsTable.loadDataSmartTable(
 			this.products || [],
 			this.storeId
 		);
@@ -42,7 +42,7 @@ export class SetupMerchantAddProductsComponent implements OnInit {
 
 	async add() {
 		try {
-			const productsForAdd = this.warehouseProductsTable
+			const productsForAdd = this.addWarehouseProductsTable
 				.allWarehouseProducts;
 
 			await this.warehousesService

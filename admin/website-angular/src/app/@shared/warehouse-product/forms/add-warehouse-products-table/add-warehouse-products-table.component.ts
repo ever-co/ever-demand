@@ -1,26 +1,19 @@
-import {
-	Component,
-	OnInit,
-	OnDestroy,
-	EventEmitter,
-	Input
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import Product from '@modules/server.common/entities/Product';
 import { first, takeUntil } from 'rxjs/operators';
 import { Subject, Observable, forkJoin } from 'rxjs';
 import { PriceCountInputComponent } from '../../../render-component/price-countInput/price-countInput.component';
 import { TranslateService } from '@ngx-translate/core';
-import { ProductCheckboxComponent } from 'app/@shared/render-component/product-checkbox/product-checkbox';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { CheckboxComponent } from 'app/@shared/render-component/customer-orders-table/checkbox/checkbox.component';
 
 @Component({
-	selector: 'ea-warehouse-products-table',
-	templateUrl: './warehouse-products-table.component.html'
+	selector: 'ea-add-warehouse-products-table',
+	templateUrl: './add-warehouse-products-table.component.html'
 })
-export class WarehouseProductsComponent implements OnInit, OnDestroy {
+export class AddWarehouseProductsComponent implements OnInit, OnDestroy {
 	@Input()
 	boxShadow: string;
 	@Input()
