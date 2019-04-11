@@ -10,6 +10,9 @@
 		<span *ngIf="currentView == componentViews.createProduct">
 			Create product
 		</span>
+		<span *ngIf="currentView == componentViews.editProduct">
+			Edit product
+		</span>
 		<span *ngIf="currentView == componentViews.addProducts">
 			Add product
 		</span>
@@ -62,10 +65,18 @@
 			></ea-merchants-setup-products-catalog>
 		</div>
 
-		<div *ngIf="currentView == componentViews.createProduct" class="row">
+		<div
+			*ngIf="
+				currentView == componentViews.createProduct ||
+				currentView == componentViews.editProduct
+			"
+			class="row"
+		>
 			<div class="form-group offset-md-2 col-md-8">
 				<ea-merchants-setup-product-mutation
 					(onCreate)="select([$event])"
+					(onEdit)="updateMain()"
+					[product]="currentProduct"
 					#productMutation
 				></ea-merchants-setup-product-mutation>
 			</div>
@@ -118,5 +129,14 @@
 		(click)="productMutation.create()"
 	>
 		Create
+	</button>
+
+	<button
+		*ngIf="currentView === componentViews.editProduct"
+		nbButton
+		[disabled]="!productMutation?.basicInfo.valid || false"
+		(click)="productMutation.save()"
+	>
+		Save
 	</button>
 </div>

@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Output,
+	ViewChild,
+	Input
+} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { BasicInfoFormComponent } from 'app/@shared/product/forms/basic-info/basic-info-form.component';
 import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
@@ -8,6 +14,7 @@ import { IProductCreateObject } from '@modules/server.common/interfaces/IProduct
 import { ProductsService } from 'app/@core/data/products.service';
 import { ProductViewModel } from 'app/pages/+simulation/products/products.component';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
+import Product from '@modules/server.common/entities/Product';
 
 @Component({
 	selector: 'ea-merchants-setup-product-mutation',
@@ -19,6 +26,11 @@ export class SetupMerchantProductMutationComponent {
 
 	@Output()
 	onCreate: EventEmitter<ProductViewModel> = new EventEmitter();
+	@Output()
+	onEdit: EventEmitter<boolean> = new EventEmitter();
+
+	@Input()
+	product: Product;
 
 	productsCategories: ProductsCategory[];
 	areCategoriesLoaded: boolean = false;
@@ -72,6 +84,23 @@ export class SetupMerchantProductMutationComponent {
 					product.images
 				)
 			});
+		} catch (error) {
+			console.error(error.message);
+		}
+	}
+
+	async save() {
+		try {
+			const res = await this.basicInfoForm.setupProductCreateObject();
+			await this._productsService
+				.save({
+					_id: this.product._id,
+					...res
+				} as Product)
+				.pipe(first())
+				.toPromise();
+
+			this.onEdit.emit(true);
 		} catch (error) {
 			console.error(error.message);
 		}

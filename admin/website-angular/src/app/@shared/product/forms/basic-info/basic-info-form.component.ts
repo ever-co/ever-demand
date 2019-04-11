@@ -44,6 +44,8 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 	readonly form: FormGroup;
 	@Input()
 	productCategories: any;
+	@Input()
+	currentProduct: Product;
 
 	uploaderPlaceholder: string;
 	product: any;
@@ -164,6 +166,8 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 					this.setValue(this.product);
 				}
 			});
+
+		this.laodData();
 	}
 
 	ngOnDestroy() {
@@ -402,5 +406,11 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 			width: data.width,
 			height: data.height
 		};
+	}
+
+	private laodData() {
+		if (this.currentProduct) {
+			this.setValue(this.currentProduct);
+		}
 	}
 }

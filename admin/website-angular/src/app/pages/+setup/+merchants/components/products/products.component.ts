@@ -10,12 +10,13 @@ import { SetupMerchantProductsCatalogComponent } from './products-catalog/produc
 import { SetupMerchantAddProductsComponent } from './add-products/add-products.component';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { takeUntil, first } from 'rxjs/operators';
 import { WarehouseProductsComponent } from 'app/@shared/warehouse-product/forms/warehouse-products-table';
 import { SetupMerchantProductMutationComponent } from './product-mutation/product-mutation.component';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { NotifyService } from 'app/@core/services/notify/notify.service';
+import Product from '@modules/server.common/entities/Product';
 
 @Component({
 	selector: 'ea-merchants-setup-products',
@@ -41,12 +42,14 @@ export class SetupMerchantProductsComponent implements OnInit, OnDestroy {
 		main: 'main',
 		productsTable: 'productsTable',
 		createProduct: 'createProduct',
+		editProduct: 'editProduct',
 		addProducts: 'addProducts'
 	};
 	productsPerPage = 3;
 	// TODO get real warehouse id
 	storeId = '5ca48ff5d32c2d18ac96f562';
 	showProductsTable: boolean = false;
+	currentProduct: Product;
 
 	productsForAdd = [];
 	storeProducts: WarehouseProduct[];
@@ -54,6 +57,7 @@ export class SetupMerchantProductsComponent implements OnInit, OnDestroy {
 	private _currentView = this.componentViews.main;
 	private _prevView = this.componentViews.main;
 	private _ngDestroy$ = new Subject<void>();
+	private products$: Subscription;
 
 	constructor(
 		private warehouseProductsRouter: WarehouseProductsRouter,
@@ -101,11 +105,13 @@ export class SetupMerchantProductsComponent implements OnInit, OnDestroy {
 			return;
 		}
 
+		this.currentProduct = null;
 		this.currentView = this.componentViews.main;
 	}
 
-	editProduct() {
-		console.warn('TODO edit product');
+	editProduct({ data }) {
+		this.currentProduct = data.product;
+		this.currentView = this.componentViews.editProduct;
 	}
 
 	async removeProduct({ data }) {
@@ -130,15 +136,17 @@ export class SetupMerchantProductsComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	ngOnInit(): void {
+	async loadProducts() {
 		if (this.storeId) {
-			this.warehouseProductsRouter
+			if (this.products$) {
+				await this.products$.unsubscribe();
+			}
+
+			this.products$ = this.warehouseProductsRouter
 				.get(this.storeId)
 				.pipe(takeUntil(this._ngDestroy$))
 				.subscribe((products) => {
-					if (products.length > 0) {
-						this.showProductsTable = true;
-					}
+					this.showProductsTable = products.length > 0;
 
 					this.productsTable.loadDataSmartTable(
 						products,
@@ -148,6 +156,16 @@ export class SetupMerchantProductsComponent implements OnInit, OnDestroy {
 					this.storeProducts = products;
 				});
 		}
+	}
+
+	updateMain() {
+		this.currentProduct = null;
+		this.currentView = this.componentViews.main;
+		this.loadProducts();
+	}
+
+	ngOnInit(): void {
+		this.loadProducts();
 	}
 
 	ngOnDestroy(): void {
