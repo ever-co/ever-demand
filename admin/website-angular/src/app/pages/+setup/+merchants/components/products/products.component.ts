@@ -3,8 +3,9 @@ import {
 	ViewChild,
 	Output,
 	EventEmitter,
-	OnInit,
-	OnDestroy
+	OnDestroy,
+	Input,
+	OnChanges
 } from '@angular/core';
 import { SetupMerchantProductsCatalogComponent } from './products-catalog/products-catalog.component';
 import { SetupMerchantAddProductsComponent } from './add-products/add-products.component';
@@ -17,13 +18,14 @@ import { SetupMerchantProductMutationComponent } from './product-mutation/produc
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { NotifyService } from 'app/@core/services/notify/notify.service';
 import Product from '@modules/server.common/entities/Product';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'ea-merchants-setup-products',
 	templateUrl: './products.component.html',
 	styleUrls: ['./products.component.scss']
 })
-export class SetupMerchantProductsComponent implements OnInit, OnDestroy {
+export class SetupMerchantProductsComponent implements OnChanges, OnDestroy {
 	@ViewChild('productsCatalog')
 	productsCatalog: SetupMerchantProductsCatalogComponent;
 	@ViewChild('addProducts')
@@ -38,6 +40,9 @@ export class SetupMerchantProductsComponent implements OnInit, OnDestroy {
 	@Output()
 	nextStep: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+	@Input()
+	storeId: string;
+
 	componentViews = {
 		main: 'main',
 		productsTable: 'productsTable',
@@ -46,8 +51,6 @@ export class SetupMerchantProductsComponent implements OnInit, OnDestroy {
 		addProducts: 'addProducts'
 	};
 	productsPerPage = 3;
-	// TODO get real warehouse id
-	storeId = '5ca48ff5d32c2d18ac96f562';
 	showProductsTable: boolean = false;
 	currentProduct: Product;
 
@@ -62,7 +65,8 @@ export class SetupMerchantProductsComponent implements OnInit, OnDestroy {
 	constructor(
 		private warehouseProductsRouter: WarehouseProductsRouter,
 		private warehouseRouter: WarehouseRouter,
-		private notifyService: NotifyService
+		private notifyService: NotifyService,
+		private router: Router
 	) {}
 
 	get haveProductsForAdd() {
@@ -164,7 +168,12 @@ export class SetupMerchantProductsComponent implements OnInit, OnDestroy {
 		this.loadProducts();
 	}
 
-	ngOnInit(): void {
+	finish() {
+		this.nextStep.emit();
+		this.router.navigateByUrl('/setup');
+	}
+
+	ngOnChanges(): void {
 		this.loadProducts();
 	}
 

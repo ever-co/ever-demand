@@ -73,6 +73,7 @@
 						</nb-step>
 						<nb-step label="Products">
 							<ea-merchants-setup-products
+								[storeId]="currentStore?.id"
 								#products
 								(previousStep)="nbStepper.previous()"
 								(nextStep)="nbStepper.next()"
