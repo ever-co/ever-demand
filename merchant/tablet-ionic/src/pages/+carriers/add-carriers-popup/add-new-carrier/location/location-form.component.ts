@@ -26,6 +26,9 @@ import {
 } from '@modules/server.common/entities/GeoLocation';
 
 import { isEmpty } from 'lodash';
+import { Store } from 'services/store.service';
+import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
+import { first } from 'rxjs/operators';
 
 @Component({
 	selector: 'carrier-location-form',
@@ -69,21 +72,10 @@ export class LocationFormComponent implements OnDestroy, OnInit, OnChanges {
 
 	constructor(
 		private formBuilder: FormBuilder,
-		private translate: TranslateService
+		private translate: TranslateService,
+		private store: Store,
+		private warehouseRouter: WarehouseRouter
 	) {}
-
-	ngOnInit() {
-		this._initGoogleAutocompleteApi();
-		// this._tryFindNewCoordinates();
-
-		this.buildForm(this.formBuilder);
-		this.bindFormControls();
-	}
-
-	ngOnChanges(): void {
-		this._ngDestroy$.next();
-		this._ngDestroy$.complete();
-	}
 
 	get buttonOK() {
 		return this._translate(this.PREFIX + this.OK);
@@ -91,6 +83,30 @@ export class LocationFormComponent implements OnDestroy, OnInit, OnChanges {
 
 	get buttonCancel() {
 		return this._translate(this.PREFIX + this.CANCEL);
+	}
+
+	get countries(): Array<{ id: Country; name: CountryName }> {
+		return countriesIdsToNamesArray;
+	}
+
+	ngOnInit() {
+		this._initGoogleAutocompleteApi();
+		// this._tryFindNewCoordinates();
+
+		this.buildForm(this.formBuilder);
+		this.bindFormControls();
+
+		this._loadInitialData();
+	}
+
+	ngOnChanges(): void {
+		this._ngDestroy$.next();
+		this._ngDestroy$.complete();
+	}
+
+	ngOnDestroy(): void {
+		this._ngDestroy$.next();
+		this._ngDestroy$.complete();
 	}
 
 	buildForm(formBuilder: FormBuilder) {
@@ -115,10 +131,6 @@ export class LocationFormComponent implements OnDestroy, OnInit, OnChanges {
 		this.lat = this.form.get('lat');
 		// this.apartment = this.form.get('apartment');
 		this.postcode = this.form.get('postcode');
-	}
-
-	get countries(): Array<{ id: Country; name: CountryName }> {
-		return countriesIdsToNamesArray;
 	}
 
 	toggleCoordinates() {
@@ -369,5 +381,20 @@ export class LocationFormComponent implements OnDestroy, OnInit, OnChanges {
 		}
 	}
 
-	ngOnDestroy(): void {}
+	private async _loadInitialData() {
+		const { geoLocation } = await this.warehouseRouter
+			.get(this.store.warehouseId, false)
+			.pipe(first())
+			.toPromise();
+
+		this.city.setValue(geoLocation.city);
+		this.street.setValue(geoLocation.streetAddress);
+		this.house.setValue(geoLocation.house);
+		this.country.setValue(geoLocation.countryId.toString());
+		this.lng.setValue(geoLocation.coordinates.lng);
+		this.lat.setValue(geoLocation.coordinates.lat);
+		this.postcode.setValue(geoLocation.postcode);
+
+		this._tryFindNewCoordinates();
+	}
 }
