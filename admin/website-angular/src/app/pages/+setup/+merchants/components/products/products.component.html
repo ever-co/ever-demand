@@ -15,7 +15,10 @@
 		</span>
 	</nb-card-header>
 	<nb-card-body>
-		<div *ngIf="currentView === componentViews.main" class="main-content">
+		<div
+			[hidden]="currentView !== componentViews.main"
+			class="main-content"
+		>
 			<!-- TODO disable if store id don't exist -->
 			<div class="row actions">
 				<div class="form-group offset-md-2 col-md-4">

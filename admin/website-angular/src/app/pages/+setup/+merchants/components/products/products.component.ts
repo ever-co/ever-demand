@@ -11,9 +11,11 @@ import { SetupMerchantAddProductsComponent } from './add-products/add-products.c
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, first } from 'rxjs/operators';
 import { WarehouseProductsComponent } from 'app/@shared/warehouse-product/forms/warehouse-products-table';
 import { SetupMerchantProductMutationComponent } from './product-mutation/product-mutation.component';
+import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
+import { NotifyService } from 'app/@core/services/notify/notify.service';
 
 @Component({
 	selector: 'ea-merchants-setup-products',
@@ -53,7 +55,11 @@ export class SetupMerchantProductsComponent implements OnInit, OnDestroy {
 	private _prevView = this.componentViews.main;
 	private _ngDestroy$ = new Subject<void>();
 
-	constructor(private warehouseProductsRouter: WarehouseProductsRouter) {}
+	constructor(
+		private warehouseProductsRouter: WarehouseProductsRouter,
+		private warehouseRouter: WarehouseRouter,
+		private notifyService: NotifyService
+	) {}
 
 	get haveProductsForAdd() {
 		let hasSelectedCarriers = false;
@@ -102,8 +108,26 @@ export class SetupMerchantProductsComponent implements OnInit, OnDestroy {
 		console.warn('TODO edit product');
 	}
 
-	removeProduct() {
-		console.warn('TODO remove product');
+	async removeProduct({ data }) {
+		try {
+			if (this.storeId) {
+				const store = await this.warehouseRouter
+					.get(this.storeId, true)
+					.pipe(first())
+					.toPromise();
+
+				store.products = store.products.filter(
+					(p: WarehouseProduct) => p.productId !== data.id
+				);
+
+				await this.warehouseRouter.save(store);
+			} else {
+				throw new Error("Store id don't exist");
+			}
+		} catch (error) {
+			const message = `Can't remove products error: ${error.message}`;
+			this.notifyService.error(message);
+		}
 	}
 
 	ngOnInit(): void {
