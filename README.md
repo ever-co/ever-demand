@@ -73,10 +73,13 @@ We follow [Gitflow Workflow](https://nvie.com/posts/a-successful-git-branching-m
 Clone the Ever Platform Git repo:
 
 ```
-git clone -c core.symlinks=true --recursive git@github.com:ever-co/ever.git
+git clone -c core.symlinks=true --recursive https://github.com/ever-co/ever.git
 ```
 
-Note: it's important to enable Git symlinks because they are used for shared modules (every project have symlinks to common shared modules in the /shared folder)
+Notes: 
+
+-   if you want to use development branch (unstable, but latest development) clone using `--branch develop`
+-   it's important to enable Git symlinks because they are used for shared modules (every project have symlinks to common shared modules in the /shared folder)
 
 If you use Git >= v2.14, it probably make sense to setup following globally:
 
