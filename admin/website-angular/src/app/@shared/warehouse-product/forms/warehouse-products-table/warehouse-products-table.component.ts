@@ -1,215 +1,229 @@
-import { Component, OnInit, OnDestroy, EventEmitter } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	OnInit,
+	Output,
+	EventEmitter,
+	Input
+} from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import Product from '@modules/server.common/entities/Product';
-import { first, takeUntil } from 'rxjs/operators';
-import { Subject, Observable, forkJoin } from 'rxjs';
-import { PriceCountInputComponent } from '../../../render-component/price-countInput/price-countInput.component';
+import { StoreProductPriceComponent } from 'app/@shared/render-component/store-products-table/store-product-price.component';
+import { StoreProductAmountComponent } from 'app/@shared/render-component/store-products-table/store-product-amount/store-product-amount.component';
+import { ProductCategoriesComponent } from 'app/@shared/render-component/product-categories/product-categories';
+import { ProductTitleRedirectComponent } from 'app/@shared/render-component/product-title-redirect/product-title-redirect.component';
+import { Observable, forkJoin, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { ProductCheckboxComponent } from 'app/@shared/render-component/product-checkbox/product-checkbox';
-import Warehouse from '@modules/server.common/entities/Warehouse';
-import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
-import { CheckboxComponent } from 'app/@shared/render-component/customer-orders-table/checkbox/checkbox.component';
+import { takeUntil } from 'rxjs/operators';
+import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
+import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
+import { ProductsCategoryService } from 'app/@core/data/productsCategory.service';
+import Product from '@modules/server.common/entities/Product';
+import { StoreProductImageComponent } from 'app/@shared/render-component/store-products-table/store-product-image/store-product-image.component';
+
+export interface WarehouseProductViewModel {
+	id: string;
+	image: string;
+	title: string;
+	description: string;
+	details: string;
+	categories: { ids: string[]; search: string };
+	price: number;
+	qty: number;
+	storeId: string;
+	product: Product;
+	allCategories: any[];
+}
 
 @Component({
 	selector: 'ea-warehouse-products-table',
 	templateUrl: './warehouse-products-table.component.html'
 })
 export class WarehouseProductsComponent implements OnInit, OnDestroy {
+	@Output()
+	onEdit = new EventEmitter();
+	@Output()
+	onDelete = new EventEmitter();
+
+	@Input()
+	perPage: number = 5;
+	@Input()
+	selectMode = 'multi';
+
+	settingsSmartTable: object;
+	sourceSmartTable = new LocalDataSource();
+	selectedProducts: WarehouseProductViewModel[] = [];
+
 	private ngDestroy$ = new Subject<void>();
-
-	private warehouseProducts: any[];
-	private warehouse: Warehouse;
-
-	public settingsSmartTable: object;
-	public sourceSmartTable = new LocalDataSource();
+	private categoriesInfo: any = [];
 
 	constructor(
-		private _translateService: TranslateService,
-		private warehouseRouter: WarehouseRouter
-	) {
+		private readonly _translateService: TranslateService,
+		private readonly _productLocalesService: ProductLocalesService,
+		private readonly _productsCategoryService: ProductsCategoryService
+	) {}
+
+	get hasSelectedProducts(): boolean {
+		return this.selectedProducts.length > 0;
+	}
+
+	ngOnInit(): void {
+		this._getCategories();
 		this._loadSettingsSmartTable();
+		this._applyTranslationOnSmartTable();
 	}
 
-	ngOnInit(): void {}
-
-	public get allWarehouseProducts() {
-		return [...this.warehouseProducts];
+	ngOnDestroy(): void {
+		this.ngDestroy$.next();
+		this.ngDestroy$.complete();
 	}
 
-	productsIsValid() {
-		if (this.warehouseProducts) {
-			const notRedy = this.warehouseProducts.filter(
-				(p) =>
-					!p.count ||
-					!p.price ||
-					(!p['isTakeaway'] && !p['isDeliveryRequired'])
-			)[0];
-
-			return notRedy ? false : true;
-		}
-	}
-
-	async loadDataSmartTable(products: Product[], warehouseId?: string) {
-		this.warehouseProducts = products.map((p) => {
-			return { product: p.id };
-		});
-
-		if (warehouseId) {
-			this.warehouse = await this.warehouseRouter
-				.get(warehouseId)
-				.pipe(first())
-				.toPromise();
-			if (this.warehouseProducts) {
-				this.warehouseProducts.map((p) => {
-					p['isTakeaway'] = this.warehouse.productsTakeaway;
-					p['isDeliveryRequired'] = this.warehouse.productsDelivery;
-					if (!p['isTakeaway'] && !p['isDeliveryRequired']) {
-						p['isDeliveryRequired'] = true;
-					}
-				});
-			}
-		}
-
-		const productsVM = products.map((product) => {
-			const resObj = {
-				name: product.title,
-				id: product.id,
-				takeProductDelivery: this.warehouse.productsDelivery,
-				takeProductTakeaway: this.warehouse.productsTakeaway
+	async loadDataSmartTable(products: WarehouseProduct[], storeId: string) {
+		const productsVM = products.map((product: WarehouseProduct) => {
+			return {
+				id: product.productId,
+				image: this._productLocalesService.getTranslate(
+					product.product['images']
+				),
+				title: this._productLocalesService.getTranslate(
+					product.product['title']
+				),
+				description: this._productLocalesService.getTranslate(
+					product.product['description']
+				),
+				details: this._productLocalesService.getTranslate(
+					product.product['details']
+				),
+				categories: {
+					ids: product.product['categories'],
+					search:
+						this.categoriesInfo &&
+						this.categoriesInfo
+							.filter((c) =>
+								product.product['categories'].includes(c.id)
+							)
+							.map((c) =>
+								this._productLocalesService.getTranslate(c.name)
+							)
+							.toString()
+				},
+				price: product.price,
+				qty: product.count,
+				storeId,
+				product: product.product,
+				allCategories: this.categoriesInfo
 			};
-			if (!resObj.takeProductDelivery && !resObj.takeProductTakeaway) {
-				resObj.takeProductDelivery = true;
-			}
-
-			return resObj;
 		});
 
 		this.sourceSmartTable.load(productsVM);
 	}
 
-	private _loadSettingsSmartTable() {
-		const columnTitlePrefix = 'WAREHOUSE_VIEW.SAVE.';
-		const getTranslate = (name: string): Observable<string | any> =>
-			this._translateService.get(columnTitlePrefix + name);
+	selectProductTmp(ev) {
+		this.selectedProducts = ev.selected;
+	}
 
-		forkJoin(
-			getTranslate('PRODUCT_NAME'),
-			getTranslate('PRICE'),
-			getTranslate('COUNT'),
-			getTranslate('DELIVERY'),
-			getTranslate('TAKEAWAY')
-		)
-			.pipe(takeUntil(this.ngDestroy$))
-			.subscribe(([name, price, count, delivery, takeaway]) => {
-				this.settingsSmartTable = {
-					actions: false,
-					hideSubHeader: true,
-					// selectMode: 'multi',
-					columns: {
-						name: {
-							title: name,
-							filter: false
-						},
-						price: {
-							title: price,
-							type: 'custom',
-							filter: false,
-							renderComponent: PriceCountInputComponent,
-							onComponentInitFunction: async (instance) => {
-								instance.placeholder = price;
-
-								const id = await instance.id
-									.pipe(first())
-									.toPromise();
-								const warehouseProd = this.warehouseProducts.filter(
-									(p) => p.product === id
-								)[0];
-
-								instance.newValue
-									.pipe(takeUntil(this.ngDestroy$))
-									.subscribe((v) => {
-										warehouseProd['initialPrice'] = v;
-										warehouseProd['price'] = v;
-									});
-							}
-						},
-						count: {
-							title: count,
-							type: 'custom',
-							filter: false,
-							renderComponent: PriceCountInputComponent,
-							onComponentInitFunction: async (instance) => {
-								instance.placeholder = count;
-								const id = await instance.id
-									.pipe(first())
-									.toPromise();
-								const warehouseProd = this.warehouseProducts.filter(
-									(p) => p.product === id
-								)[0];
-								warehouseProd['count'] = 1;
-								instance.newValue
-									.pipe(takeUntil(this.ngDestroy$))
-									.subscribe((v) => {
-										warehouseProd['count'] = v;
-									});
-							}
-						},
-						delivery: {
-							title: delivery,
-							type: 'custom',
-							filter: false,
-							renderComponent: CheckboxComponent,
-							onComponentInitFunction: async (instance) => {
-								instance.type = 'delivery';
-								const id = await instance.id
-									.pipe(first())
-									.toPromise();
-								const warehouseProd = this.warehouseProducts.filter(
-									(p) => p.product === id
-								)[0];
-								instance.newValue
-									.pipe(takeUntil(this.ngDestroy$))
-									.subscribe((res) => {
-										if (res.type === 'delivery') {
-											warehouseProd[
-												'isDeliveryRequired'
-											] = res.checked;
-										}
-									});
-							}
-						},
-						takeaway: {
-							title: takeaway,
-							type: 'custom',
-							filter: false,
-							renderComponent: CheckboxComponent,
-							onComponentInitFunction: async (
-								instance: CheckboxComponent
-							) => {
-								instance.type = 'takeaway';
-								const id = await instance.id
-									.pipe(first())
-									.toPromise();
-								const warehouseProd = this.warehouseProducts.filter(
-									(p) => p.product === id
-								)[0];
-								instance.newValue
-									.pipe(takeUntil(this.ngDestroy$))
-									.subscribe((res) => {
-										if (res.type === 'takeaway') {
-											warehouseProd['isTakeaway'] =
-												res.checked;
-										}
-									});
-							}
-						}
-					}
-				};
+	private _getCategories() {
+		this._productsCategoryService
+			.getCategories()
+			.subscribe((categories) => {
+				this.categoriesInfo = categories;
 			});
 	}
 
-	ngOnDestroy() {
-		this.ngDestroy$.next();
-		this.ngDestroy$.complete();
+	private _loadSettingsSmartTable() {
+		const columnTitlePrefix = 'WAREHOUSE_VIEW.PRODUCTS_TAB.';
+		const getTranslate = (name: string): Observable<any> =>
+			this._translateService.get(columnTitlePrefix + name);
+
+		forkJoin(
+			this._translateService.get('Id'),
+			getTranslate('IMAGE'),
+			getTranslate('TITLE'),
+			getTranslate('DESCRIPTION'),
+			getTranslate('DETAILS'),
+			getTranslate('CATEGORY'),
+			getTranslate('PRICE'),
+			getTranslate('QUANTITY')
+		)
+			.pipe(takeUntil(this.ngDestroy$))
+			.subscribe(
+				([
+					id,
+					image,
+					titleTr,
+					description,
+					details,
+					category,
+					price,
+					quantity
+				]) => {
+					this.settingsSmartTable = {
+						mode: 'external',
+						actions: {
+							add: false,
+							position: 'left'
+						},
+						edit: {
+							editButtonContent: '<i class="nb-edit"></i>'
+						},
+						delete: {
+							deleteButtonContent: '<i class="nb-trash"></i>',
+							confirmDelete: true
+						},
+						selectMode: this.selectMode,
+						columns: {
+							image: {
+								title: image,
+								type: 'custom',
+								class: 'text-center',
+								renderComponent: StoreProductImageComponent,
+								filter: false
+							},
+							title: {
+								title: titleTr,
+								type: 'custom',
+								renderComponent: ProductTitleRedirectComponent
+							},
+							description: { title: description },
+							details: { title: details },
+							categories: {
+								title: category,
+								type: 'custom',
+								renderComponent: ProductCategoriesComponent,
+								filterFunction(
+									cell?: any,
+									search?: string
+								): boolean {
+									if (cell.search.includes(search)) {
+										return true;
+									} else {
+										return false;
+									}
+								}
+							},
+							price: {
+								title: price,
+								type: 'custom',
+								renderComponent: StoreProductPriceComponent
+							},
+							qty: {
+								title: quantity,
+								class: 'text-center',
+								type: 'custom',
+								renderComponent: StoreProductAmountComponent
+							}
+						},
+						pager: {
+							display: true,
+							perPage: this.perPage
+						}
+					};
+				}
+			);
+	}
+
+	private _applyTranslationOnSmartTable() {
+		this._translateService.onLangChange.subscribe(() => {
+			this._loadSettingsSmartTable();
+		});
 	}
 }

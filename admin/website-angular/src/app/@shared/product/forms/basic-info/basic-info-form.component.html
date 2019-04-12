@@ -1,4 +1,8 @@
-<div class="col-md-12 col-lg-12 col-sm-12" [formGroup]="form" *ngIf="form">
+<div
+	class="col-md-12 col-lg-12 col-sm-12 product-basic-info "
+	[formGroup]="form"
+	*ngIf="form"
+>
 	<fieldset>
 		<div class="form-group row">
 			<label class="col-sm-2 control-label">{{
@@ -14,7 +18,7 @@
 					formControlName="title"
 				/>
 
-				<div
+				<span
 					*ngIf="title?.invalid && (title.dirty || title.touched)"
 					class="alert alert-danger"
 				>
@@ -31,7 +35,7 @@
 								| translate
 						}}
 					</span>
-				</div>
+				</span>
 			</div>
 		</div>
 		<div class="form-group row">
@@ -46,7 +50,7 @@
 					(uploadedImgObj)="addImageObj($event)"
 				></e-cu-file-uploader>
 
-				<div
+				<span
 					*ngIf="(imagesArr || uploaderChanged) && image.invalid"
 					class="alert alert-danger"
 				>
@@ -54,7 +58,7 @@
 						'PRODUCT_TYPE_VIEW.WIZARD_FORM.VALIDATION_MESSAGES.IMAGE'
 							| translate
 					}}!
-				</div>
+				</span>
 			</div>
 		</div>
 
@@ -110,7 +114,7 @@
 					></textarea>
 				</div>
 
-				<div
+				<span
 					*ngIf="
 						description?.invalid &&
 						(description.dirty || description.touched)
@@ -130,7 +134,7 @@
 								| translate
 						}}
 					</span>
-				</div>
+				</span>
 			</div>
 		</div>
 

@@ -51,6 +51,9 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 	@Input()
 	hiddenTableActions: boolean;
 
+	@Input()
+	boxShadow: string;
+
 	private static noInfoSign = '';
 	private _selectedProducts: ProductViewModel[] = [];
 	private products: Product[];

@@ -4,7 +4,6 @@ import { FormWizardModule } from 'angular2-wizard';
 import { ThemeModule } from '../../../@theme/theme.module';
 import { BasicInfoFormComponent } from './basic-info';
 import { ProductsTableComponent } from './products-table';
-import { CategoriesTableComponent } from '../categories/categories-table/categories-table.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { ProductCategoriesModule } from '../../render-component/product-categories/product-categories.module';
@@ -28,15 +27,7 @@ import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.modu
 		ConfirmationModalModule,
 		RenderComponentsModule
 	],
-	exports: [
-		BasicInfoFormComponent,
-		ProductsTableComponent,
-		CategoriesTableComponent
-	],
-	declarations: [
-		BasicInfoFormComponent,
-		ProductsTableComponent,
-		CategoriesTableComponent
-	]
+	exports: [BasicInfoFormComponent, ProductsTableComponent],
+	declarations: [BasicInfoFormComponent, ProductsTableComponent]
 })
 export class ProductFormsModule {}

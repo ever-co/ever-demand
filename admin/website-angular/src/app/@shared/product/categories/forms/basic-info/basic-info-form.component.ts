@@ -71,24 +71,28 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 		return this.image && this.image.value !== '';
 	}
 
-	get createObject() {
+	get usedLanguage() {
 		let usedLanguage = this._langTranslateService.currentLang;
 		switch (usedLanguage) {
 			case 'en':
-				usedLanguage += '-US';
-				break;
+				return (usedLanguage += '-US');
+
 			case 'bg':
-				usedLanguage += '-BG';
-				break;
+				return (usedLanguage += '-BG');
+
 			case 'he':
-				usedLanguage += '-IL';
-				break;
+				return (usedLanguage += '-IL');
+
 			case 'ru':
-				usedLanguage += '-RU';
-				break;
+				return (usedLanguage += '-RU');
+
 			default:
-				usedLanguage = 'en-US';
+				return 'en-US';
 		}
+	}
+
+	get createObject() {
+		const usedLanguage = this.usedLanguage;
 
 		const categoryObject: IProductsCategoryCreateObject = {
 			name: [{ locale: usedLanguage, value: this.name.value }]
@@ -100,16 +104,31 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 		return categoryObject;
 	}
 
-	get editObject() {
-		const editObject = {
-			name: this.name.value
-		};
-
-		if (this.showImageMeta) {
-			editObject['image'] = this.image.value;
+	getEditObject(currentCategory) {
+		const usedLanguage = this.usedLanguage;
+		const newCategoryNames = currentCategory._nameLocaleValues.map(
+			({ locale, value }) => {
+				return locale === usedLanguage
+					? {
+							locale: usedLanguage,
+							value: this.name.value
+					  }
+					: { locale, value };
+			}
+		);
+		if (!newCategoryNames.some((c) => c.locale === usedLanguage)) {
+			newCategoryNames.push({
+				locale: usedLanguage,
+				value: this.name.value
+			});
 		}
 
-		return editObject;
+		const categoryRaw: IProductsCategoryCreateObject = {
+			name: newCategoryNames,
+			image: this.image.value
+		};
+
+		return categoryRaw;
 	}
 
 	ngOnInit() {

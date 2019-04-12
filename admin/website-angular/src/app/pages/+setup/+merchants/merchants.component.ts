@@ -12,6 +12,7 @@ import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { ToasterService } from 'angular2-toaster';
 import { NbStepperComponent } from '@nebular/theme';
+import Warehouse from '@modules/server.common/entities/Warehouse';
 
 @Component({
 	styleUrls: ['./merchants.component.scss'],
@@ -38,6 +39,8 @@ export class SetupMerchantsComponent {
 	@ViewChild('ordersSettings')
 	stepOrdersSettings: SetupMerchantOrdersSettingsComponent;
 
+	currentStore: Warehouse;
+
 	get canCreateMerchant() {
 		return (
 			this.stepAccount.formValid &&
@@ -54,13 +57,13 @@ export class SetupMerchantsComponent {
 
 	async createMerchant() {
 		try {
-			const merchant = await this.warehouseRouter.register(
+			this.currentStore = await this.warehouseRouter.register(
 				this.getMerchantCreateObj()
 			);
 
 			this.toasterService.pop(
 				'success',
-				`Warehouse ${merchant.name} was created!`
+				`Warehouse ${this.currentStore.name} was created!`
 			);
 
 			this.nbStepper.next();

@@ -112,6 +112,7 @@
 		"ionicons": "^4.5.5",
 		"is-url": "^1.2.4",
 		"jquery": "^3.3.1",
+		"jsbarcode": "^3.11.0",
 		"leaflet": "^1.4.0",
 		"moment": "^2.24.0",
 		"nebular-icons": "1.1.0",
@@ -197,9 +198,9 @@
 		"ts-node": "^8.0.2",
 		"tslint": "^5.12.1",
 		"tslint-language-service": "^0.9.9",
-		"yargs": "^13.1.0",
+		"typescript": "~3.1.6",
 		"webpack-dev-server": "^3.2.1",
-		"typescript": "~3.1.6"
+		"yargs": "^13.1.0"
 	},
 	"engines": {
 		"node": ">=10.15.0",

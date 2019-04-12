@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
 	selector: 'ea-merchants-setup-manufacturing',
@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
 	styleUrls: ['./manufacturing.component.scss']
 })
 export class SetupMerchantManufacturingComponent {
+	@Output()
+	previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();
+	@Output()
+	nextStep: EventEmitter<boolean> = new EventEmitter<boolean>();
+
 	isManufacturing: boolean;
 }

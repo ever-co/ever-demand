@@ -214,6 +214,23 @@
 			"ADD": "הוסף",
 			"BACK": "חזור",
 			"SAVE": "להציל",
+			"SELECT": "בחר",
+			"CREATE": "צור",
+			"HOW_TO_SET_UP": {
+				"HOW_TO_SET_UP": "איך להציב"
+			},
+			"STEPPER": {
+				"ACCOUNT": "חשבון",
+				"BASIC_INFO": "מידע בסיסי",
+				"CONTACT_INFO": "פרטים ליצירת קשר",
+				"LOCATION": "מקום",
+				"PAYMENTS": "תשלומים",
+				"MANUFACTURING": "ייצור",
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "הגדרות משלוח & Takeaway",
+				"ORDERS_SETTINGS": "הגדרות הזמנות",
+				"PRODUCT_CATEGORIES": "קטגוריות מוצרים",
+				"PRODUCTS": "מוצרים"
+			},
 			"ACCOUNT": {
 				"ACCOUNT": "חשבון",
 				"EMAIL_ADDRESS": "כתובת דוא'ל",
@@ -275,6 +292,22 @@
 				"PRODUCTS_TAKEAWAY_BY_DEFAULT": "מוצרים Takeaway (כברירת מחדל)",
 				"USE_SELECTED_SHARED_CARRIERS": "השתמש במפעילים משותפים נבחרים",
 				"ADD_YOUR_CARRIERS": "הוסף את הספקים שלך"
+			},
+			"ORDERS_SETTINGS": {
+				"ORDERS_SETTINGS": "הגדרות הזמנות",
+				"ORDER_BARCODE_QR_CODE_TYPES": "ציין את סוג קוד הברקוד / qr"
+			},
+			"PRODUCT_CATEGORIES": {
+				"PRODUCT_CATEGORIES": "קטגוריות מוצרים",
+				"ADD_OWN_PRODUCT_CATEGORY": "הוסף את הקטגוריה של המוצר עצמו"
+			},
+			"PRODUCTS": {
+				"PRODUCTS": "מוצרים",
+				"SELECT_FROM_PRODUCTS_CATALOG": "בחר מתוך קטלוג מוצרים",
+				"CREATE_PRODUCT": "צור מוצר",
+				"EDIT_PRODUCT": "ערוך מוצר",
+				"ADD_PRODUCT": "הוסף מוצר",
+				"CREATE_NEW_PRODUCT": "צור מוצר חדש"
 			}
 		}
 	},
@@ -771,6 +804,7 @@
 			"CLIENT_REFUSE_ORDER": "הזמנת לקוח",
 			"AVAIBLE_ORDER_TO_PICK_UP": "הזמנות זמינות להרים (כל מוביל יכול לאסוף הזמנות מרובות)",
 			"ACTIVE": "פָּעִיל",
+			"CARRIER_CAN_BE_SHARED": "ניתן לשתף את המוביל?",
 			"NOT_ACTIVE": "לא פעיל",
 			"WORKING": "עובד",
 			"NOT_WORKING": "לא עובד",
