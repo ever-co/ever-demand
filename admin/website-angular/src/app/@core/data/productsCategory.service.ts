@@ -50,6 +50,7 @@ export class ProductsCategoryService {
 					) {
 						createProductsCategory(createInput: $productsCategory) {
 							id
+							image
 							name {
 								locale
 								value
@@ -86,6 +87,8 @@ export class ProductsCategoryService {
 							id: $id
 							updateInput: $productsCategory
 						) {
+							id
+							image
 							name {
 								locale
 								value

@@ -9,7 +9,7 @@
 		</button>
 		<button
 			class="btn btn-sm btn-danger btn-icon d-inline-block"
-			[disabled]="!hasSelectedProducts"
+			[disabled]="!productsTable.hasSelectedProducts"
 			(click)="deleteSelectedRows()"
 		>
 			<i class="ion-md-trash button-icon"></i>
@@ -22,13 +22,10 @@
 	</nb-card-header>
 
 	<nb-card-body>
-		<ng2-smart-table
-			[settings]="settingsSmartTable"
-			[source]="sourceSmartTable"
-			(userRowSelect)="selectProductTmp($event)"
-			(edit)="editProduct($event)"
-			(delete)="removeProduct($event)"
-		>
-		</ng2-smart-table>
+		<ea-warehouse-products-table
+			#productsTable
+			(onEdit)="editProduct($event)"
+			(onDelete)="removeProduct($event)"
+		></ea-warehouse-products-table>
 	</nb-card-body>
 </nb-card>

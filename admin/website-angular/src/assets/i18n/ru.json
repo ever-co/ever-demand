@@ -214,6 +214,23 @@
 			"ADD": "Добавлять",
 			"BACK": "Назад",
 			"SAVE": "Сохранить",
+			"SELECT": "Выбрать",
+			"CREATE": "Создайте",
+			"HOW_TO_SET_UP": {
+				"HOW_TO_SET_UP": "Как настроить"
+			},
+			"STEPPER": {
+				"ACCOUNT": "Счет",
+				"BASIC_INFO": "Базовая информация",
+				"CONTACT_INFO": "Контактная информация",
+				"LOCATION": "Место нахождения",
+				"PAYMENTS": "Платежи",
+				"MANUFACTURING": "Производство",
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "Настройки доставки и выноса",
+				"ORDERS_SETTINGS": "Настройки заказов",
+				"PRODUCT_CATEGORIES": "Категории продукта",
+				"PRODUCTS": "Товары"
+			},
 			"ACCOUNT": {
 				"ACCOUNT": "Учетная запись",
 				"EMAIL_ADDRESS": "Адрес электронной почты",
@@ -275,6 +292,22 @@
 				"PRODUCTS_TAKEAWAY_BY_DEFAULT": "Продукты на вынос (по умолчанию)",
 				"USE_SELECTED_SHARED_CARRIERS": "Использовать выбранные общие носители",
 				"ADD_YOUR_CARRIERS": "Добавьте своих перевозчиков"
+			},
+			"ORDERS_SETTINGS": {
+				"ORDERS_SETTINGS": "Настройки заказов",
+				"ORDER_BARCODE_QR_CODE_TYPES": "Укажите тип штрих-кода / QR-код"
+			},
+			"PRODUCT_CATEGORIES": {
+				"PRODUCT_CATEGORIES": "Категории продукта",
+				"ADD_OWN_PRODUCT_CATEGORY": "Добавить собственную категорию продукта"
+			},
+			"PRODUCTS": {
+				"PRODUCTS": "Товары",
+				"SELECT_FROM_PRODUCTS_CATALOG": "Выберите из каталога продукции",
+				"CREATE_PRODUCT": "Создать продукт",
+				"EDIT_PRODUCT": "Изменить продукт",
+				"ADD_PRODUCT": "Добавить товар",
+				"CREATE_NEW_PRODUCT": "Создать новый продукт"
 			}
 		}
 	},
@@ -768,6 +801,7 @@
 			"CLIENT_REFUSE_ORDER": "Заказ клиента",
 			"AVAIBLE_ORDER_TO_PICK_UP": "Доступные заказы для подбора (каждый перевозчик может выбрать несколько заказов)",
 			"ACTIVE": "Активный",
+			"CARRIER_CAN_BE_SHARED": "Перевозчик может быть общим?",
 			"NOT_ACTIVE": "Не активен",
 			"WORKING": "За работой",
 			"NOT_WORKING": "Не работает",

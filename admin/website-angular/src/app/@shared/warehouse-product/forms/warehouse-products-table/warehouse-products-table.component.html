@@ -1,7 +1,8 @@
-<nb-card>
-	<ng2-smart-table
-		[settings]="settingsSmartTable"
-		[source]="sourceSmartTable"
-	>
-	</ng2-smart-table>
-</nb-card>
+<ng2-smart-table
+	[settings]="settingsSmartTable"
+	[source]="sourceSmartTable"
+	(userRowSelect)="selectProductTmp($event)"
+	(edit)="onEdit.emit($event)"
+	(delete)="onDelete.emit($event)"
+>
+</ng2-smart-table>

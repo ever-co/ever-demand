@@ -214,6 +214,23 @@
 			"ADD": "Add",
 			"BACK": "Back",
 			"SAVE": "Save",
+			"SELECT": "Select",
+			"CREATE": "Create",
+			"HOW_TO_SET_UP": {
+				"HOW_TO_SET_UP": "How to setup"
+			},
+			"STEPPER": {
+				"ACCOUNT": "Account",
+				"BASIC_INFO": "Basic info",
+				"CONTACT_INFO": "Contact info",
+				"LOCATION": "Location",
+				"PAYMENTS": "Payments",
+				"MANUFACTURING": "Manufacturing",
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "Delivery & Takeaway Settings",
+				"ORDERS_SETTINGS": "Orders Settings",
+				"PRODUCT_CATEGORIES": "Product categories",
+				"PRODUCTS": "Products"
+			},
 			"ACCOUNT": {
 				"ACCOUNT": "Account",
 				"EMAIL_ADDRESS": "Email address",
@@ -275,6 +292,22 @@
 				"PRODUCTS_TAKEAWAY_BY_DEFAULT": "Products Takeaway (by default)",
 				"USE_SELECTED_SHARED_CARRIERS": "Use selected shared carriers",
 				"ADD_YOUR_CARRIERS": "Add your carriers"
+			},
+			"ORDERS_SETTINGS": {
+				"ORDERS_SETTINGS": "Orders Settings",
+				"ORDER_BARCODE_QR_CODE_TYPES": "Order Barcode/QR code types"
+			},
+			"PRODUCT_CATEGORIES": {
+				"PRODUCT_CATEGORIES": "Product categories",
+				"ADD_OWN_PRODUCT_CATEGORY": "Add own product category"
+			},
+			"PRODUCTS": {
+				"PRODUCTS": "Products",
+				"SELECT_FROM_PRODUCTS_CATALOG": "Select from products catalog",
+				"CREATE_PRODUCT": "Create product",
+				"EDIT_PRODUCT": "Edit product",
+				"ADD_PRODUCT": "Add product",
+				"CREATE_NEW_PRODUCT": "Create new product"
 			}
 		}
 	},
@@ -771,6 +804,7 @@
 			"CLIENT_REFUSE_ORDER": "Client Refuse Order",
 			"AVAIBLE_ORDER_TO_PICK_UP": "Available Orders to pick up (each carrier can pick up multiple orders)",
 			"ACTIVE": "Active",
+			"CARRIER_CAN_BE_SHARED": "Carrier can be shared?",
 			"NOT_ACTIVE": "Not Active",
 			"WORKING": "Working",
 			"NOT_WORKING": "Not Working",
