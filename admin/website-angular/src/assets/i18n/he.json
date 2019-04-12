@@ -216,6 +216,9 @@
 			"SAVE": "להציל",
 			"SELECT": "בחר",
 			"CREATE": "צור",
+			"HOW_TO_SET_UP": {
+				"HOW_TO_SET_UP": "איך להציב"
+			},
 			"STEPPER": {
 				"ACCOUNT": "חשבון",
 				"BASIC_INFO": "מידע בסיסי",

@@ -1,6 +1,12 @@
 <nb-card>
 	<nb-card-header>
-		<h5>How to setup {{ stepper.selected.label }}?</h5>
+		<h5>
+			{{
+				'FAKE_DATA.SETUP_MERCHANTS.HOW_TO_SET_UP.HOW_TO_SET_UP'
+					| translate
+			}}
+			{{ stepper.selected.label }}?
+		</h5>
 	</nb-card-header>
 	<nb-card-body>
 		<div *ngIf="stepper.index === 0">

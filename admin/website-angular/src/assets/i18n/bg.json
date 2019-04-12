@@ -217,6 +217,9 @@
 			"SAVE": "Запази",
 			"SELECT": "Select",
 			"CREATE": "Create",
+			"HOW_TO_SET_UP": {
+				"HOW_TO_SET_UP": "Как да настроите"
+			},
 			"STEPPER": {
 				"ACCOUNT": "Акаунт",
 				"BASIC_INFO": "Основна информация",

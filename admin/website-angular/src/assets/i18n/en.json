@@ -216,6 +216,9 @@
 			"SAVE": "Save",
 			"SELECT": "Select",
 			"CREATE": "Create",
+			"HOW_TO_SET_UP": {
+				"HOW_TO_SET_UP": "How to setup"
+			},
 			"STEPPER": {
 				"ACCOUNT": "Account",
 				"BASIC_INFO": "Basic info",
