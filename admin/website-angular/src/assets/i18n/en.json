@@ -214,6 +214,8 @@
 			"ADD": "Add",
 			"BACK": "Back",
 			"SAVE": "Save",
+			"SELECT": "Select",
+			"CREATE": "Create",
 			"ACCOUNT": {
 				"ACCOUNT": "Account",
 				"EMAIL_ADDRESS": "Email address",
@@ -283,6 +285,14 @@
 			"PRODUCT_CATEGORIES": {
 				"PRODUCT_CATEGORIES": "Product categories",
 				"ADD_OWN_PRODUCT_CATEGORY": "Add own product category"
+			},
+			"PRODUCTS": {
+				"PRODUCTS": "Products",
+				"SELECT_FROM_PRODUCTS_CATALOG": "Select from products catalog",
+				"CREATE_PRODUCT": "Create product",
+				"EDIT_PRODUCT": "Edit product",
+				"ADD_PRODUCT": "Add product",
+				"CREATE_NEW_PRODUCT": "Create new product"
 			}
 		}
 	},

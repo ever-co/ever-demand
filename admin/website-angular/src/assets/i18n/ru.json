@@ -214,6 +214,8 @@
 			"ADD": "Добавлять",
 			"BACK": "Назад",
 			"SAVE": "Сохранить",
+			"SELECT": "Выбрать",
+			"CREATE": "Создайте",
 			"ACCOUNT": {
 				"ACCOUNT": "Учетная запись",
 				"EMAIL_ADDRESS": "Адрес электронной почты",
@@ -283,6 +285,14 @@
 			"PRODUCT_CATEGORIES": {
 				"PRODUCT_CATEGORIES": "Категории продукта",
 				"ADD_OWN_PRODUCT_CATEGORY": "Добавить собственную категорию продукта"
+			},
+			"PRODUCTS": {
+				"PRODUCTS": "Товары",
+				"SELECT_FROM_PRODUCTS_CATALOG": "Выберите из каталога продукции",
+				"CREATE_PRODUCT": "Создать продукт",
+				"EDIT_PRODUCT": "Изменить продукт",
+				"ADD_PRODUCT": "Добавить товар",
+				"CREATE_NEW_PRODUCT": "Создать новый продукт"
 			}
 		}
 	},

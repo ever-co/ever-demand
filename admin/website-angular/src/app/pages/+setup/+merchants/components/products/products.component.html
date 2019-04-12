@@ -1,20 +1,24 @@
-<!-- TODO add translate -->
 <nb-card class="setup-merchant-products">
 	<nb-card-header>
 		<span *ngIf="currentView == componentViews.main">
-			Products
+			{{ 'FAKE_DATA.SETUP_MERCHANTS.PRODUCTS.PRODUCTS' | translate }}
 		</span>
 		<span *ngIf="currentView == componentViews.productsTable">
-			Select from products catalog
+			{{
+				'FAKE_DATA.SETUP_MERCHANTS.PRODUCTS.SELECT_FROM_PRODUCTS_CATALOG'
+					| translate
+			}}
 		</span>
 		<span *ngIf="currentView == componentViews.createProduct">
-			Create product
+			{{
+				'FAKE_DATA.SETUP_MERCHANTS.PRODUCTS.CREATE_PRODUCT' | translate
+			}}
 		</span>
 		<span *ngIf="currentView == componentViews.editProduct">
-			Edit product
+			{{ 'FAKE_DATA.SETUP_MERCHANTS.PRODUCTS.EDIT_PRODUCT' | translate }}
 		</span>
 		<span *ngIf="currentView == componentViews.addProducts">
-			Add product
+			{{ 'FAKE_DATA.SETUP_MERCHANTS.PRODUCTS.ADD_PRODUCT' | translate }}
 		</span>
 	</nb-card-header>
 	<nb-card-body>
@@ -31,7 +35,10 @@
 						[disabled]="!storeId"
 						(click)="currentView = componentViews.productsTable"
 					>
-						Select from products catalog
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.PRODUCTS.SELECT_FROM_PRODUCTS_CATALOG'
+								| translate
+						}}
 					</button>
 				</div>
 
@@ -43,7 +50,10 @@
 						[disabled]="!storeId"
 						(click)="currentView = componentViews.createProduct"
 					>
-						Create new product
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.PRODUCTS.CREATE_NEW_PRODUCT'
+								| translate
+						}}
 					</button>
 				</div>
 
@@ -111,7 +121,7 @@
 		nbButton
 		(click)="select(productsCatalog?.productsTable.selectedProducts)"
 	>
-		Select
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.SELECT' | translate }}
 	</button>
 
 	<button
@@ -120,7 +130,7 @@
 		nbButton
 		(click)="addProducts.add()"
 	>
-		Add
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.ADD' | translate }}
 	</button>
 
 	<button
@@ -129,7 +139,7 @@
 		[disabled]="!productMutation?.basicInfo.valid || false"
 		(click)="productMutation.create()"
 	>
-		Create
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.CREATE' | translate }}
 	</button>
 
 	<button
@@ -138,6 +148,6 @@
 		[disabled]="!productMutation?.basicInfo.valid || false"
 		(click)="productMutation.save()"
 	>
-		Save
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.SAVE' | translate }}
 	</button>
 </div>

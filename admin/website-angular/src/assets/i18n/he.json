@@ -214,6 +214,8 @@
 			"ADD": "הוסף",
 			"BACK": "חזור",
 			"SAVE": "להציל",
+			"SELECT": "בחר",
+			"CREATE": "צור",
 			"ACCOUNT": {
 				"ACCOUNT": "חשבון",
 				"EMAIL_ADDRESS": "כתובת דוא'ל",
@@ -283,6 +285,14 @@
 			"PRODUCT_CATEGORIES": {
 				"PRODUCT_CATEGORIES": "קטגוריות מוצרים",
 				"ADD_OWN_PRODUCT_CATEGORY": "הוסף את הקטגוריה של המוצר עצמו"
+			},
+			"PRODUCTS": {
+				"PRODUCTS": "מוצרים",
+				"SELECT_FROM_PRODUCTS_CATALOG": "בחר מתוך קטלוג מוצרים",
+				"CREATE_PRODUCT": "צור מוצר",
+				"EDIT_PRODUCT": "ערוך מוצר",
+				"ADD_PRODUCT": "הוסף מוצר",
+				"CREATE_NEW_PRODUCT": "צור מוצר חדש"
 			}
 		}
 	},
