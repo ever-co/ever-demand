@@ -216,6 +216,18 @@
 			"SAVE": "Save",
 			"SELECT": "Select",
 			"CREATE": "Create",
+			"STEPPER": {
+				"ACCOUNT": "Account",
+				"BASIC_INFO": "Basic info",
+				"CONTACT_INFO": "Contact info",
+				"LOCATION": "Location",
+				"PAYMENTS": "Payments",
+				"MANUFACTURING": "Manufacturing",
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "Delivery & Takeaway Settings",
+				"ORDERS_SETTINGS": "Orders Settings",
+				"PRODUCT_CATEGORIES": "Product categories",
+				"PRODUCTS": "Products"
+			},
 			"ACCOUNT": {
 				"ACCOUNT": "Account",
 				"EMAIL_ADDRESS": "Email address",

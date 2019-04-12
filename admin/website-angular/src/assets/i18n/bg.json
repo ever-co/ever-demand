@@ -217,6 +217,18 @@
 			"SAVE": "Запази",
 			"SELECT": "Select",
 			"CREATE": "Create",
+			"STEPPER": {
+				"ACCOUNT": "Акаунт",
+				"BASIC_INFO": "Основна информация",
+				"CONTACT_INFO": "Информация за контакт",
+				"LOCATION": "Местоположение",
+				"PAYMENTS": "Плащания",
+				"MANUFACTURING": "Производство",
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "Настройки за доставка и за вкъщи",
+				"ORDERS_SETTINGS": "Настройки за поръчки",
+				"PRODUCT_CATEGORIES": "Продуктови категории",
+				"PRODUCTS": "Продукти"
+			},
 			"ACCOUNT": {
 				"ACCOUNT": "Сметка",
 				"EMAIL_ADDRESS": "Имейл адрес",

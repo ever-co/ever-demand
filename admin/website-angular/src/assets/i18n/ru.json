@@ -216,6 +216,18 @@
 			"SAVE": "Сохранить",
 			"SELECT": "Выбрать",
 			"CREATE": "Создайте",
+			"STEPPER": {
+				"ACCOUNT": "Счет",
+				"BASIC_INFO": "Базовая информация",
+				"CONTACT_INFO": "Контактная информация",
+				"LOCATION": "Место нахождения",
+				"PAYMENTS": "Платежи",
+				"MANUFACTURING": "Производство",
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "Настройки доставки и выноса",
+				"ORDERS_SETTINGS": "Настройки заказов",
+				"PRODUCT_CATEGORIES": "Категории продукта",
+				"PRODUCTS": "Товары"
+			},
 			"ACCOUNT": {
 				"ACCOUNT": "Учетная запись",
 				"EMAIL_ADDRESS": "Адрес электронной почты",

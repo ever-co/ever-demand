@@ -216,6 +216,18 @@
 			"SAVE": "להציל",
 			"SELECT": "בחר",
 			"CREATE": "צור",
+			"STEPPER": {
+				"ACCOUNT": "חשבון",
+				"BASIC_INFO": "מידע בסיסי",
+				"CONTACT_INFO": "פרטים ליצירת קשר",
+				"LOCATION": "מקום",
+				"PAYMENTS": "תשלומים",
+				"MANUFACTURING": "ייצור",
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "הגדרות משלוח & Takeaway",
+				"ORDERS_SETTINGS": "הגדרות הזמנות",
+				"PRODUCT_CATEGORIES": "קטגוריות מוצרים",
+				"PRODUCTS": "מוצרים"
+			},
 			"ACCOUNT": {
 				"ACCOUNT": "חשבון",
 				"EMAIL_ADDRESS": "כתובת דוא'ל",
