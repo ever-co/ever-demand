@@ -13,16 +13,16 @@
 -   Modern & Open Platform for **On-Demand Economy**
 -   Supports Single-Store and Multi-Store / Multi-Vendor / Peer-to-Peer Marketplaces
 -   Everything Reactive, Real-Time and Blazing Fast!
--   Headless Commerce framework, which allows different implementations of store-fronts, Admin UIs and client apps. Exposes rich GraphQL, REST and WS APIs.
+-   Headless Commerce framework, which allows different implementations of store-fronts, Admin UIs and client apps. It exposes rich GraphQL, REST and WS APIs.
 -   Mobile ordering App for customers to make On-Demand orders (Hybrid / PWA, iOS and Android using Ionic / Ionic Native)
 -   Carrier (Driver) Mobile App for deliveries by carriers, drivers or service providers (iOS and Android using Ionic / Ionic Native)
 -   Customizing Shopping e-commerce Website for customers to make in-browser On-Demand purchases of food, goods or services
 -   Merchant Tablet App for Stores/Merchants/Warehouses to manage & track orders, organize deliveries, etc.
 -   Admin Website used to manage all platform features and settings in the single Web-based interface
--   Multi-language and culture settings accross Platform (i18N)
+-   Multi-language and culture settings across Platform (i18N)
 -   Products Catalogs (global and per Merchant) with Multiple Product Images
--   Inventory/Stock Management and Real-time Order Management/Processing accross the Platform
--   Deliveries/Shipping management and processing accross Platform (shipping with real-time location tracking for On-Demand orders)
+-   Inventory/Stock Management and Real-time Order Management/Processing across the Platform
+-   Deliveries/Shipping management and processing across Platform (shipping with real-time location tracking for On-Demand orders)
 -   Real-Time discounts, promotions and products/services availability updates
 -   Customers registration, Guest Checkouts, Invitations (optional)
 -   Gateway and Payment Processing (currently supported Payments Gateway - [Stripe](https://stripe.com))
@@ -32,7 +32,7 @@
 
 -   Tax Calculations
 -   Third-party Shipping providers integrations
--   Users Roles / Permissions accross Platform
+-   Users Roles / Permissions across Platform
 -   Large products catalogs with products variants, facets and full-text search
 
 You can also track feature requests from the community in the [separate repo](https://github.com/ever-co/feature-requests/issues).
@@ -62,11 +62,11 @@ Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_wi
 
 Please refer to our official [Platform Documentation](https://docs.ever.co) and to our [Wiki](https://github.com/ever-co/ever/wiki) (WIP).
 
-For quick overview of each project in the Platform (Server, Admin, Shops, etc), you can search for README.md file in the root of the projects folders. For example, see [./backend/api/README.md](backend/api/README.md) for Server (Backend) related overview.
+For a quick overview of each project in the Platform (Server, Admin, Shops, etc.), you can search for README.md file in the root of the projects folders. For example, see [./backend/api/README.md](backend/api/README.md) for Server (Backend) related overview.
 
 ## Getting Started
 
-We follow [Gitflow Workflow](https://nvie.com/posts/a-successful-git-branching-model) so the [`develop` branch](https://github.com/ever-co/ever/tree/develop) may be in an unstable or even broken state during development. Please use [releases](https://github.com/ever-co/ever/releases) or [`master` branch](https://github.com/ever-co/ever/tree/master) instead of the `develop` branch in order to get more stable code.
+We follow [Gitflow Workflow](https://nvie.com/posts/a-successful-git-branching-model), so the [`develop` branch](https://github.com/ever-co/ever/tree/develop) may be in an unstable or even broken state during development. Please use [releases](https://github.com/ever-co/ever/releases) or [`master` branch](https://github.com/ever-co/ever/tree/master) instead of the `develop` branch in order to get more stable code.
 
 ### Clone Repo
 
@@ -76,12 +76,13 @@ Clone the Ever Platform Git repo:
 git clone -c core.symlinks=true --recursive https://github.com/ever-co/ever.git
 ```
 
-Notes: 
+Notes:
 
 -   if you want to use development branch (unstable, but latest development) clone using `--branch develop`
--   it's important to enable Git symlinks because they are used for shared modules (every project have symlinks to common shared modules in the /shared folder)
+-   it's necessary to enable Git symlinks because they used for shared modules (every project has symlinks to shared modules in the /shared folder)
+-   because of symlinks, you may need to clone from an elevated command prompt (on Windows)
 
-If you use Git >= v2.14, it probably make sense to setup following globally:
+If you use Git >= v2.14, it probably makes sense to setup following globally:
 
 ```
 git config --global core.symlinks true
@@ -96,7 +97,7 @@ Notes:
 
 ### Yarn
 
-Currently we are using `Yarn` (instead of `npm`), so make sure you have latest Yarn version installed before running Ever Platform:
+Currently, we are using `Yarn` (instead of `npm`), so make sure you have latest Yarn version installed before running Ever Platform:
 
 ```
 npm install -g yarn@latest
@@ -104,20 +105,20 @@ npm install -g yarn@latest
 
 ### Quick installation
 
-After git repo is cloned, just run following command to install/bootstrap all dependencies:
+After git repo cloned, just run following command to install/bootstrap all dependencies:
 
 ```
 yarn bootstrap
 ```
 
-This will install required packages in all Platform projects using Lerna
+Above command install required packages in all Platform projects using Lerna.
 
 Note: if above command fails for any reason, you can try to install required packages manually by running `yarn` inside every sub-folder with 'package.json' file
 
 ### Lerna (manual installation)
 
 We are using [Lerna](https://github.com/lerna/lerna) for mono-repo management.
-You need to run the following command from working folder where you cloned Ever git repo, which will install Lerna together with other packages:
+You need to run the following command from the working folder where you cloned Ever git repo, which install Lerna together with other packages:
 
 ```
 yarn
@@ -135,11 +136,11 @@ Now, after Lerna installed (locally or globally), you need to Bootstrap all depe
 yarn lerna bootstrap
 ```
 
-The command above will install all required packages for every sub-project of the Ever Platform.
+The command above install all required packages for every sub-project of the Ever Platform.
 
 ### MongoDB
 
-Ever platform configured to use MongoDB by default and assume you have MongoDB service running and accepting connections on default `localhost:27017`. Please see relevant section in our [documentation](https://github.com/ever-co/ever/wiki/MongoDB).
+Ever platform configured to use MongoDB by default and assume you have MongoDB service running and accepting connections on the default `localhost:27017`. Please see relevant section in our [documentation](https://github.com/ever-co/ever/wiki/MongoDB).
 
 ### Platform Configuration
 
@@ -147,7 +148,7 @@ See relevant section in our [documentation](https://github.com/ever-co/ever/wiki
 
 ### Run Platform Projects
 
-Finally, each project from Ever Platform can be started by single command from this list:
+Finally, each project from Ever Platform could start by single command from this list:
 
 ```
  yarn run:server # Run API server
@@ -158,7 +159,7 @@ Finally, each project from Ever Platform can be started by single command from t
  yarn run:carrier # Run Carrier Mobile app
 ```
 
-Note: on the first run, API Server (Backend) will create MongoDB local database `ever_development` with the following (default) Admin user
+Note: on the first run, API Server (Backend) creates MongoDB local database `ever_development` with the following (default) Admin user
 
 -   email: `admin@ever.co`
 -   password: `admin`
@@ -167,11 +168,11 @@ You can use credentials above to login into Platform Admin App, which available 
 
 ## Metrics
 
-According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform today has more than 120K lines of TypeScript, GraphQL, HTML / CSS and other code files. You can get more details at the relevant section of our [documentation](https://github.com/ever-co/ever/wiki/Metrics).
+According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform today has more than 120K lines of TypeScript, GraphQL, HTML / CSS and other code files. You can get more details in the relevant section of our [documentation](https://github.com/ever-co/ever/wiki/Metrics).
 
 ## Contribute
 
--   Please give us :star: on Github, it **really** helps!
+-   Please give us :star: on Github, it **helps**!
 -   You are more than welcome to submit feature requests in the [separate repo](https://github.com/ever-co/feature-requests/issues)
 -   Pull requests are always welcome! Please base pull requests against the _develop_ branch and follow the [contributing guide](.github/CONTRIBUTING.md).
 
@@ -218,11 +219,11 @@ Ever Platform follows good security practices, but 100% security cannot be guara
 Ever Platform is provided AS IS without any warranty. Use at your own risk!  
 See more details in the [LICENSE.md](LICENSE.md).
 
-In production setup, all client-side to server-side (backend, APIs) communications should be encrypted using HTTPS/WSS/SSL (REST APIs, GraphQL endpoint, Socket.io WebSockets, etc).
+In a production setup, all client-side to server-side (backend, APIs) communications should be encrypted using HTTPS/WSS/SSL (REST APIs, GraphQL endpoint, Socket.io WebSockets, etc.).
 
 ## License
 
-This software is available under different licenses
+This software is available under different licenses.
 
 ### _Ever Platform Community Edition_ License
 
@@ -243,9 +244,9 @@ You should have received a copy of the relevant GNU Licenses along with this pro
 
 ### _Ever Platform Enterprise_ License
 
-Alternatively, commercial versions of the software must be used in accordance with the terms and conditions of separate written agreement between you and Ever Co. LTD.
+Alternatively, commercial versions of the software must be used in accordance with the terms and conditions of a separate written agreement between you and Ever Co. LTD.
 
-For more information about Ever® Platform Enterprise™ License please contact <mailto:ever@ever.co>.
+For more information about Ever® Platform Enterprise™ License, please contact <mailto:ever@ever.co>.
 
 #### The default Ever® Platform™ license, without a valid Ever® Platform Enterprise™ License agreement, is the Ever® Platform Community™ Edition License.
 
