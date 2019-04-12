@@ -275,6 +275,10 @@
 				"PRODUCTS_TAKEAWAY_BY_DEFAULT": "מוצרים Takeaway (כברירת מחדל)",
 				"USE_SELECTED_SHARED_CARRIERS": "השתמש במפעילים משותפים נבחרים",
 				"ADD_YOUR_CARRIERS": "הוסף את הספקים שלך"
+			},
+			"ORDERS_SETTINGS": {
+				"ORDERS_SETTINGS": "הגדרות הזמנות",
+				"ORDER_BARCODE_QR_CODE_TYPES": "ציין את סוג קוד הברקוד / qr"
 			}
 		}
 	},

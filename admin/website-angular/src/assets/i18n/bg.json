@@ -276,6 +276,10 @@
 				"PRODUCTS_TAKEAWAY_BY_DEFAULT": "Продукти за вкъщи (по подразбиране)",
 				"USE_SELECTED_SHARED_CARRIERS": "Използвайте избрани споделени оператори",
 				"ADD_YOUR_CARRIERS": "Добавете операторите си"
+			},
+			"ORDERS_SETTINGS": {
+				"ORDERS_SETTINGS": "Настройки за поръчки",
+				"ORDER_BARCODE_QR_CODE_TYPES": "Заяви типът баркод/qr код"
 			}
 		}
 	},

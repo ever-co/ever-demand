@@ -275,6 +275,10 @@
 				"PRODUCTS_TAKEAWAY_BY_DEFAULT": "Products Takeaway (by default)",
 				"USE_SELECTED_SHARED_CARRIERS": "Use selected shared carriers",
 				"ADD_YOUR_CARRIERS": "Add your carriers"
+			},
+			"ORDERS_SETTINGS": {
+				"ORDERS_SETTINGS": "Orders Settings",
+				"ORDER_BARCODE_QR_CODE_TYPES": "Order Barcode/QR code types"
 			}
 		}
 	},

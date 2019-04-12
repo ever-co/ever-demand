@@ -275,6 +275,10 @@
 				"PRODUCTS_TAKEAWAY_BY_DEFAULT": "Продукты на вынос (по умолчанию)",
 				"USE_SELECTED_SHARED_CARRIERS": "Использовать выбранные общие носители",
 				"ADD_YOUR_CARRIERS": "Добавьте своих перевозчиков"
+			},
+			"ORDERS_SETTINGS": {
+				"ORDERS_SETTINGS": "Настройки заказов",
+				"ORDER_BARCODE_QR_CODE_TYPES": "Укажите тип штрих-кода / QR-код"
 			}
 		}
 	},
