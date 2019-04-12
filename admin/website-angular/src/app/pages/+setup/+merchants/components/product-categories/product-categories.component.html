@@ -1,6 +1,9 @@
 <nb-card class="setup-merchant-product-categories">
 	<nb-card-header>
-		Product categories
+		{{
+			'FAKE_DATA.SETUP_MERCHANTS.PRODUCT_CATEGORIES.PRODUCT_CATEGORIES'
+				| translate
+		}}
 	</nb-card-header>
 	<nb-card-body>
 		<div class="row actions">
@@ -14,7 +17,10 @@
 					status="success"
 					(click)="showMutationForm = true"
 				>
-					Add own product category
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.PRODUCT_CATEGORIES.ADD_OWN_PRODUCT_CATEGORY'
+							| translate
+					}}
 				</button>
 			</div>
 
@@ -54,7 +60,7 @@
 
 <div *ngIf="showMutationForm">
 	<button nbButton (click)="showMutationForm = false">
-		Back
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.BACK' | translate }}
 	</button>
 
 	<button
@@ -63,7 +69,7 @@
 		[disabled]="showMutationForm ? !isValidForm : false"
 		(click)="add()"
 	>
-		Add
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.ADD' | translate }}
 	</button>
 
 	<button
@@ -72,6 +78,6 @@
 		[disabled]="showMutationForm ? isInvalidValidForm : false"
 		(click)="edit()"
 	>
-		Save
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.SAVE' | translate }}
 	</button>
 </div>

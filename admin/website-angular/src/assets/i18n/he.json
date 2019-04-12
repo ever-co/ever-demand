@@ -279,6 +279,10 @@
 			"ORDERS_SETTINGS": {
 				"ORDERS_SETTINGS": "הגדרות הזמנות",
 				"ORDER_BARCODE_QR_CODE_TYPES": "ציין את סוג קוד הברקוד / qr"
+			},
+			"PRODUCT_CATEGORIES": {
+				"PRODUCT_CATEGORIES": "קטגוריות מוצרים",
+				"ADD_OWN_PRODUCT_CATEGORY": "הוסף את הקטגוריה של המוצר עצמו"
 			}
 		}
 	},

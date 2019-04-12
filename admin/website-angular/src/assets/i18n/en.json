@@ -279,6 +279,10 @@
 			"ORDERS_SETTINGS": {
 				"ORDERS_SETTINGS": "Orders Settings",
 				"ORDER_BARCODE_QR_CODE_TYPES": "Order Barcode/QR code types"
+			},
+			"PRODUCT_CATEGORIES": {
+				"PRODUCT_CATEGORIES": "Product categories",
+				"ADD_OWN_PRODUCT_CATEGORY": "Add own product category"
 			}
 		}
 	},

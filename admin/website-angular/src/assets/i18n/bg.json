@@ -280,6 +280,10 @@
 			"ORDERS_SETTINGS": {
 				"ORDERS_SETTINGS": "Настройки за поръчки",
 				"ORDER_BARCODE_QR_CODE_TYPES": "Заяви типът баркод/qr код"
+			},
+			"PRODUCT_CATEGORIES": {
+				"PRODUCT_CATEGORIES": "Продуктови категории",
+				"ADD_OWN_PRODUCT_CATEGORY": "Добавете собствена категория продукти"
 			}
 		}
 	},
