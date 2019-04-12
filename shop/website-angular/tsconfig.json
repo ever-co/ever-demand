@@ -13,7 +13,7 @@
 		"importHelpers": true,
 		"strictNullChecks": false,
 		"noStrictGenericChecks": true,
-		"lib": ["dom", "es6"],
+		"lib": ["dom", "es7"],
 		"baseUrl": "./src",
 		"paths": {
 			"@angular/*": ["node_modules/@angular/*"],
