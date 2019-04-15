@@ -105,7 +105,7 @@
 		"call-number": "^1.0.1",
 		"connect": "^3.6.6",
 		"cordova-android": "^7.1.4",
-		"cordova-android-support-gradle-release": "^2.0.1",
+		"cordova-android-support-gradle-release": "^3.0.0",
 		"cordova-browser": "^6.0.0",
 		"cordova-open-native-settings": "^1.5.2",
 		"cordova-plugin-appavailability": "^0.4.2",
