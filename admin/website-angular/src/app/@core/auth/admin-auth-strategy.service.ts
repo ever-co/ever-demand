@@ -289,6 +289,8 @@ export class AdminAuthStrategy extends NbAuthStrategy {
 	private async _logout(): Promise<NbAuthResult> {
 		this.store.clear();
 
+		localStorage.setItem('serverConnection', '200');
+
 		await this.apollo.getClient().resetStore();
 
 		return new NbAuthResult(
