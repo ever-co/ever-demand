@@ -203,7 +203,7 @@ export class ServicesApp {
 		await this._registerModels();
 		await this._registerEntityAdministrator();
 		this._passportSetup();
-		this._startExpress();
+		await this._startExpress();
 		this._startSocketIO();
 	}
 
