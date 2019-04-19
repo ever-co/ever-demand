@@ -25,6 +25,11 @@
 								"glob": "**/*",
 								"input": "node_modules/leaflet/dist/images",
 								"output": "/assets/img/markers"
+							},
+							{
+								"glob": "**",
+								"input": "./src/assets/i18n",
+								"output": "./i18n"
 							}
 						],
 						"styles": [
