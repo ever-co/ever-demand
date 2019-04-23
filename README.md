@@ -157,7 +157,9 @@ Finally, each project from Ever Platform could start by single command from this
 * Run Carrier Mobile app `yarn run:carrier` and open http://localhost:4203
 * Run Shopping Website `yarn run:shopweb` and open http://localhost:3000
 
-Note: on the first run, API Server (Backend) creates MongoDB local database `ever_development` with the following (default) Admin user
+Note 1: during development you can run server with `yarn run:server:dev` to enable watch on TS files changes
+
+Note 2: on the first run, API Server (Backend) creates MongoDB local database `ever_development` with the following (default) Admin user
 
 -   email: `admin@ever.co`
 -   password: `admin`
