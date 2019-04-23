@@ -33,6 +33,7 @@
 		"bootstrap": "yarn install && yarn lerna bootstrap",
 		"run:ncu": "yarn ncu --configFileName=.ncurc.json --configFilePath=./",
 		"run:server": "yarn --cwd ./backend/api start",
+		"run:server:dev": "yarn --cwd ./backend/api start:dev",
 		"run:admin": "yarn --cwd ./admin/website-angular start",
 		"run:merchant": "yarn --cwd ./merchant/tablet-ionic start",
 		"run:shopmobile": "yarn --cwd ./shop/mobile-ionic start",
