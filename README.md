@@ -150,21 +150,21 @@ See relevant section in our [documentation](https://github.com/ever-co/ever/wiki
 
 Finally, each project from Ever Platform could start by single command from this list:
 
-```
- yarn run:server # Run API server
- yarn run:admin # Run Admin Website
- yarn run:merchant # Run Merchant Ionic Tablet App
- yarn run:shopmobile # Run Shopping Mobile App
- yarn run:shopweb # Run Shopping Website
- yarn run:carrier # Run Carrier Mobile app
-```
+* Run API server `yarn run:server`
+* Run Admin Website `yarn run:admin` and open http://localhost:4200
+* Run Shopping Mobile App `yarn run:shopmobile` and open http://localhost:4201
+* Run Merchant Ionic Tablet App `yarn run:merchant` and open http://localhost:4202
+* Run Carrier Mobile app `yarn run:carrier` and open http://localhost:4203
+* Run Shopping Website `yarn run:shopweb` and open http://localhost:3000
 
-Note: on the first run, API Server (Backend) creates MongoDB local database `ever_development` with the following (default) Admin user
+Note 1: during development you can run server with `yarn run:server:dev` to enable watch on TS files changes
+
+Note 2: on the first run, API Server (Backend) creates MongoDB local database `ever_development` with the following (default) Admin user
 
 -   email: `admin@ever.co`
 -   password: `admin`
 
-You can use credentials above to login into Platform Admin App, which available locally at http://localhost:4200 (by default)
+You can use credentials above to login into Platform Admin App.
 
 ## Metrics
 
