@@ -14,5 +14,8 @@ export class ProfileComponent {
 
 	constructor(private adminsService: AdminsService, private store: Store) {
 		this.admin$ = this.adminsService.getAdmin(this.store.adminId);
+		setTimeout(() => {
+			console.log(this.admin$);
+		}, 5000);
 	}
 }

@@ -14,3 +14,8 @@ interface NodeModule {
 declare var tinymce: any;
 
 declare var echarts: any;
+
+declare var System: System;
+interface System {
+	import(request: string): Promise<any>;
+}

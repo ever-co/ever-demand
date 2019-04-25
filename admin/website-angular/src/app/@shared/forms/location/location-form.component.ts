@@ -15,6 +15,8 @@ import {
 	Validators
 } from '@angular/forms';
 
+import { ILocation } from '../../../../modules/server.common/interfaces/IGeoLocation';
+
 import { IGeoLocationCreateObject } from '@modules/server.common/interfaces/IGeoLocation';
 import {
 	Country,

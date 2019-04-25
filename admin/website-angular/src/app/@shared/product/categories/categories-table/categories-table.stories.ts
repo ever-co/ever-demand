@@ -9,7 +9,6 @@ import {
 	boolean
 } from '@storybook/addon-knobs';
 import { action, configureActions } from '@storybook/addon-actions';
-import { DeviceComponent } from './device.component';
 import { ThemeModule } from 'app/@theme';
 import { CommonModule } from '@angular/common';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -22,13 +21,12 @@ import {
 	TranslateLoader,
 	MissingTranslationHandler,
 	FakeMissingTranslationHandler,
-	TranslateService
+	TranslateService,
+	TranslatePipe
 } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { routes, NbAuthModule } from '@nebular/auth';
 import { NotifyService } from 'app/@core/services/notify/notify.service';
-import { DeviceMutationComponent } from './device-mutation/device-mutation.component';
-import { DeviceModule } from './device.module';
 import { DeviceService } from 'app/@core/data/device.service';
 import { Apollo, ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
@@ -36,9 +34,18 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { PipesModule } from '@modules/client.common.angular2/pipes/pipes.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.module';
+import { FormsModule } from '@angular/forms';
+import { ProductCategoriesFormsModule } from '../forms/product-categories-forms.module';
+import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
+import { LocaleModule } from '@modules/client.common.angular2/locale/locale.module';
+import { ProductsCategoryService } from 'app/@core/data/productsCategory.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CategoriesTableComponent } from './categories-table.component';
 import { I18nModule } from 'app/@core/utils/i18n.module';
 
-const stories = storiesOf('Device Component', module);
+const stories = storiesOf('Categories Table Component', module);
 
 export function createApollo(httpLink: HttpLink) {
 	return {
@@ -47,27 +54,45 @@ export function createApollo(httpLink: HttpLink) {
 	};
 }
 
-export function createTranslateLoader(http: HttpClient) {
-	return new TranslateHttpLoader(http, '/i18n/', '.json');
-}
+export const staticTranslateLoader: TranslateLoader = {
+	getTranslation(lang: string) {
+		return of(require('../../../../../assets/i18n/en.json'));
+	}
+};
 
 stories.addDecorator(withKnobs);
 stories.addDecorator(
 	moduleMetadata({
-		declarations: [DeviceComponent, DeviceMutationComponent],
+		declarations: [],
 		imports: [
 			CommonModule,
 			ThemeModule,
 			Ng2SmartTableModule,
 			NbSpinnerModule,
 			ConfirmationModalModule,
+			BrowserAnimationsModule,
 			ToasterModule.forRoot(),
-			HttpClientModule,
-			I18nModule,
+			TranslateModule.forChild({
+				loader: {
+					provide: TranslateLoader,
+					useValue: staticTranslateLoader
+				},
+				missingTranslationHandler: {
+					provide: MissingTranslationHandler,
+					useClass: FakeMissingTranslationHandler
+				}
+			}),
 			RouterModule.forChild(routes),
 			NbAuthModule,
 			ApolloModule,
-			PipesModule
+			HttpLinkModule,
+			PipesModule,
+			FileUploaderModule,
+			Ng2SmartTableModule,
+			NbSpinnerModule,
+			FormsModule,
+			LocaleModule,
+			HttpClientModule
 		],
 		providers: [
 			DeviceService,
@@ -78,13 +103,18 @@ stories.addDecorator(
 			},
 			TranslateStore,
 			NotifyService,
+			NgbActiveModal,
+			ProductLocalesService,
 			TranslateService,
-			HttpLink
+			ProductsCategoryService,
+			TranslatePipe
 		]
 	})
 );
 
-stories.add('Device', () => ({
-	component: DeviceComponent,
-	props: {}
+stories.add('Category Table', () => ({
+	component: CategoriesTableComponent,
+	props: {
+		storybookVersion: boolean('Storybook-Version', true)
+	}
 }));
