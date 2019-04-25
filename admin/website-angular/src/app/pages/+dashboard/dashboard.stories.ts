@@ -83,8 +83,6 @@ export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, '/i18n/', '.json');
 }
 
-var nbThemeOptions = { name: 'default' };
-
 stories.addDecorator(withKnobs);
 stories.addDecorator(
 	moduleMetadata({
