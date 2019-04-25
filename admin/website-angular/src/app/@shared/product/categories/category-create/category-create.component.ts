@@ -8,7 +8,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { NotifyService } from 'app/@core/services/notify/notify.service';
 import { first } from 'rxjs/operators';
 import { ProductsCategoryService } from 'app/@core/data/productsCategory.service';
-import { ToasterService } from 'angular2-toaster';
 
 @Component({
 	selector: 'ea-category-create',
@@ -28,7 +27,6 @@ export class CategoryCreateComponent implements OnDestroy {
 		private readonly _productLocalesService: ProductLocalesService,
 		private readonly _langTranslateService: TranslateService,
 		private readonly _notifyService: NotifyService,
-		private readonly _toasterService: ToasterService,
 		private readonly _productsCategoryService: ProductsCategoryService
 	) {
 		this._langTranslateService.use('en');

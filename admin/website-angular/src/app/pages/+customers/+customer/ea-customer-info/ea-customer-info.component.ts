@@ -26,10 +26,6 @@ export class CustomerInfoComponent implements OnDestroy {
 		});
 	}
 
-	clicked() {
-		debugger;
-	}
-
 	ngOnDestroy(): void {
 		if (this.params$) {
 			this.params$.unsubscribe();

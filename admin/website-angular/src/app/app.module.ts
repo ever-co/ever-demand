@@ -6,11 +6,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormWizardModule } from 'angular2-wizard';
 import { SimpleTimer } from 'ng2-simple-timer';
-import {
-	TranslateLoader,
-	TranslateModule,
-	TranslateService
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ToasterModule } from 'angular2-toaster';
 import { Apollo, ApolloModule } from 'apollo-angular';
@@ -91,8 +87,7 @@ import { ServerConnectionService } from '@modules/client.common.angular2/service
 		SimpleTimer,
 		Logger,
 		AppModuleGuard,
-		MaintenanceModuleGuard,
-		TranslateService
+		MaintenanceModuleGuard
 	]
 })
 export class AppModule {

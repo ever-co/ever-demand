@@ -1,6 +1,6 @@
 <toaster-container></toaster-container>
 
-<nb-card *ngIf="storybookVersion || (admin$ | async); let admin">
+<nb-card *ngIf="(admin$ | async); let admin">
 	<nb-card-header>
 		<header class="text-center border-bottom">
 			<h1>

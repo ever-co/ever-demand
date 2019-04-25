@@ -19,19 +19,19 @@ import {
 	NB_THEME_OPTIONS,
 	NbMediaBreakpointsService,
 	NB_MEDIA_BREAKPOINTS,
-    NB_BUILT_IN_JS_THEMES,
-    NB_JS_THEMES,
-    DEFAULT_MEDIA_BREAKPOINTS,
-    NB_WINDOW,
-    nbWindowFactory,
-    NB_DOCUMENT,
-    NbSpinnerService,
-    NB_LAYOUT_DIRECTION,
-    NbLayoutDirection,
-    NbLayoutDirectionService,
-    NbLayoutScrollService,
-    NbLayoutRulerService,
-    NbOverlayModule
+	NB_BUILT_IN_JS_THEMES,
+	NB_JS_THEMES,
+	DEFAULT_MEDIA_BREAKPOINTS,
+	NB_WINDOW,
+	nbWindowFactory,
+	NB_DOCUMENT,
+	NbSpinnerService,
+	NB_LAYOUT_DIRECTION,
+	NbLayoutDirection,
+	NbLayoutDirectionService,
+	NbLayoutScrollService,
+	NbLayoutRulerService,
+	NbOverlayModule
 } from '@nebular/theme';
 import { ConfirmationModalModule } from 'app/@shared/confirmation-modal/confirmation-modal.module';
 import { ToasterModule } from 'angular2-toaster';
@@ -79,7 +79,10 @@ import { OrdersChartService } from 'app/@core/services/dashboard/orders-chart.se
 import { PeriodsService } from 'app/@core/services/dashboard/periods.service';
 import { ProfitChartService } from 'app/@core/services/dashboard/profit-chart.service';
 import { LayoutService } from 'app/@core/services/dashboard/layout.service';
-import { BUILT_IN_THEMES, NbJSThemesRegistry } from '@nebular/theme/services/js-themes-registry.service';
+import {
+	BUILT_IN_THEMES,
+	NbJSThemesRegistry
+} from '@nebular/theme/services/js-themes-registry.service';
 
 const stories = storiesOf('Dashboard', module);
 
@@ -94,9 +97,7 @@ export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, '/i18n/', '.json');
 }
 
-
-var nbThemeOptions = { name: 'default' }
-
+var nbThemeOptions = { name: 'default' };
 
 stories.addDecorator(withKnobs);
 stories.addDecorator(
@@ -178,22 +179,25 @@ stories.addDecorator(
 			NbThemeModule,
 			NbThemeService,
 			NbAuthService,
-            NbMediaBreakpointsService
-            { provide: NB_THEME_OPTIONS, useValue: nbThemeOptions || {} },
-        { provide: NB_BUILT_IN_JS_THEMES, useValue: BUILT_IN_THEMES },
-        { provide: NB_JS_THEMES, useValue: [] },
-        { provide: NB_MEDIA_BREAKPOINTS, useValue: DEFAULT_MEDIA_BREAKPOINTS },
-        { provide: NB_WINDOW, useFactory: nbWindowFactory },
-        { provide: NB_DOCUMENT, useExisting: DOCUMENT },
-        NbJSThemesRegistry,
-        NbThemeService,
-        NbMediaBreakpointsService,
-        NbSpinnerService,
-        { provide: NB_LAYOUT_DIRECTION, useValue: NbLayoutDirection.LTR },
-        NbLayoutDirectionService,
-        NbLayoutScrollService,
-        NbLayoutRulerService,
-        ...NbOverlayModule.forRoot().providers,
+			NbMediaBreakpointsService,
+			{ provide: NB_THEME_OPTIONS, useValue: nbThemeOptions || {} },
+			{ provide: NB_BUILT_IN_JS_THEMES, useValue: BUILT_IN_THEMES },
+			{ provide: NB_JS_THEMES, useValue: [] },
+			{
+				provide: NB_MEDIA_BREAKPOINTS,
+				useValue: DEFAULT_MEDIA_BREAKPOINTS
+			},
+			{ provide: NB_WINDOW, useFactory: nbWindowFactory },
+			{ provide: NB_DOCUMENT, useExisting: DOCUMENT },
+			NbJSThemesRegistry,
+			NbThemeService,
+			NbMediaBreakpointsService,
+			NbSpinnerService,
+			{ provide: NB_LAYOUT_DIRECTION, useValue: NbLayoutDirection.LTR },
+			NbLayoutDirectionService,
+			NbLayoutScrollService,
+			NbLayoutRulerService,
+			...NbOverlayModule.forRoot().providers
 		]
 	})
 );

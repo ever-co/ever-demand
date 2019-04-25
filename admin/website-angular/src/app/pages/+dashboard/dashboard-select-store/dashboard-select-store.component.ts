@@ -8,7 +8,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 })
 export class DashboardSelectStoreComponent {
 	@Input()
-	stores;
+	stores: Warehouse[];
 
 	@Output()
 	selectedStoreEmitter = new EventEmitter<Warehouse>();
