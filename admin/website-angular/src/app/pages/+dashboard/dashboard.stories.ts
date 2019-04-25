@@ -1,14 +1,7 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
-import Warehouse from '@modules/server.common/entities/Warehouse';
 
-import {
-	text,
-	optionsKnob as options,
-	withKnobs,
-	boolean,
-	object
-} from '@storybook/addon-knobs';
-import { action, configureActions } from '@storybook/addon-actions';
+import { text, withKnobs, object } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 import { ThemeModule } from 'app/@theme';
 import { CommonModule, APP_BASE_HREF, DOCUMENT } from '@angular/common';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -35,19 +28,12 @@ import {
 } from '@nebular/theme';
 import { ConfirmationModalModule } from 'app/@shared/confirmation-modal/confirmation-modal.module';
 import { ToasterModule } from 'angular2-toaster';
-import {
-	TranslateModule,
-	TranslateStore,
-	TranslateLoader,
-	MissingTranslationHandler,
-	FakeMissingTranslationHandler,
-	TranslateService
-} from '@ngx-translate/core';
+import { TranslateStore, TranslateService } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
-import { routes, NbAuthModule, NbAuthService } from '@nebular/auth';
+import { NbAuthModule, NbAuthService } from '@nebular/auth';
 import { NotifyService } from 'app/@core/services/notify/notify.service';
-import { Apollo, ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
-import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
+import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { PipesModule } from '@modules/client.common.angular2/pipes/pipes.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';

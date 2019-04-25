@@ -1,14 +1,7 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
-import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 
 import { of } from 'rxjs';
-import {
-	text,
-	optionsKnob as options,
-	withKnobs,
-	boolean
-} from '@storybook/addon-knobs';
-import { action, configureActions } from '@storybook/addon-actions';
+import { withKnobs, boolean } from '@storybook/addon-knobs';
 import { ThemeModule } from 'app/@theme';
 import { CommonModule } from '@angular/common';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -28,22 +21,19 @@ import { RouterModule } from '@angular/router';
 import { routes, NbAuthModule } from '@nebular/auth';
 import { NotifyService } from 'app/@core/services/notify/notify.service';
 import { DeviceService } from 'app/@core/data/device.service';
-import { Apollo, ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
+import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { PipesModule } from '@modules/client.common.angular2/pipes/pipes.module';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClientModule } from '@angular/common/http';
 import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.module';
 import { FormsModule } from '@angular/forms';
-import { ProductCategoriesFormsModule } from '../forms/product-categories-forms.module';
-import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { LocaleModule } from '@modules/client.common.angular2/locale/locale.module';
 import { ProductsCategoryService } from 'app/@core/data/productsCategory.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoriesTableComponent } from './categories-table.component';
-import { I18nModule } from 'app/@core/utils/i18n.module';
 
 const stories = storiesOf('Categories Table Component', module);
 
