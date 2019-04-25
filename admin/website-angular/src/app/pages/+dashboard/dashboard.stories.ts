@@ -166,7 +166,7 @@ stories.addDecorator(
 			NbThemeService,
 			NbAuthService,
 			NbMediaBreakpointsService,
-			{ provide: NB_THEME_OPTIONS, useValue: nbThemeOptions || {} },
+			{ provide: NB_THEME_OPTIONS, useValue: {} },
 			{ provide: NB_BUILT_IN_JS_THEMES, useValue: BUILT_IN_THEMES },
 			{ provide: NB_JS_THEMES, useValue: [] },
 			{
