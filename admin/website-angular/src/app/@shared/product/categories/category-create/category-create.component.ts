@@ -18,6 +18,7 @@ export class CategoryCreateComponent implements OnDestroy {
 	productId: any;
 	userId: any;
 	loading: boolean;
+	storybookVersion: boolean;
 
 	private _ngDestroy$ = new Subject<void>();
 
@@ -27,7 +28,9 @@ export class CategoryCreateComponent implements OnDestroy {
 		private readonly _langTranslateService: TranslateService,
 		private readonly _notifyService: NotifyService,
 		private readonly _productsCategoryService: ProductsCategoryService
-	) {}
+	) {
+		this._langTranslateService.use('en');
+	}
 
 	ngOnDestroy() {
 		this._ngDestroy$.next();
@@ -39,6 +42,10 @@ export class CategoryCreateComponent implements OnDestroy {
 	}
 
 	async createCategory(createObject) {
+		if (this.storybookVersion) {
+			this._notifyService.success('Success Message');
+			return true;
+		}
 		try {
 			this.loading = true;
 			await this._productsCategoryService

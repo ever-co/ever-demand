@@ -54,6 +54,8 @@
 		"@angular/core": "^7.2.4",
 		"@angular/platform-browser": "^7.2.4",
 		"@angular/platform-browser-dynamic": "^7.2.4",
+		"@ngx-translate/core": "^11.0.1",
+		"@ngx-translate/http-loader": "^4.0.0",
 		"@captemulation/get-parameter-names": "^1.2.0",
 		"@nestjs/typeorm": "^5.3.0",
 		"angular2-logger": "^0.7.0",
