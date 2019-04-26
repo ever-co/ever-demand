@@ -25,11 +25,11 @@ export class CategoryCreateComponent implements OnDestroy {
 	constructor(
 		private readonly activeModal: NgbActiveModal,
 		private readonly _productLocalesService: ProductLocalesService,
-		private readonly _langTranslateService: TranslateService,
+		private readonly _translateService: TranslateService,
 		private readonly _notifyService: NotifyService,
 		private readonly _productsCategoryService: ProductsCategoryService
 	) {
-		this._langTranslateService.use('en');
+		this._translateService.use('en');
 	}
 
 	ngOnDestroy() {

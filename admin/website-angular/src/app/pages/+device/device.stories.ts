@@ -1,5 +1,4 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
-
 import { withKnobs } from '@storybook/addon-knobs';
 import { DeviceComponent } from './device.component';
 import { ThemeModule } from 'app/@theme';
@@ -61,8 +60,8 @@ stories.addDecorator(
 				deps: [HttpLink]
 			},
 			TranslateStore,
-			NotifyService,
 			TranslateService,
+			NotifyService,
 			HttpLink
 		]
 	})

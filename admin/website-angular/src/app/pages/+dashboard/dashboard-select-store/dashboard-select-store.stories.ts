@@ -1,5 +1,4 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
-
 import { text, withKnobs, object } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import { ThemeModule } from 'app/@theme';
@@ -36,6 +35,7 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 stories.addDecorator(withKnobs);
+
 stories.addDecorator(
 	moduleMetadata({
 		declarations: [DashboardSelectStoreComponent],
@@ -61,8 +61,8 @@ stories.addDecorator(
 				deps: [HttpLink]
 			},
 			TranslateStore,
-			NotifyService,
 			TranslateService,
+			NotifyService,
 			HttpLink
 		]
 	})

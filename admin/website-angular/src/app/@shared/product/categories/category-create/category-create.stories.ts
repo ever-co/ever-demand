@@ -1,5 +1,4 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
-
 import { of } from 'rxjs';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 import { ThemeModule } from 'app/@theme';
@@ -35,6 +34,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import { LocaleModule } from '@modules/client.common.angular2/locale/locale.module';
 import { ProductsCategoryService } from 'app/@core/data/productsCategory.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { I18nModule } from 'app/@core/utils/i18n.module';
 
 const stories = storiesOf('Categories Create Component', module);
 
@@ -52,6 +52,7 @@ export const staticTranslateLoader: TranslateLoader = {
 };
 
 stories.addDecorator(withKnobs);
+
 stories.addDecorator(
 	moduleMetadata({
 		declarations: [CategoryCreateComponent],
@@ -63,16 +64,7 @@ stories.addDecorator(
 			ConfirmationModalModule,
 			BrowserAnimationsModule,
 			ToasterModule.forRoot(),
-			TranslateModule.forChild({
-				loader: {
-					provide: TranslateLoader,
-					useValue: staticTranslateLoader
-				},
-				missingTranslationHandler: {
-					provide: MissingTranslationHandler,
-					useClass: FakeMissingTranslationHandler
-				}
-			}),
+			I18nModule,
 			RouterModule.forChild(routes),
 			NbAuthModule,
 			ApolloModule,
@@ -94,10 +86,10 @@ stories.addDecorator(
 				deps: [HttpLink]
 			},
 			TranslateStore,
+			TranslateService,
 			NotifyService,
 			NgbActiveModal,
 			ProductLocalesService,
-			TranslateService,
 			ProductsCategoryService,
 			TranslatePipe
 		]
