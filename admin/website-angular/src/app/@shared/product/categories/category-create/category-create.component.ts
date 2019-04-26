@@ -25,11 +25,12 @@ export class CategoryCreateComponent implements OnDestroy {
 	constructor(
 		private readonly activeModal: NgbActiveModal,
 		private readonly _productLocalesService: ProductLocalesService,
-		private readonly _langTranslateService: TranslateService,
+		private readonly _translateService: TranslateService,
 		private readonly _notifyService: NotifyService,
 		private readonly _productsCategoryService: ProductsCategoryService
 	) {
-		this._langTranslateService.use('en');
+		this._translateService.setDefaultLang('en');
+		this._translateService.use('en');
 	}
 
 	ngOnDestroy() {
@@ -43,7 +44,11 @@ export class CategoryCreateComponent implements OnDestroy {
 
 	async createCategory(createObject) {
 		if (this.storybookVersion) {
-			this._notifyService.success('Success Message');
+			this._notifyService.success(
+				'Category ' +
+					this.localeTranslate(createObject.name) +
+					' is added'
+			);
 			return true;
 		}
 		try {

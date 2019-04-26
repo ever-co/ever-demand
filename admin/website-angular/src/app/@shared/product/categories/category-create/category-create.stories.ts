@@ -1,5 +1,4 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
-
 import { of } from 'rxjs';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 import { ThemeModule } from 'app/@theme';
@@ -9,11 +8,8 @@ import { NbSpinnerModule } from '@nebular/theme';
 import { ConfirmationModalModule } from 'app/@shared/confirmation-modal/confirmation-modal.module';
 import { ToasterModule } from 'angular2-toaster';
 import {
-	TranslateModule,
 	TranslateStore,
 	TranslateLoader,
-	MissingTranslationHandler,
-	FakeMissingTranslationHandler,
 	TranslateService,
 	TranslatePipe
 } from '@ngx-translate/core';
@@ -53,6 +49,7 @@ export const staticTranslateLoader: TranslateLoader = {
 };
 
 stories.addDecorator(withKnobs);
+
 stories.addDecorator(
 	moduleMetadata({
 		declarations: [CategoryCreateComponent],
@@ -64,7 +61,6 @@ stories.addDecorator(
 			ConfirmationModalModule,
 			BrowserAnimationsModule,
 			ToasterModule.forRoot(),
-			I18nModule,
 			RouterModule.forChild(routes),
 			NbAuthModule,
 			ApolloModule,
@@ -75,8 +71,9 @@ stories.addDecorator(
 			NbSpinnerModule,
 			FormsModule,
 			ProductCategoriesFormsModule,
+			HttpClientModule,
 			LocaleModule,
-			HttpClientModule
+			I18nModule
 		],
 		providers: [
 			DeviceService,
@@ -86,10 +83,10 @@ stories.addDecorator(
 				deps: [HttpLink]
 			},
 			TranslateStore,
+			TranslateService,
 			NotifyService,
 			NgbActiveModal,
 			ProductLocalesService,
-			TranslateService,
 			ProductsCategoryService,
 			TranslatePipe
 		]
