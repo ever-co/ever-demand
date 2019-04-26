@@ -27,12 +27,12 @@
 		},
 		"lib": ["es2017", "dom", "esnext"],
 		"noUnusedLocals": false,
-		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"]
-		/*"plugins": [
-		      {
-		        "name": "tslint-language-service"
-		      }
-		]*/
+		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"],
+		"plugins": [
+			{
+				/* "name": "typescript-tslint-plugin" */
+			}
+		]
 	},
 	"include": [
 		"src/**/*.ts",
