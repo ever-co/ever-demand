@@ -7,15 +7,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbSpinnerModule } from '@nebular/theme';
 import { ConfirmationModalModule } from 'app/@shared/confirmation-modal/confirmation-modal.module';
 import { ToasterModule } from 'angular2-toaster';
-import {
-	TranslateModule,
-	TranslateStore,
-	TranslateLoader,
-	MissingTranslationHandler,
-	FakeMissingTranslationHandler,
-	TranslateService,
-	TranslatePipe
-} from '@ngx-translate/core';
+import { TranslateLoader } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { routes, NbAuthModule } from '@nebular/auth';
 import { NotifyService } from 'app/@core/services/notify/notify.service';
@@ -28,7 +20,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.module';
 import { FormsModule } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { LocaleModule } from '@modules/client.common.angular2/locale/locale.module';
 import { ProductsCategoryService } from 'app/@core/data/productsCategory.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -83,13 +74,9 @@ stories.addDecorator(
 				useFactory: createApollo,
 				deps: [HttpLink]
 			},
-			TranslateStore,
-			TranslateService,
 			NotifyService,
 			NgbActiveModal,
-			ProductLocalesService,
-			ProductsCategoryService,
-			TranslatePipe
+			ProductsCategoryService
 		]
 	})
 );

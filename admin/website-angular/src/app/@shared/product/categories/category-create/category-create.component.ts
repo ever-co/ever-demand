@@ -29,6 +29,7 @@ export class CategoryCreateComponent implements OnDestroy {
 		private readonly _notifyService: NotifyService,
 		private readonly _productsCategoryService: ProductsCategoryService
 	) {
+		this._translateService.setDefaultLang('en');
 		this._translateService.use('en');
 	}
 
@@ -43,7 +44,11 @@ export class CategoryCreateComponent implements OnDestroy {
 
 	async createCategory(createObject) {
 		if (this.storybookVersion) {
-			this._notifyService.success('Success Message');
+			this._notifyService.success(
+				'Category ' +
+					this.localeTranslate(createObject.name) +
+					' is added'
+			);
 			return true;
 		}
 		try {

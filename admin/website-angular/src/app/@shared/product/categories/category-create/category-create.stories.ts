@@ -8,11 +8,8 @@ import { NbSpinnerModule } from '@nebular/theme';
 import { ConfirmationModalModule } from 'app/@shared/confirmation-modal/confirmation-modal.module';
 import { ToasterModule } from 'angular2-toaster';
 import {
-	TranslateModule,
 	TranslateStore,
 	TranslateLoader,
-	MissingTranslationHandler,
-	FakeMissingTranslationHandler,
 	TranslateService,
 	TranslatePipe
 } from '@ngx-translate/core';
