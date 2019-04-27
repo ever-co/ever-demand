@@ -5498,10 +5498,10 @@ invert-kv@^2.0.0:
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-2.0.0.tgz#7393f5afa59ec9ff5f67a27620d11c226e3eec02"
   integrity sha512-wPVv/y/QQ/Uiirj/vh3oP+1Ww+AWehmi1g5fFWGPF6IpCBCDVrhgHRMvrLfdYcwDh3QJbGXDW4JAuzxElLSqKA==
 
-ionic-selectable@4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/ionic-selectable/-/ionic-selectable-4.4.0.tgz#20c3279e67eabe35ac0d92981e5cd764d0b54ee9"
-  integrity sha512-1ET0wbw6t2Vap1YoPS6BIrnt5oJrGMU4dSVnyzxJWZCiqmoOPlXr+RN8vpq4ULSA6kyh2ZWZpMt5eTLczkun0g==
+ionic-selectable@4.4.1:
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/ionic-selectable/-/ionic-selectable-4.4.1.tgz#991393a652cf6e616081304b4c00cb683529485e"
+  integrity sha512-6Pai6Pqw4ofCNFSpbcN7SiOeH419wjczehrxWbMVNy3KOmSw1mfY0/wazEKlqk+iwgsOuYrhkAaEC8srtHdsBQ==
 
 ionic@^4.12.0:
   version "4.12.0"
