@@ -55,7 +55,7 @@
 		"@angular/platform-browser": "^7.2.4",
 		"@angular/platform-browser-dynamic": "^7.2.4",
 		"@captemulation/get-parameter-names": "^1.2.0",
-		"@nestjs/typeorm": "^5.3.0",
+		"@nestjs/typeorm": "^6.1.0",
 		"angular2-logger": "^0.7.0",
 		"npm": "^6.7.0",
 		"rxjs": "^6.4.0",
