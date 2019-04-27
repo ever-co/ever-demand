@@ -56,7 +56,7 @@
 		"@nestjs/platform-express": "^6.0.4",
 		"@nestjs/platform-socket.io": "^6.0.4",
 		"@nestjs/swagger": "^3.0.2",
-		"@nestjs/typeorm": "^6.0.0",
+		"@nestjs/typeorm": "^6.1.0",
 		"@nestjs/websockets": "^6.0.4",
 		"apollo-server-express": "^2.4.8",
 		"axios": "^0.18.0",
