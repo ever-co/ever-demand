@@ -70,7 +70,7 @@
 		"@ionic-native/dialogs": "^5.3.0",
 		"@ionic-native/geolocation": "^5.5.1",
 		"@ionic-native/globalization": "^5.3.0",
-		"@ionic-native/google-analytics": "^5.3.0",
+		"@ionic-native/google-analytics": "^5.5.1",
 		"@ionic-native/google-maps": "~5.5.0",
 		"@ionic-native/in-app-browser": "^5.3.0",
 		"@ionic-native/intercom": "^5.3.0",
