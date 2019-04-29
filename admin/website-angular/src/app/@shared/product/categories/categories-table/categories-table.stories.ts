@@ -54,7 +54,6 @@ stories.addDecorator(
 			ConfirmationModalModule,
 			BrowserAnimationsModule,
 			ToasterModule.forRoot(),
-			I18nModule,
 			RouterModule.forChild(routes),
 			NbAuthModule,
 			ApolloModule,
@@ -65,7 +64,8 @@ stories.addDecorator(
 			NbSpinnerModule,
 			FormsModule,
 			LocaleModule,
-			HttpClientModule
+			HttpClientModule,
+			I18nModule
 		],
 		providers: [
 			DeviceService,
