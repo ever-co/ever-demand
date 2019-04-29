@@ -33,13 +33,14 @@ export class DeviceComponent implements OnDestroy, OnInit {
 		private readonly _deviceService: DeviceService,
 		private readonly _modalService: NgbModal,
 		private readonly _translateService: TranslateService,
-		private readonly _notifyService: NotifyService,
-		private readonly modalService: NgbModal
+		private readonly _notifyService: NotifyService
 	) {
 		this._loadSmartTableSettings();
 		this._setupDataForSmartTable();
 		this._listenForEntityLocaleTranslate();
 		this._applyTranslationOnSmartTable();
+		this._translateService.setDefaultLang('en');
+		this._translateService.use('en');
 	}
 
 	// Maybe "updateDevice" this function is not in use?!
@@ -101,7 +102,7 @@ export class DeviceComponent implements OnDestroy, OnInit {
 	}
 
 	async deleteDevice(e) {
-		const activeModal = this.modalService.open(ConfimationModalComponent, {
+		const activeModal = this._modalService.open(ConfimationModalComponent, {
 			size: 'sm',
 			container: 'nb-layout',
 			backdrop: 'static'
