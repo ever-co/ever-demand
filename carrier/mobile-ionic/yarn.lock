@@ -456,10 +456,10 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/google-analytics@^5.3.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/google-analytics/-/google-analytics-5.4.0.tgz#3155c889b98dc2cb5b30a9a8c2c61324eb16c9bb"
-  integrity sha512-Lk96Oqam0nczNWvSulWvUH8yjfyp0KBxmn9m8/0kEEkQnTZD+tIuQIDYB9zZTXnw7rkpbdqJCWb+Q2CLqoEwjA==
+"@ionic-native/google-analytics@^5.5.1":
+  version "5.5.1"
+  resolved "https://registry.yarnpkg.com/@ionic-native/google-analytics/-/google-analytics-5.5.1.tgz#44249fd09d827a70ee411b05e51bef47e8cbcd95"
+  integrity sha512-fYPJdlPPrRP9WIR6mAELCdlUGwnrq9gRgREP6Z9hsVSyQPiqsZC+qzKKtSiM92esH8gQZoYeHB+1XceA1UkLyg==
   dependencies:
     "@types/cordova" latest
 
