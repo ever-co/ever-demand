@@ -57,7 +57,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 		private readonly _storeOrdersService: WarehouseOrdersService,
 		private readonly _ordersService: OrdersService,
 		private readonly _translateService: TranslateService
-	) {}
+	) {
+		this._translateService.setDefaultLang('en');
+		this._translateService.use('en');
+	}
 
 	get labelAvgPercent() {
 		const maxPercentRate = 100;

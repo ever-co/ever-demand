@@ -57,3 +57,7 @@ Thumbs.db
 .env.prod
 /src/environments/environment.ts
 /src/environments/environment.prod.ts
+
+# storybook builds
+
+/storybook-static

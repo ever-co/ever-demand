@@ -88,8 +88,7 @@ import { ServerConnectionService } from '@modules/client.common.angular2/service
 		Logger,
 		AppModuleGuard,
 		MaintenanceModuleGuard
-	],
-	exports: []
+	]
 })
 export class AppModule {
 	constructor(apollo: Apollo, httpLink: HttpLink, private store: Store) {
