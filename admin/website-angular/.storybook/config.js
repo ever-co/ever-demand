@@ -1,7 +1,9 @@
 import { configure } from '@storybook/angular';
 
+// automatically import all files ending in *.stories.ts
+const req = require.context('../src/', true, /\.stories\.ts$/);
 function loadStories() {
-	require('../src/stories/index.ts');
+	req.keys().forEach((filename) => req(filename));
 }
 
 configure(loadStories, module);
