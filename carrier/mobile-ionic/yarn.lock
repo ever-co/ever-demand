@@ -414,10 +414,10 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/camera@^5.3.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/camera/-/camera-5.4.0.tgz#d10461b9486ef8b064a7314b77c090b59620208f"
-  integrity sha512-lReblyrDaDA3Nr4uLYozOpixvdrHrpLVaGfPd7I1oR0sIYWyphFPXiCMFQL2r29GDl4hRm0jsxG5ygAvjXVTXw==
+"@ionic-native/camera@^5.5.1":
+  version "5.5.1"
+  resolved "https://registry.yarnpkg.com/@ionic-native/camera/-/camera-5.5.1.tgz#a652d51f6416bfbafaba9a1883d171824a31f9be"
+  integrity sha512-snNkhPmGUeoiQGvjPjdjWdpEBswyk8aHwZpZQFfOGRTWKfRoXVNxgQPtXIauUBkPnBw6u9UDvgoU8Q5JHSM6Vg==
   dependencies:
     "@types/cordova" latest
 
