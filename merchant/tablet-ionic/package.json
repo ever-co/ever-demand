@@ -81,7 +81,7 @@
 		"@ionic-native/intercom": "^5.3.0",
 		"@ionic-native/local-notifications": "^5.3.0",
 		"@ionic-native/mixpanel": "^5.3.0",
-		"@ionic-native/network": "^5.3.0",
+		"@ionic-native/network": "^5.5.1",
 		"@ionic-native/open-native-settings": "^5.3.0",
 		"@ionic-native/screen-orientation": "^5.3.0",
 		"@ionic-native/splash-screen": "^5.3.0",
