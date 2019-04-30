@@ -136,7 +136,7 @@
 		"upath": "^1.1.2",
 		"uuid": "^3.3.2",
 		"validator": "^10.11.0",
-		"ws": "^6.2.0"
+		"ws": "^7.0.0"
 	},
 	"devDependencies": {
 		"@nestjs/testing": "^6.0.4",
