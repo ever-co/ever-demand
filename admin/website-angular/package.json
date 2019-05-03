@@ -171,7 +171,7 @@
 		"@types/leaflet": "^1.4.2",
 		"@types/mongodb": "^3.1.19",
 		"@types/mongoose": "^5.3.16",
-		"@types/node": "^11.9.3",
+		"@types/node": "^12.0.0",
 		"@types/socket.io-client": "^1.4.32",
 		"@types/stripe": "^6.25.7",
 		"@types/uuid": "^3.4.4",
