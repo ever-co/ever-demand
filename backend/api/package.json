@@ -1,4 +1,4 @@
-{
+{  
 	"name": "ever-api",
 	"version": "0.2.0",
 	"description": "Ever API",
@@ -43,7 +43,9 @@
 		"webpack": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 webpack --config webpack.config.js",
 		"lint": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 tslint -p tsconfig.json -c tslint.json",
 		"format": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 prettier **/**/*.ts --ignore-path ./.prettierignore --write && git status",
-		"docs": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 typedoc --out docs --mode modules"
+		"docs": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 typedoc --out docs --mode modules",
+    "snyk-protect": "yarn snyk protect",
+    "prepublish": "yarn run snyk-protect"
 	},
 	"dependencies": {
 		"@captemulation/get-parameter-names": "^1.2.0",
@@ -209,7 +211,8 @@
 		"webpack-cli": "^3.3.1",
 		"webpack-command": "^0.4.2",
 		"webpack-graphql-loader": "^1.0.2",
-		"webpack-node-externals": "^1.7.2"
+		"webpack-node-externals": "^1.7.2",
+    "snyk": "^1.161.1"
 	},
 	"nyc": {
 		"include": [
@@ -251,5 +254,6 @@
 	"engines": {
 		"node": ">=10.15.0",
 		"yarn": ">=1.13.0"
-	}
+	},
+  "snyk": true
 }
