@@ -848,6 +848,10 @@
 		"CREATE": {
 			"BASIC_INFO": "Основна информация",
 			"LOCATION": "Местоположение"
+		},
+		"TRACK": {
+			"TRACK_ALL_WORKING_CARRIERS": "Проследете всички работещи превозвачи",
+			"FILTER_CARRIERS": "Филтрирай превозвачите"
 		}
 	},
 	"PRODUCT_TYPE_VIEW": {
