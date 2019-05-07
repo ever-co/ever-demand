@@ -847,6 +847,10 @@
 		"CREATE": {
 			"BASIC_INFO": "Basic Info",
 			"LOCATION": "Location"
+		},
+		"TRACK": {
+			"TRACK_ALL_WORKING_CARRIERS": "Track all working carriers",
+			"FILTER_CARRIERS": "Filter Carriers"
 		}
 	},
 	"PRODUCT_TYPE_VIEW": {
