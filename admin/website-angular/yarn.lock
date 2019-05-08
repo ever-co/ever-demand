@@ -1447,10 +1447,10 @@
     telejson "^2.1.1"
     util-deprecate "^1.0.2"
 
-"@swimlane/ngx-charts@^10.0.0":
-  version "10.1.0"
-  resolved "https://registry.yarnpkg.com/@swimlane/ngx-charts/-/ngx-charts-10.1.0.tgz#be139b770b85eda609961cc08dba815c4a0d0b32"
-  integrity sha512-0nZ3ub5o/qQfFMz+av89u/VKqsqiVhPFBDDOOPq2qimP83i+pcb0i3MEao7PSxIbKAEkL/pwRcEJw4KDZ8B67w==
+"@swimlane/ngx-charts@^11.0.0":
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/@swimlane/ngx-charts/-/ngx-charts-11.0.0.tgz#d1f9d8fb2bd8997cf1dceb14a2c709434647827e"
+  integrity sha512-5KdFunglcZSmhic3aEDutjoIZualTUbQhzfS3hY2LJC6jZrQM6ZAf7EE9hyKpE3bhgnO9Y9MAKJbJZYMSCcGNA==
   dependencies:
     d3 "^4.10.2"
     d3-array "^1.2.1"
