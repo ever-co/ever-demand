@@ -776,6 +776,7 @@
 		"CREATE_BUTTON": "Создайте",
 		"ACTIVE_AND_AVAILABLE_ORDERS": "Активные и доступные заказы",
 		"ORDERS_HISTORY": "История на поръчките",
+		"TRACK": "Следовать",
 		"SMART_TABLE_COLUMNS": {
 			"IMAGE": "Образ",
 			"NAME": "Имя",
@@ -845,7 +846,7 @@
 			"BASIC_INFO": "Базовая информация",
 			"LOCATION": "Место нахождения"
 		},
-		"TRACK": {
+		"TRACK_PAGE": {
 			"TRACK_ALL_WORKING_CARRIERS": "Отслеживание всех работающих перевозчиков",
 			"FILTER_CARRIERS": "Фильтр-носители"
 		}
