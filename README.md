@@ -4,7 +4,7 @@
 
 # Open-Source On-Demand Commerce Platform
 
-[Ever](https://ever.co)® is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform build with [TypeScript](http://www.typescriptlang.org).
+[Ever](https://ever.co)® is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform built with [TypeScript](http://www.typescriptlang.org).
 
 ![overview](https://docs.ever.co/docs/assets/overview_small.png)
 
