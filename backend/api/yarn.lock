@@ -597,10 +597,10 @@
   dependencies:
     optional "0.1.4"
 
-"@nestjs/typeorm@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@nestjs/typeorm/-/typeorm-6.0.0.tgz#a3fb0885f2e0b5d94710c43d06489cfab7200de8"
-  integrity sha512-ZUlUu8DxlgN0dFoeTiaWrD0EU8V/dRjSkqPjrbwspYfZkg/Gws/B8EFK0n0hgyVuJaG4oggV+BjupnKtO8KqGw==
+"@nestjs/typeorm@^6.1.1":
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/@nestjs/typeorm/-/typeorm-6.1.1.tgz#bf1f45f79a2b498dd33b82c1f5bd04e7797cfec3"
+  integrity sha512-KCtRYiftUfvU4QE0mlhNUHEVfo9LmFHZ7QPcSxgmV00Tf62lGX0P2vJ0Ee6zHrgPuT4TzUn+SkX70ZdeQxio3Q==
   dependencies:
     uuid "3.3.2"
 
