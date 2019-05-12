@@ -914,10 +914,10 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@nestjs/typeorm@^5.3.0":
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/@nestjs/typeorm/-/typeorm-5.3.0.tgz#448d6d08d73ceb3c1f8a00a07e26a86c8a62b9f8"
-  integrity sha512-8g80OcKRTfhh5oSkfUKPMfcKBuC0gsr79wBksUwEWoglB/7bvO/erz8RC0XQPdjRH6NRUc+qrglywGm6Be2FZQ==
+"@nestjs/typeorm@^6.1.1":
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/@nestjs/typeorm/-/typeorm-6.1.1.tgz#bf1f45f79a2b498dd33b82c1f5bd04e7797cfec3"
+  integrity sha512-KCtRYiftUfvU4QE0mlhNUHEVfo9LmFHZ7QPcSxgmV00Tf62lGX0P2vJ0Ee6zHrgPuT4TzUn+SkX70ZdeQxio3Q==
   dependencies:
     uuid "3.3.2"
 
