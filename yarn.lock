@@ -6369,9 +6369,14 @@ qrcode-terminal@^0.12.0:
   resolved "https://registry.yarnpkg.com/qrcode-terminal/-/qrcode-terminal-0.12.0.tgz#bb5b699ef7f9f0505092a3748be4464fe71b5819"
   integrity sha512-EXtzRZmC+YGmGlDFbXKxQiMZNwCLEO6BANKXG4iCtSIM0yqc/pappSx3RIKr4r0uh5JsBckOXeKrB3Iz7mdQpQ==
 
-qs@6.5.2, qs@~6.5.1, qs@~6.5.2:
+qs@6.5.2, qs@~6.5.2:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
+
+qs@^6.6.0:
+  version "6.7.0"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
+  integrity sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
 
 query-string@^6.2.0:
   version "6.2.0"
@@ -7424,14 +7429,15 @@ strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
 
-stripe@^6.24.0:
-  version "6.24.0"
-  resolved "https://registry.yarnpkg.com/stripe/-/stripe-6.24.0.tgz#b9b6966ecaf127fa4c03bfc8b083c46a61f53f16"
-  integrity sha512-8YXWtkKXe3WRuqcHjSWOP8sL2UBREMLk6LnNMskvQtykuRb4gx+9OXFOa2GgzLGs6ze39mxBevNkqQxsa3+Obw==
+stripe@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/stripe/-/stripe-7.0.0.tgz#6761e7ef03e28f7c1d773abbdd6431c78b2b4fbb"
+  integrity sha512-2CzGN1oHqEoEYxo5H5t7/pd/3NdmK1f4ZJSXKa+mBfWh3yqTpKscxKU5ZbH9NpdvE7n5awkwj1oygaMwfi9dOw==
   dependencies:
     lodash.isplainobject "^4.0.6"
-    qs "~6.5.1"
+    qs "^6.6.0"
     safe-buffer "^5.1.1"
+    uuid "^3.3.2"
 
 strong-log-transformer@^2.0.0:
   version "2.0.0"
