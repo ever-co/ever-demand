@@ -61,7 +61,7 @@
 		"rxjs": "^6.4.0",
 		"rxjs-compat": "^6.4.0",
 		"socket.io-client": "^2.2.0",
-		"stripe": "^6.24.0",
+		"stripe": "^7.0.0",
 		"typeorm": "^0.2.13",
 		"uuid": "^3.3.2"
 	},
