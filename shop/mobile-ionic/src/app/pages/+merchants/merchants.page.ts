@@ -11,6 +11,7 @@ import { MerchantsService } from 'app/services/merchants/merchants.service';
 import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
+import { environment } from 'environment';
 
 @Component({
 	templateUrl: './merchants.page.html',
@@ -92,7 +93,11 @@ export class MerchantsPage implements OnDestroy {
 	private async getLocation() {
 		let location: ILocation;
 
-		if (this.store.userId) {
+		const isProductionEnv = environment.production;
+		const defaultLat = environment.DEFAULT_LATITUDE;
+		const defaultLng = environment.DEFAULT_LONGITUDE;
+
+		if (this.store.userId && isProductionEnv && defaultLat && defaultLng) {
 			const user = await this.userRouter
 				.get(this.store.userId)
 				.pipe(first())

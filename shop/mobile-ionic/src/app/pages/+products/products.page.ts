@@ -101,7 +101,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 			this.store.registrationSystem = RegistrationSystem.Once;
 			this.store.buyProduct = currentProduct.warehouseProduct.id;
 			this.store.warehouseId = currentProduct.warehouseId;
-			this.navCtrl.navigateRoot('/invite');
+			this.router.navigateByUrl('/invite');
 		} else {
 			const orderCreateInput: IOrderCreateInput = {
 				warehouseId:
@@ -207,7 +207,11 @@ export class ProductsPage implements OnInit, OnDestroy {
 	private async loadGeoLocationProducts() {
 		let geoLocationForProducts: GeoLocation;
 
-		if (this.store.userId) {
+		const isProductionEnv = environment.production;
+		const defaultLat = environment.DEFAULT_LATITUDE;
+		const defaultLng = environment.DEFAULT_LONGITUDE;
+
+		if (this.store.userId && isProductionEnv && defaultLat && defaultLng) {
 			const user = await this.userRouter
 				.get(this.store.userId)
 				.pipe(first())
