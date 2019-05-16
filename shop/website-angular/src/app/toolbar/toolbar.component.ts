@@ -13,6 +13,7 @@ import { GeoLocationService } from 'app/services/geo-location';
 import { MatSearchComponent } from '@modules/material-extensions/search/mat-search.component';
 import { MatDialog } from '@angular/material';
 import { LocationPopupComponent } from 'app/shared/location-popup/location-popup.component';
+import { environment } from 'environments/environment';
 
 @Component({
 	selector: 'toolbar',
@@ -95,7 +96,17 @@ export class ToolbarComponent implements AfterViewInit {
 	private async laodAddress(findNew: boolean = false) {
 		let geoLocationForProducts: GeoLocation;
 
-		if (this.store.userId && !findNew) {
+		const isProductionEnv = environment.production;
+		const defaultLat = environment.DEFAULT_LATITUDE;
+		const defaultLng = environment.DEFAULT_LONGITUDE;
+
+		if (
+			this.store.userId &&
+			!findNew &&
+			isProductionEnv &&
+			defaultLat &&
+			defaultLng
+		) {
 			const user = await this.userRouter
 				.get(this.store.userId)
 				.pipe(first())
