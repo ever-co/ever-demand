@@ -8,6 +8,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import ForwardOrdersMethod from '@modules/server.common/enums/ForwardOrdersMethod';
 import { LocationFormComponent } from '../../../forms/location';
 import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
+import { WarehouseManageTabsDeliveryAreasComponent } from './delivery-areas/warehouse-manage-tabs-delivery-areas.component';
 
 export type WarehouseManageTabs = Pick<
 	IWarehouseCreateObject,
@@ -32,7 +33,10 @@ export class WarehouseManageTabsComponent {
 			details: WarehouseManageTabsDetailsComponent.buildForm(formBuilder),
 			account: WarehouseManageTabsAccountComponent.buildForm(formBuilder),
 			contactInfo: ContactInfoFormComponent.buildForm(formBuilder),
-			location: LocationFormComponent.buildForm(formBuilder)
+			location: LocationFormComponent.buildForm(formBuilder),
+			deliverAreas: WarehouseManageTabsDeliveryAreasComponent.buildForm(
+				formBuilder
+			)
 		});
 	}
 
@@ -50,6 +54,9 @@ export class WarehouseManageTabsComponent {
 
 	@ViewChild('locationForm')
 	readonly locationForm: LocationFormComponent;
+
+	@ViewChild('deliveryAreasForm')
+	readonly deliveryAreasForm: WarehouseManageTabsDeliveryAreasComponent;
 
 	@ViewChild('tabSet')
 	readonly tabSet;
@@ -70,6 +77,10 @@ export class WarehouseManageTabsComponent {
 		return this.form.get('location');
 	}
 
+	get deliveryAreas() {
+		return this.form.get('deliverAreas');
+	}
+
 	onCoordinatesChanges(coords: number[]) {
 		this.mapCoordEmitter.emit(coords);
 	}
@@ -88,6 +99,7 @@ export class WarehouseManageTabsComponent {
 		const accountRaw = this.accountComponent.getValue();
 		const contactRaw = this.contactInfoForm.getValue();
 		const locationRaw = geoLocationInput;
+		const deliveryAreasRaw = this.deliveryAreasForm.getValue();
 
 		const inputResult: {
 			basicInfo: WarehouseManageTabs;
@@ -122,6 +134,7 @@ export class WarehouseManageTabsComponent {
 		this.accountComponent.setValue(warehouse.username);
 		this.contactInfoForm.setValue(warehouse);
 		this.locationForm.setValue(geoLocationInput);
+		this.deliveryAreasForm.setValue(warehouse.deliveryAreas);
 	}
 
 	warehouseUpdateFinish() {

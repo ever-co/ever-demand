@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
 	selector: 'ea-warehouse-manage-tabs-delivery-areas',
@@ -16,7 +16,10 @@ export class WarehouseManageTabsDeliveryAreasComponent
 	@Input()
 	mapCoordEvent: Observable<google.maps.LatLng | google.maps.LatLngLiteral>;
 
+	@Input()
 	form: FormGroup;
+
+	deliverForm: FormGroup;
 	selectedShapeType: string;
 	zonesData: any[] = []; // Used to be parsed to GeoJSON and sent to the database.
 	// This will be dinamicly created when adding and removing data
@@ -43,6 +46,7 @@ export class WarehouseManageTabsDeliveryAreasComponent
 	private _mapMarker: google.maps.Marker;
 
 	private _fakeData = {
+		/*
 		type: 'FeatureCollection',
 		features: [
 			{
@@ -78,6 +82,7 @@ export class WarehouseManageTabsDeliveryAreasComponent
 				}
 			}
 		]
+		*/
 	};
 
 	private _ngDestroy$ = new Subject<void>();
@@ -89,6 +94,16 @@ export class WarehouseManageTabsDeliveryAreasComponent
 		this._listenForMapCoordinates();
 		this._loadFakeData();
 		this._initiliazeForm();
+
+		console.log(this.deliverForm);
+		console.log(this.form);
+	}
+
+	static buildForm(formBuilder: FormBuilder): FormGroup {
+		// would be used in the parent component and injected into this.form
+		return formBuilder.group({
+			deliveryAreas: ''
+		});
 	}
 
 	private _loadFakeData() {
@@ -132,17 +147,12 @@ export class WarehouseManageTabsDeliveryAreasComponent
 		});
 	}
 
-	private _mapCoordinates(coordinates) {
-		const tempArr = [];
+	getValue(): any {
+		// change this!
+	}
 
-		coordinates[0].forEach((c) => {
-			tempArr.push({
-				lat: c[0],
-				lng: c[1]
-			});
-		});
-
-		return tempArr;
+	setValue(data) {
+		this._fakeData = data;
 	}
 
 	startDrawing() {
@@ -185,8 +195,8 @@ export class WarehouseManageTabsDeliveryAreasComponent
 
 	cancelAdd() {
 		this.deleteSelectedShape();
-		this.form.get('fee').setValue('');
-		this.form.get('amount').setValue('');
+		this.deliverForm.get('fee').setValue('');
+		this.deliverForm.get('amount').setValue('');
 	}
 
 	closeEdit() {
@@ -195,7 +205,7 @@ export class WarehouseManageTabsDeliveryAreasComponent
 	}
 
 	addZone() {
-		if (this.shapeReady && this.form.status === 'VALID') {
+		if (this.shapeReady && this.deliverForm.status === 'VALID') {
 			if (
 				this._selectedZone.type ===
 				google.maps.drawing.OverlayType.POLYGON
@@ -213,15 +223,15 @@ export class WarehouseManageTabsDeliveryAreasComponent
 
 				this.zonesData.push({
 					polygon: coordinates,
-					name: this.form.get('name').value,
-					minimumAmount: this.form.get('amount').value,
-					fee: this.form.get('fee').value
+					name: this.deliverForm.get('name').value,
+					minimumAmount: this.deliverForm.get('amount').value,
+					fee: this.deliverForm.get('fee').value
 				});
 
 				this._selectedZone.properties = {
-					name: this.form.get('name').value,
-					minimumAmount: this.form.get('amount').value,
-					fee: this.form.get('fee').value
+					name: this.deliverForm.get('name').value,
+					minimumAmount: this.deliverForm.get('amount').value,
+					fee: this.deliverForm.get('fee').value
 				};
 
 				this.zonesObjects.push(this._selectedZone);
@@ -243,15 +253,15 @@ export class WarehouseManageTabsDeliveryAreasComponent
 					x: coordsArr[0],
 					y: coordsArr[1],
 					radius,
-					name: this.form.get('name').value,
-					minimumAmount: this.form.get('amount').value,
-					fee: this.form.get('fee').value
+					name: this.deliverForm.get('name').value,
+					minimumAmount: this.deliverForm.get('amount').value,
+					fee: this.deliverForm.get('fee').value
 				});
 
 				this._selectedZone.properties = {
-					name: this.form.get('name').value,
-					minimumAmount: this.form.get('amount').value,
-					fee: this.form.get('fee').value
+					name: this.deliverForm.get('name').value,
+					minimumAmount: this.deliverForm.get('amount').value,
+					fee: this.deliverForm.get('fee').value
 				};
 
 				this.zonesObjects.push(this._selectedZone);
@@ -265,9 +275,9 @@ export class WarehouseManageTabsDeliveryAreasComponent
 			this._selectedZone = null;
 			this.shapeReady = false;
 
-			this.form.get('name').setValue('Zone ' + this._zoneNumber);
-			this.form.get('fee').setValue('');
-			this.form.get('amount').setValue('');
+			this.deliverForm.get('name').setValue('Zone ' + this._zoneNumber);
+			this.deliverForm.get('fee').setValue('');
+			this.deliverForm.get('amount').setValue('');
 		}
 	}
 
@@ -277,55 +287,6 @@ export class WarehouseManageTabsDeliveryAreasComponent
 			this.shapeReady = false;
 			this.selectedShapeType = null;
 		}
-	}
-
-	private _addZoneEventListeners(zone) {
-		google.maps.event.addListener(zone, 'click', () => {
-			if (!this.selectedShapeType) {
-				// if selectedShapeType we're adding a zone, so we shoudn't be able to select other zone
-				this.setSelection(zone);
-			}
-		});
-
-		google.maps.event.addListener(zone, 'mouseover', () => {
-			this.highlightZone(zone);
-		});
-
-		google.maps.event.addListener(zone, 'mouseout', () => {
-			this.removeHighlight(zone);
-		});
-	}
-
-	private _initiliazeForm() {
-		this.form = this.fb.group({
-			name: ['Zone ' + this._zoneNumber],
-			amount: [''],
-			fee: ['']
-		});
-	}
-
-	private _getShape() {
-		if (this.selectedShapeType === 'circle') {
-			return google.maps.drawing.OverlayType.CIRCLE;
-		} else if (this.selectedShapeType === 'shape') {
-			return google.maps.drawing.OverlayType.POLYGON;
-		}
-	}
-
-	private _setupGoogleMap() {
-		const optionsMap = {
-			center: new google.maps.LatLng(0, 0),
-			zoom: 13,
-			mapTypeId: google.maps.MapTypeId.ROADMAP,
-			disableDefaultUI: true
-		};
-
-		this._map = new google.maps.Map(
-			this.mapElement.nativeElement,
-			optionsMap
-		);
-
-		google.maps.event.addListener(this._map, 'click', this._clearSelection);
 	}
 
 	setSelection(zone) {
@@ -339,19 +300,12 @@ export class WarehouseManageTabsDeliveryAreasComponent
 		}
 	}
 
-	private _populateForm(zone) {
-		this.isEditing = true;
-		this.form.get('name').setValue(zone.properties.name);
-		this.form.get('fee').setValue(zone.properties.fee);
-		this.form.get('amount').setValue(zone.properties.minimumAmount);
-	}
-
 	editZone() {
 		console.log(this._selectedZone);
 		this._selectedZone.properties = {
-			name: this.form.get('name').value,
-			fee: this.form.get('fee').value,
-			minimumAmount: this.form.get('amount').value
+			name: this.deliverForm.get('name').value,
+			fee: this.deliverForm.get('fee').value,
+			minimumAmount: this.deliverForm.get('amount').value
 		};
 
 		this.closeEdit();
@@ -373,6 +327,59 @@ export class WarehouseManageTabsDeliveryAreasComponent
 		this._zoneNumber = this.zonesObjects.length;
 	}
 
+	private _mapCoordinates(coordinates) {
+		const tempArr = [];
+
+		coordinates[0].forEach((c) => {
+			tempArr.push({
+				lat: c[0],
+				lng: c[1]
+			});
+		});
+
+		return tempArr;
+	}
+
+	private _addZoneEventListeners(zone) {
+		google.maps.event.addListener(zone, 'click', () => {
+			if (!this.selectedShapeType) {
+				// if selectedShapeType we're adding a zone, so we shoudn't be able to select other zone
+				this.setSelection(zone);
+			}
+		});
+
+		google.maps.event.addListener(zone, 'mouseover', () => {
+			this.highlightZone(zone);
+		});
+
+		google.maps.event.addListener(zone, 'mouseout', () => {
+			this.removeHighlight(zone);
+		});
+	}
+
+	private _initiliazeForm() {
+		this.deliverForm = this.fb.group({
+			name: ['Zone ' + this._zoneNumber],
+			amount: [''],
+			fee: ['']
+		});
+	}
+
+	private _getShape() {
+		if (this.selectedShapeType === 'circle') {
+			return google.maps.drawing.OverlayType.CIRCLE;
+		} else if (this.selectedShapeType === 'shape') {
+			return google.maps.drawing.OverlayType.POLYGON;
+		}
+	}
+
+	private _populateForm(zone) {
+		this.isEditing = true;
+		this.deliverForm.get('name').setValue(zone.properties.name);
+		this.deliverForm.get('fee').setValue(zone.properties.fee);
+		this.deliverForm.get('amount').setValue(zone.properties.minimumAmount);
+	}
+
 	private _clearSelection() {
 		if (this._selectedZone) {
 			this.isEditing = false;
@@ -388,27 +395,29 @@ export class WarehouseManageTabsDeliveryAreasComponent
 		this.mapCoordEvent
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe((location) => {
-				this._navigateTo(location);
-				this._addMapMarker(location);
+				this._map.setCenter(location);
+
+				this._mapMarker = new google.maps.Marker({
+					map: this._map,
+					position: location
+				});
 			});
 	}
 
-	private _navigateTo(
-		location: google.maps.LatLng | google.maps.LatLngLiteral
-	) {
-		this._map.setCenter(location);
-	}
+	private _setupGoogleMap() {
+		const optionsMap = {
+			center: new google.maps.LatLng(0, 0),
+			zoom: 13,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			disableDefaultUI: true
+		};
 
-	private _addMapMarker(
-		location: google.maps.LatLng | google.maps.LatLngLiteral
-	) {
-		// TODO: Intead of adding a marker at the adress we can get just the city from coodinates
-		// and set the map there, zoomed out
-		// console.log(location)
-		this._mapMarker = new google.maps.Marker({
-			map: this._map,
-			position: location
-		});
+		this._map = new google.maps.Map(
+			this.mapElement.nativeElement,
+			optionsMap
+		);
+
+		google.maps.event.addListener(this._map, 'click', this._clearSelection);
 	}
 
 	ngOnDestroy() {

@@ -17,7 +17,7 @@ import 'rxjs/add/operator/withLatestFrom';
 })
 export class WarehouseManageComponent implements OnInit {
 	loading: boolean;
-	//
+
 	@ViewChild('warehouseManageTabs')
 	warehouseManageTabs: WarehouseManageTabsComponent;
 
@@ -109,7 +109,6 @@ export class WarehouseManageComponent implements OnInit {
 						`Warehouse with id ${id} doesn't exist!`
 					);
 				}
-
 				this._currentWarehouse = warehouse;
 				this.warehouseManageTabs.setValue(warehouse);
 			});
