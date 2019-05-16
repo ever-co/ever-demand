@@ -40,7 +40,7 @@ export class ToolbarComponent implements AfterViewInit {
 	) {
 		this.isDeliveryRequired =
 			this.store.deliveryType === DeliveryType.Delivery;
-		this.laodAddress();
+		this.loadAddress();
 		/*let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
 			types: ["address"]
 		});
@@ -93,20 +93,12 @@ export class ToolbarComponent implements AfterViewInit {
 		);
 	}
 
-	private async laodAddress(findNew: boolean = false) {
+	private async loadAddress(findNew: boolean = false) {
 		let geoLocationForProducts: GeoLocation;
 
 		const isProductionEnv = environment.production;
-		const defaultLat = environment.DEFAULT_LATITUDE;
-		const defaultLng = environment.DEFAULT_LONGITUDE;
 
-		if (
-			this.store.userId &&
-			!findNew &&
-			isProductionEnv &&
-			defaultLat &&
-			defaultLng
-		) {
+		if (this.store.userId && !findNew && isProductionEnv) {
 			const user = await this.userRouter
 				.get(this.store.userId)
 				.pipe(first())

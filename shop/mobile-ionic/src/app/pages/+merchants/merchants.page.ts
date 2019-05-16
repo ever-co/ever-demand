@@ -94,10 +94,8 @@ export class MerchantsPage implements OnDestroy {
 		let location: ILocation;
 
 		const isProductionEnv = environment.production;
-		const defaultLat = environment.DEFAULT_LATITUDE;
-		const defaultLng = environment.DEFAULT_LONGITUDE;
 
-		if (this.store.userId && isProductionEnv && defaultLat && defaultLng) {
+		if (this.store.userId && isProductionEnv) {
 			const user = await this.userRouter
 				.get(this.store.userId)
 				.pipe(first())
