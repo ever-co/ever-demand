@@ -1,4 +1,4 @@
-{  
+{
 	"name": "ever-api",
 	"version": "0.2.0",
 	"description": "Ever API",
@@ -44,8 +44,8 @@
 		"lint": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 tslint -p tsconfig.json -c tslint.json",
 		"format": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 prettier **/**/*.ts --ignore-path ./.prettierignore --write && git status",
 		"docs": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 typedoc --out docs --mode modules",
-    "snyk-protect": "yarn snyk protect",
-    "prepublish": "yarn run snyk-protect"
+		"snyk-protect": "yarn snyk protect",
+		"prepublish": "yarn run snyk-protect"
 	},
 	"dependencies": {
 		"@captemulation/get-parameter-names": "^1.2.0",
@@ -139,7 +139,7 @@
 		"upath": "^1.1.2",
 		"uuid": "^3.3.2",
 		"validator": "^10.11.0",
-		"ws": "^6.2.1"
+		"ws": "^7.0.0"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^7.5.2",
@@ -185,10 +185,10 @@
 		"@types/ws": "^6.0.1",
 		"concurrently": "^4.1.0",
 		"conventional-changelog": "^3.1.4",
-		"cz-conventional-changelog": "^2.1.0",
 		"core-js": "^3.0.1",
 		"coveralls": "^3.0.3",
 		"cross-env": "^5.2.0",
+		"cz-conventional-changelog": "^2.1.0",
 		"husky": "^2.1.0",
 		"jest": "^24.7.1",
 		"nodemon": "^1.18.11",
@@ -198,6 +198,7 @@
 		"pretty-quick": "^1.10.0",
 		"require-directory": "^2.1.1",
 		"rxjs-tslint": "0.1.5",
+		"snyk": "^1.161.1",
 		"supertest": "^4.0.2",
 		"ts-jest": "^24.0.2",
 		"ts-loader": "^5.4.3",
@@ -211,8 +212,7 @@
 		"webpack-cli": "^3.3.1",
 		"webpack-command": "^0.4.2",
 		"webpack-graphql-loader": "^1.0.2",
-		"webpack-node-externals": "^1.7.2",
-    "snyk": "^1.161.1"
+		"webpack-node-externals": "^1.7.2"
 	},
 	"nyc": {
 		"include": [
@@ -255,5 +255,5 @@
 		"node": ">=10.15.0",
 		"yarn": ">=1.13.0"
 	},
-  "snyk": true
+	"snyk": true
 }
