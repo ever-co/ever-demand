@@ -249,7 +249,7 @@
 		"webpack-dev-server": "^3.2.1",
 		"webpack-inline-manifest-plugin": "^4.0.1",
 		"webpack-merge": "^4.2.1",
-		"yargs": "^13.2.1"
+		"yargs": "^13.2.4"
 	},
 	"engines": {
 		"node": ">=10.15.0",

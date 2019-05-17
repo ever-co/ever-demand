@@ -197,7 +197,7 @@
 		"typescript": "~3.2.4",
 		"webpack-bundle-analyzer": "^3.1.0",
 		"webpack-merge": "^4.2.1",
-		"yargs": "^13.2.2"
+		"yargs": "^13.2.4"
 	},
 	"cordova": {
 		"platforms": [

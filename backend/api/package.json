@@ -163,7 +163,7 @@
 		"@types/jest": "^24.0.11",
 		"@types/jsonwebtoken": "^8.3.2",
 		"@types/kafka-node": "^2.0.8",
-		"@types/lodash": "^4.14.123",
+		"@types/lodash": "^4.14.129",
 		"@types/method-override": "^0.0.31",
 		"@types/mkdirp": "^0.5.2",
 		"@types/moment": "^2.13.0",
