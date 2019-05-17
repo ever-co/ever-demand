@@ -82,7 +82,7 @@
 		"@types/leaflet": "^1.4.4",
 		"@types/mongodb": "^3.1.25",
 		"@types/mongoose": "^5.3.26",
-		"@types/node": "^11.13.7",
+		"@types/node": "^12.0.2",
 		"@types/socket.io-client": "^1.4.32",
 		"@types/stripe": "^6.25.12",
 		"@types/uuid": "^3.4.4",
