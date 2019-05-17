@@ -780,6 +780,7 @@
 		"CREATE_BUTTON": "създавам",
 		"ACTIVE_AND_AVAILABLE_ORDERS": "Активни и налични поръчки",
 		"ORDERS_HISTORY": "История на поръчките",
+		"TRACK": "Проследи",
 		"SMART_TABLE_COLUMNS": {
 			"IMAGE": "Изображение",
 			"NAME": "Име",
@@ -849,7 +850,7 @@
 			"BASIC_INFO": "Основна информация",
 			"LOCATION": "Местоположение"
 		},
-		"TRACK": {
+		"TRACK_PAGE": {
 			"TRACK_ALL_WORKING_CARRIERS": "Проследете всички работещи превозвачи",
 			"FILTER_CARRIERS": "Филтрирай превозвачите"
 		}

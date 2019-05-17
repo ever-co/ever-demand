@@ -779,6 +779,7 @@
 		"CREATE_BUTTON": "CREATE",
 		"ACTIVE_AND_AVAILABLE_ORDERS": "Active and Available Orders",
 		"ORDERS_HISTORY": "Orders History",
+		"TRACK": "Track",
 		"SMART_TABLE_COLUMNS": {
 			"IMAGE": "Image",
 			"NAME": "Name",
@@ -848,7 +849,7 @@
 			"BASIC_INFO": "Basic Info",
 			"LOCATION": "Location"
 		},
-		"TRACK": {
+		"TRACK_PAGE": {
 			"TRACK_ALL_WORKING_CARRIERS": "Track all working carriers",
 			"FILTER_CARRIERS": "Filter Carriers"
 		}
