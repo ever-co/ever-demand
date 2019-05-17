@@ -24,6 +24,7 @@ import { Subject } from 'rxjs';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import { CarouselViewComponent } from './views/carousel/carousel-view.component';
+import { environment } from 'environments/environment';
 
 const initializeProductsNumber: number = 10;
 
@@ -139,7 +140,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
 	private async loadGeoLocationProducts() {
 		let geoLocationForProducts: GeoLocation;
 
-		if (this.store.userId) {
+		const isProductionEnv = environment.production;
+
+		if (this.store.userId && isProductionEnv) {
 			const user = await this.userRouter
 				.get(this.store.userId)
 				.pipe(first())

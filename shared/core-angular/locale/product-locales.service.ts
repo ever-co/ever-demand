@@ -2,6 +2,16 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 
+class ProductTransientViewModel {
+	public title: string;
+	public description: string;
+
+	constructor() {
+		this.title = '';
+		this.description = '';
+	}
+}
+
 @Injectable()
 export class ProductLocalesService {
 	private readonly _defaultLang: string = 'en';
@@ -10,7 +20,7 @@ export class ProductLocalesService {
 
 	public currentLocale: string;
 
-	constructor(private translate: TranslateService) {}
+	constructor(private readonly _translateService: TranslateService) {}
 
 	public get isServiceStateValid() {
 		return (
@@ -33,7 +43,9 @@ export class ProductLocalesService {
 
 		const productMember: ILocaleMember =
 			member.find((x) =>
-				x.locale.startsWith(langChoice || this.translate.currentLang)
+				x.locale.startsWith(
+					langChoice || this._translateService.currentLang
+				)
 			) ||
 			// Use default lang
 			member.find((x) => x.locale.startsWith(this._defaultLang)) ||
@@ -115,15 +127,5 @@ export class ProductLocalesService {
 					(defaultLocale ? this._defaultLocale : this.currentLocale)
 			);
 		}
-	}
-}
-
-class ProductTransientViewModel {
-	public title: string;
-	public description: string;
-
-	constructor() {
-		this.title = '';
-		this.description = '';
 	}
 }
