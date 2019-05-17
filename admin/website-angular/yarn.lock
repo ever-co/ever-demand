@@ -1549,10 +1549,10 @@
     telejson "^2.1.1"
     util-deprecate "^1.0.2"
 
-"@swimlane/ngx-charts@^10.1.0":
-  version "10.1.0"
-  resolved "https://registry.yarnpkg.com/@swimlane/ngx-charts/-/ngx-charts-10.1.0.tgz#be139b770b85eda609961cc08dba815c4a0d0b32"
-  integrity sha512-0nZ3ub5o/qQfFMz+av89u/VKqsqiVhPFBDDOOPq2qimP83i+pcb0i3MEao7PSxIbKAEkL/pwRcEJw4KDZ8B67w==
+"@swimlane/ngx-charts@^11.1.0":
+  version "11.1.0"
+  resolved "https://registry.yarnpkg.com/@swimlane/ngx-charts/-/ngx-charts-11.1.0.tgz#56e03e4b0b34f9015952e38e6901905fe09f09fa"
+  integrity sha512-RdeZChfkk+ZMIyxX17S+RC5dq69Dmh3lLj+avUtjDlrUIiD8wnGyJL+RtZuHdsxtCqa0cCNydtkA5f74xl1d9g==
   dependencies:
     d3 "^4.10.2"
     d3-array "^1.2.1"
@@ -12808,10 +12808,10 @@ strip-json-comments@~2.0.1:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
 
-stripe@^6.31.0:
-  version "6.31.0"
-  resolved "https://registry.yarnpkg.com/stripe/-/stripe-6.31.0.tgz#524ef6997a4473c5bf9ce684b5c39e3bc307a445"
-  integrity sha512-VHVGyfrnzKdqraRHKQ42LJysQdg2iUL8pFES3dsN9yZOiEY+kxBetL7Zq2WiA24Y5PnVIO9gB5VbvmYPhEOhyA==
+stripe@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/stripe/-/stripe-7.0.0.tgz#6761e7ef03e28f7c1d773abbdd6431c78b2b4fbb"
+  integrity sha512-2CzGN1oHqEoEYxo5H5t7/pd/3NdmK1f4ZJSXKa+mBfWh3yqTpKscxKU5ZbH9NpdvE7n5awkwj1oygaMwfi9dOw==
   dependencies:
     lodash.isplainobject "^4.0.6"
     qs "^6.6.0"
