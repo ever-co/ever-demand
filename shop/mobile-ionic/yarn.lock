@@ -400,24 +400,24 @@
     is-absolute "^1.0.0"
     is-negated-glob "^1.0.0"
 
-"@ionic-native/barcode-scanner@^5.3.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/barcode-scanner/-/barcode-scanner-5.4.0.tgz#b38db6a40973ee2780dd993c3521f3962d3f083a"
-  integrity sha512-p7/wBtu3P20jX98eVoAvxoPNw9UhlVPjDTJ/DHimlFlUnj5jRl0jcQJ7ZXo8AYCYfs7vC8a32BDnqTkQlo6Lfw==
+"@ionic-native/barcode-scanner@^5.5.1":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/barcode-scanner/-/barcode-scanner-5.6.0.tgz#54433212422be34afdb58ef63c8af5c5a0ab7545"
+  integrity sha512-zga7ScJv6B05uKCu7YvdYoVQCMg0+3vgebynMX0ViEp68R5g6Ro9etmtWPUes/vNBWGGgv/YCATrlGzdYH8tcA==
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/call-number@^5.3.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/call-number/-/call-number-5.4.0.tgz#097ec2f732b8e8eaf12bc6797e4ebf7511c6d4cd"
-  integrity sha512-rG/rLePAqWxNNgh0YlneiT0QdArRXICWF0Zz/YyqD9vuXr2D0as1xPomXSjWhoUu0J6UO5LdLK5Up2PL9+LwGw==
+"@ionic-native/call-number@^5.5.1":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/call-number/-/call-number-5.6.0.tgz#3c0b4a2b42ae4eced3f40918badefcd24c577651"
+  integrity sha512-8MfFo5BLwqsLUKh56pyCJ04yqk2AmnF13tTlyfUbgw8wvspoJkcDtf4kBd1KVoBn8Uywo1vC4EcWeBwEhI8AQQ==
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/camera@^5.3.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/camera/-/camera-5.4.0.tgz#d10461b9486ef8b064a7314b77c090b59620208f"
-  integrity sha512-lReblyrDaDA3Nr4uLYozOpixvdrHrpLVaGfPd7I1oR0sIYWyphFPXiCMFQL2r29GDl4hRm0jsxG5ygAvjXVTXw==
+"@ionic-native/camera@^5.5.1":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/camera/-/camera-5.6.0.tgz#7e878eb939c377350ccaef32ddf459c6da319a99"
+  integrity sha512-XSTWP1VlAchV9phapWkP/VivnRtTf+LQLP8XC3NWlMdayrQTos8ON6Lz83/hIpidsBgOzwpus/Q7OrP8cpgtlA==
   dependencies:
     "@types/cordova" latest
 
@@ -428,24 +428,24 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/device@^5.3.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/device/-/device-5.4.0.tgz#1f071460a2559468256a8b7a82127cd7c1ebacff"
-  integrity sha512-C9j2iryuDzWXkFucR0liKgA2DU0vVkEWweOIqgPXcYSlS6NgdguYcbBWh8Bi+JKhT/lqTNq9bKrquZUwkf1IcA==
+"@ionic-native/device@^5.5.1":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/device/-/device-5.6.0.tgz#e08a492b56e92701124ce197b84dd8a0a661de58"
+  integrity sha512-bdLqmaXIdPiYNX+BUin4ByplgFJIyvUArZrVw2cWJS19Ry6FwQ1Z2OkF4BRxSKw06ppRM3OKERe3AeyqN2VuZA==
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/dialogs@^5.3.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/dialogs/-/dialogs-5.4.0.tgz#650357eb0c3ea444eabfaa12cae34fba555d284d"
-  integrity sha512-8JlLXsGjvWmLWjVJJUnfKaR1jFQD5qK5gqKcoylkQRakUBpuzTB/fFAMwOyBcHZcioXWkKDInELq2h2fu5T+WA==
+"@ionic-native/dialogs@^5.5.1":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/dialogs/-/dialogs-5.6.0.tgz#12d820c4d2a1736469e38e2e512fb52a33c7bb12"
+  integrity sha512-2Xi5Y65hplnKoZbrMzmGu966rcMw4CMF8es++5C1gqDq1RIgLKVC2W+/tGUl3Z+EEFZYkDyzeeowhviW2vO4mA==
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/geolocation@^5.3.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/geolocation/-/geolocation-5.4.0.tgz#332f0650c16b103d48c8a06b4ba0465ac0f88220"
-  integrity sha512-mcnIVhYZwRvoDMX9yRIgrixZBDSRjbtojIXWLjdWUoaO/YcOv/I5VhsICAUpiKM89NFW8Dcip3YLYDGGmCkSVA==
+"@ionic-native/geolocation@^5.5.1":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/geolocation/-/geolocation-5.6.0.tgz#f442fad7ddb520efe089d3ca89805ed3bc4722ac"
+  integrity sha512-0VEj62+l2aZ/IozyCyT205tWYEc2mnK9Nqs7XizjBDv2iGtFIZbFqF2lzv7vYTKYb7NXxJ7gM/Y5Qx5x5GKnoA==
   dependencies:
     "@types/cordova" latest
 
@@ -456,10 +456,10 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/google-analytics@^5.3.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/google-analytics/-/google-analytics-5.4.0.tgz#3155c889b98dc2cb5b30a9a8c2c61324eb16c9bb"
-  integrity sha512-Lk96Oqam0nczNWvSulWvUH8yjfyp0KBxmn9m8/0kEEkQnTZD+tIuQIDYB9zZTXnw7rkpbdqJCWb+Q2CLqoEwjA==
+"@ionic-native/google-analytics@^5.5.1":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/google-analytics/-/google-analytics-5.6.0.tgz#46f1b7fa24150ac50c250bf155cc5d4bcae2afbc"
+  integrity sha512-pxjBEMu8x0ezsr0699VDxMet/5M7U561BMVchq3/mcvT1Lz56xyvdSeEJFRSm8wy33UShY8woE7Aj6AWZzCtCw==
   dependencies:
     "@types/cordova" latest
 
@@ -468,38 +468,38 @@
   resolved "https://registry.yarnpkg.com/@ionic-native/google-maps/-/google-maps-5.5.0.tgz#02537e04bb0d01d5580f936d8ccce6745188d90a"
   integrity sha512-+sCaB7cLR35ApsOyYSfwDX2ZTO2ItOI6FHkgTQ2rzOA1DVJ9rlU8HDL6jYBUhq+aDe3lhCPexSOryeBynaSvpQ==
 
-"@ionic-native/in-app-browser@^5.3.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/in-app-browser/-/in-app-browser-5.4.0.tgz#b5a74580a9bf3e0797aabf52f53c3529dee80f0e"
-  integrity sha512-cPRKu7nl9oLKgqJyt/1SeO+aWTABWzu+QzkOQBOLfoAaqP1eXm/AU2C9joULnTl3P+s7oFZqXKiEAKI/jF+x1Q==
+"@ionic-native/in-app-browser@^5.5.1":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/in-app-browser/-/in-app-browser-5.6.0.tgz#e6de8502fa30d713db2613384e9b42004dfb4c7d"
+  integrity sha512-ld3sxbJyeZjr9fN+SU81bVn9HhpqRRU5DFvV0nWv2rcl1NT7BWdpw9ErNBKHAM4H1K0/K1GOeIU+blQMPUz07w==
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/intercom@^5.3.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/intercom/-/intercom-5.4.0.tgz#e742e008b14529c09e2825f0d7d936499478adef"
-  integrity sha512-WXEpoRt7auxtd9P4NjMwk+QTCWskEfrcn/XjJHVLDLtyvQid/ek0SLlDbJh8tB0EQuOTpXS4CE4cwfRD28NlBw==
+"@ionic-native/intercom@^5.5.1":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/intercom/-/intercom-5.6.0.tgz#06470e089254a1d9bed460d09b93e538807eac00"
+  integrity sha512-4sxRphLIVfpHBG0CF78bTJpm6ZSsDosp0nflVVkAPeoNzw9dJkOtolrof7X/V1Rpwobb0UJw0nLOaHIlMx156Q==
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/local-notifications@^5.3.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/local-notifications/-/local-notifications-5.4.0.tgz#b8310dafb53bae509af57f5b153095a0ca2063c3"
-  integrity sha512-xKpcljk4mOFhe/6BzsL8AkPPZyB6WloqUcu1jp61ADEKfkeqr4uTzpADfZ/pzlw/aL05waHwvPZRgpQM/uUHlA==
+"@ionic-native/local-notifications@^5.5.1":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/local-notifications/-/local-notifications-5.6.0.tgz#e4c41f9560ae9059d761fcc3ed7deba7b4c972c2"
+  integrity sha512-PvOOqK3xh7GnHq6UB4WvETY4nq7OL+5JmgUWi2loAPXqpX1a+0g3D91YejCrVLjTxx2kK25UJsuGTw+gs9vdmQ==
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/mixpanel@^5.3.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/mixpanel/-/mixpanel-5.4.0.tgz#7d022e29c20237208ed7f64db5d7e68251dbe81b"
-  integrity sha512-+f+3des08I3LwJQD8m0JglskOgEjqHivyYoU0DrSHZ0H+sPndOwwL6Q0LNXGwJ00gAv8173YFGxht5TxAP+neQ==
+"@ionic-native/mixpanel@^5.5.1":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/mixpanel/-/mixpanel-5.6.0.tgz#0c5fae56ebac2a1659c1c72de708231ab67a68fd"
+  integrity sha512-5qdzRENHp7SoA9Y1/1cPOxXsSe9u14uoEP+ArpQ53hmwp3BrYzpLoClIfDWkAEZ2/PGCW63PLQBKKGuETrXlAw==
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/network@^5.3.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/network/-/network-5.4.0.tgz#4f4c12da0484a1a05fccd520402b402dc1c72af0"
-  integrity sha512-qHDoterYyz65E4nl6W1GdliiNtx7oeIyO/AsA3DFoY4Adlc+SmL7Ks+ZyIBqIPCwTvrK9CQ9VxOU26LsyneLOw==
+"@ionic-native/network@^5.5.1":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/network/-/network-5.6.0.tgz#53685576c76a8c8d93c88c07eabf6646e029c104"
+  integrity sha512-q87bkEC+6kanC87KQ7A7+EcEuUzEOjYHX/WZPyhDLMyweLcYGmYTH7N2hpax3KnwIfAcVFvQDoei5ObR292BXg==
   dependencies:
     "@types/cordova" latest
 
@@ -524,10 +524,10 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/vibration@^5.3.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/vibration/-/vibration-5.4.0.tgz#27d77ea805eb5c9e2e4c5587a6c4ca5629613879"
-  integrity sha512-eKxpz4QpefHfEw9P2N3+QjmlSgKbEbZcCjButpnpM3FhUddrNzQ9ISaWHe3m/IZ8R4aj8x6N7FrZ7V32XVmidQ==
+"@ionic-native/vibration@^5.5.1":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/vibration/-/vibration-5.6.0.tgz#18455cbb0c461c9fc2feed5029ecf5086fb6a7f6"
+  integrity sha512-Yv8q1jBB2Gf7ZACbvOhG//NFw673kEIbSFRznWkmiUlIywKxn/S/3f1D+tuYujhkRO8eSfWloAvwYeOqn3KoSw==
   dependencies:
     "@types/cordova" latest
 
@@ -5215,10 +5215,10 @@ humanize-ms@^1.2.1:
   dependencies:
     ms "^2.0.0"
 
-husky@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/husky/-/husky-2.1.0.tgz#f486dd063596ad3aad4bbbcd8673ca5bface3caa"
-  integrity sha512-FHsqdIJPmQX/89Xg/761RMFCPSNNG2eiQMxChGP081NTohHexEuu/4nYh5m4TcFKq4xm+DqaGp8J/EUnkzL1Aw==
+husky@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/husky/-/husky-2.3.0.tgz#8b78ed24d763042df7fd899991985d65a976dd13"
+  integrity sha512-A/ZQSEILoq+mQM3yC3RIBSaw1bYXdkKnyyKVSUiJl+iBjVZc5LQEXdGY1ZjrDxC4IzfRPiJ0IqzEQGCN5TQa/A==
   dependencies:
     cosmiconfig "^5.2.0"
     execa "^1.0.0"
@@ -5227,9 +5227,9 @@ husky@^2.1.0:
     is-ci "^2.0.0"
     pkg-dir "^4.1.0"
     please-upgrade-node "^3.1.1"
-    read-pkg "^5.0.0"
+    read-pkg "^5.1.1"
     run-node "^1.0.0"
-    slash "^2.0.0"
+    slash "^3.0.0"
 
 i18next@^15.0.4:
   version "15.0.9"
@@ -8397,10 +8397,10 @@ read-pkg@^2.0.0:
     normalize-package-data "^2.3.2"
     path-type "^2.0.0"
 
-read-pkg@^5.0.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/read-pkg/-/read-pkg-5.1.0.tgz#62b924384c4525a1a7a96e2d456b80df142b4390"
-  integrity sha512-NjNkqf8hlMuSxh+p8h8x8sCIfEv/MoRs/nYDmSRSAk879F9C94ADq+kHUJ4LTy5Nn0PYSmMYsy1mD4+lcXiBKg==
+read-pkg@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/read-pkg/-/read-pkg-5.1.1.tgz#5cf234dde7a405c90c88a519ab73c467e9cb83f5"
+  integrity sha512-dFcTLQi6BZ+aFUaICg7er+/usEoqFdQxiEBsEMNGoipenihtxxtdrQuBXvyANCEI8VuUIVYFgeHGx9sLLvim4w==
   dependencies:
     "@types/normalize-package-data" "^2.4.0"
     normalize-package-data "^2.5.0"
@@ -9121,10 +9121,10 @@ slash@^1.0.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
   integrity sha1-xB8vbDn8FtHNF61LXYlhFK5HDVU=
 
-slash@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/slash/-/slash-2.0.0.tgz#de552851a1759df3a8f206535442f5ec4ddeab44"
-  integrity sha512-ZYKh3Wh2z1PpEXWr0MpSBZ0V6mZHAQfYevttO11c51CaWjGTaadiKZ+wVt1PbMlDV5qhMFslpZCemhwOK7C89A==
+slash@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/slash/-/slash-3.0.0.tgz#6539be870c165adbd5240220dbe361f1bc4d4634"
+  integrity sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==
 
 slice-ansi@^2.0.0:
   version "2.1.0"

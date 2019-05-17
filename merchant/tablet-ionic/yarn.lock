@@ -347,24 +347,24 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/dialogs@^5.3.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/dialogs/-/dialogs-5.4.0.tgz#650357eb0c3ea444eabfaa12cae34fba555d284d"
-  integrity sha512-8JlLXsGjvWmLWjVJJUnfKaR1jFQD5qK5gqKcoylkQRakUBpuzTB/fFAMwOyBcHZcioXWkKDInELq2h2fu5T+WA==
+"@ionic-native/dialogs@^5.5.1":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/dialogs/-/dialogs-5.6.0.tgz#12d820c4d2a1736469e38e2e512fb52a33c7bb12"
+  integrity sha512-2Xi5Y65hplnKoZbrMzmGu966rcMw4CMF8es++5C1gqDq1RIgLKVC2W+/tGUl3Z+EEFZYkDyzeeowhviW2vO4mA==
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/email-composer@^5.3.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/email-composer/-/email-composer-5.4.0.tgz#eef344baf3dd0c2eb9bbdf98b187605713502728"
-  integrity sha512-LfUivEmQBBBMJzMNy3Cfv/ZtfNw2lF7K2VyVoYqAuRFWXaTpmmj8LiHT3bTsUVL1hr3D99lcaGBzNADZ8QwV0g==
+"@ionic-native/email-composer@^5.5.1":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/email-composer/-/email-composer-5.6.0.tgz#a728120b2741621b23b402c575baff620f859431"
+  integrity sha512-2+Txwv/rjT+/k5azQIFVK3ttm7NfGMFqusOEn5g26B9opZKHjINK6yD9ofIAI7HlYd8aYBc4xQ2/rvssvDZ03g==
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/file-transfer@^5.3.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/file-transfer/-/file-transfer-5.4.0.tgz#efb6acfbf63206000945626244e268dc863443dd"
-  integrity sha512-Z5PQNyAZLlXmRDF7bNxs9sBou+CluYG0wAk11tPNlfoSXYnN/i8OIrk56hJrDfNLw8+yCnyy7+HRFaPocg36ew==
+"@ionic-native/file-transfer@^5.5.1":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/file-transfer/-/file-transfer-5.6.0.tgz#b2a256c9623bcd98fc9c29dff20afc48a10a37a8"
+  integrity sha512-5tK4d03ma7nibc1ETYK01BSUzoAypW54XMvBOO2a4/fEAXXfh8o5zWK0nGv9LEbT2a291WBCWkr2G/UpxC938A==
   dependencies:
     "@types/cordova" latest
 
@@ -5245,10 +5245,10 @@ humanize-ms@^1.2.1:
   dependencies:
     ms "^2.0.0"
 
-husky@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/husky/-/husky-2.1.0.tgz#f486dd063596ad3aad4bbbcd8673ca5bface3caa"
-  integrity sha512-FHsqdIJPmQX/89Xg/761RMFCPSNNG2eiQMxChGP081NTohHexEuu/4nYh5m4TcFKq4xm+DqaGp8J/EUnkzL1Aw==
+husky@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/husky/-/husky-2.3.0.tgz#8b78ed24d763042df7fd899991985d65a976dd13"
+  integrity sha512-A/ZQSEILoq+mQM3yC3RIBSaw1bYXdkKnyyKVSUiJl+iBjVZc5LQEXdGY1ZjrDxC4IzfRPiJ0IqzEQGCN5TQa/A==
   dependencies:
     cosmiconfig "^5.2.0"
     execa "^1.0.0"
@@ -5257,9 +5257,9 @@ husky@^2.1.0:
     is-ci "^2.0.0"
     pkg-dir "^4.1.0"
     please-upgrade-node "^3.1.1"
-    read-pkg "^5.0.0"
+    read-pkg "^5.1.1"
     run-node "^1.0.0"
-    slash "^2.0.0"
+    slash "^3.0.0"
 
 i18next@^15.0.4:
   version "15.0.9"
@@ -8472,10 +8472,10 @@ read-pkg@^2.0.0:
     normalize-package-data "^2.3.2"
     path-type "^2.0.0"
 
-read-pkg@^5.0.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/read-pkg/-/read-pkg-5.1.0.tgz#62b924384c4525a1a7a96e2d456b80df142b4390"
-  integrity sha512-NjNkqf8hlMuSxh+p8h8x8sCIfEv/MoRs/nYDmSRSAk879F9C94ADq+kHUJ4LTy5Nn0PYSmMYsy1mD4+lcXiBKg==
+read-pkg@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/read-pkg/-/read-pkg-5.1.1.tgz#5cf234dde7a405c90c88a519ab73c467e9cb83f5"
+  integrity sha512-dFcTLQi6BZ+aFUaICg7er+/usEoqFdQxiEBsEMNGoipenihtxxtdrQuBXvyANCEI8VuUIVYFgeHGx9sLLvim4w==
   dependencies:
     "@types/normalize-package-data" "^2.4.0"
     normalize-package-data "^2.5.0"
@@ -9214,10 +9214,10 @@ slash@^1.0.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
   integrity sha1-xB8vbDn8FtHNF61LXYlhFK5HDVU=
 
-slash@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/slash/-/slash-2.0.0.tgz#de552851a1759df3a8f206535442f5ec4ddeab44"
-  integrity sha512-ZYKh3Wh2z1PpEXWr0MpSBZ0V6mZHAQfYevttO11c51CaWjGTaadiKZ+wVt1PbMlDV5qhMFslpZCemhwOK7C89A==
+slash@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/slash/-/slash-3.0.0.tgz#6539be870c165adbd5240220dbe361f1bc4d4634"
+  integrity sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==
 
 slice-ansi@^2.0.0:
   version "2.1.0"

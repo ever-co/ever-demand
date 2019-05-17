@@ -187,7 +187,7 @@
 		"cross-env": "^5.2.0",
 		"dotenv": "^7.0.0",
 		"envalid": "^5.0.0",
-		"husky": "^2.1.0",
+		"husky": "^2.3.0",
 		"jasmine-core": "^3.4.0",
 		"jasmine-spec-reporter": "^4.2.1",
 		"karma": "^4.1.0",
@@ -203,8 +203,8 @@
 		"stylelint": "^10.0.1",
 		"ts-node": "^8.1.0",
 		"tslint": "^5.16.0",
-		"typescript-tslint-plugin": "^0.3.1",
 		"typescript": "~3.2.4",
+		"typescript-tslint-plugin": "^0.3.1",
 		"webpack-dev-server": "^3.3.1",
 		"yargs": "^13.2.2"
 	},

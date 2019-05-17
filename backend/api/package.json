@@ -189,7 +189,7 @@
 		"coveralls": "^3.0.3",
 		"cross-env": "^5.2.0",
 		"cz-conventional-changelog": "^2.1.0",
-		"husky": "^2.1.0",
+		"husky": "^2.3.0",
 		"jest": "^24.7.1",
 		"nodemon": "^1.18.11",
 		"nyc": "^14.0.0",
