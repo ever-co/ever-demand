@@ -77,6 +77,11 @@ export class WarehousesService {
 						getAllStores {
 							id
 							_createdAt
+							geoLocation {
+								loc {
+									coordinates
+								}
+							}
 						}
 					}
 				`
