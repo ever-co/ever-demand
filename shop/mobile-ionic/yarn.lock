@@ -909,10 +909,10 @@
   resolved "https://registry.yarnpkg.com/@types/source-list-map/-/source-list-map-0.1.2.tgz#0078836063ffaf17412349bba364087e0ac02ec9"
   integrity sha512-K5K+yml8LTo9bWJI/rECfIPrGgxdpeNbj+d53lwN4QjW1MCwlkhUms+gtdzigTeUyBr09+u8BwOIY3MXvHdcsA==
 
-"@types/stripe@^6.25.7":
-  version "6.25.10"
-  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-6.25.10.tgz#f558841c75c1b8a44d5408fc94c0ac14a5fef82e"
-  integrity sha512-dQzwRqYieySJdAy5rX0tQfoy21RVq0dnpVITN89IRqgO3I6z8alRq/GdOeCEaqFcILrPK4KZDpF3NIWSWCGpSw==
+"@types/stripe@^6.25.17":
+  version "6.25.17"
+  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-6.25.17.tgz#8d6bb4b1663bc0478405b4825122d8a86e1cb23f"
+  integrity sha512-CAlPYH2QVBHW22IHuqb1YGsOzcOlXGEwBRTrzhH4c6XlyrON8mJg2Pgfj1PTOlfJxHVLMcqJWu0Goa6uWVXz0A==
   dependencies:
     "@types/node" "*"
 

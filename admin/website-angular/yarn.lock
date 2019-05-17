@@ -1706,10 +1706,10 @@
   resolved "https://registry.yarnpkg.com/@types/source-list-map/-/source-list-map-0.1.2.tgz#0078836063ffaf17412349bba364087e0ac02ec9"
   integrity sha512-K5K+yml8LTo9bWJI/rECfIPrGgxdpeNbj+d53lwN4QjW1MCwlkhUms+gtdzigTeUyBr09+u8BwOIY3MXvHdcsA==
 
-"@types/stripe@^6.25.12":
-  version "6.25.12"
-  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-6.25.12.tgz#7d2299262968556de2b5d4854efccbc7acb49184"
-  integrity sha512-xnNajYeTdibtUfyedTv91QljDsRD+BYFI8aQKxRRU51OUBKef6Zg50kIWotgLjd4q5WHFn9fTfwPnyW2fB1xAQ==
+"@types/stripe@^6.25.17":
+  version "6.25.17"
+  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-6.25.17.tgz#8d6bb4b1663bc0478405b4825122d8a86e1cb23f"
+  integrity sha512-CAlPYH2QVBHW22IHuqb1YGsOzcOlXGEwBRTrzhH4c6XlyrON8mJg2Pgfj1PTOlfJxHVLMcqJWu0Goa6uWVXz0A==
   dependencies:
     "@types/node" "*"
 

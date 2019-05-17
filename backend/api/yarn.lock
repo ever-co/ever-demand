@@ -1281,10 +1281,10 @@
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
   integrity sha512-l42BggppR6zLmpfU6fq9HEa2oGPEI8yrSPL3GITjfRInppYFahObbIQOQK3UGxEnyQpltZLaPe75046NOZQikw==
 
-"@types/stripe@^6.25.12":
-  version "6.25.12"
-  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-6.25.12.tgz#7d2299262968556de2b5d4854efccbc7acb49184"
-  integrity sha512-xnNajYeTdibtUfyedTv91QljDsRD+BYFI8aQKxRRU51OUBKef6Zg50kIWotgLjd4q5WHFn9fTfwPnyW2fB1xAQ==
+"@types/stripe@^6.25.17":
+  version "6.25.17"
+  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-6.25.17.tgz#8d6bb4b1663bc0478405b4825122d8a86e1cb23f"
+  integrity sha512-CAlPYH2QVBHW22IHuqb1YGsOzcOlXGEwBRTrzhH4c6XlyrON8mJg2Pgfj1PTOlfJxHVLMcqJWu0Goa6uWVXz0A==
   dependencies:
     "@types/node" "*"
 
@@ -6780,10 +6780,10 @@ jws@^3.2.2:
     jwa "^1.4.1"
     safe-buffer "^5.0.1"
 
-kafka-node@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/kafka-node/-/kafka-node-4.1.1.tgz#710246f78867e9f1eba9d70336c5884b8baf3702"
-  integrity sha512-Nsx1vdxWFU7mUI59etH210QmjBsMGWAN4lz0WRmzC1QwFK4hFLgoRM3F4RtxUeDVx8PsswMA1Z0T2eJTgoV9tQ==
+kafka-node@^4.1.3:
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/kafka-node/-/kafka-node-4.1.3.tgz#9e5fdf3a5562370ff0f82c5481bd14a6e39ad93d"
+  integrity sha512-C2WHksRCr7vIKmbxYaCk2c5Q1lnHIi6C0f3AioK3ARcRHGO9DpqErcoaS9d8PP62yzTnkYras+iAlmPsZHNSfw==
   dependencies:
     async "^2.6.2"
     binary "~0.3.0"
