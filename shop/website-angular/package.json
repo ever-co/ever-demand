@@ -134,7 +134,7 @@
 		"browser-detect": "^0.2.28",
 		"bson-objectid": "^1.2.4",
 		"classlist.js": "^1.1.20150312",
-		"core-js": "^2.6.5",
+		"core-js": "^3.1.0",
 		"css-element-queries": "^1.2.0",
 		"graphql": "^14.1.1",
 		"graphql-tag": "^2.10.1",
