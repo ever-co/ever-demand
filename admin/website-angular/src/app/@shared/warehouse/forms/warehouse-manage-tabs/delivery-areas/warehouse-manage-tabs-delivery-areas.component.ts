@@ -22,8 +22,9 @@ export class WarehouseManageTabsDeliveryAreasComponent
 	deliverForm: FormGroup;
 	selectedShapeType: string;
 	zonesData: any[] = []; // Used to be parsed to GeoJSON and sent to the database.
-	// This will be dinamicly created when adding and removing data
+	// This will be dinamicly created when getting/adding/removing data
 
+	// containing all shape objects with all properties
 	zonesObjects: any[] = [];
 
 	// Used to disable Add button, form and show the text to draw
@@ -32,7 +33,7 @@ export class WarehouseManageTabsDeliveryAreasComponent
 	// Used to know when we're editing a zone
 	isEditing: boolean = false;
 
-	private _zoneNumber: number = 1;
+	private _zoneNumber;
 
 	private _map: google.maps.Map;
 	private _drawingManager: google.maps.drawing.DrawingManager;
@@ -45,46 +46,6 @@ export class WarehouseManageTabsDeliveryAreasComponent
 	private _selectedZone: any;
 	private _mapMarker: google.maps.Marker;
 
-	private _fakeData = {
-		/*
-		type: 'FeatureCollection',
-		features: [
-			{
-				type: 'Feature',
-				geometry: {
-					type: 'Point',
-					coordinates: [23.3575917, 42.669069]
-				},
-				properties: {
-					fee: 2.99,
-					minimumAmount: 10,
-					name: 'Fake Circle #1',
-					radius: 1311.0525309481147
-				}
-			},
-			{
-				type: 'Feature',
-				geometry: {
-					type: 'Polygon',
-					coordinates: [
-						[
-							[42.6718458, 23.2726193],
-							[42.6654086, 23.2872106],
-							[42.6776514, 23.2981969],
-							[42.6796706, 23.2865239]
-						]
-					]
-				},
-				properties: {
-					fee: 4.99,
-					minimumAmount: 20,
-					name: 'Fake Polygon #1'
-				}
-			}
-		]
-		*/
-	};
-
 	private _ngDestroy$ = new Subject<void>();
 
 	constructor(private fb: FormBuilder) {}
@@ -92,11 +53,7 @@ export class WarehouseManageTabsDeliveryAreasComponent
 	ngOnInit() {
 		this._setupGoogleMap();
 		this._listenForMapCoordinates();
-		this._loadFakeData();
 		this._initiliazeForm();
-
-		console.log(this.deliverForm);
-		console.log(this.form);
 	}
 
 	static buildForm(formBuilder: FormBuilder): FormGroup {
@@ -106,10 +63,32 @@ export class WarehouseManageTabsDeliveryAreasComponent
 		});
 	}
 
-	private _loadFakeData() {
-		this._fakeData.features.forEach((feature) => {
+	get deliveryZones() {
+		return this.form.get('deliveryAreas').value;
+	}
+
+	set deliveryZones(zonesData) {
+		this.form.get('deliveryAreas').setValue(zonesData);
+	}
+
+	testValues() {
+		console.log('zoneObjects \r\n', this.zonesObjects);
+		console.log('zoneData \r\n', this.zonesData);
+
+		console.log('getGEOJSOn \r\n', this.getZonesGeoJSON());
+	}
+
+	getValue(): any {
+		// add type
+		return;
+	}
+
+	setValue(data) {
+		// add type
+		data.features.forEach((feature) => {
 			if (feature.geometry.type === 'Point') {
 				// Point = Circle
+
 				const circle = new google.maps.Circle({
 					center: {
 						// Point coodinates are reversed: lng => lat
@@ -128,6 +107,19 @@ export class WarehouseManageTabsDeliveryAreasComponent
 				this._addZoneEventListeners(circle);
 
 				this.zonesObjects.push(circle);
+
+				/*
+
+				this.zonesData.push({
+					fee: feature.properties.fee,
+					minimumAmount: feature.properties.minimumAmount,
+					name: feature.properties.name,
+					radius: feature.properties.radius,
+					x: +feature.geometry.coordinates[1],
+					y: +feature.geometry.coordinates[0]
+				});
+
+				*/
 			} else {
 				const polygon = new google.maps.Polygon({
 					strokeWeight: 0.5,
@@ -138,21 +130,160 @@ export class WarehouseManageTabsDeliveryAreasComponent
 
 				polygon['properties'] = feature.properties;
 
+				polygon.setMap(this._map);
+
 				this._addZoneEventListeners(polygon);
 
 				this.zonesObjects.push(polygon);
 
-				polygon.setMap(this._map);
+				/*
+
+				this.zonesData.push({
+					fee: feature.properties.fee,
+					minimumAmount: feature.properties.minimumAmount,
+					name: feature.properties.name,
+					polygon: [...feature.geometry.coordinates[0]]
+				});
+
+				*/
 			}
 		});
+
+		this._zoneNumber = data.features.length;
+		this.deliveryZones = data;
 	}
 
-	getValue(): any {
-		// change this!
+	getZonesGeoJSON() {
+		const geoJSON = {
+			type: 'FeatureCollection',
+			features: []
+		};
+
+		const features = [];
+
+		this.zonesObjects.forEach((o) => {
+			if (o.type === 'circle') {
+				const tempObj = {};
+
+				const coordsArr = o
+					.getCenter()
+					.toUrlValue(7)
+					.split(',');
+
+				tempObj['properties'] = o.properties;
+				tempObj['properties']['radius'] = o.radius;
+				tempObj['type'] = 'Feature';
+				tempObj['geometry'] = {
+					type: 'Point',
+					coodinates: [coordsArr[1], coordsArr[0]]
+				};
+
+				features.push(tempObj);
+			} else {
+				const tempObj = {};
+
+				const coordinates = [[]];
+
+				o.getPath().forEach((point) => {
+					const mappedCoordinates = point
+						.toUrlValue(7)
+						.split(',')
+						.map((p) => +p);
+
+					coordinates[0].push(mappedCoordinates);
+				});
+
+				tempObj['properties'] = o.properties;
+				tempObj['type'] = 'Feature';
+				tempObj['geometry'] = {
+					type: 'Polygon',
+					coordinates
+				};
+
+				features.push(tempObj);
+			}
+		});
+
+		geoJSON.features = features;
+
+		return geoJSON;
 	}
 
-	setValue(data) {
-		this._fakeData = data;
+	addZone() {
+		if (this.shapeReady && this.deliverForm.status === 'VALID') {
+			if (
+				this._selectedZone.type ===
+				google.maps.drawing.OverlayType.POLYGON
+			) {
+				const coordinates = [[]];
+
+				this._selectedZone.getPath().forEach((point) => {
+					const mappedCoordinates = point
+						.toUrlValue(7)
+						.split(',')
+						.map((p) => +p);
+
+					coordinates[0].push(mappedCoordinates);
+				});
+
+				this.zonesData.push({
+					polygon: coordinates,
+					name: this.deliverForm.get('name').value,
+					minimumAmount: this.deliverForm.get('amount').value,
+					fee: this.deliverForm.get('fee').value
+				});
+
+				this._selectedZone.properties = {
+					name: this.deliverForm.get('name').value,
+					minimumAmount: this.deliverForm.get('amount').value,
+					fee: this.deliverForm.get('fee').value
+				};
+
+				this.zonesObjects.push(this._selectedZone);
+			} else {
+				/* Since GeoJSON doesn't support circle shape types, we will add it as a point and later use that as the center
+				of the circle
+				We will save the radius as a property and will have our full circle */
+
+				const coordsArr = this._selectedZone
+					.getCenter()
+					.toUrlValue(7)
+					.split(',');
+
+				const radius = this._selectedZone.getRadius();
+
+				this.zonesData.push({
+					x: coordsArr[0],
+					y: coordsArr[1],
+					radius,
+					name: this.deliverForm.get('name').value,
+					minimumAmount: this.deliverForm.get('amount').value,
+					fee: this.deliverForm.get('fee').value
+				});
+
+				this._selectedZone.properties = {
+					name: this.deliverForm.get('name').value,
+					minimumAmount: this.deliverForm.get('amount').value,
+					fee: this.deliverForm.get('fee').value
+				};
+
+				this.zonesObjects.push(this._selectedZone);
+			}
+
+			console.log(this.zonesObjects);
+
+			this._clearSelection();
+			this._zoneNumber++;
+			this.selectedShapeType = null;
+			this._selectedZone = null;
+			this.shapeReady = false;
+
+			this.deliverForm
+				.get('name')
+				.setValue('Zone ' + this._zoneNumber || 0);
+			this.deliverForm.get('fee').setValue('');
+			this.deliverForm.get('amount').setValue('');
+		}
 	}
 
 	startDrawing() {
@@ -197,88 +328,15 @@ export class WarehouseManageTabsDeliveryAreasComponent
 		this.deleteSelectedShape();
 		this.deliverForm.get('fee').setValue('');
 		this.deliverForm.get('amount').setValue('');
+		this.deliverForm.get('name').setValue('Zone ' + this._zoneNumber);
 	}
 
 	closeEdit() {
 		this.isEditing = false;
 		this._clearSelection();
-	}
-
-	addZone() {
-		if (this.shapeReady && this.deliverForm.status === 'VALID') {
-			if (
-				this._selectedZone.type ===
-				google.maps.drawing.OverlayType.POLYGON
-			) {
-				const coordinates = [[]];
-
-				this._selectedZone.getPath().forEach((point) => {
-					const mappedCoordinates = point
-						.toUrlValue(7)
-						.split(',')
-						.map((p) => +p);
-
-					coordinates[0].push(mappedCoordinates);
-				});
-
-				this.zonesData.push({
-					polygon: coordinates,
-					name: this.deliverForm.get('name').value,
-					minimumAmount: this.deliverForm.get('amount').value,
-					fee: this.deliverForm.get('fee').value
-				});
-
-				this._selectedZone.properties = {
-					name: this.deliverForm.get('name').value,
-					minimumAmount: this.deliverForm.get('amount').value,
-					fee: this.deliverForm.get('fee').value
-				};
-
-				this.zonesObjects.push(this._selectedZone);
-			} else {
-				// Shape must be circle, because drawingManager is initialized with only two shapes
-
-				/* Since GeoJSON doesn't support circle shape types, we will add it as a point and later use that as the center
-				of the circle
-				We will save the radius as a property and will have our full circle */
-
-				const coordsArr = this._selectedZone
-					.getCenter()
-					.toUrlValue(7)
-					.split(',');
-
-				const radius = this._selectedZone.getRadius();
-
-				this.zonesData.push({
-					x: coordsArr[0],
-					y: coordsArr[1],
-					radius,
-					name: this.deliverForm.get('name').value,
-					minimumAmount: this.deliverForm.get('amount').value,
-					fee: this.deliverForm.get('fee').value
-				});
-
-				this._selectedZone.properties = {
-					name: this.deliverForm.get('name').value,
-					minimumAmount: this.deliverForm.get('amount').value,
-					fee: this.deliverForm.get('fee').value
-				};
-
-				this.zonesObjects.push(this._selectedZone);
-			}
-
-			console.log(this.zonesObjects);
-
-			this._clearSelection();
-			this._zoneNumber++;
-			this.selectedShapeType = null;
-			this._selectedZone = null;
-			this.shapeReady = false;
-
-			this.deliverForm.get('name').setValue('Zone ' + this._zoneNumber);
-			this.deliverForm.get('fee').setValue('');
-			this.deliverForm.get('amount').setValue('');
-		}
+		this.deliverForm.get('fee').setValue('');
+		this.deliverForm.get('amount').setValue('');
+		this.deliverForm.get('name').setValue('Zone ' + this._zoneNumber);
 	}
 
 	deleteSelectedShape() {
@@ -359,9 +417,9 @@ export class WarehouseManageTabsDeliveryAreasComponent
 
 	private _initiliazeForm() {
 		this.deliverForm = this.fb.group({
-			name: ['Zone ' + this._zoneNumber],
-			amount: [''],
-			fee: ['']
+			name: ['Zone ' + this._zoneNumber || 0],
+			amount: '',
+			fee: ''
 		});
 	}
 

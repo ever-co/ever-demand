@@ -14,7 +14,9 @@
 					[hidden]="isEditing"
 					class="form-group row mb-4 centered"
 				>
-					<span>Select shape to add a new zone</span>
+					<span (click)="testValues()"
+						>Select shape to add a new zone</span
+					>
 					<div class="col-sm-12 btn-container">
 						<button
 							(click)="
@@ -90,12 +92,6 @@
 								placeholder="Delvery fee"
 								formControlName="fee"
 							/>
-
-							<!-- <div *ngIf="passwordConfirm.errors && (passwordConfirm.dirty || passwordConfirm.touched)" class="alert alert-danger"> -->
-							<!-- <div [hidden]="!passwordConfirm.hasError('notMatch')"> -->
-							<!-- {{ "WAREHOUSE_VIEW.MUTATION.PASSWORDS_DO_NOT_MATCH" | translate }}! -->
-							<!-- </div> -->
-							<!-- </div> -->
 						</div>
 					</div>
 

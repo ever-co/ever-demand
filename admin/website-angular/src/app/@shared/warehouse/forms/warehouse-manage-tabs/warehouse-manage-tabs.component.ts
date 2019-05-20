@@ -100,6 +100,7 @@ export class WarehouseManageTabsComponent {
 		const contactRaw = this.contactInfoForm.getValue();
 		const locationRaw = geoLocationInput;
 		const deliveryAreasRaw = this.deliveryAreasForm.getValue();
+		debugger;
 
 		const inputResult: {
 			basicInfo: WarehouseManageTabs;
@@ -115,11 +116,13 @@ export class WarehouseManageTabsComponent {
 				ordersPhone: string;
 			};
 			location: IGeoLocation;
+			deliveryAreas: any; // add type
 		} = {
 			basicInfo: { ...detailsRaw, username: accountRaw.username },
 			password: accountRaw.password,
 			contactInfo: contactRaw,
-			location: locationRaw as IGeoLocation
+			location: locationRaw as IGeoLocation,
+			deliveryAreas: deliveryAreasRaw
 		};
 
 		return inputResult;
