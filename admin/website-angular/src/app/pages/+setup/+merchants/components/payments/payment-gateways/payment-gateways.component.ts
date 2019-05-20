@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
 	selector: 'ea-payment-gateways',
 	templateUrl: './payment-gateways.component.html'
 })
-export class PaymentGatewaysComponent {}
+export class PaymentGatewaysComponent {
+	@Input()
+	warehouseLogo: string;
+}

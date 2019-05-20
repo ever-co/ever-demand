@@ -1,1 +1,181 @@
-<h4>{{ name }} payment gateway</h4>
+<div class="row m-0">
+	<div class="form-group col-md-12 p-0">
+		<nb-checkbox [(ngModel)]="isStripeEnabled">
+			<img src="{{ logo }}" width="20px" alt="" />
+			{{ name }}
+		</nb-checkbox>
+	</div>
+</div>
+
+<form *ngIf="isStripeEnabled" #basicInfoForm="ngForm">
+	<div class="row m-0">
+		<div class="form-group col-md-6">
+			<label for="payButtontext">
+				Pay Button text
+			</label>
+			<input
+				nbInput
+				type="text"
+				class="form-control"
+				id="payButtontext"
+				name="pay-button-text"
+				placeholder="Pay Button text"
+				[(ngModel)]="configModel.payButtontext"
+				#payButtontext="ngModel"
+				[ngClass]="{
+					'input-danger':
+						payButtontext.invalid &&
+						(payButtontext.dirty || payButtontext.touched),
+					'input-success':
+						payButtontext.valid &&
+						(payButtontext.dirty || payButtontext.touched)
+				}"
+				required
+			/>
+			<small
+				class="text-danger"
+				*ngIf="
+					payButtontext.invalid &&
+					(payButtontext.dirty || payButtontext.touched)
+				"
+			>
+				<span *ngIf="payButtontext.errors.required">
+					Pay Button text is required
+				</span>
+			</small>
+		</div>
+
+		<div class="form-group col-md-6">
+			<label for="currency">
+				Currency
+			</label>
+			<input
+				nbInput
+				type="text"
+				class="form-control"
+				id="currency"
+				name="currency"
+				placeholder="Currency"
+				[(ngModel)]="configModel.currency"
+				#currency="ngModel"
+				[ngClass]="{
+					'input-danger':
+						currency.invalid &&
+						(currency.dirty || currency.touched),
+					'input-success':
+						currency.valid && (currency.dirty || currency.touched)
+				}"
+				required
+			/>
+			<small
+				class="text-danger"
+				*ngIf="currency.invalid && (currency.dirty || currency.touched)"
+			>
+				<span *ngIf="currency.errors.required">
+					Currency text is required
+				</span>
+			</small>
+		</div>
+	</div>
+
+	<div class="row mt-0 mr-0 ml-0 form-group">
+		<div class="col-md-12">
+			<label for="logo">
+				Company brand logo
+			</label>
+			<e-cu-file-uploader
+				[placeholder]="'Company brand logo'"
+				[fileUrl]="configModel.companyBrandLogo"
+				(uploadedImgUrl)="configModel.companyBrandLogo = $event"
+				[customClass]="
+					configModel.companyBrandLogo !== ''
+						? invalidUrl
+							? 'form-control-danger'
+							: 'form-control-success'
+						: ''
+				"
+			></e-cu-file-uploader>
+
+			<small
+				class="text-danger"
+				*ngIf="invalidUrl && configModel.companyBrandLogo !== ''"
+			>
+				<span *ngIf="invalidUrl">
+					Invalid logo url
+				</span>
+			</small>
+		</div>
+
+		<div
+			class="col-md-8 preview-img-container"
+			[hidden]="configModel.companyBrandLogo === '' || invalidUrl"
+		>
+			<div class="col-sm-10">
+				<div class="row preview-img">
+					<img
+						src="{{ configModel.companyBrandLogo }}"
+						alt="Invalid logo"
+						class="img-rounded"
+						(error)="invalidUrl = true"
+						(load)="invalidUrl = false"
+					/>
+					<div class="remove-icon" (click)="deleteImg()">
+						<span
+							class="ion-md-remove-circle text-danger pl-2"
+							title="Remove"
+						></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row m-0">
+		<div class="form-group col-md-12">
+			<label for="publishable-key">
+				Publishable key
+			</label>
+			<input
+				nbInput
+				type="text"
+				class="form-control"
+				id="publishableKey"
+				name="publishable-key"
+				placeholder="Publishable key"
+				[(ngModel)]="configModel.publishableKey"
+				#publishableKey="ngModel"
+				[ngClass]="{
+					'input-danger':
+						publishableKey.invalid &&
+						(publishableKey.dirty || publishableKey.touched),
+					'input-success':
+						publishableKey.valid &&
+						(publishableKey.dirty || publishableKey.touched)
+				}"
+				required
+			/>
+			<small
+				class="text-danger"
+				*ngIf="
+					publishableKey.invalid &&
+					(publishableKey.dirty || publishableKey.touched)
+				"
+			>
+				<span *ngIf="publishableKey.errors.required">
+					Publishable key is required
+				</span>
+			</small>
+		</div>
+	</div>
+
+	<div class="row m-0">
+		<div class="form-group col-md-8">
+			<nb-checkbox
+				name="remember-me"
+				[(ngModel)]="configModel.allowRememberMe"
+			>
+				Allow remember me?
+			</nb-checkbox>
+		</div>
+	</div>
+</form>

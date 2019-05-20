@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 
 @Component({
 	selector: 'ea-merchants-setup-payments',
@@ -10,6 +10,9 @@ export class SetupMerchantPaymentsComponent {
 	previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();
 	@Output()
 	nextStep: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+	@Input()
+	warehouseLogo: string;
 
 	isPaymentEnabled: boolean;
 }

@@ -62,6 +62,7 @@
 						>
 							<ea-merchants-setup-payments
 								#payments
+								[warehouseLogo]="basicInfo.basicInfoModel.logo"
 								(previousStep)="nbStepper.previous()"
 								(nextStep)="nbStepper.next()"
 							></ea-merchants-setup-payments>

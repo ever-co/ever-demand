@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import PaymentGateways, {
 	paymentGatewaysToString
 } from '@modules/server.common/enums/PaymentGateways';
@@ -8,7 +8,24 @@ import PaymentGateways, {
 	templateUrl: './stripe-gateway.component.html'
 })
 export class StripeGatewayComponent {
+	isStripeEnabled: boolean;
 	name = paymentGatewaysToString(PaymentGateways.Stripe);
-	logo =
-		'https://www.chargekeep.com/wp-content/uploads/2018/02/stripe-logo.png';
+	logo = 'https://stripe.com/img/v3/home/twitter.png';
+	invalidUrl: boolean;
+
+	@Input()
+	set companyBrandLogo(logo: string) {
+		this.configModel.companyBrandLogo = logo;
+	}
+
+	configModel = {
+		payButtontext: '',
+		currency: '',
+		companyBrandLogo: '',
+		allowRememberMe: true
+	};
+
+	deleteImg() {
+		this.configModel.companyBrandLogo = '';
+	}
 }

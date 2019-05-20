@@ -206,3 +206,24 @@ nb-card.no-box-shadow {
 	box-shadow: none;
 	margin-bottom: 0;
 }
+
+.preview-img-container {
+	.preview-img {
+		padding-right: 16px;
+	}
+
+	.img-rounded {
+		margin-top: 3px;
+		max-height: 70px !important;
+	}
+
+	.remove-icon {
+		cursor: pointer;
+
+		span {
+			padding-right: 7px;
+			position: absolute;
+			font-size: 1.1em;
+		}
+	}
+}

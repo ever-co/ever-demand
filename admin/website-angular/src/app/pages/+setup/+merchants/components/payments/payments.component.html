@@ -15,7 +15,9 @@
 		</div>
 		<div [hidden]="!isPaymentEnabled" class="row m-0">
 			<div class="form-group offset-md-2 col-md-8">
-				<ea-payment-gateways></ea-payment-gateways>
+				<ea-payment-gateways
+					[warehouseLogo]="warehouseLogo"
+				></ea-payment-gateways>
 			</div>
 		</div>
 	</nb-card-body>

@@ -36,7 +36,7 @@ export class SetupMerchantBasicInfoComponent implements OnInit, OnDestroy {
 	uploaderPlaceholder: string = 'Photo (optional)';
 	barcodetDataUrl: string;
 	invalidUrl: boolean;
-	private basicInfoModel = {
+	basicInfoModel = {
 		name: '',
 		logo: '',
 		barcodeData: ''

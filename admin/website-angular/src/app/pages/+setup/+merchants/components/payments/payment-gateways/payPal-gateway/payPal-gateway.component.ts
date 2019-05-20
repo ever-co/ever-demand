@@ -8,6 +8,7 @@ import PaymentGateways, {
 	templateUrl: './payPal-gateway.component.html'
 })
 export class PayPalGatewayComponent {
+	isPayPalEnabled: boolean;
 	name = paymentGatewaysToString(PaymentGateways.PayPal);
-	logo: 'https://www.worldlandtrust.org/wp-content/uploads/2019/03/PayPal_logo-385.jpg';
+	logo = 'https://avatars1.githubusercontent.com/u/476675?s=200&v=4';
 }
