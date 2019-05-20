@@ -1,0 +1,16 @@
+type Currency {
+	_id: String!
+	currencyCode: String!
+}
+
+type Query {
+	currencies: [Currency]
+}
+
+input CurrencyCreateInput {
+	currencyCode: String!
+}
+
+type Mutation {
+	createCurrency(createInput: CurrencyCreateInput!): Currency
+}
