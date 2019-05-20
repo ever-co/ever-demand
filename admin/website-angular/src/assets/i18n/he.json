@@ -779,6 +779,7 @@
 		"CREATE_BUTTON": "צור",
 		"ACTIVE_AND_AVAILABLE_ORDERS": "הזמנות זמינות וזמינות",
 		"ORDERS_HISTORY": "היסטוריה",
+		"TRACK": "לעקוב",
 		"SMART_TABLE_COLUMNS": {
 			"IMAGE": "תמונה",
 			"NAME": "שם",
@@ -843,6 +844,14 @@
 			"CONTACT_PHONE": "צור קשר עם הטלפון",
 			"FIRST_NAME": "שם פרטי",
 			"LAST_NAME": "שם משפחה"
+		},
+		"CREATE": {
+			"BASIC_INFO": "מידע בסיסי",
+			"LOCATION": "מקום"
+		},
+		"TRACK_PAGE": {
+			"TRACK_ALL_WORKING_CARRIERS": "עקוב אחר כל ספקי השירות",
+			"FILTER_CARRIERS": "מסנני מסננים"
 		}
 	},
 	"PRODUCT_TYPE_VIEW": {

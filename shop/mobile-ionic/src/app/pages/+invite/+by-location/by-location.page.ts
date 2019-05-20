@@ -16,6 +16,7 @@ import { Store } from '../../../services/store.service';
 import { UserAuthRouter } from '@modules/client.common.angular2/routers/user-auth-router.service';
 import { GeoLocationRouter } from '@modules/client.common.angular2/routers/geo-location-router.service';
 import { Subject } from 'rxjs';
+import { environment } from 'environment';
 
 @Component({
 	selector: 'e-cu-by-location',
@@ -71,7 +72,18 @@ export class ByLocationPage implements OnInit, OnDestroy {
 				enableHighAccuracy: true // will try to use GPS (if enabled) on mobile
 			};
 
-			const response = await Geolocation.getCurrentPosition(options);
+			const defaultLat = environment.DEFAULT_LATITUDE;
+			const defaultLng = environment.DEFAULT_LONGITUDE;
+
+			let response: { coords: { longitude: number; latitude: number } };
+
+			if (!environment.production && defaultLat && defaultLng) {
+				response = {
+					coords: { latitude: defaultLat, longitude: defaultLng }
+				};
+			} else {
+				response = await Geolocation.getCurrentPosition(options);
+			}
 
 			const { coords } = response;
 

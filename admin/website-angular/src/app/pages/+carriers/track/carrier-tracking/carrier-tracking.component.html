@@ -4,7 +4,10 @@
 			<div class="col-8">
 				<nb-card>
 					<nb-card-header>
-						Track all working carriers
+						{{
+							'CARRIERS_VIEW.TRACK_PAGE.TRACK_ALL_WORKING_CARRIERS'
+								| translate
+						}}
 					</nb-card-header>
 					<nb-card-body>
 						<div #gmap class="googleMap"></div>
@@ -15,7 +18,10 @@
 			<div class="col-4">
 				<nb-card>
 					<nb-card-header>
-						Filter Carriers
+						{{
+							'CARRIERS_VIEW.TRACK_PAGE.FILTER_CARRIERS'
+								| translate
+						}}
 					</nb-card-header>
 					<nb-card-body style="overflow:inherit;">
 						<div>

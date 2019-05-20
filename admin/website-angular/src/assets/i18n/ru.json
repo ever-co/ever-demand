@@ -776,6 +776,7 @@
 		"CREATE_BUTTON": "Создайте",
 		"ACTIVE_AND_AVAILABLE_ORDERS": "Активные и доступные заказы",
 		"ORDERS_HISTORY": "История на поръчките",
+		"TRACK": "Следовать",
 		"SMART_TABLE_COLUMNS": {
 			"IMAGE": "Образ",
 			"NAME": "Имя",
@@ -840,6 +841,14 @@
 			"CONTACT_PHONE": "Контактный телефон",
 			"FIRST_NAME": "Имя",
 			"LAST_NAME": "Фамилия"
+		},
+		"CREATE": {
+			"BASIC_INFO": "Базовая информация",
+			"LOCATION": "Место нахождения"
+		},
+		"TRACK_PAGE": {
+			"TRACK_ALL_WORKING_CARRIERS": "Отслеживание всех работающих перевозчиков",
+			"FILTER_CARRIERS": "Фильтр-носители"
 		}
 	},
 	"PRODUCT_TYPE_VIEW": {

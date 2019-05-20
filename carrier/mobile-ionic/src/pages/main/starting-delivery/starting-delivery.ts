@@ -86,17 +86,18 @@ export class StartingDeliveryPage implements AfterViewInit {
 			}
 		} as IGeoLocation;
 
-		this.carrierUserDistance = Utils.getDistance(
-			this.selectedOrder.warehouse['geoLocation'],
-			dbGeoInput as GeoLocation
-		).toFixed(2);
-
 		const origin = new google.maps.LatLng(
 			position.coords.latitude,
 			position.coords.longitude
 		);
 
 		const userGeo = this.selectedOrder.user['geoLocation'];
+
+		this.carrierUserDistance = Utils.getDistance(
+			userGeo as GeoLocation,
+			dbGeoInput as GeoLocation
+		).toFixed(2);
+
 		const destination = new google.maps.LatLng(
 			userGeo.loc.coordinates[1],
 			userGeo.loc.coordinates[0]

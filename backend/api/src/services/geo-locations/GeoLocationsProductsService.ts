@@ -173,7 +173,7 @@ export class GeoLocationsProductsService
 					});
 				})
 			)
-			.flatten<ProductInfo>()
+			.flatten()
 			.groupBy((productInfo) => productInfo.warehouseProduct.productId)
 			.map((productInfos: ProductInfo[], productId) => {
 				return _.minBy(

@@ -46,6 +46,20 @@ export class GeoLocationService {
 
 	getCurrentCoords(): Promise<Coords> {
 		return new Promise((resolve, reject) => {
+			const defaultLat = environment.DEFAULT_LATITUDE;
+			const defaultLng = environment.DEFAULT_LONGITUDE;
+
+			if (!environment.production && defaultLat && defaultLng) {
+				resolve(
+					this.getCoordsObj({
+						latitude: defaultLat,
+						longitude: defaultLng
+					})
+				);
+
+				return;
+			}
+
 			navigator.geolocation.getCurrentPosition(
 				(res) => {
 					// If user is enable GPS on browser
