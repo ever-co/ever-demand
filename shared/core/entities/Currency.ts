@@ -1,4 +1,4 @@
-import { ModelName, DBObject, Types } from '@pyro/db';
+import { ModelName, DBObject, Types, Schema } from '@pyro/db';
 import { Entity, Column } from 'typeorm';
 import ICurrency, { ICurrencyCreateObject } from '../interfaces/ICurrency';
 
@@ -17,9 +17,19 @@ class Currency extends DBObject<ICurrency, ICurrencyCreateObject>
 	 * @type {string}
 	 * @memberof Currency
 	 */
-	@Types.String()
+	@Schema({ type: String, unique: true })
 	@Column()
 	currencyCode: string;
+
+	/**
+	 * Is Currency removed completely from the system
+	 *
+	 * @type {boolean}
+	 * @memberof Currency
+	 */
+	@Types.Boolean(false)
+	@Column()
+	isDeleted: boolean;
 }
 
 export default Currency;
