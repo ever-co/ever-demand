@@ -20,16 +20,13 @@
 					<nb-card-body style="overflow:inherit;">
 						<div>
 							<ng-select
-								[items]="stores"
-								placeholder="{{
-									'DASHBOARD_VIEW.SELECT_COMPONENT.SELECT_STORE'
-										| translate
-								}}"
+								[items]="merchants"
+								placeholder="Filter by Name"
 								[clearable]="false"
-								bindLabel="id"
+								bindLabel="name"
 								style="width:100%;margin-bottom:30px;"
-								(change)="storeListener($event)"
-								[(ngModel)]="selectedStore"
+								[(ngModel)]="name"
+								(change)="filterByName($event)"
 							>
 								<ng-template ng-label-tmp let-item="item">
 									<img
@@ -41,45 +38,15 @@
 									/>
 									<b>{{ item.name }}</b>
 								</ng-template>
-								<ng-template
-									ng-option-tmp
-									let-item="item"
-									let-index="index"
-								>
-									<h6 class="card-title">
-										<img
-											*ngIf="item.logo"
-											height="40"
-											width="40"
-											class="mr-1"
-											[src]="item.logo"
-										/>
-										{{ item.name }}
-									</h6>
-								</ng-template>
 							</ng-select>
 							<ng-select
-								(change)="carrierListener($event)"
-								[items]="filteredCarriersList"
-								[(ngModel)]="selectedCarrier"
+								[items]="listOfCities"
+								[(ngModel)]="merchantCity"
 								[clearable]="false"
-								placeholder="{{
-									'CARRIERS_VIEW.CARRIER_PAGE.SELECT_CARRIER'
-										| translate
-								}}"
-								bindLabel="fullName"
+								placeholder="Filter by City"
+								bindLabel="city"
 								style="width:100%; margin-bottom:30px;"
 							>
-								<ng-template ng-label-tmp let-item="item">
-									<img
-										*ngIf="item.logo"
-										height="15"
-										width="15"
-										class="mr-2"
-										[src]="item.logo"
-									/>
-									{{ item.fullName }}
-								</ng-template>
 								<ng-template
 									ng-option-tmp
 									let-item="item"
@@ -93,7 +60,7 @@
 											class="mr-1"
 											[src]="item.logo"
 										/>
-										{{ item.fullName }}
+										{{ item }}
 									</h6>
 								</ng-template>
 							</ng-select>
