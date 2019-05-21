@@ -8,7 +8,7 @@ import { createEverLogger } from '../../helpers/Log';
 
 export interface CurrencyMutationRespone {
 	success: boolean;
-	message?: String;
+	message?: string;
 	data?: Currency;
 }
 

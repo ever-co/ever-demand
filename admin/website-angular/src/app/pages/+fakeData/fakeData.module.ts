@@ -20,6 +20,7 @@ import { NotifyService } from 'app/@core/services/notify/notify.service';
 import { InvitesService } from 'app/@core/data/invites.service';
 import { InvitesRequestsService } from 'app/@core/data/invites-requests.service';
 import { UsersService } from 'app/@core/data/users.service';
+import { CurrenciesService } from 'app/@core/data/currencies.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -52,7 +53,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		InvitesService,
 		InvitesRequestsService,
 		UsersService,
-		NotifyService
+		NotifyService,
+		CurrenciesService
 	]
 })
 export class FakeDataModule {
