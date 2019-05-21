@@ -49,24 +49,22 @@
 			<label for="currency">
 				Currency
 			</label>
-			<input
-				nbInput
-				type="text"
-				class="form-control"
-				id="currency"
-				name="currency"
-				placeholder="Currency"
-				[(ngModel)]="configModel.currency"
+			<select
 				#currency="ngModel"
-				[ngClass]="{
-					'input-danger':
-						currency.invalid &&
-						(currency.dirty || currency.touched),
-					'input-success':
-						currency.valid && (currency.dirty || currency.touched)
-				}"
+				name="currency"
+				[(ngModel)]="configModel.currency"
+				class="form-control"
 				required
-			/>
+			>
+				<option value="" disabled selected hidden
+					>Choose currency code</option
+				>
+				<option
+					*ngFor="let code of currenciesCodes"
+					value="{{ code }}"
+					>{{ code }}</option
+				>
+			</select>
 			<small
 				class="text-danger"
 				*ngIf="currency.invalid && (currency.dirty || currency.touched)"

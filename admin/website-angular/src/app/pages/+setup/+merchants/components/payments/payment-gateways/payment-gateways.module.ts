@@ -6,6 +6,7 @@ import { PaymentGatewaysComponent } from './payment-gateways.component';
 import { StripeGatewayComponent } from './stripe-gateway/stripe-gateway.component';
 import { PayPalGatewayComponent } from './payPal-gateway/payPal-gateway.component';
 import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.module';
+import { CurrenciesService } from 'app/@core/data/currencies.service';
 
 @NgModule({
 	imports: [
@@ -19,6 +20,7 @@ import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.modu
 		StripeGatewayComponent,
 		PayPalGatewayComponent
 	],
-	exports: [PaymentGatewaysComponent]
+	exports: [PaymentGatewaysComponent],
+	providers: [CurrenciesService]
 })
 export class PaymentGatewaysModule {}
