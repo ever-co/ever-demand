@@ -11,4 +11,10 @@ export class PayPalGatewayComponent {
 	isPayPalEnabled: boolean;
 	name = paymentGatewaysToString(PaymentGateways.PayPal);
 	logo = 'https://avatars1.githubusercontent.com/u/476675?s=200&v=4';
+
+	get isFormValid(): boolean {
+		let isValid = false;
+
+		return isValid;
+	}
 }

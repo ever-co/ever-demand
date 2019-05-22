@@ -45,8 +45,8 @@ export class StripeGatewayComponent implements OnChanges {
 
 		if (this.stripeConfigForm) {
 			isValid =
-				this.stripeConfigForm.touched &&
-				this.stripeConfigForm.dirty &&
+				(this.stripeConfigForm.touched ||
+					this.stripeConfigForm.dirty) &&
 				this.stripeConfigForm.valid &&
 				!this.invalidUrl &&
 				this.configModel.companyBrandLogo !== '';

@@ -7,7 +7,7 @@
 	</div>
 </div>
 
-<form *ngIf="isStripeEnabled" #stripeConfigForm="ngForm">
+<form [hidden]="!isStripeEnabled" #stripeConfigForm="ngForm">
 	<div class="row m-0">
 		<div class="form-group col-md-6">
 			<label for="payButtontext">
@@ -88,7 +88,8 @@
 				(uploadedImgUrl)="configModel.companyBrandLogo = $event"
 				[customClass]="
 					fileUploader.shownInput.dirty ||
-					fileUploader.shownInput.touched
+					fileUploader.shownInput.touched ||
+					configModel.companyBrandLogo !== ''
 						? invalidUrl || configModel.companyBrandLogo === ''
 							? 'form-control-danger'
 							: 'form-control-success'
