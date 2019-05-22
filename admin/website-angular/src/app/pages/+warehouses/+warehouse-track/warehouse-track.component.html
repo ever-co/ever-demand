@@ -22,10 +22,10 @@
 							<ng-select
 								[items]="merchants"
 								placeholder="Filter by Name"
-								[clearable]="false"
+								[clearable]="true"
 								bindLabel="name"
+								[(ngModel)]="merchantName"
 								style="width:100%;margin-bottom:30px;"
-								[(ngModel)]="name"
 								(change)="filterByName($event)"
 							>
 								<ng-template ng-label-tmp let-item="item">
@@ -42,10 +42,37 @@
 							<ng-select
 								[items]="listOfCities"
 								[(ngModel)]="merchantCity"
-								[clearable]="false"
+								[clearable]="true"
 								placeholder="Filter by City"
 								bindLabel="city"
 								style="width:100%; margin-bottom:30px;"
+								(change)="filterByCity($event)"
+							>
+								<ng-template
+									ng-option-tmp
+									let-item="item"
+									let-index="index"
+								>
+									<h6 class="card-title">
+										<img
+											*ngIf="item.logo"
+											height="40"
+											width="40"
+											class="mr-1"
+											[src]="item.logo"
+										/>
+										{{ item }}
+									</h6>
+								</ng-template>
+							</ng-select>
+							<ng-select
+								[items]="listOfCountries"
+								[clearable]="true"
+								placeholder="Filter by City"
+								bindLabel="city"
+								[(ngModel)]="merchantCountry"
+								style="width:100%; margin-bottom:30px;"
+								(change)="filterByCountry($event)"
 							>
 								<ng-template
 									ng-option-tmp
