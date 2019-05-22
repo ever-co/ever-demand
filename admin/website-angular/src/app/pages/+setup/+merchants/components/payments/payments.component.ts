@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { LocationFormComponent } from 'app/@shared/forms/location';
 
 @Component({
 	selector: 'ea-merchants-setup-payments',
@@ -13,6 +14,8 @@ export class SetupMerchantPaymentsComponent {
 
 	@Input()
 	warehouseLogo: string;
+	@Input()
+	locationForm: LocationFormComponent;
 
 	isPaymentEnabled: boolean;
 }

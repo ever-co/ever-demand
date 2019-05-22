@@ -63,6 +63,7 @@
 							<ea-merchants-setup-payments
 								#payments
 								[warehouseLogo]="basicInfo.basicInfoModel.logo"
+								[locationForm]="location.locationForm"
 								(previousStep)="nbStepper.previous()"
 								(nextStep)="nbStepper.next()"
 							></ea-merchants-setup-payments>

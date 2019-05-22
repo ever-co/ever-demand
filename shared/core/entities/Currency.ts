@@ -33,3 +33,10 @@ class Currency extends DBObject<ICurrency, ICurrencyCreateObject>
 }
 
 export default Currency;
+
+export const countriesDefaultCurrencies = {
+	IL: 'ILS',
+	RU: 'RUB',
+	US: 'USD',
+	BG: 'BGN'
+};

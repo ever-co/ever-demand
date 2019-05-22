@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Country } from '@modules/server.common/entities';
 
 @Component({
 	selector: 'ea-payment-gateways',
@@ -7,4 +8,6 @@ import { Component, Input } from '@angular/core';
 export class PaymentGatewaysComponent {
 	@Input()
 	warehouseLogo: string;
+	@Input()
+	warehouseCountry: Country;
 }
