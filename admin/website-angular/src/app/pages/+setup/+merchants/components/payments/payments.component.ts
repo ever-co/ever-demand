@@ -1,5 +1,12 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Output,
+	Input,
+	ViewChild
+} from '@angular/core';
 import { LocationFormComponent } from 'app/@shared/forms/location';
+import { PaymentGatewaysComponent } from './payment-gateways/payment-gateways.component';
 
 @Component({
 	selector: 'ea-merchants-setup-payments',
@@ -7,6 +14,8 @@ import { LocationFormComponent } from 'app/@shared/forms/location';
 	styleUrls: ['./payments.component.scss']
 })
 export class SetupMerchantPaymentsComponent {
+	@ViewChild('paymentGateways')
+	paymentGateways: PaymentGatewaysComponent;
 	@Output()
 	previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();
 	@Output()
@@ -18,4 +27,8 @@ export class SetupMerchantPaymentsComponent {
 	locationForm: LocationFormComponent;
 
 	isPaymentEnabled: boolean;
+
+	get isPaymentValid() {
+		return !this.isPaymentEnabled || this.paymentGateways.isValid;
+	}
 }

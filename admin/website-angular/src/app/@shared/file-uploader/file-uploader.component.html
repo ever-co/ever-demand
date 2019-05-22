@@ -10,6 +10,7 @@
 	/>
 
 	<input
+		#shownInput="ngModel"
 		type="text"
 		class="form-control col-10"
 		[ngClass]="customClass"
@@ -17,7 +18,6 @@
 		(change)="imageUrlChanged()"
 		[(ngModel)]="fileUrl"
 	/>
-
 	<button
 		(click)="fileInput.click()"
 		class="btn btn-primary btn-rectangle col-2"

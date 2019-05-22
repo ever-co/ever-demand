@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import PaymentGateways, {
 	paymentGatewaysToString
 } from '@modules/server.common/enums/PaymentGateways';
@@ -6,12 +6,16 @@ import { CurrenciesService } from 'app/@core/data/currencies.service';
 import { first } from 'rxjs/operators';
 import { Country } from '@modules/server.common/entities';
 import { countriesDefaultCurrencies } from '@modules/server.common/entities/Currency';
+import { NgForm } from '@angular/forms';
 
 @Component({
 	selector: 'ea-stripe-gateway',
 	templateUrl: './stripe-gateway.component.html'
 })
 export class StripeGatewayComponent implements OnChanges {
+	@ViewChild('stripeConfigForm')
+	stripeConfigForm: NgForm;
+
 	isStripeEnabled: boolean;
 	name = paymentGatewaysToString(PaymentGateways.Stripe);
 	logo = 'https://stripe.com/img/v3/home/twitter.png';
@@ -36,13 +40,28 @@ export class StripeGatewayComponent implements OnChanges {
 		this.loadCurrenciesCodes();
 	}
 
+	get isFormValid(): boolean {
+		let isValid = false;
+
+		if (this.stripeConfigForm) {
+			isValid =
+				this.stripeConfigForm.touched &&
+				this.stripeConfigForm.dirty &&
+				this.stripeConfigForm.valid &&
+				!this.invalidUrl &&
+				this.configModel.companyBrandLogo !== '';
+		}
+
+		return isValid;
+	}
+
 	ngOnChanges(): void {
-		const cefaultCurrency =
+		const defaultCurrency =
 			countriesDefaultCurrencies[
 				Country[this.warehouseCountry].toString()
 			] || '';
 
-		this.configModel.currency = cefaultCurrency;
+		this.configModel.currency = defaultCurrency;
 	}
 
 	deleteImg() {

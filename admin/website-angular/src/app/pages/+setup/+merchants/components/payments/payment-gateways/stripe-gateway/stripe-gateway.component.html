@@ -7,7 +7,7 @@
 	</div>
 </div>
 
-<form *ngIf="isStripeEnabled" #basicInfoForm="ngForm">
+<form *ngIf="isStripeEnabled" #stripeConfigForm="ngForm">
 	<div class="row m-0">
 		<div class="form-group col-md-6">
 			<label for="payButtontext">
@@ -82,12 +82,14 @@
 				Company brand logo
 			</label>
 			<e-cu-file-uploader
+				#fileUploader
 				[placeholder]="'Company brand logo'"
 				[fileUrl]="configModel.companyBrandLogo"
 				(uploadedImgUrl)="configModel.companyBrandLogo = $event"
 				[customClass]="
-					configModel.companyBrandLogo !== ''
-						? invalidUrl
+					fileUploader.shownInput.dirty ||
+					fileUploader.shownInput.touched
+						? invalidUrl || configModel.companyBrandLogo === ''
 							? 'form-control-danger'
 							: 'form-control-success'
 						: ''
@@ -96,9 +98,16 @@
 
 			<small
 				class="text-danger"
-				*ngIf="invalidUrl && configModel.companyBrandLogo !== ''"
+				*ngIf="
+					fileUploader.shownInput.dirty ||
+					fileUploader.shownInput.touched
+				"
 			>
-				<span *ngIf="invalidUrl">
+				<span *ngIf="configModel.companyBrandLogo === ''">
+					Company brand logo is required
+				</span>
+
+				<span *ngIf="invalidUrl && configModel.companyBrandLogo !== ''">
 					Invalid logo url
 				</span>
 			</small>

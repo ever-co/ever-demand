@@ -16,6 +16,7 @@
 		<div [hidden]="!isPaymentEnabled" class="row m-0">
 			<div class="form-group offset-md-2 col-md-8">
 				<ea-payment-gateways
+					#paymentGateways
 					[warehouseLogo]="warehouseLogo"
 					[warehouseCountry]="locationForm.countryId.value"
 				></ea-payment-gateways>
@@ -27,6 +28,6 @@
 <button nbButton (click)="previousStep.emit()">
 	{{ 'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate }}
 </button>
-<button nbButton (click)="nextStep.emit()">
+<button nbButton [disabled]="!isPaymentValid" (click)="nextStep.emit()">
 	{{ 'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate }}
 </button>
