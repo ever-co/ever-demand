@@ -138,7 +138,7 @@
 		"underscore.string": "^3.3.5",
 		"upath": "^1.1.2",
 		"uuid": "^3.3.2",
-		"validator": "^10.11.0",
+		"validator": "^11.0.0",
 		"ws": "^7.0.0"
 	},
 	"devDependencies": {
