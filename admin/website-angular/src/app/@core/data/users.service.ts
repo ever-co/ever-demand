@@ -148,11 +148,16 @@ export class UsersService {
 	}
 
 	async banUser(id: string) {
+		console.log(`ID TYPE IS ${typeof id}`);
 		return this._apollo
 			.mutate({
 				mutation: gql`
 					mutation BanUser($id: String!) {
-						banUser(id: $id)
+						banUser(id: $id) {
+							id
+							firstName
+							lastName
+						}
 					}
 				`,
 				variables: { id }
@@ -165,7 +170,11 @@ export class UsersService {
 			.mutate({
 				mutation: gql`
 					mutation UnbanUser($id: String!) {
-						unbanUser(id: $id)
+						unbanUser(id: $id) {
+							id
+							firstName
+							lastName
+						}
 					}
 				`,
 				variables: { id }

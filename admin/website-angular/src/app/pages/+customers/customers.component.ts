@@ -341,7 +341,9 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 	}
 
 	public get isUserBanned() {
-		return this._selectedCustomers[0].isBanned;
+		return (
+			this._selectedCustomers[0] && this._selectedCustomers[0].isBanned
+		);
 	}
 
 	ngOnDestroy() {
