@@ -7,6 +7,7 @@ import ForwardOrdersMethod from '../enums/ForwardOrdersMethod';
 import { Entity, Column } from 'typeorm';
 import IWarehouseProduct from '../interfaces/IWarehouseProduct';
 import OrderBarcodeTypes from '../enums/OrderBarcodeTypes';
+import PaymentGateway from './PaymentGateway';
 
 /**
  * Warehouse / Merchant / Store
@@ -282,6 +283,15 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	@Schema({ type: String, unique: true, sparse: true })
 	@Column()
 	barcodeData: string;
+
+	/**
+	 * Payment gateways
+	 *
+	 * @type {PaymentGateway[]}
+	 * @memberof Warehouse
+	 */
+	@Schema([getSchema(PaymentGateway)])
+	paymentGateways?: PaymentGateway[];
 }
 
 export type WithFullProducts = Warehouse & {
