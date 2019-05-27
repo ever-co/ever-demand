@@ -148,7 +148,6 @@ export class UsersService {
 	}
 
 	async banUser(id: string) {
-		console.log(`ID TYPE IS ${typeof id}`);
 		return this._apollo
 			.mutate({
 				mutation: gql`
