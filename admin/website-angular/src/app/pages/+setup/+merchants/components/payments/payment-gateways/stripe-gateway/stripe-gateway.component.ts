@@ -52,7 +52,7 @@ export class StripeGatewayComponent implements OnChanges {
 	}
 
 	get createObject(): IPaymentGatewayCreateObject | null {
-		if (!this.isFormValid) {
+		if (!this.isFormValid || !this.isStripeEnabled) {
 			return null;
 		}
 

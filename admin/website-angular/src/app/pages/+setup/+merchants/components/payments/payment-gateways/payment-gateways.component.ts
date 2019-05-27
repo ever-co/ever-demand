@@ -58,9 +58,14 @@ export class PaymentGatewaysComponent {
 		const paymentsGateways = [];
 
 		const stripeGatewayCreateObject = this.stripeGateway.createObject;
+		const payPalGatewayCreateObject = this.payPalGateway.createObject;
 
 		if (stripeGatewayCreateObject) {
 			paymentsGateways.push(stripeGatewayCreateObject);
+		}
+
+		if (payPalGatewayCreateObject) {
+			paymentsGateways.push(payPalGatewayCreateObject);
 		}
 
 		return paymentsGateways;
