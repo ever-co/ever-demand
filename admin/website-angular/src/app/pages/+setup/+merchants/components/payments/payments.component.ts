@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { LocationFormComponent } from 'app/@shared/forms/location';
 import { PaymentGatewaysComponent } from './payment-gateways/payment-gateways.component';
+import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaymentGateway';
 
 @Component({
 	selector: 'ea-merchants-setup-payments',
@@ -30,5 +31,9 @@ export class SetupMerchantPaymentsComponent {
 
 	get isPaymentValid() {
 		return !this.isPaymentEnabled || this.paymentGateways.isValid;
+	}
+
+	get paymentsGateways(): IPaymentGatewayCreateObject[] {
+		return this.paymentGateways.paymentsGateways;
 	}
 }

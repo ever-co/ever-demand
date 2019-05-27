@@ -7,6 +7,7 @@ import { first } from 'rxjs/operators';
 import { Country } from '@modules/server.common/entities';
 import { countriesDefaultCurrencies } from '@modules/server.common/entities/Currency';
 import { NgForm } from '@angular/forms';
+import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaymentGateway';
 
 @Component({
 	selector: 'ea-stripe-gateway',
@@ -53,6 +54,17 @@ export class StripeGatewayComponent implements OnChanges {
 		}
 
 		return isValid;
+	}
+
+	get createObject(): IPaymentGatewayCreateObject | null {
+		if (!this.isFormValid) {
+			return null;
+		}
+
+		return {
+			paymentGateway: PaymentGateways.Stripe,
+			configureObject: this.configModel
+		};
 	}
 
 	ngOnChanges(): void {

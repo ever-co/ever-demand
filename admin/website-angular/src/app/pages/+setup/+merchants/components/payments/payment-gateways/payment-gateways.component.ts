@@ -2,6 +2,7 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { Country } from '@modules/server.common/entities';
 import { StripeGatewayComponent } from './stripe-gateway/stripe-gateway.component';
 import { PayPalGatewayComponent } from './payPal-gateway/payPal-gateway.component';
+import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaymentGateway';
 
 @Component({
 	selector: 'ea-payment-gateways',
@@ -43,5 +44,17 @@ export class PaymentGatewaysComponent {
 		}
 
 		return valid;
+	}
+
+	get paymentsGateways(): IPaymentGatewayCreateObject[] {
+		const paymentsGateways = [];
+
+		const stripeGatewayCreateObject = this.stripeGateway.createObject;
+
+		if (stripeGatewayCreateObject) {
+			paymentsGateways.push(stripeGatewayCreateObject);
+		}
+
+		return paymentsGateways;
 	}
 }

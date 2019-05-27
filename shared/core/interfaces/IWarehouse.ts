@@ -5,7 +5,9 @@ import IGeoLocation, { IGeoLocationCreateObject } from './IGeoLocation';
 import { DBCreateObject, DBRawObject, PyroObjectId } from '../@pyro/db';
 import ForwardOrdersMethod from '../enums/ForwardOrdersMethod';
 import OrderBarcodeTypes from '../enums/OrderBarcodeTypes';
-import { IPaymentGateway } from './IPaymentGateway';
+import IPaymentGatewayCreateObject, {
+	IPaymentGateway
+} from './IPaymentGateway';
 
 export interface IWarehouseCreateObject extends DBCreateObject {
 	/**
@@ -113,10 +115,10 @@ export interface IWarehouseCreateObject extends DBCreateObject {
 	/**
 	 * Payment Gateways
 	 *
-	 * @type {IPaymentGateway[]}
+	 * @type {IPaymentGatewayCreateObject[]}
 	 * @memberof IWarehouseCreateObject
 	 */
-	paymentGateways?: IPaymentGateway[];
+	paymentGateways?: IPaymentGatewayCreateObject[];
 
 	productsDelivery?: boolean;
 	productsTakeaway?: boolean;
