@@ -21,7 +21,7 @@ export class WarehouseTrackComponent implements OnInit {
 	merchants: Warehouse[] = [];
 	listOfCities: string[] = [];
 	listOfCountries: CountryName[] = [];
-	merchantListDropDown: Warehouse;
+	listOfMerchants: string[];
 	merchantCity: string;
 	merchantName: string;
 	merchantCountry: CountryName;
@@ -34,14 +34,9 @@ export class WarehouseTrackComponent implements OnInit {
 		const warehouseService = this.warehouseService
 			.getStoreLivePosition()
 			.subscribe((store) => {
-				if (
-					!(
-						this.merchantName ||
-						this.merchantCity ||
-						this.merchantCountry
-					)
-				) {
-					this.merchants = store;
+				this.merchants = store;
+
+				if (this.merchantMarkers.length === 0) {
 					this.listOfCities = Array.from(
 						new Set(store.map((mer) => mer.geoLocation.city))
 					).sort();
@@ -52,20 +47,26 @@ export class WarehouseTrackComponent implements OnInit {
 							)
 						)
 					).sort();
-				}
-
-				if (this.merchantMarkers.length === 0) {
+					this.listOfMerchants = this.setSort(
+						store.map((mer) => mer.name)
+					);
 					this.populateMarkers(store, this.merchantMarkers);
 				} else if (store.length === this.merchantMarkers.length) {
 					this.updateMarkers(store, this.merchantMarkers);
 				} else {
-					this.merchantMarkers.forEach((marker) => {
-						marker.setMap(null);
-					});
-					this.merchantMarkers = [];
-					this.populateMarkers(store, this.merchantMarkers);
+					console.log(this.merchantMarkers);
+					this.updateMarkers(
+						store.filter((mer) =>
+							this.listOfMerchants.includes(mer.name)
+						),
+						this.merchantMarkers
+					);
 				}
 			});
+	}
+
+	setSort(arr: any): any[] {
+		return Array.from(new Set(arr)).sort();
 	}
 
 	showMap() {
@@ -80,21 +81,14 @@ export class WarehouseTrackComponent implements OnInit {
 	filterByName(event) {
 		if (event) {
 			this.merchantName = event;
-			this.merchantCity = undefined;
-			this.merchantCountry = undefined;
 
 			this.deleteMarkerStorage(this.merchantMarkers);
-
-			const coords = new google.maps.LatLng(
-				event.geoLocation.loc.coordinates[1],
-				event.geoLocation.loc.coordinates[0]
+			const filteredMerchants = this.merchants.filter(
+				(mer) => mer.name === this.merchantName
 			);
-			const storeIcon = environment.MAP_MERCHANT_ICON_LINK;
-			const marker = this.addMarker(coords, this.map, storeIcon);
-			this.merchantMarkers.push(marker);
+			this.populateMarkers(filteredMerchants, this.merchantMarkers);
 		} else {
 			this.deleteMarkerStorage(this.merchantMarkers);
-
 			this.populateMarkers(this.merchants, this.merchantMarkers);
 		}
 	}
@@ -102,14 +96,15 @@ export class WarehouseTrackComponent implements OnInit {
 	filterByCity(event) {
 		if (event) {
 			this.merchantCity = event;
-			this.merchantCountry = undefined;
 			this.merchantName = undefined;
-
 			this.deleteMarkerStorage(this.merchantMarkers);
 			const filteredMerchants = this.merchants.filter(
 				(mer) => mer.geoLocation.city === this.merchantCity
 			);
 			this.populateMarkers(filteredMerchants, this.merchantMarkers);
+			this.listOfMerchants = this.setSort(
+				filteredMerchants.map((mer) => mer.name)
+			);
 		} else {
 			this.deleteMarkerStorage(this.merchantMarkers);
 			this.populateMarkers(this.merchants, this.merchantMarkers);
@@ -128,6 +123,12 @@ export class WarehouseTrackComponent implements OnInit {
 					getCountryName(mer.geoLocation.countryId) ===
 					this.merchantCountry
 			);
+			this.listOfCities = this.setSort(
+				filteredMerchants.map((mer) => mer.geoLocation.city)
+			);
+			this.listOfMerchants = this.setSort(
+				filteredMerchants.map((mer) => mer.name)
+			);
 			this.populateMarkers(filteredMerchants, this.merchantMarkers);
 		} else {
 			this.deleteMarkerStorage(this.merchantMarkers);
@@ -143,7 +144,7 @@ export class WarehouseTrackComponent implements OnInit {
 			);
 			const storeIcon = environment.MAP_MERCHANT_ICON_LINK;
 			const marker = this.addMarker(coords, this.map, storeIcon);
-			markerStorage.push(marker);
+			markerStorage.push({ marker, id: mer.id });
 		});
 	}
 
@@ -153,17 +154,25 @@ export class WarehouseTrackComponent implements OnInit {
 				mer.geoLocation.loc.coordinates[1],
 				mer.geoLocation.loc.coordinates[0]
 			);
-
-			const oldCoords = markerStorage[index].position;
-			if (!newCoords.equals(oldCoords)) {
-				markerStorage[index].setPosition(newCoords);
+			let markerIndex;
+			const oldCoords = markerStorage.find((marker, i) => {
+				if (marker.id === mer.id) {
+					markerIndex = i;
+					return true;
+				} else {
+					return false;
+				}
+			});
+			console.log(markerIndex);
+			if (!newCoords.equals(oldCoords.marker.position)) {
+				markerStorage[index].marker.setPosition(newCoords);
 			}
 		});
 	}
 
 	deleteMarkerStorage(markerStorage) {
 		markerStorage.forEach((mar) => {
-			mar.setMap(null);
+			mar.marker.setMap(null);
 		});
 		markerStorage = [];
 	}
