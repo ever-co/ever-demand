@@ -6,3 +6,170 @@
 		</nb-checkbox>
 	</div>
 </div>
+
+<form [hidden]="!isPayPalEnabled" #payPalConfigForm="ngForm">
+	<div class="row m-0">
+		<div class="form-group col-md-6">
+			<label for="mode">
+				Mode
+			</label>
+			<select
+				#mode="ngModel"
+				name="mode"
+				[(ngModel)]="configModel.mode"
+				class="form-control"
+				required
+			>
+				<option value="" disabled selected hidden
+					>Choose PayPal mode</option
+				>
+				<option *ngFor="let type of payPalTypes" value="{{ type }}">{{
+					type
+				}}</option>
+			</select>
+		</div>
+
+		<div class="form-group col-md-6">
+			<label for="currency">
+				Currency
+			</label>
+			<select
+				#currency="ngModel"
+				name="currency"
+				[(ngModel)]="configModel.currency"
+				class="form-control"
+				required
+			>
+				<option value="" disabled selected hidden
+					>Choose currency code</option
+				>
+				<option
+					*ngFor="let code of currenciesCodes"
+					value="{{ code }}"
+					>{{ code }}</option
+				>
+			</select>
+			<small
+				class="text-danger"
+				*ngIf="currency.invalid && (currency.dirty || currency.touched)"
+			>
+				<span *ngIf="currency.errors.required">
+					Currency text is required
+				</span>
+			</small>
+		</div>
+	</div>
+
+	<div class="row m-0">
+		<div class="form-group col-md-12">
+			<label for="publishableKey">
+				Publishable key
+			</label>
+			<input
+				nbInput
+				type="text"
+				class="form-control"
+				id="publishableKey"
+				name="publishable-key"
+				placeholder="Publishable key"
+				[(ngModel)]="configModel.publishableKey"
+				#publishableKey="ngModel"
+				[ngClass]="{
+					'input-danger':
+						publishableKey.invalid &&
+						(publishableKey.dirty || publishableKey.touched),
+					'input-success':
+						publishableKey.valid &&
+						(publishableKey.dirty || publishableKey.touched)
+				}"
+				required
+			/>
+			<small
+				class="text-danger"
+				*ngIf="
+					publishableKey.invalid &&
+					(publishableKey.dirty || publishableKey.touched)
+				"
+			>
+				<span *ngIf="publishableKey.errors.required">
+					Publishable key is required
+				</span>
+			</small>
+		</div>
+	</div>
+
+	<div class="row m-0">
+		<div class="form-group col-md-12">
+			<label for="secretKey">
+				Secret key
+			</label>
+			<input
+				nbInput
+				type="text"
+				class="form-control"
+				id="secretKey"
+				name="secret-key"
+				placeholder="Secret key"
+				[(ngModel)]="configModel.secretKey"
+				#secretKey="ngModel"
+				[ngClass]="{
+					'input-danger':
+						secretKey.invalid &&
+						(secretKey.dirty || secretKey.touched),
+					'input-success':
+						secretKey.valid &&
+						(secretKey.dirty || secretKey.touched)
+				}"
+				required
+			/>
+			<small
+				class="text-danger"
+				*ngIf="
+					secretKey.invalid && (secretKey.dirty || secretKey.touched)
+				"
+			>
+				<span *ngIf="secretKey.errors.required">
+					Secret key is required
+				</span>
+			</small>
+		</div>
+	</div>
+
+	<div class="row m-0">
+		<div class="form-group col-md-12">
+			<label for="description">
+				Payment description
+			</label>
+			<input
+				nbInput
+				type="text"
+				class="form-control"
+				id="description"
+				name="description"
+				placeholder="Payment description"
+				[(ngModel)]="configModel.description"
+				#description="ngModel"
+				[ngClass]="{
+					'input-danger':
+						description.invalid &&
+						(description.dirty || description.touched),
+					'input-success':
+						description.valid &&
+						(description.dirty || description.touched)
+				}"
+				required
+			/>
+			<small
+				class="text-danger"
+				*ngIf="
+					description.invalid &&
+					(description.dirty || description.touched)
+				"
+			>
+				<span *ngIf="description.errors.required">
+					Payment description is required
+				</span>
+			</small>
+		</div>
+	</div>
+</form>

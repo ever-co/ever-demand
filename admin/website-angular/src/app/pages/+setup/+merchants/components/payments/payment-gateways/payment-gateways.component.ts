@@ -3,6 +3,8 @@ import { Country } from '@modules/server.common/entities';
 import { StripeGatewayComponent } from './stripe-gateway/stripe-gateway.component';
 import { PayPalGatewayComponent } from './payPal-gateway/payPal-gateway.component';
 import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaymentGateway';
+import { CurrenciesService } from 'app/@core/data/currencies.service';
+import { first } from 'rxjs/operators';
 
 @Component({
 	selector: 'ea-payment-gateways',
@@ -19,6 +21,12 @@ export class PaymentGatewaysComponent {
 	warehouseLogo: string;
 	@Input()
 	warehouseCountry: Country;
+
+	currenciesCodes: string[] = [];
+
+	constructor(private currenciesService: CurrenciesService) {
+		this.loadCurrenciesCodes();
+	}
 
 	get isValid(): boolean {
 		let valid = false;
@@ -56,5 +64,16 @@ export class PaymentGatewaysComponent {
 		}
 
 		return paymentsGateways;
+	}
+
+	private async loadCurrenciesCodes() {
+		const res = await this.currenciesService
+			.getCurrencies()
+			.pipe(first())
+			.toPromise();
+
+		if (res) {
+			this.currenciesCodes = res.map((r) => r.currencyCode);
+		}
 	}
 }

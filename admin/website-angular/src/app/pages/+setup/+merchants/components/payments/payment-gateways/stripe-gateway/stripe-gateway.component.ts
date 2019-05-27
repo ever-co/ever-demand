@@ -2,8 +2,6 @@ import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import PaymentGateways, {
 	paymentGatewaysToString
 } from '@modules/server.common/enums/PaymentGateways';
-import { CurrenciesService } from 'app/@core/data/currencies.service';
-import { first } from 'rxjs/operators';
 import { Country } from '@modules/server.common/entities';
 import { countriesDefaultCurrencies } from '@modules/server.common/entities/Currency';
 import { NgForm } from '@angular/forms';
@@ -21,8 +19,9 @@ export class StripeGatewayComponent implements OnChanges {
 	name = paymentGatewaysToString(PaymentGateways.Stripe);
 	logo = 'https://stripe.com/img/v3/home/twitter.png';
 	invalidUrl: boolean;
-	currenciesCodes: string[] = [];
 
+	@Input()
+	currenciesCodes: string[] = [];
 	@Input()
 	warehouseCountry: Country;
 	@Input()
@@ -36,10 +35,6 @@ export class StripeGatewayComponent implements OnChanges {
 		companyBrandLogo: '',
 		allowRememberMe: true
 	};
-
-	constructor(private currenciesService: CurrenciesService) {
-		this.loadCurrenciesCodes();
-	}
 
 	get isFormValid(): boolean {
 		let isValid = false;
@@ -78,16 +73,5 @@ export class StripeGatewayComponent implements OnChanges {
 
 	deleteImg() {
 		this.configModel.companyBrandLogo = '';
-	}
-
-	private async loadCurrenciesCodes() {
-		const res = await this.currenciesService
-			.getCurrencies()
-			.pipe(first())
-			.toPromise();
-
-		if (res) {
-			this.currenciesCodes = res.map((r) => r.currencyCode);
-		}
 	}
 }
