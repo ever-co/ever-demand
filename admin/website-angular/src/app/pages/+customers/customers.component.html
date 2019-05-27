@@ -32,6 +32,19 @@
 			<i class="ion-md-phone-portrait"></i>&nbsp;&nbsp;
 			{{ 'CUSTOMERS_VIEW.CUSTOMERS_DEVICES' | translate }}
 		</button>
+
+		<!--  ADD THIS LATER WHEN FINISHED TESTING -->
+		<button
+			class="btn btn-danger mr-2 d-inline-block"
+			[disabled]="!isOnlyOneCustomerSelected || isUserBanned"
+			(click)="banSelectedRows()"
+		>
+			<i class="ion-md-close-circle button-icon"></i>
+
+			<small _ngcontent-c55="">{{
+				'CUSTOMERS_VIEW.BAN' | translate
+			}}</small>
+		</button>
 	</nb-card-header>
 
 	<nb-card-body [nbSpinner]="loading">

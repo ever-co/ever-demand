@@ -10,6 +10,7 @@ export interface IUserInitializeObject extends DBCreateObject {
 	socialIds?: string[];
 	isRegistrationCompleted?: boolean;
 	hash?: string;
+	isBanned?: boolean;
 }
 
 export interface IUserCreateObject extends IUserInitializeObject {

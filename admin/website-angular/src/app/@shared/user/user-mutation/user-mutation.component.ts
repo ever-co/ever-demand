@@ -98,6 +98,7 @@ export class UserMutationComponent {
 				'error',
 				`Error in creating customer: "${err.message}"`
 			);
+			console.error(err);
 		}
 	}
 

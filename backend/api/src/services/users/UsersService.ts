@@ -490,6 +490,16 @@ export class UsersService extends DBService<User>
 		return this.Model.insertMany(customersToCreate);
 	}
 
+	async banUser(id: string): Promise<User> {
+		await this.throwIfNotExists(id);
+		return this.update(id, { isBanned: true });
+	}
+
+	async unbanUser(id: string): Promise<User> {
+		await this.throwIfNotExists(id);
+		return this.update(id, { isBanned: false });
+	}
+
 	/**
 	 * Check if not deleted customer with given Id exists in DB and throw exception if it's not exists or deleted
 	 *
