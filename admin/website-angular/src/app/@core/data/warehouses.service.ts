@@ -77,11 +77,41 @@ export class WarehousesService {
 						getAllStores {
 							id
 							_createdAt
+							geoLocation {
+								loc {
+									coordinates
+								}
+							}
 						}
 					}
 				`
 			})
 			.pipe(map((res) => res.data.getAllStores));
+	}
+
+	getStoreLivePosition() {
+		return this._apollo
+			.watchQuery<{ getAllStores: Warehouse[] }>({
+				query: gql`
+					query GetAllStores {
+						getAllStores {
+							id
+							_createdAt
+							name
+							logo
+							geoLocation {
+								loc {
+									coordinates
+								}
+								city
+								countryId
+							}
+						}
+					}
+				`,
+				pollInterval: 5000
+			})
+			.valueChanges.pipe(map((res) => res.data.getAllStores));
 	}
 
 	getStores(pagingOptions?: IPagingOptions): Observable<Warehouse[]> {
