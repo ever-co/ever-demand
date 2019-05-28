@@ -292,6 +292,20 @@
 					"PUBLISHABLE_KEY_IS_REQUIRED": "Изисква се издателски ключ",
 					"ALLOW_REMEMBER_ME": "Нека ме запамети?",
 					"REMOVE": "Премахни"
+				},
+				"PAYPAL": {
+					"MODE": "Метод",
+					"CHOOSE_PAYPAL_MODE": "Избери PayPal метод",
+					"TYPE": "тип",
+					"CURRENCY": "Валута",
+					"CHOOSE_CURRENCY_CODE": "Изберете кода на валутата",
+					"CURRENCY_TEXT_IS_REQUIRED": "Необходим е текст на валутата",
+					"PUBLISHABLE_KEY": "Публикуван ключ",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "Изисква се публичен ключ",
+					"SECRET_KEY": "Тайният ключ",
+					"SECRET_KEY_IS_REQUIRED": "Изисква се секретен ключ",
+					"PAYMENT_DESCRIPTION": "Описание на плащането",
+					"PAYMENT_DESCRIPTION_IS_REQUIRED": "Изисква се описание на плащането"
 				}
 			},
 			"MANUFACTURING": {

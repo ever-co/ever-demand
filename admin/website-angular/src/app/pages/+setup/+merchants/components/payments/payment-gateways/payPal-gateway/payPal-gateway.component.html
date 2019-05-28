@@ -11,7 +11,9 @@
 	<div class="row m-0">
 		<div class="form-group col-md-6">
 			<label for="mode">
-				Mode
+				{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.MODE' | translate
+				}}
 			</label>
 			<select
 				#mode="ngModel"
@@ -20,18 +22,25 @@
 				class="form-control"
 				required
 			>
-				<option value="" disabled selected hidden
-					>Choose PayPal mode</option
-				>
-				<option *ngFor="let type of payPalTypes" value="{{ type }}">{{
-					type
+				<option value="" disabled selected hidden>{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.CHOOSE_PAYPAL_MODE'
+						| translate
 				}}</option>
+				<option *ngFor="let type of payPalTypes" value="{{ type }}">
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.TYPE'
+							| translate
+					}}
+				</option>
 			</select>
 		</div>
 
 		<div class="form-group col-md-6">
 			<label for="currency">
-				Currency
+				{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.CURRENCY'
+						| translate
+				}}
 			</label>
 			<select
 				#currency="ngModel"
@@ -40,9 +49,10 @@
 				class="form-control"
 				required
 			>
-				<option value="" disabled selected hidden
-					>Choose currency code</option
-				>
+				<option value="" disabled selected hidden>{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.CHOOSE_CURRENCY_CODE'
+						| translate
+				}}</option>
 				<option
 					*ngFor="let code of currenciesCodes"
 					value="{{ code }}"
@@ -54,7 +64,10 @@
 				*ngIf="currency.invalid && (currency.dirty || currency.touched)"
 			>
 				<span *ngIf="currency.errors.required">
-					Currency text is required
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.CURRENCY_TEXT_IS_REQUIRED'
+							| translate
+					}}
 				</span>
 			</small>
 		</div>
@@ -63,7 +76,10 @@
 	<div class="row m-0">
 		<div class="form-group col-md-12">
 			<label for="publishableKey">
-				Publishable key
+				{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.PUBLISHABLE_KEY'
+						| translate
+				}}
 			</label>
 			<input
 				nbInput
@@ -71,7 +87,10 @@
 				class="form-control"
 				id="publishableKey"
 				name="publishable-key"
-				placeholder="Publishable key"
+				placeholder="{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.PUBLISHABLE_KEY'
+						| translate
+				}}"
 				[(ngModel)]="configModel.publishableKey"
 				#publishableKey="ngModel"
 				[ngClass]="{
@@ -92,7 +111,10 @@
 				"
 			>
 				<span *ngIf="publishableKey.errors.required">
-					Publishable key is required
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.PUBLISHABLE_KEY_IS_REQUIRED'
+							| translate
+					}}
 				</span>
 			</small>
 		</div>
@@ -101,7 +123,10 @@
 	<div class="row m-0">
 		<div class="form-group col-md-12">
 			<label for="secretKey">
-				Secret key
+				{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.SECRET_KEY'
+						| translate
+				}}
 			</label>
 			<input
 				nbInput
@@ -109,7 +134,10 @@
 				class="form-control"
 				id="secretKey"
 				name="secret-key"
-				placeholder="Secret key"
+				placeholder="{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.SECRET_KEY'
+						| translate
+				}}"
 				[(ngModel)]="configModel.secretKey"
 				#secretKey="ngModel"
 				[ngClass]="{
@@ -129,7 +157,10 @@
 				"
 			>
 				<span *ngIf="secretKey.errors.required">
-					Secret key is required
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.SECRET_KEY_IS_REQUIRED'
+							| translate
+					}}
 				</span>
 			</small>
 		</div>
@@ -138,7 +169,10 @@
 	<div class="row m-0">
 		<div class="form-group col-md-12">
 			<label for="description">
-				Payment description
+				{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.PAYMENT_DESCRIPTION'
+						| translate
+				}}
 			</label>
 			<input
 				nbInput
@@ -146,7 +180,10 @@
 				class="form-control"
 				id="description"
 				name="description"
-				placeholder="Payment description"
+				placeholder="{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.PAYMENT_DESCRIPTION'
+						| translate
+				}}"
 				[(ngModel)]="configModel.description"
 				#description="ngModel"
 				[ngClass]="{
@@ -167,7 +204,10 @@
 				"
 			>
 				<span *ngIf="description.errors.required">
-					Payment description is required
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.PAYMENT_DESCRIPTION_IS_REQUIRED'
+							| translate
+					}}
 				</span>
 			</small>
 		</div>

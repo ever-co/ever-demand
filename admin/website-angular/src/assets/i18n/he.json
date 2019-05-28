@@ -291,6 +291,20 @@
 					"PUBLISHABLE_KEY_IS_REQUIRED": "נדרש מפתח לפרסום",
 					"ALLOW_REMEMBER_ME": "אתה זוכר אותי?",
 					"REMOVE": "הסר"
+				},
+				"PAYPAL": {
+					"MODE": "מצב",
+					"CHOOSE_PAYPAL_MODE": "בחר במצב PayPal",
+					"TYPE": "הקלד",
+					"CURRENCY": "מטבע",
+					"CHOOSE_CURRENCY_CODE": "בחר קוד מטבע",
+					"CURRENCY_TEXT_IS_REQUIRED": "טקסט מטבע נדרש",
+					"PUBLISHABLE_KEY": "מפתח ניתן לפרסום",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "נדרש מפתח לפרסום",
+					"SECRET_KEY": "מפתח סודי",
+					"SECRET_KEY_IS_REQUIRED": "נדרש מפתח סודי",
+					"PAYMENT_DESCRIPTION": "תיאור התשלום",
+					"PAYMENT_DESCRIPTION_IS_REQUIRED": "תיאור התשלום נדרש"
 				}
 			},
 			"MANUFACTURING": {

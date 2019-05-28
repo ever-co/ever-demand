@@ -291,6 +291,20 @@
 					"PUBLISHABLE_KEY_IS_REQUIRED": "Publishable key is required",
 					"ALLOW_REMEMBER_ME": "Allow remember me?",
 					"REMOVE": "Remove"
+				},
+				"PAYPAL": {
+					"MODE": "Mode",
+					"CHOOSE_PAYPAL_MODE": "Choose PayPal mode",
+					"TYPE": "type",
+					"CURRENCY": "Currency",
+					"CHOOSE_CURRENCY_CODE": "Choose currency code",
+					"CURRENCY_TEXT_IS_REQUIRED": "Currency text is required",
+					"PUBLISHABLE_KEY": "Publishable key",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "Publishable key is required",
+					"SECRET_KEY": "Secret key",
+					"SECRET_KEY_IS_REQUIRED": "Secret key is required",
+					"PAYMENT_DESCRIPTION": "Payment description",
+					"PAYMENT_DESCRIPTION_IS_REQUIRED": "Payment description is required"
 				}
 			},
 			"MANUFACTURING": {

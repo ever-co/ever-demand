@@ -291,6 +291,20 @@
 					"PUBLISHABLE_KEY_IS_REQUIRED": "Требуется публикуемый ключ",
 					"ALLOW_REMEMBER_ME": "Разрешить запомнить меня?",
 					"REMOVE": "Удалить"
+				},
+				"PAYPAL": {
+					"MODE": "Режим",
+					"CHOOSE_PAYPAL_MODE": "Выберите режим PayPal",
+					"TYPE": "тип",
+					"CURRENCY": "валюта",
+					"CHOOSE_CURRENCY_CODE": "Выберите код валюты",
+					"CURRENCY_TEXT_IS_REQUIRED": "Текст валюты требуется",
+					"PUBLISHABLE_KEY": "Публикуемый ключ",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "Требуется публикуемый ключ",
+					"SECRET_KEY": "Секретный ключ",
+					"SECRET_KEY_IS_REQUIRED": "Требуется секретный ключ",
+					"PAYMENT_DESCRIPTION": "Описание оплаты",
+					"PAYMENT_DESCRIPTION_IS_REQUIRED": "Требуется описание платежа"
 				}
 			},
 			"MANUFACTURING": {
