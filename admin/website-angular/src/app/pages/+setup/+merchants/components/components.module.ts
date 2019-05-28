@@ -8,7 +8,6 @@ import { MerchantsSetupInstructionsComponent } from './instructions/instructions
 import { SetupMerchantAccountComponent } from './account/account.component';
 import { SetupMerchantBasicInfoComponent } from './basic-info/basic-info.component';
 import { SetupMerchantContactInfoComponent } from './contact-info/contact-info.component';
-import { SetupMerchantPaymentsComponent } from './payments/payments.component';
 import { SetupMerchantManufacturingComponent } from './manufacturing/manufacturing.component';
 import { SetupMerchantOrdersSettingsComponent } from './settings/orders/orders.component';
 import { NbRadioModule } from '@nebular/theme';
@@ -22,7 +21,6 @@ const COMPONENTS = [
 	SetupMerchantBasicInfoComponent,
 	SetupMerchantContactInfoComponent,
 	MerchantsSetupInstructionsComponent,
-	SetupMerchantPaymentsComponent,
 	SetupMerchantManufacturingComponent,
 	SetupMerchantOrdersSettingsComponent,
 	SetupMerchantProductCategoriesComponent
