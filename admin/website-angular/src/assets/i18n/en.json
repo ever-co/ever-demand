@@ -276,7 +276,22 @@
 			},
 			"PAYMENTS": {
 				"PAYMENTS": "Payments",
-				"ALLOW_ONLINE_PAYMENT": "Allow online payments?"
+				"ALLOW_ONLINE_PAYMENT": "Allow online payments?",
+				"STRIPE": {
+					"PAY_BUTTON_TEXT": "Pay Button text",
+					"CURRENCY": "Currency",
+					"PAY_BUTTON_TEXT_IS_REQUIRED": "Pay Button text is required",
+					"CHOOSE_CURRENCY_CODE": "Choose currency code",
+					"CURRENCY_TEXT_IS_REQUIRED": "Currency text is required",
+					"COMPANY_BRAND_LOGO": "Company brand logo",
+					"COMPANY_BRAND_LOGO_IS_REQUIRED": "Company brand logo is required",
+					"INVALID_LOGO_URL": "Invalid logo url",
+					"INVALID_LOGO": "Invalid logo",
+					"PUBLISHABLE_KEY": "Publishable key",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "Publishable key is required",
+					"ALLOW_REMEMBER_ME": "Allow remember me?",
+					"REMOVE": "Remove"
+				}
 			},
 			"MANUFACTURING": {
 				"MANUFACTURING": "Manufacturing",

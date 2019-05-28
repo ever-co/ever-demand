@@ -6,6 +6,9 @@ import { Country } from '@modules/server.common/entities';
 import { countriesDefaultCurrencies } from '@modules/server.common/entities/Currency';
 import { NgForm } from '@angular/forms';
 import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaymentGateway';
+import { TranslateService } from '@ngx-translate/core';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
 	selector: 'ea-stripe-gateway',
@@ -20,6 +23,11 @@ export class StripeGatewayComponent implements OnChanges {
 	logo = 'https://stripe.com/img/v3/home/twitter.png';
 	invalidUrl: boolean;
 
+	private _ngDestroy$ = new Subject<void>();
+
+	COMPANY_BRAND_LOGO =
+		'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.STRIPE.COMPANY_BRAND_LOGO';
+
 	@Input()
 	currenciesCodes: string[] = [];
 	@Input()
@@ -27,6 +35,18 @@ export class StripeGatewayComponent implements OnChanges {
 	@Input()
 	set companyBrandLogo(logo: string) {
 		this.configModel.companyBrandLogo = logo;
+	}
+
+	constructor(private translateService: TranslateService) {
+		// https://github.com/ngx-translate/core/issues/835
+		// see how to translate words in the component(.ts) file
+
+		translateService
+			.stream(this.COMPANY_BRAND_LOGO)
+			.pipe(takeUntil(this._ngDestroy$))
+			.subscribe((text: string) => {
+				this.COMPANY_BRAND_LOGO = text;
+			});
 	}
 
 	configModel = {
@@ -73,5 +93,10 @@ export class StripeGatewayComponent implements OnChanges {
 
 	deleteImg() {
 		this.configModel.companyBrandLogo = '';
+	}
+
+	ngOnDestroy() {
+		this._ngDestroy$.next();
+		this._ngDestroy$.complete();
 	}
 }

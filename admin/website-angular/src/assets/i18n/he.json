@@ -276,7 +276,22 @@
 			},
 			"PAYMENTS": {
 				"PAYMENTS": "תשלומים",
-				"ALLOW_ONLINE_PAYMENT": "האם לאפשר תשלומים מקוונים?"
+				"ALLOW_ONLINE_PAYMENT": "האם לאפשר תשלומים מקוונים?",
+				"STRIPE": {
+					"PAY_BUTTON_TEXT": "טקסט של לחצן 'תשלום'",
+					"CURRENCY": "מטבע",
+					"PAY_BUTTON_TEXT_IS_REQUIRED": "יש צורך בטקסט של לחצן שלם",
+					"CHOOSE_CURRENCY_CODE": "בחר קוד מטבע",
+					"CURRENCY_TEXT_IS_REQUIRED": "טקסט מטבע נדרש",
+					"COMPANY_BRAND_LOGO": "לוגו מותג החברה",
+					"COMPANY_BRAND_LOGO_IS_REQUIRED": "הלוגו של מותג החברה נדרש",
+					"INVALID_LOGO_URL": "כתובת אתר של לוגו לא חוקית",
+					"INVALID_LOGO": "לוגו לא חוקי",
+					"PUBLISHABLE_KEY": "מפתח ניתן לפרסום",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "נדרש מפתח לפרסום",
+					"ALLOW_REMEMBER_ME": "אתה זוכר אותי?",
+					"REMOVE": "הסר"
+				}
 			},
 			"MANUFACTURING": {
 				"MANUFACTURING": "ייצור",

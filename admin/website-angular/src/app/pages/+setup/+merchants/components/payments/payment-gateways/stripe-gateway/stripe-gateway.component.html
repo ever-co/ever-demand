@@ -11,7 +11,10 @@
 	<div class="row m-0">
 		<div class="form-group col-md-6">
 			<label for="payButtontext">
-				Pay Button text
+				{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.STRIPE.PAY_BUTTON_TEXT'
+						| translate
+				}}
 			</label>
 			<input
 				nbInput
@@ -19,7 +22,10 @@
 				class="form-control"
 				id="payButtontext"
 				name="pay-button-text"
-				placeholder="Pay Button text"
+				placeholder="{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.STRIPE.PAY_BUTTON_TEXT'
+						| translate
+				}}"
 				[(ngModel)]="configModel.payButtontext"
 				#payButtontext="ngModel"
 				[ngClass]="{
@@ -40,14 +46,20 @@
 				"
 			>
 				<span *ngIf="payButtontext.errors.required">
-					Pay Button text is required
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.STRIPE.PAY_BUTTON_TEXT_IS_REQUIRED'
+							| translate
+					}}
 				</span>
 			</small>
 		</div>
 
 		<div class="form-group col-md-6">
 			<label for="currency">
-				Currency
+				{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.STRIPE.CURRENCY'
+						| translate
+				}}
 			</label>
 			<select
 				#currency="ngModel"
@@ -56,8 +68,11 @@
 				class="form-control"
 				required
 			>
-				<option value="" disabled selected hidden
-					>Choose currency code</option
+				<option value="" disabled selected hidden>
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.STRIPE.CHOOSE_CURRENCY_CODE'
+							| translate
+					}}</option
 				>
 				<option
 					*ngFor="let code of currenciesCodes"
@@ -70,7 +85,10 @@
 				*ngIf="currency.invalid && (currency.dirty || currency.touched)"
 			>
 				<span *ngIf="currency.errors.required">
-					Currency text is required
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.STRIPE.CURRENCY_TEXT_IS_REQUIRED'
+							| translate
+					}}
 				</span>
 			</small>
 		</div>
@@ -79,11 +97,14 @@
 	<div class="row mt-0 mr-0 ml-0 form-group">
 		<div class="col-md-12">
 			<label for="logo">
-				Company brand logo
+				{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.STRIPE.CURRENCY_TEXT_IS_REQUIRED'
+						| translate
+				}}
 			</label>
 			<e-cu-file-uploader
 				#fileUploader
-				[placeholder]="'Company brand logo'"
+				[placeholder]="COMPANY_BRAND_LOGO"
 				[fileUrl]="configModel.companyBrandLogo"
 				(uploadedImgUrl)="configModel.companyBrandLogo = $event"
 				[customClass]="
@@ -105,11 +126,17 @@
 				"
 			>
 				<span *ngIf="configModel.companyBrandLogo === ''">
-					Company brand logo is required
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.STRIPE.COMPANY_BRAND_LOGO_IS_REQUIRED'
+							| translate
+					}}
 				</span>
 
 				<span *ngIf="invalidUrl && configModel.companyBrandLogo !== ''">
-					Invalid logo url
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.STRIPE.INVALID_LOGO_URL'
+							| translate
+					}}
 				</span>
 			</small>
 		</div>
@@ -130,7 +157,10 @@
 					<div class="remove-icon" (click)="deleteImg()">
 						<span
 							class="ion-md-remove-circle text-danger pl-2"
-							title="Remove"
+							title="{{
+								'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.STRIPE.REMOVE'
+									| translate
+							}}"
 						></span>
 					</div>
 				</div>
@@ -141,7 +171,10 @@
 	<div class="row m-0">
 		<div class="form-group col-md-12">
 			<label for="publishableKey">
-				Publishable key
+				{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.STRIPE.PUBLISHABLE_KEY'
+						| translate
+				}}
 			</label>
 			<input
 				nbInput
@@ -149,7 +182,10 @@
 				class="form-control"
 				id="publishableKey"
 				name="publishable-key"
-				placeholder="Publishable key"
+				placeholder="{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.STRIPE.PUBLISHABLE_KEY'
+						| translate
+				}}"
 				[(ngModel)]="configModel.publishableKey"
 				#publishableKey="ngModel"
 				[ngClass]="{
@@ -170,7 +206,10 @@
 				"
 			>
 				<span *ngIf="publishableKey.errors.required">
-					Publishable key is required
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.STRIPE.PUBLISHABLE_KEY_IS_REQUIRED'
+							| translate
+					}}
 				</span>
 			</small>
 		</div>
@@ -182,7 +221,10 @@
 				name="remember-me"
 				[(ngModel)]="configModel.allowRememberMe"
 			>
-				Allow remember me?
+				{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.STRIPE.ALLOW_REMEMBER_ME'
+						| translate
+				}}
 			</nb-checkbox>
 		</div>
 	</div>
