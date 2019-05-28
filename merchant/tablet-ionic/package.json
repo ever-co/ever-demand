@@ -172,7 +172,7 @@
 		"@angular-builders/dev-server": "^7.3.1",
 		"@angular-devkit/architect": "^0.13.8",
 		"@angular-devkit/build-angular": "^0.13.8",
-		"@angular-devkit/build-optimizer": "^0.13.8",
+		"@angular-devkit/build-optimizer": "^0.800.0",
 		"@angular-devkit/core": "^7.3.8",
 		"@angular-devkit/schematics": "^7.3.8",
 		"@angular/cli": "^7.3.8",
