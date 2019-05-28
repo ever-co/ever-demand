@@ -10,6 +10,7 @@ import { SetupMerchantsLocationModule } from './components/location/location.mod
 import { SetupMerchantsDeliveryAndTakeawayModule } from './components/settings/delivery-takeaway/delivery-takeaway.module';
 import { ToasterModule } from 'angular2-toaster';
 import { SetupMerchantsProductsModule } from './components/products/products.module';
+import { SetupMerchantsPaymentsModule } from './components/payments/payments.module';
 
 const routes: Routes = [
 	{
@@ -29,6 +30,7 @@ const routes: Routes = [
 		SetupMerchantsLocationModule,
 		SetupMerchantsDeliveryAndTakeawayModule,
 		SetupMerchantsProductsModule,
+		SetupMerchantsPaymentsModule,
 		ToasterModule.forRoot()
 	],
 	declarations: [SetupMerchantsComponent]

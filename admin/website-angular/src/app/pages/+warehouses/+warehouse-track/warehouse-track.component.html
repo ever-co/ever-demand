@@ -4,10 +4,7 @@
 			<div class="col-8">
 				<nb-card>
 					<nb-card-header>
-						{{
-							'CARRIERS_VIEW.TRACK_PAGE.TRACK_ALL_WORKING_CARRIERS'
-								| translate
-						}}
+						Track all merchants
 					</nb-card-header>
 					<nb-card-body>
 						<div #gmap class="googleMap"></div>
@@ -18,24 +15,18 @@
 			<div class="col-4">
 				<nb-card>
 					<nb-card-header>
-						{{
-							'CARRIERS_VIEW.TRACK_PAGE.FILTER_CARRIERS'
-								| translate
-						}}
+						Filter Merchants
 					</nb-card-header>
 					<nb-card-body style="overflow:inherit;">
 						<div>
 							<ng-select
-								[items]="stores"
-								placeholder="{{
-									'DASHBOARD_VIEW.SELECT_COMPONENT.SELECT_STORE'
-										| translate
-								}}"
-								[clearable]="false"
-								bindLabel="id"
+								[items]="listOfMerchants"
+								placeholder="Filter by Name"
+								[clearable]="true"
+								bindLabel="name"
+								[(ngModel)]="merchantName"
 								style="width:100%;margin-bottom:30px;"
-								(change)="storeListener($event)"
-								[(ngModel)]="selectedStore"
+								(change)="filterByName($event)"
 							>
 								<ng-template ng-label-tmp let-item="item">
 									<img
@@ -45,8 +36,18 @@
 										class="mr-2"
 										[src]="item.logo"
 									/>
-									<b>{{ item.name }}</b>
+									<b>{{ item }}</b>
 								</ng-template>
+							</ng-select>
+							<ng-select
+								[items]="listOfCities"
+								[(ngModel)]="merchantCity"
+								[clearable]="true"
+								placeholder="Filter by City"
+								bindLabel="city"
+								style="width:100%; margin-bottom:30px;"
+								(change)="filterByCity($event)"
+							>
 								<ng-template
 									ng-option-tmp
 									let-item="item"
@@ -60,32 +61,19 @@
 											class="mr-1"
 											[src]="item.logo"
 										/>
-										{{ item.name }}
+										{{ item }}
 									</h6>
 								</ng-template>
 							</ng-select>
 							<ng-select
-								(change)="carrierListener($event)"
-								[items]="filteredCarriersList"
-								[(ngModel)]="selectedCarrier"
-								[clearable]="false"
-								placeholder="{{
-									'CARRIERS_VIEW.CARRIER_PAGE.SELECT_CARRIER'
-										| translate
-								}}"
-								bindLabel="fullName"
+								[items]="listOfCountries"
+								[clearable]="true"
+								placeholder="Filter by City"
+								bindLabel="city"
+								[(ngModel)]="merchantCountry"
 								style="width:100%; margin-bottom:30px;"
+								(change)="filterByCountry($event)"
 							>
-								<ng-template ng-label-tmp let-item="item">
-									<img
-										*ngIf="item.logo"
-										height="15"
-										width="15"
-										class="mr-2"
-										[src]="item.logo"
-									/>
-									{{ item.fullName }}
-								</ng-template>
 								<ng-template
 									ng-option-tmp
 									let-item="item"
@@ -99,7 +87,7 @@
 											class="mr-1"
 											[src]="item.logo"
 										/>
-										{{ item.fullName }}
+										{{ item }}
 									</h6>
 								</ng-template>
 							</ng-select>
@@ -112,24 +100,15 @@
 									</h5>
 									<ul>
 										<li>
-											{{
-												'CARRIERS_VIEW.TRACK_PAGE.PHONE'
-													| translate
-											}}:
+											Phone:
 											{{ selectedStore.contactPhone }}
 										</li>
 										<li>
-											{{
-												'CARRIERS_VIEW.TRACK_PAGE.EMAIL'
-													| translate
-											}}:
+											Email:
 											{{ selectedStore.contactEmail }}
 										</li>
 										<li>
-											{{
-												'CARRIERS_VIEW.TRACK_PAGE.ADDRESS'
-													| translate
-											}}:
+											Address:
 											{{
 												selectedStore.geoLocation
 													.streetAddress
@@ -143,25 +122,16 @@
 									</h5>
 									<ul>
 										<li>
-											{{
-												'CARRIERS_VIEW.TRACK_PAGE.DELIVERY_COUNT'
-													| translate
-											}}:
+											Delivery Count:
 											{{
 												selectedCarrier.numberOfDeliveries
 											}}
 										</li>
 										<li>
-											{{
-												'CARRIERS_VIEW.TRACK_PAGE.PHONE'
-													| translate
-											}}: {{ selectedCarrier.phone }}
+											Phone: {{ selectedCarrier.phone }}
 										</li>
 										<li>
-											{{
-												'CARRIERS_VIEW.TRACK_PAGE.ADDRESS'
-													| translate
-											}}:
+											Address:
 											{{
 												selectedCarrier.geoLocation
 													.streetAddress

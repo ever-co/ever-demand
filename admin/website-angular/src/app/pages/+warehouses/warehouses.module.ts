@@ -15,6 +15,7 @@ import { RenderComponentsModule } from '../../@shared/render-component/render-co
 import { WarehouseTableModule } from '../../@shared/render-component/warehouse-table/warehouse-table.module';
 import { NbSpinnerModule } from '@nebular/theme';
 import { ConfirmationModalModule } from 'app/@shared/confirmation-modal/confirmation-modal.module';
+import { WarehouseTrackModule } from './+warehouse-track/warehouse-track.module';
 
 @NgModule({
 	imports: [
@@ -25,6 +26,7 @@ import { ConfirmationModalModule } from 'app/@shared/confirmation-modal/confirma
 		Ng2SmartTableModule,
 		FormWizardModule,
 		ConfirmationModalModule,
+		WarehouseTrackModule,
 		ToasterModule.forRoot(),
 		TranslateModule.forChild({
 			loader: {

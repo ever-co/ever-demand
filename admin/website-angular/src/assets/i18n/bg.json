@@ -277,7 +277,36 @@
 			},
 			"PAYMENTS": {
 				"PAYMENTS": "Плащания",
-				"ALLOW_ONLINE_PAYMENT": "Разрешаване на онлайн плащания?"
+				"ALLOW_ONLINE_PAYMENT": "Разрешаване на онлайн плащания?",
+				"STRIPE": {
+					"PAY_BUTTON_TEXT": "Текст на бутона за плащане",
+					"CURRENCY": "Валута",
+					"PAY_BUTTON_TEXT_IS_REQUIRED": "Изисква се текст на бутон за плащане",
+					"CHOOSE_CURRENCY_CODE": "Изберете кода на валутата",
+					"CURRENCY_TEXT_IS_REQUIRED": "Изберете кода на валутата",
+					"COMPANY_BRAND_LOGO": "Лого на фирмената марка",
+					"COMPANY_BRAND_LOGO_IS_REQUIRED": "Изисква се лого на фирмената марка",
+					"INVALID_LOGO_URL": "Невалиден URL адрес на логото",
+					"INVALID_LOGO": "Невалидно лого",
+					"PUBLISHABLE_KEY": "Публикуван ключ",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "Изисква се издателски ключ",
+					"ALLOW_REMEMBER_ME": "Нека ме запамети?",
+					"REMOVE": "Премахни"
+				},
+				"PAYPAL": {
+					"MODE": "Метод",
+					"CHOOSE_PAYPAL_MODE": "Избери PayPal метод",
+					"TYPE": "тип",
+					"CURRENCY": "Валута",
+					"CHOOSE_CURRENCY_CODE": "Изберете кода на валутата",
+					"CURRENCY_TEXT_IS_REQUIRED": "Необходим е текст на валутата",
+					"PUBLISHABLE_KEY": "Публикуван ключ",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "Изисква се публичен ключ",
+					"SECRET_KEY": "Тайният ключ",
+					"SECRET_KEY_IS_REQUIRED": "Изисква се секретен ключ",
+					"PAYMENT_DESCRIPTION": "Описание на плащането",
+					"PAYMENT_DESCRIPTION_IS_REQUIRED": "Изисква се описание на плащането"
+				}
 			},
 			"MANUFACTURING": {
 				"MANUFACTURING": "Производство",
@@ -437,6 +466,10 @@
 				"BASIC_INFO": "Основна информация",
 				"CONTACT_INFO": "Информация за контакт",
 				"LOCATION": "Местоположение"
+			},
+			"CONTACT_INFO_TAB": {
+				"ORDER_FORWARDING_EMAIL": "Поръчка за изпращане на имейл",
+				"ORDER_FORWARDING_PHONE": "телефон за обратна връзка"
 			}
 		},
 		"NEW_PRODUCT": {
@@ -852,7 +885,11 @@
 		},
 		"TRACK_PAGE": {
 			"TRACK_ALL_WORKING_CARRIERS": "Проследете всички работещи превозвачи",
-			"FILTER_CARRIERS": "Филтрирай превозвачите"
+			"FILTER_CARRIERS": "Филтрирай превозвачите",
+			"PHONE": "Телефон",
+			"EMAIL": "Эл. адрес",
+			"ADDRESS": "Адрес",
+			"DELIVERY_COUNT": "Счетчик доставки"
 		}
 	},
 	"PRODUCT_TYPE_VIEW": {
