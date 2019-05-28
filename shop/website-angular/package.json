@@ -109,7 +109,7 @@
 		"@angular/compiler": "^7.2.11",
 		"@angular/core": "^7.2.11",
 		"@angular/forms": "^7.2.11",
-		"@angular/material": "^7.3.3",
+		"@angular/material": "^8.0.0",
 		"@angular/platform-browser": "^7.2.11",
 		"@angular/platform-browser-dynamic": "^7.2.11",
 		"@angular/platform-server": "^7.2.11",
