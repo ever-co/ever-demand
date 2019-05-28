@@ -434,6 +434,10 @@
 				"BASIC_INFO": "Basic Info",
 				"CONTACT_INFO": "Contact Info",
 				"LOCATION": "Location"
+			},
+			"CONTACT_INFO_TAB": {
+				"ORDER_FORWARDING_EMAIL": "Order Forwarding Email",
+				"ORDER_FORWARDING_PHONE": "Order Forwarding Phone"
 			}
 		},
 		"NEW_PRODUCT": {

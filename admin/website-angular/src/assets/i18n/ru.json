@@ -436,6 +436,10 @@
 				"BASIC_INFO": "Базовая информация",
 				"CONTACT_INFO": "Контактная информация",
 				"LOCATION": "Место нахождения"
+			},
+			"CONTACT_INFO_TAB": {
+				"ORDER_FORWARDING_EMAIL": "Пересылка заказа по электронной почте",
+				"ORDER_FORWARDING_PHONE": "Заказать переадресацию телефона"
 			}
 		},
 		"NEW_PRODUCT": {

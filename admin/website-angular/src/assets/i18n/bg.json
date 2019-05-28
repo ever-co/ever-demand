@@ -437,6 +437,10 @@
 				"BASIC_INFO": "Основна информация",
 				"CONTACT_INFO": "Информация за контакт",
 				"LOCATION": "Местоположение"
+			},
+			"CONTACT_INFO_TAB": {
+				"ORDER_FORWARDING_EMAIL": "Поръчка за изпращане на имейл",
+				"ORDER_FORWARDING_PHONE": "телефон за обратна връзка"
 			}
 		},
 		"NEW_PRODUCT": {

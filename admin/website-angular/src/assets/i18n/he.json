@@ -436,6 +436,10 @@
 				"BASIC_INFO": "מידע בסיסי",
 				"CONTACT_INFO": "פרטים ליצירת קשר",
 				"LOCATION": "מקום"
+			},
+			"CONTACT_INFO_TAB": {
+				"ORDER_FORWARDING_EMAIL": "סדר העברת דואר אלקטרוני",
+				"ORDER_FORWARDING_PHONE": "הזמנת טלפון העברה"
 			}
 		},
 		"NEW_PRODUCT": {
