@@ -104,7 +104,7 @@
 	"dependencies": {
 		"@agm/core": "^1.0.0-beta.5",
 		"@angular/animations": "^7.2.11",
-		"@angular/cdk": "^7.3.6",
+		"@angular/cdk": "^8.0.0",
 		"@angular/common": "^7.2.11",
 		"@angular/compiler": "^7.2.11",
 		"@angular/core": "^7.2.11",
