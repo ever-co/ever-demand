@@ -881,7 +881,11 @@
 		},
 		"TRACK_PAGE": {
 			"TRACK_ALL_WORKING_CARRIERS": "Отслеживание всех работающих перевозчиков",
-			"FILTER_CARRIERS": "Фильтр-носители"
+			"FILTER_CARRIERS": "Фильтр-носители",
+			"PHONE": "Телефон",
+			"EMAIL": "Эл. адрес",
+			"ADDRESS": "Адрес",
+			"DELIVERY_COUNT": "Счетчик доставки"
 		}
 	},
 	"PRODUCT_TYPE_VIEW": {

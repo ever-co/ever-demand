@@ -884,7 +884,11 @@
 		},
 		"TRACK_PAGE": {
 			"TRACK_ALL_WORKING_CARRIERS": "Track all working carriers",
-			"FILTER_CARRIERS": "Filter Carriers"
+			"FILTER_CARRIERS": "Filter Carriers",
+			"PHONE": "Phone",
+			"EMAIL": "Email",
+			"ADDRESS": "Address",
+			"DELIVERY_COUNT": "Delivery Count"
 		}
 	},
 	"PRODUCT_TYPE_VIEW": {

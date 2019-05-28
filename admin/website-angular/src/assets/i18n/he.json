@@ -884,7 +884,11 @@
 		},
 		"TRACK_PAGE": {
 			"TRACK_ALL_WORKING_CARRIERS": "עקוב אחר כל ספקי השירות",
-			"FILTER_CARRIERS": "מסנני מסננים"
+			"FILTER_CARRIERS": "מסנני מסננים",
+			"PHONE": "מכשיר טלפון",
+			"EMAIL": "דוא'ל",
+			"ADDRESS": "כתובת",
+			"DELIVERY_COUNT": "ספירת משלוח"
 		}
 	},
 	"PRODUCT_TYPE_VIEW": {

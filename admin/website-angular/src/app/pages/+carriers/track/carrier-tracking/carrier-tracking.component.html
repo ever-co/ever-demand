@@ -112,15 +112,24 @@
 									</h5>
 									<ul>
 										<li>
-											Phone:
+											{{
+												'CARRIERS_VIEW.TRACK_PAGE.PHONE'
+													| translate
+											}}:
 											{{ selectedStore.contactPhone }}
 										</li>
 										<li>
-											Email:
+											{{
+												'CARRIERS_VIEW.TRACK_PAGE.EMAIL'
+													| translate
+											}}:
 											{{ selectedStore.contactEmail }}
 										</li>
 										<li>
-											Address:
+											{{
+												'CARRIERS_VIEW.TRACK_PAGE.ADDRESS'
+													| translate
+											}}:
 											{{
 												selectedStore.geoLocation
 													.streetAddress
@@ -134,16 +143,25 @@
 									</h5>
 									<ul>
 										<li>
-											Delivery Count:
+											{{
+												'CARRIERS_VIEW.TRACK_PAGE.DELIVERY_COUNT'
+													| translate
+											}}:
 											{{
 												selectedCarrier.numberOfDeliveries
 											}}
 										</li>
 										<li>
-											Phone: {{ selectedCarrier.phone }}
+											{{
+												'CARRIERS_VIEW.TRACK_PAGE.PHONE'
+													| translate
+											}}: {{ selectedCarrier.phone }}
 										</li>
 										<li>
-											Address:
+											{{
+												'CARRIERS_VIEW.TRACK_PAGE.ADDRESS'
+													| translate
+											}}:
 											{{
 												selectedCarrier.geoLocation
 													.streetAddress
