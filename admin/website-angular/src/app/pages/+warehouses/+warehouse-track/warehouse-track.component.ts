@@ -52,15 +52,9 @@ export class WarehouseTrackComponent implements OnInit {
 					);
 					this.populateMarkers(store, this.merchantMarkers);
 				} else if (store.length === this.merchantMarkers.length) {
-					this.updateMarkers(store, this.merchantMarkers);
+					this.updateMarkers(store);
 				} else {
-					console.log(this.merchantMarkers);
-					this.updateMarkers(
-						store.filter((mer) =>
-							this.listOfMerchants.includes(mer.name)
-						),
-						this.merchantMarkers
-					);
+					this.updateMarkers(store);
 				}
 			});
 	}
@@ -82,13 +76,13 @@ export class WarehouseTrackComponent implements OnInit {
 		if (event) {
 			this.merchantName = event;
 
-			this.deleteMarkerStorage(this.merchantMarkers);
+			this.deleteMarkerStorage();
 			const filteredMerchants = this.merchants.filter(
 				(mer) => mer.name === this.merchantName
 			);
 			this.populateMarkers(filteredMerchants, this.merchantMarkers);
 		} else {
-			this.deleteMarkerStorage(this.merchantMarkers);
+			this.deleteMarkerStorage();
 			this.populateMarkers(this.merchants, this.merchantMarkers);
 		}
 	}
@@ -97,7 +91,7 @@ export class WarehouseTrackComponent implements OnInit {
 		if (event) {
 			this.merchantCity = event;
 			this.merchantName = undefined;
-			this.deleteMarkerStorage(this.merchantMarkers);
+			this.deleteMarkerStorage();
 			const filteredMerchants = this.merchants.filter(
 				(mer) => mer.geoLocation.city === this.merchantCity
 			);
@@ -106,7 +100,7 @@ export class WarehouseTrackComponent implements OnInit {
 				filteredMerchants.map((mer) => mer.name)
 			);
 		} else {
-			this.deleteMarkerStorage(this.merchantMarkers);
+			this.deleteMarkerStorage();
 			this.populateMarkers(this.merchants, this.merchantMarkers);
 		}
 	}
@@ -116,8 +110,7 @@ export class WarehouseTrackComponent implements OnInit {
 			this.merchantCountry = event;
 			this.merchantCity = undefined;
 			this.merchantName = undefined;
-
-			this.deleteMarkerStorage(this.merchantMarkers);
+			this.deleteMarkerStorage();
 			const filteredMerchants = this.merchants.filter(
 				(mer) =>
 					getCountryName(mer.geoLocation.countryId) ===
@@ -131,7 +124,7 @@ export class WarehouseTrackComponent implements OnInit {
 			);
 			this.populateMarkers(filteredMerchants, this.merchantMarkers);
 		} else {
-			this.deleteMarkerStorage(this.merchantMarkers);
+			this.deleteMarkerStorage();
 			this.populateMarkers(this.merchants, this.merchantMarkers);
 		}
 	}
@@ -148,33 +141,36 @@ export class WarehouseTrackComponent implements OnInit {
 		});
 	}
 
-	updateMarkers(merchantArray: Warehouse[], markerStorage: any[]) {
+	updateMarkers(merchantArray: Warehouse[]) {
 		merchantArray.forEach((mer, index) => {
 			const newCoords = new google.maps.LatLng(
 				mer.geoLocation.loc.coordinates[1],
 				mer.geoLocation.loc.coordinates[0]
 			);
 			let markerIndex;
-			const oldCoords = markerStorage.find((marker, i) => {
-				if (marker.id === mer.id) {
+			const marker = this.merchantMarkers.find((markerItem, i) => {
+				if (markerItem.id === mer.id) {
 					markerIndex = i;
 					return true;
 				} else {
 					return false;
 				}
 			});
-			console.log(markerIndex);
-			if (!newCoords.equals(oldCoords.marker.position)) {
-				markerStorage[index].marker.setPosition(newCoords);
+			if (marker) {
+				if (!newCoords.equals(marker.marker.getPosition())) {
+					this.merchantMarkers[markerIndex].marker.setPosition(
+						newCoords
+					);
+				}
 			}
 		});
 	}
 
-	deleteMarkerStorage(markerStorage) {
-		markerStorage.forEach((mar) => {
+	deleteMarkerStorage() {
+		this.merchantMarkers.forEach((mar) => {
 			mar.marker.setMap(null);
 		});
-		markerStorage = [];
+		this.merchantMarkers = [];
 	}
 
 	addMarker(position, map, icon) {
