@@ -706,6 +706,8 @@
 		"CREATE_CUSTOMER": "Create",
 		"DELETE": "DELETE",
 		"CREATE": "CREATE",
+		"BAN": "BAN",
+		"UNBAN": "UNBAN",
 		"MANAGE_CUSTOMER": "Manage customer",
 		"CUSTOMER": "Customer",
 		"CUSTOMERS_DEVICES": "Devices",

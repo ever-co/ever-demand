@@ -58,6 +58,7 @@ export class UsersService {
 							email
 							apartment
 							phone
+							isBanned
 							geoLocation {
 								countryId
 								city
@@ -94,6 +95,7 @@ export class UsersService {
 							email
 							apartment
 							phone
+							isBanned
 							geoLocation {
 								streetAddress
 								city
@@ -143,6 +145,40 @@ export class UsersService {
 			.toPromise();
 
 		return res.data['registerUser'];
+	}
+
+	async banUser(id: string) {
+		return this._apollo
+			.mutate({
+				mutation: gql`
+					mutation BanUser($id: String!) {
+						banUser(id: $id) {
+							id
+							firstName
+							lastName
+						}
+					}
+				`,
+				variables: { id }
+			})
+			.toPromise();
+	}
+
+	async unbanUser(id: string) {
+		return this._apollo
+			.mutate({
+				mutation: gql`
+					mutation UnbanUser($id: String!) {
+						unbanUser(id: $id) {
+							id
+							firstName
+							lastName
+						}
+					}
+				`,
+				variables: { id }
+			})
+			.toPromise();
 	}
 
 	async getCountOfUsers() {
