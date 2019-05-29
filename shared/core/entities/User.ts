@@ -149,6 +149,16 @@ class User extends DBObject<IUser, IUserCreateObject> implements IUser {
 	@Column()
 	isRegistrationCompleted: boolean;
 
+	/**
+	 * Is customer banned
+	 *
+	 * @type {boolean}
+	 * @memberof User
+	 */
+	@Types.Boolean(false)
+	@Column()
+	isBanned: boolean;
+
 	@Types.Boolean(false)
 	@Column()
 	isDeleted: boolean;

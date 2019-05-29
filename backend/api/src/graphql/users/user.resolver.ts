@@ -196,4 +196,14 @@ export class UserResolver {
 	) {
 		return this._usersAuthService.addRegistrationInfo(id, registrationInfo);
 	}
+
+	@Mutation()
+	async banUser(_, { id }: { id: User['id'] }) {
+		return this._usersService.banUser(id);
+	}
+
+	@Mutation()
+	async unbanUser(_, { id }: { id: User['id'] }) {
+		return this._usersService.unbanUser(id);
+	}
 }

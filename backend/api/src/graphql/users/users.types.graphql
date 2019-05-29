@@ -18,6 +18,8 @@ type User {
 	fullAddress: String
 
 	createdAt: Date
+
+	isBanned: Boolean!
 }
 
 input UserCreateInput {
@@ -147,4 +149,8 @@ type Mutation {
 		id: String!
 		registrationInfo: AdditionalUserRegistrationInfo!
 	): Void
+
+	banUser(id: String!): User
+
+	unbanUser(id: String!): User
 }
