@@ -105,13 +105,13 @@
     "@angular-devkit/core" "7.3.8"
     rxjs "6.3.3"
 
-"@angular-extensions/testing-library@^4.0.3":
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/@angular-extensions/testing-library/-/testing-library-4.0.3.tgz#79ca0a9e8f8d03399315fbe8650864443696841c"
-  integrity sha512-RTVcFvi+JkZrzrLXjjaIGNbW1qd8z/BPQMrLGsUPLIPJUsX5jq9U52qa90Xqx7N8/8ZTClfijRMSnlX1J1ZLpA==
+"@angular-extensions/testing-library@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@angular-extensions/testing-library/-/testing-library-5.0.0.tgz#43121b984827fea550a8ed45695716d6427b4353"
+  integrity sha512-C17SEegDFQfYKi/uLdMINcHy1Jdmy+kfgdQlazevWFFgHYSCUa62ltCI8vPfh9OuIs4XwTluso/EAKZR8HtiDA==
   dependencies:
     "@phenomnomnominal/tsquery" "^3.0.0"
-    dom-testing-library "^4.0.1"
+    dom-testing-library "^4.1.0"
     tslib "^1.9.0"
     tslint "^5.16.0"
 
@@ -3472,10 +3472,10 @@ dom-serializer@0, dom-serializer@~0.1.1:
     domelementtype "^1.3.0"
     entities "^1.1.1"
 
-dom-testing-library@^4.0.1:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/dom-testing-library/-/dom-testing-library-4.1.0.tgz#273264e62e9e63f4e404f7349ddd7b9356aacd23"
-  integrity sha512-654GHd0oPC31S+ll1bJH9NUOBRzcHcrf23/XzJh41o6g67uGUpF9tn23qmbcwjNauoRqKQfAdHCDwr/Ez/Ot7A==
+dom-testing-library@^4.1.0:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/dom-testing-library/-/dom-testing-library-4.1.1.tgz#615af61bee06db51bd8ecea60c113eba7cb49dda"
+  integrity sha512-PUsG7aY5BJxzulDrOtkksqudRRypcVQF6d4RGAyj9xNwallOFqrNLOyg2QW2mCpFaNVPELX8hBX/wbHQtOto/A==
   dependencies:
     "@babel/runtime" "^7.4.3"
     "@sheerun/mutationobserver-shim" "^0.3.2"
