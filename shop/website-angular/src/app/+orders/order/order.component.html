@@ -1,52 +1,62 @@
 <mat-card class="order">
 	<div class="order-info">
-		<div class="warehouse-logo-container">
-			<warehouse-logo
-				[logo]="warehouse?.logo"
-				[border]="true"
-			></warehouse-logo>
-		</div>
-
 		<div class="product-info">
 			<h1 class="product-name">
 				{{ title }} <span class="product-price">${{ price }}</span>
 			</h1>
 			<h2 class="product-description">{{ description }}</h2>
 		</div>
-		<button
-			(click)="openDialog()"
-			mat-raised-button
-			color="accent"
-			class="cancel-button"
-		>
-			<svg viewBox="0 0 24 24">
-				<path
-					d="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z"
-				/>
-			</svg>
-			{{ 'ORDER_VIEW.CANCEL' | translate }}
-		</button>
-
-		<div class="order-status-container">
-			<p class="order-status-text">
-				{{ 'ORDER_VIEW.ORDER_ID' | translate }} {{ orderNumber }}
-			</p>
-			<p class="order-status-text">
-				{{ createdAt | date: 'yyyy-MM-dd HH:mm:ss' }}
-			</p>
-
-			<svg class="order-status-icon" viewBox="0 0 24 24">
-				<path
-					d="M12,18H6V14H12M21,14V12L20,7H4L3,12V14H4V20H14V14H18V20H20V14M20,4H4V6H20V4Z"
-				/>
-			</svg>
-
-			<p class="order-status-text">
-				{{ orderStatusTextTranslates | translate }}
-			</p>
+		<div class="order-options">
+			<button
+				(click)="openDialog()"
+				mat-raised-button
+				color="accent"
+				class="cancel-button"
+			>
+				<svg viewBox="0 0 24 24">
+					<path
+						d="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z"
+					/>
+				</svg>
+				{{ 'ORDER_VIEW.CANCEL' | translate }}
+			</button>
+			<button mat-raised-button color="accent">
+				Pay
+			</button>
 		</div>
 	</div>
+	<div class="order-status-container">
+		<p class="order-status-text">
+			{{ 'ORDER_VIEW.ORDER_ID' | translate }} {{ orderNumber }}
+		</p>
+		<p class="order-status-text">
+			{{ createdAt | date: 'yyyy-MM-dd HH:mm:ss' }}
+		</p>
+		<div class="order-status-text">
+			{{ order.orderType ? 'Takeout' : 'Delivery' }}
+		</div>
 
+		<svg class="order-status-icon" viewBox="0 0 24 24">
+			<path
+				d="M12,18H6V14H12M21,14V12L20,7H4L3,12V14H4V20H14V14H18V20H20V14M20,4H4V6H20V4Z"
+			/>
+		</svg>
+
+		<p class="order-status-text">
+			{{ orderStatusTextTranslates | translate }}
+		</p>
+	</div>
+	<div class="warehouse-logo-container">
+		<warehouse-logo
+			[logo]="warehouse?.logo"
+			[border]="true"
+		></warehouse-logo>
+	</div>
+	<div class="warehouse-info" *ngIf="warehouse">
+		<span>{{ warehouse.name }}</span>
+		<span>{{ warehouse.contactPhone }}</span>
+		<span>{{ warehouse.geoLocation.streetAddress }}</span>
+	</div>
 	<img
 		*ngIf="order.products.length"
 		class="order-picture h-100"

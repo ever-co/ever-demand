@@ -20,6 +20,7 @@ export class OrdersContainerComponent {
 		const userId = store.userId;
 		// During testing: this.userOrdersRouter.getOrderedProducts('23');
 		this.userOrdersRouter.get(userId).subscribe((res) => {
+			console.log(res);
 			this.orders = res.filter((r) => !r.isCancelled);
 			res = res.filter((r) => !r.isCancelled);
 			console.log(res);

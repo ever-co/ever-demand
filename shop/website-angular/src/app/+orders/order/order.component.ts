@@ -39,6 +39,7 @@ export class OrderComponent implements OnInit {
 	public img: string;
 	public orderStatusText: string;
 	public orderNumber: number;
+	public orderType: number;
 	public createdAt: Date;
 	public createdAtConverted: string;
 	public warehouse: Warehouse;
@@ -112,11 +113,13 @@ export class OrderComponent implements OnInit {
 		this.orderStatusTextTranslates =
 			this.PREFIX_ORDER_STATUS + this.orderStatusText;
 		this.orderNumber = this.order.orderNumber;
+		this.orderType = this.order.orderType;
 		this.createdAt = this.order.createdAt;
 		this.warehouse = await this.warehouseRouter
 			.get(this.order.warehouseId, false)
 			.pipe(first())
 			.toPromise();
+		console.log(this.warehouse);
 	}
 
 	protected localeTranslate(member: ILocaleMember[]): string {

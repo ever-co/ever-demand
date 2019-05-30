@@ -3,8 +3,10 @@
 	width: 100%;
 	padding: 0;
 	display: flex;
-	align-items: flex-start;
+	justify-content: space-between;
 	height: 240px;
+	box-sizing: border-box;
+	padding: 20px;
 
 	.no-product-img {
 		border-left: 1px solid #95989a;
@@ -12,14 +14,21 @@
 }
 
 .order-info {
-	padding: 50px 40px;
-	flex-grow: 1;
+	height: 100%;
+	width: 60%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.order-options {
+	display: flex;
+	button {
+		margin-left: 20px;
+	}
 }
 
 .product-name {
-	margin-top: 0;
-	margin-bottom: 10px;
-
 	font-family: 'Roboto', 'Helvetica Neue Light', 'HelveticaNeue-Light',
 		'Helvetica Neue', Calibri, Helvetica, Arial, sans-serif;
 	font-weight: normal;
@@ -28,8 +37,6 @@
 }
 
 .product-price {
-	margin-top: 0;
-
 	font-family: 'Segoe UI', 'Helvetica Neue Light', 'HelveticaNeue-Light',
 		'Helvetica Neue', Calibri, Helvetica, Arial, sans-serif;
 	font-weight: 200;
@@ -38,9 +45,6 @@
 }
 
 .product-description {
-	margin-top: 0;
-	margin-bottom: 0;
-
 	font-family: 'Roboto', 'Helvetica Neue Light', 'HelveticaNeue-Light',
 		'Helvetica Neue', Calibri, Helvetica, Arial, sans-serif;
 	font-weight: normal;
@@ -48,9 +52,16 @@
 	font-size: 18px;
 }
 
+.warehouse-info {
+	display: flex;
+	flex-direction: column;
+	font-size: 0.8em;
+	span:first-child {
+		font-size: 1em;
+		font-weight: bold;
+	}
+}
 .cancel-button {
-	position: absolute;
-	bottom: 30px;
 }
 
 .cancel-button svg {
@@ -67,10 +78,9 @@
 }
 
 .warehouse-logo-container {
-	position: relative;
-	float: right;
-	left: calc(40px + 23px);
-	bottom: 15px;
+	position: absolute;
+	right: 109px;
+	top: 20%;
 }
 
 .warehouse-logo-container warehouse-logo {
@@ -83,10 +93,10 @@
 }
 
 .order-status-container {
-	float: right;
-	margin-top: -65px;
-	margin-right: 20px;
 	text-align: center;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
 }
 
 .order-status-icon {
@@ -95,7 +105,6 @@
 }
 
 .order-status-text {
-	margin-top: -5px;
 	font-size: 12px;
 	font-weight: normal;
 	line-height: 14px;
