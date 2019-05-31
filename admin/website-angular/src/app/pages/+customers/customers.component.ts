@@ -141,7 +141,7 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 		modal.componentInstance.user = this._selectedCustomers[0];
 		modal.result
 			.then((id) => this._usersService.unbanUser(id))
-			.catch(console.error);
+			.catch((_) => {});
 	}
 
 	private showBanPopup() {
@@ -154,7 +154,7 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 		modal.componentInstance.user = this._selectedCustomers[0];
 		modal.result
 			.then((id) => this._usersService.banUser(id))
-			.catch(console.error);
+			.catch((_) => {});
 	}
 
 	private _loadSettingsSmartTable() {
