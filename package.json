@@ -59,6 +59,7 @@
 		"@ngx-translate/core": "^11.0.1",
 		"@ngx-translate/http-loader": "^4.0.0",
 		"angular2-logger": "^0.7.0",
+		"fstream": "^1.0.12",
 		"npm": "^6.9.0",
 		"rxjs": "^6.5.1",
 		"rxjs-compat": "^6.5.1",
