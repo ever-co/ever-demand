@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material';
 import { MessagePopUpComponent } from 'app/shared/message-pop-up/message-pop-up.component';
 import { first } from 'rxjs/operators';
 import Warehouse from '@modules/server.common/entities/Warehouse';
+import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 
 @Component({
 	selector: 'order',
@@ -44,6 +45,7 @@ export class OrderComponent implements OnInit {
 	public createdAtConverted: string;
 	public warehouse: Warehouse;
 	public totalPrice;
+	public carrier;
 
 	public PREFIX_ORDER_STATUS: string = 'ORDER_CARRIER_STATUS.';
 	public orderStatusTextTranslates: string;
@@ -56,6 +58,7 @@ export class OrderComponent implements OnInit {
 	constructor(
 		private warehouseOrdersRouter: WarehouseOrdersRouter,
 		private readonly warehouseRouter: WarehouseRouter,
+		private readonly carrierRouter: CarrierRouter,
 		private readonly _productLocalesService: ProductLocalesService,
 		private translateService: TranslateService,
 		private dialog: MatDialog
@@ -119,7 +122,13 @@ export class OrderComponent implements OnInit {
 			.get(this.order.warehouseId, false)
 			.pipe(first())
 			.toPromise();
-		console.log(this.warehouse);
+
+		if (this.order.carrierId) {
+			this.carrier = await this.carrierRouter
+				.get(this.order.carrierId)
+				.pipe(first())
+				.toPromise();
+		}
 	}
 
 	protected localeTranslate(member: ILocaleMember[]): string {
