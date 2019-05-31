@@ -36,6 +36,7 @@
 		<button
 			class="btn btn-danger mr-2 d-inline-block"
 			[disabled]="!isOnlyOneCustomerSelected"
+			[nbSpinner]="showBanLoading"
 			(click)="banSelectedRows()"
 		>
 			<i class="ion-md-close-circle button-icon"></i>
@@ -48,6 +49,14 @@
 				'CUSTOMERS_VIEW.BAN' | translate
 			}}</small>
 		</button>
+		<input
+			type="checkbox"
+			name="bannedOnly"
+			id="showBannedOnly"
+			[(ngModel)]="showOnlyBanned"
+			[ngModelOptions]="{ standalone: true }"
+		/>
+		<label for="bannedOnly">Show Banned Only</label>
 	</nb-card-header>
 
 	<nb-card-body [nbSpinner]="loading">
