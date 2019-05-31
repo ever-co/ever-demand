@@ -24,7 +24,7 @@ export class ToolbarComponent implements AfterViewInit {
 	styleVariables: typeof styleVariables = styleVariables;
 	isDeliveryRequired: boolean;
 
-	@ViewChild('matSearch')
+	@ViewChild('matSearch', { static: false })
 	matSearch: MatSearchComponent;
 
 	private initializedAddress: string;

@@ -13,7 +13,7 @@ import {
 	styleUrls: ['./warehouse-track.component.scss']
 })
 export class WarehouseTrackComponent implements OnInit {
-	@ViewChild('gmap')
+	@ViewChild('gmap', { static: false })
 	gmapElement: any;
 	map: google.maps.Map;
 

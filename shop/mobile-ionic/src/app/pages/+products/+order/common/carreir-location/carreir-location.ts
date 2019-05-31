@@ -16,7 +16,7 @@ import GeoLocation from '@modules/server.common/entities/GeoLocation';
 	`
 })
 export class DirectionsLocationComponent implements OnInit, OnDestroy {
-	@ViewChild('gmap')
+	@ViewChild('gmap', { static: false })
 	gmapElement: ElementRef;
 	public map: google.maps.Map;
 	private directionsDisplay = new google.maps.DirectionsRenderer();

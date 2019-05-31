@@ -75,7 +75,7 @@ export class LoginComponent implements ToolbarController, OnInit, OnDestroy {
 	private code = this.formControl.get('code');
 	private _ngDestroy$ = new Subject<void>();
 
-	@ViewChild('codeRef', { read: ElementRef })
+	@ViewChild('codeRef', { static: false, read: ElementRef })
 	private codeRef: ElementRef;
 
 	constructor(

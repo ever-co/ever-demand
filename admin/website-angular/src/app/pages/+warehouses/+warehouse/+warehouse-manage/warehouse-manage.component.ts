@@ -18,13 +18,13 @@ import 'rxjs/add/operator/withLatestFrom';
 export class WarehouseManageComponent implements OnInit {
 	loading: boolean;
 
-	@ViewChild('warehouseManageTabs')
+	@ViewChild('warehouseManageTabs', { static: false })
 	warehouseManageTabs: WarehouseManageTabsComponent;
 
-	@ViewChild('contactInfoForm')
+	@ViewChild('contactInfoForm', { static: false })
 	contactInfoForm: ContactInfoFormComponent;
 
-	@ViewChild('locationForm')
+	@ViewChild('locationForm', { static: false })
 	locationForm: LocationFormComponent;
 
 	readonly form: FormGroup = this._formBuilder.group({

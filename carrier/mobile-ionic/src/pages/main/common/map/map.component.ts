@@ -8,7 +8,7 @@ const directionsService = new google.maps.DirectionsService();
 	templateUrl: 'map.component.html'
 })
 export class MapComponent implements OnInit {
-	@ViewChild('map')
+	@ViewChild('map', { static: false })
 	mapElement: ElementRef;
 
 	map: google.maps.Map;

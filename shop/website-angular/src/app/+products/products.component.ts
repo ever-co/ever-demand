@@ -34,7 +34,7 @@ const initializeProductsNumber: number = 10;
 	templateUrl: './products.component.html'
 })
 export class ProductsComponent implements OnInit, OnDestroy {
-	@ViewChild('carouselView')
+	@ViewChild('carouselView', { static: false })
 	carouselView: CarouselViewComponent;
 
 	products: ProductInfo[] = [];

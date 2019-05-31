@@ -36,7 +36,7 @@ import { first } from 'rxjs/operators';
 	templateUrl: 'location-form.component.html'
 })
 export class LocationFormComponent implements OnDestroy, OnInit, OnChanges {
-	@ViewChild('autocomplete')
+	@ViewChild('autocomplete', { static: false })
 	searchElement: ElementRef;
 
 	@Output()

@@ -19,7 +19,7 @@ declare var google: any;
 	styleUrls: ['./order-map-popup.scss']
 })
 export class OrderMapPopupPage implements OnInit {
-	@ViewChild('gmap')
+	@ViewChild('gmap', { static: false })
 	gmapElement: ElementRef;
 
 	@Input()

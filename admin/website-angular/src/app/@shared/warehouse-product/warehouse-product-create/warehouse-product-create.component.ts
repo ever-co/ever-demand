@@ -41,22 +41,22 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 	perPage: number;
 	choiced: string;
 
-	@ViewChild('warehouseAddChoice')
+	@ViewChild('warehouseAddChoice', { static: false })
 	warehouseAddChoice: WarehouseAddChoiceComponent;
 
-	@ViewChild('basicInfoForm')
+	@ViewChild('basicInfoForm', { static: false })
 	basicInfoForm: BasicInfoFormComponent;
 
-	@ViewChild('productsTable')
+	@ViewChild('productsTable', { static: false })
 	productsTable: ProductsTableComponent;
 
-	@ViewChild('addWarehouseProductsTable')
+	@ViewChild('addWarehouseProductsTable', { static: false })
 	addWarehouseProductsTable: AddWarehouseProductsComponent;
 
-	@ViewChild('wizzardFrom')
+	@ViewChild('wizzardFrom', { static: false })
 	wizzardFrom: WizardComponent;
 
-	@ViewChild('wizzardFromStep1')
+	@ViewChild('wizzardFromStep1', { static: false })
 	wizzardFromStep1: any;
 
 	hasSelectedProducts = () => false;

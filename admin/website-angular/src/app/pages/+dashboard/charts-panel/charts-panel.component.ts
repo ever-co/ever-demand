@@ -40,11 +40,11 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 	ordersChartData: OrdersChart;
 	profitChartData: ProfitChart;
 
-	@ViewChild('ordersChart')
+	@ViewChild('ordersChart', { static: false })
 	ordersChart: OrdersChartComponent;
-	@ViewChild('profitChart')
+	@ViewChild('profitChart', { static: false })
 	profitChart: ProfitChartComponent;
-	@ViewChild('ordersProfitTab')
+	@ViewChild('ordersProfitTab', { static: false })
 	ordersProfitTab: any;
 
 	private _ordersToday: IOrdersChartModel;

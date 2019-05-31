@@ -36,13 +36,13 @@ export class AddNewCarrierComponent implements OnInit, OnDestroy, OnChanges {
 	@Input()
 	isDone: boolean;
 
-	@ViewChild('basicInfoForm')
+	@ViewChild('basicInfoForm', { static: false })
 	basicInfoForm: BasicInfoFormComponent;
 
-	@ViewChild('accountForm')
+	@ViewChild('accountForm', { static: false })
 	accountForm: AccountFormComponent;
 
-	@ViewChild('locationForm')
+	@ViewChild('locationForm', { static: false })
 	locationForm: LocationFormComponent;
 
 	isNextStepOneAvailable: boolean = true;
