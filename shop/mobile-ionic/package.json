@@ -157,7 +157,7 @@
 		"@compodoc/compodoc": "^1.1.9",
 		"@ionic/angular-toolkit": "^1.5.1",
 		"@ionic/app-scripts": "^3.2.3",
-		"@ionic/lab": "^1.0.24",
+		"@ionic/lab": "^2.0.0",
 		"@schematics/angular": "^7.3.8",
 		"@types/d3-color": "^1.2.2",
 		"@types/googlemaps": "^3.30.19",
