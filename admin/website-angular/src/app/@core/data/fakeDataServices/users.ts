@@ -30,7 +30,8 @@ export default class FakeDataUsers {
 							environment.DEFAULT_LATITUDE
 						]
 					}
-				}
+				},
+				isBanned: Math.random() < 0.25
 			},
 			password: '123456'
 		};
