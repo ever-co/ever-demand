@@ -276,7 +276,36 @@
 			},
 			"PAYMENTS": {
 				"PAYMENTS": "Payments",
-				"ALLOW_ONLINE_PAYMENT": "Allow online payments?"
+				"ALLOW_ONLINE_PAYMENT": "Allow online payments?",
+				"STRIPE": {
+					"PAY_BUTTON_TEXT": "Pay Button text",
+					"CURRENCY": "Currency",
+					"PAY_BUTTON_TEXT_IS_REQUIRED": "Pay Button text is required",
+					"CHOOSE_CURRENCY_CODE": "Choose currency code",
+					"CURRENCY_TEXT_IS_REQUIRED": "Currency text is required",
+					"COMPANY_BRAND_LOGO": "Company brand logo",
+					"COMPANY_BRAND_LOGO_IS_REQUIRED": "Company brand logo is required",
+					"INVALID_LOGO_URL": "Invalid logo url",
+					"INVALID_LOGO": "Invalid logo",
+					"PUBLISHABLE_KEY": "Publishable key",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "Publishable key is required",
+					"ALLOW_REMEMBER_ME": "Allow remember me?",
+					"REMOVE": "Remove"
+				},
+				"PAYPAL": {
+					"MODE": "Mode",
+					"CHOOSE_PAYPAL_MODE": "Choose PayPal mode",
+					"TYPE": "type",
+					"CURRENCY": "Currency",
+					"CHOOSE_CURRENCY_CODE": "Choose currency code",
+					"CURRENCY_TEXT_IS_REQUIRED": "Currency text is required",
+					"PUBLISHABLE_KEY": "Publishable key",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "Publishable key is required",
+					"SECRET_KEY": "Secret key",
+					"SECRET_KEY_IS_REQUIRED": "Secret key is required",
+					"PAYMENT_DESCRIPTION": "Payment description",
+					"PAYMENT_DESCRIPTION_IS_REQUIRED": "Payment description is required"
+				}
 			},
 			"MANUFACTURING": {
 				"MANUFACTURING": "Manufacturing",
@@ -434,6 +463,10 @@
 				"BASIC_INFO": "Basic Info",
 				"CONTACT_INFO": "Contact Info",
 				"LOCATION": "Location"
+			},
+			"CONTACT_INFO_TAB": {
+				"ORDER_FORWARDING_EMAIL": "Order Forwarding Email",
+				"ORDER_FORWARDING_PHONE": "Order Forwarding Phone"
 			}
 		},
 		"NEW_PRODUCT": {
@@ -673,6 +706,8 @@
 		"CREATE_CUSTOMER": "Create",
 		"DELETE": "DELETE",
 		"CREATE": "CREATE",
+		"BAN": "BAN",
+		"UNBAN": "UNBAN",
 		"MANAGE_CUSTOMER": "Manage customer",
 		"CUSTOMER": "Customer",
 		"CUSTOMERS_DEVICES": "Devices",
@@ -851,7 +886,11 @@
 		},
 		"TRACK_PAGE": {
 			"TRACK_ALL_WORKING_CARRIERS": "Track all working carriers",
-			"FILTER_CARRIERS": "Filter Carriers"
+			"FILTER_CARRIERS": "Filter Carriers",
+			"PHONE": "Phone",
+			"EMAIL": "Email",
+			"ADDRESS": "Address",
+			"DELIVERY_COUNT": "Delivery Count"
 		}
 	},
 	"PRODUCT_TYPE_VIEW": {

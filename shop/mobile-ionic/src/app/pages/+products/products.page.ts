@@ -9,13 +9,12 @@ import { Store } from '../../services/store.service';
 import { Router } from '@angular/router';
 import { IOrderCreateInput } from '@modules/server.common/routers/IWarehouseOrdersRouter';
 import { OrderPage } from './+order/order.page';
-import { NavController, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { environment } from 'environment';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { GeoLocationService } from '../../services/geo-location';
 import RegistrationSystem from '@modules/server.common/enums/RegistrationSystem';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
-
 import { OrderTakeawayInfoPopup } from './+order/takeaway/popup/popup.component';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
@@ -42,7 +41,6 @@ export class ProductsPage implements OnInit, OnDestroy {
 	merchant: Warehouse;
 	productsCount: number;
 	$areProductsLoaded = new EventEmitter<boolean>();
-
 	changePage: boolean;
 
 	private readonly ngDestroy$ = new Subject<void>();
@@ -60,7 +58,6 @@ export class ProductsPage implements OnInit, OnDestroy {
 		private router: Router,
 		private modalController: ModalController,
 		private geoLocationService: GeoLocationService,
-		private navCtrl: NavController,
 		private warehouseRouter: WarehouseRouter,
 		private warehouseProductsService: WarehouseProductsService
 	) {
@@ -246,23 +243,28 @@ export class ProductsPage implements OnInit, OnDestroy {
 
 		this.lastLoadProductsCount = count;
 		this.lastImageOrientation = imageOrientation;
-		this.areProductsLoaded = false;
+
 		let merchantIds = environment['MERCHANT_IDS'];
+
 		if ((!merchantIds || merchantIds.length === 0) && this.inStore) {
 			merchantIds = [this.inStore];
 		}
 
 		await this.loadProductsCount(merchantIds, imageOrientation);
+
 		this.changePage = false;
 
 		if (this.productsCount > this.products.length) {
 			if (this.getOrdersGeoObj) {
+				this.areProductsLoaded = false;
+
 				const isDeliveryRequired =
 					this.store.deliveryType === DeliveryType.Delivery;
 				const isTakeaway =
 					this.store.deliveryType === DeliveryType.Takeaway;
 
 				let loadProducts = true;
+
 				this.geoLocationProductsService
 					.geoLocationProductsByPaging(
 						this.getOrdersGeoObj,
@@ -300,6 +302,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 						}
 
 						loadProducts = false;
+						this.areProductsLoaded = true;
 					});
 			} else {
 				this.store.registrationSystem = RegistrationSystem.Once;
@@ -308,7 +311,6 @@ export class ProductsPage implements OnInit, OnDestroy {
 		}
 
 		this.$areProductsLoaded.emit();
-		this.areProductsLoaded = true;
 	}
 
 	private async loadProductsCount(

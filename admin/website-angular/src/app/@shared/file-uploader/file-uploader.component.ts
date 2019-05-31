@@ -1,8 +1,15 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+	Component,
+	Input,
+	Output,
+	EventEmitter,
+	ViewChild
+} from '@angular/core';
 import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { environment } from 'environment';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { IProductImage } from '@modules/server.common/interfaces/IProduct';
+import { NgModel } from '@angular/forms';
 
 @Component({
 	selector: 'e-cu-file-uploader',
@@ -10,6 +17,9 @@ import { IProductImage } from '@modules/server.common/interfaces/IProduct';
 	styleUrls: ['./file-uploader.component.scss']
 })
 export class FileUploaderComponent {
+	@ViewChild('shownInput')
+	shownInput: NgModel;
+
 	@Input()
 	placeholder: string;
 	@Input()

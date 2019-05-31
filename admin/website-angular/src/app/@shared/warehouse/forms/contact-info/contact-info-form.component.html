@@ -68,8 +68,12 @@
 				<nb-checkbox
 					[value]="forwardingEmail"
 					(change)="forwardingEmailChange()"
-					>Order Forwarding Email</nb-checkbox
 				>
+					{{
+						'WAREHOUSE_VIEW.MUTATION.CONTACT_INFO_TAB.ORDER_FORWARDING_EMAIL'
+							| translate
+					}}
+				</nb-checkbox>
 				<input
 					*ngIf="forwardingEmail"
 					type="email"
@@ -106,8 +110,12 @@
 				<nb-checkbox
 					[value]="forwardingPhone"
 					(change)="forwardingPhoneChange()"
-					>Order Forwarding Phone</nb-checkbox
 				>
+					{{
+						'WAREHOUSE_VIEW.MUTATION.CONTACT_INFO_TAB.ORDER_FORWARDING_PHONE'
+							| translate
+					}}
+				</nb-checkbox>
 				<input
 					*ngIf="forwardingPhone"
 					type="text"

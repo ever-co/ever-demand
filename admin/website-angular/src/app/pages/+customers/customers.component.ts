@@ -21,6 +21,7 @@ import { NotifyService } from '../../@core/services/notify/notify.service';
 import { CustomerOrdersNumberComponent } from '../../@shared/render-component/customer-table/customer-orders-number/customer-orders-number.component';
 import { CustomerEmailComponent } from '../../@shared/render-component/customer-email/customer-email.component';
 import { CustomerPhoneComponent } from '../../@shared/render-component/customer-phone/customer-phone.component';
+import { BanConfirmComponent } from 'app/@shared/user/ban-confirm';
 
 export interface CustomerViewModel {
 	id: string;
@@ -32,6 +33,7 @@ export interface CustomerViewModel {
 	city: string;
 	address: string;
 	ordersQty: number;
+	isBanned: boolean;
 }
 
 const perPage = 7;
@@ -119,6 +121,40 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 			this.loading = false;
 			this._notifyService.error(message);
 		}
+	}
+
+	protected banSelectedRows() {
+		if (this.isUserBanned) {
+			this.showUnbanPopup();
+		} else {
+			this.showBanPopup();
+		}
+	}
+
+	private showUnbanPopup() {
+		const modal = this._modalService.open(BanConfirmComponent, {
+			size: 'lg',
+			container: 'nb-layout',
+			windowClass: 'ng-custom',
+			backdrop: 'static'
+		});
+		modal.componentInstance.user = this._selectedCustomers[0];
+		modal.result
+			.then((id) => this._usersService.unbanUser(id))
+			.catch(console.error);
+	}
+
+	private showBanPopup() {
+		const modal = this._modalService.open(BanConfirmComponent, {
+			size: 'lg',
+			container: 'nb-layout',
+			windowClass: 'ng-custom',
+			backdrop: 'static'
+		});
+		modal.componentInstance.user = this._selectedCustomers[0];
+		modal.result
+			.then((id) => this._usersService.banUser(id))
+			.catch(console.error);
 	}
 
 	private _loadSettingsSmartTable() {
@@ -242,7 +278,8 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 					address: `st. ${user.geoLocation.streetAddress ||
 						CustomersComponent.noInfoSign}, hse. № ${user
 						.geoLocation.house || CustomersComponent.noInfoSign}`,
-					ordersQty: userOrders ? userOrders.ordersCount : 0
+					ordersQty: userOrders ? userOrders.ordersCount : 0,
+					isBanned: user.isBanned
 				};
 			});
 
@@ -251,7 +288,6 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 			const usersData = new Array(this.dataCount);
 
 			usersData.splice(perPage * (page - 1), perPage, ...usersVM);
-
 			await this.sourceSmartTable.load(usersData);
 		};
 
@@ -298,6 +334,16 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 
 	private async loadDataCount() {
 		this.dataCount = await this._usersService.getCountOfUsers();
+	}
+
+	public get isOnlyOneCustomerSelected(): boolean {
+		return this._selectedCustomers.length === 1;
+	}
+
+	public get isUserBanned() {
+		return (
+			this._selectedCustomers[0] && this._selectedCustomers[0].isBanned
+		);
 	}
 
 	ngOnDestroy() {

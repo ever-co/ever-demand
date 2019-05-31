@@ -106,7 +106,8 @@ export class SetupMerchantsComponent {
 					0,
 				carriersIds: this.stepDeliveryAndTakeaway.restrictedCarriersIds,
 				orderBarcodeType: this.stepOrdersSettings.iorderBarcodeType,
-				isActive: true
+				isActive: true,
+				paymentGateways: this.stepPayments.paymentsGateways
 			};
 
 			password = accountModel.password;

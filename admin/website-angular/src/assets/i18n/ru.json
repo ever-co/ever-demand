@@ -276,7 +276,36 @@
 			},
 			"PAYMENTS": {
 				"PAYMENTS": "Плащания",
-				"ALLOW_ONLINE_PAYMENT": "Разрешаване на онлайн плащания?"
+				"ALLOW_ONLINE_PAYMENT": "Разрешаване на онлайн плащания?",
+				"STRIPE": {
+					"PAY_BUTTON_TEXT": "Текст кнопки оплаты",
+					"CURRENCY": "валюта",
+					"PAY_BUTTON_TEXT_IS_REQUIRED": "Текст кнопки оплаты требуется",
+					"CHOOSE_CURRENCY_CODE": "Выберите код валюты",
+					"CURRENCY_TEXT_IS_REQUIRED": "Текст валюты требуется",
+					"COMPANY_BRAND_LOGO": "Логотип бренда компании",
+					"COMPANY_BRAND_LOGO_IS_REQUIRED": "Требуется логотип компании",
+					"INVALID_LOGO_URL": "Неверный URL-адрес логотипа",
+					"INVALID_LOGO": "Неверный логотип",
+					"PUBLISHABLE_KEY": "Публикуемый ключ",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "Требуется публикуемый ключ",
+					"ALLOW_REMEMBER_ME": "Разрешить запомнить меня?",
+					"REMOVE": "Удалить"
+				},
+				"PAYPAL": {
+					"MODE": "Режим",
+					"CHOOSE_PAYPAL_MODE": "Выберите режим PayPal",
+					"TYPE": "тип",
+					"CURRENCY": "валюта",
+					"CHOOSE_CURRENCY_CODE": "Выберите код валюты",
+					"CURRENCY_TEXT_IS_REQUIRED": "Текст валюты требуется",
+					"PUBLISHABLE_KEY": "Публикуемый ключ",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "Требуется публикуемый ключ",
+					"SECRET_KEY": "Секретный ключ",
+					"SECRET_KEY_IS_REQUIRED": "Требуется секретный ключ",
+					"PAYMENT_DESCRIPTION": "Описание оплаты",
+					"PAYMENT_DESCRIPTION_IS_REQUIRED": "Требуется описание платежа"
+				}
 			},
 			"MANUFACTURING": {
 				"MANUFACTURING": "Производство",
@@ -436,6 +465,10 @@
 				"BASIC_INFO": "Базовая информация",
 				"CONTACT_INFO": "Контактная информация",
 				"LOCATION": "Место нахождения"
+			},
+			"CONTACT_INFO_TAB": {
+				"ORDER_FORWARDING_EMAIL": "Пересылка заказа по электронной почте",
+				"ORDER_FORWARDING_PHONE": "Заказать переадресацию телефона"
 			}
 		},
 		"NEW_PRODUCT": {
@@ -848,7 +881,11 @@
 		},
 		"TRACK_PAGE": {
 			"TRACK_ALL_WORKING_CARRIERS": "Отслеживание всех работающих перевозчиков",
-			"FILTER_CARRIERS": "Фильтр-носители"
+			"FILTER_CARRIERS": "Фильтр-носители",
+			"PHONE": "Телефон",
+			"EMAIL": "Эл. адрес",
+			"ADDRESS": "Адрес",
+			"DELIVERY_COUNT": "Счетчик доставки"
 		}
 	},
 	"PRODUCT_TYPE_VIEW": {

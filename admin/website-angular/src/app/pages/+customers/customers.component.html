@@ -32,6 +32,22 @@
 			<i class="ion-md-phone-portrait"></i>&nbsp;&nbsp;
 			{{ 'CUSTOMERS_VIEW.CUSTOMERS_DEVICES' | translate }}
 		</button>
+
+		<button
+			class="btn btn-danger mr-2 d-inline-block"
+			[disabled]="!isOnlyOneCustomerSelected"
+			(click)="banSelectedRows()"
+		>
+			<i class="ion-md-close-circle button-icon"></i>
+
+			<small _ngcontent-c55="" *ngIf="isUserBanned">{{
+				'CUSTOMERS_VIEW.UNBAN' | translate
+			}}</small>
+
+			<small _ngcontent-c55="" *ngIf="!isUserBanned">{{
+				'CUSTOMERS_VIEW.BAN' | translate
+			}}</small>
+		</button>
 	</nb-card-header>
 
 	<nb-card-body [nbSpinner]="loading">
