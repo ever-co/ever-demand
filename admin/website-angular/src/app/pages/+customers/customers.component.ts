@@ -140,7 +140,10 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 		});
 		modal.componentInstance.user = this._selectedCustomers[0];
 		modal.result
-			.then((id) => this._usersService.unbanUser(id))
+			.then(async (id) => {
+				await this._usersService.unbanUser(id);
+				this._loadSettingsSmartTable();
+			})
 			.catch(console.error);
 	}
 
@@ -153,7 +156,10 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 		});
 		modal.componentInstance.user = this._selectedCustomers[0];
 		modal.result
-			.then((id) => this._usersService.banUser(id))
+			.then(async (id) => {
+				await this._usersService.banUser(id);
+				this._loadSettingsSmartTable();
+			})
 			.catch(console.error);
 	}
 
