@@ -59,6 +59,8 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 	private dataCount: number;
 	private $users;
 
+	public _showOnlyBanned: boolean;
+
 	constructor(
 		private readonly _router: Router,
 		private readonly _ordersService: OrdersService,
@@ -252,7 +254,7 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 				users.map((u) => u.id)
 			);
 
-			const usersVM = users.map((user) => {
+			let usersVM = users.map((user) => {
 				const userOrders = usersOrders.find(
 					(res) => res['id'] === user.id
 				);
@@ -284,6 +286,10 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 			});
 
 			await this.loadDataCount();
+
+			if (this.showOnlyBanned) {
+				usersVM = usersVM.filter((user) => user.isBanned);
+			}
 
 			const usersData = new Array(this.dataCount);
 
@@ -344,6 +350,15 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 		return (
 			this._selectedCustomers[0] && this._selectedCustomers[0].isBanned
 		);
+	}
+
+	public set showOnlyBanned(v: boolean) {
+		this._showOnlyBanned = v;
+		this._loadDataSmartTable();
+	}
+
+	public get showOnlyBanned(): boolean {
+		return this._showOnlyBanned;
 	}
 
 	ngOnDestroy() {

@@ -48,6 +48,14 @@
 				'CUSTOMERS_VIEW.BAN' | translate
 			}}</small>
 		</button>
+		<input
+			type="checkbox"
+			name="bannedOnly"
+			id="showBannedOnly"
+			[(ngModel)]="showOnlyBanned"
+			[ngModelOptions]="{ standalone: true }"
+		/>
+		<label for="bannedOnly">Show Banned Only</label>
 	</nb-card-header>
 
 	<nb-card-body [nbSpinner]="loading">
