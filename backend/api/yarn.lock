@@ -1007,9 +1007,10 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
-"@types/google-maps@^3.2.0":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@types/google-maps/-/google-maps-3.2.0.tgz#804a3ae9ac9265b4e0d1508b5b9b894867974f82"
+"@types/google-maps@^3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@types/google-maps/-/google-maps-3.2.1.tgz#68b84f74773960fbf4c76e2d2bc62838b8cd5026"
+  integrity sha512-0JeYMqVUeolC2hC1v8s49vjg5zt/tQXDzzcZfWxzx8Kcu1xDSpULFkhI33CIUZ/r8PmGvrud9EEZqFhJlOE4/A==
   dependencies:
     "@types/googlemaps" "*"
 
