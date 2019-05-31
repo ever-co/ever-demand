@@ -142,7 +142,7 @@
 		"ws": "^7.0.0"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^7.5.2",
+		"@commitlint/cli": "^8.0.0",
 		"@commitlint/config-conventional": "^7.5.0",
 		"@commitlint/config-lerna-scopes": "^7.5.1",
 		"@commitlint/travis-cli": "^7.5.2",
