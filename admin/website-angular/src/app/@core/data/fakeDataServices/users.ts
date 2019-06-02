@@ -31,7 +31,7 @@ export default class FakeDataUsers {
 						]
 					}
 				},
-				isBanned: Math.random() < 0.25
+				isBanned: Math.random() < 0.01
 			},
 			password: '123456'
 		};
