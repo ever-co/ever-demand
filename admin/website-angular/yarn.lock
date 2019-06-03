@@ -1123,10 +1123,10 @@
   resolved "https://registry.yarnpkg.com/@nebular/security/-/security-3.5.0.tgz#4598956dcfcb696c80038eee88280e8813f4e196"
   integrity sha512-FySytmzIJXpa8aHLlcq+RM1YPnophKyv46Erm6Wkswfs6rIkunCAz5/nolQGf29nbyyeV4wp+HvDIOLf2o/ApQ==
 
-"@nebular/theme@^3.5.0":
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/@nebular/theme/-/theme-3.5.0.tgz#7b3d34daed6efde13238cd3efef638f5f3dbd7c6"
-  integrity sha512-FE6cj3uB/0uhwz760o2/pfKHAGj9CMflCC4+lHymq3EVpoJua7//7+0VFMloMckAGqCMWDoZ04TDzAOf5lT44w==
+"@nebular/theme@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@nebular/theme/-/theme-4.0.0.tgz#697b46ab812e24132275bc4d73161de6d2ccadbc"
+  integrity sha512-wFPLMRvHKkcKH/oKuc8TtXFJOaeFWYOvG7AvkgI3IqtkHa+x8fEsz4EMLFPOh4XADOjxXHo8wAHI3vhsgyavcg==
   dependencies:
     intersection-observer "0.5.0"
 
