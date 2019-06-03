@@ -1108,10 +1108,10 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@nebular/auth@^3.5.0":
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/@nebular/auth/-/auth-3.5.0.tgz#b6ac219bb46a0ae942ca60b02db06a467c688d75"
-  integrity sha512-dDrQuijLD/HsdYPQocdmNN7XU3Hukj3Diy6HMDS7vH9Twb3TByFkESH+s0Y0IpNugwJraZlYroiwP0/1IXG2SQ==
+"@nebular/auth@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@nebular/auth/-/auth-4.0.0.tgz#e29cd994e3c7a57fccf5eb378b069bd3cf5ab32a"
+  integrity sha512-VShBFTpWDjaM1yWPZLilwaf1+/ZDs+W3bEKtmW8MTs+eG6pJX9ulyicPax/B3l5MT2PQ2AKdvRNEd9LgfBTT5Q==
 
 "@nebular/bootstrap@^3.5.0":
   version "3.5.0"
