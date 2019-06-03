@@ -75,7 +75,7 @@
 		"@nebular/bootstrap": "^3.5.0",
 		"@nebular/security": "^3.5.0",
 		"@nebular/theme": "^3.5.0",
-		"@ng-bootstrap/ng-bootstrap": "^4.1.1",
+		"@ng-bootstrap/ng-bootstrap": "^4.2.1",
 		"@ng-select/ng-select": "^2.18.0",
 		"@ngx-translate/core": "^11.0.1",
 		"@ngx-translate/http-loader": "^4.0.0",
