@@ -1113,10 +1113,10 @@
   resolved "https://registry.yarnpkg.com/@nebular/auth/-/auth-3.5.0.tgz#b6ac219bb46a0ae942ca60b02db06a467c688d75"
   integrity sha512-dDrQuijLD/HsdYPQocdmNN7XU3Hukj3Diy6HMDS7vH9Twb3TByFkESH+s0Y0IpNugwJraZlYroiwP0/1IXG2SQ==
 
-"@nebular/bootstrap@^3.5.0":
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/@nebular/bootstrap/-/bootstrap-3.5.0.tgz#33ba3426c01f5764685c4a5e8ded2db53ffd83db"
-  integrity sha512-GbiqPBpgDIiwxy9tHapf4RTydzY5W6E+PAN+afhNvmSGu2R2iovTzVXhoEmNNzvZsB85jJ9+OBxLhq1PLmkLCA==
+"@nebular/bootstrap@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@nebular/bootstrap/-/bootstrap-4.0.0.tgz#7c26a111f6ea3e1b617672f7175ff48369ec166a"
+  integrity sha512-YiHPeAp2HOXf0yGmA0wfDVTonc1Aiy4I6yn42Xd2PlBKv7a8sXq+W7vBkUNdMiS/+8vQeCCvCxelcdXDsTxjXw==
 
 "@nebular/security@^3.5.0":
   version "3.5.0"
