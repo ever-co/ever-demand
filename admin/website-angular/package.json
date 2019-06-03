@@ -72,7 +72,7 @@
 		"@asymmetrik/ngx-leaflet": "^5.0.2",
 		"@fortawesome/fontawesome-free": "^5.8.1",
 		"@nebular/auth": "^3.5.0",
-		"@nebular/bootstrap": "^3.5.0",
+		"@nebular/bootstrap": "^4.0.0",
 		"@nebular/security": "^3.5.0",
 		"@nebular/theme": "^3.5.0",
 		"@ng-bootstrap/ng-bootstrap": "^4.1.1",
