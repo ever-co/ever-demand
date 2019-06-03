@@ -1130,10 +1130,10 @@
   dependencies:
     intersection-observer "0.5.0"
 
-"@ng-bootstrap/ng-bootstrap@^4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-4.1.1.tgz#5e9c477ed9cc19114b56a0abc87e9c8483fb6bbf"
-  integrity sha512-OgbmPVhbDdNpIwogEXsycUJG0caNtb2+wCABfLUClgi9YcfNXhZ9Phu2GQq7Pk/LO66okth6s77RBQnbTJuysg==
+"@ng-bootstrap/ng-bootstrap@^4.2.1":
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-4.2.1.tgz#aa87f2ee6c4def0be087d4f456930b1e0761d91a"
+  integrity sha512-7etP9X9jKIkbuDzU3ngI2jQhHQDZxIu0ErvlkHb7u7YH9akIOLVkXvz2mTMvcFABWZhze64UjFuEgR46b6WGSw==
   dependencies:
     tslib "^1.9.0"
 
