@@ -59,6 +59,7 @@
 		"@ngx-translate/core": "^11.0.1",
 		"@ngx-translate/http-loader": "^4.0.0",
 		"angular2-logger": "^0.7.0",
+		"fstream": "^1.0.12",
 		"npm": "^6.9.0",
 		"rxjs": "^6.5.1",
 		"rxjs-compat": "^6.5.1",
@@ -68,10 +69,10 @@
 		"uuid": "^3.3.2"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^7.5.2",
-		"@commitlint/config-conventional": "^7.5.0",
-		"@commitlint/config-lerna-scopes": "^7.5.1",
-		"@commitlint/travis-cli": "^7.5.2",
+		"@commitlint/cli": "^8.0.0",
+		"@commitlint/config-conventional": "^8.0.0",
+		"@commitlint/config-lerna-scopes": "^8.0.0",
+		"@commitlint/travis-cli": "^8.0.0",
 		"@types/async": "^2.4.1",
 		"@types/d3-color": "^1.2.2",
 		"@types/faker": "^4.1.5",
