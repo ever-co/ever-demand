@@ -35,7 +35,7 @@
 
 		<button
 			class="btn btn-danger mr-2 d-inline-block"
-			[disabled]="!isOnlyOneCustomerSelected"
+			[disabled]="!isOnlyOneCustomerSelected || showBanLoading"
 			[nbSpinner]="showBanLoading"
 			(click)="banSelectedRows()"
 		>

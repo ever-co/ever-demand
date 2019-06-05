@@ -143,12 +143,12 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 		});
 		modal.componentInstance.user = this._selectedCustomers[0];
 		modal.result
-			.then(async (id) => {
+			.then(async (user) => {
 				this.showBanLoading = true;
-				await this._usersService.unbanUser(id);
+				await this._usersService.unbanUser(user.id);
 				this._loadDataSmartTable();
 				this.showBanLoading = false;
-				this._notifyService.success('User is unbanned.');
+				this._notifyService.success(`${user.name} is unbanned!`);
 			})
 			.catch((_) => {});
 	}
@@ -162,12 +162,12 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 		});
 		modal.componentInstance.user = this._selectedCustomers[0];
 		modal.result
-			.then(async (id) => {
+			.then(async (user) => {
 				this.showBanLoading = true;
-				await this._usersService.banUser(id);
+				await this._usersService.banUser(user.id);
 				this._loadDataSmartTable();
 				this.showBanLoading = false;
-				this._notifyService.success('User is banned');
+				this._notifyService.success(`${user.name} is banned!`);
 			})
 			.catch((_) => {});
 	}
