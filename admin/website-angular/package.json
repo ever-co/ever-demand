@@ -187,7 +187,7 @@
 		"cross-env": "^5.2.0",
 		"dotenv": "^8.0.0",
 		"envalid": "^5.0.0",
-		"husky": "^2.3.0",
+		"husky": "^2.4.0",
 		"jasmine-core": "^3.4.0",
 		"jasmine-spec-reporter": "^4.2.1",
 		"karma": "^4.1.0",
