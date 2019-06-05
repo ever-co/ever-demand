@@ -38,6 +38,7 @@ export class OrderComponent implements OnInit {
 	public price: number;
 	public description: string;
 	public img: string;
+	public imgArray: string[];
 	public orderStatusText: string;
 	public orderNumber: number;
 	public orderType: number;
@@ -110,6 +111,10 @@ export class OrderComponent implements OnInit {
 			);
 			this.img = this.localeTranslate(
 				this.order.products[0].product.images
+			);
+			console.log(this.img);
+			this.imgArray = this.order.products[0].product.images.map(
+				(obj) => obj.url
 			);
 		}
 		this.orderStatusText = this.order.warehouseStatusText;

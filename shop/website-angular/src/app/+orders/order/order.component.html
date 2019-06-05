@@ -28,19 +28,6 @@
 		</div>
 	</div>
 	<div class="order-details">
-		<div class="side-container">
-			<div class="warehouse-info" *ngIf="warehouse">
-				<h3>{{ warehouse.name }}</h3>
-				<span>{{ warehouse.contactPhone }}</span>
-				<span>{{ warehouse.geoLocation.streetAddress }}</span>
-			</div>
-			<div class="warehouse-info" *ngIf="carrier">
-				<h3>{{ carrier.username }}</h3>
-				<span>{{ carrier.phone }}</span>
-				<span>{{ carrier.geoLocation.streetAddress }}</span>
-			</div>
-		</div>
-
 		<div class="order-info">
 			<div class="product-info">
 				<h1 class="product-name">
@@ -62,22 +49,37 @@
 					</svg>
 					{{ 'ORDER_VIEW.CANCEL' | translate }}
 				</button>
-				<button mat-raised-button color="accent">
-					Pay
+				<button mat-raised-button color="accent" class="pay-button">
+					<svg class="payment-button-icon" viewBox="0 0 24 24">
+						<path
+							d="M20,8H4V6H20M20,18H4V12H20M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"
+						/></svg
+					>Pay
 				</button>
 			</div>
 		</div>
+		<div class="side-container">
+			<div class="warehouse-info" *ngIf="warehouse">
+				<h5>{{ warehouse.name }}</h5>
+				<span>{{ warehouse.contactPhone }}</span>
+				<span>{{ warehouse.geoLocation.streetAddress }}</span>
+			</div>
+			<div class="warehouse-info" *ngIf="carrier">
+				<h5>{{ carrier.username }}</h5>
+				<span>{{ carrier.phone }}</span>
+				<span>{{ carrier.geoLocation.streetAddress }}</span>
+			</div>
+		</div>
 	</div>
-
 	<div class="order-images">
 		<img
-			*ngIf="order.products.length"
-			class="order-picture h-100"
-			src="{{ img }}"
+			*ngFor="let image of imgArray"
+			class="order-picture"
+			[src]="image"
 		/>
 		<span
 			*ngIf="!order.products.length"
-			class="no-product-img order-picture h-100"
+			class="no-product-img order-picture"
 		></span>
 	</div>
 </mat-card>
