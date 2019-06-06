@@ -10,7 +10,7 @@ import { AnalyticsService } from 'app/@core/utils/analytics.service';
 	styleUrls: ['./theme-switcher.component.scss']
 })
 export class ThemeSwitcherComponent {
-	@ViewChild(NbPopoverDirective)
+	@ViewChild(NbPopoverDirective, { static: false })
 	popover: NbPopoverDirective;
 
 	@Input()

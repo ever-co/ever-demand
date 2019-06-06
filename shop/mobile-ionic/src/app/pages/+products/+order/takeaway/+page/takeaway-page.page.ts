@@ -24,7 +24,7 @@ import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehou
 	styleUrls: ['./takeaway-page.page.scss']
 })
 export class OrderTakeawayInfoPage implements OnInit, OnDestroy {
-	@ViewChild('storeInfo')
+	@ViewChild('storeInfo', { static: false })
 	storeInfo: OrderStoreInfo;
 
 	modalOpen: boolean;

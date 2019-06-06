@@ -24,13 +24,13 @@ export class WarehouseMutationComponent implements AfterViewInit {
 	public BUTTON_NEXT: string = 'BUTTON_NEXT';
 	public BUTTON_PREV: string = 'BUTTON_PREV';
 
-	@ViewChild('basicInfoForm')
+	@ViewChild('basicInfoForm', { static: false })
 	basicInfoForm: BasicInfoFormComponent;
 
-	@ViewChild('contactInfoForm')
+	@ViewChild('contactInfoForm', { static: false })
 	contactInfoForm: ContactInfoFormComponent;
 
-	@ViewChild('locationForm')
+	@ViewChild('locationForm', { static: false })
 	locationForm: LocationFormComponent;
 
 	mapCoordEmitter = new EventEmitter<number[]>();

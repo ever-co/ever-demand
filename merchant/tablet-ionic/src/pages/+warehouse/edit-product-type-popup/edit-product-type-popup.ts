@@ -59,7 +59,7 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 	private lastProductCount: number;
 	private imagesData: IProductImage[];
 
-	@ViewChild('fileInput')
+	@ViewChild('fileInput', { static: false })
 	private fileInput: ElementRef;
 
 	constructor(
@@ -119,7 +119,7 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 		};
 	}
 
-	@ViewChild('imageHolder')
+	@ViewChild('imageHolder', { static: false })
 	private _imageHolder: ElementRef;
 
 	imageUrlChanged(ev) {

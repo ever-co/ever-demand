@@ -22,7 +22,7 @@ declare var google: any;
 	templateUrl: 'drive-to-warehouse.html'
 })
 export class DriveToWarehousePage {
-	@ViewChild('map')
+	@ViewChild('map', { static: false })
 	carrierMap: MapComponent;
 
 	selectedOrder: IOrder;

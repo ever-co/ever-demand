@@ -8,7 +8,7 @@ import { ModalController } from '@ionic/angular';
 	styleUrls: ['./carrier-addr-popup.scss']
 })
 export class CarrierAddrPopupPage implements OnInit {
-	@ViewChild('gmap')
+	@ViewChild('gmap', { static: false })
 	gmapElement: ElementRef;
 
 	map: google.maps.Map;

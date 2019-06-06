@@ -47,7 +47,7 @@ export class LocationComponent implements OnInit, OnChanges, OnDestroy {
 
 	map: google.maps.Map;
 
-	@ViewChild('autocomplete')
+	@ViewChild('autocomplete', { static: false })
 	searchElement: ElementRef;
 
 	mapCoordEmitter = new EventEmitter<google.maps.LatLng>();

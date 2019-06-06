@@ -17,7 +17,7 @@ import { NotifyService } from 'app/@core/services/notify/notify.service';
 	templateUrl: './add-products.component.html'
 })
 export class SetupMerchantAddProductsComponent implements OnInit {
-	@ViewChild('addWarehouseProductsTable')
+	@ViewChild('addWarehouseProductsTable', { static: false })
 	addWarehouseProductsTable: AddWarehouseProductsComponent;
 
 	@Input()
