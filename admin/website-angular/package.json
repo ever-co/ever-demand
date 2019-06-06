@@ -166,7 +166,7 @@
 		"@storybook/addon-notes": "^5.0.10",
 		"@storybook/addons": "^5.0.10",
 		"@storybook/angular": "^5.0.10",
-		"@types/async": "^2.4.1",
+		"@types/async": "^3.0.0",
 		"@types/d3-color": "^1.2.2",
 		"@types/faker": "^4.1.5",
 		"@types/googlemaps": "^3.30.19",
