@@ -103,7 +103,7 @@
 		"moment": "^2.24.0",
 		"mongodb": "^3.2.3",
 		"mongodb-memory-server": "^5.1.0",
-		"mongoose": "^5.5.4",
+		"mongoose": "^5.5.13",
 		"morgan": "^1.9.1",
 		"ms": "^2.1.1",
 		"node-sass": "^4.11.0",

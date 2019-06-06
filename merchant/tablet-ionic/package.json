@@ -147,7 +147,7 @@
 		"lodash": "^4.17.11",
 		"masonry-layout": "^4.2.2",
 		"moment": "^2.24.0",
-		"mongoose": "^5.5.0",
+		"mongoose": "^5.5.13",
 		"mx.ferreyra.callnumber": "^0.0.2",
 		"neo-async": "^2.6.1",
 		"ng2-completer": "^2.0.8",
