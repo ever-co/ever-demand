@@ -666,10 +666,10 @@
   dependencies:
     uuid "3.3.2"
 
-"@nestjs/websockets@^6.1.1":
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/websockets/-/websockets-6.1.1.tgz#99202e4ebe1310337926b5b32b264921ae957247"
-  integrity sha512-iPdp9ipM8cx2Entak4oI6eg1QPhNFH81kx9on44mQ8oAGRdZVcbiS2wQ+ERbwQyNIUsWSR390kObOlXKqelaxw==
+"@nestjs/websockets@^6.3.1":
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/@nestjs/websockets/-/websockets-6.3.1.tgz#f2cae8842a64f06d80cfcfeea196813152ec8db6"
+  integrity sha512-kkzDn2oULL7RpBUZ9Fh755rebXe9pqp67Pn84/1OMErLpk3XMSMXcfABomFNHKY2pbevxOk4ojpnm5WZdw3S9w==
   dependencies:
     iterare "1.1.2"
 
@@ -5511,10 +5511,10 @@ https-proxy-agent@^2.2.1:
     agent-base "^4.1.0"
     debug "^3.1.0"
 
-husky@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/husky/-/husky-2.3.0.tgz#8b78ed24d763042df7fd899991985d65a976dd13"
-  integrity sha512-A/ZQSEILoq+mQM3yC3RIBSaw1bYXdkKnyyKVSUiJl+iBjVZc5LQEXdGY1ZjrDxC4IzfRPiJ0IqzEQGCN5TQa/A==
+husky@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/husky/-/husky-2.4.0.tgz#1bac7c44588f6e91f808b72efc82d24a57194f36"
+  integrity sha512-3k1wuZU20gFkphNWMjh2ISCFaqfbaLY7R9FST2Mj9HeRhUK9ydj9qQR8qfXlog3EctVGsyeilcZkIT7uBZDDVA==
   dependencies:
     cosmiconfig "^5.2.0"
     execa "^1.0.0"
