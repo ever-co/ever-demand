@@ -21,8 +21,6 @@ export class WarehouseManageTabsDeliveryAreasComponent
 
 	deliverForm: FormGroup;
 	selectedShapeType: string;
-	zonesData: any[] = []; // Used to be parsed to GeoJSON and sent to the database.
-	// This will be dinamicly created when getting/adding/removing data
 
 	// containing all shape objects with all properties
 	zonesObjects: any[] = [];
@@ -71,89 +69,8 @@ export class WarehouseManageTabsDeliveryAreasComponent
 		this.form.get('deliveryAreas').setValue(zonesData);
 	}
 
-	testValues() {
-		console.log('zoneObjects \r\n', this.zonesObjects);
-		console.log('zoneData \r\n', this.zonesData);
-
-		console.log('getGEOJSOn \r\n', this.getZonesGeoJSON());
-	}
-
 	getValue(): any {
 		// add type
-		return;
-	}
-
-	setValue(data) {
-		// add type
-		data.features.forEach((feature) => {
-			if (feature.geometry.type === 'Point') {
-				// Point = Circle
-
-				const circle = new google.maps.Circle({
-					center: {
-						// Point coodinates are reversed: lng => lat
-						lng: +feature.geometry.coordinates[0],
-						lat: +feature.geometry.coordinates[1]
-					},
-					radius: feature.properties['radius'],
-					strokeWeight: 0.5,
-					fillOpacity: 0.45,
-					fillColor: '#1E90FF',
-					map: this._map
-				});
-
-				circle['properties'] = feature.properties;
-
-				this._addZoneEventListeners(circle);
-
-				this.zonesObjects.push(circle);
-
-				/*
-
-				this.zonesData.push({
-					fee: feature.properties.fee,
-					minimumAmount: feature.properties.minimumAmount,
-					name: feature.properties.name,
-					radius: feature.properties.radius,
-					x: +feature.geometry.coordinates[1],
-					y: +feature.geometry.coordinates[0]
-				});
-
-				*/
-			} else {
-				const polygon = new google.maps.Polygon({
-					strokeWeight: 0.5,
-					fillOpacity: 0.45,
-					fillColor: '#1E90FF',
-					paths: this._mapCoordinates(feature.geometry.coordinates)
-				});
-
-				polygon['properties'] = feature.properties;
-
-				polygon.setMap(this._map);
-
-				this._addZoneEventListeners(polygon);
-
-				this.zonesObjects.push(polygon);
-
-				/*
-
-				this.zonesData.push({
-					fee: feature.properties.fee,
-					minimumAmount: feature.properties.minimumAmount,
-					name: feature.properties.name,
-					polygon: [...feature.geometry.coordinates[0]]
-				});
-
-				*/
-			}
-		});
-
-		this._zoneNumber = data.features.length;
-		this.deliveryZones = data;
-	}
-
-	getZonesGeoJSON() {
 		const geoJSON = {
 			type: 'FeatureCollection',
 			features: []
@@ -161,21 +78,21 @@ export class WarehouseManageTabsDeliveryAreasComponent
 
 		const features = [];
 
-		this.zonesObjects.forEach((o) => {
-			if (o.type === 'circle') {
+		this.zonesObjects.forEach((zoneObject) => {
+			if (zoneObject.type === 'circle') {
 				const tempObj = {};
 
-				const coordsArr = o
+				const coordsArr = zoneObject
 					.getCenter()
 					.toUrlValue(7)
 					.split(',');
 
-				tempObj['properties'] = o.properties;
-				tempObj['properties']['radius'] = o.radius;
+				tempObj['properties'] = zoneObject.properties;
+				tempObj['properties']['radius'] = zoneObject.radius;
 				tempObj['type'] = 'Feature';
 				tempObj['geometry'] = {
 					type: 'Point',
-					coodinates: [coordsArr[1], coordsArr[0]]
+					coordinates: [+coordsArr[1], +coordsArr[0]]
 				};
 
 				features.push(tempObj);
@@ -184,7 +101,7 @@ export class WarehouseManageTabsDeliveryAreasComponent
 
 				const coordinates = [[]];
 
-				o.getPath().forEach((point) => {
+				zoneObject.getPath().forEach((point) => {
 					const mappedCoordinates = point
 						.toUrlValue(7)
 						.split(',')
@@ -193,7 +110,7 @@ export class WarehouseManageTabsDeliveryAreasComponent
 					coordinates[0].push(mappedCoordinates);
 				});
 
-				tempObj['properties'] = o.properties;
+				tempObj['properties'] = zoneObject.properties;
 				tempObj['type'] = 'Feature';
 				tempObj['geometry'] = {
 					type: 'Polygon',
@@ -207,6 +124,60 @@ export class WarehouseManageTabsDeliveryAreasComponent
 		geoJSON.features = features;
 
 		return geoJSON;
+	}
+
+	setValue(data) {
+		// add type
+		if (data && data.features.length > 0) {
+			data.features.forEach((feature) => {
+				if (feature.geometry.type === 'Point') {
+					// Point = Circle
+
+					const circle = new google.maps.Circle({
+						center: {
+							// Point coodinates are reversed: lng => lat
+							lng: +feature.geometry.coordinates[0],
+							lat: +feature.geometry.coordinates[1]
+						},
+						radius: feature.properties['radius'],
+						strokeWeight: 0.5,
+						fillOpacity: 0.45,
+						fillColor: '#1E90FF',
+						map: this._map
+					});
+
+					circle['type'] = 'circle';
+
+					circle['properties'] = feature.properties;
+
+					this._addZoneEventListeners(circle);
+
+					this.zonesObjects.push(circle);
+				} else if (feature.geometry.type === 'Polygon') {
+					const polygon = new google.maps.Polygon({
+						strokeWeight: 0.5,
+						fillOpacity: 0.45,
+						fillColor: '#1E90FF',
+						paths: this._mapCoordinates(
+							feature.geometry.coordinates
+						)
+					});
+
+					polygon['properties'] = feature.properties;
+
+					polygon['type'] = 'polygon';
+
+					polygon.setMap(this._map);
+
+					this._addZoneEventListeners(polygon);
+
+					this.zonesObjects.push(polygon);
+				}
+			});
+
+			this._zoneNumber = data.features.length;
+			this.deliveryZones = data;
+		}
 	}
 
 	addZone() {
@@ -226,13 +197,6 @@ export class WarehouseManageTabsDeliveryAreasComponent
 					coordinates[0].push(mappedCoordinates);
 				});
 
-				this.zonesData.push({
-					polygon: coordinates,
-					name: this.deliverForm.get('name').value,
-					minimumAmount: this.deliverForm.get('amount').value,
-					fee: this.deliverForm.get('fee').value
-				});
-
 				this._selectedZone.properties = {
 					name: this.deliverForm.get('name').value,
 					minimumAmount: this.deliverForm.get('amount').value,
@@ -245,22 +209,6 @@ export class WarehouseManageTabsDeliveryAreasComponent
 				of the circle
 				We will save the radius as a property and will have our full circle */
 
-				const coordsArr = this._selectedZone
-					.getCenter()
-					.toUrlValue(7)
-					.split(',');
-
-				const radius = this._selectedZone.getRadius();
-
-				this.zonesData.push({
-					x: coordsArr[0],
-					y: coordsArr[1],
-					radius,
-					name: this.deliverForm.get('name').value,
-					minimumAmount: this.deliverForm.get('amount').value,
-					fee: this.deliverForm.get('fee').value
-				});
-
 				this._selectedZone.properties = {
 					name: this.deliverForm.get('name').value,
 					minimumAmount: this.deliverForm.get('amount').value,
@@ -269,8 +217,6 @@ export class WarehouseManageTabsDeliveryAreasComponent
 
 				this.zonesObjects.push(this._selectedZone);
 			}
-
-			console.log(this.zonesObjects);
 
 			this._clearSelection();
 			this._zoneNumber++;
@@ -359,7 +305,6 @@ export class WarehouseManageTabsDeliveryAreasComponent
 	}
 
 	editZone() {
-		console.log(this._selectedZone);
 		this._selectedZone.properties = {
 			name: this.deliverForm.get('name').value,
 			fee: this.deliverForm.get('fee').value,
@@ -367,7 +312,6 @@ export class WarehouseManageTabsDeliveryAreasComponent
 		};
 
 		this.closeEdit();
-		// Change properties; think of a way to update coordinates or something!
 	}
 
 	highlightZone(zone) {
@@ -444,8 +388,6 @@ export class WarehouseManageTabsDeliveryAreasComponent
 			this._selectedZone.set('fillColor', '#1E90FF');
 			this._selectedZone.setEditable(false);
 			this._selectedZone = null;
-		} else {
-			console.warn("there's no zone selected");
 		}
 	}
 

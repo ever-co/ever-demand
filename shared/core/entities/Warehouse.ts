@@ -78,14 +78,13 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	geoLocation: GeoLocation;
 
 	/**
-	 * Warehouse current location (address)
-	 * Note: we do support "moving" warehouses (e.g. car with products)
+	 * Warehouse delivery areas in GeoJSON format
 	 *
-	 * @type {GeoLocation}
+	 * @type {Object}
 	 * @memberof Warehouse
 	 */
-	@Schema(getSchema(GeoLocation))
-	deliveryAreas: GeoLocation;
+	@Schema({ type: Object })
+	deliveryAreas: object;
 
 	/**
 	 * Products available at this warehouse for customer to purchase

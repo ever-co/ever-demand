@@ -100,7 +100,6 @@ export class WarehouseManageTabsComponent {
 		const contactRaw = this.contactInfoForm.getValue();
 		const locationRaw = geoLocationInput;
 		const deliveryAreasRaw = this.deliveryAreasForm.getValue();
-		debugger;
 
 		const inputResult: {
 			basicInfo: WarehouseManageTabs;
