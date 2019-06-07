@@ -148,7 +148,7 @@
 		"moment": "^2.24.0",
 		"mongoose": "^5.5.0",
 		"mx.ferreyra.callnumber": "^0.0.2",
-		"ng2-completer": "^2.0.8",
+		"ng2-completer": "^3.0.1",
 		"ng2-file-upload": "^1.3.0",
 		"ng2-smart-table": "^1.4.0",
 		"ngx-masonry": "^1.1.2",
