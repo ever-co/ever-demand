@@ -46,12 +46,12 @@
 		ea-legend-chart {
 			align-self: flex-start;
 
-			/deep/ .legends {
+			::ng-deep .legends {
 				padding-left: 0;
-				font-size: nb-theme(font-size-sm);
+				font-size: nb-theme(text-heading-6-font-size);
 			}
 
-			/deep/ .legend {
+			::ng-deep .legend {
 				margin-left: 1rem;
 			}
 		}

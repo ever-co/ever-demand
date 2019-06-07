@@ -3,6 +3,6 @@
 	border-left: 5px solid #42a948;
 }
 
-:host /deep/ .card-footer button {
+:host ::ng-deep .card-footer button {
 	cursor: pointer !important;
 }

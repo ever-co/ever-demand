@@ -14,7 +14,7 @@ import { NotifyService } from 'app/@core/services/notify/notify.service';
 	styleUrls: ['./product-create.component.scss']
 })
 export class ProductCreateComponent implements OnInit {
-	@ViewChild('basicInfoForm', { static: false })
+	@ViewChild('basicInfoForm', { static: true })
 	basicInfoForm: BasicInfoFormComponent;
 
 	public loading: boolean;

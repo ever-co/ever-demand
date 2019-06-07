@@ -30,6 +30,7 @@ import { AppModuleGuard } from './app.module.guard';
 import { MaintenanceModuleGuard } from './pages/+maintenance-info/maintenance-info.module.guard';
 import { first } from 'rxjs/operators';
 import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 // It's more 'standard' way to use Font-Awesome module and special package,
 // but for some reason ngx-admin works without it. So we leave next line commented for now.
@@ -47,6 +48,7 @@ import { ServerConnectionService } from '@modules/client.common.angular2/service
 		AppRoutingModule,
 		ApolloModule,
 		HttpLinkModule,
+		NbEvaIconsModule,
 		TranslateModule.forRoot({
 			loader: {
 				provide: TranslateLoader,

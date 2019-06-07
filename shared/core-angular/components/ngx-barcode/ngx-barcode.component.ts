@@ -99,7 +99,7 @@ export class NgxBarcodeComponent implements OnChanges {
 	@Input('bc-value')
 	value = '';
 
-	@ViewChild('bcElement', { static: false })
+	@ViewChild('bcElement', { static: true })
 	bcElement: ElementRef;
 
 	@Input('bc-valid')

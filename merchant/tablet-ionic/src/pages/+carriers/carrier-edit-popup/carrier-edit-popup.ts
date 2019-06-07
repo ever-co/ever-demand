@@ -42,13 +42,13 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 	@Input()
 	carrier: Carrier;
 
-	@ViewChild('basicInfoForm', { static: false })
+	@ViewChild('basicInfoForm', { static: true })
 	basicInfoForm: BasicInfoFormComponent;
 
-	@ViewChild('accountForm', { static: false })
+	@ViewChild('accountForm', { static: true })
 	accountForm: AccountFormComponent;
 
-	@ViewChild('locationForm', { static: false })
+	@ViewChild('locationForm', { static: true })
 	locationForm: LocationFormComponent;
 
 	isNextStepOneAvailable: boolean = true;

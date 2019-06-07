@@ -32,7 +32,7 @@ export type WarehouseBasicInfo = Pick<
 	templateUrl: 'basic-info-form.component.html'
 })
 export class BasicInfoFormComponent implements OnInit {
-	@ViewChild('fileInput', { static: false })
+	@ViewChild('fileInput', { static: true })
 	fileInput: any;
 
 	@Input()

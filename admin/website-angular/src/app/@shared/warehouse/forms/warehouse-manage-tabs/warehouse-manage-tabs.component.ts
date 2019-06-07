@@ -39,19 +39,19 @@ export class WarehouseManageTabsComponent {
 	@Input()
 	readonly form: FormGroup;
 
-	@ViewChild('detailsComponent', { static: false })
+	@ViewChild('detailsComponent', { static: true })
 	readonly detailsComponent: WarehouseManageTabsDetailsComponent;
 
-	@ViewChild('accountComponent', { static: false })
+	@ViewChild('accountComponent', { static: true })
 	readonly accountComponent: WarehouseManageTabsAccountComponent;
 
-	@ViewChild('contactInfoForm', { static: false })
+	@ViewChild('contactInfoForm', { static: true })
 	readonly contactInfoForm: ContactInfoFormComponent;
 
-	@ViewChild('locationForm', { static: false })
+	@ViewChild('locationForm', { static: true })
 	readonly locationForm: LocationFormComponent;
 
-	@ViewChild('tabSet', { static: false })
+	@ViewChild('tabSet', { static: true })
 	readonly tabSet;
 
 	mapCoordEmitter = new EventEmitter<number[]>();

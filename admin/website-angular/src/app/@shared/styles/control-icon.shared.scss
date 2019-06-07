@@ -2,28 +2,29 @@
 @import '~@nebular/theme/components/card/card.component.theme';
 
 @mixin optionally-clickable {
-	&[routerLink], &[href], &.clickable {
+	&[routerLink],
+	&[href],
+	&.clickable {
 		cursor: pointer;
 	}
 }
 
 @mixin control-icon {
-
 	.control-icon {
 		width: 1.4em;
 		height: 1.4em;
 		outline: none;
 
 		path {
-			fill: nb-theme(color-fg);
+			fill: nb-theme(text-basic-color);
 		}
 
 		&:hover path {
-			fill: nb-theme(color-fg-text);
+			fill: nb-theme(text-control-color);
 		}
 
 		&:active path {
-			fill: nb-theme(color-fg-highlight);
+			fill: nb-theme(text-hint-color);
 		}
 
 		&.control-icon-left {
@@ -38,5 +39,4 @@
 
 		@include optionally-clickable;
 	}
-
 }

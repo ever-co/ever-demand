@@ -10,7 +10,7 @@ declare var google: any;
 	templateUrl: './ea-customer-location.component.html'
 })
 export class CustomerLocationComponent implements OnDestroy, OnInit {
-	@ViewChild('gmap', { static: false })
+	@ViewChild('gmap', { static: true })
 	gmapElement: any;
 	map: google.maps.Map;
 	marker: any;

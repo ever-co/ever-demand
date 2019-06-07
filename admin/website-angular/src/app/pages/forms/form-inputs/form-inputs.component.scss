@@ -51,11 +51,11 @@
 
 	.star {
 		font-size: 1.5rem;
-		color: nb-theme(color-fg);
+		color: nb-theme(text-basic-color);
 	}
 
 	.filled {
-		color: nb-theme(color-fg);
+		color: nb-theme(text-basic-color);
 	}
 
 	// TODO: Replace with the card header styles mixin
@@ -63,15 +63,15 @@
 		line-height: 2rem;
 		font-size: 1.25rem;
 		font-family: nb-theme(font-secondary);
-		font-weight: nb-theme(font-weight-bolder);
-		color: nb-theme(color-fg-heading);
+		font-weight: nb-theme(text-subtitle-font-weight);
+		color: nb-theme(text-basic-color);
 	}
 
 	.current-rate {
 		font-size: 1.5rem;
 		@include nb-ltr(padding-left, 1rem);
 		@include nb-rtl(padding-right, 1rem);
-		color: nb-theme(color-fg-heading);
+		color: nb-theme(text-basic-color);
 	}
 
 	.full-name-inputs {
@@ -113,9 +113,9 @@
 	}
 
 	ngb-rating i {
-		color: nb-theme(color-success);
+		color: nb-theme(color-success-500);
 		@include nb-for-theme(cosmic) {
-			color: nb-theme(color-primary);
+			color: nb-theme(color-primary-500);
 		}
 	}
 

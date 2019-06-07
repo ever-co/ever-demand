@@ -5,7 +5,7 @@
 		padding: 0;
 	}
 
-	/deep/ .leaflet-container {
+	::ng-deep .leaflet-container {
 		width: 100%;
 		height: nb-theme(card-height-large);
 	}

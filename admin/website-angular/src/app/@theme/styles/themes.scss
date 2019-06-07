@@ -8,6 +8,7 @@ $nb-enabled-themes: (default, cosmic, corporate, everlight, everdark);
 
 $nb-themes: nb-register-theme(
 	(
+		padding: 1.25rem,
 		// app wise variables for each theme
 			sidebar-header-gap: 2rem,
 		sidebar-header-height: initial,

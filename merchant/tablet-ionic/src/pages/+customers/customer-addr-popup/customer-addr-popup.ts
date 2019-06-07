@@ -8,7 +8,7 @@ import User from '@modules/server.common/entities/User';
 	styleUrls: ['./customer-addr-popup.scss']
 })
 export class CustomerAddrPopupPage implements OnInit {
-	@ViewChild('gmap', { static: false })
+	@ViewChild('gmap', { static: true })
 	gmapElement: ElementRef;
 	map: google.maps.Map;
 	myLatLng = { lat: 0, lng: 0 };

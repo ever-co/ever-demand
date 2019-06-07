@@ -1,77 +1,78 @@
 @import '../../styles/themes';
 
 @include nb-install-component() {
-  h6 {
-    margin-bottom: 0.5rem;
-  }
+	h6 {
+		margin-bottom: 0.5rem;
+	}
 
-  .settings-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    flex-wrap: wrap;
+	.settings-row {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		flex-wrap: wrap;
 
-    width: 90%;
-    margin: 0 0 1rem;
+		width: 90%;
+		margin: 0 0 1rem;
 
-    a {
-      text-decoration: none;
-      font-size: 2.25rem;
+		a {
+			text-decoration: none;
+			font-size: 2.25rem;
 
-      color: nb-theme(color-fg);
+			color: nb-theme(text-basic-color);
 
-      &.selected {
-        color: nb-theme(color-success);
-      }
+			&.selected {
+				color: nb-theme(color-success-500);
+			}
 
-      @include nb-for-theme(cosmic) {
-        &.selected {
-          color: nb-theme(link-color);
-        }
-      }
-    }
-  }
+			@include nb-for-theme(cosmic) {
+				&.selected {
+					// TODO nb-theme
+					color: #3dcc6d;
+				}
+			}
+		}
+	}
 
-  .settings {
-    margin-bottom: 1em;
-  }
+	.settings {
+		margin-bottom: 1em;
+	}
 
-  .switcher {
-    margin-bottom: 1rem;
+	.switcher {
+		margin-bottom: 1rem;
 
-    /deep/ ngx-switcher {
-      .switch-label span {
-        font-size: 1em;
-        font-weight: normal;
-      }
+		::ng-deep ngx-switcher {
+			.switch-label span {
+				font-size: 1em;
+				font-weight: normal;
+			}
 
-      .switch {
-        height: 1.5em;
-        width: 3em;
+			.switch {
+				height: 1.5em;
+				width: 3em;
 
-        .slider::before {
-          height: 1.5em;
-          width: 1.5em;
-        }
+				.slider::before {
+					height: 1.5em;
+					width: 1.5em;
+				}
 
-        input:checked + .slider::before {
-          @include nb-ltr(transform, translateX(1.5rem)!important);
-          @include nb-rtl(transform, translateX(-1.5rem)!important);
-        }
-      }
+				input:checked + .slider::before {
+					@include nb-ltr(transform, translateX(1.5rem) !important);
+					@include nb-rtl(transform, translateX(-1.5rem) !important);
+				}
+			}
 
-      @include nb-for-theme(cosmic) {
-        .switch .slider {
-          background-color: nb-theme(color-bg);
-        }
-      }
-    }
-  }
+			@include nb-for-theme(cosmic) {
+				.switch .slider {
+					background-color: nb-theme(background-basic-color-1);
+				}
+			}
+		}
+	}
 
-  .language-select {
-	max-height: 40px;
-	padding: 0;
-	padding-left: 10px;
-	font-size: 0.9rem;
-  }
+	.language-select {
+		max-height: 40px;
+		padding: 0;
+		padding-left: 10px;
+		font-size: 0.9rem;
+	}
 }

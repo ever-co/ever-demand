@@ -18,7 +18,7 @@ const directionsService = new google.maps.DirectionsService();
 	styleUrls: ['./carrier-track-popup.scss']
 })
 export class CarrierTrackPopup implements OnInit {
-	@ViewChild('gmap', { static: false })
+	@ViewChild('gmap', { static: true })
 	gmapElement: ElementRef;
 
 	@Input()

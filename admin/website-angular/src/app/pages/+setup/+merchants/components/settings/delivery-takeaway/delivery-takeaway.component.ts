@@ -24,11 +24,11 @@ import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-r
 })
 export class SetupMerchantDeliveryAndTakeawayComponent
 	implements AfterViewInit, OnDestroy {
-	@ViewChild('newCarrier', { static: false })
+	@ViewChild('newCarrier', { static: true })
 	newCarrier: SetupMerchantAddNewCarrierComponent;
-	@ViewChild('sharedCarriers', { static: false })
+	@ViewChild('sharedCarriers', { static: true })
 	sharedCarriers: SetupMerchantSharedCarriersComponent;
-	@ViewChild('carriersTable', { static: false })
+	@ViewChild('carriersTable', { static: true })
 	carriersTable: CarriersSmartTableComponent;
 
 	@Output()
