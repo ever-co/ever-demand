@@ -30,7 +30,7 @@ import {
 	styleUrls: ['./products-table.component.scss']
 })
 export class ProductsTableComponent implements OnDestroy {
-	@ViewChild('productsTable', { static: false })
+	@ViewChild('productsTable', { static: true })
 	productsTable: WarehouseProductsComponent;
 
 	@Output()

@@ -9,7 +9,7 @@
 
 	nb-action {
 		i {
-			color: nb-theme(color-fg);
+			color: nb-theme(text-basic-color);
 			font-size: 2.5rem;
 			@include nb-ltr(margin-right, 1rem);
 			@include nb-rtl(margin-left, 1rem);
@@ -21,8 +21,8 @@
 
 		span {
 			font-family: nb-theme(font-secondary);
-			font-weight: nb-theme(font-weight-bold);
-			color: nb-theme(color-fg-heading);
+			font-weight: nb-theme(text-heading-2-font-weight);
+			color: nb-theme(text-basic-color);
 			text-transform: uppercase;
 		}
 	}

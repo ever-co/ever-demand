@@ -23,7 +23,7 @@
 
 	.value {
 		font-size: 2rem;
-		color: nb-theme(color-fg-heading);
+		color: nb-theme(text-basic-color);
 
 		span div small {
 			font-size: 0.5em;
@@ -34,22 +34,23 @@
 	@include media-breakpoint-down(sm) {
 		.value,
 		.title {
-			font-weight: nb-theme(font-weight-bold);
+			font-weight: nb-theme(text-heading-2-font-weight);
 		}
 
 		.title {
-			font-size: nb-theme(font-size-sm);
+			font-size: nb-theme(text-heading-6-font-size);
 		}
 
 		.value {
-			font-size: nb-theme(font-size-xlg);
+			font-size: nb-theme(text-heading-1-font-size);
 		}
 	}
 
 	@include media-breakpoint-down(is) {
 		.summary-container {
-			padding-left: nb-theme(padding);
-			padding-right: nb-theme(padding);
+			// TODO get padding form the theme
+			padding-left: 1.25rem;
+			padding-right: 1.25rem;
 		}
 
 		.value {

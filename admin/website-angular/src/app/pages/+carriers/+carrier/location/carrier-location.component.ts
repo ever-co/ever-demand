@@ -22,7 +22,7 @@ const directionsService = new google.maps.DirectionsService();
 export class CarrierLocationComponent implements OnDestroy, OnInit {
 	private ngDestroy$ = new Subject();
 
-	@ViewChild('gmap', { static: false })
+	@ViewChild('gmap', { static: true })
 	gmapElement: any;
 	map: google.maps.Map;
 	carrierSub$: any;

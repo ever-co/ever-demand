@@ -34,8 +34,10 @@
 		width: auto;
 
 		.navigation {
-			@include nb-ltr(padding-right, nb-theme(padding));
-			@include nb-rtl(padding-left, nb-theme(padding));
+			// TODO get padding form the theme
+			@include nb-ltr(padding-right, 1.25rem);
+			@include nb-rtl(padding-left, 1.25rem);
+
 			font-size: 2.5rem;
 			text-decoration: none;
 
@@ -45,11 +47,13 @@
 		}
 
 		.logo {
-			padding: 0 nb-theme(padding);
+			// TODO get padding form the theme
+			padding: 0 1.25rem;
+
 			font-size: 1.75rem;
-			font-weight: nb-theme(font-weight-bolder);
-			@include nb-ltr(border-left, 1px solid nb-theme(separator));
-			@include nb-rtl(border-right, 1px solid nb-theme(separator));
+			font-weight: nb-theme(text-subtitle-font-weight);
+			@include nb-ltr(border-left, 1px solid nb-theme(divider-color));
+			@include nb-rtl(border-right, 1px solid nb-theme(divider-color));
 			white-space: nowrap;
 
 			display: flex;
@@ -57,7 +61,7 @@
 			justify-content: center;
 
 			span {
-				font-weight: nb-theme(font-weight-normal);
+				font-weight: nb-theme(text-heading-3-font-weight);
 			}
 
 			.ever-simbol {
@@ -83,8 +87,8 @@
 			@include nb-rtl(border, none);
 		}
 
-		.header-container /deep/ ngx-theme-switcher .dropdown-toggle {
-			color: nb-theme(color-white);
+		.header-container ::ng-deep ngx-theme-switcher .dropdown-toggle {
+			color: #ffffff;
 			background: transparent;
 		}
 	}
@@ -105,13 +109,13 @@
 		}
 	}
 
-	.toggle-layout /deep/ a {
+	.toggle-layout ::ng-deep a {
 		display: block;
 		text-decoration: none;
 		line-height: 1;
 
 		i {
-			color: nb-theme(color-fg-highlight);
+			color: nb-theme(text-hint-color);
 			font-size: 2.25rem;
 			border-radius: 50%;
 			position: relative;
@@ -140,18 +144,17 @@
 		}
 	}
 
-	// TODO style
-	// @include keyframes(pulse) {
-	// 	0% {
-	// 		box-shadow: 0 0 1px 0 rgba(nb-theme(color-fg-highlight), 0);
-	// 	}
-	// 	20% {
-	// 		box-shadow: 0 0 3px 10px rgba(nb-theme(color-fg-highlight), 0.4);
-	// 	}
-	// 	100% {
-	// 		box-shadow: 0 0 5px 20px rgba(nb-theme(color-fg-highlight), 0);
-	// 	}
-	// }
+	@include keyframes(pulse) {
+		0% {
+			box-shadow: 0 0 1px 0 rgba(nb-theme(text-hint-color), 0);
+		}
+		20% {
+			box-shadow: 0 0 3px 10px rgba(nb-theme(text-hint-color), 0.4);
+		}
+		100% {
+			box-shadow: 0 0 5px 20px rgba(nb-theme(text-hint-color), 0);
+		}
+	}
 
 	@include keyframes(pulse-light) {
 		0% {
@@ -188,7 +191,7 @@
 	}
 
 	@include media-breakpoint-down(sm) {
-		nb-user /deep/ .user-name {
+		nb-user ::ng-deep .user-name {
 			display: none;
 		}
 	}
@@ -214,7 +217,7 @@
 	}
 
 	@include media-breakpoint-down(xs) {
-		.right /deep/ {
+		.right ::ng-deep {
 			display: none;
 		}
 	}

@@ -18,7 +18,7 @@ const perPage = 5;
 	styleUrls: ['/products.component.scss']
 })
 export class ProductsComponent implements OnDestroy, AfterViewInit {
-	@ViewChild('productsTable', { static: false })
+	@ViewChild('productsTable', { static: true })
 	protected productsTable: ProductsTableComponent;
 
 	public productsCategories: any;

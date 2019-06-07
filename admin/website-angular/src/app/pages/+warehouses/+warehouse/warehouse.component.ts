@@ -42,10 +42,10 @@ const perPage = 3;
 export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 	private ngDestroy$ = new Subject<void>();
 
-	@ViewChild('productsTable', { static: false })
+	@ViewChild('productsTable', { static: true })
 	public productsTable: ProductsTableComponent;
 
-	@ViewChild('warehouseSelectView', { static: false })
+	@ViewChild('warehouseSelectView', { static: true })
 	public warehouseSelectView: WarehouseSelectViewComponent;
 
 	public filterMode: OrdersFilterModes = 'all';

@@ -36,11 +36,11 @@
 
 		nb-action {
 			padding: 0 0.5rem;
-			/deep/ .control-icon {
+			::ng-deep .control-icon {
 				font-size: 1.75rem;
 			}
 		}
-		nb-user /deep/ {
+		nb-user ::ng-deep {
 			.user-container {
 				font-size: 0.875rem;
 			}
@@ -54,11 +54,11 @@
 	@include media-breakpoint-down(xs) {
 		nb-action {
 			padding: 0 0.375rem;
-			/deep/ .control-icon {
+			::ng-deep .control-icon {
 				font-size: 1.5rem;
 			}
 		}
-		nb-user /deep/ {
+		nb-user ::ng-deep {
 			.user-container {
 				font-size: 0.75rem;
 			}

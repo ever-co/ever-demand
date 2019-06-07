@@ -45,16 +45,16 @@ export class WarehouseOrderComponent implements OnInit, OnDestroy {
 	createUserEmitter = new EventEmitter<void>();
 	orderFinishedEmitter = new EventEmitter<void>();
 
-	@ViewChild('wizardForm', { static: false })
+	@ViewChild('wizardForm', { static: true })
 	private _wizardForm: WizardComponent;
 
-	@ViewChild('wizardFormStepTwo', { static: false })
+	@ViewChild('wizardFormStepTwo', { static: true })
 	public wizardFormStepTwo: WizardComponent;
 
-	@ViewChild('warehouseOrderCreateUser', { static: false })
+	@ViewChild('warehouseOrderCreateUser', { static: true })
 	private _warehouseOrderCreateUser: WarehouseOrderCreateUserComponent;
 
-	@ViewChild('warehouseOrderModal', { static: false })
+	@ViewChild('warehouseOrderModal', { static: true })
 	private _warehouseOrderModal: WarehouseOrderModalComponent;
 
 	private _userIdToOrder: string;

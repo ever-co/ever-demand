@@ -4,11 +4,11 @@
 @import '~@nebular/theme/styles/global/breakpoints';
 
 @include nb-install-component() {
-	/deep/ {
+	::ng-deep {
 		$button-size: 50px;
 
 		.container-title {
-			color: nb-theme(color-fg);
+			color: nb-theme(text-basic-color);
 			font-family: nb-theme(font-secondary);
 			margin-bottom: 0.5rem;
 		}
@@ -20,8 +20,8 @@
 
 		.subheader {
 			font-size: 0.75rem;
-			font-weight: nb-theme(font-weight-light);
-			color: nb-theme(color-fg);
+			font-weight: nb-theme(text-subtitle-font-weight);
+			color: nb-theme(text-basic-color);
 		}
 
 		.btn-demo {
@@ -38,7 +38,7 @@
 			.state-value {
 				width: $button-size;
 				height: $button-size;
-				border-radius: nb-theme(btn-border-radius);
+				border-radius: nb-theme(border-radius);
 
 				@include nb-for-theme(corporate) {
 					border-radius: nb-theme(btn-semi-round-border-radius);
@@ -70,7 +70,7 @@
 	}
 
 	@include media-breakpoint-down(is) {
-		ngx-default-buttons /deep/ nb-card-header {
+		ngx-default-buttons ::ng-deep nb-card-header {
 			flex-direction: column;
 			align-items: left;
 
@@ -81,19 +81,19 @@
 	}
 
 	@include media-breakpoint-down(xs) {
-		/deep/.icon-buttons .icon-button-examples {
+		::ng-deep.icon-buttons .icon-button-examples {
 			button {
 				@include nb-ltr(margin-right, 1rem);
 				@include nb-rtl(margin-left, 1rem);
 			}
 		}
 
-		ngx-default-buttons /deep/ nb-card-header {
+		ngx-default-buttons ::ng-deep nb-card-header {
 			flex-direction: column;
 			margin-bottom: 0.5rem;
 		}
 
-		ngx-block-level-buttons /deep/ {
+		ngx-block-level-buttons ::ng-deep {
 			.btn-primary {
 				padding: 0.75rem 1rem;
 			}
