@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@agm/core@~1.0.0-beta.5":
+"@agm/core@^1.0.0-beta.5":
   version "1.0.0-beta.6"
   resolved "https://registry.yarnpkg.com/@agm/core/-/core-1.0.0-beta.6.tgz#89a812b4b4ceb4d9cf2195400423c4b833103c5e"
   integrity sha512-Bf6azUVIZYwgUWUNISaENh38D17XJxgKU7m1TNTrP+sIgYjPrjEON8mxoGnYI8B7PBbdaWl6RPV/FcrEfSG9Ng==

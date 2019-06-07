@@ -49,10 +49,10 @@ export class TrackPage implements OnInit, OnDestroy {
 	carrierListDropdown: Carrier[];
 	sharedCarrierListId: string[];
 
-	@ViewChild('gmap', { static: false })
+	@ViewChild('gmap', { static: true })
 	gmapElement: ElementRef;
 
-	@ViewChild('filterComponent', { static: false })
+	@ViewChild('filterComponent', { static: true })
 	filterComponent: IonicSelectableComponent;
 
 	constructor(
