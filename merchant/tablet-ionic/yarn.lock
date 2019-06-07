@@ -7179,10 +7179,12 @@ next-tick@^1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
-ng2-completer@^2.0.8:
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/ng2-completer/-/ng2-completer-2.0.8.tgz#36101eb5a796f966897e7894fc437effd88ebdfb"
-  integrity sha512-WzxJ4u3vAHsfBUaFCloEBoirPZrnDabtWEKyDok7dtjhS1ZvcbwQ4asdXuDO0hZ0T1QC66U/PwLhKfkG501hVg==
+ng2-completer@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/ng2-completer/-/ng2-completer-3.0.1.tgz#6170fa6c56d4bf74350242ccc31c11aaed947019"
+  integrity sha512-Al7tNxXSgTQNDTdFVIM4m3mjpAm1/7DhNHrjXOqNfBDzN9PArJPAQYKpF/7ycHSgJQdY+E7d6mjIc1WzeLJreQ==
+  dependencies:
+    rxjs-compat "^6.2.2"
 
 ng2-file-upload@^1.3.0:
   version "1.3.0"
@@ -8997,6 +8999,11 @@ rx@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/rx/-/rx-4.1.0.tgz#a5f13ff79ef3b740fe30aa803fb09f98805d4782"
   integrity sha1-pfE/957zt0D+MKqAP7CfmIBdR4I=
+
+rxjs-compat@^6.2.2:
+  version "6.5.2"
+  resolved "https://registry.yarnpkg.com/rxjs-compat/-/rxjs-compat-6.5.2.tgz#e469070adf6260bdad195e9d4a39f444ae28b458"
+  integrity sha512-TRMkTp4FgSxE2HtGvxmgRukh3JqdFM7ejAj1Ti/VdodbPGfWvZR5+KdLKRV9jVDFyu2SknM8RD+PR54KGnoLjg==
 
 rxjs-compat@^6.4.0:
   version "6.4.0"
