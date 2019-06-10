@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
-import 'style-loader!leaflet/dist/leaflet.css';
+//import 'style-loader!leaflet/dist/leaflet.css';
 import { ActivatedRoute } from '@angular/router';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { first } from 'rxjs/operators';
@@ -36,8 +36,7 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
-		private carrierRouter: CarrierRouter,
-		private carriersService: CarriersService
+		private carrierRouter: CarrierRouter
 	) {}
 
 	ngOnInit(): void {
@@ -64,153 +63,153 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 					}
 					let isWorking = false;
 
-					this.interval = setInterval(async () => {
-						const order = await this.carriersService.getCarrierCurrentOrder(
-							carrierId
-						);
+					// this.interval = setInterval(async () => {
+					// 	const order = await this.carriersService.getCarrierCurrentOrder(
+					// 		carrierId
+					// 	);
 
-						if (order) {
-							if (!isWorking) {
-								const user = order.user;
-								const warehouse = order.warehouse;
-								const warehouseIcon =
-									'http://maps.google.com/mapfiles/kml/pal3/icon21.png';
-								const userIcon =
-									'http://maps.google.com/mapfiles/kml/pal3/icon48.png';
-								user.geoLocation = new GeoLocation(
-									user.geoLocation
-								);
-								this.userMarker = this.addMarker(
-									new google.maps.LatLng(
-										user.geoLocation.coordinates.lat,
-										user.geoLocation.coordinates.lng
-									),
-									this.map,
-									userIcon
-								);
-								warehouse.geoLocation = new GeoLocation(
-									warehouse.geoLocation
-								);
-								this.warehouseMarker = this.addMarker(
-									new google.maps.LatLng(
-										warehouse[
-											'geoLocation'
-										].coordinates.lat,
-										warehouse['geoLocation'].coordinates.lng
-									),
-									this.map,
-									warehouseIcon
-								);
-								const start = new google.maps.LatLng(
-									user.geoLocation.coordinates.lat,
-									user.geoLocation.coordinates.lng
-								);
-								const end = new google.maps.LatLng(
-									warehouse['geoLocation'].coordinates.lat,
-									warehouse['geoLocation'].coordinates.lng
-								);
-								const request = {
-									origin: start,
-									destination: end,
-									travelMode: 'DRIVING'
-								};
+					// 	if (order) {
+					// 		if (!isWorking) {
+					// 			const user = order.user;
+					// 			const warehouse = order.warehouse;
+					// 			const warehouseIcon =
+					// 				'http://maps.google.com/mapfiles/kml/pal3/icon21.png';
+					// 			const userIcon =
+					// 				'http://maps.google.com/mapfiles/kml/pal3/icon48.png';
+					// 			user.geoLocation = new GeoLocation(
+					// 				user.geoLocation
+					// 			);
+					// 			this.userMarker = this.addMarker(
+					// 				new google.maps.LatLng(
+					// 					user.geoLocation.coordinates.lat,
+					// 					user.geoLocation.coordinates.lng
+					// 				),
+					// 				this.map,
+					// 				userIcon
+					// 			);
+					// 			warehouse.geoLocation = new GeoLocation(
+					// 				warehouse.geoLocation
+					// 			);
+					// 			this.warehouseMarker = this.addMarker(
+					// 				new google.maps.LatLng(
+					// 					warehouse[
+					// 						'geoLocation'
+					// 					].coordinates.lat,
+					// 					warehouse['geoLocation'].coordinates.lng
+					// 				),
+					// 				this.map,
+					// 				warehouseIcon
+					// 			);
+					// 			const start = new google.maps.LatLng(
+					// 				user.geoLocation.coordinates.lat,
+					// 				user.geoLocation.coordinates.lng
+					// 			);
+					// 			const end = new google.maps.LatLng(
+					// 				warehouse['geoLocation'].coordinates.lat,
+					// 				warehouse['geoLocation'].coordinates.lng
+					// 			);
+					// 			const request = {
+					// 				origin: start,
+					// 				destination: end,
+					// 				travelMode: 'DRIVING'
+					// 			};
 
-								directionsService.route(request, function(
-									res,
-									stat
-								) {
-									if (stat === 'OK') {
-										directionsDisplay.setDirections(res);
-									}
-								});
-								directionsDisplay.setOptions({
-									suppressMarkers: true
-								});
-								directionsDisplay.setMap(this.map);
+					// 			directionsService.route(request, function(
+					// 				res,
+					// 				stat
+					// 			) {
+					// 				if (stat === 'OK') {
+					// 					directionsDisplay.setDirections(res);
+					// 				}
+					// 			});
+					// 			directionsDisplay.setOptions({
+					// 				suppressMarkers: true
+					// 			});
+					// 			directionsDisplay.setMap(this.map);
 
-								const bounds = new google.maps.LatLngBounds();
-								bounds.extend(this.marker.getPosition());
-								bounds.extend(
-									this.warehouseMarker.getPosition()
-								);
-								bounds.extend(this.userMarker.getPosition());
-								this.map.fitBounds(bounds);
+					// 			const bounds = new google.maps.LatLngBounds();
+					// 			bounds.extend(this.marker.getPosition());
+					// 			bounds.extend(
+					// 				this.warehouseMarker.getPosition()
+					// 			);
+					// 			bounds.extend(this.userMarker.getPosition());
+					// 			this.map.fitBounds(bounds);
 
-								isWorking = true;
-								this.isReverted = false;
+					// 			isWorking = true;
+					// 			this.isReverted = false;
 
-								const userInfoContent = `
-									<h3>  ${order.user.firstName + ' ' + order.user.lastName}</h3>
-									<ul>
-										<li><i style='margin-right:5px;' class="ion-md-mail"></i>${
-											order.user.email
-										}</li>
-										<li><i style='margin-right:5px;' class="ion-md-call"></i>${
-											order.user.phone
-										}</li>
-										<li><i style='margin-right:5px;' class="ion-md-locate"></i>${
-											order.user.geoLocation.streetAddress
-										}</li>
-									</ul>
-									`;
+					// 			const userInfoContent = `
+					// 				<h3>  ${order.user.firstName + ' ' + order.user.lastName}</h3>
+					// 				<ul>
+					// 					<li><i style='margin-right:5px;' class="ion-md-mail"></i>${
+					// 						order.user.email
+					// 					}</li>
+					// 					<li><i style='margin-right:5px;' class="ion-md-call"></i>${
+					// 						order.user.phone
+					// 					}</li>
+					// 					<li><i style='margin-right:5px;' class="ion-md-locate"></i>${
+					// 						order.user.geoLocation.streetAddress
+					// 					}</li>
+					// 				</ul>
+					// 				`;
 
-								const userInfoWindow = new google.maps.InfoWindow(
-									{
-										content: userInfoContent
-									}
-								);
+					// 			const userInfoWindow = new google.maps.InfoWindow(
+					// 				{
+					// 					content: userInfoContent
+					// 				}
+					// 			);
 
-								this.userMarker.addListener('click', () => {
-									userInfoWindow.open(
-										this.map,
-										this.userMarker
-									);
-								});
-								const warehouseInfoContent = `
-									<h3>  ${order.warehouse.name}</h3>
-									<ul>
-										<li>
-											<i style='margin-right:5px;' class="ion-md-mail"></i>
-											${order.warehouse.contactEmail}
-										</li>
-										<li>
-											<i style='margin-right:5px;' class="ion-md-phone"></i><i class="ion-md-call"></i>
-											${order.warehouse.contactPhone}
-										</li>
-										<li>
-											<i style='margin-right:5px;' class="ion-md-locate"></i>
-											${order.warehouse.geoLocation.streetAddress}
-										</li>
-									</ul>
-									`;
+					// 			this.userMarker.addListener('click', () => {
+					// 				userInfoWindow.open(
+					// 					this.map,
+					// 					this.userMarker
+					// 				);
+					// 			});
+					// 			const warehouseInfoContent = `
+					// 				<h3>  ${order.warehouse.name}</h3>
+					// 				<ul>
+					// 					<li>
+					// 						<i style='margin-right:5px;' class="ion-md-mail"></i>
+					// 						${order.warehouse.contactEmail}
+					// 					</li>
+					// 					<li>
+					// 						<i style='margin-right:5px;' class="ion-md-phone"></i><i class="ion-md-call"></i>
+					// 						${order.warehouse.contactPhone}
+					// 					</li>
+					// 					<li>
+					// 						<i style='margin-right:5px;' class="ion-md-locate"></i>
+					// 						${order.warehouse.geoLocation.streetAddress}
+					// 					</li>
+					// 				</ul>
+					// 				`;
 
-								const warehouseInfoWindow = new google.maps.InfoWindow(
-									{
-										content: warehouseInfoContent
-									}
-								);
+					// 			const warehouseInfoWindow = new google.maps.InfoWindow(
+					// 				{
+					// 					content: warehouseInfoContent
+					// 				}
+					// 			);
 
-								this.warehouseMarker.addListener(
-									'click',
-									() => {
-										warehouseInfoWindow.open(
-											this.map,
-											this.warehouseMarker
-										);
-									}
-								);
-							}
-						} else {
-							if (isWorking) {
-								this.revertMap();
-								isWorking = false;
-							}
+					// 			this.warehouseMarker.addListener(
+					// 				'click',
+					// 				() => {
+					// 					warehouseInfoWindow.open(
+					// 						this.map,
+					// 						this.warehouseMarker
+					// 					);
+					// 				}
+					// 			);
+					// 		}
+					// 	} else {
+					// 		if (isWorking) {
+					// 			this.revertMap();
+					// 			isWorking = false;
+					// 		}
 
-							if (!this.isReverted) {
-								this.revertMap();
-							}
-						}
-					}, 1500);
+					// 		if (!this.isReverted) {
+					// 			this.revertMap();
+					// 		}
+					// 	}
+					// }, 1500);
 
 					this.map.setCenter(newCoordinates);
 					const carierIcon =

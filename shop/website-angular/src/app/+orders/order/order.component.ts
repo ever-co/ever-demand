@@ -17,6 +17,7 @@ import { MessagePopUpComponent } from 'app/shared/message-pop-up/message-pop-up.
 import { first } from 'rxjs/operators';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
+import { CarrierLocationComponent } from '../location/carrier-location.component';
 
 @Component({
 	selector: 'order',
@@ -38,7 +39,7 @@ export class OrderComponent implements OnInit {
 	public price: number;
 	public description: string;
 	public img: string;
-	public imgArray: string[];
+	public products;
 	public orderStatusText: string;
 	public orderNumber: number;
 	public orderType: number;
@@ -85,6 +86,13 @@ export class OrderComponent implements OnInit {
 		});
 	}
 
+	openMap(): void {
+		const mapDialog = this.dialog.open(CarrierLocationComponent, {
+			width: '560px',
+			data: {}
+		});
+	}
+
 	getTranslate(key: string): string {
 		let translationResult = '';
 
@@ -112,10 +120,7 @@ export class OrderComponent implements OnInit {
 			this.img = this.localeTranslate(
 				this.order.products[0].product.images
 			);
-			console.log(this.img);
-			this.imgArray = this.order.products[0].product.images.map(
-				(obj) => obj.url
-			);
+			this.products = this.order.products;
 		}
 		this.orderStatusText = this.order.warehouseStatusText;
 		this.orderStatusTextTranslates =
