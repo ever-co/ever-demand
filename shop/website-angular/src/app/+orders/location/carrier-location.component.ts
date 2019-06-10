@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, Inject } from '@angular/core';
 import { Subject } from 'rxjs';
 //import 'style-loader!leaflet/dist/leaflet.css';
 import { ActivatedRoute } from '@angular/router';
@@ -9,6 +9,7 @@ import { ICarrierOrdersRouterGetOptions } from '@modules/server.common/routers/I
 import { environment } from 'environments/environment';
 import { CarriersService } from 'app/@core/data/carriers.service';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 declare var google: any;
 const directionsDisplay = new google.maps.DirectionsRenderer();
@@ -19,226 +20,135 @@ const directionsService = new google.maps.DirectionsService();
 	styleUrls: ['./carrier-location.component.scss'],
 	templateUrl: './carrier-location.component.html'
 })
-export class CarrierLocationComponent implements OnDestroy, OnInit {
+export class CarrierLocationComponent implements OnInit {
 	private ngDestroy$ = new Subject();
 
 	@ViewChild('gmap')
 	gmapElement: any;
 	map: google.maps.Map;
-	carrierSub$: any;
 	marker: any;
 	userMarker: any;
 	warehouseMarker: any;
-	interval: NodeJS.Timer;
-	isReverted: boolean = true;
-	params$: any;
-	carrierId: string;
-
+	carrierLoc: any;
+	storeLoc: any;
+	userOrder: any;
 	constructor(
-		private route: ActivatedRoute,
-		private carrierRouter: CarrierRouter
-	) {}
+		private dialogRef: MatDialogRef<CarrierLocationComponent>,
+		@Inject(MAT_DIALOG_DATA)
+		data
+	) {
+		this.carrierLoc = data.carrier;
+		this.storeLoc = data.merchant;
+		this.userOrder = data.userOrder;
+	}
 
 	ngOnInit(): void {
 		this.showMap();
-		this._subscribeCarrier();
+		this.showIconsOnMap();
 	}
 
-	async _subscribeCarrier() {
-		this.params$ = this.route.params.subscribe((res) => {
-			const carrierId = res.id || this.carrierId;
+	showIconsOnMap() {
+		const newCoordinates = new google.maps.LatLng(
+			this.carrierLoc.geoLocation.coordinates.lat,
+			this.carrierLoc.geoLocation.coordinates.lng
+		);
 
-			this.carrierSub$ = this.carrierRouter
-				.get(carrierId)
-				.subscribe(async (carrier) => {
-					if (this.interval) {
-						clearInterval(this.interval);
-					}
-					const newCoordinates = new google.maps.LatLng(
-						carrier.geoLocation.coordinates.lat,
-						carrier.geoLocation.coordinates.lng
-					);
-					if (this.marker) {
-						this.marker.setMap(null);
-					}
-					let isWorking = false;
+		const warehouseIcon =
+			'http://maps.google.com/mapfiles/kml/pal3/icon21.png';
+		const userIcon = 'http://maps.google.com/mapfiles/kml/pal3/icon48.png';
 
-					// this.interval = setInterval(async () => {
-					// 	const order = await this.carriersService.getCarrierCurrentOrder(
-					// 		carrierId
-					// 	);
+		this.userMarker = this.addMarker(
+			new google.maps.LatLng(
+				this.userOrder.geoLocation.coordinates.lat,
+				this.userOrder.geoLocation.coordinates.lng
+			),
+			this.map,
+			userIcon
+		);
 
-					// 	if (order) {
-					// 		if (!isWorking) {
-					// 			const user = order.user;
-					// 			const warehouse = order.warehouse;
-					// 			const warehouseIcon =
-					// 				'http://maps.google.com/mapfiles/kml/pal3/icon21.png';
-					// 			const userIcon =
-					// 				'http://maps.google.com/mapfiles/kml/pal3/icon48.png';
-					// 			user.geoLocation = new GeoLocation(
-					// 				user.geoLocation
-					// 			);
-					// 			this.userMarker = this.addMarker(
-					// 				new google.maps.LatLng(
-					// 					user.geoLocation.coordinates.lat,
-					// 					user.geoLocation.coordinates.lng
-					// 				),
-					// 				this.map,
-					// 				userIcon
-					// 			);
-					// 			warehouse.geoLocation = new GeoLocation(
-					// 				warehouse.geoLocation
-					// 			);
-					// 			this.warehouseMarker = this.addMarker(
-					// 				new google.maps.LatLng(
-					// 					warehouse[
-					// 						'geoLocation'
-					// 					].coordinates.lat,
-					// 					warehouse['geoLocation'].coordinates.lng
-					// 				),
-					// 				this.map,
-					// 				warehouseIcon
-					// 			);
-					// 			const start = new google.maps.LatLng(
-					// 				user.geoLocation.coordinates.lat,
-					// 				user.geoLocation.coordinates.lng
-					// 			);
-					// 			const end = new google.maps.LatLng(
-					// 				warehouse['geoLocation'].coordinates.lat,
-					// 				warehouse['geoLocation'].coordinates.lng
-					// 			);
-					// 			const request = {
-					// 				origin: start,
-					// 				destination: end,
-					// 				travelMode: 'DRIVING'
-					// 			};
+		this.warehouseMarker = this.addMarker(
+			new google.maps.LatLng(
+				this.storeLoc.geoLocation.coordinates.lat,
+				this.storeLoc.geoLocation.coordinates.lng
+			),
+			this.map,
+			warehouseIcon
+		);
+		const start = new google.maps.LatLng(
+			this.userOrder.geoLocation.coordinates.lat,
+			this.userOrder.geoLocation.coordinates.lng
+		);
+		const end = new google.maps.LatLng(
+			this.storeLoc.geoLocation.coordinates.lat,
+			this.storeLoc.geoLocation.coordinates.lng
+		);
+		const request = {
+			origin: start,
+			destination: end,
+			travelMode: 'DRIVING'
+		};
 
-					// 			directionsService.route(request, function(
-					// 				res,
-					// 				stat
-					// 			) {
-					// 				if (stat === 'OK') {
-					// 					directionsDisplay.setDirections(res);
-					// 				}
-					// 			});
-					// 			directionsDisplay.setOptions({
-					// 				suppressMarkers: true
-					// 			});
-					// 			directionsDisplay.setMap(this.map);
+		directionsService.route(request, function(res, stat) {
+			if (stat === 'OK') {
+				directionsDisplay.setDirections(res);
+			}
+		});
 
-					// 			const bounds = new google.maps.LatLngBounds();
-					// 			bounds.extend(this.marker.getPosition());
-					// 			bounds.extend(
-					// 				this.warehouseMarker.getPosition()
-					// 			);
-					// 			bounds.extend(this.userMarker.getPosition());
-					// 			this.map.fitBounds(bounds);
+		directionsDisplay.setOptions({
+			suppressMarkers: true
+		});
+		directionsDisplay.setMap(this.map);
 
-					// 			isWorking = true;
-					// 			this.isReverted = false;
+		const warehouseInfoContent = `
+									<h3>  ${this.storeLoc.name}</h3>
+									<ul>
+										<li>
+											<i style='margin-right:5px;' class="ion-md-mail"></i>
+											${this.storeLoc.contactEmail}
+										</li>
+										<li>
+											<i style='margin-right:5px;' class="ion-md-phone"></i><i class="ion-md-call"></i>
+											${this.storeLoc.contactPhone}
+										</li>
+										<li>
+											<i style='margin-right:5px;' class="ion-md-locate"></i>
+											${this.storeLoc.geoLocation.streetAddress}
+										</li>
+									</ul>
+									`;
 
-					// 			const userInfoContent = `
-					// 				<h3>  ${order.user.firstName + ' ' + order.user.lastName}</h3>
-					// 				<ul>
-					// 					<li><i style='margin-right:5px;' class="ion-md-mail"></i>${
-					// 						order.user.email
-					// 					}</li>
-					// 					<li><i style='margin-right:5px;' class="ion-md-call"></i>${
-					// 						order.user.phone
-					// 					}</li>
-					// 					<li><i style='margin-right:5px;' class="ion-md-locate"></i>${
-					// 						order.user.geoLocation.streetAddress
-					// 					}</li>
-					// 				</ul>
-					// 				`;
+		const warehouseInfoWindow = new google.maps.InfoWindow({
+			content: warehouseInfoContent
+		});
 
-					// 			const userInfoWindow = new google.maps.InfoWindow(
-					// 				{
-					// 					content: userInfoContent
-					// 				}
-					// 			);
+		this.warehouseMarker.addListener('click', () => {
+			warehouseInfoWindow.open(this.map, this.warehouseMarker);
+		});
 
-					// 			this.userMarker.addListener('click', () => {
-					// 				userInfoWindow.open(
-					// 					this.map,
-					// 					this.userMarker
-					// 				);
-					// 			});
-					// 			const warehouseInfoContent = `
-					// 				<h3>  ${order.warehouse.name}</h3>
-					// 				<ul>
-					// 					<li>
-					// 						<i style='margin-right:5px;' class="ion-md-mail"></i>
-					// 						${order.warehouse.contactEmail}
-					// 					</li>
-					// 					<li>
-					// 						<i style='margin-right:5px;' class="ion-md-phone"></i><i class="ion-md-call"></i>
-					// 						${order.warehouse.contactPhone}
-					// 					</li>
-					// 					<li>
-					// 						<i style='margin-right:5px;' class="ion-md-locate"></i>
-					// 						${order.warehouse.geoLocation.streetAddress}
-					// 					</li>
-					// 				</ul>
-					// 				`;
+		this.map.setCenter(newCoordinates);
+		const carierIcon =
+			'http://maps.google.com/mapfiles/kml/pal4/icon54.png';
 
-					// 			const warehouseInfoWindow = new google.maps.InfoWindow(
-					// 				{
-					// 					content: warehouseInfoContent
-					// 				}
-					// 			);
-
-					// 			this.warehouseMarker.addListener(
-					// 				'click',
-					// 				() => {
-					// 					warehouseInfoWindow.open(
-					// 						this.map,
-					// 						this.warehouseMarker
-					// 					);
-					// 				}
-					// 			);
-					// 		}
-					// 	} else {
-					// 		if (isWorking) {
-					// 			this.revertMap();
-					// 			isWorking = false;
-					// 		}
-
-					// 		if (!this.isReverted) {
-					// 			this.revertMap();
-					// 		}
-					// 	}
-					// }, 1500);
-
-					this.map.setCenter(newCoordinates);
-					const carierIcon =
-						'http://maps.google.com/mapfiles/kml/pal4/icon54.png';
-
-					this.marker = this.addMarker(
-						newCoordinates,
-						this.map,
-						carierIcon
-					);
-					const carrierInfoContent = `
-					<h3>  ${carrier.fullName}</h3>
+		this.marker = this.addMarker(newCoordinates, this.map, carierIcon);
+		const carrierInfoContent = `
+					<h3>  ${this.carrierLoc.fullName}</h3>
 					<ul>
-						<li>${carrier.username}</li>
-						<li><i style='margin-right:5px;' class="ion-md-call"></i>${carrier.phone}</li>
+						<li>${this.carrierLoc.username}</li>
+						<li><i style='margin-right:5px;' class="ion-md-call"></i>${
+							this.carrierLoc.phone
+						}</li>
 						<li><i style='margin-right:5px;' class="ion-md-locate"></i>${
-							carrier.geoLocation.streetAddress
+							this.carrierLoc.geoLocation.streetAddress
 						}</li>
 					</ul>
 					`;
 
-					const carrierInfoWindow = new google.maps.InfoWindow({
-						content: carrierInfoContent
-					});
+		const carrierInfoWindow = new google.maps.InfoWindow({
+			content: carrierInfoContent
+		});
 
-					this.marker.addListener('click', () => {
-						carrierInfoWindow.open(this.map, this.marker);
-					});
-				});
+		this.marker.addListener('click', () => {
+			carrierInfoWindow.open(this.map, this.marker);
 		});
 	}
 
@@ -246,7 +156,6 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 		this.map.setZoom(15);
 		this.warehouseMarker.setMap(null);
 		this.userMarker.setMap(null);
-		this.isReverted = true;
 	}
 
 	showMap() {
@@ -264,22 +173,5 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 			map,
 			icon
 		});
-	}
-
-	ngOnDestroy() {
-		this.ngDestroy$.next();
-		this.ngDestroy$.complete();
-
-		if (this.interval) {
-			clearInterval(this.interval);
-		}
-
-		if (this.carrierSub$) {
-			this.carrierSub$.unsubscribe();
-		}
-
-		if (this.params$) {
-			this.params$.unsubscribe();
-		}
 	}
 }

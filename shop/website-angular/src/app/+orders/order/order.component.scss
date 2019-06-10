@@ -64,6 +64,9 @@
 .products {
 	.product-details:last-child {
 		border: none;
+		.order-info {
+			padding-bottom: 50px;
+		}
 	}
 	.product-details {
 		display: flex;
@@ -90,7 +93,9 @@
 
 .order-options {
 	display: flex;
-
+	position: absolute;
+	left: 0;
+	bottom: 0;
 	button {
 		margin-right: 20px;
 	}
@@ -156,6 +161,9 @@
 .order-images {
 	min-width: 150px;
 	width: 150px;
+	display: flex;
+	align-items: center;
+	background: #2a2c39;
 }
 
 .order-picture {

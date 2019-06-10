@@ -1,7 +1,6 @@
 <mat-card class="order">
 	<div class="order-header">
 		<div class="order-status-container">
-			<!-- <h2 class="order-status-text" *ngIf="warehouse">{{warehouse.name}}</h2> -->
 			<p class="order-status-text">
 				{{ 'ORDER_VIEW.ORDER_ID' | translate }} #{{ orderNumber }}
 			</p>
@@ -52,18 +51,6 @@
 					class="no-product-img order-picture"
 				></span>
 			</div>
-			<!-- <div class="side-container">
-			<div class="warehouse-info" *ngIf="warehouse">
-				<h5>{{ warehouse.name }}</h5>
-				<span>{{ warehouse.contactPhone }}</span>
-				<span>{{ warehouse.geoLocation.streetAddress }}</span>
-			</div>
-			<div class="warehouse-info" *ngIf="carrier">
-				<h5>{{ carrier.username }}</h5>
-				<span>{{ carrier.phone }}</span>
-				<span>{{ carrier.geoLocation.streetAddress }}</span>
-			</div>
-		</div> -->
 		</div>
 	</div>
 	<div class="order-options">
@@ -94,7 +81,18 @@
 			class="pay-button"
 			*ngIf="carrier"
 		>
-			Carrier
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="24"
+				height="24"
+				viewBox="0 0 24 24"
+			>
+				<path
+					d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+				/>
+				<path d="M0 0h24v24H0z" fill="none" />
+			</svg>
+			Show carrier on map
 		</button>
 	</div>
 </mat-card>

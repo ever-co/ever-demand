@@ -87,9 +87,14 @@ export class OrderComponent implements OnInit {
 	}
 
 	openMap(): void {
-		const mapDialog = this.dialog.open(CarrierLocationComponent, {
+		this.dialog.open(CarrierLocationComponent, {
 			width: '560px',
-			data: {}
+			panelClass: 'app-dialog-container',
+			data: {
+				carrier: this.carrier,
+				merchant: this.warehouse,
+				userOrder: this.order.user
+			}
 		});
 	}
 
