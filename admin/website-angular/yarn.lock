@@ -13275,10 +13275,10 @@ typeface-exo@^0.0.61:
   resolved "https://registry.yarnpkg.com/typeface-exo/-/typeface-exo-0.0.61.tgz#10c6113292da354cb9f26ee9d0b0c996f1a7a3bd"
   integrity sha512-AH3bMVYnVpg2G+CJbgtogTuJpWGS0zspHJzzVR8cCgTtkbUI0pj8WBB+RFo14CHbF5MmZgYe7TVoWz+j4Yo6Jg==
 
-typescript-tslint-plugin@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/typescript-tslint-plugin/-/typescript-tslint-plugin-0.4.0.tgz#af1729e72b770489b2b912809694f46c3281bb72"
-  integrity sha512-83zipyk5bCqu/LHifaWPmJ7Xnl6lLn/3KmWINgr+XND79BrVWmkV8CudKc+a9Jhjs2opvVKq0n0P4O4NhHOixw==
+typescript-tslint-plugin@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/typescript-tslint-plugin/-/typescript-tslint-plugin-0.5.0.tgz#4cefc7f2583d5e663c5e60dc95667f5a93ce7dd0"
+  integrity sha512-qVejs4wVu6RmiNOTekPJIlztt6lN+QC+lArqbcP3CaBuABDsJ0BXYofZX1H2ZywAblOnx403FSrhQcgnRBUGQA==
   dependencies:
     minimatch "^3.0.4"
     mock-require "^3.0.2"
