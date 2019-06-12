@@ -7374,10 +7374,10 @@ ngx-moment@^3.4.0:
   dependencies:
     tslib "^1.9.0"
 
-ngx-pagination@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/ngx-pagination/-/ngx-pagination-3.2.1.tgz#d82fe15b03a628621dabb835ebc90011f2557689"
-  integrity sha512-+dprQkYoiNYDZkNAe/1HX0wDFbwCTE31mC2bEQVdI7ZbjEIvGB7R3zp5QoCKgz6cPFatUj4Iw6Ukqp5zx0oT/Q==
+ngx-pagination@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-pagination/-/ngx-pagination-4.0.0.tgz#c1ca766e0277d20c5bb3871ba7007dbcbafc56d2"
+  integrity sha512-+JKUykZicQ2ZEyWZ0Y1d2ffocUWZqooeWrSbZ4IGlPreAazlmhG4Ms6FY0KjcnslpvbQuA/9ARY5sF14q04/AA==
 
 nice-try@^1.0.4:
   version "1.0.5"
