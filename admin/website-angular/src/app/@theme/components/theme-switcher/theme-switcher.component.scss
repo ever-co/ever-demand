@@ -9,37 +9,37 @@
 		padding: 0.8rem 0.8rem;
 		align-items: center;
 		cursor: pointer;
-		background-color: nb-theme(switcher-background);
-		border-radius: nb-theme(border-radius);
+		// background-color: nb-theme(switcher-background);
+		// border-radius: nb-theme(radius);
 
-		&:hover {
-			$color: nb-theme(switcher-background);
-			$percentage: nb-theme(switcher-background-percentage);
+		// &:hover {
+		//   $color: nb-theme(switcher-background);
+		//   $percentage: nb-theme(switcher-background-percentage);
 
-			background-color: tint($color, $percentage);
-		}
+		// background-color: tint($color, $percentage);
+		// }
 
 		span {
 			margin: 0 0.7rem;
 		}
 
 		i {
-			color: nb-theme(color-primary-500);
+			//   color: nb-theme(color-primary);
 			font-size: 1.1rem;
 			border-radius: 50%;
 			position: relative;
 
 			@include nb-for-theme(default) {
-				color: nb-theme(color-success-500);
+				// color: nb-theme(color-success);
 			}
 
 			@include nb-for-theme(corporate) {
-				color: nb-theme(text-hint-color);
+				// color: nb-theme(color-fg-highlight);
 			}
 
 			&::before {
 				// Hack for IE11, IE11 should not set background
-				background: nb-theme(drops-icon-line-gadient);
+				// background: nb-theme(drops-icon-line-gadient);
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
 			}

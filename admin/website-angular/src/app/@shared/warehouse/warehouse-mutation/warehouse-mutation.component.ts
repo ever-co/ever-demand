@@ -27,7 +27,7 @@ export class WarehouseMutationComponent implements AfterViewInit {
 	@ViewChild('basicInfoForm', { static: false })
 	basicInfoForm: BasicInfoFormComponent;
 
-	@ViewChild('contactInfoForm', { static: true })
+	@ViewChild('contactInfoForm', { static: false })
 	contactInfoForm: ContactInfoFormComponent;
 
 	@ViewChild('locationForm', { static: false })

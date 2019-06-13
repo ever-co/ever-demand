@@ -7,7 +7,7 @@ import { NgForm } from '@angular/forms';
 	styleUrls: ['./account.component.scss']
 })
 export class SetupMerchantAccountComponent {
-	@ViewChild('accountForm', { static: true })
+	@ViewChild('accountForm', { static: false })
 	accountForm: NgForm;
 
 	@Output()

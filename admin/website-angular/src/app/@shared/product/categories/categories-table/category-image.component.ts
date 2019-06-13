@@ -12,7 +12,7 @@ export class CategoryImageComponent implements ViewCell, OnInit {
 	value: string;
 	rowData: any;
 
-	@ViewChild('image', { static: true })
+	@ViewChild('image', { static: false })
 	image: ElementRef;
 
 	ngOnInit() {

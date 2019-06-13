@@ -15,17 +15,17 @@
 		height: 1.4em;
 		outline: none;
 
-		path {
-			fill: nb-theme(text-basic-color);
-		}
+		// path {
+		// 	fill: nb-theme(color-fg);
+		// }
 
-		&:hover path {
-			fill: nb-theme(text-control-color);
-		}
+		// &:hover path {
+		// 	fill: nb-theme(color-fg-text);
+		// }
 
-		&:active path {
-			fill: nb-theme(text-hint-color);
-		}
+		// &:active path {
+		// 	fill: nb-theme(color-fg-highlight);
+		// }
 
 		&.control-icon-left {
 			float: left !important;

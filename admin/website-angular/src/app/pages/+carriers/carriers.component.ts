@@ -20,7 +20,7 @@ const perPage = 5;
 	styleUrls: ['carriers.component.scss']
 })
 export class CarriersComponent implements OnDestroy, AfterViewInit {
-	@ViewChild('carriersTable', { static: true })
+	@ViewChild('carriersTable', { static: false })
 	carriersTable: CarriersSmartTableComponent;
 
 	loading: boolean;

@@ -25,7 +25,7 @@ import OrderStatus from '@modules/server.common/enums/OrderStatus';
 	`
 })
 export class CreatedComponent implements ViewCell, OnInit, OnDestroy {
-	@ViewChild('createdTimer', { static: true })
+	@ViewChild('createdTimer', { static: false })
 	createdTimer: ElementRef;
 
 	private ngDestroy$ = new Subject<void>();

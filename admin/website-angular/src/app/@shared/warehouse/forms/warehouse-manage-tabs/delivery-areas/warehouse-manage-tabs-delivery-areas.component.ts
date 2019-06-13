@@ -10,7 +10,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class WarehouseManageTabsDeliveryAreasComponent
 	implements OnInit, OnDestroy {
-	@ViewChild('gmap', { static: true })
+	@ViewChild('gmap', { static: false })
 	mapElement: any;
 
 	@Input()

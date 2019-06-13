@@ -24,7 +24,7 @@ import { IProductsCategoryCreateObject } from '@modules/server.common/interfaces
 	styleUrls: ['basic-info-form.component.scss']
 })
 export class BasicInfoFormComponent implements OnInit, AfterViewInit {
-	@ViewChild('imagePreview', { static: true })
+	@ViewChild('imagePreview', { static: false })
 	imagePreviewElement: ElementRef;
 
 	@Input()

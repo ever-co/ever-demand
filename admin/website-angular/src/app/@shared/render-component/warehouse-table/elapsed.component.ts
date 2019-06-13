@@ -20,7 +20,7 @@ import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseSta
 	`
 })
 export class ElapsedComponent implements ViewCell, OnInit, OnDestroy {
-	@ViewChild('elapsedTime', { static: true })
+	@ViewChild('elapsedTime', { static: false })
 	elapsedTime: ElementRef;
 
 	private ngDestroy$ = new Subject<void>();

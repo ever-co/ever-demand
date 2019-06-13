@@ -13,10 +13,10 @@ import { TranslateService } from '@ngx-translate/core';
 	styleUrls: ['/user-mutation.component.scss']
 })
 export class UserMutationComponent {
-	@ViewChild('basicInfoForm', { static: true })
+	@ViewChild('basicInfoForm', { static: false })
 	basicInfoForm: BasicInfoFormComponent;
 
-	@ViewChild('locationForm', { static: true })
+	@ViewChild('locationForm', { static: false })
 	locationForm: LocationFormComponent;
 
 	mapTypeEmitter = new EventEmitter<string>();

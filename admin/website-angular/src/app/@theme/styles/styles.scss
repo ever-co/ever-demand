@@ -3,7 +3,8 @@
 // framework component themes (styles tied to theme variables)
 @import '~@nebular/theme/styles/globals';
 @import '~@nebular/auth/styles/all';
-@import '~@nebular/bootstrap/styles/globals';
+// TODO style
+// @import '~@nebular/bootstrap/styles/globals';
 //angular2-toaster
 @import 'node_modules/angular2-toaster/toaster';
 // global app font size
@@ -29,7 +30,8 @@
 // install the framework and custom global styles
 @include nb-install() {
 	// framework global styles
-	@include nb-bootstrap-global();
+	// TODO style
+	// @include nb-bootstrap-global();
 	@include nb-auth-global();
 	@include nb-theme-global();
 

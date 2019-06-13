@@ -1,25 +1,26 @@
-@import '../../../../@theme/styles/themes';
-@import '~@nebular/theme/styles/global/bootstrap/buttons';
+// @import '../../../../@theme/styles/themes';
+// @import '~@nebular/theme/styles/global/bootstrap/buttons';
 
-@include nb-install-component() {
-	nb-card-body {
-		padding: 0 1.25rem 1.25rem 0;
-		display: flex;
-		flex-wrap: wrap;
-	}
+// @include nb-install-component() {
 
-	.container-title {
-		margin-bottom: 0.25rem;
-	}
+//   nb-card-body {
+//     padding: 0 1.25rem 1.25rem 0;
+//     display: flex;
+//     flex-wrap: wrap;
+//   }
 
-	.size-container {
-		margin: 1.25rem 0 0 1.25rem;
-	}
+//   .container-title {
+//     margin-bottom: 0.25rem;
+//   }
 
-	.subheader {
-		margin-bottom: 0.75rem;
-		font-size: 0.875rem;
-		font-weight: nb-theme(text-subtitle-font-weight);
-		color: nb-theme(text-basic-color);
-	}
-}
+//   .size-container {
+//     margin: 1.25rem 0 0 1.25rem;
+//   }
+
+//   .subheader {
+//     margin-bottom: 0.75rem;
+//     font-size: 0.875rem;
+//     font-weight: nb-theme(font-weight-bolder);
+//     color: nb-theme(color-fg-heading);
+//   }
+// }

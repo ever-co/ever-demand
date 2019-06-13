@@ -41,7 +41,7 @@ export type WarehouseManageTabsDetails = Pick<
 })
 export class WarehouseManageTabsDetailsComponent
 	implements OnInit, AfterViewInit {
-	@ViewChild('fileInput', { static: true })
+	@ViewChild('fileInput', { static: false })
 	fileInput: ElementRef;
 	@ViewChild('logoPreview', { static: false })
 	logoPreviewElement: ElementRef;

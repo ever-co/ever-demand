@@ -36,10 +36,10 @@ import { IOrderCreateInput } from '@modules/server.common/routers/IWarehouseOrde
 	styleUrls: ['/simulation.component.scss']
 })
 export class SimulationComponent implements OnDestroy, OnInit {
-	@ViewChild('productsTable', { static: true })
+	@ViewChild('productsTable', { static: false })
 	productsTable: SimulationProductsComponent;
 
-	@ViewChild('instructions', { static: true })
+	@ViewChild('instructions', { static: false })
 	instructions: SimulationInstructionsComponent;
 
 	public hasProductsForOrder: boolean;

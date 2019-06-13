@@ -22,7 +22,7 @@ const userIcon = environment.MAP_USER_ICON_LINK;
 })
 export class UserWarehouseLocationComponent
 	implements AfterViewInit, OnDestroy, OnChanges {
-	@ViewChild('gmap', { static: true })
+	@ViewChild('gmap', { static: false })
 	gmapElement: ElementRef;
 
 	public map: google.maps.Map;

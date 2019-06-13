@@ -41,7 +41,7 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 	perPage: number;
 	choiced: string;
 
-	@ViewChild('warehouseAddChoice', { static: true })
+	@ViewChild('warehouseAddChoice', { static: false })
 	warehouseAddChoice: WarehouseAddChoiceComponent;
 
 	@ViewChild('basicInfoForm', { static: false })
@@ -56,7 +56,7 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 	@ViewChild('wizzardFrom', { static: false })
 	wizzardFrom: WizardComponent;
 
-	@ViewChild('wizzardFromStep1', { static: true })
+	@ViewChild('wizzardFromStep1', { static: false })
 	wizzardFromStep1: any;
 
 	hasSelectedProducts = () => false;

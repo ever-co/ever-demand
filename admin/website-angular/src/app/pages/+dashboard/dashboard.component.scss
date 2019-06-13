@@ -4,7 +4,7 @@ $shadow-green: #00977e;
 
 @include nb-install-component() {
 	.progress-info {
-		color: nb-theme(text-basic-color);
+		// color: nb-theme(color-fg-heading);
 		margin-top: 2.5rem;
 
 		&:first-child {
@@ -12,20 +12,20 @@ $shadow-green: #00977e;
 		}
 	}
 
-	.title {
-		font-family: nb-theme(font-secondary);
-		font-size: nb-theme(text-heading-6-font-size);
-		font-weight: nb-theme(text-heading-1-font-weight);
-	}
+	// .title {
+	// 	font-family: nb-theme(font-secondary);
+	// 	font-size: nb-theme(font-size-lg);
+	// 	font-weight: nb-theme(font-weight-bold);
+	// }
 
 	.value {
-		font-size: 2rem;
-		font-weight: nb-theme(text-subtitle-font-weight);
+		font-size: 3rem;
+		// font-weight: nb-theme(font-weight-light);
 		margin-top: 0.5rem;
 	}
 
 	.description {
-		color: nb-theme(text-basic-color);
+		// color: nb-theme(color-fg);
 		margin-top: 0.5rem;
 	}
 
@@ -39,7 +39,7 @@ $shadow-green: #00977e;
 
 		.progress-value {
 			height: 0.6rem;
-			background: nb-theme(progress-bar-background);
+			// background: nb-theme(progress-bar-background);
 
 			@include nb-for-theme(cosmic) {
 				box-shadow: 0 0.2rem $shadow-green;

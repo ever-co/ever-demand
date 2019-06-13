@@ -19,24 +19,24 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 	templateUrl: './merchants.component.html'
 })
 export class SetupMerchantsComponent {
-	@ViewChild('nbStepper', { static: true })
+	@ViewChild('nbStepper', { static: false })
 	nbStepper: NbStepperComponent;
 
-	@ViewChild('account', { static: true })
+	@ViewChild('account', { static: false })
 	stepAccount: SetupMerchantAccountComponent;
-	@ViewChild('basicInfo', { static: true })
+	@ViewChild('basicInfo', { static: false })
 	stepBasicInfo: SetupMerchantBasicInfoComponent;
-	@ViewChild('contactInfo', { static: true })
+	@ViewChild('contactInfo', { static: false })
 	stepContactInfo: SetupMerchantContactInfoComponent;
-	@ViewChild('location', { static: true })
+	@ViewChild('location', { static: false })
 	stepLocation: SetupMerchantLocationComponent;
-	@ViewChild('payments', { static: true })
+	@ViewChild('payments', { static: false })
 	stepPayments: SetupMerchantPaymentsComponent;
-	@ViewChild('manufacturing', { static: true })
+	@ViewChild('manufacturing', { static: false })
 	stepManufacturing: SetupMerchantManufacturingComponent;
-	@ViewChild('deliveryAndTakeaway', { static: true })
+	@ViewChild('deliveryAndTakeaway', { static: false })
 	stepDeliveryAndTakeaway: SetupMerchantDeliveryAndTakeawayComponent;
-	@ViewChild('ordersSettings', { static: true })
+	@ViewChild('ordersSettings', { static: false })
 	stepOrdersSettings: SetupMerchantOrdersSettingsComponent;
 
 	currentStore: Warehouse;

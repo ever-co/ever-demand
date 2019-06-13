@@ -48,7 +48,7 @@ export class ChartPanelHeaderComponent implements OnInit, OnDestroy {
 		daysDiff: number;
 	}>();
 
-	@ViewChild('customDateRangeButton', { static: true })
+	@ViewChild('customDateRangeButton', { static: false })
 	customDateRangeButton: ElementRef;
 
 	isDateRangeSelected = false;

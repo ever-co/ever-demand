@@ -6,7 +6,7 @@
 	.legends {
 		display: flex;
 		@include nb-rtl(flex-direction, row-reverse);
-		color: nb-theme(text-basic-color);
+		// color: nb-theme(color-fg);
 		padding: 0 0 0 2.85rem;
 	}
 

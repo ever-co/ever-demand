@@ -21,7 +21,7 @@ import {
 	`
 })
 export class SearchInputComponent {
-	@ViewChild('input', { static: true }) input: ElementRef;
+	@ViewChild('input', { static: false }) input: ElementRef;
 
 	@Output() search: EventEmitter<string> = new EventEmitter<string>();
 

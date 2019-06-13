@@ -12,7 +12,7 @@ import { InviteRequestRouter } from '@modules/client.common.angular2/routers/inv
 	styleUrls: ['/invite-request-modal.component.scss']
 })
 export class InviteRequestModalComponent {
-	@ViewChild('locationForm', { static: true })
+	@ViewChild('locationForm', { static: false })
 	locationForm: LocationFormComponent;
 
 	mapTypeEmitter = new EventEmitter<string>();

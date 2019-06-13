@@ -1,6 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NbMenuService, NbSidebarService, NbMenuItem } from '@nebular/theme';
-import { AnalyticsService } from '../../../@core/utils/analytics.service';
 import { Subject, Observable } from 'rxjs';
 import { AdminsService } from '../../../@core/data/admins.service';
 import { Store } from '../../../@core/data/store.service';
@@ -25,7 +24,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	constructor(
 		private sidebarService: NbSidebarService,
 		private menuService: NbMenuService,
-		private analyticsService: AnalyticsService,
 		private adminsService: AdminsService,
 		private store: Store,
 		private translateService: TranslateService
@@ -74,12 +72,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
 		return false;
 	}
 
-	goToHome() {
+	navigateHome() {
 		this.menuService.navigateHome();
 	}
 
 	startSearch() {
-		this.analyticsService.trackEvent('startSearch');
+		return false;
 	}
 
 	ngOnDestroy() {

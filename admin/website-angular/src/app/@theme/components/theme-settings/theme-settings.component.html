@@ -25,7 +25,16 @@
 
 <h6>THEMES</h6>
 <div class="settings-row theme-button">
-	<ngx-theme-switcher></ngx-theme-switcher>
+	<!-- <ngx-theme-switcher></ngx-theme-switcher> -->
+	<nb-select
+		[(selected)]="currentTheme"
+		(selectedChange)="toggleTheme()"
+		status="primary"
+	>
+		<nb-option *ngFor="let theme of themes" [value]="theme.value">
+			{{ theme.name }}</nb-option
+		>
+	</nb-select>
 </div>
 
 <h6>LANGUAGE</h6>
@@ -47,7 +56,8 @@
 </div>
 
 <div class="switcher">
-	<ngx-layout-direction-switcher
+	<!-- TODO  -->
+	<!-- <ngx-layout-direction-switcher
 		[vertical]="true"
-	></ngx-layout-direction-switcher>
+	></ngx-layout-direction-switcher> -->
 </div>

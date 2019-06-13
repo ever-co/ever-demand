@@ -5,18 +5,17 @@
  */
 
 @mixin ngx-pace-theme() {
-	.pace .pace-progress {
-		background: nb-theme(text-hint-color);
-	}
+	//   .pace .pace-progress {
+	// background: nb-theme(color-fg-highlight);
+	//   }
 
-	.pace .pace-progress-inner {
-		box-shadow: 0 0 10px nb-theme(text-hint-color),
-			0 0 5px nb-theme(text-hint-color);
-	}
+	//   .pace .pace-progress-inner {
+	// box-shadow: 0 0 10px nb-theme(color-fg-highlight), 0 0 5px nb-theme(color-fg-highlight);
+	//   }
 
 	.pace .pace-activity {
 		display: none;
-		// border-top-color: nb-theme(text-hint-color);
-		// border-left-color: nb-theme(text-hint-color);
+		// border-top-color: nb-theme(color-fg-highlight);
+		// border-left-color: nb-theme(color-fg-highlight);
 	}
 }
