@@ -17,11 +17,15 @@ export class ThemeSettingsComponent {
 	themes = [
 		{
 			value: 'default',
-			name: 'Light'
+			name: 'White'
 		},
 		{
-			value: 'dark',
+			value: 'everdark',
 			name: 'Dark'
+		},
+		{
+			value: 'everlight',
+			name: 'Light'
 		},
 		{
 			value: 'cosmic',

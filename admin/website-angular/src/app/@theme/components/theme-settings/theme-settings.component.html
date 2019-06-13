@@ -26,22 +26,23 @@
 <h6>THEMES</h6>
 <div class="settings-row theme-button">
 	<!-- <ngx-theme-switcher></ngx-theme-switcher> -->
-	<nb-select
-		[(selected)]="currentTheme"
-		(selectedChange)="toggleTheme()"
+	<select
+		[(ngModel)]="currentTheme"
+		(change)="toggleTheme()"
 		status="primary"
+		class="form-control"
 	>
-		<nb-option *ngFor="let theme of themes" [value]="theme.value">
-			{{ theme.name }}</nb-option
+		<option *ngFor="let theme of themes" [value]="theme.value">
+			{{ theme.name }}</option
 		>
-	</nb-select>
+	</select>
 </div>
 
 <h6>LANGUAGE</h6>
 <div class="settings-row">
 	<select
 		class="col-sm-1"
-		class="form-control language-select"
+		class="form-control"
 		#langSelect
 		(change)="switchLanguage(langSelect.value)"
 	>
@@ -56,8 +57,7 @@
 </div>
 
 <div class="switcher">
-	<!-- TODO  -->
-	<!-- <ngx-layout-direction-switcher
+	<ngx-layout-direction-switcher
 		[vertical]="true"
-	></ngx-layout-direction-switcher> -->
+	></ngx-layout-direction-switcher>
 </div>

@@ -1,5 +1,26 @@
 nb-card#dashboard-select-stores {
+	h5 {
+		font-family: Exo;
+		color: #2a2a2a;
+		font-weight: 500;
+		font-size: 1.25rem;
+	}
+
+	li {
+		font-size: 0.9rem;
+		line-height: 1.25;
+
+		font-weight: 400;
+	}
 	nb-card-body {
 		overflow: inherit !important;
+
+		h6 {
+			font-family: Exo;
+			color: #2a2a2a;
+			font-weight: 500;
+			line-height: 1.2;
+			font-size: 1rem;
+		}
 	}
 }

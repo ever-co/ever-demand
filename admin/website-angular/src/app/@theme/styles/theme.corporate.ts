@@ -16,7 +16,7 @@ export const CORPORATE_THEME = {
 			tooltipBg: '#eef2f5',
 			tooltipBorderColor: '#eef2f5',
 			tooltipExtraCss: 'border-radius: 10px; padding: 4px 16px;',
-			tooltipTextColor: '#2a2a2a',
+			tooltipTextColor: '#2a2a2a;',
 			tooltipFontWeight: '400',
 
 			lineBg: '#cae6f3',
@@ -36,11 +36,11 @@ export const CORPORATE_THEME = {
 			tooltipLineWidth: '0',
 			tooltipBorderColor: '#ebeef2',
 			tooltipExtraCss: 'border-radius: 10px; padding: 8px 24px;',
-			tooltipTextColor: '#2a2a2a',
+			tooltipTextColor: '#2a2a2a;',
 			tooltipFontWeight: 'bolder',
 
 			axisLineColor: 'rgba(0, 0, 0, 0)',
-			xAxisTextColor: '#2a2a2a',
+			xAxisTextColor: '#2a2a2a;',
 			yAxisSplitLine: '#ebeef2',
 
 			itemBorderColor: '#73a1ff',
@@ -72,7 +72,7 @@ export const CORPORATE_THEME = {
 			splitLineStyleWidth: '1',
 			splitLineStyleColor: '#000000',
 
-			tooltipTextColor: '#2a2a2a',
+			tooltipTextColor: '#2a2a2a;',
 			tooltipFontWeight: '400',
 			tooltipFontSize: '16',
 			tooltipBg: '#eef2f5',
@@ -93,7 +93,7 @@ export const CORPORATE_THEME = {
 			tooltipBg: '#edf0f4',
 			tooltipBorderColor: '#ebeef2',
 			tooltipExtraCss: 'border-radius: 10px; padding: 8px 24px;',
-			tooltipTextColor: '#2a2a2a',
+			tooltipTextColor: '#2a2a2a;',
 			tooltipFontWeight: 'bolder'
 		},
 
@@ -139,7 +139,7 @@ export const CORPORATE_THEME = {
 			tooltipLineWidth: '0',
 			tooltipBorderColor: '#ebeef2',
 			tooltipExtraCss: 'border-radius: 10px; padding: 8px 24px;',
-			tooltipTextColor: '#2a2a2a',
+			tooltipTextColor: '#2a2a2a;',
 			tooltipFontWeight: 'bolder',
 			tooltipFontSize: '20',
 
@@ -212,7 +212,7 @@ export const CORPORATE_THEME = {
 			tooltipLineWidth: '0',
 			tooltipBorderColor: '#ebeef2',
 			tooltipExtraCss: 'border-radius: 10px; padding: 8px 24px;',
-			tooltipTextColor: '#2a2a2a',
+			tooltipTextColor: '#2a2a2a;',
 			tooltipFontWeight: 'bolder',
 			tooltipFontSize: '20',
 
@@ -286,7 +286,7 @@ export const CORPORATE_THEME = {
 			gradFrom: '#e3ecfe',
 			gradTo: '#e3ecfe',
 
-			tooltipTextColor: '#2a2a2a',
+			tooltipTextColor: '#2a2a2a;',
 			tooltipFontWeight: '400',
 			tooltipFontSize: '16',
 			tooltipBg: '#eef2f5',

@@ -19,7 +19,7 @@ export class PagesComponent {
 		this.menu = [
 			{
 				title: this.getTranslation('MENU_VIEW.DASHBOARD'),
-				icon: 'person-outline',
+				icon: 'pie-chart-outline',
 				link: '/dashboard',
 				pathMatch: 'prefix'
 			},

@@ -40,7 +40,7 @@
 		"config": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn ts-node ./scripts/configure.ts",
 		"config:dev": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run config -- --environment=dev",
 		"config:prod": "cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=4096 yarn run config -- --environment=prod",
-		"start": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run config:dev && ng serve --port 4444",
+		"start": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run config:dev && ng serve",
 		"build": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run config:dev && ng build",
 		"build:prod": "cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=4096 yarn run config:prod && yarn run build -- --prod --aot",
 		"test": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run config:dev && ng test",

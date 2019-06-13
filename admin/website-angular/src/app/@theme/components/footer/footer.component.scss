@@ -13,12 +13,12 @@
 
 		a {
 			padding: 0.4rem;
-			// color: nb-theme(color-fg);
+			color: #a4abb3;
 			transition: color ease-out 0.1s;
 
-			// &:hover {
-			// color: nb-theme(color-fg-heading);
-			// }
+			&:hover {
+				color: #2a2a2a;
+			}
 		}
 	}
 

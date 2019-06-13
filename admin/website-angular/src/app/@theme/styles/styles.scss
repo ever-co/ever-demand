@@ -3,12 +3,11 @@
 // framework component themes (styles tied to theme variables)
 @import '~@nebular/theme/styles/globals';
 @import '~@nebular/auth/styles/all';
-// TODO style
-// @import '~@nebular/bootstrap/styles/globals';
+
+@import '~@nebular/bootstrap/styles/globals';
 //angular2-toaster
 @import 'node_modules/angular2-toaster/toaster';
-// global app font size
-@import './font-size';
+
 // custom global ng-bootstrap modal
 @import './ng-bootstrap.modal';
 // loading progress bar theme
@@ -30,8 +29,7 @@
 // install the framework and custom global styles
 @include nb-install() {
 	// framework global styles
-	// TODO style
-	// @include nb-bootstrap-global();
+	@include nb-bootstrap-global();
 	@include nb-auth-global();
 	@include nb-theme-global();
 

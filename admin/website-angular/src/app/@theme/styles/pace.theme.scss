@@ -5,13 +5,14 @@
  */
 
 @mixin ngx-pace-theme() {
-	//   .pace .pace-progress {
-	// background: nb-theme(color-fg-highlight);
-	//   }
+	.pace .pace-progress {
+		background: nb-theme(color-primary-default);
+	}
 
-	//   .pace .pace-progress-inner {
-	// box-shadow: 0 0 10px nb-theme(color-fg-highlight), 0 0 5px nb-theme(color-fg-highlight);
-	//   }
+	.pace .pace-progress-inner {
+		box-shadow: 0 0 10px nb-theme(color-primary-default),
+			0 0 5px nb-theme(color-primary-default);
+	}
 
 	.pace .pace-activity {
 		display: none;
