@@ -16,7 +16,7 @@ import { first } from 'rxjs/operators';
 })
 export class SetupMerchantAddNewCarrierComponent
 	implements AfterViewInit, OnInit {
-	@ViewChild('basicInfoForm', { static: false })
+	@ViewChild('basicInfoForm', { static: true })
 	basicInfoForm: BasicInfoFormComponent;
 
 	@Input()

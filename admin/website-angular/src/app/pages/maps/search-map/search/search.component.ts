@@ -17,7 +17,7 @@ import { Location } from '../entity/Location';
 export class SearchComponent implements OnInit {
 	@Output() positionChanged = new EventEmitter<Location>();
 
-	@ViewChild('search', { static: false })
+	@ViewChild('search', { static: true })
 	public searchElementRef: ElementRef;
 
 	constructor(private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) {}

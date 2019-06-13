@@ -30,7 +30,7 @@ export class WarehouseOrderViewComponent
 	selectedOrder: Order;
 	@Input()
 	hideHeader: boolean;
-	@ViewChild('slideshow', { static: false })
+	@ViewChild('slideshow', { static: true })
 	slideshow: any;
 
 	isSelectedOrderActionsAvailable: boolean = true;

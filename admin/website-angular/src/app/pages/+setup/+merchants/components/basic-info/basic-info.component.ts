@@ -19,7 +19,7 @@ import { getDummyImage } from '@modules/server.common/utils';
 	styleUrls: ['./basic-info.component.scss']
 })
 export class SetupMerchantBasicInfoComponent implements OnInit, OnDestroy {
-	@ViewChild('basicInfoForm', { static: false })
+	@ViewChild('basicInfoForm', { static: true })
 	basicInfoForm: NgForm;
 
 	@ViewChild('name', { static: false })

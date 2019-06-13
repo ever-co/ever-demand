@@ -8,7 +8,7 @@ import { FormBuilder } from '@angular/forms';
 	styleUrls: ['./location.component.scss']
 })
 export class SetupMerchantLocationComponent {
-	@ViewChild('locationForm', { static: false })
+	@ViewChild('locationForm', { static: true })
 	locationForm: LocationFormComponent;
 
 	@Output()

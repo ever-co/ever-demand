@@ -15,7 +15,7 @@ import { Subject } from 'rxjs';
 	templateUrl: './stripe-gateway.component.html'
 })
 export class StripeGatewayComponent implements OnChanges {
-	@ViewChild('stripeConfigForm', { static: false })
+	@ViewChild('stripeConfigForm', { static: true })
 	stripeConfigForm: NgForm;
 
 	isStripeEnabled: boolean;

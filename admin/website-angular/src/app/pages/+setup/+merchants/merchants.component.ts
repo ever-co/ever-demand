@@ -22,13 +22,13 @@ export class SetupMerchantsComponent {
 	@ViewChild('nbStepper', { static: false })
 	nbStepper: NbStepperComponent;
 
-	@ViewChild('account', { static: false })
+	@ViewChild('account', { static: true })
 	stepAccount: SetupMerchantAccountComponent;
-	@ViewChild('basicInfo', { static: false })
+	@ViewChild('basicInfo', { static: true })
 	stepBasicInfo: SetupMerchantBasicInfoComponent;
-	@ViewChild('contactInfo', { static: false })
+	@ViewChild('contactInfo', { static: true })
 	stepContactInfo: SetupMerchantContactInfoComponent;
-	@ViewChild('location', { static: false })
+	@ViewChild('location', { static: true })
 	stepLocation: SetupMerchantLocationComponent;
 	@ViewChild('payments', { static: false })
 	stepPayments: SetupMerchantPaymentsComponent;

@@ -16,7 +16,7 @@ import { environment } from 'environments/environment';
 	`
 })
 export class CarrierLocationComponent implements OnInit, OnDestroy {
-	@ViewChild('gmap', { static: false })
+	@ViewChild('gmap', { static: true })
 	gmapElement: ElementRef;
 	public map: google.maps.Map;
 	private directionsDisplay = new google.maps.DirectionsRenderer();

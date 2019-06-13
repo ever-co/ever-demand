@@ -1,6 +1,6 @@
 <toaster-container> </toaster-container>
 
-<div *ngIf="(user$ | async) as user" class="row">
+<div *ngIf="user$ | async as user" class="row">
 	<div class="col-md-8">
 		<nb-card>
 			<nb-card-header class="row">
@@ -34,7 +34,7 @@
 						class="btn btn-primary active"
 						[routerLink]="['./edit']"
 					>
-						<i class="nb-edit button-icon"></i>
+						<i class="ion-md-create button-icon"></i>
 						<small>{{
 							'CUSTOMERS_VIEW.CUSTOMER_VIEW.EDIT' | translate
 						}}</small>

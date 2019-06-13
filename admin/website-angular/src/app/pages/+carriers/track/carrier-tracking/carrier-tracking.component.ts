@@ -34,7 +34,7 @@ export class CarrierTrackingComponent implements OnInit, OnDestroy {
 	private ngDestroy$ = new Subject();
 	public carrierId: string;
 
-	@ViewChild('gmap', { static: false })
+	@ViewChild('gmap', { static: true })
 	gmapElement: any;
 	map: google.maps.Map;
 	carrierSub$: any;

@@ -15,7 +15,7 @@ import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaym
 	styleUrls: ['./payments.component.scss']
 })
 export class SetupMerchantPaymentsComponent {
-	@ViewChild('paymentGateways', { static: false })
+	@ViewChild('paymentGateways', { static: true })
 	paymentGateways: PaymentGatewaysComponent;
 	@Output()
 	previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();

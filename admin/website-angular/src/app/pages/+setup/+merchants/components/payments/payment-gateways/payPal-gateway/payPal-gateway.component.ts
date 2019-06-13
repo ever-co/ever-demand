@@ -12,7 +12,7 @@ import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaym
 	templateUrl: './payPal-gateway.component.html'
 })
 export class PayPalGatewayComponent implements OnChanges {
-	@ViewChild('payPalConfigForm', { static: false })
+	@ViewChild('payPalConfigForm', { static: true })
 	payPalConfigForm: NgForm;
 
 	isPayPalEnabled: boolean;
