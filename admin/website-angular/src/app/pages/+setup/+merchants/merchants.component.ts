@@ -19,7 +19,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 	templateUrl: './merchants.component.html'
 })
 export class SetupMerchantsComponent {
-	@ViewChild('nbStepper', { static: true })
+	@ViewChild('nbStepper', { static: false })
 	nbStepper: NbStepperComponent;
 
 	@ViewChild('account', { static: true })
@@ -30,13 +30,13 @@ export class SetupMerchantsComponent {
 	stepContactInfo: SetupMerchantContactInfoComponent;
 	@ViewChild('location', { static: true })
 	stepLocation: SetupMerchantLocationComponent;
-	@ViewChild('payments', { static: true })
+	@ViewChild('payments', { static: false })
 	stepPayments: SetupMerchantPaymentsComponent;
-	@ViewChild('manufacturing', { static: true })
+	@ViewChild('manufacturing', { static: false })
 	stepManufacturing: SetupMerchantManufacturingComponent;
-	@ViewChild('deliveryAndTakeaway', { static: true })
+	@ViewChild('deliveryAndTakeaway', { static: false })
 	stepDeliveryAndTakeaway: SetupMerchantDeliveryAndTakeawayComponent;
-	@ViewChild('ordersSettings', { static: true })
+	@ViewChild('ordersSettings', { static: false })
 	stepOrdersSettings: SetupMerchantOrdersSettingsComponent;
 
 	currentStore: Warehouse;

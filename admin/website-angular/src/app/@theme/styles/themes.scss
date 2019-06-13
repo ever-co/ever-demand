@@ -4,15 +4,17 @@
 @import '~@nebular/theme/styles/themes';
 
 // which themes you what to enable (empty to enable all)
-$nb-enabled-themes: (default, cosmic, corporate, everlight, everdark);
+$nb-enabled-themes: (default /*, cosmic, corporate, everlight, everdark*/);
 
 $nb-themes: nb-register-theme(
 	(
-		padding: 1.25rem,
 		// app wise variables for each theme
 			sidebar-header-gap: 2rem,
 		sidebar-header-height: initial,
 		layout-content-width: 1400px,
+		header-height: 5.45rem,
+		font-family-primary: Roboto,
+		font-family-secondary: Exo,
 		font-main: Roboto,
 		font-secondary: Exo,
 		switcher-background: #ebeff5,

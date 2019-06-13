@@ -3,11 +3,14 @@
 // framework component themes (styles tied to theme variables)
 @import '~@nebular/theme/styles/globals';
 @import '~@nebular/auth/styles/all';
+
 @import '~@nebular/bootstrap/styles/globals';
 //angular2-toaster
 @import 'node_modules/angular2-toaster/toaster';
+
 // global app font size
 @import './font-size';
+
 // custom global ng-bootstrap modal
 @import './ng-bootstrap.modal';
 // loading progress bar theme
@@ -226,4 +229,18 @@ nb-card.no-box-shadow {
 			font-size: 1.1em;
 		}
 	}
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: Exo !important;
+	font-weight: 500 !important;
+}
+
+.ng2-smart-action.ng-star-inserted i {
+	font-size: 1.5rem;
 }

@@ -3,6 +3,8 @@
 @include nb-install-component() {
 	h6 {
 		margin-bottom: 0.5rem;
+		font-weight: 500;
+		font-size: 1rem;
 	}
 
 	.settings-row {
@@ -18,15 +20,14 @@
 			text-decoration: none;
 			font-size: 2.25rem;
 
-			color: nb-theme(text-basic-color);
+			color: #a4abb3;
 
 			&.selected {
-				color: nb-theme(color-success-500);
+				color: #40dc7e;
 			}
 
 			@include nb-for-theme(cosmic) {
 				&.selected {
-					// TODO nb-theme
 					color: #3dcc6d;
 				}
 			}
@@ -62,14 +63,14 @@
 			}
 
 			@include nb-for-theme(cosmic) {
-				.switch .slider {
-					background-color: nb-theme(background-basic-color-1);
-				}
+				// .switch .slider {
+				// background-color: nb-theme(color-bg);
+				// }
 			}
 		}
 	}
 
-	.language-select {
+	.settings-row select {
 		max-height: 40px;
 		padding: 0;
 		padding-left: 10px;

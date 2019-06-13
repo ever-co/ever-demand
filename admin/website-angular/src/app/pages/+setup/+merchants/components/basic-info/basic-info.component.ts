@@ -22,7 +22,7 @@ export class SetupMerchantBasicInfoComponent implements OnInit, OnDestroy {
 	@ViewChild('basicInfoForm', { static: true })
 	basicInfoForm: NgForm;
 
-	@ViewChild('name', { static: true })
+	@ViewChild('name', { static: false })
 	name: NgModel;
 
 	@Output()

@@ -14,10 +14,10 @@ import { CategoriesTableComponent } from 'app/@shared/product/categories/categor
 	styleUrls: ['./product-categories.component.scss']
 })
 export class SetupMerchantProductCategoriesComponent {
-	@ViewChild('basicInfo', { static: true })
+	@ViewChild('basicInfo', { static: false })
 	basicInfo: BasicInfoFormComponent;
 
-	@ViewChild('categoriesTable', { static: true })
+	@ViewChild('categoriesTable', { static: false })
 	categoriesTable: CategoriesTableComponent;
 
 	@Output()

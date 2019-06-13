@@ -4,7 +4,7 @@ $shadow-green: #00977e;
 
 @include nb-install-component() {
 	.progress-info {
-		color: nb-theme(text-basic-color);
+		color: #2a2a2a;
 		margin-top: 2.5rem;
 
 		&:first-child {
@@ -13,19 +13,20 @@ $shadow-green: #00977e;
 	}
 
 	.title {
-		font-family: nb-theme(font-secondary);
-		font-size: nb-theme(text-heading-6-font-size);
-		font-weight: nb-theme(text-heading-1-font-weight);
+		font-family: font-main;
+		font-size: 1.125rem;
+		font-weight: 600;
 	}
 
 	.value {
-		font-size: 2rem;
-		font-weight: nb-theme(text-subtitle-font-weight);
+		font-size: 2.4rem;
+		font-weight: 300;
 		margin-top: 0.5rem;
+		line-height: 1.1;
 	}
 
 	.description {
-		color: nb-theme(text-basic-color);
+		color: #a4abb3;
 		margin-top: 0.5rem;
 	}
 

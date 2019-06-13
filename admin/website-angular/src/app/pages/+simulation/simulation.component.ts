@@ -39,7 +39,7 @@ export class SimulationComponent implements OnDestroy, OnInit {
 	@ViewChild('productsTable', { static: true })
 	productsTable: SimulationProductsComponent;
 
-	@ViewChild('instructions', { static: true })
+	@ViewChild('instructions', { static: false })
 	instructions: SimulationInstructionsComponent;
 
 	public hasProductsForOrder: boolean;

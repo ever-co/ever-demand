@@ -19,12 +19,15 @@
 		.summary {
 			width: 100%;
 		}
+
+		small {
+			margin-bottom: 0.5rem;
+		}
 	}
 
 	.value {
 		font-size: 2rem;
-		color: nb-theme(text-basic-color);
-
+		color: #2a2a2a;
 		span div small {
 			font-size: 0.5em;
 			display: block;
@@ -34,21 +37,20 @@
 	@include media-breakpoint-down(sm) {
 		.value,
 		.title {
-			font-weight: nb-theme(text-heading-2-font-weight);
+			font-weight: 500;
 		}
 
 		.title {
-			font-size: nb-theme(text-heading-6-font-size);
+			font-size: 0.875rem;
 		}
 
 		.value {
-			font-size: nb-theme(text-heading-1-font-size);
+			font-size: 1.25rem;
 		}
 	}
 
 	@include media-breakpoint-down(is) {
 		.summary-container {
-			// TODO get padding form the theme
 			padding-left: 1.25rem;
 			padding-right: 1.25rem;
 		}

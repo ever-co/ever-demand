@@ -17,9 +17,12 @@ import {
 	NbCheckboxModule,
 	NbPopoverModule,
 	NbContextMenuModule,
-	NbProgressBarModule
+	NbProgressBarModule,
+	NbIconModule,
+	NbSelectModule
 } from '@nebular/theme';
 
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbSecurityModule } from '@nebular/security';
 
 import {
@@ -52,7 +55,6 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AdminsService } from '../@core/data/admins.service';
 import { PipesModule } from '@modules/client.common.angular2/pipes/pipes.module';
-import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -75,7 +77,10 @@ const NB_MODULES = [
 	NbContextMenuModule,
 	NgbModule,
 	NbSecurityModule, // *nbIsGranted directive
-	NbProgressBarModule
+	NbProgressBarModule,
+	NbIconModule,
+	NbEvaIconsModule,
+	NbSelectModule
 ];
 
 const COMPONENTS = [
@@ -99,7 +104,7 @@ const ENTRY_COMPONENTS = [ThemeSwitcherListComponent];
 const NB_THEME_PROVIDERS = [
 	...NbThemeModule.forRoot(
 		{
-			name: 'everlight'
+			name: 'default'
 		},
 		[
 			DEFAULT_THEME,
@@ -118,7 +123,6 @@ const NB_THEME_PROVIDERS = [
 	imports: [
 		...BASE_MODULES,
 		...NB_MODULES,
-		NbEvaIconsModule,
 		HttpClientModule,
 		TranslateModule.forChild({
 			loader: {

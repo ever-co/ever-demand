@@ -14,10 +14,10 @@ import User from '@modules/server.common/entities/User';
 	styleUrls: ['./customer-edit.component.scss']
 })
 export class CustomerEditComponent implements OnInit {
-	@ViewChild('basicInfoForm', { static: true })
+	@ViewChild('basicInfoForm', { static: false })
 	basicInfoForm: BasicInfoFormComponent;
 
-	@ViewChild('locationForm', { static: true })
+	@ViewChild('locationForm', { static: false })
 	locationForm: LocationFormComponent;
 
 	mapTypeEmitter = new EventEmitter<string>();

@@ -1,29 +1,30 @@
-@import '../../../../@theme/styles/themes';
-@import '~@nebular/theme/styles/global/bootstrap/buttons';
+// @import '../../../../@theme/styles/themes';
+// @import '~@nebular/theme/styles/global/bootstrap/buttons';
 
-@include nb-install-component() {
-	nb-card-body {
-		padding: 0 0 29px;
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-	}
+// @include nb-install-component() {
 
-	.shape-container {
-		margin: 1.25rem 1.25rem 0;
-	}
+//   nb-card-body {
+//     padding: 0 0 29px;
+//     display: flex;
+//     flex-wrap: wrap;
+//     justify-content: space-between;
+//   }
 
-	.container-title {
-		margin-bottom: 0.25rem;
-	}
+//   .shape-container {
+//     margin: 1.25rem 1.25rem 0;
+//   }
 
-	.subheader {
-		margin-bottom: 1rem;
-		font-size: 0.875rem;
+//   .container-title {
+//     margin-bottom: 0.25rem;
+//   }
 
-		span:nth-child(2) {
-			color: nb-theme(text-basic-color);
-			font-weight: nb-theme(text-heading-2-font-weight);
-		}
-	}
-}
+//   .subheader {
+//     margin-bottom: 1rem;
+//     font-size: 0.875rem;
+
+//     span:nth-child(2) {
+//       color: #2a2a2a;
+//       font-weight: 500;
+//     }
+//   }
+// }
