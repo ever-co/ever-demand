@@ -2,7 +2,7 @@
 
 .card {
     
-    background: rgba(66; 66; 66);
+    background: rgba(66, 66, 66, 1);
     height: 450px;
     background-repeat: no-repeat;
     position: relative;
@@ -13,6 +13,12 @@
         position: absolute;
         top: 0;
         left: 0;
+    }
+    button {
+        font-size: 0.8em !important;
+        width: auto;
+        // height: 60px;
+        padding: 12px;
     }
 }
 
@@ -25,4 +31,9 @@
     width: 100%;
     padding: 8px;
     color: white;
+    
 }
+
+// .btn {
+//     font-size: 0.5em !important;
+// }

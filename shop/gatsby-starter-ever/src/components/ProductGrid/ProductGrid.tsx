@@ -10,14 +10,14 @@ import ProductCard from '../ProductCard';
  */
 const ProductGrid = ({geoLocationProductsByPaging, addToCart}) => (
 	<Grid container spacing={3}>
-				{geoLocationProductsByPaging.map((item: { warehouseProduct: { product: any; }; }) => {
-					return (
-						<Grid item xs={12} md={4} lg={3} xl={2}>
-							<ProductCard product={item} addToCart={addToCart}/>
-						</Grid>
-					);
-				})}
-			</Grid>
+		{geoLocationProductsByPaging.map((item: { warehouseProduct: { product: any; }; }) => {
+			return (
+				<Grid item xs={12} md={4} lg={3} xl={2}>
+					<ProductCard item={item} addToCart={addToCart}/>
+				</Grid>
+			);
+		})}
+	</Grid>
 );
 
 ProductGrid.propTypes = {

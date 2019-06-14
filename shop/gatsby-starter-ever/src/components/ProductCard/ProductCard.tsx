@@ -2,36 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardContent, Typography, CardActions, Button } from '@material-ui/core';
 import { navigate } from 'gatsby';
+import styles from './ProductCard.module.scss'
 //import { Test } from './ProductCard.styles';
 
 const ProductCard = ({item, addToCart}) => {
   const { product } = item.warehouseProduct;
   return (
-    <Card style={{
-      background: `rgba(66, 66, 66)`,
-      height: '450px',
-      backgroundRepeat: 'no-repeat',
-      position: 'relative',
-      padding: '.2em'
-    }}>
-      <img src={product.images[0].url} style={{
-        // height: "100%",
-        width: '100%',
-        position: 'absolute',
-        top: 0,
-        left: 0
-      }} />
+    <Card className={styles.card}>
+      <img src={product.images[0].url} />
       <CardContent>
-        <div style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          background: 'rgba(66, 66, 66, 0.5)',
-          width: '100%',
-          padding: '8px',
-          color: 'white'
-
-        }}>
+        <div className={styles.cardContent}>
           <Typography variant={'h5'}>
             {product.title[0].value}
           </Typography>

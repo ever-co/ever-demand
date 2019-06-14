@@ -10,14 +10,25 @@ import { AppContext } from '../Context';
 import { GeoLocationProductsByPaging } from '../apollo/product';
 import {useQuery, useMutation} from 'react-apollo-hooks'
 import { createOrder } from '../apollo/order';
+import config from '../config'
+import { Container } from '@material-ui/core';
 
 const IndexPage = (props) => {
   const context = useContext(AppContext);
-	const { coords } = context;
+  let coordinates;
+  // in dev mode load default coords
+  if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+    coordinates = config.defaultCoordinates;
+  }
+  else {
+    
+   coordinates  = context.coordinates;
+  }
+  
 
 	const { data, error, loading } = useQuery(GeoLocationProductsByPaging, {
 		variables: {
-			geoLocation: { loc: { type: 'Point', coordinates: coords } }
+			geoLocation: { loc: { type: 'Point', coordinates: coordinates } }
 		}
   });
   const placeOrder = useMutation(createOrder);
@@ -28,14 +39,20 @@ const IndexPage = (props) => {
 		const {product} = warehouseProduct;
 		placeOrder({variables: {createInput: {userId: context.user.id, warehouseId: item.warehouseId, products: {productId: product.id, count: 1}}}});
 
-	};
+  };
+  if (loading) {
+		return <div>Loading...</div>;
+	}
+	if (error) {
+		// @ts-ignore
+		return <div>Error! {error.message}</div>;
+	}
   return (
     <Layout>
       <SEO title='Home' keywords={[`gatsby`, `application`, `react`, 'ever']} />
-      <section>
-        <ProductGrid geoLocationProductsByPaging={data.geoLocationProductsByPaging} addToCart={addToCart} />
-
-      </section>
+      <Container maxWidth={"xl"}>
+      <ProductGrid geoLocationProductsByPaging={data.geoLocationProductsByPaging} addToCart={addToCart} />
+      </Container>
     </Layout>
 )};
 
