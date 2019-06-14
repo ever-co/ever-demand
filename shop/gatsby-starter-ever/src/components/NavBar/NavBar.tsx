@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { Box, Button, Container, Grid } from '@material-ui/core';
 import { Link } from 'gatsby';
 //import { Test } from './NavBar.styles';
-import * as styles from './NavBar.Module.scss';
+import * as styles from './NavBar.module.scss';
 import { navigate } from 'gatsby';
 
 const NavBar = props => (
