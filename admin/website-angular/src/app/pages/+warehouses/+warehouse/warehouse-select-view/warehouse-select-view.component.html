@@ -46,17 +46,19 @@
 
 				<div class="btnManage">
 					<button
+						nbButton
+						status="success"
 						type="button"
-						class="btn btn-sm btn-success"
 						[routerLink]="['./manage']"
 					>
 						{{ 'WAREHOUSE_VIEW.MANAGE_STORE' | translate }}
 					</button>
 
 					<button
+						nbButton
 						title="JSON"
 						type="button"
-						class="btn btn-sm btn-dark btn-icon pull-right"
+						class="pull-right bg-dark border-dark"
 						(click)="openInfo()"
 					>
 						<svg width="15px" viewBox="0 0 24 24">

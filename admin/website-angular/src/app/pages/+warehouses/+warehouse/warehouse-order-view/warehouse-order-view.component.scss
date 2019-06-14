@@ -11,6 +11,8 @@ $brand-darken: darken($brand, 5%);
 
 .btn {
 	cursor: pointer;
+	font-weight: 500 !important;
+	padding: 0.625rem 1.125rem !important;
 }
 
 .btn:hover {
