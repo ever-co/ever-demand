@@ -7,7 +7,7 @@ import { LocationFormModule } from '../../../../@shared/forms/location';
 import { GoogleMapModule } from '../../../../@shared/forms/google-map/google-map.module';
 import { CustomerEditComponent } from './customer-edit.component';
 import { ToasterModule } from 'angular2-toaster';
-import { NbSpinnerModule } from '@nebular/theme';
+import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 
 const routes: Routes = [
 	{
@@ -26,7 +26,8 @@ const routes: Routes = [
 		UserFormsModule,
 		LocationFormModule,
 		GoogleMapModule,
-		NbSpinnerModule
+		NbSpinnerModule,
+		NbButtonModule
 	],
 	declarations: [CustomerEditComponent]
 })

@@ -6,12 +6,24 @@
 </div>
 <div class="modal-body">
 	<div class="col-12 input-group">
-		<input type="number" [(ngModel)]="code" placeholder="Code" class="form-control" />
+		<input
+			type="number"
+			[(ngModel)]="code"
+			placeholder="Code"
+			class="form-control"
+		/>
 	</div>
 </div>
 <div class="modal-footer">
 	<div class="row" style="width: 90%; margin: auto;">
-		<button class="btn btn-md btn-primary col-12" [disabled]='(!code || (code < 1000 || code > 9999))' (click)="login()">Get
-			inside</button>
+		<button
+			nbButton
+			status="primary"
+			class="col-12"
+			[disabled]="!code || (code < 1000 || code > 9999)"
+			(click)="login()"
+		>
+			Get inside
+		</button>
 	</div>
 </div>

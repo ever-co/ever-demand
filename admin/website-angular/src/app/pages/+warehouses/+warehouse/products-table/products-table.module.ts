@@ -5,7 +5,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { ProductsTableComponent } from './products-table.component';
 import { ToasterModule } from 'angular2-toaster';
-import { NbSpinnerModule } from '@nebular/theme';
+import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 import { ConfirmationModalModule } from '../../../../@shared/confirmation-modal/confirmation-modal.module';
 import { WarehouseProductFormsModule } from 'app/@shared/warehouse-product/forms';
 
@@ -26,7 +26,8 @@ const COMPONENTS = [ProductsTableComponent];
 
 		NbSpinnerModule,
 		ConfirmationModalModule,
-		WarehouseProductFormsModule
+		WarehouseProductFormsModule,
+		NbButtonModule
 	],
 	declarations: [...COMPONENTS],
 	exports: [...COMPONENTS]

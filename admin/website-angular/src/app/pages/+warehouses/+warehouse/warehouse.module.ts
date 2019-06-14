@@ -13,7 +13,7 @@ import { WarehouseTableModule } from '../../../@shared/render-component/warehous
 import { WarehouseOrderModule } from './+warehouse-order/warehouse-order.module';
 import { CustomerOrdersTableModule } from '../../../@shared/render-component/customer-orders-table/customer-orders-table.module';
 import { JsonModalModule } from '../../../@shared/json-modal/json-modal.module';
-import { NbSpinnerModule } from '@nebular/theme';
+import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 import { ProductsTableModule } from './products-table/products-table.module';
 import { WarehouseProductsViewModule } from './+warehouse-products-view/warehouse-products-view.module';
 import { WarehouseMainInfoViewModule } from './warehouse-main-info/warehouse-main-info.module';
@@ -58,7 +58,8 @@ const routes: Routes = [
 		WarehouseMainInfoViewModule,
 		WarehouseSelectViewModule,
 		WarehouseOrderViewModule,
-		WarehouseOrdersTableModule
+		WarehouseOrdersTableModule,
+		NbButtonModule
 	],
 	declarations: [WarehouseComponent]
 })

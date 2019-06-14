@@ -10,7 +10,8 @@
 			<div class="fakeData col">
 				<div class="container-btn d-flex align-items-center">
 					<button
-						class="btn btn-primary"
+						nbButton
+						status="primary"
 						[disabled]="isBtnDisabled.all"
 						(click)="callAll()"
 						[nbSpinner]="loading.all"
@@ -36,7 +37,8 @@
 			<div class="fakeData my-auto col">
 				<div class="container-btn float-right">
 					<button
-						class="btn btn-danger btn-sm"
+						nbButton
+						status="danger"
 						(click)="clearAll()"
 						[disabled]="isBtnDisabled.clearAll"
 						[nbSpinner]="loading.clearAll"

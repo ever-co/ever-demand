@@ -357,10 +357,10 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 								<img width="32" height="32" src="${this.localeTranslate(
 									order.products[0].product.images
 								)}" />
-								<h6 class="d-inline-block">
+								<p class="d-inline-block">
 									${this.localeTranslate(order.products[0].product.title)}
 									<span class="badge badge-pill badge-secondary">${order.products[0].count}</span>
-								</h6>
+								</p>
 							</div>
 						`
 								: '',

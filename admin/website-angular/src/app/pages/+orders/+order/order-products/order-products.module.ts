@@ -8,7 +8,7 @@ import { RenderComponentsModule } from 'app/@shared/render-component/render-comp
 import { StoreProductsTableModule } from 'app/@shared/render-component/store-products-table/store-products-table.module';
 import { WarehouseOrderModalModule } from 'app/@shared/warehouse/+warehouse-order-modal/warehouse-order-modal.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { NbSpinnerModule } from '@nebular/theme';
+import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 import { ConfirmationModalModule } from 'app/@shared/confirmation-modal/confirmation-modal.module';
 
 @NgModule({
@@ -22,7 +22,8 @@ import { ConfirmationModalModule } from 'app/@shared/confirmation-modal/confirma
 		StoreProductsTableModule,
 		WarehouseOrderModalModule,
 		NbSpinnerModule,
-		ConfirmationModalModule
+		ConfirmationModalModule,
+		NbButtonModule
 	],
 	declarations: [OrderProductsComponent],
 	exports: [OrderProductsComponent]

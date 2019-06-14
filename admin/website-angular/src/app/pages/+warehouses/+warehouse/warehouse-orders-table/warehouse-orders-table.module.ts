@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormWizardModule } from 'angular2-wizard';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { TranslateModule } from '@ngx-translate/core';
-import { NbSpinnerModule } from '@nebular/theme';
+import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 import { ThemeModule } from '../../../../@theme';
 import { WarehouseOrdersTableComponent } from './warehouse-orders-table.component';
 
@@ -14,7 +14,8 @@ import { WarehouseOrdersTableComponent } from './warehouse-orders-table.componen
 		FormWizardModule,
 		Ng2SmartTableModule,
 		TranslateModule.forChild(),
-		NbSpinnerModule
+		NbSpinnerModule,
+		NbButtonModule
 	],
 	declarations: [WarehouseOrdersTableComponent],
 	exports: [WarehouseOrdersTableComponent]

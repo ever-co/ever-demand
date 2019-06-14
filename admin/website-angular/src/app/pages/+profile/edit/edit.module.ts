@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ThemeModule } from '../../../@theme';
 import { AccountComponent } from './account/account.component';
 import { BasicInfoComponent } from './basic-info/basic-info.component';
-import { NbSpinnerModule } from '@nebular/theme';
+import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.module';
 
 const EDIT_PROFILE_COMPONENTS = [AccountComponent, BasicInfoComponent];
@@ -17,7 +17,8 @@ const EDIT_PROFILE_COMPONENTS = [AccountComponent, BasicInfoComponent];
 		ToasterModule.forRoot(),
 		TranslateModule.forChild(),
 		FileUploaderModule,
-		NbSpinnerModule
+		NbSpinnerModule,
+		NbButtonModule
 	],
 	declarations: [...EDIT_PROFILE_COMPONENTS],
 	exports: [...EDIT_PROFILE_COMPONENTS],

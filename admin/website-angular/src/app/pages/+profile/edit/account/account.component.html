@@ -79,7 +79,11 @@
 				>
 			</div>
 			<button
-				class="btn btn-with-icon btn-outline-success btn-lg float-right save-button-profile"
+				nbButton
+				status="success"
+				outline
+				size="large"
+				class="float-right save-button-profile"
 				[disabled]="
 					!accountForm.valid ||
 					((password.dirty || password.touched) &&
@@ -88,7 +92,7 @@
 				type="button"
 				(click)="saveChanges()"
 			>
-				<i class="ion-md-checkmark"></i>
+				<i class="ion-md-checkmark mr-1"></i>
 				<span> {{ 'PROFILE_VIEW.SAVE' | translate }} </span>
 			</button>
 		</form>

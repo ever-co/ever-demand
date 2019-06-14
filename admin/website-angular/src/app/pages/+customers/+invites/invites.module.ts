@@ -10,7 +10,7 @@ import { InvitesComponent } from './invites.component';
 import { InvitesService } from '../../../@core/data/invites.service';
 import { InvitesRequestsModule } from './+invites-requests/invites-requests.module';
 import { CountryRenderComponent } from './country-render/country-render.component';
-import { NbSpinnerModule } from '@nebular/theme';
+import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 import { ConfirmationModalModule } from '../../../@shared/confirmation-modal/confirmation-modal.module';
 
 const routes: Routes = [
@@ -31,7 +31,8 @@ const routes: Routes = [
 		HighlightModule.forRoot({ theme: 'github' }),
 		InvitesRequestsModule,
 		NbSpinnerModule,
-		ConfirmationModalModule
+		ConfirmationModalModule,
+		NbButtonModule
 	],
 	declarations: [InvitesComponent],
 	entryComponents: [CountryRenderComponent],

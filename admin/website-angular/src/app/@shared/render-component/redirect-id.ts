@@ -4,7 +4,9 @@ import { Router } from '@angular/router';
 
 @Component({
 	template: `
-		<button class="btn btn-sm btn-outline-secondary" (click)="redirect()">{{rowData.id}}</button>
+		<button class="btn btn-sm btn-outline-secondary" (click)="redirect()">
+			{{ rowData.id }}
+		</button>
 	`
 })
 export class RedirectIdComponent implements ViewCell {

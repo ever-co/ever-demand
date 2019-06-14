@@ -19,15 +19,13 @@ $shadow-green: #00977e;
 	}
 
 	.value {
-		font-size: 2.4rem;
+		font-size: 2.5rem;
 		font-weight: 300;
-		margin-top: 0.5rem;
-		line-height: 1.1;
+		line-height: 1.3;
 	}
 
 	.description {
 		color: #a4abb3;
-		margin-top: 0.5rem;
 	}
 
 	::ng-deep nb-progress-bar {
