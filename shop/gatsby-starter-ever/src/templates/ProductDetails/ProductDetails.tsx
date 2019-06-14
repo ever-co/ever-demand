@@ -1,21 +1,61 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-//import { Test } from './ProductDetails.styles';
+import {
+	Box,
+	Button,
+	CardActionArea,
+	CardActions,
+	CardContent,
+	CardHeader,
+	Container,
+	Grid,
+	Typography
+} from "@material-ui/core"
+import { graphql } from "gatsby"
+import React, { useState } from "react";
+import Layout from "../../components/layout"
+import { Card, Carousel } from "./styles"
 
-const ProductDetails = (props) => (
-  <div className="ProductDetailsWrapper">
-    Test content
-  </div>
-);
+// @ts-ignore
+const ProductTemplate = ({ data }) => {
+	const { product } = data.ever
+	const [activeImage, setActiveImage] = useState(product.images[0].url)
+	return (
+		<Layout>
+			<Card>
 
-ProductDetails.propTypes = {
-  // bla: PropTypes.string,
-};
+				<Grid container justify={"center"}>
 
-ProductDetails.defaultProps = {
-  // bla: 'test',
-};
+					<Grid item container xs={12} lg={6} style={{ position: "relative" }} justify={"center"}>
+						<Container>
+							<img style={{
+								height: "450px",
+								margin: "0 auto",
+								display: "block",
+								maxWidth: "100%"
 
-export default ProductDetails;
+							}} src={activeImage} />
+							<Box width={1} height={"180px"} p={2}>
+								<Carousel wrapAround slidesToShow={4}>
+									{product.images.map((image: { url: string | undefined; }) => <img src={image.url} onClick={() => setActiveImage(image.url)} />)}
+								</Carousel>
+							</Box>
+						</Container>
+					</Grid>
 
-export  {ProductDetails}
+					<Grid item xs={12} lg={6} >
+						<Typography variant={"h5"}> {product.title[0].value} </Typography>
+						<br />
+						<Typography variant={"body1"}> {product.description[0].value} </Typography>
+						<Button variant={"contained"} color={"secondary"}> Order </Button>
+						<Typography variant={"body2"} color={"secondary"}> {product.details[0].value} </Typography>
+					</Grid>
+
+
+
+				</Grid>
+			</Card>
+
+		</Layout>
+	)
+}
+export default ProductTemplate
+

@@ -1,3 +1,4 @@
+import {getlocale} from '../auth'
 /**
  * Formats a Vendure price (an integer) into a localised dollar-cents format.
  * @param currency
@@ -10,3 +11,6 @@ export function formatPrice(currency: string, value: number): string {
     currencyDisplay: 'symbol',
   }).format(value / 100);
 }
+
+
+export const matchLocale = (arr) => arr.filter(item => item.locale === getlocale())

@@ -34,7 +34,7 @@ const NavBar = (props) => (
 				 		 </Grid>
 					  </Grid>
 
-				  <Button color="inherit" onClick={navigate('/settings')}>Settings</Button>
+				  <Button color="inherit" onClick={() => navigate('/settings')}>Settings</Button>
 		  </Box>
 	  </AppBar>
 );
