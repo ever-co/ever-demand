@@ -8,6 +8,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import ForwardOrdersMethod from '@modules/server.common/enums/ForwardOrdersMethod';
 import { LocationFormComponent } from '../../../forms/location';
 import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
+import { WarehouseManageTabsDeliveryAreasComponent } from './delivery-areas/warehouse-manage-tabs-delivery-areas.component';
 
 export type WarehouseManageTabs = Pick<
 	IWarehouseCreateObject,
@@ -32,7 +33,10 @@ export class WarehouseManageTabsComponent {
 			details: WarehouseManageTabsDetailsComponent.buildForm(formBuilder),
 			account: WarehouseManageTabsAccountComponent.buildForm(formBuilder),
 			contactInfo: ContactInfoFormComponent.buildForm(formBuilder),
-			location: LocationFormComponent.buildForm(formBuilder)
+			location: LocationFormComponent.buildForm(formBuilder),
+			deliverAreas: WarehouseManageTabsDeliveryAreasComponent.buildForm(
+				formBuilder
+			)
 		});
 	}
 
@@ -51,6 +55,9 @@ export class WarehouseManageTabsComponent {
 	@ViewChild('locationForm', { static: false })
 	readonly locationForm: LocationFormComponent;
 
+	@ViewChild('deliveryAreasForm', { static: false })
+	readonly deliveryAreasForm: WarehouseManageTabsDeliveryAreasComponent;
+
 	@ViewChild('tabSet', { static: false })
 	readonly tabSet;
 
@@ -60,18 +67,25 @@ export class WarehouseManageTabsComponent {
 	get details() {
 		return this.form.get('details');
 	}
+  
 	get account() {
 		return this.form.get('account');
 	}
+  
 	get contactInfo() {
 		return this.form.get('contactInfo');
 	}
+  
 	get location() {
 		return this.form.get('location');
 	}
 
 	get validForm() {
 		return this.form.valid && this.contactInfoForm.validForm;
+  }
+  
+	get deliveryAreas() {
+		return this.form.get('deliverAreas');
 	}
 
 	onCoordinatesChanges(coords: number[]) {
@@ -92,6 +106,7 @@ export class WarehouseManageTabsComponent {
 		const accountRaw = this.accountComponent.getValue();
 		const contactRaw = this.contactInfoForm.getValue();
 		const locationRaw = geoLocationInput;
+		const deliveryAreasRaw = this.deliveryAreasForm.getValue();
 
 		const inputResult: {
 			basicInfo: WarehouseManageTabs;
@@ -107,11 +122,13 @@ export class WarehouseManageTabsComponent {
 				ordersPhone: string;
 			};
 			location: IGeoLocation;
+			deliveryAreas: any; // add type
 		} = {
 			basicInfo: { ...detailsRaw, username: accountRaw.username },
 			password: accountRaw.password,
 			contactInfo: contactRaw,
-			location: locationRaw as IGeoLocation
+			location: locationRaw as IGeoLocation,
+			deliveryAreas: deliveryAreasRaw
 		};
 
 		return inputResult;
@@ -126,6 +143,7 @@ export class WarehouseManageTabsComponent {
 		this.accountComponent.setValue(warehouse.username);
 		this.contactInfoForm.setValue(warehouse);
 		this.locationForm.setValue(geoLocationInput);
+		this.deliveryAreasForm.setValue(warehouse.deliveryAreas);
 	}
 
 	warehouseUpdateFinish() {

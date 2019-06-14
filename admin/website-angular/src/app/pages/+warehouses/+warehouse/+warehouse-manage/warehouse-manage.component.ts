@@ -69,7 +69,8 @@ export class WarehouseManageComponent implements OnInit {
 				...this._currentWarehouse,
 				...tabsInfoRaw.basicInfo,
 				...tabsInfoRaw.contactInfo,
-				geoLocation: tabsInfoRaw.location
+				geoLocation: tabsInfoRaw.location,
+				deliveryAreas: tabsInfoRaw.deliveryAreas
 			};
 
 			const passwordOld = tabsInfoRaw.password.current;
@@ -113,7 +114,6 @@ export class WarehouseManageComponent implements OnInit {
 						`Warehouse with id ${id} doesn't exist!`
 					);
 				}
-
 				this._currentWarehouse = warehouse;
 				this.warehouseManageTabs.setValue(warehouse);
 			});
