@@ -8,7 +8,7 @@ export const getUser = () =>
 		: {};
 
 export const setUser = (user: { id?: string; token?: string }) => {
-	window.localStorage.setItem('user', JSON.stringify(user));
+	isBrowser() && window.localStorage.setItem('user', JSON.stringify(user));
 	return user;
 };
 
@@ -19,7 +19,7 @@ export const getlocale = () =>
 		: 'en-us';
 
 export const setlocale = locale => {
-	window.localStorage.setItem('locale', locale);
+	isBrowser() && window.localStorage.setItem('locale', locale);
 	return locale;
 };
 
