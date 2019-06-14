@@ -133,14 +133,14 @@ export class CustomerOrdersComponent implements OnDestroy, OnInit, OnChanges {
 								valuePrepareFunction: (_, order: Order) => {
 									if (order.isCancelled) {
 										return `
-									<h6 > <span class='warnCancelled'>${cancelled}</span></h6>
+									<span class='warnCancelled'>${cancelled}</span>
 									`;
 									} else {
 										return `
-									<h6 > <span class=' space'>${completed}</span>${
+									<span > <span class=' space'>${completed}</span>${
 											order.isCompleted ? '✔' : '✘'
-										}</h6>
-									<h6> <span class='space'>${paid}</span>${order.isPaid ? '✔' : '✘'}</h6>
+										}</span>
+									<span> <span class='space'>${paid}</span>${order.isPaid ? '✔' : '✘'}</span>
 									`;
 									}
 								}
@@ -158,7 +158,7 @@ export class CustomerOrdersComponent implements OnDestroy, OnInit, OnChanges {
 												'short'
 										  )
 										: `${notDelivered}`;
-									return `<h6>${formatted}</h6>`;
+									return `<p>${formatted}</p>`;
 								}
 							},
 							Created: {
@@ -171,7 +171,7 @@ export class CustomerOrdersComponent implements OnDestroy, OnInit, OnChanges {
 									const formatted: string = new DatePipe(
 										'en-EN'
 									).transform(raw, 'short');
-									return `<h6>${formatted}</h6>`;
+									return `<p>${formatted}</p>`;
 								}
 							},
 							actions: {
