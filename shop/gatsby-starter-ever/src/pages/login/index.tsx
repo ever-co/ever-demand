@@ -7,6 +7,8 @@ import GeoLoginForm from '../../components/GeoLoginForm';
 import Map from '../../components/Map'
 import { AppContext } from '../../Context';
 import config from '../../config'
+import { useMutation } from 'react-apollo-hooks';
+import { CreateUser } from '../../apollo/user';
 
 const defaultUser = {
 	email: "",
@@ -42,6 +44,14 @@ const page = () => {
 		}
 
 	};
+	const formatUser = () => {
+		let user = { ...state };
+		delete user.password;
+		return (user);
+	};
+	const submit = useMutation(CreateUser, {
+		variables: { user: formatUser(), password: state.password }
+	});
 	return (
 		<Box className={styles.auth}>
 			<Box width={1} textAlign={'center'} p={2} py={6}>

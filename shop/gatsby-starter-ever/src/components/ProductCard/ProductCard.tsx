@@ -23,7 +23,7 @@ const ProductCard = ({item, addToCart}) => {
                 color={'secondary'}
                 onClick={() => {
                   addToCart(item)
-                  navigate('/Orders')
+                  navigate('/orders')
                 }
                 }
             >

@@ -21,23 +21,22 @@ const IndexPage = (props) => {
     coordinates = config.defaultCoordinates;
   }
   else {
-    
+
    coordinates  = context.coordinates;
   }
-  
+
 
 	const { data, error, loading } = useQuery(GeoLocationProductsByPaging, {
 		variables: {
-			geoLocation: { loc: { type: 'Point', coordinates: coordinates } }
+			geoLocation: { loc: { type: 'Point', coordinates } }
 		}
   });
   const placeOrder = useMutation(createOrder);
 
 	const addToCart = (item: { warehouseProduct?: any; warehouseId?: any; }) => {
-		console.log(item);
 		const {warehouseProduct } = item;
 		const {product} = warehouseProduct;
-		placeOrder({variables: {createInput: {userId: context.user.id, warehouseId: item.warehouseId, products: {productId: product.id, count: 1}}}});
+		placeOrder({variables: {createInput: {userId: context.getUser().id, warehouseId: item.warehouseId, products: {productId: product.id, count: 1}}}});
 
   };
   if (loading) {
