@@ -5,6 +5,7 @@ import { ThemeModule } from '../../../@theme/theme.module';
 import { LocationFormModule } from '../../forms/location';
 import { GoogleMapModule } from '../../forms/google-map/google-map.module';
 import { InviteRequestModalComponent } from './invite-request-modal.component';
+import { NbButtonModule } from '@nebular/theme';
 
 @NgModule({
 	imports: [
@@ -12,7 +13,8 @@ import { InviteRequestModalComponent } from './invite-request-modal.component';
 		FormWizardModule,
 		TranslateModule.forChild(),
 		LocationFormModule,
-		GoogleMapModule
+		GoogleMapModule,
+		NbButtonModule
 	],
 	exports: [InviteRequestModalComponent],
 	declarations: [InviteRequestModalComponent],

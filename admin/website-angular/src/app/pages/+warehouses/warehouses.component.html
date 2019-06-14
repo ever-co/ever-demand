@@ -3,7 +3,9 @@
 
 	<nb-card-header>
 		<button
-			class="btn btn-success btn-sm mr-2 d-inline-block"
+			nbButton
+			status="success"
+			class="mr-2 d-inline-block"
 			(click)="createWarehouseModel()"
 		>
 			<i class="ion-md-add button-icon"></i>
@@ -12,7 +14,9 @@
 			}}</small>
 		</button>
 		<button
-			class="btn btn-danger btn-sm mr-2 d-inline-block"
+			nbButton
+			status="danger"
+			class="mr-2 d-inline-block"
 			[disabled]="!hasSelectedWarehouses"
 			(click)="deleteSelectedRows()"
 		>
@@ -22,7 +26,9 @@
 			}}</small>
 		</button>
 		<button
-			class="btn btn-warning btn-sm mr-2 d-inline-block"
+			nbButton
+			status="warning"
+			class="mr-2 d-inline-block"
 			routerLink="track"
 		>
 			<i class="ion-md-trash button-icon"></i>

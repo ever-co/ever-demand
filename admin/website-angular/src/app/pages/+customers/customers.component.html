@@ -3,10 +3,12 @@
 
 	<nb-card-header>
 		<button
-			class="btn btn-success mr-2 d-inline-block"
+			nbButton
+			status="success"
+			class="mr-2 d-inline-block"
 			(click)="showCreateUserModal()"
 		>
-			<i class="ion-md-add button-icon"></i>
+			<i class="ion-md-add button-icon mr-2"></i>
 
 			<small _ngcontent-c55="">{{
 				'CUSTOMERS_VIEW.CREATE' | translate
@@ -14,11 +16,13 @@
 		</button>
 
 		<button
-			class="btn btn-danger mr-2 d-inline-block"
+			nbButton
+			status="danger"
+			class="mr-2 d-inline-block"
 			[disabled]="!hasSelectedCustomers"
 			(click)="deleteSelectedRows()"
 		>
-			<i class="ion-md-trash button-icon"></i>
+			<i class="ion-md-trash button-icon mr-2"></i>
 
 			<small _ngcontent-c55="">{{
 				'CUSTOMERS_VIEW.DELETE' | translate
@@ -26,7 +30,9 @@
 		</button>
 
 		<button
-			class="btn btn-info mr-2 d-inline-block"
+			nbButton
+			status="info"
+			class="mr-2 d-inline-block"
 			[routerLink]="['/devices']"
 		>
 			<i class="ion-md-phone-portrait"></i>&nbsp;&nbsp;
@@ -34,12 +40,14 @@
 		</button>
 
 		<button
-			class="btn btn-danger mr-2 d-inline-block"
+			nbButton
+			status="danger"
+			class="mr-2 d-inline-block"
 			[disabled]="!isOnlyOneCustomerSelected || showBanLoading"
 			[nbSpinner]="showBanLoading"
 			(click)="banSelectedRows()"
 		>
-			<i class="ion-md-close-circle button-icon"></i>
+			<i class="ion-md-close-circle button-icon mr-2"></i>
 
 			<small _ngcontent-c55="" *ngIf="isUserBanned">{{
 				'CUSTOMERS_VIEW.UNBAN' | translate

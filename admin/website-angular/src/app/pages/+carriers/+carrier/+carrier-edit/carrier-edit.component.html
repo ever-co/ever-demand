@@ -18,15 +18,16 @@
 				<h1>{{ 'CARRIERS_VIEW.EDIT.EDIT_CARRIER' | translate }}</h1>
 			</div>
 			<button
+				nbButton
+				size="large"
+				status="success"
 				type="button"
-				class="btn btn-success btn-icon pull-right btn-with-icon no-text-transform"
+				class="btn-icon pull-right btn-with-icon no-text-transform"
 				(click)="updateCarrier()"
 				[disabled]="!isCarrierValid"
 			>
-				<i class="ion-md-checkmark"></i>
-				<small>{{
-					'CARRIERS_VIEW.CARRIER_PAGE.SAVE' | translate
-				}}</small>
+				<i class="ion-md-checkmark mr-2"></i>
+				{{ 'CARRIERS_VIEW.CARRIER_PAGE.SAVE' | translate }}
 			</button>
 		</nb-card-header>
 	</nb-card>

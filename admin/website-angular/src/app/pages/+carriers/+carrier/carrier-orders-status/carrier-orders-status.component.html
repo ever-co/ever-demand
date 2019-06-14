@@ -36,7 +36,9 @@
 					<button
 						[disabled]="!pageBtnStates.isCarrierPickupOrder"
 						type="button"
-						class="btn btn-outline-primary btn-sm btn-rectangle"
+						nbButton
+						outline
+						status="primary"
 						(click)="
 							updateCarrierOrdersStatus(
 								enumOrderCarrierStatus.CarrierPickedUpOrder
@@ -44,7 +46,10 @@
 						"
 						[nbSpinner]="loading"
 					>
-						<span class="ion-md-filing" aria-hidden="true"></span>
+						<span
+							class="ion-md-filing mr-2"
+							aria-hidden="true"
+						></span>
 						{{
 							'CARRIERS_VIEW.CARRIER_PAGE.PICKED_UP_ORDER'
 								| translate
@@ -54,11 +59,16 @@
 					<button
 						[disabled]="!pageBtnStates.isCarrierPickupOrder"
 						type="button"
-						class="btn btn-outline-danger btn-sm btn-rectangle"
+						nbButton
+						outline
+						status="danger"
 						(click)="cancelDelivery()"
 						[nbSpinner]="loading"
 					>
-						<span class="ion-md-alert" aria-hidden="true"></span>
+						<span
+							class="ion-md-alert mr-2"
+							aria-hidden="true"
+						></span>
 						{{ 'CARRIERS_VIEW.CARRIER_PAGE.CANCEL' | translate }}
 					</button>
 				</div>
