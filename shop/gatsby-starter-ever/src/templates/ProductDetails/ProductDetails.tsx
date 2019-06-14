@@ -17,3 +17,5 @@ ProductDetails.defaultProps = {
 };
 
 export default ProductDetails;
+
+export  {ProductDetails}

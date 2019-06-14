@@ -2,13 +2,14 @@ import React, { useContext, useState } from 'react';
 import Header from './Header';
 import logo from '../../assets/ever-logo.svg';
 import styles from '../../styles/styles.module.scss';
-import { Box, Card, Grid } from '@material-ui/core';
+import {Box, Button, Card, Grid} from '@material-ui/core';
 import GeoLoginForm from '../../components/GeoLoginForm';
 import Map from '../../components/Map'
 import { AppContext } from '../../Context';
 import config from '../../config'
 import { useMutation } from 'react-apollo-hooks';
 import { CreateUser } from '../../apollo/user';
+import {navigate} from "@reach/router";
 
 const defaultUser = {
 	email: "",
@@ -27,7 +28,6 @@ const defaultUser = {
 		postcode: "",
 		city: ""
 	},
-
 }
 
 const page = () => {
@@ -46,11 +46,11 @@ const page = () => {
 	};
 	const formatUser = () => {
 		let user = { ...state };
-		delete user.password;
+		user.geoLocation.loc.coordinates = context.coordinates;
 		return (user);
 	};
 	const submit = useMutation(CreateUser, {
-		variables: { user: formatUser(), password: state.password }
+		variables: { user: formatUser(), password: '' }
 	});
 	return (
 		<Box className={styles.auth}>
@@ -60,8 +60,20 @@ const page = () => {
 
 			<Grid container justify={'center'} spacing={6} alignContent={'stretch'}>
 				<Grid item xs md={6} xl={4}>
-					<Card p={2} className={styles.card}>
+					<Card className={styles.card}>
 					<GeoLoginForm state={state} handleChange={handleChange} />
+
+						<Box marginTop={4}>
+							<Button variant={'contained'} onClick={() => {
+								submit().then(
+									({data, loading, error}) => {
+										context.setUser(data.registerUser)
+										navigate('/')
+									}
+								)
+							}
+							}>Submit</Button>
+						</Box>
 					</Card>
 				</Grid>
 				<Grid  xs md={6} xl={4}>

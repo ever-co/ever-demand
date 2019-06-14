@@ -18,11 +18,11 @@ const GeoLoginForm = ({state, handleChange }) => {
 		<Select
 			value={state.geoLocation.countryId}
 			onChange={handleChange('countryId')}
-			fullWidth
+			style={{color: 'white'}}
 			inputProps={{
 			name: 'countryId',
 			id: 'countryId',
-			fullWidth: true
+			fullwidth: true,
 			}}
 		>
 			{countries.map((country, i) => <MenuItem value={i} key={i}> {country} </MenuItem>)}

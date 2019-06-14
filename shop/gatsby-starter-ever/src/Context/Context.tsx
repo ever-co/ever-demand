@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import { createContext, useState } from 'react';
 import * as auth from "../auth";
-import { navigate } from 'gatsby'
-import { ThemeProvider } from "@material-ui/styles"
-import theme from '../theme'
+import { navigate } from 'gatsby';
+import { ThemeProvider } from "@material-ui/styles";
+import theme from '../theme';
 
 const AppContext = createContext(null);
 
@@ -26,7 +26,10 @@ const Provider = ({ children, ...props }) => {
 	}
 	useEffect( () => {
 		if (typeof window !== "undefined" && !coordinates) {
-			getLocation()
+			getLocation();
+		}
+		if (!user) {
+			navigate('/login');
 		}
 	} )
 	return (
