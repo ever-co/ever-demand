@@ -19,7 +19,8 @@ import {
 	NbContextMenuModule,
 	NbProgressBarModule,
 	NbIconModule,
-	NbSelectModule
+	NbSelectModule,
+	NbRadioModule
 } from '@nebular/theme';
 
 import { NbEvaIconsModule } from '@nebular/eva-icons';
@@ -80,7 +81,8 @@ const NB_MODULES = [
 	NbProgressBarModule,
 	NbIconModule,
 	NbEvaIconsModule,
-	NbSelectModule
+	NbSelectModule,
+	NbRadioModule
 ];
 
 const COMPONENTS = [

@@ -6,7 +6,7 @@
 			class="d-inline-block mr-2"
 			(click)="addProducts.emit()"
 		>
-			<i class="ion-md-add active button-icon mr-2"></i>
+			<i class="ion-md-add active button-icon mr-1"></i>
 			{{ 'WAREHOUSE_VIEW.PRODUCTS_TAB.ADD_PRODUCTS' | translate }}
 		</button>
 		<button
@@ -16,7 +16,7 @@
 			[disabled]="!productsTable.hasSelectedProducts"
 			(click)="deleteSelectedRows()"
 		>
-			<i class="ion-md-trash button-icon mr-2"></i>
+			<i class="ion-md-trash button-icon mr-1"></i>
 			{{ 'WAREHOUSE_VIEW.PRODUCTS_TAB.DELETE' | translate }}
 		</button>
 		<small class="pull-right">{{

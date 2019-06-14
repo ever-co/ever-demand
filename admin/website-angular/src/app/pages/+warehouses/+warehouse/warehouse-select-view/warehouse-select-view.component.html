@@ -10,7 +10,7 @@
 					*ngIf="selectedWarehouse"
 					(change)="selectWarehouse($event)"
 					[items]="warehouses"
-					[(ngModel)]="selectedWarehouse.id"
+					[ngModel]="selectedWarehouse.id"
 					[clearable]="false"
 					placeholder="Select store"
 					bindLabel="id"
@@ -31,7 +31,7 @@
 						let-item="item"
 						let-index="index"
 					>
-						<h6 class="card-title">
+						<p class="card-title">
 							<img
 								*ngIf="item.logo"
 								height="40"
@@ -40,7 +40,7 @@
 								[src]="item.logo"
 							/>
 							{{ item.name }}
-						</h6>
+						</p>
 					</ng-template>
 				</ng-select>
 
@@ -78,7 +78,7 @@
 					selectedWarehouse?.contactPhone && warehouse?.contactEmail
 				"
 			>
-				<h5>{{ 'WAREHOUSE_VIEW.CONTACT_DETAILS' | translate }}</h5>
+				<h6>{{ 'WAREHOUSE_VIEW.CONTACT_DETAILS' | translate }}</h6>
 				<ul>
 					<li>
 						{{ 'WAREHOUSE_VIEW.PHONE' | translate }}:
@@ -109,9 +109,9 @@
 			<div
 				*ngIf="selectedWarehouse?.ordersPhone && warehouse?.ordersEmail"
 			>
-				<h5>
+				<h6>
 					{{ 'WAREHOUSE_VIEW.ORDERS_FORWARDING_DETAILS' | translate }}
-				</h5>
+				</h6>
 				<ul>
 					<li>
 						{{ 'WAREHOUSE_VIEW.PHONE' | translate }}:

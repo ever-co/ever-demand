@@ -16,28 +16,28 @@ export class ThemeSettingsComponent {
 
 	themes = [
 		{
-			value: 'default',
-			name: 'White'
-		},
-		{
-			value: 'everdark',
-			name: 'Dark'
-		},
-		{
 			value: 'everlight',
 			name: 'Light'
 		},
 		{
-			value: 'cosmic',
-			name: 'Cosmic'
-		},
-		{
-			value: 'corporate',
-			name: 'Corporate'
+			value: 'everdark',
+			name: 'Dark'
 		}
+		// {
+		// 	value: 'default',
+		// 	name: 'White'
+		// },
+		// {
+		// 	value: 'cosmic',
+		// 	name: 'Cosmic'
+		// },
+		// {
+		// 	value: 'corporate',
+		// 	name: 'Corporate'
+		// }
 	];
 
-	currentTheme = 'default';
+	currentTheme = 'everlight';
 
 	constructor(
 		protected stateService: StateService,

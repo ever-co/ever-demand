@@ -8,7 +8,7 @@
 			class="mr-2 d-inline-block"
 			(click)="showCreateUserModal()"
 		>
-			<i class="ion-md-add button-icon mr-2"></i>
+			<i class="ion-md-add button-icon mr-1"></i>
 
 			<small _ngcontent-c55="">{{
 				'CUSTOMERS_VIEW.CREATE' | translate
@@ -22,7 +22,7 @@
 			[disabled]="!hasSelectedCustomers"
 			(click)="deleteSelectedRows()"
 		>
-			<i class="ion-md-trash button-icon mr-2"></i>
+			<i class="ion-md-trash button-icon mr-1"></i>
 
 			<small _ngcontent-c55="">{{
 				'CUSTOMERS_VIEW.DELETE' | translate
@@ -47,7 +47,7 @@
 			[nbSpinner]="showBanLoading"
 			(click)="banSelectedRows()"
 		>
-			<i class="ion-md-close-circle button-icon mr-2"></i>
+			<i class="ion-md-close-circle button-icon mr-1"></i>
 
 			<small _ngcontent-c55="" *ngIf="isUserBanned">{{
 				'CUSTOMERS_VIEW.UNBAN' | translate
