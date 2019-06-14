@@ -53,10 +53,10 @@
     "scripts": {
         "build": "gatsby build",
         "develop": "gatsby develop",
-        "format": "prettier --write src/**/*.{js,jsx}",
+        "format": "prettier --write src/**/*.{js,jsx,tsx,ts}",
         "start": "npm run develop",
         "serve": "gatsby serve",
-        "lint": "tslint -p tslint.json --fix",
+        "lint": "tslint --project ./src  --fix",
         "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\"",
         "codegen": "graphql-codegen"
     },

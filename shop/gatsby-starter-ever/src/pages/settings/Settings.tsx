@@ -1,37 +1,50 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import * as auth from '../../auth'
-import {Box, Button, Container, MenuItem, Select} from '@material-ui/core';
-import countries from "../../assets/countries";
+import * as auth from '../../auth';
+import { Box, Button, Container, MenuItem, Select } from '@material-ui/core';
+import countries from '../../assets/countries';
 import Layout from '../../components/layout';
 
+const locales = ['en', 'fr', 'bg', 'he', 'ru'];
 
-const locales = ["en", "fr", "bg", "he", "ru"]
-
-const Settings = (props) => {
-  const [state, setState] = useState(auth.getlocale())
-return (
-  <Layout>
-	  <Container className="SettingsWrapper">
-		  <Box m={4} p={4}>
-			  <Select value={state} onChange={event => setState(event.target.value)}>
-				  {locales.map((locale, i) => <MenuItem value={locale} key={i}> {locale} </MenuItem>)}
-
-			  </Select>
-			  <br />
-			  <br />
-			  <Button variant={'contained'} color={'secondary'} onClick={auth.setlocale(state)}>Save</Button>
-		  </Box>
-	  </Container>
-  </Layout>
-)};
+const Settings = props => {
+	const [state, setState] = useState(auth.getlocale());
+	return (
+		<Layout>
+			<Container className="SettingsWrapper">
+				<Box m={4} p={4}>
+					<Select
+						value={state}
+						onChange={event => setState(event.target.value)}
+					>
+						{locales.map((locale, i) => (
+							<MenuItem value={locale} key={i}>
+								{' '}
+								{locale}{' '}
+							</MenuItem>
+						))}
+					</Select>
+					<br />
+					<br />
+					<Button
+						variant={'contained'}
+						color={'secondary'}
+						onClick={auth.setlocale(state)}
+					>
+						Save
+					</Button>
+				</Box>
+			</Container>
+		</Layout>
+	);
+};
 
 Settings.propTypes = {
-  // bla: PropTypes.string,
+	// bla: PropTypes.string,
 };
 
 Settings.defaultProps = {
-  // bla: 'test',
+	// bla: 'test',
 };
 
 export default Settings;

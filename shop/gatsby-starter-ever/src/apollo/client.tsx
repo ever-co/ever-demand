@@ -1,8 +1,12 @@
-
 import fetch from 'isomorphic-fetch';
-import { ApolloClient, HttpLink, InMemoryCache, ApolloLink } from 'apollo-boost';
+import {
+	ApolloClient,
+	HttpLink,
+	InMemoryCache,
+	ApolloLink,
+} from 'apollo-boost';
 import config from '../config';
-import { onError } from "apollo-link-error"
+import { onError } from 'apollo-link-error';
 // @ts-ignore
 // @ts-ignore
 export const client = new ApolloClient({
@@ -12,17 +16,17 @@ export const client = new ApolloClient({
 			if (graphQLErrors)
 				graphQLErrors.map(({ message, locations, path }) =>
 					console.log(
-						`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-					)
+						`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+					),
 				);
 			if (networkError) console.log(`[Network error]: ${networkError}`);
 		}),
 		new HttpLink({
-			uri: config.graphqlUri
-		})
+			uri: config.graphqlUri,
+		}),
 	]),
 	cache: new InMemoryCache(),
-	fetch
+	fetch,
 });
 
 export default client;

@@ -1,9 +1,9 @@
-import {gql} from 'apollo-boost'
+import { gql } from 'apollo-boost';
 
 export const CreateUser = gql`
-mutation makeUser($user: UserCreateInput!, $password: String!) {
-  registerUser(registerInput: { user: $user, password: $password }) {
-    id
-  }
-}
+	mutation makeUser($user: UserCreateInput!, $password: String!) {
+		registerUser(registerInput: { user: $user, password: $password }) {
+			id
+		}
+	}
 `;

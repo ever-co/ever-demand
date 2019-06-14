@@ -4,20 +4,22 @@ import Order from '../Order/Order';
 import { Container, Grid } from '@material-ui/core';
 //import { Test } from './OrdersList.styles';
 
-const OrdersList = ({orders}) => (
+const OrdersList = ({ orders }) => (
 	<Container>
-	  <Grid justify={'center'} spacing={4}>
-		  {orders.map(order => <Order order={order} />)}
-	  </Grid>
+		<Grid justify={'center'} spacing={4}>
+			{orders.map(order => (
+				<Order order={order} />
+			))}
+		</Grid>
 	</Container>
 );
 
 OrdersList.propTypes = {
-  // bla: PropTypes.string,
+	// bla: PropTypes.string,
 };
 
 OrdersList.defaultProps = {
-  // bla: 'test',
+	// bla: 'test',
 };
 
 export default OrdersList;

@@ -12,35 +12,34 @@ import './style.scss';
  * See: https://www.gatsbyjs.org/docs/static-query/
  */
 const Layout = ({ children }) => (
-
-    <StaticQuery
-        query={graphql`
-      query SiteTitleQuery {
-        site {
-          siteMetadata {
-            title
-          }
-        }
-      }
-    `}
-        render={data => (
-            <>
-              <NavBar siteTitle={data.site.siteMetadata.title} />
-              <div>
-                <main>{children}</main>
-                <footer>
-                  © {new Date().getFullYear()}, Built with
-                  {` `}
-                  <a href='https://www.ever.co'>Ever</a>
-                </footer>
-              </div>
-            </>
-        )}
-    />
+	<StaticQuery
+		query={graphql`
+			query SiteTitleQuery {
+				site {
+					siteMetadata {
+						title
+					}
+				}
+			}
+		`}
+		render={data => (
+			<>
+				<NavBar siteTitle={data.site.siteMetadata.title} />
+				<div>
+					<main>{children}</main>
+					<footer>
+						© {new Date().getFullYear()}, Built with
+						{` `}
+						<a href="https://www.ever.co">Ever</a>
+					</footer>
+				</div>
+			</>
+		)}
+	/>
 );
 
 Layout.propTypes = {
-  children: PropTypes.node.isRequired,
+	children: PropTypes.node.isRequired,
 };
 
 export default Layout;

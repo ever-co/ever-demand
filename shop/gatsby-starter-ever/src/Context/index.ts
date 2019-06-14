@@ -1,3 +1,3 @@
 import { AppContext, Provider } from './Context';
 
-export { AppContext, Provider }
+export { AppContext, Provider };
