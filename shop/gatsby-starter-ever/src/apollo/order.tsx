@@ -10,7 +10,10 @@ mutation placeOrder($createInput: OrderCreateInput!){
 export const getOrders = gql`
 query fetchOrders($id: String!){
         getOrders(userId: $id) {
-          id
+			id
+			updatedAt
+			orderNumber
+			status
           products {
             isTakeaway
             product {
@@ -25,11 +28,15 @@ query fetchOrders($id: String!){
                 locale
                 value
               }
+              title {
+                locale
+                value
+              }
             }
             price
           }
           totalPrice
         }
       }
-      
+
 `

@@ -1,8 +1,8 @@
 @import '../../styles/styles.module.scss';
 
 .card {
-    
-    background: rgba(66, 66, 66, 1);
+
+    background-color: rgba(66, 66, 66, 1) !important;
     height: 450px;
     background-repeat: no-repeat;
     position: relative;
@@ -23,15 +23,16 @@
 }
 
 .card-content {
-    
+
     position: absolute;
+	padding: 0.5em;
     bottom: 0;
     left: 0;
     background: rgba(66, 66, 66, 0.5);
     width: 100%;
     padding: 8px;
     color: white;
-    
+
 }
 
 // .btn {

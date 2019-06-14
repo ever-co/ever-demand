@@ -1,41 +1,41 @@
-const path = require("path");
+const path = require(`path`)
 
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/node-apis/
- */
-
-/*// You can delete this file if you're not using it
-exports.onCreateNode = ({ node }) => {
-  console.log(node.internal.type)
-}*/
 
 exports.createPages = ({ graphql, actions }) => {
-  // **Note:** The graphql function call returns a Promise
-  // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise for more info
-  return graphql(`
-    {
-      vendure {
-        products {
-          items {
-            id
-            slug
-          }
-        }
+	const { createPage } = actions
+	const productTemplate = path.resolve(`src/templates/ProductDetails)
+	return graphql(`
+
+    query loadPagesQuery {
+      ever {
+      	products {
+      	id
+      	}
       }
     }
-  `).then(result => {
-    result.data.vendure.products.items.forEach(product => {
-      actions.createPage({
-        path: "products/" + product.slug,
-        component: path.resolve(`./src/templates/ProductDetail.tsx`),
-        context: {
-          // Data passed to context is available
-          // in page queries as GraphQL variables.
-          id: product.id,
-        },
-      });
-    });
-  });
-};
+  `, { limit: 99999 }).then(result => {
+		if (result.errors) {
+			throw result.errors
+		}
+
+		// Create blog post pages.
+		result.data.ever.products.forEach(product => {
+			createPage({
+				// Path for this page — required
+				path: `${product.id}`,
+				component: productTemplate,
+				context: {
+					// Add optional context data to be inserted
+					// as props into the page component..
+					//
+					// The context data can also be used as
+					// arguments to the page GraphQL query.
+					//
+					// The page "path" is always available as a GraphQL
+					// argument.
+					id: product.id
+				},
+			})
+		})
+	})
+}
