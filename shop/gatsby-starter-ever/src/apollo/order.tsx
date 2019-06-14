@@ -14,6 +14,7 @@ query fetchOrders($id: String!){
 			updatedAt
 			orderNumber
 			status
+			totalPrice
           products {
             isTakeaway
             product {
