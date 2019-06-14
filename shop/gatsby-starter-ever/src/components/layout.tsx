@@ -4,6 +4,7 @@ import React from 'react';
 
 import NavBar from './NavBar';
 import './style.scss';
+import {Box} from "@material-ui/core";
 
 /**
  * Layout component that queries for data
@@ -25,14 +26,14 @@ const Layout = ({ children }) => (
 		render={data => (
 			<>
 				<NavBar siteTitle={data.site.siteMetadata.title} />
-				<div>
+				<Box mt={4}>
 					<main>{children}</main>
 					<footer>
 						© {new Date().getFullYear()}, Built with
 						{` `}
 						<a href="https://www.ever.co">Ever</a>
 					</footer>
-				</div>
+				</Box>
 			</>
 		)}
 	/>
