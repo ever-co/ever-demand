@@ -1,0 +1,28 @@
+@import '../../styles/styles.module.scss';
+
+.card {
+    
+    background: rgba(66; 66; 66);
+    height: 450px;
+    background-repeat: no-repeat;
+    position: relative;
+    padding: .2em;
+
+    img {
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
+.card-content {
+    
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: rgba(66, 66, 66, 0.5);
+    width: 100%;
+    padding: 8px;
+    color: white;
+}

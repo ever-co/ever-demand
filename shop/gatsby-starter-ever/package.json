@@ -1,0 +1,68 @@
+{
+    "name": "gatsby-starter-ever",
+    "private": true,
+    "description": "A simple starter to get up and developing quickly with Gatsby and Ever",
+    "version": "0.1.1",
+    "author": "Kyle Kitlinski <kyle@kkitlinski.com>",
+    "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^1.2.15",
+        "@fortawesome/free-solid-svg-icons": "^5.7.2",
+        "@fortawesome/react-fontawesome": "^0.1.4",
+        "@material-ui/core": "^4.1.1",
+        "@material-ui/styles": "^4.1.1",
+        "apollo-boost": "^0.3.1",
+        "apollo-client": "^2.5.1",
+        "bulma": "^0.7.4",
+        "dotenv": "^8.0.0",
+        "formik": "^1.5.1",
+        "gatsby": "^2.1.31",
+        "gatsby-image": "^2.0.33",
+        "gatsby-plugin-manifest": "^2.0.24",
+        "gatsby-plugin-offline": "^2.0.25",
+        "gatsby-plugin-react-helmet": "^3.0.9",
+        "gatsby-plugin-sharp": "^2.0.28",
+        "gatsby-plugin-typescript": "^2.0.11",
+        "gatsby-source-filesystem": "^2.0.24",
+        "gatsby-transformer-sharp": "^2.1.17",
+        "prop-types": "^15.7.2",
+        "react": "^16.8.4",
+        "react-apollo-hooks": "^0.4.3",
+        "react-dom": "^16.8.4",
+        "react-google-maps": "^9.4.5",
+        "react-helmet": "^5.2.0"
+    },
+    "devDependencies": {
+        "@graphql-codegen/add": "^1.0.4",
+        "@graphql-codegen/cli": "^1.0.4",
+        "@graphql-codegen/typescript": "^1.0.4",
+        "@graphql-codegen/typescript-operations": "^1.0.4",
+        "@types/react": "^16.8.8",
+        "gatsby-plugin-sass": "^2.0.11",
+        "gatsby-source-graphql": "^2.0.14",
+        "node-sass": "^4.11.0",
+        "prettier": "^1.16.4",
+        "tslint": "^5.14.0",
+        "typescript": "^3.3.3333"
+    },
+    "keywords": [
+        "gatsby"
+    ],
+    "license": "MIT",
+    "scripts": {
+        "build": "gatsby build",
+        "develop": "gatsby develop",
+        "format": "prettier --write src/**/*.{js,jsx}",
+        "start": "npm run develop",
+        "serve": "gatsby serve",
+        "lint": "tslint -p tslint.json --fix",
+        "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\"",
+        "codegen": "graphql-codegen"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/evereq/ever"
+    },
+    "bugs": {
+        "url": "https://github.com/evereq/ever"
+    }
+}
