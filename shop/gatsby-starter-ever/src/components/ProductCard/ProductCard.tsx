@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import { navigate } from 'gatsby';
 import styles from './ProductCard.module.scss';
+import {matchLocale} from "../../utilities/utilities";
 //import { Test } from './ProductCard.styles';
 
 const ProductCard = ({ item, addToCart }) => {
@@ -18,9 +19,9 @@ const ProductCard = ({ item, addToCart }) => {
 			<img src={product.images[0].url} />
 			<CardContent>
 				<div className={styles.cardContent}>
-					<Typography variant={'h5'}>{product.title[0].value}</Typography>
+					<Typography variant={'h5'}>{matchLocale(product.title)}</Typography>
 					<Typography variant={'body1'}>
-						{product.description[0].value}
+						{matchLocale(product.description)}
 					</Typography>
 					<CardActions>
 						<Button

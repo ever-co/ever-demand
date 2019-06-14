@@ -13,4 +13,4 @@ export function formatPrice(currency: string, value: number): string {
 }
 
 export const matchLocale = arr =>
-	arr.filter(item => item.locale === getlocale());
+	arr.filter(item => item.locale === getlocale()).value || arr[0].value;
