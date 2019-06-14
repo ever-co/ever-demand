@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './GeoLogin.module.scss'
+// import Map from '../Map'
 
-const GeoLogin = ({title, subtitle, logo}) => {
+const Header = ({title, subtitle, logo}) => {
   return (
     <div className={styles.content + styles.auth}>
     <div className={styles.formContent}>
@@ -15,12 +16,12 @@ const GeoLogin = ({title, subtitle, logo}) => {
     </div>
   )};
 
-GeoLogin.propTypes = {
+Header.propTypes = {
   // bla: PropTypes.string,
 };
 
-GeoLogin.defaultProps = {
+Header.defaultProps = {
   // bla: 'test',
 };
 
-export default GeoLogin;
+export default Header;

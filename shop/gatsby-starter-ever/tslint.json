@@ -48,7 +48,7 @@
     },
     "indent": [
       true,
-      "spaces"
+      "tabs"
     ],
     "no-console": false,
     "no-string-literal": false,

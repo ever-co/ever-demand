@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
-import React from 'react';
-import { config } from '../../config'
+import  config  from '../../config'
 
 const { defaultCoordinates } = config;
 
