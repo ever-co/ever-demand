@@ -29,7 +29,7 @@ export class CarrierResolver {
 	@Query('getCarriers')
 	async getCarriers(
 		_,
-		{ findInput, pagingOptions = {} }
+		{ carriersFindInput, pagingOptions = {} }
 	): Promise<Carrier[]> {
 		// set default paging options
 		if (!pagingOptions || (pagingOptions && !pagingOptions['sort'])) {
@@ -37,7 +37,7 @@ export class CarrierResolver {
 		}
 
 		const carriers = await this._carriersService.getCarriers(
-			findInput,
+			carriersFindInput,
 			pagingOptions
 		);
 
@@ -70,8 +70,11 @@ export class CarrierResolver {
 	 * @memberof CarrierResolver
 	 */
 	@Query('getCountOfCarriers')
-	async getCountOfCarriers(): Promise<number> {
-		return this._carriersService.Model.find({ isDeleted: { $eq: false } })
+	async getCountOfCarriers(_, { carriersFindInput }): Promise<number> {
+		return this._carriersService.Model.find({
+			...carriersFindInput,
+			isDeleted: { $eq: false }
+		})
 			.countDocuments()
 			.exec();
 	}

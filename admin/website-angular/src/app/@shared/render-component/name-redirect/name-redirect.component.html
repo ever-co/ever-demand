@@ -1,5 +1,10 @@
-<div (click)="redirect()" class="redirectBtn">
-	<h6 class="warehouse-name-smt">
-		<strong>{{ rowData.name }}</strong>
-	</h6>
+<div (click)="redirect()" class="{{ redirectPage ? 'redirectBtn' : '' }}">
+	<p class="warehouse-name-smt">
+		<strong
+			>{{ rowData.name
+			}}<span *ngIf="rowData.isBanned" class="badge badge-danger"
+				>ban</span
+			></strong
+		>
+	</p>
 </div>

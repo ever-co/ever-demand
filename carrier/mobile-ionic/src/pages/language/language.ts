@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import { TranslateService } from '@ngx-translate/core';
 import { DeviceRouter } from '@modules/client.common.angular2/routers/device-router.service';
 
@@ -22,11 +21,12 @@ export class LanguagePage {
 		return localStorage.getItem('_deviceId');
 	}
 
-	languageChange(val) {
+	languageChange() {
 		localStorage.setItem('_language', this.language);
 
 		// Example: "en-US".substr(0, 2) = "en"
 		const langAbbreviation = this.language.substr(0, 2);
+
 		this._langTranslator.use(langAbbreviation);
 
 		if (this.deviceId) {

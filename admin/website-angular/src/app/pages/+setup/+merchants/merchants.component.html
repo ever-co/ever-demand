@@ -1,0 +1,145 @@
+<toaster-container></toaster-container>
+
+<div class="setup-merchants-page">
+	<div class="row">
+		<div class="col-md-9">
+			<nb-card>
+				<nb-card-body>
+					<nb-stepper #nbStepper orientation="vertical">
+						<nb-step
+							label="{{
+								'FAKE_DATA.SETUP_MERCHANTS.STEPPER.ACCOUNT'
+									| translate
+							}}"
+						>
+							<ea-merchants-setup-account
+								#account
+								(previousStep)="nbStepper.previous()"
+								(nextStep)="nbStepper.next()"
+							></ea-merchants-setup-account>
+						</nb-step>
+						<nb-step
+							label="{{
+								'FAKE_DATA.SETUP_MERCHANTS.STEPPER.BASIC_INFO'
+									| translate
+							}}"
+						>
+							<ea-merchants-setup-basic-info
+								#basicInfo
+								(previousStep)="nbStepper.previous()"
+								(nextStep)="nbStepper.next()"
+							></ea-merchants-setup-basic-info>
+						</nb-step>
+						<nb-step
+							label="{{
+								'FAKE_DATA.SETUP_MERCHANTS.STEPPER.CONTACT_INFO'
+									| translate
+							}}"
+						>
+							<ea-merchants-setup-contact-info
+								#contactInfo
+								(previousStep)="nbStepper.previous()"
+								(nextStep)="nbStepper.next()"
+							></ea-merchants-setup-contact-info>
+						</nb-step>
+						<nb-step
+							label="{{
+								'FAKE_DATA.SETUP_MERCHANTS.STEPPER.LOCATION'
+									| translate
+							}}"
+						>
+							<ea-merchants-setup-location
+								#location
+								(previousStep)="nbStepper.previous()"
+								(nextStep)="nbStepper.next()"
+							></ea-merchants-setup-location>
+						</nb-step>
+						<nb-step
+							label="{{
+								'FAKE_DATA.SETUP_MERCHANTS.STEPPER.PAYMENTS'
+									| translate
+							}}"
+						>
+							<ea-merchants-setup-payments
+								#payments
+								[warehouseLogo]="basicInfo.basicInfoModel.logo"
+								[locationForm]="location.locationForm"
+								(previousStep)="nbStepper.previous()"
+								(nextStep)="nbStepper.next()"
+							></ea-merchants-setup-payments>
+						</nb-step>
+						<nb-step
+							label="{{
+								'FAKE_DATA.SETUP_MERCHANTS.STEPPER.MANUFACTURING'
+									| translate
+							}}"
+						>
+							<ea-merchants-setup-manufacturing
+								#manufacturing
+								(previousStep)="nbStepper.previous()"
+								(nextStep)="nbStepper.next()"
+							></ea-merchants-setup-manufacturing>
+						</nb-step>
+						<nb-step
+							label="{{
+								'FAKE_DATA.SETUP_MERCHANTS.STEPPER.DELIVERY_AND_TAKEAWAY_SETTINGS'
+									| translate
+							}}"
+						>
+							<ea-merchants-setup-delivery-takeaway
+								[locationForm]="location.locationForm"
+								#deliveryAndTakeaway
+								(previousStep)="nbStepper.previous()"
+								(nextStep)="nbStepper.next()"
+							></ea-merchants-setup-delivery-takeaway>
+						</nb-step>
+						<nb-step
+							label="{{
+								'FAKE_DATA.SETUP_MERCHANTS.STEPPER.ORDERS_SETTINGS'
+									| translate
+							}}"
+						>
+							<ea-merchants-setup-orders-settings
+								#ordersSettings
+								(previousStep)="nbStepper.previous()"
+								(nextStep)="createMerchant()"
+								[canCreateMerchant]="canCreateMerchant"
+							></ea-merchants-setup-orders-settings>
+						</nb-step>
+						<nb-step
+							label="{{
+								'FAKE_DATA.SETUP_MERCHANTS.STEPPER.PRODUCT_CATEGORIES'
+									| translate
+							}}"
+						>
+							<ea-merchants-setup-product-categories
+								#productCategories
+								(previousStep)="nbStepper.previous()"
+								(nextStep)="nbStepper.next()"
+							></ea-merchants-setup-product-categories>
+						</nb-step>
+						<nb-step
+							label="{{
+								'FAKE_DATA.SETUP_MERCHANTS.STEPPER.PRODUCTS'
+									| translate
+							}}"
+						>
+							<ea-merchants-setup-products
+								[storeId]="currentStore?.id"
+								#products
+								(previousStep)="nbStepper.previous()"
+								(nextStep)="nbStepper.next()"
+							></ea-merchants-setup-products>
+						</nb-step>
+					</nb-stepper>
+				</nb-card-body>
+			</nb-card>
+		</div>
+
+		<div class="col-md-3">
+			<ea-merchants-setup-instructions
+				[stepper]="nbStepper"
+			></ea-merchants-setup-instructions>
+		</div>
+	</div>
+</div>

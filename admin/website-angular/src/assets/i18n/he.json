@@ -206,7 +206,139 @@
 		"CONFIRM_ORDER": "אשר הזמנה",
 		"CREATE_ORDER": "צור הזמנה",
 		"CONFIMR_1st_ORDER": "אשר הזמנה ראשונה",
-		"CONFIMR_2nd_ORDER": "אשר את ההזמנה השנייה"
+		"CONFIMR_2nd_ORDER": "אשר את ההזמנה השנייה",
+		"SETUP_MERCHANTS": {
+			"SETUP_MERCHANTS": "הגדר סוחרים",
+			"PREV": "PREV",
+			"NEXT": "הבא",
+			"ADD": "הוסף",
+			"BACK": "חזור",
+			"SAVE": "להציל",
+			"SELECT": "בחר",
+			"CREATE": "צור",
+			"HOW_TO_SET_UP": {
+				"HOW_TO_SET_UP": "איך להציב"
+			},
+			"STEPPER": {
+				"ACCOUNT": "חשבון",
+				"BASIC_INFO": "מידע בסיסי",
+				"CONTACT_INFO": "פרטים ליצירת קשר",
+				"LOCATION": "מקום",
+				"PAYMENTS": "תשלומים",
+				"MANUFACTURING": "ייצור",
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "הגדרות משלוח & Takeaway",
+				"ORDERS_SETTINGS": "הגדרות הזמנות",
+				"PRODUCT_CATEGORIES": "קטגוריות מוצרים",
+				"PRODUCTS": "מוצרים"
+			},
+			"ACCOUNT": {
+				"ACCOUNT": "חשבון",
+				"EMAIL_ADDRESS": "כתובת דוא'ל",
+				"EMAIL": "דוא'ל",
+				"PASSWORD": "סיסמה",
+				"REPEAT_PASSWORD": "חזור על הסיסמה",
+				"EMAIL_IS_REQUIRED": "נדרש דוא'ל",
+				"INVALID_EMAIL_FORMAT": "פורמט דוא'ל לא חוקי",
+				"USERNAME": "שם משתמש",
+				"USERNAME_IS_REQUIRED": "נדרש שם משתמש",
+				"USERNAME_MUST_BE_AT_LEAST_3_CHARACTERS": "שם המשתמש חייב להיות לפחות 3 תווים",
+				"PASSWORD_IS_REQUIRED": "דרושה סיסמא",
+				"PASSWORD_MUST_BE_AT_LEAST_4_CHARACTERS": "הסיסמה צריכה להיות לפחות 4 תווים",
+				"REPEAT_PASSWORD_IS_REQUIRED": "נדרשת סיסמה חוזרת",
+				"PASSWORDS_DO_NOT_MATCH": "סיסמאות לא תואמות"
+			},
+			"BASIC_INFO": {
+				"BASIC_INFO": "מידע בסיסי",
+				"NAME": "שם",
+				"NAME_IS_REQUIRED": "נדרש שם",
+				"NAME_MUST_BE_AT_LEAST_4_CHARACTERS": "השם חייב להיות לפחות 4 תווים",
+				"PHOTO": "תמונה",
+				"ENTER_A_VALID_LOGO_URL_OR_BROWSE_FROM_A_DEVICE": "הזן כתובת אתר חוקית של לוגו או דפדף ממכשיר",
+				"REMOVE": "הסר",
+				"PHOTO_OPTIONAL": "תמונה (אופציונלי)",
+				"BARCODE_DATA": "נתוני ברקוד",
+				"BARCODE_DATA_IS_REQUIRED": "נתוני ברקוד נדרשים"
+			},
+			"CONTACT_INFO": {
+				"CONTACT_INFO": "פרטים ליצירת קשר",
+				"CONTACT_PHONE": "צור קשר עם הטלפון",
+				"INVALID_PHONE_NUMBER_FORMAT": "פורמט מספר טלפון לא חוקי",
+				"ORDER_FORWARDING_EMAIL": "סדר העברת דואר אלקטרוני",
+				"ORDER_FORWARDING_PHONE": "הזמנת טלפון העברה",
+				"ORDERS_EMAIL": "דוא'ל דוא'ל",
+				"ORDERS_EMAIL_IS_REQUIRED": "יש צורך בהודעות דוא'ל",
+				"INVALID_EMAIL_FORMAT": "פורמט דוא'ל לא חוקי",
+				"ORDERS_PHONE": "טלפון הטלפונים",
+				"ORDERS_PHONE_IS_REQUIRED": "טלפון הטלפון נדרש"
+			},
+			"LOCATION": {
+				"LOCATION": "מקום"
+			},
+			"PAYMENTS": {
+				"PAYMENTS": "תשלומים",
+				"ALLOW_ONLINE_PAYMENT": "האם לאפשר תשלומים מקוונים?",
+				"STRIPE": {
+					"PAY_BUTTON_TEXT": "טקסט של לחצן 'תשלום'",
+					"CURRENCY": "מטבע",
+					"PAY_BUTTON_TEXT_IS_REQUIRED": "יש צורך בטקסט של לחצן שלם",
+					"CHOOSE_CURRENCY_CODE": "בחר קוד מטבע",
+					"CURRENCY_TEXT_IS_REQUIRED": "טקסט מטבע נדרש",
+					"COMPANY_BRAND_LOGO": "לוגו מותג החברה",
+					"COMPANY_BRAND_LOGO_IS_REQUIRED": "הלוגו של מותג החברה נדרש",
+					"INVALID_LOGO_URL": "כתובת אתר של לוגו לא חוקית",
+					"INVALID_LOGO": "לוגו לא חוקי",
+					"PUBLISHABLE_KEY": "מפתח ניתן לפרסום",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "נדרש מפתח לפרסום",
+					"ALLOW_REMEMBER_ME": "אתה זוכר אותי?",
+					"REMOVE": "הסר"
+				},
+				"PAYPAL": {
+					"MODE": "מצב",
+					"CHOOSE_PAYPAL_MODE": "בחר במצב PayPal",
+					"TYPE": "הקלד",
+					"CURRENCY": "מטבע",
+					"CHOOSE_CURRENCY_CODE": "בחר קוד מטבע",
+					"CURRENCY_TEXT_IS_REQUIRED": "טקסט מטבע נדרש",
+					"PUBLISHABLE_KEY": "מפתח ניתן לפרסום",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "נדרש מפתח לפרסום",
+					"SECRET_KEY": "מפתח סודי",
+					"SECRET_KEY_IS_REQUIRED": "נדרש מפתח סודי",
+					"PAYMENT_DESCRIPTION": "תיאור התשלום",
+					"PAYMENT_DESCRIPTION_IS_REQUIRED": "תיאור התשלום נדרש"
+				}
+			},
+			"MANUFACTURING": {
+				"MANUFACTURING": "ייצור",
+				"PRODUCTS_MANUFACTURING": "ייצור מוצרים"
+			},
+			"DELIVERY_AND_TAKEAWAY_SETTINGS": {
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "הגדרות משלוח & Takeaway",
+				"SELECT_FROM_SHARED_CARRIERS": "בחר מתוך ספקים משותפים",
+				"ADD_YOUR_CARRIER": "הוסף את הספק שלך",
+				"EDIT_CARRIER": "ערוך ספק",
+				"CARRIER_REQUIRED": "נדרש נושא",
+				"PRODUCTS_DELIVERY_BY_DEFAULT": "משלוח מוצרים (כברירת מחדל)",
+				"PRODUCTS_TAKEAWAY_BY_DEFAULT": "מוצרים Takeaway (כברירת מחדל)",
+				"USE_SELECTED_SHARED_CARRIERS": "השתמש במפעילים משותפים נבחרים",
+				"ADD_YOUR_CARRIERS": "הוסף את הספקים שלך"
+			},
+			"ORDERS_SETTINGS": {
+				"ORDERS_SETTINGS": "הגדרות הזמנות",
+				"ORDER_BARCODE_QR_CODE_TYPES": "ציין את סוג קוד הברקוד / qr"
+			},
+			"PRODUCT_CATEGORIES": {
+				"PRODUCT_CATEGORIES": "קטגוריות מוצרים",
+				"ADD_OWN_PRODUCT_CATEGORY": "הוסף את הקטגוריה של המוצר עצמו"
+			},
+			"PRODUCTS": {
+				"PRODUCTS": "מוצרים",
+				"SELECT_FROM_PRODUCTS_CATALOG": "בחר מתוך קטלוג מוצרים",
+				"CREATE_PRODUCT": "צור מוצר",
+				"EDIT_PRODUCT": "ערוך מוצר",
+				"ADD_PRODUCT": "הוסף מוצר",
+				"CREATE_NEW_PRODUCT": "צור מוצר חדש"
+			}
+		}
 	},
 	"WAREHOUSE_MANAGE": {
 		"TITLE": "ניהול מחסן",
@@ -333,6 +465,10 @@
 				"BASIC_INFO": "מידע בסיסי",
 				"CONTACT_INFO": "פרטים ליצירת קשר",
 				"LOCATION": "מקום"
+			},
+			"CONTACT_INFO_TAB": {
+				"ORDER_FORWARDING_EMAIL": "סדר העברת דואר אלקטרוני",
+				"ORDER_FORWARDING_PHONE": "הזמנת טלפון העברה"
 			}
 		},
 		"NEW_PRODUCT": {
@@ -676,6 +812,7 @@
 		"CREATE_BUTTON": "צור",
 		"ACTIVE_AND_AVAILABLE_ORDERS": "הזמנות זמינות וזמינות",
 		"ORDERS_HISTORY": "היסטוריה",
+		"TRACK": "לעקוב",
 		"SMART_TABLE_COLUMNS": {
 			"IMAGE": "תמונה",
 			"NAME": "שם",
@@ -701,6 +838,7 @@
 			"CLIENT_REFUSE_ORDER": "הזמנת לקוח",
 			"AVAIBLE_ORDER_TO_PICK_UP": "הזמנות זמינות להרים (כל מוביל יכול לאסוף הזמנות מרובות)",
 			"ACTIVE": "פָּעִיל",
+			"CARRIER_CAN_BE_SHARED": "ניתן לשתף את המוביל?",
 			"NOT_ACTIVE": "לא פעיל",
 			"WORKING": "עובד",
 			"NOT_WORKING": "לא עובד",
@@ -739,6 +877,18 @@
 			"CONTACT_PHONE": "צור קשר עם הטלפון",
 			"FIRST_NAME": "שם פרטי",
 			"LAST_NAME": "שם משפחה"
+		},
+		"CREATE": {
+			"BASIC_INFO": "מידע בסיסי",
+			"LOCATION": "מקום"
+		},
+		"TRACK_PAGE": {
+			"TRACK_ALL_WORKING_CARRIERS": "עקוב אחר כל ספקי השירות",
+			"FILTER_CARRIERS": "מסנני מסננים",
+			"PHONE": "מכשיר טלפון",
+			"EMAIL": "דוא'ל",
+			"ADDRESS": "כתובת",
+			"DELIVERY_COUNT": "ספירת משלוח"
 		}
 	},
 	"PRODUCT_TYPE_VIEW": {

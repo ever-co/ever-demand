@@ -3,11 +3,11 @@
 // framework component themes (styles tied to theme variables)
 @import '~@nebular/theme/styles/globals';
 @import '~@nebular/auth/styles/all';
+
 @import '~@nebular/bootstrap/styles/globals';
 //angular2-toaster
 @import 'node_modules/angular2-toaster/toaster';
-// global app font size
-@import './font-size';
+
 // custom global ng-bootstrap modal
 @import './ng-bootstrap.modal';
 // loading progress bar theme
@@ -77,6 +77,10 @@
 	padding: 0 !important;
 }
 
+.category-table td.ng2-smart-actions.ng-star-inserted {
+	padding: 0 !important;
+}
+
 ea-warehouse-product-create {
 	max-height: 800px;
 	// overflow: scroll;
@@ -113,7 +117,7 @@ nb-card.no-margin {
 	align-items: center !important;
 }
 
-.button-icon {
+.button-icon mr-1 {
 	margin-right: 3px;
 }
 
@@ -182,4 +186,85 @@ ea-product-create .card-footer {
 
 .ng-select .ng-select-container .ng-value-container .ng-input > input {
 	height: auto !important;
+}
+
+.setup-merchants-page {
+	nb-stepper {
+		.step-content {
+			width: 100%;
+			text-align: center;
+
+			button {
+				margin: 8px;
+				border: 0;
+			}
+		}
+	}
+}
+
+nb-card.no-box-shadow {
+	box-shadow: none;
+	margin-bottom: 0;
+}
+
+.preview-img-container {
+	.preview-img {
+		padding-right: 16px;
+	}
+
+	.img-rounded {
+		margin-top: 3px;
+		max-height: 70px !important;
+	}
+
+	.remove-icon {
+		cursor: pointer;
+
+		span {
+			padding-right: 7px;
+			position: absolute;
+			font-size: 1.1em;
+		}
+	}
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: Exo !important;
+	font-weight: 500 !important;
+}
+
+.ng2-smart-action.ng-star-inserted i {
+	font-size: 1.5rem;
+}
+
+span.space {
+	margin-right: 5px;
+}
+
+div.redirectBtn {
+	border: 2px solid #dadfe6;
+	color: #2a2a2a;
+	background-color: transparent;
+	padding: 0.525rem 0.6rem 0.525rem 0.6rem;
+	border-radius: 0.375rem;
+	position: relative;
+	cursor: pointer;
+
+	strong {
+		font-weight: 500;
+	}
+}
+
+div.redirectBtn:hover {
+	background: #dadfe6;
+}
+
+button,
+.btn {
+	font-weight: 500 !important;
 }

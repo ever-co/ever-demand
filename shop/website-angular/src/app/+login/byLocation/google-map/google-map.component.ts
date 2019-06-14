@@ -19,7 +19,7 @@ import { takeUntil } from 'rxjs/operators';
 	`
 })
 export class GoogleMapComponent implements OnInit, OnDestroy {
-	@ViewChild('gmap')
+	@ViewChild('gmap', { static: true })
 	public mapElement: any;
 
 	@Input()

@@ -20,12 +20,16 @@ declare var google: any;
 	templateUrl: 'delivery.html'
 })
 export class DeliveryPage implements AfterViewInit {
-	@ViewChild('map')
+	@ViewChild('map', { static: false })
 	carrierMap: MapComponent;
 
 	selectedOrder: IOrder;
 	carrierUserDistance: string;
 	disabledButtons: boolean = true;
+
+	get fullAddress() {
+		return this.selectedOrder.user.fullAddress;
+	}
 
 	constructor(
 		private orderRouter: OrderRouter,
@@ -104,16 +108,17 @@ export class DeliveryPage implements AfterViewInit {
 			}
 		} as IGeoLocation;
 
-		this.carrierUserDistance = Utils.getDistance(
-			order.warehouse['geoLocation'],
-			dbGeoInput as GeoLocation
-		).toFixed(2);
-
 		const origin = new google.maps.LatLng(
 			position.coords.latitude,
 			position.coords.longitude
 		);
 		const userGeo = order.user['geoLocation'];
+
+		this.carrierUserDistance = Utils.getDistance(
+			userGeo,
+			dbGeoInput as GeoLocation
+		).toFixed(2);
+
 		const destination = new google.maps.LatLng(
 			userGeo.loc.coordinates[1],
 			userGeo.loc.coordinates[0]

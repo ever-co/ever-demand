@@ -22,7 +22,7 @@ declare var google: any;
 	templateUrl: 'drive-to-warehouse.html'
 })
 export class DriveToWarehousePage {
-	@ViewChild('map')
+	@ViewChild('map', { static: false })
 	carrierMap: MapComponent;
 
 	selectedOrder: IOrder;
@@ -79,10 +79,6 @@ export class DriveToWarehousePage {
 							this.workTaken =
 								order.carrierStatus !==
 								OrderCarrierStatus.NoCarrier;
-							this.carrierUserDistance = Utils.getDistance(
-								order.user.geoLocation,
-								dbGeoInput as GeoLocation
-							).toFixed(2);
 
 							const origin = new google.maps.LatLng(
 								position.coords.latitude,
@@ -90,6 +86,12 @@ export class DriveToWarehousePage {
 							);
 
 							const merchantGeo = order.warehouse['geoLocation'];
+
+							this.carrierUserDistance = Utils.getDistance(
+								merchantGeo,
+								dbGeoInput as GeoLocation
+							).toFixed(2);
+
 							const destination = new google.maps.LatLng(
 								merchantGeo.loc.coordinates[1],
 								merchantGeo.loc.coordinates[0]

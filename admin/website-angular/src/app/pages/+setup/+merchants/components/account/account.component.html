@@ -1,0 +1,221 @@
+<nb-card class="setup-merchant-account">
+	<nb-card-header>
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.ACCOUNT.ACCOUNT' | translate }}
+	</nb-card-header>
+	<nb-card-body>
+		<form class="row m-0" #accountForm="ngForm">
+			<div class="form-group col-md-6">
+				<label for="email">
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.ACCOUNT.EMAIL_ADDRESS'
+							| translate
+					}}
+				</label>
+				<input
+					nbInput
+					type="email"
+					class="form-control"
+					id="email"
+					name="email-input"
+					placeholder="{{
+						'FAKE_DATA.SETUP_MERCHANTS.ACCOUNT.EMAIL' | translate
+					}}"
+					[(ngModel)]="accountModel.email"
+					(change)="emailChange()"
+					#email="ngModel"
+					[ngClass]="{
+						'input-danger':
+							email.invalid && (email.dirty || email.touched),
+						'input-success':
+							email.valid && (email.dirty || email.touched)
+					}"
+					required
+					email
+				/>
+				<small
+					class="text-danger"
+					*ngIf="email.invalid && (email.dirty || email.touched)"
+				>
+					<span *ngIf="email.errors.required">
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.ACCOUNT.EMAIL_IS_REQUIRED'
+								| translate
+						}}
+					</span>
+					<span *ngIf="email.errors.email">
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.ACCOUNT.INVALID_EMAIL_FORMAT'
+								| translate
+						}}
+					</span>
+				</small>
+			</div>
+			<div class="form-group col-md-6">
+				<label for="username">
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.ACCOUNT.USERNAME' | translate
+					}}
+				</label>
+				<input
+					nbInput
+					type="text"
+					class="form-control"
+					id="username"
+					name="username-input"
+					placeholder="{{
+						'FAKE_DATA.SETUP_MERCHANTS.ACCOUNT.USERNAME' | translate
+					}}"
+					[(ngModel)]="accountModel.username"
+					#username="ngModel"
+					[ngClass]="{
+						'input-danger':
+							username.invalid &&
+							(username.dirty ||
+								username.touched ||
+								accountModel.username !== ''),
+						'input-success':
+							username.valid &&
+							(username.dirty ||
+								username.touched ||
+								accountModel.username !== '')
+					}"
+					required
+					minlength="3"
+				/>
+				<small
+					class="text-danger"
+					*ngIf="
+						username.invalid && (username.dirty || username.touched)
+					"
+				>
+					<span *ngIf="username.errors.required">
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.ACCOUNT.USERNAME_IS_REQUIRED'
+								| translate
+						}}
+					</span>
+					<span *ngIf="username.errors.minlength">
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.ACCOUNT.USERNAME_MUST_BE_AT_LEAST_3_CHARACTERS'
+								| translate
+						}}
+					</span>
+				</small>
+			</div>
+			<div class="form-group col-md-6">
+				<label for="pass">
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.ACCOUNT.PASSWORD' | translate
+					}}
+				</label>
+				<input
+					nbInput
+					type="password"
+					class="form-control"
+					id="pass"
+					name="pass-input"
+					[(ngModel)]="accountModel.password"
+					#password="ngModel"
+					placeholder="{{
+						'FAKE_DATA.SETUP_MERCHANTS.ACCOUNT.PASSWORD' | translate
+					}}"
+					[ngClass]="{
+						'input-danger':
+							password.invalid &&
+							(password.dirty || password.touched),
+						'input-success':
+							password.valid &&
+							(password.dirty || password.touched)
+					}"
+					minlength="4"
+					required
+				/>
+				<small
+					class="text-danger"
+					*ngIf="
+						password.invalid && (password.dirty || password.touched)
+					"
+				>
+					<span *ngIf="password.errors.required">
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.ACCOUNT.PASSWORD_IS_REQUIRED'
+								| translate
+						}}
+					</span>
+					<span *ngIf="password.errors.minlength">
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.ACCOUNT.PASSWORD_MUST_BE_AT_LEAST_4_CHARACTERS'
+								| translate
+						}}
+					</span>
+				</small>
+			</div>
+			<div class="form-group col-md-6">
+				<label for="r-pass">
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.ACCOUNT.REPEAT_PASSWORD'
+							| translate
+					}}
+				</label>
+				<input
+					nbInput
+					type="password"
+					class="form-control"
+					id="rPass"
+					name="r-pass-input"
+					[(ngModel)]="accountModel.repeatPassword"
+					#rPassword="ngModel"
+					placeholder="{{
+						'FAKE_DATA.SETUP_MERCHANTS.ACCOUNT.REPEAT_PASSWORD'
+							| translate
+					}}"
+					[ngClass]="{
+						'input-danger':
+							(rPassword.invalid ||
+								rPassword.value !== password.value ||
+								password.invalid) &&
+							(rPassword.dirty || rPassword.touched),
+						'input-success':
+							rPassword.value === password.value &&
+							password.valid &&
+							(rPassword.dirty || rPassword.touched)
+					}"
+					required
+				/>
+				<small
+					class="text-danger"
+					*ngIf="
+						(rPassword.invalid ||
+							rPassword.value !== password.value) &&
+						(rPassword.dirty || rPassword.touched)
+					"
+				>
+					<span *ngIf="rPassword.errors?.required">
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.ACCOUNT.REPEAT_PASSWORD_IS_REQUIRED'
+								| translate
+						}}
+					</span>
+					<span
+						*ngIf="
+							!rPassword.errors?.required &&
+							rPassword.value !== password.value
+						"
+					>
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.ACCOUNT.PASSWORDS_DO_NOT_MATCH'
+								| translate
+						}}
+					</span>
+				</small>
+			</div>
+		</form>
+	</nb-card-body>
+</nb-card>
+
+<button nbButton disabled (click)="previousStep.emit()">
+	{{ 'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate }}
+</button>
+<button nbButton (click)="nextStep.emit()" [disabled]="!formValid">
+	{{ 'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate }}
+</button>

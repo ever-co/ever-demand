@@ -54,7 +54,7 @@ function warehouseFixture([lng, lat]: [
 			contactPhone: faker.phone.phoneNumber(),
 			ordersEmail: null,
 			ordersPhone: null,
-			forwardOrdersUsing: faker.random.number(1) as ForwardOrdersMethod,
+			forwardOrdersUsing: [ForwardOrdersMethod.Unselected],
 			isManufacturing: true,
 			isCarrierRequired: true,
 			usedCarriersIds: [],
@@ -75,10 +75,7 @@ describe('GeoLocationWarehouses', () => {
 			reconnectInterval: 1000
 		};
 
-		await mongoose.connect(
-			mongoUrl,
-			options
-		);
+		await mongoose.connect(mongoUrl, options);
 		console.log(`MongoDB successfully connected to ${mongoUrl}`);
 	});
 

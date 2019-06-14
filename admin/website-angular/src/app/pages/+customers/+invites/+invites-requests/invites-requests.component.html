@@ -1,21 +1,25 @@
 <nb-card class="no-margin">
 	<nb-card-header>
 		<button
-			class="btn btn-icon btn-danger btn-sm mr-2 d-inline-block"
+			nbButton
+			status="danger"
+			class="btn-sm mr-2 d-inline-block"
 			[disabled]="!hasSelectedInvitesRequests"
 			(click)="deleteSelectedRows()"
 		>
-			<i class="ion-md-trash button-icon"></i>
+			<i class="ion-md-trash button-icon mr-1"></i>
 			<small>{{
 				'CUSTOMERS_VIEW.INVITES_VIEW.DELETE' | translate
 			}}</small>
 		</button>
 		<button
-			class="btn btn-info btn-sm mr-2 d-inline-block"
+			nbButton
+			status="info"
+			class="mr-2 d-inline-block"
 			[disabled]="!hasSelectedInvitesRequestsForInvite"
 			(click)="inviteSelectedRows()"
 		>
-			<i class="fa fa-envelope-open-o button-icon"></i>
+			<i class="fa fa-envelope-open-o button-icon mr-1"></i>
 			<small>{{
 				'CUSTOMERS_VIEW.INVITES_VIEW.INVITE' | translate
 			}}</small>

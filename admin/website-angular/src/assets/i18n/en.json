@@ -206,7 +206,139 @@
 		"CONFIRM_ORDER": "CONFIRM ORDER",
 		"CREATE_ORDER": "CREATE ORDER",
 		"CONFIMR_1st_ORDER": "Confirm 1st order",
-		"CONFIMR_2nd_ORDER": "Confirm 2nd order"
+		"CONFIMR_2nd_ORDER": "Confirm 2nd order",
+		"SETUP_MERCHANTS": {
+			"SETUP_MERCHANTS": "Setup merchants",
+			"PREV": "PREV",
+			"NEXT": "NEXT",
+			"ADD": "Add",
+			"BACK": "Back",
+			"SAVE": "Save",
+			"SELECT": "Select",
+			"CREATE": "Create",
+			"HOW_TO_SET_UP": {
+				"HOW_TO_SET_UP": "How to setup"
+			},
+			"STEPPER": {
+				"ACCOUNT": "Account",
+				"BASIC_INFO": "Basic info",
+				"CONTACT_INFO": "Contact info",
+				"LOCATION": "Location",
+				"PAYMENTS": "Payments",
+				"MANUFACTURING": "Manufacturing",
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "Delivery & Takeaway Settings",
+				"ORDERS_SETTINGS": "Orders Settings",
+				"PRODUCT_CATEGORIES": "Product categories",
+				"PRODUCTS": "Products"
+			},
+			"ACCOUNT": {
+				"ACCOUNT": "Account",
+				"EMAIL_ADDRESS": "Email address",
+				"EMAIL": "Email",
+				"PASSWORD": "Password",
+				"REPEAT_PASSWORD": "Repeat password",
+				"EMAIL_IS_REQUIRED": "Email is required",
+				"INVALID_EMAIL_FORMAT": "Invalid email format",
+				"USERNAME": "Username",
+				"USERNAME_IS_REQUIRED": "Username is required",
+				"USERNAME_MUST_BE_AT_LEAST_3_CHARACTERS": "Username must be at least 3 characters",
+				"PASSWORD_IS_REQUIRED": "Password is required",
+				"PASSWORD_MUST_BE_AT_LEAST_4_CHARACTERS": "Password must be at least 4 characters",
+				"REPEAT_PASSWORD_IS_REQUIRED": "Repeat password is required",
+				"PASSWORDS_DO_NOT_MATCH": "Passwords do not match"
+			},
+			"BASIC_INFO": {
+				"BASIC_INFO": "Basic info",
+				"NAME": "Name",
+				"NAME_IS_REQUIRED": "Name is required",
+				"NAME_MUST_BE_AT_LEAST_4_CHARACTERS": "Name must be at least 4 characters",
+				"PHOTO": "Photo",
+				"ENTER_A_VALID_LOGO_URL_OR_BROWSE_FROM_A_DEVICE": "Enter a valid logo URL or browse from a device",
+				"REMOVE": "Remove",
+				"PHOTO_OPTIONAL": "Photo (optional)",
+				"BARCODE_DATA": "Barcode Data",
+				"BARCODE_DATA_IS_REQUIRED": "Barcode Data is required"
+			},
+			"CONTACT_INFO": {
+				"CONTACT_INFO": "Contact info",
+				"CONTACT_PHONE": "Contact Phone",
+				"INVALID_PHONE_NUMBER_FORMAT": "Invalid phone number format",
+				"ORDER_FORWARDING_EMAIL": "Order Forwarding Email",
+				"ORDER_FORWARDING_PHONE": "Order Forwarding Phone",
+				"ORDERS_EMAIL": "Orders Email",
+				"ORDERS_EMAIL_IS_REQUIRED": "Orders email is required",
+				"INVALID_EMAIL_FORMAT": "Invalid email format",
+				"ORDERS_PHONE": "Orders Phone",
+				"ORDERS_PHONE_IS_REQUIRED": "Orders phone is required"
+			},
+			"LOCATION": {
+				"LOCATION": "Location"
+			},
+			"PAYMENTS": {
+				"PAYMENTS": "Payments",
+				"ALLOW_ONLINE_PAYMENT": "Allow online payments?",
+				"STRIPE": {
+					"PAY_BUTTON_TEXT": "Pay Button text",
+					"CURRENCY": "Currency",
+					"PAY_BUTTON_TEXT_IS_REQUIRED": "Pay Button text is required",
+					"CHOOSE_CURRENCY_CODE": "Choose currency code",
+					"CURRENCY_TEXT_IS_REQUIRED": "Currency text is required",
+					"COMPANY_BRAND_LOGO": "Company brand logo",
+					"COMPANY_BRAND_LOGO_IS_REQUIRED": "Company brand logo is required",
+					"INVALID_LOGO_URL": "Invalid logo url",
+					"INVALID_LOGO": "Invalid logo",
+					"PUBLISHABLE_KEY": "Publishable key",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "Publishable key is required",
+					"ALLOW_REMEMBER_ME": "Allow remember me?",
+					"REMOVE": "Remove"
+				},
+				"PAYPAL": {
+					"MODE": "Mode",
+					"CHOOSE_PAYPAL_MODE": "Choose PayPal mode",
+					"TYPE": "type",
+					"CURRENCY": "Currency",
+					"CHOOSE_CURRENCY_CODE": "Choose currency code",
+					"CURRENCY_TEXT_IS_REQUIRED": "Currency text is required",
+					"PUBLISHABLE_KEY": "Publishable key",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "Publishable key is required",
+					"SECRET_KEY": "Secret key",
+					"SECRET_KEY_IS_REQUIRED": "Secret key is required",
+					"PAYMENT_DESCRIPTION": "Payment description",
+					"PAYMENT_DESCRIPTION_IS_REQUIRED": "Payment description is required"
+				}
+			},
+			"MANUFACTURING": {
+				"MANUFACTURING": "Manufacturing",
+				"PRODUCTS_MANUFACTURING": "Products Manufacturing"
+			},
+			"DELIVERY_AND_TAKEAWAY_SETTINGS": {
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "Delivery & Takeaway Settings",
+				"SELECT_FROM_SHARED_CARRIERS": "Select from shared carriers",
+				"ADD_YOUR_CARRIER": "Add your carrier",
+				"EDIT_CARRIER": "Edit carrier",
+				"CARRIER_REQUIRED": "Carrier required",
+				"PRODUCTS_DELIVERY_BY_DEFAULT": "Products Delivery (by default)",
+				"PRODUCTS_TAKEAWAY_BY_DEFAULT": "Products Takeaway (by default)",
+				"USE_SELECTED_SHARED_CARRIERS": "Use selected shared carriers",
+				"ADD_YOUR_CARRIERS": "Add your carriers"
+			},
+			"ORDERS_SETTINGS": {
+				"ORDERS_SETTINGS": "Orders Settings",
+				"ORDER_BARCODE_QR_CODE_TYPES": "Order Barcode/QR code types"
+			},
+			"PRODUCT_CATEGORIES": {
+				"PRODUCT_CATEGORIES": "Product categories",
+				"ADD_OWN_PRODUCT_CATEGORY": "Add own product category"
+			},
+			"PRODUCTS": {
+				"PRODUCTS": "Products",
+				"SELECT_FROM_PRODUCTS_CATALOG": "Select from products catalog",
+				"CREATE_PRODUCT": "Create product",
+				"EDIT_PRODUCT": "Edit product",
+				"ADD_PRODUCT": "Add product",
+				"CREATE_NEW_PRODUCT": "Create new product"
+			}
+		}
 	},
 	"WAREHOUSE_MANAGE": {
 		"TITLE": "Manage Warehouse",
@@ -331,6 +463,10 @@
 				"BASIC_INFO": "Basic Info",
 				"CONTACT_INFO": "Contact Info",
 				"LOCATION": "Location"
+			},
+			"CONTACT_INFO_TAB": {
+				"ORDER_FORWARDING_EMAIL": "Order Forwarding Email",
+				"ORDER_FORWARDING_PHONE": "Order Forwarding Phone"
 			}
 		},
 		"NEW_PRODUCT": {
@@ -570,6 +706,8 @@
 		"CREATE_CUSTOMER": "Create",
 		"DELETE": "DELETE",
 		"CREATE": "CREATE",
+		"BAN": "BAN",
+		"UNBAN": "UNBAN",
 		"MANAGE_CUSTOMER": "Manage customer",
 		"CUSTOMER": "Customer",
 		"CUSTOMERS_DEVICES": "Devices",
@@ -676,6 +814,7 @@
 		"CREATE_BUTTON": "CREATE",
 		"ACTIVE_AND_AVAILABLE_ORDERS": "Active and Available Orders",
 		"ORDERS_HISTORY": "Orders History",
+		"TRACK": "Track",
 		"SMART_TABLE_COLUMNS": {
 			"IMAGE": "Image",
 			"NAME": "Name",
@@ -701,6 +840,7 @@
 			"CLIENT_REFUSE_ORDER": "Client Refuse Order",
 			"AVAIBLE_ORDER_TO_PICK_UP": "Available Orders to pick up (each carrier can pick up multiple orders)",
 			"ACTIVE": "Active",
+			"CARRIER_CAN_BE_SHARED": "Carrier can be shared?",
 			"NOT_ACTIVE": "Not Active",
 			"WORKING": "Working",
 			"NOT_WORKING": "Not Working",
@@ -743,6 +883,14 @@
 		"CREATE": {
 			"BASIC_INFO": "Basic Info",
 			"LOCATION": "Location"
+		},
+		"TRACK_PAGE": {
+			"TRACK_ALL_WORKING_CARRIERS": "Track all working carriers",
+			"FILTER_CARRIERS": "Filter Carriers",
+			"PHONE": "Phone",
+			"EMAIL": "Email",
+			"ADDRESS": "Address",
+			"DELIVERY_COUNT": "Delivery Count"
 		}
 	},
 	"PRODUCT_TYPE_VIEW": {

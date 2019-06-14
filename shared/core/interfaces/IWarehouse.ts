@@ -5,6 +5,9 @@ import IGeoLocation, { IGeoLocationCreateObject } from './IGeoLocation';
 import { DBCreateObject, DBRawObject, PyroObjectId } from '../@pyro/db';
 import ForwardOrdersMethod from '../enums/ForwardOrdersMethod';
 import OrderBarcodeTypes from '../enums/OrderBarcodeTypes';
+import IPaymentGatewayCreateObject, {
+	IPaymentGateway
+} from './IPaymentGateway';
 
 export interface IWarehouseCreateObject extends DBCreateObject {
 	/**
@@ -69,7 +72,7 @@ export interface IWarehouseCreateObject extends DBCreateObject {
 	 * @type {ForwardOrdersMethod}
 	 * @memberof IWarehouseCreateObject
 	 */
-	forwardOrdersUsing: ForwardOrdersMethod;
+	forwardOrdersUsing: ForwardOrdersMethod[];
 
 	/**
 	 * Is Warehouse products by default require manufacturing
@@ -99,6 +102,7 @@ export interface IWarehouseCreateObject extends DBCreateObject {
 	 * @memberof IWarehouseCreateObject
 	 */
 	hasRestrictedCarriers?: boolean;
+	carriersIds?: string[];
 
 	/**
 	 * Password hash
@@ -107,6 +111,14 @@ export interface IWarehouseCreateObject extends DBCreateObject {
 	 * @memberof IWarehouseCreateObject
 	 */
 	hash?: string;
+
+	/**
+	 * Payment Gateways
+	 *
+	 * @type {IPaymentGatewayCreateObject[]}
+	 * @memberof IWarehouseCreateObject
+	 */
+	paymentGateways?: IPaymentGatewayCreateObject[];
 
 	productsDelivery?: boolean;
 	productsTakeaway?: boolean;
@@ -125,6 +137,7 @@ interface IWarehouse extends IWarehouseCreateObject, DBRawObject {
 	usedCarriersIds: string[];
 	hasRestrictedCarriers: boolean;
 	barcodeData?: string;
+	paymentGateways?: IPaymentGateway[];
 }
 
 export default IWarehouse;

@@ -16,7 +16,7 @@
 >
 	<wizard-step
 		[title]="'WAREHOUSE_VIEW.MUTATION.WIZARD_TITLES.BASIC_INFO' | translate"
-		[isValid]="basicInfo.valid"
+		[isValid]="basicInfo.valid && password.valid"
 	>
 		<div class="pt-5"></div>
 		<ea-warehouse-basic-info-form
@@ -30,7 +30,7 @@
 		[title]="
 			'WAREHOUSE_VIEW.MUTATION.WIZARD_TITLES.CONTACT_INFO' | translate
 		"
-		[isValid]="contactInfo.valid"
+		[isValid]="isValidContactInfo"
 	>
 		<div class="pt-5"></div>
 		<ea-warehouse-contact-info-form

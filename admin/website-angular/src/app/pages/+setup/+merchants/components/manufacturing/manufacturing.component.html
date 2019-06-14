@@ -1,0 +1,26 @@
+<nb-card class="setup-merchant-manufacturing">
+	<nb-card-header>
+		{{
+			'FAKE_DATA.SETUP_MERCHANTS.MANUFACTURING.MANUFACTURING' | translate
+		}}
+	</nb-card-header>
+	<nb-card-body>
+		<div class="row m-0">
+			<div class="form-group offset-md-2 col-md-4">
+				<nb-checkbox [(ngModel)]="isManufacturing">
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.MANUFACTURING.PRODUCTS_MANUFACTURING'
+							| translate
+					}}
+				</nb-checkbox>
+			</div>
+		</div>
+	</nb-card-body>
+</nb-card>
+
+<button nbButton (click)="previousStep.emit()">
+	{{ 'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate }}
+</button>
+<button nbButton (click)="nextStep.emit()">
+	{{ 'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate }}
+</button>

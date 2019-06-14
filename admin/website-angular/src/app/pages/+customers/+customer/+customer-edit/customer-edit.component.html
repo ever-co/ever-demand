@@ -1,7 +1,7 @@
 <toaster-container></toaster-container>
 
 <div>
-	<nb-card *ngIf="(customer$ | async) as customer">
+	<nb-card *ngIf="customer$ | async as customer">
 		<nb-card-header>
 			<div class="d-inline-flex">
 				<svg
@@ -18,11 +18,14 @@
 			</div>
 
 			<button
-				class="btn btn-success pull-right text-center"
+				nbButton
+				status="success"
+				size="large"
+				class="pull-right text-center"
 				(click)="updateCustomer()"
 				[disabled]="!form.valid"
 			>
-				<i class="ion-md-checkmark button-icon"></i>
+				<i class="ion-md-checkmark button-icon mr-1"></i>
 				<span>{{ 'PRODUCTS_VIEW.EDIT_VIEW.SAVE' | translate }}</span>
 			</button>
 		</nb-card-header>

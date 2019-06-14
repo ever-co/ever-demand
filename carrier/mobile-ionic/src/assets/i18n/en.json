@@ -5,9 +5,16 @@
 	},
 	"CURRENT_DIRECTION": "ltr",
 	"SIDEBAR_SIDE": "left",
-
 	"MAIN_VIEW": {
 		"EVERCO_DRIVER": "Carrier"
+	},
+	"MENU": {
+		"MAIN": "Main",
+		"DELIVERIES": "Deliveries",
+		"SETTINGS": "Settings",
+		"LANGUAGE": "Language",
+		"ABOUT_US": "About Us",
+		"TERMS_OF_USE": "Terms of Use"
 	},
 	"DELIVERY_VIEW": {
 		"THE_CUSTOMER_HAS_TO_PAY": "The Customer has to pay",
@@ -64,7 +71,11 @@
 		"TITLE": "Terms of Use"
 	},
 	"LANGUAGE_VIEW": {
-		"TITLE": "Select language"
+		"TITLE": "Select language",
+		"ENGLISH": "English",
+		"BULGARIAN": "Bulgarian",
+		"HEBREW": "Hebrew",
+		"RUSSIAN": "Rusian"
 	},
 	"LIST_VIEW": {
 		"YOU_NAVIGATED_HERE_FROM": "You navigated here from"

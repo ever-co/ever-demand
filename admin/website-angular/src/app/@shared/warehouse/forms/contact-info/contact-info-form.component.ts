@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import ForwardOrdersMethod from '@modules/server.common/enums/ForwardOrdersMethod';
 import { IWarehouseCreateObject } from '@modules/server.common/interfaces/IWarehouse';
-import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { FormHelpers } from '../../../forms/helpers';
 
 export type WarehouseContactInfo = Pick<
@@ -14,6 +13,8 @@ export type WarehouseContactInfo = Pick<
 	| 'ordersPhone'
 >;
 
+const phoneNumberRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9x]*$/;
+
 @Component({
 	selector: 'ea-warehouse-contact-info-form',
 	templateUrl: 'contact-info-form.component.html'
@@ -22,56 +23,28 @@ export class ContactInfoFormComponent {
 	@Input()
 	readonly form: FormGroup;
 
-	public ForwardOrdersMethod = ForwardOrdersMethod;
-
-	readonly forwardOrdersOptions: IMultiSelectOption[] = [
-		{ id: ForwardOrdersMethod['Unselected'], name: '' },
-		{ id: ForwardOrdersMethod.Email, name: 'Email' },
-		{ id: ForwardOrdersMethod.Phone, name: 'Phone' }
-	];
+	forwardingEmail: boolean;
+	forwardingPhone: boolean;
 
 	static buildForm(formBuilder: FormBuilder): FormGroup {
 		// would be used in the parent component and injected into this.form
 
-		const phoneNumberRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9x]*$/;
+		return formBuilder.group({
+			contactPhone: ['', [Validators.pattern(phoneNumberRegex)]],
+			contactEmail: ['', [Validators.email]],
 
-		return formBuilder.group(
-			{
-				contactPhone: ['', [Validators.pattern(phoneNumberRegex)]],
-				contactEmail: ['', [Validators.email]],
+			forwardOrdersUsing: [],
 
-				forwardOrdersUsing: [
-					ForwardOrdersMethod['Unselected'],
-					[Validators.required]
-				],
-
-				ordersPhone: ['', [Validators.pattern(phoneNumberRegex)]],
-				ordersEmail: ['', [Validators.email]]
-			},
-			{
-				validator: (form) => {
-					switch (form.get('forwardOrdersUsing').value) {
-						// case ForwardOrdersMethod[ 'Unselected' ]:
-						// 	return true;
-						case ForwardOrdersMethod.Phone:
-							return form.get('ordersPhone').value
-								? null
-								: { ordersPhoneRequired: true };
-						case ForwardOrdersMethod.Email:
-							return form.get('ordersEmail').value
-								? null
-								: { ordersEmailRequired: true };
-					}
-				}
-			}
-		);
+			ordersPhone: ['', [Validators.pattern(phoneNumberRegex)]],
+			ordersEmail: ['', [Validators.email]]
+		});
 	}
 
 	getValue() {
 		const contactInfo = this.form.getRawValue() as {
 			contactEmail: string;
 			contactPhone: string;
-			forwardOrdersUsing: ForwardOrdersMethod;
+			forwardOrdersUsing: ForwardOrdersMethod[];
 			ordersEmail: string;
 			ordersPhone: string;
 		};
@@ -83,7 +56,7 @@ export class ContactInfoFormComponent {
 			...(contactInfo.contactPhone
 				? { contactPhone: contactInfo.contactPhone }
 				: { contactPhone: null }),
-			forwardOrdersUsing: contactInfo.forwardOrdersUsing,
+			forwardOrdersUsing: this.getForwardOrdersUsing(),
 			...(contactInfo.ordersEmail
 				? { ordersEmail: contactInfo.ordersEmail }
 				: { ordersEmail: null }),
@@ -93,7 +66,7 @@ export class ContactInfoFormComponent {
 		};
 	}
 
-	public setValue<T extends WarehouseContactInfo>(contactInfo: T) {
+	setValue<T extends WarehouseContactInfo>(contactInfo: T) {
 		FormHelpers.deepMark(this.form, 'dirty');
 
 		this.form.setValue({
@@ -107,6 +80,15 @@ export class ContactInfoFormComponent {
 			ordersEmail: contactInfo.ordersEmail ? contactInfo.ordersEmail : '',
 			ordersPhone: contactInfo.ordersPhone ? contactInfo.ordersPhone : ''
 		});
+
+		if (contactInfo.forwardOrdersUsing) {
+			this.forwardingEmail = contactInfo.forwardOrdersUsing.includes(
+				ForwardOrdersMethod.Email
+			);
+			this.forwardingPhone = contactInfo.forwardOrdersUsing.includes(
+				ForwardOrdersMethod.Phone
+			);
+		}
 	}
 
 	get contactEmail() {
@@ -127,5 +109,66 @@ export class ContactInfoFormComponent {
 
 	get ordersPhone() {
 		return this.form.get('ordersPhone');
+	}
+
+	get validForm() {
+		return (
+			this.form &&
+			this.form.valid &&
+			(this.forwardingEmail ? this.ordersEmail.value !== '' : true) &&
+			(this.forwardingPhone ? this.ordersPhone.value !== '' : true)
+		);
+	}
+
+	forwardingPhoneChange() {
+		this.forwardingPhone = !this.forwardingPhone;
+		let forwardOrdersUsingArr = this.forwardOrdersUsing.value || [];
+
+		forwardOrdersUsingArr = forwardOrdersUsingArr.filter(
+			(v) => v !== ForwardOrdersMethod.Phone
+		);
+
+		if (this.forwardingPhone) {
+			forwardOrdersUsingArr.push(ForwardOrdersMethod.Phone);
+		} else {
+			this.ordersPhone.setValue('');
+		}
+
+		this.forwardOrdersUsing.setValue(forwardOrdersUsingArr);
+	}
+
+	forwardingEmailChange() {
+		this.forwardingEmail = !this.forwardingEmail;
+		let forwardOrdersUsingArr = this.forwardOrdersUsing.value || [];
+
+		forwardOrdersUsingArr = forwardOrdersUsingArr.filter(
+			(v) => v !== ForwardOrdersMethod.Email
+		);
+
+		if (this.forwardingEmail) {
+			forwardOrdersUsingArr.push(ForwardOrdersMethod.Email);
+		} else {
+			this.ordersEmail.setValue('');
+		}
+
+		this.forwardOrdersUsing.setValue(forwardOrdersUsingArr);
+	}
+
+	private getForwardOrdersUsing() {
+		const forwardOrdersUsing = [];
+
+		if (this.forwardingEmail) {
+			forwardOrdersUsing.push(ForwardOrdersMethod.Email);
+		}
+
+		if (this.forwardingPhone) {
+			forwardOrdersUsing.push(ForwardOrdersMethod.Phone);
+		}
+
+		if (!this.forwardingEmail && !this.forwardingPhone) {
+			forwardOrdersUsing.push(ForwardOrdersMethod.Unselected);
+		}
+
+		return forwardOrdersUsing;
 	}
 }

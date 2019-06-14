@@ -29,6 +29,7 @@ export type CarrierBasicInfo = Pick<
 	| 'lastName'
 	| 'logo'
 	| 'apartment'
+	| 'isSharedCarrier'
 >;
 
 @Component({
@@ -37,7 +38,7 @@ export type CarrierBasicInfo = Pick<
 	styleUrls: ['basic-info-form.component.scss']
 })
 export class BasicInfoFormComponent implements OnInit, AfterViewInit {
-	@ViewChild('logoImagePreview')
+	@ViewChild('logoImagePreview', { static: false })
 	logoImagePreview: ElementRef;
 
 	uploaderPlaceholder: string;
@@ -48,10 +49,17 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 	@Input()
 	readonly password?: AbstractControl;
 
+	@Input()
+	boxShadow;
+
 	constructor(private translateService: TranslateService) {}
 
 	get isActive() {
 		return this.form.get('isActive');
+	}
+
+	get isSharedCarrier() {
+		return this.form.get('isSharedCarrier');
 	}
 
 	get username() {
@@ -78,49 +86,6 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 		return this.logo && this.logo.value !== '';
 	}
 
-	get isFirstNameValid(): boolean {
-		return (
-			this.firstName.errors &&
-			(this.firstName.dirty || this.firstName.touched)
-		);
-	}
-
-	get isLastNameValid(): boolean {
-		return (
-			this.lastName.errors &&
-			(this.lastName.dirty || this.lastName.touched)
-		);
-	}
-
-	get isActiveValid(): boolean {
-		return (
-			this.isActive.errors &&
-			(this.isActive.dirty || this.isActive.touched)
-		);
-	}
-
-	get isPhoneValid(): boolean {
-		return this.phone.errors && (this.phone.dirty || this.phone.touched);
-	}
-
-	get isUsernameValid(): boolean {
-		return (
-			this.username.errors &&
-			(this.username.dirty || this.username.touched)
-		);
-	}
-
-	get isPasswordValid(): boolean {
-		return (
-			this.password.errors &&
-			(this.password.dirty || this.password.touched)
-		);
-	}
-
-	get isLogoValid(): boolean {
-		return this.logo.errors && (this.logo.dirty || this.logo.touched);
-	}
-
 	static buildForm(formBuilder: FormBuilder): FormGroup {
 		// would be used in the parent component and injected into this.form
 		return formBuilder.group({
@@ -139,6 +104,7 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 				]
 			],
 			isActive: [true, Validators.required],
+			isSharedCarrier: [false],
 			phone: [
 				'',
 				[

@@ -3,23 +3,36 @@
 
 	<nb-card-header>
 		<button
-			class="btn btn-success btn-sm mr-2 d-inline-block"
+			nbButton
+			status="success"
+			class="mr-2 d-inline-block"
 			(click)="createWarehouseModel()"
 		>
-			<i class="ion-md-add button-icon"></i>
+			<i class="ion-md-add button-icon mr-1"></i>
 			<small _ngcontent-c55="">{{
 				'WAREHOUSES_VIEW.CREATE' | translate
 			}}</small>
 		</button>
 		<button
-			class="btn btn-danger btn-sm mr-2 d-inline-block"
+			nbButton
+			status="danger"
+			class="mr-2 d-inline-block"
 			[disabled]="!hasSelectedWarehouses"
 			(click)="deleteSelectedRows()"
 		>
-			<i class="ion-md-trash button-icon"></i>
+			<i class="ion-md-trash button-icon mr-1"></i>
 			<small _ngcontent-c55="">{{
 				'WAREHOUSES_VIEW.DELETE' | translate
 			}}</small>
+		</button>
+		<button
+			nbButton
+			status="warning"
+			class="mr-2 d-inline-block"
+			routerLink="track"
+		>
+			<i class="ion-md-map button-icon mr-1"></i>
+			<small _ngcontent-c55="">Show on Map</small>
 		</button>
 	</nb-card-header>
 

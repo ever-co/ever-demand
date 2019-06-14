@@ -8,17 +8,17 @@ import { environment } from 'environments/environment';
 const socialLinks = [
 	{
 		url: environment.COMPANY_GITHUB_LINK,
-		icon: 'socicon-github'
+		icon: 'github-outline'
 	},
 	{
 		url: environment.COMPANY_FACEBOOK_LINK,
 		target: '_blank',
-		icon: 'socicon-facebook'
+		icon: 'facebook-outline'
 	},
 	{
 		url: environment.COMPANY_TWITTER_LINK,
 		target: '_blank',
-		icon: 'socicon-twitter'
+		icon: 'twitter-outline'
 	}
 ];
 

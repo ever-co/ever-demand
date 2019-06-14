@@ -17,7 +17,7 @@ export type WarehouseManageTabs = Pick<
 	| 'isActive'
 	| 'username'
 	| 'hasRestrictedCarriers'
-	| 'usedCarriersIds'
+	| 'carriersIds'
 	| 'isManufacturing'
 	| 'isCarrierRequired'
 >;
@@ -43,22 +43,22 @@ export class WarehouseManageTabsComponent {
 	@Input()
 	readonly form: FormGroup;
 
-	@ViewChild('detailsComponent')
+	@ViewChild('detailsComponent', { static: false })
 	readonly detailsComponent: WarehouseManageTabsDetailsComponent;
 
-	@ViewChild('accountComponent')
+	@ViewChild('accountComponent', { static: false })
 	readonly accountComponent: WarehouseManageTabsAccountComponent;
 
-	@ViewChild('contactInfoForm')
+	@ViewChild('contactInfoForm', { static: false })
 	readonly contactInfoForm: ContactInfoFormComponent;
 
-	@ViewChild('locationForm')
+	@ViewChild('locationForm', { static: false })
 	readonly locationForm: LocationFormComponent;
 
-	@ViewChild('deliveryAreasForm')
+	@ViewChild('deliveryAreasForm', { static: false })
 	readonly deliveryAreasForm: WarehouseManageTabsDeliveryAreasComponent;
 
-	@ViewChild('tabSet')
+	@ViewChild('tabSet', { static: false })
 	readonly tabSet;
 
 	mapCoordEmitter = new EventEmitter<number[]>();
@@ -67,16 +67,23 @@ export class WarehouseManageTabsComponent {
 	get details() {
 		return this.form.get('details');
 	}
+  
 	get account() {
 		return this.form.get('account');
 	}
+  
 	get contactInfo() {
 		return this.form.get('contactInfo');
 	}
+  
 	get location() {
 		return this.form.get('location');
 	}
 
+	get validForm() {
+		return this.form.valid && this.contactInfoForm.validForm;
+  }
+  
 	get deliveryAreas() {
 		return this.form.get('deliverAreas');
 	}
@@ -110,7 +117,7 @@ export class WarehouseManageTabsComponent {
 			contactInfo: {
 				contactEmail: string;
 				contactPhone: string;
-				forwardOrdersUsing: ForwardOrdersMethod;
+				forwardOrdersUsing: ForwardOrdersMethod[];
 				ordersEmail: string;
 				ordersPhone: string;
 			};

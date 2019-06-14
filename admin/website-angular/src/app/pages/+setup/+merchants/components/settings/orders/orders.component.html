@@ -1,0 +1,55 @@
+<nb-card class="setup-merchant-orders-settings">
+	<nb-card-header>
+		{{
+			'FAKE_DATA.SETUP_MERCHANTS.ORDERS_SETTINGS.ORDERS_SETTINGS'
+				| translate
+		}}
+	</nb-card-header>
+	<nb-card-body>
+		<div class="form-group offset-md-2 col-md-8 row">
+			<div class="col">
+				<label>
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.ORDERS_SETTINGS.ORDER_BARCODE_QR_CODE_TYPES'
+							| translate
+					}}
+				</label>
+				<nb-radio-group
+					(valueChange)="typeChange($event)"
+					[(ngModel)]="iorderBarcodeType"
+				>
+					<nb-radio
+						*ngFor="let type of orderBarcodeTypes"
+						[value]="type.value"
+					>
+						{{ type.label }}
+					</nb-radio>
+				</nb-radio-group>
+			</div>
+			<div class="col">
+				<div class="row preview-barcode">
+					<img
+						*ngIf="isQRCode"
+						src="{{ barcodetDataUrl }}"
+						alt="Invalid image"
+					/>
+					<ngx-barcode
+						*ngIf="!isQRCode"
+						[bc-value]="barcodetData"
+						[bc-format]="ngxBarcodeFormat"
+						[bc-element-type]="img"
+						[bc-height]="30"
+						[bc-width]="1"
+					></ngx-barcode>
+				</div>
+			</div>
+		</div>
+	</nb-card-body>
+</nb-card>
+
+<button nbButton (click)="previousStep.emit()">
+	{{ 'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate }}
+</button>
+<button nbButton (click)="nextStep.emit()" [disabled]="!canCreateMerchant">
+	{{ 'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate }}
+</button>

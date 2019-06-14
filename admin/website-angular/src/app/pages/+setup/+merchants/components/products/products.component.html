@@ -1,0 +1,153 @@
+<nb-card class="setup-merchant-products">
+	<nb-card-header>
+		<span *ngIf="currentView == componentViews.main">
+			{{ 'FAKE_DATA.SETUP_MERCHANTS.PRODUCTS.PRODUCTS' | translate }}
+		</span>
+		<span *ngIf="currentView == componentViews.productsTable">
+			{{
+				'FAKE_DATA.SETUP_MERCHANTS.PRODUCTS.SELECT_FROM_PRODUCTS_CATALOG'
+					| translate
+			}}
+		</span>
+		<span *ngIf="currentView == componentViews.createProduct">
+			{{
+				'FAKE_DATA.SETUP_MERCHANTS.PRODUCTS.CREATE_PRODUCT' | translate
+			}}
+		</span>
+		<span *ngIf="currentView == componentViews.editProduct">
+			{{ 'FAKE_DATA.SETUP_MERCHANTS.PRODUCTS.EDIT_PRODUCT' | translate }}
+		</span>
+		<span *ngIf="currentView == componentViews.addProducts">
+			{{ 'FAKE_DATA.SETUP_MERCHANTS.PRODUCTS.ADD_PRODUCT' | translate }}
+		</span>
+	</nb-card-header>
+	<nb-card-body>
+		<div
+			[hidden]="currentView !== componentViews.main"
+			class="main-content"
+		>
+			<div class="row actions">
+				<div class="form-group offset-md-2 col-md-4">
+					<button
+						nbButton
+						outline
+						status="success"
+						[disabled]="!storeId"
+						(click)="currentView = componentViews.productsTable"
+					>
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.PRODUCTS.SELECT_FROM_PRODUCTS_CATALOG'
+								| translate
+						}}
+					</button>
+				</div>
+
+				<div class="form-group col-md-4">
+					<button
+						nbButton
+						outline
+						status="success"
+						[disabled]="!storeId"
+						(click)="currentView = componentViews.createProduct"
+					>
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.PRODUCTS.CREATE_NEW_PRODUCT'
+								| translate
+						}}
+					</button>
+				</div>
+
+				<div [hidden]="!showProductsTable">
+					<ea-warehouse-products-table
+						#productsTable
+						[selectMode]="null"
+						[perPage]="productsPerPage"
+						(onEdit)="editProduct($event)"
+						(onDelete)="removeProduct($event)"
+					></ea-warehouse-products-table>
+				</div>
+			</div>
+		</div>
+
+		<div *ngIf="currentView == componentViews.productsTable" class="row">
+			<ea-merchants-setup-products-catalog
+				[existedProductsIds]="existedProductsIds"
+				#productsCatalog
+			></ea-merchants-setup-products-catalog>
+		</div>
+
+		<div
+			*ngIf="
+				currentView == componentViews.createProduct ||
+				currentView == componentViews.editProduct
+			"
+			class="row"
+		>
+			<div class="form-group offset-md-2 col-md-8">
+				<ea-merchants-setup-product-mutation
+					(onCreate)="select([$event])"
+					(onEdit)="updateMain()"
+					[product]="currentProduct"
+					#productMutation
+				></ea-merchants-setup-product-mutation>
+			</div>
+		</div>
+
+		<div *ngIf="currentView == componentViews.addProducts" class="row">
+			<ea-merchants-setup-add-products
+				#addProducts
+				[products]="productsForAdd"
+				[storeId]="storeId"
+				(successAdd)="currentView = componentViews.main"
+			></ea-merchants-setup-add-products>
+		</div> </nb-card-body
+></nb-card>
+
+<div *ngIf="currentView === componentViews.main">
+	<button nbButton (click)="previousStep.emit()">
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate }}
+	</button>
+	<button nbButton (click)="finish()">
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate }}
+	</button>
+</div>
+<div *ngIf="currentView !== componentViews.main">
+	<button nbButton (click)="back()">
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.BACK' | translate }}
+	</button>
+	<button
+		*ngIf="currentView === componentViews.productsTable"
+		[disabled]="!haveProductsForAdd"
+		nbButton
+		(click)="select(productsCatalog?.productsTable.selectedProducts)"
+	>
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.SELECT' | translate }}
+	</button>
+
+	<button
+		*ngIf="currentView === componentViews.addProducts"
+		[disabled]="!addProducts?.addWarehouseProductsTable.productsIsValid()"
+		nbButton
+		(click)="addProducts.add()"
+	>
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.ADD' | translate }}
+	</button>
+
+	<button
+		*ngIf="currentView === componentViews.createProduct"
+		nbButton
+		[disabled]="!productMutation?.basicInfo.valid || false"
+		(click)="productMutation.create()"
+	>
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.CREATE' | translate }}
+	</button>
+
+	<button
+		*ngIf="currentView === componentViews.editProduct"
+		nbButton
+		[disabled]="!productMutation?.basicInfo.valid || false"
+		(click)="productMutation.save()"
+	>
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.SAVE' | translate }}
+	</button>
+</div>

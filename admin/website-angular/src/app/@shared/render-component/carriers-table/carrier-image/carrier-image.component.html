@@ -1,1 +1,6 @@
-<img class="redirect-image" (click)="redirect()" src="{{ imageUrl }}" width="60">
+<img
+	class="{{ redirectPage ? 'redirect-image' : '' }}"
+	(click)="redirect()"
+	src="{{ imageUrl }}"
+	width="60"
+/>

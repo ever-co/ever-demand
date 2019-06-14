@@ -206,7 +206,139 @@
 		"CONFIRM_ORDER": "ПОДТВЕРДИТЕ ЗАКАЗ",
 		"CREATE_ORDER": "СОЗДАТЬ ЗАКАЗ",
 		"CONFIMR_1st_ORDER": "Подтвердить 1 заказ",
-		"CONFIMR_2nd_ORDER": "Подтвердить второй заказ"
+		"CONFIMR_2nd_ORDER": "Подтвердить второй заказ",
+		"SETUP_MERCHANTS": {
+			"SETUP_MERCHANTS": "Настройки ресторана",
+			"PREV": "НАЗАД",
+			"NEXT": "СЛЕДУЮЩИЙ",
+			"ADD": "Добавлять",
+			"BACK": "Назад",
+			"SAVE": "Сохранить",
+			"SELECT": "Выбрать",
+			"CREATE": "Создайте",
+			"HOW_TO_SET_UP": {
+				"HOW_TO_SET_UP": "Как настроить"
+			},
+			"STEPPER": {
+				"ACCOUNT": "Счет",
+				"BASIC_INFO": "Базовая информация",
+				"CONTACT_INFO": "Контактная информация",
+				"LOCATION": "Место нахождения",
+				"PAYMENTS": "Платежи",
+				"MANUFACTURING": "Производство",
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "Настройки доставки и выноса",
+				"ORDERS_SETTINGS": "Настройки заказов",
+				"PRODUCT_CATEGORIES": "Категории продукта",
+				"PRODUCTS": "Товары"
+			},
+			"ACCOUNT": {
+				"ACCOUNT": "Учетная запись",
+				"EMAIL_ADDRESS": "Адрес электронной почты",
+				"EMAIL": "Эл. адрес",
+				"PASSWORD": "Пароль",
+				"REPEAT_PASSWORD": "Повторите пароль",
+				"EMAIL_IS_REQUIRED": "Требуется электронная почта",
+				"INVALID_EMAIL_FORMAT": "Неверный формат электронной почты",
+				"USERNAME": "Имя пользователя",
+				"USERNAME_IS_REQUIRED": "Имя пользователя требуется",
+				"USERNAME_MUST_BE_AT_LEAST_3_CHARACTERS": "Имя пользователя должно быть не менее 3 символов",
+				"PASSWORD_IS_REQUIRED": "Необходим пароль",
+				"PASSWORD_MUST_BE_AT_LEAST_4_CHARACTERS": "Пароль должен содержать не менее 4 символов",
+				"REPEAT_PASSWORD_IS_REQUIRED": "Требуется повторный пароль",
+				"PASSWORDS_DO_NOT_MATCH": "Пароли не совпадают"
+			},
+			"BASIC_INFO": {
+				"BASIC_INFO": "Базовая информация",
+				"NAME": "Название",
+				"NAME_IS_REQUIRED": "Имя обязательно",
+				"NAME_MUST_BE_AT_LEAST_4_CHARACTERS": "Имя должно содержать не менее 4 символов",
+				"PHOTO": "Фото",
+				"ENTER_A_VALID_LOGO_URL_OR_BROWSE_FROM_A_DEVICE": "Введите действительный URL-адрес логотипа или перейдите с устройства",
+				"REMOVE": "Удалить",
+				"PHOTO_OPTIONAL": "Фото (необязательно)",
+				"BARCODE_DATA": "Данные штрих-кода",
+				"BARCODE_DATA_IS_REQUIRED": "Данные штрих-кода обязательны"
+			},
+			"CONTACT_INFO": {
+				"CONTACT_INFO": "Контактная информация",
+				"CONTACT_PHONE": "Контактный телефон",
+				"INVALID_PHONE_NUMBER_FORMAT": "Неверный формат номера телефона",
+				"ORDER_FORWARDING_EMAIL": "Пересылка заказа по электронной почте",
+				"ORDER_FORWARDING_PHONE": "Заказать переадресацию телефона",
+				"ORDERS_EMAIL": "Электронная почта заказов",
+				"ORDERS_EMAIL_IS_REQUIRED": "Заказы по электронной почте требуется",
+				"INVALID_EMAIL_FORMAT": "Неверный формат электронной почты",
+				"ORDERS_PHONE": "Заказ телефона",
+				"ORDERS_PHONE_IS_REQUIRED": "Заказы по телефону обязательны"
+			},
+			"LOCATION": {
+				"LOCATION": "Место нахождения"
+			},
+			"PAYMENTS": {
+				"PAYMENTS": "Плащания",
+				"ALLOW_ONLINE_PAYMENT": "Разрешаване на онлайн плащания?",
+				"STRIPE": {
+					"PAY_BUTTON_TEXT": "Текст кнопки оплаты",
+					"CURRENCY": "валюта",
+					"PAY_BUTTON_TEXT_IS_REQUIRED": "Текст кнопки оплаты требуется",
+					"CHOOSE_CURRENCY_CODE": "Выберите код валюты",
+					"CURRENCY_TEXT_IS_REQUIRED": "Текст валюты требуется",
+					"COMPANY_BRAND_LOGO": "Логотип бренда компании",
+					"COMPANY_BRAND_LOGO_IS_REQUIRED": "Требуется логотип компании",
+					"INVALID_LOGO_URL": "Неверный URL-адрес логотипа",
+					"INVALID_LOGO": "Неверный логотип",
+					"PUBLISHABLE_KEY": "Публикуемый ключ",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "Требуется публикуемый ключ",
+					"ALLOW_REMEMBER_ME": "Разрешить запомнить меня?",
+					"REMOVE": "Удалить"
+				},
+				"PAYPAL": {
+					"MODE": "Режим",
+					"CHOOSE_PAYPAL_MODE": "Выберите режим PayPal",
+					"TYPE": "тип",
+					"CURRENCY": "валюта",
+					"CHOOSE_CURRENCY_CODE": "Выберите код валюты",
+					"CURRENCY_TEXT_IS_REQUIRED": "Текст валюты требуется",
+					"PUBLISHABLE_KEY": "Публикуемый ключ",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "Требуется публикуемый ключ",
+					"SECRET_KEY": "Секретный ключ",
+					"SECRET_KEY_IS_REQUIRED": "Требуется секретный ключ",
+					"PAYMENT_DESCRIPTION": "Описание оплаты",
+					"PAYMENT_DESCRIPTION_IS_REQUIRED": "Требуется описание платежа"
+				}
+			},
+			"MANUFACTURING": {
+				"MANUFACTURING": "Производство",
+				"PRODUCTS_MANUFACTURING": "Производство продукции"
+			},
+			"DELIVERY_AND_TAKEAWAY_SETTINGS": {
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "Настройки доставки и выноса",
+				"SELECT_FROM_SHARED_CARRIERS": "Выберите из общих перевозчиков",
+				"ADD_YOUR_CARRIER": "Добавьте ваш оператор",
+				"EDIT_CARRIER": "Редактировать перевозчик",
+				"CARRIER_REQUIRED": "Требуется перевозчик",
+				"PRODUCTS_DELIVERY_BY_DEFAULT": "Доставка продуктов (по умолчанию)",
+				"PRODUCTS_TAKEAWAY_BY_DEFAULT": "Продукты на вынос (по умолчанию)",
+				"USE_SELECTED_SHARED_CARRIERS": "Использовать выбранные общие носители",
+				"ADD_YOUR_CARRIERS": "Добавьте своих перевозчиков"
+			},
+			"ORDERS_SETTINGS": {
+				"ORDERS_SETTINGS": "Настройки заказов",
+				"ORDER_BARCODE_QR_CODE_TYPES": "Укажите тип штрих-кода / QR-код"
+			},
+			"PRODUCT_CATEGORIES": {
+				"PRODUCT_CATEGORIES": "Категории продукта",
+				"ADD_OWN_PRODUCT_CATEGORY": "Добавить собственную категорию продукта"
+			},
+			"PRODUCTS": {
+				"PRODUCTS": "Товары",
+				"SELECT_FROM_PRODUCTS_CATALOG": "Выберите из каталога продукции",
+				"CREATE_PRODUCT": "Создать продукт",
+				"EDIT_PRODUCT": "Изменить продукт",
+				"ADD_PRODUCT": "Добавить товар",
+				"CREATE_NEW_PRODUCT": "Создать новый продукт"
+			}
+		}
 	},
 	"WAREHOUSE_MANAGE": {
 		"TITLE": "Управление складом",
@@ -333,6 +465,10 @@
 				"BASIC_INFO": "Базовая информация",
 				"CONTACT_INFO": "Контактная информация",
 				"LOCATION": "Место нахождения"
+			},
+			"CONTACT_INFO_TAB": {
+				"ORDER_FORWARDING_EMAIL": "Пересылка заказа по электронной почте",
+				"ORDER_FORWARDING_PHONE": "Заказать переадресацию телефона"
 			}
 		},
 		"NEW_PRODUCT": {
@@ -673,6 +809,7 @@
 		"CREATE_BUTTON": "Создайте",
 		"ACTIVE_AND_AVAILABLE_ORDERS": "Активные и доступные заказы",
 		"ORDERS_HISTORY": "История на поръчките",
+		"TRACK": "Следовать",
 		"SMART_TABLE_COLUMNS": {
 			"IMAGE": "Образ",
 			"NAME": "Имя",
@@ -698,6 +835,7 @@
 			"CLIENT_REFUSE_ORDER": "Заказ клиента",
 			"AVAIBLE_ORDER_TO_PICK_UP": "Доступные заказы для подбора (каждый перевозчик может выбрать несколько заказов)",
 			"ACTIVE": "Активный",
+			"CARRIER_CAN_BE_SHARED": "Перевозчик может быть общим?",
 			"NOT_ACTIVE": "Не активен",
 			"WORKING": "За работой",
 			"NOT_WORKING": "Не работает",
@@ -736,6 +874,18 @@
 			"CONTACT_PHONE": "Контактный телефон",
 			"FIRST_NAME": "Имя",
 			"LAST_NAME": "Фамилия"
+		},
+		"CREATE": {
+			"BASIC_INFO": "Базовая информация",
+			"LOCATION": "Место нахождения"
+		},
+		"TRACK_PAGE": {
+			"TRACK_ALL_WORKING_CARRIERS": "Отслеживание всех работающих перевозчиков",
+			"FILTER_CARRIERS": "Фильтр-носители",
+			"PHONE": "Телефон",
+			"EMAIL": "Эл. адрес",
+			"ADDRESS": "Адрес",
+			"DELIVERY_COUNT": "Счетчик доставки"
 		}
 	},
 	"PRODUCT_TYPE_VIEW": {

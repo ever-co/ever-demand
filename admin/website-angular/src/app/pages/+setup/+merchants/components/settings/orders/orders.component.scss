@@ -1,0 +1,16 @@
+.setup-merchant-orders-settings {
+	nb-card-body {
+		text-align: left;
+
+		.preview-barcode {
+			padding: 8px;
+			background: #dedede;
+			display: inline-block;
+
+			img {
+				margin: 0;
+				max-height: 5rem;
+			}
+		}
+	}
+}

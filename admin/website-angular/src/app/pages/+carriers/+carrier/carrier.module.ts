@@ -14,7 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Ng2SmartTableModule } from 'ng2-smart-table/ng2-smart-table.module';
 import { CarrierMutationModule } from '../../../@shared/carrier/carrier-mutation';
 import { HighlightModule } from 'ngx-highlightjs';
-import { NbSpinnerModule } from '@nebular/theme';
+import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 import { CarriersTableModule } from '../../../@shared/render-component/carriers-table/carriers-table.module';
 import { CarrierOrdersHistoryComponent } from './carrier-orders-history/carrier-orders-history.component';
 import { RenderComponentsModule } from '../../../@shared/render-component/render-components.module';
@@ -42,7 +42,8 @@ import { FormsModule } from '@angular/forms';
 		NbSpinnerModule,
 		CarrierOrdersTableModule,
 		NgSelectModule,
-		FormsModule
+		FormsModule,
+		NbButtonModule
 	],
 	declarations: [
 		CarrierComponent,

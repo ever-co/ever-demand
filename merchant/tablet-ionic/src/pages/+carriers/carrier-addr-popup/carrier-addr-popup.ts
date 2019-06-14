@@ -8,7 +8,7 @@ import { ModalController } from '@ionic/angular';
 	styleUrls: ['./carrier-addr-popup.scss']
 })
 export class CarrierAddrPopupPage implements OnInit {
-	@ViewChild('gmap')
+	@ViewChild('gmap', { static: true })
 	gmapElement: ElementRef;
 
 	map: google.maps.Map;
@@ -18,12 +18,12 @@ export class CarrierAddrPopupPage implements OnInit {
 	@Input()
 	geoLocation: GeoLocation;
 
-	private city: any;
-	private country: any;
-	private street: any;
-	private house: any;
-	private apartment: any;
-	private coordinates: any;
+	city: any;
+	country: any;
+	street: any;
+	house: any;
+	apartment: any;
+	coordinates: any;
 
 	constructor(public modalCtrl: ModalController) {}
 

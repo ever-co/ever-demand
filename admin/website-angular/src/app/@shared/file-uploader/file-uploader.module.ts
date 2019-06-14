@@ -4,13 +4,15 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FileUploadModule } from 'ng2-file-upload';
 import { FileUploaderComponent } from './file-uploader.component';
 import { FormsModule } from '@angular/forms';
+import { NbButtonModule } from '@nebular/theme';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		FormsModule,
 		TranslateModule.forChild(),
-		FileUploadModule
+		FileUploadModule,
+		NbButtonModule
 	],
 	exports: [FileUploaderComponent],
 	declarations: [FileUploaderComponent]

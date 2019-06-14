@@ -42,13 +42,13 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 	@Input()
 	carrier: Carrier;
 
-	@ViewChild('basicInfoForm')
+	@ViewChild('basicInfoForm', { static: true })
 	basicInfoForm: BasicInfoFormComponent;
 
-	@ViewChild('accountForm')
+	@ViewChild('accountForm', { static: true })
 	accountForm: AccountFormComponent;
 
-	@ViewChild('locationForm')
+	@ViewChild('locationForm', { static: true })
 	locationForm: LocationFormComponent;
 
 	isNextStepOneAvailable: boolean = true;
@@ -94,6 +94,7 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 
 		const account = {
 			isActive: this.accountForm.isActive.value,
+			isSharedCarrier: this.accountForm.isSharedCarrier.value,
 			username: this.accountForm.userName.value,
 			password: this.accountForm.password.value,
 			repeatPassword: this.accountForm.repeatPassword.value
@@ -110,6 +111,7 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 
 			username: account.username,
 			isActive: account.isActive,
+			isSharedCarrier: account.isSharedCarrier,
 
 			geoLocation
 		};
@@ -127,6 +129,7 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 
 		this.cancelModal();
 	}
+
 	get password() {
 		return this.accountForm.password.value;
 	}
@@ -137,8 +140,7 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 		this.isNextStepThreeAvailable = false;
 	}
 
-	toStep2event() {
-		// This is event emitter, not a function
+	toStep2event($event) {
 		this.isNextStepOneAvailable = false;
 		this.isNextStepTwoAvailable = true;
 		this.isNextStepThreeAvailable = false;
@@ -155,6 +157,7 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 		this.isNextStepTwoAvailable = false;
 		this.isNextStepThreeAvailable = true;
 	}
+
 	cancelModal() {
 		this.modalCtrl.dismiss();
 	}
@@ -163,6 +166,7 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 		const prevOrComplete = data;
 		this.buttonClickEvent.emit(prevOrComplete);
 	}
+
 	onClickComplete(data) {
 		this._updateCarrier();
 	}

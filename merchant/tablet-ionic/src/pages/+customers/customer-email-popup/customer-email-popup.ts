@@ -11,7 +11,7 @@ export class CustomerEmailPopupPage implements OnInit {
 	@Input()
 	user: any;
 
-	private email: any;
+	email: any;
 
 	constructor(
 		public loadingCtrl: LoadingController,

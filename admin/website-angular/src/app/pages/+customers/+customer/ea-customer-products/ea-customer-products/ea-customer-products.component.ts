@@ -105,7 +105,7 @@ export class CustomerProductsComponent implements OnDestroy, OnInit {
 							) => {
 								return this._sanitizer.bypassSecurityTrustHtml(
 									`<div class="product">
-											<h6>${product.warehouseProduct.price}</h6>
+											<p>${product.warehouseProduct.price}</p>
 										</div>
 									</div>`
 								);
@@ -125,7 +125,7 @@ export class CustomerProductsComponent implements OnDestroy, OnInit {
 							) => {
 								return this._sanitizer.bypassSecurityTrustHtml(
 									`<div class="product">
-											<h6>${product.warehouseProduct.count}</h6>
+											<p>${product.warehouseProduct.count}</p>
 										</div>
 									</div>`
 								);

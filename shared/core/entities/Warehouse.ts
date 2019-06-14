@@ -7,6 +7,7 @@ import ForwardOrdersMethod from '../enums/ForwardOrdersMethod';
 import { Entity, Column } from 'typeorm';
 import IWarehouseProduct from '../interfaces/IWarehouseProduct';
 import OrderBarcodeTypes from '../enums/OrderBarcodeTypes';
+import PaymentGateway from './PaymentGateway';
 
 /**
  * Warehouse / Merchant / Store
@@ -184,9 +185,9 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	 * @type {ForwardOrdersMethod}
 	 * @memberof Warehouse
 	 */
-	@Types.Number(ForwardOrdersMethod.Phone)
+	@Schema([Number])
 	@Column()
-	forwardOrdersUsing: ForwardOrdersMethod;
+	forwardOrdersUsing: ForwardOrdersMethod[];
 
 	/**
 	 * Is Warehouse products by default require manufacturing
@@ -239,6 +240,15 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	@Column()
 	hasRestrictedCarriers: boolean;
 
+	/**
+	 * IDs of carriers which are "connected" (assigned) to the Store ("own carriers").
+	 *
+	 * @type {string[]}
+	 * @memberof Warehouse
+	 */
+	@Schema([String])
+	carriersIds: string[];
+
 	@Types.Boolean(false)
 	@Column()
 	isDeleted: boolean;
@@ -282,6 +292,15 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	@Schema({ type: String, unique: true, sparse: true })
 	@Column()
 	barcodeData: string;
+
+	/**
+	 * Payment gateways
+	 *
+	 * @type {PaymentGateway[]}
+	 * @memberof Warehouse
+	 */
+	@Schema([getSchema(PaymentGateway)])
+	paymentGateways?: PaymentGateway[];
 }
 
 export type WithFullProducts = Warehouse & {

@@ -38,6 +38,7 @@ import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import User from '@modules/server.common/entities/User';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { ConfigService } from '../config/config.service';
+import * as pem from 'pem';
 
 // local IPs
 const INTERNAL_IPS = ['127.0.0.1', '::1'];
@@ -202,7 +203,7 @@ export class ServicesApp {
 		await this._registerModels();
 		await this._registerEntityAdministrator();
 		this._passportSetup();
-		this._startExpress();
+		await this._startExpress();
 		this._startSocketIO();
 	}
 
@@ -272,7 +273,7 @@ export class ServicesApp {
 		});
 	}
 
-	private _startExpress() {
+	private async _startExpress() {
 		// that's important to see even if logs disabled, do not remove!
 		console.log('Connected to DB');
 
@@ -296,21 +297,40 @@ export class ServicesApp {
 
 		this.expressApp.set('view cache', false);
 
-		// TODO: this is probably a good place to check if Cert files exists and if not generate them for localhost
-		this.httpsServer = https.createServer(
-			{
-				cert: fs.readFileSync(env.HTTPS_CERT_PATH),
-				key: fs.readFileSync(env.HTTPS_KEY_PATH)
-			},
-			this.expressApp
-		);
+		// now we check if Cert files exists and if not generate them for localhost
+		const httpsCertPath = env.HTTPS_CERT_PATH;
+		const httpsKeyPath = env.HTTPS_KEY_PATH;
+
+		const hasHttpsCert = fs.existsSync(httpsCertPath);
+		const hasHttpsKey = fs.existsSync(httpsKeyPath);
+
+		let hasDefaultHttpsCert = false;
+
+		if (!hasHttpsCert || !hasHttpsKey) {
+			hasDefaultHttpsCert = await this._getCertificates(
+				httpsCertPath,
+				httpsKeyPath
+			);
+		}
+
+		if ((hasHttpsCert && hasHttpsKey) || hasDefaultHttpsCert) {
+			this.httpsServer = https.createServer(
+				{
+					cert: fs.readFileSync(httpsCertPath),
+					key: fs.readFileSync(httpsKeyPath)
+				},
+				this.expressApp
+			);
+		}
 
 		this.httpServer = http.createServer(this.expressApp);
 
 		// TODO: add to settings file
 		// set connections timeouts to 30 minutes (for long running requests)
 		const timeout = 30 * 60 * 1000;
-		this.httpsServer.setTimeout(timeout);
+		if (this.httpsServer) {
+			this.httpsServer.setTimeout(timeout);
+		}
 		this.httpServer.setTimeout(timeout);
 
 		this.expressApp.set('httpsPort', env.HTTPSPORT);
@@ -406,7 +426,7 @@ export class ServicesApp {
 			'Express server prepare to listen'
 		);
 
-		if (httpsPort && httpsPort > 0) {
+		if (httpsPort && httpsPort > 0 && this.httpsServer) {
 			// app listen on https
 			this.httpsServer.listen(httpsPort, () => {
 				this.log.info(
@@ -417,6 +437,10 @@ export class ServicesApp {
 					`Express https server listening on port ${httpsPort}`
 				);
 			});
+		} else {
+			this.log.warn(
+				`No SSL Certificate exists, HTTPS endpoint will be disabled`
+			);
 		}
 
 		if (httpPort && httpPort > 0) {
@@ -431,6 +455,74 @@ export class ServicesApp {
 				);
 			});
 		}
+	}
+
+	private async _getCertificates(
+		httpsCertPath: string,
+		httpsKeyPath: string
+	) {
+		try {
+			this.log.info('Generating SSL Certificates for HTTPS');
+
+			let { success } = await this._createCertificateAsync(
+				httpsCertPath,
+				httpsKeyPath
+			);
+
+			this.log.info('Certificates were generated');
+
+			return success;
+		} catch (error) {
+			this.log.warn(
+				`Certificates were not generated due to error: ${error.message}`
+			);
+
+			return false;
+		}
+	}
+
+	private _createCertificateAsync(
+		httpsCertPath: string,
+		httpsKeyPath: string
+	): Promise<{ success: boolean }> {
+		return new Promise((resolve, reject) => {
+			try {
+				pem.createCertificate(
+					{
+						days: 365,
+						selfSigned: true
+					},
+					(err, keys) => {
+						if (err) {
+							reject({ success: false, message: err.message });
+							return;
+						}
+
+						const httpsCertDirPath = path.dirname(httpsCertPath);
+						const httpsKeyDirPath = path.dirname(httpsKeyPath);
+
+						if (!fs.existsSync(httpsCertDirPath)) {
+							fs.mkdirSync(httpsCertDirPath, {
+								recursive: true
+							});
+						}
+
+						if (!fs.existsSync(httpsKeyDirPath)) {
+							fs.mkdirSync(httpsKeyDirPath, {
+								recursive: true
+							});
+						}
+
+						fs.writeFileSync(httpsCertPath, keys.certificate);
+						fs.writeFileSync(httpsKeyPath, keys.serviceKey);
+
+						resolve({ success: true });
+					}
+				);
+			} catch (err) {
+				reject({ success: false, message: err.message });
+			}
+		});
 	}
 
 	private _startSocketIO() {

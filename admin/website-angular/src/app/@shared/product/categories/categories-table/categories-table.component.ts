@@ -1,4 +1,11 @@
-import { Component, OnDestroy } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	Input,
+	OnInit,
+	Output,
+	EventEmitter
+} from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import { ProductsCategoryService } from '../../../../@core/data/productsCategory.service';
@@ -26,18 +33,30 @@ interface ProductViewModel {
 	styleUrls: ['./categories-table.component.scss'],
 	templateUrl: './categories-table.component.html'
 })
-export class CategoriesTableComponent implements OnDestroy {
-	private ngDestroy$ = new Subject<void>();
+export class CategoriesTableComponent implements OnInit, OnDestroy {
+	@Input()
+	selectMode = 'multi';
+	@Input()
+	showPerPage = 7;
+	@Input()
+	editWithModal = true;
 
-	public confirmSub$: Subscription;
+	@Output()
+	editRow = new EventEmitter();
+	@Output()
+	deleteRow = new EventEmitter();
+
+	productsCategories: ProductsCategory[] = [];
+	loading: boolean;
+
+	confirmSub$: Subscription;
 
 	settingsSmartTable: object;
 	sourceSmartTable = new LocalDataSource();
 
 	private static noInfoSign = '';
 	private _selectedCategories: ProductViewModel[] = [];
-	public productsCategories: ProductsCategory[] = [];
-	public loading: boolean;
+	private ngDestroy$ = new Subject<void>();
 
 	constructor(
 		private readonly _translateService: TranslateService,
@@ -47,8 +66,8 @@ export class CategoriesTableComponent implements OnDestroy {
 		private readonly _notifyService: NotifyService,
 		private readonly modalService: NgbModal
 	) {
-		this._loadSettingsSmartTable();
-		this._applyTranslationOnSmartTable();
+		this._translateService.setDefaultLang('en');
+		this._translateService.use('en');
 	}
 
 	get hasSelectedCategories(): boolean {
@@ -59,15 +78,23 @@ export class CategoriesTableComponent implements OnDestroy {
 		return [...this._selectedCategories];
 	}
 
+	ngOnInit(): void {
+		this._loadSettingsSmartTable();
+		this._applyTranslationOnSmartTable();
+	}
 	edit(ev) {
-		const activeModal = this._modalService.open(CategoryEditComponent, {
-			size: 'lg',
-			container: 'nb-layout',
-			backdrop: 'static'
-		});
-		const modalComponent: CategoryEditComponent =
-			activeModal.componentInstance;
-		modalComponent.currentCategory = ev.data;
+		if (this.editWithModal) {
+			const activeModal = this._modalService.open(CategoryEditComponent, {
+				size: 'lg',
+				container: 'nb-layout',
+				backdrop: 'static'
+			});
+			const modalComponent: CategoryEditComponent =
+				activeModal.componentInstance;
+			modalComponent.currentCategory = ev.data;
+		} else {
+			this.editRow.emit(ev.data);
+		}
 	}
 
 	async deleteCategory(e) {
@@ -87,13 +114,18 @@ export class CategoriesTableComponent implements OnDestroy {
 
 				try {
 					this.loading = true;
+
 					this._productsCategoryService
 						.removeByIds(idsArray)
 						.pipe()
 						.toPromise();
+
 					this.loading = false;
+
 					const message = `Category '${e.data.title}' deleted`;
 					this._notifyService.success(message);
+
+					this.deleteRow.emit(e.data);
 				} catch (error) {
 					this.loading = false;
 					const message = `Something went wrong!`;
@@ -124,7 +156,7 @@ export class CategoriesTableComponent implements OnDestroy {
 		this.sourceSmartTable.load(categoriesVM);
 	}
 
-	protected localeTranslate(member: ILocaleMember[]) {
+	localeTranslate(member: ILocaleMember[]) {
 		return this._productLocalesService.getTranslate(member);
 	}
 
@@ -144,17 +176,17 @@ export class CategoriesTableComponent implements OnDestroy {
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(([image, titleTr]) => {
 				this.settingsSmartTable = {
-					selectMode: 'multi',
+					selectMode: this.selectMode,
 					mode: 'external',
 					actions: {
 						add: false,
 						position: 'left'
 					},
 					edit: {
-						editButtonContent: '<i class="nb-edit"></i>'
+						editButtonContent: '<i class="ion-md-create"></i>'
 					},
 					delete: {
-						deleteButtonContent: '<i class="nb-trash"></i>',
+						deleteButtonContent: '<i class="ion-md-trash"></i>',
 						confirmDelete: true
 					},
 					columns: {
@@ -169,7 +201,7 @@ export class CategoriesTableComponent implements OnDestroy {
 					},
 					pager: {
 						display: true,
-						perPage: 7
+						perPage: this.showPerPage
 					}
 				};
 			});

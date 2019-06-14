@@ -11,8 +11,9 @@ import { RenderComponentsModule } from '../../@shared/render-component/render-co
 import { GeoLocationService } from '../../@core/data/geo-location.service';
 import { UserMutationModule } from '../../@shared/user/user-mutation';
 import { CustomerTableModule } from '../../@shared/render-component/customer-table/customer-table.module';
-import { NbSpinnerModule } from '@nebular/theme';
+import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 import { NotifyService } from 'app/@core/services/notify/notify.service';
+import { BanConfirmModule } from 'app/@shared/user/ban-confirm';
 
 const routes: Routes = [
 	{
@@ -41,7 +42,9 @@ const routes: Routes = [
 		RenderComponentsModule,
 		UserMutationModule,
 		CustomerTableModule,
-		NbSpinnerModule
+		NbSpinnerModule,
+		BanConfirmModule,
+		NbButtonModule
 	],
 	declarations: [CustomersComponent],
 	providers: [JsonPipe, GeoLocationService, NotifyService]

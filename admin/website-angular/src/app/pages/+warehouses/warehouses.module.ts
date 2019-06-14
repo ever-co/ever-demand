@@ -13,8 +13,9 @@ import { WarehouseMutationModule } from '../../@shared/warehouse/warehouse-mutat
 import { HighlightModule } from 'ngx-highlightjs';
 import { RenderComponentsModule } from '../../@shared/render-component/render-components.module';
 import { WarehouseTableModule } from '../../@shared/render-component/warehouse-table/warehouse-table.module';
-import { NbSpinnerModule } from '@nebular/theme';
+import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 import { ConfirmationModalModule } from 'app/@shared/confirmation-modal/confirmation-modal.module';
+import { WarehouseTrackModule } from './+warehouse-track/warehouse-track.module';
 
 @NgModule({
 	imports: [
@@ -25,6 +26,7 @@ import { ConfirmationModalModule } from 'app/@shared/confirmation-modal/confirma
 		Ng2SmartTableModule,
 		FormWizardModule,
 		ConfirmationModalModule,
+		WarehouseTrackModule,
 		ToasterModule.forRoot(),
 		TranslateModule.forChild({
 			loader: {
@@ -36,7 +38,8 @@ import { ConfirmationModalModule } from 'app/@shared/confirmation-modal/confirma
 		HighlightModule.forRoot({ theme: 'github' }),
 		RenderComponentsModule,
 		WarehouseTableModule,
-		NbSpinnerModule
+		NbSpinnerModule,
+		NbButtonModule
 	],
 	declarations: [WarehousesComponent],
 	entryComponents: [],

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
 import { Geolocation } from '@ionic-native/geolocation';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
+import { environment } from 'environment';
 
 @Injectable()
 export class GeoLocationService {
@@ -10,7 +11,17 @@ export class GeoLocationService {
 	getCurrentGeoLocation(): Promise<GeoLocation> {
 		return new Promise(async (resolve, reject) => {
 			try {
-				const { coords } = await Geolocation.getCurrentPosition();
+				const defaultLat = environment.DEFAULT_LATITUDE;
+				const defaultLng = environment.DEFAULT_LONGITUDE;
+
+				let coords: { longitude: number; latitude: number };
+
+				if (!environment.production && defaultLat && defaultLng) {
+					coords = { latitude: defaultLat, longitude: defaultLng };
+				} else {
+					const data = await Geolocation.getCurrentPosition();
+					coords = data.coords;
+				}
 
 				const location: ILocation = {
 					type: 'Point',

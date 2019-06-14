@@ -13,6 +13,8 @@ type Carrier {
 	geoLocation: GeoLocation!
 	devicesIds: [String!]!
 	apartment: String
+	isActive: Boolean
+	isSharedCarrier: Boolean
 	# Resolved
 	devices: [Device!]!
 
@@ -28,6 +30,8 @@ input CarriersFindInput {
 	phone: String
 	isDeleted: Boolean
 	status: Int
+	isSharedCarrier: Boolean
+	_id: Any
 	# TODO geoLocation
 }
 
@@ -39,7 +43,7 @@ type Query {
 		pagingOptions: PagingOptionsInput
 	): [Carrier!]!
 	getActiveCarriers: [Carrier]!
-	getCountOfCarriers: Int!
+	getCountOfCarriers(carriersFindInput: CarriersFindInput): Int!
 }
 
 input CarrierCreateInput {
@@ -58,6 +62,7 @@ input CarrierCreateInput {
 	skippedOrderIds: [String!]
 	deliveriesCountToday: Int
 	totalDistanceToday: Float
+	isSharedCarrier: Boolean
 	devicesIds: [String!]
 
 	# True carrier enabled in system, False carrier completely disabled in the system (e.g. was fired).
@@ -82,6 +87,7 @@ input CarrierUpdateInput {
 	deliveriesCountToday: Int
 	totalDistanceToday: Float
 	devicesIds: [String!]
+	isSharedCarrier: Boolean
 
 	# True carrier enabled in system, False carrier completely disabled in the system (e.g. was fired).
 	# This setting is set by Admin, not by carrier itself

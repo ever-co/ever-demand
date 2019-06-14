@@ -12,11 +12,11 @@
 				</div>
 
 				<div class="col-md-9 content-center">
-					<h6>
+					<span>
 						{{
 							'WAREHOUSE_VIEW.PRODUCTS_MANUFACTURING' | translate
 						}}
-					</h6>
+					</span>
 				</div>
 			</div>
 			<div class="row store-info" [hidden]="!isCarrierRequired">
@@ -25,7 +25,9 @@
 				</div>
 
 				<div class="col-md-9 content-center">
-					<h6>{{ 'WAREHOUSE_VIEW.CARRIER_REQUIRED' | translate }}</h6>
+					<span>{{
+						'WAREHOUSE_VIEW.CARRIER_REQUIRED' | translate
+					}}</span>
 				</div>
 			</div>
 		</div>

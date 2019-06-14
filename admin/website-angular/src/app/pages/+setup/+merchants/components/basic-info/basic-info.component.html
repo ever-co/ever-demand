@@ -1,0 +1,179 @@
+<nb-card class="setup-merchant-basic-info">
+	<nb-card-header>
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.BASIC_INFO' | translate }}
+	</nb-card-header>
+	<nb-card-body>
+		<form class="row m-0" #basicInfoForm="ngForm">
+			<div class="form-group offset-md-2 col-md-8">
+				<label for="name">
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.NAME' | translate
+					}}
+				</label>
+				<input
+					nbInput
+					type="text"
+					class="form-control"
+					id="name"
+					name="name-input"
+					placeholder="{{
+						'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.NAME' | translate
+					}}"
+					[(ngModel)]="basicInfoModel.name"
+					#name="ngModel"
+					(change)="nameChange()"
+					[ngClass]="{
+						'input-danger':
+							name.invalid && (name.dirty || name.touched),
+						'input-success':
+							name.valid && (name.dirty || name.touched)
+					}"
+					required
+					minlength="4"
+				/>
+				<small
+					class="text-danger"
+					*ngIf="name.invalid && (name.dirty || name.touched)"
+				>
+					<span *ngIf="name.errors.required">
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.NAME_IS_REQUIRED'
+								| translate
+						}}
+					</span>
+					<span *ngIf="name.errors.minlength">
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.NAME_MUST_BE_AT_LEAST_4_CHARACTERS'
+								| translate
+						}}
+					</span>
+				</small>
+			</div>
+			<div class="offset-md-2 col-md-8">
+				<label for="name">
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.PHOTO' | translate
+					}}
+				</label>
+				<e-cu-file-uploader
+					[placeholder]="uploaderPlaceholder"
+					[name]="name.value"
+					[fileUrl]="basicInfoModel.logo"
+					(uploadedImgUrl)="basicInfoModel.logo = $event"
+					[customClass]="
+						basicInfoModel.logo !== ''
+							? invalidUrl
+								? 'form-control-danger'
+								: 'form-control-success'
+							: ''
+					"
+				></e-cu-file-uploader>
+
+				<small
+					class="text-danger"
+					*ngIf="invalidUrl && basicInfoModel.logo !== ''"
+				>
+					<span *ngIf="invalidUrl">
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.ENTER_A_VALID_LOGO_URL_OR_BROWSE_FROM_A_DEVICE'
+								| translate
+						}}
+					</span>
+				</small>
+			</div>
+			<div
+				class="offset-md-2 col-md-8"
+				[hidden]="basicInfoModel.logo === '' || invalidUrl"
+			>
+				<div class="col-sm-10">
+					<div class="row preview-img">
+						<img
+							src="{{ basicInfoModel.logo }}"
+							alt="Invalid image"
+							class="img-rounded"
+							(error)="invalidUrl = true"
+							(load)="invalidUrl = false"
+						/>
+						<div class="remove-icon" (click)="deleteImg()">
+							<span
+								class="ion-md-remove-circle text-danger pl-2"
+								title="{{
+									'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.REMOVE'
+										| translate
+								}}"
+							></span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="mb-3 col-12 p-0">
+				<div class="form-group offset-md-2 col-md-8 mt-3 mb-0">
+					<label for="barcodeData">
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.BARCODE_DATA'
+								| translate
+						}}
+					</label>
+					<input
+						nbInput
+						type="text"
+						class="form-control"
+						id="barcodeData"
+						name="barcode-data-input"
+						placeholder="{{
+							'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.BARCODE_DATA'
+								| translate
+						}}"
+						[(ngModel)]="basicInfoModel.barcodeData"
+						(change)="barcodeDataChange()"
+						#barcodeData="ngModel"
+						[ngClass]="{
+							'input-danger':
+								barcodeData.invalid &&
+								(barcodeData.dirty || barcodeData.touched),
+							'input-success':
+								barcodeData.valid &&
+								(barcodeData.dirty ||
+									barcodeData.touched ||
+									barcodeData.value)
+						}"
+						required
+					/>
+					<small
+						class="text-danger"
+						*ngIf="
+							barcodeData.invalid &&
+							(barcodeData.dirty || barcodeData.touched)
+						"
+					>
+						<span *ngIf="barcodeData.errors.required">
+							{{
+								'FAKE_DATA.SETUP_MERCHANTS.BASIC_INFO.BARCODE_DATA_IS_REQUIRED'
+									| translate
+							}}
+						</span>
+					</small>
+				</div>
+				<div class="offset-md-2 col-md-8" [hidden]="!barcodetDataUrl">
+					<div class="col-sm-10">
+						<span class="row preview-barcode">
+							<img
+								src="{{ barcodetDataUrl }}"
+								alt="Invalid image"
+								class="img-rounded"
+							/>
+						</span>
+					</div>
+				</div>
+			</div>
+		</form>
+	</nb-card-body>
+</nb-card>
+
+<button nbButton (click)="previousStep.emit()">
+	{{ 'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate }}
+</button>
+<button nbButton (click)="nextStep.emit()" [disabled]="!formValid">
+	{{ 'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate }}
+</button>

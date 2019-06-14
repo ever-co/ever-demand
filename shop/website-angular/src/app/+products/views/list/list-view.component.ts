@@ -27,7 +27,7 @@ export class ListViewComponent implements OnDestroy {
 	@Input()
 	isWideView: boolean;
 
-	@ViewChild(MasonryComponent)
+	@ViewChild(MasonryComponent, { static: false })
 	masonry: MasonryComponent;
 
 	containerWidth: string = '100px';

@@ -1,11 +1,10 @@
 import { Observable, from, of } from 'rxjs';
-import { NbAuthResult } from '@nebular/auth';
+import { NbAuthResult, NbAuthStrategy } from '@nebular/auth';
 import { ActivatedRoute } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { NbAuthStrategy } from '@nebular/auth/strategies/auth-strategy';
 import { Store } from '../data/store.service';
 import Admin from '@modules/server.common/entities/Admin';
 import { NbAuthStrategyClass } from '@nebular/auth/auth.options';
@@ -288,6 +287,8 @@ export class AdminAuthStrategy extends NbAuthStrategy {
 
 	private async _logout(): Promise<NbAuthResult> {
 		this.store.clear();
+
+		this.store.serverConnection = '200';
 
 		await this.apollo.getClient().resetStore();
 

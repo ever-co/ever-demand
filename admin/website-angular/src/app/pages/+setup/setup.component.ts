@@ -15,4 +15,10 @@ export class SetupComponent {
 		this._router.navigate(['/generate-initial-data']);
 		this.loading = false;
 	}
+
+	navigateToSetupMerchantsPage() {
+		this.loading = true;
+		this._router.navigate(['/setup/merchants']);
+		this.loading = false;
+	}
 }

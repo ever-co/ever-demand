@@ -1,7 +1,15 @@
-<div class="modal-header"><span>{{mainTextTr()}}</span><button aria-label="Close" class="close"
-	 (click)="cancel()"><span aria-hidden="true">×</span></button></div>
+<div class="modal-header">
+	<span>{{ mainTextTr() }}</span
+	><button aria-label="Close" class="close" (click)="cancel()">
+		<span aria-hidden="true">×</span>
+	</button>
+</div>
 
 <div class="modal-footer">
-	<button class="btn btn-sm btn-danger" (click)="cancel()">{{cancelButtonTr()}}</button>
-	<button class="btn btn-sm btn-success" (click)="confirmEvent.emit()">{{confirmButtonTr()}}</button>
+	<button nbButton status="danger" (click)="cancel()">
+		{{ cancelButtonTr() }}
+	</button>
+	<button nbButton status="success" (click)="confirmEvent.emit()">
+		{{ confirmButtonTr() }}
+	</button>
 </div>

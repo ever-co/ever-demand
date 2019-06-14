@@ -1,22 +1,44 @@
-<div class="header-container" [class.left]="position === 'normal'" [class.right]="position === 'inverse'">
-	<div class="logo-containter">
-		<a (click)="toggleSidebar()" href="#" class="navigation"><i class="nb-menu"></i></a>
-		<div class="logo" (click)="goToHome()"><span>
-				{{"HEADER_VIEW.EVER" | translate}}</span><span class="ever-simbol">®</span>
-			<span>{{"HEADER_VIEW.ADMIN" | translate}}</span></div>
+<div
+	class="header-container"
+	[class.left]="position === 'normal'"
+	[class.right]="position === 'inverse'"
+>
+	<div class="logo-container">
+		<a (click)="toggleSidebar()" href="#" class="navigation">
+			<nb-icon icon="menu-2-outline"></nb-icon>
+		</a>
+
+		<div class="logo" (click)="navigateHome()">
+			<span> {{ 'HEADER_VIEW.EVER' | translate }}</span
+			><span class="ever-simbol">®</span>
+			<span>{{ 'HEADER_VIEW.ADMIN' | translate }}</span>
+		</div>
 	</div>
 </div>
 
 <div class="header-container">
-	<nb-actions size="medium" [class.right]="position === 'normal'" [class.left]="position === 'inverse'">
-		<nb-action icon="nb-gear" class="toggle-layout" (click)="toggleSettings()"></nb-action>
+	<nb-actions
+		size="small"
+		[class.right]="position === 'normal'"
+		[class.left]="position === 'inverse'"
+	>
+		<nb-action
+			icon="settings-2-outline"
+			class="toggle-layout"
+			(click)="toggleSettings()"
+		></nb-action>
 		<nb-action class="admin-menu" *ngIf="admin$ | async; let admin">
-			<nb-user [nbContextMenu]="adminMenu" [name]="admin?.name" [picture]="admin?.pictureUrl"></nb-user>
+			<nb-user
+				[nbContextMenu]="adminMenu"
+				[name]="admin?.name"
+				[picture]="admin?.pictureUrl"
+			></nb-user>
 		</nb-action>
-		<!-- <nb-action class="control-item" disabled icon="nb-notifications"></nb-action>
-    	<nb-action class="control-item" icon="nb-email"></nb-action>
+		<!--
+		<nb-action class="control-item" icon="bell-outline"></nb-action>
+    <nb-action class="control-item" icon="email-outline"></nb-action>
     	<nb-action class="control-item">
-		<nb-search [hidden]='true' type="rotate-layout" (click)="startSearch()"></nb-search>
+		 <nb-search type="rotate-layout"></nb-search>
 		</nb-action>-->
 	</nb-actions>
 </div>

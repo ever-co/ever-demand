@@ -26,10 +26,12 @@
 			<nb-card-body>
 				<button
 					type="button"
-					class="btn btn-primary btn-with-icon no-text-transform"
+					nbButton
+					status="primary"
+					class="btn-with-icon no-text-transform"
 					[routerLink]="['./edit']"
 				>
-					<i class="nb-edit"></i>
+					<i class="ion-md-create mr-1"></i>
 					<span>{{
 						'CARRIERS_VIEW.CARRIER_PAGE.EDIT' | translate
 					}}</span>
@@ -77,7 +79,7 @@
 					*ngIf="selectedCarrier"
 					(change)="carrierSelect($event)"
 					[items]="carriers"
-					[(ngModel)]="selectedCarrier.id"
+					[ngModel]="selectedCarrier.id"
 					[clearable]="false"
 					placeholder="{{
 						'CARRIERS_VIEW.CARRIER_PAGE.SELECT_CARRIER' | translate
@@ -102,7 +104,7 @@
 						let-item="item"
 						let-index="index"
 					>
-						<h6 class="card-title">
+						<p class="card-title">
 							<img
 								*ngIf="item.logo"
 								height="40"
@@ -113,7 +115,7 @@
 							{{ item.firstName }}
 							{{ item.firstName && item.lastName }}
 							{{ item.firstName ? '' : '# ' + item.id }}
-						</h6>
+						</p>
 					</ng-template>
 				</ng-select>
 			</nb-card-body>

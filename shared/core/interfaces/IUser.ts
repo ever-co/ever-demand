@@ -10,6 +10,7 @@ export interface IUserInitializeObject extends DBCreateObject {
 	socialIds?: string[];
 	isRegistrationCompleted?: boolean;
 	hash?: string;
+	isBanned?: boolean;
 }
 
 export interface IUserCreateObject extends IUserInitializeObject {
@@ -28,6 +29,7 @@ interface IUser extends IUserCreateObject, IUserInitializeObject, DBRawObject {
 	_id: PyroObjectId;
 	geoLocation: IGeoLocation;
 	devicesIds: string[];
+	readonly fullAddress: string;
 }
 
 export default IUser;

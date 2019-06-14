@@ -7,7 +7,8 @@ enum OrderBarcodeTypes {
 	QR = 0,
 	CODE128 = 1,
 	CODE39 = 2,
-	pharmacode = 3
+	pharmacode = 3,
+	MSI = 4
 }
 
 export function orderBarcodeTypesToString(status: OrderBarcodeTypes): string {
@@ -20,6 +21,8 @@ export function orderBarcodeTypesToString(status: OrderBarcodeTypes): string {
 			return 'CODE39';
 		case OrderBarcodeTypes.pharmacode:
 			return 'pharmacode';
+		case OrderBarcodeTypes.MSI:
+			return 'MSI';
 		default:
 			return 'BAD_STATUS';
 	}

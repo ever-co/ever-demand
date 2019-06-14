@@ -51,6 +51,9 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 	@Input()
 	hiddenTableActions: boolean;
 
+	@Input()
+	boxShadow: string;
+
 	private static noInfoSign = '';
 	private _selectedProducts: ProductViewModel[] = [];
 	private products: Product[];
@@ -255,10 +258,10 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 						position: 'left'
 					},
 					edit: {
-						editButtonContent: '<i class="nb-edit"></i>'
+						editButtonContent: '<i class="ion-md-create"></i>'
 					},
 					delete: {
-						deleteButtonContent: '<i class="nb-trash"></i>',
+						deleteButtonContent: '<i class="ion-md-trash"></i>',
 						confirmDelete: true
 					},
 					mode: 'external',

@@ -18,7 +18,7 @@ import { getDummyImage } from '@modules/server.common/utils';
 @Component({
 	selector: 'user-mutation',
 	templateUrl: './user-mutation.component.html',
-	styleUrls: ['/user-mutation.component.scss']
+	styleUrls: ['./user-mutation.component.scss']
 })
 export class UserMutationComponent {
 	readonly form: FormGroup = this._formBuilder.group({
@@ -31,10 +31,10 @@ export class UserMutationComponent {
 	readonly apartment = this.form.get('apartment') as FormGroup;
 	readonly location = this.form.get('location') as FormGroup;
 
-	@ViewChild('basicInfoForm')
+	@ViewChild('basicInfoForm', { static: false })
 	basicInfoForm: BasicInfoFormComponent;
 
-	@ViewChild('locationForm')
+	@ViewChild('locationForm', { static: false })
 	locationForm: LocationFormComponent;
 
 	@Input()
@@ -160,6 +160,7 @@ export class UserMutationComponent {
 			const lastNameLetter = user.lastName
 				? user.lastName.charAt(0).toUpperCase()
 				: '';
+
 			if (firstNameLetter || lastNameLetter) {
 				user.image = getDummyImage(
 					300,
@@ -167,7 +168,11 @@ export class UserMutationComponent {
 					firstNameLetter + lastNameLetter
 				);
 			} else {
-				// TODO if first/last name not exist
+				const firstCityLetter = user.geoLocation.city
+					.charAt(0)
+					.toUpperCase();
+
+				user.image = getDummyImage(300, 300, firstCityLetter);
 			}
 		}
 

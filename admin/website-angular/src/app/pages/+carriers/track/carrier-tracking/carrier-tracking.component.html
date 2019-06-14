@@ -4,7 +4,10 @@
 			<div class="col-8">
 				<nb-card>
 					<nb-card-header>
-						Track all working carriers
+						{{
+							'CARRIERS_VIEW.TRACK_PAGE.TRACK_ALL_WORKING_CARRIERS'
+								| translate
+						}}
 					</nb-card-header>
 					<nb-card-body>
 						<div #gmap class="googleMap"></div>
@@ -15,7 +18,10 @@
 			<div class="col-4">
 				<nb-card>
 					<nb-card-header>
-						Filter Carriers
+						{{
+							'CARRIERS_VIEW.TRACK_PAGE.FILTER_CARRIERS'
+								| translate
+						}}
 					</nb-card-header>
 					<nb-card-body style="overflow:inherit;">
 						<div>
@@ -46,7 +52,7 @@
 									let-item="item"
 									let-index="index"
 								>
-									<h6 class="card-title">
+									<p class="card-title">
 										<img
 											*ngIf="item.logo"
 											height="40"
@@ -55,7 +61,7 @@
 											[src]="item.logo"
 										/>
 										{{ item.name }}
-									</h6>
+									</p>
 								</ng-template>
 							</ng-select>
 							<ng-select
@@ -85,7 +91,7 @@
 									let-item="item"
 									let-index="index"
 								>
-									<h6 class="card-title">
+									<p class="card-title">
 										<img
 											*ngIf="item.logo"
 											height="40"
@@ -94,27 +100,36 @@
 											[src]="item.logo"
 										/>
 										{{ item.fullName }}
-									</h6>
+									</p>
 								</ng-template>
 							</ng-select>
 						</div>
 						<nb-card-footer>
 							<div class="details">
 								<div class="warehouse" *ngIf="selectedStore">
-									<h5>
+									<h6>
 										<b>{{ selectedStore.name }}</b>
-									</h5>
+									</h6>
 									<ul>
 										<li>
-											Phone:
+											{{
+												'CARRIERS_VIEW.TRACK_PAGE.PHONE'
+													| translate
+											}}:
 											{{ selectedStore.contactPhone }}
 										</li>
 										<li>
-											Email:
+											{{
+												'CARRIERS_VIEW.TRACK_PAGE.EMAIL'
+													| translate
+											}}:
 											{{ selectedStore.contactEmail }}
 										</li>
 										<li>
-											Address:
+											{{
+												'CARRIERS_VIEW.TRACK_PAGE.ADDRESS'
+													| translate
+											}}:
 											{{
 												selectedStore.geoLocation
 													.streetAddress
@@ -123,21 +138,30 @@
 									</ul>
 								</div>
 								<div class="carrier" *ngIf="selectedCarrier">
-									<h5>
+									<h6>
 										<b>{{ selectedCarrier.fullName }}</b>
-									</h5>
+									</h6>
 									<ul>
 										<li>
-											Delivery Count:
+											{{
+												'CARRIERS_VIEW.TRACK_PAGE.DELIVERY_COUNT'
+													| translate
+											}}:
 											{{
 												selectedCarrier.numberOfDeliveries
 											}}
 										</li>
 										<li>
-											Phone: {{ selectedCarrier.phone }}
+											{{
+												'CARRIERS_VIEW.TRACK_PAGE.PHONE'
+													| translate
+											}}: {{ selectedCarrier.phone }}
 										</li>
 										<li>
-											Address:
+											{{
+												'CARRIERS_VIEW.TRACK_PAGE.ADDRESS'
+													| translate
+											}}:
 											{{
 												selectedCarrier.geoLocation
 													.streetAddress

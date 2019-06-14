@@ -16,7 +16,7 @@ import {
 } from '@angular/animations';
 import { Observable } from 'rxjs';
 import 'rxjs/add/observable/fromEvent';
-import { ElementQueries } from 'css-element-queries';
+import * as ElementQueries from 'css-element-queries/src/ElementQueries';
 import ProductInfo from '../../../modules/server.common/entities/ProductInfo';
 import { OrderRouter } from '../../../modules/client.common.angular2/routers/order-router.service';
 import { WarehouseOrdersRouter } from '../../../modules/client.common.angular2/routers/warehouse-orders-router.service';

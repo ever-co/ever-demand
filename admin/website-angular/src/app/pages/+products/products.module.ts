@@ -11,11 +11,11 @@ import { ProductCreateModule } from '../../@shared/product/product-create';
 import { ProductFormsModule } from '../../@shared/product/forms';
 import { CategoryCreateComponent } from '../../@shared/product/categories/category-create';
 import { CategoryEditComponent } from '../../@shared/product/categories/category-edit/category-edit.component';
-import { NbSpinnerModule } from '@nebular/theme';
+import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 import { NotifyService } from 'app/@core/services/notify/notify.service';
 import { ConfirmationModalModule } from '../../@shared/confirmation-modal/confirmation-modal.module';
-import { CategoryImageComponent } from 'app/@shared/product/categories/categories-table/category-image.component';
 import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.module';
+import { ProductCategoriesFormsModule } from 'app/@shared/product/categories/forms/product-categories-forms.module';
 
 const routes: Routes = [
 	{
@@ -44,20 +44,17 @@ const routes: Routes = [
 		ProductFormsModule,
 		NbSpinnerModule,
 		ConfirmationModalModule,
-		FileUploaderModule
+		FileUploaderModule,
+		ProductCategoriesFormsModule,
+		NbButtonModule
 	],
 	declarations: [
 		ProductsComponent,
 		CategoryCreateComponent,
 		CategoryEditComponent,
-		CategoriesComponent,
-		CategoryImageComponent
+		CategoriesComponent
 	],
-	entryComponents: [
-		CategoryCreateComponent,
-		CategoryEditComponent,
-		CategoryImageComponent
-	],
+	entryComponents: [CategoryCreateComponent, CategoryEditComponent],
 	providers: [JsonPipe, NotifyService]
 })
 export class ProductsModule {

@@ -43,6 +43,7 @@ import { InvitesRequestsService } from 'app/@core/data/invites-requests.service'
 import { UsersService } from 'app/@core/data/users.service';
 import { environment } from 'environments/environment';
 import * as _ from 'lodash';
+import { CurrenciesService } from 'app/@core/data/currencies.service';
 
 const NEED_DEFAULT_SETTINGS_MESSAGE =
 	"Can't generate fake data without DEFAULT_LONGITUDE and DEFAULT_LATITUDE";
@@ -102,7 +103,8 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		private readonly _invitesService: InvitesService,
 		private readonly _inviteRequestsService: InvitesRequestsService,
 		private readonly _notifyService: NotifyService,
-		private readonly _usersService: UsersService
+		private readonly _usersService: UsersService,
+		private readonly _currenciesService: CurrenciesService
 	) {
 		this._setupButtonStatuses();
 		this._setupButtonLoading();
@@ -162,6 +164,10 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		this.isBtnDisabled.all = true;
 		this.loading.all = true;
 
+		if (!this.includeHardcodedData) {
+			await this._generateCurrencies();
+		}
+
 		await this.createInvite1();
 		await this.createInvite2();
 		await this.createInvite3();
@@ -211,6 +217,8 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 	async generateHardcoded() {
 		this.loading.hardcoded = true;
 		this.isBtnDisabled.hardcoded = true;
+
+		await this._generateCurrencies();
 
 		await this._createHardcodedInvites();
 		await this._createHardcodedWarehouses();
@@ -1143,6 +1151,22 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		}
 
 		return warehouseProductCreateObjects;
+	}
+
+	private async _generateCurrencies() {
+		const currenciesCodes = ['USD', 'ILS', 'EUR', 'BGN', 'RUB'];
+
+		for (const currencyCode of currenciesCodes) {
+			const res = await this._currenciesService
+				.create({ currencyCode })
+				.pipe(first())
+				.toPromise();
+
+			this.toasterService.pop(
+				res.success ? 'success' : 'warning',
+				res.message
+			);
+		}
 	}
 
 	ngOnDestroy() {

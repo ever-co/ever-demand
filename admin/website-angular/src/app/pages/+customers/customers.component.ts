@@ -21,6 +21,7 @@ import { NotifyService } from '../../@core/services/notify/notify.service';
 import { CustomerOrdersNumberComponent } from '../../@shared/render-component/customer-table/customer-orders-number/customer-orders-number.component';
 import { CustomerEmailComponent } from '../../@shared/render-component/customer-email/customer-email.component';
 import { CustomerPhoneComponent } from '../../@shared/render-component/customer-phone/customer-phone.component';
+import { BanConfirmComponent } from 'app/@shared/user/ban-confirm';
 
 export interface CustomerViewModel {
 	id: string;
@@ -32,6 +33,7 @@ export interface CustomerViewModel {
 	city: string;
 	address: string;
 	ordersQty: number;
+	isBanned: boolean;
 }
 
 const perPage = 7;
@@ -46,6 +48,7 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 
 	static noInfoSign = '';
 	public loading: boolean;
+	public showBanLoading = false;
 
 	protected customers: User[] = [];
 	protected orders: Order[] = [];
@@ -56,6 +59,8 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 	private _selectedCustomers: CustomerViewModel[] = [];
 	private dataCount: number;
 	private $users;
+
+	public _showOnlyBanned: boolean;
 
 	constructor(
 		private readonly _router: Router,
@@ -119,6 +124,52 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 			this.loading = false;
 			this._notifyService.error(message);
 		}
+	}
+
+	protected banSelectedRows() {
+		if (this.isUserBanned) {
+			this.showUnbanPopup();
+		} else {
+			this.showBanPopup();
+		}
+	}
+
+	private showUnbanPopup() {
+		const modal = this._modalService.open(BanConfirmComponent, {
+			size: 'lg',
+			container: 'nb-layout',
+			windowClass: 'ng-custom',
+			backdrop: 'static'
+		});
+		modal.componentInstance.user = this._selectedCustomers[0];
+		modal.result
+			.then(async (user) => {
+				this.showBanLoading = true;
+				await this._usersService.unbanUser(user.id);
+				this._loadDataSmartTable();
+				this.showBanLoading = false;
+				this._notifyService.success(`${user.name} is unbanned!`);
+			})
+			.catch((_) => {});
+	}
+
+	private showBanPopup() {
+		const modal = this._modalService.open(BanConfirmComponent, {
+			size: 'lg',
+			container: 'nb-layout',
+			windowClass: 'ng-custom',
+			backdrop: 'static'
+		});
+		modal.componentInstance.user = this._selectedCustomers[0];
+		modal.result
+			.then(async (user) => {
+				this.showBanLoading = true;
+				await this._usersService.banUser(user.id);
+				this._loadDataSmartTable();
+				this.showBanLoading = false;
+				this._notifyService.success(`${user.name} is banned!`);
+			})
+			.catch((_) => {});
 	}
 
 	private _loadSettingsSmartTable() {
@@ -216,7 +267,7 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 				users.map((u) => u.id)
 			);
 
-			const usersVM = users.map((user) => {
+			let usersVM = users.map((user) => {
 				const userOrders = usersOrders.find(
 					(res) => res['id'] === user.id
 				);
@@ -242,16 +293,20 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 					address: `st. ${user.geoLocation.streetAddress ||
 						CustomersComponent.noInfoSign}, hse. № ${user
 						.geoLocation.house || CustomersComponent.noInfoSign}`,
-					ordersQty: userOrders ? userOrders.ordersCount : 0
+					ordersQty: userOrders ? userOrders.ordersCount : 0,
+					isBanned: user.isBanned
 				};
 			});
 
 			await this.loadDataCount();
 
+			if (this.showOnlyBanned) {
+				usersVM = usersVM.filter((user) => user.isBanned);
+			}
+
 			const usersData = new Array(this.dataCount);
 
 			usersData.splice(perPage * (page - 1), perPage, ...usersVM);
-
 			await this.sourceSmartTable.load(usersData);
 		};
 
@@ -298,6 +353,25 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 
 	private async loadDataCount() {
 		this.dataCount = await this._usersService.getCountOfUsers();
+	}
+
+	public get isOnlyOneCustomerSelected(): boolean {
+		return this._selectedCustomers.length === 1;
+	}
+
+	public get isUserBanned() {
+		return (
+			this._selectedCustomers[0] && this._selectedCustomers[0].isBanned
+		);
+	}
+
+	public set showOnlyBanned(v: boolean) {
+		this._showOnlyBanned = v;
+		this._loadDataSmartTable();
+	}
+
+	public get showOnlyBanned(): boolean {
+		return this._showOnlyBanned;
 	}
 
 	ngOnDestroy() {

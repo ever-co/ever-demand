@@ -1,0 +1,33 @@
+<nb-card class="setup-merchant-payments">
+	<nb-card-header>
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYMENTS' | translate }}
+	</nb-card-header>
+	<nb-card-body>
+		<div class="row m-0">
+			<div class="form-group offset-md-2 col-md-8">
+				<nb-checkbox [(ngModel)]="isPaymentEnabled">
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.ALLOW_ONLINE_PAYMENT'
+							| translate
+					}}
+				</nb-checkbox>
+			</div>
+		</div>
+		<div [hidden]="!isPaymentEnabled" class="row m-0">
+			<div class="form-group offset-md-2 col-md-8">
+				<ea-payment-gateways
+					#paymentGateways
+					[warehouseLogo]="warehouseLogo"
+					[warehouseCountry]="locationForm.countryId.value"
+				></ea-payment-gateways>
+			</div>
+		</div>
+	</nb-card-body>
+</nb-card>
+
+<button nbButton (click)="previousStep.emit()">
+	{{ 'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate }}
+</button>
+<button nbButton [disabled]="!isPaymentValid" (click)="nextStep.emit()">
+	{{ 'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate }}
+</button>
