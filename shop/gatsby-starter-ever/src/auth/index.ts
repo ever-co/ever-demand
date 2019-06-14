@@ -16,6 +16,17 @@ export const setUser = (user: {
 };
 
 // @ts-ignore
+export const getlocale = () =>
+	isBrowser() && window.localStorage.getItem('locale') ? window.localStorage.getItem('locale'):
+	'en-us'
+;
+
+export const setlocale = (locale) => {
+	window.localStorage.setItem('locale', locale)
+	return locale
+};
+
+// @ts-ignore
 // export const handleLogin = ({ username, password }) => {
 // 	return false;
 // };
