@@ -12,7 +12,7 @@ const AppContext = createContext(null);
 const Provider = ({ children, ...props }) => {
 	const [coordinates, setCoordinates] = useState(null);
 	const user = auth.getUser();
-	if (!user) {
+	if (!user.id) {
 		navigate('/geoLocation');
 	}
 	const getLocation = () => {
