@@ -11,6 +11,9 @@ const AppContext = createContext(null);
 
 const Provider = ({ children, ...props }) => {
 	const [coordinates, setCoordinates] = useState(null);
+	
+	const [deliveryOnly, setDeliveryOnly] = useState(false);
+	
 	const user = auth.getUser();
 
 	const getLocation = () => {
@@ -37,6 +40,8 @@ const Provider = ({ children, ...props }) => {
 				...auth,
 				coordinates,
 				setCoordinates,
+				deliveryOnly,
+				setDeliveryOnly
 			}}
 		>
 			<ThemeProvider theme={theme}>{children}</ThemeProvider>
