@@ -5,7 +5,7 @@ import { Box, Button, Container, MenuItem, Select } from '@material-ui/core';
 import countries from '../../assets/countries';
 import Layout from '../../components/layout';
 
-const locales = ['en', 'fr', 'bg', 'he', 'ru'];
+const locales = ['en-US', 'fr', 'bg', 'he-LI', 'ru'];
 
 const Settings = props => {
 	const [state, setState] = useState(auth.getlocale());

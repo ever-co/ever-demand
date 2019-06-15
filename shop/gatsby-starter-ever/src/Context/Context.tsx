@@ -28,7 +28,7 @@ const Provider = ({ children, ...props }) => {
 			getLocation();
 		}
 		if (!user.id) {
-			navigate('/geoLocation');
+			navigate('/login');
 		}
 	});
 	return (
