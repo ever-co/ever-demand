@@ -50,12 +50,14 @@ const IndexPage = props => {
 		// @ts-ignore
 		return <div>Error! {error.message}</div>;
 	}
+	const gridProducts = data.geoLocationProductsByPaging && !context.deliveryOnly ? data.geoLocationProductsByPaging:
+		data.geoLocationProductsByPaging.filter(item => !item.isTakeaway)
 	return (
 		<Layout>
 			<SEO title="Home" keywords={[`gatsby`, `application`, `react`, 'ever']} />
 			<Container maxWidth={'xl'}>
 				<ProductGrid
-					geoLocationProductsByPaging={data.geoLocationProductsByPaging}
+					geoLocationProductsByPaging={gridProducts}
 					addToCart={addToCart}
 				/>
 			</Container>
