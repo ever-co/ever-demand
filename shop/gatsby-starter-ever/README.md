@@ -1,10 +1,10 @@
-# Vendure Gatsby Storefront
+# Ever Gatsby Starter
 
-This is a storefront app built with [Gatsby](https://www.gatsbyjs.org) and powered by [Vendure](https://www.vendure.io/).
+This is a starter app built with [Gatsby](https://www.gatsbyjs.org) and powered by [Ever](https://www.ever.dev/).
 
 ## Status
 
-This is a work in progress currently. 
+This is a work in progress currently.
 
 ## Setup
 
