@@ -23,9 +23,9 @@ const defaultUser = {
 			coordinates: null,
 		},
 		countryId: 0,
-		streetAddress: '',
 		house: '',
 		postcode: '',
+		streetAddress: '',
 		city: '',
 	},
 };
@@ -45,8 +45,24 @@ const page = () => {
 		}
 	};
 	const formatUser = () => {
-		let user = { ...state };
-		user.geoLocation.loc.coordinates = context.coordinates;
+		let user = {
+			email: state.email,
+			firstName: state.firstName,
+			lastName: state.lastName,
+			phone: state.phone,
+			geoLocation: {
+				loc: {
+					type: "Point",
+					coordinates: context.coordinates,
+				},
+				city: state.city,
+				countryId: state.geoLocation.countryId,
+				house: state.house,
+				postcode: state.postcode,
+				streetAddress: state.streetAddress
+			},
+			apartment: state.apartment,
+		};
 		return user;
 	};
 	const submit = useMutation(CreateUser, {
