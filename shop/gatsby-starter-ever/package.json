@@ -3,7 +3,28 @@
     "private": true,
     "description": "A simple starter to get up and developing quickly with Gatsby and Ever",
     "version": "0.1.1",
-    "author": "Kyle Kitlinski <kyle@kkitlinski.com>",
+    "author": {
+        "name": "Ever Co. LTD",
+        "email": "ever@ever.co",
+        "url": "https://ever.co"
+    },
+    "contributors": [
+        {
+            "name": "Ruslan Konviser (Evereq)",
+            "email": "ruslan@ever.co",
+            "url": "https://ever.co"
+        },
+        {
+            "name": "Misha Konviser (Komish)",
+            "email": "michael@ever.co",
+            "url": "https://ever.co"
+        }
+        {
+            "name": "Kyle Kitlinski (k-kit)",
+            "email": "kyle@kkitlinski.com",
+            "url": "https://kkitlinski.com"
+        }
+    ],
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^1.2.15",
         "@fortawesome/free-solid-svg-icons": "^5.7.2",
