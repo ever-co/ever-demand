@@ -1,7 +1,7 @@
 generates:
   ./ever-types.ts:
     schema: http://45.77.216.107:5555/graphql
-    documents: 'src/components/ShoppingCart/ShoppingCart.vendure.ts'
+    documents: src/**/*.{ts,tsx}
     pluckConfig:
       modules:
         - name: apollo-boost
