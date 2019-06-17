@@ -70,44 +70,46 @@ const page = () => {
 	});
 	return (
 		<Box className={styles.auth}>
-			<Box width={1} textAlign={'center'} m={4}>
+			<Box mb={4}>
 				<Header title={'What is your address?'} subtitle={'We guarantee to only show products relevent to your location.'} logo={logo} />
 			</Box>
 
-			<Grid container justify={'center'} spacing={6} alignContent={'stretch'}>
-				<Grid item xs md={6} lg={4} xl={3}>
-					<Card className={styles.card}>
-						<GeoLoginForm state={state} handleChange={handleChange} />
+			<Box p={4}>
+				<Grid container justify={'center'} spacing={6} alignItems={'center'}>
+					<Grid item xs md={6} lg={4} xl={3}>
+						<Card className={styles.card}>
+							<GeoLoginForm state={state} handleChange={handleChange} />
 
-						<Box marginTop={4}>
-							<Button
-								variant={'contained'}
-								onClick={() => {
-									submit().then(({ data, loading, error }) => {
-										context.setUser(data.registerUser);
-										navigate('/');
-									});
-								}}
-							>
-								Submit
-							</Button>
+							<Box marginTop={4}>
+								<Button
+									variant={'contained'}
+									onClick={() => {
+										submit().then(({ data, loading, error }) => {
+											context.setUser(data.registerUser);
+											navigate('/');
+										});
+									}}
+								>
+									Submit
+								</Button>
+							</Box>
+						</Card>
+					</Grid>
+					<Grid xs md={6} lg={4} xl={3}>
+						<Box p={4}>
+							<Map
+								coords={context.coordinates}
+								isMarkerShown
+								className={styles.map}
+								googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${config.GOOGLE_MAPS_API_KEY}&callback=initMap`}
+								loadingElement={<div className={styles.mapContainer} />}
+								containerElement={<div className={styles.mapContainer} />}
+								mapElement={<div className={styles.mapContainer} />}
+							/>
 						</Box>
-					</Card>
+					</Grid>
 				</Grid>
-				<Grid xs md={6} lg={4} xl={3}>
-					<Box p={4}>
-						<Map
-							coords={context.coordinates}
-							isMarkerShown
-							className={styles.map}
-							googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${config.GOOGLE_MAPS_API_KEY}&callback=initMap`}
-							loadingElement={<div className={styles.mapContainer} />}
-							containerElement={<div className={styles.mapContainer} />}
-							mapElement={<div className={styles.mapContainer} />}
-						/>
-					</Box>
-				</Grid>
-			</Grid>
+			</Box>
 		</Box>
 	);
 };

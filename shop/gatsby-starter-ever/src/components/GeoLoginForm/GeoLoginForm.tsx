@@ -21,7 +21,7 @@ const fields = [
 const GeoLoginForm = ({ state, handleChange }) => {
 	console.log(styles)
 	return (
-		<Box component={FormControl} width={1}>
+		<Box component={FormControl} style={{width: '100%'}}>
 			<InputLabel htmlFor="countryId">Country</InputLabel>
 			<Select
 				value={state.geoLocation.countryId}

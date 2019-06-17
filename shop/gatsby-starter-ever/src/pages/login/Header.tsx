@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './login.module.scss';
-import { Container, Grid } from '@material-ui/core';
+import { Container, Grid, Box } from '@material-ui/core';
 // import Map from '../Map'
 
 const Header = ({ title, subtitle, logo }) => {
 	return (
-		<Container>
-		<Grid container justify={'center'} className={styles.content + styles.auth} direction={'column'}>
-			<Grid item container>
+		<Box width={1} m={4}>
+		<Grid container alignItems={'center'} alignContent={'center'} justify={'center'} className={styles.content + styles.auth} direction={'column'}>
+			<Grid item>
 					<img src={logo} />
 			</Grid>
 			<Grid item>
@@ -18,7 +18,7 @@ const Header = ({ title, subtitle, logo }) => {
 				<h2 className={styles.slogan + styles.locationSlogan}>{subtitle}</h2>
 			</Grid>
 		</Grid>
-		</Container>
+		</Box>
 	);
 };
 
