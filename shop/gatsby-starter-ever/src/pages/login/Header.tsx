@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './GeoLogin.module.scss';
+import styles from './login.module.scss';
 // import Map from '../Map'
 
 const Header = ({ title, subtitle, logo }) => {

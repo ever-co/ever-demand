@@ -19,6 +19,7 @@ const fields = [
 	['Apt. #', 'apartment', 'text'],
 ];
 const GeoLoginForm = ({ state, handleChange }) => {
+	console.log(styles)
 	return (
 		<Box component={FormControl} width={1}>
 			<InputLabel htmlFor="countryId">Country</InputLabel>
@@ -29,7 +30,6 @@ const GeoLoginForm = ({ state, handleChange }) => {
 				inputProps={{
 					name: 'countryId',
 					id: 'countryId',
-					fullwidth: true,
 				}}
 			>
 				{countries.map((country, i) => (
@@ -47,9 +47,11 @@ const GeoLoginForm = ({ state, handleChange }) => {
 						fullWidth
 						inputProps={{
 							type: field[2],
+							className: styles.field
 						}}
 						value={state[field[1]]}
 						onChange={handleChange(field[1])}
+						className={styles.field}
 					/>
 				</Box>
 			))}

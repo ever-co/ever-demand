@@ -54,9 +54,10 @@ body {
 	background-color: $brand-darken;
 	min-height: 100vh;
 	height: 100%;
-	max-width: 100%;
+	width: 100%;
 	padding: 60px;
 	color: #ffffff;
+	text-align: left;
 	.map-container {
 		min-height:400px;
 	}
