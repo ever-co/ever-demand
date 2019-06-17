@@ -7,7 +7,7 @@ import {Grid} from '@material-ui/core';
 const Header = ({ title, subtitle, logo }) => {
 	return (
 		<Grid container justify={'center'} className={styles.content + styles.auth} direction={'column'}>
-			<Grid item className={styles.formContent}>
+			<Grid item>
 					<img src={logo} />
 			</Grid>
 			<Grid item>
