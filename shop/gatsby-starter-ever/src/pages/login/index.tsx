@@ -80,7 +80,7 @@ const page = () => {
 						<Card className={styles.card}>
 							<GeoLoginForm state={state} handleChange={handleChange} />
 
-							<Box marginTop={4} mt={4}>
+							<Box mx={3}>
 								<Button
 									variant={'contained'}
 									onClick={() => {
