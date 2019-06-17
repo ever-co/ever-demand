@@ -17,7 +17,7 @@ const NavBar = props => {
 	return (
 	<AppBar bgcolor={'primary'} className={styles.toolbar} position={'static'}>
 		<Box component={Toolbar} width={1} className={styles.toolbar}>
-			<Grid container flexGrow={1} spacing={4}>
+			<Grid container flexGrow={1} spacing={8} >
 				<Grid item>
 					<Link to="/">
 						<img src={Logo} />

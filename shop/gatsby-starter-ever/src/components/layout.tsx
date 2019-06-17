@@ -4,7 +4,9 @@ import React from 'react';
 
 import NavBar from './NavBar';
 import './style.scss';
-import {Box} from "@material-ui/core";
+import { Box, Container } from '@material-ui/core';
+import { inspect } from 'util';
+import styles from '../styles/styles.module.scss'
 
 /**
  * Layout component that queries for data
@@ -26,16 +28,18 @@ const Layout = ({ children }) => (
 		render={data => (
 			<>
 				<NavBar siteTitle={data.site.siteMetadata.title} />
-				<Box mt={4}>
-					<main>{children}</main>
-					<Box display={'flex'} justifyContent={'center'} textAlign={'center'} mt={3}>
-						<footer>
-							© {new Date().getFullYear()}, Built with
-							{` `}
-							<a href="https://www.ever.co">Ever</a>
-						</footer>
+				<Container maxWidth={'xl'} className={styles.content}>
+					<Box mt={2}>
+						<main>{children}</main>
+						<Box display={'flex'} justifyContent={'center'} textAlign={'center'} mt={3}>
+							<footer>
+								© {new Date().getFullYear()}, Built with
+								{` `}
+								<a href="https://www.ever.co">Ever</a>
+							</footer>
+						</Box>
 					</Box>
-				</Box>
+				</Container>
 			</>
 		)}
 	/>

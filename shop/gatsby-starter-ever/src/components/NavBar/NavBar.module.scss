@@ -1,9 +1,13 @@
 @import '../../styles/styles.module.scss';
 
+.content {
+	margin-top: 80px;
+}
 .toolbar {
 	min-height: 54px !important;
 	width: 100%;
 	position: fixed;
+
 	top: 0;
 	left: 0;
 	z-index: 100;
