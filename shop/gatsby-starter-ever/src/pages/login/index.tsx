@@ -70,7 +70,7 @@ const page = () => {
 	});
 	return (
 		<Box className={styles.auth}>
-			<Box width={1} textAlign={'center'} p={2} py={6}>
+			<Box width={1} textAlign={'center'} m={4}>
 				<Header title={'What is your address?'} subtitle={'We guarantee to only show products relevent to your location.'} logo={logo} />
 			</Box>
 
