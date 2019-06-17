@@ -66,14 +66,12 @@ body {
 		background: $brand-lighted;
 		margin: 0 auto;
 		width: 100%;
-		color: #fff;
 		height: 400px;
 		-webkit-box-shadow: 0px 0px 50px 5px rgba(156, 156, 156, 0.75);
 		-moz-box-shadow: 0px 0px 50px 5px rgba(156, 156, 156, 0.75);
 		box-shadow: 0px 0px 50px 5px rgba(156, 156, 156, 0.75);
 
 		label, .label {
-			color: white
 		}
 		.login-button {
 			-moz-box-shadow: inset 0px 1px 0px 0px #cf866c;

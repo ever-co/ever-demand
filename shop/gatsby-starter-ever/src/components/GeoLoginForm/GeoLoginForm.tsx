@@ -1,5 +1,5 @@
 import {
-	Box,
+	Box, FilledInput,
 	FormControl,
 	InputLabel,
 	MenuItem,
@@ -21,37 +21,41 @@ const fields = [
 const GeoLoginForm = ({ state, handleChange }) => {
 	console.log(styles)
 	return (
-		<Box component={FormControl} style={{width: '100%'}}>
-			<InputLabel htmlFor="countryId">Country</InputLabel>
-			<Select
-				value={state.geoLocation.countryId}
-				onChange={handleChange('countryId')}
-				style={{ color: 'white' }}
-				inputProps={{
-					name: 'countryId',
-					id: 'countryId',
-				}}
-			>
-				{countries.map((country, i) => (
-					<MenuItem value={i} key={i}>
-						{' '}
-						{country}{' '}
-					</MenuItem>
-				))}
-			</Select>
+		<Box style={{width: '100%'}} p={[1,2,3]}>
+			<FormControl className={styles.control}
+				variant="filled" fullWidth>
+				<InputLabel variant={'filled'} htmlFor="countryId">Country</InputLabel>
+				<Select
+					input={<FilledInput name="Country" id="countryId" />}
+					value={state.geoLocation.countryId}
+					onChange={handleChange('countryId')}
+					inputProps={{
+						name: 'countryId',
+						id: 'countryId',
+					}}
+					variant="filled"
+
+				>
+					{countries.map((country, i) => (
+						<MenuItem value={i} key={i}>
+							{' '}
+							{country}{' '}
+						</MenuItem>
+					))}
+				</Select>
+			</FormControl>
 			{fields.map(field => (
-				<Box>
+				<Box fullWidth className={styles.control} mt={1}>
 					<TextField
 						id={field[1]}
 						label={field[0]}
 						fullWidth
+						variant="filled"
 						inputProps={{
 							type: field[2],
-							className: styles.field
 						}}
 						value={state[field[1]]}
 						onChange={handleChange(field[1])}
-						className={styles.field}
 					/>
 				</Box>
 			))}

@@ -70,17 +70,17 @@ const page = () => {
 	});
 	return (
 		<Box className={styles.auth} >
-			<Box marginBottom={1} padding={4}>
+			<Box marginBottom={1} padding={1}>
 				<Header title={'What is your address?'} subtitle={'We guarantee to only show products relevent to your location.'} logo={logo} />
 			</Box>
 			<br />
-			<Box padding={1} marginTop={2}>
+			<Box  marginTop={2}>
 				<Grid container justify={'center'} spacing={6} alignItems={'center'}>
-					<Grid item xs md={6} lg={4} xl={3}>
+					<Grid item xs md={6} lg={4} xl={3} style={{paddingTop: 0}}>
 						<Card className={styles.card}>
 							<GeoLoginForm state={state} handleChange={handleChange} />
 
-							<Box marginTop={4}>
+							<Box marginTop={4} mt={4}>
 								<Button
 									variant={'contained'}
 									onClick={() => {
@@ -96,7 +96,7 @@ const page = () => {
 						</Card>
 					</Grid>
 					<Grid xs md={6} lg={4} xl={3}>
-						<Box padding={2}  marginBottom={4}>
+						<Box p={[1,2,3,4]}  marginBottom={4}>
 							<Map
 								coords={context.coordinates}
 								isMarkerShown
