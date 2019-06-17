@@ -28,11 +28,13 @@ const Layout = ({ children }) => (
 				<NavBar siteTitle={data.site.siteMetadata.title} />
 				<Box mt={4}>
 					<main>{children}</main>
-					<footer>
-						© {new Date().getFullYear()}, Built with
-						{` `}
-						<a href="https://www.ever.co">Ever</a>
-					</footer>
+					<Box display={'flex'} justifyContent={'center'} textAlign={'center'} mt={3}>
+						<footer>
+							© {new Date().getFullYear()}, Built with
+							{` `}
+							<a href="https://www.ever.co">Ever</a>
+						</footer>
+					</Box>
 				</Box>
 			</>
 		)}

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Card, CardContent, Typography, Grid } from '@material-ui/core';
 import styles from './Order.module.scss';
+import { matchLocale } from '../../utilities/utilities';
 
 const Order = ({ order }) => {
 	const { product } = order.products[0];
@@ -10,7 +11,7 @@ const Order = ({ order }) => {
 		<Card className={styles.order}>
 			<Grid container justify={'space-between'} className={styles.cardContent}>
 				<Grid item xs={6}>
-					<Typography variant={'h4'}>{product.title[0].value}</Typography>
+					<Typography variant={'h4'}>{matchLocale(product.title)}</Typography>
 					<Typography variant={'subtitle1'}>
 						{product.description[0].value}
 					</Typography>
