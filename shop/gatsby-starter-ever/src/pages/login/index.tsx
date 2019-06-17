@@ -69,8 +69,8 @@ const page = () => {
 		variables: { user: formatUser(), password: '' },
 	});
 	return (
-		<Box className={styles.auth}>
-			<Box mb={4}>
+		<Box className={styles.auth} mb={4}>
+			<Box mb={1}>
 				<Header title={'What is your address?'} subtitle={'We guarantee to only show products relevent to your location.'} logo={logo} />
 			</Box>
 
