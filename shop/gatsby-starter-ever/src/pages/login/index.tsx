@@ -69,12 +69,12 @@ const page = () => {
 		variables: { user: formatUser(), password: '' },
 	});
 	return (
-		<Box className={styles.auth} mb={4}>
-			<Box mb={1}>
+		<Box className={styles.auth} >
+			<Box marginBottom={1} padding={4}>
 				<Header title={'What is your address?'} subtitle={'We guarantee to only show products relevent to your location.'} logo={logo} />
 			</Box>
-
-			<Box p={4}>
+			<br />
+			<Box padding={1} marginTop={2}>
 				<Grid container justify={'center'} spacing={6} alignItems={'center'}>
 					<Grid item xs md={6} lg={4} xl={3}>
 						<Card className={styles.card}>
@@ -96,7 +96,7 @@ const page = () => {
 						</Card>
 					</Grid>
 					<Grid xs md={6} lg={4} xl={3}>
-						<Box p={4}>
+						<Box padding={2}  marginBottom={4}>
 							<Map
 								coords={context.coordinates}
 								isMarkerShown
