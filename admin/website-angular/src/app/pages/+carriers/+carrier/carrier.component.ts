@@ -19,7 +19,7 @@ import { CarrierOrdersComponent } from './carrier-orders/carrier-orders.componen
 	styleUrls: ['./carrier.component.scss']
 })
 export class CarrierComponent implements OnInit, OnDestroy {
-	@ViewChild('carrierOrders')
+	@ViewChild('carrierOrders', { static: true })
 	public carrierOrders: CarrierOrdersComponent;
 
 	private ngDestroy$ = new Subject();

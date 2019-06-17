@@ -17,7 +17,7 @@
 							: ''
 					"
 					formControlName="oldPassword"
-					placeholder="{{&quot;PROFILE_VIEW.OLD_PASSWORD&quot; | translate}}"
+					placeholder="{{ 'PROFILE_VIEW.OLD_PASSWORD' | translate }}"
 				/>
 				<span *ngIf="oldPasswordErrorMsg">
 					<strong class="text-danger">
@@ -42,7 +42,7 @@
 							: ''
 					"
 					formControlName="password"
-					placeholder="{{&quot;PROFILE_VIEW.NEW_PASSWORD&quot; | translate}}"
+					placeholder="{{ 'PROFILE_VIEW.NEW_PASSWORD' | translate }}"
 				/>
 				<span *ngIf="passwordErrorMsg">
 					<strong class="text-danger">
@@ -67,7 +67,9 @@
 							: ''
 					"
 					formControlName="repeatPassword"
-					placeholder="{{&quot;PROFILE_VIEW.REPEAT_NEW_PASSWORD&quot; | translate}}"
+					placeholder="{{
+						'PROFILE_VIEW.REPEAT_NEW_PASSWORD' | translate
+					}}"
 				/>
 				<span *ngIf="repeatPasswordErrorMsg">
 					<strong class="text-danger">
@@ -77,7 +79,11 @@
 				>
 			</div>
 			<button
-				class="btn btn-with-icon btn-outline-success btn-lg float-right save-button-profile"
+				nbButton
+				status="success"
+				outline
+				size="large"
+				class="float-right save-button-profile"
 				[disabled]="
 					!accountForm.valid ||
 					((password.dirty || password.touched) &&
@@ -86,7 +92,7 @@
 				type="button"
 				(click)="saveChanges()"
 			>
-				<i class="nb-checkmark"></i>
+				<i class="ion-md-checkmark mr-1"></i>
 				<span> {{ 'PROFILE_VIEW.SAVE' | translate }} </span>
 			</button>
 		</form>

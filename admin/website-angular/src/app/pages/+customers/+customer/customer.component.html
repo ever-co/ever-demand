@@ -1,6 +1,6 @@
 <toaster-container> </toaster-container>
 
-<div *ngIf="(user$ | async) as user" class="row">
+<div *ngIf="user$ | async as user" class="row">
 	<div class="col-md-8">
 		<nb-card>
 			<nb-card-header class="row">
@@ -31,10 +31,11 @@
 				<div class="col-3 edit-wrapper">
 					<button
 						type="button"
-						class="btn btn-primary active"
+						nbButton
+						status="primary"
 						[routerLink]="['./edit']"
 					>
-						<i class="nb-edit button-icon"></i>
+						<i class="ion-md-create button-icon mr-1"></i>
 						<small>{{
 							'CUSTOMERS_VIEW.CUSTOMER_VIEW.EDIT' | translate
 						}}</small>
@@ -82,7 +83,7 @@
 					*ngIf="selectedUser"
 					(change)="customerSelect($event)"
 					[items]="users"
-					[(ngModel)]="selectedUser.id"
+					[ngModel]="selectedUser.id"
 					[clearable]="false"
 					placeholder="Select customer"
 					bindLabel="id"
@@ -105,7 +106,7 @@
 						let-item="item"
 						let-index="index"
 					>
-						<h6 class="card-title">
+						<p class="card-title">
 							<img
 								*ngIf="item.image"
 								height="40"
@@ -116,7 +117,7 @@
 							{{ item.firstName }}
 							{{ item.firstName && item.lastName }}
 							{{ item.firstName ? '' : '# ' + item.id }}
-						</h6>
+						</p>
 					</ng-template>
 				</ng-select>
 			</nb-card-body>

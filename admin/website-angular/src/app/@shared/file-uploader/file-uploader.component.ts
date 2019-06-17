@@ -17,7 +17,7 @@ import { NgModel } from '@angular/forms';
 	styleUrls: ['./file-uploader.component.scss']
 })
 export class FileUploaderComponent {
-	@ViewChild('shownInput')
+	@ViewChild('shownInput', { static: true })
 	shownInput: NgModel;
 
 	@Input()

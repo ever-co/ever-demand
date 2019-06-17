@@ -40,10 +40,10 @@ export class MatBoldInputComponent extends InputComponent
 	@Input()
 	public rippleSpeedFactor: number = 2;
 
-	@ViewChild(MatRipple)
+	@ViewChild(MatRipple, { static: false })
 	public ripple: MatRipple;
 
-	@ViewChild('input')
+	@ViewChild('input', { static: false })
 	public input: ElementRef;
 
 	@HostBinding('class.mat-focused')

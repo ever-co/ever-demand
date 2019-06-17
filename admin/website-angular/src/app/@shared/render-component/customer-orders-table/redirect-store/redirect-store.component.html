@@ -1,7 +1,7 @@
-<div *ngIf="(store$ | async) as store" (click)="redirect()" class="redirectBtn">
-	<h6>
+<div *ngIf="store$ | async as store" (click)="redirect()" class="redirectBtn">
+	<span>
 		<img class="warehouse-image" alt="" src="{{ store.logo }}" />
 		<div class="warehouse-name">{{ store.name }}</div>
-	</h6>
-	<h6>{{ warehouseStatusText | translate }}</h6>
+	</span>
+	<p>{{ warehouseStatusText | translate }}</p>
 </div>

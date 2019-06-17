@@ -18,10 +18,7 @@
 		(change)="imageUrlChanged()"
 		[(ngModel)]="fileUrl"
 	/>
-	<button
-		(click)="fileInput.click()"
-		class="btn btn-primary btn-rectangle col-2"
-	>
+	<button nbButton status="primary" (click)="fileInput.click()" class="col-2">
 		{{ 'BROWSE' | translate }}
 	</button>
 </div>

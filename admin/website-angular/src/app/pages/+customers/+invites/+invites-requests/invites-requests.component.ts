@@ -346,19 +346,21 @@ export class InvitesRequestsComponent implements OnDestroy, AfterViewChecked {
 					this.settingsSmartTable = {
 						selectMode: 'multi',
 						add: {
-							addButtonContent: '<i class="nb-plus"></i>',
-							createButtonContent: '<i class="nb-checkmark"></i>',
-							cancelButtonContent: '<i class="nb-close"></i>',
+							addButtonContent: '<i class="ion-md-add"></i>',
+							createButtonContent:
+								'<i class="ion-md-checkmark"></i>',
+							cancelButtonContent: '<i class="ion-md-close"></i>',
 							confirmCreate: true
 						},
 						edit: {
-							editButtonContent: '<i class="nb-edit"></i>',
-							saveButtonContent: '<i class="nb-checkmark"></i>',
-							cancelButtonContent: '<i class="nb-close"></i>',
+							editButtonContent: '<i class="ion-md-create"></i>',
+							saveButtonContent:
+								'<i class="ion-md-checkmark"></i>',
+							cancelButtonContent: '<i class="ion-md-close"></i>',
 							confirmSave: true
 						},
 						delete: {
-							deleteButtonContent: '<i class="nb-trash"></i>',
+							deleteButtonContent: '<i class="ion-md-trash"></i>',
 							confirmDelete: true
 						},
 						columns: {

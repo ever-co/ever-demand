@@ -1,18 +1,22 @@
 <nb-card [nbSpinner]="loading">
 	<nb-card-header>
 		<button
-			class="btn btn-sm btn-success btn-icon d-inline-block mr-2"
+			nbButton
+			status="success"
+			class="d-inline-block mr-2"
 			(click)="addProducts.emit()"
 		>
-			<i class="ion-md-add active button-icon"></i>
+			<i class="ion-md-add active button-icon mr-1"></i>
 			{{ 'WAREHOUSE_VIEW.PRODUCTS_TAB.ADD_PRODUCTS' | translate }}
 		</button>
 		<button
-			class="btn btn-sm btn-danger btn-icon d-inline-block"
+			nbButton
+			status="danger"
+			class="d-inline-block"
 			[disabled]="!productsTable.hasSelectedProducts"
 			(click)="deleteSelectedRows()"
 		>
-			<i class="ion-md-trash button-icon"></i>
+			<i class="ion-md-trash button-icon mr-1"></i>
 			{{ 'WAREHOUSE_VIEW.PRODUCTS_TAB.DELETE' | translate }}
 		</button>
 		<small class="pull-right">{{

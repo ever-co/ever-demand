@@ -58,7 +58,7 @@ export class CreateProductTypePopupPage implements OnInit {
 
 	hasImage: boolean;
 
-	@ViewChild('fileInput')
+	@ViewChild('fileInput', { static: true })
 	fileInput: ElementRef;
 
 	private imagesData: IProductImage[];
@@ -133,7 +133,7 @@ export class CreateProductTypePopupPage implements OnInit {
 
 	ionViewDidLoad() {}
 
-	@ViewChild('imageHolder')
+	@ViewChild('imageHolder', { static: true })
 	private _imageHolder: ElementRef;
 
 	imageUrlChanged(ev) {

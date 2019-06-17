@@ -22,7 +22,7 @@ import { UserRouter } from '@modules/client.common.angular2/routers/user-router.
 	templateUrl: './location-popup.component.html'
 })
 export class LocationPopupComponent implements OnInit, AfterViewInit {
-	@ViewChild('locationForm')
+	@ViewChild('locationForm', { static: false })
 	locationForm: LocationFormComponent;
 
 	place: google.maps.places.PlaceResult;

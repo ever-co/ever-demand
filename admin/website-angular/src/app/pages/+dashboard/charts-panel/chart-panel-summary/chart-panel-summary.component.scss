@@ -19,12 +19,15 @@
 		.summary {
 			width: 100%;
 		}
+
+		small {
+			margin-bottom: 0.5rem;
+		}
 	}
 
 	.value {
 		font-size: 2rem;
-		color: nb-theme(color-fg-heading);
-
+		color: #2a2a2a;
 		span div small {
 			font-size: 0.5em;
 			display: block;
@@ -34,22 +37,22 @@
 	@include media-breakpoint-down(sm) {
 		.value,
 		.title {
-			font-weight: nb-theme(font-weight-bold);
+			font-weight: 500;
 		}
 
 		.title {
-			font-size: nb-theme(font-size-sm);
+			font-size: 0.875rem;
 		}
 
 		.value {
-			font-size: nb-theme(font-size-xlg);
+			font-size: 1.25rem;
 		}
 	}
 
 	@include media-breakpoint-down(is) {
 		.summary-container {
-			padding-left: nb-theme(padding);
-			padding-right: nb-theme(padding);
+			padding-left: 1.25rem;
+			padding-right: 1.25rem;
 		}
 
 		.value {

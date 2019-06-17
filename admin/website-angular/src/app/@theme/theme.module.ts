@@ -17,9 +17,13 @@ import {
 	NbCheckboxModule,
 	NbPopoverModule,
 	NbContextMenuModule,
-	NbProgressBarModule
+	NbProgressBarModule,
+	NbIconModule,
+	NbSelectModule,
+	NbRadioModule
 } from '@nebular/theme';
 
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbSecurityModule } from '@nebular/security';
 
 import {
@@ -74,7 +78,11 @@ const NB_MODULES = [
 	NbContextMenuModule,
 	NgbModule,
 	NbSecurityModule, // *nbIsGranted directive
-	NbProgressBarModule
+	NbProgressBarModule,
+	NbIconModule,
+	NbEvaIconsModule,
+	NbSelectModule,
+	NbRadioModule
 ];
 
 const COMPONENTS = [
@@ -98,7 +106,7 @@ const ENTRY_COMPONENTS = [ThemeSwitcherListComponent];
 const NB_THEME_PROVIDERS = [
 	...NbThemeModule.forRoot(
 		{
-			name: 'everlight'
+			name: 'default'
 		},
 		[
 			DEFAULT_THEME,

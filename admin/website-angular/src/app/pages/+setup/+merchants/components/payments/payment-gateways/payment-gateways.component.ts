@@ -11,10 +11,10 @@ import { first } from 'rxjs/operators';
 	templateUrl: './payment-gateways.component.html'
 })
 export class PaymentGatewaysComponent {
-	@ViewChild('stripeGateway')
+	@ViewChild('stripeGateway', { static: false })
 	stripeGateway: StripeGatewayComponent;
 
-	@ViewChild('payPalGateway')
+	@ViewChild('payPalGateway', { static: false })
 	payPalGateway: PayPalGatewayComponent;
 
 	@Input()

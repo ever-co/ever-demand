@@ -22,7 +22,6 @@ export class OrdersContainerComponent {
 		this.userOrdersRouter.get(userId).subscribe((res) => {
 			this.orders = res.filter((r) => !r.isCancelled);
 			res = res.filter((r) => !r.isCancelled);
-			console.log(res);
 		});
 	}
 }

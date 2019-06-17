@@ -21,6 +21,7 @@ import { CustomerOrdersModule } from './ea-customer-orders/ea-customer-orders.mo
 import { CustomerMetricsComponent } from './ea-customer-metrics/ea-customer-metrics.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
+import { NbButtonModule } from '@nebular/theme';
 
 const routes = [
 	{
@@ -50,7 +51,8 @@ const routes = [
 		WarehouseOrderModalModule,
 		CustomerOrdersModule,
 		NgSelectModule,
-		FormsModule
+		FormsModule,
+		NbButtonModule
 	],
 	declarations: [
 		CustomerComponent,

@@ -5,7 +5,7 @@ $legend-payment-color: #6935ca;
 $legend-canceled-color: #3f4fda;
 
 @include nb-install-component() {
-	/deep/ nb-tabset {
+	::ng-deep nb-tabset {
 		display: flex;
 		flex-direction: column;
 		flex: 1;
@@ -17,6 +17,7 @@ $legend-canceled-color: #3f4fda;
 
 	nb-tab {
 		flex: 1;
+		padding: 0;
 		padding-bottom: 1.25rem;
 	}
 

@@ -17,7 +17,7 @@ import 'rxjs/add/operator/switchMap';
 export class ProductEditComponent implements OnInit, OnDestroy {
 	private ngDestroy$ = new Subject<void>();
 
-	@ViewChild('basicInfoForm')
+	@ViewChild('basicInfoForm', { static: true })
 	public basicInfoForm: BasicInfoFormComponent;
 
 	public readonly form: FormGroup = this.formBuilder.group({

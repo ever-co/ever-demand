@@ -1,15 +1,15 @@
-:host /deep/ .modal-footer .btn-primary {
+:host ::ng-deep .modal-footer .btn-primary {
 	background-color: #111111 !important;
 	border: none !important;
 	color: white !important;
 	cursor: pointer !important;
 }
 
-:host /deep/ .modal-footer .btn-primary:hover {
+:host ::ng-deep .modal-footer .btn-primary:hover {
 	background-color: #bebebe !important;
 	color: #111111 !important;
 }
-:host /deep/ .modal-footer .btn-neutral {
+:host ::ng-deep .modal-footer .btn-neutral {
 	background-color: #111111;
 	color: #ffffff;
 }

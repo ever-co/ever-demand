@@ -26,13 +26,13 @@ import { Router } from '@angular/router';
 	styleUrls: ['./products.component.scss']
 })
 export class SetupMerchantProductsComponent implements OnChanges, OnDestroy {
-	@ViewChild('productsCatalog')
+	@ViewChild('productsCatalog', { static: false })
 	productsCatalog: SetupMerchantProductsCatalogComponent;
-	@ViewChild('addProducts')
+	@ViewChild('addProducts', { static: false })
 	addProducts: SetupMerchantAddProductsComponent;
-	@ViewChild('productsTable')
+	@ViewChild('productsTable', { static: false })
 	productsTable: WarehouseProductsComponent;
-	@ViewChild('productMutation')
+	@ViewChild('productMutation', { static: false })
 	productMutation: SetupMerchantProductMutationComponent;
 
 	@Output()

@@ -7,7 +7,7 @@ import { NgForm } from '@angular/forms';
 	styleUrls: ['./contact-info.component.scss']
 })
 export class SetupMerchantContactInfoComponent {
-	@ViewChild('contactInfoForm')
+	@ViewChild('contactInfoForm', { static: true })
 	contactInfoForm: NgForm;
 
 	@Output()

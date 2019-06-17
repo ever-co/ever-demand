@@ -19,19 +19,19 @@ export class PagesComponent {
 		this.menu = [
 			{
 				title: this.getTranslation('MENU_VIEW.DASHBOARD'),
-				icon: 'fa fa-tachometer-alt',
+				icon: 'pie-chart-outline',
 				link: '/dashboard',
 				pathMatch: 'prefix'
 			},
 			{
 				title: this.getTranslation('MENU_VIEW.STORES'),
-				icon: 'fa fa-home',
+				icon: 'home-outline',
 				link: '/stores',
 				pathMatch: 'prefix'
 			},
 			{
 				title: this.getTranslation('MENU_VIEW.PRODUCTS.PRODUCTS'),
-				icon: 'fa fa-cart-plus',
+				icon: 'shopping-cart-outline',
 				link: '/products',
 				children: [
 					{
@@ -51,7 +51,7 @@ export class PagesComponent {
 			},
 			{
 				title: this.getTranslation('MENU_VIEW.CUSTOMERS.CUSTOMERS'),
-				icon: 'fa fa-user',
+				icon: 'person-outline',
 				link: '/customers',
 				children: [
 					{
@@ -71,20 +71,20 @@ export class PagesComponent {
 			},
 			{
 				title: this.getTranslation('MENU_VIEW.CARRIERS'),
-				icon: 'fa fa-truck',
+				icon: 'car-outline',
 				link: '/carriers',
 				pathMatch: 'prefix'
 			},
 			{
 				title: this.getTranslation('MENU_VIEW.SIMULATION'),
-				icon: 'fa fa-star',
+				icon: 'star-outline',
 				link: '/simulation',
 				pathMatch: 'prefix',
 				home: true
 			},
 			{
 				title: this.getTranslation('MENU_VIEW.SETUP'),
-				icon: 'fa fa-cog',
+				icon: 'settings-2-outline',
 				link: '/setup',
 				pathMatch: 'prefix'
 			}

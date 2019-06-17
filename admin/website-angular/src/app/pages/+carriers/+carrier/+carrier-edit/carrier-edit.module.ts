@@ -8,7 +8,7 @@ import { GoogleMapModule } from '../../../../@shared/forms/google-map/google-map
 import { RouterModule } from '@angular/router';
 import { routes } from './carrier-edit.routes';
 import { ToasterModule } from 'angular2-toaster';
-import { NbSpinnerModule } from '@nebular/theme';
+import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 
 @NgModule({
 	imports: [
@@ -19,7 +19,8 @@ import { NbSpinnerModule } from '@nebular/theme';
 		CarrierFormsModule,
 		LocationFormModule,
 		GoogleMapModule,
-		NbSpinnerModule
+		NbSpinnerModule,
+		NbButtonModule
 	],
 	exports: [CarrierEditComponent],
 	declarations: [CarrierEditComponent]

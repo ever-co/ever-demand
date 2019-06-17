@@ -58,7 +58,7 @@ export const ROOT_SELECTOR = 'app';
 	`
 })
 export class AppComponent implements OnInit {
-	@ViewChild(RouterOutlet)
+	@ViewChild(RouterOutlet, { static: false })
 	public routerOutlet: RouterOutlet;
 
 	constructor(
