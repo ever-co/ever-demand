@@ -22,7 +22,7 @@ export enum DeliveryStatus {
 	styleUrls: ['./order.component.scss']
 })
 export class SimulationOrderComponent implements OnDestroy, OnInit {
-	@ViewChild('elapsedTime', { static: true })
+	@ViewChild('elapsedTime', { static: false })
 	elapsedTime: ElapsedTimeComponent;
 
 	@Input()

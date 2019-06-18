@@ -12,6 +12,7 @@ import { WarehouseManageTabsDetailsComponent } from './warehouse-manage-tabs/det
 import { WarehouseManageTabsAccountComponent } from './warehouse-manage-tabs/account/warehouse-manage-tabs-account.component';
 import { WarehouseManageTabsDeliveryAreasComponent } from './warehouse-manage-tabs/delivery-areas/warehouse-manage-tabs-delivery-areas.component';
 import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.module';
+import { NbButtonModule } from '@nebular/theme';
 
 @NgModule({
 	imports: [
@@ -21,7 +22,8 @@ import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.modu
 		MultiselectDropdownModule,
 		FileUploaderModule,
 		GoogleMapModule,
-		LocationFormModule
+		LocationFormModule,
+		NbButtonModule
 	],
 	exports: [
 		WarehouseManageTabsComponent,

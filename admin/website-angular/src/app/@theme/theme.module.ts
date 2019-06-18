@@ -56,6 +56,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AdminsService } from '../@core/data/admins.service';
 import { PipesModule } from '@modules/client.common.angular2/pipes/pipes.module';
+import { DARK_THEME } from './styles/theme.dark';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -113,7 +114,8 @@ const NB_THEME_PROVIDERS = [
 			COSMIC_THEME,
 			CORPORATE_THEME,
 			EVERDARK_THEME,
-			EVERLIGHT_THEME
+			EVERLIGHT_THEME,
+			DARK_THEME
 		]
 	).providers,
 	...NbSidebarModule.forRoot().providers,
