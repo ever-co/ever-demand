@@ -1,14 +1,11 @@
-import { graphql, Link } from 'gatsby';
 import React, { useContext } from 'react';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
-
-import styles from './home.module.scss';
 import ProductGrid from '../components/ProductGrid';
 import { AppContext } from '../Context';
 import { GeoLocationProductsByPaging } from '../apollo/product';
-import { useQuery, useMutation } from 'react-apollo-hooks';
+import { useMutation, useQuery } from 'react-apollo-hooks';
 import { createOrder } from '../apollo/order';
 import config from '../config';
 import { Container } from '@material-ui/core';
@@ -25,7 +22,7 @@ const IndexPage = props => {
 
 	const { data, error, loading } = useQuery(GeoLocationProductsByPaging, {
 		variables: {
-			geoLocation: { loc: { type: 'Point', coordinates } },
+			geoLocation: { loc: { type: 'Point', coordinates: context.coordinates } },
 		},
 	});
 	const placeOrder = useMutation(createOrder);
