@@ -238,9 +238,9 @@ export class OrderInfoPage implements OnInit, OnDestroy {
 			return result.replace(
 				'%s',
 				`${
-					this.order
-						? (<Order>this.order).totalPrice.toFixed(2)
-						: '00.00'
+				this.order
+					? (<Order>this.order).totalPrice.toFixed(2)
+					: '00.00'
 				}$`
 			);
 		};
