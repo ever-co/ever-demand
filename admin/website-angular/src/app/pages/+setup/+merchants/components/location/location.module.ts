@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { SetupMerchantLocationComponent } from './location.component';
 import { LocationFormModule } from 'app/@shared/forms/location';
 import { GoogleMapModule } from 'app/@shared/forms/google-map/google-map.module';
+import { NbButtonModule } from '@nebular/theme';
 
 const COMPONENTS = [SetupMerchantLocationComponent];
 
@@ -16,7 +17,8 @@ const COMPONENTS = [SetupMerchantLocationComponent];
 		FormsModule,
 		TranslateModule.forChild(),
 		LocationFormModule,
-		GoogleMapModule
+		GoogleMapModule,
+		NbButtonModule
 	],
 	declarations: COMPONENTS,
 	exports: COMPONENTS

@@ -5,6 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SetupMerchantPaymentsComponent } from './payments.component';
 import { NgModule } from '@angular/core';
 import { PaymentGatewaysModule } from './payment-gateways/payment-gateways.module';
+import { NbButtonModule } from '@nebular/theme';
 
 @NgModule({
 	imports: [
@@ -12,7 +13,8 @@ import { PaymentGatewaysModule } from './payment-gateways/payment-gateways.modul
 		ThemeModule,
 		FormsModule,
 		TranslateModule.forChild(),
-		PaymentGatewaysModule
+		PaymentGatewaysModule,
+		NbButtonModule
 	],
 	declarations: [SetupMerchantPaymentsComponent],
 	exports: [SetupMerchantPaymentsComponent]

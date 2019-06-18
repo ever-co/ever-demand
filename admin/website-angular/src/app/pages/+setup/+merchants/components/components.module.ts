@@ -10,7 +10,7 @@ import { SetupMerchantBasicInfoComponent } from './basic-info/basic-info.compone
 import { SetupMerchantContactInfoComponent } from './contact-info/contact-info.component';
 import { SetupMerchantManufacturingComponent } from './manufacturing/manufacturing.component';
 import { SetupMerchantOrdersSettingsComponent } from './settings/orders/orders.component';
-import { NbRadioModule } from '@nebular/theme';
+import { NbRadioModule, NbButtonModule } from '@nebular/theme';
 import { SetupMerchantProductCategoriesComponent } from './product-categories/product-categories.component';
 import { ProductCategoriesFormsModule } from 'app/@shared/product/categories/forms/product-categories-forms.module';
 import { NotifyService } from 'app/@core/services/notify/notify.service';
@@ -35,7 +35,8 @@ const COMPONENTS = [
 		TranslateModule.forChild(),
 		FileUploaderModule,
 		ProductCategoriesFormsModule,
-		NgxBarcodeModule
+		NgxBarcodeModule,
+		NbButtonModule
 	],
 	declarations: COMPONENTS,
 	exports: COMPONENTS,
