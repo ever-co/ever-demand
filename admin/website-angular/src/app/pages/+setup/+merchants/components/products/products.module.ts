@@ -9,6 +9,7 @@ import { ProductFormsModule } from 'app/@shared/product/forms';
 import { SetupMerchantAddProductsComponent } from './add-products/add-products.component';
 import { WarehouseProductFormsModule } from 'app/@shared/warehouse-product/forms';
 import { SetupMerchantProductMutationComponent } from './product-mutation/product-mutation.component';
+import { NbButtonModule } from '@nebular/theme';
 
 const COMPONENTS = [
 	SetupMerchantProductsComponent,
@@ -24,7 +25,8 @@ const COMPONENTS = [
 		FormsModule,
 		TranslateModule.forChild(),
 		ProductFormsModule,
-		WarehouseProductFormsModule
+		WarehouseProductFormsModule,
+		NbButtonModule
 	],
 	declarations: COMPONENTS,
 	exports: COMPONENTS
