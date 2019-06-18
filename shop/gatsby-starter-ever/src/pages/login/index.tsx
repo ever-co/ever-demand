@@ -82,6 +82,7 @@ const page = () => {
 
 							<Box mx={3}>
 								<Button
+									color={'secondary'}
 									variant={'contained'}
 									onClick={() => {
 										submit().then(({ data, loading, error }) => {
