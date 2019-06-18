@@ -1,15 +1,10 @@
 import {
 	Box,
 	Button,
-	CardActionArea,
-	CardActions,
-	CardContent,
-	CardHeader,
 	Container,
 	Grid,
 	Typography,
 } from '@material-ui/core';
-import { graphql } from 'gatsby';
 import React, { useState } from 'react';
 import Layout from '../../components/layout';
 import { Card, Carousel } from './styles';

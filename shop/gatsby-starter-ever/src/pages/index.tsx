@@ -12,15 +12,8 @@ import { Container } from '@material-ui/core';
 
 const IndexPage = props => {
 	const context = useContext(AppContext);
-	let coordinates;
-	// in dev mode load default coords
-	if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-		coordinates = config.defaultCoordinates;
-	} else {
-		coordinates = context.coordinates;
-	}
 
-	const { data, error, loading } = useQuery(GeoLocationProductsByPaging, {
+	const { data, error, loading } = context.coordinates && useQuery(GeoLocationProductsByPaging, {
 		variables: {
 			geoLocation: { loc: { type: 'Point', coordinates: context.coordinates } },
 		},
