@@ -1,4 +1,8 @@
 const config = require('./src/config')
+// require("dotenv").config({
+// 	path: `.env`,
+// })
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby Ever Starter`,
