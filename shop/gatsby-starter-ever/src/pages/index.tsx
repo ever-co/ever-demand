@@ -17,7 +17,7 @@ const IndexPage = props => {
 		variables: {
 			geoLocation: { loc: { type: 'Point', coordinates: context.coordinates } },
 		},
-	}) || {};
+	}) || {loading: true};
 	const placeOrder = useMutation(createOrder);
 
 	const addToCart = (item: { warehouseProduct?: any; warehouseId?: any }) => {
