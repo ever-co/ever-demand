@@ -75,6 +75,8 @@ $nb-themes: nb-register-theme(
 			radial-gradient(circle, #5a37b8 0%, #7b51db 100%),
 		slide-out-shadow-color: 2px 0 3px #29157a,
 		slide-out-shadow-color-rtl: -2px 0 3px #29157a,
+		smart-table-bg-even: transparent,
+		smart-table-bg-active: rgba(0, 0, 0, 0.1),
 		//
 			//chart-panel-summary-box-shadow: none,
 			//chart-panel-summary-background-color: rgba(0, 0, 0, 0.1),
@@ -137,7 +139,9 @@ $nb-themes: nb-register-theme(
 		select-min-width: 6rem,
 		slide-out-background: linear-gradient(270deg, #edf1f7 0%, #e4e9f2 100%),
 		slide-out-shadow-color: 0 4px 14px 0 #8f9bb3,
-		slide-out-shadow-color-rtl: 0 4px 14px 0 #8f9bb3
+		slide-out-shadow-color-rtl: 0 4px 14px 0 #8f9bb3,
+		smart-table-bg-even: transparent,
+		smart-table-bg-active: rgba(0, 0, 0, 0.1)
 	),
 	dark,
 	dark

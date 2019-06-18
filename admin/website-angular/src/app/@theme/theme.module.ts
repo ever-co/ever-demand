@@ -107,7 +107,7 @@ const ENTRY_COMPONENTS = [ThemeSwitcherListComponent];
 const NB_THEME_PROVIDERS = [
 	...NbThemeModule.forRoot(
 		{
-			name: 'default'
+			name: 'everlight'
 		},
 		[
 			DEFAULT_THEME,
