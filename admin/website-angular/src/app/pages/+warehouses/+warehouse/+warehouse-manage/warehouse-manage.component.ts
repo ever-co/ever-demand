@@ -70,7 +70,9 @@ export class WarehouseManageComponent implements OnInit {
 				...tabsInfoRaw.basicInfo,
 				...tabsInfoRaw.contactInfo,
 				geoLocation: tabsInfoRaw.location,
-				deliveryAreas: tabsInfoRaw.deliveryAreas
+				deliveryAreas: tabsInfoRaw.deliveryAreas,
+				isPaymentEnabled: tabsInfoRaw.isPaymentEnabled,
+				paymentGateways: tabsInfoRaw.paymentsGateways
 			};
 
 			const passwordOld = tabsInfoRaw.password.current;

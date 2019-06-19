@@ -58,12 +58,23 @@ export class PayPalGatewayComponent implements OnChanges {
 		};
 	}
 
-	ngOnChanges(): void {
-		const defaultCurrency =
-			countriesDefaultCurrencies[
-				Country[this.warehouseCountry].toString()
-			] || '';
+	setValue(data) {
+		this.isPayPalEnabled = true;
+		this.configModel.currency = data['currency'] || '';
+		this.configModel.mode = data['mode'] || '';
+		this.configModel.publishableKey = data['publishableKey'] || '';
+		this.configModel.secretKey = data['secretKey'] || '';
+		this.configModel.description = data['description'] || '';
+	}
 
-		this.configModel.currency = defaultCurrency;
+	ngOnChanges(): void {
+		const merchantCountry = Country[this.warehouseCountry];
+
+		if (merchantCountry) {
+			const defaultCurrency =
+				countriesDefaultCurrencies[merchantCountry.toString()] || '';
+
+			this.configModel.currency = defaultCurrency;
+		}
 	}
 }

@@ -11,6 +11,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BasicInfoFormComponent, ContactInfoFormComponent } from '../forms';
 import { LocationFormComponent } from '../../forms/location';
 import { TranslateService } from '@ngx-translate/core';
+import { PaymentsSettingsFormComponent } from '../forms/payments-settings/payments-settings-form.component';
 
 @Component({
 	selector: 'ea-warehouse-mutation',
@@ -32,6 +33,9 @@ export class WarehouseMutationComponent implements AfterViewInit {
 
 	@ViewChild('locationForm', { static: false })
 	locationForm: LocationFormComponent;
+
+	@ViewChild('paymentsSettingsForm', { static: false })
+	paymentsSettingsForm: PaymentsSettingsFormComponent;
 
 	mapCoordEmitter = new EventEmitter<number[]>();
 	mapGeometryEmitter = new EventEmitter<any>();
@@ -108,7 +112,10 @@ export class WarehouseMutationComponent implements AfterViewInit {
 				warehouse: {
 					...this.basicInfoForm.getValue(),
 					...this.contactInfoForm.getValue(),
-					geoLocation: geoLocationInput
+					geoLocation: geoLocationInput,
+					isPaymentEnabled: this.paymentsSettingsForm
+						.isPaymentEnabled,
+					paymentGateways: this.paymentsSettingsForm.paymentsGateways
 				},
 				password: this.basicInfoForm.getPassword()
 			});

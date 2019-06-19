@@ -83,16 +83,26 @@ export class StripeGatewayComponent implements OnChanges {
 	}
 
 	ngOnChanges(): void {
-		const defaultCurrency =
-			countriesDefaultCurrencies[
-				Country[this.warehouseCountry].toString()
-			] || '';
+		const merchantCountry = Country[this.warehouseCountry];
 
-		this.configModel.currency = defaultCurrency;
+		if (merchantCountry) {
+			const defaultCurrency =
+				countriesDefaultCurrencies[merchantCountry.toString()] || '';
+
+			this.configModel.currency = defaultCurrency;
+		}
 	}
 
 	deleteImg() {
 		this.configModel.companyBrandLogo = '';
+	}
+
+	setValue(data) {
+		this.isStripeEnabled = true;
+		this.configModel.payButtontext = data['payButtontext'] || '';
+		this.configModel.currency = data['currency'] || '';
+		this.configModel.companyBrandLogo = data['companyBrandLogo'] || '';
+		this.configModel.allowRememberMe = data['allowRememberMe'];
 	}
 
 	ngOnDestroy() {

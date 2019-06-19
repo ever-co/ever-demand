@@ -27,10 +27,7 @@
 						| translate
 				}}</option>
 				<option *ngFor="let type of payPalTypes" value="{{ type }}">
-					{{
-						'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.TYPE'
-							| translate
-					}}
+					{{ type }}
 				</option>
 			</select>
 		</div>
