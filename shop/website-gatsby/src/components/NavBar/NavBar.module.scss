@@ -3,6 +3,10 @@
 .content {
 	margin-top: 80px;
 }
+
+.nav-grid {
+	height: auto;
+}
 .toolbar {
 	min-height: 54px !important;
 	width: 100%;
@@ -32,26 +36,7 @@
 	// 	font-family: "Pluto Heavy", sans-serif;
 	// }
 
-	.logo {
-		margin-top: 20px;
-		margin-bottom: 10px;
-		margin-left: 20px;
-		margin-right: 20px;
-		outline: none;
-		// text-align: center;
 
-		// color: #ffffff;
-		// font-size: 80px;
-		// font-family: "Pluto Heavy", sans-serif;
-		// position: absolute;
-		// 	top: calc(50% - 280px / 2);
-		color: #fff;
-		position: relative;
-		img {
-			margin-bottom: 0;
-			width: 80px;
-		}
-	}
 
 	.logo:hover {
 		// background: transparent !important;
@@ -111,6 +96,29 @@
 
 	.no-select {
 		color: #d0d0d0;
+	}
+}
+.logo {
+	margin-top: auto;
+	margin-bottom: 0;
+	margin-left: 20px;
+	margin-right: 20px;
+	outline: none;
+	// text-align: center;
+
+	// color: #ffffff;
+	// font-size: 80px;
+	// font-family: "Pluto Heavy", sans-serif;
+	// position: absolute;
+	 	top: calc(50% - 280px / 2);
+	color: #fff;
+	//position: relative;
+	img {
+		//position: absolute;
+		margin-bottom: 0;
+		width: 80px;
+		//top: 50;
+		//left:50;
 	}
 }
 

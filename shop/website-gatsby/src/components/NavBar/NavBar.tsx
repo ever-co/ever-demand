@@ -17,11 +17,11 @@ const NavBar = props => {
 	return (
 	<AppBar bgcolor={'primary'} className={styles.toolbar} position={'static'}>
 		<Box component={Toolbar} width={1} className={styles.toolbar}>
-			<Grid container flexGrow={1} spacing={8} >
-				<Grid item>
-					<Link to="/">
-						<img src={Logo} />
-					</Link>
+			<Grid container flexGrow={1} spacing={2} className={styles.navGrid}>
+				<Grid item alignItems={'center'} alignContent={'center'}>
+					<Button onClick={() => navigate('/')} className={styles.logo}>
+						<img src={Logo}  />
+					</Button>
 				</Grid>
 				<Grid item>
 					<Link to="/orders" style={{ color: 'white', textDecoration: 'none' }}>
