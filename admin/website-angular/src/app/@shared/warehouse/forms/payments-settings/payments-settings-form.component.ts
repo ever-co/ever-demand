@@ -1,6 +1,7 @@
 import { Component, ViewChild, Input } from '@angular/core';
 import { PaymentGatewaysComponent } from 'app/@shared/payment-gateways/payment-gateways.component';
 import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaymentGateway';
+import Warehouse from '@modules/server.common/entities/Warehouse';
 
 @Component({
 	selector: 'ea-warehouse-payments-settings-form',
@@ -15,7 +16,7 @@ export class PaymentsSettingsFormComponent {
 	@Input()
 	warehouseCountry: string;
 
-	isPaymentEnabled: boolean;
+	isPaymentEnabled: boolean = false;
 
 	get isPaymentValid() {
 		return !this.isPaymentEnabled || this.paymentGateways.isValid;
@@ -23,5 +24,10 @@ export class PaymentsSettingsFormComponent {
 
 	get paymentsGateways(): IPaymentGatewayCreateObject[] {
 		return this.paymentGateways.paymentsGateways;
+	}
+
+	setValue(merchant: Warehouse) {
+		this.isPaymentEnabled = merchant.isPaymentEnabled;
+		this.paymentGateways.setValue(merchant);
 	}
 }

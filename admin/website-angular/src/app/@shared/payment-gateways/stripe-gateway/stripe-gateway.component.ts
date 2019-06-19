@@ -97,6 +97,14 @@ export class StripeGatewayComponent implements OnChanges {
 		this.configModel.companyBrandLogo = '';
 	}
 
+	setValue(data) {
+		this.isStripeEnabled = true;
+		this.configModel.payButtontext = data['payButtontext'] || '';
+		this.configModel.currency = data['currency'] || '';
+		this.configModel.companyBrandLogo = data['companyBrandLogo'] || '';
+		this.configModel.allowRememberMe = data['allowRememberMe'];
+	}
+
 	ngOnDestroy() {
 		this._ngDestroy$.next();
 		this._ngDestroy$.complete();

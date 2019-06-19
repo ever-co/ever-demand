@@ -58,6 +58,15 @@ export class PayPalGatewayComponent implements OnChanges {
 		};
 	}
 
+	setValue(data) {
+		this.isPayPalEnabled = true;
+		this.configModel.currency = data['currency'] || '';
+		this.configModel.mode = data['mode'] || '';
+		this.configModel.publishableKey = data['publishableKey'] || '';
+		this.configModel.secretKey = data['secretKey'] || '';
+		this.configModel.description = data['description'] || '';
+	}
+
 	ngOnChanges(): void {
 		const merchantCountry = Country[this.warehouseCountry];
 

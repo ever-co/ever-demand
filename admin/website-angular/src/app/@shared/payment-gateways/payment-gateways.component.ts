@@ -5,6 +5,8 @@ import { PayPalGatewayComponent } from './payPal-gateway/payPal-gateway.componen
 import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaymentGateway';
 import { CurrenciesService } from 'app/@core/data/currencies.service';
 import { first } from 'rxjs/operators';
+import Warehouse from '@modules/server.common/entities/Warehouse';
+import PaymentGateways from '@modules/server.common/enums/PaymentGateways';
 
 @Component({
 	selector: 'ea-payment-gateways',
@@ -79,6 +81,26 @@ export class PaymentGatewaysComponent {
 
 		if (res) {
 			this.currenciesCodes = res.map((r) => r.currencyCode);
+		}
+	}
+
+	setValue(merchant: Warehouse) {
+		if (merchant.paymentGateways) {
+			const stripeConfigObj = merchant.paymentGateways.find(
+				(g) => g.paymentGateway === PaymentGateways.Stripe
+			);
+
+			if (stripeConfigObj) {
+				this.stripeGateway.setValue(stripeConfigObj.configureObject);
+			}
+
+			const payPalConfigObj = merchant.paymentGateways.find(
+				(g) => g.paymentGateway === PaymentGateways.PayPal
+			);
+
+			if (payPalConfigObj) {
+				this.payPalGateway.setValue(payPalConfigObj.configureObject);
+			}
 		}
 	}
 }

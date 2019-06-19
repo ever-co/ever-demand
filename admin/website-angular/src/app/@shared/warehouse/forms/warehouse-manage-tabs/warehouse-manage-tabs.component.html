@@ -54,6 +54,16 @@
 		>
 		</google-map>
 	</nb-tab>
+
+	<!-- TODO add translate -->
+	<!-- TODO load default data [warehouseLogo]="detailsComponent.logo.value"
+	[warehouseCountry]="locationForm.countryId.value" -->
+	<nb-tab tabTitle="Payment" class="pt-5">
+		<ea-warehouse-payments-settings-form
+			#paymentsSettingsForm
+		></ea-warehouse-payments-settings-form>
+	</nb-tab>
+
 	<nb-tab
 		tabTitle="{{
 			'WAREHOUSE_MANAGE.WIZARD_TITLES.DELIVERY_ZONES' | translate
