@@ -7,8 +7,8 @@ import { AppContext } from '../Context';
 import { GeoLocationProductsByPaging } from '../apollo/product';
 import { useMutation, useQuery } from 'react-apollo-hooks';
 import { createOrder } from '../apollo/order';
-import config from '../config';
 import { Container } from '@material-ui/core';
+import {navigate} from "@reach/router";
 
 const IndexPage = props => {
 	const context = useContext(AppContext);
@@ -31,7 +31,7 @@ const IndexPage = props => {
 					products: { productId: product.id, count: 1 },
 				},
 			},
-		});
+		}).then(() => navigate('/orders'));
 	};
 	if (loading) {
 		return <div>Loading...</div>;
