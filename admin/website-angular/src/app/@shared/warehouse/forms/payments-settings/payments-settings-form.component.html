@@ -1,0 +1,23 @@
+<nb-card>
+	<nb-card-body>
+		<div class="row m-0">
+			<div class="form-group offset-md-2 col-md-8">
+				<nb-checkbox [(ngModel)]="isPaymentEnabled">
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYMENTS'
+							| translate
+					}}
+				</nb-checkbox>
+			</div>
+		</div>
+		<div [hidden]="!isPaymentEnabled" class="row m-0">
+			<div class="form-group offset-md-2 col-md-8">
+				<ea-payment-gateways
+					#paymentGateways
+					[warehouseLogo]="warehouseLogo"
+					[warehouseCountry]="warehouseCountry"
+				></ea-payment-gateways>
+			</div>
+		</div>
+	</nb-card-body>
+</nb-card>

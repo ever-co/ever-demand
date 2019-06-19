@@ -83,12 +83,14 @@ export class StripeGatewayComponent implements OnChanges {
 	}
 
 	ngOnChanges(): void {
-		const defaultCurrency =
-			countriesDefaultCurrencies[
-				Country[this.warehouseCountry].toString()
-			] || '';
+		const merchantCountry = Country[this.warehouseCountry];
 
-		this.configModel.currency = defaultCurrency;
+		if (merchantCountry) {
+			const defaultCurrency =
+				countriesDefaultCurrencies[merchantCountry.toString()] || '';
+
+			this.configModel.currency = defaultCurrency;
+		}
 	}
 
 	deleteImg() {

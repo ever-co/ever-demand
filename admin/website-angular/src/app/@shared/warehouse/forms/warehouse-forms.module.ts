@@ -13,6 +13,8 @@ import { WarehouseManageTabsAccountComponent } from './warehouse-manage-tabs/acc
 import { WarehouseManageTabsDeliveryAreasComponent } from './warehouse-manage-tabs/delivery-areas/warehouse-manage-tabs-delivery-areas.component';
 import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.module';
 import { NbButtonModule } from '@nebular/theme';
+import { PaymentsSettingsFormComponent } from './payments-settings/payments-settings-form.component';
+import { PaymentGatewaysModule } from 'app/@shared/payment-gateways/payment-gateways.module';
 
 @NgModule({
 	imports: [
@@ -23,7 +25,8 @@ import { NbButtonModule } from '@nebular/theme';
 		FileUploaderModule,
 		GoogleMapModule,
 		LocationFormModule,
-		NbButtonModule
+		NbButtonModule,
+		PaymentGatewaysModule
 	],
 	exports: [
 		WarehouseManageTabsComponent,
@@ -31,7 +34,8 @@ import { NbButtonModule } from '@nebular/theme';
 		WarehouseManageTabsAccountComponent,
 		BasicInfoFormComponent,
 		ContactInfoFormComponent,
-		WarehouseManageTabsDeliveryAreasComponent
+		WarehouseManageTabsDeliveryAreasComponent,
+		PaymentsSettingsFormComponent
 	],
 	declarations: [
 		WarehouseManageTabsComponent,
@@ -39,7 +43,8 @@ import { NbButtonModule } from '@nebular/theme';
 		WarehouseManageTabsAccountComponent,
 		BasicInfoFormComponent,
 		ContactInfoFormComponent,
-		WarehouseManageTabsDeliveryAreasComponent
+		WarehouseManageTabsDeliveryAreasComponent,
+		PaymentsSettingsFormComponent
 	]
 })
 export class WarehouseFormsModule {}

@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { SetupMerchantPaymentsComponent } from './payments.component';
 import { NgModule } from '@angular/core';
-// import { PaymentGatewaysModule } from './payment-gateways/payment-gateways.module';
 import { PaymentGatewaysModule } from 'app/@shared/payment-gateways/payment-gateways.module';
 import { NbButtonModule } from '@nebular/theme';
 
