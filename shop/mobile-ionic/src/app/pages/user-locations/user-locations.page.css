@@ -5,3 +5,7 @@ ion-item-group#address-info {
 ion-button#save {
 	margin-bottom: 10px;
 }
+
+.map {
+	height: 60%;
+}

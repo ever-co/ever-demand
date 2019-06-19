@@ -33,7 +33,7 @@ const routes: Routes = [
 		canLoad: [OrdersHistoryModuleGuard]
 	},
 	{
-		path: ' ',
+		path: 'invite',
 		loadChildren: './+invite/invite.module#InvitePageModule',
 		canLoad: [InviteModuleGuard]
 	},
