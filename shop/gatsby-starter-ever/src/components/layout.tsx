@@ -1,11 +1,10 @@
-import { graphql, StaticQuery } from 'gatsby';
+import {graphql, StaticQuery} from 'gatsby';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import NavBar from './NavBar';
 import './style.scss';
-import { Box, Container } from '@material-ui/core';
-import { inspect } from 'util';
+import {Box, Container} from '@material-ui/core';
 import styles from '../styles/styles.module.scss'
 
 /**
@@ -27,6 +26,7 @@ const Layout = ({ children }) => (
 		`}
 		render={data => (
 			<>
+
 				<NavBar siteTitle={data.site.siteMetadata.title} />
 				<Container maxWidth={'xl'} className={styles.content}>
 					<Box mt={2}>

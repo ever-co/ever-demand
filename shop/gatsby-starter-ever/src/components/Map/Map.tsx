@@ -1,14 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {
-	withScriptjs,
-	withGoogleMap,
-	GoogleMap,
-	Marker,
-} from 'react-google-maps';
-import config from '../../config';
+import {GoogleMap, Marker, withGoogleMap, withScriptjs,} from 'react-google-maps';
 
-const { defaultCoordinates } = config;
+const  defaultCoordinates  = [process.env.DEFAULT_LONGITUDE, process.env.DEFAULT_LATITUDE];
 
 const Map = withScriptjs(
 	withGoogleMap(({ coordinates }) => {

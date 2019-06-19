@@ -1,8 +1,9 @@
-const config = require('./src/config')
-// require("dotenv").config({
-// 	path: `.env`,
-// })
-
+require('dotenv').config({
+	path: `.env.${process.env.NODE_ENV}`,
+})
+process.env.DEFAULT_LATITUDE = parseFloat(process.env.DEFAULT_LATITUDE)
+process.env.DEFAULT_LONGITUDE = parseFloat(process.env.DEFAULT_LONGITUDE)
+console.log(process.env)
 module.exports = {
   siteMetadata: {
     title: `Gatsby Ever Starter`,
@@ -34,7 +35,7 @@ module.exports = {
         // This is field under which it's accessible
         fieldName: "ever",
         // Url to query from
-        url: config.graphqlUri,
+        url: process.env.GQL_ENDPOINT,
       },
     },
     {

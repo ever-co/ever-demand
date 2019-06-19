@@ -1,16 +1,10 @@
+import {ApolloClient, ApolloLink, HttpLink, InMemoryCache,} from 'apollo-boost';
+import {onError} from 'apollo-link-error';
 import fetch from 'isomorphic-fetch';
-import {
-	ApolloClient,
-	HttpLink,
-	InMemoryCache,
-	ApolloLink,
-} from 'apollo-boost';
-import config from '../config';
-import { onError } from 'apollo-link-error';
 // @ts-ignore
 // @ts-ignore
 export const client = new ApolloClient({
-	uri: config.graphqlUri,
+	uri: process.env.GQL_ENDPOINT,
 	link: ApolloLink.from([
 		onError(({ graphQLErrors, networkError }) => {
 			if (graphQLErrors)
@@ -22,7 +16,7 @@ export const client = new ApolloClient({
 			if (networkError) console.log(`[Network error]: ${networkError}`);
 		}),
 		new HttpLink({
-			uri: config.graphqlUri,
+			uri: process.env.GQL_ENDPOINT,
 		}),
 	]),
 	cache: new InMemoryCache(),

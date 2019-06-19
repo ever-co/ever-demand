@@ -1,15 +1,14 @@
-import React, { useContext, useState } from 'react';
+import React, {useContext, useState} from 'react';
 import Header from './Header';
 import logo from '../../assets/ever-logo.svg';
 import styles from '../../styles/styles.module.scss';
-import { Box, Button, Card, Grid } from '@material-ui/core';
+import {Box, Button, Card, Grid} from '@material-ui/core';
 import GeoLoginForm from '../../components/GeoLoginForm';
 import Map from '../../components/Map';
-import { AppContext } from '../../Context';
-import config from '../../config';
-import { useMutation } from 'react-apollo-hooks';
-import { CreateUser } from '../../apollo/user';
-import { navigate } from '@reach/router';
+import {AppContext} from '../../Context';
+import {useMutation} from 'react-apollo-hooks';
+import {CreateUser} from '../../apollo/user';
+import {navigate} from '@reach/router';
 
 const defaultUser = {
 	email: '',
@@ -103,7 +102,7 @@ const page = () => {
 								coords={context.coordinates}
 								isMarkerShown
 								className={styles.map}
-								googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${config.GOOGLE_MAPS_API_KEY}&callback=initMap`}
+								googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API_KEY}&callback=initMap`}
 								loadingElement={<div className={styles.mapContainer} />}
 								containerElement={<div className={styles.mapContainer} />}
 								mapElement={<div className={styles.mapContainer} />}
