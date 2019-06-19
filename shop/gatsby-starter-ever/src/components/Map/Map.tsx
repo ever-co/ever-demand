@@ -1,7 +1,7 @@
 import React from 'react';
 import {GoogleMap, Marker, withGoogleMap, withScriptjs,} from 'react-google-maps';
 
-const  defaultCoordinates  = [process.env.DEFAULT_LONGITUDE, process.env.DEFAULT_LATITUDE];
+const  defaultCoordinates  = [process.env.DEFAULT_LONGITUDE, process.env.DEFAULT_LATITUDE].map(x => parseFloat(x));
 
 const Map = withScriptjs(
 	withGoogleMap(({ coordinates }) => {

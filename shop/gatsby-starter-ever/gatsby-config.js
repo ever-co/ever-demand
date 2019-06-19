@@ -3,7 +3,6 @@ require('dotenv').config({
 })
 process.env.DEFAULT_LATITUDE = parseFloat(process.env.DEFAULT_LATITUDE)
 process.env.DEFAULT_LONGITUDE = parseFloat(process.env.DEFAULT_LONGITUDE)
-console.log(process.env)
 module.exports = {
   siteMetadata: {
     title: `Gatsby Ever Starter`,
