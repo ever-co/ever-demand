@@ -1,19 +1,17 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
-import styles from './orders.module.scss';
-import { useQuery } from 'react-apollo-hooks';
-import { getOrders } from '../apollo/order';
-import { Button, Card, Container, Grid, Typography } from '@material-ui/core';
-import { AppContext } from '../Context';
+import React, {useContext} from 'react';
+import {useQuery} from 'react-apollo-hooks';
+import {getOrders} from '../apollo/order';
+import {Button, Container, Grid, Typography} from '@material-ui/core';
+import {AppContext} from '../Context';
 import Layout from '../components/layout';
 import OrdersList from '../components/OrdersList/OrdersList';
-import { navigate } from 'gatsby';
 
 const Orders = props => {
 	const context = useContext(AppContext);
 	// @ts-ignore
 	const { data, error, loading } = useQuery(getOrders, {
 		variables: { id: context.getUser().id },
+		pollInterval: 500
 	});
 	const orders = data.getOrders;
 

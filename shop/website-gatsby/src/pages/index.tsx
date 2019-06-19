@@ -1,13 +1,13 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import ProductGrid from '../components/ProductGrid';
-import { AppContext } from '../Context';
-import { GeoLocationProductsByPaging } from '../apollo/product';
-import { useMutation, useQuery } from 'react-apollo-hooks';
-import { createOrder } from '../apollo/order';
-import { Container } from '@material-ui/core';
+import {AppContext} from '../Context';
+import {GeoLocationProductsByPaging} from '../apollo/product';
+import {useMutation, useQuery} from 'react-apollo-hooks';
+import {createOrder} from '../apollo/order';
+import {Container} from '@material-ui/core';
 import {navigate} from "@reach/router";
 
 const IndexPage = props => {
@@ -17,6 +17,7 @@ const IndexPage = props => {
 		variables: {
 			geoLocation: { loc: { type: 'Point', coordinates: context.coordinates } },
 		},
+		pollInterval: 500
 	}) || {loading: true};
 	const placeOrder = useMutation(createOrder);
 
@@ -30,7 +31,7 @@ const IndexPage = props => {
 					warehouseId: item.warehouseId,
 					products: { productId: product.id, count: 1 },
 				},
-			},
+			}
 		}).then(() => navigate('/orders'));
 	};
 	if (loading) {

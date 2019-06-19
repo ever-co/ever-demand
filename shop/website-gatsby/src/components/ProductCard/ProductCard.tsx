@@ -1,13 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {
-	Card,
-	CardContent,
-	Typography,
-	CardActions,
-	Button,
-} from '@material-ui/core';
-import { navigate } from 'gatsby';
+import {Button, Card, CardActions, CardContent, Typography,} from '@material-ui/core';
+import {navigate} from 'gatsby';
 import styles from './ProductCard.module.scss';
 import {matchLocale} from "../../utilities/utilities";
 //import { Test } from './ProductCard.styles';
@@ -29,7 +22,6 @@ const ProductCard = ({ item, addToCart }) => {
 							color={'secondary'}
 							onClick={() => {
 								addToCart(item);
-								navigate('/orders');
 							}}
 						>
 							Buy for: ${item.warehouseProduct.price.toFixed(2)}
