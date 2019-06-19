@@ -5,54 +5,139 @@
 			<nb-card-header>
 				<div class="col-md-8">
 					<h1>{{ 'SIMULATION_VIEW.SIMULATION' | translate }}</h1>
-					<br>
-					<h4>{{ "SIMULATION_VIEW.PURCHASE_PRODUCTS" | translate }}</h4>
+					<br />
+					<h4>
+						{{ 'SIMULATION_VIEW.PURCHASE_PRODUCTS' | translate }}
+					</h4>
 				</div>
 			</nb-card-header>
 
 			<nb-card-body>
-				<div *ngIf='loadButtons' id="simulations-buttons" class="row">
-					<div *ngIf='user == null'>
-						<button class="btn btn-hero-info" *ngIf="inviteSystem && !inviteRequest && !invite" (click)="showInviteRequestModal()">{{
-							"SIMULATION_VIEW.INVITE_REQUEST" | translate }}</button>
-						<button class="btn btn-hero-success" *ngIf="inviteSystem && inviteRequest" (click)="inviteUser()">{{ "SIMULATION_VIEW.INVITE_USER"
-							| translate }}
+				<div *ngIf="loadButtons" id="simulations-buttons" class="row">
+					<div *ngIf="user == null">
+						<button
+							nbButton
+							hero
+							status="info"
+							*ngIf="inviteSystem && !inviteRequest && !invite"
+							(click)="showInviteRequestModal()"
+						>
+							{{ 'SIMULATION_VIEW.INVITE_REQUEST' | translate }}
+						</button>
+						<button
+							nbButton
+							hero
+							status="success"
+							*ngIf="inviteSystem && inviteRequest"
+							(click)="inviteUser()"
+						>
+							{{ 'SIMULATION_VIEW.INVITE_USER' | translate }}
 						</button>
 					</div>
-					<button class="btn btn-hero-info" *ngIf="((!inviteSystem && user == null) || (invite && user == null))" (click)="createUser()">
-						{{ "SIMULATION_VIEW.CREATE_USER" | translate }}
+					<button
+						nbButton
+						hero
+						status="info"
+						*ngIf="
+							(!inviteSystem && user == null) ||
+							(invite && user == null)
+						"
+						(click)="createUser()"
+					>
+						{{ 'SIMULATION_VIEW.CREATE_USER' | translate }}
 					</button>
-					<button id="order" (click)="orderCreate()" [disabled]="!hasProductsForOrder" [hidden]="order != null || user == null" class="btn btn-success"
-					 [nbSpinner]="loading">
-						{{"SIMULATION_VIEW.ORDER" | translate }}</button>
-					<div *ngIf='hasProductsForOrder' class="order-info bg-warning">
-						<span class="text-white d-block">{{"SIMULATION_VIEW.PRODUCTS" | translate }}: <h6 class="d-inline-block"> {{productsCount}}</h6></span>
-						<span class="text-white d-block">{{"SIMULATION_VIEW.STORE" | translate }}: <h6 class="d-inline-block"> {{warehouse?.name}}</h6></span>
+					<button
+						nbButton
+						status="success"
+						id="order"
+						class="fix-btn-height"
+						(click)="orderCreate()"
+						[disabled]="!hasProductsForOrder"
+						[hidden]="order != null || user == null"
+						[nbSpinner]="loading"
+					>
+						{{ 'SIMULATION_VIEW.ORDER' | translate }}
+					</button>
+					<div
+						*ngIf="hasProductsForOrder"
+						class="order-info bg-warning"
+					>
+						<span class="text-white d-block"
+							>{{ 'SIMULATION_VIEW.PRODUCTS' | translate }}:
+							<h6 class="d-inline-block">
+								{{ productsCount }}
+							</h6></span
+						>
+						<span class="text-white d-block"
+							>{{ 'SIMULATION_VIEW.STORE' | translate }}:
+							<h6 class="d-inline-block">
+								{{ warehouse?.name }}
+							</h6></span
+						>
 					</div>
 
 					<div id="orders" class="btn-group" *ngIf="order != null">
-						<button id="orderConfirm" [disabled]='!order?.isCompleted' (click)="orderConfirm()" class="btn btn-success" [nbSpinner]="loading">{{
-							"SIMULATION_VIEW.ORDER_CONFIRM" | translate }}</button>
-						<button id="orderCancel" [disabled]='order?.isCompleted' (click)="orderCancel()" class="btn btn-danger" [nbSpinner]="loading">{{
-							"SIMULATION_VIEW.ORDER_CANCEL" | translate }}</button>
+						<button
+							nbButton
+							status="success"
+							id="orderConfirm"
+							[disabled]="!order?.isCompleted"
+							(click)="orderConfirm()"
+							[nbSpinner]="loading"
+						>
+							{{ 'SIMULATION_VIEW.ORDER_CONFIRM' | translate }}
+						</button>
+						<button
+							nbButton
+							status="danger"
+							id="orderCancel"
+							[disabled]="order?.isCompleted"
+							(click)="orderCancel()"
+							[nbSpinner]="loading"
+						>
+							{{ 'SIMULATION_VIEW.ORDER_CANCEL' | translate }}
+						</button>
 					</div>
 				</div>
 
-				<nb-tabset class="row" [hidden]="(order != null || user == null)" fullWidth>
-					<nb-tab tabTitle='{{"SIMULATION_VIEW.TAB_BUTTONS.PRODUCTS" | translate }}'>
-						<ea-simulation-products #productsTable></ea-simulation-products>
+				<nb-tabset
+					class="row"
+					[hidden]="order != null || user == null"
+					fullWidth
+				>
+					<nb-tab
+						tabTitle="{{
+							'SIMULATION_VIEW.TAB_BUTTONS.PRODUCTS' | translate
+						}}"
+					>
+						<ea-simulation-products
+							#productsTable
+						></ea-simulation-products>
 					</nb-tab>
-					<nb-tab tabTitle='{{"SIMULATION_VIEW.TAB_BUTTONS.ORDER_HISTORY" | translate }}'>
-						<ea-customer-orders #orderHistoryTable [userId]='user?.id'></ea-customer-orders>
+					<nb-tab
+						tabTitle="{{
+							'SIMULATION_VIEW.TAB_BUTTONS.ORDER_HISTORY'
+								| translate
+						}}"
+					>
+						<ea-customer-orders
+							#orderHistoryTable
+							[userId]="user?.id"
+						></ea-customer-orders>
 					</nb-tab>
 				</nb-tabset>
 
-				<ea-simulation-order *ngIf="order != null" [order]='order'></ea-simulation-order>
+				<ea-simulation-order
+					*ngIf="order != null"
+					[order]="order"
+				></ea-simulation-order>
 			</nb-card-body>
-
 		</nb-card>
 	</div>
 	<div class="col-md-3">
-		<ea-simulation-instructions [inviteSystem]='inviteSystem' #instructions></ea-simulation-instructions>
+		<ea-simulation-instructions
+			[inviteSystem]="inviteSystem"
+			#instructions
+		></ea-simulation-instructions>
 	</div>
 </div>

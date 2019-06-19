@@ -13,6 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { InvitesRequestsTableModule } from 'app/@shared/render-component/invites-requests/invites-requests.module';
 import { NotifyService } from 'app/@core/services/notify/notify.service';
 import { ConfirmationModalModule } from '../../../../@shared/confirmation-modal/confirmation-modal.module';
+import { NbButtonModule } from '@nebular/theme';
 @NgModule({
 	imports: [
 		CommonModule,
@@ -22,7 +23,8 @@ import { ConfirmationModalModule } from '../../../../@shared/confirmation-modal/
 		TranslateModule.forChild(),
 		HighlightModule.forRoot({ theme: 'github' }),
 		InvitesRequestsTableModule,
-		ConfirmationModalModule
+		ConfirmationModalModule,
+		NbButtonModule
 	],
 	declarations: [InvitesRequestsComponent, CountryRenderComponent],
 	entryComponents: [CountryRenderComponent],

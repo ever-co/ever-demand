@@ -3,13 +3,13 @@
 	border-left: 5px solid #42a948; /* green */
 }
 
-:host /deep/ .card-footer button {
+:host ::ng-deep .card-footer button {
 	background-color: #111111 !important;
 	border: none !important;
 	color: white !important;
 	cursor: pointer !important;
 }
-:host /deep/ .card-footer button:hover {
+:host ::ng-deep .card-footer button:hover {
 	background-color: #bebebe !important;
 	color: #111111 !important;
 }

@@ -21,22 +21,26 @@
 			>
 				<div class="col-8 p-0 btn-group">
 					<button
-						class="btn btn-icon btn-success btn-sm d-inline-block"
+						nbButton
+						status="success"
+						class="d-inline-block"
 						(click)="addProducts()"
 					>
-						<i class="ion-md-add button-icon"></i
+						<i class="ion-md-add button-icon mr-1"></i
 						>{{
 							'ORDER_VIEW.ORDER_PRODUCT_INFO.ADD_PRODUCTS'
 								| translate
 						}}
 					</button>
 					<button
-						class="btn btn-icon btn-dark btn-sm mr-2 d-inline-block"
+						nbButton
+						status="warning"
+						class="mr-2 d-inline-block"
 						[disabled]="!selectedProducts.length"
 						(click)="removeSelectedProducts()"
 						[nbSpinner]="loading"
 					>
-						<i class="ion-md-trash button-icon"></i>
+						<i class="ion-md-trash button-icon mr-1"></i>
 						{{
 							'ORDER_VIEW.ORDER_PRODUCT_INFO.REMOVE_PRODUCTS'
 								| translate
@@ -45,11 +49,13 @@
 				</div>
 				<div class="col-4 pull-right p-0">
 					<button
-						class="btn btn-icon btn-danger btn-sm mr-2 d-inline-block float-right"
+						nbButton
+						status="danger"
+						class="mr-2 d-inline-block float-right"
 						(click)="cancelOrder()"
 						[nbSpinner]="loading"
 					>
-						<i class="ion-md-close button-icon"></i>
+						<i class="ion-md-close button-icon mr-1"></i>
 						{{
 							'ORDER_VIEW.ORDER_PRODUCT_INFO.CANCEL_ORDER'
 								| translate

@@ -18,6 +18,7 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MessagePopUpComponent } from 'app/shared/message-pop-up/message-pop-up.component';
 import { MessagePopUpModalModule } from 'app/shared/message-pop-up/message-pop-up.module';
+import { CarrierLocationComponent } from './location/carrier-location.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -27,10 +28,11 @@ export function HttpLoaderFactory(http: HttpClient) {
 	declarations: [
 		OrdersContainerComponent,
 		OrdersComponent,
-		OrderComponent
+		OrderComponent,
+		CarrierLocationComponent
 		// MessagePopUpComponent
 	],
-	// entryComponents: [MessagePopUpComponent],
+	entryComponents: [CarrierLocationComponent],
 	imports: [
 		CommonModule,
 		MessagePopUpModalModule,

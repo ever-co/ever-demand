@@ -183,10 +183,10 @@ export class CategoriesTableComponent implements OnInit, OnDestroy {
 						position: 'left'
 					},
 					edit: {
-						editButtonContent: '<i class="nb-edit"></i>'
+						editButtonContent: '<i class="ion-md-create"></i>'
 					},
 					delete: {
-						deleteButtonContent: '<i class="nb-trash"></i>',
+						deleteButtonContent: '<i class="ion-md-trash"></i>',
 						confirmDelete: true
 					},
 					columns: {

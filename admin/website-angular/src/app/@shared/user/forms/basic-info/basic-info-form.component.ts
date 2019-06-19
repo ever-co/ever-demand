@@ -35,7 +35,7 @@ export type CustomerBasicInfo = Pick<
 })
 export class BasicInfoFormComponent
 	implements OnInit, OnDestroy, AfterViewInit {
-	@ViewChild('logoImagePreview')
+	@ViewChild('logoImagePreview', { static: false })
 	logoImagePreview: ElementRef;
 
 	@Input()

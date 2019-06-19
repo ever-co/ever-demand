@@ -15,7 +15,7 @@ import { PaymentGatewaysComponent } from 'app/@shared/payment-gateways/payment-g
 	styleUrls: ['./payments.component.scss']
 })
 export class SetupMerchantPaymentsComponent {
-	@ViewChild('paymentGateways')
+	@ViewChild('paymentGateways', { static: true })
 	paymentGateways: PaymentGatewaysComponent;
 	@Output()
 	previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();

@@ -15,7 +15,7 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ToasterModule } from 'angular2-toaster';
 import FakeDataProductsCategories from '../../@core/data/fakeDataServices/productsCategories';
-import { NbSpinnerModule } from '@nebular/theme';
+import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 import { NotifyService } from 'app/@core/services/notify/notify.service';
 import { InvitesService } from 'app/@core/data/invites.service';
 import { InvitesRequestsService } from 'app/@core/data/invites-requests.service';
@@ -39,7 +39,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 			}
 		}),
 		RouterModule.forChild(routes),
-		NbSpinnerModule
+		NbSpinnerModule,
+		NbButtonModule
 	],
 	declarations: [FakeDataComponent],
 	providers: [

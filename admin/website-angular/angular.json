@@ -34,7 +34,6 @@
 							"node_modules/ionicons/dist/scss/ionicons.scss",
 							"node_modules/@fortawesome/fontawesome-free/css/all.css",
 							"node_modules/socicon/css/socicon.css",
-							"node_modules/nebular-icons/scss/nebular-icons.scss",
 							"node_modules/angular-tree-component/dist/angular-tree-component.css",
 							"node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
 							"node_modules/leaflet/dist/leaflet.css",
@@ -116,7 +115,6 @@
 							"node_modules/ionicons/dist/scss/ionicons.scss",
 							"node_modules/@fortawesome/fontawesome-free/css/all.css",
 							"node_modules/socicon/css/socicon.css",
-							"node_modules/nebular-icons/scss/nebular-icons.scss",
 							"node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
 							"node_modules/leaflet/dist/leaflet.css",
 							"src/app/@theme/styles/styles.scss"

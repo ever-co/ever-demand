@@ -3,40 +3,40 @@
 		<div class="value">
 			<span [ngClass]="isLoading ? 'waiting' : ''">
 				<div class="row" *ngIf="item.isPrice && !isLoading">
-					<div class="col-4">
+					<h2 class="col-4">
 						<small>{{ item.values.completed.title }}</small> ${{
 							item.values.completed.value | myNumberWithCommas
 						}}
-					</div>
+					</h2>
 
-					<div class="col-4">
+					<h2 class="col-4">
 						<small>{{ item.values.total.title }}</small> ${{
 							item.values.total.value | myNumberWithCommas
 						}}
-					</div>
+					</h2>
 
-					<div class="col-4">
+					<h2 class="col-4">
 						<small>{{ item.values.cancelled.title }}</small> ${{
 							item.values.cancelled.value | myNumberWithCommas
 						}}
-					</div>
+					</h2>
 				</div>
 
 				<div class="row" *ngIf="!item.isPrice && !isLoading">
-					<div class="col-4">
+					<h2 class="col-4">
 						<small>{{ item.values.completed.title }}</small>
 						{{ item.values.completed.value }}
-					</div>
+					</h2>
 
-					<div class="col-4">
+					<h2 class="col-4">
 						<small>{{ item.values.total.title }}</small>
 						{{ item.values.total.value }}
-					</div>
+					</h2>
 
-					<div class="col-4">
+					<h2 class="col-4">
 						<small>{{ item.values.cancelled.title }}</small>
 						{{ item.values.cancelled.value }}
-					</div>
+					</h2>
 				</div>
 			</span>
 

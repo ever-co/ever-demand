@@ -18,22 +18,22 @@ import { ModalController } from '@ionic/angular';
 	styleUrls: ['./add-carriers-popup.scss']
 })
 export class AddCarriersPopupPage implements OnInit, OnDestroy {
-	@ViewChild('addNewCarrier')
+	@ViewChild('addNewCarrier', { static: false })
 	addNewCarrierComponent: AddNewCarrierComponent;
 
-	@ViewChild('carriersCatalog')
+	@ViewChild('carriersCatalog', { static: false })
 	carriersCatalog: CarriersCatalogComponent;
 
-	@ViewChild('addChoice')
+	@ViewChild('addChoice', { static: true })
 	addChoiceComponent: AddChoiceComponent;
 
-	@ViewChild('wizzardFrom')
+	@ViewChild('wizzardFrom', { static: true })
 	wizzardFrom: any;
 
-	@ViewChild('wizzardFromStep1')
+	@ViewChild('wizzardFromStep1', { static: true })
 	wizzardFromStep1: any;
 
-	@ViewChild('wizardFormStep2')
+	@ViewChild('wizardFormStep2', { static: true })
 	wizardFormStep2: any;
 
 	choiced: string;

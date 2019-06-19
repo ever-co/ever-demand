@@ -7,7 +7,7 @@ import { ThemeModule } from '../../@theme';
 import { FormWizardModule } from 'angular2-wizard';
 import { CarriersRoutingModule } from './carriers-routing.module';
 import { RenderComponentsModule } from '../../@shared/render-component/render-components.module';
-import { NbSpinnerModule } from '@nebular/theme';
+import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 import { TrackModule } from './track/track.module';
 import { CarrierLocationModule } from './+carrier/location/carrier-location.module';
 import { CarriersSmartTableModule } from 'app/@shared/carrier/carriers-table/carriers-table.module';
@@ -26,7 +26,8 @@ import { CarrierMutationModule } from 'app/@shared/carrier/carrier-mutation';
 		TrackModule,
 		CarriersSmartTableModule,
 		RenderComponentsModule,
-		CarrierMutationModule
+		CarrierMutationModule,
+		NbButtonModule
 	],
 	declarations: [CarriersComponent]
 })

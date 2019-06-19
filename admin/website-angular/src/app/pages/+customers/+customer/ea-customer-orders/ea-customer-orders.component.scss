@@ -16,7 +16,7 @@
 		padding: 0;
 	}
 
-	/deep/ ng2-smart-table {
+	::ng-deep ng2-smart-table {
 		.redirectBtn {
 			font-size: 0.9em !important;
 			text-align: left !important;

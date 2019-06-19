@@ -52,7 +52,7 @@
 									let-item="item"
 									let-index="index"
 								>
-									<h6 class="card-title">
+									<p class="card-title">
 										<img
 											*ngIf="item.logo"
 											height="40"
@@ -61,7 +61,7 @@
 											[src]="item.logo"
 										/>
 										{{ item.name }}
-									</h6>
+									</p>
 								</ng-template>
 							</ng-select>
 							<ng-select
@@ -91,7 +91,7 @@
 									let-item="item"
 									let-index="index"
 								>
-									<h6 class="card-title">
+									<p class="card-title">
 										<img
 											*ngIf="item.logo"
 											height="40"
@@ -100,16 +100,16 @@
 											[src]="item.logo"
 										/>
 										{{ item.fullName }}
-									</h6>
+									</p>
 								</ng-template>
 							</ng-select>
 						</div>
 						<nb-card-footer>
 							<div class="details">
 								<div class="warehouse" *ngIf="selectedStore">
-									<h5>
+									<h6>
 										<b>{{ selectedStore.name }}</b>
-									</h5>
+									</h6>
 									<ul>
 										<li>
 											{{
@@ -138,9 +138,9 @@
 									</ul>
 								</div>
 								<div class="carrier" *ngIf="selectedCarrier">
-									<h5>
+									<h6>
 										<b>{{ selectedCarrier.fullName }}</b>
-									</h5>
+									</h6>
 									<ul>
 										<li>
 											{{

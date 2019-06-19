@@ -47,7 +47,9 @@
 		"build:carrier": "yarn --cwd ./carrier/mobile-ionic run build",
 		"build": "yarn run build:server && yarn run build:admin && yarn run build:merchant && yarn run build:shopmobile && yarn run build:shopweb && yarn run build:carrier",
 		"tslint-check": "tslint-config-prettier-check ./tslint.json",
-		"count": "cross-env yarn cloc backend/api/src admin/website-angular/src shop/mobile-ionic/src shop/website-angular/src carrier/mobile-ionic/src merchant/tablet-ionic/src shared/core-angular shared/core --exclude-dir='node_modules,modules'"
+		"count": "cross-env yarn cloc backend/api/src admin/website-angular/src shop/mobile-ionic/src shop/website-angular/src carrier/mobile-ionic/src merchant/tablet-ionic/src shared/core-angular shared/core --exclude-dir='node_modules,modules'",
+		"snyk-protect": "snyk protect",
+		"prepare": "yarn run snyk-protect"
 	},
 	"resolutions": {},
 	"dependencies": {
@@ -59,6 +61,7 @@
 		"@ngx-translate/core": "^11.0.1",
 		"@ngx-translate/http-loader": "^4.0.0",
 		"angular2-logger": "^0.7.0",
+		"fstream": "^1.0.12",
 		"npm": "^6.9.0",
 		"rxjs": "^6.5.1",
 		"rxjs-compat": "^6.5.1",
@@ -68,11 +71,11 @@
 		"uuid": "^3.3.2"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^7.5.2",
-		"@commitlint/config-conventional": "^7.5.0",
-		"@commitlint/config-lerna-scopes": "^7.5.1",
-		"@commitlint/travis-cli": "^7.5.2",
-		"@types/async": "^2.4.1",
+		"@commitlint/cli": "^8.0.0",
+		"@commitlint/config-conventional": "^8.0.0",
+		"@commitlint/config-lerna-scopes": "^8.0.0",
+		"@commitlint/travis-cli": "^8.0.0",
+		"@types/async": "^3.0.0",
 		"@types/d3-color": "^1.2.2",
 		"@types/faker": "^4.1.5",
 		"@types/googlemaps": "^3.30.19",
@@ -92,7 +95,7 @@
 		"conventional-changelog": "^3.1.4",
 		"cross-env": "^5.2.0",
 		"cz-conventional-changelog": "^2.1.0",
-		"husky": "^2.3.0",
+		"husky": "^2.4.0",
 		"jasmine-core": "^3.4.0",
 		"jasmine-spec-reporter": "^4.2.1",
 		"karma": "^4.1.0",
@@ -112,6 +115,7 @@
 		"rxjs-tslint": "0.1.5",
 		"tslint": "^5.16.0",
 		"tslint-config-prettier": "^1.18.0",
+		"snyk": "^1.175.2",
 		"typescript": "~3.4.5"
 	},
 	"config": {
@@ -128,5 +132,6 @@
 	"engines": {
 		"node": ">=10.15.0",
 		"yarn": ">=1.13.0"
-	}
+	},
+	"snyk": true
 }

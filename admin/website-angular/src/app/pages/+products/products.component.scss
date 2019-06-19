@@ -8,7 +8,7 @@ nb-card-body {
 	border-bottom-right-radius: 0.5rem;
 }
 
-:host /deep/ ng2-smart-table {
+:host ::ng-deep ng2-smart-table {
 	tr {
 		th {
 			padding: 18px !important;

@@ -10,7 +10,7 @@ import { Subject } from 'rxjs';
 })
 export class SetupMerchantProductsCatalogComponent
 	implements OnInit, OnDestroy {
-	@ViewChild('productsTable')
+	@ViewChild('productsTable', { static: true })
 	productsTable: ProductsTableComponent;
 
 	@Input()

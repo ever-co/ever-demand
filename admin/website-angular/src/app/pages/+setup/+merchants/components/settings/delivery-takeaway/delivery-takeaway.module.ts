@@ -12,6 +12,7 @@ import { RenderComponentsModule } from 'app/@shared/render-component/render-comp
 import { CarrierMutationModule } from 'app/@shared/carrier/carrier-mutation';
 import { SetupMerchantAddNewCarrierComponent } from './add-new-carrier/add-new-carrier.component';
 import { CarrierFormsModule } from 'app/@shared/carrier/forms';
+import { NbButtonModule } from '@nebular/theme';
 
 const COMPONENTS = [
 	SetupMerchantDeliveryAndTakeawayComponent,
@@ -30,7 +31,8 @@ const COMPONENTS = [
 		TrackModule,
 		RenderComponentsModule,
 		CarrierMutationModule,
-		CarrierFormsModule
+		CarrierFormsModule,
+		NbButtonModule
 	],
 	declarations: COMPONENTS,
 	exports: COMPONENTS

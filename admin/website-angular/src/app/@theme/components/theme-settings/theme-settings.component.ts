@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { StateService } from '../../../@core/data/state.service';
 import { TranslateService } from '@ngx-translate/core';
+import { NbThemeService } from '@nebular/theme';
 
 @Component({
 	selector: 'ngx-theme-settings',
@@ -13,9 +14,39 @@ export class ThemeSettingsComponent {
 
 	languages = { en: 'English', bg: 'Bulgarian', he: 'Hebrew', ru: 'Russian' };
 
+	themes = [
+		{
+			value: 'everlight',
+			name: 'Ever Light'
+		},
+		{
+			value: 'everdark',
+			name: 'Ever Dark'
+		},
+		{
+			value: 'default',
+			name: 'White'
+		},
+		{
+			value: 'cosmic',
+			name: 'Cosmic'
+		},
+		{
+			value: 'corporate',
+			name: 'Corporate'
+		},
+		{
+			value: 'dark',
+			name: 'Dark'
+		}
+	];
+
+	currentTheme = 'everlight';
+
 	constructor(
 		protected stateService: StateService,
-		public translate: TranslateService
+		public translate: TranslateService,
+		private themeService: NbThemeService
 	) {
 		translate.addLangs(['en', 'bg', 'he', 'ru']);
 		translate.setDefaultLang('en');
@@ -30,6 +61,10 @@ export class ThemeSettingsComponent {
 		this.stateService
 			.getSidebarStates()
 			.subscribe((sidebars: any[]) => (this.sidebars = sidebars));
+	}
+
+	toggleTheme() {
+		this.themeService.changeTheme(this.currentTheme);
 	}
 
 	switchLanguage(language: string) {

@@ -42,10 +42,10 @@ const perPage = 3;
 export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 	private ngDestroy$ = new Subject<void>();
 
-	@ViewChild('productsTable')
+	@ViewChild('productsTable', { static: false })
 	public productsTable: ProductsTableComponent;
 
-	@ViewChild('warehouseSelectView')
+	@ViewChild('warehouseSelectView', { static: false })
 	public warehouseSelectView: WarehouseSelectViewComponent;
 
 	public filterMode: OrdersFilterModes = 'all';
@@ -357,10 +357,10 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 								<img width="32" height="32" src="${this.localeTranslate(
 									order.products[0].product.images
 								)}" />
-								<h6 class="d-inline-block">
+								<p class="d-inline-block">
 									${this.localeTranslate(order.products[0].product.title)}
 									<span class="badge badge-pill badge-secondary">${order.products[0].count}</span>
-								</h6>
+								</p>
 							</div>
 						`
 								: '',

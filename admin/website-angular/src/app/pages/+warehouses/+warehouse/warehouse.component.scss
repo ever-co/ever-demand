@@ -44,8 +44,9 @@ $brand-darken: darken($brand, 5%);
 .subheader {
 	margin-bottom: 0.75rem;
 	font-size: 0.875rem;
-	font-weight: nb-theme(font-weight-bolder);
-	color: nb-theme(color-fg-heading);
+	// TODO style
+	// font-weight: nb-theme(font-weight-bolder);
+	// color: #2a2a2a;
 }
 
 .example-container:not(:last-child) {
@@ -84,7 +85,7 @@ nb-card {
 	}
 }
 
-:host /deep/ .productsContainer a {
+:host ::ng-deep .productsContainer a {
 	border: none;
 	background-color: rgba(182, 176, 176, 0.05) !important;
 	color: #111111 !important;
@@ -101,7 +102,7 @@ nb-card {
 	}
 }
 
-:host /deep/ ng2-smart-table {
+:host ::ng-deep ng2-smart-table {
 	.tableImg {
 		height: 100px;
 		width: 100px;
@@ -270,4 +271,10 @@ nb-card-header {
 
 .orders-filters {
 	padding: 0 1.25rem;
+}
+
+.process-orders {
+	label:hover {
+		color: #000;
+	}
 }

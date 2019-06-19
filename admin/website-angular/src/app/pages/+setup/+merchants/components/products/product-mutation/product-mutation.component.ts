@@ -21,7 +21,7 @@ import Product from '@modules/server.common/entities/Product';
 	templateUrl: './product-mutation.component.html'
 })
 export class SetupMerchantProductMutationComponent {
-	@ViewChild('basicInfoForm')
+	@ViewChild('basicInfoForm', { static: true })
 	basicInfoForm: BasicInfoFormComponent;
 
 	@Output()

@@ -7,6 +7,7 @@ import { RedirectOrderComponent } from './redirect-order.component';
 import { RedirectProductComponent } from './redirect-product/redirect-product.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { CustomerOrderActionsComponent } from './customer-order-actions/customer-order-actions.component';
+import { NbButtonModule } from '@nebular/theme';
 
 const COMPONENTS = [
 	RedirectStoreComponent,
@@ -17,7 +18,12 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-	imports: [CommonModule, ThemeModule, TranslateModule.forChild()],
+	imports: [
+		CommonModule,
+		ThemeModule,
+		TranslateModule.forChild(),
+		NbButtonModule
+	],
 	declarations: COMPONENTS,
 	entryComponents: COMPONENTS,
 	exports: COMPONENTS

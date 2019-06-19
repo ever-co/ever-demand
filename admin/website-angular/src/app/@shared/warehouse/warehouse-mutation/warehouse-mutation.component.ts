@@ -24,13 +24,13 @@ export class WarehouseMutationComponent implements AfterViewInit {
 	public BUTTON_NEXT: string = 'BUTTON_NEXT';
 	public BUTTON_PREV: string = 'BUTTON_PREV';
 
-	@ViewChild('basicInfoForm')
+	@ViewChild('basicInfoForm', { static: false })
 	basicInfoForm: BasicInfoFormComponent;
 
-	@ViewChild('contactInfoForm')
+	@ViewChild('contactInfoForm', { static: true })
 	contactInfoForm: ContactInfoFormComponent;
 
-	@ViewChild('locationForm')
+	@ViewChild('locationForm', { static: false })
 	locationForm: LocationFormComponent;
 
 	mapCoordEmitter = new EventEmitter<number[]>();
@@ -78,9 +78,13 @@ export class WarehouseMutationComponent implements AfterViewInit {
 		// This hack is need because the styles of 'ng-bootstrap' modal and google autocomplete api
 		// collide and autocomplete field just doesn't show without larger z-index.
 		setTimeout(() => {
-			document.querySelector('body > div.pac-container.pac-logo')[
-				'style'
-			]['zIndex'] = 10000;
+			const elementRef = document.querySelector(
+				'body > div.pac-container.pac-logo'
+			);
+
+			if (elementRef) {
+				elementRef['style']['zIndex'] = 10000;
+			}
 		}, 2000);
 	}
 

@@ -1,13 +1,15 @@
 .btn-startProcessing {
-    color: #333;
-    background-color: #fff;
-    border-color: #ccc;
-    margin-bottom: 5px;
+	color: #333;
+	background-color: #fff;
+	border-color: #ccc;
+	margin-bottom: 5px;
+	font-weight: 500;
+	padding: 0.75rem 1.5rem;
 }
 
 .btn-startProcessing:hover {
-    color: rgb(24, 22, 22);
-    background-color: rgb(241, 239, 239);
-    border-color: rgb(182, 176, 176);
-    cursor: pointer;
+	color: rgb(24, 22, 22);
+	background-color: rgb(241, 239, 239);
+	border-color: rgb(182, 176, 176);
+	cursor: pointer;
 }

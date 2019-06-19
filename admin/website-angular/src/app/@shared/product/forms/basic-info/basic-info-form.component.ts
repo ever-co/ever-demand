@@ -35,9 +35,9 @@ import { TranslateService } from '@ngx-translate/core';
 	templateUrl: 'basic-info-form.component.html'
 })
 export class BasicInfoFormComponent implements OnDestroy, OnInit {
-	@ViewChild('fileInput')
+	@ViewChild('fileInput', { static: false })
 	fileInput: any;
-	@ViewChild('productImagePreview')
+	@ViewChild('productImagePreview', { static: false })
 	productImagePreview: ElementRef;
 
 	@Input()

@@ -21,18 +21,18 @@ declare var google: any;
 	templateUrl: 'track.html',
 	styleUrls: ['./track.scss']
 })
-export class TrackPage implements OnInit, OnDestroy {	    
-	private carriersOnDisplay: Carrier[];	
+export class TrackPage implements OnInit, OnDestroy {
+	private carriersOnDisplay: Carrier[];
 	private carriers$: Subscription;
 	private warehouse$: Subscription;
 	private params$: Subscription;
 	private warehouseCoordinates: any;
 	private orders$: Subscription;
 	private _ngDestroy$ = new Subject<void>();
-	
+
 	map: google.maps.Map;
 	selectedCarrier: Carrier;
-	carriers: Carrier[];    
+	carriers: Carrier[];
 	markers: google.maps.Marker[] = [];
 	totalDeliveries = 0;
 	totalCarriers = 0;
@@ -48,12 +48,12 @@ export class TrackPage implements OnInit, OnDestroy {
 	carrierIcon = 'http://maps.google.com/mapfiles/kml/pal4/icon54.png';
 	carrierListDropdown: Carrier[];
 	sharedCarrierListId: string[];
-  
-  @ViewChild('gmap')
+
+	@ViewChild('gmap', { static: true })
 	gmapElement: ElementRef;
-  
-	@ViewChild('filterComponent')
-  filterComponent: IonicSelectableComponent;
+
+	@ViewChild('filterComponent', { static: true })
+	filterComponent: IonicSelectableComponent;
 
 	constructor(
 		private carrierService: CarrierService,

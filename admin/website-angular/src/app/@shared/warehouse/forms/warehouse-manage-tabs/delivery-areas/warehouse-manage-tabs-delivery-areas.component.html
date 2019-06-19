@@ -1,30 +1,48 @@
-<div class="map-container">
-	<div #gmap class="g-map"></div>
+<div class="delivery-container">
+	<div class="map-container">
+		<div #gmap class="g-map"></div>
+	</div>
 	<div class="zones">
 		<div class="zones-form">
-			<div class="col-sm-12" [formGroup]="form" *ngIf="form">
-				<fieldset>
-					<div *ngIf="!selectedShape" class="form-group row mb-4">
-						<div class="col-sm-12 btn-container">
-							<button
-								(click)="
-									selectedShape = 'circle'; startDrawing()
-								"
-								nbButton
-							>
-								Circle
-							</button>
-							<button
-								(click)="
-									selectedShape = 'shape'; startDrawing()
-								"
-								nbButton
-							>
-								Shape
-							</button>
-						</div>
+			<div
+				class="col-sm-12"
+				[formGroup]="deliverForm"
+				*ngIf="deliverForm"
+			>
+				<div
+					*ngIf="!selectedShapeType"
+					[hidden]="isEditing"
+					class="form-group row mb-4 centered"
+				>
+					<span>Select shape to add a new zone</span>
+					<div class="col-sm-12 btn-container">
+						<button
+							(click)="
+								selectedShapeType = 'circle'; startDrawing()
+							"
+							nbButton
+						>
+							Circle
+						</button>
+						<button
+							(click)="
+								selectedShapeType = 'shape'; startDrawing()
+							"
+							nbButton
+						>
+							Shape
+						</button>
 					</div>
+				</div>
 
+				<span
+					class="mb-4"
+					*ngIf="!shapeReady && selectedShapeType"
+					[hidden]="isEditing"
+					>Draw a shape on the map</span
+				>
+
+				<fieldset *ngIf="shapeReady || isEditing">
 					<div class="form-group row">
 						<label
 							class="col-sm-4 d-flex align-items-center control-label"
@@ -44,12 +62,13 @@
 					<div class="form-group row">
 						<label
 							class="col-sm-4 d-flex align-items-center control-label"
-							>*Minimum amount</label
+							>Minimum amount</label
 						>
 
 						<div class="col-sm-8">
 							<input
 								type="number"
+								step="0.1"
 								class="form-control"
 								placeholder="Minimum amount"
 								formControlName="amount"
@@ -60,57 +79,87 @@
 					<div class="form-group row">
 						<label
 							class="col-sm-4 d-flex align-items-center control-label"
-							>*Delivery fee</label
+							>Delivery fee</label
 						>
 
 						<div class="col-sm-8">
 							<input
 								type="number"
+								step="0.1"
 								class="form-control"
 								placeholder="Delvery fee"
 								formControlName="fee"
 							/>
-
-							<!-- <div *ngIf="passwordConfirm.errors && (passwordConfirm.dirty || passwordConfirm.touched)" class="alert alert-danger"> -->
-							<!-- <div [hidden]="!passwordConfirm.hasError('notMatch')"> -->
-							<!-- {{ "WAREHOUSE_VIEW.MUTATION.PASSWORDS_DO_NOT_MATCH" | translate }}! -->
-							<!-- </div> -->
-							<!-- </div> -->
 						</div>
 					</div>
 
-					<div *ngIf="selectedShape" class="form-group row">
-						<div class="col-sm-12 btn-container">
+					<div class="form-group row">
+						<div *ngIf="shapeReady" class="col-sm-12 btn-container">
 							<button
-								(click)="cancel()"
+								(click)="cancelAdd()"
+								nbButton
+								class="btn btn-wa rning"
+							>
+								Cancel
+							</button>
+
+							<button
+								[disabled]="
+									!shapeReady ||
+									deliverForm.status === 'INVALID'
+								"
+								nbButton
+								class="btn btn-primary"
+								(click)="addZone()"
+							>
+								Add
+							</button>
+						</div>
+
+						<div
+							*ngIf="isEditing && !shapeReady"
+							class="col-sm-12 btn-container"
+						>
+							<button
+								(click)="closeEdit()"
 								nbButton
 								class="btn btn-warning"
 							>
 								Cancel
 							</button>
 							<button
-								[disabled]="
-									!shapeReady || form.status === 'INVALID'
-								"
+								[disabled]="deliverForm.status === 'INVALID'"
 								nbButton
 								class="btn btn-primary"
+								(click)="editZone()"
 							>
-								Add
+								Edit
 							</button>
 						</div>
 					</div>
 				</fieldset>
 			</div>
 		</div>
-		<div class="zones-list">
+		<div *ngIf="zonesObjects.length > 0" class="zones-list">
 			<ul>
-				<li>
-					<span>
-						Zone 1
-					</span>
-					<div class="btn-container">
-						<i class="far fa-trash-alt"></i>
-						<i class="far fa-edit"></i>
+				<li *ngFor="let zone of zonesObjects; let i = index">
+					<div
+						(mouseenter)="highlightZone(zone)"
+						(mouseleave)="removeHighlight(zone)"
+					>
+						<span>
+							{{ zone.properties.name }}
+						</span>
+						<div class="btn-container">
+							<i
+								class="far fa-edit"
+								(click)="setSelection(zone)"
+							></i>
+							<i
+								class="far fa-trash-alt"
+								(click)="deleteZone(zone)"
+							></i>
+						</div>
 					</div>
 				</li>
 			</ul>

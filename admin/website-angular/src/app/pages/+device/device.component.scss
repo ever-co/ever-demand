@@ -10,7 +10,7 @@ nb-card-body {
 	border-bottom-right-radius: 0.5rem;
 }
 
-:host /deep/ ng2-smart-table {
+:host ::ng-deep ng2-smart-table {
 	tr.ng2-smart-titles > th:nth-child(1) {
 		text-align: center;
 		cursor: pointer;

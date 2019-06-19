@@ -61,9 +61,8 @@
 			<div [hidden]="!productsDelivery" class="row actions">
 				<div class="form-group offset-md-2 col-md-4">
 					<button
-						nbButton
-						outline
-						status="success"
+						type="button"
+						class="btn btn-outline-success"
 						(click)="currentView = componentViews.carriersTable"
 					>
 						{{
@@ -75,9 +74,8 @@
 
 				<div class="form-group  col-md-4">
 					<button
-						nbButton
-						outline
-						status="success"
+						type="button"
+						class="btn btn-outline-success"
 						(click)="currentView = componentViews.addNewCarrier"
 					>
 						{{

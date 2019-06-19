@@ -18,7 +18,7 @@ import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus'
 	templateUrl: 'starting-delivery.html'
 })
 export class StartingDeliveryPage implements AfterViewInit {
-	@ViewChild('map')
+	@ViewChild('map', { static: false })
 	carrierMap: MapComponent;
 
 	selectedOrder: IOrder;
