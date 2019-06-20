@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { Geoposition } from '@ionic-native/geolocation';
 declare var google: any;
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { IonSearchbar } from '@ionic/angular';
 
 @Component({
 	selector: 'e-cu-user-locations',
@@ -11,6 +11,7 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 })
 export class UserLocationsPage implements OnInit {
 	@ViewChild('container', { static: false }) container: ElementRef;
+	@ViewChild(IonSearchbar, { static: false }) locationInput: IonSearchbar;
 	public latitude: number;
 	public longitude: number;
 	public map: google.maps.Map;
@@ -31,6 +32,7 @@ export class UserLocationsPage implements OnInit {
 	}
 
 	watchUserSearch() {
+		this.service = new google.maps.places.PlacesService(this.map);
 		this.searchForm.get('searchLocation').valueChanges.subscribe(value => {
 			this.service.findPlaceFromQuery({
 				query: this.searchForm.get('searchLocation').value,
@@ -59,10 +61,25 @@ export class UserLocationsPage implements OnInit {
 	loadMap() {
 		const settings = this.configureMapSettings();
 		this.map = new google.maps.Map(this.container.nativeElement, this.configureMapSettings());
-		this.service = new google.maps.places.PlacesService(this.map);
-		this.watchUserSearch();
 		new google.maps.Marker({ position: settings.center, map: this.map })
+		this.watchUserSearch();
+		this.configureAutoComplete();
+	}
 
+	configureAutoComplete() {
+		this.locationInput.getInputElement().then(el => {
+			const autocomplete = new google.maps.places.Autocomplete(el);
+			autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
+			autocomplete.addListener('place_changed', () => {
+				const place = autocomplete.getPlace();
+				if (!place.geometry) { return; }
+				if (place.geometry.viewport) {
+					this.map.fitBounds(place.geometry.viewport);
+				} else {
+					this.map.setCenter(place.geometry.location);
+				}
+			});
+		})
 	}
 
 	configureMapSettings() {

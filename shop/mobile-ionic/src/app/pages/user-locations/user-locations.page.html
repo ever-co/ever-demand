@@ -12,7 +12,8 @@
 	<ion-card>
 		<ion-card-content>
 			<form [formGroup]="searchForm">
-				<ion-searchbar debounce="500" searchIcon="pin" formControlName="searchLocation"></ion-searchbar>
+				<ion-searchbar debounce="500" searchIcon="pin" #searchLocation formControlName="searchLocation">
+				</ion-searchbar>
 			</form>
 			<ion-grid>
 				<ion-row>
