@@ -11,7 +11,9 @@
 	<div #container id="map-container" class="map"></div>
 	<ion-card>
 		<ion-card-content>
-			<ion-searchbar debounce="500" searchIcon="pin"></ion-searchbar>
+			<form [formGroup]="searchForm">
+				<ion-searchbar debounce="500" searchIcon="pin" formControlName="searchLocation"></ion-searchbar>
+			</form>
 			<ion-grid>
 				<ion-row>
 					<ion-col size="12">
