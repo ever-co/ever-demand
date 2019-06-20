@@ -4,6 +4,7 @@ declare var google: any;
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { IonSearchbar } from '@ionic/angular';
 
+const MAP_ZOOM = 17;
 @Component({
 	selector: 'e-cu-user-locations',
 	templateUrl: './user-locations.page.html',
@@ -77,6 +78,7 @@ export class UserLocationsPage implements OnInit {
 					this.map.fitBounds(place.geometry.viewport);
 				} else {
 					this.map.setCenter(place.geometry.location);
+					this.map.setZoom(MAP_ZOOM)
 				}
 			});
 		})
@@ -84,7 +86,7 @@ export class UserLocationsPage implements OnInit {
 
 	configureMapSettings() {
 		return {
-			zoom: 17,
+			zoom: MAP_ZOOM,
 			center: { lat: this.latitude, lng: this.longitude },
 			mapTypeControl: false,
 			streetViewControl: false
