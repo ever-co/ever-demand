@@ -10,26 +10,36 @@
 <ion-content>
 	<div #container id="map-container" class="map"></div>
 	<ion-card>
-		<ion-card-header>
-			<!-- <ion-card-title>Add new address</ion-card-title> -->
-		</ion-card-header>
 		<ion-card-content>
-			<ion-item-group id="address-info">
+			<ion-searchbar debounce="500" searchIcon="pin"></ion-searchbar>
+			<ion-grid>
 				<ion-row>
 					<ion-col size="12">
 						<ion-item>
-							<ion-input placeholder="Enter a new address"></ion-input>
+							<ion-input placeholder="City"></ion-input>
 						</ion-item>
 					</ion-col>
 				</ion-row>
-			</ion-item-group>
-			<ion-button id="save" color="secondary" expand="full">
-				<ion-ripple-effect type="unbounded"></ion-ripple-effect>
-				SAVE
-			</ion-button>
-			<ion-item lines="none">
-				<ion-icon name="compass"></ion-icon>Use Current Location
-			</ion-item>
+				<ion-row>
+					<ion-col size="12">
+						<ion-item>
+							<ion-input placeholder="Street"></ion-input>
+						</ion-item>
+					</ion-col>
+				</ion-row>
+				<ion-row>
+					<ion-col size="6">
+						<ion-item>
+							<ion-input placeholder="House"></ion-input>
+						</ion-item>
+					</ion-col>
+					<ion-col size="6">
+						<ion-item>
+							<ion-input placeholder="Apartment"></ion-input>
+						</ion-item>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
 		</ion-card-content>
 	</ion-card>
 </ion-content>

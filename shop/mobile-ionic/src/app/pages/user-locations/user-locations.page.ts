@@ -8,8 +8,8 @@ declare var google: any;
 	templateUrl: './user-locations.page.html',
 	styleUrls: ['./user-locations.page.css'],
 })
-export class UserLocationsPage implements OnInit, AfterViewInit {
-	@ViewChild('container', { static: true }) container: ElementRef;
+export class UserLocationsPage implements OnInit {
+	@ViewChild('container', { static: false }) container: ElementRef;
 	public latitude: number;
 	public longitude: number;
 	public map: google.maps.Map;
@@ -36,5 +36,8 @@ export class UserLocationsPage implements OnInit, AfterViewInit {
 			mapTypeControl: false,
 			streetViewControl: false
 		};
+	}
+
+	updateMap() {
 	}
 }

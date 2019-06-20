@@ -1,11 +1,23 @@
-ion-item-group#address-info {
-	margin-bottom: 20px;
+ion-card {
+	position: absolute;
+	top: 0px;
+	background-color: #fff;
 }
 
-ion-button#save {
+ion-content {
+	height: 100%;
+}
+
+ion-card-content {
+	height: 100%;
+}
+
+ion-searchbar {
 	margin-bottom: 10px;
+	position: relative;
 }
 
-.map {
-	height: 60%;
+div#map-container {
+	position: relative;
+	height: 100%;
 }
