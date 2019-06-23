@@ -11,19 +11,20 @@ const Orders = props => {
 	// @ts-ignore
 	const { data, error, loading } = useQuery(getOrders, {
 		variables: { id: context.getUser().id },
-		pollInterval: 500
 	});
 
 
-	if (loading) {
-		return <div>Loading...</div>;
-	}
-	if (error) {
-		// @ts-ignore
-		return <div>Error! {error.message}</div>;
+	if (context.orders === []) {
+		if (loading) {
+			return <div>Loading...</div>;
+		}
+		if (error) {
+			// @ts-ignore
+			return <div>Error! {error.message}</div>;
+		}
+		context.setOrders(data.getOrders)
 	}
 	console.log(context.orders)
-	context.setOrders(data.getOrders)
 	const orders = context.orders || [];
 	const sum = (_total, order) => {
 		return _total + order;
