@@ -13,7 +13,7 @@ const Orders = props => {
 		variables: { id: context.getUser().id },
 		pollInterval: 500
 	});
-	const orders = data.getOrders;
+
 
 	if (loading) {
 		return <div>Loading...</div>;
@@ -22,6 +22,9 @@ const Orders = props => {
 		// @ts-ignore
 		return <div>Error! {error.message}</div>;
 	}
+	console.log(context.orders)
+	context.setOrders(data.getOrders)
+	const orders = context.orders || [];
 	const sum = (_total, order) => {
 		return _total + order;
 	};

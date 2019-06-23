@@ -32,7 +32,11 @@ const IndexPage = props => {
 					products: { productId: product.id, count: 1 },
 				},
 			}
-		}).then(() => navigate('/orders'));
+		}).then((res) => {
+			console.log(res)
+			context.setOrders([...context.orders, res.data.createOrder])
+			navigate('/orders')
+		});
 	};
 	if (loading) {
 		return <div>Loading...</div>;

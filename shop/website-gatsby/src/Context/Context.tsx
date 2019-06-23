@@ -10,6 +10,7 @@ const Provider = ({ children, ...props }) => {
 	const [coordinates, setCoordinates] = useState(null);
 
 	const [deliveryOnly, setDeliveryOnly] = useState(false);
+	const [orders, setOrders] = useState([])
 
 	const user = auth.getUser();
 
@@ -42,7 +43,9 @@ const Provider = ({ children, ...props }) => {
 				coordinates,
 				setCoordinates,
 				deliveryOnly,
-				setDeliveryOnly
+				setDeliveryOnly,
+				orders,
+				setOrders
 			}}
 		>
 			<ThemeProvider theme={theme}>{children}</ThemeProvider>
