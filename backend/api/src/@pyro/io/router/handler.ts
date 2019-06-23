@@ -17,7 +17,7 @@ export class RouterHandler {
 		this.listeners = getListeners(router);
 	}
 
-	listen(): void {
+	async listen(): Promise<void> {
 		this.log.info(`Starting router listening`, {
 			routerName: this.routerName,
 			listeners: this.listeners
