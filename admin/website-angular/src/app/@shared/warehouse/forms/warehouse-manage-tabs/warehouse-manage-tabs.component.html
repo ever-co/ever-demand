@@ -55,12 +55,12 @@
 		</google-map>
 	</nb-tab>
 
-	<!-- TODO add translate -->
-	<!-- TODO load default data [warehouseLogo]="detailsComponent.logo.value"
-	[warehouseCountry]="locationForm.countryId.value" -->
 	<nb-tab tabTitle="Payment" class="pt-5">
 		<ea-warehouse-payments-settings-form
 			#paymentsSettingsForm
+			[isEdit]="true"
+			[warehouseLogo]="detailsComponent.logo.value"
+			[warehouseCountry]="locationForm.countryId.value"
 		></ea-warehouse-payments-settings-form>
 	</nb-tab>
 
