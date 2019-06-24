@@ -29,8 +29,8 @@ RUN mkdir -p /usr/src/app
 
 # Provides cached layer for node_modules and bower_components
 ADD package.json /tmp/package.json
-ADD .snyk /tmp/.snyk
-ADD yarn.lock /tmp/yarn.lock
+COPY .snyk /tmp/.snyk
+COPY yarn.lock /tmp/yarn.lock
 RUN cd /tmp/ && yarn install
 RUN cp -a /tmp/node_modules /usr/src/app/
 RUN cd /usr/src/app
