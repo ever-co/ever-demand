@@ -1,0 +1,24 @@
+version: '3.1'
+
+services:
+    mongo:
+        image: mongo
+        ports:
+            - '27017:27017'
+
+    api:
+        build:
+            context: ./backend/api
+            dockerfile: Dockerfile
+        environment:
+            WAIT_HOSTS: mongo:27017
+        restart: on-failure
+        depends_on:
+            - mongo
+        links:
+            - mongo
+        ports:
+            - 5500:5500
+            - 5501:5501
+            - 5050:5050
+            - 5555:5555
