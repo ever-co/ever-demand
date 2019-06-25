@@ -182,7 +182,7 @@
 		"@angular/compiler-cli": "^8.0.0",
 		"@angular/language-service": "^8.0.0",
 		"@compodoc/compodoc": "^1.1.9",
-		"@ionic/angular-toolkit": "^1.5.1",
+		"@ionic/angular-toolkit": "^2.0.0",
 		"@ionic/app-scripts": "^3.2.4",
 		"@ionic/lab": "^2.0.1",
 		"@types/d3-color": "^1.2.2",
