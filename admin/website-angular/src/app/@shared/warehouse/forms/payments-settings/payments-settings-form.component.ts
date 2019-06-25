@@ -15,6 +15,8 @@ export class PaymentsSettingsFormComponent {
 	warehouseLogo: string;
 	@Input()
 	warehouseCountry: string;
+	@Input()
+	isEdit: boolean;
 
 	isPaymentEnabled: boolean = false;
 
