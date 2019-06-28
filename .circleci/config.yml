@@ -20,7 +20,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/monorepo-root
         docker:
-            - image: circleci/node:10.15.0
+            - image: circleci/node:12.4.0
         steps:
             - checkout
             - run:
@@ -60,7 +60,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/backend/api
         docker:
-            - image: circleci/node:10.15.0
+            - image: circleci/node:12.4.0
         steps:
             - checkout
             - run:
@@ -100,7 +100,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/admin/website-angular
         docker:
-            - image: circleci/node:10.15.0
+            - image: circleci/node:12.4.0
         steps:
             - checkout
             - run:
@@ -140,7 +140,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/carrier/mobile-ionic
         docker:
-            - image: circleci/node:10.15.0
+            - image: circleci/node:12.4.0
         steps:
             - checkout
             - run:
@@ -183,7 +183,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/shop/mobile-ionic
         docker:
-            - image: circleci/node:10.15.0
+            - image: circleci/node:12.4.0
         steps:
             - checkout
             - run:
@@ -226,7 +226,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/shop/website-angular
         docker:
-            - image: circleci/node:10.15.0
+            - image: circleci/node:12.4.0
         steps:
             - checkout
             - run:
@@ -266,7 +266,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/merchant/tablet-ionic
         docker:
-            - image: circleci/node:10.15.0
+            - image: circleci/node:12.4.0
         steps:
             - checkout
             - run:
@@ -309,7 +309,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/carrier/mobile-ionic
         docker:
-            - image: circleci/node:10.15.0-browsers
+            - image: circleci/node:12.4.0-browsers
         steps:
             - run:
                   name: 'Installing latest Yarn'
@@ -342,7 +342,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/shop/mobile-ionic
         docker:
-            - image: circleci/node:10.15.0-browsers
+            - image: circleci/node:12.4.0-browsers
         steps:
             - run:
                   name: 'Installing latest Yarn'
@@ -375,7 +375,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/shop/website-angular
         docker:
-            - image: circleci/node:10.15.0-browsers
+            - image: circleci/node:12.4.0-browsers
         steps:
             - run:
                   name: 'Installing latest Yarn'
@@ -408,7 +408,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/admin/website-angular
         docker:
-            - image: circleci/node:10.15.0-browsers
+            - image: circleci/node:12.4.0-browsers
         steps:
             - run:
                   name: 'Installing latest Yarn'
@@ -441,7 +441,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/backend/api
         docker:
-            - image: circleci/node:10.15.0-browsers
+            - image: circleci/node:12.4.0-browsers
         steps:
             - run:
                   name: 'Installing latest Yarn'
