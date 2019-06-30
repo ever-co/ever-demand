@@ -42,7 +42,6 @@
 	<wizard-step
 		[title]="'WAREHOUSE_VIEW.MUTATION.WIZARD_TITLES.LOCATION' | translate"
 		[isValid]="location.valid"
-		(onComplete)="createWarehouse()"
 	>
 		<div class="pt-4"></div>
 
@@ -62,5 +61,20 @@
 			>
 			</google-map>
 		</div>
+	</wizard-step>
+
+	<!-- TODO add translate -->
+	<wizard-step
+		[title]="'Payment'"
+		[isValid]="paymentsSettingsForm.isPaymentValid"
+		(onComplete)="createWarehouse()"
+	>
+		<div class="pt-4"></div>
+
+		<ea-warehouse-payments-settings-form
+			#paymentsSettingsForm
+			[warehouseLogo]="basicInfoForm.logo.value"
+			[warehouseCountry]="locationForm.countryId.value"
+		></ea-warehouse-payments-settings-form>
 	</wizard-step>
 </form-wizard>

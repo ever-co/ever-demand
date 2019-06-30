@@ -42,7 +42,7 @@ process.on('uncaughtException', (err) => {
 		try {
 			console.error("Can't write to log!!!!!!");
 			console.error(logWritingErr);
-		} catch (consoleWritingError) { }
+		} catch (consoleWritingError) {}
 	}
 
 	console.error(err);
@@ -55,7 +55,7 @@ process.on('unhandledRejection', (err, promise) => {
 		try {
 			console.error("Can't write to log!!!!!!");
 			console.error(logWritingErr);
-		} catch (consoleWritingError) { }
+		} catch (consoleWritingError) {}
 	}
 
 	console.error(err);
@@ -68,10 +68,11 @@ process.on('unhandledRejection', (err, promise) => {
 	await ServicesApp.CreateTypeORMConnection();
 
 	const app = servicesContainer.get<ServicesApp>(ServicesApp);
-	await app.start();
 
-	// load NestJS modules dynamically, because needs all services to be initialized before
-	const bootstrapNest = await require('./nest-bootstrap').bootstrapNest;
-	// bootstrap NestJS modules/controllers/DI/etc
-	bootstrapNest();
+	await app.start(async () => {
+		// load NestJS modules dynamically, because needs all services to be initialized before
+		const bootstrapNest = await require('./nest-bootstrap').bootstrapNest;
+		// bootstrap NestJS modules/controllers/DI/etc
+		bootstrapNest();
+	});
 })();

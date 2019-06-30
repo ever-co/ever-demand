@@ -1,6 +1,12 @@
 version: 2
 
 aliases:
+    - &install-deps
+      name: Install Linux Dependencies
+      command: |
+          sudo apt-get update                    
+          sudo npm install --quiet node-gyp -g
+          sudo npm config set python /usr/bin/python
     - &install-chrome
       name: Install Chrome
       command: |
@@ -9,6 +15,15 @@ aliases:
           sudo dpkg -i google-chrome.deb
           sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
           rm google-chrome.deb
+    - &install-yarn
+      name: Install Latest Yarn
+      command: |
+          # remove default yarn
+          sudo rm -rf $(dirname $(which yarn))/yarn*
+          # download latest
+          rm -rf ~/.yarn
+          curl -o- -L https://yarnpkg.com/install.sh | bash
+          echo 'export PATH="${PATH}:${HOME}/.yarn/bin:${HOME}/.config/yarn/global/node_modules/.bin"' >> $BASH_ENV
 
 defaults: &defaults
     # put here anything which is common between all jobs
@@ -20,18 +35,11 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/monorepo-root
         docker:
-            - image: circleci/node:10.15.0
+            - image: circleci/node:10.16.0
         steps:
             - checkout
-            - run:
-                  name: 'Installing latest Yarn'
-                  command: |
-                      # remove default yarn
-                      sudo rm -rf $(dirname $(which yarn))/yarn*
-                      # download latest
-                      rm -rf ~/.yarn
-                      curl -o- -L https://yarnpkg.com/install.sh | bash
-                      echo 'export PATH="${PATH}:${HOME}/.yarn/bin:${HOME}/.config/yarn/global/node_modules/.bin"' >> $BASH_ENV
+            - run: *install-deps
+            - run: *install-yarn
             - run:
                   name: 'Pull Submodules'
                   command: |
@@ -60,18 +68,11 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/backend/api
         docker:
-            - image: circleci/node:10.15.0
+            - image: circleci/node:10.16.0
         steps:
             - checkout
-            - run:
-                  name: 'Installing latest Yarn'
-                  command: |
-                      # remove default yarn
-                      sudo rm -rf $(dirname $(which yarn))/yarn*
-                      # download latest
-                      rm -rf ~/.yarn
-                      curl -o- -L https://yarnpkg.com/install.sh | bash
-                      echo 'export PATH="${PATH}:${HOME}/.yarn/bin:${HOME}/.config/yarn/global/node_modules/.bin"' >> $BASH_ENV
+            - run: *install-deps
+            - run: *install-yarn
             - run:
                   name: 'Pull Submodules'
                   command: |
@@ -100,18 +101,11 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/admin/website-angular
         docker:
-            - image: circleci/node:10.15.0
+            - image: circleci/node:10.16.0
         steps:
             - checkout
-            - run:
-                  name: 'Installing latest Yarn'
-                  command: |
-                      # remove default yarn
-                      sudo rm -rf $(dirname $(which yarn))/yarn*
-                      # download latest
-                      rm -rf ~/.yarn
-                      curl -o- -L https://yarnpkg.com/install.sh | bash
-                      echo 'export PATH="${PATH}:${HOME}/.yarn/bin:${HOME}/.config/yarn/global/node_modules/.bin"' >> $BASH_ENV
+            - run: *install-deps
+            - run: *install-yarn
             - run:
                   name: 'Pull Submodules'
                   command: |
@@ -140,18 +134,11 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/carrier/mobile-ionic
         docker:
-            - image: circleci/node:10.15.0
+            - image: circleci/node:10.16.0
         steps:
             - checkout
-            - run:
-                  name: 'Installing latest Yarn'
-                  command: |
-                      # remove default yarn
-                      sudo rm -rf $(dirname $(which yarn))/yarn*
-                      # download latest
-                      rm -rf ~/.yarn
-                      curl -o- -L https://yarnpkg.com/install.sh | bash
-                      echo 'export PATH="${PATH}:${HOME}/.yarn/bin:${HOME}/.config/yarn/global/node_modules/.bin"' >> $BASH_ENV
+            - run: *install-deps
+            - run: *install-yarn
             - run:
                   name: 'Pull Submodules'
                   command: |
@@ -183,18 +170,11 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/shop/mobile-ionic
         docker:
-            - image: circleci/node:10.15.0
+            - image: circleci/node:10.16.0
         steps:
             - checkout
-            - run:
-                  name: 'Installing latest Yarn'
-                  command: |
-                      # remove default yarn
-                      sudo rm -rf $(dirname $(which yarn))/yarn*
-                      # download latest
-                      rm -rf ~/.yarn
-                      curl -o- -L https://yarnpkg.com/install.sh | bash
-                      echo 'export PATH="${PATH}:${HOME}/.yarn/bin:${HOME}/.config/yarn/global/node_modules/.bin"' >> $BASH_ENV
+            - run: *install-deps
+            - run: *install-yarn
             - run:
                   name: 'Pull Submodules'
                   command: |
@@ -226,18 +206,11 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/shop/website-angular
         docker:
-            - image: circleci/node:10.15.0
+            - image: circleci/node:10.16.0
         steps:
             - checkout
-            - run:
-                  name: 'Installing latest Yarn'
-                  command: |
-                      # remove default yarn
-                      sudo rm -rf $(dirname $(which yarn))/yarn*
-                      # download latest
-                      rm -rf ~/.yarn
-                      curl -o- -L https://yarnpkg.com/install.sh | bash
-                      echo 'export PATH="${PATH}:${HOME}/.yarn/bin:${HOME}/.config/yarn/global/node_modules/.bin"' >> $BASH_ENV
+            - run: *install-deps
+            - run: *install-yarn
             - run:
                   name: 'Pull Submodules'
                   command: |
@@ -266,18 +239,11 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/merchant/tablet-ionic
         docker:
-            - image: circleci/node:10.15.0
+            - image: circleci/node:10.16.0
         steps:
             - checkout
-            - run:
-                  name: 'Installing latest Yarn'
-                  command: |
-                      # remove default yarn
-                      sudo rm -rf $(dirname $(which yarn))/yarn*
-                      # download latest
-                      rm -rf ~/.yarn
-                      curl -o- -L https://yarnpkg.com/install.sh | bash
-                      echo 'export PATH="${PATH}:${HOME}/.yarn/bin:${HOME}/.config/yarn/global/node_modules/.bin"' >> $BASH_ENV
+            - run: *install-deps
+            - run: *install-yarn
             - run:
                   name: 'Pull Submodules'
                   command: |
@@ -309,17 +275,10 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/carrier/mobile-ionic
         docker:
-            - image: circleci/node:10.15.0-browsers
+            - image: circleci/node:10.16.0-browsers
         steps:
-            - run:
-                  name: 'Installing latest Yarn'
-                  command: |
-                      # remove default yarn
-                      sudo rm -rf $(dirname $(which yarn))/yarn*
-                      # download latest
-                      rm -rf ~/.yarn
-                      curl -o- -L https://yarnpkg.com/install.sh | bash
-                      echo 'export PATH="${PATH}:${HOME}/.yarn/bin:${HOME}/.config/yarn/global/node_modules/.bin"' >> $BASH_ENV
+            - run: *install-deps
+            - run: *install-yarn
             - run: *install-chrome
             - attach_workspace:
                   at: /tmp/workspace/carrier/mobile-ionic
@@ -342,17 +301,10 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/shop/mobile-ionic
         docker:
-            - image: circleci/node:10.15.0-browsers
+            - image: circleci/node:10.16.0-browsers
         steps:
-            - run:
-                  name: 'Installing latest Yarn'
-                  command: |
-                      # remove default yarn
-                      sudo rm -rf $(dirname $(which yarn))/yarn*
-                      # download latest
-                      rm -rf ~/.yarn
-                      curl -o- -L https://yarnpkg.com/install.sh | bash
-                      echo 'export PATH="${PATH}:${HOME}/.yarn/bin:${HOME}/.config/yarn/global/node_modules/.bin"' >> $BASH_ENV
+            - run: *install-deps
+            - run: *install-yarn
             - run: *install-chrome
             - attach_workspace:
                   at: /tmp/workspace/shop/mobile-ionic
@@ -375,17 +327,10 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/shop/website-angular
         docker:
-            - image: circleci/node:10.15.0-browsers
+            - image: circleci/node:10.16.0-browsers
         steps:
-            - run:
-                  name: 'Installing latest Yarn'
-                  command: |
-                      # remove default yarn
-                      sudo rm -rf $(dirname $(which yarn))/yarn*
-                      # download latest
-                      rm -rf ~/.yarn
-                      curl -o- -L https://yarnpkg.com/install.sh | bash
-                      echo 'export PATH="${PATH}:${HOME}/.yarn/bin:${HOME}/.config/yarn/global/node_modules/.bin"' >> $BASH_ENV
+            - run: *install-deps
+            - run: *install-yarn
             - run: *install-chrome
             - attach_workspace:
                   at: /tmp/workspace/shop/website-angular
@@ -408,17 +353,10 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/admin/website-angular
         docker:
-            - image: circleci/node:10.15.0-browsers
+            - image: circleci/node:10.16.0-browsers
         steps:
-            - run:
-                  name: 'Installing latest Yarn'
-                  command: |
-                      # remove default yarn
-                      sudo rm -rf $(dirname $(which yarn))/yarn*
-                      # download latest
-                      rm -rf ~/.yarn
-                      curl -o- -L https://yarnpkg.com/install.sh | bash
-                      echo 'export PATH="${PATH}:${HOME}/.yarn/bin:${HOME}/.config/yarn/global/node_modules/.bin"' >> $BASH_ENV
+            - run: *install-deps
+            - run: *install-yarn
             - run: *install-chrome
             - attach_workspace:
                   at: /tmp/workspace/admin/website-angular
@@ -441,17 +379,10 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/backend/api
         docker:
-            - image: circleci/node:10.15.0-browsers
+            - image: circleci/node:10.16.0-browsers
         steps:
-            - run:
-                  name: 'Installing latest Yarn'
-                  command: |
-                      # remove default yarn
-                      sudo rm -rf $(dirname $(which yarn))/yarn*
-                      # download latest
-                      rm -rf ~/.yarn
-                      curl -o- -L https://yarnpkg.com/install.sh | bash
-                      echo 'export PATH="${PATH}:${HOME}/.yarn/bin:${HOME}/.config/yarn/global/node_modules/.bin"' >> $BASH_ENV
+            - run: *install-deps
+            - run: *install-yarn
             - run: *install-chrome
             - attach_workspace:
                   at: /tmp/workspace/backend/api

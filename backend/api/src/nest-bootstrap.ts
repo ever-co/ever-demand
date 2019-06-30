@@ -44,4 +44,5 @@ export async function bootstrapNest(): Promise<void> {
 	}
 
 	log.info(`Swagger UI available at http://localhost:${port}/api`);
+	console.log(`Swagger UI available at http://localhost:${port}/api`);
 }

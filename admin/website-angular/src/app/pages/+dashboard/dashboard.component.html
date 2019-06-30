@@ -5,12 +5,12 @@
 				<nb-card size="medium">
 					<nb-card-body>
 						<div class="progress-info">
-							<div class="title">
+							<h6 class="title">
 								{{
 									'DASHBOARD_VIEW.TOTAL_CUSTOMER' | translate
 								}}
-							</div>
-							<div class="value">
+							</h6>
+							<h2 class="value">
 								<span
 									[ngClass]="
 										loading.totalInfo.customers
@@ -27,7 +27,7 @@
 									[nbSpinner]="loading.totalInfo.customers"
 								>
 								</span>
-							</div>
+							</h2>
 
 							<div class="description">
 								<bdi>{{
@@ -38,13 +38,13 @@
 						</div>
 
 						<div class="progress-info">
-							<div class="title">
+							<h6 class="title">
 								{{
 									'DASHBOARD_VIEW.TOTAL_COMPLETED_ORDERS'
 										| translate
 								}}
-							</div>
-							<div class="value">
+							</h6>
+							<h2 class="value">
 								<span
 									[ngClass]="
 										loading.totalInfo.orders
@@ -59,7 +59,7 @@
 									[nbSpinner]="loading.totalInfo.orders"
 								>
 								</span>
-							</div>
+							</h2>
 
 							<div class="description">
 								<bdi>{{
@@ -70,10 +70,10 @@
 						</div>
 
 						<div class="progress-info">
-							<div class="title">
+							<h6 class="title">
 								{{ 'DASHBOARD_VIEW.TOTAL_REVENUE' | translate }}
-							</div>
-							<div class="value">
+							</h6>
+							<h2 class="value">
 								<span
 									[ngClass]="
 										loading.totalInfo.revenue
@@ -90,7 +90,7 @@
 									[nbSpinner]="loading.totalInfo.revenue"
 								>
 								</span>
-							</div>
+							</h2>
 
 							<div class="description">
 								<bdi>{{
@@ -107,13 +107,13 @@
 				<nb-card size="medium">
 					<nb-card-body>
 						<div class="progress-info">
-							<div class="title">
+							<h6 class="title">
 								{{
 									'DASHBOARD_VIEW.TODAYs_CUSTOMERS'
 										| translate
 								}}
-							</div>
-							<div class="value">
+							</h6>
+							<h2 class="value">
 								<span
 									[ngClass]="
 										loading.todayInfo.customers
@@ -130,7 +130,7 @@
 									[nbSpinner]="loading.todayInfo.customers"
 								>
 								</span>
-							</div>
+							</h2>
 
 							<ngb-progressbar
 								[value]="averageRateCustomersToday.value"
@@ -156,13 +156,13 @@
 						</div>
 
 						<div class="progress-info">
-							<div class="title">
+							<h6 class="title">
 								{{
 									'DASHBOARD_VIEW.TODAYs_COMPLETED_ORDERS'
 										| translate
 								}}
-							</div>
-							<div class="value">
+							</h6>
+							<h2 class="value">
 								<span
 									[ngClass]="
 										loading.todayInfo.orders
@@ -177,7 +177,7 @@
 									[nbSpinner]="loading.todayInfo.orders"
 								>
 								</span>
-							</div>
+							</h2>
 
 							<ngb-progressbar
 								[value]="averageRateOrdersToday.value"
@@ -203,12 +203,12 @@
 						</div>
 
 						<div class="progress-info">
-							<div class="title">
+							<h6 class="title">
 								{{
 									'DASHBOARD_VIEW.TODAYs_REVENUE' | translate
 								}}
-							</div>
-							<div class="value">
+							</h6>
+							<h2 class="value">
 								<span
 									[ngClass]="
 										loading.todayInfo.revenue
@@ -225,7 +225,7 @@
 									[nbSpinner]="loading.todayInfo.revenue"
 								>
 								</span>
-							</div>
+							</h2>
 
 							<ngb-progressbar
 								[value]="averageRateRevenueToday.value"
