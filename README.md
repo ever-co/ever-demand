@@ -223,30 +223,7 @@ In a production setup, all client-side to server-side (backend, APIs) communicat
 
 ## License
 
-This software is available under different licenses.
-
-### _Ever Platform Community Edition_ License
-
-Different parts of the Platform are made available under the terms of the separate Open-Source licenses:
-
--   Shopping Mobile App and Carrier Mobile App under [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.txt)
--   Backend Api (Server), Admin Website, Merchant Tablet App and Merchant Website, Shopping Website under [GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.txt)
--   Pyro shared modules under [MIT License](https://opensource.org/licenses/MIT)
--   Other shared modules under [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.txt)
-
-If you decide to choose the Ever® Platform Community™ Edition License, you must comply with the following terms:
-
-This program is free software: you can redistribute it and/or modify it under the terms of the corresponding licenses described in the LICENSE.md files located in software sub-folders and under the terms of licenses described in individual files.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-You should have received a copy of the relevant GNU Licenses along with this program. If not, see http://www.gnu.org/licenses/.
-
-### _Ever Platform Enterprise_ License
-
-Alternatively, commercial versions of the software must be used in accordance with the terms and conditions of a separate written agreement between you and Ever Co. LTD.
-
-For more information about Ever® Platform Enterprise™ License, please contact <mailto:ever@ever.co>.
+This software is available under [Ever® Platform Community™ Edition](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-community-edition-license) and [Ever® Platform Enterprise™](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-enterprise-license) Licenses. 
 
 #### The default Ever® Platform™ license, without a valid Ever® Platform Enterprise™ License agreement, is the Ever® Platform Community™ Edition License.
 
