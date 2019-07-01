@@ -16,16 +16,16 @@ export class UserLocationsPage implements OnInit {
 	public latitude: number;
 	public longitude: number;
 	public map: google.maps.Map;
-	public form: FormGroup;
+	public addressForm: FormGroup;
 	public searchForm: FormGroup;
 	public service;
 
 	constructor(private geolocation: Geolocation, private formBuilder: FormBuilder) { }
 
 	ngOnInit() {
-		this.createForm();
+		this.createAddressForm();
 		this.createSearchForm();
-		this.geolocation.getCurrentPosition().then((_res: Geoposition) => {
+		this.geolocation.getCurrentPosition().then(_res => {
 			this.latitude = _res.coords.latitude;
 			this.longitude = _res.coords.longitude;
 			this.loadMap();
@@ -39,6 +39,7 @@ export class UserLocationsPage implements OnInit {
 				query: this.searchForm.get('searchLocation').value,
 				fields: ['name', 'geometry']
 			}, (res, status) => {
+				console.log(`result is ${JSON.stringify(res)}`);
 				this.map.setCenter(res[0].geometry.location);
 			});
 		});
@@ -50,8 +51,8 @@ export class UserLocationsPage implements OnInit {
 		});
 	}
 
-	createForm() {
-		this.form = this.formBuilder.group({
+	createAddressForm() {
+		this.addressForm = this.formBuilder.group({
 			city: new FormControl(''),
 			street: new FormControl(''),
 			house: new FormControl(''),
@@ -79,6 +80,10 @@ export class UserLocationsPage implements OnInit {
 				} else {
 					this.map.setCenter(place.geometry.location);
 					this.map.setZoom(MAP_ZOOM)
+				}
+				if (place.address_components) {
+					this.addressForm.controls.street.setValue(place.address_components[1].long_name);
+					this.addressForm.controls.city.setValue(place.address_components[0].long_name);
 				}
 			});
 		})
