@@ -1,0 +1,23 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-buttons slot="start">
+			<ion-menu-button autoHide="false"></ion-menu-button>
+		</ion-buttons>
+		<ion-title>Current Addresses</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-button size="small" color="secondary" (click)="addNewAddress()">
+		<ion-icon name="add"></ion-icon>
+	</ion-button>
+	<ion-card *ngFor="let location of currentAddresses">
+		<ion-card-header>
+			<ion-card-subtitle>{{location.house}}</ion-card-subtitle>
+			<ion-card-title>{{location.street}}</ion-card-title>
+		</ion-card-header>
+		<ion-card-content>
+			Apartment {{location.apartment}}
+		</ion-card-content>
+	</ion-card>
+</ion-content>
