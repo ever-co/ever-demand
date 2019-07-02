@@ -83,7 +83,7 @@
     typescript "~2.6.1"
     webpack-sources "^1.0.1"
 
-"@angular-devkit/build-optimizer@0.800.2", "@angular-devkit/build-optimizer@^0.800.2":
+"@angular-devkit/build-optimizer@0.800.2":
   version "0.800.2"
   resolved "https://registry.yarnpkg.com/@angular-devkit/build-optimizer/-/build-optimizer-0.800.2.tgz#4223b2ac8c2a4c05682d1f3cb0417b4630b4a943"
   integrity sha512-A/lX7Fjfeh5PspGURV8fJeOsrIYM/7why7mC6v78zdxaErd4S18wUXJDfndjx3qiKyuq76Uu4cQcS7XfClpb8Q==
@@ -91,6 +91,16 @@
     loader-utils "1.2.3"
     source-map "0.5.6"
     typescript "3.4.4"
+    webpack-sources "1.3.0"
+
+"@angular-devkit/build-optimizer@^0.801.0":
+  version "0.801.0"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/build-optimizer/-/build-optimizer-0.801.0.tgz#8243efea9121986c20f8b4a797e367ace7e21428"
+  integrity sha512-ggL0oaA7TwZYbuMPI+OOY/BgE3Oyhy+UNQVrS8PFkiZewJ2hLGc+fBoXWITya5T/ybd0BMUtOYNfAZJcmUNdfQ==
+  dependencies:
+    loader-utils "1.2.3"
+    source-map "0.5.6"
+    typescript "3.4.5"
     webpack-sources "1.3.0"
 
 "@angular-devkit/build-webpack@0.800.2":
