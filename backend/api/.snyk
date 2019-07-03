@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.13.3
+version: v1.13.5
 ignore: {}
 # patches apply the minimum changes required to fix a vulnerability
 patch:
@@ -8,3 +8,32 @@ patch:
         patched: '2019-05-05T22:08:14.658Z'
     - '@nestjs/common > axios':
         patched: '2019-05-05T22:08:14.658Z'
+  SNYK-JS-LODASH-450202:
+    - mongoose > async > lodash:
+        patched: '2019-07-03T22:08:16.516Z'
+    - lodash:
+        patched: '2019-07-03T22:08:16.516Z'
+    - node-sass > lodash:
+        patched: '2019-07-03T22:08:16.516Z'
+    - kafka-node > lodash:
+        patched: '2019-07-03T22:08:16.516Z'
+    - request-promise > request-promise-core > lodash:
+        patched: '2019-07-03T22:08:16.516Z'
+    - node-sass > sass-graph > lodash:
+        patched: '2019-07-03T22:08:16.516Z'
+    - kafka-node > async > lodash:
+        patched: '2019-07-03T22:08:16.516Z'
+    - '@nestjs/graphql > lodash':
+        patched: '2019-07-03T22:08:16.516Z'
+    - pm2 > async > lodash:
+        patched: '2019-07-03T22:08:16.516Z'
+    - pm2 > @pm2/agent > async > lodash:
+        patched: '2019-07-03T22:08:16.516Z'
+    - pm2 > vizion > async > lodash:
+        patched: '2019-07-03T22:08:16.516Z'
+    - node-sass > gaze > globule > lodash:
+        patched: '2019-07-03T22:08:16.516Z'
+    - pm2 > pm2-deploy > async > lodash:
+        patched: '2019-07-03T22:08:16.516Z'
+    - mongodb-memory-server > mongodb-memory-server-core > getos > async > lodash:
+        patched: '2019-07-03T22:08:16.516Z'
