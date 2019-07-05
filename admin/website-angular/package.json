@@ -68,7 +68,7 @@
 		"@angular/platform-browser": "^8.0.0",
 		"@angular/platform-browser-dynamic": "^8.0.0",
 		"@angular/router": "^8.0.0",
-		"@asymmetrik/ngx-leaflet": "^5.0.2",
+		"@asymmetrik/ngx-leaflet": "^6.0.0",
 		"@fortawesome/fontawesome-free": "~5.8.1",
 		"@nebular/auth": "^4.1.0",
 		"@nebular/bootstrap": "^4.1.0",
