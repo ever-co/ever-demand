@@ -219,10 +219,10 @@
   dependencies:
     tslib "^1.9.0"
 
-"@asymmetrik/ngx-leaflet@^5.0.2":
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/@asymmetrik/ngx-leaflet/-/ngx-leaflet-5.0.2.tgz#307d7e99b6fd0e27f23601213aa5e696ab23a8da"
-  integrity sha512-y4+U9nUnukdTTO2Z6fCt0V85U605bveERNIzrovjKELkHbxz70TvJSvCU7iSSc5ZwS5ZJI1a24SiBJ5sGt9WMQ==
+"@asymmetrik/ngx-leaflet@^6.0.0":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@asymmetrik/ngx-leaflet/-/ngx-leaflet-6.0.1.tgz#0b2d3188c000bc4321bad6888b87a6f8bd29d9c4"
+  integrity sha512-8jYlmpXhPVUjjApfx136U5d+vhv10z0S4yeNLYGXHV8NSvTA9LiGzWki61udhQjBxeYcKjImKLOv3TV/N4Uz+Q==
 
 "@babel/code-frame@7.0.0", "@babel/code-frame@^7.0.0":
   version "7.0.0"
