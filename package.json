@@ -107,7 +107,7 @@
 		"lerna": "^3.13.4",
 		"lerna-changelog": "^0.8.2",
 		"lighthouse": "^5.0.0",
-		"lint-staged": "^8.1.5",
+		"lint-staged": "^9.1.0",
 		"npm-check-updates": "^3.1.8",
 		"prettier": "^1.17.0",
 		"prettier-tslint": "^0.4.2",
