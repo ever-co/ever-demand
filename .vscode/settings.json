@@ -62,5 +62,8 @@
 		"xabikos.javascriptsnippets",
 		"davidanson.vscode-markdownlint",
 		"leizongmin.node-module-intellisense"
-	]
+	],
+	"workbench.colorCustomizations": {
+		"tab.unfocusedActiveBorder": "#fff0"
+	}
 }

@@ -1,137 +1,138 @@
 {
-	"name": "ever-platform",
-	"description": "Ever Platform",
-	"license": "AGPL-3.0",
-	"version": "0.2.0",
-	"homepage": "https://ever.co",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/ever-co/ever.git"
-	},
-	"bugs": {
-		"url": "https://github.com/ever-co/ever/issues"
-	},
-	"private": true,
-	"author": {
-		"name": "Ever Co. LTD",
-		"email": "ever@ever.co",
-		"url": "https://ever.co"
-	},
-	"contributors": [
-		{
-			"name": "Ruslan Konviser (Evereq)",
-			"email": "ruslan@ever.co",
-			"url": "https://ever.co"
-		},
-		{
-			"name": "Misha Konviser (Komish)",
-			"email": "michael@ever.co",
-			"url": "https://ever.co"
-		}
-	],
-	"scripts": {
-		"bootstrap": "yarn install && yarn lerna bootstrap",
-		"run:ncu": "yarn ncu --configFileName=.ncurc.json --configFilePath=./",
-		"run:server": "yarn --cwd ./backend/api start",
-		"run:server:dev": "yarn --cwd ./backend/api start:dev",
-		"run:admin": "yarn --cwd ./admin/website-angular start",
-		"run:merchant": "yarn --cwd ./merchant/tablet-ionic start",
-		"run:shopmobile": "yarn --cwd ./shop/mobile-ionic start",
-		"run:shopweb": "yarn --cwd ./shop/website-angular start",
-		"run:carrier": "yarn --cwd ./carrier/mobile-ionic start",
-		"build:server": "yarn --cwd ./backend/api run build",
-		"build:admin": "yarn --cwd ./admin/website-angular run build",
-		"build:merchant": "yarn --cwd ./merchant/tablet-ionic run build",
-		"build:shopmobile": "yarn --cwd ./shop/mobile-ionic run build",
-		"build:shopweb": "yarn --cwd ./shop/website-angular run build",
-		"build:carrier": "yarn --cwd ./carrier/mobile-ionic run build",
-		"build": "yarn run build:server && yarn run build:admin && yarn run build:merchant && yarn run build:shopmobile && yarn run build:shopweb && yarn run build:carrier",
-		"tslint-check": "tslint-config-prettier-check ./tslint.json",
-		"count": "cross-env yarn cloc backend/api/src admin/website-angular/src shop/mobile-ionic/src shop/website-angular/src carrier/mobile-ionic/src merchant/tablet-ionic/src shared/core-angular shared/core --exclude-dir='node_modules,modules'",
-		"snyk-protect": "snyk protect",
-		"prepare": "yarn run snyk-protect"
-	},
-	"resolutions": {},
-	"dependencies": {
-		"@angular/core": "^7.2.14",
-		"@angular/platform-browser": "^7.2.14",
-		"@angular/platform-browser-dynamic": "^7.2.14",
-		"@captemulation/get-parameter-names": "^1.2.0",
-		"@nestjs/typeorm": "^6.1.1",
-		"@ngx-translate/core": "^11.0.1",
-		"@ngx-translate/http-loader": "^4.0.0",
-		"angular2-logger": "^0.7.0",
-		"fstream": "^1.0.12",
-		"npm": "^6.9.0",
-		"rxjs": "^6.5.1",
-		"rxjs-compat": "^6.5.1",
-		"socket.io-client": "^2.2.0",
-		"stripe": "^7.0.0",
-		"typeorm": "^0.2.16",
-		"uuid": "^3.3.2"
-	},
-	"devDependencies": {
-		"@commitlint/cli": "^8.0.0",
-		"@commitlint/config-conventional": "^8.0.0",
-		"@commitlint/config-lerna-scopes": "^8.0.0",
-		"@commitlint/travis-cli": "^8.0.0",
-		"@types/async": "^3.0.0",
-		"@types/d3-color": "^1.2.2",
-		"@types/faker": "^4.1.5",
-		"@types/googlemaps": "^3.30.19",
-		"@types/jasmine": "^3.3.12",
-		"@types/jasminewd2": "^2.0.6",
-		"@types/jest": "^24.0.11",
-		"@types/leaflet": "^1.4.4",
-		"@types/mongodb": "^3.1.25",
-		"@types/mongoose": "^5.3.26",
-		"@types/node": "^12.0.2",
-		"@types/socket.io-client": "^1.4.32",
-		"@types/stripe": "^6.25.17",
-		"@types/uuid": "^3.4.4",
-		"cloc": "^2.4.0",
-		"codelyzer": "^5.0.1",
-		"concurrently": "^4.1.0",
-		"conventional-changelog": "^3.1.4",
-		"cross-env": "^5.2.0",
-		"cz-conventional-changelog": "^2.1.0",
-		"husky": "^2.4.0",
-		"jasmine-core": "^3.4.0",
-		"jasmine-spec-reporter": "^4.2.1",
-		"karma": "^4.1.0",
-		"karma-chrome-launcher": "^2.2.0",
-		"karma-cli": "^2.0.0",
-		"karma-coverage-istanbul-reporter": "^2.0.5",
-		"karma-jasmine": "^2.0.1",
-		"karma-jasmine-html-reporter": "^1.4.2",
-		"lerna": "^3.13.4",
-		"lerna-changelog": "^0.8.2",
-		"lighthouse": "^5.0.0",
-		"lint-staged": "^8.1.5",
-		"npm-check-updates": "^3.1.8",
-		"prettier": "^1.17.0",
-		"prettier-tslint": "^0.4.2",
-		"pretty-quick": "^1.10.0",
-		"rxjs-tslint": "0.1.5",
-		"tslint": "^5.16.0",
-		"tslint-config-prettier": "^1.18.0",
-		"snyk": "^1.175.2",
-		"typescript": "~3.4.5"
-	},
-	"config": {
-		"commitizen": {
-			"path": "./node_modules/cz-conventional-changelog"
-		}
-	},
-	"husky": {
-		"hooks": {
-			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-			"pre-commit": "pretty-quick --no-verify --staged"
-		}
-	},
-	"engines": {
-		"node": ">=10.15.0",
-		"yarn": ">=1.13.0"
-	},
-	"snyk": true
+    "name": "ever-platform",
+    "description": "Ever Platform",
+    "license": "AGPL-3.0",
+    "version": "0.2.0",
+    "homepage": "https://ever.co",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ever-co/ever.git"
+    },
+    "bugs": {
+        "url": "https://github.com/ever-co/ever/issues"
+    },
+    "private": true,
+    "author": {
+        "name": "Ever Co. LTD",
+        "email": "ever@ever.co",
+        "url": "https://ever.co"
+    },
+    "contributors": [{
+            "name": "Ruslan Konviser (Evereq)",
+            "email": "ruslan@ever.co",
+            "url": "https://ever.co"
+        },
+        {
+            "name": "Misha Konviser (Komish)",
+            "email": "michael@ever.co",
+            "url": "https://ever.co"
+        }
+    ],
+    "scripts": {
+        "bootstrap": "yarn install && yarn lerna bootstrap",
+        "run:ncu": "yarn ncu --configFileName=.ncurc.json --configFilePath=./",
+        "run:server": "yarn --cwd ./backend/api start",
+        "run:server:dev": "yarn --cwd ./backend/api start:dev",
+        "run:admin": "yarn --cwd ./admin/website-angular start",
+        "run:merchant": "yarn --cwd ./merchant/tablet-ionic start",
+        "run:shopmobile": "yarn --cwd ./shop/mobile-ionic start",
+        "run:shopweb": "yarn --cwd ./shop/website-angular start",
+        "run:carrier": "yarn --cwd ./carrier/mobile-ionic start",
+        "run:gatsby": "yarn --cwd ./shop/gatsby-starter-ever/ run develop",
+        "build:server": "yarn --cwd ./backend/api run build",
+        "build:gatsby": "yarn --cwd ./shop/gatsby-starter-ever/ run build",
+        "build:admin": "yarn --cwd ./admin/website-angular run build",
+        "build:merchant": "yarn --cwd ./merchant/tablet-ionic run build",
+        "build:shopmobile": "yarn --cwd ./shop/mobile-ionic run build",
+        "build:shopweb": "yarn --cwd ./shop/website-angular run build",
+        "build:carrier": "yarn --cwd ./carrier/mobile-ionic run build",
+        "build": "yarn run build:server && yarn run build:admin && yarn run build:merchant && yarn run build:shopmobile && yarn run build:shopweb && yarn run build:carrier",
+        "tslint-check": "tslint-config-prettier-check ./tslint.json",
+        "count": "cross-env yarn cloc backend/api/src admin/website-angular/src shop/mobile-ionic/src shop/website-angular/src carrier/mobile-ionic/src merchant/tablet-ionic/src shared/core-angular shared/core --exclude-dir='node_modules,modules'",
+        "snyk-protect": "snyk protect",
+        "prepare": "yarn run snyk-protect"
+    },
+    "resolutions": {},
+    "dependencies": {
+        "@angular/core": "^7.2.14",
+        "@angular/platform-browser": "^7.2.14",
+        "@angular/platform-browser-dynamic": "^7.2.14",
+        "@captemulation/get-parameter-names": "^1.2.0",
+        "@nestjs/typeorm": "^6.1.1",
+        "@ngx-translate/core": "^11.0.1",
+        "@ngx-translate/http-loader": "^4.0.0",
+        "angular2-logger": "^0.7.0",
+        "fstream": "^1.0.12",
+        "npm": "^6.9.0",
+        "rxjs": "^6.5.1",
+        "rxjs-compat": "^6.5.1",
+        "socket.io-client": "^2.2.0",
+        "stripe": "^7.0.0",
+        "typeorm": "^0.2.16",
+        "uuid": "^3.3.2"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^8.0.0",
+        "@commitlint/config-conventional": "^8.0.0",
+        "@commitlint/config-lerna-scopes": "^8.0.0",
+        "@commitlint/travis-cli": "^8.0.0",
+        "@types/async": "^3.0.0",
+        "@types/d3-color": "^1.2.2",
+        "@types/faker": "^4.1.5",
+        "@types/googlemaps": "^3.30.19",
+        "@types/jasmine": "^3.3.12",
+        "@types/jasminewd2": "^2.0.6",
+        "@types/jest": "^24.0.11",
+        "@types/leaflet": "^1.4.4",
+        "@types/mongodb": "^3.1.25",
+        "@types/mongoose": "^5.3.26",
+        "@types/node": "^12.0.2",
+        "@types/socket.io-client": "^1.4.32",
+        "@types/stripe": "^6.25.17",
+        "@types/uuid": "^3.4.4",
+        "cloc": "^2.4.0",
+        "codelyzer": "^5.0.1",
+        "concurrently": "^4.1.0",
+        "conventional-changelog": "^3.1.4",
+        "cross-env": "^5.2.0",
+        "cz-conventional-changelog": "^2.1.0",
+        "husky": "^2.4.0",
+        "jasmine-core": "^3.4.0",
+        "jasmine-spec-reporter": "^4.2.1",
+        "karma": "^4.1.0",
+        "karma-chrome-launcher": "^2.2.0",
+        "karma-cli": "^2.0.0",
+        "karma-coverage-istanbul-reporter": "^2.0.5",
+        "karma-jasmine": "^2.0.1",
+        "karma-jasmine-html-reporter": "^1.4.2",
+        "lerna": "^3.13.4",
+        "lerna-changelog": "^0.8.2",
+        "lighthouse": "^5.0.0",
+        "lint-staged": "^8.1.5",
+        "npm-check-updates": "^3.1.8",
+        "prettier": "^1.17.0",
+        "prettier-tslint": "^0.4.2",
+        "pretty-quick": "^1.10.0",
+        "rxjs-tslint": "0.1.5",
+        "tslint": "^5.16.0",
+        "tslint-config-prettier": "^1.18.0",
+        "snyk": "^1.175.2",
+        "typescript": "~3.4.5"
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    },
+    "husky": {
+        "hooks": {
+            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+            "pre-commit": "pretty-quick --no-verify --staged"
+        }
+    },
+    "engines": {
+        "node": ">=10.15.0",
+        "yarn": ">=1.13.0"
+    },
+    "snyk": true
 }
