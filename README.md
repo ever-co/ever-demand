@@ -199,7 +199,11 @@ According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform tod
 
 ### Contributors
 
--   View all of our [contributors](https://github.com/ever-co/ever/graphs/contributors)
+-   Kyle Kitlinski (https://github.com/K-Kit)
+-   Deepak Chandwani (https://github.com/deepaksslibra)
+-   Adem Hodzic (https://github.com/AdemHodzic)
+
+View full list of our [contributors](https://github.com/ever-co/ever/graphs/contributors).
 
 ## Contact Us
 
