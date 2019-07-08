@@ -84,7 +84,7 @@
 		"angular-tree-component": "^8.3.0",
 		"angular2-chartjs": "^0.5.1",
 		"angular2-logger": "^0.7.0",
-		"angular2-toaster": "^7.0.0",
+		"angular2-toaster": "^8.0.0",
 		"angular2-wizard": "github:maiyaporn/angular2-wizard#pull/56/head",
 		"apollo-angular": "^1.6.0",
 		"apollo-angular-link-http": "^1.7.0",
