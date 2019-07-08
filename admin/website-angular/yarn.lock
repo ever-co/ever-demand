@@ -1143,10 +1143,10 @@
   dependencies:
     tslib "^1.9.0"
 
-"@ng-select/ng-select@^2.18.0":
-  version "2.18.0"
-  resolved "https://registry.yarnpkg.com/@ng-select/ng-select/-/ng-select-2.18.0.tgz#3296f698dd2d06dc81cf4fe0529b09e36f7e1a55"
-  integrity sha512-LK9htwdljl/e4cPmgV25WU3B0v43p5gGAwDl+yNoUY6Afm7SUoyS1+y2lKMKkdWQySJ6pWjMuIDs96Ekv0NJcQ==
+"@ng-select/ng-select@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@ng-select/ng-select/-/ng-select-3.0.0.tgz#09bcd74bb3a96c0fc70b9b9360564718e4c2a44a"
+  integrity sha512-eqRq0ajlXdj+URhvpTBLfCAaF0FdXqSkdbvWxYiymtCbX9UtrtjaL4G8EIOJkNhpXf/Uu+sjQ1eBbLsCjmKhHw==
   dependencies:
     tslib "^1.9.0"
 
