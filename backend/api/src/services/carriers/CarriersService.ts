@@ -1,13 +1,13 @@
 import * as Logger from 'bunyan';
-import CarrierStatus from '../../modules/server.common/enums/CarrierStatus';
-import Carrier from '../../modules/server.common/entities/Carrier';
+import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
+import Carrier from '@modules/server.common/entities/Carrier';
 import { createEverLogger } from '../../helpers/Log';
 import { DBService } from '@pyro/db-server';
 import { inject, injectable } from 'inversify';
 import ICarrierRouter, {
 	ICarrierLoginResponse,
 	ICarrierRegistrationInput
-} from '../../modules/server.common/routers/ICarrierRouter';
+} from '@modules/server.common/routers/ICarrierRouter';
 import {
 	asyncListener,
 	observableListener,
@@ -15,8 +15,8 @@ import {
 	serialization
 } from '@pyro/io';
 import IService from '../IService';
-import GeoLocation from '../../modules/server.common/entities/GeoLocation';
-import IGeoLocation from '../../modules/server.common/interfaces/IGeoLocation';
+import GeoLocation from '@modules/server.common/entities/GeoLocation';
+import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 import { concat, of, Observable } from 'rxjs';
 import { exhaustMap, filter, first, map, switchMap } from 'rxjs/operators';
 import { env } from '../../env';

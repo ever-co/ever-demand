@@ -4,17 +4,17 @@ import { inject, injectable, LazyServiceIdentifer } from 'inversify';
 import { env } from '../../env';
 import { WarehousesService, WarehousesProductsService } from '../warehouses';
 import { createEverLogger } from '../../helpers/Log';
-import OrderCarrierStatus from '../../modules/server.common/enums/OrderCarrierStatus';
-import OrderWarehouseStatus from '../../modules/server.common/enums/OrderWarehouseStatus';
+import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
+import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
 import { UsersService } from '../users';
-import Order from '../../modules/server.common/entities/Order';
+import Order from '@modules/server.common/entities/Order';
 import { DBService } from '@pyro/db-server';
 import {
 	default as IOrder,
 	IOrderCreateObject
-} from '../../modules/server.common/interfaces/IOrder';
+} from '@modules/server.common/interfaces/IOrder';
 import CarriersService from '../carriers/CarriersService';
-import IOrderRouter from '../../modules/server.common/routers/IOrderRouter';
+import IOrderRouter from '@modules/server.common/routers/IOrderRouter';
 import { asyncListener, observableListener, routerName } from '@pyro/io';
 import IService from '../IService';
 import * as Stripe from 'stripe';
@@ -430,9 +430,7 @@ export class OrdersService extends DBService<Order>
 
 				if (!wProduct) {
 					throw new Error(
-						`WarehouseOrdersService got call to create(userId, orderProducts) - But there is no product with the id ${
-							args.productId
-						}!`
+						`WarehouseOrdersService got call to create(userId, orderProducts) - But there is no product with the id ${args.productId}!`
 					);
 				}
 
@@ -538,9 +536,7 @@ export class OrdersService extends DBService<Order>
 
 				if (!wProduct) {
 					throw new Error(
-						`WarehouseOrdersService got call to create(userId, orderProducts) - But there is no product with the id ${
-							args.productId
-						}!`
+						`WarehouseOrdersService got call to create(userId, orderProducts) - But there is no product with the id ${args.productId}!`
 					);
 				}
 

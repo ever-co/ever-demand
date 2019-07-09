@@ -1,10 +1,10 @@
 import * as Logger from 'bunyan';
 import { injectable } from 'inversify';
 import { createEverLogger } from '../../helpers/Log';
-import Product from '../../modules/server.common/entities/Product';
+import Product from '@modules/server.common/entities/Product';
 import { DBService } from '@pyro/db-server';
-import { default as IProduct } from '../../modules/server.common/interfaces/IProduct';
-import IProductRouter from '../../modules/server.common/routers/IProductRouter';
+import { default as IProduct } from '@modules/server.common/interfaces/IProduct';
+import IProductRouter from '@modules/server.common/routers/IProductRouter';
 import { Observable } from 'rxjs';
 import {
 	asyncListener,

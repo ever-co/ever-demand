@@ -1,21 +1,21 @@
 import { inject, injectable } from 'inversify';
 import * as Logger from 'bunyan';
 import { WarehousesService } from '../warehouses';
-import Warehouse from '../../modules/server.common/entities/Warehouse';
-import GeoLocation from '../../modules/server.common/entities/GeoLocation';
-import ProductInfo from '../../modules/server.common/entities/ProductInfo';
+import Warehouse from '@modules/server.common/entities/Warehouse';
+import GeoLocation from '@modules/server.common/entities/GeoLocation';
+import ProductInfo from '@modules/server.common/entities/ProductInfo';
 import * as _ from 'lodash';
-import Utils from '../../modules/server.common/utils';
+import Utils from '@modules/server.common/utils';
 import { createEverLogger } from '../../helpers/Log';
 import { GeoLocationsWarehousesService } from './GeoLocationsWarehousesService';
-import IGeoLocation from '../../modules/server.common/interfaces/IGeoLocation';
+import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 import {
 	observableListener,
 	routerName,
 	serialization,
 	asyncListener
 } from '@pyro/io';
-import IGeoLocationProductsRouter from '../../modules/server.common/routers/IGeoLocationProductsRouter';
+import IGeoLocationProductsRouter from '@modules/server.common/routers/IGeoLocationProductsRouter';
 import IService from '../IService';
 import { map, first } from 'rxjs/operators';
 import IWarehouseProduct from '@modules/server.common/interfaces/IWarehouseProduct';

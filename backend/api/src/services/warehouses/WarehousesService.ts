@@ -3,13 +3,13 @@ import * as _ from 'lodash';
 import { inject, injectable } from 'inversify';
 import { ProductsService } from '../products';
 import { createEverLogger } from '../../helpers/Log';
-import Warehouse from '../../modules/server.common/entities/Warehouse';
-import { default as IWarehouse } from '../../modules/server.common/interfaces/IWarehouse';
+import Warehouse from '@modules/server.common/entities/Warehouse';
+import { default as IWarehouse } from '@modules/server.common/interfaces/IWarehouse';
 import { IGeoLocationCreateObject } from '@modules/server.common/interfaces/IGeoLocation';
 import { Observable } from 'rxjs';
 import IWarehouseRouter, {
 	IWarehouseRegistrationInput
-} from '../../modules/server.common/routers/IWarehouseRouter';
+} from '@modules/server.common/routers/IWarehouseRouter';
 import {
 	asyncListener,
 	observableListener,
