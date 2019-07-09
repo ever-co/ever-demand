@@ -1,7 +1,7 @@
 import { Query, ResolveProperty, Resolver, Mutation } from '@nestjs/graphql';
-import IOrder from '../../modules/server.common/interfaces/IOrder';
+import IOrder from '@modules/server.common/interfaces/IOrder';
 import CarriersService from '../../services/carriers/CarriersService';
-import Order from '../../modules/server.common/entities/Order';
+import Order from '@modules/server.common/entities/Order';
 import { first } from 'rxjs/operators';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';

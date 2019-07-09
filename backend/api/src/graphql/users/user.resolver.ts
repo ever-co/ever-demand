@@ -6,7 +6,7 @@ import {
 	IUserCreateObject,
 	IResponseGenerate1000Customers
 } from '@modules/server.common/interfaces/IUser';
-import User from '../../modules/server.common/entities/User';
+import User from '@modules/server.common/entities/User';
 import { DevicesService } from '../../services/devices';
 import { UsersAuthService } from '../../services/users/UsersAuthService';
 import {
