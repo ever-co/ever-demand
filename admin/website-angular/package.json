@@ -93,7 +93,7 @@
 		"apollo-link": "^1.2.11",
 		"apollo-link-context": "^1.0.17",
 		"apollo-link-ws": "^1.0.17",
-		"apollo-upload-client": "^10.0.1",
+		"apollo-upload-client": "^11.0.0",
 		"bootstrap": "^4.3.1",
 		"buffer": "^5.2.1",
 		"chart.js": "^2.8.0",
