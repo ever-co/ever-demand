@@ -22,6 +22,7 @@ import { IGeoLocationCreateObject } from '@modules/server.common/interfaces/IGeo
 import { Country } from '@modules/server.common/entities/GeoLocation';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 import * as faker from 'faker';
+import { Repository } from 'typeorm';
 
 @injectable()
 @routerName('invite-request')
@@ -36,7 +37,9 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 
 	constructor(
 		@inject(InvitesService) protected invitesService: InvitesService,
-		@inject(DevicesService) protected devicesService: DevicesService
+		@inject(DevicesService) protected devicesService: DevicesService,
+		@inject('InviteRequestRepository')
+		private readonly _inviteRequestRepository: Repository<InviteRequest>
 	) {
 		super();
 
@@ -68,6 +71,14 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 						_.map(results, (result) => result._id)
 					);
 				}
+			});
+		_inviteRequestRepository
+			.count()
+			.then((c) => {
+				console.log('InviteRequests count: ' + c);
+			})
+			.catch((e) => {
+				console.log(e);
 			});
 	}
 

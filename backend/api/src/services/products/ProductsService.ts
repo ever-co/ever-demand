@@ -1,5 +1,5 @@
 import * as Logger from 'bunyan';
-import { injectable } from 'inversify';
+import { injectable, inject } from 'inversify';
 import { createEverLogger } from '../../helpers/Log';
 import Product from '../../modules/server.common/entities/Product';
 import { DBService } from '@pyro/db-server';
@@ -17,6 +17,7 @@ import { CreateObject } from '@pyro/db/db-create-object';
 import { UpdateObject } from '@pyro/db/db-update-object';
 import { first, switchMap, map } from 'rxjs/operators';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
+import { Repository } from 'typeorm';
 
 @injectable()
 @routerName('product')
@@ -27,6 +28,21 @@ export class ProductsService extends DBService<Product>
 	protected readonly log: Logger = createEverLogger({
 		name: 'productsService'
 	});
+
+	constructor(
+		@inject('ProductRepository')
+		private readonly _productRepository: Repository<Product>
+	) {
+		super();
+		_productRepository
+			.count()
+			.then((c) => {
+				console.log('Products count: ' + c);
+			})
+			.catch((e) => {
+				console.log(e);
+			});
+	}
 
 	@observableListener()
 	get(id: Product['id']): Observable<Product | null> {

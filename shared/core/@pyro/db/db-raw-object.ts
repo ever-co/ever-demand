@@ -6,7 +6,7 @@ import { DBObject } from '@pyro/db/db-object';
  * Data Transfer Object (DTO)
  */
 export interface DBRawObject extends DBCreateObject {
-	_id: PyroObjectId;
+	_id: string | PyroObjectId;
 	_createdAt: Date | string;
 	_updatedAt: Date | string;
 }

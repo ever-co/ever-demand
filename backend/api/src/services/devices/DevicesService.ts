@@ -1,4 +1,4 @@
-import { injectable } from 'inversify';
+import { injectable, inject } from 'inversify';
 import { IDeviceCreateObject } from '@modules/server.common/interfaces/IDevice';
 import Device from '@modules/server.common/entities/Device';
 import { DBService } from '@pyro/db-server';
@@ -9,6 +9,7 @@ import IDeviceRouter from '@modules/server.common/routers/IDeviceRouter';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';
 import IService from '../IService';
 import { first, switchMap, map } from 'rxjs/operators';
+import { Repository } from 'typeorm';
 
 @injectable()
 @routerName('device')
@@ -17,6 +18,21 @@ export class DevicesService extends DBService<Device>
 	public readonly DBObject = Device;
 
 	protected readonly log = createEverLogger({ name: 'devicesService' });
+
+	constructor(
+		@inject('DeviceRepository')
+		private readonly _deviceRepository: Repository<Device>
+	) {
+		super();
+		_deviceRepository
+			.count()
+			.then((c) => {
+				console.log('Devices count: ' + c);
+			})
+			.catch((e) => {
+				console.log(e);
+			});
+	}
 
 	@observableListener()
 	get(id: string): Observable<Device | null> {

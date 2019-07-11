@@ -8,7 +8,7 @@ import IProduct, {
 	IProductImage,
 	IProductTitle
 } from '../interfaces/IProduct';
-import ProductsCategory from './ProductsCategory';
+import ProductCategory from './ProductsCategory';
 import { IProductsCategory } from '../interfaces/IProductsCategory';
 import { Entity, Column } from 'typeorm';
 
@@ -86,7 +86,7 @@ class Product extends DBObject<IProduct, IProductCreateObject>
 	 * @type {IProductsCategory[]}
 	 * @memberof Product
 	 */
-	@Types.Ref([ProductsCategory])
+	@Types.Ref([ProductCategory])
 	categories: IProductsCategory[];
 
 	@Types.Boolean(false)

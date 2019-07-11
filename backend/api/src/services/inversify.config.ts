@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { Container, interfaces, ContainerModule } from 'inversify';
+import { Container, interfaces, ContainerModule, injectable } from 'inversify';
 import * as _ from 'lodash';
 import { IRoutersManager, RoutersManager, RouterSymbol } from '@pyro/io';
 import { CarriersOrdersService, CarriersService } from './carriers';
@@ -39,6 +39,20 @@ import Admin from '@modules/server.common/entities/Admin';
 import Device from '@modules/server.common/entities/Device';
 import { FakeOrdersService } from './fake-data/FakeOrdersService';
 import { CurrenciesService } from './currency/CurrencyService';
+import Product from '@modules/server.common/entities/Product';
+import { ObjectLiteralExpression } from 'ts-morph';
+import Carrier from '@modules/server.common/entities/Carrier';
+import Currency from '@modules/server.common/entities/Currency';
+import Invite from '@modules/server.common/entities/Invite';
+import InviteRequest from '@modules/server.common/entities/InviteRequest';
+import Order from '@modules/server.common/entities/Order';
+import ProductCategory from '@modules/server.common/entities/ProductsCategory';
+import User from '@modules/server.common/entities/User';
+import Warehouse from '@modules/server.common/entities/Warehouse';
+import {
+	TypeORMService,
+	typeORMServiceFactory
+} from '@pyro/db-server/typeorm-service';
 
 function getRepository(t: any): any {
 	const conn = getConnection('typeorm');
@@ -46,18 +60,33 @@ function getRepository(t: any): any {
 }
 
 const bindings = new ContainerModule((bind: interfaces.Bind) => {
-	bind<Repository<Admin>>('AdminRepository')
-		.toDynamicValue(() => {
-			return getRepository(Admin);
-		})
-		.inRequestScope();
+	const database = 'mysql' || process.env.DB;
 
-	bind<Repository<Device>>('DeviceRepository')
-		.toDynamicValue(() => {
-			return getRepository(Device);
-		})
-		.inRequestScope();
+	console.log(`Database is ${database}`);
 
+	[
+		Admin,
+		Carrier,
+		Device,
+		Invite,
+		InviteRequest,
+		Order,
+		Product,
+		ProductCategory,
+		User,
+		Warehouse
+	].forEach((el: any) => {
+		const { modelName } = el;
+		bind<Repository<typeof modelName>>(`${el.modelName}Repository`)
+			.toDynamicValue(() => {
+				return getRepository(el.modelName);
+			})
+			.inRequestScope();
+
+		// bind<TypeORMService<typeof modelName>>(
+		// 	`TypeORMService<${modelName}>`
+		// ).toConstantValue(TypeORMService<modelName>)
+	});
 	_.each(
 		[
 			ConfigService,
@@ -106,8 +135,10 @@ const bindings = new ContainerModule((bind: interfaces.Bind) => {
 	);
 
 	bind(AuthService).toSelf();
+	bind(TypeORMService).toSelf();
 
 	bind('Factory<AuthService>').toFactory(authServiceFactory);
+	bind('Factory<TypeORMService>').toFactory(typeORMServiceFactory);
 
 	bind<IRoutersManager>('RoutersManager')
 		.to(RoutersManager)
@@ -116,6 +147,25 @@ const bindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<ServicesApp>(ServicesApp)
 		.toSelf()
 		.inSingletonScope();
+
+	// [TypeORMService].forEach((Service) => {
+	// 	bind(Service).to(Service);
+	// });
+
+	bind('DatabaseService').toFactory((context) => {
+		return (model) => {
+			if (database === 'mongo') {
+				return context.container.get<TypeORMService<typeof model>>(
+					TypeORMService
+				);
+			}
+			const repo = context.container.get<Repository<any>>(
+				`${model}Repository`
+			);
+			return typeORMServiceFactory(context)(repo);
+			// return context.container.get('Factory<TypeORMService>')(model);
+		};
+	});
 });
 
 const container = new Container();

@@ -2,7 +2,7 @@ import * as Logger from 'bunyan';
 import CarrierStatus from '../../modules/server.common/enums/CarrierStatus';
 import Carrier from '../../modules/server.common/entities/Carrier';
 import { createEverLogger } from '../../helpers/Log';
-import { DBService } from '@pyro/db-server';
+import { DBService, IDbService } from '@pyro/db-server';
 import { inject, injectable } from 'inversify';
 import ICarrierRouter, {
 	ICarrierLoginResponse,
@@ -17,11 +17,12 @@ import {
 import IService from '../IService';
 import GeoLocation from '../../modules/server.common/entities/GeoLocation';
 import IGeoLocation from '../../modules/server.common/interfaces/IGeoLocation';
-import { concat, of, Observable } from 'rxjs';
+import { concat, of, Observable, from } from 'rxjs';
 import { exhaustMap, filter, first, map, switchMap } from 'rxjs/operators';
 import { env } from '../../env';
 import { AuthService, AuthServiceFactory } from '../auth';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
+import { Repository } from 'typeorm';
 
 @injectable()
 @routerName('carrier')
@@ -33,22 +34,36 @@ export class CarriersService extends DBService<Carrier>
 	});
 
 	private readonly authService: AuthService<Carrier>;
+	private databaseService: IDbService<Carrier>;
 
 	constructor(
 		@inject('Factory<AuthService>')
-		private readonly authServiceFactory: AuthServiceFactory
+		private readonly authServiceFactory: AuthServiceFactory,
+		@inject('CarrierRepository')
+		private readonly _carrierRepository: Repository<Carrier>,
+		@inject('DatabaseService')
+		private databaseServiceFactory: (type) => IDbService<Carrier>
 	) {
 		super();
+		_carrierRepository
+			.count()
+			.then((c) => {
+				console.log('Cariers count: ' + c);
+			})
+			.catch((e) => {
+				console.log(e);
+			});
 		this.authService = this.authServiceFactory({
 			role: 'carrier',
 			Entity: Carrier,
 			saltRounds: env.CARRIER_PASSWORD_BCRYPT_SALT_ROUNDS
 		});
+		this.databaseService = this.databaseServiceFactory('Carrier');
 	}
 
 	@observableListener()
 	get(id: Carrier['id']) {
-		return super.get(id).pipe(
+		return from(this.databaseService.get(id)).pipe(
 			map(async (carrier) => {
 				await this.throwIfNotExists(id);
 				return carrier;
@@ -67,24 +82,20 @@ export class CarriersService extends DBService<Carrier>
 	}
 
 	protected async _getAllActive() {
-		return super.find({ isActive: true, isDeleted: { $eq: false } });
+		return this.databaseService.find({ isActive: true, isDeleted: false });
 	}
 
 	async getMultipleByIds(
 		carrierIds: string[]
 	): Promise<Observable<Carrier[]>> {
-		const carriers = await this.find({
-			_id: { $in: carrierIds },
-			isDeleted: { $eq: false }
-		});
-
-		const carriersIdsToReturn = carriers.map((c) => c.id);
-		return this.getMultiple(carriersIdsToReturn);
+		return this.databaseService
+			.getMultiple(carrierIds)
+			.pipe(map((arr) => arr.filter((elem) => !elem.isDeleted)));
 	}
 
 	@asyncListener()
 	async register(input: ICarrierRegistrationInput) {
-		const carrier = await super.create({
+		const carrier = await this.databaseService.create({
 			...input.carrier,
 			...(input.password
 				? {
@@ -130,7 +141,7 @@ export class CarriersService extends DBService<Carrier>
 		status: CarrierStatus
 	): Promise<Carrier> {
 		await this.throwIfNotExists(carrierId);
-		return super.update(carrierId, { status });
+		return this.databaseService.update(carrierId, { status });
 	}
 
 	@asyncListener()
@@ -139,7 +150,7 @@ export class CarriersService extends DBService<Carrier>
 		isActive: boolean
 	): Promise<Carrier> {
 		await this.throwIfNotExists(carrierId);
-		return super.update(carrierId, { isActive });
+		return this.databaseService.update(carrierId, { isActive });
 	}
 
 	@asyncListener()
@@ -149,7 +160,7 @@ export class CarriersService extends DBService<Carrier>
 		geoLocation: GeoLocation
 	): Promise<Carrier> {
 		await this.throwIfNotExists(carrierId);
-		return super.update(carrierId, { geoLocation });
+		return this.databaseService.update(carrierId, { geoLocation });
 	}
 
 	@asyncListener()
@@ -158,7 +169,7 @@ export class CarriersService extends DBService<Carrier>
 		updateObject: Partial<Carrier>
 	): Promise<Carrier> {
 		await this.throwIfNotExists(id);
-		return super.update(id, updateObject);
+		return this.databaseService.update(id, updateObject);
 	}
 
 	async increaseNumberOfDeliveries(
@@ -167,13 +178,13 @@ export class CarriersService extends DBService<Carrier>
 	): Promise<Carrier> {
 		await this.throwIfNotExists(carrierId);
 
-		return super.update(carrierId, {
-			$inc: { numberOfDeliveries: n }
+		return this.databaseService.update(carrierId, {
+			numberOfDeliveries: n
 		});
 	}
 
 	async throwIfNotExists(carrierId: string) {
-		const carrier = await super
+		const carrier = await this.databaseService
 			.get(carrierId)
 			.pipe(first())
 			.toPromise();
@@ -189,15 +200,10 @@ export class CarriersService extends DBService<Carrier>
 			sortObj[pagingOptions.sort.field] = pagingOptions.sort.sortBy;
 		}
 
-		return this.Model.find({
+		return this.databaseService.find({
 			...findInput,
-			isDeleted: { $eq: false }
-		})
-			.sort(sortObj)
-			.skip(pagingOptions.skip)
-			.limit(pagingOptions.limit)
-			.lean()
-			.exec();
+			isDeleted: false
+		});
 	}
 }
 

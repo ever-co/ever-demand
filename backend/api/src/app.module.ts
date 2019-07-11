@@ -58,7 +58,7 @@ export const CommandHandlers = [GetAboutUsHandler];
 // Add here all CQRS event handlers
 export const EventHandlers = [];
 
-const entities = ServicesApp.getEntities();
+// const entities = ServicesApp.getEntities();
 
 @Module({
 	controllers: [TestController],
@@ -71,20 +71,23 @@ const entities = ServicesApp.getEntities();
 		AdminsModule,
 		ConfigModule,
 		// configure TypeORM Connection which will be possible to use inside NestJS (e.g. resolvers)
-		TypeOrmModule.forRoot({
-			type: 'mongodb',
-			host: 'localhost',
-			database: 'test',
-			entities,
-			synchronize: true,
-			useNewUrlParser: true,
-			autoReconnect: true,
-			logging: true
-		}),
+		// TypeOrmModule.forRoot({
+		// 	type: 'mysql',
+		// 	host: 'localhost',
+		// 	port: 3306,
+		// 	database: 'test',
+		// 	username: 'ever',
+		// 	password: 'ever',
+		// 	entities,
+		// 	synchronize: true,
+		// 	// useNewUrlParser: true,
+		// 	// autoReconnect: true,
+		// 	logging: true
+		// }),
 		// define which repositories shall be registered in the current scope (each entity will have own repository).
 		// Thanks to that we can inject the XXXXRepository to the NestJS using the @InjectRepository() decorator
 		// NOTE: this could be used inside NestJS only, not inside our services
-		TypeOrmModule.forFeature(entities),
+		// TypeOrmModule.forFeature(entities),
 		SubscriptionsModule.forRoot(env.GQLPORT_SUBSCRIPTIONS),
 		GraphQLModule.forRoot({
 			typePaths: ['./**/*.graphql'],

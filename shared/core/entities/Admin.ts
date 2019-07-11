@@ -64,7 +64,7 @@ class Admin extends DBObject<IAdmin, IAdminCreateObject> implements IAdmin {
 	 * @memberof Admin
 	 */
 	@Types.Boolean(false)
-	@Column()
+	@Column({ default: false })
 	isDeleted: boolean;
 
 	/**
@@ -78,7 +78,7 @@ class Admin extends DBObject<IAdmin, IAdminCreateObject> implements IAdmin {
 		required: false,
 		validate: new RegExp(`^[a-z ,.'-]+$`, 'i')
 	})
-	@Column()
+	@Column({ default: '' })
 	firstName?: string;
 
 	/**
@@ -92,7 +92,7 @@ class Admin extends DBObject<IAdmin, IAdminCreateObject> implements IAdmin {
 		required: false,
 		validate: new RegExp(`^[a-z ,.'-]+$`, 'i')
 	})
-	@Column()
+	@Column({ default: '' })
 	lastName?: string;
 }
 

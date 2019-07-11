@@ -1,5 +1,5 @@
 import * as Logger from 'bunyan';
-import { injectable } from 'inversify';
+import { injectable, inject } from 'inversify';
 import Utils from '../../modules/server.common/utils';
 import { createEverLogger } from '../../helpers/Log';
 import Invite from '../../modules/server.common/entities/Invite';
@@ -29,6 +29,7 @@ import { IInviteRequestCreateObject } from '@modules/server.common/interfaces/II
 import * as faker from 'faker';
 import { Country } from '@modules/server.common/entities/GeoLocation';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
+import { Repository } from 'typeorm';
 
 @injectable()
 @routerName('invite')
@@ -44,13 +45,25 @@ export class InvitesService extends DBService<Invite>
 
 	private static readonly InviteWorkingDistance = 50000;
 
-	constructor() {
+	constructor(
+		@inject('InviteRepository')
+		private readonly _inviteRepository: Repository<Invite>
+	) {
 		super();
 
 		this._invitedStreetLocations = of(null).pipe(
 			concat(this.existence),
 			exhaustMap(() => this._getInvitedStreetLocations())
 		);
+
+		_inviteRepository
+			.count()
+			.then((c) => {
+				console.log('Invites count: ' + c);
+			})
+			.catch((e) => {
+				console.log(e);
+			});
 	}
 
 	@observableListener()

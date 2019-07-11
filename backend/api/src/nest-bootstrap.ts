@@ -36,6 +36,8 @@ export async function bootstrapNest(): Promise<void> {
 
 	SwaggerModule.setup('api', app, document);
 
+	console.log(`APP IS LISTENING ON PORT ${port}`);
+
 	await app.listen(port + '');
 
 	if (module.hot) {

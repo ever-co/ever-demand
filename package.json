@@ -60,6 +60,7 @@
 		"@ngx-translate/http-loader": "^4.0.0",
 		"angular2-logger": "^0.7.0",
 		"fstream": "^1.0.12",
+		"mysql": "^2.17.1",
 		"npm": "^6.9.0",
 		"rxjs": "^6.5.1",
 		"rxjs-compat": "^6.5.1",

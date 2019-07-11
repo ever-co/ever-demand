@@ -42,7 +42,7 @@ process.on('uncaughtException', (err) => {
 		try {
 			console.error("Can't write to log!!!!!!");
 			console.error(logWritingErr);
-		} catch (consoleWritingError) { }
+		} catch (consoleWritingError) {}
 	}
 
 	console.error(err);
@@ -55,7 +55,7 @@ process.on('unhandledRejection', (err, promise) => {
 		try {
 			console.error("Can't write to log!!!!!!");
 			console.error(logWritingErr);
-		} catch (consoleWritingError) { }
+		} catch (consoleWritingError) {}
 	}
 
 	console.error(err);
@@ -64,10 +64,11 @@ process.on('unhandledRejection', (err, promise) => {
 (mongoose as any).Promise = BluebirdPromise;
 
 (async () => {
-	// needs TypeORM connection to be ready before we initialize Services
-	await ServicesApp.CreateTypeORMConnection();
+	await ServicesApp.createTypeORMConnection();
 
+	// needs TypeORM connection to be ready before we initialize Services
 	const app = servicesContainer.get<ServicesApp>(ServicesApp);
+
 	await app.start();
 
 	// load NestJS modules dynamically, because needs all services to be initialized before

@@ -31,6 +31,7 @@ import OrderStatus from '@modules/server.common/enums/OrderStatus';
 import User from '@modules/server.common/entities/User';
 import { ProductsService } from '../../services/products';
 import { Observable } from 'rxjs';
+import { Repository } from 'typeorm';
 
 // TODO: this and other Stripe related things should be inside separate Payments Service
 const stripe: Stripe = new Stripe(env.STRIPE_SECRET_KEY);
@@ -82,9 +83,19 @@ export class OrdersService extends DBService<Order>
 		@inject(new LazyServiceIdentifer(() => WarehousesService))
 		protected _storesService: WarehousesService,
 		@inject(new LazyServiceIdentifer(() => ProductsService))
-		protected _productsService: ProductsService
+		protected _productsService: ProductsService,
+		@inject('OrderRepository')
+		private readonly _orderRepository: Repository<Order>
 	) {
 		super();
+		_orderRepository
+			.count()
+			.then((c) => {
+				console.log('Orders count: ' + c);
+			})
+			.catch((e) => {
+				console.log(e);
+			});
 	}
 
 	async generateOrdersPerEachCustomer(customers: any[]): Promise<void> {

@@ -1,4 +1,4 @@
-import { DBService } from '@pyro/db-server';
+import { DBService, IDbService } from '@pyro/db-server';
 import Admin from '@modules/server.common/entities/Admin';
 import { createEverLogger } from '../../helpers/Log';
 import { AuthService, AuthServiceFactory } from '../auth';
@@ -12,6 +12,7 @@ import { asyncListener, observableListener } from '@pyro/io';
 import { inject, injectable } from 'inversify';
 import { first, map, switchMap } from 'rxjs/operators';
 import { Repository } from 'typeorm';
+import { FindObject } from '@pyro/db/db-find-object';
 
 // TODO: Rename! "Admin" is not a great name, but currently "Users" mean "Customers"...
 /**
@@ -26,12 +27,16 @@ export class AdminsService extends DBService<Admin> implements IAdminRouter {
 
 	private readonly authService: AuthService<Admin>;
 
+	private databaseService: IDbService<Admin>;
+
 	constructor(
 		@inject('Factory<AuthService>')
 		authServiceFactory: AuthServiceFactory,
 		// TypeORM Repository - temporary here, will be moved into DBService later
 		@inject('AdminRepository')
-		private readonly _adminRepository: Repository<Admin>
+		private readonly _adminRepository: Repository<Admin>,
+		@inject('DatabaseService')
+		private databaseServiceFactory: (type) => IDbService<Admin>
 	) {
 		super();
 
@@ -44,6 +49,8 @@ export class AdminsService extends DBService<Admin> implements IAdminRouter {
 			.catch((e) => {
 				console.log(e);
 			});
+
+		this.databaseService = this.databaseServiceFactory('Admin');
 
 		this.authService = authServiceFactory({
 			role: 'admin',
@@ -65,12 +72,13 @@ export class AdminsService extends DBService<Admin> implements IAdminRouter {
 
 	@asyncListener()
 	async getByEmail(email: Admin['email']): Promise<Admin | null> {
-		return super.findOne({ email, isDeleted: { $eq: false } });
+		return this.databaseService.findOne({ email });
+		// return super.findOne({ email, isDeleted: { $eq: false } });
 	}
 
 	@asyncListener()
 	async register(input: IAdminRegistrationInput): Promise<Admin> {
-		const admin = await this.create({
+		const admin = await this.databaseService.create({
 			...input.admin,
 			...(input.password
 				? {
@@ -138,5 +146,13 @@ export class AdminsService extends DBService<Admin> implements IAdminRouter {
 		if (!admin || admin.isDeleted) {
 			throw Error(`Admin with id '${adminId}' does not exists!`);
 		}
+	}
+
+	async count(findObj: FindObject<Admin>): Promise<number> {
+		return this.databaseService.count(findObj);
+	}
+
+	async find(conditions: any): Promise<any> {
+		return this.databaseService.find(conditions);
 	}
 }
