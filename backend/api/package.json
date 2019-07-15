@@ -146,7 +146,7 @@
 		"@commitlint/cli": "^8.1.0",
 		"@commitlint/config-conventional": "^8.1.0",
 		"@commitlint/config-lerna-scopes": "^8.1.0",
-		"@commitlint/travis-cli": "^8.0.0",
+		"@commitlint/travis-cli": "^8.1.0",
 		"@nestjs/testing": "^6.3.2",
 		"@types/bcrypt": "^3.0.0",
 		"@types/bluebird": "^3.5.27",
