@@ -189,7 +189,7 @@
 		"core-js": "^3.1.4",
 		"coveralls": "^3.0.4",
 		"cross-env": "^5.2.0",
-		"cz-conventional-changelog": "^2.1.0",
+		"cz-conventional-changelog": "^3.0.0",
 		"husky": "^2.4.1",
 		"jest": "^24.8.0",
 		"nodemon": "^1.19.1",
