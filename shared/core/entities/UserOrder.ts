@@ -1,7 +1,8 @@
 import GeoLocation from './GeoLocation';
 import { DBObject, getSchema, ModelName, Schema } from '../@pyro/db';
 import IUserOrder, { IUserOrderCreateObject } from '../interfaces/IUserOrder';
-import { Column } from 'typeorm';
+import { Column, GeoNearOptions } from 'typeorm';
+import IGeoLocation from '../interfaces/IGeoLocation';
 
 /**
  * Store information about Customer inside (embeded into) Order
@@ -19,7 +20,13 @@ class UserOrder extends DBObject<IUserOrder, IUserOrderCreateObject>
 		super(userOrder);
 
 		if (userOrder && userOrder.geoLocation) {
-			this.geoLocation = new GeoLocation(userOrder.geoLocation);
+			this.defaultAddress = this.geoLocation.filter(
+				(address: GeoLocation) => address.default === true
+			);
+			userOrder.geoLocation.forEach((location: IGeoLocation) => {
+				this.geoLocation.push(new GeoLocation(location));
+			});
+			// this.geoLocation = new GeoLocation(userOrder.geoLocation);
 		}
 	}
 
@@ -85,7 +92,16 @@ class UserOrder extends DBObject<IUserOrder, IUserOrderCreateObject>
 	 * @memberof UserOrder
 	 */
 	@Schema(getSchema(GeoLocation))
-	geoLocation: GeoLocation;
+	geoLocation: Array<GeoLocation>;
+
+	/**
+	 * Current customer location (customer address, last known location of the customer)
+	 *
+	 * @type {GeoLocation}
+	 * @memberof UserOrder
+	 */
+	@Schema(getSchema(GeoLocation))
+	defaultAddress: Array<GeoLocation>;
 
 	/**
 	 * Apartment (stored separately from geolocation/address for efficiency)
@@ -153,10 +169,21 @@ class UserOrder extends DBObject<IUserOrder, IUserOrderCreateObject>
 	 * @memberof UserOrder
 	 */
 	get fullAddress(): string {
-		return (
-			`${this.geoLocation.city}, ${this.geoLocation.streetAddress} ` +
-			`${this.apartment}/${this.geoLocation.house}`
+		const defaultAddress = this.geoLocation.filter(
+			(location: GeoLocation) => {
+				return location.default === true;
+			}
 		);
+		if (defaultAddress) {
+			return (
+				`${this.defaultAddress[0].city}, ${
+					this.defaultAddress[0].streetAddress
+				} ` +
+				`${this.defaultAddress[0].apartment}/${
+					this.defaultAddress[0].house
+				}`
+			);
+		}
 	}
 }
 

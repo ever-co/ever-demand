@@ -1,5 +1,6 @@
 import { DBCreateObject, DBRawObject, PyroObjectId } from '../@pyro/db';
 import { Country } from '../entities/GeoLocation';
+import { Address } from 'cluster';
 
 export interface ILocation {
 	type: 'Point';
@@ -12,6 +13,7 @@ export interface IAddress {
 	postcode?: string | null;
 	streetAddress: string | null;
 	house: string | null;
+	default: boolean;
 }
 
 export function getEmptyAddress(): IAddress {
@@ -20,7 +22,8 @@ export function getEmptyAddress(): IAddress {
 		city: '',
 		postcode: '',
 		streetAddress: '',
-		house: ''
+		house: '',
+		default: false
 	};
 }
 
@@ -35,6 +38,7 @@ export interface IGeolocationUpdateObject {
 	streetAddress?: string | null;
 	house?: string | null;
 	loc?: ILocation;
+	default?: boolean;
 }
 
 interface IGeoLocation extends DBRawObject, IGeoLocationCreateObject {

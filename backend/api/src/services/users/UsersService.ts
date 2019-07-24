@@ -464,7 +464,8 @@ export class UsersService extends DBService<User>
 					type: 'Point',
 					coordinates: [defaultLng, defaultLat]
 				},
-				streetAddress: faker.address.streetAddress()
+				streetAddress: faker.address.streetAddress(),
+				default: true
 			};
 
 			if (!existingEmails.includes(email)) {

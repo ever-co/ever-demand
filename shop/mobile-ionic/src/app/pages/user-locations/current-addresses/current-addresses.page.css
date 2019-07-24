@@ -1,3 +1,13 @@
 ion-button {
 	margin-left: 16px;
 }
+
+div#checker {
+	display: flex;
+	justify-content: space-between;
+}
+
+ion-card-content {
+	padding-top: 0px !important;
+	padding-bottom: 0px !important;
+}

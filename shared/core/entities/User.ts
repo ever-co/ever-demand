@@ -2,6 +2,7 @@ import GeoLocation from './GeoLocation';
 import { DBObject, getSchema, ModelName, Schema, Types } from '../@pyro/db';
 import IUser, { IUserCreateObject } from '../interfaces/IUser';
 import { Entity, Column } from 'typeorm';
+import IGeoLocation from '../interfaces/IGeoLocation';
 
 /**
  * Customer who make orders
@@ -18,7 +19,9 @@ class User extends DBObject<IUser, IUserCreateObject> implements IUser {
 		super(user);
 
 		if (user && user.geoLocation) {
-			this.geoLocation = new GeoLocation(user.geoLocation);
+			user.geoLocation.forEach((location: IGeoLocation) => {
+				this.geoLocation.push(new GeoLocation(location));
+			});
 		}
 	}
 
@@ -89,7 +92,7 @@ class User extends DBObject<IUser, IUserCreateObject> implements IUser {
 	 * @memberof User
 	 */
 	@Schema(getSchema(GeoLocation))
-	geoLocation: GeoLocation;
+	geoLocation: Array<GeoLocation>;
 
 	/**
 	 * Apartment (stored separately from geolocation/address for efficiency)
@@ -171,10 +174,20 @@ class User extends DBObject<IUser, IUserCreateObject> implements IUser {
 	 * @memberof User
 	 */
 	get fullAddress(): string {
-		return (
-			`${this.geoLocation.city}, ${this.geoLocation.streetAddress} ` +
-			`${this.apartment}/${this.geoLocation.house}`
+		return '';
+		// return (
+		// 	`${this.geoLocation.city}, ${this.geoLocation.streetAddress} ` +
+		// 	`${this.apartment}/${this.geoLocation.house}`
+		// );
+	}
+
+	getDefaultGeolocation() {
+		const defaultLocation = this.geoLocation.filter(
+			(location: GeoLocation) => {
+				return (location.default = true);
+			}
 		);
+		return defaultLocation;
 	}
 }
 

@@ -8,16 +8,21 @@
 </ion-header>
 
 <ion-content>
-	<ion-button size="small" color="secondary" (click)="addNewAddress()">
-		<ion-icon name="add"></ion-icon>
-	</ion-button>
-	<ion-card *ngFor="let location of currentAddresses">
+	<div style=" display: flex;">
+		<ion-item [routerLink]="['/user-addresses/new']" detail="false" lines="none">
+			<ion-icon name="add" color="secondary"></ion-icon>
+			<ion-text color="secondary">Set a different location</ion-text>
+		</ion-item>
+	</div>
+	<ion-card *ngFor="let location of currentAddresses" button="true">
 		<ion-card-header>
-			<ion-card-subtitle>{{location.house}}</ion-card-subtitle>
-			<ion-card-title>{{location.street}}</ion-card-title>
+			<ion-card-title style="display: flex; justify-content: space-between">
+				<ion-label>{{location.house}}</ion-label>
+				<ion-icon name="checkmark" color="tertiary" *ngIf="location.default === 'true'"></ion-icon>
+			</ion-card-title>
+			<ion-card-subtitle>
+				<div>{{location.street}}, apartment {{location.apartment}}</div>
+			</ion-card-subtitle>
 		</ion-card-header>
-		<ion-card-content>
-			Apartment {{location.apartment}}
-		</ion-card-content>
 	</ion-card>
 </ion-content>

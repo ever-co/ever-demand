@@ -15,6 +15,7 @@ import IUserAuthRouter, {
 import { inject, injectable } from 'inversify';
 import { AuthService, AuthServiceFactory } from '../auth';
 import { env } from '../../env';
+import { IGeoLocationCreateObject } from '@modules/server.common/interfaces/IGeoLocation';
 
 /**
  * Customers Authentication Service
@@ -200,22 +201,28 @@ export class UsersAuthService extends EntityService<User>
 	private async _isInvited(
 		userCreateObject: IUserCreateObject
 	): Promise<boolean> {
-		const inviteFindObject = {
-			'geoLocation.countryId': userCreateObject.geoLocation.countryId,
-			'geoLocation.city': userCreateObject.geoLocation.city,
-			'geoLocation.streetAddress':
-				userCreateObject.geoLocation.streetAddress,
-			'geoLocation.house': userCreateObject.geoLocation.house,
-			apartment: userCreateObject.apartment
-		};
+		const defaultAddress = userCreateObject.geoLocation.filter(
+			(currentLoc: IGeoLocationCreateObject) => {
+				return currentLoc.default === true;
+			}
+		);
+		if (defaultAddress.length > 0) {
+			const inviteFindObject = {
+				'geoLocation.countryId': defaultAddress[0].countryId,
+				'geoLocation.city': defaultAddress[0].city,
+				'geoLocation.streetAddress': defaultAddress[0].streetAddress,
+				'geoLocation.house': defaultAddress[0].house,
+				apartment: userCreateObject.apartment
+			};
 
-		if (userCreateObject.geoLocation.postcode) {
-			inviteFindObject['geoLocation.postcode'] =
-				userCreateObject.geoLocation.postcode;
+			if (defaultAddress[0].postcode) {
+				inviteFindObject['geoLocation.postcode'] =
+					defaultAddress[0].postcode;
+			}
+
+			const invite = await this.invitesService.findOne(inviteFindObject);
+
+			return invite != null;
 		}
-
-		const invite = await this.invitesService.findOne(inviteFindObject);
-
-		return invite != null;
 	}
 }

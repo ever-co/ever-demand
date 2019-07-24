@@ -358,7 +358,8 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 				type: 'Point',
 				coordinates: [defaultLng, defaultLat]
 			},
-			streetAddress: faker.address.streetAddress()
+			streetAddress: faker.address.streetAddress(),
+			default: true
 		};
 		return GeoLocation;
 	}

@@ -10,37 +10,38 @@ export class CurrentAddressesPage implements OnInit {
 
 	public currentAddresses = [
 		{
-			house: 'blue house',
+			house: 'sarez aparments',
 			apartment: '12',
-			street: '14 street msa',
+			default: 'true',
+			street: 'seasons roads kasarani',
 		},
 		{
 			house: 'giona',
 			apartment: '12 B',
+			default: 'false',
 			street: 'likoni road',
 		},
 		{
 			house: 'blue house',
 			apartment: '12',
+			default: 'false',
 			street: '14 street msa',
 		},
 		{
 			house: 'blue house',
 			apartment: '12',
+			default: 'false',
 			street: '14 street msa',
 		},
 		{
 			house: 'blue house',
 			apartment: '12',
+			default: 'false',
 			street: '14 street msa',
 		}
 	];
 	constructor(private router: Router) { }
 
 	ngOnInit() {
-	}
-
-	addNewAddress() {
-		this.router.navigate(['/user-addresses/new']);
 	}
 }
