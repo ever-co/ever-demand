@@ -115,7 +115,7 @@
 		"rxjs-tslint": "0.1.5",
 		"tslint": "^5.16.0",
 		"tslint-config-prettier": "^1.18.0",
-		"snyk": "^1.175.2",
+		"snyk": "^2.0.0",
 		"typescript": "~3.4.5"
 	},
 	"config": {
