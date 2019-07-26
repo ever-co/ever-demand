@@ -99,5 +99,4 @@
     <plugin name="cordova-plugin-statusbar" spec="2.4.2" />
     <plugin name="cordova-plugin-vibration" spec="3.1.0" />
     <engine name="browser" spec="^6.0.0" />
-    <engine name="android" spec="7.1.4" />
 </widget>
