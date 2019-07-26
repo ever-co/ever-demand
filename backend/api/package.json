@@ -209,7 +209,7 @@
 		"typemoq": "^2.1.0",
 		"typescript": "~3.4.5",
 		"wait-on": "^3.2.0",
-		"webpack": "^4.35.0",
+		"webpack": "^4.38.0",
 		"webpack-cli": "^3.3.5",
 		"webpack-command": "^0.4.2",
 		"webpack-graphql-loader": "^1.0.2",
