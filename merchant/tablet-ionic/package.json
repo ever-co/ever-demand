@@ -103,10 +103,12 @@
 		"bootstrap": "^4.3.1",
 		"call-number": "^1.0.1",
 		"connect": "^3.6.6",
-		"cordova-android": "^7.1.4",
+		"cordova-android": "^8.0.0",
 		"cordova-android-support-gradle-release": "^2.0.1",
 		"cordova-browser": "^6.0.0",
 		"cordova-open-native-settings": "^1.5.2",
+		"cordova-plugin-androidx": "^1.0.2",
+		"cordova-plugin-androidx-adapter": "^1.1.0",
 		"cordova-plugin-appavailability": "^0.4.2",
 		"cordova-plugin-badge": "0.8.8",
 		"cordova-plugin-camera": "^4.0.3",
@@ -182,7 +184,7 @@
 		"@angular/compiler-cli": "^8.0.0",
 		"@angular/language-service": "^8.0.0",
 		"@compodoc/compodoc": "^1.1.9",
-		"@ionic/angular-toolkit": "^1.5.1",
+		"@ionic/angular-toolkit": "^2.0.0",
 		"@ionic/app-scripts": "^3.2.4",
 		"@ionic/lab": "^2.0.1",
 		"@types/d3-color": "^1.2.2",
@@ -206,7 +208,7 @@
 		"dotenv": "^8.0.0",
 		"envalid": "^5.0.0",
 		"husky": "^2.4.0",
-		"ionic": "^5.0.1",
+		"ionic": "^5.2.3",
 		"rxjs-tslint": "0.1.5",
 		"terser": "^4.0.0",
 		"terser-webpack-plugin": "^1.2.3",
@@ -219,19 +221,24 @@
 	},
 	"cordova": {
 		"platforms": [
-			"android",
-			"browser"
+			"browser",
+			"android"
 		],
 		"plugins": {
 			"cordova-open-native-settings": {},
 			"cordova-plugin-whitelist": {},
 			"cordova-plugin-device": {},
-			"cordova-plugin-ionic-webview": {},
+			"cordova-plugin-ionic-webview": {
+				"ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
+			},
 			"cordova-plugin-ionic-keyboard": {},
-			"cordova-plugin-google-analytics": {},
+			"cordova-plugin-google-analytics": {
+				"GMS_VERSION": "11.0.1"
+			},
 			"cordova-plugin-network-information": {},
 			"cordova-plugin-mixpanel": {
-				"PLAY_SERVICES_VERSION": "+"
+				"PLAY_SERVICES_VERSION": "+",
+				"FIREBASE_VERSION": "+"
 			},
 			"cordova-plugin-intercom": {},
 			"cordova-plugin-screen-orientation": {},
@@ -240,13 +247,19 @@
 			"cordova-plugin-camera": {},
 			"cordova-plugin-splashscreen": {},
 			"mx.ferreyra.callnumber": {},
-			"cordova-plugin-email-composer": {},
-			"phonegap-plugin-barcodescanner": {},
+			"cordova-plugin-email-composer": {
+				"ANDROID_SUPPORT_V4_VERSION": "27.+"
+			},
+			"phonegap-plugin-barcodescanner": {
+				"ANDROID_SUPPORT_V4_VERSION": "27.+"
+			},
 			"call-number": {},
 			"cordova-plugin-file-transfer": {},
 			"cordova-plugin-geolocation": {},
 			"cordova-plugin-local-notification": {},
-			"cordova-plugin-vibration": {}
+			"cordova-plugin-vibration": {},
+			"cordova-plugin-androidx": {},
+			"cordova-plugin-androidx-adapter": {}
 		}
 	},
 	"engines": {
