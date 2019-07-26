@@ -320,7 +320,7 @@ export class ByLocationPage implements OnInit, OnDestroy {
 				}, ${coordinatesObj.lng}] started...`
 			);
 
-			const address = await this.geoLocationRouter.getAddressByCoordinatesUsingArcGIS(
+			let address = await this.geoLocationRouter.getAddressByCoordinatesUsingArcGIS(
 				coordinatesObj.lat,
 				coordinatesObj.lng
 			);
@@ -330,8 +330,15 @@ export class ByLocationPage implements OnInit, OnDestroy {
 			);
 
 			if (!address) {
-				this.detectingLocation = false;
-				return false;
+				try {
+					address = await this.getAddressByGoogleGeocoder(
+						coordinatesObj.lat,
+						coordinatesObj.lng
+					);
+				} catch (error) {
+					this.detectingLocation = false;
+					return false;
+				}
 			}
 
 			let result = false;
@@ -364,5 +371,33 @@ export class ByLocationPage implements OnInit, OnDestroy {
 
 		this.ngDestroy$.next();
 		this.ngDestroy$.complete();
+	}
+
+	private getAddressByGoogleGeocoder(lat, lng) {
+		const geocoder = new google.maps.Geocoder();
+
+		return new Promise(function(resolve, reject) {
+			geocoder.geocode(
+				{
+					location: { lng, lat }
+				},
+				(results, status) => {
+					if (status === google.maps.GeocoderStatus.OK) {
+						const address = results.find((x) =>
+							x.types.includes('street_address')
+						);
+						const formattedAddress = {
+							locality: address.address_components[3].short_name,
+							thoroughfare:
+								address.address_components[1].short_name
+						};
+
+						resolve(formattedAddress);
+					} else {
+						reject('Cannot find the address.');
+					}
+				}
+			);
+		});
 	}
 }
