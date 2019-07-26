@@ -4,7 +4,7 @@ aliases:
     - &install-deps
       name: Install Linux Dependencies
       command: |
-          sudo apt-get update                    
+          sudo apt-get update
           sudo npm install --quiet node-gyp -g
           sudo npm install cordova -g
           sudo npm config set python /usr/bin/python
@@ -164,9 +164,9 @@ jobs:
             - run:
                   name: Add new android platform
                   command: cd carrier/mobile-ionic && yarn ionic cordova platform add android@8.0.0
-            - run:
-                  name: Build cordova android
-                  command: cd carrier/mobile-ionic && yarn ionic cordova build android
+            # - run:
+            #       name: Build cordova android
+            #       command: cd carrier/mobile-ionic && yarn ionic cordova build android
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-carrier-mobile-ionic-{{ checksum "yarn.lock" }}
