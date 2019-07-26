@@ -6,6 +6,7 @@ aliases:
       command: |
           sudo apt-get update                    
           sudo npm install --quiet node-gyp -g
+          sudo npm install cordova -g
           sudo npm config set python /usr/bin/python
     - &install-chrome
       name: Install Chrome
