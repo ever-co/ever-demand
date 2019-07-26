@@ -205,7 +205,7 @@
 		"ts-loader": "^6.0.4",
 		"ts-node": "^8.3.0",
 		"tslint": "^5.18.0",
-		"typedoc": "^0.14.2",
+		"typedoc": "^0.15.0",
 		"typemoq": "^2.1.0",
 		"typescript": "~3.4.5",
 		"wait-on": "^3.2.0",
