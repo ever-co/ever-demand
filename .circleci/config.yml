@@ -16,9 +16,7 @@ aliases:
           sudo npm install --quiet node-gyp -g
           sudo npm install cordova -g
           sudo npm install ionic -g
-          sudo npm config set python /usr/bin/python
-          echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
-          echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
+          sudo npm config set python /usr/bin/python         
     - &install-chrome
       name: Install Chrome
       command: |
@@ -181,7 +179,9 @@ jobs:
                   command: | 
                     cd carrier/mobile-ionic 
                     yarn ionic cordova platform add android@8.0.0 --noresources
-                    ionic config set -g telemetry true
+                    ionic config set -g telemetry true                    
+                    # echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
+                    # echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
             - run:
                   name: Run Cordova Build for Android (Debug)
                   command: | 
