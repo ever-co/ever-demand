@@ -164,9 +164,9 @@ jobs:
             - run:
                   name: Add new android platform
                   command: cd carrier/mobile-ionic && yarn ionic cordova platform add android@8.0.0
-            # - run:
-            #       name: Build cordova android
-            #       command: cd carrier/mobile-ionic && yarn ionic cordova build android
+            - run:
+                  name: Run Cordova Build for Android (Production)
+                  command: cd carrier/mobile-ionic && yarn cordova:build:prod
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-carrier-mobile-ionic-{{ checksum "yarn.lock" }}
