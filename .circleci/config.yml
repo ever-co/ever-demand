@@ -151,7 +151,9 @@ jobs:
         steps:
             - checkout
             - run: *install-deps
-            - run: *install-yarn
+            - run: 
+                  name: Install Yarn
+                  command: sudo npm install -g yarn
             - run: *install-gradle
             - run:
                   name: 'Pull Submodules'
