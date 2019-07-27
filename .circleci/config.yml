@@ -149,7 +149,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/carrier/mobile-ionic
         docker:
-            - image: circleci/node:10.16.0
+            - image: circleci/android:api-28-node
         steps:
             - checkout
             - run: *install-deps
