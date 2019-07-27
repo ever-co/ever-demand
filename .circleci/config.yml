@@ -1,13 +1,24 @@
 version: 2
 
 aliases:
+    - &install-gradle
+      name: Install Gradle
+      command: |
+          wget https://services.gradle.org/distributions/gradle-4.0.2-bin.zip -P /tmp
+          sudo unzip -d /opt/gradle /tmp/gradle-*.zip
+          echo 'export GRADLE_HOME=/opt/gradle/gradle-4.0.2' >> $BASH_ENV
+          echo 'export PATH=$PATH:/opt/gradle/gradle-4.0.2/bin' >> $BASH_ENV
+          source $BASH_ENV
     - &install-deps
-      name: Install Linux Dependencies
+      name: Install Global Dependencies
       command: |
           sudo apt-get update
           sudo npm install --quiet node-gyp -g
           sudo npm install cordova -g
+          sudo npm install ionic -g
           sudo npm config set python /usr/bin/python
+          echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
+          echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
     - &install-chrome
       name: Install Chrome
       command: |
@@ -30,6 +41,9 @@ defaults: &defaults
     # put here anything which is common between all jobs
     # we define default work dir, however almost every job redefine it
     working_directory: /tmp/workspace
+    environment:
+       JVM_OPTS: -Xmx3200m
+       ANDROID_HOME: /usr/local/android-sdk-linux
 
 jobs:
     build-monorepo-root:
@@ -140,6 +154,7 @@ jobs:
             - checkout
             - run: *install-deps
             - run: *install-yarn
+            - run: *install-gradle
             - run:
                   name: 'Pull Submodules'
                   command: |
@@ -163,15 +178,25 @@ jobs:
                   command: cd carrier/mobile-ionic && yarn ionic cordova platform rm android
             - run:
                   name: Add new android platform
-                  command: cd carrier/mobile-ionic && yarn ionic cordova platform add android@8.0.0
+                  command: | 
+                    cd carrier/mobile-ionic 
+                    yarn ionic cordova platform add android@8.0.0 --noresources
+                    ionic config set -g telemetry true
             - run:
-                  name: Run Cordova Build for Android (Production)
-                  command: cd carrier/mobile-ionic && yarn cordova:build:prod
+                  name: Run Cordova Build for Android (Debug)
+                  command: | 
+                    cd carrier/mobile-ionic
+                    yarn cordova:build
+                    mkdir -p /tmp/apk
+                    cp -r platforms/android/app/build/outputs/apk/debug/app-debug.apk /tmp/apk
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-carrier-mobile-ionic-{{ checksum "yarn.lock" }}
                   paths:
                       - ~/.cache/yarn
+            - store_artifacts:
+                  path: /tmp/apk
+                  destination: apks          
             - persist_to_workspace:
                   root: /tmp/workspace/carrier/mobile-ionic
                   paths:
@@ -289,7 +314,7 @@ jobs:
         steps:
             - run: *install-deps
             - run: *install-yarn
-            - run: *install-chrome
+            - run: *install-chrome            
             - attach_workspace:
                   at: /tmp/workspace/carrier/mobile-ionic
             - run:
