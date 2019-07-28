@@ -89,7 +89,7 @@ export class Store {
 			localStorage.setItem('_language', language);
 		}
 
-		this.translate.use(language);
+		this.translate.use(language.substr(0, 2));
 	}
 
 	get maintenanceMode(): string | null {

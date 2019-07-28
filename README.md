@@ -193,13 +193,18 @@ According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform tod
 -   Elvis Arabadjiyski ([Dreemsuncho](https://github.com/Dreemsuncho))
 -   Emil Momchilov ([jew-er](https://github.com/jew-er))
 
-#### Graphic Designer & QA
+#### Designers & QA
 
--   Julia Konviser
+-   [Milena Dimova](https://www.linkedin.com/in/dimova-milena-31010414) (UI/UX Designer)
+-   [Julia Konviser](https://www.linkedin.com/in/julia-konviser-8b917552) (Graphic Designer, QA)
 
 ### Contributors
 
--   View all of our [contributors](https://github.com/ever-co/ever/graphs/contributors)
+-   Kyle Kitlinski (https://github.com/K-Kit)
+-   Deepak Chandwani (https://github.com/deepaksslibra)
+-   Adem Hodzic (https://github.com/AdemHodzic)
+
+View full list of our [contributors](https://github.com/ever-co/ever/graphs/contributors).
 
 ## Contact Us
 

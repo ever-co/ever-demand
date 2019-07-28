@@ -1,7 +1,7 @@
 import { Mutation, Query, ResolveProperty, Resolver } from '@nestjs/graphql';
 import { CarriersService } from '../../services/carriers';
-import { default as ICarrier } from '../../modules/server.common/interfaces/ICarrier';
-import Carrier from '../../modules/server.common/entities/Carrier';
+import { default as ICarrier } from '@modules/server.common/interfaces/ICarrier';
+import Carrier from '@modules/server.common/entities/Carrier';
 import { first, map } from 'rxjs/operators';
 import { DevicesService } from '../../services/devices';
 import {

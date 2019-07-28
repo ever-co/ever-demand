@@ -17,10 +17,10 @@ import {
 import { Observable } from 'rxjs';
 import 'rxjs/add/observable/fromEvent';
 import * as ElementQueries from 'css-element-queries/src/ElementQueries';
-import ProductInfo from '../../../modules/server.common/entities/ProductInfo';
-import { OrderRouter } from '../../../modules/client.common.angular2/routers/order-router.service';
-import { WarehouseOrdersRouter } from '../../../modules/client.common.angular2/routers/warehouse-orders-router.service';
-import { ProductLocalesService } from '../../../modules/client.common.angular2/locale/product-locales.service';
+import ProductInfo from '@modules/server.common/entities/ProductInfo';
+import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
+import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
+import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { Store } from 'app/services/store';
 import RegistrationSystem from '@modules/server.common/enums/RegistrationSystem';

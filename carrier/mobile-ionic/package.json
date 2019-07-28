@@ -96,10 +96,12 @@
 		"apollo-link-ws": "^1.0.17",
 		"call-number": "^1.0.1",
 		"connect": "^3.6.6",
-		"cordova-android": "7.1.4",
+		"cordova-android": "^8.0.0",
 		"cordova-android-support-gradle-release": "^2.0.1",
 		"cordova-browser": "^6.0.0",
 		"cordova-open-native-settings": "^1.5.2",
+		"cordova-plugin-androidx": "^1.0.2",
+		"cordova-plugin-androidx-adapter": "^1.1.0",
 		"cordova-plugin-appavailability": "^0.4.2",
 		"cordova-plugin-badge": "^0.8.8",
 		"cordova-plugin-camera": "^4.0.3",
@@ -169,7 +171,7 @@
 		"@angular/compiler-cli": "^8.0.0",
 		"@angular/language-service": "^8.0.0",
 		"@compodoc/compodoc": "^1.1.9",
-		"@ionic/angular-toolkit": "^1.5.1",
+		"@ionic/angular-toolkit": "^2.0.0",
 		"@ionic/app-scripts": "^3.2.4",
 		"@ionic/lab": "^2.0.1",
 		"@schematics/angular": "^8.0.2",
@@ -195,7 +197,7 @@
 		"dotenv": "^8.0.0",
 		"envalid": "^5.0.0",
 		"husky": "^2.4.0",
-		"ionic": "^5.0.1",
+		"ionic": "^5.2.3",
 		"jasmine-core": "^3.3.0",
 		"jasmine-spec-reporter": "^4.2.1",
 		"karma": "^4.0.1",
@@ -235,7 +237,8 @@
 			},
 			"cordova-plugin-network-information": {},
 			"cordova-plugin-mixpanel": {
-				"PLAY_SERVICES_VERSION": "+"
+				"PLAY_SERVICES_VERSION": "+",
+				"FIREBASE_VERSION": "+"
 			},
 			"cordova-plugin-intercom": {},
 			"cordova-plugin-screen-orientation": {},
@@ -252,7 +255,9 @@
 			},
 			"cordova-plugin-vibration": {},
 			"cordova-plugin-local-notification": {},
-			"call-number": {}
+			"call-number": {},
+			"cordova-plugin-androidx": {},
+			"cordova-plugin-androidx-adapter": {}
 		}
 	},
 	"engines": {

@@ -1,12 +1,12 @@
 import { injectable } from 'inversify';
 import * as Logger from 'bunyan';
 import * as _ from 'lodash';
-import Utils from '../../modules/server.common/utils';
+import Utils from '@modules/server.common/utils';
 import { createEverLogger } from '../../helpers/Log';
 import { WarehousesService } from '../warehouses';
-import GeoLocation from '../../modules/server.common/entities/GeoLocation';
-import Warehouse from '../../modules/server.common/entities/Warehouse';
-import IWarehouse from '../../modules/server.common/interfaces/IWarehouse';
+import GeoLocation from '@modules/server.common/entities/GeoLocation';
+import Warehouse from '@modules/server.common/entities/Warehouse';
+import IWarehouse from '@modules/server.common/interfaces/IWarehouse';
 import { Observable } from 'rxjs';
 import {
 	observableListener,
@@ -14,8 +14,8 @@ import {
 	serialization,
 	asyncListener
 } from '@pyro/io';
-import IGeoLocation from '../../modules/server.common/interfaces/IGeoLocation';
-import IGeoLocationWarehousesRouter from '../../modules/server.common/routers/IGeoLocationWarehousesRouter';
+import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
+import IGeoLocationWarehousesRouter from '@modules/server.common/routers/IGeoLocationWarehousesRouter';
 import IService from '../IService';
 import { ExistenceEventType } from '@pyro/db-server';
 import { of } from 'rxjs/observable/of';
