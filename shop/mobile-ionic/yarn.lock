@@ -464,10 +464,10 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/geolocation@^5.5.1":
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/geolocation/-/geolocation-5.6.0.tgz#f442fad7ddb520efe089d3ca89805ed3bc4722ac"
-  integrity sha512-0VEj62+l2aZ/IozyCyT205tWYEc2mnK9Nqs7XizjBDv2iGtFIZbFqF2lzv7vYTKYb7NXxJ7gM/Y5Qx5x5GKnoA==
+"@ionic-native/geolocation@^5.11.0":
+  version "5.11.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/geolocation/-/geolocation-5.11.0.tgz#1e9c7ad9c98c9c020f95a31afae56f4c2961d3e8"
+  integrity sha512-wj3uDa/Yxcrfz2AJuqQze7fZFuanfrepREs1tedbM9dZA7Zrz2Rwa5ntulx59bnbW7QojrEUGnbJcpdHFG7tPA==
   dependencies:
     "@types/cordova" latest
 
@@ -478,10 +478,10 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/google-analytics@^5.5.1":
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/google-analytics/-/google-analytics-5.6.0.tgz#46f1b7fa24150ac50c250bf155cc5d4bcae2afbc"
-  integrity sha512-pxjBEMu8x0ezsr0699VDxMet/5M7U561BMVchq3/mcvT1Lz56xyvdSeEJFRSm8wy33UShY8woE7Aj6AWZzCtCw==
+"@ionic-native/google-analytics@^5.11.0":
+  version "5.11.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/google-analytics/-/google-analytics-5.11.0.tgz#96ca3b168d60e9527f7b6d92e71572775b40a563"
+  integrity sha512-xChpMHx0sLlelxaz0CcysNE17SXLpLUQzBlcwkvJkadPfJmMIJxe0Ak6JyTty8uKDNZqQ9d4ryTBGMb7wMEeag==
   dependencies:
     "@types/cordova" latest
 
