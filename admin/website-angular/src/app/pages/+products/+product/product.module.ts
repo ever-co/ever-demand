@@ -6,9 +6,9 @@ import { routes } from './product.routes';
 import { FormWizardModule } from 'angular2-wizard';
 import { ToasterModule } from 'angular2-toaster';
 import { TranslateModule } from '@ngx-translate/core';
-import { Ng2SmartTableModule } from 'ng2-smart-table/ng2-smart-table.module';
 import { HighlightModule } from 'ngx-highlightjs';
 import { ProductComponent } from './product.component';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 @NgModule({
 	imports: [
