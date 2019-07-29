@@ -184,7 +184,7 @@
 		"@types/node": "^12.0.2",
 		"@types/socket.io-client": "^1.4.32",
 		"@types/source-map": "^0.5.7",
-		"@types/stripe": "^6.31.9",
+		"@types/stripe": "^6.31.10",
 		"@types/stripe-node": "^4.7.1",
 		"@types/uglify-js": "^3.0.4",
 		"@types/uuid": "^3.4.4",
