@@ -71,7 +71,7 @@
 		"@asymmetrik/ngx-leaflet": "^6.0.1",
 		"@fortawesome/fontawesome-free": "~5.8.1",
 		"@nebular/auth": "^4.1.0",
-		"@nebular/bootstrap": "^4.1.0",
+		"@nebular/bootstrap": "^4.1.3",
 		"@nebular/eva-icons": "^4.1.0",
 		"@nebular/security": "^4.1.0",
 		"@nebular/theme": "^4.1.0",
