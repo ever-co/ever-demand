@@ -62,6 +62,8 @@
 		"@ngx-translate/http-loader": "^4.0.0",
 		"angular2-logger": "^0.7.0",
 		"fstream": "^1.0.12",
+		"lodash.template": "^4.5.0",
+		"lodash.templatesettings": "^4.2.0",
 		"npm": "^6.9.0",
 		"rxjs": "^6.5.1",
 		"rxjs-compat": "^6.5.1",

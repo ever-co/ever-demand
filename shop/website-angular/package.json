@@ -146,6 +146,7 @@
 		"lodash": "^4.17.15",
 		"lodash.mergewith": "^4.6.2",
 		"lodash.template": "^4.5.0",
+		"lodash.templatesettings": "^4.2.0",
 		"masonry-layout": "^4.2.2",
 		"mdi-svg": "^2.2.43",
 		"neo-async": "^2.6.1",
@@ -169,8 +170,8 @@
 		"zone.js": "^0.9.1"
 	},
 	"devDependencies": {
-		"@angular-devkit/build-angular": "^0.800.1",
-		"@angular-devkit/build-optimizer": "^0.800.1",
+		"@angular-devkit/build-angular": "^0.801.2",
+		"@angular-devkit/build-optimizer": "^0.801.2",
 		"@angular/cli": "^8.0.1",
 		"@angular/compiler-cli": "^8.0.0",
 		"@angular/language-service": "^8.0.0",

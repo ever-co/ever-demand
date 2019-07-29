@@ -116,6 +116,7 @@
 		"jsbarcode": "^3.11.0",
 		"leaflet": "^1.4.0",
 		"lodash.template": "^4.5.0",
+		"lodash.templatesettings": "^4.2.0",
 		"moment": "^2.24.0",
 		"ng-simple-slideshow": "^1.2.9",
 		"ng2-ckeditor": "^1.2.2",
@@ -150,9 +151,9 @@
 		"zone.js": "^0.9.1"
 	},
 	"devDependencies": {
-		"@angular-devkit/architect": "^0.800.2",
-		"@angular-devkit/build-angular": "^0.800.2",
-		"@angular-devkit/build-webpack": "^0.800.2",
+		"@angular-devkit/architect": "^0.801.2",
+		"@angular-devkit/build-angular": "^0.801.2",
+		"@angular-devkit/build-webpack": "^0.801.2",
 		"@angular-devkit/core": "^8.0.2",
 		"@angular-devkit/schematics": "^8.0.2",
 		"@angular/cli": "^8.0.2",
