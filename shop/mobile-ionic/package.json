@@ -127,7 +127,7 @@
 		"ionicons": "^4.5.8",
 		"jasmine": "^3.3.1",
 		"jsbarcode": "^3.11.0",
-		"lodash": "^4.17.15",
+		"lodash": "^4.17.13",
 		"lodash.mergewith": "^4.6.2",
 		"mx.ferreyra.callnumber": "0.0.2",
 		"neo-async": "^2.6.1",
