@@ -70,7 +70,7 @@
 		"@ionic-native/core": "^5.3.0",
 		"@ionic-native/device": "^5.5.1",
 		"@ionic-native/dialogs": "^5.5.1",
-		"@ionic-native/email-composer": "^5.5.1",
+		"@ionic-native/email-composer": "^5.11.0",
 		"@ionic-native/file-transfer": "^5.5.1",
 		"@ionic-native/geolocation": "^5.5.1",
 		"@ionic-native/globalization": "^5.3.0",
