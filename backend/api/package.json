@@ -60,7 +60,7 @@
 		"@nestjs/swagger": "^3.0.2",
 		"@nestjs/typeorm": "^6.1.2",
 		"@nestjs/websockets": "^6.3.2",
-		"apollo-server-express": "^2.7.2",
+		"apollo-server-express": "^2.8.0",
 		"axios": "^0.19.0",
 		"bcrypt": "^3.0.6",
 		"bluebird": "^3.5.5",
