@@ -143,7 +143,7 @@
 		"handlebars": "^4.1.2",
 		"http-server": "^0.11.1",
 		"ie-shim": "^0.1.0",
-		"lodash": "^4.17.15",
+		"lodash": "^4.17.13",
 		"masonry-layout": "^4.2.2",
 		"mdi-svg": "^2.2.43",
 		"neo-async": "^2.6.1",
