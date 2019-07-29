@@ -3182,10 +3182,10 @@ cordova-plugin-inappbrowser@^3.0.0:
   resolved "https://registry.yarnpkg.com/cordova-plugin-inappbrowser/-/cordova-plugin-inappbrowser-3.0.0.tgz#d4ae00d36676210751057ad258ae4ad4a9161ada"
   integrity sha1-1K4A02Z2IQdRBXrSWK5K1KkWGto=
 
-cordova-plugin-intercom@^6.2.0:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/cordova-plugin-intercom/-/cordova-plugin-intercom-6.2.0.tgz#c0b7107f78d343dfe3df9357e6f77b8348042d6b"
-  integrity sha512-xjhlEt/6OgOFJnA2iD6OJMyhnqMD+s2MLzS+erx2jA4XG9xiXzLAkIZGBukaRcf/RzuNnKA2HnGXiTIRV7xTvQ==
+cordova-plugin-intercom@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-intercom/-/cordova-plugin-intercom-7.1.0.tgz#1264032218d0f7be26961cec21635b796a10ac27"
+  integrity sha512-ko8kD1wEJbOxomVtyx1G21VosQpXQVlEfewSG0SsFyY0FlZAHGUMDr1c96DA++NswUSGiAJWRv86Tat7ahyfpA==
 
 cordova-plugin-ionic-keyboard@^2.1.3:
   version "2.1.3"
@@ -7319,10 +7319,10 @@ ngx-moment@^3.4.0:
   dependencies:
     tslib "^1.9.0"
 
-ngx-pagination@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/ngx-pagination/-/ngx-pagination-3.2.1.tgz#d82fe15b03a628621dabb835ebc90011f2557689"
-  integrity sha512-+dprQkYoiNYDZkNAe/1HX0wDFbwCTE31mC2bEQVdI7ZbjEIvGB7R3zp5QoCKgz6cPFatUj4Iw6Ukqp5zx0oT/Q==
+ngx-pagination@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/ngx-pagination/-/ngx-pagination-4.1.0.tgz#05ccd30f54351e04beeaa92cbe5c42be5fd809c2"
+  integrity sha512-qdDuOkMMNFsM4r1Jyc+uJZr1edwLoIr8Uzh+TUPE5kDT1f29ZIKt92H8+yCijDMUwHJ65mX6SAfZvbtZEwIN4w==
 
 nice-try@^1.0.4:
   version "1.0.5"

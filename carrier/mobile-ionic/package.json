@@ -112,7 +112,7 @@
 		"cordova-plugin-globalization": "^1.11.0",
 		"cordova-plugin-google-analytics": "^1.8.6",
 		"cordova-plugin-inappbrowser": "^3.0.0",
-		"cordova-plugin-intercom": "^6.2.0",
+		"cordova-plugin-intercom": "^7.1.0",
 		"cordova-plugin-ionic-keyboard": "^2.1.3",
 		"cordova-plugin-ionic-webview": "^4.0.1",
 		"cordova-plugin-local-notification": "^0.9.0-beta.2",
