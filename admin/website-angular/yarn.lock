@@ -219,10 +219,10 @@
   dependencies:
     tslib "^1.9.0"
 
-"@asymmetrik/ngx-leaflet@^5.0.2":
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/@asymmetrik/ngx-leaflet/-/ngx-leaflet-5.0.2.tgz#307d7e99b6fd0e27f23601213aa5e696ab23a8da"
-  integrity sha512-y4+U9nUnukdTTO2Z6fCt0V85U605bveERNIzrovjKELkHbxz70TvJSvCU7iSSc5ZwS5ZJI1a24SiBJ5sGt9WMQ==
+"@asymmetrik/ngx-leaflet@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@asymmetrik/ngx-leaflet/-/ngx-leaflet-6.0.1.tgz#0b2d3188c000bc4321bad6888b87a6f8bd29d9c4"
+  integrity sha512-8jYlmpXhPVUjjApfx136U5d+vhv10z0S4yeNLYGXHV8NSvTA9LiGzWki61udhQjBxeYcKjImKLOv3TV/N4Uz+Q==
 
 "@babel/code-frame@7.0.0", "@babel/code-frame@^7.0.0":
   version "7.0.0"
@@ -849,6 +849,13 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
+"@babel/runtime@^7.5.4":
+  version "7.5.5"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.5.5.tgz#74fba56d35efbeca444091c7850ccd494fd2f132"
+  integrity sha512-28QvEGyQyNkB0/m2B4FU7IEZGK2NUrcMtT6BZEFALTguLk+AUT6ofsHtPk5QyjAdUkpMJ+/Em+quwz4HOt30AQ==
+  dependencies:
+    regenerator-runtime "^0.13.2"
+
 "@babel/template@^7.0.0", "@babel/template@^7.1.0", "@babel/template@^7.2.2", "@babel/template@^7.4.0":
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.4.0.tgz#12474e9c077bae585c5d835a95c0b0b790c25c8b"
@@ -1136,17 +1143,17 @@
   dependencies:
     intersection-observer "0.5.0"
 
-"@ng-bootstrap/ng-bootstrap@^4.2.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-4.2.1.tgz#aa87f2ee6c4def0be087d4f456930b1e0761d91a"
-  integrity sha512-7etP9X9jKIkbuDzU3ngI2jQhHQDZxIu0ErvlkHb7u7YH9akIOLVkXvz2mTMvcFABWZhze64UjFuEgR46b6WGSw==
+"@ng-bootstrap/ng-bootstrap@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-5.1.0.tgz#c0bdb74702d46f58b3cfd526dd77921e6107e7f7"
+  integrity sha512-IYoKE1NMrIPbRV0077/uHOjdwPb3qyhHpbBXiMGjclkSm2GvKXNPIzgd3Vjon/lbKelHdAW4A/upUHN2VYUi3w==
   dependencies:
     tslib "^1.9.0"
 
-"@ng-select/ng-select@^2.18.0":
-  version "2.18.0"
-  resolved "https://registry.yarnpkg.com/@ng-select/ng-select/-/ng-select-2.18.0.tgz#3296f698dd2d06dc81cf4fe0529b09e36f7e1a55"
-  integrity sha512-LK9htwdljl/e4cPmgV25WU3B0v43p5gGAwDl+yNoUY6Afm7SUoyS1+y2lKMKkdWQySJ6pWjMuIDs96Ekv0NJcQ==
+"@ng-select/ng-select@^3.0.4":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@ng-select/ng-select/-/ng-select-3.0.4.tgz#9549279c6c5b76aafdae83a1440bf7d71ff631da"
+  integrity sha512-GYKGfUHeaJT9faxiKD8FjfUbL1JNEqSaLND570YcttRjN95o+DnH1GFLKUwZLrO8KB1R90aCR9B2NJ+J9fmOmw==
   dependencies:
     tslib "^1.9.0"
 
@@ -2115,10 +2122,10 @@ angular2-template-loader@^0.6.2:
   dependencies:
     loader-utils "^0.2.15"
 
-angular2-toaster@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/angular2-toaster/-/angular2-toaster-7.0.0.tgz#8d72716b6b267cf36576bf77361bb3ab09e9d093"
-  integrity sha512-+nKyzg7X9r9knVghyURR63eXpbvErd/Hm7c7rx/v4gfqI7jNAkWHxO1tikVKEQFoD+au6Fu54LOGhEmXb0ECxg==
+angular2-toaster@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/angular2-toaster/-/angular2-toaster-8.0.0.tgz#9f5df2c9df00b96475cd179c4b4e4fad5a6dc7ac"
+  integrity sha512-MRDswCmhqFLBiot7C7SIq96NyU5aT9pwIVdYgmYJtXHp7N6fXk6QzuMSMhVvK12edUJntgmUft+SZfh45Oq0Wg==
 
 angular2-uuid@*:
   version "1.1.1"
@@ -2289,13 +2296,13 @@ apollo-link-context@^1.0.17:
     apollo-link "^1.2.11"
     tslib "^1.9.3"
 
-apollo-link-http-common@^0.2.13:
-  version "0.2.13"
-  resolved "https://registry.yarnpkg.com/apollo-link-http-common/-/apollo-link-http-common-0.2.13.tgz#c688f6baaffdc7b269b2db7ae89dae7c58b5b350"
-  integrity sha512-Uyg1ECQpTTA691Fwx5e6Rc/6CPSu4TB4pQRTGIpwZ4l5JDOQ+812Wvi/e3IInmzOZpwx5YrrOfXrtN8BrsDXoA==
+apollo-link-http-common@^0.2.14:
+  version "0.2.14"
+  resolved "https://registry.yarnpkg.com/apollo-link-http-common/-/apollo-link-http-common-0.2.14.tgz#d3a195c12e00f4e311c417f121181dcc31f7d0c8"
+  integrity sha512-v6mRU1oN6XuX8beVIRB6OpF4q1ULhSnmy7ScnHnuo1qV6GaFmDcbdvXqxIkAV1Q8SQCo2lsv4HeqJOWhFfApOg==
   dependencies:
-    apollo-link "^1.2.11"
-    ts-invariant "^0.3.2"
+    apollo-link "^1.2.12"
+    ts-invariant "^0.4.0"
     tslib "^1.9.3"
 
 apollo-link-ws@^1.0.17:
@@ -2316,16 +2323,27 @@ apollo-link@^1.0.0, apollo-link@^1.2.11:
     tslib "^1.9.3"
     zen-observable-ts "^0.8.18"
 
-apollo-upload-client@^10.0.1:
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/apollo-upload-client/-/apollo-upload-client-10.0.1.tgz#e8446288d03edb1c582c91c26a18b27533f85013"
-  integrity sha512-K6WnuYQi0RRTNO+aSPVjoUWXp4QSr+eoKU4fE0OKQp25XRF2oXl2cTLs+Q4Nk0wOIHM76YGdo/IHtzuNR7jO+A==
+apollo-link@^1.2.12:
+  version "1.2.12"
+  resolved "https://registry.yarnpkg.com/apollo-link/-/apollo-link-1.2.12.tgz#014b514fba95f1945c38ad4c216f31bcfee68429"
+  integrity sha512-fsgIAXPKThyMVEMWQsUN22AoQI+J/pVXcjRGAShtk97h7D8O+SPskFinCGEkxPeQpE83uKaqafB2IyWdjN+J3Q==
   dependencies:
-    apollo-link "^1.2.11"
-    apollo-link-http-common "^0.2.13"
+    apollo-utilities "^1.3.0"
+    ts-invariant "^0.4.0"
+    tslib "^1.9.3"
+    zen-observable-ts "^0.8.19"
+
+apollo-upload-client@^11.0.0:
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/apollo-upload-client/-/apollo-upload-client-11.0.0.tgz#465a2ed5756e6155f53befaf82d17bdb08c82060"
+  integrity sha512-JChTrBi1VSF8u6OPrkWUApJlyUvzwhw98kqRB3fSi7/CU6z0OUD42Mee9s5h8mfjKEfOanK6GNZhF4t2tIPXSw==
+  dependencies:
+    "@babel/runtime" "^7.5.4"
+    apollo-link "^1.2.12"
+    apollo-link-http-common "^0.2.14"
     extract-files "^5.0.1"
 
-apollo-utilities@1.3.2, apollo-utilities@^1.3.2:
+apollo-utilities@1.3.2, apollo-utilities@^1.3.0, apollo-utilities@^1.3.2:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.3.2.tgz#8cbdcf8b012f664cd6cb5767f6130f5aed9115c9"
   integrity sha512-JWNHj8XChz7S4OZghV6yc9FNnzEXj285QYp/nLNh943iObycI5GTDO3NGR9Dth12LRrSFMeDOConPfPln+WGfg==
@@ -14240,6 +14258,14 @@ zen-observable-ts@^0.8.18:
   version "0.8.18"
   resolved "https://registry.yarnpkg.com/zen-observable-ts/-/zen-observable-ts-0.8.18.tgz#ade44b1060cc4a800627856ec10b9c67f5f639c8"
   integrity sha512-q7d05s75Rn1j39U5Oapg3HI2wzriVwERVo4N7uFGpIYuHB9ff02P/E92P9B8T7QVC93jCMHpbXH7X0eVR5LA7A==
+  dependencies:
+    tslib "^1.9.3"
+    zen-observable "^0.8.0"
+
+zen-observable-ts@^0.8.19:
+  version "0.8.19"
+  resolved "https://registry.yarnpkg.com/zen-observable-ts/-/zen-observable-ts-0.8.19.tgz#c094cd20e83ddb02a11144a6e2a89706946b5694"
+  integrity sha512-u1a2rpE13G+jSzrg3aiCqXU5tN2kw41b+cBZGmnc+30YimdkKiDj9bTowcB41eL77/17RF/h+393AuVgShyheQ==
   dependencies:
     tslib "^1.9.3"
     zen-observable "^0.8.0"
