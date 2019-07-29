@@ -565,10 +565,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/stripe@^6.25.17":
-  version "6.25.17"
-  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-6.25.17.tgz#8d6bb4b1663bc0478405b4825122d8a86e1cb23f"
-  integrity sha512-CAlPYH2QVBHW22IHuqb1YGsOzcOlXGEwBRTrzhH4c6XlyrON8mJg2Pgfj1PTOlfJxHVLMcqJWu0Goa6uWVXz0A==
+"@types/stripe@^6.31.9":
+  version "6.31.9"
+  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-6.31.9.tgz#84a3ee6f614d3d96c1acf269b006d5dd82f4d6a2"
+  integrity sha512-BRXXTRFPie7U5JTUjD64sYvS++LVS6rmiOEoYQ//3fRaMhuO+gKVWXw4JBw1hSWCGQXZghUITFad2wzHqBX6gw==
   dependencies:
     "@types/node" "*"
 
@@ -862,6 +862,11 @@ acorn@^6.0.5, acorn@^6.0.7:
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.1.1.tgz#7d25ae05bb8ad1f9b699108e1094ecd7884adc1f"
   integrity sha512-jPTiwtOxaHNaAPg/dmrJ/beuzLRnXtB0kQPQ8JpotKJgTB6rX6c8mlf315941pyjBSaPg8NHXS9fhP4u17DpGA==
+
+acorn@^6.2.0:
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.2.1.tgz#3ed8422d6dec09e6121cc7a843ca86a330a86b51"
+  integrity sha512-JD0xT5FCRDNyjDda3Lrg/IxFscp9q4tiYtxE1/nOzlKCk7hIRuYjhq1kCNkbPjMRMZuFq20HNQn1I9k8Oj0E+Q==
 
 add-asset-html-webpack-plugin@^3.1.3:
   version "3.1.3"
@@ -11161,17 +11166,16 @@ webpack@4.35.2:
     watchpack "^1.5.0"
     webpack-sources "^1.3.0"
 
-webpack@^4.29.6:
-  version "4.29.6"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.29.6.tgz#66bf0ec8beee4d469f8b598d3988ff9d8d90e955"
-  integrity sha512-MwBwpiE1BQpMDkbnUUaW6K8RFZjljJHArC6tWQJoFm0oQtfoSebtg4Y7/QHnJ/SddtjYLHaKGX64CFjG5rehJw==
+webpack@^4.38.0:
+  version "4.38.0"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.38.0.tgz#6d77108404b08883c78f4e7e45a43c4e5c47c931"
+  integrity sha512-lbuFsVOq8PZY+1Ytz/mYOvYOo+d4IJ31hHk/7iyoeWtwN33V+5HYotSH+UIb9tq914ey0Hot7z6HugD+je3sWw==
   dependencies:
     "@webassemblyjs/ast" "1.8.5"
     "@webassemblyjs/helper-module-context" "1.8.5"
     "@webassemblyjs/wasm-edit" "1.8.5"
     "@webassemblyjs/wasm-parser" "1.8.5"
-    acorn "^6.0.5"
-    acorn-dynamic-import "^4.0.0"
+    acorn "^6.2.0"
     ajv "^6.1.0"
     ajv-keywords "^3.1.0"
     chrome-trace-event "^1.0.0"
