@@ -145,7 +145,7 @@
 		"ionic-selectable": "^4.4.1",
 		"ionicons": "^4.5.8",
 		"jsbarcode": "^3.11.0",
-		"lodash": "^4.17.11",
+		"lodash": "^4.17.13",
 		"masonry-layout": "^4.2.2",
 		"moment": "^2.24.0",
 		"mongoose": "^5.5.13",
