@@ -14,7 +14,7 @@ import { InputComponent } from './input-component';
 @Component({
 	selector: 'mat-bold-input',
 	styleUrls: ['./mat-bold-input.component.scss'],
-	templateUrl: './mat-bold-input.component.html',
+	templateUrl: 'mat-bold-input.component.html',
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,
