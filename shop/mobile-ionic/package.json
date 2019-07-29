@@ -72,7 +72,7 @@
 		"@ionic-native/google-analytics": "^5.5.1",
 		"@ionic-native/google-maps": "~5.5.0",
 		"@ionic-native/in-app-browser": "^5.5.1",
-		"@ionic-native/intercom": "^5.5.1",
+		"@ionic-native/intercom": "^5.11.0",
 		"@ionic-native/local-notifications": "^5.5.1",
 		"@ionic-native/mixpanel": "^5.5.1",
 		"@ionic-native/network": "^5.5.1",
