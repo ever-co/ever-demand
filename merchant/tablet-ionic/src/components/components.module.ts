@@ -28,6 +28,8 @@ import { CustomerEmailPopupPageModule } from 'pages/+customers/customer-email-po
 import { CustomerDeliveriesPopupPageModule } from 'pages/+customers/customer-deliveries-popup/customer-deliveries-popup.module';
 import { CustomerAddrPopupPageModule } from 'pages/+customers/customer-addr-popup/customer-addr-popup.module';
 import { FileUploaderModule } from './file-uploader/file-uploader.module';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { SettingsPaymentsComponent } from './settings-page-components/settings/payments/payments';
 
 @NgModule({
 	declarations: [
@@ -49,7 +51,8 @@ import { FileUploaderModule } from './file-uploader/file-uploader.module';
 		CustomerInfoComponent,
 		CarrierInfoComponent,
 		PhoneComponent,
-		UserPhoneComponent
+		UserPhoneComponent,
+		SettingsPaymentsComponent
 	],
 	imports: [
 		CommonModule,
@@ -63,7 +66,8 @@ import { FileUploaderModule } from './file-uploader/file-uploader.module';
 		CustomerEmailPopupPageModule,
 		CustomerDeliveriesPopupPageModule,
 		CustomerAddrPopupPageModule,
-		FileUploaderModule
+		FileUploaderModule,
+		NgSelectModule
 	],
 	exports: [
 		LoadingComponent,

@@ -90,6 +90,7 @@
 		"@ionic/angular": "^4.1.2",
 		"@ionic/pro": "^2.0.4",
 		"@ionic/storage": "^2.2.0",
+		"@ng-select/ng-select": "^3.0.5",
 		"@ngx-translate/core": "^11.0.1",
 		"@ngx-translate/http-loader": "^4.0.0",
 		"angular2-logger": "^0.7.0",

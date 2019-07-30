@@ -28,6 +28,8 @@ $fa-font-path: './assets/fonts' !default;
 @import './theme/smart-table.scss';
 @import './app/ionic-multiple-select.scss';
 
+@import '~@ng-select/ng-select/themes/default.theme.css';
+
 @import './pages/+settings/settings.scss';
 
 @import './pages/+carriers/carriers.scss';
@@ -46,6 +48,23 @@ body {
 
 .ion-page {
 	background-color: $brand-darken;
+}
+
+.payments-gateways-select {
+	height: 100%;
+	padding-top: initial;
+	display: flex !important;
+	align-items: flex-end;
+	border-bottom: 1px solid #cacaca;
+	color: #000;
+
+	.ng-select-container {
+		border: 0 !important;
+	}
+
+	.ng-placeholder {
+		color: black !important;
+	}
 }
 
 .warehouse-view .orders-container {

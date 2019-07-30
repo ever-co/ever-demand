@@ -17,6 +17,8 @@ export class SettingsComponent implements AfterViewInit {
 	@Input()
 	currWarehouse: Warehouse;
 
+	showPayments = false;
+
 	orderBarcodeTypes: OrderBarcodeTypes[] = [
 		OrderBarcodeTypes.QR,
 		OrderBarcodeTypes.CODE128,
@@ -24,7 +26,8 @@ export class SettingsComponent implements AfterViewInit {
 		OrderBarcodeTypes.pharmacode
 	];
 
-	paymentsEnabled: boolean;
+	// TODO
+	// paymentsEnabled: boolean;
 	selectedOrderBarcodeType: OrderBarcodeTypes;
 	barcodetDataUrl: string;
 	hasScanCode: boolean;
@@ -41,6 +44,7 @@ export class SettingsComponent implements AfterViewInit {
 		if (this.currWarehouse) {
 			this.merchantBeforeUpdate = new Warehouse(this.currWarehouse);
 		}
+
 		this.generateQRCode();
 	}
 
@@ -98,5 +102,7 @@ export class SettingsComponent implements AfterViewInit {
 				this.currWarehouse.barcodeData
 			);
 		}
+
+		this.showPayments = true;
 	}
 }

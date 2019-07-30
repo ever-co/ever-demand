@@ -1,0 +1,85 @@
+<ion-row>
+	<ion-col class="col-6">
+		<ion-item mode="ios">
+			<ion-label>
+				{{ 'SETTINGS_VIEW.ALLOW_ONLINE_PAYMENTS' | translate }}?
+			</ion-label>
+			<ion-checkbox
+				slot="start"
+				#isPaymentEnabled="ngModel"
+				[(ngModel)]="currWarehouse.isPaymentEnabled"
+			>
+			</ion-checkbox>
+		</ion-item>
+	</ion-col>
+	<ion-col class="col-3">
+		<ng-select
+			[items]="myPaymentsGateways"
+			[clearable]="false"
+			[searchable]="false"
+			placeholder="My payments gateways"
+			(change)="selectedMyPaymentsGateways = null"
+			[(ngModel)]="selectedMyPaymentsGateways"
+			class="payments-gateways-select"
+		>
+			<ng-template ng-label-tmp let-item="item">
+				<img
+					*ngIf="getPaymentLogo(item)"
+					height="15"
+					width="15"
+					class="mr-2"
+					[src]="getPaymentLogo(item)"
+				/>
+				{{ getPaymentName(item) }}
+			</ng-template>
+
+			<ng-template ng-option-tmp let-item="item" let-index="index">
+				<p class="card-title">
+					<img
+						*ngIf="getPaymentLogo(item)"
+						height="40"
+						width="40"
+						class="mr-1"
+						[src]="getPaymentLogo(item)"
+					/>
+					{{ getPaymentName(item) }}
+				</p>
+			</ng-template>
+		</ng-select>
+	</ion-col>
+	<ion-col class="col-3">
+		<ng-select
+			[items]="paymentsGateways"
+			[clearable]="false"
+			[searchable]="false"
+			placeholder="Payments gateways"
+			class="payments-gateways-select"
+			(change)="selectedPaymentsGateways = null"
+			[(ngModel)]="selectedPaymentsGateways"
+		>
+			<ng-template ng-label-tmp let-item="item">
+				<img
+					*ngIf="getPaymentLogo(item)"
+					height="15"
+					width="15"
+					class="mr-2"
+					[src]="getPaymentLogo(item)"
+				/>
+				{{ getPaymentName(item) }}
+			</ng-template>
+
+			<ng-template ng-option-tmp let-item="item" let-index="index">
+				<p class="card-title">
+					<img
+						*ngIf="getPaymentLogo(item)"
+						height="40"
+						width="40"
+						class="mr-1"
+						[src]="getPaymentLogo(item)"
+					/>
+					{{ getPaymentName(item) }}
+				</p>
+			</ng-template>
+		</ng-select>
+	</ion-col>
+</ion-row>

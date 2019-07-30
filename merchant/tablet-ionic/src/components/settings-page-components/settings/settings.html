@@ -16,7 +16,8 @@
 						slot="start"
 						#productsDelivery="ngModel"
 						[(ngModel)]="currWarehouse.productsDelivery"
-					></ion-checkbox>
+					>
+					</ion-checkbox>
 				</ion-item>
 			</ion-col>
 			<ion-col class="col-6">
@@ -30,7 +31,8 @@
 						slot="start"
 						#productsTakeaway="ngModel"
 						[(ngModel)]="currWarehouse.productsTakeaway"
-					></ion-checkbox>
+					>
+					</ion-checkbox>
 				</ion-item>
 			</ion-col>
 		</ion-row>
@@ -38,20 +40,13 @@
 		<h4 class="row-title">
 			{{ 'SETTINGS_VIEW.SETTINGS_SECTION.PAYMENTS_SETTINGS' | translate }}
 		</h4>
-		<ion-row>
-			<ion-col class="col-6">
-				<ion-item mode="ios">
-					<ion-label>
-						{{ 'SETTINGS_VIEW.ALLOW_ONLINE_PAYMENTS' | translate }}?
-					</ion-label>
-					<ion-checkbox
-						slot="start"
-						#isPaymentEnabled="ngModel"
-						[(ngModel)]="currWarehouse.isPaymentEnabled"
-					></ion-checkbox>
-				</ion-item>
-			</ion-col>
-		</ion-row>
+
+		<merchant-payments-settings
+			[currWarehouse]="currWarehouse"
+			#paymentsSettings
+			*ngIf="showPayments"
+		>
+		</merchant-payments-settings>
 
 		<br />
 		<h4 class="row-title">
@@ -121,7 +116,7 @@
 				<ion-button
 					[disabled]="
 						hasChanges(
-							isPaymentEnabled.dirty,
+							paymentsSettings?.isPaymentEnabled.dirty,
 							productsDelivery.dirty,
 							productsTakeaway.dirty,
 							orderBarcodeType.dirty,
@@ -132,7 +127,8 @@
 					(click)="saveChanges()"
 					color="success"
 				>
-					{{ 'SETTINGS_VIEW.SAVE_CHANGES' | translate }}
+					{{ paymentsSettings | json }} {{
+					'SETTINGS_VIEW.SAVE_CHANGES' | translate }}
 				</ion-button>
 			</ion-col>
 		</ion-row>

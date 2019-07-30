@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import PaymentGateways, {
-	paymentGatewaysToString
+	paymentGatewaysToString,
+	paymentGatewaysLogo
 } from '@modules/server.common/enums/PaymentGateways';
 import { Country } from '@modules/server.common/entities';
 import { NgForm } from '@angular/forms';
@@ -19,7 +20,7 @@ export class StripeGatewayComponent {
 
 	isStripeEnabled: boolean;
 	name = paymentGatewaysToString(PaymentGateways.Stripe);
-	logo = 'https://stripe.com/img/v3/home/twitter.png';
+	logo = paymentGatewaysLogo(PaymentGateways.Stripe);
 	invalidUrl: boolean;
 
 	private _ngDestroy$ = new Subject<void>();
