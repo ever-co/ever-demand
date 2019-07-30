@@ -236,7 +236,7 @@
 		"sass-loader": "^7.1.0",
 		"script-ext-html-webpack-plugin": "^2.1.3",
 		"source-map-loader": "^0.2.4",
-		"standard-version": "^6.0.1",
+		"standard-version": "^7.0.0",
 		"string-replace-loader": "^2.1.1",
 		"style-loader": "^0.23.1",
 		"to-string-loader": "^1.1.5",
