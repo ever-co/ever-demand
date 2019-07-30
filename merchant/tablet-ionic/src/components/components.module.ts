@@ -12,7 +12,6 @@ import { OrderImageComponent } from './common/order-image/order-image';
 import { CommonComponent } from './settings-page-components/common/common';
 import { AccountComponent } from './settings-page-components/account/account';
 import { LocationComponent } from './settings-page-components/location/location';
-import { SettingsComponent } from './settings-page-components/settings/settings';
 import { GoogleMapModule } from '../@shared/google-map/google-map.module';
 import { OrderTitleComponent } from './common/order-title/order-title';
 import { CustomerInfoComponent } from './common/customer-info/customer-info';
@@ -28,8 +27,6 @@ import { CustomerEmailPopupPageModule } from 'pages/+customers/customer-email-po
 import { CustomerDeliveriesPopupPageModule } from 'pages/+customers/customer-deliveries-popup/customer-deliveries-popup.module';
 import { CustomerAddrPopupPageModule } from 'pages/+customers/customer-addr-popup/customer-addr-popup.module';
 import { FileUploaderModule } from './file-uploader/file-uploader.module';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { SettingsPaymentsComponent } from './settings-page-components/settings/payments/payments';
 
 @NgModule({
 	declarations: [
@@ -46,13 +43,11 @@ import { SettingsPaymentsComponent } from './settings-page-components/settings/p
 		CommonComponent,
 		AccountComponent,
 		LocationComponent,
-		SettingsComponent,
 		OrderTitleComponent,
 		CustomerInfoComponent,
 		CarrierInfoComponent,
 		PhoneComponent,
-		UserPhoneComponent,
-		SettingsPaymentsComponent
+		UserPhoneComponent
 	],
 	imports: [
 		CommonModule,
@@ -66,8 +61,7 @@ import { SettingsPaymentsComponent } from './settings-page-components/settings/p
 		CustomerEmailPopupPageModule,
 		CustomerDeliveriesPopupPageModule,
 		CustomerAddrPopupPageModule,
-		FileUploaderModule,
-		NgSelectModule
+		FileUploaderModule
 	],
 	exports: [
 		LoadingComponent,
@@ -83,7 +77,6 @@ import { SettingsPaymentsComponent } from './settings-page-components/settings/p
 		CommonComponent,
 		AccountComponent,
 		LocationComponent,
-		SettingsComponent,
 		PhoneComponent
 	]
 })

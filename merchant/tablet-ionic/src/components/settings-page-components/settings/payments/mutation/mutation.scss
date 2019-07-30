@@ -1,0 +1,11 @@
+.payments-mutation-popup {
+	background-color: #fff;
+	display: flex !important;
+	flex-direction: column;
+	position: relative;
+	height: 100%;
+
+	.body {
+		height: 80%;
+	}
+}

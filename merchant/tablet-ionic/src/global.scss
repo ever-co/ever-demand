@@ -961,6 +961,13 @@ ion-modal.customer-email {
 	}
 }
 
+.payments-mutation-wrapper {
+	display: flex !important;
+	.modal-wrapper {
+		height: 450px;
+	}
+}
+
 .carrier-deliveries {
 	display: flex !important;
 	.modal-wrapper {

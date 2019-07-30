@@ -1,0 +1,20 @@
+<div class="payments-mutation-popup">
+	<h4 class="custom-title-popup">
+		{{ titleText }}
+	</h4>
+	<button class="close" (click)="cancelModal()">
+		<i class="fa fa-close"></i>
+	</button>
+
+	<div class="body"></div>
+
+	<div class="button-bar padding-top">
+		<button class="button button-assertive" (click)="cancelModal()">
+			Cancel
+		</button>
+
+		<button class="button button-brand">
+			{{ configureObject ? 'Update' : 'Add' }}
+		</button>
+	</div>
+</div>

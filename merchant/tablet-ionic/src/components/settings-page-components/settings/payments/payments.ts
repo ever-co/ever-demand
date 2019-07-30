@@ -4,6 +4,8 @@ import PaymentGateways, {
 	paymentGatewaysToString,
 	paymentGatewaysLogo
 } from '@modules/server.common/enums/PaymentGateways';
+import { ModalController } from '@ionic/angular';
+import { PaymentMutationComponent } from './mutation/mutation';
 
 @Component({
 	selector: 'merchant-payments-settings',
@@ -19,6 +21,8 @@ export class SettingsPaymentsComponent implements OnInit {
 	paymentsGateways = [];
 	selectedMyPaymentsGateways: PaymentGateways[];
 	selectedPaymentsGateways: PaymentGateways[];
+
+	constructor(public modalCtrl: ModalController) {}
 
 	ngOnInit(): void {
 		const merchantPaymentsGateways = this.currWarehouse.paymentGateways.map(
@@ -47,5 +51,25 @@ export class SettingsPaymentsComponent implements OnInit {
 
 	getPaymentLogo(p: PaymentGateways) {
 		return paymentGatewaysLogo(p);
+	}
+
+	async showMutation(e) {
+		const modal = await this.modalCtrl.create({
+			component: PaymentMutationComponent,
+			componentProps: {
+				configureObject: this.currWarehouse.paymentGateways.find(
+					(pg) => pg.paymentGateway === e
+				),
+				paymentGateway: e
+			},
+			cssClass: 'payments-mutation-wrapper'
+		});
+
+		await modal.present();
+
+		await modal.onDidDismiss();
+
+		this.selectedMyPaymentsGateways = [];
+		this.selectedPaymentsGateways = [];
 	}
 }

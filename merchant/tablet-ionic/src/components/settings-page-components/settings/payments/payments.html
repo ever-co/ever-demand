@@ -21,7 +21,7 @@
 			[clearable]="false"
 			[searchable]="false"
 			placeholder="My payments gateways"
-			(change)="selectedMyPaymentsGateways = null"
+			(change)="showMutation($event)"
 			[(ngModel)]="selectedMyPaymentsGateways"
 			class="payments-gateways-select"
 		>
@@ -40,8 +40,8 @@
 				<p class="card-title">
 					<img
 						*ngIf="getPaymentLogo(item)"
-						height="40"
-						width="40"
+						height="35"
+						width="35"
 						class="mr-1"
 						[src]="getPaymentLogo(item)"
 					/>
@@ -60,7 +60,7 @@
 			[searchable]="false"
 			placeholder="Payments gateways"
 			class="payments-gateways-select"
-			(change)="selectedPaymentsGateways = null"
+			(change)="showMutation($event)"
 			[(ngModel)]="selectedPaymentsGateways"
 		>
 			<ng-template ng-label-tmp let-item="item">
@@ -78,8 +78,8 @@
 				<p class="card-title">
 					<img
 						*ngIf="getPaymentLogo(item)"
-						height="40"
-						width="40"
+						height="35"
+						width="35"
 						class="mr-1"
 						[src]="getPaymentLogo(item)"
 					/>
