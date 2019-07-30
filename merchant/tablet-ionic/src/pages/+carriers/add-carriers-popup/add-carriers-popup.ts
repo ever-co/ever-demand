@@ -84,6 +84,7 @@ export class AddCarriersPopupPage implements OnInit, OnDestroy {
 				.get('CARRIERS_VIEW.ADD_CARRIER.SELECT_HOW_TO_ADD')
 				.pipe(takeUntil(this._ngDestroy$))
 				.subscribe((title) => (resultTitle = title));
+
 			return resultTitle;
 		};
 
