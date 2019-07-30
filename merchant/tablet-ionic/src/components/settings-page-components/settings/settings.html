@@ -44,7 +44,6 @@
 		<merchant-payments-settings
 			[currWarehouse]="currWarehouse"
 			#paymentsSettings
-			*ngIf="showPayments"
 		>
 		</merchant-payments-settings>
 
@@ -116,7 +115,7 @@
 				<ion-button
 					[disabled]="
 						hasChanges(
-							paymentsSettings?.isPaymentEnabled.dirty,
+							paymentsSettings.hasChanged,
 							productsDelivery.dirty,
 							productsTakeaway.dirty,
 							orderBarcodeType.dirty,
@@ -127,8 +126,7 @@
 					(click)="saveChanges()"
 					color="success"
 				>
-					{{ paymentsSettings | json }} {{
-					'SETTINGS_VIEW.SAVE_CHANGES' | translate }}
+					{{ 'SETTINGS_VIEW.SAVE_CHANGES' | translate }}
 				</ion-button>
 			</ion-col>
 		</ion-row>

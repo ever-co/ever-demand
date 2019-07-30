@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit } from '@angular/core';
+import { Component, Input, AfterViewInit, ViewChild } from '@angular/core';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import OrderBarcodeTypes, {
 	orderBarcodeTypesToString
@@ -26,8 +26,6 @@ export class SettingsComponent implements AfterViewInit {
 		OrderBarcodeTypes.pharmacode
 	];
 
-	// TODO
-	// paymentsEnabled: boolean;
 	selectedOrderBarcodeType: OrderBarcodeTypes;
 	barcodetDataUrl: string;
 	hasScanCode: boolean;

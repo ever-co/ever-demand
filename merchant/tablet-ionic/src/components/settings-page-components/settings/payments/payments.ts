@@ -13,9 +13,8 @@ export class SettingsPaymentsComponent implements OnInit {
 	@Input()
 	currWarehouse: Warehouse;
 
-	@ViewChild('isPaymentEnabled', { static: false })
-	isPaymentEnabled: ElementRef;
-
+	showPaymentsGateways: boolean;
+	hasChanged: boolean;
 	myPaymentsGateways = [];
 	paymentsGateways = [];
 	selectedMyPaymentsGateways: PaymentGateways[];
@@ -38,6 +37,8 @@ export class SettingsPaymentsComponent implements OnInit {
 		this.paymentsGateways = allPaymentGateways.filter(
 			(pg) => !this.myPaymentsGateways.includes(pg)
 		);
+
+		this.showPaymentsGateways = true;
 	}
 
 	getPaymentName(p: PaymentGateways) {

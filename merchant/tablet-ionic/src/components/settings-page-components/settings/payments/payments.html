@@ -6,13 +6,16 @@
 			</ion-label>
 			<ion-checkbox
 				slot="start"
-				#isPaymentEnabled="ngModel"
+				(click)="hasChanged = true"
 				[(ngModel)]="currWarehouse.isPaymentEnabled"
 			>
 			</ion-checkbox>
 		</ion-item>
 	</ion-col>
-	<ion-col class="col-3">
+	<ion-col
+		*ngIf="currWarehouse.isPaymentEnabled && showPaymentsGateways"
+		class="col-3"
+	>
 		<ng-select
 			[items]="myPaymentsGateways"
 			[clearable]="false"
@@ -47,7 +50,10 @@
 			</ng-template>
 		</ng-select>
 	</ion-col>
-	<ion-col class="col-3">
+	<ion-col
+		*ngIf="currWarehouse.isPaymentEnabled && showPaymentsGateways"
+		class="col-3"
+	>
 		<ng-select
 			[items]="paymentsGateways"
 			[clearable]="false"
