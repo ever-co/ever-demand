@@ -185,13 +185,15 @@ According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform tod
 -   Ruslan Konviser ([Evereq](https://github.com/evereq))
 -   Michael Konviser ([Komish](https://github.com/MrKomish))
 
-#### Developers
+#### Developers (alphabetical order)
 
+-   Aleksandar Tasev ([AlexTasev](https://github.com/AlexTasev))
 -   Alish Meklyov ([Alish](https://github.com/AlishMekliov931))
 -   Blagovest Gerov ([BlagovestGerov](https://github.com/BlagovestGerov))
 -   Boyan Stanchev ([boyanstanchev](https://github.com/boyanstanchev))
 -   Elvis Arabadjiyski ([Dreemsuncho](https://github.com/Dreemsuncho))
 -   Emil Momchilov ([jew-er](https://github.com/jew-er))
+-   Hristo Hristov ([hrimar](https://github.com/hrimar))
 
 #### Designers & QA
 
