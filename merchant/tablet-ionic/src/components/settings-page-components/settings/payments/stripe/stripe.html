@@ -102,7 +102,7 @@
 					<span *ngIf="companyBrandLogo.value === ''"
 						>Company brand logo is required</span
 					>
-					<span *ngIf="invalidUrl && companyBrandLogo !== ''"
+					<span *ngIf="invalidUrl && companyBrandLogo.value !== ''"
 						>Invalid logo url</span
 					>
 				</div>
