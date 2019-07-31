@@ -151,7 +151,7 @@
 		"zone.js": "^0.9.1"
 	},
 	"devDependencies": {
-		"@angular-devkit/architect": "^0.801.2",
+		"@angular-devkit/architect": "^0.802.0",
 		"@angular-devkit/build-angular": "^0.801.3",
 		"@angular-devkit/build-webpack": "^0.801.3",
 		"@angular-devkit/core": "^8.0.2",
