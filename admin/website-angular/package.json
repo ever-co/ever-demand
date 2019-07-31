@@ -152,7 +152,7 @@
 	},
 	"devDependencies": {
 		"@angular-devkit/architect": "^0.801.2",
-		"@angular-devkit/build-angular": "^0.801.3",
+		"@angular-devkit/build-angular": "^0.802.0",
 		"@angular-devkit/build-webpack": "^0.801.3",
 		"@angular-devkit/core": "^8.0.2",
 		"@angular-devkit/schematics": "^8.0.2",
