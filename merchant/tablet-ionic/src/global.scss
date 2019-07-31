@@ -50,9 +50,22 @@ body {
 	background-color: $brand-darken;
 }
 
+ion-item.payments-gateways-select-container {
+	--inner-padding-end: 6px;
+}
+
 .payments-gateways-select {
-	border-bottom: 1px solid #cacaca;
 	color: #000;
+	width: 100%;
+	border-bottom: 1px solid #cacaca;
+	margin-left: 16px;
+	.ng-value-container {
+		padding: 0 !important;
+	}
+
+	.ng-arrow-wrapper {
+		padding: 0 !important;
+	}
 
 	.ng-select-container {
 		border: 0 !important;

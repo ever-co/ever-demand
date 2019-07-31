@@ -1,12 +1,16 @@
 <div class="payments-mutation-popup">
-	<h4 class="custom-title-popup">
+	<h4 class="custom-title-popup mb-0">
 		{{ titleText }}
 	</h4>
 	<button class="close" (click)="cancelModal()">
 		<i class="fa fa-close"></i>
 	</button>
 
-	<div class="body"></div>
+	<div class="body">
+		<e-cu-stripe-gateway
+			[currenciesCodes]="currenciesCodes"
+		></e-cu-stripe-gateway>
+	</div>
 
 	<div class="button-bar padding-top">
 		<button class="button button-assertive" (click)="cancelModal()">

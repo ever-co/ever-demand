@@ -4,16 +4,20 @@ import { SettingsPaymentsComponent } from './payments/payments';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { IonicModule } from '@ionic/angular';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PaymentMutationComponent } from './payments/mutation/mutation';
 import { ConfirmDeletePopupModule } from 'components/confirm-delete-popup/confirm-delete-popup.module';
+import { StripeGatewayComponent } from './payments/stripe/stripe';
+import { FileUploaderModule } from 'components/file-uploader/file-uploader.module';
+import { CurrenciesService } from 'services/currencies.service';
 
 @NgModule({
 	declarations: [
 		SettingsComponent,
 		SettingsPaymentsComponent,
-		PaymentMutationComponent
+		PaymentMutationComponent,
+		StripeGatewayComponent
 	],
 	entryComponents: [PaymentMutationComponent],
 	imports: [
@@ -21,9 +25,12 @@ import { ConfirmDeletePopupModule } from 'components/confirm-delete-popup/confir
 		TranslateModule.forChild(),
 		IonicModule,
 		FormsModule,
+		ReactiveFormsModule,
 		NgSelectModule,
-		ConfirmDeletePopupModule
+		ConfirmDeletePopupModule,
+		FileUploaderModule
 	],
-	exports: [SettingsComponent]
+	exports: [SettingsComponent],
+	providers: [CurrenciesService]
 })
 export class MerchantSettingsComponentModule {}

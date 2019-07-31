@@ -3,6 +3,8 @@ import { ModalController } from '@ionic/angular';
 import PaymentGateways, {
 	paymentGatewaysToString
 } from '@modules/server.common/enums/PaymentGateways';
+import { first } from 'rxjs/operators';
+import { CurrenciesService } from 'services/currencies.service';
 
 @Component({
 	selector: 'merchant-payments-mutation',
@@ -13,7 +15,14 @@ export class PaymentMutationComponent {
 	configureObject: any;
 	paymentGateway: PaymentGateways;
 
-	constructor(public modalController: ModalController) {}
+	currenciesCodes: string[] = [];
+
+	constructor(
+		public modalController: ModalController,
+		private currenciesService: CurrenciesService
+	) {
+		this.loadCurrenciesCodes();
+	}
 
 	cancelModal() {
 		this.modalController.dismiss();
@@ -23,5 +32,16 @@ export class PaymentMutationComponent {
 		return `${
 			this.configureObject ? 'Update' : 'Add'
 		}  ${paymentGatewaysToString(this.paymentGateway)} gateway`;
+	}
+
+	private async loadCurrenciesCodes() {
+		const res = await this.currenciesService
+			.getCurrencies()
+			.pipe(first())
+			.toPromise();
+
+		if (res) {
+			this.currenciesCodes = res.map((r) => r.currencyCode);
+		}
 	}
 }

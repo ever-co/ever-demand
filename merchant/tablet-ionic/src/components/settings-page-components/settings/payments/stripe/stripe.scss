@@ -1,0 +1,20 @@
+.stripe-gateway {
+	ion-col.allow-remember-me {
+		display: flex;
+
+		ion-item {
+			margin-top: auto;
+			width: 100%;
+		}
+	}
+
+	.validation-errors {
+		display: flex;
+		justify-content: flex-start;
+		font-size: 12px;
+		box-sizing: border-box;
+		span {
+			color: red;
+		}
+	}
+}
