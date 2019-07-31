@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PaymentMutationComponent } from './payments/mutation/mutation';
+import { ConfirmDeletePopupModule } from 'components/confirm-delete-popup/confirm-delete-popup.module';
 
 @NgModule({
 	declarations: [
@@ -20,7 +21,8 @@ import { PaymentMutationComponent } from './payments/mutation/mutation';
 		TranslateModule.forChild(),
 		IonicModule,
 		FormsModule,
-		NgSelectModule
+		NgSelectModule,
+		ConfirmDeletePopupModule
 	],
 	exports: [SettingsComponent]
 })

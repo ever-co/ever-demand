@@ -6,10 +6,12 @@ import PaymentGateways, {
 } from '@modules/server.common/enums/PaymentGateways';
 import { ModalController } from '@ionic/angular';
 import { PaymentMutationComponent } from './mutation/mutation';
+import { ConfirmDeletePopupPage } from 'components/confirm-delete-popup/confirm-delete-popup';
 
 @Component({
 	selector: 'merchant-payments-settings',
-	templateUrl: 'payments.html'
+	templateUrl: 'payments.html',
+	styleUrls: ['payments.scss']
 })
 export class SettingsPaymentsComponent implements OnInit {
 	@Input()
@@ -45,12 +47,12 @@ export class SettingsPaymentsComponent implements OnInit {
 		this.showPaymentsGateways = true;
 	}
 
-	getPaymentName(p: PaymentGateways) {
-		return paymentGatewaysToString(p);
+	getPaymentName(pg: PaymentGateways) {
+		return paymentGatewaysToString(pg);
 	}
 
-	getPaymentLogo(p: PaymentGateways) {
-		return paymentGatewaysLogo(p);
+	getPaymentLogo(pg: PaymentGateways) {
+		return paymentGatewaysLogo(pg);
 	}
 
 	async showMutation(e) {
@@ -71,5 +73,35 @@ export class SettingsPaymentsComponent implements OnInit {
 
 		this.selectedMyPaymentsGateways = [];
 		this.selectedPaymentsGateways = [];
+	}
+
+	async confirmRemovePaymentGateway(pg: PaymentGateways) {
+		const modal = await this.modalCtrl.create({
+			component: ConfirmDeletePopupPage,
+			componentProps: {
+				data: {
+					image: this.getPaymentLogo(pg),
+					name: this.getPaymentName(pg)
+				},
+				isRemove: true
+			},
+			cssClass: 'confirm-delete-wrapper'
+		});
+
+		await modal.present();
+
+		const res = await modal.onDidDismiss();
+
+		if (res.data) {
+			this.removePaymentGateway(pg);
+		}
+	}
+
+	private removePaymentGateway(pg) {
+		this.myPaymentsGateways = this.myPaymentsGateways.filter(
+			(existedPG) => existedPG !== pg
+		);
+		this.currWarehouse.paymentGateways = this.myPaymentsGateways;
+		this.hasChanged = true;
 	}
 }
