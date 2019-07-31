@@ -47,8 +47,8 @@ Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_wi
 -   [TypeScript](https://www.typescriptlang.org) language (version >=2.9)
 -   [Node.js](https://nodejs.org) (version >=10)
 -   [Ionic](https://ionicframework.com) (version 4) for Shopping Mobile App, Carrier Mobile App and Merchant Tablet App
--   Shopping Website developed with [Angular](https://angular.io) 7 using [Angular Starter](https://github.com/gdi2290/angular-starter)
--   Admin Website developed with [Angular](https://angular.io) version 7 using [ngx-admin](https://github.com/akveo/ngx-admin)
+-   Shopping Website developed with [Angular](https://angular.io) 8 using [Angular Starter](https://github.com/gdi2290/angular-starter)
+-   Admin Website developed with [Angular](https://angular.io) version 8 using [ngx-admin](https://github.com/akveo/ngx-admin)
 -   Headless Commerce framework (Backend APIs/Server) developed using [Nest](https://github.com/nestjs/nest) with heavy use of our own Pyro module. Supports GraphQL, REST and WS Real-Time APIs (WebSockets using [Socket.io](https://socket.io) library)
 -   [RxJS](http://reactivex.io/rxjs) library used heavy in every part of the Platform
 -   [InversifyJS](http://inversify.io) used for Inversion Control / Dependency Injection in most parts of the Platform. On the Backend/API we also use DI provided by [Nest](https://github.com/nestjs/nest)
@@ -137,6 +137,8 @@ yarn lerna bootstrap
 ```
 
 The command above install all required packages for every sub-project of the Ever Platform.
+
+Note: if above command fails for any reason, you can try to install required packages manually by running `yarn` inside every sub-folder with 'package.json' file
 
 ### MongoDB
 
