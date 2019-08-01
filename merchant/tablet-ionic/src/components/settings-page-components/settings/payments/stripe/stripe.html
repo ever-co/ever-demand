@@ -81,15 +81,13 @@
 			</ion-col>
 		</ion-row>
 
-		<ion-row>
+		<ion-row class="mt-3">
 			<ion-col id="common">
 				<e-cu-file-uploader
 					#fileUploader
 					[name]="payButtontext?.value"
 					[fileUrl]="companyBrandLogo?.value"
 					(uploadedImgUrl)="companyBrandLogo.setValue($event)"
-					[buttonFullSpace]="true"
-					[inputCustomStyle]="true"
 				></e-cu-file-uploader>
 
 				<div

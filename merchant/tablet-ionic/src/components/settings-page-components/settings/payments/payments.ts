@@ -7,6 +7,9 @@ import PaymentGateways, {
 import { ModalController } from '@ionic/angular';
 import { PaymentMutationComponent } from './mutation/mutation';
 import { ConfirmDeletePopupPage } from 'components/confirm-delete-popup/confirm-delete-popup';
+import { countriesDefaultCurrencies } from '@modules/server.common/entities/Currency';
+import { Country } from '@modules/server.common/entities';
+import { first } from 'rxjs/operators';
 
 @Component({
 	selector: 'merchant-payments-settings',
@@ -62,14 +65,30 @@ export class SettingsPaymentsComponent implements OnInit {
 				configureObject: this.currWarehouse.paymentGateways.find(
 					(pg) => pg.paymentGateway === e
 				),
-				paymentGateway: e
+				paymentGateway: e,
+				defaultCompanyBrandLogo: this.currWarehouse.logo,
+				defaultCurrency:
+					countriesDefaultCurrencies[
+						Country[this.currWarehouse.geoLocation.countryId]
+					]
 			},
 			cssClass: 'payments-mutation-wrapper'
 		});
 
 		await modal.present();
 
-		await modal.onDidDismiss();
+		const { data } = await modal.onDidDismiss();
+
+		if (data) {
+			const res = await data.pipe(first()).toPromise();
+
+			this.currWarehouse.paymentGateways.push(res);
+			this.myPaymentsGateways.push(res.paymentGateway);
+			this.paymentsGateways = this.paymentsGateways.filter(
+				(pg) => pg !== res.paymentGateway
+			);
+			this.hasChanged = true;
+		}
 
 		this.selectedMyPaymentsGateways = [];
 		this.selectedPaymentsGateways = [];
@@ -98,6 +117,8 @@ export class SettingsPaymentsComponent implements OnInit {
 	}
 
 	private removePaymentGateway(pg) {
+		this.paymentsGateways = [...this.paymentsGateways, pg];
+
 		this.myPaymentsGateways = this.myPaymentsGateways.filter(
 			(existedPG) => existedPG !== pg
 		);

@@ -1,19 +1,29 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Output } from '@angular/core';
 import {
 	FormGroup,
 	AbstractControl,
 	FormBuilder,
 	Validators
 } from '@angular/forms';
+import { Subject } from 'rxjs';
+import PaymentGateways from '@modules/server.common/enums/PaymentGateways';
+import { IPaymentGatewayCreateObject } from '@modules/server.common/interfaces/IPaymentGateway';
 
 @Component({
 	selector: 'e-cu-stripe-gateway',
 	templateUrl: './stripe.html',
 	styleUrls: ['stripe.scss']
 })
-export class StripeGatewayComponent implements OnInit {
+export class StripeGatewayComponent implements OnInit, OnDestroy {
 	@Input()
 	currenciesCodes: string[] = [];
+	@Input()
+	defaultCompanyBrandLogo: string;
+	@Input()
+	defaultCurrency: string;
+
+	@Output()
+	configureObject = new Subject();
 
 	form: FormGroup;
 
@@ -25,11 +35,10 @@ export class StripeGatewayComponent implements OnInit {
 
 	invalidUrl: boolean;
 
-	constructor(private formBuilder: FormBuilder) {
-		this.buildForm(this.formBuilder);
-	}
+	constructor(private formBuilder: FormBuilder) {}
 
 	ngOnInit() {
+		this.buildForm(this.formBuilder);
 		this.bindFormControls();
 	}
 
@@ -45,13 +54,29 @@ export class StripeGatewayComponent implements OnInit {
 		this.companyBrandLogo.setValue('');
 	}
 
+	ngOnDestroy(): void {
+		this.configureObject.next(this.getConfigureObject());
+	}
+
 	private buildForm(formBuilder: FormBuilder) {
+		console.log(this.defaultCompanyBrandLogo);
+
 		this.form = formBuilder.group({
 			payButtontext: ['', [Validators.required]],
-			currency: ['', [Validators.required]],
-			companyBrandLogo: ['', [Validators.required]],
+			currency: [this.defaultCurrency, [Validators.required]],
+			companyBrandLogo: [
+				this.defaultCompanyBrandLogo,
+				[Validators.required]
+			],
 			publishableKey: ['', Validators.required],
 			allowRememberMe: ['']
 		});
+	}
+
+	private getConfigureObject(): IPaymentGatewayCreateObject {
+		return {
+			paymentGateway: PaymentGateways.Stripe,
+			configureObject: this.form.getRawValue()
+		};
 	}
 }

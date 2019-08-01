@@ -8,7 +8,11 @@
 
 	<div class="body">
 		<e-cu-stripe-gateway
+			*ngIf="paymentGateway === paymentGateways.Stripe"
 			[currenciesCodes]="currenciesCodes"
+			[defaultCompanyBrandLogo]="defaultCompanyBrandLogo"
+			[defaultCurrency]="defaultCurrency"
+			(configureObject)="updateConfigureObject($event)"
 		></e-cu-stripe-gateway>
 	</div>
 
@@ -17,7 +21,10 @@
 			Cancel
 		</button>
 
-		<button class="button button-brand">
+		<button
+			(click)="cancelModal(newConfigureObject)"
+			class="button button-brand"
+		>
 			{{ configureObject ? 'Update' : 'Add' }}
 		</button>
 	</div>

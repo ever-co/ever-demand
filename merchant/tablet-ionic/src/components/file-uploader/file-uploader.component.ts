@@ -3,7 +3,8 @@ import {
 	Input,
 	Output,
 	EventEmitter,
-	ViewChild
+	ViewChild,
+	OnInit
 } from '@angular/core';
 import { FileUploader, FileUploaderOptions, FileItem } from 'ng2-file-upload';
 import { environment } from 'environment';
@@ -19,7 +20,7 @@ import { NgModel } from '@angular/forms';
 	templateUrl: './file-uploader.component.html',
 	styleUrls: ['./file-uploader.component.scss']
 })
-export class FileUploaderComponent {
+export class FileUploaderComponent implements OnInit {
 	@ViewChild('shownInput', { static: true })
 	shownInput: NgModel;
 

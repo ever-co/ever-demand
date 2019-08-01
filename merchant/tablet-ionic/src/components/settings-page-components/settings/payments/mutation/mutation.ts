@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import PaymentGateways, {
 	paymentGatewaysToString
 } from '@modules/server.common/enums/PaymentGateways';
 import { first } from 'rxjs/operators';
 import { CurrenciesService } from 'services/currencies.service';
+import { Subject } from 'rxjs';
+import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaymentGateway';
 
 @Component({
 	selector: 'merchant-payments-mutation',
@@ -12,10 +14,13 @@ import { CurrenciesService } from 'services/currencies.service';
 	styleUrls: ['mutation.scss']
 })
 export class PaymentMutationComponent {
+	defaultCompanyBrandLogo: string;
+	defaultCurrency: string;
 	configureObject: any;
 	paymentGateway: PaymentGateways;
-
 	currenciesCodes: string[] = [];
+	paymentGateways = PaymentGateways;
+	newConfigureObject = new Subject();
 
 	constructor(
 		public modalController: ModalController,
@@ -24,14 +29,18 @@ export class PaymentMutationComponent {
 		this.loadCurrenciesCodes();
 	}
 
-	cancelModal() {
-		this.modalController.dismiss();
-	}
-
 	get titleText() {
 		return `${
 			this.configureObject ? 'Update' : 'Add'
 		}  ${paymentGatewaysToString(this.paymentGateway)} gateway`;
+	}
+
+	cancelModal(newConfigureObject: IPaymentGatewayCreateObject) {
+		this.modalController.dismiss(newConfigureObject);
+	}
+
+	updateConfigureObject(e) {
+		this.newConfigureObject.next(e);
 	}
 
 	private async loadCurrenciesCodes() {
