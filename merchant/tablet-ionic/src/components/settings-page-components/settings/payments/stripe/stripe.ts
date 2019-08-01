@@ -21,6 +21,14 @@ export class StripeGatewayComponent implements OnInit, OnDestroy {
 	defaultCompanyBrandLogo: string;
 	@Input()
 	defaultCurrency: string;
+	@Input()
+	data: {
+		payButtontext: string;
+		currency: string;
+		companyBrandLogo: string;
+		publishableKey: string;
+		allowRememberMe: boolean;
+	};
 
 	@Output()
 	configureObject = new Subject();
@@ -59,17 +67,26 @@ export class StripeGatewayComponent implements OnInit, OnDestroy {
 	}
 
 	private buildForm(formBuilder: FormBuilder) {
-		console.log(this.defaultCompanyBrandLogo);
-
 		this.form = formBuilder.group({
-			payButtontext: ['', [Validators.required]],
-			currency: [this.defaultCurrency, [Validators.required]],
-			companyBrandLogo: [
-				this.defaultCompanyBrandLogo,
+			payButtontext: [
+				this.data ? this.data.payButtontext : '',
 				[Validators.required]
 			],
-			publishableKey: ['', Validators.required],
-			allowRememberMe: ['']
+			currency: [
+				this.data ? this.data.currency : this.defaultCurrency,
+				[Validators.required]
+			],
+			companyBrandLogo: [
+				this.data
+					? this.data.companyBrandLogo
+					: this.defaultCompanyBrandLogo,
+				[Validators.required]
+			],
+			publishableKey: [
+				this.data ? this.data.publishableKey : '',
+				Validators.required
+			],
+			allowRememberMe: [this.data ? this.data.allowRememberMe : '']
 		});
 	}
 

@@ -10,6 +10,7 @@
 		<e-cu-stripe-gateway
 			*ngIf="paymentGateway === paymentGateways.Stripe"
 			[currenciesCodes]="currenciesCodes"
+			[data]="configureObject"
 			[defaultCompanyBrandLogo]="defaultCompanyBrandLogo"
 			[defaultCurrency]="defaultCurrency"
 			(configureObject)="updateConfigureObject($event)"

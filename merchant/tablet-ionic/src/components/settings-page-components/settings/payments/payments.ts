@@ -59,12 +59,15 @@ export class SettingsPaymentsComponent implements OnInit {
 	}
 
 	async showMutation(e) {
+		const paymentGateway = this.currWarehouse.paymentGateways.find(
+			(pg) => pg.paymentGateway === e
+		);
+
 		const modal = await this.modalCtrl.create({
 			component: PaymentMutationComponent,
 			componentProps: {
-				configureObject: this.currWarehouse.paymentGateways.find(
-					(pg) => pg.paymentGateway === e
-				),
+				configureObject:
+					paymentGateway && paymentGateway.configureObject,
 				paymentGateway: e,
 				defaultCompanyBrandLogo: this.currWarehouse.logo,
 				defaultCurrency:
@@ -82,8 +85,16 @@ export class SettingsPaymentsComponent implements OnInit {
 		if (data) {
 			const res = await data.pipe(first()).toPromise();
 
+			this.currWarehouse.paymentGateways = this.currWarehouse.paymentGateways.filter(
+				(pg) => pg.paymentGateway !== res.paymentGateway
+			);
 			this.currWarehouse.paymentGateways.push(res);
+
+			this.myPaymentsGateways = this.myPaymentsGateways.filter(
+				(pg) => pg !== res.paymentGateway
+			);
 			this.myPaymentsGateways.push(res.paymentGateway);
+
 			this.paymentsGateways = this.paymentsGateways.filter(
 				(pg) => pg !== res.paymentGateway
 			);
