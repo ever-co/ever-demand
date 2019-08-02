@@ -99,13 +99,15 @@ export class CustomerEditComponent implements OnInit {
 	protected async updateCustomer() {
 		const geoLocationInput = this.locationForm.getValue();
 		geoLocationInput.loc.coordinates.reverse();
+		this._currentCustomer.setDefaultLocation(geoLocationInput);
+		const allCustomerAddresses = this._currentCustomer.customerAddress;
 		try {
 			this.loading = true;
 			const customer = await this._customerRouter.updateUser(
 				this._currentCustomer.id,
 				{
 					...this.basicInfoForm.getValue(),
-					geoLocation: geoLocationInput as IGeoLocation
+					geoLocation: allCustomerAddresses
 				}
 			);
 			this.loading = false;
