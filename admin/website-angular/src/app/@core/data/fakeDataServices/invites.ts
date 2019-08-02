@@ -23,7 +23,8 @@ export default class FakeDataInvites {
 					loc: {
 						type: 'Point',
 						coordinates: [lng + 0.05, lat - 0.01]
-					}
+					},
+					default: false
 				},
 				apartment: '3'
 			};
@@ -38,7 +39,8 @@ export default class FakeDataInvites {
 					loc: {
 						type: 'Point',
 						coordinates: [lng + 0.09, lat - 0.1]
-					}
+					},
+					default: false
 				},
 				apartment: '2'
 			};
@@ -53,7 +55,8 @@ export default class FakeDataInvites {
 					loc: {
 						type: 'Point',
 						coordinates: [lng, lat - 0.01]
-					}
+					},
+					default: false
 				},
 				apartment: '6'
 			};
@@ -68,7 +71,8 @@ export default class FakeDataInvites {
 					loc: {
 						type: 'Point',
 						coordinates: [lng + 0.06, lat]
-					}
+					},
+					default: false
 				},
 				apartment: '6'
 			};
@@ -92,7 +96,8 @@ export default class FakeDataInvites {
 					loc: {
 						type: 'Point',
 						coordinates: [lng, lat]
-					}
+					},
+					default: false
 				},
 				apartment: faker.random.number(199).toString()
 			};

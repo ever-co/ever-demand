@@ -17,20 +17,23 @@ export default class FakeDataUsers {
 				phone: faker.phone.phoneNumber(),
 				image: faker.image.avatar(),
 				apartment: faker.random.number(199).toString(),
-				geoLocation: {
-					countryId: faker.random.number(200) as Country,
-					city: faker.address.city(),
-					postcode: faker.address.zipCode(),
-					streetAddress: faker.address.streetAddress(),
-					house: faker.random.number(199).toString(),
-					loc: {
-						type: 'Point',
-						coordinates: [
-							environment.DEFAULT_LONGITUDE,
-							environment.DEFAULT_LATITUDE
-						]
+				geoLocation: [
+					{
+						countryId: faker.random.number(200) as Country,
+						city: faker.address.city(),
+						postcode: faker.address.zipCode(),
+						streetAddress: faker.address.streetAddress(),
+						house: faker.random.number(199).toString(),
+						loc: {
+							type: 'Point',
+							coordinates: [
+								environment.DEFAULT_LONGITUDE,
+								environment.DEFAULT_LATITUDE
+							]
+						},
+						default: true
 					}
-				},
+				],
 				isBanned: Math.random() < 0.01
 			},
 			password: '123456'

@@ -24,7 +24,7 @@ export default class FakeDataCarriers {
 						return {
 							carrier: {
 								isDeleted: false,
-								firstName,
+								firstName: faker.name.firstName(),
 								lastName: faker.name.lastName(),
 								status: faker.random.number({
 									min: 0,
@@ -56,7 +56,8 @@ export default class FakeDataCarriers {
 											this.getCloseCoordinate(lng),
 											this.getCloseCoordinate(lat)
 										]
-									}
+									},
+									default: false
 								}
 							},
 							password: '123456'
@@ -93,7 +94,8 @@ export default class FakeDataCarriers {
 										this.getCloseCoordinate(lng),
 										this.getCloseCoordinate(lat)
 									]
-								}
+								},
+								default: false
 							}
 						},
 						password: '123456'
@@ -129,7 +131,8 @@ export default class FakeDataCarriers {
 										this.getCloseCoordinate(lng),
 										this.getCloseCoordinate(lat)
 									]
-								}
+								},
+								default: false
 							}
 						},
 						password: '123456'
@@ -164,7 +167,8 @@ export default class FakeDataCarriers {
 										this.getCloseCoordinate(lng),
 										this.getCloseCoordinate(lat)
 									]
-								}
+								},
+								default: false
 							}
 						},
 						password: '123456'

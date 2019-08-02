@@ -29,7 +29,8 @@ export class AdminStorageService extends StorageService {
 					loc: {
 						type: 'Point',
 						coordinates: [lng, lat]
-					}
+					},
+					default: false
 			  })
 			: null;
 }

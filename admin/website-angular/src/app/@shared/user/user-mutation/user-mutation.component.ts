@@ -82,7 +82,7 @@ export class UserMutationComponent {
 			const user = await this.userAuthRouter.register({
 				user: {
 					...this.basicInfoForm.getValue(),
-					geoLocation: location,
+					geoLocation: [location],
 					apartment: this.locationForm.getApartment()
 				}
 			});

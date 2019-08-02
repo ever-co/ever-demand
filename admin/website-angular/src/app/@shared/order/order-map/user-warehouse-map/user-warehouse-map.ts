@@ -66,7 +66,7 @@ export class UserWarehouseLocationComponent
 			const warehouse = this.order.warehouse;
 
 			this.userMarker = this.addMarker(
-				user['geoLocation'],
+				user.getDefaultGeolocation(),
 				this.map,
 				userIcon
 			);
