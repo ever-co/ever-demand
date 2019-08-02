@@ -141,7 +141,9 @@ export class SettingsPaymentsComponent implements OnInit {
 		this.myPaymentsGateways = this.myPaymentsGateways.filter(
 			(existedPG) => existedPG !== pg
 		);
-		this.currWarehouse.paymentGateways = this.myPaymentsGateways;
+		this.currWarehouse.paymentGateways = this.currWarehouse.paymentGateways.filter(
+			(existedPG) => existedPG.paymentGateway !== pg
+		);
 		this.hasChanged = true;
 	}
 }
