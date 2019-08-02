@@ -12,7 +12,6 @@ import { OrderImageComponent } from './common/order-image/order-image';
 import { CommonComponent } from './settings-page-components/common/common';
 import { AccountComponent } from './settings-page-components/account/account';
 import { LocationComponent } from './settings-page-components/location/location';
-import { SettingsComponent } from './settings-page-components/settings/settings';
 import { GoogleMapModule } from '../@shared/google-map/google-map.module';
 import { OrderTitleComponent } from './common/order-title/order-title';
 import { CustomerInfoComponent } from './common/customer-info/customer-info';
@@ -44,7 +43,6 @@ import { FileUploaderModule } from './file-uploader/file-uploader.module';
 		CommonComponent,
 		AccountComponent,
 		LocationComponent,
-		SettingsComponent,
 		OrderTitleComponent,
 		CustomerInfoComponent,
 		CarrierInfoComponent,
@@ -79,7 +77,6 @@ import { FileUploaderModule } from './file-uploader/file-uploader.module';
 		CommonComponent,
 		AccountComponent,
 		LocationComponent,
-		SettingsComponent,
 		PhoneComponent
 	]
 })
