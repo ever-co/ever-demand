@@ -160,29 +160,39 @@ class UserOrder extends DBObject<IUserOrder, IUserOrderCreateObject>
 	@Schema(Boolean)
 	@Column()
 	isRegistrationCompleted: boolean;
-
 	/**
 	 * Get full address of customer (including apartment)
 	 * Note: does not include country
 	 *
 	 * @readonly
-	 * @memberof UserOrder
+	 * @memberof User
 	 */
 	get fullAddress(): string {
-		const defaultAddress = this.geoLocation.filter(
+		const address = this.getDefaultGeolocation();
+		if (address) {
+			return (
+				`${address.city}, ${address.streetAddress} ` +
+				`${address.apartment}/${address.house}`
+			);
+		} else {
+			return '';
+		}
+	}
+
+	get customerAddress(): Array<GeoLocation> {
+		return this.geoLocation;
+	}
+
+	getDefaultGeolocation(): GeoLocation | null {
+		const defaultLocation = this.geoLocation.filter(
 			(location: GeoLocation) => {
-				return location.default === true;
+				return location.default;
 			}
 		);
-		if (defaultAddress) {
-			return (
-				`${this.defaultAddress[0].city}, ${
-					this.defaultAddress[0].streetAddress
-				} ` +
-				`${this.defaultAddress[0].apartment}/${
-					this.defaultAddress[0].house
-				}`
-			);
+		if (defaultLocation) {
+			return defaultLocation[0];
+		} else {
+			return null;
 		}
 	}
 }

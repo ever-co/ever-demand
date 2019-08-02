@@ -2,7 +2,9 @@ import GeoLocation from './GeoLocation';
 import { DBObject, getSchema, ModelName, Schema, Types } from '../@pyro/db';
 import IUser, { IUserCreateObject } from '../interfaces/IUser';
 import { Entity, Column } from 'typeorm';
-import IGeoLocation from '../interfaces/IGeoLocation';
+import IGeoLocation, {
+	IGeoLocationCreateObject
+} from '../interfaces/IGeoLocation';
 
 /**
  * Customer who make orders
@@ -174,20 +176,40 @@ class User extends DBObject<IUser, IUserCreateObject> implements IUser {
 	 * @memberof User
 	 */
 	get fullAddress(): string {
-		return '';
-		// return (
-		// 	`${this.geoLocation.city}, ${this.geoLocation.streetAddress} ` +
-		// 	`${this.apartment}/${this.geoLocation.house}`
-		// );
+		const address = this.getDefaultGeolocation();
+		if (address) {
+			return (
+				`${address.city}, ${address.streetAddress} ` +
+				`${address.apartment}/${address.house}`
+			);
+		} else {
+			return '';
+		}
 	}
 
-	getDefaultGeolocation() {
+	get customerAddress(): Array<GeoLocation> {
+		return this.geoLocation;
+	}
+
+	getDefaultGeolocation(): GeoLocation | null {
 		const defaultLocation = this.geoLocation.filter(
 			(location: GeoLocation) => {
-				return (location.default = true);
+				return location.default;
 			}
 		);
-		return defaultLocation;
+		if (defaultLocation) {
+			return defaultLocation[0];
+		} else {
+			return null;
+		}
+	}
+
+	setDefaultLocation(input: IGeoLocationCreateObject) {
+		this.customerAddress.forEach((address: GeoLocation) => {
+			address.default = false;
+		});
+		input.default = true;
+		this.customerAddress.push(input);
 	}
 }
 
