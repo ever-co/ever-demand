@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import PaymentGateways, {
 	paymentGatewaysToString
@@ -21,6 +21,7 @@ export class PaymentMutationComponent {
 	currenciesCodes: string[] = [];
 	paymentGateways = PaymentGateways;
 	newConfigureObject = new Subject();
+	isValid: boolean;
 
 	constructor(
 		public modalController: ModalController,

@@ -50,6 +50,14 @@ export class SettingsPaymentsComponent implements OnInit {
 		this.showPaymentsGateways = true;
 	}
 
+	get isValid() {
+		return (
+			this.hasChanged &&
+			(!this.currWarehouse.isPaymentEnabled ||
+				this.myPaymentsGateways.length > 0)
+		);
+	}
+
 	getPaymentName(pg: PaymentGateways) {
 		return paymentGatewaysToString(pg);
 	}

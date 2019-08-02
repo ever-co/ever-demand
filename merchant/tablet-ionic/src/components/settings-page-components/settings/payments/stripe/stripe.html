@@ -115,8 +115,8 @@
 									src="{{ companyBrandLogo?.value }}"
 									alt="Invalid image"
 									class="img-rounded"
-									(error)="invalidUrl = true"
-									(load)="invalidUrl = false"
+									(error)="onUrlChanges(true)"
+									(load)="onUrlChanges(false)"
 								/>
 							</div>
 

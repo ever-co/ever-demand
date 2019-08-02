@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, OnDestroy, Output } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	Input,
+	OnDestroy,
+	Output,
+	EventEmitter
+} from '@angular/core';
 import {
 	FormGroup,
 	AbstractControl,
@@ -8,6 +15,7 @@ import {
 import { Subject } from 'rxjs';
 import PaymentGateways from '@modules/server.common/enums/PaymentGateways';
 import { IPaymentGatewayCreateObject } from '@modules/server.common/interfaces/IPaymentGateway';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
 	selector: 'e-cu-stripe-gateway',
@@ -29,7 +37,11 @@ export class StripeGatewayComponent implements OnInit, OnDestroy {
 		publishableKey: string;
 		allowRememberMe: boolean;
 	};
+	@Input()
+	isValid: boolean;
 
+	@Output()
+	isValidChange = new EventEmitter();
 	@Output()
 	configureObject = new Subject();
 
@@ -40,14 +52,16 @@ export class StripeGatewayComponent implements OnInit, OnDestroy {
 	companyBrandLogo: AbstractControl;
 	publishableKey: AbstractControl;
 	allowRememberMe: AbstractControl;
-
 	invalidUrl: boolean;
+
+	private _ngDestroy$ = new Subject<void>();
 
 	constructor(private formBuilder: FormBuilder) {}
 
 	ngOnInit() {
 		this.buildForm(this.formBuilder);
 		this.bindFormControls();
+		this.onFormChanges();
 	}
 
 	bindFormControls() {
@@ -64,6 +78,12 @@ export class StripeGatewayComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy(): void {
 		this.configureObject.next(this.getConfigureObject());
+	}
+
+	private onUrlChanges(isInvalid: boolean) {
+		this.invalidUrl = isInvalid;
+		this.isValid = this.form.valid && !isInvalid;
+		this.isValidChange.emit(this.isValid);
 	}
 
 	private buildForm(formBuilder: FormBuilder) {
@@ -95,5 +115,14 @@ export class StripeGatewayComponent implements OnInit, OnDestroy {
 			paymentGateway: PaymentGateways.Stripe,
 			configureObject: this.form.getRawValue()
 		};
+	}
+
+	private onFormChanges() {
+		this.form.statusChanges
+			.pipe(takeUntil(this._ngDestroy$))
+			.subscribe((value) => {
+				this.isValid = this.form.valid && !this.invalidUrl;
+				this.isValidChange.emit(this.isValid);
+			});
 	}
 }
