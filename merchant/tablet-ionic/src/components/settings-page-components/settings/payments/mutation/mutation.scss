@@ -5,13 +5,21 @@
 	position: relative;
 	height: 100%;
 
-	.body {
-		height: 80%;
-	}
-
 	button:disabled {
 		cursor: default;
 		opacity: 0.4;
 		pointer-events: none;
+	}
+}
+
+.payments-mutation-popup-form {
+	.validation-errors {
+		display: flex;
+		justify-content: flex-start;
+		font-size: 12px;
+		box-sizing: border-box;
+		span {
+			color: red;
+		}
 	}
 }

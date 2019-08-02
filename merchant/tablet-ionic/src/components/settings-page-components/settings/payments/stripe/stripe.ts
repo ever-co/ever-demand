@@ -20,7 +20,7 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
 	selector: 'e-cu-stripe-gateway',
 	templateUrl: './stripe.html',
-	styleUrls: ['stripe.scss']
+	styleUrls: ['stripe.scss', '../mutation/mutation.scss']
 })
 export class StripeGatewayComponent implements OnInit, OnDestroy {
 	@Input()
@@ -64,14 +64,6 @@ export class StripeGatewayComponent implements OnInit, OnDestroy {
 		this.onFormChanges();
 	}
 
-	bindFormControls() {
-		this.payButtontext = this.form.get('payButtontext');
-		this.currency = this.form.get('currency');
-		this.companyBrandLogo = this.form.get('companyBrandLogo');
-		this.publishableKey = this.form.get('publishableKey');
-		this.allowRememberMe = this.form.get('allowRememberMe');
-	}
-
 	deleteImg() {
 		this.companyBrandLogo.setValue('');
 	}
@@ -108,6 +100,14 @@ export class StripeGatewayComponent implements OnInit, OnDestroy {
 			],
 			allowRememberMe: [this.data ? this.data.allowRememberMe : '']
 		});
+	}
+
+	private bindFormControls() {
+		this.payButtontext = this.form.get('payButtontext');
+		this.currency = this.form.get('currency');
+		this.companyBrandLogo = this.form.get('companyBrandLogo');
+		this.publishableKey = this.form.get('publishableKey');
+		this.allowRememberMe = this.form.get('allowRememberMe');
 	}
 
 	private getConfigureObject(): IPaymentGatewayCreateObject {

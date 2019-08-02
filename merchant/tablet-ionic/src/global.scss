@@ -973,7 +973,13 @@ ion-modal.customer-email {
 .payments-mutation-wrapper {
 	display: flex !important;
 	.modal-wrapper {
-		height: 450px;
+		height: fit-content;
+	}
+
+	.ion-page {
+		height: fit-content;
+		position: static;
+		contain: none;
 	}
 }
 

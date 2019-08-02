@@ -6,7 +6,7 @@
 		<i class="fa fa-close"></i>
 	</button>
 
-	<div class="body">
+	<div class="mb-2">
 		<e-cu-stripe-gateway
 			*ngIf="paymentGateway === paymentGateways.Stripe"
 			[currenciesCodes]="currenciesCodes"
@@ -16,6 +16,15 @@
 			(configureObject)="updateConfigureObject($event)"
 			[(isValid)]="isValid"
 		></e-cu-stripe-gateway>
+
+		<e-cu-paypal-gateway
+			*ngIf="paymentGateway === paymentGateways.PayPal"
+			[currenciesCodes]="currenciesCodes"
+			[data]="configureObject"
+			[defaultCurrency]="defaultCurrency"
+			(configureObject)="updateConfigureObject($event)"
+			[(isValid)]="isValid"
+		></e-cu-paypal-gateway>
 	</div>
 
 	<div class="button-bar padding-top">

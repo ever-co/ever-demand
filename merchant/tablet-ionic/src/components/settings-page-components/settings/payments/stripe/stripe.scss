@@ -7,14 +7,4 @@
 			width: 100%;
 		}
 	}
-
-	.validation-errors {
-		display: flex;
-		justify-content: flex-start;
-		font-size: 12px;
-		box-sizing: border-box;
-		span {
-			color: red;
-		}
-	}
 }

@@ -11,13 +11,15 @@ import { ConfirmDeletePopupModule } from 'components/confirm-delete-popup/confir
 import { StripeGatewayComponent } from './payments/stripe/stripe';
 import { FileUploaderModule } from 'components/file-uploader/file-uploader.module';
 import { CurrenciesService } from 'services/currencies.service';
+import { PayPalGatewayComponent } from './payments/payPal/payPal';
 
 @NgModule({
 	declarations: [
 		SettingsComponent,
 		SettingsPaymentsComponent,
 		PaymentMutationComponent,
-		StripeGatewayComponent
+		StripeGatewayComponent,
+		PayPalGatewayComponent
 	],
 	entryComponents: [PaymentMutationComponent],
 	imports: [
