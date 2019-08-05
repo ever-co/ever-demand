@@ -123,7 +123,7 @@ export class ApplicationModule implements NestModule, OnModuleInit {
 		private readonly moduleRef: ModuleRef,
 		private readonly command$: CommandBus,
 		private readonly event$: EventBus
-	) { }
+	) {}
 
 	onModuleInit() {
 		// initialize CQRS
@@ -137,7 +137,7 @@ export class ApplicationModule implements NestModule, OnModuleInit {
 		// https://github.com/apollographql/apollo-server/issues/1649#issuecomment-420840287
 		const { ObjectId } = mongoose.Types;
 
-		ObjectId.prototype.valueOf = function () {
+		ObjectId.prototype.valueOf = function() {
 			return this.toString();
 		};
 
@@ -157,6 +157,9 @@ export class ApplicationModule implements NestModule, OnModuleInit {
 
 		*/
 		log.info(
+			`GraphQL playground available at http://localhost:${port}/graphql`
+		);
+		console.log(
 			`GraphQL playground available at http://localhost:${port}/graphql`
 		);
 	}
