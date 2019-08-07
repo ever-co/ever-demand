@@ -1,0 +1,98 @@
+<div class="payments-settings">
+	<ion-row>
+		<ion-col class="col-6">
+			<ion-item mode="ios">
+				<ion-label>
+					{{ 'SETTINGS_VIEW.ALLOW_ONLINE_PAYMENTS' | translate }}?
+				</ion-label>
+				<ion-checkbox
+					slot="start"
+					(click)="hasChanged = true"
+					[(ngModel)]="currWarehouse.isPaymentEnabled"
+				>
+				</ion-checkbox>
+			</ion-item>
+		</ion-col>
+	</ion-row>
+	<ion-row class="mt-3">
+		<ion-col
+			*ngIf="currWarehouse.isPaymentEnabled && showPaymentsGateways"
+			class="col-6"
+		>
+			<ng-select
+				[items]="paymentsGateways"
+				[clearable]="false"
+				[searchable]="false"
+				placeholder="Available Payment Gateways"
+				(change)="showMutation($event)"
+				[(ngModel)]="selectedPaymentsGateways"
+				class="payments-gateways-select"
+			>
+				<ng-template ng-label-tmp let-item="item">
+					<img
+						*ngIf="getPaymentLogo(item)"
+						height="15"
+						width="15"
+						class="mr-2"
+						[src]="getPaymentLogo(item)"
+					/>
+					{{ getPaymentName(item) }}
+				</ng-template>
+
+				<ng-template ng-option-tmp let-item="item" let-index="index">
+					<p class="card-title">
+						<img
+							*ngIf="getPaymentLogo(item)"
+							height="35"
+							width="35"
+							class="mr-1"
+							[src]="getPaymentLogo(item)"
+						/>
+						{{ getPaymentName(item) }}
+					</p>
+				</ng-template>
+			</ng-select>
+		</ion-col>
+		<ion-col
+			*ngIf="
+				currWarehouse.isPaymentEnabled &&
+				showPaymentsGateways &&
+				myPaymentsGateways.length
+			"
+			class="selected-payment-gateways col-6"
+		>
+			<ion-label>
+				<div class="mt-2">
+					Selected Payment Gateways
+				</div>
+			</ion-label>
+			<ion-list class="pt-2">
+				<ion-item *ngFor="let pg of myPaymentsGateways">
+					<ion-avatar slot="start">
+						<img src="{{ getPaymentLogo(pg) }}" />
+					</ion-avatar>
+					<ion-label
+						>{{ getPaymentName(pg) }}
+						<ion-button
+							class="mr-1 ml-2"
+							color="danger"
+							size="small"
+							(click)="confirmRemovePaymentGateway(pg)"
+						>
+							<i class="fa fa-trash mr-1"></i>
+							Remove
+						</ion-button>
+						<ion-button
+							(click)="showMutation(pg)"
+							color="success"
+							size="small"
+						>
+							<i class="fa fa-edit mr-1"></i>
+							Edit
+						</ion-button>
+					</ion-label>
+				</ion-item>
+			</ion-list>
+		</ion-col>
+	</ion-row>
+</div>

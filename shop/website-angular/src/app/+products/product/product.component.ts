@@ -16,7 +16,7 @@ import {
 } from '@angular/animations';
 import { Observable } from 'rxjs';
 import 'rxjs/add/observable/fromEvent';
-import * as ElementQueries from 'css-element-queries/src/ElementQueries';
+import { ElementQueries } from 'css-element-queries/src/ElementQueries';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
@@ -78,7 +78,9 @@ export class ProductComponent implements OnChanges {
 	}
 
 	onImageLoad(): void {
-		ElementQueries.init();
+		if (ElementQueries) {
+			ElementQueries.init();
+		}
 
 		this.load.emit();
 		this.showTitle = 'shown';

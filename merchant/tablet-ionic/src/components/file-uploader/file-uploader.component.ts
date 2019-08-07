@@ -1,4 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+	Component,
+	Input,
+	Output,
+	EventEmitter,
+	ViewChild,
+	OnInit
+} from '@angular/core';
 import { FileUploader, FileUploaderOptions, FileItem } from 'ng2-file-upload';
 import { environment } from 'environment';
 import { TranslateService } from '@ngx-translate/core';
@@ -6,13 +13,17 @@ import { ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { IProductImage } from '@modules/server.common/interfaces/IProduct';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
+import { NgModel } from '@angular/forms';
 
 @Component({
 	selector: 'e-cu-file-uploader',
 	templateUrl: './file-uploader.component.html',
 	styleUrls: ['./file-uploader.component.scss']
 })
-export class FileUploaderComponent {
+export class FileUploaderComponent implements OnInit {
+	@ViewChild('shownInput', { static: true })
+	shownInput: NgModel;
+
 	@Input()
 	labelText: string;
 	@Input()
@@ -69,6 +80,8 @@ export class FileUploaderComponent {
 	imageUrlChanged() {
 		if (this.uploader.queue.length > 0) {
 			this.uploader.queue[this.uploader.queue.length - 1].upload();
+		} else {
+			this.uploadedImgUrl.emit(this.fileUrl);
 		}
 
 		this.uploader.onSuccessItem = (

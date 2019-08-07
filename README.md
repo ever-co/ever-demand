@@ -1,3 +1,5 @@
+#### *** If you are running IT Company, check our new project [Gauzy](https://github.com/ever-co/gauzy) ***
+
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/ever)
 [![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/ever-co/ever?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/evereq?utm_source=github&utm_medium=button&utm_term=evereq&utm_campaign=github)
@@ -47,8 +49,8 @@ Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_wi
 -   [TypeScript](https://www.typescriptlang.org) language (version >=2.9)
 -   [Node.js](https://nodejs.org) (version >=10)
 -   [Ionic](https://ionicframework.com) (version 4) for Shopping Mobile App, Carrier Mobile App and Merchant Tablet App
--   Shopping Website developed with [Angular](https://angular.io) 7 using [Angular Starter](https://github.com/gdi2290/angular-starter)
--   Admin Website developed with [Angular](https://angular.io) version 7 using [ngx-admin](https://github.com/akveo/ngx-admin)
+-   Shopping Website developed with [Angular](https://angular.io) 8 using [Angular Starter](https://github.com/gdi2290/angular-starter)
+-   Admin Website developed with [Angular](https://angular.io) version 8 using [ngx-admin](https://github.com/akveo/ngx-admin)
 -   Headless Commerce framework (Backend APIs/Server) developed using [Nest](https://github.com/nestjs/nest) with heavy use of our own Pyro module. Supports GraphQL, REST and WS Real-Time APIs (WebSockets using [Socket.io](https://socket.io) library)
 -   [RxJS](http://reactivex.io/rxjs) library used heavy in every part of the Platform
 -   [InversifyJS](http://inversify.io) used for Inversion Control / Dependency Injection in most parts of the Platform. On the Backend/API we also use DI provided by [Nest](https://github.com/nestjs/nest)
@@ -138,6 +140,8 @@ yarn lerna bootstrap
 
 The command above install all required packages for every sub-project of the Ever Platform.
 
+Note: if above command fails for any reason, you can try to install required packages manually by running `yarn` inside every sub-folder with 'package.json' file
+
 ### MongoDB
 
 Ever platform configured to use MongoDB by default and assume you have MongoDB service running and accepting connections on the default `localhost:27017`. Please see relevant section in our [documentation](https://github.com/ever-co/ever/wiki/MongoDB).
@@ -185,13 +189,15 @@ According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform tod
 -   Ruslan Konviser ([Evereq](https://github.com/evereq))
 -   Michael Konviser ([Komish](https://github.com/MrKomish))
 
-#### Developers
+#### Developers (alphabetical order)
 
+-   Aleksandar Tasev ([AlexTasev](https://github.com/AlexTasev))
 -   Alish Meklyov ([Alish](https://github.com/AlishMekliov931))
 -   Blagovest Gerov ([BlagovestGerov](https://github.com/BlagovestGerov))
 -   Boyan Stanchev ([boyanstanchev](https://github.com/boyanstanchev))
 -   Elvis Arabadjiyski ([Dreemsuncho](https://github.com/Dreemsuncho))
 -   Emil Momchilov ([jew-er](https://github.com/jew-er))
+-   Hristo Hristov ([hrimar](https://github.com/hrimar))
 
 #### Designers & QA
 
@@ -255,3 +261,5 @@ All other brand and product names are trademarks, registered trademarks or servi
 [![Greenkeeper badge](https://badges.greenkeeper.io/ever-co/ever.svg)](https://greenkeeper.io)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fever.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fever?ref=badge_shield)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io)
+
+#### *** If you are running IT Company, check our new project [Gauzy](https://github.com/ever-co/gauzy) ***

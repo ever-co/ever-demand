@@ -11,7 +11,6 @@ import { CarrierOrdersComponent } from './carrier-orders/carrier-orders.componen
 import { FormWizardModule } from 'angular2-wizard';
 import { ToasterModule } from 'angular2-toaster';
 import { TranslateModule } from '@ngx-translate/core';
-import { Ng2SmartTableModule } from 'ng2-smart-table/ng2-smart-table.module';
 import { CarrierMutationModule } from '../../../@shared/carrier/carrier-mutation';
 import { HighlightModule } from 'ngx-highlightjs';
 import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
@@ -24,6 +23,7 @@ import { CarriersOrdersService } from '../../../@core/data/carriers-orders.servi
 import { CarrierOrdersTableModule } from '../../../@shared/render-component/carrier-orders-table/carrier-orders-table.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 @NgModule({
 	imports: [

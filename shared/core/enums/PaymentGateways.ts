@@ -21,4 +21,15 @@ export function paymentGatewaysToString(
 	}
 }
 
+export function paymentGatewaysLogo(paymentGateway: PaymentGateways): string {
+	switch (paymentGateway) {
+		case PaymentGateways.Stripe:
+			return 'https://stripe.com/img/v3/home/twitter.png';
+		case PaymentGateways.PayPal:
+			return 'https://avatars1.githubusercontent.com/u/476675?s=200&v=4';
+		default:
+			return 'BAD_PAYMENT_GATEWAY';
+	}
+}
+
 export default PaymentGateways;

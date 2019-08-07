@@ -1,6 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import PaymentGateways, {
-	paymentGatewaysToString
+	paymentGatewaysToString,
+	paymentGatewaysLogo
 } from '@modules/server.common/enums/PaymentGateways';
 import { Country } from '@modules/server.common/entities';
 import { NgForm } from '@angular/forms';
@@ -16,7 +17,7 @@ export class PayPalGatewayComponent {
 
 	isPayPalEnabled: boolean;
 	name = paymentGatewaysToString(PaymentGateways.PayPal);
-	logo = 'https://avatars1.githubusercontent.com/u/476675?s=200&v=4';
+	logo = paymentGatewaysLogo(PaymentGateways.PayPal);
 
 	@Input()
 	currenciesCodes: string[] = [];
