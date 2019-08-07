@@ -20,7 +20,7 @@ export class PaymentMutationComponent {
 	paymentGateway: PaymentGateways;
 	currenciesCodes: string[] = [];
 	paymentGateways = PaymentGateways;
-	newConfigureObject = new Subject();
+	newConfigureObject = new Subject<IPaymentGatewayCreateObject>();
 	isValid: boolean;
 
 	constructor(
@@ -36,7 +36,7 @@ export class PaymentMutationComponent {
 		}  ${paymentGatewaysToString(this.paymentGateway)} gateway`;
 	}
 
-	cancelModal(newConfigureObject: IPaymentGatewayCreateObject) {
+	cancelModal(newConfigureObject?: Subject<IPaymentGatewayCreateObject>) {
 		this.modalController.dismiss(newConfigureObject);
 	}
 

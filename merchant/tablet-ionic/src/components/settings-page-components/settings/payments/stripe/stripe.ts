@@ -72,7 +72,7 @@ export class StripeGatewayComponent implements OnInit, OnDestroy {
 		this.configureObject.next(this.getConfigureObject());
 	}
 
-	private onUrlChanges(isInvalid: boolean) {
+	onUrlChanges(isInvalid: boolean) {
 		this.invalidUrl = isInvalid;
 		this.isValid = this.form.valid && !isInvalid;
 		this.isValidChange.emit(this.isValid);
