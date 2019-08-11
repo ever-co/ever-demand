@@ -115,7 +115,7 @@
 		"@angular/platform-server": "^8.0.0",
 		"@angular/router": "^8.0.0",
 		"@angular/service-worker": "^8.0.0",
-		"@fortawesome/angular-fontawesome": "^0.4.0",
+		"@fortawesome/angular-fontawesome": "^0.5.0",
 		"@fortawesome/fontawesome-free": "^5.10.0",
 		"@fortawesome/fontawesome-svg-core": "^1.2.19",
 		"@fortawesome/free-brands-svg-icons": "^5.9.0",
