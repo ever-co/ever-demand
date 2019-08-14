@@ -28,8 +28,8 @@ export class CustomerLocationComponent implements OnDestroy, OnInit {
 				.pipe(first())
 				.toPromise();
 			const coordinates = new google.maps.LatLng(
-				user['geoLocation'].coordinates.lat,
-				user['geoLocation'].coordinates.lng
+				user.getDefaultGeolocation().coordinates.lat,
+				user.getDefaultGeolocation().coordinates.lng
 			);
 			this.showMap(coordinates);
 			this.marker = this.addMarker(coordinates, this.map);

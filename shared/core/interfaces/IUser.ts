@@ -14,7 +14,7 @@ export interface IUserInitializeObject extends DBCreateObject {
 }
 
 export interface IUserCreateObject extends IUserInitializeObject {
-	geoLocation: IGeoLocationCreateObject;
+	geoLocation: Array<IGeoLocationCreateObject>;
 	devicesIds?: string[];
 	apartment?: string;
 	stripeCustomerId?: string;
@@ -27,7 +27,7 @@ export interface IResponseGenerate1000Customers {
 
 interface IUser extends IUserCreateObject, IUserInitializeObject, DBRawObject {
 	_id: PyroObjectId;
-	geoLocation: IGeoLocation;
+	geoLocation: Array<IGeoLocation>;
 	devicesIds: string[];
 	readonly fullAddress: string;
 }

@@ -47,6 +47,10 @@ class GeoLocation extends DBObject<IGeoLocation, IGeoLocationCreateObject>
 	@Column()
 	house: string | null;
 
+	@Schema({ type: Boolean, required: false })
+	@Column()
+	default: boolean | null;
+
 	@Index('2dsphere')
 	@Schema(locationPreSchema)
 	loc: ILocation;

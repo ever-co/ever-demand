@@ -33,7 +33,8 @@ function geoLocationFixture([lng, lat]: [number, number]): GeoLocation {
 		loc: {
 			type: 'Point',
 			coordinates: [lng, lat]
-		}
+		},
+		default: true
 	});
 }
 

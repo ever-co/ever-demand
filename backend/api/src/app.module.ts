@@ -156,8 +156,10 @@ export class ApplicationModule implements NestModule, OnModuleInit {
 		server.applyMiddleware({app, path: graphqlPath});
 
 		*/
-
 		log.info(
+			`GraphQL playground available at http://localhost:${port}/graphql`
+		);
+		console.log(
 			`GraphQL playground available at http://localhost:${port}/graphql`
 		);
 	}

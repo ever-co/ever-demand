@@ -12,7 +12,7 @@ export interface IUserOrderInitializeObject extends DBCreateObject {
 }
 
 export interface IUserOrderCreateObject extends IUserOrderInitializeObject {
-	geoLocation: IGeoLocationCreateObject;
+	geoLocation: Array<IGeoLocationCreateObject>;
 	devicesIds?: string[];
 	apartment?: string;
 	stripeCustomerId?: string;
@@ -23,7 +23,7 @@ interface IUserOrder
 		IUserOrderInitializeObject,
 		DBRawObject {
 	_id: PyroObjectId;
-	geoLocation: IGeoLocation;
+	geoLocation: Array<IGeoLocation>;
 	devicesIds: string[];
 	readonly fullAddress: string;
 }

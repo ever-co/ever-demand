@@ -55,7 +55,8 @@ export default class FakeDataWarehouses {
 									loc: {
 										type: 'Point',
 										coordinates: [lng, lat]
-									}
+									},
+									default: false
 								},
 								_createdAt: this._getRandomDateRange()
 							},
@@ -90,7 +91,8 @@ export default class FakeDataWarehouses {
 								loc: {
 									type: 'Point',
 									coordinates: [lng + 0.05, lat + 0.09]
-								}
+								},
+								default: false
 							},
 							_createdAt: this._getRandomDateRange()
 						},
@@ -124,7 +126,8 @@ export default class FakeDataWarehouses {
 								loc: {
 									type: 'Point',
 									coordinates: [lng - 0.05, lat - 0.09]
-								}
+								},
+								default: false
 							},
 							_createdAt: this._getRandomDateRange()
 						},
@@ -158,7 +161,8 @@ export default class FakeDataWarehouses {
 								loc: {
 									type: 'Point',
 									coordinates: [lng + 0.08, lat + 0.07]
-								}
+								},
+								default: false
 							},
 							_createdAt: this._getRandomDateRange()
 						} as any,
@@ -192,7 +196,8 @@ export default class FakeDataWarehouses {
 								loc: {
 									type: 'Point',
 									coordinates: [lng - 0.08, lat - 0.07]
-								}
+								},
+								default: false
 							},
 							_createdAt: this._getRandomDateRange()
 						} as any,
@@ -212,7 +217,8 @@ export default class FakeDataWarehouses {
 				loc: {
 					type: 'Point',
 					coordinates: [lng, lat]
-				}
+				},
+				default: false
 			};
 		} else {
 			console.warn(NEED_DEFAULT_SETTINGS_MESSAGE);
@@ -231,7 +237,8 @@ export default class FakeDataWarehouses {
 				loc: {
 					type: 'Point',
 					coordinates: [lng + 0.05, lat - 0.08]
-				}
+				},
+				default: false
 			};
 		} else {
 			console.warn(NEED_DEFAULT_SETTINGS_MESSAGE);

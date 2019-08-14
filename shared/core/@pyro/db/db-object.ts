@@ -14,7 +14,7 @@ export interface DBObjectClass extends Function {
 export abstract class DBObject<
 	RawObject extends CreateObject & DBRawObject,
 	CreateObject extends DBCreateObject
-> implements DBRawObject {
+	> implements DBRawObject {
 	// to allow inferring the generic args types
 	readonly CreateObjectTYPE: CreateObject;
 

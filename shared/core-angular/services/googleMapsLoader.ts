@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class GoogleMapsLoader {
-	constructor() {}
+	constructor() { }
 
 	load(googleMapsApiKey: string) {
 		const src = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&libraries=places,drawing&callback=__onGoogleLoaded`;

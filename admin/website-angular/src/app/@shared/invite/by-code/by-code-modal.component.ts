@@ -39,12 +39,12 @@ export class ByCodeModalComponent {
 					const user = await this.userAuthRouter.register({
 						user: {
 							apartment: invite.apartment,
-							geoLocation: invite.geoLocation
+							geoLocation: [invite.geoLocation]
 						}
 					});
 					this.toasterService.pop(
 						'success',
-						`Successful logen with code`
+						`Successful login with code`
 					);
 					this.activeModal.close(user);
 				} else {

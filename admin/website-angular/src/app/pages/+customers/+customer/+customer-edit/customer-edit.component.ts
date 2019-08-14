@@ -68,14 +68,14 @@ export class CustomerEditComponent implements OnInit {
 				this._currentCustomer = customer;
 
 				// GeoJSON use reversed order of lat => lng
-				const geoLocationInput = customer.geoLocation;
+				const geoLocationInput = customer.getDefaultGeolocation();
 				geoLocationInput.loc.coordinates.reverse();
 
 				this.basicInfoForm.setValue(customer);
 				this.locationForm.setValue(geoLocationInput);
 				this._emitMapCoordinates([
-					customer.geoLocation.coordinates.lat,
-					customer.geoLocation.coordinates.lng
+					customer.getDefaultGeolocation().coordinates.lat,
+					customer.getDefaultGeolocation().coordinates.lng
 				]);
 			});
 	}
@@ -99,13 +99,15 @@ export class CustomerEditComponent implements OnInit {
 	protected async updateCustomer() {
 		const geoLocationInput = this.locationForm.getValue();
 		geoLocationInput.loc.coordinates.reverse();
+		this._currentCustomer.setDefaultLocation(geoLocationInput);
+		const allCustomerAddresses = this._currentCustomer.customerAddress;
 		try {
 			this.loading = true;
 			const customer = await this._customerRouter.updateUser(
 				this._currentCustomer.id,
 				{
 					...this.basicInfoForm.getValue(),
-					geoLocation: geoLocationInput as IGeoLocation
+					geoLocation: allCustomerAddresses
 				}
 			);
 			this.loading = false;

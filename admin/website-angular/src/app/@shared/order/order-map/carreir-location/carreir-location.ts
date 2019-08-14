@@ -27,7 +27,6 @@ export class CarrierLocationComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		this.loadMap();
-
 		this.loadRoot();
 	}
 
@@ -50,9 +49,12 @@ export class CarrierLocationComponent implements OnInit, OnDestroy {
 			const [carrierLng, carrierLat] = this.order.carrier[
 				'geoLocation'
 			].loc.coordinates;
-			const [userLng, userLat] = this.order.user[
-				'geoLocation'
-			].loc.coordinates;
+			// for a user, we need to load default address
+			const [
+				userLng,
+				userLat
+			] = this.order.user.getDefaultGeolocation().loc.coordinates;
+
 			const origin = new google.maps.LatLng(carrierLat, carrierLng);
 			const destination = new google.maps.LatLng(userLat, userLng);
 

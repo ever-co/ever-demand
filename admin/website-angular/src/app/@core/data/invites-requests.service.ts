@@ -188,7 +188,8 @@ export class InvitesRequestsService {
 			loc: {
 				coordinates: [Number(lng), Number(lat)],
 				type: 'Point'
-			}
+			},
+			default: false
 		};
 
 		const inviteRequest: IInviteRequestCreateObject = {

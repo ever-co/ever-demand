@@ -16,6 +16,11 @@ const routes: Routes = [
 		canLoad: [ProductsModuleGuard]
 	},
 	{
+		path: 'user-addresses',
+		loadChildren: './user-locations/user-locations.module#UserLocationsPageModule',
+		canLoad: [ProductsModuleGuard]
+	},
+	{
 		path: 'products/product-details/:id',
 		loadChildren:
 			'./+products/product-details/product-details.module#ProductDetailsPageModule'
@@ -83,4 +88,4 @@ const routes: Routes = [
 	],
 	exports: [RouterModule]
 })
-export class PagesModule {}
+export class PagesModule { }

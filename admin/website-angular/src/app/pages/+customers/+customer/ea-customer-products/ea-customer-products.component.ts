@@ -61,7 +61,7 @@ export class CustomerProductsComponent implements OnDestroy, OnInit {
 			}
 
 			this.availableProductsSubscription$ = this.geoLocationProductService
-				.getGeoLocationProducts(user.geoLocation)
+				.getGeoLocationProducts(user.getDefaultGeolocation())
 				.subscribe((products) => {
 					this.availableProducts = products;
 					this.sourceSmartTable.load(products);

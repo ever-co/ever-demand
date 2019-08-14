@@ -1,0 +1,51 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-buttons slot="start">
+			<ion-menu-button autoHide="false"></ion-menu-button>
+		</ion-buttons>
+		<ion-title>Location Settings</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<div #container id="map-container" class="map"></div>
+	<ion-card>
+		<ion-card-content>
+			<form [formGroup]="searchForm">
+				<ion-searchbar debounce="500" searchIcon="pin" #searchLocation formControlName="searchLocation">
+				</ion-searchbar>
+			</form>
+			<form [formGroup]="addressForm">
+				<ion-grid>
+					<ion-row>
+						<ion-col size="12">
+							<ion-item>
+								<ion-input placeholder="City" formControlName="locality"></ion-input>
+							</ion-item>
+						</ion-col>
+					</ion-row>
+					<ion-row>
+						<ion-col size="12">
+							<ion-item>
+								<ion-input placeholder="Street" formControlName="street_number"></ion-input>
+							</ion-item>
+						</ion-col>
+					</ion-row>
+					<ion-row>
+						<ion-col size="6">
+							<ion-item>
+								<ion-input placeholder="House" formControlName="house"></ion-input>
+							</ion-item>
+						</ion-col>
+						<ion-col size="6">
+							<ion-item>
+								<ion-input placeholder="Apartment" formControlName="apartment"></ion-input>
+							</ion-item>
+						</ion-col>
+					</ion-row>
+					<ion-button *ngIf="addressForm.valid">Save Address</ion-button>
+				</ion-grid>
+			</form>
+		</ion-card-content>
+	</ion-card>
+</ion-content>

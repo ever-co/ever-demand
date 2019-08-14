@@ -1,7 +1,8 @@
 import GeoLocation from './GeoLocation';
 import { DBObject, getSchema, ModelName, Schema } from '../@pyro/db';
 import IUserOrder, { IUserOrderCreateObject } from '../interfaces/IUserOrder';
-import { Column } from 'typeorm';
+import { Column, GeoNearOptions } from 'typeorm';
+import IGeoLocation from '../interfaces/IGeoLocation';
 
 /**
  * Store information about Customer inside (embeded into) Order
@@ -19,7 +20,13 @@ class UserOrder extends DBObject<IUserOrder, IUserOrderCreateObject>
 		super(userOrder);
 
 		if (userOrder && userOrder.geoLocation) {
-			this.geoLocation = new GeoLocation(userOrder.geoLocation);
+			this.defaultAddress = this.geoLocation.filter(
+				(address: GeoLocation) => address.default === true
+			);
+			userOrder.geoLocation.forEach((location: IGeoLocation) => {
+				this.geoLocation.push(new GeoLocation(location));
+			});
+			// this.geoLocation = new GeoLocation(userOrder.geoLocation);
 		}
 	}
 
@@ -85,7 +92,16 @@ class UserOrder extends DBObject<IUserOrder, IUserOrderCreateObject>
 	 * @memberof UserOrder
 	 */
 	@Schema(getSchema(GeoLocation))
-	geoLocation: GeoLocation;
+	geoLocation: Array<GeoLocation>;
+
+	/**
+	 * Current customer location (customer address, last known location of the customer)
+	 *
+	 * @type {GeoLocation}
+	 * @memberof UserOrder
+	 */
+	@Schema(getSchema(GeoLocation))
+	defaultAddress: Array<GeoLocation>;
 
 	/**
 	 * Apartment (stored separately from geolocation/address for efficiency)
@@ -144,19 +160,40 @@ class UserOrder extends DBObject<IUserOrder, IUserOrderCreateObject>
 	@Schema(Boolean)
 	@Column()
 	isRegistrationCompleted: boolean;
-
 	/**
 	 * Get full address of customer (including apartment)
 	 * Note: does not include country
 	 *
 	 * @readonly
-	 * @memberof UserOrder
+	 * @memberof User
 	 */
 	get fullAddress(): string {
-		return (
-			`${this.geoLocation.city}, ${this.geoLocation.streetAddress} ` +
-			`${this.apartment}/${this.geoLocation.house}`
+		const address = this.getDefaultGeolocation();
+		if (address) {
+			return (
+				`${address.city}, ${address.streetAddress} ` +
+				`${address.apartment}/${address.house}`
+			);
+		} else {
+			return '';
+		}
+	}
+
+	get customerAddress(): Array<GeoLocation> {
+		return this.geoLocation;
+	}
+
+	getDefaultGeolocation(): GeoLocation | null {
+		const defaultLocation = this.geoLocation.filter(
+			(location: GeoLocation) => {
+				return location.default;
+			}
 		);
+		if (defaultLocation) {
+			return defaultLocation[0];
+		} else {
+			return null;
+		}
 	}
 }
 
