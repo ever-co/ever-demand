@@ -231,7 +231,7 @@
 		"preload-webpack-plugin": "^2.3.0",
 		"prettier": "^1.16.4",
 		"protractor": "^5.4.2",
-		"rimraf": "^2.6.3",
+		"rimraf": "^3.0.0",
 		"rxjs-tslint": "0.1.5",
 		"sass-loader": "^7.1.0",
 		"script-ext-html-webpack-plugin": "^2.1.3",
