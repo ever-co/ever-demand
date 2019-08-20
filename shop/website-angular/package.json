@@ -215,7 +215,7 @@
 		"json-loader": "^0.5.7",
 		"karma": "^4.0.1",
 		"karma-chrome-launcher": "^3.0.0",
-		"karma-coverage": "^1.1.2",
+		"karma-coverage": "^2.0.0",
 		"karma-jasmine": "^2.0.1",
 		"karma-mocha-reporter": "^2.2.5",
 		"karma-remap-coverage": "^0.1.5",
