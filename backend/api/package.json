@@ -213,7 +213,7 @@
 		"wait-on": "^3.2.0",
 		"webpack": "^4.38.0",
 		"webpack-cli": "^3.3.5",
-		"webpack-command": "^0.4.2",
+		"webpack-command": "^0.5.0",
 		"webpack-graphql-loader": "^1.0.2",
 		"webpack-node-externals": "^1.7.2"
 	},
