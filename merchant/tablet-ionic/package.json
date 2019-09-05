@@ -213,7 +213,7 @@
 		"ionic": "^5.2.3",
 		"rxjs-tslint": "0.1.5",
 		"terser": "^4.0.0",
-		"terser-webpack-plugin": "^1.2.3",
+		"terser-webpack-plugin": "^2.0.0",
 		"ts-node": "^8.0.3",
 		"tslint": "^5.14.0",
 		"typescript": "3.4.5",
