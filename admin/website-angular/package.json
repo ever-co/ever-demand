@@ -201,7 +201,7 @@
 		"protractor": "^5.4.2",
 		"rimraf": "^2.6.3",
 		"rxjs-tslint": "0.1.5",
-		"stylelint": "^10.0.1",
+		"stylelint": "^11.0.0",
 		"ts-node": "^8.1.0",
 		"tslint": "^5.16.0",
 		"typescript": "3.4.5",
