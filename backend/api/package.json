@@ -90,7 +90,7 @@
 		"graphql-subscriptions": "^1.1.0",
 		"graphql-tools": "^4.0.5",
 		"handlebars": "^4.1.2",
-		"image-size": "^0.7.4",
+		"image-size": "^0.8.0",
 		"install": "^0.13.0",
 		"inversify": "^5.0.1",
 		"ipstack": "^0.1.1",
