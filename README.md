@@ -214,9 +214,10 @@ View full list of our [contributors](https://github.com/ever-co/ever/graphs/cont
 
 ## Contact Us
 
+-   [Discord Chat](https://discord.gg/msqRJ4w)
+-   [Slack Community](https://join.slack.com/t/everplatform/shared_invite/enQtNzc2NzI1OTgwMjQwLTBkODI3OTU2ZDI1YTQwNWE3OGExYWUwYjE5NThkMjRiYjA0NmFiNzZhYWUzNWViNWI4Nzg2YTc3MzY2MjY0YzU)
 -   [Spectrum Community](https://spectrum.chat/ever)
 -   [Gitter Chat](https://gitter.im/ever-co/ever)
--   [Discord Chat](https://discord.gg/msqRJ4w)
 -   [CodeMentor](https://www.codementor.io/evereq)
 -   [Telegram](https://t.me/everplatform)
 -   For business inquiries: <mailto:ever@ever.co>
