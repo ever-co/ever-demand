@@ -68,7 +68,7 @@
 		"bunyan": "^1.8.12",
 		"bunyan-cloudwatch": "^2.2.0",
 		"bunyan-prettystream": "^0.1.3",
-		"cli-color": "^1.4.0",
+		"cli-color": "^2.0.0",
 		"concurix": "^1.1.2",
 		"connect": "^3.7.0",
 		"cookie-session": "^2.0.0-beta.3",
