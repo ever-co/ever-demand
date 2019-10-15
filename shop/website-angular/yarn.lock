@@ -7069,10 +7069,10 @@ next-tick@^1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
-ng-lazyload-image@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/ng-lazyload-image/-/ng-lazyload-image-6.0.0.tgz#d70ca6bd767c1ea0c6b80b9266fb47a93bb803da"
-  integrity sha512-oatEf5Aq8abjTMxldSypm863B3BJElefBNnmVPEf09KNdYIm1dSrZP6/70CSsxNUhRYsfR+T9Q1SVPaZkwYZ0w==
+ng-lazyload-image@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/ng-lazyload-image/-/ng-lazyload-image-7.0.0.tgz#4c2fb94b1d72535701bc9cbe89100b0b054d6314"
+  integrity sha512-JAHioiGkenCusve/U7ee/laNpijkO1/5qGXi1iZAZxtLXVfw4ceuWf/Dyjz7hU4qOP1KSh60HQU86ve5D0wThg==
   dependencies:
     tslib "^1.9.0"
 
