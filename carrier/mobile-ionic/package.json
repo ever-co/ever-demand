@@ -137,7 +137,7 @@
 		"kareem": "^2.3.0",
 		"lodash": "^4.17.15",
 		"lodash.mergewith": "^4.6.2",
-		"mongoose": "^5.5.13",
+		"mongoose": "^5.7.5",
 		"mpath": "^0.6.0",
 		"mquery": "^3.2.0",
 		"mx.ferreyra.callnumber": "0.0.2",
