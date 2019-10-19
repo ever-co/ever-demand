@@ -69,15 +69,12 @@
 		"CHARTS": {
 			"ORDERS": "Поръчки",
 			"PROFIT": "Печалба",
-
 			"TOTAL_ORDERS": "Общо поръчки",
 			"TOTAL_COMPLETED_ORDERS": "Общо изпълнени поръчки",
 			"TOTAL_CANCELLED_ORDERS": "Общо отменени поръчки",
-
 			"TOTAL_REVENUE_ALL_ORDERS": "Общо приходи от всички поръчки",
 			"TOTAL_REVENUE_COMPLETED_ORDERS": "Общо приходи от изпълнени поръчки",
 			"TOTAL_LOST_REVENUE_CANCELLED_ORDERS": "Общо загубени приходи от анулирани поръчки",
-
 			"PAYMENT": "Плащане",
 			"CANCELED": "Отменен",
 			"ALL_ORDERS": "Всички поръчки",
@@ -355,8 +352,8 @@
 		"PRODUCTS_MANUFACTURING": "Производство на изделия",
 		"CARRIER_REQUIRED": "Необходим е превозвач",
 		"RIGHT_NOW": "(точно сега)",
-		"ADDRESS": "Адрес",
 		"CARRIERS": "Превозвачи",
+		"ADDRESS": "Адрес",
 		"CARRIERS_SPECIFIC": "Използвайте само конкретни превозвачи",
 		"VALIDATION": {
 			"NAME": "Името е задължително",
@@ -415,19 +412,17 @@
 		"MUTATION": {
 			"TITLE": "Създай нов склад",
 			"NAME": "Име",
-			"PHOTO": "Снимка",
 			"LOGO": "Лого",
+			"PHOTO": "Снимка",
 			"IS_ACTIVE": "Активен ли е?",
 			"PRODUCTS_MANUFACTURING": "Производство на изделия",
 			"CARRIER_REQUIRED": "Необходим е превозвач",
 			"RIGHT_NOW": "Точно сега",
-			"PHONE": "Телефон",
-			"EMAIL": "Електронна поща",
+			"ORDERS_PHONE": "Телефон за поръчки",
 			"CONTACT_PHONE": "Телефон за връзка",
+			"ORDERS_EMAIL": "Имейл за поръчки",
 			"CONTACT_EMAIL": "Емейл за връзка",
 			"FORWARD_ORDERS_WITH": "Препращайте поръчките с",
-			"ORDERS_PHONE": "Телефон за поръчки",
-			"ORDERS_EMAIL": "Имейл за поръчки",
 			"USERNAME": "Потребител",
 			"OLD_PASSWORD": "Стара парола",
 			"NEW_PASSWORD": "Нова Парола",
@@ -609,6 +604,7 @@
 			"ERRORS": {
 				"FIRST_NAME_IS_REQUIRED": "Първо име е задължително",
 				"LAST_NAME_IS_REQUIRED": "Фамилно име е задължително",
+				"INVALID_EMAIL": "Грешен имейл",
 				"EMAIL_IS_REQUIRED": "Имейл е задължителен",
 				"COORDINATES_ARE_REQUIRED": "Координати са задължителни"
 			},
@@ -662,6 +658,7 @@
 			"CREATE_USER_STEP": {
 				"CREATE_USER": "Създаване на потребител",
 				"STEP_1": "Етап 1",
+				"ORDER": "Поръчка",
 				"TO_CONTINUE_IS_REQUIRED_TO_REGISTER_IN_THE_SYSTEM": "Стъпка За да продължите, трябва да се регистрирате в системата",
 				"CLICK_ON_BUTTON_CREATE_USER": "Кликнете върху бутона 'Създаване на потребител'",
 				"FILL_THE_FORM_FOR_ADDITIONAL_INFO": "Попълнете формуляра за допълнителна информация (по избор)",
@@ -705,10 +702,12 @@
 		"TITLE": "Клиенти",
 		"DELETE_CUSTOMERS": "Изтрий Селектирани",
 		"CREATE_CUSTOMER": "Създай Клиент",
-		"CUSTOMER": "Клиент",
-		"MANAGE_CUSTOMER": "Управление на клиента",
 		"DELETE": "Изтрий",
 		"CREATE": "създавам",
+		"BAN": "BAN",
+		"UNBAN": "UNBAN",
+		"MANAGE_CUSTOMER": "Управление на клиента",
+		"CUSTOMER": "Клиент",
 		"CUSTOMERS_DEVICES": "Клиентски устройства",
 		"INVITE": "Покана",
 		"NOT_INVITED_ONLY": "Не са поканени само",
@@ -720,8 +719,8 @@
 		"Order": "Поръчка",
 		"CANCEL_ORDER": "Отмяна на поръчката",
 		"CATEGORY": "Категория",
-		"AVAILABLE_PRODUCTS": "Налични продукти",
 		"ORDERS_HISTORY": "История на поръчките",
+		"AVAILABLE_PRODUCTS": "Налични продукти",
 		"NEARBY_STORES": "Магазини наблизо",
 		"INVITES_REQUESTS_MANAGEMENT": "Покана за управление на заявки",
 		"INVITES_MANAGEMENT": "Управлявай поканите",
@@ -742,8 +741,8 @@
 			"NAME": "Име",
 			"EMAIL": "Eлектронна Поща",
 			"PHONE": "Телефон",
-			"ORDERS_QTY": "Поръчки количество",
 			"ADDRESS": "Адрес",
+			"ORDERS_QTY": "Поръчки количество",
 			"COUNTRY": "Държава",
 			"CITY": "Град",
 			"STREET_ADDRESS": "Адрес на улица",
@@ -770,6 +769,11 @@
 			"ORDER": "Поръчка",
 			"STATUS": "Статус"
 		},
+		"EDIT": {
+			"EDIT_CUSTOMER": "Редактиране на клиент",
+			"BASIC_INFO": "Основна информация",
+			"SAVE": "Запази"
+		},
 		"DEVICE": {
 			"ALL_DEVICE": "Всички устройства",
 			"DEVICE_ID": "ID на устройството",
@@ -785,20 +789,15 @@
 			"DELETE": "Изтрий",
 			"CREATE": "създавам"
 		},
-		"EDIT": {
-			"EDIT_CUSTOMER": "Редактиране на клиент",
-			"BASIC_INFO": "Основна информация",
-			"SAVE": "Запази"
-		},
 		"WAREHOUSE": {
 			"WAREHOUSE_INFO": "Информация за складовете",
 			"WAREHOUSE_ID": "Идент. № на склада",
 			"WAREHOUSE_NAME": "Име на склада"
 		},
 		"CUSTOMER_VIEW": {
-			"CUSTOMER": "Клиент",
 			"MANAGE_CUSTOMER": "Управление на клиента",
-			"EDIT": "Редактирай"
+			"EDIT": "Редактирай",
+			"CUSTOMER": "Клиент"
 		},
 		"INVITES_VIEW": {
 			"DELETE": "Изтрий",
@@ -843,11 +842,11 @@
 			"NOT_ACTIVE": "Неактивен",
 			"WORKING": "Работещ",
 			"NOT_WORKING": "Не работещ",
+			"SELECT_CARRIER": "Изберете оператор",
 			"CARRIER_ORDERS_STATUS": "Статус на Поръчките на Куриера",
 			"Start": "Започни",
 			"PICKED_UP_ORDER": "Получена поръчка",
 			"CANCEL": "Отказ",
-			"SELECT_CARRIER": "Изберете оператор",
 			"Arrived To Client": "Пристигнал до клиента",
 			"No Carrier": "Няма превозвач",
 			"Order Selected For Delivery": "Поръчката е избрана за доставка",
@@ -900,8 +899,8 @@
 				"THE_LENGHT_OF_THE_TITLE": "Дължината на заглавието трябва да е максимум 255 знака!",
 				"IMAGE": "Снимката е задължителна",
 				"DESCRIPTION": "Описанието е задължително",
-				"THE_LENGHT_OF_THE_DESCRIPTION": "Дължината на описанието трябва да бъде максимум 255 знака!",
 				"LANGUAGE": "Език е задължителен",
+				"THE_LENGHT_OF_THE_DESCRIPTION": "Дължината на описанието трябва да бъде максимум 255 знака!",
 				"PRICE": "Цената е задължителна",
 				"COUNT": "Брой продукти са задължителни"
 			}
@@ -931,7 +930,6 @@
 				"BASIC_INFO": {
 					"TITLE": "Основно Инфо.",
 					"FIRST_NAME": "Първо Име",
-					"LAST_NAME": "Фамилия",
 					"FIRST_NAME_OPTIONAL": "Име (незадължително)",
 					"LAST_NAME_OPTIONAL": "Фамилно име (по избор)",
 					"PHOTO_URL": "URL адрес на снимката",
@@ -1029,11 +1027,11 @@
 		"Given to Carrier": "Дадено на Carrier",
 		"Allocation Failed": "Разпределението не бе успешно",
 		"Packaging Failed": "Опаковането не бе успешно",
-		"Arrived To Client": "Пристигнал до клиента",
 		"No Carrier": "Няма превозвач",
 		"Order Selected For Delivery": "Поръчката е избрана за доставка",
 		"Order Picked Up": "Поръчката е взета",
 		"Order In Delivery": "Поръчка се доставя",
+		"Arrived To Client": "Пристигнал до клиента",
 		"Delivered": "Доставени",
 		"Delivery Issues": "Проблеми при доставката",
 		"Client Refuse to Take Order": "Клиентът отказва да приеме поръчка",
@@ -1074,14 +1072,12 @@
 	"Cancelled": "Отменен",
 	"All": "Всички",
 	"CANCEL": "Отказ",
-	"UPDATE": "Актуализация",
 	"Default Settings": "Настройките по подразбиране",
 	"Products Manufacturing": "Производство на изделия",
 	"Carrier required before sale": "Превозвачът е необходим преди продажбата",
 	"New Product Type": "Превозвачът е необходим преди продажбата",
 	"Products": "Продукти",
 	"Product": "Продукт",
-	"New Product": "Нов продукт",
 	"Title": "Заглавие",
 	"Picture Url": "Линк към снимката",
 	"Description": "Описание",
@@ -1096,6 +1092,7 @@
 	"BULGARIAN": "Български",
 	"SELECT": "Изберете",
 	"Name": "Име",
+	"Id": "Идент. номер",
 	"Warehouse name is required": "Името на склада е задължително",
 	"Name must be at least 1 characters long": "Името трябва да е с дължина поне 1 знак",
 	"Title cannot be more than 255 characters long": "Заглавието не може да има повече от 255 знака",
@@ -1103,6 +1100,7 @@
 	"Warehouse logo is required": "Необходимо е лого на склад",
 	"is Active": "Активен ли е",
 	"right now": "точно сега",
+	"Unselected": "Unselected",
 	"Phone": "Телефон",
 	"Email": "Електронна поща",
 	"Username": "Потребител",
