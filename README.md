@@ -12,7 +12,7 @@
 
 ## Features
 
--   Modern & Open Platform for **On-Demand Economy**
+-   Modern & Open Platform for **On-Demand Economy** and **Digital Marketplaces**
 -   Supports Single-Store and Multi-Store / Multi-Vendor / Peer-to-Peer Marketplaces
 -   Everything Reactive, Real-Time and Blazing Fast!
 -   Headless Commerce framework, which allows different implementations of store-fronts, Admin UIs and client apps. It exposes rich GraphQL, REST and WS APIs.
