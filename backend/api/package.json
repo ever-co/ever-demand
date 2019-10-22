@@ -104,7 +104,7 @@
 		"module-alias": "^2.2.0",
 		"moment": "^2.24.0",
 		"mongodb": "^3.2.7",
-		"mongodb-memory-server": "^5.1.5",
+		"mongodb-memory-server": "^5.2.11",
 		"mongoose": "^5.6.0",
 		"morgan": "^1.9.1",
 		"ms": "^2.1.2",
