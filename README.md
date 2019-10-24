@@ -201,14 +201,14 @@ According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform tod
 
 #### Designers & QA
 
--   [Milena Dimova](https://www.linkedin.com/in/dimova-milena-31010414) (UI/UX Designer)
 -   [Julia Konviser](https://www.linkedin.com/in/julia-konviser-8b917552) (Graphic Designer, QA)
 
 ### Contributors
 
--   Kyle Kitlinski (https://github.com/K-Kit)
--   Deepak Chandwani (https://github.com/deepaksslibra)
--   Adem Hodzic (https://github.com/AdemHodzic)
+-   [Adem Hodzic] (https://github.com/AdemHodzic)
+-   [Deepak Chandwani](https://github.com/deepaksslibra)
+-   [Kyle Kitlinski](https://github.com/K-Kit)
+-   [Milena Dimova](https://www.linkedin.com/in/dimova-milena-31010414) (UI/UX Designer)
 
 View full list of our [contributors](https://github.com/ever-co/ever/graphs/contributors).
 
