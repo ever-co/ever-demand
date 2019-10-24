@@ -205,7 +205,7 @@ According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform tod
 
 ### Contributors
 
--   [Adem Hodzic] (https://github.com/AdemHodzic)
+-   [Adem Hodzic](https://github.com/AdemHodzic)
 -   [Deepak Chandwani](https://github.com/deepaksslibra)
 -   [Kyle Kitlinski](https://github.com/K-Kit)
 -   [Milena Dimova](https://www.linkedin.com/in/dimova-milena-31010414) (UI/UX Designer)
