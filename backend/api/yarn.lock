@@ -7146,10 +7146,10 @@ jws@^3.2.2:
     jwa "^1.4.1"
     safe-buffer "^5.0.1"
 
-kafka-node@^4.1.3:
-  version "4.1.3"
-  resolved "https://registry.yarnpkg.com/kafka-node/-/kafka-node-4.1.3.tgz#9e5fdf3a5562370ff0f82c5481bd14a6e39ad93d"
-  integrity sha512-C2WHksRCr7vIKmbxYaCk2c5Q1lnHIi6C0f3AioK3ARcRHGO9DpqErcoaS9d8PP62yzTnkYras+iAlmPsZHNSfw==
+kafka-node@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/kafka-node/-/kafka-node-5.0.0.tgz#4b6f65cc1d77ebe565859dfb8f9575ed15d543c0"
+  integrity sha512-dD2ga5gLcQhsq1yNoQdy1MU4x4z7YnXM5bcG9SdQuiNr5KKuAmXixH1Mggwdah5o7EfholFbcNDPSVA6BIfaug==
   dependencies:
     async "^2.6.2"
     binary "~0.3.0"
