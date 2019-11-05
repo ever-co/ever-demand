@@ -1037,12 +1037,12 @@
   dependencies:
     "@types/node" "*"
 
-"@types/kafka-node@^2.0.8":
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/@types/kafka-node/-/kafka-node-2.0.8.tgz#f45d96611d9fa349041f56f370095edc56426d0c"
-  integrity sha512-WMhZLv75LorppurHDLb/ghOwX8TCBRWs4C5CpuuXa4lFyKcbahzkgUKmwLRYy4ixdjEsNANrjiDrybTzVPu6YQ==
+"@types/kafka-node@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@types/kafka-node/-/kafka-node-3.0.0.tgz#32ba5e30f518c3b9bfc41c3a30fea3116613581c"
+  integrity sha512-X9IIidUDMPzFTA158qXIx+NmNp1dyfZxL43Jnwh3JrZBtLpCG5ojCdMfg2Va8vPfW/Jd4mUDGWaZvDBKUffv3A==
   dependencies:
-    "@types/node" "*"
+    kafka-node "*"
 
 "@types/lodash@^4.14.134":
   version "4.14.134"
@@ -7145,6 +7145,27 @@ jws@^3.2.2:
   dependencies:
     jwa "^1.4.1"
     safe-buffer "^5.0.1"
+
+kafka-node@*:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/kafka-node/-/kafka-node-5.0.0.tgz#4b6f65cc1d77ebe565859dfb8f9575ed15d543c0"
+  integrity sha512-dD2ga5gLcQhsq1yNoQdy1MU4x4z7YnXM5bcG9SdQuiNr5KKuAmXixH1Mggwdah5o7EfholFbcNDPSVA6BIfaug==
+  dependencies:
+    async "^2.6.2"
+    binary "~0.3.0"
+    bl "^2.2.0"
+    buffer-crc32 "~0.2.5"
+    buffermaker "~1.2.0"
+    debug "^2.1.3"
+    denque "^1.3.0"
+    lodash "^4.17.4"
+    minimatch "^3.0.2"
+    nested-error-stacks "^2.0.0"
+    optional "^0.1.3"
+    retry "^0.10.1"
+    uuid "^3.0.0"
+  optionalDependencies:
+    snappy "^6.0.1"
 
 kafka-node@^4.1.3:
   version "4.1.3"
