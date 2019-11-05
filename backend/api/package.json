@@ -165,7 +165,7 @@
 		"@types/inversify": "^2.0.33",
 		"@types/jest": "^24.0.15",
 		"@types/jsonwebtoken": "^8.3.2",
-		"@types/kafka-node": "^2.0.8",
+		"@types/kafka-node": "^3.0.0",
 		"@types/lodash": "^4.14.134",
 		"@types/method-override": "^0.0.31",
 		"@types/mkdirp": "^0.5.2",
