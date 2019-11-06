@@ -176,7 +176,7 @@
 		"@types/reflect-metadata": "^0.1.0",
 		"@types/socket.io-client": "^1.4.32",
 		"@types/stripe": "^6.31.10",
-		"@types/swiper": "^4.4.2",
+		"@types/swiper": "^5.2.0",
 		"@types/uuid": "^3.4.4",
 		"@types/yargs": "^13.0.0",
 		"@webcomponents/webcomponentsjs": "^2.2.10",
