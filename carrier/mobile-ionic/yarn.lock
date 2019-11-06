@@ -1064,10 +1064,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/swiper@^4.4.2":
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/@types/swiper/-/swiper-4.4.2.tgz#189585204a651ceb4b5f6a5eb536f808faa00079"
-  integrity sha512-bJzmpMwGaA6elG0/9M3H45Az0IwuuJoUGUXGgH/DVKZOJg3iBtu+djAlBnOXOonAHd5kDsrfdhdxFKOGjzM+Vw==
+"@types/swiper@^5.2.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@types/swiper/-/swiper-5.2.0.tgz#11ddbff1726a1a31c11a3e1e93e5d07050418445"
+  integrity sha512-JUkSp8aarWdp5SMWo89nMVFuBO3PZLhhP3F1jWGFUC2nclDxIU/ZbgMYAvBs29j906nQ/uAXiEqloV6qPQpUZg==
 
 "@types/uuid@^3.4.4":
   version "3.4.4"
