@@ -131,7 +131,7 @@
 		"fstream": "^1.0.12",
 		"graphql": "^14.1.1",
 		"graphql-tag": "^2.10.1",
-		"handlebars": "^4.1.2",
+		"handlebars": "^4.4.5",
 		"hooks-fixed": "^2.0.2",
 		"ionicons": "^4.5.8",
 		"kareem": "^2.3.0",
