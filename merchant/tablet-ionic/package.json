@@ -141,7 +141,7 @@
 		"fstream": "^1.0.12",
 		"graphql": "^14.1.1",
 		"graphql-tag": "^2.10.1",
-		"handlebars": "^4.1.2",
+		"handlebars": "^4.4.5",
 		"imagesloaded": "^4.1.4",
 		"ionic-selectable": "^4.4.1",
 		"ionicons": "^4.5.8",
