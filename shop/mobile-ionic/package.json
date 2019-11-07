@@ -123,7 +123,7 @@
 		"fstream": "^1.0.12",
 		"graphql": "^14.1.1",
 		"graphql-tag": "^2.10.1",
-		"handlebars": "^4.1.2",
+		"handlebars": "^4.4.5",
 		"ionicons": "^4.5.8",
 		"jasmine": "^3.3.1",
 		"jsbarcode": "^3.11.0",
