@@ -7151,6 +7151,11 @@ he@1.2.x:
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
 
+highlight.js@*:
+  version "9.16.2"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.16.2.tgz#68368d039ffe1c6211bcc07e483daf95de3e403e"
+  integrity sha512-feMUrVLZvjy0oC7FVJQcSQRqbBq9kwqnYE4+Kj9ZjbHh3g+BisiPgF49NyQbVLNdrL/qqZr3Ca9yOKwgn2i/tw==
+
 highlight.js@^9.14.2:
   version "9.15.6"
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.15.6.tgz#72d4d8d779ec066af9a17cb14360c3def0aa57c4"
@@ -7160,6 +7165,11 @@ highlight.js@~9.12.0:
   version "9.12.0"
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.12.0.tgz#e6d9dbe57cbefe60751f02af336195870c90c01e"
   integrity sha1-5tnb5Xy+/mB1HwKvM2GVhwyQwB4=
+
+highlightjs-line-numbers.js@*:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/highlightjs-line-numbers.js/-/highlightjs-line-numbers.js-2.7.0.tgz#b202f7dc547cb9ab64d8b3ad571d834817815bdf"
+  integrity sha512-2kgZkfGy3TB6rF1o1XJtUThDyraLAFd6iiAIE1MEH89om8VwyHsal6BBnIOP2yOuq2TCuuGd0YD6aGHa6iq3/g==
 
 history@^4.7.2:
   version "4.9.0"
@@ -9588,11 +9598,13 @@ ngx-echarts@^4.1.1:
   dependencies:
     tslib "^1.9.0"
 
-ngx-highlightjs@^2.1.4:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/ngx-highlightjs/-/ngx-highlightjs-2.1.4.tgz#65e01ffac1980bef42cfd2e021a468fcba3e03a0"
-  integrity sha512-MYPWdKg1hQhVrsPTNRhUP0n+dTxVIeuiGPLttkO3v1au9+ytk/AbFO8qtDZSMYhUZHVER+16t9M74pJFM5AXeQ==
+ngx-highlightjs@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-highlightjs/-/ngx-highlightjs-4.0.0.tgz#22312519aea132cb7ca1e2a7532a0c8843a2288f"
+  integrity sha512-9RuY7hCtQdRtz3Auo5Bv858IlJm16zcTD4HBtvj8jrqGf0nQBgE/PDFmUsYSRTkC1vDvJvPs0LQbXN1VuVtjYA==
   dependencies:
+    highlight.js "*"
+    highlightjs-line-numbers.js "*"
     tslib "^1.9.0"
 
 ngx-moment@^3.4.0:
