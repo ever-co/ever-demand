@@ -196,7 +196,7 @@
 		"cpr": "^3.0.1",
 		"cross-env": "^5.2.0",
 		"dotenv": "^8.0.0",
-		"envalid": "^5.0.0",
+		"envalid": "^6.0.0",
 		"husky": "^3.0.1",
 		"ionic": "^5.2.3",
 		"jasmine-core": "^3.3.0",
