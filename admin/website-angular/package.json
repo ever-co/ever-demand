@@ -126,7 +126,7 @@
 		"ng2-smart-table": "^1.5.0",
 		"ng2-tree": "^2.0.0-rc.11",
 		"ngx-echarts": "^4.1.1",
-		"ngx-highlightjs": "^2.1.4",
+		"ngx-highlightjs": "^4.0.0",
 		"ngx-moment": "^3.4.0",
 		"ngx-translate-multi-http-loader": "^3.0.0",
 		"node-sass": "^4.12.0",
