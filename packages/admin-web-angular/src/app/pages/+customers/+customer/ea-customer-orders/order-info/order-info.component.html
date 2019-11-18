@@ -1,0 +1,50 @@
+<div class="modal-header">
+	<h3>{{ 'CUSTOMERS_VIEW.ORDER_INFO' | translate }}</h3>
+	<button class="close" aria-label="Close" (click)="cancel()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div *ngIf="order$ | async as order" class="modal-body info-content">
+	<h6>
+		<strong>{{ 'CUSTOMERS_VIEW.ORDER_ID' | translate }}:</strong> <br />
+		<span (click)="redirectToOrderPage()" class="order-redirect">{{
+			order.id
+		}}</span>
+	</h6>
+	<h6>
+		<strong>{{ 'CUSTOMERS_VIEW.STORE_ID' | translate }}:</strong> <br />
+		<span (click)="redirectToStorePage()" class="order-redirect">{{
+			order.warehouseId
+		}}</span>
+	</h6>
+	<h6 *ngIf="order.carrierId">
+		<strong>{{ 'CUSTOMERS_VIEW.CARRIER_ID' | translate }}:</strong> <br />
+		<span (click)="redirectToCarrierPage()" class="order-redirect">{{
+			order.carrierId
+		}}</span>
+	</h6>
+	<h6 *ngIf="!order.carrierId">
+		<strong>{{ 'CUSTOMERS_VIEW.NO_CARRIER' | translate }}</strong>
+	</h6>
+	<div class="json-viewer">
+		<button
+			(click)="showCode = !showCode"
+			class="btn btn-dark btn-icon pull-left"
+			type="button"
+		>
+			<svg viewBox="0 0 24 24" width="24px">
+				<path
+					_ngcontent-c20=""
+					d="M14.6,16.6L19.2,12L14.6,7.4L16,6L22,12L16,18L14.6,16.6M9.4,16.6L4.8,12L9.4,7.4L8,6L2,12L8,18L9.4,16.6Z"
+					fill="#fff"
+				></path>
+			</svg>
+		</button>
+
+		<div class="json-info" *ngIf="showCode">
+			<div>
+				<pre><code style="height:300px" highlight [language]="['json']" [code]="selectedOrder | json" class="iconInfo"></code></pre>
+			</div>
+		</div>
+	</div>
+</div>

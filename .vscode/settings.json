@@ -62,5 +62,7 @@
 		"xabikos.javascriptsnippets",
 		"davidanson.vscode-markdownlint",
 		"leizongmin.node-module-intellisense"
-	]
+	],
+	"git.ignoreLimitWarning": true,
+	"vsicons.presets.nestjs": true
 }

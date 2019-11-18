@@ -4,23 +4,23 @@ Copyright © 2016-present, Ever Co. LTD. All rights reserved.
 
 This software is available under different licenses
 
-### _Ever Platform Community Edition_ License for Shared Modules
+### _Ever Platform Community Edition_ License for for Backend Api (Server)
 
-If you decide to choose the Ever Platform Community Edition License for Shared Modules, you must comply with the following terms:
+If you decide to choose the Ever Platform Community Edition License for for Backend Api (Server), you must comply with the following terms:
 
 This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License, version 3,
+it under the terms of the GNU Affero General Public License, version 3,
 as published by the Free Software Foundation.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
+GNU Affero General Public License for more details.
 
-You should have received a copy of the GNU General Public License
+You should have received a copy of the GNU Affero General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-[GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.txt)
+[GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.txt)
 
 ### _Ever Platform Enterprise_ License
 

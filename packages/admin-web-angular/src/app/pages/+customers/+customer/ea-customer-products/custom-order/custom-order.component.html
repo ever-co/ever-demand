@@ -1,0 +1,75 @@
+<toaster-container></toaster-container>
+
+<div class="modal-header">
+	<h3 class="modal-title">
+		{{ 'CUSTOMERS_VIEW.MAKE_A_CUSTOM_ORDER' | translate }}
+	</h3>
+	<button class="close" aria-label="Close" (click)="cancel()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+
+<div class="modal-body">
+	<form class="form-horizontal" [formGroup]="form">
+		<div class="form-group row">
+			<label class="col-sm-2 control-label">{{
+				'CUSTOMERS_VIEW.PRODUCT_COUNT' | translate
+			}}</label>
+			<div class="col-sm-9">
+				<input
+					type="number"
+					class="form-control"
+					formControlName="count"
+					placeholder="1"
+					step="1"
+					min="1"
+					max="15"
+				/>
+
+				<div
+					*ngIf="
+						count.hasError('required') &&
+						(count.dirty || count.touched)
+					"
+					class="alert alert-danger"
+				>
+					{{ "CUSTOMERS_VIEW.QUANTITY_CAN'T_BE_EMPTY" | translate }}!
+				</div>
+				<div
+					*ngIf="
+						count.hasError('min') && (count.dirty || count.touched)
+					"
+					class="alert alert-danger"
+				>
+					{{ "CUSTOMERS_VIEW.QUANTITY_CAN'T_BE_0" | translate }}!
+				</div>
+				<div
+					*ngIf="
+						count.hasError('notEnoughAvailable') &&
+						(count.dirty || count.touched)
+					"
+					class="alert alert-danger"
+				>
+					{{
+						'CUSTOMERS_VIEW.NOT_ENOUGH_PRODUCTS_AVAILABLE'
+							| translate
+					}}!
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-neutral" type="button" (click)="cancel()">
+		{{ 'CANCEL' | translate }}
+	</button>
+	<button
+		class="btn btn-success"
+		type="button"
+		(click)="createOrder()"
+		[disabled]="!form.valid"
+	>
+		{{ 'CUSTOMERS_VIEW.ORDER' | translate }}
+	</button>
+</div>

@@ -1,1 +1,0 @@
-# Angular Clients Shared Library

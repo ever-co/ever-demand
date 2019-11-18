@@ -1,0 +1,82 @@
+<no-orders-info
+	*ngIf="ordersLoaded && orders?.length === 0 && !isOrderContainerLive"
+	(toggleOrderContainer)="toggleOrderContainer.emit()"
+	[filterMode]="'ready'"
+></no-orders-info>
+
+<ion-spinner
+	*ngIf="!ordersLoaded"
+	class="orders-spinner"
+	name="bubbles"
+></ion-spinner>
+
+<div *ngIf="orders.length > 0">
+	<div
+		*ngFor="
+			let order of orders
+				| paginate
+					: {
+							itemsPerPage: 10,
+							currentPage: page,
+							totalItems: ordersCount
+					  }
+		"
+		item-height="209px"
+	>
+		<order-without-carrier
+			[order]="order"
+			[onUpdateWarehouseStatus]="onUpdateWarehouseStatus"
+			[getWarehouseStatus]="getWarehouseStatus"
+			*ngIf="orderState(order) === OrderState.WarehousePreparation"
+		>
+		</order-without-carrier>
+
+		<order-with-carrier
+			[order]="order"
+			[onUpdateWarehouseStatus]="onUpdateWarehouseStatus"
+			[getWarehouseStatus]="getWarehouseStatus"
+			*ngIf="orderState(order) === OrderState.InDelivery"
+		>
+		</order-with-carrier>
+
+		<order-delivered
+			[order]="order"
+			*ngIf="orderState(order) === OrderState.Delivered"
+			[getWarehouseStatus]="getWarehouseStatus"
+		>
+		</order-delivered>
+
+		<order-canceled
+			[order]="order"
+			*ngIf="orderState(order) === OrderState.Canceled"
+			[getWarehouseStatus]="getWarehouseStatus"
+		>
+		</order-canceled>
+
+		<order-delivery-problem
+			[order]="order"
+			*ngIf="orderState(order) === OrderState.DeliveryProblem"
+			[getWarehouseStatus]="getWarehouseStatus"
+		>
+		</order-delivery-problem>
+
+		<order-warehouse-preparation-problem
+			[order]="order"
+			*ngIf="orderState(order) === OrderState.WarehousePreparationProblem"
+			[getWarehouseStatus]="getWarehouseStatus"
+		>
+		</order-warehouse-preparation-problem>
+	</div>
+
+	<pagination-controls
+		*ngIf="!focusedOrder"
+		class="pagination"
+		(pageChange)="loadPage($event)"
+		directionLinks="true"
+		autoHide="true"
+		responsive="true"
+		previousLabel="Previous"
+		nextLabel="Next"
+	>
+	</pagination-controls>
+</div>

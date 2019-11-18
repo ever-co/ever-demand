@@ -1,0 +1,20 @@
+<div class="pull-left">
+	<span class="badge badge-light"
+		>{{ 'WAREHOUSE_VIEW.ORDER.ORDER' | translate }} #{{
+			selectedOrder.orderNumber
+		}}</span
+	>
+	<span class="badge badge-primary">{{
+		getStatus(selectedOrder.warehouseStatusText)
+	}}</span>
+	<span class="badge badge-secondary">{{
+		getStatus(selectedOrder.carrierStatusText)
+	}}</span>
+</div>
+
+<div class="pull-right">
+	<b>{{ selectedOrder.createdAt | date: 'dd-MM-yyyy' }}</b>
+	<div *ngIf="selectedOrder.products.length">
+		{{ timers[selectedOrder.products[0].id] }}
+	</div>
+</div>

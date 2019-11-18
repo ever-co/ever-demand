@@ -1,0 +1,27 @@
+<nb-card>
+	<ea-user-basic-info-form
+		#basicInfoForm
+		[form]="basicInfo"
+		[showBasicInfoLabel]="true"
+	>
+	</ea-user-basic-info-form>
+
+	<hr />
+
+	<ea-location-form
+		#locationForm
+		[form]="location"
+		[apartment]="apartment"
+		[showAutocompleteSearch]="true"
+		(mapCoordinatesEmitter)="onCoordinatesChanges($event)"
+		(mapGeometryEmitter)="onGeometrySend($event)"
+	>
+	</ea-location-form>
+
+	<div class="py-2"></div>
+
+	<google-map
+		[mapCoordEvent]="mapCoordEmitter"
+		[mapGeometryEvent]="mapGeometryEmitter"
+	></google-map>
+</nb-card>
