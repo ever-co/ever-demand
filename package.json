@@ -2,7 +2,7 @@
 	"name": "ever-platform",
 	"description": "Ever Platform",
 	"license": "AGPL-3.0",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"homepage": "https://ever.co",
 	"repository": {
 		"type": "git",
@@ -30,6 +30,8 @@
 		}
 	],
 	"scripts": {
+		"watch": "yarn lerna run watch --parallel",
+		"lint": "yarn tslint --fix",
 		"bootstrap": "yarn install && yarn lerna bootstrap",
 		"run:ncu": "yarn ncu --configFileName=.ncurc.json --configFilePath=./",
 		"run:server": "yarn --cwd ./backend/api start",
@@ -39,6 +41,7 @@
 		"run:shopmobile": "yarn --cwd ./shop/mobile-ionic start",
 		"run:shopweb": "yarn --cwd ./shop/website-angular start",
 		"run:carrier": "yarn --cwd ./carrier/mobile-ionic start",
+		"build": "yarn lerna run build",
 		"build:server": "yarn --cwd ./backend/api run build",
 		"build:admin": "yarn --cwd ./admin/website-angular run build",
 		"build:merchant": "yarn --cwd ./merchant/tablet-ionic run build",
@@ -73,10 +76,10 @@
 		"uuid": "^3.3.2"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^8.1.0",
-		"@commitlint/config-conventional": "^8.1.0",
-		"@commitlint/config-lerna-scopes": "^8.1.0",
-		"@commitlint/travis-cli": "^8.1.0",
+		"@commitlint/cli": "^8.2.0",
+		"@commitlint/config-conventional": "^8.2.0",
+		"@commitlint/config-lerna-scopes": "^8.2.0",
+		"@commitlint/travis-cli": "^8.2.0",
 		"@types/async": "^3.0.0",
 		"@types/d3-color": "^1.2.2",
 		"@types/faker": "^4.1.5",
@@ -86,14 +89,15 @@
 		"@types/jest": "^24.0.11",
 		"@types/leaflet": "^1.4.4",
 		"@types/mongodb": "^3.1.25",
-		"@types/mongoose": "^5.3.26",
-		"@types/node": "^12.0.2",
+		"@types/mongoose": "^5.5.32",
+		"@types/node": "^12.12.8",
 		"@types/socket.io-client": "^1.4.32",
 		"@types/stripe": "^6.31.10",
 		"@types/uuid": "^3.4.4",
 		"cloc": "^2.4.0",
 		"codelyzer": "^5.0.1",
-		"concurrently": "^4.1.0",
+		"concurrently": "^5.0.0",
+		"conventional-changelog-core": "^4.0.3",
 		"conventional-changelog": "^3.1.4",
 		"cross-env": "^5.2.0",
 		"cz-conventional-changelog": "^3.0.2",
@@ -106,7 +110,7 @@
 		"karma-coverage-istanbul-reporter": "^2.0.5",
 		"karma-jasmine": "^2.0.1",
 		"karma-jasmine-html-reporter": "^1.4.2",
-		"lerna": "^3.13.4",
+		"lerna": "^3.16.4",
 		"lerna-changelog": "^0.8.2",
 		"lighthouse": "^5.0.0",
 		"lint-staged": "^9.2.1",
@@ -120,14 +124,26 @@
 		"tslint-config-prettier": "^1.18.0",
 		"typescript": "~3.4.5"
 	},
+	"workspaces": {
+		"packages": [
+			"packages/*"
+		]
+	},
 	"config": {
 		"commitizen": {
 			"path": "./node_modules/cz-conventional-changelog"
 		}
 	},
+	"commitlint": {
+		"extends": [
+			"@commitlint/config-conventional"
+		],
+		"rules": {}
+	},
 	"husky": {
 		"hooks": {
 			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+			"post-commit": "git update-index --again",
 			"pre-commit": "pretty-quick --no-verify --staged"
 		}
 	},

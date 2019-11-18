@@ -6,6 +6,12 @@ services:
         container_name: mongo
         ports:
             - '27017:27017'
+        environment:
+            - MONGO_DATA_DIR=/data/db
+            - MONGO_LOG_DIR=/dev/null
+        volumes:
+            - mongo_data:/data/db
+        command: mongod --logpath=/dev/null # --quiet
         networks:
             - overlay
 
@@ -18,6 +24,7 @@ services:
         environment:
             NODE_ENV: production
             WAIT_HOSTS: mongo:27017
+            DB_URI: mongodb://mongo/ever_development
         restart: on-failure
         depends_on:
             - mongo
@@ -39,6 +46,7 @@ volumes:
     root_node_modules:
     api_node_modules:
     certificates:
+    mongo_data:
 
 networks:
     overlay:

@@ -48,6 +48,7 @@
 		"prepublish": "yarn run snyk-protect"
 	},
 	"dependencies": {
+		"@ever-co/core": "^0.3.0",
 		"@captemulation/get-parameter-names": "^1.3.0",
 		"@nestjs/common": "^6.3.2",
 		"@nestjs/core": "^6.5.3",

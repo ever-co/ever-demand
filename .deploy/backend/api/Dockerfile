@@ -53,4 +53,4 @@ COPY . .
 EXPOSE 5500 5501 5050 5555
 
 CMD /wait \
-    && cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=2048 yarn --cwd ./backend/api start
+    && cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=2048 yarn --cwd ./backend/api node build/main.js
