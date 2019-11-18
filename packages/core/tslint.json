@@ -1,0 +1,121 @@
+{
+	"extends": ["tslint:latest", "tslint-config-prettier"],
+	"linterOptions": {
+		"exclude": ["node_modules", "dist"]
+	},
+	"rules": {
+		"no-implicit-dependencies": false,
+		"no-submodule-imports": false,
+		"trailing-comma": [
+			false,
+			{
+				"multiline": "always",
+				"singleline": "never"
+			}
+		],
+		"interface-name": [false, "always-prefix"],
+		"arrow-return-shorthand": true,
+		"callable-types": true,
+		"class-name": true,
+		"comment-format": [true, "check-space"],
+		"forin": true,
+		"import-blacklist": [true],
+		"ordered-imports": false,
+		"interface-over-type-literal": true,
+		"label-position": true,
+		"max-line-length": [true, 120],
+		"member-access": false,
+		"no-arg": true,
+		"no-console": [false],
+		"no-construct": true,
+		"no-debugger": true,
+		"no-duplicate-super": true,
+		"no-empty": false,
+		"no-empty-interface": false,
+		"no-eval": true,
+		"no-misused-new": true,
+		"no-non-null-assertion": false,
+		"no-shadowed-variable": true,
+		"no-string-literal": false,
+		"no-string-throw": true,
+		"no-switch-case-fall-through": true,
+		"no-unnecessary-initializer": true,
+		"no-use-before-declare": true,
+		"no-var-keyword": true,
+		"object-literal-sort-keys": false,
+		"prefer-const": true,
+		"object-literal-key-quotes": false,
+		"no-angle-bracket-type-assertion": false,
+		"member-ordering": false,
+		"no-consecutive-blank-lines": false,
+		"radix": true,
+		"semicolon": [true, "always"],
+		"triple-equals": [true, "allow-null-check"],
+		"typeof-compare": true,
+		"unified-signatures": true,
+		"variable-name": false,
+		"directive-selector": [true, "attribute", "ngx", "camelCase"],
+		"component-selector": [
+			true,
+			"element",
+			[
+				"e-cu", // e-cu = ever customer
+				"ngx",
+				"ea", // ea = ever admin
+				"es" // es = ever store
+			],
+			"kebab-case"
+		],
+		"no-attribute-parameter-decorator": true,
+		"no-forward-ref": true,
+		"no-input-rename": true,
+		"no-output-rename": true,
+		"only-arrow-functions": false,
+		"pipe-naming": [true, "camelCase", "my"],
+		"use-host-property-decorator": true,
+		"ban": [
+			true,
+			"eval",
+			"fit",
+			"fdescribe",
+			{
+				"name": "$",
+				"message": "please don't"
+			}
+		],
+		"max-classes-per-file": [false],
+		"import-destructuring-spacing": true,
+		"invoke-injectable": true,
+		"no-access-missing-member": true,
+		"templates-use-public": true,
+		"use-input-property-decorator": true,
+		"use-life-cycle-interface": true,
+		"use-output-property-decorator": true,
+		"use-pipe-transform-interface": true,
+		"quotemark": [true, "single", "avoid-escape"],
+		"eofline": true,
+		"import-spacing": true,
+		"indent": [true, "tabs"],
+		"no-trailing-whitespace": true,
+		"one-line": [false],
+		"typedef-whitespace": [
+			true,
+			{
+				"call-signature": "nospace",
+				"index-signature": "nospace",
+				"parameter": "nospace",
+				"property-declaration": "nospace",
+				"variable-declaration": "nospace"
+			}
+		],
+		"whitespace": [
+			true,
+			"check-branch",
+			"check-decl",
+			"check-operator",
+			"check-separator",
+			"check-type"
+		],
+		"no-namespace": false
+	}
+}

@@ -1,0 +1,364 @@
+// The path for our ionicons font files, relative to the built CSS in www/css
+$ionicons-font-path: '../../lib/ionic/release/fonts' !default;
+$fa-font-path: '../../lib/font-awesome/fonts' !default;
+
+$brand: #2a2c39;
+$brand-lighted: #353748;
+$brand-darken: darken($brand, 5%); // #1f212a
+
+$assertive: #bd4742;
+$assertive-lighted: #ce4843;
+$assertive-darken: darken($assertive, 5%);
+
+$balanced: #33cd5f;
+$balanced-lighted: #47d26f;
+
+.app-keyboard-open {
+	.app-hide-on-keyboard-open {
+		display: none;
+	}
+}
+
+///////////////
+/// Mixins ////
+///////////////
+
+@mixin calc($property, $expression...) {
+	#{$property}: -moz-calc(#{$expression});
+	#{$property}: -webkit-calc(#{$expression});
+	#{$property}: calc(#{$expression});
+}
+
+@mixin transform($transforms) {
+	-moz-transform: $transforms;
+	-o-transform: $transforms;
+	-ms-transform: $transforms;
+	-webkit-transform: $transforms;
+	transform: $transforms;
+}
+
+@mixin vertical-align($position: relative) {
+	position: $position;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+@mixin center($position: relative) {
+	position: $position;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+@mixin top-center($position: relative) {
+	position: $position;
+	left: 50%;
+	-webkit-transform: translate(-50%, 0);
+	-ms-transform: translate(-50%, 0);
+	top: 0;
+}
+
+@mixin bottom-center($position: relative) {
+	position: $position;
+	left: 50%;
+	-webkit-transform: translate(-50%, 0);
+	-ms-transform: translate(-50%, 0);
+	bottom: 0;
+}
+
+@mixin calc($property, $expression) {
+	#{$property}: -webkit-calc(#{$expression});
+	#{$property}: calc(#{$expression});
+}
+
+@mixin placeholder($color) {
+	&::-webkit-input-placeholder {
+		color: $color;
+	}
+	&::-moz-placeholder {
+		color: $color;
+	}
+	&:-ms-input-placeholder {
+		color: $color;
+	}
+}
+
+///////////////////////////////
+/// Normalize Html And Body ///
+///////////////////////////////
+
+html,
+body {
+	overflow: visible !important;
+	background-color: $brand-darken !important;
+}
+
+///////////////
+// Ionic Add //
+///////////////
+
+.menu-open {
+	.side-menu-content-ltr {
+		-webkit-transform: translate3d(250px, 0px, 0px) !important;
+	}
+
+	.side-menu-content-rtl {
+		-webkit-transform: translate3d(-250px, 0px, 0px) !important;
+	}
+}
+
+.loading-container .loading {
+	background-color: transparent;
+
+	.spinner {
+		fill: #fff;
+		stroke: #fff;
+		svg {
+			width: 40px;
+			height: 40px;
+		}
+	}
+}
+
+.bright-vie .loading-container .loading .spinner {
+	fill: $brand;
+	stroke: $brand;
+}
+
+.swiper-slide {
+	img {
+		width: 100%;
+	}
+}
+
+//////////////////
+/// Bar Styles ///
+//////////////////
+
+.bar {
+	&.bar-brand {
+		border-bottom: 2px solid darken($brand, 2%);
+		background: $brand none;
+		color: white !important;
+		.title {
+			color: white;
+		}
+		.button-icon mr-1 {
+			color: white;
+		}
+	}
+}
+
+///////////////////
+/// Custom link ///
+//////////////////
+
+.brand-link {
+	color: $brand;
+	&:active {
+		color: $brand-lighted;
+	}
+}
+
+/////////////////////
+/// Everbie Input ///
+/////////////////////
+
+.everbie-input {
+	height: 57px;
+	width: 100%;
+	font-size: 16px;
+	line-height: 20px;
+	border: solid #5c5f73 1px;
+	color: #fff;
+	background-color: inherit;
+	border-radius: 8px;
+	padding: 20px;
+	text-align: center;
+	-webkit-appearance: none;
+
+	@include placeholder(#6d6f80);
+}
+
+/////////////////////////
+/// Add Button Styles ///
+/////////////////////////
+
+.button.button-brand {
+	background-color: $brand;
+	border-color: darken($brand, 3%);
+	color: #fff;
+	&.active,
+	&.activated {
+		background-color: darken($brand, 1%);
+		box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+	}
+}
+
+.button.button-dark-brand {
+	background-color: $brand-darken;
+	border-color: darken($brand-darken, 3%);
+	color: #fff;
+	&.active,
+	&.activated {
+		background-color: darken($brand-darken, 1%);
+		box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+	}
+}
+
+.button.button-brand-lighted {
+	background-color: $brand-lighted;
+	border-color: darken($brand-lighted, 3%);
+	color: #fff;
+	&.active,
+	&.activated {
+		background-color: darken($brand-lighted, 1%);
+		box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+	}
+}
+
+.button.button-assertive {
+	&.active,
+	&.activated {
+		border-color: $assertive-darken !important;
+	}
+}
+
+.button.button-balanced {
+	&.active,
+	&.activated {
+		border-color: darken($balanced, 3%) !important;
+	}
+}
+
+.button.button-balanced {
+	background-color: darken($balanced, 5%);
+}
+
+.everbie-button {
+	// @extend .waves-effect;
+	// @extend .waves-classic;
+	@extend .button;
+	@extend .button-assertive;
+
+	border-radius: 8px !important;
+
+	font-size: 20px;
+	padding: 10px 16px;
+	margin-bottom: 0;
+	line-height: 34px;
+
+	background-color: #ce4843;
+}
+
+/////////////
+/// Utils ///
+/////////////
+
+.bottom-0 {
+	position: absolute;
+	bottom: 0;
+}
+
+.no-padding {
+	padding: 0;
+}
+
+.no-padding-right {
+	padding-right: 0;
+}
+
+.no-padding-left {
+	padding-left: 0;
+}
+
+.no-padding-top {
+	padding-top: 0;
+}
+
+.no-padding-bottom {
+	padding-bottom: 0;
+}
+
+.text-align-right {
+	text-align: right;
+}
+
+.text-align-center {
+	text-align: center;
+}
+
+.text-align-left {
+	text-align: left;
+}
+
+.col-100 {
+	width: 100%;
+}
+
+.display-block {
+	display: block;
+}
+
+.header-bar-big-title {
+	font-size: 22px !important;
+	text-align: center !important;
+}
+
+.button-bar-right-container {
+	width: 280px;
+	margin-left: auto;
+}
+
+.pull-right {
+	margin-left: auto;
+}
+
+.plus-navbar-button {
+	&::before {
+		font-size: 24px !important;
+	}
+}
+
+.border-color-brand {
+	border-color: $brand;
+}
+
+.flip {
+	@include transform(scale(-1, 1));
+}
+
+.transition-on-color-change {
+	$speed: 0.3s;
+	-webkit-transition: background-color $speed, border-color $speed,
+		color $speed;
+	-moz-transition: background-color $speed, border-color $speed, color $speed;
+	-o-transition: background-color $speed, border-color $speed, color $speed;
+	transition: background-color $speed, border-color $speed, color $speed;
+}
+
+.horizontal-space-10 {
+	width: 10px;
+}
+
+.margin-top-bottom {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.maintenance-message-container {
+	color: white;
+	padding: 20px;
+
+	background: $brand;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	height: 100%;
+}

@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"noLib": false,
+		"skipLibCheck": true,
+		"lib": ["es2017", "esnext.asynciterable"],
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"target": "es2017",
+		"strict": true,
+		"strictPropertyInitialization": false,
+		"sourceMap": false,
+		"newLine": "LF"
+	}
+}
