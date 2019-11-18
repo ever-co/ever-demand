@@ -212,8 +212,8 @@
 			"ADD": "Добави",
 			"BACK": "Обратно",
 			"SAVE": "Запази",
-			"SELECT": "Select",
-			"CREATE": "Create",
+			"SELECT": "Изберете",
+			"CREATE": "Създай Клиент",
 			"HOW_TO_SET_UP": {
 				"HOW_TO_SET_UP": "Как да настроите"
 			},
@@ -604,7 +604,7 @@
 			"ERRORS": {
 				"FIRST_NAME_IS_REQUIRED": "Първо име е задължително",
 				"LAST_NAME_IS_REQUIRED": "Фамилно име е задължително",
-				"INVALID_EMAIL": "Грешен имейл",
+				"INVALID_EMAIL": "Невалиден Имейл",
 				"EMAIL_IS_REQUIRED": "Имейл е задължителен",
 				"COORDINATES_ARE_REQUIRED": "Координати са задължителни"
 			},
