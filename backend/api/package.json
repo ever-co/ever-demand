@@ -258,5 +258,5 @@
 		"node": ">=10.15.0",
 		"yarn": ">=1.13.0"
 	},
-	"snyk": true
+	"snyk": false
 }
