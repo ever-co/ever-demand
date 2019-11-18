@@ -2,7 +2,7 @@
 	"name": "@ever-co/core",
 	"description": "Ever Platform Shared Core",
 	"license": "AGPL-3.0",
-	"version": "0.2.0",
+	"version": "0.3.1-alpha.0",
 	"homepage": "https://ever.co",
 	"repository": {
 		"type": "git",
@@ -39,17 +39,17 @@
 		"access": "public"
 	},
 	"dependencies": {
-		"reflect-metadata": "^0.1.13",
-		"typeorm": "^0.2.18",
-		"mongoose": "^5.6.0",
 		"lodash": "^4.17.15",
+		"mongoose": "^5.6.0",
+		"reflect-metadata": "^0.1.13",
 		"rxjs": "^6.5.2",
-		"stripe": "^7.2.0"
+		"stripe": "^7.2.0",
+		"typeorm": "^0.2.18"
 	},
 	"devDependencies": {
-		"rimraf": "^3.0.0",
 		"@types/jest": "^24.0.11",
 		"@types/node": "^12.12.8",
+		"rimraf": "^3.0.0",
 		"typescript": "~3.4.5"
 	}
 }
