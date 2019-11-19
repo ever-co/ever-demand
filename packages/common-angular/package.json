@@ -37,10 +37,5 @@
 	},
 	"publishConfig": {
 		"access": "public"
-	},
-	"dependencies": {},
-	"devDependencies": {
-		"rimraf": "^3.0.0",
-		"typescript": "~3.4.5"
 	}
 }

@@ -45,11 +45,5 @@
 		"rxjs": "^6.5.2",
 		"stripe": "^7.2.0",
 		"typeorm": "^0.2.18"
-	},
-	"devDependencies": {
-		"@types/jest": "^24.0.11",
-		"@types/node": "^12.12.8",
-		"rimraf": "^3.0.0",
-		"typescript": "~3.4.5"
 	}
 }
