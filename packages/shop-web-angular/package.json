@@ -102,6 +102,8 @@
 		"webpack": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run config:dev && node --max_old_space_size=4096 node_modules/webpack/bin/webpack.js"
 	},
 	"dependencies": {
+		"@ever-platform/common": "^0.3.0",
+		"@ever-platform/common-angular": "^0.3.0",
 		"@agm/core": "^1.0.0-beta.5",
 		"@angular/animations": "^8.0.0",
 		"@angular/cdk": "^8.0.0",

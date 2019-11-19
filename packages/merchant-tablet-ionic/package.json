@@ -55,6 +55,8 @@
 		"cordova:run:prod:device": "cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=4096 yarn run config:prod && yarn ionic cordova run android --prod --release --device"
 	},
 	"dependencies": {
+		"@ever-platform/common": "^0.3.0",
+		"@ever-platform/common-angular": "^0.3.0",
 		"@angular/animations": "^8.0.0",
 		"@angular/common": "^8.0.0",
 		"@angular/core": "^8.0.0",

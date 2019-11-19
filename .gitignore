@@ -44,3 +44,4 @@ Thumbs.db
 yarn.lock
 /yarn-error.log
 *.lerna_backup
+/packages/common-angular/node_modules/.bin
