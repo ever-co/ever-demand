@@ -1,4 +1,4 @@
-import User from '@modules/server.common/entities/User';
+import User from '../entities/User';
 import { CreateObject } from '@pyro/db/db-create-object';
 
 export interface AddableRegistrationInfo {

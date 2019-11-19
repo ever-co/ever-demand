@@ -17,7 +17,7 @@ import { WarehouseRouter } from './warehouse-router.service';
 import { UserProductsRouter } from './user-products-router.service';
 import { WarehouseOrdersRouter } from './warehouse-orders-router.service';
 import { UserOrdersRouter } from './user-orders-router.service';
-import { UserAuthRouter } from '@modules/client.common.angular2/routers/user-auth-router.service';
+import { UserAuthRouter } from './user-auth-router.service';
 import { GeoLocationRouter } from './geo-location-router.service';
 
 @NgModule({

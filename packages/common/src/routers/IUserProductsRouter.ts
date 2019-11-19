@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
-import User from '@modules/server.common/entities/User';
-import Device from '@modules/server.common/entities/Device';
+import User from '../entities/User';
+import Device from '../entities/Device';
 
 interface IUserProductsRouter {
 	getPlaceholder(

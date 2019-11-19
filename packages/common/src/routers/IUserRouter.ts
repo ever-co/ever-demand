@@ -3,7 +3,7 @@ import User from '../entities/User';
 import GeoLocation from '../entities/GeoLocation';
 import { IUserCreateObject } from '../interfaces/IUser';
 import Stripe from 'stripe';
-import Device from '@modules/server.common/entities/Device';
+import Device from '../entities/Device';
 
 interface IUserRouter {
 	get(id: User['id']): Observable<User | null>;

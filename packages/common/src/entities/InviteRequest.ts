@@ -92,9 +92,7 @@ class InviteRequest
 			return null;
 		}
 
-		let address = `${this.geoLocation.streetAddress} ${
-			this.geoLocation.house
-		}`;
+		let address = `${this.geoLocation.streetAddress} ${this.geoLocation.house}`;
 
 		if (this.apartment) {
 			address += `/${this.apartment}`;

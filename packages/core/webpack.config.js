@@ -1,8 +1,15 @@
 const webpack = require('webpack');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+// const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
-console.log('The custom config is used');
+const isProduction =
+	typeof process.env.NODE_ENV !== 'undefined' &&
+	process.env.NODE_ENV === 'production';
+const mode = isProduction ? 'production' : 'development';
+const devtool = isProduction ? false : 'inline-source-map';
+
+console.log('The custom config is used now');
 
 module.exports = {
 	entry: ['webpack/hot/poll?100', './src/nest-bootstrap.ts'],
@@ -10,12 +17,15 @@ module.exports = {
 	target: 'node',
 	externals: [
 		nodeExternals({
-			whitelist: ['webpack/hot/poll?100']
+			whitelist: ['webpack/hot/poll?100', '@ever-platform/common']
 		})
 	],
 	module: {
 		rules: [
-			{ test: /\.graphql?$/, loader: 'webpack-graphql-loader' },
+			{
+				test: /\.graphql?$/,
+				loader: 'webpack-graphql-loader'
+			},
 			{
 				test: /.tsx?$/,
 				use: 'ts-loader',
@@ -23,18 +33,24 @@ module.exports = {
 			}
 		]
 	},
-	mode: 'development',
+	mode,
+	devtool,
 	resolve: {
+		modules: ['node_modules'],
 		extensions: ['.tsx', '.ts', '.js'],
-		symlinks: false,
+		symlinks: true,
 		alias: {
-			'@modules': path.resolve('./src/modules/'),
+			'@modules': path.resolve('./node_modules/@ever-platform/common/'),
 			'@pyro/io': path.resolve('./src/@pyro/io'),
 			'@pyro/db-server': path.resolve('./src/@pyro/db-server'),
-			'@pyro': path.resolve('./src/modules/server.common/@pyro/')
+			'@pyro': path.resolve('./node_modules/@ever-platform/common/@pyro/')
 		}
 	},
-	plugins: [new webpack.HotModuleReplacementPlugin()],
+	plugins: [
+		new webpack.HotModuleReplacementPlugin()
+		// new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]),
+		// new ForkTsCheckerWebpackPlugin({ tslint: true })
+	],
 	output: {
 		path: path.join(__dirname, 'dist'),
 		filename: 'server.js'

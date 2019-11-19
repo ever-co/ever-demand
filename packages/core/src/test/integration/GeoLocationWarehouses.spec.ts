@@ -1,3 +1,4 @@
+/*
 import 'jest';
 import { servicesContainer } from '../../services/inversify.config';
 import { GeoLocationsWarehousesService } from '../../services/geo-locations';
@@ -142,6 +143,10 @@ describe('GeoLocationWarehouses', () => {
 			await createNearbyWarehouse();
 
 			expect(warehouses).toHaveLength(1);*/
+
+/*
+
 		});
 	});
 });
+*/

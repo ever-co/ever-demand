@@ -3,9 +3,10 @@
 		"module": "commonjs",
 		"lib": ["dom", "esnext", "es2017.object"],
 		"baseUrl": "./src",
+		"outDir": "./build",
+		"rootDir": "./src",
 		"incremental": true,
 		"removeComments": true,
-		"outDir": "./build",
 		"target": "es6",
 		"moduleResolution": "node",
 		"preserveConstEnums": true,
@@ -18,8 +19,14 @@
 		"typeRoots": ["node_modules/@types"],
 		"types": ["node", "reflect-metadata", "jest"],
 		"paths": {
-			"@pyro/*": ["@pyro/*", "./modules/server.common/@pyro/*"],
-			"@modules/*": ["./modules/*"]
+			"@pyro/*": [
+				"@pyro/*",
+				"../node_modules/@ever-platform/common/@pyro/*"
+			],
+			"@modules/server.common/*": [
+				"@modules/server.common/*",
+				"../node_modules/@ever-platform/common/*"
+			]
 		}
 	},
 	"include": ["src/**/*.ts", "./*.ts"],

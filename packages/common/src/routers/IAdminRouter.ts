@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import Admin from '../entities/Admin';
 import { CreateObject } from '@pyro/db/db-create-object';
-import IAdmin from '@modules/server.common/interfaces/IAdmin';
+import IAdmin from '../interfaces/IAdmin';
 
 export interface IAdminRegistrationInput {
 	admin: CreateObject<Admin>;

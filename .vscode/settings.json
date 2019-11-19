@@ -64,5 +64,6 @@
 		"leizongmin.node-module-intellisense"
 	],
 	"git.ignoreLimitWarning": true,
-	"vsicons.presets.nestjs": true
+	"vsicons.presets.nestjs": true,
+	"cSpell.words": ["pyro"]
 }

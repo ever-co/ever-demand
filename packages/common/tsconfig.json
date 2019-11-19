@@ -1,9 +1,12 @@
 {
+	"compileOnSave": false,
 	"compilerOptions": {
 		"module": "commonjs",
-		"lib": ["dom", "esnext", "es2017.object"],
-		"baseUrl": "",
-		"outDir": "build",
+		"lib": ["es2017", "dom", "esnext"],
+		"baseUrl": "./src",
+		"outDir": "./build",
+		"rootDir": "./src",
+		"incremental": true,
 		"target": "es6",
 		"moduleResolution": "node",
 		"preserveConstEnums": true,
@@ -16,9 +19,8 @@
 		"typeRoots": ["node_modules/@types"],
 		"types": ["node", "reflect-metadata", "jest"],
 		"paths": {
-			"@pyro/*": ["@pyro/*"],
-			"@modules/server.common/*": ["*"]
+			"@pyro/*": ["@pyro/*", "/@pyro/*"]
 		}
 	},
-	"exclude": ["backup", "backup/TrackingService", "node_modules"]
+	"exclude": ["node_modules"]
 }

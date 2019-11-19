@@ -11,7 +11,13 @@
 		"target": "es2017",
 		"strict": true,
 		"strictPropertyInitialization": false,
-		"sourceMap": false,
+		"sourceMap": true,
 		"newLine": "LF"
-	}
+	},
+	"exclude": [
+		"node_modules",
+		"packages/*/node_modules",
+		"packages/*/lib",
+		"packages/*/build"
+	]
 }

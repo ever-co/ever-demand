@@ -1,16 +1,34 @@
 {
 	"compileOnSave": false,
 	"compilerOptions": {
+		"lib": ["es2017", "dom", "esnext"],
+		"baseUrl": "./src",
+		"outDir": "./build",
+		"rootDir": "./src",
+		"incremental": true,
+		"target": "es5",
+		"moduleResolution": "node",
+		"preserveConstEnums": true,
+		"emitDecoratorMetadata": true,
+		"allowSyntheticDefaultImports": true,
+		"experimentalDecorators": true,
 		"sourceMap": true,
 		"declaration": false,
-		"moduleResolution": "node",
-		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true,
-		"noImplicitAny": false,
-		"preserveConstEnums": true,
-		"allowSyntheticDefaultImports": true,
-		"target": "es5",
+		"skipLibCheck": true,
+		"strictNullChecks": false,
 		"typeRoots": ["node_modules/@types"],
-		"lib": ["es2017", "dom", "esnext"]
-	}
+		"types": [],
+		"noImplicitAny": false,
+		"paths": {
+			"@pyro/*": [
+				"@pyro/*",
+				"../node_modules/@ever-platform/common/@pyro/*"
+			],
+			"@modules/server.common/*": [
+				"@modules/server.common/*",
+				"../node_modules/@ever-platform/common/*"
+			]
+		}
+	},
+	"exclude": ["node_modules"]
 }

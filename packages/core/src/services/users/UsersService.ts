@@ -1,7 +1,7 @@
 import * as Logger from 'bunyan';
 import { inject, injectable, LazyServiceIdentifer } from 'inversify';
 import { env } from '../../env';
-import User from '../../modules/server.common/entities/User';
+import User from '@modules/server.common/entities/User';
 import { createEverLogger } from '../../helpers/Log';
 import { InvitesService } from '../invites';
 import { DBService } from '@pyro/db-server';
@@ -9,7 +9,7 @@ import {
 	IUserCreateObject,
 	IUserInitializeObject
 } from '@modules/server.common/interfaces/IUser';
-import IUserRouter from '../../modules/server.common/routers/IUserRouter';
+import IUserRouter from '@modules/server.common/routers/IUserRouter';
 import {
 	asyncListener,
 	observableListener,
@@ -20,10 +20,10 @@ import { Observable } from 'rxjs';
 import { observeFile } from '../../utils';
 import GeoLocation, {
 	Country
-} from '../../modules/server.common/entities/GeoLocation';
+} from '@modules/server.common/entities/GeoLocation';
 import IGeoLocation, {
 	IGeoLocationCreateObject
-} from '../../modules/server.common/interfaces/IGeoLocation';
+} from '@modules/server.common/interfaces/IGeoLocation';
 import { DevicesService } from '../devices';
 import IService from '../IService';
 import * as Stripe from 'stripe';
@@ -40,7 +40,7 @@ import {
 } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { _throw } from 'rxjs/observable/throw';
-import ILanguage from '../../modules/server.common/interfaces/ILanguage';
+import ILanguage from '@modules/server.common/interfaces/ILanguage';
 import _ = require('lodash');
 import * as faker from 'faker';
 import { WarehousesService } from '../../services/warehouses';

@@ -1,5 +1,5 @@
 import { DBCreateObject, DBRawObject, PyroObjectId } from '../@pyro/db';
-import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
+import { ILocaleMember } from './ILocale';
 
 export interface IProductsCategoryCreateObject extends DBCreateObject {
 	name: IProductsCategoryName[];

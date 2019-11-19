@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { observableListener, routerName } from '@pyro/io';
-import IUserProductsRouter from '../../modules/server.common/routers/IUserProductsRouter';
+import IUserProductsRouter from '@modules/server.common/routers/IUserProductsRouter';
 import * as Handlebars from 'handlebars';
 import { observeFile } from '../../utils';
 import { DevicesService } from '../devices/DevicesService';
@@ -33,19 +33,11 @@ export class UsersProductsService implements IUserProductsRouter, IService {
 	constructor(protected devicesService: DevicesService) {
 		this._placeholderTemplateString = observeFile(
 			this._placeholderTemplateFileName
-		).pipe(
-			distinctUntilChanged(),
-			publishReplay(1),
-			refCount()
-		);
+		).pipe(distinctUntilChanged(), publishReplay(1), refCount());
 
 		this._placeholderTranslationsJSON = observeFile(
 			this._placeholderTranslationsFileName
-		).pipe(
-			distinctUntilChanged(),
-			publishReplay(1),
-			refCount()
-		);
+		).pipe(distinctUntilChanged(), publishReplay(1), refCount());
 	}
 
 	/**
