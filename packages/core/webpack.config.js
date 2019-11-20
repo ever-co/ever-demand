@@ -14,12 +14,12 @@ console.log('The custom config is used now');
 module.exports = {
 	entry: ['webpack/hot/poll?100', './src/nest-bootstrap.ts'],
 	watch: false,
-	target: 'node',
 	externals: [
 		nodeExternals({
-			whitelist: ['webpack/hot/poll?100', '@ever-platform/common']
+			whitelist: ['webpack/hot/poll?100']
 		})
 	],
+	target: 'node',
 	module: {
 		rules: [
 			{
@@ -27,9 +27,17 @@ module.exports = {
 				loader: 'webpack-graphql-loader'
 			},
 			{
-				test: /.tsx?$/,
-				use: 'ts-loader',
-				exclude: /node_modules/
+				test: /\.(ts|tsx)?$/,
+				use: {
+					loader: 'ts-loader',
+					options: {
+						transpileOnly: false
+					}
+				},
+				include: [
+					path.resolve('./src'),
+					path.resolve('./node_modules/@ever-platform/common')
+				]
 			}
 		]
 	},
@@ -38,12 +46,16 @@ module.exports = {
 	resolve: {
 		modules: ['node_modules'],
 		extensions: ['.tsx', '.ts', '.js'],
-		symlinks: true,
+		symlinks: false,
 		alias: {
-			'@modules': path.resolve('./node_modules/@ever-platform/common/'),
+			'@modules/server.common': path.resolve(
+				'./node_modules/@ever-platform/common/src'
+			),
 			'@pyro/io': path.resolve('./src/@pyro/io'),
 			'@pyro/db-server': path.resolve('./src/@pyro/db-server'),
-			'@pyro': path.resolve('./node_modules/@ever-platform/common/@pyro/')
+			'@pyro': path.resolve(
+				'./node_modules/@ever-platform/common/src/@pyro/'
+			)
 		}
 	},
 	plugins: [

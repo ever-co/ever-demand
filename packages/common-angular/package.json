@@ -31,7 +31,7 @@
 	],
 	"scripts": {
 		"watch": "tsc -p ./tsconfig.build.json -w",
-		"build": "rimraf dist && tsc -p ./tsconfig.build.json",
+		"build": "rimraf build && tsc -p ./tsconfig.build.json",
 		"lint": "tslint --fix --project ./",
 		"test": "jest --config ./jest.config.js"
 	},

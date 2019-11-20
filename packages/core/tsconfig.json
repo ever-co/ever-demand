@@ -1,7 +1,8 @@
 {
+	"compileOnSave": false,
 	"compilerOptions": {
+		"lib": ["es2017", "dom", "esnext"],
 		"module": "commonjs",
-		"lib": ["dom", "esnext", "es2017.object"],
 		"baseUrl": "./src",
 		"outDir": "./build",
 		"rootDir": "./src",
@@ -16,19 +17,25 @@
 		"sourceMap": true,
 		"skipLibCheck": true,
 		"strictNullChecks": false,
-		"typeRoots": ["node_modules/@types"],
+		"typeRoots": ["../../node_modules/@types"],
 		"types": ["node", "reflect-metadata", "jest"],
 		"paths": {
 			"@pyro/*": [
 				"@pyro/*",
-				"../node_modules/@ever-platform/common/@pyro/*"
+				"../node_modules/@ever-platform/common/src/@pyro/*"
 			],
 			"@modules/server.common/*": [
 				"@modules/server.common/*",
-				"../node_modules/@ever-platform/common/*"
+				"../node_modules/@ever-platform/common/src/*"
 			]
 		}
 	},
 	"include": ["src/**/*.ts", "./*.ts"],
-	"exclude": ["backup", "build", "backup/TrackingService", "node_modules"]
+	"exclude": ["build", "node_modules"],
+	"files": ["../../node_modules/@types/node/index.d.ts"],
+	"references": [
+		{
+			"path": "../common"
+		}
+	]
 }

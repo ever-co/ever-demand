@@ -6,7 +6,9 @@
 		"cacheDir": ".changelog",
 		"labels": {}
 	},
+	"stream": true,
 	"command": {
+		"bootstrap": {},
 		"publish": {
 			"ignoreChanges": ["*.md", "test/**"]
 		},

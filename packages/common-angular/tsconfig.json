@@ -6,6 +6,7 @@
 		"outDir": "./build",
 		"rootDir": "./src",
 		"incremental": true,
+		"removeComments": true,
 		"target": "es5",
 		"moduleResolution": "node",
 		"preserveConstEnums": true,
@@ -13,22 +14,28 @@
 		"allowSyntheticDefaultImports": true,
 		"experimentalDecorators": true,
 		"sourceMap": true,
-		"declaration": false,
+		"declaration": true,
 		"skipLibCheck": true,
 		"strictNullChecks": false,
-		"typeRoots": ["node_modules/@types"],
+		"typeRoots": ["../../node_modules/@types"],
 		"types": [],
 		"noImplicitAny": false,
 		"paths": {
 			"@pyro/*": [
 				"@pyro/*",
-				"../node_modules/@ever-platform/common/@pyro/*"
+				"../node_modules/@ever-platform/common/src/@pyro/*"
 			],
 			"@modules/server.common/*": [
 				"@modules/server.common/*",
-				"../node_modules/@ever-platform/common/*"
+				"../node_modules/@ever-platform/common/src/*"
 			]
 		}
 	},
-	"exclude": ["node_modules"]
+	"exclude": ["node_modules"],
+	"files": ["../../node_modules/@types/node/index.d.ts"],
+	"references": [
+		{
+			"path": "../common"
+		}
+	]
 }

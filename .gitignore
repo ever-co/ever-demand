@@ -45,3 +45,5 @@ yarn.lock
 /yarn-error.log
 *.lerna_backup
 /packages/common-angular/node_modules/.bin
+/packages/core/tsconfig.build.tsbuildinfo
+/packages/core/src/test/setup.js
