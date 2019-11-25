@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { ApplicationModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { env } from './env';
-import * as Logger from 'bunyan';
+import Logger from 'bunyan';
 import { createEverLogger } from './helpers/Log';
 import { EverbieNestJSLogger } from './helpers/NestJSLogger';
 import {

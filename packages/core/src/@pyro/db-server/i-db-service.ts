@@ -1,6 +1,6 @@
 import { Subject, Observable } from 'rxjs';
 import { ExistenceEvent } from './existence';
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import { DBObject } from '@pyro/db';
 import { RawObject } from '@pyro/db/db-raw-object';
 import { CreateObject } from '@pyro/db/db-create-object';

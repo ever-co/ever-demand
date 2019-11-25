@@ -9,7 +9,7 @@ export const DateScalar = new GraphQLScalarType({
 	serialize(value: { getTime: () => void }) {
 		return value.getTime(); // value sent to the client
 	},
-	parseLiteral(ast: { kind: any; value: string | number | Date }) {
+	parseLiteral(ast) {
 		if (ast.kind === Kind.INT) {
 			return new Date(ast.value); // ast value is always in string format
 		}

@@ -63,7 +63,7 @@ export class ProductsCategoryService {
 				}
 			})
 			.pipe(
-				map((result) => result.data.createProductsCategory),
+				map((result: any) => result.data.createProductsCategory),
 				share()
 			);
 	}
@@ -102,7 +102,7 @@ export class ProductsCategoryService {
 				}
 			})
 			.pipe(
-				map((result) => result.data.updateProductsCategory),
+				map((result: any) => result.data.updateProductsCategory),
 				share()
 			);
 	}

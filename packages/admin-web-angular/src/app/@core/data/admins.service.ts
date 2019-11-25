@@ -75,7 +75,7 @@ export class AdminsService {
 				}
 			})
 			.pipe(
-				map((result) => result.data.updateAdmin),
+				map((result: any) => result.data.updateAdmin),
 				share()
 			);
 	}

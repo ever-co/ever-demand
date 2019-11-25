@@ -1,6 +1,6 @@
 import { getModel } from '@pyro/db-server/model';
 import { DBObject } from '@pyro/db';
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import { RawObject } from '@pyro/db/db-raw-object';
 import { injectable } from 'inversify';
 

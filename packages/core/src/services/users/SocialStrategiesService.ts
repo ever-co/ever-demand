@@ -1,6 +1,6 @@
-import * as GoogleStrategy from 'passport-google-oauth20';
+import GoogleStrategy from 'passport-google-oauth20';
+import FacebookStrategy from 'passport-facebook';
 import { inject, injectable } from 'inversify';
-import * as FacebookStrategy from 'passport-facebook';
 import { SocialRegisterService } from './SocialRegisterService';
 import { routerName } from '@pyro/io';
 import { env } from '../../env';

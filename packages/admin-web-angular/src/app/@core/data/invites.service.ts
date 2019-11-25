@@ -101,7 +101,7 @@ export class InvitesService {
 				}
 			})
 			.pipe(
-				map((result) => result.data.createInvite),
+				map((result: any) => result.data.createInvite),
 				share()
 			);
 	}
@@ -119,7 +119,7 @@ export class InvitesService {
 				variables: { ids }
 			})
 			.pipe(
-				map((result) => result.data.removeInvitesByIds),
+				map((result: any) => result.data.removeInvitesByIds),
 				share()
 			);
 	}
@@ -146,7 +146,7 @@ export class InvitesService {
 				}
 			})
 			.pipe(
-				map((result) => result.data.updateInvite),
+				map((result: any) => result.data.updateInvite),
 				share()
 			);
 	}

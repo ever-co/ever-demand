@@ -5,7 +5,10 @@ certificates
 
 **/*.js
 **/*.js.map
+**/*.d.ts
+**/*.d.ts.map
 dist
+build
 
 # Hot module reload configuration
 !webpack.config.js

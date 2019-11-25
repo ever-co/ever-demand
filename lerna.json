@@ -1,6 +1,8 @@
 {
 	"lerna": "3.11.1",
-	"version": "0.3.1-alpha.0",
+	"hoist": true,
+	"concurrency": 8,
+	"version": "independent",
 	"changelog": {
 		"repo": "ever-co/ever",
 		"cacheDir": ".changelog",
@@ -10,7 +12,9 @@
 	"command": {
 		"bootstrap": {},
 		"publish": {
-			"ignoreChanges": ["*.md", "test/**"]
+			"conventionalCommits": true,
+			"ignoreChanges": ["*.md", "test/**"],
+			"message": "chore(release): %s"
 		},
 		"version": {
 			"push": false

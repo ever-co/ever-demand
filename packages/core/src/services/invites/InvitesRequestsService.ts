@@ -1,3 +1,4 @@
+import Logger from 'bunyan';
 import { inject, injectable } from 'inversify';
 import { createEverLogger } from '../../helpers/Log';
 import { IInviteRequestCreateObject } from '@modules/server.common/interfaces/IInviteRequest';
@@ -5,14 +6,14 @@ import InviteRequest from '@modules/server.common/entities/InviteRequest';
 import { DBService, ExistenceEventType } from '@pyro/db-server';
 import { InvitesService } from './InvitesService';
 import { Subscription } from 'rxjs/Subscription';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import Invite from '@modules/server.common/entities/Invite';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';
-import * as requestPromise from 'request-promise';
-import * as Bluebird from 'bluebird';
+import requestPromise from 'request-promise';
+import Bluebird from 'bluebird';
 import { DevicesService } from '../devices';
 import Device from '@modules/server.common/entities/Device';
-import * as notifications from '@modules/server.common/notifications';
+import { launched } from '@modules/server.common/notifications';
 import IInviteRequestRouter from '@modules/server.common/routers/IInviteRequestRouter';
 import { asyncListener, observableListener, routerName } from '@pyro/io';
 import IService from '../IService';
@@ -21,14 +22,14 @@ import { filter, first, map, switchMap } from 'rxjs/operators';
 import { IGeoLocationCreateObject } from '@modules/server.common/interfaces/IGeoLocation';
 import { Country } from '@modules/server.common/entities/GeoLocation';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
-import * as faker from 'faker';
+import faker from 'faker';
 
 @injectable()
 @routerName('invite-request')
 export class InvitesRequestsService extends DBService<InviteRequest>
 	implements IInviteRequestRouter, IService {
-	public readonly DBObject = InviteRequest;
-	protected readonly log = createEverLogger({
+	public readonly DBObject: any = InviteRequest;
+	protected readonly log: Logger = createEverLogger({
 		name: 'invitesRequestsService'
 	});
 
@@ -94,9 +95,9 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 		invite: Invite,
 		devicesIds: string[]
 	): Promise<void> {
-		const devices = await (await this.devicesService.getMultipleDevices(
-			devicesIds
-		))
+		const devices = await (
+			await this.devicesService.getMultipleDevices(devicesIds)
+		)
 			.pipe(first())
 			.toPromise();
 
@@ -106,7 +107,7 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 		);
 		const languages = _.keys(devicesByLanguages) as ILanguage[];
 
-		await Bluebird.map(languages, async (language: ILanguage) => {
+		await (<any>Bluebird).map(languages, async (language: ILanguage) => {
 			const devicesByLanguage: Device[] = devicesByLanguages[language];
 
 			const request = {
@@ -116,7 +117,9 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 			};
 
 			try {
-				await requestPromise({
+				const rp: any = requestPromise;
+
+				await rp({
 					method: 'POST',
 					uri: 'https://go.urbanairship.com/api/push',
 					body: request,
@@ -274,14 +277,14 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 						title: 'Ever just launched!',
 						alert: 'Click to see some available products.',
 						extra: {
-							event: notifications.launched,
+							event: launched,
 							invite: JSON.stringify(invite)
 						}
 					},
 					ios: {
 						alert: 'Ever just launched at your address. Have fun!',
 						extra: {
-							event: notifications.launched,
+							event: launched,
 							invite: JSON.stringify(invite)
 						}
 					}
@@ -292,7 +295,7 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 						title: 'Ever только что запустился!',
 						alert: 'Кликните чтобы увидить доступные продукты.',
 						extra: {
-							event: notifications.launched,
+							event: launched,
 							invite: JSON.stringify(invite)
 						}
 					},
@@ -300,7 +303,7 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 						alert:
 							'Ever тольуо что запустился по Вашему адресу. Удачи!',
 						extra: {
-							event: notifications.launched,
+							event: launched,
 							invite: JSON.stringify(invite)
 						}
 					}
@@ -311,14 +314,14 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 						title: 'Ever стартира!',
 						alert: 'Кликнете, за да видите някои налични продукти.',
 						extra: {
-							event: notifications.launched,
+							event: launched,
 							invite: JSON.stringify(invite)
 						}
 					},
 					ios: {
 						alert: 'Ever стартира на вашия адрес. Забавлявай се!',
 						extra: {
-							event: notifications.launched,
+							event: launched,
 							invite: JSON.stringify(invite)
 						}
 					}
@@ -330,14 +333,14 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 						title: 'הושקנו בכתובת שלך!',
 						alert: 'תלחץ כדי לצפות במוצרים!',
 						extra: {
-							event: notifications.launched,
+							event: launched,
 							invite: JSON.stringify(invite)
 						}
 					},
 					ios: {
 						alert: 'Ever הושק בכתובת שלך! תלחץ כדי לצפות במוצרים!',
 						extra: {
-							event: notifications.launched,
+							event: launched,
 							invite: JSON.stringify(invite)
 						}
 					}

@@ -1,13 +1,13 @@
 import { DBObject, DBObjectClass } from './db-object';
 import 'reflect-metadata';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import { Schema as MongooseSchema, SchemaDefinition } from 'mongoose';
 
 const mongooseSchemasKey: string = 'mongooseSchemas';
 const mongooseIndexesKey: string = 'mongooseIndexes';
 
 export function Schema(schema: any): PropertyDecorator {
-	return (target: DBObject<any, any>, propertyKey: string) => {
+	return (target: object, propertyKey: string | symbol) => {
 		let mongooseSchemas = Reflect.getMetadata(
 			mongooseSchemasKey,
 			target.constructor
@@ -28,7 +28,7 @@ export function Schema(schema: any): PropertyDecorator {
 }
 
 export function Index(value: string | number): PropertyDecorator {
-	return (target: DBObject<any, any>, propertyKey: string) => {
+	return (target: object, propertyKey: string | symbol) => {
 		let indexesObj = Reflect.getMetadata(
 			mongooseIndexesKey,
 			target.constructor

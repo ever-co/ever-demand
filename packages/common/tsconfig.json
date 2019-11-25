@@ -1,28 +1,14 @@
 {
-	"compileOnSave": false,
+	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
-		"module": "commonjs",
-		"lib": ["es2017", "dom", "esnext"],
 		"baseUrl": "./src",
 		"outDir": "./build",
 		"rootDir": "./src",
-		"incremental": true,
-		"target": "es6",
-		"moduleResolution": "node",
-		"preserveConstEnums": true,
-		"emitDecoratorMetadata": true,
-		"allowSyntheticDefaultImports": true,
-		"experimentalDecorators": true,
-		"sourceMap": true,
-		"declaration": true,
-		"skipLibCheck": true,
-		"strictNullChecks": false,
-		"typeRoots": ["../../node_modules/@types"],
+		"target": "es5",
 		"types": ["node", "reflect-metadata", "jest"],
 		"paths": {
 			"@pyro/*": ["@pyro/*", "/@pyro/*"]
 		}
 	},
-	"exclude": ["node_modules"],
-	"files": ["../../node_modules/@types/node/index.d.ts"]
+	"include": ["./src/**/*.ts"]
 }

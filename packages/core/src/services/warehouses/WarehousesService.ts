@@ -1,5 +1,5 @@
-import * as Logger from 'bunyan';
-import * as _ from 'lodash';
+import Logger from 'bunyan';
+import _ from 'lodash';
 import { inject, injectable } from 'inversify';
 import { ProductsService } from '../products';
 import { createEverLogger } from '../../helpers/Log';
@@ -39,7 +39,7 @@ import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 @routerName('warehouse')
 export class WarehousesService extends DBService<Warehouse>
 	implements IWarehouseRouter, IService {
-	public readonly DBObject = Warehouse;
+	public readonly DBObject: any = Warehouse;
 
 	protected log: Logger = createEverLogger({ name: 'warehousesService' });
 

@@ -2,13 +2,13 @@ import { env } from './env';
 
 // attempt to set memory limit for NodeJS to be greater than default
 // (aprox 1.7Gb)
-import * as v8 from 'v8';
+import v8 from 'v8';
 console.log('Setting NodeJS Max memory usage limit to ' + env.WEB_MEMORY);
 v8.setFlagsFromString('--max_old_space_size=' + env.WEB_MEMORY);
 
 import 'reflect-metadata';
-import * as sourceMapSupport from 'source-map-support';
-import * as moduleAlias from 'module-alias';
+import sourceMapSupport from 'source-map-support';
+import moduleAlias from 'module-alias';
 
 try {
 	if (global.v8debug) {
@@ -27,8 +27,8 @@ try {
 	console.error(err);
 }
 
-import * as BluebirdPromise from 'bluebird';
-import * as mongoose from 'mongoose';
+import BluebirdPromise from 'bluebird';
+import mongoose from 'mongoose';
 import { createEverLogger } from './helpers/Log';
 import { servicesContainer } from './services/inversify.config';
 import { ServicesApp } from './services/services.app';

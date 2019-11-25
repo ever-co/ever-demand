@@ -15,6 +15,7 @@ import IUserAuthRouter, {
 import { inject, injectable } from 'inversify';
 import { AuthService, AuthServiceFactory } from '../auth';
 import { env } from '../../env';
+import Logger from 'bunyan';
 
 /**
  * Customers Authentication Service
@@ -30,12 +31,14 @@ import { env } from '../../env';
 @routerName('user-auth')
 export class UsersAuthService extends EntityService<User>
 	implements IUserAuthRouter, IService {
-	readonly DBObject = User;
+	readonly DBObject: any = User;
 
 	// TODO: why it's not in the settings and hardcoded to some default value here?
 	private static IS_INVITES_SYSTEM_ON: boolean = false;
 
-	protected readonly log = createEverLogger({ name: 'userAuthService' });
+	protected readonly log: Logger = createEverLogger({
+		name: 'userAuthService'
+	});
 
 	private readonly authService: AuthService<User>;
 

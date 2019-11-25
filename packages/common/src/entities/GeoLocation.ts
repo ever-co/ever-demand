@@ -4,7 +4,7 @@ import {
 	IGeoLocationCreateObject,
 	ILocation
 } from '../interfaces/IGeoLocation';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import { countries } from '../data/abbreviation-to-country';
 import { Column } from 'typeorm';
 

@@ -1,5 +1,5 @@
 import { getListeners, getRouterName, IRouter } from './router/router';
-import * as Logger from 'bunyan';
+import Logger from 'bunyan';
 import { IListenerHandler } from './listener/handler/handler';
 import { AsyncListenerHandler } from './listener/handler/async';
 import { ObservableListenerHandler } from './listener/handler/observable';

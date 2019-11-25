@@ -1,11 +1,11 @@
 import { IListenerHandler } from './handler';
 import { getRouterName, IRouter } from '../../router/router';
-import * as Logger from 'bunyan';
+import Logger from 'bunyan';
 import { getListenerType, Listener } from '../listener';
 import { ListenerType } from '../types';
 import { getListenerSerializer } from '../serialization';
-import * as _ from 'lodash';
-import * as getArgsNames from '@captemulation/get-parameter-names';
+import _ from 'lodash';
+import getArgsNames from '@captemulation/get-parameter-names';
 
 export abstract class BaseListenerHandler<T> implements IListenerHandler<T> {
 	protected readonly serializer: (args: any[]) => any[];

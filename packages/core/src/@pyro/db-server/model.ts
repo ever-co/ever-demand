@@ -1,5 +1,5 @@
 import { getSchema } from '@pyro/db';
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 export const modelMetadata = 'db:model';
 

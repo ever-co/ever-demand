@@ -124,10 +124,14 @@ export class AdminAuthStrategy extends NbAuthStrategy {
 			})
 			.pipe(
 				map(
-					(res: {
+					/*
+					Instead of res: any, it should be:
+					res: {
 						data: { adminLogin: IAdminLoginResponse };
 						errors;
-					}) => {
+					}
+					*/
+					(res: any) => {
 						const { data, errors } = res;
 						const isSuccessful = !!data.adminLogin;
 
@@ -233,7 +237,10 @@ export class AdminAuthStrategy extends NbAuthStrategy {
 				errorPolicy: 'all'
 			})
 			.pipe(
-				map((res: { data: { registerAdmin: Admin }; errors }) => {
+				/*
+					res: { data: { registerAdmin: Admin }; errors }
+				*/
+				map((res: any) => {
 					const { data, errors } = res;
 					const admin = data.registerAdmin;
 

@@ -15,7 +15,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import { ToasterService } from 'angular2-toaster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatest, Subject } from 'rxjs';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import { first } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';

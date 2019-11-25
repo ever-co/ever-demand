@@ -1,4 +1,4 @@
-import * as Logger from 'bunyan';
+import Logger from 'bunyan';
 import { injectable } from 'inversify';
 import Utils from '@modules/server.common/utils';
 import { createEverLogger } from '../../helpers/Log';
@@ -26,7 +26,7 @@ import _ = require('lodash');
 import { env } from '../../env';
 import { IGeoLocationCreateObject } from '@modules/server.common/interfaces/IGeoLocation';
 import { IInviteRequestCreateObject } from '@modules/server.common/interfaces/IInviteRequest';
-import * as faker from 'faker';
+import faker from 'faker';
 import { Country } from '@modules/server.common/entities/GeoLocation';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 
@@ -38,7 +38,7 @@ export class InvitesService extends DBService<Invite>
 		name: 'invitesService'
 	});
 
-	public readonly DBObject = Invite;
+	public readonly DBObject: any = Invite;
 
 	protected _invitedStreetLocations: Observable<IStreetLocation[]>;
 

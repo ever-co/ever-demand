@@ -1,4 +1,4 @@
-import * as Logger from 'bunyan';
+import Logger from 'bunyan';
 import { inject, injectable, LazyServiceIdentifer } from 'inversify';
 import { env } from '../../env';
 import User from '@modules/server.common/entities/User';
@@ -26,7 +26,7 @@ import IGeoLocation, {
 } from '@modules/server.common/interfaces/IGeoLocation';
 import { DevicesService } from '../devices';
 import IService from '../IService';
-import * as Stripe from 'stripe';
+import Stripe from 'Stripe';
 import { v1 as uuid } from 'uuid';
 import {
 	distinctUntilChanged,
@@ -42,12 +42,9 @@ import { of } from 'rxjs/observable/of';
 import { _throw } from 'rxjs/observable/throw';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';
 import _ = require('lodash');
-import * as faker from 'faker';
+import faker from 'faker';
 import { WarehousesService } from '../../services/warehouses';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
-
-// TODO: this and other Stripe related things should be inside separate Payments Service
-const stripe: Stripe = new Stripe(env.STRIPE_SECRET_KEY);
 
 interface IWatchedFiles {
 	aboutUs: { [language in ILanguage]: Observable<string> };
@@ -69,7 +66,10 @@ interface IWatchedFiles {
 @routerName('user')
 export class UsersService extends DBService<User>
 	implements IUserRouter, IService {
-	public readonly DBObject = User;
+	public readonly DBObject: any = User;
+
+	// TODO: this and other Stripe related things should be inside separate Payments Service
+	private stripe = new Stripe(env.STRIPE_SECRET_KEY);
 
 	protected readonly log: Logger = createEverLogger({
 		name: 'usersService'
@@ -222,8 +222,9 @@ export class UsersService extends DBService<User>
 
 		if (user != null) {
 			if (user.stripeCustomerId != null) {
-				return (await stripe.customers.listCards(user.stripeCustomerId))
-					.data;
+				return (
+					await this.stripe.customers.listCards(user.stripeCustomerId)
+				).data;
 			} else {
 				return [];
 			}
@@ -264,7 +265,7 @@ export class UsersService extends DBService<User>
 
 			if (user != null) {
 				if (user.stripeCustomerId == null) {
-					const customer = await stripe.customers.create({
+					const customer = await this.stripe.customers.create({
 						email: user.email,
 						description: 'User id: ' + user.id,
 						metadata: {
@@ -277,7 +278,7 @@ export class UsersService extends DBService<User>
 					});
 				}
 
-				card = (await stripe.customers.createSource(
+				card = (await this.stripe.customers.createSource(
 					user.stripeCustomerId as string,
 					{
 						source: tokenId

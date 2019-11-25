@@ -34,7 +34,7 @@ export const Types = {
 	},
 
 	Ref(Type: any, options: any = {}): PropertyDecorator {
-		return (target, propertyKey: string) => {
+		return (target: object, propertyKey: string | symbol) => {
 			const multi = Array.isArray(Type);
 
 			const op = { ...options };

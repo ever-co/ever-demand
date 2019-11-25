@@ -23,3 +23,8 @@ export class Schema {
 }
 
 export const Types: any = {};
+
+export default {
+	Schema,
+	Types
+};

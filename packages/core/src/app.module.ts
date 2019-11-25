@@ -6,7 +6,7 @@ import {
 	HttpServer,
 	Inject
 } from '@nestjs/common';
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import { GraphQLSchema } from 'graphql';
 import { GraphQLModule } from '@nestjs/graphql';
 import { SubscriptionsModule } from './graphql/subscriptions/subscriptions.module';
@@ -20,7 +20,7 @@ import { WarehousesModule } from './graphql/warehouses/warehouses.module';
 import { OrdersModule } from './graphql/orders/orders.module';
 import { CarriersModule } from './graphql/carriers/carriers.module';
 import { ProductsModule } from './graphql/products/products.module';
-import * as Logger from 'bunyan';
+import Logger from 'bunyan';
 import { env } from './env';
 import { createEverLogger } from './helpers/Log';
 import { CommandBus, EventBus, CqrsModule } from '@nestjs/cqrs';

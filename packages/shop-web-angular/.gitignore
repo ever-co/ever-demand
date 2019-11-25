@@ -1,3 +1,11 @@
+**/*.js
+**/*.js.map
+**/*.d.ts
+**/*.d.ts.map
+
+dist
+build
+
 # Logs
 logs
 *.log

@@ -2,6 +2,7 @@ import { createEverLogger } from '../../helpers/Log';
 import { injectable, multiInject } from 'inversify';
 import { IRouter, RouterSymbol } from './router/router';
 import { RouterHandler } from './router/handler';
+import Logger from 'bunyan';
 
 export interface IRoutersManager {
 	startListening(io: SocketIO.Server);
@@ -11,7 +12,7 @@ export interface IRoutersManager {
 export class RoutersManager implements IRoutersManager {
 	constructor(@multiInject(RouterSymbol) protected routers: any[]) {}
 
-	protected log = createEverLogger({ name: 'io' });
+	protected log: Logger = createEverLogger({ name: 'io' });
 
 	protected io: SocketIO.Server;
 

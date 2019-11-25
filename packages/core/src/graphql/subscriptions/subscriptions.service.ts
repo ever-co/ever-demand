@@ -1,4 +1,4 @@
-import * as WebSocket from 'ws';
+import WebSocket from 'ws';
 import { Inject, Injectable, OnModuleDestroy } from '@nestjs/common';
 import { SUBSCRIPTION_SERVER } from './subscription.constants';
 import { ServerOptions, SubscriptionServer } from 'subscriptions-transport-ws';

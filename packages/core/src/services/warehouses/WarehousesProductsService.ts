@@ -1,12 +1,12 @@
 import { injectable } from 'inversify';
 import { createEverLogger } from '../../helpers/Log';
-import * as Logger from 'bunyan';
+import Logger from 'bunyan';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { WarehousesService } from './WarehousesService';
 import IWarehouseProduct, {
 	IWarehouseProductCreateObject
 } from '@modules/server.common/interfaces/IWarehouseProduct';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import IWarehouse from '@modules/server.common/interfaces/IWarehouse';
 import { ExistenceEventType, DBService } from '@pyro/db-server';
@@ -400,15 +400,17 @@ export class WarehousesProductsService
 		const updatedWarehouseProduct = _.clone(_updatedWarehouseProduct);
 		updatedWarehouseProduct.product = updatedWarehouseProduct.productId;
 
-		const updatedWarehouse = (await this.warehousesService.updateMultiple(
-			{
-				_id: new mongoose.Types.ObjectId(warehouseId),
-				'products._id': updatedWarehouseProduct._id
-			},
-			{
-				'products.$': updatedWarehouseProduct
-			}
-		))[0];
+		const updatedWarehouse = (
+			await this.warehousesService.updateMultiple(
+				{
+					_id: new mongoose.Types.ObjectId(warehouseId),
+					'products._id': updatedWarehouseProduct._id
+				},
+				{
+					'products.$': updatedWarehouseProduct
+				}
+			)
+		)[0];
 
 		return _.find(
 			updatedWarehouse.products,
@@ -460,9 +462,7 @@ export class WarehousesProductsService
 
 		if (product != null) {
 			this.log.info(
-				`Product price before: ${
-					product.price
-				} and we want to change it to: ${price}`
+				`Product price before: ${product.price} and we want to change it to: ${price}`
 			);
 			product.price = price;
 
@@ -515,9 +515,7 @@ export class WarehousesProductsService
 
 		if (product != null) {
 			this.log.info(
-				`Product count before remove: ${
-					product.count
-				} and we want to remove ${count} products`
+				`Product count before remove: ${product.count} and we want to remove ${count} products`
 			);
 
 			if (product.count >= count) {
@@ -582,9 +580,7 @@ export class WarehousesProductsService
 
 		if (product != null) {
 			this.log.info(
-				`Product sold count before decrease: ${
-					product.soldCount
-				} and we want to decrease ${count} products`
+				`Product sold count before decrease: ${product.soldCount} and we want to decrease ${count} products`
 			);
 
 			if (product.soldCount >= count) {

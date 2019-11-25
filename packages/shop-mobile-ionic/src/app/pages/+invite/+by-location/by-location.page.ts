@@ -1,5 +1,5 @@
 // imports from lodash have to be combined
-import * as _ from 'lodash';
+import _ from 'lodash';
 import { every, isEmpty, isNumber } from 'lodash';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { InviteRequestRouter } from '@modules/client.common.angular2/routers/invite-request-router.service';
@@ -100,9 +100,7 @@ export class ByLocationPage implements OnInit, OnDestroy {
 			}
 
 			console.log(
-				`Device location using @ionic-native/geolocation services recieved: ${
-					coords.latitude
-				}, ${coords.longitude}`
+				`Device location using @ionic-native/geolocation services recieved: ${coords.latitude}, ${coords.longitude}`
 			);
 
 			return { lng: coords.longitude, lat: coords.latitude };
@@ -315,9 +313,7 @@ export class ByLocationPage implements OnInit, OnDestroy {
 			}
 
 			console.log(
-				`Reverse geo-code address by coordinates [${
-					coordinatesObj.lat
-				}, ${coordinatesObj.lng}] started...`
+				`Reverse geo-code address by coordinates [${coordinatesObj.lat}, ${coordinatesObj.lng}] started...`
 			);
 
 			let address = await this.geoLocationRouter.getAddressByCoordinatesUsingArcGIS(

@@ -19,8 +19,8 @@ import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { Observable, concat } from 'rxjs';
 import { FormHelpers } from '../../../../forms/helpers';
 import 'rxjs/add/observable/of';
-import * as _ from 'lodash';
-import * as isUrl from 'is-url';
+import _ from 'lodash';
+import isUrl from 'is-url';
 import { TranslateService } from '@ngx-translate/core';
 
 export type WarehouseManageTabsDetails = Pick<
@@ -200,8 +200,6 @@ export class WarehouseManageTabsDetailsComponent
 			.pipe(first())
 			.toPromise();
 
-		this.uploaderPlaceholder = `${res['WAREHOUSE_VIEW.MUTATION.PHOTO']} (${
-			res['OPTIONAL']
-		})`;
+		this.uploaderPlaceholder = `${res['WAREHOUSE_VIEW.MUTATION.PHOTO']} (${res['OPTIONAL']})`;
 	}
 }

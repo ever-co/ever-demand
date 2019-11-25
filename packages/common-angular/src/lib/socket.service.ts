@@ -10,7 +10,7 @@ import {
 	share
 } from 'rxjs/operators';
 import 'rxjs/add/observable/fromEvent';
-import * as _io from 'socket.io-client';
+import _io from 'socket.io-client';
 
 export enum ConnectionStatus {
 	NotConnected,
@@ -67,7 +67,9 @@ export class Socket {
 	) {
 		console.log(`Socket with url ${socketUrl} created!`);
 
-		this.ioSocket = this.io(`${this.socketUrl}`, {
+		const ioCallable = <any>this.io;
+
+		this.ioSocket = ioCallable(`${this.socketUrl}`, {
 			reconnection: false
 		});
 
@@ -98,19 +100,25 @@ export class Socket {
 	}
 
 	disconnect(close?: any) {
-		return this.ioSocket.disconnect.apply(this.ioSocket, arguments);
+		return this.ioSocket.disconnect.apply(this.ioSocket, <any>arguments);
 	}
 
 	emit(eventName: string, ...args: any[]) {
-		return this.ioSocket.emit.apply(this.ioSocket, arguments);
+		return this.ioSocket.emit.apply(this.ioSocket, <any>arguments);
 	}
 
 	removeListener(eventName: string, callback?: () => void) {
-		return this.ioSocket.removeListener.apply(this.ioSocket, arguments);
+		return this.ioSocket.removeListener.apply(
+			this.ioSocket,
+			<any>arguments
+		);
 	}
 
 	removeAllListeners(eventName?: string) {
-		return this.ioSocket.removeAllListeners.apply(this.ioSocket, arguments);
+		return this.ioSocket.removeAllListeners.apply(
+			this.ioSocket,
+			<any>arguments
+		);
 	}
 
 	/**

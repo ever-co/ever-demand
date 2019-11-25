@@ -1,18 +1,19 @@
 import { inject, injectable, multiInject } from 'inversify';
-import * as https from 'https';
-import * as http from 'http';
-import * as path from 'path';
-import * as fs from 'fs';
-import * as bodyParser from 'body-parser';
-import * as cors from 'cors';
-import * as passport from 'passport';
-import * as methodOverride from 'method-override';
-import * as errorhandler from 'errorhandler';
-import * as socketIO from 'socket.io';
-import * as express from 'express';
-import * as mongoose from 'mongoose';
-import * as morgan from 'morgan';
-import * as exphbs from 'express-handlebars';
+import https from 'https';
+import http from 'http';
+import path from 'path';
+import pem from 'pem';
+import fs from 'fs';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import passport from 'passport';
+import methodOverride from 'method-override';
+import errorhandler from 'errorhandler';
+import socketIO from 'socket.io';
+import express from 'express';
+import mongoose from 'mongoose';
+import morgan from 'morgan';
+import exphbs from 'express-handlebars';
 import { createEverLogger } from '../helpers/Log';
 import IService, { ServiceSymbol } from './IService';
 import { IRoutersManager } from '@pyro/io';
@@ -20,7 +21,7 @@ import { WarehousesService } from './warehouses';
 import { SocialStrategiesService } from './users';
 import { env } from '../env';
 import { getModel } from '@pyro/db-server';
-import * as Bluebird from 'bluebird';
+import Bluebird from 'bluebird';
 import { AdminsService } from './admins';
 import ipstack = require('ipstack');
 import requestIp = require('request-ip');
@@ -38,7 +39,6 @@ import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import User from '@modules/server.common/entities/User';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { ConfigService } from '../config/config.service';
-import * as pem from 'pem';
 
 // local IPs
 const INTERNAL_IPS = ['127.0.0.1', '::1'];
@@ -46,7 +46,8 @@ const INTERNAL_IPS = ['127.0.0.1', '::1'];
 @injectable()
 export class ServicesApp {
 	protected db_server = process.env.DB_ENV || 'primary';
-	protected db = mongoose.connection;
+
+	protected db: mongoose.Connection;
 
 	protected expressApp: express.Express;
 	protected httpsServer: https.Server;
@@ -82,7 +83,10 @@ export class ServicesApp {
 		http.globalAgent.maxSockets = maxSockets;
 		https.globalAgent.maxSockets = maxSockets;
 
-		this._configDB();
+		// If the Node process ends, close the Mongoose connection
+		process
+			.on('SIGINT', this._gracefulExit)
+			.on('SIGTERM', this._gracefulExit);
 	}
 
 	async start(callback: () => void) {
@@ -124,7 +128,8 @@ export class ServicesApp {
 			reconnectTries: Number.MAX_VALUE,
 			poolSize: ServicesApp._poolSize,
 			connectTimeoutMS: ServicesApp._connectTimeoutMS,
-			logging: true
+			logging: true,
+			useUnifiedTopology: true
 		});
 
 		console.log(
@@ -155,7 +160,38 @@ export class ServicesApp {
 		}
 	}
 
-	private _configDB() {
+	private async _connectDB() {
+		try {
+			const connectionOptions: mongoose.ConnectionOptions = {
+				useCreateIndex: true,
+				useNewUrlParser: true,
+				autoReconnect: true,
+				useFindAndModify: false,
+				reconnectTries: Number.MAX_VALUE,
+				poolSize: ServicesApp._poolSize,
+				connectTimeoutMS: ServicesApp._connectTimeoutMS,
+				useUnifiedTopology: true
+			};
+
+			const mongoConnect: mongoose.Mongoose = await mongoose.connect(
+				env.DB_URI,
+				connectionOptions
+			);
+
+			this.db = mongoConnect.connection;
+
+			this._configDBEvents();
+
+			this._onDBConnect();
+		} catch (err) {
+			this.log.error(
+				err,
+				'Sever initialization failed! Cannot connect to DB'
+			);
+		}
+	}
+
+	private _configDBEvents() {
 		this.db.on('error', (err) => this.log.error(err));
 
 		this.db.on('disconnected', () => {
@@ -173,37 +209,6 @@ export class ServicesApp {
 					' connected'
 			);
 		});
-
-		this.db.once('open', () => this._onDBConnect());
-
-		// If the Node process ends, close the Mongoose connection
-		process
-			.on('SIGINT', this._gracefulExit)
-			.on('SIGTERM', this._gracefulExit);
-	}
-
-	private async _connectDB() {
-		try {
-			const connectionOptions: mongoose.ConnectionOptions = {
-				useCreateIndex: true,
-				useNewUrlParser: true,
-				autoReconnect: true,
-				useFindAndModify: false,
-				reconnectTries: Number.MAX_VALUE,
-				poolSize: ServicesApp._poolSize,
-				connectTimeoutMS: ServicesApp._connectTimeoutMS
-			};
-
-			const mongoConnect: mongoose.Mongoose = await mongoose.connect(
-				env.DB_URI,
-				connectionOptions
-			);
-		} catch (err) {
-			this.log.error(
-				err,
-				'Sever initialization failed! Cannot connect to DB'
-			);
-		}
 	}
 
 	private async _onDBConnect() {
@@ -288,7 +293,7 @@ export class ServicesApp {
 	}
 
 	private async _registerModels() {
-		await Bluebird.map(this.services, async (service) => {
+		await (<any>Bluebird).map(this.services, async (service) => {
 			if ((service as any).DBObject != null) {
 				// get the model to register it's schema indexes in db
 				await getModel((service as any).DBObject).createIndexes();
@@ -297,7 +302,7 @@ export class ServicesApp {
 	}
 
 	private async _startExpress() {
-		this.expressApp = express();
+		this.expressApp = (<any>express)();
 
 		const hbs = exphbs.create({
 			extname: '.hbs',
@@ -361,7 +366,7 @@ export class ServicesApp {
 		// TODO: we may want to restric access some way
 		// (but needs to be careful because we serve some HTML pages for all clients too, e.g. About Us)
 		this.expressApp.use(
-			cors({
+			(<any>cors)({
 				origin: true,
 				credentials: true
 			})
@@ -372,15 +377,19 @@ export class ServicesApp {
 		this.expressApp.use(
 			bodyParser.json({ type: 'application/vnd.api+json' })
 		);
-		this.expressApp.use(methodOverride('X-HTTP-Method')); // Microsoft
-		this.expressApp.use(methodOverride('X-HTTP-Method-Override')); // Google/GData
-		this.expressApp.use(methodOverride('X-Method-Override')); // IBM
+
+		const mo: any = methodOverride;
+
+		this.expressApp.use(mo('X-HTTP-Method')); // Microsoft
+		this.expressApp.use(mo('X-HTTP-Method-Override')); // Google/GData
+		this.expressApp.use(mo('X-Method-Override')); // IBM
 		this.expressApp.use(morgan('dev'));
 		this.expressApp.use(passport.initialize());
 		this.expressApp.use(requestIp.mw());
 
 		if (this.expressApp.get('environment') === 'development') {
-			this.expressApp.use(errorhandler());
+			const eh: any = errorhandler;
+			this.expressApp.use(eh());
 		}
 
 		this.expressApp.get('/', function(req, res) {
@@ -546,8 +555,9 @@ export class ServicesApp {
 	}
 
 	private async _startSocketIO() {
-		const ioHttps = socketIO(this.httpsServer);
-		const ioHttp = socketIO(this.httpServer);
+		const so: any = socketIO;
+		const ioHttps = so(this.httpsServer);
+		const ioHttp = so(this.httpServer);
 
 		await this.routersManager.startListening(ioHttps);
 		await this.routersManager.startListening(ioHttp);

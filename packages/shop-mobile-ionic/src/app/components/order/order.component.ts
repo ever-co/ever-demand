@@ -3,7 +3,7 @@ import { Store } from '../../services/store.service';
 import OrderStatus from '@modules/server.common/enums/OrderStatus';
 import Order from '@modules/server.common/entities/Order';
 import Warehouse from '@modules/server.common/entities/Warehouse';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import {
 	animate,
 	state,
@@ -41,9 +41,7 @@ export class OrderComponent {
 	}
 
 	get customerAddress() {
-		return `${this.order.user.geoLocation.countryName} ${
-			this.order.user.geoLocation.postcode
-		}, ${this.order.user.geoLocation.city}`;
+		return `${this.order.user.geoLocation.countryName} ${this.order.user.geoLocation.postcode}, ${this.order.user.geoLocation.city}`;
 	}
 
 	get totalPrice() {

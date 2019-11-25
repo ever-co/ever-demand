@@ -1,4 +1,4 @@
-import * as Logger from 'bunyan';
+import Logger from 'bunyan';
 import { inject, injectable, LazyServiceIdentifer } from 'inversify';
 import { createEverLogger } from '../../helpers/Log';
 import { observableListener, routerName, asyncListener } from '@pyro/io';

@@ -1,7 +1,7 @@
 import { getListeners, getRouterName, IRouter } from './router';
 import { ConnectionHandler } from '../connection-handler';
 import { Listener } from '../listener/listener';
-import * as Logger from 'bunyan';
+import Logger from 'bunyan';
 
 export class RouterHandler {
 	private readonly routerName: string;

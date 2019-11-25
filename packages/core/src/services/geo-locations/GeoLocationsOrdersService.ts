@@ -2,12 +2,12 @@ import { inject, injectable } from 'inversify';
 import { OrdersService } from '../orders';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
-import * as _ from 'lodash';
-import * as Logger from 'bunyan';
+import _ from 'lodash';
+import Logger from 'bunyan';
 import Order from '@modules/server.common/entities/Order';
 import { createEverLogger } from '../../helpers/Log';
 import { GeoLocationsWarehousesService } from './GeoLocationsWarehousesService';
-import * as Bluebird from 'bluebird';
+import Bluebird from 'bluebird';
 import {
 	WarehousesProductsService,
 	WarehousesOrdersService,
@@ -236,33 +236,36 @@ export class GeoLocationsOrdersService
 			'warehouses by location'
 		);
 
-		const orders = _.flatten(
-			await Bluebird.map(warehouses, async (warehouse: Warehouse) => {
-				const warehouseOrders = await this.warehousesOrdersService
-					.get(warehouse.id, {
-						populateCarrier: !!options.populateCarrier
-					})
-					.pipe(first())
-					.toPromise();
+		const orders: Order[] = _.flatten(
+			await (<any>Bluebird).map(
+				warehouses,
+				async (warehouse: Warehouse) => {
+					const warehouseOrders = await this.warehousesOrdersService
+						.get(warehouse.id, {
+							populateCarrier: !!options.populateCarrier
+						})
+						.pipe(first())
+						.toPromise();
 
-				if (options.populateWarehouse) {
-					_.each(
-						warehouseOrders,
-						(order) => (order.warehouse = warehouse)
+					if (options.populateWarehouse) {
+						_.each(
+							warehouseOrders,
+							(order) => (order.warehouse = warehouse)
+						);
+					}
+
+					this.log.info(
+						{
+							geoLocation,
+							warehouseOrders,
+							warehouse
+						},
+						'orders by warehouse'
 					);
+
+					return warehouseOrders;
 				}
-
-				this.log.info(
-					{
-						geoLocation,
-						warehouseOrders,
-						warehouse
-					},
-					'orders by warehouse'
-				);
-
-				return warehouseOrders;
-			})
+			)
 		);
 
 		this.log.info(

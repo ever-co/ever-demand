@@ -2,7 +2,7 @@
 import { servicesContainer } from '../../../services/inversify.config';
 import { InvitesService } from '../../../services/invites';
 import { MongoClient } from 'mongodb';
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import { env } from '../../../env';
 
 describe('InvitesService', () => {

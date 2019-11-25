@@ -1,5 +1,5 @@
-import * as Logger from 'bunyan';
-import * as _ from 'lodash';
+import Logger from 'bunyan';
+import _ from 'lodash';
 import { createEverLogger } from '../../helpers/Log';
 import { ProductsService } from '../products';
 import { OrdersService } from '../orders';
@@ -206,7 +206,10 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 			}
 		);
 
-		await this.skipOrders(carrierId, _.map(orders, (order) => order.id));
+		await this.skipOrders(
+			carrierId,
+			_.map(orders, (order) => order.id)
+		);
 
 		return this.carriersService.updateStatus(carrierId, 0);
 	}

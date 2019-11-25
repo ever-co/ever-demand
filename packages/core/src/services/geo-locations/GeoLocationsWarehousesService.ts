@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
-import * as Logger from 'bunyan';
-import * as _ from 'lodash';
+import Logger from 'bunyan';
+import _ from 'lodash';
 import Utils from '@modules/server.common/utils';
 import { createEverLogger } from '../../helpers/Log';
 import { WarehousesService } from '../warehouses';

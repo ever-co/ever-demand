@@ -12,6 +12,7 @@ import { asyncListener, observableListener } from '@pyro/io';
 import { inject, injectable } from 'inversify';
 import { first, map, switchMap } from 'rxjs/operators';
 import { Repository } from 'typeorm';
+import Logger from 'bunyan';
 
 // TODO: Rename! "Admin" is not a great name, but currently "Users" mean "Customers"...
 /**
@@ -20,9 +21,9 @@ import { Repository } from 'typeorm';
  */
 @injectable()
 export class AdminsService extends DBService<Admin> implements IAdminRouter {
-	readonly DBObject = Admin;
+	readonly DBObject: any = Admin;
 
-	protected readonly log = createEverLogger({ name: 'adminService' });
+	protected readonly log: Logger = createEverLogger({ name: 'adminService' });
 
 	private readonly authService: AuthService<Admin>;
 

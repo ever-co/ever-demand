@@ -1,4 +1,4 @@
-import * as Logger from 'bunyan';
+import Logger from 'bunyan';
 import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { createEverLogger } from '../../helpers/Log';
@@ -27,7 +27,7 @@ import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 @routerName('carrier')
 export class CarriersService extends DBService<Carrier>
 	implements ICarrierRouter, IService {
-	public readonly DBObject = Carrier;
+	public readonly DBObject: any = Carrier;
 	protected readonly log: Logger = createEverLogger({
 		name: 'carriersService'
 	});
@@ -140,6 +140,20 @@ export class CarriersService extends DBService<Carrier>
 	): Promise<Carrier> {
 		await this.throwIfNotExists(carrierId);
 		return super.update(carrierId, { isActive });
+	}
+
+	/**
+	 * Update email for given Carrier (by carrier Id)
+	 *
+	 * @param {string} carrierId
+	 * @param {string} email
+	 * @returns {Promise<Carrier>}
+	 * @memberof CarriersService
+	 */
+	@asyncListener()
+	async updateEmail(carrierId: string, email: string): Promise<Carrier> {
+		await this.throwIfNotExists(carrierId);
+		return this.update(carrierId, { email });
 	}
 
 	@asyncListener()

@@ -19,7 +19,7 @@ import { getOperationAST } from 'graphql/utilities/getOperationAST';
 import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { Logger } from 'angular2-logger/core';
-import { CommonModule } from '@modules/client.common.angular2';
+import { CommonModule } from '@modules/client.common.angular2/common.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from 'environments/environment';

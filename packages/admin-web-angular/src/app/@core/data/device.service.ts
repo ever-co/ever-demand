@@ -112,7 +112,7 @@ export class DeviceService {
 				}
 			})
 			.pipe(
-				map((result) => result.data.updateDevice.update),
+				map((result: any) => result.data.updateDevice.update),
 				map((d) => this._deviceFactory(d)),
 				share()
 			);
@@ -131,7 +131,7 @@ export class DeviceService {
 				variables: { ids }
 			})
 			.pipe(
-				map((result) => result.data.removeDeviceByIds),
+				map((result: any) => result.data.removeDeviceByIds),
 				share()
 			);
 	}
@@ -151,7 +151,7 @@ export class DeviceService {
 				}
 			})
 			.pipe(
-				map((result) => result.data.createDevice),
+				map((result: any) => result.data.createDevice),
 				share()
 			);
 	}

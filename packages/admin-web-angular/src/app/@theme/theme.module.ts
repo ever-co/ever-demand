@@ -40,7 +40,6 @@ import {
 
 import {
 	OneColumnLayoutComponent,
-	SampleLayoutComponent,
 	ThreeColumnsLayoutComponent,
 	TwoColumnsLayoutComponent
 } from './layouts';
@@ -97,7 +96,6 @@ const COMPONENTS = [
 	ThemeSettingsComponent,
 	TinyMCEComponent,
 	OneColumnLayoutComponent,
-	SampleLayoutComponent,
 	ThreeColumnsLayoutComponent,
 	TwoColumnsLayoutComponent
 ];

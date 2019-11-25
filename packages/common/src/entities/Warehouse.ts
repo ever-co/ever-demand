@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import _ from 'lodash';
 import { DBObject, getSchema, ModelName, Schema, Types } from '../@pyro/db';
 import GeoLocation from './GeoLocation';
 import WarehouseProduct, { WithPopulatedProduct } from './WarehouseProduct';

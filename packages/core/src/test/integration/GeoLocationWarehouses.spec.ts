@@ -2,7 +2,7 @@
 import 'jest';
 import { servicesContainer } from '../../services/inversify.config';
 import { GeoLocationsWarehousesService } from '../../services/geo-locations';
-import * as faker from 'faker';
+import faker from 'faker';
 import ForwardOrdersMethod from '@modules/server.common/enums/ForwardOrdersMethod';
 import {
 	Country,
@@ -11,7 +11,7 @@ import {
 import { WarehousesService } from '../../services/warehouses';
 import { ObjectID } from 'bson';
 import { IWarehouseRegistrationInput } from '@modules/server.common/routers/IWarehouseRouter';
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import { env } from '../../env';
 import { randomCoordinatesNear } from '../../utils';
 import { first, shareReplay } from 'rxjs/operators';

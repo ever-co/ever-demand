@@ -1,7 +1,14 @@
 # compiled output
 /dist
+/build
 /tmp
 /out-tsc
+
+
+**/*.d.ts
+**/*.d.ts.map
+**/*.js
+**/*.js.map
 
 # dependencies
 /node_modules

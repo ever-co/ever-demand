@@ -98,7 +98,7 @@ export class ProductsService {
 				}
 			})
 			.pipe(
-				map((result) => result.data.createProduct),
+				map((result: any) => result.data.createProduct),
 				share()
 			);
 	}
@@ -118,7 +118,7 @@ export class ProductsService {
 				}
 			})
 			.pipe(
-				map((result) => result.data.saveProduct),
+				map((result: any) => result.data.saveProduct),
 				share()
 			);
 	}
@@ -136,7 +136,7 @@ export class ProductsService {
 				variables: { ids }
 			})
 			.pipe(
-				map((result) => result.data.removeProductsByIds),
+				map((result: any) => result.data.removeProductsByIds),
 				share()
 			);
 	}

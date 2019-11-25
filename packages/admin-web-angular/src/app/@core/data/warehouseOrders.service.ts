@@ -36,7 +36,7 @@ export class WarehouseOrdersService {
 				`,
 				variables: { createInput }
 			})
-			.map((result) => result.data.createOrder);
+			.map((result: any) => result.data.createOrder);
 	}
 
 	getDashboardOrdersChartOrders(storeId: string): Observable<Order[]> {

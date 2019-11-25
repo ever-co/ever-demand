@@ -26,7 +26,7 @@ import { ConfimationModalComponent } from '../../../../@shared/confirmation-moda
 import { InviteViewModel } from '../invites.component';
 
 // import { ToasterService } from 'angular2-toaster';
-// import * as fingerprint2 from 'fingerprintjs2';
+// import fingerprint2 from 'fingerprintjs2';
 
 export interface InviteRequestViewModel {
 	id: string;
@@ -301,9 +301,7 @@ export class InvitesRequestsComponent implements OnDestroy, AfterViewChecked {
 
 			this.loading = false;
 
-			const message = `${
-				idsForDelete.length
-			} invites requests was deleted`;
+			const message = `${idsForDelete.length} invites requests was deleted`;
 
 			this._notifyService.success(message);
 

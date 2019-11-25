@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { observableListener, routerName } from '@pyro/io';
 import IUserProductsRouter from '@modules/server.common/routers/IUserProductsRouter';
-import * as Handlebars from 'handlebars';
+import Handlebars from 'handlebars';
 import { observeFile } from '../../utils';
 import { DevicesService } from '../devices/DevicesService';
 import IService from '../IService';

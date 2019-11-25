@@ -1,4 +1,4 @@
-import * as Logger from 'bunyan';
+import Logger from 'bunyan';
 import { injectable } from 'inversify';
 import { createEverLogger } from '../../helpers/Log';
 import Product from '@modules/server.common/entities/Product';
@@ -22,7 +22,7 @@ import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 @routerName('product')
 export class ProductsService extends DBService<Product>
 	implements IProductRouter, IService {
-	public readonly DBObject = Product;
+	public readonly DBObject: any = Product;
 
 	protected readonly log: Logger = createEverLogger({
 		name: 'productsService'

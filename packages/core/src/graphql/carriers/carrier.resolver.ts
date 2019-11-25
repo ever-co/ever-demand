@@ -79,6 +79,14 @@ export class CarrierResolver {
 			.exec();
 	}
 
+	@Mutation('updateUserEmail')
+	async updateUserEmail(
+		_,
+		{ carrierId, email }: { carrierId: string; email: string }
+	) {
+		return this._carriersService.updateEmail(carrierId, email);
+	}
+
 	@Mutation('registerCarrier')
 	async registerCarrier(
 		_,

@@ -1,9 +1,9 @@
 import { env } from './env';
-import * as util from 'util';
-import * as path from 'path';
-import * as os from 'os';
-import * as PM2 from 'pm2/lib/API.js';
-import * as cst from 'pm2/constants.js';
+import util from 'util';
+import path from 'path';
+import os from 'os';
+import PM2 from 'pm2/lib/API.js';
+import cst from 'pm2/constants.js';
 
 const pm2 = new PM2(
 	env.isProd

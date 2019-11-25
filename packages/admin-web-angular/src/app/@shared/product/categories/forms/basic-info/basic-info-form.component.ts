@@ -12,8 +12,8 @@ import {
 	AbstractControl,
 	FormBuilder
 } from '@angular/forms';
-import * as isUrl from 'is-url';
-import * as _ from 'lodash';
+import isUrl from 'is-url';
+import _ from 'lodash';
 import { TranslateService } from '@ngx-translate/core';
 import { first } from 'rxjs/operators';
 import { IProductsCategoryCreateObject } from '@modules/server.common/interfaces/IProductsCategory';

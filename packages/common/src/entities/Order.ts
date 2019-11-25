@@ -10,7 +10,7 @@ import {
 	Types,
 	getSchema
 } from '../@pyro/db';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import IOrder from '../interfaces/IOrder';
 import OrderWarehouseStatus, {
 	warehouseStatusToString

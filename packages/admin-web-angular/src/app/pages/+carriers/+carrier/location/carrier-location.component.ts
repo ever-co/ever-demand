@@ -29,7 +29,7 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 	marker: any;
 	userMarker: any;
 	warehouseMarker: any;
-	interval: NodeJS.Timer;
+	interval: any;
 	isReverted: boolean = true;
 	params$: any;
 	carrierId: string;
@@ -225,9 +225,7 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 					<ul>
 						<li>${carrier.username}</li>
 						<li><i style='margin-right:5px;' class="ion-md-call"></i>${carrier.phone}</li>
-						<li><i style='margin-right:5px;' class="ion-md-locate"></i>${
-							carrier.geoLocation.streetAddress
-						}</li>
+						<li><i style='margin-right:5px;' class="ion-md-locate"></i>${carrier.geoLocation.streetAddress}</li>
 					</ul>
 					`;
 

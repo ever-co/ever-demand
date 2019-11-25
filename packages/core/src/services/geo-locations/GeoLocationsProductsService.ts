@@ -1,10 +1,10 @@
 import { inject, injectable } from 'inversify';
-import * as Logger from 'bunyan';
+import Logger from 'bunyan';
 import { WarehousesService } from '../warehouses';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import Utils from '@modules/server.common/utils';
 import { createEverLogger } from '../../helpers/Log';
 import { GeoLocationsWarehousesService } from './GeoLocationsWarehousesService';
@@ -138,7 +138,8 @@ export class GeoLocationsProductsService
 		options?: IGetGeoLocationProductsOptions,
 		searchText?: string
 	): ProductInfo[] {
-		return _(warehouses)
+		const underscore_: any = _; // TODO: remove sh..t
+		return underscore_(warehouses)
 			.map((_warehouse) => {
 				const warehouse = _.clone(_warehouse);
 

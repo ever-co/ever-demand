@@ -14,7 +14,7 @@ import { UsersService } from '../../services/users';
 import IProduct from '@modules/server.common/interfaces/IProduct';
 import { ProductsService } from '../../services/products';
 import Product from '@modules/server.common/entities/Product';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import { ObjectId } from 'bson';
 import { FakeOrdersService } from '../../services/fake-data/FakeOrdersService';
 
@@ -492,9 +492,9 @@ export class OrderResolver {
 	) {
 		const commonOptionsFlag = { isDeleted: { $eq: false } };
 
-		const stores: Warehouse[] = (await this._warehousesService.find(
-			commonOptionsFlag
-		)).filter((__, index) => index <= 20);
+		const stores: Warehouse[] = (
+			await this._warehousesService.find(commonOptionsFlag)
+		).filter((__, index) => index <= 20);
 
 		const carriers: Carrier[] = await this._carriersService.find(
 			commonOptionsFlag

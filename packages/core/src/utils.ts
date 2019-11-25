@@ -1,7 +1,7 @@
 // TODO: move all utils into shared/core
 
 import { Observable } from 'rxjs';
-import * as fs from 'fs';
+import fs from 'fs';
 
 export function observeFile(fileName: string): Observable<string> {
 	return Observable.create((observer) => {

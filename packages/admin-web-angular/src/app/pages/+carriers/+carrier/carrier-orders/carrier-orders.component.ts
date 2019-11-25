@@ -15,7 +15,7 @@ import Carrier from '@modules/server.common/entities/Carrier';
 import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/carrier-orders-router.service';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Subject, Observable } from 'rxjs/Rx';
 import { takeUntil } from 'rxjs/operators';

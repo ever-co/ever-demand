@@ -65,5 +65,5 @@
 	],
 	"git.ignoreLimitWarning": true,
 	"vsicons.presets.nestjs": true,
-	"cSpell.words": ["pyro"]
+	"cSpell.words": ["inversify", "pyro", "typeorm"]
 }

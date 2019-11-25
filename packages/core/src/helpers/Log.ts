@@ -1,11 +1,11 @@
-import * as Logger from 'bunyan';
+import Logger from 'bunyan';
 import { existsSync } from 'fs';
-import * as mkdirp from 'mkdirp';
+import mkdirp from 'mkdirp';
 import { env } from '../env';
 import _ = require('lodash');
 import createCWStream from 'bunyan-cloudwatch';
-import * as os from 'os';
-import * as PrettyStream from 'bunyan-prettystream';
+import os from 'os';
+import PrettyStream from 'bunyan-prettystream';
 
 export interface LogArgs {
 	// which file used to store logs

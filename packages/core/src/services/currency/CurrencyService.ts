@@ -5,6 +5,7 @@ import { DBService } from '@pyro/db-server';
 import IService from 'services/IService';
 import { ICurrencyCreateObject } from '@modules/server.common/interfaces/ICurrency';
 import { createEverLogger } from '../../helpers/Log';
+import Logger from 'bunyan';
 
 export interface CurrencyMutationRespone {
 	success: boolean;
@@ -15,14 +16,18 @@ export interface CurrencyMutationRespone {
 @injectable()
 @routerName('currency')
 export class CurrenciesService extends DBService<Currency> implements IService {
-	public readonly DBObject = Currency;
+	public readonly DBObject: any = Currency;
 
-	protected readonly log = createEverLogger({ name: 'currenciesService' });
+	protected readonly log: Logger = createEverLogger({
+		name: 'currenciesService'
+	});
 
 	async createCurrency(
 		currency: ICurrencyCreateObject
 	): Promise<CurrencyMutationRespone> {
-		let success, message, data;
+		let success;
+		let message;
+		let data;
 
 		try {
 			data = await this.create(currency);

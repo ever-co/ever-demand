@@ -1,5 +1,5 @@
 import { inject, injectable, LazyServiceIdentifer } from 'inversify';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import { OrdersService } from '../orders';
 import Order from '@modules/server.common/entities/Order';
 import { UsersService } from './UsersService';
@@ -15,6 +15,7 @@ import mongoose = require('mongoose');
 import { ObjectId } from 'mongodb';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
+import Logger from 'bunyan';
 
 /**
  * Customers Orders Service
@@ -28,7 +29,7 @@ import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseSta
 @injectable()
 @routerName('user-orders')
 export class UsersOrdersService implements IUserOrdersRouter, IService {
-	protected readonly log = createEverLogger({
+	protected readonly log: Logger = createEverLogger({
 		name: 'usersOrdersService'
 	});
 

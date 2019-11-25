@@ -14,9 +14,9 @@ import {
 	Validators
 } from '@angular/forms';
 import { ICarrierCreateObject } from '@modules/server.common/interfaces/ICarrier';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import { FormHelpers } from '../../../forms/helpers';
-import * as isUrl from 'is-url';
+import isUrl from 'is-url';
 import { TranslateService } from '@ngx-translate/core';
 import { first } from 'rxjs/operators';
 

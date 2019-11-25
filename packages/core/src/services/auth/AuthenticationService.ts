@@ -1,5 +1,5 @@
 import { ExtractJwt } from 'passport-jwt';
-import * as jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { first } from 'rxjs/operators';
 import { inject, injectable, LazyServiceIdentifer } from 'inversify';
 import { routerName } from '@pyro/io';

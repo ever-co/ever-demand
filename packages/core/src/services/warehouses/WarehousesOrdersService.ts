@@ -1,7 +1,7 @@
-import * as Logger from 'bunyan';
+import Logger from 'bunyan';
 import { inject, injectable, LazyServiceIdentifer } from 'inversify';
-import * as moment from 'moment';
-import * as Bluebird from 'bluebird';
+import moment from 'moment';
+import Bluebird from 'bluebird';
 import { createEverLogger } from '../../helpers/Log';
 import OrderProduct from '@modules/server.common/entities/OrderProduct';
 import Order from '@modules/server.common/entities/Order';
@@ -159,7 +159,7 @@ export class WarehousesOrdersService
 			warehouse: warehouseId,
 			isDeleted: { $eq: false },
 			_createdAt: {
-				$gte: moment()
+				$gte: (<any>moment)()
 					.startOf('day')
 					.toDate()
 			}
@@ -242,9 +242,7 @@ export class WarehousesOrdersService
 
 				if (!wProduct) {
 					throw new Error(
-						`WarehouseOrdersService got call to create(userId, orderProducts) - But there is no product with the id ${
-							args.productId
-						}!`
+						`WarehouseOrdersService got call to create(userId, orderProducts) - But there is no product with the id ${args.productId}!`
 					);
 				}
 
@@ -277,7 +275,7 @@ export class WarehousesOrdersService
 		});
 
 		// we do all remove operations and notify about warehouse orders change after we remove products from warehouse
-		await Bluebird.map(
+		await (<any>Bluebird).map(
 			order.products,
 			async (orderProduct: OrderProduct) => {
 				const productId = orderProduct.product.id;
@@ -410,7 +408,7 @@ export class WarehousesOrdersService
 		);
 
 		// revert order sold count
-		await Bluebird.map(
+		await (<any>Bluebird).map(
 			order.products,
 			async (orderProduct: OrderProduct) => {
 				const productId = orderProduct.product.id;

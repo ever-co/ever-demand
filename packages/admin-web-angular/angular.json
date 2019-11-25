@@ -1,5 +1,5 @@
 {
-	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+	"$schema": "../../node_modules/@angular/cli/lib/config/schema.json",
 	"version": 1,
 	"newProjectRoot": "projects",
 	"projects": {
@@ -7,15 +7,19 @@
 			"root": "",
 			"sourceRoot": "src",
 			"projectType": "application",
+			"prefix": "app",
 			"architect": {
 				"build": {
-					"builder": "@angular-devkit/build-angular:browser",
+					"builder": "@angular-builders/custom-webpack:browser",
 					"options": {
+						"customWebpackConfig": {
+							"path": "./webpack.config.js"
+						},
 						"preserveSymlinks": true,
 						"outputPath": "dist",
 						"index": "src/index.html",
 						"main": "src/main.ts",
-						"tsConfig": "src/tsconfig.app.json",
+						"tsConfig": "tsconfig.json",
 						"polyfills": "src/polyfills.ts",
 						"assets": [
 							"src/assets",
@@ -23,33 +27,36 @@
 							"src/favicon.png",
 							{
 								"glob": "**/*",
-								"input": "node_modules/leaflet/dist/images",
+								"input": "../../node_modules/leaflet/dist/images",
 								"output": "/assets/img/markers"
 							}
 						],
 						"styles": [
-							"node_modules/bootstrap/dist/css/bootstrap.css",
-							"node_modules/typeface-exo/index.css",
-							"node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
-							"node_modules/ionicons/dist/scss/ionicons.scss",
-							"node_modules/@fortawesome/fontawesome-free/css/all.css",
-							"node_modules/socicon/css/socicon.css",
-							"node_modules/angular-tree-component/dist/angular-tree-component.css",
-							"node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
-							"node_modules/leaflet/dist/leaflet.css",
+							"../../node_modules/bootstrap/dist/css/bootstrap.css",
+							"../../node_modules/typeface-exo/index.css",
+							"../../node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+							"../../node_modules/ionicons/dist/scss/ionicons.scss",
+							"../../node_modules/@fortawesome/fontawesome-free/css/all.css",
+							"../../node_modules/socicon/css/socicon.css",
+							"../../node_modules/angular-tree-component/dist/angular-tree-component.css",
+							"../../node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
+							"../../node_modules/leaflet/dist/leaflet.css",
 							"src/app/@theme/styles/styles.scss"
 						],
+						"stylePreprocessorOptions": {
+							"includePaths": ["src/app", "src/assets"]
+						},
 						"scripts": [
-							"node_modules/pace-js/pace.min.js",
-							"node_modules/tinymce/tinymce.min.js",
-							"node_modules/tinymce/themes/mobile/theme.min.js",
-							"node_modules/tinymce/themes/silver/theme.min.js",
-							"node_modules/tinymce/plugins/link/plugin.min.js",
-							"node_modules/tinymce/plugins/paste/plugin.min.js",
-							"node_modules/tinymce/plugins/table/plugin.min.js",
-							"node_modules/echarts/dist/echarts.min.js",
-							"node_modules/echarts/dist/extension/bmap.min.js",
-							"node_modules/chart.js/dist/Chart.min.js"
+							"../../node_modules/pace-js/pace.min.js",
+							"../../node_modules/tinymce/tinymce.min.js",
+							"../../node_modules/tinymce/themes/mobile/theme.min.js",
+							"../../node_modules/tinymce/themes/silver/theme.min.js",
+							"../../node_modules/tinymce/plugins/link/plugin.min.js",
+							"../../node_modules/tinymce/plugins/paste/plugin.min.js",
+							"../../node_modules/tinymce/plugins/table/plugin.min.js",
+							"../../node_modules/echarts/dist/echarts.min.js",
+							"../../node_modules/echarts/dist/extension/bmap.min.js",
+							"../../node_modules/chart.js/dist/Chart.min.js"
 						]
 					},
 					"configurations": {
@@ -73,9 +80,12 @@
 					}
 				},
 				"serve": {
-					"builder": "@angular-devkit/build-angular:dev-server",
+					"builder": "@angular-builders/custom-webpack:dev-server",
 					"options": {
-						"browserTarget": "ever-admin:build"
+						"browserTarget": "ever-admin:build",
+						"customWebpackConfig": {
+							"path": "./webpack.config.js"
+						}
 					},
 					"configurations": {
 						"production": {
@@ -95,28 +105,28 @@
 						"main": "src/test.ts",
 						"karmaConfig": "./karma.conf.js",
 						"polyfills": "src/polyfills.ts",
-						"tsConfig": "src/tsconfig.spec.json",
+						"tsConfig": "tsconfig.spec.json",
 						"scripts": [
-							"node_modules/pace-js/pace.min.js",
-							"node_modules/tinymce/tinymce.min.js",
-							"node_modules/tinymce/themes/mobile/theme.min.js",
-							"node_modules/tinymce/themes/silver/theme.min.js",
-							"node_modules/tinymce/plugins/link/plugin.min.js",
-							"node_modules/tinymce/plugins/paste/plugin.min.js",
-							"node_modules/tinymce/plugins/table/plugin.min.js",
-							"node_modules/echarts/dist/echarts.min.js",
-							"node_modules/echarts/dist/extension/bmap.min.js",
-							"node_modules/chart.js/dist/Chart.min.js"
+							"../../node_modules/pace-js/pace.min.js",
+							"../../node_modules/tinymce/tinymce.min.js",
+							"../../node_modules/tinymce/themes/mobile/theme.min.js",
+							"../../node_modules/tinymce/themes/silver/theme.min.js",
+							"../../node_modules/tinymce/plugins/link/plugin.min.js",
+							"../../node_modules/tinymce/plugins/paste/plugin.min.js",
+							"../../node_modules/tinymce/plugins/table/plugin.min.js",
+							"../../node_modules/echarts/dist/echarts.min.js",
+							"../../node_modules/echarts/dist/extension/bmap.min.js",
+							"../../node_modules/chart.js/dist/Chart.min.js"
 						],
 						"styles": [
-							"node_modules/bootstrap/dist/css/bootstrap.css",
-							"node_modules/typeface-exo/index.css",
-							"node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
-							"node_modules/ionicons/dist/scss/ionicons.scss",
-							"node_modules/@fortawesome/fontawesome-free/css/all.css",
-							"node_modules/socicon/css/socicon.css",
-							"node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
-							"node_modules/leaflet/dist/leaflet.css",
+							"../../node_modules/bootstrap/dist/css/bootstrap.css",
+							"../../node_modules/typeface-exo/index.css",
+							"../../node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+							"../../node_modules/ionicons/dist/scss/ionicons.scss",
+							"../../node_modules/@fortawesome/fontawesome-free/css/all.css",
+							"../../node_modules/socicon/css/socicon.css",
+							"../../node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
+							"../../node_modules/leaflet/dist/leaflet.css",
 							"src/app/@theme/styles/styles.scss"
 						],
 						"assets": [
@@ -125,7 +135,7 @@
 							"src/favicon.png",
 							{
 								"glob": "**/*",
-								"input": "node_modules/leaflet/dist/images",
+								"input": "../../node_modules/leaflet/dist/images",
 								"output": "/assets/img/markers"
 							}
 						]
@@ -134,10 +144,7 @@
 				"lint": {
 					"builder": "@angular-devkit/build-angular:tslint",
 					"options": {
-						"tsConfig": [
-							"src/tsconfig.app.json",
-							"src/tsconfig.spec.json"
-						],
+						"tsConfig": ["tsconfig.json", "tsconfig.spec.json"],
 						"typeCheck": true,
 						"exclude": ["**/node_modules/**/*"]
 					}
@@ -159,7 +166,7 @@
 				"lint": {
 					"builder": "@angular-devkit/build-angular:tslint",
 					"options": {
-						"tsConfig": ["e2e/tsconfig.e2e.json"],
+						"tsConfig": ["tsconfig.e2e.json"],
 						"exclude": ["**/node_modules/**/*"]
 					}
 				}

@@ -1,5 +1,5 @@
-import * as Logger from 'bunyan';
-import * as Bluebird from 'bluebird';
+import Logger from 'bunyan';
+import Bluebird from 'bluebird';
 import { inject, injectable, LazyServiceIdentifer } from 'inversify';
 import { env } from '../../env';
 import { WarehousesService, WarehousesProductsService } from '../warehouses';
@@ -17,7 +17,7 @@ import CarriersService from '../carriers/CarriersService';
 import IOrderRouter from '@modules/server.common/routers/IOrderRouter';
 import { asyncListener, observableListener, routerName } from '@pyro/io';
 import IService from '../IService';
-import * as Stripe from 'stripe';
+import Stripe from 'Stripe';
 import { exhaustMap, first, switchMap, map } from 'rxjs/operators';
 import { v1 as uuid } from 'uuid';
 import OrderProduct from '@modules/server.common/entities/OrderProduct';
@@ -32,14 +32,14 @@ import User from '@modules/server.common/entities/User';
 import { ProductsService } from '../../services/products';
 import { Observable } from 'rxjs';
 
-// TODO: this and other Stripe related things should be inside separate Payments Service
-const stripe: Stripe = new Stripe(env.STRIPE_SECRET_KEY);
-
 @injectable()
 @routerName('order')
 export class OrdersService extends DBService<Order>
 	implements IOrderRouter, IService {
-	public readonly DBObject = Order;
+	public readonly DBObject: any = Order;
+
+	// TODO: this and other Stripe related things should be inside separate Payments Service
+	private stripe: Stripe = new Stripe(env.STRIPE_SECRET_KEY);
 
 	protected readonly log: Logger = createEverLogger({
 		name: 'ordersService'
@@ -269,7 +269,7 @@ export class OrdersService extends DBService<Order>
 					.toPromise();
 
 				if (user != null) {
-					const charge: Stripe.charges.ICharge = await stripe.charges.create(
+					const charge: Stripe.charges.ICharge = await this.stripe.charges.create(
 						{
 							amount: order.totalPrice * 100, // amount in cents, again
 							customer: user.stripeCustomerId,
@@ -334,7 +334,7 @@ export class OrdersService extends DBService<Order>
 
 			if (order != null) {
 				if (order.stripeChargeId != null) {
-					refund = await stripe.refunds.create({
+					refund = await this.stripe.refunds.create({
 						charge: order.stripeChargeId
 					});
 
@@ -430,9 +430,7 @@ export class OrdersService extends DBService<Order>
 
 				if (!wProduct) {
 					throw new Error(
-						`WarehouseOrdersService got call to create(userId, orderProducts) - But there is no product with the id ${
-							args.productId
-						}!`
+						`WarehouseOrdersService got call to create(userId, orderProducts) - But there is no product with the id ${args.productId}!`
 					);
 				}
 
@@ -538,9 +536,7 @@ export class OrdersService extends DBService<Order>
 
 				if (!wProduct) {
 					throw new Error(
-						`WarehouseOrdersService got call to create(userId, orderProducts) - But there is no product with the id ${
-							args.productId
-						}!`
+						`WarehouseOrdersService got call to create(userId, orderProducts) - But there is no product with the id ${args.productId}!`
 					);
 				}
 
@@ -596,7 +592,7 @@ export class OrdersService extends DBService<Order>
 		);
 
 		// revert order sold count
-		await Bluebird.map(removedProducts, async (orderProduct) => {
+		await (<any>Bluebird).map(removedProducts, async (orderProduct) => {
 			const productId = orderProduct.product.id;
 
 			await this.warehousesProductsService.decreaseSoldCount(
@@ -917,11 +913,13 @@ export class OrdersService extends DBService<Order>
 			toPopulate += 'warehouse ';
 		}
 
-		return new Order((await this.Model.findById(id)
-			.populate(toPopulate)
-			.sort({ _createdAt: -1, orderNumber: -1 })
-			.lean()
-			.exec()) as IOrder);
+		return new Order(
+			(await this.Model.findById(id)
+				.populate(toPopulate)
+				.sort({ _createdAt: -1, orderNumber: -1 })
+				.lean()
+				.exec()) as IOrder
+		);
 	}
 
 	private async _throwIfNotExists(orderId: string): Promise<void> {

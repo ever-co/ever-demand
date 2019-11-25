@@ -33,7 +33,7 @@ export class CarrierMapComponent {
 	marker: any;
 	userMarker: any;
 	warehouseMarker: any;
-	interval: NodeJS.Timer;
+	interval: any;
 	isReverted: boolean = true;
 	params$: any;
 

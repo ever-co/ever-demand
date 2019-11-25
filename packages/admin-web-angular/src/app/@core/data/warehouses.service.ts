@@ -217,7 +217,7 @@ export class WarehousesService {
 				}
 			})
 			.pipe(
-				map((result) => result.data.warehouseAddProducts),
+				map((result: any) => result.data.warehouseAddProducts),
 				share()
 			);
 	}

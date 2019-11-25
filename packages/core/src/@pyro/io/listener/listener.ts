@@ -11,7 +11,7 @@ export const listenerOf = (
 	listenerType: ListenerType
 ) => (): MethodDecorator => (
 	router: IRouter,
-	propertyKey: string,
+	propertyKey: string | symbol,
 	descriptor
 ) => {
 	const method = router[propertyKey];

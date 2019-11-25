@@ -9,14 +9,17 @@ import IDeviceRouter from '@modules/server.common/routers/IDeviceRouter';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';
 import IService from '../IService';
 import { first, switchMap, map } from 'rxjs/operators';
+import Logger from 'bunyan';
 
 @injectable()
 @routerName('device')
 export class DevicesService extends DBService<Device>
 	implements IDeviceRouter, IService {
-	public readonly DBObject = Device;
+	public readonly DBObject: any = Device;
 
-	protected readonly log = createEverLogger({ name: 'devicesService' });
+	protected readonly log: Logger = createEverLogger({
+		name: 'devicesService'
+	});
 
 	@observableListener()
 	get(id: string): Observable<Device | null> {

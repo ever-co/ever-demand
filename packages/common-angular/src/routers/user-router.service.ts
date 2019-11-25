@@ -8,7 +8,7 @@ import IUser, {
 } from '@modules/server.common/interfaces/IUser';
 import User from '@modules/server.common/entities/User';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
-import * as Stripe from 'stripe';
+import Stripe from 'stripe';
 
 @Injectable()
 export class UserRouter implements IUserRouter {

@@ -8,7 +8,7 @@ import {
 	EventEmitter
 } from '@angular/core';
 
-import * as masonry from 'masonry-layout';
+import masonry from 'masonry-layout';
 
 declare var require: any;
 declare var imagesLoaded: any;

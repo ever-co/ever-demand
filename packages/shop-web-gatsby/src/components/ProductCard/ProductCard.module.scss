@@ -1,0 +1,37 @@
+@import '../../styles/styles.module.scss';
+
+.card {
+	background-color: rgba(66, 66, 66, 1) !important;
+	height: 450px;
+	background-repeat: no-repeat;
+	position: relative;
+	padding: 0.2em;
+
+	img {
+		width: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	button {
+		font-size: 0.8em !important;
+		width: auto;
+		// height: 60px;
+		padding: 12px;
+	}
+}
+
+.card-content {
+	position: absolute;
+	padding: 0.5em;
+	bottom: 0;
+	left: 0;
+	background: rgba(66, 66, 66, 0.5);
+	width: 100%;
+	padding: 8px;
+	color: white;
+}
+
+// .btn {
+//     font-size: 0.5em !important;
+// }

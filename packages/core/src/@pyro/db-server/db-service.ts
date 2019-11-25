@@ -1,6 +1,6 @@
-import * as mongoose from 'mongoose';
-import * as _ from 'lodash';
-import * as Logger from 'bunyan';
+import mongoose from 'mongoose';
+import _ from 'lodash';
+import Logger from 'bunyan';
 import { Observable, Subject } from 'rxjs';
 import { injectable } from 'inversify';
 import { ExistenceEvent, ExistenceEventType } from './existence';

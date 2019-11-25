@@ -2,12 +2,12 @@ import { EntityService } from '@pyro/db-server/entity-service';
 import { DBCreateObject, DBObject, DBRawObject, PyroObjectId } from '@pyro/db';
 import { env } from '../../env';
 import { WrongPasswordError } from '@modules/server.common/errors/WrongPasswordError';
-import * as bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 import { injectable, interfaces } from 'inversify';
 import { RawObject } from '@pyro/db/db-raw-object';
 
 // have to combine the two imports
-import * as jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { JsonWebTokenError } from 'jsonwebtoken';
 
 interface IAuthableCreateObject extends DBCreateObject {
@@ -27,7 +27,7 @@ interface IAuthable
 
 interface AuthServiceConfig<T extends IAuthable> {
 	role: string;
-	Entity: AuthService<T>['DBObject'];
+	Entity: any; // AuthService<T>['DBObject'];
 	saltRounds: number;
 }
 

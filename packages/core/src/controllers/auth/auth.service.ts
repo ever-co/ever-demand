@@ -1,9 +1,10 @@
-import * as jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { Injectable } from '@nestjs/common';
 import User from '@modules/server.common/entities/User';
 import { createEverLogger } from '../../helpers/Log';
 import { first } from 'rxjs/operators';
 import { UsersService } from '../../services/users';
+import Logger from 'bunyan';
 
 export interface JwtPayload {
 	id: string;
@@ -12,7 +13,7 @@ export interface JwtPayload {
 @Injectable()
 export class AuthService {
 	public readonly DBObject = User;
-	protected readonly log = createEverLogger({ name: 'authService' });
+	protected readonly log: Logger = createEverLogger({ name: 'authService' });
 
 	constructor(private readonly _usersService: UsersService) {}
 

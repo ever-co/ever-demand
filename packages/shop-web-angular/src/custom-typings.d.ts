@@ -37,7 +37,7 @@ declare var $: any;
  * in the files such as main.browser.ts or any file within app/
  *
 
-import * as _ from 'lodash'
+import _ from 'lodash'
 
  * You can include your type definitions in this file until you create one for the @types
  *

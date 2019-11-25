@@ -1,4 +1,4 @@
-import * as Logger from 'bunyan';
+import Logger from 'bunyan';
 import { injectable } from 'inversify';
 import { createEverLogger } from '../../helpers/Log';
 import { DBService } from '@pyro/db-server';
@@ -15,7 +15,7 @@ import { first, switchMap, map } from 'rxjs/operators';
 @routerName('products-category')
 export class ProductsCategoriesService extends DBService<ProductsCategory>
 	implements IProductsCategoryRouter, IService {
-	public readonly DBObject = ProductsCategory;
+	public readonly DBObject: any = ProductsCategory;
 
 	protected readonly log: Logger = createEverLogger({
 		name: 'productsCategoriesService'
