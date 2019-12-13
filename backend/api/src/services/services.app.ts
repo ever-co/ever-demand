@@ -619,7 +619,7 @@ export class ServicesApp {
 				const baseRedirectUr =
 					passport['_strategies'].session.base_redirect_url;
 				if (req.user) {
-					res.redirect(baseRedirectUr + req.user.redirectUrl);
+					res.redirect(baseRedirectUr + (<any>req.user).redirectUrl);
 				} else {
 					res.redirect(baseRedirectUr || '');
 				}
@@ -648,7 +648,7 @@ export class ServicesApp {
 				const baseRedirectUr =
 					passport['_strategies'].session.base_redirect_url;
 				if (req.user) {
-					res.redirect(baseRedirectUr + req.user.redirectUrl);
+					res.redirect(baseRedirectUr + (<any>req.user).redirectUrl);
 				} else {
 					res.redirect(baseRedirectUr || '');
 				}
