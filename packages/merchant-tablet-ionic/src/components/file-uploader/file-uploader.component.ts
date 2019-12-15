@@ -7,7 +7,7 @@ import {
 	OnInit
 } from '@angular/core';
 import { FileUploader, FileUploaderOptions, FileItem } from 'ng2-file-upload';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';

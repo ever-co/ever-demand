@@ -21,7 +21,7 @@ import { NotifyService } from '../../@core/services/notify/notify.service';
 import { CustomerOrdersNumberComponent } from '../../@shared/render-component/customer-table/customer-orders-number/customer-orders-number.component';
 import { CustomerEmailComponent } from '../../@shared/render-component/customer-email/customer-email.component';
 import { CustomerPhoneComponent } from '../../@shared/render-component/customer-phone/customer-phone.component';
-import { BanConfirmComponent } from 'app/@shared/user/ban-confirm';
+import { BanConfirmComponent } from '@app/@shared/user/ban-confirm';
 
 export interface CustomerViewModel {
 	id: string;

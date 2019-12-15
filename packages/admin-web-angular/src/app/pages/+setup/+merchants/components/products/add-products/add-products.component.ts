@@ -6,11 +6,11 @@ import {
 	Output,
 	EventEmitter
 } from '@angular/core';
-import { AddWarehouseProductsComponent } from 'app/@shared/warehouse-product/forms/add-warehouse-products-table';
+import { AddWarehouseProductsComponent } from '@app/@shared/warehouse-product/forms/add-warehouse-products-table';
 import Product from '@modules/server.common/entities/Product';
-import { WarehousesService } from 'app/@core/data/warehouses.service';
+import { WarehousesService } from '@app/@core/data/warehouses.service';
 import { first } from 'rxjs/operators';
-import { NotifyService } from 'app/@core/services/notify/notify.service';
+import { NotifyService } from '@app/@core/services/notify/notify.service';
 
 @Component({
 	selector: 'ea-merchants-setup-add-products',

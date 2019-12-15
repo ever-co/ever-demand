@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
 import { Geolocation } from '@ionic-native/geolocation';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class GeoLocationService {

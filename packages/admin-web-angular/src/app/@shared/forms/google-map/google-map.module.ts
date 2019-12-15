@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { GoogleMapComponent } from './google-map.component';
 import { AgmCoreModule } from '@agm/core';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 
 @NgModule({
 	imports: [

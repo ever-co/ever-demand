@@ -23,11 +23,11 @@ var user = {
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 
 import { withKnobs, object } from '@storybook/addon-knobs';
-import { ThemeModule } from 'app/@theme';
+import { ThemeModule } from '@app/@theme';
 import { CommonModule, APP_BASE_HREF } from '@angular/common';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbSpinnerModule } from '@nebular/theme';
-import { ConfirmationModalModule } from 'app/@shared/confirmation-modal/confirmation-modal.module';
+import { ConfirmationModalModule } from '@app/@shared/confirmation-modal/confirmation-modal.module';
 import { ToasterModule } from 'angular2-toaster';
 import {
 	TranslateModule,
@@ -36,7 +36,7 @@ import {
 } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { NbAuthModule } from '@nebular/auth';
-import { NotifyService } from 'app/@core/services/notify/notify.service';
+import { NotifyService } from '@app/@core/services/notify/notify.service';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -44,15 +44,15 @@ import { PipesModule } from '@modules/client.common.angular2/pipes/pipes.module'
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { I18nModule } from 'app/@core/utils/i18n.module';
+import { I18nModule } from '@app/@core/utils/i18n.module';
 import { CustomerInfoComponent } from './ea-customer-info.component';
 import { HighlightModule } from 'ngx-highlightjs';
-import { RenderComponentsModule } from 'app/@shared/render-component/render-components.module';
-import { WarehouseMutationModule } from 'app/@shared/warehouse/warehouse-mutation';
-import { CustomerOrdersTableModule } from 'app/@shared/render-component/customer-orders-table/customer-orders-table.module';
-import { CustomerProductsTableModule } from 'app/@shared/render-component/customer-products-table/customer-products-table.module';
-import { CustomerWarehousesTableModule } from 'app/@shared/warehouse/customer-warehouses-table/customer-warehouses-table.module';
-import { WarehouseOrderModalModule } from 'app/@shared/warehouse/+warehouse-order-modal/warehouse-order-modal.module';
+import { RenderComponentsModule } from '@app/@shared/render-component/render-components.module';
+import { WarehouseMutationModule } from '@app/@shared/warehouse/warehouse-mutation';
+import { CustomerOrdersTableModule } from '@app/@shared/render-component/customer-orders-table/customer-orders-table.module';
+import { CustomerProductsTableModule } from '@app/@shared/render-component/customer-products-table/customer-products-table.module';
+import { CustomerWarehousesTableModule } from '@app/@shared/warehouse/customer-warehouses-table/customer-warehouses-table.module';
+import { WarehouseOrderModalModule } from '@app/@shared/warehouse/+warehouse-order-modal/warehouse-order-modal.module';
 import { CustomerOrdersModule } from '../ea-customer-orders/ea-customer-orders.module';
 import { FormsModule } from '@angular/forms';
 import { CustomerComponent } from '../customer.component';
@@ -60,7 +60,7 @@ import { CustomerLocationComponent } from '../ea-customer-location/ea-customer-l
 import { CustomerProductsComponent } from '../ea-customer-products/ea-customer-products/ea-customer-products.component';
 import { CustomerStoresComponent } from '../ea-customer-stores/ea-customer-stores.component';
 import { CustomerMetricsComponent } from '../ea-customer-metrics/ea-customer-metrics.component';
-import { UsersService } from 'app/@core/data/users.service';
+import { UsersService } from '@app/@core/data/users.service';
 
 const stories = storiesOf('Customer Info', module);
 

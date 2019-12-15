@@ -1,5 +1,5 @@
 import { Component, ViewChild, EventEmitter } from '@angular/core';
-import { LocationFormComponent } from 'app/@shared/forms/location';
+import { LocationFormComponent } from '@app/@shared/forms/location';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { ToasterService } from 'angular2-toaster';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';

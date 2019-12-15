@@ -14,8 +14,7 @@ import { CommonModule } from '@modules/client.common.angular2';
 import { MenuModule } from './components/menu/menu.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { Logger } from 'angular2-logger/core';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
 import { Apollo, ApolloModule } from 'apollo-angular';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -96,7 +95,6 @@ import { ServerConnectionService } from '@modules/client.common.angular2/service
 			multi: true
 		},
 		{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-		Logger,
 		PagesModuleGuard,
 		MaintenanceModuleGuard
 	],

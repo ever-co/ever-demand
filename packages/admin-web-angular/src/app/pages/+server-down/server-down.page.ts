@@ -1,8 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
-import { Store } from 'app/@core/data/store.service';
-import { environment } from 'environment';
+import { Store } from '@app/@core/data/store.service';
+import { environment } from 'environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
 

@@ -9,7 +9,7 @@ import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-r
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/carrier-orders-router.service';
-import { CarriersService } from 'app/@core/data/carriers.service';
+import { CarriersService } from '@app/@core/data/carriers.service';
 import { environment } from 'environments/environment';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 

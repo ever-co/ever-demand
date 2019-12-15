@@ -14,7 +14,6 @@ import { CommonModule } from '@modules/client.common.angular2';
 import { MenuModule } from '../components/menu/menu.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { Logger } from 'angular2-logger/core';
 import { environment } from '../environments/environment';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 import { FileUploadModule } from 'ng2-file-upload';
@@ -97,7 +96,6 @@ import { ServerConnectionService } from '@modules/client.common.angular2/service
 		},
 		// { provide: ErrorHandler, useClass: IonicErrorHandler },
 		{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-		Logger,
 		PagesModuleGuard,
 		MaintenanceModuleGuard,
 		Store,

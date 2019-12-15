@@ -9,13 +9,13 @@ import {
 } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { TranslateService } from '@ngx-translate/core';
-import { CarrierImageComponent } from 'app/@shared/render-component/carriers-table/carrier-image/carrier-image.component';
-import { RedirectNameComponent } from 'app/@shared/render-component/name-redirect/name-redirect.component';
-import { CarrierPhoneComponent } from 'app/@shared/render-component/carriers-table/carrier-phone/carrier-phone.component';
+import { CarrierImageComponent } from '@app/@shared/render-component/carriers-table/carrier-image/carrier-image.component';
+import { RedirectNameComponent } from '@app/@shared/render-component/name-redirect/name-redirect.component';
+import { CarrierPhoneComponent } from '@app/@shared/render-component/carriers-table/carrier-phone/carrier-phone.component';
 import { Observable, forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Carrier from '@modules/server.common/entities/Carrier';
-import { CarrierActionsComponent } from 'app/@shared/render-component/carriers-table/carrier-actions/carrier-actions.component';
+import { CarrierActionsComponent } from '@app/@shared/render-component/carriers-table/carrier-actions/carrier-actions.component';
 import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 
 export interface CarrierSmartTableObject {

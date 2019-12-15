@@ -5,7 +5,7 @@ import {
 	AfterViewInit,
 	OnInit
 } from '@angular/core';
-import { BasicInfoFormComponent } from 'app/@shared/carrier/forms/basic-info/basic-info-form.component';
+import { BasicInfoFormComponent } from '@app/@shared/carrier/forms/basic-info/basic-info-form.component';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { first } from 'rxjs/operators';

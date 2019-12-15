@@ -6,7 +6,7 @@ import { WarehouseProductCreateComponent } from './warehouse-product-create.comp
 import { WarehouseProductFormsModule } from '../forms';
 import { ProductFormsModule } from '../../product/forms';
 import { NbSpinnerModule } from '@nebular/theme';
-import { NotifyService } from 'app/@core/services/notify/notify.service';
+import { NotifyService } from '@app/@core/services/notify/notify.service';
 
 @NgModule({
 	imports: [

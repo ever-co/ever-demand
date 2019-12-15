@@ -10,8 +10,8 @@ import { CountryRenderComponent } from '../country-render/country-render.compone
 import { InvitesService } from '../../../../@core/data/invites.service';
 import { DeviceService } from '../../../../@core/data/device.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { InvitesRequestsTableModule } from 'app/@shared/render-component/invites-requests/invites-requests.module';
-import { NotifyService } from 'app/@core/services/notify/notify.service';
+import { InvitesRequestsTableModule } from '@app/@shared/render-component/invites-requests/invites-requests.module';
+import { NotifyService } from '@app/@core/services/notify/notify.service';
 import { ConfirmationModalModule } from '../../../../@shared/confirmation-modal/confirmation-modal.module';
 import { NbButtonModule } from '@nebular/theme';
 @NgModule({

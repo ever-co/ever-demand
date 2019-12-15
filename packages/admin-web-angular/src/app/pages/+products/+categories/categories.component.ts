@@ -7,7 +7,7 @@ import { CategoryCreateComponent } from '../../../@shared/product/categories/cat
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CategoriesTableComponent } from '../../../@shared/product/categories/categories-table/categories-table.component';
-import { NotifyService } from 'app/@core/services/notify/notify.service';
+import { NotifyService } from '@app/@core/services/notify/notify.service';
 
 @Component({
 	selector: 'ea-categories',

@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { IOrderCreateInput } from '@modules/server.common/routers/IWarehouseOrdersRouter';
 import { OrderPage } from './+order/order.page';
 import { ModalController } from '@ionic/angular';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { GeoLocationService } from '../../services/geo-location';
 import RegistrationSystem from '@modules/server.common/enums/RegistrationSystem';

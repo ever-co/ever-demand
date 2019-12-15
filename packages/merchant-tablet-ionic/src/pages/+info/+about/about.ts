@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { Store } from 'services/store.service';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 
 @Component({
 	selector: 'page-about',

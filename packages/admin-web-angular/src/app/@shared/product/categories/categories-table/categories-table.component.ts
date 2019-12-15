@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
-import { ProductsCategoryService } from '../../../../@core/data/productsCategory.service';
+import { ProductsCategoryService } from '@app/@core/data/productsCategory.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryEditComponent } from '../category-edit';
 import { TranslateService } from '@ngx-translate/core';
@@ -16,8 +16,8 @@ import { forkJoin, Subject, Observable, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
-import { NotifyService } from 'app/@core/services/notify/notify.service';
-import { ConfimationModalComponent } from '../../../confirmation-modal/confirmation-modal.component';
+import { NotifyService } from '@app/@core/services/notify/notify.service';
+import { ConfimationModalComponent } from '@app/@shared/confirmation-modal/confirmation-modal.component';
 import { CategoryImageComponent } from './category-image.component';
 
 interface ProductViewModel {

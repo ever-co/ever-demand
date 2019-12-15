@@ -6,7 +6,7 @@ import { Subject } from 'rxjs/Rx';
 import { ToasterService } from 'angular2-toaster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import _ from 'lodash';
-import { CarriersSmartTableComponent } from 'app/@shared/carrier/carriers-table/carriers-table.component';
+import { CarriersSmartTableComponent } from '@app/@shared/carrier/carriers-table/carriers-table.component';
 import { takeUntil, first } from 'rxjs/operators';
 import Carrier from '@modules/server.common/entities/Carrier';
 import CarrierStatus from '@modules/server.common/enums/CarrierStatus';

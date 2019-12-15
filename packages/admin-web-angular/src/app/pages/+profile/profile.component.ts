@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import Admin from '@modules/server.common/entities/Admin';
-import { AdminsService } from 'app/@core/data/admins.service';
-import { Store } from 'app/@core/data/store.service';
+import { AdminsService } from '@app/@core/data/admins.service';
+import { Store } from '@app/@core/data/store.service';
 import { Observable } from 'rxjs/Observable';
 
 @Component({

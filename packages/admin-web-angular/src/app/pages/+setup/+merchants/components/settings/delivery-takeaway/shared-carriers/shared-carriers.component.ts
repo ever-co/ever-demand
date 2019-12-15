@@ -6,11 +6,11 @@ import {
 	Input
 } from '@angular/core';
 import Carrier from '@modules/server.common/entities/Carrier';
-import { CarriersSmartTableComponent } from 'app/@shared/carrier/carriers-table/carriers-table.component';
+import { CarriersSmartTableComponent } from '@app/@shared/carrier/carriers-table/carriers-table.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
-import { CarriersService } from 'app/@core/data/carriers.service';
+import { CarriersService } from '@app/@core/data/carriers.service';
 import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 
 const perPage = 5;

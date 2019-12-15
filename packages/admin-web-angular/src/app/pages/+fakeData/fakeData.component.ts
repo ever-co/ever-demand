@@ -35,15 +35,15 @@ import {
 	IProductsCategoryName,
 	IProductsCategory
 } from '@modules/server.common/interfaces/IProductsCategory';
-import { NotifyService } from 'app/@core/services/notify/notify.service';
-import { OrdersService } from 'app/@core/data/orders.service';
+import { NotifyService } from '@app/@core/services/notify/notify.service';
+import { OrdersService } from '@app/@core/data/orders.service';
 import { ICarrierRegistrationInput } from '@modules/server.common/routers/ICarrierRouter';
-import { InvitesService } from 'app/@core/data/invites.service';
-import { InvitesRequestsService } from 'app/@core/data/invites-requests.service';
-import { UsersService } from 'app/@core/data/users.service';
+import { InvitesService } from '@app/@core/data/invites.service';
+import { InvitesRequestsService } from '@app/@core/data/invites-requests.service';
+import { UsersService } from '@app/@core/data/users.service';
 import { environment } from 'environments/environment';
 import _ from 'lodash';
-import { CurrenciesService } from 'app/@core/data/currencies.service';
+import { CurrenciesService } from '@app/@core/data/currencies.service';
 
 const NEED_DEFAULT_SETTINGS_MESSAGE =
 	"Can't generate fake data without DEFAULT_LONGITUDE and DEFAULT_LATITUDE";

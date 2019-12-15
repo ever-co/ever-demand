@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CallNumber } from '@ionic-native/call-number';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 import { Store } from 'app/services/store.service';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { first } from 'rxjs/operators';

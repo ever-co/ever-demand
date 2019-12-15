@@ -7,8 +7,8 @@ import {
 	OnDestroy
 } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
-import { OrdersChart } from 'app/@core/services/dashboard/orders-chart.service';
-import { LayoutService } from 'app/@core/services/dashboard/layout.service';
+import { OrdersChart } from '@app/@core/services/dashboard/orders-chart.service';
+import { LayoutService } from '@app/@core/services/dashboard/layout.service';
 import { takeWhile, delay } from 'rxjs/operators';
 
 @Component({

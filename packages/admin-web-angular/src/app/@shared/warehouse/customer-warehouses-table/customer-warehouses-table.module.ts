@@ -7,7 +7,7 @@ import { CustomerWarehousesTableComponent } from './customer-warehouses-table.co
 import { WarehouseOrderComponent } from '../../../pages/+warehouses/+warehouse-order/warehouse-order.component';
 import { SelectWarehouseComponent } from '../select-warehouse.component/select-warehouse.component';
 import { WarehouseTableModule } from '../../render-component/warehouse-table/warehouse-table.module';
-import { WarehouseInfoComponent } from 'app/pages/+warehouses/+warehouse-order/warehouse-info/warehouse-info.component';
+import { WarehouseInfoComponent } from '@app/pages/+warehouses/+warehouse-order/warehouse-info/warehouse-info.component';
 import { HighlightModule } from 'ngx-highlightjs';
 
 const COMPONENTS = [

@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { WarehousesService } from 'app/@core/data/warehouses.service';
+import { WarehousesService } from '@app/@core/data/warehouses.service';
 import { environment } from 'environments/environment';
 import { Marker } from '@agm/core/services/google-maps-types';
 import Warehouse from '@modules/server.common/entities/Warehouse';

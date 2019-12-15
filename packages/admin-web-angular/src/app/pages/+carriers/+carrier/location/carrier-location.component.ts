@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
-import 'style-loader!leaflet/dist/leaflet.css';
+// TODO: import 'style-loader!leaflet/dist/leaflet.css';
 import { ActivatedRoute } from '@angular/router';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { first } from 'rxjs/operators';
 import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/carrier-orders-router.service';
 import { ICarrierOrdersRouterGetOptions } from '@modules/server.common/routers/ICarrierOrdersRouter';
 import { environment } from 'environments/environment';
-import { CarriersService } from 'app/@core/data/carriers.service';
+import { CarriersService } from '@app/@core/data/carriers.service';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 
 declare var google: any;

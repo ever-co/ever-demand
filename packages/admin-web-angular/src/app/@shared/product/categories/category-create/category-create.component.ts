@@ -5,9 +5,9 @@ import { Subject } from 'rxjs';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { TranslateService } from '@ngx-translate/core';
-import { NotifyService } from 'app/@core/services/notify/notify.service';
+import { NotifyService } from '@app/@core/services/notify/notify.service';
 import { first } from 'rxjs/operators';
-import { ProductsCategoryService } from 'app/@core/data/productsCategory.service';
+import { ProductsCategoryService } from '@app/@core/data/productsCategory.service';
 
 @Component({
 	selector: 'ea-category-create',

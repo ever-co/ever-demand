@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileUploadModule } from 'ng2-file-upload';
 import { CarrierMapComponent } from './carrier-map.component';
-import { ThemeModule } from 'app/@theme';
+import { ThemeModule } from '@app/@theme';
 
 @NgModule({
 	declarations: [CarrierMapComponent],

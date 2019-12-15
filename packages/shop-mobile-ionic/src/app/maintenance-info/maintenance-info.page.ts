@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MaintenanceService } from '@modules/client.common.angular2/services/maintenance.service';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 import { Store } from 'app/services/store.service';
 import { Router } from '@angular/router';
 

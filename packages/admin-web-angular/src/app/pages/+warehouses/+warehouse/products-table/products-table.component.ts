@@ -22,7 +22,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
 	WarehouseProductViewModel,
 	WarehouseProductsComponent
-} from 'app/@shared/warehouse-product/forms/warehouse-products-table';
+} from '@app/@shared/warehouse-product/forms/warehouse-products-table';
 
 @Component({
 	selector: 'ea-store-products-table',

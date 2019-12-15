@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from 'services/store.service';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 
 @Component({
 	selector: 'e-cu-menu',

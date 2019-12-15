@@ -17,10 +17,10 @@ import { HighlightModule } from 'ngx-highlightjs';
 import { SimulationProductsComponent } from './products/products.component';
 import { CustomerOrdersModule } from '../+customers/+customer/ea-customer-orders/ea-customer-orders.module';
 import { SimulationInstructionsComponent } from './instructions/instructions.component';
-import { InviteRequestModalModule } from 'app/@shared/invite/invite-request/invite-request-modal.module';
-import { ByCodeModalModule } from 'app/@shared/invite/by-code/by-code-modal.module';
+import { InviteRequestModalModule } from '@app/@shared/invite/invite-request/invite-request-modal.module';
+import { ByCodeModalModule } from '@app/@shared/invite/by-code/by-code-modal.module';
 import { SimulationOrderModule } from './order/order.module';
-import { RenderComponentsModule } from 'app/@shared/render-component/render-components.module';
+import { RenderComponentsModule } from '@app/@shared/render-component/render-components.module';
 import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 
 @NgModule({

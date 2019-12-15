@@ -11,7 +11,7 @@ import { ToasterService } from 'angular2-toaster';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfimationModalComponent } from 'app/@shared/confirmation-modal/confirmation-modal.component';
+import { ConfimationModalComponent } from '@app/@shared/confirmation-modal/confirmation-modal.component';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { root } from 'rxjs/internal/util/root';
 import { takeUntil } from 'rxjs/operators';

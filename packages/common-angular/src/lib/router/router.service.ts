@@ -1,4 +1,3 @@
-import { Logger } from 'angular2-logger/core';
 import { Socket } from '../socket.service';
 import { Observable } from 'rxjs';
 import { ObservableRequest } from './ObservableRequest';
@@ -16,8 +15,7 @@ export class Router {
 		socketFactory: SocketFactory,
 		private readonly routersService: RoutersService,
 		private readonly name: string,
-		private readonly apiUrl: string,
-		private readonly logger: Logger
+		private readonly apiUrl: string
 	) {
 		this.socket = socketFactory.build(`${apiUrl}/${name}`);
 		this.routersService.sockets.next(this.socket);

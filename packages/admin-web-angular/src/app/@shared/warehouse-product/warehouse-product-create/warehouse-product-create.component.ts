@@ -15,10 +15,10 @@ import { WizardComponent } from 'angular2-wizard';
 import { TranslateService } from '@ngx-translate/core';
 import { NbThemeService } from '@nebular/theme';
 import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
-import { ProductsCategoryService } from 'app/@core/data/productsCategory.service';
+import { ProductsCategoryService } from '@app/@core/data/productsCategory.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
-import { NotifyService } from 'app/@core/services/notify/notify.service';
+import { NotifyService } from '@app/@core/services/notify/notify.service';
 
 const perPage = 3;
 
@@ -221,9 +221,7 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 					.toPromise();
 				this.createdProducts.push(product);
 
-				const message = `Product ${
-					productCreateObject.title[0].value
-				} is created`;
+				const message = `Product ${productCreateObject.title[0].value} is created`;
 				this._notifyService.success(message);
 			}
 		} else {

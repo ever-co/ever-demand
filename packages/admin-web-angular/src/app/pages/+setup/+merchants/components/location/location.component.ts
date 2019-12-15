@@ -1,5 +1,5 @@
 import { Component, EventEmitter, ViewChild, Output } from '@angular/core';
-import { LocationFormComponent } from 'app/@shared/forms/location';
+import { LocationFormComponent } from '@app/@shared/forms/location';
 import { FormBuilder } from '@angular/forms';
 
 @Component({

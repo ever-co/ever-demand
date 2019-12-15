@@ -12,11 +12,11 @@ import { ChartPanelSummaryComponent } from './charts-panel/chart-panel-summary/c
 import { NgxEchartsModule } from 'ngx-echarts';
 import { LegendChartComponent } from './charts-panel/legend-chart/legend-chart.component';
 import { DashboardSelectStoreComponent } from './dashboard-select-store/dashboard-select-store.component';
-import { LayoutService } from 'app/@core/services/dashboard/layout.service';
-import { OrdersProfitChartService } from 'app/@core/services/dashboard/orders-profit-chart.service';
-import { OrdersChartService } from 'app/@core/services/dashboard/orders-chart.service';
-import { PeriodsService } from 'app/@core/services/dashboard/periods.service';
-import { ProfitChartService } from 'app/@core/services/dashboard/profit-chart.service';
+import { LayoutService } from '@app/@core/services/dashboard/layout.service';
+import { OrdersProfitChartService } from '@app/@core/services/dashboard/orders-profit-chart.service';
+import { OrdersChartService } from '@app/@core/services/dashboard/orders-chart.service';
+import { PeriodsService } from '@app/@core/services/dashboard/periods.service';
+import { ProfitChartService } from '@app/@core/services/dashboard/profit-chart.service';
 import { ToasterModule } from 'angular2-toaster';
 import { NbSpinnerModule } from '@nebular/theme';
 import { PipesModule } from '@modules/client.common.angular2/pipes/pipes.module';

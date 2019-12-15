@@ -15,7 +15,7 @@ import { MaintenanceModuleGuard } from './pages/+maintenance-info/maintenance-in
 const routes: Routes = [
 	{
 		path: '',
-		loadChildren: 'app/pages/pages.module#PagesModule',
+		loadChildren: './pages/pages.module#PagesModule',
 		canActivate: [AppModuleGuard, AdminAuthGuard]
 	},
 	{

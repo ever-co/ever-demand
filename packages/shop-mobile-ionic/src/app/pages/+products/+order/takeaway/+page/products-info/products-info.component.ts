@@ -9,7 +9,7 @@ import {
 import { Subject } from 'rxjs';
 import Order from '@modules/server.common/entities/Order';
 import { getIdFromTheDate } from '@modules/server.common/utils';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 

@@ -10,7 +10,6 @@ import { Network } from '@ionic-native/network/ngx';
 import { Globalization } from '@ionic-native/globalization/ngx';
 import { Device } from '@ionic-native/device/ngx';
 import { CommonModule } from '@modules/client.common.angular2';
-import { Logger } from 'angular2-logger/core';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { GraphQLModule } from '../graphql/apollo.config';
@@ -80,7 +79,6 @@ import { MenuModule } from 'components/menu/menu.module';
 		GoogleMaps,
 		// { provide: ErrorHandler, useClass: IonicErrorHandler },
 		{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-		Logger,
 		GoogleAnalytics,
 		Mixpanel,
 		Network,

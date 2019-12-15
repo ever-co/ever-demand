@@ -28,7 +28,6 @@ import { AppState } from './app.service';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { NoContentComponent } from './no-content';
 import { CommonModule } from '../modules/client.common.angular2';
-import { Logger } from 'angular2-logger/core';
 import { SidenavService } from './sidenav/sidenav.service';
 import { SidenavContentComponent } from './sidenav/sidenav-content.component';
 import '../styles/styles.scss';
@@ -106,7 +105,6 @@ const APP_PROVIDERS = [
 	...APP_RESOLVER_PROVIDERS,
 	AppState,
 	SidenavService,
-	Logger,
 	ServerSettings,
 	InfiniteScrollModule,
 	{

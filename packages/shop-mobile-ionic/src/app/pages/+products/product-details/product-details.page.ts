@@ -26,7 +26,7 @@ import Product from '@modules/server.common/entities/Product';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { IProductImage } from '@modules/server.common/interfaces/IProduct';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 import RegistrationSystem from '@modules/server.common/enums/RegistrationSystem';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';

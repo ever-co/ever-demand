@@ -1,5 +1,5 @@
 import { Component, ViewChild, Input } from '@angular/core';
-import { PaymentGatewaysComponent } from 'app/@shared/payment-gateways/payment-gateways.component';
+import { PaymentGatewaysComponent } from '@app/@shared/payment-gateways/payment-gateways.component';
 import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaymentGateway';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 

@@ -8,7 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProductCreateComponent } from '../../@shared/product/product-create';
 import { ProductsTableComponent } from '../../@shared/product/forms/products-table';
 import { ProductsCategoryService } from '../../@core/data/productsCategory.service';
-import { NotifyService } from 'app/@core/services/notify/notify.service';
+import { NotifyService } from '@app/@core/services/notify/notify.service';
 
 const perPage = 5;
 

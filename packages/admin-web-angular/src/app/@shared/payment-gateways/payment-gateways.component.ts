@@ -3,7 +3,7 @@ import { Country } from '@modules/server.common/entities';
 import { StripeGatewayComponent } from './stripe-gateway/stripe-gateway.component';
 import { PayPalGatewayComponent } from './payPal-gateway/payPal-gateway.component';
 import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaymentGateway';
-import { CurrenciesService } from 'app/@core/data/currencies.service';
+import { CurrenciesService } from '@app/@core/data/currencies.service';
 import { first } from 'rxjs/operators';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import PaymentGateways from '@modules/server.common/enums/PaymentGateways';

@@ -11,10 +11,10 @@ import { LocationFormModule } from '../../forms/location';
 import { WarehouseManageTabsDetailsComponent } from './warehouse-manage-tabs/details/warehouse-manage-tabs-details.component';
 import { WarehouseManageTabsAccountComponent } from './warehouse-manage-tabs/account/warehouse-manage-tabs-account.component';
 import { WarehouseManageTabsDeliveryAreasComponent } from './warehouse-manage-tabs/delivery-areas/warehouse-manage-tabs-delivery-areas.component';
-import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.module';
+import { FileUploaderModule } from '@app/@shared/file-uploader/file-uploader.module';
 import { NbButtonModule } from '@nebular/theme';
 import { PaymentsSettingsFormComponent } from './payments-settings/payments-settings-form.component';
-import { PaymentGatewaysModule } from 'app/@shared/payment-gateways/payment-gateways.module';
+import { PaymentGatewaysModule } from '@app/@shared/payment-gateways/payment-gateways.module';
 
 @NgModule({
 	imports: [

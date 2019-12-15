@@ -4,11 +4,11 @@ import { Subject, Subscription } from 'rxjs';
 import { WarehousesService } from '../../@core/data/warehouses.service';
 import Order from '@modules/server.common/entities/Order';
 import { OrdersService } from '../../@core/data/orders.service';
-import { WarehouseOrdersService } from 'app/@core/data/warehouseOrders.service';
-import { DashboardLoadingIndicatorState } from 'app/models/DashboardLoadingIndicatorState';
+import { WarehouseOrdersService } from '@app/@core/data/warehouseOrders.service';
+import { DashboardLoadingIndicatorState } from '@app/models/DashboardLoadingIndicatorState';
 import { TranslateService } from '@ngx-translate/core';
-import { DashboardInfoViewModel } from 'app/models/DashboardInfoViewModel';
-import { IExistingCustomersViewModel } from 'app/models/IExistingCustomersViewModel';
+import { DashboardInfoViewModel } from '@app/models/DashboardInfoViewModel';
+import { IExistingCustomersViewModel } from '@app/models/IExistingCustomersViewModel';
 
 @Component({
 	selector: 'ea-dashboard',

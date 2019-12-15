@@ -7,18 +7,18 @@ import {
 	Input
 } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import { StoreProductPriceComponent } from 'app/@shared/render-component/store-products-table/store-product-price.component';
-import { StoreProductAmountComponent } from 'app/@shared/render-component/store-products-table/store-product-amount/store-product-amount.component';
-import { ProductCategoriesComponent } from 'app/@shared/render-component/product-categories/product-categories';
-import { ProductTitleRedirectComponent } from 'app/@shared/render-component/product-title-redirect/product-title-redirect.component';
+import { StoreProductPriceComponent } from '@app/@shared/render-component/store-products-table/store-product-price.component';
+import { StoreProductAmountComponent } from '@app/@shared/render-component/store-products-table/store-product-amount/store-product-amount.component';
+import { ProductCategoriesComponent } from '@app/@shared/render-component/product-categories/product-categories';
+import { ProductTitleRedirectComponent } from '@app/@shared/render-component/product-title-redirect/product-title-redirect.component';
 import { Observable, forkJoin, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
-import { ProductsCategoryService } from 'app/@core/data/productsCategory.service';
+import { ProductsCategoryService } from '@app/@core/data/productsCategory.service';
 import Product from '@modules/server.common/entities/Product';
-import { StoreProductImageComponent } from 'app/@shared/render-component/store-products-table/store-product-image/store-product-image.component';
+import { StoreProductImageComponent } from '@app/@shared/render-component/store-products-table/store-product-image/store-product-image.component';
 
 export interface WarehouseProductViewModel {
 	id: string;

@@ -11,7 +11,7 @@ import IPlatform from '@modules/server.common/interfaces/IPlatform';
 import { Device } from '@ionic-native/device/ngx';
 import { Router } from '@angular/router';
 import { Store } from './services/store.service';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 
 @Component({
 	selector: 'e-cu-root',

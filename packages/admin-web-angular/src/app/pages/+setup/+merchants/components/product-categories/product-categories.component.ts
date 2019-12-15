@@ -1,12 +1,12 @@
 import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
 import { first } from 'rxjs/operators';
-import { ProductsCategoryService } from 'app/@core/data/productsCategory.service';
+import { ProductsCategoryService } from '@app/@core/data/productsCategory.service';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
-import { BasicInfoFormComponent } from 'app/@shared/product/categories/forms/basic-info';
-import { NotifyService } from 'app/@core/services/notify/notify.service';
+import { BasicInfoFormComponent } from '@app/@shared/product/categories/forms/basic-info';
+import { NotifyService } from '@app/@core/services/notify/notify.service';
 import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
-import { CategoriesTableComponent } from 'app/@shared/product/categories/categories-table';
+import { CategoriesTableComponent } from '@app/@shared/product/categories/categories-table';
 
 @Component({
 	selector: 'ea-merchants-setup-product-categories',

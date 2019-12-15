@@ -20,7 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { countries } from '@modules/server.common/data/abbreviation-to-country';
 import { StatusComponent } from '../../../../@shared/render-component/invites-requests/status/status.component';
 import { InvitedDateComponent } from '../../../../@shared/render-component/invites-requests/invited-date.component';
-import { NotifyService } from 'app/@core/services/notify/notify.service';
+import { NotifyService } from '@app/@core/services/notify/notify.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfimationModalComponent } from '../../../../@shared/confirmation-modal/confirmation-modal.component';
 import { InviteViewModel } from '../invites.component';

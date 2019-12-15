@@ -16,11 +16,11 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ToasterModule } from 'angular2-toaster';
 import FakeDataProductsCategories from '../../@core/data/fakeDataServices/productsCategories';
 import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
-import { NotifyService } from 'app/@core/services/notify/notify.service';
-import { InvitesService } from 'app/@core/data/invites.service';
-import { InvitesRequestsService } from 'app/@core/data/invites-requests.service';
-import { UsersService } from 'app/@core/data/users.service';
-import { CurrenciesService } from 'app/@core/data/currencies.service';
+import { NotifyService } from '@app/@core/services/notify/notify.service';
+import { InvitesService } from '@app/@core/data/invites.service';
+import { InvitesRequestsService } from '@app/@core/data/invites-requests.service';
+import { UsersService } from '@app/@core/data/users.service';
+import { CurrenciesService } from '@app/@core/data/currencies.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');

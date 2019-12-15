@@ -17,12 +17,12 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { ProductCategoriesComponent } from '../../../render-component/product-categories/product-categories';
 import { ProductsCategoryService } from '../../../../@core/data/productsCategory.service';
-import { NotifyService } from 'app/@core/services/notify/notify.service';
+import { NotifyService } from '@app/@core/services/notify/notify.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfimationModalComponent } from '../../../confirmation-modal/confirmation-modal.component';
-import { ProductCheckboxComponent } from 'app/@shared/render-component/product-checkbox/product-checkbox';
-import { ProductTitleComponent } from 'app/@shared/render-component/product-title/product-title.component';
-import { ProductImageComponent } from 'app/@shared/render-component/product-image/product-image.component';
+import { ProductCheckboxComponent } from '@app/@shared/render-component/product-checkbox/product-checkbox';
+import { ProductTitleComponent } from '@app/@shared/render-component/product-title/product-title.component';
+import { ProductImageComponent } from '@app/@shared/render-component/product-image/product-image.component';
 
 interface ProductViewModel {
 	id: string;

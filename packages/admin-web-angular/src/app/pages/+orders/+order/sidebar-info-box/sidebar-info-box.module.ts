@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToasterModule } from 'angular2-toaster';
 import { TranslateModule } from '@ngx-translate/core';
-import { ThemeModule } from 'app/@theme';
+import { ThemeModule } from '@app/@theme';
 import { SidebarInfoBoxComponent } from './sidebar-info-box.component';
 
 @NgModule({

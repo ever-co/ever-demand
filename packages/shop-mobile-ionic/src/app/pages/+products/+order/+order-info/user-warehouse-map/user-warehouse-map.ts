@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 
 const warehouseIcon = environment.MAP_MERCHANT_ICON_LINK;
 const userIcon = environment.MAP_USER_ICON_LINK;

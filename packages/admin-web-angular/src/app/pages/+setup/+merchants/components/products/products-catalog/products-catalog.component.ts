@@ -1,7 +1,7 @@
 import { Component, ViewChild, Input, OnInit, OnDestroy } from '@angular/core';
-import { ProductsTableComponent } from 'app/@shared/product/forms/products-table';
+import { ProductsTableComponent } from '@app/@shared/product/forms/products-table';
 import { first, takeUntil } from 'rxjs/operators';
-import { ProductsService } from 'app/@core/data/products.service';
+import { ProductsService } from '@app/@core/data/products.service';
 import { Subject } from 'rxjs';
 
 @Component({

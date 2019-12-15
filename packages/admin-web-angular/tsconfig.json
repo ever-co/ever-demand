@@ -1,11 +1,11 @@
 {
 	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
-		"module": "es2015",
+		"module": "esnext",
 		"baseUrl": "./src",
 		"outDir": "./build",
 		"rootDir": "./",
-		"target": "es5",
+		"target": "es2015",
 		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"],
 		"paths": {
 			"@angular/*": ["../node_modules/@angular/*"],
@@ -28,7 +28,8 @@
 			"typeorm": [
 				"../node_modules/@ever-platform/common-angular/src/typeorm-placeholder"
 			],
-			"environment": ["./environments/environment"],
+			"@app/*": ["app/*"],
+			"environments/*": ["./environments/*"],
 			"core-js/es7/reflect": [
 				"../../../node_modules/core-js/proposals/reflect-metadata"
 			],
@@ -51,9 +52,6 @@
 		"./src",
 		"node_modules/@ever-platform/common",
 		"node_modules/@ever-platform/common-angular",
-		"node_modules/angular2-wizard",
-		"node_modules/angular2-logger/app/core/level.ts",
-		"node_modules/angular2-logger/app/core/logger.ts",
-		"node_modules/angular2-logger/app/core/providers.ts"
+		"node_modules/angular2-wizard"
 	]
 }

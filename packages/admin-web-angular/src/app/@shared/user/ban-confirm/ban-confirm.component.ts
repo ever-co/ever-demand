@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { CustomerViewModel } from 'app/pages/+customers/customers.component';
+import { CustomerViewModel } from '@app/pages/+customers/customers.component';
 
 @Component({
 	selector: 'ea-ban-confirm',

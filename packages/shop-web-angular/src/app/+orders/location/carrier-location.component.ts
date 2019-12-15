@@ -7,7 +7,7 @@ import { first } from 'rxjs/operators';
 import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/carrier-orders-router.service';
 import { ICarrierOrdersRouterGetOptions } from '@modules/server.common/routers/ICarrierOrdersRouter';
 import { environment } from 'environments/environment';
-import { CarriersService } from 'app/@core/data/carriers.service';
+import { CarriersService } from '@app/@core/data/carriers.service';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
@@ -134,12 +134,8 @@ export class CarrierLocationComponent implements OnInit {
 					<h3>  ${this.carrierLoc.fullName}</h3>
 					<ul>
 						<li>${this.carrierLoc.username}</li>
-						<li><i style='margin-right:5px;' class="ion-md-call"></i>${
-							this.carrierLoc.phone
-						}</li>
-						<li><i style='margin-right:5px;' class="ion-md-locate"></i>${
-							this.carrierLoc.geoLocation.streetAddress
-						}</li>
+						<li><i style='margin-right:5px;' class="ion-md-call"></i>${this.carrierLoc.phone}</li>
+						<li><i style='margin-right:5px;' class="ion-md-locate"></i>${this.carrierLoc.geoLocation.streetAddress}</li>
 					</ul>
 					`;
 

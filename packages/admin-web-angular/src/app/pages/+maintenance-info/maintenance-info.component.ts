@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { MaintenanceService } from '@modules/client.common.angular2/services/maintenance.service';
 import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
-import { Store } from 'app/@core/data/store.service';
+import { Store } from '@app/@core/data/store.service';
 
 @Component({
 	templateUrl: './maintenance-info.component.html'

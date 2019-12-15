@@ -7,8 +7,8 @@ import {
 } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { takeWhile } from 'rxjs/operators';
-import { ProfitChart } from 'app/@core/services/dashboard/profit-chart.service';
-import { LayoutService } from 'app/@core/services/dashboard/layout.service';
+import { ProfitChart } from '@app/@core/services/dashboard/profit-chart.service';
+import { LayoutService } from '@app/@core/services/dashboard/layout.service';
 
 @Component({
 	selector: 'ea-profit-chart',

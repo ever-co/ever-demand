@@ -35,9 +35,6 @@
 	"include": [
 		"src/**/*.ts",
 		"./*.ts",
-		"./node_modules/angular2-logger/app/core/level.ts",
-		"./node_modules/angular2-logger/app/core/logger.ts",
-		"./node_modules/angular2-logger/app/core/providers.ts",
 		"src/modules/client.common.angular2/mongoose-placeholder.ts",
 		"src/modules/client.common.angular2/typeorm-placeholder.ts",
 		"src/modules/**/*.ts"

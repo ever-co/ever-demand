@@ -7,7 +7,7 @@ import { ProductsCategoryService } from '../../../../@core/data/productsCategory
 import { IProductsCategoryName } from '@modules/server.common/interfaces/IProductsCategory';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
-import { NotifyService } from 'app/@core/services/notify/notify.service';
+import { NotifyService } from '@app/@core/services/notify/notify.service';
 
 @Component({
 	selector: 'ea-category-edit',

@@ -6,7 +6,7 @@ import { IProductCreateObject } from '@modules/server.common/interfaces/IProduct
 import { ProductsService } from '../../../@core/data/products.service';
 import { first } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
-import { NotifyService } from 'app/@core/services/notify/notify.service';
+import { NotifyService } from '@app/@core/services/notify/notify.service';
 
 @Component({
 	selector: 'ea-product-create',
@@ -54,9 +54,7 @@ export class ProductCreateComponent implements OnInit {
 					.pipe(first())
 					.toPromise();
 				this.loading = false;
-				const message = `Product ${
-					productCreateObject.title[0].value
-				} is created`;
+				const message = `Product ${productCreateObject.title[0].value} is created`;
 
 				this._notifyService.success(message);
 				this._cancelModal();

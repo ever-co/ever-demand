@@ -1,7 +1,7 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { text, withKnobs, object } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import { ThemeModule } from 'app/@theme';
+import { ThemeModule } from '@app/@theme';
 import { CommonModule, APP_BASE_HREF, DOCUMENT } from '@angular/common';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import {
@@ -25,12 +25,12 @@ import {
 	NbLayoutRulerService,
 	NbOverlayModule
 } from '@nebular/theme';
-import { ConfirmationModalModule } from 'app/@shared/confirmation-modal/confirmation-modal.module';
+import { ConfirmationModalModule } from '@app/@shared/confirmation-modal/confirmation-modal.module';
 import { ToasterModule } from 'angular2-toaster';
 import { TranslateStore, TranslateService } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { NbAuthModule, NbAuthService } from '@nebular/auth';
-import { NotifyService } from 'app/@core/services/notify/notify.service';
+import { NotifyService } from '@app/@core/services/notify/notify.service';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -38,7 +38,7 @@ import { PipesModule } from '@modules/client.common.angular2/pipes/pipes.module'
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { I18nModule } from 'app/@core/utils/i18n.module';
+import { I18nModule } from '@app/@core/utils/i18n.module';
 import { DashboardComponent } from './dashboard.component';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { ChartsPanelComponent } from './charts-panel/charts-panel.component';
@@ -48,22 +48,22 @@ import { OrdersChartComponent } from './charts-panel/charts/orders-chart/orders-
 import { ProfitChartComponent } from './charts-panel/charts/profit-chart/profit-chart.component';
 import { LegendChartComponent } from './charts-panel/legend-chart/legend-chart.component';
 import { DashboardSelectStoreComponent } from './dashboard-select-store/dashboard-select-store.component';
-import { WarehousesService } from 'app/@core/data/warehouses.service';
+import { WarehousesService } from '@app/@core/data/warehouses.service';
 import { WarehouseModule } from '../+warehouses/+warehouse';
-import { WarehouseOrdersService } from 'app/@core/data/warehouseOrders.service';
-import { WarehouseProductCreateModule } from 'app/@shared/warehouse-product/warehouse-product-create';
+import { WarehouseOrdersService } from '@app/@core/data/warehouseOrders.service';
+import { WarehouseProductCreateModule } from '@app/@shared/warehouse-product/warehouse-product-create';
 import { WarehouseOrderModule } from '../+warehouses/+warehouse/+warehouse-order/warehouse-order.module';
 import { WarehouseProductsViewModule } from '../+warehouses/+warehouse/+warehouse-products-view/warehouse-products-view.module';
 import { WarehouseMainInfoViewModule } from '../+warehouses/+warehouse/warehouse-main-info/warehouse-main-info.module';
 import { WarehouseSelectViewModule } from '../+warehouses/+warehouse/warehouse-select-view/warehouse-select-view.module';
 import { WarehouseOrderViewModule } from '../+warehouses/+warehouse/warehouse-order-view/warehouse-order-view.module';
 import { WarehouseOrdersTableModule } from '../+warehouses/+warehouse/warehouse-orders-table/warehouse-orders-table.module';
-import { OrdersService } from 'app/@core/data/orders.service';
-import { OrdersProfitChartService } from 'app/@core/services/dashboard/orders-profit-chart.service';
-import { OrdersChartService } from 'app/@core/services/dashboard/orders-chart.service';
-import { PeriodsService } from 'app/@core/services/dashboard/periods.service';
-import { ProfitChartService } from 'app/@core/services/dashboard/profit-chart.service';
-import { LayoutService } from 'app/@core/services/dashboard/layout.service';
+import { OrdersService } from '@app/@core/data/orders.service';
+import { OrdersProfitChartService } from '@app/@core/services/dashboard/orders-profit-chart.service';
+import { OrdersChartService } from '@app/@core/services/dashboard/orders-chart.service';
+import { PeriodsService } from '@app/@core/services/dashboard/periods.service';
+import { ProfitChartService } from '@app/@core/services/dashboard/profit-chart.service';
+import { LayoutService } from '@app/@core/services/dashboard/layout.service';
 import {
 	BUILT_IN_THEMES,
 	NbJSThemesRegistry

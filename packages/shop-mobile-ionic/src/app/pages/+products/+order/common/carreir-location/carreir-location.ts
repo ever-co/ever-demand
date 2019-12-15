@@ -6,7 +6,7 @@ import {
 	Input,
 	OnDestroy
 } from '@angular/core';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 
 @Component({

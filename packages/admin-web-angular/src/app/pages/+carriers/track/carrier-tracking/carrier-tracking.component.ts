@@ -11,13 +11,13 @@ import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-r
 import { Subject, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/carrier-orders-router.service';
-import { CarriersService } from 'app/@core/data/carriers.service';
+import { CarriersService } from '@app/@core/data/carriers.service';
 import { environment } from 'environments/environment';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
-import { WarehousesService } from 'app/@core/data/warehouses.service';
+import { WarehousesService } from '@app/@core/data/warehouses.service';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { ICarrierCreateObject } from '@modules/server.common/interfaces/ICarrier';
 
@@ -97,9 +97,7 @@ export class CarrierTrackingComponent implements OnInit, OnDestroy {
 	carrierListener(e) {
 		if (this.selectedStore) {
 			this.router.navigate([
-				`carriers/track/${this.selectedStore.id}/${
-					this.selectedCarrier.id
-				}`
+				`carriers/track/${this.selectedStore.id}/${this.selectedCarrier.id}`
 			]);
 		} else {
 			this.router.navigate([

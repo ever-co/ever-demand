@@ -5,17 +5,17 @@ import { TranslateService } from '@ngx-translate/core';
 import {
 	OrdersChart,
 	OrdersChartService
-} from 'app/@core/services/dashboard/orders-chart.service';
-import { ProfitChart } from 'app/@core/services/dashboard/profit-chart.service';
+} from '@app/@core/services/dashboard/orders-chart.service';
+import { ProfitChart } from '@app/@core/services/dashboard/profit-chart.service';
 import { takeWhile } from 'rxjs/operators';
 import {
 	OrdersProfitChartService,
 	OrderProfitChartSummary
-} from 'app/@core/services/dashboard/orders-profit-chart.service';
+} from '@app/@core/services/dashboard/orders-profit-chart.service';
 import Order from '@modules/server.common/entities/Order';
-import { PeriodsService } from 'app/@core/services/dashboard/periods.service';
+import { PeriodsService } from '@app/@core/services/dashboard/periods.service';
 import { Subject } from 'rxjs';
-import { DashboardLoadingIndicatorState } from 'app/models/DashboardLoadingIndicatorState';
+import { DashboardLoadingIndicatorState } from '@app/models/DashboardLoadingIndicatorState';
 import { toDate } from '@modules/server.common/utils';
 
 interface IOrdersChartModel {

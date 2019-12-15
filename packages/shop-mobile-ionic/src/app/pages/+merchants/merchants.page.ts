@@ -5,13 +5,12 @@ import { Store } from 'app/services/store.service';
 import { first } from 'rxjs/operators';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { GeoLocationService } from 'app/services/geo-location';
-
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { MerchantsService } from 'app/services/merchants/merchants.service';
 import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 
 @Component({
 	templateUrl: './merchants.page.html',

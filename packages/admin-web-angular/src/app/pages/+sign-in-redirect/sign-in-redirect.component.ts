@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WarehousesService } from 'app/@core/data/warehouses.service';
+import { WarehousesService } from '@app/@core/data/warehouses.service';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 

@@ -6,7 +6,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { FileUploadModule } from 'ng2-file-upload';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { ThemeModule } from 'app/@theme';
+import { ThemeModule } from '@app/@theme';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 

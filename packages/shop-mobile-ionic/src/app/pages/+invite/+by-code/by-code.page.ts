@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
 import Invite from '@modules/server.common/entities/Invite';
 import { Store } from '../../../services/store.service';
 import { UserAuthRouter } from '@modules/client.common.angular2/routers/user-auth-router.service';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 import { OrdersService } from 'app/services/orders/orders.service';
 
 @Component({

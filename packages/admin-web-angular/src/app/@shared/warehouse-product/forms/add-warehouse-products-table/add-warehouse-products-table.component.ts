@@ -7,7 +7,7 @@ import { PriceCountInputComponent } from '../../../render-component/price-countI
 import { TranslateService } from '@ngx-translate/core';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
-import { CheckboxComponent } from 'app/@shared/render-component/customer-orders-table/checkbox/checkbox.component';
+import { CheckboxComponent } from '@app/@shared/render-component/customer-orders-table/checkbox/checkbox.component';
 
 @Component({
 	selector: 'ea-add-warehouse-products-table',

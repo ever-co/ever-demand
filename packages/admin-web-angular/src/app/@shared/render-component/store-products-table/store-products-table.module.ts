@@ -7,7 +7,7 @@ import { StoreProductQtyComponent } from './store-product-qty.component';
 import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 import { StoreProductAmountComponent } from './store-product-amount/store-product-amount.component';
 import { StoreOrderProductAmountComponent } from './store-order-product-amount/store-order-product-amount.component';
-import { ConfirmationModalModule } from 'app/@shared/confirmation-modal/confirmation-modal.module';
+import { ConfirmationModalModule } from '@app/@shared/confirmation-modal/confirmation-modal.module';
 
 const COMPONENTS = [
 	StoreProductImageComponent,

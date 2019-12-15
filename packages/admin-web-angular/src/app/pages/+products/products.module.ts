@@ -12,10 +12,10 @@ import { ProductFormsModule } from '../../@shared/product/forms';
 import { CategoryCreateComponent } from '../../@shared/product/categories/category-create';
 import { CategoryEditComponent } from '../../@shared/product/categories/category-edit/category-edit.component';
 import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
-import { NotifyService } from 'app/@core/services/notify/notify.service';
+import { NotifyService } from '@app/@core/services/notify/notify.service';
 import { ConfirmationModalModule } from '../../@shared/confirmation-modal/confirmation-modal.module';
-import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.module';
-import { ProductCategoriesFormsModule } from 'app/@shared/product/categories/forms/product-categories-forms.module';
+import { FileUploaderModule } from '@app/@shared/file-uploader/file-uploader.module';
+import { ProductCategoriesFormsModule } from '@app/@shared/product/categories/forms/product-categories-forms.module';
 
 const routes: Routes = [
 	{

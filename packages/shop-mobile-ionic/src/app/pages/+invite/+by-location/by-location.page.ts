@@ -16,7 +16,7 @@ import { Store } from '../../../services/store.service';
 import { UserAuthRouter } from '@modules/client.common.angular2/routers/user-auth-router.service';
 import { GeoLocationRouter } from '@modules/client.common.angular2/routers/geo-location-router.service';
 import { Subject } from 'rxjs';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 
 @Component({
 	selector: 'e-cu-by-location',

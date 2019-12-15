@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ToasterModule } from 'angular2-toaster';
 import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
-import { NotifyService } from 'app/@core/services/notify/notify.service';
+import { NotifyService } from '@app/@core/services/notify/notify.service';
 import { ConfirmationModalModule } from '../../@shared/confirmation-modal/confirmation-modal.module';
 
 const routes: Routes = [

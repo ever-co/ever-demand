@@ -11,7 +11,7 @@ import { RedirectOrderComponent } from '../../../../@shared/render-component/cus
 import { RedirectProductComponent } from '../../../../@shared/render-component/customer-orders-table/redirect-product/redirect-product.component';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin, Subject, Observable } from 'rxjs';
-import { CustomerOrderActionsComponent } from 'app/@shared/render-component/customer-orders-table/customer-order-actions/customer-order-actions.component';
+import { CustomerOrderActionsComponent } from '@app/@shared/render-component/customer-orders-table/customer-order-actions/customer-order-actions.component';
 
 @Component({
 	selector: 'ea-customer-orders',

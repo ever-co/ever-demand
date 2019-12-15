@@ -10,18 +10,18 @@ import { Observable, Subject, forkJoin } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
-import { Store } from 'app/@core/data/store.service';
+import { Store } from '@app/@core/data/store.service';
 import { SimulationProductsComponent } from './products/products.component';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import Order from '@modules/server.common/entities/Order';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
-import { InviteRequestModalComponent } from 'app/@shared/invite/invite-request/invite-request-modal.component';
+import { InviteRequestModalComponent } from '@app/@shared/invite/invite-request/invite-request-modal.component';
 import InviteRequest from '@modules/server.common/entities/InviteRequest';
 import { IInviteCreateObject } from '@modules/server.common/interfaces/IInvite';
 import Invite from '@modules/server.common/entities/Invite';
 import { ToasterService } from 'angular2-toaster';
-import { ByCodeModalComponent } from 'app/@shared/invite/by-code/by-code-modal.component';
+import { ByCodeModalComponent } from '@app/@shared/invite/by-code/by-code-modal.component';
 import {
 	SimulationInstructionsComponent,
 	Step
@@ -282,9 +282,7 @@ export class SimulationComponent implements OnDestroy, OnInit {
 				.pipe(first())
 				.toPromise();
 
-			const productsInfo: Observable<
-				ProductInfo[]
-			> = this.geoLocationService.getGeoLocationProducts(
+			const productsInfo: Observable<ProductInfo[]> = this.geoLocationService.getGeoLocationProducts(
 				this.user.geoLocation
 			);
 

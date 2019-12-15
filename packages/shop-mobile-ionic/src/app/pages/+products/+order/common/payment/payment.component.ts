@@ -4,7 +4,7 @@ import { UserRouter } from '@modules/client.common.angular2/routers/user-router.
 import { Store } from 'app/services/store.service';
 import Stripe from 'stripe';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 import { ModalController } from '@ionic/angular';
 import { OrderPage } from '../../order.page';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';

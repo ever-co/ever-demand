@@ -6,7 +6,7 @@ import {
 	ViewChild
 } from '@angular/core';
 import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { IProductImage } from '@modules/server.common/interfaces/IProduct';
 import { NgModel } from '@angular/forms';
@@ -51,7 +51,7 @@ export class FileUploaderComponent {
 	}
 
 	async imageUrlChanged() {
-		let newValue =
+		const newValue =
 			this.fileUrl &&
 			this.fileUrl.replace(this.oldValue || '', '').trim();
 

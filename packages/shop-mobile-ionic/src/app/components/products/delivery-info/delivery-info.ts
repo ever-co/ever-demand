@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { first } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 import { Store } from 'app/services/store.service';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 

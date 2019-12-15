@@ -6,13 +6,13 @@ import {
 	Input
 } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import { BasicInfoFormComponent } from 'app/@shared/product/forms/basic-info/basic-info-form.component';
+import { BasicInfoFormComponent } from '@app/@shared/product/forms/basic-info/basic-info-form.component';
 import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
-import { ProductsCategoryService } from 'app/@core/data/productsCategory.service';
+import { ProductsCategoryService } from '@app/@core/data/productsCategory.service';
 import { first } from 'rxjs/operators';
 import { IProductCreateObject } from '@modules/server.common/interfaces/IProduct';
-import { ProductsService } from 'app/@core/data/products.service';
-import { ProductViewModel } from 'app/pages/+simulation/products/products.component';
+import { ProductsService } from '@app/@core/data/products.service';
+import { ProductViewModel } from '@app/pages/+simulation/products/products.component';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import Product from '@modules/server.common/entities/Product';
 
@@ -58,9 +58,7 @@ export class SetupMerchantProductMutationComponent {
 				.toPromise();
 		} catch (error) {
 			console.warn(
-				`Error during load product categories. message: ${
-					error.message
-				}`
+				`Error during load product categories. message: ${error.message}`
 			);
 		}
 

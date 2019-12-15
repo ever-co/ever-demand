@@ -1,13 +1,13 @@
 import { Component, OnDestroy, EventEmitter } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import { ProductImageRedirectComponent } from 'app/@shared/render-component/product-image-redirect/product-image-redirect.component';
+import { ProductImageRedirectComponent } from '@app/@shared/render-component/product-image-redirect/product-image-redirect.component';
 import { forkJoin, Observable, Subject } from 'rxjs';
-import { ProductTitleRedirectComponent } from 'app/@shared/render-component/product-title-redirect/product-title-redirect.component';
-import { SimulationJsonComponent } from 'app/@shared/render-component/simulation-table/sumulation-json.component';
+import { ProductTitleRedirectComponent } from '@app/@shared/render-component/product-title-redirect/product-title-redirect.component';
+import { SimulationJsonComponent } from '@app/@shared/render-component/simulation-table/sumulation-json.component';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
-import { ProductCheckboxComponent } from 'app/@shared/render-component/product-checkbox/product-checkbox';
+import { ProductCheckboxComponent } from '@app/@shared/render-component/product-checkbox/product-checkbox';
 
 export interface ProductViewModel {
 	id: string;

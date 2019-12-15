@@ -67,7 +67,6 @@
 		"@ngx-progressbar/core": "^5.3.2",
 		"@ngx-translate/core": "^11.0.1",
 		"@ngx-translate/http-loader": "^4.0.0",
-		"angular2-logger": "^0.7.0",
 		"apollo-angular": "^1.6.0",
 		"apollo-angular-link-http": "^1.7.0",
 		"apollo-cache-inmemory": "^1.6.2",

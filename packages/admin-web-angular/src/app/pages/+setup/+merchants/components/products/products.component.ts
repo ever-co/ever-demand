@@ -13,10 +13,10 @@ import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil, first } from 'rxjs/operators';
-import { WarehouseProductsComponent } from 'app/@shared/warehouse-product/forms/warehouse-products-table';
+import { WarehouseProductsComponent } from '@app/@shared/warehouse-product/forms/warehouse-products-table';
 import { SetupMerchantProductMutationComponent } from './product-mutation/product-mutation.component';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
-import { NotifyService } from 'app/@core/services/notify/notify.service';
+import { NotifyService } from '@app/@core/services/notify/notify.service';
 import Product from '@modules/server.common/entities/Product';
 import { Router } from '@angular/router';
 

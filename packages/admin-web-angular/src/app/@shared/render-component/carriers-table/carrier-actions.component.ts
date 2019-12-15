@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ViewCell } from 'ng2-smart-table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CarrierTableInfoComponent } from '../../../pages/+carriers/+carrier/carrier-info.component';
-import { CarrierLocationComponent } from 'app/pages/+carriers/+carrier/location/carrier-location.component';
+import { CarrierTableInfoComponent } from '@app/pages/+carriers/+carrier/carrier-info.component';
+import { CarrierLocationComponent } from '@app/pages/+carriers/+carrier/location/carrier-location.component';
 
 @Component({
 	template: `

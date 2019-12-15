@@ -5,7 +5,7 @@ import { PopoverController, ModalController, NavParams } from '@ionic/angular';
 import { Store } from '../../../../services/store.service';
 import { OrderPage } from '../order.page';
 import { Router } from '@angular/router';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 import { OrderTakeawayInfoPopup } from '../takeaway/popup/popup.component';
 

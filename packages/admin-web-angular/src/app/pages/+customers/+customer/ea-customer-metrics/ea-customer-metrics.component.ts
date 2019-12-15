@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import User from '@modules/server.common/entities/User';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'apollo-client/util/Observable';
-import { UsersService } from 'app/@core/data/users.service';
+import { UsersService } from '@app/@core/data/users.service';
 
 @Component({
 	selector: 'ea-customer-metrics',

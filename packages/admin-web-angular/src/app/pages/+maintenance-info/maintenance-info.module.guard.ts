@@ -5,7 +5,7 @@ import {
 	ActivatedRouteSnapshot,
 	RouterStateSnapshot
 } from '@angular/router';
-import { Store } from 'app/@core/data/store.service';
+import { Store } from '@app/@core/data/store.service';
 
 @Injectable()
 export class MaintenanceModuleGuard implements CanActivate {

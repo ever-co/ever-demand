@@ -11,7 +11,7 @@ import { SetupMerchantSharedCarriersComponent } from './shared-carriers/shared-c
 import {
 	CarriersSmartTableComponent,
 	CarrierSmartTableObject
-} from 'app/@shared/carrier/carriers-table/carriers-table.component';
+} from '@app/@shared/carrier/carriers-table/carriers-table.component';
 import { Subject } from 'rxjs';
 import { SetupMerchantAddNewCarrierComponent } from './add-new-carrier/add-new-carrier.component';
 import { getDummyImage } from '@modules/server.common/utils';

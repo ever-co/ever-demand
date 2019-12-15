@@ -10,8 +10,8 @@ import { ProductCategoriesModule } from '../../render-component/product-categori
 import { CommonModule } from '@angular/common';
 import { NbSpinnerModule } from '@nebular/theme';
 import { ConfirmationModalModule } from '../../confirmation-modal/confirmation-modal.module';
-import { RenderComponentsModule } from 'app/@shared/render-component/render-components.module';
-import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.module';
+import { RenderComponentsModule } from '@app/@shared/render-component/render-components.module';
+import { FileUploaderModule } from '@app/@shared/file-uploader/file-uploader.module';
 
 @NgModule({
 	imports: [
