@@ -151,9 +151,7 @@ jobs:
         steps:
             - checkout
             - run: *install-deps
-            - run: 
-                  name: Install Yarn
-                  command: sudo npm install -g yarn
+            - run: *install-yarn
             - run: *install-gradle
             - run:
                   name: 'Pull Submodules'
@@ -211,9 +209,7 @@ jobs:
         steps:
             - checkout
             - run: *install-deps
-            - run: 
-                  name: Install Yarn
-                  command: sudo npm install -g yarn
+            - run: *install-yarn                  
             - run: *install-gradle                  
             - run:
                   name: 'Pull Submodules'
@@ -304,9 +300,7 @@ jobs:
         steps:
             - checkout
             - run: *install-deps
-            - run: 
-                  name: Install Yarn
-                  command: sudo npm install -g yarn
+            - run: *install-yarn
             - run: *install-gradle
             - run:
                   name: 'Pull Submodules'
