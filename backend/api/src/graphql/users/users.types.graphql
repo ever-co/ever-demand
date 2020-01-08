@@ -135,7 +135,7 @@ input PagingSortInput {
 type Mutation {
 	updateUser(id: String!, updateObject: UserUpdateObjectInput!): User!
 
-	updateEmail(userId: String!, email: String!): User!
+	updateUserEmail(userId: String!, email: String!): User!
 
 	registerUser(registerInput: UserRegisterInput!): User!
 
