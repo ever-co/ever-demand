@@ -142,6 +142,20 @@ export class CarriersService extends DBService<Carrier>
 		return super.update(carrierId, { isActive });
 	}
 
+	/**
+	 * Update email for given Carrier (by carrier Id)
+	 *
+	 * @param {string} carrierId
+	 * @param {string} email
+	 * @returns {Promise<Carrier>}
+	 * @memberof CarriersService
+	 */
+	@asyncListener()
+	async updateEmail(carrierId: string, email: string): Promise<Carrier> {
+		await this.throwIfNotExists(carrierId);
+		return this.update(carrierId, { email });
+	}
+
 	@asyncListener()
 	async updateGeoLocation(
 		carrierId: Carrier['id'],

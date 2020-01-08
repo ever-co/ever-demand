@@ -112,7 +112,7 @@ input CarrierPasswordUpdateInput {
 type Mutation {
 	registerCarrier(registerInput: CarrierRegisterInput!): Carrier!
 
-	updateEmail(id: String!, email: String!): Carrier!
+	updateCarrierEmail(id: String!, email: String!): Carrier!
 
 	updateCarrier(id: String!, updateInput: CarrierUpdateInput!): Carrier!
 
