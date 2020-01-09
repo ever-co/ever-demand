@@ -161,7 +161,7 @@
 		"ngx-pagination": "^4.1.0",
 		"node-sass": "^4.11.0",
 		"phonegap-plugin-barcodescanner": "^8.0.1",
-		"pm2": "^3.4.0",
+		"pm2": "^4.2.1",
 		"qrcode": "^1.4.1",
 		"rxjs": "^6.5.2",
 		"rxjs-compat": "^6.5.2",
