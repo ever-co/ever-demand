@@ -1,7 +1,10 @@
-import { connect } from 'connect';
+import * as connect from 'connect';
 import * as path from 'path';
-import { serveStatic } from 'serve-static';
-const port: number = 8080;
+import * as serveStatic from 'serve-static';
+import { env } from './scripts/env';
+
+const port: number = env.PORT;
+
 connect()
 	.use(serveStatic(path.join(__dirname, 'www')))
 	.listen(port);

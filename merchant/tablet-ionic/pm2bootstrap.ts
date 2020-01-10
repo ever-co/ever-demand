@@ -1,139 +1,54 @@
-const env = process.env;
-import * as util from 'util';
-import * as path from 'path';
-import * as os from 'os';
-import * as PM2 from 'pm2/lib/API.js';
-import * as cst from 'pm2/constants.js';
+require('dotenv').config();
+const pm2 = require('pm2');
 
-const pm2 = new PM2(
-	env.isProd
-		? {
-				public_key: env.KEYMETRICS_PUBLIC_KEY,
-				secret_key: env.KEYMETRICS_SECRET_KEY
-		  }
-		: {}
-);
+import { env } from './scripts/env';
 
-const start = util.promisify(pm2.start.bind(pm2));
-const interact = (private_key, public_key, machine_name) =>
-	new Promise((resolve) =>
-		pm2.interact(private_key, public_key, machine_name, resolve)
-	);
-const launchBus = util.promisify(pm2.launchBus.bind(pm2));
-const runningApps = util.promisify(pm2.list.bind(pm2));
-const timeout = (ms: number) =>
-	new Promise((resolve) => setTimeout(resolve, ms));
+const MACHINE_NAME = process.env.KEYMETRICS_MACHINE_NAME;
+const PRIVATE_KEY = process.env.KEYMETRICS_SECRET_KEY;
+const PUBLIC_KEY = process.env.KEYMETRICS_PUBLIC_KEY;
+const appName = process.env.PM2_APP_NAME || 'EverMerchants';
+const instances = env.WEB_CONCURRENCY;
+const maxMemory = env.WEB_MEMORY;
+const port = env.PORT;
 
-(async () => {
-	// Display logs in standard output
-	try {
-		const bus = await launchBus();
-		console.log('[PM2] Log streaming started');
+pm2.connect(function() {
+	pm2.start(
+		{
+			script: 'app.js',
+			name: appName, // ----> THESE ATTRIBUTES ARE OPTIONAL:
+			exec_mode: 'fork', // ----> https://github.com/Unitech/PM2/blob/master/ADVANCED_README.md#schema
+			instances,
+			max_memory_restart: maxMemory + 'M', // Auto restart if process taking more than XXmo
+			env: {
+				// If needed declare some environment variables
+				NODE_ENV: 'production',
+				PORT: port,
+				KEYMETRICS_PUBLIC: PUBLIC_KEY,
+				KEYMETRICS_SECRET: PRIVATE_KEY
+			},
+			post_update: ['yarn install'] // Commands to execute once we do a pull from Keymetrics
+		},
+		function() {
+			// Display logs in standard output
+			pm2.launchBus(function(err, bus) {
+				console.log('[PM2] Log streaming started');
 
-		bus.on('log:out', (packet) => {
-			console.log('[App:%s] %s', packet.process.name, packet.data);
-		});
+				bus.on('log:out', function(packet) {
+					console.log(
+						'[App:%s] %s',
+						packet.process.name,
+						packet.data
+					);
+				});
 
-		bus.on('log:err', (packet) => {
-			console.error('[App:%s][Err] %s', packet.process.name, packet.data);
-		});
-	} catch (err) {
-		exitPM2();
-	}
-})();
-
-(async () => {
-	try {
-		await start({
-			pm2_home: path.join(os.homedir(), '.pm2'),
-			script: './app.js',
-			name: 'EverMerchant',
-			daemon_mode: true,
-			// See https://github.com/Unitech/PM2/blob/master/ADVANCED_README.md#schema
-			exec_mode: 'cluster',
-			instances: env.WEB_CONCURRENCY,
-			// Auto restart if process taking more than XXmo
-			max_memory_restart: env.WEB_MEMORY + 'M',
-			// post_update: ["npm install"] // Commands to execute once we do a pull from Keymetrics
-			...(env.isDev ? { watch: true } : {})
-		});
-	} catch (err) {
-		console.error(err);
-	}
-
-	// autoExit();
-
-	if (env.isProd) {
-		await interact(
-			env.KEYMETRICS_SECRET_KEY,
-			env.KEYMETRICS_PUBLIC_KEY,
-			env.KEYMETRICS_MACHINE_NAME
-		);
-	}
-
-	process.on('SIGINT', function() {
-		exitPM2();
-	});
-
-	process.on('SIGTERM', function() {
-		exitPM2();
-	});
-})();
-
-function exitPM2() {
-	console.log('Exiting PM2');
-	pm2.kill(function() {
-		process.exit(0);
-	});
-}
-
-/**
- * Exit current PM2 instance if 0 app is online
- */
-async function autoExit() {
-	const interval = 3000;
-	const aliveInterval = interval * 1.5;
-
-	let alive = false;
-
-	while (true) {
-		await timeout(interval);
-
-		const aliveTimer = setTimeout(function() {
-			if (!alive) {
-				console.error('PM2 Daemon is dead');
-				process.exit(1);
-			}
-		}, aliveInterval);
-
-		try {
-			const apps = await runningApps();
-
-			clearTimeout(aliveTimer);
-			alive = true;
-
-			let appOnline = 0;
-
-			apps.forEach(function(app) {
-				if (
-					app.pm2_env.status === cst.ONLINE_STATUS ||
-					app.pm2_env.status === cst.LAUNCHING_STATUS
-				) {
-					appOnline++;
-				}
+				bus.on('log:err', function(packet) {
+					console.error(
+						'[App:%s][Err] %s',
+						packet.process.name,
+						packet.data
+					);
+				});
 			});
-
-			console.log('check ' + appOnline);
-
-			if (appOnline === 0) {
-				console.log('0 application online, exiting');
-				exitPM2();
-			}
-		} catch (err) {
-			console.log('pm2.list got error');
-			console.error(err);
-			exitPM2();
-			return;
 		}
-	}
-}
+	);
+});
