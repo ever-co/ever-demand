@@ -26,9 +26,11 @@ pm2.connect(function() {
 				KEYMETRICS_PUBLIC: PUBLIC_KEY,
 				KEYMETRICS_SECRET: PRIVATE_KEY
 			},
+			autorestart: true,
 			post_update: ['yarn install'] // Commands to execute once we do a pull from Keymetrics
 		},
 		function() {
+			pm2.startup('amazon', console.log);
 			// Display logs in standard output
 			pm2.launchBus(function(err, bus) {
 				console.log('[PM2] Log streaming started');
