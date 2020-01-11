@@ -4,15 +4,15 @@ import { createEverLogger } from '../../helpers/Log';
 import { ProductsService } from '../products';
 import { OrdersService } from '../orders';
 import CarriersService from './CarriersService';
-import Carrier from '../../modules/server.common/entities/Carrier';
-import OrderCarrierStatus from '../../modules/server.common/enums/OrderCarrierStatus';
+import Carrier from '@modules/server.common/entities/Carrier';
+import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import { inject, injectable } from 'inversify';
 import { WarehousesOrdersService } from '../warehouses';
-import ICarrierOrdersRouter from '../../modules/server.common/routers/ICarrierOrdersRouter';
+import ICarrierOrdersRouter from '@modules/server.common/routers/ICarrierOrdersRouter';
 import { asyncListener, observableListener, routerName } from '@pyro/io';
 import IService from '../IService';
-import Order from '../../modules/server.common/entities/Order';
-import IOrder from '../../modules/server.common/interfaces/IOrder';
+import Order from '@modules/server.common/entities/Order';
+import IOrder from '@modules/server.common/interfaces/IOrder';
 import {
 	GeoLocationsOrdersService,
 	GeoLocationOrdersOptions

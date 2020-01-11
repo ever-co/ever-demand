@@ -101,7 +101,7 @@ export class AppComponent {
 		this.globalization
 			.getPreferredLanguage()
 			.then((res) => {
-				this.store.language = res.value;
+				this.store.language = res.value.substr(0, 2);
 			})
 			.catch((e) => console.log(e));
 	}

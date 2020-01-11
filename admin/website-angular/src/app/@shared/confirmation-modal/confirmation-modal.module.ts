@@ -4,7 +4,7 @@ import { ThemeModule } from '../../@theme';
 import { TranslateModule } from '@ngx-translate/core';
 import { ConfimationModalComponent } from './confirmation-modal.component';
 import { ToasterModule } from 'angular2-toaster';
-import { NbSpinnerModule } from '@nebular/theme';
+import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 
 const COMPONENTS = [ConfimationModalComponent];
 
@@ -14,7 +14,8 @@ const COMPONENTS = [ConfimationModalComponent];
 		ThemeModule,
 		TranslateModule.forChild(),
 		ToasterModule.forRoot(),
-		NbSpinnerModule
+		NbSpinnerModule,
+		NbButtonModule
 	],
 	declarations: COMPONENTS,
 	entryComponents: COMPONENTS,

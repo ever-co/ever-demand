@@ -1,3 +1,5 @@
+#### **_ If you are running IT Company, check our new project [Gauzy](https://github.com/ever-co/gauzy) _**
+
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/ever)
 [![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/ever-co/ever?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/evereq?utm_source=github&utm_medium=button&utm_term=evereq&utm_campaign=github)
@@ -10,7 +12,7 @@
 
 ## Features
 
--   Modern & Open Platform for **On-Demand Economy**
+-   Modern & Open Platform for **On-Demand Economy** and **Digital Marketplaces**
 -   Supports Single-Store and Multi-Store / Multi-Vendor / Peer-to-Peer Marketplaces
 -   Everything Reactive, Real-Time and Blazing Fast!
 -   Headless Commerce framework, which allows different implementations of store-fronts, Admin UIs and client apps. It exposes rich GraphQL, REST and WS APIs.
@@ -47,8 +49,8 @@ Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_wi
 -   [TypeScript](https://www.typescriptlang.org) language (version >=2.9)
 -   [Node.js](https://nodejs.org) (version >=10)
 -   [Ionic](https://ionicframework.com) (version 4) for Shopping Mobile App, Carrier Mobile App and Merchant Tablet App
--   Shopping Website developed with [Angular](https://angular.io) 7 using [Angular Starter](https://github.com/gdi2290/angular-starter)
--   Admin Website developed with [Angular](https://angular.io) version 7 using [ngx-admin](https://github.com/akveo/ngx-admin)
+-   Shopping Website developed with [Angular](https://angular.io) 8 using [Angular Starter](https://github.com/gdi2290/angular-starter)
+-   Admin Website developed with [Angular](https://angular.io) version 8 using [ngx-admin](https://github.com/akveo/ngx-admin)
 -   Headless Commerce framework (Backend APIs/Server) developed using [Nest](https://github.com/nestjs/nest) with heavy use of our own Pyro module. Supports GraphQL, REST and WS Real-Time APIs (WebSockets using [Socket.io](https://socket.io) library)
 -   [RxJS](http://reactivex.io/rxjs) library used heavy in every part of the Platform
 -   [InversifyJS](http://inversify.io) used for Inversion Control / Dependency Injection in most parts of the Platform. On the Backend/API we also use DI provided by [Nest](https://github.com/nestjs/nest)
@@ -76,11 +78,11 @@ Clone the Ever Platform Git repo:
 git clone -c core.symlinks=true --recursive https://github.com/ever-co/ever.git
 ```
 
-Notes:
+**IMPORTANT NOTES:**
 
 -   if you want to use development branch (unstable, but latest development) clone using `--branch develop`
 -   it's necessary to enable Git symlinks because they used for shared modules (every project has symlinks to shared modules in the /shared folder)
--   because of symlinks, you may need to clone from an elevated command prompt (on Windows)
+-   because of symlinks, you may need to clone from an elevated command prompt. On Windows run console with "Run as Administrator" option.
 
 If you use Git >= v2.14, it probably makes sense to setup following globally:
 
@@ -94,6 +96,7 @@ Notes:
 -   to setup Symlinks & Submodules recurse locally only (for Ever repo), remove `--global` in the commands above
 -   for older Git versions see [this](https://stackoverflow.com/questions/4611512/is-there-a-way-to-make-git-pull-automatically-update-submodules/4611550#4611550)
 -   at the moment we are not using Git sub-modules, but it may change in the future (we were using them, but decided to drop for now in favor of symlinks)
+-   we are moving from symlinks to npm modules managed by Lerna. See branch https://github.com/ever-co/ever/tree/feature/use-packages
 
 ### Yarn
 
@@ -138,6 +141,8 @@ yarn lerna bootstrap
 
 The command above install all required packages for every sub-project of the Ever Platform.
 
+Note: if above command fails for any reason, you can try to install required packages manually by running `yarn` inside every sub-folder with 'package.json' file
+
 ### MongoDB
 
 Ever platform configured to use MongoDB by default and assume you have MongoDB service running and accepting connections on the default `localhost:27017`. Please see relevant section in our [documentation](https://github.com/ever-co/ever/wiki/MongoDB).
@@ -150,12 +155,12 @@ See relevant section in our [documentation](https://github.com/ever-co/ever/wiki
 
 Finally, each project from Ever Platform could start by single command from this list:
 
-* Run API server `yarn run:server`
-* Run Admin Website `yarn run:admin` and open http://localhost:4200
-* Run Shopping Mobile App `yarn run:shopmobile` and open http://localhost:4201
-* Run Merchant Ionic Tablet App `yarn run:merchant` and open http://localhost:4202
-* Run Carrier Mobile app `yarn run:carrier` and open http://localhost:4203
-* Run Shopping Website `yarn run:shopweb` and open http://localhost:3000
+-   Run API server `yarn run:server`
+-   Run Admin Website `yarn run:admin` and open http://localhost:4200
+-   Run Shopping Mobile App `yarn run:shopmobile` and open http://localhost:4201
+-   Run Merchant Ionic Tablet App `yarn run:merchant` and open http://localhost:4202
+-   Run Carrier Mobile app `yarn run:carrier` and open http://localhost:4203
+-   Run Shopping Website `yarn run:shopweb` and open http://localhost:3000
 
 Note 1: during development you can run server with `yarn run:server:dev` to enable watch on TS files changes
 
@@ -185,27 +190,35 @@ According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform tod
 -   Ruslan Konviser ([Evereq](https://github.com/evereq))
 -   Michael Konviser ([Komish](https://github.com/MrKomish))
 
-#### Developers
+#### Developers (alphabetical order)
 
+-   Aleksandar Tasev ([AlexTasev](https://github.com/AlexTasev))
 -   Alish Meklyov ([Alish](https://github.com/AlishMekliov931))
 -   Blagovest Gerov ([BlagovestGerov](https://github.com/BlagovestGerov))
 -   Boyan Stanchev ([boyanstanchev](https://github.com/boyanstanchev))
 -   Elvis Arabadjiyski ([Dreemsuncho](https://github.com/Dreemsuncho))
 -   Emil Momchilov ([jew-er](https://github.com/jew-er))
+-   Hristo Hristov ([hrimar](https://github.com/hrimar))
 
-#### Graphic Designer & QA
+#### Designers & QA
 
--   Julia Konviser
+-   [Julia Konviser](https://www.linkedin.com/in/julia-konviser-8b917552) (Graphic Designer, QA)
 
 ### Contributors
 
--   View all of our [contributors](https://github.com/ever-co/ever/graphs/contributors)
+-   [Adem Hodzic](https://github.com/AdemHodzic)
+-   [Deepak Chandwani](https://github.com/deepaksslibra)
+-   [Kyle Kitlinski](https://github.com/K-Kit)
+-   [Milena Dimova](https://www.linkedin.com/in/dimova-milena-31010414) (UI/UX Designer)
+
+View full list of our [contributors](https://github.com/ever-co/ever/graphs/contributors).
 
 ## Contact Us
 
+-   [Discord Chat](https://discord.gg/msqRJ4w)
+-   [Slack Community](https://join.slack.com/t/everplatform/shared_invite/enQtNzc2NzI1OTgwMjQwLTBkODI3OTU2ZDI1YTQwNWE3OGExYWUwYjE5NThkMjRiYjA0NmFiNzZhYWUzNWViNWI4Nzg2YTc3MzY2MjY0YzU)
 -   [Spectrum Community](https://spectrum.chat/ever)
 -   [Gitter Chat](https://gitter.im/ever-co/ever)
--   [Discord Chat](https://discord.gg/msqRJ4w)
 -   [CodeMentor](https://www.codementor.io/evereq)
 -   [Telegram](https://t.me/everplatform)
 -   For business inquiries: <mailto:ever@ever.co>
@@ -223,32 +236,13 @@ In a production setup, all client-side to server-side (backend, APIs) communicat
 
 ## License
 
-This software is available under different licenses.
+This software is available under following licenses:
 
-### _Ever Platform Community Edition_ License
+-   [Ever® Platform Community™ Edition](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-community-edition-license)
+-   [Ever® Platform Small Business™](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-small-business-license)
+-   [Ever® Platform Enterprise™](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-enterprise-license)
 
-Different parts of the Platform are made available under the terms of the separate Open-Source licenses:
-
--   Shopping Mobile App and Carrier Mobile App under [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.txt)
--   Backend Api (Server), Admin Website, Merchant Tablet App and Merchant Website, Shopping Website under [GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.txt)
--   Pyro shared modules under [MIT License](https://opensource.org/licenses/MIT)
--   Other shared modules under [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.txt)
-
-If you decide to choose the Ever® Platform Community™ Edition License, you must comply with the following terms:
-
-This program is free software: you can redistribute it and/or modify it under the terms of the corresponding licenses described in the LICENSE.md files located in software sub-folders and under the terms of licenses described in individual files.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-You should have received a copy of the relevant GNU Licenses along with this program. If not, see http://www.gnu.org/licenses/.
-
-### _Ever Platform Enterprise_ License
-
-Alternatively, commercial versions of the software must be used in accordance with the terms and conditions of a separate written agreement between you and Ever Co. LTD.
-
-For more information about Ever® Platform Enterprise™ License, please contact <mailto:ever@ever.co>.
-
-#### The default Ever® Platform™ license, without a valid Ever® Platform Enterprise™ License agreement, is the Ever® Platform Community™ Edition License.
+#### The default Ever® Platform™ license, without a valid Ever® Platform Enterprise™ or Ever® Platform Small Business™ License agreement, is the Ever® Platform Community™ Edition License.
 
 #### Please see [LICENSE.md](LICENSE.md) for more information on licenses.
 
@@ -257,7 +251,7 @@ For more information about Ever® Platform Enterprise™ License, please contact
 ## Trademarks
 
 **Ever**® is a registered trademark of [Ever Co. LTD](https://ever.co).  
-**Ever® Platform™**, **Ever® Platform Community™** and **Ever® Platform Enterprise™** are all trademarks of [Ever Co. LTD](https://ever.co).
+**Ever® Platform™**, **Ever® Platform Community™**, **Ever® Platform Small Business™** and **Ever® Platform Enterprise™** are all trademarks of [Ever Co. LTD](https://ever.co).
 
 The trademarks may only be used with the written permission of Ever Co. LTD. and may not be used to promote or otherwise market competitive products or services.
 
@@ -273,3 +267,5 @@ All other brand and product names are trademarks, registered trademarks or servi
 [![Greenkeeper badge](https://badges.greenkeeper.io/ever-co/ever.svg)](https://greenkeeper.io)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fever.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fever?ref=badge_shield)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io)
+
+#### **_ If you are running IT Company, check our new project [Gauzy](https://github.com/ever-co/gauzy) _**

@@ -1,0 +1,43 @@
+<div class="payments-mutation-popup">
+	<h4 class="custom-title-popup mb-0">
+		{{ titleText }}
+	</h4>
+	<button class="close" (click)="cancelModal()">
+		<i class="fa fa-close"></i>
+	</button>
+
+	<div class="mb-2">
+		<e-cu-stripe-gateway
+			*ngIf="paymentGateway === paymentGateways.Stripe"
+			[currenciesCodes]="currenciesCodes"
+			[data]="configureObject"
+			[defaultCompanyBrandLogo]="defaultCompanyBrandLogo"
+			[defaultCurrency]="defaultCurrency"
+			(configureObject)="updateConfigureObject($event)"
+			[(isValid)]="isValid"
+		></e-cu-stripe-gateway>
+
+		<e-cu-paypal-gateway
+			*ngIf="paymentGateway === paymentGateways.PayPal"
+			[currenciesCodes]="currenciesCodes"
+			[data]="configureObject"
+			[defaultCurrency]="defaultCurrency"
+			(configureObject)="updateConfigureObject($event)"
+			[(isValid)]="isValid"
+		></e-cu-paypal-gateway>
+	</div>
+
+	<div class="button-bar padding-top">
+		<button class="button button-assertive" (click)="cancelModal()">
+			Cancel
+		</button>
+
+		<button
+			[disabled]="!isValid"
+			(click)="cancelModal(newConfigureObject)"
+			class="button button-brand"
+		>
+			{{ configureObject ? 'Update' : 'Add' }}
+		</button>
+	</div>
+</div>

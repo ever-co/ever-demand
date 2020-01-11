@@ -15,18 +15,18 @@ export class RoutersManager implements IRoutersManager {
 
 	protected io: SocketIO.Server;
 
-	startListening(io: SocketIO.Server) {
+	async startListening(io: SocketIO.Server) {
 		this.io = io;
 
-		this.routers.forEach((router) => {
-			this.startRouterListening(router);
+		this.routers.forEach(async (router) => {
+			await this.startRouterListening(router);
 		});
 	}
 
-	private startRouterListening(router: IRouter) {
+	private async startRouterListening(router: IRouter) {
 		try {
 			const routerHandler = new RouterHandler(this.io, router, this.log);
-			routerHandler.listen();
+			await routerHandler.listen();
 		} catch (err) {
 			this.log.fatal("Couldn't start router listening!", { err });
 		}

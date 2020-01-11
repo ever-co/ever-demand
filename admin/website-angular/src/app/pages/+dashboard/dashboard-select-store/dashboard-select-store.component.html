@@ -1,6 +1,6 @@
 <nb-card id="dashboard-select-stores" size="medium" class="h-auto">
 	<nb-card-header>
-		<h5>{{ 'DASHBOARD_VIEW.SELECT_COMPONENT.STORES' | translate }}</h5>
+		<h6>{{ 'DASHBOARD_VIEW.SELECT_COMPONENT.STORES' | translate }}</h6>
 	</nb-card-header>
 
 	<nb-card-body>
@@ -24,7 +24,7 @@
 				<b>{{ item.name }}</b>
 			</ng-template>
 			<ng-template ng-option-tmp let-item="item" let-index="index">
-				<h6 class="card-title">
+				<p class="card-title">
 					<img
 						*ngIf="item.logo"
 						height="40"
@@ -34,18 +34,18 @@
 					/>
 
 					{{ item.name }}
-				</h6>
+				</p>
 			</ng-template>
 		</ng-select>
 
 		<div *ngIf="selectedStore">
 			<div class="mt-4">
-				<h5>
+				<h6>
 					{{
 						'DASHBOARD_VIEW.SELECT_COMPONENT.CONTACT_DETAILS'
 							| translate
 					}}
-				</h5>
+				</h6>
 				<ul>
 					<li>
 						{{

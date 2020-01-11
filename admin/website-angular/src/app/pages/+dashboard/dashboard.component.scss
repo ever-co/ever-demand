@@ -4,7 +4,7 @@ $shadow-green: #00977e;
 
 @include nb-install-component() {
 	.progress-info {
-		color: nb-theme(color-fg-heading);
+		color: #2a2a2a;
 		margin-top: 2.5rem;
 
 		&:first-child {
@@ -13,23 +13,22 @@ $shadow-green: #00977e;
 	}
 
 	.title {
-		font-family: nb-theme(font-secondary);
-		font-size: nb-theme(font-size-lg);
-		font-weight: nb-theme(font-weight-bold);
+		font-family: font-main !important;
+		// font-size: 1.125rem !important;
+		font-weight: 600 !important;
 	}
 
 	.value {
-		font-size: 3rem;
-		font-weight: nb-theme(font-weight-light);
-		margin-top: 0.5rem;
+		// font-size: 2.5rem !important;
+		font-weight: 300 !important;
+		line-height: 2rem !important;
 	}
 
 	.description {
-		color: nb-theme(color-fg);
-		margin-top: 0.5rem;
+		color: #a4abb3;
 	}
 
-	/deep/ nb-progress-bar {
+	::ng-deep nb-progress-bar {
 		margin-top: 0.2rem;
 
 		.progress-container {

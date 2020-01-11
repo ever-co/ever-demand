@@ -7,7 +7,7 @@ import { getFakeImg } from '@modules/server.common/utils';
 import { environment } from 'environments/environment';
 import * as faker from 'faker';
 import _ from 'lodash';
-import { _appIdRandomProviderFactory } from '@angular/core/src/application_tokens';
+// import { _appIdRandomProviderFactory } from '@angular/core/src/application_tokens';
 
 const NEED_DEFAULT_SETTINGS_MESSAGE =
 	"Can't generate fake data without DEFAULT_LONGITUDE and DEFAULT_LATITUDE";

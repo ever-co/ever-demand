@@ -26,6 +26,11 @@
 		display: flex;
 		align-content: center;
 		align-items: center;
+		height: auto;
+
+		img {
+			height: 5rem;
+		}
 	}
 
 	.row-title {

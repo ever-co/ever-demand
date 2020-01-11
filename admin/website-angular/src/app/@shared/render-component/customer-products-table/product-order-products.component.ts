@@ -7,7 +7,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 @Component({
 	template: `
 		<div class="product">
-			<h6 class="text-center">
+			<p class="text-center">
 				<span (click)="redirect()" class="button-redirect productBtn">
 					<img
 						alt=""
@@ -17,7 +17,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 					/>
 					<span class="productTitle">{{ productTitle }}</span>
 				</span>
-			</h6>
+			</p>
 		</div>
 	`
 })

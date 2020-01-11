@@ -1,0 +1,136 @@
+<!-- TODO add translate -->
+<form class="payments-mutation-popup-form stripe-gateway" [formGroup]="form">
+	<ion-grid>
+		<ion-row>
+			<ion-col text-center>
+				<ion-item>
+					<ion-label class="labels" position="floating"
+						>Pay Button text</ion-label
+					>
+					<ion-input
+						type="text"
+						formControlName="payButtontext"
+					></ion-input>
+				</ion-item>
+				<div
+					*ngIf="
+						payButtontext.invalid &&
+						(payButtontext.dirty || payButtontext.touched)
+					"
+					class="validation-errors"
+				>
+					<span *ngIf="payButtontext.errors.required"
+						>Pay Button text is required</span
+					>
+				</div>
+			</ion-col>
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating"
+						>Publishable key</ion-label
+					>
+					<ion-input
+						type="text"
+						formControlName="publishableKey"
+					></ion-input>
+				</ion-item>
+				<div
+					*ngIf="
+						publishableKey.invalid &&
+						(publishableKey.dirty || publishableKey.touched)
+					"
+					class="validation-errors"
+				>
+					<span *ngIf="publishableKey.errors.required"
+						>Publishable key is required</span
+					>
+				</div>
+			</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating"
+						>Currency</ion-label
+					>
+					<ion-select
+						formControlName="currency"
+						[cancelText]="'Cancel'"
+						[okText]="'OK'"
+					>
+						<ion-select-option
+							*ngFor="let code of currenciesCodes"
+							value="{{ code }}"
+							>{{ code }}</ion-select-option
+						>
+					</ion-select>
+				</ion-item>
+			</ion-col>
+			<ion-col class="allow-remember-me">
+				<ion-item mode="ios">
+					<ion-label>
+						Allow remember me?
+					</ion-label>
+					<ion-checkbox
+						slot="start"
+						formControlName="allowRememberMe"
+					>
+					</ion-checkbox>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+
+		<ion-row class="mt-3">
+			<ion-col id="common">
+				<e-cu-file-uploader
+					#fileUploader
+					[name]="payButtontext?.value"
+					[fileUrl]="companyBrandLogo?.value"
+					(uploadedImgUrl)="companyBrandLogo.setValue($event)"
+				></e-cu-file-uploader>
+
+				<div
+					*ngIf="
+						fileUploader.shownInput.dirty ||
+						fileUploader.shownInput.touched
+					"
+					class="validation-errors"
+				>
+					<span *ngIf="companyBrandLogo.value === ''"
+						>Company brand logo is required</span
+					>
+					<span *ngIf="invalidUrl && companyBrandLogo.value !== ''"
+						>Invalid logo url</span
+					>
+				</div>
+				<ion-row
+					class="form-group"
+					[hidden]="companyBrandLogo?.value === '' || invalidUrl"
+				>
+					<div class="col-sm-12 p-0">
+						<ion-row class="pt-1 preview-img">
+							<div>
+								<img
+									src="{{ companyBrandLogo?.value }}"
+									alt="Invalid image"
+									class="img-rounded"
+									(error)="onUrlChanges(true)"
+									(load)="onUrlChanges(false)"
+								/>
+							</div>
+
+							<div class="removeIcon" (click)="deleteImg()">
+								<ion-icon
+									ios="ios-remove-circle"
+									id="remove-circle"
+									md="md-remove-circle"
+								></ion-icon>
+							</div>
+						</ion-row>
+					</div>
+				</ion-row>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</form>

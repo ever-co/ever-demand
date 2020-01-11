@@ -1,4 +1,4 @@
-:host /deep/ .ng2-smart-titles:first-child {
+:host ::ng-deep .ng2-smart-titles:first-child {
 	text-align: center !important;
 }
 
@@ -6,7 +6,7 @@
 	text-align: center !important;
 }
 
-:host /deep/ ng2-smart-table .tableImg {
+:host ::ng-deep ng2-smart-table .tableImg {
 	height: 100px;
 	width: 100px;
 }
@@ -71,4 +71,8 @@ a {
 	padding: 0.5rem;
 	border-bottom-left-radius: 0.375rem;
 	border-bottom-right-radius: 0.375rem;
+}
+
+.fix-btn-height {
+	height: 2.5rem !important;
 }

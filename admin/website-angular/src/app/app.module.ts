@@ -55,7 +55,7 @@ import { ServerConnectionService } from '@modules/client.common.angular2/service
 			}
 		}),
 		CommonModule.forRoot({ apiUrl: environment.SERVICES_ENDPOINT }),
-		NgbModule.forRoot(),
+		NgbModule,
 		ThemeModule.forRoot(),
 		CoreModule.forRoot()
 	],

@@ -10,6 +10,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MerchantSettingsComponentModule } from 'components/settings-page-components/settings/settings.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -38,6 +39,7 @@ const routes: Routes = [
 		IonicModule,
 		CommonModule,
 		FormsModule,
+		MerchantSettingsComponentModule,
 		RouterModule.forChild(routes)
 	]
 })

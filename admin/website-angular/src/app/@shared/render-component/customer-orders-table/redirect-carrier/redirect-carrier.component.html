@@ -1,7 +1,7 @@
 <div (click)="redirect()" class="redirectBtn">
-	<h6 *ngIf="(carrier$ | async) as carrier">
+	<span *ngIf="carrier$ | async as carrier">
 		<img class="carrier-image" alt="" src="{{ carrier.logo }}" />
 		<div class="carrier-name">{{ carrier.firstName }}</div>
-	</h6>
-	<h6>{{ carrierStatusText | translate }}</h6>
+	</span>
+	<p>{{ carrierStatusText | translate }}</p>
 </div>

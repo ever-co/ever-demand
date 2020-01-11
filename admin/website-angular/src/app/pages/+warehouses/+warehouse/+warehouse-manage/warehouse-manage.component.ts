@@ -18,13 +18,13 @@ import 'rxjs/add/operator/withLatestFrom';
 export class WarehouseManageComponent implements OnInit {
 	loading: boolean;
 
-	@ViewChild('warehouseManageTabs')
+	@ViewChild('warehouseManageTabs', { static: false })
 	warehouseManageTabs: WarehouseManageTabsComponent;
 
-	@ViewChild('contactInfoForm')
+	@ViewChild('contactInfoForm', { static: false })
 	contactInfoForm: ContactInfoFormComponent;
 
-	@ViewChild('locationForm')
+	@ViewChild('locationForm', { static: false })
 	locationForm: LocationFormComponent;
 
 	readonly form: FormGroup = this._formBuilder.group({
@@ -69,7 +69,10 @@ export class WarehouseManageComponent implements OnInit {
 				...this._currentWarehouse,
 				...tabsInfoRaw.basicInfo,
 				...tabsInfoRaw.contactInfo,
-				geoLocation: tabsInfoRaw.location
+				geoLocation: tabsInfoRaw.location,
+				deliveryAreas: tabsInfoRaw.deliveryAreas,
+				isPaymentEnabled: tabsInfoRaw.isPaymentEnabled,
+				paymentGateways: tabsInfoRaw.paymentsGateways
 			};
 
 			const passwordOld = tabsInfoRaw.password.current;
@@ -113,7 +116,6 @@ export class WarehouseManageComponent implements OnInit {
 						`Warehouse with id ${id} doesn't exist!`
 					);
 				}
-
 				this._currentWarehouse = warehouse;
 				this.warehouseManageTabs.setValue(warehouse);
 			});

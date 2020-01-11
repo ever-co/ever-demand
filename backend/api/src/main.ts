@@ -69,10 +69,10 @@ process.on('unhandledRejection', (err, promise) => {
 	// needs TypeORM connection to be ready before we initialize Services
 	const app = servicesContainer.get<ServicesApp>(ServicesApp);
 
-	await app.start();
-
-	// load NestJS modules dynamically, because needs all services to be initialized before
-	const bootstrapNest = await require('./nest-bootstrap').bootstrapNest;
-	// bootstrap NestJS modules/controllers/DI/etc
-	bootstrapNest();
+	await app.start(async () => {
+		// load NestJS modules dynamically, because needs all services to be initialized before
+		const bootstrapNest = await require('./nest-bootstrap').bootstrapNest;
+		// bootstrap NestJS modules/controllers/DI/etc
+		bootstrapNest();
+	});
 })();

@@ -11,6 +11,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BasicInfoFormComponent, ContactInfoFormComponent } from '../forms';
 import { LocationFormComponent } from '../../forms/location';
 import { TranslateService } from '@ngx-translate/core';
+import { PaymentsSettingsFormComponent } from '../forms/payments-settings/payments-settings-form.component';
 
 @Component({
 	selector: 'ea-warehouse-mutation',
@@ -24,14 +25,17 @@ export class WarehouseMutationComponent implements AfterViewInit {
 	public BUTTON_NEXT: string = 'BUTTON_NEXT';
 	public BUTTON_PREV: string = 'BUTTON_PREV';
 
-	@ViewChild('basicInfoForm')
+	@ViewChild('basicInfoForm', { static: false })
 	basicInfoForm: BasicInfoFormComponent;
 
-	@ViewChild('contactInfoForm')
+	@ViewChild('contactInfoForm', { static: true })
 	contactInfoForm: ContactInfoFormComponent;
 
-	@ViewChild('locationForm')
+	@ViewChild('locationForm', { static: false })
 	locationForm: LocationFormComponent;
+
+	@ViewChild('paymentsSettingsForm', { static: false })
+	paymentsSettingsForm: PaymentsSettingsFormComponent;
 
 	mapCoordEmitter = new EventEmitter<number[]>();
 	mapGeometryEmitter = new EventEmitter<any>();
@@ -78,9 +82,13 @@ export class WarehouseMutationComponent implements AfterViewInit {
 		// This hack is need because the styles of 'ng-bootstrap' modal and google autocomplete api
 		// collide and autocomplete field just doesn't show without larger z-index.
 		setTimeout(() => {
-			document.querySelector('body > div.pac-container.pac-logo')[
-				'style'
-			]['zIndex'] = 10000;
+			const elementRef = document.querySelector(
+				'body > div.pac-container.pac-logo'
+			);
+
+			if (elementRef) {
+				elementRef['style']['zIndex'] = 10000;
+			}
 		}, 2000);
 	}
 
@@ -104,7 +112,10 @@ export class WarehouseMutationComponent implements AfterViewInit {
 				warehouse: {
 					...this.basicInfoForm.getValue(),
 					...this.contactInfoForm.getValue(),
-					geoLocation: geoLocationInput
+					geoLocation: geoLocationInput,
+					isPaymentEnabled: this.paymentsSettingsForm
+						.isPaymentEnabled,
+					paymentGateways: this.paymentsSettingsForm.paymentsGateways
 				},
 				password: this.basicInfoForm.getPassword()
 			});

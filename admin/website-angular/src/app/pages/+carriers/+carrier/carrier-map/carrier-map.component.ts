@@ -26,7 +26,7 @@ export class CarrierMapComponent {
 	private ngDestroy$ = new Subject();
 	public carrierId: string;
 
-	@ViewChild('gmap')
+	@ViewChild('gmap', { static: true })
 	gmapElement: any;
 	map: google.maps.Map;
 	carrierSub$: any;

@@ -26,7 +26,7 @@ nb-card {
 	}
 }
 
-:host /deep/ .productsContainer a {
+:host ::ng-deep .productsContainer a {
 	border: none;
 	background-color: rgba(182, 176, 176, 0.05) !important;
 	color: #111111 !important;
@@ -43,7 +43,7 @@ nb-card {
 	}
 }
 
-:host /deep/ ng2-smart-table {
+:host ::ng-deep ng2-smart-table {
 	.tableImg {
 		height: 100px;
 		width: 100px;

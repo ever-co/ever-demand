@@ -1,24 +1,24 @@
 import { injectable } from 'inversify';
 import { createEverLogger } from '../../helpers/Log';
 import * as Logger from 'bunyan';
-import WarehouseProduct from '../../modules/server.common/entities/WarehouseProduct';
+import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { WarehousesService } from './WarehousesService';
 import IWarehouseProduct, {
 	IWarehouseProductCreateObject
-} from '../../modules/server.common/interfaces/IWarehouseProduct';
+} from '@modules/server.common/interfaces/IWarehouseProduct';
 import * as _ from 'lodash';
-import Warehouse from '../../modules/server.common/entities/Warehouse';
-import IWarehouse from '../../modules/server.common/interfaces/IWarehouse';
+import Warehouse from '@modules/server.common/entities/Warehouse';
+import IWarehouse from '@modules/server.common/interfaces/IWarehouse';
 import { ExistenceEventType, DBService } from '@pyro/db-server';
 import { Observable } from 'rxjs';
-import IWarehouseProductsRouter from '../../modules/server.common/routers/IWarehouseProductsRouter';
+import IWarehouseProductsRouter from '@modules/server.common/routers/IWarehouseProductsRouter';
 import {
 	asyncListener,
 	observableListener,
 	routerName,
 	serialization
 } from '@pyro/io';
-import IProduct from '../../modules/server.common/interfaces/IProduct';
+import IProduct from '@modules/server.common/interfaces/IProduct';
 import IService from '../IService';
 import { exhaustMap, first, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';

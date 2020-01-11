@@ -17,7 +17,9 @@
 
 <div class="modal-footer">
 	<button
-		class="btn btn-success"
+		nbButton
+		status="success"
+		size="large"
 		type="button"
 		(click)="editCategory(basicInfo.getEditObject(currentCategory))"
 		[disabled]="basicInfo.form.invalid"

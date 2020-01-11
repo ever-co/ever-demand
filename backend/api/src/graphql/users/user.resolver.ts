@@ -6,7 +6,7 @@ import {
 	IUserCreateObject,
 	IResponseGenerate1000Customers
 } from '@modules/server.common/interfaces/IUser';
-import User from '../../modules/server.common/entities/User';
+import User from '@modules/server.common/entities/User';
 import { DevicesService } from '../../services/devices';
 import { UsersAuthService } from '../../services/users/UsersAuthService';
 import {
@@ -132,7 +132,10 @@ export class UserResolver {
 	}
 
 	@Mutation()
-	async updateEmail(_, { userId, email }: { userId: string; email: string }) {
+	async updateUserEmail(
+		_,
+		{ userId, email }: { userId: string; email: string }
+	) {
 		return this._usersService.updateEmail(userId, email);
 	}
 

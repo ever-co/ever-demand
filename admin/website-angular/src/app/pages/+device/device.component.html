@@ -10,11 +10,12 @@
 		<div class="row">
 			<div class="col">
 				<button
-					class="btn btn-danger active"
+					nbButton
+					status="danger"
 					[disabled]="!hasSelectedDevices"
 					(click)="deleteSelectedDevices()"
 				>
-					<i class="ion-md-trash button-icon"></i>
+					<i class="ion-md-trash button-icon mr-1"></i>
 					<small _ngcontent-c55="">{{
 						'CUSTOMERS_VIEW.DEVICE.DELETE' | translate
 					}}</small>

@@ -27,7 +27,8 @@
 		<button
 			(click)="makeOrder()"
 			[disabled]="!canOrder"
-			class="btn btn-sm btn-primary"
+			nbButton
+			status="primary"
 		>
 			<span *ngIf="!actionBtnText">{{
 				TRANSLATE_PREFIXES.ORDER | translate

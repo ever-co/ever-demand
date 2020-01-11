@@ -5,7 +5,7 @@ import { ThemeModule } from '../../../@theme';
 import { WarehouseOrderModalComponent } from './warehouse-order-modal.component';
 import { WarehouseOrderInputComponent } from './warehouse-order-input.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { NbSpinnerModule } from '@nebular/theme';
+import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 
 const COMPONENTS = [WarehouseOrderModalComponent, WarehouseOrderInputComponent];
 
@@ -16,7 +16,8 @@ const COMPONENTS = [WarehouseOrderModalComponent, WarehouseOrderInputComponent];
 		Ng2SmartTableModule,
 		NbSpinnerModule,
 		NbSpinnerModule,
-		TranslateModule.forChild()
+		TranslateModule.forChild(),
+		NbButtonModule
 	],
 	declarations: [WarehouseOrderModalComponent, WarehouseOrderInputComponent],
 	entryComponents: COMPONENTS,

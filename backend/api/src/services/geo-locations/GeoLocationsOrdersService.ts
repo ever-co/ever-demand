@@ -1,10 +1,10 @@
 import { inject, injectable } from 'inversify';
 import { OrdersService } from '../orders';
-import Warehouse from '../../modules/server.common/entities/Warehouse';
-import GeoLocation from '../../modules/server.common/entities/GeoLocation';
+import Warehouse from '@modules/server.common/entities/Warehouse';
+import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import * as _ from 'lodash';
 import * as Logger from 'bunyan';
-import Order from '../../modules/server.common/entities/Order';
+import Order from '@modules/server.common/entities/Order';
 import { createEverLogger } from '../../helpers/Log';
 import { GeoLocationsWarehousesService } from './GeoLocationsWarehousesService';
 import * as Bluebird from 'bluebird';
@@ -19,8 +19,8 @@ import {
 	serialization,
 	asyncListener
 } from '@pyro/io';
-import IGeoLocationOrdersRouter from '../../modules/server.common/routers/IGeoLocationOrdersRouter';
-import IGeoLocation from '../../modules/server.common/interfaces/IGeoLocation';
+import IGeoLocationOrdersRouter from '@modules/server.common/routers/IGeoLocationOrdersRouter';
+import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 import IService from '../IService';
 import { ExistenceEventType } from '@pyro/db-server';
 import { concat, exhaustMap, filter, first, share } from 'rxjs/operators';

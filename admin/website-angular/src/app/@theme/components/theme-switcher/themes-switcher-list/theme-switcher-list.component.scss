@@ -16,7 +16,7 @@ $icon-top-color-everlight: gray;
 $icon-top-color-everdark: black;
 
 @include nb-install-component() {
-	/deep/ .themes-switcher-list {
+	::ng-deep .themes-switcher-list {
 		padding: 1rem 2rem 1.25rem 0.5rem;
 		margin: 0;
 
@@ -97,13 +97,13 @@ $icon-top-color-everdark: black;
 				font-weight: 300;
 				vertical-align: super;
 				padding-left: 1rem;
-				color: nb-theme(color-fg-heading);
+				// color: #2a2a2a;
 			}
 		}
 	}
 
 	@include media-breakpoint-down(is) {
-		/deep/ .themes-switcher-list {
+		::ng-deep .themes-switcher-list {
 			display: none;
 		}
 	}

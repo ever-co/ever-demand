@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { UserOrdersRouter } from '../../modules/client.common.angular2/routers/user-orders-router.service';
-import Order from '../../modules/server.common/entities/Order';
+import { UserOrdersRouter } from '@modules/client.common.angular2/routers/user-orders-router.service';
+import Order from '@modules/server.common/entities/Order';
 import { Store } from 'app/services/store';
 
 @Component({
@@ -22,7 +22,6 @@ export class OrdersContainerComponent {
 		this.userOrdersRouter.get(userId).subscribe((res) => {
 			this.orders = res.filter((r) => !r.isCancelled);
 			res = res.filter((r) => !r.isCancelled);
-			console.log(res);
 		});
 	}
 }

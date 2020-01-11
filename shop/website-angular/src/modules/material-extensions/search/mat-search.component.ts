@@ -35,13 +35,13 @@ export class MatSearchComponent {
 	@Output()
 	detectLocation: EventEmitter<boolean> = new EventEmitter();
 
-	@ViewChild(MatRipple)
+	@ViewChild(MatRipple, { static: false })
 	public ripple: MatRipple;
 
-	@ViewChild('searchButton')
+	@ViewChild('searchButton', { static: false })
 	public searchButton: MatButton;
 
-	@ViewChild('input')
+	@ViewChild('input', { static: false })
 	public input: ElementRef;
 
 	@HostBinding('class.mat-focused')

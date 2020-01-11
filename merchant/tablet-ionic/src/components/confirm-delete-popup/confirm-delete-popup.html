@@ -1,6 +1,9 @@
 <!-- TODO add translate -->
 <div class="confirm-delete">
-	<h4>Are you sure you want to delete the following data?</h4>
+	<h4>
+		Are you sure you want to {{ isRemove ? 'remvoe' : 'delete' }} the
+		following data?
+	</h4>
 	<div class="details">
 		<img src="{{ data?.image }}" />
 		<div class="text">

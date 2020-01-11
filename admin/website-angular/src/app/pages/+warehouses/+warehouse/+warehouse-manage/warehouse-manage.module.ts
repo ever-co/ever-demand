@@ -7,7 +7,7 @@ import { GoogleMapModule } from '../../../../@shared/forms/google-map/google-map
 import { ThemeModule } from '../../../../@theme';
 import { WarehouseManageComponent } from './warehouse-manage.component';
 import { ToasterModule } from 'angular2-toaster';
-import { NbSpinnerModule } from '@nebular/theme';
+import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 
 const routes: Routes = [
 	{
@@ -25,7 +25,8 @@ const routes: Routes = [
 		WarehouseFormsModule,
 		LocationFormModule,
 		GoogleMapModule,
-		NbSpinnerModule
+		NbSpinnerModule,
+		NbButtonModule
 	],
 	declarations: [WarehouseManageComponent]
 })

@@ -14,7 +14,7 @@ import { InputComponent } from './input-component';
 @Component({
 	selector: 'mat-bold-input',
 	styleUrls: ['./mat-bold-input.component.scss'],
-	templateUrl: './mat-bold-input.component.html',
+	templateUrl: 'mat-bold-input.component.html',
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,
@@ -40,10 +40,10 @@ export class MatBoldInputComponent extends InputComponent
 	@Input()
 	public rippleSpeedFactor: number = 2;
 
-	@ViewChild(MatRipple)
+	@ViewChild(MatRipple, { static: false })
 	public ripple: MatRipple;
 
-	@ViewChild('input')
+	@ViewChild('input', { static: false })
 	public input: ElementRef;
 
 	@HostBinding('class.mat-focused')

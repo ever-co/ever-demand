@@ -69,14 +69,12 @@
 		"CHARTS": {
 			"ORDERS": "заказы",
 			"PROFIT": "прибыль",
-
 			"TOTAL_ORDERS": "Всего заказов",
 			"TOTAL_COMPLETED_ORDERS": "Всего выполненных заказов",
 			"TOTAL_CANCELLED_ORDERS": "Всего отмененных заказов",
 			"TOTAL_REVENUE_ALL_ORDERS": "Общий доход от всех заказов",
 			"TOTAL_REVENUE_COMPLETED_ORDERS": "Общий доход от выполненных заказов",
 			"TOTAL_LOST_REVENUE_CANCELLED_ORDERS": "Общий потерянный доход от отмененных заказов",
-
 			"PAYMENT": "Оплата",
 			"CANCELED": "Отменен",
 			"ALL_ORDERS": "Все заказы",
@@ -142,7 +140,7 @@
 		"BROWSE": "Просматривать",
 		"REMOVE": "Удалить",
 		"SAVE": "Сохранить",
-		"OLD_PASSWORD": "Прежний пароль",
+		"OLD_PASSWORD": "Старый пароль",
 		"NEW_PASSWORD": "Новый пароль",
 		"REPEAT_NEW_PASSWORD": "повторите новый пароль",
 		"INVALID_EMAIL_ADDRESS": "Неверный адрес электронной почты",
@@ -164,7 +162,7 @@
 		"FAKE_DATA_GENERATOR": "Ложный генератор данных",
 		"GENERATE_ALL": "Создать Все",
 		"CREATE_100_USERS": "Создать 100 пользователей",
-		"CREATE_100_CARRIERS": "Создать 100 носителей",
+		"CREATE_100_CARRIERS": "Создать 100 перевозчиков",
 		"CREATE_100_WAREHOUSES": "Создание 100 складов",
 		"SETUP": "НАСТРОИТЬ",
 		"GENERATE_INITIAL_DATA": "Генерировать исходные данные",
@@ -192,13 +190,13 @@
 		"CREATE_SUSHI_BOX_PRODUCT": "Создайте продукт Sushi box",
 		"CREATE_PEPERONI&TOMATO_PIZZA_PRODUCT": "Создайте продукт пиццы Peperoni & Tomato",
 		"CREATE_WAREHOUSE": "СОЗДАТЬ СКЛАД",
-		"CREATE_1st_WAREHOUSE": "Создать 1-й склад",
+		"CREATE_1st_WAREHOUSE": "Создать первый склад",
 		"CREATE_2nd_WAREHOUSE": "Създайте 2-ри склад",
 		"CREATE_3rd_WAREHOUSE": "Создать 3-й склад",
 		"CREATE_WAREHOUSE_PRODUCT": "СОЗДАТЬ ТОВАРНЫЙ ПРОДУКТ",
 		"CREATE_1st_WAREHOUSE_PRODUCTS(using_product_number_1_2_3_4_5_and_6)": "Создайте 1-й складской продукт (используя номера продуктов 1, 2, 3, 4, 5 и 6)",
-		"CREATE_2nd_WAREHOUSE_PRODUCTS(using_product_number_1_2_and_3": "Создайте 2-й складской продукт (используя номера продуктов 1, 2 и 3",
 		"CREATE_3rd_WAREHOUSE_PRODUCTS(using_1st_product)": "Създайте 3-ти складови продукти (с 1-ва продукт)",
+		"CREATE_2nd_WAREHOUSE_PRODUCTS(using_product_number_1_2_and_3": "Создайте 2-й складской продукт (используя номера продуктов 1, 2 и 3",
 		"UPDATE_WAREHOUSE_GEO_LOCATION": "РАСПРОСТРАНЕНИЕ СКЛАДСКИХ СКЛАДОВ",
 		"UPDATE_1ST_WAREHOUSE_GEO_LOCATION": "Обновление местоположения 1-го хранилища",
 		"CREATE_1RD_ORDER(using_1st_warehouse_1st_user_and_1st_product)": "Создайте 1-й заказ (используя 1-й склад, 1-й пользователь и 1-й продукт)",
@@ -226,7 +224,7 @@
 				"LOCATION": "Место нахождения",
 				"PAYMENTS": "Платежи",
 				"MANUFACTURING": "Производство",
-				"DELIVERY_AND_TAKEAWAY_SETTINGS": "Настройки доставки и выноса",
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "Настройки доставки и доставки",
 				"ORDERS_SETTINGS": "Настройки заказов",
 				"PRODUCT_CATEGORIES": "Категории продукта",
 				"PRODUCTS": "Товары"
@@ -354,8 +352,8 @@
 		"PRODUCTS_MANUFACTURING": "Производство продукции",
 		"CARRIER_REQUIRED": "Требуется перевозчик",
 		"RIGHT_NOW": "(прямо сейчас)",
-		"ADDRESS": "Адрес",
 		"CARRIERS": "Носители",
+		"ADDRESS": "Адрес",
 		"CARRIERS_SPECIFIC": "Используйте только определенные носители",
 		"VALIDATION": {
 			"NAME": "Требуется имя",
@@ -414,19 +412,17 @@
 		"MUTATION": {
 			"TITLE": "Создать новый склад",
 			"NAME": "Имя",
-			"PHOTO": "Снимка",
 			"LOGO": "Логотип",
+			"PHOTO": "Снимка",
 			"IS_ACTIVE": "Активен",
 			"PRODUCTS_MANUFACTURING": "Производство продукции",
 			"CARRIER_REQUIRED": "Требуется перевозчик",
+			"RIGHT_NOW": "Прямо сейчас",
+			"ORDERS_PHONE": "Телефон заказов",
 			"CONTACT_PHONE": "Контактный телефон",
+			"ORDERS_EMAIL": "Заказать электронную почту",
 			"CONTACT_EMAIL": "Электронная почта для контактов",
 			"FORWARD_ORDERS_WITH": "Форвардные заказы с",
-			"ORDERS_PHONE": "Телефон заказов",
-			"ORDERS_EMAIL": "Заказать электронную почту",
-			"RIGHT_NOW": "Прямо сейчас",
-			"PHONE": "Телефон",
-			"EMAIL": "Эл. адрес",
 			"USERNAME": "Имя пользователя",
 			"OLD_PASSWORD": "Старый пароль",
 			"NEW_PASSWORD": "Новый Пароль",
@@ -458,8 +454,8 @@
 				"CONTACT_EMAIL_IS_REQUIRED": "Требуется контактный адрес электронной почты",
 				"USERNAME_IS_REQUIRED": "Имя пользователя требуется",
 				"PASSWORD_IS_REQUIRED": "Необходим пароль",
-				"COUNTRY_IS_REQUIRED": "Страна обязательна",
-				"COORDINATES_ARE_REQUIRED": "Требуются координаты"
+				"COORDINATES_ARE_REQUIRED": "Требуются координаты",
+				"COUNTRY_IS_REQUIRED": "Страна обязательна"
 			},
 			"WIZARD_TITLES": {
 				"BASIC_INFO": "Базовая информация",
@@ -536,7 +532,7 @@
 		},
 		"PRODUCTS_TAB": {
 			"PRODUCTS": "Товары",
-			"ADD_PRODUCTS": "Add Products",
+			"ADD_PRODUCTS": "Добавить товары",
 			"DELETE": "Добавить продукты",
 			"IMAGE": "Образ",
 			"TITLE": "заглавие",
@@ -608,6 +604,7 @@
 			"ERRORS": {
 				"FIRST_NAME_IS_REQUIRED": "Имя требуется",
 				"LAST_NAME_IS_REQUIRED": "Фамилия обязательна",
+				"INVALID_EMAIL": "Неверный Email",
 				"EMAIL_IS_REQUIRED": "Требуется электронная почта",
 				"COORDINATES_ARE_REQUIRED": "Требуются координатыd"
 			},
@@ -621,43 +618,47 @@
 			"ID": "Я бы",
 			"IMAGE": "Образ"
 		},
-		"STATUSES": [
-			{
-				"TITLE": "Мы готовим Ваш заказ!",
-				"DETAILS": "Вы должны получить его в течении %t минут.",
-				"NOT_PAID_NOTE": "Вам будет необходимо оплатить %s (наличными курьеру)."
+		"ORDER_INFO": {
+			"STATUSES": [
+				{
+					"TITLE": "Мы готовим заказ!",
+					"DETAILS": "Вы получите его через %t минут.",
+					"NOT_PAID_NOTE": "Подготовьте ваш кошелек (%s наличными)."
+				},
+				{
+					"TITLE": "Перевозчик на пути!",
+					"DETAILS": "Вы получите заказ в %t мин.",
+					"NOT_PAID_NOTE": "Подготовьте ваш кошелек (%s наличными)."
+				},
+				{
+					"TITLE": "Проверьте дверь!",
+					"DETAILS": "Вы получите заказ в секундах.",
+					"NOT_PAID_NOTE": "Подготовьте ваш кошелек (%s наличными)."
+				},
+				{
+					"TITLE": "Заказ завершен!",
+					"DETAILS": "Спасибо за использование Ever",
+					"NOT_PAID_NOTE": ""
+				}
+			],
+			"DELIVERY_STATUS": {
+				"WE": "Мы",
+				"CARRIER": "Перевозчик",
+				"YOU": "Вы"
 			},
-			{
-				"TITLE": "Курьер по дороге к Вам!",
-				"DETAILS": "Вы должны получить заказ в течении %t минут.",
-				"NOT_PAID_NOTE": "Вам будет необходимо оплатить %s (наличными курьеру)."
-			},
-			{
-				"TITLE": "Курьер уже практически у Вас!",
-				"DETAILS": "Вы получите заказ через несколько секунд.",
-				"NOT_PAID_NOTE": "Вам будет необходимо оплатить %s (наличными курьеру)."
-			},
-			{
-				"TITLE": "Заказ доставлен!",
-				"DETAILS": "Спасибо за использование Ever"
+			"DELIVERY_WRONG": {
+				"DELIVERY_WRONG": "Доставка была неверной!",
+				"PROCESSING_WRONG": "Обработка была неверна!",
+				"TRY_AGAIN": "Пожалуйста, попробуйте еще раз.",
+				"CALL_FOR_DETAILS": "Вызов для подробностей"
 			}
-		],
-		"DELIVERY_STATUS": {
-			"WE": "Мы",
-			"CARRIER": "Курьер",
-			"YOU": "Вы"
-		},
-		"DELIVERY_WRONG": {
-			"DELIVERY_WRONG": "Доставка прошла неправильно!",
-			"PROCESSING_WRONG": "Произошла ошибка!",
-			"TRY_AGAIN": "Пожалуйста, попробуйте еще раз.",
-			"CALL_FOR_DETAILS": "Призыв к деталям"
 		},
 		"INSTRUCTIONS_STEPS": {
 			"INSTRUTIONS": "инструкции",
 			"CREATE_USER_STEP": {
 				"CREATE_USER": "Создать пользователя",
 				"STEP_1": "Шаг 1",
+				"ORDER": "Заказ",
 				"TO_CONTINUE_IS_REQUIRED_TO_REGISTER_IN_THE_SYSTEM": "Для продолжения необходимо зарегистрироваться в системе",
 				"CLICK_ON_BUTTON_CREATE_USER": "Нажмите кнопку 'Создать пользователя'",
 				"FILL_THE_FORM_FOR_ADDITIONAL_INFO": "Заполните форму для дополнительной информации (необязательно)",
@@ -701,23 +702,25 @@
 		"TITLE": "Клиенты",
 		"DELETE_CUSTOMERS": "Удалить Выбранное",
 		"CREATE_CUSTOMER": "Создать клиента",
-		"MANAGE_CUSTOMER": "Управление клиентом",
-		"CUSTOMER": "Клиент",
 		"DELETE": "удалять",
 		"CREATE": "Создайте",
+		"BAN": "БАН",
+		"UNBAN": "НЕБНГ",
+		"MANAGE_CUSTOMER": "Управление клиентом",
+		"CUSTOMER": "Клиент",
 		"CUSTOMERS_DEVICES": "Устройства для клиентов",
 		"INVITE": "Приглашение",
 		"NOT_INVITED_ONLY": "Только не приглашенные",
 		"ORDER": "Порядок",
-		"Order": "Порядок",
 		"ORDERS_STATISTICS": "Статистика заказов",
 		"NUMBER_OF_ORDERS": "Количество заказов",
 		"CANCELED_ORDERS": "Отмененные заказы",
 		"COMPLETED_ORDERS_TOTAL": "Всего выполненных заказов",
+		"Order": "Порядок",
 		"CANCEL_ORDER": "Отменить заказ",
 		"CATEGORY": "Kатегория",
-		"AVAILABLE_PRODUCTS": "Доступные продукты",
 		"ORDERS_HISTORY": "История на поръчките",
+		"AVAILABLE_PRODUCTS": "Доступные продукты",
 		"NEARBY_STORES": "Магазины поблизости",
 		"INVITES_REQUESTS_MANAGEMENT": "Приглашает управление запросами",
 		"INVITES_MANAGEMENT": "Управление приглашениями",
@@ -766,6 +769,11 @@
 			"ORDER": "Порядок",
 			"STATUS": "Положение дел"
 		},
+		"EDIT": {
+			"EDIT_CUSTOMER": "Изменить клиента",
+			"BASIC_INFO": "Базовая информация",
+			"SAVE": "Сохранить"
+		},
 		"DEVICE": {
 			"ALL_DEVICE": "Все устройства",
 			"DEVICE_ID": "Идентификатор устройства",
@@ -780,11 +788,6 @@
 			"CUSTOMERS_DEVICES": "Устройства для клиентов",
 			"DELETE": "удалять",
 			"CREATE": "Создайте"
-		},
-		"EDIT": {
-			"EDIT_CUSTOMER": "Изменить клиента",
-			"BASIC_INFO": "Базовая информация",
-			"SAVE": "Сохранить"
 		},
 		"WAREHOUSE": {
 			"WAREHOUSE_INFO": "Складская информация",
@@ -896,8 +899,8 @@
 				"THE_LENGHT_OF_THE_TITLE": "Длина заголовка должна быть не более 255 символов!",
 				"IMAGE": "Требуется фото",
 				"DESCRIPTION": "Требуется описание",
-				"THE_LENGHT_OF_THE_DESCRIPTION": "Длина описания должна быть не более 255 символов!",
 				"LANGUAGE": "Требуется язык",
+				"THE_LENGHT_OF_THE_DESCRIPTION": "Длина описания должна быть не более 255 символов!",
 				"PRICE": "Требуется цена",
 				"COUNT": "Требуется количество товаров"
 			}
@@ -927,7 +930,6 @@
 				"BASIC_INFO": {
 					"TITLE": "Базовая Инфо.",
 					"FIRST_NAME": "Имя",
-					"LAST_NAME": "Фамилия",
 					"FIRST_NAME_OPTIONAL": "Имя (необязательно)",
 					"LAST_NAME_OPTIONAL": "Фамилия (необязательно)",
 					"PHOTO_URL": "URL Адрес фотографии",
@@ -1029,8 +1031,8 @@
 		"Order Selected For Delivery": "Заказ выбран для доставки",
 		"Order Picked Up": "Выбранный заказ",
 		"Order In Delivery": "Заказ в доставке",
-		"Delivered": "Доставлен",
 		"Arrived To Client": "Прибыл в клиенту",
+		"Delivered": "Доставлен",
 		"Delivery Issues": "Проблемы с доставкой",
 		"Client Refuse to Take Order": "Клиент отказывается принимать заказы",
 		"Given to Customer": "Передано клиенту",
@@ -1067,6 +1069,7 @@
 	"In Delivery": "По мере доставки",
 	"Not Confirmed": "Не подтверждено",
 	"Not paid": "Не выплачивается",
+	"Cancelled": "Отменено",
 	"All": "Все",
 	"CANCEL": "Отмена",
 	"Default Settings": "Настройки по умолчанию",
@@ -1075,7 +1078,6 @@
 	"New Product Type": "Перевозчик, требуемый до продажи",
 	"Products": "Продукты",
 	"Product": "Продукт",
-	"New Product": "Новый продукт",
 	"Title": "Заглавие",
 	"Picture Url": "Ссылка на фотографию / Фото гиперссылка",
 	"Description": "Описание",
@@ -1090,6 +1092,7 @@
 	"BULGARIAN": "Болгарский",
 	"SELECT": "Выбрать",
 	"Name": "Имя",
+	"Id": "Id",
 	"Warehouse name is required": "Требуется имя склада",
 	"Name must be at least 1 characters long": "Имя должно быть не менее 1 символа",
 	"Title cannot be more than 255 characters long": "Название не может содержать более 255 символов",
@@ -1097,12 +1100,14 @@
 	"Warehouse logo is required": "Требуется логотип склада",
 	"is Active": "Активен",
 	"right now": "прямо сейчас",
+	"Unselected": "Не выбрано",
 	"Phone": "Телефон",
 	"Email": "Эл. адрес",
 	"Username": "Имя пользователя",
 	"Username is required": "Имя пользователя требуется",
 	"Password": "Пароль",
 	"Country": "Страна",
+	"USA": "США",
 	"Israel": "Израиль",
 	"Bulgaria": "Болгария",
 	"City": "Город",

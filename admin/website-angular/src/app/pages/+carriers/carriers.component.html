@@ -3,25 +3,31 @@
 
 	<nb-card-header>
 		<button
-			class="btn btn-icon btn-success btn-sm mr-2 d-inline-block"
+			nbButton
+			status="success"
+			class="mr-2 d-inline-block"
 			(click)="openWizardNewCarrier()"
 		>
-			<i class="ion-md-add button-icon"></i>
+			<i class="ion-md-add button-icon mr-1"></i>
 			{{ 'CARRIERS_VIEW.CREATE_BUTTON' | translate }}
 		</button>
 		<button
-			class="btn btn-icon btn-danger btn-sm mr-2 d-inline-block"
+			nbButton
+			status="danger"
+			class="mr-2 d-inline-block"
 			[disabled]="!carriersTable.hasSelectedCarriers"
 			(click)="deleteSelectedCarriers()"
 		>
-			<i class="ion-md-trash button-icon"></i>
+			<i class="ion-md-trash button-icon mr-1"></i>
 			{{ 'CARRIERS_VIEW.DELETE' | translate }}
 		</button>
 		<button
-			class="btn btn-icon btn-primary btn-sm mr-2 d-inline-block"
+			nbButton
+			status="primary"
+			class="mr-2 d-inline-block"
 			routerLink="track"
 		>
-			<i class="ion-md-map button-icon"></i>
+			<i class="ion-md-map button-icon mr-1"></i>
 			{{ 'CARRIERS_VIEW.TRACK' | translate }}
 		</button>
 	</nb-card-header>

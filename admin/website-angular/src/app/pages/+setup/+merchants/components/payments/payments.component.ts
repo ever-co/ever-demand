@@ -6,8 +6,8 @@ import {
 	ViewChild
 } from '@angular/core';
 import { LocationFormComponent } from 'app/@shared/forms/location';
-import { PaymentGatewaysComponent } from './payment-gateways/payment-gateways.component';
 import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaymentGateway';
+import { PaymentGatewaysComponent } from 'app/@shared/payment-gateways/payment-gateways.component';
 
 @Component({
 	selector: 'ea-merchants-setup-payments',
@@ -15,7 +15,7 @@ import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaym
 	styleUrls: ['./payments.component.scss']
 })
 export class SetupMerchantPaymentsComponent {
-	@ViewChild('paymentGateways')
+	@ViewChild('paymentGateways', { static: true })
 	paymentGateways: PaymentGatewaysComponent;
 	@Output()
 	previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();

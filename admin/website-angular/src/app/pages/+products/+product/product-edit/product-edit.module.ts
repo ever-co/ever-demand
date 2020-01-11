@@ -7,7 +7,7 @@ import { ProductEditComponent } from './product-edit.component';
 import { ProductFormsModule } from '../../../../@shared/product/forms';
 import { FormWizardModule } from 'angular2-wizard';
 import { ProductsCategoryService } from '../../../../@core/data/productsCategory.service';
-import { NbSpinnerModule } from '@nebular/theme';
+import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 
 export const routes: Routes = [
 	{
@@ -24,7 +24,8 @@ export const routes: Routes = [
 		RouterModule.forChild(routes),
 		ProductFormsModule,
 		FormWizardModule,
-		NbSpinnerModule
+		NbSpinnerModule,
+		NbButtonModule
 	],
 	exports: [],
 	declarations: [ProductEditComponent],

@@ -74,6 +74,9 @@ export type Env = Readonly<{
 
 	// For "single" merchant (multiple branches)
 	MERCHANT_IDS?: string[];
+	WEB_CONCURRENCY: number;
+	WEB_MEMORY: number;
+	PORT: number;
 }>;
 
 const merchantIDs = makeValidator<string[]>((x) => x, 'merchantIDs');
@@ -167,7 +170,10 @@ export const env: Env = cleanEnv(
 			default: [
 				// Add existing merchant ids
 			]
-		})
+		}),
+		WEB_CONCURRENCY: num({ default: 1 }),
+		WEB_MEMORY: num({ default: 2048 }),
+		PORT: num({ default: 4201 })
 	},
 	{ strict: true, dotEnvPath: __dirname + '/../.env' }
 );

@@ -1,7 +1,7 @@
 <div class="product">
-	<h6 *ngIf="(store$ | async) as store" class="text-center">
+	<p *ngIf="store$ | async as store" class="text-center">
 		<span (click)="redirect()" class="button-redirect warhouseBtn">
 			<span class="productTitle">{{ store.name }}</span>
 		</span>
-	</h6>
+	</p>
 </div>

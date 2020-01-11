@@ -1,14 +1,14 @@
 import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
 import { styleVariables } from '../../../styles/variables';
 import { first, map } from 'rxjs/operators';
-import { InviteRouter } from '../../../modules/client.common.angular2/routers/invite-router.service';
-import { InviteRequestRouter } from '../../../modules/client.common.angular2/routers/invite-request-router.service';
+import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
+import { InviteRequestRouter } from '@modules/client.common.angular2/routers/invite-request-router.service';
 import { HttpClient } from '@angular/common/http';
-import { ILocation } from '../../../modules/server.common/interfaces/IGeoLocation';
-import InviteRequest from '../../../modules/server.common/entities/InviteRequest';
+import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
+import InviteRequest from '@modules/server.common/entities/InviteRequest';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { UserRouter } from '../../../modules/client.common.angular2/routers/user-router.service';
-import User from '../../../modules/server.common/entities/User';
+import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
+import User from '@modules/server.common/entities/User';
 import { GeoLocationRouter } from '@modules/client.common.angular2/routers/geo-location-router.service';
 import { Store } from 'app/services/store';
 import { environment } from 'environments/environment';
@@ -23,7 +23,7 @@ import { TranslateService } from '@ngx-translate/core';
 	templateUrl: '/byLocation.component.html'
 })
 export class LoginByLocationComponent implements OnInit {
-	@ViewChild('locationForm')
+	@ViewChild('locationForm', { static: false })
 	public locationForm: LocationFormComponent;
 
 	public InitUser: User;

@@ -16,6 +16,8 @@ import { MatDialog } from '@angular/material';
 import { MessagePopUpComponent } from 'app/shared/message-pop-up/message-pop-up.component';
 import { first } from 'rxjs/operators';
 import Warehouse from '@modules/server.common/entities/Warehouse';
+import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
+import { CarrierLocationComponent } from '../location/carrier-location.component';
 
 @Component({
 	selector: 'order',
@@ -37,12 +39,15 @@ export class OrderComponent implements OnInit {
 	public price: number;
 	public description: string;
 	public img: string;
+	public products;
 	public orderStatusText: string;
 	public orderNumber: number;
+	public orderType: number;
 	public createdAt: Date;
 	public createdAtConverted: string;
 	public warehouse: Warehouse;
 	public totalPrice;
+	public carrier;
 
 	public PREFIX_ORDER_STATUS: string = 'ORDER_CARRIER_STATUS.';
 	public orderStatusTextTranslates: string;
@@ -55,6 +60,7 @@ export class OrderComponent implements OnInit {
 	constructor(
 		private warehouseOrdersRouter: WarehouseOrdersRouter,
 		private readonly warehouseRouter: WarehouseRouter,
+		private readonly carrierRouter: CarrierRouter,
 		private readonly _productLocalesService: ProductLocalesService,
 		private translateService: TranslateService,
 		private dialog: MatDialog
@@ -76,6 +82,18 @@ export class OrderComponent implements OnInit {
 				return this.warehouseOrdersRouter
 					.cancel(this.order._id.toString())
 					.then();
+			}
+		});
+	}
+
+	openMap(): void {
+		this.dialog.open(CarrierLocationComponent, {
+			width: '560px',
+			panelClass: 'app-dialog-container',
+			data: {
+				carrier: this.carrier,
+				merchant: this.warehouse,
+				userOrder: this.order.user
 			}
 		});
 	}
@@ -107,16 +125,25 @@ export class OrderComponent implements OnInit {
 			this.img = this.localeTranslate(
 				this.order.products[0].product.images
 			);
+			this.products = this.order.products;
 		}
 		this.orderStatusText = this.order.warehouseStatusText;
 		this.orderStatusTextTranslates =
 			this.PREFIX_ORDER_STATUS + this.orderStatusText;
 		this.orderNumber = this.order.orderNumber;
+		this.orderType = this.order.orderType;
 		this.createdAt = this.order.createdAt;
 		this.warehouse = await this.warehouseRouter
 			.get(this.order.warehouseId, false)
 			.pipe(first())
 			.toPromise();
+
+		if (this.order.carrierId) {
+			this.carrier = await this.carrierRouter
+				.get(this.order.carrierId)
+				.pipe(first())
+				.toPromise();
+		}
 	}
 
 	protected localeTranslate(member: ILocaleMember[]): string {

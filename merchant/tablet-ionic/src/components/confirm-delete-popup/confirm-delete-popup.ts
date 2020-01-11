@@ -17,6 +17,8 @@ export interface IConfirmDeleteData {
 export class ConfirmDeletePopupPage {
 	@Input()
 	data: IConfirmDeleteData;
+	@Input()
+	isRemove: boolean;
 
 	constructor(public modalCtrl: ModalController) {}
 

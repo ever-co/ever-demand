@@ -21,6 +21,7 @@ const interact = (private_key, public_key, machine_name) =>
 	);
 const launchBus = util.promisify(pm2.launchBus.bind(pm2));
 const runningApps = util.promisify(pm2.list.bind(pm2));
+const dump = util.promisify(pm2.dump.bind(pm2));
 const timeout = (ms: number) =>
 	new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -57,6 +58,8 @@ const timeout = (ms: number) =>
 			// post_update: ["npm install"] // Commands to execute once we do a pull from Keymetrics
 			...(env.isDev ? { watch: true } : {})
 		});
+
+		await dump();
 	} catch (err) {
 		console.error(err);
 	}

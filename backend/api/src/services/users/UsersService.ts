@@ -466,6 +466,7 @@ export class UsersService extends DBService<User>
 			const firstName = faker.name.firstName();
 			const lastName = faker.name.lastName();
 			const email = faker.internet.email(firstName, lastName);
+			const isBanned = Math.random() < 0.02;
 
 			const geoLocation: IGeoLocationCreateObject = {
 				countryId: faker.random.number(Country.ZW) as Country,
@@ -487,6 +488,7 @@ export class UsersService extends DBService<User>
 					geoLocation,
 					apartment: `${customerCount}`,
 					email,
+					isBanned,
 					image: faker.image.avatar(),
 					phone: faker.phone.phoneNumber(),
 					_createdAt: faker.date.between(

@@ -12,6 +12,9 @@ import { WarehouseManageTabsDetailsComponent } from './warehouse-manage-tabs/det
 import { WarehouseManageTabsAccountComponent } from './warehouse-manage-tabs/account/warehouse-manage-tabs-account.component';
 import { WarehouseManageTabsDeliveryAreasComponent } from './warehouse-manage-tabs/delivery-areas/warehouse-manage-tabs-delivery-areas.component';
 import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.module';
+import { NbButtonModule } from '@nebular/theme';
+import { PaymentsSettingsFormComponent } from './payments-settings/payments-settings-form.component';
+import { PaymentGatewaysModule } from 'app/@shared/payment-gateways/payment-gateways.module';
 
 @NgModule({
 	imports: [
@@ -21,7 +24,9 @@ import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.modu
 		MultiselectDropdownModule,
 		FileUploaderModule,
 		GoogleMapModule,
-		LocationFormModule
+		LocationFormModule,
+		NbButtonModule,
+		PaymentGatewaysModule
 	],
 	exports: [
 		WarehouseManageTabsComponent,
@@ -29,7 +34,8 @@ import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.modu
 		WarehouseManageTabsAccountComponent,
 		BasicInfoFormComponent,
 		ContactInfoFormComponent,
-		WarehouseManageTabsDeliveryAreasComponent
+		WarehouseManageTabsDeliveryAreasComponent,
+		PaymentsSettingsFormComponent
 	],
 	declarations: [
 		WarehouseManageTabsComponent,
@@ -37,7 +43,8 @@ import { FileUploaderModule } from 'app/@shared/file-uploader/file-uploader.modu
 		WarehouseManageTabsAccountComponent,
 		BasicInfoFormComponent,
 		ContactInfoFormComponent,
-		WarehouseManageTabsDeliveryAreasComponent
+		WarehouseManageTabsDeliveryAreasComponent,
+		PaymentsSettingsFormComponent
 	]
 })
 export class WarehouseFormsModule {}

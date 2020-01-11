@@ -17,7 +17,7 @@ import { NgModel } from '@angular/forms';
 	styleUrls: ['./file-uploader.component.scss']
 })
 export class FileUploaderComponent {
-	@ViewChild('shownInput')
+	@ViewChild('shownInput', { static: true })
 	shownInput: NgModel;
 
 	@Input()
@@ -51,7 +51,9 @@ export class FileUploaderComponent {
 	}
 
 	async imageUrlChanged() {
-		let newValue = this.fileUrl.replace(this.oldValue || '', '').trim();
+		let newValue =
+			this.fileUrl &&
+			this.fileUrl.replace(this.oldValue || '', '').trim();
 
 		if (this.uploader.queue.length > 0) {
 			this.uploader.queue[this.uploader.queue.length - 1].upload();

@@ -1,10 +1,16 @@
-<ngx-switcher
-	[firstValue]="directions.RTL"
-	[secondValue]="directions.LTR"
-	[firstValueLabel]="'RTL'"
-	[secondValueLabel]="'LTR'"
-	[value]="currentDirection"
-	(valueChange)="toggleDirection($event)"
-	[vertical]="vertical"
->
-</ngx-switcher>
+<fieldset>
+	<p>Directions:</p>
+
+	<nb-radio-group
+		(valueChange)="toggleDirection($event)"
+		[(value)]="currentDirection"
+		name="size"
+	>
+		<nb-radio name="size" [value]="directions.LTR"
+			><small>LTR </small></nb-radio
+		>
+		<nb-radio name="size" [value]="directions.RTL">
+			<small>RTL</small>
+		</nb-radio>
+	</nb-radio-group>
+</fieldset>

@@ -12,9 +12,11 @@
 
 		<ion-item mode="{{ itemMode }}" class="upload-input col-10 pr-0 pl-0">
 			<ion-input
+				#shownInput="ngModel"
 				class="{{ inputCustomStyle ? 'ion-input-custom-style' : '' }}"
 				ng2FileDrop
 				[uploader]="uploader"
+				(change)="imageUrlChanged()"
 				(onFileDrop)="imageUrlChanged()"
 				[placeholder]="isBrowser ? dragAndDrob : pictureURL"
 				type="text"

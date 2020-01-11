@@ -5,7 +5,7 @@ import {
 	OnInit,
 	ViewChild
 } from '@angular/core';
-import ProductInfo from '../../modules/server.common/entities/ProductInfo';
+import ProductInfo from '@modules/server.common/entities/ProductInfo';
 import { Store } from 'app/services/store';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { IOrderCreateInput } from '@modules/server.common/routers/IWarehouseOrdersRouter';
@@ -34,7 +34,7 @@ const initializeProductsNumber: number = 10;
 	templateUrl: './products.component.html'
 })
 export class ProductsComponent implements OnInit, OnDestroy {
-	@ViewChild('carouselView')
+	@ViewChild('carouselView', { static: false })
 	carouselView: CarouselViewComponent;
 
 	products: ProductInfo[] = [];

@@ -79,6 +79,15 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	geoLocation: GeoLocation;
 
 	/**
+	 * Warehouse delivery areas in GeoJSON format
+	 *
+	 * @type {Object}
+	 * @memberof Warehouse
+	 */
+	@Schema({ type: Object })
+	deliveryAreas: object;
+
+	/**
 	 * Products available at this warehouse for customer to purchase
 	 *
 	 * @type {WarehouseProduct[]}

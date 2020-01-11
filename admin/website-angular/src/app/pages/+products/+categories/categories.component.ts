@@ -15,7 +15,7 @@ import { NotifyService } from 'app/@core/services/notify/notify.service';
 	styleUrls: ['/categories.component.scss']
 })
 export class CategoriesComponent implements OnDestroy {
-	@ViewChild('categoriesTable')
+	@ViewChild('categoriesTable', { static: true })
 	categoriesTable: CategoriesTableComponent;
 
 	protected settingsSmartTable: object;

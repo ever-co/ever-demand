@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormWizardModule } from 'angular2-wizard';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { TranslateModule } from '@ngx-translate/core';
-import { NbSpinnerModule } from '@nebular/theme';
+import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 import { ThemeModule } from '../../../../@theme';
 import { WarehouseSelectViewComponent } from './warehouse-select-view.component';
 import { RouterModule } from '@angular/router';
@@ -22,7 +22,8 @@ import { FormsModule } from '@angular/forms';
 		NbSpinnerModule,
 		JsonModalModule,
 		NgSelectModule,
-		FormsModule
+		FormsModule,
+		NbButtonModule
 	],
 	declarations: [WarehouseSelectViewComponent],
 	exports: [WarehouseSelectViewComponent]

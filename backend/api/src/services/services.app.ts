@@ -60,6 +60,8 @@ export class ServicesApp {
 	// TODO: put to config
 	private static _connectTimeoutMS: number = 40000;
 
+	private callback: () => void;
+
 	constructor(
 		@multiInject(ServiceSymbol)
 		protected services: IService[],
@@ -77,13 +79,14 @@ export class ServicesApp {
 		const maxSockets = _configService.Env.MAX_SOCKETS;
 
 		// see https://webapplog.com/seven-things-you-should-stop-doing-with-node-js
-		https.globalAgent.maxSockets = maxSockets;
 		http.globalAgent.maxSockets = maxSockets;
+		https.globalAgent.maxSockets = maxSockets;
 
 		this._configMongoDB();
 	}
 
-	async start() {
+	async start(callback: () => void) {
+		this.callback = callback;
 		await this._onDBConnect();
 		console.log('end');
 	}
@@ -105,6 +108,8 @@ export class ServicesApp {
 	}
 
 	static async createTypeORMConnection() {
+		const typeORMLog = createEverLogger({ name: 'TypeORM' });
+
 		// list of entities for which Repositories will be greated in TypeORM
 		const entities = ServicesApp.getEntities();
 
@@ -130,6 +135,10 @@ export class ServicesApp {
 		});
 
 		console.log(
+			`TypeORM DB connection created. DB connected: ${conn.isConnected}`
+		);
+
+		typeORMLog.info(
 			`TypeORM DB connection created. DB connected: ${conn.isConnected}`
 		);
 
@@ -182,43 +191,56 @@ export class ServicesApp {
 
 	private async _connectToMongo() {
 		try {
-			mongoose.connect(
-				env.DB_URI,
-				{
-					useCreateIndex: true,
-					useNewUrlParser: true,
-					autoReconnect: true,
-					useFindAndModify: false,
-					reconnectTries: Number.MAX_VALUE,
-					poolSize: ServicesApp._poolSize,
-					connectTimeoutMS: ServicesApp._connectTimeoutMS
-				} as any,
-				(err) => {
-					if (err != null) {
-						this.log.error(err);
-					}
-				}
-			);
+			const connectionOptions: mongoose.ConnectionOptions = {
+				useCreateIndex: true,
+				useNewUrlParser: true,
+				autoReconnect: true,
+				useFindAndModify: false,
+				reconnectTries: Number.MAX_VALUE,
+				poolSize: ServicesApp._poolSize,
+				connectTimeoutMS: ServicesApp._connectTimeoutMS
+			};
 
-			this.log.info('Trying to connect to DB ' + this.db_server);
+			const mongoConnect: mongoose.Mongoose = await mongoose.connect(
+				env.DB_URI,
+				connectionOptions
+			);
 		} catch (err) {
-			this.log.error(err, 'Sever initialization failed!');
+			this.log.error(
+				err,
+				'Sever initialization failed! Cannot connect to DB'
+			);
 		}
 	}
 
 	private async _onDBConnect() {
+		// that's important to see even if logs disabled, do not remove!
+		console.log('Connected to DB');
+
+		this.log.info({ db: this.db_server }, 'Connected to DB');
+
 		if (process.env.DB === 'mongo') {
 			console.log('registering models');
 			await this._registerModels();
 		}
-		console.log('start admin');
+
 		await this._registerEntityAdministrator();
 		console.log('start passport');
 		this._passportSetup();
 		console.log('start express');
 		await this._startExpress();
-		console.log('start socket');
-		this._startSocketIO();
+		await this._startSocketIO();
+
+		// execute callback defined at main.ts
+		await this.callback();
+
+		// let's report RAM usage after all is bootstrapped
+		await this.reportMemoryUsage();
+	}
+
+	private async reportMemoryUsage() {
+		console.log('Memory usage: ');
+		console.log(process.memoryUsage());
 	}
 
 	/**
@@ -290,11 +312,6 @@ export class ServicesApp {
 	}
 
 	private async _startExpress() {
-		// that's important to see even if logs disabled, do not remove!
-		console.log('Connected to DB');
-
-		this.log.info({ db: this.db_server }, 'Connected to DB');
-
 		this.expressApp = express();
 
 		const hbs = exphbs.create({
@@ -344,9 +361,11 @@ export class ServicesApp {
 		// TODO: add to settings file
 		// set connections timeouts to 30 minutes (for long running requests)
 		const timeout = 30 * 60 * 1000;
+
 		if (this.httpsServer) {
 			this.httpsServer.setTimeout(timeout);
 		}
+
 		this.httpServer.setTimeout(timeout);
 
 		this.expressApp.set('httpsPort', env.HTTPSPORT);
@@ -480,7 +499,7 @@ export class ServicesApp {
 		try {
 			this.log.info('Generating SSL Certificates for HTTPS');
 
-			let { success } = await this._createCertificateAsync(
+			const { success } = await this._createCertificateAsync(
 				httpsCertPath,
 				httpsKeyPath
 			);
@@ -541,12 +560,12 @@ export class ServicesApp {
 		});
 	}
 
-	private _startSocketIO() {
+	private async _startSocketIO() {
 		const ioHttps = socketIO(this.httpsServer);
 		const ioHttp = socketIO(this.httpServer);
 
-		this.routersManager.startListening(ioHttps);
-		this.routersManager.startListening(ioHttp);
+		await this.routersManager.startListening(ioHttps);
+		await this.routersManager.startListening(ioHttp);
 	}
 
 	private _setupStaticRoutes() {
@@ -615,7 +634,7 @@ export class ServicesApp {
 				const baseRedirectUr =
 					passport['_strategies'].session.base_redirect_url;
 				if (req.user) {
-					res.redirect(baseRedirectUr + req.user.redirectUrl);
+					res.redirect(baseRedirectUr + (<any>req.user).redirectUrl);
 				} else {
 					res.redirect(baseRedirectUr || '');
 				}
@@ -644,7 +663,7 @@ export class ServicesApp {
 				const baseRedirectUr =
 					passport['_strategies'].session.base_redirect_url;
 				if (req.user) {
-					res.redirect(baseRedirectUr + req.user.redirectUrl);
+					res.redirect(baseRedirectUr + (<any>req.user).redirectUrl);
 				} else {
 					res.redirect(baseRedirectUr || '');
 				}

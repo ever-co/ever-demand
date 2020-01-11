@@ -1,13 +1,13 @@
 import * as Logger from 'bunyan';
-import CarrierStatus from '../../modules/server.common/enums/CarrierStatus';
-import Carrier from '../../modules/server.common/entities/Carrier';
+import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
+import Carrier from '@modules/server.common/entities/Carrier';
 import { createEverLogger } from '../../helpers/Log';
 import { DBService, IDbService } from '@pyro/db-server';
 import { inject, injectable } from 'inversify';
 import ICarrierRouter, {
 	ICarrierLoginResponse,
 	ICarrierRegistrationInput
-} from '../../modules/server.common/routers/ICarrierRouter';
+} from '@modules/server.common/routers/ICarrierRouter';
 import {
 	asyncListener,
 	observableListener,
@@ -15,8 +15,8 @@ import {
 	serialization
 } from '@pyro/io';
 import IService from '../IService';
-import GeoLocation from '../../modules/server.common/entities/GeoLocation';
-import IGeoLocation from '../../modules/server.common/interfaces/IGeoLocation';
+import GeoLocation from '@modules/server.common/entities/GeoLocation';
+import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 import { concat, of, Observable, from } from 'rxjs';
 import { exhaustMap, filter, first, map, switchMap } from 'rxjs/operators';
 import { env } from '../../env';
@@ -151,6 +151,20 @@ export class CarriersService extends DBService<Carrier>
 	): Promise<Carrier> {
 		await this.throwIfNotExists(carrierId);
 		return this.databaseService.update(carrierId, { isActive });
+	}
+
+	/**
+	 * Update email for given Carrier (by carrier Id)
+	 *
+	 * @param {string} carrierId
+	 * @param {string} email
+	 * @returns {Promise<Carrier>}
+	 * @memberof CarriersService
+	 */
+	@asyncListener()
+	async updateEmail(carrierId: string, email: string): Promise<Carrier> {
+		await this.throwIfNotExists(carrierId);
+		return this.update(carrierId, { email });
 	}
 
 	@asyncListener()

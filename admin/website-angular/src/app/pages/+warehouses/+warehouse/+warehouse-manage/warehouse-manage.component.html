@@ -1,7 +1,7 @@
 <toaster-container></toaster-container>
 
 <div [nbSpinner]="loading">
-	<nb-card *ngIf="(warehouse$ | async) as warehouse">
+	<nb-card *ngIf="warehouse$ | async as warehouse">
 		<nb-card-header>
 			<div class="d-inline-flex">
 				<svg
@@ -18,12 +18,15 @@
 			</div>
 
 			<button
+				nbButton
+				status="success"
 				type="button"
-				class="btn btn-success pull-right text-center"
+				size="large"
+				class="pull-right text-center"
 				(click)="updateWarehouse()"
 				[disabled]="!validForm"
 			>
-				<i class="ion-md-checkmark button-icon"></i>
+				<i class="ion-md-checkmark button-icon mr-1"></i>
 				<span>{{ 'WAREHOUSE_MANAGE.SAVE' | translate }}</span>
 			</button>
 		</nb-card-header>

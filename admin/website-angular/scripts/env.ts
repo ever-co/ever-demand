@@ -40,6 +40,10 @@ export type Env = Readonly<{
 
 	SETTINGS_APP_TYPE?: string;
 	SETTINGS_MAINTENANCE_API_URL?: string;
+
+	WEB_CONCURRENCY: number;
+	WEB_MEMORY: number;
+	PORT: number;
 }>;
 
 export const env: Env = cleanEnv(
@@ -99,7 +103,11 @@ export const env: Env = cleanEnv(
 		SETTINGS_APP_TYPE: str({ default: 'admin' }),
 		SETTINGS_MAINTENANCE_API_URL: str({
 			default: ''
-		})
+		}),
+
+		WEB_CONCURRENCY: num({ default: 1 }),
+		WEB_MEMORY: num({ default: 2048 }),
+		PORT: num({ default: 4200 })
 	},
 	{ strict: true, dotEnvPath: __dirname + '/../.env' }
 );

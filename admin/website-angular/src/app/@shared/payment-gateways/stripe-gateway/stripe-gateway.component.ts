@@ -1,9 +1,9 @@
 import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import PaymentGateways, {
-	paymentGatewaysToString
+	paymentGatewaysToString,
+	paymentGatewaysLogo
 } from '@modules/server.common/enums/PaymentGateways';
 import { Country } from '@modules/server.common/entities';
-import { countriesDefaultCurrencies } from '@modules/server.common/entities/Currency';
 import { NgForm } from '@angular/forms';
 import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaymentGateway';
 import { TranslateService } from '@ngx-translate/core';
@@ -14,13 +14,13 @@ import { Subject } from 'rxjs';
 	selector: 'ea-stripe-gateway',
 	templateUrl: './stripe-gateway.component.html'
 })
-export class StripeGatewayComponent implements OnChanges {
-	@ViewChild('stripeConfigForm')
+export class StripeGatewayComponent {
+	@ViewChild('stripeConfigForm', { static: true })
 	stripeConfigForm: NgForm;
 
 	isStripeEnabled: boolean;
 	name = paymentGatewaysToString(PaymentGateways.Stripe);
-	logo = 'https://stripe.com/img/v3/home/twitter.png';
+	logo = paymentGatewaysLogo(PaymentGateways.Stripe);
 	invalidUrl: boolean;
 
 	private _ngDestroy$ = new Subject<void>();
@@ -34,7 +34,9 @@ export class StripeGatewayComponent implements OnChanges {
 	warehouseCountry: Country;
 	@Input()
 	set companyBrandLogo(logo: string) {
-		this.configModel.companyBrandLogo = logo;
+		if (!this.configModel.companyBrandLogo) {
+			this.configModel.companyBrandLogo = logo;
+		}
 	}
 
 	constructor(private translateService: TranslateService) {
@@ -53,6 +55,7 @@ export class StripeGatewayComponent implements OnChanges {
 		payButtontext: '',
 		currency: '',
 		companyBrandLogo: '',
+		publishableKey: '',
 		allowRememberMe: true
 	};
 
@@ -82,17 +85,17 @@ export class StripeGatewayComponent implements OnChanges {
 		};
 	}
 
-	ngOnChanges(): void {
-		const defaultCurrency =
-			countriesDefaultCurrencies[
-				Country[this.warehouseCountry].toString()
-			] || '';
-
-		this.configModel.currency = defaultCurrency;
-	}
-
 	deleteImg() {
 		this.configModel.companyBrandLogo = '';
+	}
+
+	setValue(data) {
+		this.isStripeEnabled = true;
+		this.configModel.payButtontext = data['payButtontext'] || '';
+		this.configModel.currency = data['currency'] || '';
+		this.configModel.companyBrandLogo = data['companyBrandLogo'] || '';
+		this.configModel.publishableKey = data['publishableKey'] || '';
+		this.configModel.allowRememberMe = data['allowRememberMe'];
 	}
 
 	ngOnDestroy() {

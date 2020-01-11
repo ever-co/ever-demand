@@ -1,0 +1,116 @@
+<!-- TODO add translate -->
+<form class="payments-mutation-popup-form paypal-gateway" [formGroup]="form">
+	<ion-grid>
+		<ion-row class="paypal-selects">
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating"
+						>Mode</ion-label
+					>
+					<ion-select
+						formControlName="mode"
+						[cancelText]="'Cancel'"
+						[okText]="'OK'"
+						[placeholder]="'Choose PayPal mode'"
+					>
+						<ion-select-option
+							*ngFor="let type of payPalTypes"
+							value="{{ type }}"
+							>{{ type }}
+						</ion-select-option>
+					</ion-select>
+				</ion-item>
+			</ion-col>
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating"
+						>Currency</ion-label
+					>
+					<ion-select
+						formControlName="currency"
+						[cancelText]="'Cancel'"
+						[okText]="'OK'"
+					>
+						<ion-select-option
+							*ngFor="let code of currenciesCodes"
+							value="{{ code }}"
+							>{{ code }}
+						</ion-select-option>
+					</ion-select>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating"
+						>Publishable key</ion-label
+					>
+					<ion-input
+						type="text"
+						formControlName="publishableKey"
+					></ion-input>
+				</ion-item>
+				<div
+					*ngIf="
+						publishableKey.invalid &&
+						(publishableKey.dirty || publishableKey.touched)
+					"
+					class="validation-errors"
+				>
+					<span *ngIf="publishableKey.errors.required"
+						>Publishable key is required</span
+					>
+				</div>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating"
+						>Secret key</ion-label
+					>
+					<ion-input
+						type="text"
+						formControlName="secretKey"
+					></ion-input>
+				</ion-item>
+				<div
+					*ngIf="
+						secretKey.invalid &&
+						(secretKey.dirty || secretKey.touched)
+					"
+					class="validation-errors"
+				>
+					<span *ngIf="secretKey.errors.required"
+						>Secret key is required</span
+					>
+				</div>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating"
+						>Payment description</ion-label
+					>
+					<ion-input
+						type="text"
+						formControlName="description"
+					></ion-input>
+				</ion-item>
+				<div
+					*ngIf="
+						description.invalid &&
+						(description.dirty || description.touched)
+					"
+					class="validation-errors"
+				>
+					<span *ngIf="description.errors.required"
+						>Payment description is required</span
+					>
+				</div>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</form>

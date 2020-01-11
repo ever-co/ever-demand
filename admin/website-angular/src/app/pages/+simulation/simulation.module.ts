@@ -21,7 +21,7 @@ import { InviteRequestModalModule } from 'app/@shared/invite/invite-request/invi
 import { ByCodeModalModule } from 'app/@shared/invite/by-code/by-code-modal.module';
 import { SimulationOrderModule } from './order/order.module';
 import { RenderComponentsModule } from 'app/@shared/render-component/render-components.module';
-import { NbSpinnerModule } from '@nebular/theme';
+import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 
 @NgModule({
 	imports: [
@@ -41,7 +41,8 @@ import { NbSpinnerModule } from '@nebular/theme';
 		CustomerOrdersModule,
 		SimulationOrderModule,
 		RenderComponentsModule,
-		NbSpinnerModule
+		NbSpinnerModule,
+		NbButtonModule
 	],
 
 	declarations: [

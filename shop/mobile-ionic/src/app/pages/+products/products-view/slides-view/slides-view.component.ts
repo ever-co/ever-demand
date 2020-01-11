@@ -59,7 +59,7 @@ export class ProductsSlidesViewComponent
 	@Output()
 	goToDetailsPage = new EventEmitter<ProductInfo>();
 
-	@ViewChild(IonSlides)
+	@ViewChild(IonSlides, { static: false })
 	slides: IonSlides;
 
 	imageOrientation: number = 1;

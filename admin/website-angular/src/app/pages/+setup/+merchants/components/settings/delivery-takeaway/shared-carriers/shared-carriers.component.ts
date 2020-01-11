@@ -21,7 +21,7 @@ const perPage = 5;
 })
 export class SetupMerchantSharedCarriersComponent
 	implements OnDestroy, AfterViewInit {
-	@ViewChild('carriersTable')
+	@ViewChild('carriersTable', { static: true })
 	carriersTable: CarriersSmartTableComponent;
 
 	@Input()
