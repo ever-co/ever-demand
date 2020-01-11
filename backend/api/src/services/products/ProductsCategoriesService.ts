@@ -6,11 +6,11 @@ import IProductsCategoryRouter from '@modules/server.common/routers/IProductsCat
 import { Observable } from 'rxjs';
 import { asyncListener, observableListener, routerName } from '@pyro/io';
 import IService from '../IService';
-import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import { UpdateObject } from '@pyro/db/db-update-object';
 import { CreateObject } from '@pyro/db/db-create-object';
 import { first, switchMap, map } from 'rxjs/operators';
 import { Repository } from 'typeorm';
+import ProductCategory from '@modules/server.common/entities/ProductsCategory';
 
 @injectable()
 @routerName('products-category')
