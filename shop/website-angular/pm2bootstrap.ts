@@ -6,7 +6,7 @@ import { env } from './scripts/env';
 const MACHINE_NAME = process.env.KEYMETRICS_MACHINE_NAME;
 const PRIVATE_KEY = process.env.KEYMETRICS_SECRET_KEY;
 const PUBLIC_KEY = process.env.KEYMETRICS_PUBLIC_KEY;
-const appName = process.env.PM2_APP_NAME || 'EverAdmin';
+const appName = process.env.PM2_APP_NAME || 'EverShopWeb';
 const instances = env.WEB_CONCURRENCY;
 const maxMemory = env.WEB_MEMORY;
 const port = env.PORT;
