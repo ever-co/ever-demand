@@ -93,12 +93,12 @@ writeFile(`./src/environments/${envFileDest}`, envFileContent, function(err) {
 	}
 });
 
-writeFile(`./src/environments/${envFileDestOther}`, '', function(err) {
+writeFile(`./src/environments/${envFileDestOther}`, envFileContent, function(
+	err
+) {
 	if (err) {
 		console.log(err);
 	} else {
-		console.log(
-			`Generated Second Empty Angular environment file: ${envFileDestOther}`
-		);
+		console.log(`Generated Angular environment file: ${envFileDestOther}`);
 	}
 });
