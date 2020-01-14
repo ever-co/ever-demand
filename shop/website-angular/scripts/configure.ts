@@ -97,7 +97,7 @@ export const environment: Environment = {
   GQL_ENDPOINT: '${env.GQL_ENDPOINT}',
   GQL_SUBSCRIPTIONS_ENDPOINT: '${env.GQL_SUBSCRIPTIONS_ENDPOINT}',
   AUTH_LOGO: '${env.AUTH_LOGO}',
-
+  NO_INTERNET_LOGO: '${env.NO_INTERNET_LOGO}',
   GOOGLE_MAPS_API_KEY: '${env.GOOGLE_MAPS_API_KEY}',
 
   DELIVERY_TIME_MIN: ${env.DELIVERY_TIME_MIN},
@@ -136,24 +136,22 @@ const envFileDestOther: string = !isProd
 	? 'environment.prod.ts'
 	: 'environment.ts';
 
-writeFile(
-	`./src/environments/${envFileDest}`,
-	isProd ? envFileContentProd : envFileContentDev,
-	function(err) {
-		if (err) {
-			console.log(err);
-		} else {
-			console.log(`Generated Angular environment file: ${envFileDest}`);
-		}
-	}
-);
-
-writeFile(`./src/environments/${envFileDestOther}`, '', function(err) {
+writeFile(`./src/environments/${envFileDest}`, envFileContentProd, function(
+	err
+) {
 	if (err) {
 		console.log(err);
 	} else {
-		console.log(
-			`Generated Second Empty Angular environment file: ${envFileDest}`
-		);
+		console.log(`Generated Angular environment file: ${envFileDest}`);
+	}
+});
+
+writeFile(`./src/environments/${envFileDestOther}`, envFileContentDev, function(
+	err
+) {
+	if (err) {
+		console.log(err);
+	} else {
+		console.log(`Generated Angular environment file: ${envFileDestOther}`);
 	}
 });
