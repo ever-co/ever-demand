@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, ExtraOptions } from '@angular/router';
 import { PagesModuleGuard } from 'pages/pages.module.guard';
 import { InfoModuleGuard } from './info/info.module.guard';
 
@@ -21,8 +21,13 @@ const routes: Routes = [
 	}
 ];
 
+const config: ExtraOptions = {
+	useHash: true,
+	enableTracing: true
+};
+
 @NgModule({
-	imports: [RouterModule.forRoot(routes)],
+	imports: [RouterModule.forRoot(routes, config)],
 	exports: [RouterModule],
 	providers: [PagesModuleGuard, InfoModuleGuard]
 })
