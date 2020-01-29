@@ -140,7 +140,8 @@ const APP_PROVIDERS = [
 		FormsModule,
 		HttpLinkModule,
 		RouterModule.forRoot(ROUTES, {
-			useHash: Boolean(history.pushState) === false,
+			useHash: true,
+			enableTracing: true,
 			preloadingStrategy: PreloadAllModules
 		}),
 		MatIconModule,
