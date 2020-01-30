@@ -6,7 +6,7 @@ import { map, share } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class CarriersOrdersService {
+export class Go-Get OrdersService {
 	constructor(private readonly apollo: Apollo) {}
 
 	getCarrierOrdersHistory(
