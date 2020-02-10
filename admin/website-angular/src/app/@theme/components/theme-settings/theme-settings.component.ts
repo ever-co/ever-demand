@@ -12,7 +12,13 @@ export class ThemeSettingsComponent {
 	layouts = [];
 	sidebars = [];
 
-	languages = { en: 'English', bg: 'Bulgarian', he: 'Hebrew', ru: 'Russian' };
+	languages = {
+		en: 'English',
+		bg: 'Bulgarian',
+		he: 'Hebrew',
+		ru: 'Russian',
+		es: 'Spanish'
+	};
 
 	themes = [
 		{
@@ -48,11 +54,11 @@ export class ThemeSettingsComponent {
 		public translate: TranslateService,
 		private themeService: NbThemeService
 	) {
-		translate.addLangs(['en', 'bg', 'he', 'ru']);
+		translate.addLangs(['en', 'bg', 'he', 'ru', 'es']);
 		translate.setDefaultLang('en');
 
 		const browserLang = translate.getBrowserLang();
-		translate.use(browserLang.match(/en|bg|he|ru/) ? browserLang : 'en');
+		translate.use(browserLang.match(/en|bg|he|ru|es/) ? browserLang : 'en');
 
 		this.stateService
 			.getLayoutStates()

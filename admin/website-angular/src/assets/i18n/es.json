@@ -1,0 +1,83 @@
+{
+	"DASHBOARD_VIEW": {
+		"TOTAL_CUSTOMER": "Clientes totales",
+		"TOTAL_QUANTITY_OF_EXISTING_CUSTOMERS": "Cantidad total de clientes existentes",
+		"TOTAL_COMPLETED_ORDERS": "Total de pedidos completados",
+		"TOTAL_QUANTITY_OF_COMPLETED_ORDERS": "Cantidad total de pedidos completados",
+		"TOTAL_REVENUE": "Los ingresos totales",
+		"TOTAL_SUM_SUM_OF_ALL_COMPLETED_ORDERS": "Suma total de todos los pedidos completados",
+		"TODAYs_CUSTOMERS": "Clientes de hoy",
+		"TODAYs_QUANTITY_OF_REGISTERED_CUSTOMERS": "Cantidad actual de clientes registrados",
+		"TODAYs_COMPLETED_ORDERS": "Los pedidos completados de hoy",
+		"TODAYs_QUANTITY_OF_NEW_COMPLETED_ORDERS": "Cantidad actual de nuevos pedidos completados",
+		"TODAYs_REVENUE": "Ingresos de hoy",
+		"TODAYs_SUM_OF_COMPLETED_ORDERS": "Suma de hoy de pedidos completados",
+		"TILL_AVERAGE": "hasta la media",
+		"BETTER_THAN_AVERAGE": "mejor que el promedio",
+		"SELECT_COMPONENT": {
+			"STORES": "Historias",
+			"CONTACT_DETAILS": "Detalles de contacto",
+			"PHONE": "Teléfono",
+			"EMAIL": "Email",
+			"ORDERS_FORWARDING_WITH": "Reenvío de órdenes con",
+			"SELECT_STORE": "Seleccionar tienda"
+		},
+		"CHARTS": {
+			"ORDERS": "Pedidos",
+			"PROFIT": "Lucro",
+			"TOTAL_ORDERS": "Pedidos totales",
+			"TOTAL_COMPLETED_ORDERS": "Total de pedidos completados",
+			"TOTAL_CANCELLED_ORDERS": "Total de pedidos cancelados",
+			"TOTAL_REVENUE_ALL_ORDERS": "Ingresos totales de todos los pedidos",
+			"TOTAL_REVENUE_COMPLETED_ORDERS": "Ingresos totales de pedidos completados",
+			"TOTAL_LOST_REVENUE_CANCELLED_ORDERS": "Total de ingresos perdidos de pedidos cancelados",
+			"PAYMENT": "Pago",
+			"CANCELED": "Cancelado",
+			"ALL_ORDERS": "Todas las órdenes",
+			"TODAY": "Hoy",
+			"LAST_WEEK": "La semana pasada",
+			"LAST_MONTH": "El mes pasado",
+			"CURRENT_YEAR": "Año corriente",
+			"YEARS": "Por año",
+			"CUSTOM_PERIOD": "Periodo personalizado",
+			"SELECT_PERIOD": "Seleccionar periodo",
+			"FROM": "Desde",
+			"TO": "A",
+			"SELECT": "Seleccione",
+			"LABELS": {
+				"WEEK": "Semana",
+				"WEEKDAYS": {
+					"MON": "Lun",
+					"TUE": "mar",
+					"WED": "Mie",
+					"THU": "Jue",
+					"FRI": "Vie",
+					"SAT": "Se sentó",
+					"SUN": "Dom"
+				},
+				"MONTHS": {
+					"JAN": "Ene",
+					"FEB": "Feb",
+					"MAR": "mar",
+					"APR": "Abr",
+					"MAY": "Mayo",
+					"JUN": "Jun",
+					"JUL": "Jul",
+					"AUG": "Aug",
+					"SEP": "Sep",
+					"OCT": "Oct",
+					"NOV": "Nov",
+					"DEC": "Dic"
+				}
+			}
+		}
+	},
+	"LANGUAGE": "Idioma",
+	"BROWSE": "Vistazo",
+	"ENGLISH": "Inglés",
+	"HEBREW": "Hebreo",
+	"RUSSIAN": "Ruso",
+	"BULGARIAN": "Búlgaro",
+	"SPANISH": "Español",
+	"SELECT": "Seleccione"
+}
