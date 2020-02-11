@@ -31,6 +31,21 @@ export class AppComponent {
 		private device: Device
 	) {
 		this._initializeApp();
+
+		_translateService.addLangs([
+			'en-US',
+			'bg-BG',
+			'he-IL',
+			'ru-RU',
+			'es-ES'
+		]);
+		_translateService.setDefaultLang('en-US');
+		const browserLang = _translateService.getBrowserLang();
+		_translateService.use(
+			browserLang.match(/en-US|bg-BG|he-HE|ru-RU|es-ES/)
+				? browserLang
+				: 'en-US'
+		);
 	}
 
 	async getChannelId(): Promise<string | null> {
@@ -100,7 +115,7 @@ export class AppComponent {
 			await this._registerDeviceDevMode();
 		}
 
-		await this._watchDeviceUpdates();
+		// await this._watchDeviceUpdates();
 	}
 
 	private async _registerDeviceDevMode() {
@@ -114,9 +129,9 @@ export class AppComponent {
 		this.store.deviceId = device.id;
 	}
 
-	private async _watchDeviceUpdates() {
-		this._translateService.onLangChange.subscribe(async ({ lang }) => {
-			await this.deviceRouter.updateLanguage(this.store.deviceId, lang);
-		});
-	}
+	// private async _watchDeviceUpdates() {
+	// 	this._translateService.onLangChange.subscribe(async ({ lang }) => {
+	// 		await this.deviceRouter.updateLanguage(this.store.deviceId, lang);
+	// 	});
+	// }
 }

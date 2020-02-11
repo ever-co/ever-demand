@@ -1,0 +1,16 @@
+{
+	"LANGUAGE": {
+		"ID": "en-US test",
+		"NAME": "English test"
+	},
+	"LANGUAGE_VIEW": {
+		"TITLE": "Seleccione el idioma"
+	},
+	"BROWSE": "Vistazo",
+	"ENGLISH": "Inglés",
+	"HEBREW": "Hebreo",
+	"RUSSIAN": "Ruso",
+	"BULGARIAN": "Búlgaro",
+	"SPANISH": "Español",
+	"SELECT": "Seleccione"
+}
