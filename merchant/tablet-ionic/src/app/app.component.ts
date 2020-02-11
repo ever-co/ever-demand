@@ -53,7 +53,7 @@ export class AppComponent {
 			const browserLang = this.translate.getBrowserLang();
 
 			this.translate.use(
-				browserLang.match(/en|bg|he|ru/) ? browserLang : 'en'
+				browserLang.match(/en|bg|he|ru|es/) ? browserLang : 'en'
 			);
 
 			this.store.language = this.translate.currentLang;
