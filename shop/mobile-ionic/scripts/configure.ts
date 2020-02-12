@@ -57,6 +57,8 @@ export const environment: Environment = {
   MIXPANEL_API_KEY: '${env.MIXPANEL_API_KEY}',
 
   DEFAULT_LANG: '${env.DEFAULT_LANG}',
+
+  DEFAULT_LANGUAGE: '${env.DEFAULT_LANGUAGE}',
   DEFAULT_LOCALE: '${env.DEFAULT_LOCALE}',
 
   DELIVERY_TIME_MIN: ${env.DELIVERY_TIME_MIN},
