@@ -32,6 +32,7 @@ export interface Environment {
 
 	CURRENCY_SYMBOL: string;
 
+	DEFAULT_LANGUAGE: string;
 	// For maintenance micro service
 	SETTINGS_APP_TYPE?: string;
 	SETTINGS_MAINTENANCE_API_URL?: string;

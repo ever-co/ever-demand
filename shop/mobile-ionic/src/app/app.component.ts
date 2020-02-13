@@ -18,6 +18,8 @@ import { environment } from 'environment';
 	templateUrl: 'app.component.html'
 })
 export class AppComponent {
+	defaultLanguage = '';
+
 	constructor(
 		public readonly platform: Platform,
 		private readonly store: Store,
@@ -32,6 +34,8 @@ export class AppComponent {
 	) {
 		this._initializeApp();
 
+		this.defaultLanguage = environment['DEFAULT_LANGUAGE'];
+
 		_translateService.addLangs([
 			'en-US',
 			'bg-BG',
@@ -41,11 +45,16 @@ export class AppComponent {
 		]);
 		_translateService.setDefaultLang('en-US');
 		const browserLang = _translateService.getBrowserLang();
-		_translateService.use(
-			browserLang.match(/en-US|bg-BG|he-HE|ru-RU|es-ES/)
-				? browserLang
-				: 'en-US'
-		);
+
+		if (this.defaultLanguage) {
+			_translateService.use(this.defaultLanguage);
+		} else {
+			_translateService.use(
+				browserLang.match(/en-US|bg-BG|he-HE|ru-RU|es-ES/)
+					? browserLang
+					: 'en-US'
+			);
+		}
 	}
 
 	async getChannelId(): Promise<string | null> {

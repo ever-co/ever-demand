@@ -21,6 +21,8 @@ import { Router } from '@angular/router';
 	templateUrl: 'app.component.html'
 })
 export class AppComponent implements OnInit {
+	defaultLanguage = '';
+
 	constructor(
 		public platform: Platform,
 		public statusBar: StatusBar,
@@ -109,6 +111,11 @@ export class AppComponent implements OnInit {
 	}
 
 	private async _setupLangTranslator() {
+		this.defaultLanguage = environment['DEFAULT_LANGUAGE'];
+
+		console.log('this.defaultLanguage');
+		console.log(this.defaultLanguage);
+
 		const lang = (localStorage.getItem('_language') as ILanguage) || null;
 		const langs = { he: 'he', ru: 'ru', bg: 'bg', en: 'en', es: 'es' };
 		// This 4 lines is here because of bug => without this lines, lang translation doesn't work.
@@ -127,10 +134,14 @@ export class AppComponent implements OnInit {
 			const browserLang = this.platform.is('cordova')
 				? (await this.globalization.getPreferredLanguage()).value
 				: this._langTranslator.getBrowserLang();
-			if (langs[browserLang]) {
-				this._langTranslator.use(langs[browserLang]);
+			if (this.defaultLanguage) {
+				this._langTranslator.use(this.defaultLanguage);
 			} else {
-				this._langTranslator.use(langs.en);
+				if (langs[browserLang]) {
+					this._langTranslator.use(langs[browserLang]);
+				} else {
+					this._langTranslator.use(langs.en);
+				}
 			}
 		}
 	}

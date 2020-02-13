@@ -53,6 +53,8 @@ export const environment: Environment = {
   DEFAULT_LATITUDE: ${env.DEFAULT_LATITUDE},
   DEFAULT_LONGITUDE: ${env.DEFAULT_LONGITUDE},
 
+  DEFAULT_LANGUAGE: ${env.DEFAULT_LANGUAGE},
+
   // For maintenance micro service
   SETTINGS_APP_TYPE: '${env.SETTINGS_APP_TYPE}',
   SETTINGS_MAINTENANCE_API_URL: '${env.SETTINGS_MAINTENANCE_API_URL}'
