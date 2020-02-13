@@ -78,7 +78,7 @@ export const env: Env = cleanEnv(
 		DEFAULT_LATITUDE: num({ default: 42.6459136 }),
 		DEFAULT_LONGITUDE: num({ default: 23.3932736 }),
 
-		DEFAULT_LANGUAGE: str({ default: 'es' }),
+		DEFAULT_LANGUAGE: str({ default: 'en' }),
 
 		// Graphql endpoints for apollo services
 		GQL_ENDPOINT: str({ default: 'http://localhost:5555/graphql' }),
