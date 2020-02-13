@@ -10,6 +10,8 @@ export type Env = Readonly<{
 	DEFAULT_LATITUDE: number;
 	DEFAULT_LONGITUDE: number;
 
+	DEFAULT_LANGUAGE: string;
+
 	SERVICES_ENDPOINT: string;
 	HTTPS_SERVICES_ENDPOINT: string;
 	GQL_ENDPOINT: string;
@@ -37,6 +39,8 @@ export const env: Env = cleanEnv(
 
 		DEFAULT_LATITUDE: num({ default: 42.6459136 }),
 		DEFAULT_LONGITUDE: num({ default: 23.3332736 }),
+
+		DEFAULT_LANGUAGE: str({ default: 'es' }),
 
 		SERVICES_ENDPOINT: str({ default: 'http://localhost:5500' }),
 		HTTPS_SERVICES_ENDPOINT: str({ default: 'https://localhost:5501' }),
