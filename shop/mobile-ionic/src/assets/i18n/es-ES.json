@@ -1,17 +1,11 @@
-
 {
-	"LANGUAGE_VIEW": {
-		"TITLE": "Seleccione el idioma"
-	},
 	"BROWSE": "Vistazo",
 	"ENGLISH": "Inglés",
 	"HEBREW": "Hebreo",
 	"RUSSIAN": "Ruso",
 	"BULGARIAN": "Búlgaro",
 	"SPANISH": "Español",
-	"SELECT": "Seleccione"
-}
-{
+	"SELECT": "Seleccione",
 	"LANGUAGE": {
 		"ID": "es-ES",
 		"NAME": "Español"
