@@ -1,69 +1,116 @@
 {
+	"COMMON": {
+		"SAVE": "Guardar",
+		"CANCEL": "Cancelar",
+		"USA": "EEUU",
+		"ISRAEL": "Israel",
+		"BULGARIA": "Bulgaria",
+		"ESPAÑA": "España"
+	},
+	"ORDER_VIEW": {
+		"ORDER_HEADER_INFO": {
+			"ORDER": "Pedido",
+			"MANAGE_ORDER": "Gestionar Pedido",
+			"TOTAL": "Total"
+		},
+		"ORDER_PRODUCT_INFO": {
+			"ORDER_PRODUCTS": "Productos en el Pedido",
+			"ADD_PRODUCTS": "Agregar Productos",
+			"REMOVE_PRODUCTS": "Quitar Productos",
+			"CANCEL_ORDER": "Cancelar Pedido",
+			"THE_ORDER_IS_CANCEL": "Pedido Cancelado",
+			"THE_ORDER_IS_GIVEN_TO_CARRIER": "Pedido entregado al repartidor",
+			"THE_ORDER_IS_DELIVERED": "Pedido entregado",
+			"ADD_PRODUCTS_MODAL": "Agregar Productos",
+			"ADD": "Agregar",
+			"SUCCESS_TOAST": "Productos agregados al pedido",
+			"ERROR_TOAST": "Error, algo ha salido mal.",
+			"SMART_TABLE": {
+				"NAME": "Nombre",
+				"QTY": "Cantidad",
+				"PRICE": "Precio",
+				"IMAGE": "Imagen"
+			}
+		},
+		"ORDER_SIDEBAR": {
+			"CONTACT_DETAILS": "Detalles de contacto",
+			"WAREHOUSE": "Sucursal",
+			"CUSTOMER": "Cliente",
+			"CARRIER": "Reparto",
+			"QTY": "Cantidad"
+		},
+		"LOCATION_INFO": {
+			"MAP": "Mapa",
+			"DELIVERY_DISTANCE": "Distancia de entrega:"
+		}
+	},
 	"DASHBOARD_VIEW": {
-		"TOTAL_CUSTOMER": "Clientes totales",
+		"TOTAL_CUSTOMER": "Total de Clientes",
 		"TOTAL_QUANTITY_OF_EXISTING_CUSTOMERS": "Cantidad total de clientes existentes",
 		"TOTAL_COMPLETED_ORDERS": "Total de pedidos completados",
 		"TOTAL_QUANTITY_OF_COMPLETED_ORDERS": "Cantidad total de pedidos completados",
-		"TOTAL_REVENUE": "Los ingresos totales",
-		"TOTAL_SUM_SUM_OF_ALL_COMPLETED_ORDERS": "Suma total de todos los pedidos completados",
+		"TOTAL_REVENUE": "Total de Facturación",
+		"TOTAL_SUM_SUM_OF_ALL_COMPLETED_ORDERS": "Suma total de todos los pedidos completados completados",
 		"TODAYs_CUSTOMERS": "Clientes de hoy",
-		"TODAYs_QUANTITY_OF_REGISTERED_CUSTOMERS": "Cantidad actual de clientes registrados",
-		"TODAYs_COMPLETED_ORDERS": "Los pedidos completados de hoy",
-		"TODAYs_QUANTITY_OF_NEW_COMPLETED_ORDERS": "Cantidad actual de nuevos pedidos completados",
-		"TODAYs_REVENUE": "Ingresos de hoy",
-		"TODAYs_SUM_OF_COMPLETED_ORDERS": "Suma de hoy de pedidos completados",
-		"TILL_AVERAGE": "hasta la media",
-		"BETTER_THAN_AVERAGE": "mejor que el promedio",
+		"TODAYs_QUANTITY_OF_REGISTERED_CUSTOMERS": "Cantidad de clientes registrados hoy",
+		"TODAYs_COMPLETED_ORDERS": "Pedidos completados hoy",
+		"TODAYs_QUANTITY_OF_NEW_COMPLETED_ORDERS": "Cantidad de nuevos pedidos completados hoy",
+		"TODAYs_REVENUE": "Facturación de hoy",
+		"TODAYs_SUM_OF_COMPLETED_ORDERS": "Suma de pedidos completados hoy",
+		"TILL_AVERAGE": "promedio",
+		"BETTER_THAN_AVERAGE": "mejor que promedio",
 		"SELECT_COMPONENT": {
-			"STORES": "Historias",
-			"CONTACT_DETAILS": "Detalles de contacto",
+			"STORES": "Sucursales",
+			"CONTACT_DETAILS": "Detalles de Contacto",
 			"PHONE": "Teléfono",
-			"EMAIL": "Email",
-			"ORDERS_FORWARDING_WITH": "Reenvío de órdenes con",
-			"SELECT_STORE": "Seleccionar tienda"
+			"EMAIL": "Correo",
+			"ORDERS_FORWARDING_WITH": "Pedidos Repartidos Por",
+			"SELECT_STORE": "Seleccionar Sucursal"
 		},
 		"CHARTS": {
 			"ORDERS": "Pedidos",
-			"PROFIT": "Lucro",
-			"TOTAL_ORDERS": "Pedidos totales",
-			"TOTAL_COMPLETED_ORDERS": "Total de pedidos completados",
-			"TOTAL_CANCELLED_ORDERS": "Total de pedidos cancelados",
-			"TOTAL_REVENUE_ALL_ORDERS": "Ingresos totales de todos los pedidos",
-			"TOTAL_REVENUE_COMPLETED_ORDERS": "Ingresos totales de pedidos completados",
-			"TOTAL_LOST_REVENUE_CANCELLED_ORDERS": "Total de ingresos perdidos de pedidos cancelados",
+			"PROFIT": "Renta",
+
+			"TOTAL_ORDERS": "Pedidos",
+			"TOTAL_COMPLETED_ORDERS": "Pedidos completados",
+			"TOTAL_CANCELLED_ORDERS": "Pedidos cancelados",
+			"TOTAL_REVENUE_ALL_ORDERS": "Facturación de pedidos completados y cancelados",
+			"TOTAL_REVENUE_COMPLETED_ORDERS": "Facturación de pedidos completados",
+			"TOTAL_LOST_REVENUE_CANCELLED_ORDERS": "Facturación perdida de pedidos cancelados",
+
 			"PAYMENT": "Pago",
 			"CANCELED": "Cancelado",
-			"ALL_ORDERS": "Todas las órdenes",
+			"ALL_ORDERS": "Todos los Pedidos",
 			"TODAY": "Hoy",
-			"LAST_WEEK": "La semana pasada",
-			"LAST_MONTH": "El mes pasado",
-			"CURRENT_YEAR": "Año corriente",
-			"YEARS": "Por año",
-			"CUSTOM_PERIOD": "Periodo personalizado",
-			"SELECT_PERIOD": "Seleccionar periodo",
+			"LAST_WEEK": "Ultima Semana",
+			"LAST_MONTH": "Ultimo Mes",
+			"CURRENT_YEAR": "Año Actual",
+			"YEARS": "Por Año",
+			"CUSTOM_PERIOD": "Período Personalizado",
+			"SELECT_PERIOD": "Seleccionar Período",
 			"FROM": "Desde",
-			"TO": "A",
-			"SELECT": "Seleccione",
+			"TO": "Hasta",
+			"SELECT": "Seleccionar",
 			"LABELS": {
 				"WEEK": "Semana",
 				"WEEKDAYS": {
 					"MON": "Lun",
-					"TUE": "mar",
+					"TUE": "Mar",
 					"WED": "Mie",
 					"THU": "Jue",
 					"FRI": "Vie",
-					"SAT": "Se sentó",
+					"SAT": "Sab",
 					"SUN": "Dom"
 				},
 				"MONTHS": {
 					"JAN": "Ene",
 					"FEB": "Feb",
-					"MAR": "mar",
+					"MAR": "Mar",
 					"APR": "Abr",
-					"MAY": "Mayo",
+					"MAY": "May",
 					"JUN": "Jun",
 					"JUL": "Jul",
-					"AUG": "Aug",
+					"AUG": "Ago",
 					"SEP": "Sep",
 					"OCT": "Oct",
 					"NOV": "Nov",
@@ -72,12 +119,1014 @@
 			}
 		}
 	},
+	"HEADER_VIEW": {
+		"ADMIN": "Admin",
+		"EVER": "Ever",
+		"PROFILE": "Perfil",
+		"LOG_OUT": "Salir"
+	},
+	"FOOTER_VIEW": {
+		"COPY_RIGHT": "Copyright © 2016-presente",
+		"ALL_RIGHTS_RESERVED": "Todos los derechos reservados"
+	},
+	"PROFILE_VIEW": {
+		"PROFILE_PAGE": "Página de Perfil",
+		"BASIC_INFO": "Información Básica",
+		"ACCOUNT": "Cuenta",
+		"USERNAME": "Usuario",
+		"ERROR": "Error",
+		"EMAIL": "Correo",
+		"FIRST_NAME": "Nombre",
+		"FIRST_NAME_OPTIONAL": "Nombre (opcional)",
+		"LAST_NAME": "Apellido (opcional)",
+		"PICTURE_URL": "Enlace de la Imágen (opcional)",
+		"BROWSE": "Buscar",
+		"REMOVE": "Eliminar",
+		"SAVE": "Guardar",
+		"OLD_PASSWORD": "Clave actual",
+		"NEW_PASSWORD": "Clave nueva",
+		"REPEAT_NEW_PASSWORD": "Repetir clave nueva",
+		"INVALID_EMAIL_ADDRESS": "Correo inválido",
+		"INVALID_URL": "Enlace inválido",
+		"NAME_MUST_CONTAIN_ONLY_LETTERS": "El nombre debe tener sólo letras",
+		"PASSWORDS_DO_NOT_MATCH": "Las claves no coinciden",
+		"SUCCESSFULLY_CHANGE_PASSWORD": "Cambio de clave exitoso"
+	},
+	"PRODUCTS_VIEW": {
+		"DELETE": "ELIMINAR",
+		"CREATE": "CREAR",
+		"EDIT_VIEW": {
+			"EDIT_PRODUCT": "Modificar Producto",
+			"BASIC_INFO": "Información Básica",
+			"SAVE": "Guardar"
+		}
+	},
+	"FAKE_DATA": {
+		"FAKE_DATA_GENERATOR": "Generador de datos aleatorios",
+		"GENERATE_ALL": "Generar Todo",
+		"CREATE_100_USERS": "Crear 100 clientes",
+		"CREATE_100_CARRIERS": "Crear 100 repartos",
+		"CREATE_100_WAREHOUSES": "Crear 100 sucursales",
+		"SETUP": "INICIALIZAR",
+		"GENERATE_INITIAL_DATA": "Generar Datos Iniciales",
+		"CREATE_INVITE": "CREAR INVITADO",
+		"HARDCODED_DATA": "Datos fijos",
+		"CLEAR_ALL": "LIMPIAR TODO",
+		"GENERATE_HARDCODED_ONLY": "Genear Sólo Datos Fijos",
+		"INCLUDED_HARDCODED_DATA": "Incluir Datos Fijos",
+		"CREATE_1st_INVITE": "Crear 1er invitado",
+		"CREATE_2st_INVITE": "Crear 2do invitado",
+		"CREATE_3st_INVITE": "Crear 3er invitado",
+		"CREATE_4st_INVITE": "Crear 4to invitado",
+		"CREATE_CUSTOMER": "Crear Cliente",
+		"CREATE_USER": "CREAR USUARIO",
+		"CREATE_1st_USER": "Crear 1er usuario (usando 1er invitado)",
+		"CREATE_CARRIER": "CREAR REPARTO",
+		"CREATE_1st_CARRIER": "Crear 1er reparto",
+		"CREATE_2nd_CARRIER": "Crear 2do reparto",
+		"CREATE_3rd_CARRIER": "Crear 3er reparto",
+		"CREATE_PRODUCT": "CREAR PRODUCTO",
+		"CREATE_PEPERONI&MUSHROOM_PIZZA_PRODUCT": "Crear producto pizza de Peperoni & Hongos",
+		"CREATE_SUSHI&CAVIAR_PRODUCT": "Crear producto Sushi & Caviar",
+		"CREATE_SUSHI_MIX_PRODUCT": "Crear porducto Sushi Mix",
+		"CREATE_PASTA_PRODUCT": "Crear producto pasta",
+		"CREATE_SUSHI_BOX_PRODUCT": "Crear producto caja de Sushi",
+		"CREATE_PEPERONI&TOMATO_PIZZA_PRODUCT": "Crear producto pizza de Peperoni & Tomate",
+		"CREATE_WAREHOUSE": "CREAR SUCURSAL",
+		"CREATE_1st_WAREHOUSE": "Crear 1er sucursal",
+		"CREATE_2nd_WAREHOUSE": "Crear 2da sucursal",
+		"CREATE_3rd_WAREHOUSE": "Crear 3er sucursal",
+		"CREATE_WAREHOUSE_PRODUCT": "CREAR PRODUCTO DE SUCURSAL",
+		"CREATE_1st_WAREHOUSE_PRODUCTS(using_product_number_1_2_3_4_5_and_6)": "Crear 1er producto de sucursal (usando número de producto 1, 2, 3, 4, 5 y 6)",
+		"CREATE_3rd_WAREHOUSE_PRODUCTS(using_1st_product)": "Crear 3er producto de sucursal (usando 1er producto)",
+		"CREATE_2nd_WAREHOUSE_PRODUCTS(using_product_number_1_2_and_3": "Crear 2do producto de sucursal (usando número de producto 1, 2, and 3",
+		"UPDATE_WAREHOUSE_GEO_LOCATION": "ACTUALIZAR UBICACIÓN EN EL MAPA DE SUCURSAL",
+		"UPDATE_1ST_WAREHOUSE_GEO_LOCATION": "Actualizar ubicación en el mapa de 1er sucursal",
+		"CREATE_1RD_ORDER(using_1st_warehouse_1st_user_and_1st_product)": "Crear 1er pedido (usando 1er sucursal, 1er usuario, 1er producto)",
+		"CREATE_2ND_ORDER(using_1st_warehouse_1st_user_and_2nd_product)": "Crear 2do pedido (usando 1er sucursal, 1er usuario y 2do producto)",
+		"CONFIRM_ORDER": "CONFIRMAR PEDIDO",
+		"CREATE_ORDER": "CREAR PEDIDO",
+		"CONFIMR_1st_ORDER": "Confirmar 1er pedido",
+		"CONFIMR_2nd_ORDER": "Confirmar 2do pedido",
+		"SETUP_MERCHANTS": {
+			"SETUP_MERCHANTS": "Inicializar restaurantes",
+			"PREV": "ANT",
+			"NEXT": "SIG",
+			"ADD": "Agregar",
+			"BACK": "Atrás",
+			"SAVE": "Guardar",
+			"SELECT": "Seleccionar",
+			"CREATE": "Crear",
+			"HOW_TO_SET_UP": {
+				"HOW_TO_SET_UP": "Cómo inicializar"
+			},
+			"STEPPER": {
+				"ACCOUNT": "Cuenta",
+				"BASIC_INFO": "Información básica",
+				"CONTACT_INFO": "Información de Contacto",
+				"LOCATION": "Ubicación",
+				"PAYMENTS": "Pagos",
+				"MANUFACTURING": "Elaboración",
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "Configuraciones de Reparto & Retiro",
+				"ORDERS_SETTINGS": "Configuraciones de Pedidos",
+				"PRODUCT_CATEGORIES": "Categorías de Producto",
+				"PRODUCTS": "Productos"
+			},
+			"ACCOUNT": {
+				"ACCOUNT": "Cuenta",
+				"EMAIL_ADDRESS": "Correo",
+				"EMAIL": "Correo",
+				"PASSWORD": "Clave",
+				"REPEAT_PASSWORD": "Repetir clave",
+				"EMAIL_IS_REQUIRED": "Correo requerido",
+				"INVALID_EMAIL_FORMAT": "Formato de correo inválido",
+				"USERNAME": "Usuario",
+				"USERNAME_IS_REQUIRED": "Usuario requerido",
+				"USERNAME_MUST_BE_AT_LEAST_3_CHARACTERS": "El usuario debe tener al menos 3 caractéres",
+				"PASSWORD_IS_REQUIRED": "Clave requerida",
+				"PASSWORD_MUST_BE_AT_LEAST_4_CHARACTERS": "La clave debe tener al menos 4 caractéres",
+				"REPEAT_PASSWORD_IS_REQUIRED": "Repetir la clave requerido",
+				"PASSWORDS_DO_NOT_MATCH": "Claves no coinciden"
+			},
+			"BASIC_INFO": {
+				"BASIC_INFO": "Información básica",
+				"NAME": "Nombre",
+				"NAME_IS_REQUIRED": "Nombre requerido",
+				"NAME_MUST_BE_AT_LEAST_4_CHARACTERS": "El nombre debe tener al menos 4 caractéres",
+				"PHOTO": "Foto",
+				"ENTER_A_VALID_LOGO_URL_OR_BROWSE_FROM_A_DEVICE": "Ingrese un enlace del logo válido o busque en el dispositivo",
+				"REMOVE": "Eliminar",
+				"PHOTO_OPTIONAL": "Foto (opcional)",
+				"BARCODE_DATA": "Código de barras",
+				"BARCODE_DATA_IS_REQUIRED": "Código de barras requerido"
+			},
+			"CONTACT_INFO": {
+				"CONTACT_INFO": "Información de contacto",
+				"CONTACT_PHONE": "Teléfono de contacto",
+				"INVALID_PHONE_NUMBER_FORMAT": "Formato de teléfono inválido",
+				"ORDER_FORWARDING_EMAIL": "Correo de reparto de pedido",
+				"ORDER_FORWARDING_PHONE": "Teléfono de reparto de pedido",
+				"ORDERS_EMAIL": "Correo de pedidos",
+				"ORDERS_EMAIL_IS_REQUIRED": "Correo de pedidos requerido",
+				"INVALID_EMAIL_FORMAT": "Formato de correo inválido",
+				"ORDERS_PHONE": "Teléfono de pedidos",
+				"ORDERS_PHONE_IS_REQUIRED": "Teléfono de pedidos es requerido"
+			},
+			"LOCATION": {
+				"LOCATION": "Ubicación"
+			},
+			"PAYMENTS": {
+				"PAYMENTS": "Pagos",
+				"ALLOW_ONLINE_PAYMENT": "¿Permitir pagos online?",
+				"STRIPE": {
+					"PAY_BUTTON_TEXT": "Texto de botón de pago",
+					"CURRENCY": "Moneda",
+					"PAY_BUTTON_TEXT_IS_REQUIRED": "Texto de botón de pago requerido",
+					"CHOOSE_CURRENCY_CODE": "Elegir código de moneda",
+					"CURRENCY_TEXT_IS_REQUIRED": "Código de moneda requerido",
+					"COMPANY_BRAND_LOGO": "Logo de la compañía",
+					"COMPANY_BRAND_LOGO_IS_REQUIRED": "Logo de la compañía requerido",
+					"INVALID_LOGO_URL": "Enlace del logo inválido",
+					"INVALID_LOGO": "Logo inválido",
+					"PUBLISHABLE_KEY": "Llave publicable",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "Llave publicable requerida",
+					"ALLOW_REMEMBER_ME": "Permitir recordarme?",
+					"REMOVE": "Eliminar"
+				},
+				"PAYPAL": {
+					"MODE": "Modo",
+					"CHOOSE_PAYPAL_MODE": "Elegir modo de PayPal",
+					"TYPE": "tipo",
+					"CURRENCY": "Moneda",
+					"CHOOSE_CURRENCY_CODE": "Elegir código de moneda",
+					"CURRENCY_TEXT_IS_REQUIRED": "Código de moneda requerido",
+					"PUBLISHABLE_KEY": "Llave publicable",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "Llave publicable requerida",
+					"SECRET_KEY": "Llave secreta",
+					"SECRET_KEY_IS_REQUIRED": "Llave secreta requerida",
+					"PAYMENT_DESCRIPTION": "Descripción del pago",
+					"PAYMENT_DESCRIPTION_IS_REQUIRED": "Descripción del pago requerida"
+				}
+			},
+			"MANUFACTURING": {
+				"MANUFACTURING": "Elaboración",
+				"PRODUCTS_MANUFACTURING": "Elaboración de Productos"
+			},
+			"DELIVERY_AND_TAKEAWAY_SETTINGS": {
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "Configuraciones de Reparto & Retiro",
+				"SELECT_FROM_SHARED_CARRIERS": "Seleccionar de repartos compartidos",
+				"ADD_YOUR_CARRIER": "Agregar tu reparto",
+				"EDIT_CARRIER": "Modificar reparto",
+				"CARRIER_REQUIRED": "Reparto requerido",
+				"PRODUCTS_DELIVERY_BY_DEFAULT": "Repartir (por defecto)",
+				"PRODUCTS_TAKEAWAY_BY_DEFAULT": "Retirar (por defecto)",
+				"USE_SELECTED_SHARED_CARRIERS": "Usar repartos compartidos seleccionados",
+				"ADD_YOUR_CARRIERS": "Agregar tus repartos"
+			},
+			"ORDERS_SETTINGS": {
+				"ORDERS_SETTINGS": "Configuraciones de pedido",
+				"ORDER_BARCODE_QR_CODE_TYPES": "Pedido del tipo código de barras/código QR"
+			},
+			"PRODUCT_CATEGORIES": {
+				"PRODUCT_CATEGORIES": "Categorías de producto",
+				"ADD_OWN_PRODUCT_CATEGORY": "Agregar categoría de producto propia"
+			},
+			"PRODUCTS": {
+				"PRODUCTS": "Productos",
+				"SELECT_FROM_PRODUCTS_CATALOG": "Seleccionar del catálogo de productos",
+				"CREATE_PRODUCT": "Crear producto",
+				"EDIT_PRODUCT": "Modificar producto",
+				"ADD_PRODUCT": "Agregar producto",
+				"CREATE_NEW_PRODUCT": "Crear nuevo producto"
+			}
+		}
+	},
+	"WAREHOUSE_MANAGE": {
+		"TITLE": "Gestionar Sucursal",
+		"MANAGE_STORE": "Gestionar Sucursal",
+		"SAVE": "Guardar",
+		"NAME": "Nombre",
+		"USERNAME": "Usuario",
+		"PASSWORD": "Clave",
+		"COUNTRY": "País",
+		"CITY": "Ciudad",
+		"POSTCODE": "Código Postal",
+		"IS_ACTIVE": "Está activo",
+		"PRODUCTS_MANUFACTURING": "Elaboración de Productos",
+		"CARRIER_REQUIRED": "Reparto requerido",
+		"RIGHT_NOW": "(ahora)",
+		"CARRIERS": "Repartos",
+		"ADDRESS": "Dirección",
+		"CARRIERS_SPECIFIC": "Usar sólo repartos específicos",
+		"VALIDATION": {
+			"NAME": "Nombre requerido",
+			"USERNAME": "Usuario requerido",
+			"PASSWORD": "Clave requerida",
+			"COUNTRY": "Country is required",
+			"CITY": "Ciudad requerida",
+			"STREET": "Calle requerida",
+			"HOUSE": "Número de puerta requerido",
+			"POSTCODE": "Código Postal requerido"
+		},
+		"WIZARD_TITLES": {
+			"DETAILS": "Detalles",
+			"ACCOUNT": "Cuenta",
+			"CONTACT_INFO": "Información de Contacto",
+			"LOCATION": "Ubicación",
+			"DELIVERY_ZONES": "Zonas de entrega"
+		}
+	},
+	"WAREHOUSES_VIEW": {
+		"TITLE": "Sucursales",
+		"DELETE_WAREHOUSES": "Eliminar Seleccionadas",
+		"DELETE": "ELIMINAR",
+		"CREATE": "CREAR",
+		"SMART_TABLE_COLUMNS": {
+			"IMAGE": "Imágen",
+			"NAME": "Nombre",
+			"EMAIL": "Correo",
+			"PHONE": "Teléfono",
+			"CITY": "Ciudad",
+			"ADDRESS": "Dirección",
+			"ORDERS_QTY": "Cantidad de pedidos",
+			"ORDERS": "Pedidos"
+		},
+		"INFO": {
+			"STORE_INFO": "Información de Sucursal",
+			"STORE_ID": "ID de Sucursal",
+			"STORE_NAME": "Nombre de Sucursal"
+		}
+	},
+	"WAREHOUSE_VIEW": {
+		"ORDER": {
+			"CONFIRM": "Confirmar",
+			"START_PROCESSING": "Empezar a Procesar",
+			"START_ALLOCATION": "Empezar Asignación",
+			"ALLOCATED": "Asignado",
+			"ALLOCATION_FAILS": "Asignación Fallida",
+			"START_PACKAGING": "Empezar a Embalar",
+			"PACKAGED": "Embalado",
+			"PACKAGING_FAILS": "Embalado Fallido",
+			"GIVEN_TO_CARRIER": "Entregado al Repartidor",
+			"GIVEN_TO_CUSTOMER": "Entregado al Cliente",
+			"ORDER": "Pedido",
+			"CANT_PROCESSING_WITHOUT_PRODUCTS": "No se puede procesar el pedido sin productos."
+		},
+		"MUTATION": {
+			"TITLE": "Registrar Nueva Sucursal",
+			"NAME": "Nombre",
+			"LOGO": "Logo",
+			"PHOTO": "Foto",
+			"IS_ACTIVE": "Está Activa",
+			"PRODUCTS_MANUFACTURING": "Elaboración de Productos",
+			"CARRIER_REQUIRED": "Reparto requerido",
+			"RIGHT_NOW": "Ahora mismo",
+			"ORDERS_PHONE": "Teléfono de pedidos",
+			"CONTACT_PHONE": "Teléfono de contacto",
+			"ORDERS_EMAIL": "Correo de pedidos",
+			"CONTACT_EMAIL": "Teléfono de contacto",
+			"FORWARD_ORDERS_WITH": "Repartir Pedidos Con",
+			"USERNAME": "Usuario",
+			"OLD_PASSWORD": "Clave actual",
+			"NEW_PASSWORD": "Clave nueva",
+			"CONFIRM_PASSWORD": "Repetir calve nueva",
+			"PASSWORDS_DO_NOT_MATCH": "Las claves no coinciden",
+			"PASSWORD": "Clave",
+			"COUNTRY": "País",
+			"USA": "EEUU",
+			"ISRAEL": "Israel",
+			"BULGARIA": "Bulgaria",
+			"ESPAÑA": "España",
+			"CITY": "Ciudad",
+			"ADDRESS": "Dirección",
+			"POSTCODE": "Código Postal",
+			"COORDINATES": "Coordenadas",
+			"AUTO_DETECT_COORDINATES": "Auto detectar coordenadas",
+			"CARRIERS": "Repartos",
+			"USE_ONLY_SPECIFIC_CARRIERS": "Usar sólo repartos específicos",
+			"ERRORS": {
+				"NAME_IS_REQUIRED": "Nombre de sucursal requerido",
+				"NAME_ATLEAST_3_CHARS": "El nombre debe tener al menos 3 caractéres",
+				"NAME_MORE_THAN_255_CHARS": "El nombre no puede tener más de 255 caractéres",
+				"LOGO_IS_REQUIRED": "Logo de sucursal requerido",
+				"INVALID_URL": "Ingresar un enlace del logo válido o subir desde el dispositivo",
+				"PHONE_CONTAINS_ONLY_DIGIT": "El teléfono sólo puede contener dígitos",
+				"INVALID_EMAIL": "Correo inválido",
+				"ORDERS_PHONE_IS_REQUIRED": "Teléfono del pedido requerido",
+				"CONTACT_PHONE_IS_REQUIRED": "Teléfono de contacto requerido",
+				"ORDERS_EMAIL_IS_REQUIRED": "Correo del pedido requerido",
+				"CONTACT_EMAIL_IS_REQUIRED": "Correo de contacto requerido",
+				"USERNAME_IS_REQUIRED": "Usuario requerido",
+				"PASSWORD_IS_REQUIRED": "Clave requerida",
+				"COORDINATES_ARE_REQUIRED": "Coordenadas requeridas",
+				"COUNTRY_IS_REQUIRED": "País requerido"
+			},
+			"WIZARD_TITLES": {
+				"BASIC_INFO": "Información básica",
+				"CONTACT_INFO": "Información de contacto",
+				"LOCATION": "Ubicación"
+			},
+			"CONTACT_INFO_TAB": {
+				"ORDER_FORWARDING_EMAIL": "Correo de reparto de pedidos",
+				"ORDER_FORWARDING_PHONE": "Teléfono de reparto de pedidos"
+			}
+		},
+		"NEW_PRODUCT": {
+			"SELECT_FROM_PRODUCTS_CATALOG": "Seleccionar del catálogo de productos",
+			"CREATE_NEW_PRODUCT": "Crear nuevo producto",
+			"HOW_TO_ADD": "Cómo agregar",
+			"ADD": "Agregar",
+			"SAVE": "Guardar",
+			"ADD_PRODUCTS_TO_STORE": "Agregar Productos a la Sucursal",
+			"NOTHING_FOUND": "Nada encontrado..."
+		},
+		"SELECT_PRODUCTS": {
+			"TITLE": "Título",
+			"DESCRIPTION": "Descripción",
+			"DETAILS": "Detalles",
+			"IMAGES": "Imágenes",
+			"CATEGORY": "Categoría"
+		},
+		"SAVE": {
+			"PRODUCT_NAME": "Nombre del Producto",
+			"PRICE": "Precio",
+			"COUNT": "Cantidad",
+			"DELIVERY": "Repartir",
+			"TAKEAWAY": "Retirar"
+		},
+		"PLACEHOLDER": {
+			"EXAMPLE": "Ejemplo: Lo de Pepe",
+			"IMAGE_URL": "Enlace a la imágen",
+			"HERE_GOES_A_SHORT_DESCRIPTION": "Aquí va una breve descripción",
+			"HERE_GOES_A_DETAILS_ABOUT_PRODUCT_(OPTION)": "Aquí van detalles del producto (opcional)",
+			"REMOVE_IMAGE": "Eliminar imágen"
+		},
+		"CREATE_ORDER_MODAL": {
+			"TITLE": {
+				"CREATE_ORDER": "Crear Pedido"
+			},
+			"WIZARD_FORM": {
+				"BUTTON_NEXT": "Siguiente",
+				"BUTTON_PREV": "Anterior",
+				"BUTTON_DONE": "Crear",
+				"STEP1": {
+					"TITLE": "Elegir Opción",
+					"SELECT_FROM_EXISTING": "Elegir Existente",
+					"ADD_NEW_CUSTOMER": "Agregar Nuevo Cliente"
+				},
+				"STEP2": {
+					"TITLE": {
+						"SELECT_CUSTOMER": "Seleccionar Cliente",
+						"SELECT_ADD": "Seleccionar/Agregar",
+						"ADD_NEW": "Agregar Nuevo"
+					},
+					"SMART_TABLE": {
+						"TITLES": {
+							"FULL_NAME": "Nombre",
+							"EMAIL": "Correo",
+							"PHONE": "Teléfono",
+							"ADDRESS": "Dirección"
+						}
+					}
+				},
+				"STEP3": {
+					"TITLE": "Crear Pedido"
+				}
+			}
+		},
+		"PRODUCTS_TAB": {
+			"PRODUCTS": "Productos",
+			"ADD_PRODUCTS": "Agregar Productos",
+			"DELETE": "Eliminar",
+			"IMAGE": "Imágen",
+			"TITLE": "Título",
+			"DESCRIPTION": "Descripción",
+			"DETAILS": "Detalles",
+			"CATEGORY": "Categoría",
+			"PRICE": "Precio",
+			"QUANTITY": "Cantidad",
+			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Presiona en la imágen del producto para incrementar su cantidad disponible"
+		},
+		"NEW_PRODUCT_TYPE": "Nuevo tipo de producto",
+		"ADD_PRODUCTS": "Agregar Productos",
+		"CREATE_ORDER": "Crear Pedido",
+		"STATUS": "Estado",
+		"ORDERS": "Pedidos",
+		"WAREHOUSE": "Sucursal",
+		"PRODUCT": "Producto",
+		"PRODUCTS": "Productos",
+		"ORDER_NUMBER": "Número de Pedido",
+		"CANCELLED": "Cancelado",
+		"WAREHOUSE_STATUS": "Estado en Sucursal",
+		"CARRIER_STATUS": "Estado en el Repartidor",
+		"PAID": "Pago",
+		"CARRIER": "Reparto",
+		"CREATED": "Creado",
+		"ELAPSED": "Transcurrido",
+		"CONTACT_DETAILS": "Detalles de Contacto",
+		"EMAIL": "Correo",
+		"PHONE": "Teléfono",
+		"ORDERS_FORWARDING_DETAILS": "Detalles de Reparto del Pedido",
+		"ORDERS_FORWARDING_WITH": "Repartir Pedido con",
+		"MANAGE_STORE": "Gestionar Sucursal",
+		"TOP_PRODUCTS": "Productos Top",
+		"PRODUCTS_MANUFACTURING": "Elaboración de Productos",
+		"CARRIER_REQUIRED": "Reparto requerido",
+		"MANAGE_WAREHOUSE": "Gestionar Sucursal",
+		"MANAGE_STORE_PRODUCTS_&_ORDERS": "Gestionar Productos & Pedidos de Sucursal"
+	},
+	"SIMULATION_VIEW": {
+		"SIMULATION": "Simulación",
+		"PURCHASE_PRODUCTS": "Comprar productos",
+		"CREATE_INVITE_REQUEST": "Crear invitación",
+		"SEND": "Enviar",
+		"CREATE_USER": "Crear Usuario",
+		"ORDER_CONFIRM": "Confirmar Pedido",
+		"ORDER_CANCEL": "Cancelar Pedido",
+		"PRODUCTS": "Productos",
+		"STORE": "Sucursal",
+		"ORDER": "Pedido",
+		"INVITE_REQUEST": "Invitación",
+		"INVITE_USER": "Usuario de Invitado",
+		"TAB_BUTTONS": {
+			"PRODUCTS": "Productos",
+			"ORDER_HISTORY": "Historial de pedidos"
+		},
+		"USER_MUTATION": {
+			"TITLE": "Crear Cliente",
+			"NAME": "Nombre",
+			"EMAIL": "Correo",
+			"COUNTRY": "País",
+			"CITY": "Ciudad",
+			"USA": "EEUU",
+			"ISRAEL": "Israel",
+			"BULGARIA": "Bulgaria",
+			"ESPAÑA": "España",
+			"ADDRESS": "Dirección",
+			"POSTCODE": "Código Postal",
+			"COORDINATES": "Coordenadas",
+			"AUTO_DETECT_COORDINATES": "Auto detectar coordenadas",
+			"ERRORS": {
+				"FIRST_NAME_IS_REQUIRED": "Nombre requerido",
+				"LAST_NAME_IS_REQUIRED": "Apellido requerido",
+				"INVALID_EMAIL": "Correo Inválido",
+				"EMAIL_IS_REQUIRED": "Correo requerido",
+				"COORDINATES_ARE_REQUIRED": "Coordenadas requeridas"
+			},
+			"WIZARD_TITLES": {
+				"ADDITIONAL_INFO": "Información Adicional",
+				"LOCATION": "Ubiación"
+			}
+		},
+		"SMART_TABLE": {
+			"TITLE": "Título",
+			"ID": "Id",
+			"IMAGE": "Imágen"
+		},
+		"ORDER_INFO": {
+			"STATUSES": [
+				{
+					"TITLE": "Estamos preparando el pedido",
+					"DETAILS": "Recibirás tu pedido en %t minutos",
+					"NOT_PAID_NOTE": "Ten listo %s en efectivo"
+				},
+				{
+					"TITLE": "Repartidor en camino",
+					"DETAILS": "Recibirás tu pedido en %t minutos",
+					"NOT_PAID_NOTE": "Ten listo %s en efectivo"
+				},
+				{
+					"TITLE": "Ve a la puerta",
+					"DETAILS": "Estás a punto de recibir tu pedido",
+					"NOT_PAID_NOTE": "Ten listo %s en efectivo"
+				},
+				{
+					"TITLE": "Pedido Entregado",
+					"DETAILS": "Gracias por elegirnos",
+					"NOT_PAID_NOTE": ""
+				}
+			],
+			"DELIVERY_STATUS": {
+				"WE": "Nosotros",
+				"CARRIER": "Reparto",
+				"YOU": "Tu"
+			},
+			"DELIVERY_WRONG": {
+				"DELIVERY_WRONG": "La entrega falló",
+				"PROCESSING_WRONG": "La preparación falló",
+				"TRY_AGAIN": "Por favor intenta de nuevo",
+				"CALL_FOR_DETAILS": "Llama por detalles"
+			}
+		},
+		"INSTRUCTIONS_STEPS": {
+			"INSTRUTIONS": "Instrucciones",
+			"CREATE_USER_STEP": {
+				"CREATE_USER": "Crear Usuario",
+				"STEP_1": "Paso 1.",
+				"ORDER": "Pedido",
+				"TO_CONTINUE_IS_REQUIRED_TO_REGISTER_IN_THE_SYSTEM": "Para continuar se requiere registrarse",
+				"CLICK_ON_BUTTON_CREATE_USER": "Presiona el botón 'Crear Usuario'",
+				"FILL_THE_FORM_FOR_ADDITIONAL_INFO": "Llena el formulario para información adicional (opcional)",
+				"FILL_THE_FORM_FOR_LOCATION_AND_PRESS_DONE_BUTTON": "Llena el formulario para ubicación y presiona el botón CREAR"
+			},
+			"ORDER_STEP": {
+				"ORDER": "Pedido",
+				"STEP_2": "Paso 2.",
+				"CREATE_ORDER": "Crear pedido",
+				"CHOICE_SOME_PRODUCTS_FROM_THE_TABLE": "Selecciona productos del menú, podrás ver detalles cuando presiones su nombre o imágen.",
+				"SELECT_PRODUCT": "Para seleccionar un producto debes presionar en su fila.",
+				"SELECT_BUTTON_ORDER_TO_CREATE_ORDER": "Presiona el botón 'Pedir' para crear pedido con el producto seleccionado.",
+				"REVIEW_ORDER_HISTORY": "Revisar historial de pedidos:",
+				"ON_PRESS_ORDER_HISTORY_TAB": "Presionando 'Historial de Pedidos' muestra tus pedidos pasados...",
+				"HERE_YOU_CAN_SEE_DETAILS_ABOUT_EACH_ORDER": "Aquí puedes ver detalles de cada pedido",
+				"PRESS_ON_CARRIER_ORDER_OR_PRODUCT_NAME": "Presiona sobre reparto, pedido o nombre de producto para más información."
+			},
+			"CONFIRM_OR_CANCEL_STEP": {
+				"STEP_3": "Paso 3",
+				"CONFIRM_CANCEL_ORDER": "Confirmar/Cancelar pedido",
+				"REAL_TIME": "Tiempo/Seguimiento",
+				"TRACK_STATUS_ON_YOUR_ORDER": "Seguir estado de tu pedido.",
+				"ELAPSED_TIME_FROM_CREATE_TO_DELIVERED": "Tiempo transcurrido desde creado hasta entregado.",
+				"SHOWS_MERCHANT_LOCATION": "Mostrar ubicación del comercio.",
+				"SHOWS_CARRIER_LOCATION": "Mostrar ubicación del repartidor.",
+				"POSSIBILITIES": "Possibilidades:",
+				"SLIDER_REVIEW_OF_THE_ALL_PRODUCTS": "Revisión de todos los productos.",
+				"CAN_CANCEL_IT_WITH_ORDER_CANCEL_BUTTON": "Hasta que el pedido no está entregado puede cancelarlo con el botón 'Cancelar Pedido'.",
+				"AFTER_THE_ORDER_IS_DELIVER_USER_CAN_CLICK_BUTTON_ORDER_CONFIRM_TO_CONTINUE": "Luego de que el pedido ha sido entregado el usuario puede presionar el botón de 'Confirmar Pedido' para continuar..."
+			},
+			"INVITE_STEP": {
+				"TO_CONTINUE_ITs_REQUIRED_TO_BE_INVITED_IN_THE_SYSTEM": "Para continuar se requiere estar invitado:",
+				"SEND_INVITE_REQUEST": "Invitar al sistema a través del formulario de Invitación.",
+				"ALL_INVITE_REQUESTS_ARE_REVIEWED": "Todas las solicitudes de invitación son revisadas por el admin y pueden ser realizadas si el servicio está disponible próximo a tu ubicación (para pruebas basta con el botón de Invitar Usuario).",
+				"AFTER_YOU_GET_INVITED_BEFORE": "Luego de ser invitado puedes ingresar al sistema ingresando el código de invitación que es provisto por el sistema, lo verás aquí.",
+				"AFTER_YOU_GET_INVITED_AFTER": "Código luego de presionar el botón de Invitar, puedes ingresarlo presionando el botón de Crear Usuario."
+			}
+		}
+	},
+	"CUSTOMERS_VIEW": {
+		"TITLE": "Clientes",
+		"DELETE_CUSTOMERS": "Eliminar",
+		"CREATE_CUSTOMER": "Crear",
+		"DELETE": "ELIMINAR",
+		"CREATE": "CREAR",
+		"BAN": "BLOQUEAR",
+		"UNBAN": "DESBLOQUEAR",
+		"MANAGE_CUSTOMER": "Gestionar cliente",
+		"CUSTOMER": "Cliente",
+		"CUSTOMERS_DEVICES": "Dispositivos",
+		"INVITE": "Invitación",
+		"NOT_INVITED_ONLY": "No sólo invitado",
+		"ORDER": "Pedido",
+		"ORDERS_STATISTICS": "Estadístias del pedido",
+		"NUMBER_OF_ORDERS": "Pedidos",
+		"CANCELED_ORDERS": "Pedidos Cancelados",
+		"COMPLETED_ORDERS_TOTAL": "Pedidos Completados",
+		"Order": "Pedido",
+		"CANCEL_ORDER": "Cancelar Pedido",
+		"CATEGORY": "Categoría",
+		"ORDERS_HISTORY": "Historial de Pedidos",
+		"AVAILABLE_PRODUCTS": "Productos disponibles",
+		"NEARBY_STORES": "Comercios cercanos",
+		"INVITES_REQUESTS_MANAGEMENT": "Gestión de invitaciones",
+		"INVITES_MANAGEMENT": "Gestión de invitados",
+		"DESCRIPTION": "Descripción",
+		"DETAILS": "Detalles",
+		"MAKE_A_CUSTOM_ORDER": "Crear pedido personalizado",
+		"PRODUCT_COUNT": "Conteo de Productos",
+		"QUANTITY_CAN'T_BE_EMPTY": "La cantidad no puede estar vacía",
+		"QUANTITY_CAN'T_BE_0": "La cantidad no puede ser 0",
+		"NOT_ENOUGH_PRODUCTS_AVAILABLE": "No hay productos suficientes disponibles",
+		"ORDER_INFO": "Información de Pedido",
+		"ORDER_ID": "Id de Pedido",
+		"STORE_ID": "Id de Comercio",
+		"CARRIER_ID": "Id de Reparto",
+		"NO_CARRIER": "Sin Reparto",
+		"SMART_TABLE_COLUMNS": {
+			"IMAGE": "Imágen",
+			"NAME": "Nombre",
+			"EMAIL": "Correo",
+			"PHONE": "Teléfono",
+			"ADDRESS": "Dirección",
+			"ORDERS_QTY": "Cantidad de Pedidos",
+			"COUNTRY": "País",
+			"CITY": "Ciudad",
+			"STREET_ADDRESS": "Calle",
+			"HOUSE": "Número de puerta",
+			"APARTMENT": "Apartamento",
+			"INVITE_CODE": "Código de Invitación",
+			"INVITED_DATE": "Fecha de Invitación",
+			"ORDER_NUMBER": "Número de Pedido",
+			"WAREHOUSE": "Sucursal",
+			"CARRIER": "Reparto",
+			"PRODUCT_LIST": "Lista de Productos",
+			"STATS": "Estadísticas",
+			"DELIVERY_TIME": "Tiempo de entrega",
+			"CREATED": "Creada",
+			"ACTIONS": "Acciones",
+			"PAID": "Pago",
+			"COMPLETED": "Completado",
+			"CANCELLED": "Cancelado",
+			"NOT_DELIVERED": "No entregado",
+			"PRODUCT": "Producto",
+			"PRICE": "Precio",
+			"STORE": "Comercio",
+			"AVAILABLE_COUNT": "Cantidad disponible",
+			"ORDER": "Pedido",
+			"STATUS": "Estado"
+		},
+		"EDIT": {
+			"EDIT_CUSTOMER": "Modificar Cliente",
+			"BASIC_INFO": "Información Básica",
+			"SAVE": "Guardar"
+		},
+		"DEVICE": {
+			"ALL_DEVICE": "Todos los dispositivos",
+			"DEVICE_ID": "ID de dispositivo",
+			"ID": "id",
+			"UPDATE": "Actualizar",
+			"LANGUAGE": "idioma",
+			"TYPE": "tipo",
+			"TYPEU": "Tipo",
+			"UUID": "uuid",
+			"DEVICE_UUID": "UUID de dispositivo",
+			"UPDATE_DEVICE": "Actualizar dispositivo",
+			"CUSTOMERS_DEVICES": "Dispositivo de Cliente",
+			"DELETE": "ELIMINAR",
+			"CREATE": "CREAR"
+		},
+		"WAREHOUSE": {
+			"WAREHOUSE_INFO": "Información de Sucursal",
+			"WAREHOUSE_ID": "Id de Sucursal",
+			"WAREHOUSE_NAME": "Nombre de Sucursal"
+		},
+		"CUSTOMER_VIEW": {
+			"MANAGE_CUSTOMER": "Gestionar cliente",
+			"EDIT": "MODIFICAR",
+			"CUSTOMER": "Cliente"
+		},
+		"INVITES_VIEW": {
+			"DELETE": "Eliminar",
+			"INVITE": "Invitación"
+		}
+	},
+	"CARRIERS_VIEW": {
+		"TITLE": "Reparto",
+		"DELETE_CARRIERS": "Eliminar Selección",
+		"CREATE_CARRIER": "Crear Reparto",
+		"DELETE": "ELIMINAR",
+		"CREATE_BUTTON": "CREAR",
+		"ACTIVE_AND_AVAILABLE_ORDERS": "Pedidos Activos y Disponibles",
+		"ORDERS_HISTORY": "Historial de Pedidos",
+		"TRACK": "Seguimiento",
+		"SMART_TABLE_COLUMNS": {
+			"IMAGE": "Imágen",
+			"NAME": "Nombre",
+			"PHONE": "Teléfono",
+			"STATUS": "Estado",
+			"ADDRESS": "Dirección",
+			"DELIVERIES": "Repartos"
+		},
+		"CARRIER_PAGE": {
+			"WAREHOUSE": "Sucursal",
+			"CUSTOMER": "Cliente",
+			"SAVE": "Guardar",
+			"EDIT": "Modificar",
+			"CARRIER_INFO": "Información de Reparto",
+			"CARRIER_ID": "Id de Reparto",
+			"REGISTER_NEW_CARRIER": "Registrar Nuevo Reparto",
+			"WAREHOUSE_STATUS": "Estado en Sucursal",
+			"CARRIER_STATUS": "Estado en el Repartidor",
+			"CREATED": "Creado",
+			"ARRIVED_TO_CUSTOMER": "En el Cliente",
+			"FAILED": "Fallido",
+			"DELIVERED": "Entregado",
+			"CLIENT_REFUSE_ORDER": "Cliente Rechaza Pedido",
+			"AVAIBLE_ORDER_TO_PICK_UP": "Pedidos Disponibles para Llevar (cada repartidor puede llevar varios pedidos)",
+			"ACTIVE": "Activo",
+			"CARRIER_CAN_BE_SHARED": "Repartidor puede ser compartido?",
+			"NOT_ACTIVE": "No Activo",
+			"WORKING": "Trabajando",
+			"NOT_WORKING": "No Trabajando",
+			"SELECT_CARRIER": "Seleccionar Reparto",
+			"CARRIER_ORDERS_STATUS": "Estado de Pedidos del Reparto",
+			"Start": "Comenzar",
+			"PICKED_UP_ORDER": "Pedido levantado",
+			"CANCEL": "Cancelar",
+			"Arrived To Client": "En el Cliente",
+			"No Carrier": "Sin Reparto",
+			"Order Selected For Delivery": "Pedido para Repartir",
+			"Order Picked Up": "Pedido Retirado",
+			"Order In Delivery": "Pedido en el Repartidor",
+			"Delivered": "Entregado",
+			"Delivery Issues": "Problemas de Entrega",
+			"Client Refuse to Take Order": "Cliente Rechaza el Pedido",
+			"BAD_STATUS": "ESTADO ERRONEO",
+			"Created": "Creado",
+			"Confirmed": "Confirmado",
+			"Processing": "Procesando",
+			"Allocation Started": "Asignación Comenzó",
+			"Allocation Finished": "Asignado",
+			"Packaging Started": "Embalado Comenzó",
+			"Packaged": "Embalado",
+			"Given to Carrier": "Entregado al Repartidor",
+			"Allocation Failed": "Asignación Falló",
+			"Packaging Failed": "Embalado Falló",
+			"LOCATION": "Ubicación",
+			"TIME": "Tiempo"
+		},
+		"EDIT": {
+			"EDIT_CARRIER": "Modificar Reparto",
+			"BASIC_INFO": "Información Básica",
+			"LOCATION": "Ubicación",
+			"PHOTO_URL": "Enlace a Foto",
+			"CONTACT_PHONE": "Teléfono de Contacto",
+			"FIRST_NAME": "Nombre",
+			"LAST_NAME": "Apellido"
+		},
+		"CREATE": {
+			"BASIC_INFO": "Información Básica",
+			"LOCATION": "Ubicación"
+		},
+		"TRACK_PAGE": {
+			"TRACK_ALL_WORKING_CARRIERS": "Seguir todos los repartidores trabajando",
+			"FILTER_CARRIERS": "Filtrar Repartos",
+			"PHONE": "Teléfono",
+			"EMAIL": "Correo",
+			"ADDRESS": "Dirección",
+			"DELIVERY_COUNT": "Conteo de Repartos"
+		}
+	},
+	"PRODUCT_TYPE_VIEW": {
+		"TITLE": "Nuevo Producto",
+		"WIZARD_FORM": {
+			"VALIDATION_MESSAGES": {
+				"TITLE": "Título requerido",
+				"THE_LENGHT_OF_THE_TITLE": "El largo del título debe tener como máximo 255 caractéres.",
+				"IMAGE": "Imágen requerida",
+				"DESCRIPTION": "Descripción requerida",
+				"LANGUAGE": "Idioma requerido",
+				"THE_LENGHT_OF_THE_DESCRIPTION": "El largo de la descripción debe tener como máximo 255 caractéres",
+				"PRICE": "Precio requerido",
+				"COUNT": "Cantidad de unidades del producto requerida"
+			}
+		}
+	},
+	"SHARED": {
+		"FORMS": {
+			"ERRORS": {
+				"FIRST_NAME_REQUIRED": "Nombre requerido",
+				"LAST_NAME_REQUIRED": "Apellido requerido",
+				"USERNAME_REQUIRED": "Usuario requerido",
+				"PASSWORD_REQUIRED": "Clave requerida",
+				"PHONE_REQUIRED": "Teléfono requerido",
+				"LOGO_URL_REQUIRED": "Enlace al logo o archivo del dispositivo requerido",
+				"IS_ACTIVE": "Campo 'Está Activo' requerido",
+				"COUNTRY_REQUIRED": "País Requerido",
+				"CITY_REQUIRED": "Ciudad Requerida",
+				"STREET_ADDRESS_REQUIRED": "Dirección Requerida",
+				"HOUSE_REQUIRED": "Número de puerta requerido",
+				"COORDINATES_REQUIRED": "Coordenadas requeridas",
+				"MUST_CONTAIN_ONLY_LETTERS": "Debe contener sólo letras",
+				"PHONE_MUST_CONTAINS_ONLY(specail_signs)AND_DIGIT_CHARACTER": "El teléfono puede comenzar con '+' o '(números)' y debe contener sólo: -, ., (espacio), y dígitos"
+			}
+		},
+		"USER": {
+			"FORMS": {
+				"BASIC_INFO": {
+					"TITLE": "Información Básica",
+					"FIRST_NAME": "Nombre",
+					"FIRST_NAME_OPTIONAL": "Nombre (opcional)",
+					"LAST_NAME_OPTIONAL": "Apellido (opcional)",
+					"PHOTO_URL": "Enlace a foto",
+					"PICTURE_URL": "Enlace a imágen (opcional)",
+					"EMAIL": "Correo",
+					"EMAIL_OPTIONAL": "Correo (opcional)",
+					"ERRORS": {
+						"INVALID_EMAIL": "Correo Inválido",
+						"EMAIL_IS_ALREADY_IN_USE": "El correo ya se encuentra en uso"
+					}
+				}
+			}
+		},
+		"WAREHOUSE": {
+			"ORDER_MODAL": {
+				"MAKE_ORDER": "Realizar Pedido",
+				"ONLY_AVAILABLE": "Mostras sólo productos disponibles",
+				"ORDER": "Pedido",
+				"SMART_TABLE": {
+					"TITLES": {
+						"IMG": "Imágen",
+						"PRODUCT": "Producto",
+						"PRICE": "Precio",
+						"AVAILABLE": "Disponible",
+						"AMOUNT": "Cantidad"
+					}
+				}
+			}
+		}
+	},
+	"MENU_VIEW": {
+		"DASHBOARD": "Tablero",
+		"STORES": "Sucursales",
+		"PRODUCTS": {
+			"PRODUCTS": "Productos",
+			"MANAGEMENT": "Gestión",
+			"CATEGORIES": "Categorías"
+		},
+		"CUSTOMERS": {
+			"CUSTOMERS": "Clientes",
+			"MANAGEMENT": "Gestión",
+			"INVITES": "Invitaciones"
+		},
+		"CARRIERS": "Repartos",
+		"SIMULATION": "Simulación",
+		"SETUP": "Inicializar"
+	},
+	"CATEGORY_VIEW": {
+		"TITLE": "Título",
+		"IMAGE": "Imágen",
+		"CREATE_BUTTON": "CREAR",
+		"DELETE": "ELIMINAR",
+		"EDIT": {
+			"EDIT_CATEGORY": "Modificar Categoría",
+			"CATEGORY_NAME": "Nombre de Categoría",
+			"ENTER_THE_CATEGORY_NAME": "Ingresar nombre de categoría",
+			"DONE": "Realizado"
+		},
+		"CREATE": {
+			"CREATE_CATEGORY": "Crear Categoría",
+			"CATEGORY_NAME": "Nombre de Categoría",
+			"ENTER_THE_CATEGORY_NAME": "Ingresar nombre de categoría",
+			"PHOTO": "Imágen",
+			"BROWSE": "Buscar",
+			"INVALID_URL": "Enlace inválido",
+			"REMOVE_IMAGE": "Eliminar imágen",
+			"PHOTO_OPTIONAL": "Imágen (opcional)",
+			"DONE": "Realizado"
+		}
+	},
+	"PLACEHOLDER": {
+		"EXAMPLE": "Example: Lo de Pepe",
+		"IMAGE_URL": "Enlace a Imágen",
+		"HERE_GOES_A_SHORT_DESCRIPTION": "Aquí va una breve descripción",
+		"HERE_GOES_A_DETAILS_ABOUT_PRODUCT_(OPTION)": "Aquí van detalles del producto (opcional)",
+		"REMOVE_IMAGE": "Eliminar imágen",
+		"PASSWORD": "Clave",
+		"LATITUDE": "Latitud",
+		"LONGITUDE": "Longitud",
+		"APARTMENT": "Apartamento",
+		"HOUSE": "Número de puerta",
+		"STREET": "Calle",
+		"ZIP": "Código Postal",
+		"CITY": "Ciudad",
+		"FIND_ADDRESS": "Buscar Dirección"
+	},
+	"STATUS_TEXT": {
+		"Created": "Creado",
+		"Confirmed": "Confirmado",
+		"Processing": "Procesando",
+		"Allocation Started": "Asignación Comenzó",
+		"Allocation Finished": "Asignado",
+		"Packaging Started": "Embalado Comenzó",
+		"Packaged": "Embalado",
+		"Given to Carrier": "Entregado al Repartidor",
+		"Allocation Failed": "Asignación Falló",
+		"Packaging Failed": "Embalado Falló",
+		"No Carrier": "Sin Reparto",
+		"Order Selected For Delivery": "Pedido Seleccionado para Repartir",
+		"Order Picked Up": "Pedido Retirado",
+		"Order In Delivery": "Pedido en el Repartidor",
+		"Arrived To Client": "Pedido en Cliente",
+		"Delivered": "Entregado",
+		"Delivery Issues": "Problemas de Entrega",
+		"Client Refuse to Take Order": "Cliente Rechaza el Pedido",
+		"Given to Customer": "Entregado al Cliente",
+		"BAD_STATUS": "ESTADO ERRONEO"
+	},
+	"ELAPSED_TIME": {
+		"TITLE": "Tiempo transcurrido"
+	},
+	"CONFIRM_MODAL": {
+		"ARE_YOU_SURE": "Está seguro?",
+		"ARE_YOU_SURE_YOU_WANT_TO_INCREASE": "Seguro que desea incrementar la cantidad de unidades del producto?",
+		"ARE_YOU_SURE_YOU_WANT_TO_DECREASE": "Seguro que desea decrementar la cantidad de unidades del producto?",
+		"YES": "Si",
+		"NO": "No"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "La conexión con el servidor se ha perdido"
+	},
+	"BUTTON_NEXT": "Siguiente",
+	"BUTTON_PREV": "Anterior",
+	"BUTTON_DONE": "Realizado",
+	"TERRAIN": "Terreno",
+	"SATELLITE": "Satelite",
+	"LOCATION": "Ubicación",
+	"ROAD_MAP": "Mapa del trayecto",
+	"Manage warehouse": "Gestionar productos y pedidos de la sucursal",
+	"Warehouse": "Sucursal",
+	"Create Warehouse": "Crear Sucursal",
+	"SIMULATION": "Simulación",
+	"Purchase products": "Comprar productos",
+	"Manage": "Gestionar",
+	"Orders": "Pedidos",
+	"Confirmed": "Confirmado",
+	"In Delivery": "En Reparto",
+	"Not Confirmed": "No Confirmado",
+	"Not paid": "No pago",
+	"Cancelled": "Cancelado",
+	"All": "Todos",
+	"CANCEL": "Cancelar",
+	"Default Settings": "Configuración por Defecto",
+	"Products Manufacturing": "Elaboración de Productos",
+	"Carrier required before sale": "Reparto requerido antes de la venta",
+	"New Product Type": "Nuevo Tipo de Producto",
+	"Products": "Productos",
+	"Product": "Producto",
+	"Title": "Título",
+	"Picture Url": "Enlace de Imágen",
+	"Description": "Descripción",
+	"Details": "Detalles",
+	"Price": "Precio",
+	"CATEGORY": "Categoría",
 	"LANGUAGE": "Idioma",
-	"BROWSE": "Vistazo",
+	"BROWSE": "Buscar",
 	"ENGLISH": "Inglés",
 	"HEBREW": "Hebreo",
 	"RUSSIAN": "Ruso",
-	"BULGARIAN": "Búlgaro",
-	"SPANISH": "Español",
-	"SELECT": "Seleccione"
+    "BULGARIAN": "Búlgaro",
+	"ESPAÑOL": "Español",
+	"SELECT": "Seleccionar",
+	"Name": "Nombre",
+	"Id": "Id",
+	"Warehouse name is required": "Nombre de Sucursal requerido",
+	"Name must be at least 1 characters long": "Nombre debe tener al menos 1 carcter",
+	"Title cannot be more than 255 characters long": "El título no pude tener más de 255 caractéres",
+	"Logo": "Logo",
+	"Warehouse logo is required": "Logo de Sucursal requerido",
+	"is Active": "está Activo",
+	"right now": "ahora mismo",
+	"Unselected": "Sin seleccionar",
+	"Phone": "Teléfono",
+	"Email": "Correo",
+	"Username": "Usuario",
+	"Username is required": "Usuario requerido",
+	"Password": "Clave",
+	"Country": "País",
+	"USA": "EEUU",
+	"Israel": "Israel",
+	"Bulgaria": "Bulgaria",
+	"ESPAÑA": "España",
+	"City": "Ciudad",
+	"Address": "Dirección",
+	"Postcode": "Código Postal",
+	"Coordinates": "Coordenadas",
+	"Auto detect coordinates": "Autodetectar coordenadas",
+	"Carriers": "Repartos",
+	"Carrier": "Reparto",
+	"Use only specific carriers": "Usar sólo repartos específicos",
+	"Manage carrier and deliveries": "Gestionar repartos",
+	"Register New Carrier": "Registar Nuevo Reparto",
+	"Create User": "Crear Usuario",
+	"OPTIONAL": "opcional"
 }
