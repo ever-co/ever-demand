@@ -1,19 +1,17 @@
 {
 	"compilerOptions": {
-		"target": "es5",
-		"module": "commonjs",
+		"outDir": "./dist/out-tsc",
+		"sourceMap": true,
+		"declaration": false,
 		"moduleResolution": "node",
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-		"allowSyntheticDefaultImports": true,
-		"sourceMap": true,
-		"noEmit": true,
-		"skipLibCheck": true,
-		"noEmitHelpers": true,
 		"importHelpers": true,
-		"strictNullChecks": false,
-		"noStrictGenericChecks": true,
-		"lib": ["dom", "es7"],
+		"noImplicitAny": false,
+		"preserveConstEnums": true,
+		"allowSyntheticDefaultImports": true,
+		"target": "es5",
+		"typeRoots": ["node_modules/@types"],
 		"baseUrl": "./src",
 		"paths": {
 			"@angular/*": ["node_modules/@angular/*"],
@@ -24,7 +22,8 @@
 			],
 			"typeorm": ["./modules/client.common.angular2/typeorm-placeholder"]
 		},
-		"typeRoots": ["node_modules/@types"],
+		"lib": ["dom", "es7"],
+		"noUnusedLocals": false,
 		"types": [
 			"reflect-metadata",
 			"hammerjs",
@@ -33,9 +32,14 @@
 			"uglify-js",
 			"webpack",
 			"googlemaps"
-		]
+		],
+
+		"module": "commonjs",
+		"skipLibCheck": true,
+		"noEmitHelpers": true,
+		"strictNullChecks": false,
+		"noStrictGenericChecks": true
 	},
-	"exclude": ["dist", "src/**/*.spec.ts", "src/**/__tests__/*.ts"],
 	"include": [
 		"src/**/*.ts",
 		"./*.ts",
@@ -46,13 +50,15 @@
 		"src/modules/client.common.angular2/typeorm-placeholder.ts",
 		"src/modules/**/*.ts"
 	],
-	"awesomeTypescriptLoaderOptions": {
-		"forkChecker": true,
-		"useWebpackText": true
-	},
-	"compileOnSave": false,
-	"buildOnSave": false,
-	"atom": {
-		"rewriteTsconfig": false
-	}
+	"exclude": ["node_modules"]
+
+	// "awesomeTypescriptLoaderOptions": {
+	// 	"forkChecker": true,
+	// 	"useWebpackText": true
+	// },
+	// "compileOnSave": false,
+	// "buildOnSave": false,
+	// "atom": {
+	// 	"rewriteTsconfig": false
+	// }
 }

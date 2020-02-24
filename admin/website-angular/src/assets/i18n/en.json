@@ -69,14 +69,12 @@
 		"CHARTS": {
 			"ORDERS": "Orders",
 			"PROFIT": "Profit",
-
 			"TOTAL_ORDERS": "Total orders",
 			"TOTAL_COMPLETED_ORDERS": "Total completed orders",
-			"TOTAL_CANCELLED_ORDERS": "Total cancelled orders",
+			"TOTAL_CANCELLED_ORDERS": "Total canceled orders",
 			"TOTAL_REVENUE_ALL_ORDERS": "Total revenue from all orders",
 			"TOTAL_REVENUE_COMPLETED_ORDERS": "Total revenue from completed orders",
-			"TOTAL_LOST_REVENUE_CANCELLED_ORDERS": "Total lost revenue from cancelled orders",
-
+			"TOTAL_LOST_REVENUE_CANCELLED_ORDERS": "Total lost revenue from canceled orders",
 			"PAYMENT": "Payment",
 			"CANCELED": "Canceled",
 			"ALL_ORDERS": "All Orders",
@@ -1092,6 +1090,7 @@
 	"HEBREW": "Hebrew",
 	"RUSSIAN": "Russian",
 	"BULGARIAN": "Bulgarian",
+	"SPANISH": "Spanish",
 	"SELECT": "Select",
 	"Name": "Name",
 	"Id": "Id",

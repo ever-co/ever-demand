@@ -12,7 +12,7 @@ interface ProductTransientViewModel {
 	providedIn: 'root'
 })
 export class ProductLocalesService {
-	private readonly _defaultLang: string = environment.DEFAULT_LANG;
+	private readonly _defaultLang: string = environment.DEFAULT_LANGUAGE;
 	private readonly _defaultLocale: string = environment.DEFAULT_LOCALE;
 
 	private _productTransientProperties: ProductTransientViewModel = {

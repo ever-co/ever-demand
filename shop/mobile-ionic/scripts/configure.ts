@@ -54,9 +54,9 @@ export const environment: Environment = {
   FAKE_UUID: '${env.FAKE_UUID}',
 
   // Not secret MixPanel Token
-  MIXPANEL_API_KEY: '${env.MIXPANEL_API_KEY}',
+  MIXPANEL_API_KEY: '${env.MIXPANEL_API_KEY}',  
 
-  DEFAULT_LANG: '${env.DEFAULT_LANG}',
+  DEFAULT_LANGUAGE: '${env.DEFAULT_LANGUAGE}',
   DEFAULT_LOCALE: '${env.DEFAULT_LOCALE}',
 
   DELIVERY_TIME_MIN: ${env.DELIVERY_TIME_MIN},
@@ -138,12 +138,12 @@ writeFile(`./src/environments/${envFileDest}`, envFileContent, function(err) {
 	}
 });
 
-writeFile(`./src/environments/${envFileDestOther}`, '', function(err) {
+writeFile(`./src/environments/${envFileDestOther}`, envFileContent, function(
+	err
+) {
 	if (err) {
 		console.log(err);
 	} else {
-		console.log(
-			`Generated Second Empty Angular environment file: ${envFileDestOther}`
-		);
+		console.log(`Generated Second environment file: ${envFileDestOther}`);
 	}
 });

@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'environments/environment';
 
 @Component({
 	selector: 'settings',
@@ -8,21 +9,31 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class SettingsComponent implements OnInit, OnDestroy {
 	public selectedLang: string;
+	public defaultLanguage = '';
+
 	constructor(private translateService: TranslateService) {
+		this.defaultLanguage = environment['DEFAULT_LANGUAGE'];
+
 		if (translateService.currentLang) {
 			const current = translateService.currentLang;
 			this.selectedLang = current;
 			translateService.setDefaultLang(current);
 		} else {
 			// TODO: load list of supported languages from config service
-			translateService.addLangs(['en', 'fr', 'bg', 'he', 'ru']);
+			translateService.addLangs(['en', 'es', 'bg', 'he', 'ru']);
 			translateService.setDefaultLang('en');
 
 			const browserLang = translateService.getBrowserLang();
 			// TODO: load list of supported languages from config service
-			translateService.use(
-				browserLang.match(/en|fr|bg|he|ru/) ? browserLang : 'en'
-			);
+
+			if (this.defaultLanguage) {
+				translateService.use(this.defaultLanguage);
+			} else {
+				translateService.use(
+					browserLang.match(/en|es|bg|he|ru/) ? browserLang : 'en'
+				);
+			}
+
 			this.selectedLang = this.translateService.currentLang;
 		}
 	}

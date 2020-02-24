@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes, Router } from '@angular/router';
+import { RouterModule, Routes, Router, ExtraOptions } from '@angular/router';
 import { PagesModuleGuard } from './pages/pages.module.guard';
 import { MaintenanceModuleGuard } from './maintenance-info/maintenance-info.module.guard';
 import { Store } from './services/store.service';
@@ -27,8 +27,13 @@ const routes: Routes = [
 	}
 ];
 
+const config: ExtraOptions = {
+	useHash: true,
+	enableTracing: true
+};
+
 @NgModule({
-	imports: [RouterModule.forRoot(routes)],
+	imports: [RouterModule.forRoot(routes, config)],
 	exports: [RouterModule]
 })
 export class AppRoutingModule {

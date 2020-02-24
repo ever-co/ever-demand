@@ -45,16 +45,23 @@ export class AppComponent {
 	}
 
 	rootPage: any;
+	defaultLanguage = '';
 
 	initializeApp() {
 		this.platform.ready().then(() => {
 			this._watchNetworkConnection();
 
+			this.defaultLanguage = environment['DEFAULT_LANGUAGE'];
+
 			const browserLang = this.translate.getBrowserLang();
 
-			this.translate.use(
-				browserLang.match(/en|bg|he|ru/) ? browserLang : 'en'
-			);
+			if (this.defaultLanguage) {
+				this.translate.use(this.defaultLanguage);
+			} else {
+				this.translate.use(
+					browserLang.match(/en|bg|he|ru|es/) ? browserLang : 'en'
+				);
+			}
 
 			this.store.language = this.translate.currentLang;
 

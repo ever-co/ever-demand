@@ -20,20 +20,39 @@
 	<ion-list>
 		<ion-radio-group [(ngModel)]="language">
 			<ion-item>
-				<ion-label>English</ion-label>
-				<ion-radio value="en-US"></ion-radio>
+				<ion-label>{{ 'ENGLISH' | translate }}</ion-label>
+				<ion-radio
+					value="en-US"
+					(ionSelect)="switchLanguage('en-US')"
+				></ion-radio>
 			</ion-item>
 			<ion-item>
-				<ion-label>Български</ion-label>
-				<ion-radio value="bg-BG"></ion-radio>
+				<ion-label>{{ 'BULGARIAN' | translate }}</ion-label>
+				<ion-radio
+					value="bg-BG"
+					(ionSelect)="switchLanguage('bg-BG')"
+				></ion-radio>
 			</ion-item>
 			<ion-item>
-				<ion-label>עברית</ion-label>
-				<ion-radio value="he-IL"></ion-radio>
+				<ion-label>{{ 'HEBREW' | translate }}</ion-label>
+				<ion-radio
+					value="he-IL"
+					(ionSelect)="switchLanguage('he-IL')"
+				></ion-radio>
 			</ion-item>
 			<ion-item>
-				<ion-label>Русский</ion-label>
-				<ion-radio value="ru-RU"></ion-radio>
+				<ion-label>{{ 'RUSSIAN' | translate }}</ion-label>
+				<ion-radio
+					value="ru-Ru"
+					(ionSelect)="switchLanguage('ru-RU')"
+				></ion-radio>
+			</ion-item>
+			<ion-item>
+				<ion-label>{{ 'SPANISH' | translate }}</ion-label>
+				<ion-radio
+					value="es-ES"
+					(ionSelect)="switchLanguage('es-ES')"
+				></ion-radio>
 			</ion-item>
 		</ion-radio-group>
 	</ion-list>

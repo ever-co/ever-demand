@@ -31,7 +31,7 @@ export type Env = Readonly<{
 	// Not secret MixPanel Token
 	MIXPANEL_API_KEY: string;
 
-	DEFAULT_LANG: string;
+	DEFAULT_LANGUAGE: string;
 	DEFAULT_LOCALE: string;
 
 	DELIVERY_TIME_MIN: number;
@@ -74,6 +74,9 @@ export type Env = Readonly<{
 
 	// For "single" merchant (multiple branches)
 	MERCHANT_IDS?: string[];
+	WEB_CONCURRENCY: number;
+	WEB_MEMORY: number;
+	PORT: number;
 }>;
 
 const merchantIDs = makeValidator<string[]>((x) => x, 'merchantIDs');
@@ -108,7 +111,8 @@ export const env: Env = cleanEnv(
 		// Not secret MixPanel Token
 		MIXPANEL_API_KEY: str({ default: '' }),
 
-		DEFAULT_LANG: str({ default: 'en' }),
+		DEFAULT_LANGUAGE: str({ default: 'en' }),
+
 		DEFAULT_LOCALE: str({ default: 'en-US' }),
 
 		DELIVERY_TIME_MIN: num({ default: 30 }),
@@ -167,7 +171,10 @@ export const env: Env = cleanEnv(
 			default: [
 				// Add existing merchant ids
 			]
-		})
+		}),
+		WEB_CONCURRENCY: num({ default: 1 }),
+		WEB_MEMORY: num({ default: 2048 }),
+		PORT: num({ default: 4201 })
 	},
 	{ strict: true, dotEnvPath: __dirname + '/../.env' }
 );

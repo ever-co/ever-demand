@@ -132,7 +132,10 @@ export class UserResolver {
 	}
 
 	@Mutation()
-	async updateEmail(_, { userId, email }: { userId: string; email: string }) {
+	async updateUserEmail(
+		_,
+		{ userId, email }: { userId: string; email: string }
+	) {
 		return this._usersService.updateEmail(userId, email);
 	}
 
