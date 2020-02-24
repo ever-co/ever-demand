@@ -32,6 +32,8 @@ export type Env = Readonly<{
 	MIXPANEL_API_KEY: string;
 
 	DEFAULT_LANG: string;
+
+	DEFAULT_LANGUAGE: string;
 	DEFAULT_LOCALE: string;
 
 	DELIVERY_TIME_MIN: number;
@@ -112,6 +114,9 @@ export const env: Env = cleanEnv(
 		MIXPANEL_API_KEY: str({ default: '' }),
 
 		DEFAULT_LANG: str({ default: 'en' }),
+
+		DEFAULT_LANGUAGE: str({ default: 'en-US' }),
+
 		DEFAULT_LOCALE: str({ default: 'en-US' }),
 
 		DELIVERY_TIME_MIN: num({ default: 30 }),

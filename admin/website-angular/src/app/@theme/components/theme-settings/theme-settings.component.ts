@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { StateService } from '../../../@core/data/state.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NbThemeService } from '@nebular/theme';
+import { environment } from 'environment';
 
 @Component({
 	selector: 'ngx-theme-settings',
@@ -12,7 +13,13 @@ export class ThemeSettingsComponent {
 	layouts = [];
 	sidebars = [];
 
-	languages = { en: 'English', bg: 'Bulgarian', he: 'Hebrew', ru: 'Russian' };
+	languages = {
+		en: 'English',
+		bg: 'Bulgarian',
+		he: 'Hebrew',
+		ru: 'Russian',
+		es: 'Spanish'
+	};
 
 	themes = [
 		{
@@ -42,17 +49,26 @@ export class ThemeSettingsComponent {
 	];
 
 	currentTheme = 'everlight';
+	defaultLanguage = '';
 
 	constructor(
 		protected stateService: StateService,
 		public translate: TranslateService,
 		private themeService: NbThemeService
 	) {
-		translate.addLangs(['en', 'bg', 'he', 'ru']);
+		this.defaultLanguage = environment['DEFAULT_LANGUAGE'];
+
+		translate.addLangs(['en', 'bg', 'he', 'ru', 'es']);
 		translate.setDefaultLang('en');
 
 		const browserLang = translate.getBrowserLang();
-		translate.use(browserLang.match(/en|bg|he|ru/) ? browserLang : 'en');
+		if (this.defaultLanguage) {
+			translate.use(this.defaultLanguage);
+		} else {
+			translate.use(
+				browserLang.match(/en|bg|he|ru|es/) ? browserLang : 'en'
+			);
+		}
 
 		this.stateService
 			.getLayoutStates()

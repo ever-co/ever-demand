@@ -1,0 +1,128 @@
+{
+	"Title": "Ejemplo de traducción",
+	"Intro": "Hola, soy Arturo y tengo 42 años.",
+	"Cancel": "Cancelar",
+	"Cancel Order": "¡En sólo 5-10 minutos estará degustando esta deliciosa comida! Si la cancela se perderá un sabroso plato y probablemente debamos desecharlo.",
+	"Pay": "O paga con efectivo",
+	"Pay now": "Pague ahora",
+	"Products": "Productos",
+	"Orders": "Pedidos",
+	"Buy for": "Compra por",
+	"DELIVERY": "Delivery",
+	"TAKEAWAY": "Para retirar",
+	"Details": "Detalles",
+	"Delivery from": "Delivery desde",
+	"WHAT_IS_YOUR_ADDRESS": "Cuál es tu dirección?",
+	"FOR": "para",
+	"MESSAGE_POP_UP": {
+		"CANCEL_ORDER": "¡En solo 5-10 minutos degustarás esta deliciosa comida!",
+		"CANCEL": "Cancelar",
+		"CONFIRMATION": "Confirmación",
+		"WRONG_CODE_TRY_AGAIN": "Código erroneo, pruebe de nuevo",
+		"TO_BE_INVITED_ALLOW_GPS": "Para ser invitado habilite GPS"
+	},
+	"PRODUCTS_VIEW": {
+		"PRODUCTS": "Productos",
+		"ORDERS": "Pedidos",
+		"BUY_FOR": "Comprar por",
+		"DETAILS": "Detalles",
+		"DELIVERY_FROM": "Entrega desde",
+		"TAKEOUT_FROM": "Para retirar en",
+		"MINUTES": "min",
+		"DELIVERY": "Delivery",
+		"TAKEAWAY": "Para retirar",
+		"READYFOR": "Listo para",
+		"NO_PRODUCTS_FOUND": "No se encontraron productos",
+		"NO_PRODUCTS": "No existen productos",
+		"FASTFOOD": "Comida rápida",
+		"SEARCH": "Buscar",
+		"LOADING_MORE_DATA": "Cargando más datos...",
+		"PRODUCT_DETAILS_VIEW": {
+			"BUY_FOR": "Comprar por",
+			"DETAILS": "Detalles",
+			"DELIVERY_FROM": "Entrega desde",
+			"TAKEOUT_FROM": "Para retirar en"
+		}
+	},
+	"LOG_IN_VIEW": {
+		"OR": "O",
+		"ENTER_BY_ADDRESS": "Ingresar por Dirección",
+		"SIGN_UP_WITH_AN_APP_INVITATION": "Regístrese con una invitación a la aplicación",
+		"WE_WILL_SEND_YOU_A_MESSAGE": "Le enviaremos un mensaje tan pronto como comencemos a trabajar por su dirección",
+		"THANKS_FOR_REGISTERING": "¡Gracias por registrarte!",
+		"WHAT_YOU_SEE_IS_WHAT_YOU_GET": "Lo que ves es lo que tienes.",
+		"INVITE_CODE": "Codigo de invitacion",
+		"NOTIFICATION_MESSAGE": {
+			"WRONG_CODE_TRY_AGAIN": "Código erroneo, pruebe de nuevo",
+			"TO_BE_INVITED_ALLOW_GPS": "Para ser invitado habilite GPS"
+		},
+		"BY_LOCATION_VIEW": {
+			"WHAT_IS_YOUR_ADDRESS": "Cual es tu dirección?",
+			"WE_GUARANTEE_TO_SHOW_ONLY_RELEVANT_PRODUCTS": "Garantizamos mostrar solo productos relevantes basados en la dirección ingresada",
+			"SEARCH": "Buscar",
+			"COUNTRY": "País",
+			"APARTMENT": "Apartmento",
+			"CONTINUE": "Continuar",
+			"PLACEHOLDER": {
+				"SELECTED_CITY": "Ciudad Seleccionada",
+				"SELECTED_STREET": "Calle Seleccionada",
+				"HOUSE": "Número de Puerta",
+				"APARTMENT_OPTIONAL": "Apartamento (opcional)"
+			}
+		}
+	},
+	"ORDER_VIEW": {
+		"CANCEL": "Cancelar",
+		"CANCEL_ORDER": "¡En solo 5-10 minutos degustarás esta deliciosa comida!",
+		"PAY": "O paga en Eectivo",
+		"PAY_NOW": "Pagar Ahora",
+		"PRODUCTS": "Productos",
+		"ORDERS": "Pedidos",
+		"ORDER_ID": "Identificador de Pedido:"
+	},
+	"ORDER_CARRIER_STATUS": {
+		"CARRIER_STATUS": "Estado del Delivery",
+		"CREATED": "Creado",
+		"ARRIVED_TO_CUSTOMER": "Llegó al Cliente",
+		"FAILED": "Entrega fallida",
+		"DELIVERED": "Entregado",
+		"CLIENT_REFUSE_ORDER": "Cliente Rechazó el Pedido",
+		"AVAIBLE_ORDER_TO_PICK_UP": "Pedidos disponibles para retirar (cada delivery puede tomar múltiples pedidos)",
+		"ACTIVE": "Activo",
+		"NOT_ACTIVE": "No Activo",
+		"WORKING": "Trabajando",
+		"NOT_WORKING": "No Trabajando",
+		"SELECT_CARRIER": "Seleccionar Delivery",
+		"CARRIER_ORDERS_STATUS": "Estados de los Pedidos",
+		"Start": "Comenzar",
+		"PICKED_UP_ORDER": "Pedido retirado",
+		"CANCEL": "Cancelar",
+		"Arrived To Client": "Llegó al Cliente",
+		"No Carrier": "No hay Delivery",
+		"Order Selected For Delivery": "Pedido Seleccionado para Entrega",
+		"Order Picked Up": "Pedido retirado",
+		"Order In Delivery": "Pedido en camino",
+		"Delivered": "Entregado",
+		"Delivery Issues": "Problemas de Entrega",
+		"Client Refuse to Take Order": "El cliente rechazó el pedido",
+		"BAD_STATUS": "ESTADO ERRONEO",
+		"Created": "Creado",
+		"Confirmed": "Confirmado",
+		"Processing": "Procesando",
+		"Allocation Started": "Asignación Iniciada",
+		"Allocation Finished": "Asignado",
+		"Packaging Started": "Embalado Iniciado",
+		"Packaged": "Embalado",
+		"Given to Carrier": "Entregado al Delivery",
+		"Allocation Failed": "Asignación Fallida",
+		"Packaging Failed": "Embalado Fallido",
+		"LOCATION": "Ubicación"
+	},
+	"SETTINGS_VIEW": {
+		"SETTINGS": "Configuraciones",
+		"LANGUAGE": "Idioma"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Se perdió conexión con el servidor"
+	}
+}

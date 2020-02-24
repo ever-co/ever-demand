@@ -40,6 +40,8 @@ export type Env = Readonly<{
 
 	MAP_CARRIER_ICON_LINK: string;
 
+	DEFAULT_LANGUAGE: string;
+
 	// For maintenance micro service
 	SETTINGS_APP_TYPE?: string;
 	SETTINGS_MAINTENANCE_API_URL?: string;
@@ -96,6 +98,7 @@ export const env: Env = cleanEnv(
 		SETTINGS_MAINTENANCE_API_URL: str({
 			default: ''
 		}),
+		DEFAULT_LANGUAGE: str({ default: 'en' }),
 		WEB_CONCURRENCY: num({ default: 1 }),
 		WEB_MEMORY: num({ default: 2048 }),
 		PORT: num({ default: 4202 })
