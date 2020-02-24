@@ -40,7 +40,7 @@ export const env: Env = cleanEnv(
 		DEFAULT_LATITUDE: num({ default: 42.6459136 }),
 		DEFAULT_LONGITUDE: num({ default: 23.3332736 }),
 
-		DEFAULT_LANGUAGE: str({ default: 'es' }),
+		DEFAULT_LANGUAGE: str({ default: 'en' }),
 
 		SERVICES_ENDPOINT: str({ default: 'http://localhost:5500' }),
 		HTTPS_SERVICES_ENDPOINT: str({ default: 'https://localhost:5501' }),

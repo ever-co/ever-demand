@@ -54,9 +54,7 @@ export const environment: Environment = {
   FAKE_UUID: '${env.FAKE_UUID}',
 
   // Not secret MixPanel Token
-  MIXPANEL_API_KEY: '${env.MIXPANEL_API_KEY}',
-
-  DEFAULT_LANG: '${env.DEFAULT_LANG}',
+  MIXPANEL_API_KEY: '${env.MIXPANEL_API_KEY}',  
 
   DEFAULT_LANGUAGE: '${env.DEFAULT_LANGUAGE}',
   DEFAULT_LOCALE: '${env.DEFAULT_LOCALE}',
