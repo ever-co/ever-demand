@@ -13,13 +13,28 @@ export class ThemeSettingsComponent {
 	layouts = [];
 	sidebars = [];
 
-	languages = {
-		en: 'English',
-		bg: 'Bulgarian',
-		he: 'Hebrew',
-		ru: 'Russian',
-		es: 'Spanish'
-	};
+	languages = [
+		{
+			value: 'en-US',
+			name: 'English'
+		},
+		{
+			value: 'bg-BG',
+			name: 'Bulgarian'
+		},
+		{
+			value: 'he-IL',
+			name: 'Hebrew'
+		},
+		{
+			value: 'ru-RU',
+			name: 'Russian'
+		},
+		{
+			value: 'es-ES',
+			name: 'Spanish'
+		}
+	];
 
 	themes = [
 		{
@@ -49,7 +64,7 @@ export class ThemeSettingsComponent {
 	];
 
 	currentTheme = 'everlight';
-	defaultLanguage = '';
+	defaultLanguage = 'ru-RU';
 
 	constructor(
 		protected stateService: StateService,
@@ -58,15 +73,17 @@ export class ThemeSettingsComponent {
 	) {
 		this.defaultLanguage = environment['DEFAULT_LANGUAGE'];
 
-		translate.addLangs(['en', 'bg', 'he', 'ru', 'es']);
-		translate.setDefaultLang('en');
+		translate.addLangs(['en-US', 'bg-BG', 'he-IL', 'ru-RU', 'es-ES']);
+		translate.setDefaultLang('en-US');
 
 		const browserLang = translate.getBrowserLang();
 		if (this.defaultLanguage) {
 			translate.use(this.defaultLanguage);
 		} else {
 			translate.use(
-				browserLang.match(/en|bg|he|ru|es/) ? browserLang : 'en'
+				browserLang.match(/en-US|bg-BG|he-IL|ru-RU|es-ES/)
+					? browserLang
+					: 'en-US'
 			);
 		}
 
@@ -84,13 +101,13 @@ export class ThemeSettingsComponent {
 	}
 
 	switchLanguage(language: string) {
-		if (language === 'he') {
+		if (this.defaultLanguage === 'he-IL') {
 			this.stateService.setSidebarState(this.sidebars[1]);
 		} else {
 			this.stateService.setSidebarState(this.sidebars[0]);
 		}
 
-		this.translate.use(language);
+		this.translate.use(this.defaultLanguage);
 	}
 
 	layoutSelect(layout: any): boolean {

@@ -100,18 +100,18 @@ export class ProductLocalesService {
 	takeSelectedLang(lang: string) {
 		let translateLang = this._defaultLocale;
 		switch (lang) {
-			case 'en':
+			case 'en-US':
 				translateLang = 'en-US';
 				break;
-			case 'he':
+			case 'he-IL':
 				translateLang = 'he-IL';
 				break;
-			case 'ru':
+			case 'ru-RU':
 				translateLang = 'ru-RU';
 				break;
-			case 'bg':
+			case 'bg-BG':
 				translateLang = 'bg-BG';
-			case 'es':
+			case 'es-ES':
 				translateLang = 'es-ES';
 				break;
 		}
