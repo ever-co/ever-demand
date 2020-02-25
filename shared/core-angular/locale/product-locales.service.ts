@@ -14,7 +14,7 @@ class ProductTransientViewModel {
 
 @Injectable()
 export class ProductLocalesService {
-	private readonly _defaultLang: string = 'en';
+	private readonly _defaultLang: string = 'en-US';
 	private readonly _defaultLocale: string = 'en-US';
 	private _productTransientProperties = new ProductTransientViewModel();
 

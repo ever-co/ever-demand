@@ -1,0 +1,436 @@
+{
+	"LANGUAGE": {
+		"ID": "es-ES",
+		"NAME": "Español"
+	},
+	"DASHBOARD": "Tablero",
+	"CURRENT_DIRECTION": "ltr",
+	"SIDEBAR_SIDE": "left",
+	"SIDE_MENU": {
+		"TITLE": "Ever Comercios",
+		"GROUPS": {
+			"NO_TITLE": {
+				"DIVER_TITLE": "",
+				"ITEMS": {
+					"WAREHOUSE": "Tablero"
+				}
+			},
+			"SETTINGS": {
+				"SETTINGS": "Ajustes",
+				"DIVER_TITLE": "Ajustes",
+				"ITEMS": {
+					"LANGUAGE": "Idioma",
+					"SIGN_OUT": "Salir"
+				}
+			},
+			"INFO": {
+				"DIVER_TITLE": "Información",
+				"ITEMS": {
+					"ABOUT_US": "Acerca De",
+					"TERMS_OF_USE": "Condiciones de Uso"
+				}
+			}
+		}
+	},
+	"CUSTOMERS_VIEW": {
+		"CUSTOMERS": "Clientes",
+		"ADD_CUSTOMER": "Agregar Cliente",
+		"IMAGE": "Imágen",
+		"NAME": "Nombre",
+		"PHONE_NUMBER": "Teléfono",
+		"ADDRESSES": "Dirección",
+		"ORDERS": "Pedidos",
+		"TOTAL": "Total",
+		"E_MAIL": "Correo",
+		"ADDRESS_POP_UP": {
+			"CUSTOMER_ADDRESS": "Dirección del Cliente",
+			"COUNTRY": "Ciudad",
+			"STREET": "Calle",
+			"HOUSE": "Número de Puerta",
+			"APARTMENT": "Apartmento",
+			"COORDINATES": "Coordenadas"
+		},
+
+		"EMAIL_POP_UP": {
+			"CUSTOMER_EMAIL": "Correo del Cliente",
+			"SEND_E_MAIL": "Enviar Correo"
+		},
+		"ORDERS_POP_UP": {
+			"CUSTOMER_ORDERS": "Pedidos del Cliente",
+			"ALL_ORDERS": "Todos los Pedidos",
+			"TOTAL_ORDERS_SUM": "Suma Total de Pedidos",
+			"COMPLATED": "Terminados",
+			"PAID": "Pago"
+		}
+	},
+	"FILE_UPLOADER": {
+		"DRAG_AND_DROP_FILE_HERE": "Arrastre Imágen Aquí",
+		"PICTURE_URL": "Enlace de la Imágen",
+		"BROWSE": "Buscar"
+	},
+	"CARRIERS_VIEW": {
+		"CARRIERS_CATALOG": {
+			"IMAGE": "Imágen",
+			"NAME": "Nombre",
+			"PHONE": "Teléfono",
+			"ADDRESS": "Dirección",
+			"LOGO": "Logo"
+		},
+		"TRACK_CARRIER": "Seguimiento del Repartidor",
+		"CARRIERS": "Repartos",
+		"ADD_CARRIERS": "Agregar Reparto",
+		"IMAGE": "Imágen",
+		"NAME": "Nombre",
+		"PHONE_NUMBER": "Número de Teléfono",
+		"ADDRESSES": "Dirección",
+		"STATUS": "Estado",
+		"DELIVERIES": "Repartos",
+		"NO_CARRIERS": "NO CARRIERS",
+		"WORKING": "Trabajando",
+		"NOT_WORKING": "No Trabajando",
+		"BLOCKED": "Bloqueado",
+		"DELIVERIES_POP_UP": {
+			"CARRIER_DELIVERIES": "Entregas del Reparto",
+			"ALL_DELIVERIES": "Todas las Entregas",
+			"DELIVERIES_TODAY": "Entregado Hoy",
+			"TOTAL_DISTANCE_TODAY": "Distancia Recorrida Hoy",
+			"CUSTOMER": "Cliente",
+			"WAREHOUSE": "Sucursal",
+			"STATUS": "Estado",
+			"DELIVERY": "Reparto",
+			"NO_DELIVERIES": "No Hay Repartos",
+			"COMPLETED": "Terminado",
+			"PAID": "Pago"
+		},
+		"ADDRESS": {
+			"CARRIER_ADDRESS": "Dirección del Reparto",
+			"COUNTRY": "Ciudad",
+			"HOUSE": "Calle y Número de Puerta",
+			"COORDINATES": "Coordenadas"
+		},
+		"EDIT_CARRIER": {
+			"EDIT_CARRIER": "Editar Reparto"
+		},
+		"ADD_CARRIER": {
+			"ADD_CARRIER": "Agregar Reparto",
+			"HOW_TO_ADD": "Como Agregar",
+			"SELECT_HOW_TO_ADD": "Seleccionar Como Agregar",
+			"ADD": "Agregar",
+			"CARRIERS_CATALOG": "Catálogo de Repartos",
+			"SELECT_FROM_CARRIERS_CATALOG": "Seleccionar",
+			"ADD_NEW_CARRIER": "Agregar Nuevo",
+			"FIRST_NAME": "Nombre",
+			"LAST_NAME": "Apellido",
+			"EMAIL": "Correo",
+			"USERNAME": "Usuario",
+			"PASSWORD": "Password",
+			"NAME": "Nombre",
+			"PHONE": "Teléfono",
+			"ADDRESS": "Dirección",
+			"LOGO": "Logo",
+			"IS_ACTIVE": "Está Activo",
+			"CITY": "Ciudad",
+			"STREET": "Calle",
+			"HOUSE": "Número de Puerta",
+			"LATITUDE": "Latitud",
+			"LONGITUDE": "Longitud",
+			"COUNTRY": "País",
+			"OK": "OK",
+			"CANCEL": "CANCELAR",
+			"PREVIOUS": "ANTERIOR",
+			"BACK": "REGRESAR",
+			"NEXT": "SIGUIENTE",
+			"DONE": "REALIZADO",
+			"LOCATION": "UBICACION",
+			"ZIP": "CODIGO POSTAL",
+			"PROFILE_DETAILS": "DETALLES",
+			"BROWSE": "BUSCAR",
+			"DRAG_AND_DROP_FILE_HERE": "Arrastre Imágen Aquí",
+			"PICTURE_URL": "Enlace de la Imágen",
+			"ACCOUNT": "CUENTA",
+			"REPEAT": "Repetir",
+			"REPEAT_PASSWORD": "Repetir Clave",
+			"PASSWORD_DO_NOT_MATCH": "Claves no Coinciden",
+			"FIND_ADDRESS": "Buscar Dirección",
+			"FORMS": {
+				"ERRORS": {
+					"FIRST_NAME_REQUIRED": "Nombre requerido",
+					"LAST_NAME_REQUIRED": "Apellido requerido",
+					"PHONE_REQUIRED": "Teléfono requerido",
+					"EMAIL_IS_REQUIRED": "Correo requerido",
+					"MUST_CONTAIN_ONLY_LETTERS": "Debe contener sólo letras",
+
+					"PHONE_MUST_CONTAINS_ONLY(special_signs)AND_DIGIT_CHARACTER": "Teléfono debe contener solo números"
+				}
+			}
+		},
+		"SELECT LANGUAGE": {
+			"USA": "EEUU",
+			"ISRAEL": "Israel",
+			"BULGARIA": "Bulgaria",
+			"ESPAÑA": "España"
+		}
+	},
+	"SETTINGS_VIEW": {
+		"SETTINGS": "Ajustes",
+		"OPTIONS": "Opciones",
+		"COMMON": "Comúnes",
+		"LOCATION": "Ubicación",
+		"ACCOUNT": "Cuenta",
+		"NEW_USERNAME": "Nuevo Usuario",
+		"NAME_MUST_BE_AT_LEAST_4_CHARACTERS_LONG": "El nombre debe contener al menos 4 caracteres",
+		"OLD_PASSWORD": "Clave Actual",
+		"NEW_PASSWORD": "Clave Nueva",
+		"REPEAT_NEW_PASSWORD": "Repetir Clave Nueva",
+		"PASSWORDS_DO_NOT_MATCH": "Claves no Coinciden",
+		"SAVE_CHANGES": "Guardar Cambios",
+		"SAVE": "Guardar",
+		"CHANGES": "Cambios",
+		"BASIC_INFO": "Información Básica",
+		"NAME": "Nombre",
+		"NAME_IS_REQUIRED": "Nombre requerido",
+		"LOGO": "Logo",
+		"BROWSE": "Buscar",
+		"CONTACT_INFO": "Información de Contacto",
+		"E_MAIL": "Correo",
+		"PHON_NUMBER": "Número de Teléfono",
+		"COUNTRY": "País",
+		"CITY": "Ciudad",
+		"CITY_IS_REQUIRED": "Ciudad requerida",
+		"POSTCODE_optional": "Código Postal (opcional)",
+		"STREET": "Street",
+		"STREET_IS_REQUIRED": "Calle requerida",
+		"HOUSE": "Número de Puerta",
+		"HOUSE_IS_REQUIRED": "Numero requerido",
+		"APARTMENT_optional": "Numero Apto (opcional)",
+		"AUTO_DETECT_COORDINATES": "Detectar Coordenadas",
+		"LATITUDE": "Latitud",
+		"LATITUDE_IS_REQUIRED": "Latitud requerida",
+		"LONGITUDE": "Longitud",
+		"LONGITUDE_IS_REQUIRED": "Longitud requerida",
+		"FIND_ADDRESS": "Buscar Dirección",
+		"OK": "OK",
+		"CANCEL": "CANCELAR",
+		"ALLOW_ONLINE_PAYMENTS": "Permitir Pagos Online",
+		"SETTINGS_SECTION": {
+			"DELIVERY_OR_TAKEAWAY_SETTINGS": "Configuraciones de Reparto/Retiro",
+			"PRODUCTS_DELIVERY_BY_DEFAULT": "Reparto de Productos (por defecto)",
+			"PRODUCTS_TAKEAWAY_BY_DEFAULT": "Retiro de Productos (por defecto)",
+			"PAYMENTS_SETTINGS": "Ajustes de Pagos",
+			"BARCODE_QR_CODE_SETTINGS": "Ajustes de Código Barras/Código QR",
+			"ORDER_BARCODE_TYPE": "Tipo de Código del Pedido",
+			"BARCODE_DATA": "Datos del Código",
+			"SCAN_EXISTED": "Existía escaneado"
+		}
+	},
+	"LOGIN_VIEW": {
+		"LOGIN": "Entrar"
+	},
+	"LANGUAGE_VIEW": {
+		"TITLE": "Seleccionar Idioma",
+		"OK": "OK",
+		"CANCEL": "CANCELAR"
+	},
+	"ABOUT_VIEW": {
+		"TITLE": "Acerca De",
+		"APP_VERSION": "Versión de la App"
+	},
+	"TERMS_OF_USE_VIEW": {
+		"TITLE": "Condiciones de Uso"
+	},
+	"WAREHOUSE_VIEW": {
+		"RELEVANT": "Relevante",
+		"ALL": "Todo",
+		"LOADING_MORE_DATA": "Cargando mas datos...",
+		"ORDERS": "Pedidos",
+		"NEW_ORDER": "Nuevo Pedido",
+		"PRODUCTS": "Productos Top",
+		"SELECT_POP_UP": {
+			"SELECT_CATEGORIES": "Seleccionar Categorías",
+			"OK": "OK",
+			"CANCEL": "CANCELAR"
+		},
+		"ORDER_WAREHOUSE_STATUSES": {
+			"CREATED": "Creado",
+			"CONFIRMED": "Confirmado",
+			"PROCESSING": "Procesando",
+			"ALLOCATION_STARTED": "Asignando",
+			"ALLOCATION_FINISHED": "Asignado",
+			"PACKAGING_STARTED": "Embalando",
+			"PACKAGED": "Embalada",
+			"GIVEN_TO_CARRIER": "Entregado a Repartidor",
+			"TAKEN": "Tomada",
+			"ALLOCATION_FAILED": "Asignación Fallida",
+			"PACKAGING_FAILED": "Embalado Fallido",
+			"BAD_STATUS": "Estado Erróneo",
+			"NO_ACTIVE_ORDERS": "No hay Pedidos Activos",
+			"NO_ORDERS": "No hay Pedidos",
+			"NO_PRODUCTS": "No hay Productos"
+		},
+		"CREATE_PRODUCTS_POPUP": {
+			"NEW_PRODUCT_TYPE": "Nuevo Tipo de Producto",
+			"CREATE_NEW_PRODUCT_TYPE": "Crear Nuevo Tipo de Producto",
+			"TITLE": "Nombre",
+			"DESCRIPTION": "Descripción",
+			"CATEGORIES": "Categorias",
+			"PRICE": "Precio",
+			"COUNT": "Cantidad",
+			"LANGUAGE": "Idioma",
+
+			"COUNT_PLACEHOLDER": "0",
+			"DRAG&DROP_FILE_HERE": "Arrastre Archivo Aquí",
+			"DRAG&DROP_PICTURE_HERE": "Arrastre Imágen Aquí",
+			"OR_BROWSE": "o Buscar",
+			"CLICK_TO_UPLOAD_PICTURE": "Click para Cargar Imágen",
+			"CLICK_TO_UPLOAD_MORE_PICTURE": "Click para Cargar más Imágenes",
+			"CANCEL": "Cancelar",
+			"CREATE": "Crear",
+			"ENGLISH": "Inglés",
+			"HEBREW": "Hebreo",
+			"RUSSIAN": "Ruso",
+			"BULGARIAN": "Bulgaro",
+			"ESPAÑOL": "Español",
+			"OPTIONAL": "Opcional",
+			"TAKEAWAY": "Retirar",
+			"DELIVERY": "Repartir"
+		},
+		"NEW_ORDER_VIEW": {
+			"NEW_MANUAL_ORDER": "Nuevo Pedido Manual",
+			"SELECT_EXISTING_CUSTOMER": "Seleccionar Cliente",
+			"ADD_NEW_CUSTOMER": "Crear Nuevo Cliente",
+			"FULL_NAME": "Nombre Completo",
+			"EMAIL": "Correo",
+			"PHONE": "Teléfono",
+			"ADDRESS": "Dirección",
+
+			"IMAGE": "Imágen",
+			"PRODUCT": "Producto",
+			"PRICE": "Precio",
+			"AVAILABLE": "Disponible",
+			"AMOUNT": "Cantidad",
+			"MAKE_ORDER": "Crear Pedido",
+			"BASIC_INFO": "Información Básica",
+			"FIRST_NAME": "Nombre",
+			"LAST_NAME": "Apellido",
+			"EMAIL_IS_INVALID": "Email es invalido",
+
+			"EMAIL_IS_ALREADY_IN_USE": "Correo esta en uso",
+			"NEXT": "Siguiente",
+			"ADD_CUSTOMER": "Agregar Cliente",
+			"BACK": "Regresar",
+			"FIND_ADDRESS": "Buscar Dirección",
+			"COUNTRY": "País",
+			"CITY": "Ciudad",
+			"COUNTRY_IS_INVALID": "País Inválido",
+			"CITY_IS_REQUIRED": "Ciudad requerida",
+			"ZIP": "Código Postal",
+			"STREET_ADDRESS": "Calle",
+			"STREET_ADDRESS_IS_REQUIRED": "Calle requerida",
+			"HOUSE_No": "Número de Puerta",
+			"APARTMENT": "Apartamento",
+			"SHOW_COORDINATES": "Mostrar Coordenaas",
+			"LATITUDE": "Latitud",
+
+			"LONGITUTE": "Longitud",
+			"HOUSE_IS_REQUIRED": "Número de Puerta requerido"
+		},
+		"EDIT_PICTURE": {
+			"PRODUCT_IMAGES": "Imágenes de Productos",
+			"SAVE_IMAGES": "Guardar Imágenes"
+		},
+		"MISC_TEXT": {
+			"CREATE_NEW_ORDER": "Crear Nuevo Pedido",
+			"ADD_NEW_PRODUCT": "Agregar Nuevo Producto"
+		}
+	},
+	"EDIT_PRODUCT_POP_UP": {
+		"EDIT_PRODUCT_TYPE": "Editar Tipo de Producto",
+		"UPDATE_AN_EXISTING_PRODUCT": "Modificar Producto",
+		"CLICK_TO_EDIT_PICTURES": "Click para Modificar Imágenes",
+		"TITLE": "Nombre",
+		"DESCRIPTION": "Descripción",
+		"CATEGORIES": "Categorías",
+		"PRICE": "Precio",
+		"COUNT": "Cantidad",
+		"LANGUAGE": "Idioma",
+		"DRAG&DROP_FILE_HERE": "Arrastre Imágenes Aquí",
+		"OR_BROWSE": "Buscar",
+		"CLICK_TO_UPLAOD_PICTURE": "Click para Cargar Imágenes",
+		"CANCEL": "Cancelar",
+
+		"UPDATE": "Modificar",
+		"ENGLISH": "Inglés",
+		"HEBREW": "Hebreo",
+		"RUSSIAN": "Ruso",
+		"BULGARIAN": "Bulgaro",
+		"ESPAÑOL": "Español",
+		"OPTIONAL": "Opcional"
+	},
+	"ORDER_CANCELED_COMPONENT": {
+		"CANCELED": "Cancelado",
+		"ORDER_CANCELED": "Pedido cancelado",
+		"DELIVERED": "Entregado",
+		"CREATED_AT": "Creación"
+	},
+	"ORDER_CONTROL_BUTTONS_COMPONENT": {
+		"CONFIRM": "Confirmar",
+		"START_PROCESSING": "Comenzar Procesamiento",
+		"START_ALLOCATION": "Comenzar Asignación",
+		"ALLOCATED": "Asignado",
+		"START_PACKAGING": "Comenzar a Embalar",
+		"PACKAGED": "Emabalado",
+		"FAILED": "Error",
+		"GIVEN_TO_CARRIER": "Entregado al Repartidor",
+		"GIVEN_TO_CUSTOMER": "Entregado al Cliente"
+	},
+	"ORDER_DELIVERED_COMPONENT": {
+		"DELIVERED": "Entregado",
+		"CREATED_AT": "Creación",
+		"DELIVERED_AT": "Entregado a las",
+		"DELIVERED_TO": "Entregado a"
+	},
+	"ORDER_DELIVERY_PROBLEM_COMPONENT": {
+		"DELIVERY_ISSUES": "Problemas de Entrega",
+		"ISSUES_DURING_DELIVERY_TO": "Problemas Durante la Entrega a",
+		"BY": "Por",
+		"CREATED_AT": "Creación"
+	},
+	"ORDER_WAREHOUSE_PREPARATION_PROBLEM_COMPONENT": {
+		"CREATED_AT": "Creación"
+	},
+	"ORDER_WITH_CARRIER_COMPONENT": {
+		"IN_DELIVERY_TO": "En camino a",
+		"BY": "Por ",
+		"CREATED_AT": "Creación"
+	},
+	"ORDER_WITHOUT_CARRIER_COMPONENT": {
+		"CREATED_AT": "Creación",
+		"CANT_PROCESSING_WITHOUT_PRODUCTS": "No se puede procesar un pedido sin productos"
+	},
+	"ORDER_TITLE_COMPONENT": {
+		"ORDER": "Pedido",
+		"FROM": "Desde"
+	},
+	"TRACK_ORDER_POP_UP": {
+		"CARRIER": "Reparto",
+		"TRACK": "Seguir",
+		"CUSTOMER": "Cliente"
+	},
+	"CONNECTION_ERROR_VIEW": {
+		"TITLE": "No hay Conexión con el Servidor",
+		"DESCRIPTION": [
+			"Asegurese que está",
+			"Conectado a Internet",
+			"o cierre y abra nuevamente la App."
+		]
+	},
+	"CUSTOMER_ORDERS_POP_UP": {
+		"ORDER_ID": "ID de Pedido",
+		"DELIVERY": "Reparto",
+		"ADDRESS": "Dirección",
+		"STATUS": "Estado"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Sin conexión con el Servidor."
+	}
+}

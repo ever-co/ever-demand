@@ -27,7 +27,7 @@ export class LanguagePage implements OnInit {
 		this.selected = localStorage.getItem('_language');
 		this.language = localStorage.getItem('_language') as ILanguage;
 		// TODO: use settings service to get list of supported languages
-		this.translate.addLangs(['en', 'bg', 'he', 'ru', 'es']);
+		this.translate.addLangs(['en-US', 'bg-BG', 'he-IL', 'ru-RU', 'es-ES']);
 	}
 
 	get buttonOK() {
