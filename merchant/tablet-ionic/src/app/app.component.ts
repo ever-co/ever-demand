@@ -59,7 +59,9 @@ export class AppComponent {
 				this.translate.use(this.defaultLanguage);
 			} else {
 				this.translate.use(
-					browserLang.match(/en|bg|he|ru|es/) ? browserLang : 'en'
+					browserLang.match(/en-US|bg-BG|he-IL|ru-RU|es-ES/)
+						? browserLang
+						: 'en-US'
 				);
 			}
 

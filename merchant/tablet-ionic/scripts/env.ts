@@ -98,7 +98,7 @@ export const env: Env = cleanEnv(
 		SETTINGS_MAINTENANCE_API_URL: str({
 			default: ''
 		}),
-		DEFAULT_LANGUAGE: str({ default: 'en' }),
+		DEFAULT_LANGUAGE: str({ default: 'en-US' }),
 		WEB_CONCURRENCY: num({ default: 1 }),
 		WEB_MEMORY: num({ default: 2048 }),
 		PORT: num({ default: 4202 })
