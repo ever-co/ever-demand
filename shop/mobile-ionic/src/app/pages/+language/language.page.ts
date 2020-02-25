@@ -18,7 +18,7 @@ export class LanguagePage {
 
 	set language(lang: ILanguage) {
 		this.store.language = lang;
-		this.location.back();
+		this.goBack();
 	}
 
 	get language(): ILanguage {
@@ -27,10 +27,5 @@ export class LanguagePage {
 
 	goBack() {
 		this.location.back();
-	}
-
-	// TODO: not sure it's needed, before we just call 'set language` using [(ngModel)]="language"
-	switchLanguage(language: string) {
-		this.translate.use(language);
 	}
 }
