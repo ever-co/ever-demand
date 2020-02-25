@@ -111,7 +111,7 @@ export const env: Env = cleanEnv(
 		// Not secret MixPanel Token
 		MIXPANEL_API_KEY: str({ default: '' }),
 
-		DEFAULT_LANGUAGE: str({ default: 'en' }),
+		DEFAULT_LANGUAGE: str({ default: 'en-US' }),
 
 		DEFAULT_LOCALE: str({ default: 'en-US' }),
 
