@@ -64,7 +64,7 @@ export class ThemeSettingsComponent {
 	];
 
 	currentTheme = 'everlight';
-	defaultLanguage = 'ru-RU';
+	defaultLanguage = '';
 
 	constructor(
 		protected stateService: StateService,
