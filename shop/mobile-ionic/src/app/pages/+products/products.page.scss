@@ -1,7 +1,7 @@
 @import '../../../modules/client.common.angular2/scss/everbie.common';
 
 ion-content {
-	background-color: $brand-darken;
+	background-color: #FCF7F8;
 
 	.products-view {
 		height: 100%;
@@ -11,13 +11,16 @@ ion-content {
 .float-right {
 	float: right;
 }
+ion-header{
+	border-bottom: 2px solid var(--ion-color-tertiary);
+}
 
 .header-actions {
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;
 	ion-label {
-		color: #96525c;
+		color: var(--ion-color-secondary);
 	}
 }
 

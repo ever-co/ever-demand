@@ -44,3 +44,7 @@ Thumbs.db
 yarn.lock
 /yarn-error.log
 *.lerna_backup
+admin/website-angular/yarn.lock
+backend/api/package-lock.json
+admin/website-angular/yarn.lock
+admin/website-angular/yarn.lock

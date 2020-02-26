@@ -36,12 +36,13 @@ img {
 }
 
 .icon {
-	border: 1px solid #95989a;
+	border: 3px solid #FAE4E0;
+	border-radius: 50%;
 	padding: 5px;
 }
 
 .productDescription {
-	color: #d0d0d0;
+	color: #C0979D;
 }
 
 .productDetails {
@@ -67,7 +68,7 @@ img {
 }
 
 .productTitle {
-	color: white;
+	color: var(--ion-color-secondary);
 	font-size: 16px;
 	white-space: nowrap;
 	overflow: hidden;
@@ -93,17 +94,22 @@ ion-row {
 		position: relative;
 		text-align: center;
 		height: 100%;
-		color: white;
 		text-align: center;
+		color: white;
 		span {
 			margin: 0 auto;
 		}
 	}
-
+	.button-assertive{
+		background-color: var(--ion-color-tertiary);
+	}
+	.button-brand{
+		color: var(--ion-color-secondary);
+	}
 	.disabled {
-		background-color: #cccccc !important;
+		background-color: #ffffff !important;
 		border: 1px solid #999999 !important;
-		color: #666666 !important;
+		color: #BE959B !important;
 	}
 }
 

@@ -125,12 +125,6 @@
 			"path": "./node_modules/cz-conventional-changelog"
 		}
 	},
-	"husky": {
-		"hooks": {
-			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-			"pre-commit": "pretty-quick --no-verify --staged"
-		}
-	},
 	"engines": {
 		"node": ">=10.15.0",
 		"yarn": ">=1.13.0"

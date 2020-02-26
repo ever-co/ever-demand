@@ -2,17 +2,20 @@
 	text-align: center;
 	line-height: 1;
 	padding-right: 5px;
-	color: white;
-
+	--color: #96525C !important;
 	.delivery-lines {
 		font-size: 80%;
+		color: #96525C;
 		small {
 			display: block;
 		}
 	}
-
 	.delivery-sign {
+		background: #f6efef;
+		color: #96525C !important;
 		font-size: 18px;
+		padding: 12px;
+		border-radius: 50%;
 	}
 }
 
@@ -27,7 +30,6 @@
 	padding: 5px;
 	z-index: 9999;
 	width: 70px;
-
 	line-height: 1;
 	text-align: center;
 }

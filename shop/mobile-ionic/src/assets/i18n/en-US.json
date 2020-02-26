@@ -37,7 +37,7 @@
 	"PRODUCTS_VIEW": {
 		"TITLE": "Products",
 		"BUY_BUTTON": {
-			"PRE": "Buy for ",
+			"PRE": "Order Now ",
 			"SUF": ""
 		},
 		"NOT_AVAILABLE": "Product not available",
@@ -49,7 +49,7 @@
 			"DETAILS": "Details",
 			"BACK": "Back",
 			"INCLUDES": "Includes",
-			"BUY_FOR": "Buy for"
+			"BUY_FOR": "Order Now "
 		}
 	},
 	"HELP_VIEW": {
