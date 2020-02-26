@@ -45,6 +45,16 @@ export class MerchantsPage implements OnDestroy {
 		}
 	}
 
+	onFocus({srcElement}){
+		srcElement.style.borderColor="#99505C";
+		srcElement.style.boxShadow= " 10px 10px 12px -13px rgba(0,0,0,0.75)";
+	}
+
+	onBlur({srcElement}){
+		srcElement.style.borderColor="#e9d6d0";
+		srcElement.style.boxShadow="none";
+	}
+
 	async selectMerchant(merchant) {
 		this.store.inStore = merchant.id;
 		this.router.navigateByUrl('products');

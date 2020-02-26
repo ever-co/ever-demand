@@ -147,7 +147,7 @@
 			"NO_TITLE": {
 				"DIVER_TITLE": "",
 				"ITEMS": {
-					"PRODUCTS": "Продукти",
+					"MASSAGES": "Масажи",
 					"LAST_PURCHASES": "Последни покупки",
 					"CALL_US": "Обадете ни се",
 					"ORDER_HISTORY": "История на поръчките"
@@ -221,7 +221,7 @@
 	"ORDER_INFO": "Информация за поръчката",
 	"CLOSE": "Затворен",
 	"SCAN": "Търсене",
-	"MERCHANTS": "Купечество",
+	"MERCHANTS": "Салони",
 	"NOT_FOUND": "Няма резултати!",
 	"IN_STORE": "В магазина",
 	"EXIT_STORE": "Излезте от магазина",

@@ -16,6 +16,9 @@ ion-content {
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;
+	ion-label {
+		color: #96525c;
+	}
 }
 
 .header-title {
@@ -40,10 +43,16 @@ ion-content {
 }
 
 .toggleDeliveryType {
-	zoom: 0.6;
+    zoom: .8;
+}
+ion-toggle {
+	--background: #f1f1f2;
+	--background-checked: #f1f1f2;
+	--handle-background: var(--ion-color-tertiary);
+	--handle-background-checked: var(--ion-color-tertiary);
 }
 .no-select {
-	color: #d0d0d0;
+	color: #c0979d;
 }
 
 .products-title {

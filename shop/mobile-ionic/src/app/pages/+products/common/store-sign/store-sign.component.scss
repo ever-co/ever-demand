@@ -1,13 +1,14 @@
 @import '../../../../../modules/client.common.angular2/scss/everbie.common';
 
 .in-store {
+	margin-top: 9px;
 	text-align: center;
 	line-height: 1;
 	padding-right: 5px;
 
 	.in-store-lines {
 		font-size: 80%;
-		color: #d0d0d0;
+		color: #C0979D;
 		small {
 			display: block;
 		}
@@ -22,8 +23,5 @@
 
 	.exit-store-sign {
 		color: $assertive-lighted;
-	}
-	.in-store-sign {
-		color: $balanced;
 	}
 }

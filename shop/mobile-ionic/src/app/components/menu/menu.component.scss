@@ -1,17 +1,77 @@
-ion-title {
-	text-align: center;
+ion-toolbar {
+	ion-icon {
+		margin-top: 15px;
+		height: 25px;
+		width: 32px;
+		color: transparent;
+		width: 50px;
+		margin-left: 100px;
+	}
 }
 
-ion-item-divider {
-	visibility: visible;
-	ion-icon {
-		margin-right: 10px;
-	}
+ion-title {
+	text-align: center;
+	font-weight: 100;
 }
 
 ion-item {
 	visibility: visible;
+	color: #ab757d;
+	--border-color: #e9d6d0;
+}
+ion-icon {
+	margin-right: 8px;
+	color: #c1989e;
+}
+ion-label {
+	font-size: 16px !important;
+}
+
+ion-list {
+	padding: 0;
+}
+
+.massages-sub-menu {
+	--background-activated: #ffe5e5;
+	--highlight-color-focused: #ffe5e5;
+	color: #ca5163;
+	ion-label {
+		margin: 16px 0 16px 20px;
+	}
 	ion-icon {
-		margin-right: 15px;
+		color: #d26775;
+		&:nth-child(3) {
+			font-size: 17px;
+		}
+	}
+}
+
+.sub-menu {
+	ion-icon {
+		padding-left: 27px;
+	}
+}
+ion-item-group {
+	&:first-child {
+		.secondary-menu-item {
+			ion-icon {
+				font-size: 25px;
+				text-align: center;
+				margin-right: 26px;
+			}
+		}
+	}
+}
+.secondary-menu-item {
+	visibility: visible;
+	--background: #fbf7f6;
+	text-transform: uppercase;
+	color: #96525c;
+	border-top: 1px solid #e9d6d0;
+	border-bottom: 1px solid #e9d6d0;
+	ion-icon {
+		margin-right: 20px;
+		color: #96525c;
+		font-size: 30px;
 	}
 }

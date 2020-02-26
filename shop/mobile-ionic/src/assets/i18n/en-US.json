@@ -42,8 +42,8 @@
 		},
 		"NOT_AVAILABLE": "Product not available",
 		"MINUTES": "min",
-		"DELIVERY": "Delivery",
-		"TAKEAWAY": "Takeout",
+		"DELIVERY": "SALOON",
+		"TAKEAWAY": "HOME",
 		"READYFOR": "Ready for",
 		"DETAILS": {
 			"DETAILS": "Details",
@@ -147,7 +147,7 @@
 			"NO_TITLE": {
 				"DIVER_TITLE": "",
 				"ITEMS": {
-					"PRODUCTS": "Products",
+					"MASSAGES": "Massages",
 					"LAST_PURCHASES": "Last Purchases",
 					"CALL_US": "Call Us",
 					"ORDER_HISTORY": "Order history"
@@ -197,9 +197,9 @@
 		]
 	},
 	"MERCHANTS_VIEW": {
-		"CLOSE_TO_YOU": "MERCHANTS CLOSE TO YOU",
-		"NAME": "Merchant name",
-		"WITH_NAME": "Merchants with name"
+		"CLOSE_TO_YOU": "SALOONS CLOSE TO YOU",
+		"NAME": "Saloon name",
+		"WITH_NAME": "Saloons with name"
 	},
 	"NO_SERVER_VIEW": {
 		"NO_SERVER": "Server connection is lost"
@@ -221,10 +221,10 @@
 	"ORDER_INFO": "Order Info",
 	"CLOSE": "Close",
 	"SCAN": "Scan",
-	"MERCHANTS": "Merchants",
-	"NOT_FOUND": "Not Found!",
-	"IN_STORE": "In Store",
-	"EXIT_STORE": "Exit Store",
+	"MERCHANTS": "Saloons",
+	"NOT_FOUND": "Results not found!",
+	"IN_STORE": "In Saloons",
+	"EXIT_STORE": "Exit Saloons",
 	"FAILED": "Failed",
 	"CANCELED": "Canceled",
 	"IN_DELIVERY": "In Delivery",

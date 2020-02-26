@@ -1,7 +1,7 @@
 <ion-header>
-	<ion-toolbar color="primary">
-		<ion-buttons slot="start">
-			<ion-menu-button autoHide="false"></ion-menu-button>
+	<ion-toolbar color="light">
+		<ion-buttons slot="start" >
+			<ion-menu-button autoHide="false" color="tertiary"></ion-menu-button>
 		</ion-buttons>
 		<ion-row nowrap>
 			<ion-col *ngIf="inStore" class="col-9 p-1 header-title">
@@ -27,7 +27,6 @@
 				>
 				<ion-toggle
 					*ngIf="!inStore"
-					color="secondary"
 					class="toggleDeliveryType pr-5px pl-5px"
 					(ionChange)="toggleGetProductsType()"
 					[(ngModel)]="isDeliveryRequired"

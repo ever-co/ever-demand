@@ -1,4 +1,11 @@
 @import '../../../modules/client.common.angular2/scss/everbie.common';
+ion-header {
+	ion-title {
+		width: fit-content;
+		margin: auto;
+		font-size: 16px;
+	}
+}
 
 .back-btn {
 	font-size: 30px;
@@ -7,6 +14,17 @@
 }
 
 .merchants-content {
+	ion-searchbar {
+		color: #94969f;
+		border: 2px solid #e9d6d0;
+		padding: 0;
+		height: 37px;
+		margin: 11px auto;
+		border-radius: 5px;
+		transition: all .8s ease-out;
+	}
+	background: var(--ion-color-primary);
+
 	.merchants-list {
 		background: $brand-lighted;
 		margin: 0;
@@ -17,12 +35,15 @@
 		bottom: 0;
 		top: 3.8rem;
 	}
-
+	.not-found-img {
+		width: 50%;
+		margin: 10% auto;
+	}
 	.box {
-		padding: 12px 12px 12px 0;
+		margin: 11px auto;
 		button {
 			padding: 10px;
-			border-radius: 10px;
+			border-radius: 5px;
 			display: flex !important;
 			align-content: center !important;
 			align-items: center !important;
@@ -31,6 +52,7 @@
 			color: white;
 			text-align: center;
 			font-size: 1rem;
+			box-shadow: 2px 3px 12px -5px rgba(0, 0, 0, 0.75);
 			span {
 				margin: 0 auto;
 			}
@@ -38,9 +60,10 @@
 	}
 
 	.merchants-list-header {
-		color: white;
+		color: #2a2c39;
 		width: 100%;
 		text-align: center;
+		text-transform: initial;
 	}
 
 	.merchants-container {
@@ -49,13 +72,18 @@
 		overflow: scroll;
 
 		.not-found-text {
-			color: white;
+			color: var(--ion-color-secondary);
 			width: 100%;
 			text-align: center;
 		}
-
-		:first-child {
-			margin-top: 0 !important;
+		ion-item{
+			// border-radius:15px ;
+			box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.25);
+		}
+		ion-avatar{
+			img{
+				border: 2px solid #F6CEC7;
+			}
 		}
 	}
 }
