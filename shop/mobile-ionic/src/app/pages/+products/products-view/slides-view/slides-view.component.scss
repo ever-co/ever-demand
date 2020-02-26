@@ -52,6 +52,7 @@ ion-slide {
 		position: absolute;
 		right: 10px;
 		top: -28px;
+		border: 3px solid #F6CEC7;
 	}
 
 	ion-col {
@@ -59,14 +60,15 @@ ion-slide {
 	}
 
 	.title {
-		color: #fff;
+		color: var(--ion-color-secondary);
+
 		font-family: Roboto, 'Helvetica Neue', sans-serif;
 		font-weight: 400;
 		font-size: 20px;
 	}
 
 	.description {
-		color: #fff;
+		color: var(--ion-color-dark);
 		font-family: Roboto, 'Helvetica Neue', sans-serif;
 		font-weight: 400;
 		font-size: 13px;
@@ -94,6 +96,8 @@ ion-slide {
 
 .slides-buttons {
 	height: 35%;
+	width: 95%;
+    margin: 0 auto 15px;
 	button {
 		padding: 15px;
 		border-radius: 5px;
@@ -106,16 +110,19 @@ ion-slide {
 		color: white;
 		text-align: center;
 		font-size: 0.9em;
-
+	
 		span {
 			margin: 0 auto;
 		}
 	}
-
+	
+	.button-brand {
+		color: var(--ion-color-secondary);
+	}
 	.disabled {
-		background: #cccccc !important;
-		border: 1px solid #999999 !important;
-		color: #666666 !important;
+		background: #F5E7E4 !important;
+		border: 1px solid #F5E7E4 !important;
+		color: #DBB2AA !important;
 	}
 }
 
@@ -131,6 +138,7 @@ ion-slide {
 	position: relative;
 	height: 25%;
 	.info-bottom {
+		background: #fff;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -162,6 +170,7 @@ ion-slide {
 		.bottom {
 			e-cu-warehouse-logo {
 				top: -38px;
+				
 			}
 		}
 		.info-bottom {

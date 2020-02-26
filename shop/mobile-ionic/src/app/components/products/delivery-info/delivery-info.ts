@@ -8,23 +8,31 @@ import DeliveryType from '@modules/server.common/enums/DeliveryType';
 
 const defaultDeliveryTimeMin = environment.DELIVERY_TIME_MIN;
 const defaultDeliveryTimeMax = environment.DELIVERY_TIME_MAX;
-
+const productsView = environment.PRODUCTS_VIEW_TYPE;
 @Component({
 	selector: 'e-cu-delivery-info',
 	styleUrls: ['./delivery-info.scss'],
 	template: `
 		<div
 			class="delivery-info"
+			
 			[ngClass]="{
 				'over-image brand-light': overImage,
-				'show-top': !hasDiscount
+				'show-top': !hasDiscount,
+				'slides': getIsSlides()
 			}"
 		>
-			<div class="delivery-sign">
-				<i class="fa {{ getProductDeliverySignIconName() }}"></i>
+			<div class="delivery-sign" [ngClass]="{
+				'slides': getIsSlides(),
+				'list': !getIsSlides()
+			}">
+			<ion-icon src="../../../../assets/icons/{{getProductDeliverySignIconName()}}.svg"></ion-icon>
 			</div>
 
-			<div class=" delivery-lines">
+			<div class=" delivery-lines" [ngClass]="{
+				'slides': getIsSlides(),
+				'list': !getIsSlides()
+			}">
 				<small>{{ getProductDeliveryLine1() }}</small>
 				<small>{{ getProductDeliveryLine2() }}</small>
 			</div>
@@ -89,6 +97,7 @@ export class DeliveryInfoComponent implements OnInit {
 			.toPromise();
 	}
 
+
 	getIsInstant(currentProduct: WarehouseProduct): boolean {
 		if (currentProduct == null) {
 			return false;
@@ -123,14 +132,22 @@ export class DeliveryInfoComponent implements OnInit {
 			}
 		}
 	}
+	getIsSlides(){
+		if(productsView==="slides"){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
 	getProductDeliverySignIconName() {
 		if (this.currentProduct == null) {
 			return '';
 		}
 
-		return this.isTakeaway ? 'fa-bolt' : 'fa-motorcycle';
+		return this.isTakeaway ? 'availeble-lightning' : 'motorcycle';
 	}
+
 
 	getProductDeliveryLine1() {
 		if (this.currentProduct == null) {

@@ -29,7 +29,7 @@ $assertive-darken: darken($assertive, 5%);
 		}
 
 		&.button-assertive {
-			background-color: $assertive-darken ;
+			background-color: var(--ion-color-tertiary) ;
 			box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
 		}
 	}

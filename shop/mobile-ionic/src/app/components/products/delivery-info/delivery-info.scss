@@ -2,23 +2,40 @@
 	text-align: center;
 	line-height: 1;
 	padding-right: 5px;
-	--color: #96525C !important;
+	--color: #96525c !important;
 	.delivery-lines {
 		font-size: 80%;
-		color: #96525C;
 		small {
 			display: block;
 		}
 	}
+	.delivery-lines.list {
+		color: #96525c;
+	}
+	.delivery-lines.slides {
+		color: #ffffff;
+	}
 	.delivery-sign {
-		background: #f6efef;
-		color: #96525C !important;
 		font-size: 18px;
 		padding: 12px;
 		border-radius: 50%;
 	}
+	.delivery-sign.list {
+		background: #f6efef;
+		color: #96525c !important;
+	}
+	.delivery-sign.slides {
+		color: #ffffff !important;
+		padding: 0;
+		padding-right: 5px;
+	}
 }
+.delivery-info.slides {
+	background: rgba( var(--ion-color-secondary-rgb), .7);
+	display: flex;
+	align-items: center;
 
+}
 .delivery-info.over-image {
 	opacity: 0.8;
 	position: absolute;

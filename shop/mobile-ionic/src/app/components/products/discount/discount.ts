@@ -6,15 +6,15 @@ import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 	styleUrls: ['./discount.scss'],
 	template: `
 		<div *ngIf="getDiscount() != 0" class="discount-circle brand-light">
+		
+		<ion-icon src="../../../assets/icons/discount-sissors.svg" class="d-scissors"></ion-icon>
 			<div class="price-initial">
-				{{ currentProduct ? '$' + currentProduct.initialPrice : '' }}
+				<span class="initial-price">{{ currentProduct ? '$' + currentProduct.initialPrice : '' }} </span>
+				<span>{{ currentProduct ? '$' + currentProduct.price : '' }}</span>
 			</div>
-			<span
-				><i class="fa fa-scissors" aria-hidden="true"></i>
-				{{ getDiscount() }}%</span
-			>
 		</div>
 	`
+	
 })
 export class DiscountComponent {
 	@Input()
