@@ -25,6 +25,7 @@ import { env } from '../../env';
 import { AuthService, AuthServiceFactory } from '../auth';
 import { v1 as uuid } from 'uuid';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
+import { Repository } from 'typeorm';
 
 /**
  * Warehouses Service
@@ -49,7 +50,9 @@ export class WarehousesService extends DBService<Warehouse>
 		@inject(ProductsService)
 		private readonly productsService: ProductsService,
 		@inject('Factory<AuthService>')
-		private readonly authServiceFactory: AuthServiceFactory
+		private readonly authServiceFactory: AuthServiceFactory,
+		@inject('WarehouseRepository')
+		private readonly _warehouseRepository: Repository<Warehouse>
 	) {
 		super();
 		this.authService = this.authServiceFactory({
@@ -57,6 +60,15 @@ export class WarehousesService extends DBService<Warehouse>
 			Entity: Warehouse,
 			saltRounds: env.USER_PASSWORD_BCRYPT_SALT_ROUNDS
 		});
+
+		_warehouseRepository
+			.count()
+			.then((c) => {
+				console.log('Warehouses count: ' + c);
+			})
+			.catch((e) => {
+				console.log(e);
+			});
 	}
 
 	/**

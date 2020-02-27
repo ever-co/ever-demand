@@ -222,17 +222,18 @@ export abstract class DBService<T extends DBObject<any, any>>
 		if (lastValue == null) {
 			throw new Error(".remove(objectId) error - Object don't exist");
 		} else {
-			this.existence.next({
-				id: objectId,
-				value: null,
-				lastValue,
-				type: ExistenceEventType.Removed
-			});
+			const callId = uuid();
 
-			this.log.info(
-				{ callId, objectId, lastValue },
-				'.remove(objectId) removed object'
-			);
+			this.log.info({ callId }, '.removeAll() called!');
+
+			try {
+				await this.Model.remove({}).exec();
+			} catch (err) {
+				this.log.error({ callId, err }, '.removeAll() thrown error!');
+				throw err;
+			}
+
+			this.log.info({ callId }, '.removeAll() removed all!');
 		}
 	}
 

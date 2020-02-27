@@ -1,35 +1,51 @@
 import * as Logger from 'bunyan';
-import { injectable } from 'inversify';
+import { injectable, inject } from 'inversify';
 import { createEverLogger } from '../../helpers/Log';
 import { DBService } from '@pyro/db-server';
 import IProductsCategoryRouter from '@modules/server.common/routers/IProductsCategoryRouter';
 import { Observable } from 'rxjs';
 import { asyncListener, observableListener, routerName } from '@pyro/io';
 import IService from '../IService';
-import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import { UpdateObject } from '@pyro/db/db-update-object';
 import { CreateObject } from '@pyro/db/db-create-object';
 import { first, switchMap, map } from 'rxjs/operators';
+import { Repository } from 'typeorm';
+import ProductCategory from '@modules/server.common/entities/ProductsCategory';
 
 @injectable()
 @routerName('products-category')
-export class ProductsCategoriesService extends DBService<ProductsCategory>
+export class ProductsCategoriesService extends DBService<ProductCategory>
 	implements IProductsCategoryRouter, IService {
-	public readonly DBObject = ProductsCategory;
+	public readonly DBObject = ProductCategory;
 
 	protected readonly log: Logger = createEverLogger({
 		name: 'productsCategoriesService'
 	});
 
+	constructor(
+		@inject('ProductCategoryRepository')
+		private readonly _productCategoryRepository: Repository<ProductCategory>
+	) {
+		super();
+		_productCategoryRepository
+			.count()
+			.then((c) => {
+				console.log('Product Categories count: ' + c);
+			})
+			.catch((e) => {
+				console.log(e);
+			});
+	}
+
 	/**
 	 * Get Product Category by Id
 	 *
-	 * @param {ProductsCategory['id']} id
-	 * @returns {(Observable<ProductsCategory | null>)}
+	 * @param {ProductCategory['id']} id
+	 * @returns {(Observable<ProductCategory | null>)}
 	 * @memberof ProductsCategoriesService
 	 */
 	@observableListener()
-	get(id: ProductsCategory['id']): Observable<ProductsCategory | null> {
+	get(id: ProductCategory['id']): Observable<ProductCategory | null> {
 		return super.get(id).pipe(
 			map(async (category) => {
 				await this.throwIfNotExists(id);
@@ -42,14 +58,14 @@ export class ProductsCategoriesService extends DBService<ProductsCategory>
 	/**
 	 * Create new Product Category
 	 *
-	 * @param {CreateObject<ProductsCategory>} category
-	 * @returns {Promise<ProductsCategory>}
+	 * @param {CreateObject<ProductCategory>} category
+	 * @returns {Promise<ProductCategory>}
 	 * @memberof ProductsCategoriesService
 	 */
 	@asyncListener()
 	async create(
-		category: CreateObject<ProductsCategory>
-	): Promise<ProductsCategory> {
+		category: CreateObject<ProductCategory>
+	): Promise<ProductCategory> {
 		return super.create(category);
 	}
 
@@ -57,15 +73,15 @@ export class ProductsCategoriesService extends DBService<ProductsCategory>
 	 * Updates existed Product Category
 	 *
 	 * @param {string} id
-	 * @param {UpdateObject<ProductsCategory>} updateObject
-	 * @returns {Promise<ProductsCategory>}
+	 * @param {UpdateObject<ProductCategory>} updateObject
+	 * @returns {Promise<ProductCategory>}
 	 * @memberof ProductsCategoriesService
 	 */
 	@asyncListener()
 	async update(
 		id: string,
-		updateObject: UpdateObject<ProductsCategory>
-	): Promise<ProductsCategory> {
+		updateObject: UpdateObject<ProductCategory>
+	): Promise<ProductCategory> {
 		await this.throwIfNotExists(id);
 		return super.update(id, updateObject);
 	}

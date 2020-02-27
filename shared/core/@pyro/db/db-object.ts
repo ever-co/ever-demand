@@ -5,7 +5,13 @@ import { PyroObjectId } from './object-id';
 import * as mongoose from 'mongoose';
 import { toDate } from '../../utils';
 import * as _ from 'lodash';
-import { Column, PrimaryColumn } from 'typeorm';
+import {
+	Column,
+	PrimaryColumn,
+	CreateDateColumn,
+	UpdateDateColumn,
+	PrimaryGeneratedColumn
+} from 'typeorm';
 
 export interface DBObjectClass extends Function {
 	modelName?: string;
@@ -26,21 +32,21 @@ export abstract class DBObject<
 	constructor(obj: RawObject) {
 		_.assign(this, obj);
 
-		if (
-			mongoose != null &&
-			mongoose.Types != null &&
-			mongoose.Types.ObjectId != null
-		) {
-			if (obj && obj['_id']) {
-				this['_id'] = mongoose.Types.ObjectId.createFromHexString(
-					obj['_id'].toString()
-				);
-			}
-		}
+		// if (
+		// 	mongoose != null &&
+		// 	mongoose.Types != null &&
+		// 	mongoose.Types.ObjectId != null
+		// ) {
+		// 	if (obj && obj['_id']) {
+		// 		this['_id'] = mongoose.Types.ObjectId.createFromHexString(
+		// 			obj['_id'].toString()
+		// 		);
+		// 	}
+		// }
 	}
 
-	@PrimaryColumn()
-	_id: PyroObjectId;
+	@PrimaryGeneratedColumn()
+	_id: string;
 
 	/**
 	 * Time when entity was created
@@ -49,7 +55,7 @@ export abstract class DBObject<
 	 * @type {(Date | string)}
 	 * @memberof DBObject
 	 */
-	@Column()
+	@CreateDateColumn()
 	_createdAt: Date | string;
 
 	/**
@@ -58,7 +64,7 @@ export abstract class DBObject<
 	 * @type {(Date | string)}
 	 * @memberof DBObject
 	 */
-	@Column()
+	@UpdateDateColumn()
 	_updatedAt: Date | string;
 
 	get createdAt(): Date {

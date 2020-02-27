@@ -64,9 +64,9 @@ process.on('unhandledRejection', (err, promise) => {
 (mongoose as any).Promise = BluebirdPromise;
 
 (async () => {
-	// needs TypeORM connection to be ready before we initialize Services
-	await ServicesApp.CreateTypeORMConnection();
+	await ServicesApp.createTypeORMConnection();
 
+	// needs TypeORM connection to be ready before we initialize Services
 	const app = servicesContainer.get<ServicesApp>(ServicesApp);
 
 	await app.start(async () => {

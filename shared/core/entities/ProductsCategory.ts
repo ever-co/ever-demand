@@ -15,7 +15,7 @@ import { Entity, Column } from 'typeorm';
  */
 @ModelName('ProductCategory')
 @Entity({ name: 'productcategories' })
-class ProductsCategory
+class ProductCategory
 	extends DBObject<IProductsCategory, IProductsCategoryCreateObject>
 	implements IProductsCategory {
 	/**
@@ -45,4 +45,4 @@ class ProductsCategory
 	isDeleted: boolean;
 }
 
-export default ProductsCategory;
+export default ProductCategory;

@@ -30,21 +30,22 @@ You should have received a copy of the relevant GNU Licenses along with this pro
 
 We suggest to check a great overview about different open-source licenses at <https://choosealicense.com/licenses>.  
 For example, for AGPL v3 (strongest copyleft license we use) conditions can be summarized as following:
-- making available complete source code of licensed works and modifications, which include larger works using a licensed work, under the same license. 
-- Copyright and license notices must be preserved
-- Contributors provide an express grant of patent rights. 
-- When a modified version is used to provide a service over a network, the complete source code of the modified version must be made available.
+
+-   making available complete source code of licensed works and modifications, which include larger works using a licensed work, under the same license.
+-   Copyright and license notices must be preserved
+-   Contributors provide an express grant of patent rights.
+-   When a modified version is used to provide a service over a network, the complete source code of the modified version must be made available.
 
 Feel free to [Contact Us](https://github.com/ever-co/ever#contact-us) for an additional information about used open-source licenses!
 
 ### _Ever Platform Small Business_ License
 
-Ever® Platform Small Business™ License can be purchased by businesses with annual revenues do not exceed $1 million.
+Ever® Platform Small Business™ License can be purchased by businesses with annual revenues do not exceed \$1 million.
 For more information, please contact <mailto:ever@ever.co>.
 
 ### _Ever Platform Enterprise_ License
 
-Ever® Platform Enterprise™ License can be purchased by businesses with more than $1 million in annual revenue.
+Ever® Platform Enterprise™ License can be purchased by businesses with more than \$1 million in annual revenue.
 For more information, please contact <mailto:ever@ever.co>.
 
 ## Credits

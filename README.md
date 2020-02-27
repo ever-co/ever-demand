@@ -1,4 +1,4 @@
-#### *** If you are running IT Company, check our new project [Gauzy](https://github.com/ever-co/gauzy) ***
+#### **_ If you are running IT Company, check our new project [Gauzy](https://github.com/ever-co/gauzy) _**
 
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/ever)
 [![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/ever-co/ever?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -155,12 +155,12 @@ See relevant section in our [documentation](https://github.com/ever-co/ever/wiki
 
 Finally, each project from Ever Platform could start by single command from this list:
 
-* Run API server `yarn run:server`
-* Run Admin Website `yarn run:admin` and open http://localhost:4200
-* Run Shopping Mobile App `yarn run:shopmobile` and open http://localhost:4201
-* Run Merchant Ionic Tablet App `yarn run:merchant` and open http://localhost:4202
-* Run Carrier Mobile app `yarn run:carrier` and open http://localhost:4203
-* Run Shopping Website `yarn run:shopweb` and open http://localhost:3000
+-   Run API server `yarn run:server`
+-   Run Admin Website `yarn run:admin` and open http://localhost:4200
+-   Run Shopping Mobile App `yarn run:shopmobile` and open http://localhost:4201
+-   Run Merchant Ionic Tablet App `yarn run:merchant` and open http://localhost:4202
+-   Run Carrier Mobile app `yarn run:carrier` and open http://localhost:4203
+-   Run Shopping Website `yarn run:shopweb` and open http://localhost:3000
 
 Note 1: during development you can run server with `yarn run:server:dev` to enable watch on TS files changes
 
@@ -237,9 +237,10 @@ In a production setup, all client-side to server-side (backend, APIs) communicat
 ## License
 
 This software is available under following licenses:
-- [Ever® Platform Community™ Edition](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-community-edition-license)
-- [Ever® Platform Small Business™](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-small-business-license)
-- [Ever® Platform Enterprise™](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-enterprise-license)
+
+-   [Ever® Platform Community™ Edition](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-community-edition-license)
+-   [Ever® Platform Small Business™](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-small-business-license)
+-   [Ever® Platform Enterprise™](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-enterprise-license)
 
 #### The default Ever® Platform™ license, without a valid Ever® Platform Enterprise™ or Ever® Platform Small Business™ License agreement, is the Ever® Platform Community™ Edition License.
 
@@ -267,4 +268,4 @@ All other brand and product names are trademarks, registered trademarks or servi
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fever.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fever?ref=badge_shield)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io)
 
-#### *** If you are running IT Company, check our new project [Gauzy](https://github.com/ever-co/gauzy) ***
+#### **_ If you are running IT Company, check our new project [Gauzy](https://github.com/ever-co/gauzy) _**

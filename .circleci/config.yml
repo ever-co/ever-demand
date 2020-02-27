@@ -16,7 +16,7 @@ aliases:
           sudo npm install --quiet node-gyp -g
           sudo npm install cordova -g
           sudo npm install ionic -g
-          sudo npm config set python /usr/bin/python         
+          sudo npm config set python /usr/bin/python
     - &install-chrome
       name: Install Chrome
       command: |
@@ -40,8 +40,8 @@ defaults: &defaults
     # we define default work dir, however almost every job redefine it
     working_directory: /tmp/workspace
     environment:
-       JVM_OPTS: -Xmx3200m
-       ANDROID_HOME: /usr/local/android-sdk-linux
+        JVM_OPTS: -Xmx3200m
+        ANDROID_HOME: /usr/local/android-sdk-linux
 
 jobs:
     build-monorepo-root:
@@ -151,7 +151,7 @@ jobs:
         steps:
             - checkout
             - run: *install-deps
-            - run: 
+            - run:
                   name: Install Yarn
                   command: sudo npm install -g yarn --force
             - run: *install-gradle
@@ -178,19 +178,19 @@ jobs:
                   command: cd carrier/mobile-ionic && yarn ionic cordova platform rm android
             - run:
                   name: Add new android platform
-                  command: | 
-                    cd carrier/mobile-ionic 
-                    yarn ionic cordova platform add android@8.0.0 --noresources
-                    ionic config set -g telemetry true                    
-                    # echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
-                    # echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
+                  command: |
+                      cd carrier/mobile-ionic 
+                      yarn ionic cordova platform add android@8.0.0 --noresources
+                      ionic config set -g telemetry true                    
+                      # echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
+                      # echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
             - run:
                   name: Run Cordova Build for Android (Debug)
-                  command: | 
-                    cd carrier/mobile-ionic
-                    yarn cordova:build
-                    mkdir -p /tmp/apk
-                    cp -r platforms/android/app/build/outputs/apk/debug/app-debug.apk /tmp/apk/carrier.apk
+                  command: |
+                      cd carrier/mobile-ionic
+                      yarn cordova:build
+                      mkdir -p /tmp/apk
+                      cp -r platforms/android/app/build/outputs/apk/debug/app-debug.apk /tmp/apk/carrier.apk
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-carrier-mobile-ionic-{{ checksum "yarn.lock" }}
@@ -198,7 +198,7 @@ jobs:
                       - ~/.cache/yarn
             - store_artifacts:
                   path: /tmp/apk
-                  destination: apks          
+                  destination: apks
             - persist_to_workspace:
                   root: /tmp/workspace/carrier/mobile-ionic
                   paths:
@@ -211,10 +211,10 @@ jobs:
         steps:
             - checkout
             - run: *install-deps
-            - run: 
+            - run:
                   name: Install Yarn
                   command: sudo npm install -g yarn --force
-            - run: *install-gradle                  
+            - run: *install-gradle
             - run:
                   name: 'Pull Submodules'
                   command: |
@@ -238,19 +238,19 @@ jobs:
                   command: cd shop/mobile-ionic && yarn ionic cordova platform rm android
             - run:
                   name: Add new android platform
-                  command: | 
-                    cd shop/mobile-ionic
-                    yarn ionic cordova platform add android@8.0.0 --noresources
-                    ionic config set -g telemetry true                    
-                    # echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
-                    # echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
+                  command: |
+                      cd shop/mobile-ionic
+                      yarn ionic cordova platform add android@8.0.0 --noresources
+                      ionic config set -g telemetry true                    
+                      # echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
+                      # echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
             - run:
                   name: Run Cordova Build for Android (Debug)
-                  command: | 
-                    cd shop/mobile-ionic
-                    yarn cordova:build
-                    mkdir -p /tmp/apk
-                    cp -r platforms/android/app/build/outputs/apk/debug/app-debug.apk /tmp/apk/shop.apk
+                  command: |
+                      cd shop/mobile-ionic
+                      yarn cordova:build
+                      mkdir -p /tmp/apk
+                      cp -r platforms/android/app/build/outputs/apk/debug/app-debug.apk /tmp/apk/shop.apk
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-shop-mobile-ionic-{{ checksum "yarn.lock" }}
@@ -304,7 +304,7 @@ jobs:
         steps:
             - checkout
             - run: *install-deps
-            - run: 
+            - run:
                   name: Install Yarn
                   command: sudo npm install -g yarn --force
             - run: *install-gradle
@@ -312,7 +312,7 @@ jobs:
                   name: 'Pull Submodules'
                   command: |
                       git submodule init
-                      git submodule update --remote            
+                      git submodule update --remote
             - restore_cache:
                   name: Restore Yarn Package Cache
                   keys:
@@ -331,19 +331,19 @@ jobs:
                   command: cd merchant/tablet-ionic && yarn ionic cordova platform rm android
             - run:
                   name: Add new android platform
-                  command: | 
-                    cd merchant/tablet-ionic
-                    yarn ionic cordova platform add android@8.0.0 --noresources
-                    ionic config set -g telemetry true                    
-                    # echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
-                    # echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
+                  command: |
+                      cd merchant/tablet-ionic
+                      yarn ionic cordova platform add android@8.0.0 --noresources
+                      ionic config set -g telemetry true                    
+                      # echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
+                      # echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
             - run:
                   name: Run Cordova Build for Android (Debug)
-                  command: | 
-                    cd merchant/tablet-ionic
-                    yarn cordova:build
-                    mkdir -p /tmp/apk
-                    cp -r platforms/android/app/build/outputs/apk/debug/app-debug.apk /tmp/apk/merchant.apk
+                  command: |
+                      cd merchant/tablet-ionic
+                      yarn cordova:build
+                      mkdir -p /tmp/apk
+                      cp -r platforms/android/app/build/outputs/apk/debug/app-debug.apk /tmp/apk/merchant.apk
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-merchant-tablet-ionic-{{ checksum "yarn.lock" }}
@@ -364,7 +364,7 @@ jobs:
         steps:
             - run: *install-deps
             - run: *install-yarn
-            - run: *install-chrome            
+            - run: *install-chrome
             - attach_workspace:
                   at: /tmp/workspace/carrier/mobile-ionic
             - run:

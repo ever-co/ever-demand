@@ -39,7 +39,7 @@ export const Types = {
 
 			const op = { ...options };
 			op.type = String;
-			op.ref = (multi ? Type[0] : Type).modelName;
+			op.ref = typeof (multi ? Type[0] : Type);
 
 			Schema(multi ? [op] : op)(target, propertyKey);
 		};

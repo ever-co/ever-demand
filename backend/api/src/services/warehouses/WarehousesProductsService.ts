@@ -460,7 +460,9 @@ export class WarehousesProductsService
 
 		if (product != null) {
 			this.log.info(
-				`Product price before: ${product.price} and we want to change it to: ${price}`
+				`Product price before: ${
+					product.price
+				} and we want to change it to: ${price}`
 			);
 			product.price = price;
 
@@ -513,7 +515,9 @@ export class WarehousesProductsService
 
 		if (product != null) {
 			this.log.info(
-				`Product count before remove: ${product.count} and we want to remove ${count} products`
+				`Product count before remove: ${
+					product.count
+				} and we want to remove ${count} products`
 			);
 
 			if (product.count >= count) {
@@ -578,7 +582,9 @@ export class WarehousesProductsService
 
 		if (product != null) {
 			this.log.info(
-				`Product sold count before decrease: ${product.soldCount} and we want to decrease ${count} products`
+				`Product sold count before decrease: ${
+					product.soldCount
+				} and we want to decrease ${count} products`
 			);
 
 			if (product.soldCount >= count) {

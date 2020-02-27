@@ -34,7 +34,7 @@ import Invite from '@modules/server.common/entities/Invite';
 import InviteRequest from '@modules/server.common/entities/InviteRequest';
 import Order from '@modules/server.common/entities/Order';
 import Product from '@modules/server.common/entities/Product';
-import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
+import ProductCategory from '@modules/server.common/entities/ProductsCategory';
 import User from '@modules/server.common/entities/User';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { ConfigService } from '../config/config.service';
@@ -82,12 +82,13 @@ export class ServicesApp {
 		http.globalAgent.maxSockets = maxSockets;
 		https.globalAgent.maxSockets = maxSockets;
 
-		this._configDB();
+		this._configMongoDB();
 	}
 
 	async start(callback: () => void) {
 		this.callback = callback;
-		await this._connectDB();
+		await this._onDBConnect();
+		console.log('end');
 	}
 
 	static getEntities() {
@@ -99,14 +100,14 @@ export class ServicesApp {
 			InviteRequest,
 			Order,
 			Product,
-			ProductsCategory,
+			ProductCategory,
 			User,
 			Warehouse
 		];
 		return entities;
 	}
 
-	static async CreateTypeORMConnection() {
+	static async createTypeORMConnection() {
 		const typeORMLog = createEverLogger({ name: 'TypeORM' });
 
 		// list of entities for which Repositories will be greated in TypeORM
@@ -115,16 +116,22 @@ export class ServicesApp {
 		const conn = await createConnection({
 			name: 'typeorm',
 			// TODO: put this into settings (it's mongo only during testing of TypeORM integration!)
-			type: 'mongodb',
-			url: env.DB_URI,
+			// type: 'mongodb',
+			// url: env.DB_URI,
+			type: 'mysql',
+			host: 'localhost',
+			port: 3306,
+			database: 'test',
+			username: 'ever',
+			password: 'ever',
 			entities,
 			synchronize: true,
-			useNewUrlParser: true,
-			autoReconnect: true,
-			reconnectTries: Number.MAX_VALUE,
-			poolSize: ServicesApp._poolSize,
-			connectTimeoutMS: ServicesApp._connectTimeoutMS,
-			logging: true
+			// useNewUrlParser: true,
+			// autoReconnect: true,
+			// reconnectTries: Number.MAX_VALUE,
+			// poolSize: ServicesApp._poolSize,
+			// connectTimeoutMS: ServicesApp._connectTimeoutMS,
+			logging: false
 		});
 
 		console.log(
@@ -155,7 +162,7 @@ export class ServicesApp {
 		}
 	}
 
-	private _configDB() {
+	private _configMongoDB() {
 		this.db.on('error', (err) => this.log.error(err));
 
 		this.db.on('disconnected', () => {
@@ -182,7 +189,7 @@ export class ServicesApp {
 			.on('SIGTERM', this._gracefulExit);
 	}
 
-	private async _connectDB() {
+	private async _connectToMongo() {
 		try {
 			const connectionOptions: mongoose.ConnectionOptions = {
 				useCreateIndex: true,
@@ -212,9 +219,15 @@ export class ServicesApp {
 
 		this.log.info({ db: this.db_server }, 'Connected to DB');
 
-		await this._registerModels();
+		if (process.env.DB === 'mongo') {
+			console.log('registering models');
+			await this._registerModels();
+		}
+
 		await this._registerEntityAdministrator();
+		console.log('start passport');
 		this._passportSetup();
+		console.log('start express');
 		await this._startExpress();
 		await this._startSocketIO();
 
@@ -242,12 +255,14 @@ export class ServicesApp {
 		const adminEmail = 'admin@ever.co'; // TODO: put to config
 		const adminPassword = 'admin'; // TODO: put to config
 
+		console.log('Counting admins');
 		const adminCollectionCount = await this._adminsService.count({
 			email: adminEmail
 		});
+		console.log('Finished Counting admins');
 
 		if (adminCollectionCount === 0) {
-			this._adminsService.register({
+			await this._adminsService.register({
 				admin: {
 					email: adminEmail,
 					name: 'Admin',

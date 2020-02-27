@@ -1,21 +1,21 @@
 import { Observable } from 'rxjs';
-import ProductsCategory from '../entities/ProductsCategory';
+import ProductCategory from '../entities/ProductsCategory';
 import { CreateObject } from '@pyro/db/db-create-object';
 import { UpdateObject } from '@pyro/db/db-update-object';
 
 interface IProductsCategoryRouter {
-	get(id: ProductsCategory['id']): Observable<ProductsCategory | null>;
+	get(id: ProductCategory['id']): Observable<ProductCategory | null>;
 
 	create(
-		createInput: CreateObject<ProductsCategory>
-	): Promise<ProductsCategory>;
+		createInput: CreateObject<ProductCategory>
+	): Promise<ProductCategory>;
 
 	update(
-		id: ProductsCategory['id'],
-		updateInput: UpdateObject<ProductsCategory>
-	): Promise<ProductsCategory>;
+		id: ProductCategory['id'],
+		updateInput: UpdateObject<ProductCategory>
+	): Promise<ProductCategory>;
 
-	remove(id: ProductsCategory['id']): Promise<void>;
+	remove(id: ProductCategory['id']): Promise<void>;
 }
 
 export default IProductsCategoryRouter;

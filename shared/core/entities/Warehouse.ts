@@ -186,7 +186,7 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	 * @memberof Warehouse
 	 */
 	@Schema([Number])
-	@Column()
+	@Column('simple-array')
 	forwardOrdersUsing: ForwardOrdersMethod[];
 
 	/**

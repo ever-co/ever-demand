@@ -45,6 +45,7 @@ import _ = require('lodash');
 import * as faker from 'faker';
 import { WarehousesService } from '../../services/warehouses';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
+import { Repository } from 'typeorm';
 
 // TODO: this and other Stripe related things should be inside separate Payments Service
 const stripe: Stripe = new Stripe(env.STRIPE_SECRET_KEY);
@@ -83,9 +84,20 @@ export class UsersService extends DBService<User>
 		@inject(new LazyServiceIdentifer(() => DevicesService))
 		protected devicesService: DevicesService,
 		@inject(new LazyServiceIdentifer(() => WarehousesService))
-		protected _storesService: WarehousesService
+		protected _storesService: WarehousesService,
+		@inject('UserRepository')
+		private readonly _userRepository: Repository<User>
 	) {
 		super();
+
+		_userRepository
+			.count()
+			.then((c) => {
+				console.log('Users count: ' + c);
+			})
+			.catch((e) => {
+				console.log(e);
+			});
 
 		// TODO: too many hardcoded constants used below. Refactor!
 		this.watchedFiles = _.zipObject(

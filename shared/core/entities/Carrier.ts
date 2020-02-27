@@ -185,7 +185,7 @@ class Carrier extends DBObject<ICarrier, ICarrierCreateObject>
 	email: string;
 
 	@Schema([String])
-	@Column()
+	@Column('simple-array')
 	skippedOrderIds: string[];
 
 	/**
