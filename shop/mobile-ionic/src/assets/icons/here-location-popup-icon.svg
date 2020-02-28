@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="24.5" viewBox="0 0 16 24.5">
+  <g id="_ionicons_svg_ios-pin" transform="translate(15.5) rotate(180)">
+    <path id="Shape" d="M-7,19h0a53.3,53.3,0,0,0,3.5-4.665C-1.9,11.935,0,8.56,0,6.107,0,2.739-3.14,0-7,0s-7,2.739-7,6.107c0,2.454,1.9,5.829,3.5,8.228A53.3,53.3,0,0,0-7,19ZM-7,4.435a2.217,2.217,0,0,1,2.28,2.142A2.217,2.217,0,0,1-7,8.719,2.217,2.217,0,0,1-9.28,6.577,2.217,2.217,0,0,1-7,4.435Z" transform="translate(1) rotate(-180)" fill="#fff"/>
+    <ellipse id="Oval" cx="7.5" cy="2.5" rx="7.5" ry="2.5" transform="translate(15 -19) rotate(-180)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1"/>
+  </g>
+</svg>

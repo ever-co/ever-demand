@@ -2,9 +2,11 @@
 
 .takeaway-store-info {
 	padding: 5px 10px;
+	width: 90%;
+	margin: auto;
 	.call-icon {
 		margin-right: 7px;
-		color: $balanced-lighted;
+		color: var(--ion-color-secondary);
 		&:before {
 			font-size: 1.3em;
 			cursor: pointer;
@@ -19,7 +21,7 @@
 
 	.map-icon {
 		margin-right: 7px;
-		color: #17a2b8;
+		color: var(--ion-color-secondary);
 		&:before {
 			font-size: 1.3em;
 			cursor: pointer;
@@ -42,9 +44,11 @@
 	}
 
 	.broder-top {
-		border-top: 1px solid;
-		margin-top: 10px;
+		border-top: 1px solid #E9D6D0;
 		padding-top: 16px;
+		width: 75%;
+		margin: 15px auto;
+
 	}
 
 	.underline {
@@ -53,5 +57,8 @@
 
 	.description {
 		font-size: 80%;
+		span {
+			color: #000000;
+		}
 	}
 }

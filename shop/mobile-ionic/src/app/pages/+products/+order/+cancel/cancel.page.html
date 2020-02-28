@@ -1,42 +1,29 @@
 <div class="order-cancel">
-	<div
-		class="box box-brand text-align-center box-small-padding"
-		dir="{{ 'CURRENT_DIRECTION' | translate }}"
-	>
+	<div class="box box-brand text-align-center box-small-padding" dir="{{ 'CURRENT_DIRECTION' | translate }}">
 		<h4>{{ 'BUY_POPUP.UNDO_POPUP.TITLE' | translate }}</h4>
 
-		{{ 'BUY_POPUP.UNDO_POPUP.DETAILS.0' | translate }}
+		<p>
+			{{ 'BUY_POPUP.UNDO_POPUP.DETAILS.0' | translate }}
 
-		<strong>{{ 'BUY_POPUP.UNDO_POPUP.DETAILS.1' | translate }}</strong>
+			<strong>{{ 'BUY_POPUP.UNDO_POPUP.DETAILS.1' | translate }}</strong>
 
-		{{ 'BUY_POPUP.UNDO_POPUP.DETAILS.2' | translate }}
+			{{ 'BUY_POPUP.UNDO_POPUP.DETAILS.2' | translate }}
+		</p>
 	</div>
 
 	<div class="box box-brand-light box-small-padding">
 		<ion-row dir="{{ 'CURRENT_DIRECTION' | translate }}">
-			<span
-				class="waves-effect waves-classicno-padding"
-				style="width: 48%;"
-			>
-				<button
-					class="button button-assertive border-color-brand col-100"
-					(click)="showOrderInfo()"
-				>
+			<span class="waves-effect waves-classicno-padding" style="width: 48%;">
+				<button class="button  border-color-brand col-100 cancel-btn" (click)="showOrderInfo()">
 					<span>{{ 'NO' | translate }}</span>
 				</button>
 			</span>
 
 			<div class="horizontal-space-10"></div>
 
-			<span
-				class="waves-effect waves-classic no-padding col"
-				style="width: 48%; padding: 0px;"
-			>
-				<button
-					class="button button-brand col-100"
-					(click)="closePopup()"
-				>
-					<span>{{ 'YES' | translate }}</span>
+			<span class="waves-effect waves-classic no-padding col" style="width: 48%; padding: 0px;">
+				<button class="button button-brand col-100" (click)="closePopup()">
+					<span class="yes-c-txt">{{ 'YES' | translate }}</span>
 				</button>
 			</span>
 		</ion-row>

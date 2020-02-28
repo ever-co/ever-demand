@@ -1,16 +1,20 @@
 <div class="by-location" dir="{{ 'CURRENT_DIRECTION' | translate }}">
+	<div class="massaza-logo-descr">
+		<img src="../../../../assets/icons/logo/massaza-logo-w-txt.svg" alt="Massaza logo" color="transparent">
+		<h3>Massage. Home or Saloons</h3>
+	</div>
 	<h1>{{ 'INVITE_VIEW.YOUR_ADDRESS' | translate }}</h1>
 
 	<h2>{{ 'INVITE_VIEW.LAUNCH_NOTIFICATION' | translate }}</h2>
 
-	<div style="padding-top: 50px" *ngIf="detectingLocation">
-		<h3 style="color: white">
+	<ion-spinner color="dark" [hidden]="!detectingLocation"></ion-spinner>
+	<div style="padding-top: 25px" *ngIf="detectingLocation">
+		<h3 >
 			{{ 'INVITE_VIEW.DETECTING_LOCATION' | translate }}
 		</h3>
-		<br />
+		<br />	
 	</div>
 
-	<ion-spinner color="light" [hidden]="!detectingLocation"></ion-spinner>
 
 	<div *ngIf="!detectingLocation">
 		<input
@@ -91,7 +95,7 @@
 					</ion-row>
 				</ion-grid>
 				<ion-button
-					color="secondary"
+					color="tertiary"
 					*ngIf="house && (apartment || !isApartment)"
 					expand="block"
 					class="submit-button"

@@ -1,12 +1,12 @@
 <ion-header>
-	<ion-toolbar color="primary">
+	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-menu-button autoHide="false"></ion-menu-button>
+			<ion-menu-button autoHide="false"  color="tertiary"></ion-menu-button>
 		</ion-buttons>
 
-		<ion-title>{{ 'PRODUCTS_VIEW.DETAILS.DETAILS' | translate }}</ion-title>
+		<ion-title color="secondary"> {{ 'PRODUCTS_VIEW.DETAILS.DETAILS' | translate }}</ion-title>
 		<ion-buttons slot="end">
-			<ion-button (click)="goToProductPage()">
+			<ion-button (click)="goToProductPage()"  color="tertiary">
 				<i class="fa fa-angle-left back-btn"></i>
 				<span>{{ 'PRODUCTS_VIEW.DETAILS.BACK' | translate }}</span>
 			</ion-button>
@@ -34,11 +34,11 @@
 						<h2 class="text">
 							{{ localeTranslate(product.product.title) }}
 						</h2>
-						<h6 class="productDescription">
+						<!-- <h6 class="productDescription">
 							{{
 							shortenDescription(localeTranslate(product.product.description))
 							}}
-						</h6>
+						</h6> -->
 					</div>
 				</ion-col>
 				<ion-col class="col-2">

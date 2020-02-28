@@ -5,9 +5,9 @@
 	<div class="title-content">
 		<h4 class="main-title mt-0">{{ byPopupStatuses.TITLE }}</h4>
 
-		<div style="font-size: 80%">{{ byPopupStatuses.DETAILS }}</div>
+		<div style="font-size: 80%; color:#000">{{ byPopupStatuses.DETAILS }}</div>
 
-		<div style="font-size: 80%" *ngIf="!order?.isPaid">
+		<div style="font-size: 80%; color:#000" *ngIf="!order?.isPaid">
 			{{ byPopupStatuses.NOT_PAID_NOTE }}
 		</div>
 	</div>

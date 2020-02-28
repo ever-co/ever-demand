@@ -1,9 +1,9 @@
 @keyframes blinking {
 	0% {
-		color: #fff;
+		color: #F3C6B6;
 	}
 	50% {
-		color: #9a9a9a;
+		color: var(--ion-color-secondary);
 	}
 }
 
@@ -14,16 +14,17 @@
 	font-size: 36px;
 	.status {
 		display: inline-block;
+		margin: 0 16px;
 	}
 
 	* {
-		color: #9a9a9a !important;
+		color:#F3C6B6 !important;
 	}
 
 	.activated {
 		&,
 		* {
-			color: #fff !important;
+			color: var(--ion-color-secondary) !important;
 		}
 	}
 

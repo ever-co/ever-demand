@@ -28,7 +28,7 @@
 		}
 
 		.delivery-time {
-			color: #008f0e;
+			color: #0091FF;
 			opacity: 0.73;
 		}
 
@@ -40,13 +40,13 @@
 
 	.total-price {
 		font-size: 18px;
-		color: #000000;
+		color: var(--ion-color-tertiary);
 		opacity: 0.8;
 	}
 }
 
 .hr {
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid #E9D6D0;
 	width: 100%;
 }
 

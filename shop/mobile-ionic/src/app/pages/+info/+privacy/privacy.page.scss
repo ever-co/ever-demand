@@ -1,5 +1,12 @@
 @import '../../../../modules/client.common.angular2/scss/everbie.common.scss';
 
+ion-header {
+	ion-title {
+		font-size: 16px;
+		margin-left: 110px;
+		width: fit-content;
+	}
+}
 ion-content {
 	background-color: $brand-darken;
 }

@@ -21,7 +21,7 @@
 		"CANT_ACCESS_LOCATION": "Can't access your location.",
 		"CANT_ACCESS_LOCATION_GET_IN_BY_ADDRESS": "Can't access your location, please try to get in by address.",
 		"GET_IN_BY_ADDRESS": "Sign up by Address",
-		"GET_IN": "Get inside!",
+		"GET_IN": "Get In",
 		"YOUR_ADDRESS": "Let us know your Address",
 		"LAUNCH_NOTIFICATION": "We promise to show only relevant products according to your address",
 		"BY_CODE": {
@@ -133,7 +133,7 @@
 			"SHOW_PRODUCTS": "Show Products"
 		},
 		"UNDO_POPUP": {
-			"TITLE": "Are you sure?",
+			"TITLE": "Are you sure you want to cancel the order?",
 			"DETAILS": [
 				"Undo will return you the money, but you will",
 				"lose",
@@ -206,8 +206,8 @@
 	},
 	"OR": "Or",
 	"OR_LOWERCASE": "or",
-	"YES": "Yes",
-	"NO": "No",
+	"YES": "Yes, Cancel it",
+	"NO": "No, Keep it",
 	"OK": "Ok",
 	"CITY": "City",
 	"STREET": "Street",

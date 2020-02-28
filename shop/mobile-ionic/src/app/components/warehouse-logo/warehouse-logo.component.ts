@@ -15,12 +15,12 @@ import { Component, HostBinding, Input, OnInit } from '@angular/core';
 			}
 
 			:host.bordered {
-				border: solid #95989a 1px;
+				border: solid #F6CEC7 1px;
 			}
 
 			img {
-				max-width: 69%;
-				max-height: 69%;
+				max-width: 100%;
+				max-height: 100%;
 				user-drag: none;
 				user-select: none;
 				-moz-user-select: none;
@@ -29,6 +29,9 @@ import { Component, HostBinding, Input, OnInit } from '@angular/core';
 				-ms-user-select: none;
 				width: auto;
 				height: auto;
+				border-radius:50%;
+				border: solid #F6CEC7 1px;
+
 			}
 
 			img.light {

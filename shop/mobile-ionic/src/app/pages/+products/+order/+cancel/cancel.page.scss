@@ -1,6 +1,19 @@
 .order-cancel {
 	z-index: 1000;
-
+	.box.box-brand{
+		padding: 16px;
+		h4{
+			padding: 16px;
+		}
+		p,strong{
+			font-size: 14px;
+			color: #000000;
+		}
+	}
+	.box.box-brand-light{
+		background-color: var(--ion-color-primary) !important;
+		padding: 0 10px 25px;
+	}
 	button {
 		padding: 15px;
 		border-radius: 5px;
@@ -14,5 +27,14 @@
 		span {
 			margin: 0 auto;
 		}
+	}
+	.cancel-btn{
+		background-color: var(--ion-color-secondary);
+		span{
+			color: #ffffff;
+		}
+	}
+	.yes-c-txt{
+		color: var(--ion-color-secondary);
 	}
 }

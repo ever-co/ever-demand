@@ -173,16 +173,19 @@ body {
 	width: 100%;
 	font-size: 16px;
 	line-height: 20px;
-	border: solid #5c5f73 1px;
-	color: #fff;
+	border: solid #D7BAAD 1px;
+	color: #000;
 	background-color: inherit;
 	border-radius: 8px;
 	padding: 20px;
 	text-align: center;
 	-webkit-appearance: none;
-
-	@include placeholder(#6d6f80);
+	&:focus{
+		outline: none;
+	}
+	@include placeholder(#D4D4D7);
 }
+
 
 /////////////////////////
 /// Add Button Styles ///

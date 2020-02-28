@@ -8,11 +8,17 @@
 	margin: 0px;
 	width: 100%;
 	height: 100%;
+	background: var(--ion-color-primary);
 }
 
 .icon {
-	border: 1px solid #95989a;
-	padding: 5px;
+	border: 1px solid #F6CEC7;
+	// padding: 5px;
+}
+ion-title{
+	width: fit-content;
+	margin-left: 100px;
+	font-size: 16px;
 }
 
 .product-description {
@@ -105,11 +111,11 @@ ion-slides.hydrated {
 }
 
 .title-text {
-	color: white;
+	color: var(--ion-color-secondary);
 }
 
 .description-text {
-	color: #d0d0d0;
+	color: #000000;
 }
 
 .delivery-sign {
@@ -169,6 +175,8 @@ ion-slides.hydrated {
 		height: 100%;
 		color: white;
 		text-align: center;
+		width: 95%;
+		margin: 0 auto 18px;
 		span {
 			margin: 0 auto;
 		}
@@ -191,7 +199,7 @@ ion-slides.hydrated {
 
 .text {
 	margin: 0;
-	color: white;
+	color: var(--ion-color-secondary);
 	font-size: 16px;
 	white-space: nowrap;
 	overflow: hidden;

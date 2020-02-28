@@ -2,37 +2,48 @@
 
 .by-location {
 	@include center(absolute);
-	width: 68%;
-}
+	width: 75%;
 
+}
+.massaza-logo-descr{
+	h3{
+		width: 100%;
+		margin-top: 10px;
+	}
+}
 h1 {
 	font-family: 'Open Sans Hebrew', '-apple-system', 'Helvetica Neue', 'Roboto',
 		'Segoe UI', sans-serif;
-	font-size: 30px;
+	font-size: 22px;
 	width: 220px;
 	font-weight: 200;
 	text-align: center;
-	color: #fff;
-	margin: 13px auto 0 auto;
+	color: var(--ion-color-secondary);
+	margin: 40px auto 0 auto;
 }
 
 h2 {
 	font-family: 'Open Sans Hebrew', '-apple-system', 'Helvetica Neue', 'Roboto',
 		'Segoe UI', sans-serif;
-	color: #fff;
-	opacity: 0.6;
+	color:  var(--ion-color-dark);
 	font-size: 14px;
 	line-height: 20px;
-	width: 205px;
+	width: 100%;
 	margin: 13px auto 41px auto;
 }
-
+h3{
+	color: var(--ion-color-tertiary);
+	line-height: 1.4;
+	font-size: 18px;
+    width: 80%;
+    margin: auto;
+}
 input,
 select {
 	@extend .everbie-input;
 	margin: 10px auto;
 	width: 100%;
-	background-color: transparent !important;
+	background-color: #ffffff !important;
 }
 
 .house-and-apartment {
@@ -102,6 +113,10 @@ select {
 
 .submit-button {
 	margin-top: 20px;
+	background-color: var(--ion-color-tertiary);
+	border-radius: 8px;
+	text-transform: capitalize;
+	height: 45px;
 }
 
 .input-wrapper {

@@ -6,14 +6,14 @@
 		>
 			<h4 class="main-title">{{ byPopupStatuses.TITLE }}</h4>
 
-			<div style="font-size: 80%">{{ byPopupStatuses.DETAILS }}</div>
+			<div style="font-size: 80%; color:#000">{{ byPopupStatuses.DETAILS }}</div>
 
-			<div style="font-size: 80%" ng-if="!order?.isPaid">
+			<div style="font-size: 80%; color:#000" ng-if="!order?.isPaid">
 				{{ byPopupStatuses.NOT_PAID_NOTE }}
 			</div>
 		</div>
 
-		<div class="box box-brand-light box-small-padding">
+		<div class="box box-brand-light box-small-padding" style="padding-top: 0;">
 			<e-cu-elapsed-time #elapsedTime></e-cu-elapsed-time>
 
 			<div
@@ -90,10 +90,18 @@
 
 	<div
 		class="box box-brand-light box-small-padding"
+		style="padding:0 20px"
 		dir="{{ 'CURRENT_DIRECTION' | translate }}"
 	>
 		<div *ngIf="!order?.isCompleted && !areIssues">
-			<ion-row>
+			<ion-col>
+				
+				<e-cu-payment
+					class="waves-effect waves-classic col-8 pl-5px p-0"
+					*ngIf="paymentsEnabled && order"
+					[order]="order"
+					[modalChange]="modalChange"
+				></e-cu-payment>
 				<span
 					class="waves-effect waves-classic {{
 						paymentsEnabled ? 'col-4' : 'col-12'
@@ -107,13 +115,7 @@
 					</button>
 				</span>
 
-				<e-cu-payment
-					class="waves-effect waves-classic col-8 pl-5px p-0"
-					*ngIf="paymentsEnabled && order"
-					[order]="order"
-					[modalChange]="modalChange"
-				></e-cu-payment>
-			</ion-row>
+			</ion-col>
 		</div>
 
 		<div *ngIf="areIssues">

@@ -18,6 +18,13 @@
 			margin: 0 auto;
 		}
 	}
+	.button-balanced {
+		span {
+			color: #fff;
+		}
+		background-color: var(--ion-color-secondary);
+		margin-top: -26px;
+	}
 
 	.big-button-padding {
 		button {
@@ -29,14 +36,14 @@
 		padding-top: 55px;
 		height: 200px;
 		position: relative;
-
+		
 		.show-products {
 			position: absolute;
 			top: 12px;
 			width: 100%;
 			text-align: center;
 			.order-info-icon {
-				color: $balanced-lighted;
+				color: var(--ion-color-secondary);
 				&:before {
 					font-size: 1rem;
 					margin-right: 5px;
@@ -44,7 +51,8 @@
 			}
 
 			.times-icon {
-				color: $assertive-lighted;
+				color: var(--ion-color-secondary);
+				zoom: 1.5;
 			}
 		}
 	}
