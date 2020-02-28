@@ -3,10 +3,21 @@ import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
 import { Geolocation } from '@ionic-native/geolocation';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { environment } from 'environment';
+import { Subscribable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+interface Coords {
+	longitude?: number;
+	latitude?: number;
+}
 
 @Injectable()
 export class GeoLocationService {
-	constructor() {}
+	private headers: HttpHeaders = new HttpHeaders({
+		'Content-Type': 'application/json'
+	});
+
+	constructor(private http: HttpClient) {}
 
 	getCurrentGeoLocation(): Promise<GeoLocation> {
 		return new Promise(async (resolve, reject) => {
@@ -14,14 +25,7 @@ export class GeoLocationService {
 				const defaultLat = environment.DEFAULT_LATITUDE;
 				const defaultLng = environment.DEFAULT_LONGITUDE;
 
-				let coords: { longitude: number; latitude: number };
-
-				if (!environment.production && defaultLat && defaultLng) {
-					coords = { latitude: defaultLat, longitude: defaultLng };
-				} else {
-					const data = await Geolocation.getCurrentPosition();
-					coords = data.coords;
-				}
+				const coords = await this.getCurrentCoords();
 
 				const location: ILocation = {
 					type: 'Point',
@@ -47,5 +51,60 @@ export class GeoLocationService {
 				reject(error);
 			}
 		});
+	}
+
+	getCurrentCoords(): Promise<Coords> {
+		return new Promise(async (resolve, reject) => {
+			const defaultLat = environment.DEFAULT_LATITUDE;
+			const defaultLng = environment.DEFAULT_LONGITUDE;
+
+			if (!environment.production && defaultLat && defaultLng) {
+				resolve(
+					this.getCoordsObj({
+						latitude: defaultLat,
+						longitude: defaultLng
+					})
+				);
+
+				return;
+			}
+
+			try {
+				const { coords } = await Geolocation.getCurrentPosition();
+
+				resolve(this.getCoordsObj(coords));
+			} catch (error) {
+				navigator.geolocation.getCurrentPosition(
+					(res) => {
+						// If user is enable GPS on browser
+						resolve(this.getCoordsObj(res.coords));
+					},
+					(err) => {
+						// If user is denied GPS on browser
+						this.getLocationByIP().subscribe((res) => {
+							if (res) {
+								resolve(this.getCoordsObj(res));
+							} else {
+								reject(err.message);
+							}
+						});
+					}
+				);
+			}
+		});
+	}
+
+	private getLocationByIP(): Subscribable<Coords | null> {
+		return this.http.get(
+			environment.SERVICES_ENDPOINT + '/getLocationByIP',
+			{ headers: this.headers }
+		);
+	}
+
+	private getCoordsObj(coords: Coords) {
+		return {
+			longitude: coords.longitude,
+			latitude: coords.latitude
+		};
 	}
 }
