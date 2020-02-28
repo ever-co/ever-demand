@@ -22,9 +22,6 @@ export class GeoLocationService {
 	getCurrentGeoLocation(): Promise<GeoLocation> {
 		return new Promise(async (resolve, reject) => {
 			try {
-				const defaultLat = environment.DEFAULT_LATITUDE;
-				const defaultLng = environment.DEFAULT_LONGITUDE;
-
 				const coords = await this.getCurrentCoords();
 
 				const location: ILocation = {
@@ -58,7 +55,7 @@ export class GeoLocationService {
 			const defaultLat = environment.DEFAULT_LATITUDE;
 			const defaultLng = environment.DEFAULT_LONGITUDE;
 
-			if (!environment.production && defaultLat && defaultLng) {
+			if (defaultLat && defaultLng) {
 				resolve(
 					this.getCoordsObj({
 						latitude: defaultLat,

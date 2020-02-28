@@ -77,7 +77,7 @@ export class ByLocationPage implements OnInit, OnDestroy {
 
 			let response: { coords: { longitude: number; latitude: number } };
 
-			if (!environment.production && defaultLat && defaultLng) {
+			if (defaultLat && defaultLng) {
 				response = {
 					coords: { latitude: defaultLat, longitude: defaultLng }
 				};
