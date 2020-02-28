@@ -18,12 +18,14 @@ export class ServerConnectionService {
 		endPoint: string,
 		store: { serverConnection: string }
 	) {
+		debugger;
 		try {
 			await this.httpClient
 				.get(endPoint)
 				.pipe(first())
 				.toPromise();
 		} catch (error) {
+			debugger;
 			store.serverConnection = error.status;
 		}
 	}
