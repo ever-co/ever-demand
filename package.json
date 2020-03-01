@@ -43,7 +43,7 @@
 		"run:ncu": "yarn ncu --configFileName=.ncurc.json --configFilePath=./",
 		"run:server": "yarn --cwd ./backend/api start",
 		"run:server:dev": "yarn --cwd ./backend/api start:dev",
-		"run:admin": "yarn --cwd ./packages/admin-web-angular start",
+		"run:admin": "yarn build:common && yarn --cwd ./packages/admin-web-angular start",
 		"run:merchant": "yarn --cwd ./merchant/tablet-ionic start",
 		"run:shopmobile": "yarn --cwd ./shop/mobile-ionic start",
 		"run:shopweb": "yarn --cwd ./shop/website-angular start",

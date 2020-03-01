@@ -1661,7 +1661,7 @@
 "@ever-platform/common-angular@file:packages/common-angular":
   version "0.3.0"
   dependencies:
-    "@ever-platform/common" "file:../../../Library/Caches/Yarn/v6/npm-@ever-platform-common-angular-0.3.0-7e51f272-9ffd-47a0-abfa-e03e45b11a28-1583002538943/node_modules/@ever-platform/common"
+    "@ever-platform/common" "file:../../../Library/Caches/Yarn/v6/npm-@ever-platform-common-angular-0.3.0-34095334-5678-484b-aa63-12f7c249d20a-1583064350786/node_modules/@ever-platform/common"
 
 "@ever-platform/common@file:packages/common":
   version "0.3.0"
@@ -6162,16 +6162,10 @@ angular2-uuid@*:
   resolved "https://registry.yarnpkg.com/angular2-uuid/-/angular2-uuid-1.1.1.tgz#72f03cd532b7f40032eb1ecfb9f8457384be956e"
   integrity sha1-cvA81TK39AAy6x7PufhFc4S+lW4=
 
-angular2-wizard@^0.4.0:
+angular2-wizard@^0.3.1, angular2-wizard@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/angular2-wizard/-/angular2-wizard-0.4.0.tgz#78a92778dc8ec64f2074a53bd981a4a2127f1939"
   integrity sha1-eKkneNyOxk8gdKU72YGkohJ/GTk=
-  dependencies:
-    bootstrap "^4.0.0-alpha.6"
-
-"angular2-wizard@github:maiyaporn/angular2-wizard#pull/56/head":
-  version "0.3.0"
-  resolved "https://codeload.github.com/maiyaporn/angular2-wizard/tar.gz/902be7f5ba65b3b272f99eb8a4fc08d193744281"
   dependencies:
     bootstrap "^4.0.0-alpha.6"
 

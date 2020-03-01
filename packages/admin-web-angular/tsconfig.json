@@ -49,11 +49,5 @@
 		"strictInjectionParameters": true,
 		"enableResourceInlining": true
 	},
-	"include": [
-		"./src",
-		"../../node_modules/angular2-wizard",
-		"../../node_modules/@ever-platform/common-angular",
-		"../../node_modules/@ever-platform/common"
-	],
-	"exclude": ["../../node_modules/angular2-wizard/**/*.spec.ts"]
+	"include": ["./src"]
 }
