@@ -1,6 +1,5 @@
 {
 	"lerna": "3.11.1",
-	"hoist": true,
 	"concurrency": 8,
 	"version": "independent",
 	"changelog": {

@@ -12,9 +12,6 @@
 				"build": {
 					"builder": "@angular-builders/custom-webpack:browser",
 					"options": {
-						"customWebpackConfig": {
-							"path": "./webpack.config.js"
-						},
 						"preserveSymlinks": true,
 						"outputPath": "dist",
 						"index": "src/index.html",

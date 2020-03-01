@@ -8,27 +8,28 @@
 		"target": "es6",
 		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"],
 		"paths": {
-			"@angular/*": ["../node_modules/@angular/*"],
-			"@nebular/*": ["../node_modules/@nebular/*"],
+			"@angular/*": ["../../../node_modules/@angular/*"],
+			"@nebular/*": ["../../../node_modules/@nebular/*"],
 			"@modules/server.common/*": [
 				"@modules/server.common/*",
-				"../node_modules/@ever-platform/common/src/*"
+				"../../../node_modules/@ever-platform/common/dist/*"
 			],
 			"@modules/client.common.angular2/*": [
 				"@modules/client.common.angular2/*",
-				"../node_modules/@ever-platform/common-angular/src/*"
+				"../../../node_modules/@ever-platform/common-angular/dist/*"
 			],
 			"@pyro/*": [
 				"@pyro/*",
-				"../node_modules/@ever-platform/common/src/@pyro/*"
+				"../../../node_modules/@ever-platform/common/dist/@pyro/*"
 			],
 			"mongoose": [
-				"../node_modules/@ever-platform/common-angular/src/mongoose-placeholder"
+				"../../../node_modules/@ever-platform/common-angular/dist/mongoose-placeholder"
 			],
 			"typeorm": [
-				"../node_modules/@ever-platform/common-angular/src/typeorm-placeholder"
+				"../../../node_modules/@ever-platform/common-angular/dist/typeorm-placeholder"
 			],
-			"environment": ["./environments/environment"],
+			"@app/*": ["app/*"],
+			"environments/*": ["./environments/*"],
 			"core-js/es7/reflect": [
 				"../../../node_modules/core-js/proposals/reflect-metadata"
 			],
@@ -49,8 +50,9 @@
 	},
 	"include": [
 		"./src",
-		"node_modules/@ever-platform/common",
-		"node_modules/@ever-platform/common-angular",
-		"node_modules/angular2-wizard"
-	]
+		"../../node_modules/angular2-wizard",
+		"../../node_modules/@ever-platform/common-angular",
+		"../../node_modules/@ever-platform/common"
+	],
+	"exclude": ["../../node_modules/angular2-wizard/**/*.spec.ts"]
 }

@@ -21,7 +21,7 @@ import { ThemeModule } from './@theme/theme.module';
 import { CommonModule } from '@modules/client.common.angular2/common.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { environment } from 'environments/environment';
+import { environment } from '../environments/environment';
 import { Store } from './@core/data/store.service';
 import { GoogleMapsLoader } from '@modules/client.common.angular2/services/googleMapsLoader';
 import { MaintenanceService } from '@modules/client.common.angular2/services/maintenance.service';
@@ -33,7 +33,6 @@ import { ServerConnectionService } from '@modules/client.common.angular2/service
 // It's more 'standard' way to use Font-Awesome module and special package,
 // but for some reason ngx-admin works without it. So we leave next line commented for now.
 // import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
 @NgModule({
 	imports: [
 		BrowserModule,
@@ -156,20 +155,23 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 export function googleMapsLoaderFactory(provider: GoogleMapsLoader) {
-	return () => provider.load(environment.GOOGLE_MAPS_API_KEY);
+	const loader = () => provider.load(environment.GOOGLE_MAPS_API_KEY);
+	return loader;
 }
 
 export function serverConnectionFactory(
 	provider: ServerConnectionService,
 	store: Store
 ) {
-	return () => provider.load(environment.SERVICES_ENDPOINT, store);
+	const loader = () => provider.load(environment.SERVICES_ENDPOINT, store);
+	return loader;
 }
 
 export function maintenanceFactory(provider: MaintenanceService) {
-	return () =>
+	const loader = () =>
 		provider.load(
 			environment['SETTINGS_APP_TYPE'],
 			environment['SETTINGS_MAINTENANCE_API_URL']
 		);
+	return loader;
 }
