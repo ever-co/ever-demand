@@ -11,6 +11,14 @@
 
 ![overview](https://docs.ever.co/docs/assets/overview_small.png)
 
+## Demos
+
+* [Admin Website](http://ec2-52-87-227-39.compute-1.amazonaws.com:4200), use admin user email: `admin@ever.co`, password: `admin`
+* [Shopping Mobile App](http://ec2-52-87-227-39.compute-1.amazonaws.com:4201)
+* [Merchant Ionic Tablet App](http://ec2-52-87-227-39.compute-1.amazonaws.com:4202)
+* [Carrier Mobile App](http://ec2-52-87-227-39.compute-1.amazonaws.com:4203)
+* [Shopping Website](http://ec2-52-87-227-39.compute-1.amazonaws.com:3000)
+
 ## Features
 
 -   Modern & Open Platform for **On-Demand Economy** and **Digital Marketplaces**
