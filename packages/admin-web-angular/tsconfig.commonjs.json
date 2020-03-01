@@ -12,21 +12,17 @@
 			"@nebular/*": ["../../../node_modules/@nebular/*"],
 			"@modules/server.common/*": [
 				"@modules/server.common/*",
-				"../../../node_modules/@ever-platform/common/dist/*"
+				"../../common/src/*"
 			],
 			"@modules/client.common.angular2/*": [
 				"@modules/client.common.angular2/*",
-				"../../../node_modules/@ever-platform/common-angular/dist/*"
+				"../../common-angular/src/*"
 			],
-			"@pyro/*": [
-				"@pyro/*",
-				"../../../node_modules/@ever-platform/common/dist/@pyro/*"
-			],
-			"mongoose": [
-				"../../../node_modules/@ever-platform/common-angular/dist/mongoose-placeholder"
-			],
-			"typeorm": [
-				"../../../node_modules/@ever-platform/common-angular/dist/typeorm-placeholder"
+			"@pyro/*": ["@pyro/*", "../../common/src/@pyro/*"],
+			"mongoose": ["../../common-angular/src/mongoose-placeholder"],
+			"typeorm": ["../../common-angular/src/typeorm-placeholder"],
+			"angular2-wizard": [
+				"../../../node_modules/@ever-co/angular2-wizard/dist/*"
 			],
 			"@app/*": ["app/*"],
 			"environments/*": ["./environments/*"],
@@ -48,11 +44,6 @@
 		"strictInjectionParameters": true,
 		"enableResourceInlining": true
 	},
-	"include": [
-		"./src",
-		"../../node_modules/angular2-wizard",
-		"../../node_modules/@ever-platform/common-angular",
-		"../../node_modules/@ever-platform/common"
-	],
-	"exclude": ["../../node_modules/angular2-wizard/**/*.spec.ts"]
+	"files": ["./src/app/app.module.ts", "./src/main.ts", "./src/polyfills.ts"],
+	"include": ["./src"]
 }

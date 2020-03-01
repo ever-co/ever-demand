@@ -13,7 +13,7 @@
 					"builder": "@angular-builders/custom-webpack:browser",
 					"options": {
 						"preserveSymlinks": true,
-						"outputPath": "dist",
+						"outputPath": "build",
 						"index": "src/index.html",
 						"main": "src/main.ts",
 						"tsConfig": "tsconfig.json",

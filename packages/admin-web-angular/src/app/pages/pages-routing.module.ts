@@ -19,52 +19,87 @@ const routes: Routes = [
 			// },
 			{
 				path: 'sign-in-redirect',
-				loadChildren:
-					'./+sign-in-redirect/sign-in-redirect.module#SignInRedirectModule'
+				loadChildren: () =>
+					import(
+						'app/pages/+sign-in-redirect/sign-in-redirect.module'
+					).then((m) => m.SignInRedirectModule)
 			},
 			{
 				path: 'dashboard',
-				loadChildren: './+dashboard/dashboard.module#DashboardModule'
+				loadChildren: () =>
+					import('app/pages/+dashboard/dashboard.module').then(
+						(m) => m.DashboardModule
+					)
 			},
 			{
 				path: 'simulation',
-				loadChildren: './+simulation/simulation.module#SimulationModule'
+				loadChildren: () =>
+					import('app/pages/+simulation/simulation.module').then(
+						(m) => m.SimulationModule
+					)
 			},
 			{
 				path: 'stores',
-				loadChildren: './+warehouses/warehouses.module#WarehousesModule'
+				loadChildren: () =>
+					import('app/pages/+warehouses/warehouses.module').then(
+						(m) => m.WarehousesModule
+					)
 			},
 			{
 				path: 'carriers',
-				loadChildren: './+carriers/carriers.module#CarriersModule'
+				loadChildren: () =>
+					import('app/pages/+carriers/carriers.module').then(
+						(m) => m.CarriersModule
+					)
 			},
 			{
 				path: 'setup',
-				loadChildren: './+setup/setup.module#SetupModule'
+				loadChildren: () =>
+					import('app/pages/+setup/setup.module').then(
+						(m) => m.SetupModule
+					)
 			},
 			{
 				path: 'generate-initial-data',
-				loadChildren: './+fakeData/fakeData.module#FakeDataModule'
+				loadChildren: () =>
+					import('app/pages/+fakeData/fakeData.module').then(
+						(m) => m.FakeDataModule
+					)
 			},
 			{
 				path: 'devices',
-				loadChildren: './+device/device.module#DeviceModule'
+				loadChildren: () =>
+					import('app/pages/+device/device.module').then(
+						(m) => m.DeviceModule
+					)
 			},
 			{
 				path: 'customers',
-				loadChildren: './+customers/customers.module#CustomersModule'
+				loadChildren: () =>
+					import('app/pages/+customers/customers.module').then(
+						(m) => m.CustomersModule
+					)
 			},
 			{
 				path: 'orders',
-				loadChildren: './+orders/orders.module#OrdersModule'
+				loadChildren: () =>
+					import('app/pages/+orders/orders.module').then(
+						(m) => m.OrdersModule
+					)
 			},
 			{
 				path: 'products',
-				loadChildren: './+products/products.module#ProductsModule'
+				loadChildren: () =>
+					import('app/pages/+products/products.module').then(
+						(m) => m.ProductsModule
+					)
 			},
 			{
 				path: 'profile',
-				loadChildren: './+profile/profile.module#ProfileModule'
+				loadChildren: () =>
+					import('app/pages/+profile/profile.module').then(
+						(m) => m.ProfileModule
+					)
 			}
 		]
 	}

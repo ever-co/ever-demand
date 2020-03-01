@@ -21,7 +21,7 @@ import { ThemeModule } from './@theme/theme.module';
 import { CommonModule } from '@modules/client.common.angular2/common.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { environment } from '../environments/environment';
+import { environment } from 'environments/environment';
 import { Store } from './@core/data/store.service';
 import { GoogleMapsLoader } from '@modules/client.common.angular2/services/googleMapsLoader';
 import { MaintenanceService } from '@modules/client.common.angular2/services/maintenance.service';
@@ -155,23 +155,20 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 export function googleMapsLoaderFactory(provider: GoogleMapsLoader) {
-	const loader = () => provider.load(environment.GOOGLE_MAPS_API_KEY);
-	return loader;
+	return () => provider.load(environment.GOOGLE_MAPS_API_KEY);
 }
 
 export function serverConnectionFactory(
 	provider: ServerConnectionService,
 	store: Store
 ) {
-	const loader = () => provider.load(environment.SERVICES_ENDPOINT, store);
-	return loader;
+	return () => provider.load(environment.SERVICES_ENDPOINT, store);
 }
 
 export function maintenanceFactory(provider: MaintenanceService) {
-	const loader = () =>
+	return () =>
 		provider.load(
 			environment['SETTINGS_APP_TYPE'],
 			environment['SETTINGS_MAINTENANCE_API_URL']
 		);
-	return loader;
 }
