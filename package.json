@@ -50,7 +50,7 @@
 		"run:carrier": "yarn --cwd ./carrier/mobile-ionic start",
 		"build:server": "yarn --cwd ./backend/api run build",
 		"build:common": "yarn --cwd ./packages/common build && yarn --cwd ./packages/common-angular build",
-		"build:admin": "yarn --cwd ./packages/admin-web-angular run build",
+		"build:admin": "yarn build:common && yarn --cwd ./packages/admin-web-angular run build",
 		"build:merchant": "yarn --cwd ./merchant/tablet-ionic run build",
 		"build:shopmobile": "yarn --cwd ./shop/mobile-ionic run build",
 		"build:shopweb": "yarn --cwd ./shop/website-angular run build",

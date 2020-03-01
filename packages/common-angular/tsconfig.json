@@ -2,7 +2,7 @@
 	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
 		"baseUrl": "./src",
-		"outDir": "./dist",
+		"outDir": "./build",
 		"rootDir": "./src",
 		"target": "es5",
 		"types": [],

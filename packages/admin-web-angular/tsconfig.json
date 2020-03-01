@@ -13,21 +13,21 @@
 			"@nebular/*": ["../../../node_modules/@nebular/*"],
 			"@modules/server.common/*": [
 				"@modules/server.common/*",
-				"../../../node_modules/@ever-platform/common/dist/*"
+				"../../../node_modules/@ever-platform/common/build/*"
 			],
 			"@modules/client.common.angular2/*": [
 				"@modules/client.common.angular2/*",
-				"../../../node_modules/@ever-platform/common-angular/dist/*"
+				"../../../node_modules/@ever-platform/common-angular/build/*"
 			],
 			"@pyro/*": [
 				"@pyro/*",
-				"../../../node_modules/@ever-platform/common/dist/@pyro/*"
+				"../../../node_modules/@ever-platform/common/build/@pyro/*"
 			],
 			"mongoose": [
-				"../../../node_modules/@ever-platform/common-angular/dist/mongoose-placeholder"
+				"../../../node_modules/@ever-platform/common-angular/build/mongoose-placeholder"
 			],
 			"typeorm": [
-				"../../../node_modules/@ever-platform/common-angular/dist/typeorm-placeholder"
+				"../../../node_modules/@ever-platform/common-angular/build/typeorm-placeholder"
 			],
 			"@app/*": ["app/*"],
 			"environments/*": ["./environments/*"],
