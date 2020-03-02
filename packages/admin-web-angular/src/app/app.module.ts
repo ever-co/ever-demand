@@ -33,7 +33,6 @@ import { ServerConnectionService } from '@modules/client.common.angular2/service
 // It's more 'standard' way to use Font-Awesome module and special package,
 // but for some reason ngx-admin works without it. So we leave next line commented for now.
 // import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
 @NgModule({
 	imports: [
 		BrowserModule,

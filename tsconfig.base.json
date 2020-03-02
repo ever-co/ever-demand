@@ -32,10 +32,7 @@
 		// "strict": true,
 		// "strictPropertyInitialization": false,
 		// "newLine": "LF",
-		"typeRoots": ["node_modules/@types"],
-		"paths": {
-			"@ever-platform/*": ["packages/*/src"]
-		}
+		"typeRoots": ["node_modules/@types"]
 	},
 	"files": ["node_modules/@types/node/index.d.ts"],
 	"exclude": [

@@ -15,7 +15,8 @@ import { MaintenanceModuleGuard } from './pages/+maintenance-info/maintenance-in
 const routes: Routes = [
 	{
 		path: '',
-		loadChildren: './pages/pages.module#PagesModule',
+		loadChildren: () =>
+			import('app/pages/pages.module').then((m) => m.PagesModule),
 		canActivate: [AppModuleGuard, AdminAuthGuard]
 	},
 	{
@@ -51,13 +52,18 @@ const routes: Routes = [
 	},
 	{
 		path: 'maintenance-info',
-		loadChildren:
-			'./pages/+maintenance-info/maintenance-info.module#MaintenanceInfoModule',
+		loadChildren: () =>
+			import('app/pages/+maintenance-info/maintenance-info.module').then(
+				(m) => m.MaintenanceInfoModule
+			),
 		canActivate: [MaintenanceModuleGuard]
 	},
 	{
 		path: 'server-down',
-		loadChildren: './pages/+server-down/server-down.module#ServerDownModule'
+		loadChildren: () =>
+			import('app/pages/+server-down/server-down.module').then(
+				(m) => m.ServerDownModule
+			)
 	},
 	{ path: '**', redirectTo: '' }
 ];
