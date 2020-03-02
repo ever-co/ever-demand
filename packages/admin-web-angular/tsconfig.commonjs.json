@@ -8,27 +8,24 @@
 		"target": "es6",
 		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"],
 		"paths": {
-			"@angular/*": ["../node_modules/@angular/*"],
-			"@nebular/*": ["../node_modules/@nebular/*"],
+			"@angular/*": ["../../../node_modules/@angular/*"],
+			"@nebular/*": ["../../../node_modules/@nebular/*"],
 			"@modules/server.common/*": [
 				"@modules/server.common/*",
-				"../node_modules/@ever-platform/common/src/*"
+				"../../common/src/*"
 			],
 			"@modules/client.common.angular2/*": [
 				"@modules/client.common.angular2/*",
-				"../node_modules/@ever-platform/common-angular/src/*"
+				"../../common-angular/src/*"
 			],
-			"@pyro/*": [
-				"@pyro/*",
-				"../node_modules/@ever-platform/common/src/@pyro/*"
+			"@pyro/*": ["@pyro/*", "../../common/src/@pyro/*"],
+			"mongoose": ["../../common-angular/src/mongoose-placeholder"],
+			"typeorm": ["../../common-angular/src/typeorm-placeholder"],
+			"angular2-wizard": [
+				"../../../node_modules/@ever-co/angular2-wizard/dist/*"
 			],
-			"mongoose": [
-				"../node_modules/@ever-platform/common-angular/src/mongoose-placeholder"
-			],
-			"typeorm": [
-				"../node_modules/@ever-platform/common-angular/src/typeorm-placeholder"
-			],
-			"environment": ["./environments/environment"],
+			"@app/*": ["app/*"],
+			"environments/*": ["./environments/*"],
 			"core-js/es7/reflect": [
 				"../../../node_modules/core-js/proposals/reflect-metadata"
 			],
@@ -47,10 +44,6 @@
 		"strictInjectionParameters": true,
 		"enableResourceInlining": true
 	},
-	"include": [
-		"./src",
-		"node_modules/@ever-platform/common",
-		"node_modules/@ever-platform/common-angular",
-		"node_modules/angular2-wizard"
-	]
+	"files": ["./src/app/app.module.ts", "./src/main.ts", "./src/polyfills.ts"],
+	"include": ["./src"]
 }
