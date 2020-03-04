@@ -337,7 +337,7 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 	}
 
 	private _setDefaultLocaleValue() {
-		this.locale.setValue('en-US');
+		this.locale.setValue(this._translateService.currentLang);
 	}
 
 	private _bindFormControls() {
