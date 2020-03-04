@@ -298,7 +298,8 @@ export abstract class DBService<T extends DBObject<any, any>>
 			{
 				_id: { $in: ids.map((id) => this.getObjectId(id)) }
 			},
-			{ isDeleted: true }
+			{ isDeleted: true },
+			{ multi: true }
 		).exec();
 	}
 
