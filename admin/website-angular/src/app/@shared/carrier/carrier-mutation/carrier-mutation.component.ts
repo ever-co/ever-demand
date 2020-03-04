@@ -1,4 +1,9 @@
-import { Component, ViewChild, EventEmitter } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	EventEmitter,
+	AfterViewInit
+} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ToasterService } from 'angular2-toaster';
 
@@ -16,7 +21,7 @@ import { TranslateService } from '@ngx-translate/core';
 	templateUrl: './carrier-mutation.component.html',
 	styleUrls: ['./carrier-mutation.component.scss']
 })
-export class CarrierMutationComponent {
+export class CarrierMutationComponent implements AfterViewInit {
 	@ViewChild('basicInfoForm', { static: false })
 	basicInfoForm: BasicInfoFormComponent;
 
@@ -64,6 +69,12 @@ export class CarrierMutationComponent {
 
 	get buttonPrevious() {
 		return this._translate(this.BUTTON_PREV);
+	}
+
+	ngAfterViewInit(): void {
+		if (this.locationForm) {
+			this.locationForm.setDefaultCoords();
+		}
 	}
 
 	onGeometrySend(
