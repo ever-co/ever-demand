@@ -58,14 +58,16 @@ export class ProductComponent implements OnInit, OnDestroy {
 
 	getLanguageFullName(langAbbreviation: string) {
 		switch (langAbbreviation) {
-			case 'en':
+			case 'en-US':
 				return 'English';
-			case 'bg':
+			case 'bg-BG':
 				return 'Български';
-			case 'he':
+			case 'he-IL':
 				return 'עברית';
-			case 'ru':
+			case 'ru-RU':
 				return 'Русский';
+			case 'es-ES':
+				return 'Spanish';
 		}
 	}
 
