@@ -7,20 +7,15 @@
 		"target": "es6",
 		"types": ["node", "reflect-metadata", "jest"],
 		"paths": {
-			"@pyro/*": [
-				"@pyro/*",
-				"../node_modules/@ever-platform/common/src/@pyro/*"
-			],
 			"@modules/server.common/*": [
 				"@modules/server.common/*",
-				"../node_modules/@ever-platform/common/src/*"
+				"../../../node_modules/@ever-platform/common/src/*"
+			],
+			"@pyro/*": [
+				"@pyro/*",
+				"../../../node_modules/@ever-platform/common/src/@pyro/*"
 			]
 		}
 	},
-	"include": ["./src/**/*.ts"],
-	"references": [
-		{
-			"path": "../common"
-		}
-	]
+	"include": ["./src"]
 }

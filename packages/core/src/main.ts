@@ -20,11 +20,8 @@ try {
 	moduleAlias.addAliases({
 		'@pyro/db-server': __dirname + '/@pyro/db-server',
 		'@pyro/io': __dirname + '/@pyro/io',
-		'@pyro/db':
-			__dirname +
-			'/../../node_modules/@ever-platform/common/src/@pyro/db',
-		'@modules/server.common':
-			__dirname + '/../../node_modules/@ever-platform/common/src/'
+		'@pyro/db': '@ever-platform/common/build/@pyro/db',
+		'@modules/server.common': '@ever-platform/common/build/'
 	});
 } catch (err) {
 	console.error(err);

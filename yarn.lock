@@ -1860,7 +1860,7 @@
 "@ever-platform/common-angular@file:packages/common-angular":
   version "0.3.0"
   dependencies:
-    "@ever-platform/common" "file:../../../Library/Caches/Yarn/v6/npm-@ever-platform-common-angular-0.3.0-fcfebbd0-ad28-4f7a-b0cd-6cce7f8d99d8-1583098446411/node_modules/@ever-platform/common"
+    "@ever-platform/common" "file:../../../Library/Caches/Yarn/v6/npm-@ever-platform-common-angular-0.3.0-8460a41a-d1d1-4cf1-bf76-4f5ed2c71d57-1583353825756/node_modules/@ever-platform/common"
 
 "@ever-platform/common@file:packages/common":
   version "0.3.0"
@@ -5451,13 +5451,6 @@
   dependencies:
     "@types/node" "*"
 
-"@types/kafka-node@^2.0.8":
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/@types/kafka-node/-/kafka-node-2.0.9.tgz#449bbdae1a28316ccce987cf68a8c00deddaa337"
-  integrity sha512-hEmz2OUNdynQey3PnerLtogydAIjKX/I+J/lfOuM1jBhHOhdqDKCjlsMy1gXKEZDXWxv324/7qzOZuxjRk5Uhw==
-  dependencies:
-    "@types/node" "*"
-
 "@types/keygrip@*":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@types/keygrip/-/keygrip-1.0.2.tgz#513abfd256d7ad0bf1ee1873606317b33b1b2a72"
@@ -8269,15 +8262,7 @@ binary-extensions@^2.0.0:
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.0.0.tgz#23c0df14f6a88077f5f986c0d167ec03c3d5537c"
   integrity sha512-Phlt0plgpIIBOGTT/ehfFnbNlfsDEiqmzE2KRXoX1bLIlir4X/MR+zSyBEkL05ffWgnRSf/DXv+WrUAVr93/ow==
 
-binary@~0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/binary/-/binary-0.3.0.tgz#9f60553bc5ce8c3386f3b553cff47462adecaa79"
-  integrity sha1-n2BVO8XOjDOG87VTz/R0Yq3sqnk=
-  dependencies:
-    buffers "~0.1.1"
-    chainsaw "~0.1.0"
-
-bindings@^1.3.1, bindings@^1.5.0:
+bindings@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/bindings/-/bindings-1.5.0.tgz#10353c9e945334bc0511a6d90b38fbc7c9c504df"
   integrity sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==
@@ -8701,7 +8686,7 @@ buffer-alloc@^1.1.0, buffer-alloc@^1.2.0:
     buffer-alloc-unsafe "^1.1.0"
     buffer-fill "^1.0.0"
 
-buffer-crc32@~0.2.3, buffer-crc32@~0.2.5:
+buffer-crc32@~0.2.3:
   version "0.2.13"
   resolved "https://registry.yarnpkg.com/buffer-crc32/-/buffer-crc32-0.2.13.tgz#0d333e3f00eac50aa1454abd30ef8c2a5d9a7242"
   integrity sha1-DTM+PwDqxQqhRUq9MO+MKl2ackI=
@@ -8761,18 +8746,6 @@ buffer@^5.1.0, buffer@^5.2.0, buffer@^5.2.1, buffer@^5.4.3:
   dependencies:
     base64-js "^1.0.2"
     ieee754 "^1.1.4"
-
-buffermaker@~1.2.0:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/buffermaker/-/buffermaker-1.2.1.tgz#0631f92b891a84b750f1036491ac857c734429f4"
-  integrity sha512-IdnyU2jDHU65U63JuVQNTHiWjPRH0CS3aYd/WPaEwyX84rFdukhOduAVb1jwUScmb5X0JWPw8NZOrhoLMiyAHQ==
-  dependencies:
-    long "1.1.2"
-
-buffers@~0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/buffers/-/buffers-0.1.1.tgz#b24579c3bed4d6d396aeee6d9a8ae7f5482ab7bb"
-  integrity sha1-skV5w77U1tOWru5tmorn9Ugqt7s=
 
 builtin-modules@^1.1.0, builtin-modules@^1.1.1:
   version "1.1.1"
@@ -9173,13 +9146,6 @@ center-align@^0.1.1:
   dependencies:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
-
-chainsaw@~0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/chainsaw/-/chainsaw-0.1.0.tgz#5eab50b28afe58074d0d58291388828b5e5fbc98"
-  integrity sha1-XqtQsor+WAdNDVgpE4iCi15fvJg=
-  dependencies:
-    traverse ">=0.3.0 <0.4"
 
 chalk@1.1.3, chalk@^1.0.0, chalk@^1.1.1, chalk@^1.1.3:
   version "1.1.3"
@@ -11862,7 +11828,7 @@ debug@*, debug@4, debug@^4.0.0, debug@^4.0.1, debug@^4.1.0, debug@^4.1.1, debug@
   dependencies:
     ms "^2.1.1"
 
-debug@2, debug@2.6.9, debug@^2.1.0, debug@^2.1.3, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.3, debug@^2.6.6, debug@^2.6.8, debug@^2.6.9:
+debug@2, debug@2.6.9, debug@^2.1.0, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.3, debug@^2.6.6, debug@^2.6.8, debug@^2.6.9:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
   integrity sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==
@@ -12159,7 +12125,7 @@ denodeify@^1.2.1:
   resolved "https://registry.yarnpkg.com/denodeify/-/denodeify-1.2.1.tgz#3a36287f5034e699e7577901052c2e6c94251631"
   integrity sha1-OjYof1A05pnnV3kBBSwubJQlFjE=
 
-denque@^1.3.0, denque@^1.4.1:
+denque@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/denque/-/denque-1.4.1.tgz#6744ff7641c148c3f8a69c307e51235c1f4a37cf"
   integrity sha512-OfzPuSZKGcgr96rf1oODnfjqBFmr1DVoc/TrItj3Ohe0Ah1C5WX5Baquw/9U9KovnQ88EqmJbD66rKYUQYN1tQ==
@@ -19093,27 +19059,6 @@ jws@^3.2.2:
     jwa "^1.4.1"
     safe-buffer "^5.0.1"
 
-kafka-node@^4.1.3:
-  version "4.1.3"
-  resolved "https://registry.yarnpkg.com/kafka-node/-/kafka-node-4.1.3.tgz#9e5fdf3a5562370ff0f82c5481bd14a6e39ad93d"
-  integrity sha512-C2WHksRCr7vIKmbxYaCk2c5Q1lnHIi6C0f3AioK3ARcRHGO9DpqErcoaS9d8PP62yzTnkYras+iAlmPsZHNSfw==
-  dependencies:
-    async "^2.6.2"
-    binary "~0.3.0"
-    bl "^2.2.0"
-    buffer-crc32 "~0.2.5"
-    buffermaker "~1.2.0"
-    debug "^2.1.3"
-    denque "^1.3.0"
-    lodash "^4.17.4"
-    minimatch "^3.0.2"
-    nested-error-stacks "^2.0.0"
-    optional "^0.1.3"
-    retry "^0.10.1"
-    uuid "^3.0.0"
-  optionalDependencies:
-    snappy "^6.0.1"
-
 kapellmeister@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/kapellmeister/-/kapellmeister-3.0.1.tgz#419b715cd221acda3db79892caedf63e1c9f7d25"
@@ -20137,11 +20082,6 @@ lokijs@^1.5.8:
   version "1.5.8"
   resolved "https://registry.yarnpkg.com/lokijs/-/lokijs-1.5.8.tgz#9296f288edb2147389ec692fc972c428c59179d1"
   integrity sha512-D8E3TBrY35o1ELnonp2MF8b3wKu2tVNl2TqRjvS+95oPMMe7OoIAxNY1qr+5BEZwnWn2V4ErAjVt000DonM+FA==
-
-long@1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/long/-/long-1.1.2.tgz#eaef5951ca7551d96926b82da242db9d6b28fb53"
-  integrity sha1-6u9ZUcp1UdlpJrgtokLbnWso+1M=
 
 long@^4.0.0:
   version "4.0.0"
@@ -21677,7 +21617,7 @@ node-object-hash@^2.0.0:
   resolved "https://registry.yarnpkg.com/node-object-hash/-/node-object-hash-2.0.0.tgz#9971fcdb7d254f05016bd9ccf508352bee11116b"
   integrity sha512-VZR0zroAusy1ETZMZiGeLkdu50LGjG5U1KHZqTruqtTyQ2wfWhHG2Ow4nsUbfTFGlaREgNHcCWoM/OzEm6p+NQ==
 
-node-pre-gyp@*, node-pre-gyp@0.14.0:
+node-pre-gyp@0.14.0:
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.14.0.tgz#9a0596533b877289bcad4e143982ca3d904ddc83"
   integrity sha512-+CvDC7ZttU/sSt9rFjix/P05iS43qHCOOGzcr3Ry99bXG7VX953+vFyEuph/tfqoYu8dttBkE86JSKBO2OzcxA==
@@ -22380,7 +22320,7 @@ optimize-js@^1.0.0:
     magic-string "^0.16.0"
     yargs "^4.8.1"
 
-optional@0.1.4, optional@^0.1.3:
+optional@0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/optional/-/optional-0.1.4.tgz#cdb1a9bedc737d2025f690ceeb50e049444fd5b3"
   integrity sha512-gtvrrCfkE08wKcgXaVwQVgwEQ8vel2dc5DDBn9RLQZ3YtmtkBss6A2HY6BnJH4N/4Ku97Ri/SF8sNWE2225WJw==
@@ -24026,7 +23966,7 @@ potrace@^2.1.2:
   dependencies:
     jimp "^0.6.4"
 
-prebuild-install@^5.2.2, prebuild-install@^5.3.3:
+prebuild-install@^5.3.3:
   version "5.3.3"
   resolved "https://registry.yarnpkg.com/prebuild-install/-/prebuild-install-5.3.3.tgz#ef4052baac60d465f5ba6bf003c9c1de79b9da8e"
   integrity sha512-GV+nsUXuPW2p8Zy7SarF/2W/oiK8bFQgJcncoJ0d7kRpekEA0ftChjfEaF9/Y+QJEc/wFR7RAEa8lYByuUIe2g==
@@ -25854,7 +25794,7 @@ retry@0.12.0, retry@^0.12.0:
   resolved "https://registry.yarnpkg.com/retry/-/retry-0.12.0.tgz#1b42a6266a21f07421d1b0b54b7dc167b01c013b"
   integrity sha1-G0KmJmoh8HQh0bC1S33BZ7AcATs=
 
-retry@^0.10.0, retry@^0.10.1:
+retry@^0.10.0:
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/retry/-/retry-0.10.1.tgz#e76388d217992c252750241d3d3956fed98d8ff4"
   integrity sha1-52OI0heZLCUnUCQdPTlW/tmNj/Q=
@@ -26886,15 +26826,6 @@ snapdragon@^0.8.1:
     source-map "^0.5.6"
     source-map-resolve "^0.5.0"
     use "^3.1.0"
-
-snappy@^6.0.1, snappy@^6.2.3:
-  version "6.2.3"
-  resolved "https://registry.yarnpkg.com/snappy/-/snappy-6.2.3.tgz#11690a8fcf0c71ff6b04e72ab32631804b2d265a"
-  integrity sha512-HZpVoIxMfQ4fL3iDuMdI1R5xycw1o9YDCAndTKZCY/EHRoKFvzwplttuBBVGeEg2fd1hYiwAXos/sM24W7N1LA==
-  dependencies:
-    bindings "^1.3.1"
-    nan "^2.14.0"
-    prebuild-install "^5.2.2"
 
 snyk-config@^2.2.1:
   version "2.2.3"
@@ -28961,11 +28892,6 @@ transaction-tracer@~1.1.0:
   dependencies:
     eenano "~1.0.0"
     seqid "~1.0.0"
-
-"traverse@>=0.3.0 <0.4":
-  version "0.3.9"
-  resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.3.9.tgz#717b8f220cc0bb7b44e40514c22b2e8bbc70d8b9"
-  integrity sha1-cXuPIgzAu3tE5AUUwisui7xw2Lk=
 
 traverse@^0.6.6:
   version "0.6.6"
