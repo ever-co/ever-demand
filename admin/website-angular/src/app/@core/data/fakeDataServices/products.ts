@@ -6,15 +6,14 @@ import { IProductsCategory } from '@modules/server.common/interfaces/IProductsCa
 import { images } from '@modules/server.common/data/image-urls';
 import { productNames } from '@modules/server.common/data/food-product-names';
 
+const locales = ['en-US', 'he-LI', 'bg-BG', 'ru-RU', 'es-ES'];
+
 @Injectable()
 export default class FakeDataProducts {
 	async getRandomProduct(
 		inputCategories: IProductsCategory[] = []
 	): Promise<IProductCreateObject> {
-		const imageUS = await this._getImage();
-		const imageIL = await this._getImage();
-		const imageBG = await this._getImage();
-		const imageRU = await this._getImage();
+		const images = await this._getRandomImages();
 
 		return {
 			title: [
@@ -39,24 +38,7 @@ export default class FakeDataProducts {
 					value: faker.lorem.sentence()
 				}
 			],
-			images: [
-				{
-					locale: 'en-US',
-					...imageUS
-				},
-				{
-					locale: 'he-IL',
-					...imageIL
-				},
-				{
-					locale: 'bg-BG',
-					...imageBG
-				},
-				{
-					locale: 'ru-RU',
-					...imageRU
-				}
-			],
+			images,
 			categories: inputCategories
 		};
 	}
@@ -75,9 +57,14 @@ export default class FakeDataProducts {
 			height: imageElementUS.height
 		};
 
-		const imageIL = await this._getImage();
-		const imageBG = await this._getImage();
-		const imageRU = await this._getImage();
+		const randomImages = await this._getRandomImages(['en-US']);
+
+		const images = randomImages.concat([
+			{
+				locale: 'en-US',
+				...imageUS
+			}
+		]);
 
 		return {
 			title: [
@@ -102,24 +89,7 @@ export default class FakeDataProducts {
 					value: '100% tasty peperoni pizza'
 				}
 			],
-			images: [
-				{
-					locale: 'en-US',
-					...imageUS
-				},
-				{
-					locale: 'he-IL',
-					...imageIL
-				},
-				{
-					locale: 'bg-BG',
-					...imageBG
-				},
-				{
-					locale: 'ru-RU',
-					...imageRU
-				}
-			],
+			images,
 			categories: inputCategories
 		};
 	}
@@ -138,9 +108,14 @@ export default class FakeDataProducts {
 			height: imageElementUS.height
 		};
 
-		const imageIL = await this._getImage();
-		const imageBG = await this._getImage();
-		const imageRU = await this._getImage();
+		const randomImages = await this._getRandomImages(['en-US']);
+
+		const images = randomImages.concat([
+			{
+				locale: 'en-US',
+				...imageUS
+			}
+		]);
 
 		return {
 			title: [
@@ -165,24 +140,7 @@ export default class FakeDataProducts {
 					value: 'Mix Caviar and sushi'
 				}
 			],
-			images: [
-				{
-					locale: 'en-US',
-					...imageUS
-				},
-				{
-					locale: 'he-IL',
-					...imageIL
-				},
-				{
-					locale: 'bg-BG',
-					...imageBG
-				},
-				{
-					locale: 'ru-RU',
-					...imageRU
-				}
-			],
+			images,
 			categories: inputCategories
 		};
 	}
@@ -201,9 +159,14 @@ export default class FakeDataProducts {
 			height: imageElementUS.height
 		};
 
-		const imageIL = await this._getImage();
-		const imageBG = await this._getImage();
-		const imageRU = await this._getImage();
+		const randomImages = await this._getRandomImages(['en-US']);
+
+		const images = randomImages.concat([
+			{
+				locale: 'en-US',
+				...imageUS
+			}
+		]);
 
 		return {
 			title: [
@@ -228,24 +191,7 @@ export default class FakeDataProducts {
 					value: '23 tasty mix from sushi'
 				}
 			],
-			images: [
-				{
-					locale: 'en-US',
-					...imageUS
-				},
-				{
-					locale: 'he-IL',
-					...imageIL
-				},
-				{
-					locale: 'bg-BG',
-					...imageBG
-				},
-				{
-					locale: 'ru-RU',
-					...imageRU
-				}
-			],
+			images,
 			categories: inputCategories
 		};
 	}
@@ -297,6 +243,32 @@ export default class FakeDataProducts {
 			height: imageElementRU.height
 		};
 
+		const randomImages = await this._getRandomImages([
+			'en-US',
+			'he-IL',
+			'ru-RU',
+			'bg-BG'
+		]);
+
+		const images = randomImages.concat([
+			{
+				locale: 'en-US',
+				...imageUS
+			},
+			{
+				locale: 'he-IL',
+				...imageIL
+			},
+			{
+				locale: 'ru-RU',
+				...imageRU
+			},
+			{
+				locale: 'bg-BG',
+				...imageBG
+			}
+		]);
+
 		return {
 			title: [
 				{
@@ -320,24 +292,7 @@ export default class FakeDataProducts {
 					value: 'Great seasoned pasta'
 				}
 			],
-			images: [
-				{
-					locale: 'en-US',
-					...imageUS
-				},
-				{
-					locale: 'he-IL',
-					...imageIL
-				},
-				{
-					locale: 'ru-RU',
-					...imageRU
-				},
-				{
-					locale: 'bg-BG',
-					...imageBG
-				}
-			],
+			images,
 			categories: inputCategories
 		};
 	}
@@ -356,9 +311,14 @@ export default class FakeDataProducts {
 			height: imageElementUS.height
 		};
 
-		const imageIL = await this._getImage();
-		const imageBG = await this._getImage();
-		const imageRU = await this._getImage();
+		const randomImages = await this._getRandomImages(['en-US']);
+
+		const images = randomImages.concat([
+			{
+				locale: 'en-US',
+				...imageUS
+			}
+		]);
 
 		return {
 			title: [
@@ -383,24 +343,7 @@ export default class FakeDataProducts {
 					value: 'Sushi box'
 				}
 			],
-			images: [
-				{
-					locale: 'en-US',
-					...imageUS
-				},
-				{
-					locale: 'he-IL',
-					...imageIL
-				},
-				{
-					locale: 'bg-BG',
-					...imageBG
-				},
-				{
-					locale: 'ru-RU',
-					...imageRU
-				}
-			],
+			images,
 			categories: inputCategories
 		};
 	}
@@ -419,9 +362,14 @@ export default class FakeDataProducts {
 			height: imageElementUS.height
 		};
 
-		const imageIL = await this._getImage();
-		const imageBG = await this._getImage();
-		const imageRU = await this._getImage();
+		const randomImages = await this._getRandomImages(['en-US']);
+
+		const images = randomImages.concat([
+			{
+				locale: 'en-US',
+				...imageUS
+			}
+		]);
 
 		return {
 			title: [
@@ -447,26 +395,18 @@ export default class FakeDataProducts {
 						'100% muzzarella with tomato and pepperoni served with tomato souce by side.'
 				}
 			],
-			images: [
-				{
-					locale: 'en-US',
-					...imageUS
-				},
-				{
-					locale: 'he-IL',
-					...imageIL
-				},
-				{
-					locale: 'bg-BG',
-					...imageBG
-				},
-				{
-					locale: 'ru-RU',
-					...imageRU
-				}
-			],
+			images,
 			categories: inputCategories
 		};
+	}
+
+	private async _getRandomImages(skipLocales = []) {
+		const image = await this._getImage();
+		return locales
+			.filter((locale) => !skipLocales.includes(locale))
+			.map((locale) => {
+				return { locale, ...image };
+			});
 	}
 
 	private async _getImage() {
