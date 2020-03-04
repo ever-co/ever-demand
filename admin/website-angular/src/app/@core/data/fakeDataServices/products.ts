@@ -5,11 +5,16 @@ import * as _ from 'lodash';
 import { IProductsCategory } from '@modules/server.common/interfaces/IProductsCategory';
 import { images } from '@modules/server.common/data/image-urls';
 import { productNames } from '@modules/server.common/data/food-product-names';
-
-const locales = ['en-US', 'he-IL', 'bg-BG', 'ru-RU', 'es-ES'];
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export default class FakeDataProducts {
+	private locales = [];
+
+	constructor(private translateService: TranslateService) {
+		this.locales = this.translateService.getLangs();
+	}
+
 	async getRandomProduct(
 		inputCategories: IProductsCategory[] = []
 	): Promise<IProductCreateObject> {
@@ -402,7 +407,7 @@ export default class FakeDataProducts {
 
 	private async _getRandomImages(skipLocales = []) {
 		const image = await this._getImage();
-		return locales
+		return this.locales
 			.filter((locale) => !skipLocales.includes(locale))
 			.map((locale) => {
 				return { locale, ...image };
