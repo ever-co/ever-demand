@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { CallNumber } from '@ionic-native/call-number';
 import { environment } from 'environment';
 import { Store } from 'app/services/store.service';
@@ -18,7 +18,8 @@ export class MenuComponent {
 
 	constructor(
 		private store: Store,
-		private warehouseRouter: WarehouseRouter
+		private warehouseRouter: WarehouseRouter,
+		private elem: ElementRef
 	) {}
 
 	get maintenanceMode() {
@@ -48,4 +49,5 @@ export class MenuComponent {
 			this.merchant = null;
 		}
 	}
+
 }

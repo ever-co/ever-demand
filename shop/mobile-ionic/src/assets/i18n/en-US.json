@@ -106,9 +106,9 @@
 			"NOT_PAID_NOTE": "Prepare your wallet (%s in cash)."
 		},
 		"DELIVERY_STATUS": {
-			"WE": "We",
-			"CARRIER": "Carrier",
-			"YOU": "You"
+			"WE": "Massage Person",
+			"CARRIER": "On Road to You",
+			"YOU": "Your home"
 		},
 		"DELIVERY_WRONG": {
 			"DELIVERY_WRONG": "The Delivery Went Wrong!",

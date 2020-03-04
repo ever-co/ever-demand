@@ -28,7 +28,7 @@
 					}"
 				>
 					<h5>{{ 'BUY_POPUP.DELIVERY_STATUS.WE' | translate }}</h5>
-					<i class="fa fa-building"></i>
+					<ion-icon src="../../../../assets/icons/popup-saloon-building.svg"></ion-icon>
 				</div>
 
 				<span [ngClass]="{ activated: isCarrierActive }">..</span>
@@ -42,13 +42,11 @@
 				>
 					<h5>
 						{{ 'BUY_POPUP.DELIVERY_STATUS.CARRIER' | translate }}
-					</h5>
-					<i
-						class="fa fa-motorcycle"
-						[ngClass]="{
-							flip: ('CURRENT_DIRECTION' | translate) == 'rtl'
-						}"
-					></i>
+						</h5>
+				
+					<ion-icon src="../../../../assets/icons/popup-car.svg" 	[ngClass]="{
+						flip: ('CURRENT_DIRECTION' | translate) == 'rtl'
+					}"></ion-icon>
 				</div>
 
 				<span [ngClass]="{ activated: isCustomerActive }">..</span>
@@ -61,7 +59,7 @@
 					}"
 				>
 					<h5>{{ 'BUY_POPUP.DELIVERY_STATUS.YOU' | translate }}</h5>
-					<i class="fa fa-home"></i>
+					<ion-icon src="../../../../assets/icons/popup-house.svg"></ion-icon>
 				</div>
 			</div>
 		</div>
