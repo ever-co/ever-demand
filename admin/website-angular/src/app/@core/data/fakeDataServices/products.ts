@@ -6,7 +6,7 @@ import { IProductsCategory } from '@modules/server.common/interfaces/IProductsCa
 import { images } from '@modules/server.common/data/image-urls';
 import { productNames } from '@modules/server.common/data/food-product-names';
 
-const locales = ['en-US', 'he-LI', 'bg-BG', 'ru-RU', 'es-ES'];
+const locales = ['en-US', 'he-IL', 'bg-BG', 'ru-RU', 'es-ES'];
 
 @Injectable()
 export default class FakeDataProducts {
