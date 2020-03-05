@@ -9,7 +9,7 @@ import { Store } from '../../services/store.service';
 import { Router } from '@angular/router';
 import { IOrderCreateInput } from '@modules/server.common/routers/IWarehouseOrdersRouter';
 import { OrderPage } from './+order/order.page';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { environment } from 'environment';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { GeoLocationService } from '../../services/geo-location';
@@ -59,7 +59,8 @@ export class ProductsPage implements OnInit, OnDestroy {
 		private modalController: ModalController,
 		private geoLocationService: GeoLocationService,
 		private warehouseRouter: WarehouseRouter,
-		private warehouseProductsService: WarehouseProductsService
+		private warehouseProductsService: WarehouseProductsService,
+		public navCtrl: NavController
 	) {
 		this.productsLocale = this.store.language || environment.DEFAULT_LOCALE;
 
@@ -98,7 +99,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 			this.store.registrationSystem = RegistrationSystem.Once;
 			this.store.buyProduct = currentProduct.warehouseProduct.id;
 			this.store.warehouseId = currentProduct.warehouseId;
-			this.router.navigateByUrl('/invite');
+			this.navCtrl.navigateRoot('/invite');
 		} else {
 			const orderCreateInput: IOrderCreateInput = {
 				warehouseId:
