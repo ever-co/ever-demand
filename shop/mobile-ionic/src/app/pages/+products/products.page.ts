@@ -309,6 +309,8 @@ export class ProductsPage implements OnInit, OnDestroy {
 				this.store.registrationSystem = RegistrationSystem.Once;
 				this.router.navigate(['/invite']);
 			}
+		} else {
+			this.areProductsLoaded = true;
 		}
 
 		this.$areProductsLoaded.emit();
