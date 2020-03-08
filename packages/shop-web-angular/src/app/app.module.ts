@@ -27,7 +27,7 @@ import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState } from './app.service';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { NoContentComponent } from './no-content';
-import { CommonModule } from '../modules/client.common.angular2';
+import { CommonModule } from '@modules/client.common.angular2/common.module';
 import { SidenavService } from './sidenav/sidenav.service';
 import { SidenavContentComponent } from './sidenav/sidenav-content.component';
 import '../styles/styles.scss';
