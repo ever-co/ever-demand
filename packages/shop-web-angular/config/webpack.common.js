@@ -23,7 +23,6 @@ const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplaceme
 
 const buildUtils = require('./build-utils');
 const nodeModulesPath = '../../../node_modules';
-console.log(path.resolve(__dirname, nodeModulesPath));
 
 /**
  * Webpack configuration
