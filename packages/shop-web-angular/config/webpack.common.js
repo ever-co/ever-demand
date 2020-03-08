@@ -22,6 +22,7 @@ const AngularCompilerPlugin = require('@ngtools/webpack').AngularCompilerPlugin;
 const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplacementPlugin');
 
 const buildUtils = require('./build-utils');
+const nodeModulesPath = '../../../node_modules';
 
 /**
  * Webpack configuration
@@ -64,7 +65,10 @@ module.exports = function(options) {
 				'main'
 			],
 			extensions: ['.ts', '.js', '.json'],
-			modules: [helpers.root('src'), helpers.root('node_modules')],
+			modules: [
+				helpers.root('src'),
+				path.resolve(__dirname, nodeModulesPath)
+			],
 			alias: buildUtils.rxjsAlias(supportES2015),
 			symlinks: false
 		},
@@ -94,6 +98,11 @@ module.exports = function(options) {
 				{
 					test: /\.(eot|woff2?|svg|ttf)([\?]?.*)$/,
 					use: 'file-loader'
+				},
+				{
+					test: /\.mjs$/,
+					include: /node_modules/,
+					type: 'javascript/auto'
 				}
 			]
 		},
@@ -110,7 +119,7 @@ module.exports = function(options) {
 				// For some reason, it does not work well with mongoose-placeholder.ts, so we reference JS here
 				// it's anyway placeholder so we don't really care much about content to be in sync with TS (for now at least)
 				require.resolve(
-					'../src/modules/client.common.angular2/mongoose-placeholder.js'
+					`${nodeModulesPath}/@ever-platform/common-angular/build/mongoose-placeholder.js`
 				)
 			),
 
@@ -119,7 +128,7 @@ module.exports = function(options) {
 				// For some reason, it does not work well with typeorm-placeholder.ts, so we reference JS here
 				// it's anyway placeholder so we don't really care much about content to be in sync with TS (for now at least)
 				require.resolve(
-					'../src/modules/client.common.angular2/typeorm-placeholder.js'
+					`${nodeModulesPath}/@ever-platform/common-angular/build/typeorm-placeholder.js`
 				)
 			),
 
@@ -154,7 +163,7 @@ module.exports = function(options) {
 			new CopyWebpackPlugin(
 				[
 					{ from: 'src/assets', to: 'assets' },
-					{ from: 'node_modules/mdi-svg/svg', to: 'icons' },
+					{ from: `${nodeModulesPath}/mdi-svg/svg`, to: 'icons' },
 					{ from: 'src/meta' }
 				],
 				isProd ? { ignore: ['mock-data/**/*'] } : undefined

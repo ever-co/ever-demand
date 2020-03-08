@@ -1,4 +1,5 @@
 {
+	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
 		"target": "es5",
 		"module": "esnext",
@@ -14,32 +15,25 @@
 		"noStrictGenericChecks": true,
 		"lib": ["es7", "dom"],
 		"baseUrl": "./src",
+		"types": ["reflect-metadata", "hammerjs", "node", "googlemaps"],
 		"paths": {
-			"@angular/*": ["../node_modules/@angular/*"],
-			"@pyro/*": ["./modules/server.common/@pyro/*"],
+			"@modules/server.common/*": ["../../common/src/*"],
+			"@modules/client.common.angular2/*": ["../../common-angular/src/*"],
 			"@modules/*": ["./modules/*"],
-			"mongoose": [
-				"./modules/client.common.angular2/mongoose-placeholder"
-			],
-			"typeorm": ["./modules/client.common.angular2/typeorm-placeholder"]
-		},
-		"typeRoots": ["node_modules/@types"],
-		"types": ["reflect-metadata", "hammerjs", "node", "googlemaps"]
+			"@pyro/*": ["../../common/src/@pyro/*"],
+			"mongoose": ["../../common-angular/src/mongoose-placeholder"],
+			"typeorm": ["../../common-angular/src/typeorm-placeholder"],
+			"environments/*": ["./environments/*"]
+		}
 	},
-	"include": [
-		"src/**/*.ts",
-		"./*.ts",
-		"src/modules/client.common.angular2/mongoose-placeholder.ts",
-		"src/modules/client.common.angular2/typeorm-placeholder.ts",
-		"src/modules/**/*.ts"
-	],
-	"exclude": ["dist", "src/**/*.spec.ts", "src/**/*.e2e.ts"],
 	"angularCompilerOptions": {
 		"skipMetadataEmit": true
 	},
-	"compileOnSave": false,
-	"buildOnSave": false,
-	"atom": {
-		"rewriteTsconfig": false
-	}
+	"include": [
+		"./src",
+		"./*.ts",
+		"../common/**/*.ts",
+		"../common-angular/**/*.ts"
+	],
+	"exclude": ["dist", "src/**/*.spec.ts", "src/**/*.e2e.ts", "node_modules"]
 }
