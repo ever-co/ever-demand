@@ -1,4 +1,4 @@
-import { connect } from 'connect';
+import connect from 'connect';
 import path from 'path';
 import { serveStatic } from 'serve-static';
 const port: number = 8080;
