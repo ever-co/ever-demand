@@ -1,4 +1,5 @@
 {
+	"extends": "../../tsconfig.base.json",
 	"compileOnSave": false,
 	"compilerOptions": {
 		"sourceMap": true,
@@ -11,21 +12,20 @@
 		"preserveConstEnums": true,
 		"allowSyntheticDefaultImports": true,
 		"target": "es5",
-		"typeRoots": ["node_modules/@types"],
 		"baseUrl": "./src",
 		"paths": {
-			"@ionic-native/*": ["../node_modules/@ionic-native/*"],
-			"@angular/*": ["../node_modules/@angular/*"],
-			"@nebular/*": ["../node_modules/@nebular/*"],
+			"@ionic-native/*": ["../../../node_modules/@ionic-native/*"],
+			"@angular/*": ["../../../node_modules/@angular/*"],
+			"@nebular/*": ["../../../node_modules/@nebular/*"],
+			"@modules/server.common/*": ["../../common/src/*"],
+			"@modules/client.common.angular2/*": ["../../common-angular/src/*"],
 			"@modules/*": ["./modules/*"],
-			"@pyro/*": ["./modules/server.common/@pyro/*"],
-			"mongoose": [
-				"./modules/client.common.angular2/mongoose-placeholder"
-			],
-			"typeorm": ["./modules/client.common.angular2/typeorm-placeholder"],
+			"@pyro/*": ["../../common/src/@pyro/*"],
+			"mongoose": ["../../common-angular/src/mongoose-placeholder"],
+			"typeorm": ["../../common-angular/src/typeorm-placeholder"],
 			"environment": ["./environments/environment"],
 			"core-js/es7/reflect": [
-				"../node_modules/core-js/proposals/reflect-metadata"
+				"../../../node_modules/core-js/proposals/reflect-metadata"
 			]
 		},
 		"lib": ["es2017", "dom", "esnext"],
@@ -35,9 +35,8 @@
 	"include": [
 		"src/**/*.ts",
 		"./*.ts",
-		"src/modules/client.common.angular2/mongoose-placeholder.ts",
-		"src/modules/client.common.angular2/typeorm-placeholder.ts",
-		"src/modules/**/*.ts"
+		"../common/**/*.ts",
+		"../common-angular/**/*.ts"
 	],
 	"exclude": ["node_modules"],
 	"atom": {

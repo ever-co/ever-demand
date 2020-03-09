@@ -15,16 +15,14 @@ pm2.connect(function() {
 			instances: instances,
 			max_memory_restart: maxMemory + 'M',
 			env: {
-				// If needed declare some environment variables
 				NODE_ENV: 'production',
 				PORT: '8080',
 				KEYMETRICS_PUBLIC: PUBLIC_KEY,
 				KEYMETRICS_SECRET: PRIVATE_KEY
 			},
-			post_update: ['yarn install'] // Commands to execute once we do a pull from Keymetrics
+			post_update: ['yarn install']
 		},
 		function() {
-			// Display logs in standard output
 			pm2.launchBus(function(err, bus) {
 				console.log('[PM2] Log streaming started');
 				bus.on('log:out', function(packet) {
@@ -45,3 +43,4 @@ pm2.connect(function() {
 		}
 	);
 });
+//# sourceMappingURL=pm2bootstrap.js.map

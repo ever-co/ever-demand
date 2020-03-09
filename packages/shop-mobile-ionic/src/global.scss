@@ -25,9 +25,9 @@
 @import 'theme/fonts/google-font-Jura';
 
 $fa-font-path: './assets/fonts' !default;
-@import '../node_modules/font-awesome/scss/font-awesome';
+@import '~font-awesome/scss/font-awesome';
 
-@import 'modules/client.common.angular2/scss/everbie.common';
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
 
 @import 'theme/box';
 @import 'theme/delivery-status';

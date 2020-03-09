@@ -1,5 +1,5 @@
 {
-	"$schema": "./node_modules/@angular-devkit/core/src/workspace/workspace-schema.json",
+	"$schema": "../../node_modules/@angular/cli/lib/config/schema.json",
 	"version": 1,
 	"defaultProject": "app",
 	"newProjectRoot": "projects",
@@ -31,13 +31,13 @@
 							},
 							{
 								"glob": "**/*.svg",
-								"input": "node_modules/ionicons/dist/ionicons/svg",
+								"input": "../../node_modules/ionicons/dist/ionicons/svg",
 								"output": "./svg"
 							},
 							"src/manifest.json"
 						],
 						"styles": [
-							"node_modules/bootstrap/dist/css/bootstrap.min.css",
+							"../../node_modules/bootstrap/dist/css/bootstrap.min.css",
 							{
 								"input": "src/theme/variables.scss"
 							},
@@ -93,7 +93,7 @@
 						"tsConfig": "src/tsconfig.spec.json",
 						"karmaConfig": "src/karma.conf.js",
 						"styles": [
-							"node_modules/bootstrap/dist/css/bootstrap.min.css",
+							"../../node_modules/bootstrap/dist/css/bootstrap.min.css",
 							{
 								"input": "src/theme/variables.scss"
 							},

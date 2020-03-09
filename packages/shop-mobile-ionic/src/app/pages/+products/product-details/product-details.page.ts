@@ -5,20 +5,14 @@ import {
 	NgZone,
 	EventEmitter
 } from '@angular/core';
-import {
-	ActivatedRoute,
-	Router
-} from '../../../../../node_modules/@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '../../../services/store.service';
 import {
 	SwiperInterface as Swiper,
 	SwiperOptions
 } from '@ionic/core/dist/ionic/swiper/swiper-interface';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
-import {
-	NavController,
-	ModalController
-} from '../../../../../node_modules/@ionic/angular';
+import { NavController, ModalController } from '@ionic/angular';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { OrderPage } from '../+order/order.page';

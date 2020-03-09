@@ -8,7 +8,7 @@ import { ProductDetailsPage } from './product-details.page';
 import { WarehouseLogoModule } from '../../../components/warehouse-logo/warehouse-logo.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient } from '../../../../../node_modules/@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { OrderPageModule } from '../+order/order.module';
 import { CancelPageModule } from '../+order/+cancel/cancel.module';
 import { ProductsModule } from '../../../components/products/products.module';
