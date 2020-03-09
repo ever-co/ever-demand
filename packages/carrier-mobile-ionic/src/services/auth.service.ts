@@ -1,7 +1,7 @@
-import { Injectable } from '../../node_modules/@angular/core';
-import { Apollo } from '../../node_modules/apollo-angular';
+import { Injectable } from '@angular/core';
+import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
-import { map, share } from '../../node_modules/rxjs/operators';
+import { map, share } from 'rxjs/operators';
 import Carrier from '@modules/server.common/entities/Carrier';
 
 export interface CarrierLoginInfo {
