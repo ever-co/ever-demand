@@ -45,7 +45,7 @@
 		"run:server:dev": "yarn --cwd ./packages/core start:dev",
 		"run:admin": "yarn --cwd ./packages/admin-web-angular start",
 		"run:merchant": "yarn --cwd ./merchant/tablet-ionic start",
-		"run:shopmobile": "yarn --cwd ./shop/mobile-ionic start",
+		"run:shopmobile": "yarn --cwd ./packages/shop-mobile-ionic start",
 		"run:shopweb": "yarn build:common && yarn --cwd ./packages/shop-web-angular start",
 		"run:carrier": "yarn --cwd ./carrier/mobile-ionic start",
 		"build:server": "yarn --cwd ./backend/api run build",
