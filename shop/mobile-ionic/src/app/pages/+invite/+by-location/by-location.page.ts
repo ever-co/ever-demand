@@ -282,12 +282,10 @@ export class ByLocationPage implements OnInit, OnDestroy {
 
 		let coordinatesObj = await this.getCoordinatesByAddress();
 
-		debugger;
 		if (coordinatesObj == null) {
 			coordinatesObj = await this.getCoordinates();
 		}
 
-		debugger;
 		if (coordinatesObj != null) {
 			return this.inviteRequestRouter.create({
 				geoLocation: {
@@ -433,7 +431,7 @@ export class ByLocationPage implements OnInit, OnDestroy {
 		const streetAddress = this.streetAddress;
 		const city = this.city;
 		const countryName = getCountryName(this.country);
-		debugger;
+
 		if (!streetAddress || !house || !city || !countryName) {
 			return;
 		}
@@ -452,7 +450,6 @@ export class ByLocationPage implements OnInit, OnDestroy {
 					if (status === google.maps.GeocoderStatus.OK) {
 						const place: google.maps.GeocoderResult = results[0];
 
-						debugger;
 						const neededAddressTypes = [
 							'country',
 							'locality',
