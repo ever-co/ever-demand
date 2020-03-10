@@ -103,9 +103,7 @@ export class ByLocationPage implements OnInit, OnDestroy {
 			}
 
 			console.log(
-				`Device location using @ionic-native/geolocation services recieved: ${
-					coords.latitude
-				}, ${coords.longitude}`
+				`Device location using @ionic-native/geolocation services recieved: ${coords.latitude}, ${coords.longitude}`
 			);
 
 			return { lng: coords.longitude, lat: coords.latitude };
@@ -322,9 +320,7 @@ export class ByLocationPage implements OnInit, OnDestroy {
 			}
 
 			console.log(
-				`Reverse geo-code address by coordinates [${
-					coordinatesObj.lat
-				}, ${coordinatesObj.lng}] started...`
+				`Reverse geo-code address by coordinates [${coordinatesObj.lat}, ${coordinatesObj.lng}] started...`
 			);
 
 			let address = await this.geoLocationRouter.getAddressByCoordinatesUsingArcGIS(
@@ -392,7 +388,10 @@ export class ByLocationPage implements OnInit, OnDestroy {
 				},
 				(results, status) => {
 					if (status === google.maps.GeocoderStatus.OK) {
-						let country;
+						let country = results.find((x) =>
+							x.types.includes('country')
+						);
+
 						let address = results.find((x) =>
 							x.types.includes('street_address')
 						);
@@ -401,17 +400,13 @@ export class ByLocationPage implements OnInit, OnDestroy {
 							address = results.find((x) =>
 								x.types.includes('route')
 							);
-
-							country = address.address_components[4].short_name;
-						} else {
-							country = address.address_components[5].short_name;
 						}
 
 						const formattedAddress = {
 							locality: address.address_components[3].short_name,
 							thoroughfare:
 								address.address_components[1].short_name,
-							country
+							country: country.address_components[0].short_name
 						};
 
 						resolve(formattedAddress);
