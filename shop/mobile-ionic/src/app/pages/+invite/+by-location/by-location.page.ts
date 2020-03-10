@@ -473,6 +473,8 @@ export class ByLocationPage implements OnInit, OnDestroy {
 
 						const loc = place.geometry.location;
 						resolve({ lat: loc.lat(), lng: loc.lng() });
+					} else {
+						resolve(null);
 					}
 				}
 			);
