@@ -43,7 +43,7 @@ body {
 }
 
 .ion-page {
-	background-color: $brand-lighted;
+	background-color: var(--ion-color-primary);
 }
 
 // This is for remove bad popup background
@@ -97,7 +97,7 @@ ion-menu-button {
 }
 
 .brand-light {
-	background: #ffffff;
+	background: var(--ion-color-primary);
 }
 
 .blur-filter {

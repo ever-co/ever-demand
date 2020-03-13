@@ -11,9 +11,8 @@ body {
 ion-card {
 	width: 100%;
 	margin: 0;
-	background-color: #fff;
+	background-color: var(--ion-color-primary);
 }
-
 .actions {
 	margin-bottom: 10px;
 

@@ -1,4 +1,4 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, ɵɵresolveBody } from '@angular/core';
 import { CallNumber } from '@ionic-native/call-number';
 import { environment } from 'environment';
 import { Store } from 'app/services/store.service';
@@ -50,4 +50,13 @@ export class MenuComponent {
 		}
 	}
 
+	changeTheme(e){
+		let themeName = e.detail.value;
+		if(themeName === "night-theme"){
+			document.body.classList.add('dark');
+		}else{
+			document.body.classList.remove('dark');
+		}
+	
+	}
 }

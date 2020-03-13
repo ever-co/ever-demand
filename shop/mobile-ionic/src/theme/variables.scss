@@ -3,9 +3,12 @@ $app-direction: multi;
 
 /** Ionic CSS Variables **/
 :root {
+
+	--ion-color-content: #F9F4F5;
+	--ion-color-content-rgb: 249, 244, 245;
 	/** primary **/
 	--ion-color-primary: #ffffff;
-	--ion-color-primary-rgb: 42, 44, 57;
+	--ion-color-primary-rgb: 255, 255, 255;
 	--ion-color-primary-contrast: #ffffff;
 	--ion-color-primary-contrast-rgb: 255, 255, 255;
 	--ion-color-primary-shade: #252732;
@@ -68,14 +71,159 @@ $app-direction: multi;
 	--ion-color-medium-tint: #a2a4ab;
 
 	/** light **/
-	--ion-color-light: #ffffff;
+	--ion-color-light: #FFE5E5;
 	--ion-color-light-rgb: 244, 244, 244;
 	--ion-color-light-contrast: #000000;
 	--ion-color-light-contrast-rgb: 0, 0, 0;
 	--ion-color-light-shade: #d7d8da;
 	--ion-color-light-tint: #f5f6f9;
-	
+
+
+
+
+	//header color
+	--ion-color-header: #ffffff;
+	//border-color
+	--ion-color-border: #E9D6D0;
+
+	--ion-color-massaza-item-txt: #D26775;
+
+	--ion-color-menu-secondary: #ffffff;
+	--ion-color-link-text: #96525c;
+
+	--ion-color-icon-background: #FEEFEC;
+	--ion-color-icon-color: #A26160;
+
+
+	//got it button
+	--ion-color-here-btn: #96525C;
+
+	//disabled button
+	--ion-color-disabled-background: #F5E7E4;
+	--ion-color-disabled-txt: #DBB2AA;
+	//no-select
+	--ion-color-no-select: #C0979D;
+
+
 	:focus {
 		outline: none;
 	}
 }
+
+
+.dark {
+	--ion-color-content: #281C1E;
+	--ion-color-content-rgb: 40, 28, 30;
+
+	--ion-color-primary: #50272F;
+	--ion-color-primary-rgb: 80, 39, 47;
+	--ion-color-primary-contrast: #fff;
+	--ion-color-primary-contrast-rgb: 255, 255, 255;
+	// --ion-color-primary-shade: red;
+	// --ion-color-primary-tint: red;
+
+	/** secondary **/
+	--ion-color-secondary: #ffffff;
+	--ion-color-secondary-rgb: 116, 42, 57;
+	--ion-color-secondary-contrast: #ffffff;
+	--ion-color-secondary-contrast-rgb: 255, 255, 255;
+	--ion-color-secondary-shade: #f9b19f;
+	--ion-color-secondary-tint: #c45955;
+
+	/** tertiary **/
+	--ion-color-tertiary: #E87B68;
+	--ion-color-tertiary-rgb: 241, 241, 242;
+	--ion-color-tertiary-contrast: #ffffff;
+	--ion-color-tertiary-contrast-rgb: 255, 255, 255;
+	--ion-color-tertiary-shade: #96525c;
+	--ion-color-tertiary-tint: #f9b19f;
+
+	/** success **/
+	--ion-color-success: #10dc60;
+	--ion-color-success-rgb: 16, 220, 96;
+	--ion-color-success-contrast: #000000;
+	--ion-color-success-contrast-rgb: 0, 0, 0;
+	--ion-color-success-shade: #0ec254;
+	--ion-color-success-tint: #28e070;
+
+
+
+	/** menu-color **/
+
+	// --ion-color-warning-rgb: 255, 206, 0;
+	// --ion-color-warning-contrast: #ffffff;
+	// --ion-color-warning-contrast-rgb: 255, 255, 255;
+	// --ion-color-warning-shade: #e0b500;
+	// --ion-color-warning-tint: #ffd31a;
+
+	/** danger **/
+	--ion-color-danger: #f04141;
+	--ion-color-danger-rgb: 245, 61, 61;
+	--ion-color-danger-contrast: #ffffff;
+	--ion-color-danger-contrast-rgb: 255, 255, 255;
+	--ion-color-danger-shade: #d33939;
+	--ion-color-danger-tint: #f25454;
+
+	/** dark **/
+	--ion-color-dark: #ffffff;
+	--ion-color-dark-rgb: 34, 34, 34;
+	--ion-color-dark-contrast: #ffffff;
+	--ion-color-dark-contrast-rgb: 255, 255, 255;
+	--ion-color-dark-shade: #1e2023;
+	--ion-color-dark-tint: #383a3e;
+
+	/** medium **/
+	--ion-color-medium: #989aa2;
+	--ion-color-medium-rgb: 152, 154, 162;
+	--ion-color-medium-contrast: #ffffff;
+	--ion-color-medium-contrast-rgb: 255, 255, 255;
+	--ion-color-medium-shade: #86888f;
+	--ion-color-medium-tint: #a2a4ab;
+
+	/** light **/
+	--ion-color-light: #742A39;
+	--ion-color-light-rgb: 244, 244, 244;
+	--ion-color-light-contrast: #000000;
+	--ion-color-light-contrast-rgb: 0, 0, 0;
+	--ion-color-light-shade: #d7d8da;
+	--ion-color-light-tint: #f5f6f9;
+
+
+	//header color
+	--ion-color-header: #3B282A;
+	//border-color
+	--ion-color-border: #7C434E;
+
+	--ion-color-massaza-item-txt: #ffffff;
+
+	--ion-color-menu-secondary: #67303A;
+
+	--ion-color-link-text: #E67966;
+
+	--ion-color-icon-background: #724245;
+	--ion-color-icon-color: #DEB1A5;
+
+	//got it button
+	--ion-color-here-btn: #FAA464;
+
+	// disabled button
+	--ion-color-disabled-background: #764042;
+	--ion-color-disabled-txt: #764042;
+
+	//no-select
+	--ion-color-no-select: #A45A50;
+
+	:focus {
+		outline: none;
+	}
+}
+
+ion-toolbar {
+	background: var(--ion-color-header);
+
+	ion-title,
+	ion-label {
+		color: var(--ion-color-link-text);
+	}
+}
+

@@ -1,7 +1,7 @@
 @import '../../../modules/client.common.angular2/scss/everbie.common';
 
 ion-content {
-	background-color: #FCF7F8;
+	background-color: var(--ion-color-content);
 
 	.products-view {
 		height: 100%;
@@ -20,7 +20,7 @@ ion-header{
 	align-items: center;
 	justify-content: flex-end;
 	ion-label {
-		color: var(--ion-color-secondary);
+		color: var(--ion-color-link-text);
 	}
 }
 
@@ -47,13 +47,13 @@ ion-header{
 
 .toggleDeliveryType {
     zoom: .8;
-}
-ion-toggle {
-	--background: #f1f1f2;
-	--background-checked: #f1f1f2;
+	--background: var(--ion-color-icon-background);
+	--background-checked: var(--ion-color-icon-background);
 	--handle-background: var(--ion-color-tertiary);
 	--handle-background-checked: var(--ion-color-tertiary);
 }
+
+
 .no-select {
 	color: #c0979d;
 }

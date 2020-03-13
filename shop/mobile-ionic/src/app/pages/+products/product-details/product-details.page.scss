@@ -12,7 +12,7 @@
 }
 
 .icon {
-	border: 1px solid #F6CEC7;
+	border: 1px solid var(--ion-color-border);
 	// padding: 5px;
 }
 ion-title{
@@ -115,7 +115,7 @@ ion-slides.hydrated {
 }
 
 .description-text {
-	color: #000000;
+	color: var(--ion-color-dark);
 }
 
 .delivery-sign {

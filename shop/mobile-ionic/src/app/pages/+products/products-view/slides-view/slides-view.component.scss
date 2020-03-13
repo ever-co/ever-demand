@@ -52,7 +52,7 @@ ion-slide {
 		position: absolute;
 		right: 10px;
 		top: -28px;
-		border: 3px solid #F6CEC7;
+		border: 1px solid var(--ion-color-border);
 	}
 
 	ion-col {
@@ -117,12 +117,12 @@ ion-slide {
 	}
 	
 	.button-brand {
-		color: var(--ion-color-secondary);
+		color: var(--ion-color-link-text);
 	}
 	.disabled {
-		background: #F5E7E4 !important;
+		background-color: var(--ion-color-disabled-background) !important;
 		border: 1px solid #F5E7E4 !important;
-		color: #DBB2AA !important;
+		color: var(--ion-color-disabled-txt) !important;
 	}
 }
 
@@ -138,7 +138,7 @@ ion-slide {
 	position: relative;
 	height: 25%;
 	.info-bottom {
-		background: #fff;
+		background: var(--ion-color-primary);
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;

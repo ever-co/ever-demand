@@ -8,14 +8,14 @@ import { Component, HostBinding, Input, OnInit } from '@angular/core';
 				width: 56px;
 				height: 56px;
 				border-radius: 50%;
-				background-color: #fff;
+				background-color: --var(--ion-color-primary);
 				display: flex;
 				justify-content: center;
 				align-items: center;
 			}
 
 			:host.bordered {
-				border: solid #F6CEC7 1px;
+				border: solid var(--ion-color-border) 1px;
 			}
 
 			img {
@@ -30,7 +30,7 @@ import { Component, HostBinding, Input, OnInit } from '@angular/core';
 				width: auto;
 				height: auto;
 				border-radius:50%;
-				border: solid #F6CEC7 1px;
+				border: solid var(--ion-color-border) 1px;
 
 			}
 

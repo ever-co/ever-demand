@@ -17,13 +17,13 @@
 		font-size: 14px;
 
 		.top {
-			color: #000000;
-			opacity: 0.87;
+			color: var(--ion-color-dark);
+			// opacity: 0.87;
 		}
 
 		.bottom {
 			display: inline-block;
-			color: #000000;
+			color: var(--ion-color-dark);
 			opacity: 0.54;
 		}
 
@@ -46,7 +46,7 @@
 }
 
 .hr {
-	border-bottom: 1px solid #E9D6D0;
+	border-bottom: 1px solid var(--ion-color-border);
 	width: 100%;
 }
 

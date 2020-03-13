@@ -42,7 +42,7 @@ $assertive-darken: darken($assertive, 5%);
 	}
 
 	&.box-brand-light {
-		background-color: $brand-lighted !important;
+		background-color: var(--ion-color-primary) !important;
 		&, * {
 			color: var(--ion-color-secondary);
 		}

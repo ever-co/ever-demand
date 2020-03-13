@@ -1,6 +1,6 @@
 <ion-menu (ionWillOpen)="menuOpened()" contentId="pageContainer" side="start">
 	<ion-header>
-		<ion-toolbar color="secondary">
+		<ion-toolbar >
 			<ion-icon src="../../../assets/icons/logo/massaza-logo.svg"></ion-icon>
 		</ion-toolbar>
 	</ion-header>
@@ -9,13 +9,13 @@
 		<ion-list>
 			<ion-item-group>
 					<ion-item routerLink="/products" routerDirection="root" routerLinkActive="activated"
-						class="massages-sub-menu" detail="false" (click)=" showHide = !showHide">
+						class="massages-sub-menu" detail="false" >
 						<ion-icon src="../../../assets/icons/massages-menu-icon.svg"></ion-icon>
 						<ion-label class="ion-text-uppercase">{{
 							'SIDE_MENU.GROUPS.NO_TITLE.ITEMS.MASSAGES'
 								| translate
 						}}</ion-label>
-						<ion-icon src="../../../assets/icons/sub-menu-icon.svg"></ion-icon>
+						<ion-icon src="../../../assets/icons/sub-menu-icon.svg" (click)=" showHide = !showHide"></ion-icon>
 					</ion-item>
 					<ion-radio-group>
 						<div [ngClass]="{ 'show': showHide, 'hide': !showHide}">
@@ -78,7 +78,7 @@
 
 				<ion-menu-toggle [autoHide]="true">
 					<ion-item routerLink="/language" routerDirection="root" routerLinkActive="activated"
-						class="sub-menu" detail="false" style="border-bottom: 1px solid #e9d6d0" lines="none">
+						class="sub-menu" detail="false" style="border-bottom: 1px solid var(--ion-color-border)" lines="none">
 						<ion-icon name="globe"></ion-icon>
 						<ion-label>{{
 							'SIDE_MENU.GROUPS.SETTINGS.ITEMS.LANGUAGE'
@@ -88,16 +88,16 @@
 				</ion-menu-toggle>
 			</ion-item-group>
 
-			<ion-radio-group>
-				<ion-item class="sub-menu" lines="none">
+			<ion-radio-group (ionChange)="changeTheme($event)">
+				<ion-item class="sub-menu" lines="none" >
 					<ion-icon name="moon"></ion-icon>
 					<ion-label>Switch to Night Theme </ion-label>
-					<ion-radio value="night-theme" checked></ion-radio>
+					<ion-radio value="night-theme"  ></ion-radio>
 				</ion-item>
 				<ion-item class="sub-menu">
 					<ion-icon name="sunny"></ion-icon>
 					<ion-label>Switch to Day Theme </ion-label>
-					<ion-radio value="day-theme"></ion-radio>
+					<ion-radio value="day-theme" checked></ion-radio>
 				</ion-item>
 			</ion-radio-group>
 				
@@ -106,7 +106,7 @@
 						<ion-label>Auto-select Theme</ion-label>
 						<ion-note>Auto selected day or night</ion-note>
 					</ion-col>
-					<ion-toggle color="primary"></ion-toggle>
+					<ion-toggle ></ion-toggle>
 				</ion-item>
 
 			<ion-item-divider class="secondary-menu-item">

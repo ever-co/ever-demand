@@ -23,9 +23,9 @@
 	flex: 2 0 auto;
 
 	.title {
-		color: #000000;
-
+		
 		.text {
+			color: var(--ion-color-dark);
 			font-size: 16px;
 			max-width: 200px;
 			white-space: nowrap;
@@ -44,7 +44,7 @@
 
 	.description {
 		font-size: 14px;
-		color: #000000;
+		color: var(--ion-color-dark);
 		width: 200px;
 		opacity: 0.54;
 	}
