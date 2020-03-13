@@ -6,7 +6,7 @@ import { IProductsCategory } from '@modules/server.common/interfaces/IProductsCa
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import Product from '@modules/server.common/entities/Product';
 import { Subject } from 'rxjs';
-import { first, takeUntil, map, switchMap } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { ProductsCategoryService } from '../../../@core/data/productsCategory.service';
 import { Location } from '@angular/common';
