@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { ProductsCategoryService } from '../../../@core/data/productsCategory.service';
+import { Location } from '@angular/common';
 
 @Component({
 	selector: 'ea-product',
@@ -26,6 +27,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
 	constructor(
 		public readonly translateService: TranslateService,
+		private readonly _location: Location,
 		private readonly _router: ActivatedRoute,
 		private readonly _productsService: ProductsService,
 		private readonly _productLocalesService: ProductLocalesService,
@@ -102,6 +104,10 @@ export class ProductComponent implements OnInit, OnDestroy {
 		this.productCategoriesArr = this.allCategories.filter((c) =>
 			categoriesID.includes(c.id)
 		);
+	}
+
+	back() {
+		this._location.back();
 	}
 
 	private _loadProduct() {
