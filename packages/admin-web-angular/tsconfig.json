@@ -3,8 +3,6 @@
 	"compilerOptions": {
 		"module": "esnext",
 		"baseUrl": "./src",
-		"outDir": "./build",
-		"rootDir": "./",
 		"target": "es2015",
 		"experimentalDecorators": true,
 		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"],
@@ -40,7 +38,6 @@
 	"angularCompilerOptions": {
 		"annotateForClosureCompiler": true,
 		"skipTemplateCodegen": true,
-		"strictMetadataEmit": true,
 		"fullTemplateTypeCheck": true,
 		"strictInjectionParameters": true,
 		"enableResourceInlining": true

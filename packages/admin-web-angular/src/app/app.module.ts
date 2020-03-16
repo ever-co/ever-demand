@@ -155,20 +155,23 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 export function googleMapsLoaderFactory(provider: GoogleMapsLoader) {
-	return () => provider.load(environment.GOOGLE_MAPS_API_KEY);
+	const loader = () => provider.load(environment.GOOGLE_MAPS_API_KEY);
+	return loader;
 }
 
 export function serverConnectionFactory(
 	provider: ServerConnectionService,
 	store: Store
 ) {
-	return () => provider.load(environment.SERVICES_ENDPOINT, store);
+	const loader = () => provider.load(environment.SERVICES_ENDPOINT, store);
+	return loader;
 }
 
 export function maintenanceFactory(provider: MaintenanceService) {
-	return () =>
+	const loader = () =>
 		provider.load(
 			environment['SETTINGS_APP_TYPE'],
 			environment['SETTINGS_MAINTENANCE_API_URL']
 		);
+	return loader;
 }
