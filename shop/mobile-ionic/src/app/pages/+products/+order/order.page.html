@@ -6,9 +6,9 @@
 		>
 			<h4 class="main-title">{{ byPopupStatuses.TITLE }}</h4>
 
-			<div style="font-size: 80%; color:#000">{{ byPopupStatuses.DETAILS }}</div>
+			<div style="font-size: 80%; color:var(--ion-color-dark)">{{ byPopupStatuses.DETAILS }}</div>
 
-			<div style="font-size: 80%; color:#000" ng-if="!order?.isPaid">
+			<div style="font-size: 80%; color:var(--ion-color-dark)" ng-if="!order?.isPaid">
 				{{ byPopupStatuses.NOT_PAID_NOTE }}
 			</div>
 		</div>

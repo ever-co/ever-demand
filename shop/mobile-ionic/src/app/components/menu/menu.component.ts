@@ -15,7 +15,6 @@ export class MenuComponent {
 	merchant: Warehouse;
 
 	private _ourSupportNumber = environment.SUPPORT_NUMBER;
-
 	constructor(
 		private store: Store,
 		private warehouseRouter: WarehouseRouter,
@@ -49,14 +48,46 @@ export class MenuComponent {
 			this.merchant = null;
 		}
 	}
+	
+	ngOnInit() { 
+		 let theme =localStorage.getItem('theme');
+		this.setTheme(theme);
+	}
 
-	changeTheme(e){
+	getTheme(e) {
+		e.preventDefault();
 		let themeName = e.detail.value;
-		if(themeName === "night-theme"){
-			document.body.classList.add('dark');
+		let theme;
+		if (themeName === 'night-theme' ) {
+			theme = 'night';
+			localStorage.setItem('theme', theme);
+		} else {
+			theme = 'day';
+			localStorage.setItem('theme', theme);
+		}
+		this.setTheme(theme);
+	}
+
+	setTheme(theme){
+		if(theme === 'night'){
+			document.body.classList.add('dark')
 		}else{
+			document.body.classList.remove('dark')
+		}
+	}
+
+	getTime() {
+		let time = new Date().getSeconds();
+		if (time >= 18) {
+			document.body.classList.add('dark');
+		} else if (time < 18 && time >= 6) {
 			document.body.classList.remove('dark');
 		}
-	
+	}
+
+	autoTheme(e) {
+		if (e.detail.checked) {
+			setInterval(this.getTime, 1000 * 60 * 60);
+		}
 	}
 }

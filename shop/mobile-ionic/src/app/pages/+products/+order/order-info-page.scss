@@ -3,20 +3,26 @@
 .all {
 	width: 100%;
 	height: 100%;
+
 	.title {
 		width: 100%;
 		height: 25%;
+
 		.box {
 			height: 100%;
 		}
 	}
+
 	.maps {
 		width: 100%;
 		height: 27%;
+		background: var(--ion-color-primary) ;
 	}
-	.actions > .box {
+
+	.actions>.box {
 		height: 100%;
 	}
+
 	.actions {
 		width: 100%;
 		height: 48%;
@@ -25,10 +31,6 @@
 		.status {
 			margin-left: 20px;
 			margin-right: 20px;
-		}
-
-		.actions-content {
-			padding-top: 5%;
 		}
 
 		.buttons-bottom {
@@ -41,7 +43,7 @@
 			padding-left: 20px;
 			padding-right: 20px;
 
-			.row > span {
+			.row>span {
 				padding: 0;
 			}
 		}
@@ -58,7 +60,19 @@
 
 			span {
 				margin: 0 auto;
-				color: white;
+				color: #fff;
+			}
+
+			&.button-brand {
+				background: var(--ion-color-disabled-background);
+
+				span {
+					color: var(--ion-color-here-btn);
+
+				}
+			}
+			&.button-balanced{
+				background: var(--ion-color-here-btn);
 			}
 		}
 	}
@@ -73,6 +87,7 @@
 	align-content: center !important;
 	align-items: center !important;
 	height: 100%;
+
 	img {
 		width: 100%;
 	}
@@ -80,6 +95,7 @@
 
 .products-slides-image {
 	height: 100%;
+
 	img {
 		height: 100%;
 		margin: 0 auto;

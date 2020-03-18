@@ -1,7 +1,7 @@
 @import '../../../../../../../modules/client.common.angular2/scss/everbie.common';
 
 .takeaway-store-info {
-	padding: 5px 10px;
+	padding: 0 10px;
 	width: 90%;
 	margin: auto;
 	.call-icon {
@@ -45,9 +45,9 @@
 
 	.broder-top {
 		border-top: 1px solid var(--ion-color-border);
-		padding-top: 16px;
+		padding-top: 5px;
 		width: 75%;
-		margin: 15px auto;
+		margin: 10px auto;
 
 	}
 
