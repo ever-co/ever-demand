@@ -17,9 +17,9 @@ ion-header {
 
 ion-toggle {
 	--background: var(--ion-color-icon-background);
-	--background-checked: var(--ion-color-icon-background) !important;
+	--background-checked: #ffffff !important;
 	--handle-background: var(--ion-color-tertiary);
-	--handle-background-checked: var(--ion-color-tertiary) !important;
+	--handle-background-checked: green !important;
 }
 .list-md{
 	background: var(--ion-color-primary);
@@ -132,4 +132,10 @@ ion-item-group {
 		color: var(--ion-color-secondary);
 		font-size: 25px;
 	}
+}
+
+.active{
+	--background: red;
+	background: red;
+	color: red;
 }

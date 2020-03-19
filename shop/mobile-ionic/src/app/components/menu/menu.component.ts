@@ -48,46 +48,56 @@ export class MenuComponent {
 			this.merchant = null;
 		}
 	}
-	
-	ngOnInit() { 
-		 let theme =localStorage.getItem('theme');
+
+	ngOnInit() {
+		const theme = localStorage.getItem('theme');
 		this.setTheme(theme);
 	}
 
 	getTheme(e) {
 		e.preventDefault();
-		let themeName = e.detail.value;
+		const themeName = e.detail.value;
 		let theme;
-		if (themeName === 'night-theme' ) {
+		if (themeName === 'night-theme') {
 			theme = 'night';
-			localStorage.setItem('theme', theme);
 		} else {
 			theme = 'day';
-			localStorage.setItem('theme', theme);
 		}
 		this.setTheme(theme);
 	}
 
-	setTheme(theme){
-		if(theme === 'night'){
-			document.body.classList.add('dark')
-		}else{
-			document.body.classList.remove('dark')
-		}
-	}
-
-	getTime() {
-		let time = new Date().getSeconds();
-		if (time >= 18) {
+	setTheme(theme) {
+		if (theme === 'night') {
+			localStorage.setItem('theme', theme);
 			document.body.classList.add('dark');
-		} else if (time < 18 && time >= 6) {
+		} else {
+			localStorage.setItem('theme', theme);
 			document.body.classList.remove('dark');
 		}
 	}
 
+	getTime() {
+		let time = new Date().getHours();
+		let theme;
+		if (time >= 18) {
+			theme = 'night';
+		} else if (time < 18 && time >= 6) {
+			theme = 'day';
+		}
+		this.setTheme(theme);
+	}
+
 	autoTheme(e) {
 		if (e.detail.checked) {
+			this.getTime();
 			setInterval(this.getTime, 1000 * 60 * 60);
 		}
+	}
+
+	changeView(e) {
+		if (e.detail.value != localStorage.getItem('page_view')) {
+			window.location.reload();
+		}
+		localStorage.setItem('page_view', e.detail.value);
 	}
 }

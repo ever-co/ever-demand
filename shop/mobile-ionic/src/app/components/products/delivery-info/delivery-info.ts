@@ -8,7 +8,7 @@ import DeliveryType from '@modules/server.common/enums/DeliveryType';
 
 const defaultDeliveryTimeMin = environment.DELIVERY_TIME_MIN;
 const defaultDeliveryTimeMax = environment.DELIVERY_TIME_MAX;
-const productsView = environment.PRODUCTS_VIEW_TYPE;
+const productsView = localStorage.getItem('page_view') || environment.PRODUCTS_VIEW_TYPE;
 @Component({
 	selector: 'e-cu-delivery-info',
 	styleUrls: ['./delivery-info.scss'],

@@ -30,7 +30,8 @@ const initializeProductsNumber: number = 10;
 	styleUrls: ['./products.page.scss']
 })
 export class ProductsPage implements OnInit, OnDestroy {
-	viewType: string = environment.PRODUCTS_VIEW_TYPE;
+	viewType: string =
+		localStorage.getItem('page_view') || environment.PRODUCTS_VIEW_TYPE;
 	products: ProductInfo[] = [];
 	areProductsLoaded: boolean = false;
 	soldOut: boolean;
