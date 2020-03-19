@@ -68,12 +68,6 @@ import { ServerConnectionService } from '@modules/client.common.angular2/service
 		Network,
 		Device,
 		ServerConnectionService,
-		{
-			provide: APP_INITIALIZER,
-			useFactory: serverConnectionFactory,
-			deps: [ServerConnectionService, Store],
-			multi: true
-		},
 		GoogleMapsLoader,
 		{
 			provide: APP_INITIALIZER,
@@ -92,7 +86,7 @@ import { ServerConnectionService } from '@modules/client.common.angular2/service
 		{
 			provide: APP_INITIALIZER,
 			useFactory: serverSettingsFactory,
-			deps: [ServerSettings],
+			deps: [ServerSettings, ServerConnectionService, Store],
 			multi: true
 		},
 		{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
@@ -174,8 +168,18 @@ export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-export function serverSettingsFactory(provider: ServerSettings) {
-	return () => provider.load();
+export function serverSettingsFactory(
+	serverSettings: ServerSettings,
+	serverConnectionService: ServerConnectionService,
+	store: Store
+) {
+	return async () => {
+		await serverConnectionService.load(
+			environment.SERVICES_ENDPOINT,
+			store
+		);
+		await serverSettings.load();
+	};
 }
 
 export function maintenanceFactory(provider: MaintenanceService) {
@@ -188,11 +192,4 @@ export function maintenanceFactory(provider: MaintenanceService) {
 
 export function googleMapsLoaderFactory(provider: GoogleMapsLoader) {
 	return () => provider.load(environment.GOOGLE_MAPS_API_KEY);
-}
-
-export function serverConnectionFactory(
-	provider: ServerConnectionService,
-	store: Store
-) {
-	return () => provider.load(environment.SERVICES_ENDPOINT, store);
 }

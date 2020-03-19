@@ -72,19 +72,21 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 	}
 
 	get usedLanguage() {
-		let usedLanguage = this._langTranslateService.currentLang;
+		const usedLanguage = this._langTranslateService.currentLang;
 		switch (usedLanguage) {
-			case 'en':
-				return (usedLanguage += '-US');
+			case 'en-US':
+				return 'en-US';
 
-			case 'bg':
-				return (usedLanguage += '-BG');
+			case 'bg-BG':
+				return 'bg-BG';
 
-			case 'he':
-				return (usedLanguage += '-IL');
+			case 'he-IL':
+				return 'he-IL';
 
-			case 'ru':
-				return (usedLanguage += '-RU');
+			case 'ru-RU':
+				return 'ru-RU';
+			case 'es-ES':
+				return 'es-ES';
 
 			default:
 				return 'en-US';

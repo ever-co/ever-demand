@@ -1,4 +1,5 @@
-#### *** If you are running IT Company, check our new project [Gauzy](https://github.com/ever-co/gauzy) ***
+#### *** Update: If you are running IT agency or doing freelance, check our new project [Gauzy](https://github.com/ever-co/gauzy) ***
+#### !!! Hiring: remote TypeScript / NestJS / Angular developers. Send CV to jobs@ever.co !!!
 
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/ever)
 [![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/ever-co/ever?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -9,6 +10,14 @@
 [Ever](https://ever.co)® is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform built with [TypeScript](http://www.typescriptlang.org).
 
 ![overview](https://docs.ever.co/docs/assets/overview_small.png)
+
+## Demos
+
+* [Admin Website](http://ec2-52-87-227-39.compute-1.amazonaws.com:4200), use admin user email: `admin@ever.co`, password: `admin`
+* [Shopping Mobile App](http://ec2-52-87-227-39.compute-1.amazonaws.com:4201)
+* [Merchant Ionic Tablet App](http://ec2-52-87-227-39.compute-1.amazonaws.com:4202)
+* [Carrier Mobile App](http://ec2-52-87-227-39.compute-1.amazonaws.com:4203)
+* [Shopping Website](http://ec2-52-87-227-39.compute-1.amazonaws.com:3000)
 
 ## Features
 
@@ -267,4 +276,5 @@ All other brand and product names are trademarks, registered trademarks or servi
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fever.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fever?ref=badge_shield)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io)
 
-#### *** If you are running IT Company, check our new project [Gauzy](https://github.com/ever-co/gauzy) ***
+#### *** Update: If you are running IT agency or doing freelance, check our new project [Gauzy](https://github.com/ever-co/gauzy) ***
+#### !!! Hiring: remote TypeScript / NestJS / Angular developers. Send CV to jobs@ever.co !!!

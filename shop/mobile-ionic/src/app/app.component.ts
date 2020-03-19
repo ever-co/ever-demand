@@ -18,6 +18,8 @@ import { environment } from 'environment';
 	templateUrl: 'app.component.html'
 })
 export class AppComponent {
+	defaultLanguage = '';
+
 	constructor(
 		public readonly platform: Platform,
 		private readonly store: Store,
@@ -31,6 +33,28 @@ export class AppComponent {
 		private device: Device
 	) {
 		this._initializeApp();
+
+		this.defaultLanguage = environment['DEFAULT_LANGUAGE'];
+
+		_translateService.addLangs([
+			'en-US',
+			'bg-BG',
+			'he-IL',
+			'ru-RU',
+			'es-ES'
+		]);
+		_translateService.setDefaultLang('en-US');
+		const browserLang = _translateService.getBrowserLang();
+
+		if (this.defaultLanguage) {
+			_translateService.use(this.defaultLanguage);
+		} else {
+			_translateService.use(
+				browserLang.match(/en-US|bg-BG|he-HE|ru-RU|es-ES/)
+					? browserLang
+					: 'en-US'
+			);
+		}
 	}
 
 	async getChannelId(): Promise<string | null> {
@@ -100,7 +124,7 @@ export class AppComponent {
 			await this._registerDeviceDevMode();
 		}
 
-		await this._watchDeviceUpdates();
+		// await this._watchDeviceUpdates();
 	}
 
 	private async _registerDeviceDevMode() {
@@ -114,9 +138,9 @@ export class AppComponent {
 		this.store.deviceId = device.id;
 	}
 
-	private async _watchDeviceUpdates() {
-		this._translateService.onLangChange.subscribe(async ({ lang }) => {
-			await this.deviceRouter.updateLanguage(this.store.deviceId, lang);
-		});
-	}
+	// private async _watchDeviceUpdates() {
+	// 	this._translateService.onLangChange.subscribe(async ({ lang }) => {
+	// 		await this.deviceRouter.updateLanguage(this.store.deviceId, lang);
+	// 	});
+	// }
 }

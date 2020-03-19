@@ -24,3 +24,18 @@ div.input-group {
 img {
 	min-height: 200px;
 }
+
+nb-card-header {
+	min-height: 71px;
+	position: relative;
+
+	.control-icon-left {
+		cursor: pointer;
+		overflow: hidden;
+		vertical-align: middle;
+		width: 1.4em;
+		height: 1.4em;
+		float: left !important;
+		margin-right: 1.25rem;
+	}
+}

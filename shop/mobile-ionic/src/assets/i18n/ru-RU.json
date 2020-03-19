@@ -227,5 +227,11 @@
 	"FAILED": "Не удалось",
 	"CANCELED": "Отменен",
 	"IN_DELIVERY": "В доставке",
-	"COMPLETED": "Завершенный"
+	"COMPLETED": "Завершенный",
+	"BROWSE": "ПРОСМАТРИВАТЬ",
+	"ENGLISH": "Английский",
+	"HEBREW": "Иврит",
+	"RUSSIAN": "Русский",
+	"BULGARIAN": "Болгарский",
+	"SELECT": "Выбрать"
 }

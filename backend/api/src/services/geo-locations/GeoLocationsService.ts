@@ -29,6 +29,16 @@ export class GeoLocationsService implements IGeoLocationsRouter, IService {
 		lat: number,
 		lng: number
 	): Promise<any | null> {
+		if (!this.arcgisClientID || !this.arcgisClientSecret) {
+			this.log.info(
+				`Cannot use getAddressByCoordinatesUsingArcGIS without${
+					this.arcgisClientID ? '' : ' arcgisClientID'
+				}${this.arcgisClientSecret ? '' : ' arcgisClientSecret'}`
+			);
+
+			return null;
+		}
+
 		try {
 			this.log.info(
 				`Attempt to reverse Geocode coordinates: ${lat},${lng}`

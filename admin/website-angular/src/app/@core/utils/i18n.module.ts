@@ -28,7 +28,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 })
 export class I18nModule {
 	constructor(translate: TranslateService) {
-		translate.setDefaultLang('en');
-		translate.use('en');
+		translate.setDefaultLang('en-US');
+		translate.use('en-US');
 	}
 }

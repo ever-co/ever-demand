@@ -37,11 +37,5 @@ const config: ExtraOptions = {
 	exports: [RouterModule]
 })
 export class AppRoutingModule {
-	constructor(private store: Store, private router: Router) {
-		const serverConnection = Number(this.store.serverConnection);
-
-		if (serverConnection === 0) {
-			this.router.navigate(['server-down']);
-		}
-	}
+	constructor(private store: Store, private router: Router) {}
 }

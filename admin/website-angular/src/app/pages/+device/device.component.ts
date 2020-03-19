@@ -39,8 +39,8 @@ export class DeviceComponent implements OnDestroy, OnInit {
 		this._setupDataForSmartTable();
 		this._listenForEntityLocaleTranslate();
 		this._applyTranslationOnSmartTable();
-		this._translateService.setDefaultLang('en');
-		this._translateService.use('en');
+		this._translateService.setDefaultLang('en-US');
+		this._translateService.use('en-US');
 	}
 
 	// Maybe "updateDevice" this function is not in use?!

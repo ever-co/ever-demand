@@ -58,8 +58,18 @@ export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-export function serverSettingsFactory(provider: ServerSettings) {
-	return () => provider.load();
+export function serverSettingsFactory(
+	serverSettings: ServerSettings,
+	serverConnectionService: ServerConnectionService,
+	store: Store
+) {
+	return async () => {
+		await serverConnectionService.load(
+			environment.SERVICES_ENDPOINT,
+			store
+		);
+		await serverSettings.load();
+	};
 }
 
 export function maintenanceFactory(provider: MaintenanceService) {
@@ -74,21 +84,9 @@ export function googleMapsLoaderFactory(provider: GoogleMapsLoader) {
 	return () => provider.load(environment.GOOGLE_MAPS_API_KEY);
 }
 
-export function serverConnectionFactory(
-	provider: ServerConnectionService,
-	store: Store
-) {
-	return () => provider.load(environment.SERVICES_ENDPOINT, store);
-}
-
 const APP_PROVIDERS = [
 	ServerConnectionService,
-	{
-		provide: APP_INITIALIZER,
-		useFactory: serverConnectionFactory,
-		deps: [ServerConnectionService, Store],
-		multi: true
-	},
+
 	MaintenanceService,
 	{
 		provide: APP_INITIALIZER,
@@ -112,7 +110,7 @@ const APP_PROVIDERS = [
 	{
 		provide: APP_INITIALIZER,
 		useFactory: serverSettingsFactory,
-		deps: [ServerSettings],
+		deps: [ServerSettings, ServerConnectionService, Store],
 		multi: true
 	}
 ];

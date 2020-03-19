@@ -8,7 +8,7 @@ export * from './Order';
 export * from './OrderProduct';
 export * from './Product';
 export * from './ProductInfo';
-export * from './ProductsCategory';
+export * from './ProductCategory';
 export * from './User';
 export * from './UserOrder';
 export * from './Warehouse';

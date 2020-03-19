@@ -40,19 +40,15 @@
 	</div>
 
 	<h6>LANGUAGE</h6>
-	<div class="settings-row">
+	<div class="settings-row theme-button">
 		<select
-			class="col-sm-1"
+			[(ngModel)]="defaultLanguage"
+			(change)="switchLanguage()"
+			status="primary"
 			class="form-control"
-			#langSelect
-			(change)="switchLanguage(langSelect.value)"
 		>
-			<option value="" selected disabled hidden></option>
-			<option
-				*ngFor="let lang of translate.getLangs()"
-				[value]="lang"
-				[selected]="lang === translate.currentLang"
-				>{{ languages[lang] }}</option
+			<option *ngFor="let lang of languages" [value]="lang.value">
+				{{ lang.name }}</option
 			>
 		</select>
 	</div>

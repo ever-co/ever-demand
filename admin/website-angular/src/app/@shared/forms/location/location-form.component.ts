@@ -27,6 +27,7 @@ import { pick, isEmpty } from 'lodash';
 import { ToasterService } from 'angular2-toaster';
 
 import { countries } from '@modules/server.common/data/abbreviation-to-country';
+import { environment } from 'environment';
 
 @Component({
 	selector: 'ea-location-form',
@@ -204,6 +205,16 @@ export class LocationFormComponent implements AfterViewInit {
 
 	toggleShowCoordinates() {
 		this.showCoordinates = !this.showCoordinates;
+	}
+
+	setDefaultCoords() {
+		const lat = environment.DEFAULT_LATITUDE;
+		const lng = environment.DEFAULT_LONGITUDE;
+
+		if (lat && lng) {
+			this.coordinates.setValue([lat, lng]);
+			this.onCoordinatesChanged();
+		}
 	}
 
 	private _applyFormattedAddress(address: string) {

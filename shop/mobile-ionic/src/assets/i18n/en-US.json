@@ -228,5 +228,12 @@
 	"FAILED": "Failed",
 	"CANCELED": "Canceled",
 	"IN_DELIVERY": "In Delivery",
-	"COMPLETED": "Completed"
+	"COMPLETED": "Completed",
+	"BROWSE": "Browse",
+	"ENGLISH": "English",
+	"HEBREW": "Hebrew",
+	"RUSSIAN": "Russian",
+	"BULGARIAN": "Bulgarian",
+	"SPANISH": "Spanish",
+	"SELECT": "Select"
 }

@@ -63,7 +63,14 @@ module.exports = function(options) {
 				'module',
 				'main'
 			],
-			extensions: ['.ts', '.js', '.json'],
+			extensions: [
+				'.webpack.js',
+				'.web.js',
+				'.ts',
+				'.mjs',
+				'.js',
+				'.json'
+			],
 			modules: [helpers.root('src'), helpers.root('node_modules')],
 			alias: buildUtils.rxjsAlias(supportES2015),
 			symlinks: false

@@ -228,5 +228,11 @@
 	"FAILED": "נכשל",
 	"CANCELED": "מבוטל",
 	"IN_DELIVERY": "במשלוח",
-	"COMPLETED": "הושלם"
+	"COMPLETED": "הושלם",
+	"BROWSE": "לְדַפדֵף",
+	"ENGLISH": "אנגלית",
+	"HEBREW": "עִברִית",
+	"RUSSIAN": "רוּסִי",
+	"BULGARIAN": "בולגרית",
+	"SELECT": "בחר"
 }
