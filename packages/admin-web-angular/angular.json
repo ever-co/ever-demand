@@ -10,7 +10,7 @@
 			"prefix": "app",
 			"architect": {
 				"build": {
-					"builder": "@angular-builders/custom-webpack:browser",
+					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
 						"preserveSymlinks": true,
 						"outputPath": "build",
@@ -77,12 +77,9 @@
 					}
 				},
 				"serve": {
-					"builder": "@angular-builders/custom-webpack:dev-server",
+					"builder": "@angular-devkit/build-angular:dev-server",
 					"options": {
-						"browserTarget": "ever-admin:build",
-						"customWebpackConfig": {
-							"path": "./webpack.config.js"
-						}
+						"browserTarget": "ever-admin:build"
 					},
 					"configurations": {
 						"production": {

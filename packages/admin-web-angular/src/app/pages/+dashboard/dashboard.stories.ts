@@ -15,7 +15,7 @@ import {
 	NB_JS_THEMES,
 	DEFAULT_MEDIA_BREAKPOINTS,
 	NB_WINDOW,
-	nbWindowFactory,
+	windowFactory,
 	NB_DOCUMENT,
 	NbSpinnerService,
 	NB_LAYOUT_DIRECTION,
@@ -171,7 +171,7 @@ stories.addDecorator(
 				provide: NB_MEDIA_BREAKPOINTS,
 				useValue: DEFAULT_MEDIA_BREAKPOINTS
 			},
-			{ provide: NB_WINDOW, useFactory: nbWindowFactory },
+			{ provide: NB_WINDOW, useFactory: windowFactory },
 			{ provide: NB_DOCUMENT, useExisting: DOCUMENT },
 			NbJSThemesRegistry,
 			NbThemeService,
