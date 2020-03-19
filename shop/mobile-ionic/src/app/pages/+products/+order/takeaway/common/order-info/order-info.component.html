@@ -1,4 +1,7 @@
 <div class="takeaway-order-info">
+	<span *ngIf="!lessInfo" >
+		{{ localeTranslate((order?.products)[0]?.product?.title) }}
+	</span>
 	<div
 		class="qr-code-container text-align-center {{
 			!lessInfo ? 'moreInfo' : ''
@@ -18,15 +21,11 @@
 			[bc-margin-bottom]="25"
 		></ngx-barcode>
 	</div>
-	<div class="info row">
-		<span *ngIf="!lessInfo" class="left-info col-7">
-			{{ localeTranslate((order?.products)[0]?.product?.title) }}
-		</span>
+		
 		<span
 			class="{{
-				lessInfo ? 'col-12 text-align-center' : 'col-5 right-text'
+				lessInfo ? ' text-align-center' : ' right-text'
 			}} "
 			>#{{ orderId }}</span
 		>
-	</div>
 </div>

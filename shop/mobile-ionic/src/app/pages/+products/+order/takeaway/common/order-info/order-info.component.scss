@@ -1,5 +1,6 @@
 .takeaway-order-info {
 	height: 100%;
+	text-align: center;
 	.qr-code-container {
 		height: 70%;
 		img {
@@ -9,17 +10,5 @@
 
 	.qr-code-container.moreInfo {
 		height: 60%;
-	}
-
-	.info {
-		position: absolute;
-
-		left: 1rem;
-		right: 1rem;
-		bottom: 0rem;
-
-		.right-text {
-			text-align: right;
-		}
 	}
 }

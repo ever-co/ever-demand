@@ -90,7 +90,7 @@ export const env: Env = cleanEnv(
 
 		// 'slides' | 'list'
 		PRODUCTS_VIEW_TYPE: str({ default: 'slides' }),
-
+		
 		// 'popup' or 'page'
 		ORDER_INFO_TYPE: str({ default: 'page' }),
 
