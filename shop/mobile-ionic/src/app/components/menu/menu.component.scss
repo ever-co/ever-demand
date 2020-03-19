@@ -14,7 +14,9 @@ ion-header {
 		--background:var(--ion-color-header);
 	}
 }
-
+.auto-theme{
+	max-width: 80%;
+}
 ion-toggle {
 	--background: var(--ion-color-icon-background);
 	--background-checked: #ffffff !important;
@@ -22,6 +24,10 @@ ion-toggle {
 	--handle-background-checked: green !important;
 }
 .list-md{
+	background: var(--ion-color-primary);
+}
+.list-ios{
+	height: 100vh;
 	background: var(--ion-color-primary);
 }
 .show {

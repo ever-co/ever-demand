@@ -4,7 +4,13 @@
 			<ion-menu-button autoHide="false" color="tertiary"></ion-menu-button>
 		</ion-buttons>
 
-		<ion-title >{{ 'ABOUT_VIEW.TITLE' | translate }}</ion-title>
+		<ion-title class="ion-text-center">{{ 'ABOUT_VIEW.TITLE' | translate }}</ion-title>
+		<ion-buttons slot="end">
+			<ion-button (click)="goBack()" color="tertiary">
+				<i class="fa fa-angle-left back-btn"></i>
+				<span>{{ 'BACK' | translate }}</span>
+			</ion-button>
+		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 

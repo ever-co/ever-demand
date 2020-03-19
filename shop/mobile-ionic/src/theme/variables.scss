@@ -4,8 +4,6 @@ $app-direction: multi;
 /** Ionic CSS Variables **/
 :root {
 
-	--ion-color-content: #F9F4F5;
-	--ion-color-content-rgb: 249, 244, 245;
 	/** primary **/
 	--ion-color-primary: #ffffff;
 	--ion-color-primary-rgb: 255, 255, 255;
@@ -78,30 +76,47 @@ $app-direction: multi;
 	--ion-color-light-shade: #d7d8da;
 	--ion-color-light-tint: #f5f6f9;
 
+	/** Custom variables **/
 
 
+	/** Content **/
+	--ion-color-content: #F9F4F5;
+	--ion-color-content-rgb: 249, 244, 245;
 
-	//header color
+
+	/** Header background  **/
 	--ion-color-header: #ffffff;
-	//border-color
-	--ion-color-border: #E9D6D0;
 
-	--ion-color-massaza-item-txt: #D26775;
 
-	--ion-color-menu-secondary: #ffffff;
+	/** Link text color **/
 	--ion-color-link-text: #96525c;
 
+
+	/** Sub menu text color **/
+	--ion-color-massaza-item-txt: #D26775;
+
+
+	/** Secondary menu items background **/
+	--ion-color-menu-secondary: #ffffff;
+
+
+	/** Border color **/
+	--ion-color-border: #E9D6D0;
+
+
+	/** Ready Icon **/
 	--ion-color-icon-background: #FEEFEC;
 	--ion-color-icon-color: #A26160;
 
 
-	//got it button
-	--ion-color-here-btn: #96525C;
+	/** Secondary button **/
+	--ion-color-secondary-btn: #96525C;
 
-	//disabled button
+	/** Disabled **/
 	--ion-color-disabled-background: #F5E7E4;
 	--ion-color-disabled-txt: #DBB2AA;
-	//no-select
+
+	/** No-select**/
 	--ion-color-no-select: #C0979D;
 
 
@@ -112,15 +127,12 @@ $app-direction: multi;
 
 
 .dark {
-	--ion-color-content: #281C1E;
-	--ion-color-content-rgb: 40, 28, 30;
 
+	/** primary **/
 	--ion-color-primary: #50272F;
 	--ion-color-primary-rgb: 80, 39, 47;
 	--ion-color-primary-contrast: #fff;
 	--ion-color-primary-contrast-rgb: 255, 255, 255;
-	// --ion-color-primary-shade: red;
-	// --ion-color-primary-tint: red;
 
 	/** secondary **/
 	--ion-color-secondary: #ffffff;
@@ -148,13 +160,13 @@ $app-direction: multi;
 
 
 
-	/** menu-color **/
+	/**warning **/
 
-	// --ion-color-warning-rgb: 255, 206, 0;
-	// --ion-color-warning-contrast: #ffffff;
-	// --ion-color-warning-contrast-rgb: 255, 255, 255;
-	// --ion-color-warning-shade: #e0b500;
-	// --ion-color-warning-tint: #ffd31a;
+	--ion-color-warning-rgb: 255, 206, 0;
+	--ion-color-warning-contrast: #ffffff;
+	--ion-color-warning-contrast-rgb: 255, 255, 255;
+	--ion-color-warning-shade: #e0b500;
+	--ion-color-warning-tint: #ffd31a;
 
 	/** danger **/
 	--ion-color-danger: #f04141;
@@ -189,34 +201,54 @@ $app-direction: multi;
 	--ion-color-light-tint: #f5f6f9;
 
 
-	//header color
+	/** Custom variables **/
+
+	/** Content **/
+	--ion-color-content: #281C1E;
+	--ion-color-content-rgb: 40, 28, 30;
+
+
+	/** Header background  **/
 	--ion-color-header: #3B282A;
-	//border-color
-	--ion-color-border: #7C434E;
 
-	--ion-color-massaza-item-txt: #ffffff;
 
-	--ion-color-menu-secondary: #67303A;
-
+	/** Link text color **/
 	--ion-color-link-text: #E67966;
 
+
+	/** Sub menu text color **/
+	--ion-color-massaza-item-txt: #ffffff;
+
+
+	/** Secondary menu items background **/
+	--ion-color-menu-secondary: #67303A;
+
+
+	/** Border color **/
+	--ion-color-border: #7C434E;
+
+
+	/** Ready Icon **/
 	--ion-color-icon-background: #724245;
 	--ion-color-icon-color: #DEB1A5;
 
-	//got it button
-	--ion-color-here-btn: #FAA464;
+	
+	/** Secondary button **/
+	--ion-color-secondary-btn: #FAA464;
 
-	// disabled button
+	
+	/** Disabled **/
 	--ion-color-disabled-background: #764042;
 	--ion-color-disabled-txt: #764042;
 
-	//no-select
+	/** No-select**/
 	--ion-color-no-select: #A45A50;
 
 	:focus {
 		outline: none;
 	}
 }
+
 
 ion-toolbar {
 	background: var(--ion-color-header);

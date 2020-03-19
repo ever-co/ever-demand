@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
 	selector: 'e-cu-help',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
 	styleUrls: ['./help.page.scss']
 })
 export class HelpPage {
-	constructor() {}
+	constructor(
+		private location: Location,
+	) {}
+	goBack() {
+		this.location.back();
+	}
 }

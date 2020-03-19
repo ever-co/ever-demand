@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { Store } from '../../../services/store.service';
 
@@ -13,5 +14,8 @@ export class TermsOfUsePage {
 		this.store.deviceId
 	);
 
-	constructor(private store: Store, private userRouter: UserRouter) {}
+	constructor(private store: Store, private userRouter: UserRouter, private location: Location) {}
+	goBack() {
+		this.location.back();
+	}
 }

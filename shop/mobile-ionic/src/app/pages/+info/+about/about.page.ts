@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
+import { Location } from '@angular/common';
 import { Store } from '../../../services/store.service';
 
 @Component({
@@ -10,5 +11,8 @@ import { Store } from '../../../services/store.service';
 export class AboutPage {
 	html$ = this.userRouter.getAboutUs(this.store.userId, this.store.deviceId);
 
-	constructor(private store: Store, private userRouter: UserRouter) {}
+	constructor(private store: Store, private userRouter: UserRouter, private location: Location,) {}
+	goBack() {
+		this.location.back();
+	}
 }

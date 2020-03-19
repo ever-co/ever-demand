@@ -13,6 +13,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 })
 export class MenuComponent {
 	merchant: Warehouse;
+	autoThemeChecked: boolean;
 
 	private _ourSupportNumber = environment.SUPPORT_NUMBER;
 	constructor(
@@ -63,7 +64,9 @@ export class MenuComponent {
 		} else {
 			theme = 'day';
 		}
-		this.setTheme(theme);
+		if (!this.autoThemeChecked) {
+			this.setTheme(theme);
+		}
 	}
 
 	setTheme(theme) {
@@ -77,7 +80,7 @@ export class MenuComponent {
 	}
 
 	getTime() {
-		let time = new Date().getHours();
+		const time = new Date().getHours();
 		let theme;
 		if (time >= 18) {
 			theme = 'night';
@@ -91,6 +94,9 @@ export class MenuComponent {
 		if (e.detail.checked) {
 			this.getTime();
 			setInterval(this.getTime, 1000 * 60 * 60);
+			this.autoThemeChecked = true;
+		} else {
+			this.autoThemeChecked = false;
 		}
 	}
 

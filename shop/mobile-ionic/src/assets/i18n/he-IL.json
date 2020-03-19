@@ -153,6 +153,18 @@
 					"ORDER_HISTORY": "היסטוריית הזמנות"
 				}
 			},
+			"VIEW_TYPE":{
+				"SLIDES": "Slides View",
+				"LIST": "List View"
+			},
+			"THEME":{
+				"NIGHT": "Night Theme",
+				"DAY": "Day Theme",
+				"AUTO_THEME":{
+					"MAIN_LABEL": "Auto-select Theme",
+					"SUB_LABEL": "Auto selected day or night"
+				}
+			},
 			"STORE": {
 				"STORE_TITLE": "חנות",
 				"ITEMS": {

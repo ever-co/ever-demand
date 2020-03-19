@@ -11,9 +11,6 @@ ion-content {
 .float-right {
 	float: right;
 }
-ion-header{
-	// border-bottom: 2px solid var(--ion-color-tertiary);
-}
 
 .header-actions {
 	display: flex;
@@ -47,7 +44,7 @@ ion-header{
 
 .toggleDeliveryType {
     zoom: .8;
-	--background: var(--ion-color-icon-background);
+	// --background: var(--ion-color-icon-background);
 	--background-checked: var(--ion-color-icon-background);
 	--handle-background: var(--ion-color-tertiary);
 	--handle-background-checked: var(--ion-color-tertiary);
