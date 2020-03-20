@@ -6,7 +6,7 @@ $assertive-darken: darken($assertive, 5%);
 	width: 100%;
 
 	&.box-small-padding {
-		padding: 5px;
+		// padding: 5px;
 		.box-padding {
 			padding-left: 10px;
 			padding-right: 10px;
@@ -42,7 +42,7 @@ $assertive-darken: darken($assertive, 5%);
 	}
 
 	&.box-brand-light {
-		background-color: var(--ion-color-primary) !important;
+		background-color: var(--ion-color-content-secondary) !important;
 		&, * {
 			color: var(--ion-color-secondary);
 		}
