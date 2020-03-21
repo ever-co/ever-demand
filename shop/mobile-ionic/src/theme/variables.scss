@@ -5,28 +5,28 @@ $app-direction: multi;
 :root {
 
 	/** primary **/
-	--ion-color-primary: #ffffff;
-	--ion-color-primary-rgb: 255, 255, 255;
+	--ion-color-primary: #FFDA00;
+	--ion-color-primary-rgb: 255, 218, 0;
 	--ion-color-primary-contrast: #ffffff;
 	--ion-color-primary-contrast-rgb: 255, 255, 255;
 	--ion-color-primary-shade: #252732;
 	--ion-color-primary-tint: #3f414d;
 
 	/** secondary **/
-	--ion-color-secondary: #96525c;
-	--ion-color-secondary-rgb: 150, 82, 92;
-	--ion-color-secondary-contrast: #ffffff;
+	--ion-color-secondary: #282A5F;
+	--ion-color-secondary-rgb: 40, 42, 95;
+	--ion-color-secondary-contrast: #F7F7F2;
 	--ion-color-secondary-contrast-rgb: 255, 255, 255;
-	--ion-color-secondary-shade: #f9b19f;
+	--ion-color-secondary-shade: #282A5F;
 	--ion-color-secondary-tint: #c45955;
 
 	/** tertiary **/
-	--ion-color-tertiary: #e67966;
+	--ion-color-tertiary: #E77700;
 	--ion-color-tertiary-rgb: 241, 241, 242;
-	--ion-color-tertiary-contrast: #ffffff;
+	--ion-color-tertiary-contrast: #E97F00;
 	--ion-color-tertiary-contrast-rgb: 255, 255, 255;
-	--ion-color-tertiary-shade: #96525c;
-	--ion-color-tertiary-tint: #f9b19f;
+	--ion-color-tertiary-shade: #E77700;
+	--ion-color-tertiary-tint: #E77700;
 
 	/** success **/
 	--ion-color-success: #10dc60;
@@ -69,7 +69,7 @@ $app-direction: multi;
 	--ion-color-medium-tint: #a2a4ab;
 
 	/** light **/
-	--ion-color-light: #FFE5E5;
+	--ion-color-light: #FEF6C1;
 	--ion-color-light-rgb: 244, 244, 244;
 	--ion-color-light-contrast: #000000;
 	--ion-color-light-contrast-rgb: 0, 0, 0;
@@ -80,37 +80,49 @@ $app-direction: multi;
 
 
 	/** Content **/
-	--ion-color-content: #F9F4F5;
-	--ion-color-content-rgb: 249, 244, 245;
-
-
-	/** Header background  **/
-	--ion-color-header: #ffffff;
+	--ion-color-content: #ffffff;
+	--ion-color-content-rgb: 255, 255, 255;
+	--ion-color-content-secondary: #FFFEF2;
+	--ion-color-content-merchants: #F7F7F2;
 
 
 	/** Link text color **/
-	--ion-color-link-text: #96525c;
+	--ion-color-text: #282A5F;
+	--ion-color-text-secondary: #83806C;
 
+	/** Menu items border **/
+	--ion-color-menu-border: #D0D4DE;
 
-	/** Sub menu text color **/
-	--ion-color-massaza-item-txt: #D26775;
-
+	/** Not found **/
+	--ion-color-not-found-icon: #FFE9E9;
+	--ion-color-not-found-txt: #FF5C5C;
 
 	/** Secondary menu items background **/
 	--ion-color-menu-secondary: #ffffff;
 
 
 	/** Border color **/
-	--ion-color-border: #E9D6D0;
+	--ion-color-border: #FFE9D1;
 
 
 	/** Ready Icon **/
-	--ion-color-icon-background: #FEEFEC;
-	--ion-color-icon-color: #A26160;
+	--ion-color-icon-background: #F5EFEF;
+	--ion-color-icon-color: #E77700;
 
+	/** inactive-icons-color **/
+	--ion-color-inactive-icon: #7677A3;
+	--ion-color-inactive-text: #9B9BBA;
+
+
+	/** Delivery info**/
+	--ion-color-delivery-info-icon-background: #FFDA00;
+	--ion-color-delivery-info-icon: #FFDC00;
+
+	/** Delivery status**/
+	--ion-color-delivery-status-background: #FFF8C8;
 
 	/** Secondary button **/
-	--ion-color-secondary-btn: #96525C;
+	--ion-color-secondary-btn: #FFDC00;
 
 	/** Disabled **/
 	--ion-color-disabled-background: #F5E7E4;
@@ -119,6 +131,10 @@ $app-direction: multi;
 	/** No-select**/
 	--ion-color-no-select: #C0979D;
 
+	// Toggle btn colors
+	--ion-color-toggle-background:#EBEBE7;
+	--ion-color-toggle-color-inactive:#FFF;
+	--ion-color-toggle-color-active: #E77700;
 
 	:focus {
 		outline: none;
@@ -129,26 +145,26 @@ $app-direction: multi;
 .dark {
 
 	/** primary **/
-	--ion-color-primary: #50272F;
+	--ion-color-primary: #282A5F;
 	--ion-color-primary-rgb: 80, 39, 47;
-	--ion-color-primary-contrast: #fff;
+	--ion-color-primary-contrast: #1F1F2C;
 	--ion-color-primary-contrast-rgb: 255, 255, 255;
 
 	/** secondary **/
-	--ion-color-secondary: #ffffff;
-	--ion-color-secondary-rgb: 116, 42, 57;
-	--ion-color-secondary-contrast: #ffffff;
+	--ion-color-secondary: #FFDC00;
+	--ion-color-secondary-rgb: 255, 220, 0;
+	--ion-color-secondary-contrast: #26264A;
 	--ion-color-secondary-contrast-rgb: 255, 255, 255;
-	--ion-color-secondary-shade: #f9b19f;
+	--ion-color-secondary-shade: #ffffff;
 	--ion-color-secondary-tint: #c45955;
 
 	/** tertiary **/
-	--ion-color-tertiary: #E87B68;
+	--ion-color-tertiary: #E77700;
 	--ion-color-tertiary-rgb: 241, 241, 242;
 	--ion-color-tertiary-contrast: #ffffff;
 	--ion-color-tertiary-contrast-rgb: 255, 255, 255;
-	--ion-color-tertiary-shade: #96525c;
-	--ion-color-tertiary-tint: #f9b19f;
+	--ion-color-tertiary-shade: #B2B2BD;
+	--ion-color-tertiary-tint: #FFDC00;
 
 	/** success **/
 	--ion-color-success: #10dc60;
@@ -193,7 +209,7 @@ $app-direction: multi;
 	--ion-color-medium-tint: #a2a4ab;
 
 	/** light **/
-	--ion-color-light: #742A39;
+	--ion-color-light: #404183;
 	--ion-color-light-rgb: 244, 244, 244;
 	--ion-color-light-contrast: #000000;
 	--ion-color-light-contrast-rgb: 0, 0, 0;
@@ -204,45 +220,64 @@ $app-direction: multi;
 	/** Custom variables **/
 
 	/** Content **/
-	--ion-color-content: #281C1E;
-	--ion-color-content-rgb: 40, 28, 30;
-
+	--ion-color-content: #282A5F;
+	--ion-color-content-rgb: 40, 42, 95;
+	--ion-color-content-secondary: #242648;
+	--ion-color-content-merchants: #13142D;
 
 	/** Header background  **/
 	--ion-color-header: #3B282A;
 
 
 	/** Link text color **/
-	--ion-color-link-text: #E67966;
+	--ion-color-text: #ffffff;
+	--ion-color-text-secondary: #E7E7E7;
 
+	/** Menu items border **/
+	--ion-color-menu-border: #424186;
 
-	/** Sub menu text color **/
-	--ion-color-massaza-item-txt: #ffffff;
-
+	/**Not found **/
+	--ion-color-not-found-icon: #721D27;
+	--ion-color-not-found-txt: #ffffff;
 
 	/** Secondary menu items background **/
-	--ion-color-menu-secondary: #67303A;
+	--ion-color-menu-secondary: #282A5F;
 
 
 	/** Border color **/
-	--ion-color-border: #7C434E;
+	--ion-color-border: #4D4D5F;
 
 
 	/** Ready Icon **/
-	--ion-color-icon-background: #724245;
-	--ion-color-icon-color: #DEB1A5;
+	--ion-color-icon-background: #404183;
+	--ion-color-icon-color: #FFDC00;
 
-	
+	/** inactive-icons-color **/
+	--ion-color-inactive-icon: #7677A3;
+	--ion-color-inactive-text: #9B9BBA;
+
+	/** Delivery info**/
+	--ion-color-delivery-info-icon-background: #725058;
+	--ion-color-delivery-info-icon: #FFFFFF;
+
+	/** Delivery status**/
+	--ion-color-delivery-status-background: #575993;
+
 	/** Secondary button **/
-	--ion-color-secondary-btn: #FAA464;
+	--ion-color-secondary-btn: #E77700;
 
-	
+
 	/** Disabled **/
 	--ion-color-disabled-background: #764042;
 	--ion-color-disabled-txt: #764042;
 
 	/** No-select**/
 	--ion-color-no-select: #A45A50;
+
+	// Toggle btn colors
+	--ion-color-toggle-background:#404183;
+	--ion-color-toggle-color-inactive:#8E8ECF;
+	--ion-color-toggle-color-active: #FFDC00;
 
 	:focus {
 		outline: none;
@@ -251,10 +286,10 @@ $app-direction: multi;
 
 
 ion-toolbar {
-	background: var(--ion-color-header);
+	background: var(--ion-color-primary);
 
 	ion-title,
 	ion-label {
-		color: var(--ion-color-link-text);
+		color: var(--ion-color-secondary);
 	}
 }

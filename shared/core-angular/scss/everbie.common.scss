@@ -192,7 +192,7 @@ body {
 /////////////////////////
 
 .button.button-brand {
-	background-color: var(--ion-color-icon-background);
+	background-color: transparent;
 	border-color: darken($brand, 3%);
 	color: #fff;
 	&.active,

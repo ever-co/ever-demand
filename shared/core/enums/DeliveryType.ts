@@ -5,8 +5,7 @@
  * @enum {number}
  */
 enum DeliveryType {
-	Delivery = 0,
-	Takeaway = 1
+	Delivery = 0
 }
 
 export default DeliveryType;

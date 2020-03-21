@@ -25,17 +25,18 @@
 			*ngFor="let productInfo of showProducts"
 		>
 			<div class="image">
+				
+				<e-cu-delivery-info
+					[currentProduct]="productInfo.warehouseProduct"
+					[overImage]="true"
+					[hasDiscount]="discount.getDiscount()"
+				></e-cu-delivery-info>
 				<e-cu-discount
 					[currentProduct]="productInfo.warehouseProduct"
 					#discount
 				>
 				</e-cu-discount>
 
-				<e-cu-delivery-info
-					[currentProduct]="productInfo.warehouseProduct"
-					[overImage]="true"
-					[hasDiscount]="discount.getDiscount()"
-				></e-cu-delivery-info>
 				<img
 					src="{{
 						localeTranslate(

@@ -35,6 +35,7 @@
 		"DETECTING_LOCATION": "Моля, изчакайте, опитваме се да открием настоящия си адрес ..."
 	},
 	"PRODUCTS_VIEW": {
+		"ALL_SERVICES": "Всички услуги",
 		"TITLE": "Продукти",
 		"BUY_BUTTON": {
 			"PRE": "Купи за",
@@ -147,7 +148,7 @@
 			"NO_TITLE": {
 				"DIVER_TITLE": "",
 				"ITEMS": {
-					"MASSAGES": "Масажи",
+					"SERVICES": "Почистващи услуги",
 					"LAST_PURCHASES": "Последни покупки",
 					"CALL_US": "Обадете ни се",
 					"ORDER_HISTORY": "История на поръчките"
@@ -181,7 +182,7 @@
 			"INFO": {
 				"DIVER_TITLE": "Информация",
 				"ITEMS": {
-					"FAQ": "Помощ	",
+					"FAQ": "Помощ",
 					"ABOUT_US": "За нас",
 					"TERMS_OF_USE": "Условия за ползване",
 					"PRIVACY": "Поверителност"

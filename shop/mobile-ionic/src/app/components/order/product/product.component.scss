@@ -61,8 +61,8 @@
 
 .products-price {
 	font-size: 14px;
-	color: var(--ion-color-tertiary);
-	opacity: 0.8;
+	color: var(--ion-color-tertiary-tint);
+	opacity: 0.9;
 	// padding-left: 3%;
 	// padding-right: 2%;
 	position: absolute;
@@ -99,7 +99,7 @@
 .container {
 	position: relative;
 	padding: 0 !important;
-
+	
 	.test {
 		font-size: 0.8em;
 		display: flex;

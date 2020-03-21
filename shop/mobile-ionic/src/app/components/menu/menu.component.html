@@ -1,7 +1,8 @@
 <ion-menu (ionWillOpen)="menuOpened()" contentId="pageContainer" side="start">
 	<ion-header>
 		<ion-toolbar >
-			<ion-icon src="../../../assets/icons/logo/massaza-logo.svg"></ion-icon>
+			<ion-label slot="start">MOPPAZA</ion-label>
+			<ion-icon src="../../../assets/icons/logo/moppaza-menu.svg" slot="end"></ion-icon>
 		</ion-toolbar>
 	</ion-header>
 
@@ -9,8 +10,8 @@
 		<ion-list>
 			<ion-item-group>
 					<ion-item routerLink="/products" routerDirection="root" routerLinkActive="activated"
-						class="massages-sub-menu" detail="false" >
-						<ion-icon src="../../../assets/icons/massages-menu-icon.svg"></ion-icon>
+						class="moppaza-sub-menu" detail="false" >
+						<ion-icon src="../../../assets/icons/broom-menu-icon.svg"></ion-icon>
 						<ion-label class="ion-text-uppercase">{{
 							'SIDE_MENU.GROUPS.NO_TITLE.ITEMS.MASSAGES'
 								| translate
@@ -19,12 +20,12 @@
 					</ion-item>
 					<ion-radio-group (ionChange)="changeView($event)">
 						<div [ngClass]="{ 'show': showHide, 'hide': !showHide}">
-							<ion-item class="sub-menu">
+							<ion-item class="sub-menu" lines="none">
 								<ion-icon src="../../../assets/icons/slides-view-menu-icon.svg"></ion-icon>
 								<ion-label>{{'SIDE_MENU.GROUPS.VIEW_TYPE.SLIDES' | translate}}</ion-label>
 								<ion-radio value="slides"></ion-radio>
 							</ion-item>
-							<ion-item class="sub-menu">
+							<ion-item class="sub-menu"lines="none">
 								<ion-icon src="../../../assets/icons/listview-menu-icon.svg"></ion-icon>
 								<ion-label>{{'SIDE_MENU.GROUPS.VIEW_TYPE.LIST' | translate}}</ion-label>
 								<ion-radio value="list"></ion-radio>

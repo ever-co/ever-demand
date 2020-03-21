@@ -5,20 +5,28 @@
 	top: 10px;
 	font-size: 15px;
 	border-radius: 5px;
-	background: rgba( var(--ion-color-secondary-rgb), .5);
+	background: rgba(var(--ion-color-primary-rgb), 0.2);
 	padding: 5px;
 	z-index: 9999;
 	line-height: 1;
 	text-align: center;
 	color: #ffffff;
-	width: 70px;
+	width: 90px;
+
 	.price-initial {
+		font-size: 18px;
+		display: flex;
+		flex-flow: column;
+		margin: auto;
+
 		.initial-price {
 			text-decoration: line-through;
 			font-size: 0.8rem;
 		}
 	}
+
 	.d-scissors {
+		font-size: 20px;
 		transform-origin: center;
 		transform: translateY(8px);
 	}

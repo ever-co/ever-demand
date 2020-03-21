@@ -29,22 +29,22 @@ $assertive-darken: darken($assertive, 5%);
 		}
 
 		&.button-assertive {
-			background-color: var(--ion-color-tertiary) ;
+			background-color: var(--ion-color-secondary-btn) ;
 			box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
 		}
 	}
 
 	&.box-brand {
-		background-color: var(--ion-color-primary) !important;
+		background-color: var(--ion-color-content-secondary) !important;
 		&, * {
 			color: var(--ion-color-secondary);
 		}
 	}
 
 	&.box-brand-light {
-		background-color: var(--ion-color-primary) !important;
+		background-color: var(--ion-color-content-secondary) !important;
 		&, * {
-			color: var(--ion-color-secondary);
+			
 		}
 	}
 

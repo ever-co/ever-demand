@@ -5,7 +5,7 @@
 	width: 75%;
 
 }
-.massaza-logo-descr{
+.moppaza-logo-descr{
 	h3{
 		width: 100%;
 		margin-top: 10px;
@@ -16,10 +16,10 @@ h1 {
 		'Segoe UI', sans-serif;
 	font-size: 22px;
 	width: 220px;
-	font-weight: 200;
+	font-weight: bold;
 	text-align: center;
 	color: var(--ion-color-secondary);
-	margin: 40px auto 0 auto;
+	margin: 30px auto 0 auto;
 }
 
 h2 {
@@ -28,13 +28,13 @@ h2 {
 	color:  var(--ion-color-dark);
 	font-size: 14px;
 	line-height: 20px;
-	width: 100%;
-	margin: 13px auto 41px auto;
+	width: 80%;
+	margin: 13px auto 10px auto;
 }
 h3{
-	color: var(--ion-color-tertiary);
+	// color: var(--ion-color-tertiary);
 	line-height: 1.4;
-	font-size: 18px;
+	font-size: 14px;
     width: 80%;
     margin: auto;
 }
@@ -44,6 +44,10 @@ select {
 	margin: 10px auto;
 	width: 100%;
 	background-color: #ffffff !important;
+	font-weight: bold;
+	&::placeholder{
+		color: #000;
+	}
 }
 
 .house-and-apartment {
@@ -117,6 +121,7 @@ select {
 	border-radius: 8px;
 	text-transform: capitalize;
 	height: 45px;
+	color: #ffffff;
 }
 
 .input-wrapper {

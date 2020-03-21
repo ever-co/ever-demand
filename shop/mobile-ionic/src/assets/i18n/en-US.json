@@ -35,6 +35,7 @@
 		"DETECTING_LOCATION": "Please wait, we attempting to detect your current address..."
 	},
 	"PRODUCTS_VIEW": {
+		"ALL_SERVICES": "All Services",
 		"TITLE": "Products",
 		"BUY_BUTTON": {
 			"PRE": "Order Now ",
@@ -106,7 +107,7 @@
 			"NOT_PAID_NOTE": "Prepare your wallet (%s in cash)."
 		},
 		"DELIVERY_STATUS": {
-			"WE": "Massage Person",
+			"WE": "Cleaning Person",
 			"CARRIER": "On Road to You",
 			"YOU": "Your home"
 		},
@@ -147,10 +148,10 @@
 			"NO_TITLE": {
 				"DIVER_TITLE": "",
 				"ITEMS": {
-					"MASSAGES": "Massages",
+					"SERVICES": "Cleaning services",
 					"LAST_PURCHASES": "Last Purchases",
 					"CALL_US": "Call Us",
-					"ORDER_HISTORY": "Order history"
+					"ORDER_HISTORY": "Order History"
 				}
 			},
 			"VIEW_TYPE":{
@@ -218,7 +219,7 @@
 	},
 	"OR": "Or",
 	"OR_LOWERCASE": "or",
-	"YES": "Yes, Cancel it",
+	"YES": "Yes, Cancel",
 	"NO": "No, Keep it",
 	"OK": "Ok",
 	"CITY": "City",

@@ -1,10 +1,17 @@
 @keyframes blinking {
 	0% {
-		color: #F3C6B6;
+
+		color: var(--ion-color-inactive-icon);
+		stroke: var(--ion-color-inactive-icon);
+		background: var(--ion-color-inactive-text);
 	}
+
 	50% {
-		color: var(--ion-color-secondary);
+		color: var(--ion-color-primary);
+		stroke: var(--ion-color-primary);
+		background: #FBDC00;
 	}
+	
 }
 
 .delivery-status {
@@ -12,38 +19,57 @@
 	margin-bottom: 20px;
 	text-align: center;
 	font-size: 36px;
-	h5{
-		max-width: 5em;
-			text-transform: uppercase;
-			font-weight: 100;
-			font-size: 10px;
-	}
-	.status {
-		display: inline-block;
-		margin: 0 16px 0 0;
+
+	h5 {
+		text-transform: uppercase;
+		font-weight: 100;
+		font-size: 10px;
+		font-weight: bold;
+		color: var(--ion-color-secondary);
 	}
 
-	* {
-		color:#F3C6B6 !important;
+	.status {
+		display: inline-block;
+		width: 20%;
+		border-radius: 15px;
+		background: var(--ion-color-delivery-status-background);
+	}
+
+	ion-icon {
+		font-size: 40px;
+		color: var(--ion-color-primary) !important;
+	}
+
+	span{
+		color: var(--ion-color-secondary);
 	}
 
 	.activated {
+		background: #FBDC00;
+		animation: blinking 1s ease-out infinite;
 		&,
 		* {
 			color: var(--ion-color-secondary) !important;
+			stroke: var(--ion-color-secondary);
 		}
 	}
 
 	.current {
-		h5{
+		h5 {
 			max-width: 5em;
 			text-transform: uppercase;
 			font-weight: 100;
 			font-size: 10px;
+			margin-left: 16px;
 		}
+
+		ion-icon {
+			font-size: 40px;
+		}
+
 		&,
 		* {
-			animation: blinking 1s ease-in-out infinite;
+			animation: blinking 1s ease-out infinite;
 		}
 	}
 }

@@ -14,7 +14,8 @@ import { environment } from 'environment';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { GeoLocationService } from '../../services/geo-location';
 import RegistrationSystem from '@modules/server.common/enums/RegistrationSystem';
-import DeliveryType from '@modules/server.common/enums/DeliveryType';
+import DeliveryType from '../../../modules/server.common/enums/DeliveryType'
+// import DeliveryType from '@modules/server.common/enums/DeliveryType';
 import { OrderTakeawayInfoPopup } from './+order/takeaway/popup/popup.component';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
@@ -37,7 +38,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 	products_placeholder: string = '';
 	modalOpen: boolean;
 	modalChange = new EventEmitter<boolean>();
-	isDeliveryRequired: boolean;
+	isDeliveryRequired: true;
 	merchant: Warehouse;
 	productsCount: number;
 	$areProductsLoaded = new EventEmitter<boolean>();
@@ -65,11 +66,11 @@ export class ProductsPage implements OnInit, OnDestroy {
 		this.productsLocale = this.store.language || environment.DEFAULT_LOCALE;
 
 		if (this.inStore) {
-			this.store.deliveryType = DeliveryType.Takeaway;
+			// this.store.deliveryType = DeliveryType.Takeaway;
 			this.loadMerchant();
 		}
-		this.isDeliveryRequired =
-			this.store.deliveryType === DeliveryType.Delivery;
+		// this.isDeliveryRequired =
+		// 	this.store.deliveryType === DeliveryType.Delivery;
 
 		this._subscribeProductsPlaceholder();
 		this.loadGeoLocationProducts();
@@ -153,7 +154,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 	}
 
 	toggleGetProductsType() {
-		this.changePage = true;
+		// this.changePage = true;
 		this.products = [];
 		this.loadProducts({
 			count: this.lastLoadProductsCount,
@@ -235,9 +236,10 @@ export class ProductsPage implements OnInit, OnDestroy {
 	}
 
 	private async loadProducts(options = {}) {
-		this.store.deliveryType = this.isDeliveryRequired
-			? DeliveryType.Delivery
-			: DeliveryType.Takeaway;
+		console.log(this.isDeliveryRequired);
+
+		this.store.deliveryType = DeliveryType.Delivery;
+			
 
 		const count = options['count'];
 		const imageOrientation = options['imageOrientation'];
@@ -261,8 +263,8 @@ export class ProductsPage implements OnInit, OnDestroy {
 
 				const isDeliveryRequired =
 					this.store.deliveryType === DeliveryType.Delivery;
-				const isTakeaway =
-					this.store.deliveryType === DeliveryType.Takeaway;
+				// const isTakeaway =
+				// 	this.store.deliveryType === DeliveryType.Takeaway;
 
 				let loadProducts = true;
 
@@ -275,7 +277,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 						},
 						{
 							isDeliveryRequired,
-							isTakeaway,
+							// isTakeaway,
 							merchantIds,
 							imageOrientation,
 							locale: this.productsLocale,
@@ -323,14 +325,14 @@ export class ProductsPage implements OnInit, OnDestroy {
 		if (this.getOrdersGeoObj) {
 			const isDeliveryRequired =
 				this.store.deliveryType === DeliveryType.Delivery;
-			const isTakeaway =
-				this.store.deliveryType === DeliveryType.Takeaway;
+			// const isTakeaway =
+			// 	this.store.deliveryType === DeliveryType.Takeaway;
 
 			this.productsCount = await this.geoLocationProductsService.getCountOfGeoLocationProducts(
 				this.getOrdersGeoObj,
 				{
 					isDeliveryRequired,
-					isTakeaway,
+					// isTakeaway,
 					merchantIds,
 					imageOrientation,
 					locale: this.productsLocale,

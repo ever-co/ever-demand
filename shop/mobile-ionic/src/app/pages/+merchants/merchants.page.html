@@ -1,12 +1,12 @@
 <ion-header>
 	<ion-toolbar color="var(--ion-color-header)">
 		<ion-buttons slot="start">
-			<ion-menu-button autoHide="false" color="tertiary"></ion-menu-button>
+			<ion-menu-button autoHide="false" color="secondary"></ion-menu-button>
 		</ion-buttons>
 
 		<ion-title color="secondary">{{ 'MERCHANTS' | translate }}</ion-title>
 		<ion-buttons slot="end">
-			<ion-button (click)="goToProductPage()" color="tertiary">
+			<ion-button (click)="goToProductPage()" color="secondary">
 				<i class="fa fa-angle-left back-btn"></i>
 				<span>{{ 'BACK' | translate }}</span>
 			</ion-button>
@@ -17,8 +17,8 @@
 <ion-content  scroll="true" class="merchants-content">
 	<ion-row>
 		<ion-col class="col-8 p-0 " offset=".2">
-			<ion-searchbar  [(ngModel)]="searchName" mode="ios" color="light" placeholder="Search for Saloon" animated 
-				debounce="1000" (ionChange)="searchChange($event)" (ionFocus)="onFocus($event)" (ionBlur) ="onBlur($event)"></ion-searchbar>
+			<ion-searchbar  [(ngModel)]="searchName" mode="ios" color="light" placeholder="Search for Saloon"  
+				 (ionChange)="searchChange($event)" (ionFocus)="onFocus($event)" (ionBlur) ="onBlur($event)"></ion-searchbar>
 		</ion-col>
 
 		<ion-col class="col-3 p-0 " push=".5" >
@@ -45,7 +45,8 @@
 			<h5 *ngIf="merchants?.length === 0" class="not-found-text">
 				{{ 'NOT_FOUND' | translate }}
 			</h5>
-			<ion-img *ngIf="merchants?.length === 0" src="../../../assets/icons/Not-found-icon.svg" class="not-found-img"></ion-img>
+			<ion-icon *ngIf="merchants?.length === 0" src="../../../assets/icons/Not-found-icon.svg" class="not-found-img"></ion-icon>
+			<!-- <ion-img ></ion-img> -->
 			<ion-item *ngFor="let merchant of merchants" (click)="selectMerchant(merchant)" class="m-2 " lines="none">
 				<ion-avatar slot="end">
 					<img src="{{ merchant.logo }}" />

@@ -1,7 +1,7 @@
 @import '../../../modules/client.common.angular2/scss/everbie.common';
 
 ion-content {
-	background-color: var(--ion-color-content);
+	background-color: var(--ion-color-primary-contrast);
 
 	.products-view {
 		height: 100%;
@@ -17,7 +17,7 @@ ion-content {
 	align-items: center;
 	justify-content: flex-end;
 	ion-label {
-		color: var(--ion-color-link-text);
+		color: var(--ion-color-text);
 	}
 }
 
@@ -42,13 +42,13 @@ ion-content {
 	padding-right: 5px;
 }
 
-.toggleDeliveryType {
-    zoom: .8;
+// .toggleDeliveryType {
+//     zoom: .8;
 	// --background: var(--ion-color-icon-background);
-	--background-checked: var(--ion-color-icon-background);
-	--handle-background: var(--ion-color-tertiary);
-	--handle-background-checked: var(--ion-color-tertiary);
-}
+// 	--background-checked: var(--ion-color-icon-background);
+// 	--handle-background: var(--ion-color-tertiary);
+// 	--handle-background-checked: var(--ion-color-tertiary);
+// }
 
 
 .no-select {

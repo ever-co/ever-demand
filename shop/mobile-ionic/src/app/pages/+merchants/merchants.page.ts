@@ -46,12 +46,12 @@ export class MerchantsPage implements OnDestroy {
 	}
 
 	onFocus({srcElement}){
-		srcElement.style.borderColor="#99505C";
-		srcElement.style.boxShadow= " 10px 10px 12px -13px rgba(0,0,0,0.75)";
+		srcElement.style.borderColor="var(--ion-color-secondary)";
+		srcElement.style.boxShadow= " 0 10px 12px -13px rgba(var(--ion-color-secondary-rgb),0.75)";
 	}
 
 	onBlur({srcElement}){
-		srcElement.style.borderColor="#e9d6d0";
+		srcElement.style.borderColor="var(--ion-color-primary)";
 		srcElement.style.boxShadow="none";
 	}
 

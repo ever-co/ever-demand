@@ -29,12 +29,17 @@
 		}
 	}
 	.cancel-btn{
-		background-color: var(--ion-color-secondary-btn);
+		background-color: var(--ion-color-tertiary);
 		span{
 			color: #ffffff;
+			font-weight: bold;
 		}
 	}
+	.yes-c{
+		border: 1px solid var(--ion-color-secondary-btn);
 	.yes-c-txt{
-		color: var(--ion-color-secondary-btn);
+		color: var(--ion-color-tertiary-shade);
+		font-weight: bold;
 	}
+}
 }

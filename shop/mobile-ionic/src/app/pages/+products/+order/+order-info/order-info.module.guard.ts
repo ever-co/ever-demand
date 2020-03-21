@@ -18,10 +18,10 @@ export class OrderInfoPageModuleGuard implements CanLoad {
 			return false;
 		}
 
-		if (this.store.deliveryType === DeliveryType.Takeaway) {
-			this.router.navigate(['order-info-takeaway']);
-			return false;
-		}
+		// if (this.store.deliveryType === DeliveryType.Takeaway) {
+		// 	this.router.navigate(['order-info-takeaway']);
+		// 	return false;
+		// }
 
 		return true;
 	}

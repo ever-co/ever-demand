@@ -33,8 +33,8 @@ const productsView = localStorage.getItem('page_view') || environment.PRODUCTS_V
 				'slides': getIsSlides(),
 				'list': !getIsSlides()
 			}">
-				<small>{{ getProductDeliveryLine1() }}</small>
-				<small>{{ getProductDeliveryLine2() }}</small>
+				<small>AVAILABLE</small>
+				<small>NOW</small>
 			</div>
 		</div>
 	`
@@ -60,7 +60,7 @@ export class DeliveryInfoComponent implements OnInit {
 		private translateService: TranslateService,
 		private store: Store
 	) {
-		this.isTakeaway = this.store.deliveryType === DeliveryType.Takeaway;
+		// this.isTakeaway = this.store.deliveryType === DeliveryType.Takeaway;
 	}
 
 	ngOnInit(): void {
@@ -145,7 +145,7 @@ export class DeliveryInfoComponent implements OnInit {
 			return '';
 		}
 
-		return this.isTakeaway ? 'availeble-lightning' : 'motorcycle';
+		return this.isTakeaway ? 'motorcycle' :  'availeble-lightning';
 	}
 
 

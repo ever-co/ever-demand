@@ -2,7 +2,7 @@
 
 ion-content {
 	background: url(../../../assets/imgs/ever-background-gradient.svg);
-	background-color: $brand-darken;
+	background-color: var(--ion-color-content);
 }
 
 .invite-view-content {

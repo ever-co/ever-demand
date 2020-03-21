@@ -25,6 +25,8 @@
 			display: inline-block;
 			color: var(--ion-color-dark);
 			opacity: 0.54;
+			font-size: 12px;
+			margin-right: 12px;
 		}
 
 		.delivery-time {
@@ -40,8 +42,7 @@
 
 	.total-price {
 		font-size: 18px;
-		color: var(--ion-color-tertiary);
-		opacity: 0.8;
+		color: var(--ion-color-tertiary-tint);
 	}
 }
 

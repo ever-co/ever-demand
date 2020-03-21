@@ -42,6 +42,7 @@
 		"DETECTING_LOCATION": "Estamos intentando detectar tu dirección actual..."
 	},
 	"PRODUCTS_VIEW": {
+		"ALL_SERVICES": "All Services",
 		"TITLE": "Productos",
 		"BUY_BUTTON": {
 			"PRE": "Comprar por ",

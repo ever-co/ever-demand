@@ -60,10 +60,10 @@ ion-slide {
 	}
 
 	.title {
-		color: var(--ion-color-secondary);
+		color: var(--ion-color-tertiary);
 
 		font-family: Roboto, 'Helvetica Neue', sans-serif;
-		font-weight: 400;
+		font-weight: 900;
 		font-size: 20px;
 	}
 
@@ -107,17 +107,18 @@ ion-slide {
 		position: relative;
 		text-align: center;
 		height: 100%;
-		color: white;
+		color: var(--ion-color-text);
+		font-weight: bold;
 		text-align: center;
 		font-size: 0.9em;
-	
 		span {
 			margin: 0 auto;
 		}
 	}
 	
 	.button-brand {
-		color: var(--ion-color-link-text);
+		color: var(--ion-color-text-secondary);
+		border: 1px solid var(--ion-color-secondary-btn);
 	}
 	.disabled {
 		background-color: var(--ion-color-disabled-background) !important;
@@ -138,7 +139,7 @@ ion-slide {
 	position: relative;
 	height: 25%;
 	.info-bottom {
-		background: var(--ion-color-primary);
+		background: var(--ion-color-content);
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;

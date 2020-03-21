@@ -2,44 +2,59 @@
 
 ion-header {
 	ion-toolbar {
-		ion-icon {
-			margin-top: 15px;
-			height: 25px;
-			width: 32px;
-			color: transparent;
-			width: 50px;
-			margin-left: 100px;
+		ion-label {
+			letter-spacing: 2px;
+			color: var(--ion-color-primary);
+			font-weight: bold;
+			margin: auto 15px;
 		}
 
-		--background:var(--ion-color-header);
+		ion-icon {
+			height: 40px;
+			width: 32px;
+			margin: 15px 10px;
+		}
+
+		--background:var(--ion-color-secondary);
 	}
 }
-.auto-theme{
+
+.auto-theme {
 	max-width: 80%;
 }
+
 ion-toggle {
-	--background: var(--ion-color-icon-background);
-	--background-checked: #ffffff !important;
-	--handle-background: var(--ion-color-tertiary);
-	--handle-background-checked: green !important;
+	--background: var(--ion-color-toggle-background);
+	--background-checked: var(--ion-color-toggle-background) !important;
+	--handle-background: var(--ion-color-toggle-color-inactive);
+	--handle-background-checked: var(--ion-color-toggle-color-active) !important;
 }
-.list-md{
-	background: var(--ion-color-primary);
+
+.list-md {
+	background: var(--ion-color-secondary-contrast);
 }
-.list-ios{
-	height: 100vh;
-	background: var(--ion-color-primary);
+
+.list-ios {
+	min-height:100vh ;
+	background: var(--ion-color-secondary-contrast);
 }
+
 .show {
 	transition: all .5s ease-out;
 	transform: rotate3d(1, 0, 0, 0deg);
 	height: 6em;
+	ion-icon{
+		font-size: 20px;
+	}
 }
 
 .hide {
 	transition: all .5s ease-in;
 	transform: rotate3d(1, 0, 0, 90deg);
 	height: 0px;
+	ion-icon{
+		font-size: 18px;
+	}
 }
 
 ion-radio {
@@ -49,18 +64,18 @@ ion-radio {
 ion-radio-group {
 	ion-item {
 		ion-label {
-			color: #CAA8AD;
+			color: var(--ion-color-inactive-text);
 
 		}
 
 		ion-icon {
-			color: #EFE2DD;
+			color: var(--ion-color-inactive-icon);
 		}
 	}
 }
 
 ion-note {
-	color: var(--ion-color-secondary);
+	color: var(--ion-color-secondary-shade);
 }
 
 ion-title {
@@ -70,36 +85,39 @@ ion-title {
 
 ion-item {
 	visibility: visible;
-	color: var(--ion-color-secondary);
-	--border-color: var(--ion-color-border);
-	--background: var(--ion-color-primary);
+	color: var(--ion-color-secondary-shade);
+	--border-color: var(--ion-color-menu-border);
+	--background: var(--ion-color-secondary-contrast);
 }
 
 ion-icon {
 	margin-right: 8px;
-	color: var(--ion-color-secondary);
+	color: var(--ion-color-secondary-shade);
 }
 
 ion-label {
 	font-size: 16px !important;
-
+	font-weight: bold;
 }
 
 ion-list {
 	padding: 0;
 }
 
-.massages-sub-menu {
+.moppaza-sub-menu {
+	--background: var(--ion-color-light);
 	--background-activated: var(--ion-color-light);
 	--highlight-color-focused: var(--ion-color-light);
-	color: var(--ion-color-massaza-item-txt);
+	color: var(--ion-color-icon-color);
 
 	ion-label {
 		margin: 16px 0 16px 20px;
+		color: var(--ion-color-icon-color);
 	}
 
 	ion-icon {
-		color: var(--ion-color-massaza-item-txt);
+		color: var(--ion-color-icon-color);
+		stroke: var(--ion-color-icon-color);
 
 		&:nth-child(3) {
 			font-size: 17px;
@@ -129,18 +147,18 @@ ion-item-group {
 	visibility: visible;
 	--background: var(--ion-color-menu-secondary);
 	text-transform: uppercase;
-	color: var(--ion-color-secondary);
-	border-top: 1px solid var(--ion-color-border);
-	border-bottom: 1px solid var(--ion-color-border);
+	color: var(--ion-color-icon-color);
+	border-top: 1px solid var(--ion-color-menu-border);
+	border-bottom: 1px solid var(--ion-color-menu-border);
 
 	ion-icon {
 		margin-right: 20px;
-		color: var(--ion-color-secondary);
+		color: var(--ion-color-icon-color);
 		font-size: 25px;
 	}
 }
 
-.active{
+.active {
 	--background: red;
 	background: red;
 	color: red;

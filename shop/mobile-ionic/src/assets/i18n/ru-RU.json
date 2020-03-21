@@ -35,6 +35,7 @@
 		"DETECTING_LOCATION": "Пожалуйста подождите, мы пытаемся определить Ваш текущий адрес..."
 	},
 	"PRODUCTS_VIEW": {
+		"ALL_SERVICES": "All Services",
 		"TITLE": "Наши Продукты",
 		"BUY_BUTTON": {
 			"PRE": "Купить за ",
@@ -146,7 +147,7 @@
 			"NO_TITLE": {
 				"DIVER_TITLE": "",
 				"ITEMS": {
-					"MASSAGES": "Массаж",
+					"SERVICES": "Cleaning services",
 					"LAST_PURCHASES": "Недавние Покупки",
 					"CALL_US": "Позвонить Клиенту",
 					"ORDER_HISTORY": "История заказов"
