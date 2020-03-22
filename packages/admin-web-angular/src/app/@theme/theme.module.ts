@@ -140,8 +140,8 @@ const NB_THEME_PROVIDERS = [
 	entryComponents: [...ENTRY_COMPONENTS]
 })
 export class ThemeModule {
-	static forRoot(): ModuleWithProviders {
-		const providers: ModuleWithProviders = {
+	static forRoot(): ModuleWithProviders<ThemeModule> {
+		const providers: ModuleWithProviders<ThemeModule> = {
 			ngModule: ThemeModule,
 			providers: [...NB_THEME_PROVIDERS]
 		};

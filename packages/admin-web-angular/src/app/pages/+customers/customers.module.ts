@@ -22,11 +22,11 @@ const routes: Routes = [
 	},
 	{
 		path: 'invites',
-		loadChildren: './+invites/invites.module#InvitesModule'
+		loadChildren: () => import('./+invites/invites.module').then(m => m.InvitesModule)
 	},
 	{
 		path: 'list/:id',
-		loadChildren: './+customer/customer.module#CustomerModule'
+		loadChildren: () => import('./+customer/customer.module').then(m => m.CustomerModule)
 	}
 ];
 

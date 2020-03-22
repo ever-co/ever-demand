@@ -15,10 +15,10 @@ import { first, map, switchMap } from 'rxjs/operators';
 	styleUrls: ['./carrier-edit.component.scss']
 })
 export class CarrierEditComponent implements OnInit {
-	@ViewChild('basicInfoForm', { static: false })
+	@ViewChild('basicInfoForm')
 	basicInfoForm: BasicInfoFormComponent;
 
-	@ViewChild('locationForm', { static: false })
+	@ViewChild('locationForm')
 	locationForm: LocationFormComponent;
 
 	mapTypeEmitter = new EventEmitter<string>();

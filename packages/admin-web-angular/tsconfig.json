@@ -7,8 +7,6 @@
 		"experimentalDecorators": true,
 		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"],
 		"paths": {
-			"@angular/*": ["../../../node_modules/@angular/*"],
-			"@nebular/*": ["../../../node_modules/@nebular/*"],
 			"@modules/server.common/*": [
 				"@modules/server.common/*",
 				"../../common/src/*"
@@ -35,7 +33,9 @@
 			"core-js/es6/*": ["../../../node_modules/core-js/es"]
 		}
 	},
+	"files": ["src/main.ts", "src/polyfills.ts"],
 	"angularCompilerOptions": {
+		"enableIvy": false,
 		"annotateForClosureCompiler": true,
 		"skipTemplateCodegen": true,
 		"fullTemplateTypeCheck": true,

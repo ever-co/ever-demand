@@ -14,7 +14,7 @@ const routes: Routes = [
 	},
 	{
 		path: ':id',
-		loadChildren: './+warehouse/warehouse.module#WarehouseModule'
+		loadChildren: () => import('./+warehouse/warehouse.module').then(m => m.WarehouseModule)
 	}
 ];
 

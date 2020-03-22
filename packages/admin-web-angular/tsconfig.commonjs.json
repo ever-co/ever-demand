@@ -8,8 +8,6 @@
 		"target": "es6",
 		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"],
 		"paths": {
-			"@angular/*": ["../../../node_modules/@angular/*"],
-			"@nebular/*": ["../../../node_modules/@nebular/*"],
 			"@modules/server.common/*": [
 				"@modules/server.common/*",
 				"../../common/src/*"
@@ -37,6 +35,7 @@
 		}
 	},
 	"angularCompilerOptions": {
+		"enableIvy": false,
 		"annotateForClosureCompiler": true,
 		"skipTemplateCodegen": true,
 		"strictMetadataEmit": true,

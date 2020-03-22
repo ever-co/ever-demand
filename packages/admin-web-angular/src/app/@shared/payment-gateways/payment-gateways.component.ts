@@ -14,10 +14,10 @@ import { countriesDefaultCurrencies } from '@modules/server.common/entities/Curr
 	templateUrl: './payment-gateways.component.html'
 })
 export class PaymentGatewaysComponent implements OnChanges {
-	@ViewChild('stripeGateway', { static: false })
+	@ViewChild('stripeGateway')
 	stripeGateway: StripeGatewayComponent;
 
-	@ViewChild('payPalGateway', { static: false })
+	@ViewChild('payPalGateway')
 	payPalGateway: PayPalGatewayComponent;
 
 	@Input()

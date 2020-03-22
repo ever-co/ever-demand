@@ -22,7 +22,7 @@ const routes: Routes = [
 	},
 	{
 		path: ':id',
-		loadChildren: './+carrier/carrier.module#CarrierModule'
+		loadChildren: () => import('./+carrier/carrier.module').then(m => m.CarrierModule)
 	}
 ];
 

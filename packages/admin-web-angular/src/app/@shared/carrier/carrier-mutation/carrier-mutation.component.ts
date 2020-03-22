@@ -17,10 +17,10 @@ import { TranslateService } from '@ngx-translate/core';
 	styleUrls: ['./carrier-mutation.component.scss']
 })
 export class CarrierMutationComponent {
-	@ViewChild('basicInfoForm', { static: false })
+	@ViewChild('basicInfoForm')
 	basicInfoForm: BasicInfoFormComponent;
 
-	@ViewChild('locationForm', { static: false })
+	@ViewChild('locationForm')
 	locationForm: LocationFormComponent;
 
 	readonly form: FormGroup = this.formBuilder.group({

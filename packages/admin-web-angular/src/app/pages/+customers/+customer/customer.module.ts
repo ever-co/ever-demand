@@ -30,7 +30,7 @@ const routes = [
 	},
 	{
 		path: 'edit',
-		loadChildren: './+customer-edit/customer-edit.module#CustomerEditModule'
+		loadChildren: () => import('./+customer-edit/customer-edit.module').then(m => m.CustomerEditModule)
 	}
 ];
 

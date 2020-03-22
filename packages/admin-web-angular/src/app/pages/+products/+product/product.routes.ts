@@ -8,6 +8,6 @@ export const routes: Routes = [
 	},
 	{
 		path: 'edit',
-		loadChildren: './product-edit/product-edit.module#ProductEditModule'
+		loadChildren: () => import('./product-edit/product-edit.module').then(m => m.ProductEditModule)
 	}
 ];

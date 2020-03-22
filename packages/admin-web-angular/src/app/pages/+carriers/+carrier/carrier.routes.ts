@@ -8,6 +8,6 @@ export const routes: Routes = [
 	},
 	{
 		path: 'edit',
-		loadChildren: './+carrier-edit/carrier-edit.module#CarrierEditModule'
+		loadChildren: () => import('./+carrier-edit/carrier-edit.module').then(m => m.CarrierEditModule)
 	}
 ];

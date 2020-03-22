@@ -44,25 +44,25 @@ export class WarehouseManageTabsComponent {
 	@Input()
 	readonly form: FormGroup;
 
-	@ViewChild('detailsComponent', { static: false })
+	@ViewChild('detailsComponent')
 	readonly detailsComponent: WarehouseManageTabsDetailsComponent;
 
-	@ViewChild('accountComponent', { static: false })
+	@ViewChild('accountComponent')
 	readonly accountComponent: WarehouseManageTabsAccountComponent;
 
-	@ViewChild('contactInfoForm', { static: false })
+	@ViewChild('contactInfoForm')
 	readonly contactInfoForm: ContactInfoFormComponent;
 
-	@ViewChild('locationForm', { static: false })
+	@ViewChild('locationForm')
 	readonly locationForm: LocationFormComponent;
 
-	@ViewChild('paymentsSettingsForm', { static: false })
+	@ViewChild('paymentsSettingsForm')
 	readonly paymentsSettingsForm: PaymentsSettingsFormComponent;
 
-	@ViewChild('deliveryAreasForm', { static: false })
+	@ViewChild('deliveryAreasForm')
 	readonly deliveryAreasForm: WarehouseManageTabsDeliveryAreasComponent;
 
-	@ViewChild('tabSet', { static: false })
+	@ViewChild('tabSet')
 	readonly tabSet;
 
 	mapCoordEmitter = new EventEmitter<number[]>();
