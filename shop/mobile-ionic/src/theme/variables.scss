@@ -7,6 +7,8 @@ $app-direction: multi;
 	/** primary **/
 	--ion-color-primary: #FFDA00;
 	--ion-color-primary-rgb: 255, 218, 0;
+	--ion-color-primary-rgba:255, 218, 0, .2;
+
 	--ion-color-primary-contrast: #ffffff;
 	--ion-color-primary-contrast-rgb: 255, 255, 255;
 	--ion-color-primary-shade: #252732;
@@ -115,7 +117,6 @@ $app-direction: multi;
 
 
 	/** Delivery info**/
-	--ion-color-delivery-info-icon-background: #FFDA00;
 	--ion-color-delivery-info-icon: #FFDC00;
 
 	/** Delivery status**/
@@ -145,6 +146,8 @@ $app-direction: multi;
 	/** primary **/
 	--ion-color-primary: #282A5F;
 	--ion-color-primary-rgb: 80, 39, 47;
+	--ion-color-primary-rgba: 80, 39, 47, .7;
+
 	--ion-color-primary-contrast: #1F1F2C;
 	--ion-color-primary-contrast-rgb: 255, 255, 255;
 
@@ -255,7 +258,6 @@ $app-direction: multi;
 	--ion-color-inactive-text: #9B9BBA;
 
 	/** Delivery info**/
-	--ion-color-delivery-info-icon-background: #725058;
 	--ion-color-delivery-info-icon: #FFFFFF;
 
 	/** Delivery status**/
