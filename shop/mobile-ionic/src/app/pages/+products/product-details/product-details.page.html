@@ -19,9 +19,9 @@
 		<div *ngIf="modalOpen" class="blur-lighter"></div>
 		<ion-grid *ngIf="product" class="ion-no-padding">
 			<ion-row
-				no-padding
+				
 				align-items-center
-				class="header-container brand-light"
+				class="header-container ion-no-padding brand-light"
 			>
 				<ion-col class="col-2">
 					<e-cu-warehouse-logo
@@ -87,9 +87,8 @@
 
 			<ion-col
 				[hidden]="true"
-				no-padding
 				size="12"
-				class="reviews-content"
+				class="reviews-content ion-no-padding"
 			>
 				<ion-img src="/assets/imgs/reviews.png"></ion-img>
 			</ion-col>

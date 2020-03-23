@@ -59,7 +59,9 @@ export class MenuComponent {
 		}else if(localStorage.getItem('page_view') === "slides"){
 			document.getElementById("slides").classList.add("item-radio-checked");
 		}
-		
+		if(localStorage.getItem("autotheme")=== "true"){
+			document.getElementById("autoThemeToggle").checked = true;
+		}
 	}
 
 	getTheme(e) {
@@ -103,12 +105,16 @@ export class MenuComponent {
 	}
 
 	autoTheme(e) {
+		let v =document.getElementById("autoThemeToggle");
 		if (e.detail.checked) {
 			this.getTime();
 			setInterval(this.getTime, 1000 * 60 * 60);
 			this.autoThemeChecked = true;
+			localStorage.setItem('autotheme', "true");
 		} else {
 			this.autoThemeChecked = false;
+			localStorage.setItem('autotheme', "false");
+
 		}
 	}
 
