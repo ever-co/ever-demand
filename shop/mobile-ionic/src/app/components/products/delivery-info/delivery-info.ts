@@ -134,8 +134,10 @@ export class DeliveryInfoComponent implements OnInit {
 	}
 	getIsSlides(){
 		if(productsView==="slides"){
+			document.getElementById(productsView).classList.add("item-radio-checked")
 			return true;
 		}else{
+			document.getElementById("list").classList.add("item-radio-checked")
 			return false;
 		}
 	}

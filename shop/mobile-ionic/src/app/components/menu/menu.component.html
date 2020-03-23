@@ -13,22 +13,22 @@
 						class="moppaza-sub-menu" detail="false" >
 						<ion-icon src="../../../assets/icons/broom-menu-icon.svg"></ion-icon>
 						<ion-label class="ion-text-uppercase">{{
-							'SIDE_MENU.GROUPS.NO_TITLE.ITEMS.MASSAGES'
+							'SIDE_MENU.GROUPS.NO_TITLE.ITEMS.SERVICES'
 								| translate
 						}}</ion-label>
 						<ion-icon src="../../../assets/icons/sub-menu-icon.svg" (click)=" showHide = !showHide"></ion-icon>
 					</ion-item>
 					<ion-radio-group (ionChange)="changeView($event)">
 						<div [ngClass]="{ 'show': showHide, 'hide': !showHide}">
-							<ion-item class="sub-menu" lines="none">
+							<ion-item class="sub-menu" lines="none" id="slides">
 								<ion-icon src="../../../assets/icons/slides-view-menu-icon.svg"></ion-icon>
 								<ion-label>{{'SIDE_MENU.GROUPS.VIEW_TYPE.SLIDES' | translate}}</ion-label>
 								<ion-radio value="slides"></ion-radio>
 							</ion-item>
-							<ion-item class="sub-menu"lines="none">
+							<ion-item class="sub-menu"lines="none" id="list">
 								<ion-icon src="../../../assets/icons/listview-menu-icon.svg"></ion-icon>
 								<ion-label>{{'SIDE_MENU.GROUPS.VIEW_TYPE.LIST' | translate}}</ion-label>
-								<ion-radio value="list"></ion-radio>
+								<ion-radio value="list" ></ion-radio>
 							</ion-item>
 						</div>
 					</ion-radio-group>
@@ -90,15 +90,15 @@
 			</ion-item-group>
 
 			<ion-radio-group (ionChange)="getTheme($event)">
-				<ion-item class="sub-menu" lines="none" >
+				<ion-item class="sub-menu" lines="none" id="night">
 					<ion-icon name="moon"></ion-icon>
 					<ion-label>{{'SIDE_MENU.GROUPS.THEME.NIGHT'|translate}} </ion-label>
 					<ion-radio value="night-theme"  ></ion-radio>
 				</ion-item>
-				<ion-item class="sub-menu">
+				<ion-item class="sub-menu" id="day">
 					<ion-icon name="sunny"></ion-icon>
 					<ion-label>{{'SIDE_MENU.GROUPS.THEME.DAY'|translate}} </ion-label>
-					<ion-radio value="day-theme" ></ion-radio>
+					<ion-radio value="day-theme"></ion-radio>
 				</ion-item>
 			</ion-radio-group>
 				

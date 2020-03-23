@@ -17,7 +17,7 @@
 				>
 			</ion-col>
 			<ion-col class="header-actions">
-				<ion-label  style="margin: auto; color: var(--ion-color-secondary); font-weight: bold;">{{ 'PRODUCTS_VIEW.ALL_SERVICES' | translate }}</ion-label>
+				<ion-label *ngIf="!inStore" style="margin: auto; color: var(--ion-color-secondary); font-weight: bold;">{{ 'PRODUCTS_VIEW.ALL_SERVICES' | translate }}</ion-label>
 				<!-- <ion-label
 					*ngIf="!inStore"
 					(click)="isDeliveryRequired = !isDeliveryRequired"

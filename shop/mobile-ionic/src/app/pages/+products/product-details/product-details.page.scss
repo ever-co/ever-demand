@@ -13,7 +13,6 @@
 
 .icon {
 	border: 1px solid var(--ion-color-border);
-	// padding: 5px;
 }
 ion-title{
     text-align: center;
@@ -129,6 +128,7 @@ ion-slides.hydrated {
 	.delivery-lines {
 		font-size: 80%;
 		small {
+			min-width: max-content;
 			display: block;
 		}
 	}

@@ -6,7 +6,12 @@
 
 }
 .moppaza-logo-descr{
+	ion-icon{
+		height: 8em;
+		width: 50%;
+	}
 	h3{
+		color: var(--ion-color-dark);
 		width: 100%;
 		margin-top: 10px;
 	}
@@ -122,6 +127,7 @@ select {
 	text-transform: capitalize;
 	height: 45px;
 	color: #ffffff;
+	font-weight: bold;
 }
 
 .input-wrapper {

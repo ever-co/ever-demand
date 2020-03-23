@@ -1,6 +1,7 @@
 @import '../../../modules/client.common.angular2/scss/everbie.common.scss';
 
 ion-header {
+
 	ion-toolbar {
 		ion-label {
 			letter-spacing: 2px;
@@ -14,8 +15,15 @@ ion-header {
 			width: 32px;
 			margin: 15px 10px;
 		}
-
 		--background:var(--ion-color-secondary);
+
+	}
+	background:var(--ion-color-secondary);
+
+}
+.activated{
+	ion-label{
+	color: var(--ion-color-secondary-shade);
 	}
 }
 
@@ -111,7 +119,7 @@ ion-list {
 	color: var(--ion-color-icon-color);
 
 	ion-label {
-		margin: 16px 0 16px 20px;
+		margin: 16px 0 16px 10px;
 		color: var(--ion-color-icon-color);
 	}
 
@@ -124,8 +132,15 @@ ion-list {
 		}
 	}
 }
-
+ion-radio-group{
+.item-radio-checked{
+	ion-label, ion-icon{
+		color: var(--ion-color-secondary-shade);
+	}
+}
+}
 .sub-menu {
+
 	ion-icon {
 		padding-left: 27px;
 	}

@@ -22,9 +22,30 @@
 		position: relative;
 		text-align: center;
 		height: 100%;
-
 		span {
 			margin: 0 auto;
+		}
+		&.button-brand{
+			border: 1px solid var(--ion-color-secondary-btn);
+			color: var(--ion-color-text-secondary);
+		}
+	}
+	.box.box-brand{
+		background-color: var(--ion-color-primary) !important;
+	}
+	.delivery-status {
+		ion-icon{
+			font-size: 50px;
+		}
+		h5{
+			width: 70%;
+			margin: 10px auto 2px;
+		}
+		.your-home-txt{
+			max-width: 50%;
+		}
+		.status{
+		width: 28%;
 		}
 	}
 }

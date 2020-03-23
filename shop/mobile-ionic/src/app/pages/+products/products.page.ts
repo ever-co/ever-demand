@@ -236,7 +236,6 @@ export class ProductsPage implements OnInit, OnDestroy {
 	}
 
 	private async loadProducts(options = {}) {
-		console.log(this.isDeliveryRequired);
 
 		this.store.deliveryType = DeliveryType.Delivery;
 			

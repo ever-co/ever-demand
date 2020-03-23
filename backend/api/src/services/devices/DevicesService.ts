@@ -20,6 +20,7 @@ export class DevicesService extends DBService<Device>
 
 	@observableListener()
 	get(id: string): Observable<Device | null> {
+		console.log(id)
 		return super.get(id).pipe(
 			map(async (device) => {
 				await this.throwIfNotExists(id);

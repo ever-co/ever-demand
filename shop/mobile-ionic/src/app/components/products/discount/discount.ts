@@ -33,7 +33,7 @@ export class DiscountComponent {
 		) {
 			return 0;
 		}
-
+		
 		return Math.floor(
 			(1 - this.currentProduct.price / this.currentProduct.initialPrice) *
 				100

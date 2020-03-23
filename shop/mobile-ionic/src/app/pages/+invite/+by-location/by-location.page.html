@@ -1,15 +1,15 @@
 <div class="by-location" dir="{{ 'CURRENT_DIRECTION' | translate }}">
 	<div class="moppaza-logo-descr">
-		<img src="../../../../assets/icons/logo/moppaza.svg" alt="Massaza logo" color="transparent">
-		<h3 color="dark">Available Cleaning Services</h3>
+		<ion-icon src="../../../../assets/icons/logo/moppaza.svg" alt="Moppaza logo"></ion-icon>
+		<h3 >Available Cleaning Services</h3>
 	</div>
 	<h1>{{ 'INVITE_VIEW.YOUR_ADDRESS' | translate }}</h1>
 
 	<h2>{{ 'INVITE_VIEW.LAUNCH_NOTIFICATION' | translate }}</h2>
 
-	<ion-spinner color="dark" [hidden]="!detectingLocation"></ion-spinner>
+	<ion-spinner style="color: var(--ion-color-dark); padding-top: 25px" [hidden]="!detectingLocation"></ion-spinner>
 	<div style="padding-top: 25px" *ngIf="detectingLocation">
-		<h3 >
+		<h3 style="color: var(--ion-color-dark)" >
 			{{ 'INVITE_VIEW.DETECTING_LOCATION' | translate }}
 		</h3>
 		<br />	
@@ -44,9 +44,9 @@
               cancel-label="{{ 'BACK' | translate }}"       -->
 
 			<div *ngIf="streetAddress">
-				<ion-grid no-padding>
+				<ion-grid class="ion-no-padding" >
 					<ion-row class="house-and-apartment">
-						<ion-col no-padding>
+						<ion-col class="ion-no-padding">
 							<div
 								class="house house-{{
 									'CURRENT_DIRECTION' | translate
@@ -60,7 +60,7 @@
 							</div>
 						</ion-col>
 
-						<ion-col no-padding>
+						<ion-col class="ion-no-padding">
 							<div class="apartment">
 								<input
 									type="number"

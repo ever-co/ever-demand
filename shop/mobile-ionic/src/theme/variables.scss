@@ -125,11 +125,9 @@ $app-direction: multi;
 	--ion-color-secondary-btn: #FFDC00;
 
 	/** Disabled **/
-	--ion-color-disabled-background: #F5E7E4;
-	--ion-color-disabled-txt: #DBB2AA;
+	--ion-color-disabled-background: #FFFAD7;
+	--ion-color-disabled-txt: #9F9EAD;
 
-	/** No-select**/
-	--ion-color-no-select: #C0979D;
 
 	// Toggle btn colors
 	--ion-color-toggle-background:#EBEBE7;
@@ -268,11 +266,9 @@ $app-direction: multi;
 
 
 	/** Disabled **/
-	--ion-color-disabled-background: #764042;
-	--ion-color-disabled-txt: #764042;
+	--ion-color-disabled-background: #404183;
+	--ion-color-disabled-txt: #A0A0C1;
 
-	/** No-select**/
-	--ion-color-no-select: #A45A50;
 
 	// Toggle btn colors
 	--ion-color-toggle-background:#404183;
@@ -287,7 +283,7 @@ $app-direction: multi;
 
 ion-toolbar {
 	background: var(--ion-color-primary);
-
+    margin: 10px 0 0;
 	ion-title,
 	ion-label {
 		color: var(--ion-color-secondary);

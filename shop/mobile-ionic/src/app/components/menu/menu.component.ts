@@ -53,6 +53,13 @@ export class MenuComponent {
 	ngOnInit() {
 		const theme = localStorage.getItem('theme');
 		this.setTheme(theme);
+		if(localStorage.getItem('page_view') === "list"){
+			document.getElementById("list").classList.add("item-radio-checked");
+			
+		}else if(localStorage.getItem('page_view') === "slides"){
+			document.getElementById("slides").classList.add("item-radio-checked");
+		}
+		
 	}
 
 	getTheme(e) {
@@ -70,13 +77,18 @@ export class MenuComponent {
 	}
 
 	setTheme(theme) {
+		
 		if (theme === 'night') {
 			localStorage.setItem('theme', theme);
 			document.body.classList.add('dark');
+			document.getElementById("day").classList.remove('item-radio-checked');
 		} else {
 			localStorage.setItem('theme', theme);
 			document.body.classList.remove('dark');
+			document.getElementById("night").classList.remove('item-radio-checked');
+
 		}
+		document.getElementById(theme).classList.add('item-radio-checked');
 	}
 
 	getTime() {
@@ -101,6 +113,7 @@ export class MenuComponent {
 	}
 
 	changeView(e) {
+		
 		if (e.detail.value != localStorage.getItem('page_view')) {
 			window.location.reload();
 		}

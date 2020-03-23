@@ -6,7 +6,7 @@
 
 	.title {
 		width: 100%;
-		height: 25%;
+		height: 20%;
 
 		.box {
 			height: 100%;
@@ -37,14 +37,9 @@
 
 		.buttons-bottom {
 			position: absolute;
-
-			left: 0px;
-			right: 0px;
-			bottom: 5px;
-
+			bottom: -20px;
 			padding-left: 20px;
 			padding-right: 20px;
-
 			.row>span {
 				padding: 0;
 
