@@ -19,12 +19,12 @@
 					</ion-item>
 					<ion-radio-group (ionChange)="changeView($event)">
 						<div [ngClass]="{ 'show': showHide, 'hide': !showHide}">
-							<ion-item class="sub-menu">
+							<ion-item class="sub-menu" id="slides">
 								<ion-icon src="../../../assets/icons/slides-view-menu-icon.svg"></ion-icon>
 								<ion-label>{{'SIDE_MENU.GROUPS.VIEW_TYPE.SLIDES' | translate}}</ion-label>
 								<ion-radio value="slides"></ion-radio>
 							</ion-item>
-							<ion-item class="sub-menu">
+							<ion-item class="sub-menu" lines="none" id="list">
 								<ion-icon src="../../../assets/icons/listview-menu-icon.svg"></ion-icon>
 								<ion-label>{{'SIDE_MENU.GROUPS.VIEW_TYPE.LIST' | translate}}</ion-label>
 								<ion-radio value="list"></ion-radio>
@@ -89,12 +89,12 @@
 			</ion-item-group>
 
 			<ion-radio-group (ionChange)="getTheme($event)">
-				<ion-item class="sub-menu" lines="none" >
+				<ion-item class="sub-menu" lines="none" id="night">
 					<ion-icon name="moon"></ion-icon>
 					<ion-label>{{'SIDE_MENU.GROUPS.THEME.NIGHT'|translate}} </ion-label>
 					<ion-radio value="night-theme"  ></ion-radio>
 				</ion-item>
-				<ion-item class="sub-menu">
+				<ion-item class="sub-menu" id="day">
 					<ion-icon name="sunny"></ion-icon>
 					<ion-label>{{'SIDE_MENU.GROUPS.THEME.DAY'|translate}} </ion-label>
 					<ion-radio value="day-theme" ></ion-radio>
@@ -106,7 +106,7 @@
 						<ion-label>{{'SIDE_MENU.GROUPS.THEME.AUTO_THEME.MAIN_LABEL'|translate}}</ion-label>
 						<ion-note>{{'SIDE_MENU.GROUPS.THEME.AUTO_THEME.SUB_LABEL'|translate}}</ion-note>
 					</ion-col>
-					<ion-toggle (ionChange)="autoTheme($event)"></ion-toggle>
+					<ion-toggle (ionChange)="autoTheme($event)" id="autoThemeToggle"></ion-toggle>
 				</ion-item>
 
 			<ion-item-divider class="secondary-menu-item">

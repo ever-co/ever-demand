@@ -1,4 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
+import { Location } from '@angular/common';
 import Order from '@modules/server.common/entities/Order';
 import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
@@ -25,6 +26,7 @@ export class OrdersHistoryPage implements OnDestroy {
 		);
 
 	constructor(
+		private location: Location,
 		private readonly _store: Store,
 		private readonly _apollo: Apollo
 	) {}
@@ -36,5 +38,8 @@ export class OrdersHistoryPage implements OnDestroy {
 
 	getStatusText(order: Order) {
 		return order.getStatusText(this._store.language);
+	}
+	goBack() {
+		this.location.back();
 	}
 }

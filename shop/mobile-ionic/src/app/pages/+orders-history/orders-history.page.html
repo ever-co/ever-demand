@@ -1,9 +1,15 @@
 <ion-header>
-	<ion-toolbar color="primary">
-		<ion-buttons slot="start" >
+	<ion-toolbar color="var(--ion-color-header)">
+		<ion-buttons slot="start">
 			<ion-menu-button autoHide="false" color="tertiary"></ion-menu-button>
 		</ion-buttons>
 		<ion-title color="secondary">{{ 'ORDER_HISTORY_VIEW.TITLE' | translate }}</ion-title>
+		<ion-buttons slot="end">
+			<ion-button (click)="goBack()" color="tertiary">
+				<i class="fa fa-angle-left back-btn"></i>
+				<span>{{ 'BACK' | translate }}</span>
+			</ion-button>
+		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
@@ -14,8 +20,8 @@
 		</div>
 
 		<div class="no-orders-message">
-			<i class="fa fa-shopping-bag"></i>
-
+			<!-- <i class="fa fa-shopping-bag" color="dark"></i> -->
+			<ion-icon src="../../../assets/icons/not-available.svg" class="no-orders-icon"></ion-icon>
 			<h2>{{ 'LAST_PURCHASES_VIEW.NOTHING_ORDERED' | translate }}</h2>
 
 			<ion-button

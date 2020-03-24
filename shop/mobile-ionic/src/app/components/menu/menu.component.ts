@@ -53,6 +53,15 @@ export class MenuComponent {
 	ngOnInit() {
 		const theme = localStorage.getItem('theme');
 		this.setTheme(theme);
+		if(localStorage.getItem('page_view') === "list"){
+			document.getElementById("list").classList.add("item-radio-checked");
+			
+		}else if(localStorage.getItem('page_view') === "slides"){
+			document.getElementById("slides").classList.add("item-radio-checked");
+		}
+		if(localStorage.getItem("autotheme")=== "true"){
+			// document.getElementById("autoThemeToggle").checked = true;
+		}
 	}
 
 	getTheme(e) {
@@ -70,12 +79,19 @@ export class MenuComponent {
 	}
 
 	setTheme(theme) {
+		
 		if (theme === 'night') {
 			localStorage.setItem('theme', theme);
 			document.body.classList.add('dark');
-		} else {
+			document.getElementById("day").classList.remove('item-radio-checked');
+		} else if (theme==="day"){
 			localStorage.setItem('theme', theme);
 			document.body.classList.remove('dark');
+			document.getElementById("night").classList.remove('item-radio-checked');
+
+		}
+		if(!theme){
+		document.getElementById(theme).classList.add('item-radio-checked');
 		}
 	}
 
@@ -91,16 +107,21 @@ export class MenuComponent {
 	}
 
 	autoTheme(e) {
+		let v =document.getElementById("autoThemeToggle");
 		if (e.detail.checked) {
 			this.getTime();
 			setInterval(this.getTime, 1000 * 60 * 60);
 			this.autoThemeChecked = true;
+			localStorage.setItem('autotheme', "true");
 		} else {
 			this.autoThemeChecked = false;
+			localStorage.setItem('autotheme', "false");
+
 		}
 	}
 
 	changeView(e) {
+		
 		if (e.detail.value != localStorage.getItem('page_view')) {
 			window.location.reload();
 		}

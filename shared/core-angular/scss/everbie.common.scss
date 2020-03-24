@@ -195,47 +195,47 @@ body {
 	background-color: var(--ion-color-icon-background);
 	border-color: darken($brand, 3%);
 	color: #fff;
-	&.active,
-	&.activated {
-		background-color: darken($brand, 1%);
-		box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
-	}
+	// &.active,
+	// &.activated {
+	// 	background-color: darken($brand, 1%);
+	// 	box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+	// }
 }
 
 .button.button-dark-brand {
 	background-color: $brand-darken;
 	border-color: darken($brand-darken, 3%);
 	color: #fff;
-	&.active,
-	&.activated {
-		background-color: darken($brand-darken, 1%);
-		box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
-	}
+	// &.active,
+	// &.activated {
+	// 	background-color: darken($brand-darken, 1%);
+	// 	box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+	// }
 }
 
 .button.button-brand-lighted {
 	background-color: $brand-lighted;
 	border-color: darken($brand-lighted, 3%);
 	color: #fff;
-	&.active,
-	&.activated {
-		background-color: darken($brand-lighted, 1%);
-		box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
-	}
+	// &.active,
+	// &.activated {
+	// 	background-color: darken($brand-lighted, 1%);
+	// 	box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+	// }
 }
 
 .button.button-assertive {
-	&.active,
-	&.activated {
-		border-color: $assertive-darken !important;
-	}
+	// &.active,
+	// &.activated {
+	// 	border-color: $assertive-darken !important;
+	// }
 }
 
 .button.button-balanced {
-	&.active,
-	&.activated {
-		border-color: darken($balanced, 3%) !important;
-	}
+	// &.active,
+	// &.activated {
+	// 	border-color: darken($balanced, 3%) !important;
+	// }
 }
 
 .button.button-balanced {
@@ -246,7 +246,7 @@ body {
 	// @extend .waves-effect;
 	// @extend .waves-classic;
 	@extend .button;
-	@extend .button-assertive;
+	// @extend .button-assertive;
 
 	border-radius: 8px !important;
 

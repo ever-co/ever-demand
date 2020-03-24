@@ -2,8 +2,7 @@
 
 ion-header {
 	ion-title {
-		width: fit-content;
-		margin: auto;
+		text-align: center;
 		font-size: 16px;
 	}
 
@@ -14,11 +13,6 @@ ion-row {
 	
 }
 
-.back-btn {
-	font-size: 30px;
-	margin-right: 10px;
-	margin-bottom: 4px;
-}
 
 .merchants-content {
 	ion-searchbar {

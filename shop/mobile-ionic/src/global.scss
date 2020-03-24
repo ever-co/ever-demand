@@ -132,3 +132,26 @@ ion-menu-button {
 		color: white !important;
 	}
 }
+.sc-ion-buttons-ios-s ion-button{
+	font-size: 15px;
+}
+
+.back-btn {
+    font-size: 25px;
+    margin-right: 10px;
+    margin-bottom: 4px;
+}
+
+
+ion-toolbar {
+	background: var(--ion-color-header);
+    min-height: 55px;
+	ion-title,
+	ion-label {
+		color: var(--ion-color-link-text);
+	}
+	ion-buttons{
+		margin: 3% 0 0;
+	}
+}
+

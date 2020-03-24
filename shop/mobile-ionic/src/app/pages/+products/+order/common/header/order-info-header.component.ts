@@ -6,7 +6,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 	styles: [
 		`
 			.back-btn {
-				font-size: 30px;
+				font-size: 25px;
 				margin-right: 10px;
 				margin-bottom: 4px;
 			}

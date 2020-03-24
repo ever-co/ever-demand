@@ -14,29 +14,49 @@ ion-header {
 		--background:var(--ion-color-header);
 	}
 }
-.auto-theme{
+
+ion-content {
+	--background: var(--ion-color-primary);
+}
+
+.auto-theme {
 	max-width: 80%;
 }
+
 ion-toggle {
 	--background: var(--ion-color-icon-background);
-	--background-checked: #ffffff !important;
-	--handle-background: var(--ion-color-tertiary);
-	--handle-background-checked: green !important;
+	--background-checked: #462229 !important;
+	--handle-background: #fff;
+	--handle-background-checked: var(--ion-color-tertiary) !important;
+	zoom: .8;
+	margin: auto;
 }
-.list-md{
+
+.list-md {
 	background: var(--ion-color-primary);
 }
-.list-ios{
+
+.list-ios {
 	min-height: 100vh;
 	background: var(--ion-color-primary);
 }
+
+
 .show {
+	ion-icon {
+		font-size: 20px;
+	}
+
 	transition: all .5s ease-out;
 	transform: rotate3d(1, 0, 0, 0deg);
 	height: 6em;
 }
 
 .hide {
+	ion-icon {
+		font-size: 20px;
+	}
+
 	transition: all .5s ease-in;
 	transform: rotate3d(1, 0, 0, 90deg);
 	height: 0px;
@@ -90,6 +110,7 @@ ion-list {
 }
 
 .massages-sub-menu {
+	--background:var(--ion-color-light);;
 	--background-activated: var(--ion-color-light);
 	--highlight-color-focused: var(--ion-color-light);
 	color: var(--ion-color-massaza-item-txt);
@@ -125,6 +146,16 @@ ion-item-group {
 	}
 }
 
+ion-radio-group {
+	.item-radio-checked {
+
+		ion-label,
+		ion-icon {
+			color: var(--ion-color-secondary-shade);
+		}
+	}
+}
+
 .secondary-menu-item {
 	visibility: visible;
 	--background: var(--ion-color-menu-secondary);
@@ -140,8 +171,8 @@ ion-item-group {
 	}
 }
 
-.active{
-	--background: red;
-	background: red;
-	color: red;
+.activated {
+	ion-label,ion-icon {
+		color: #F9B19F;
+	}
 }

@@ -97,7 +97,7 @@ $app-direction: multi;
 
 
 	/** Secondary menu items background **/
-	--ion-color-menu-secondary: #ffffff;
+	--ion-color-menu-secondary: #FBF7F6;
 
 
 	/** Border color **/
@@ -116,8 +116,8 @@ $app-direction: multi;
 	--ion-color-disabled-background: #F5E7E4;
 	--ion-color-disabled-txt: #DBB2AA;
 
-	/** No-select**/
-	--ion-color-no-select: #C0979D;
+	--ion-item-background-activated: transparent !important;
+	--ion-item-background-focused: transparent !important;
 
 
 	:focus {
@@ -242,20 +242,11 @@ $app-direction: multi;
 	--ion-color-disabled-background: #764042;
 	--ion-color-disabled-txt: #764042;
 
-	/** No-select**/
-	--ion-color-no-select: #A45A50;
+	--ion-item-background-activated: transparent !important;
+	--ion-item-background-focused: transparent !important;
 
 	:focus {
 		outline: none;
 	}
 }
 
-
-ion-toolbar {
-	background: var(--ion-color-header);
-
-	ion-title,
-	ion-label {
-		color: var(--ion-color-link-text);
-	}
-}

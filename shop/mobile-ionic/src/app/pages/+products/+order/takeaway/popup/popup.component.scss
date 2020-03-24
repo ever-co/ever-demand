@@ -13,7 +13,8 @@
 		position: relative;
 		text-align: center;
 		height: 100%;
-
+		width: 90%;
+		margin: 0 auto;
 		span {
 			margin: 0 auto;
 		}
@@ -26,11 +27,6 @@
 		margin-top: -26px;
 	}
 
-	.big-button-padding {
-		button {
-			padding: 10px !important;
-		}
-	}
 
 	.order-info {
 		padding-top: 55px;

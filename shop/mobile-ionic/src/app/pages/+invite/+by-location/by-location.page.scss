@@ -7,6 +7,12 @@
 }
 
 .massaza-logo-descr{
+	ion-icon{
+		border: none;
+		width: 90%;
+		height: 7em;
+		color: var(--ion-color-content-secondary);
+	}
 	h3{
 		width: 100%;
 		margin-top: 10px;

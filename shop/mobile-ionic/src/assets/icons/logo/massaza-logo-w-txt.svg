@@ -8,7 +8,7 @@
     </pattern>
   </defs>
   <g id="Group_1" data-name="Group 1" transform="translate(-124 -128)">
-    <rect id="Asset_7" data-name="Asset 7" width="94" height="68" transform="translate(140 128)" fill="url(#pattern)"/>
+    <rect id="Asset_7" data-name="Asset 7" width="94" height="68" transform="translate(140 128)" fill="url(#pattern)" />
     <g id="Bitmap" transform="translate(124 207)">
       <rect id="Bitmap-2" data-name="Bitmap" width="130" height="20" fill="url(#pattern-2)"/>
       <rect id="Bitmap-3" data-name="Bitmap" width="130" height="20" fill="none"/>
