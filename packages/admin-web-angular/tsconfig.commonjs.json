@@ -8,18 +8,13 @@
 		"target": "es6",
 		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"],
 		"paths": {
-			"@modules/server.common/*": [
-				"@modules/server.common/*",
-				"../../common/src/*"
-			],
-			"@modules/client.common.angular2/*": [
-				"@modules/client.common.angular2/*",
-				"../../common-angular/src/*"
-			],
-			"@pyro/*": ["@pyro/*", "../../common/src/@pyro/*"],
+			"@angular/*": ["../node_modules/@angular/*"],
+			"@modules/server.common/*": ["../../common/src/*"],
+			"@modules/client.common.angular2/*": ["../../common-angular/src/*"],
+			"@pyro/*": ["../../common/src/@pyro/*"],
 			"mongoose": ["../../common-angular/src/mongoose-placeholder"],
 			"typeorm": ["../../common-angular/src/typeorm-placeholder"],
-			"angular2-wizard": [
+			"angular2-wizard/*": [
 				"../../../node_modules/@ever-co/angular2-wizard/dist/*"
 			],
 			"@app/*": ["app/*"],

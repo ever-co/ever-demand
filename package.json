@@ -252,6 +252,12 @@
 	"workspaces": {
 		"packages": [
 			"packages/*"
+		],
+		"nohoist": [
+			"**/@nebular",
+			"**/@nebular/**",
+			"**/@angular",
+			"**/@angular/**"
 		]
 	},
 	"config": {
