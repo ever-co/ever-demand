@@ -36,7 +36,7 @@ export class OrderInfoPage implements OnInit, OnDestroy {
 
 	public delivered: boolean;
 
-	@ViewChild('elapsedTime', { static: false })
+	@ViewChild('elapsedTime')
 	elapsedTime: ElapsedTimeComponent;
 
 	public modalOpen: boolean;

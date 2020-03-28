@@ -5,14 +5,11 @@
 		"outDir": "./build",
 		"rootDir": "./src",
 		"target": "es5",
-		"types": [],
 		"paths": {
 			"@pyro/*": [
-				"@pyro/*",
 				"../../../node_modules/@ever-platform/common/src/@pyro/*"
 			],
 			"@modules/server.common/*": [
-				"@modules/server.common/*",
 				"../../../node_modules/@ever-platform/common/src/*"
 			]
 		}

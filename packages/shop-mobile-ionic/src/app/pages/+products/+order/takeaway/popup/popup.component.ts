@@ -25,7 +25,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 	styleUrls: ['./popup.component.scss']
 })
 export class OrderTakeawayInfoPopup implements OnInit, OnDestroy {
-	@ViewChild('elapsedTime', { static: false })
+	@ViewChild('elapsedTime')
 	elapsedTime: ElapsedTimeComponent;
 
 	modalChange: EventEmitter<boolean>;

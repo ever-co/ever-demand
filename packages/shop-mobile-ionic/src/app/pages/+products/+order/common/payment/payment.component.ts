@@ -10,6 +10,7 @@ import { OrderPage } from '../../order.page';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 
+
 @Component({
 	selector: 'e-cu-payment',
 	templateUrl: './payment.component.html',

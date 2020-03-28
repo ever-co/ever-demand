@@ -30,7 +30,7 @@ const routes: Routes = [
 		children: [
 			{
 				path: 'order',
-				loadChildren: './+order/order.module#OrderPageModule',
+				loadChildren: () => import('./+order/order.module').then(m => m.OrderPageModule),
 				canLoad: [OrderModuleGuard]
 			}
 		]

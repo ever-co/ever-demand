@@ -41,7 +41,7 @@ export class OrderPage implements OnInit, OnDestroy {
 
 	public modalChange: EventEmitter<boolean>;
 
-	@ViewChild('elapsedTime', { static: false })
+	@ViewChild('elapsedTime')
 	elapsedTime: ElapsedTimeComponent;
 
 	private _pageSubscriptions: Subscription[] = [];

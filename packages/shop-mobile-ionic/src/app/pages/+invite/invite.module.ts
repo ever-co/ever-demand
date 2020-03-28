@@ -19,13 +19,13 @@ const routes: Routes = [
 			},
 			{
 				path: 'by-code',
-				loadChildren: './+by-code/by-code.module#ByCodePageModule',
+				loadChildren: () => import('./+by-code/by-code.module').then(m => m.ByCodePageModule),
 				canLoad: [ByCodeModuleGuard]
 			},
 			{
 				path: 'by-location',
 				loadChildren:
-					'./+by-location/by-location.module#ByLocationPageModule',
+					() => import('./+by-location/by-location.module').then(m => m.ByLocationPageModule),
 				canLoad: [ByLocationModuleGuard]
 			}
 		]
