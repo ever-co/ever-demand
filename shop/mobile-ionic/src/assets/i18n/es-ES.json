@@ -85,6 +85,15 @@
 	},
 	"BUY_POPUP": {
 		"ORDER_PAID": "El pedido cuesta $",
+		"CANCEL": {
+			"STATUSES": [
+				{
+					"TITLE": "El pedido se canceló mientras se preparaba el almacén!",
+					"DETAILS": "",
+					"NOT_PAID_NOTE": ""
+				}
+			]
+		},
 		"STATUSES": [
 			{
 				"TITLE": "¡Estamos preparando el pedido!",

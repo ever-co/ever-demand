@@ -78,6 +78,15 @@
 	},
 	"BUY_POPUP": {
 		"ORDER_PAID": "ההזמנה משולמת $",
+		"CANCEL": {
+			"STATUSES": [
+				{
+					"TITLE": "ההזמנה בוטלה תוך כדי הכנת מחסן!",
+					"DETAILS": "",
+					"NOT_PAID_NOTE": ""
+				}
+			]
+		},
 		"STATUSES": [
 			{
 				"TITLE": "אנחנו מכינים את ההזמנה!",

@@ -78,6 +78,15 @@
 	},
 	"BUY_POPUP": {
 		"ORDER_PAID": "The order is paid $",
+		"CANCEL": {
+			"STATUSES": [
+				{
+					"TITLE": "The order was cancel while Warehouse Preparation!",
+					"DETAILS": "",
+					"NOT_PAID_NOTE": ""
+				}
+			]
+		},
 		"STATUSES": [
 			{
 				"TITLE": "We're preparing the order!",

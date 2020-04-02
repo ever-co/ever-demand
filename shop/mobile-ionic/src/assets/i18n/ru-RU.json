@@ -78,6 +78,15 @@
 	},
 	"BUY_POPUP": {
 		"ORDER_PAID": "Заказ оплачен $",
+		"CANCEL": {
+			"STATUSES": [
+				{
+					"TITLE": "Заказ был отменен при подготовке склада!",
+					"DETAILS": "",
+					"NOT_PAID_NOTE": ""
+				}
+			]
+		},
 		"STATUSES": [
 			{
 				"TITLE": "Мы готовим Ваш заказ!",
