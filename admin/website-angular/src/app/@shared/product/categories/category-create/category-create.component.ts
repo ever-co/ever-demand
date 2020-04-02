@@ -28,10 +28,7 @@ export class CategoryCreateComponent implements OnDestroy {
 		private readonly _translateService: TranslateService,
 		private readonly _notifyService: NotifyService,
 		private readonly _productsCategoryService: ProductsCategoryService
-	) {
-		this._translateService.setDefaultLang('en-US');
-		this._translateService.use('en-US');
-	}
+	) {}
 
 	ngOnDestroy() {
 		this._ngDestroy$.next();
