@@ -354,7 +354,8 @@
 		"ENGLISH": "Английский",
 		"HEBREW": "Иврит",
 		"RUSSIAN": "Русский",
-		"BULGARIAN": "Болгарский"
+		"BULGARIAN": "Болгарский",
+		"SPANISH": "Испанский"
 	},
 	"ORDER_CANCELED_COMPONENT": {
 		"CANCELED": "отменен",

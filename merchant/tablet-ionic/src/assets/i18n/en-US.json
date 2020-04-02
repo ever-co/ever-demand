@@ -354,6 +354,7 @@
 		"HEBREW": "Hebrew",
 		"RUSSIAN": "Russian",
 		"BULGARIAN": "Bulgarian",
+		"SPANISH": "Spanish",
 		"OPTIONAL": "optional"
 	},
 	"ORDER_CANCELED_COMPONENT": {

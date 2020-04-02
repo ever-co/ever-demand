@@ -354,7 +354,8 @@
 		"ENGLISH": "אנגלית",
 		"HEBREW": "עִברִית",
 		"RUSSIAN": "רוּסִי",
-		"BULGARIAN": "בולגרית"
+		"BULGARIAN": "בולגרית",
+		"SPANISH": "ספרדית"
 	},
 	"ORDER_CANCELED_COMPONENT": {
 		"CANCELED": "מבוטל",
