@@ -1,3 +1,10 @@
+<div *ngIf="selectedOrder?.isCancelled" class="money-amount-container">
+	<div class="money-amount">
+		<!-- TODO add translate -->
+		The customer cancel order
+	</div>
+</div>
+
 <div class="carrier-view">
 	<img
 		class="product-image"
@@ -15,6 +22,7 @@
 		<div class="buttons">
 			<div class="button-bar">
 				<button
+					*ngIf="!selectedOrder?.isCancelled"
 					[disabled]="disabledButtons"
 					class="button button-brand"
 					(click)="gotProduct()"

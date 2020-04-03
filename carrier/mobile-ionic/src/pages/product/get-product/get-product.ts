@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import ICarrier from '@modules/server.common/interfaces/ICarrier';
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
@@ -8,17 +8,20 @@ import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/car
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { Store } from '../../../services/store.service';
-import { first } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Component({
 	selector: 'page-get-product',
 	templateUrl: 'get-product.html'
 })
-export class GetProductPage {
+export class GetProductPage implements OnDestroy {
 	carrier: ICarrier;
 	selectedOrder: IOrder;
 	disabledButtons: boolean = true;
+
+	private destroy$ = new Subject<void>();
 
 	constructor(
 		private orderRouter: OrderRouter,
@@ -58,7 +61,7 @@ export class GetProductPage {
 				this.selectedOrder['id']
 			]);
 			localStorage.removeItem('orderId');
-
+			this.store.selectedOrder = null;
 			this.router.navigateByUrl('/main/home', {
 				skipLocationChange: false
 			});
@@ -79,13 +82,20 @@ export class GetProductPage {
 			.pipe(first())
 			.toPromise();
 
-		this.selectedOrder = await this.orderRouter
+		this.orderRouter
 			.get(this.store.orderId, {
 				populateWarehouse: true
 			})
-			.pipe(first())
-			.toPromise();
+			.pipe(takeUntil(this.destroy$))
+			.subscribe((o) => {
+				this.selectedOrder = o;
+				this.store.selectedOrder = o;
+				this.disabledButtons = false;
+			});
+	}
 
-		this.disabledButtons = false;
+	ngOnDestroy(): void {
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
 }

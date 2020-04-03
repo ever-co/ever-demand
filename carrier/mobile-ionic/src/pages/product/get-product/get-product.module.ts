@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { GetProductPage } from './get-product';
 import { TranslateModule } from '@ngx-translate/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
 	{
@@ -12,6 +13,10 @@ const routes: Routes = [
 
 @NgModule({
 	declarations: [GetProductPage],
-	imports: [TranslateModule.forChild(), RouterModule.forChild(routes)]
+	imports: [
+		TranslateModule.forChild(),
+		RouterModule.forChild(routes),
+		CommonModule
+	]
 })
 export class GetProductPageModule {}

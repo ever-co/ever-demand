@@ -88,6 +88,7 @@ export class DeliveryPage implements AfterViewInit {
 			.toPromise();
 
 		this.selectedOrder = order;
+		this.store.selectedOrder = order;
 		// const carrier = await this.carrierRouter
 		// 	.get(order.carrierId)
 		// 	.pipe(first())

@@ -71,6 +71,8 @@ export class StartingDeliveryPage implements AfterViewInit {
 			.pipe(first())
 			.toPromise();
 
+		this.store.selectedOrder = this.selectedOrder;
+
 		const position = this.geoLocationService.defaultLocation()
 			? this.geoLocationService.defaultLocation()
 			: await this.geolocation.getCurrentPosition();

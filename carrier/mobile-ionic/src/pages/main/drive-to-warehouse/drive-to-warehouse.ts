@@ -37,7 +37,7 @@ export class DriveToWarehousePage {
 		private orderRouter: OrderRouter,
 		private carrierRouter: CarrierRouter,
 		private carrierOrdersRouter: CarrierOrdersRouter,
-		private store: Store,
+		public store: Store,
 		private geoLocationService: GeoLocationService,
 		private geolocation: Geolocation,
 		private router: Router
@@ -76,6 +76,7 @@ export class DriveToWarehousePage {
 						})
 						.subscribe((order) => {
 							this.selectedOrder = order;
+							this.store.selectedOrder = order;
 							this.workTaken =
 								order.carrierStatus !==
 								OrderCarrierStatus.NoCarrier;
@@ -183,6 +184,7 @@ export class DriveToWarehousePage {
 	}
 
 	private unselectOrder() {
+		this.store.selectedOrder = null;
 		localStorage.removeItem('orderId');
 	}
 
