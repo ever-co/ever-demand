@@ -133,6 +133,8 @@ export class WarehouseTrackComponent implements OnInit {
 	}
 
 	populateMarkers(merchantArray, markerStorage) {
+		const latlngbounds = new google.maps.LatLngBounds();
+
 		merchantArray.forEach((mer) => {
 			const coords = new google.maps.LatLng(
 				mer.geoLocation.loc.coordinates[1],
@@ -141,7 +143,10 @@ export class WarehouseTrackComponent implements OnInit {
 			const storeIcon = environment.MAP_MERCHANT_ICON_LINK;
 			const marker = this.addMarker(coords, this.map, storeIcon);
 			markerStorage.push({ marker, id: mer.id });
+			latlngbounds.extend(coords);
 		});
+
+		this.map.fitBounds(latlngbounds);
 	}
 
 	updateMarkers(merchantArray: Warehouse[]) {
