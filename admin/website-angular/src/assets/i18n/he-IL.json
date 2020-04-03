@@ -378,6 +378,7 @@
 		"DELETE_WAREHOUSES": "מחק נבחרה",
 		"DELETE": "מחק",
 		"CREATE": "צור",
+		"SHOW_ON_MAP": "הצג על המפה",
 		"SMART_TABLE_COLUMNS": {
 			"IMAGE": "תמונה",
 			"NAME": "שֵׁם",

@@ -35,6 +35,7 @@
 	"WAREHOUSES_VIEW": {
 		"TITLE": "Entrepôts",
 		"DELETE_WAREHOUSES": "Supprimer la Sélection",
+		"SHOW_ON_MAP": "Afficher sur la carte",
 		"SMART_TABLE_COLUMNS": {
 			"NAME": "Prénom",
 			"EMAIL": "Email",

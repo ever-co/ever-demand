@@ -378,6 +378,7 @@
 		"DELETE_WAREHOUSES": "Удалить Выбранное",
 		"DELETE": "удалять",
 		"CREATE": "Создайте",
+		"SHOW_ON_MAP": "Показать на карте",
 		"SMART_TABLE_COLUMNS": {
 			"IMAGE": "Образ",
 			"NAME": "Имя",

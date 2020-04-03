@@ -378,6 +378,7 @@
 		"DELETE_WAREHOUSES": "Delete Selected",
 		"DELETE": "DELETE",
 		"CREATE": "CREATE",
+		"SHOW_ON_MAP": "Show on map",
 		"SMART_TABLE_COLUMNS": {
 			"IMAGE": "Image",
 			"NAME": "Name",
