@@ -64,8 +64,11 @@ export class WarehouseTrackComponent implements OnInit {
 	}
 
 	showMap() {
+		const lat = environment.DEFAULT_LATITUDE;
+		const lng = environment.DEFAULT_LONGITUDE;
+
 		const mapProp = {
-			center: new google.maps.LatLng(42.642941, 23.334149),
+			center: new google.maps.LatLng(lat, lng),
 			zoom: 15,
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
