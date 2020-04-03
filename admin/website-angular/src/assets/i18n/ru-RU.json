@@ -393,6 +393,13 @@
 			"STORE_INFO": "Информация о магазине",
 			"STORE_ID": "Идентификатор магазина",
 			"STORE_NAME": "Название магазина"
+		},
+		"MERCHANTS": {
+			"TRACK_ALL_MERCHANTS": "Отслеживать всех продавцов",
+			"FILTER_MERCHANTS": "Торговцы фильтрами",
+			"FILTER_BY_NAME": "Фильтр по имени",
+			"FILTER_BY_CITY": "Фильтр по городу",
+			"FILTER_BY_COUNTRY": "Фильтр по стране"
 		}
 	},
 	"WAREHOUSE_VIEW": {

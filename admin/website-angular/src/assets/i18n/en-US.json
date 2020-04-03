@@ -393,6 +393,13 @@
 			"STORE_INFO": "Store Info",
 			"STORE_ID": "Store ID",
 			"STORE_NAME": "Store Name"
+		},
+		"MERCHANTS": {
+			"TRACK_ALL_MERCHANTS": "Track all merchants",
+			"FILTER_MERCHANTS": "Filter merchants",
+			"FILTER_BY_NAME": "Filter by name",
+			"FILTER_BY_CITY": "Filter by city",
+			"FILTER_BY_COUNTRY": "Filter by country"
 		}
 	},
 	"WAREHOUSE_VIEW": {

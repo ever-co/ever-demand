@@ -393,6 +393,13 @@
 			"STORE_INFO": "Информация за магазина",
 			"STORE_ID": "Идент. № на магазина",
 			"STORE_NAME": "Име на Магазина"
+		},
+		"MERCHANTS": {
+			"TRACK_ALL_MERCHANTS": "Проследи всички търговци",
+			"FILTER_MERCHANTS": "Филтрирай търговци",
+			"FILTER_BY_NAME": "Филтрирай по име",
+			"FILTER_BY_CITY": "Филтрирай по град",
+			"FILTER_BY_COUNTRY": "Филтрирай по държава"
 		}
 	},
 	"WAREHOUSE_VIEW": {

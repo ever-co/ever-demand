@@ -43,6 +43,13 @@
 			"CITY": "Ville",
 			"ADDRESS": "Adresse",
 			"ORDERS_QTY": "Commandes quantité"
+		},
+		"MERCHANTS": {
+			"TRACK_ALL_MERCHANTS": "Suivre tous les marchands",
+			"FILTER_MERCHANTS": "Filtrer les marchands",
+			"FILTER_BY_NAME": "Filtrer par nom",
+			"FILTER_BY_CITY": "Filtrer par ville",
+			"FILTER_BY_COUNTRY": "Filtrer par pays"
 		}
 	},
 	"WAREHOUSE_VIEW": {
