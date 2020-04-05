@@ -378,6 +378,7 @@
 		"DELETE_WAREHOUSES": "מחק נבחרה",
 		"DELETE": "מחק",
 		"CREATE": "צור",
+		"SHOW_ON_MAP": "הצג על המפה",
 		"SMART_TABLE_COLUMNS": {
 			"IMAGE": "תמונה",
 			"NAME": "שֵׁם",
@@ -392,6 +393,13 @@
 			"STORE_INFO": "מידע חנות",
 			"STORE_ID": "מזהה חנות",
 			"STORE_NAME": "שם חנות"
+		},
+		"MERCHANTS": {
+			"TRACK_ALL_MERCHANTS": "עקוב אחר כל הסוחרים",
+			"FILTER_MERCHANTS": "סוחרי סינון",
+			"FILTER_BY_NAME": "לסנן לפי שם",
+			"FILTER_BY_CITY": "סנן לפי עיר",
+			"FILTER_BY_COUNTRY": "סנן לפי מדינה"
 		}
 	},
 	"WAREHOUSE_VIEW": {

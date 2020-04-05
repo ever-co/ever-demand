@@ -381,6 +381,7 @@
 		"DELETE_WAREHOUSES": "Eliminar Seleccionadas",
 		"DELETE": "ELIMINAR",
 		"CREATE": "CREAR",
+		"SHOW_ON_MAP": "Mostrar en el mapa",
 		"SMART_TABLE_COLUMNS": {
 			"IMAGE": "Imágen",
 			"NAME": "Nombre",
@@ -395,6 +396,13 @@
 			"STORE_INFO": "Información de Sucursal",
 			"STORE_ID": "ID de Sucursal",
 			"STORE_NAME": "Nombre de Sucursal"
+		},
+		"MERCHANTS": {
+			"TRACK_ALL_MERCHANTS": "Rastrear a todas las comerciantes",
+			"FILTER_MERCHANTS": "Filtrar comerciantes",
+			"FILTER_BY_NAME": "Filtrar por nombre",
+			"FILTER_BY_CITY": "Filtrar por ciudad",
+			"FILTER_BY_COUNTRY": "Filtrar por país"
 		}
 	},
 	"WAREHOUSE_VIEW": {

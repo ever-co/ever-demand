@@ -35,6 +35,7 @@
 	"WAREHOUSES_VIEW": {
 		"TITLE": "Entrepôts",
 		"DELETE_WAREHOUSES": "Supprimer la Sélection",
+		"SHOW_ON_MAP": "Afficher sur la carte",
 		"SMART_TABLE_COLUMNS": {
 			"NAME": "Prénom",
 			"EMAIL": "Email",
@@ -42,6 +43,13 @@
 			"CITY": "Ville",
 			"ADDRESS": "Adresse",
 			"ORDERS_QTY": "Commandes quantité"
+		},
+		"MERCHANTS": {
+			"TRACK_ALL_MERCHANTS": "Suivre tous les marchands",
+			"FILTER_MERCHANTS": "Filtrer les marchands",
+			"FILTER_BY_NAME": "Filtrer par nom",
+			"FILTER_BY_CITY": "Filtrer par ville",
+			"FILTER_BY_COUNTRY": "Filtrer par pays"
 		}
 	},
 	"WAREHOUSE_VIEW": {

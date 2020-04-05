@@ -378,6 +378,7 @@
 		"DELETE_WAREHOUSES": "Удалить Выбранное",
 		"DELETE": "удалять",
 		"CREATE": "Создайте",
+		"SHOW_ON_MAP": "Показать на карте",
 		"SMART_TABLE_COLUMNS": {
 			"IMAGE": "Образ",
 			"NAME": "Имя",
@@ -392,6 +393,13 @@
 			"STORE_INFO": "Информация о магазине",
 			"STORE_ID": "Идентификатор магазина",
 			"STORE_NAME": "Название магазина"
+		},
+		"MERCHANTS": {
+			"TRACK_ALL_MERCHANTS": "Отслеживать всех продавцов",
+			"FILTER_MERCHANTS": "Торговцы фильтрами",
+			"FILTER_BY_NAME": "Фильтр по имени",
+			"FILTER_BY_CITY": "Фильтр по городу",
+			"FILTER_BY_COUNTRY": "Фильтр по стране"
 		}
 	},
 	"WAREHOUSE_VIEW": {
