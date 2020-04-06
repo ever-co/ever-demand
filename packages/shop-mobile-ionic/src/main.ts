@@ -13,3 +13,4 @@ platformBrowserDynamic()
 		// TODO: we probably should also send error to Sentry here
 		console.log(err);
 	});
+

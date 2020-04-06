@@ -23,7 +23,7 @@ import { TranslateService } from '@ngx-translate/core';
 	templateUrl: '/byLocation.component.html'
 })
 export class LoginByLocationComponent implements OnInit {
-	@ViewChild('locationForm', { static: false })
+	@ViewChild('locationForm')
 	public locationForm: LocationFormComponent;
 
 	public InitUser: User;

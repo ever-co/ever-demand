@@ -1,6 +1,6 @@
 import { DBObject, DBObjectClass } from './db-object';
 import 'reflect-metadata';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { Schema as MongooseSchema, SchemaDefinition } from 'mongoose';
 
 const mongooseSchemasKey: string = 'mongooseSchemas';
@@ -64,8 +64,8 @@ export function getSchema(DBObj: DBObjectClass): MongooseSchema {
 	const schema = new MongooseSchema(preSchema, {
 		timestamps: {
 			createdAt: '_createdAt',
-			updatedAt: '_updatedAt'
-		}
+			updatedAt: '_updatedAt',
+		},
 	});
 
 	const mongooseIndexes = Reflect.getMetadata(mongooseIndexesKey, DBObj);
@@ -80,7 +80,7 @@ export function getSchema(DBObj: DBObjectClass): MongooseSchema {
 			_.each(getSchema(SubType).indexes(), (index: any) => {
 				_.each(index, (indexValue: any, indexProperty: string) => {
 					schema.index({
-						[property + '.' + indexProperty]: indexValue
+						[property + '.' + indexProperty]: indexValue,
 					});
 				});
 			});

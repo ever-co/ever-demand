@@ -3,12 +3,10 @@ import { NgModule } from '@angular/core';
 import { ProductsComponent } from './products.component';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { routes } from './products.routes';
-import {
-	MatCardModule,
-	MatIconModule,
-	MatFormFieldModule,
-	MatInputModule
-} from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { ProductDetailsComponent } from './product-details';
 import { WarehouseLogoModule } from '../warehouse-logo';

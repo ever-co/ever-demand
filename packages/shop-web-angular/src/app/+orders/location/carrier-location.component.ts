@@ -9,7 +9,7 @@ import { ICarrierOrdersRouterGetOptions } from '@modules/server.common/routers/I
 import { environment } from 'environments/environment';
 import { CarriersService } from '@app/@core/data/carriers.service';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 declare var google: any;
 const directionsDisplay = new google.maps.DirectionsRenderer();

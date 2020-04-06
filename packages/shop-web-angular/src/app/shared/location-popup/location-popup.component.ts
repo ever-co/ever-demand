@@ -6,7 +6,7 @@ import {
 	AfterViewInit,
 	ViewChild
 } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
 import { LocationFormComponent } from 'app/+login/byLocation/location/location.component';
@@ -22,7 +22,7 @@ import { UserRouter } from '@modules/client.common.angular2/routers/user-router.
 	templateUrl: './location-popup.component.html'
 })
 export class LocationPopupComponent implements OnInit, AfterViewInit {
-	@ViewChild('locationForm', { static: false })
+	@ViewChild('locationForm')
 	locationForm: LocationFormComponent;
 
 	place: google.maps.places.PlaceResult;

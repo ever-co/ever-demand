@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-	MatDialogModule,
-	MatButtonModule,
-	MatCardModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { LocationPopupComponent } from './location-popup.component';
 import { LocationFormModule } from 'app/+login/byLocation/location/location.module';
 import { GoogleMapModule } from 'app/+login/byLocation/google-map/google-map.module';

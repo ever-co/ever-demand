@@ -17,22 +17,22 @@ export const ROUTES: Routes = [
 			},
 			{
 				path: 'login',
-				loadChildren: './+login#LoginModule',
+				loadChildren: () => import('./+login').then(m => m.LoginModule),
 				canActivate: [LoginModuleGuard]
 			},
 			{
 				path: 'products',
-				loadChildren: './+products#ProductsModule',
+				loadChildren: () => import('./+products').then(m => m.ProductsModule),
 				canActivate: [ProductsModuleGuard, AuthGuard]
 			},
 			{
 				path: 'orders',
-				loadChildren: './+orders#OrdersModule',
+				loadChildren: () => import('./+orders').then(m => m.OrdersModule),
 				canActivate: [AuthGuard]
 			},
 			{
 				path: 'settings',
-				loadChildren: './+settings#SettingsModule',
+				loadChildren: () => import('./+settings').then(m => m.SettingsModule),
 				canActivate: [AuthGuard]
 			}
 		],
@@ -41,12 +41,12 @@ export const ROUTES: Routes = [
 	{
 		path: 'maintenance-info',
 		loadChildren:
-			'./+maintenance-info/maintenance-info.module#MaintenanceInfoModule',
+			() => import('./+maintenance-info/maintenance-info.module').then(m => m.MaintenanceInfoModule),
 		canActivate: [MaintenanceModuleGuard]
 	},
 	{
 		path: 'server-down',
-		loadChildren: './+server-down/server-down.module#ServerDownModule'
+		loadChildren: () => import('./+server-down/server-down.module').then(m => m.ServerDownModule)
 	},
 	{
 		path: '**',

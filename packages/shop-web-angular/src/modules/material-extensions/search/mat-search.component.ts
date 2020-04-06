@@ -7,7 +7,8 @@ import {
 	Output,
 	EventEmitter
 } from '@angular/core';
-import { MatButton, MatRipple } from '@angular/material';
+import { MatButton } from '@angular/material/button';
+import { MatRipple } from '@angular/material/core';
 
 @Component({
 	selector: 'mat-search',
@@ -35,13 +36,13 @@ export class MatSearchComponent {
 	@Output()
 	detectLocation: EventEmitter<boolean> = new EventEmitter();
 
-	@ViewChild(MatRipple, { static: false })
+	@ViewChild(MatRipple)
 	public ripple: MatRipple;
 
-	@ViewChild('searchButton', { static: false })
+	@ViewChild('searchButton')
 	public searchButton: MatButton;
 
-	@ViewChild('input', { static: false })
+	@ViewChild('input')
 	public input: ElementRef;
 
 	@HostBinding('class.mat-focused')

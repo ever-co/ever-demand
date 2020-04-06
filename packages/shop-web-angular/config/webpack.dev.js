@@ -12,8 +12,6 @@ const commonConfig = require('./webpack.common.js'); // the settings that are co
  */
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 
-const nodeModulesPath = '../../../node_modules';
-
 /**
  * Webpack configuration
  *
@@ -61,7 +59,7 @@ module.exports = function(options) {
 						'css-loader',
 						{
 							loader: 'sass-loader',
-							options: { includePaths: [nodeModulesPath] }
+							options: { includePaths: [ '../../../node_modules', '../node_modules'] }
 						}
 					],
 					include: [helpers.root('src', 'styles')]

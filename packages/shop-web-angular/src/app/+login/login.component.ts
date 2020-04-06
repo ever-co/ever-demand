@@ -11,7 +11,8 @@ import {
 	NgForm,
 	FormBuilder
 } from '@angular/forms';
-import { ErrorStateMatcher, MatDialog } from '@angular/material';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ToolbarController } from '../app.component';
 import { styleVariables } from '../../styles/variables';
 import { Router } from '@angular/router';
@@ -75,7 +76,7 @@ export class LoginComponent implements ToolbarController, OnInit, OnDestroy {
 	private code = this.formControl.get('code');
 	private _ngDestroy$ = new Subject<void>();
 
-	@ViewChild('codeRef', { static: false, read: ElementRef })
+	@ViewChild('codeRef', { read: ElementRef })
 	private codeRef: ElementRef;
 
 	constructor(

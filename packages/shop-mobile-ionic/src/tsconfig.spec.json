@@ -2,8 +2,9 @@
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
 		"outDir": "../out-tsc/spec",
-		"baseUrl": "./"
-},
+		"baseUrl": "./",
+		"module": "esnext"
+	},
 	"files": ["test.ts"],
 	"include": ["polyfills.ts", "**/*.spec.ts", "**/*.d.ts"]
 }

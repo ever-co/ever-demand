@@ -11,7 +11,7 @@ import { UserRouter } from '@modules/client.common.angular2/routers/user-router.
 import { first } from 'rxjs/operators';
 import { GeoLocationService } from 'app/services/geo-location';
 import { MatSearchComponent } from '@modules/material-extensions/search/mat-search.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { LocationPopupComponent } from 'app/shared/location-popup/location-popup.component';
 import { environment } from 'environments/environment';
 
@@ -24,7 +24,7 @@ export class ToolbarComponent implements AfterViewInit {
 	styleVariables: typeof styleVariables = styleVariables;
 	isDeliveryRequired: boolean;
 
-	@ViewChild('matSearch', { static: false })
+	@ViewChild('matSearch')
 	matSearch: MatSearchComponent;
 
 	private initializedAddress: string;

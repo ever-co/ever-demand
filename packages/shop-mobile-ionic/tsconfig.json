@@ -14,7 +14,6 @@
 		"target": "es5",
 		"baseUrl": "./src",
 		"paths": {
-			"@ionic-native/*": ["../../../node_modules/@ionic-native/*"],
 			"@angular/*": ["../node_modules/@angular/*"],
 			"@modules/server.common/*": ["../../common/src/*"],
 			"@modules/client.common.angular2/*": ["../../common-angular/src/*"],

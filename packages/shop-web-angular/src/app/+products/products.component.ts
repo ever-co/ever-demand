@@ -11,7 +11,7 @@ import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/w
 import { IOrderCreateInput } from '@modules/server.common/routers/IWarehouseOrdersRouter';
 import { Router } from '@angular/router';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
-import { first, takeUntil } from 'rxjs/operators';
+import { first, takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { GeoLocationService } from 'app/services/geo-location';
 import RegistrationSystem from '@modules/server.common/enums/RegistrationSystem';
@@ -34,7 +34,7 @@ const initializeProductsNumber: number = 10;
 	templateUrl: './products.component.html'
 })
 export class ProductsComponent implements OnInit, OnDestroy {
-	@ViewChild('carouselView', { static: false })
+	@ViewChild('carouselView')
 	carouselView: CarouselViewComponent;
 
 	products: ProductInfo[] = [];
@@ -68,9 +68,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
 	productsFilter() {
 		this.modelChanged
-			.debounceTime(1000) // wait 500ms after the last event before emitting last event
-			.distinctUntilChanged() // only emit if value is different from previous value
-			.pipe(takeUntil(this._ngDestroy$))
+			.pipe(
+				debounceTime(1000), // wait 500ms after the last event before emitting last event
+				distinctUntilChanged() // only emit if value is different from previous valuetakeUntil(this._ngDestroy$))
+			)
 			.subscribe(async (text) => {
 				this.searchText = text;
 				this.products = [];

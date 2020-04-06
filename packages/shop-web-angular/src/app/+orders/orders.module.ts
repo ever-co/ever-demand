@@ -5,12 +5,9 @@ import { routes } from './orders.routes';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {
-	MatButtonModule,
-	MatCardModule,
-	MatDialog,
-	MatDialogModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { OrderComponent } from './order';
 import { WarehouseLogoModule } from '../warehouse-logo';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';

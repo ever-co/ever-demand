@@ -67,7 +67,8 @@ module.exports = function(options) {
 			extensions: ['.ts', '.js', '.json'],
 			modules: [
 				helpers.root('src'),
-				path.resolve(__dirname, nodeModulesPath)
+				path.resolve(__dirname, "../../../node_modules"),
+				path.resolve(__dirname, "../node_modules"),
 			],
 			alias: buildUtils.rxjsAlias(supportES2015),
 			symlinks: false
