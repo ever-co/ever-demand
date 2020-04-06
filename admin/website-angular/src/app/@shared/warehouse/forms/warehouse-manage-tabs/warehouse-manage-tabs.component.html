@@ -55,7 +55,11 @@
 		</google-map>
 	</nb-tab>
 
-	<nb-tab tabTitle="Payment" class="pt-5">
+	<nb-tab
+		tabTitle="{{ 'WAREHOUSE_MANAGE.WIZARD_TITLES.PAYMENT' | translate }}
+	"
+		class="pt-5"
+	>
 		<ea-warehouse-payments-settings-form
 			#paymentsSettingsForm
 			[isEdit]="true"

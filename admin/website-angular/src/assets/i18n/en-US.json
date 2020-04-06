@@ -370,6 +370,7 @@
 			"ACCOUNT": "Account",
 			"CONTACT_INFO": "Contact Info",
 			"LOCATION": "Location",
+			"PAYMENT": "Payment",
 			"DELIVERY_ZONES": "Delivery zones"
 		}
 	},
