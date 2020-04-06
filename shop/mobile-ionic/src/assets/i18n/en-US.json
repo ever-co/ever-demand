@@ -206,7 +206,7 @@
 		]
 	},
 	"MERCHANTS_VIEW": {
-		"CLOSE_TO_YOU": "MERCHANTS CLOSE TO YOU",
+		"CLOSE_TO_YOU": "Merchants close to you",
 		"NAME": "Merchant name",
 		"WITH_NAME": "Merchants with name"
 	},
