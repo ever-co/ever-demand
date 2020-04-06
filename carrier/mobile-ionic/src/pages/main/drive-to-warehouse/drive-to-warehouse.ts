@@ -124,10 +124,6 @@ export class DriveToWarehousePage {
 			]);
 
 			this.unselectOrder();
-
-			this.router.navigateByUrl('/main/home', {
-				skipLocationChange: false
-			});
 		}
 	}
 
@@ -161,10 +157,6 @@ export class DriveToWarehousePage {
 					[this.selectedOrder['id']]
 				);
 				this.unselectOrder();
-
-				this.router.navigateByUrl('/main/home', {
-					skipLocationChange: false
-				});
 			}
 		}
 	}
@@ -174,6 +166,15 @@ export class DriveToWarehousePage {
 		this.unsubscribeAll();
 	}
 
+	unselectOrder() {
+		this.store.selectedOrder = null;
+		localStorage.removeItem('orderId');
+
+		this.router.navigateByUrl('/main/home', {
+			skipLocationChange: false
+		});
+	}
+
 	private unsubscribeAll() {
 		if (this.carrier$) {
 			this.carrier$.unsubscribe();
@@ -181,11 +182,6 @@ export class DriveToWarehousePage {
 		if (this.order$) {
 			this.order$.unsubscribe();
 		}
-	}
-
-	private unselectOrder() {
-		this.store.selectedOrder = null;
-		localStorage.removeItem('orderId');
 	}
 
 	private unselectDriveToWarehouseFrom() {
