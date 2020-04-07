@@ -30,6 +30,14 @@
 			"STREET": "La rue est requise",
 			"HOUSE": "Le numéro de maison est requis",
 			"POSTCODE": "Code postal requis"
+		},
+		"WIZARD_TITLES": {
+			"DETAILS": "Détails",
+			"ACCOUNT": "Compte",
+			"CONTACT_INFO": "Informations de contact",
+			"LOCATION": "Emplacement",
+			"PAYMENT": "Paiement",
+			"DELIVERY_ZONES": "Zones de livraison"
 		}
 	},
 	"WAREHOUSES_VIEW": {
