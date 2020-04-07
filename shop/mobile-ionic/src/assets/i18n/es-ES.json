@@ -213,7 +213,7 @@
 		]
 	},
 	"MERCHANTS_VIEW": {
-		"CLOSE_TO_YOU": "MERCHANTS CLOSE TO YOU",
+		"CLOSE_TO_YOU": "Comerciantes cerca de ti",
 		"NAME": "Nombre del Comercio",
 		"WITH_NAME": "Comercios"
 	},
