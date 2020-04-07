@@ -151,7 +151,10 @@ export class GeoLocationsOrdersService
 		geoLocation: IGeoLocation,
 		skippedOrderIds: string[] = [],
 		options: GeoLocationOrdersOptions,
-		searchObj?: { byRegex: Array<{ key: string; value: string }> }
+		searchObj?: {
+			isCancelled?: boolean;
+			byRegex?: Array<{ key: string; value: string }>;
+		}
 	): Promise<Order[]> {
 		const merchants = await this.geoLocationsWarehousesService.getMerchants(
 			geoLocation,
@@ -163,10 +166,20 @@ export class GeoLocationsOrdersService
 
 		let searchByRegex = [];
 
-		if (searchObj && searchObj.byRegex.length > 0) {
-			searchByRegex = searchObj.byRegex.map((s) => {
-				return { [s.key]: { $regex: s.value, $options: 'i' } };
-			});
+		if (searchObj) {
+			const byRegex = searchObj.byRegex;
+
+			if (byRegex && byRegex.length > 0) {
+				searchByRegex = byRegex.map((s) => {
+					return { [s.key]: { $regex: s.value, $options: 'i' } };
+				});
+			}
+
+			const isCancelled = searchObj.isCancelled;
+
+			if (isCancelled != null) {
+				searchByRegex.push({ isCancelled });
+			}
 		}
 
 		const orders = await this.ordersService.Model.aggregate([

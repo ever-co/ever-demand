@@ -11,6 +11,7 @@
 	<div class="buttons">
 		<div class="button-bar">
 			<button
+				*ngIf="!selectedOrder?.isCancelled"
 				[disabled]="disabledButtons"
 				class="button button-brand"
 				(click)="startDelivery()"
@@ -19,11 +20,15 @@
 			</button>
 
 			<button
+				[ngSwitch]="selectedOrder?.isCancelled"
 				[disabled]="disabledButtons"
 				class="button button-assertive"
 				(click)="returnProduct()"
 			>
-				{{ 'STARTING_DELIVERY_VIEW.CANCEL' | translate }}
+				<span *ngSwitchCase="false"
+					>{{ 'STARTING_DELIVERY_VIEW.CANCEL' | translate }}</span
+				>
+				<span *ngSwitchCase="true">{{ 'OK' | translate }}</span>
 			</button>
 		</div>
 	</div>

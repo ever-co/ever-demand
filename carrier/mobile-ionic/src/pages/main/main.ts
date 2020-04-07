@@ -1,4 +1,10 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	ElementRef,
+	OnInit,
+	OnDestroy
+} from '@angular/core';
 
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -9,16 +15,22 @@ import { Store } from '../../services/store.service';
 import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 import { GeoLocationService } from '../../services/geo-location.service';
 import { Platform } from '@ionic/angular';
+import IOrder from '@modules/server.common/interfaces/IOrder';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
 	selector: 'page-main',
 	templateUrl: 'main.html',
 	styleUrls: ['main.scss']
 })
-export class MainPage implements OnInit {
+export class MainPage implements OnInit, OnDestroy {
+	selectedOrder: IOrder;
+
 	private watch: any;
 	private isOnline: boolean;
 	private isMapRendered: boolean;
+	private destroy$ = new Subject<void>();
 
 	constructor(
 		private platform: Platform,
@@ -32,6 +44,7 @@ export class MainPage implements OnInit {
 		this.platform.ready().then(() => {
 			console.warn('MainPage Loaded');
 			this.watchLocation();
+			this.watchOrderStatus();
 		});
 	}
 
@@ -40,6 +53,7 @@ export class MainPage implements OnInit {
 			if (this.isOnline) {
 				const carrier$ = this.carrierRouter
 					.get(this.store.carrierId)
+					.pipe(takeUntil(this.destroy$))
 					.subscribe(async (carrier) => {
 						if (carrier.status === CarrierStatus.Online) {
 							this.geolocation
@@ -112,5 +126,16 @@ export class MainPage implements OnInit {
 					});
 			}
 		}, 3000);
+	}
+
+	watchOrderStatus() {
+		this.store.selectedOrder$
+			.pipe(takeUntil(this.destroy$))
+			.subscribe((o) => (this.selectedOrder = o));
+	}
+
+	ngOnDestroy(): void {
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
 }

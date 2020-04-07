@@ -11,6 +11,7 @@ import { HomeModuleGuard } from './home/home.module.guard';
 import { DeliveryModuleGuard } from './delivery/delivery.module.guard';
 import { StartingDeliveryModuleGuard } from './starting-delivery/starting-delivery.module.guard';
 import { DriveToWarehouseModuleGuard } from './drive-to-warehouse/drive-to-warehouse.module.guard';
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
 	{
@@ -53,7 +54,8 @@ const routes: Routes = [
 	imports: [
 		IonicModule,
 		RouterModule.forChild(routes),
-		TranslateModule.forChild()
+		TranslateModule.forChild(),
+		CommonModule
 	],
 	entryComponents: [MainPage],
 	providers: [

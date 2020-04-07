@@ -1,3 +1,10 @@
+<div *ngIf="selectedOrder?.isCancelled" class="money-amount-container">
+	<div class="money-amount">
+		<!-- TODO add translate -->
+		The customer cancel order
+	</div>
+</div>
+
 <div class="carrier-view">
 	<img
 		class="product-image"
@@ -13,8 +20,9 @@
 			<span class="right-text">#{{ selectedOrder?.orderNumber }}</span>
 		</div>
 		<div class="buttons">
-			<div class="button-bar">
+			<div *ngIf="!selectedOrder?.isCancelled" class="button-bar">
 				<button
+					*ngIf="!selectedOrder?.isCancelled"
 					[disabled]="disabledButtons"
 					class="button button-brand"
 					(click)="gotProduct()"
@@ -28,6 +36,15 @@
 					(click)="cancelWork()"
 				>
 					{{ 'GET_PRODUCT_VIEW.CANCEL' | translate }}
+				</button>
+			</div>
+
+			<div class="button-bar" *ngIf="selectedOrder?.isCancelled">
+				<button
+					class="button button-assertive"
+					(click)="unselectOrder()"
+				>
+					{{ 'OK' | translate }}
 				</button>
 			</div>
 		</div>

@@ -21,6 +21,7 @@ type Query {
 }
 
 input SearchOrdersForWork {
+	isCancelled: Boolean
 	byRegex: [SearchByRegex]
 }
 

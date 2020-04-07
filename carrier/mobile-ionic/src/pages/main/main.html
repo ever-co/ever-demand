@@ -17,5 +17,11 @@
 </ion-header>
 
 <ion-content class="carrier-view" scroll="false">
+	<div *ngIf="selectedOrder?.isCancelled" class="money-amount-container">
+		<div class="money-amount">
+			<!-- TODO add translate -->
+			The customer cancel order
+		</div>
+	</div>
 	<ion-router-outlet></ion-router-outlet>
 </ion-content>

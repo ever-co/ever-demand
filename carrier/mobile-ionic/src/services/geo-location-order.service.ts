@@ -12,7 +12,11 @@ export class GeoLocationOrdersService {
 	getOrderForWork(
 		geoLocation: IGeoLocation,
 		skippedOrderIds: string[] = [],
-		options: { sort: string } = { sort: 'asc' }
+		options: { sort: string } = { sort: 'asc' },
+		searchObj?: {
+			isCancelled?: boolean;
+			byRegex?: Array<{ key: string; value: string }>;
+		}
 	) {
 		return this.apollo
 			.watchQuery<{ getOrderForWork: Order }>({
@@ -21,17 +25,19 @@ export class GeoLocationOrdersService {
 						$geoLocation: GeoLocationFindInput!
 						$skippedOrderIds: [String!]!
 						$options: GeoLocationOrdersOptions
+						$searchObj: SearchOrdersForWork
 					) {
 						getOrderForWork(
 							geoLocation: $geoLocation
 							skippedOrderIds: $skippedOrderIds
 							options: $options
+							searchObj: $searchObj
 						) {
 							id
 						}
 					}
 				`,
-				variables: { geoLocation, skippedOrderIds, options },
+				variables: { geoLocation, skippedOrderIds, options, searchObj },
 				pollInterval: 2000
 			})
 			.valueChanges.pipe(
