@@ -121,11 +121,9 @@ export class HomePage {
 						.getOrderForWork(
 							dbGeoInput,
 							carrier.skippedOrderIds,
-							null,
+							{ sort: 'asc' },
 							{
-								byRegex: [
-									{ key: 'isCancelled', value: 'false' }
-								]
+								isCancelled: false
 							}
 						)
 

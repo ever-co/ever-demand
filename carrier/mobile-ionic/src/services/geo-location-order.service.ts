@@ -13,7 +13,10 @@ export class GeoLocationOrdersService {
 		geoLocation: IGeoLocation,
 		skippedOrderIds: string[] = [],
 		options: { sort: string } = { sort: 'asc' },
-		searchObj?: { byRegex: Array<{ key: string; value: string }> }
+		searchObj?: {
+			isCancelled?: boolean;
+			byRegex?: Array<{ key: string; value: string }>;
+		}
 	) {
 		return this.apollo
 			.watchQuery<{ getOrderForWork: Order }>({
