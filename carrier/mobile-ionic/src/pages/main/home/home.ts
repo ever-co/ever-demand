@@ -13,7 +13,7 @@ import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { GeoLocationService } from '../../../services/geo-location.service';
 import { MapComponent } from '../common/map/map.component';
-import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 declare var google: any;
 
@@ -39,7 +39,7 @@ export class HomePage {
 		private geoLocationOrdersService: GeoLocationOrdersService,
 		private geolocation: Geolocation,
 		private geoLocationService: GeoLocationService,
-		private router: Router
+		private navCtrl: NavController
 	) {}
 
 	ionViewWillEnter() {
@@ -70,6 +70,7 @@ export class HomePage {
 
 		this.isWorking = res.status === CarrierStatus.Online;
 		localStorage.removeItem('orderId');
+		this.store.selectedOrder = null;
 	}
 
 	notification() {
@@ -139,9 +140,8 @@ export class HomePage {
 
 								this.unsubscribeAll();
 
-								this.router.navigateByUrl(
-									'/main/drive-to-warehouse',
-									{ skipLocationChange: false }
+								this.navCtrl.navigateRoot(
+									'/main/drive-to-warehouse'
 								);
 							}
 						});

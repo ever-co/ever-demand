@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
@@ -13,7 +13,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 import { GeoLocationService } from '../../../services/geo-location.service';
 import { MapComponent } from '../common/map/map.component';
-import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 declare var google: any;
 
@@ -21,7 +21,7 @@ declare var google: any;
 	selector: 'page-drive-to-warehouse',
 	templateUrl: 'drive-to-warehouse.html'
 })
-export class DriveToWarehousePage {
+export class DriveToWarehousePage implements OnInit {
 	@ViewChild('map', { static: false })
 	carrierMap: MapComponent;
 
@@ -29,6 +29,7 @@ export class DriveToWarehousePage {
 	carrier: ICarrier;
 	carrierUserDistance: string;
 	workTaken: boolean;
+	fromDelivery: boolean;
 
 	carrier$;
 	order$;
@@ -40,8 +41,12 @@ export class DriveToWarehousePage {
 		public store: Store,
 		private geoLocationService: GeoLocationService,
 		private geolocation: Geolocation,
-		private router: Router
+		private navCtrl: NavController
 	) {}
+
+	ngOnInit(): void {
+		this.fromDelivery = this.store.driveToWarehouseFrom === 'delivery';
+	}
 
 	ionViewWillEnter() {
 		this.carrier$ = this.carrierRouter
@@ -128,16 +133,11 @@ export class DriveToWarehousePage {
 	}
 
 	async carrierInWarehouse() {
-		if (this.store.driveToWarehouseFrom === 'delivery') {
+		if (this.fromDelivery) {
 			this.store.returnProductFrom = 'driveToWarehouse';
-
-			this.router.navigate(['/product/return'], {
-				skipLocationChange: false
-			});
+			this.navCtrl.navigateRoot('/product/return');
 		} else {
-			this.router.navigateByUrl('/product/get', {
-				skipLocationChange: false
-			});
+			this.navCtrl.navigateRoot('/product/get');
 		}
 
 		this.unselectDriveToWarehouseFrom();
@@ -145,11 +145,9 @@ export class DriveToWarehousePage {
 	}
 
 	async cancelWork() {
-		if (this.store.driveToWarehouseFrom === 'delivery') {
+		if (this.fromDelivery) {
 			this.unselectDriveToWarehouseFrom();
-			this.router.navigateByUrl('/main/delivery', {
-				skipLocationChange: true
-			});
+			this.navCtrl.navigateRoot('/main/delivery');
 		} else {
 			if (this.carrier && this.selectedOrder) {
 				await this.carrierOrdersRouter.cancelDelivery(
@@ -169,10 +167,7 @@ export class DriveToWarehousePage {
 	unselectOrder() {
 		this.store.selectedOrder = null;
 		localStorage.removeItem('orderId');
-
-		this.router.navigateByUrl('/main/home', {
-			skipLocationChange: false
-		});
+		this.navCtrl.navigateRoot('/main/home');
 	}
 
 	private unsubscribeAll() {

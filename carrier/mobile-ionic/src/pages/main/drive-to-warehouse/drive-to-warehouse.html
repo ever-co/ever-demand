@@ -18,24 +18,26 @@
 				{{ 'DRIVE_TO_WAREHOUSE_VIEW.SKIP_WORK' | translate }}
 			</button>
 		</div>
-		<div class="button-bar" *ngIf="workTaken">
-			<button
-				*ngIf="!selectedOrder?.isCancelled || store.driveToWarehouseFrom === 'delivery'"
-				class="button button-brand"
-				(click)="carrierInWarehouse()"
-			>
+		<div
+			class="button-bar"
+			*ngIf="workTaken && (!selectedOrder?.isCancelled || fromDelivery)"
+		>
+			<button class="button button-brand" (click)="carrierInWarehouse()">
 				{{ "DRIVE_TO_WAREHOUSE_VIEW.I'M_THERE" | translate }}
 			</button>
 
 			<button
 				class="button button-assertive"
-				*ngIf="store.driveToWarehouseFrom !== 'delivery'"
+				*ngIf="!selectedOrder.isCancelled"
 				(click)="cancelWork()"
 			>
 				{{ 'DRIVE_TO_WAREHOUSE_VIEW.CANCEL' | translate }}
 			</button>
 		</div>
-		<div class="button-bar" *ngIf="selectedOrder?.isCancelled">
+		<div
+			class="button-bar"
+			*ngIf="selectedOrder?.isCancelled && !fromDelivery"
+		>
 			<button class="button button-assertive" (click)="unselectOrder()">
 				{{ 'OK' | translate }}
 			</button>

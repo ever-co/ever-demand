@@ -9,8 +9,8 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { Store } from '../../../services/store.service';
 import { first, takeUntil } from 'rxjs/operators';
-import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { NavController } from '@ionic/angular';
 
 @Component({
 	selector: 'page-get-product',
@@ -29,7 +29,7 @@ export class GetProductPage implements OnDestroy {
 		private carrierOrdersRouter: CarrierOrdersRouter,
 		private _translateProductLocales: ProductLocalesService,
 		private store: Store,
-		private router: Router
+		private navCtrl: NavController
 	) {}
 
 	ionViewWillEnter() {
@@ -44,9 +44,7 @@ export class GetProductPage implements OnDestroy {
 				OrderCarrierStatus.CarrierPickedUpOrder
 			);
 
-			this.router.navigateByUrl('/main/starting-delivery', {
-				skipLocationChange: false
-			});
+			this.navCtrl.navigateRoot('/main/starting-delivery');
 		} else {
 			// TODO: replace with popup
 			alert('Try again!');
@@ -60,11 +58,8 @@ export class GetProductPage implements OnDestroy {
 			await this.carrierOrdersRouter.cancelDelivery(this.carrier['id'], [
 				this.selectedOrder['id']
 			]);
-			localStorage.removeItem('orderId');
-			this.store.selectedOrder = null;
-			this.router.navigateByUrl('/main/home', {
-				skipLocationChange: false
-			});
+
+			this.unselectOrder();
 		} else {
 			// 	// TODO: replace with popup
 			alert('Try again!');
@@ -92,6 +87,13 @@ export class GetProductPage implements OnDestroy {
 				this.store.selectedOrder = o;
 				this.disabledButtons = false;
 			});
+	}
+
+	unselectOrder() {
+		this.store.selectedOrder = null;
+		localStorage.removeItem('orderId');
+
+		this.navCtrl.navigateRoot('/main/home');
 	}
 
 	ngOnDestroy(): void {
