@@ -24,6 +24,8 @@ export type WarehouseBasicInfo = Pick<
 	| 'username'
 	| 'hasRestrictedCarriers'
 	| 'carriersIds'
+	| 'useOnlyRestrictedCarriersForDelivery'
+	| 'preferRestrictedCarriersForDelivery'
 >;
 
 @Component({
@@ -43,6 +45,7 @@ export class BasicInfoFormComponent implements OnInit {
 	uploaderPlaceholder: string;
 
 	carriersOptions: IMultiSelectOption[];
+	delivery = 'all';
 
 	static buildForm(formBuilder: FormBuilder): FormGroup {
 		// would be used in the parent component and injected into this.form
@@ -78,6 +81,8 @@ export class BasicInfoFormComponent implements OnInit {
 			username: ['', [Validators.required]],
 
 			hasRestrictedCarriers: [false, [Validators.required]],
+			useOnlyRestrictedCarriersForDelivery: [false],
+			preferRestrictedCarriersForDelivery: [false],
 			carriersIds: [[]]
 		});
 	}
@@ -95,6 +100,8 @@ export class BasicInfoFormComponent implements OnInit {
 
 			hasRestrictedCarriers: boolean;
 			carriersIds: string[];
+			useOnlyRestrictedCarriersForDelivery: boolean;
+			preferRestrictedCarriersForDelivery: boolean;
 		};
 
 		if (!basicInfo.logo) {
@@ -112,6 +119,16 @@ export class BasicInfoFormComponent implements OnInit {
 						hasRestrictedCarriers: basicInfo.hasRestrictedCarriers,
 						carriersIds: basicInfo.carriersIds
 				  }
+				: {}),
+			...(basicInfo.hasRestrictedCarriers &&
+			basicInfo.carriersIds &&
+			basicInfo.carriersIds.length
+				? {
+						useOnlyRestrictedCarriersForDelivery:
+							basicInfo.useOnlyRestrictedCarriersForDelivery,
+						preferRestrictedCarriersForDelivery:
+							basicInfo.preferRestrictedCarriersForDelivery
+				  }
 				: {})
 		};
 	}
@@ -123,7 +140,9 @@ export class BasicInfoFormComponent implements OnInit {
 			pick(basicInfo, [
 				...Object.keys(this.getValue()),
 				'hasRestrictedCarriers',
-				'carriersIds'
+				'carriersIds',
+				'useOnlyRestrictedCarriersForDelivery',
+				'preferRestrictedCarriersForDelivery'
 			])
 		);
 	}
@@ -169,6 +188,14 @@ export class BasicInfoFormComponent implements OnInit {
 		return this.form.get('carriersIds');
 	}
 
+	get useOnlyRestrictedCarriersForDelivery() {
+		return this.form.get('useOnlyRestrictedCarriersForDelivery');
+	}
+
+	get preferRestrictedCarriersForDelivery() {
+		return this.form.get('preferRestrictedCarriersForDelivery');
+	}
+
 	get showLogoMeta() {
 		return this.logo && this.logo.value !== '';
 	}
@@ -180,6 +207,20 @@ export class BasicInfoFormComponent implements OnInit {
 
 	deleteImg() {
 		this.logo.setValue('');
+	}
+
+	changeDelivery(type: 'all' | 'onlyStore' | 'preferStore') {
+		this.useOnlyRestrictedCarriersForDelivery.setValue(false);
+		this.preferRestrictedCarriersForDelivery.setValue(false);
+
+		switch (type) {
+			case 'onlyStore':
+				this.useOnlyRestrictedCarriersForDelivery.setValue(true);
+				break;
+			case 'preferStore':
+				this.preferRestrictedCarriersForDelivery.setValue(true);
+				break;
+		}
 	}
 
 	private async getUploaderPlaceholderText() {

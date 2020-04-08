@@ -44,6 +44,8 @@ type Warehouse {
 	usedCarriersIds: [String!]
 	carriers: [Carrier!] # Resolved, if hasRestrictedCarriers is false -> returns null
 	orderBarcodeType: Int
+	useOnlyRestrictedCarriersForDelivery: Boolean
+	preferRestrictedCarriersForDelivery: Boolean
 }
 
 input WarehouseCreateInput {
@@ -76,6 +78,8 @@ input WarehouseCreateInput {
 	hasRestrictedCarriers: Boolean
 	carriersIds: [String!]
 	usedCarriersIds: [String!]
+	useOnlyRestrictedCarriersForDelivery: Boolean
+	preferRestrictedCarriersForDelivery: Boolean
 }
 
 input WarehousesFindInput {
@@ -109,6 +113,8 @@ input WarehousesFindInput {
 	hasRestrictedCarriers: Boolean
 	carriersIds: [String!]
 	usedCarriersIds: [String!]
+	useOnlyRestrictedCarriersForDelivery: Boolean
+	preferRestrictedCarriersForDelivery: Boolean
 }
 
 type Query {
