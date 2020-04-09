@@ -45,7 +45,8 @@ export class BasicInfoFormComponent implements OnInit {
 	uploaderPlaceholder: string;
 
 	carriersOptions: IMultiSelectOption[];
-	delivery = 'all';
+
+	private _delivery: 'all' | 'onlyStore' | 'preferStore' = 'all';
 
 	static buildForm(formBuilder: FormBuilder): FormGroup {
 		// would be used in the parent component and injected into this.form
@@ -129,12 +130,23 @@ export class BasicInfoFormComponent implements OnInit {
 						preferRestrictedCarriersForDelivery:
 							basicInfo.preferRestrictedCarriersForDelivery
 				  }
-				: {})
+				: {
+						useOnlyRestrictedCarriersForDelivery: false,
+						preferRestrictedCarriersForDelivery: false
+				  })
 		};
 	}
 
 	setValue<T extends WarehouseBasicInfo>(basicInfo: T) {
 		FormHelpers.deepMark(this.form, 'dirty');
+
+		basicInfo = Object.assign(
+			{
+				useOnlyRestrictedCarriersForDelivery: false,
+				preferRestrictedCarriersForDelivery: false
+			},
+			basicInfo
+		);
 
 		this.form.setValue(
 			pick(basicInfo, [
@@ -145,6 +157,17 @@ export class BasicInfoFormComponent implements OnInit {
 				'preferRestrictedCarriersForDelivery'
 			])
 		);
+
+		const onlyStore = basicInfo.useOnlyRestrictedCarriersForDelivery;
+		const preferStore = basicInfo.preferRestrictedCarriersForDelivery;
+
+		if (onlyStore) {
+			this.delivery = 'onlyStore';
+		} else if (preferStore) {
+			this.delivery = 'preferStore';
+		} else {
+			this.delivery = 'all';
+		}
 	}
 
 	getPassword(): string {
@@ -196,6 +219,25 @@ export class BasicInfoFormComponent implements OnInit {
 		return this.form.get('preferRestrictedCarriersForDelivery');
 	}
 
+	get delivery() {
+		return this._delivery;
+	}
+
+	set delivery(value) {
+		this._delivery = value;
+		this.useOnlyRestrictedCarriersForDelivery.setValue(false);
+		this.preferRestrictedCarriersForDelivery.setValue(false);
+
+		switch (value) {
+			case 'onlyStore':
+				this.useOnlyRestrictedCarriersForDelivery.setValue(true);
+				break;
+			case 'preferStore':
+				this.preferRestrictedCarriersForDelivery.setValue(true);
+				break;
+		}
+	}
+
 	get showLogoMeta() {
 		return this.logo && this.logo.value !== '';
 	}
@@ -207,20 +249,6 @@ export class BasicInfoFormComponent implements OnInit {
 
 	deleteImg() {
 		this.logo.setValue('');
-	}
-
-	changeDelivery(type: 'all' | 'onlyStore' | 'preferStore') {
-		this.useOnlyRestrictedCarriersForDelivery.setValue(false);
-		this.preferRestrictedCarriersForDelivery.setValue(false);
-
-		switch (type) {
-			case 'onlyStore':
-				this.useOnlyRestrictedCarriersForDelivery.setValue(true);
-				break;
-			case 'preferStore':
-				this.preferRestrictedCarriersForDelivery.setValue(true);
-				break;
-		}
 	}
 
 	private async getUploaderPlaceholderText() {

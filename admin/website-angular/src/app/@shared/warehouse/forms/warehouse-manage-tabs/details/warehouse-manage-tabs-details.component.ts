@@ -69,7 +69,7 @@ export class WarehouseManageTabsDetailsComponent
 		)
 	);
 
-	private _delivery: 'all' | 'onlyStore' | 'preferStore';
+	private _delivery: 'all' | 'onlyStore' | 'preferStore' = 'all';
 
 	constructor(
 		private readonly _carrierRouter: CarrierRouter,
@@ -159,9 +159,9 @@ export class WarehouseManageTabsDetailsComponent
 			isManufacturing: [true, [Validators.required]],
 			isCarrierRequired: [true, [Validators.required]],
 			hasRestrictedCarriers: [false, [Validators.required]],
-			carriersIds: [[]],
 			useOnlyRestrictedCarriersForDelivery: [false],
-			preferRestrictedCarriersForDelivery: [false]
+			preferRestrictedCarriersForDelivery: [false],
+			carriersIds: [[]]
 		});
 	}
 
@@ -207,12 +207,24 @@ export class WarehouseManageTabsDetailsComponent
 						preferRestrictedCarriersForDelivery:
 							basicInfo.preferRestrictedCarriersForDelivery
 				  }
-				: {})
+				: {
+						useOnlyRestrictedCarriersForDelivery: false,
+						preferRestrictedCarriersForDelivery: false
+				  })
 		};
 	}
 
 	setValue<T extends WarehouseManageTabsDetails>(basicInfo: T) {
 		FormHelpers.deepMark(this.form, 'dirty');
+
+		basicInfo = Object.assign(
+			{
+				useOnlyRestrictedCarriersForDelivery: false,
+				preferRestrictedCarriersForDelivery: false
+			},
+			basicInfo
+		);
+
 		this.form.setValue(
 			_.pick(basicInfo, [
 				...Object.keys(this.getValue()),
