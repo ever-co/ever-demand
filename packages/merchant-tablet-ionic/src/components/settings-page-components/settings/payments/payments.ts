@@ -34,12 +34,12 @@ export class SettingsPaymentsComponent implements OnInit {
 			(mpg) => mpg.paymentGateway
 		);
 		const allPaymentGateways = Object.values(PaymentGateways).filter(
-			(r) => !isNaN(r)
+			(r) => !isNaN(<number>r)
 		);
 
 		if (merchantPaymentsGateways) {
 			this.myPaymentsGateways = allPaymentGateways.filter((pg) =>
-				merchantPaymentsGateways.includes(pg)
+				merchantPaymentsGateways.includes(<PaymentGateways>pg)
 			);
 		}
 

@@ -14,9 +14,7 @@
 		"target": "es5",
 		"baseUrl": "./src",
 		"paths": {
-			"@ionic-native/*": ["../../../node_modules/@ionic-native/*"],
-			"@angular/*": ["../../../node_modules/@angular/*"],
-			"@nebular/*": ["../../../node_modules/@nebular/*"],
+			"@angular/*": ["../node_modules/@angular/*"],
 			"@modules/server.common/*": ["../../common/src/*"],
 			"@modules/client.common.angular2/*": ["../../common-angular/src/*"],
 			"@modules/*": ["./modules/*"],
@@ -41,5 +39,13 @@
 	"exclude": ["node_modules", "src/**/*.spec.ts", "src/**/__tests__/*.ts"],
 	"atom": {
 		"rewriteTsconfig": false
+	},
+	"angularCompilerOptions": {
+		"enableIvy": false,
+		"preserveWhitespaces": false,
+		"strictInjectionParameters": true,
+		"fullTemplateTypeCheck": true,
+		"strictTemplates": true,
+		"strictMetadataEmit": false
 	}
 }

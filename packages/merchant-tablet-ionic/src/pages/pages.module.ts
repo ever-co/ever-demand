@@ -8,46 +8,46 @@ import { InfoModuleGuard } from './+info/info.module.guard';
 const routes: Routes = [
 	{
 		path: 'login',
-		loadChildren: './+login/login.module#LoginPageModule',
+		loadChildren: () => import('./+login/login.module').then(m => m.LoginPageModule),
 		canLoad: [LoginModuleGuard]
 	},
 	{
 		path: 'warehouse',
-		loadChildren: './+warehouse/warehouse.module#WarehousePageModule',
+		loadChildren: () => import('./+warehouse/warehouse.module').then(m => m.WarehousePageModule),
 		canLoad: [WarehouseModuleGuard]
 	},
 	{
 		path: 'language',
-		loadChildren: './+language/language.module#LanguagePageModule'
+		loadChildren: () => import('./+language/language.module').then(m => m.LanguagePageModule)
 	},
 	{
 		path: 'customers',
-		loadChildren: './+customers/customers.module#CustomersPageModule'
+		loadChildren: () => import('./+customers/customers.module').then(m => m.CustomersPageModule)
 	},
 	{
 		path: 'carriers',
-		loadChildren: './+carriers/carriers.module#CarrierssPageModule'
+		loadChildren: () => import('./+carriers/carriers.module').then(m => m.CarrierssPageModule)
 	},
 	{
 		path: 'track',
-		loadChildren: './+track/track.module#TrackPageModule'
+		loadChildren: () => import('./+track/track.module').then(m => m.TrackPageModule)
 	},
 	{
 		path: 'track/:id',
-		loadChildren: './+track/track.module#TrackPageModule'
+		loadChildren: () => import('./+track/track.module').then(m => m.TrackPageModule)
 	},
 	{
 		path: 'settings',
-		loadChildren: './+settings/settings.module#SettingsPageModule'
+		loadChildren: () => import('./+settings/settings.module').then(m => m.SettingsPageModule)
 	},
 	{
 		path: 'info',
-		loadChildren: './+info/info.module#InfoModule',
+		loadChildren: () => import('./+info/info.module').then(m => m.InfoModule),
 		canLoad: [InfoModuleGuard]
 	},
 	{
 		path: 'errors',
-		loadChildren: './+errors/errors.module#ErrorsModule'
+		loadChildren: () => import('./+errors/errors.module').then(m => m.ErrorsModule)
 	},
 	{
 		path: '',
