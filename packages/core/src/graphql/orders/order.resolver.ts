@@ -34,7 +34,7 @@ export class OrderResolver {
 		products: Product[]
 	): IProduct => {
 		return products[orderCount % products.length];
-	};
+	}
 
 	private _getRandomCustomer = (
 		orderCount: number,
@@ -45,14 +45,14 @@ export class OrderResolver {
 		} else {
 			return customers[orderCount % customers.length];
 		}
-	};
+	}
 
 	private _getRandomCarrierId = (
 		orderCount: number,
 		carriers: Carrier[]
 	): string => {
 		return carriers[orderCount % carriers.length].id;
-	};
+	}
 
 	private _prepareOrderFieldsValues = (orderCount: number) => {
 		const hasCarrier = Math.random() > 0.07; // 7% chance, order have not carrier.
@@ -60,7 +60,7 @@ export class OrderResolver {
 		const numberOfProductsToOrder = orderCount % 4 || 1;
 
 		return { numberOfProductsToOrder, hasCarrier, orderIsPaid };
-	};
+	}
 
 	private _getRandomOrderDate = (orderCount: number): Date => {
 		const orderDate = new Date();
@@ -94,7 +94,7 @@ export class OrderResolver {
 		orderDate.setHours(orderCount % hours);
 
 		return orderDate;
-	};
+	}
 
 	private _setupOrderProducts = (products: Product[]) => {
 		let productCount = 1;
@@ -120,7 +120,7 @@ export class OrderResolver {
 		}
 
 		return orderProducts;
-	};
+	}
 
 	private _setupAvailableOrdersToCreate = (
 		stores: Warehouse[],
@@ -150,7 +150,7 @@ export class OrderResolver {
 			});
 		}
 		return orders;
-	};
+	}
 
 	private _setupHistoryOrdersToCreate = (
 		stores: Warehouse[],
@@ -204,7 +204,7 @@ export class OrderResolver {
 		}
 
 		return orders;
-	};
+	}
 
 	@Query()
 	async generateActiveAndAvailableOrdersPerCarrier() {
@@ -450,7 +450,7 @@ export class OrderResolver {
 
 		try {
 			const currentStoreOrders = [];
-			let storeCreatedDate = new Date(storeCreatedAt);
+			const storeCreatedDate = new Date(storeCreatedAt);
 
 			for (
 				let orderNumber = 1;
@@ -645,7 +645,7 @@ export class OrderResolver {
 											(i) => new ObjectId(i)
 										)
 									}
-							  }
+							}
 							: {}
 					]
 				}

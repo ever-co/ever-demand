@@ -11,7 +11,7 @@ export abstract class EntityService<T extends DBObject<any, any>> {
 		modelName: string;
 	};
 
-	get Model(): mongoose.Model<RawObject<T> & mongoose.Document> {
+	get Model(): any {
 		return getModel<RawObject<T> & mongoose.Document>(this.DBObject);
 	}
 

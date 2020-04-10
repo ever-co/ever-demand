@@ -2069,7 +2069,7 @@
     "@angular/platform-browser-dynamic" "^9.1.0"
     "@angular/router" "^9.1.0"
     "@angular/service-worker" "^9.1.0"
-    "@ever-platform/common" "file:../../../Library/Caches/Yarn/v6/npm-@ever-platform-common-angular-0.3.0-f0361d6f-831c-4bb3-99c0-11af98bc3356-1586521256977/node_modules/@ever-platform/common"
+    "@ever-platform/common" "file:../../../Library/Caches/Yarn/v6/npm-@ever-platform-common-angular-0.3.0-d4d9eece-85e0-44a2-9772-ccf7eb2f5f88-1586527354452/node_modules/@ever-platform/common"
     tslib "^1.10.0"
     zone.js "~0.10.2"
 
@@ -5919,7 +5919,7 @@
   dependencies:
     moment "*"
 
-"@types/mongodb@*", "@types/mongodb@^3.5.4":
+"@types/mongodb@*":
   version "3.5.4"
   resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.5.4.tgz#3c54abf6340fd2fe7c83fb8c3f1848497db8e55d"
   integrity sha512-1Q781+rC+hYB34Ped9dRLOWsw1yTNwqphqkRyJR/yFuoWoZ3664s6RxilVSkqEm3lwFmpTYCXtGudxSpHHGDIQ==
@@ -5927,10 +5927,18 @@
     "@types/bson" "*"
     "@types/node" "*"
 
-"@types/mongoose@^5.7.7":
-  version "5.7.8"
-  resolved "https://registry.yarnpkg.com/@types/mongoose/-/mongoose-5.7.8.tgz#684e168d605d61be28fe1f1932f0b8b0e17115eb"
-  integrity sha512-nLyVONnGou1DfNwyP70FUVG+teusG8Whlwbke5BZrZ03iG6Iyu5gowzfuKpN7pu8BW/SOcF+Gcpny08FJdGuWw==
+"@types/mongodb@^3.3.11":
+  version "3.5.5"
+  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.5.5.tgz#eaf5e521500406bad37c887c4a9ce6c8cbfb498b"
+  integrity sha512-iIWBu740IPolqzpYUBdQs1T4LMiJv1CIIcJb6gX2mGtb/VmnFWONSiyUG+lJF4IUg+QEuIqpalW3eshiTCc8dQ==
+  dependencies:
+    "@types/bson" "*"
+    "@types/node" "*"
+
+"@types/mongoose@^5.5.32":
+  version "5.7.10"
+  resolved "https://registry.yarnpkg.com/@types/mongoose/-/mongoose-5.7.10.tgz#af8a08cab03c64fa7b5568fc4ea66ef5ec6ad0fe"
+  integrity sha512-qXO0fBHczeTouCtOVySknSMeZj0KANQ1jvYj1KDcAx3DR/KwIYpJAKGsTv0Zy5z1+sPqx8DsT9hsqq7twuFzJg==
   dependencies:
     "@types/mongodb" "*"
     "@types/node" "*"

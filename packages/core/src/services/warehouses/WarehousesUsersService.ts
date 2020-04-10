@@ -24,7 +24,7 @@ import { WarehousesService } from './WarehousesService';
 @routerName('warehouse-users')
 export class WarehousesUsersService implements IService, IWarehouseUsersRouter {
 	protected log: Logger = createEverLogger({
-		name: 'warehousesUsersService'
+		name: 'warehousesUsersService',
 	});
 
 	constructor(
@@ -50,12 +50,12 @@ export class WarehousesUsersService implements IService, IWarehouseUsersRouter {
 			exhaustMap(() => {
 				return this.ordersService.Model.distinct('user._id', {
 					warehouse: warehouseId,
-					isDeleted: { $eq: false }
+					isDeleted: { $eq: false },
 				})
 					.lean()
 					.exec();
 			}),
-			map((users) => {
+			map((users: User[]) => {
 				return users.map((u) => new User(u));
 			})
 		);
@@ -71,8 +71,6 @@ export class WarehousesUsersService implements IService, IWarehouseUsersRouter {
 	@asyncListener()
 	async getPromise(warehouseId: Warehouse['id']): Promise<User[]> {
 		await this._warehousesService.throwIfNotExists(warehouseId);
-		return this.get(warehouseId)
-			.pipe(first())
-			.toPromise();
+		return this.get(warehouseId).pipe(first()).toPromise();
 	}
 }
