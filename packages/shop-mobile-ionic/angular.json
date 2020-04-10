@@ -12,11 +12,8 @@
 			"schematics": {},
 			"architect": {
 				"build": {
-					"builder": "@angular-builders/custom-webpack:browser",
+					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
-						"customWebpackConfig": {
-							"path": "./extra-webpack.config.js"
-						},
 						"progress": false,
 						"outputPath": "www",
 						"index": "src/index.html",
@@ -49,6 +46,12 @@
 					},
 					"configurations": {
 						"production": {
+							"budgets": [
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "6kb"
+								}
+							],
 							"fileReplacements": [
 								{
 									"replace": "src/environments/environment.ts",

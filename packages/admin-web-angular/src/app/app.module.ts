@@ -27,7 +27,6 @@ import { GoogleMapsLoader } from '@modules/client.common.angular2/services/googl
 import { MaintenanceService } from '@modules/client.common.angular2/services/maintenance.service';
 import { AppModuleGuard } from './app.module.guard';
 import { MaintenanceModuleGuard } from './pages/+maintenance-info/maintenance-info.module.guard';
-import { first } from 'rxjs/operators';
 import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
 
 // It's more 'standard' way to use Font-Awesome module and special package,
@@ -155,23 +154,20 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 export function googleMapsLoaderFactory(provider: GoogleMapsLoader) {
-	const loader = () => provider.load(environment.GOOGLE_MAPS_API_KEY);
-	return loader;
+	return () => provider.load(environment.GOOGLE_MAPS_API_KEY);
 }
 
 export function serverConnectionFactory(
 	provider: ServerConnectionService,
 	store: Store
 ) {
-	const loader = () => provider.load(environment.SERVICES_ENDPOINT, store);
-	return loader;
+	return () => provider.load(environment.SERVICES_ENDPOINT, store);
 }
 
 export function maintenanceFactory(provider: MaintenanceService) {
-	const loader = () =>
+	return () =>
 		provider.load(
 			environment['SETTINGS_APP_TYPE'],
 			environment['SETTINGS_MAINTENANCE_API_URL']
 		);
-	return loader;
 }

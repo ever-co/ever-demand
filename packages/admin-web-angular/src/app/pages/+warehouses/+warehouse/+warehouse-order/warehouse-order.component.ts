@@ -48,13 +48,13 @@ export class WarehouseOrderComponent implements OnInit, OnDestroy {
 	@ViewChild('wizardForm', { static: true })
 	private _wizardForm: WizardComponent;
 
-	@ViewChild('wizardFormStepTwo', { static: false })
+	@ViewChild('wizardFormStepTwo')
 	public wizardFormStepTwo: WizardComponent;
 
-	@ViewChild('warehouseOrderCreateUser', { static: false })
+	@ViewChild('warehouseOrderCreateUser')
 	private _warehouseOrderCreateUser: WarehouseOrderCreateUserComponent;
 
-	@ViewChild('warehouseOrderModal', { static: false })
+	@ViewChild('warehouseOrderModal')
 	private _warehouseOrderModal: WarehouseOrderModalComponent;
 
 	private _userIdToOrder: string;

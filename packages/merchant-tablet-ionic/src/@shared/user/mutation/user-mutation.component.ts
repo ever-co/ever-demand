@@ -31,10 +31,10 @@ export class UserMutationComponent {
 	readonly apartment = this.form.get('apartment') as FormGroup;
 	readonly location = this.form.get('location') as FormGroup;
 
-	@ViewChild('basicInfoForm', { static: false })
+	@ViewChild('basicInfoForm')
 	basicInfoForm: BasicInfoFormComponent;
 
-	@ViewChild('locationForm', { static: false })
+	@ViewChild('locationForm')
 	locationForm: LocationFormComponent;
 
 	@Input()

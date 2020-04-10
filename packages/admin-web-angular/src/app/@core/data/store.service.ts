@@ -1,6 +1,8 @@
 import Admin from '@modules/server.common/entities/Admin';
 import User from '@modules/server.common/entities/User';
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class Store {
 	get token(): string | null {
 		return localStorage.getItem('token') || null;

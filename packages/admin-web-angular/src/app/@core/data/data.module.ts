@@ -33,8 +33,8 @@ const SERVICES = [
 	providers: [...SERVICES]
 })
 export class DataModule {
-	static forRoot(): ModuleWithProviders {
-		const providers: ModuleWithProviders = {
+	static forRoot(): ModuleWithProviders<DataModule> {
+		const providers: ModuleWithProviders<DataModule> = {
 			ngModule: DataModule,
 			providers: [...SERVICES]
 		};

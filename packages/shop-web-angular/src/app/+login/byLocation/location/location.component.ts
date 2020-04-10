@@ -53,7 +53,7 @@ export class LocationFormComponent
 	@Input()
 	place: google.maps.places.PlaceResult;
 
-	@ViewChild('autocomplete', { static: false })
+	@ViewChild('autocomplete')
 	public searchElement: ElementRef;
 
 	@Output()

@@ -1,11 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import {
-	MatButtonModule,
-	MatFormFieldModule,
-	MatInputModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatBoldInputModule } from '../../../modules/material-extensions';
 import { MatSearchModule } from '../../../modules/material-extensions/search';
 import { LoginByLocationComponent } from './byLocation.component';

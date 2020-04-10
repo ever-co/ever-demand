@@ -1,6 +1,7 @@
-import { EventEmitter, Input } from '@angular/core';
+import { EventEmitter, Input, Directive } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 
+@Directive()
 export abstract class InputComponent implements ControlValueAccessor {
 	@Input()
 	public placeholder: string = '';

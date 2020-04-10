@@ -7,7 +7,7 @@ import {
 	OnInit
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { MatRipple } from '@angular/material';
+import { MatRipple } from '@angular/material/core';
 
 import { InputComponent } from './input-component';
 
@@ -40,10 +40,10 @@ export class MatBoldInputComponent extends InputComponent
 	@Input()
 	public rippleSpeedFactor: number = 2;
 
-	@ViewChild(MatRipple, { static: false })
+	@ViewChild(MatRipple)
 	public ripple: MatRipple;
 
-	@ViewChild('input', { static: false })
+	@ViewChild('input')
 	public input: ElementRef;
 
 	@HostBinding('class.mat-focused')

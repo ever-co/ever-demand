@@ -12,54 +12,54 @@ import { MerchantsPageModuleGuard } from './+merchants/merchants.module.guard';
 const routes: Routes = [
 	{
 		path: 'products',
-		loadChildren: './+products/products.module#ProductsPageModule',
+		loadChildren: () => import('./+products/products.module').then(m => m.ProductsPageModule),
 		canLoad: [ProductsModuleGuard]
 	},
 	{
 		path: 'products/product-details/:id',
 		loadChildren:
-			'./+products/product-details/product-details.module#ProductDetailsPageModule'
+			() => import('./+products/product-details/product-details.module').then(m => m.ProductDetailsPageModule)
 		// canLoad: [ ProductsModuleGuard ]
 	},
 	{
 		path: 'orders-history',
 		loadChildren:
-			'./+orders-history/orders-history.module#OrdersHistoryPageModule',
+			() => import('./+orders-history/orders-history.module').then(m => m.OrdersHistoryPageModule),
 		canLoad: [OrdersHistoryModuleGuard]
 	},
 	{
 		path: 'invite',
-		loadChildren: './+invite/invite.module#InvitePageModule',
+		loadChildren: () => import('./+invite/invite.module').then(m => m.InvitePageModule),
 		canLoad: [InviteModuleGuard]
 	},
 	{
 		path: 'info',
-		loadChildren: './+info/info.module#InfoModule',
+		loadChildren: () => import('./+info/info.module').then(m => m.InfoModule),
 		canLoad: [InfoModuleGuard]
 	},
 	{
 		path: 'language',
-		loadChildren: './+language/language.module#LanguagePageModule'
+		loadChildren: () => import('./+language/language.module').then(m => m.LanguagePageModule)
 	},
 	{
 		path: 'errors',
-		loadChildren: './+errors/errors.module#ErrorsModule'
+		loadChildren: () => import('./+errors/errors.module').then(m => m.ErrorsModule)
 	},
 	{
 		path: 'order-info',
 		loadChildren:
-			'./+products/+order/+order-info/order-info.module#OrderInfoPageModule',
+			() => import('./+products/+order/+order-info/order-info.module').then(m => m.OrderInfoPageModule),
 		canLoad: [OrderInfoPageModuleGuard]
 	},
 	{
 		path: 'order-info-takeaway',
 		loadChildren:
-			'./+products/+order/takeaway/+page/takeaway-page.module#OrderTakeawayInfoPageModule',
+			() => import('./+products/+order/takeaway/+page/takeaway-page.module').then(m => m.OrderTakeawayInfoPageModule),
 		canLoad: [OrderTakeawayInfoModuleGuard]
 	},
 	{
 		path: 'merchants',
-		loadChildren: './+merchants/merchants.module#MerchantsPageModule',
+		loadChildren: () => import('./+merchants/merchants.module').then(m => m.MerchantsPageModule),
 		canLoad: [MerchantsPageModuleGuard]
 	},
 	{

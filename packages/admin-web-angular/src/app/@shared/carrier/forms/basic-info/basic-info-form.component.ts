@@ -38,7 +38,7 @@ export type CarrierBasicInfo = Pick<
 	styleUrls: ['basic-info-form.component.scss']
 })
 export class BasicInfoFormComponent implements OnInit, AfterViewInit {
-	@ViewChild('logoImagePreview', { static: false })
+	@ViewChild('logoImagePreview')
 	logoImagePreview: ElementRef;
 
 	uploaderPlaceholder: string;

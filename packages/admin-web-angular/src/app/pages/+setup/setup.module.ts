@@ -13,7 +13,7 @@ const routes: Routes = [
 	},
 	{
 		path: 'merchants',
-		loadChildren: './+merchants/merchants.module#SetupMerchantsModule'
+		loadChildren: () => import('./+merchants/merchants.module').then(m => m.SetupMerchantsModule)
 	}
 ];
 

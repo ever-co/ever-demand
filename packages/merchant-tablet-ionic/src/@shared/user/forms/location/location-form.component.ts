@@ -63,7 +63,7 @@ export class LocationFormComponent implements OnInit, AfterViewInit {
 		google.maps.places.PlaceGeometry | google.maps.GeocoderGeometry
 	>();
 
-	@ViewChild('autocomplete', { static: false })
+	@ViewChild('autocomplete')
 	searchElement: ElementRef;
 
 	showCoordinates: boolean = false;

@@ -4,7 +4,7 @@ import { Router, RouterFactory } from '../lib/router';
 import { Injectable } from '@angular/core';
 import IUserRouter from '@modules/server.common/routers/IUserRouter';
 import IUser, {
-	IUserCreateObject
+	IUserCreateObject,
 } from '@modules/server.common/interfaces/IUser';
 import User from '@modules/server.common/entities/User';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';

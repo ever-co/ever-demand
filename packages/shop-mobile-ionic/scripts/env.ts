@@ -76,9 +76,9 @@ export type Env = Readonly<{
 	MERCHANT_IDS?: string[];
 }>;
 
-const merchantIDs = makeValidator<string[]>((x) => x, 'merchantIDs');
+const merchantIDs: any = makeValidator((x) => x, 'merchantIDs');
 
-export const env: Env = cleanEnv(
+export const env: any = cleanEnv(
 	process.env,
 	{
 		production: bool({ default: false }),

@@ -142,7 +142,7 @@ export class CreateProductTypePopupPage implements OnInit {
 		reader.addEventListener('load', (e) => {
 			const imageBase64 = e.target['result'];
 			this.hasImage = true;
-			this._setImageHolderBackground(imageBase64);
+			this._setImageHolderBackground(<string>imageBase64);
 		});
 
 		reader.readAsDataURL(ev.target.files[0]);

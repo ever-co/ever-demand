@@ -7,18 +7,18 @@ import { Store } from './services/store.service';
 const routes: Routes = [
 	{
 		path: '',
-		loadChildren: './pages/pages.module#PagesModule',
+		loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule),
 		canActivate: [PagesModuleGuard]
 	},
 	{
 		path: 'maintenance-info',
 		loadChildren:
-			'./maintenance-info/maintenance-info.module#MaintenanceInfoPageModule',
+			() => import('./maintenance-info/maintenance-info.module').then(m => m.MaintenanceInfoPageModule),
 		canActivate: [MaintenanceModuleGuard]
 	},
 	{
 		path: 'server-down',
-		loadChildren: './+server-down/server-down.module#ServerDownPageModule'
+		loadChildren: () => import('./+server-down/server-down.module').then(m => m.ServerDownPageModule)
 	},
 	{
 		path: '**',

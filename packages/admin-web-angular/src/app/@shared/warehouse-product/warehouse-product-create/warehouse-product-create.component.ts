@@ -44,16 +44,16 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 	@ViewChild('warehouseAddChoice', { static: true })
 	warehouseAddChoice: WarehouseAddChoiceComponent;
 
-	@ViewChild('basicInfoForm', { static: false })
+	@ViewChild('basicInfoForm')
 	basicInfoForm: BasicInfoFormComponent;
 
-	@ViewChild('productsTable', { static: false })
+	@ViewChild('productsTable')
 	productsTable: ProductsTableComponent;
 
-	@ViewChild('addWarehouseProductsTable', { static: false })
+	@ViewChild('addWarehouseProductsTable')
 	addWarehouseProductsTable: AddWarehouseProductsComponent;
 
-	@ViewChild('wizzardFrom', { static: false })
+	@ViewChild('wizzardFrom')
 	wizzardFrom: WizardComponent;
 
 	@ViewChild('wizzardFromStep1', { static: true })

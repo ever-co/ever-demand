@@ -4,10 +4,12 @@ import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import User from '@modules/server.common/entities/User';
 import { generateObjectIdString } from '@modules/server.common/utils';
 import { environment } from 'environments/environment';
+import { Injectable } from "@angular/core";
 
 const lng = environment['DEFAULT_LONGITUDE'];
 const lat = environment['DEFAULT_LATITUDE'];
 
+@Injectable()
 export class AdminStorageService extends StorageService {
 	isConnected: boolean = false;
 

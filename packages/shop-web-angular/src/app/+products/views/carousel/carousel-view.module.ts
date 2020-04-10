@@ -1,10 +1,10 @@
-import 'hammerjs';
+
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { CarouselViewComponent } from './carousel-view.component';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
 import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 import { FormsModule } from '@angular/forms';
 import { GeoLocationProductsService } from 'app/services/geo-location-products';

@@ -1,14 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import {
-	MatButtonModule,
-	MatFormFieldModule,
-	MatInputModule,
-	MatIconModule,
-	MatSelectModule,
-	MatCheckboxModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import {
 	MatSearchModule,
 	MatBoldInputModule

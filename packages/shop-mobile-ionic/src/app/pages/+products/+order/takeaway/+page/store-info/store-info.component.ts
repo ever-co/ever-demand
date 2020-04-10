@@ -22,7 +22,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 	styleUrls: ['./store-info.component.scss']
 })
 export class OrderStoreInfo implements OnInit, OnDestroy {
-	@ViewChild('elapsedTime', { static: false })
+	@ViewChild('elapsedTime')
 	elapsedTime: ElapsedTimeComponent;
 
 	@Input()

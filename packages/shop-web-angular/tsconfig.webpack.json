@@ -17,6 +17,7 @@
 		"baseUrl": "./src",
 		"types": ["reflect-metadata", "hammerjs", "node", "googlemaps"],
 		"paths": {
+			"@angular/*": ["../node_modules/@angular/*"],
 			"@modules/server.common/*": ["../../common/src/*"],
 			"@modules/client.common.angular2/*": ["../../common-angular/src/*"],
 			"@modules/*": ["./modules/*"],
@@ -27,13 +28,13 @@
 		}
 	},
 	"angularCompilerOptions": {
-		"skipMetadataEmit": true
+		"skipMetadataEmit": true,
+		"enableIvy": false
 	},
 	"include": [
 		"./src",
 		"./*.ts",
-		"../common/**/*.ts",
+		"../common/**/*.d.ts",
 		"../common-angular/**/*.ts"
-	],
-	"exclude": ["dist", "src/**/*.spec.ts", "src/**/*.e2e.ts", "node_modules"]
+	]
 }

@@ -29,7 +29,7 @@ const routes: Routes = [
 	{
 		path: 'manage',
 		loadChildren:
-			'./+warehouse-manage/warehouse-manage.module#WarehouseManageModule'
+			() => import('./+warehouse-manage/warehouse-manage.module').then(m => m.WarehouseManageModule)
 	}
 ];
 

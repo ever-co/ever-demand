@@ -5,7 +5,7 @@ const routes: Routes = [
 	{
 		path: 'connection-lost',
 		loadChildren:
-			'./+connection-lost/connection-lost.module#ConnectionLostPageModule'
+			() => import('./+connection-lost/connection-lost.module').then(m => m.ConnectionLostPageModule)
 	}
 ];
 

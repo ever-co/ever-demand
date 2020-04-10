@@ -2,13 +2,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import {
-	MatButtonModule,
-	MatFormFieldModule,
-	MatInputModule,
-	MatDialogModule,
-	MatCardModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatBoldInputModule } from '../../modules/material-extensions';
 import { MatSearchModule } from '../../modules/material-extensions/search';
 import { routes } from './login.routes';

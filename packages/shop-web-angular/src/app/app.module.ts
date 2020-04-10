@@ -2,18 +2,16 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { PreloadAllModules, RouterModule } from '@angular/router';
-import {
-	MatButtonModule,
-	MatCardModule,
-	MatCheckboxModule,
-	MatFormFieldModule,
-	MatIconModule,
-	MatListModule,
-	MatSidenavModule,
-	MatToolbarModule,
-	MatSlideToggleModule,
-	MatButtonToggleModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from 'environments/environment';
 import { IconsModule } from '../modules/icons';

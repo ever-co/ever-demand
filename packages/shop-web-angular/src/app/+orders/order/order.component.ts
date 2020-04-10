@@ -12,7 +12,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { MessagePopUpComponent } from 'app/shared/message-pop-up/message-pop-up.component';
 import { first } from 'rxjs/operators';
 import Warehouse from '@modules/server.common/entities/Warehouse';
