@@ -6,12 +6,12 @@ import { InfoModuleGuard } from './info/info.module.guard';
 const routes: Routes = [
 	{
 		path: 'info',
-		loadChildren: './info/info.module#InfoPageModule',
+		loadChildren: () => import('./info/info.module').then(m => m.InfoPageModule),
 		canLoad: [InfoModuleGuard]
 	},
 	{
 		path: '',
-		loadChildren: '../pages/pages.module#PagesModule',
+		loadChildren: () => import('../pages/pages.module').then(m => m.PagesModule),
 		canLoad: [PagesModuleGuard]
 	},
 	{

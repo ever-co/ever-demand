@@ -5,12 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
 	{
 		path: 'get',
-		loadChildren: './get-product/get-product.module#GetProductPageModule'
+		loadChildren: () => import('./get-product/get-product.module').then(m => m.GetProductPageModule)
 	},
 	{
 		path: 'return',
 		loadChildren:
-			'./return-product/return-product.module#ReturnProductPageModule'
+			() => import('./return-product/return-product.module').then(m => m.ReturnProductPageModule)
 	},
 	{
 		path: '',

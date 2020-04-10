@@ -8,18 +8,18 @@ const routes: Routes = [
 	{
 		path: 'maintenance',
 		loadChildren:
-			'./maintenance-info/maintenance-info.module#MaintenanceInfoPageModule',
+			() => import('./maintenance-info/maintenance-info.module').then(m => m.MaintenanceInfoPageModule),
 		canLoad: [MaintenanceModuleGuard]
 	},
 	{
 		path: 'server-down',
 		loadChildren:
-			'./no-server-connection/no-server.module#ServerDownModule',
+			() => import('./no-server-connection/no-server.module').then(m => m.ServerDownModule),
 		canLoad: [ServerDownModuleGuard]
 	},
 	{
 		path: 'no-internet',
-		loadChildren: './no-internet/no-internet.module#NoInternerModule',
+		loadChildren: () => import('./no-internet/no-internet.module').then(m => m.NoInternerModule),
 		canLoad: [NoInternetModuleGuard]
 	},
 	{

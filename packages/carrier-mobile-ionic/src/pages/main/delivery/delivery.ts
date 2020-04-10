@@ -20,7 +20,7 @@ declare var google: any;
 	templateUrl: 'delivery.html'
 })
 export class DeliveryPage implements AfterViewInit {
-	@ViewChild('map', { static: false })
+	@ViewChild('map')
 	carrierMap: MapComponent;
 
 	selectedOrder: IOrder;

@@ -9,32 +9,32 @@ import { AuthGuard } from './auth.guard';
 const routes: Routes = [
 	{
 		path: 'login',
-		loadChildren: './login/login.module#LoginPageModule',
+		loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule),
 		canLoad: [LoginModuleGuard]
 	},
 	{
 		path: 'main',
-		loadChildren: './main/main.module#MainPageModule',
+		loadChildren: () => import('./main/main.module').then(m => m.MainPageModule),
 		canLoad: [AuthGuard, MainModuleGuard]
 	},
 	{
 		path: 'product',
-		loadChildren: './product/product.module#ProductModule',
+		loadChildren: () => import('./product/product.module').then(m => m.ProductModule),
 		canLoad: [AuthGuard, ProductModuleGuard]
 	},
 	{
 		path: 'deliveries',
-		loadChildren: './deliveries/deliveries.module#DeliveriesPageModule',
+		loadChildren: () => import('./deliveries/deliveries.module').then(m => m.DeliveriesPageModule),
 		canLoad: [AuthGuard]
 	},
 	{
 		path: 'language',
-		loadChildren: './language/language.module#LanguagePageModule',
+		loadChildren: () => import('./language/language.module').then(m => m.LanguagePageModule),
 		canLoad: [AuthGuard]
 	},
 	{
 		path: 'information',
-		loadChildren: './information/information.module#InformationModule',
+		loadChildren: () => import('./information/information.module').then(m => m.InformationModule),
 		canLoad: [AuthGuard, InformationModuleGuard]
 	},
 	{

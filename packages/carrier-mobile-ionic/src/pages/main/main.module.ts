@@ -19,24 +19,24 @@ const routes: Routes = [
 		children: [
 			{
 				path: 'home',
-				loadChildren: './home/home.module#HomePageModule',
+				loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
 				canLoad: [HomeModuleGuard]
 			},
 			{
 				path: 'drive-to-warehouse',
 				loadChildren:
-					'./drive-to-warehouse/drive-to-warehouse.module#DriveToWarehousePageModule',
+					() => import('./drive-to-warehouse/drive-to-warehouse.module').then(m => m.DriveToWarehousePageModule),
 				canLoad: [DriveToWarehouseModuleGuard]
 			},
 			{
 				path: 'starting-delivery',
 				loadChildren:
-					'./starting-delivery/starting-delivery.module#StartingDeliveryPageModule',
+					() => import('./starting-delivery/starting-delivery.module').then(m => m.StartingDeliveryPageModule),
 				canLoad: [StartingDeliveryModuleGuard]
 			},
 			{
 				path: 'delivery',
-				loadChildren: './delivery/delivery.module#DeliveryPageModule',
+				loadChildren: () => import('./delivery/delivery.module').then(m => m.DeliveryPageModule),
 				canLoad: [DeliveryModuleGuard]
 			},
 			{

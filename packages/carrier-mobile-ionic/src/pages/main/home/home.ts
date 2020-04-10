@@ -22,7 +22,7 @@ declare var google: any;
 	templateUrl: 'home.html'
 })
 export class HomePage {
-	@ViewChild('map', { static: false })
+	@ViewChild('map')
 	carrierMap: MapComponent;
 
 	carrier: ICarrier;
