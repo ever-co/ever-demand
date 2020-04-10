@@ -6,14 +6,15 @@
 		"rootDir": "./",
 		"target": "es6",
 		"types": ["node", "reflect-metadata", "jest"],
+		"experimentalDecorators": true,
 		"paths": {
 			"@modules/server.common/*": [
 				"@modules/server.common/*",
-				"../../../node_modules/@ever-platform/common/src/*"
+				"../node_modules/@ever-platform/common/src/*"
 			],
 			"@pyro/*": [
 				"@pyro/*",
-				"../../../node_modules/@ever-platform/common/src/@pyro/*"
+				"../node_modules/@ever-platform/common/src/@pyro/*"
 			]
 		}
 	},

@@ -84,7 +84,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 		return this.parse(obj as RawObject<T>);
 	}
 
-	getMultiple(ids: Array<T['id']>): Observable<T[]> {
+	getMultiple(ids: T['id'][]): Observable<T[]> {
 		const callId = uuid();
 
 		this.log.info({ objectIds: ids, callId }, '.getMultiple(ids) called');
@@ -114,7 +114,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 		);
 	}
 
-	async getCurrentMultiple(ids: Array<T['id']>): Promise<T[]> {
+	async getCurrentMultiple(ids: T['id'][]): Promise<T[]> {
 		const callId = uuid();
 
 		this.log.info(
@@ -130,7 +130,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 			.lean()
 			.exec();
 
-		return _.map(objs as Array<RawObject<T>>, (obj) => this.parse(obj));
+		return _.map(objs as RawObject<T>[], (obj) => this.parse(obj));
 	}
 
 	async create(createObject: CreateObject<T>): Promise<T> {
@@ -293,7 +293,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 	 * @returns {Promise<void>}
 	 * @memberof DBService
 	 */
-	async removeMultipleByIds(ids: Array<T['id']>): Promise<void> {
+	async removeMultipleByIds(ids: T['id'][]): Promise<void> {
 		this.Model.update(
 			{
 				_id: { $in: ids.map((id) => this.getObjectId(id)) }
@@ -314,7 +314,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 				conditions == null ? {} : conditions
 			)
 				.lean()
-				.exec()) as Array<RawObject<T>>;
+				.exec()) as RawObject<T>[];
 
 			results = _.map(documents, (obj) => this.parse(obj));
 		} catch (err) {
@@ -480,7 +480,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 	}
 
 	async updateMultipleByIds(
-		ids: Array<T['id']>,
+		ids: T['id'][],
 		updateObj: UpdateObject<T>
 	): Promise<T[]> {
 		const callId = uuid();
