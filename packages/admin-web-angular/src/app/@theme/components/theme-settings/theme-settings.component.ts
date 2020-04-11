@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { StateService } from '../../../@core/data/state.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NbThemeService } from '@nebular/theme';
+import { environment } from 'environment';
 
 @Component({
 	selector: 'ngx-theme-settings',
@@ -12,7 +13,28 @@ export class ThemeSettingsComponent {
 	layouts = [];
 	sidebars = [];
 
-	languages = { en: 'English', bg: 'Bulgarian', he: 'Hebrew', ru: 'Russian' };
+	languages = [
+		{
+			value: 'en-US',
+			name: 'English'
+		},
+		{
+			value: 'bg-BG',
+			name: 'Bulgarian'
+		},
+		{
+			value: 'he-IL',
+			name: 'Hebrew'
+		},
+		{
+			value: 'ru-RU',
+			name: 'Russian'
+		},
+		{
+			value: 'es-ES',
+			name: 'Spanish'
+		}
+	];
 
 	themes = [
 		{
@@ -42,17 +64,28 @@ export class ThemeSettingsComponent {
 	];
 
 	currentTheme = 'everlight';
+	defaultLanguage = '';
 
 	constructor(
 		protected stateService: StateService,
 		public translate: TranslateService,
 		private themeService: NbThemeService
 	) {
-		translate.addLangs(['en', 'bg', 'he', 'ru']);
-		translate.setDefaultLang('en');
+		this.defaultLanguage = environment['DEFAULT_LANGUAGE'];
+
+		translate.addLangs(['en-US', 'bg-BG', 'he-IL', 'ru-RU', 'es-ES']);
+		translate.setDefaultLang('en-US');
 
 		const browserLang = translate.getBrowserLang();
-		translate.use(browserLang.match(/en|bg|he|ru/) ? browserLang : 'en');
+		if (this.defaultLanguage) {
+			translate.use(this.defaultLanguage);
+		} else {
+			translate.use(
+				browserLang.match(/en-US|bg-BG|he-IL|ru-RU|es-ES/)
+					? browserLang
+					: 'en-US'
+			);
+		}
 
 		this.stateService
 			.getLayoutStates()
@@ -68,13 +101,13 @@ export class ThemeSettingsComponent {
 	}
 
 	switchLanguage(language: string) {
-		if (language === 'he') {
+		if (this.defaultLanguage === 'he-IL') {
 			this.stateService.setSidebarState(this.sidebars[1]);
 		} else {
 			this.stateService.setSidebarState(this.sidebars[0]);
 		}
 
-		this.translate.use(language);
+		this.translate.use(this.defaultLanguage);
 	}
 
 	layoutSelect(layout: any): boolean {

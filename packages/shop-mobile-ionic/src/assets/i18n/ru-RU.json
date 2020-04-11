@@ -78,6 +78,15 @@
 	},
 	"BUY_POPUP": {
 		"ORDER_PAID": "Заказ оплачен $",
+		"CANCEL": {
+			"STATUSES": [
+				{
+					"TITLE": "Заказ был отменен при подготовке склада!",
+					"DETAILS": "",
+					"NOT_PAID_NOTE": ""
+				}
+			]
+		},
 		"STATUSES": [
 			{
 				"TITLE": "Мы готовим Ваш заказ!",
@@ -227,5 +236,11 @@
 	"FAILED": "Не удалось",
 	"CANCELED": "Отменен",
 	"IN_DELIVERY": "В доставке",
-	"COMPLETED": "Завершенный"
+	"COMPLETED": "Завершенный",
+	"BROWSE": "ПРОСМАТРИВАТЬ",
+	"ENGLISH": "Английский",
+	"HEBREW": "Иврит",
+	"RUSSIAN": "Русский",
+	"BULGARIAN": "Болгарский",
+	"SELECT": "Выбрать"
 }

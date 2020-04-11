@@ -269,7 +269,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 								onComponentInitFunction: async (
 									instance: StatusComponent
 								) => {
-									instance.text = 'paid';
+									instance.text = paid;
 									instance.checkOrderField = 'isPaid';
 								},
 								width: '100px'
@@ -281,7 +281,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 								onComponentInitFunction: async (
 									instance: StatusComponent
 								) => {
-									instance.text = 'cancelled';
+									instance.text = cancelled;
 									instance.checkOrderField = 'isCancelled';
 								},
 								width: '100px'

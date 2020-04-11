@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import ICarrier from '@modules/server.common/interfaces/ICarrier';
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
@@ -8,17 +8,20 @@ import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/car
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { Store } from '../../../services/store.service';
-import { first } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { first, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { NavController } from '@ionic/angular';
 
 @Component({
 	selector: 'page-get-product',
 	templateUrl: 'get-product.html'
 })
-export class GetProductPage {
+export class GetProductPage implements OnDestroy {
 	carrier: ICarrier;
 	selectedOrder: IOrder;
 	disabledButtons: boolean = true;
+
+	private destroy$ = new Subject<void>();
 
 	constructor(
 		private orderRouter: OrderRouter,
@@ -26,7 +29,7 @@ export class GetProductPage {
 		private carrierOrdersRouter: CarrierOrdersRouter,
 		private _translateProductLocales: ProductLocalesService,
 		private store: Store,
-		private router: Router
+		private navCtrl: NavController
 	) {}
 
 	ionViewWillEnter() {
@@ -41,9 +44,7 @@ export class GetProductPage {
 				OrderCarrierStatus.CarrierPickedUpOrder
 			);
 
-			this.router.navigateByUrl('/main/starting-delivery', {
-				skipLocationChange: false
-			});
+			this.navCtrl.navigateRoot('/main/starting-delivery');
 		} else {
 			// TODO: replace with popup
 			alert('Try again!');
@@ -57,11 +58,8 @@ export class GetProductPage {
 			await this.carrierOrdersRouter.cancelDelivery(this.carrier['id'], [
 				this.selectedOrder['id']
 			]);
-			localStorage.removeItem('orderId');
 
-			this.router.navigateByUrl('/main/home', {
-				skipLocationChange: false
-			});
+			this.unselectOrder();
 		} else {
 			// 	// TODO: replace with popup
 			alert('Try again!');
@@ -79,13 +77,27 @@ export class GetProductPage {
 			.pipe(first())
 			.toPromise();
 
-		this.selectedOrder = await this.orderRouter
+		this.orderRouter
 			.get(this.store.orderId, {
 				populateWarehouse: true
 			})
-			.pipe(first())
-			.toPromise();
+			.pipe(takeUntil(this.destroy$))
+			.subscribe((o) => {
+				this.selectedOrder = o;
+				this.store.selectedOrder = o;
+				this.disabledButtons = false;
+			});
+	}
 
-		this.disabledButtons = false;
+	unselectOrder() {
+		this.store.selectedOrder = null;
+		localStorage.removeItem('orderId');
+
+		this.navCtrl.navigateRoot('/main/home');
+	}
+
+	ngOnDestroy(): void {
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
 }

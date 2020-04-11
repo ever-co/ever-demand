@@ -3,7 +3,10 @@ import _ from 'lodash';
 import { every, isEmpty, isNumber } from 'lodash';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { InviteRequestRouter } from '@modules/client.common.angular2/routers/invite-request-router.service';
-import { Country } from '@modules/server.common/entities/GeoLocation';
+import {
+	Country,
+	getCountryName
+} from '@modules/server.common/entities/GeoLocation';
 import { first } from 'rxjs/operators';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -77,7 +80,7 @@ export class ByLocationPage implements OnInit, OnDestroy {
 
 			let response: { coords: { longitude: number; latitude: number } };
 
-			if (!environment.production && defaultLat && defaultLng) {
+			if (defaultLat && defaultLng) {
 				response = {
 					coords: { latitude: defaultLat, longitude: defaultLng }
 				};
@@ -275,7 +278,11 @@ export class ByLocationPage implements OnInit, OnDestroy {
 	private async createInviteRequest(): Promise<InviteRequest> {
 		const device = { id: this.store.deviceId }; // await this.deviceService.device.pipe(first()).toPromise();
 
-		const coordinatesObj = await this.getCoordinates();
+		let coordinatesObj = await this.getCoordinatesByAddress();
+
+		if (coordinatesObj == null) {
+			coordinatesObj = await this.getCoordinates();
+		}
 
 		if (coordinatesObj != null) {
 			return this.inviteRequestRouter.create({
@@ -349,6 +356,8 @@ export class ByLocationPage implements OnInit, OnDestroy {
 				result = true;
 			}
 
+			this.country = +Country[address.country];
+
 			this.detectingLocation = false;
 
 			return result;
@@ -379,18 +388,85 @@ export class ByLocationPage implements OnInit, OnDestroy {
 				},
 				(results, status) => {
 					if (status === google.maps.GeocoderStatus.OK) {
-						const address = results.find((x) =>
+						let country = results.find((x) =>
+							x.types.includes('country')
+						);
+
+						let address = results.find((x) =>
 							x.types.includes('street_address')
 						);
+
+						if (!address) {
+							address = results.find((x) =>
+								x.types.includes('route')
+							);
+						}
+
 						const formattedAddress = {
 							locality: address.address_components[3].short_name,
 							thoroughfare:
-								address.address_components[1].short_name
+								address.address_components[1].short_name,
+							country: country.address_components[0].short_name
 						};
 
 						resolve(formattedAddress);
 					} else {
 						reject('Cannot find the address.');
+					}
+				}
+			);
+		});
+	}
+
+	private getCoordinatesByAddress(): Promise<{
+		lng: number;
+		lat: number;
+	} | null> {
+		const house = this.house;
+		const streetAddress = this.streetAddress;
+		const city = this.city;
+		const countryName = getCountryName(this.country);
+
+		if (!streetAddress || !house || !city || !countryName) {
+			return;
+		}
+
+		const geocoder = new google.maps.Geocoder();
+
+		return new Promise(function(resolve, reject) {
+			geocoder.geocode(
+				{
+					address: `${streetAddress} ${house}, ${city}`,
+					componentRestrictions: {
+						country: countryName
+					}
+				},
+				(results, status) => {
+					if (status === google.maps.GeocoderStatus.OK) {
+						const place: google.maps.GeocoderResult = results[0];
+
+						const neededAddressTypes = [
+							'country',
+							'locality',
+							'route',
+							'street_number'
+						];
+						const existedTypes = place.address_components
+							.map((ac) => ac.types)
+							.reduce((acc, val) => acc.concat(val), []);
+
+						for (const type of neededAddressTypes) {
+							if (!existedTypes.includes(type)) {
+								resolve(null);
+
+								return;
+							}
+						}
+
+						const loc = place.geometry.location;
+						resolve({ lat: loc.lat(), lng: loc.lng() });
+					} else {
+						resolve(null);
 					}
 				}
 			);

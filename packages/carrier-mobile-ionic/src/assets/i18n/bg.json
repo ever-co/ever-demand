@@ -75,7 +75,8 @@
 		"ENGLISH": "Английски",
 		"BULGARIAN": "Български",
 		"HEBREW": "Иврит",
-		"RUSSIAN": "Руски"
+		"RUSSIAN": "Руски",
+		"SPANISH": "Испански"
 	},
 	"LIST_VIEW": {
 		"YOU_NAVIGATED_HERE_FROM": "От тук сте навигирали"

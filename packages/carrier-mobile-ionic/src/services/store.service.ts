@@ -6,16 +6,33 @@ import Carrier from '@modules/server.common/entities/Carrier';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { first } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+import IOrder from '@modules/server.common/interfaces/IOrder';
 
 // TODO use https://beta.ionicframework.com/docs/building/storage
 
 @Injectable()
 export class Store {
+	private _selectedOrder: IOrder;
+
 	constructor(
 		private readonly carrierRouter: CarrierRouter,
 		private readonly translate: TranslateService // private readonly platform: Platform
 	) {
 		// this._initLanguage();
+	}
+
+	selectedOrder$: BehaviorSubject<IOrder> = new BehaviorSubject(
+		this.selectedOrder
+	);
+
+	set selectedOrder(order: IOrder) {
+		this.selectedOrder$.next(order);
+		this._selectedOrder = order;
+	}
+
+	get selectedOrder(): IOrder {
+		return this._selectedOrder;
 	}
 
 	get token(): string | null {

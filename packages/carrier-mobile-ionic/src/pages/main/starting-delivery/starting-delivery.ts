@@ -1,9 +1,9 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { MapComponent } from '../common/map/map.component';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { Router } from '@angular/router';
-import { first } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { GeoLocationService } from 'services/geo-location.service';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -17,13 +17,15 @@ import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus'
 	selector: 'page-starting-delivery',
 	templateUrl: 'starting-delivery.html'
 })
-export class StartingDeliveryPage implements AfterViewInit {
+export class StartingDeliveryPage implements AfterViewInit, OnDestroy {
 	@ViewChild('map')
 	carrierMap: MapComponent;
 
 	selectedOrder: IOrder;
 	carrierUserDistance: string;
 	disabledButtons: boolean = true;
+
+	private destroy$ = new Subject<void>();
 
 	constructor(
 		private orderRouter: OrderRouter,
@@ -65,47 +67,55 @@ export class StartingDeliveryPage implements AfterViewInit {
 		this.disabledButtons = false;
 	}
 
-	private async loadData() {
-		this.selectedOrder = await this.orderRouter
+	private loadData() {
+		this.orderRouter
 			.get(localStorage.getItem('orderId'), { populateWarehouse: true })
-			.pipe(first())
-			.toPromise();
+			.pipe(takeUntil(this.destroy$))
+			.subscribe(async (order) => {
+				this.selectedOrder = order;
+				this.store.selectedOrder = order;
 
-		const position = this.geoLocationService.defaultLocation()
-			? this.geoLocationService.defaultLocation()
-			: await this.geolocation.getCurrentPosition();
+				const position = this.geoLocationService.defaultLocation()
+					? this.geoLocationService.defaultLocation()
+					: await this.geolocation.getCurrentPosition();
 
-		// MongoDb store coordinates lng => lat
-		const dbGeoInput = {
-			loc: {
-				type: 'Point',
-				coordinates: [
-					position.coords.longitude,
-					position.coords.latitude
-				]
-			}
-		} as IGeoLocation;
+				// MongoDb store coordinates lng => lat
+				const dbGeoInput = {
+					loc: {
+						type: 'Point',
+						coordinates: [
+							position.coords.longitude,
+							position.coords.latitude
+						]
+					}
+				} as IGeoLocation;
 
-		const origin = new google.maps.LatLng(
-			position.coords.latitude,
-			position.coords.longitude
-		);
+				const origin = new google.maps.LatLng(
+					position.coords.latitude,
+					position.coords.longitude
+				);
 
-		const userGeo = this.selectedOrder.user['geoLocation'];
+				const userGeo = this.selectedOrder.user['geoLocation'];
 
-		this.carrierUserDistance = Utils.getDistance(
-			userGeo as GeoLocation,
-			dbGeoInput as GeoLocation
-		).toFixed(2);
+				this.carrierUserDistance = Utils.getDistance(
+					userGeo as GeoLocation,
+					dbGeoInput as GeoLocation
+				).toFixed(2);
 
-		const destination = new google.maps.LatLng(
-			userGeo.loc.coordinates[1],
-			userGeo.loc.coordinates[0]
-		);
+				const destination = new google.maps.LatLng(
+					userGeo.loc.coordinates[1],
+					userGeo.loc.coordinates[0]
+				);
 
-		this.carrierMap.setCenter(origin);
-		this.carrierMap.drawRoute(origin, destination);
+				this.carrierMap.setCenter(origin);
+				this.carrierMap.drawRoute(origin, destination);
 
-		this.disabledButtons = false;
+				this.disabledButtons = false;
+			});
+	}
+
+	ngOnDestroy(): void {
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
 }

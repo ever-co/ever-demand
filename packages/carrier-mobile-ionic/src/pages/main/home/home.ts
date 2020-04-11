@@ -70,6 +70,7 @@ export class HomePage {
 
 		this.isWorking = res.status === CarrierStatus.Online;
 		localStorage.removeItem('orderId');
+		this.store.selectedOrder = null;
 	}
 
 	notification() {
@@ -118,7 +119,14 @@ export class HomePage {
 
 				if (carrier.status === CarrierStatus.Online) {
 					this.order$ = this.geoLocationOrdersService
-						.getOrderForWork(dbGeoInput, carrier.skippedOrderIds)
+						.getOrderForWork(
+							dbGeoInput,
+							carrier.skippedOrderIds,
+							{ sort: 'asc' },
+							{
+								isCancelled: false
+							}
+						)
 
 						.subscribe(async (order) => {
 							if (order || this.store.orderId) {

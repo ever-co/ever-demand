@@ -14,6 +14,7 @@ import { CommonModule } from '@modules/client.common.angular2/common.module';
 import { MenuModule } from './components/menu/menu.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+// import { Logger } from 'angular2-logger/core';
 import { environment } from 'environments/environment';
 import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
 import { Apollo, ApolloModule } from 'apollo-angular';
@@ -95,6 +96,7 @@ import { ServerConnectionService } from '@modules/client.common.angular2/service
 			multi: true
 		},
 		{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+		// Logger,
 		PagesModuleGuard,
 		MaintenanceModuleGuard
 	],
@@ -171,6 +173,22 @@ export class AppModule {
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
+
+/*
+export function serverSettingsFactory(
+	serverSettings: ServerSettings,
+	serverConnectionService: ServerConnectionService,
+	store: Store
+) {
+	return async () => {
+		await serverConnectionService.load(
+			environment.SERVICES_ENDPOINT,
+			store
+		);
+		await serverSettings.load();
+	};
+}
+*/
 
 export function serverSettingsFactory(provider: ServerSettings) {
 	return () => provider.load();

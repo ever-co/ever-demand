@@ -22,7 +22,7 @@ export class ServerDownPage implements OnDestroy {
 		private serverConnectionService: ServerConnectionService
 	) {
 		const browserLang = translate.getBrowserLang();
-		translate.use(browserLang.match(/en|bg|he|ru/) ? browserLang : 'en');
+		translate.use(browserLang.match(/en|bg|he|ru/) ? browserLang : 'en-US');
 
 		this.noInternetLogo = environment['NO_INTERNET_LOGO'];
 		this.testConnection();

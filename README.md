@@ -1,4 +1,5 @@
-#### *** If you are running IT Company, check our new project [Gauzy](https://github.com/ever-co/gauzy) ***
+#### *** Update: If you are running IT agency or doing freelance, check our new project [Gauzy](https://github.com/ever-co/gauzy) ***
+#### !!! Hiring: remote TypeScript / NestJS / Angular developers. Send CV to jobs@ever.co !!!
 
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/ever)
 [![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/ever-co/ever?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -9,6 +10,14 @@
 [Ever](https://ever.co)® is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform built with [TypeScript](http://www.typescriptlang.org).
 
 ![overview](https://docs.ever.co/docs/assets/overview_small.png)
+
+## Demos
+
+* [Admin Website](http://demo.ever.co:4200), use admin user email: `admin@ever.co`, password: `admin`
+* [Shopping Mobile App](http://demo.ever.co:4201)
+* [Merchant Ionic Tablet App](http://demo.ever.co:4202)
+* [Carrier Mobile App](http://demo.ever.co:4203)
+* [Shopping Website](http://demo.ever.co:3000)
 
 ## Features
 
@@ -78,11 +87,11 @@ Clone the Ever Platform Git repo:
 git clone -c core.symlinks=true --recursive https://github.com/ever-co/ever.git
 ```
 
-Notes:
+**IMPORTANT NOTES:**
 
 -   if you want to use development branch (unstable, but latest development) clone using `--branch develop`
 -   it's necessary to enable Git symlinks because they used for shared modules (every project has symlinks to shared modules in the /shared folder)
--   because of symlinks, you may need to clone from an elevated command prompt (on Windows)
+-   because of symlinks, you may need to clone from an elevated command prompt. On Windows run console with "Run as Administrator" option.
 
 If you use Git >= v2.14, it probably makes sense to setup following globally:
 
@@ -96,6 +105,7 @@ Notes:
 -   to setup Symlinks & Submodules recurse locally only (for Ever repo), remove `--global` in the commands above
 -   for older Git versions see [this](https://stackoverflow.com/questions/4611512/is-there-a-way-to-make-git-pull-automatically-update-submodules/4611550#4611550)
 -   at the moment we are not using Git sub-modules, but it may change in the future (we were using them, but decided to drop for now in favor of symlinks)
+-   we are moving from symlinks to npm modules managed by Lerna. See branch https://github.com/ever-co/ever/tree/feature/use-packages
 
 ### Yarn
 
@@ -235,9 +245,12 @@ In a production setup, all client-side to server-side (backend, APIs) communicat
 
 ## License
 
-This software is available under [Ever® Platform Community™ Edition](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-community-edition-license) and [Ever® Platform Enterprise™](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-enterprise-license) Licenses. 
+This software is available under following licenses:
+- [Ever® Platform Community™ Edition](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-community-edition-license)
+- [Ever® Platform Small Business™](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-small-business-license)
+- [Ever® Platform Enterprise™](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-enterprise-license)
 
-#### The default Ever® Platform™ license, without a valid Ever® Platform Enterprise™ License agreement, is the Ever® Platform Community™ Edition License.
+#### The default Ever® Platform™ license, without a valid Ever® Platform Enterprise™ or Ever® Platform Small Business™ License agreement, is the Ever® Platform Community™ Edition License.
 
 #### Please see [LICENSE.md](LICENSE.md) for more information on licenses.
 
@@ -246,7 +259,7 @@ This software is available under [Ever® Platform Community™ Edition](https://
 ## Trademarks
 
 **Ever**® is a registered trademark of [Ever Co. LTD](https://ever.co).  
-**Ever® Platform™**, **Ever® Platform Community™** and **Ever® Platform Enterprise™** are all trademarks of [Ever Co. LTD](https://ever.co).
+**Ever® Platform™**, **Ever® Platform Community™**, **Ever® Platform Small Business™** and **Ever® Platform Enterprise™** are all trademarks of [Ever Co. LTD](https://ever.co).
 
 The trademarks may only be used with the written permission of Ever Co. LTD. and may not be used to promote or otherwise market competitive products or services.
 
@@ -263,4 +276,5 @@ All other brand and product names are trademarks, registered trademarks or servi
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fever.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fever?ref=badge_shield)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io)
 
-#### *** If you are running IT Company, check our new project [Gauzy](https://github.com/ever-co/gauzy) ***
+#### *** Update: If you are running IT agency or doing freelance, check our new project [Gauzy](https://github.com/ever-co/gauzy) ***
+#### !!! Hiring: remote TypeScript / NestJS / Angular developers. Send CV to jobs@ever.co !!!

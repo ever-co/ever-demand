@@ -318,6 +318,8 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 				return this._getStatusTextRussian();
 			case 'bg-BG':
 				return this._getStatusTextBulgarian();
+			case 'es-ES':
+				return this._getStatusTextSpanish();
 			default:
 				return 'BAD_STATUS';
 		}
@@ -433,6 +435,26 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 				return 'Проблема с подготовкой';
 			case OrderStatus.CarrierIssue:
 				return 'Проблема с доставкой';
+			default:
+				return 'BAD_STATUS';
+		}
+	}
+
+	private _getStatusTextSpanish() {
+		switch (this.status) {
+			case OrderStatus.WarehousePreparation:
+				return 'Preparación';
+			case OrderStatus.InDelivery:
+				return 'En la entrega';
+			case OrderStatus.Delivered:
+				return 'Entregado';
+			case OrderStatus.CanceledWhileWarehousePreparation:
+			case OrderStatus.CanceledWhileInDelivery:
+				return 'Cancelado';
+			case OrderStatus.WarehouseIssue:
+				return 'Problema de preparación';
+			case OrderStatus.CarrierIssue:
+				return 'Problema de envio';
 			default:
 				return 'BAD_STATUS';
 		}

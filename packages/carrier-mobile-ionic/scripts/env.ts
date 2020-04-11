@@ -35,9 +35,15 @@ export type Env = Readonly<{
 	DEFAULT_LATITUDE: number;
 	DEFAULT_LONGITUDE: number;
 
+	DEFAULT_LANGUAGE: string;
+
 	// For maintenance micro service
 	SETTINGS_APP_TYPE?: string;
 	SETTINGS_MAINTENANCE_API_URL?: string;
+
+	WEB_CONCURRENCY: number;
+	WEB_MEMORY: number;
+	PORT: number;
 }>;
 
 export const env: Env = cleanEnv(
@@ -72,6 +78,8 @@ export const env: Env = cleanEnv(
 		DEFAULT_LATITUDE: num({ default: 42.6459136 }),
 		DEFAULT_LONGITUDE: num({ default: 23.3932736 }),
 
+		DEFAULT_LANGUAGE: str({ default: 'en' }),
+
 		// Graphql endpoints for apollo services
 		GQL_ENDPOINT: str({ default: 'http://localhost:5555/graphql' }),
 		GQL_SUBSCRIPTIONS_ENDPOINT: str({
@@ -84,7 +92,11 @@ export const env: Env = cleanEnv(
 		SETTINGS_APP_TYPE: str({ default: 'carrier-mobile' }),
 		SETTINGS_MAINTENANCE_API_URL: str({
 			default: ''
-		})
+		}),
+
+		WEB_CONCURRENCY: num({ default: 1 }),
+		WEB_MEMORY: num({ default: 2048 }),
+		PORT: num({ default: 4203 })
 	},
 	{ strict: true, dotEnvPath: __dirname + '/../.env' }
 );

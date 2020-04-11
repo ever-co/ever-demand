@@ -90,6 +90,10 @@ export class WarehouseMutationComponent implements AfterViewInit {
 				elementRef['style']['zIndex'] = 10000;
 			}
 		}, 2000);
+
+		if (this.locationForm) {
+			this.locationForm.setDefaultCoords();
+		}
 	}
 
 	onCoordinatesChanges(coords: number[]) {

@@ -26,6 +26,7 @@ import { AppState } from './app.service';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { NoContentComponent } from './no-content';
 import { CommonModule } from '@modules/client.common.angular2/common.module';
+// import { Logger } from 'angular2-logger/core';
 import { SidenavService } from './sidenav/sidenav.service';
 import { SidenavContentComponent } from './sidenav/sidenav-content.component';
 import '../styles/styles.scss';
@@ -54,6 +55,22 @@ import { ServerConnectionService } from '@modules/client.common.angular2/service
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
+
+/*
+export function serverSettingsFactory(
+	serverSettings: ServerSettings,
+	serverConnectionService: ServerConnectionService,
+	store: Store
+) {
+	return async () => {
+		await serverConnectionService.load(
+			environment.SERVICES_ENDPOINT,
+			store
+		);
+		await serverSettings.load();
+	};
+}
+*/
 
 export function serverSettingsFactory(provider: ServerSettings) {
 	return () => provider.load();
@@ -103,6 +120,7 @@ const APP_PROVIDERS = [
 	...APP_RESOLVER_PROVIDERS,
 	AppState,
 	SidenavService,
+	// Logger,
 	ServerSettings,
 	InfiniteScrollModule,
 	{
@@ -137,6 +155,7 @@ const APP_PROVIDERS = [
 		HttpLinkModule,
 		RouterModule.forRoot(ROUTES, {
 			useHash: Boolean(history.pushState) === false,
+			// enableTracing: true,
 			preloadingStrategy: PreloadAllModules
 		}),
 		MatIconModule,

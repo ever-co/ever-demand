@@ -25,7 +25,7 @@ export interface Environment {
 	// Not secret MixPanel Token
 	MIXPANEL_API_KEY: string;
 
-	DEFAULT_LANG: string;
+	DEFAULT_LANGUAGE: string;
 	DEFAULT_LOCALE: string;
 
 	DELIVERY_TIME_MIN: number;

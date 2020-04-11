@@ -10,6 +10,8 @@ export type Env = Readonly<{
 	DEFAULT_LATITUDE: number;
 	DEFAULT_LONGITUDE: number;
 
+	DEFAULT_LANGUAGE: string;
+
 	SERVICES_ENDPOINT: string;
 	HTTPS_SERVICES_ENDPOINT: string;
 	GQL_ENDPOINT: string;
@@ -24,6 +26,10 @@ export type Env = Readonly<{
 
 	SETTINGS_APP_TYPE?: string;
 	SETTINGS_MAINTENANCE_API_URL?: string;
+
+	WEB_CONCURRENCY: number;
+	WEB_MEMORY: number;
+	PORT: number;
 }>;
 
 export const env: Env = cleanEnv(
@@ -33,6 +39,8 @@ export const env: Env = cleanEnv(
 
 		DEFAULT_LATITUDE: num({ default: 42.6459136 }),
 		DEFAULT_LONGITUDE: num({ default: 23.3332736 }),
+
+		DEFAULT_LANGUAGE: str({ default: 'en' }),
 
 		SERVICES_ENDPOINT: str({ default: 'http://localhost:5500' }),
 		HTTPS_SERVICES_ENDPOINT: str({ default: 'https://localhost:5501' }),
@@ -53,7 +61,11 @@ export const env: Env = cleanEnv(
 		SETTINGS_APP_TYPE: str({ default: 'shop-web' }),
 		SETTINGS_MAINTENANCE_API_URL: str({
 			default: ''
-		})
+		}),
+
+		WEB_CONCURRENCY: num({ default: 1 }),
+		WEB_MEMORY: num({ default: 2048 }),
+		PORT: num({ default: 3000 })
 	},
 	{ strict: true, dotEnvPath: __dirname + '/../.env' }
 );

@@ -30,6 +30,8 @@
 		}
 	],
 	"scripts": {
+		"ng:dev": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn ng",
+		"ng:prod": "cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=4096 yarn ng",
 		"config": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn ts-node ./scripts/configure.ts",
 		"config:dev": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run config -- --environment=dev",
 		"config:prod": "cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=4096 yarn run config -- --environment=prod",
@@ -67,6 +69,8 @@
 		"github-deploy:prod": "cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=4096 yarn run config:prod && yarn run webpack -- --config config/webpack.github-deploy.js  --mode production --progress --profile --env.githubProd",
 		"github-deploy": "yarn run github-deploy:dev",
 		"lint": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run config:dev && yarn run tslint \"src/**/*.ts\"",
+		"postinstall": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run config:dev && yarn run webdriver:update",
+		"postversion": "git push && git push --tags",
 		"preclean:install": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run clean",
 		"preversion": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn test",
 		"protractor": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run config:dev && protractor",
@@ -155,6 +159,7 @@
 		"ngx-hm-carousel": "^1.6.5-bata.1",
 		"ngx-infinite-scroll": "^7.0.1",
 		"ngx-toastr": "^10.0.4",
+		"pm2": "^4.2.1",
 		"raw-loader": "1.0.0",
 		"reflect-metadata": "^0.1.13",
 		"rxjs": "^6.5.2",

@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
@@ -11,7 +11,8 @@ import { GeoLocationService } from '../../../services/geo-location.service';
 import { MapComponent } from '../common/map/map.component';
 import { Router } from '@angular/router';
 import { Store } from 'services/store.service';
-import { first } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 declare var google: any;
 
@@ -19,13 +20,15 @@ declare var google: any;
 	selector: 'page-delivery',
 	templateUrl: 'delivery.html'
 })
-export class DeliveryPage implements AfterViewInit {
+export class DeliveryPage implements AfterViewInit, OnDestroy {
 	@ViewChild('map')
 	carrierMap: MapComponent;
 
 	selectedOrder: IOrder;
 	carrierUserDistance: string;
 	disabledButtons: boolean = true;
+
+	private destroy$ = new Subject<void>();
 
 	get fullAddress() {
 		return this.selectedOrder.user.fullAddress;
@@ -79,53 +82,60 @@ export class DeliveryPage implements AfterViewInit {
 
 	private unselectOrder() {
 		localStorage.removeItem('orderId');
+		this.store.selectedOrder = null;
 	}
 
-	private async loadData() {
-		const order = await this.orderRouter
+	private loadData() {
+		this.orderRouter
 			.get(localStorage.getItem('orderId'), { populateWarehouse: true })
-			.pipe(first())
-			.toPromise();
+			.pipe(takeUntil(this.destroy$))
+			.subscribe(async (order) => {
+				this.selectedOrder = order;
+				this.store.selectedOrder = order;
+				// const carrier = await this.carrierRouter
+				// 	.get(order.carrierId)
+				// 	.pipe(first())
+				// 	.toPromise();
 
-		this.selectedOrder = order;
-		// const carrier = await this.carrierRouter
-		// 	.get(order.carrierId)
-		// 	.pipe(first())
-		// 	.toPromise();
+				const position = this.geoLocationService.defaultLocation()
+					? this.geoLocationService.defaultLocation()
+					: await this.geolocation.getCurrentPosition();
 
-		const position = this.geoLocationService.defaultLocation()
-			? this.geoLocationService.defaultLocation()
-			: await this.geolocation.getCurrentPosition();
+				// MongoDb store coordinates lng => lat
+				const dbGeoInput = {
+					loc: {
+						type: 'Point',
+						coordinates: [
+							position.coords.longitude,
+							position.coords.latitude
+						]
+					}
+				} as IGeoLocation;
 
-		// MongoDb store coordinates lng => lat
-		const dbGeoInput = {
-			loc: {
-				type: 'Point',
-				coordinates: [
-					position.coords.longitude,
-					position.coords.latitude
-				]
-			}
-		} as IGeoLocation;
+				const origin = new google.maps.LatLng(
+					position.coords.latitude,
+					position.coords.longitude
+				);
+				const userGeo = order.user['geoLocation'];
 
-		const origin = new google.maps.LatLng(
-			position.coords.latitude,
-			position.coords.longitude
-		);
-		const userGeo = order.user['geoLocation'];
+				this.carrierUserDistance = Utils.getDistance(
+					userGeo,
+					dbGeoInput as GeoLocation
+				).toFixed(2);
 
-		this.carrierUserDistance = Utils.getDistance(
-			userGeo,
-			dbGeoInput as GeoLocation
-		).toFixed(2);
+				const destination = new google.maps.LatLng(
+					userGeo.loc.coordinates[1],
+					userGeo.loc.coordinates[0]
+				);
 
-		const destination = new google.maps.LatLng(
-			userGeo.loc.coordinates[1],
-			userGeo.loc.coordinates[0]
-		);
+				this.carrierMap.setCenter(origin);
+				this.carrierMap.drawRoute(origin, destination);
+				this.disabledButtons = false;
+			});
+	}
 
-		this.carrierMap.setCenter(origin);
-		this.carrierMap.drawRoute(origin, destination);
-		this.disabledButtons = false;
+	ngOnDestroy(): void {
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
 }

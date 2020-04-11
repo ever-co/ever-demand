@@ -9,6 +9,7 @@ import { takeUntil, first } from 'rxjs/operators';
 import { ToasterService } from 'angular2-toaster';
 import { ProductsCategoryService } from '../../../../@core/data/productsCategory.service';
 import 'rxjs/add/operator/switchMap';
+import { Location } from '@angular/common';
 
 @Component({
 	styleUrls: ['./product-edit.component.scss'],
@@ -23,6 +24,8 @@ export class ProductEditComponent implements OnInit, OnDestroy {
 	public readonly form: FormGroup = this.formBuilder.group({
 		basicInfo: BasicInfoFormComponent.buildForm(this.formBuilder)
 	});
+
+	storeId: string;
 
 	public readonly basicInfo = this.form.get('basicInfo') as FormControl;
 
@@ -39,7 +42,8 @@ export class ProductEditComponent implements OnInit, OnDestroy {
 		private readonly productsService: ProductsService,
 		private readonly toasterService: ToasterService,
 		private readonly router: Router,
-		private readonly productsCategoryService: ProductsCategoryService
+		private readonly productsCategoryService: ProductsCategoryService,
+		private location: Location
 	) {
 		this.loadProductCategories();
 		this.product$ = this.activatedRoute.params.switchMap((p) => {
@@ -82,6 +86,10 @@ export class ProductEditComponent implements OnInit, OnDestroy {
 				`Error in updating carrier: "${err.message}"`
 			);
 		}
+	}
+
+	back() {
+		this.location.back();
 	}
 
 	ngOnInit(): void {

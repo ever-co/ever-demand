@@ -97,7 +97,10 @@ export class OrderPage implements OnInit, OnDestroy {
 	}
 
 	public get isWarehouseCurrent() {
-		return this.currentStatus === DeliveryStatus.Warehouse;
+		return (
+			this.currentStatus === DeliveryStatus.Warehouse &&
+			(this.order && !this.order.isCancelled)
+		);
 	}
 
 	public get isCarrierActive() {
@@ -151,7 +154,7 @@ export class OrderPage implements OnInit, OnDestroy {
 			return DeliveryStatus.Warehouse;
 		}
 
-		if (this.order['isCompleted']) {
+		if (this.order['isCompleted'] && !this.order['isCancelled']) {
 			return DeliveryStatus.Completed;
 		} else if (
 			this.order.carrierStatus >=
@@ -203,7 +206,9 @@ export class OrderPage implements OnInit, OnDestroy {
 
 	public get byPopupStatuses() {
 		// this is workaround for access language assets from array.
-		const popupStatuses = 'BUY_POPUP.STATUSES.' + this.currentStatus;
+		const popupStatuses = `BUY_POPUP.${
+			this.order && this.order.isCancelled ? 'CANCEL.' : ''
+		}STATUSES.${this.currentStatus}`;
 		let result: string = '';
 
 		const getTitle = () => {

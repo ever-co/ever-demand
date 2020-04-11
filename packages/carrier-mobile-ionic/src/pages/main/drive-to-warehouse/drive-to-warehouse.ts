@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
@@ -21,7 +21,7 @@ declare var google: any;
 	selector: 'page-drive-to-warehouse',
 	templateUrl: 'drive-to-warehouse.html'
 })
-export class DriveToWarehousePage {
+export class DriveToWarehousePage implements OnInit {
 	@ViewChild('map')
 	carrierMap: MapComponent;
 
@@ -42,6 +42,10 @@ export class DriveToWarehousePage {
 		private geolocation: Geolocation,
 		private router: Router
 	) {}
+
+	ngOnInit(): void {
+		this.fromDelivery = this.store.driveToWarehouseFrom === 'delivery';
+	}
 
 	ionViewWillEnter() {
 		this.carrier$ = this.carrierRouter
@@ -76,6 +80,7 @@ export class DriveToWarehousePage {
 						})
 						.subscribe((order) => {
 							this.selectedOrder = order;
+							this.store.selectedOrder = order;
 							this.workTaken =
 								order.carrierStatus !==
 								OrderCarrierStatus.NoCarrier;
@@ -123,15 +128,11 @@ export class DriveToWarehousePage {
 			]);
 
 			this.unselectOrder();
-
-			this.router.navigateByUrl('/main/home', {
-				skipLocationChange: false
-			});
 		}
 	}
 
 	async carrierInWarehouse() {
-		if (this.store.driveToWarehouseFrom === 'delivery') {
+		if (this.fromDelivery) {
 			this.store.returnProductFrom = 'driveToWarehouse';
 
 			this.router.navigate(['/product/return'], {
@@ -148,7 +149,7 @@ export class DriveToWarehousePage {
 	}
 
 	async cancelWork() {
-		if (this.store.driveToWarehouseFrom === 'delivery') {
+		if (this.fromDelivery) {
 			this.unselectDriveToWarehouseFrom();
 			this.router.navigateByUrl('/main/delivery', {
 				skipLocationChange: true
@@ -160,10 +161,6 @@ export class DriveToWarehousePage {
 					[this.selectedOrder['id']]
 				);
 				this.unselectOrder();
-
-				this.router.navigateByUrl('/main/home', {
-					skipLocationChange: false
-				});
 			}
 		}
 	}
@@ -173,6 +170,12 @@ export class DriveToWarehousePage {
 		this.unsubscribeAll();
 	}
 
+	unselectOrder() {
+		this.store.selectedOrder = null;
+		localStorage.removeItem('orderId');
+		this.navCtrl.navigateRoot('/main/home');
+	}
+
 	private unsubscribeAll() {
 		if (this.carrier$) {
 			this.carrier$.unsubscribe();
@@ -180,10 +183,6 @@ export class DriveToWarehousePage {
 		if (this.order$) {
 			this.order$.unsubscribe();
 		}
-	}
-
-	private unselectOrder() {
-		localStorage.removeItem('orderId');
 	}
 
 	private unselectDriveToWarehouseFrom() {

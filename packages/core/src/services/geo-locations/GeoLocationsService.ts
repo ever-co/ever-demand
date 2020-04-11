@@ -29,12 +29,26 @@ export class GeoLocationsService implements IGeoLocationsRouter, IService {
 		lat: number,
 		lng: number
 	): Promise<any | null> {
+		if (!this.arcgisClientID || !this.arcgisClientSecret) {
+			this.log.info(
+				`Cannot use getAddressByCoordinatesUsingArcGIS without${
+					this.arcgisClientID ? '' : ' arcgisClientID'
+				}${this.arcgisClientSecret ? '' : ' arcgisClientSecret'}`
+			);
+
+			return null;
+		}
+
 		try {
 			this.log.info(
 				`Attempt to reverse Geocode coordinates: ${lat},${lng}`
 			);
 
-			const tokenRequestUrl = `https://www.arcgis.com/sharing/oauth2/token?client_id=${this.arcgisClientID}&client_secret=${this.arcgisClientSecret}&grant_type=client_credentials&f=json`;
+			const tokenRequestUrl = `https://www.arcgis.com/sharing/oauth2/token?client_id=${
+				this.arcgisClientID
+			}&client_secret=${
+				this.arcgisClientSecret
+			}&grant_type=client_credentials&f=json`;
 
 			const tokenResult = await axios.get(tokenRequestUrl);
 
@@ -44,7 +58,9 @@ export class GeoLocationsService implements IGeoLocationsRouter, IService {
 				!tokenResult.data['access_token']
 			) {
 				this.log.info(
-					`Cannot get arcgis token with client_id=${this.arcgisClientID}, client_secret=${this.arcgisClientSecret}`
+					`Cannot get arcgis token with client_id=${
+						this.arcgisClientID
+					}, client_secret=${this.arcgisClientSecret}`
 				);
 				return null;
 			} else {

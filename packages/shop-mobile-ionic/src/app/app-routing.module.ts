@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes, Router } from '@angular/router';
+import { RouterModule, Routes, Router, ExtraOptions } from '@angular/router';
 import { PagesModuleGuard } from './pages/pages.module.guard';
 import { MaintenanceModuleGuard } from './maintenance-info/maintenance-info.module.guard';
 import { Store } from './services/store.service';
@@ -27,16 +27,22 @@ const routes: Routes = [
 	}
 ];
 
+const config: ExtraOptions = {
+	useHash: true,
+	enableTracing: true
+};
+
 @NgModule({
-	imports: [RouterModule.forRoot(routes)],
+	// imports: [RouterModule.forRoot(routes, config)],
+    imports: [RouterModule.forRoot(routes)],
 	exports: [RouterModule]
 })
 export class AppRoutingModule {
 	constructor(private store: Store, private router: Router) {
-		const serverConnection = Number(this.store.serverConnection);
+		// const serverConnection = Number(this.store.serverConnection);
 
-		if (serverConnection === 0) {
-			this.router.navigate(['server-down']);
-		}
+		// if (serverConnection === 0) {
+        //  	this.router.navigate(['server-down']);
+		// }
 	}
 }

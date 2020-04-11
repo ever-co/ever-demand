@@ -20,7 +20,10 @@ export class GeoLocationOrdersResolver {
 			geoLocation: IGeoLocation;
 			skippedOrderIds: string[];
 			options: GeoLocationOrdersOptions;
-			searchObj?: { byRegex: Array<{ key: string; value: string }> };
+			searchObj?: {
+				isCancelled?: boolean;
+				byRegex?: Array<{ key: string; value: string }>;
+			};
 		}
 	) {
 		const orders = await this.geoLocationsOrdersService.getOrdersForWork(

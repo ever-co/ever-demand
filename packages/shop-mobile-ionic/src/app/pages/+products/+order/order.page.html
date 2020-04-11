@@ -132,9 +132,13 @@
 				<button
 					class="button button-assertive col-100"
 					(click)="closePopup()"
+					[ngSwitch]="order?.isCancelled"
 					dir="{{ 'CURRENT_DIRECTION' | translate }}"
 				>
-					<span>{{ 'BUY_POPUP.BUTTONS.END' | translate }}</span>
+					<span *ngSwitchCase="false"
+						>{{ 'BUY_POPUP.BUTTONS.END' | translate }}</span
+					>
+					<span *ngSwitchCase="true">{{ 'OK' | translate}}</span>
 				</button>
 			</span>
 		</div>
