@@ -153,6 +153,7 @@ interface IOrder extends IOrderCreateObject, DBRawObject {
 	warehouseStatus: OrderWarehouseStatus;
 	carrierStatus: OrderCarrierStatus;
 	orderNumber: number;
+	totalPrice?: number;
 }
 
 export default IOrder;

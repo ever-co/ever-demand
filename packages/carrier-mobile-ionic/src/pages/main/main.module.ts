@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { MainPage } from './main';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
+import { CommonModule } from '@angular/common';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { TranslateModule } from '@ngx-translate/core';
 import { GeoLocationService } from '../../services/geo-location.service';
@@ -51,6 +52,7 @@ const routes: Routes = [
 @NgModule({
 	declarations: [MainPage],
 	imports: [
+		CommonModule,
 		IonicModule,
 		RouterModule.forChild(routes),
 		TranslateModule.forChild()

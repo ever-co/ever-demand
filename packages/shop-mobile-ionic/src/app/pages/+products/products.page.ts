@@ -44,7 +44,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 	changePage: boolean;
 
 	private readonly ngDestroy$ = new Subject<void>();
-	private getOrdersGeoObj: { loc: ILocation };
+	getOrdersGeoObj: { loc: ILocation };
 	private lastLoadProductsCount: number;
 	private lastImageOrientation: number;
 	private productsLocale: string;
@@ -233,7 +233,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 		}
 	}
 
-	private async loadProducts(options = {}) {
+	async loadProducts(options = {}) {
 		this.store.deliveryType = this.isDeliveryRequired
 			? DeliveryType.Delivery
 			: DeliveryType.Takeaway;

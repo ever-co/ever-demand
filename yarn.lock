@@ -2057,7 +2057,7 @@
     "@angular/platform-browser-dynamic" "^9.1.0"
     "@angular/router" "^9.1.0"
     "@angular/service-worker" "^9.1.0"
-    "@ever-platform/common" "file:../../../Users/evere/AppData/Local/Yarn/Cache/v6/npm-@ever-platform-common-angular-0.3.0-3289b93a-5ef6-4a9d-8969-c0a054bf58a5-1586642915012/node_modules/@ever-platform/common"
+    "@ever-platform/common" "file:../../../Library/Caches/Yarn/v6/npm-@ever-platform-common-angular-0.3.0-cf0ea462-64e5-4e80-b8fc-e2348d9d26bc-1586714971339/node_modules/@ever-platform/common"
     tslib "^1.10.0"
     zone.js "~0.10.2"
 
@@ -16520,17 +16520,17 @@ graphql-import@^0.7.1:
     lodash "^4.17.4"
     resolve-from "^4.0.0"
 
-graphql-playground-html@^1.6.15:
-  version "1.6.15"
-  resolved "https://registry.yarnpkg.com/graphql-playground-html/-/graphql-playground-html-1.6.15.tgz#f86e8d9c027a046e113746913c3e96429f991e2c"
-  integrity sha512-yRTKAOybHD6Lcb2/u4jkSkBzcz+Ppje8NmQuA0jn8Ou9T44qjm4vVwqkOW5ciugR/t4s5NilaWgvdbPMocfS6g==
+graphql-playground-html@^1.6.19:
+  version "1.6.19"
+  resolved "https://registry.yarnpkg.com/graphql-playground-html/-/graphql-playground-html-1.6.19.tgz#3883ecf5e8c18b3c0f08145b5417b9c01a1f0bef"
+  integrity sha512-cLAqoOlxHbGj/LBpr4l2BE9qXf3g8ShjQqU2daVueITI/3wIkcDQTaQaQp+HWv0uaX0dCsgMCFW/TooLj8yJOg==
 
 graphql-playground-middleware-express@^1.7.12:
-  version "1.7.13"
-  resolved "https://registry.yarnpkg.com/graphql-playground-middleware-express/-/graphql-playground-middleware-express-1.7.13.tgz#d187a43ac6507b1d601de818e5d3317b7e4256a5"
-  integrity sha512-dsB+3JSRGkaSE5GIZHKuOhAw0Ay/vXsqDiLPQNiu9vKg7291heA9g3jZHuDkGuHnsMzgFSNCHb6ovcN7KU4xpw==
+  version "1.7.14"
+  resolved "https://registry.yarnpkg.com/graphql-playground-middleware-express/-/graphql-playground-middleware-express-1.7.14.tgz#19ec806c54e3d8c213e1bf00088e9e236f49b258"
+  integrity sha512-EqoAhbRBd7rEEEDFfvECQVmZnC4cOEmRc5goiiZldozt2GZB2UBK3/7p0DAtflg6S1w6SNUR8Tg9cDLjiL1Dew==
   dependencies:
-    graphql-playground-html "^1.6.15"
+    graphql-playground-html "^1.6.19"
 
 graphql-query-complexity@^0.3.0:
   version "0.3.0"
@@ -22178,7 +22178,7 @@ node-object-hash@^2.0.0:
   resolved "https://registry.yarnpkg.com/node-object-hash/-/node-object-hash-2.0.0.tgz#9971fcdb7d254f05016bd9ccf508352bee11116b"
   integrity sha512-VZR0zroAusy1ETZMZiGeLkdu50LGjG5U1KHZqTruqtTyQ2wfWhHG2Ow4nsUbfTFGlaREgNHcCWoM/OzEm6p+NQ==
 
-node-pre-gyp@*, node-pre-gyp@0.14.0:
+node-pre-gyp@0.14.0:
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.14.0.tgz#9a0596533b877289bcad4e143982ca3d904ddc83"
   integrity sha512-+CvDC7ZttU/sSt9rFjix/P05iS43qHCOOGzcr3Ry99bXG7VX953+vFyEuph/tfqoYu8dttBkE86JSKBO2OzcxA==
@@ -29856,9 +29856,9 @@ typedarray@^0.0.6:
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
 typedoc-default-themes@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/typedoc-default-themes/-/typedoc-default-themes-0.10.0.tgz#f1a13a24c136967ebd0f127614c2955f9ebd5b26"
-  integrity sha512-FV3Fct86EXTuW8f6E7F4ntM/BrBD5u7E+b96MIfiDWh3S14V+b+nNO+XzL0pQTBzF7PT63qHuwhrEBUk8XuqKA==
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/typedoc-default-themes/-/typedoc-default-themes-0.10.1.tgz#eb27b7d689457c7ec843e47ec0d3e500581296a7"
+  integrity sha512-SuqAQI0CkwhqSJ2kaVTgl37cWs733uy9UGUqwtcds8pkFK8oRF4rZmCq+FXTGIb9hIUOu40rf5Kojg0Ha6akeg==
   dependencies:
     lunr "^2.3.8"
 

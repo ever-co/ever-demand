@@ -7,8 +7,8 @@ $h: 570px;
 	.modal-wrapper {
 		width: $w;
 		height: $h;
-		left: calc(50% - ($w / 2));
-		top: calc(50% - ($h / 2));
+		left: calc(50% - (#{$w} / 2));
+		top: calc(50% - (#{$h} / 2));
 
 		carrier-track-popup {
 			border: 1px solid rgba(0, 0, 0, 0.125);

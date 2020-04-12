@@ -32,11 +32,11 @@
 				<ion-col class="text-content" clsss="col-6">
 					<div>
 						<h2 class="text">
-							{{ localeTranslate(product.product.title) }}
+							{{ localeTranslate(product.product?.title) }}
 						</h2>
 						<h6 class="productDescription">
 							{{
-							shortenDescription(localeTranslate(product.product.description))
+							shortenDescription(localeTranslate(product.product?.description))
 							}}
 						</h6>
 					</div>

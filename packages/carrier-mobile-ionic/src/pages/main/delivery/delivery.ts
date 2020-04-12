@@ -11,7 +11,7 @@ import { GeoLocationService } from '../../../services/geo-location.service';
 import { MapComponent } from '../common/map/map.component';
 import { Router } from '@angular/router';
 import { Store } from 'services/store.service';
-import { first, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 declare var google: any;

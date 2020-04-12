@@ -94,7 +94,7 @@
 		"@ionic/pro": "^2.0.4",
 		"@ionic/storage": "^2.2.0",
 		"@ng-select/ng-select": "^3.0.5",
-		"@ngx-translate/core": "^11.0.1",
+		"@ngx-translate/core": "^12.1.2",
 		"@ngx-translate/http-loader": "^4.0.0",
 		"angular2-wizard": "^0.4.0",
 		"apollo-angular": "^1.6.0",

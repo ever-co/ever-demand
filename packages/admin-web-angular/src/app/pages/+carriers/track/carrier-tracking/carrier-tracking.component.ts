@@ -21,7 +21,7 @@ import { WarehousesService } from '@app/@core/data/warehouses.service';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { ICarrierCreateObject } from '@modules/server.common/interfaces/ICarrier';
 import { takeUntil } from 'rxjs/operators';
-import 'rxjs/add/operator/takeUntil';
+
 
 declare var google: any;
 const directionsDisplay = new google.maps.DirectionsRenderer();
@@ -68,12 +68,12 @@ export class CarrierTrackingComponent implements OnInit, OnDestroy {
 	getCarriers() {
 		this._storesService
 			.getStores()
-			.takeUntil(this.ngDestroy$)
+			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe((stores) => {
 				this.stores = stores;
 				this.carriersService
 					.getAllCarriers()
-					.takeUntil(this.ngDestroy$)
+					.pipe(takeUntil(this.ngDestroy$))
 					.subscribe((carriers) => {
 						this.carriers = carriers.filter(
 							(carrier) => carrier.status === 0

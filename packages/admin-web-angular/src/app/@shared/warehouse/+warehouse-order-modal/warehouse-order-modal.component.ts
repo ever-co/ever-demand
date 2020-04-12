@@ -17,7 +17,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { takeUntil } from 'rxjs/operators';
-import 'rxjs/add/operator/takeUntil';
+
 
 @Component({
 	selector: 'ea-warehouse-order-modal',
@@ -255,7 +255,9 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 						childInstance: WarehouseOrderInputComponent
 					) => {
 						childInstance.amount
-							.takeUntil(this._ngDestroy$)
+							.pipe(
+								takeUntil(this._ngDestroy$)
+							)
 							.subscribe((count) => {
 								const wProduct = this._orderProducts.find(
 									({ productId }) =>

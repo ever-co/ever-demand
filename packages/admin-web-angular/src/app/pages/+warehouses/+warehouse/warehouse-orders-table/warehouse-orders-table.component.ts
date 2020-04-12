@@ -22,7 +22,7 @@ import { ElapsedComponent } from '../../../../@shared/render-component/warehouse
 import { DatePipe } from '@angular/common';
 import { WarehouseOrderComponent } from '../+warehouse-order/warehouse-order.component';
 import { takeUntil } from 'rxjs/operators';
-import 'rxjs/add/operator/takeUntil';
+
 
 @Component({
 	selector: 'ea-warehouse-orders-table',
@@ -68,7 +68,7 @@ export class WarehouseOrdersTableComponent
 		);
 
 		(modalRef.componentInstance as WarehouseOrderComponent).orderFinishedEmitter
-			.takeUntil(this._ngDestroy$)
+			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe(() => {
 				modalRef.close();
 			});

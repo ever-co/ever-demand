@@ -26,7 +26,7 @@ export class AllOrdersComponent implements OnInit, OnDestroy, OnChanges {
 	onUpdateWarehouseStatus: any;
 
 	@Input()
-	orderState: () => void;
+	orderState: (Order) => void;
 
 	@Input()
 	focusedOrder: Order;

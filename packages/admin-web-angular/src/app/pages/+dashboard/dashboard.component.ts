@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DashboardInfoViewModel } from '@app/models/DashboardInfoViewModel';
 import { IExistingCustomersViewModel } from '@app/models/IExistingCustomersViewModel';
 import { takeUntil } from 'rxjs/operators';
-import 'rxjs/add/operator/takeUntil';
+
 
 @Component({
 	selector: 'ea-dashboard',
@@ -157,7 +157,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	private _listenTotalStores() {
 		this._storesService
 			.getStores()
-			.takeUntil(this._ngDestroy$)
+			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe((stores) => {
 				this.stores = stores;
 			});
@@ -176,7 +176,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 		this.isChartPanelOrdersLoad = true;
 		this.chartPanelOrders = await this._ordersService.getOrdersChartTotalOrdersNew();
 		this.isChartPanelOrdersLoad = false;
-		// .takeUntil(this._ngDestroy$)
+		// .pipe(takeUntil(this._ngDestroy$))
 		// .subscribe((orders) => {
 		// 	if (!this.hasSelectedStore) {
 		// 		this.chartPanelOrders = orders;
@@ -203,7 +203,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 		// Old logic for orders info
 		// this._ordersService
 		// 	.getDashboardCompletedOrders()
-		// 	.takeUntil(this._ngDestroy$)
+		// 	.pipe(takeUntil(this._ngDestroy$))
 		// 	.subscribe((orders) => {
 		// 		this.completedOrders = orders;
 		// 		if (this.hasSelectedStore) {
@@ -235,7 +235,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 		this._ordersService
 			.getDashboardCompletedOrdersToday()
-			.takeUntil(this._ngDestroy$)
+			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe((orders) => {
 				this.completedOrdersToday = orders;
 
@@ -256,7 +256,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 		this._storesService
 			.getCountExistingCustomers()
-			.takeUntil(this._ngDestroy$)
+			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe((existingCustomers) => {
 				this.existingCustomers = existingCustomers;
 
@@ -272,7 +272,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 		this._storesService
 			.getCountExistingCustomersToday()
-			.takeUntil(this._ngDestroy$)
+			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe((existingCustomersToday) => {
 				this.existingCustomersToday = existingCustomersToday;
 

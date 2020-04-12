@@ -19,7 +19,7 @@ import { ToasterService } from 'angular2-toaster';
 import { ChartsPanelComponent } from '../charts-panel.component';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import 'rxjs/add/operator/takeUntil';
+
 
 @Component({
 	selector: 'ea-chart-panel-header',
@@ -153,7 +153,7 @@ export class ChartPanelHeaderComponent implements OnInit, OnDestroy {
 	}
 
 	private _listenClearRangeFromParent() {
-		this.clearRangeFromParent.takeUntil(this._ngDestroy$).subscribe(() => {
+		this.clearRangeFromParent.pipe(takeUntil(this._ngDestroy$)).subscribe(() => {
 			this.isDateRangeSelected = false;
 		});
 	}
@@ -185,7 +185,7 @@ export class ChartPanelHeaderComponent implements OnInit, OnDestroy {
 
 	private _listenForPreservedRanges() {
 		this.preservedRangeEvent
-			.takeUntil(this._ngDestroy$)
+			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe(({ from, to }: { from: Date; to: Date }) => {
 				const fromYear = from.getFullYear().toString();
 				let fromMonth = (from.getMonth() + 1).toString();

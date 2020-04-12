@@ -30,7 +30,7 @@ export class RelevantOrdersComponent
 	onUpdateWarehouseStatus: any;
 
 	@Input()
-	orderState: () => void;
+	orderState: (Order) => void;
 
 	@Input()
 	focusedOrder: Order;
