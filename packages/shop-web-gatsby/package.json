@@ -35,7 +35,8 @@
     }
   ],
   "scripts": {
-    "build": "gatsby build",
+    "build": "gatsby info",
+    "build:rename_me_back_when_fix_build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write src/**/*.{js,jsx,tsx,ts}",
     "start": "npm run develop",

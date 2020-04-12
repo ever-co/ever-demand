@@ -16,15 +16,16 @@ import { ImageUserComponent } from '../../components/users-table/image';
 import { OrdersService } from '../../../src/services/orders.service';
 import { Store } from '../../../src/services/store.service';
 import { ModalController } from '@ionic/angular';
-import { takeUntil } from 'rxjs/operators';
 import { CustomerAddrPopupPage } from './customer-addr-popup/customer-addr-popup';
 import { ConfirmDeletePopupPage } from 'components/confirm-delete-popup/confirm-delete-popup';
 import { WarehouseOrdersService } from 'services/warehouse-orders.service';
+import { takeUntil } from 'rxjs/operators';
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
 	selector: 'page-customers',
 	templateUrl: 'customers.html',
-	styleUrls: ['./customers.scss']
+	styleUrls: ['./customers.scss'],
 })
 export class CustomersPage implements OnDestroy {
 	orders: Order[];
@@ -91,7 +92,7 @@ export class CustomersPage implements OnDestroy {
 		const modal = await this._modalCtrl.create({
 			component: UserMutationComponent,
 			componentProps: { user },
-			cssClass: 'customer-add-wrapper'
+			cssClass: 'customer-add-wrapper',
 		});
 
 		await modal.present();
@@ -102,7 +103,7 @@ export class CustomersPage implements OnDestroy {
 			const orderCreateInput: IOrderCreateInput = {
 				warehouseId: this.warehouseId,
 				userId,
-				products: []
+				products: [],
 			};
 
 			await this.warehouseOrdersRouter.create(orderCreateInput);
@@ -113,7 +114,7 @@ export class CustomersPage implements OnDestroy {
 		const modal = await this._modalCtrl.create({
 			component: CustomerAddrPopupPage,
 			componentProps: { user: e.data.user },
-			cssClass: 'customer-address-popup'
+			cssClass: 'customer-address-popup',
 		});
 		await modal.present();
 	}
@@ -122,7 +123,7 @@ export class CustomersPage implements OnDestroy {
 		const modal = await this._modalCtrl.create({
 			component: ConfirmDeletePopupPage,
 			componentProps: { data: e.data },
-			cssClass: 'confirm-delete-wrapper'
+			cssClass: 'confirm-delete-wrapper',
 		});
 
 		await modal.present();
@@ -205,7 +206,7 @@ export class CustomersPage implements OnDestroy {
 						phone: userInfo.user.phone,
 						addresses: userInfo.user.geoLocation.city,
 						orders: userInfo.ordersCount,
-						total: userInfo.totalPrice
+						total: userInfo.totalPrice,
 					};
 				}
 			);
@@ -254,62 +255,62 @@ export class CustomersPage implements OnDestroy {
 						mode: 'external',
 						edit: {
 							editButtonContent: '<i class="fa fa-edit"></i>',
-							confirmEdit: true
+							confirmEdit: true,
 						},
 						delete: {
 							deleteButtonContent: '<i class="fa fa-trash"></i>',
-							confirmDelete: true
+							confirmDelete: true,
 						},
 						actions: {
 							custom: [
 								{
 									name: 'track',
-									title: '<i class="fa fa-map-marker"></i>'
-								}
-							]
+									title: '<i class="fa fa-map-marker"></i>',
+								},
+							],
 						},
 						columns: {
 							image: {
 								title: image,
 								type: 'custom',
 								renderComponent: ImageUserComponent,
-								filter: false
+								filter: false,
 							},
 							name: { title: name },
 							phone: {
 								title: phone,
 								type: 'custom',
-								renderComponent: UserPhoneComponent
+								renderComponent: UserPhoneComponent,
 							},
 							addresses: {
 								title: addresses,
 								type: 'custom',
-								renderComponent: AddressComponent
+								renderComponent: AddressComponent,
 							},
 							orders: {
 								title: orders,
 								class: 'text-center',
 								type: 'custom',
-								renderComponent: OrdersComponent
+								renderComponent: OrdersComponent,
 							},
 							total: {
 								title: total,
 								class: 'text-center',
 								type: 'custom',
-								renderComponent: TotalComponent
+								renderComponent: TotalComponent,
 							},
 							email: {
 								title: email,
 								class: 'text-center',
 								filter: false,
 								type: 'custom',
-								renderComponent: EmailComponent
-							}
+								renderComponent: EmailComponent,
+							},
 						},
 						pager: {
 							display: true,
-							perPage: 14
-						}
+							perPage: 14,
+						},
 					};
 				}
 			);

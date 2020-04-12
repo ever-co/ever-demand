@@ -34,7 +34,7 @@ module.exports = {
 				// This is field under which it's accessible
 				fieldName: 'ever',
 				// Url to query from
-				url: process.env.GQL_ENDPOINT,
+				url: process.env.GQL_ENDPOINT || 'http://localhost:8000/___graphql',
 			},
 		},
 		{

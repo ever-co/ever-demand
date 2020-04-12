@@ -1,6 +1,6 @@
-import * as connect from 'connect';
-import * as path from 'path';
-import * as serveStatic from 'serve-static';
+import connect from 'connect';
+import path from 'path';
+import serveStatic from 'serve-static';
 import { env } from './scripts/env';
 
 const port: number = env.PORT;

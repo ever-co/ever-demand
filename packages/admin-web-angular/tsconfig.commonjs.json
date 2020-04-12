@@ -1,11 +1,13 @@
 {
 	"extends": "../../tsconfig.base.json",
+	"compileOnSave": false,
 	"compilerOptions": {
 		"module": "commonjs",
+		"target": "es6",
 		"baseUrl": "./src",
+		"experimentalDecorators": true,
 		"outDir": "./build",
 		"rootDir": "./",
-		"target": "es6",
 		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"],
 		"paths": {
 			"@angular/*": ["../node_modules/@angular/*"],
