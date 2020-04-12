@@ -16,7 +16,7 @@ module.exports = {
 	watch: false,
 	externals: [
 		nodeExternals({
-			whitelist: ['webpack/hot/poll?100']
+			modulesDir: path.resolve(__dirname, '../../node_modules'),
 		})
 	],
 	target: 'node',
@@ -24,47 +24,40 @@ module.exports = {
 		rules: [
 			{
 				test: /\.graphql?$/,
-				loader: 'webpack-graphql-loader'
+				loader: 'webpack-graphql-loader',
+			},
+			{
+				test: /\.mjs$/,
+				include: /node_modules/,
+				type: 'javascript/auto',
 			},
 			{
 				test: /\.(ts|tsx)?$/,
-				use: {
-					loader: 'ts-loader',
-					options: {
-						transpileOnly: false
-					}
-				},
-				include: [
-					path.resolve('./src'),
-					path.resolve('./node_modules/@ever-platform/common')
-				]
+				loader: 'ts-loader',
+    		options: { allowTsInNodeModules: true }
 			}
-		]
+			
+		],
 	},
 	mode,
 	devtool,
 	resolve: {
-		modules: ['node_modules'],
 		extensions: ['.tsx', '.ts', '.js'],
 		symlinks: false,
 		alias: {
-			'@modules/server.common': path.resolve(
-				'./node_modules/@ever-platform/common/src'
-			),
+			'@modules/server.common': path.resolve('./node_modules/@ever-platform/common/src'),
 			'@pyro/io': path.resolve('./src/@pyro/io'),
 			'@pyro/db-server': path.resolve('./src/@pyro/db-server'),
-			'@pyro': path.resolve(
-				'./node_modules/@ever-platform/common/src/@pyro/'
-			)
-		}
+			'@pyro': path.resolve('./node_modules/@ever-platform/common/src/@pyro/'),
+		},
 	},
 	plugins: [
-		new webpack.HotModuleReplacementPlugin()
+		new webpack.HotModuleReplacementPlugin(),
 		// new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]),
 		// new ForkTsCheckerWebpackPlugin({ tslint: true })
 	],
 	output: {
 		path: path.join(__dirname, 'dist'),
-		filename: 'server.js'
-	}
+		filename: 'server.js',
+	},
 };
