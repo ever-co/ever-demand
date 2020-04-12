@@ -4,7 +4,7 @@ import {
 	FormBuilder,
 	FormControl,
 	FormGroup,
-	Validators
+	Validators,
 } from '@angular/forms';
 import { IWarehouseCreateObject } from '@modules/server.common/interfaces/IWarehouse';
 import { map, first } from 'rxjs/operators';
@@ -24,12 +24,14 @@ export type WarehouseBasicInfo = Pick<
 	| 'username'
 	| 'hasRestrictedCarriers'
 	| 'carriersIds'
+	| 'useOnlyRestrictedCarriersForDelivery'
+	| 'preferRestrictedCarriersForDelivery'
 >;
 
 @Component({
 	selector: 'ea-warehouse-basic-info-form',
 	styleUrls: ['basic-info-form.component.scss'],
-	templateUrl: 'basic-info-form.component.html'
+	templateUrl: 'basic-info-form.component.html',
 })
 export class BasicInfoFormComponent implements OnInit {
 	@ViewChild('fileInput', { static: true })
@@ -44,6 +46,8 @@ export class BasicInfoFormComponent implements OnInit {
 
 	carriersOptions: IMultiSelectOption[];
 
+	private _delivery: 'all' | 'onlyStore' | 'preferStore' = 'all';
+
 	static buildForm(formBuilder: FormBuilder): FormGroup {
 		// would be used in the parent component and injected into this.form
 		return formBuilder.group({
@@ -52,8 +56,8 @@ export class BasicInfoFormComponent implements OnInit {
 				[
 					Validators.required,
 					Validators.minLength(3),
-					Validators.maxLength(255)
-				]
+					Validators.maxLength(255),
+				],
 			],
 			logo: [
 				'',
@@ -71,14 +75,16 @@ export class BasicInfoFormComponent implements OnInit {
 							}
 						}
 						return null;
-					}
-				]
+					},
+				],
 			],
 			isActive: [true, [Validators.required]],
 			username: ['', [Validators.required]],
 
 			hasRestrictedCarriers: [false, [Validators.required]],
-			carriersIds: [[]]
+			useOnlyRestrictedCarriersForDelivery: [false],
+			preferRestrictedCarriersForDelivery: [false],
+			carriersIds: [[]],
 		});
 	}
 
@@ -95,6 +101,8 @@ export class BasicInfoFormComponent implements OnInit {
 
 			hasRestrictedCarriers: boolean;
 			carriersIds: string[];
+			useOnlyRestrictedCarriersForDelivery: boolean;
+			preferRestrictedCarriersForDelivery: boolean;
 		};
 
 		if (!basicInfo.logo) {
@@ -110,22 +118,56 @@ export class BasicInfoFormComponent implements OnInit {
 			...(basicInfo.hasRestrictedCarriers
 				? {
 						hasRestrictedCarriers: basicInfo.hasRestrictedCarriers,
-						carriersIds: basicInfo.carriersIds
+						carriersIds: basicInfo.carriersIds,
 				  }
-				: {})
+				: {}),
+			...(basicInfo.hasRestrictedCarriers &&
+			basicInfo.carriersIds &&
+			basicInfo.carriersIds.length
+				? {
+						useOnlyRestrictedCarriersForDelivery:
+							basicInfo.useOnlyRestrictedCarriersForDelivery,
+						preferRestrictedCarriersForDelivery:
+							basicInfo.preferRestrictedCarriersForDelivery,
+				  }
+				: {
+						useOnlyRestrictedCarriersForDelivery: false,
+						preferRestrictedCarriersForDelivery: false,
+				  }),
 		};
 	}
 
 	setValue<T extends WarehouseBasicInfo>(basicInfo: T) {
 		FormHelpers.deepMark(this.form, 'dirty');
 
+		basicInfo = Object.assign(
+			{
+				useOnlyRestrictedCarriersForDelivery: false,
+				preferRestrictedCarriersForDelivery: false,
+			},
+			basicInfo
+		);
+
 		this.form.setValue(
 			pick(basicInfo, [
 				...Object.keys(this.getValue()),
 				'hasRestrictedCarriers',
-				'carriersIds'
+				'carriersIds',
+				'useOnlyRestrictedCarriersForDelivery',
+				'preferRestrictedCarriersForDelivery',
 			])
 		);
+
+		const onlyStore = basicInfo.useOnlyRestrictedCarriersForDelivery;
+		const preferStore = basicInfo.preferRestrictedCarriersForDelivery;
+
+		if (onlyStore) {
+			this.delivery = 'onlyStore';
+		} else if (preferStore) {
+			this.delivery = 'preferStore';
+		} else {
+			this.delivery = 'all';
+		}
 	}
 
 	getPassword(): string {
@@ -169,6 +211,33 @@ export class BasicInfoFormComponent implements OnInit {
 		return this.form.get('carriersIds');
 	}
 
+	get useOnlyRestrictedCarriersForDelivery() {
+		return this.form.get('useOnlyRestrictedCarriersForDelivery');
+	}
+
+	get preferRestrictedCarriersForDelivery() {
+		return this.form.get('preferRestrictedCarriersForDelivery');
+	}
+
+	get delivery() {
+		return this._delivery;
+	}
+
+	set delivery(value) {
+		this._delivery = value;
+		this.useOnlyRestrictedCarriersForDelivery.setValue(false);
+		this.preferRestrictedCarriersForDelivery.setValue(false);
+
+		switch (value) {
+			case 'onlyStore':
+				this.useOnlyRestrictedCarriersForDelivery.setValue(true);
+				break;
+			case 'preferStore':
+				this.preferRestrictedCarriersForDelivery.setValue(true);
+				break;
+		}
+	}
+
 	get showLogoMeta() {
 		return this.logo && this.logo.value !== '';
 	}
@@ -188,9 +257,7 @@ export class BasicInfoFormComponent implements OnInit {
 			.pipe(first())
 			.toPromise();
 
-		this.uploaderPlaceholder = `${res['WAREHOUSE_VIEW.MUTATION.PHOTO']} (${
-			res['OPTIONAL']
-		})`;
+		this.uploaderPlaceholder = `${res['WAREHOUSE_VIEW.MUTATION.PHOTO']} (${res['OPTIONAL']})`;
 	}
 
 	private async loadCarriersOptions() {
@@ -204,7 +271,7 @@ export class BasicInfoFormComponent implements OnInit {
 		this.carriersOptions = carriers.map((c) => {
 			return {
 				id: c.id,
-				name: `${c.firstName} ${c.lastName}`
+				name: `${c.firstName} ${c.lastName}`,
 			};
 		});
 	}

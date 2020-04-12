@@ -1,12 +1,12 @@
 import IWarehouseProduct, {
-	IWarehouseProductCreateObject
+	IWarehouseProductCreateObject,
 } from './IWarehouseProduct';
 import IGeoLocation, { IGeoLocationCreateObject } from './IGeoLocation';
 import { DBCreateObject, DBRawObject, PyroObjectId } from '../@pyro/db';
 import ForwardOrdersMethod from '../enums/ForwardOrdersMethod';
 import OrderBarcodeTypes from '../enums/OrderBarcodeTypes';
 import IPaymentGatewayCreateObject, {
-	IPaymentGateway
+	IPaymentGateway,
 } from './IPaymentGateway';
 
 export interface IWarehouseCreateObject extends DBCreateObject {
@@ -124,6 +124,8 @@ export interface IWarehouseCreateObject extends DBCreateObject {
 	productsTakeaway?: boolean;
 	orderBarcodeType?: OrderBarcodeTypes;
 	barcodeData?: string;
+	useOnlyRestrictedCarriersForDelivery?: boolean;
+	preferRestrictedCarriersForDelivery?: boolean;
 }
 
 interface IWarehouse extends IWarehouseCreateObject, DBRawObject {
@@ -138,6 +140,8 @@ interface IWarehouse extends IWarehouseCreateObject, DBRawObject {
 	hasRestrictedCarriers: boolean;
 	barcodeData?: string;
 	paymentGateways?: IPaymentGateway[];
+	useOnlyRestrictedCarriersForDelivery?: boolean;
+	preferRestrictedCarriersForDelivery?: boolean;
 }
 
 export default IWarehouse;

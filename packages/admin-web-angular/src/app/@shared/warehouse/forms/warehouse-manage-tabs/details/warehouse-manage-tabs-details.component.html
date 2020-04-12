@@ -154,5 +154,31 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- TODO add translate -->
+		<div
+			*ngIf="hasRestrictedCarriers.value && carriersIds?.value.length"
+			class="form-group row"
+		>
+			<label class="col-sm-2 control-label">Delivery</label>
+
+			<div class="col-sm-9">
+				<nb-radio-group
+					[(value)]="delivery"
+					class="row m-0"
+					name="size"
+				>
+					<nb-radio name="size" [value]="'all'">
+						Use All Carriers
+					</nb-radio>
+					<nb-radio name="size" [value]="'onlyStore'">
+						Use Only Store Carriers
+					</nb-radio>
+					<nb-radio name="size" [value]="'preferStore'">
+						Prefer Store Carriers
+					</nb-radio>
+				</nb-radio-group>
+			</div>
+		</div>
 	</fieldset>
 </div>

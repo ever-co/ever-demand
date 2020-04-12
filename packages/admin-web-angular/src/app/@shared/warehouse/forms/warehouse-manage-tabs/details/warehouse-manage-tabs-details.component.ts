@@ -4,13 +4,13 @@ import {
 	ViewChild,
 	ElementRef,
 	AfterViewInit,
-	OnInit
+	OnInit,
 } from '@angular/core';
 import {
 	AbstractControl,
 	FormBuilder,
 	FormGroup,
-	Validators
+	Validators,
 } from '@angular/forms';
 import { IWarehouseCreateObject } from '@modules/server.common/interfaces/IWarehouse';
 import { map, first } from 'rxjs/operators';
@@ -32,12 +32,14 @@ export type WarehouseManageTabsDetails = Pick<
 	| 'carriersIds'
 	| 'isManufacturing'
 	| 'isCarrierRequired'
+	| 'useOnlyRestrictedCarriersForDelivery'
+	| 'preferRestrictedCarriersForDelivery'
 >;
 
 @Component({
 	selector: 'ea-warehouse-manage-tabs-details',
 	styleUrls: ['./warehouse-manage-tabs-details.component.scss'],
-	templateUrl: './warehouse-manage-tabs-details.component.html'
+	templateUrl: './warehouse-manage-tabs-details.component.html',
 })
 export class WarehouseManageTabsDetailsComponent
 	implements OnInit, AfterViewInit {
@@ -60,12 +62,14 @@ export class WarehouseManageTabsDetailsComponent
 					.map((c) => {
 						return {
 							id: c.id,
-							name: `${c.firstName} ${c.lastName}`
+							name: `${c.firstName} ${c.lastName}`,
 						};
 					})
 			)
 		)
 	);
+
+	private _delivery: 'all' | 'onlyStore' | 'preferStore' = 'all';
 
 	constructor(
 		private readonly _carrierRouter: CarrierRouter,
@@ -99,6 +103,33 @@ export class WarehouseManageTabsDetailsComponent
 		return this.form.get('isCarrierRequired');
 	}
 
+	get useOnlyRestrictedCarriersForDelivery() {
+		return this.form.get('useOnlyRestrictedCarriersForDelivery');
+	}
+
+	get preferRestrictedCarriersForDelivery() {
+		return this.form.get('preferRestrictedCarriersForDelivery');
+	}
+
+	get delivery() {
+		return this._delivery;
+	}
+
+	set delivery(value) {
+		this._delivery = value;
+		this.useOnlyRestrictedCarriersForDelivery.setValue(false);
+		this.preferRestrictedCarriersForDelivery.setValue(false);
+
+		switch (value) {
+			case 'onlyStore':
+				this.useOnlyRestrictedCarriersForDelivery.setValue(true);
+				break;
+			case 'preferStore':
+				this.preferRestrictedCarriersForDelivery.setValue(true);
+				break;
+		}
+	}
+
 	static buildForm(formBuilder: FormBuilder): FormGroup {
 		// would be used in the parent component and injected into this.form
 		return formBuilder.group({
@@ -107,8 +138,8 @@ export class WarehouseManageTabsDetailsComponent
 				[
 					Validators.required,
 					Validators.minLength(3),
-					Validators.maxLength(255)
-				]
+					Validators.maxLength(255),
+				],
 			],
 			logo: [
 				'',
@@ -121,14 +152,16 @@ export class WarehouseManageTabsDetailsComponent
 						}
 
 						return null;
-					}
-				]
+					},
+				],
 			],
 			isActive: [true, [Validators.required]],
 			isManufacturing: [true, [Validators.required]],
 			isCarrierRequired: [true, [Validators.required]],
 			hasRestrictedCarriers: [false, [Validators.required]],
-			carriersIds: [[]]
+			useOnlyRestrictedCarriersForDelivery: [false],
+			preferRestrictedCarriersForDelivery: [false],
+			carriersIds: [[]],
 		});
 	}
 
@@ -149,6 +182,8 @@ export class WarehouseManageTabsDetailsComponent
 			isCarrierRequired: boolean;
 			hasRestrictedCarriers: boolean;
 			carriersIds: string[];
+			useOnlyRestrictedCarriersForDelivery: boolean;
+			preferRestrictedCarriersForDelivery: boolean;
 		};
 
 		return {
@@ -160,22 +195,56 @@ export class WarehouseManageTabsDetailsComponent
 			...(basicInfo.hasRestrictedCarriers
 				? {
 						hasRestrictedCarriers: basicInfo.hasRestrictedCarriers,
-						carriersIds: basicInfo.carriersIds
+						carriersIds: basicInfo.carriersIds,
 				  }
-				: {})
+				: {}),
+			...(basicInfo.hasRestrictedCarriers &&
+			basicInfo.carriersIds &&
+			basicInfo.carriersIds.length
+				? {
+						useOnlyRestrictedCarriersForDelivery:
+							basicInfo.useOnlyRestrictedCarriersForDelivery,
+						preferRestrictedCarriersForDelivery:
+							basicInfo.preferRestrictedCarriersForDelivery,
+				  }
+				: {
+						useOnlyRestrictedCarriersForDelivery: false,
+						preferRestrictedCarriersForDelivery: false,
+				  }),
 		};
 	}
 
 	setValue<T extends WarehouseManageTabsDetails>(basicInfo: T) {
 		FormHelpers.deepMark(this.form, 'dirty');
 
+		basicInfo = Object.assign(
+			{
+				useOnlyRestrictedCarriersForDelivery: false,
+				preferRestrictedCarriersForDelivery: false,
+			},
+			basicInfo
+		);
+
 		this.form.setValue(
 			_.pick(basicInfo, [
 				...Object.keys(this.getValue()),
 				'hasRestrictedCarriers',
-				'carriersIds'
+				'carriersIds',
+				'useOnlyRestrictedCarriersForDelivery',
+				'preferRestrictedCarriersForDelivery',
 			])
 		);
+
+		const onlyStore = basicInfo.useOnlyRestrictedCarriersForDelivery;
+		const preferStore = basicInfo.preferRestrictedCarriersForDelivery;
+
+		if (onlyStore) {
+			this.delivery = 'onlyStore';
+		} else if (preferStore) {
+			this.delivery = 'preferStore';
+		} else {
+			this.delivery = 'all';
+		}
 	}
 
 	deleteImg() {
