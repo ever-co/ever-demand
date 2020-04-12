@@ -3,7 +3,7 @@ import {
 	EventEmitter,
 	Input,
 	OnDestroy,
-	OnInit
+	OnInit,
 } from '@angular/core';
 import { WarehouseViewModel } from '../../../../models/WarehouseViewModel';
 import { WarehousesService } from '../../../../@core/data/warehouses.service';
@@ -15,15 +15,15 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import { ToasterService } from 'angular2-toaster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatest, Subject } from 'rxjs';
+import { first, takeUntil } from 'rxjs/operators';
 import _ from 'lodash';
-import { first } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 
 @Component({
 	selector: 'ea-customer-stores',
 	styleUrls: ['./ea-customer-stores.component.scss'],
-	templateUrl: './ea-customer-stores.component.html'
+	templateUrl: './ea-customer-stores.component.html',
 })
 export class CustomerStoresComponent implements OnInit, OnDestroy {
 	@Input()
@@ -72,7 +72,7 @@ export class CustomerStoresComponent implements OnInit, OnDestroy {
 	createWarehouseModel() {
 		this._modalService.open(WarehouseMutationComponent, {
 			size: 'lg',
-			container: 'nb-layout'
+			container: 'nb-layout',
 		});
 	}
 
@@ -120,14 +120,15 @@ export class CustomerStoresComponent implements OnInit, OnDestroy {
 				phone: warehouse.contactPhone || noInfoSign,
 				city: warehouse.geoLocation.city || noInfoSign,
 				address: `
-					St. ${warehouse.geoLocation.streetAddress || noInfoSign}, House № ${warehouse
-					.geoLocation.house || noInfoSign}
+					St. ${warehouse.geoLocation.streetAddress || noInfoSign}, House № ${
+					warehouse.geoLocation.house || noInfoSign
+				}
 				`,
 				ordersQty: merchantOrders ? merchantOrders.ordersCount : 0,
 				actions: {
 					actionName: 'Order',
-					actionOwnerId: this.currentUser.id
-				}
+					actionOwnerId: this.currentUser.id,
+				},
 			};
 		});
 
@@ -141,7 +142,7 @@ export class CustomerStoresComponent implements OnInit, OnDestroy {
 		};
 
 		const {
-			loc: { type, coordinates }
+			loc: { type, coordinates },
 		} = this.currentUser.geoLocation;
 		const geoInput = { loc: { type, coordinates } } as GeoLocation;
 

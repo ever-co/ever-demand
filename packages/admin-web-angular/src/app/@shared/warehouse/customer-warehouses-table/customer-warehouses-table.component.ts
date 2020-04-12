@@ -4,7 +4,7 @@ import {
 	EventEmitter,
 	Input,
 	OnInit,
-	OnDestroy
+	OnDestroy,
 } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { WarehouseViewModel } from '../../../models/WarehouseViewModel';
@@ -13,11 +13,12 @@ import { Subject, forkJoin, Observable } from 'rxjs';
 import { RedirectNameComponent } from '../../render-component/name-redirect/name-redirect.component';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
 	selector: 'ea-customer-warehouses-table',
 	styleUrls: ['./customer-warehouses-table.component.scss'],
-	templateUrl: './customer-warehouses-table.component.html'
+	templateUrl: './customer-warehouses-table.component.html',
 })
 export class CustomerWarehousesTableComponent
 	implements OnInit, AfterViewInit, OnDestroy {
@@ -92,7 +93,7 @@ export class CustomerWarehousesTableComponent
 					city,
 					address,
 					orderQTY,
-					actions
+					actions,
 				]) => {
 					this.settingsSmartTable = {
 						actions: false,
@@ -104,7 +105,7 @@ export class CustomerWarehousesTableComponent
 								renderComponent: RedirectNameComponent,
 								onComponentInitFunction: (instance) => {
 									instance.redirectPage = 'stores';
-								}
+								},
 							},
 							email: { title: email },
 							phone: { title: phone },
@@ -115,21 +116,19 @@ export class CustomerWarehousesTableComponent
 								type: 'html',
 								filter: false,
 								valuePrepareFunction: (_, vm) =>
-									`<span class="badge badge-secondary">${
-										vm.ordersQty
-									}</span>`
+									`<span class="badge badge-secondary">${vm.ordersQty}</span>`,
 							},
 							actions: {
 								title: actions,
 								filter: false,
 								type: 'custom',
-								renderComponent: WarehouseOrderComponent
-							}
+								renderComponent: WarehouseOrderComponent,
+							},
 						},
 						pager: {
 							display: true,
-							perPage: 3
-						}
+							perPage: 3,
+						},
 					};
 				}
 			);

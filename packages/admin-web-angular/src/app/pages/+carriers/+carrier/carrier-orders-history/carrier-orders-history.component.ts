@@ -5,7 +5,7 @@ import {
 	OnChanges,
 	OnDestroy,
 	Output,
-	AfterViewInit
+	AfterViewInit,
 } from '@angular/core';
 
 import Order from '@modules/server.common/entities/Order';
@@ -18,19 +18,20 @@ import _ from 'lodash';
 import { forkJoin, Observable, Subscription } from 'rxjs';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Subject } from 'rxjs/Rx';
-import { takeUntil, first } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { CreatedComponent } from '../../../../@shared/render-component/created/created.component';
 import { CarriersOrdersService } from '@app/@core/data/carriers-orders.service';
 import { StoreOrderComponent } from '@app/@shared/render-component/carrier-orders-table/store-order.component';
 import { UserOrderComponent } from '@app/@shared/render-component/carrier-orders-table/user-order-component';
+import { takeUntil, first } from 'rxjs/operators';
+import 'rxjs/add/operator/takeUntil';
 
 const perPage = 3;
 
 @Component({
 	selector: 'ea-carrier-orders-history',
 	templateUrl: '/carrier-orders-history.component.html',
-	styleUrls: ['./carrier-orders-history.component.scss']
+	styleUrls: ['./carrier-orders-history.component.scss'],
 })
 export class CarrierOrdersHistoryComponent
 	implements OnDestroy, OnChanges, AfterViewInit {
@@ -142,7 +143,7 @@ export class CarrierOrdersHistoryComponent
 					customer,
 					warehouseStatus,
 					carrierStatus,
-					created
+					created,
 				]) => {
 					this.settingsSmartTable = {
 						actions: false,
@@ -151,13 +152,13 @@ export class CarrierOrdersHistoryComponent
 								title: merchant,
 								type: 'custom',
 								renderComponent: StoreOrderComponent,
-								width: '20%'
+								width: '20%',
 							},
 							Customer: {
 								title: customer,
 								type: 'custom',
 								renderComponent: UserOrderComponent,
-								width: '20%'
+								width: '20%',
 							},
 							WarehouseStatus: {
 								title: warehouseStatus,
@@ -171,7 +172,7 @@ export class CarrierOrdersHistoryComponent
 										});
 
 									return warehouseStat;
-								}
+								},
 							},
 							CarrierStatus: {
 								title: carrierStatus,
@@ -185,18 +186,18 @@ export class CarrierOrdersHistoryComponent
 										});
 
 									return carrierStat;
-								}
+								},
 							},
 							Created: {
 								title: created,
 								type: 'custom',
-								renderComponent: CreatedComponent
-							}
+								renderComponent: CreatedComponent,
+							},
 						},
 						pager: {
 							display: true,
-							perPage: 3
-						}
+							perPage: 3,
+						},
 					};
 				}
 			);
@@ -229,7 +230,7 @@ export class CarrierOrdersHistoryComponent
 			.getCarrierOrdersHistory(this.selectedCarrier.id, {
 				sort: 'desc',
 				skip: perPage * (page - 1),
-				limit: perPage
+				limit: perPage,
 			})
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe((orders: Order[]) => {

@@ -4,19 +4,21 @@ import { ProfitChartComponent } from './charts/profit-chart/profit-chart.compone
 import { TranslateService } from '@ngx-translate/core';
 import {
 	OrdersChart,
-	OrdersChartService
+	OrdersChartService,
 } from '@app/@core/services/dashboard/orders-chart.service';
 import { ProfitChart } from '@app/@core/services/dashboard/profit-chart.service';
+import { Subject } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
 import {
 	OrdersProfitChartService,
-	OrderProfitChartSummary
+	OrderProfitChartSummary,
 } from '@app/@core/services/dashboard/orders-profit-chart.service';
 import Order from '@modules/server.common/entities/Order';
 import { PeriodsService } from '@app/@core/services/dashboard/periods.service';
-import { Subject } from 'rxjs';
 import { DashboardLoadingIndicatorState } from '@app/models/DashboardLoadingIndicatorState';
 import { toDate } from '@modules/server.common/utils';
+import { takeUntil } from 'rxjs/operators';
+import 'rxjs/add/operator/takeUntil';
 
 interface IOrdersChartModel {
 	total: any;
@@ -27,7 +29,7 @@ interface IOrdersChartModel {
 @Component({
 	selector: 'ea-ecommerce-charts',
 	styleUrls: ['./charts-panel.component.scss'],
-	templateUrl: './charts-panel.component.html'
+	templateUrl: './charts-panel.component.html',
 })
 export class ChartsPanelComponent implements OnInit, OnDestroy {
 	preservedRanges$ = new Subject<{ from: Date; to: Date }>();
@@ -59,11 +61,11 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 
 	private _yearsLabelRange = {
 		from: null as number,
-		to: null as number
+		to: null as number,
 	};
 	private _dateLabelRange = {
 		from: null as Date,
-		to: null as Date
+		to: null as Date,
 	};
 
 	private _orders: Order[] = [];
@@ -127,7 +129,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 			rangeDays: 'range days', // 1 - 27 days
 			rangeWeeks: 'range weeks', // 28 - 60 days
 			rangeMonths: 'range months', // 60 - 365 days
-			rangeYears: 'range years' // more than 365 days
+			rangeYears: 'range years', // more than 365 days
 		};
 	}
 
@@ -153,7 +155,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 			),
 			TOTAL_REVENUE_CANCELLED_ORDERS_OVER_PERIOD: this._translate(
 				`${rootPrefix}.TOTAL_LOST_REVENUE_CANCELLED_ORDERS`
-			)
+			),
 		};
 	}
 
@@ -161,7 +163,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		return {
 			chartPanelSummary: (isLoading) =>
 				(this.loading.chartPanelSummary = isLoading),
-			chart: (isLoading) => (this.loading.chart = isLoading)
+			chart: (isLoading) => (this.loading.chart = isLoading),
 		};
 	}
 
@@ -186,7 +188,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 	selectDateRangeOrderCharts({
 		fromDate,
 		toDate,
-		daysDiff
+		daysDiff,
 	}: {
 		fromDate: Date;
 		toDate: Date;
@@ -250,20 +252,20 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 			values: {
 				total: {
 					title: this._translations.TOTAL_ORDERS_OVER_PERIOD,
-					value: this._chartPanelSummaryTotal
+					value: this._chartPanelSummaryTotal,
 				},
 				completed: {
 					title: this._translations
 						.TOTAL_COMPLETED_ORDERS_OVER_PERIOD,
-					value: this._chartPanelSummaryCompleted
+					value: this._chartPanelSummaryCompleted,
 				},
 				cancelled: {
 					title: this._translations
 						.TOTAL_CANCELLED_ORDERS_OVER_PERIOD,
-					value: this._chartPanelSummaryCancelled
-				}
+					value: this._chartPanelSummaryCancelled,
+				},
 			},
-			isPrice: false
+			isPrice: false,
 		});
 	}
 
@@ -272,20 +274,20 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 			values: {
 				total: {
 					title: this._translations.TOTAL_REVENUE_OVER_PERIOD,
-					value: this._chartPanelSummaryTotal
+					value: this._chartPanelSummaryTotal,
 				},
 				completed: {
 					title: this._translations
 						.TOTAL_REVENUE_COMPLETED_ORDERS_OVER_PERIOD,
-					value: this._chartPanelSummaryCompleted
+					value: this._chartPanelSummaryCompleted,
 				},
 				cancelled: {
 					title: this._translations
 						.TOTAL_REVENUE_CANCELLED_ORDERS_OVER_PERIOD,
-					value: this._chartPanelSummaryCancelled
-				}
+					value: this._chartPanelSummaryCancelled,
+				},
 			},
-			isPrice: true
+			isPrice: true,
 		});
 	}
 
@@ -300,7 +302,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 	private _resetYearsLabelRange() {
 		this._yearsLabelRange = {
 			from: Number.MAX_SAFE_INTEGER,
-			to: new Date().getFullYear()
+			to: new Date().getFullYear(),
 		};
 	}
 
@@ -1664,7 +1666,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				hours.length,
 				hours
 			),
-			linesData: initialLinesData
+			linesData: initialLinesData,
 		};
 
 		Object.keys(this._ordersToday.total).forEach((key) => {
@@ -1696,7 +1698,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				weeksDays.length,
 				weeksDays
 			),
-			linesData: initialLinesData
+			linesData: initialLinesData,
 		};
 
 		Object.keys(this._ordersLastWeek.total).forEach((key) => {
@@ -1728,7 +1730,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				dates.length,
 				dates
 			),
-			linesData: initialLinesData
+			linesData: initialLinesData,
 		};
 
 		// Because the dates strat from 1 but array indexes start from 0 and we use dates for indexing.
@@ -1765,7 +1767,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				months.length,
 				months
 			),
-			linesData: initialLinesData
+			linesData: initialLinesData,
 		};
 
 		Object.keys(this._ordersCurrentYear.total).forEach((key) => {
@@ -1796,7 +1798,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				years.length,
 				years
 			),
-			linesData: initialLinesData
+			linesData: initialLinesData,
 		};
 
 		const indexByKey = this._generageIndexesByKeys(years);
@@ -1827,7 +1829,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				labels.length,
 				labels
 			),
-			linesData: initialLinesData
+			linesData: initialLinesData,
 		};
 
 		const indexByKey = this._generageIndexesByKeys(keys);
@@ -1859,7 +1861,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				labels.length,
 				labels
 			),
-			linesData: initialLinesData
+			linesData: initialLinesData,
 		};
 
 		const indexByKey = this._generageIndexesByKeys(keys);
@@ -1890,7 +1892,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				labels.length,
 				labels
 			),
-			linesData: initialLinesData
+			linesData: initialLinesData,
 		};
 
 		const indexByKey = this._generageIndexesByKeys(keys);
@@ -1918,7 +1920,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				years.length,
 				years
 			),
-			linesData: initialLinesData
+			linesData: initialLinesData,
 		};
 
 		const indexByKey = this._generageIndexesByKeys(years);
@@ -1946,7 +1948,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				hours.length,
 				hours
 			),
-			data: initialLinesData
+			data: initialLinesData,
 		};
 
 		Object.keys(this._ordersToday.total).forEach((key) => {
@@ -1978,7 +1980,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				weeks.length,
 				weeks
 			),
-			data: initialLinesData
+			data: initialLinesData,
 		};
 
 		Object.keys(this._ordersLastWeek.total).forEach((key) => {
@@ -2010,7 +2012,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				dates.length,
 				dates
 			),
-			data: initialLinesData
+			data: initialLinesData,
 		};
 
 		// Because the dates strat from 1 but array indexes start from 0 and we use dates for indexing.
@@ -2045,7 +2047,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				months.length,
 				months
 			),
-			data: initialLinesData
+			data: initialLinesData,
 		};
 
 		Object.keys(this._ordersCurrentYear.total).forEach((key) => {
@@ -2072,7 +2074,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				years.length,
 				years
 			),
-			data: initialLinesData
+			data: initialLinesData,
 		};
 
 		const indexByKey = this._generageIndexesByKeys(years);
@@ -2103,7 +2105,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				labels.length,
 				labels
 			),
-			data: initialLinesData
+			data: initialLinesData,
 		};
 
 		const indexByKey = this._generageIndexesByKeys(keys);
@@ -2135,7 +2137,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				labels.length,
 				labels
 			),
-			data: initialLinesData
+			data: initialLinesData,
 		};
 
 		const indexByKey = this._generageIndexesByKeys(keys);
@@ -2166,7 +2168,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				labels.length,
 				labels
 			),
-			data: initialLinesData
+			data: initialLinesData,
 		};
 
 		const indexByKey = this._generageIndexesByKeys(keys);
@@ -2194,7 +2196,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				years.length,
 				years
 			),
-			data: initialLinesData
+			data: initialLinesData,
 		};
 
 		const indexByKey = this._generageIndexesByKeys(years);
@@ -2315,47 +2317,47 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		this._ordersToday = {
 			total: {},
 			cancelled: {},
-			completed: {}
+			completed: {},
 		};
 		this._ordersLastWeek = {
 			total: {},
 			cancelled: {},
-			completed: {}
+			completed: {},
 		};
 		this._ordersLastMonth = {
 			total: {},
 			cancelled: {},
-			completed: {}
+			completed: {},
 		};
 		this._ordersCurrentYear = {
 			total: {},
 			cancelled: {},
-			completed: {}
+			completed: {},
 		};
 		this._ordersYears = {
 			total: {},
 			cancelled: {},
-			completed: {}
+			completed: {},
 		};
 		this._ordersDateRange = {
 			total: {},
 			cancelled: {},
-			completed: {}
+			completed: {},
 		};
 		this._ordersWeeksRange = {
 			total: {},
 			cancelled: {},
-			completed: {}
+			completed: {},
 		};
 		this._ordersMonthsRange = {
 			total: {},
 			cancelled: {},
-			completed: {}
+			completed: {},
 		};
 		this._ordersYearsRange = {
 			total: {},
 			cancelled: {},
-			completed: {}
+			completed: {},
 		};
 	}
 
@@ -2412,7 +2414,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		return [
 			JSON.parse(JSON.stringify(dataRow)),
 			JSON.parse(JSON.stringify(dataRow)),
-			JSON.parse(JSON.stringify(dataRow))
+			JSON.parse(JSON.stringify(dataRow)),
 		];
 	}
 

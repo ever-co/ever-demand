@@ -5,7 +5,7 @@ import {
 	OnChanges,
 	OnDestroy,
 	Output,
-	AfterViewInit
+	AfterViewInit,
 } from '@angular/core';
 
 import Order from '@modules/server.common/entities/Order';
@@ -18,7 +18,6 @@ import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 import _ from 'lodash';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Subject, Observable } from 'rxjs/Rx';
-import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin, Subscription } from 'rxjs';
 import { CreatedComponent } from '../../../../@shared/render-component/created/created.component';
@@ -27,6 +26,8 @@ import { GeoLocationOrdersService } from '@app/@core/data/geo-location-orders.se
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { StoreOrderComponent } from '@app/@shared/render-component/carrier-orders-table/store-order.component';
 import { UserOrderComponent } from '@app/@shared/render-component/carrier-orders-table/user-order-component';
+import { takeUntil } from 'rxjs/operators';
+import 'rxjs/add/operator/takeUntil';
 
 const perPage = 3;
 let searchCustomer: boolean;
@@ -35,7 +36,7 @@ let oldSearch = '';
 @Component({
 	selector: 'ea-carrier-orders',
 	templateUrl: '/carrier-orders.component.html',
-	styleUrls: ['./carrier-orders.component.scss']
+	styleUrls: ['./carrier-orders.component.scss'],
 })
 export class CarrierOrdersComponent
 	implements OnDestroy, OnChanges, AfterViewInit {
@@ -99,10 +100,10 @@ export class CarrierOrdersComponent
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(async (searchText: string) => {
 				await this.loadDataCount({
-					byRegex: [{ key: 'user.firstName', value: searchText }]
+					byRegex: [{ key: 'user.firstName', value: searchText }],
 				});
 				await this.loadSmartTableData(1, {
-					byRegex: [{ key: 'user.firstName', value: searchText }]
+					byRegex: [{ key: 'user.firstName', value: searchText }],
 				});
 			});
 	}
@@ -241,7 +242,7 @@ export class CarrierOrdersComponent
 					customer,
 					warehouseStatus,
 					carrierStatus,
-					created
+					created,
 				]) => {
 					this.settingsSmartTable = {
 						actions: false,
@@ -250,7 +251,7 @@ export class CarrierOrdersComponent
 								title: warehouse,
 								type: 'custom',
 								renderComponent: StoreOrderComponent,
-								width: '20%'
+								width: '20%',
 							},
 							Customer: {
 								title: customer,
@@ -278,7 +279,7 @@ export class CarrierOrdersComponent
 									}
 
 									return true;
-								}
+								},
 							},
 							WarehouseStatus: {
 								title: warehouseStatus,
@@ -292,7 +293,7 @@ export class CarrierOrdersComponent
 										});
 
 									return warehouseStat;
-								}
+								},
 							},
 							CarrierStatus: {
 								title: carrierStatus,
@@ -306,18 +307,18 @@ export class CarrierOrdersComponent
 										});
 
 									return carrierStat;
-								}
+								},
 							},
 							Created: {
 								title: created,
 								type: 'custom',
-								renderComponent: CreatedComponent
-							}
+								renderComponent: CreatedComponent,
+							},
 						},
 						pager: {
 							display: true,
-							perPage
-						}
+							perPage,
+						},
 					};
 				}
 			);
@@ -329,8 +330,8 @@ export class CarrierOrdersComponent
 		const getOrdersGeoObj = {
 			loc: {
 				type: 'Point',
-				coordinates: this.selectedCarrier.geoLocation.loc.coordinates
-			}
+				coordinates: this.selectedCarrier.geoLocation.loc.coordinates,
+			},
 		};
 		this.dataCount = await this.geoLocationOrdersService.getCountOfOrdersForWork(
 			getOrdersGeoObj as GeoLocation,
@@ -346,8 +347,8 @@ export class CarrierOrdersComponent
 		const getOrdersGeoObj = {
 			loc: {
 				type: 'Point',
-				coordinates: this.selectedCarrier.geoLocation.loc.coordinates
-			}
+				coordinates: this.selectedCarrier.geoLocation.loc.coordinates,
+			},
 		};
 
 		if (this.$locationOrders) {
@@ -360,7 +361,7 @@ export class CarrierOrdersComponent
 				this.selectedCarrier.skippedOrderIds,
 				{
 					skip: perPage * (page - 1),
-					limit: perPage
+					limit: perPage,
 				},
 				searchObj
 			)

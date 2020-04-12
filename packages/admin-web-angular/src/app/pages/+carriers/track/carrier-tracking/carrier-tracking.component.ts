@@ -5,7 +5,7 @@ import {
 	EventEmitter,
 	ViewChild,
 	OnInit,
-	OnDestroy
+	OnDestroy,
 } from '@angular/core';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { Subject, Subscription } from 'rxjs';
@@ -20,6 +20,8 @@ import { FormsModule } from '@angular/forms';
 import { WarehousesService } from '@app/@core/data/warehouses.service';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { ICarrierCreateObject } from '@modules/server.common/interfaces/ICarrier';
+import { takeUntil } from 'rxjs/operators';
+import 'rxjs/add/operator/takeUntil';
 
 declare var google: any;
 const directionsDisplay = new google.maps.DirectionsRenderer();
@@ -28,7 +30,7 @@ const directionsService = new google.maps.DirectionsService();
 @Component({
 	selector: 'ea-carrier-tracking',
 	styleUrls: ['carrier-tracking.component.scss'],
-	templateUrl: 'carrier-tracking.component.html'
+	templateUrl: 'carrier-tracking.component.html',
 })
 export class CarrierTrackingComponent implements OnInit, OnDestroy {
 	private ngDestroy$ = new Subject();
@@ -97,11 +99,11 @@ export class CarrierTrackingComponent implements OnInit, OnDestroy {
 	carrierListener(e) {
 		if (this.selectedStore) {
 			this.router.navigate([
-				`carriers/track/${this.selectedStore.id}/${this.selectedCarrier.id}`
+				`carriers/track/${this.selectedStore.id}/${this.selectedCarrier.id}`,
 			]);
 		} else {
 			this.router.navigate([
-				`carriers/track/1/${this.selectedCarrier.id}`
+				`carriers/track/1/${this.selectedCarrier.id}`,
 			]);
 		}
 	}
@@ -170,7 +172,7 @@ export class CarrierTrackingComponent implements OnInit, OnDestroy {
 		const mapProp = {
 			center: new google.maps.LatLng(42.642941, 23.334149),
 			zoom: 15,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
 		};
 		this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
 	}
@@ -179,7 +181,7 @@ export class CarrierTrackingComponent implements OnInit, OnDestroy {
 		return new google.maps.Marker({
 			position,
 			map,
-			icon
+			icon,
 		});
 	}
 

@@ -3,11 +3,10 @@ import {
 	OnInit,
 	OnDestroy,
 	OnChanges,
-	AfterViewInit
+	AfterViewInit,
 } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Subject, Observable, forkJoin } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
@@ -15,18 +14,20 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import Order from '@modules/server.common/entities/Order';
 import {
 	ordersFilter,
-	OrdersFilterModes
+	OrdersFilterModes,
 } from '../../../ordersFilter/ordersFilter';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { RedirectOrderComponent } from '../../../../@shared/render-component/customer-orders-table/redirect-order.component';
 import { ElapsedComponent } from '../../../../@shared/render-component/warehouse-table/elapsed/elapsed.component';
 import { DatePipe } from '@angular/common';
 import { WarehouseOrderComponent } from '../+warehouse-order/warehouse-order.component';
+import { takeUntil } from 'rxjs/operators';
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
 	selector: 'ea-warehouse-orders-table',
 	styleUrls: ['./warehouse-orders-table.component.scss'],
-	templateUrl: './warehouse-orders-table.component.html'
+	templateUrl: './warehouse-orders-table.component.html',
 })
 export class WarehouseOrdersTableComponent
 	implements OnInit, OnDestroy, OnChanges, AfterViewInit {
@@ -62,7 +63,7 @@ export class WarehouseOrdersTableComponent
 				size: 'lg',
 				container: 'nb-layout',
 				windowClass: 'ng-custom',
-				backdrop: 'static'
+				backdrop: 'static',
 			}
 		);
 
@@ -135,7 +136,7 @@ export class WarehouseOrdersTableComponent
 						carrierStatusText,
 						carrier,
 						created,
-						elapsed
+						elapsed,
 					]) => {
 						data.push({
 							id: order.id,
@@ -162,7 +163,7 @@ export class WarehouseOrdersTableComponent
 								: '',
 							status: warehouseStatusText,
 							carrierStatusHtml: `<div class="badge badge-secondary">${carrierStatusText}</div>`,
-							created: formatted
+							created: formatted,
 						});
 					}
 				);
@@ -215,7 +216,7 @@ export class WarehouseOrdersTableComponent
 					status,
 					carrier,
 					created,
-					elapsed
+					elapsed,
 				]) => {
 					this.settingsSmartTable = {
 						actions: false,
@@ -223,13 +224,13 @@ export class WarehouseOrdersTableComponent
 							orderNumber: {
 								title: orderNumber,
 								type: 'custom',
-								renderComponent: RedirectOrderComponent
+								renderComponent: RedirectOrderComponent,
 							},
 							product: { title: product, type: 'html' },
 							status: {
 								title: status,
 								type: 'string',
-								width: '30px'
+								width: '30px',
 							},
 							carrierStatusHtml: { title: carrier, type: 'html' },
 							created: { title: created, type: 'string' },
@@ -237,13 +238,13 @@ export class WarehouseOrdersTableComponent
 								title: elapsed,
 								filter: false,
 								type: 'custom',
-								renderComponent: ElapsedComponent
-							}
+								renderComponent: ElapsedComponent,
+							},
 						},
 						pager: {
 							display: true,
-							perPage: 3
-						}
+							perPage: 3,
+						},
 					};
 				}
 			);

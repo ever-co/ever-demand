@@ -3,7 +3,7 @@ import {
 	OnDestroy,
 	AfterViewInit,
 	ViewChild,
-	OnChanges
+	OnChanges,
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -19,10 +19,8 @@ import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import {
 	ordersFilter,
-	OrdersFilterModes
+	OrdersFilterModes,
 } from '../../ordersFilter/ordersFilter';
-import { Subject, forkJoin, Observable } from 'rxjs';
-import { takeUntil, first } from 'rxjs/operators';
 import { WarehouseProductCreateComponent } from '../../../@shared/warehouse-product/warehouse-product-create';
 import { ElapsedComponent } from '../../../@shared/render-component/warehouse-table/elapsed/elapsed.component';
 import { WarehouseOrderComponent } from './+warehouse-order/warehouse-order.component';
@@ -31,13 +29,16 @@ import { ProductsTableComponent } from './products-table/products-table.componen
 import { WarehouseSelectViewComponent } from './warehouse-select-view/warehouse-select-view.component';
 import { WarehouseOrdersService } from '@app/@core/data/warehouseOrders.service';
 import { StatusComponent } from '@app/@shared/render-component/warehouse-table/status/status.component';
+import { Subject, forkJoin, Observable } from 'rxjs';
+import { takeUntil, first } from 'rxjs/operators';
+import 'rxjs/add/operator/takeUntil';
 
 const perPage = 3;
 
 @Component({
 	selector: 'ea-warehouse',
 	templateUrl: './warehouse.component.html',
-	styleUrls: ['./warehouse.component.scss']
+	styleUrls: ['./warehouse.component.scss'],
 })
 export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 	private ngDestroy$ = new Subject<void>();
@@ -98,7 +99,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 				size: 'lg',
 				container: 'nb-layout',
 				windowClass: 'ng-custom',
-				backdrop: 'static'
+				backdrop: 'static',
 			}
 		);
 
@@ -162,7 +163,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 				size: 'lg',
 				container: 'nb-layout',
 				backdrop: 'static',
-				windowClass: 'ng-custom'
+				windowClass: 'ng-custom',
 			}
 		);
 		const modalComponent: WarehouseProductCreateComponent =
@@ -194,7 +195,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 				id,
 				{
 					skip: perPage * (page - 1),
-					limit: perPage
+					limit: perPage,
 				},
 				status
 			)
@@ -240,7 +241,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 					paid,
 					cancelled,
 					created,
-					elapsed
+					elapsed,
 				]) => {
 					this.settingsSmartTable = {
 						actions: false,
@@ -249,18 +250,18 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 								title: orderNumber,
 								type: 'custom',
 								renderComponent: RedirectOrderComponent,
-								width: '100px'
+								width: '100px',
 							},
 							product: { title: product, type: 'html' },
 							status: {
 								title: status,
 								type: 'html',
-								width: '100px'
+								width: '100px',
 							},
 							carrierStatusHtml: {
 								title: carrier,
 								type: 'html',
-								width: '100px'
+								width: '100px',
 							},
 							paid: {
 								title: paid,
@@ -272,7 +273,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 									instance.text = paid;
 									instance.checkOrderField = 'isPaid';
 								},
-								width: '100px'
+								width: '100px',
 							},
 							cancelled: {
 								title: cancelled,
@@ -284,20 +285,20 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 									instance.text = cancelled;
 									instance.checkOrderField = 'isCancelled';
 								},
-								width: '100px'
+								width: '100px',
 							},
 							created: { title: created, type: 'string' },
 							elapsed: {
 								title: elapsed,
 								filter: false,
 								type: 'custom',
-								renderComponent: ElapsedComponent
-							}
+								renderComponent: ElapsedComponent,
+							},
 						},
 						pager: {
 							display: true,
-							perPage
-						}
+							perPage,
+						},
 					};
 				}
 			);
@@ -337,7 +338,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 						paid,
 						cancelled,
 						created,
-						elapsed
+						elapsed,
 					]) => {
 						data.push({
 							id: order.id,
@@ -368,7 +369,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 							carrierStatusHtml: `<div class="badge badge-secondary">${carrierStatusText}</div>`,
 							created: formatted,
 							orderType: order.orderType,
-							order
+							order,
 						});
 					}
 				);

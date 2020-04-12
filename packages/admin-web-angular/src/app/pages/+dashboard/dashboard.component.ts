@@ -9,11 +9,13 @@ import { DashboardLoadingIndicatorState } from '@app/models/DashboardLoadingIndi
 import { TranslateService } from '@ngx-translate/core';
 import { DashboardInfoViewModel } from '@app/models/DashboardInfoViewModel';
 import { IExistingCustomersViewModel } from '@app/models/IExistingCustomersViewModel';
+import { takeUntil } from 'rxjs/operators';
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
 	selector: 'ea-dashboard',
 	styleUrls: ['./dashboard.component.scss'],
-	templateUrl: './dashboard.component.html'
+	templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 	stores: Warehouse[] = [];
@@ -37,17 +39,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	averageRateCustomersToday = {
 		value: 0,
 		allStores: 0,
-		perStore: {} // => perStore[storeId]
+		perStore: {}, // => perStore[storeId]
 	};
 	averageRateOrdersToday = {
 		value: 0,
 		allStores: 0,
-		perStore: {}
+		perStore: {},
 	};
 	averageRateRevenueToday = {
 		value: 0,
 		allStores: 0,
-		perStore: {}
+		perStore: {},
 	};
 
 	private _ngDestroy$ = new Subject<void>();
@@ -75,7 +77,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 			revenue:
 				this.averageRateRevenueToday.value > maxPercentRate
 					? this._translations.labelBetterThanAverage
-					: this._translations.labelTillAverage
+					: this._translations.labelTillAverage,
 		};
 	}
 
@@ -91,7 +93,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 			),
 			labelBetterThanAverage: this._translate(
 				`${translationPrefix}.BETTER_THAN_AVERAGE`
-			)
+			),
 		};
 	}
 
@@ -109,7 +111,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 			todayOrders: (isLoading) =>
 				(this.loading.todayInfo.orders = isLoading),
 			todayRevenue: (isLoading) =>
-				(this.loading.todayInfo.revenue = isLoading)
+				(this.loading.todayInfo.revenue = isLoading),
 		};
 	}
 

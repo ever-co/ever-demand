@@ -6,24 +6,25 @@ import {
 	Output,
 	ViewChild,
 	ElementRef,
-	OnInit
+	OnInit,
 } from '@angular/core';
 import {
 	NbMediaBreakpoint,
 	NbMediaBreakpointsService,
-	NbThemeService
+	NbThemeService,
 } from '@nebular/theme';
 import { takeWhile } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { ToasterService } from 'angular2-toaster';
 import { ChartsPanelComponent } from '../charts-panel.component';
 import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import 'rxjs/add/operator/takeUntil';
 
 @Component({
 	selector: 'ea-chart-panel-header',
 	styleUrls: ['./chart-panel-header.component.scss'],
-	templateUrl: './chart-panel-header.component.html'
+	templateUrl: './chart-panel-header.component.html',
 })
 export class ChartPanelHeaderComponent implements OnInit, OnDestroy {
 	@Input()
@@ -135,7 +136,7 @@ export class ChartPanelHeaderComponent implements OnInit, OnDestroy {
 			this.customRangeDaysDiff.emit({
 				fromDate: from,
 				toDate: to,
-				daysDiff
+				daysDiff,
 			});
 
 			this._closeDateRangeDropdown();
@@ -161,24 +162,24 @@ export class ChartPanelHeaderComponent implements OnInit, OnDestroy {
 		this.types = [
 			{
 				key: ChartsPanelComponent._PERIODS.today,
-				value: this._translations.today
+				value: this._translations.today,
 			},
 			{
 				key: ChartsPanelComponent._PERIODS.lastWeek,
-				value: this._translations.lastWeek
+				value: this._translations.lastWeek,
 			},
 			{
 				key: ChartsPanelComponent._PERIODS.lastMonth,
-				value: this._translations.lastMonth
+				value: this._translations.lastMonth,
 			},
 			{
 				key: ChartsPanelComponent._PERIODS.currentYear,
-				value: this._translations.currentYear
+				value: this._translations.currentYear,
 			},
 			{
 				key: ChartsPanelComponent._PERIODS.years,
-				value: this._translations.years
-			}
+				value: this._translations.years,
+			},
 		];
 	}
 
@@ -220,16 +221,16 @@ export class ChartPanelHeaderComponent implements OnInit, OnDestroy {
 		this.chartLegend = [
 			{
 				iconColor: this.orderProfitLegend.firstItem,
-				title: this._translations.completed
+				title: this._translations.completed,
 			},
 			{
 				iconColor: this.orderProfitLegend.secondItem,
-				title: this._translations.canceled
+				title: this._translations.canceled,
 			},
 			{
 				iconColor: this.orderProfitLegend.thirdItem,
-				title: this._translations.totalOrders
-			}
+				title: this._translations.totalOrders,
+			},
 		];
 	}
 
@@ -289,7 +290,7 @@ export class ChartPanelHeaderComponent implements OnInit, OnDestroy {
 			totalOrders: this._translate(`${prefix}.ALL_ORDERS`),
 			canceled: this._translate(`${prefix}.CANCELED`),
 			completed: this._translate(`${prefix}.PAYMENT`),
-			selectPeriod: this._translate(`${prefix}.SELECT_PERIOD`)
+			selectPeriod: this._translate(`${prefix}.SELECT_PERIOD`),
 		};
 	}
 
