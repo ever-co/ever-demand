@@ -24,6 +24,8 @@ export type WarehouseBasicInfo = Pick<
 	| 'username'
 	| 'hasRestrictedCarriers'
 	| 'carriersIds'
+	| 'useOnlyRestrictedCarriersForDelivery'
+	| 'preferRestrictedCarriersForDelivery'
 >;
 
 @Component({
@@ -43,6 +45,8 @@ export class BasicInfoFormComponent implements OnInit {
 	uploaderPlaceholder: string;
 
 	carriersOptions: IMultiSelectOption[];
+
+	private _delivery: 'all' | 'onlyStore' | 'preferStore' = 'all';
 
 	static buildForm(formBuilder: FormBuilder): FormGroup {
 		// would be used in the parent component and injected into this.form
@@ -78,6 +82,8 @@ export class BasicInfoFormComponent implements OnInit {
 			username: ['', [Validators.required]],
 
 			hasRestrictedCarriers: [false, [Validators.required]],
+			useOnlyRestrictedCarriersForDelivery: [false],
+			preferRestrictedCarriersForDelivery: [false],
 			carriersIds: [[]]
 		});
 	}
@@ -95,6 +101,8 @@ export class BasicInfoFormComponent implements OnInit {
 
 			hasRestrictedCarriers: boolean;
 			carriersIds: string[];
+			useOnlyRestrictedCarriersForDelivery: boolean;
+			preferRestrictedCarriersForDelivery: boolean;
 		};
 
 		if (!basicInfo.logo) {
@@ -112,20 +120,54 @@ export class BasicInfoFormComponent implements OnInit {
 						hasRestrictedCarriers: basicInfo.hasRestrictedCarriers,
 						carriersIds: basicInfo.carriersIds
 				  }
-				: {})
+				: {}),
+			...(basicInfo.hasRestrictedCarriers &&
+			basicInfo.carriersIds &&
+			basicInfo.carriersIds.length
+				? {
+						useOnlyRestrictedCarriersForDelivery:
+							basicInfo.useOnlyRestrictedCarriersForDelivery,
+						preferRestrictedCarriersForDelivery:
+							basicInfo.preferRestrictedCarriersForDelivery
+				  }
+				: {
+						useOnlyRestrictedCarriersForDelivery: false,
+						preferRestrictedCarriersForDelivery: false
+				  })
 		};
 	}
 
 	setValue<T extends WarehouseBasicInfo>(basicInfo: T) {
 		FormHelpers.deepMark(this.form, 'dirty');
 
+		basicInfo = Object.assign(
+			{
+				useOnlyRestrictedCarriersForDelivery: false,
+				preferRestrictedCarriersForDelivery: false
+			},
+			basicInfo
+		);
+
 		this.form.setValue(
 			pick(basicInfo, [
 				...Object.keys(this.getValue()),
 				'hasRestrictedCarriers',
-				'carriersIds'
+				'carriersIds',
+				'useOnlyRestrictedCarriersForDelivery',
+				'preferRestrictedCarriersForDelivery'
 			])
 		);
+
+		const onlyStore = basicInfo.useOnlyRestrictedCarriersForDelivery;
+		const preferStore = basicInfo.preferRestrictedCarriersForDelivery;
+
+		if (onlyStore) {
+			this.delivery = 'onlyStore';
+		} else if (preferStore) {
+			this.delivery = 'preferStore';
+		} else {
+			this.delivery = 'all';
+		}
 	}
 
 	getPassword(): string {
@@ -167,6 +209,33 @@ export class BasicInfoFormComponent implements OnInit {
 
 	get carriersIds() {
 		return this.form.get('carriersIds');
+	}
+
+	get useOnlyRestrictedCarriersForDelivery() {
+		return this.form.get('useOnlyRestrictedCarriersForDelivery');
+	}
+
+	get preferRestrictedCarriersForDelivery() {
+		return this.form.get('preferRestrictedCarriersForDelivery');
+	}
+
+	get delivery() {
+		return this._delivery;
+	}
+
+	set delivery(value) {
+		this._delivery = value;
+		this.useOnlyRestrictedCarriersForDelivery.setValue(false);
+		this.preferRestrictedCarriersForDelivery.setValue(false);
+
+		switch (value) {
+			case 'onlyStore':
+				this.useOnlyRestrictedCarriersForDelivery.setValue(true);
+				break;
+			case 'preferStore':
+				this.preferRestrictedCarriersForDelivery.setValue(true);
+				break;
+		}
 	}
 
 	get showLogoMeta() {

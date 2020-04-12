@@ -301,6 +301,26 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	 */
 	@Schema([getSchema(PaymentGateway)])
 	paymentGateways?: PaymentGateway[];
+
+	/**
+	 * if true, only assigned carriers (in carriersIds) can be used for delivery
+	 *
+	 * @type {boolean}
+	 * @memberof Warehouse
+	 */
+	@Schema({ type: Boolean, required: false })
+	@Column()
+	useOnlyRestrictedCarriersForDelivery?: boolean;
+
+	/**
+	 * if true, assigned carriers (in carriersIds) will be prefer for delivery
+	 *
+	 * @type {boolean}
+	 * @memberof Warehouse
+	 */
+	@Schema({ type: Boolean, required: false })
+	@Column()
+	preferRestrictedCarriersForDelivery?: boolean;
 }
 
 export type WithFullProducts = Warehouse & {
