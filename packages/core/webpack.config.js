@@ -17,7 +17,7 @@ module.exports = {
 	externals: [
 		nodeExternals({
 			modulesDir: path.resolve(__dirname, '../../node_modules'),
-		})
+		}),
 	],
 	target: 'node',
 	module: {
@@ -34,9 +34,8 @@ module.exports = {
 			{
 				test: /\.(ts|tsx)?$/,
 				loader: 'ts-loader',
-    		options: { allowTsInNodeModules: true }
-			}
-			
+				options: { allowTsInNodeModules: true },
+			},
 		],
 	},
 	mode,
@@ -45,10 +44,14 @@ module.exports = {
 		extensions: ['.tsx', '.ts', '.js'],
 		symlinks: false,
 		alias: {
-			'@modules/server.common': path.resolve('./node_modules/@ever-platform/common/src'),
+			'@modules/server.common': path.resolve(
+				'./node_modules/@ever-platform/common/src'
+			),
 			'@pyro/io': path.resolve('./src/@pyro/io'),
 			'@pyro/db-server': path.resolve('./src/@pyro/db-server'),
-			'@pyro': path.resolve('./node_modules/@ever-platform/common/src/@pyro/'),
+			'@pyro': path.resolve(
+				'./node_modules/@ever-platform/common/src/@pyro/'
+			),
 		},
 	},
 	plugins: [
