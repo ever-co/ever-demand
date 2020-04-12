@@ -8,17 +8,17 @@ import {
 	Index,
 	ModelName,
 	Types,
-	getSchema
+	getSchema,
 } from '../@pyro/db';
 import _ from 'lodash';
-import IOrder from '../interfaces/IOrder';
+
 import OrderWarehouseStatus, {
-	warehouseStatusToString
+	warehouseStatusToString,
 } from '../enums/OrderWarehouseStatus';
 import OrderCarrierStatus, {
-	carrierStatusToString
+	carrierStatusToString,
 } from '../enums/OrderCarrierStatus';
-import { IOrderCreateObject } from '../interfaces/IOrder';
+import IOrder, { IOrderCreateObject } from '../interfaces/IOrder';
 import IWarehouse from '../interfaces/IWarehouse';
 import ICarrier from '../interfaces/ICarrier';
 import OrderStatus from '../enums/OrderStatus';

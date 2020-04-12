@@ -11,8 +11,7 @@ import { environment } from 'environments/environment';
 })
 export class AboutPage {
 	aboutHtml: string;
-
-	protected appVersion: string;
+	appVersion: string;
 
 	private _pageSubscriptions: Subscription[] = [];
 

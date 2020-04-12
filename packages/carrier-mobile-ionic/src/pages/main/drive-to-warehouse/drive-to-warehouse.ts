@@ -14,6 +14,7 @@ import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 import { GeoLocationService } from '../../../services/geo-location.service';
 import { MapComponent } from '../common/map/map.component';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 declare var google: any;
 
@@ -29,6 +30,7 @@ export class DriveToWarehousePage implements OnInit {
 	carrier: ICarrier;
 	carrierUserDistance: string;
 	workTaken: boolean;
+	fromDelivery: boolean;
 
 	carrier$;
 	order$;
@@ -40,7 +42,8 @@ export class DriveToWarehousePage implements OnInit {
 		private store: Store,
 		private geoLocationService: GeoLocationService,
 		private geolocation: Geolocation,
-		private router: Router
+		private router: Router,
+		private navCtrl: NavController
 	) {}
 
 	ngOnInit(): void {
