@@ -5,21 +5,21 @@ import {
 	Output,
 	ViewChild,
 	ElementRef,
-	AfterViewInit
+	AfterViewInit,
 } from '@angular/core';
 import {
 	AbstractControl,
 	FormArray,
 	FormBuilder,
 	FormGroup,
-	Validators
+	Validators,
 } from '@angular/forms';
 
 import { IGeoLocationCreateObject } from '@modules/server.common/interfaces/IGeoLocation';
 import {
 	Country,
 	CountryName,
-	getCountryName
+	getCountryName,
 } from '@modules/server.common/entities/GeoLocation';
 import { FormHelpers } from '../helpers';
 
@@ -27,12 +27,12 @@ import { pick, isEmpty } from 'lodash';
 import { ToasterService } from 'angular2-toaster';
 
 import { countries } from '@modules/server.common/data/abbreviation-to-country';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 
 @Component({
 	selector: 'ea-location-form',
 	styleUrls: ['./location-form.component.scss'],
-	templateUrl: 'location-form.component.html'
+	templateUrl: 'location-form.component.html',
 })
 export class LocationFormComponent implements AfterViewInit {
 	@Input()
@@ -138,8 +138,8 @@ export class LocationFormComponent implements AfterViewInit {
 					(ctrl) =>
 						LocationFormComponent.COUNTRIES.map(
 							(c) => c.id
-						).includes(ctrl.value)
-				]
+						).includes(ctrl.value),
+				],
 			],
 			city: ['', [Validators.required]],
 			streetAddress: ['', [Validators.required]],
@@ -148,8 +148,8 @@ export class LocationFormComponent implements AfterViewInit {
 
 			loc: formBuilder.group({
 				type: ['Point'],
-				coordinates: formBuilder.array([null, null])
-			})
+				coordinates: formBuilder.array([null, null]),
+			}),
 		});
 
 		return form;
@@ -192,7 +192,7 @@ export class LocationFormComponent implements AfterViewInit {
 
 		this.form.setValue({
 			postcode: geoLocation.postcode || '',
-			...(pick(geoLocation, Object.keys(this.getValue())) as any)
+			...(pick(geoLocation, Object.keys(this.getValue())) as any),
 		});
 
 		// This setup the form and map with new received values.
@@ -249,8 +249,8 @@ export class LocationFormComponent implements AfterViewInit {
 				{
 					address: `${streetAddress} ${house}, ${city}`,
 					componentRestrictions: {
-						country: countryName
-					}
+						country: countryName,
+					},
 				},
 				(results, status) => {
 					if (status === google.maps.GeocoderStatus.OK) {
@@ -273,7 +273,7 @@ export class LocationFormComponent implements AfterViewInit {
 		const geocoder = new google.maps.Geocoder();
 		geocoder.geocode(
 			{
-				location: { lng: this._lng, lat: this._lat }
+				location: { lng: this._lng, lat: this._lat },
 			},
 			(results, status) => {
 				if (status === google.maps.GeocoderStatus.OK) {
@@ -368,7 +368,7 @@ export class LocationFormComponent implements AfterViewInit {
 			administrative_area_level_2: shortName,
 			administrative_area_level_3: shortName,
 			administrative_area_level_4: shortName,
-			administrative_area_level_5: shortName
+			administrative_area_level_5: shortName,
 		};
 
 		let streetName = '';

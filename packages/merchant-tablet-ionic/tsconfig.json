@@ -2,6 +2,8 @@
 	"extends": "../../tsconfig.base.json",
 	"compileOnSave": false,
 	"compilerOptions": {
+		"baseUrl": "./src",
+		"target": "es5",
 		"sourceMap": true,
 		"declaration": false,
 		"moduleResolution": "node",
@@ -11,8 +13,6 @@
 		"noImplicitAny": false,
 		"preserveConstEnums": true,
 		"allowSyntheticDefaultImports": true,
-		"target": "es5",
-		"baseUrl": "./src",
 		"paths": {
 			"@angular/*": ["../node_modules/@angular/*"],
 			"@modules/server.common/*": ["../../common/src/*"],

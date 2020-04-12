@@ -1,9 +1,9 @@
 {
 	"extends": "../../tsconfig.base.json",
+	"compileOnSave": false,
 	"compilerOptions": {
-		"module": "esnext",
 		"baseUrl": "./src",
-		"target": "es2015",
+		"target": "es5",
 		"experimentalDecorators": true,
 		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"],
 		"paths": {

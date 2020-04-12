@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { StateService } from '../../../@core/data/state.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NbThemeService } from '@nebular/theme';
-import { environment } from 'environment';
+import { environment } from 'environments/environment';
 
 @Component({
 	selector: 'ngx-theme-settings',
 	styleUrls: ['./theme-settings.component.scss'],
-	templateUrl: './theme-settings.component.html'
+	templateUrl: './theme-settings.component.html',
 })
 export class ThemeSettingsComponent {
 	layouts = [];
@@ -16,51 +16,51 @@ export class ThemeSettingsComponent {
 	languages = [
 		{
 			value: 'en-US',
-			name: 'English'
+			name: 'English',
 		},
 		{
 			value: 'bg-BG',
-			name: 'Bulgarian'
+			name: 'Bulgarian',
 		},
 		{
 			value: 'he-IL',
-			name: 'Hebrew'
+			name: 'Hebrew',
 		},
 		{
 			value: 'ru-RU',
-			name: 'Russian'
+			name: 'Russian',
 		},
 		{
 			value: 'es-ES',
-			name: 'Spanish'
-		}
+			name: 'Spanish',
+		},
 	];
 
 	themes = [
 		{
 			value: 'everlight',
-			name: 'Ever Light'
+			name: 'Ever Light',
 		},
 		{
 			value: 'everdark',
-			name: 'Ever Dark'
+			name: 'Ever Dark',
 		},
 		{
 			value: 'default',
-			name: 'White'
+			name: 'White',
 		},
 		{
 			value: 'cosmic',
-			name: 'Cosmic'
+			name: 'Cosmic',
 		},
 		{
 			value: 'corporate',
-			name: 'Corporate'
+			name: 'Corporate',
 		},
 		{
 			value: 'dark',
-			name: 'Dark'
-		}
+			name: 'Dark',
+		},
 	];
 
 	currentTheme = 'everlight';
