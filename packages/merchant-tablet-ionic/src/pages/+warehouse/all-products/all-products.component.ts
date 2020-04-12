@@ -20,7 +20,7 @@ export class AllProductsComponent implements OnInit, OnDestroy {
 	presentCreateProductPopover: () => void;
 
 	@Input()
-	addProduct: () => void;
+	addProduct: (string) => void;
 
 	@Input()
 	getWarehouseProductImageUrl: () => void;
