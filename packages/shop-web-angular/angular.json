@@ -3,7 +3,7 @@
 	"version": 1,
 	"newProjectRoot": "projects",
 	"projects": {
-		"ever-admin": {
+		"ever-shop-web": {
 			"root": "",
 			"sourceRoot": "src",
 			"projectType": "application",
@@ -30,31 +30,13 @@
 						],
 						"styles": [
 							"../../node_modules/bootstrap/dist/css/bootstrap.css",
-							"../../node_modules/typeface-exo/index.css",
-							"../../node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
-							"../../node_modules/ionicons/dist/scss/ionicons.scss",
 							"../../node_modules/@fortawesome/fontawesome-free/css/all.css",
-							"../../node_modules/socicon/css/socicon.css",
-							"../../node_modules/angular-tree-component/dist/angular-tree-component.css",
-							"../../node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
-							"../../node_modules/leaflet/dist/leaflet.css",
-							"src/app/@theme/styles/styles.scss"
+							"src/styles/styles.scss"
 						],
 						"stylePreprocessorOptions": {
 							"includePaths": ["src/app", "src/assets"]
 						},
-						"scripts": [
-							"../../node_modules/pace-js/pace.min.js",
-							"../../node_modules/tinymce/tinymce.min.js",
-							"../../node_modules/tinymce/themes/mobile/theme.min.js",
-							"../../node_modules/tinymce/themes/silver/theme.min.js",
-							"../../node_modules/tinymce/plugins/link/plugin.min.js",
-							"../../node_modules/tinymce/plugins/paste/plugin.min.js",
-							"../../node_modules/tinymce/plugins/table/plugin.min.js",
-							"../../node_modules/echarts/dist/echarts.min.js",
-							"../../node_modules/echarts/dist/extension/bmap.min.js",
-							"../../node_modules/chart.js/dist/Chart.min.js"
-						]
+						"scripts": []
 					},
 					"configurations": {
 						"production": {
@@ -106,28 +88,11 @@
 						"karmaConfig": "./karma.conf.js",
 						"polyfills": "src/polyfills.ts",
 						"tsConfig": "tsconfig.spec.json",
-						"scripts": [
-							"../../node_modules/pace-js/pace.min.js",
-							"../../node_modules/tinymce/tinymce.min.js",
-							"../../node_modules/tinymce/themes/mobile/theme.min.js",
-							"../../node_modules/tinymce/themes/silver/theme.min.js",
-							"../../node_modules/tinymce/plugins/link/plugin.min.js",
-							"../../node_modules/tinymce/plugins/paste/plugin.min.js",
-							"../../node_modules/tinymce/plugins/table/plugin.min.js",
-							"../../node_modules/echarts/dist/echarts.min.js",
-							"../../node_modules/echarts/dist/extension/bmap.min.js",
-							"../../node_modules/chart.js/dist/Chart.min.js"
-						],
+						"scripts": [],
 						"styles": [
 							"../../node_modules/bootstrap/dist/css/bootstrap.css",
-							"../../node_modules/typeface-exo/index.css",
-							"../../node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
-							"../../node_modules/ionicons/dist/scss/ionicons.scss",
 							"../../node_modules/@fortawesome/fontawesome-free/css/all.css",
-							"../../node_modules/socicon/css/socicon.css",
-							"../../node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
-							"../../node_modules/leaflet/dist/leaflet.css",
-							"src/app/@theme/styles/styles.scss"
+							"src/styles/styles.scss"
 						],
 						"assets": [
 							"src/assets",
@@ -173,7 +138,7 @@
 			}
 		}
 	},
-	"defaultProject": "ever-admin",
+	"defaultProject": "ever-shop-web",
 	"schematics": {
 		"@schematics/angular:component": {
 			"prefix": "ea",
