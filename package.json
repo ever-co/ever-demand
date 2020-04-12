@@ -257,7 +257,9 @@
 			"**/@nebular",
 			"**/@nebular/**",
 			"**/@angular",
-			"**/@angular/**"
+			"**/@angular/**",
+			"**/@ever-co",
+			"**/@ever-co/**"
 		]
 	},
 	"config": {
