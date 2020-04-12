@@ -13,7 +13,7 @@ import { Subject, forkJoin, Observable } from 'rxjs';
 import { RedirectNameComponent } from '../../render-component/name-redirect/name-redirect.component';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
-import 'rxjs/add/operator/takeUntil';
+
 
 @Component({
 	selector: 'ea-customer-warehouses-table',
@@ -135,7 +135,9 @@ export class CustomerWarehousesTableComponent
 	}
 
 	private _loadDataSmartTable() {
-		this.sourceEvent.takeUntil(this._ngDestroy$).subscribe((rawSource) => {
+		this.sourceEvent.pipe(
+			takeUntil(this._ngDestroy$)
+		).subscribe((rawSource) => {
 			this.sourceSmartTable.load(rawSource);
 		});
 	}

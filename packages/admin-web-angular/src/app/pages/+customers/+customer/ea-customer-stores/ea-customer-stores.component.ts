@@ -149,7 +149,7 @@ export class CustomerStoresComponent implements OnInit, OnDestroy {
 		const stores$ = this._warehousesService.getNearbyStores(geoInput);
 
 		combineLatest(stores$)
-			.takeUntil(this._ngDestroy$)
+			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe((res) => {
 				const stores: Warehouse[] = res[0];
 				emitSource(stores);

@@ -24,7 +24,7 @@ import { CarriersOrdersService } from '@app/@core/data/carriers-orders.service';
 import { StoreOrderComponent } from '@app/@shared/render-component/carrier-orders-table/store-order.component';
 import { UserOrderComponent } from '@app/@shared/render-component/carrier-orders-table/user-order-component';
 import { takeUntil, first } from 'rxjs/operators';
-import 'rxjs/add/operator/takeUntil';
+
 
 const perPage = 3;
 
@@ -166,7 +166,7 @@ export class CarrierOrdersHistoryComponent
 								valuePrepareFunction: (_, order: Order) => {
 									let warehouseStat = 'BAD_STATUS';
 									getTranslate(order.warehouseStatusText)
-										.takeUntil(this.ngDestroy$)
+										.pipe(takeUntil(this.ngDestroy$))
 										.subscribe((y) => {
 											warehouseStat = y;
 										});
@@ -180,7 +180,7 @@ export class CarrierOrdersHistoryComponent
 								valuePrepareFunction: (_, order: Order) => {
 									let carrierStat = 'No Status';
 									getTranslate(order.carrierStatusText)
-										.takeUntil(this.ngDestroy$)
+										.pipe(takeUntil(this.ngDestroy$))
 										.subscribe((y) => {
 											carrierStat = y;
 										});

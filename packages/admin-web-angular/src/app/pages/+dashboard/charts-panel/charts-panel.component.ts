@@ -18,7 +18,7 @@ import { PeriodsService } from '@app/@core/services/dashboard/periods.service';
 import { DashboardLoadingIndicatorState } from '@app/models/DashboardLoadingIndicatorState';
 import { toDate } from '@modules/server.common/utils';
 import { takeUntil } from 'rxjs/operators';
-import 'rxjs/add/operator/takeUntil';
+
 
 interface IOrdersChartModel {
 	total: any;
@@ -2447,7 +2447,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 
 	private _listenLangChange() {
 		this._translateService.onLangChange
-			.takeUntil(this._ngDestroy$)
+			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe(() => {
 				this._refreshChartData();
 				this._setChartsSummary();
