@@ -89,13 +89,13 @@ export class PaymentComponent {
 
 					try {
 						let order = await this.orderRouter.payWithStripe(
-							this.store.userId,
+							this.store.orderId,
 							cardId
 						);
 						console.log('Payment Done!');
 						try {
 							order = await this.orderRouter.confirm(
-								this.store.userId
+								this.store.orderId
 							);
 							console.log('Order Confirmed!');
 						} catch (err) {
