@@ -183,10 +183,10 @@
 		}
 	},
 	"schematics": {
-		"@ionic/schematics-angular:component": {
+		"@ionic/angular-toolkit:component": {
 			"styleext": "scss"
 		},
-		"@ionic/schematics-angular:page": {
+		"@ionic/angular-toolkit:page": {
 			"styleext": "scss"
 		}
 	}

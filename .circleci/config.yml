@@ -25,6 +25,14 @@ aliases:
           sudo dpkg -i google-chrome.deb
           sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
           rm google-chrome.deb
+    - &install-gradle
+      name: Install Gradle
+      command: |
+          wget https://services.gradle.org/distributions/gradle-4.0.2-bin.zip -P /tmp
+          sudo unzip -d /opt/gradle /tmp/gradle-*.zip
+          echo 'export GRADLE_HOME=/opt/gradle/gradle-4.0.2' >> $BASH_ENV
+          echo 'export PATH=$PATH:/opt/gradle/gradle-4.0.2/bin' >> $BASH_ENV
+          source $BASH_ENV
     - &install-yarn
       name: Install Latest Yarn
       command: |
@@ -67,7 +75,9 @@ jobs:
                   command: yarn bootstrap
             - run:
                   name: Run Build All
-                  command: yarn build
+                  # note: it should be possible also to run: yarn build,
+                  # but for now we don't want parallel builds in Circle
+                  command: yarn build:all
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-monorepo-root-{{ checksum "yarn.lock" }}
@@ -153,7 +163,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/carrier/mobile-ionic
         docker:
-            - image: circleci/android:api-28-node
+            - image: circleci/android:api-29-node
         steps:
             - checkout
             - run: *install-deps
@@ -213,7 +223,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/shop/mobile-ionic
         docker:
-            - image: circleci/android:api-28-node
+            - image: circleci/android:api-29-node
         steps:
             - checkout
             - run: *install-deps
@@ -309,7 +319,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/merchant/tablet-ionic
         docker:
-            - image: circleci/android:api-28-node
+            - image: circleci/android:api-29-node
         steps:
             - checkout
             - run: *install-deps
