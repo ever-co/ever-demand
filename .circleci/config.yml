@@ -183,9 +183,6 @@ jobs:
                   name: Run Ionic Build (Production)
                   command: cd packages/carrier-mobile-ionic && yarn ionic:build:prod
             - run:
-                  name: Remove old android platform
-                  command: cd packages/carrier-mobile-ionic && yarn ionic cordova platform rm android
-            - run:
                   name: Add new android platform
                   command: |
                       cd packages/carrier-mobile-ionic 
@@ -245,9 +242,6 @@ jobs:
             - run:
                   name: Run Ionic Build (Production)
                   command: cd packages/shop-mobile-ionic && yarn ionic:build:prod
-            - run:
-                  name: Remove old android platform
-                  command: cd packages/shop-mobile-ionic && yarn ionic cordova platform rm android
             - run:
                   name: Add new android platform
                   command: |
@@ -344,9 +338,6 @@ jobs:
             - run:
                   name: Run Ionic Build (Production)
                   command: cd packages/merchant-tablet-ionic && yarn ionic:build:prod
-            - run:
-                  name: Remove old android platform
-                  command: cd packages/merchant-tablet-ionic && yarn ionic cordova platform rm android
             - run:
                   name: Add new android platform
                   command: |

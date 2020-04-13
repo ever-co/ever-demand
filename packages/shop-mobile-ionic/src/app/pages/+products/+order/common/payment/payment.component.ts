@@ -10,11 +10,10 @@ import { OrderPage } from '../../order.page';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 
-
 @Component({
 	selector: 'e-cu-payment',
 	templateUrl: './payment.component.html',
-	styleUrls: ['./payment.component.scss']
+	styleUrls: ['./payment.component.scss'],
 })
 export class PaymentComponent {
 	@Input()
@@ -90,13 +89,13 @@ export class PaymentComponent {
 
 					try {
 						let order = await this.orderRouter.payWithStripe(
-							this.store.userId,
+							this.store.orderId,
 							cardId
 						);
 						console.log('Payment Done!');
 						try {
 							order = await this.orderRouter.confirm(
-								this.store.userId
+								this.store.orderId
 							);
 							console.log('Order Confirmed!');
 						} catch (err) {
@@ -112,7 +111,7 @@ export class PaymentComponent {
 				close();
 			},
 
-			closed: () => close()
+			closed: () => close(),
 		});
 
 		const currentOrderProduct = this.order.products[0];
@@ -121,7 +120,7 @@ export class PaymentComponent {
 		handler.open({
 			name: this.localeTranslate(currentProduct.title),
 			description: this.localeTranslate(currentProduct.description),
-			amount: currentOrderProduct.price * 100
+			amount: currentOrderProduct.price * 100,
 		});
 	}
 
@@ -136,7 +135,7 @@ export class PaymentComponent {
 			component: OrderPage,
 			cssClass: 'order-info-modal',
 			showBackdrop: true,
-			componentProps: { modalChange: this.modalChange }
+			componentProps: { modalChange: this.modalChange },
 		});
 
 		if (this.modalChange) {

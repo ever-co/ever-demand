@@ -51,3 +51,4 @@ Thumbs.db
 /packages/admin-web-angular/*.tsbuildinfo
 /packages/common/*.tsbuildinfo
 /packages/core/*.tsbuildinfo
+/packages/shop-mobile-ionic/package-lock.json
