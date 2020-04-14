@@ -1,0 +1,32 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.app-loading-container {
+	color: #fff;
+
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	text-align: center;
+	font-size: 20px;
+	line-height: 30px;
+
+	.spinner {
+		fill: #fff;
+		stroke: #fff;
+
+		svg {
+			width: 40px;
+			height: 40px;
+		}
+	}
+}
+
+:global .loading-on-white .app-loading-container {
+	color: $brand-darken;
+	.spinner {
+		fill: $brand;
+		stroke: $brand;
+	}
+}

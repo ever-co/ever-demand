@@ -1,0 +1,71 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+ion-content {
+	background-color: $brand-darken;
+
+	.products-view {
+		height: 100%;
+	}
+}
+
+.float-right {
+	float: right;
+}
+
+.header-actions {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.header-title {
+	display: flex;
+	align-items: center;
+}
+
+.pr-10px {
+	padding-right: 10px;
+}
+
+.pr-14px {
+	padding-right: 14px;
+}
+
+.pr-15px {
+	padding-right: 15px;
+}
+
+.pr-5px {
+	padding-right: 5px;
+}
+
+.toggleDeliveryType {
+	zoom: 0.6;
+}
+.no-select {
+	color: #d0d0d0;
+}
+
+.products-title {
+	display: flex;
+}
+
+.merchant-name {
+	max-width: 10rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: inline-block;
+}
+
+@keyframes fide-out {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.7;
+	}
+	100% {
+		opacity: 1;
+	}
+}

@@ -1,0 +1,105 @@
+<div class="by-location" dir="{{ 'CURRENT_DIRECTION' | translate }}">
+	<h1>{{ 'INVITE_VIEW.YOUR_ADDRESS' | translate }}</h1>
+
+	<h2>{{ 'INVITE_VIEW.LAUNCH_NOTIFICATION' | translate }}</h2>
+
+	<div style="padding-top: 50px;" *ngIf="detectingLocation">
+		<h3 style="color: white;">
+			{{ 'INVITE_VIEW.DETECTING_LOCATION' | translate }}
+		</h3>
+		<br />
+	</div>
+
+	<ion-spinner color="light" [hidden]="!detectingLocation"></ion-spinner>
+
+	<div *ngIf="!detectingLocation">
+		<input
+			class="ion-autocomplete"
+			[(ngModel)]="city"
+			placeholder="{{ 'CITY' | translate }}"
+		/>
+		<!--<input ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete" autocomplete="off"
+			   [(ngModel)]="city" max-selected-items="1"
+			   items-method="inviteByLocationCtrl?.queryCities(query)" selected-items-label="Selected City"
+			   template-url="templates/autocomplete.html"
+			   placeholder="City" style="margin-bottom: 0" placeholder="{{ 'CITY' | translate }}"/>-->
+		<!-- Angular have no such label:
+          cancel-label="{{ 'BACK' | translate }}"       -->
+
+		<div *ngIf="city">
+			<input
+				class="ion-autocomplete"
+				[(ngModel)]="streetAddress"
+				placeholder="{{ 'STREET' | translate }}"
+			/>
+			<!--<input ion-autocomplete readonly class="ion-autocomplete" autocomplete="off" [(ngModel)]="streetAddress"
+				   max-selected-items="1"
+				   items-method="inviteByLocationCtrl?.queryStreets(query)" selected-items-label="Selected Street"
+				   template-url="templates/autocomplete.html" placeholder="{{ 'STREET' | translate }}"/>-->
+			<!-- Angular have no such label:
+              cancel-label="{{ 'BACK' | translate }}"       -->
+
+			<div *ngIf="streetAddress">
+				<ion-grid no-padding>
+					<ion-row class="house-and-apartment">
+						<ion-col no-padding>
+							<div
+								class="house house-{{
+									'CURRENT_DIRECTION' | translate
+								}}"
+							>
+								<input
+									type="number"
+									[(ngModel)]="house"
+									placeholder="{{ 'HOUSE' | translate }}"
+								/>
+							</div>
+						</ion-col>
+
+						<ion-col no-padding>
+							<div class="apartment">
+								<input
+									type="number"
+									*ngIf="isApartment"
+									[(ngModel)]="apartment"
+									placeholder="{{ 'APARTMENT' | translate }}"
+									class="apartment apartment-{{
+										'CURRENT_DIRECTION' | translate
+									}}"
+								/>
+
+								<div
+									*ngIf="!apartment"
+									class="is-apartment is-apartment-{{
+										'CURRENT_DIRECTION' | translate
+									}}"
+								>
+									<span class="description">
+										{{ 'APARTMENT' | translate }}
+									</span>
+									<label class="toggle toggle-assertive">
+										<ion-checkbox
+											[(ngModel)]="isApartment"
+										></ion-checkbox>
+										<div class="track">
+											<div class="handle"></div>
+										</div>
+									</label>
+								</div>
+							</div>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+				<ion-button
+					color="secondary"
+					*ngIf="house && (apartment || !isApartment)"
+					expand="block"
+					class="submit-button"
+					(click)="login()"
+				>
+					{{ 'INVITE_VIEW.GET_IN' | translate }}
+				</ion-button>
+			</div>
+		</div>
+	</div>
+</div>

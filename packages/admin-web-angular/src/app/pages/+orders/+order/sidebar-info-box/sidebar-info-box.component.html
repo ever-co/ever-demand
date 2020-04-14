@@ -1,0 +1,29 @@
+<nb-card
+	*ngIf="title"
+	class="m-0 order-sidebar-info-box clickable"
+	[ngClass]="{ clickable: redirectUrl }"
+	(click)="redirect()"
+>
+	<nb-card-header>
+		<h4>{{ title }}</h4>
+	</nb-card-header>
+
+	<nb-card-body class="row">
+		<div *ngIf="imageUrl" class="col-lg-4 img-container p-0 pl-3">
+			<img src="{{ imageUrl }}" alt="" />
+		</div>
+		<div
+			*ngIf="contactDetails.length"
+			[ngClass]="{ 'col-lg-8': imageUrl, 'col-lg-12': !imageUrl }"
+		>
+			<h6>
+				{{ 'ORDER_VIEW.ORDER_SIDEBAR.CONTACT_DETAILS' | translate }}
+			</h6>
+			<ul>
+				<li *ngFor="let detail of contactDetails">
+					{{ detail }}
+				</li>
+			</ul>
+		</div>
+	</nb-card-body>
+</nb-card>

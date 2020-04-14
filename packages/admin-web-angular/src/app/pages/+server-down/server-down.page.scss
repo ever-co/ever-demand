@@ -1,0 +1,25 @@
+// @import '@modules/client.common.angular2/scss/everbie.common';
+// @import "~@modules/client.common.angular2/scss/everbie.common.scss';
+// @import "~@ever-platform/common-angular/scss/everbie.common.scss';
+
+.info-page {
+	padding: 0 !important;
+
+	.server-down-content {
+		color: white;
+
+		// background: $brand;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		height: 100%;
+		flex-direction: column;
+	}
+
+	.info-massage h3 {
+		color: red;
+		width: 100%;
+	}
+}

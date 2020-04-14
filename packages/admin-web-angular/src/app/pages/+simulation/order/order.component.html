@@ -1,0 +1,114 @@
+<div *ngIf="order" class="order-info row">
+	<div class="col-md-6">
+		<div class="row">
+			<h4 class="main-title col-12">
+				{{ orderInfoStatuses.TITLE }}
+			</h4>
+
+			<h6 class="col-12">
+				{{ orderInfoStatuses.DETAILS }}
+			</h6>
+
+			<h6 class="col-12" ng-if="!order?.isPaid">
+				{{ orderInfoStatuses.NOT_PAID_NOTE }}
+			</h6>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<ea-elapsed-time #elapsedTime></ea-elapsed-time>
+			</div>
+		</div>
+		<div
+			class="row delivery-status"
+			dir="{{ 'CURRENT_DIRECTION' | translate }}"
+		>
+			<div
+				class="status col-sm-3"
+				[ngClass]="{
+					activated: isWarehouseActive,
+					current: isWarehouseCurrent
+				}"
+			>
+				<h5>
+					{{
+						'SIMULATION_VIEW.ORDER_INFO.DELIVERY_STATUS.WE'
+							| translate
+					}}
+				</h5>
+				<i class="fa fa-building"></i>
+			</div>
+			<span
+				class="col-sm-1 align-end"
+				[ngClass]="{ activated: isCarrierActive }"
+				>..</span
+			>
+
+			<div
+				class="status col-sm-4"
+				[ngClass]="{
+					activated: isCarrierActive,
+					current: isCarrierCurrent
+				}"
+			>
+				<h5>
+					{{
+						'SIMULATION_VIEW.ORDER_INFO.DELIVERY_STATUS.CARRIER'
+							| translate
+					}}
+				</h5>
+				<i
+					class="fa fa-motorcycle"
+					[ngClass]="{
+						flip: ('CURRENT_DIRECTION' | translate) == 'rtl'
+					}"
+				></i>
+			</div>
+			<span
+				class="col-sm-1 align-end"
+				[ngClass]="{ activated: isCustomerActive }"
+				>..</span
+			>
+
+			<div
+				class="status col-sm-3"
+				[ngClass]="{
+					activated: isCustomerActive,
+					current: isCustomerCurrent
+				}"
+			>
+				<h5>
+					{{
+						'SIMULATION_VIEW.ORDER_INFO.DELIVERY_STATUS.YOU'
+							| translate
+					}}
+				</h5>
+				<i class="fa fa-home"></i>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12 no-padding">
+				<slideshow
+					*ngIf="order.products.length"
+					[height]="'355px'"
+					[autoPlay]="true"
+					[autoPlayInterval]="5000"
+					[imageUrls]="getSlideImage(order)"
+					[lazyLoad]="order.products.length"
+					[autoPlayWaitForLazyLoad]="true"
+					>></slideshow
+				>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6 order-map">
+		<ea-carrier-location
+			[order]="order"
+			*ngIf="isCarrierCurrent"
+		></ea-carrier-location>
+		<ea-user-warehouse-location
+			[order]="order"
+			*ngIf="!isCarrierCurrent"
+		></ea-user-warehouse-location>
+	</div>
+</div>

@@ -1,0 +1,22 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.info-page {
+	.server-down-content {
+		color: white;
+		padding: 20px;
+
+		background: $brand;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		height: 100%;
+		flex-direction: column;
+	}
+
+	.info-massage h3 {
+		color: red;
+		width: 100%;
+	}
+}

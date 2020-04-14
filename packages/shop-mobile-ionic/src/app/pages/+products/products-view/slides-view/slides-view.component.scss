@@ -1,0 +1,179 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+ng-progress /deep/ .ng-bar-placeholder {
+	background-color: #3c4160;
+	height: 5px;
+}
+
+ng-progress /deep/ .ng-bar {
+	background-color: #505785;
+}
+
+ion-menu-button {
+	position: absolute;
+	z-index: 1000;
+	margin-top: 10px;
+	margin-left: 5px;
+}
+
+ion-slide {
+	display: block;
+	height: 100vh;
+}
+
+.product-card {
+	padding-bottom: 0 !important;
+}
+
+.products-view {
+	height: 100%;
+}
+
+.product-card .image {
+	user-drag: none;
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	margin-bottom: -5px !important;
+	img {
+		height: 100%;
+	}
+}
+
+.product-card .bottom {
+	height: 100%;
+	background-color: $brand-darken;
+	width: 100%;
+	text-align: left;
+
+	e-cu-warehouse-logo {
+		position: absolute;
+		right: 10px;
+		top: -28px;
+	}
+
+	ion-col {
+		padding: 0;
+	}
+
+	.title {
+		color: #fff;
+		font-family: Roboto, 'Helvetica Neue', sans-serif;
+		font-weight: 400;
+		font-size: 20px;
+	}
+
+	.description {
+		color: #fff;
+		font-family: Roboto, 'Helvetica Neue', sans-serif;
+		font-weight: 400;
+		font-size: 13px;
+	}
+
+	.purchase-button {
+		padding: 0 5px 0px 5px;
+		font-family: Roboto, 'Helvetica Neue', sans-serif;
+	}
+
+	.details-button {
+		padding: 0 5px 0px 0;
+		font-family: Roboto, 'Helvetica Neue', sans-serif;
+		color: #fff;
+	}
+}
+
+.productDetails {
+	color: #bd4742;
+	font-size: 80%;
+	margin-left: 35px;
+	cursor: pointer;
+	float: right;
+}
+
+.slides-buttons {
+	height: 35%;
+	button {
+		padding: 15px;
+		border-radius: 5px;
+		display: flex !important;
+		align-content: center !important;
+		align-items: center !important;
+		position: relative;
+		text-align: center;
+		height: 100%;
+		color: white;
+		text-align: center;
+		font-size: 0.9em;
+
+		span {
+			margin: 0 auto;
+		}
+	}
+
+	.disabled {
+		background: #cccccc !important;
+		border: 1px solid #999999 !important;
+		color: #666666 !important;
+	}
+}
+
+.image {
+	position: relative;
+	height: 75%;
+	.product-info {
+		width: 100%;
+	}
+}
+
+.info {
+	position: relative;
+	height: 25%;
+	.info-bottom {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 100%;
+		.text-wrapper {
+			box-sizing: border-box;
+			height: 65%;
+			padding-top: 15px;
+			padding-bottom: 15px;
+			padding-left: 20px;
+			padding-right: 10px;
+			h1,
+			h2 {
+				margin: 0;
+				padding: 0;
+			}
+			h1 {
+				margin-bottom: 8px;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 330px) {
+	.info {
+		height: 26%;
+		box-sizing: border-box;
+		padding-bottom: 18px;
+		.bottom {
+			e-cu-warehouse-logo {
+				top: -38px;
+			}
+		}
+		.info-bottom {
+			.text-wrapper {
+				padding-bottom: 5px;
+				padding-top: 13px;
+				height: 65%;
+				h1 {
+					margin-bottom: 0;
+					font-size: 18px;
+				}
+			}
+		}
+	}
+}

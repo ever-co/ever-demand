@@ -1,0 +1,46 @@
+<nb-card>
+	<toaster-container></toaster-container>
+	<nb-tabset fullWidth>
+		<nb-tab
+			[nbSpinner]="loading"
+			tabTitle="{{ 'CUSTOMERS_VIEW.INVITES_MANAGEMENT' | translate }}"
+		>
+			<nb-card class="no-margin">
+				<nb-card-header>
+					<button
+						nbButton
+						status="danger"
+						class="btn-sm mr-2 d-inline-block"
+						[disabled]="!hasSelectedInvites"
+						(click)="deleteSelectedRows()"
+					>
+						<i class="ion-md-trash button-icon mr-1"></i>
+						<small>{{
+							'CUSTOMERS_VIEW.INVITES_VIEW.DELETE' | translate
+						}}</small>
+					</button>
+				</nb-card-header>
+
+				<nb-card-body>
+					<ng2-smart-table
+						[settings]="settingsSmartTable"
+						[source]="sourceSmartTable"
+						(createConfirm)="createConfirm($event)"
+						(editConfirm)="editConfirm($event)"
+						(deleteConfirm)="deleteConfirm($event)"
+						(userRowSelect)="selectInviteTmp($event)"
+					>
+					</ng2-smart-table>
+				</nb-card-body>
+			</nb-card>
+		</nb-tab>
+		<nb-tab
+			[nbSpinner]="invitesRequests.loading"
+			tabTitle="{{
+				'CUSTOMERS_VIEW.INVITES_REQUESTS_MANAGEMENT' | translate
+			}}"
+		>
+			<ea-invites-requests #invitesRequests></ea-invites-requests>
+		</nb-tab>
+	</nb-tabset>
+</nb-card>

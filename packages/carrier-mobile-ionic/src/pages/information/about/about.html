@@ -1,0 +1,27 @@
+<ion-header class="bar-brand bar bar-header disable-user-behavior">
+	<ion-title id="aboutTitle">
+		{{ 'ABOUT_VIEW.TITLE' | translate }}
+	</ion-title>
+	<div class="buttons buttons-left header-item">
+		<span class="left-buttons">
+			<div class="waves-effect waves-classic">
+				<ion-menu-toggle class="button-icon">
+					<ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+				</ion-menu-toggle>
+			</div>
+		</span>
+	</div>
+</ion-header>
+
+<ion-content scroll="true" class="app-view has-header">
+	<div class="about-content">
+		<loading [hidden]="aboutHtml != null"></loading>
+		<div
+			*ngIf="aboutHtml != null"
+			[innerHTML]="aboutHtml | safe: 'html'"
+		></div>
+		<h5 style="padding-left: 10px; color: #888;" *ngIf="aboutHtml != null">
+			App Version: {{ appVersion }}
+		</h5>
+	</div>
+</ion-content>

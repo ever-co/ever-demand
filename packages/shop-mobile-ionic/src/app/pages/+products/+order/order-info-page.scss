@@ -1,0 +1,91 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.all {
+	width: 100%;
+	height: 100%;
+	.title {
+		width: 100%;
+		height: 25%;
+		.box {
+			height: 100%;
+		}
+	}
+	.maps {
+		width: 100%;
+		height: 27%;
+	}
+	.actions > .box {
+		height: 100%;
+	}
+	.actions {
+		width: 100%;
+		height: 48%;
+		position: relative;
+
+		.status {
+			margin-left: 20px;
+			margin-right: 20px;
+		}
+
+		.actions-content {
+			padding-top: 5%;
+		}
+
+		.buttons-bottom {
+			position: absolute;
+
+			left: 0px;
+			right: 0px;
+			bottom: 5px;
+
+			padding-left: 20px;
+			padding-right: 20px;
+
+			.row > span {
+				padding: 0;
+			}
+		}
+
+		button {
+			padding: 15px;
+			border-radius: 5px;
+			display: flex !important;
+			align-content: center !important;
+			align-items: center !important;
+			position: relative;
+			text-align: center;
+			height: 100%;
+
+			span {
+				margin: 0 auto;
+				color: white;
+			}
+		}
+	}
+
+	.horizontal-space-5 {
+		width: 5px;
+	}
+}
+
+.products-list-image {
+	display: flex !important;
+	align-content: center !important;
+	align-items: center !important;
+	height: 100%;
+	img {
+		width: 100%;
+	}
+}
+
+.products-slides-image {
+	height: 100%;
+	img {
+		height: 100%;
+		margin: 0 auto;
+	}
+}
+
+.underline {
+	border-bottom: 1px solid;
+}

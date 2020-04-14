@@ -1,0 +1,19 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.info-page {
+	background: $brand !important;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	.view-content {
+		margin: auto;
+
+		.logo {
+			text-align: center;
+		}
+	}
+	.info-massage h3 {
+		color: red;
+		width: 100%;
+	}
+}

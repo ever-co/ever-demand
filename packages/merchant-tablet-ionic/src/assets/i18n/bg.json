@@ -1,0 +1,426 @@
+{
+	"LANGUAGE": {
+		"ID": "bg-BG",
+		"NAME": "Bulgarian"
+	},
+	"CURRENT_DIRECTION": "ltr",
+	"DASHBOARD": "Табло",
+	"SIDEBAR_SIDE": "left",
+	"SIDE_MENU": {
+		"TITLE": "Евър Търговци",
+		"GROUPS": {
+			"NO_TITLE": {
+				"DIVER_TITLE": "",
+				"ITEMS": {
+					"WAREHOUSE": "Табло"
+				}
+			},
+			"SETTINGS": {
+				"SETTINGS": "Настройки",
+				"DIVER_TITLE": "Настройки",
+				"ITEMS": {
+					"LANGUAGE": "Език",
+					"SIGN_OUT": "Отписване"
+				}
+			},
+			"INFO": {
+				"DIVER_TITLE": "Информация",
+				"ITEMS": {
+					"ABOUT_US": "За нас",
+					"TERMS_OF_USE": "Условия за ползване"
+				}
+			}
+		}
+	},
+	"CUSTOMERS_VIEW": {
+		"CUSTOMERS": "Клиенти",
+		"ADD_CUSTOMER": "Добавяне на клиент",
+		"IMAGE": "Изображение",
+		"NAME": "Име",
+		"PHONE_NUMBER": "Телефонен номер",
+		"ADDRESSES": "Aдреси",
+		"ORDERS": "Поръчки",
+		"TOTAL": "Обща сума",
+		"E_MAIL": "Електронна поща",
+		"ADDRESS_POP_UP": {
+			"CUSTOMER_ADDRESS": "Адрес на клиента",
+			"COUNTRY": "Държава",
+			"STREET": "Улица",
+			"HOUSE": "Къща",
+			"APARTMENT": "Апартамент",
+			"COORDINATES": "Координати"
+		},
+		"EMAIL_POP_UP": {
+			"CUSTOMER_EMAIL": "Клиентски имейл",
+			"SEND_E_MAIL": "Изпратете имейл"
+		},
+		"ORDERS_POP_UP": {
+			"CUSTOMER_ORDERS": "Поръчки на клиенти",
+			"ALL_ORDERS": "Всички поръчки",
+			"TOTAL_ORDERS_SUM": "Сума на общите поръчки",
+			"COMPLATED": "Завършен",
+			"PAID": "Платен"
+		}
+	},
+	"FILE_UPLOADER": {
+		"DRAG_AND_DROP_FILE_HERE": "Завлачи и пусни Изображение тук",
+		"PICTURE_URL": "URL адрес на картинката",
+		"BROWSE": "Разгледай"
+	},
+	"CARRIERS_VIEW": {
+		"CARRIERS_CATALOG": {
+			"IMAGE": "Изображение",
+			"NAME": "Име",
+			"PHONE": "Телефон",
+			"ADDRESS": "Адрес",
+			"LOGO": "Лого"
+		},
+		"TRACK_CARRIER": "Проследяване на доставчика",
+		"CARRIERS": "Куриери",
+		"ADD_CARRIERS": "Добавяне на превозвачи",
+		"IMAGE": "Изображение",
+		"NAME": "ИМЕ",
+		"PHONE_NUMBER": "Телефонен номер",
+		"ADDRESSES": "Адрес",
+		"STATUS": "Статус",
+		"DELIVERIES": "Доставки",
+		"NO_CARRIERS": "Няма куриери",
+		"WORKING": "Работи",
+		"NOT_WORKING": "Не работи",
+		"BLOCKED": "Блокиран",
+		"DELIVERIES_POP_UP": {
+			"CARRIER_DELIVERIES": "Доставки на куриера",
+			"ALL_DELIVERIES": "Всички Доставки",
+			"DELIVERIES_TODAY": "Доставки от Днес",
+			"TOTAL_DISTANCE_TODAY": "Общо Разстояние Днес",
+			"CUSTOMER": "Клиент",
+			"WAREHOUSE": "Склад",
+			"STATUS": "Статус",
+			"DELIVERY": "Доставка",
+			"NO_DELIVERIES": "Няма Доставки",
+			"COMPLETED": "Завършена",
+			"PAID": "Платена"
+		},
+		"ADDRESS": {
+			"CARRIER_ADDRESS": "Адрес на куриера",
+			"COUNTRY": "Държава",
+			"HOUSE": "Kъща",
+			"COORDINATES": "Координати"
+		},
+		"EDIT_CARRIER": {
+			"EDIT_CARRIER": "Редактирайте носителя"
+		},
+		"ADD_CARRIER": {
+			"ADD_CARRIER": "Добавете куриер",
+			"HOW_TO_ADD": "Как да добавите",
+			"SELECT_HOW_TO_ADD": "Изберете Как да добавите",
+			"ADD": "Добави",
+			"CARRIERS_CATALOG": "Каталог на куриерите",
+			"SELECT_FROM_CARRIERS_CATALOG": "Изберете от каталога на превозвачите",
+			"ADD_NEW_CARRIER": "Добавете нов куриер",
+			"FIRST_NAME": "Име",
+			"LAST_NAME": "Фамилия",
+			"EMAIL": "електронна поща",
+			"USERNAME": "Потребител",
+			"PASSWORD": "Парола",
+			"NAME": "Име",
+			"PHONE": "Телефон",
+			"ADDRESS": "Адреси",
+			"LOGO": "Лого",
+			"IS_ACTIVE": "активен",
+			"CITY": "Град",
+			"STREET": "Улица",
+			"HOUSE": "Къща",
+			"LATITUDE": "Географска ширина",
+			"LONGITUDE": "Географска дължина",
+			"COUNTRY": "Държава",
+			"OK": "Добре",
+			"CANCEL": "ОТКАЗ",
+			"PREVIOUS": "ПРЕДИШНА",
+			"BACK": "ОБРАТНО",
+			"NEXT": "СЛЕДВАЩИЯ",
+			"DONE": "СВЪРШЕН",
+			"LOCATION": "МЕСТОПОЛОЖЕНИЕ",
+			"ZIP": "пощенски код",
+			"PROFILE_DETAILS": "ДЕТАЙЛИ НА ПРОФИЛ",
+			"BROWSE": "РАЗГЛЕДАЙ",
+			"DRAG_AND_DROP_FILE_HERE": "Завлачи и пусни Изображение тук",
+			"PICTURE_URL": "URL адрес на картинката",
+			"ACCOUNT": "ОПИС",
+			"REPEAT": "Повторение",
+			"REPEAT_PASSWORD": "Повтори паролата",
+			"PASSWORD_DO_NOT_MATCH": "Паролата не съвпада",
+			"FIND_ADDRESS": "Намерете адрес",
+			"FORMS": {
+				"ERRORS": {
+					"FIRST_NAME_REQUIRED": "Името е задължително",
+					"LAST_NAME_REQUIRED": "Изисква се фамилно име",
+					"PHONE_REQUIRED": "Необходим е телефон",
+					"EMAIL_IS_REQUIRED": "Имейл е задължителен",
+					"MUST_CONTAIN_ONLY_LETTERS": "Трябва да съдържа само букви",
+					"PHONE_MUST_CONTAINS_ONLY(special_signs)AND_DIGIT_CHARACTER": "Телефонният номер може да започва с '+' и трябва да съдържа само само: '-,., (Интервал), #' и цифри"
+				}
+			}
+		},
+		"SELECT LANGUAGE": {
+			"USA": "САЩ",
+			"ISRAEL": "Израел",
+			"BULGARIA": "България"
+		}
+	},
+	"SETTINGS_VIEW": {
+		"SETTINGS": "Настройки",
+		"OPTIONS": "Oпции",
+		"COMMON": "Често срещани",
+		"LOCATION": "Mестоположение",
+		"ACCOUNT": "Oпис",
+		"NEW_USERNAME": "Ново потребителско име",
+		"NAME_MUST_BE_AT_LEAST_4_CHARACTERS_LONG": "Името трябва да е с дължина най-малко 4 знака",
+		"OLD_PASSWORD": "Стара парола",
+		"NEW_PASSWORD": "Нова парола",
+		"REPEAT_NEW_PASSWORD": "Повтори новата парола",
+		"PASSWORDS_DO_NOT_MATCH": "Паролите не съвпадат",
+		"SAVE_CHANGES": "Запази Промените",
+		"SAVE": "Запази",
+		"CHANGES": "Промени",
+		"BASIC_INFO": "Основна информация",
+		"NAME": "име",
+		"NAME_IS_REQUIRED": "Името е задължително",
+		"LOGO": "Лого",
+		"BROWSE": "Разгледай",
+		"CONTACT_INFO": "Информация за контакт",
+		"E_MAIL": "Електронна поща",
+		"PHON_NUMBER": "Телефонен номер",
+		"COUNTRY": "Държава",
+		"CITY": "град",
+		"CITY_IS_REQUIRED": "Градът е задължителен",
+		"POSTCODE_optional": "Пощенски код (по избор)",
+		"STREET": "улица",
+		"STREET_IS_REQUIRED": "Улицата е задължителна",
+		"HOUSE": "къща",
+		"HOUSE_IS_REQUIRED": "Къща се изисква",
+		"APARTMENT_optional": "Апартамент (опция)",
+		"AUTO_DETECT_COORDINATES": "Автоматично откриване на координати",
+		"LATITUDE": "Географска ширина",
+		"LATITUDE_IS_REQUIRED": "Latitude е задължително",
+		"LONGITUDE": "дължина",
+		"LONGITUDE_IS_REQUIRED": "Необходима е дължина",
+		"FIND_ADDRESS": "Намерете адрес",
+		"OK": "Добре",
+		"CANCEL": "ОТКАЗ",
+		"ALLOW_ONLINE_PAYMENTS": "Разрешаване на онлайн плащания",
+		"SETTINGS_SECTION": {
+			"DELIVERY_OR_TAKEAWAY_SETTINGS": "Настройки за доставки или за взимане от място",
+			"PRODUCTS_DELIVERY_BY_DEFAULT": "Доставка на продукти (по подразбиране)",
+			"PRODUCTS_TAKEAWAY_BY_DEFAULT": "Продукти за взимане от място (по подразбиране)",
+			"PAYMENTS_SETTINGS": "Настройки за плащания",
+			"BARCODE_QR_CODE_SETTINGS": "Настройки за баркод / QR код",
+			"ORDER_BARCODE_TYPE": "Тип баркод на поръчката",
+			"BARCODE_DATA": "Данни за баркод",
+			"SCAN_EXISTED": "Сканиране на текущите"
+		}
+	},
+	"LOGIN_VIEW": {
+		"LOGIN": "Влез"
+	},
+	"LANGUAGE_VIEW": {
+		"TITLE": "Избери Език",
+		"OK": "Добре",
+		"CANCEL": "ОТКАЗ"
+	},
+	"ABOUT_VIEW": {
+		"TITLE": "За нас",
+		"APP_VERSION": "Версия на приложението"
+	},
+	"TERMS_OF_USE_VIEW": {
+		"TITLE": "Условия за ползване"
+	},
+	"WAREHOUSE_VIEW": {
+		"RELEVANT": "Приоритетни",
+		"ALL": "Всички",
+		"LOADING_MORE_DATA": "Още данни се зареждат ...",
+		"ORDERS": "Поръчки",
+		"NEW_ORDER": "Нова поръчка",
+		"PRODUCTS": "Топ Продукти",
+		"SELECT_POP_UP": {
+			"SELECT_CATEGORIES": "Изберете Категории",
+			"OK": "Добре",
+			"CANCEL": "ОТКАЗ"
+		},
+		"ORDER_WAREHOUSE_STATUSES": {
+			"CREATED": "Създаден",
+			"CONFIRMED": "Потвърдено",
+			"PROCESSING": "Обработване",
+			"ALLOCATION_STARTED": "Разпределението е започнало",
+			"ALLOCATION_FINISHED": "Разпределението е завършено",
+			"PACKAGING_STARTED": "Опаковането започна",
+			"PACKAGED": "Опакован",
+			"GIVEN_TO_CARRIER": "Дадено на доставчик",
+			"TAKEN": "Взета",
+			"ALLOCATION_FAILED": "Разпределението не бе успешно",
+			"PACKAGING_FAILED": "Опаковането не бе успешно",
+			"BAD_STATUS": "Лошо състояние",
+			"NO_ACTIVE_ORDERS": "Няма активни поръчки",
+			"NO_ORDERS": "Няма поръчки",
+			"NO_PRODUCTS": "Няма продукти"
+		},
+		"CREATE_PRODUCTS_POPUP": {
+			"NEW_PRODUCT_TYPE": "Нов тип продукт",
+			"CREATE_NEW_PRODUCT_TYPE": "Създай нов продукт",
+			"TITLE": "Заглавие",
+			"DESCRIPTION": "Описание",
+			"CATEGORIES": "Категории",
+			"PRICE": "Цена",
+			"COUNT": "Брой",
+			"LANGUAGE": "Език",
+			"COUNT_PLACEHOLDER": "0",
+			"DRAG&DROP_FILE_HERE": "Завлачи и пусни файла тук",
+			"DRAG&DROP_PICTURE_HERE": "Завлачи и пусни снимката тук",
+			"OR_BROWSE": "или прегледайте",
+			"CLICK_TO_UPLOAD_PICTURE": "Качи снимка",
+			"CLICK_TO_UPLOAD_MORE_PICTURE": "Кликнете, за да качите още снимки",
+			"CANCEL": "Отказ",
+			"CREATE": "Създай",
+			"ENGLISH": "Английски",
+			"HEBREW": "Иврит",
+			"RUSSIAN": "Руски",
+			"BULGARIAN": "Български",
+			"OPTIONAL": "по избор",
+			"DELIVERY": "Доставка",
+			"TAKEAWAY": "Вземи на място"
+		},
+		"NEW_ORDER_VIEW": {
+			"NEW_MANUAL_ORDER": "Нова ръчна поръчка",
+			"SELECT_EXISTING_CUSTOMER": "Изберете съществуващ клиент",
+			"ADD_NEW_CUSTOMER": "Добавяне на нов клиент",
+			"FULL_NAME": "Пълно име",
+			"EMAIL": "електронна поща",
+			"PHONE": "телефон",
+			"ADDRESS": "адрес",
+			"IMAGE": "Изображение",
+			"PRODUCT": "продукт",
+			"PRICE": "Цена",
+			"AVAILABLE": "На разположение",
+			"AMOUNT": "Количество",
+			"MAKE_ORDER": "Направете поръчка",
+			"BASIC_INFO": "Основна информация",
+			"FIRST_NAME": "Първо име",
+			"LAST_NAME": "Фамилия",
+			"EMAIL_IS_INVALID": "Имейл адресът е невалиден",
+			"EMAIL_IS_ALREADY_IN_USE": "Основна информация",
+			"NEXT": "Следващия",
+			"ADD_CUSTOMER": "Добавяне на клиент",
+			"BACK": "Обратно",
+			"FIND_ADDRESS": "Намерете адрес",
+			"COUNTRY": "Държава",
+			"CITY": "град",
+			"COUNTRY_IS_INVALID": "Държавата е невалидна",
+			"CITY_IS_REQUIRED": "Градът е задължителен",
+			"ZIP": "пощенски код",
+			"STREET_ADDRESS": "Адрес на улица",
+			"STREET_ADDRESS_IS_REQUIRED": "Изисква се уличен адрес",
+			"HOUSE_№": "Къща №",
+			"APARTMENT": "апартамент",
+			"SHOW_COORDINATES": "Показване на координатите",
+			"LATITUDE": "Географска ширина",
+			"LONGITUTE": "дължина",
+			"HOUSE_IS_REQUIRED": "Къща се изисква"
+		},
+		"EDIT_PICTURE": {
+			"PRODUCT_IMAGES": "Изображения на продукти",
+			"SAVE_IMAGES": "Запазване на изображенията"
+		},
+		"MISC_TEXT": {
+			"CREATE_NEW_ORDER": "Създай Нова Поръчка",
+			"ADD_NEW_PRODUCT": "Добави Нов Продукт"
+		}
+	},
+	"EDIT_PRODUCT_POP_UP": {
+		"EDIT_PRODUCT_TYPE": "Редактиране на типа продукт",
+		"UPDATE_AN_EXISTING_PRODUCT": "Актуализиране на съществуващ продукт",
+		"CLICK_TO_EDIT_PICTURES": "Кликнете върху „Редактиране на картини“",
+		"TITLE": "Заглавие",
+		"DESCRIPTION": "Описание",
+		"CATEGORIES": "Категории",
+		"PRICE": "Цена",
+		"COUNT": "Брой",
+		"LANGUAGE": "Език",
+		"DRAG&DROP_FILE_HERE": "Завлачи и пусни файла тук",
+		"OR_BROWSE": "или прегледайте",
+		"CLICK_TO_UPLAOD_PICTURE": "Кликнете, за да качите снимка",
+		"CANCEL": "Отказ",
+		"UPDATE": "Актуализация",
+		"ENGLISH": "Английски",
+		"HEBREW": "Иврит",
+		"RUSSIAN": "Руски",
+		"BULGARIAN": "Български",
+		"SPANISH": "Испански"
+	},
+	"ORDER_CANCELED_COMPONENT": {
+		"CANCELED": "Отменен",
+		"ORDER_CANCELED": "Поръчка отказана",
+		"DELIVERED": "Доставена",
+		"CREATED_AT": "Създадена на"
+	},
+	"ORDER_CONTROL_BUTTONS_COMPONENT": {
+		"CONFIRM": "Потвърждавам",
+		"START_PROCESSING": "Стартирай обработка",
+		"START_ALLOCATION": "Започни разпределение",
+		"ALLOCATED": "Разпределени",
+		"START_PACKAGING": "Стартирай пакетиране",
+		"PACKAGED": "Пакетирано",
+		"FAILED": "Неуспешен опит",
+		"GIVEN_TO_CARRIER": "Даден на доставчик",
+		"GIVEN_TO_CUSTOMER": "Дадено на клиента"
+	},
+	"ORDER_DELIVERED_COMPONENT": {
+		"DELIVERED": "Доставена",
+		"CREATED_AT": "Създадена на",
+		"DELIVERED_AT": "Доставена на",
+		"DELIVERED_TO": "Доставена до"
+	},
+	"ORDER_DELIVERY_PROBLEM_COMPONENT": {
+		"DELIVERY_ISSUES": "Проблеми при доставката",
+		"ISSUES_DURING_DELIVERY_TO": "Проблеми по-време надоставка",
+		"BY": "От",
+		"CREATED_AT": "Създаден на"
+	},
+	"ORDER_WAREHOUSE_PREPARATION_PROBLEM_COMPONENT": {
+		"CREATED_AT": "Създаден на"
+	},
+	"ORDER_WITH_CARRIER_COMPONENT": {
+		"IN_DELIVERY_TO": "При доставка от",
+		"BY": "От",
+		"CREATED_AT": "Създадена на"
+	},
+	"ORDER_WITHOUT_CARRIER_COMPONENT": {
+		"CREATED_AT": "Създадена на",
+		"CANT_PROCESSING_WITHOUT_PRODUCTS": "Не може да се обработва поръчката без продукти."
+	},
+	"ORDER_TITLE_COMPONENT": {
+		"ORDER": "Поръчка",
+		"FROM": "от"
+	},
+	"TRACK_ORDER_POP_UP": {
+		"CARRIER": "носител",
+		"TRACK": "път",
+		"CUSTOMER": "клиент"
+	},
+	"CONNECTION_ERROR_VIEW": {
+		"TITLE": "Няма връзка с някога",
+		"DESCRIPTION": [
+			"Моля, уверете се, че сте",
+			"свързани с интернет",
+			"или да опитате по-късно."
+		]
+	},
+	"CUSTOMER_ORDERS_POP_UP": {
+		"ORDER_ID": "Идентификатор на поръчката",
+		"DELIVERY": "Доставка",
+		"ADDRESS": "Адрес",
+		"STATUS": "Статус"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Няма връзка със сървъра"
+	}
+}

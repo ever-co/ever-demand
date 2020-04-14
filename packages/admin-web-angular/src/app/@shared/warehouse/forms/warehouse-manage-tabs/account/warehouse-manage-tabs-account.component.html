@@ -1,0 +1,100 @@
+<div class="col-sm-12" [formGroup]="form" *ngIf="form">
+	<fieldset>
+		<div class="form-group row">
+			<label class="col-sm-2 control-label"
+				>* {{ 'WAREHOUSE_VIEW.MUTATION.USERNAME' | translate }}</label
+			>
+
+			<div class="col-sm-9">
+				<input
+					type="text"
+					class="form-control"
+					placeholder="{{
+						'WAREHOUSE_VIEW.MUTATION.USERNAME' | translate
+					}}"
+					formControlName="username"
+				/>
+
+				<div
+					*ngIf="
+						username.errors && (username.dirty || username.touched)
+					"
+					class="alert alert-danger"
+				>
+					<div [hidden]="!username.hasError('required')">
+						{{
+							'WAREHOUSE_VIEW.MUTATION.ERRORS.USERNAME_IS_REQUIRED'
+								| translate
+						}}!
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row" [formGroup]="password">
+			<label class="col-sm-2 control-label">{{
+				'WAREHOUSE_VIEW.MUTATION.OLD_PASSWORD' | translate
+			}}</label>
+
+			<div class="col-sm-9">
+				<input
+					type="password"
+					class="form-control"
+					placeholder="{{
+						'WAREHOUSE_VIEW.MUTATION.OLD_PASSWORD' | translate
+					}}"
+					formControlName="current"
+				/>
+			</div>
+		</div>
+
+		<div class="form-group row" [formGroup]="password">
+			<label class="col-sm-2 control-label">{{
+				'WAREHOUSE_VIEW.MUTATION.NEW_PASSWORD' | translate
+			}}</label>
+
+			<div class="col-sm-9">
+				<input
+					type="password"
+					class="form-control"
+					placeholder="{{
+						'WAREHOUSE_VIEW.MUTATION.NEW_PASSWORD' | translate
+					}}"
+					formControlName="new"
+				/>
+			</div>
+		</div>
+
+		<div class="form-group row" [formGroup]="password">
+			<label class="col-sm-2 control-label">{{
+				'WAREHOUSE_VIEW.MUTATION.CONFIRM_PASSWORD' | translate
+			}}</label>
+
+			<div class="col-sm-9">
+				<input
+					type="password"
+					class="form-control"
+					placeholder="{{
+						'WAREHOUSE_VIEW.MUTATION.CONFIRM_PASSWORD' | translate
+					}}"
+					formControlName="confirm"
+				/>
+
+				<div
+					*ngIf="
+						passwordConfirm.errors &&
+						(passwordConfirm.dirty || passwordConfirm.touched)
+					"
+					class="alert alert-danger"
+				>
+					<div [hidden]="!passwordConfirm.hasError('notMatch')">
+						{{
+							'WAREHOUSE_VIEW.MUTATION.PASSWORDS_DO_NOT_MATCH'
+								| translate
+						}}!
+					</div>
+				</div>
+			</div>
+		</div>
+	</fieldset>
+</div>

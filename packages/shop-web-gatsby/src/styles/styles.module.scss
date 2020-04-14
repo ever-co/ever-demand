@@ -1,0 +1,206 @@
+/* this file will be extracted to main dist folder and is imported in index.html */
+/* This file is for setting global styles  */
+@import 'variables';
+
+// @import '~material-components-web/material-components-web';
+
+nav {
+	margin-top: 16px;
+}
+
+body {
+	margin: 0;
+}
+
+.content {
+	margin-top: 80px;
+}
+
+// Material design icons :)
+/* fallback */
+@font-face {
+	font-family: 'Material Icons';
+	font-style: normal;
+	font-weight: 400;
+	src: url(https://fonts.gstatic.com/s/materialicons/v39/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2)
+		format('woff2');
+}
+
+.material-icons {
+	font-family: 'Material Icons';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 24px;
+	line-height: 1;
+	letter-spacing: normal;
+	text-transform: none;
+	display: inline-block;
+	white-space: nowrap;
+	word-wrap: normal;
+	direction: ltr;
+	-webkit-font-feature-settings: 'liga';
+	-webkit-font-smoothing: antialiased;
+}
+
+.content-center {
+	display: flex !important;
+	align-content: center !important;
+	align-items: center !important;
+}
+
+.location-modal-card form {
+	box-shadow: none !important;
+}
+
+.auth {
+	margin: 0 auto;
+	background-color: $brand-darken;
+	min-height: 100vh;
+	height: 100%;
+	width: 100%;
+	padding: 60px;
+	color: #ffffff;
+	text-align: left;
+	.map-container {
+		min-height: 400px;
+	}
+	.card {
+		padding: 16px;
+		background: $brand-lighted;
+		margin: 0 auto;
+		width: 100%;
+		height: 400px;
+		-webkit-box-shadow: 0px 0px 50px 5px rgba(156, 156, 156, 0.75);
+		-moz-box-shadow: 0px 0px 50px 5px rgba(156, 156, 156, 0.75);
+		box-shadow: 0px 0px 50px 5px rgba(156, 156, 156, 0.75);
+
+		.login-button {
+			-moz-box-shadow: inset 0px 1px 0px 0px #cf866c;
+			-webkit-box-shadow: inset 0px 1px 0px 0px #cf866c;
+			box-shadow: inset 0px 1px 0px 0px #cf866c;
+			background: -webkit-gradient(
+				linear,
+				left top,
+				left bottom,
+				color-stop(0.05, #d0451b),
+				color-stop(1, #dd4b39)
+			);
+			background: -moz-linear-gradient(top, #d0451b 5%, #dd4b39 100%);
+			background: -webkit-linear-gradient(top, #d0451b 5%, #dd4b39 100%);
+			background: -o-linear-gradient(top, #d0451b 5%, #dd4b39 100%);
+			background: -ms-linear-gradient(top, #d0451b 5%, #dd4b39 100%);
+			background: linear-gradient(to bottom, #d0451b 5%, #dd4b39 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#d0451b', endColorstr='#dd4b39',GradientType=0);
+			background-color: #d0451b;
+			-moz-border-radius: 3px;
+			width: 100%;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			-webkit-border-radius: 3px;
+			border-radius: 3px;
+			border: 1px solid #942911;
+			display: inline-block;
+			cursor: pointer;
+			color: #ffffff;
+			font-family: Arial;
+			font-size: 0.9em;
+			padding: 6px 24px;
+			text-decoration: none;
+			text-shadow: 0px 1px 0px #854629;
+			&:hover {
+				background: -webkit-gradient(
+					linear,
+					left top,
+					left bottom,
+					color-stop(0.05, #bc3315),
+					color-stop(1, #dd4b39)
+				);
+				background: -moz-linear-gradient(top, #bc3315 5%, #dd4b39 100%);
+				background: -webkit-linear-gradient(top, #bc3315 5%, #dd4b39 100%);
+				background: -o-linear-gradient(top, #bc3315 5%, #dd4b39 100%);
+				background: -ms-linear-gradient(top, #bc3315 5%, #dd4b39 100%);
+				background: linear-gradient(to bottom, #bc3315 5%, #dd4b39 100%);
+				filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#bc3315', endColorstr='#dd4b39',GradientType=0);
+				background-color: #bc3315;
+			}
+			&:active {
+				position: relative;
+				top: 2px;
+			}
+		}
+	}
+	svg {
+		margin-top: 5px;
+		margin-bottom: 5px;
+		margin-left: 20px;
+		margin-right: 20px;
+		text-align: center;
+		color: #fff;
+		img {
+			margin-bottom: 0;
+		}
+	}
+	.slogan {
+		text-align: center;
+		// margin-top: 0;
+		margin-bottom: 50px !important;
+		font-family: roboto, 'Helvetica Neue Light', 'HelveticaNeue-Light',
+			'Helvetica Neue', Calibri, Helvetica, Arial, sans-serif;
+		// font-weight: 300; // color: #f1f1f1; // font-size: 14px;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		opacity: 0.4;
+		font-size: 14px;
+		color: #fff;
+	}
+}
+.maintenance-message-container {
+	color: white;
+	padding: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	height: 100%;
+	background: #2a2c39;
+}
+
+.search-products {
+	.mat-form-field-ripple {
+		background-color: $assertive-lighted !important;
+	}
+
+	.mat-form-field-underline {
+		background-color: $assertive-lighted !important;
+	}
+}
+
+.view-settings {
+	mat-button-toggle-group {
+		height: 35px;
+	}
+
+	.mat-button-toggle-button {
+		height: 100%;
+	}
+
+	.mat-button-toggle-label-content {
+		line-height: normal !important;
+	}
+}
+
+.carousel-view {
+	.carousel {
+		display: flex;
+		align-items: center;
+		padding-bottom: 20px;
+		.content {
+			height: 100%;
+		}
+
+		mat-card.product-card.pt-0.mat-card.grid-view {
+			width: 100% !important;
+			height: 100% !important;
+		}
+	}
+}

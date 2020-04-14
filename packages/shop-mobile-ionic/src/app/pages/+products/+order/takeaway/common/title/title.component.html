@@ -1,0 +1,14 @@
+<div
+	class="box box-brand takeaway-title"
+	style="padding: 30px 20px; height: 100%;"
+>
+	<div class="title-content">
+		<h4 class="main-title mt-0">{{ byPopupStatuses.TITLE }}</h4>
+
+		<div style="font-size: 80%;">{{ byPopupStatuses.DETAILS }}</div>
+
+		<div style="font-size: 80%;" *ngIf="!order?.isPaid">
+			{{ byPopupStatuses.NOT_PAID_NOTE }}
+		</div>
+	</div>
+</div>

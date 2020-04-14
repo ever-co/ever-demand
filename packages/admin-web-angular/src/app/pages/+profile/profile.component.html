@@ -1,0 +1,36 @@
+<toaster-container></toaster-container>
+
+<nb-card *ngIf="admin$ | async; let admin">
+	<nb-card-header>
+		<header class="text-center border-bottom">
+			<h1>
+				{{ 'PROFILE_VIEW.PROFILE_PAGE' | translate }}
+			</h1>
+		</header>
+
+		<body class="row">
+			<div class="col-md-2 profile-image text-center">
+				<div class="row text-center">
+					<div class="col-md-8 offset-md-1">
+						<img src="{{ admin.pictureUrl }}" alt="Admin image" />
+					</div>
+				</div>
+			</div>
+			<div class="col-md-10">
+				<h2>{{ admin.name }}</h2>
+				<h4>{{ admin.email }}</h4>
+			</div>
+		</body>
+	</nb-card-header>
+
+	<nb-card-body>
+		<nb-tabset fullWidth>
+			<nb-tab tabTitle="{{ 'PROFILE_VIEW.BASIC_INFO' | translate }}">
+				<ea-basic-info [admin]="admin"></ea-basic-info>
+			</nb-tab>
+			<nb-tab tabTitle="{{ 'PROFILE_VIEW.ACCOUNT' | translate }}">
+				<ea-account [admin]="admin"></ea-account>
+			</nb-tab>
+		</nb-tabset>
+	</nb-card-body>
+</nb-card>

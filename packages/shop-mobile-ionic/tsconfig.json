@@ -1,0 +1,52 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"compileOnSave": false,
+	"compilerOptions": {
+		"sourceMap": true,
+		"declaration": false,
+		"moduleResolution": "node",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"importHelpers": true,
+		"noImplicitAny": false,
+		"preserveConstEnums": true,
+		"allowSyntheticDefaultImports": true,
+		"target": "es5",
+		"baseUrl": "./src",
+		"paths": {
+			"@angular/*": ["../node_modules/@angular/*"],
+			"@modules/server.common/*": ["../../common/src/*"],
+			"@modules/client.common.angular2/*": ["../../common-angular/src/*"],
+			"@modules/*": ["./modules/*"],
+			"@pyro/*": ["../../common/src/@pyro/*"],
+			"mongoose": ["../../common-angular/src/mongoose-placeholder"],
+			"typeorm": ["../../common-angular/src/typeorm-placeholder"],
+			"environment": ["./environments/environment"],
+			"core-js/es7/reflect": [
+				"../../../node_modules/core-js/proposals/reflect-metadata"
+			]
+		},
+		"lib": ["es2017", "dom", "esnext"],
+		"noUnusedLocals": false,
+		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"]
+	},
+	"files": ["src/main.ts", "src/polyfills.ts"],
+	"include": [
+		"src/**/*.ts",
+		"./*.ts",
+		"../common/**/*.ts",
+		"../common-angular/**/*.ts"
+	],
+	"angularCompilerOptions": {
+		"enableIvy": false,
+		"annotateForClosureCompiler": true,
+		"skipTemplateCodegen": true,
+		"fullTemplateTypeCheck": true,
+		"strictInjectionParameters": true,
+		"enableResourceInlining": true
+	},
+	"exclude": ["node_modules"],
+	"atom": {
+		"rewriteTsconfig": false
+	}
+}

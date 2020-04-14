@@ -12,12 +12,12 @@ node_js:
 cache:
     directories:
         - node_modules
-        - backend/api/node_modules
-        - admin/website-angular/node_modules
-        - carrier/mobile-ionic/node_modules
-        - shop/mobile-ionic/node_modules
-        - shop/website-angular/node_modules
-        - merchant/tablet-ionic/node_modules
+        - packages/core/node_modules
+        - packages/admin-web-angular/node_modules
+        - packages/carrier-mobile-ionic/node_modules
+        - packages/shop-mobile-ionic/node_modules
+        - packages/shop-web-angular/node_modules
+        - packages/merchant-tablet-ionic/node_modules
 
 addons:
     apt:
@@ -40,12 +40,12 @@ install:
 
 matrix:
     include:
-        # - env: PROJECT=backend/api
-        # - env: PROJECT=admin/website-angular
-        # - env: PROJECT=carrier/mobile-ionic
-        # - env: PROJECT=shop/mobile-ionic
-        # - env: PROJECT=shop/website-angular
-        # - env: PROJECT=merchant/tablet-ionic
+        - env: PROJECT=packages/core
+        - env: PROJECT=packages/admin-web-angular
+        - env: PROJECT=packages/carrier-mobile-ionic
+        - env: PROJECT=packages/shop-mobile-ionic
+        - env: PROJECT=packages/shop-web-angular
+        - env: PROJECT=packages/merchant-tablet-ionic
 
 before_script:
     - cd $PROJECT

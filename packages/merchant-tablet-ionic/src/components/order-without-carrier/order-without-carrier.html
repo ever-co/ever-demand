@@ -1,0 +1,57 @@
+<div class="card order-card order-without-carrier">
+	<div class="row m-0">
+		<order-image [order]="order" class="col-2 p-0"></order-image>
+
+		<div class="order-main-container no-carrier col-8">
+			<order-title [order]="order"></order-title>
+			<div *ngIf="hasProducts" class="order-main">
+				<div class="delivery-details">
+					<customer-info [user]="order?.user"></customer-info>
+				</div>
+
+				<div class="order-actions">
+					<order-control-buttons
+						*ngIf="hasProducts"
+						[orderId]="order.id"
+						[warehouseStatus]="order.warehouseStatus"
+						[carrierStatus]="order.carrierStatus"
+						[onUpdateWarehouseStatus]="onUpdateWarehouseStatus"
+						[orderType]="order.orderType"
+					>
+					</order-control-buttons>
+				</div>
+			</div>
+
+			<div *ngIf="!hasProducts" class="no-processing">
+				<h4 class="no-processing-text">
+					{{
+					'ORDER_WITHOUT_CARRIER_COMPONENT.CANT_PROCESSING_WITHOUT_PRODUCTS'
+					| translate }}
+				</h4>
+			</div>
+		</div>
+
+		<div c class="order-timer-container col-2">
+			<h4 class="status order-header">
+				{{ getWarehouseStatus.call(null, order.warehouseStatus) |
+				translate }}
+			</h4>
+
+			<div class="times">
+				<div class="time">
+					{{ 'ORDER_WITHOUT_CARRIER_COMPONENT.CREATED_AT' | translate
+					}}
+					<span class="big"
+						>{{ order.createdAt | date: 'HH:mm' }}</span
+					>
+
+					<br />
+
+					<span style="font-weight: 500;">
+						(<span>{{ order.createdAt | amTimeAgo }}</span>)
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

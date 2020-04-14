@@ -1,0 +1,106 @@
+<div class="order-product">
+	<toaster-container></toaster-container>
+	<nb-card class="m-0">
+		<nb-card-header>
+			<div class="row m-0">
+				<h4>
+					{{
+						'ORDER_VIEW.ORDER_PRODUCT_INFO.ORDER_PRODUCTS'
+							| translate
+					}}
+				</h4>
+			</div>
+			<div class="row break-line"></div>
+			<div
+				[hidden]="
+					order?.isCancelled ||
+					order?.carrierStatus === deliveryCompleted ||
+					order?.warehouseStatus === givenToCarrier
+				"
+				class="row m-0"
+			>
+				<div class="col-8 p-0 btn-group">
+					<button
+						nbButton
+						status="success"
+						class="d-inline-block"
+						(click)="addProducts()"
+					>
+						<i class="ion-md-add button-icon mr-1"></i
+						>{{
+							'ORDER_VIEW.ORDER_PRODUCT_INFO.ADD_PRODUCTS'
+								| translate
+						}}
+					</button>
+					<button
+						nbButton
+						status="warning"
+						class="mr-2 d-inline-block"
+						[disabled]="!selectedProducts.length"
+						(click)="removeSelectedProducts()"
+						[nbSpinner]="loading"
+					>
+						<i class="ion-md-trash button-icon mr-1"></i>
+						{{
+							'ORDER_VIEW.ORDER_PRODUCT_INFO.REMOVE_PRODUCTS'
+								| translate
+						}}
+					</button>
+				</div>
+				<div class="col-4 pull-right p-0">
+					<button
+						nbButton
+						status="danger"
+						class="mr-2 d-inline-block float-right"
+						(click)="cancelOrder()"
+						[nbSpinner]="loading"
+					>
+						<i class="ion-md-close button-icon mr-1"></i>
+						{{
+							'ORDER_VIEW.ORDER_PRODUCT_INFO.CANCEL_ORDER'
+								| translate
+						}}
+					</button>
+				</div>
+			</div>
+
+			<h4 class="text-danger" *ngIf="order?.isCancelled">
+				{{
+					'ORDER_VIEW.ORDER_PRODUCT_INFO.THE_ORDER_IS_CANCEL'
+						| translate
+				}}
+			</h4>
+			<h4
+				class="text-info"
+				*ngIf="
+					order?.warehouseStatus === givenToCarrier &&
+					order?.carrierStatus !== deliveryCompleted
+				"
+			>
+				{{
+					'ORDER_VIEW.ORDER_PRODUCT_INFO.THE_ORDER_IS_GIVEN_TO_CARRIER'
+						| translate
+				}}
+			</h4>
+			<h4
+				class="text-success"
+				*ngIf="order?.carrierStatus === deliveryCompleted"
+			>
+				{{
+					'ORDER_VIEW.ORDER_PRODUCT_INFO.THE_ORDER_IS_DELIVERED'
+						| translate
+				}}
+			</h4>
+		</nb-card-header>
+
+		<nb-card-body>
+			<ng2-smart-table
+				[settings]="settingsSmartTable"
+				[source]="sourceSmartTable"
+				id="smartTableCustomer"
+				(userRowSelect)="selectProductTmp($event)"
+			>
+			</ng2-smart-table>
+		</nb-card-body>
+	</nb-card>
+</div>

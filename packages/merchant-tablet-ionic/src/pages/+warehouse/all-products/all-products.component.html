@@ -1,0 +1,88 @@
+<div *ngIf="showNoProductsIcon">
+	<div class="no-orders-message">
+		<i class="fa fa-book"></i>
+		<div>
+			<h2>
+				{{
+					'WAREHOUSE_VIEW.ORDER_WAREHOUSE_STATUSES.NO_PRODUCTS'
+						| translate
+				}}
+			</h2>
+			<h3 (click)="presentCreateProductPopover()">
+				{{ 'WAREHOUSE_VIEW.MISC_TEXT.ADD_NEW_PRODUCT' | translate }}
+			</h3>
+		</div>
+	</div>
+</div>
+
+<div class="masonry-container">
+	<ngx-masonry
+		*ngIf="productsCount > 0"
+		[options]="masonryOptions"
+		[updateLayout]="updateMasonryLayout"
+		#masonry
+	>
+		<ngxMasonryItem
+			class="masonry-item"
+			*ngFor="
+				let warehouseProduct of allProducts
+					| paginate
+						: {
+								itemsPerPage: 10,
+								currentPage: page,
+								totalItems: productsCount
+						  }
+			"
+		>
+			<ion-item class="product-card-container" type="card">
+				<div class="card product-card">
+					<div class="product-image-container">
+						<img
+							class="product-image"
+							(load)="masonry.layout()"
+							(click)="addProduct(warehouseProduct.product.id)"
+							src="{{
+								localeTranslate(
+									warehouseProduct?.product?.images
+								)
+							}}"
+						/>
+					</div>
+
+					<div class="product-mini-bar">
+						<a
+							class="edit-button button"
+							(click)="openEditProductModal(warehouseProduct)"
+						>
+							<ion-icon
+								ios="ios-settings"
+								md="md-settings"
+							></ion-icon>
+						</a>
+						<span class="name"
+							>{{
+								truncateTitle(
+									localeTranslate(
+										warehouseProduct.product.title
+									)
+								)
+							}}
+						</span>
+						<span class="count">{{ warehouseProduct?.count }}</span>
+					</div>
+				</div>
+			</ion-item>
+		</ngxMasonryItem>
+	</ngx-masonry>
+</div>
+
+<pagination-controls
+	class="pagination"
+	(pageChange)="loadPage($event)"
+	directionLinks="true"
+	autoHide="true"
+	responsive="true"
+	previousLabel="Previous"
+	nextLabel="Next"
+>
+</pagination-controls>

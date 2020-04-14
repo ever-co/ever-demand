@@ -1,0 +1,164 @@
+<div class="row">
+	<div class="col-12">
+		<div class="row">
+			<div class="col-8">
+				<nb-card>
+					<nb-card-header>
+						{{
+							'WAREHOUSES_VIEW.MERCHANTS.TRACK_ALL_MERCHANTS'
+								| translate
+						}}
+					</nb-card-header>
+					<nb-card-body>
+						<div #gmap class="googleMap"></div>
+					</nb-card-body>
+				</nb-card>
+			</div>
+
+			<div class="col-4">
+				<nb-card>
+					<nb-card-header>
+						{{
+							'WAREHOUSES_VIEW.MERCHANTS.FILTER_MERCHANTS'
+								| translate
+						}}
+					</nb-card-header>
+					<nb-card-body style="overflow: inherit;">
+						<div>
+							<ng-select
+								[items]="listOfMerchants"
+								[placeholder]="
+									'WAREHOUSES_VIEW.MERCHANTS.FILTER_BY_NAME'
+										| translate
+								"
+								[clearable]="true"
+								bindLabel="name"
+								[(ngModel)]="merchantName"
+								style="width: 100%; margin-bottom: 30px;"
+								(change)="filterByName($event)"
+							>
+								<ng-template ng-label-tmp let-item="item">
+									<img
+										*ngIf="item.logo"
+										height="15"
+										width="15"
+										class="mr-2"
+										[src]="item.logo"
+									/>
+									<b>{{ item }}</b>
+								</ng-template>
+							</ng-select>
+							<ng-select
+								[items]="listOfCities"
+								[(ngModel)]="merchantCity"
+								[clearable]="true"
+								[placeholder]="
+									'WAREHOUSES_VIEW.MERCHANTS.FILTER_BY_CITY'
+										| translate
+								"
+								bindLabel="city"
+								style="width: 100%; margin-bottom: 30px;"
+								(change)="filterByCity($event)"
+							>
+								<ng-template
+									ng-option-tmp
+									let-item="item"
+									let-index="index"
+								>
+									<p class="card-title">
+										<img
+											*ngIf="item.logo"
+											height="40"
+											width="40"
+											class="mr-1"
+											[src]="item.logo"
+										/>
+										{{ item }}
+									</p>
+								</ng-template>
+							</ng-select>
+							<ng-select
+								[items]="listOfCountries"
+								[clearable]="true"
+								[placeholder]="
+									'WAREHOUSES_VIEW.MERCHANTS.FILTER_BY_COUNTRY'
+										| translate
+								"
+								bindLabel="city"
+								[(ngModel)]="merchantCountry"
+								style="width: 100%; margin-bottom: 30px;"
+								(change)="filterByCountry($event)"
+							>
+								<ng-template
+									ng-option-tmp
+									let-item="item"
+									let-index="index"
+								>
+									<p class="card-title">
+										<img
+											*ngIf="item.logo"
+											height="40"
+											width="40"
+											class="mr-1"
+											[src]="item.logo"
+										/>
+										{{ item }}
+									</p>
+								</ng-template>
+							</ng-select>
+						</div>
+						<nb-card-footer>
+							<div class="details">
+								<div class="warehouse" *ngIf="selectedStore">
+									<h6>
+										<b>{{ selectedStore.name }}</b>
+									</h6>
+									<ul>
+										<li>
+											Phone:
+											{{ selectedStore.contactPhone }}
+										</li>
+										<li>
+											Email:
+											{{ selectedStore.contactEmail }}
+										</li>
+										<li>
+											Address:
+											{{
+												selectedStore.geoLocation
+													.streetAddress
+											}}
+										</li>
+									</ul>
+								</div>
+								<div class="carrier" *ngIf="selectedCarrier">
+									<h6>
+										<b>{{ selectedCarrier.fullName }}</b>
+									</h6>
+									<ul>
+										<li>
+											Delivery Count:
+											{{
+												selectedCarrier.numberOfDeliveries
+											}}
+										</li>
+										<li>
+											Phone: {{ selectedCarrier.phone }}
+										</li>
+										<li>
+											Address:
+											{{
+												selectedCarrier.geoLocation
+													.streetAddress
+											}}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</nb-card-footer>
+					</nb-card-body>
+				</nb-card>
+			</div>
+		</div>
+	</div>
+</div>

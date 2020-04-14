@@ -1,0 +1,29 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.in-store {
+	text-align: center;
+	line-height: 1;
+	padding-right: 5px;
+
+	.in-store-lines {
+		font-size: 80%;
+		color: #d0d0d0;
+		small {
+			display: block;
+		}
+	}
+
+	.store-sign {
+		font-size: 18px;
+		* {
+			animation: fide-out 2s ease-in-out infinite !important;
+		}
+	}
+
+	.exit-store-sign {
+		color: $assertive-lighted;
+	}
+	.in-store-sign {
+		color: $balanced;
+	}
+}

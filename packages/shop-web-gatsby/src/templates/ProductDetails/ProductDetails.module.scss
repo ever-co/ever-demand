@@ -1,0 +1,200 @@
+@import '../../styles/styles.module.scss';
+
+.product-details {
+	position: absolute;
+	z-index: 15;
+	top: 50%;
+	left: 50%;
+	margin: -35vh 0 0 -30.5vw;
+	width: 61vw;
+	height: 70vh;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	/*display: flex;
+    justify-content: space-around;
+    align-items: stretch;*/
+
+	mat-card-content {
+		width: 100%;
+		height: 100%;
+
+		.row {
+			height: 100%;
+		}
+	}
+
+	.product-details-container {
+		height: 100%;
+		display: flex;
+		align-items: center;
+		align-content: center;
+	}
+
+	.product-image {
+		height: 100%;
+		text-align: center;
+
+		.top-image {
+			width: 100%;
+			height: 70%;
+			display: flex;
+			align-content: center;
+			align-items: center;
+			background: $brand-darken;
+		}
+
+		.bottom-images {
+			width: 100%;
+			height: 30%;
+			background: $brand;
+
+			.image-slide {
+				height: 100%;
+
+				.scroll-image {
+					cursor: pointer;
+				}
+			}
+
+			.drag-button {
+				cursor: pointer;
+				bottom: 0;
+				position: absolute;
+				background: $brand-lighted;
+				color: white;
+				/* top: 0; */
+				height: 30%;
+				opacity: 0.4;
+				border: 0;
+				padding: 0;
+				i {
+					font-size: 30px;
+				}
+			}
+			.drag-button.left {
+				left: 0;
+			}
+			.drag-button.right {
+				right: 0;
+			}
+
+			.drag-button:hover {
+				opacity: 0.7;
+				i {
+					font-weight: bold;
+				}
+			}
+
+			.drag-button:active {
+				opacity: 1;
+			}
+		}
+
+		.single-image {
+			height: 100% !important;
+		}
+	}
+
+	.product-image img {
+		max-width: 100%;
+		max-height: 100%;
+		margin: 0 auto;
+	}
+
+	.back-button {
+		position: absolute;
+		top: 35px;
+		left: 35px;
+	}
+
+	.back-button svg {
+		position: relative;
+		width: 28px;
+		height: 28px;
+	}
+
+	.product-details-content {
+		padding-left: 5.7vw;
+		padding-right: 5.7vw;
+		flex-grow: 1;
+	}
+
+	.warehouse {
+		display: flex;
+		align-items: center;
+	}
+
+	.warehouse warehouse-logo {
+		display: inline-flex !important;
+		margin-right: 15px;
+		width: 2.7vw;
+		height: 2.7vw;
+	}
+
+	.warehouse .warehouse-name {
+		display: inline-block;
+		font-family: Roboto;
+		font-weight: bold;
+		font-size: 15px;
+		color: rgba(0, 0, 0, 0.54);
+		margin: 0;
+	}
+
+	.product {
+		margin-top: 50px;
+		margin-bottom: 52px;
+	}
+
+	.product .title {
+		margin-top: 0;
+		margin-bottom: 9px;
+
+		font-family: Roboto;
+		font-size: 36px;
+		font-weight: 400;
+		color: rgba(0, 0, 2, 0.8);
+	}
+
+	.product .description {
+		margin-top: 0;
+		margin-bottom: 12px;
+
+		font-family: Roboto;
+		font-size: 21px;
+		font-weight: 400;
+		color: rgba(0, 0, 0, 0.8);
+	}
+
+	.product .details {
+		margin-top: 0;
+		margin-bottom: 0;
+
+		font-family: Roboto;
+		font-weight: 400;
+		font-size: 15px;
+		max-width: 350px;
+		color: rgba(0, 0, 0, 0.72);
+	}
+
+	.purchase-button {
+		margin-top: 0;
+		margin-bottom: 3px;
+	}
+
+	.delivery-address {
+		margin-top: 1rem;
+		margin-bottom: 0;
+
+		font-size: 13px;
+		font-weight: 400;
+		font-family: Roboto;
+		color: rgba(0, 0, 0, 0.72);
+	}
+
+	.delivery-address mat-icon {
+		position: relative;
+		top: 3px;
+		font-size: 20px;
+	}
+}

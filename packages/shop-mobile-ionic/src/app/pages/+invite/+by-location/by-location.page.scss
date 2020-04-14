@@ -1,0 +1,125 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.by-location {
+	@include center(absolute);
+	width: 68%;
+}
+
+h1 {
+	font-family: 'Open Sans Hebrew', '-apple-system', 'Helvetica Neue', 'Roboto',
+		'Segoe UI', sans-serif;
+	font-size: 30px;
+	width: 220px;
+	font-weight: 200;
+	text-align: center;
+	color: #fff;
+	margin: 13px auto 0 auto;
+}
+
+h2 {
+	font-family: 'Open Sans Hebrew', '-apple-system', 'Helvetica Neue', 'Roboto',
+		'Segoe UI', sans-serif;
+	color: #fff;
+	opacity: 0.6;
+	font-size: 14px;
+	line-height: 20px;
+	width: 205px;
+	margin: 13px auto 41px auto;
+}
+
+input,
+select {
+	@extend .everbie-input;
+	margin: 10px auto;
+	width: 100%;
+	background-color: transparent !important;
+}
+
+.house-and-apartment {
+	.house {
+		&.house-ltr {
+			padding-right: 5px;
+		}
+
+		&.house-rtl {
+			padding-left: 5px;
+		}
+
+		input {
+			margin: 0;
+		}
+	}
+
+	.apartment {
+		&.apartment-ltr {
+			padding-left: 5px;
+		}
+
+		&.apartment-rtl {
+			padding-right: 5px;
+		}
+
+		.item-toggle {
+			background: transparent;
+		}
+		input {
+			margin: 0;
+		}
+	}
+
+	.is-apartment {
+		margin-top: 10px;
+		color: #eee;
+		border: none;
+
+		.description {
+			top: -10px;
+			font-size: 13px;
+			position: relative;
+		}
+
+		&.is-apartment-ltr {
+			margin-left: -30px;
+
+			.description {
+				right: 5px;
+			}
+
+			.toggle {
+				margin-right: -45px;
+			}
+		}
+
+		&.is-apartment-rtl {
+			margin-left: -15px;
+
+			.description {
+				left: 8px;
+			}
+		}
+	}
+}
+
+.submit-button {
+	margin-top: 20px;
+}
+
+.input-wrapper {
+	display: none;
+}
+
+ion-toggle#toggle {
+	margin: 0 auto;
+}
+
+#toggleWrapp {
+	display: inline-block;
+	width: 100px;
+}
+
+#toggleLabel {
+	display: inline-block;
+	width: 100px;
+	color: white;
+	padding-top: 12px;
+}

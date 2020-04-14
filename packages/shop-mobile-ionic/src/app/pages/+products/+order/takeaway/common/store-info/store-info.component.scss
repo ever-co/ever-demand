@@ -1,0 +1,57 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.takeaway-store-info {
+	padding: 5px 10px;
+	.call-icon {
+		margin-right: 7px;
+		color: $balanced-lighted;
+		&:before {
+			font-size: 1.3em;
+			cursor: pointer;
+			margin-right: 5px;
+			position: relative;
+		}
+		&,
+		* {
+			animation: example 1s ease-in-out infinite !important;
+		}
+	}
+
+	.map-icon {
+		margin-right: 7px;
+		color: #17a2b8;
+		&:before {
+			font-size: 1.3em;
+			cursor: pointer;
+			margin-right: 5px;
+			position: relative;
+		}
+		&,
+		* {
+			animation: example 1s ease-in-out infinite !important;
+		}
+	}
+
+	@keyframes example {
+		0% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0.75;
+		}
+	}
+
+	.broder-top {
+		border-top: 1px solid;
+		margin-top: 10px;
+		padding-top: 16px;
+	}
+
+	.underline {
+		border-bottom: 1px solid;
+	}
+
+	.description {
+		font-size: 80%;
+	}
+}

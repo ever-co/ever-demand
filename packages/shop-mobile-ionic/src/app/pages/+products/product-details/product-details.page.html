@@ -1,0 +1,114 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-buttons slot="start">
+			<ion-menu-button autoHide="false"></ion-menu-button>
+		</ion-buttons>
+
+		<ion-title>{{ 'PRODUCTS_VIEW.DETAILS.DETAILS' | translate }}</ion-title>
+		<ion-buttons slot="end">
+			<ion-button (click)="goToProductPage()">
+				<i class="fa fa-angle-left back-btn"></i>
+				<span>{{ 'PRODUCTS_VIEW.DETAILS.BACK' | translate }}</span>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content [ngClass]="{'blur-filter': modalOpen}">
+	<ion-card class="product-card brand-dark">
+		<div *ngIf="modalOpen" class="blur-lighter"></div>
+		<ion-grid *ngIf="product" no-padding>
+			<ion-row
+				no-padding
+				align-items-center
+				class="header-container brand-light"
+			>
+				<ion-col class="col-2">
+					<e-cu-warehouse-logo
+						[logo]="warehouseLogo"
+						class="icon"
+					></e-cu-warehouse-logo>
+				</ion-col>
+				<ion-col class="text-content" clsss="col-6">
+					<div>
+						<h2 class="text">
+							{{ localeTranslate(product.product?.title) }}
+						</h2>
+						<h6 class="productDescription">
+							{{
+							shortenDescription(localeTranslate(product.product?.description))
+							}}
+						</h6>
+					</div>
+				</ion-col>
+				<ion-col class="col-2">
+					<e-cu-delivery-info
+						[currentProduct]="product"
+					></e-cu-delivery-info>
+				</ion-col>
+			</ion-row>
+
+			<ion-row no-padding *ngIf="product" class="images">
+				<e-cu-discount [currentProduct]="product"></e-cu-discount>
+				<div *ngIf="image" class="single-image">
+					<img
+						src="{{image.url}}"
+						[ngClass]="image.orientation === 2 ? 'all-space' : 'half-space'"
+						alt=""
+					/>
+				</div>
+				<ion-slides
+					*ngIf="images && images.length !== 0"
+					[options]="swiperOptions"
+					dir="{{ 'CURRENT_DIRECTION' | translate }}"
+				>
+					<ion-slide
+						*ngFor="let image of images"
+						class="slide-content"
+					>
+						<img
+							src="{{ image.url }}"
+							*ngIf="product.product.images.length !== 0"
+						/>
+					</ion-slide>
+				</ion-slides>
+			</ion-row>
+
+			<ion-row size="12" class="list-content">
+				<div class="list">
+					<h6 class="title-text">
+						{{ 'PRODUCTS_VIEW.DETAILS.INCLUDES' | translate }}
+					</h6>
+					<span class="description-text">
+						{{ localeTranslate(product?.product.details) }}
+					</span>
+				</div>
+			</ion-row>
+
+			<ion-col
+				[hidden]="true"
+				no-padding
+				size="12"
+				class="reviews-content"
+			>
+				<ion-img src="/assets/imgs/reviews.png"></ion-img>
+			</ion-col>
+
+			<div class="box details-buttons">
+				<button
+					class="button button-assertive border-color-brand col-100"
+					[ngClass]="{'disabled': soldOut}"
+					(click)="!soldOut && buyItem(product.product)"
+				>
+					<span
+						>{{ !soldOut ? ('PRODUCTS_VIEW.BUY_BUTTON.PRE' |
+						translate) : ('PRODUCTS_VIEW.NOT_AVAILABLE' | translate)
+						}} {{ !soldOut ? (product?.price + '$') : ('') }} {{
+						!soldOut ? ('PRODUCTS_VIEW.BUY_BUTTON.SUF' | translate)
+						: ('') }}</span
+					>
+				</button>
+			</div>
+		</ion-grid>
+	</ion-card>
+</ion-content>

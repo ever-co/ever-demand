@@ -1,0 +1,54 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+.customer-deliveries-popup {
+	background-color: #fff;
+	min-height: 100%;
+	display: block !important;
+	margin: 0 !important;
+	.body {
+		overflow-y: scroll;
+		height: 75%;
+		position: relative;
+	}
+	.info {
+		color: #0074d9;
+		font-weight: bold;
+	}
+
+	table {
+		margin-top: 0 !important;
+	}
+
+	#basicInfo {
+		font-size: 1.1em;
+		min-height: 10%;
+		background: #eee;
+		span {
+			margin: auto;
+			text-transform: none !important;
+			font-style: italic;
+		}
+	}
+
+	.ng2-smart-pagination-nav {
+		li {
+			width: 50% !important;
+		}
+	}
+
+	.ng2-smart-titles {
+		height: 55px !important;
+	}
+
+	.pagination {
+		line-height: 1 !important;
+		position: absolute;
+		width: auto;
+		bottom: 0;
+		left: 50%;
+		-webkit-transform: translateX(-50%);
+		-moz-transform: translateX(-50%);
+		-ms-transform: translateX(-50%);
+		-o-transform: translateX(-50%);
+		transform: translateX(-50%);
+	}
+}

@@ -1,0 +1,37 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"baseUrl": "./src",
+		"outDir": "./build",
+		"rootDir": "./src",
+		"target": "es5",
+		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"],
+		"paths": {
+			"@angular/*": ["../node_modules/@angular/*"],
+			"@modules/server.common/*": ["../../common/src/*"],
+			"@modules/client.common.angular2/*": ["../../common-angular/src/*"],
+			"@pyro/*": ["../../common/src/@pyro/*"],
+			"mongoose": ["../../common-angular/src/mongoose-placeholder"],
+			"typeorm": ["../../common-angular/src/typeorm-placeholder"],
+			"angular2-wizard/*": [
+				"../../../node_modules/@ever-co/angular2-wizard/dist/*"
+			],
+			"@app/*": ["app/*"],
+			"environments/*": ["./environments/*"],
+			"core-js/es7/reflect": [
+				"../../../node_modules/core-js/proposals/reflect-metadata"
+			],
+			"core-js/es7/array": ["../../../node_modules/core-js/stable/array"],
+			"core-js/es7/object": [
+				"../../../node_modules/core-js/stable/object"
+			],
+			"core-js/es6/*": ["../../../node_modules/core-js/es"]
+		}
+	},
+	"include": [
+		"./src/**/*.ts",
+		"./src/modules/client.common.angular2/mongoose-placeholder.ts",
+		"./src/modules/client.common.angular2/typeorm-placeholder.ts",
+		"./src/modules/**/*.ts"
+	]
+}

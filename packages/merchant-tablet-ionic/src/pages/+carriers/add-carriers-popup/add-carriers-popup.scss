@@ -1,0 +1,9 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.page-add-carriers-popup {
+	background-color: #fff;
+	display: flex !important;
+	flex-direction: column;
+	position: relative;
+	// overflow: scroll;
+}

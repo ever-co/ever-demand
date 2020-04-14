@@ -1,0 +1,27 @@
+<div class="carrier-delete">
+	<h4>Are you sure you want to delete the following carrierData?</h4>
+	<div class="details">
+		<img src="{{ carrierData?.image }}" />
+		<div class="text">
+			<div>{{ carrierData?.name }}</div>
+			<div
+				[ngClass]="{
+					good: carrierData?.status === 'working',
+					bad: !(carrierData?.status === 'working')
+				}"
+			>
+				{{ carrierData?.status | titlecase }}
+			</div>
+			<div style="width: 100%; text-align: center;">
+				{{ carrierData?.phone }}
+			</div>
+			<div>{{ carrierData?.addresses }}</div>
+		</div>
+	</div>
+	<div class="control">
+		<ion-button (click)="deleteCarrier()" color="danger">
+			Confirm
+		</ion-button>
+		<ion-button (click)="cancelModal()" color="info">Cancel</ion-button>
+	</div>
+</div>

@@ -1,0 +1,146 @@
+<e-cu-order-info-header (back)="undo()"></e-cu-order-info-header>
+
+<ion-content
+	class="info-container brand-dark"
+	[ngClass]="{ 'blur-filter': modalOpen }"
+	no-padding
+>
+	<div *ngIf="modalOpen" class="blur-lighter"></div>
+	<div dir="{{ 'CURRENT_DIRECTION' | translate }}" class="all">
+		<div class="title">
+			<div
+				class="box box-brand text-align-center"
+				style="padding: 30px 20px;"
+			>
+				<h4 class="main-title">{{ byPopupStatuses.TITLE }}</h4>
+
+				<div style="font-size: 80%;">{{ byPopupStatuses.DETAILS }}</div>
+
+				<div style="font-size: 80%;" ng-if="!order?.isPaid">
+					{{ byPopupStatuses.NOT_PAID_NOTE }}
+				</div>
+			</div>
+		</div>
+		<div class="maps">
+			<!-- <div [hidden]='order?.carrier' #gmap id="mapDiv" class="map-content"></div> -->
+			<e-cu-directions-location
+				[origin]="order?.carrier?.geoLocation"
+				[destination]="order?.user?.geoLocation"
+				*ngIf="isCarrierCurrent"
+			></e-cu-directions-location>
+			<e-cu-user-warehouse-location
+				[order]="order"
+				*ngIf="!isCarrierCurrent"
+			></e-cu-user-warehouse-location>
+		</div>
+		<div class="actions">
+			<div class="box box-brand-light box-small-padding actions-content">
+				<e-cu-elapsed-time #elapsedTime></e-cu-elapsed-time>
+
+				<div
+					class="delivery-status"
+					dir="{{ 'CURRENT_DIRECTION' | translate }}"
+				>
+					<div
+						class="status"
+						[ngClass]="{
+							activated: isWarehouseActive,
+							current: isWarehouseCurrent
+						}"
+					>
+						<h5>
+							{{ 'BUY_POPUP.DELIVERY_STATUS.WE' | translate }}
+						</h5>
+						<i class="fa fa-building"></i>
+					</div>
+
+					<span [ngClass]="{ activated: isCarrierActive }">..</span>
+
+					<div
+						class="status"
+						[ngClass]="{
+							activated: isCarrierActive,
+							current: isCarrierCurrent
+						}"
+					>
+						<h5>
+							{{ 'BUY_POPUP.DELIVERY_STATUS.CARRIER' | translate
+							}}
+						</h5>
+						<i
+							class="fa fa-motorcycle"
+							[ngClass]="{
+								flip: ('CURRENT_DIRECTION' | translate) == 'rtl'
+							}"
+						></i>
+					</div>
+
+					<span [ngClass]="{ activated: isCustomerActive }">..</span>
+
+					<div
+						class="status"
+						[ngClass]="{
+							activated: isCustomerActive,
+							current: isCustomerCurrent
+						}"
+					>
+						<h5>
+							{{ 'BUY_POPUP.DELIVERY_STATUS.YOU' | translate }}
+						</h5>
+						<i class="fa fa-home"></i>
+					</div>
+				</div>
+
+				<div
+					class="box box-brand-light buttons-bottom"
+					dir="{{ 'CURRENT_DIRECTION' | translate }}"
+				>
+					<div class="row" *ngIf="!order?.isCompleted">
+						<span
+							class="waves-effect waves-classic {{
+								paymentsEnabled ? 'col-3' : 'col-12'
+							}}"
+						>
+							<button
+								class="button button-brand col-100"
+								(click)="undo()"
+							>
+								<span
+									>{{ 'BUY_POPUP.BUTTONS.UNDO' | translate
+									}}</span
+								>
+							</button>
+						</span>
+
+						<e-cu-payment
+							class="waves-effect waves-classic col-9 pl-5px p-0"
+							*ngIf="paymentsEnabled && order"
+							[order]="order"
+						></e-cu-payment>
+					</div>
+
+					<div class="row" *ngIf="order?.isCompleted && !areIssues">
+						<span
+							class="waves-effect waves-classic col no-padding-bottom"
+						>
+							<button
+								class="button button-assertive col-100"
+								(click)="closePopup()"
+								[ngSwitch]="order?.isCancelled"
+								dir="{{ 'CURRENT_DIRECTION' | translate }}"
+							>
+								<span *ngSwitchCase="false"
+									>{{ 'BUY_POPUP.BUTTONS.END' | translate
+									}}</span
+								>
+								<span *ngSwitchCase="true"
+									>{{ 'OK' | translate }}</span
+								>
+							</button>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</ion-content>

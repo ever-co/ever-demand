@@ -1,0 +1,76 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-buttons slot="start">
+			<ion-menu-button autoHide="false"></ion-menu-button>
+		</ion-buttons>
+
+		<ion-title>{{ 'MERCHANTS' | translate }}</ion-title>
+		<ion-buttons slot="end">
+			<ion-button (click)="goToProductPage()">
+				<i class="fa fa-angle-left back-btn"></i>
+				<span>{{ 'BACK' | translate }}</span>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content color="black" scroll="true" class="merchants-content">
+	<ion-row>
+		<ion-col class="col-9 p-0">
+			<ion-searchbar
+				[(ngModel)]="searchName"
+				mode="ios"
+				color="light"
+				placeholder="{{'MERCHANTS_VIEW.NAME' | translate}}"
+				animated
+				debounce="1000"
+				(ionChange)="searchChange($event)"
+			></ion-searchbar>
+		</ion-col>
+
+		<ion-col class="col-3 p-0">
+			<div class="box">
+				<button
+					class="button button-assertive border-color-brand col-100"
+					(click)="scanQR()"
+				>
+					<span>
+						<i class="fa order-info-icon m-0 fa-qrcode"></i> {{
+						'SCAN' | translate }}
+					</span>
+				</button>
+			</div>
+		</ion-col>
+	</ion-row>
+
+	<ion-list class="merchants-list">
+		<ion-list-header class="p-0 mb-1">
+			<div class="merchants-list-header">
+				<span *ngIf="!searchName"
+					>{{ 'MERCHANTS_VIEW.CLOSE_TO_YOU' | translate }}</span
+				>
+				<span *ngIf="searchName"
+					>{{ 'MERCHANTS_VIEW.WITH_NAME' | translate }} '{{ searchName
+					}}'</span
+				>
+			</div>
+		</ion-list-header>
+		<div class="merchants-container">
+			<h5 *ngIf="merchants?.length === 0" class="not-found-text">
+				{{ 'NOT_FOUND' | translate }}
+			</h5>
+
+			<ion-item
+				*ngFor="let merchant of merchants"
+				(click)="selectMerchant(merchant)"
+				class="m-2"
+				lines="none"
+			>
+				<ion-avatar slot="start">
+					<img src="{{ merchant.logo }}" />
+				</ion-avatar>
+				<ion-label> {{ merchant.name }} </ion-label>
+			</ion-item>
+		</div>
+	</ion-list>
+</ion-content>

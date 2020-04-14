@@ -1,0 +1,23 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"baseUrl": "./src",
+		"outDir": "./build",
+		"rootDir": "./src",
+		"target": "es5",
+		"paths": {
+			"@pyro/*": [
+				"../../../node_modules/@ever-platform/common/src/@pyro/*"
+			],
+			"@modules/server.common/*": [
+				"../../../node_modules/@ever-platform/common/src/*"
+			]
+		}
+	},
+	"include": ["./src/**/*.ts"],
+	"references": [
+		{
+			"path": "../common"
+		}
+	]
+}

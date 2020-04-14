@@ -1,0 +1,28 @@
+<ion-header class="bar-brand bar bar-header disable-user-behavior">
+	<ion-title>
+		{{ 'DELIVERY_VIEW.DELIVERIES_HISTORY' | translate }}
+	</ion-title>
+
+	<div class="buttons buttons-left header-item">
+		<span class="left-buttons">
+			<div class="waves-effect waves-classic">
+				<ion-menu-toggle class="button-icon">
+					<ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+				</ion-menu-toggle>
+			</div>
+		</span>
+	</div>
+</ion-header>
+
+<ion-content>
+	<div class="orders">
+		<div>
+			<div
+				class="order-container"
+				*ngFor="let order of currentCompletedOrders"
+			>
+				<order-card [order]="order"></order-card>
+			</div>
+		</div>
+	</div>
+</ion-content>

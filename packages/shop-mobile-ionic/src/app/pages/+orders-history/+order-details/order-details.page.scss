@@ -1,0 +1,30 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+ion-content {
+	background-color: #fff !important;
+}
+
+.fixed-content,
+.scroll-content {
+	margin-top: 15px !important;
+}
+
+.no-orders-message {
+	@include center(absolute);
+	text-align: center;
+
+	i {
+		font-size: 40vw;
+	}
+
+	h2 {
+		font-family: 'Open Sans Hebrew', '-apple-system', 'Helvetica Neue',
+			'Roboto', 'Segoe UI', sans-serif;
+		margin-top: 5px;
+		font-size: 5vw;
+	}
+
+	a {
+		margin-top: 20px;
+	}
+}

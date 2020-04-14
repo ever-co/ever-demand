@@ -1,0 +1,40 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"target": "es5",
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"allowSyntheticDefaultImports": true,
+		"sourceMap": true,
+		"noEmitHelpers": true,
+		"skipLibCheck": true,
+		"importHelpers": true,
+		"strictNullChecks": false,
+		"noStrictGenericChecks": true,
+		"lib": ["es7", "dom"],
+		"baseUrl": "./src",
+		"types": ["reflect-metadata", "hammerjs", "node", "googlemaps"],
+		"paths": {
+			"@angular/*": ["../node_modules/@angular/*"],
+			"@modules/server.common/*": ["../../common/src/*"],
+			"@modules/client.common.angular2/*": ["../../common-angular/src/*"],
+			"@modules/*": ["./modules/*"],
+			"@pyro/*": ["../../common/src/@pyro/*"],
+			"mongoose": ["../../common-angular/src/mongoose-placeholder"],
+			"typeorm": ["../../common-angular/src/typeorm-placeholder"],
+			"environments/*": ["./environments/*"]
+		}
+	},
+	"angularCompilerOptions": {
+		"skipMetadataEmit": true,
+		"enableIvy": false
+	},
+	"include": [
+		"./src",
+		"./*.ts",
+		"../common/**/*.d.ts",
+		"../common-angular/**/*.ts"
+	]
+}

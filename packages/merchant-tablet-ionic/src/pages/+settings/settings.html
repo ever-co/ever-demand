@@ -1,0 +1,58 @@
+<div class="page-settings">
+	<div id="header" class="bar bar-header bar-brand">
+		<h1 class="title">
+			{{ 'SIDE_MENU.GROUPS.SETTINGS.SETTINGS' | translate }}
+		</h1>
+		<div class="buttons buttons-left header-item">
+			<span class="left-buttons">
+				<div class="waves-effect waves-classic">
+					<ion-menu-toggle class="button-icon">
+						<ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+					</ion-menu-toggle>
+				</div>
+			</span>
+		</div>
+	</div>
+
+	<ion-segment [(ngModel)]="selectedSegment" id="segmentContainer">
+		<ion-segment-button value="account" class="segment-activated">
+			{{ 'SETTINGS_VIEW.ACCOUNT' | translate }}
+		</ion-segment-button>
+
+		<ion-segment-button value="common">
+			{{ 'SETTINGS_VIEW.COMMON' | translate }}
+		</ion-segment-button>
+
+		<ion-segment-button value="location">
+			{{ 'SETTINGS_VIEW.LOCATION' | translate }}
+		</ion-segment-button>
+
+		<ion-segment-button value="options">
+			{{ 'SETTINGS_VIEW.SETTINGS' | translate }}
+		</ion-segment-button>
+	</ion-segment>
+
+	<div [ngSwitch]="selectedSegment">
+		<div *ngSwitchCase="'options'" class="segmentDivs" id="optionsDiv">
+			<merchant-settings
+				[currWarehouse]="_currWarehouse"
+			></merchant-settings>
+		</div>
+
+		<div *ngSwitchCase="'common'" class="segmentDivs" id="common">
+			<merchant-common [currWarehouse]="_currWarehouse"></merchant-common>
+		</div>
+
+		<div *ngSwitchCase="'location'" class="segmentDivs" id="location">
+			<merchant-location
+				[currWarehouse]="_currWarehouse"
+			></merchant-location>
+		</div>
+
+		<div *ngSwitchCase="'account'" class="segmentDivs" id="account">
+			<merchant-account
+				[currWarehouse]="_currWarehouse"
+			></merchant-account>
+		</div>
+	</div>
+</div>

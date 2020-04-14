@@ -1,0 +1,55 @@
+{
+	"name": "@ever-platform/common",
+	"description": "Ever Platform Shared Core",
+	"license": "AGPL-3.0",
+	"version": "0.3.0",
+	"homepage": "https://ever.co",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ever-co/ever.git"
+	},
+	"bugs": {
+		"url": "https://github.com/ever-co/ever/issues"
+	},
+	"private": false,
+	"author": {
+		"name": "Ever Co. LTD",
+		"email": "ever@ever.co",
+		"url": "https://ever.co"
+	},
+	"contributors": [
+		{
+			"name": "Ruslan Konviser (Evereq)",
+			"email": "ruslan@ever.co",
+			"url": "https://ever.co"
+		},
+		{
+			"name": "Misha Konviser (Komish)",
+			"email": "michael@ever.co",
+			"url": "https://ever.co"
+		}
+	],
+	"scripts": {
+		"watch": "tsc -p ./tsconfig.build.json -w",
+		"build": "rimraf build && tsc -p ./tsconfig.build.json",
+		"lint": "tslint --fix --project ./",
+		"test": "jest --config ./jest.config.js"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"dependencies": {
+		"lodash": "^4.17.15",
+		"mongoose": "^5.6.0",
+		"reflect-metadata": "^0.1.13",
+		"rxjs": "^6.5.2",
+		"stripe": "^7.2.0",
+		"typeorm": "^0.2.18"
+	},
+	"devDependencies": {
+		"@types/node": "12.11.1",
+		"ts-node": "~8.3.0",
+		"tslint": "^6.1.1",
+		"typescript": "~3.7.5"
+	}
+}

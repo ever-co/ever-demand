@@ -1,0 +1,31 @@
+<!-- TODO add translate -->
+<div class="confirm-delete">
+	<h4>
+		Are you sure you want to {{ isRemove ? 'remvoe' : 'delete' }} the
+		following data?
+	</h4>
+	<div class="details">
+		<img src="{{ data?.image }}" />
+		<div class="text">
+			<div>{{ data?.name }}</div>
+			<div
+				[ngClass]="{
+					good: data?.status === 'working',
+					bad: !(data?.status === 'working')
+				}"
+			>
+				{{ data?.status | titlecase }}
+			</div>
+			<div style="width: 100%; text-align: center;">
+				{{ data?.phone }}
+			</div>
+			<div>{{ data?.addresses }}</div>
+		</div>
+	</div>
+	<div class="control">
+		<ion-button (click)="confirmDelete()" color="danger">
+			Confirm
+		</ion-button>
+		<ion-button (click)="cancelModal()" color="info">Cancel</ion-button>
+	</div>
+</div>

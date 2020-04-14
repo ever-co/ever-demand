@@ -1,24 +1,25 @@
 {
 	"lerna": "3.11.1",
-	"version": "0.2.0",
+	"concurrency": 8,
+	"version": "independent",
 	"changelog": {
 		"repo": "ever-co/ever",
 		"cacheDir": ".changelog",
 		"labels": {}
 	},
+	"stream": true,
 	"command": {
+		"bootstrap": {},
 		"publish": {
-			"ignoreChanges": ["*.md", "test/**"]
+			"conventionalCommits": true,
+			"ignoreChanges": ["*.md", "test/**"],
+			"message": "chore(release): %s"
+		},
+		"version": {
+			"push": false
 		}
 	},
-	"packages": [
-		"backend/api",
-		"admin/website-angular",
-		"carrier/mobile-ionic",
-		"merchant/tablet-ionic",
-		"shop/mobile-ionic",
-		"shop/website-angular"
-	],
+	"packages": ["packages/*"],
 	"npmClient": "yarn",
-	"useWorkspaces": false
+	"useWorkspaces": true
 }

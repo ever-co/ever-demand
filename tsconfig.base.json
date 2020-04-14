@@ -1,0 +1,48 @@
+{
+	"compileOnSave": false,
+	"compilerOptions": {
+		"composite": false,
+		"declaration": false,
+		"declarationMap": false,
+		"sourceMap": true,
+		"importHelpers": true,
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"baseUrl": "./",
+		"rootDir": "./",
+		"noUnusedLocals": false,
+		"noLib": false,
+		"noImplicitAny": false,
+		"skipLibCheck": true,
+		"strictNullChecks": false,
+		"removeComments": true,
+		"lib": ["es2017", "dom", "esnext.asynciterable"],
+		"plugins": [
+			{
+				"name": "tslint-language-service"
+			}
+		],
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"emitDecoratorMetadata": true,
+		"preserveConstEnums": true,
+		"experimentalDecorators": true,
+		"target": "es5",
+		"typeRoots": ["node_modules/@types"]
+	},
+	"files": ["node_modules/@types/node/index.d.ts"],
+	"exclude": [
+		"node_modules",
+		"dist",
+		"build",
+		"lib",
+		"test",
+		"__tests__",
+		"**/*.test*",
+		"**/*.spec*",
+		"packages/*/node_modules",
+		"packages/*/lib",
+		"packages/*/dist",
+		"packages/*/build"
+	]
+}

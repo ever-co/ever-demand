@@ -1,0 +1,64 @@
+@import '../../styles/styles.module.scss';
+
+:host {
+	width: 100%;
+	height: 100%;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	background-color: $brand-darken;
+	display: flex;
+
+	justify-content: center;
+	align-items: center;
+}
+
+///deep/ input[type='text'] {
+//	color: #333 !important;
+//}
+
+.content {
+	background-color: $brand;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 40px 70px;
+	border-radius: 3px;
+}
+
+.title {
+	margin-top: 20px;
+	margin-bottom: 10px;
+	text-align: center;
+
+	color: #ffffff;
+	font-size: 30px;
+	font-family: roboto, 'Helvetica Neue Light', 'HelveticaNeue-Light',
+		'Helvetica Neue', Calibri, Helvetica, Arial, sans-serif;
+}
+
+.auth {
+	.col {
+		margin-bottom: 20px !important;
+	}
+}
+
+.location-slogan {
+	margin-bottom: 80px !important;
+}
+
+.field {
+	//color: white !important;
+}
+
+.control {
+	background: whitesmoke;
+
+	label {
+		color: black;
+	}
+}

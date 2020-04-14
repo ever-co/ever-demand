@@ -1,24 +1,53 @@
-version: '3.1'
+version: '3.7'
 
 services:
     mongo:
         image: mongo
+        container_name: mongo
         ports:
             - '27017:27017'
+        environment:
+            - MONGO_DATA_DIR=/data/db
+            - MONGO_LOG_DIR=/dev/null
+        volumes:
+            - mongo_data:/data/db
+        command: mongod --logpath=/dev/null # --quiet
+        networks:
+            - overlay
 
     api:
+        container_name: api
+        image: ever-api:latest
         build:
-            context: ./backend/api
-            dockerfile: Dockerfile
+            context: .
+            dockerfile: .deploy/backend/api/Dockerfile
         environment:
+            NODE_ENV: production
             WAIT_HOSTS: mongo:27017
+            DB_URI: mongodb://mongo/ever_development
         restart: on-failure
         depends_on:
             - mongo
         links:
             - mongo
+        volumes:
+            - .:/srv/ever
+            - root_node_modules:/srv/ever/node_modules
+            - api_node_modules:/srv/ever/backend/api/node_modules
         ports:
             - 5500:5500
             - 5501:5501
             - 5050:5050
             - 5555:5555
+        networks:
+            - overlay
+
+volumes:
+    root_node_modules:
+    api_node_modules:
+    certificates:
+    mongo_data:
+
+networks:
+    overlay:
+        driver: bridge

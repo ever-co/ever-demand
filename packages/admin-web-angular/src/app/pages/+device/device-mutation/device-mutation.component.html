@@ -1,0 +1,72 @@
+<div class="modal-header">
+	<span class="modal-title">
+		{{ 'CUSTOMERS_VIEW.DEVICE.UPDATE_DEVICE' | translate }}
+	</span>
+	<button class="close" aria-label="Close" (click)="cancel()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body" [nbSpinner]="loading">
+	<form [formGroup]="form">
+		<div class="form-group">
+			<label for="exampleInputId">{{
+				'CUSTOMERS_VIEW.DEVICE.DEVICE_ID' | translate
+			}}</label>
+			<input
+				formControlName="id"
+				name="deviceId"
+				class="form-control"
+				id="exampleInputId"
+				readonly
+				placeholder="{{
+					'CUSTOMERS_VIEW.DEVICE.DEVICE_ID' | translate
+				}}"
+			/>
+		</div>
+		<div class="form-group">
+			<label for="exampleInputLanguage">{{
+				'LANGUAGE' | translate
+			}}</label>
+			<input
+				formControlName="language"
+				name="language"
+				class="form-control"
+				id="exampleInputLanguage"
+				placeholder="{{ 'LANGUAGE' | translate }}"
+			/>
+		</div>
+		<div class="form-group">
+			<label for="exampleInputType">{{
+				'CUSTOMERS_VIEW.DEVICE.TYPEU' | translate
+			}}</label>
+			<input
+				formControlName="type"
+				name="type"
+				class="form-control"
+				id="exampleInputType"
+				placeholder="{{ 'CUSTOMERS_VIEW.DEVICE.TYPEU' | translate }}"
+			/>
+		</div>
+		<div class="form-group">
+			<label for="exampleInputUuid">{{
+				'CUSTOMERS_VIEW.DEVICE.DEVICE_UUID' | translate
+			}}</label>
+			<input
+				formControlName="uuid"
+				name="uuid"
+				class="form-control"
+				id="exampleInputUuid"
+				readonly
+				placeholder="{{
+					'CUSTOMERS_VIEW.DEVICE.DEVICE_UUID' | translate
+				}}"
+			/>
+		</div>
+		<button (click)="update()" type="submit" class="btn btn-success">
+			{{ 'CUSTOMERS_VIEW.DEVICE.UPDATE' | translate }}
+		</button>
+		<button (click)="cancel()" class="btn btn-default float-right">
+			{{ 'CANCEL' | translate }}
+		</button>
+	</form>
+</div>

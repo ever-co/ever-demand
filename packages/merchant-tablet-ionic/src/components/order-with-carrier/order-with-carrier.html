@@ -1,0 +1,50 @@
+<div class="card order-card order-with-carrier">
+	<div class="row m-0">
+		<order-image class="col-2 p-0" [order]="order"></order-image>
+
+		<div class="order-main-container col-8 carrier">
+			<order-title [order]="order"></order-title>
+
+			<div class="order-main">
+				<div class="delivery-details">
+					<customer-info [user]="order?.user"></customer-info>
+					<carrier-info
+						*ngIf="order.carrier"
+						[order]="order"
+					></carrier-info>
+				</div>
+
+				<div class="order-actions">
+					<order-control-buttons
+						[orderId]="order.id"
+						[warehouseStatus]="order.warehouseStatus"
+						[carrierStatus]="order.carrierStatus"
+						[onUpdateWarehouseStatus]="onUpdateWarehouseStatus"
+						[orderType]="order.orderType"
+					>
+					</order-control-buttons>
+				</div>
+			</div>
+		</div>
+
+		<div class="order-timer-container col-2">
+			<h4 class="status order-header">
+				{{ getWarehouseStatus.call(null, order.warehouseStatus) |
+				translate }}
+			</h4>
+
+			<div class="times">
+				<div class="time">
+					{{ 'ORDER_WITH_CARRIER_COMPONENT.CREATED_AT' | translate }}
+					<span class="big"
+						>{{ order.createdAt | date: 'HH:mm' }}</span
+					>
+					<br />
+					<span style="font-weight: 500;"
+						>(<span>{{ order.createdAt | amTimeAgo }}</span>)</span
+					>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

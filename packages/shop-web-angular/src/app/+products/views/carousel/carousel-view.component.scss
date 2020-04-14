@@ -1,0 +1,89 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+$transition_time: 0.1s;
+
+.carousel-view {
+	position: absolute;
+	bottom: 50px;
+	left: 0;
+	right: 0;
+	top: 114px;
+	margin: 0;
+	.carousel {
+		color: white;
+		.content {
+			display: flex;
+			.item {
+				display: block;
+				opacity: 0.3;
+				display: flex;
+				align-content: center;
+				align-items: center;
+
+				transition: opacity 0.295s linear $transition_time;
+
+				&.visible {
+					opacity: 1;
+
+					.product {
+						width: 95%;
+						height: 95%;
+					}
+				}
+
+				.product {
+					width: 90%;
+					height: 90%;
+					margin: 0 auto;
+					display: block;
+					background-size: cover;
+					background-position: center;
+				}
+			}
+		}
+
+		.ball {
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			background: black;
+			border: 2px solid;
+			opacity: 0.5;
+
+			&.visible {
+				opacity: 1;
+			}
+		}
+
+		.click-area {
+			width: 60px;
+			text-align: center;
+			display: flex;
+			background: $brand-darken;
+			border-radius: 50%;
+			opacity: 0.5;
+			margin: 10px;
+			i {
+				font-size: 60px;
+			}
+		}
+
+		.click-area:hover {
+			opacity: 0.7;
+		}
+
+		.click-area:active {
+			opacity: 1;
+		}
+
+		.click-area.disabled,
+		.click-area.disabled:hover,
+		.click-area.disabled:active {
+			background: $brand;
+			opacity: 0.5;
+		}
+	}
+
+	.text-right {
+		padding: 10px 10px 0 0;
+	}
+}

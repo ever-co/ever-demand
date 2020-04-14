@@ -1,0 +1,80 @@
+<div class="by-code" dir="{{ 'CURRENT_DIRECTION' | translate }}">
+	<div class="logo app-hide-on-keyboard-open">
+		<img src="{{ inviteByCodeLogo }}" />
+		<p class="details">
+			{{ 'INVITE_VIEW.BY_CODE.LOGO.DETAILS' | translate }}
+		</p>
+	</div>
+
+	<div class="invite-by-code-content">
+		<ion-grid *ngIf="!isInvited" class="p-0 another-option-wrapper">
+			<ion-row>
+				<ion-col class="p-0">
+					<ion-button
+						(click)="goToInviteByLocation()"
+						expand="block"
+						color="secondary"
+					>
+						{{ 'INVITE_VIEW.GET_IN_BY_ADDRESS' | translate }}
+					</ion-button>
+				</ion-col>
+			</ion-row>
+			<ion-row class="social">
+				<ion-col class="p-0" size="6">
+					<ion-button class="facebook-login" expand="block">
+						<ion-icon
+							slot="icon-only"
+							name="logo-facebook"
+						></ion-icon>
+					</ion-button>
+				</ion-col>
+				<ion-col class="p-0" size="6">
+					<ion-button class="google-login" expand="block">
+						<ion-icon
+							slot="icon-only"
+							name="logo-google"
+						></ion-icon>
+					</ion-button>
+				</ion-col>
+			</ion-row>
+			<ion-row>
+				<p class="another-option-or d-block">
+					{{ 'OR_LOWERCASE' | translate }}
+					<span class="or-what">
+						{{ 'INVITE_VIEW.BY_CODE.OR_WHAT' | translate }}
+					</span>
+				</p>
+			</ion-row>
+		</ion-grid>
+
+		<div *ngIf="isInvited" class="another-option-wrapper">
+			<div *ngIf="inviteAddress">
+				<h3 style="color: #ccc;">
+					{{ 'INVITE_VIEW.INVITED_TEXT.TITLE' | translate }}
+				</h3>
+				<h5 style="color: #888;">
+					{{ 'INVITE_VIEW.INVITED_TEXT.DETAILS' | translate }}
+				</h5>
+				<p style="color: #bbb; font-size: 120%;">{{ inviteAddress }}</p>
+			</div>
+			<p class="another-option-or">
+				<span class="or-what">
+					{{ 'INVITE_VIEW.BY_CODE.INVITED' | translate }}
+				</span>
+			</p>
+		</div>
+
+		<input
+			type="number"
+			class="code-input"
+			style="width: 100%;"
+			max="9999"
+			maxlength="4"
+			placeholder="Invite Code"
+			[(ngModel)]="code"
+			(ngModelChange)="onCodeInputChange()"
+			(keypress)="onCodeInputKeyPress($event)"
+			placeholder="{{ 'INVITE_VIEW.BY_CODE.INVITE_CODE' | translate }}"
+		/>
+	</div>
+</div>

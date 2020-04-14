@@ -1,0 +1,30 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+@import '../../../order-info-page';
+
+.products-info {
+	height: 100%;
+}
+
+.products-image-content {
+	height: 60%;
+	position: relative;
+}
+
+.bottom-container {
+	height: 40%;
+	position: relative;
+	.buttons-bottom {
+		position: absolute;
+		width: 100%;
+		bottom: 0;
+	}
+
+	.actions {
+		height: 100%;
+
+		.order-info {
+			height: 70%;
+			position: relative;
+		}
+	}
+}

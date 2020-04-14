@@ -1,0 +1,99 @@
+<div *ngIf="order$ | async as order" class="row order-page">
+	<toaster-container></toaster-container>
+
+	<div class="col-md-9">
+		<nb-card>
+			<nb-card-header>
+				<h1 class="d-inline-vlock">
+					{{ 'ORDER_VIEW.ORDER_HEADER_INFO.ORDER' | translate }}
+					{{ getOrderName(order) }}
+					<span class="pull-right">{{
+						order.createdAt | date: 'MM-dd-yy'
+					}}</span>
+				</h1>
+			</nb-card-header>
+
+			<nb-card-body>
+				<h4 class="d-inline-block">
+					{{
+						'ORDER_VIEW.ORDER_HEADER_INFO.MANAGE_ORDER' | translate
+					}}
+				</h4>
+				<h4 class="d-inline-block pull-right">
+					{{ 'ORDER_VIEW.ORDER_HEADER_INFO.TOTAL' | translate }} ${{
+						getTotalPrice(order)
+					}}
+				</h4>
+			</nb-card-body>
+		</nb-card>
+
+		<ea-warehouse-order-view
+			[hideHeader]="true"
+			[selectedOrder]="order"
+		></ea-warehouse-order-view>
+
+		<ea-order-products [order]="order"></ea-order-products>
+	</div>
+	<div class="col-md-3 order-sidebar-info">
+		<nb-card class="p-3">
+			<ea-order-sidebar-info-box
+				class="mb-3"
+				*ngIf="order?.warehouse"
+				[redirectUrl]="'stores/' + order.warehouse.id"
+				[title]="titleWarehouse"
+				[imageUrl]="order?.warehouse?.logo"
+				[contactDetails]="getWarehouseContactDetails(order?.warehouse)"
+			></ea-order-sidebar-info-box>
+
+			<ea-order-sidebar-info-box
+				*ngIf="order?.user"
+				[redirectUrl]="'customers/list/' + order.user.id"
+				[title]="titleCustomer"
+				[imageUrl]="order?.user?.image"
+				[contactDetails]="getCustomerContactDetails(order?.user)"
+			></ea-order-sidebar-info-box>
+
+			<ea-order-sidebar-info-box
+				class="mt-3"
+				*ngIf="order?.carrier"
+				[redirectUrl]="'carriers/' + order.carrier.id"
+				[title]="titleCarrier"
+				[imageUrl]="order?.carrier?.logo"
+				[contactDetails]="getCarrierContactDetails(order?.carrier)"
+			></ea-order-sidebar-info-box>
+
+			<nb-card class="m-0 mt-3">
+				<nb-card-header>
+					<h4>{{ 'ORDER_VIEW.LOCATION_INFO.MAP' | translate }}</h4>
+				</nb-card-header>
+
+				<nb-card-body class="order-map p-0">
+					<div class="sub-title content-center">
+						<h6>
+							{{
+								'ORDER_VIEW.LOCATION_INFO.DELIVERY_DISTANCE'
+									| translate
+							}}
+							{{
+								getDistance(
+									order?.user?.geoLocation,
+									order?.warehouse?.geoLocation
+								)
+							}}
+						</h6>
+					</div>
+					<div class="map">
+						<ea-carrier-location
+							[order]="order"
+							*ngIf="isCarrierCurrent(order)"
+						></ea-carrier-location>
+						<ea-user-warehouse-location
+							[order]="order"
+							*ngIf="!isCarrierCurrent(order)"
+						></ea-user-warehouse-location>
+					</div>
+				</nb-card-body>
+			</nb-card>
+		</nb-card>
+	</div>
+</div>

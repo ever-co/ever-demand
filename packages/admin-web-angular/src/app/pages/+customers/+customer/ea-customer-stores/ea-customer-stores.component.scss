@@ -1,0 +1,18 @@
+nb-card-body {
+	padding: 0;
+}
+
+nb-card-header {
+	border: none;
+	position: relative;
+
+	.title {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+}
+
+nb-card {
+	margin: 0;
+}

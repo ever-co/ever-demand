@@ -1,0 +1,69 @@
+<div class="content auth">
+	<div class="logo"><img src="{{ authLogo }}" /></div>
+
+	<h2 class="slogan">
+		{{ 'LOG_IN_VIEW.WHAT_YOU_SEE_IS_WHAT_YOU_GET' | translate }}
+	</h2>
+
+	<div
+		*ngIf="isInvited"
+		ng-show="inviteByCodeCtrl.isInvited"
+		class="another-option-wrapper"
+	>
+		<div>
+			<h3 style="color: #ccc;">
+				{{ 'LOG_IN_VIEW.THANKS_FOR_REGISTERING' | translate }}
+			</h3>
+			<h5 style="color: #888;">
+				{{ 'LOG_IN_VIEW.WE_WILL_SEND_YOU_A_MESSAGE' | translate }}
+			</h5>
+			<p style="color: #bbb; font-size: 120%;">{{ inviteAddress }}</p>
+		</div>
+
+		<p class="another-option-or">
+			<span class="or">
+				{{
+					'LOG_IN_VIEW.SIGN_UP_WITH_AN_APP_INVITATION' | translate
+				}}</span
+			>
+		</p>
+	</div>
+
+	<form [formGroup]="formControl">
+		<mat-bold-input
+			class="invite-code-input"
+			color="#e1e1e1"
+			focusedColor="#f1f1f1"
+			placeholder="{{ 'LOG_IN_VIEW.INVITE_CODE' | translate }}"
+			type="number"
+			formControlName="code"
+			#codeRef
+		>
+		</mat-bold-input>
+		<div *ngIf="!isInvited" class="or">
+			{{ 'LOG_IN_VIEW.OR' | translate }}
+		</div>
+		<button
+			*ngIf="!isInvited"
+			class="login-button"
+			(click)="loadByLocation()"
+		>
+			{{ 'LOG_IN_VIEW.ENTER_BY_ADDRESS' | translate }}
+		</button>
+
+		<div class="row iconsContainer">
+			<a
+				href="{{ HTTPS_SERVICES_ENDPOINT }}/auth/facebook"
+				class="login-button fbIcon"
+			>
+				<fa-icon [icon]="['fab', 'facebook']"></fa-icon>
+			</a>
+			<a
+				href="{{ HTTPS_SERVICES_ENDPOINT }}/auth/google"
+				class="login-button googleIcon"
+			>
+				<fa-icon [icon]="['fab', 'google']"></fa-icon>
+			</a>
+		</div>
+	</form>
+</div>

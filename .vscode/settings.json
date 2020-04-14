@@ -62,5 +62,8 @@
 		"xabikos.javascriptsnippets",
 		"davidanson.vscode-markdownlint",
 		"leizongmin.node-module-intellisense"
-	]
+	],
+	"git.ignoreLimitWarning": true,
+	"vsicons.presets.nestjs": true,
+	"cSpell.words": ["envalid", "esnext", "inversify", "pyro", "typeorm"]
 }

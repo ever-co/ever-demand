@@ -1,0 +1,26 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.discount-circle {
+	background: $brand-lighted;
+	opacity: 0.8;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	font-size: 15px;
+	border-radius: 5px;
+	color: white;
+	padding: 5px;
+
+	line-height: 1;
+	text-align: center;
+
+	width: 70px;
+	.price-initial {
+		font-size: 15px;
+		text-decoration: line-through;
+	}
+
+	i {
+		font-size: inherit;
+	}
+}

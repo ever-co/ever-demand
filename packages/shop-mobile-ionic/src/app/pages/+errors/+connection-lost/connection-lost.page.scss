@@ -1,0 +1,31 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.ion-content {
+	background: $brand-darken;
+
+	.connection-error {
+		width: 80%;
+		text-align: center;
+
+		@include center(absolute);
+
+		.connection-error-title {
+			color: white;
+			font-size: 7.5vw;
+			line-height: 9.5vw;
+			margin-bottom: 7vw;
+		}
+
+		.connection-error-description {
+			color: white;
+			font-size: 5vw;
+			line-height: 7vw;
+			margin-bottom: 10vw;
+		}
+
+		.connection-error-spinner {
+			color: white;
+			font-size: 13vw;
+		}
+	}
+}

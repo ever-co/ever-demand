@@ -1,0 +1,146 @@
+<div class="order-page">
+	<div [hidden]="areIssues" dir="{{ 'CURRENT_DIRECTION' | translate }}">
+		<div
+			class="box box-brand text-align-center"
+			style="padding: 20px 20px;"
+		>
+			<h4 class="main-title">{{ byPopupStatuses.TITLE }}</h4>
+
+			<div style="font-size: 80%;">{{ byPopupStatuses.DETAILS }}</div>
+
+			<div style="font-size: 80%;" ng-if="!order?.isPaid">
+				{{ byPopupStatuses.NOT_PAID_NOTE }}
+			</div>
+		</div>
+
+		<div class="box box-brand-light box-small-padding">
+			<e-cu-elapsed-time #elapsedTime></e-cu-elapsed-time>
+
+			<div
+				class="delivery-status"
+				dir="{{ 'CURRENT_DIRECTION' | translate }}"
+			>
+				<div
+					class="status"
+					[ngClass]="{
+						activated: isWarehouseActive,
+						current: isWarehouseCurrent
+					}"
+				>
+					<h5>{{ 'BUY_POPUP.DELIVERY_STATUS.WE' | translate }}</h5>
+					<i class="fa fa-building"></i>
+				</div>
+
+				<span [ngClass]="{ activated: isCarrierActive }">..</span>
+
+				<div
+					class="status"
+					[ngClass]="{
+						activated: isCarrierActive,
+						current: isCarrierCurrent
+					}"
+				>
+					<h5>
+						{{ 'BUY_POPUP.DELIVERY_STATUS.CARRIER' | translate }}
+					</h5>
+					<i
+						class="fa fa-motorcycle"
+						[ngClass]="{
+							flip: ('CURRENT_DIRECTION' | translate) == 'rtl'
+						}"
+					></i>
+				</div>
+
+				<span [ngClass]="{ activated: isCustomerActive }">..</span>
+
+				<div
+					class="status"
+					[ngClass]="{
+						activated: isCustomerActive,
+						current: isCustomerCurrent
+					}"
+				>
+					<h5>{{ 'BUY_POPUP.DELIVERY_STATUS.YOU' | translate }}</h5>
+					<i class="fa fa-home"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div
+		class="box box-brand text-align-center"
+		style="padding: 10px;"
+		*ngIf="areIssuesDuringDelivery"
+	>
+		<h4>{{ 'BUY_POPUP.DELIVERY_WRONG.DELIVERY_WRONG' | translate }}</h4>
+		{{ 'BUY_POPUP.DELIVERY_WRONG.TRY_AGAIN' | translate }} (<a
+			style="font-size: 12px;"
+			>{{ 'BUY_POPUP.DELIVERY_WRONG.CALL_FOR_DETAILS' | translate }}</a
+		>)
+	</div>
+
+	<div
+		class="box box-brand text-align-center"
+		style="padding: 10px;"
+		*ngIf="areIssuesDuringWarehouseProcessing"
+	>
+		<h4>{{ 'BUY_POPUP.DELIVERY_WRONG.PROCESSING_WRONG' | translate }}</h4>
+		{{ 'BUY_POPUP.DELIVERY_WRONG.TRY_AGAIN' | translate }}
+	</div>
+
+	<div
+		class="box box-brand-light box-small-padding"
+		dir="{{ 'CURRENT_DIRECTION' | translate }}"
+	>
+		<div *ngIf="!order?.isCompleted && !areIssues">
+			<ion-row>
+				<span
+					class="waves-effect waves-classic {{
+						paymentsEnabled ? 'col-4' : 'col-12'
+					}} no-padding"
+				>
+					<button
+						class="button button-brand undo-btn col-100"
+						(click)="undo()"
+					>
+						<span>{{ 'BUY_POPUP.BUTTONS.UNDO' | translate }}</span>
+					</button>
+				</span>
+
+				<e-cu-payment
+					class="waves-effect waves-classic col-8 pl-5px p-0"
+					*ngIf="paymentsEnabled && order"
+					[order]="order"
+					[modalChange]="modalChange"
+				></e-cu-payment>
+			</ion-row>
+		</div>
+
+		<div *ngIf="areIssues">
+			<span class="waves-effect waves-classic no-padding-bottom">
+				<button
+					class="button button-assertive col-100"
+					(click)="closePopup()"
+				>
+					<span>{{ 'OK' | translate }}</span>
+				</button>
+			</span>
+		</div>
+
+		<div *ngIf="order?.isCompleted && !areIssues">
+			<span class="waves-effect waves-classic no-padding-bottom">
+				<button
+					class="button button-assertive col-100"
+					(click)="closePopup()"
+					[ngSwitch]="order?.isCancelled"
+					dir="{{ 'CURRENT_DIRECTION' | translate }}"
+				>
+					<span *ngSwitchCase="false"
+						>{{ 'BUY_POPUP.BUTTONS.END' | translate }}</span
+					>
+					<span *ngSwitchCase="true">{{ 'OK' | translate}}</span>
+				</button>
+			</span>
+		</div>
+	</div>
+</div>

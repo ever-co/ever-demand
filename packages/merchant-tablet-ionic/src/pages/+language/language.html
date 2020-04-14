@@ -1,0 +1,37 @@
+<div class="bar bar-header bar-brand language-header">
+	<h1 class="title">{{ 'LANGUAGE_VIEW.TITLE' | translate }}</h1>
+	<div class="buttons buttons-left header-item">
+		<span class="left-buttons">
+			<div class="waves-effect waves-classic">
+				<ion-menu-toggle class="button-icon" menuToggle>
+					<ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+				</ion-menu-toggle>
+			</div>
+		</span>
+	</div>
+</div>
+
+<ion-content class="language-content" scroll="false" padding>
+	<ion-list>
+		<ion-item>
+			<ion-label
+				>{{ 'SIDE_MENU.GROUPS.SETTINGS.ITEMS.LANGUAGE' | translate
+				}}</ion-label
+			>
+			<ion-select
+				[(ngModel)]="selected"
+				(ionChange)="switchLanguage(selected)"
+				[cancelText]="buttonCancel"
+				[okText]="buttonOK"
+			>
+				<ion-select-option
+					*ngFor="let lang of translate?.getLangs()"
+					[value]="lang"
+					[selected]="lang === translate.currentLang"
+				>
+					{{ lang }}
+				</ion-select-option>
+			</ion-select>
+		</ion-item>
+	</ion-list>
+</ion-content>

@@ -1,0 +1,48 @@
+<div class="content auth">
+	<div class="formContent">
+		<div class="logo"><img src="{{ authLogo }}" /></div>
+		<h2 class="title">
+			{{
+				'LOG_IN_VIEW.BY_LOCATION_VIEW.WHAT_IS_YOUR_ADDRESS' | translate
+			}}
+		</h2>
+		<h2 class="slogan location-slogan">
+			{{
+				'LOG_IN_VIEW.BY_LOCATION_VIEW.WE_GUARANTEE_TO_SHOW_ONLY_RELEVANT_PRODUCTS'
+					| translate
+			}}
+		</h2>
+
+		<!--
+			<div [hidden]="!inviteByLocationCtrl.detectingLocation">
+
+			<input ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete blackInput"
+			autocomplete="off" ng-model="inviteByLocationCtrl.city" placeholder="{{ 'CITY' | translate }}"
+			max-selected-items="1" items-method="inviteByLocationCtrl.queryCities(query)"
+			selected-items-label="Selected City"
+			template-url="templates/autocomplete.html" cancel-label="{{ 'BACK' | translate }}"
+			style="margin-bottom: 0"/>
+
+			</div>
+		-->
+
+		<div class="row">
+			<div class="col offset-lg-3 col-lg-3 mr-4">
+				<es-location-form
+					(continue)="login()"
+					#locationForm
+					[coordinates]="coordinates"
+					(mapGeometryEmitter)="onGeometrySend($event)"
+					(mapCoordinatesEmitter)="onCoordinatesChanges($event)"
+				></es-location-form>
+			</div>
+
+			<div class="col col-lg-3 ml-4">
+				<ngx-google-map
+					[mapCoordEvent]="mapCoordEmitter"
+					[mapGeometryEvent]="mapGeometryEmitter"
+				></ngx-google-map>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,22 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"baseUrl": "./src",
+		"outDir": "./build",
+		"rootDir": "./",
+		"target": "es6",
+		"types": ["node", "reflect-metadata", "jest"],
+		"experimentalDecorators": true,
+		"paths": {
+			"@modules/server.common/*": [
+				"@modules/server.common/*",
+				"../node_modules/@ever-platform/common/src/*"
+			],
+			"@pyro/*": [
+				"@pyro/*",
+				"../node_modules/@ever-platform/common/src/@pyro/*"
+			]
+		}
+	},
+	"include": ["./src"]
+}

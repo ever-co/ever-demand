@@ -1,0 +1,17 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+ion-content {
+	background: url(../../../assets/imgs/ever-background-gradient.svg);
+	background-color: $brand-darken;
+}
+
+.invite-view-content {
+	text-align: center;
+	max-width: 500px;
+	width: 80%;
+
+	.invite-by {
+		width: 100%;
+		margin: auto;
+	}
+}

@@ -16,7 +16,7 @@ aliases:
           sudo npm install --quiet node-gyp -g
           sudo npm install cordova -g
           sudo npm install ionic -g
-          sudo npm config set python /usr/bin/python         
+          sudo npm config set python /usr/bin/python
     - &install-chrome
       name: Install Chrome
       command: |
@@ -25,6 +25,14 @@ aliases:
           sudo dpkg -i google-chrome.deb
           sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
           rm google-chrome.deb
+    - &install-gradle
+      name: Install Gradle
+      command: |
+          wget https://services.gradle.org/distributions/gradle-4.0.2-bin.zip -P /tmp
+          sudo unzip -d /opt/gradle /tmp/gradle-*.zip
+          echo 'export GRADLE_HOME=/opt/gradle/gradle-4.0.2' >> $BASH_ENV
+          echo 'export PATH=$PATH:/opt/gradle/gradle-4.0.2/bin' >> $BASH_ENV
+          source $BASH_ENV
     - &install-yarn
       name: Install Latest Yarn
       command: |
@@ -40,15 +48,15 @@ defaults: &defaults
     # we define default work dir, however almost every job redefine it
     working_directory: /tmp/workspace
     environment:
-       JVM_OPTS: -Xmx3200m
-       ANDROID_HOME: /usr/local/android-sdk-linux
+        JVM_OPTS: -Xmx3200m
+        ANDROID_HOME: /usr/local/android-sdk-linux
 
 jobs:
     build-monorepo-root:
         <<: *defaults
         working_directory: /tmp/workspace/monorepo-root
         docker:
-            - image: circleci/node:10.16.0
+            - image: circleci/node:13.12
         steps:
             - checkout
             - run: *install-deps
@@ -63,11 +71,13 @@ jobs:
                   keys:
                       - yarn-packages-monorepo-root-{{ checksum "yarn.lock" }}
             - run:
-                  name: Install Dependencies
-                  command: yarn install
-            - run:
                   name: Run Bootstrap
                   command: yarn bootstrap
+            - run:
+                  name: Run Build All
+                  # note: it should be possible also to run: yarn build,
+                  # but for now we don't want parallel builds in Circle
+                  command: yarn build:all
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-monorepo-root-{{ checksum "yarn.lock" }}
@@ -81,7 +91,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/backend/api
         docker:
-            - image: circleci/node:10.16.0
+            - image: circleci/node:13.12
         steps:
             - checkout
             - run: *install-deps
@@ -96,11 +106,14 @@ jobs:
                   keys:
                       - yarn-packages-backend-api-{{ checksum "yarn.lock" }}
             - run:
-                  name: Install Dependencies
-                  command: cd backend/api && yarn install
+                  name: Run Bootstrap
+                  command: yarn bootstrap
+            - run:
+                  name: Run Build Common Packages
+                  command: yarn build:common
             - run:
                   name: Run Build
-                  command: cd backend/api && yarn build
+                  command: yarn build:server
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-backend-api-{{ checksum "yarn.lock" }}
@@ -114,7 +127,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/admin/website-angular
         docker:
-            - image: circleci/node:10.16.0
+            - image: circleci/node:13.12
         steps:
             - checkout
             - run: *install-deps
@@ -129,11 +142,14 @@ jobs:
                   keys:
                       - yarn-packages-admin-website-angular-{{ checksum "yarn.lock" }}
             - run:
-                  name: Install Dependencies
-                  command: cd admin/website-angular && yarn install
+                  name: Run Bootstrap
+                  command: yarn bootstrap
+            - run:
+                  name: Run Build Common Packages
+                  command: yarn build:common
             - run:
                   name: Run Build
-                  command: cd admin/website-angular && yarn build
+                  command: yarn build:admin
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-admin-website-angular-{{ checksum "yarn.lock" }}
@@ -147,11 +163,11 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/carrier/mobile-ionic
         docker:
-            - image: circleci/android:api-28-node
+            - image: circleci/android:api-29-node
         steps:
             - checkout
             - run: *install-deps
-            - run: 
+            - run:
                   name: Install Yarn
                   command: sudo npm install -g yarn --force
             - run: *install-gradle
@@ -165,32 +181,32 @@ jobs:
                   keys:
                       - yarn-packages-carrier-mobile-ionic-{{ checksum "yarn.lock" }}
             - run:
-                  name: Install Dependencies
-                  command: cd carrier/mobile-ionic && yarn install
+                  name: Run Bootstrap
+                  command: yarn bootstrap
+            - run:
+                  name: Run Build Common Packages
+                  command: yarn build:common
             - run:
                   name: Run Build
-                  command: cd carrier/mobile-ionic && yarn build
+                  command: yarn build:carrier
             - run:
                   name: Run Ionic Build (Production)
-                  command: cd carrier/mobile-ionic && yarn ionic:build:prod
-            - run:
-                  name: Remove old android platform
-                  command: cd carrier/mobile-ionic && yarn ionic cordova platform rm android
+                  command: cd packages/carrier-mobile-ionic && yarn ionic:build:prod
             - run:
                   name: Add new android platform
-                  command: | 
-                    cd carrier/mobile-ionic 
-                    yarn ionic cordova platform add android@8.0.0 --noresources
-                    ionic config set -g telemetry true                    
-                    # echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
-                    # echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
+                  command: |
+                      cd packages/carrier-mobile-ionic 
+                      yarn ionic cordova platform add android@8.0.0 --noresources
+                      ionic config set -g telemetry true                    
+                      # echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
+                      # echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
             - run:
                   name: Run Cordova Build for Android (Debug)
-                  command: | 
-                    cd carrier/mobile-ionic
-                    yarn cordova:build
-                    mkdir -p /tmp/apk
-                    cp -r platforms/android/app/build/outputs/apk/debug/app-debug.apk /tmp/apk/carrier.apk
+                  command: |
+                      cd packages/carrier-mobile-ionic
+                      yarn cordova:build
+                      mkdir -p /tmp/apk
+                      cp -r platforms/android/app/build/outputs/apk/debug/app-debug.apk /tmp/apk/carrier.apk
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-carrier-mobile-ionic-{{ checksum "yarn.lock" }}
@@ -198,7 +214,7 @@ jobs:
                       - ~/.cache/yarn
             - store_artifacts:
                   path: /tmp/apk
-                  destination: apks          
+                  destination: apks
             - persist_to_workspace:
                   root: /tmp/workspace/carrier/mobile-ionic
                   paths:
@@ -207,14 +223,14 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/shop/mobile-ionic
         docker:
-            - image: circleci/android:api-28-node
+            - image: circleci/android:api-29-node
         steps:
             - checkout
             - run: *install-deps
-            - run: 
+            - run:
                   name: Install Yarn
                   command: sudo npm install -g yarn --force
-            - run: *install-gradle                  
+            - run: *install-gradle
             - run:
                   name: 'Pull Submodules'
                   command: |
@@ -225,32 +241,32 @@ jobs:
                   keys:
                       - yarn-packages-shop-mobile-ionic-{{ checksum "yarn.lock" }}
             - run:
-                  name: Install Dependencies
-                  command: cd shop/mobile-ionic && yarn install
+                  name: Run Bootstrap
+                  command: yarn bootstrap
+            - run:
+                  name: Run Build Common Packages
+                  command: yarn build:common
             - run:
                   name: Run Build
-                  command: cd shop/mobile-ionic && yarn build
+                  command: yarn build:shopmobile
             - run:
                   name: Run Ionic Build (Production)
-                  command: cd shop/mobile-ionic && yarn ionic:build:prod
-            - run:
-                  name: Remove old android platform
-                  command: cd shop/mobile-ionic && yarn ionic cordova platform rm android
+                  command: cd packages/shop-mobile-ionic && yarn ionic:build:prod
             - run:
                   name: Add new android platform
-                  command: | 
-                    cd shop/mobile-ionic
-                    yarn ionic cordova platform add android@8.0.0 --noresources
-                    ionic config set -g telemetry true                    
-                    # echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
-                    # echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
+                  command: |
+                      cd packages/shop-mobile-ionic
+                      yarn ionic cordova platform add android@8.0.0 --noresources
+                      ionic config set -g telemetry true                    
+                      # echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
+                      # echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
             - run:
                   name: Run Cordova Build for Android (Debug)
-                  command: | 
-                    cd shop/mobile-ionic
-                    yarn cordova:build
-                    mkdir -p /tmp/apk
-                    cp -r platforms/android/app/build/outputs/apk/debug/app-debug.apk /tmp/apk/shop.apk
+                  command: |
+                      cd packages/shop-mobile-ionic
+                      yarn cordova:build
+                      mkdir -p /tmp/apk
+                      cp -r platforms/android/app/build/outputs/apk/debug/app-debug.apk /tmp/apk/shop.apk
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-shop-mobile-ionic-{{ checksum "yarn.lock" }}
@@ -267,7 +283,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/shop/website-angular
         docker:
-            - image: circleci/node:10.16.0
+            - image: circleci/node:13.12
         steps:
             - checkout
             - run: *install-deps
@@ -282,11 +298,14 @@ jobs:
                   keys:
                       - yarn-packages-shop-website-angular-{{ checksum "yarn.lock" }}
             - run:
-                  name: Install Dependencies
-                  command: cd shop/website-angular && yarn install
+                  name: Run Bootstrap
+                  command: yarn bootstrap
+            - run:
+                  name: Run Build Common Packages
+                  command: yarn build:common
             - run:
                   name: Run Build
-                  command: cd shop/website-angular && yarn build
+                  command: yarn build:shopweb
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-shop-website-angular-{{ checksum "yarn.lock" }}
@@ -300,11 +319,11 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/merchant/tablet-ionic
         docker:
-            - image: circleci/android:api-28-node
+            - image: circleci/android:api-29-node
         steps:
             - checkout
             - run: *install-deps
-            - run: 
+            - run:
                   name: Install Yarn
                   command: sudo npm install -g yarn --force
             - run: *install-gradle
@@ -312,38 +331,38 @@ jobs:
                   name: 'Pull Submodules'
                   command: |
                       git submodule init
-                      git submodule update --remote            
+                      git submodule update --remote
             - restore_cache:
                   name: Restore Yarn Package Cache
                   keys:
                       - yarn-packages-merchant-tablet-ionic-{{ checksum "yarn.lock" }}
             - run:
-                  name: Install Dependencies
-                  command: cd merchant/tablet-ionic && yarn install
+                  name: Run Bootstrap
+                  command: yarn bootstrap
+            - run:
+                  name: Run Build Common Packages
+                  command: yarn build:common
             - run:
                   name: Run Build
-                  command: cd merchant/tablet-ionic && yarn build
+                  command: yarn build:merchant
             - run:
                   name: Run Ionic Build (Production)
-                  command: cd merchant/tablet-ionic && yarn ionic:build:prod
-            - run:
-                  name: Remove old android platform
-                  command: cd merchant/tablet-ionic && yarn ionic cordova platform rm android
+                  command: cd packages/merchant-tablet-ionic && yarn ionic:build:prod
             - run:
                   name: Add new android platform
-                  command: | 
-                    cd merchant/tablet-ionic
-                    yarn ionic cordova platform add android@8.0.0 --noresources
-                    ionic config set -g telemetry true                    
-                    # echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
-                    # echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
+                  command: |
+                      cd packages/merchant-tablet-ionic
+                      yarn ionic cordova platform add android@8.0.0 --noresources
+                      ionic config set -g telemetry true                    
+                      # echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
+                      # echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
             - run:
                   name: Run Cordova Build for Android (Debug)
-                  command: | 
-                    cd merchant/tablet-ionic
-                    yarn cordova:build
-                    mkdir -p /tmp/apk
-                    cp -r platforms/android/app/build/outputs/apk/debug/app-debug.apk /tmp/apk/merchant.apk
+                  command: |
+                      cd packages/merchant-tablet-ionic
+                      yarn cordova:build
+                      mkdir -p /tmp/apk
+                      cp -r platforms/android/app/build/outputs/apk/debug/app-debug.apk /tmp/apk/merchant.apk
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-merchant-tablet-ionic-{{ checksum "yarn.lock" }}
@@ -364,7 +383,7 @@ jobs:
         steps:
             - run: *install-deps
             - run: *install-yarn
-            - run: *install-chrome            
+            - run: *install-chrome
             - attach_workspace:
                   at: /tmp/workspace/carrier/mobile-ionic
             - run:

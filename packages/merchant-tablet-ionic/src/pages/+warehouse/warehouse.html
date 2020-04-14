@@ -1,0 +1,144 @@
+<ion-content scroll="false" class="app-view warehouse-view no-padding">
+	<ion-row class="warehouse-view m-0">
+		<div class="orders-container col">
+			<div class="bar bar-header bar-brand">
+				<h1 class="title">{{ 'WAREHOUSE_VIEW.ORDERS' | translate }}</h1>
+
+				<div class="buttons buttons-left header-item">
+					<span class="left-buttons">
+						<div class="waves-effect waves-classic">
+							<ion-menu-toggle class="button-icon">
+								<ion-icon
+									ios="ios-menu"
+									md="md-menu"
+								></ion-icon>
+							</ion-menu-toggle>
+						</div>
+					</span>
+				</div>
+
+				<div class="button-bar-right-container allowOverflow">
+					<div class="button-bar">
+						<a
+							class="button"
+							[ngClass]="{
+								'button-dark-brand': showRelevant,
+								'button-brand': !showRelevant || showAllProducts
+							}"
+							(click)="
+								switchOrders(true); showAllProducts = false
+							"
+						>
+							{{ 'WAREHOUSE_VIEW.RELEVANT' | translate }}
+						</a>
+						<a
+							class="button"
+							[ngClass]="{
+								'button-dark-brand': !showRelevant,
+								'button-brand': showRelevant || showAllProducts
+							}"
+							(click)="
+								switchOrders(false); showAllProducts = false
+							"
+						>
+							{{ 'WAREHOUSE_VIEW.ALL' | translate }}
+						</a>
+						<a
+							class="button"
+							[ngClass]="{
+								'button-dark-brand': isOrderContainerLive,
+								'button-brand': !isOrderContainerLive
+							}"
+							(click)="toggleOrderContainer()"
+						>
+							+ {{ 'WAREHOUSE_VIEW.NEW_ORDER' | translate }}
+						</a>
+						<a class="button button-brand" (click)="scanBarcode()">
+							<i class="fa fa-qrcode"></i> Scan
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<ion-content class="app-view" scroll="false">
+				<div class="orders">
+					<div class="pt-3" *ngIf="isOrderContainerLive">
+						<order
+							class="card m-0 mb-0 p-0"
+							(orderFinishedEmitter)="onOrderFinish()"
+						></order>
+					</div>
+
+					<merchant-all-products
+						*ngIf="showAllProducts"
+						[warehouseId]="warehouseId"
+						[presentCreateProductPopover]="
+							presentCreateProductPopover
+						"
+						[addProduct]="addProduct"
+						[getWarehouseProductImageUrl]="
+							getWarehouseProductImageUrl
+						"
+						[openEditProductModal]="openEditProductModal"
+						[truncateTitle]="truncateTitle"
+						[localeTranslate]="localeTranslate"
+					></merchant-all-products>
+
+					<merchant-relevant-orders
+						*ngIf="showRelevant && !showAllProducts"
+						[onUpdateWarehouseStatus]="updateOrderWarehouseStatus"
+						[getWarehouseStatus]="getWarehouseStatus"
+						[orderState]="orderState"
+						[focusedOrder]="focusedOrder"
+						(toggleOrderContainer)="toggleOrderContainer()"
+						[isOrderContainerLive]="isOrderContainerLive"
+					>
+					</merchant-relevant-orders>
+
+					<merchant-all-orders
+						*ngIf="!showRelevant && !showAllProducts"
+						[onUpdateWarehouseStatus]="updateOrderWarehouseStatus"
+						[getWarehouseStatus]="getWarehouseStatus"
+						[orderState]="orderState"
+						[focusedOrder]="focusedOrder"
+						(toggleOrderContainer)="toggleOrderContainer()"
+						[isOrderContainerLive]="isOrderContainerLive"
+					>
+					</merchant-all-orders>
+				</div>
+			</ion-content>
+		</div>
+
+		<div class="products-container">
+			<div class="bar bar-header bar-assertive redbar">
+				<div>
+					<button
+						(click)="showAllProducts = !showAllProducts"
+						class="all button"
+					>
+						All
+					</button>
+					<span class="text">
+						{{ 'WAREHOUSE_VIEW.PRODUCTS' | translate }}
+					</span>
+					<button
+						class="icon button-icon plus-navbar-button p-0"
+						(click)="presentCreateProductPopover()"
+					>
+						<ion-icon ios="ios-add" md="md-add"></ion-icon>
+					</button>
+				</div>
+			</div>
+
+			<merchant-top-products
+				[warehouseId]="warehouseId"
+				[presentCreateProductPopover]="presentCreateProductPopover"
+				[addProduct]="addProduct"
+				[getWarehouseProductImageUrl]="getWarehouseProductImageUrl"
+				[openEditProductModal]="openEditProductModal"
+				[truncateTitle]="truncateTitle"
+				[localeTranslate]="localeTranslate"
+			></merchant-top-products>
+		</div>
+	</ion-row>
+</ion-content>
