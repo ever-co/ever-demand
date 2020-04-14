@@ -61,9 +61,9 @@ export class OrderRouter implements IOrderRouter {
 
 	async payWithStripe(orderId: string, cardId: string): Promise<Order> {
 		const order = await this.router.run<IOrder>(
-			'updateWarehouseStatus',
+			'payWithStripe',
 			orderId,
-			status
+			cardId
 		);
 		return this._orderFactory(order);
 	}
