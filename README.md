@@ -56,11 +56,11 @@ Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_wi
 
 ## Technology Stack and Requirements
 
--   [TypeScript](https://www.typescriptlang.org) language (version >=2.9)
--   [Node.js](https://nodejs.org) (version >=10)
--   [Ionic](https://ionicframework.com) (version 4) for Shopping Mobile App, Carrier Mobile App and Merchant Tablet App
--   Shopping Website developed with [Angular](https://angular.io) 8 using [Angular Starter](https://github.com/gdi2290/angular-starter)
--   Admin Website developed with [Angular](https://angular.io) version 8 using [ngx-admin](https://github.com/akveo/ngx-admin)
+-   [TypeScript](https://www.typescriptlang.org) language
+-   [Node.js](https://nodejs.org)
+-   [Ionic](https://ionicframework.com) (version 5) for Shopping Mobile App, Carrier Mobile App and Merchant Tablet App
+-   Shopping Website developed with [Angular](https://angular.io) (version 9.1) using [Angular Starter](https://github.com/gdi2290/angular-starter)
+-   Admin Website developed with [Angular](https://angular.io) (version 9.1) using [ngx-admin](https://github.com/akveo/ngx-admin)
 -   Headless Commerce framework (Backend APIs/Server) developed using [Nest](https://github.com/nestjs/nest) with heavy use of our own Pyro module. Supports GraphQL, REST and WS Real-Time APIs (WebSockets using [Socket.io](https://socket.io) library)
 -   [RxJS](http://reactivex.io/rxjs) library used heavy in every part of the Platform
 -   [InversifyJS](http://inversify.io) used for Inversion Control / Dependency Injection in most parts of the Platform. On the Backend/API we also use DI provided by [Nest](https://github.com/nestjs/nest)
@@ -91,7 +91,7 @@ git clone https://github.com/ever-co/ever.git
 **IMPORTANT NOTE:**
 
 -   if you want to use develop branch (unstable, but latest development) clone using `--branch develop` (our default branch).
--   if you want to use release branch (more stable) clone using `-- master`.
+-   if you want to use release branch (more stable) clone using `--branch master`.
 
 ### Yarn
 
