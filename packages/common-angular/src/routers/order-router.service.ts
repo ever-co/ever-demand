@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router, RouterFactory } from '../lib/router';
 import IOrderRouter, {
-	IOrderRouterGetOptions
+	IOrderRouterGetOptions,
 } from '@modules/server.common/routers/IOrderRouter';
 import Order from '@modules/server.common/entities/Order';
 import Warehouse from '@modules/server.common/entities/Warehouse';
@@ -61,9 +61,9 @@ export class OrderRouter implements IOrderRouter {
 
 	async payWithStripe(orderId: string, cardId: string): Promise<Order> {
 		const order = await this.router.run<IOrder>(
-			'updateWarehouseStatus',
+			'payWithStripe',
 			orderId,
-			status
+			cardId
 		);
 		return this._orderFactory(order);
 	}

@@ -7,22 +7,22 @@ import { InvitesService } from '../invites';
 import { DBService } from '@pyro/db-server';
 import {
 	IUserCreateObject,
-	IUserInitializeObject
+	IUserInitializeObject,
 } from '@modules/server.common/interfaces/IUser';
 import IUserRouter from '@modules/server.common/routers/IUserRouter';
 import {
 	asyncListener,
 	observableListener,
 	routerName,
-	serialization
+	serialization,
 } from '@pyro/io';
 import { Observable } from 'rxjs';
 import { observeFile } from '../../utils';
 import GeoLocation, {
-	Country
+	Country,
 } from '@modules/server.common/entities/GeoLocation';
 import IGeoLocation, {
-	IGeoLocationCreateObject
+	IGeoLocationCreateObject,
 } from '@modules/server.common/interfaces/IGeoLocation';
 import { DevicesService } from '../devices';
 import IService from '../IService';
@@ -36,7 +36,7 @@ import {
 	refCount,
 	switchMap,
 	tap,
-	map
+	map,
 } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { _throw } from 'rxjs/observable/throw';
@@ -72,7 +72,7 @@ export class UsersService extends DBService<User>
 	private stripe = new Stripe(env.STRIPE_SECRET_KEY);
 
 	protected readonly log: Logger = createEverLogger({
-		name: 'usersService'
+		name: 'usersService',
 	});
 
 	public watchedFiles: IWatchedFiles;
@@ -128,7 +128,7 @@ export class UsersService extends DBService<User>
 	async getSocial(socialId: string): Promise<User> {
 		return super.findOne({
 			socialIds: { $in: [socialId] },
-			isDeleted: { $eq: false }
+			isDeleted: { $eq: false },
 		});
 	}
 
@@ -159,7 +159,7 @@ export class UsersService extends DBService<User>
 
 		return this.Model.find({
 			...findInput,
-			isDeleted: { $eq: false }
+			isDeleted: { $eq: false },
 		})
 			.sort(sortObj)
 			.skip(pagingOptions.skip)
@@ -216,14 +216,14 @@ export class UsersService extends DBService<User>
 	async getCards(userId: string): Promise<Stripe.cards.ICard[]> {
 		await this.throwIfNotExists(userId);
 
-		const user = await this.get(userId)
-			.pipe(first())
-			.toPromise();
+		const user = await this.get(userId).pipe(first()).toPromise();
 
 		if (user != null) {
 			if (user.stripeCustomerId != null) {
 				return (
-					await this.stripe.customers.listCards(user.stripeCustomerId)
+					await stripe.customers.listSources(user.stripeCustomerId, {
+						object: 'card',
+					})
 				).data;
 			} else {
 				return [];
@@ -259,9 +259,7 @@ export class UsersService extends DBService<User>
 		let card: Stripe.cards.ICard;
 
 		try {
-			let user = await this.get(userId)
-				.pipe(first())
-				.toPromise();
+			let user = await this.get(userId).pipe(first()).toPromise();
 
 			if (user != null) {
 				if (user.stripeCustomerId == null) {
@@ -269,19 +267,19 @@ export class UsersService extends DBService<User>
 						email: user.email,
 						description: 'User id: ' + user.id,
 						metadata: {
-							userId: user.id
-						}
+							userId: user.id,
+						},
 					});
 
 					user = await this.update(userId, {
-						stripeCustomerId: customer.id
+						stripeCustomerId: customer.id,
 					});
 				}
 
 				card = (await this.stripe.customers.createSource(
 					user.stripeCustomerId as string,
 					{
-						source: tokenId
+						source: tokenId,
 					}
 				)) as Stripe.cards.ICard;
 			} else {
@@ -437,10 +435,7 @@ export class UsersService extends DBService<User>
 		defaultLat: number
 	): Promise<IUserCreateObject[]> {
 		const existingEmails = _.map(
-			await this.Model.find({})
-				.select({ email: 1 })
-				.lean()
-				.exec(),
+			await this.Model.find({}).select({ email: 1 }).lean().exec(),
 			(u) => u.email
 		);
 
@@ -463,9 +458,9 @@ export class UsersService extends DBService<User>
 				house: `${customerCount}`,
 				loc: {
 					type: 'Point',
-					coordinates: [defaultLng, defaultLat]
+					coordinates: [defaultLng, defaultLat],
 				},
-				streetAddress: faker.address.streetAddress()
+				streetAddress: faker.address.streetAddress(),
 			};
 
 			if (!existingEmails.includes(email)) {
@@ -483,7 +478,7 @@ export class UsersService extends DBService<User>
 					_createdAt: faker.date.between(
 						customerCreatedFrom,
 						customerCreatedTo
-					)
+					),
 				} as any);
 
 				customerCount += 1;
@@ -510,10 +505,7 @@ export class UsersService extends DBService<User>
 	 * @memberof UsersService
 	 */
 	async throwIfNotExists(userId: string) {
-		const user = await super
-			.get(userId)
-			.pipe(first())
-			.toPromise();
+		const user = await super.get(userId).pipe(first()).toPromise();
 
 		if (!user || user.isDeleted) {
 			throw Error(`Customer with id '${userId}' does not exists!`);
