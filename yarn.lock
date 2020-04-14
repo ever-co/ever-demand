@@ -2052,7 +2052,7 @@
     "@angular/platform-browser-dynamic" "^9.1.0"
     "@angular/router" "^9.1.0"
     "@angular/service-worker" "^9.1.0"
-    "@ever-platform/common" "file:C:/Users/Alish/AppData/Local/Yarn/Cache/v4/npm-@ever-platform-common-angular-0.3.0-8478e209-1c0c-4e88-a1c5-6cb491902be0-1586868314994/node_modules/@ever-platform/common"
+    "@ever-platform/common" "file:C:/Users/Alish/AppData/Local/Yarn/Cache/v4/npm-@ever-platform-common-angular-0.3.0-d7386328-2cae-4787-b409-1a00141664cc-1586876080537/node_modules/@ever-platform/common"
     tslib "^1.10.0"
     zone.js "~0.10.2"
 
@@ -17819,7 +17819,7 @@ ionic-selectable@^4.4.1:
   resolved "https://registry.yarnpkg.com/ionic-selectable/-/ionic-selectable-4.7.1.tgz#5103ea275c87c4ab3478b603d8bdc044d05b0350"
   integrity sha512-kyik9tQWn+SokGMNBks5wjxkW8+oc7Xrjquy9rEpMJpB60YUUYacseFkPRukaY/2DzjPNF1dpPsvrblltGBYuw==
 
-ionic@^5.4.7:
+ionic@^5.4.16, ionic@^5.4.7:
   version "5.4.16"
   resolved "https://registry.yarnpkg.com/ionic/-/ionic-5.4.16.tgz#f4d4a58d24a7803b504d8c486aeb51d330b4b173"
   integrity sha512-MlHmcctGxxUdvjKJGDUQOZEJMMTrZk3ZtC0tkMUy/im53c0giZrKQtkBKXOLK6uYXBnhlOXn0jrs97PnfNadyg==
