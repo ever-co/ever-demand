@@ -17,7 +17,6 @@ import CarriersService from '../carriers/CarriersService';
 import IOrderRouter from '@modules/server.common/routers/IOrderRouter';
 import { asyncListener, observableListener, routerName } from '@pyro/io';
 import IService from '../IService';
-import Stripe from 'Stripe';
 import { exhaustMap, first, switchMap, map } from 'rxjs/operators';
 import { v1 as uuid } from 'uuid';
 import OrderProduct from '@modules/server.common/entities/OrderProduct';
@@ -31,6 +30,7 @@ import OrderStatus from '@modules/server.common/enums/OrderStatus';
 import User from '@modules/server.common/entities/User';
 import { ProductsService } from '../../services/products';
 import { Observable } from 'rxjs';
+import Stripe = require('stripe');
 
 @injectable()
 @routerName('order')
