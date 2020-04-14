@@ -1,7 +1,7 @@
 <span class="all {{ smallButtons ? 'small-buttons' : '' }}">
 	<span class="actions">
 		<button
-			*ngIf="!order?.isPaid"
+			*ngIf="!order?.isPaid && !userCard"
 			class="button button-assertive border-color-brand col-100"
 			(click)="toPaymentStage()"
 		>

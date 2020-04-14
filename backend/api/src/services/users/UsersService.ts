@@ -222,8 +222,10 @@ export class UsersService extends DBService<User>
 
 		if (user != null) {
 			if (user.stripeCustomerId != null) {
-				return (await stripe.customers.listCards(user.stripeCustomerId))
-					.data;
+				return (await stripe.customers.listSources(
+					user.stripeCustomerId,
+					{ object: 'card' }
+				)).data;
 			} else {
 				return [];
 			}
