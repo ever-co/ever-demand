@@ -20,7 +20,7 @@ import {
 	NbProgressBarModule,
 	NbIconModule,
 	NbSelectModule,
-	NbRadioModule
+	NbRadioModule,
 } from '@nebular/theme';
 
 import { NbEvaIconsModule } from '@nebular/eva-icons';
@@ -35,13 +35,13 @@ import {
 	ThemeSettingsComponent,
 	ThemeSwitcherComponent,
 	ThemeSwitcherListComponent,
-	TinyMCEComponent
+	TinyMCEComponent,
 } from './components';
 
 import {
 	OneColumnLayoutComponent,
 	ThreeColumnsLayoutComponent,
-	TwoColumnsLayoutComponent
+	TwoColumnsLayoutComponent,
 } from './layouts';
 
 import { DEFAULT_THEME } from './styles/theme.default';
@@ -56,6 +56,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AdminsService } from '../@core/data/admins.service';
 import { PipesModule } from '@modules/client.common.angular2/pipes/pipes.module';
 import { DARK_THEME } from './styles/theme.dark';
+import { SampleLayoutComponent } from './layouts/sample/sample.layout';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -82,7 +83,7 @@ const NB_MODULES = [
 	NbIconModule,
 	NbEvaIconsModule,
 	NbSelectModule,
-	NbRadioModule
+	NbRadioModule,
 ];
 
 const COMPONENTS = [
@@ -96,8 +97,9 @@ const COMPONENTS = [
 	ThemeSettingsComponent,
 	TinyMCEComponent,
 	OneColumnLayoutComponent,
+	SampleLayoutComponent,
 	ThreeColumnsLayoutComponent,
-	TwoColumnsLayoutComponent
+	TwoColumnsLayoutComponent,
 ];
 
 const ENTRY_COMPONENTS = [ThemeSwitcherListComponent];
@@ -105,7 +107,7 @@ const ENTRY_COMPONENTS = [ThemeSwitcherListComponent];
 const NB_THEME_PROVIDERS = [
 	...NbThemeModule.forRoot(
 		{
-			name: 'everlight'
+			name: 'everlight',
 		},
 		[
 			DEFAULT_THEME,
@@ -113,12 +115,12 @@ const NB_THEME_PROVIDERS = [
 			CORPORATE_THEME,
 			EVERDARK_THEME,
 			EVERLIGHT_THEME,
-			DARK_THEME
+			DARK_THEME,
 		]
 	).providers,
 	...NbSidebarModule.forRoot().providers,
 	...NbMenuModule.forRoot().providers,
-	AdminsService
+	AdminsService,
 ];
 
 @NgModule({
@@ -130,20 +132,20 @@ const NB_THEME_PROVIDERS = [
 			loader: {
 				provide: TranslateLoader,
 				useFactory: HttpLoaderFactory,
-				deps: [HttpClient]
-			}
+				deps: [HttpClient],
+			},
 		}),
-		PipesModule
+		PipesModule,
 	],
 	exports: [...BASE_MODULES, ...NB_MODULES, ...COMPONENTS],
 	declarations: [...COMPONENTS],
-	entryComponents: [...ENTRY_COMPONENTS]
+	entryComponents: [...ENTRY_COMPONENTS],
 })
 export class ThemeModule {
 	static forRoot(): ModuleWithProviders<ThemeModule> {
 		const providers: ModuleWithProviders<ThemeModule> = {
 			ngModule: ThemeModule,
-			providers: [...NB_THEME_PROVIDERS]
+			providers: [...NB_THEME_PROVIDERS],
 		};
 
 		return providers;
