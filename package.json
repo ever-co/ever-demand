@@ -58,8 +58,7 @@
 		"build:all": "yarn run build:common && yarn run build:server && yarn run build:admin && yarn run build:merchant && yarn run build:shopmobile && yarn run build:shopweb && yarn run build:carrier",
 		"tslint-check": "tslint-config-prettier-check ./tslint.json",
 		"count": "cross-env yarn cloc packages/core/src packages/shop-web-angular/src packages/carrier-mobile-ionic/src packages/shop-web-angular/src packages/shop-mobile-ionic/src packages/merchant-tablet-ionic/src packages/common-angular packages/common --exclude-dir='node_modules,modules'",
-		"snyk-protect": "snyk protect",
-		"prepare": "yarn run snyk-protect"
+		"snyk-protect": "snyk protect"
 	},
 	"resolutions": {},
 	"devDependencies": {

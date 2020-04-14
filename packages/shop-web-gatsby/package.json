@@ -93,5 +93,6 @@
   },
   "keywords": [
     "gatsby"
-  ]
+  ],
+  "snyk": false
 }

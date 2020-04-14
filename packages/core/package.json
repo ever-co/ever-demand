@@ -45,8 +45,7 @@
 		"lint": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 tslint -p tsconfig.json -c tslint.json",
 		"format": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 prettier **/**/*.ts --ignore-path ./.prettierignore --write && git status",
 		"docs": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 typedoc --out docs --mode modules",
-		"snyk-protect": "yarn snyk protect",
-		"prepublish": "yarn run snyk-protect"
+		"snyk-protect": "yarn snyk protect"
 	},
 	"publishConfig": {
 		"access": "public"
@@ -147,6 +146,12 @@
 		"validator": "^11.0.0",
 		"ws": "^7.1.1"
 	},
+	"devDependencies": {
+		"@types/node": "12.11.1",
+		"ts-node": "~8.3.0",
+		"tslint": "^6.1.1",
+		"typescript": "~3.7.5"
+	},
 	"nyc": {
 		"include": [
 			"packages/**/*.ts"
@@ -188,11 +193,5 @@
 		"node": ">=10.15.0",
 		"yarn": ">=1.13.0"
 	},
-	"snyk": false,
-	"devDependencies": {
-		"@types/node": "12.11.1",
-		"ts-node": "~8.3.0",
-		"tslint": "^6.1.1",
-		"typescript": "~3.7.5"
-	}
+	"snyk": false
 }

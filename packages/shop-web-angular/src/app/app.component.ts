@@ -73,12 +73,22 @@ export class AppComponent implements OnInit {
 			translateService.setDefaultLang(current);
 		} else {
 			// TODO: load list of supported languages from config service
-			translateService.addLangs(['en', 'fr', 'bg', 'he', 'ru']);
-			translateService.setDefaultLang('en');
+			translateService.addLangs([
+				'en-US',
+				'es-ES',
+				'bg-BG',
+				'he-IL',
+				'ru-RU',
+			]);
+
+			translateService.setDefaultLang('en-US');
+
 			const browserLang = translateService.getBrowserLang();
 			// TODO: load list of supported languages from config service
 			translateService.use(
-				browserLang.match(/en|fr|bg|he|ru/) ? browserLang : 'en'
+				browserLang.match(/en-US|bg-BG|he-HE|ru-RU|es-ES/)
+					? browserLang
+					: 'en-US'
 			);
 		}
 	}

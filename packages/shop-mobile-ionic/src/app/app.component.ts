@@ -43,7 +43,9 @@ export class AppComponent {
 			'ru-RU',
 			'es-ES',
 		]);
+
 		_translateService.setDefaultLang('en-US');
+
 		const browserLang = _translateService.getBrowserLang();
 
 		if (this.defaultLanguage) {

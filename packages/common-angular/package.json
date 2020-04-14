@@ -59,5 +59,6 @@
 		"lint": "^0.7.0",
 		"ts-node": "~8.3.0",
 		"typescript": "~3.7.5"
-	}
+	},
+	"snyk": false
 }
