@@ -188,5 +188,11 @@
 		"node": ">=10.15.0",
 		"yarn": ">=1.13.0"
 	},
-	"snyk": false
+	"snyk": false,
+	"devDependencies": {
+		"@types/node": "12.11.1",
+		"ts-node": "~8.3.0",
+		"tslint": "^6.1.1",
+		"typescript": "~3.7.5"
+	}
 }
