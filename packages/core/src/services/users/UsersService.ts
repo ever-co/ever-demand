@@ -26,7 +26,6 @@ import IGeoLocation, {
 } from '@modules/server.common/interfaces/IGeoLocation';
 import { DevicesService } from '../devices';
 import IService from '../IService';
-import Stripe from 'Stripe';
 import { v1 as uuid } from 'uuid';
 import {
 	distinctUntilChanged,
@@ -45,6 +44,7 @@ import _ = require('lodash');
 import faker from 'faker';
 import { WarehousesService } from '../../services/warehouses';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
+import Stripe = require('stripe');
 
 interface IWatchedFiles {
 	aboutUs: { [language in ILanguage]: Observable<string> };
@@ -221,9 +221,12 @@ export class UsersService extends DBService<User>
 		if (user != null) {
 			if (user.stripeCustomerId != null) {
 				return (
-					await stripe.customers.listSources(user.stripeCustomerId, {
-						object: 'card',
-					})
+					await this.stripe.customers.listSources(
+						user.stripeCustomerId,
+						{
+							object: 'card',
+						}
+					)
 				).data;
 			} else {
 				return [];
