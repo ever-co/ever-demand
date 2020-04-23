@@ -326,7 +326,7 @@
 			"ZIP": "Código Postal",
 			"STREET_ADDRESS": "Calle",
 			"STREET_ADDRESS_IS_REQUIRED": "Calle requerida",
-			"HOUSE_No": "Número de Puerta",
+			"HOUSE_№": "Número de Puerta",
 			"APARTMENT": "Apartamento",
 			"SHOW_COORDINATES": "Mostrar Coordenaas",
 			"LATITUDE": "Latitud",
