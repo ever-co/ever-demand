@@ -266,6 +266,7 @@
 			"NO_PRODUCTS": "אין מוצרים"
 		},
 		"CREATE_PRODUCTS_POPUP": {
+			"ERROR_MSG": "משהו לא בסדר, לא מצליח לבצע סדר!",
 			"NEW_PRODUCT_TYPE": "סוג מוצר חדש",
 			"CREATE_NEW_PRODUCT_TYPE": "צור סוג מוצר חדש",
 			"TITLE": "כותרת",
