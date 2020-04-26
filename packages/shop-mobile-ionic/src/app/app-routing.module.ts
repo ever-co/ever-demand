@@ -31,6 +31,13 @@ const routes: Routes = [
 		pathMatch: 'full',
 		redirectTo: '',
 	},
+	{
+		path: 'user-locations',
+		loadChildren: () =>
+			import('./pages/user-locations/user-locations.module').then(
+				(m) => m.UserLocationsPageModule
+			),
+	},
 ];
 
 const config: ExtraOptions = {

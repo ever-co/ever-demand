@@ -55,16 +55,16 @@ export class GeoLocationService {
 			const defaultLat = environment.DEFAULT_LATITUDE;
 			const defaultLng = environment.DEFAULT_LONGITUDE;
 
-			if (defaultLat && defaultLng) {
-				resolve(
-					this.getCoordsObj({
-						latitude: defaultLat,
-						longitude: defaultLng,
-					})
-				);
+			// if (defaultLat && defaultLng) {
+			// 	resolve(
+			// 		this.getCoordsObj({
+			// 			latitude: defaultLat,
+			// 			longitude: defaultLng,
+			// 		})
+			// 	);
 
-				return;
-			}
+			// 	return;
+			// } //
 
 			try {
 				const { coords } = await Geolocation.getCurrentPosition();

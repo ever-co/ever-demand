@@ -84,7 +84,22 @@
 						}}</ion-label>
 					</ion-item>
 				</ion-menu-toggle>
+
+				<ion-menu-toggle [autoHide]="true">
+					<ion-item
+						routerLink="/user-locations"
+						routerDirection="root"
+						routerLinkActive="activated"
+					>
+						<ion-icon name="globe"></ion-icon>
+						<ion-label>{{
+							'SIDE_MENU.GROUPS.SETTINGS.ITEMS.ADDRESSES'
+								| translate
+						}}</ion-label>
+					</ion-item>
+				</ion-menu-toggle>
 			</ion-item-group>
+
 			<ion-item-group>
 				<ion-item-divider>
 					<ion-label>{{
