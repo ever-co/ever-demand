@@ -222,6 +222,7 @@ According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform tod
 -   [Kyle Kitlinski](https://github.com/K-Kit)
 -   [Milena Dimova](https://www.linkedin.com/in/dimova-milena-31010414) (UI/UX Designer)
 -   [Rachit Magon](https://github.com/rmagon)
+-   [Surya Singh](https://github.com/suryasingh)
 
 View full list of our [contributors](https://github.com/ever-co/ever/graphs/contributors).
 
