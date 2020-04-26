@@ -31,7 +31,7 @@ ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.6.0/wait
 
 RUN npm install cross-env -g \
 	&& npm install pm2 -g --unsafe-perm \
-    && chmod +x /wait
+	&& chmod +x /wait
 
 RUN mkdir /srv/ever && chown node:node /srv/ever
 RUN mkdir -p /srv/ever/packages/core && chown node:node /srv/ever/packages/core

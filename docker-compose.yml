@@ -15,26 +15,6 @@ services:
         networks:
             - overlay
 
-    admin-web:
-        container_name: admin-web
-        image: ever-admin-web:latest
-        build:
-            context: .
-            dockerfile: .deploy/admin-web-angular/Dockerfile
-        environment:
-            NODE_ENV: production
-        restart: on-failure
-        depends_on:
-            - core
-        volumes:
-            - .:/srv/ever
-            - root_node_modules:/srv/ever/node_modules
-            - admin_web_node_modules:/srv/ever/packages/admin-web/node_modules
-        ports:
-            - 4200:4200
-        networks:
-            - overlay
-
     core:
         container_name: core
         image: ever-core:latest
@@ -45,6 +25,7 @@ services:
             NODE_ENV: production
             WAIT_HOSTS: mongo:27017
             DB_URI: mongodb://mongo/ever_development
+            TESTING_DB_URI: mongodb://mongo/ever_testing
         restart: on-failure
         depends_on:
             - mongo
