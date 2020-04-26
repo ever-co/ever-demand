@@ -265,6 +265,7 @@
 			"NO_PRODUCTS": "Няма продукти"
 		},
 		"CREATE_PRODUCTS_POPUP": {
+			"ERROR_MSG": "Нещо не е наред, не можете да направите поръчка!",
 			"NEW_PRODUCT_TYPE": "Нов тип продукт",
 			"CREATE_NEW_PRODUCT_TYPE": "Създай нов продукт",
 			"TITLE": "Заглавие",
