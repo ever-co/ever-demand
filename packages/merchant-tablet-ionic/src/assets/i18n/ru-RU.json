@@ -75,7 +75,13 @@
 			"ADDRESS": "Адрес",
 			"LOGO": "Логотип"
 		},
+		"TRACK_ORDER": "Отследить заказ",
 		"TRACK_CARRIER": "Отследить перевозчика",
+		"DELIVERY_TRACKING": "Отслеживание доставки",
+		"CARRIER": "Перевозчик",
+		"STORE": "Магазин",
+		"DELIVERY_COUNT": "Количество доставки:",
+		"CUSTOMER": "Клиент",
 		"CARRIERS": "Носители",
 		"ADD_CARRIERS": "Добавить носители",
 		"IMAGE": "Образ",

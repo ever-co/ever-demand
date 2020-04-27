@@ -75,7 +75,13 @@
 			"ADDRESS": "Address",
 			"LOGO": "Logo"
 		},
+		"TRACK_ORDER": "Track order",
 		"TRACK_CARRIER": "Track Carrier",
+		"DELIVERY_TRACKING": "Delivery Tracking",
+		"CARRIER": "Carrier",
+		"STORE": "Store",
+		"DELIVERY_COUNT": "Delivery count:",
+		"CUSTOMER": "Customer",
 		"CARRIERS": "Carriers",
 		"ADD_CARRIERS": "Add Carriers",
 		"IMAGE": "Image",
