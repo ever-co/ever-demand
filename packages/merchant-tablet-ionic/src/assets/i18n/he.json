@@ -75,7 +75,13 @@
 			"ADDRESS": "כתובת",
 			"LOGO": "סֵמֶל"
 		},
+		"TRACK_ORDER": "עקוב אחר הסדר",
 		"TRACK_CARRIER": "עקוב אחר ספק",
+		"DELIVERY_TRACKING": "מעקב משלוחים",
+		"CARRIER": "מנשא",
+		"STORE": "חנות",
+		"DELIVERY_COUNT": "ספירת משלוחים",
+		"CUSTOMER": "צרכן",
 		"CARRIERS": "ספקים",
 		"ADD_CARRIERS": "הוסף ספקים",
 		"IMAGE": "תמונה",

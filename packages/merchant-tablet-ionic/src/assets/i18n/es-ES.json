@@ -76,7 +76,13 @@
 			"ADDRESS": "Dirección",
 			"LOGO": "Logo"
 		},
+		"TRACK_ORDER": "Orden de pista",
 		"TRACK_CARRIER": "Seguimiento del Repartidor",
+		"DELIVERY_TRACKING": "Seguimiento de entregas",
+		"CARRIER": "Portador",
+		"STORE": "Tienda",
+		"DELIVERY_COUNT": "Recuento de entrega:",
+		"CUSTOMER": "Cliente",
 		"CARRIERS": "Repartos",
 		"ADD_CARRIERS": "Agregar Reparto",
 		"IMAGE": "Imágen",

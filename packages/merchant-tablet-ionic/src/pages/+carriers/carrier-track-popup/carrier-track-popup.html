@@ -1,12 +1,12 @@
 <div #gmap id="mapDiv" class="map"></div>
 <div class="sidebar">
 	<i (click)="cancelModal()" class="fa fa-close close-btn"></i>
-	<h2 *ngIf="!user">Carrier Tracking</h2>
-	<h2 *ngIf="user">Delivery Tracking</h2>
+	<h2 *ngIf="!user">{{ "CARRIERS_VIEW.TRACK_CARRIER" | translate }}</h2>
+	<h2 *ngIf="user">{{ "CARRIERS_VIEW.DELIVERY_TRACKING" | translate }}</h2>
 	<ul *ngIf="carrier">
 		<div>
 			<img [src]="carrierIcon" />
-			<h4>Carrier</h4>
+			<h4>{{ "CARRIERS_VIEW.CARRIER" | translate }}</h4>
 		</div>
 		<h3>{{ carrier.fullName }}</h3>
 		<small>@{{ carrier.username }} </small>
@@ -20,12 +20,15 @@
 			{{ carrier.geoLocation.loc.coordinates[0].toFixed(6) + ', ' +
 			carrier.geoLocation.loc.coordinates[1].toFixed(6) }}
 		</li>
-		<li>Delivery count: {{ carrier.numberOfDeliveries }}</li>
+		<li>
+			{{ "CARRIERS_VIEW.DELIVERY_COUNT" | translate }} {{
+			carrier.numberOfDeliveries }}
+		</li>
 	</ul>
 	<ul *ngIf="warehouse">
 		<div>
 			<img [src]="storeIcon" />
-			<h4>Store</h4>
+			<h4>{{ "CARRIERS_VIEW.STORE" | translate }}</h4>
 		</div>
 		<h3>{{ warehouse.name }}</h3>
 		<li><i class="fa fa-envelope"></i> {{ warehouse.contactEmail }}</li>
@@ -43,7 +46,7 @@
 	<ul *ngIf="user">
 		<div>
 			<img [src]="userIcon" />
-			<h4>Customer</h4>
+			<h4>{{ "CARRIERS_VIEW.CUSTOMER" | translate }}</h4>
 		</div>
 		<h3>{{ user.firstName + ' ' + user.lastName }}</h3>
 		<li><i class="fa fa-envelope"></i> {{ user.email }}</li>
