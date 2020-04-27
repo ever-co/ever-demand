@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { UserLocationsPageRoutingModule } from './user-locations-routing.module';
 import { UserLocationsPage } from './user-locations.page';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { RouterModule, Routes } from '@angular/router';
 

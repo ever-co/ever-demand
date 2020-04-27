@@ -1,11 +1,4 @@
-import {
-	Component,
-	OnInit,
-	ViewChild,
-	ElementRef,
-	AfterViewInit,
-} from '@angular/core';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 declare var google: any;
 import {
 	FormBuilder,
@@ -49,15 +42,11 @@ export class NewAddressPage implements OnInit {
 		// }, (err) => {
 		// 	{ console.log(err) }
 		// })
-
 		this.geoLocationService.getCurrentGeoLocation().then((_res) => {
 			this.latitude = _res.loc.coordinates[1];
 			this.longitude = _res.loc.coordinates[0];
 			this.loadMap();
-		}),
-			(err) => {
-				console.log(err);
-			};
+		});
 	}
 
 	createSearchForm() {
