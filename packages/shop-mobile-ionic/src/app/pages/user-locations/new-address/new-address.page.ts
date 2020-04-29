@@ -7,9 +7,12 @@ import {
 	Validators,
 } from '@angular/forms';
 import { GeoLocationService } from '../../../services/geo-location';
+import { UsersService } from '../../../services/users/users.service';
+//import { UsersService } from '../../../ services/src/services/users/UsersService.ts';
+
 import { IonSearchbar } from '@ionic/angular';
 
-const MAP_ZOOM = 17;
+const MAP_ZOOM = 16;
 
 @Component({
 	selector: 'e-cu-new-address',
@@ -25,10 +28,12 @@ export class NewAddressPage implements OnInit {
 	public addressForm: FormGroup;
 	public searchForm: FormGroup;
 	public service;
+	public isOtherAddress: boolean = false;
 
 	constructor(
 		private formBuilder: FormBuilder,
-		private geoLocationService: GeoLocationService
+		private geoLocationService: GeoLocationService,
+		private usersService: UsersService
 	) {}
 
 	ngOnInit() {
@@ -42,9 +47,9 @@ export class NewAddressPage implements OnInit {
 		// }, (err) => {
 		// 	{ console.log(err) }
 		// })
-		this.geoLocationService.getCurrentGeoLocation().then((_res) => {
-			this.latitude = _res.loc.coordinates[1];
-			this.longitude = _res.loc.coordinates[0];
+		this.geoLocationService.getCurrentCoordsFromDeviceGPS().then((_res) => {
+			this.latitude = _res.latitude;
+			this.longitude = _res.longitude;
 			this.loadMap();
 		});
 	}
@@ -63,6 +68,9 @@ export class NewAddressPage implements OnInit {
 			apartment: new FormControl('', [Validators.required]),
 			country: new FormControl('', [Validators.required]),
 			postal_code: new FormControl('', [Validators.required]),
+			address_name: new FormControl('home'),
+			latitude: new FormControl(''),
+			longitude: new FormControl(''),
 		});
 	}
 
@@ -143,5 +151,28 @@ export class NewAddressPage implements OnInit {
 		};
 	}
 
-	saveNewAddress() {}
+	saveNewAddress() {
+		console.log('Values are', this.addressForm.value);
+		console.log('localStorage', localStorage.getItem('_userId'));
+		let userId = localStorage.getItem('_userId');
+
+		let objectToUpdate = {
+			postal_code: this.addressForm.value.postal_code,
+		};
+
+		this.usersService
+			.updateUserAddress(userId, objectToUpdate)
+			.subscribe((res) => {
+				console.log(res);
+			});
+	}
+
+	addressName() {
+		console.log('Values are', this.addressForm.value);
+		if (this.addressForm.value.address_name == '') {
+			this.isOtherAddress = true;
+		} else {
+			this.isOtherAddress = false;
+		}
+	}
 }

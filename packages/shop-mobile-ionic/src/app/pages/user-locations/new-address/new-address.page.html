@@ -78,6 +78,49 @@
 							</ion-item>
 						</ion-col>
 					</ion-row>
+					<ion-row (click)="addressName()">
+						<ion-radio-group
+							formControlName="address_name"
+							class="row"
+						>
+							<ion-col>
+								<ion-item lines="none">
+									<ion-label>Home</ion-label>
+									<ion-radio
+										style="margin-left: 5px;"
+										value="home"
+									></ion-radio>
+								</ion-item>
+							</ion-col>
+							<ion-col>
+								<ion-item lines="none">
+									<ion-label>Office</ion-label>
+									<ion-radio
+										style="margin-left: 5px;"
+										value="office"
+									></ion-radio>
+								</ion-item>
+							</ion-col>
+
+							<ion-col *ngIf="isOtherAddress == false">
+								<ion-item lines="none">
+									<ion-label>Other</ion-label>
+									<ion-radio
+										style="margin-left: 5px;"
+										value=""
+									></ion-radio>
+								</ion-item>
+							</ion-col>
+							<ion-col *ngIf="isOtherAddress == true">
+								<ion-item lines="none">
+									<ion-input
+										placeholder="Address Name"
+										formControlName="address_name"
+									></ion-input>
+								</ion-item>
+							</ion-col>
+						</ion-radio-group>
+					</ion-row>
 					<ion-button
 						*ngIf="addressForm.valid"
 						(click)="saveNewAddress()"

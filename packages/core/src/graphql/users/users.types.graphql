@@ -20,6 +20,8 @@ type User {
 	createdAt: Date
 
 	isBanned: Boolean!
+
+	otherAddresses: String
 }
 
 input UserCreateInput {
@@ -121,6 +123,15 @@ input UserUpdateObjectInput {
 	stripeCustomerId: String
 }
 
+input UserUpdateAddressInput {
+	addressId: ID
+	postal_code: String!
+}
+
+type UpdatedObject {
+	postal_code: String!
+}
+
 input PagingOptionsInput {
 	sort: PagingSortInput
 	limit: Int
@@ -134,6 +145,11 @@ input PagingSortInput {
 
 type Mutation {
 	updateUser(id: String!, updateObject: UserUpdateObjectInput!): User!
+
+	updateUserAddresses(
+		id: String!
+		otherAddresses: UserUpdateAddressInput!
+	): Void
 
 	updateUserEmail(userId: String!, email: String!): User!
 

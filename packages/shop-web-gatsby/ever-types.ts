@@ -1468,6 +1468,11 @@ export type User = {
 	fullAddress?: Maybe<Scalars['String']>;
 	createdAt?: Maybe<Scalars['Date']>;
 	isBanned: Scalars['Boolean'];
+	otherAddresses: OtherAddresses;
+};
+
+export type OtherAddresses = {
+	postal_code: Scalars['String'];
 };
 
 export type UserCreateInput = {

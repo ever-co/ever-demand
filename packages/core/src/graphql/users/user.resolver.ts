@@ -5,6 +5,7 @@ import {
 	default as IUser,
 	IUserCreateObject,
 	IResponseGenerate1000Customers,
+	IUserUpdateObject,
 } from '@modules/server.common/interfaces/IUser';
 import User from '@modules/server.common/entities/User';
 import { DevicesService } from '../../services/devices';
@@ -126,6 +127,18 @@ export class UserResolver {
 		{ id, updateObject }: { id: string; updateObject: IUserCreateObject }
 	) {
 		return this._usersService.updateUser(id, updateObject);
+	}
+
+	@Mutation()
+	async updateUserAddresses(
+		_,
+		{
+			id,
+			otherAddresses,
+		}: { id: string; otherAddresses: IUserUpdateObject }
+	) {
+		console.log('updateObjec>>>>>>>>>>>>>>>>>>', id, otherAddresses);
+		return this._usersService.updateUserAddress(id, otherAddresses);
 	}
 
 	@Mutation()

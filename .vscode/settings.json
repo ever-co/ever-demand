@@ -72,5 +72,6 @@
 		"pyro",
 		"snyk",
 		"typeorm"
-	]
+	],
+	"deepscan.enable": true
 }
