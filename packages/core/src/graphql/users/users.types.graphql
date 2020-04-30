@@ -3,6 +3,8 @@ type User {
 	id: String!
 	geoLocation: GeoLocation!
 	apartment: String!
+	addresses: [UserOtherAddresses!]!
+
 	firstName: String
 	lastName: String
 	email: String
@@ -20,8 +22,6 @@ type User {
 	createdAt: Date
 
 	isBanned: Boolean!
-
-	otherAddresses: String
 }
 
 input UserCreateInput {
@@ -121,15 +121,33 @@ input UserUpdateObjectInput {
 	devicesIds: [String!]
 	apartment: String
 	stripeCustomerId: String
+	addresses: [UserOtherAddressesInput]
 }
 
-input UserUpdateAddressInput {
-	addressId: ID
-	postal_code: String!
+input UserOtherAddressesInput {
+	locality: String
+	street_number: String
+	house: String
+	apartment: String
+	country: String
+	postal_code: String
+	address_name: String
+	latitude: String
+	longitude: String
+	isPrimaryAddress: Boolean
 }
 
-type UpdatedObject {
-	postal_code: String!
+type UserOtherAddresses {
+	locality: String
+	street_number: String
+	house: String
+	apartment: String
+	country: String
+	postal_code: String
+	address_name: String
+	latitude: String
+	longitude: String
+	isPrimaryAddress: Boolean
 }
 
 input PagingOptionsInput {
@@ -145,11 +163,6 @@ input PagingSortInput {
 
 type Mutation {
 	updateUser(id: String!, updateObject: UserUpdateObjectInput!): User!
-
-	updateUserAddresses(
-		id: String!
-		otherAddresses: UserUpdateAddressInput!
-	): Void
 
 	updateUserEmail(userId: String!, email: String!): User!
 

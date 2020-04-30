@@ -36,46 +36,27 @@ export class UsersService {
 			);
 	}
 
-	updateUserAddress(
-		id: string,
-		otherAddresses: { postal_code: string }
-	): Observable<any> {
-		console.log('From User Service --->>', otherAddresses);
-		return this._apollo.mutate({
-			mutation: gql`
-				mutation updateUserAddresses(
-					$id: String!
-					$otherAddresses: UserUpdateAddressInput!
-				) {
-					updateUserAddresses(
-						id: $id
-						otherAddresses: $otherAddresses
-					)
-				}
-			`,
-			variables: { id, otherAddresses },
-		});
+	updateUserAddress(id: string, updateObject: any): Observable<any> {
+		return this._apollo
+			.mutate<{ id: string; updateObject: any }>({
+				mutation: gql`
+					mutation updateUser(
+						$id: String!
+						$updateObject: UserUpdateObjectInput!
+					) {
+						updateUser(id: $id, updateObject: $updateObject) {
+							fullAddress
+						}
+					}
+				`,
+				variables: {
+					id,
+					updateObject,
+				},
+			})
+			.pipe(
+				map((result: any) => result.data.updateUser),
+				share()
+			);
 	}
-
-	// updateUserAddress(id: string, otherAddress: IUserUpdateObject): Observable<IUser> {
-	// 	return this._apollo
-	// 		.mutate<{ id: string; otherAddress: IUserUpdateObject }>({
-	// 			mutation: gql`
-	//                 mutation UpdateUserAddress(
-	//                     $id: String!
-	//                     $otherAddress: UserUpdateAddressInput!
-	//                 ) {
-	//                     updateUserAddress(id: $id, otherAddress: $otherAddress)
-	//                 }
-	//             `,
-	// 			variables: {
-	// 				id,
-	// 				otherAddress,
-	// 			},
-	// 		})
-	// 		.pipe(
-	// 			map((result: any) => result.data.updateUser),
-	// 			share()
-	// 		);
-	// }
 }

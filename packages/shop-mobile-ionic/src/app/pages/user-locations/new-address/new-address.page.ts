@@ -39,14 +39,6 @@ export class NewAddressPage implements OnInit {
 	ngOnInit() {
 		this.createAddressForm();
 		this.createSearchForm();
-		// this.geoLocationService.getCurrentPosition((_res) => {
-		// 	console.log("users location", _res);
-		// 	this.latitude = _res.coords.latitude;
-		// 	this.longitude = _res.coords.longitude;
-		// 	//this.loadMap();
-		// }, (err) => {
-		// 	{ console.log(err) }
-		// })
 		this.geoLocationService.getCurrentCoordsFromDeviceGPS().then((_res) => {
 			this.latitude = _res.latitude;
 			this.longitude = _res.longitude;
@@ -152,12 +144,18 @@ export class NewAddressPage implements OnInit {
 	}
 
 	saveNewAddress() {
-		console.log('Values are', this.addressForm.value);
-		console.log('localStorage', localStorage.getItem('_userId'));
 		let userId = localStorage.getItem('_userId');
-
 		let objectToUpdate = {
+			locality: this.addressForm.value.locality,
+			street_number: this.addressForm.value.street_number,
+			house: this.addressForm.value.house,
+			apartment: this.addressForm.value.apartment,
+			country: this.addressForm.value.country,
 			postal_code: this.addressForm.value.postal_code,
+			address_name: this.addressForm.value.address_name,
+			latitude: this.latitude,
+			longitude: this.longitude,
+			isPrimaryAddress: true,
 		};
 
 		this.usersService
@@ -168,7 +166,6 @@ export class NewAddressPage implements OnInit {
 	}
 
 	addressName() {
-		console.log('Values are', this.addressForm.value);
 		if (this.addressForm.value.address_name == '') {
 			this.isOtherAddress = true;
 		} else {

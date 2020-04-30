@@ -8,7 +8,6 @@ import { DBService } from '@pyro/db-server';
 import {
 	IUserCreateObject,
 	IUserInitializeObject,
-	IUserUpdateObject,
 } from '@modules/server.common/interfaces/IUser';
 import IUserRouter from '@modules/server.common/routers/IUserRouter';
 import {
@@ -185,25 +184,6 @@ export class UsersService extends DBService<User>
 	): Promise<User> {
 		await this.throwIfNotExists(id);
 		return super.update(id, userCreateObject);
-	}
-
-	/**
-	 * Updates Customer details
-	 * // TODO function actually returns User | null we should fix that.
-	 *
-	 * @param {string} id
-	 * @param {IUserUpdateObject} userUpdateObject
-	 * @returns {Promise<User>}
-	 * @memberof UsersService
-	 */
-	@asyncListener()
-	async updateUserAddress(
-		id: string,
-		userUpdateObject: IUserUpdateObject
-	): Promise<User> {
-		await this.throwIfNotExists(id);
-		console.log('next to resolver------>>>', id, userUpdateObject);
-		return super.update(id, userUpdateObject);
 	}
 
 	/**
