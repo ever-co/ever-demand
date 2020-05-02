@@ -4,7 +4,7 @@
 			<ion-menu-button autoHide="false"></ion-menu-button>
 		</ion-buttons>
 
-		<ion-title>{{ 'ORDER_INFO' | translate }}</ion-title>
+		<ion-title>{{ title ? title : ('ORDER_INFO' | translate) }}</ion-title>
 		<ion-buttons slot="end">
 			<ion-button (click)="back.emit()">
 				<i class="fa fa-angle-left back-btn"></i>

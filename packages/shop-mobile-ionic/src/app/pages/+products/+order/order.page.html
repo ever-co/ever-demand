@@ -109,10 +109,16 @@
 
 				<e-cu-payment
 					class="waves-effect waves-classic col-8 pl-5px p-0"
-					*ngIf="paymentsEnabled && order"
+					*ngIf="paymentsEnabled && order && !mercadoPayment"
 					[order]="order"
 					[modalChange]="modalChange"
 				></e-cu-payment>
+				<e-cu-mercado-payment
+					class="waves-effect waves-classic col-8 pl-5px p-0"
+					*ngIf="paymentsEnabled && order && mercadoPayment"
+					[order]="order"
+					[modalChange]="modalChange"
+				></e-cu-mercado-payment>
 			</ion-row>
 		</div>
 

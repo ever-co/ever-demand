@@ -213,6 +213,19 @@
 	"NO_SERVER_VIEW": {
 		"NO_SERVER": "Server connection is lost"
 	},
+	"PAYMENT": {
+		"ERRORS": {
+			"INVALID_CARD_NUMBER": "Card number not valid",
+			"INVALID_SECURITY_CODE": "CVV not valid",
+			"INVALID_NAME": "Cardholder name not valid",
+			"INVALID_DOCTYPE": "Doc Type is not valid",
+			"INVALID_DOC_SUBTYPE": "Please check your document id",
+			"INVALID_DOC_NUMBER": "Please check your document id",
+			"INVALID_MONTH": "Invalid month",
+			"INVALID_YEAR": "Invalid year",
+			"DEFAULT": "Please check the entered details"
+		}
+	},
 	"OR": "Or",
 	"OR_LOWERCASE": "or",
 	"YES": "Yes",

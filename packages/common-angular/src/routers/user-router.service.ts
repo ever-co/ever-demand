@@ -43,8 +43,23 @@ export class UserRouter implements IUserRouter {
 		return this.router.run<string>('addPaymentMethod', userId, tokenId);
 	}
 
+	addPaymentMethodMercado(
+		userId: string,
+		token: string
+	): Promise<string /*cardId*/> {
+		return this.router.run<string>(
+			'addPaymentMethodMercado',
+			userId,
+			token
+		);
+	}
+
 	getCards(userId: string): Promise<Stripe.cards.ICard[]> {
 		return this.router.run<Stripe.cards.ICard[]>('getCards', userId);
+	}
+
+	getMercadoCards(userId: string): Promise<any> {
+		return this.router.run<any>('getMercadoCards', userId);
 	}
 
 	async updateEmail(userId: string, email: string): Promise<User> {

@@ -111,6 +111,10 @@ class User extends DBObject<IUser, IUserCreateObject> implements IUser {
 	@Column()
 	stripeCustomerId?: string;
 
+	@Schema({ type: String, required: false })
+	@Column()
+	mercadoCustomerId?: string;
+
 	/**
 	 * IDs of customer mobile devices / browser (see Device entity)
 	 *

@@ -15,6 +15,10 @@ import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus'
 import { Subject } from 'rxjs';
 import { Store } from 'app/services/store.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Subscribable } from 'rxjs';
+import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
+import { environment } from 'environments/environment';
 
 @Component({
 	selector: 'e-cu-order-store-info',
@@ -39,6 +43,8 @@ export class OrderStoreInfo implements OnInit, OnDestroy {
 	@Output()
 	complete = new EventEmitter<boolean>();
 
+	mercadoPayment = false;
+
 	get areIssues() {
 		// TODO: implement
 		return false;
@@ -53,11 +59,18 @@ export class OrderStoreInfo implements OnInit, OnDestroy {
 
 	constructor(
 		public modalController: ModalController,
-		private store: Store
+		private store: Store,
+		private http: HttpClient,
+		private orderRouter: OrderRouter
 	) {}
+
+	private headers: HttpHeaders = new HttpHeaders({
+		'Content-Type': 'application/json',
+	});
 
 	ngOnInit(): void {
 		console.warn('OrderStoreInfo Initialize.');
+		this.mercadoPayment = Boolean(environment.MERCADO_PAYMENT);
 	}
 
 	get currentStatus(): DeliveryStatus {

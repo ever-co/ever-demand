@@ -25,6 +25,15 @@
 			(configureObject)="updateConfigureObject($event)"
 			[(isValid)]="isValid"
 		></e-cu-paypal-gateway>
+
+		<e-cu-mercadopago-gateway
+			*ngIf="paymentGateway === paymentGateways.MercadoPago"
+			[currenciesCodes]="currenciesCodes"
+			[data]="configureObject"
+			[defaultCurrency]="defaultCurrency"
+			(configureObject)="updateConfigureObject($event)"
+			[(isValid)]="isValid"
+		></e-cu-mercadopago-gateway>
 	</div>
 
 	<div class="button-bar padding-top">

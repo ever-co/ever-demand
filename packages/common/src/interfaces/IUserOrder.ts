@@ -16,6 +16,7 @@ export interface IUserOrderCreateObject extends IUserOrderInitializeObject {
 	devicesIds?: string[];
 	apartment?: string;
 	stripeCustomerId?: string;
+	mercadoCustomerId?: string;
 }
 
 interface IUserOrder

@@ -18,6 +18,7 @@ import { Store } from '../../../services/store.service';
 import { CancelPage } from './+cancel/cancel.page';
 import { ElapsedTimeComponent } from '../../../components/elapsed-time/elapsed-time.component';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
+import { environment } from 'environments/environment';
 
 export enum DeliveryStatus {
 	Warehouse,
@@ -40,6 +41,8 @@ export class OrderPage implements OnInit, OnDestroy {
 	public delivered: boolean;
 
 	public modalChange: EventEmitter<boolean>;
+
+	mercadoPayment = false;
 
 	@ViewChild('elapsedTime')
 	elapsedTime: ElapsedTimeComponent;
@@ -67,6 +70,7 @@ export class OrderPage implements OnInit, OnDestroy {
 		if (!this.store.startOrderDate) {
 			this.store.startOrderDate = new Date().toString();
 		}
+		this.mercadoPayment = Boolean(environment.MERCADO_PAYMENT);
 	}
 
 	ngOnDestroy() {
@@ -311,7 +315,9 @@ export class OrderPage implements OnInit, OnDestroy {
 		console.log(`order Cancelled: ${order.id}`);
 
 		if (order.isPaid) {
-			await this.orderRouter.refundWithStripe(order.id);
+			order.mercadoChargeId
+				? await this.orderRouter.refundWithMercado(order.id)
+				: await this.orderRouter.refundWithStripe(order.id);
 		}
 	}
 

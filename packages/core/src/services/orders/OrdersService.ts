@@ -31,6 +31,7 @@ import User from '@modules/server.common/entities/User';
 import { ProductsService } from '../../services/products';
 import { Observable } from 'rxjs';
 import Stripe = require('stripe');
+import mercadopago = require('mercadopago');
 
 @injectable()
 @routerName('order')
@@ -245,6 +246,81 @@ export class OrdersService extends DBService<Order>
 	 * @memberof OrdersService
 	 */
 	@asyncListener()
+	async payWithMercado(
+		orderId: Order['id'],
+		cardToken: string
+	): Promise<Order> {
+		mercadopago.configurations.setAccessToken(env.MERCADO_SECRET_KEY);
+		await this._throwIfNotExists(orderId);
+
+		const callId = uuid();
+
+		this.log.info(
+			{ callId, orderId, cardToken },
+			'.payWithMercado(orderId, cardToken) called'
+		);
+
+		let order: Order;
+
+		try {
+			const _order = await this.get(orderId).pipe(first()).toPromise();
+
+			if (_order != null) {
+				order = _order;
+
+				const user = await this.usersService
+					.get(order.user.id)
+					.pipe(first())
+					.toPromise();
+
+				if (user != null) {
+					const paymentData = {
+						transaction_amount: order.totalPrice,
+						token: cardToken,
+						installments: 1,
+						payer: {
+							type: 'customer',
+							id: user.mercadoCustomerId,
+						},
+					};
+
+					const { response } = await mercadopago.payment.create(
+						paymentData
+					);
+
+					console.log('YEHKYA', response);
+
+					order = await this.update(orderId, {
+						mercadoChargeId: `${response.id}`,
+						isPaid: true,
+					});
+
+					return order;
+				} else {
+					throw new Error('User specified in order is not found!');
+				}
+			} else {
+				throw new Error("couldn't find order with such id");
+			}
+		} catch (err) {
+			this.log.error(
+				{ callId, orderId, cardToken, err },
+				'.payWithMercado(orderId, cardToken) thrown error!'
+			);
+			throw err;
+		}
+	}
+
+	/**
+	 * Pay with Stripe for given order with given CC
+	 * TODO: move to separate Payments Service
+	 *
+	 * @param {Order['id']} orderId
+	 * @param {string} cardId CC Id which will be used to pay
+	 * @returns {Promise<Order>}
+	 * @memberof OrdersService
+	 */
+	@asyncListener()
 	async payWithStripe(orderId: Order['id'], cardId: string): Promise<Order> {
 		await this._throwIfNotExists(orderId);
 
@@ -355,6 +431,53 @@ export class OrdersService extends DBService<Order>
 			this.log.error(
 				{ callId, orderId, err },
 				'.refundWithStripe(orderId) thrown error!'
+			);
+			throw err;
+		}
+	}
+
+	@asyncListener()
+	async refundWithMercado(orderId: Order['id']): Promise<Order> {
+		mercadopago.configurations.setAccessToken(env.MERCADO_SECRET_KEY);
+		await this._throwIfNotExists(orderId);
+
+		const callId = uuid();
+
+		this.log.info(
+			{ callId, orderId },
+			'.refundWithMercado(orderId) called'
+		);
+
+		let order: Order | null;
+
+		try {
+			order = await this.get(orderId).pipe(first()).toPromise();
+
+			if (order != null) {
+				if (order.mercadoChargeId != null) {
+					const refund = await mercadopago.payment.refund(
+						order.mercadoChargeId
+					);
+
+					this.log.info(
+						{ callId, orderId, refund },
+						'.refundWithMercado(orderId) made refund'
+					);
+					return order;
+				} else {
+					throw new Error(
+						`There is no order with mercadoChargeId field and id of ${orderId} to refundWithMercado on!`
+					);
+				}
+			} else {
+				throw new Error(
+					`There is no order with id of ${orderId} to refundWithMercado on!`
+				);
+			}
+		} catch (err) {
+			this.log.error(
+				{ callId, orderId, err },
+				'.refundWithMercado(orderId) thrown error!'
 			);
 			throw err;
 		}

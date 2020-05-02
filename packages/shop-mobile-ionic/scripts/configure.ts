@@ -104,7 +104,10 @@ export const environment: Environment = {
 		env.MERCHANT_IDS && env.MERCHANT_IDS.length > 0
 			? env.MERCHANT_IDS
 			: JSON.stringify([])
-  }
+  },
+
+  MERCADO_PUBLISHABLE_KEY: '${env.MERCADO_PUBLISHABLE_KEY}',
+  MERCADO_PAYMENT: '${env.MERCADO_PAYMENT}'
 };
 
 /*

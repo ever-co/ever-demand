@@ -1,0 +1,48 @@
+<span class="all {{ smallButtons ? 'small-buttons' : '' }}">
+	<span class="actions">
+		<button
+			*ngIf="loading"
+			disabled
+			class="button button-assertive border-color-brand col-100 button-loading"
+		>
+			<span>
+				<ion-spinner></ion-spinner>
+			</span>
+		</button>
+
+		<button
+			*ngIf="!order?.isPaid && !userCards && !loading"
+			class="button button-assertive border-color-brand col-100"
+			(click)="acceptCard()"
+		>
+			<span>
+				{{ 'BUY_POPUP.BUTTONS.PAY_NOW' | translate }}
+			</span>
+		</button>
+
+		<button
+			class="button button-assertive border-color-brand col-100"
+			(click)="payWithUserCard()"
+			*ngIf="!order?.isPaid && userCards && !loading"
+		>
+			<span
+				>{{ 'BUY_POPUP.BUTTONS.PAY_WITH_FIXED_CARD' | translate }} *{{
+					userCards[0]?.last_four_digits
+				}}
+				<i class="fa fa-credit-card" aria-hidden="true"></i
+			></span>
+		</button>
+
+		<button
+			class="button button-assertive border-color-brand col-100"
+			disabled
+			*ngIf="order?.isPaid && !loading"
+		>
+			<span>{{ 'BUY_POPUP.BUTTONS.PAID' | translate }}</span>
+		</button>
+
+		<!-- <button (click)="acceptCard()">
+			<span>Add New Card</span>
+		</button> -->
+	</span>
+</span>

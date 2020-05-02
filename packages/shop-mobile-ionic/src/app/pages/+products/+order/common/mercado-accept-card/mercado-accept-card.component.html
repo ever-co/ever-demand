@@ -1,0 +1,238 @@
+<div class="mercado-accept-card">
+	<e-cu-order-info-header
+		(back)="close(false)"
+		title="Pay with your card"
+	></e-cu-order-info-header>
+	<form
+		method="post"
+		id="pay"
+		name="pay"
+		(submit)="doPay($event)"
+		class="accept-card-form"
+		*ngIf="formGroup && order"
+		[formGroup]="formGroup"
+	>
+		<fieldset>
+			<div class="payment-title box box-brand text-align-center">
+				<div>
+					<h1>${{ order.totalPrice.toFixed(2) }}</h1>
+				</div>
+			</div>
+
+			<div class="general-warning-label">
+				<h3>
+					<ion-label color="danger">{{
+						generalError | translate
+					}}</ion-label>
+				</h3>
+			</div>
+
+			<div class="card-row row" *ngIf="!userCard" [hidden]="user?.email">
+				<div class="col">
+					<label for="cardNumber">Email</label>
+					<input
+						id="email"
+						name="email"
+						data-checkout="email"
+						formControlName="email"
+						placeholder="user@email.com"
+					/>
+				</div>
+			</div>
+
+			<div class="card-row row">
+				<div class="col">
+					<label for="cardNumber">Card Number</label>
+					<div class="card-number-input">
+						<input
+							(keyup)="guessPaymentMethod($event)"
+							(change)="guessPaymentMethod($event)"
+							type="text"
+							id="cardNumber"
+							data-checkout="cardNumber"
+							onselectstart="return false"
+							onCopy="return false"
+							onCut="return false"
+							onDrag="return false"
+							onDrop="return false"
+							autocomplete="offs"
+							formControlName="cardNumber"
+							placeholder="XXXX XXXX XXXX XXXX"
+							[ngClass]="{
+								'status-invalid':
+									formGroup.controls['cardNumber'].invalid &&
+									formGroup.controls['cardNumber'].dirty
+							}"
+						/>
+						<!-- <img src="{{ cardThumbnail }}" *ngIf="cardThumbnail" /> -->
+					</div>
+					<div
+						*ngIf="
+							cardNumberError ||
+							(formGroup.controls['cardNumber'].invalid &&
+								formGroup.controls['cardNumber'].dirty)
+						"
+						class="warning-label"
+					>
+						<ion-label color="danger">{{
+							cardNumberError || 'Card Number Invalid'
+						}}</ion-label>
+					</div>
+				</div>
+			</div>
+
+			<div class="card-row row">
+				<div class="col">
+					<label for="cardholderName">Cardholder Name</label>
+					<input
+						class="ng-invalid"
+						type="text"
+						id="cardholderName"
+						data-checkout="cardholderName"
+						formControlName="cardholderName"
+						placeholder="John Doe"
+						[ngClass]="{
+							'status-invalid':
+								formGroup.controls['cardholderName'].invalid &&
+								formGroup.controls['cardholderName'].dirty
+						}"
+					/>
+				</div>
+			</div>
+
+			<div class="card-row row">
+				<div class="col-3 month">
+					<label for="cardExpirationMonth">Month</label>
+					<input
+						placeholder="MM"
+						type="text"
+						id="cardExpirationMonth"
+						data-checkout="cardExpirationMonth"
+						onselectstart="return false"
+						onpaste="return false"
+						onCopy="return false"
+						onCut="return false"
+						onDrag="return false"
+						onDrop="return false"
+						autocomplete="off"
+						formControlName="cardExpirationMonth"
+						[ngClass]="{
+							'status-invalid':
+								formGroup.controls['cardExpirationMonth']
+									.invalid &&
+								formGroup.controls['cardExpirationMonth'].dirty
+						}"
+					/>
+				</div>
+				<div class="col-3 year">
+					<label for="cardExpirationYear">Year</label>
+					<input
+						placeholder="YY"
+						type="text"
+						id="cardExpirationYear"
+						data-checkout="cardExpirationYear"
+						onselectstart="return false"
+						onpaste="return false"
+						onCopy="return false"
+						onCut="return false"
+						onDrag="return false"
+						onDrop="return false"
+						autocomplete="off"
+						formControlName="cardExpirationYear"
+						[ngClass]="{
+							'status-invalid':
+								formGroup.controls['cardExpirationYear']
+									.invalid &&
+								formGroup.controls['cardExpirationYear'].dirty
+						}"
+					/>
+				</div>
+				<div class="col-6">
+					<label for="securityCode">CVV</label>
+					<input
+						type="text"
+						id="securityCode"
+						data-checkout="securityCode"
+						onselectstart="return false"
+						onpaste="return false"
+						onCopy="return false"
+						onCut="return false"
+						onDrag="return false"
+						onDrop="return false"
+						autocomplete="off"
+						formControlName="securityCode"
+						[ngClass]="{
+							'status-invalid':
+								formGroup.controls['securityCode'].invalid &&
+								formGroup.controls['securityCode'].dirty
+						}"
+					/>
+				</div>
+			</div>
+
+			<div class="card-row row" [hidden]="hideSecondStep">
+				<div class="col">
+					<label for="installments">Installments</label>
+					<select
+						id="installments"
+						class="form-control"
+						name="installments"
+					>
+					</select>
+				</div>
+			</div>
+
+			<div class="card-row row" [hidden]="hideSecondStep">
+				<div class="col-3">
+					<label for="docType">Type</label>
+					<select
+						id="docType"
+						data-checkout="docType"
+						class="form-control"
+						formControlName="docType"
+					>
+						<option
+							*ngFor="let doc of documentTypes"
+							value="{{ doc.name }}"
+							>{{ doc.name }}</option
+						>
+					</select>
+				</div>
+
+				<div class="col-9">
+					<label for="docNumber">Document Number</label>
+					<input
+						type="text"
+						id="docNumber"
+						data-checkout="docNumber"
+						formControlName="docNumber"
+					/>
+				</div>
+			</div>
+
+			<input
+				hidden="true"
+				id="cardId"
+				name="cardId"
+				data-checkout="cardId"
+				*ngIf="userCard"
+				[value]="userCard.id"
+			/>
+
+			<div class="submit-button">
+				<button
+					class="button border-color-brand"
+					type="submit"
+					[disabled]="
+						!userCard &&
+						(cardNumberError || formGroup.invalid || loading)
+					"
+				>
+					<ion-spinner *ngIf="loading"></ion-spinner>
+					Pay Now
+					<img src="{{ cardThumbnail }}" *ngIf="cardThumbnail" />
+				</button>
+			</div>
+		</fieldset>
+	</form>
+</div>

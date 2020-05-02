@@ -10,6 +10,7 @@ import { ConfirmDeletePopupPage } from 'components/confirm-delete-popup/confirm-
 import { countriesDefaultCurrencies } from '@modules/server.common/entities/Currency';
 import { Country } from '@modules/server.common/entities';
 import { first } from 'rxjs/operators';
+import { environment } from '../../../../../src/environments/environment';
 
 @Component({
 	selector: 'merchant-payments-settings',
@@ -46,6 +47,12 @@ export class SettingsPaymentsComponent implements OnInit {
 		this.paymentsGateways = allPaymentGateways.filter(
 			(pg) => !this.myPaymentsGateways.includes(pg)
 		);
+
+		if (environment.MERCADO_PAYMENT) {
+			this.paymentsGateways = this.paymentsGateways.filter((pg) => {
+				return pg != PaymentGateways.Stripe;
+			});
+		}
 
 		this.showPaymentsGateways = true;
 	}

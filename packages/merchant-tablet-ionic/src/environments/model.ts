@@ -36,4 +36,6 @@ export interface Environment {
 	// For maintenance micro service
 	SETTINGS_APP_TYPE: string;
 	SETTINGS_MAINTENANCE_API_URL: string;
+
+	MERCADO_PAYMENT: boolean;
 }

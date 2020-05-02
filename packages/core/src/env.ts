@@ -26,6 +26,7 @@ export type Env = Readonly<{
 	TESTING_DB_URI: string;
 
 	STRIPE_SECRET_KEY: string;
+	MERCADO_SECRET_KEY: string;
 
 	URBAN_AIRSHIP_KEY: string;
 	URBAN_AIRSHIP_SECRET: string;
@@ -90,7 +91,11 @@ export const env: Env = cleanEnv(
 		DB_URI: str({ default: 'mongodb://localhost/ever_development' }),
 		TESTING_DB_URI: str({ default: 'mongodb://localhost/ever_testing' }),
 
-		STRIPE_SECRET_KEY: str({ default: '' }),
+		STRIPE_SECRET_KEY: str({ default: 'sk_test_u6W8oxQZFIAuDklEFmDubfKS' }),
+		MERCADO_SECRET_KEY: str({
+			default:
+				'TEST-7998486328950030-042215-b08075a40f6bc2d90edeb5b6fdbd656f-553274383',
+		}),
 
 		URBAN_AIRSHIP_KEY: str({ default: '' }),
 		URBAN_AIRSHIP_SECRET: str({ default: '' }),
@@ -148,7 +153,7 @@ export const env: Env = cleanEnv(
 		IP_STACK_API_KEY: str({ default: '' }),
 		LOG_LEVEL: str({
 			choices: ['trace', 'debug', 'info', 'warn', 'error', 'fatal'],
-			default: 'error',
+			default: 'info',
 		}),
 		ENGINE_API_KEY: str({
 			desc:

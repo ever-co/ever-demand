@@ -60,7 +60,9 @@ export const environment: Environment = {
 
   // For maintenance micro service
   SETTINGS_APP_TYPE: '${env.SETTINGS_APP_TYPE}',
-  SETTINGS_MAINTENANCE_API_URL: '${env.SETTINGS_MAINTENANCE_API_URL}'
+  SETTINGS_MAINTENANCE_API_URL: '${env.SETTINGS_MAINTENANCE_API_URL}',
+
+  MERCADO_PAYMENT: ${env.MERCADO_PAYMENT}
 
 };
 

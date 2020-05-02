@@ -1,0 +1,72 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.mercado-accept-card {
+	.accept-card-form {
+		padding: 0rem 2rem 1rem 2rem;
+
+		input {
+			@extend .everbie-input;
+			text-align: start;
+		}
+
+		input:disabled,
+		input:disabled:hover,
+		input:disabled:active,
+		input:disabled:focus {
+			background: #5e5e5e;
+			border: 1px solid black;
+		}
+
+		select {
+			@extend .everbie-input;
+		}
+
+		.status-invalid {
+			background: #ff000036;
+		}
+
+		label {
+			color: #6c757d;
+			font-size: 1.2rem;
+		}
+
+		.card-row {
+			margin-bottom: 1rem;
+		}
+
+		.month {
+			padding-right: 0px;
+			input {
+				border-top-right-radius: 0px;
+				border-bottom-right-radius: 0px;
+			}
+		}
+
+		.year {
+			padding-left: 0px;
+			input {
+				border-top-left-radius: 0px;
+				border-bottom-left-radius: 0px;
+			}
+		}
+
+		.submit-button {
+			display: flex;
+			justify-content: flex-end;
+			button {
+				padding: 1rem;
+				border-radius: 4px;
+			}
+		}
+
+		.general-warning-label {
+			text-align: center;
+		}
+
+		.warning-label {
+			display: flex;
+			justify-content: flex-end;
+			text-align: right;
+		}
+	}
+}

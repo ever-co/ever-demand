@@ -40,7 +40,9 @@ export class IssuePage implements OnInit {
 	async closePopup() {
 		await this.warehouseOrdersRouter.cancel(this.order.id);
 		if (this.order.isPaid) {
-			await this.orderRouter.refundWithStripe(this.order.id);
+			this.order.mercadoChargeId
+				? await this.orderRouter.refundWithMercado(this.order.id)
+				: await this.orderRouter.refundWithStripe(this.order.id);
 		}
 
 		localStorage.removeItem('startDate');

@@ -180,7 +180,8 @@
 	},
 	"cli": {
 		"packageManager": "yarn",
-		"defaultCollection": "@ionic/angular-toolkit"
+		"defaultCollection": "@ionic/angular-toolkit",
+		"analytics": false
 	},
 	"schematics": {
 		"@ionic/angular-toolkit:component": {
