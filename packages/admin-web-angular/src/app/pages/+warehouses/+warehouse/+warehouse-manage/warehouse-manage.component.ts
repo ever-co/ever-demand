@@ -37,12 +37,6 @@ export class WarehouseManageComponent implements OnInit {
 		map((p) => p['id'])
 	);
 
-	readonly warehouse$ = this.warehouseId$.pipe(
-		switchMap((id) => {
-			return this.warehouseRouter.get(id).pipe(first());
-		})
-	);
-
 	private _currentWarehouse: Warehouse;
 
 	constructor(
@@ -53,7 +47,15 @@ export class WarehouseManageComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this._loadWarehouse();
+		this.warehouseId$.subscribe((id) => {
+			this.warehouseRouter
+				.get(id)
+				.pipe()
+				.subscribe((warehouse) => {
+					this._currentWarehouse = warehouse;
+					this.warehouseManageTabs.setValue(warehouse);
+				});
+		});
 	}
 
 	get validForm() {
@@ -104,21 +106,6 @@ export class WarehouseManageComponent implements OnInit {
 				`Error in updating customer: "${err.message}"`
 			);
 		}
-	}
-
-	private _loadWarehouse() {
-		this.warehouse$
-			.withLatestFrom(this.warehouseId$)
-			.subscribe(([warehouse, id]) => {
-				if (!warehouse) {
-					this.toasterService.pop(
-						'error',
-						`Warehouse with id ${id} doesn't exist!`
-					);
-				}
-				this._currentWarehouse = warehouse;
-				this.warehouseManageTabs.setValue(warehouse);
-			});
 	}
 
 	private _showWarehouseUpdateSuccessMessage(warehouse) {
