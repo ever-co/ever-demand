@@ -16,9 +16,8 @@ import { IWarehouseCreateObject } from '@modules/server.common/interfaces/IWareh
 import { map, first } from 'rxjs/operators';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
-import { Observable, concat } from 'rxjs';
+import { Observable, concat, of } from 'rxjs';
 import { FormHelpers } from '../../../../forms/helpers';
-import 'rxjs/add/observable/of';
 import _ from 'lodash';
 import isUrl from 'is-url';
 import { TranslateService } from '@ngx-translate/core';
@@ -54,7 +53,7 @@ export class WarehouseManageTabsDetailsComponent
 	uploaderPlaceholder: string;
 
 	carriersOptions$: Observable<IMultiSelectOption[]> = concat(
-		Observable.of([]),
+		of([]),
 		this._carrierRouter.getAllActive().pipe(
 			map((carriers) =>
 				carriers

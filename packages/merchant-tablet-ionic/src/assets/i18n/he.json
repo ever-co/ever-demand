@@ -75,7 +75,13 @@
 			"ADDRESS": "כתובת",
 			"LOGO": "סֵמֶל"
 		},
+		"TRACK_ORDER": "עקוב אחר הסדר",
 		"TRACK_CARRIER": "עקוב אחר ספק",
+		"DELIVERY_TRACKING": "מעקב משלוחים",
+		"CARRIER": "מנשא",
+		"STORE": "חנות",
+		"DELIVERY_COUNT": "ספירת משלוחים",
+		"CUSTOMER": "צרכן",
 		"CARRIERS": "ספקים",
 		"ADD_CARRIERS": "הוסף ספקים",
 		"IMAGE": "תמונה",
@@ -266,6 +272,7 @@
 			"NO_PRODUCTS": "אין מוצרים"
 		},
 		"CREATE_PRODUCTS_POPUP": {
+			"ERROR_MSG": "משהו לא בסדר, לא מצליח לבצע סדר!",
 			"NEW_PRODUCT_TYPE": "סוג מוצר חדש",
 			"CREATE_NEW_PRODUCT_TYPE": "צור סוג מוצר חדש",
 			"TITLE": "כותרת",

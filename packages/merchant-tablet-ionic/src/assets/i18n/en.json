@@ -75,7 +75,13 @@
 			"ADDRESS": "Address",
 			"LOGO": "Logo"
 		},
+		"TRACK_ORDER": "Track order",
 		"TRACK_CARRIER": "Track Carrier",
+		"DELIVERY_TRACKING": "Delivery Tracking",
+		"CARRIER": "Carrier",
+		"STORE": "Store",
+		"DELIVERY_COUNT": "Delivery count:",
+		"CUSTOMER": "Customer",
 		"CARRIERS": "Carriers",
 		"ADD_CARRIERS": "Add Carriers",
 		"IMAGE": "Image",
@@ -265,6 +271,7 @@
 			"NO_PRODUCTS": "No Products"
 		},
 		"CREATE_PRODUCTS_POPUP": {
+			"ERROR_MSG": "Something is wrong, unable to place order!",
 			"NEW_PRODUCT_TYPE": "New Product Type",
 			"CREATE_NEW_PRODUCT_TYPE": "Create a new product type",
 			"TITLE": "Title",
