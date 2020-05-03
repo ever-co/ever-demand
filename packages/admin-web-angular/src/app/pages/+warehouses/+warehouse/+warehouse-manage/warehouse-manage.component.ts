@@ -8,7 +8,6 @@ import { LocationFormComponent } from '../../../../@shared/forms/location';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { WarehouseManageTabsComponent } from '../../../../@shared/warehouse/forms/warehouse-manage-tabs/warehouse-manage-tabs.component';
-import 'rxjs/add/operator/withLatestFrom';
 
 @Component({
 	selector: 'ea-warehouse-manage',
@@ -47,15 +46,17 @@ export class WarehouseManageComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.warehouseId$.subscribe((id) => {
-			this.warehouseRouter
-				.get(id)
-				.pipe()
-				.subscribe((warehouse) => {
-					this._currentWarehouse = warehouse;
-					this.warehouseManageTabs.setValue(warehouse);
-				});
-		});
+		this.loadWarehouse();
+	}
+
+	async loadWarehouse() {
+		const warehouseId = await this.warehouseId$.pipe(first()).toPromise();
+		const warehouse = await this.warehouseRouter
+			.get(warehouseId)
+			.pipe(first())
+			.toPromise();
+		this._currentWarehouse = warehouse;
+		this.warehouseManageTabs.setValue(warehouse);
 	}
 
 	get validForm() {
