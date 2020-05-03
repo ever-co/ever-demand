@@ -43,6 +43,12 @@ export class UserMutationComponent {
 	@Output()
 	customerIdEmitter = new EventEmitter<string>();
 
+	@Input()
+	visible: boolean = true;
+
+	@Output()
+	updateVisible = new EventEmitter<boolean>();
+
 	mapCoordinatesEmitter = new EventEmitter<
 		google.maps.LatLng | google.maps.LatLngLiteral
 	>();
@@ -77,6 +83,11 @@ export class UserMutationComponent {
 
 	broadcastCustomerId(customerId: string) {
 		this.customerIdEmitter.emit(customerId);
+	}
+
+	changeState(): void {
+		this.visible = false;
+		this.updateVisible.emit(this.visible);
 	}
 
 	async createCustomer() {

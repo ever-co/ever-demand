@@ -24,6 +24,8 @@ import { TranslateService } from '@ngx-translate/core';
 
 			<div *ngIf="!isSelectedFromExisting">
 				<user-mutation
+					[visible]="visible"
+					(changeState)="changeState($event)"
 					(customerIdEmitter)="broadcastCustomerId($event)"
 				></user-mutation>
 			</div>
@@ -32,6 +34,8 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class SelectAddCustomerComponent implements OnInit {
 	private ngDestroy$ = new Subject<void>();
+
+	visible: boolean;
 
 	@Input()
 	customerOptionSelected: number;
@@ -61,6 +65,10 @@ export class SelectAddCustomerComponent implements OnInit {
 
 	selectFromExisting(ev) {
 		this.broadcastCustomerId(ev.data.id);
+	}
+
+	changeState(ev): void {
+		this.visible = ev;
 	}
 
 	broadcastCustomerId(customerId: string) {

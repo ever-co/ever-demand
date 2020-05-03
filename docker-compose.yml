@@ -15,16 +15,17 @@ services:
         networks:
             - overlay
 
-    api:
-        container_name: api
-        image: ever-api:latest
+    core:
+        container_name: core
+        image: ever-core:latest
         build:
             context: .
-            dockerfile: .deploy/backend/api/Dockerfile
+            dockerfile: .deploy/core/Dockerfile
         environment:
             NODE_ENV: production
             WAIT_HOSTS: mongo:27017
             DB_URI: mongodb://mongo/ever_development
+            TESTING_DB_URI: mongodb://mongo/ever_testing
         restart: on-failure
         depends_on:
             - mongo
@@ -33,7 +34,7 @@ services:
         volumes:
             - .:/srv/ever
             - root_node_modules:/srv/ever/node_modules
-            - api_node_modules:/srv/ever/backend/api/node_modules
+            - core_node_modules:/srv/ever/packages/core/node_modules
         ports:
             - 5500:5500
             - 5501:5501
@@ -44,9 +45,10 @@ services:
 
 volumes:
     root_node_modules:
-    api_node_modules:
+    core_node_modules:
     certificates:
     mongo_data:
+    admin_web_node_modules:
 
 networks:
     overlay:

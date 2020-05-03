@@ -26,8 +26,8 @@
 			>
 				<ion-select-option
 					*ngFor="let lang of translate?.getLangs()"
-					[value]="lang"
-					[selected]="lang === translate.currentLang"
+					value="{{lang}}"
+					selected="lang === translate.currentLang"
 				>
 					{{ lang }}
 				</ion-select-option>

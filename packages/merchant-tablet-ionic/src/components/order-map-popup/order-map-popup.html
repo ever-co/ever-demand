@@ -1,6 +1,8 @@
 <div class="order-map-component">
 	<h4 class="custom-title-popup d-flex">
-		<span class="ml-auto">Track order</span>
+		<span class="ml-auto"
+			>{{ "CARRIERS_VIEW.TRACK_ORDER" | translate }}</span
+		>
 		<span class="ml-auto"
 			><ion-icon (click)="cancelModal()" name="close"></ion-icon
 		></span>
@@ -9,7 +11,7 @@
 		<div *ngIf="warehouse" class="row m-0">
 			<div>
 				<img *ngIf="merchantIcon" src="{{ merchantIcon }}" alt="" />
-				<strong> Shop -</strong>
+				<strong> {{ "CARRIERS_VIEW.STORE" | translate }} -</strong>
 				<span class="text"
 					>{{ getfullAddress(warehouse.geoLocation) }}</span
 				>
@@ -18,7 +20,7 @@
 		<div *ngIf="order?.user" class="row m-0">
 			<div>
 				<img *ngIf="userIcon" src="{{ userIcon }}" alt="" />
-				<strong> Customer -</strong>
+				<strong> {{ "CARRIERS_VIEW.CUSTOMER" | translate }} -</strong>
 				<span class="text"
 					>{{ getfullAddress(order.user.geoLocation) }}
 				</span>
@@ -30,7 +32,7 @@
 					*ngIf="carrierIcon"
 					src="{{ carrierIcon }}"
 					alt=""
-				/><strong> Carrier -</strong>
+				/><strong> {{ "CARRIERS_VIEW.CARRIER" | translate }} -</strong>
 				<span class="text"
 					>{{ getfullAddress(order.carrier.geoLocation) }}
 				</span>

@@ -38,6 +38,7 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 
 	settingsSmartTable: any;
 	sourceSmartTable = new LocalDataSource();
+	errorMsg: string = 'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.ERROR_MSG';
 
 	private _orderProducts: IOrderCreateInputProduct[] = [];
 
@@ -86,9 +87,7 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 					this.orderFinishedEmitter.emit();
 				},
 				() => {
-					this._showNotification(
-						'Something is wrong, unable to place order!'
-					);
+					this._showNotification(this.errorMsg);
 				}
 			);
 	}
@@ -105,7 +104,7 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 
 	private async _showNotification(message: string) {
 		const alert = await this._alertController.create({
-			message,
+			message: this._translateService.instant(message),
 			buttons: ['OK'],
 		});
 		await alert.present();

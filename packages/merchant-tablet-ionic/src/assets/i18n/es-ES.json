@@ -76,7 +76,13 @@
 			"ADDRESS": "Dirección",
 			"LOGO": "Logo"
 		},
+		"TRACK_ORDER": "Orden de pista",
 		"TRACK_CARRIER": "Seguimiento del Repartidor",
+		"DELIVERY_TRACKING": "Seguimiento de entregas",
+		"CARRIER": "Portador",
+		"STORE": "Tienda",
+		"DELIVERY_COUNT": "Recuento de entrega:",
+		"CUSTOMER": "Cliente",
 		"CARRIERS": "Repartos",
 		"ADD_CARRIERS": "Agregar Reparto",
 		"IMAGE": "Imágen",
@@ -268,6 +274,7 @@
 			"NO_PRODUCTS": "No hay Productos"
 		},
 		"CREATE_PRODUCTS_POPUP": {
+			"ERROR_MSG": "¡Algo está mal, no se puede hacer el pedido!",
 			"NEW_PRODUCT_TYPE": "Nuevo Tipo de Producto",
 			"CREATE_NEW_PRODUCT_TYPE": "Crear Nuevo Tipo de Producto",
 			"TITLE": "Nombre",
@@ -326,7 +333,7 @@
 			"ZIP": "Código Postal",
 			"STREET_ADDRESS": "Calle",
 			"STREET_ADDRESS_IS_REQUIRED": "Calle requerida",
-			"HOUSE_No": "Número de Puerta",
+			"HOUSE_№": "Número de Puerta",
 			"APARTMENT": "Apartamento",
 			"SHOW_COORDINATES": "Mostrar Coordenaas",
 			"LATITUDE": "Latitud",
