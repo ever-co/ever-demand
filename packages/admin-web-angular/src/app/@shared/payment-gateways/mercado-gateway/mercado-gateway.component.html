@@ -1,0 +1,187 @@
+<div class="row m-0">
+	<div class="form-group col-md-12 p-0">
+		<nb-checkbox [(ngModel)]="isMercadoEnabled">
+			<img src="{{ logo }}" width="20px" alt="" />
+			{{ name }}
+		</nb-checkbox>
+	</div>
+</div>
+
+<form [hidden]="!isMercadoEnabled" #mercadoConfigForm="ngForm">
+	<div class="row m-0">
+		<div class="form-group col-md-6">
+			<label for="payButtontext">
+				{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.STRIPE.PAY_BUTTON_TEXT'
+						| translate
+				}}
+			</label>
+			<input
+				nbInput
+				type="text"
+				class="form-control"
+				id="payButtontext"
+				name="pay-button-text"
+				placeholder="{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.STRIPE.PAY_BUTTON_TEXT'
+						| translate
+				}}"
+				[(ngModel)]="configModel.payButtontext"
+				#payButtontext="ngModel"
+				[ngClass]="{
+					'input-danger':
+						payButtontext.invalid &&
+						(payButtontext.dirty || payButtontext.touched),
+					'input-success':
+						payButtontext.valid &&
+						(payButtontext.dirty || payButtontext.touched)
+				}"
+				required
+			/>
+			<small
+				class="text-danger"
+				*ngIf="
+					payButtontext.invalid &&
+					(payButtontext.dirty || payButtontext.touched)
+				"
+			>
+				<span *ngIf="payButtontext.errors.required">
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.STRIPE.PAY_BUTTON_TEXT_IS_REQUIRED'
+							| translate
+					}}
+				</span>
+			</small>
+		</div>
+
+		<div class="form-group col-md-6">
+			<label for="currency">
+				{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.CURRENCY'
+						| translate
+				}}
+			</label>
+			<select
+				#currency="ngModel"
+				name="currency"
+				[(ngModel)]="configModel.currency"
+				class="form-control"
+				required
+			>
+				<option value="" disabled selected hidden>{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.CHOOSE_CURRENCY_CODE'
+						| translate
+				}}</option>
+				<option
+					*ngFor="let code of currenciesCodes"
+					value="{{ code }}"
+					>{{ code }}</option
+				>
+			</select>
+			<small
+				class="text-danger"
+				*ngIf="currency.invalid && (currency.dirty || currency.touched)"
+			>
+				<span *ngIf="currency.errors.required">
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.CURRENCY_TEXT_IS_REQUIRED'
+							| translate
+					}}
+				</span>
+			</small>
+		</div>
+	</div>
+
+	<div class="row m-0">
+		<div class="form-group col-md-12">
+			<label for="publishableKey">
+				{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.PUBLISHABLE_KEY'
+						| translate
+				}}
+			</label>
+			<input
+				nbInput
+				type="text"
+				class="form-control"
+				id="publishableKey"
+				name="publishable-key"
+				placeholder="{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.PUBLISHABLE_KEY'
+						| translate
+				}}"
+				[(ngModel)]="configModel.publishableKey"
+				#publishableKey="ngModel"
+				[ngClass]="{
+					'input-danger':
+						publishableKey.invalid &&
+						(publishableKey.dirty || publishableKey.touched),
+					'input-success':
+						publishableKey.valid &&
+						(publishableKey.dirty || publishableKey.touched)
+				}"
+				required
+			/>
+			<small
+				class="text-danger"
+				*ngIf="
+					publishableKey.invalid &&
+					(publishableKey.dirty || publishableKey.touched)
+				"
+			>
+				<span *ngIf="publishableKey.errors.required">
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.PUBLISHABLE_KEY_IS_REQUIRED'
+							| translate
+					}}
+				</span>
+			</small>
+		</div>
+	</div>
+
+	<div class="row m-0">
+		<div class="form-group col-md-12">
+			<label for="secretKey">
+				{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.SECRET_KEY'
+						| translate
+				}}
+			</label>
+			<input
+				nbInput
+				type="text"
+				class="form-control"
+				id="secretKey"
+				name="secret-key"
+				placeholder="{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.SECRET_KEY'
+						| translate
+				}}"
+				[(ngModel)]="configModel.secretKey"
+				#secretKey="ngModel"
+				[ngClass]="{
+					'input-danger':
+						secretKey.invalid &&
+						(secretKey.dirty || secretKey.touched),
+					'input-success':
+						secretKey.valid &&
+						(secretKey.dirty || secretKey.touched)
+				}"
+				required
+			/>
+			<small
+				class="text-danger"
+				*ngIf="
+					secretKey.invalid && (secretKey.dirty || secretKey.touched)
+				"
+			>
+				<span *ngIf="secretKey.errors.required">
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.PAYPAL.SECRET_KEY_IS_REQUIRED'
+							| translate
+					}}
+				</span>
+			</small>
+		</div>
+	</div>
+</form>

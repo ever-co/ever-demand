@@ -7,6 +7,7 @@ import { StripeGatewayComponent } from './stripe-gateway/stripe-gateway.componen
 import { PayPalGatewayComponent } from './payPal-gateway/payPal-gateway.component';
 import { FileUploaderModule } from '@app/@shared/file-uploader/file-uploader.module';
 import { CurrenciesService } from '@app/@core/data/currencies.service';
+import { MercadoGatewayComponent } from './mercado-gateway/mercado-gateway.component';
 
 @NgModule({
 	imports: [
@@ -19,6 +20,7 @@ import { CurrenciesService } from '@app/@core/data/currencies.service';
 		PaymentGatewaysComponent,
 		StripeGatewayComponent,
 		PayPalGatewayComponent,
+		MercadoGatewayComponent,
 	],
 	exports: [PaymentGatewaysComponent],
 	providers: [CurrenciesService],

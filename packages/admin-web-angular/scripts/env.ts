@@ -46,6 +46,7 @@ export type Env = Readonly<{
 	WEB_CONCURRENCY: number;
 	WEB_MEMORY: number;
 	PORT: number;
+	MERCADO_PAYMENT: boolean;
 }>;
 
 export const env: Env = cleanEnv(
@@ -112,6 +113,7 @@ export const env: Env = cleanEnv(
 		WEB_CONCURRENCY: num({ default: 1 }),
 		WEB_MEMORY: num({ default: 2048 }),
 		PORT: num({ default: 4200 }),
+		MERCADO_PAYMENT: bool({ default: false }),
 	},
 	{ strict: true, dotEnvPath: __dirname + '/../.env' }
 );
