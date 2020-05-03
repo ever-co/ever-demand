@@ -36,7 +36,7 @@ export class WarehouseManageComponent implements OnInit {
 		map((p) => p['id'])
 	);
 
-	private _currentWarehouse: Warehouse;
+	_currentWarehouse: Warehouse;
 
 	constructor(
 		private readonly _formBuilder: FormBuilder,
