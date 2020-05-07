@@ -11,12 +11,12 @@ import {
 	UseGuards,
 } from '@nestjs/common';
 
-import { ApiBearerAuth, ApiUseTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateProductDto, UpdateProductDto } from './ProductsDto';
 import { AuthGuard } from '@nestjs/passport';
 import { ProductsService } from '../../services/products';
 
-@ApiUseTags('product')
+@ApiTags('product')
 @Controller('product')
 export class ProductController {
 	constructor(private productsService: ProductsService) {}

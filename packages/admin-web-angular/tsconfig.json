@@ -14,11 +14,11 @@
 			"@pyro/*": ["../../common/src/@pyro/*"],
 			"mongoose": ["../../common-angular/src/mongoose-placeholder"],
 			"typeorm": ["../../common-angular/src/typeorm-placeholder"],
-			"angular2-wizard": [
-				"../node_modules/@ever-co/angular2-wizard/dist/*"
+			"@ngx-translate/*": [
+				"@ngx-translate/*",
+				"../node_modules/@ngx-translate/*"
 			],
-			"angular2-wizard/*": [
-				"angular2-wizard/*",
+			"angular2-wizard": [
 				"../node_modules/@ever-co/angular2-wizard/dist/*"
 			],
 			"@app/*": ["app/*"],

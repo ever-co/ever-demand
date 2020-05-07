@@ -15,6 +15,92 @@ services:
         networks:
             - overlay
 
+    admin-web:
+        container_name: admin-web
+        image: ever-admin-web:latest
+        command: yarn run:admin
+        build:
+            context: .
+            dockerfile: .deploy/admin-web-angular/Dockerfile
+        environment:
+            NODE_ENV: production
+        restart: on-failure
+        depends_on:
+            - core
+        ports:
+            - 4200:4200
+        networks:
+            - overlay
+
+    shop-web:
+        container_name: shop-web
+        image: ever-shop-web:latest
+        command: yarn run:shopweb
+        build:
+            context: .
+            dockerfile: .deploy/shop-web-angular/Dockerfile
+        environment:
+            NODE_ENV: production
+        restart: on-failure
+        depends_on:
+            - core
+        ports:
+            - 3000:3000
+        networks:
+            - overlay
+
+    carrier-mobile:
+        container_name: carrier-mobile
+        image: ever-carrier-mobile:latest
+        command: yarn run:carrier
+        build:
+            context: .
+            dockerfile: .deploy/carrier-mobile-ionic/Dockerfile
+        environment:
+            NODE_ENV: production
+        restart: on-failure
+        depends_on:
+            - core
+        ports:
+            - 4203:4200
+            - 4204:4203
+        networks:
+            - overlay
+
+    shop-mobile:
+        container_name: shop-mobile
+        image: ever-shop-mobile:latest
+        command: yarn run:shopmobile
+        build:
+            context: .
+            dockerfile: .deploy/shop-mobile-ionic/Dockerfile
+        environment:
+            NODE_ENV: production
+        restart: on-failure
+        depends_on:
+            - core
+        ports:
+            - 4201:4201
+        networks:
+            - overlay
+
+    merchant-mobile:
+        container_name: merchant-mobile
+        image: ever-merchant-mobile:latest
+        command: yarn run:merchant
+        build:
+            context: .
+            dockerfile: .deploy/merchant-tablet-ionic/Dockerfile
+        environment:
+            NODE_ENV: production
+        restart: on-failure
+        depends_on:
+            - core
+        ports:
+            - 4202:4202
+        networks:
+            - overlay
+
     core:
         container_name: core
         image: ever-core:latest
@@ -48,7 +134,6 @@ volumes:
     core_node_modules:
     certificates:
     mongo_data:
-    admin_web_node_modules:
 
 networks:
     overlay:

@@ -8,7 +8,7 @@ import { CarrierLocationModule } from './location/carrier-location.module';
 import { CarrierInfoComponent } from './carrier-info/carrier-info.component';
 import { CarrierOrdersStatusComponent } from './carrier-orders-status/carrier-orders-status.component';
 import { CarrierOrdersComponent } from './carrier-orders/carrier-orders.component';
-import { FormWizardModule } from 'angular2-wizard';
+import { FormWizardModule } from '@ever-co/angular2-wizard';
 import { ToasterModule } from 'angular2-toaster';
 import { TranslateModule } from '@ngx-translate/core';
 import { CarrierMutationModule } from '../../../@shared/carrier/carrier-mutation';

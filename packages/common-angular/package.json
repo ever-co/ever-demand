@@ -51,6 +51,8 @@
 		"@angular/router": "^9.1.0",
 		"@angular/service-worker": "^9.1.0",
 		"@ever-platform/common": "file:../common",
+		"@ngx-translate/core": "^12.1.2",
+		"@ngx-translate/http-loader": "^4.0.0",
 		"tslib": "^1.10.0",
 		"zone.js": "~0.10.2"
 	},
