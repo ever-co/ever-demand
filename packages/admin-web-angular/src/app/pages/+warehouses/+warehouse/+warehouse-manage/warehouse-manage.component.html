@@ -1,13 +1,13 @@
 <toaster-container></toaster-container>
 
 <div [nbSpinner]="loading">
-	<nb-card *ngIf="warehouse$ | async as warehouse">
+	<nb-card *ngIf="_currentWarehouse">
 		<nb-card-header>
 			<div class="d-inline-flex">
 				<svg
 					viewBox="0 0 24 24"
 					class="control-icon control-icon-left"
-					[routerLink]="['/stores/' + warehouse.id]"
+					[routerLink]="['/stores/' + _currentWarehouse.id]"
 				>
 					<path
 						d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"
