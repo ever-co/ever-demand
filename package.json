@@ -81,6 +81,8 @@
 		"@types/leaflet": "^1.5.12",
 		"@types/node": "^10.9.4",
 		"@types/source-map": "^0.5.7",
+		"@types/socket.io": "^2.1.4",
+		"@types/socket.io-client": "^1.4.32",
 		"@types/swiper": "^4.4.2",
 		"@types/uglify-js": "^3.0.4",
 		"@types/uuid": "^3.4.4",
@@ -206,7 +208,9 @@
 			"**/@angular",
 			"**/@angular/**",
 			"**/@ever-co",
-			"**/@ever-co/**"
+			"**/@ever-co/**",
+			"**/@ngx-translate",
+			"**/@ngx-translate/**"
 		]
 	},
 	"config": {

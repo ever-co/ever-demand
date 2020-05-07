@@ -11,7 +11,7 @@ import { IProductCreateObject } from '@modules/server.common/interfaces/IProduct
 import { AddWarehouseProductsComponent } from '../forms/add-warehouse-products-table';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { WarehousesService } from '../../../@core/data/warehouses.service';
-import { WizardComponent } from 'angular2-wizard';
+import { WizardComponent } from '@ever-co/angular2-wizard';
 import { TranslateService } from '@ngx-translate/core';
 import { NbThemeService } from '@nebular/theme';
 import ProductsCategory from '@modules/server.common/entities/ProductsCategory';

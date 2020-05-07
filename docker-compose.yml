@@ -1,47 +1,68 @@
 version: '3.7'
 
 services:
-    mongo:
-        image: mongo
-        container_name: mongo
-        ports:
-            - '27017:27017'
-        environment:
-            - MONGO_DATA_DIR=/data/db
-            - MONGO_LOG_DIR=/dev/null
-        volumes:
-            - mongo_data:/data/db
-        command: mongod --logpath=/dev/null # --quiet
-        networks:
-            - overlay
+    # mongo:
+    #     image: mongo
+    #     container_name: mongo
+    #     ports:
+    #         - '27017:27017'
+    #     environment:
+    #         - MONGO_DATA_DIR=/data/db
+    #         - MONGO_LOG_DIR=/dev/null
+    #     volumes:
+    #         - mongo_data:/data/db
+    #     command: mongod --logpath=/dev/null # --quiet
+    #     networks:
+    #         - overlay
 
-    core:
-        container_name: core
-        image: ever-core:latest
+    admin-web:
+        container_name: admin-web
+        image: ever-admin-web:latest
+        command: yarn run:admin
         build:
             context: .
-            dockerfile: .deploy/core/Dockerfile
+            dockerfile: .deploy/admin-web-angular/Dockerfile
         environment:
             NODE_ENV: production
-            WAIT_HOSTS: mongo:27017
-            DB_URI: mongodb://mongo/ever_development
-            TESTING_DB_URI: mongodb://mongo/ever_testing
         restart: on-failure
-        depends_on:
-            - mongo
-        links:
-            - mongo
+        # depends_on:
+        #     - core
         volumes:
             - .:/srv/ever
             - root_node_modules:/srv/ever/node_modules
-            - core_node_modules:/srv/ever/packages/core/node_modules
+            - admin_web_node_modules:/srv/ever/packages/admin-web/node_modules
         ports:
-            - 5500:5500
-            - 5501:5501
-            - 5050:5050
-            - 5555:5555
+            - 4200:4200
         networks:
             - overlay
+
+    # core:
+    #     container_name: core
+    #     image: ever-core:latest
+    #     build:
+    #         context: .
+    #         dockerfile: .deploy/core/Dockerfile
+    #     environment:
+    #         NODE_ENV: production
+    #         WAIT_HOSTS: mongo:27017
+    #         DB_URI: mongodb://mongo/ever_development
+    #         TESTING_DB_URI: mongodb://mongo/ever_testing
+    #     restart: on-failure
+    #     depends_on:
+    #         - mongo
+    #     links:
+    #         - mongo
+    #     volumes:
+    #         - .:/srv/ever
+    #         - root_node_modules:/srv/ever/node_modules
+    #         - core_node_modules:/srv/ever/packages/core/node_modules
+    #     ports:
+    #         - 5500:5500
+    #         - 5501:5501
+    #         - 5050:5050
+    #         - 5555:5555
+    #     networks:
+    #         - overlay
 
 volumes:
     root_node_modules:

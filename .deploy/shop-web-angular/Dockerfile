@@ -25,11 +25,7 @@ RUN yarn install
 
 FROM node:alpine AS production
 
-ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.6.0/wait /wait
-
-RUN npm install cross-env -g \
-	&& npm install pm2 -g --unsafe-perm \
-	&& chmod +x /wait
+RUN npm install cross-env -g
 
 RUN mkdir /srv/ever && chown node:node /srv/ever
 RUN mkdir -p /srv/ever/packages/shop-web-angular && chown node:node /srv/ever/packages/shop-web-angular
@@ -52,8 +48,3 @@ COPY --chown=node:node package.json yarn.lock lerna.json package.workspaces.json
 COPY --chown=node:node packages/common ./packages/common
 COPY --chown=node:node packages/common-angular ./packages/common-angular
 COPY --chown=node:node packages/shop-web-angular ./packages/shop-web-angular
-
-EXPOSE 5500 5501 5050 5555
-
-CMD /wait \
-	&& yarn run:shopweb

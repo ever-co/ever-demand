@@ -8,7 +8,7 @@ import {
 
 import { ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
-import { WizardComponent } from 'angular2-wizard';
+import { WizardComponent } from '@ever-co/angular2-wizard';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

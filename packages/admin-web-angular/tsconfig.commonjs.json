@@ -19,10 +19,6 @@
 			"angular2-wizard": [
 				"../node_modules/@ever-co/angular2-wizard/dist/*"
 			],
-			"angular2-wizard/*": [
-				"angular2-wizard/*",
-				"../node_modules/@ever-co/angular2-wizard/dist/*"
-			],
 			"@app/*": ["app/*"],
 			"environments/*": ["./environments/*"],
 			"core-js/es7/reflect": [

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormWizardModule } from 'angular2-wizard';
+import { FormWizardModule } from '@ever-co/angular2-wizard';
 import { ThemeModule } from '../../../@theme/theme.module';
 import { BasicInfoFormComponent } from './basic-info';
 import { ProductsTableComponent } from './products-table';
