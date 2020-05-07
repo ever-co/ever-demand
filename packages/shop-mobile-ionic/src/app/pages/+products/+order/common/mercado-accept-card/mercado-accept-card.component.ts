@@ -72,14 +72,11 @@ export class MercadoAcceptCardComponent {
 	ngOnInit(): void {
 		(<any>window).Mercadopago.setPublishableKey(this.mercadoPublishableKey);
 
-		console.log(this.userCard);
-
 		this.getDocumentTypes().subscribe((res) => {
 			if (res) {
 				this.documentTypes = res;
-				console.log(this.documentTypes);
 			} else {
-				console.log('error');
+				console.log('Error, could not find document types');
 			}
 		});
 
@@ -87,7 +84,6 @@ export class MercadoAcceptCardComponent {
 			this.user = user;
 			this.setSavedCard();
 			this.loading = false;
-			console.log(user);
 		});
 	}
 
@@ -146,7 +142,6 @@ export class MercadoAcceptCardComponent {
 	}
 
 	setPaymentMethod(status, response) {
-		console.log(response);
 		if (status == 200) {
 			this.cardThumbnail = response[0].thumbnail;
 			this.paymentMethodId = response[0].id;
@@ -243,18 +238,6 @@ export class MercadoAcceptCardComponent {
 			)
 				.map((product) => product.product.title)
 				.toString()}}`;
-			const transaction_amount = this.order.totalPrice;
-			const installments = (<any>window).document.getElementById(
-				'installments'
-			).value;
-			const payment_method_id = this.paymentMethodId;
-			console.log({
-				description,
-				transaction_amount,
-				installments,
-				payment_method_id,
-				token: response.id,
-			});
 			try {
 				if (!this.user.email) {
 					const user = await this.userRouter.updateEmail(

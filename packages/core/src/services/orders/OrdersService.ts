@@ -237,7 +237,7 @@ export class OrdersService extends DBService<Order>
 	}
 
 	/**
-	 * Pay with Stripe for given order with given CC
+	 * Pay with Mercado for given order with given CC
 	 * TODO: move to separate Payments Service
 	 *
 	 * @param {Order['id']} orderId
@@ -287,8 +287,6 @@ export class OrdersService extends DBService<Order>
 					const { response } = await mercadopago.payment.create(
 						paymentData
 					);
-
-					console.log('YEHKYA', response);
 
 					order = await this.update(orderId, {
 						mercadoChargeId: `${response.id}`,

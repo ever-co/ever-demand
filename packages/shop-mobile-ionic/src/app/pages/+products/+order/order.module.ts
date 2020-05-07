@@ -9,6 +9,7 @@ import { OrderPopupComponent } from './order-popup.component';
 import { ElapsedTimeModule } from '../../../components/elapsed-time/elapsed-time.module';
 import { StripeLoader } from 'app/services/stripeLoader';
 import { OrderInfoCommonModule } from './common/order-info-common.module';
+import { MercadoLoader } from 'app/services/mercadoLoader';
 
 const routes: Routes = [
 	{
@@ -31,15 +32,16 @@ const routes: Routes = [
 	declarations: [OrderPage, OrderPopupComponent],
 	providers: [
 		StripeLoader,
+		MercadoLoader,
 		{
 			provide: OrderPageModule,
-			useFactory: stripeLoaderFactory,
-			deps: [StripeLoader],
+			useFactory: paymentLoaderFactory,
+			deps: [StripeLoader, MercadoLoader],
 		},
 	],
 })
 export class OrderPageModule {}
 
-export function stripeLoaderFactory(provider: StripeLoader) {
+export function paymentLoaderFactory(provider: StripeLoader) {
 	return () => provider;
 }
