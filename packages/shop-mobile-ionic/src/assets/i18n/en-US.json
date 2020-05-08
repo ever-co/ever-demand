@@ -214,6 +214,21 @@
 		"NO_SERVER": "Server connection is lost"
 	},
 	"PAYMENT": {
+		"PLACEHOLDER": {
+			"NAME": "John Does"
+		},
+		"LABEL": {
+			"CARD_NUMBER": "Card Number",
+			"NAME": "Cardholder Name",
+			"MONTH": "Month",
+			"YEAR": "Year",
+			"CVV": "CVV",
+			"TYPE": "Type",
+			"DOC_NO": "Document Number",
+			"INSTALLMENTS": "Installments",
+			"PAYMENT_HEADER": "Pay with your card"
+		},
+		"PAY_NOW": "Pay Now",
 		"ERRORS": {
 			"INVALID_CARD_NUMBER": "Card number not valid",
 			"INVALID_SECURITY_CODE": "CVV not valid",

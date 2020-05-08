@@ -1,7 +1,7 @@
 <div class="mercado-accept-card">
 	<e-cu-order-info-header
 		(back)="close(false)"
-		title="Pay with your card"
+		title="{{ 'PAYMENT.LABEL.PAYMENT_HEADER' | translate }}"
 	></e-cu-order-info-header>
 	<form
 		method="post"
@@ -29,7 +29,9 @@
 
 			<div class="card-row row" *ngIf="!userCard" [hidden]="user?.email">
 				<div class="col">
-					<label for="cardNumber">Email</label>
+					<label for="cardNumber">{{
+						'PAYMENT.LABEL.EMAIL' | translate
+					}}</label>
 					<input
 						id="email"
 						name="email"
@@ -42,7 +44,9 @@
 
 			<div class="card-row row">
 				<div class="col">
-					<label for="cardNumber">Card Number</label>
+					<label for="cardNumber">{{
+						'PAYMENT.LABEL.CARD_NUMBER' | translate
+					}}</label>
 					<div class="card-number-input">
 						<input
 							(keyup)="guessPaymentMethod($event)"
@@ -83,14 +87,16 @@
 
 			<div class="card-row row">
 				<div class="col">
-					<label for="cardholderName">Cardholder Name</label>
+					<label for="cardholderName">{{
+						'PAYMENT.LABEL.NAME' | translate
+					}}</label>
 					<input
 						class="ng-invalid"
 						type="text"
 						id="cardholderName"
 						data-checkout="cardholderName"
 						formControlName="cardholderName"
-						placeholder="John Doe"
+						placeholder="{{ 'PLACEHOLDER.NAME' | translate }}"
 						[ngClass]="{
 							'status-invalid':
 								formGroup.controls['cardholderName'].invalid &&
@@ -102,7 +108,9 @@
 
 			<div class="card-row row">
 				<div class="col-3 month">
-					<label for="cardExpirationMonth">Month</label>
+					<label for="cardExpirationMonth">{{
+						'PAYMENT.LABEL.MONTH' | translate
+					}}</label>
 					<input
 						placeholder="MM"
 						type="text"
@@ -125,7 +133,9 @@
 					/>
 				</div>
 				<div class="col-3 year">
-					<label for="cardExpirationYear">Year</label>
+					<label for="cardExpirationYear">{{
+						'PAYMENT.LABEL.YEAR' | translate
+					}}</label>
 					<input
 						placeholder="YY"
 						type="text"
@@ -148,7 +158,9 @@
 					/>
 				</div>
 				<div class="col-6">
-					<label for="securityCode">CVV</label>
+					<label for="securityCode">{{
+						'PAYMENT.LABEL.CVV' | translate
+					}}</label>
 					<input
 						type="text"
 						id="securityCode"
@@ -172,7 +184,9 @@
 
 			<div class="card-row row" [hidden]="hideSecondStep">
 				<div class="col">
-					<label for="installments">Installments</label>
+					<label for="installments">{{
+						'PAYMENT.LABEL.INSTALLMENTS' | translate
+					}}</label>
 					<select
 						id="installments"
 						class="form-control"
@@ -184,7 +198,9 @@
 
 			<div class="card-row row" [hidden]="hideSecondStep">
 				<div class="col-3">
-					<label for="docType">Type</label>
+					<label for="docType">{{
+						'PAYMENT.LABEL.TYPE' | translate
+					}}</label>
 					<select
 						id="docType"
 						data-checkout="docType"
@@ -200,7 +216,9 @@
 				</div>
 
 				<div class="col-9">
-					<label for="docNumber">Document Number</label>
+					<label for="docNumber">{{
+						'PAYMENT.LABEL.DOC_NO' | translate
+					}}</label>
 					<input
 						type="text"
 						id="docNumber"
@@ -229,7 +247,7 @@
 					"
 				>
 					<ion-spinner *ngIf="loading"></ion-spinner>
-					Pay Now
+					{{ 'PAYMENT.PAY_NOW' | translate }}
 					<img src="{{ cardThumbnail }}" *ngIf="cardThumbnail" />
 				</button>
 			</div>
