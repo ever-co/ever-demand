@@ -50,7 +50,7 @@ export class SettingsPaymentsComponent implements OnInit {
 
 		if (environment.MERCADO_PAYMENT) {
 			this.paymentsGateways = this.paymentsGateways.filter((pg) => {
-				return pg != PaymentGateways.Stripe;
+				return pg == PaymentGateways.MercadoPago;
 			});
 		}
 

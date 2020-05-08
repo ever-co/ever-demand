@@ -31,7 +31,7 @@ export function paymentGatewaysLogo(paymentGateway: PaymentGateways): string {
 		case PaymentGateways.PayPal:
 			return 'https://avatars1.githubusercontent.com/u/476675?s=200&v=4';
 		case PaymentGateways.MercadoPago:
-			return 'https://avatars0.githubusercontent.com/u/900583?s=200&v=4';
+			return '/assets/imgs/mercadopago_logo.png';
 		default:
 			return 'BAD_PAYMENT_GATEWAY';
 	}

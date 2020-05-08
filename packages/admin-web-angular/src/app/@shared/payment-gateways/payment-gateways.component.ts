@@ -35,7 +35,6 @@ export class PaymentGatewaysComponent implements OnChanges {
 	currenciesCodes: string[] = [];
 
 	showMercadoPayment = environment.MERCADO_PAYMENT;
-	showStripePayment = !environment.MERCADO_PAYMENT;
 
 	constructor(private currenciesService: CurrenciesService) {
 		this.loadCurrenciesCodes();
