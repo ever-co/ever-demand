@@ -1,0 +1,45 @@
+<div class="mercado-accept-card">
+	<e-cu-order-info-header
+		(back)="close()"
+		title="Pay with your card"
+	></e-cu-order-info-header>
+	<div class="box box-brand text-align-center payment-title">
+		<ion-text color="light">
+			Select an existing card or add a new one
+		</ion-text>
+	</div>
+	<ion-list class="card-list">
+		<ion-card button (click)="acceptPayment(null)" class="card add-card">
+			<ion-card-content class="add-card-meta text-align-center">
+				<i class="fa fa-plus-circle add-icon"></i>
+				<ion-text color="light">
+					<h3>Add new card</h3>
+				</ion-text>
+			</ion-card-content>
+		</ion-card>
+		<ion-card
+			button
+			(click)="acceptPayment(userCard)"
+			class="card"
+			*ngFor="let userCard of userCards"
+		>
+			<ion-card-header>
+				<ion-card-subtitle>{{
+					userCard.cardholder.name
+				}}</ion-card-subtitle>
+				<ion-card-title
+					>**** **** ****
+					{{ userCard.last_four_digits }}
+				</ion-card-title>
+			</ion-card-header>
+
+			<ion-card-content class="card-meta">
+				{{ userCard.expiration_month }} / {{ userCard.expiration_year }}
+				<img
+					src="{{ userCard.payment_method.thumbnail }}"
+					*ngIf="userCard.payment_method?.thumbnail"
+				/>
+			</ion-card-content>
+		</ion-card>
+	</ion-list>
+</div>

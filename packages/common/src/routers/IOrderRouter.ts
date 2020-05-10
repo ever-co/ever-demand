@@ -37,7 +37,11 @@ interface IOrderRouter {
 
 	payWithStripe(orderId: Order['id'], cardId: string): Promise<Order>;
 
+	payWithMercado(orderId: Order['id'], cardToken: string): Promise<Order>;
+
 	refundWithStripe(orderId: Order['id']): Promise<Order>;
+
+	refundWithMercado(orderId: Order['id']): Promise<Order>;
 }
 
 export default IOrderRouter;

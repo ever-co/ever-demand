@@ -45,6 +45,7 @@ import faker from 'faker';
 import { WarehousesService } from '../../services/warehouses';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 import Stripe = require('stripe');
+import mercadopago = require('mercadopago');
 
 interface IWatchedFiles {
 	aboutUs: { [language in ILanguage]: Observable<string> };
@@ -237,6 +238,36 @@ export class UsersService extends DBService<User>
 	}
 
 	/**
+	 * Get Mercado Cards for given customer
+	 * TODO: move to separate Mercado (Payments) Service
+	 *
+	 * @param {string} userId
+	 * @returns {Promise<Stripe.cards.ICard[]>}
+	 * @memberof UsersService
+	 */
+	@asyncListener()
+	async getMercadoCards(userId: string): Promise<[]> {
+		mercadopago.configurations.setAccessToken(env.MERCADO_SECRET_KEY);
+		await this.throwIfNotExists(userId);
+
+		const user = await this.get(userId).pipe(first()).toPromise();
+
+		if (user != null) {
+			if (user.mercadoCustomerId != null) {
+				const data = await mercadopago.customers.get(
+					user.mercadoCustomerId
+				);
+
+				return data.response.cards;
+			} else {
+				return [];
+			}
+		} else {
+			throw new Error(`User with the id ${userId} doesn't exist`);
+		}
+	}
+
+	/**
 	 * Add Payment Method (Credit Card) for the customer.
 	 * If method called first time for given customer, it creates Customer record in the Stripe API and
 	 * updates stripeCustomerId in our DB
@@ -302,6 +333,80 @@ export class UsersService extends DBService<User>
 		);
 
 		return card.id;
+	}
+
+	@asyncListener()
+	async addPaymentMethodMercado(
+		userId: string,
+		token: string
+	): Promise<string> {
+		mercadopago.configurations.setAccessToken(env.MERCADO_SECRET_KEY);
+		await this.throwIfNotExists(userId);
+
+		const callId = uuid();
+
+		this.log.error(
+			{ callId, userId, token },
+			'.addPaymentMethodMercado(userId, token) called'
+		);
+
+		let mercadoCustomerId;
+
+		this.log.info(
+			{ callId, userId, token },
+			'.addPaymentMethodMercado(userId, token) called'
+		);
+
+		try {
+			let user = await this.get(userId).pipe(first()).toPromise();
+
+			if (user != null && user.email) {
+				if (user.mercadoCustomerId == null) {
+					const customerData = { email: user.email };
+
+					try {
+						const customerObj = await mercadopago.customers.create(
+							customerData
+						);
+
+						user = await this.update(userId, {
+							mercadoCustomerId: customerObj.response.id,
+						});
+					} catch (error) {
+						this.log.error('create customer error', error);
+					}
+				}
+
+				const cardData = {
+					token,
+					customer_id: user.mercadoCustomerId,
+					id: user.mercadoCustomerId,
+				};
+
+				const cardObj = await mercadopago.customers.cards.create(
+					cardData
+				);
+
+				mercadoCustomerId = user.mercadoCustomerId;
+			} else {
+				throw new Error(
+					`User with the id ${userId} doesn't exist or does not have email`
+				);
+			}
+		} catch (err) {
+			this.log.error(
+				{ callId, userId, token, err },
+				'.addPaymentMethodMercado(userId, token) thrown error!'
+			);
+			throw err;
+		}
+
+		this.log.info(
+			{ callId, userId, token, mercadoCustomerId },
+			'.addPaymentMethodMercado(userId, tokenId) added payment method'
+		);
+
+		return mercadoCustomerId;
 	}
 
 	/**

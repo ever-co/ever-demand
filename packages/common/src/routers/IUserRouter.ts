@@ -14,6 +14,8 @@ interface IUserRouter {
 
 	getCards(userId: User['id']): Promise<Stripe.cards.ICard[]>;
 
+	getMercadoCards(userId: User['id']): Promise<any>;
+
 	updateEmail(userId: User['id'], email: string): Promise<User>;
 
 	updateGeoLocation(

@@ -1,0 +1,98 @@
+<!-- TODO add translate -->
+<form
+	class="payments-mutation-popup-form mercadopago-gateway"
+	[formGroup]="form"
+>
+	<ion-grid>
+		<ion-row class="mercaddopago-selects">
+			<ion-col text-center>
+				<ion-item>
+					<ion-label class="labels" position="floating"
+						>Pay Button text</ion-label
+					>
+					<ion-input
+						type="text"
+						formControlName="payButtontext"
+					></ion-input>
+				</ion-item>
+				<div
+					*ngIf="
+						payButtontext.invalid &&
+						(payButtontext.dirty || payButtontext.touched)
+					"
+					class="validation-errors"
+				>
+					<span *ngIf="payButtontext.errors.required"
+						>Pay Button text is required</span
+					>
+				</div>
+			</ion-col>
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating"
+						>Currency</ion-label
+					>
+					<ion-select
+						formControlName="currency"
+						[cancelText]="'Cancel'"
+						[okText]="'OK'"
+					>
+						<ion-select-option
+							*ngFor="let code of currenciesCodes"
+							value="{{ code }}"
+							>{{ code }}
+						</ion-select-option>
+					</ion-select>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating"
+						>Publishable key</ion-label
+					>
+					<ion-input
+						type="text"
+						formControlName="publishableKey"
+					></ion-input>
+				</ion-item>
+				<div
+					*ngIf="
+						publishableKey.invalid &&
+						(publishableKey.dirty || publishableKey.touched)
+					"
+					class="validation-errors"
+				>
+					<span *ngIf="publishableKey.errors.required"
+						>Publishable key is required</span
+					>
+				</div>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating"
+						>Secret key</ion-label
+					>
+					<ion-input
+						type="text"
+						formControlName="secretKey"
+					></ion-input>
+				</ion-item>
+				<div
+					*ngIf="
+						secretKey.invalid &&
+						(secretKey.dirty || secretKey.touched)
+					"
+					class="validation-errors"
+				>
+					<span *ngIf="secretKey.errors.required"
+						>Secret key is required</span
+					>
+				</div>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</form>

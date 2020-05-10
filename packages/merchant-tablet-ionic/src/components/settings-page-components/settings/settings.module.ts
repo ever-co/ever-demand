@@ -12,6 +12,7 @@ import { StripeGatewayComponent } from './payments/stripe/stripe';
 import { FileUploaderModule } from 'components/file-uploader/file-uploader.module';
 import { CurrenciesService } from 'services/currencies.service';
 import { PayPalGatewayComponent } from './payments/payPal/payPal';
+import { MercadopagoGatewayComponent } from './payments/mercadopago/mercadopago';
 
 @NgModule({
 	declarations: [
@@ -20,6 +21,7 @@ import { PayPalGatewayComponent } from './payments/payPal/payPal';
 		PaymentMutationComponent,
 		StripeGatewayComponent,
 		PayPalGatewayComponent,
+		MercadopagoGatewayComponent,
 	],
 	entryComponents: [PaymentMutationComponent],
 	imports: [

@@ -114,9 +114,15 @@
 
 						<e-cu-payment
 							class="waves-effect waves-classic col-9 pl-5px p-0"
-							*ngIf="paymentsEnabled && order"
+							*ngIf="paymentsEnabled && order && !mercadoPayment"
 							[order]="order"
 						></e-cu-payment>
+						<e-cu-mercado-payment
+							class="waves-effect waves-classic col-9 pl-5px p-0"
+							*ngIf="paymentsEnabled && order && mercadoPayment"
+							[order]="order"
+						>
+						</e-cu-mercado-payment>
 					</div>
 
 					<div class="row" *ngIf="order?.isCompleted && !areIssues">

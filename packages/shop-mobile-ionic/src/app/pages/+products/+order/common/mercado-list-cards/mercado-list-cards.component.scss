@@ -1,0 +1,37 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.mercado-accept-card {
+	.payment-title {
+		margin-top: 10px;
+	}
+	.card-list {
+		background: transparent;
+		padding: 0.5rem;
+		.card {
+			flex: 0 0 auto;
+			height: auto;
+			background: #ffffff94;
+			padding: 0.3rem;
+			.card-meta {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				img {
+					height: 17px;
+				}
+			}
+		}
+		.add-card {
+			background: transparent;
+			border: 1px solid #949494;
+			color: #949494;
+			.add-card-meta {
+				display: flex;
+				flex-direction: column;
+			}
+			.add-icon {
+				font-size: 3rem;
+			}
+		}
+	}
+}

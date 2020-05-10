@@ -19,6 +19,7 @@ import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseSta
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
+import { environment } from 'environments/environment';
 
 @Component({
 	templateUrl: './popup.component.html',
@@ -33,6 +34,8 @@ export class OrderTakeawayInfoPopup implements OnInit, OnDestroy {
 	paymentsEnabled: boolean = true;
 	inStore: boolean;
 	showProducts: boolean = true;
+
+	mercadoPayment = false;
 
 	private _pageSubscriptions: Subscription[] = [];
 
@@ -54,6 +57,7 @@ export class OrderTakeawayInfoPopup implements OnInit, OnDestroy {
 		if (!this.store.startOrderDate) {
 			this.store.startOrderDate = new Date().toString();
 		}
+		this.mercadoPayment = Boolean(environment.MERCADO_PAYMENT);
 	}
 
 	ngOnDestroy(): void {
@@ -150,7 +154,9 @@ export class OrderTakeawayInfoPopup implements OnInit, OnDestroy {
 		console.log(`order Cancelled: ${order.id}`);
 
 		if (order.isPaid) {
-			await this.orderRouter.refundWithStripe(order.id);
+			order.mercadoChargeId
+				? await this.orderRouter.refundWithMercado(order.id)
+				: await this.orderRouter.refundWithStripe(order.id);
 		}
 	}
 

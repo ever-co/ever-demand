@@ -28,6 +28,8 @@ export class OrderProductsInfo implements OnInit, OnDestroy {
 	@Output()
 	undo = new EventEmitter<boolean>();
 
+	mercadoPayment = false;
+
 	@Output()
 	complete = new EventEmitter<boolean>();
 	listView = environment.PRODUCTS_VIEW_TYPE === 'list';
@@ -38,6 +40,7 @@ export class OrderProductsInfo implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		console.warn('OrderProductsInfo Initialize.');
+		this.mercadoPayment = Boolean(environment.MERCADO_PAYMENT);
 	}
 
 	localeTranslate(member: ILocaleMember[]): string {

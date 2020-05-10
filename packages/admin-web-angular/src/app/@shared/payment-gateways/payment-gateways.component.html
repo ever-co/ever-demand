@@ -2,8 +2,15 @@
 	#stripeGateway
 	[currenciesCodes]="currenciesCodes"
 	[companyBrandLogo]="warehouseLogo"
+	*ngIf="!showMercadoPayment"
 ></ea-stripe-gateway>
 <ea-payPal-gateway
 	#payPalGateway
 	[currenciesCodes]="currenciesCodes"
+	*ngIf="!showMercadoPayment"
 ></ea-payPal-gateway>
+<ea-mercado-gateway
+	#mercadoGateway
+	[currenciesCodes]="currenciesCodes"
+	*ngIf="showMercadoPayment"
+></ea-mercado-gateway>

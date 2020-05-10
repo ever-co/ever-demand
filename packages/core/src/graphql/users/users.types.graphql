@@ -119,6 +119,7 @@ input UserUpdateObjectInput {
 	devicesIds: [String!]
 	apartment: String
 	stripeCustomerId: String
+	mercadoCustomerId: String
 }
 
 input PagingOptionsInput {

@@ -112,7 +112,10 @@ class User extends DBObject<IUser, IUserCreateObject> implements IUser {
     @Types.String() public apartment: string;
 
     @Schema({ type: String, required: false })
-    public stripeCustomerId?: string;
+	public stripeCustomerId?: string;
+
+	@Schema({ type: String, required: false })
+    public mercadoCustomerId?: string;
 
     @Schema([String]) public devicesIds: string[];
 }

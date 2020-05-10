@@ -18,6 +18,7 @@ export interface IUserCreateObject extends IUserInitializeObject {
 	devicesIds?: string[];
 	apartment?: string;
 	stripeCustomerId?: string;
+	mercadoCustomerId?: string;
 }
 
 export interface IResponseGenerate1000Customers {

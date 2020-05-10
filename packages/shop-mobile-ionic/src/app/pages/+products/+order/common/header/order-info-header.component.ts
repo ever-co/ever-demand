@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
 	selector: 'e-cu-order-info-header',
@@ -14,6 +14,9 @@ import { Component, Output, EventEmitter } from '@angular/core';
 	],
 })
 export class OrderInfoHeaderComponent {
+	@Input()
+	title?: string;
+
 	@Output()
 	back = new EventEmitter<boolean>();
 }

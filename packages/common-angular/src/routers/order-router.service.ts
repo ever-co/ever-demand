@@ -68,9 +68,26 @@ export class OrderRouter implements IOrderRouter {
 		return this._orderFactory(order);
 	}
 
+	async payWithMercado(orderId: string, cardToken: string): Promise<Order> {
+		const order = await this.router.run<IOrder>(
+			'payWithMercado',
+			orderId,
+			cardToken
+		);
+		return this._orderFactory(order);
+	}
+
 	async refundWithStripe(orderId: string): Promise<Order> {
 		const order = await this.router.run<IOrder>(
 			'refundWithStripe',
+			orderId
+		);
+		return this._orderFactory(order);
+	}
+
+	async refundWithMercado(orderId: string): Promise<Order> {
+		const order = await this.router.run<IOrder>(
+			'refundWithMercado',
 			orderId
 		);
 		return this._orderFactory(order);

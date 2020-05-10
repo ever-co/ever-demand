@@ -107,6 +107,10 @@ class UserOrder extends DBObject<IUserOrder, IUserOrderCreateObject>
 	@Column()
 	stripeCustomerId?: string;
 
+	@Schema({ type: String, required: false })
+	@Column()
+	mercadoCustomerId?: string;
+
 	/**
 	 * IDs of customer mobile devices / browser
 	 *

@@ -247,6 +247,10 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 	@Column()
 	stripeChargeId?: string;
 
+	@Schema({ type: String, required: false })
+	@Column()
+	mercadoChargeId?: string;
+
 	/**
 	 * Human readable Order Number in the Store (short id of order, unique in the given store only)
 	 *

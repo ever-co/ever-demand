@@ -8,6 +8,8 @@ import { first } from 'rxjs/operators';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import PaymentGateways from '@modules/server.common/enums/PaymentGateways';
 import { countriesDefaultCurrencies } from '@modules/server.common/entities/Currency';
+import { MercadoGatewayComponent } from './mercado-gateway/mercado-gateway.component';
+import { environment } from 'environments/environment';
 
 @Component({
 	selector: 'ea-payment-gateways',
@@ -20,6 +22,9 @@ export class PaymentGatewaysComponent implements OnChanges {
 	@ViewChild('payPalGateway')
 	payPalGateway: PayPalGatewayComponent;
 
+	@ViewChild('mercadoGateway')
+	mercadoGateway: MercadoGatewayComponent;
+
 	@Input()
 	warehouseLogo: string;
 	@Input()
@@ -29,6 +34,8 @@ export class PaymentGatewaysComponent implements OnChanges {
 
 	currenciesCodes: string[] = [];
 
+	showMercadoPayment = environment.MERCADO_PAYMENT;
+
 	constructor(private currenciesService: CurrenciesService) {
 		this.loadCurrenciesCodes();
 	}
@@ -36,10 +43,11 @@ export class PaymentGatewaysComponent implements OnChanges {
 	get isValid(): boolean {
 		let valid = false;
 		if (
-			this.stripeGateway.isStripeEnabled ||
-			this.payPalGateway.isPayPalEnabled
+			this.stripeGateway?.isStripeEnabled ||
+			this.payPalGateway?.isPayPalEnabled ||
+			this.mercadoGateway?.isMercadoEnabled
 		) {
-			if (this.stripeGateway.isStripeEnabled) {
+			if (this.stripeGateway?.isStripeEnabled) {
 				valid = this.stripeGateway.isFormValid;
 
 				if (!valid) {
@@ -47,8 +55,16 @@ export class PaymentGatewaysComponent implements OnChanges {
 				}
 			}
 
-			if (this.payPalGateway.isPayPalEnabled) {
+			if (this.payPalGateway?.isPayPalEnabled) {
 				valid = this.payPalGateway.isFormValid;
+
+				if (!valid) {
+					return;
+				}
+			}
+
+			if (this.mercadoGateway?.isMercadoEnabled) {
+				valid = this.mercadoGateway.isFormValid;
 
 				if (!valid) {
 					return;
@@ -62,8 +78,9 @@ export class PaymentGatewaysComponent implements OnChanges {
 	get paymentsGateways(): IPaymentGatewayCreateObject[] {
 		const paymentsGateways = [];
 
-		const stripeGatewayCreateObject = this.stripeGateway.createObject;
-		const payPalGatewayCreateObject = this.payPalGateway.createObject;
+		const stripeGatewayCreateObject = this.stripeGateway?.createObject;
+		const payPalGatewayCreateObject = this.payPalGateway?.createObject;
+		const mercadoGatewayCreateObject = this.mercadoGateway?.createObject;
 
 		if (stripeGatewayCreateObject) {
 			paymentsGateways.push(stripeGatewayCreateObject);
@@ -71,6 +88,10 @@ export class PaymentGatewaysComponent implements OnChanges {
 
 		if (payPalGatewayCreateObject) {
 			paymentsGateways.push(payPalGatewayCreateObject);
+		}
+
+		if (mercadoGatewayCreateObject) {
+			paymentsGateways.push(mercadoGatewayCreateObject);
 		}
 
 		return paymentsGateways;
@@ -96,6 +117,13 @@ export class PaymentGatewaysComponent implements OnChanges {
 			) {
 				this.payPalGateway.configModel.currency = defaultCurrency;
 			}
+
+			if (
+				this.mercadoGateway &&
+				(!this.isEdit || !this.mercadoGateway.configModel.currency)
+			) {
+				this.mercadoGateway.configModel.currency = defaultCurrency;
+			}
 		}
 	}
 
@@ -116,7 +144,7 @@ export class PaymentGatewaysComponent implements OnChanges {
 				(g) => g.paymentGateway === PaymentGateways.Stripe
 			);
 
-			if (stripeConfigObj) {
+			if (stripeConfigObj && this.stripeGateway) {
 				this.stripeGateway.setValue(stripeConfigObj.configureObject);
 			}
 
@@ -124,8 +152,16 @@ export class PaymentGatewaysComponent implements OnChanges {
 				(g) => g.paymentGateway === PaymentGateways.PayPal
 			);
 
-			if (payPalConfigObj) {
+			if (payPalConfigObj && this.payPalGateway) {
 				this.payPalGateway.setValue(payPalConfigObj.configureObject);
+			}
+
+			const mercadoConfigObj = merchant.paymentGateways.find(
+				(g) => g.paymentGateway === PaymentGateways.MercadoPago
+			);
+
+			if (mercadoConfigObj && this.mercadoGateway) {
+				this.mercadoGateway.setValue(mercadoConfigObj.configureObject);
 			}
 		}
 	}
