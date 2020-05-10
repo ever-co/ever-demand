@@ -1,9 +1,8 @@
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ever-co/ever) 
-
 #### **_ Update: If you are running any business or doing freelance, check our new project [Gauzy](https://github.com/ever-co/gauzy) _**
 
 #### !!! Hiring: remote TypeScript / NestJS / Angular developers. Send CV to jobs@ever.co !!!
 
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ever-co/ever)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/ever)
 [![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/ever-co/ever?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/evereq?utm_source=github&utm_medium=button&utm_term=evereq&utm_campaign=github)
@@ -59,7 +58,7 @@ Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_wi
 ## Technology Stack and Requirements
 
 -   [TypeScript](https://www.typescriptlang.org) language
--   [Node.js](https://nodejs.org)
+-   [NodeJs](https://nodejs.org) / [NestJs](https://github.com/nestjs/nest)
 -   [Ionic](https://ionicframework.com) (version 5) for Shopping Mobile App, Carrier Mobile App and Merchant Tablet App
 -   Shopping Website developed with [Angular](https://angular.io) (version 9.1) using [Angular Starter](https://github.com/gdi2290/angular-starter)
 -   Admin Website developed with [Angular](https://angular.io) (version 9.1) using [ngx-admin](https://github.com/akveo/ngx-admin)
