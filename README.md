@@ -149,7 +149,7 @@ The command above install all required packages for every sub-project of the Eve
 
 Note: if above command fails for any reason, you can try to install required packages manually by running `yarn` inside every sub-folder with 'package.json' file.
 
-After Lerna boostrap everything you need to run build for all projecs as described above in the "Build" section.
+After Lerna bootstrap everything you need to run build for all projects as described above in the "Build" section.
 
 ### MongoDB
 
