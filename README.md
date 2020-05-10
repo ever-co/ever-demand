@@ -1,3 +1,5 @@
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ever-co/ever) 
+
 #### **_ Update: If you are running any business or doing freelance, check our new project [Gauzy](https://github.com/ever-co/gauzy) _**
 
 #### !!! Hiring: remote TypeScript / NestJS / Angular developers. Send CV to jobs@ever.co !!!
