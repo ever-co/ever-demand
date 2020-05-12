@@ -10,22 +10,23 @@
 	"tslint.enable": true,
 	"typescript.preferences.quoteStyle": "single",
 	"files.exclude": {
-		".build": true,
-		".git": true,
-		"**/.build": true,
-		"**/.DS_Store": true,
-		"**/.git": true,
-		"**/.sourcemaps": true,
 		"**/.vscode": true,
+		".git": true,
+		"**/.git": true,
+		".build": true,
+		"**/.DS_Store": true,
+		"**/*.js": true,
 		"**/*.js.map": true,
-		"**/build": true,
-		"**/dist": true,
-		"**/node_modules": true,
-		"**/www": true,
-		"**/yarn.lock": true,
 		"build/**/*.js": {
 			"when": "$(basename).ts"
-		}
+		},
+		"**/node_modules": true,
+		"**/dist": true,
+		"**/build": true,
+		"**/.build": true,
+		"**/.sourcemaps": true,
+		"**/www": true,
+		"**/yarn.lock": true
 	},
 	"search.exclude": {
 		"**/.vscode": true,
