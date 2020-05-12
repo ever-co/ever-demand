@@ -1,7 +1,7 @@
 require('dotenv').config();
 const pm2 = require('pm2');
 
-import { env } from './scripts/env';
+import { env } from '../scripts/env';
 
 const MACHINE_NAME = process.env.KEYMETRICS_MACHINE_NAME;
 const PRIVATE_KEY = process.env.KEYMETRICS_SECRET_KEY;
@@ -14,7 +14,7 @@ const port = env.PORT;
 pm2.connect(function () {
 	pm2.start(
 		{
-			script: './dist/out-tsc/app.js',
+			script: './dist/out-tsc/packages/admin-web-angular/src/app.js',
 			name: appName, // ----> THESE ATTRIBUTES ARE OPTIONAL:
 			exec_mode: 'fork', // ----> https://github.com/Unitech/PM2/blob/master/ADVANCED_README.md#schema
 			instances,

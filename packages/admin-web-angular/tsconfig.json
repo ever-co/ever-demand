@@ -2,7 +2,8 @@
 	"extends": "../../tsconfig.base.json",
 	"compileOnSave": false,
 	"compilerOptions": {
-		"module": "esnext",
+		"outDir": "./dist/out-tsc",
+		"module": "commonjs",
 		"target": "es2015",
 		"baseUrl": "./src",
 		"experimentalDecorators": true,
