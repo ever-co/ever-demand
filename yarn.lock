@@ -2046,7 +2046,9 @@
     "@angular/platform-browser-dynamic" "^9.1.0"
     "@angular/router" "^9.1.0"
     "@angular/service-worker" "^9.1.0"
-    "@ever-platform/common" "file:../../../Library/Caches/Yarn/v6/npm-@ever-platform-common-angular-0.3.0-c950b304-bdc2-4a97-93b7-6d99230bef50-1588767730627/node_modules/@ever-platform/common"
+    "@ever-platform/common" "file:C:/Users/Alish/AppData/Local/Yarn/Cache/v4/npm-@ever-platform-common-angular-0.3.0-e2ae60dc-a6ac-4268-8964-4540dd10b3a8-1589270814914/node_modules/@ever-platform/common"
+    "@ngx-translate/core" "^12.1.2"
+    "@ngx-translate/http-loader" "^4.0.0"
     tslib "^1.10.0"
     zone.js "~0.10.2"
 
@@ -31740,7 +31742,7 @@ webpack-bundle-analyzer@^3.6.1:
     opener "^1.5.1"
     ws "^6.0.0"
 
-webpack-cli@^3.3.10:
+webpack-cli@^3.3.10, webpack-cli@^3.3.11:
   version "3.3.11"
   resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-3.3.11.tgz#3bf21889bf597b5d82c38f215135a411edfdc631"
   integrity sha512-dXlfuml7xvAFwYUPsrtQAA9e4DOe58gnzSxhgrO/ZM/gyXTBowrsYeubyN4mqGhYdpXMFNyQ6emjJS9M7OBd4g==

@@ -14,7 +14,7 @@ const port = env.PORT;
 pm2.connect(function () {
 	pm2.start(
 		{
-			script: './dist/out-tsc/app.js',
+			script: './dist/out-tsc/packages/shop-web-angular/app.js',
 			name: appName, // ----> THESE ATTRIBUTES ARE OPTIONAL:
 			exec_mode: 'fork', // ----> https://github.com/Unitech/PM2/blob/master/ADVANCED_README.md#schema
 			instances,
