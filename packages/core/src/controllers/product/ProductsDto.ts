@@ -1,4 +1,4 @@
-import { ApiModelProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import {
 	IProductTitle,
 	IProductDescription,
@@ -6,20 +6,20 @@ import {
 } from '@modules/server.common/interfaces/IProduct';
 
 export class UpdateProductDto {
-	@ApiModelProperty()
+	@ApiProperty()
 	readonly name?: string;
 
-	@ApiModelProperty()
+	@ApiProperty()
 	readonly price?: number;
 }
 
 export class CreateProductDto {
-	@ApiModelProperty()
+	@ApiProperty()
 	readonly title: IProductTitle[];
 
-	@ApiModelProperty()
+	@ApiProperty()
 	readonly description: IProductDescription[];
 
-	@ApiModelProperty()
+	@ApiProperty()
 	readonly images: IProductImage[];
 }

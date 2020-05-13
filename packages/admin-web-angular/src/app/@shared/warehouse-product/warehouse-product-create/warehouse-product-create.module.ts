@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../../@theme/theme.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormWizardModule } from 'angular2-wizard';
+import { FormWizardModule } from '@ever-co/angular2-wizard';
 import { WarehouseProductCreateComponent } from './warehouse-product-create.component';
 import { WarehouseProductFormsModule } from '../forms';
 import { ProductFormsModule } from '../../product/forms';

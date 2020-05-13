@@ -47,7 +47,7 @@ const timeout = (ms: number) =>
 	try {
 		await start({
 			pm2_home: path.join(os.homedir(), '.pm2'),
-			script: './build/main.js',
+			script: './build/src/main.js',
 			name: 'EverApi',
 			daemon_mode: true,
 			// See https://github.com/Unitech/PM2/blob/master/ADVANCED_README.md#schema

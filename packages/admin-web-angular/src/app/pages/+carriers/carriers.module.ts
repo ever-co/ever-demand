@@ -4,7 +4,7 @@ import { ToasterModule } from 'angular2-toaster';
 import { TranslateModule } from '@ngx-translate/core';
 import { CarriersComponent } from './carriers.component';
 import { ThemeModule } from '../../@theme';
-import { FormWizardModule } from 'angular2-wizard';
+import { FormWizardModule } from '@ever-co/angular2-wizard';
 import { CarriersRoutingModule } from './carriers-routing.module';
 import { RenderComponentsModule } from '../../@shared/render-component/render-components.module';
 import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';

@@ -1,8 +1,8 @@
 import { Controller, Get } from '@nestjs/common';
 import { UserCommandService } from '../services/users';
-import { ApiUseTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 
-@ApiUseTags('test')
+@ApiTags('test')
 @Controller('test')
 export class TestController {
 	constructor(private readonly _userCommandService: UserCommandService) {}

@@ -42,19 +42,19 @@
 		"DETECTING_LOCATION": "Estamos intentando detectar tu dirección actual..."
 	},
 	"PRODUCTS_VIEW": {
-		"TITLE": "Productos",
+		"TITLE": "Para retirar",
 		"BUY_BUTTON": {
 			"PRE": "Comprar por ",
 			"SUF": ""
 		},
 		"NOT_AVAILABLE": "Producto no disponible",
 		"MINUTES": "min",
-		"DELIVERY": "Delivery",
-		"TAKEAWAY": "Para retirar",
-		"READYFOR": "Listo para",
+		"DELIVERY": "a domicilio",
+		"TAKEAWAY": "para retirar",
+		"READYFOR": "Listo",
 		"DETAILS": {
 			"DETAILS": "Detalles",
-			"BACK": "Regresar",
+			"BACK": "Volver",
 			"INCLUDES": "Incluye",
 			"BUY_FOR": "Comprar por "
 		}
@@ -215,7 +215,7 @@
 	"MERCHANTS_VIEW": {
 		"CLOSE_TO_YOU": "Comerciantes cerca de ti",
 		"NAME": "Nombre del Comercio",
-		"WITH_NAME": "Comercios"
+		"WITH_NAME": "Sucursal"
 	},
 	"NO_SERVER_VIEW": {
 		"NO_SERVER": "Se perdió la conexión con el servidor"
@@ -237,10 +237,10 @@
 	"ORDER_INFO": "Información del Pedido",
 	"CLOSE": "Cerrar",
 	"SCAN": "Escanear",
-	"MERCHANTS": "Comercios",
+	"MERCHANTS": "Para retirar",
 	"NOT_FOUND": "¡No hay resultados!",
-	"IN_STORE": "En el comercio",
-	"EXIT_STORE": "Salir del comercio",
+	"IN_STORE": "Entrar por sucursal",
+	"EXIT_STORE": "Inicio",
 	"FAILED": "Error",
 	"CANCELED": "Cancelado",
 	"IN_DELIVERY": "En viaje",

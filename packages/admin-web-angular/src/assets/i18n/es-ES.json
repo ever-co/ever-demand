@@ -317,7 +317,7 @@
 				"SELECT_FROM_SHARED_CARRIERS": "Seleccionar de repartos compartidos",
 				"ADD_YOUR_CARRIER": "Agregar tu reparto",
 				"EDIT_CARRIER": "Modificar reparto",
-				"CARRIER_REQUIRED": "Reparto requerido",
+				"CARRIER_REQUIRED": "Realiza repartos",
 				"PRODUCTS_DELIVERY_BY_DEFAULT": "Repartir (por defecto)",
 				"PRODUCTS_TAKEAWAY_BY_DEFAULT": "Retirar (por defecto)",
 				"USE_SELECTED_SHARED_CARRIERS": "Usar repartos compartidos seleccionados",
@@ -353,11 +353,11 @@
 		"POSTCODE": "Código Postal",
 		"IS_ACTIVE": "Está activo",
 		"PRODUCTS_MANUFACTURING": "Elaboración de Productos",
-		"CARRIER_REQUIRED": "Reparto requerido",
+		"CARRIER_REQUIRED": "Realiza repartos",
 		"RIGHT_NOW": "(ahora)",
-		"CARRIERS": "Repartos",
+		"CARRIERS": "Repartidores",
 		"ADDRESS": "Dirección",
-		"CARRIERS_SPECIFIC": "Usar sólo repartos específicos",
+		"CARRIERS_SPECIFIC": "Usar sólo repartidores específicos",
 		"VALIDATION": {
 			"NAME": "Nombre requerido",
 			"USERNAME": "Usuario requerido",
@@ -428,12 +428,12 @@
 			"PHOTO": "Foto",
 			"IS_ACTIVE": "Está Activa",
 			"PRODUCTS_MANUFACTURING": "Elaboración de Productos",
-			"CARRIER_REQUIRED": "Reparto requerido",
+			"CARRIER_REQUIRED": "Realiza repartos",
 			"RIGHT_NOW": "Ahora mismo",
 			"ORDERS_PHONE": "Teléfono de pedidos",
 			"CONTACT_PHONE": "Teléfono de contacto",
 			"ORDERS_EMAIL": "Correo de pedidos",
-			"CONTACT_EMAIL": "Teléfono de contacto",
+			"CONTACT_EMAIL": "Correo electrónico de contacto",
 			"FORWARD_ORDERS_WITH": "Repartir Pedidos Con",
 			"USERNAME": "Usuario",
 			"OLD_PASSWORD": "Clave actual",
@@ -451,8 +451,8 @@
 			"POSTCODE": "Código Postal",
 			"COORDINATES": "Coordenadas",
 			"AUTO_DETECT_COORDINATES": "Auto detectar coordenadas",
-			"CARRIERS": "Repartos",
-			"USE_ONLY_SPECIFIC_CARRIERS": "Usar sólo repartos específicos",
+			"CARRIERS": "Repartidores",
+			"USE_ONLY_SPECIFIC_CARRIERS": "Usar sólo repartidores específicos",
 			"ERRORS": {
 				"NAME_IS_REQUIRED": "Nombre de sucursal requerido",
 				"NAME_ATLEAST_3_CHARS": "El nombre debe tener al menos 3 caractéres",
@@ -504,7 +504,7 @@
 			"TAKEAWAY": "Retirar"
 		},
 		"PLACEHOLDER": {
-			"EXAMPLE": "Ejemplo: Lo de Pepe",
+			"EXAMPLE": "Ejemplo: Ensalada verde",
 			"IMAGE_URL": "Enlace a la imágen",
 			"HERE_GOES_A_SHORT_DESCRIPTION": "Aquí va una breve descripción",
 			"HERE_GOES_A_DETAILS_ABOUT_PRODUCT_(OPTION)": "Aquí van detalles del producto (opcional)",
@@ -567,7 +567,7 @@
 		"ORDER_NUMBER": "Número de Pedido",
 		"CANCELLED": "Cancelado",
 		"WAREHOUSE_STATUS": "Estado en Sucursal",
-		"CARRIER_STATUS": "Estado en el Repartidor",
+		"CARRIER_STATUS": "Estado del Repartidor",
 		"PAID": "Pago",
 		"CARRIER": "Reparto",
 		"CREATED": "Creado",
@@ -580,7 +580,7 @@
 		"MANAGE_STORE": "Gestionar Sucursal",
 		"TOP_PRODUCTS": "Productos Top",
 		"PRODUCTS_MANUFACTURING": "Elaboración de Productos",
-		"CARRIER_REQUIRED": "Reparto requerido",
+		"CARRIER_REQUIRED": "Realiza repartos",
 		"MANAGE_WAREHOUSE": "Gestionar Sucursal",
 		"MANAGE_STORE_PRODUCTS_&_ORDERS": "Gestionar Productos & Pedidos de Sucursal"
 	},
@@ -624,7 +624,7 @@
 			},
 			"WIZARD_TITLES": {
 				"ADDITIONAL_INFO": "Información Adicional",
-				"LOCATION": "Ubiación"
+				"LOCATION": "Ubicación"
 			}
 		},
 		"SMART_TABLE": {
@@ -766,7 +766,7 @@
 			"INVITED_DATE": "Fecha de Invitación",
 			"ORDER_NUMBER": "Número de Pedido",
 			"WAREHOUSE": "Sucursal",
-			"CARRIER": "Reparto",
+			"CARRIER": "Repartidor",
 			"PRODUCT_LIST": "Lista de Productos",
 			"STATS": "Estadísticas",
 			"DELIVERY_TIME": "Tiempo de entrega",
@@ -821,7 +821,7 @@
 	"CARRIERS_VIEW": {
 		"TITLE": "Reparto",
 		"DELETE_CARRIERS": "Eliminar Selección",
-		"CREATE_CARRIER": "Crear Reparto",
+		"CREATE_CARRIER": "Crear Repartidor",
 		"DELETE": "ELIMINAR",
 		"CREATE_BUTTON": "CREAR",
 		"ACTIVE_AND_AVAILABLE_ORDERS": "Pedidos Activos y Disponibles",
@@ -840,11 +840,11 @@
 			"CUSTOMER": "Cliente",
 			"SAVE": "Guardar",
 			"EDIT": "Modificar",
-			"CARRIER_INFO": "Información de Reparto",
-			"CARRIER_ID": "Id de Reparto",
-			"REGISTER_NEW_CARRIER": "Registrar Nuevo Reparto",
+			"CARRIER_INFO": "Información de Repartidor",
+			"CARRIER_ID": "Id de Repartidor",
+			"REGISTER_NEW_CARRIER": "Registrar Nuevo Repartidor",
 			"WAREHOUSE_STATUS": "Estado en Sucursal",
-			"CARRIER_STATUS": "Estado en el Repartidor",
+			"CARRIER_STATUS": "Estado del Repartidor",
 			"CREATED": "Creado",
 			"ARRIVED_TO_CUSTOMER": "En el Cliente",
 			"FAILED": "Fallido",
@@ -857,15 +857,15 @@
 			"WORKING": "Trabajando",
 			"NOT_WORKING": "No Trabajando",
 			"SELECT_CARRIER": "Seleccionar Reparto",
-			"CARRIER_ORDERS_STATUS": "Estado de Pedidos del Reparto",
+			"CARRIER_ORDERS_STATUS": "Estado de Pedidos del Repartidor",
 			"Start": "Comenzar",
 			"PICKED_UP_ORDER": "Pedido levantado",
 			"CANCEL": "Cancelar",
 			"Arrived To Client": "En el Cliente",
 			"No Carrier": "Sin Reparto",
 			"Order Selected For Delivery": "Pedido para Repartir",
-			"Order Picked Up": "Pedido Retirado",
-			"Order In Delivery": "Pedido en el Repartidor",
+			"Order Picked Up": "Retirado",
+			"Order In Delivery": "Pedido en Viaje",
 			"Delivered": "Entregado",
 			"Delivery Issues": "Problemas de Entrega",
 			"Client Refuse to Take Order": "Cliente Rechaza el Pedido",
@@ -884,7 +884,7 @@
 			"TIME": "Tiempo"
 		},
 		"EDIT": {
-			"EDIT_CARRIER": "Modificar Reparto",
+			"EDIT_CARRIER": "Modificar Repartidor",
 			"BASIC_INFO": "Información Básica",
 			"LOCATION": "Ubicación",
 			"PHOTO_URL": "Enlace a Foto",
@@ -898,7 +898,7 @@
 		},
 		"TRACK_PAGE": {
 			"TRACK_ALL_WORKING_CARRIERS": "Seguir todos los repartidores trabajando",
-			"FILTER_CARRIERS": "Filtrar Repartos",
+			"FILTER_CARRIERS": "Filtrar Repartidores",
 			"PHONE": "Teléfono",
 			"EMAIL": "Correo",
 			"ADDRESS": "Dirección",
@@ -987,7 +987,7 @@
 			"MANAGEMENT": "Gestión",
 			"INVITES": "Invitaciones"
 		},
-		"CARRIERS": "Repartos",
+		"CARRIERS": "Repartidores",
 		"SIMULATION": "Simulación",
 		"SETUP": "Inicializar"
 	},
@@ -1015,7 +1015,7 @@
 		}
 	},
 	"PLACEHOLDER": {
-		"EXAMPLE": "Example: Lo de Pepe",
+		"EXAMPLE": "Example: Ensalada verde",
 		"IMAGE_URL": "Enlace a Imágen",
 		"HERE_GOES_A_SHORT_DESCRIPTION": "Aquí va una breve descripción",
 		"HERE_GOES_A_DETAILS_ABOUT_PRODUCT_(OPTION)": "Aquí van detalles del producto (opcional)",
@@ -1131,11 +1131,11 @@
 	"Postcode": "Código Postal",
 	"Coordinates": "Coordenadas",
 	"Auto detect coordinates": "Autodetectar coordenadas",
-	"Carriers": "Repartos",
-	"Carrier": "Reparto",
-	"Use only specific carriers": "Usar sólo repartos específicos",
-	"Manage carrier and deliveries": "Gestionar repartos",
-	"Register New Carrier": "Registar Nuevo Reparto",
+	"Carriers": "Repartidores",
+	"Carrier": "Repartidor",
+	"Use only specific carriers": "Usar sólo repartidores específicos",
+	"Manage carrier and deliveries": "Gestionar repartidor",
+	"Register New Carrier": "Registar Nuevo Repartidor",
 	"Create User": "Crear Usuario",
-	"OPTIONAL": "opcional"
+	"OPTIONAL": "Opcional"
 }

@@ -14,7 +14,7 @@ const port = env.PORT;
 pm2.connect(function () {
 	pm2.start(
 		{
-			script: './www/out-tsc/app.js',
+			script: './www/out-tsc/packages/merchant-tablet-ionic/app.js',
 			name: appName, // ----> THESE ATTRIBUTES ARE OPTIONAL:
 			exec_mode: 'fork', // ----> https://github.com/Unitech/PM2/blob/master/ADVANCED_README.md#schema
 			instances,

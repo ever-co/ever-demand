@@ -21,6 +21,7 @@ const commonConfig = require('./webpack.common.js');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HashedModuleIdsPlugin = require('webpack/lib/HashedModuleIdsPlugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 /***
@@ -99,12 +100,14 @@ module.exports = function (env) {
 
 		optimization: {
 			minimizer: [
-				new UglifyJsPlugin({
-					sourceMap: sourceMapEnabled,
-					parallel: true,
-					cache: helpers.root('webpack-cache/uglify-cache'),
-					uglifyOptions: getUglifyOptions(supportES2015, true),
-				}),
+				// TODO fixes error when un-comment below
+				// new UglifyJsPlugin({
+				// 	sourceMap: sourceMapEnabled,
+				// 	parallel: true,
+				// 	cache: helpers.root('webpack-cache/uglify-cache'),
+				// 	uglifyOptions: getUglifyOptions(supportES2015, true),
+				// }),
+				// new TerserPlugin(),
 			],
 			splitChunks: {
 				chunks: 'all',

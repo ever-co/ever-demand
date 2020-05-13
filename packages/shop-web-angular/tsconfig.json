@@ -1,6 +1,7 @@
 {
 	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
+		"outDir": "./dist/out-tsc",
 		"target": "es5",
 		"module": "commonjs",
 		"moduleResolution": "node",
@@ -15,7 +16,13 @@
 		"noStrictGenericChecks": true,
 		"lib": ["es7", "dom"],
 		"baseUrl": "./src",
-		"types": ["reflect-metadata", "hammerjs", "node", "googlemaps"],
+		"types": [
+			"reflect-metadata",
+			"hammerjs",
+			"node",
+			"googlemaps",
+			"webpack"
+		],
 		"paths": {
 			"@angular/*": ["../node_modules/@angular/*"],
 			"@modules/server.common/*": ["../../common/src/*"],
