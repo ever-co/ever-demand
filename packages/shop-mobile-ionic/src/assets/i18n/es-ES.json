@@ -220,6 +220,34 @@
 	"NO_SERVER_VIEW": {
 		"NO_SERVER": "Se perdió la conexión con el servidor"
 	},
+    "PAYMENT": {
+		"PLACEHOLDER": {
+			"NAME": "Juan Perez"
+		},
+		"LABEL": {
+			"CARD_NUMBER": "Numero de tarjeta",
+			"NAME": "Nombre del titular",
+			"MONTH": "Mes",
+			"YEAR": "Año",
+			"CVV": "CVV",
+			"TYPE": "Tipo",
+			"DOC_NO": "Numero de documento",
+			"INSTALLMENTS": "Cuotas",
+			"PAYMENT_HEADER": "Pagar con tu tarjeta"
+		},
+		"PAY_NOW": "Pagar ahora",
+		"ERRORS": {
+			"INVALID_CARD_NUMBER": "Numero de tarjeta invalido",
+			"INVALID_SECURITY_CODE": "CVV invalido",
+			"INVALID_NAME": "Titular no valido",
+			"INVALID_DOCTYPE": "Tipo de documento invalido",
+			"INVALID_DOC_SUBTYPE": "Por favor revisar numero de documento",
+			"INVALID_DOC_NUMBER": "Por favor revisar numero de documento",
+			"INVALID_MONTH": "Mes invalido",
+			"INVALID_YEAR": "Año invalido",
+			"DEFAULT": "Por favor revisar detalles ingresados"
+		}
+	},
 	"OR": "O",
 	"OR_LOWERCASE": "o",
 	"YES": "Si",
