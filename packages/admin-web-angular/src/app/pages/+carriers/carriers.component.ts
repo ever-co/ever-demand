@@ -2,7 +2,7 @@ import { Component, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 
 import { CarriersService } from '../../@core/data/carriers.service';
 import { CarrierMutationComponent } from '../../@shared/carrier/carrier-mutation';
-import { Subject } from 'rxjs/Rx';
+import { Subject } from 'rxjs';
 import { ToasterService } from 'angular2-toaster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import _ from 'lodash';

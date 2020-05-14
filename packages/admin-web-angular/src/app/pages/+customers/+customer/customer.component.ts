@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '../../../@core/data/users.service';
 import User from '@modules/server.common/entities/User';
 import { Observable, Subject } from 'rxjs';
-import { first, takeUntil } from 'rxjs/operators';
+import { first, takeUntil, switchMap } from 'rxjs/operators';
 
 @Component({
 	selector: 'ea-customer',
@@ -24,9 +24,11 @@ export class CustomerComponent implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit() {
-		this.user$ = this._router.params.switchMap((p) => {
-			return this._userService.getUserById(p.id);
-		});
+		this.user$ = this._router.params.pipe(
+			switchMap((p) => {
+				return this._userService.getUserById(p.id);
+			})
+		);
 
 		(async () => {
 			return this.loadUsers();

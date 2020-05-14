@@ -65,10 +65,7 @@ export class CategoriesTableComponent implements OnInit, OnDestroy {
 		private readonly _modalService: NgbModal,
 		private readonly _notifyService: NotifyService,
 		private readonly modalService: NgbModal
-	) {
-		this._translateService.setDefaultLang('en');
-		this._translateService.use('en');
-	}
+	) {}
 
 	get hasSelectedCategories(): boolean {
 		return this._selectedCategories.length > 0;
