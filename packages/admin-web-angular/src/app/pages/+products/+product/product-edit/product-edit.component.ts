@@ -5,7 +5,7 @@ import Product from '@modules/server.common/entities/Product';
 import { Observable, Subject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../../../../@core/data/products.service';
-import { takeUntil, first } from 'rxjs/operators';
+import { takeUntil, first, switchMap } from 'rxjs/operators';
 import { ToasterService } from 'angular2-toaster';
 import { ProductsCategoryService } from '../../../../@core/data/productsCategory.service';
 import 'rxjs/add/operator/switchMap';
@@ -29,7 +29,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
 
 	public readonly basicInfo = this.form.get('basicInfo') as FormControl;
 
-	protected product$: Observable<Product>;
+	protected product$: any;
 	protected status;
 	product: any;
 
@@ -46,9 +46,12 @@ export class ProductEditComponent implements OnInit, OnDestroy {
 		private location: Location
 	) {
 		this.loadProductCategories();
-		this.product$ = this.activatedRoute.params.switchMap((p) => {
-			return this.productsService.getProductById(p.id);
-		});
+
+		this.product$ = this.activatedRoute.params.pipe(
+			switchMap((p) => {
+				return this.productsService.getProductById(p.id);
+			})
+		);
 	}
 
 	public get isProductValid() {

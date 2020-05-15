@@ -17,7 +17,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import _ from 'lodash';
 import { forkJoin, Observable, Subscription } from 'rxjs';
 import { LocalDataSource } from 'ng2-smart-table';
-import { Subject } from 'rxjs/Rx';
+import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { CreatedComponent } from '../../../../@shared/render-component/created/created.component';
 import { CarriersOrdersService } from '@app/@core/data/carriers-orders.service';
