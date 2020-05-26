@@ -1,13 +1,20 @@
 import { Component, ViewChild, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { first, map, switchMap } from 'rxjs/operators';
+import {
+	first,
+	map,
+	switchMap,
+	withLatestFrom,
+	catchError,
+} from 'rxjs/operators';
 import { ToasterService } from 'angular2-toaster';
 import { BasicInfoFormComponent } from '../../../../@shared/user/forms';
 import { LocationFormComponent } from '../../../../@shared/forms/location';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 import User from '@modules/server.common/entities/User';
+import { empty } from 'rxjs';
 
 @Component({
 	templateUrl: './customer-edit.component.html',
@@ -39,6 +46,9 @@ export class CustomerEditComponent implements OnInit {
 	);
 
 	readonly customer$ = this.customerId$.pipe(
+		catchError((err) => {
+			return empty();
+		}),
 		switchMap((id) => {
 			return this._customerRouter.get(id).pipe(first());
 		})
@@ -56,7 +66,7 @@ export class CustomerEditComponent implements OnInit {
 
 	ngOnInit() {
 		this.customer$
-			.withLatestFrom(this.customerId$)
+			.pipe(withLatestFrom(this.customerId$))
 			.subscribe(([customer, id]) => {
 				if (!customer) {
 					this._toasterService.pop(
