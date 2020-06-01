@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import Admin from '@modules/server.common/entities/Admin';
 import { AdminsService } from '../../../../@core/data/admins.service';
-import { first, takeUntil } from 'rxjs/operators';
+import { first, takeUntil, debounceTime } from 'rxjs/operators';
 import { ToasterService } from 'angular2-toaster';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -133,8 +133,7 @@ export class AccountComponent implements OnInit, OnDestroy {
 	private validations = {
 		oldPasswordControl: () => {
 			this.oldPassword.valueChanges
-				.debounceTime(500)
-				.pipe(takeUntil(this.ngDestroy$))
+				.pipe(debounceTime(500), takeUntil(this.ngDestroy$))
 				.subscribe((value) => {
 					this.oldPasswordErrorMsg =
 						(this.oldPassword.touched || this.oldPassword.dirty) &&
@@ -145,8 +144,7 @@ export class AccountComponent implements OnInit, OnDestroy {
 		},
 		passwordControl: () => {
 			this.password.valueChanges
-				.debounceTime(500)
-				.pipe(takeUntil(this.ngDestroy$))
+				.pipe(debounceTime(500), takeUntil(this.ngDestroy$))
 				.subscribe((value) => {
 					this.passwordErrorMsg =
 						(this.password.touched || this.password.dirty) &&
@@ -157,8 +155,7 @@ export class AccountComponent implements OnInit, OnDestroy {
 		},
 		repeatPasswordControl: () => {
 			this.repeatPassword.valueChanges
-				.debounceTime(500)
-				.pipe(takeUntil(this.ngDestroy$))
+				.pipe(debounceTime(500), takeUntil(this.ngDestroy$))
 				.subscribe((value) => {
 					this.repeatPasswordErrorMsg =
 						(this.repeatPassword.touched ||
