@@ -7,7 +7,7 @@ import {
 	getCountryName,
 	CountryName,
 } from '@modules/server.common/entities/GeoLocation';
-
+import { Location } from '@angular/common';
 @Component({
 	templateUrl: './warehouse-track.component.html',
 	styleUrls: ['./warehouse-track.component.scss'],
@@ -26,7 +26,10 @@ export class WarehouseTrackComponent implements OnInit {
 	merchantName: string;
 	merchantCountry: CountryName;
 
-	constructor(private warehouseService: WarehousesService) {}
+	constructor(
+		private warehouseService: WarehousesService,
+		private location: Location
+	) {}
 
 	ngOnInit(): void {
 		this.showMap();
@@ -187,5 +190,9 @@ export class WarehouseTrackComponent implements OnInit {
 			map,
 			icon,
 		});
+	}
+
+	goBack() {
+		this.location.back();
 	}
 }
