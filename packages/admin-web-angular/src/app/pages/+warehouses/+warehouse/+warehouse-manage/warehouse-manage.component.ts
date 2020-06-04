@@ -78,6 +78,7 @@ export class WarehouseManageComponent implements OnInit {
 				paymentGateways: tabsInfoRaw.paymentsGateways,
 			};
 
+			const username = this.tabsForm.value.account['username'];
 			const passwordOld = tabsInfoRaw.password.current;
 			const passwordNew = tabsInfoRaw.password.new;
 
@@ -100,6 +101,14 @@ export class WarehouseManageComponent implements OnInit {
 			this._showWarehouseUpdateSuccessMessage(warehouse);
 
 			this.warehouseManageTabs.warehouseUpdateFinish();
+			this.warehouseManageTabs.accountComponent.form.setValue({
+				username: username,
+				password: {
+					confirm: '',
+					current: '',
+					new: '',
+				},
+			});
 		} catch (err) {
 			this.loading = false;
 			this.toasterService.pop(
