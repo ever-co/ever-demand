@@ -11,6 +11,7 @@ import { WarehouseOrderModalModule } from '../../../../@shared/warehouse/+wareho
 import { TranslateModule } from '@ngx-translate/core';
 import { NbSpinnerModule } from '@nebular/theme';
 import { ThemeModule } from '../../../../@theme';
+import { WizardComponent } from '@ever-co/angular2-wizard';
 
 @NgModule({
 	imports: [
@@ -26,6 +27,6 @@ import { ThemeModule } from '../../../../@theme';
 		NbSpinnerModule,
 	],
 	declarations: [WarehouseOrderComponent, WarehouseOrderCreateUserComponent],
-	entryComponents: [WarehouseOrderComponent],
+	entryComponents: [WarehouseOrderComponent, WizardComponent],
 })
 export class WarehouseOrderModule {}
