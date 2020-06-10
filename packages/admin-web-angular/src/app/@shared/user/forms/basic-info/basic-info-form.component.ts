@@ -21,7 +21,7 @@ import { FormHelpers } from '../../../forms/helpers';
 import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/debounceTime';
 import { TranslateService } from '@ngx-translate/core';
-import { first, takeUntil } from 'rxjs/operators';
+import { first, takeUntil, debounceTime } from 'rxjs/operators';
 
 export type CustomerBasicInfo = Pick<
 	IUserCreateObject,
@@ -111,19 +111,21 @@ export class BasicInfoFormComponent
 				],
 				async (ctrlEmail: FormControl) => {
 					if (!isSearchRdy) {
-						emailSearch$.debounceTime(500).subscribe(async () => {
-							const hasExistedEmail = await this._usersService
-								.isUserExists({
-									exceptCustomerId: this._customerId,
-									memberKey: 'email',
-									memberValue: ctrlEmail.value,
-								})
-								.toPromise();
+						emailSearch$
+							.pipe(debounceTime(500))
+							.subscribe(async () => {
+								const hasExistedEmail = await this._usersService
+									.isUserExists({
+										exceptCustomerId: this._customerId,
+										memberKey: 'email',
+										memberValue: ctrlEmail.value,
+									})
+									.toPromise();
 
-							if (hasExistedEmail) {
-								ctrlEmail.setErrors({ emailTaken: true });
-							}
-						});
+								if (hasExistedEmail) {
+									ctrlEmail.setErrors({ emailTaken: true });
+								}
+							});
 
 						isSearchRdy = true;
 					}

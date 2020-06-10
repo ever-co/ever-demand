@@ -6,7 +6,7 @@ import {
 	Validators,
 } from '@angular/forms';
 import Admin from '@modules/server.common/entities/Admin';
-import { takeUntil, first } from 'rxjs/operators';
+import { takeUntil, first, debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { IAdminUpdateObject } from '@modules/server.common/interfaces/IAdmin';
 import { AdminsService } from '../../../../@core/data/admins.service';
@@ -154,8 +154,7 @@ export class BasicInfoComponent implements OnChanges, OnDestroy {
 	private validations = {
 		usernameControl: () => {
 			this.username.valueChanges
-				.debounceTime(500)
-				.pipe(takeUntil(this.ngDestroy$))
+				.pipe(debounceTime(500), takeUntil(this.ngDestroy$))
 				.subscribe((value) => {
 					this.usernameErrorMsg = this.hasError(this.username)
 						? Object.keys(this.username.errors)[0]
@@ -164,8 +163,7 @@ export class BasicInfoComponent implements OnChanges, OnDestroy {
 		},
 		emailControl: () => {
 			this.email.valueChanges
-				.debounceTime(500)
-				.pipe(takeUntil(this.ngDestroy$))
+				.pipe(debounceTime(500), takeUntil(this.ngDestroy$))
 				.subscribe((value) => {
 					this.emailErrorMsg = this.hasError(this.email)
 						? this.email.errors.email
@@ -176,8 +174,7 @@ export class BasicInfoComponent implements OnChanges, OnDestroy {
 		},
 		firstNameControl: () => {
 			this.firstName.valueChanges
-				.debounceTime(500)
-				.pipe(takeUntil(this.ngDestroy$))
+				.pipe(debounceTime(500), takeUntil(this.ngDestroy$))
 				.subscribe((value) => {
 					this.firstNameErrorMsg = this.hasError(this.firstName)
 						? this.firstName.errors.pattern
@@ -188,8 +185,7 @@ export class BasicInfoComponent implements OnChanges, OnDestroy {
 		},
 		lastNameControl: () => {
 			this.lastName.valueChanges
-				.debounceTime(500)
-				.pipe(takeUntil(this.ngDestroy$))
+				.pipe(debounceTime(500), takeUntil(this.ngDestroy$))
 				.subscribe((value) => {
 					this.lastNameErrorMsg = this.hasError(this.lastName)
 						? this.lastName.errors.pattern

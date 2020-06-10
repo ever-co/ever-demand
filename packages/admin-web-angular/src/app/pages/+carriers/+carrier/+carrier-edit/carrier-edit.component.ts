@@ -7,7 +7,7 @@ import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-r
 import Carrier from '@modules/server.common/entities/Carrier';
 import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 import { ToasterService } from 'angular2-toaster';
-import { first, map, switchMap } from 'rxjs/operators';
+import { map, first } from 'rxjs/operators';
 
 @Component({
 	selector: 'ea-carrier-edit',
@@ -38,14 +38,8 @@ export class CarrierEditComponent implements OnInit {
 	readonly apartment = this.form.get('apartment') as FormControl;
 
 	readonly carrierId$ = this.activatedRoute.params.pipe(map((p) => p['id']));
-
-	readonly carrier$ = this.carrierId$.pipe(
-		switchMap((id) => {
-			return this.carrierRouter.get(id).pipe(first());
-		})
-	);
-
-	private currentCarrier: Carrier;
+	
+	public currentCarrier: Carrier;
 
 	constructor(
 		private readonly toasterService: ToasterService,
@@ -59,10 +53,13 @@ export class CarrierEditComponent implements OnInit {
 		return this.basicInfo.valid && this.location.valid;
 	}
 
-	ngOnInit() {
-		this.carrier$
-			.withLatestFrom(this.carrierId$)
-			.subscribe(([carrier, id]) => {
+	ngOnInit() {		
+		const id = this.activatedRoute.snapshot.params.id;
+
+		this.carrierRouter
+			.get(id)
+			.pipe(first())
+			.subscribe((carrier) => {
 				if (!carrier) {
 					this.toasterService.pop(
 						'error',
