@@ -282,6 +282,7 @@ export class OrdersService extends DBService<Order>
 							type: 'customer',
 							id: user.mercadoCustomerId,
 						},
+						binary_mode: true,
 					};
 
 					const { response } = await mercadopago.payment.create(
