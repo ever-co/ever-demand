@@ -146,7 +146,7 @@ export function getIdFromTheDate(order: Order): string {
 	}
 	const [day, month, year] = new Date(order['createdAt'])
 		.toLocaleDateString()
-		.split('/');
+		.split('.');
 
 	let d = ('0' + day).slice(-2);
 	d = d.substr(-2);
