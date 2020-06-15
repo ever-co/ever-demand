@@ -245,5 +245,6 @@
 	"CANCELED": "Cancelado",
 	"IN_DELIVERY": "En viaje",
 	"COMPLETED": "Completado",
-	"LOCATION_NOTES": "Notas de ubicación"
+	"LOCATION_NOTES": "Notas de ubicación",
+	"ENTER_NOTES_HERE": "Introduce notas aquí"
 }

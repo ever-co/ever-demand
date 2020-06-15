@@ -245,5 +245,6 @@
 	"BULGARIAN": "Bulgarian",
 	"SPANISH": "Spanish",
 	"SELECT": "Select",
-	"LOCATION_NOTES": "Location Notes"
+	"LOCATION_NOTES": "Location Notes",
+	"ENTER_NOTES_HERE": "Enter notes here"
 }
