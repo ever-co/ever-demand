@@ -186,13 +186,9 @@ export class ByLocationPage implements OnInit, OnDestroy {
 						inviteRequest
 					);
 				} else {
-					console.log('22222222222222222222222222222222222');
-					console.log(inviteRequest);
 					const inviteCurrent = await this.inviteRouter.create(
 						inviteRequest
 					);
-					console.log('4444444444444444444444444444');
-					console.log(inviteCurrent);
 					await this.register(inviteCurrent);
 				}
 			}

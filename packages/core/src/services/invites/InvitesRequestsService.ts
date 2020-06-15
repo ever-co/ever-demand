@@ -87,12 +87,7 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 	async create(
 		inviteRequest: IInviteRequestCreateObject
 	): Promise<InviteRequest> {
-		console.log('KJSSSSSSSSSSSSSSSSSSSSSSSSSSSSS');
-		console.log(inviteRequest);
-		const res = await super.create(inviteRequest);
-		console.log('555555555555555555');
-		console.log(res);
-		return res;
+		return super.create(inviteRequest);
 	}
 
 	@asyncListener()
