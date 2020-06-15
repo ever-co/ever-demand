@@ -244,5 +244,6 @@
 	"FAILED": "Error",
 	"CANCELED": "Cancelado",
 	"IN_DELIVERY": "En viaje",
-	"COMPLETED": "Completado"
+	"COMPLETED": "Completado",
+	"LOCATION_NOTES": "Notas de ubicación"
 }

@@ -244,5 +244,6 @@
 	"RUSSIAN": "Russian",
 	"BULGARIAN": "Bulgarian",
 	"SPANISH": "Spanish",
-	"SELECT": "Select"
+	"SELECT": "Select",
+	"LOCATION_NOTES": "Location Notes"
 }

@@ -46,6 +46,7 @@ input GeoLocationInput {
 	streetAddress: String!
 	house: String!
 	postcode: String
+	notes: String
 	loc: Location!
 }
 

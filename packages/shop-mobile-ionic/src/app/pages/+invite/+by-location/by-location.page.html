@@ -54,6 +54,24 @@
 									placeholder="{{ 'HOUSE' | translate }}"
 								/>
 							</div>
+
+							<div
+								class="notes notes-{{
+										'CURRENT_DIRECTION' | translate
+									}}"
+							>
+								<span class="notes" (click)="toggleTextarea()">
+									{{ 'LOCATION_NOTES' | translate }}
+								</span>
+								<ion-textarea
+									[(ngModel)]="notes"
+									*ngIf="showTextarea"
+									autofocus
+									rows="3"
+									cols="18"
+									placeholder="Enter notes here..."
+								></ion-textarea>
+							</div>
 						</ion-col>
 
 						<ion-col no-padding>
