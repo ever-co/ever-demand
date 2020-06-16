@@ -146,14 +146,15 @@ export function getIdFromTheDate(order: Order): string {
 	}
 	const [day, month, year] = new Date(order['createdAt'])
 		.toLocaleDateString()
-		.split('/');
+		.split('.');
 
 	let d = ('0' + day).slice(-2);
 	d = d.substr(-2);
 	let m = ('0' + month).slice(-2);
 	m = m.substr(-2);
+	let y = year.slice(0, 4);
 
-	return `${d}${m}${year}-${order.orderNumber}`;
+	return `${d}${m}${y}-${order.orderNumber}`;
 }
 
 export default Utils;
