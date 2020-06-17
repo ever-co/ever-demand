@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap, takeUntil, first } from 'rxjs/operators';
+import { switchMap, takeUntil, first, debounceTime } from 'rxjs/operators';
 import Order from '@modules/server.common/entities/Order';
 import { Subject } from 'rxjs';
 import Warehouse from '@modules/server.common/entities/Warehouse';
@@ -37,15 +37,11 @@ export class OrderComponent implements OnDestroy {
 		private readonly orderRouter: OrderRouter,
 		private readonly translateService: TranslateService
 	) {
-		this.order$ = this._router.params.pipe(
-			switchMap((params) => {
-				return this.orderRouter.get(params.id, {
-					populateWarehouse: true,
-					populateCarrier: true,
-				});
-			}),
-			takeUntil(this.ngDestroy$)
-		);
+		const id = this._router.snapshot.params.id;
+
+		this.order$ = this.orderRouter
+			.get(id, { populateWarehouse: true, populateCarrier: true })
+			.pipe(takeUntil(this.ngDestroy$));
 	}
 
 	get titleWarehouse() {

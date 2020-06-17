@@ -183,7 +183,8 @@
 			*ngIf="selectedOrder.products.length"
 			class="col-12 no-padding slider"
 		>
-			<slideshow
+			<!-- TODO un-comment when the following is fixed https://github.com/dockleryxk/ng-simple-slideshow/issues/105 -->
+			<!-- <slideshow
 				#slideshow
 				[height]="'300px'"
 				[captionBackground]="'rgba(0, 0, 0, .5)'"
@@ -192,7 +193,7 @@
 				[imageUrls]="slideImages"
 				[lazyLoad]="selectedOrder.products.length"
 				[autoPlayWaitForLazyLoad]="true"
-			></slideshow>
+			></slideshow> -->
 		</div>
 	</nb-card-body>
 </nb-card>
