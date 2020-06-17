@@ -16,7 +16,7 @@ export class PriceCountInputComponent implements ViewCell, OnInit {
 
 	ngOnInit() {
 		this.id.emit(this.rowData.id);
-		if (this.placeholder === 'Count') {
+		if (this.placeholder === 'Count' || this.placeholder === 'Price') {
 			this.value = 1;
 		}
 	}
