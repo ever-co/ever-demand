@@ -51,22 +51,23 @@ export class WarehouseManageTabsDetailsComponent
 	readonly form: FormGroup;
 
 	uploaderPlaceholder: string;
+	carriersOptions: IMultiSelectOption[];
 
-	carriersOptions$: Observable<IMultiSelectOption[]> = concat(
-		of([]),
-		this._carrierRouter.getAllActive().pipe(
-			map((carriers) =>
-				carriers
-					.filter((c) => c.isSharedCarrier)
-					.map((c) => {
-						return {
-							id: c.id,
-							name: `${c.firstName} ${c.lastName}`,
-						};
-					})
-			)
-		)
-	);
+	// carriersOptions$: Observable<IMultiSelectOption[]> = concat(
+	// 	of([]),
+	// 	this._carrierRouter.getAllActive().pipe(
+	// 		map((carriers) =>
+	// 			carriers
+	// 				.filter((c) => c.isSharedCarrier)
+	// 				.map((c) => {
+	// 					return {
+	// 						id: c.id,
+	// 						name: `${c.firstName} ${c.lastName}`,
+	// 					};
+	// 				})
+	// 		)
+	// 	)
+	// );
 
 	private _delivery: 'all' | 'onlyStore' | 'preferStore' = 'all';
 
@@ -166,6 +167,7 @@ export class WarehouseManageTabsDetailsComponent
 
 	ngOnInit(): void {
 		this.getUploaderPlaceholderText();
+		this.loadCarriersOptions();
 	}
 
 	ngAfterViewInit() {
@@ -269,5 +271,21 @@ export class WarehouseManageTabsDetailsComponent
 			.toPromise();
 
 		this.uploaderPlaceholder = `${res['WAREHOUSE_VIEW.MUTATION.PHOTO']} (${res['OPTIONAL']})`;
+	}
+
+	private async loadCarriersOptions() {
+		let carriers = await this._carrierRouter
+			.getAllActive()
+			.pipe(first())
+			.toPromise();
+
+		carriers = carriers.filter((c) => c.isSharedCarrier);
+
+		this.carriersOptions = carriers.map((c) => {
+			return {
+				id: c.id,
+				name: `${c.firstName} ${c.lastName}`,
+			};
+		});
 	}
 }
