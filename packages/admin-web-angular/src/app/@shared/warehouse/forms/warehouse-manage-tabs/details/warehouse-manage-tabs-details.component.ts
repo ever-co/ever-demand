@@ -13,10 +13,9 @@ import {
 	Validators,
 } from '@angular/forms';
 import { IWarehouseCreateObject } from '@modules/server.common/interfaces/IWarehouse';
-import { map, first } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
-import { Observable, concat, of } from 'rxjs';
 import { FormHelpers } from '../../../../forms/helpers';
 import _ from 'lodash';
 import isUrl from 'is-url';
