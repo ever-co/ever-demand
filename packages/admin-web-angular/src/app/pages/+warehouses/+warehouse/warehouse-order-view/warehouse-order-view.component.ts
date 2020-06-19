@@ -97,8 +97,7 @@ export class WarehouseOrderViewComponent
 					p.product.description
 				),
 				style: {
-					maxWidth: '100%',
-					maxHeight: '100%',
+					height: '100%',
 				},
 			};
 		});
