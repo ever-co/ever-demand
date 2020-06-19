@@ -21,6 +21,7 @@ export default class FakeDataUsers {
 					countryId: faker.random.number(200) as Country,
 					city: faker.address.city(),
 					postcode: faker.address.zipCode(),
+					notes: faker.lorem.text(1),
 					streetAddress: faker.address.streetAddress(),
 					house: faker.random.number(199).toString(),
 					loc: {
