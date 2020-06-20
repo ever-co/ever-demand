@@ -141,7 +141,6 @@ export class OrderComponent implements OnInit {
 
 	ngOnInit() {
 		this._sliceOrderProducts();
-		console.log('333333333333333', this.order);
 	}
 
 	toggleOrderProducts() {
