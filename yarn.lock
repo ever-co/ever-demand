@@ -429,6 +429,11 @@
   resolved "https://registry.yarnpkg.com/@angular/material/-/material-9.2.2.tgz#53b2d8a62fe48b79127cdf43b3b8b082e4c3df27"
   integrity sha512-gdQiMJ6PtW/5fd+0mglHFyzxULDCBGjn9RTET3sUq2rkc9+jBXr4OvnsUyBWSnqqv97XqotVDIx5JgE4/YX/Rw==
 
+"@angular/material@^9.2.4":
+  version "9.2.4"
+  resolved "https://packages.services.inno-charge.de/@angular%2fmaterial/-/material-9.2.4.tgz#2666ef606fbb88d60f8e2f18c5e4f94a3dd572d8"
+  integrity sha512-LkoTXE6B0slvMhvfZDdPWaz4yaYLkaAp5VSPunI9pxGsPxzqEV9e210wC1/sjG/76Nk8Ep7/2z9XKac8Q9bMwA==
+
 "@angular/platform-browser-dynamic@^9.1.0", "@angular/platform-browser-dynamic@^9.1.1":
   version "9.1.4"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-9.1.4.tgz#bf1cde9156bd29eeeef932b683b0c993614f75d5"
@@ -2046,7 +2051,7 @@
     "@angular/platform-browser-dynamic" "^9.1.0"
     "@angular/router" "^9.1.0"
     "@angular/service-worker" "^9.1.0"
-    "@ever-platform/common" "file:C:/Users/Alish/AppData/Local/Yarn/Cache/v4/npm-@ever-platform-common-angular-0.3.0-908281c7-a6e3-4151-85b0-a93d821f77e5-1589281352293/node_modules/@ever-platform/common"
+    "@ever-platform/common" "file:../../Library/Caches/Yarn/v4/npm-@ever-platform-common-angular-0.3.0-8d9d670b-1cc3-4851-beb0-a19e2801fc24-1592842867890/node_modules/@ever-platform/common"
     "@ngx-translate/core" "^12.1.2"
     "@ngx-translate/http-loader" "^4.0.0"
     tslib "^1.10.0"
