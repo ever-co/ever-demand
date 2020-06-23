@@ -96,8 +96,9 @@ export class WarehouseOrderViewComponent
 				title: this._productLocalesService.getTranslate(
 					p.product.description
 				),
-				backgroundSize: 'contain',
-				backgroundPosition: 'center',
+				style: {
+					height: '100%',
+				},
 			};
 		});
 
