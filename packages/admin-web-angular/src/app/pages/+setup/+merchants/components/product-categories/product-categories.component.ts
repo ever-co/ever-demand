@@ -94,7 +94,7 @@ export class SetupMerchantProductCategoriesComponent {
 
 	async edit() {
 		try {
-			const editObj = this.basicInfo.getEditObject(this.currentCategory);
+			const editObj = this.basicInfo.getEditObject();
 			const category = await this.productsCategoryService
 				.update(this.currentCategory.id, editObj)
 				.pipe(first())

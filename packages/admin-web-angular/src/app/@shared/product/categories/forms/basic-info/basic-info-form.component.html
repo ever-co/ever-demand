@@ -1,6 +1,21 @@
 <form class="form-horizontal pt-4 pb-0" [formGroup]="form">
 	<div class="form-group row">
 		<label class="col-sm-2 control-label">{{
+			'LANGUAGE' | translate
+		}}</label>
+		<div class="col-sm-9">
+			<select class="form-control" formControlName="locale">
+				<option value="en-US">{{ 'ENGLISH' | translate }}</option>
+				<option value="he-IL">{{ 'HEBREW' | translate }}</option>
+				<option value="ru-RU">{{ 'RUSSIAN' | translate }}</option>
+				<option value="bg-BG">{{ 'BULGARIAN' | translate }}</option>
+				<option value="es-ES">{{ 'SPANISH' | translate }}</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label class="col-sm-2 control-label">{{
 			'CATEGORY_VIEW.CREATE.CATEGORY_NAME' | translate
 		}}</label>
 		<div class="col-sm-9">

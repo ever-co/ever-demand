@@ -21,7 +21,7 @@
 		status="success"
 		size="large"
 		type="button"
-		(click)="editCategory(basicInfo.getEditObject(currentCategory))"
+		(click)="editCategory(basicInfo.getEditObject())"
 		[disabled]="basicInfo.form.invalid"
 	>
 		{{ 'CATEGORY_VIEW.EDIT.DONE' | translate }}!
