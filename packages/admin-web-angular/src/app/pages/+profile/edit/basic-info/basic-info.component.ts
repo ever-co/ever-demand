@@ -102,6 +102,7 @@ export class BasicInfoComponent implements OnChanges, OnDestroy {
 				.pipe(first())
 				.toPromise();
 			this.loading = false;
+			this.basicInfoForm.markAsPristine();
 			this.toasterService.pop('success', 'Successfully updated data');
 		} catch (error) {
 			this.loading = false;
@@ -137,6 +138,7 @@ export class BasicInfoComponent implements OnChanges, OnDestroy {
 		this.validations.emailControl();
 		this.validations.firstNameControl();
 		this.validations.lastNameControl();
+		this.validations.pictureControl();
 	}
 
 	deleteImg() {
@@ -192,6 +194,15 @@ export class BasicInfoComponent implements OnChanges, OnDestroy {
 							? this.nameMustContainOnlyLetters()
 							: Object.keys(this.lastName.errors)[0]
 						: '';
+				});
+		},
+		pictureControl: () => {
+			this.picture.valueChanges
+				.pipe(debounceTime(500), takeUntil(this.ngDestroy$))
+				.subscribe((value) => {
+					value !== this.admin.pictureUrl && !this.picture.invalid
+						? this.picture.markAsDirty()
+						: this.picture.markAsPristine();
 				});
 		},
 	};
