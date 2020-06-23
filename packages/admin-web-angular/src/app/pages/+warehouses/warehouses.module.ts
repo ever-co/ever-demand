@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { FormWizardModule } from '@ever-co/angular2-wizard';
+import { FormWizardModule, WizardComponent } from '@ever-co/angular2-wizard';
 import { ToasterModule } from 'angular2-toaster';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ThemeModule } from '../../@theme';
@@ -42,7 +42,7 @@ import { WarehouseTrackModule } from './+warehouse-track/warehouse-track.module'
 		NbButtonModule,
 	],
 	declarations: [WarehousesComponent],
-	entryComponents: [],
+	entryComponents: [WizardComponent],
 	providers: [JsonPipe],
 })
 export class WarehousesModule {}
