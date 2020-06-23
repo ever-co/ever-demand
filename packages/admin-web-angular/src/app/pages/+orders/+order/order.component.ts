@@ -98,6 +98,13 @@ export class OrderComponent implements OnDestroy {
 		}
 		if (user.geoLocation) {
 			details.push(user.fullAddress);
+
+			user.geoLocation.notes =
+				user.geoLocation.notes === undefined
+					? ''
+					: user.geoLocation.notes;
+
+			details.push(`Notes: ${user.geoLocation.notes}`);
 		}
 		return details.filter((d) => d);
 	}

@@ -87,6 +87,7 @@ export class WarehouseOrdersService {
 										streetAddress
 										house
 										postcode
+										notes
 										countryName
 										city
 										loc {

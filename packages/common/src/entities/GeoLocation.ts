@@ -31,6 +31,10 @@ class GeoLocation extends DBObject<IGeoLocation, IGeoLocationCreateObject>
 	@Column()
 	postcode?: string | null;
 
+	@Schema({ required: false, type: String })
+	@Column()
+	notes?: string | null;
+
 	@Schema({ type: String, required: false })
 	@Column()
 	apartment?: string | null;

@@ -100,6 +100,7 @@ export class UsersService {
 								streetAddress
 								city
 								house
+								notes
 								loc {
 									type
 									coordinates
