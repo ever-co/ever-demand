@@ -11,7 +11,7 @@ import { ToasterService } from 'angular2-toaster';
 import { WizardComponent } from '@ever-co/angular2-wizard';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, finalize } from 'rxjs/operators';
 import { UsersService } from '../../../../@core/data/users.service';
 import { WarehouseOrdersService } from '../../../../@core/data/warehouseOrders.service';
 import User from '@modules/server.common/entities/User';
@@ -20,7 +20,6 @@ import { WarehouseOrderCreateUserComponent } from './create-user/warehouse-order
 import { WarehouseOrderModalComponent } from '../../../../@shared/warehouse/+warehouse-order-modal/warehouse-order-modal.component';
 import { TranslateService } from '@ngx-translate/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import 'rxjs/add/operator/finally';
 
 const perPage = 5;
 
@@ -156,7 +155,7 @@ export class WarehouseOrderComponent implements OnInit, OnDestroy {
 				products: orderProducts,
 			})
 			.pipe(takeUntil(this._ngDestroy$))
-			.finally(() => this.orderFinishedEmitter.emit())
+			.pipe(finalize(() => this.orderFinishedEmitter.emit()))
 			.subscribe(
 				() => {
 					this.loading = false;
