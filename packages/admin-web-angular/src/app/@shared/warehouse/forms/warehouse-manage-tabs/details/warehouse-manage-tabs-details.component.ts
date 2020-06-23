@@ -43,6 +43,7 @@ export class WarehouseManageTabsDetailsComponent
 	implements OnInit, AfterViewInit {
 	@ViewChild('fileInput')
 	fileInput: ElementRef;
+
 	@ViewChild('logoPreview')
 	logoPreviewElement: ElementRef;
 
@@ -50,23 +51,8 @@ export class WarehouseManageTabsDetailsComponent
 	readonly form: FormGroup;
 
 	uploaderPlaceholder: string;
-	carriersOptions: IMultiSelectOption[];
 
-	// carriersOptions$: Observable<IMultiSelectOption[]> = concat(
-	// 	of([]),
-	// 	this._carrierRouter.getAllActive().pipe(
-	// 		map((carriers) =>
-	// 			carriers
-	// 				.filter((c) => c.isSharedCarrier)
-	// 				.map((c) => {
-	// 					return {
-	// 						id: c.id,
-	// 						name: `${c.firstName} ${c.lastName}`,
-	// 					};
-	// 				})
-	// 		)
-	// 	)
-	// );
+	carriersOptions: IMultiSelectOption[];
 
 	private _delivery: 'all' | 'onlyStore' | 'preferStore' = 'all';
 
@@ -78,18 +64,23 @@ export class WarehouseManageTabsDetailsComponent
 	get name() {
 		return this.form.get('name');
 	}
+
 	get logo() {
 		return this.form.get('logo');
 	}
+
 	get isActive() {
 		return this.form.get('isActive');
 	}
+
 	get hasRestrictedCarriers() {
 		return this.form.get('hasRestrictedCarriers');
 	}
+
 	get carriersIds() {
 		return this.form.get('carriersIds');
 	}
+
 	get showLogoMeta() {
 		return this.logo && this.logo.value !== '';
 	}
