@@ -127,7 +127,7 @@ export class AddWarehouseProductsComponent implements OnInit, OnDestroy {
 								const warehouseProd = this.warehouseProducts.filter(
 									(p) => p.product === id
 								)[0];
-								warehouseProd['price'] = 1;
+
 								instance.newValue
 									.pipe(takeUntil(this.ngDestroy$))
 									.subscribe((v) => {
