@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap, takeUntil, first, debounceTime } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import Order from '@modules/server.common/entities/Order';
 import { Subject } from 'rxjs';
 import Warehouse from '@modules/server.common/entities/Warehouse';
