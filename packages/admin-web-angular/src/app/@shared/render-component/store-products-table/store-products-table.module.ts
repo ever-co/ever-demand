@@ -8,6 +8,8 @@ import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 import { StoreProductAmountComponent } from './store-product-amount/store-product-amount.component';
 import { StoreOrderProductAmountComponent } from './store-order-product-amount/store-order-product-amount.component';
 import { ConfirmationModalModule } from '@app/@shared/confirmation-modal/confirmation-modal.module';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { StoreProductIsActiveComponent } from './store-product-is-active/store-product-is-active.component';
 
 const COMPONENTS = [
 	StoreProductImageComponent,
@@ -15,6 +17,7 @@ const COMPONENTS = [
 	StoreProductQtyComponent,
 	StoreProductAmountComponent,
 	StoreOrderProductAmountComponent,
+	StoreProductIsActiveComponent,
 ];
 
 @NgModule({
@@ -24,6 +27,7 @@ const COMPONENTS = [
 		NbSpinnerModule,
 		ConfirmationModalModule,
 		NbButtonModule,
+		MatSlideToggleModule,
 	],
 	declarations: COMPONENTS,
 	entryComponents: COMPONENTS,

@@ -19,6 +19,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import { ProductsCategoryService } from '@app/@core/data/productsCategory.service';
 import Product from '@modules/server.common/entities/Product';
 import { StoreProductImageComponent } from '@app/@shared/render-component/store-products-table/store-product-image/store-product-image.component';
+import { StoreProductIsActiveComponent } from '@app/@shared/render-component/store-products-table/store-product-is-active/store-product-is-active.component';
 
 export interface WarehouseProductViewModel {
 	id: string;
@@ -119,6 +120,7 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 
 	selectProductTmp(ev) {
 		this.selectedProducts = ev.selected;
+		console.warn(ev);
 	}
 
 	private _getCategories() {
@@ -210,6 +212,11 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 								class: 'text-center',
 								type: 'custom',
 								renderComponent: StoreProductAmountComponent,
+							},
+							isActive: {
+								title: 'Active',
+								type: 'custom',
+								renderComponent: StoreProductIsActiveComponent,
 							},
 						},
 						pager: {

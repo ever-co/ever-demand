@@ -9,6 +9,7 @@ import { RenderComponentsModule } from '../../render-component/render-components
 import { WarehouseProductsComponent } from './warehouse-products-table';
 import { StoreProductsTableModule } from '@app/@shared/render-component/store-products-table/store-products-table.module';
 import { ProductCategoriesModule } from '@app/@shared/render-component/product-categories/product-categories.module';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 const COMPONENTS = [
 	WarehouseAddChoiceComponent,
@@ -25,6 +26,7 @@ const COMPONENTS = [
 		RenderComponentsModule,
 		StoreProductsTableModule,
 		ProductCategoriesModule,
+		MatSlideToggleModule,
 	],
 	exports: COMPONENTS,
 	declarations: COMPONENTS,

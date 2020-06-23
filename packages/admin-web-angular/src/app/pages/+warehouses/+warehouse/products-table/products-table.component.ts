@@ -55,9 +55,11 @@ export class ProductsTableComponent implements OnDestroy {
 
 	editProduct(ev) {
 		this._router.navigate(['/products/list/' + ev.data.id + '/edit']);
+		console.warn(ev);
 	}
 
 	removeProduct(ev) {
+		console.warn(ev);
 		const activeModal = this.modalService.open(ConfimationModalComponent, {
 			size: 'sm',
 			container: 'nb-layout',
