@@ -7,7 +7,7 @@ import { ThemeModule } from '../../../../@theme';
 import { NbSpinnerModule } from '@nebular/theme';
 import { WarehouseOrderViewComponent } from './warehouse-order-view.component';
 import { OrderHeaderInfoModule } from './order-header-info/order-header-info.module';
-import { SlideshowModule } from 'ng-simple-slideshow';
+import { ImageSliderModule } from '../../../../@shared/render-component/image-slider/image-slider.module';
 
 @NgModule({
 	imports: [
@@ -18,7 +18,7 @@ import { SlideshowModule } from 'ng-simple-slideshow';
 		TranslateModule.forChild(),
 		NbSpinnerModule,
 		OrderHeaderInfoModule,
-		SlideshowModule,
+		ImageSliderModule,
 	],
 	declarations: [WarehouseOrderViewComponent],
 	exports: [WarehouseOrderViewComponent],

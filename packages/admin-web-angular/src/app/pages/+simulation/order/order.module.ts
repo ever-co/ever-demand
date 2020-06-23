@@ -5,7 +5,7 @@ import { ToasterModule } from 'angular2-toaster';
 import { TranslateModule } from '@ngx-translate/core';
 import { SimulationOrderComponent } from './order.component';
 import { ElapsedTimeModule } from '@app/@shared/elapsed-time/elapsed-time.module';
-import { SlideshowModule } from 'ng-simple-slideshow';
+import { ImageSliderModule } from '../../../@shared/render-component/image-slider/image-slider.module';
 import { OrderMapModule } from '@app/@shared/order/order-map/order-map.module';
 
 const SIMULATION_ORDER_COMPONENTS = [SimulationOrderComponent];
@@ -17,8 +17,8 @@ const SIMULATION_ORDER_COMPONENTS = [SimulationOrderComponent];
 		ToasterModule.forRoot(),
 		TranslateModule.forChild(),
 		ElapsedTimeModule,
-		SlideshowModule,
 		OrderMapModule,
+		ImageSliderModule,
 	],
 
 	declarations: [...SIMULATION_ORDER_COMPONENTS],

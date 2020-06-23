@@ -88,16 +88,7 @@
 
 		<div class="row">
 			<div class="col-12 no-padding">
-				<slideshow
-					*ngIf="order.products.length"
-					[height]="'355px'"
-					[autoPlay]="true"
-					[autoPlayInterval]="5000"
-					[imageUrls]="getSlideImage(order)"
-					[lazyLoad]="order.products.length"
-					[autoPlayWaitForLazyLoad]="true"
-					>></slideshow
-				>
+				<image-slider [slideImages]="slideImages"></image-slider>
 			</div>
 		</div>
 	</div>
