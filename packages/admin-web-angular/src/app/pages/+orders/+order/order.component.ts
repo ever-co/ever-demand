@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap, takeUntil, first, debounceTime } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import Order from '@modules/server.common/entities/Order';
 import { Subject } from 'rxjs';
 import Warehouse from '@modules/server.common/entities/Warehouse';
@@ -98,6 +98,13 @@ export class OrderComponent implements OnDestroy {
 		}
 		if (user.geoLocation) {
 			details.push(user.fullAddress);
+
+			user.geoLocation.notes =
+				user.geoLocation.notes === undefined
+					? ''
+					: user.geoLocation.notes;
+
+			details.push(`Notes: ${user.geoLocation.notes}`);
 		}
 		return details.filter((d) => d);
 	}

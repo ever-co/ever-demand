@@ -10,6 +10,7 @@ export interface IAddress {
 	countryId: Country | null;
 	city: string | null;
 	postcode?: string | null;
+	notes?: string | null;
 	streetAddress: string | null;
 	house: string | null;
 }
@@ -19,6 +20,7 @@ export function getEmptyAddress(): IAddress {
 		countryId: null,
 		city: '',
 		postcode: '',
+		notes: '',
 		streetAddress: '',
 		house: '',
 	};
@@ -32,6 +34,7 @@ export interface IGeolocationUpdateObject {
 	countryId?: Country | null;
 	city?: string | null;
 	postcode?: string | null;
+	notes?: string | null;
 	streetAddress?: string | null;
 	house?: string | null;
 	loc?: ILocation;

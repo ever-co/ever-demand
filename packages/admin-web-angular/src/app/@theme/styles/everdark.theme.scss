@@ -1,18 +1,19 @@
 $gray: #888;
+$primary: #3366ff;
 $danger: #ce4843;
 $success: #47d26f;
 $dark: hsl(234, 26, 25);
 $nb-themes: nb-register-theme(
 	(
-		color-primary-100: $gray,
-		color-primary-200: $gray,
-		color-primary-300: $gray,
-		color-primary-400: $gray,
-		color-primary-500: $gray,
-		color-primary-600: $gray,
-		color-primary-700: $gray,
-		color-primary-800: $gray,
-		color-primary-900: $gray,
+		color-primary-100: $primary,
+		color-primary-200: $primary,
+		color-primary-300: $primary,
+		color-primary-400: $primary,
+		color-primary-500: $primary,
+		color-primary-600: $primary,
+		color-primary-700: $primary,
+		color-primary-800: $primary,
+		color-primary-900: $primary,
 		color-info-100: $gray,
 		color-info-200: $gray,
 		color-info-300: $gray,

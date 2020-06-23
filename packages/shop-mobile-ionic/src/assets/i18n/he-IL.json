@@ -243,5 +243,7 @@
 	"HEBREW": "עִברִית",
 	"RUSSIAN": "רוּסִי",
 	"BULGARIAN": "בולגרית",
-	"SELECT": "בחר"
+	"SELECT": "בחר",
+	"LOCATION_NOTES": "הערות מיקום",
+	"ENTER_NOTES_HERE": "הזן הערות כאן"
 }

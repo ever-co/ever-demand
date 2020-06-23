@@ -7,6 +7,7 @@ interface IEnterByLocation {
 	streetAddress: string;
 	house: string;
 	postcode?: string | null;
+	notes?: string | null;
 	apartment: string;
 }
 
@@ -21,6 +22,7 @@ export function toEnterByLocation(
 		city: location.city,
 		countryId: location.countryId,
 		postcode: location.postcode,
+		notes: location.notes,
 	} as any;
 }
 

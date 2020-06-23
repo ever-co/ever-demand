@@ -98,6 +98,7 @@ export class CarrierService {
 								geoLocation {
 									house
 									postcode
+									notes
 									countryName
 									city
 									streetAddress

@@ -26,6 +26,7 @@ type GeoLocation {
 	streetAddress: String!
 	house: String!
 	postcode: String
+	notes: String
 	loc: Loc!
 	coordinates: GeoLocationCoordinates!
 }
@@ -43,6 +44,7 @@ input GeoLocationCreateInput {
 	streetAddress: String!
 	house: String!
 	postcode: String
+	notes: String
 	loc: LocInput!
 }
 
@@ -52,6 +54,7 @@ input GeoLocationUpdateInput {
 	streetAddress: String
 	house: String
 	postcode: String
+	notes: String
 	loc: LocInput
 }
 
@@ -61,6 +64,7 @@ input GeoLocationFindInput {
 	streetAddress: String
 	house: String
 	postcode: String
+	notes: String
 	loc: LocInput
 }
 

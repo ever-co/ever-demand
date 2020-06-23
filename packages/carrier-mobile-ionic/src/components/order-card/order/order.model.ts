@@ -16,6 +16,7 @@ export const OrderFragment = gql`
 				streetAddress
 				house
 				postcode
+				notes
 				house
 				city
 			}

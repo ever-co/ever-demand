@@ -10,6 +10,7 @@
 			</div>
 
 			<div class="top">{{ customerAddress }}</div>
+			<div class="bottom">{{ customerNotes }}</div>
 			<small>
 				<div *ngIf="order.isCancelled">
 					{{ 'DELIVERY_VIEW.CANCELED' | translate }}

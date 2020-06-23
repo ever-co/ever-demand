@@ -13,10 +13,9 @@ import {
 	Validators,
 } from '@angular/forms';
 import { IWarehouseCreateObject } from '@modules/server.common/interfaces/IWarehouse';
-import { map, first } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
-import { Observable, concat, of } from 'rxjs';
 import { FormHelpers } from '../../../../forms/helpers';
 import _ from 'lodash';
 import isUrl from 'is-url';
@@ -44,6 +43,7 @@ export class WarehouseManageTabsDetailsComponent
 	implements OnInit, AfterViewInit {
 	@ViewChild('fileInput')
 	fileInput: ElementRef;
+
 	@ViewChild('logoPreview')
 	logoPreviewElement: ElementRef;
 
@@ -52,21 +52,7 @@ export class WarehouseManageTabsDetailsComponent
 
 	uploaderPlaceholder: string;
 
-	carriersOptions$: Observable<IMultiSelectOption[]> = concat(
-		of([]),
-		this._carrierRouter.getAllActive().pipe(
-			map((carriers) =>
-				carriers
-					.filter((c) => c.isSharedCarrier)
-					.map((c) => {
-						return {
-							id: c.id,
-							name: `${c.firstName} ${c.lastName}`,
-						};
-					})
-			)
-		)
-	);
+	carriersOptions: IMultiSelectOption[];
 
 	private _delivery: 'all' | 'onlyStore' | 'preferStore' = 'all';
 
@@ -78,18 +64,23 @@ export class WarehouseManageTabsDetailsComponent
 	get name() {
 		return this.form.get('name');
 	}
+
 	get logo() {
 		return this.form.get('logo');
 	}
+
 	get isActive() {
 		return this.form.get('isActive');
 	}
+
 	get hasRestrictedCarriers() {
 		return this.form.get('hasRestrictedCarriers');
 	}
+
 	get carriersIds() {
 		return this.form.get('carriersIds');
 	}
+
 	get showLogoMeta() {
 		return this.logo && this.logo.value !== '';
 	}
@@ -166,6 +157,7 @@ export class WarehouseManageTabsDetailsComponent
 
 	ngOnInit(): void {
 		this.getUploaderPlaceholderText();
+		this.loadCarriersOptions();
 	}
 
 	ngAfterViewInit() {
@@ -269,5 +261,21 @@ export class WarehouseManageTabsDetailsComponent
 			.toPromise();
 
 		this.uploaderPlaceholder = `${res['WAREHOUSE_VIEW.MUTATION.PHOTO']} (${res['OPTIONAL']})`;
+	}
+
+	private async loadCarriersOptions() {
+		let carriers = await this._carrierRouter
+			.getAllActive()
+			.pipe(first())
+			.toPromise();
+
+		carriers = carriers.filter((c) => c.isSharedCarrier);
+
+		this.carriersOptions = carriers.map((c) => {
+			return {
+				id: c.id,
+				name: `${c.firstName} ${c.lastName}`,
+			};
+		});
 	}
 }

@@ -116,6 +116,7 @@ class InviteRequest
 				streetAddress: this.geoLocation.streetAddress,
 				city: this.geoLocation.city,
 				postcode: this.geoLocation.postcode,
+				notes: this.geoLocation.notes,
 				countryId: this.geoLocation.countryId,
 			};
 		} else {
