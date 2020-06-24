@@ -278,6 +278,7 @@
 			"PAYMENTS": {
 				"PAYMENTS": "Pagos",
 				"ALLOW_ONLINE_PAYMENT": "¿Permitir pagos online?",
+				"ALLOW_CASH_PAYMENT": "¿Permitir pagos en efectivo?",
 				"STRIPE": {
 					"PAY_BUTTON_TEXT": "Texto de botón de pago",
 					"CURRENCY": "Moneda",
