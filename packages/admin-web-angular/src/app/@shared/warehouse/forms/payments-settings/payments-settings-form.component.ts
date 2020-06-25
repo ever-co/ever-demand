@@ -19,7 +19,7 @@ export class PaymentsSettingsFormComponent {
 	isEdit: boolean;
 
 	isPaymentEnabled: boolean = false;
-	isCashPaymentEnabled: boolean = false;
+	isCashPaymentEnabled: boolean = true;
 
 	get isPaymentValid() {
 		return !this.isPaymentEnabled || this.paymentGateways.isValid;

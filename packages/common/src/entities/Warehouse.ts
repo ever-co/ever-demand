@@ -75,7 +75,7 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	 * @memberof Warehouse
 	 */
 
-	@Types.Boolean(false)
+	@Types.Boolean(true)
 	@Column()
 	isCashPaymentEnabled: boolean;
 
