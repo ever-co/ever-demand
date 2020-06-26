@@ -85,11 +85,7 @@ export class WarehouseManageTabsComponent {
 	}
 
 	get validForm() {
-		return (
-			this.form.valid &&
-			this.contactInfoForm.validForm &&
-			this.paymentsSettingsForm.isPaymentValid
-		);
+		return this.form.valid;
 	}
 
 	get deliveryAreas() {
