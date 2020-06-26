@@ -1,0 +1,50 @@
+<ion-grid class="promotion-mutation-component">
+	<h4 class="custom-title-popup">
+		{{ (promotion ? 'Edit promotion' : 'Add promotion') | translate }}
+	</h4>
+	<button class="close" *ngIf="visible" (click)="cancelModal()">
+		<i class="fa fa-close"></i>
+	</button>
+	<ion-row class="crete-user">
+		<ion-col [hidden]="isNextStepAvailable">
+			<basic-info-form
+				#basicInfoForm
+				[form]="basicInfo"
+				[promotionData]="promotion"
+			></basic-info-form>
+		</ion-col>
+
+		<ion-col [hidden]="!isNextStepAvailable">
+			<details-info-form #promotionDetailsForm> </details-info-form>
+		</ion-col>
+	</ion-row>
+
+	<ion-row>
+		<ion-col class="text-center mb-3">
+			<ion-button
+				color="light"
+				class="mr-2"
+				*ngIf="isNextStepAvailable"
+				(click)="isNextStepAvailable = false"
+			>
+				{{ 'WAREHOUSE_VIEW.NEW_ORDER_VIEW.BACK' | translate }}
+			</ion-button>
+			<ion-button
+				color="dark"
+				*ngIf="!isNextStepAvailable"
+				(click)="isNextStepAvailable = true"
+				[disabled]="basicInfo.invalid"
+			>
+				{{ 'WAREHOUSE_VIEW.NEW_ORDER_VIEW.NEXT' | translate }}
+			</ion-button>
+			<ion-button
+				color="dark"
+				*ngIf="isNextStepAvailable"
+				(click)="promotion? savePromotion() : createPromotion()"
+			>
+				{{ (promotion ? 'Done' :
+				'WAREHOUSE_VIEW.NEW_ORDER_VIEW.ADD_PROMOTION' ) | translate }}
+			</ion-button>
+		</ion-col>
+	</ion-row>
+</ion-grid>

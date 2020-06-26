@@ -1,0 +1,31 @@
+type Promotion {
+	_id: String!
+	title: String!
+	description: String!
+	active: Boolean
+	activeFrom: Date
+	activeTo: Date
+	image: String
+	product: Product
+	purchasesCount: Int
+}
+
+input PromotionCreateInput {
+	title: String!
+	description: String!
+	active: Boolean!
+	activeFrom: Date
+	activeTo: Date
+	image: String
+	# tstodo
+	# product: String
+	purchasesCount: Int
+}
+
+type Query {
+	promotions: [Promotion]
+}
+
+type Mutation {
+	createPromotion(createInput: PromotionCreateInput): Promotion
+}

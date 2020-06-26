@@ -1,0 +1,69 @@
+<form class="carrier-basic-info" [formGroup]="form">
+	<ion-grid>
+		<ion-row>
+			<ion-col>
+				<h5 class="text-center">
+					Basic Info
+				</h5>
+			</ion-col>
+		</ion-row>
+		<ion-col text-center>
+			<ion-item>
+				<ion-label class="labels" position="floating">Title</ion-label>
+				<ion-input
+					placeholder="Title"
+					formControlName="title"
+				></ion-input>
+			</ion-item>
+		</ion-col>
+		<ion-row>
+			<ion-col text-center>
+				<ion-item>
+					<ion-label class="labels" position="floating"
+						>Active From</ion-label
+					>
+					<ion-datetime
+						value="1990-02-19"
+						placeholder="Select Date"
+						formControlName="activeFrom"
+					></ion-datetime>
+				</ion-item>
+			</ion-col>
+			<ion-col text-center>
+				<ion-item>
+					<ion-label class="labels" position="floating"
+						>Active To</ion-label
+					>
+					<ion-datetime
+						value="1990-02-19"
+						placeholder="Select Date"
+						formControlName="activeTo"
+					></ion-datetime>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-label class="labels" position="floating"
+						>Purchases count</ion-label
+					>
+					<ion-input
+						type="number"
+						formControlName="purchasesCount"
+					></ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col text-center>
+				<ion-label class="labels" position="floating"
+					>Is Active</ion-label
+				>
+				<ion-checkbox
+					formControlName="active"
+					color="primary"
+				></ion-checkbox>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</form>
