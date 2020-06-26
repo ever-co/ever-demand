@@ -54,6 +54,14 @@ export interface IWarehouseProductCreateObject extends DBCreateObject {
 	isManufacturing?: boolean;
 
 	/**
+	 * Is product aviavable
+	 *
+	 * @type {boolean}
+	 * @memberof IWarehouseProductCreateObject
+	 */
+	isProductAviavable?: boolean;
+
+	/**
 	 * Is product(s) become available only when carrier found
 	 *
 	 * @type {boolean}
@@ -102,6 +110,8 @@ interface IWarehouseProduct extends IWarehouseProductCreateObject, DBRawObject {
 	isDeliveryRequired: boolean;
 
 	isTakeaway?: boolean;
+
+	isProductAviavable?: boolean;
 }
 
 export default IWarehouseProduct;

@@ -14,6 +14,7 @@ import { ProductImageComponent } from './product-image/product-image.component';
 import { CustomerEmailComponent } from './customer-email/customer-email.component';
 import { CustomerPhoneComponent } from './customer-phone/customer-phone.component';
 import { CheckboxComponent } from './customer-orders-table/checkbox/checkbox.component';
+import { IsAviavableCheckBox } from './store-product-is-aviavable-checkbox/is-aviavable-checkbox.component';
 
 const COMPONENTS = [
 	PriceCountInputComponent,
@@ -28,6 +29,7 @@ const COMPONENTS = [
 	ProductImageComponent,
 	CustomerEmailComponent,
 	CustomerPhoneComponent,
+	IsAviavableCheckBox,
 ];
 
 @NgModule({

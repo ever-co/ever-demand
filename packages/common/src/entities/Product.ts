@@ -92,6 +92,10 @@ class Product extends DBObject<IProduct, IProductCreateObject>
 	@Types.Boolean(false)
 	@Column()
 	isDeleted: boolean;
+
+	@Types.Boolean(true)
+	@Column()
+	isProductAviavable: boolean;
 }
 
 export default Product;

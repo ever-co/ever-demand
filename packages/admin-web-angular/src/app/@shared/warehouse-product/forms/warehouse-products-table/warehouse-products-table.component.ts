@@ -19,6 +19,8 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import { ProductsCategoryService } from '@app/@core/data/productsCategory.service';
 import Product from '@modules/server.common/entities/Product';
 import { StoreProductImageComponent } from '@app/@shared/render-component/store-products-table/store-product-image/store-product-image.component';
+import { CheckboxComponent } from '@app/@shared/render-component/customer-orders-table/checkbox/checkbox.component';
+import { IsAviavableCheckBox } from '@app/@shared/render-component/store-product-is-aviavable-checkbox/is-aviavable-checkbox.component';
 
 export interface WarehouseProductViewModel {
 	id: string;
@@ -32,6 +34,7 @@ export interface WarehouseProductViewModel {
 	storeId: string;
 	product: Product;
 	allCategories: any[];
+	isProductAviavable: boolean;
 }
 
 @Component({
@@ -111,6 +114,7 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 				storeId,
 				product: product.product,
 				allCategories: this.categoriesInfo,
+				isProductAviavable: product.isProductAviavable,
 			};
 		});
 
@@ -210,6 +214,11 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 								class: 'text-center',
 								type: 'custom',
 								renderComponent: StoreProductAmountComponent,
+							},
+							isAviavable: {
+								title: 'Aviavability',
+								type: 'custom',
+								renderComponent: IsAviavableCheckBox,
 							},
 						},
 						pager: {
