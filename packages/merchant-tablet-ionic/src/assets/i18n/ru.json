@@ -419,6 +419,11 @@
 		"ORDER": "порядок",
 		"FROM": "от"
 	},
+	"ORDER_TYPE": {
+		"TYPE": "Тип заказа:",
+		"DELIVERY": "Доставка",
+		"TAKEAWAY": "Навынос"
+	},
 	"TRACK_ORDER_POP_UP": {
 		"CARRIER": "Перевозчик",
 		"TRACK": "трек",

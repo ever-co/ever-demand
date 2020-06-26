@@ -7,6 +7,7 @@
 			<div *ngIf="hasProducts" class="order-main">
 				<div class="delivery-details">
 					<customer-info [user]="order?.user"></customer-info>
+					<order-info [order]="order"></order-info>
 				</div>
 
 				<div class="order-actions">
