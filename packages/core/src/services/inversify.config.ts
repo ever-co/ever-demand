@@ -90,7 +90,7 @@ const bindings = new ContainerModule((bind: interfaces.Bind) => {
 			AuthenticationService,
 			FakeOrdersService,
 			CurrenciesService,
-			PromotionService
+			PromotionService,
 		],
 		(Service: any) => {
 			bind(Service).to(Service).inSingletonScope();
