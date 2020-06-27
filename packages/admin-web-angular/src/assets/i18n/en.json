@@ -550,7 +550,8 @@
 			"CATEGORY": "Category",
 			"PRICE": "Price",
 			"QUANTITY": "Quantity",
-			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Click on Product Image to increase available quantity"
+			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Click on Product Image to increase available quantity",
+			"AVAILABILITY": "Availability"
 		},
 		"NEW_PRODUCT_TYPE": "New Type Product",
 		"ADD_PRODUCTS": "Add Products",

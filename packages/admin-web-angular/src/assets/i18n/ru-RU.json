@@ -550,7 +550,8 @@
 			"CATEGORY": "категория",
 			"PRICE": "Цена",
 			"QUANTITY": "Количество",
-			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Нажмите на изображение продукта, чтобы увеличить доступное количество"
+			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Нажмите на изображение продукта, чтобы увеличить доступное количество",
+			"AVAILABILITY": "Доступность"
 		},
 		"NEW_PRODUCT_TYPE": "Новый тип продукта",
 		"ADD_PRODUCTS": "Добавить продукты",

@@ -146,7 +146,8 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 			getTranslate('DETAILS'),
 			getTranslate('CATEGORY'),
 			getTranslate('PRICE'),
-			getTranslate('QUANTITY')
+			getTranslate('QUANTITY'),
+			getTranslate('AVAILABILITY')
 		)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(
@@ -159,6 +160,7 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 					category,
 					price,
 					quantity,
+					availability,
 				]) => {
 					this.settingsSmartTable = {
 						mode: 'external',
@@ -215,8 +217,8 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 								type: 'custom',
 								renderComponent: StoreProductAmountComponent,
 							},
-							isAviavable: {
-								title: 'Aviavability',
+							isAvailable: {
+								title: availability,
 								type: 'custom',
 								renderComponent: IsAviavableCheckBox,
 							},
