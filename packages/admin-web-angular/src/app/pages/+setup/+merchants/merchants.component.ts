@@ -110,7 +110,6 @@ export class SetupMerchantsComponent {
 				paymentGateways: this.stepPayments.paymentsGateways,
 				isCashPaymentEnabled: this.stepPayments.isCashPaymentEnabled,
 			};
-			console.warn(warehouse);
 			password = accountModel.password;
 		}
 		return { warehouse, password };
