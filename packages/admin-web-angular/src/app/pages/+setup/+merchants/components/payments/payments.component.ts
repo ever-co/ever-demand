@@ -32,7 +32,6 @@ export class SetupMerchantPaymentsComponent implements OnInit {
 	isCashPaymentEnabled = true;
 
 	ngOnInit() {
-		console.warn('KURAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
 		console.warn(this.isCashPaymentEnabled);
 	}
 
@@ -50,6 +49,5 @@ export class SetupMerchantPaymentsComponent implements OnInit {
 
 	isOnlinePaymentAllowed(ev) {
 		this.isPaymentEnabled = ev;
-		console.warn(ev);
 	}
 }
