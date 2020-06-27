@@ -108,8 +108,9 @@ export class SetupMerchantsComponent {
 				orderBarcodeType: this.stepOrdersSettings.iorderBarcodeType,
 				isActive: true,
 				paymentGateways: this.stepPayments.paymentsGateways,
+				isCashPaymentEnabled: this.stepPayments.isCashPaymentEnabled,
 			};
-
+			console.warn(warehouse);
 			password = accountModel.password;
 		}
 		return { warehouse, password };
