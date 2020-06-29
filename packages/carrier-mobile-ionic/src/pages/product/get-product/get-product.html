@@ -6,19 +6,35 @@
 </div>
 
 <div class="carrier-view">
-	<img
-		class="product-image"
-		src="{{ (selectedOrder?.products)[0].product.images[0].url }}"
-	/>
+	<div style="display: flex; flex-wrap: wrap;">
+		<div
+			class="image-container"
+			*ngFor="let product of selectedOrder?.products"
+			style="width: 30%;"
+		>
+			<img
+				style="width: 100%;"
+				*ngFor="let image of product?.product.images"
+				class="product-image"
+				src="{{ image.url }}"
+			/>
+		</div>
+	</div>
 	<div class="bottom-container">
 		<div class="info">
-			<span class="left-info"
-				>{{
-				localeTranslate((selectedOrder?.products)[0]?.product?.title)
-				}}</span
+			<div
+				*ngFor="let product of selectedOrder?.products"
+				style="padding-right: 5px;"
 			>
-			<span class="right-text">#{{ selectedOrder?.orderNumber }}</span>
+				<span
+					class="left-info"
+					*ngFor="let title of product.product.title"
+					>{{title.value}}</span
+				>
+				<span class="right-text">#{{selectedOrder.orderNumber}}</span>
+			</div>
 		</div>
+
 		<div class="buttons">
 			<div *ngIf="!selectedOrder?.isCancelled" class="button-bar">
 				<button
