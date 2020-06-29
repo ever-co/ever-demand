@@ -321,6 +321,16 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	@Schema({ type: Boolean, required: false })
 	@Column()
 	preferRestrictedCarriersForDelivery?: boolean;
+
+	/**
+	 * if true, accepting the orders not goes of all the states
+	 *
+	 * @type {boolean}
+	 * @memberof Warehouse
+	 */
+	@Schema({ type: Boolean, required: false })
+	@Column()
+	ordersShortProcess?: boolean;
 }
 
 export type WithFullProducts = Warehouse & {

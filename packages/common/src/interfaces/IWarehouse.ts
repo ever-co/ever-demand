@@ -126,6 +126,7 @@ export interface IWarehouseCreateObject extends DBCreateObject {
 	barcodeData?: string;
 	useOnlyRestrictedCarriersForDelivery?: boolean;
 	preferRestrictedCarriersForDelivery?: boolean;
+	ordersShortProcess?: boolean;
 }
 
 interface IWarehouse extends IWarehouseCreateObject, DBRawObject {
@@ -142,6 +143,7 @@ interface IWarehouse extends IWarehouseCreateObject, DBRawObject {
 	paymentGateways?: IPaymentGateway[];
 	useOnlyRestrictedCarriersForDelivery?: boolean;
 	preferRestrictedCarriersForDelivery?: boolean;
+	ordersShortProcess?: boolean;
 }
 
 export default IWarehouse;
