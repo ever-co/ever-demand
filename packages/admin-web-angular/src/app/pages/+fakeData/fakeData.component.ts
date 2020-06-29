@@ -1154,7 +1154,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 	}
 
 	private async _generateCurrencies() {
-		const currenciesCodes = ['USD', 'ILS', 'EUR', 'BGN', 'RUB'];
+		const currenciesCodes = ['USD', 'ILS', 'EUR', 'BGN', 'RUB', 'UYU'];
 
 		for (const currencyCode of currenciesCodes) {
 			const res = await this._currenciesService
