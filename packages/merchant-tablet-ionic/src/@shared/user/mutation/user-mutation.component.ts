@@ -128,7 +128,9 @@ export class UserMutationComponent {
 			message = `Error in creating customer: '${err.message}'!`;
 		} finally {
 			await this.presentToast(message);
-			await this.modalController.dismiss(userId);
+			if (this.visible) {
+				await this.modalController.dismiss(userId);
+			}
 		}
 	}
 
