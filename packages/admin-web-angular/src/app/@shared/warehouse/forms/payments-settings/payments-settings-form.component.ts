@@ -19,9 +19,14 @@ export class PaymentsSettingsFormComponent {
 	isEdit: boolean;
 
 	isPaymentEnabled: boolean = false;
+	isCashPaymentEnabled: boolean = true;
 
 	get isPaymentValid() {
 		return !this.isPaymentEnabled || this.paymentGateways.isValid;
+	}
+
+	get isCashPaymentValid() {
+		return !this.isCashPaymentEnabled || this.paymentGateways.isValid;
 	}
 
 	get paymentsGateways(): IPaymentGatewayCreateObject[] {
@@ -30,6 +35,7 @@ export class PaymentsSettingsFormComponent {
 
 	setValue(merchant: Warehouse) {
 		this.isPaymentEnabled = merchant.isPaymentEnabled;
+		this.isCashPaymentEnabled = merchant.isCashPaymentEnabled;
 		this.paymentGateways.setValue(merchant);
 	}
 }

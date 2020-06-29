@@ -412,6 +412,11 @@
 		"ORDER": "Pedido",
 		"FROM": "Para"
 	},
+	"ORDER_TYPE": {
+		"TYPE": "Tipo de orden:",
+		"DELIVERY": "Entrega",
+		"TAKEAWAY": "Para llevar"
+	},
 	"TRACK_ORDER_POP_UP": {
 		"CARRIER": "Reparto",
 		"TRACK": "Seguir",

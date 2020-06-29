@@ -31,7 +31,7 @@ export class WarehouseManageTabsDeliveryAreasComponent
 	// Used to know when we're editing a zone
 	isEditing: boolean = false;
 
-	private _zoneNumber;
+	private _zoneNumber = 0;
 
 	private _map: google.maps.Map;
 	private _drawingManager: google.maps.drawing.DrawingManager;

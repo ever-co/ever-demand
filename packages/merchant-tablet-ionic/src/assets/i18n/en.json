@@ -409,6 +409,11 @@
 		"ORDER": "Order",
 		"FROM": "from"
 	},
+	"ORDER_TYPE": {
+		"TYPE": "Order type:",
+		"DELIVERY": "Delivery",
+		"TAKEAWAY": "Takeaway"
+	},
 	"TRACK_ORDER_POP_UP": {
 		"CARRIER": "Carrier",
 		"TRACK": "Track",

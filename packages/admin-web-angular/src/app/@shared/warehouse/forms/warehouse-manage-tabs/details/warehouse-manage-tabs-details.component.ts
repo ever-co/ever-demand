@@ -32,6 +32,7 @@ export type WarehouseManageTabsDetails = Pick<
 	| 'isCarrierRequired'
 	| 'useOnlyRestrictedCarriersForDelivery'
 	| 'preferRestrictedCarriersForDelivery'
+	| 'ordersShortProcess'
 >;
 
 @Component({
@@ -100,6 +101,9 @@ export class WarehouseManageTabsDetailsComponent
 	get preferRestrictedCarriersForDelivery() {
 		return this.form.get('preferRestrictedCarriersForDelivery');
 	}
+	get ordersShortProcess() {
+		return this.form.get('ordersShortProcess');
+	}
 
 	get delivery() {
 		return this._delivery;
@@ -152,6 +156,7 @@ export class WarehouseManageTabsDetailsComponent
 			useOnlyRestrictedCarriersForDelivery: [false],
 			preferRestrictedCarriersForDelivery: [false],
 			carriersIds: [[]],
+			ordersShortProcess: [false],
 		});
 	}
 
@@ -175,9 +180,11 @@ export class WarehouseManageTabsDetailsComponent
 			carriersIds: string[];
 			useOnlyRestrictedCarriersForDelivery: boolean;
 			preferRestrictedCarriersForDelivery: boolean;
+			ordersShortProcess: boolean;
 		};
 
 		return {
+			ordersShortProcess: basicInfo.ordersShortProcess,
 			isActive: basicInfo.isActive,
 			isManufacturing: basicInfo.isManufacturing,
 			isCarrierRequired: basicInfo.isCarrierRequired,
@@ -212,6 +219,7 @@ export class WarehouseManageTabsDetailsComponent
 			{
 				useOnlyRestrictedCarriersForDelivery: false,
 				preferRestrictedCarriersForDelivery: false,
+				ordersShortProcess: false,
 			},
 			basicInfo
 		);

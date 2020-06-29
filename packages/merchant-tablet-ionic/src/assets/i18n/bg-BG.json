@@ -408,6 +408,11 @@
 		"ORDER": "Поръчка",
 		"FROM": "от"
 	},
+	"ORDER_TYPE": {
+		"TYPE": "Тип на поръчката:",
+		"DELIVERY": "Доставка",
+		"TAKEAWAY": "За вкъщи"
+	},
 	"TRACK_ORDER_POP_UP": {
 		"CARRIER": "носител",
 		"TRACK": "път",

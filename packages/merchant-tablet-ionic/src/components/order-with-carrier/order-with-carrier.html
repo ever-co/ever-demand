@@ -8,6 +8,7 @@
 			<div class="order-main">
 				<div class="delivery-details">
 					<customer-info [user]="order?.user"></customer-info>
+					<order-info [order]="order"></order-info>
 					<carrier-info
 						*ngIf="order.carrier"
 						[order]="order"
