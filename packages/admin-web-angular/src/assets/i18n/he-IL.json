@@ -275,6 +275,7 @@
 			"PAYMENTS": {
 				"PAYMENTS": "תשלומים",
 				"ALLOW_ONLINE_PAYMENT": "האם לאפשר תשלומים מקוונים?",
+				"ALLOW_CASH_PAYMENT": "אפשר תשלומים במזומן?",
 				"STRIPE": {
 					"PAY_BUTTON_TEXT": "טקסט של לחצן 'תשלום'",
 					"CURRENCY": "מטבע",

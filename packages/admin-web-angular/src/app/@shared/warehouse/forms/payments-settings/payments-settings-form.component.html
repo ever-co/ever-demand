@@ -1,9 +1,17 @@
 <div class="col-sm-12">
 	<div class="row m-0">
-		<div class="form-group offset-md-2 col-md-8">
+		<div class="form-group offset-md-2 col-md-4">
 			<nb-checkbox [(ngModel)]="isPaymentEnabled">
 				{{
 					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.ALLOW_ONLINE_PAYMENT'
+						| translate
+				}}
+			</nb-checkbox>
+		</div>
+		<div class="form-group offset-md-2 col-md-4">
+			<nb-checkbox [(ngModel)]="isCashPaymentEnabled">
+				{{
+					'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.ALLOW_CASH_PAYMENT'
 						| translate
 				}}
 			</nb-checkbox>

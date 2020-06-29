@@ -30,7 +30,9 @@ export class IconsService {
 		this.iconRegistry.addSvgIconInNamespace(
 			'ever',
 			icon,
-			this.sanitizer.bypassSecurityTrustResourceUrl(`icons/${icon}.svg`)
+			this.sanitizer.bypassSecurityTrustResourceUrl(
+				`assets/icon/${icon}.svg`
+			)
 		);
 
 		this.registeredIcons.add(icon);

@@ -27,6 +27,7 @@ import { CustomerEmailPopupPageModule } from 'pages/+customers/customer-email-po
 import { CustomerDeliveriesPopupPageModule } from 'pages/+customers/customer-deliveries-popup/customer-deliveries-popup.module';
 import { CustomerAddrPopupPageModule } from 'pages/+customers/customer-addr-popup/customer-addr-popup.module';
 import { FileUploaderModule } from './file-uploader/file-uploader.module';
+import { OrderInfoComponent } from './common/order-info/order-info';
 
 @NgModule({
 	declarations: [
@@ -45,6 +46,7 @@ import { FileUploaderModule } from './file-uploader/file-uploader.module';
 		LocationComponent,
 		OrderTitleComponent,
 		CustomerInfoComponent,
+		OrderInfoComponent,
 		CarrierInfoComponent,
 		PhoneComponent,
 		UserPhoneComponent,

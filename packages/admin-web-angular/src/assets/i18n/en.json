@@ -275,6 +275,7 @@
 			"PAYMENTS": {
 				"PAYMENTS": "Payments",
 				"ALLOW_ONLINE_PAYMENT": "Allow online payments?",
+				"ALLOW_CASH_PAYMENT": "Allow cash payments?",
 				"STRIPE": {
 					"PAY_BUTTON_TEXT": "Pay Button text",
 					"CURRENCY": "Currency",
