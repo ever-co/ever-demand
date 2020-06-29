@@ -4,10 +4,24 @@
 	</nb-card-header>
 	<nb-card-body>
 		<div class="row m-0">
-			<div class="form-group offset-md-2 col-md-8">
-				<nb-checkbox [(ngModel)]="isPaymentEnabled">
+			<div class="form-group offset-md-2 col-md-4">
+				<nb-checkbox
+					[checked]="false"
+					(checkedChange)="isOnlinePaymentAllowed($event)"
+				>
 					{{
 						'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.ALLOW_ONLINE_PAYMENT'
+							| translate
+					}}
+				</nb-checkbox>
+			</div>
+			<div class="form-group offset-md-2 col-md-4">
+				<nb-checkbox
+					[checked]="true"
+					(checkedChange)="isCashAllowed($event)"
+				>
+					{{
+						'FAKE_DATA.SETUP_MERCHANTS.PAYMENTS.ALLOW_CASH_PAYMENT'
 							| translate
 					}}
 				</nb-checkbox>

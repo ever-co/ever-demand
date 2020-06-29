@@ -69,6 +69,17 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	isPaymentEnabled: boolean;
 
 	/**
+	 * Enable or disable cash payment method
+	 *
+	 * @type {boolean}
+	 * @memberof Warehouse
+	 */
+
+	@Types.Boolean(true)
+	@Column()
+	isCashPaymentEnabled: boolean;
+
+	/**
 	 * Warehouse current location (address)
 	 * Note: we do support "moving" warehouses (e.g. car with products)
 	 *
