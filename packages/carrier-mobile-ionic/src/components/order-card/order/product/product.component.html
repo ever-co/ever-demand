@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="test">
 			<section class="product-image">
-				<img [src]="image.url" [ngClass]="imageClass" />
+				<img *ngIf="image" [src]="image.url" [ngClass]="imageClass" />
 			</section>
 
 			<section class="product-content">
