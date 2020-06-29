@@ -27,6 +27,14 @@ export interface IWarehouseCreateObject extends DBCreateObject {
 	isPaymentEnabled?: boolean;
 
 	/**
+	 * Is Cash payment enabled (Warehouse may decide if they dont want cash payments)
+	 *
+	 * @type {boolean}
+	 * @memberof IWarehouseCreateObject
+	 */
+	isCashPaymentEnabled?: boolean;
+
+	/**
 	 * Warehouse current location (we support 'moving' warehouses/merchants)
 	 *
 	 * @type {IGeoLocationCreateObject}
