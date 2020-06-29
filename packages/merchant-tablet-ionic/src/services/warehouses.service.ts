@@ -229,6 +229,7 @@ export class WarehousesService {
 							usedCarriersIds
 							contactEmail
 							contactPhone
+							ordersShortProcess
 							geoLocation {
 								city
 								streetAddress
