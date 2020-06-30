@@ -82,7 +82,7 @@ export class AddWarehouseProductsComponent implements OnInit, OnDestroy {
 			};
 			if (!resObj.takeProductDelivery && !resObj.takeProductTakeaway) {
 				resObj.takeProductDelivery = true;
-				resObj.takeProductTakeaway = !this.warehouse.isCarrierRequired;
+				resObj.takeProductTakeaway = true;
 			}
 
 			return resObj;
