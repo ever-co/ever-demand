@@ -561,6 +561,9 @@
 			"CATEGORY": "קטגוריה",
 			"PRICE": "מחיר",
 			"QUANTITY": "כמות",
+			"TYPE": "סוּג",
+			"DELIVERY": "מְסִירָה",
+			"TAKEAWAY": "להסיר",
 			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "לחץ על Image Product כדי להגדיל את הכמות הזמינה"
 		},
 		"NEW_PRODUCT_TYPE": "הספק נדרש לפני המכירה",
