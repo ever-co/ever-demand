@@ -114,14 +114,14 @@ class WarehouseProduct
 	isDeliveryRequired: boolean;
 
 	/**
-	 * Is product aviavable for purchase
+	 * Is product available for purchase
 	 *
 	 * @type {boolean}
 	 * @memberof WarehouseProduct
 	 */
 	@Column()
 	@Types.Boolean(true)
-	isProductAviavable: boolean;
+	isProductAvailable: boolean;
 
 	@Schema({ required: false, type: Boolean })
 	@Column()

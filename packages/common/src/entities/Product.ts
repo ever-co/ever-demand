@@ -95,7 +95,7 @@ class Product extends DBObject<IProduct, IProductCreateObject>
 
 	@Types.Boolean(true)
 	@Column()
-	isProductAviavable: boolean;
+	isProductAvailable: boolean;
 }
 
 export default Product;

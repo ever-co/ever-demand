@@ -652,16 +652,15 @@ export class WarehousesProductsService
 	}
 
 	@asyncListener()
-	async changeProductAviavable(
+	async changeProductAvailability(
 		warehouseId: string,
 		productId: string,
-		isAviavable: boolean
+		isAvailable: boolean
 	): Promise<WarehouseProduct> {
 		const warehouse = await this.warehousesService
 			.get(warehouseId)
 			.pipe(first())
 			.toPromise();
-
 		if (warehouse) {
 			const existedProduct = _.find(
 				warehouse.products,
@@ -669,7 +668,7 @@ export class WarehousesProductsService
 			);
 
 			if (existedProduct) {
-				existedProduct.isProductAviavable = isAviavable;
+				existedProduct.isProductAvailable = isAvailable;
 
 				return this.saveUpdated(warehouseId, existedProduct);
 			} else {

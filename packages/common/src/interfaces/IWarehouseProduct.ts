@@ -59,7 +59,7 @@ export interface IWarehouseProductCreateObject extends DBCreateObject {
 	 * @type {boolean}
 	 * @memberof IWarehouseProductCreateObject
 	 */
-	isProductAviavable?: boolean;
+	isProductAvailable?: boolean;
 
 	/**
 	 * Is product(s) become available only when carrier found
@@ -111,7 +111,7 @@ interface IWarehouseProduct extends IWarehouseProductCreateObject, DBRawObject {
 
 	isTakeaway?: boolean;
 
-	isProductAviavable?: boolean;
+	isProductAvailable?: boolean;
 }
 
 export default IWarehouseProduct;

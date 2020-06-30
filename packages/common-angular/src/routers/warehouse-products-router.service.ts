@@ -109,17 +109,18 @@ export class WarehouseProductsRouter implements IWarehouseProductsRouter {
 		return this._warehouseProductFactory(warehouseProduct);
 	}
 
-	async changeProductAviavability(
+	async changeProductAvailability(
 		warehouseId: string,
 		productId: string,
-		isAviavable: boolean
+		isAvailable: boolean
 	): Promise<WarehouseProduct> {
 		const warehouseProduct = await this.router.run<IWarehouseProduct>(
-			'changeProductAviavability',
+			'changeProductAvailability',
 			warehouseId,
 			productId,
-			isAviavable
+			isAvailable
 		);
+
 		return this._warehouseProductFactory(warehouseProduct);
 	}
 

@@ -24,7 +24,7 @@ import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers
 		`,
 	],
 })
-export class IsAviavableCheckBox implements ViewCell, OnInit {
+export class IsAvailableCheckBox implements ViewCell, OnInit {
 	@Input() rowData: any;
 	@Input() value: string;
 	isChecked: boolean;
@@ -32,18 +32,19 @@ export class IsAviavableCheckBox implements ViewCell, OnInit {
 	productId: string;
 	constructor(private warehouseProductRouter: WarehouseProductsRouter) {}
 	ngOnInit() {
-		this.isChecked = this.rowData.isProductAviavable;
+		this.isChecked = this.rowData.isProductAvailable;
 		this.wareHouseId = this.rowData.storeId;
 		this.productId = this.rowData.product.id;
+		console.warn(this.rowData);
 	}
 
 	async clickHandler() {
 		this.isChecked = !this.isChecked;
-		this.rowData.isProductAviavable = this.isChecked;
-		await this.warehouseProductRouter.changeProductAviavability(
+		this.rowData.isProductAvailable = this.isChecked;
+		await this.warehouseProductRouter.changeProductAvailability(
 			this.wareHouseId,
 			this.productId,
-			this.rowData.isProductAviavable
+			this.rowData.isProductAvailable
 		);
 	}
 }
