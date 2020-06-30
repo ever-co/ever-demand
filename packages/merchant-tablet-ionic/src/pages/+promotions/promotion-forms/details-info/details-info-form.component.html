@@ -1,12 +1,25 @@
-<ion-row>
-	<ion-col text-center>
-		<ion-item>
-			<ion-label position="floating">Description</ion-label>
-			<ion-textarea
-				formControlName="activeTo"
-				value="Ionic enables developers to build performant, high-quality mobile apps."
-			>
-			</ion-textarea>
-		</ion-item>
-	</ion-col>
-</ion-row>
+<form class="carrier-basic-info" [formGroup]="form">
+	<ion-row>
+		<ion-col text-center>
+			<ion-item>
+				<ion-label position="floating">{{
+					'CARRIERS_VIEW.PROMOTIONS.DESCRIPTION' | translate
+				}}</ion-label>
+				<ion-textarea formControlName="description"> </ion-textarea>
+			</ion-item>
+		</ion-col>
+	</ion-row>
+	<ion-row>
+		<ion-col text-center>
+			<e-cu-file-uploader (uploadedImgUrl)="image.setValue($event)">
+			</e-cu-file-uploader>
+		</ion-col>
+	</ion-row>
+	<ion-row *ngIf="image">
+		<ion-col text-center>
+			<ion-thumbnail>
+				<ion-img [src]="image.value" #imagePreview></ion-img>
+			</ion-thumbnail>
+		</ion-col>
+	</ion-row>
+</form>

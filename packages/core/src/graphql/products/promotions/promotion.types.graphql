@@ -1,19 +1,19 @@
 type Promotion {
-	_id: String!
-	title: String!
-	description: String!
+	_id: String
+	title: String
+	description: String
 	active: Boolean
 	activeFrom: Date
 	activeTo: Date
 	image: String
-	product: Product
+	# product: Product
 	purchasesCount: Int
 }
 
 input PromotionCreateInput {
 	title: String!
-	description: String!
-	active: Boolean!
+	description: String
+	active: Boolean
 	activeFrom: Date
 	activeTo: Date
 	image: String

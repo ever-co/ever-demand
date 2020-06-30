@@ -46,11 +46,12 @@ export interface IPromotionCreateObject extends DBCreateObject {
 	 */
 	image: string;
 
-	/**
-	 * @type {Product}
-	 * @memberof IPromotionCreateObject
-	 */
-	product: Product;
+	//tstodo
+	// /**
+	//  * @type {Product}
+	//  * @memberof IPromotionCreateObject
+	//  */
+	// product: Product;
 
 	/**
 	 * @type {number}

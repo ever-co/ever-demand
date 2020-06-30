@@ -41,11 +41,9 @@ export class PromotionService {
 		return this.apollo
 			.mutate<{ promotion: IPromotionCreateObject }>({
 				mutation: gql`
-					mutation CreatePromotion(
-						$promotion: IPromotionCreateObject!
-					) {
-						createPromotion(promotion: $promotion) {
-							id
+					mutation CreatePromotion($promotion: PromotionCreateInput) {
+						createPromotion(createInput: $promotion) {
+							_id
 						}
 					}
 				`,

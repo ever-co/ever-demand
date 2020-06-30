@@ -168,6 +168,20 @@
 				}
 			}
 		},
+		"PROMOTIONS": {
+			"PROMOTIONS": "Promotions",
+			"BASIC_INFO": "Basic Info",
+			"TITLE": "Title",
+			"ACTIVE_FROM": "Active from",
+			"ACTIVE_TO": "Active to",
+			"PURCHASES_COUNT": "Purchases count",
+			"IS_ACTIVE": "Is active",
+			"SELECT_DATE": "Select date",
+			"DESCRIPTION": "Description",
+			"SAVE": "Save",
+			"NEXT": "Next",
+			"BACK": "Back"
+		},
 		"SELECT LANGUAGE": {
 			"USA": "USA",
 			"ISRAEL": "Israel",

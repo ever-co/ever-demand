@@ -6,7 +6,7 @@
 		<i class="fa fa-close"></i>
 	</button>
 	<ion-row class="crete-user">
-		<ion-col [hidden]="isNextStepAvailable">
+		<ion-col [hidden]="!isNextStepAvailable">
 			<basic-info-form
 				#basicInfoForm
 				[form]="basicInfo"
@@ -14,8 +14,9 @@
 			></basic-info-form>
 		</ion-col>
 
-		<ion-col [hidden]="!isNextStepAvailable">
-			<details-info-form #promotionDetailsForm> </details-info-form>
+		<ion-col [hidden]="isNextStepAvailable">
+			<details-info-form #promotionDetailsForm [form]="detailsInfo">
+			</details-info-form>
 		</ion-col>
 	</ion-row>
 
@@ -24,26 +25,26 @@
 			<ion-button
 				color="light"
 				class="mr-2"
-				*ngIf="isNextStepAvailable"
-				(click)="isNextStepAvailable = false"
-			>
-				{{ 'WAREHOUSE_VIEW.NEW_ORDER_VIEW.BACK' | translate }}
-			</ion-button>
-			<ion-button
-				color="dark"
 				*ngIf="!isNextStepAvailable"
 				(click)="isNextStepAvailable = true"
+			>
+				{{ 'CARRIERS_VIEW.PROMOTIONS.BACK' | translate }}
+			</ion-button>
+			<ion-button
+				color="light"
+				class="mr-2"
+				*ngIf="isNextStepAvailable"
+				(click)="isNextStepAvailable = false"
 				[disabled]="basicInfo.invalid"
 			>
-				{{ 'WAREHOUSE_VIEW.NEW_ORDER_VIEW.NEXT' | translate }}
+				{{ 'CARRIERS_VIEW.PROMOTIONS.NEXT' | translate }}
 			</ion-button>
 			<ion-button
 				color="dark"
-				*ngIf="isNextStepAvailable"
 				(click)="promotion? savePromotion() : createPromotion()"
+				[disabled]="!basicInfoForm.form.valid"
 			>
-				{{ (promotion ? 'Done' :
-				'WAREHOUSE_VIEW.NEW_ORDER_VIEW.ADD_PROMOTION' ) | translate }}
+				{{ 'CARRIERS_VIEW.PROMOTIONS.SAVE' | translate }}
 			</ion-button>
 		</ion-col>
 	</ion-row>

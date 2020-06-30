@@ -27,7 +27,7 @@ class Promotion extends DBObject<IPromotion, IPromotionCreateObject>
 	 * @type {string}
 	 * @memberof Promotion
 	 */
-	@Schema({ type: Date, required: false })
+	@Schema({ type: String, required: false })
 	@Column()
 	description: string;
 
@@ -43,7 +43,7 @@ class Promotion extends DBObject<IPromotion, IPromotionCreateObject>
 	 * @type {Date}
 	 * @memberof Promotion
 	 */
-	@Schema({ type: Date, required: true })
+	@Schema({ type: Date, required: false })
 	@Column()
 	activeFrom: Date;
 
@@ -63,12 +63,13 @@ class Promotion extends DBObject<IPromotion, IPromotionCreateObject>
 	@Column()
 	image: string;
 
-	/**
-	 * @type {Product}
-	 * @memberof Promotion
-	 */
-	@Types.Ref(Product)
-	product: Product;
+	//tstodo
+	// /**
+	//  * @type {Product}
+	//  * @memberof Promotion
+	//  */
+	// @Types.Ref(Product)
+	// product: Product;
 
 	/**
 	 * @type {number}
@@ -77,6 +78,10 @@ class Promotion extends DBObject<IPromotion, IPromotionCreateObject>
 	@Types.Number()
 	@Column()
 	purchasesCount: number;
+
+	@Types.Boolean(false)
+	@Column()
+	isDeleted: boolean;
 }
 
 export default Promotion;

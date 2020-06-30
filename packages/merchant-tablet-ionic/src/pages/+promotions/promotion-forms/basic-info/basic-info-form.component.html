@@ -3,40 +3,48 @@
 		<ion-row>
 			<ion-col>
 				<h5 class="text-center">
-					Basic Info
+					{{ 'CARRIERS_VIEW.PROMOTIONS.BASIC_INFO' | translate }}
 				</h5>
 			</ion-col>
 		</ion-row>
-		<ion-col text-center>
-			<ion-item>
-				<ion-label class="labels" position="floating">Title</ion-label>
-				<ion-input
-					placeholder="Title"
-					formControlName="title"
-				></ion-input>
-			</ion-item>
-		</ion-col>
 		<ion-row>
 			<ion-col text-center>
 				<ion-item>
-					<ion-label class="labels" position="floating"
-						>Active From</ion-label
-					>
+					<ion-label class="labels" position="floating">{{
+						'CARRIERS_VIEW.PROMOTIONS.TITLE' | translate
+					}}</ion-label>
+					<ion-input
+						[placeholder]="
+							'CARRIERS_VIEW.PROMOTIONS.TITLE' | translate
+						"
+						formControlName="title"
+					></ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col text-center>
+				<ion-item>
+					<ion-label class="labels" position="floating">{{
+						'CARRIERS_VIEW.PROMOTIONS.ACTIVE_FROM' | translate
+					}}</ion-label>
 					<ion-datetime
-						value="1990-02-19"
-						placeholder="Select Date"
+						[placeholder]="
+							'CARRIERS_VIEW.PROMOTIONS.SELECT_DATE' | translate
+						"
 						formControlName="activeFrom"
 					></ion-datetime>
 				</ion-item>
 			</ion-col>
 			<ion-col text-center>
 				<ion-item>
-					<ion-label class="labels" position="floating"
-						>Active To</ion-label
-					>
+					<ion-label class="labels" position="floating">{{
+						'CARRIERS_VIEW.PROMOTIONS.ACTIVE_TO' | translate
+					}}</ion-label>
 					<ion-datetime
-						value="1990-02-19"
-						placeholder="Select Date"
+						[placeholder]="
+							'CARRIERS_VIEW.PROMOTIONS.SELECT_DATE' | translate
+						"
 						formControlName="activeTo"
 					></ion-datetime>
 				</ion-item>
@@ -46,23 +54,31 @@
 		<ion-row>
 			<ion-col>
 				<ion-item>
-					<ion-label class="labels" position="floating"
-						>Purchases count</ion-label
-					>
+					<ion-label class="labels" position="floating">{{
+						'CARRIERS_VIEW.PROMOTIONS.PURCHASES_COUNT' | translate
+					}}</ion-label>
 					<ion-input
 						type="number"
 						formControlName="purchasesCount"
+						[placeholder]="
+							'CARRIERS_VIEW.PROMOTIONS.PURCHASES_COUNT'
+								| translate
+						"
 					></ion-input>
 				</ion-item>
 			</ion-col>
+		</ion-row>
+		<ion-row>
 			<ion-col text-center>
-				<ion-label class="labels" position="floating"
-					>Is Active</ion-label
-				>
-				<ion-checkbox
-					formControlName="active"
-					color="primary"
-				></ion-checkbox>
+				<ion-item>
+					<ion-label class="labels" position="floating">{{
+						'CARRIERS_VIEW.PROMOTIONS.IS_ACTIVE' | translate
+					}}</ion-label>
+					<ion-checkbox
+						formControlName="active"
+						color="primary"
+					></ion-checkbox>
+				</ion-item>
 			</ion-col>
 		</ion-row>
 	</ion-grid>
