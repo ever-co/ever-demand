@@ -46,6 +46,7 @@ type Warehouse {
 	orderBarcodeType: Int
 	useOnlyRestrictedCarriersForDelivery: Boolean
 	preferRestrictedCarriersForDelivery: Boolean
+	ordersShortProcess: Boolean
 }
 
 input WarehouseCreateInput {

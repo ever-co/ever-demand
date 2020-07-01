@@ -278,6 +278,7 @@
 			"PAYMENTS": {
 				"PAYMENTS": "Pagos",
 				"ALLOW_ONLINE_PAYMENT": "¿Permitir pagos online?",
+				"ALLOW_CASH_PAYMENT": "¿Permitir pagos en efectivo?",
 				"STRIPE": {
 					"PAY_BUTTON_TEXT": "Texto de botón de pago",
 					"CURRENCY": "Moneda",
@@ -453,6 +454,16 @@
 			"AUTO_DETECT_COORDINATES": "Auto detectar coordenadas",
 			"CARRIERS": "Repartos",
 			"USE_ONLY_SPECIFIC_CARRIERS": "Usar sólo repartos específicos",
+			"SELECT_SHAPE_TO_ADD_ZONE": "Seleccione forma para agregar una nueva zona",
+			"CIRCLE": "Circulo",
+			"SHAPE": "Forma",
+			"DRAW_SHAPE_ON_MAP": "Dibuja una forma en el mapa",
+			"MINIMUM_AMOUNT": "Monto minimo",
+			"DELIVERY_FEE": "Gastos de envío",
+			"CANCEL": "Cancelar",
+			"ADD": "Añadir",
+			"EDIT": "Editar",
+			"ZONE_NAME": "Nombre de zona",
 			"ERRORS": {
 				"NAME_IS_REQUIRED": "Nombre de sucursal requerido",
 				"NAME_ATLEAST_3_CHARS": "El nombre debe tener al menos 3 caractéres",
@@ -555,7 +566,10 @@
 			"PRICE": "Precio",
 			"QUANTITY": "Cantidad",
 			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Presiona en la imágen del producto para incrementar su cantidad disponible",
-			"AVAILABILITY": "Disponibilidad"
+			"AVAILABILITY": "Disponibilidad",
+			"TYPE": "Tipo",
+			"DELIVERY": "Entrega",
+			"TAKEAWAY": "Para llevar"			
 		},
 		"NEW_PRODUCT_TYPE": "Nuevo tipo de producto",
 		"ADD_PRODUCTS": "Agregar Productos",

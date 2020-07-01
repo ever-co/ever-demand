@@ -275,6 +275,7 @@
 			"PAYMENTS": {
 				"PAYMENTS": "Плащания",
 				"ALLOW_ONLINE_PAYMENT": "Разрешаване на онлайн плащания?",
+				"ALLOW_CASH_PAYMENT": "Разрешить наличные платежи?",
 				"STRIPE": {
 					"PAY_BUTTON_TEXT": "Текст кнопки оплаты",
 					"CURRENCY": "валюта",
@@ -449,6 +450,16 @@
 			"AUTO_DETECT_COORDINATES": "Автоматическое определение координат",
 			"CARRIERS": "Носители",
 			"USE_ONLY_SPECIFIC_CARRIERS": "Используйте только определенные носители",
+			"SELECT_SHAPE_TO_ADD_ZONE": "Выберите фигуру, чтобы добавить новую зону",
+			"CIRCLE": "Круг",
+			"SHAPE": "Форма",
+			"DRAW_SHAPE_ON_MAP": "Нарисуйте фигуру на карте",
+			"MINIMUM_AMOUNT": "Минимальная сумма",
+			"DELIVERY_FEE": "Стоимость доставки",
+			"CANCEL": "Отмена",
+			"ADD": "Добавить",
+			"EDIT": "Редактировать",
+			"ZONE_NAME": "Название зоны",
 			"ERRORS": {
 				"NAME_IS_REQUIRED": "Требуется имя склада",
 				"NAME_ATLEAST_3_CHARS": "Имя должно быть не менее 3 символов.",
@@ -551,7 +562,10 @@
 			"PRICE": "Цена",
 			"QUANTITY": "Количество",
 			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Нажмите на изображение продукта, чтобы увеличить доступное количество",
-			"AVAILABILITY": "Доступность"
+			"AVAILABILITY": "Доступность",
+			"TYPE": "Тип",
+			"DELIVERY": "Доставка",
+			"TAKEAWAY": "Навынос"			
 		},
 		"NEW_PRODUCT_TYPE": "Новый тип продукта",
 		"ADD_PRODUCTS": "Добавить продукты",

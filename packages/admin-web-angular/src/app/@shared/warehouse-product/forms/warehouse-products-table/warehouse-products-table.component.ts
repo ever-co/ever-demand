@@ -11,7 +11,7 @@ import { StoreProductPriceComponent } from '@app/@shared/render-component/store-
 import { StoreProductAmountComponent } from '@app/@shared/render-component/store-products-table/store-product-amount/store-product-amount.component';
 import { ProductCategoriesComponent } from '@app/@shared/render-component/product-categories/product-categories';
 import { ProductTitleRedirectComponent } from '@app/@shared/render-component/product-title-redirect/product-title-redirect.component';
-import { Observable, forkJoin, Subject } from 'rxjs';
+import { Observable, forkJoin, Subject, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
@@ -55,6 +55,9 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 	settingsSmartTable: object;
 	sourceSmartTable = new LocalDataSource();
 	selectedProducts: WarehouseProductViewModel[] = [];
+	columnTitlePrefix = 'WAREHOUSE_VIEW.PRODUCTS_TAB.';
+	subscription: Subscription;
+	suffix: string;
 
 	private ngDestroy$ = new Subject<void>();
 	private categoriesInfo: any = [];
@@ -78,6 +81,7 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 	ngOnDestroy(): void {
 		this.ngDestroy$.next();
 		this.ngDestroy$.complete();
+		this.subscription.unsubscribe();
 	}
 
 	async loadDataSmartTable(products: WarehouseProduct[], storeId: string) {
@@ -111,6 +115,9 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 				},
 				price: product.price,
 				qty: product.count,
+				type: product.isTakeaway
+					? this._translate(`${this.columnTitlePrefix}TAKEAWAY`)
+					: this._translate(`${this.columnTitlePrefix}DELIVERY`),
 				storeId,
 				product: product.product,
 				allCategories: this.categoriesInfo,
@@ -134,9 +141,8 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 	}
 
 	private _loadSettingsSmartTable() {
-		const columnTitlePrefix = 'WAREHOUSE_VIEW.PRODUCTS_TAB.';
 		const getTranslate = (name: string): Observable<any> =>
-			this._translateService.get(columnTitlePrefix + name);
+			this._translateService.get(this.columnTitlePrefix + name);
 
 		forkJoin(
 			this._translateService.get('Id'),
@@ -147,7 +153,8 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 			getTranslate('CATEGORY'),
 			getTranslate('PRICE'),
 			getTranslate('QUANTITY'),
-			getTranslate('AVAILABILITY')
+			getTranslate('AVAILABILITY'),
+			getTranslate('TYPE')
 		)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(
@@ -161,6 +168,7 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 					price,
 					quantity,
 					availability,
+					type
 				]) => {
 					this.settingsSmartTable = {
 						mode: 'external',
@@ -220,7 +228,10 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 							isAvailable: {
 								title: availability,
 								type: 'custom',
-								renderComponent: IsAvailableCheckBox,
+								renderComponent: IsAvailableCheckBox
+              },
+							type: {
+								title: type,
 							},
 						},
 						pager: {
@@ -236,5 +247,14 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 		this._translateService.onLangChange.subscribe(() => {
 			this._loadSettingsSmartTable();
 		});
+	}
+
+	private _translate(key: string) {
+		this.subscription = this._translateService
+			.stream(key)
+			.subscribe((res) => {
+				this.suffix = res;
+			});
+		return this.suffix;
 	}
 }

@@ -4,6 +4,7 @@ import {
 	Output,
 	Input,
 	ViewChild,
+	OnInit,
 } from '@angular/core';
 import { LocationFormComponent } from '@app/@shared/forms/location';
 import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaymentGateway';
@@ -14,7 +15,7 @@ import { PaymentGatewaysComponent } from '@app/@shared/payment-gateways/payment-
 	templateUrl: './payments.component.html',
 	styleUrls: ['./payments.component.scss'],
 })
-export class SetupMerchantPaymentsComponent {
+export class SetupMerchantPaymentsComponent implements OnInit {
 	@ViewChild('paymentGateways', { static: true })
 	paymentGateways: PaymentGatewaysComponent;
 	@Output()
@@ -27,7 +28,12 @@ export class SetupMerchantPaymentsComponent {
 	@Input()
 	locationForm: LocationFormComponent;
 
-	isPaymentEnabled: boolean;
+	isPaymentEnabled = false;
+	isCashPaymentEnabled = true;
+
+	ngOnInit() {
+		console.warn(this.isCashPaymentEnabled);
+	}
 
 	get isPaymentValid() {
 		return !this.isPaymentEnabled || this.paymentGateways.isValid;
@@ -35,5 +41,13 @@ export class SetupMerchantPaymentsComponent {
 
 	get paymentsGateways(): IPaymentGatewayCreateObject[] {
 		return this.paymentGateways.paymentsGateways;
+	}
+
+	isCashAllowed(ev) {
+		this.isCashPaymentEnabled = ev;
+	}
+
+	isOnlinePaymentAllowed(ev) {
+		this.isPaymentEnabled = ev;
 	}
 }

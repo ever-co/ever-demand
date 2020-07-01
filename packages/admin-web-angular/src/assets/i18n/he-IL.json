@@ -275,6 +275,7 @@
 			"PAYMENTS": {
 				"PAYMENTS": "תשלומים",
 				"ALLOW_ONLINE_PAYMENT": "האם לאפשר תשלומים מקוונים?",
+				"ALLOW_CASH_PAYMENT": "אפשר תשלומים במזומן?",
 				"STRIPE": {
 					"PAY_BUTTON_TEXT": "טקסט של לחצן 'תשלום'",
 					"CURRENCY": "מטבע",
@@ -449,6 +450,16 @@
 			"AUTO_DETECT_COORDINATES": "זיהוי אוטומטי של קואורדינטות",
 			"CARRIERS": "ספקים",
 			"USE_ONLY_SPECIFIC_CARRIERS": "השתמש רק בספקים ספציפיים",
+			"SELECT_SHAPE_TO_ADD_ZONE": "בחר צורה להוסיף אזור חדש",
+			"CIRCLE": "מעגל",
+			"SHAPE": "צוּרָה",
+			"DRAW_SHAPE_ON_MAP": "צייר צורה על המפה",
+			"MINIMUM_AMOUNT": "כמות מינימלית",
+			"DELIVERY_FEE": "דמי משלוח",
+			"CANCEL": "לְבַטֵל",
+			"ADD": "לְהוֹסִיף",
+			"EDIT": "לַעֲרוֹך",
+			"ZONE_NAME": "שם אזור",
 			"ERRORS": {
 				"NAME_IS_REQUIRED": "שם המחסן נדרש",
 				"NAME_ATLEAST_3_CHARS": "השם חייב להיות באורך של לפחות 3 תווים",
@@ -551,7 +562,10 @@
 			"PRICE": "מחיר",
 			"QUANTITY": "כמות",
 			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "לחץ על Image Product כדי להגדיל את הכמות הזמינה",
-			"AVAILABILITY": "זמינות"
+			"AVAILABILITY": "זמינות",
+			"TYPE": "סוּג",
+			"DELIVERY": "מְסִירָה",
+			"TAKEAWAY": "להסיר"
 		},
 		"NEW_PRODUCT_TYPE": "הספק נדרש לפני המכירה",
 		"ADD_PRODUCTS": "הוסף מוצרים",

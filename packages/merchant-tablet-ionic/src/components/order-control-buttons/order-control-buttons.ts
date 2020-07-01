@@ -1,13 +1,16 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
+import { Store } from 'services/store.service';
+import { WarehousesService } from 'services/warehouses.service';
+import { map } from 'rxjs/operators';
 
 @Component({
 	selector: 'order-control-buttons',
 	templateUrl: 'order-control-buttons.html',
 	styleUrls: ['./order-control-buttons.scss'],
 })
-export class OrderControlButtonsComponent {
+export class OrderControlButtonsComponent implements OnInit {
 	@Input()
 	orderId: string;
 
@@ -26,5 +29,21 @@ export class OrderControlButtonsComponent {
 	orderTypeDelivery: DeliveryType = DeliveryType.Delivery;
 	orderTypeTakeaway: DeliveryType = DeliveryType.Takeaway;
 
-	constructor(private orderRouter: OrderRouter) {}
+	ordersShortProcess: boolean;
+	_storeID: string;
+	constructor(
+		private orderRouter: OrderRouter,
+		private store: Store,
+		private warehaousesService: WarehousesService
+	) {}
+
+	ngOnInit() {
+		this._storeID = this.store.warehouseId;
+		this.warehaousesService
+			.getStoreById(this._storeID)
+			.pipe(map((store) => store.ordersShortProcess))
+			.subscribe((isShortProcess) => {
+				this.ordersShortProcess = isShortProcess;
+			});
+	}
 }

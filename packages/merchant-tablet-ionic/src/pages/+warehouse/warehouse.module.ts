@@ -20,6 +20,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { CreateProductTypePopupPageModule } from './create-product-type-popup/create-product-type-popup.module';
 import { EditProductTypePopupPageModule } from './edit-product-type-popup/edit-product-type-popup.module';
+import { WarehousesService } from 'services/warehouses.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -59,6 +60,11 @@ const routes: Routes = [
 		CreateProductTypePopupPageModule,
 		EditProductTypePopupPageModule,
 	],
-	providers: [WarehouseOrdersService, Store, WarehouseProductsService],
+	providers: [
+		WarehouseOrdersService,
+		Store,
+		WarehouseProductsService,
+		WarehousesService,
+	],
 })
 export class WarehousePageModule {}

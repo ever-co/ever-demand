@@ -120,6 +120,8 @@ export class WarehouseMutationComponent implements AfterViewInit {
 					isPaymentEnabled: this.paymentsSettingsForm
 						.isPaymentEnabled,
 					paymentGateways: this.paymentsSettingsForm.paymentsGateways,
+					isCashPaymentEnabled: this.paymentsSettingsForm
+						.isCashPaymentEnabled,
 				},
 				password: this.basicInfoForm.getPassword(),
 			});
