@@ -562,11 +562,11 @@
 			"CATEGORY": "Category",
 			"PRICE": "Price",
 			"QUANTITY": "Quantity",
+			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Click on Product Image to increase available quantity",
+			"AVAILABILITY": "Availability",
 			"TYPE": "Type",
 			"DELIVERY": "Delivery",
-			"TAKEAWAY": "Takeaway",
-			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Кликнете върху Изображение на продукта, за да увеличите наличното количество",
-			"AVAILABILITY": "Наличност"
+			"TAKEAWAY": "Takeaway"
 		},
 		"NEW_PRODUCT_TYPE": "New Type Product",
 		"ADD_PRODUCTS": "Add Products",
