@@ -19,6 +19,8 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import { ProductsCategoryService } from '@app/@core/data/productsCategory.service';
 import Product from '@modules/server.common/entities/Product';
 import { StoreProductImageComponent } from '@app/@shared/render-component/store-products-table/store-product-image/store-product-image.component';
+import { CheckboxComponent } from '@app/@shared/render-component/customer-orders-table/checkbox/checkbox.component';
+import { IsAvailableCheckBox } from '@app/@shared/render-component/store-product-is-available-checkbox/is-available-checkbox.component';
 
 export interface WarehouseProductViewModel {
 	id: string;
@@ -32,6 +34,7 @@ export interface WarehouseProductViewModel {
 	storeId: string;
 	product: Product;
 	allCategories: any[];
+	isProductAvailable: boolean;
 }
 
 @Component({
@@ -118,6 +121,7 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 				storeId,
 				product: product.product,
 				allCategories: this.categoriesInfo,
+				isProductAvailable: product.isProductAvailable,
 			};
 		});
 
@@ -149,6 +153,7 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 			getTranslate('CATEGORY'),
 			getTranslate('PRICE'),
 			getTranslate('QUANTITY'),
+			getTranslate('AVAILABILITY'),
 			getTranslate('TYPE')
 		)
 			.pipe(takeUntil(this.ngDestroy$))
@@ -162,7 +167,8 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 					category,
 					price,
 					quantity,
-					type,
+					availability,
+					type
 				]) => {
 					this.settingsSmartTable = {
 						mode: 'external',
@@ -219,6 +225,11 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 								type: 'custom',
 								renderComponent: StoreProductAmountComponent,
 							},
+							isAvailable: {
+								title: availability,
+								type: 'custom',
+								renderComponent: IsAvailableCheckBox
+              },
 							type: {
 								title: type,
 							},

@@ -561,10 +561,11 @@
 			"CATEGORY": "קטגוריה",
 			"PRICE": "מחיר",
 			"QUANTITY": "כמות",
+			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "לחץ על Image Product כדי להגדיל את הכמות הזמינה",
+			"AVAILABILITY": "זמינות",
 			"TYPE": "סוּג",
 			"DELIVERY": "מְסִירָה",
-			"TAKEAWAY": "להסיר",
-			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "לחץ על Image Product כדי להגדיל את הכמות הזמינה"
+			"TAKEAWAY": "להסיר"
 		},
 		"NEW_PRODUCT_TYPE": "הספק נדרש לפני המכירה",
 		"ADD_PRODUCTS": "הוסף מוצרים",

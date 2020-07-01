@@ -561,10 +561,11 @@
 			"CATEGORY": "категория",
 			"PRICE": "Цена",
 			"QUANTITY": "количество",
+			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Кликнете върху Изображение на продукта, за да увеличите наличното количество",
+			"AVAILABILITY": "Наличност",
 			"TYPE": "Тип",
 			"DELIVERY": "Доставка",
-			"TAKEAWAY": "За вкъщи",
-			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Кликнете върху Изображение на продукта, за да увеличите наличното количество"
+			"TAKEAWAY": "За вкъщи"			
 		},
 		"NEW_PRODUCT_TYPE": "Нов тип продукт",
 		"ADD_PRODUCTS": "Добавяне на продукти",
