@@ -2,8 +2,17 @@
 
 <div class="bottom-container">
 	<div class="info">
-		<span class="left-info">To: {{ selectedOrder?.user.fullAddress }}</span>
-		<span class="right-text">{{ carrierUserDistance + 'km' }}</span>
+		<div class="row">
+			<div>
+				<span class="left-info"
+					>To: {{ selectedOrder?.user.fullAddress }}</span
+				>
+				<span class="right-text">{{ carrierUserDistance + 'km' }}</span>
+			</div>
+			<div class="center-info">
+				<span>Order ID: {{ selectedOrder?._id }}</span>
+			</div>
+		</div>
 	</div>
 	<div class="buttons">
 		<div

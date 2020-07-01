@@ -21,6 +21,7 @@ declare var google: any;
 @Component({
 	selector: 'page-drive-to-warehouse',
 	templateUrl: 'drive-to-warehouse.html',
+	styleUrls: ['drive-to-warehouse.scss'],
 })
 export class DriveToWarehousePage implements OnInit {
 	@ViewChild('map')
