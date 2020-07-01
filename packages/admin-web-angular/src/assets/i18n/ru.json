@@ -562,6 +562,9 @@
 			"CATEGORY": "Категория",
 			"PRICE": "Цена",
 			"QUANTITY": "Количество",
+			"TYPE": "Тип",
+			"DELIVERY": "Доставка",
+			"TAKEAWAY": "На вынос",
 			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Нажмите на изображение товара, чтобы увеличить доступное количество"
 		},
 		"NEW_PRODUCT_TYPE": "Новый продукт типа",
