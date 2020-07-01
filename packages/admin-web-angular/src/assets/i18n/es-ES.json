@@ -565,7 +565,11 @@
 			"CATEGORY": "Categoría",
 			"PRICE": "Precio",
 			"QUANTITY": "Cantidad",
-			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Presiona en la imágen del producto para incrementar su cantidad disponible"
+			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Presiona en la imágen del producto para incrementar su cantidad disponible",
+			"AVAILABILITY": "Disponibilidad",
+			"TYPE": "Tipo",
+			"DELIVERY": "Entrega",
+			"TAKEAWAY": "Para llevar"			
 		},
 		"NEW_PRODUCT_TYPE": "Nuevo tipo de producto",
 		"ADD_PRODUCTS": "Agregar Productos",

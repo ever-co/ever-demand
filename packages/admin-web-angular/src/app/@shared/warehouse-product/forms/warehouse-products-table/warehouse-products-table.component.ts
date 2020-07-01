@@ -11,7 +11,7 @@ import { StoreProductPriceComponent } from '@app/@shared/render-component/store-
 import { StoreProductAmountComponent } from '@app/@shared/render-component/store-products-table/store-product-amount/store-product-amount.component';
 import { ProductCategoriesComponent } from '@app/@shared/render-component/product-categories/product-categories';
 import { ProductTitleRedirectComponent } from '@app/@shared/render-component/product-title-redirect/product-title-redirect.component';
-import { Observable, forkJoin, Subject } from 'rxjs';
+import { Observable, forkJoin, Subject, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
@@ -19,6 +19,8 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import { ProductsCategoryService } from '@app/@core/data/productsCategory.service';
 import Product from '@modules/server.common/entities/Product';
 import { StoreProductImageComponent } from '@app/@shared/render-component/store-products-table/store-product-image/store-product-image.component';
+import { CheckboxComponent } from '@app/@shared/render-component/customer-orders-table/checkbox/checkbox.component';
+import { IsAvailableCheckBox } from '@app/@shared/render-component/store-product-is-available-checkbox/is-available-checkbox.component';
 
 export interface WarehouseProductViewModel {
 	id: string;
@@ -32,6 +34,7 @@ export interface WarehouseProductViewModel {
 	storeId: string;
 	product: Product;
 	allCategories: any[];
+	isProductAvailable: boolean;
 }
 
 @Component({
@@ -52,6 +55,9 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 	settingsSmartTable: object;
 	sourceSmartTable = new LocalDataSource();
 	selectedProducts: WarehouseProductViewModel[] = [];
+	columnTitlePrefix = 'WAREHOUSE_VIEW.PRODUCTS_TAB.';
+	subscription: Subscription;
+	suffix: string;
 
 	private ngDestroy$ = new Subject<void>();
 	private categoriesInfo: any = [];
@@ -75,6 +81,7 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 	ngOnDestroy(): void {
 		this.ngDestroy$.next();
 		this.ngDestroy$.complete();
+		this.subscription.unsubscribe();
 	}
 
 	async loadDataSmartTable(products: WarehouseProduct[], storeId: string) {
@@ -108,9 +115,13 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 				},
 				price: product.price,
 				qty: product.count,
+				type: product.isTakeaway
+					? this._translate(`${this.columnTitlePrefix}TAKEAWAY`)
+					: this._translate(`${this.columnTitlePrefix}DELIVERY`),
 				storeId,
 				product: product.product,
 				allCategories: this.categoriesInfo,
+				isProductAvailable: product.isProductAvailable,
 			};
 		});
 
@@ -130,9 +141,8 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 	}
 
 	private _loadSettingsSmartTable() {
-		const columnTitlePrefix = 'WAREHOUSE_VIEW.PRODUCTS_TAB.';
 		const getTranslate = (name: string): Observable<any> =>
-			this._translateService.get(columnTitlePrefix + name);
+			this._translateService.get(this.columnTitlePrefix + name);
 
 		forkJoin(
 			this._translateService.get('Id'),
@@ -142,7 +152,9 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 			getTranslate('DETAILS'),
 			getTranslate('CATEGORY'),
 			getTranslate('PRICE'),
-			getTranslate('QUANTITY')
+			getTranslate('QUANTITY'),
+			getTranslate('AVAILABILITY'),
+			getTranslate('TYPE')
 		)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(
@@ -155,6 +167,8 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 					category,
 					price,
 					quantity,
+					availability,
+					type
 				]) => {
 					this.settingsSmartTable = {
 						mode: 'external',
@@ -211,6 +225,14 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 								type: 'custom',
 								renderComponent: StoreProductAmountComponent,
 							},
+							isAvailable: {
+								title: availability,
+								type: 'custom',
+								renderComponent: IsAvailableCheckBox
+              },
+							type: {
+								title: type,
+							},
 						},
 						pager: {
 							display: true,
@@ -225,5 +247,14 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 		this._translateService.onLangChange.subscribe(() => {
 			this._loadSettingsSmartTable();
 		});
+	}
+
+	private _translate(key: string) {
+		this.subscription = this._translateService
+			.stream(key)
+			.subscribe((res) => {
+				this.suffix = res;
+			});
+		return this.suffix;
 	}
 }
