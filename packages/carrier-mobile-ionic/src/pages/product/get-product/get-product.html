@@ -5,32 +5,24 @@
 	</div>
 </div>
 
-<div class="carrier-view">
-	<div style="display: flex; flex-wrap: wrap;">
-		<div
-			class="image-container"
-			*ngFor="let product of selectedOrder?.products"
-			style="width: 30%;"
+<ion-content style="z-index: -1;" *ngIf="selectedProductImages">
+	<ion-slides pager="true">
+		<ion-slide
+			style="display: block; height: 100vh;"
+			*ngFor="let imageUrl of selectedProductImages"
 		>
-			<img
-				style="width: 100%;"
-				*ngFor="let image of product?.product.images"
-				class="product-image"
-				src="{{ image.url }}"
-			/>
-		</div>
-	</div>
+			<img src="{{imageUrl}}" />
+		</ion-slide>
+	</ion-slides>
+</ion-content>
+<div class="carrier-view">
 	<div class="bottom-container">
 		<div class="info">
 			<div
-				*ngFor="let product of selectedOrder?.products"
+				*ngFor="let title of selectedProductTitles"
 				style="padding-right: 5px;"
 			>
-				<span
-					class="left-info"
-					*ngFor="let title of product.product.title"
-					>{{title.value}}</span
-				>
+				<span class="left-info">{{title }}</span>
 				<span class="right-text">#{{selectedOrder.orderNumber}}</span>
 			</div>
 		</div>

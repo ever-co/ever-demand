@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import ICarrier from '@modules/server.common/interfaces/ICarrier';
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
@@ -11,6 +11,7 @@ import { Store } from '../../../services/store.service';
 import { first, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { NavController } from '@ionic/angular';
+import { environment } from 'environments/environment';
 
 @Component({
 	selector: 'page-get-product',
@@ -20,9 +21,11 @@ export class GetProductPage implements OnDestroy {
 	carrier: ICarrier;
 	selectedOrder: IOrder;
 	disabledButtons: boolean = true;
+	private productsLocale: string;
+	selectedProductImages: any;
+	selectedProductTitles: any;
 
 	private destroy$ = new Subject<void>();
-
 	constructor(
 		private orderRouter: OrderRouter,
 		private carrierRouter: CarrierRouter,
@@ -30,7 +33,10 @@ export class GetProductPage implements OnDestroy {
 		private _translateProductLocales: ProductLocalesService,
 		private store: Store,
 		private navCtrl: NavController
-	) {}
+	) {
+		this.productsLocale =
+			this.store.language || environment.DEFAULT_LANGUAGE;
+	}
 
 	ionViewWillEnter() {
 		this.loadData();
@@ -76,8 +82,7 @@ export class GetProductPage implements OnDestroy {
 			.get(this.store.carrierId)
 			.pipe(first())
 			.toPromise();
-
-		this.orderRouter
+		await this.orderRouter
 			.get(this.store.orderId, {
 				populateWarehouse: true,
 			})
@@ -86,6 +91,26 @@ export class GetProductPage implements OnDestroy {
 				this.selectedOrder = o;
 				this.store.selectedOrder = o;
 				this.disabledButtons = false;
+				const imageUrls = [];
+				const titles = [];
+
+				this.selectedOrder.products.forEach((x) => {
+					x.product.images.forEach((x) => {
+						if (x.locale.match(this.productsLocale)) {
+							imageUrls.push(x.url);
+						}
+					});
+				});
+				this.selectedOrder.products.forEach((x) => {
+					x.product.title.forEach((x) => {
+						if (x.locale.match(this.productsLocale)) {
+							titles.push(x.value);
+						}
+					});
+				});
+
+				this.selectedProductImages = imageUrls;
+				this.selectedProductTitles = titles;
 			});
 	}
 

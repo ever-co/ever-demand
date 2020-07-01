@@ -3,6 +3,7 @@ import { GetProductPage } from './get-product';
 import { TranslateModule } from '@ngx-translate/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
 
 const routes: Routes = [
 	{
@@ -17,6 +18,8 @@ const routes: Routes = [
 		TranslateModule.forChild(),
 		RouterModule.forChild(routes),
 		CommonModule,
+		IonicModule,
 	],
+	providers: [],
 })
 export class GetProductPageModule {}
