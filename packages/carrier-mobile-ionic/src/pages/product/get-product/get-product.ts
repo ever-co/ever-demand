@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import ICarrier from '@modules/server.common/interfaces/ICarrier';
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
