@@ -96,10 +96,13 @@ export class PromotionTable implements OnInit, OnDestroy {
 	async openAddPromotion() {
 		const addPromotionPopup = await this.modalCtrl.create({
 			component: PromotionMutation,
-			cssClass: 'tstodo',
 		});
 
 		await addPromotionPopup.present();
+
+		await addPromotionPopup.onDidDismiss();
+
+		this._loadPromotions();
 	}
 
 	editPromotion() {}

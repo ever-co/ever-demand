@@ -6,7 +6,6 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { CommonModule } from '@angular/common';
 import { PromotionService } from 'services/promotion.service';
 import { PromotionMutationModule } from './promotion-mutation-popup/promotion-mutation.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
 	{

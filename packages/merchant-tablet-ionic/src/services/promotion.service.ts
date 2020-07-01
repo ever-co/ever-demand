@@ -20,8 +20,14 @@ export class PromotionService {
 					query allPromotions {
 						promotions {
 							_id
-							title
-							description
+							title {
+								locale
+								value
+							}
+							description {
+								locale
+								value
+							}
 							active
 							activeFrom
 							activeTo

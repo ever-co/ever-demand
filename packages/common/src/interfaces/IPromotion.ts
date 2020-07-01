@@ -6,18 +6,18 @@ export interface IPromotionCreateObject extends DBCreateObject {
 	/**
 	 * Promotion title locale
 	 *
-	 * @type {string}
+	 * @type {IPromotionTitle[]}
 	 * @memberof IPromotionCreateObject
 	 */
-	title: string;
+	title: IPromotionTitle[];
 
 	/**
 	 * Promotion description locale
 	 *
-	 * @type {string}
+	 * @type {IPromotionDescription[]}
 	 * @memberof IPromotionCreateObject
 	 */
-	description: string;
+	description: IPromotionDescription[];
 
 	/**
 	 *
@@ -46,12 +46,11 @@ export interface IPromotionCreateObject extends DBCreateObject {
 	 */
 	image: string;
 
-	//tstodo
-	// /**
-	//  * @type {Product}
-	//  * @memberof IPromotionCreateObject
-	//  */
-	// product: Product;
+	/**
+	 * @type {Product}
+	 * @memberof IPromotionCreateObject
+	 */
+	product: Product;
 
 	/**
 	 * @type {number}
@@ -64,6 +63,5 @@ export interface IPromotion extends IPromotionCreateObject, DBRawObject {
 	_id: PyroObjectId;
 }
 
-//tstodo ^^
 export interface IPromotionDescription extends ILocaleMember {}
 export interface IPromotionTitle extends ILocaleMember {}

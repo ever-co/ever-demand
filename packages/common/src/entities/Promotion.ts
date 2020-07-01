@@ -1,7 +1,12 @@
 import { DBObject, ModelName, Types, Schema } from '@pyro/db';
 import { Entity, Column } from 'typeorm';
 import Product from './Product';
-import { IPromotion, IPromotionCreateObject } from '../interfaces/IPromotion';
+import {
+	IPromotion,
+	IPromotionCreateObject,
+	IPromotionTitle,
+	IPromotionDescription,
+} from '../interfaces/IPromotion';
 
 /**
  *
@@ -13,23 +18,19 @@ import { IPromotion, IPromotionCreateObject } from '../interfaces/IPromotion';
 @Entity({ name: 'promotions' })
 class Promotion extends DBObject<IPromotion, IPromotionCreateObject>
 	implements IPromotion {
-	//tstodo
-
 	/**
-	 * @type {string}
+	 * @type {IPromotionTitle[]}
 	 * @memberof Promotion
 	 */
-	@Schema({ type: String, required: false })
-	@Column()
-	title: string;
+	@Schema({ type: Array, required: false })
+	title: IPromotionTitle[];
 
 	/**
-	 * @type {string}
+	 * @type {IPromotionDescription[]}
 	 * @memberof Promotion
 	 */
-	@Schema({ type: String, required: false })
-	@Column()
-	description: string;
+	@Schema({ type: Array, required: false })
+	description: IPromotionDescription[];
 
 	/**
 	 * @type {boolean}
@@ -63,13 +64,12 @@ class Promotion extends DBObject<IPromotion, IPromotionCreateObject>
 	@Column()
 	image: string;
 
-	//tstodo
-	// /**
-	//  * @type {Product}
-	//  * @memberof Promotion
-	//  */
-	// @Types.Ref(Product)
-	// product: Product;
+	/**
+	 * @type {Product}
+	 * @memberof Promotion
+	 */
+	@Types.Ref(Product)
+	product: Product;
 
 	/**
 	 * @type {number}

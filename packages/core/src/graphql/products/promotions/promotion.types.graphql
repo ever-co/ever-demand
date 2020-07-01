@@ -1,25 +1,38 @@
 type Promotion {
 	_id: String
-	title: String
-	description: String
+	title: [TranslateType]
+	description: [TranslateType]
 	active: Boolean
 	activeFrom: Date
 	activeTo: Date
 	image: String
-	# product: Product
+	product: Product
 	purchasesCount: Int
 }
 
+type TranslateType {
+	locale: String!
+	value: String!
+}
+
+type Product {
+	_id: String!
+}
+
 input PromotionCreateInput {
-	title: String!
-	description: String
+	title: [TranslateInput]
+	description: [TranslateInput]
 	active: Boolean
 	activeFrom: Date
 	activeTo: Date
 	image: String
-	# tstodo
-	# product: String
+	product: String
 	purchasesCount: Int
+}
+
+input TranslateInput {
+	locale: String!
+	value: String!
 }
 
 type Query {

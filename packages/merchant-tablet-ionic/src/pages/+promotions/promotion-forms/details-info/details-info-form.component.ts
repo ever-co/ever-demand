@@ -13,13 +13,14 @@ export class DetailsInfoFormComponent {
 	constructor() {}
 
 	get image() {
-		return this.form.get('imageUrl');
+		return this.form.get('image');
 	}
 
 	static buildForm(formBuilder: FormBuilder): FormGroup {
 		return formBuilder.group({
 			description: [''],
-			imageUrl: [null],
+			image: [null],
+			locale: ['en-US'],
 		});
 	}
 
