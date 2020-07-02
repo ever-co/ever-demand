@@ -15,6 +15,8 @@ import { CustomerEmailComponent } from './customer-email/customer-email.componen
 import { CustomerPhoneComponent } from './customer-phone/customer-phone.component';
 import { CheckboxComponent } from './customer-orders-table/checkbox/checkbox.component';
 import { IsAvailableCheckBox } from './store-product-is-available-checkbox/is-available-checkbox.component';
+import { ProductTakeawayDeliveryComponent } from './product-takeaway-delivery/product-takeaway-delivery.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 const COMPONENTS = [
 	PriceCountInputComponent,
@@ -30,10 +32,16 @@ const COMPONENTS = [
 	CustomerEmailComponent,
 	CustomerPhoneComponent,
 	IsAvailableCheckBox,
+	ProductTakeawayDeliveryComponent,
 ];
 
 @NgModule({
-	imports: [CommonModule, ThemeModule, MomentModule],
+	imports: [
+		CommonModule,
+		ThemeModule,
+		MomentModule,
+		TranslateModule.forChild(),
+	],
 	declarations: COMPONENTS,
 	entryComponents: COMPONENTS,
 })
