@@ -16,6 +16,7 @@ import { environment } from 'environments/environment';
 @Component({
 	selector: 'page-get-product',
 	templateUrl: 'get-product.html',
+	styleUrls: ['./get-product.scss'],
 })
 export class GetProductPage implements OnDestroy {
 	carrier: ICarrier;
@@ -93,7 +94,6 @@ export class GetProductPage implements OnDestroy {
 				this.disabledButtons = false;
 				const imageUrls = [];
 				const titles = [];
-
 				this.selectedOrder.products.forEach((x) => {
 					x.product.images.forEach((x) => {
 						if (x.locale.match(this.productsLocale)) {

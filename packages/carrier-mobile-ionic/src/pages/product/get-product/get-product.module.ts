@@ -4,6 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
+import { MenuModule } from 'components/menu/menu.module';
 
 const routes: Routes = [
 	{
@@ -19,6 +20,7 @@ const routes: Routes = [
 		RouterModule.forChild(routes),
 		CommonModule,
 		IonicModule,
+		MenuModule,
 	],
 	providers: [],
 })
