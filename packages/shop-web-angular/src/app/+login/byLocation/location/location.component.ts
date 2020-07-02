@@ -18,6 +18,7 @@ import {
 	Country,
 	getCountryName,
 	CountryName,
+	countriesIdsToNamesArray,
 } from '@modules/server.common/entities/GeoLocation';
 import { GeoLocationRouter } from '@modules/client.common.angular2/routers/geo-location-router.service';
 import InviteRequest from '@modules/server.common/entities/InviteRequest';
@@ -42,9 +43,7 @@ export class LocationFormComponent
 	public static COUNTRIES: Array<{
 		id: Country;
 		name: CountryName;
-	}> = Object.keys(countries).map((abbr) => {
-		return { id: Country[abbr], name: getCountryName(+Country[abbr]) };
-	});
+	}> = countriesIdsToNamesArray;
 
 	@Input()
 	public InitUser: User;
