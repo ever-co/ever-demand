@@ -15,6 +15,7 @@ import { GeoLocationService } from '../../../services/geo-location.service';
 import { MapComponent } from '../common/map/map.component';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { getIdFromTheDate } from '@modules/server.common/utils';
 
 declare var google: any;
 
@@ -32,6 +33,7 @@ export class DriveToWarehousePage implements OnInit {
 	carrierUserDistance: string;
 	workTaken: boolean;
 	fromDelivery: boolean;
+	selectedOrderID: string;
 
 	carrier$;
 	order$;
@@ -85,6 +87,7 @@ export class DriveToWarehousePage implements OnInit {
 						.subscribe((order) => {
 							this.selectedOrder = order;
 							this.store.selectedOrder = order;
+							this.selectedOrderID = getIdFromTheDate(order);
 							this.workTaken =
 								order.carrierStatus !==
 								OrderCarrierStatus.NoCarrier;
