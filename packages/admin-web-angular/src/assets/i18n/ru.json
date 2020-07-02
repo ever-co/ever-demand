@@ -425,6 +425,7 @@
 			"LOGO": "Логотип",
 			"PHOTO": "Фото",
 			"IS_ACTIVE": "Активно",
+			"ORDERS_SHORT_PROCESS": "Краткий процесс заказов",
 			"PRODUCTS_MANUFACTURING": "Производство товаров",
 			"CARRIER_REQUIRED": "Перевозчик требуется",
 			"RIGHT_NOW": "Прямо сейчас",
@@ -561,7 +562,11 @@
 			"CATEGORY": "Категория",
 			"PRICE": "Цена",
 			"QUANTITY": "Количество",
-			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Нажмите на изображение товара, чтобы увеличить доступное количество"
+			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Нажмите на изображение товара, чтобы увеличить доступное количество",
+			"AVAILABILITY": "Доступность",
+			"TYPE": "Тип",
+			"DELIVERY": "Доставка",
+			"TAKEAWAY": "На вынос"
 		},
 		"NEW_PRODUCT_TYPE": "Новый продукт типа",
 		"ADD_PRODUCTS": "Добавить товары",
