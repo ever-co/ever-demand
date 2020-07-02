@@ -52,6 +52,22 @@ export class Store {
 		localStorage.setItem('serverConnection', val);
 	}
 
+	get adminPasswordReset() {
+		return localStorage.getItem('adminPasswordReset');
+	}
+
+	set adminPasswordReset(val: string) {
+		localStorage.setItem('adminPasswordReset', val);
+	}
+
+	get fakeDataGenerator() {
+		return localStorage.getItem('fakeDataGenerator');
+	}
+
+	set fakeDataGenerator(val: string) {
+		localStorage.setItem('fakeDataGenerator', val);
+	}
+
 	clearMaintenanceMode() {
 		localStorage.removeItem('maintenanceMode');
 	}

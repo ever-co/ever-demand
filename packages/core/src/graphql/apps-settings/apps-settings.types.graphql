@@ -1,0 +1,8 @@
+type AdminAppSettings {
+	adminPasswordReset: Boolean!
+	fakeDataGenerator: Boolean!
+}
+
+type Query {
+	adminAppSettings: AdminAppSettings!
+}
