@@ -16,7 +16,7 @@ export class SetupComponent implements OnInit {
 		private readonly _store: Store
 	) {}
 	ngOnInit(): void {
-		this.fakeDataGenerator = !!this._store.fakeDataGenerator;
+		this.fakeDataGenerator = !!+this._store.fakeDataGenerator;
 	}
 
 	navigateToFakeDataPage() {

@@ -6,6 +6,8 @@ import { IInviteCreateObject } from '@modules/server.common/interfaces/IInvite';
 import { InvitesService } from '../../services/invites/InvitesService';
 import { InvitesRequestsService } from '../../services/invites';
 import Invite from '@modules/server.common/entities/Invite';
+import { UseGuards } from '@nestjs/common';
+import { FakrDataGuard } from '../../auth/guards/fake-data.guard';
 
 @Resolver('Invite')
 export class InviteResolver {
@@ -15,6 +17,7 @@ export class InviteResolver {
 	) {}
 
 	@Query()
+	@UseGuards(FakrDataGuard)
 	async generate1000InvitesConnectedToInviteRequests(
 		_,
 		{ defaultLng, defaultLat }: { defaultLng: number; defaultLat: number }

@@ -4,6 +4,8 @@ import { IInviteRequestCreateObject } from '@modules/server.common/interfaces/II
 import { first } from 'rxjs/operators';
 import Invite from '@modules/server.common/entities/Invite';
 import InviteRequest from '@modules/server.common/entities/InviteRequest';
+import { UseGuards } from '@nestjs/common';
+import { FakrDataGuard } from 'auth/guards/fake-data.guard';
 
 @Resolver('Invite-request')
 export class InviteRequestResolver {
@@ -12,6 +14,7 @@ export class InviteRequestResolver {
 	) {}
 
 	@Query()
+	@UseGuards(FakrDataGuard)
 	async generate1000InviteRequests(
 		_,
 		{ defaultLng, defaultLat }: { defaultLng: number; defaultLat: number }

@@ -6,8 +6,8 @@ import { IAdminAppSettings } from '@modules/server.common/interfaces/IAppsSettin
 export class AppsSettingsService {
 	getAdminAppSettings(): IAdminAppSettings {
 		return {
-			adminPasswordReset: env.ADMIN_PASSWORD_RESET,
-			fakeDataGenerator: env.FAKE_DATA_GENERATOR,
+			adminPasswordReset: env.ADMIN_PASSWORD_RESET ? 1 : 0,
+			fakeDataGenerator: env.FAKE_DATA_GENERATOR ? 1 : 0,
 		};
 	}
 }

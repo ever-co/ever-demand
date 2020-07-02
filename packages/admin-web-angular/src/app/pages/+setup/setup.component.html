@@ -5,7 +5,7 @@
 
 	<nb-card-body>
 		<button
-			*ngIf="fakeDataGenerator"
+			[disabled]="!fakeDataGenerator"
 			nbButton
 			status="primary"
 			class="mr-3"

@@ -1,6 +1,6 @@
 type AdminAppSettings {
-	adminPasswordReset: Boolean!
-	fakeDataGenerator: Boolean!
+	adminPasswordReset: Int!
+	fakeDataGenerator: Int!
 }
 
 type Query {
