@@ -135,7 +135,25 @@ export class CarriersService {
 						getCarrier(id: $id) {
 							id
 							firstName
+							lastName
+							phone
 							logo
+							isDeleted
+							numberOfDeliveries
+							skippedOrderIds
+							status
+							isActive
+							username
+							isSharedCarrier
+							geoLocation {
+								city
+								streetAddress
+								house
+								loc {
+									type
+									coordinates
+								}
+							}
 						}
 					}
 				`,

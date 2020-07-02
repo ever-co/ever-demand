@@ -6,6 +6,7 @@ import { CarrierImageComponent } from './carrier-image/carrier-image.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { CarrierPhoneComponent } from './carrier-phone/carrier-phone.component';
 import { CarrierActionsComponent } from './carrier-actions/carrier-actions.component';
+import { HighlightModule } from 'ngx-highlightjs';
 
 const COMPONENTS = [
 	CarrierActionsComponent,
@@ -15,7 +16,12 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-	imports: [CommonModule, ThemeModule, TranslateModule.forChild()],
+	imports: [
+		CommonModule,
+		ThemeModule,
+		HighlightModule.forRoot({ theme: 'github' }),
+		TranslateModule.forChild(),
+	],
 	declarations: COMPONENTS,
 	entryComponents: COMPONENTS,
 	exports: COMPONENTS,

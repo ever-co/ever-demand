@@ -5,10 +5,32 @@
 	</button>
 </div>
 <div class="modal-body">
-	<h6>
-		<strong
-			>{{ 'CARRIERS_VIEW.CARRIER_PAGE.CARRIER_ID' | translate }}:</strong
-		>
-		{{ carrierId }}
-	</h6>
+	<div>
+		<h6>
+			<strong
+				>{{
+					'CARRIERS_VIEW.CARRIER_PAGE.CARRIER_ID' | translate
+				}}:</strong
+			>
+			<span (click)="redirectToCarrierPage()" class="carrier-redirect">{{
+				carrierId
+			}}</span>
+		</h6>
+	</div>
+	<div>
+		<h6>
+			<strong
+				>{{ 'CARRIERS_VIEW.CARRIER_PAGE.NAME' | translate }}:
+			</strong>
+			<span (click)="redirectToCarrierPage()" class="carrier-redirect"
+				>{{ carrierData?.firstName + ' ' + carrierData?.lastName }}
+			</span>
+		</h6>
+	</div>
+</div>
+
+<div>
+	<pre>
+		<code highlight [language]="['json']" [code]="carrierData | json"></code>
+	</pre>
 </div>
