@@ -892,7 +892,8 @@
 			"Allocation Failed": "Не удалось выделить",
 			"Packaging Failed": "Сбой упаковки",
 			"LOCATION": "Местоположение",
-			"TIME": "Время"
+			"TIME": "Время",
+			"NAME": "Наименование"
 		},
 		"EDIT": {
 			"EDIT_CARRIER": "Изменить оператора",
