@@ -887,7 +887,8 @@
 			"Allocation Failed": "ההקצאה נכשלה",
 			"Packaging Failed": "האריזות נכשלו",
 			"LOCATION": "מקום",
-			"TIME": "זמן"
+			"TIME": "זמן",
+			"NAME": "שם"
 		},
 		"EDIT": {
 			"EDIT_CARRIER": "ערוך ספק",

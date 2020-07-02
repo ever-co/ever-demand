@@ -888,7 +888,8 @@
 			"Allocation Failed": "Allocation Failed",
 			"Packaging Failed": "Packaging Failed",
 			"LOCATION": "Location",
-			"TIME": "Time"
+			"TIME": "Time",
+			"NAME": "Name"
 		},
 		"EDIT": {
 			"EDIT_CARRIER": "Edit Carrier",

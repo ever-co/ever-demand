@@ -892,7 +892,8 @@
 			"Allocation Failed": "Asignación Falló",
 			"Packaging Failed": "Embalado Falló",
 			"LOCATION": "Ubicación",
-			"TIME": "Tiempo"
+			"TIME": "Tiempo",
+			"NAME": "Nombre"
 		},
 		"EDIT": {
 			"EDIT_CARRIER": "Modificar Reparto",
