@@ -1,5 +1,4 @@
 import {
-	OnInit,
 	OnDestroy,
 	Component,
 	ViewChild,
@@ -21,7 +20,7 @@ import { Subject } from 'rxjs';
 	templateUrl: 'promotion-mutation.html',
 	styleUrls: ['./promotion-mutation.scss'],
 })
-export class PromotionMutation implements OnInit, OnDestroy {
+export class PromotionMutation implements OnDestroy {
 	@Input()
 	promotion: IPromotion;
 
@@ -56,43 +55,31 @@ export class PromotionMutation implements OnInit, OnDestroy {
 		private readonly promotionService: PromotionService
 	) {}
 
-	ngOnInit(): void {}
-
 	ngOnDestroy(): void {
 		this._ngDestroy$.next();
 		this._ngDestroy$.unsubscribe();
 	}
 
-	savePromotion() {
-		let updatePromotionData = this.basicInfoForm.getValue();
-	}
+	savePromotion() {}
 
 	createPromotion() {
-		// const promotionCreateInput = {
-		// 	...this.basicInfoForm.getValue(),
-		// 	...this.detailsInfoForm.getValue(),
-		// };
-
-		let promotionCreateInput = {
-			title: [],
-			description: [],
-			active: true,
-			activeFrom: null,
-			activeTo: null,
-			purchasesCount: 12,
-			image: null,
-			product: null,
+		const promotionCreateInput = {
+			...this.basicInfoForm.getValue(),
+			...this.detailsInfoForm.getValue(),
 		};
 
-		// delete promotionCreateInput.product;
+		if (!this.form.valid) {
+			this.presentToast('Please fill in valid data.');
+			return;
+		}
+
+		debugger;
 
 		this.promotionService
 			.create(promotionCreateInput)
 			.pipe(first())
 			.subscribe(
 				(data) => {
-					//tstodo
-					console.log(data);
 					this.presentToast('Successfully created promotion!');
 				},
 				(err) => {

@@ -2,34 +2,29 @@
 	<ion-row>
 		<ion-col>
 			<ion-item>
-				<ion-label>Language</ion-label>
-				<ion-select formControlName="locale" okText="Okay">
-					<ion-select-option value="en-US">{{
-						'ENGLISH' | translate
-					}}</ion-select-option>
-					<ion-select-option value="he-IL">{{
-						'HEBREW' | translate
-					}}</ion-select-option>
-					<ion-select-option value="ru-RU">{{
-						'RUSSIAN' | translate
-					}}</ion-select-option>
-					<ion-select-option value="bg-BG">{{
-						'BULGARIAN' | translate
-					}}</ion-select-option>
-					<ion-select-option value="es-ES">{{
-						'SPANISH' | translate
-					}}</ion-select-option>
-				</ion-select>
+				<ion-label class="labels" position="floating">{{
+					'CARRIERS_VIEW.PROMOTIONS.PURCHASES_COUNT' | translate
+				}}</ion-label>
+				<ion-input
+					type="number"
+					formControlName="purchasesCount"
+					[placeholder]="
+						'CARRIERS_VIEW.PROMOTIONS.PURCHASES_COUNT' | translate
+					"
+				></ion-input>
 			</ion-item>
 		</ion-col>
 	</ion-row>
 	<ion-row>
 		<ion-col text-center>
-			<ion-item>
-				<ion-label position="floating">{{
-					'CARRIERS_VIEW.PROMOTIONS.DESCRIPTION' | translate
+			<ion-item class="">
+				<ion-label class="labels" position="fixed">{{
+					'CARRIERS_VIEW.PROMOTIONS.IS_ACTIVE' | translate
 				}}</ion-label>
-				<ion-textarea formControlName="description"> </ion-textarea>
+				<ion-checkbox
+					formControlName="active"
+					color="primary"
+				></ion-checkbox>
 			</ion-item>
 		</ion-col>
 	</ion-row>
@@ -42,7 +37,12 @@
 	<ion-row *ngIf="image">
 		<ion-col text-center>
 			<ion-thumbnail>
-				<ion-img [src]="image.value" #imagePreview></ion-img>
+				<ion-img
+					*ngIf="image && image.value"
+					[src]="image.value"
+					#imagePreview
+					[alt]="'Invalid image'"
+				></ion-img>
 			</ion-thumbnail>
 		</ion-col>
 	</ion-row>

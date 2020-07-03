@@ -12,7 +12,7 @@
 				</div>
 			</span>
 		</div>
-		<div class="right-container">
+		<!-- <div class="right-container">
 			<div class="allowOverflow">
 				<div class="button-bar">
 					<a class="button button-brand" (click)="openAddPromotion()">
@@ -23,7 +23,7 @@
 					</a>
 				</div>
 			</div>
-		</div>
+		</div> -->
 	</div>
 	<div id="contentWrapper" scroll="false">
 		<ng2-smart-table
@@ -37,10 +37,7 @@
 		</ng2-smart-table>
 
 		<div *ngIf="showNoPromotionsIcon">
-			<!-- //tstodo  -->
 			<div class="no-promotions-message">
-				<i class="fa fa-truck"></i>
-
 				<h2>{{ 'CARRIERS_VIEW.NO_PROMOTIONS' | translate }}</h2>
 			</div>
 		</div>

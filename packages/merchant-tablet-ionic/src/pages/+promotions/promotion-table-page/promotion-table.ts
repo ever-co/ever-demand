@@ -7,6 +7,7 @@ import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
 import { PromotionMutation } from '../promotion-mutation-popup/promotion-mutation';
+import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 
 @Component({
 	selector: 'promotion-table',
@@ -26,13 +27,14 @@ export class PromotionTable implements OnInit, OnDestroy {
 
 	constructor(
 		private readonly promotionsService: PromotionService,
+		private readonly productLocaleService: ProductLocalesService,
 		private readonly translateService: TranslateService,
 		public modalCtrl: ModalController
 	) {}
 
 	ngOnInit(): void {
 		this._loadPromotions();
-		this._loadSettingsSmartTable();
+		this._applyTranslationOnSmartTable();
 	}
 
 	ngOnDestroy() {
@@ -40,15 +42,15 @@ export class PromotionTable implements OnInit, OnDestroy {
 		this._ngDestroy$.complete();
 	}
 
-	private async _loadPromotions() {
+	private _loadPromotions() {
 		this.promotionsService
 			.getAll()
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe((promotionsRes) => {
-				//tstodo
-				console.log(promotionsRes, 'promotions');
 				this.promotions = promotionsRes.promotions || [];
-				this.sourceSmartTable.load(this.promotions);
+
+				this._loadSettingsSmartTable();
+				this._loadDataSmartTable();
 
 				this.promotions.length === 0
 					? (this.showNoPromotionsIcon = true)
@@ -103,6 +105,31 @@ export class PromotionTable implements OnInit, OnDestroy {
 		await addPromotionPopup.onDidDismiss();
 
 		this._loadPromotions();
+	}
+
+	private _applyTranslationOnSmartTable() {
+		this.translateService.onLangChange
+			.pipe(takeUntil(this._ngDestroy$))
+			.subscribe(() => {
+				this._loadSettingsSmartTable();
+				this._loadDataSmartTable();
+			});
+	}
+
+	private _loadDataSmartTable() {
+		const promotionsVM = this.promotions.map((promotion) => {
+			return {
+				title: this.productLocaleService.getTranslate(promotion.title),
+				active: promotion.active,
+				activeFrom: promotion.activeFrom,
+				activeTo: promotion.activeTo,
+				purchasesCount: promotion.purchasesCount,
+			};
+		});
+
+		debugger;
+
+		this.sourceSmartTable.load(promotionsVM);
 	}
 
 	editPromotion() {}
