@@ -16,7 +16,7 @@ import {
 import { ObjectId } from 'mongodb';
 import { OrdersService } from '../../services/orders';
 import { UseGuards } from '@nestjs/common';
-import { FakeDataGuard } from 'auth/guards/fake-data.guard';
+import { FakeDataGuard } from '../../auth/guards/fake-data.guard';
 
 @Resolver('User')
 export class UserResolver {

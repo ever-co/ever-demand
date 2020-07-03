@@ -5,7 +5,7 @@ import { first } from 'rxjs/operators';
 import Invite from '@modules/server.common/entities/Invite';
 import InviteRequest from '@modules/server.common/entities/InviteRequest';
 import { UseGuards } from '@nestjs/common';
-import { FakeDataGuard } from 'auth/guards/fake-data.guard';
+import { FakeDataGuard } from '../../auth/guards/fake-data.guard';
 
 @Resolver('Invite-request')
 export class InviteRequestResolver {
