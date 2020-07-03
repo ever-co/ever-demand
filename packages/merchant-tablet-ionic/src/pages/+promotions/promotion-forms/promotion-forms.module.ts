@@ -4,8 +4,6 @@ import { DetailsInfoFormComponent } from './details-info/details-info-form.compo
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { FileUploadModule } from 'ng2-file-upload';
-import { ComponentsModule } from 'components/components.module';
 import { FileUploaderModule } from 'components/file-uploader/file-uploader.module';
 import { CommonModule } from '@angular/common';
 

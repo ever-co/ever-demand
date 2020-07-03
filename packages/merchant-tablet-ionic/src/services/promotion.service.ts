@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import {
-	IPromotionCreateObject,
-	IPromotion,
-} from '@modules/server.common/interfaces/IPromotion';
+import { IPromotionCreateObject } from '@modules/server.common/interfaces/IPromotion';
 import gql from 'graphql-tag';
 import { map, share } from 'rxjs/operators';
 import { Observable } from 'rxjs';
