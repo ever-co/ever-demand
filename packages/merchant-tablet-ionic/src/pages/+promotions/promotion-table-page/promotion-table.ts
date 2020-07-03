@@ -127,8 +127,6 @@ export class PromotionTable implements OnInit, OnDestroy {
 			};
 		});
 
-		debugger;
-
 		this.sourceSmartTable.load(promotionsVM);
 	}
 

@@ -73,8 +73,6 @@ export class PromotionMutation implements OnDestroy {
 			return;
 		}
 
-		debugger;
-
 		this.promotionService
 			.create(promotionCreateInput)
 			.pipe(first())
