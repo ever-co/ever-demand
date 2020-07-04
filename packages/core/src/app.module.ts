@@ -45,6 +45,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServicesModule } from './services/services.module';
 import { ServicesApp } from './services/services.app';
 import { CurrencyModule } from './graphql/currency/currency.module';
+import { PromotionModule } from './graphql/products/promotions/promotion.module';
 import { AppsSettingsModule } from './graphql/apps-settings/apps-settings.module';
 
 const port = env.GQLPORT;
@@ -113,6 +114,7 @@ const entities = ServicesApp.getEntities();
 		GeoLocationOrdersModule,
 		GeoLocationMerchantsModule,
 		CurrencyModule,
+		PromotionModule,
 	],
 })
 export class ApplicationModule implements NestModule, OnModuleInit {
