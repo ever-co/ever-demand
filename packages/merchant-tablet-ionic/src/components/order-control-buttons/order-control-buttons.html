@@ -2,7 +2,7 @@
 	<a
 		class="button button-brand"
 		*ngIf="warehouseStatus == 0"
-		(click)="onUpdateWarehouseStatus(orderId, 1)"
+		(click)="onUpdateWarehouseStatus(orderId, ordersShortProcess ? 5 : 1)"
 	>
 		{{ 'ORDER_CONTROL_BUTTONS_COMPONENT.CONFIRM' | translate }}
 	</a>

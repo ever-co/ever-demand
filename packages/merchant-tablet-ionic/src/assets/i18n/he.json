@@ -419,6 +419,11 @@
 		"ORDER": "להזמין",
 		"FROM": "מ"
 	},
+	"ORDER_TYPE": {
+		"TYPE": ":סוג הזמנה",
+		"DELIVERY": "מְסִירָה",
+		"TAKEAWAY": "להסיר"
+	},
 	"TRACK_ORDER_POP_UP": {
 		"CARRIER": "המוביל",
 		"TRACK": "עקוב אחר",

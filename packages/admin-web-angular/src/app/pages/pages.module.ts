@@ -5,6 +5,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { ThemeModule } from '../@theme/theme.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { SignInRedirectModule } from './+sign-in-redirect/sign-in-redirect.module';
+import { FakeDataModuleGuard } from './+fakeData/fakeData.module.guard';
 
 const PAGES_COMPONENTS = [PagesComponent];
 
@@ -16,6 +17,7 @@ const PAGES_COMPONENTS = [PagesComponent];
 		SignInRedirectModule,
 		MiscellaneousModule,
 	],
+	providers: [FakeDataModuleGuard],
 	declarations: [...PAGES_COMPONENTS],
 })
 export class PagesModule {}

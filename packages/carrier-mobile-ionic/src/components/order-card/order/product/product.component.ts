@@ -55,7 +55,8 @@ export class ProductComponent implements OnInit {
 			) ||
 			this.orderProduct.product.images.find(
 				(product) => product.locale === 'en-US'
-			)
+			) ||
+			this.orderProduct.product.images[0]
 		);
 	}
 

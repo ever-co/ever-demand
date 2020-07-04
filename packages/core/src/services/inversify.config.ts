@@ -39,6 +39,7 @@ import Admin from '@modules/server.common/entities/Admin';
 import Device from '@modules/server.common/entities/Device';
 import { FakeOrdersService } from './fake-data/FakeOrdersService';
 import { CurrenciesService } from './currency/CurrencyService';
+import { AppsSettingsService } from './apps-settings';
 
 function getRepository(t: any): any {
 	const conn = getConnection('typeorm');
@@ -89,6 +90,7 @@ const bindings = new ContainerModule((bind: interfaces.Bind) => {
 			AuthenticationService,
 			FakeOrdersService,
 			CurrenciesService,
+			AppsSettingsService,
 		],
 		(Service: any) => {
 			bind(Service).to(Service).inSingletonScope();

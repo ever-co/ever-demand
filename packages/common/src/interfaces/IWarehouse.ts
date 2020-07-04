@@ -27,6 +27,14 @@ export interface IWarehouseCreateObject extends DBCreateObject {
 	isPaymentEnabled?: boolean;
 
 	/**
+	 * Is Cash payment enabled (Warehouse may decide if they dont want cash payments)
+	 *
+	 * @type {boolean}
+	 * @memberof IWarehouseCreateObject
+	 */
+	isCashPaymentEnabled?: boolean;
+
+	/**
 	 * Warehouse current location (we support 'moving' warehouses/merchants)
 	 *
 	 * @type {IGeoLocationCreateObject}
@@ -126,6 +134,7 @@ export interface IWarehouseCreateObject extends DBCreateObject {
 	barcodeData?: string;
 	useOnlyRestrictedCarriersForDelivery?: boolean;
 	preferRestrictedCarriersForDelivery?: boolean;
+	ordersShortProcess?: boolean;
 }
 
 interface IWarehouse extends IWarehouseCreateObject, DBRawObject {
@@ -142,6 +151,7 @@ interface IWarehouse extends IWarehouseCreateObject, DBRawObject {
 	paymentGateways?: IPaymentGateway[];
 	useOnlyRestrictedCarriersForDelivery?: boolean;
 	preferRestrictedCarriersForDelivery?: boolean;
+	ordersShortProcess?: boolean;
 }
 
 export default IWarehouse;
