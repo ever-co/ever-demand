@@ -76,6 +76,7 @@ export class WarehouseManageComponent implements OnInit {
 				deliveryAreas: tabsInfoRaw.deliveryAreas,
 				isPaymentEnabled: tabsInfoRaw.isPaymentEnabled,
 				paymentGateways: tabsInfoRaw.paymentsGateways,
+				isCashPaymentEnabled: tabsInfoRaw.isCashPaymentEnabled,
 			};
 
 			const username = this.tabsForm.value.account['username'];
