@@ -26,6 +26,7 @@ export type WarehouseBasicInfo = Pick<
 	| 'carriersIds'
 	| 'useOnlyRestrictedCarriersForDelivery'
 	| 'preferRestrictedCarriersForDelivery'
+	| 'ordersShortProcess'
 >;
 
 @Component({
@@ -84,6 +85,7 @@ export class BasicInfoFormComponent implements OnInit {
 			hasRestrictedCarriers: [false, [Validators.required]],
 			useOnlyRestrictedCarriersForDelivery: [false],
 			preferRestrictedCarriersForDelivery: [false],
+			ordersShortProcess: [false],
 			carriersIds: [[]],
 		});
 	}
@@ -103,6 +105,7 @@ export class BasicInfoFormComponent implements OnInit {
 			carriersIds: string[];
 			useOnlyRestrictedCarriersForDelivery: boolean;
 			preferRestrictedCarriersForDelivery: boolean;
+			ordersShortProcess: boolean;
 		};
 
 		if (!basicInfo.logo) {
@@ -134,6 +137,7 @@ export class BasicInfoFormComponent implements OnInit {
 						useOnlyRestrictedCarriersForDelivery: false,
 						preferRestrictedCarriersForDelivery: false,
 				  }),
+			ordersShortProcess: basicInfo.ordersShortProcess,
 		};
 	}
 
@@ -144,6 +148,7 @@ export class BasicInfoFormComponent implements OnInit {
 			{
 				useOnlyRestrictedCarriersForDelivery: false,
 				preferRestrictedCarriersForDelivery: false,
+				ordersShortProcess: false,
 			},
 			basicInfo
 		);

@@ -109,6 +109,21 @@ export class WarehouseProductsRouter implements IWarehouseProductsRouter {
 		return this._warehouseProductFactory(warehouseProduct);
 	}
 
+	async changeProductAvailability(
+		warehouseId: string,
+		productId: string,
+		isAvailable: boolean
+	): Promise<WarehouseProduct> {
+		const warehouseProduct = await this.router.run<IWarehouseProduct>(
+			'changeProductAvailability',
+			warehouseId,
+			productId,
+			isAvailable
+		);
+
+		return this._warehouseProductFactory(warehouseProduct);
+	}
+
 	async increaseSoldCount(
 		warehouseId: string,
 		productId: string,

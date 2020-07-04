@@ -15,6 +15,8 @@ import {
 } from '@modules/server.common/routers/IUserAuthRouter';
 import { ObjectId } from 'mongodb';
 import { OrdersService } from '../../services/orders';
+import { UseGuards } from '@nestjs/common';
+import { FakeDataGuard } from '../../auth/guards/fake-data.guard';
 
 @Resolver('User')
 export class UserResolver {
@@ -32,6 +34,7 @@ export class UserResolver {
 	}
 
 	@Query()
+	@UseGuards(FakeDataGuard)
 	async generate1000Customers(
 		_,
 		{ defaultLng, defaultLat }: { defaultLng: number; defaultLat: number }

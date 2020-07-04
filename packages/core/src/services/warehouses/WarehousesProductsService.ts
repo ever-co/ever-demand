@@ -650,4 +650,36 @@ export class WarehousesProductsService
 			)
 		);
 	}
+
+	@asyncListener()
+	async changeProductAvailability(
+		warehouseId: string,
+		productId: string,
+		isAvailable: boolean
+	): Promise<WarehouseProduct> {
+		const warehouse = await this.warehousesService
+			.get(warehouseId)
+			.pipe(first())
+			.toPromise();
+		if (warehouse) {
+			const existedProduct = _.find(
+				warehouse.products,
+				(warehouseProduct) => warehouseProduct.productId === productId
+			);
+
+			if (existedProduct) {
+				existedProduct.isProductAvailable = isAvailable;
+
+				return this.saveUpdated(warehouseId, existedProduct);
+			} else {
+				const errMsg = 'Cannot find product';
+				this.log.error(new Error(errMsg));
+				throw new Error(errMsg);
+			}
+		} else {
+			const errMsg = 'Cannot find warehouse';
+			this.log.error(new Error(errMsg));
+			throw new Error(errMsg);
+		}
+	}
 }

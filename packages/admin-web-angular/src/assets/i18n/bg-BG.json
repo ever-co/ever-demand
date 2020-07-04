@@ -275,6 +275,7 @@
 			"PAYMENTS": {
 				"PAYMENTS": "Плащания",
 				"ALLOW_ONLINE_PAYMENT": "Разрешаване на онлайн плащания?",
+				"ALLOW_CASH_PAYMENT": "Разрешаване на плащане в брой?",
 				"STRIPE": {
 					"PAY_BUTTON_TEXT": "Текст на бутона за плащане",
 					"CURRENCY": "Валута",
@@ -449,6 +450,16 @@
 			"AUTO_DETECT_COORDINATES": "Автоматично откриване на координати",
 			"CARRIERS": "Превозвачите",
 			"USE_ONLY_SPECIFIC_CARRIERS": "Използвайте само конкретни доставчици",
+			"SELECT_SHAPE_TO_ADD_ZONE": "Изберете форма, за да добавите нова зона",
+			"CIRCLE": "Кръг",
+			"SHAPE": "Форма",
+			"DRAW_SHAPE_ON_MAP": "Начертайте форма на картата",
+			"MINIMUM_AMOUNT": "Минимална сума",
+			"DELIVERY_FEE": "Такса за доставка",
+			"CANCEL": "Отказ",
+			"ADD": "Добави",
+			"EDIT": "Редактирай",
+			"ZONE_NAME": "Име на зона",
 			"ERRORS": {
 				"NAME_IS_REQUIRED": "Името на склада е задължително",
 				"NAME_ATLEAST_3_CHARS": "Името трябва да е с дължина най-малко 3 знака",
@@ -550,7 +561,11 @@
 			"CATEGORY": "категория",
 			"PRICE": "Цена",
 			"QUANTITY": "количество",
-			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Кликнете върху Изображение на продукта, за да увеличите наличното количество"
+			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Кликнете върху Изображение на продукта, за да увеличите наличното количество",
+			"AVAILABILITY": "Наличност",
+			"TYPE": "Тип",
+			"DELIVERY": "Доставка",
+			"TAKEAWAY": "За вкъщи"			
 		},
 		"NEW_PRODUCT_TYPE": "Нов тип продукт",
 		"ADD_PRODUCTS": "Добавяне на продукти",
@@ -876,7 +891,8 @@
 			"Allocation Failed": "Разпределението не бе успешно",
 			"Packaging Failed": "Опаковането не бе успешно",
 			"LOCATION": "Местоположение",
-			"TIME": "Време"
+			"TIME": "Време",
+			"NAME": "Име"
 		},
 		"EDIT": {
 			"EDIT_CARRIER": "Редактиране на превозвача",

@@ -28,6 +28,7 @@ import { MaintenanceService } from '@modules/client.common.angular2/services/mai
 import { AppModuleGuard } from './app.module.guard';
 import { MaintenanceModuleGuard } from './pages/+maintenance-info/maintenance-info.module.guard';
 import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
+import { ServerSettingsService } from './@core/services/server-settings.service';
 
 // It's more 'standard' way to use Font-Awesome module and special package,
 // but for some reason ngx-admin works without it. So we leave next line commented for now.
@@ -78,6 +79,13 @@ import { ServerConnectionService } from '@modules/client.common.angular2/service
 			provide: APP_INITIALIZER,
 			useFactory: maintenanceFactory,
 			deps: [MaintenanceService],
+			multi: true,
+		},
+		ServerSettingsService,
+		{
+			provide: APP_INITIALIZER,
+			useFactory: serverSettingsFactory,
+			deps: [ServerSettingsService],
 			multi: true,
 		},
 		{ provide: APP_BASE_HREF, useValue: '/' },
@@ -170,4 +178,8 @@ export function maintenanceFactory(provider: MaintenanceService) {
 			environment['SETTINGS_APP_TYPE'],
 			environment['SETTINGS_MAINTENANCE_API_URL']
 		);
+}
+
+export function serverSettingsFactory(provider: ServerSettingsService) {
+	return () => provider.load();
 }
