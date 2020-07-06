@@ -38,6 +38,7 @@ import Product from '@modules/server.common/entities/Product';
 import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import User from '@modules/server.common/entities/User';
 import Warehouse from '@modules/server.common/entities/Warehouse';
+import Promotion from '@modules/server.common/entities/Promotion';
 import { ConfigService } from '../config/config.service';
 
 // local IPs
@@ -106,6 +107,7 @@ export class ServicesApp {
 			ProductsCategory,
 			User,
 			Warehouse,
+			Promotion,
 		];
 		return entities;
 	}

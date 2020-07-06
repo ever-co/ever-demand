@@ -461,6 +461,19 @@
 			"ADD": "Add",
 			"EDIT": "Edit",
 			"ZONE_NAME": "Zone name",
+			"UNALLOWED_ORDER_CANCELATION": "Unallowed Order Cancelation",
+			"ORDER_CANCELATION_OPTIONS": {
+				"ORDERING": "After Ordering",
+				"START_PROCESSING": "After Start Processing",
+				"START_ALLOCATION": "After Start Allocation",
+				"ALLOCATED": "After Allocated",
+				"START_PACKAGING": "After Start Packaging",
+				"PACKAGED": "After Packaged",
+				"CARRIER_TAKE_WORK": "After Carrier Take Work",
+				"CARRIER_GOT_IT": "After Carrier Got It",
+				"CARRIER_START_DELIVERY": "After Carrier Start Delivery",
+				"DELIVERED": "After Delivered"
+			},
 			"ERRORS": {
 				"NAME_IS_REQUIRED": "Warehouse name is required",
 				"NAME_ATLEAST_3_CHARS": "Name must be at least 3 characters long",
@@ -562,7 +575,11 @@
 			"CATEGORY": "Category",
 			"PRICE": "Price",
 			"QUANTITY": "Quantity",
-			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Click on Product Image to increase available quantity"
+			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Click on Product Image to increase available quantity",
+			"AVAILABILITY": "Availability",
+			"TYPE": "Type",
+			"DELIVERY": "Delivery",
+			"TAKEAWAY": "Takeaway"
 		},
 		"NEW_PRODUCT_TYPE": "New Type Product",
 		"ADD_PRODUCTS": "Add Products",
@@ -888,7 +905,8 @@
 			"Allocation Failed": "Allocation Failed",
 			"Packaging Failed": "Packaging Failed",
 			"LOCATION": "Location",
-			"TIME": "Time"
+			"TIME": "Time",
+			"NAME": "Name"
 		},
 		"EDIT": {
 			"EDIT_CARRIER": "Edit Carrier",

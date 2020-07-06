@@ -48,6 +48,7 @@ export class OrderComponent implements OnInit {
 	public warehouse: Warehouse;
 	public totalPrice;
 	public carrier;
+	public _isButtonDisabled: boolean = true;
 
 	public PREFIX_ORDER_STATUS: string = 'ORDER_CARRIER_STATUS.';
 	public orderStatusTextTranslates: string;
@@ -67,6 +68,11 @@ export class OrderComponent implements OnInit {
 	) {}
 
 	openDialog(): void {
+		//duble ckeck orderCancelation
+		if (this._isButtonDisabled) {
+			throw new Error('You can not Cancle this Order!!! ');
+		}
+		//---
 		const dialogRef = this.dialog.open(MessagePopUpComponent, {
 			width: '560px',
 			data: {
@@ -109,10 +115,30 @@ export class OrderComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.warehouseRouter
+			.get(this.order.warehouseId, false)
+			.pipe(first())
+			.subscribe((store) => {
+				this.warehouse = store;
+
+				this.orderCancelationCheck(
+					this.warehouse.orderCancelation,
+					this.order
+				);
+			});
+
+		if (this.order.carrierId) {
+			this.carrierRouter
+				.get(this.order.carrierId)
+				.pipe(first())
+				.subscribe((carrier) => {
+					this.carrier = carrier;
+				});
+		}
 		this.loadData();
 	}
 
-	private async loadData() {
+	private loadData() {
 		this.price = 0;
 		if (this.order.products.length) {
 			this.title = this.localeTranslate(
@@ -133,20 +159,23 @@ export class OrderComponent implements OnInit {
 		this.orderNumber = this.order.orderNumber;
 		this.orderType = this.order.orderType;
 		this.createdAt = this.order.createdAt;
-		this.warehouse = await this.warehouseRouter
-			.get(this.order.warehouseId, false)
-			.pipe(first())
-			.toPromise();
-
-		if (this.order.carrierId) {
-			this.carrier = await this.carrierRouter
-				.get(this.order.carrierId)
-				.pipe(first())
-				.toPromise();
-		}
 	}
 
 	protected localeTranslate(member: ILocaleMember[]): string {
 		return this._productLocalesService.getTranslate(member);
+	}
+
+	protected orderCancelationCheck(storeCancelation, order) {
+		if (!storeCancelation || !storeCancelation.enabled) {
+			this._isButtonDisabled = false;
+			return;
+		}
+		if (
+			storeCancelation.onState >
+			order.warehouseStatus + order.carrierStatus
+		) {
+			this._isButtonDisabled = false;
+			return;
+		}
 	}
 }

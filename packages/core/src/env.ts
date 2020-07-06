@@ -53,6 +53,8 @@ export type Env = Readonly<{
 
 	SETTING_INVITES_ENABLED?: boolean;
 	SETTINGS_REGISTRATIONS_REQUIRED_ON_START?: boolean;
+	ADMIN_PASSWORD_RESET?: boolean;
+	FAKE_DATA_GENERATOR?: boolean;
 
 	FAKE_INVITE_CODE: number;
 
@@ -145,6 +147,8 @@ export const env: Env = cleanEnv(
 
 		SETTING_INVITES_ENABLED: bool({ default: false }),
 		SETTINGS_REGISTRATIONS_REQUIRED_ON_START: bool({ default: false }),
+		ADMIN_PASSWORD_RESET: bool({ default: false }),
+		FAKE_DATA_GENERATOR: bool({ default: false }),
 
 		FAKE_INVITE_CODE: num({ default: 0 }),
 

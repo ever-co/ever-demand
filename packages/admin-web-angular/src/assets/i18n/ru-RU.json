@@ -561,7 +561,11 @@
 			"CATEGORY": "категория",
 			"PRICE": "Цена",
 			"QUANTITY": "Количество",
-			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Нажмите на изображение продукта, чтобы увеличить доступное количество"
+			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Нажмите на изображение продукта, чтобы увеличить доступное количество",
+			"AVAILABILITY": "Доступность",
+			"TYPE": "Тип",
+			"DELIVERY": "Доставка",
+			"TAKEAWAY": "Навынос"			
 		},
 		"NEW_PRODUCT_TYPE": "Новый тип продукта",
 		"ADD_PRODUCTS": "Добавить продукты",
@@ -887,7 +891,8 @@
 			"Allocation Failed": "Не удалось выполнить распределение",
 			"Packaging Failed": "Ошибка упаковки",
 			"LOCATION": "Место нахождения",
-			"TIME": "Ввремя"
+			"TIME": "Ввремя",
+			"NAME": "Имя"
 		},
 		"EDIT": {
 			"EDIT_CARRIER": "Изменить несущую",

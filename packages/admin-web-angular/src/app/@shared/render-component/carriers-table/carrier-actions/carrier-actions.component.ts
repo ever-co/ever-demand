@@ -6,6 +6,7 @@ import { CarrierTableInfoComponent } from '@app/pages/+carriers/+carrier/carrier
 
 @Component({
 	templateUrl: './carrier-actions.component.html',
+	styles: [' .iconsCont {cursor: pointer}'],
 })
 export class CarrierActionsComponent implements ViewCell, OnInit {
 	value: string | number;
@@ -19,7 +20,7 @@ export class CarrierActionsComponent implements ViewCell, OnInit {
 	ngOnInit() {}
 	openInfo() {
 		const activeModal = this.modalService.open(CarrierTableInfoComponent, {
-			size: 'sm',
+			size: 'lg',
 			container: 'nb-layout',
 		});
 		const modalComponent: CarrierTableInfoComponent =

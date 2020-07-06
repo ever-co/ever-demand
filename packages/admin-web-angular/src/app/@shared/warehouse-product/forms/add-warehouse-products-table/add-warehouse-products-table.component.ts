@@ -68,6 +68,7 @@ export class AddWarehouseProductsComponent implements OnInit, OnDestroy {
 					p['isDeliveryRequired'] = this.warehouse.productsDelivery;
 					if (!p['isTakeaway'] && !p['isDeliveryRequired']) {
 						p['isDeliveryRequired'] = true;
+						p['isTakeaway'] = true;
 					}
 				});
 			}
@@ -82,6 +83,7 @@ export class AddWarehouseProductsComponent implements OnInit, OnDestroy {
 			};
 			if (!resObj.takeProductDelivery && !resObj.takeProductTakeaway) {
 				resObj.takeProductDelivery = true;
+				resObj.takeProductTakeaway = true;
 			}
 
 			return resObj;

@@ -7,6 +7,7 @@ import {
 } from '@modules/server.common/routers/IAdminRouter';
 import { ExtractJwt } from 'passport-jwt';
 import Admin from '@modules/server.common/entities/Admin';
+import { env } from '../../env';
 
 @Resolver('Admin')
 export class AdminResolver {
@@ -62,6 +63,10 @@ export class AdminResolver {
 			password,
 		}: { id: Admin['id']; password: { current: string; new: string } }
 	): Promise<void> {
+		if (!env.ADMIN_PASSWORD_RESET) {
+			throw new Error('Admin password cannot be changed');
+		}
+
 		return this._adminsService.updatePassword(id, password);
 	}
 }

@@ -425,6 +425,7 @@
 			"LOGO": "Логотип",
 			"PHOTO": "Фото",
 			"IS_ACTIVE": "Активно",
+			"ORDERS_SHORT_PROCESS": "Краткий процесс заказов",
 			"PRODUCTS_MANUFACTURING": "Производство товаров",
 			"CARRIER_REQUIRED": "Перевозчик требуется",
 			"RIGHT_NOW": "Прямо сейчас",
@@ -460,6 +461,19 @@
 			"ADD": "Добавить",
 			"EDIT": "Редактирование",
 			"ZONE_NAME": "Название зоны",
+			"UNALLOWED_ORDER_CANCELATION": "Неразрешенная отмена заказа",
+			"ORDER_CANCELATION_OPTIONS": {
+				"ORDERING": "После заказа",
+				"START_PROCESSING": "После начала обработки",
+				"START_ALLOCATION": "После начала распределения",
+				"ALLOCATED": "После выделенного",
+				"START_PACKAGING": "После начала упаковки",
+				"PACKAGED": "После Упакованного",
+				"CARRIER_TAKE_WORK": "После того, как Carrier выполнит работу",
+				"CARRIER_GOT_IT": "После того, как перевозчик понял это",
+				"CARRIER_START_DELIVERY": "После начала доставки перевозчика",
+				"DELIVERED": "После доставки"
+			},
 			"ERRORS": {
 				"NAME_IS_REQUIRED": "Требуется название склада",
 				"NAME_ATLEAST_3_CHARS": "Имя должно быть не менее 3 символов",
@@ -561,7 +575,11 @@
 			"CATEGORY": "Категория",
 			"PRICE": "Цена",
 			"QUANTITY": "Количество",
-			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Нажмите на изображение товара, чтобы увеличить доступное количество"
+			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Нажмите на изображение товара, чтобы увеличить доступное количество",
+			"AVAILABILITY": "Доступность",
+			"TYPE": "Тип",
+			"DELIVERY": "Доставка",
+			"TAKEAWAY": "На вынос"
 		},
 		"NEW_PRODUCT_TYPE": "Новый продукт типа",
 		"ADD_PRODUCTS": "Добавить товары",
@@ -887,7 +905,8 @@
 			"Allocation Failed": "Не удалось выделить",
 			"Packaging Failed": "Сбой упаковки",
 			"LOCATION": "Местоположение",
-			"TIME": "Время"
+			"TIME": "Время",
+			"NAME": "Наименование"
 		},
 		"EDIT": {
 			"EDIT_CARRIER": "Изменить оператора",

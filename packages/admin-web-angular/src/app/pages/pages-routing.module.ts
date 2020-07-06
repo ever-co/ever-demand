@@ -1,6 +1,7 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
+import { FakeDataModuleGuard } from './+fakeData/fakeData.module.guard';
 
 const routes: Routes = [
 	{
@@ -65,6 +66,7 @@ const routes: Routes = [
 					import('app/pages/+fakeData/fakeData.module').then(
 						(m) => m.FakeDataModule
 					),
+				canActivate: [FakeDataModuleGuard],
 			},
 			{
 				path: 'devices',
