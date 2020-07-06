@@ -182,11 +182,11 @@
 			}}</label>
 			<div class="col-sm-9">
 				<select class="form-control" formControlName="locale">
-					<option value="en-US">{{ 'ENGLISH' | translate }}</option>
-					<option value="he-IL">{{ 'HEBREW' | translate }}</option>
-					<option value="ru-RU">{{ 'RUSSIAN' | translate }}</option>
-					<option value="bg-BG">{{ 'BULGARIAN' | translate }}</option>
-					<option value="es-ES">{{ 'SPANISH' | translate }}</option>
+					<option
+						[value]="getLanguageCode(lang)"
+						*ngFor="let lang of languages"
+						>{{ lang | translate }}</option
+					>
 				</select>
 			</div>
 		</div>
