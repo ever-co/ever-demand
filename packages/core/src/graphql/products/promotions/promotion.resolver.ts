@@ -18,4 +18,22 @@ export class PromotionResolver {
 	) {
 		return this._promotionService.createPromotion(createInput);
 	}
+
+	@Mutation()
+	async removePromotion(_, { id }: { id: string }): Promise<void> {
+		await this._promotionService.throwIfNotExists(id);
+		return this._promotionService.remove(id);
+	}
+
+	@Mutation()
+	async removePromotionsByIds(_, { ids }: { ids: string[] }): Promise<void> {
+		const promotions = await this._promotionService.find({
+			_id: { $in: ids },
+			isDeleted: { $eq: false },
+		});
+
+		const promotionsIds = promotions.map((p) => p.id);
+
+		return this._promotionService.removeMultipleByIds(promotionsIds);
+	}
 }

@@ -6,6 +6,7 @@ import Promotion from '@modules/server.common/entities/Promotion';
 import { createEverLogger } from '../../helpers/Log';
 import Logger from 'bunyan';
 import { IPromotionCreateObject } from '@ever-platform/common/src/interfaces/IPromotion';
+import { first } from 'rxjs/operators';
 
 @injectable()
 @routerName('promotion')
@@ -39,5 +40,13 @@ export class PromotionService extends DBService<Promotion> implements IService {
 		return this.find({
 			isDeleted: { $eq: false },
 		});
+	}
+
+	async throwIfNotExists(promotionId: string) {
+		const promotion = await this.get(promotionId).pipe(first()).toPromise();
+
+		if (!promotion || promotion.isDeleted) {
+			throw Error(`Prmotion with id '${promotionId}' does not exist!`);
+		}
 	}
 }

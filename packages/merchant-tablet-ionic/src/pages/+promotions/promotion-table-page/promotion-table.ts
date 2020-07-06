@@ -3,11 +3,13 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { IPromotion } from '@modules/server.common/interfaces/IPromotion';
 import { Subject } from 'rxjs';
 import { PromotionService } from 'services/promotion.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
 import { PromotionMutation } from '../promotion-mutation-popup/promotion-mutation';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
+import { ConfirmDeletePopupPage } from 'components/confirm-delete-popup/confirm-delete-popup';
+import { ImageTableComponent } from 'components/table-components/image-table';
 
 @Component({
 	selector: 'promotion-table',
@@ -21,7 +23,7 @@ export class PromotionTable implements OnInit, OnDestroy {
 	promotions: IPromotion[];
 
 	sourceSmartTable = new LocalDataSource();
-	slectedPromotions: IPromotion[];
+	selectedPromotions: IPromotion[];
 
 	private _ngDestroy$ = new Subject<void>();
 
@@ -29,6 +31,7 @@ export class PromotionTable implements OnInit, OnDestroy {
 		private readonly promotionsService: PromotionService,
 		private readonly productLocaleService: ProductLocalesService,
 		private readonly translateService: TranslateService,
+		private readonly toastrController: ToastController,
 		public modalCtrl: ModalController
 	) {}
 
@@ -70,7 +73,12 @@ export class PromotionTable implements OnInit, OnDestroy {
 				confirmDelete: true,
 			},
 			columns: {
-				//tstodo add translations
+				image: {
+					title: 'Image',
+					type: 'custom',
+					renderComponent: ImageTableComponent,
+					filter: false,
+				},
 				title: {
 					title: 'Title',
 					type: 'string',
@@ -82,10 +90,16 @@ export class PromotionTable implements OnInit, OnDestroy {
 				activeFrom: {
 					title: 'Active From',
 					type: 'date',
+					valuePrepareFunction: (activeFrom: string) => {
+						return new Date(activeFrom).toLocaleDateString();
+					},
 				},
 				activeTo: {
 					title: 'Active To',
 					type: 'date',
+					valuePrepareFunction: (activeTo) => {
+						return new Date(activeTo).toLocaleDateString();
+					},
 				},
 				purchasesCount: {
 					title: 'Purchases num',
@@ -119,6 +133,8 @@ export class PromotionTable implements OnInit, OnDestroy {
 	private _loadDataSmartTable() {
 		const promotionsVM = this.promotions.map((promotion) => {
 			return {
+				id: promotion._id,
+				image: promotion.image,
 				title: this.productLocaleService.getTranslate(promotion.title),
 				active: promotion.active,
 				activeFrom: promotion.activeFrom,
@@ -132,5 +148,44 @@ export class PromotionTable implements OnInit, OnDestroy {
 
 	editPromotion() {}
 
-	deletePromotion() {}
+	async deletePromotion(event: any) {
+		const modal = await this.modalCtrl.create({
+			component: ConfirmDeletePopupPage,
+			componentProps: { data: event.data },
+			cssClass: 'confirm-delete-wrapper',
+		});
+
+		await modal.present();
+
+		const res = await modal.onDidDismiss();
+
+		if (res.data) {
+			const promotionId = event.data.id;
+
+			this.promotionsService.removeByIds([promotionId]).subscribe(
+				(data) => {
+					this.promotions = this.promotions.filter(
+						(p) => ![promotionId].includes(p._id)
+					);
+
+					this._loadDataSmartTable();
+					this.presentToast('Successfully deleted promotion!');
+				},
+				(err) => {
+					this.presentToast(err.message || 'Something went wrong!');
+				}
+			);
+		}
+	}
+
+	private presentToast(message: string) {
+		this.toastrController
+			.create({
+				message,
+				duration: 2000,
+			})
+			.then((toast) => {
+				toast.present();
+			});
+	}
 }
