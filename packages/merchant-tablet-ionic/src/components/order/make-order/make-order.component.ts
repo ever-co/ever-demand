@@ -81,9 +81,6 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe(
 				() => {
-					this._showNotification(
-						`User with id '${this.customerId}' finish the order`
-					);
 					this.orderFinishedEmitter.emit();
 				},
 				() => {
