@@ -18,6 +18,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import { WarehouseOrdersService } from '../../../services/warehouse-orders.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertController } from '@ionic/angular';
+import DeliveryType from '@modules/server.common/enums/DeliveryType';
 
 @Component({
 	selector: 'make-order',
@@ -29,6 +30,9 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 
 	@Input()
 	customerId: string;
+
+	@Input()
+	orderType: DeliveryType;
 
 	@Input()
 	orderFinishedEmitter: EventEmitter<void>;
@@ -75,6 +79,7 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 		this._warehouseOrdersService
 			.createOrder({
 				userId: this.customerId,
+				orderType: this.orderType,
 				warehouseId: this.warehouseId,
 				products: orderProducts,
 			})
