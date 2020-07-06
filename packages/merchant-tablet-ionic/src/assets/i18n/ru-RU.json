@@ -168,6 +168,21 @@
 				}
 			}
 		},
+		"PROMOTIONS": {
+			"PROMOTIONS": "Акции",
+			"BASIC_INFO": "Базовая информация",
+			"TITLE": "Заглавие",
+			"ACTIVE_FROM": "Активный от",
+			"ACTIVE_TO": "Активно для",
+			"PURCHASES_COUNT": "Количество покупок",
+			"IS_ACTIVE": "Активен",
+			"SELECT_DATE": "Выберите дату",
+			"DESCRIPTION": "Описание",
+			"SAVE": "Сохранить",
+			"NEXT": "Следующий",
+			"BACK": "Назад",
+			"LANGUAGE": "Язык"
+		},
 		"SELECT LANGUAGE": {
 			"USA": "США",
 			"ISRAEL": "Израиль",

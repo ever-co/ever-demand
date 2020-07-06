@@ -41,4 +41,6 @@ type Query {
 
 type Mutation {
 	createPromotion(createInput: PromotionCreateInput): Promotion
+	removePromotion(id: String!): Void
+	removePromotionsByIds(ids: [String!]!): Remove
 }

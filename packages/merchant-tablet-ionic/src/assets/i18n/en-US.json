@@ -180,7 +180,11 @@
 			"DESCRIPTION": "Description",
 			"SAVE": "Save",
 			"NEXT": "Next",
-			"BACK": "Back"
+			"BACK": "Back",
+			"LANGUAGE": "Language",
+			"ACTIVE": "Active",
+			"IMAGE": "Image",
+			"STATUS": "Status"
 		},
 		"SELECT LANGUAGE": {
 			"USA": "USA",
