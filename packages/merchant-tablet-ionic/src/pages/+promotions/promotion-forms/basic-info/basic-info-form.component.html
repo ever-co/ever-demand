@@ -12,21 +12,11 @@
 				<ion-item>
 					<ion-label>Language</ion-label>
 					<ion-select formControlName="locale" okText="Okay">
-						<ion-select-option value="en-US">{{
-							'ENGLISH' | translate
-						}}</ion-select-option>
-						<ion-select-option value="he-IL">{{
-							'HEBREW' | translate
-						}}</ion-select-option>
-						<ion-select-option value="ru-RU">{{
-							'RUSSIAN' | translate
-						}}</ion-select-option>
-						<ion-select-option value="bg-BG">{{
-							'BULGARIAN' | translate
-						}}</ion-select-option>
-						<ion-select-option value="es-ES">{{
-							'SPANISH' | translate
-						}}</ion-select-option>
+						<ion-select-option
+							*ngFor="let lang of languages"
+							[value]="getLanguageCode(lang)"
+							>{{ lang | translate }}</ion-select-option
+						>
 					</ion-select>
 				</ion-item>
 			</ion-col>

@@ -10,6 +10,10 @@ import { takeUntil } from 'rxjs/operators';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 import IProduct from '@modules/server.common/interfaces/IProduct';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
+import {
+	LanguageCodesEnum,
+	LanguagesEnum,
+} from '@modules/server.common/interfaces/ILanguage';
 
 @Component({
 	selector: 'basic-info-form',
@@ -22,6 +26,8 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 
 	@Input()
 	promotionData: IPromotion;
+
+	public languages = Object.keys(LanguageCodesEnum);
 
 	availableProducts: Partial<IProduct>[] = [];
 	displayProducts: { id: string; title: string; image: string }[];
@@ -88,6 +94,10 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 		delete basicInfoValue.locale;
 
 		return basicInfoValue as IPromotionCreateObject;
+	}
+
+	getLanguageCode(language: LanguagesEnum) {
+		return LanguageCodesEnum[language];
 	}
 
 	private _setValue() {
