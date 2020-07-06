@@ -27,6 +27,7 @@ export type WarehouseBasicInfo = Pick<
 	| 'useOnlyRestrictedCarriersForDelivery'
 	| 'preferRestrictedCarriersForDelivery'
 	| 'ordersShortProcess'
+	| 'orderCancelation'
 >;
 
 @Component({
@@ -138,6 +139,7 @@ export class BasicInfoFormComponent implements OnInit {
 						preferRestrictedCarriersForDelivery: false,
 				  }),
 			ordersShortProcess: basicInfo.ordersShortProcess,
+			orderCancelation: { enabled: false, onState: 0 },
 		};
 	}
 

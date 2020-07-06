@@ -33,6 +33,7 @@ export type WarehouseManageTabsDetails = Pick<
 	| 'useOnlyRestrictedCarriersForDelivery'
 	| 'preferRestrictedCarriersForDelivery'
 	| 'ordersShortProcess'
+	| 'orderCancelation'
 >;
 
 @Component({
@@ -56,6 +57,20 @@ export class WarehouseManageTabsDetailsComponent
 	carriersOptions: IMultiSelectOption[];
 
 	private _delivery: 'all' | 'onlyStore' | 'preferStore' = 'all';
+
+	// orderCancelationOptions can be moved to a separate file
+	orderCancelationOptions = [
+		{ text: 'ORDERING', value: 1 },
+		{ text: 'START_PROCESSING', value: 2 },
+		{ text: 'START_ALLOCATION', value: 3 },
+		{ text: 'ALLOCATED', value: 4 },
+		{ text: 'START_PACKAGING', value: 5 },
+		{ text: 'PACKAGED', value: 6 },
+		{ text: 'CARRIER_TAKE_WORK', value: 7 },
+		{ text: 'CARRIER_GOT_IT', value: 8 },
+		{ text: 'CARRIER_START_DELIVERY', value: 9 },
+		{ text: 'DELIVERED', value: 11 },
+	];
 
 	constructor(
 		private readonly _carrierRouter: CarrierRouter,
@@ -103,6 +118,10 @@ export class WarehouseManageTabsDetailsComponent
 	}
 	get ordersShortProcess() {
 		return this.form.get('ordersShortProcess');
+	}
+
+	get enabledOrderCancelation() {
+		return this.form.get('enabledOrderCancelation');
 	}
 
 	get delivery() {
@@ -157,6 +176,9 @@ export class WarehouseManageTabsDetailsComponent
 			preferRestrictedCarriersForDelivery: [false],
 			carriersIds: [[]],
 			ordersShortProcess: [false],
+
+			enabledOrderCancelation: [false],
+			stateOrderCancelation: [0],
 		});
 	}
 
@@ -181,6 +203,9 @@ export class WarehouseManageTabsDetailsComponent
 			useOnlyRestrictedCarriersForDelivery: boolean;
 			preferRestrictedCarriersForDelivery: boolean;
 			ordersShortProcess: boolean;
+
+			enabledOrderCancelation: boolean;
+			stateOrderCancelation: number;
 		};
 
 		return {
@@ -209,6 +234,10 @@ export class WarehouseManageTabsDetailsComponent
 						useOnlyRestrictedCarriersForDelivery: false,
 						preferRestrictedCarriersForDelivery: false,
 				  }),
+			orderCancelation: {
+				enabled: basicInfo.enabledOrderCancelation,
+				onState: Number(basicInfo.stateOrderCancelation),
+			},
 		};
 	}
 
@@ -220,17 +249,30 @@ export class WarehouseManageTabsDetailsComponent
 				useOnlyRestrictedCarriersForDelivery: false,
 				preferRestrictedCarriersForDelivery: false,
 				ordersShortProcess: false,
+				enabledOrderCancelation: basicInfo.orderCancelation
+					? basicInfo.orderCancelation.enabled
+					: false,
+				stateOrderCancelation: basicInfo.orderCancelation
+					? basicInfo.orderCancelation.onState
+					: 0,
 			},
 			basicInfo
 		);
 
+		//Remove orderCancelation from the list becouse its  not actually form control
+		//can be improved
+		const filteredValues = Object.keys(this.getValue());
+		_.remove(filteredValues, (e) => e === 'orderCancelation');
+
 		this.form.setValue(
 			_.pick(basicInfo, [
-				...Object.keys(this.getValue()),
+				...filteredValues,
 				'hasRestrictedCarriers',
 				'carriersIds',
 				'useOnlyRestrictedCarriersForDelivery',
 				'preferRestrictedCarriersForDelivery',
+				'enabledOrderCancelation',
+				'stateOrderCancelation',
 			])
 		);
 

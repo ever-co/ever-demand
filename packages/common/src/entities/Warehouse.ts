@@ -342,6 +342,15 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	@Schema({ type: Boolean, required: false })
 	@Column()
 	ordersShortProcess?: boolean;
+
+	/**
+	 *
+	 *
+	 * @type { {enabled: Boolean, onState: Number} }
+	 * @memberof Warehouse
+	 */
+	@Schema({ type: { enabled: Boolean, onState: Number }, required: false })
+	orderCancelation?: { enabled: boolean; onState: number };
 }
 
 export type WithFullProducts = Warehouse & {

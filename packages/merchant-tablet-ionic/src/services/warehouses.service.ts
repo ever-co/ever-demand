@@ -230,6 +230,10 @@ export class WarehousesService {
 							contactEmail
 							contactPhone
 							ordersShortProcess
+							orderCancelation {
+								enabled
+								onState
+							}
 							geoLocation {
 								city
 								streetAddress
