@@ -8,6 +8,7 @@ input OrderCreateInput {
 	warehouseId: String!
 	products: [OrderProductCreateInput!]!
 	options: WarehouseOrdersRouterCreateOptions
+	orderType: Int
 }
 
 input WarehouseOrdersRouterCreateOptions {

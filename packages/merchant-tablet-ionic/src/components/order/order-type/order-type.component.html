@@ -1,16 +1,14 @@
-<div class="customer">
+<div class="delivery">
 	<div padding-vertical></div>
 
 	<button ion-button color="dark" outline (click)="chooseOption(0)">
-		{{
-			'WAREHOUSE_VIEW.NEW_ORDER_VIEW.SELECT_EXISTING_CUSTOMER' | translate
-		}}
+		{{ 'ORDER_TYPE.DELIVERY' | translate }}
 	</button>
 
 	<span padding-horizontal></span>
 	<span padding-horizontal></span>
 
 	<button ion-button color="dark" outline (click)="chooseOption(1)">
-		{{ 'WAREHOUSE_VIEW.NEW_ORDER_VIEW.ADD_NEW_CUSTOMER' | translate }}
+		{{ 'ORDER_TYPE.TAKEAWAY' | translate }}
 	</button>
 </div>
