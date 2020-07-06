@@ -461,6 +461,19 @@
 			"ADD": "Добавить",
 			"EDIT": "Редактирование",
 			"ZONE_NAME": "Название зоны",
+			"UNALLOWED_ORDER_CANCELATION": "Неразрешенная отмена заказа",
+			"ORDER_CANCELATION_OPTIONS": {
+				"ORDERING": "После заказа",
+				"START_PROCESSING": "После начала обработки",
+				"START_ALLOCATION": "После начала распределения",
+				"ALLOCATED": "После выделенного",
+				"START_PACKAGING": "После начала упаковки",
+				"PACKAGED": "После Упакованного",
+				"CARRIER_TAKE_WORK": "После того, как Carrier выполнит работу",
+				"CARRIER_GOT_IT": "После того, как перевозчик понял это",
+				"CARRIER_START_DELIVERY": "После начала доставки перевозчика",
+				"DELIVERED": "После доставки"
+			},
 			"ERRORS": {
 				"NAME_IS_REQUIRED": "Требуется название склада",
 				"NAME_ATLEAST_3_CHARS": "Имя должно быть не менее 3 символов",
