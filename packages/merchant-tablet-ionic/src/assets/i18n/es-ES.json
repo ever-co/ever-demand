@@ -170,6 +170,21 @@
 				}
 			}
 		},
+		"PROMOTIONS": {
+			"PROMOTIONS": "Promociones",
+			"BASIC_INFO": "Información básica",
+			"TITLE": "Título",
+			"ACTIVE_FROM": "Activa desde",
+			"ACTIVE_TO": "Activa para",
+			"PURCHASES_COUNT": "Cuenta de compras",
+			"IS_ACTIVE": "Esta activa",
+			"SELECT_DATE": "Seleccione fecha",
+			"DESCRIPTION": "Descripción",
+			"SAVE": "Salvar",
+			"NEXT": "Próxima",
+			"BACK": "Espalda",
+			"LANGUAGE": "Idioma"
+		},
 		"SELECT LANGUAGE": {
 			"USA": "EEUU",
 			"ISRAEL": "Israel",

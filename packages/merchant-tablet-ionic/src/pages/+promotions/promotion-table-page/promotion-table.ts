@@ -10,6 +10,7 @@ import { PromotionMutation } from '../promotion-mutation-popup/promotion-mutatio
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { ConfirmDeletePopupPage } from 'components/confirm-delete-popup/confirm-delete-popup';
 import { ImageTableComponent } from 'components/table-components/image-table';
+import { DatePipe } from '@angular/common';
 
 @Component({
 	selector: 'promotion-table',
@@ -62,51 +63,52 @@ export class PromotionTable implements OnInit, OnDestroy {
 	}
 
 	private _loadSettingsSmartTable() {
-		this.settingsSmartTable = {
-			mode: 'external',
-			edit: {
-				editButtonContent: '<i class="fa fa-edit"></i>',
-				confirmEdit: true,
-			},
-			delete: {
-				deleteButtonContent: '<i class="fa fa-trash"></i>',
-				confirmDelete: true,
-			},
-			columns: {
-				image: {
-					title: 'Image',
-					type: 'custom',
-					renderComponent: ImageTableComponent,
-					filter: false,
-				},
-				title: {
-					title: 'Title',
-					type: 'string',
-				},
-				active: {
-					title: 'Status',
-					type: 'boolean',
-				},
-				activeFrom: {
-					title: 'Active From',
-					type: 'date',
-					valuePrepareFunction: (activeFrom: string) => {
-						return new Date(activeFrom).toLocaleDateString();
+		this.translateService
+			.get('CARRIERS_VIEW.PROMOTIONS')
+			.pipe(takeUntil(this._ngDestroy$))
+			.subscribe((TRANSLATE_DATA) => {
+				this.settingsSmartTable = {
+					mode: 'external',
+					edit: {
+						editButtonContent: '<i class="fa fa-edit"></i>',
+						confirmEdit: true,
 					},
-				},
-				activeTo: {
-					title: 'Active To',
-					type: 'date',
-					valuePrepareFunction: (activeTo) => {
-						return new Date(activeTo).toLocaleDateString();
+					delete: {
+						deleteButtonContent: '<i class="fa fa-trash"></i>',
+						confirmDelete: true,
 					},
-				},
-				purchasesCount: {
-					title: 'Purchases num',
-					type: 'number',
-				},
-			},
-		};
+					columns: {
+						image: {
+							title: TRANSLATE_DATA.IMAGE,
+							type: 'custom',
+							renderComponent: ImageTableComponent,
+							filter: false,
+						},
+						title: {
+							title: TRANSLATE_DATA.TITLE,
+							type: 'string',
+						},
+						active: {
+							title: TRANSLATE_DATA.STATUS,
+							type: 'boolean',
+						},
+						activeFrom: {
+							title: TRANSLATE_DATA.ACTIVE_FROM,
+							type: 'html',
+							valuePrepareFunction: this.formatTableDate,
+						},
+						activeTo: {
+							title: TRANSLATE_DATA.ACTIVE_TO,
+							type: 'html',
+							valuePrepareFunction: this.formatTableDate,
+						},
+						purchasesCount: {
+							title: TRANSLATE_DATA.PURCHASES_COUNT,
+							type: 'number',
+						},
+					},
+				};
+			});
 	}
 
 	async openAddPromotion() {
@@ -187,5 +189,15 @@ export class PromotionTable implements OnInit, OnDestroy {
 			.then((toast) => {
 				toast.present();
 			});
+	}
+
+	private formatTableDate(date: string) {
+		const raw: Date = new Date(date);
+
+		const formatted: string = date
+			? new DatePipe('en-EN').transform(raw, 'dd-MMM-yyyy hh:mm:ss')
+			: '-';
+
+		return `<p>${formatted}</p>`;
 	}
 }
