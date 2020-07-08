@@ -266,6 +266,12 @@
 		"ORDERS": "Orders",
 		"NEW_ORDER": "New Order",
 		"PRODUCTS": "Top Products",
+		"ARE_YOU_SURE_TO_DELETE": "Are you sure you want to ",
+		"REMOVE": "Remove",
+		"DELETE": "Delete",
+		"THE_FOLLOWING_DATA": "the following data",
+		"CONFIRM": "Confirm",
+		"CANCEL": "Cancel",
 		"SELECT_POP_UP": {
 			"SELECT_CATEGORIES": "Select Categories",
 			"OK": "OK",

@@ -15,7 +15,11 @@
 		</ion-col>
 
 		<ion-col [hidden]="isNextStepAvailable">
-			<details-info-form #promotionDetailsForm [form]="detailsInfo">
+			<details-info-form
+				#promotionDetailsForm
+				[form]="detailsInfo"
+				[promotionData]="promotion"
+			>
 			</details-info-form>
 		</ion-col>
 	</ion-row>

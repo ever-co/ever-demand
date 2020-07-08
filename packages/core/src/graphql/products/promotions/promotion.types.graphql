@@ -2,6 +2,8 @@ type Promotion {
 	_id: String
 	title: [TranslateType]
 	description: [TranslateType]
+	promoPrice: Float
+	warehouse: Warehouse
 	active: Boolean
 	activeFrom: Date
 	activeTo: Date
@@ -22,12 +24,18 @@ type Product {
 input PromotionCreateInput {
 	title: [TranslateInput]
 	description: [TranslateInput]
+	promoPrice: Float
+	warehouse: WarehouseInput
 	active: Boolean
 	activeFrom: Date
 	activeTo: Date
 	image: String
 	product: String
 	purchasesCount: Int
+}
+
+input WarehouseInput {
+	_id: String
 }
 
 input TranslateInput {

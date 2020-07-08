@@ -1,5 +1,10 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import {
+	FormGroup,
+	FormBuilder,
+	Validators,
+	AbstractControl,
+} from '@angular/forms';
 import {
 	IPromotion,
 	IPromotionCreateObject,
@@ -89,6 +94,7 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 
 		let basicInfoValue = this.form.value;
 
+		basicInfoValue.warehouse = { _id: this.warehouseId };
 		basicInfoValue.title = this.promotion.title;
 		basicInfoValue.description = this.promotion.description;
 		delete basicInfoValue.locale;
@@ -123,11 +129,11 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 	static buildForm(formBuilder: FormBuilder): FormGroup {
 		return formBuilder.group({
 			locale: ['en-US'],
-			title: [''],
+			title: ['', Validators.required],
 			description: [''],
-			activeFrom: [null],
-			activeTo: [null],
-			product: [null],
+			activeFrom: [null, Validators.required],
+			activeTo: [null, Validators.required],
+			product: [null, Validators.required],
 		});
 	}
 

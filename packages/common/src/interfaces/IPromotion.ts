@@ -1,6 +1,7 @@
 import { ILocaleMember } from './ILocale';
 import Product from '../entities/Product';
 import { DBRawObject, PyroObjectId, DBCreateObject } from '@pyro/db';
+import IWarehouse from './IWarehouse';
 
 export interface IPromotionCreateObject extends DBCreateObject {
 	/**
@@ -57,6 +58,22 @@ export interface IPromotionCreateObject extends DBCreateObject {
 	 * @memberof IPromotionCreateObject
 	 */
 	purchasesCount: number;
+
+	/**
+	 *
+	 * @type {number}
+	 * @memberof IPromotionCreateObject
+	 */
+	promoPrice: number;
+
+	/**
+	 *
+	 * Id of warehouse this Promotion is associated with
+	 *
+	 * @type {IWarehouse}
+	 * @memberof IPromotionCreateObject
+	 */
+	warehouse: IWarehouse;
 }
 
 export interface IPromotion extends IPromotionCreateObject, DBRawObject {

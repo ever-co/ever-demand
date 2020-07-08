@@ -25,7 +25,7 @@ export class PromotionService extends DBService<Promotion> implements IService {
 
 			return {
 				success: true,
-				message: `Successfully creates promotion ${data.title || ''}`,
+				message: `Successfully created promotion ${data.title || ''}`,
 				data,
 			};
 		} catch (error) {

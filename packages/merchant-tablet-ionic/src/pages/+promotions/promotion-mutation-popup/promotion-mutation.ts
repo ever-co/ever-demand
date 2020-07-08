@@ -5,6 +5,7 @@ import {
 	Input,
 	EventEmitter,
 	Output,
+	OnInit,
 } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { IPromotion } from '@modules/server.common/interfaces/IPromotion';

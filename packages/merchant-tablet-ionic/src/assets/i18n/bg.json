@@ -263,6 +263,12 @@
 		"ORDERS": "Поръчки",
 		"NEW_ORDER": "Нова поръчка",
 		"PRODUCTS": "Топ Продукти",
+		"ARE_YOU_SURE_TO_DELETE": "Сигурни ли сте, че искате да изтриете ",
+		"REMOVE": "Премахни",
+		"DELETE": "Изтрий",
+		"THE_FOLLOWING_DATA": "следната информация",
+		"CONFIRM": "Потвърди",
+		"CANCEL": "Отмени",
 		"SELECT_POP_UP": {
 			"SELECT_CATEGORIES": "Изберете Категории",
 			"OK": "Добре",
