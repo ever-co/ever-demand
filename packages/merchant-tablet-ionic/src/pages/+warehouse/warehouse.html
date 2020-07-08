@@ -19,17 +19,52 @@
 
 				<div class="button-bar-right-container allowOverflow">
 					<div class="button-bar">
-						<a
+						<label class="col-sm-2"
+							>{{ 'Switch' | translate }}</label
+						>
+						<div class="col-sm-6">
+							<select
+								class="form-control"
+								(change)="switchOrders(true, $event); showAllProducts = false;"
+							>
+								<option></option>
+								<option value="not_confirmed">
+									{{ 'New' | translate }}
+								</option>
+								<option value="ready_for_packaging">
+									{{ 'Ready' | translate }}
+								</option>
+								<option value="relevant">
+									{{ 'WAREHOUSE_VIEW.RELEVANT' | translate }}
+								</option>
+								<option value="all">
+									{{ 'WAREHOUSE_VIEW.ALL' | translate }}
+								</option>
+							</select>
+						</div>
+						<!-- <a
 							class="button"
 							[ngClass]="{
-								'button-dark-brand': showConfirmed,
+								'button-dark-brand': showNew,
 								'button-brand': !showRelevant || !showAllProducts
 							}"
 							(click)="
-								switchOrders(true, 'confirmed'); showAllProducts = false;
+								switchOrders(true, 'not_confirmed'); showAllProducts = false;
 							"
 						>
 							{{ 'New' | translate }}
+						</a> -->
+						<!-- <a
+							class="button"
+							[ngClass]="{
+								'button-dark-brand': showReady,
+								'button-brand': !showRelevant || !showAllProducts || !showNew
+							}"
+							(click)="
+								switchOrders(true, 'ready_for_packaging'); showAllProducts = false;
+							"
+						>
+							{{ 'Ready' | translate }}
 						</a>
 						<a
 							class="button"
@@ -46,7 +81,7 @@
 						<a
 							class="button"
 							[ngClass]="{
-								'button-dark-brand': !showRelevant || !showConfirmed,
+								'button-dark-brand': !showRelevant,
 								'button-brand': showRelevant || showAllProducts
 							}"
 							(click)="
@@ -54,7 +89,7 @@
 							"
 						>
 							{{ 'WAREHOUSE_VIEW.ALL' | translate }}
-						</a>
+						</a> -->
 						<a
 							class="button"
 							[ngClass]="{
@@ -95,17 +130,6 @@
 						[truncateTitle]="truncateTitle"
 						[localeTranslate]="localeTranslate"
 					></merchant-all-products>
-
-					<!-- <merchant-confirmed-orders
-						*ngIf="!showRelevant && !showAllProducts && showConfirmed"
-						[onUpdateWarehouseStatus]="updateOrderWarehouseStatus"
-						[getWarehouseStatus]="getWarehouseStatus"
-						[orderState]="orderState"
-						[focusedOrder]="focusedOrder"
-						(toggleOrderContainer)="toggleOrderContainer()"
-						[isOrderContainerLive]="isOrderContainerLive"
-					>
-					</merchant-confirmed-orders> -->
 
 					<merchant-relevant-orders
 						*ngIf="showRelevant && !showAllProducts"

@@ -41,7 +41,6 @@ export class WarehousePage {
 	ordersCount: number;
 	showRelevant: boolean = true;
 	showAllProducts: boolean = false;
-	showConfirmed: boolean = false;
 	focusedOrder: Order;
 	focusedOrder$: any;
 
@@ -109,15 +108,15 @@ export class WarehousePage {
 		}
 	}
 
-	switchOrders(showRelevant, filter = null) {
+	switchOrders(showRelevant, event?) {
 		if (this.focusedOrder$) {
 			this.focusedOrder$.unsubscribe();
 		}
 		this.focusedOrder = null;
 		this.showRelevant = showRelevant;
 
-		if (filter != null) {
-			this.filter = filter;
+		if (event != null) {
+			this.filter = event.target.value;
 		} else {
 			this.filter = null;
 		}
