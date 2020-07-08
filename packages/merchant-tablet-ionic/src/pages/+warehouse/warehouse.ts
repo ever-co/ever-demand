@@ -41,8 +41,11 @@ export class WarehousePage {
 	ordersCount: number;
 	showRelevant: boolean = true;
 	showAllProducts: boolean = false;
+	showConfirmed: boolean = false;
 	focusedOrder: Order;
 	focusedOrder$: any;
+
+	filter: any; //todo
 
 	constructor(
 		// public navCtrl: NavController,
@@ -106,12 +109,18 @@ export class WarehousePage {
 		}
 	}
 
-	switchOrders(showRelevant) {
+	switchOrders(showRelevant, filter = null) {
 		if (this.focusedOrder$) {
 			this.focusedOrder$.unsubscribe();
 		}
 		this.focusedOrder = null;
 		this.showRelevant = showRelevant;
+
+		if (filter != null) {
+			this.filter = filter;
+		} else {
+			this.filter = null;
+		}
 	}
 
 	onOrderFinish() {

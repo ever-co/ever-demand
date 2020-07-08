@@ -41,6 +41,9 @@ export class RelevantOrdersComponent
 	@Output()
 	toggleOrderContainer: EventEmitter<boolean> = new EventEmitter();
 
+	@Input()
+	filter: string;
+
 	orders: Order[] = [];
 	ordersCount: number;
 	OrderState: any = OrderState;
@@ -60,13 +63,13 @@ export class RelevantOrdersComponent
 		if (this.focusedOrder) {
 			this.orders = [this.focusedOrder];
 		} else {
-			this.loadAllOrders();
+			this.loadAllOrders(this.filter ? this.filter : 'relevant');
 		}
 	}
 
 	ngAfterViewInit() {}
 
-	async loadData(event = null) {
+	async loadData(event = null, status = 'relevant') {
 		const sub = this.warehouseOrdersService
 			.getStoreOrdersTableData(
 				this.store.warehouseId,
@@ -78,7 +81,7 @@ export class RelevantOrdersComponent
 					skip: (this.page - 1) * showOrdersNumber,
 					limit: showOrdersNumber,
 				},
-				'relevant'
+				status
 			)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe((res) => {
@@ -105,8 +108,8 @@ export class RelevantOrdersComponent
 		this.subscriptions.push(sub);
 	}
 
-	private async loadAllOrders() {
-		await this.loadOrdersCount();
+	private async loadAllOrders(status = 'relevant') {
+		await this.loadOrdersCount(status);
 
 		this.orders = [];
 
@@ -120,13 +123,13 @@ export class RelevantOrdersComponent
 
 		this.loadedPages = [];
 
-		this.loadData();
+		this.loadData(null, status);
 	}
 
-	private async loadOrdersCount() {
+	private async loadOrdersCount(status = 'relevant') {
 		this.ordersCount = await this.warehouseOrdersService.getCountOfStoreOrders(
 			this.store.warehouseId,
-			'relevant'
+			status
 		);
 	}
 

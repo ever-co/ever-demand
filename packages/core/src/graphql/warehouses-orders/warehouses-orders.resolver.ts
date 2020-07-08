@@ -66,6 +66,8 @@ export class WarehouseOrdersResolver {
 			pagingOptions['sort'] = { field: '_createdAt', sortBy: 'asc' };
 		}
 
+		console.log('STATUS', status);
+
 		const orders = await this._warehousesOrdersService.getStoreOrders(
 			storeId,
 			pagingOptions,

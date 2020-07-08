@@ -22,6 +22,18 @@
 						<a
 							class="button"
 							[ngClass]="{
+								'button-dark-brand': showConfirmed,
+								'button-brand': !showRelevant || !showAllProducts
+							}"
+							(click)="
+								switchOrders(true, 'confirmed'); showAllProducts = false;
+							"
+						>
+							{{ 'New' | translate }}
+						</a>
+						<a
+							class="button"
+							[ngClass]="{
 								'button-dark-brand': showRelevant,
 								'button-brand': !showRelevant || showAllProducts
 							}"
@@ -34,7 +46,7 @@
 						<a
 							class="button"
 							[ngClass]="{
-								'button-dark-brand': !showRelevant,
+								'button-dark-brand': !showRelevant || !showConfirmed,
 								'button-brand': showRelevant || showAllProducts
 							}"
 							(click)="
@@ -84,6 +96,17 @@
 						[localeTranslate]="localeTranslate"
 					></merchant-all-products>
 
+					<!-- <merchant-confirmed-orders
+						*ngIf="!showRelevant && !showAllProducts && showConfirmed"
+						[onUpdateWarehouseStatus]="updateOrderWarehouseStatus"
+						[getWarehouseStatus]="getWarehouseStatus"
+						[orderState]="orderState"
+						[focusedOrder]="focusedOrder"
+						(toggleOrderContainer)="toggleOrderContainer()"
+						[isOrderContainerLive]="isOrderContainerLive"
+					>
+					</merchant-confirmed-orders> -->
+
 					<merchant-relevant-orders
 						*ngIf="showRelevant && !showAllProducts"
 						[onUpdateWarehouseStatus]="updateOrderWarehouseStatus"
@@ -92,6 +115,7 @@
 						[focusedOrder]="focusedOrder"
 						(toggleOrderContainer)="toggleOrderContainer()"
 						[isOrderContainerLive]="isOrderContainerLive"
+						[filter]="filter"
 					>
 					</merchant-relevant-orders>
 
