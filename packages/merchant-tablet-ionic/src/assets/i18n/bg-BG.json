@@ -309,7 +309,8 @@
 			"BULGARIAN": "Български",
 			"OPTIONAL": "по избор",
 			"DELIVERY": "Доставка",
-			"TAKEAWAY": "Вземи на място"
+			"TAKEAWAY": "Вземи на място",
+			"PRODUCT_AVAILABILITY": "Наличност на продукта"
 		},
 		"NEW_ORDER_VIEW": {
 			"NEW_MANUAL_ORDER": "Нова ръчна поръчка",

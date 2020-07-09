@@ -310,7 +310,8 @@
 			"BULGARIAN": "Болгарский",
 			"OPTIONAL": "необязательный",
 			"TAKEAWAY": "Навынос",
-			"DELIVERY": "Доставка"
+			"DELIVERY": "Доставка",
+			"PRODUCT_AVAILABILITY": "Доступность продукта"
 		},
 		"NEW_ORDER_VIEW": {
 			"NEW_MANUAL_ORDER": "Новый ручной порядок",
