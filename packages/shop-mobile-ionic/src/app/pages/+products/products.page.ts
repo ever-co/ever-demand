@@ -311,7 +311,6 @@ export class ProductsPage implements OnInit, OnDestroy {
 		} else {
 			this.areProductsLoaded = true;
 		}
-
 		this.$areProductsLoaded.emit();
 	}
 
@@ -397,5 +396,6 @@ export class ProductsPage implements OnInit, OnDestroy {
 				.pipe(first())
 				.toPromise();
 		}
+		this.loadProducts();
 	}
 }
