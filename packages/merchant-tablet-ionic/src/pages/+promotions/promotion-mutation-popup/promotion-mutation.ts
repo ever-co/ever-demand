@@ -61,10 +61,8 @@ export class PromotionMutation implements OnDestroy {
 		this._ngDestroy$.unsubscribe();
 	}
 
-	savePromotion() {}
-
-	createPromotion() {
-		const promotionCreateInput = {
+	savePromotion() {
+		let promotionUserInput = {
 			...this.basicInfoForm.getValue(),
 			...this.detailsInfoForm.getValue(),
 		};
@@ -74,21 +72,43 @@ export class PromotionMutation implements OnDestroy {
 			return;
 		}
 
-		this.promotionService
-			.create(promotionCreateInput)
-			.pipe(first())
-			.subscribe(
-				(data) => {
-					this.presentToast('Successfully created promotion!');
-				},
-				(err) => {
-					this.presentToast(err.message || 'Something went wrong!');
-				},
-				() => {
-					this.updateVisible.emit(true);
-					this.cancelModal();
-				}
-			);
+		if (!this.promotion) {
+			this.promotionService
+				.create(promotionUserInput)
+				.pipe(first())
+				.subscribe(
+					(data) => {
+						this.presentToast('Successfully created promotion!');
+					},
+					(err) => {
+						this.presentToast(
+							err.message || 'Something went wrong!'
+						);
+					},
+					() => {
+						this.updateVisible.emit(true);
+						this.cancelModal();
+					}
+				);
+		} else {
+			this.promotionService
+				.update(this.promotion._id.toString(), promotionUserInput)
+				.pipe(first())
+				.subscribe(
+					(data) => {
+						this.presentToast('Successfully updated promotion!');
+					},
+					(err) => {
+						this.presentToast(
+							err.message || 'Something went wrong!'
+						);
+					},
+					() => {
+						this.updateVisible.emit(true);
+						this.cancelModal();
+					}
+				);
+		}
 	}
 
 	private presentToast(message: string) {

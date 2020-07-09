@@ -9,13 +9,12 @@ import { Observable } from 'rxjs';
 export class PromotionService {
 	constructor(private readonly apollo: Apollo) {}
 
-	//tstodo
-	getAll(): Observable<any> {
+	getAll(findInput: { warehouse: string }): Observable<any> {
 		return this.apollo
 			.query<any>({
 				query: gql`
-					query allPromotions {
-						promotions {
+					query allPromotions($findInput: PromotionsFindInput) {
+						promotions(findInput: $findInput) {
 							_id
 							title {
 								locale
@@ -29,10 +28,14 @@ export class PromotionService {
 							activeFrom
 							activeTo
 							image
+							promoPrice
 							purchasesCount
+							warehouseId
+							productId
 						}
 					}
 				`,
+				variables: { findInput },
 			})
 			.pipe(
 				map((result) => result.data || []),
@@ -44,13 +47,37 @@ export class PromotionService {
 		return this.apollo
 			.mutate<{ promotion: IPromotionCreateObject }>({
 				mutation: gql`
-					mutation CreatePromotion($promotion: PromotionCreateInput) {
+					mutation CreatePromotion($promotion: PromotionInput) {
 						createPromotion(createInput: $promotion) {
 							_id
 						}
 					}
 				`,
 				variables: {
+					promotion,
+				},
+			})
+			.pipe(
+				map((result) => result.data),
+				share()
+			);
+	}
+
+	update(id: String, promotion: IPromotionCreateObject) {
+		return this.apollo
+			.mutate<{ promotion: IPromotionCreateObject }>({
+				mutation: gql`
+					mutation UpdatePromotion(
+						$id: String
+						$promotion: PromotionInput
+					) {
+						updatePromotion(id: $id, updateInput: $promotion) {
+							_id
+						}
+					}
+				`,
+				variables: {
+					id,
 					promotion,
 				},
 			})

@@ -120,7 +120,7 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 			),
 			activeFrom: this.promotion.activeFrom || new Date(),
 			activeTo: this.promotion.activeTo || null,
-			product: this.promotion.product || null,
+			product: this.promotion.productId || null,
 		};
 
 		this.form.patchValue(promotionFormValue);

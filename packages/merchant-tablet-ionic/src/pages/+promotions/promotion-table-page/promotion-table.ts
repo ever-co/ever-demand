@@ -48,7 +48,7 @@ export class PromotionTable implements OnInit, OnDestroy {
 
 	private _loadPromotions() {
 		this.promotionsService
-			.getAll()
+			.getAll({ warehouse: localStorage.getItem('_warehouseId') || null })
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe((promotionsRes) => {
 				this.promotions = promotionsRes.promotions || [];

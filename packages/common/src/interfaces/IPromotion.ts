@@ -54,6 +54,12 @@ export interface IPromotionCreateObject extends DBCreateObject {
 	product: Product;
 
 	/**
+	 * @type {string}
+	 * @memberof IPromotionCreateObject
+	 */
+	productId?: string;
+
+	/**
 	 * @type {number}
 	 * @memberof IPromotionCreateObject
 	 */
@@ -74,6 +80,12 @@ export interface IPromotionCreateObject extends DBCreateObject {
 	 * @memberof IPromotionCreateObject
 	 */
 	warehouse: IWarehouse;
+
+	/**
+	 * @type {string}
+	 * @memberof IPromotionCreateObject
+	 */
+	warehouseId?: string;
 }
 
 export interface IPromotion extends IPromotionCreateObject, DBRawObject {

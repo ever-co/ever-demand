@@ -45,7 +45,7 @@
 			</ion-button>
 			<ion-button
 				color="dark"
-				(click)="promotion? savePromotion() : createPromotion()"
+				(click)="savePromotion()"
 				[disabled]="!basicInfoForm.form.valid"
 			>
 				{{ 'CARRIERS_VIEW.PROMOTIONS.SAVE' | translate }}
