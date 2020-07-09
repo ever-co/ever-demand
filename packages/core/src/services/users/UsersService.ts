@@ -395,6 +395,10 @@ export class UsersService extends DBService<User>
 			switchMap((device) => this.watchedFiles.termsOfUse[device.language])
 		);
 	}
+	@observableListener()
+	getTermsOfUseByLanguage(selectedLanguage: string): Observable<string> {
+		return this.watchedFiles.termsOfUse[selectedLanguage];
+	}
 
 	/**
 	 * Get Privacy Policy Content (HTML)
