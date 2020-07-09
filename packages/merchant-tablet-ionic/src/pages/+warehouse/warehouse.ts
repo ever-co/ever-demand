@@ -26,6 +26,18 @@ export enum OrderState {
 	Delivered,
 }
 
+export enum OrderStatus {
+	'not_confirmed' = 'CREATED',
+	'all' = 'ALL',
+	'confirmed' = 'CONFIRMED',
+	'ready_for_packaging' = 'ALLOCATION_FINISHED',
+	'processing' = 'PROCESSING',
+	'in_delivery' = 'GIVEN_TO_CARRIER',
+	'packaging' = 'PACKAGING_STARTED',
+	'packaged' = 'PACKAGED',
+	'cancelled' = 'CANCELLED',
+}
+
 @Component({
 	selector: 'page-warehouse',
 	templateUrl: 'warehouse.html',
@@ -45,6 +57,9 @@ export class WarehousePage {
 	focusedOrder$: any;
 
 	filter: any; //todo
+	keys = Object.keys;
+	statuses = OrderStatus;
+	simplified: boolean;
 
 	constructor(
 		// public navCtrl: NavController,
