@@ -27,7 +27,12 @@
 							{{ 'MENU.MAIN' | translate }}
 						</ion-label>
 					</ion-item>
-
+					<ion-item button (click)="openOrdersListModal()">
+						<ion-icon name="bicycle"></ion-icon>
+						<ion-label>
+							Orders List
+						</ion-label>
+					</ion-item>
 					<ion-item
 						routerLink="/deliveries"
 						routerDirection="root"

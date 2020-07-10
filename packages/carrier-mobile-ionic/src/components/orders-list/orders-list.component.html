@@ -1,0 +1,44 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-title>Select Order for Delivery ...</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen color="light">
+	<ion-card button *ngFor="let order of filteredList">
+		<ion-card-content (click)="selectNewOrder(order.id)">
+			<ion-item>
+				<ion-avatar slot="start">
+					<img [src]="order.warehouse.logo" />
+				</ion-avatar>
+				<ion-label>
+					<p>name: {{ order.warehouse.name }}</p>
+					<p>Phone: {{ order.warehouse.contactPhone }}</p>
+					<p>Email: {{ order.warehouse.cantactEmail }}</p>
+				</ion-label>
+			</ion-item>
+
+			<ion-item>
+				<ion-avatar slot="start">
+					<img [src]="order.user.image" />
+				</ion-avatar>
+				<ion-label>
+					<p>
+						name: {{ order.user.firstName }}
+						{{ order.user.lastName }}
+					</p>
+					<p>Phone: {{ order.user.phone }}</p>
+					<p>Email:</p>
+					<p>Adress: {{ order.user.fullAddress }}</p>
+				</ion-label>
+			</ion-item>
+			Tital Price: {{ order.totalPrice }}
+		</ion-card-content>
+	</ion-card>
+</ion-content>
+
+<ion-tab-bar slot="bottom" color="primary">
+	<ion-tab-button (click)="closeOrderListModal()" tab="schedule">
+		<ion-label>BACK</ion-label>
+	</ion-tab-button>
+</ion-tab-bar>

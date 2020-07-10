@@ -27,6 +27,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { RouteReuseStrategy } from '@angular/router';
 import { AppComponent } from './app.component';
 import { MenuModule } from 'components/menu/menu.module';
+import { OrdersListModule } from 'components/orders-list/orders-list.module';
 
 @NgModule({
 	schemas: [NO_ERRORS_SCHEMA],
@@ -49,6 +50,7 @@ import { MenuModule } from 'components/menu/menu.module';
 		}),
 		HttpClientModule,
 		PipesModule,
+		OrdersListModule,
 	],
 	bootstrap: [AppComponent],
 	entryComponents: [AppComponent],

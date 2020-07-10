@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Store } from 'services/store.service';
 import { environment } from 'environments/environment';
+import { ModalController } from '@ionic/angular';
+import { OrdersListComponent } from '../orders-list/orders-list.component';
 
 @Component({
 	selector: 'e-cu-menu',
@@ -10,7 +12,7 @@ import { environment } from 'environments/environment';
 export class MenuComponent {
 	companyName: string;
 
-	constructor(private store: Store) {
+	constructor(private store: Store, private modalCtrl: ModalController) {
 		this.companyName = environment.APP_NAME;
 	}
 
@@ -19,4 +21,12 @@ export class MenuComponent {
 	}
 
 	menuOpened() {}
+
+	async openOrdersListModal() {
+		const modal = await this.modalCtrl.create({
+			component: OrdersListComponent,
+			cssClass: 'orders-list-modal',
+		});
+		await modal.present();
+	}
 }
