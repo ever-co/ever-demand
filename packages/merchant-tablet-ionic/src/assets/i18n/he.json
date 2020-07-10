@@ -270,6 +270,8 @@
 			"CANCEL": "בטל"
 		},
 		"ORDER_WAREHOUSE_STATUSES": {
+			"ALL": "את כל",
+			"CANCELLED": "מבוטל",
 			"CREATED": "נוצר",
 			"CONFIRMED": "מְאוּשָׁר",
 			"PROCESSING": "מעבד",

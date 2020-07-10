@@ -269,6 +269,8 @@
 			"CANCEL": "ОТКАЗ"
 		},
 		"ORDER_WAREHOUSE_STATUSES": {
+			"ALL": "Всички",
+			"CANCELLED": "Отменени",
 			"CREATED": "Създаден",
 			"CONFIRMED": "Потвърдено",
 			"PROCESSING": "Обработване",

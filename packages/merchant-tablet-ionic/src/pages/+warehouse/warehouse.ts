@@ -26,6 +26,18 @@ export enum OrderState {
 	Delivered,
 }
 
+export enum OrderStatus {
+	'not_confirmed' = 'CREATED',
+	'all' = 'ALL',
+	'confirmed' = 'CONFIRMED',
+	'ready_for_packaging' = 'ALLOCATION_FINISHED',
+	'processing' = 'PROCESSING',
+	'in_delivery' = 'GIVEN_TO_CARRIER',
+	'packaging' = 'PACKAGING_STARTED',
+	'packaged' = 'PACKAGED',
+	'cancelled' = 'CANCELLED',
+}
+
 @Component({
 	selector: 'page-warehouse',
 	templateUrl: 'warehouse.html',
@@ -41,11 +53,13 @@ export class WarehousePage {
 	ordersCount: number;
 	showRelevant: boolean = true;
 	showAllProducts: boolean = false;
-	showConfirmed: boolean = false;
 	focusedOrder: Order;
 	focusedOrder$: any;
 
 	filter: any; //todo
+	keys = Object.keys;
+	statuses = OrderStatus;
+	simplified: boolean;
 
 	constructor(
 		// public navCtrl: NavController,
@@ -109,15 +123,15 @@ export class WarehousePage {
 		}
 	}
 
-	switchOrders(showRelevant, filter = null) {
+	switchOrders(showRelevant, event?) {
 		if (this.focusedOrder$) {
 			this.focusedOrder$.unsubscribe();
 		}
 		this.focusedOrder = null;
 		this.showRelevant = showRelevant;
 
-		if (filter != null) {
-			this.filter = filter;
+		if (event != null) {
+			this.filter = event.target.value;
 		} else {
 			this.filter = null;
 		}

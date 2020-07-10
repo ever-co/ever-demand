@@ -272,6 +272,8 @@
 			"CANCEL": "CANCEL"
 		},
 		"ORDER_WAREHOUSE_STATUSES": {
+			"ALL": "All",
+			"CANCELLED": "Cancelled",
 			"CREATED": "Created",
 			"CONFIRMED": "Confirmed",
 			"PROCESSING": "Processing",

@@ -270,6 +270,8 @@
 			"CANCEL": "ОТМЕНИТЬ"
 		},
 		"ORDER_WAREHOUSE_STATUSES": {
+			"ALL": "Все",
+			"CANCELLED": "Отменен",
 			"CREATED": "Созданный",
 			"CONFIRMED": "Подтвердил",
 			"PROCESSING": "Обработка",
