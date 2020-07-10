@@ -270,6 +270,9 @@ export class WarehousesOrdersService
 			orderNumber: await this.getNextOrderNumber(warehouseId),
 			orderType,
 			...(options.autoConfirm ? { isConfirmed: true } : {}),
+			...(options.autoConfirm
+				? { warehouseStatus: OrderWarehouseStatus.ReadyForProcessing }
+				: { warehouseStatus: OrderWarehouseStatus.NoStatus }),
 		});
 
 		// we do all remove operations and notify about warehouse orders change after we remove products from warehouse
