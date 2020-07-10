@@ -229,7 +229,6 @@ export class WarehousesService {
 							usedCarriersIds
 							contactEmail
 							contactPhone
-							ordersShortProcess
 							orderCancelation {
 								enabled
 								onState
@@ -249,6 +248,24 @@ export class WarehousesService {
 			})
 			.pipe(
 				map((res) => res.data['warehouse']),
+				share()
+			);
+	}
+
+	getOrdersShortProcess(warehouseId: string) {
+		return this._apollo
+			.mutate({
+				mutation: gql`
+					mutation GetOrdersShortProcess($warehouseId: String!) {
+						getOrdersShortProcess(warehouseId: $warehouseId) {
+							ordersShortProcess
+						}
+					}
+				`,
+				variables: { warehouseId },
+			})
+			.pipe(
+				map((res) => res.data['ordersShortProcess']),
 				share()
 			);
 	}

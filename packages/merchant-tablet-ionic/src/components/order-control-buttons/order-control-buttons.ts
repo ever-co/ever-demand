@@ -40,7 +40,7 @@ export class OrderControlButtonsComponent implements OnInit {
 	ngOnInit() {
 		this._storeID = this.store.warehouseId;
 		this.warehaousesService
-			.getStoreById(this._storeID)
+			.getOrdersShortProcess(this._storeID)
 			.pipe(map((store) => store.ordersShortProcess))
 			.subscribe((isShortProcess) => {
 				this.ordersShortProcess = isShortProcess;
