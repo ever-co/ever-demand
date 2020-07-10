@@ -314,7 +314,8 @@
 			"ESPAÑOL": "Español",
 			"OPTIONAL": "Opcional",
 			"TAKEAWAY": "Retirar",
-			"DELIVERY": "Repartir"
+			"DELIVERY": "Repartir",
+			"PRODUCT_AVAILABILITY": "Disponibilidad de producto"
 		},
 		"NEW_ORDER_VIEW": {
 			"NEW_MANUAL_ORDER": "Nuevo Pedido Manual",

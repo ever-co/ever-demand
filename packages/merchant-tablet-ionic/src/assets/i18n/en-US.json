@@ -312,7 +312,8 @@
 			"BULGARIAN": "Bulgarian",
 			"OPTIONAL": "optional",
 			"TAKEAWAY": "Takeaway",
-			"DELIVERY": "Delivery"
+			"DELIVERY": "Delivery",
+			"PRODUCT_AVAILABILITY": "Product availability"
 		},
 		"NEW_ORDER_VIEW": {
 			"NEW_MANUAL_ORDER": "New Manual Order",
