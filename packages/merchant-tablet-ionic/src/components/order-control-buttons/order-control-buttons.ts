@@ -34,13 +34,13 @@ export class OrderControlButtonsComponent implements OnInit {
 	constructor(
 		private orderRouter: OrderRouter,
 		private store: Store,
-		private warehaousesService: WarehousesService
+		private warehousesService: WarehousesService
 	) {}
 
 	ngOnInit() {
 		this._storeID = this.store.warehouseId;
-		this.warehaousesService
-			.getOrdersShortProcess(this._storeID)
+		this.warehousesService
+			.getWarehouseOrderProcess(this._storeID)
 			.pipe(map((store) => store.ordersShortProcess))
 			.subscribe((isShortProcess) => {
 				this.ordersShortProcess = isShortProcess;

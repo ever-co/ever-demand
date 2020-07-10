@@ -252,20 +252,20 @@ export class WarehousesService {
 			);
 	}
 
-	getOrdersShortProcess(warehouseId: string) {
+	getWarehouseOrderProcess(id: string) {
 		return this._apollo
-			.mutate({
-				mutation: gql`
-					mutation GetOrdersShortProcess($warehouseId: String!) {
-						getOrdersShortProcess(warehouseId: $warehouseId) {
+			.query({
+				query: gql`
+					query GetWarehouseOrderProcess($id: String!) {
+						warehouse(id: $id) {
 							ordersShortProcess
 						}
 					}
 				`,
-				variables: { warehouseId },
+				variables: { id },
 			})
 			.pipe(
-				map((res) => res.data['ordersShortProcess']),
+				map((res) => res.data['warehouse']),
 				share()
 			);
 	}
