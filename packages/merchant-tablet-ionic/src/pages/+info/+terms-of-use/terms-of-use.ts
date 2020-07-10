@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
-import { Store } from 'services/store.service';
 
 @Component({
 	selector: 'page-terms-of-use',

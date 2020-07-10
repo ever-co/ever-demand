@@ -21,7 +21,7 @@ export class OrdersContainerComponent {
 		// During testing: this.userOrdersRouter.getOrderedProducts('23');
 		this.userOrdersRouter.get(userId).subscribe((res) => {
 			this.orders = res.filter((r) => !r.isCancelled);
-			res = res.filter((r) => !r.isCancelled);
+			res.filter((r) => !r.isCancelled);
 		});
 	}
 }
