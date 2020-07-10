@@ -12,7 +12,7 @@ export class TermsOfUsePage implements OnInit {
 	public useTermsHtml: string = '<h1>Loading...</h1>';
 	public selectedLanguage: string;
 
-	constructor(private userRouter: UserRouter, private store: Store) {
+	constructor(private userRouter: UserRouter) {
 		this.selectedLanguage = localStorage.getItem('_language');
 	}
 
@@ -22,16 +22,6 @@ export class TermsOfUsePage implements OnInit {
 			.subscribe((html) => {
 				this.useTermsHtml = html;
 			});
-	}
-	ionViewWillEnter() {
-		// this.userRouter.getTermsOfUse(this._userId, this._deviceId).subscribe(
-		// 	(innerHtml) => {
-		// 		this.useTermsHtml = innerHtml;
-		// 	},
-		// 	(err) => {
-		// 		console.log(err);
-		// 	}
-		// );
 	}
 
 	private get _userId() {

@@ -9,21 +9,11 @@ import { Store } from 'services/store.service';
 export class TermsOfUsePage implements OnInit {
 	public useTermsHtml: string = '<h1>Loading...</h1>';
 	public selectedLanguage: string;
-	constructor(private userRouter: UserRouter, private store: Store) {
+	constructor(private userRouter: UserRouter) {
 		this.selectedLanguage = localStorage.getItem('_language');
 	}
 
 	ngOnInit(): void {
-		// this.userRouter
-		// 	.getTermsOfUse(this._warehouseId, this._deviceId)
-		// 	.subscribe(
-		// 		(innerHtml) => {
-		// 			this.useTermsHtml = innerHtml;
-		// 		},
-		// 		(err) => {
-		// 			console.log(err);
-		// 		}
-		// 	);
 		this.userRouter
 			.getTermsOfUseByLanguage(this.selectedLanguage)
 			.subscribe((html) => {
