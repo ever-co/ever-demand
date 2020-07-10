@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Mixpanel } from '@ionic-native/mixpanel/ngx';
 import Order from '@modules/server.common/entities/Order';
 import Warehouse from '@modules/server.common/entities/Warehouse';
@@ -43,7 +43,7 @@ export enum OrderStatus {
 	templateUrl: 'warehouse.html',
 	styleUrls: ['./warehouse.scss'],
 })
-export class WarehousePage {
+export class WarehousePage implements OnInit {
 	private warehouse$: any;
 	filterMode: OrdersFilterModes = 'ready';
 	warehouse: Warehouse;
@@ -55,11 +55,11 @@ export class WarehousePage {
 	showAllProducts: boolean = false;
 	focusedOrder: Order;
 	focusedOrder$: any;
+	orderStatus: any;
 
 	filter: any; //todo
 	keys = Object.keys;
 	statuses = OrderStatus;
-	simplified: boolean;
 
 	constructor(
 		// public navCtrl: NavController,
@@ -84,6 +84,10 @@ export class WarehousePage {
 	// 	const isLogged = await this.store.isLogged();
 	// 	return this.store.maintenanceMode === null && isLogged;
 	// }
+
+	ngOnInit() {
+		this.getOrderShortProcess();
+	}
 
 	get isLogged() {
 		return localStorage.getItem('_warehouseId');
@@ -233,6 +237,16 @@ export class WarehousePage {
 		});
 
 		await modal.present();
+	}
+
+	async getOrderShortProcess() {
+		this.orderStatus = await this.warehouseService
+			.getWarehouseOrderProcess(this.store.warehouseId)
+			.toPromise();
+
+		this.orderStatus = this.orderStatus['ordersShortProcess'];
+
+		return this.orderStatus;
 	}
 
 	getWarehouseStatus(orderWarehouseStatusNumber: OrderWarehouseStatus) {
