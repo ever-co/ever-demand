@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { Store } from 'services/store.service';
-import { environment } from 'environments/environment';
 
 @Component({
 	selector: 'page-terms-of-use',
@@ -11,7 +10,7 @@ export class TermsOfUsePage implements OnInit {
 	public useTermsHtml: string = '<h1>Loading...</h1>';
 	public selectedLanguage: string;
 	constructor(private userRouter: UserRouter, private store: Store) {
-		this.selectedLanguage = environment.DEFAULT_LANGUAGE;
+		this.selectedLanguage = localStorage.getItem('_language');
 	}
 
 	ngOnInit(): void {
