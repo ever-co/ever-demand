@@ -16,6 +16,7 @@ import Product from '@modules/server.common/entities/Product';
 import { PopoverController, ModalController } from '@ionic/angular';
 import { CreateProductTypePopupPage } from './create-product-type-popup/create-product-type-popup';
 import { EditProductTypePopupPage } from './edit-product-type-popup/edit-product-type-popup';
+import { WarehousesService } from 'services/warehouses.service';
 
 export enum OrderState {
 	WarehousePreparation,
@@ -54,7 +55,8 @@ export class WarehousePage {
 		private mixpanel: Mixpanel,
 		private translateProductLocales: ProductLocalesService,
 		private store: Store,
-		private barcodeScanner: BarcodeScanner
+		private barcodeScanner: BarcodeScanner,
+		private warehouseService: WarehousesService
 	) {}
 
 	// ionViewDidLoad() {

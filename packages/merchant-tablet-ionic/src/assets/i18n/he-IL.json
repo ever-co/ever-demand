@@ -310,7 +310,8 @@
 			"BULGARIAN": "בולגרית",
 			"OPTIONAL": "אופציונאלי",
 			"TAKEAWAY": "להסיר",
-			"DELIVERY": "משלוח"
+			"DELIVERY": "משלוח",
+			"PRODUCT_AVAILABILITY": "זמינות מוצר"
 		},
 		"NEW_ORDER_VIEW": {
 			"NEW_MANUAL_ORDER": "סדר ידני חדש",
