@@ -46,6 +46,8 @@ type Warehouse {
 	orderBarcodeType: Int
 	useOnlyRestrictedCarriersForDelivery: Boolean
 	preferRestrictedCarriersForDelivery: Boolean
+	ordersShortProcess: Boolean
+	orderCancelation: OrderCancelation!
 }
 
 input WarehouseCreateInput {
@@ -205,4 +207,9 @@ input GeoLocationCreateObject {
 	postcode: String!
 	streetAddress: String!
 	house: String!
+}
+
+type OrderCancelation {
+	enabled: Boolean
+	onState: Int
 }

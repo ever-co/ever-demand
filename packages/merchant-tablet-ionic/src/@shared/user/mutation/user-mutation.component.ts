@@ -43,6 +43,12 @@ export class UserMutationComponent {
 	@Output()
 	customerIdEmitter = new EventEmitter<string>();
 
+	@Input()
+	visible: boolean = true;
+
+	@Output()
+	updateVisible = new EventEmitter<boolean>();
+
 	mapCoordinatesEmitter = new EventEmitter<
 		google.maps.LatLng | google.maps.LatLngLiteral
 	>();
@@ -77,6 +83,11 @@ export class UserMutationComponent {
 
 	broadcastCustomerId(customerId: string) {
 		this.customerIdEmitter.emit(customerId);
+	}
+
+	changeState(): void {
+		this.visible = false;
+		this.updateVisible.emit(this.visible);
 	}
 
 	async createCustomer() {
@@ -117,7 +128,9 @@ export class UserMutationComponent {
 			message = `Error in creating customer: '${err.message}'!`;
 		} finally {
 			await this.presentToast(message);
-			await this.modalController.dismiss(userId);
+			if (this.visible) {
+				await this.modalController.dismiss(userId);
+			}
 		}
 	}
 

@@ -20,6 +20,7 @@ import {
 	Country,
 	CountryName,
 	getCountryName,
+	countriesIdsToNamesArray,
 } from '@modules/server.common/entities/GeoLocation';
 import { FormHelpers } from '../helpers';
 
@@ -57,11 +58,10 @@ export class LocationFormComponent implements AfterViewInit {
 
 	public showCoordinates: boolean = false;
 
-	static COUNTRIES: Array<{ id: Country; name: CountryName }> = Object.keys(
-		countries
-	).map((abbr) => {
-		return { id: Country[abbr], name: getCountryName(+Country[abbr]) };
-	});
+	static COUNTRIES: Array<{
+		id: Country;
+		name: CountryName;
+	}> = countriesIdsToNamesArray;
 
 	private _lastUsedAddressText: string;
 	private _lat: number;

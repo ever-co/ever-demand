@@ -31,6 +31,10 @@ class GeoLocation extends DBObject<IGeoLocation, IGeoLocationCreateObject>
 	@Column()
 	postcode?: string | null;
 
+	@Schema({ required: false, type: String })
+	@Column()
+	notes?: string | null;
+
 	@Schema({ type: String, required: false })
 	@Column()
 	apartment?: string | null;
@@ -602,9 +606,11 @@ export function getCountryName(country: Country | null): CountryName | null {
 	return countries[Country[country]] || null;
 }
 
-export const countriesIdsToNamesArray: Array<{
+export const countriesIdsToNamesArray: {
 	id: Country;
 	name: CountryName;
-}> = Object.keys(countries).map((abbr) => {
-	return { id: Country[abbr], name: getCountryName(+Country[abbr]) };
-});
+}[] = Object.keys(countries)
+	.map((abbr) => {
+		return { id: Country[abbr], name: getCountryName(+Country[abbr]) };
+	})
+	.sort((c1, c2) => c1.name.localeCompare(c2.name));

@@ -85,11 +85,7 @@ export class WarehouseManageTabsComponent {
 	}
 
 	get validForm() {
-		return (
-			this.form.valid &&
-			this.contactInfoForm.validForm &&
-			this.paymentsSettingsForm.isPaymentValid
-		);
+		return this.form.valid && this.paymentsSettingsForm.isPaymentValid;
 	}
 
 	get deliveryAreas() {
@@ -133,6 +129,7 @@ export class WarehouseManageTabsComponent {
 			deliveryAreas: any; // add type
 			isPaymentEnabled: boolean;
 			paymentsGateways: object[];
+			isCashPaymentEnabled: boolean;
 		} = {
 			basicInfo: { ...detailsRaw, username: accountRaw.username },
 			password: accountRaw.password,
@@ -141,8 +138,9 @@ export class WarehouseManageTabsComponent {
 			deliveryAreas: deliveryAreasRaw,
 			isPaymentEnabled: this.paymentsSettingsForm.isPaymentEnabled,
 			paymentsGateways: this.paymentsSettingsForm.paymentsGateways,
+			isCashPaymentEnabled: this.paymentsSettingsForm
+				.isCashPaymentEnabled,
 		};
-
 		return inputResult;
 	}
 

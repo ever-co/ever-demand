@@ -28,6 +28,10 @@ import _ from 'lodash';
 import isUrl from 'is-url';
 import { takeUntil, first } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
+import {
+	LanguageCodesEnum,
+	LanguagesEnum,
+} from '@modules/server.common/interfaces/ILanguage';
 
 @Component({
 	selector: 'ea-product-basic-info-form',
@@ -72,6 +76,8 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 	public categoryOptions: IMultiSelectOption[];
 	private onLocaleChanges: any;
 	private images: IProductImage[] = [];
+
+	public languages = Object.keys(LanguageCodesEnum);
 
 	static hasValidImage(images) {
 		if (images) {
@@ -175,6 +181,10 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 		this.form.reset();
 		this._ngDestroy$.next();
 		this._ngDestroy$.complete();
+	}
+
+	getLanguageCode(language: LanguagesEnum) {
+		return LanguageCodesEnum[language];
 	}
 
 	deleteImg(image) {

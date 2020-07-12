@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable, forkJoin } from 'rxjs';
 import _ from 'lodash';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subject } from 'rxjs/Rx';
+import { Subject } from 'rxjs';
 import { takeUntil, first } from 'rxjs/operators';
 import { getCountryName } from '@modules/server.common/entities/GeoLocation';
 import { CountryRenderComponent } from './+invites/country-render/country-render.component';

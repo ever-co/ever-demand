@@ -13,12 +13,10 @@ import {
 	Validators,
 } from '@angular/forms';
 import { IWarehouseCreateObject } from '@modules/server.common/interfaces/IWarehouse';
-import { map, first } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
-import { Observable, concat } from 'rxjs';
 import { FormHelpers } from '../../../../forms/helpers';
-import 'rxjs/add/observable/of';
 import _ from 'lodash';
 import isUrl from 'is-url';
 import { TranslateService } from '@ngx-translate/core';
@@ -34,6 +32,8 @@ export type WarehouseManageTabsDetails = Pick<
 	| 'isCarrierRequired'
 	| 'useOnlyRestrictedCarriersForDelivery'
 	| 'preferRestrictedCarriersForDelivery'
+	| 'ordersShortProcess'
+	| 'orderCancelation'
 >;
 
 @Component({
@@ -45,6 +45,7 @@ export class WarehouseManageTabsDetailsComponent
 	implements OnInit, AfterViewInit {
 	@ViewChild('fileInput')
 	fileInput: ElementRef;
+
 	@ViewChild('logoPreview')
 	logoPreviewElement: ElementRef;
 
@@ -53,23 +54,23 @@ export class WarehouseManageTabsDetailsComponent
 
 	uploaderPlaceholder: string;
 
-	carriersOptions$: Observable<IMultiSelectOption[]> = concat(
-		Observable.of([]),
-		this._carrierRouter.getAllActive().pipe(
-			map((carriers) =>
-				carriers
-					.filter((c) => c.isSharedCarrier)
-					.map((c) => {
-						return {
-							id: c.id,
-							name: `${c.firstName} ${c.lastName}`,
-						};
-					})
-			)
-		)
-	);
+	carriersOptions: IMultiSelectOption[];
 
 	private _delivery: 'all' | 'onlyStore' | 'preferStore' = 'all';
+
+	// orderCancelationOptions can be moved to a separate file
+	orderCancelationOptions = [
+		{ text: 'ORDERING', value: 1 },
+		{ text: 'START_PROCESSING', value: 2 },
+		{ text: 'START_ALLOCATION', value: 3 },
+		{ text: 'ALLOCATED', value: 4 },
+		{ text: 'START_PACKAGING', value: 5 },
+		{ text: 'PACKAGED', value: 6 },
+		{ text: 'CARRIER_TAKE_WORK', value: 7 },
+		{ text: 'CARRIER_GOT_IT', value: 8 },
+		{ text: 'CARRIER_START_DELIVERY', value: 9 },
+		{ text: 'DELIVERED', value: 11 },
+	];
 
 	constructor(
 		private readonly _carrierRouter: CarrierRouter,
@@ -79,18 +80,23 @@ export class WarehouseManageTabsDetailsComponent
 	get name() {
 		return this.form.get('name');
 	}
+
 	get logo() {
 		return this.form.get('logo');
 	}
+
 	get isActive() {
 		return this.form.get('isActive');
 	}
+
 	get hasRestrictedCarriers() {
 		return this.form.get('hasRestrictedCarriers');
 	}
+
 	get carriersIds() {
 		return this.form.get('carriersIds');
 	}
+
 	get showLogoMeta() {
 		return this.logo && this.logo.value !== '';
 	}
@@ -109,6 +115,13 @@ export class WarehouseManageTabsDetailsComponent
 
 	get preferRestrictedCarriersForDelivery() {
 		return this.form.get('preferRestrictedCarriersForDelivery');
+	}
+	get ordersShortProcess() {
+		return this.form.get('ordersShortProcess');
+	}
+
+	get enabledOrderCancelation() {
+		return this.form.get('enabledOrderCancelation');
 	}
 
 	get delivery() {
@@ -162,11 +175,16 @@ export class WarehouseManageTabsDetailsComponent
 			useOnlyRestrictedCarriersForDelivery: [false],
 			preferRestrictedCarriersForDelivery: [false],
 			carriersIds: [[]],
+			ordersShortProcess: [false],
+
+			enabledOrderCancelation: [false],
+			stateOrderCancelation: [0],
 		});
 	}
 
 	ngOnInit(): void {
 		this.getUploaderPlaceholderText();
+		this.loadCarriersOptions();
 	}
 
 	ngAfterViewInit() {
@@ -184,9 +202,14 @@ export class WarehouseManageTabsDetailsComponent
 			carriersIds: string[];
 			useOnlyRestrictedCarriersForDelivery: boolean;
 			preferRestrictedCarriersForDelivery: boolean;
+			ordersShortProcess: boolean;
+
+			enabledOrderCancelation: boolean;
+			stateOrderCancelation: number;
 		};
 
 		return {
+			ordersShortProcess: basicInfo.ordersShortProcess,
 			isActive: basicInfo.isActive,
 			isManufacturing: basicInfo.isManufacturing,
 			isCarrierRequired: basicInfo.isCarrierRequired,
@@ -211,6 +234,10 @@ export class WarehouseManageTabsDetailsComponent
 						useOnlyRestrictedCarriersForDelivery: false,
 						preferRestrictedCarriersForDelivery: false,
 				  }),
+			orderCancelation: {
+				enabled: basicInfo.enabledOrderCancelation,
+				onState: Number(basicInfo.stateOrderCancelation),
+			},
 		};
 	}
 
@@ -221,17 +248,31 @@ export class WarehouseManageTabsDetailsComponent
 			{
 				useOnlyRestrictedCarriersForDelivery: false,
 				preferRestrictedCarriersForDelivery: false,
+				ordersShortProcess: false,
+				enabledOrderCancelation: basicInfo.orderCancelation
+					? basicInfo.orderCancelation.enabled
+					: false,
+				stateOrderCancelation: basicInfo.orderCancelation
+					? basicInfo.orderCancelation.onState
+					: 0,
 			},
 			basicInfo
 		);
 
+		//Remove orderCancelation from the list becouse its  not actually form control
+		//can be improved
+		const filteredValues = Object.keys(this.getValue());
+		_.remove(filteredValues, (e) => e === 'orderCancelation');
+
 		this.form.setValue(
 			_.pick(basicInfo, [
-				...Object.keys(this.getValue()),
+				...filteredValues,
 				'hasRestrictedCarriers',
 				'carriersIds',
 				'useOnlyRestrictedCarriersForDelivery',
 				'preferRestrictedCarriersForDelivery',
+				'enabledOrderCancelation',
+				'stateOrderCancelation',
 			])
 		);
 
@@ -270,5 +311,21 @@ export class WarehouseManageTabsDetailsComponent
 			.toPromise();
 
 		this.uploaderPlaceholder = `${res['WAREHOUSE_VIEW.MUTATION.PHOTO']} (${res['OPTIONAL']})`;
+	}
+
+	private async loadCarriersOptions() {
+		let carriers = await this._carrierRouter
+			.getAllActive()
+			.pipe(first())
+			.toPromise();
+
+		carriers = carriers.filter((c) => c.isSharedCarrier);
+
+		this.carriersOptions = carriers.map((c) => {
+			return {
+				id: c.id,
+				name: `${c.firstName} ${c.lastName}`,
+			};
+		});
 	}
 }

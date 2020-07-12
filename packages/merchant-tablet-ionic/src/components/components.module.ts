@@ -27,6 +27,8 @@ import { CustomerEmailPopupPageModule } from 'pages/+customers/customer-email-po
 import { CustomerDeliveriesPopupPageModule } from 'pages/+customers/customer-deliveries-popup/customer-deliveries-popup.module';
 import { CustomerAddrPopupPageModule } from 'pages/+customers/customer-addr-popup/customer-addr-popup.module';
 import { FileUploaderModule } from './file-uploader/file-uploader.module';
+import { OrderInfoComponent } from './common/order-info/order-info';
+import { ImageTableComponent } from './table-components/image-table';
 
 @NgModule({
 	declarations: [
@@ -45,9 +47,11 @@ import { FileUploaderModule } from './file-uploader/file-uploader.module';
 		LocationComponent,
 		OrderTitleComponent,
 		CustomerInfoComponent,
+		OrderInfoComponent,
 		CarrierInfoComponent,
 		PhoneComponent,
 		UserPhoneComponent,
+		ImageTableComponent,
 	],
 	imports: [
 		CommonModule,
@@ -78,6 +82,7 @@ import { FileUploaderModule } from './file-uploader/file-uploader.module';
 		AccountComponent,
 		LocationComponent,
 		PhoneComponent,
+		ImageTableComponent,
 	],
 })
 export class ComponentsModule {}

@@ -4,6 +4,14 @@
 			<div class="col-8">
 				<nb-card>
 					<nb-card-header>
+						<div class="go-back">
+							<nb-icon
+								icon="arrow-back-outline"
+								(click)="goBack()"
+							>
+							</nb-icon>
+						</div>
+
 						{{
 							'WAREHOUSES_VIEW.MERCHANTS.TRACK_ALL_MERCHANTS'
 								| translate

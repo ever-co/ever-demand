@@ -86,6 +86,7 @@ export default class FakeDataInvites {
 				geoLocation: {
 					city: faker.address.city(),
 					postcode: faker.address.zipCode(),
+					notes: faker.lorem.text(1),
 					streetAddress: faker.address.streetAddress(),
 					house: faker.random.number(199).toString(),
 					countryId: faker.random.number(1) as Country,

@@ -5,10 +5,6 @@ import { env } from './env';
 import Logger from 'bunyan';
 import { createEverLogger } from './helpers/Log';
 import { EverbieNestJSLogger } from './helpers/NestJSLogger';
-import {
-	SwaggerBaseConfig,
-	SwaggerDocument,
-} from '@nestjs/swagger/dist/interfaces';
 import { INestApplication } from '@nestjs/common';
 
 const log: Logger = createEverLogger({ name: 'bootstrapNest' });
@@ -23,16 +19,13 @@ export async function bootstrapNest(): Promise<void> {
 	});
 
 	app.enableCors();
-	const options: SwaggerBaseConfig = new DocumentBuilder()
+	const options = new DocumentBuilder()
 		.setTitle('Ever REST API')
 		.setVersion('1.0')
 		.addBearerAuth()
 		.build();
 
-	const document: SwaggerDocument = SwaggerModule.createDocument(
-		app,
-		options
-	);
+	const document = SwaggerModule.createDocument(app, options);
 
 	SwaggerModule.setup('api', app, document);
 

@@ -75,7 +75,13 @@
 			"ADDRESS": "Адрес",
 			"LOGO": "Логотип"
 		},
+		"TRACK_ORDER": "Отследить заказ",
 		"TRACK_CARRIER": "Отследить перевозчика",
+		"DELIVERY_TRACKING": "Отслеживание доставки",
+		"CARRIER": "Перевозчик",
+		"STORE": "Магазин",
+		"DELIVERY_COUNT": "Количество доставки:",
+		"CUSTOMER": "Клиент",
 		"CARRIERS": "Носители",
 		"ADD_CARRIERS": "Добавить носители",
 		"IMAGE": "Образ",
@@ -161,6 +167,21 @@
 					"PHONE_MUST_CONTAINS_ONLY(special_signs)AND_DIGIT_CHARACTER": "Номер телефона может начинаться с '+' и должен содержать только: '-,., (Пробел), #' и цифры символов"
 				}
 			}
+		},
+		"PROMOTIONS": {
+			"PROMOTIONS": "Акции",
+			"BASIC_INFO": "Базовая информация",
+			"TITLE": "Заглавие",
+			"ACTIVE_FROM": "Активный от",
+			"ACTIVE_TO": "Активно для",
+			"PURCHASES_COUNT": "Количество покупок",
+			"IS_ACTIVE": "Активен",
+			"SELECT_DATE": "Выберите дату",
+			"DESCRIPTION": "Описание",
+			"SAVE": "Сохранить",
+			"NEXT": "Следующий",
+			"BACK": "Назад",
+			"LANGUAGE": "Язык"
 		},
 		"SELECT LANGUAGE": {
 			"USA": "США",
@@ -289,7 +310,8 @@
 			"BULGARIAN": "Болгарский",
 			"OPTIONAL": "необязательный",
 			"TAKEAWAY": "Навынос",
-			"DELIVERY": "Доставка"
+			"DELIVERY": "Доставка",
+			"PRODUCT_AVAILABILITY": "Доступность продукта"
 		},
 		"NEW_ORDER_VIEW": {
 			"NEW_MANUAL_ORDER": "Новый ручной порядок",
@@ -412,6 +434,11 @@
 	"ORDER_TITLE_COMPONENT": {
 		"ORDER": "порядок",
 		"FROM": "от"
+	},
+	"ORDER_TYPE": {
+		"TYPE": "Тип заказа:",
+		"DELIVERY": "Доставка",
+		"TAKEAWAY": "Навынос"
 	},
 	"TRACK_ORDER_POP_UP": {
 		"CARRIER": "Перевозчик",

@@ -272,7 +272,6 @@ export class WarehousesService {
 
 		return res.data['getCountOfMerchants'];
 	}
-
 	protected _warehouseFactory(warehouse: IWarehouse) {
 		return warehouse == null ? null : new Warehouse(warehouse);
 	}

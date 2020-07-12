@@ -76,7 +76,13 @@
 			"ADDRESS": "Dirección",
 			"LOGO": "Logo"
 		},
+		"TRACK_ORDER": "Orden de pista",
 		"TRACK_CARRIER": "Seguimiento del Repartidor",
+		"DELIVERY_TRACKING": "Seguimiento de entregas",
+		"CARRIER": "Portador",
+		"STORE": "Tienda",
+		"DELIVERY_COUNT": "Recuento de entrega:",
+		"CUSTOMER": "Cliente",
 		"CARRIERS": "Repartos",
 		"ADD_CARRIERS": "Agregar Reparto",
 		"IMAGE": "Imágen",
@@ -163,6 +169,21 @@
 					"PHONE_MUST_CONTAINS_ONLY(special_signs)AND_DIGIT_CHARACTER": "Teléfono debe contener solo números"
 				}
 			}
+		},
+		"PROMOTIONS": {
+			"PROMOTIONS": "Promociones",
+			"BASIC_INFO": "Información básica",
+			"TITLE": "Título",
+			"ACTIVE_FROM": "Activa desde",
+			"ACTIVE_TO": "Activa para",
+			"PURCHASES_COUNT": "Cuenta de compras",
+			"IS_ACTIVE": "Esta activa",
+			"SELECT_DATE": "Seleccione fecha",
+			"DESCRIPTION": "Descripción",
+			"SAVE": "Salvar",
+			"NEXT": "Próxima",
+			"BACK": "Espalda",
+			"LANGUAGE": "Idioma"
 		},
 		"SELECT LANGUAGE": {
 			"USA": "EEUU",
@@ -293,7 +314,8 @@
 			"ESPAÑOL": "Español",
 			"OPTIONAL": "Opcional",
 			"TAKEAWAY": "Retirar",
-			"DELIVERY": "Repartir"
+			"DELIVERY": "Repartir",
+			"PRODUCT_AVAILABILITY": "Disponibilidad de producto"
 		},
 		"NEW_ORDER_VIEW": {
 			"NEW_MANUAL_ORDER": "Nuevo Pedido Manual",
@@ -412,6 +434,11 @@
 	"ORDER_TITLE_COMPONENT": {
 		"ORDER": "Pedido",
 		"FROM": "Desde"
+	},
+	"ORDER_TYPE": {
+		"TYPE": "Tipo de orden:",
+		"DELIVERY": "Entrega",
+		"TAKEAWAY": "Para llevar"
 	},
 	"TRACK_ORDER_POP_UP": {
 		"CARRIER": "Reparto",

@@ -75,7 +75,13 @@
 			"ADDRESS": "Address",
 			"LOGO": "Logo"
 		},
+		"TRACK_ORDER": "Track order",
 		"TRACK_CARRIER": "Track Carrier",
+		"DELIVERY_TRACKING": "Delivery Tracking",
+		"CARRIER": "Carrier",
+		"STORE": "Store",
+		"DELIVERY_COUNT": "Delivery count:",
+		"CUSTOMER": "Customer",
 		"CARRIERS": "Carriers",
 		"ADD_CARRIERS": "Add Carriers",
 		"IMAGE": "Image",
@@ -161,6 +167,24 @@
 					"PHONE_MUST_CONTAINS_ONLY(special_signs)AND_DIGIT_CHARACTER": "Phone number can start with '+' or '(some numbers)' and must contains only only: '-, ., (space), #'' and digit characters"
 				}
 			}
+		},
+		"PROMOTIONS": {
+			"PROMOTIONS": "Promotions",
+			"BASIC_INFO": "Basic Info",
+			"TITLE": "Title",
+			"ACTIVE_FROM": "Active from",
+			"ACTIVE_TO": "Active to",
+			"PURCHASES_COUNT": "Purchases count",
+			"IS_ACTIVE": "Is active",
+			"SELECT_DATE": "Select date",
+			"DESCRIPTION": "Description",
+			"SAVE": "Save",
+			"NEXT": "Next",
+			"BACK": "Back",
+			"LANGUAGE": "Language",
+			"ACTIVE": "Active",
+			"IMAGE": "Image",
+			"STATUS": "Status"
 		},
 		"SELECT LANGUAGE": {
 			"USA": "USA",
@@ -288,7 +312,8 @@
 			"BULGARIAN": "Bulgarian",
 			"OPTIONAL": "optional",
 			"TAKEAWAY": "Takeaway",
-			"DELIVERY": "Delivery"
+			"DELIVERY": "Delivery",
+			"PRODUCT_AVAILABILITY": "Product availability"
 		},
 		"NEW_ORDER_VIEW": {
 			"NEW_MANUAL_ORDER": "New Manual Order",
@@ -402,6 +427,11 @@
 	"ORDER_TITLE_COMPONENT": {
 		"ORDER": "Order",
 		"FROM": "from"
+	},
+	"ORDER_TYPE": {
+		"TYPE": "Order type:",
+		"DELIVERY": "Delivery",
+		"TAKEAWAY": "Takeaway"
 	},
 	"TRACK_ORDER_POP_UP": {
 		"CARRIER": "Carrier",

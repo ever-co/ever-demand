@@ -39,6 +39,10 @@
 					<h2 class="product-description">
 						{{ localeTranslate(product.product.description) }}
 					</h2>
+					<h2 class="customer-notes">
+						Notes:
+						{{ order.user.geoLocation.notes }}
+					</h2>
 				</div>
 			</div>
 			<div class="order-images">
@@ -59,6 +63,7 @@
 			mat-raised-button
 			color="accent"
 			class="cancel-button"
+			[disabled]="_isButtonDisabled"
 		>
 			<svg viewBox="0 0 24 24">
 				<path
@@ -73,7 +78,7 @@
 					d="M20,8H4V6H20M20,18H4V12H20M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"
 				/>
 			</svg>
-			Pay
+			{{ 'ORDER_VIEW.PAY' | translate }}
 		</button>
 		<button
 			mat-raised-button

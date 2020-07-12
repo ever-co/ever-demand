@@ -77,6 +77,15 @@ export class OrderComponent implements OnInit {
 		return `${countryName} ${this.order.user.geoLocation.postcode}, ${this.order.user.geoLocation.city}`;
 	}
 
+	get customerNotes() {
+		const customerNotes =
+			this.order.user.geoLocation.notes === null
+				? ''
+				: this.order.user.geoLocation.notes;
+
+		return `Notes: ${customerNotes}`;
+	}
+
 	get warehouseAddress() {
 		const warehouse = this.order.warehouse as Warehouse;
 		const countryName = getCountryName(warehouse.geoLocation.countryId);

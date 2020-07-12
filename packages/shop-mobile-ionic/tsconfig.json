@@ -2,6 +2,7 @@
 	"extends": "../../tsconfig.base.json",
 	"compileOnSave": false,
 	"compilerOptions": {
+		"outDir": "./www/out-tsc",
 		"sourceMap": true,
 		"declaration": false,
 		"moduleResolution": "node",

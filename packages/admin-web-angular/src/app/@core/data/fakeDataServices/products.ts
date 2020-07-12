@@ -26,7 +26,7 @@ export default class FakeDataProducts {
 					value: this._getRandomProductName(),
 				},
 				{
-					locale: 'he-LI',
+					locale: 'he-IL',
 					value: 'רק איזה סוג של מוצר',
 				},
 			],

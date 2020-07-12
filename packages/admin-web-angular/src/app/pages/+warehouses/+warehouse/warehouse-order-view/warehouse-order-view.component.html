@@ -183,16 +183,7 @@
 			*ngIf="selectedOrder.products.length"
 			class="col-12 no-padding slider"
 		>
-			<slideshow
-				#slideshow
-				[height]="'300px'"
-				[captionBackground]="'rgba(0, 0, 0, .5)'"
-				[autoPlay]="true"
-				[autoPlayInterval]="5000"
-				[imageUrls]="slideImages"
-				[lazyLoad]="selectedOrder.products.length"
-				[autoPlayWaitForLazyLoad]="true"
-			></slideshow>
+			<image-slider [slideImages]="slideImages"></image-slider>
 		</div>
 	</nb-card-body>
 </nb-card>

@@ -65,6 +65,13 @@ const routes: Routes = [
 		canLoad: [InfoModuleGuard],
 	},
 	{
+		path: 'promotions',
+		loadChildren: () =>
+			import('./+promotions/promotion.module').then(
+				(m) => m.PromotionModule
+			),
+	},
+	{
 		path: 'errors',
 		loadChildren: () =>
 			import('./+errors/errors.module').then((m) => m.ErrorsModule),

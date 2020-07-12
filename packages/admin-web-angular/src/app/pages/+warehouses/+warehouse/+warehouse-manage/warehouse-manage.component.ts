@@ -8,7 +8,6 @@ import { LocationFormComponent } from '../../../../@shared/forms/location';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { WarehouseManageTabsComponent } from '../../../../@shared/warehouse/forms/warehouse-manage-tabs/warehouse-manage-tabs.component';
-import 'rxjs/add/operator/withLatestFrom';
 
 @Component({
 	selector: 'ea-warehouse-manage',
@@ -37,13 +36,7 @@ export class WarehouseManageComponent implements OnInit {
 		map((p) => p['id'])
 	);
 
-	readonly warehouse$ = this.warehouseId$.pipe(
-		switchMap((id) => {
-			return this.warehouseRouter.get(id).pipe(first());
-		})
-	);
-
-	private _currentWarehouse: Warehouse;
+	_currentWarehouse: Warehouse;
 
 	constructor(
 		private readonly _formBuilder: FormBuilder,
@@ -53,7 +46,17 @@ export class WarehouseManageComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this._loadWarehouse();
+		this.loadWarehouse();
+	}
+
+	async loadWarehouse() {
+		const warehouseId = await this.warehouseId$.pipe(first()).toPromise();
+		const warehouse = await this.warehouseRouter
+			.get(warehouseId)
+			.pipe(first())
+			.toPromise();
+		this._currentWarehouse = warehouse;
+		this.warehouseManageTabs.setValue(warehouse);
 	}
 
 	get validForm() {
@@ -73,8 +76,10 @@ export class WarehouseManageComponent implements OnInit {
 				deliveryAreas: tabsInfoRaw.deliveryAreas,
 				isPaymentEnabled: tabsInfoRaw.isPaymentEnabled,
 				paymentGateways: tabsInfoRaw.paymentsGateways,
+				isCashPaymentEnabled: tabsInfoRaw.isCashPaymentEnabled,
 			};
 
+			const username = this.tabsForm.value.account['username'];
 			const passwordOld = tabsInfoRaw.password.current;
 			const passwordNew = tabsInfoRaw.password.new;
 
@@ -97,6 +102,14 @@ export class WarehouseManageComponent implements OnInit {
 			this._showWarehouseUpdateSuccessMessage(warehouse);
 
 			this.warehouseManageTabs.warehouseUpdateFinish();
+			this.warehouseManageTabs.accountComponent.form.setValue({
+				username: username,
+				password: {
+					confirm: '',
+					current: '',
+					new: '',
+				},
+			});
 		} catch (err) {
 			this.loading = false;
 			this.toasterService.pop(
@@ -104,21 +117,6 @@ export class WarehouseManageComponent implements OnInit {
 				`Error in updating customer: "${err.message}"`
 			);
 		}
-	}
-
-	private _loadWarehouse() {
-		this.warehouse$
-			.withLatestFrom(this.warehouseId$)
-			.subscribe(([warehouse, id]) => {
-				if (!warehouse) {
-					this.toasterService.pop(
-						'error',
-						`Warehouse with id ${id} doesn't exist!`
-					);
-				}
-				this._currentWarehouse = warehouse;
-				this.warehouseManageTabs.setValue(warehouse);
-			});
 	}
 
 	private _showWarehouseUpdateSuccessMessage(warehouse) {

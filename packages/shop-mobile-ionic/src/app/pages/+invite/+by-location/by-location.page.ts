@@ -34,6 +34,8 @@ export class ByLocationPage implements OnInit, OnDestroy {
 	public city: string;
 	public country: number = Country.IL;
 	public detectingLocation: boolean = true;
+	public showTextarea: boolean = false;
+	public notes: string;
 
 	private readonly ngDestroy$ = new Subject<void>();
 
@@ -63,6 +65,10 @@ export class ByLocationPage implements OnInit, OnDestroy {
 			((isNumber(this.apartment) && this.apartment !== 0) ||
 				!this.isApartment)
 		);
+	}
+
+	public toggleTextarea() {
+		this.showTextarea = !this.showTextarea;
 	}
 
 	protected async getCoordinates(): Promise<{
@@ -160,6 +166,7 @@ export class ByLocationPage implements OnInit, OnDestroy {
 					streetAddress: this.streetAddress,
 					city: this.city,
 					countryId: this.country,
+					notes: this.notes,
 				})
 				.pipe(first())
 				.toPromise();
@@ -292,6 +299,7 @@ export class ByLocationPage implements OnInit, OnDestroy {
 					city: this.city,
 					streetAddress: this.streetAddress,
 					house: this.house.toString(),
+					notes: this.notes,
 				},
 				apartment: this.isApartment ? this.apartment.toString() : '0',
 				deviceId: device.id,

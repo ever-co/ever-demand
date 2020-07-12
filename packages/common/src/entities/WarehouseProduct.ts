@@ -113,6 +113,16 @@ class WarehouseProduct
 	@Types.Boolean(true)
 	isDeliveryRequired: boolean;
 
+	/**
+	 * Is product available for purchase
+	 *
+	 * @type {boolean}
+	 * @memberof WarehouseProduct
+	 */
+	@Column()
+	@Types.Boolean(true)
+	isProductAvailable: boolean;
+
 	@Schema({ required: false, type: Boolean })
 	@Column()
 	isTakeaway?: boolean;
@@ -144,6 +154,7 @@ class WarehouseProduct
 	 * @type {string}
 	 * @memberof WarehouseProduct
 	 */
+
 	get productId(): string {
 		if (typeof this.product === 'string') {
 			return this.product as string;

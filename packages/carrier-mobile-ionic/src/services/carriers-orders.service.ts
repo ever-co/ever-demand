@@ -40,6 +40,7 @@ export class CarriersOrdersService {
 								geoLocation {
 									countryId
 									postcode
+									notes
 									city
 								}
 							}

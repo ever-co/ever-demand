@@ -26,7 +26,6 @@ import { GeoLocationOrdersService } from '@app/@core/data/geo-location-orders.se
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { StoreOrderComponent } from '@app/@shared/render-component/carrier-orders-table/store-order.component';
 import { UserOrderComponent } from '@app/@shared/render-component/carrier-orders-table/user-order-component';
-import { takeUntil } from 'rxjs/operators';
 
 const perPage = 3;
 let searchCustomer: boolean;
@@ -58,6 +57,7 @@ export class CarrierOrdersComponent
 	private _isWork: boolean;
 	private dataCount: number;
 	private $locationOrders: Subscription;
+	subscription: Subscription;
 
 	public carrierOnlineStatus = CarrierStatus.Online;
 
@@ -95,16 +95,16 @@ export class CarrierOrdersComponent
 		this.loadSmartTableTranslates();
 		this.smartTableChange();
 
-		CarrierOrdersComponent.$customerSearch
-			.pipe(takeUntil(this.ngDestroy$))
-			.subscribe(async (searchText: string) => {
+		this.subscription = CarrierOrdersComponent.$customerSearch.subscribe(
+			async (searchText: string) => {
 				await this.loadDataCount({
 					byRegex: [{ key: 'user.firstName', value: searchText }],
 				});
 				await this.loadSmartTableData(1, {
 					byRegex: [{ key: 'user.firstName', value: searchText }],
 				});
-			});
+			}
+		);
 	}
 
 	ngOnChanges() {
@@ -170,9 +170,8 @@ export class CarrierOrdersComponent
 	}
 
 	async smartTableChange() {
-		this.sourceSmartTable
+		this.subscription = this.sourceSmartTable
 			.onChanged()
-			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(async (event) => {
 				if (event.action === 'page') {
 					const page = event.paging.page;
@@ -225,102 +224,97 @@ export class CarrierOrdersComponent
 		const getTranslate = (name: string): Observable<string | any> =>
 			this._translateService.get(columnTitlePrefix + name);
 
-		forkJoin(
+		this.subscription = forkJoin(
 			this._translateService.get('Id'),
 			getTranslate('WAREHOUSE'),
 			getTranslate('CUSTOMER'),
 			getTranslate('WAREHOUSE_STATUS'),
 			getTranslate('CARRIER_STATUS'),
 			getTranslate('CREATED')
-		)
-			.pipe(takeUntil(this.ngDestroy$))
-			.subscribe(
-				([
-					id,
-					warehouse,
-					customer,
-					warehouseStatus,
-					carrierStatus,
-					created,
-				]) => {
-					this.settingsSmartTable = {
-						actions: false,
-						columns: {
-							Warehouse: {
-								title: warehouse,
-								type: 'custom',
-								renderComponent: StoreOrderComponent,
-								width: '20%',
+		).subscribe(
+			([
+				id,
+				warehouse,
+				customer,
+				warehouseStatus,
+				carrierStatus,
+				created,
+			]) => {
+				this.settingsSmartTable = {
+					actions: false,
+					columns: {
+						Warehouse: {
+							title: warehouse,
+							type: 'custom',
+							renderComponent: StoreOrderComponent,
+							width: '20%',
+						},
+						Customer: {
+							title: customer,
+							type: 'custom',
+							renderComponent: UserOrderComponent,
+							width: '20%',
+							filterFunction(
+								cell?: string,
+								search?: string
+							): boolean {
+								if (!searchCustomer && oldSearch !== search) {
+									oldSearch = search;
+
+									searchCustomer = true;
+									setTimeout(() => {
+										searchCustomer = false;
+
+										CarrierOrdersComponent.$customerSearch.emit(
+											search
+										);
+									}, 1000);
+								}
+
+								return true;
 							},
-							Customer: {
-								title: customer,
-								type: 'custom',
-								renderComponent: UserOrderComponent,
-								width: '20%',
-								filterFunction(
-									cell?: string,
-									search?: string
-								): boolean {
-									if (
-										!searchCustomer &&
-										oldSearch !== search
-									) {
-										oldSearch = search;
+						},
+						WarehouseStatus: {
+							title: warehouseStatus,
+							type: 'string',
+							valuePrepareFunction: (_, order: Order) => {
+								let warehouseStat = 'BAD_STATUS';
+								getTranslate(
+									order.warehouseStatusText
+								).subscribe((y) => {
+									warehouseStat = y;
+								});
 
-										searchCustomer = true;
-										setTimeout(() => {
-											searchCustomer = false;
-
-											CarrierOrdersComponent.$customerSearch.emit(
-												search
-											);
-										}, 1000);
+								return warehouseStat;
+							},
+						},
+						CarrierStatus: {
+							title: carrierStatus,
+							type: 'string',
+							valuePrepareFunction: (_, order: Order) => {
+								let carrierStat = 'No Status';
+								getTranslate(order.carrierStatusText).subscribe(
+									(y) => {
+										carrierStat = y;
 									}
+								);
 
-									return true;
-								},
-							},
-							WarehouseStatus: {
-								title: warehouseStatus,
-								type: 'string',
-								valuePrepareFunction: (_, order: Order) => {
-									let warehouseStat = 'BAD_STATUS';
-									getTranslate(order.warehouseStatusText)
-										.pipe(takeUntil(this.ngDestroy$))
-										.subscribe((y) => {
-											warehouseStat = y;
-										});
-
-									return warehouseStat;
-								},
-							},
-							CarrierStatus: {
-								title: carrierStatus,
-								type: 'string',
-								valuePrepareFunction: (_, order: Order) => {
-									let carrierStat = 'No Status';
-									getTranslate(order.carrierStatusText)
-										.pipe(takeUntil(this.ngDestroy$))
-										.subscribe((y) => {
-											carrierStat = y;
-										});
-
-									return carrierStat;
-								},
-							},
-							Created: {
-								title: created,
-								type: 'custom',
-								renderComponent: CreatedComponent,
+								return carrierStat;
 							},
 						},
-						pager: {
-							display: true,
-							perPage,
+						Created: {
+							title: created,
+							type: 'custom',
+							renderComponent: CreatedComponent,
 						},
-					};
-				}
-			);
+					},
+					pager: {
+						display: true,
+						perPage,
+					},
+				};
+			}
+		);
 	}
 
 	private async loadDataCount(searchObj?: {
@@ -364,7 +358,6 @@ export class CarrierOrdersComponent
 				},
 				searchObj
 			)
-			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(async (ordersForWork: Order[]) => {
 				const currentOrder = await this.carriersService.getCarrierCurrentOrder(
 					this.selectedCarrier.id
@@ -388,5 +381,7 @@ export class CarrierOrdersComponent
 	ngOnDestroy() {
 		this.ngDestroy$.next();
 		this.ngDestroy$.complete();
+		this.subscription.unsubscribe();
+		this.$locationOrders.unsubscribe();
 	}
 }

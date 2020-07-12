@@ -75,7 +75,13 @@
 			"ADDRESS": "כתובת",
 			"LOGO": "סֵמֶל"
 		},
+		"TRACK_ORDER": "עקוב אחר הסדר",
 		"TRACK_CARRIER": "עקוב אחר ספק",
+		"DELIVERY_TRACKING": "מעקב משלוחים",
+		"CARRIER": "מנשא",
+		"STORE": "חנות",
+		"DELIVERY_COUNT": "ספירת משלוחים",
+		"CUSTOMER": "צרכן",
 		"CARRIERS": "ספקים",
 		"ADD_CARRIERS": "הוסף ספקים",
 		"IMAGE": "תמונה",
@@ -161,6 +167,21 @@
 					"PHONE_MUST_CONTAINS_ONLY(special_signs)AND_DIGIT_CHARACTER": "מספר הטלפון יכול להתחיל עם '+' והוא חייב להכיל רק: ',,., (רווח), #' 'ותווים ספרותיים"
 				}
 			}
+		},
+		"PROMOTIONS": {
+			"PROMOTIONS": "מבצעים",
+			"BASIC_INFO": "מידע בסיסי",
+			"TITLE": "כותרת",
+			"ACTIVE_FROM": "פעיל מ-",
+			"ACTIVE_TO": "פעיל ל",
+			"PURCHASES_COUNT": "ספירת רכישות",
+			"IS_ACTIVE": "פעיל",
+			"SELECT_DATE": "בחר תאריך",
+			"DESCRIPTION": "תיאור",
+			"SAVE": "לשמור",
+			"NEXT": "הַבָּא",
+			"BACK": "חזור",
+			"LANGUAGE": "שפה"
 		},
 		"SELECT LANGUAGE": {
 			"USA": "ארה'ב",
@@ -289,7 +310,8 @@
 			"BULGARIAN": "בולגרית",
 			"OPTIONAL": "אופציונאלי",
 			"TAKEAWAY": "להסיר",
-			"DELIVERY": "משלוח"
+			"DELIVERY": "משלוח",
+			"PRODUCT_AVAILABILITY": "זמינות מוצר"
 		},
 		"NEW_ORDER_VIEW": {
 			"NEW_MANUAL_ORDER": "סדר ידני חדש",
@@ -412,6 +434,11 @@
 	"ORDER_TITLE_COMPONENT": {
 		"ORDER": "להזמין",
 		"FROM": "מ"
+	},
+	"ORDER_TYPE": {
+		"TYPE": ":סוג הזמנה",
+		"DELIVERY": "מְסִירָה",
+		"TAKEAWAY": "להסיר"
 	},
 	"TRACK_ORDER_POP_UP": {
 		"CARRIER": "המוביל",

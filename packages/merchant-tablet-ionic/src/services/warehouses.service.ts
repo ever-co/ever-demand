@@ -229,6 +229,10 @@ export class WarehousesService {
 							usedCarriersIds
 							contactEmail
 							contactPhone
+							orderCancelation {
+								enabled
+								onState
+							}
 							geoLocation {
 								city
 								streetAddress
@@ -237,6 +241,24 @@ export class WarehousesService {
 									coordinates
 								}
 							}
+						}
+					}
+				`,
+				variables: { id },
+			})
+			.pipe(
+				map((res) => res.data['warehouse']),
+				share()
+			);
+	}
+
+	getWarehouseOrderProcess(id: string) {
+		return this._apollo
+			.query({
+				query: gql`
+					query GetWarehouseOrderProcess($id: String!) {
+						warehouse(id: $id) {
+							ordersShortProcess
 						}
 					}
 				`,

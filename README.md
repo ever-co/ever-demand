@@ -1,12 +1,9 @@
-#### **_ Update: If you are running any business or doing freelance, check our new project [Gauzy](https://github.com/ever-co/gauzy) _**
-
-#### !!! Hiring: remote TypeScript / NestJS / Angular developers. Send CV to jobs@ever.co !!!
-
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ever-co/ever)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/ever)
 [![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/ever-co/ever?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/evereq?utm_source=github&utm_medium=button&utm_term=evereq&utm_campaign=github)
 
-# Open-Source On-Demand Commerce Platform
+# Open-Source Commerce Platform for On-Demand Economy and Digital Marketplaces
 
 [Ever](https://ever.co)® is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform built with [TypeScript](http://www.typescriptlang.org).
 
@@ -57,7 +54,7 @@ Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_wi
 ## Technology Stack and Requirements
 
 -   [TypeScript](https://www.typescriptlang.org) language
--   [Node.js](https://nodejs.org)
+-   [NodeJs](https://nodejs.org) / [NestJs](https://github.com/nestjs/nest)
 -   [Ionic](https://ionicframework.com) (version 5) for Shopping Mobile App, Carrier Mobile App and Merchant Tablet App
 -   Shopping Website developed with [Angular](https://angular.io) (version 9.1) using [Angular Starter](https://github.com/gdi2290/angular-starter)
 -   Admin Website developed with [Angular](https://angular.io) (version 9.1) using [ngx-admin](https://github.com/akveo/ngx-admin)
@@ -148,7 +145,7 @@ The command above install all required packages for every sub-project of the Eve
 
 Note: if above command fails for any reason, you can try to install required packages manually by running `yarn` inside every sub-folder with 'package.json' file.
 
-After Lerna boostrap everything you need to run build for all projecs as described above in the "Build" section.
+After Lerna bootstrap everything you need to run build for all projects as described above in the "Build" section.
 
 ### MongoDB
 
@@ -222,6 +219,7 @@ According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform tod
 -   [Kyle Kitlinski](https://github.com/K-Kit)
 -   [Milena Dimova](https://www.linkedin.com/in/dimova-milena-31010414) (UI/UX Designer)
 -   [Rachit Magon](https://github.com/rmagon)
+-   [Surya Singh](https://github.com/suryasingh)
 
 View full list of our [contributors](https://github.com/ever-co/ever/graphs/contributors).
 
@@ -280,6 +278,6 @@ All other brand and product names are trademarks, registered trademarks or servi
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fever.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fever?ref=badge_shield)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io)
 
-#### **_ Update: If you are running any business or doing freelance, check our new project [Gauzy](https://github.com/ever-co/gauzy) _**
-
-#### !!! Hiring: remote TypeScript / NestJS / Angular developers. Send CV to jobs@ever.co !!!
+## P.S.
+- If you are running any business or doing freelance, check our new project [Gauzy](https://github.com/ever-co/gauzy)
+- [We are Hiring: remote TypeScript / NestJS / Angular developers](https://github.com/ever-co/jobs#available-positions)

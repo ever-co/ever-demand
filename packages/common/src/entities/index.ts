@@ -13,3 +13,4 @@ export * from './User';
 export * from './UserOrder';
 export * from './Warehouse';
 export * from './WarehouseProduct';
+export * from './Promotion';

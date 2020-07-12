@@ -50,6 +50,31 @@ select {
 		}
 	}
 
+	.notes {
+		cursor: pointer;
+		font-size: 13px;
+		position: relative;
+		margin-top: 10px;
+		color: #eee;
+		border: none;
+
+		&.notes-ltr {
+			margin-left: -30px;
+
+			.description {
+				right: 5px;
+			}
+		}
+
+		&.notes-rtl {
+			margin-left: -15px;
+
+			.description {
+				left: 8px;
+			}
+		}
+	}
+
 	.apartment {
 		&.apartment-ltr {
 			padding-left: 5px;

@@ -75,7 +75,13 @@
 			"ADDRESS": "Адрес",
 			"LOGO": "Лого"
 		},
+		"TRACK_ORDER": "Проследяване на поръчка",
 		"TRACK_CARRIER": "Проследяване на доставчика",
+		"DELIVERY_TRACKING": "Проследяване на доставките",
+		"CARRIER": "Доставчик",
+		"STORE": "Магазин",
+		"DELIVERY_COUNT": "Брой на доставките:",
+		"CUSTOMER": "Клиент",
 		"CARRIERS": "Куриери",
 		"ADD_CARRIERS": "Добавяне на превозвачи",
 		"IMAGE": "Изображение",
@@ -161,6 +167,21 @@
 					"PHONE_MUST_CONTAINS_ONLY(special_signs)AND_DIGIT_CHARACTER": "Телефонният номер може да започва с '+' и трябва да съдържа само само: '-,., (Интервал), #' и цифри"
 				}
 			}
+		},
+		"PROMOTIONS": {
+			"PROMOTIONS": "Промоции",
+			"BASIC_INFO": "Основна информация",
+			"TITLE": "Заглавие",
+			"ACTIVE_FROM": "Активна от",
+			"ACTIVE_TO": "Активна до",
+			"PURCHASES_COUNT": "Брой покупки",
+			"IS_ACTIVE": "Активна",
+			"SELECT_DATE": "Изберете дата",
+			"DESCRIPTION": "Описание",
+			"SAVE": "Запази",
+			"NEXT": "Нататък",
+			"BACK": "Обратно",
+			"LANGUAGE": "Език"
 		},
 		"SELECT LANGUAGE": {
 			"USA": "САЩ",
@@ -288,7 +309,8 @@
 			"BULGARIAN": "Български",
 			"OPTIONAL": "по избор",
 			"DELIVERY": "Доставка",
-			"TAKEAWAY": "Вземи на място"
+			"TAKEAWAY": "Вземи на място",
+			"PRODUCT_AVAILABILITY": "Наличност на продукта"
 		},
 		"NEW_ORDER_VIEW": {
 			"NEW_MANUAL_ORDER": "Нова ръчна поръчка",
@@ -401,6 +423,11 @@
 	"ORDER_TITLE_COMPONENT": {
 		"ORDER": "Поръчка",
 		"FROM": "от"
+	},
+	"ORDER_TYPE": {
+		"TYPE": "Тип на поръчката:",
+		"DELIVERY": "Доставка",
+		"TAKEAWAY": "За вкъщи"
 	},
 	"TRACK_ORDER_POP_UP": {
 		"CARRIER": "носител",

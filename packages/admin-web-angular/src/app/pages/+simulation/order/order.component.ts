@@ -30,6 +30,7 @@ export class SimulationOrderComponent implements OnDestroy, OnInit {
 	public delivered: boolean;
 
 	private _ngDestroy$ = new Subject<void>();
+	slideImages: any;
 
 	constructor(
 		private readonly _translateService: TranslateService,
@@ -40,6 +41,7 @@ export class SimulationOrderComponent implements OnDestroy, OnInit {
 		if (!this._getStartDate) {
 			this._setStartDate = new Date();
 		}
+		this.getSlideImage(this.order);
 	}
 
 	getSlideImage(order: Order) {
@@ -50,12 +52,13 @@ export class SimulationOrderComponent implements OnDestroy, OnInit {
 				title: this._localeTranslate.getTranslate(
 					p.product.description
 				),
-				backgroundSize: 'contain',
-				backgroundPosition: 'center',
+				style: {
+					height: '100%',
+				},
 			};
 		});
 
-		return images;
+		this.slideImages = images;
 	}
 
 	private get _getStartDate() {
