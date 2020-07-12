@@ -379,7 +379,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 				const obj = (await this.Model.findByIdAndUpdate(
 					objectId,
 					updateObj as any,
-					{ new: true }
+					{ new: true, strict: false }
 				)
 					.lean()
 					.exec()) as RawObject<T>;

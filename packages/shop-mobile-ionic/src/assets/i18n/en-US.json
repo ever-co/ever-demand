@@ -76,6 +76,9 @@
 	"LANGUAGE_VIEW": {
 		"TITLE": "Select Language"
 	},
+	"ADDRESSES_VIEW": {
+		"TITLE": "Current Addresses"
+	},
 	"BUY_POPUP": {
 		"ORDER_PAID": "The order is paid $",
 		"CANCEL": {
@@ -172,7 +175,8 @@
 			"SETTINGS": {
 				"DIVER_TITLE": "Settings",
 				"ITEMS": {
-					"LANGUAGE": "Language"
+					"LANGUAGE": "Language",
+					"ADDRESSES": "Addresses"
 				}
 			},
 			"INFO": {

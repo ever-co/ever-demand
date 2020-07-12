@@ -3,6 +3,8 @@ type User {
 	id: String!
 	geoLocation: GeoLocation!
 	apartment: String!
+	addresses: [UserOtherAddresses!]!
+
 	firstName: String
 	lastName: String
 	email: String
@@ -119,6 +121,33 @@ input UserUpdateObjectInput {
 	devicesIds: [String!]
 	apartment: String
 	stripeCustomerId: String
+	addresses: [UserOtherAddressesInput]
+}
+
+input UserOtherAddressesInput {
+	locality: String
+	street_number: String
+	house: String
+	apartment: String
+	country: String
+	postal_code: String
+	address_name: String
+	latitude: String
+	longitude: String
+	isPrimaryAddress: Boolean
+}
+
+type UserOtherAddresses {
+	locality: String
+	street_number: String
+	house: String
+	apartment: String
+	country: String
+	postal_code: String
+	address_name: String
+	latitude: String
+	longitude: String
+	isPrimaryAddress: Boolean
 }
 
 input PagingOptionsInput {

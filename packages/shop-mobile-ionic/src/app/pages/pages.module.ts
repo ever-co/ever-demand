@@ -83,6 +83,14 @@ const routes: Routes = [
 		canLoad: [MerchantsPageModuleGuard],
 	},
 	{
+		path: 'user-locations',
+		loadChildren: () =>
+			import('./user-locations/user-locations.module').then(
+				(m) => m.UserLocationsPageModule
+			),
+		canLoad: [MerchantsPageModuleGuard],
+	},
+	{
 		path: '',
 		pathMatch: 'full',
 		redirectTo: 'invite',
