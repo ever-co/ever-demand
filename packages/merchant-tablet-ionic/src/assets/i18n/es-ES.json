@@ -466,5 +466,9 @@
 	},
 	"NO_SERVER_VIEW": {
 		"NO_SERVER": "Sin conexión con el Servidor."
+	},
+	"PROMOTIONS": {
+		"PROMO_PRICE": "Precio promocional",
+		"NO_PROMOTIONS": "No hay promociones"
 	}
 }

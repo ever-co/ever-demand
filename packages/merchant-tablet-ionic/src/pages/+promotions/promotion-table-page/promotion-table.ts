@@ -159,6 +159,10 @@ export class PromotionTable implements OnInit, OnDestroy {
 		});
 
 		await modal.present();
+
+		await modal.onDidDismiss();
+
+		this._loadPromotions();
 	}
 
 	async deletePromotion(event: any) {

@@ -455,5 +455,9 @@
 	},
 	"NO_SERVER_VIEW": {
 		"NO_SERVER": "Няма връзка със сървъра"
+	},
+	"PROMOTIONS": {
+		"PROMO_PRICE": "Промо цена",
+		"NO_PROMOTIONS": "Няма промоции"
 	}
 }
