@@ -17,7 +17,7 @@
 			"ADD_PRODUCTS": "Добавить продукты",
 			"REMOVE_PRODUCTS": "Удалить продукты",
 			"CANCEL_ORDER": "Отменить заказ",
-			"THE_ORDER_IS_CANCEL": "Заказ отменяется",
+			"THE_ORDER_IS_CANCELED": "Заказ отменяется",
 			"THE_ORDER_IS_GIVEN_TO_CARRIER": "Заказ предоставляется перевозчику.",
 			"THE_ORDER_IS_DELIVERED": "Заказ доставляется.",
 			"ADD_PRODUCTS_MODAL": "Добавить продукты",
@@ -565,7 +565,7 @@
 			"AVAILABILITY": "Доступность",
 			"TYPE": "Тип",
 			"DELIVERY": "Доставка",
-			"TAKEAWAY": "Навынос"			
+			"TAKEAWAY": "Навынос"
 		},
 		"NEW_PRODUCT_TYPE": "Новый тип продукта",
 		"ADD_PRODUCTS": "Добавить продукты",
