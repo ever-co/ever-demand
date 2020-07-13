@@ -87,7 +87,6 @@ export class UsersService extends DBService<User>
 		protected _storesService: WarehousesService
 	) {
 		super();
-
 		// TODO: too many hardcoded constants used below. Refactor!
 		this.watchedFiles = _.zipObject(
 			['aboutUs', 'privacy', 'termsOfUse'],
@@ -96,7 +95,7 @@ export class UsersService extends DBService<User>
 					['en-US', 'he-IL', 'ru-RU', 'bg-BG'],
 					_.map(['en-US', 'he-IL', 'ru-RU', 'bg-BG'], (language) =>
 						observeFile(
-							`${__dirname}/../../../res/templates/${folder}/${language}.hbs`
+							`${__dirname}/../../../../res/templates/${folder}/${language}.hbs`
 						).pipe(
 							tap({ error: (err) => this.log.error(err) }),
 							publishReplay(1),
@@ -499,6 +498,10 @@ export class UsersService extends DBService<User>
 			),
 			switchMap((device) => this.watchedFiles.termsOfUse[device.language])
 		);
+	}
+	@observableListener()
+	getTermsOfUseByLanguage(selectedLanguage: string): Observable<string> {
+		return this.watchedFiles.termsOfUse[selectedLanguage];
 	}
 
 	/**

@@ -19,20 +19,6 @@ const routes: Routes = [
 				(m) => m.PromotionTableModule
 			),
 	},
-	// {
-	// 	path: 'create',
-	// 	loadChildren: () =>
-	// 		import('./promotion-form/promotion-form.module').then(
-	// 			(m) => m.PromotionFormModule
-	// 		),
-	// },
-	// {
-	// 	path: 'edit',
-	// 	loadChildren: () =>
-	// 		import('./promotion-form/promotion-form.module').then(
-	// 			(m) => m.PromotionFormModule
-	// 		),
-	// },
 ];
 
 @NgModule({

@@ -42,6 +42,7 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 	selectOptionsObj: object;
 	takaProductDelivery: boolean = true;
 	takaProductTakeaway: boolean;
+	isAvailable: boolean;
 
 	@Input()
 	warehouseProduct: WarehouseProduct;
@@ -64,6 +65,7 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 
 	constructor(
 		// public navParams: NavParams,
+		private warehouseProductRouter: WarehouseProductsRouter,
 		private productRouter: ProductRouter,
 		private warehouseProductsRouter: WarehouseProductsRouter,
 		private readonly _productsCategorySrvice: ProductsCategoryService,
@@ -193,6 +195,7 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 	}
 
 	async ngOnInit() {
+		this.isAvailable = this.warehouseProduct.isProductAvailable;
 		this.product = this.warehouseProduct.product as Product;
 		this.lastProductCount = this.warehouseProduct.count;
 		this.lastProductPrice = this.warehouseProduct.price;
@@ -421,6 +424,7 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 			this.warehouseProduct.product = product.id;
 			this.warehouseProduct.isDeliveryRequired = this.takaProductDelivery;
 			this.warehouseProduct.isTakeaway = this.takaProductTakeaway;
+			this.warehouseProduct.isProductAvailable = this.isAvailable;
 
 			this.warehouseProductsRouter
 				.saveUpdated(this.warehouseId, this.warehouseProduct)
@@ -471,5 +475,14 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 	private createFileName() {
 		const newFileName = new Date().getTime() + '.jpg';
 		return newFileName;
+	}
+
+	async clickHandler() {
+		this.isAvailable != this.isAvailable;
+		await this.warehouseProductRouter.changeProductAvailability(
+			this.warehouseId,
+			this.warehouseProduct.productId,
+			this.isAvailable
+		);
 	}
 }

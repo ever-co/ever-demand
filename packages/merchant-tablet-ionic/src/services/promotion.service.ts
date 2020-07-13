@@ -59,4 +59,18 @@ export class PromotionService {
 				share()
 			);
 	}
+
+	removeByIds(ids: string[]) {
+		return this.apollo.mutate({
+			mutation: gql`
+				mutation RemoveByIds($ids: [String!]!) {
+					removePromotionsByIds(ids: $ids) {
+						ok
+						n
+					}
+				}
+			`,
+			variables: { ids },
+		});
+	}
 }
