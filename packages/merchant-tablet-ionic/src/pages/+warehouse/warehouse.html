@@ -27,11 +27,11 @@
 						}"
 						>
 							<ion-select
-								[interfaceOptions]="keys(statuses)"
+								interface="popover"
 								[placeholder]="'WAREHOUSE_VIEW.SWITCH_ORDERS' | translate"
 								(ionChange)="switchOrders(true, $event); showAllProducts = false;"
 							>
-								<ion-select-option value="relevant"
+								<ion-select-option value="relevant" selected
 									>{{ 'WAREHOUSE_VIEW.RELEVANT' | translate
 									}}</ion-select-option
 								>
