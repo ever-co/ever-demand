@@ -17,7 +17,7 @@
 			"ADD_PRODUCTS": "Добавить товары",
 			"REMOVE_PRODUCTS": "Удалить товары",
 			"CANCEL_ORDER": "Отменить заказ",
-			"THE_ORDER_IS_CANCEL": "Ордер отменен",
+			"THE_ORDER_IS_CANCELED": "Заказ отменен",
 			"THE_ORDER_IS_GIVEN_TO_CARRIER": "Заказ выдан перевозчику.",
 			"THE_ORDER_IS_DELIVERED": "Заказ доставлен.",
 			"ADD_PRODUCTS_MODAL": "Добавить товары",
