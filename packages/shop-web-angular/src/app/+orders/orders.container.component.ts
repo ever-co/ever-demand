@@ -11,15 +11,12 @@ import { Store } from 'app/services/store';
 			*ngIf="!orders.length"
 			style="text-align:center; font-size:28px;margin:20px 0"
 		>
-			There is no orders ...
+			There are no orders ...
 		</div>
 	`,
 })
-export class OrdersContainerComponent {
-	// TODO: add correct type of orders variable!
+export class OrdersContainerComponent {	
 	public orders: Order[];
-	// public orders: Observable<Order[]>;
-	// public orders: Observable<IOrderProductInfo[]>;
 
 	constructor(
 		private readonly userOrdersRouter: UserOrdersRouter,
@@ -27,6 +24,7 @@ export class OrdersContainerComponent {
 		private readonly store: Store
 	) {
 		const userId = store.userId;
+
 		// During testing: this.userOrdersRouter.getOrderedProducts('23');
 		this.userOrdersRouter.get(userId).subscribe((res) => {
 			this.ngZone.run(() => {

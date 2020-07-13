@@ -76,6 +76,13 @@ export class UserRouter implements IUserRouter {
 		);
 	}
 
+	getTermsOfUseByLanguage(selectedLanguage: string): Observable<string> {
+		return this.router.runAndObserve<string>(
+			'getTermsOfUseByLanguage',
+			selectedLanguage
+		);
+	}
+
 	getPrivacy(userId: string, deviceId: string): Observable<string> {
 		return this.router.runAndObserve<string>(
 			'getPrivacy',
