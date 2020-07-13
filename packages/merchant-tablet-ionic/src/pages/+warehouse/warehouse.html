@@ -20,32 +20,32 @@
 				<div class="button-bar-right-container allowOverflow">
 					<div class="button-bar">
 						<a
-							class="button"
+							class="button switch"
 							[ngClass]="{
 							'button-dark-brand': showRelevant,
-							'button-brand': !showRelevant || !showAllProducts
+							'button-brand': !showAllProducts
 						}"
-							>{{ 'Switch Orders' }}</a
 						>
-						<div class="col-sm-6 dropdown">
-							<select
-								class="form-control"
-								(change)="switchOrders(true, $event); showAllProducts = false;"
+							<ion-select
+								[interfaceOptions]="keys(statuses)"
+								[placeholder]="'WAREHOUSE_VIEW.SWITCH_ORDERS' | translate"
+								(ionChange)="switchOrders(true, $event); showAllProducts = false;"
 							>
-								<option value="relevant" selected
+								<ion-select-option value="relevant"
 									>{{ 'WAREHOUSE_VIEW.RELEVANT' | translate
-									}}</option
+									}}</ion-select-option
 								>
-								<option
-									*ngFor="let status of keys(statuses)"
+								<ion-select-option
+									*ngFor="let status of keys(statuses) | skipStatus:orderStatus"
 									[value]="status"
 								>
 									{{
 									('WAREHOUSE_VIEW.ORDER_WAREHOUSE_STATUSES.'
 									+ statuses[status]) | translate }}
-								</option>
-							</select>
-						</div>
+								</ion-select-option>
+							</ion-select>
+						</a>
+
 						<a
 							class="button"
 							[ngClass]="{

@@ -578,6 +578,10 @@ export function getStoreOrdersFingObj(storeId: string, status: string) {
 			findObj['warehouseStatus'] = OrderWarehouseStatus.NoStatus;
 			findObj['isCancelled'] = false;
 			break;
+		case 'alocation_started':
+			findObj['warehouseStatus'] = OrderWarehouseStatus.AllocationStarted;
+			findObj['isCancelled'] = false;
+			break;
 		case 'ready_for_packaging':
 			findObj['warehouseStatus'] =
 				OrderWarehouseStatus.AllocationFinished;

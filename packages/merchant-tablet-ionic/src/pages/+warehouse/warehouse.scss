@@ -62,6 +62,18 @@
 			overflow: unset !important;
 			padding: 0 !important;
 		}
+		ion-select {
+			overflow: unset !important;
+			padding: 0 !important;
+		}
+		ion-select::part(placeholder),
+		ion-select::part(text) {
+			opacity: 1;
+			font-size: 13px;
+		}
+		ion-select::part(icon) {
+			opacity: 1;
+		}
 	}
 
 	.order-header {
