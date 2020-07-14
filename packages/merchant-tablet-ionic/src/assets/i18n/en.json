@@ -170,6 +170,7 @@
 		},
 		"PROMOTIONS": {
 			"PROMOTIONS": "Promotions",
+			"NO_PROMOTIONS": "No promotions",
 			"BASIC_INFO": "Basic Info",
 			"TITLE": "Title",
 			"ACTIVE_FROM": "Active from",

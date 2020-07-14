@@ -172,6 +172,7 @@
 		},
 		"PROMOTIONS": {
 			"PROMOTIONS": "Promociones",
+			"NO_PROMOTIONS": "Sin promociones",
 			"BASIC_INFO": "Información básica",
 			"TITLE": "Título",
 			"ACTIVE_FROM": "Activa desde",

@@ -170,6 +170,7 @@
 		},
 		"PROMOTIONS": {
 			"PROMOTIONS": "Акции",
+			"NO_PROMOTIONS": "Нет рекламных акций",
 			"BASIC_INFO": "Базовая информация",
 			"TITLE": "Заглавие",
 			"ACTIVE_FROM": "Активный от",
