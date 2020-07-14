@@ -9,7 +9,6 @@ import { AddressesComponent } from '../../components/carriers-table/addresses';
 import { StatusComponent } from '../../components/carriers-table/status';
 import { DeliveriesComponent } from '../../components/carriers-table/deliveries';
 import { ImageComponent } from '../../components/carriers-table/image';
-import { WarehouseCarriersRouter } from '@modules/client.common.angular2/routers/warehouse-carriers-router.service';
 import { Store } from '../../../src/services/store.service';
 import { ModalController } from '@ionic/angular';
 import { AddCarriersPopupPage } from './add-carriers-popup/add-carriers-popup';
