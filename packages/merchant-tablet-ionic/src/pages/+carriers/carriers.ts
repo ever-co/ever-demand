@@ -18,6 +18,8 @@ import { CarrierTrackPopup } from './carrier-track-popup/carrier-track-popup';
 import { Router } from '@angular/router';
 import { ConfirmDeletePopupPage } from 'components/confirm-delete-popup/confirm-delete-popup';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
+import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
+import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 
 @Component({
 	selector: 'page-carriers',
@@ -35,10 +37,11 @@ export class CarriersPage implements OnInit, OnDestroy {
 	constructor(
 		private readonly router: Router,
 		public modalCtrl: ModalController,
-		private readonly warehouseCarriersRouter: WarehouseCarriersRouter,
 		private readonly _translateService: TranslateService,
 		private readonly store: Store,
-		private warehouseRouter: WarehouseRouter
+		private warehouseRouter: WarehouseRouter,
+		private readonly carrierRouter: CarrierRouter,
+		private warehouseOrdersRouter: WarehouseOrdersRouter
 	) {}
 
 	get deviceId() {
@@ -128,18 +131,41 @@ export class CarriersPage implements OnInit, OnDestroy {
 			this.sourceSmartTable.load(carriersVM);
 		};
 
-		this.warehouseCarriersRouter
-			.get(this.warehouseId)
+		let usedCarriers = [];
+
+		this.warehouseOrdersRouter
+			.get(this.store.warehouseId)
 			.pipe(takeUntil(this._ngDestroy$))
-			.subscribe((carriers) => {
-				this.carriers = carriers;
-
-				loadData(this.carriers);
-
-				this.carriers.length === 0
-					? (this.showNoDeliveryIcon = true)
-					: (this.showNoDeliveryIcon = false);
+			.subscribe((orders) => {
+				orders = orders.filter((order) => order.isCancelled === false);
+				orders.forEach((o) => {
+					usedCarriers.push(o.carrier);
+				});
+				this.carrierRouter
+					.getAllActive()
+					.subscribe((carriers: Carrier[]) => {
+						this.carriers = carriers.filter((c: Carrier) =>
+							usedCarriers.includes(c.id)
+						);
+						loadData(this.carriers);
+						this.carriers.length === 0
+							? (this.showNoDeliveryIcon = true)
+							: (this.showNoDeliveryIcon = false);
+					});
 			});
+
+		// this.warehouseCarriersRouter
+		// 	.get(this.warehouseId)
+		// 	.pipe(takeUntil(this._ngDestroy$))
+		// 	.subscribe((carriers) => {
+		// 		this.carriers = carriers;
+
+		// 		loadData(this.carriers);
+
+		// 		this.carriers.length === 0
+		// 			? (this.showNoDeliveryIcon = true)
+		// 			: (this.showNoDeliveryIcon = false);
+		// 	});
 	}
 
 	goToTrackPage() {
