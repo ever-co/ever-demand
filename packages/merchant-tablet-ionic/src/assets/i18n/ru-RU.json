@@ -266,6 +266,12 @@
 		"SWITCH_ORDERS": "Переключение заказов",
 		"NEW_ORDER": "Новый порядок",
 		"PRODUCTS": "Лучшие продукты",
+		"ARE_YOU_SURE_TO_DELETE": "Вы уверены, что хотите этого",
+		"REMOVE": "Удалять",
+		"DELETE": "Удалить",
+		"THE_FOLLOWING_DATA": "следующие данные",
+		"CONFIRM": "Подтверждение",
+		"CANCEL": "Отмена",
 		"SELECT_POP_UP": {
 			"SELECT_CATEGORIES": "Выбрать категории",
 			"OK": "Хорошо",
@@ -465,5 +471,9 @@
 	},
 	"NO_SERVER_VIEW": {
 		"NO_SERVER": "Сервер упал"
+	},
+	"PROMOTIONS": {
+		"PROMO_PRICE": "Промо цена",
+		"NO_PROMOTIONS": "Нет Акции"
 	}
 }

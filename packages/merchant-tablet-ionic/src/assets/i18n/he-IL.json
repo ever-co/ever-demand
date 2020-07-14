@@ -266,6 +266,12 @@
 		"SWITCH_ORDERS": "החלף הזמנות",
 		"NEW_ORDER": "הזמנה חדשה",
 		"PRODUCTS": "מוצרים מובילים",
+		"ARE_YOU_SURE_TO_DELETE": "לְבַטֵל",
+		"REMOVE": "לְהַסִיר",
+		"DELETE": "לִמְחוֹק",
+		"THE_FOLLOWING_DATA": "הנתונים הבאים",
+		"CONFIRM": "לְאַשֵׁר",
+		"CANCEL": "לְבַטֵל",
 		"SELECT_POP_UP": {
 			"SELECT_CATEGORIES": "בחר קטגוריות",
 			"OK": "בסדר",
@@ -465,5 +471,9 @@
 	},
 	"NO_SERVER_VIEW": {
 		"NO_SERVER": "השרת נפל"
+	},
+	"PROMOTIONS": {
+		"PROMO_PRICE": "מחיר פרומו",
+		"NO_PROMOTIONS": "אין מבצעים"
 	}
 }

@@ -48,7 +48,7 @@ export class PromotionTable implements OnInit, OnDestroy {
 
 	private _loadPromotions() {
 		this.promotionsService
-			.getAll()
+			.getAll({ warehouse: localStorage.getItem('_warehouseId') || null })
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe((promotionsRes) => {
 				this.promotions = promotionsRes.promotions || [];
@@ -90,7 +90,10 @@ export class PromotionTable implements OnInit, OnDestroy {
 						},
 						active: {
 							title: TRANSLATE_DATA.STATUS,
-							type: 'boolean',
+							type: 'html',
+							valuePrepareFunction: (active) => {
+								return `<span>${active ? '✔' : '✘'}</span>`;
+							},
 						},
 						activeFrom: {
 							title: TRANSLATE_DATA.ACTIVE_FROM,
@@ -142,18 +145,33 @@ export class PromotionTable implements OnInit, OnDestroy {
 				activeFrom: promotion.activeFrom,
 				activeTo: promotion.activeTo,
 				purchasesCount: promotion.purchasesCount,
+				promotion: promotion,
 			};
 		});
 
 		this.sourceSmartTable.load(promotionsVM);
 	}
 
-	editPromotion() {}
+	async editPromotion(event: any) {
+		const modal = await this.modalCtrl.create({
+			component: PromotionMutation,
+			componentProps: { promotion: event.data.promotion },
+		});
+
+		await modal.present();
+
+		await modal.onDidDismiss();
+
+		this._loadPromotions();
+	}
 
 	async deletePromotion(event: any) {
 		const modal = await this.modalCtrl.create({
 			component: ConfirmDeletePopupPage,
-			componentProps: { data: event.data },
+			componentProps: {
+				data: event.data,
+				customText: `Promotion: ${event.data.title || '-'}`,
+			},
 			cssClass: 'confirm-delete-wrapper',
 		});
 
