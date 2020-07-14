@@ -261,6 +261,7 @@
 		"ALL": "Всички",
 		"LOADING_MORE_DATA": "Още данни се зареждат ...",
 		"ORDERS": "Поръчки",
+		"SWITCH_ORDERS": "Филтрирай Поръчките",
 		"NEW_ORDER": "Нова поръчка",
 		"PRODUCTS": "Топ Продукти",
 		"SELECT_POP_UP": {
@@ -269,6 +270,8 @@
 			"CANCEL": "ОТКАЗ"
 		},
 		"ORDER_WAREHOUSE_STATUSES": {
+			"ALL": "Всички",
+			"CANCELLED": "Отменени",
 			"CREATED": "Създаден",
 			"CONFIRMED": "Потвърдено",
 			"PROCESSING": "Обработване",

@@ -262,6 +262,7 @@
 		"ALL": "Все",
 		"LOADING_MORE_DATA": "Загрузка дополнительных данных ...",
 		"ORDERS": "Заказы",
+		"SWITCH_ORDERS": "Переключение заказов",
 		"NEW_ORDER": "Новый порядок",
 		"PRODUCTS": "Лучшие продукты",
 		"SELECT_POP_UP": {
@@ -270,6 +271,8 @@
 			"CANCEL": "ОТМЕНИТЬ"
 		},
 		"ORDER_WAREHOUSE_STATUSES": {
+			"ALL": "Все",
+			"CANCELLED": "Отменен",
 			"CREATED": "Созданный",
 			"CONFIRMED": "Подтвердил",
 			"PROCESSING": "Обработка",
