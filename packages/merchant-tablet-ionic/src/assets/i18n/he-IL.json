@@ -170,6 +170,7 @@
 		},
 		"PROMOTIONS": {
 			"PROMOTIONS": "מבצעים",
+			"NO_PROMOTIONS": "אין מבצעים",
 			"BASIC_INFO": "מידע בסיסי",
 			"TITLE": "כותרת",
 			"ACTIVE_FROM": "פעיל מ-",
