@@ -172,6 +172,7 @@
 		},
 		"PROMOTIONS": {
 			"PROMOTIONS": "Promociones",
+			"NO_PROMOTIONS": "Sin promociones",
 			"BASIC_INFO": "Información básica",
 			"TITLE": "Título",
 			"ACTIVE_FROM": "Activa desde",
@@ -264,6 +265,7 @@
 		"ALL": "Todo",
 		"LOADING_MORE_DATA": "Cargando mas datos...",
 		"ORDERS": "Pedidos",
+		"SWITCH_ORDERS": "Órdenes de cambio",
 		"NEW_ORDER": "Nuevo Pedido",
 		"PRODUCTS": "Productos Top",
 		"ARE_YOU_SURE_TO_DELETE": "Estás seguro que quieres",
@@ -278,6 +280,8 @@
 			"CANCEL": "CANCELAR"
 		},
 		"ORDER_WAREHOUSE_STATUSES": {
+			"ALL": "Todas",
+			"CANCELLED": "Cancelado",
 			"CREATED": "Creado",
 			"CONFIRMED": "Confirmado",
 			"PROCESSING": "Procesando",
@@ -320,7 +324,8 @@
 			"ESPAÑOL": "Español",
 			"OPTIONAL": "Opcional",
 			"TAKEAWAY": "Retirar",
-			"DELIVERY": "Repartir"
+			"DELIVERY": "Repartir",
+			"PRODUCT_AVAILABILITY": "Disponibilidad de producto"
 		},
 		"NEW_ORDER_VIEW": {
 			"NEW_MANUAL_ORDER": "Nuevo Pedido Manual",

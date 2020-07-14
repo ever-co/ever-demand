@@ -170,6 +170,7 @@
 		},
 		"PROMOTIONS": {
 			"PROMOTIONS": "מבצעים",
+			"NO_PROMOTIONS": "אין מבצעים",
 			"BASIC_INFO": "מידע בסיסי",
 			"TITLE": "כותרת",
 			"ACTIVE_FROM": "פעיל מ-",
@@ -262,6 +263,7 @@
 		"ALL": "את כל",
 		"LOADING_MORE_DATA": "טוען נתונים נוספים ...",
 		"ORDERS": "הזמנות",
+		"SWITCH_ORDERS": "החלף הזמנות",
 		"NEW_ORDER": "הזמנה חדשה",
 		"PRODUCTS": "מוצרים מובילים",
 		"ARE_YOU_SURE_TO_DELETE": "לְבַטֵל",
@@ -276,6 +278,8 @@
 			"CANCEL": "בטל"
 		},
 		"ORDER_WAREHOUSE_STATUSES": {
+			"ALL": "את כל",
+			"CANCELLED": "מבוטל",
 			"CREATED": "נוצר",
 			"CONFIRMED": "מְאוּשָׁר",
 			"PROCESSING": "מעבד",
@@ -316,7 +320,8 @@
 			"BULGARIAN": "בולגרית",
 			"OPTIONAL": "אופציונאלי",
 			"TAKEAWAY": "להסיר",
-			"DELIVERY": "משלוח"
+			"DELIVERY": "משלוח",
+			"PRODUCT_AVAILABILITY": "זמינות מוצר"
 		},
 		"NEW_ORDER_VIEW": {
 			"NEW_MANUAL_ORDER": "סדר ידני חדש",

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, NgZone } from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import {
 	animate,
@@ -64,7 +64,8 @@ export class OrderComponent implements OnInit {
 		private readonly carrierRouter: CarrierRouter,
 		private readonly _productLocalesService: ProductLocalesService,
 		private translateService: TranslateService,
-		private dialog: MatDialog
+		private dialog: MatDialog,
+		private readonly ngZone: NgZone
 	) {}
 
 	openDialog(): void {
@@ -119,12 +120,14 @@ export class OrderComponent implements OnInit {
 			.get(this.order.warehouseId, false)
 			.pipe(first())
 			.subscribe((store) => {
-				this.warehouse = store;
+				this.ngZone.run(() => {
+					this.warehouse = store;
 
-				this.orderCancelationCheck(
-					this.warehouse.orderCancelation,
-					this.order
-				);
+					this.orderCancelationCheck(
+						this.warehouse.orderCancelation,
+						this.order
+					);
+				});
 			});
 
 		if (this.order.carrierId) {

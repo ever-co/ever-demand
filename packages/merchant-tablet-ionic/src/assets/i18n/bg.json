@@ -170,6 +170,7 @@
 		},
 		"PROMOTIONS": {
 			"PROMOTIONS": "Промоции",
+			"NO_PROMOTIONS": "Няма промоции",
 			"BASIC_INFO": "Основна информация",
 			"TITLE": "Заглавие",
 			"ACTIVE_FROM": "Активна от",
@@ -261,6 +262,7 @@
 		"ALL": "Всички",
 		"LOADING_MORE_DATA": "Още данни се зареждат ...",
 		"ORDERS": "Поръчки",
+		"SWITCH_ORDERS": "Филтрирай Поръчките",
 		"NEW_ORDER": "Нова поръчка",
 		"PRODUCTS": "Топ Продукти",
 		"ARE_YOU_SURE_TO_DELETE": "Сигурни ли сте, че искате да изтриете ",
@@ -275,6 +277,8 @@
 			"CANCEL": "ОТКАЗ"
 		},
 		"ORDER_WAREHOUSE_STATUSES": {
+			"ALL": "Всички",
+			"CANCELLED": "Отменени",
 			"CREATED": "Създаден",
 			"CONFIRMED": "Потвърдено",
 			"PROCESSING": "Обработване",
@@ -315,7 +319,8 @@
 			"BULGARIAN": "Български",
 			"OPTIONAL": "по избор",
 			"DELIVERY": "Доставка",
-			"TAKEAWAY": "Вземи на място"
+			"TAKEAWAY": "Вземи на място",
+			"PRODUCT_AVAILABILITY": "Наличност на продукта"
 		},
 		"NEW_ORDER_VIEW": {
 			"NEW_MANUAL_ORDER": "Нова ръчна поръчка",

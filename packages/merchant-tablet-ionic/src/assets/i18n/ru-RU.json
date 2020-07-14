@@ -170,6 +170,7 @@
 		},
 		"PROMOTIONS": {
 			"PROMOTIONS": "Акции",
+			"NO_PROMOTIONS": "Нет рекламных акций",
 			"BASIC_INFO": "Базовая информация",
 			"TITLE": "Заглавие",
 			"ACTIVE_FROM": "Активный от",
@@ -262,6 +263,7 @@
 		"ALL": "Все",
 		"LOADING_MORE_DATA": "Загрузка дополнительных данных ...",
 		"ORDERS": "Заказы",
+		"SWITCH_ORDERS": "Переключение заказов",
 		"NEW_ORDER": "Новый порядок",
 		"PRODUCTS": "Лучшие продукты",
 		"ARE_YOU_SURE_TO_DELETE": "Вы уверены, что хотите этого",
@@ -276,6 +278,8 @@
 			"CANCEL": "ОТМЕНИТЬ"
 		},
 		"ORDER_WAREHOUSE_STATUSES": {
+			"ALL": "Все",
+			"CANCELLED": "Отменен",
 			"CREATED": "Созданный",
 			"CONFIRMED": "Подтвердил",
 			"PROCESSING": "Обработка",
@@ -316,7 +320,8 @@
 			"BULGARIAN": "Болгарский",
 			"OPTIONAL": "необязательный",
 			"TAKEAWAY": "Навынос",
-			"DELIVERY": "Доставка"
+			"DELIVERY": "Доставка",
+			"PRODUCT_AVAILABILITY": "Доступность продукта"
 		},
 		"NEW_ORDER_VIEW": {
 			"NEW_MANUAL_ORDER": "Новый ручной порядок",
