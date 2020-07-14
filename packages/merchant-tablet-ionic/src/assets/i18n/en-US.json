@@ -264,6 +264,7 @@
 		"ALL": "All",
 		"LOADING_MORE_DATA": "Loading more data...",
 		"ORDERS": "Orders",
+		"SWITCH_ORDERS": "Switch Orders",
 		"NEW_ORDER": "New Order",
 		"PRODUCTS": "Top Products",
 		"SELECT_POP_UP": {
@@ -272,6 +273,8 @@
 			"CANCEL": "CANCEL"
 		},
 		"ORDER_WAREHOUSE_STATUSES": {
+			"ALL": "All",
+			"CANCELLED": "Cancelled",
 			"CREATED": "Created",
 			"CONFIRMED": "Confirmed",
 			"PROCESSING": "Processing",

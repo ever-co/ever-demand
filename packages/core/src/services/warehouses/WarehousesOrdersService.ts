@@ -578,6 +578,28 @@ export function getStoreOrdersFingObj(storeId: string, status: string) {
 			findObj['warehouseStatus'] = OrderWarehouseStatus.NoStatus;
 			findObj['isCancelled'] = false;
 			break;
+		case 'alocation_started':
+			findObj['warehouseStatus'] = OrderWarehouseStatus.AllocationStarted;
+			findObj['isCancelled'] = false;
+			break;
+		case 'ready_for_packaging':
+			findObj['warehouseStatus'] =
+				OrderWarehouseStatus.AllocationFinished;
+			findObj['isCancelled'] = false;
+			break;
+		case 'processing':
+			findObj['warehouseStatus'] =
+				OrderWarehouseStatus.WarehouseStartedProcessing;
+			findObj['isCancelled'] = false;
+			break;
+		case 'packaging':
+			findObj['warehouseStatus'] = OrderWarehouseStatus.PackagingStarted;
+			findObj['isCancelled'] = false;
+			break;
+		case 'packaged':
+			findObj['warehouseStatus'] = OrderWarehouseStatus.PackagingFinished;
+			findObj['isCancelled'] = false;
+			break;
 		case 'not_paid':
 			findObj['isPaid'] = false;
 			break;

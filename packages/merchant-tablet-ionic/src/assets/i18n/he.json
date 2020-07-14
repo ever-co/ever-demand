@@ -262,6 +262,7 @@
 		"ALL": "את כל",
 		"LOADING_MORE_DATA": "טוען נתונים נוספים ...",
 		"ORDERS": "הזמנות",
+		"SWITCH_ORDERS": "החלף הזמנות",
 		"NEW_ORDER": "הזמנה חדשה",
 		"PRODUCTS": "מוצרים מובילים",
 		"SELECT_POP_UP": {
@@ -270,6 +271,8 @@
 			"CANCEL": "בטל"
 		},
 		"ORDER_WAREHOUSE_STATUSES": {
+			"ALL": "את כל",
+			"CANCELLED": "מבוטל",
 			"CREATED": "נוצר",
 			"CONFIRMED": "מְאוּשָׁר",
 			"PROCESSING": "מעבד",
