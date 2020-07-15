@@ -166,6 +166,7 @@
 		},
 		"PROMOTIONS": {
 			"PROMOTIONS": "Promociones",
+			"NO_PROMOTIONS": "Sin promociones",
 			"BASIC_INFO": "Información básica",
 			"TITLE": "Título",
 			"ACTIVE_FROM": "Activa desde",
@@ -258,14 +259,23 @@
 		"ALL": "Todo",
 		"LOADING_MORE_DATA": "Cargando mas datos...",
 		"ORDERS": "Pedidos",
+		"SWITCH_ORDERS": "Órdenes de cambio",
 		"NEW_ORDER": "Nuevo Pedido",
 		"PRODUCTS": "Productos Top",
+		"ARE_YOU_SURE_TO_DELETE": "Estás seguro que quieres",
+		"REMOVE": "Eliminar",
+		"DELETE": "Eliminar",
+		"THE_FOLLOWING_DATA": "los siguientes datos",
+		"CONFIRM": "Confirmar",
+		"CANCEL": "Cancelar",
 		"SELECT_POP_UP": {
 			"SELECT_CATEGORIES": "Seleccionar Categorías",
 			"OK": "OK",
 			"CANCEL": "CANCELAR"
 		},
 		"ORDER_WAREHOUSE_STATUSES": {
+			"ALL": "Todas",
+			"CANCELLED": "Cancelado",
 			"CREATED": "Creado",
 			"CONFIRMED": "Confirmado",
 			"PROCESSING": "Procesando",
@@ -454,5 +464,9 @@
 	},
 	"NO_SERVER_VIEW": {
 		"NO_SERVER": "Sin conexión con el Servidor."
+	},
+	"PROMOTIONS": {
+		"PROMO_PRICE": "Precio promocional",
+		"NO_PROMOTIONS": "No hay promociones"
 	}
 }
