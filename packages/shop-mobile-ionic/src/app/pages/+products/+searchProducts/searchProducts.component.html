@@ -6,30 +6,8 @@
 		placeholder="Product or a shop name"
 		animated
 		debounce="500"
-		(ionChange)="loadProducts()"
+		(ionChange)="loadFullData()"
 	></ion-searchbar>
-
-	<!-- <ion-list class="merchants-list">
-    <ion-list-header class="p-0 mb-1">
-    </ion-list-header>
-    <div class="merchants-container">
-        <h5 *ngIf="searchResultMerchants?.length === 0" class="not-found-text">
-            ne e namereno
-        </h5>
-
-        <ion-item
-            *ngFor="let merchant of searchResultMerchants"
-            (click)="selectMerchant(merchant)"
-            class="m-2"
-            lines="none"
-        >
-            <ion-avatar slot="start">
-                <img src="{{ merchant.logo }}" />
-            </ion-avatar>
-            <ion-label> {{ merchant.name }} </ion-label>
-        </ion-item>
-    </div>
-</ion-list> -->
 
 	<ion-list class="brand-dark">
 		<div class="products-container">
@@ -41,12 +19,28 @@
 			</h5>
 
 			<ion-item
+				color="medium"
+				*ngFor="let merchant of searchResultMerchants"
+				lines="none"
+				class="m-2"
+			>
+				<ion-avatar slot="start">
+					<img [src]="merchant.logo" />
+				</ion-avatar>
+				<ion-label>{{ merchant.name }} </ion-label>
+			</ion-item>
+
+			<ion-item
 				*ngFor="let product of searchResultProducts"
 				lines="none"
 				class="m-2"
 			>
 				<ion-avatar slot="start">
-					<img src="{{ product.warehouseLogo }}" />
+					<img
+						[src]="
+							product.warehouseProduct.product['images'][0].url
+						"
+					/>
 				</ion-avatar>
 				<ion-label
 					>{{ product.warehouseProduct.product['title'][0].value }}
