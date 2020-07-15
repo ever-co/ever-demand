@@ -30,6 +30,14 @@ export class GeoLocationResolver {
 			.toPromise();
 	}
 
+	@Query('getMerchantIds')
+	async getMerchantIds(_, { geoLocation }: { geoLocation: GeoLocation }) {
+		return this.geoLocationsProductsService
+			.get(geoLocation)
+			.pipe(first())
+			.toPromise();
+	}
+
 	@Query()
 	async geoLocationProductsByPaging(
 		_,

@@ -21,6 +21,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
 import { GeoLocationProductsService } from 'app/services/geo-location/geo-location-products';
 import { WarehouseProductsService } from 'app/services/merchants/warehouse-products';
+import { GeoLocationWarehousesRouter } from '@modules/client.common.angular2/routers/geo-location-warehouses-router.service';
 
 const initializeProductsNumber: number = 10;
 
@@ -49,6 +50,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 	private lastLoadProductsCount: number;
 	private lastImageOrientation: number;
 	private productsLocale: string;
+	private getGeoLocation: GeoLocation;
 
 	constructor(
 		private store: Store,
@@ -60,7 +62,8 @@ export class ProductsPage implements OnInit, OnDestroy {
 		private modalController: ModalController,
 		private geoLocationService: GeoLocationService,
 		private warehouseRouter: WarehouseRouter,
-		private warehouseProductsService: WarehouseProductsService
+		private warehouseProductsService: WarehouseProductsService,
+		private geoLocationWarehouseService: GeoLocationWarehousesRouter
 	) {
 		this.productsLocale = this.store.language || environment.DEFAULT_LOCALE;
 
@@ -87,8 +90,18 @@ export class ProductsPage implements OnInit, OnDestroy {
 		return (!merchantIds || merchantIds.length < 1) && !this.inStore;
 	}
 
-	ngOnInit(): void {
+	async ngOnInit() {
 		this.continueOrder();
+		this.loadProducts();
+	}
+
+	async loadAllProducts() {
+		const takeoutProducts = [];
+		const deliveryProducts = [];
+
+		// const allProducts = this.warehouseProductsService.getAllWarehouseProducts();
+
+		// console.warn(allProducts);
 	}
 
 	async buyItem(currentProduct: ProductInfo) {
@@ -162,6 +175,8 @@ export class ProductsPage implements OnInit, OnDestroy {
 	}
 
 	changeStoreMode() {
+		debugger;
+		this.products = [];
 		if (this.inStore) {
 			this.store.clearInStore();
 		} else {
@@ -174,11 +189,12 @@ export class ProductsPage implements OnInit, OnDestroy {
 		}
 
 		this.changePage = true;
-		this.products = [];
-		this.loadProducts({
-			count: this.lastLoadProductsCount,
-			imageOrientation: this.lastImageOrientation,
-		});
+
+		// this.loadProducts({
+		// 	count: this.lastLoadProductsCount,
+		// 	imageOrientation: this.lastImageOrientation,
+		// });
+		this.loadProducts();
 	}
 
 	ngOnDestroy() {
@@ -232,6 +248,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 				},
 			};
 		}
+		this.getGeoLocation = geoLocationForProducts;
 	}
 
 	async loadProducts(options = {}) {
@@ -240,12 +257,15 @@ export class ProductsPage implements OnInit, OnDestroy {
 			: DeliveryType.Takeaway;
 
 		const count = options['count'];
-		const imageOrientation = options['imageOrientation'];
-
+		// const imageOrientation = options['imageOrientation'];
+		const imageOrientation = options[1];
 		this.lastLoadProductsCount = count;
 		this.lastImageOrientation = imageOrientation;
 
-		let merchantIds = environment['MERCHANT_IDS'];
+		let merchantIds = [
+			'5f0f0f02b2c63906dc965259',
+			'5f0f0f12b2c63906dc96525b',
+		];
 
 		if ((!merchantIds || merchantIds.length === 0) && this.inStore) {
 			merchantIds = [this.inStore];
@@ -255,7 +275,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 
 		this.changePage = false;
 
-		if (this.productsCount > this.products.length) {
+		if (this.productsCount >= this.products.length) {
 			if (this.getOrdersGeoObj) {
 				this.areProductsLoaded = false;
 
@@ -265,7 +285,8 @@ export class ProductsPage implements OnInit, OnDestroy {
 					this.store.deliveryType === DeliveryType.Takeaway;
 
 				let loadProducts = true;
-
+				// const test = await this.geoLocationProductsService.getMerchantIds(this.getOrdersGeoObj);
+				// console.warn(test);
 				this.geoLocationProductsService
 					.geoLocationProductsByPaging(
 						this.getOrdersGeoObj,
@@ -312,6 +333,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 		} else {
 			this.areProductsLoaded = true;
 		}
+
 		this.$areProductsLoaded.emit();
 	}
 
@@ -397,6 +419,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 				.pipe(first())
 				.toPromise();
 		}
+
 		this.loadProducts();
 	}
 	toggleSearch() {
