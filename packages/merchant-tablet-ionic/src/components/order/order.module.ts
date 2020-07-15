@@ -13,6 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { OrderTypeComponent } from './order-type/order-type.component';
 
 @NgModule({
 	imports: [
@@ -29,6 +30,7 @@ import { FormsModule } from '@angular/forms';
 		SelectAddCustomerComponent,
 		MakeOrderComponent,
 		MakeOrderInputComponent,
+		OrderTypeComponent,
 		AddressComponent,
 	],
 	entryComponents: [AddressComponent, MakeOrderInputComponent],

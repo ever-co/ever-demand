@@ -7,6 +7,8 @@ import {
 	IPromotionTitle,
 	IPromotionDescription,
 } from '../interfaces/IPromotion';
+import Warehouse from './Warehouse';
+import IWarehouse from '../interfaces/IWarehouse';
 
 /**
  *
@@ -22,7 +24,7 @@ class Promotion extends DBObject<IPromotion, IPromotionCreateObject>
 	 * @type {IPromotionTitle[]}
 	 * @memberof Promotion
 	 */
-	@Schema({ type: Array, required: false })
+	@Schema({ type: Array, required: true })
 	title: IPromotionTitle[];
 
 	/**
@@ -39,6 +41,23 @@ class Promotion extends DBObject<IPromotion, IPromotionCreateObject>
 	@Types.Boolean(true)
 	@Column()
 	active: boolean;
+
+	/**
+	 * @type {number}
+	 * @memberof Promotion
+	 */
+	@Types.Number()
+	@Column()
+	promoPrice: number;
+
+	/**
+	 * Warehouse promotion is associated with
+	 *
+	 * @type {IWarehouse}
+	 * @memberof Promotion
+	 */
+	@Types.Ref(Warehouse)
+	warehouse: Warehouse;
 
 	/**
 	 * @type {Date}

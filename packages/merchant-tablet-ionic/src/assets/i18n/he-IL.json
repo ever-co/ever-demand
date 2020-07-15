@@ -168,6 +168,22 @@
 				}
 			}
 		},
+		"PROMOTIONS": {
+			"PROMOTIONS": "מבצעים",
+			"NO_PROMOTIONS": "אין מבצעים",
+			"BASIC_INFO": "מידע בסיסי",
+			"TITLE": "כותרת",
+			"ACTIVE_FROM": "פעיל מ-",
+			"ACTIVE_TO": "פעיל ל",
+			"PURCHASES_COUNT": "ספירת רכישות",
+			"IS_ACTIVE": "פעיל",
+			"SELECT_DATE": "בחר תאריך",
+			"DESCRIPTION": "תיאור",
+			"SAVE": "לשמור",
+			"NEXT": "הַבָּא",
+			"BACK": "חזור",
+			"LANGUAGE": "שפה"
+		},
 		"SELECT LANGUAGE": {
 			"USA": "ארה'ב",
 			"ISRAEL": "ישראל",
@@ -247,14 +263,23 @@
 		"ALL": "את כל",
 		"LOADING_MORE_DATA": "טוען נתונים נוספים ...",
 		"ORDERS": "הזמנות",
+		"SWITCH_ORDERS": "החלף הזמנות",
 		"NEW_ORDER": "הזמנה חדשה",
 		"PRODUCTS": "מוצרים מובילים",
+		"ARE_YOU_SURE_TO_DELETE": "לְבַטֵל",
+		"REMOVE": "לְהַסִיר",
+		"DELETE": "לִמְחוֹק",
+		"THE_FOLLOWING_DATA": "הנתונים הבאים",
+		"CONFIRM": "לְאַשֵׁר",
+		"CANCEL": "לְבַטֵל",
 		"SELECT_POP_UP": {
 			"SELECT_CATEGORIES": "בחר קטגוריות",
 			"OK": "בסדר",
 			"CANCEL": "בטל"
 		},
 		"ORDER_WAREHOUSE_STATUSES": {
+			"ALL": "את כל",
+			"CANCELLED": "מבוטל",
 			"CREATED": "נוצר",
 			"CONFIRMED": "מְאוּשָׁר",
 			"PROCESSING": "מעבד",
@@ -295,7 +320,8 @@
 			"BULGARIAN": "בולגרית",
 			"OPTIONAL": "אופציונאלי",
 			"TAKEAWAY": "להסיר",
-			"DELIVERY": "משלוח"
+			"DELIVERY": "משלוח",
+			"PRODUCT_AVAILABILITY": "זמינות מוצר"
 		},
 		"NEW_ORDER_VIEW": {
 			"NEW_MANUAL_ORDER": "סדר ידני חדש",
@@ -445,5 +471,9 @@
 	},
 	"NO_SERVER_VIEW": {
 		"NO_SERVER": "השרת נפל"
+	},
+	"PROMOTIONS": {
+		"PROMO_PRICE": "מחיר פרומו",
+		"NO_PROMOTIONS": "אין מבצעים"
 	}
 }

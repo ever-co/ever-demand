@@ -168,6 +168,22 @@
 				}
 			}
 		},
+		"PROMOTIONS": {
+			"PROMOTIONS": "Промоции",
+			"NO_PROMOTIONS": "Няма промоции",
+			"BASIC_INFO": "Основна информация",
+			"TITLE": "Заглавие",
+			"ACTIVE_FROM": "Активна от",
+			"ACTIVE_TO": "Активна до",
+			"PURCHASES_COUNT": "Брой покупки",
+			"IS_ACTIVE": "Активна",
+			"SELECT_DATE": "Изберете дата",
+			"DESCRIPTION": "Описание",
+			"SAVE": "Запази",
+			"NEXT": "Нататък",
+			"BACK": "Обратно",
+			"LANGUAGE": "Език"
+		},
 		"SELECT LANGUAGE": {
 			"USA": "САЩ",
 			"ISRAEL": "Израел",
@@ -246,14 +262,23 @@
 		"ALL": "Всички",
 		"LOADING_MORE_DATA": "Още данни се зареждат ...",
 		"ORDERS": "Поръчки",
+		"SWITCH_ORDERS": "Филтрирай Поръчките",
 		"NEW_ORDER": "Нова поръчка",
 		"PRODUCTS": "Топ Продукти",
+		"ARE_YOU_SURE_TO_DELETE": "Сигурни ли сте, че искате да изтриете ",
+		"REMOVE": "Премахни",
+		"DELETE": "Изтрий",
+		"THE_FOLLOWING_DATA": "следната информация",
+		"CONFIRM": "Потвърди",
+		"CANCEL": "Отмени",
 		"SELECT_POP_UP": {
 			"SELECT_CATEGORIES": "Изберете Категории",
 			"OK": "Добре",
 			"CANCEL": "ОТКАЗ"
 		},
 		"ORDER_WAREHOUSE_STATUSES": {
+			"ALL": "Всички",
+			"CANCELLED": "Отменени",
 			"CREATED": "Създаден",
 			"CONFIRMED": "Потвърдено",
 			"PROCESSING": "Обработване",
@@ -294,7 +319,8 @@
 			"BULGARIAN": "Български",
 			"OPTIONAL": "по избор",
 			"DELIVERY": "Доставка",
-			"TAKEAWAY": "Вземи на място"
+			"TAKEAWAY": "Вземи на място",
+			"PRODUCT_AVAILABILITY": "Наличност на продукта"
 		},
 		"NEW_ORDER_VIEW": {
 			"NEW_MANUAL_ORDER": "Нова ръчна поръчка",
@@ -434,5 +460,9 @@
 	},
 	"NO_SERVER_VIEW": {
 		"NO_SERVER": "Няма връзка със сървъра"
+	},
+	"PROMOTIONS": {
+		"PROMO_PRICE": "Промо цена",
+		"NO_PROMOTIONS": "Няма промоции"
 	}
 }

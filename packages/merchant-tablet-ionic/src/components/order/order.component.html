@@ -12,6 +12,10 @@
 			<ion-icon name="person-add"></ion-icon>
 		</ion-segment-button>
 
+		<ion-segment-button value="type">
+			<ion-icon name="car"></ion-icon>
+		</ion-segment-button>
+
 		<ion-segment-button value="order">
 			<ion-icon name="cart"></ion-icon>
 		</ion-segment-button>
@@ -31,9 +35,16 @@
 			></select-add-customer>
 		</div>
 
+		<div *ngSwitchCase="availSegmentOptions.type">
+			<order-type
+				(orderTypeEmitter)="onOrderTypeSelected($event)"
+			></order-type>
+		</div>
+
 		<div *ngSwitchCase="availSegmentOptions.order">
 			<make-order
 				[customerId]="customerIdToOrder"
+				[orderType]="orderType"
 				[orderFinishedEmitter]="orderFinishedEmitter"
 			></make-order>
 		</div>

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
-import { Store } from 'services/store.service';
 
 @Component({
 	selector: 'page-terms-of-use',
@@ -8,20 +7,17 @@ import { Store } from 'services/store.service';
 })
 export class TermsOfUsePage implements OnInit {
 	public useTermsHtml: string = '<h1>Loading...</h1>';
-
-	constructor(private userRouter: UserRouter, private store: Store) {}
+	public selectedLanguage: string;
+	constructor(private userRouter: UserRouter) {
+		this.selectedLanguage = localStorage.getItem('_language');
+	}
 
 	ngOnInit(): void {
 		this.userRouter
-			.getTermsOfUse(this._warehouseId, this._deviceId)
-			.subscribe(
-				(innerHtml) => {
-					this.useTermsHtml = innerHtml;
-				},
-				(err) => {
-					console.log(err);
-				}
-			);
+			.getTermsOfUseByLanguage(this.selectedLanguage)
+			.subscribe((html) => {
+				this.useTermsHtml = html;
+			});
 	}
 
 	private get _warehouseId() {

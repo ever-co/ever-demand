@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Mixpanel } from '@ionic-native/mixpanel/ngx';
 import Order from '@modules/server.common/entities/Order';
 import Warehouse from '@modules/server.common/entities/Warehouse';
@@ -16,6 +16,7 @@ import Product from '@modules/server.common/entities/Product';
 import { PopoverController, ModalController } from '@ionic/angular';
 import { CreateProductTypePopupPage } from './create-product-type-popup/create-product-type-popup';
 import { EditProductTypePopupPage } from './edit-product-type-popup/edit-product-type-popup';
+import { WarehousesService } from 'services/warehouses.service';
 
 export enum OrderState {
 	WarehousePreparation,
@@ -26,12 +27,22 @@ export enum OrderState {
 	Delivered,
 }
 
+export enum OrderStatus {
+	'all' = 'ALL',
+	'confirmed' = 'CONFIRMED',
+	'processing' = 'PROCESSING',
+	'alocation_started' = 'ALLOCATION_STARTED',
+	'packaging' = 'PACKAGING_STARTED',
+	'packaged' = 'PACKAGED',
+	'in_delivery' = 'GIVEN_TO_CARRIER',
+}
+
 @Component({
 	selector: 'page-warehouse',
 	templateUrl: 'warehouse.html',
 	styleUrls: ['./warehouse.scss'],
 })
-export class WarehousePage {
+export class WarehousePage implements OnInit {
 	private warehouse$: any;
 	filterMode: OrdersFilterModes = 'ready';
 	warehouse: Warehouse;
@@ -43,6 +54,11 @@ export class WarehousePage {
 	showAllProducts: boolean = false;
 	focusedOrder: Order;
 	focusedOrder$: any;
+	orderStatus: boolean;
+
+	filter: any; //todo
+	keys = Object.keys;
+	statuses = OrderStatus;
 
 	constructor(
 		// public navCtrl: NavController,
@@ -54,7 +70,8 @@ export class WarehousePage {
 		private mixpanel: Mixpanel,
 		private translateProductLocales: ProductLocalesService,
 		private store: Store,
-		private barcodeScanner: BarcodeScanner
+		private barcodeScanner: BarcodeScanner,
+		private warehouseService: WarehousesService
 	) {}
 
 	// ionViewDidLoad() {
@@ -67,6 +84,10 @@ export class WarehousePage {
 	// 	const isLogged = await this.store.isLogged();
 	// 	return this.store.maintenanceMode === null && isLogged;
 	// }
+
+	ngOnInit() {
+		this.getOrderShortProcess();
+	}
 
 	get isLogged() {
 		return localStorage.getItem('_warehouseId');
@@ -106,12 +127,18 @@ export class WarehousePage {
 		}
 	}
 
-	switchOrders(showRelevant) {
+	switchOrders(showRelevant, event?) {
 		if (this.focusedOrder$) {
 			this.focusedOrder$.unsubscribe();
 		}
 		this.focusedOrder = null;
 		this.showRelevant = showRelevant;
+
+		if (event != null) {
+			this.filter = event.target.value;
+		} else {
+			this.filter = null;
+		}
 	}
 
 	onOrderFinish() {
@@ -210,6 +237,16 @@ export class WarehousePage {
 		});
 
 		await modal.present();
+	}
+
+	async getOrderShortProcess() {
+		this.orderStatus = await this.warehouseService
+			.getWarehouseOrderProcess(this.store.warehouseId)
+			.toPromise();
+
+		this.orderStatus = this.orderStatus['ordersShortProcess'];
+
+		return this.orderStatus;
 	}
 
 	getWarehouseStatus(orderWarehouseStatusNumber: OrderWarehouseStatus) {

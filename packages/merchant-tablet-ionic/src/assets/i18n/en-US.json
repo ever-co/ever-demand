@@ -170,6 +170,7 @@
 		},
 		"PROMOTIONS": {
 			"PROMOTIONS": "Promotions",
+			"NO_PROMOTIONS": "No promotions",
 			"BASIC_INFO": "Basic Info",
 			"TITLE": "Title",
 			"ACTIVE_FROM": "Active from",
@@ -180,7 +181,11 @@
 			"DESCRIPTION": "Description",
 			"SAVE": "Save",
 			"NEXT": "Next",
-			"BACK": "Back"
+			"BACK": "Back",
+			"LANGUAGE": "Language",
+			"ACTIVE": "Active",
+			"IMAGE": "Image",
+			"STATUS": "Status"
 		},
 		"SELECT LANGUAGE": {
 			"USA": "USA",
@@ -260,14 +265,23 @@
 		"ALL": "All",
 		"LOADING_MORE_DATA": "Loading more data...",
 		"ORDERS": "Orders",
+		"SWITCH_ORDERS": "Switch Orders",
 		"NEW_ORDER": "New Order",
 		"PRODUCTS": "Top Products",
+		"ARE_YOU_SURE_TO_DELETE": "Are you sure you want to ",
+		"REMOVE": "Remove",
+		"DELETE": "Delete",
+		"THE_FOLLOWING_DATA": "the following data",
+		"CONFIRM": "Confirm",
+		"CANCEL": "Cancel",
 		"SELECT_POP_UP": {
 			"SELECT_CATEGORIES": "Select Categories",
 			"OK": "OK",
 			"CANCEL": "CANCEL"
 		},
 		"ORDER_WAREHOUSE_STATUSES": {
+			"ALL": "All",
+			"CANCELLED": "Cancelled",
 			"CREATED": "Created",
 			"CONFIRMED": "Confirmed",
 			"PROCESSING": "Processing",
@@ -308,7 +322,8 @@
 			"BULGARIAN": "Bulgarian",
 			"OPTIONAL": "optional",
 			"TAKEAWAY": "Takeaway",
-			"DELIVERY": "Delivery"
+			"DELIVERY": "Delivery",
+			"PRODUCT_AVAILABILITY": "Product availability"
 		},
 		"NEW_ORDER_VIEW": {
 			"NEW_MANUAL_ORDER": "New Manual Order",
@@ -449,5 +464,9 @@
 	},
 	"NO_SERVER_VIEW": {
 		"NO_SERVER": "Server connection is lost"
+	},
+	"PROMOTIONS": {
+		"PROMO_PRICE": "Promo price",
+		"NO_PROMOTIONS": "No Promotions"
 	}
 }

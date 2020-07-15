@@ -42,6 +42,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 	productsCount: number;
 	$areProductsLoaded = new EventEmitter<boolean>();
 	changePage: boolean;
+	isSearchOpened: boolean = false;
 
 	private readonly ngDestroy$ = new Subject<void>();
 	getOrdersGeoObj: { loc: ILocation };
@@ -311,7 +312,6 @@ export class ProductsPage implements OnInit, OnDestroy {
 		} else {
 			this.areProductsLoaded = true;
 		}
-
 		this.$areProductsLoaded.emit();
 	}
 
@@ -397,5 +397,9 @@ export class ProductsPage implements OnInit, OnDestroy {
 				.pipe(first())
 				.toPromise();
 		}
+		this.loadProducts();
+	}
+	toggleSearch() {
+		this.isSearchOpened = !this.isSearchOpened;
 	}
 }

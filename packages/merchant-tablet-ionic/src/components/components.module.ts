@@ -28,6 +28,7 @@ import { CustomerDeliveriesPopupPageModule } from 'pages/+customers/customer-del
 import { CustomerAddrPopupPageModule } from 'pages/+customers/customer-addr-popup/customer-addr-popup.module';
 import { FileUploaderModule } from './file-uploader/file-uploader.module';
 import { OrderInfoComponent } from './common/order-info/order-info';
+import { ImageTableComponent } from './table-components/image-table';
 
 @NgModule({
 	declarations: [
@@ -50,6 +51,7 @@ import { OrderInfoComponent } from './common/order-info/order-info';
 		CarrierInfoComponent,
 		PhoneComponent,
 		UserPhoneComponent,
+		ImageTableComponent,
 	],
 	imports: [
 		CommonModule,
@@ -80,6 +82,7 @@ import { OrderInfoComponent } from './common/order-info/order-info';
 		AccountComponent,
 		LocationComponent,
 		PhoneComponent,
+		ImageTableComponent,
 	],
 })
 export class ComponentsModule {}

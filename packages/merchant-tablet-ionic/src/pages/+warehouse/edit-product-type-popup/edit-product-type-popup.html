@@ -130,6 +130,19 @@
 					</div>
 				</div>
 			</ion-row>
+			<ion-row class="row">
+				<ion-col class="col">
+					<ion-checkbox
+						class="mr-3"
+						[(ngModel)]="isAvailable"
+						(ionChange)="clickHandler()"
+					>
+					</ion-checkbox>
+					<ion-label
+						>{{'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.PRODUCT_AVAILABILITY'|translate}}</ion-label
+					>
+				</ion-col>
+			</ion-row>
 
 			<ion-row class="row getProductType">
 				<ion-col class="pl-0 col-6">
@@ -139,7 +152,9 @@
 							[(ngModel)]="takaProductDelivery"
 							(ionChange)="getProductTypeChange('Delivery')"
 						></ion-checkbox>
-						<ion-label>Delivery</ion-label>
+						<ion-label
+							>{{'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.DELIVERY'|translate}}</ion-label
+						>
 					</ion-item>
 				</ion-col>
 				<ion-col class="pl-0 col-6">
@@ -149,7 +164,9 @@
 							[(ngModel)]="takaProductTakeaway"
 							(ionChange)="getProductTypeChange('Takeaway')"
 						></ion-checkbox>
-						<ion-label>Takeaway</ion-label>
+						<ion-label
+							>{{'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.TAKEAWAY'|translate}}</ion-label
+						>
 					</ion-item>
 				</ion-col>
 			</ion-row>

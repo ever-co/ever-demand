@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import DeliveryType from '@modules/server.common/enums/DeliveryType';
 
-type SegmentSection = 'options' | 'select/add' | 'order';
+type SegmentSection = 'options' | 'select/add' | 'type' | 'order';
 
 @Component({
 	selector: 'order',
@@ -11,6 +12,7 @@ export class OrderComponent implements OnInit {
 	readonly availSegmentOptions = {
 		options: 'options' as SegmentSection,
 		selectAdd: 'select/add' as SegmentSection,
+		type: 'type' as SegmentSection,
 		order: 'order' as SegmentSection,
 	};
 
@@ -20,6 +22,7 @@ export class OrderComponent implements OnInit {
 	segmentSection: SegmentSection = this.availSegmentOptions.options;
 	selectAddCustomerOption: number;
 	customerIdToOrder: string;
+	orderType: DeliveryType;
 
 	ngOnInit() {}
 
@@ -29,7 +32,12 @@ export class OrderComponent implements OnInit {
 	}
 
 	onCustomerSelected(customerId: string) {
-		this.segmentSection = this.availSegmentOptions.order;
+		this.segmentSection = this.availSegmentOptions.type;
 		this.customerIdToOrder = customerId;
+	}
+
+	onOrderTypeSelected(type: DeliveryType) {
+		this.segmentSection = this.availSegmentOptions.order;
+		this.orderType = type;
 	}
 }

@@ -18,7 +18,7 @@
 			"ADD_PRODUCTS": "Agregar Productos",
 			"REMOVE_PRODUCTS": "Quitar Productos",
 			"CANCEL_ORDER": "Cancelar Pedido",
-			"THE_ORDER_IS_CANCEL": "Pedido Cancelado",
+			"THE_ORDER_IS_CANCELED": "Pedido Cancelado",
 			"THE_ORDER_IS_GIVEN_TO_CARRIER": "Pedido entregado al repartidor",
 			"THE_ORDER_IS_DELIVERED": "Pedido entregado",
 			"ADD_PRODUCTS_MODAL": "Agregar Productos",
@@ -569,7 +569,7 @@
 			"AVAILABILITY": "Disponibilidad",
 			"TYPE": "Tipo",
 			"DELIVERY": "Entrega",
-			"TAKEAWAY": "Para llevar"			
+			"TAKEAWAY": "Para llevar"
 		},
 		"NEW_PRODUCT_TYPE": "Nuevo tipo de producto",
 		"ADD_PRODUCTS": "Agregar Productos",
