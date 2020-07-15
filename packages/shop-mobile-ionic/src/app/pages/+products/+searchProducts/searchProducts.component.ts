@@ -6,7 +6,7 @@ import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import RegistrationSystem from '@modules/server.common/enums/RegistrationSystem';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
-
+import DeliveryType from '@modules/server.common/enums/DeliveryType';
 import { MerchantsService } from 'app/services/merchants/merchants.service';
 import { Store } from 'app/services/store.service';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
@@ -22,9 +22,9 @@ import { GeoLocationProductsService } from 'app/services/geo-location/geo-locati
 	styleUrls: ['./searchProducts.style.scss'],
 })
 export class SearchProductsComponent implements OnInit {
-	searchInput: string;
-	searchResultMerchants: Warehouse[];
-	searchResultProducts: ProductInfo[];
+	searchInput: string = '';
+	searchResultMerchants: Warehouse[] = [];
+	searchResultProducts: ProductInfo[] = [];
 	getOrdersGeoObj: { loc: ILocation };
 
 	constructor(
@@ -36,77 +36,45 @@ export class SearchProductsComponent implements OnInit {
 		private router: Router
 	) {}
 	ngOnInit() {
-		this.loadGeoLocationProducts();
+		this.loadFullData();
+	}
+
+	async loadFullData() {
+		await this.loadGeoLocationProducts();
+		this.loadMerchants();
+		this.loadProducts();
+		console.log(this.searchResultProducts);
+	}
+
+	async loadMerchants() {
+		const location = this.getOrdersGeoObj.loc;
+		const merchants = await this.merchantsService.getMerchantsBuyName(
+			this.searchInput,
+			{ loc: location }
+		);
+		this.searchResultMerchants = merchants.slice(0, 5);
 	}
 
 	async loadProducts() {
+		const isDeliveryRequired =
+			this.store.deliveryType === DeliveryType.Delivery;
+		const isTakeaway = this.store.deliveryType === DeliveryType.Takeaway;
+
 		await this.geoLocationProductsService
-			.geoLocationProductsByPaging(this.getOrdersGeoObj, {
-				skip: 0,
-				limit: 100,
-			})
+			.geoLocationProductsByPaging(
+				this.getOrdersGeoObj,
+				{ limit: 20 },
+				{
+					isDeliveryRequired,
+					isTakeaway,
+				},
+				this.searchInput
+			)
 			.pipe(first())
-			.subscribe((products: ProductInfo[]) => {
-				this.filterProducts(products);
+			.subscribe((products) => {
+				this.searchResultProducts = products;
 			});
 	}
-
-	filterProducts(products: ProductInfo[]) {
-		if (products) {
-			const filteredProducts = products.filter((product) => {
-				const title = product.warehouseProduct.product['title'];
-
-				const result = title.filter((t) =>
-					t.value
-						.toLowerCase()
-						.includes(this.searchInput.toLowerCase())
-				);
-				if (result.length === 0) {
-					return false;
-				}
-				return result;
-			});
-			this.searchResultProducts = filteredProducts;
-			//  .filter(prod=>prod.warehouseProduct.isDeliveryRequired === !+this.store.deliveryType)
-			// console.log(this.searchResultProducts)
-		}
-	}
-
-	//  async loadSearchMerchants() {
-
-	//     const location = await this.getLocation();
-
-	//     this.searchResultMerchants = await this.merchantsService.getMerchantsBuyName(
-	//         this.searchInput,
-	//         { loc: location }
-	//     );
-	// }
-
-	// private async getLocation() {
-	// 	let location: ILocation;
-
-	// 	const isProductionEnv = environment.production;
-
-	// 	if (this.store.userId && isProductionEnv) {
-	// 		const user = await this.userRouter
-	// 			.get(this.store.userId)
-	// 			.pipe(first())
-	// 			.toPromise();
-
-	// 		location = {
-	// 			type: 'Point',
-	// 			coordinates: user.geoLocation.loc.coordinates,
-	// 		};
-	// 	} else {
-	// 		const findGeoLocation = await this.geoLocationService.getCurrentGeoLocation();
-	// 		location = {
-	// 			type: 'Point',
-	// 			coordinates: findGeoLocation.loc.coordinates,
-	// 		};
-	// 	}
-
-	// 	return location;
-	// }
 
 	private async loadGeoLocationProducts() {
 		let geoLocationForProducts: GeoLocation;
