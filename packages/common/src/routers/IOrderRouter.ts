@@ -15,8 +15,6 @@ interface IOrderRouter {
 		options?: IOrderRouterGetOptions
 	): Observable<Order | null>;
 
-	getOrders(options?: IOrderRouterGetOptions): Observable<Order[]>;
-
 	confirm(orderId: Order['id']): Promise<Order>;
 
 	updateCarrierStatus(
