@@ -12,7 +12,10 @@
 	<ion-list class="brand-dark">
 		<div class="products-container">
 			<h5
-				*ngIf="searchResultProducts?.length === 0"
+				*ngIf="
+					searchResultProducts.length === 0 &&
+					searchResultMerchants.length === 0
+				"
 				class="not-found-text p-3"
 			>
 				Empty List
@@ -30,11 +33,11 @@
 				<ion-label>{{ merchant.name }} </ion-label>
 			</ion-item>
 
-			<div class="center">
+			<div class="center" *ngIf="searchResultMerchants.length">
 				<ion-button
 					color="tertiary"
 					size="small"
-					(click)="loadMerchants()"
+					(click)="loadMoreMerchants()"
 					>View More</ion-button
 				>
 			</div>
@@ -84,11 +87,11 @@
 				</ion-row>
 			</ion-card>
 
-			<div class="center">
+			<div class="center" *ngIf="searchResultProducts.length">
 				<ion-button
 					color="tertiary"
 					size="small"
-					(click)="loadProducts()"
+					(click)="loadMoreProducts()"
 					>View More</ion-button
 				>
 			</div>

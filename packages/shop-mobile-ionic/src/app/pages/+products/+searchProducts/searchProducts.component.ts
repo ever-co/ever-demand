@@ -60,6 +60,14 @@ export class SearchProductsComponent implements OnInit {
 			this.searchInput,
 			{ loc: location }
 		);
+		this.searchResultMerchants = merchants.slice(0, 5);
+	}
+	async loadMoreMerchants() {
+		const location = this.getOrdersGeoObj.loc;
+		const merchants = await this.merchantsService.getMerchantsBuyName(
+			this.searchInput,
+			{ loc: location }
+		);
 		merchants
 			.slice(
 				this.searchResultMerchants.length,
@@ -69,6 +77,30 @@ export class SearchProductsComponent implements OnInit {
 	}
 
 	async loadProducts() {
+		const isDeliveryRequired =
+			this.store.deliveryType === DeliveryType.Delivery;
+		const isTakeaway = this.store.deliveryType === DeliveryType.Takeaway;
+
+		await this.geoLocationProductsService
+			.geoLocationProductsByPaging(
+				this.getOrdersGeoObj,
+				{
+					limit: this.loadingOrdersLimit,
+					skip: 0,
+				},
+				{
+					isDeliveryRequired,
+					isTakeaway,
+				},
+				this.searchInput
+			)
+			.pipe(first())
+			.subscribe((products) => {
+				this.searchResultProducts = products;
+				// products.map((pr) => this.searchResultProducts.push(pr));
+			});
+	}
+	async loadMoreProducts() {
 		const isDeliveryRequired =
 			this.store.deliveryType === DeliveryType.Delivery;
 		const isTakeaway = this.store.deliveryType === DeliveryType.Takeaway;
