@@ -6,3 +6,39 @@
 		text-align: center;
 	}
 }
+
+.product-container {
+	padding: 0;
+	height: 6rem;
+
+	.image-container {
+		padding: 0;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+	.info-container {
+		.product-title {
+			font-size: 1.2rem;
+			font-weight: bold;
+		}
+		padding: 0;
+		.price {
+			display: flex;
+			justify-content: flex-end;
+			ion-badge {
+				padding: 10px 20px;
+				font-size: 1rem;
+			}
+		}
+		.product-description {
+			text-indent: 30px;
+			padding: 5px;
+		}
+	}
+}
+.center {
+	text-align: center;
+	padding: 1rem;
+}

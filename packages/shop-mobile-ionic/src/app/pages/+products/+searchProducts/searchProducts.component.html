@@ -12,7 +12,10 @@
 	<ion-list class="brand-dark">
 		<div class="products-container">
 			<h5
-				*ngIf="searchResultProducts?.length === 0"
+				*ngIf="
+					searchResultProducts.length === 0 &&
+					searchResultMerchants.length === 0
+				"
 				class="not-found-text p-3"
 			>
 				Empty List
@@ -30,25 +33,68 @@
 				<ion-label>{{ merchant.name }} </ion-label>
 			</ion-item>
 
-			<ion-item
-				*ngFor="let product of searchResultProducts"
-				lines="none"
-				class="m-2"
-			>
-				<ion-avatar slot="start">
-					<img
-						[src]="
-							product.warehouseProduct.product['images'][0].url
-						"
-					/>
-				</ion-avatar>
-				<ion-label
-					>{{ product.warehouseProduct.product['title'][0].value }}
-				</ion-label>
-				<ion-label
-					>price: {{ product.warehouseProduct.price }}
-				</ion-label>
-			</ion-item>
+			<div class="center" *ngIf="searchResultMerchants.length">
+				<ion-button
+					color="tertiary"
+					size="small"
+					(click)="loadMoreMerchants()"
+					>View More</ion-button
+				>
+			</div>
+
+			<ion-card *ngFor="let productInfo of searchResultProducts">
+				<ion-row
+					class="product-container"
+					(click)="goToDetailsPage(productInfo)"
+				>
+					<ion-col class="col-3 image-container">
+						<img [src]="getProductImage(productInfo)" />
+					</ion-col>
+					<ion-col class="col-9" class="col-9 info-container">
+						<ion-row>
+							<ion-col>
+								<span class="product-title">
+									{{
+										localeTranslate(
+											productInfo.warehouseProduct
+												.product['title']
+										)
+									}}
+								</span>
+							</ion-col>
+							<ion-col class="col-3 price">
+								<ion-badge color="primary"
+									>{{
+										productInfo.warehouseProduct.price
+									}}
+									$</ion-badge
+								>
+							</ion-col>
+						</ion-row>
+						<ion-row>
+							<span class="product-description">
+								{{
+									shortenDescription(
+										localeTranslate(
+											productInfo.warehouseProduct
+												.product['description']
+										)
+									)
+								}}
+							</span>
+						</ion-row>
+					</ion-col>
+				</ion-row>
+			</ion-card>
+
+			<div class="center" *ngIf="searchResultProducts.length">
+				<ion-button
+					color="tertiary"
+					size="small"
+					(click)="loadMoreProducts()"
+					>View More</ion-button
+				>
+			</div>
 		</div>
 	</ion-list>
 </div>
