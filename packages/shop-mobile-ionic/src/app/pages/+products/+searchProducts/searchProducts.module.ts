@@ -7,9 +7,20 @@ import { MerchantsService } from 'app/services/merchants/merchants.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { TranslateModule } from '@ngx-translate/core';
+
+import { WarehouseLogoModule } from '../../../components/warehouse-logo/warehouse-logo.module';
+import { ProductsModule } from '../../../components/products/products.module';
 
 @NgModule({
-	imports: [CommonModule, FormsModule, IonicModule],
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		WarehouseLogoModule,
+		ProductsModule,
+		TranslateModule.forChild(),
+	],
 	declarations: [SearchProductsComponent],
 	exports: [SearchProductsComponent],
 	providers: [GeoLocationService, MerchantsService],

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { first } from 'rxjs/operators';
 
 import Warehouse from '@modules/server.common/entities/Warehouse';
@@ -12,9 +12,12 @@ import { Store } from 'app/services/store.service';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { GeoLocationService } from 'app/services/geo-location';
 import { Router } from '@angular/router';
+import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
+import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 
 import { environment } from 'environments/environment';
 import { GeoLocationProductsService } from 'app/services/geo-location/geo-location-products';
+import { WarehouseProductsService } from 'app/services/merchants/warehouse-products';
 
 @Component({
 	selector: 'search-products',
@@ -22,6 +25,10 @@ import { GeoLocationProductsService } from 'app/services/geo-location/geo-locati
 	styleUrls: ['./searchProducts.style.scss'],
 })
 export class SearchProductsComponent implements OnInit {
+	private static MAX_DESCRIPTION_LENGTH: number = 100;
+	private loadingOrdersLimit: number = 6;
+	private loadingMerchantsLimit: number = 5;
+
 	searchInput: string = '';
 	searchResultMerchants: Warehouse[] = [];
 	searchResultProducts: ProductInfo[] = [];
@@ -33,7 +40,9 @@ export class SearchProductsComponent implements OnInit {
 		private userRouter: UserRouter,
 		private geoLocationService: GeoLocationService,
 		private geoLocationProductsService: GeoLocationProductsService,
-		private router: Router
+		private router: Router,
+		private readonly translateProductLocales: ProductLocalesService,
+		private warehouseProductsService: WarehouseProductsService
 	) {}
 	ngOnInit() {
 		this.loadFullData();
@@ -43,7 +52,6 @@ export class SearchProductsComponent implements OnInit {
 		await this.loadGeoLocationProducts();
 		this.loadMerchants();
 		this.loadProducts();
-		console.log(this.searchResultProducts);
 	}
 
 	async loadMerchants() {
@@ -52,7 +60,12 @@ export class SearchProductsComponent implements OnInit {
 			this.searchInput,
 			{ loc: location }
 		);
-		this.searchResultMerchants = merchants.slice(0, 5);
+		merchants
+			.slice(
+				this.searchResultMerchants.length,
+				this.searchResultMerchants.length + this.loadingMerchantsLimit
+			)
+			.map((merch) => this.searchResultMerchants.push(merch));
 	}
 
 	async loadProducts() {
@@ -63,7 +76,10 @@ export class SearchProductsComponent implements OnInit {
 		await this.geoLocationProductsService
 			.geoLocationProductsByPaging(
 				this.getOrdersGeoObj,
-				{ limit: 20 },
+				{
+					limit: this.loadingOrdersLimit,
+					skip: this.searchResultProducts.length,
+				},
 				{
 					isDeliveryRequired,
 					isTakeaway,
@@ -72,7 +88,7 @@ export class SearchProductsComponent implements OnInit {
 			)
 			.pipe(first())
 			.subscribe((products) => {
-				this.searchResultProducts = products;
+				products.map((pr) => this.searchResultProducts.push(pr));
 			});
 	}
 
@@ -104,6 +120,50 @@ export class SearchProductsComponent implements OnInit {
 					coordinates: geoLocationForProducts.loc.coordinates,
 				},
 			};
+		}
+	}
+	localeTranslate(member: ILocaleMember[]): string {
+		return this.translateProductLocales.getTranslate(member);
+	}
+
+	shortenDescription(desc: string) {
+		return desc.length < SearchProductsComponent.MAX_DESCRIPTION_LENGTH
+			? desc
+			: desc.substr(
+					0,
+					SearchProductsComponent.MAX_DESCRIPTION_LENGTH - 3
+			  ) + '...';
+	}
+	getProductImage(product) {
+		return this.localeTranslate(product.warehouseProduct.product['images']);
+	}
+
+	async goToDetailsPage(product: ProductInfo) {
+		const prod = await this.warehouseProductsService.getWarehouseProduct(
+			product.warehouseId,
+			product.warehouseProduct.id
+		);
+
+		if (prod) {
+			this.router.navigate(
+				[
+					`/products/product-details/${product.warehouseProduct.product['id']}`,
+				],
+				{
+					queryParams: {
+						backUrl: '/products',
+						warehouseId: product.warehouseId,
+					},
+				}
+			);
+		} else {
+			const loadedProduct = this.searchResultProducts.find(
+				(p) => p.warehouseProduct.id === product.warehouseProduct.id
+			);
+
+			if (loadedProduct) {
+				loadedProduct['soldOut'] = true;
+			}
 		}
 	}
 }
