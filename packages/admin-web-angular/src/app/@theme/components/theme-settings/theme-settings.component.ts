@@ -15,24 +15,12 @@ export class ThemeSettingsComponent {
 
 	languages = [
 		{
+			value: 'fr-FR',
+			name: 'Francais',
+		},
+		{
 			value: 'en-US',
 			name: 'English',
-		},
-		{
-			value: 'bg-BG',
-			name: 'Bulgarian',
-		},
-		{
-			value: 'he-IL',
-			name: 'Hebrew',
-		},
-		{
-			value: 'ru-RU',
-			name: 'Russian',
-		},
-		{
-			value: 'es-ES',
-			name: 'Spanish',
 		},
 	];
 
@@ -64,7 +52,7 @@ export class ThemeSettingsComponent {
 	];
 
 	currentTheme = 'everlight';
-	defaultLanguage = '';
+	defaultLanguage = 'fr-FR';
 
 	constructor(
 		protected stateService: StateService,
@@ -73,17 +61,15 @@ export class ThemeSettingsComponent {
 	) {
 		this.defaultLanguage = environment['DEFAULT_LANGUAGE'];
 
-		translate.addLangs(['en-US', 'bg-BG', 'he-IL', 'ru-RU', 'es-ES']);
-		translate.setDefaultLang('en-US');
+		translate.addLangs(['en-US', 'fr-FR']);
+		translate.setDefaultLang('fr-FR');
 
 		const browserLang = translate.getBrowserLang();
 		if (this.defaultLanguage) {
 			translate.use(this.defaultLanguage);
 		} else {
 			translate.use(
-				browserLang.match(/en-US|bg-BG|he-IL|ru-RU|es-ES/)
-					? browserLang
-					: 'en-US'
+				browserLang.match(/fr-FR|en-US/) ? browserLang : 'fr-FR'
 			);
 		}
 

@@ -24,6 +24,12 @@ export class PagesComponent {
 				pathMatch: 'prefix',
 			},
 			{
+				title: this.getTranslation('MENU_VIEW.ORDERS'),
+				icon: 'shopping-bag-outline',
+				link: '/orders',
+				pathMatch: 'prefix',
+			},
+			{
 				title: this.getTranslation('MENU_VIEW.STORES'),
 				icon: 'home-outline',
 				link: '/stores',

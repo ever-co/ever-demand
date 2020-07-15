@@ -274,7 +274,7 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 			case 'en-US':
 				return {
 					android: {
-						title: 'Ever just launched!',
+						title: 'Bellem just launched!',
 						alert: 'Click to see some available products.',
 						extra: {
 							event: launched,
@@ -282,63 +282,44 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 						},
 					},
 					ios: {
-						alert: 'Ever just launched at your address. Have fun!',
-						extra: {
-							event: launched,
-							invite: JSON.stringify(invite),
-						},
-					},
-				};
-			case 'ru-RU':
-				return {
-					android: {
-						title: 'Ever только что запустился!',
-						alert: 'Кликните чтобы увидить доступные продукты.',
-						extra: {
-							event: launched,
-							invite: JSON.stringify(invite),
-						},
-					},
-					ios: {
 						alert:
-							'Ever тольуо что запустился по Вашему адресу. Удачи!',
+							'Bellem just launched at your address. Have fun!',
 						extra: {
 							event: launched,
 							invite: JSON.stringify(invite),
 						},
 					},
 				};
-			case 'bg-BG':
+			case 'fr-FR':
 				return {
 					android: {
-						title: 'Ever стартира!',
-						alert: 'Кликнете, за да видите някои налични продукти.',
+						title: 'Bellem est lance!',
+						alert: 'Click pour voir les produits disponibles.',
 						extra: {
 							event: launched,
 							invite: JSON.stringify(invite),
 						},
 					},
 					ios: {
-						alert: 'Ever стартира на вашия адрес. Забавлявай се!',
+						alert: 'Bellem commence a votre addresse. prefitez-en!',
 						extra: {
 							event: launched,
 							invite: JSON.stringify(invite),
 						},
 					},
 				};
-			case 'he-IL':
 			default:
 				return {
 					android: {
-						title: 'הושקנו בכתובת שלך!',
-						alert: 'תלחץ כדי לצפות במוצרים!',
+						title: 'Bellem est lance!',
+						alert: 'Click pour voir les produits disponibles.',
 						extra: {
 							event: launched,
 							invite: JSON.stringify(invite),
 						},
 					},
 					ios: {
-						alert: 'Ever הושק בכתובת שלך! תלחץ כדי לצפות במוצרים!',
+						alert: 'Bellem commence a votre addresse. prefitez-en!',
 						extra: {
 							event: launched,
 							invite: JSON.stringify(invite),
