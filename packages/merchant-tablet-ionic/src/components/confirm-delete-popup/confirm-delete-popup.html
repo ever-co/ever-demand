@@ -1,11 +1,11 @@
-<!-- TODO add translate -->
 <div class="confirm-delete">
 	<h4>
-		Are you sure you want to {{ isRemove ? 'remvoe' : 'delete' }} the
-		following data?
+		{{'WAREHOUSE_VIEW.ARE_YOU_SURE_TO_DELETE' | translate }} {{ isRemove ?
+		('WAREHOUSE_VIEW.REMOVE' | translate) : ('WAREHOUSE_VIEW.DELETE' |
+		translate) }} {{'WAREHOUSE_VIEW.THE_FOLLOWING_DATA' | translate}}?
 	</h4>
 	<div class="details">
-		<img src="{{ data?.image }}" />
+		<img *ngIf="data.image" src="{{ data?.image }}" />
 		<div class="text">
 			<div>{{ data?.name }}</div>
 			<div
@@ -21,11 +21,16 @@
 			</div>
 			<div>{{ data?.addresses }}</div>
 		</div>
+		<div *ngIf="customText" class="text custom-text">
+			{{ customText }}
+		</div>
 	</div>
 	<div class="control">
 		<ion-button (click)="confirmDelete()" color="danger">
-			Confirm
+			{{'WAREHOUSE_VIEW.CONFIRM' | translate}}
 		</ion-button>
-		<ion-button (click)="cancelModal()" color="info">Cancel</ion-button>
+		<ion-button (click)="cancelModal()" color="info"
+			>{{'WAREHOUSE_VIEW.CANCEL' | translate}}</ion-button
+		>
 	</div>
 </div>

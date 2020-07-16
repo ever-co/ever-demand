@@ -108,7 +108,6 @@ export class CarriersPage implements OnInit, OnDestroy {
 		const modal = await this.modalCtrl.create({
 			component: CarrierEditPopupPage,
 			componentProps: { carrier: e.data.carrier },
-			cssClass: 'carrier-edit-wrapper',
 		});
 
 		await modal.present();

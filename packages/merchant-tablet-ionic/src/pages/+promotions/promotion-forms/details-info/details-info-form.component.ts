@@ -37,6 +37,7 @@ export class DetailsInfoFormComponent implements OnInit {
 			image: [''],
 			active: [true],
 			purchasesCount: [0, Validators.min(0)],
+			promoPrice: [0, Validators.min(0)],
 		});
 	}
 
@@ -51,6 +52,7 @@ export class DetailsInfoFormComponent implements OnInit {
 			image: this.promotionDetails.image || '',
 			active: this.promotionDetails.active || true,
 			purchasesCount: this.promotionDetails.purchasesCount || 0,
+			promoPrice: this.promotionData.promoPrice || 0,
 		};
 
 		this.form.patchValue(promotionFormValue);
@@ -61,6 +63,7 @@ export class DetailsInfoFormComponent implements OnInit {
 			image: null,
 			active: true,
 			purchasesCount: 0,
+			promoPrice: 0,
 		};
 	}
 }

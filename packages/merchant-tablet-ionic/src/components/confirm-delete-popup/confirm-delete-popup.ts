@@ -19,6 +19,8 @@ export class ConfirmDeletePopupPage {
 	data: IConfirmDeleteData;
 	@Input()
 	isRemove: boolean;
+	@Input()
+	customText: string;
 
 	constructor(public modalCtrl: ModalController) {}
 

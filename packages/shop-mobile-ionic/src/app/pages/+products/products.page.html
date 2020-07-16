@@ -35,12 +35,14 @@
 				<ion-label
 					*ngIf="!inStore"
 					(click)="isDeliveryRequired = !isDeliveryRequired"
-					class="pr-14px"
 				>
 					<small [ngClass]="{ 'no-select': !isDeliveryRequired }">
 						{{ 'PRODUCTS_VIEW.DELIVERY' | translate }}
 					</small></ion-label
 				>
+				<ion-label class="pl-3 pr-3" (click)="toggleSearch()">
+					<ion-icon name="search"></ion-icon>
+				</ion-label>
 				<ion-label
 					*ngIf="!navigateToMerchants"
 					(click)="changeStoreMode()"
@@ -70,7 +72,7 @@
 	<div *ngIf="modalOpen" class="blur-lighter"></div>
 
 	<e-cu-products-view
-		*ngIf="getOrdersGeoObj"
+		*ngIf="getOrdersGeoObj && !isSearchOpened "
 		[placeholder]="products_placeholder"
 		[products]="products"
 		(buy)="buyItem($event)"
@@ -81,6 +83,7 @@
 		[$areProductsLoaded]="$areProductsLoaded"
 	>
 	</e-cu-products-view>
+	<search-products *ngIf="isSearchOpened"></search-products>
 </ion-content>
 
 <router-outlet></router-outlet>

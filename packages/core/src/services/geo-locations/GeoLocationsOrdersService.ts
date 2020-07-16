@@ -215,7 +215,10 @@ export class GeoLocationsOrdersService
 			.limit(options.limit || 1)
 			.exec();
 
-		return orders.filter((o) => o !== null).map((o) => new Order(o));
+		return orders
+			.filter((o) => o !== null)
+			.filter((o) => o.orderType === 0)
+			.map((o) => new Order(o));
 	}
 
 	/**
