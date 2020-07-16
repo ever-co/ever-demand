@@ -71,14 +71,19 @@ export class TrackPage implements OnInit, OnDestroy {
 		component: IonicSelectableComponent;
 		value: any;
 	}) {
+		this.warehouse$.unsubscribe();
 		this.carriers$.unsubscribe();
 		this.params$.unsubscribe();
-		this.warehouse$.unsubscribe();
 		this.router.navigate([`track/${event.value.id}`]);
 	}
 
 	ngOnInit(): void {
-		this.warehouse$ = this.warehouseService
+		this.getItems();
+	}
+
+	async getItems() {
+		//TODO SOMETIMES WHEN SWITCHING WHICH CARRIER TO TRACK DOESNT SUBSCRIBE?
+		this.warehouse$ = await this.warehouseService
 			.getAllStores()
 			.subscribe((warehouse) => {
 				const currentWarehouse = warehouse.find(
@@ -136,6 +141,7 @@ export class TrackPage implements OnInit, OnDestroy {
 									(car) => car.id === res.id
 								)[0];
 								this.showCheckboxFilters = false;
+								this.carrierListDropdown = this.carriers;
 								this.carriersOnDisplay = [this.selectedCarrier];
 								this.renderCarriers([this.selectedCarrier]);
 							} else {
