@@ -174,10 +174,4 @@ export class SearchProductsComponent implements OnInit {
 			this.searchResultProducts
 		);
 	}
-
-	getDistance(merchantGeoLoc: GeoLocation) {
-		// console.log(this.geoLocStore,merchantGeoLoc)
-		// const opa = Utils.getDistance(this.geoLocStore, merchantGeoLoc )
-		// console.log(opa)
-	}
 }
