@@ -52,6 +52,33 @@ export class GeoLocationResolver {
 			searchText
 		);
 	}
+
+	@Query()
+	async geoLocationProductsByCategory(
+		_,
+		{
+			geoLocation,
+			options,
+			category,
+			pagingOptions = {},
+			searchText,
+		}: {
+			geoLocation;
+			options?: IGetGeoLocationProductsOptions;
+			category?;
+			pagingOptions;
+			searchText?: string;
+		}
+	) {
+		return this.geoLocationsProductsService.geoLocationProductsByCategory(
+			geoLocation,
+			category,
+			pagingOptions,
+			options,
+			searchText
+		);
+	}
+
 	@Query()
 	async getCountOfGeoLocationProducts(
 		_,

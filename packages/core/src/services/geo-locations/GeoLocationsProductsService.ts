@@ -26,6 +26,7 @@ import {
 } from '@modules/server.common/interfaces/IProduct';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { IGetGeoLocationProductsOptions } from 'graphql/geo-locations/geo-location.resolver';
+import ICategory from '@modules/server.common/interfaces/ICategory';
 
 @injectable()
 @routerName('geo-location-products')
@@ -108,6 +109,35 @@ export class GeoLocationsProductsService
 	async geoLocationProductsByPaging(
 		@serialization((g: IGeoLocation) => new GeoLocation(g))
 		geoLocation: GeoLocation,
+		pagingOptions,
+		options?: IGetGeoLocationProductsOptions,
+		searchText?: string
+	): Promise<ProductInfo[]> {
+		const merchants = await this.geoLocationsWarehousesService.getMerchants(
+			geoLocation,
+			GeoLocationsWarehousesService.TrackingDistance,
+			{
+				fullProducts: true,
+				activeOnly: true,
+				merchantsIds: options ? options.merchantIds : null,
+			}
+		);
+
+		const products = this._getProductsFromWarehouses(
+			geoLocation,
+			merchants.map((m) => new Warehouse(m)),
+			options,
+			searchText
+		);
+
+		return products.slice(pagingOptions.skip).slice(0, pagingOptions.limit);
+	}
+
+	@asyncListener()
+	async geoLocationProductsByCategory(
+		@serialization((g: IGeoLocation) => new GeoLocation(g))
+		geoLocation: GeoLocation,
+		category: ICategory,
 		pagingOptions,
 		options?: IGetGeoLocationProductsOptions,
 		searchText?: string

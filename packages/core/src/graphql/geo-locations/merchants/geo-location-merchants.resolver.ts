@@ -4,6 +4,7 @@ import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import Utils from '@modules/server.common/utils';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
+import ICategory from '@modules/server.common/interfaces/ICategory';
 
 const IN_STORE_DISTANCE = 50;
 
@@ -17,6 +18,34 @@ export class GeoLocationMerchantsResolver {
 	async getCoseMerchants(_, { geoLocation }: { geoLocation: IGeoLocation }) {
 		let merchants = await this.geoLocationsWarehousesService.getMerchants(
 			geoLocation,
+			IN_STORE_DISTANCE,
+			{ fullProducts: false, activeOnly: true }
+		);
+
+		merchants = merchants.sort(
+			(m1, m2) =>
+				Utils.getDistance(
+					new GeoLocation(m1.geoLocation),
+					new GeoLocation(geoLocation)
+				) -
+				Utils.getDistance(
+					new GeoLocation(m2.geoLocation),
+					new GeoLocation(geoLocation)
+				)
+		);
+
+		return merchants.map((m) => new Warehouse(m));
+	}
+
+	@Query('getCloseMerchantsCategory')
+	async getCloseMerchantsCategory(
+		_,
+		{ geoLocation }: { geoLocation: IGeoLocation },
+		{ category }: { category: ICategory }
+	) {
+		let merchants = await this.geoLocationsWarehousesService.getCloseMerchantsCategory(
+			geoLocation,
+			category,
 			IN_STORE_DISTANCE,
 			{ fullProducts: false, activeOnly: true }
 		);

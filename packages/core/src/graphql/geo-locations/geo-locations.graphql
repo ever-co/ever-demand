@@ -77,6 +77,14 @@ type Query {
 		searchText: String
 	): [ProductInfo]!
 
+	geoLocationProductsByCategory(
+		geoLocation: GeoLocationFindInput!
+		category: ProductsCategorySearchInput
+		pagingOptions: PagingOptionsInput
+		options: GetGeoLocationProductsOptions
+		searchText: String
+	): [ProductInfo]!
+
 	getCountOfGeoLocationProducts(
 		geoLocation: GeoLocationFindInput!
 		options: GetGeoLocationProductsOptions
