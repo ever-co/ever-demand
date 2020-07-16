@@ -1,100 +1,113 @@
-<div class="brand-dark search-products">
+<div class="brand-light search-products">
 	<ion-searchbar
 		[(ngModel)]="searchInput"
 		mode="ios"
 		color="light"
-		placeholder="Product or a shop name"
+		[placeholder]="'SEARCH_VIEW.SEARCH_PLACEHOLDER' | translate"
 		animated
 		debounce="500"
-		(ionChange)="loadFullData()"
+		(ionChange)="onSearchChange()"
 	></ion-searchbar>
 
-	<ion-list class="brand-dark">
-		<div class="products-container">
-			<h5
-				*ngIf="
-					searchResultProducts.length === 0 &&
-					searchResultMerchants.length === 0
-				"
-				class="not-found-text p-3"
+	<e-cu-loading color="light" *ngIf="isLoading"></e-cu-loading>
+	<ion-list class="brand-light" *ngIf="!isLoading">
+		<h5
+			*ngIf="
+				searchResultProducts.length === 0 &&
+				searchResultMerchants.length === 0
+			"
+			class="not-found-text p-3"
+		>
+			{{ 'SEARCH_VIEW.EMPTY_LIST' | translate }}
+		</h5>
+
+		<ion-card *ngFor="let merchant of searchResultMerchants">
+			<ion-row class="merchant-container">
+				<ion-col class="col-2 logo-container">
+					<ion-avatar>
+						<img [src]="merchant.logo" />
+					</ion-avatar>
+				</ion-col>
+				<ion-col class="col-8">
+					<span class="merchant-name">{{ merchant.name }}</span>
+				</ion-col>
+				<ion-col class="col-2 is-open">
+					<span [ngClass]="merchant.isActive ? 'open' : 'close'">
+						{{
+							merchant.isActive
+								? ('SEARCH_VIEW.OPEN' | translate)
+								: ('SEARCH_VIEW.CLOSED' | translate)
+						}}
+					</span>
+				</ion-col>
+			</ion-row>
+		</ion-card>
+
+		<div class="center" *ngIf="searchResultMerchants.length">
+			<ion-button
+				[disabled]="merchantsShowMoreButton"
+				color="secondary"
+				size="small"
+				(click)="loadMerchants(false)"
 			>
-				Empty List
-			</h5>
+				{{ 'SEARCH_VIEW.VIEW_MORE' | translate }}
+			</ion-button>
+		</div>
 
-			<ion-item
-				color="medium"
-				*ngFor="let merchant of searchResultMerchants"
-				lines="none"
-				class="m-2"
-			>
-				<ion-avatar slot="start">
-					<img [src]="merchant.logo" />
-				</ion-avatar>
-				<ion-label>{{ merchant.name }} </ion-label>
-			</ion-item>
-
-			<div class="center" *ngIf="searchResultMerchants.length">
-				<ion-button
-					color="tertiary"
-					size="small"
-					(click)="loadMoreMerchants()"
-					>View More</ion-button
-				>
-			</div>
-
-			<ion-card *ngFor="let productInfo of searchResultProducts">
-				<ion-row
-					class="product-container"
-					(click)="goToDetailsPage(productInfo)"
-				>
-					<ion-col class="col-3 image-container">
-						<img [src]="getProductImage(productInfo)" />
-					</ion-col>
-					<ion-col class="col-9" class="col-9 info-container">
-						<ion-row>
-							<ion-col>
-								<span class="product-title">
-									{{
-										localeTranslate(
-											productInfo.warehouseProduct
-												.product['title']
-										)
-									}}
-								</span>
-							</ion-col>
-							<ion-col class="col-3 price">
-								<ion-badge color="primary"
-									>{{
-										productInfo.warehouseProduct.price
-									}}
-									$</ion-badge
-								>
-							</ion-col>
-						</ion-row>
-						<ion-row>
-							<span class="product-description">
+		<ion-card
+			*ngFor="let productInfo of searchResultProducts"
+			(click)="goToDetailsPage(productInfo)"
+			class="product-container"
+		>
+			<ion-row>
+				<ion-col class="col-3 image-container">
+					<img [src]="getProductImage(productInfo)" />
+				</ion-col>
+				<ion-col class="col-9 info-container">
+					<ion-row>
+						<ion-col class="col-10">
+							<span class="product-title">
 								{{
-									shortenDescription(
-										localeTranslate(
-											productInfo.warehouseProduct
-												.product['description']
-										)
+									localeTranslate(
+										productInfo.warehouseProduct.product[
+											'title'
+										]
 									)
 								}}
 							</span>
-						</ion-row>
-					</ion-col>
-				</ion-row>
-			</ion-card>
+						</ion-col>
+						<ion-col class="col-2 price">
+							<ion-badge color="primary">
+								{{ productInfo.warehouseProduct.price }}$
+							</ion-badge>
+						</ion-col>
+					</ion-row>
+					<ion-row>
+						<span class="product-description">
+							{{
+								shortenDescription(
+									localeTranslate(
+										productInfo.warehouseProduct.product[
+											'description'
+										]
+									)
+								)
+							}}
+						</span>
+					</ion-row>
+				</ion-col>
+			</ion-row>
+		</ion-card>
 
-			<div class="center" *ngIf="searchResultProducts.length">
-				<ion-button
-					color="tertiary"
-					size="small"
-					(click)="loadMoreProducts()"
-					>View More</ion-button
-				>
-			</div>
+		<div class="center" *ngIf="searchResultProducts.length">
+			<ion-button
+				[disabled]="productsShowMoreButton"
+				color="secondary"
+				size="small"
+				(click)="loadProducts(false)"
+			>
+				{{ 'SEARCH_VIEW.VIEW_MORE' | translate }}
+			</ion-button>
 		</div>
 	</ion-list>
 </div>
