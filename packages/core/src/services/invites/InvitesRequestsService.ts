@@ -308,25 +308,6 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 						},
 					},
 				};
-			case 'bg-BG':
-				return {
-					android: {
-						title: 'Ever стартира!',
-						alert: 'Кликнете, за да видите някои налични продукти.',
-						extra: {
-							event: launched,
-							invite: JSON.stringify(invite),
-						},
-					},
-					ios: {
-						alert: 'Ever стартира на вашия адрес. Забавлявай се!',
-						extra: {
-							event: launched,
-							invite: JSON.stringify(invite),
-						},
-					},
-				};
-			case 'he-IL':
 			default:
 				return {
 					android: {
