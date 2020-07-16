@@ -50,6 +50,7 @@ interface IWatchedFiles {
 	aboutUs: { [language in ILanguage]: Observable<string> };
 	privacy: { [language in ILanguage]: Observable<string> };
 	termsOfUse: { [language in ILanguage]: Observable<string> };
+	help: { [language in ILanguage]: Observable<string> };
 }
 
 /**
@@ -88,8 +89,8 @@ export class UsersService extends DBService<User>
 		super();
 		// TODO: too many hardcoded constants used below. Refactor!
 		this.watchedFiles = _.zipObject(
-			['aboutUs', 'privacy', 'termsOfUse'],
-			_.map(['about_us', 'privacy', 'terms_of_use'], (folder) =>
+			['aboutUs', 'privacy', 'termsOfUse', 'help'],
+			_.map(['about_us', 'privacy', 'terms_of_use', 'help'], (folder) =>
 				_.zipObject(
 					['en-US', 'he-IL', 'ru-RU', 'bg-BG'],
 					_.map(['en-US', 'he-IL', 'ru-RU', 'bg-BG'], (language) =>
@@ -397,6 +398,21 @@ export class UsersService extends DBService<User>
 	@observableListener()
 	getTermsOfUseByLanguage(selectedLanguage: string): Observable<string> {
 		return this.watchedFiles.termsOfUse[selectedLanguage];
+	}
+
+	@observableListener()
+	getAboutUsByLanguage(selectedLanguage: string): Observable<string> {
+		return this.watchedFiles.aboutUs[selectedLanguage];
+	}
+
+	@observableListener()
+	getPrivacyByLanguage(selectedLanguage: string): Observable<string> {
+		return this.watchedFiles.privacy[selectedLanguage];
+	}
+
+	@observableListener()
+	getHelpByLanguage(selectedLanguage: string): Observable<string> {
+		return this.watchedFiles.help[selectedLanguage];
 	}
 
 	/**
