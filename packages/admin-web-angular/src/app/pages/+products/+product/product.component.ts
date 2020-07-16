@@ -62,14 +62,8 @@ export class ProductComponent implements OnInit, OnDestroy {
 		switch (langAbbreviation) {
 			case 'en-US':
 				return 'English';
-			case 'bg-BG':
-				return 'Български';
-			case 'he-IL':
-				return 'עברית';
-			case 'ru-RU':
-				return 'Русский';
-			case 'es-ES':
-				return 'Spanish';
+			case 'fr-FR':
+				return 'Francais';
 		}
 	}
 

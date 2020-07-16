@@ -20,7 +20,7 @@ export class ProductLocalesService {
 
 	public currentLocale: string;
 
-	constructor(private readonly _translateService: TranslateService) {}
+	constructor(private readonly _translateService: TranslateService) { }
 
 	public get isServiceStateValid() {
 		return (
@@ -103,16 +103,8 @@ export class ProductLocalesService {
 			case 'en-US':
 				translateLang = 'en-US';
 				break;
-			case 'he-IL':
-				translateLang = 'he-IL';
-				break;
-			case 'ru-RU':
-				translateLang = 'ru-RU';
-				break;
-			case 'bg-BG':
-				translateLang = 'bg-BG';
-			case 'es-ES':
-				translateLang = 'es-ES';
+			case 'fr-FR':
+				translateLang = 'fr-FR';
 				break;
 		}
 		return translateLang;

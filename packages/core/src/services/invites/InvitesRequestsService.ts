@@ -289,11 +289,11 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 						},
 					},
 				};
-			case 'ru-RU':
+			case 'fr-FR':
 				return {
 					android: {
-						title: 'Ever только что запустился!',
-						alert: 'Кликните чтобы увидить доступные продукты.',
+						title: 'BellEm, c est lance!',
+						alert: 'Cliquez pour voir les produits disponibles.',
 						extra: {
 							event: launched,
 							invite: JSON.stringify(invite),
@@ -308,25 +308,6 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 						},
 					},
 				};
-			case 'bg-BG':
-				return {
-					android: {
-						title: 'Ever стартира!',
-						alert: 'Кликнете, за да видите някои налични продукти.',
-						extra: {
-							event: launched,
-							invite: JSON.stringify(invite),
-						},
-					},
-					ios: {
-						alert: 'Ever стартира на вашия адрес. Забавлявай се!',
-						extra: {
-							event: launched,
-							invite: JSON.stringify(invite),
-						},
-					},
-				};
-			case 'he-IL':
 			default:
 				return {
 					android: {

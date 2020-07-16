@@ -91,8 +91,8 @@ export class UsersService extends DBService<User>
 			['aboutUs', 'privacy', 'termsOfUse'],
 			_.map(['about_us', 'privacy', 'terms_of_use'], (folder) =>
 				_.zipObject(
-					['en-US', 'he-IL', 'ru-RU', 'bg-BG'],
-					_.map(['en-US', 'he-IL', 'ru-RU', 'bg-BG'], (language) =>
+					['en-US', 'fr-FR'],
+					_.map(['en-US', 'fr-FR'], (language) =>
 						observeFile(
 							`${__dirname}/../../../../res/templates/${folder}/${language}.hbs`
 						).pipe(

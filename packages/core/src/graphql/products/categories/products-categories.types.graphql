@@ -7,6 +7,10 @@ type ProductsCategory {
 	_updatedAt: Date
 }
 
+input ProductsCategorySearchInput {
+	name: String!
+}
+
 input ProductsCategoryInput {
 	_id: String!
 	name: [TranslateInput!]
