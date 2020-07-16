@@ -48,6 +48,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 	searchText: string;
 	modelChanged: Subject<string> = new Subject<string>();
 	isWideView: boolean;
+	isProductAvailable: boolean = true;
 
 	private getOrdersGeoObj: { loc: ILocation };
 	private productsCount: number;
