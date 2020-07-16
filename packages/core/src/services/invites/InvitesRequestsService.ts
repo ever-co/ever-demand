@@ -289,11 +289,11 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 						},
 					},
 				};
-			case 'ru-RU':
+			case 'fr-FR':
 				return {
 					android: {
-						title: 'Ever только что запустился!',
-						alert: 'Кликните чтобы увидить доступные продукты.',
+						title: 'BellEm, c est lance!',
+						alert: 'Cliquez pour voir les produits disponibles.',
 						extra: {
 							event: launched,
 							invite: JSON.stringify(invite),

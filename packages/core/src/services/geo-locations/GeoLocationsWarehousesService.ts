@@ -15,6 +15,7 @@ import {
 	asyncListener,
 } from '@pyro/io';
 import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
+import ICategory from '@modules/server.common/interfaces/ICategory';
 import IGeoLocationWarehousesRouter from '@modules/server.common/routers/IGeoLocationWarehousesRouter';
 import IService from '../IService';
 import { ExistenceEventType } from '@pyro/db-server';
@@ -164,6 +165,46 @@ export class GeoLocationsWarehousesService
 				merchantsIds && merchantsIds.length > 0
 					? {
 							_id: { $in: merchantsIds },
+					  }
+					: {}
+			)
+		)
+			.populate(options.fullProducts ? 'products.product' : '')
+			.lean()
+			.exec()) as IWarehouse[];
+
+		return merchants;
+	}
+
+	@asyncListener()
+	async getCloseMerchantsCategory(
+		geoLocation: IGeoLocation,
+		category: ICategory,
+		maxDistance: number,
+		options: {
+			fullProducts: boolean;
+			activeOnly: boolean;
+			merchantsIds?: string[];
+		}
+	): Promise<IWarehouse[]> {
+		const merchantsIds = options.merchantsIds;
+		const merchants = (await this.warehousesService.Model.find(
+			_.assign(
+				{
+					'geoLocation.loc': {
+						$near: {
+							$geometry: {
+								type: 'Point',
+								coordinates: geoLocation.loc.coordinates
+							},
+							$maxDistance: maxDistance
+						}
+					}
+				},
+				options.activeOnly ? { isActive: true } : {},
+				merchantsIds && merchantsIds.length > 0
+					? {
+							_id: { $in: merchantsIds }
 					  }
 					: {}
 			)
