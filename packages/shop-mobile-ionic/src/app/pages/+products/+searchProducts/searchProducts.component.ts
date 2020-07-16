@@ -113,9 +113,9 @@ export class SearchProductsComponent implements OnInit {
 
 		const orderCount = await this.geoLocationProductsService.getCountOfGeoLocationProducts(
 			this.geoObj,
-			options
+			options,
+			this.searchInput
 		);
-
 		this.productsShowMoreButton =
 			orderCount === this.searchResultProducts.length;
 	}
