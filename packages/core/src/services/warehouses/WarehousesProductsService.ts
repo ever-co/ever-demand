@@ -122,7 +122,9 @@ export class WarehousesProductsService
 			map((warehouseProducts) =>
 				_.filter(
 					warehouseProducts,
-					(warehouseProduct) => warehouseProduct.count > 0
+					(warehouseProduct) =>
+						warehouseProduct.count > 0 &&
+						warehouseProduct.isProductAvailable === true
 				)
 			)
 		);

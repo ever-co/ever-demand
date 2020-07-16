@@ -51,6 +51,7 @@ export class WarehouseProductsService {
 							isManufacturing
 							isCarrierRequired
 							isDeliveryRequired
+							isProductAvailable
 							isTakeaway
 							deliveryTimeMin
 							deliveryTimeMax
