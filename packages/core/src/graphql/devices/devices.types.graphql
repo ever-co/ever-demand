@@ -54,8 +54,6 @@ type Subscription {
 }
 
 enum Language {
-	he_IL
 	en_US
-	ru_RU
-	bg_BG
+	fr_FR
 }
