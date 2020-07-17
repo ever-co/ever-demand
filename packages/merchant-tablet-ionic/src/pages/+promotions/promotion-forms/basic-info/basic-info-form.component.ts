@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
 	IPromotion,
 	IPromotionCreateObject,
@@ -89,8 +89,24 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 
 		let basicInfoValue = this.form.value;
 
-		basicInfoValue.title = this.promotion.title;
-		basicInfoValue.description = this.promotion.description;
+		basicInfoValue.warehouse = { _id: this.warehouseId };
+
+		basicInfoValue.title = this.promotion.title.map((localeMember: any) => {
+			return {
+				locale: localeMember.locale,
+				value: localeMember.value,
+			};
+		});
+
+		basicInfoValue.description = this.promotion.description.map(
+			(localeMember: any) => {
+				return {
+					locale: localeMember.locale,
+					value: localeMember.value,
+				};
+			}
+		);
+
 		delete basicInfoValue.locale;
 
 		return basicInfoValue as IPromotionCreateObject;
@@ -114,7 +130,7 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 			),
 			activeFrom: this.promotion.activeFrom || new Date(),
 			activeTo: this.promotion.activeTo || null,
-			product: this.promotion.product || null,
+			product: this.promotion.productId || null,
 		};
 
 		this.form.patchValue(promotionFormValue);
@@ -123,11 +139,11 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 	static buildForm(formBuilder: FormBuilder): FormGroup {
 		return formBuilder.group({
 			locale: ['en-US'],
-			title: [''],
+			title: ['', Validators.required],
 			description: [''],
-			activeFrom: [null],
-			activeTo: [null],
-			product: [null],
+			activeFrom: [null, Validators.required],
+			activeTo: [null, Validators.required],
+			product: [null, Validators.required],
 		});
 	}
 

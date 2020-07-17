@@ -10,6 +10,7 @@ import ProductInfo from '@modules/server.common/entities/ProductInfo';
 import { Store } from '../../../services/store.service';
 import { Router } from '@angular/router';
 import { WarehouseProductsService } from 'app/services/merchants/warehouse-products';
+import { ProductsService } from '../../../services/products.service';
 
 @Component({
 	selector: 'e-cu-products-view',
@@ -47,7 +48,8 @@ export class ProductsViewComponent implements OnChanges {
 	constructor(
 		private store: Store,
 		private router: Router,
-		private warehouseProductsService: WarehouseProductsService
+		private warehouseProductsService: WarehouseProductsService,
+		private productService: ProductsService
 	) {}
 
 	ngOnChanges({ products }: { products: SimpleChange }) {
@@ -75,31 +77,6 @@ export class ProductsViewComponent implements OnChanges {
 	}
 
 	async goToDetailsPage(product: ProductInfo) {
-		const prod = await this.warehouseProductsService.getWarehouseProduct(
-			product.warehouseId,
-			product.warehouseProduct.id
-		);
-
-		if (prod) {
-			this.router.navigate(
-				[
-					`/products/product-details/${product.warehouseProduct.product['id']}`,
-				],
-				{
-					queryParams: {
-						backUrl: '/products',
-						warehouseId: product.warehouseId,
-					},
-				}
-			);
-		} else {
-			const loadedProduct = this.products.find(
-				(p) => p.warehouseProduct.id === product.warehouseProduct.id
-			);
-
-			if (loadedProduct) {
-				loadedProduct['soldOut'] = true;
-			}
-		}
+		this.productService.goToDetailsPage(product, this.products);
 	}
 }

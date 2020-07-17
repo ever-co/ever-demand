@@ -21,6 +21,11 @@
 				h4 {
 					width: 90%;
 					text-align: center;
+					text-transform: lowercase;
+
+					&::first-letter {
+						text-transform: uppercase;
+					}
 				}
 				.control {
 					display: flex;
@@ -30,9 +35,9 @@
 				.details {
 					display: flex;
 					align-items: center;
-					width: 90%;
 					border: 1px solid rgba(0, 0, 0, 0.125);
 					border-radius: 4px;
+					flex-direction: column;
 					img {
 						width: 128px;
 						height: 128px;

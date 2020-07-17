@@ -20,29 +20,32 @@
 				<div class="button-bar-right-container allowOverflow">
 					<div class="button-bar">
 						<a
-							class="button"
+							class="button switch"
 							[ngClass]="{
-								'button-dark-brand': showRelevant,
-								'button-brand': !showRelevant || showAllProducts
-							}"
-							(click)="
-								switchOrders(true); showAllProducts = false
-							"
+							'button-dark-brand': showRelevant,
+							'button-brand': !showAllProducts
+						}"
 						>
-							{{ 'WAREHOUSE_VIEW.RELEVANT' | translate }}
+							<ion-select
+								interface="popover"
+								[placeholder]="'WAREHOUSE_VIEW.SWITCH_ORDERS' | translate"
+								(ionChange)="switchOrders(true, $event); showAllProducts = false;"
+							>
+								<ion-select-option value="relevant"
+									>{{ 'WAREHOUSE_VIEW.RELEVANT' | translate
+									}}</ion-select-option
+								>
+								<ion-select-option
+									*ngFor="let status of keys(statuses) | skipStatus:orderStatus"
+									[value]="status"
+								>
+									{{
+									('WAREHOUSE_VIEW.ORDER_WAREHOUSE_STATUSES.'
+									+ statuses[status]) | translate }}
+								</ion-select-option>
+							</ion-select>
 						</a>
-						<a
-							class="button"
-							[ngClass]="{
-								'button-dark-brand': !showRelevant,
-								'button-brand': showRelevant || showAllProducts
-							}"
-							(click)="
-								switchOrders(false); showAllProducts = false
-							"
-						>
-							{{ 'WAREHOUSE_VIEW.ALL' | translate }}
-						</a>
+
 						<a
 							class="button"
 							[ngClass]="{
@@ -92,6 +95,7 @@
 						[focusedOrder]="focusedOrder"
 						(toggleOrderContainer)="toggleOrderContainer()"
 						[isOrderContainerLive]="isOrderContainerLive"
+						[filter]="filter"
 					>
 					</merchant-relevant-orders>
 
