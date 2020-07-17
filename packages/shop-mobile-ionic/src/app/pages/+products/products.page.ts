@@ -257,12 +257,10 @@ export class ProductsPage implements OnInit, OnDestroy {
 		if (this.productsCount > this.products.length) {
 			if (this.getOrdersGeoObj) {
 				this.areProductsLoaded = false;
-
 				const isDeliveryRequired =
 					this.store.deliveryType === DeliveryType.Delivery;
 				const isTakeaway =
 					this.store.deliveryType === DeliveryType.Takeaway;
-
 				let loadProducts = true;
 				this.geoLocationProductsService
 					.geoLocationProductsByPaging(
@@ -297,9 +295,15 @@ export class ProductsPage implements OnInit, OnDestroy {
 						}
 
 						if (loadProducts) {
-							this.products.push(...products);
+							products.forEach((product) => {
+								console.warn(product);
+								if (
+									product.warehouseProduct.isProductAvailable
+								) {
+									this.products.push(product);
+								}
+							});
 						}
-
 						loadProducts = false;
 						this.areProductsLoaded = true;
 					});

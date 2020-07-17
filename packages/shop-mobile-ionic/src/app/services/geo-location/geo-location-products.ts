@@ -20,6 +20,7 @@ export class GeoLocationProductsService {
 			imageOrientation?: number;
 			locale?: string;
 			withoutCount?: boolean;
+			isProductAvailable?: boolean;
 		},
 		searchText?: string
 	): Observable<ProductInfo[]> {
@@ -47,7 +48,6 @@ export class GeoLocationProductsService {
 								initialPrice
 								count
 								soldCount
-
 								product {
 									id
 									title {
@@ -76,6 +76,7 @@ export class GeoLocationProductsService {
 								isTakeaway
 								deliveryTimeMin
 								deliveryTimeMax
+								isProductAvailable
 							}
 						}
 					}
@@ -98,6 +99,7 @@ export class GeoLocationProductsService {
 			imageOrientation?: number;
 			locale?: string;
 			withoutCount?: boolean;
+			isProductAvailable?: boolean;
 		},
 		searchText?: string
 	) {

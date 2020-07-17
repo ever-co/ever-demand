@@ -91,4 +91,5 @@ input GetGeoLocationProductsOptions {
 	imageOrientation: Int
 	locale: String
 	withoutCount: Boolean
+	isProductAvailable: Boolean
 }

@@ -11,6 +11,7 @@ export interface IGetGeoLocationProductsOptions {
 	imageOrientation?: number;
 	locale?: string;
 	withoutCount?: boolean;
+	isProductAvailable?: boolean;
 }
 
 @Resolver('GeoLocation')
