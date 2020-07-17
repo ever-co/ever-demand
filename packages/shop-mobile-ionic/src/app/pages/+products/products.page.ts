@@ -244,7 +244,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 			.toPromise();
 		let merchantIds = [];
 
-		if ((!merchantIds || merchantIds.length === 0) && this.inStore) {
+		if (this.inStore) {
 			merchantIds = [this.inStore];
 		} else {
 			merchantIds = merchants.map((merchant) => merchant.id);
@@ -296,7 +296,6 @@ export class ProductsPage implements OnInit, OnDestroy {
 
 						if (loadProducts) {
 							products.forEach((product) => {
-								console.warn(product);
 								if (
 									product.warehouseProduct.isProductAvailable
 								) {
