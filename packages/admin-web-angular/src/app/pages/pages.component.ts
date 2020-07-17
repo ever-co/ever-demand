@@ -23,6 +23,12 @@ export class PagesComponent {
 				link: '/dashboard',
 				pathMatch: 'prefix',
 			},
+			// {
+			// 	title: this.getTranslation('MENU_VIEW.ORDERS'),
+			// 	icon: 'shopping-bag-outline',
+			// 	link: '/orders',
+			// 	pathMatch: 'prefix',
+			// },
 			{
 				title: this.getTranslation('MENU_VIEW.STORES'),
 				icon: 'home-outline',

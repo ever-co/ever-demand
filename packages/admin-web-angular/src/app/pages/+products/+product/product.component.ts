@@ -60,10 +60,10 @@ export class ProductComponent implements OnInit, OnDestroy {
 
 	getLanguageFullName(langAbbreviation: string) {
 		switch (langAbbreviation) {
-			case 'en-US':
-				return 'English';
 			case 'fr-FR':
 				return 'Francais';
+			case 'en-US':
+				return 'English';
 		}
 	}
 

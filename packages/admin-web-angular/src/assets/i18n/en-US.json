@@ -17,7 +17,7 @@
 			"ADD_PRODUCTS": "Add products",
 			"REMOVE_PRODUCTS": "Remove Products",
 			"CANCEL_ORDER": "Cancel Order",
-			"THE_ORDER_IS_CANCELED": "The order is canceled",
+			"THE_ORDER_IS_CANCEL": "The order is cancel",
 			"THE_ORDER_IS_GIVEN_TO_CARRIER": "The order is given to carrier.",
 			"THE_ORDER_IS_DELIVERED": "The order is delivered.",
 			"ADD_PRODUCTS_MODAL": "Add Products",
@@ -118,12 +118,12 @@
 	},
 	"HEADER_VIEW": {
 		"ADMIN": "Admin",
-		"EVER": "Ever",
+		"EVER": "Bellem",
 		"PROFILE": "Profile",
 		"LOG_OUT": "Log out"
 	},
 	"FOOTER_VIEW": {
-		"COPY_RIGHT": "Copyright © 2016-present",
+		"COPY_RIGHT": "Copyright © 2020",
 		"ALL_RIGHTS_RESERVED": "All rights reserved"
 	},
 	"PROFILE_VIEW": {
@@ -1001,6 +1001,7 @@
 	},
 	"MENU_VIEW": {
 		"DASHBOARD": "Dashboard",
+		"ORDERS": "Orders",
 		"STORES": "Stores",
 		"PRODUCTS": {
 			"PRODUCTS": "Products",
@@ -1126,6 +1127,7 @@
 	"LANGUAGE": "Language",
 	"BROWSE": "Browse",
 	"ENGLISH": "English",
+	"FRENCH": "French",
 	"HEBREW": "Hebrew",
 	"RUSSIAN": "Russian",
 	"BULGARIAN": "Bulgarian",

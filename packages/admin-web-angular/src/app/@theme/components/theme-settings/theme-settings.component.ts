@@ -69,9 +69,7 @@ export class ThemeSettingsComponent {
 			translate.use(this.defaultLanguage);
 		} else {
 			translate.use(
-				browserLang.match(/en-US|fr-FR/)
-					? browserLang
-					: 'fr-FR'
+				browserLang.match(/fr-FR|en-US/) ? browserLang : 'fr-FR'
 			);
 		}
 

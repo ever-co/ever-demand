@@ -81,7 +81,7 @@
 											: ''
 									"
 								>
-									${{
+									XAF{{
 										totalInfo.revenue | myNumberWithCommas
 									}}
 								</span>
@@ -216,7 +216,7 @@
 											: ''
 									"
 								>
-									${{
+									XAF{{
 										todayInfo.revenue | myNumberWithCommas
 									}}
 								</span>
@@ -259,7 +259,8 @@
 				<ea-ecommerce-charts
 					[orders]="chartPanelOrders"
 					[isOrdersLoad]="isChartPanelOrdersLoad"
-				></ea-ecommerce-charts>
+				>
+				</ea-ecommerce-charts>
 			</div>
 		</div>
 	</div>
@@ -267,7 +268,8 @@
 	<div class="col-3">
 		<ea-dashboard-select-store
 			[stores]="stores"
-			(selectedStoreEmitter)="onSelectStore($event)"
-		></ea-dashboard-select-store>
+			(selectedStoreEmitter)="onSelectStore(XAFevent)"
+		>
+		</ea-dashboard-select-store>
 	</div>
 </div>

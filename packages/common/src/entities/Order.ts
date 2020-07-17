@@ -379,21 +379,21 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 			case OrderStatus.WarehousePreparation:
 				return 'Preparation';
 			case OrderStatus.InDelivery:
-				return 'In Delivery';
+				return 'En cours de livraison';
 			case OrderStatus.Delivered:
-				return 'Delivered';
+				return 'Livre';
 			case OrderStatus.CanceledWhileWarehousePreparation:
 			case OrderStatus.CanceledWhileInDelivery:
-				return 'Cancelled';
+				return 'Annule';
 			case OrderStatus.WarehouseIssue:
-				return 'Preparation Issue';
+				return 'Probleme de Preparation';
 			case OrderStatus.CarrierIssue:
-				return 'Delivery Issue';
+				return 'Probleme de livraison';
 			default:
 				return 'BAD_STATUS';
 		}
 	}
-
+  
 }
 
 export default Order;
