@@ -22,6 +22,7 @@ import { CommonProducts } from './common/common-products.module';
 import { GeoLocationProductsService } from 'app/services/geo-location/geo-location-products';
 import { WarehouseProductsService } from 'app/services/merchants/warehouse-products';
 import { SearchProductsModule } from './+searchProducts/searchProducts.module';
+import { WarehouseService } from 'app/services/warehouse.service';
 
 const routes: Routes = [
 	{
@@ -64,6 +65,7 @@ const routes: Routes = [
 		GeoLocationService,
 		GeoLocationProductsService,
 		WarehouseProductsService,
+		WarehouseService,
 	],
 	declarations: [
 		ProductsPage,

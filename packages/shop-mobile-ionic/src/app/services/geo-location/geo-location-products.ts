@@ -122,22 +122,4 @@ export class GeoLocationProductsService {
 
 		return res.data['getCountOfGeoLocationProducts'];
 	}
-
-	async getMerchantIds(geoLocation) {
-		const res = await this.apollo
-			.query({
-				query: gql`
-					query GetMerchantIds($geoLocation: GeoLocationFindInput!) {
-						getMerchantIds(geoLocation: $geoLocation) {
-							warehouses {
-								id
-							}
-						}
-					}
-				`,
-				variables: { geoLocation },
-			})
-			.toPromise();
-		return res.data['getMerchantIds'];
-	}
 }

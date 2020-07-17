@@ -82,7 +82,6 @@ type Query {
 		options: GetGeoLocationProductsOptions
 		searchText: String
 	): Int!
-	getMerchantIds(geoLocation: GeoLocationFindInput!): [String]
 }
 
 input GetGeoLocationProductsOptions {

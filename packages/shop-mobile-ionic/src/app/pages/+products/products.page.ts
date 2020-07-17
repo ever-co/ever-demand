@@ -21,7 +21,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
 import { GeoLocationProductsService } from 'app/services/geo-location/geo-location-products';
 import { WarehouseProductsService } from 'app/services/merchants/warehouse-products';
-import { GeoLocationWarehousesRouter } from '@modules/client.common.angular2/routers/geo-location-warehouses-router.service';
+import { WarehouseService } from 'app/services/warehouse.service';
 
 const initializeProductsNumber: number = 10;
 
@@ -50,7 +50,6 @@ export class ProductsPage implements OnInit, OnDestroy {
 	private lastLoadProductsCount: number;
 	private lastImageOrientation: number;
 	private productsLocale: string;
-	private getGeoLocation: GeoLocation;
 
 	constructor(
 		private store: Store,
@@ -63,7 +62,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 		private geoLocationService: GeoLocationService,
 		private warehouseRouter: WarehouseRouter,
 		private warehouseProductsService: WarehouseProductsService,
-		private geoLocationWarehouseService: GeoLocationWarehousesRouter
+		private warehouseService: WarehouseService
 	) {
 		this.productsLocale = this.store.language || environment.DEFAULT_LOCALE;
 
@@ -90,20 +89,10 @@ export class ProductsPage implements OnInit, OnDestroy {
 		return (!merchantIds || merchantIds.length < 1) && !this.inStore;
 	}
 
-	async ngOnInit() {
+	ngOnInit() {
 		this.continueOrder();
 		this.loadProducts();
 	}
-
-	async loadAllProducts() {
-		const takeoutProducts = [];
-		const deliveryProducts = [];
-
-		// const allProducts = this.warehouseProductsService.getAllWarehouseProducts();
-
-		// console.warn(allProducts);
-	}
-
 	async buyItem(currentProduct: ProductInfo) {
 		if (
 			!this.store.userId &&
@@ -168,14 +157,10 @@ export class ProductsPage implements OnInit, OnDestroy {
 	toggleGetProductsType() {
 		this.changePage = true;
 		this.products = [];
-		this.loadProducts({
-			count: this.lastLoadProductsCount,
-			imageOrientation: this.lastImageOrientation,
-		});
+		this.loadProducts();
 	}
 
 	changeStoreMode() {
-		debugger;
 		this.products = [];
 		if (this.inStore) {
 			this.store.clearInStore();
@@ -189,11 +174,6 @@ export class ProductsPage implements OnInit, OnDestroy {
 		}
 
 		this.changePage = true;
-
-		// this.loadProducts({
-		// 	count: this.lastLoadProductsCount,
-		// 	imageOrientation: this.lastImageOrientation,
-		// });
 		this.loadProducts();
 	}
 
@@ -248,7 +228,6 @@ export class ProductsPage implements OnInit, OnDestroy {
 				},
 			};
 		}
-		this.getGeoLocation = geoLocationForProducts;
 	}
 
 	async loadProducts(options = {}) {
@@ -257,25 +236,25 @@ export class ProductsPage implements OnInit, OnDestroy {
 			: DeliveryType.Takeaway;
 
 		const count = options['count'];
-		// const imageOrientation = options['imageOrientation'];
-		const imageOrientation = options[1];
+		const imageOrientation = options['imageOrientation'];
 		this.lastLoadProductsCount = count;
 		this.lastImageOrientation = imageOrientation;
-
-		let merchantIds = [
-			'5f0f0f02b2c63906dc965259',
-			'5f0f0f12b2c63906dc96525b',
-		];
+		const merchants = await this.warehouseService
+			.getAllStores()
+			.toPromise();
+		let merchantIds = [];
 
 		if ((!merchantIds || merchantIds.length === 0) && this.inStore) {
 			merchantIds = [this.inStore];
+		} else {
+			merchantIds = merchants.map((merchant) => merchant.id);
 		}
 
 		await this.loadProductsCount(merchantIds, imageOrientation);
 
 		this.changePage = false;
 
-		if (this.productsCount >= this.products.length) {
+		if (this.productsCount > this.products.length) {
 			if (this.getOrdersGeoObj) {
 				this.areProductsLoaded = false;
 
@@ -285,8 +264,6 @@ export class ProductsPage implements OnInit, OnDestroy {
 					this.store.deliveryType === DeliveryType.Takeaway;
 
 				let loadProducts = true;
-				// const test = await this.geoLocationProductsService.getMerchantIds(this.getOrdersGeoObj);
-				// console.warn(test);
 				this.geoLocationProductsService
 					.geoLocationProductsByPaging(
 						this.getOrdersGeoObj,
