@@ -78,8 +78,7 @@ export class DriveToWarehousePage implements OnInit {
 					await this.order$.unsubscribe();
 				}
 
-				const orderId = localStorage.getItem('orderId');
-				if (orderId) {
+				this.store.orderId$.subscribe((orderId) => {
 					this.order$ = this.orderRouter
 						.get(orderId, {
 							populateWarehouse: true,
@@ -112,7 +111,7 @@ export class DriveToWarehousePage implements OnInit {
 							this.carrierMap.setCenter(origin);
 							this.carrierMap.drawRoute(origin, destination);
 						});
-				}
+				});
 			});
 	}
 

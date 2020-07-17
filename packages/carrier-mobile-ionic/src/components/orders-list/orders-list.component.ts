@@ -19,6 +19,8 @@ import { Router } from '@angular/router';
 export class OrdersListComponent implements OnInit {
 	filteredList = [];
 	private carrier;
+	private carrier$;
+	private orders$;
 
 	constructor(
 		private modalCtrl: ModalController,
@@ -39,11 +41,11 @@ export class OrdersListComponent implements OnInit {
 	}
 
 	filterOrdersList(orders) {
-		this.filteredList = [].concat(orders).reverse();
+		this.filteredList = [].concat(orders);
 	}
 
 	async loadOrderslist() {
-		this.carrierRouter
+		this.carrier$ = this.carrierRouter
 			.get(this.store.carrierId)
 			.subscribe(async (carrier) => {
 				this.carrier = carrier;
@@ -61,7 +63,7 @@ export class OrdersListComponent implements OnInit {
 					},
 				} as IGeoLocation;
 
-				this.geoLocationOrdersService
+				this.orders$ = this.geoLocationOrdersService
 					.getOrdersForWork(
 						dbGeoInput,
 						carrier.skippedOrderIds,
@@ -77,14 +79,28 @@ export class OrdersListComponent implements OnInit {
 					});
 			});
 	}
+
+	selectNewOrder(id) {
+		//checking if selected order is started
+		//its not possible to take 2 orders a the same time for now
+
+		const status = this.store.selectedOrder.carrierStatus;
+		if (status !== 0) {
+			//todo add message popup error
+			alert('You are already in delivery ...');
+		} else {
+			this.store.orderId = id;
+		}
+		this.closeOrderListModal();
+	}
+
 	async closeOrderListModal() {
+		this.destroyAll();
 		await this.modalCtrl.dismiss();
 	}
 
-	selectNewOrder(id) {
-		this.store.orderId = id;
-
-		this.closeOrderListModal();
-		this.router.navigateByUrl('/', { skipLocationChange: false });
+	destroyAll() {
+		this.carrier$ ? this.carrier$.unsubscribe() : null;
+		this.orders$ ? this.orders$.unsubscribe() : null;
 	}
 }
