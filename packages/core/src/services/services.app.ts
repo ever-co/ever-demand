@@ -151,8 +151,8 @@ export class ServicesApp {
 				this.db.close(() => {
 					this.log.info(
 						'Mongoose default connection with DB :' +
-							this.db_server +
-							' is disconnected through app termination'
+						this.db_server +
+						' is disconnected through app termination'
 					);
 					process.exit(0);
 				});
@@ -199,16 +199,16 @@ export class ServicesApp {
 		this.db.on('disconnected', () => {
 			this.log.warn(
 				'Mongoose default connection to DB :' +
-					this.db_server +
-					' disconnected'
+				this.db_server +
+				' disconnected'
 			);
 		});
 
 		this.db.on('connected', () => {
 			this.log.info(
 				'Mongoose default connection to DB :' +
-					this.db_server +
-					' connected'
+				this.db_server +
+				' connected'
 			);
 		});
 	}
@@ -570,40 +570,24 @@ export class ServicesApp {
 			res.render('about_us_en');
 		});
 
-		this.expressApp.get('/he/about', function (req, res) {
-			res.render('about_us_he');
-		});
-
-		this.expressApp.get('/ru/about', function (req, res) {
-			res.render('about_us_ru');
+		this.expressApp.get('/fr/about', function (req, res) {
+			res.render('about_us_fr');
 		});
 
 		this.expressApp.get('/en/privacy', function (req, res) {
 			res.render('privacy_en');
 		});
 
-		this.expressApp.get('/he/privacy', function (req, res) {
-			res.render('privacy_he');
-		});
-
-		this.expressApp.get('/ru/privacy', function (req, res) {
-			res.render('privacy_ru');
+		this.expressApp.get('/fr/privacy', function (req, res) {
+			res.render('privacy_fr');
 		});
 
 		this.expressApp.get('/en/terms', function (req, res) {
 			res.render('terms_of_use_en');
 		});
 
-		this.expressApp.get('/he/terms', function (req, res) {
-			res.render('terms_of_use_he');
-		});
-
-		this.expressApp.get('/ru/terms', function (req, res) {
-			res.render('terms_of_use_ru');
-		});
-
-		this.expressApp.get('/bg/terms', function (req, res) {
-			res.render('terms_of_use_bg');
+		this.expressApp.get('/fr/terms', function (req, res) {
+			res.render('terms_of_use_fr');
 		});
 	}
 
