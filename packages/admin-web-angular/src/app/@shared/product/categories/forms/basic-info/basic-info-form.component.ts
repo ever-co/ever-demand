@@ -53,7 +53,7 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 	constructor(
 		private readonly fb: FormBuilder,
 		private readonly _langTranslateService: TranslateService
-	) {}
+	) { }
 
 	get image() {
 		return this.form.get('image');
@@ -79,7 +79,7 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 
 			case 'en-US':
 				return 'en-US';
-
+        
 			default:
 				return 'fr-FR';
 		}
@@ -104,9 +104,9 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 			({ locale, value }) => {
 				return locale === usedLanguage
 					? {
-							locale: usedLanguage,
-							value: this.name.value,
-					  }
+						locale: usedLanguage,
+						value: this.name.value,
+					}
 					: { locale, value };
 			}
 		);

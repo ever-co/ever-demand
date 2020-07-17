@@ -15,12 +15,12 @@ export class ThemeSettingsComponent {
 
 	languages = [
 		{
-			value: 'fr-FR',
-			name: 'Francais',
-		},
-		{
 			value: 'en-US',
 			name: 'English',
+		},
+		{
+			value: 'fr-FR',
+			name: 'Francais',
 		},
 	];
 
