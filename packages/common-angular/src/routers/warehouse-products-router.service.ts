@@ -124,6 +124,36 @@ export class WarehouseProductsRouter implements IWarehouseProductsRouter {
 		return this._warehouseProductFactory(warehouseProduct);
 	}
 
+	async changeProductTakeaway(
+		warehouseId: string,
+		productId: string,
+		isTakeaway: boolean
+	): Promise<WarehouseProduct> {
+		const warehouseProduct = await this.router.run<IWarehouseProduct>(
+			'changeProductTakeaway',
+			warehouseId,
+			productId,
+			isTakeaway
+		);
+
+		return this._warehouseProductFactory(warehouseProduct);
+	}
+
+	async changeProductDelivery(
+		warehouseId: string,
+		productId: string,
+		isDelivery: boolean
+	): Promise<WarehouseProduct> {
+		const warehouseProduct = await this.router.run<IWarehouseProduct>(
+			'changeProductDelivery',
+			warehouseId,
+			productId,
+			isDelivery
+		);
+
+		return this._warehouseProductFactory(warehouseProduct);
+	}
+
 	async increaseSoldCount(
 		warehouseId: string,
 		productId: string,

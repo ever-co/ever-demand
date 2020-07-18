@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
+import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 
 @Component({
 	styles: [
@@ -7,73 +9,76 @@ import { Component, Input } from '@angular/core';
 				white-space: nowrap;
 				padding-bottom: 4px;
 			}
-
-			div img {
-				width: 40px;
-				height: 40px;
-			}
-
-			.icon-closed {
-				color: red;
-				margin-right: 3px;
-			}
-
-			.icon-checked {
-				color: green;
-				margin-right: 3px;
-			}
 		`,
 	],
 	template: `
-		<div
-			*ngIf="
-				rowData.type.isDeliveryRequired && !rowData.type.isTakeaway;
-				else takeaway
-			"
-		>
+		<div>
 			<div>
-				<i class="ion-md-checkmark icon-checked"></i>
-				{{ 'WAREHOUSE_VIEW.PRODUCTS_TAB.DELIVERY' | translate }}
+				<nb-checkbox
+					[(ngModel)]="isDelivery"
+					(checkedChange)="isDeliveryChange($event)"
+					>{{
+						'WAREHOUSE_VIEW.PRODUCTS_TAB.DELIVERY' | translate
+					}}</nb-checkbox
+				>
 			</div>
 			<div>
-				<i class="ion-md-close icon-closed"></i>
-				{{ 'WAREHOUSE_VIEW.PRODUCTS_TAB.TAKEAWAY' | translate }}
+				<nb-checkbox
+					[(ngModel)]="isTakeaway"
+					(checkedChange)="isTakeawayChange($event)"
+					>{{
+						'WAREHOUSE_VIEW.PRODUCTS_TAB.TAKEAWAY' | translate
+					}}</nb-checkbox
+				>
 			</div>
 		</div>
-		<ng-template #takeaway>
-			<div
-				*ngIf="
-					!rowData.type.isDeliveryRequired && rowData.type.isTakeaway;
-					else both
-				"
-			>
-				<div>
-					<i class="ion-md-close icon-closed"></i>
-					{{ 'WAREHOUSE_VIEW.PRODUCTS_TAB.DELIVERY' | translate }}
-				</div>
-				<div>
-					<i class="ion-md-checkmark icon-checked"></i>
-					{{ 'WAREHOUSE_VIEW.PRODUCTS_TAB.TAKEAWAY' | translate }}
-				</div>
-			</div>
-			<ng-template #both>
-				<div>
-					<div>
-						<i class="ion-md-checkmark icon-checked"></i>
-						{{ 'WAREHOUSE_VIEW.PRODUCTS_TAB.DELIVERY' | translate }}
-					</div>
-					<div>
-						<i class="ion-md-checkmark icon-checked"></i>
-						{{ 'WAREHOUSE_VIEW.PRODUCTS_TAB.TAKEAWAY' | translate }}
-					</div>
-				</div>
-			</ng-template>
-		</ng-template>
 	`,
 })
-export class ProductTakeawayDeliveryComponent {
+export class ProductTakeawayDeliveryComponent implements OnInit {
 	@Input()
 	rowData: any;
+	isDelivery: boolean;
+	isTakeaway: boolean;
+	wareHouseId: string;
+	productId: string;
 
-	constructor() {}
+	constructor(private warehouseProductRouter: WarehouseProductsRouter) {}
+
+	ngOnInit() {
+		this.isDelivery = this.rowData.isDeliveryRequired;
+		this.isTakeaway = this.rowData.isTakeaway;
+		this.wareHouseId = this.rowData.storeId;
+		this.productId = this.rowData.product.id;
+	}
+
+	async isDeliveryChange() {
+		this.isDelivery = !this.isDelivery;
+
+		if (!this.isDelivery && !this.isTakeaway) {
+			this.isDelivery = true;
+			alert('Atleast one type should be selected!');
+			return;
+		}
+		this.rowData.isDeliveryRequired = this.isDelivery;
+		await this.warehouseProductRouter.changeProductDelivery(
+			this.wareHouseId,
+			this.productId,
+			this.rowData.isDeliveryRequired
+		);
+	}
+
+	async isTakeawayChange() {
+		this.isTakeaway = !this.isTakeaway;
+		if (!this.isDelivery && !this.isTakeaway) {
+			this.isTakeaway = true;
+			alert('Atleast one type should be selected!');
+			return;
+		}
+		this.rowData.isTakeaway = this.isTakeaway;
+		await this.warehouseProductRouter.changeProductTakeaway(
+			this.wareHouseId,
+			this.productId,
+			this.rowData.isTakeaway
+		);
+	}
 }
