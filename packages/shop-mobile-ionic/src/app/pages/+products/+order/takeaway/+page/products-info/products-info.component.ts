@@ -8,10 +8,10 @@ import {
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import Order from '@modules/server.common/entities/Order';
-import { getIdFromTheDate } from '@modules/server.common/utils';
 import { environment } from 'environments/environment';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
+import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
 
 @Component({
 	selector: 'e-cu-order-produts-info',
@@ -38,6 +38,12 @@ export class OrderProductsInfo implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		console.warn('OrderProductsInfo Initialize.');
+	}
+
+	isOrderReady() {
+		return (
+			this.order.warehouseStatus >= OrderWarehouseStatus.PackagingFinished
+		);
 	}
 
 	localeTranslate(member: ILocaleMember[]): string {
