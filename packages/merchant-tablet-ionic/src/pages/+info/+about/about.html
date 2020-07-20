@@ -18,4 +18,10 @@
 		*ngIf="useAboutHtml !== null"
 		[innerHTML]="useAboutHtml | safe: 'html'"
 	></div>
+	<h5
+		style="padding-left: 10px; padding-top: 20px; color: #888;"
+		*ngIf="useAboutHtml !== null"
+	>
+		{{ 'ABOUT_VIEW.APP_VERSION' | translate }}: {{ appVersion }}
+	</h5>
 </ion-content>
