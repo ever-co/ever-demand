@@ -85,7 +85,6 @@ export class ProductsPage implements OnInit, OnDestroy {
 
 	get navigateToMerchants() {
 		const merchantIds = environment['MERCHANT_IDS'];
-
 		return (!merchantIds || merchantIds.length < 1) && !this.inStore;
 	}
 
@@ -157,6 +156,10 @@ export class ProductsPage implements OnInit, OnDestroy {
 	toggleGetProductsType() {
 		this.changePage = true;
 		this.products = [];
+		// this.loadProducts({
+		// 	count: this.lastLoadProductsCount,
+		// 	imageOrientation: this.lastImageOrientation,
+		// });
 		this.loadProducts();
 	}
 
@@ -168,7 +171,6 @@ export class ProductsPage implements OnInit, OnDestroy {
 			if (!this.navigateToMerchants) {
 				// Here take first merchant id because all id's are from one merchant
 				this.store.inStore = environment['MERCHANT_IDS'][0];
-
 				this.loadMerchant();
 			}
 		}
@@ -242,6 +244,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 		const merchants = await this.warehouseService
 			.getAllStores()
 			.toPromise();
+
 		let merchantIds = [];
 
 		if (this.inStore) {
@@ -276,6 +279,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 							imageOrientation,
 							locale: this.productsLocale,
 							withoutCount: true,
+							isProductAvailable: true,
 						}
 					)
 					.pipe(takeUntil(this.ngDestroy$))
@@ -295,7 +299,9 @@ export class ProductsPage implements OnInit, OnDestroy {
 						}
 
 						if (loadProducts) {
+							this.products = [];
 							products.forEach((product) => {
+								//TODO MAKE THE FILTERLING FROM THE API
 								if (
 									product.warehouseProduct.isProductAvailable
 								) {
@@ -399,7 +405,6 @@ export class ProductsPage implements OnInit, OnDestroy {
 				.pipe(first())
 				.toPromise();
 		}
-
 		this.loadProducts();
 	}
 	toggleSearch() {
