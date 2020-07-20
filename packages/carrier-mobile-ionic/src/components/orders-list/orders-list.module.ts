@@ -5,9 +5,10 @@ import { OrdersListComponent } from './orders-list.component';
 import { GeoLocationOrdersService } from '../../services/geo-location-order.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { GeoLocationService } from '../../services/geo-location.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-	imports: [CommonModule, IonicModule],
+	imports: [CommonModule, IonicModule, TranslateModule.forChild()],
 	declarations: [OrdersListComponent],
 	entryComponents: [OrdersListComponent],
 	exports: [OrdersListComponent],

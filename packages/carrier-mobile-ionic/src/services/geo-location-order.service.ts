@@ -99,6 +99,7 @@ export class GeoLocationOrdersService {
 								lastName
 								image
 								phone
+								email
 								fullAddress
 								geoLocation {
 									loc {
