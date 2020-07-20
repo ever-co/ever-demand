@@ -18,7 +18,7 @@ import { combineLatest, of, throwError, Observable } from 'rxjs';
 @injectable()
 @routerName('user-products')
 export class UsersProductsService implements IUserProductsRouter, IService {
-	private static templatesDirPath: string = `${__dirname}/../../../res/templates/`;
+	private static templatesDirPath: string = `${__dirname}/../../../../res/templates/`;
 
 	protected _placeholderTemplateFileName: string =
 		UsersProductsService.templatesDirPath + `user_products_placeholder.hbs`;
