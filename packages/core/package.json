@@ -2,7 +2,7 @@
 	"name": "@ever-platform/core",
 	"description": "Ever Platform Headless Framework",
 	"license": "AGPL-3.0",
-	"version": "0.3.16",
+	"version": "0.3.17",
 	"homepage": "https://ever.co",
 	"repository": {
 		"type": "git",
