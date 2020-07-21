@@ -38,6 +38,18 @@ export class WarehouseRouter implements IWarehouseRouter {
 			);
 	}
 
+	getAll(fullProducts: boolean = false): Observable<Warehouse[]> {
+		return this.router
+			.runAndObserve<IWarehouse[]>('getAllStores', fullProducts)
+			.pipe(
+				map((warehouses) =>
+					_.map(warehouses, (warehouse) =>
+						this._warehouseFactory(warehouse)
+					)
+				)
+			);
+	}
+
 	async login(
 		username: string,
 		password: string
