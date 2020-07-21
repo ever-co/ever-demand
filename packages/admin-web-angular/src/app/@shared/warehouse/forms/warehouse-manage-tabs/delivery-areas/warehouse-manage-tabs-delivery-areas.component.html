@@ -192,3 +192,24 @@
 		</div>
 	</div>
 </div>
+<div class="max-distance form-group" [formGroup]="form">
+	<div class="number-input">
+		<span>Maximum Delivery Radius (meters): </span>
+
+		<input
+			class="form-control"
+			(change)="onMaxDistanceChange()"
+			formControlName="maxDistance"
+			type="number"
+			placeholder="Radius"
+		/>
+	</div>
+	<div class="checkbox">
+		<nb-checkbox
+			formControlName="showOnMap"
+			(change)="onMaxDistanceChange()"
+			status="success"
+			>Show in map</nb-checkbox
+		>
+	</div>
+</div>
