@@ -112,9 +112,9 @@ export class GeoLocationsProductsService
 		options?: IGetGeoLocationProductsOptions,
 		searchText?: string
 	): Promise<ProductInfo[]> {
-		const merchants = await this.geoLocationsWarehousesService.getMerchants(
+		// getMerchants is replaced with getMerchantsInDeliveryZone
+		const merchants = await this.geoLocationsWarehousesService.getMerchantsInDeliveryZone(
 			geoLocation,
-			GeoLocationsWarehousesService.TrackingDistance,
 			{
 				fullProducts: true,
 				activeOnly: true,
