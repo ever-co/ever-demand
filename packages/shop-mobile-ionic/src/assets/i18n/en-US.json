@@ -76,6 +76,12 @@
 	"LANGUAGE_VIEW": {
 		"TITLE": "Select Language"
 	},
+	"CATEGORIES_VIEW": {
+		"TITLE": "Services"
+	},
+	"PROFILE_VIEW": {
+		"TITLE": "Profile"
+	},
 	"BUY_POPUP": {
 		"ORDER_PAID": "The order is paid $",
 		"CANCEL": {
@@ -151,12 +157,13 @@
 		}
 	},
 	"SIDE_MENU": {
-		"TITLE": "Ever",
+		"TITLE": "Bell'Em",
 		"GROUPS": {
 			"NO_TITLE": {
 				"DIVER_TITLE": "",
 				"ITEMS": {
 					"PRODUCTS": "Products",
+					"CATEGORIES": "Services",
 					"LAST_PURCHASES": "Last Purchases",
 					"CALL_US": "Call Us",
 					"ORDER_HISTORY": "Order history"
@@ -172,7 +179,8 @@
 			"SETTINGS": {
 				"DIVER_TITLE": "Settings",
 				"ITEMS": {
-					"LANGUAGE": "Language"
+					"LANGUAGE": "Language",
+					"PROFILE": "Profile"
 				}
 			},
 			"INFO": {
@@ -239,6 +247,7 @@
 	"IN_DELIVERY": "In Delivery",
 	"COMPLETED": "Completed",
 	"BROWSE": "Browse",
+	"FRENCH": "Francais",
 	"ENGLISH": "English",
 	"HEBREW": "Hebrew",
 	"RUSSIAN": "Russian",

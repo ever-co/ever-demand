@@ -16,6 +16,11 @@
 					></ion-label
 				>
 			</ion-col>
+
+			<ion-col *ngIf="!inStore" class="col-9 p-1 header-title">
+				<img alt="logo" height="45" src="/assets/imgs/bellem_blanc.png" />
+			</ion-col>
+			<!--
 			<ion-col class="header-actions">
 				<ion-label
 					*ngIf="!inStore"
@@ -41,6 +46,8 @@
 						{{ 'PRODUCTS_VIEW.DELIVERY' | translate }}
 					</small></ion-label
 				>
+			-->
+				<ion-col class="header-actions">
 				<ion-label
 					*ngIf="!navigateToMerchants"
 					(click)="changeStoreMode()"

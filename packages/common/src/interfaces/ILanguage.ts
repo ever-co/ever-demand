@@ -1,4 +1,5 @@
 // TODO: add other locales
+
 type ILanguage = 'fr-FR' | 'en-US';
 
 export default ILanguage;

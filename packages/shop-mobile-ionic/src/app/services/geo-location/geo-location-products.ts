@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
+import ICategory from '@modules/server.common/interfaces/ICategory';
 
 import { Observable } from 'rxjs';
 import { map, share } from 'rxjs/operators';
@@ -85,6 +86,88 @@ export class GeoLocationProductsService {
 			})
 			.valueChanges.pipe(
 				map((res) => res.data.geoLocationProductsByPaging),
+				share()
+			);
+	}
+
+	geoLocationProductsByCategory(
+		geoLocation,
+		category: ICategory,
+		pagingOptions: IPagingOptions,
+		options?: {
+			isDeliveryRequired?: boolean;
+			isTakeaway?: boolean;
+			merchantIds?: string[];
+			imageOrientation?: number;
+			locale?: string;
+			withoutCount?: boolean;
+		},
+		searchText?: string
+	): Observable<ProductInfo[]> {
+		return this.apollo
+			.watchQuery<{ geoLocationProductsByCategory: ProductInfo[] }>({
+				query: gql`
+					query geoLocationProductsByCategory(
+						$geoLocation: GeoLocationFindInput!
+						$options: GetGeoLocationProductsOptions
+						$category: ProductsCategorySearchInput
+						$pagingOptions: PagingOptionsInput
+						$searchText: String
+					) {
+						geoLocationProductsByCategory(
+							geoLocation: $geoLocation
+							options: $options
+							category: $category
+							pagingOptions: $pagingOptions
+							searchText: $searchText
+						) {
+							distance
+							warehouseId
+							warehouseLogo
+							warehouseProduct {
+								id
+								price
+								initialPrice
+								count
+								soldCount
+
+								product {
+									id
+									title {
+										locale
+										value
+									}
+									description {
+										locale
+										value
+									}
+									details {
+										locale
+										value
+									}
+									images {
+										locale
+										url
+										width
+										height
+										orientation
+									}
+								}
+								isManufacturing
+								isCarrierRequired
+								isDeliveryRequired
+								isTakeaway
+								deliveryTimeMin
+								deliveryTimeMax
+							}
+						}
+					}
+				`,
+				variables: { geoLocation, options, category, pagingOptions, searchText },
+				pollInterval: 2000
+			})
+			.valueChanges.pipe(
+				map((res) => res.data.geoLocationProductsByCategory),
 				share()
 			);
 	}

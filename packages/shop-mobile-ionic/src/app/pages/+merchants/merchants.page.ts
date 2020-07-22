@@ -65,6 +65,7 @@ export class MerchantsPage implements OnDestroy {
 
 	private async loadCloseMerchants() {
 		const location = await this.getLocation();
+		const category = this.store.category;
 
 		this.merchants = await this.geoLocationsMerchantsService
 			.getCoseMerchants({ loc: location })

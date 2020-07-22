@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';
+import ICategory from '@modules/server.common/interfaces/ICategory';
 import Order from '@modules/server.common/entities/Order';
 import Device from '@modules/server.common/entities/Device';
 import User from '@modules/server.common/entities/User';
@@ -235,6 +236,18 @@ export class Store {
 
 		console.warn(`User with id '${userId}' does not exists!"`);
 		return false;
+	}
+
+	get category(): ICategory {
+		return localStorage.getItem('_category') as unknown as ICategory;
+	}
+
+	set category(cat: ICategory) {
+		if (cat.name == null) {
+			localStorage.removeItem('_category');
+		} else {
+			localStorage.setItem('_category', cat.name);
+		}
 	}
 
 	private async _initLanguage() {

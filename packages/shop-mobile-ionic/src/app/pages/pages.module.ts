@@ -54,6 +54,20 @@ const routes: Routes = [
 			),
 	},
 	{
+		path: 'categories',
+		loadChildren: () =>
+			import('./categories/categories.module').then(
+				(m) => m.CategoriesPageModule
+			),
+	},
+	{
+		path: 'profile',
+		loadChildren: () =>
+			import('./profile/profile.module').then(
+				(m) => m.ProfilePageModule
+			),
+	},
+	{
 		path: 'errors',
 		loadChildren: () =>
 			import('./+errors/errors.module').then((m) => m.ErrorsModule),

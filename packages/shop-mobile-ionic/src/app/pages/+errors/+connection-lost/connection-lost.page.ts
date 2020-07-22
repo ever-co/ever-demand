@@ -9,9 +9,11 @@ import { environment } from 'environments/environment';
 export class ConnectionLostPage implements OnInit {
 	noInternetLogo: string;
 	companyName: string;
+	descriptionGQL: string;
 	constructor() {
 		this.noInternetLogo = environment.NO_INTERNET_LOGO;
 		this.companyName = environment.COMPANY_NAME;
+		this.descriptionGQL = environment.GQL_ENDPOINT;
 	}
 
 	ngOnInit() {}

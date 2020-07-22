@@ -32,7 +32,7 @@ export class ByLocationPage implements OnInit, OnDestroy {
 	public house: number;
 	public streetAddress: string;
 	public city: string;
-	public country: number = Country.IL;
+	public country: number = Country.CM;
 	public detectingLocation: boolean = true;
 	public showTextarea: boolean = false;
 	public notes: string;
@@ -212,7 +212,8 @@ export class ByLocationPage implements OnInit, OnDestroy {
 			this.store.backToDetails = null;
 			return;
 		}
-		this.router.navigate(['/products'], { skipLocationChange: true });
+		//this.router.navigate(['/products'], { skipLocationChange: true });
+		this.router.navigate(['/categories'], { skipLocationChange: true });
 	}
 
 	async goToDetailsPage() {

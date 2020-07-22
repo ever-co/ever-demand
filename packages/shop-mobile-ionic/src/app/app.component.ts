@@ -38,13 +38,10 @@ export class AppComponent {
 
 		_translateService.addLangs([
 			'en-US',
-			'bg-BG',
-			'he-IL',
-			'ru-RU',
-			'es-ES',
+			'fr-FR'
 		]);
 
-		_translateService.setDefaultLang('en-US');
+		_translateService.setDefaultLang('fr-FR');
 
 		const browserLang = _translateService.getBrowserLang();
 
@@ -52,9 +49,9 @@ export class AppComponent {
 			_translateService.use(this.defaultLanguage);
 		} else {
 			_translateService.use(
-				browserLang.match(/en-US|bg-BG|he-HE|ru-RU|es-ES/)
+				browserLang.match(/en-US|fr-FR/)
 					? browserLang
-					: 'en-US'
+					: 'fr-FR'
 			);
 		}
 	}
