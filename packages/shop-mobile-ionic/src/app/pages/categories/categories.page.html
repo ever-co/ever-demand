@@ -1,0 +1,115 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-buttons slot="start">
+			<ion-menu-button autoHide="false"></ion-menu-button>
+		</ion-buttons>
+
+		<ion-title> <img alt="logo" height="45" src="/assets/imgs/bellem_blanc.png" /> {{ 'CATEGORIES_VIEW.TITLE' | translate }}</ion-title>
+
+
+		<ion-buttons slot="end">
+
+			<!--
+			<ion-button (click)="goBack()">
+				<i class="fa fa-angle-left back-btn"></i>
+				<span>{{ 'BACK' | translate }}</span>
+			</ion-button>
+			-->
+
+		</ion-buttons>
+
+
+	</ion-toolbar>
+</ion-header>
+
+<ion-content scroll="false">
+  <ion-grid class="bellem_services_grid">
+    <ion-row class="bellem_services_row">
+      <ion-col class="bellem_services_row"
+
+			routerLink="/merchants"
+			routerDirection="root"
+			routerLinkActive="activated">
+				<div class="img-wrapper" [style.background-image]="'url(assets/imgs/cake.jpg)'" (click)="switchCategory('cake')">
+					<div class="service-wrapper">Bell'Cake</div>
+				</div>
+      </ion-col>
+
+      <ion-col
+
+				routerLink="/merchants"
+				routerDirection="root"
+				routerLinkActive="activated">
+        <div class="img-wrapper" [style.background-image]="'url(assets/imgs/drinks.jpg)'" (click)="switchCategory('drinks')">
+					<div class="service-wrapper">Bell'Drinks</div>
+				</div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col
+
+				routerLink="/merchants"
+				routerDirection="root"
+				routerLinkActive="activated">
+        <div class="img-wrapper" [style.background-image]="'url(assets/imgs/food.jpeg)'" (click)="switchCategory('food')">
+					<div class="service-wrapper">Bell'Food</div>
+				</div>
+      </ion-col>
+
+      <ion-col
+
+				routerLink="/merchants"
+				routerDirection="root"
+				routerLinkActive="activated">
+        <div class="img-wrapper" [style.background-image]="'url(assets/imgs/laundry.jpg)'" (click)="switchCategory('clean')">
+					<div class="service-wrapper">Bell'Clean</div>
+				</div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col
+
+				routerLink="/merchants"
+				routerDirection="root"
+				routerLinkActive="activated">
+        <div class="img-wrapper" [style.background-image]="'url(assets/imgs/med.jpeg)'" (click)="switchCategory('med')">
+					<div class="service-wrapper">Bell'Med</div>
+				</div>
+      </ion-col>
+
+			<ion-col
+
+				routerLink="/merchants"
+				routerDirection="root"
+				routerLinkActive="activated">
+        <div class="img-wrapper" [style.background-image]="'url(assets/imgs/messenger.jpeg)'" (click)="switchCategory('messenger')">
+					<div class="service-wrapper">Bell'Messenger</div>
+				</div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col
+
+				routerLink="/merchants"
+				routerDirection="root"
+				routerLinkActive="activated">
+        <div class="img-wrapper" [style.background-image]="'url(assets/imgs/pizza.jpg)'" (click)="switchCategory('pizza')">
+					<div class="service-wrapper">Bell'Pizza</div>
+				</div>
+      </ion-col>
+
+      <ion-col
+
+				routerLink="/merchants"
+				routerDirection="root"
+				routerLinkActive="activated">
+        <div class="img-wrapper" [style.background-image]="'url(assets/imgs/shop.jpg)'" (click)="switchCategory('mart')">
+					<div class="service-wrapper">Bell'Mart</div>
+				</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

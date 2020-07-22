@@ -45,6 +45,7 @@ export class ProductDetailsPage implements AfterViewInit, OnDestroy {
 
 	public swiperOptions: SwiperOptions;
 	public product: WarehouseProduct;
+	public quantity: number = 2;
 	public productID: string;
 	public prevUrl: string;
 	public warehouseLogo: string;
@@ -114,7 +115,7 @@ export class ProductDetailsPage implements AfterViewInit, OnDestroy {
 		return this.translateProductLocales.getTranslate(member);
 	}
 
-	async buyItem(currentProduct: Product) {
+	async buyItem(currentProduct: Product, quantity: number) {
 		if (
 			!this.store.userId &&
 			this.store.registrationSystem === RegistrationSystem.Disabled
@@ -127,7 +128,7 @@ export class ProductDetailsPage implements AfterViewInit, OnDestroy {
 		} else {
 			const orderCreateInput: IOrderCreateInput = {
 				warehouseId: this.warehouseId,
-				products: [{ count: 1, productId: currentProduct.id }],
+				products: [{ count: quantity, productId: currentProduct.id }],
 				userId: this.store.userId,
 				orderType: this.store.deliveryType,
 				options: { autoConfirm: true },
@@ -195,7 +196,7 @@ export class ProductDetailsPage implements AfterViewInit, OnDestroy {
 		const buyProductId = this.store.buyProduct;
 		if (this.store.userId) {
 			if (buyProductId && buyProductId !== 'null') {
-				this.buyItem(this.product.product as Product);
+				this.buyItem(this.product.product as Product, this.quantity);
 				this.store.buyProduct = null;
 				this.store.warehouseId = null;
 			}

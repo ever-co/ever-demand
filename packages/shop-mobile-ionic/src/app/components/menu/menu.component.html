@@ -9,6 +9,19 @@
 		<ion-list>
 			<ion-item-group>
 				<ion-menu-toggle [autoHide]="true">
+
+					<ion-item
+						routerLink="/categories"
+						routerDirection="root"
+						routerLinkActive="activated"
+					>
+						<ion-icon ios="ios-apps" md="md-apps"></ion-icon>
+						<ion-label>{{
+							'SIDE_MENU.GROUPS.NO_TITLE.ITEMS.CATEGORIES'
+								| translate
+						}}</ion-label>
+					</ion-item>
+<!--
 					<ion-item
 						routerLink="/products"
 						routerDirection="root"
@@ -20,6 +33,7 @@
 								| translate
 						}}</ion-label>
 					</ion-item>
+-->
 					<ion-item
 						routerLink="/orders-history"
 						routerDirection="root"
@@ -83,6 +97,18 @@
 								| translate
 						}}</ion-label>
 					</ion-item>
+
+					<ion-item
+						routerLink="/profile"
+						routerDirection="root"
+						routerLinkActive="activated"
+					>
+						<ion-icon ios="ios-person" md="md-person"></ion-icon>
+						<ion-label>{{
+							'SIDE_MENU.GROUPS.SETTINGS.ITEMS.PROFILE'
+								| translate
+						}}</ion-label>
+					</ion-item>
 				</ion-menu-toggle>
 			</ion-item-group>
 			<ion-item-group>
@@ -93,6 +119,7 @@
 				</ion-item-divider>
 
 				<ion-menu-toggle [autoHide]="true">
+<!--
 					<ion-item
 						routerLink="/info/help"
 						routerDirection="root"
@@ -103,6 +130,7 @@
 							'SIDE_MENU.GROUPS.INFO.ITEMS.FAQ' | translate
 						}}</ion-label>
 					</ion-item>
+-->
 					<ion-item (click)="callUs()">
 						<ion-icon name="call"></ion-icon>
 						<ion-label>{{
@@ -110,6 +138,7 @@
 								| translate
 						}}</ion-label>
 					</ion-item>
+<!--
 					<ion-item
 						routerLink="/info/about"
 						routerDirection="root"
@@ -120,6 +149,7 @@
 							'SIDE_MENU.GROUPS.INFO.ITEMS.ABOUT_US' | translate
 						}}</ion-label>
 					</ion-item>
+-->
 				</ion-menu-toggle>
 			</ion-item-group>
 

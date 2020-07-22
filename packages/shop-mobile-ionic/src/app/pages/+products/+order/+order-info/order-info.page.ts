@@ -78,6 +78,10 @@ export class OrderInfoPage implements OnInit, OnDestroy {
 		this.router.navigateByUrl('/products');
 	}
 
+	goToCategoriesPage() {
+		this.router.navigateByUrl('/categories');
+	}
+
 	public get isCustomerActive() {
 		return this.currentStatus >= DeliveryStatus.Customer;
 	}
