@@ -22,6 +22,7 @@ export interface IAdminCreateObject extends DBCreateObject {
 	pictureUrl: string;
 	firstName?: string;
 	lastName?: string;
+	isStoreMode?: boolean;
 }
 
 export interface IAdminUpdateObject extends DBCreateObject {
@@ -37,6 +38,7 @@ export interface IAdminUpdateObject extends DBCreateObject {
 	pictureUrl?: string;
 	firstName?: string;
 	lastName?: string;
+	isStoreMode?: boolean;
 }
 
 interface IAdmin extends DBRawObject, IAdminCreateObject {

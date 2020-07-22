@@ -68,6 +68,16 @@ class Admin extends DBObject<IAdmin, IAdminCreateObject> implements IAdmin {
 	isDeleted: boolean;
 
 	/**
+	 * Is store mode enabled / disabled
+	 *
+	 * @type {boolean}
+	 * @memberof Admin
+	 */
+	@Types.Boolean(false)
+	@Column()
+	isStoreMode: boolean;
+
+	/**
 	 * User First Name
 	 *
 	 * @type {string}
