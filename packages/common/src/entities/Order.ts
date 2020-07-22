@@ -312,14 +312,8 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 		switch (language) {
 			case 'en-US':
 				return this._getStatusTextEnglish();
-			case 'he-IL':
-				return this._getStatusTextHebrew();
-			case 'ru-RU':
-				return this._getStatusTextRussian();
-			case 'bg-BG':
-				return this._getStatusTextBulgarian();
-			case 'es-ES':
-				return this._getStatusTextSpanish();
+			case 'fr-FR':
+				return this._getStatusTextFrench();
 			default:
 				return 'BAD_STATUS';
 		}
@@ -380,83 +374,23 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 		}
 	}
 
-	private _getStatusTextBulgarian(): string {
+	private _getStatusTextFrench(): string {
 		switch (this.status) {
 			case OrderStatus.WarehousePreparation:
-				return 'Подготовка';
+				return 'Preparation';
 			case OrderStatus.InDelivery:
-				return 'Доставя се';
+				return 'En livraison';
 			case OrderStatus.Delivered:
-				return 'Доставено';
+				return 'Livre';
 			case OrderStatus.CanceledWhileWarehousePreparation:
 			case OrderStatus.CanceledWhileInDelivery:
-				return 'Отказана';
+				return 'Annule';
 			case OrderStatus.WarehouseIssue:
-				return 'Проблем при подготовката';
+				return 'Probleme de Preparation';
 			case OrderStatus.CarrierIssue:
-				return 'Проблем при доставката';
+				return 'Probleme de livraison';
 			default:
-				return 'Проблем с поръчката';
-		}
-	}
-
-	private _getStatusTextHebrew(): string {
-		switch (this.status) {
-			case OrderStatus.WarehousePreparation:
-				return 'בהכנה';
-			case OrderStatus.InDelivery:
-				return 'במשלוח';
-			case OrderStatus.Delivered:
-				return 'הסתיים בצלחה';
-			case OrderStatus.CanceledWhileWarehousePreparation:
-			case OrderStatus.CanceledWhileInDelivery:
-				return 'התבטל';
-			case OrderStatus.WarehouseIssue:
-				return 'בעייה בהכנה';
-			case OrderStatus.CarrierIssue:
-				return 'בעייה במשלוח';
-			default:
-				return 'BAD_STATUS';
-		}
-	}
-
-	private _getStatusTextRussian(): string {
-		switch (this.status) {
-			case OrderStatus.WarehousePreparation:
-				return 'В подготовке';
-			case OrderStatus.InDelivery:
-				return 'В доставки';
-			case OrderStatus.Delivered:
-				return 'Доставлено';
-			case OrderStatus.CanceledWhileWarehousePreparation:
-			case OrderStatus.CanceledWhileInDelivery:
-				return 'Отменено';
-			case OrderStatus.WarehouseIssue:
-				return 'Проблема с подготовкой';
-			case OrderStatus.CarrierIssue:
-				return 'Проблема с доставкой';
-			default:
-				return 'BAD_STATUS';
-		}
-	}
-
-	private _getStatusTextSpanish() {
-		switch (this.status) {
-			case OrderStatus.WarehousePreparation:
-				return 'Preparación';
-			case OrderStatus.InDelivery:
-				return 'En la entrega';
-			case OrderStatus.Delivered:
-				return 'Entregado';
-			case OrderStatus.CanceledWhileWarehousePreparation:
-			case OrderStatus.CanceledWhileInDelivery:
-				return 'Cancelado';
-			case OrderStatus.WarehouseIssue:
-				return 'Problema de preparación';
-			case OrderStatus.CarrierIssue:
-				return 'Problema de envio';
-			default:
-				return 'BAD_STATUS';
+				return 'MAUVAIS_STATUS';
 		}
 	}
 }
