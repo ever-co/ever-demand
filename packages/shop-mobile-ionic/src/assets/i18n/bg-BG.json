@@ -76,6 +76,13 @@
 	"LANGUAGE_VIEW": {
 		"TITLE": "Избери език"
 	},
+	"SEARCH_VIEW": {
+		"VIEW_MORE": "Виж още",
+		"EMPTY_LIST": "Няма намерени продукти или ресторанти ... ",
+		"SEARCH_PLACEHOLDER": "Продукт или ресторант",
+		"OPEN": "Отворено",
+		"CLOSED": "Затворено"
+	},
 	"BUY_POPUP": {
 		"ORDER_PAID": "Поръчката е платена $",
 		"CANCEL": {

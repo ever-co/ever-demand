@@ -96,3 +96,21 @@
 		}
 	}
 }
+
+.max-distance {
+	margin-bottom: 1rem;
+	display: flex;
+	width: 70%;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem;
+	.number-input {
+		margin-right: 2rem;
+		display: flex;
+		align-items: center;
+		input {
+			margin-left: 1rem;
+			max-width: 8rem;
+		}
+	}
+}

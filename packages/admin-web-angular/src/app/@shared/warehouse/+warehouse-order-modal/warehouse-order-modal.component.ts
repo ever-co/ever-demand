@@ -127,7 +127,7 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 
 	private _loadWarehouseProducts() {
 		this._warehouseProductsRouter
-			.get(this.warehouseId)
+			.getAvailable(this.warehouseId)
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe((p) => {
 				Object.assign(this._warehouseProducts, p);

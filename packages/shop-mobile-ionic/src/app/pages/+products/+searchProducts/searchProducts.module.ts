@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { WarehouseLogoModule } from '../../../components/warehouse-logo/warehouse-logo.module';
 import { ProductsModule } from '../../../components/products/products.module';
+import { LoadingModule } from '../../../components/loading/loading.module';
 
 @NgModule({
 	imports: [
@@ -20,6 +21,7 @@ import { ProductsModule } from '../../../components/products/products.module';
 		WarehouseLogoModule,
 		ProductsModule,
 		TranslateModule.forChild(),
+		LoadingModule,
 	],
 	declarations: [SearchProductsComponent],
 	exports: [SearchProductsComponent],

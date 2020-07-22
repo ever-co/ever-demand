@@ -76,6 +76,13 @@
 	"LANGUAGE_VIEW": {
 		"TITLE": "Select Language"
 	},
+	"SEARCH_VIEW": {
+		"VIEW_MORE": "View More",
+		"EMPTY_LIST": "No Products Or Merchants Found ... ",
+		"SEARCH_PLACEHOLDER": "Product Or Restorant Name",
+		"OPEN": "Open",
+		"CLOSED": "Closed"
+	},
 	"BUY_POPUP": {
 		"ORDER_PAID": "The order is paid $",
 		"CANCEL": {

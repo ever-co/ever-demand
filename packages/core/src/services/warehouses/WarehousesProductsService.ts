@@ -122,7 +122,9 @@ export class WarehousesProductsService
 			map((warehouseProducts) =>
 				_.filter(
 					warehouseProducts,
-					(warehouseProduct) => warehouseProduct.count > 0
+					(warehouseProduct) =>
+						warehouseProduct.count > 0 &&
+						warehouseProduct.isProductAvailable === true
 				)
 			)
 		);
@@ -669,6 +671,68 @@ export class WarehousesProductsService
 
 			if (existedProduct) {
 				existedProduct.isProductAvailable = isAvailable;
+
+				return this.saveUpdated(warehouseId, existedProduct);
+			} else {
+				const errMsg = 'Cannot find product';
+				this.log.error(new Error(errMsg));
+				throw new Error(errMsg);
+			}
+		} else {
+			const errMsg = 'Cannot find warehouse';
+			this.log.error(new Error(errMsg));
+			throw new Error(errMsg);
+		}
+	}
+	@asyncListener()
+	async changeProductTakeaway(
+		warehouseId: string,
+		productId: string,
+		isTakeaway: boolean
+	): Promise<WarehouseProduct> {
+		const warehouse = await this.warehousesService
+			.get(warehouseId)
+			.pipe(first())
+			.toPromise();
+		if (warehouse) {
+			const existedProduct = _.find(
+				warehouse.products,
+				(warehouseProduct) => warehouseProduct.productId === productId
+			);
+
+			if (existedProduct) {
+				existedProduct.isTakeaway = isTakeaway;
+
+				return this.saveUpdated(warehouseId, existedProduct);
+			} else {
+				const errMsg = 'Cannot find product';
+				this.log.error(new Error(errMsg));
+				throw new Error(errMsg);
+			}
+		} else {
+			const errMsg = 'Cannot find warehouse';
+			this.log.error(new Error(errMsg));
+			throw new Error(errMsg);
+		}
+	}
+	@asyncListener()
+	async changeProductDelivery(
+		warehouseId: string,
+		productId: string,
+		isDelivery: boolean
+	): Promise<WarehouseProduct> {
+		const warehouse = await this.warehousesService
+			.get(warehouseId)
+			.pipe(first())
+			.toPromise();
+		if (warehouse) {
+			const existedProduct = _.find(
+				warehouse.products,
+				(warehouseProduct) => warehouseProduct.productId === productId
+			);
+
+			if (existedProduct) {
+				existedProduct.isDeliveryRequired = isDelivery;
 
 				return this.saveUpdated(warehouseId, existedProduct);
 			} else {

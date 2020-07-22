@@ -163,5 +163,6 @@ export class WarehouseManageTabsComponent {
 		this.tabSet.tabs._results[2].activeValue = false;
 		this.tabSet.tabs._results[3].activeValue = false;
 		this.tabSet.tabs._results[4].activeValue = false;
+		this.tabSet.tabs._results[5].activeValue = false;
 	}
 }

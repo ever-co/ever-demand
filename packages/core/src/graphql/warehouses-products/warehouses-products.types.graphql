@@ -23,6 +23,7 @@ type WarehouseProduct {
 	isManufacturing: Boolean
 	isCarrierRequired: Boolean
 	isDeliveryRequired: Boolean
+	isProductAvailable: Boolean
 	isTakeaway: Boolean
 	deliveryTimeMin: Int
 	deliveryTimeMax: Int
@@ -36,6 +37,7 @@ input WarehouseProductInput {
 	isManufacturing: Boolean
 	isCarrierRequired: Boolean
 	isDeliveryRequired: Boolean
+	isProductAvailable: Boolean
 	isTakeaway: Boolean
 	deliveryTimeMin: Int
 	deliveryTimeMax: Int

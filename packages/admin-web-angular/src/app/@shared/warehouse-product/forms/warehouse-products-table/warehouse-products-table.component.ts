@@ -117,6 +117,8 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 				product: product.product,
 				allCategories: this.categoriesInfo,
 				isProductAvailable: product.isProductAvailable,
+				isTakeaway: product.isTakeaway,
+				isDeliveryRequired: product.isDeliveryRequired,
 			};
 		});
 

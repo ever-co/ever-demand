@@ -73,6 +73,7 @@ export class GeoLocationProductsService {
 								isManufacturing
 								isCarrierRequired
 								isDeliveryRequired
+								isProductAvailable
 								isTakeaway
 								deliveryTimeMin
 								deliveryTimeMax
@@ -84,7 +85,11 @@ export class GeoLocationProductsService {
 				pollInterval: 2000,
 			})
 			.valueChanges.pipe(
-				map((res) => res.data.geoLocationProductsByPaging),
+				map((res) =>
+					res.data.geoLocationProductsByPaging.filter(
+						(p) => p.warehouseProduct.isProductAvailable === true
+					)
+				),
 				share()
 			);
 	}
