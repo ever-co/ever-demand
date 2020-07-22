@@ -177,6 +177,63 @@ export class GeoLocationsWarehousesService
 		return merchants;
 	}
 
+	async getMerchantsInDeliveryZone(
+		geoLocation: IGeoLocation,
+		options: {
+			fullProducts: boolean;
+			activeOnly: boolean;
+			merchantsIds?: string[];
+		}
+	): Promise<IWarehouse[]> {
+		const merchantsIds = options.merchantsIds;
+		const merchants = (await this.warehousesService.Model.find(
+			_.assign(
+				{
+					'geoLocation.loc': {
+						$near: {
+							$geometry: {
+								type: 'Point',
+								coordinates: geoLocation.loc.coordinates,
+							},
+						},
+					},
+				},
+				options.activeOnly ? { isActive: true } : {},
+				merchantsIds && merchantsIds.length > 0
+					? {
+							_id: { $in: merchantsIds },
+					  }
+					: {}
+			)
+		)
+			.populate(options.fullProducts ? 'products.product' : '')
+			.lean()
+			.exec()) as IWarehouse[];
+
+		const userGoeLocation = new GeoLocation({ ...geoLocation });
+		// GeoJSON use reversed order for coordinates from our implementation.
+		// we use lat => lng but GeoJSON use lng => lat.
+		userGoeLocation.loc.coordinates.reverse();
+
+		// PER merchant delivery radius filter
+		const merchantsInDeliveryZone = merchants.filter((mer) => {
+			// todo: updated when add deliveryAreas type/interface
+			// if maxDistance in store's settings is not setted, it use hardcoded TrackingDistance
+			const maxDistance = mer['deliveryAreas'].maxDistance
+				? mer['deliveryAreas'].maxDistance
+				: GeoLocationsWarehousesService.TrackingDistance;
+
+			const storeGeoLocation = new GeoLocation({ ...mer.geoLocation });
+			// GeoJSON use reversed order for coordinates from our implementation.
+			// we use lat => lng but GeoJSON use lng => lat.
+			storeGeoLocation.loc.coordinates.reverse();
+
+			const distance =
+				Utils.getDistance(userGoeLocation, storeGeoLocation) * 1000;
+			return distance <= maxDistance;
+		});
+		return merchantsInDeliveryZone;
+	}
 	/**
 	 * Get warehouses available for given location
 	 *
