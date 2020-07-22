@@ -89,36 +89,36 @@ export const env: any = cleanEnv(
 		VERSION: str({ default: '1.0.0' }),
 
 		// 'slides' | 'list'
-		PRODUCTS_VIEW_TYPE: str({ default: 'slides' }),
+		PRODUCTS_VIEW_TYPE: str({ default: 'list' }),
 
 		// 'popup' or 'page'
 		ORDER_INFO_TYPE: str({ default: 'page' }),
 
 		API_FILE_UPLOAD_URL: str({
-			default: 'https://api.cloudinary.com/v1_1/evereq/upload',
+			default: 'https://api.cloudinary.com/v1_1/bellem/upload',
 		}),
 
 		INVITE_BY_CODE_LOGO: str({ default: 'assets/imgs/ever-logo.svg' }),
-		NO_INTERNET_LOGO: str({ default: 'assets/imgs/logo.png' }),
+		NO_INTERNET_LOGO: str({ default: 'assets/imgs/bellem_logo.png' }),
 
-		COMPANY_NAME: str({ default: 'Ever Co. LTD' }),
+		COMPANY_NAME: str({ default: 'BellEm. LTD' }),
 
-		GOOGLE_MAPS_API_KEY: str({ default: '' }),
+		GOOGLE_MAPS_API_KEY: str({ default: 'AIzaSyAvUNNXFK3xlzKE21uNkSVM1wROVAjd_Ak' }),
 
-		GOOGLE_ANALYTICS_API_KEY: str({ default: '' }),
+		GOOGLE_ANALYTICS_API_KEY: str({ default: 'AIzaSyAvUNNXFK3xlzKE21uNkSVM1wROVAjd_Ak' }),
 		FAKE_UUID: str({ default: uuid() }),
 
 		// Not secret MixPanel Token
 		MIXPANEL_API_KEY: str({ default: '' }),
 
-		DEFAULT_LANGUAGE: str({ default: 'en-US' }),
+		DEFAULT_LANGUAGE: str({ default: 'fr-FR' }),
 
-		DEFAULT_LOCALE: str({ default: 'en-US' }),
+		DEFAULT_LOCALE: str({ default: 'fr-FR' }),
 
 		DELIVERY_TIME_MIN: num({ default: 30 }),
 		DELIVERY_TIME_MAX: num({ default: 60 }),
 
-		SUPPORT_NUMBER: str({ default: '0888888888' }),
+		SUPPORT_NUMBER: str({ default: '690419637' }),
 
 		STRIPE_PUBLISHABLE_KEY: str({ default: '' }),
 
@@ -138,19 +138,19 @@ export const env: any = cleanEnv(
 			default: 'http://maps.google.com/mapfiles/kml/pal4/icon54.png',
 		}),
 
-		DEFAULT_LATITUDE: num({ default: 42.6459136 }),
-		DEFAULT_LONGITUDE: num({ default: 23.3332736 }),
+		DEFAULT_LATITUDE: num({ default: 4.094836 }),
+		DEFAULT_LONGITUDE: num({ default: 9.743204 }),
 
 		// Graphql endpoints for apollo services
-		GQL_ENDPOINT: str({ default: 'http://localhost:5555/graphql' }),
+		GQL_ENDPOINT: str({ default: 'http://bellem.cm:5555/graphql' }),
 		GQL_SUBSCRIPTIONS_ENDPOINT: str({
 			default: 'ws://localhost:5050/subscriptions',
 		}),
-		SERVICES_ENDPOINT: str({ default: 'http://localhost:5500' }),
-		HTTPS_SERVICES_ENDPOINT: str({ default: 'https://localhost:5501' }),
+		SERVICES_ENDPOINT: str({ default: 'http://bellem.cm:5500' }),
+		HTTPS_SERVICES_ENDPOINT: str({ default: 'https://bellem.cm:5501' }),
 
 		FAKE_INVITE_ID: str({ default: '1ae9d04f9010d834f8906881' }),
-		FAKE_INVITE_CITY: str({ default: 'Sofia' }),
+		FAKE_INVITE_CITY: str({ default: 'Douala' }),
 		FAKE_INVITE_POSTCODE: str({ default: '1700' }),
 		FAKE_INVITE_ADDRESS: str({ default: 'Simeonovsko shose' }),
 		FAKE_INVITE_HOUSE: str({ default: '104' }),
@@ -158,7 +158,7 @@ export const env: any = cleanEnv(
 		FAKE_INVITE_UPDATED_AT: str({ default: '2018-05-02T14:50:55.658Z' }),
 		FAKE_INVITE_APARTMENT: str({ default: '3' }),
 		FAKE_INVITE_CODE: num({ default: 8321 }),
-		FAKE_INVITE_COUNTRY_ID: num({ default: 21 }),
+		FAKE_INVITE_COUNTRY_ID: num({ default: 46 }),
 
 		// For maintenance micro service. Ever maintanance API URL: https://maintenance.ever.co/status
 		SETTINGS_APP_TYPE: str({ default: 'shop-mobile' }),

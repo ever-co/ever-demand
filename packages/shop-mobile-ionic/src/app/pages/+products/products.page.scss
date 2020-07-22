@@ -1,7 +1,7 @@
 @import '~@ever-platform/common-angular/src/scss/everbie.common';
 
 ion-content {
-	background-color: $brand-darken;
+	background-color: $brand-darken !important;
 
 	.products-view {
 		height: 100%;

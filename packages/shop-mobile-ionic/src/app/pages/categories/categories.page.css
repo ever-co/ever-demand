@@ -1,0 +1,46 @@
+.img-wrapper {
+    min-height: 150px;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: center;
+}
+
+.service-wrapper {
+    min-height: 30px;
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    color: white;
+    position: relative;
+    top: 25px;
+
+}
+
+/**
+.bellem_services_grid {
+
+  position: fixed;
+  top: 50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: grid;
+  border-style: solid;
+  border-color: red;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-gap: 2px;
+
+
+}
+
+.bellem_services_row {
+
+}
+
+.bellem_services_col {
+
+}
+*/

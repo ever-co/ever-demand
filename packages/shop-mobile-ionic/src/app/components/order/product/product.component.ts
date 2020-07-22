@@ -47,7 +47,7 @@ export class ProductComponent {
 				(product) => product.locale === this.store.language
 			) ||
 			this.orderProduct.product.images.find(
-				(product) => product.locale === 'en-US'
+				(product) => product.locale === 'fr-FR'
 			)
 		);
 	}

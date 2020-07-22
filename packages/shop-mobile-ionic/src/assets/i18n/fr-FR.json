@@ -1,0 +1,257 @@
+{
+	"LANGUAGE": {
+		"ID": "fr-FR",
+		"NAME": "Francais"
+	},
+	"CURRENT_DIRECTION": "ltr",
+	"SIDEBAR_SIDE": "left",
+	"INVITE_VIEW": {
+		"WELCOME_TO": "Bienvenue sur",
+		"EVER": "Bell'Em",
+		"INFO_MISSING": "Certaines informations sont incompletes!",
+		"YOUR_INVITE_CODE": "Votre code d'invitation",
+		"INVITED_TEXT": {
+			"TITLE": "Merci pour votre inscription !",
+			"DETAILS": "Vous recevrez une notification avec votre code d'invitation au lancement à :"
+		},
+		"NOT_INVITED_BY_CODE": {
+			"TITLE": "Code incorrect !",
+			"DETAILS": "Assurez vous svp de respecter les paramètres définies par votre code."
+		},
+		"CANT_ACCESS_LOCATION": "Ne peut déterminer votre position.",
+		"CANT_ACCESS_LOCATION_GET_IN_BY_ADDRESS": "Ne peut déterminer votre position, renseignez votre adresse svp.",
+		"GET_IN_BY_ADDRESS": "S'inscrire par l'adresse",
+		"GET_IN": "Entrez !",
+		"YOUR_ADDRESS": "Renseignez votre adresse",
+		"LAUNCH_NOTIFICATION": "Notre promesse : Essentiellement des produits de proximité.",
+		"BY_CODE": {
+			"OR_WHAT": "S'inscrire par Invitation",
+			"INVITED": "Se connecter avec un Code Invitation",
+			"LOGO": {
+				"DETAILS": "Produits : Livraison & à emporter"
+			},
+			"INVITE_CODE": "Code Invitation"
+		},
+		"DETECTING_LOCATION": "Patientez pendant que nous détectons votre adresse actuelle..."
+	},
+	"PRODUCTS_VIEW": {
+		"TITLE": "Produits",
+		"BUY_BUTTON": {
+			"PRE": "Payer pour ",
+			"SUF": ""
+		},
+		"NOT_AVAILABLE": "Produit indisponible",
+		"MINUTES": "min",
+		"DELIVERY": "Livraison",
+		"TAKEAWAY": "À emporter",
+		"READYFOR": "Prêt pour",
+		"DETAILS": {
+			"DETAILS": "Détails",
+			"BACK": "Retour",
+			"INCLUDES": "Contient",
+			"BUY_FOR": "Payer pour"
+		}
+	},
+	"HELP_VIEW": {
+		"TITLE": "Aide"
+	},
+	"ORDER_HISTORY_VIEW": {
+		"TITLE": "Historique de commandes",
+		"DETAILS": "Détails"
+	},
+	"LAST_PURCHASES_VIEW": {
+		"TITLE": "Derniers Achats",
+		"NOTHING_ORDERED": "Aucune commande",
+		"TO_PRODUCTS": "Aux Produits"
+	},
+	"ABOUT_VIEW": {
+		"TITLE": "À propos de Nous"
+	},
+	"TERMS_OF_USE_VIEW": {
+		"TITLE": "Conditions d'utilisation"
+	},
+	"PRIVACY_VIEW": {
+		"TITLE": "Données personnelles"
+	},
+	"LANGUAGE_VIEW": {
+		"TITLE": "Selectionnez une Langue"
+	},
+	"CATEGORIES_VIEW": {
+		"TITLE": "Services"
+	},
+	"PROFILE_VIEW": {
+		"TITLE": "Profile"
+	},
+	"BUY_POPUP": {
+		"ORDER_PAID": "La commande est payée $",
+		"CANCEL": {
+			"STATUSES": [
+				{
+					"TITLE": "La commande a été annulée pendant la préparation(Warehouse)!",
+					"DETAILS": "",
+					"NOT_PAID_NOTE": ""
+				}
+			]
+		},
+		"STATUSES": [
+			{
+				"TITLE": "Nous apprêtons votre commande!",
+				"DETAILS": "Vous l'aurez à votre disposition dans %t minutes.",
+				"NOT_PAID_NOTE": "Tenez votre porte-feuille (%s en cash)."
+			},
+			{
+				"TITLE": "Livreur en chemin!",
+				"DETAILS": "Vous aurez votre commande dans %t min.",
+				"NOT_PAID_NOTE": "Tenez votre porte-feuille (%s en cash)."
+			},
+			{
+				"TITLE": "Vérifiez à la porte!",
+				"DETAILS": "Vous aurez votre commande dans les secondes qui suivent.",
+				"NOT_PAID_NOTE": "Tenez votre porte-feuille (%s en cash)."
+			},
+			{
+				"TITLE": "Commande bouclée!",
+				"DETAILS": "Merci d'utiliser Bell'Em",
+				"NOT_PAID_NOTE": ""
+			}
+		],
+		"STATUSES_TAKEAWAY": {
+			"TITLE": "Nous apprêtons votre commande!",
+			"DETAILS": "Vous l'aurez à votre disposition dans %t minutes.",
+			"NOT_PAID_NOTE": "Tenez votre porte-feuille (%s en cash)."
+		},
+		"DELIVERY_STATUS": {
+			"WE": "Nous",
+			"CARRIER": "Livreur",
+			"YOU": "Vous"
+		},
+		"DELIVERY_WRONG": {
+			"DELIVERY_WRONG": "La livraison a échoué!",
+			"PROCESSING_WRONG": "La préparation a échoué!",
+			"TRY_AGAIN": "Essayez à nouveau svp.",
+			"CALL_FOR_DETAILS": "Appelez pour plus de détails"
+		},
+		"ELAPSED_TIME": {
+			"TITLE": "Temps écoulé"
+		},
+		"BUTTONS": {
+			"UNDO": "Annuler",
+			"PAY_NOW": "Payer avec une Carte",
+			"PAY_X": "Payer {{amount}}",
+			"PAY_WITH_FIXED_CARD": "Payer avec",
+			"PAID": "Payé(e)",
+			"END": "Bon appetit!",
+			"CANCEL": "Annuler",
+			"GOT_IT": "Bien recu!",
+			"IM_HERE": "Me voici",
+			"SHOW_QR_CODE": "Montrer le Code QR",
+			"SHOW_PRODUCTS": "Montrer les Produits"
+		},
+		"UNDO_POPUP": {
+			"TITLE": "Confirmer votre choix",
+			"DETAILS": [
+				"Annueler vous retrocédera l'argent, mais vous allez",
+				"perdre",
+				"la commande!"
+			]
+		}
+	},
+	"SIDE_MENU": {
+		"TITLE": "Bell'Em",
+		"GROUPS": {
+			"NO_TITLE": {
+				"DIVER_TITLE": "",
+				"ITEMS": {
+					"PRODUCTS": "Produits",
+					"CATEGORIES": "Services",
+					"LAST_PURCHASES": "Derniers Achats",
+					"CALL_US": "Nous appeler",
+					"ORDER_HISTORY": "Historique de commandes"
+				}
+			},
+			"STORE": {
+				"STORE_TITLE": "Magasin",
+				"ITEMS": {
+					"CALL_WAITER": "Appeler le servant",
+					"ABOUT": "A propos"
+				}
+			},
+			"SETTINGS": {
+				"DIVER_TITLE": "Réglages",
+				"ITEMS": {
+					"LANGUAGE": "Langue",
+					"PROFILE": "Profile"
+				}
+			},
+			"INFO": {
+				"DIVER_TITLE": "Information",
+				"ITEMS": {
+					"FAQ": "Aide",
+					"ABOUT_US": "A propos de Nous",
+					"TERMS_OF_USE": "Conditions d'utilisation",
+					"PRIVACY": "Données personnelles"
+				}
+			},
+			"LEGALS": {
+				"DIVER_TITLE": "LEGAL",
+				"ITEMS": {
+					"TERMS_OF_USE": "Conditions d'utilisation",
+					"PRIVACY": "Données personnelles"
+				}
+			}
+		}
+	},
+	"TIMER": {
+		"MINUTES": "Minutes",
+		"SECONDS": "Secondes"
+	},
+	"CONNECTION_ERROR_VIEW": {
+		"TITLE": "Pas de connection á Bell'Em",
+		"DESCRIPTION": [
+			"Assurez vous svp d'être",
+			"connecté(e) à internet",
+			"ou Essayez à nouveau plus tard."
+		]
+	},
+	"MERCHANTS_VIEW": {
+		"CLOSE_TO_YOU": "Commerces à proximité",
+		"NAME": "Nom du commerce",
+		"WITH_NAME": "Commerces par Nom"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Connection au serveur échouée"
+	},
+	"OR": "Ou",
+	"OR_LOWERCASE": "ou",
+	"YES": "Oui",
+	"NO": "Non",
+	"OK": "Ok",
+	"CITY": "Ville",
+	"STREET": "Rue",
+	"HOUSE": "Maison",
+	"APARTMENT": "Appartement",
+	"BACK": "Retour",
+	"MORE": "Plus",
+	"TO": "À",
+	"STORE_INFO": "Info Commerce",
+	"MAP": "Carte",
+	"ORDER_INFO": "Info Commande",
+	"CLOSE": "Fermer",
+	"SCAN": "Scanner",
+	"MERCHANTS": "Commerces",
+	"NOT_FOUND": "Pas trouvé(e)!",
+	"IN_STORE": "Dans le Store",
+	"EXIT_STORE": "Hors du Store",
+	"FAILED": "Échoué(e)",
+	"CANCELED": "Annulé(e)",
+	"IN_DELIVERY": "En Livraison",
+	"COMPLETED": "Terminé(e)",
+	"BROWSE": "Parcourir",
+	"FRENCH": "Francais",
+	"ENGLISH": "Anglais",
+	"HEBREW": "Hebreu",
+	"RUSSIAN": "Russe",
+	"BULGARIAN": "Bulgare",
+	"SPANISH": "Espagnol",
+	"SELECT": "Selectionner"
+}

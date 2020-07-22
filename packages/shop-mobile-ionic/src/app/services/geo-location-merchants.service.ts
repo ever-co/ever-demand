@@ -3,6 +3,7 @@ import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { map, share } from 'rxjs/operators';
 import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
+import ICategory from '@modules/server.common/interfaces/ICategory';
 
 @Injectable()
 export class GeoLocationsMerchantsService {
@@ -29,5 +30,32 @@ export class GeoLocationsMerchantsService {
 				map((res) => res.data['getCoseMerchants']),
 				share()
 			);
+	}
+
+	getCloseMerchantsCategory(geoLocation: { loc: ILocation } , category: {category: ICategory} ) {
+	return this._apollo
+		.query({
+			query: gql`
+				query getCloseMerchantsCategory(
+					$geoLocation: GeoLocationFindInput!
+					$category: ProductsCategorySearchInput
+				) {
+					getCloseMerchantsCategory(
+						geoLocation: $geoLocation
+						category: $category
+					) {
+						id
+						username
+						name
+						logo
+					}
+				}
+			`,
+			variables: { geoLocation, category }
+		})
+		.pipe(
+			map((res) => res.data['getCloseMerchantsCategory']),
+			share()
+		);
 	}
 }

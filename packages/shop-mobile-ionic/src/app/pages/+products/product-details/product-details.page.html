@@ -98,12 +98,12 @@
 				<button
 					class="button button-assertive border-color-brand col-100"
 					[ngClass]="{'disabled': soldOut}"
-					(click)="!soldOut && buyItem(product.product)"
+					(click)="!soldOut && buyItem(product.product, quantity)"
 				>
 					<span
 						>{{ !soldOut ? ('PRODUCTS_VIEW.BUY_BUTTON.PRE' |
 						translate) : ('PRODUCTS_VIEW.NOT_AVAILABLE' | translate)
-						}} {{ !soldOut ? (product?.price + '$') : ('') }} {{
+					}} {{ !soldOut ? (product?.price + 'XAF') : ('') }} {{
 						!soldOut ? ('PRODUCTS_VIEW.BUY_BUTTON.SUF' | translate)
 						: ('') }}</span
 					>
