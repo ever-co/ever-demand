@@ -39,4 +39,5 @@ export const countriesDefaultCurrencies = {
 	RU: 'RUB',
 	US: 'USD',
 	BG: 'BGN',
+	CM: 'XAF',
 };

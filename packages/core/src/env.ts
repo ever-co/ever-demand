@@ -73,7 +73,7 @@ export const env: Env = cleanEnv(
 	{
 		NODE_ENV: str({
 			choices: ['production', 'development', 'test'],
-			default: 'development',
+			default: 'production',
 		}) as ValidatorSpec<Env['NODE_ENV']>,
 
 		WEB_CONCURRENCY: num({ default: 1 }),
@@ -89,7 +89,7 @@ export const env: Env = cleanEnv(
 
 		LOGS_PATH: str({ default: './tmp/logs' }),
 
-		DB_URI: str({ default: 'mongodb://localhost/ever_development' }),
+		DB_URI: str({ default: 'mongodb://localhost/bellem_production' }),
 		TESTING_DB_URI: str({ default: 'mongodb://localhost/ever_testing' }),
 
 		STRIPE_SECRET_KEY: str({ default: '' }),
@@ -104,7 +104,9 @@ export const env: Env = cleanEnv(
 		KEYMETRICS_SECRET_KEY: str({ default: '' }),
 		KEYMETRICS_PUBLIC_KEY: str({ default: '' }),
 
-		GOOGLE_APP_ID: str({ default: '' }),
+		GOOGLE_APP_ID: str({
+			default: 'AIzaSyDudKVRLfNoQFm9JFvGQkGfdxZAbgqXLDE',
+		}),
 		GOOGLE_APP_SECRET: str({ default: '' }),
 
 		FACEBOOK_APP_ID: str({ default: '' }),
@@ -152,9 +154,9 @@ export const env: Env = cleanEnv(
 		IP_STACK_API_KEY: str({ default: '' }),
 		LOG_LEVEL: str({
 			choices: ['trace', 'debug', 'info', 'warn', 'error', 'fatal'],
-			default: 'error',
+			default: 'debug',
 		}),
-		ENGINE_API_KEY: str({
+		APOLLO_KEY: str({
 			desc:
 				'Apollo Engine Key (optional, see https://www.apollographql.com/docs/platform/schema-registry)',
 			default: '',

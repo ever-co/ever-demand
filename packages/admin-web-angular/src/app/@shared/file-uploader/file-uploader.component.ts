@@ -111,7 +111,7 @@ export class FileUploaderComponent {
 			fileItem: any,
 			form: FormData
 		): any => {
-			form.append('upload_preset', 'everbie-products-images');
+			form.append('upload_preset', 'upload_preset');
 
 			let tags = 'myphotoalbum';
 

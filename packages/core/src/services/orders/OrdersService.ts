@@ -29,8 +29,9 @@ import Warehouse, {
 import OrderStatus from '@modules/server.common/enums/OrderStatus';
 import User from '@modules/server.common/entities/User';
 import { ProductsService } from '../../services/products';
-import { Observable } from 'rxjs';
 import Stripe = require('stripe');
+import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
+import { concat, of, Observable } from 'rxjs';
 
 @injectable()
 @routerName('order')
@@ -927,4 +928,87 @@ export class OrdersService extends DBService<Order>
 			throw Error(`Order with id '${orderId}' does not exists!`);
 		}
 	}
+}
+
+export function getOrdersFingObj(status: string) {
+	const findObj = {
+		isDeleted: { $eq: false },
+	};
+
+	switch (status) {
+		case 'confirmed':
+			findObj['$and'] = [
+				{
+					warehouseStatus: {
+						$gt: OrderWarehouseStatus.NoStatus,
+					},
+				},
+				{
+					warehouseStatus: {
+						$lt: OrderWarehouseStatus.GivenToCustomer,
+					},
+				},
+				{
+					carrierStatus: {
+						$lte: OrderCarrierStatus.CarrierSelectedOrder,
+					},
+				},
+			];
+			findObj['isCancelled'] = false;
+			break;
+		case 'in_delivery':
+			findObj['$and'] = [
+				{
+					carrierStatus: {
+						$gte: OrderCarrierStatus.CarrierPickedUpOrder,
+					},
+				},
+				{
+					warehouseStatus: {
+						$lt: OrderWarehouseStatus.AllocationFailed,
+					},
+				},
+				{
+					carrierStatus: {
+						$lt: OrderCarrierStatus.DeliveryCompleted,
+					},
+				},
+			];
+			findObj['isCancelled'] = false;
+			break;
+		case 'not_confirmed':
+			findObj['warehouseStatus'] = OrderWarehouseStatus.NoStatus;
+			findObj['isCancelled'] = false;
+			break;
+		case 'not_paid':
+			findObj['isPaid'] = false;
+			break;
+		case 'cancelled':
+			findObj['isCancelled'] = true;
+			break;
+		case 'relevant':
+			findObj['$and'] = [
+				{
+					warehouseStatus: {
+						$gte: OrderWarehouseStatus.NoStatus,
+					},
+				},
+				{
+					warehouseStatus: {
+						$lt: OrderWarehouseStatus.GivenToCustomer,
+					},
+				},
+				{
+					carrierStatus: {
+						$lte: OrderCarrierStatus.CarrierSelectedOrder,
+					},
+				},
+			];
+			findObj['isCancelled'] = false;
+			break;
+		default:
+			break;
+	}
+
+	return findObj;
 }
