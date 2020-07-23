@@ -59,7 +59,7 @@ class GeoLocation extends DBObject<IGeoLocation, IGeoLocationCreateObject>
 		return getCountryName(this.countryId);
 	}
 
-	set countryName(caountryName: CountryName) {}
+	set countryName(countryName: CountryName) {}
 
 	get isLocValid(): any {
 		return (
