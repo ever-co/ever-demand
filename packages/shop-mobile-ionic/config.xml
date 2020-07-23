@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="co.ever.customer" version="0.2.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>ever.shop.mobile</name>
-    <description>Ever Mobile Shop App</description>
-    <author email="ever@ever.co" href="https://ever.co/">Ever Co. LTD</author>
+<widget id="co.ever.customer" version="0.2.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Bellem Shop</name>
+    <description>Bellem Mobile Shop App</description>
+    <author email="ever@ever.co" href="https://ever.co/">Bellem</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="*" />
@@ -40,6 +40,9 @@
         <splash density="port-xhdpi" src="resources/android/splash/drawable-port-xhdpi-screen.png" />
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+            <application android:usesCleartextTraffic="true" />
+        </edit-config>
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />

@@ -50,9 +50,11 @@ export class ByLocationPage implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit() {
+		/*
 		setTimeout(async () => {
 			await this.updateCurrentAddressByCoordinates();
 		}, 50);
+		*/
 	}
 
 	public get isValid() {
