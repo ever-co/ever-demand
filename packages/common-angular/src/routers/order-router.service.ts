@@ -10,6 +10,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
 import IOrder from '@modules/server.common/interfaces/IOrder';
+import _ from 'lodash';
 
 @Injectable()
 export class OrderRouter implements IOrderRouter {
@@ -23,6 +24,16 @@ export class OrderRouter implements IOrderRouter {
 		return this.router
 			.runAndObserve<IOrder>('get', id, options)
 			.pipe(map((order) => this._orderFactory(order)));
+	}
+
+	getOrders(options: IOrderRouterGetOptions = {}): Observable<Order[]> {
+		return this.router
+			.runAndObserve<IOrder[]>('getOrders', options)
+			.pipe(
+				map((orders) =>
+					_.map(orders, (order) => this._orderFactory(order))
+				)
+			);
 	}
 
 	async confirm(orderId: string): Promise<Order> {

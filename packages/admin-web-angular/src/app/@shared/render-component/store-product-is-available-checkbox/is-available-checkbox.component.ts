@@ -35,6 +35,7 @@ export class IsAvailableCheckBox implements ViewCell, OnInit {
 		this.isChecked = this.rowData.isProductAvailable;
 		this.wareHouseId = this.rowData.storeId;
 		this.productId = this.rowData.product.id;
+		console.warn(this.rowData);
 	}
 
 	async clickHandler() {

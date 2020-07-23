@@ -53,7 +53,7 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 	constructor(
 		private readonly fb: FormBuilder,
 		private readonly _langTranslateService: TranslateService
-	) {}
+	) { }
 
 	get image() {
 		return this.form.get('image');
@@ -74,23 +74,14 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 	get usedLanguage() {
 		const usedLanguage = this._langTranslateService.currentLang;
 		switch (usedLanguage) {
+			case 'fr-Fr':
+				return 'fr-FR';
+
 			case 'en-US':
 				return 'en-US';
-
-			case 'bg-BG':
-				return 'bg-BG';
-
-			case 'he-IL':
-				return 'he-IL';
-
-			case 'ru-RU':
-				return 'ru-RU';
-
-			case 'es-ES':
-				return 'es-ES';
-
+        
 			default:
-				return 'en-US';
+				return 'fr-FR';
 		}
 	}
 
@@ -113,9 +104,9 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 			({ locale, value }) => {
 				return locale === usedLanguage
 					? {
-							locale: usedLanguage,
-							value: this.name.value,
-					  }
+						locale: usedLanguage,
+						value: this.name.value,
+					}
 					: { locale, value };
 			}
 		);

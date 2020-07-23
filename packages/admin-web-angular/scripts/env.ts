@@ -62,8 +62,8 @@ export const env: Env = cleanEnv(
 
 		GOOGLE_MAPS_API_KEY: str({ default: '' }),
 
-		DEFAULT_LATITUDE: num({ default: 42.6459136 }),
-		DEFAULT_LONGITUDE: num({ default: 23.3332736 }),
+		DEFAULT_LATITUDE: num({ default: 4.0850277 }),
+		DEFAULT_LONGITUDE: num({ default: 9.7535913 }),
 
 		NO_INTERNET_LOGO: str({ default: 'assets/images/ever-logo.svg' }),
 

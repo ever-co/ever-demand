@@ -1,14 +1,8 @@
 {
+	"fr-FR": {
+		"no_products_text": "Aucun produit a acheter pour l'instant"
+	},
 	"en-US": {
 		"no_products_text": "Nothing to buy for now."
-	},
-	"he-IL": {
-		"no_products_text": "אין שום דבר לקנות כרגע."
-	},
-	"ru-RU": {
-		"no_products_text": "Нет ничего для покупки."
-	},
-	"bg-BG": {
-		"no_products_text": "Нищо за купуване за сега."
 	}
 }

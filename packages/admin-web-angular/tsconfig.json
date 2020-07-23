@@ -4,7 +4,7 @@
 	"compilerOptions": {
 		"outDir": "./dist/out-tsc",
 		"module": "commonjs",
-		"target": "es2015",
+		"target": "es5",
 		"baseUrl": "./src",
 		"experimentalDecorators": true,
 		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"],

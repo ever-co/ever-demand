@@ -18,6 +18,13 @@ import _ from 'lodash';
 import { ObjectId } from 'bson';
 import { FakeOrdersService } from '../../services/fake-data/FakeOrdersService';
 
+export type OrdersFilterModes =
+	| 'ready'
+	| 'in_delivery'
+	| 'not_confirmed'
+	| 'cancelled'
+	| 'all';
+
 @Resolver('Order')
 export class OrderResolver {
 	constructor(
