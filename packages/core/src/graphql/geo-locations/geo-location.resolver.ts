@@ -61,7 +61,7 @@ export class GeoLocationResolver {
 			options,
 			category,
 			pagingOptions = {},
-			searchText
+			searchText,
 		}: {
 			geoLocation;
 			options?: IGetGeoLocationProductsOptions;

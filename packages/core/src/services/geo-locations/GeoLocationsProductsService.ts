@@ -148,7 +148,7 @@ export class GeoLocationsProductsService
 			{
 				fullProducts: true,
 				activeOnly: true,
-				merchantsIds: options ? options.merchantIds : null
+				merchantsIds: options ? options.merchantIds : null,
 			}
 		);
 

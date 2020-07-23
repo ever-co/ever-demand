@@ -6,5 +6,5 @@ type ICategory = 'cake' | 'food' | 'mart' | 'pizza' | 'clean' | 'med' | 'me2u' |
 export default ICategory;
 */
 export default interface ICategory {
-  name: string;
+	name: string;
 }

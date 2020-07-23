@@ -38,27 +38,30 @@ export class GeoLocationMerchantsResolver {
 	}
 
 	@Query('getCloseMerchantsCategory')
-async getCloseMerchantsCategory(_, { geoLocation }: { geoLocation: IGeoLocation }, {category}: {category: ICategory} ) {
-	let merchants = await this.geoLocationsWarehousesService.getCloseMerchantsCategory(
-		geoLocation,
-		category,
-		IN_STORE_DISTANCE,
-		{ fullProducts: false, activeOnly: true }
-	);
+	async getCloseMerchantsCategory(
+		_,
+		{ geoLocation }: { geoLocation: IGeoLocation },
+		{ category }: { category: ICategory }
+	) {
+		let merchants = await this.geoLocationsWarehousesService.getCloseMerchantsCategory(
+			geoLocation,
+			category,
+			IN_STORE_DISTANCE,
+			{ fullProducts: false, activeOnly: true }
+		);
 
-	merchants = merchants.sort(
-		(m1, m2) =>
-			Utils.getDistance(
-				new GeoLocation(m1.geoLocation),
-				new GeoLocation(geoLocation)
-			) -
-			Utils.getDistance(
-				new GeoLocation(m2.geoLocation),
-				new GeoLocation(geoLocation)
-			)
-	);
+		merchants = merchants.sort(
+			(m1, m2) =>
+				Utils.getDistance(
+					new GeoLocation(m1.geoLocation),
+					new GeoLocation(geoLocation)
+				) -
+				Utils.getDistance(
+					new GeoLocation(m2.geoLocation),
+					new GeoLocation(geoLocation)
+				)
+		);
 
-	return merchants.map((m) => new Warehouse(m));
-}
-
+		return merchants.map((m) => new Warehouse(m));
+	}
 }

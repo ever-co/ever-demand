@@ -379,13 +379,7 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 			case OrderStatus.WarehousePreparation:
 				return 'Preparation';
 			case OrderStatus.InDelivery:
-<<<<<<< HEAD
-				return 'En livraison';
-||||||| merged common ancestors
-				return 'En la entrega';
-=======
 				return 'En cours de livraison';
->>>>>>> c0ed75bda1c6d1a813fb546e68167e7a6ae04259
 			case OrderStatus.Delivered:
 				return 'Livre';
 			case OrderStatus.CanceledWhileWarehousePreparation:

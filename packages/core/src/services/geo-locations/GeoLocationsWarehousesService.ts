@@ -195,16 +195,16 @@ export class GeoLocationsWarehousesService
 						$near: {
 							$geometry: {
 								type: 'Point',
-								coordinates: geoLocation.loc.coordinates
+								coordinates: geoLocation.loc.coordinates,
 							},
-							$maxDistance: maxDistance
-						}
-					}
+							$maxDistance: maxDistance,
+						},
+					},
 				},
 				options.activeOnly ? { isActive: true } : {},
 				merchantsIds && merchantsIds.length > 0
 					? {
-							_id: { $in: merchantsIds }
+							_id: { $in: merchantsIds },
 					  }
 					: {}
 			)
