@@ -1,20 +1,19 @@
 .img-wrapper {
-    min-height: 150px;
-    width: 100%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position-x: center;
+	min-height: 160px;
+	width: 100%;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position-x: center;
 }
 
 .service-wrapper {
-    min-height: 30px;
-    width: 100%;
-    text-align: center;
-    font-size: 24px;
-    color: white;
-    position: relative;
-    top: 25px;
-
+	min-height: 30px;
+	width: 100%;
+	text-align: center;
+	font-size: 24px;
+	color: white;
+	position: relative;
+	top: 25px;
 }
 
 /**

@@ -390,7 +390,7 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 			case OrderStatus.CarrierIssue:
 				return 'Probleme de livraison';
 			default:
-				return 'BAD_STATUS';
+				return 'MAUVAIS_STATUS';
 		}
 	}
   

@@ -1,7 +1,13 @@
 <ion-menu (ionWillOpen)="menuOpened()" contentId="pageContainer" side="start">
 	<ion-header>
 		<ion-toolbar color="secondary">
-			<ion-title>{{ 'SIDE_MENU.TITLE' | translate }}</ion-title>
+			<ion-title
+				><img
+					alt="logo"
+					height="45"
+					src="/assets/imgs/bellem_blanc.png"
+				/>{{ 'SIDE_MENU.TITLE' | translate }}</ion-title
+			>
 		</ion-toolbar>
 	</ion-header>
 
@@ -9,7 +15,6 @@
 		<ion-list>
 			<ion-item-group>
 				<ion-menu-toggle [autoHide]="true">
-
 					<ion-item
 						routerLink="/categories"
 						routerDirection="root"
@@ -21,7 +26,7 @@
 								| translate
 						}}</ion-label>
 					</ion-item>
-<!--
+					<!--
 					<ion-item
 						routerLink="/products"
 						routerDirection="root"
@@ -119,7 +124,7 @@
 				</ion-item-divider>
 
 				<ion-menu-toggle [autoHide]="true">
-<!--
+					<!--
 					<ion-item
 						routerLink="/info/help"
 						routerDirection="root"
@@ -138,7 +143,7 @@
 								| translate
 						}}</ion-label>
 					</ion-item>
-<!--
+					<!--
 					<ion-item
 						routerLink="/info/about"
 						routerDirection="root"

@@ -36,6 +36,10 @@ export class MerchantsPage implements OnDestroy {
 		this.router.navigateByUrl('products');
 	}
 
+	goToCategoriesPage() {
+		this.router.navigateByUrl('categories');
+	}
+
 	searchChange(event) {
 		if (this.searchName) {
 			this.loadSearchMerchants();

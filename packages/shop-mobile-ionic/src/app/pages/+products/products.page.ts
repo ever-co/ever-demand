@@ -23,7 +23,6 @@ import { GeoLocationProductsService } from 'app/services/geo-location/geo-locati
 import { WarehouseProductsService } from 'app/services/merchants/warehouse-products';
 import ICategory from '@modules/server.common/interfaces/ICategory';
 
-
 const initializeProductsNumber: number = 10;
 
 @Component({
@@ -73,7 +72,8 @@ export class ProductsPage implements OnInit, OnDestroy {
 			this.store.deliveryType = DeliveryType.Delivery;
 			this.loadMerchant();
 		}
-		this.isDeliveryRequired = this.store.deliveryType === DeliveryType.Delivery;
+		this.isDeliveryRequired =
+			this.store.deliveryType === DeliveryType.Delivery;
 
 		this._subscribeProductsPlaceholder();
 		this.loadGeoLocationProducts();
@@ -168,6 +168,9 @@ export class ProductsPage implements OnInit, OnDestroy {
 	changeStoreMode() {
 		if (this.inStore) {
 			this.store.clearInStore();
+
+			//We go back to the merchants list.
+			this.router.navigate(['/merchants']);
 		} else {
 			if (!this.navigateToMerchants) {
 				// Here take first merchant id because all id's are from one merchant
@@ -239,7 +242,6 @@ export class ProductsPage implements OnInit, OnDestroy {
 	}
 
 	async loadProducts(options = {}) {
-
 		this.category = this.store.category || { name: 'food' };
 		let name = this.category.name;
 
@@ -278,7 +280,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 					.geoLocationProductsByCategory(
 						this.getOrdersGeoObj,
 						{
-							name: this.category.toString()
+							name: this.category.toString(),
 						},
 						{
 							skip: this.products.length,
