@@ -28,7 +28,6 @@ import { environment } from 'environments/environment';
 })
 export class ByLocationPage implements OnInit, OnDestroy {
 
-	public house: number;
 	public streetAddress: string;
 	public city: string;
 	public country: number = Country.CM;
@@ -36,12 +35,14 @@ export class ByLocationPage implements OnInit, OnDestroy {
   public firstName: string;
 	public lastName: string;
 	public email: string;
+	public phone: string;
 
 	public detectingLocation: boolean = false;  // Set to false for CM ***
 	public showTextarea: boolean = false;
 	public notes: string;
 
-	public apartment: number = 1;
+	public house: number = 10;
+	public apartment: number = 10;
 	public isApartment: boolean = true;
 
 	private readonly ngDestroy$ = new Subject<void>();
@@ -71,7 +72,7 @@ export class ByLocationPage implements OnInit, OnDestroy {
 		return (
 			every([this.firstName+ ' '+this.lastName , this.email], notEmptyString) &&
 			every([this.city, this.streetAddress], notEmptyString) &&
-			every([this.house, this.country], (n) => isNumber(n) && n !== 0)
+			every([this.phone, this.country], (n) => isNumber(n) && n !== 0)
 			&& ((isNumber(this.apartment) && this.apartment !== 0) || !this.isApartment)
 		);
 	}
@@ -218,6 +219,7 @@ export class ByLocationPage implements OnInit, OnDestroy {
 				firstName: this.firstName,
 				lastName: this.lastName,
 				email: this.email,
+				phone: this.phone,
 
 				apartment: invite.apartment,
 				geoLocation: invite.geoLocation,

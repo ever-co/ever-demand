@@ -50,13 +50,13 @@
 			<input
 				class="ion-autocomplete"
 				[(ngModel)]="streetAddress"
-				placeholder="{{ 'STREET' | translate }}"
+				placeholder="{{ 'QUARTER' | translate }}"
 			/>
 
 			<div *ngIf="streetAddress">
 				<input
 					class="ion-autocomplete"
-					[(ngModel)]="house"
+					[(ngModel)]="phone"
 					type="number"
 					placeholder="{{ 'PHONE' | translate }}"
 				/>
@@ -67,7 +67,7 @@
 			<!-- Angular have no such label:
               cancel-label="{{ 'BACK' | translate }}"       -->
 
-			<div *ngIf="streetAddress">
+			<div *ngIf="phone">
 				<ion-button
 					color="secondary"
 					*ngIf="house && (apartment || !isApartment)"
