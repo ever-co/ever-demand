@@ -41,7 +41,9 @@ export class OrderComponent {
 	}
 
 	get customerAddress() {
-		return `${this.order.user.geoLocation.countryName} ${this.order.user.geoLocation.postcode}, ${this.order.user.geoLocation.city}`;
+		// TODO - Awaiting geolocation for orders.
+		//return `${this.order.user.geoLocation.city}, ${this.order.user.geoLocation.streetAddress} - ${this.order.user.phone}`;
+		return `${this.order.user.geoLocation.city}, ${this.order.user.geoLocation.streetAddress}`;
 	}
 
 	get totalPrice() {

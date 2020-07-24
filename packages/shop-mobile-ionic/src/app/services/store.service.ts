@@ -252,12 +252,10 @@ export class Store {
 
 	private async _initLanguage() {
 		const lang = (localStorage.getItem('_language') as ILanguage) || null;
-		const langs = { he: 'he-IL', ru: 'ru-RU', bg: 'bg-BG', en: 'en-US' };
+		const langs = { fr: 'fr-FR', en: 'en-US' };
 		// This 4 lines is here because of bug => without this lines, lang translation doesn't work.
 		// (The bug is unknown)
-		this._translateService.use(langs.he);
-		this._translateService.use(langs.ru);
-		this._translateService.use(langs.bg);
+		this._translateService.use(langs.fr);
 		this._translateService.use(langs.en);
 		this._translateService.resetLang(langs.en);
 

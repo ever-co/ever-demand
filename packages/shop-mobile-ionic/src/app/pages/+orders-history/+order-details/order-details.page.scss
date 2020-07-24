@@ -28,3 +28,25 @@ ion-content {
 		margin-top: 20px;
 	}
 }
+
+.order-process-buttons {
+	position: absolute;
+	padding-right: 5px;
+	padding-left: 5px;
+	bottom: 25px;
+	button {
+		padding: 15px;
+		border-radius: 5px;
+		display: flex !important;
+		align-content: center !important;
+		align-items: center !important;
+		position: relative;
+		text-align: center;
+		height: 100%;
+		color: white;
+		text-align: center;
+		span {
+			margin: 0 auto;
+		}
+	}
+}
