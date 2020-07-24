@@ -12,6 +12,7 @@
 
 	<ion-spinner color="light" [hidden]="!detectingLocation"></ion-spinner>
 
+
 	<div *ngIf="!detectingLocation">
 		<input
 			class="ion-autocomplete"
@@ -32,6 +33,15 @@
 				[(ngModel)]="streetAddress"
 				placeholder="{{ 'STREET' | translate }}"
 			/>
+
+
+			<div *ngIf="streetAddress">
+				<input
+					class="ion-autocomplete"
+					[(ngModel)]="house"
+					type="number"
+					placeholder="{{ 'PHONE' | translate }}"
+				/>
 			<!--<input ion-autocomplete readonly class="ion-autocomplete" autocomplete="off" [(ngModel)]="streetAddress"
 				   max-selected-items="1"
 				   items-method="inviteByLocationCtrl?.queryStreets(query)" selected-items-label="Selected Street"
@@ -40,74 +50,6 @@
               cancel-label="{{ 'BACK' | translate }}"       -->
 
 			<div *ngIf="streetAddress">
-				<ion-grid no-padding>
-					<ion-row class="house-and-apartment">
-						<ion-col no-padding>
-							<div
-								class="house house-{{
-									'CURRENT_DIRECTION' | translate
-								}}"
-							>
-								<input
-									type="number"
-									[(ngModel)]="house"
-									placeholder="{{ 'HOUSE' | translate }}"
-								/>
-							</div>
-
-							<div
-								class="notes notes-{{
-										'CURRENT_DIRECTION' | translate
-									}}"
-							>
-								<span class="notes" (click)="toggleTextarea()">
-									{{ 'LOCATION_NOTES' | translate }}
-								</span>
-								<ion-textarea
-									[(ngModel)]="notes"
-									*ngIf="showTextarea"
-									autofocus
-									rows="3"
-									cols="18"
-									placeholder="{{ 'ENTER_NOTES_HERE' | translate }}"
-								></ion-textarea>
-							</div>
-						</ion-col>
-
-						<ion-col no-padding>
-							<div class="apartment">
-								<input
-									type="number"
-									*ngIf="isApartment"
-									[(ngModel)]="apartment"
-									placeholder="{{ 'APARTMENT' | translate }}"
-									class="apartment apartment-{{
-										'CURRENT_DIRECTION' | translate
-									}}"
-								/>
-
-								<div
-									*ngIf="!apartment"
-									class="is-apartment is-apartment-{{
-										'CURRENT_DIRECTION' | translate
-									}}"
-								>
-									<span class="description">
-										{{ 'APARTMENT' | translate }}
-									</span>
-									<label class="toggle toggle-assertive">
-										<ion-checkbox
-											[(ngModel)]="isApartment"
-										></ion-checkbox>
-										<div class="track">
-											<div class="handle"></div>
-										</div>
-									</label>
-								</div>
-							</div>
-						</ion-col>
-					</ion-row>
-				</ion-grid>
 				<ion-button
 					color="secondary"
 					*ngIf="house && (apartment || !isApartment)"

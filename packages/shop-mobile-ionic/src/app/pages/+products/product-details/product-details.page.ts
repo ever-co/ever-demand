@@ -45,7 +45,7 @@ export class ProductDetailsPage implements AfterViewInit, OnDestroy {
 
 	public swiperOptions: SwiperOptions;
 	public product: WarehouseProduct;
-	public quantity: number = 2;
+	public quantity: number = 1;
 	public productID: string;
 	public prevUrl: string;
 	public warehouseLogo: string;
@@ -116,16 +116,16 @@ export class ProductDetailsPage implements AfterViewInit, OnDestroy {
 	}
 
 	async buyItem(currentProduct: Product, quantity: number) {
-		if (
-			!this.store.userId &&
-			this.store.registrationSystem === RegistrationSystem.Disabled
-		) {
+		if (!this.store.userId && this.store.registrationSystem === RegistrationSystem.Disabled) {
+
 			this.store.registrationSystem = RegistrationSystem.Once;
 			this.store.buyProduct = currentProduct.id;
 			this.store.backToDetails = currentProduct.id;
 			this.store.warehouseId = this.warehouseId;
 			this.navCtrl.navigateRoot('/invite');
+
 		} else {
+
 			const orderCreateInput: IOrderCreateInput = {
 				warehouseId: this.warehouseId,
 				products: [{ count: quantity, productId: currentProduct.id }],
@@ -155,6 +155,21 @@ export class ProductDetailsPage implements AfterViewInit, OnDestroy {
 					}`,
 				]);
 			}
+		}
+	}
+
+	async decreaseItem(currentProduct: Product, quantity: number) {
+
+		const qty = this.quantity;
+		if(qty !== 1){
+			this.quantity = qty - 1;
+		}
+	}
+
+	async increaseItem(currentProduct: Product, quantity: number) {
+		const qty = this.quantity;
+		if(qty !== 10){
+			this.quantity = qty + 1;
 		}
 	}
 

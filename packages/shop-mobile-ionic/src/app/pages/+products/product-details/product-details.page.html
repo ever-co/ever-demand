@@ -94,6 +94,48 @@
 				<ion-img src="/assets/imgs/reviews.png"></ion-img>
 			</ion-col>
 
+
+			<div class="box quantity-buttons">
+
+				<ion-row no-padding align-items-center class="header-container brand-light">
+					<ion-col class="col-2">
+						<button
+							class="button button-assertive border-color-brand col-100"
+							[ngClass]="{'disabled': soldOut}"
+							(click)="decreaseItem(product.product, quantity)"
+						>
+							<span>
+									{{ '-' }}
+							</span>
+						</button>
+					</ion-col>
+					<ion-col class="text-content" clsss="col-6">
+
+						<div class="center">
+							<h2 class="text center">
+								{{ quantity +' '+ localeTranslate(product.product?.title) }}
+							</h2>
+							<h6 class="productDescription">
+								{{ ((product?.price * quantity) +' XAF') }}
+							</h6>
+						</div>
+
+					</ion-col>
+					<ion-col class="col-2">
+						<button
+							class="button button-assertive border-color-brand col-100"
+							[ngClass]="{'disabled': soldOut}"
+							(click)="increaseItem(product.product, quantity)"
+						>
+							<span>
+									{{ '+' }}
+							</span>
+						</button>
+					</ion-col>
+				</ion-row>
+
+			</div>
+
 			<div class="box details-buttons">
 				<button
 					class="button button-assertive border-color-brand col-100"
@@ -103,7 +145,7 @@
 					<span
 						>{{ !soldOut ? ('PRODUCTS_VIEW.BUY_BUTTON.PRE' |
 						translate) : ('PRODUCTS_VIEW.NOT_AVAILABLE' | translate)
-					}} {{ !soldOut ? (product?.price + 'XAF') : ('') }} {{
+					}} {{ !soldOut ? ((product?.price * quantity) + ' XAF') : ('') }} {{
 						!soldOut ? ('PRODUCTS_VIEW.BUY_BUTTON.SUF' | translate)
 						: ('') }}</span
 					>
