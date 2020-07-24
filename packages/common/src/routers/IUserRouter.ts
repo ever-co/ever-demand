@@ -28,6 +28,8 @@ interface IUserRouter {
 		deviceId: Device['id']
 	): Observable<string>;
 
+	getHelp(userId: User['id'], deviceId: Device['id']): Observable<string>;
+
 	getPrivacy(userId: User['id'], deviceId: Device['id']): Observable<string>;
 }
 

@@ -395,25 +395,6 @@ export class UsersService extends DBService<User>
 			switchMap((device) => this.watchedFiles.termsOfUse[device.language])
 		);
 	}
-	@observableListener()
-	getTermsOfUseByLanguage(selectedLanguage: string): Observable<string> {
-		return this.watchedFiles.termsOfUse[selectedLanguage];
-	}
-
-	@observableListener()
-	getAboutUsByLanguage(selectedLanguage: string): Observable<string> {
-		return this.watchedFiles.aboutUs[selectedLanguage];
-	}
-
-	@observableListener()
-	getPrivacyByLanguage(selectedLanguage: string): Observable<string> {
-		return this.watchedFiles.privacy[selectedLanguage];
-	}
-
-	@observableListener()
-	getHelpByLanguage(selectedLanguage: string): Observable<string> {
-		return this.watchedFiles.help[selectedLanguage];
-	}
 
 	/**
 	 * Get Privacy Policy Content (HTML)
@@ -439,6 +420,26 @@ export class UsersService extends DBService<User>
 					oldDevice.language !== newDevice.language
 			),
 			switchMap((device) => this.watchedFiles.privacy[device.language])
+		);
+	}
+
+	@observableListener()
+	getHelp(userId: string, deviceId: string): Observable<string> {
+		return this.devicesService.get(deviceId).pipe(
+			exhaustMap((device) => {
+				if (device === null) {
+					return _throw(
+						new Error(`User with the id ${userId} doesn't exist`)
+					);
+				} else {
+					return of(device);
+				}
+			}),
+			distinctUntilChanged(
+				(oldDevice, newDevice) =>
+					oldDevice.language !== newDevice.language
+			),
+			switchMap((device) => this.watchedFiles.help[device.language])
 		);
 	}
 

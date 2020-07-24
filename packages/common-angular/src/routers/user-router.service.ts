@@ -76,32 +76,8 @@ export class UserRouter implements IUserRouter {
 		);
 	}
 
-	getPrivacyByLanguage(selectedLanguage: string): Observable<string> {
-		return this.router.runAndObserve<string>(
-			'getPrivacyByLanguage',
-			selectedLanguage
-		);
-	}
-
-	getTermsOfUseByLanguage(selectedLanguage: string): Observable<string> {
-		return this.router.runAndObserve<string>(
-			'getTermsOfUseByLanguage',
-			selectedLanguage
-		);
-	}
-
-	getAboutUsByLanguage(selectedLanguage: string): Observable<string> {
-		return this.router.runAndObserve<string>(
-			'getAboutUsByLanguage',
-			selectedLanguage
-		);
-	}
-
-	getHelpByLanguage(selectedLanguage: string): Observable<string> {
-		return this.router.runAndObserve<string>(
-			'getHelpByLanguage',
-			selectedLanguage
-		);
+	getHelp(userId: string, deviceId: string): Observable<string> {
+		return this.router.runAndObserve<string>('getHelp', userId, deviceId);
 	}
 
 	getPrivacy(userId: string, deviceId: string): Observable<string> {

@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { Subscription } from 'rxjs';
+import ILanguage from '@modules/server.common/interfaces/ILanguage';
+import { DeviceRouter } from '@modules/client.common.angular2/routers/device-router.service';
 
 @Component({
 	selector: 'page-terms-of-use',
@@ -8,15 +10,24 @@ import { Subscription } from 'rxjs';
 })
 export class TermsOfUsePage implements OnInit, OnDestroy {
 	public useTermsHtml: string = '<h1>Loading...</h1>';
-	public selectedLanguage: string;
+	public selectedLanguage: ILanguage;
 	private sub: Subscription;
-	constructor(private userRouter: UserRouter) {
-		this.selectedLanguage = localStorage.getItem('_language');
+	public deviceId: string;
+	public userId: string;
+	constructor(
+		private userRouter: UserRouter,
+		private deviceRouter: DeviceRouter
+	) {
+		this.selectedLanguage =
+			(localStorage.getItem('_language') as ILanguage) || 'en-US';
+		this.deviceId = localStorage.getItem('_deviceId');
+		this.userId = localStorage.getItem('_userId');
 	}
 
 	ngOnInit(): void {
+		this.deviceRouter.updateLanguage(this.deviceId, this.selectedLanguage);
 		this.sub = this.userRouter
-			.getTermsOfUseByLanguage(this.selectedLanguage)
+			.getTermsOfUse(this.userId, this.deviceId)
 			.subscribe((html) => {
 				this.useTermsHtml = html;
 			});
