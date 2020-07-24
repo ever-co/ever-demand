@@ -16,9 +16,28 @@
 	<div *ngIf="!detectingLocation">
 		<input
 			class="ion-autocomplete"
-			[(ngModel)]="city"
-			placeholder="{{ 'CITY' | translate }}"
+			[(ngModel)]="firstName"
+			placeholder="{{ 'FIRSTNAME' | translate }}"
 		/>
+		<input
+			class="ion-autocomplete"
+			[(ngModel)]="lastName"
+			placeholder="{{ 'LASTNAME' | translate }}"
+		/>
+		<input
+			class="ion-autocomplete"
+			[(ngModel)]="email"
+			placeholder="{{ 'EMAIL' | translate }}"
+		/>
+
+
+		<div *ngIf="email">
+			<input
+				class="ion-autocomplete"
+				[(ngModel)]="city"
+				placeholder="{{ 'CITY' | translate }}"
+			/>
+
 		<!--<input ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete" autocomplete="off"
 			   [(ngModel)]="city" max-selected-items="1"
 			   items-method="inviteByLocationCtrl?.queryCities(query)" selected-items-label="Selected City"
@@ -33,7 +52,6 @@
 				[(ngModel)]="streetAddress"
 				placeholder="{{ 'STREET' | translate }}"
 			/>
-
 
 			<div *ngIf="streetAddress">
 				<input
@@ -60,6 +78,7 @@
 					{{ 'INVITE_VIEW.GET_IN' | translate }}
 				</ion-button>
 			</div>
-		</div>
+
+		</div> <!-- house used for phone -->
 	</div>
 </div>

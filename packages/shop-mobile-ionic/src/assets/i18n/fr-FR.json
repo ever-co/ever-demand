@@ -226,6 +226,13 @@
 	"YES": "Oui",
 	"NO": "Non",
 	"OK": "Ok",
+
+	"FIRSTNAME": "Prénoms",
+	"LASTNAME": "Noms",
+	"EMAIL": "Adresse Mail",
+	"QUARTER": "Quartier",
+	"PHONE": "Numéro de téléphone",
+
 	"CITY": "Ville",
 	"STREET": "Rue",
 	"HOUSE": "Maison",
