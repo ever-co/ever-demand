@@ -27,6 +27,13 @@ const routes: Routes = [
 			),
 	},
 	{
+		path: 'customer-addresses',
+		loadChildren: () =>
+			import('./pages/+customer/customer-addresses.module').then(
+				(m) => m.CustomerAddressesModule
+			),
+	},
+	{
 		path: '**',
 		pathMatch: 'full',
 		redirectTo: '',

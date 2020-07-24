@@ -33,6 +33,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { Network } from '@ionic-native/network/ngx';
 import { Device } from '@ionic-native/device/ngx';
 import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
+import { CustomerAddressesModule } from './pages/+customer/customer-addresses.module';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -42,6 +43,7 @@ import { ServerConnectionService } from '@modules/client.common.angular2/service
 		HttpClientModule,
 		BrowserAnimationsModule,
 		MenuModule,
+		CustomerAddressesModule,
 		ApolloModule,
 		HttpLinkModule,
 		IonicModule.forRoot(),

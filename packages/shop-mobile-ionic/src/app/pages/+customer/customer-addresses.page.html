@@ -1,0 +1,108 @@
+<!-- <div class="page-settings">
+	<div id="header" class="bar bar-header bar-brand">
+		<ion-title>
+			{{ 'Customer Addresses' | translate }}
+		</ion-title>
+		<div class="buttons buttons-left header-item">
+			<span class="left-buttons">
+				<div class="waves-effect waves-classic">
+					<ion-menu-toggle class="button-icon">
+						<ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+					</ion-menu-toggle>
+				</div>
+			</span>
+		</div>
+	</div>
+
+	<ion-segment [(ngModel)]="selectedSegment" id="segmentContainer">
+		<ion-segment-button value="home" class="segment-activated">
+			{{ 'Current' | translate }}
+		</ion-segment-button>
+
+		<ion-segment-button value="current">
+			{{ 'Home' | translate }}
+		</ion-segment-button>
+
+		<ion-segment-button value="work">
+			{{ 'Other' | translate }}
+		</ion-segment-button>
+
+		<ion-segment-button value="other">
+			{{ 'Work' | translate }}
+		</ion-segment-button>
+	</ion-segment>
+
+	<div [ngSwitch]="selectedSegment">
+		<div *ngSwitchCase="'options'" class="segmentDivs" id="optionsDiv">
+			<!-- <merchant-settings
+				[currWarehouse]="_currWarehouse"
+			></merchant-settings> -->
+<!-- </div>
+
+		<div *ngSwitchCase="'home'" class="segmentDivs" id="common">
+			<home-address></home-address>
+		</div>
+
+		<div *ngSwitchCase="'current'" class="segmentDivs" id="location"> -->
+<!-- <merchant-location
+				[currWarehouse]="_currWarehouse"
+			></merchant-location> -->
+<!-- </div>
+
+		<div *ngSwitchCase="'work'" class="segmentDivs" id="account"> -->
+<!-- <merchant-account
+				[currWarehouse]="_currWarehouse"
+			></merchant-account> -->
+<!-- </div>
+	</div>
+</div> -->
+
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-buttons slot="start">
+			<ion-menu-button autoHide="false"></ion-menu-button>
+		</ion-buttons>
+
+		<ion-title>{{ 'Customer Addresses' | translate }}</ion-title>
+		<ion-buttons slot="end">
+			<ion-button (click)="goBack()">
+				<i class="fa fa-angle-left back-btn"></i>
+				<span>{{ 'BACK' | translate }}</span>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content scroll="false">
+	<ion-segment [(ngModel)]="selectedSegment" id="segmentContainer">
+		<ion-segment-button value="home">
+			{{ 'Home' | translate }}
+		</ion-segment-button>
+
+		<ion-segment-button value="work">
+			{{ 'Other' | translate }}
+		</ion-segment-button>
+
+		<ion-segment-button value="other">
+			{{ 'Work' | translate }}
+		</ion-segment-button>
+	</ion-segment>
+
+	<ion-segment [ngSwitch]="selectedSegment">
+		<ion-tab-button *ngSwitchCase="'home'" class="segmentDivs" id="common">
+			<home-address></home-address>
+		</ion-tab-button>
+
+		<div *ngSwitchCase="'work'" class="segmentDivs" id="location">
+			<!-- <merchant-location
+				[currWarehouse]="_currWarehouse"
+			></merchant-location> -->
+		</div>
+
+		<div *ngSwitchCase="'other'" class="segmentDivs" id="account">
+			<!-- <merchant-account
+				[currWarehouse]="_currWarehouse"
+			></merchant-account> -->
+		</div>
+	</ion-segment>
+</ion-content>

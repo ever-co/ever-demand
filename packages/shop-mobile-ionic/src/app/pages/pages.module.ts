@@ -8,6 +8,7 @@ import { OrderTakeawayInfoModuleGuard } from './+products/+order/takeaway/+page/
 import { OrderInfoPageModuleGuard } from './+products/+order/+order-info/order-info.module.guard';
 import { OrdersHistoryModuleGuard } from './+orders-history/orders-history.module.guard';
 import { MerchantsPageModuleGuard } from './+merchants/merchants.module.guard';
+import { CustomerAddressesModule } from './+customer/customer-addresses.module';
 
 const routes: Routes = [
 	{
@@ -83,6 +84,14 @@ const routes: Routes = [
 		canLoad: [MerchantsPageModuleGuard],
 	},
 	{
+		path: 'customer-addresses',
+		loadChildren: () =>
+			import('./+customer/customer-addresses.module').then(
+				(m) => m.CustomerAddressesModule
+			),
+		canLoad: [MerchantsPageModuleGuard],
+	},
+	{
 		path: '',
 		pathMatch: 'full',
 		redirectTo: 'invite',
@@ -97,6 +106,7 @@ const routes: Routes = [
 		InfoModuleGuard,
 		MaintenanceService,
 		OrderTakeawayInfoModuleGuard,
+		CustomerAddressesModule,
 		OrderInfoPageModuleGuard,
 		OrdersHistoryModuleGuard,
 		MerchantsPageModuleGuard,

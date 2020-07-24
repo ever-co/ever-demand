@@ -84,6 +84,16 @@
 						}}</ion-label>
 					</ion-item>
 				</ion-menu-toggle>
+				<ion-menu-toggle [autoHide]="true">
+					<ion-item
+						routerLink="/customer-addresses"
+						routerDirection="root"
+						routerLinkActive="activated"
+					>
+						<ion-icon name="location"></ion-icon>
+						<ion-label>{{ 'Addresses' | translate }}</ion-label>
+					</ion-item>
+				</ion-menu-toggle>
 			</ion-item-group>
 			<ion-item-group>
 				<ion-item-divider>
