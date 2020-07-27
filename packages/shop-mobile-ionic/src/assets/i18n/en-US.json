@@ -189,6 +189,10 @@
 					"ABOUT_US": "About Us",
 					"TERMS_OF_USE": "Terms of Use",
 					"PRIVACY": "Privacy"
+				},
+				"CALL": {
+					"WE_APPOLOGISE": "We Apologise!",
+					"CALL_UNSUCCESSFULL": "Call Was Unsuccessful!"
 				}
 			},
 			"LEGALS": {

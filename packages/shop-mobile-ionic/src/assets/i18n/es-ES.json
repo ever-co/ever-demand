@@ -189,6 +189,10 @@
 					"ABOUT_US": "Acerca de",
 					"TERMS_OF_USE": "Condiciones de uso",
 					"PRIVACY": "Privacidad"
+				},
+				"CALL": {
+					"WE_APPOLOGISE": "Pedimos perdón!",
+					"CALL_UNSUCCESSFULL": "La llamada no fue exitosa!"
 				}
 			},
 			"LEGALS": {
