@@ -184,53 +184,39 @@ export class GeoLocationsWarehousesService
 		}
 	): Promise<IWarehouse[]> {
 		const merchantsIds = options.merchantsIds;
-		const merchants = (await this.warehousesService.Model.find(
-			_.assign(
+		const merchants = await this.warehousesService.Model.aggregate([
+			[
 				{
-					'geoLocation.loc': {
-						$near: {
-							$geometry: {
-								type: 'Point',
-								coordinates: geoLocation.loc.coordinates,
-							},
-						},
+					$geoNear: {
+						near: geoLocation.loc,
+						distanceField: 'distanceToCustomer',
 					},
 				},
-				options.activeOnly ? { isActive: true } : {},
-				merchantsIds && merchantsIds.length > 0
-					? {
-							_id: { $in: merchantsIds },
-					  }
-					: {}
-			)
-		)
-			.populate(options.fullProducts ? 'products.product' : '')
-			.lean()
-			.exec()) as IWarehouse[];
+				{
+					$match: _.assign(
+						{
+							$expr: {
+								$lte: [
+									'$distanceToCustomer',
+									'$deliveryAreas.maxDistance',
+								],
+							},
+						},
+						options.activeOnly ? { isActive: true } : {},
+						merchantsIds && merchantsIds.length > 0
+							? { _id: { $in: merchantsIds } }
+							: {}
+					),
+				},
+			],
+		]);
 
-		const userGoeLocation = new GeoLocation({ ...geoLocation });
-		// GeoJSON use reversed order for coordinates from our implementation.
-		// we use lat => lng but GeoJSON use lng => lat.
-		userGoeLocation.loc.coordinates.reverse();
+		const populatedMerchants = (await this.warehousesService.Model.populate(
+			merchants,
+			{ path: 'products.product', options: { lean: true } }
+		)) as IWarehouse[];
 
-		// PER merchant delivery radius filter
-		const merchantsInDeliveryZone = merchants.filter((mer) => {
-			// todo: updated when add deliveryAreas type/interface
-			// if maxDistance in store's settings is not setted, it use hardcoded TrackingDistance
-			const maxDistance = mer['deliveryAreas'].maxDistance
-				? mer['deliveryAreas'].maxDistance
-				: GeoLocationsWarehousesService.TrackingDistance;
-
-			const storeGeoLocation = new GeoLocation({ ...mer.geoLocation });
-			// GeoJSON use reversed order for coordinates from our implementation.
-			// we use lat => lng but GeoJSON use lng => lat.
-			storeGeoLocation.loc.coordinates.reverse();
-
-			const distance =
-				Utils.getDistance(userGoeLocation, storeGeoLocation) * 1000;
-			return distance <= maxDistance;
-		});
-		return merchantsInDeliveryZone;
+		return populatedMerchants;
 	}
 	/**
 	 * Get warehouses available for given location
