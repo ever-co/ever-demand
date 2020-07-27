@@ -48,7 +48,7 @@ type Warehouse {
 	preferRestrictedCarriersForDelivery: Boolean
 	ordersShortProcess: Boolean
 	orderCancelation: OrderCancelation!
-	isStoreMode: Boolean!
+	inStoreMode: Boolean!
 }
 
 input WarehouseCreateInput {
@@ -83,7 +83,7 @@ input WarehouseCreateInput {
 	usedCarriersIds: [String!]
 	useOnlyRestrictedCarriersForDelivery: Boolean
 	preferRestrictedCarriersForDelivery: Boolean
-	isStoreMode: Boolean!
+	inStoreMode: Boolean!
 }
 
 input WarehousesFindInput {
@@ -119,7 +119,7 @@ input WarehousesFindInput {
 	usedCarriersIds: [String!]
 	useOnlyRestrictedCarriersForDelivery: Boolean
 	preferRestrictedCarriersForDelivery: Boolean
-	isStoreMode: Boolean!
+	inStoreMode: Boolean!
 }
 
 type Query {

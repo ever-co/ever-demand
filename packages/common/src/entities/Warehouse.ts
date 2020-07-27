@@ -80,7 +80,7 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	isCashPaymentEnabled: boolean;
 
 	/**
-	 * Enable or disable store mode
+	 * Enable or disable in-store mode
 	 *
 	 * @type {boolean}
 	 * @memberof Warehouse
@@ -88,7 +88,7 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 
 	@Types.Boolean(false)
 	@Column()
-	isStoreMode: boolean;
+	inStoreMode: boolean;
 
 	/**
 	 * Warehouse current location (address)

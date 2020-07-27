@@ -162,7 +162,7 @@ export class GeoLocationsWarehousesService
 					},
 				},
 				options.activeOnly ? { isActive: true } : {},
-				options.storeMode ? { isStoreMode: true } : {},
+				options.storeMode ? { inStoreMode: true } : {},
 				merchantsIds && merchantsIds.length > 0
 					? {
 							_id: { $in: merchantsIds },
