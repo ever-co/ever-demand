@@ -11,7 +11,8 @@ export class TestController {
 	async index() {
 		const userId = '1';
 		const deviceId = '2';
+		const selectedLanguage = '3';
 
-		await this._userCommandService.exec(userId, deviceId);
+		await this._userCommandService.exec(userId, deviceId, selectedLanguage);
 	}
 }
