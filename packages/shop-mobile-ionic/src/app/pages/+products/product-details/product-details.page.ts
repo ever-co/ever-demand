@@ -17,7 +17,9 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { OrderPage } from '../+order/order.page';
 import Product from '@modules/server.common/entities/Product';
+import User from '@modules/server.common/entities/User';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
+import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { IProductImage } from '@modules/server.common/interfaces/IProduct';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { environment } from 'environments/environment';
@@ -41,8 +43,10 @@ export class ProductDetailsPage implements AfterViewInit, OnDestroy {
 	private swiper: Swiper;
 	private readonly swiperEvents$ = new Subject<'init' | 'next' | 'prev'>();
 	private warehouseId: string;
+	private userId: string;
 	private warehouseProduct$: any;
 
+	public currentUser: User;
 	public swiperOptions: SwiperOptions;
 	public product: WarehouseProduct;
 	public quantity: number = 1;
@@ -55,6 +59,9 @@ export class ProductDetailsPage implements AfterViewInit, OnDestroy {
 	public modalChange = new EventEmitter<boolean>();
 	public soldOut: boolean;
 
+	public altDeliveryAddressStatus: boolean = false;
+	public deliveryNotes: string;
+
 	constructor(
 		private route: ActivatedRoute,
 		private store: Store,
@@ -65,6 +72,7 @@ export class ProductDetailsPage implements AfterViewInit, OnDestroy {
 		public warehouseOrdersRouter: WarehouseOrdersRouter,
 		public modalController: ModalController,
 		public warehouseRouter: WarehouseRouter,
+		public userRouter: UserRouter,
 		public warehouseProductsRouter: WarehouseProductsRouter
 	) {
 		this.slideOptions();
@@ -75,7 +83,10 @@ export class ProductDetailsPage implements AfterViewInit, OnDestroy {
 	ngAfterViewInit() {
 		this.prevUrl = this.route.snapshot.queryParams.backUrl;
 		this.warehouseId = this.route.snapshot.queryParams.warehouseId;
+		this.userId = this.store.userId;
+
 		this.loadProductImages();
+		this.loadUser();
 	}
 
 	slideOptions() {
@@ -132,6 +143,7 @@ export class ProductDetailsPage implements AfterViewInit, OnDestroy {
 				userId: this.store.userId,
 				orderType: this.store.deliveryType,
 				options: { autoConfirm: true },
+				deliveryNotes: this.deliveryNotes,
 			};
 
 			const order: Order = await this.warehouseOrdersRouter.create(
@@ -171,6 +183,11 @@ export class ProductDetailsPage implements AfterViewInit, OnDestroy {
 		if(qty !== 10){
 			this.quantity = qty + 1;
 		}
+	}
+
+	async changeDeliveryAddressStatus() {
+		const status = this.altDeliveryAddressStatus;
+		this.altDeliveryAddressStatus = !status;
 	}
 
 	// Should make goBack to previous page
@@ -262,6 +279,18 @@ export class ProductDetailsPage implements AfterViewInit, OnDestroy {
 
 		this._subscribeWarehouseProduct();
 	}
+
+	private async loadUser() {
+
+		const user = await this.userRouter
+			.get(this.userId)
+			.pipe(first())
+			.toPromise();
+
+		this.currentUser = user as User;
+
+	}
+
 
 	private loadImages() {
 		const currentProduct = this.product.product as Product;

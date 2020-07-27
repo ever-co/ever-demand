@@ -49,7 +49,7 @@ export class CancelPage {
 		this.store.orderId = null;
 
 		if (environment.ORDER_INFO_TYPE === 'page') {
-			this.router.navigate(['/products']);
+			this.router.navigate(['/categories']);
 		}
 
 		await this.modalController.dismiss();

@@ -85,10 +85,11 @@
 		<ion-grid class="brand-light">
 			<ion-row class="list-buttons">
 				<ion-col class="box col-8">
+					<!--(click)="!productInfo.soldOut && buy.emit(productInfo)"-->
 					<button
 						class="button button-assertive border-color-brand col-100"
 						[ngClass]="{ disabled: productInfo.soldOut }"
-						(click)="!productInfo.soldOut && buy.emit(productInfo)"
+						(click)="!productInfo.soldOut && goToDetailsPage.emit(productInfo)"
 					>
 						<span
 							>{{

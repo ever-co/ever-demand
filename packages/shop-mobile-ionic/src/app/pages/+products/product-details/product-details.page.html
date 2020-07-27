@@ -95,6 +95,59 @@
 			</ion-col>
 
 
+
+			<div class="box delivery-buttons">
+
+				<ion-row no-padding align-items-center class="header-container brand-light">
+
+					<ion-col class="col-2">
+						<e-cu-delivery-info
+							[currentProduct]="product"
+						></e-cu-delivery-info>
+					</ion-col>
+
+					<ion-col class="text-content" clsss="col-8">
+
+						<div class="center"
+							*ngIf="!altDeliveryAddressStatus"
+							>
+							<h2 class="text center">
+								{{ currentUser.firstName+' '+currentUser.lastName +' ('+currentUser.phone+')' }}
+							</h2>
+							<h6 class="productDescription">
+								{{ currentUser.fullAddress }}
+							</h6>
+						</div>
+
+						<div class="center"
+							*ngIf="altDeliveryAddressStatus"
+							>
+							<textarea
+								class="ion-autocomplete"
+								rows="8" cols="80"
+								[(ngModel)]="deliveryNotes"
+								placeholder="{{ 'QUARTER' | translate }}"
+							>
+							</textarea>
+						</div>
+
+					</ion-col>
+
+					<ion-col class="col-2">
+						<button
+							class="button button-assertive border-color-brand col-100"
+							[ngClass]="{'disabled': soldOut}"
+							(click)="changeDeliveryAddressStatus()"
+						>
+							<span>
+									{{ '...' }}
+							</span>
+						</button>
+					</ion-col>
+				</ion-row>
+
+			</div>
+
 			<div class="box quantity-buttons">
 
 				<ion-row no-padding align-items-center class="header-container brand-light">
