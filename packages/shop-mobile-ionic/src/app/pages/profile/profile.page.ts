@@ -28,10 +28,4 @@ export class ProfilePage implements OnInit {
 		this.location.back();
 	}
 
-	private loadUser() {
-		this.userId = this.store.userId;
-		this.user = this.usersService.getUserById(this.userId);
-
-		console.log('>>>>>>>>>>>>>USER ID is ', this.userId);
-	}
 }
