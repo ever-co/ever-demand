@@ -240,7 +240,11 @@
 			"BARCODE_QR_CODE_SETTINGS": "Настройки штрих-кода / QR-кода",
 			"ORDER_BARCODE_TYPE": "Тип заказа штрих-кода",
 			"BARCODE_DATA": "Данные штрих-кода",
-			"SCAN_EXISTED": "Сканирование существует"
+			"SCAN_EXISTED": "Сканирование существует",
+			"DELIVERY_SETTINGS": "Настройки доставки",
+			"TAKEAWAY_SETTINGS": "Настройки на вынос",
+			"IN_STORE_MODE": "Режим магазина",
+			"IN_STORE_MODE_SETTINGS": "Настройки режима в магазине"
 		}
 	},
 	"LOGIN_VIEW": {

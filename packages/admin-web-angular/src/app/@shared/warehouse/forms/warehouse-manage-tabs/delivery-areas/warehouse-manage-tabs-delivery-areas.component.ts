@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, first } from 'rxjs/operators';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
@@ -46,6 +46,9 @@ export class WarehouseManageTabsDeliveryAreasComponent
 
 	private _ngDestroy$ = new Subject<void>();
 
+	private _storeLocation;
+	private _maxDistanceZone;
+
 	constructor(private fb: FormBuilder) {}
 
 	ngOnInit() {
@@ -58,9 +61,17 @@ export class WarehouseManageTabsDeliveryAreasComponent
 		// would be used in the parent component and injected into this.form
 		return formBuilder.group({
 			deliveryAreas: '',
+			maxDistance: 0,
+			showOnMap: false,
 		});
 	}
 
+	get maxDistance() {
+		return this.form.get('maxDistance').value;
+	}
+	set maxDistance(distance) {
+		this.form.get('maxDistance').setValue(distance);
+	}
 	get deliveryZones() {
 		return this.form.get('deliveryAreas').value;
 	}
@@ -74,6 +85,7 @@ export class WarehouseManageTabsDeliveryAreasComponent
 		const geoJSON = {
 			type: 'FeatureCollection',
 			features: [],
+			maxDistance: this.maxDistance,
 		};
 
 		const features = [];
@@ -127,6 +139,15 @@ export class WarehouseManageTabsDeliveryAreasComponent
 	}
 
 	setValue(data) {
+		this.maxDistance = data.maxDistance;
+		this.mapCoordEvent.pipe(first()).subscribe((location) => {
+			if (location && this.form.get('showOnMap').value) {
+				this._maxDistanceZone = this.createMaxDistanceCircle(
+					location,
+					data.maxDistance
+				);
+			}
+		});
 		// add type
 		if (data && data.features.length > 0) {
 			data.features.forEach((feature) => {
@@ -401,6 +422,7 @@ export class WarehouseManageTabsDeliveryAreasComponent
 					map: this._map,
 					position: location,
 				});
+				this._storeLocation = location;
 			});
 	}
 
@@ -418,6 +440,30 @@ export class WarehouseManageTabsDeliveryAreasComponent
 		);
 
 		google.maps.event.addListener(this._map, 'click', this._clearSelection);
+	}
+
+	onMaxDistanceChange() {
+		if (this._maxDistanceZone) {
+			this.deleteZone(this._maxDistanceZone);
+		}
+		if (this._storeLocation && this.form.get('showOnMap').value) {
+			this._maxDistanceZone = this.createMaxDistanceCircle(
+				this._storeLocation,
+				this.maxDistance
+			);
+		}
+	}
+
+	createMaxDistanceCircle(center, maxDistance) {
+		const zone = new google.maps.Circle({
+			center: center,
+			radius: maxDistance,
+			strokeWeight: 0.9,
+			fillOpacity: 0.05,
+			fillColor: '#000000',
+			map: this._map,
+		});
+		return zone;
 	}
 
 	ngOnDestroy() {

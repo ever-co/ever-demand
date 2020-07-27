@@ -173,7 +173,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 
 	private _loadWarehouses() {
 		this.warehouseRouter
-			.getAllActive()
+			.getAll()
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe((w: Warehouse[]) => {
 				this.warehouses = w;

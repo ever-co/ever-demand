@@ -460,6 +460,7 @@
 			"ADD": "לְהוֹסִיף",
 			"EDIT": "לַעֲרוֹך",
 			"ZONE_NAME": "שם אזור",
+			"IN_STORE_MODE": "במצב חנות",
 			"ERRORS": {
 				"NAME_IS_REQUIRED": "שם המחסן נדרש",
 				"NAME_ATLEAST_3_CHARS": "השם חייב להיות באורך של לפחות 3 תווים",

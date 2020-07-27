@@ -242,7 +242,11 @@
 			"BARCODE_QR_CODE_SETTINGS": "Barcode/QR code Settings",
 			"ORDER_BARCODE_TYPE": "Order barcode type",
 			"BARCODE_DATA": "Barcode data",
-			"SCAN_EXISTED": "Scan Existed"
+			"SCAN_EXISTED": "Scan Existed",
+			"DELIVERY_SETTINGS": "Delivery settings",
+			"TAKEAWAY_SETTINGS": "Takeaway settings",
+			"IN_STORE_MODE": "In-store mode",
+			"IN_STORE_MODE_SETTINGS": "In-store mode settings"
 		}
 	},
 	"LOGIN_VIEW": {

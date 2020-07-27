@@ -121,6 +121,42 @@ export class WarehousesService extends DBService<Warehouse>
 	}
 
 	/**
+	 * Get all merchants
+	 *
+	 * @param {boolean} [fullProducts=false]
+	 * @returns {Observable<Warehouse[]>}
+	 * @memberof WarehousesService
+	 */
+	@observableListener()
+	getAllStores(fullProducts: boolean = false): Observable<Warehouse[]> {
+		const callId = uuid();
+
+		this.log.info(
+			{ callId, fullProducts },
+			'.getAllStores(fullProducts) called'
+		);
+
+		return of(null).pipe(
+			concat(this.existence),
+			exhaustMap(() => this._getAllStores(fullProducts)),
+			tap({
+				next: (warehouses) => {
+					this.log.info(
+						{ callId, fullProducts, warehouses },
+						'.getAllStores(fullProducts) emitted next value'
+					);
+				},
+				error: (err) => {
+					this.log.error(
+						{ callId, fullProducts, err },
+						'.getAllStores(fullProducts) thrown error!'
+					);
+				},
+			})
+		);
+	}
+
+	/**
 	 * Create new Merchant
 	 *
 	 * @param {IWarehouseRegistrationInput} input
@@ -306,6 +342,18 @@ export class WarehousesService extends DBService<Warehouse>
 		return _.map(
 			(await this.Model.find({
 				isActive: true,
+				isDeleted: { $eq: false },
+			})
+				.populate(fullProducts ? 'products.product' : '')
+				.lean()
+				.exec()) as IWarehouse[],
+			(warehouse) => new Warehouse(warehouse)
+		);
+	}
+
+	private async _getAllStores(fullProducts = false): Promise<Warehouse[]> {
+		return _.map(
+			(await this.Model.find({
 				isDeleted: { $eq: false },
 			})
 				.populate(fullProducts ? 'products.product' : '')

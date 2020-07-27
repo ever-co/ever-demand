@@ -34,6 +34,7 @@ export type WarehouseManageTabsDetails = Pick<
 	| 'preferRestrictedCarriersForDelivery'
 	| 'ordersShortProcess'
 	| 'orderCancelation'
+	| 'inStoreMode'
 >;
 
 @Component({
@@ -76,6 +77,10 @@ export class WarehouseManageTabsDetailsComponent
 		private readonly _carrierRouter: CarrierRouter,
 		private readonly _translateService: TranslateService
 	) {}
+
+	get inStoreMode() {
+		return this.form.get('inStoreMode');
+	}
 
 	get name() {
 		return this.form.get('name');
@@ -176,6 +181,7 @@ export class WarehouseManageTabsDetailsComponent
 			preferRestrictedCarriersForDelivery: [false],
 			carriersIds: [[]],
 			ordersShortProcess: [false],
+			inStoreMode: [],
 
 			enabledOrderCancelation: [false],
 			stateOrderCancelation: [0],
@@ -203,6 +209,7 @@ export class WarehouseManageTabsDetailsComponent
 			useOnlyRestrictedCarriersForDelivery: boolean;
 			preferRestrictedCarriersForDelivery: boolean;
 			ordersShortProcess: boolean;
+			inStoreMode: boolean;
 
 			enabledOrderCancelation: boolean;
 			stateOrderCancelation: number;
@@ -211,6 +218,7 @@ export class WarehouseManageTabsDetailsComponent
 		return {
 			ordersShortProcess: basicInfo.ordersShortProcess,
 			isActive: basicInfo.isActive,
+			inStoreMode: basicInfo.inStoreMode,
 			isManufacturing: basicInfo.isManufacturing,
 			isCarrierRequired: basicInfo.isCarrierRequired,
 			name: basicInfo.name,

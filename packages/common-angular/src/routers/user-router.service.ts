@@ -60,34 +60,55 @@ export class UserRouter implements IUserRouter {
 		return this._userFactory(user);
 	}
 
-	getAboutUs(userId: string, deviceId: string): Observable<string> {
+	getAboutUs(
+		userId: string,
+		deviceId: string,
+		selectedLanguage: string
+	): Observable<string> {
 		return this.router.runAndObserve<string>(
 			'getAboutUs',
 			userId,
-			deviceId
-		);
-	}
-
-	getTermsOfUse(userId: string, deviceId: string): Observable<string> {
-		return this.router.runAndObserve<string>(
-			'getTermsOfUse',
-			userId,
-			deviceId
-		);
-	}
-
-	getTermsOfUseByLanguage(selectedLanguage: string): Observable<string> {
-		return this.router.runAndObserve<string>(
-			'getTermsOfUseByLanguage',
+			deviceId,
 			selectedLanguage
 		);
 	}
 
-	getPrivacy(userId: string, deviceId: string): Observable<string> {
+	getTermsOfUse(
+		userId: string,
+		deviceId: string,
+		selectedLanguage: string
+	): Observable<string> {
+		return this.router.runAndObserve<string>(
+			'getTermsOfUse',
+			userId,
+			deviceId,
+			selectedLanguage
+		);
+	}
+
+	getHelp(
+		userId: string,
+		deviceId: string,
+		selectedLanguage: string
+	): Observable<string> {
+		return this.router.runAndObserve<string>(
+			'getHelp',
+			userId,
+			deviceId,
+			selectedLanguage
+		);
+	}
+
+	getPrivacy(
+		userId: string,
+		deviceId: string,
+		selectedLanguage: string
+	): Observable<string> {
 		return this.router.runAndObserve<string>(
 			'getPrivacy',
 			userId,
-			deviceId
+			deviceId,
+			selectedLanguage
 		);
 	}
 

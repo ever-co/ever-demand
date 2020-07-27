@@ -65,7 +65,6 @@ export class MerchantsPage implements OnDestroy {
 
 	private async loadCloseMerchants() {
 		const location = await this.getLocation();
-
 		this.merchants = await this.geoLocationsMerchantsService
 			.getCoseMerchants({ loc: location })
 			.pipe(first())
