@@ -15,5 +15,51 @@
 </ion-header>
 
 <ion-content>
+	<div class="card">
+		<div class="header">
+			<div class="avatar">
+				<img src="/assets/imgs/avatar.png" alt="" />
+			</div>
+		</div>
+	</div>
 
+	<div class="container">
+		<ion-label for="email"
+			><b>{{ 'PROFILE_VIEW.NAME' | translate }}: </b></ion-label
+		>
+		<ion-input
+			type="text"
+			placeholder="{{ 'PROFILE_VIEW.NAME_INPUT' | translate }}"
+			name="email"
+			required
+		></ion-input>
+
+		<ion-label for="psw"
+			><b>{{ 'PROFILE_VIEW.TELEPHONE' | translate }}:</b></ion-label
+		>
+		<ion-input
+			type="password"
+			placeholder="{{ 'PROFILE_VIEW.TELEPHONE_INPUT' | translate }}"
+			name="psw"
+			required
+		></ion-input>
+
+		<ion-label for="psw-repeat"
+			><b>{{ 'PROFILE_VIEW.NEIGHBORHOOD' | translate }}:</b></ion-label
+		>
+		<ion-input
+			type="password"
+			placeholder="{{ 'PROFILE_VIEW.NEIGHBORHOOD_INPUT' | translate }}"
+			name="psw-repeat"
+			required
+		></ion-input>
+
+		<ion-row>
+			<ion-col>
+				<ion-button type="submit" class="signupbtn"
+					>{{ 'PROFILE_VIEW.VALIDATE' | translate }}</ion-button
+				>
+			</ion-col>
+		</ion-row>
+	</div>
 </ion-content>

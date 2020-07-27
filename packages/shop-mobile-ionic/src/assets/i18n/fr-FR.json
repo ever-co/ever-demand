@@ -80,7 +80,15 @@
 		"TITLE": "Services"
 	},
 	"PROFILE_VIEW": {
-		"TITLE": "Profile"
+		"TITLE": "Profile",
+		"NAME": "Nom",
+		"NAME_INPUT": "Changer Nom",
+		"TELEPHONE": "Téléphone",
+		"TELEPHONE_INPUT": "Changer Téléphone",
+		"NEIGHBORHOOD": "Quartier",
+		"NEIGHBORHOOD_INPUT": "Changer Quartier",
+		"VALIDATE": "Valider",
+		"UPLOAD": "Télécharger"
 	},
 	"BUY_POPUP": {
 		"ORDER_PAID": "La commande est payée $",
