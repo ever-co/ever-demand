@@ -342,13 +342,16 @@ export class UsersService extends DBService<User>
 	 * (e.g. show different contact details or branch location etc)
 	 * @param userId
 	 * @param deviceId
+	 * @param selectedLanguage
 	 * @returns HTML representation of About Us
 	 */
 	@observableListener()
 	getAboutUs(
 		userId: string,
-		deviceId: string
+		deviceId: string,
+		selectedLanguage: string
 	): Observable<string> /*returns html*/ {
+		const language = selectedLanguage as ILanguage;
 		return this.devicesService.get(deviceId).pipe(
 			exhaustMap((device) => {
 				if (device === null) {
@@ -363,7 +366,7 @@ export class UsersService extends DBService<User>
 				(oldDevice, newDevice) =>
 					oldDevice.language !== newDevice.language
 			),
-			switchMap((device) => this.watchedFiles.aboutUs[device.language])
+			switchMap((device) => this.watchedFiles.aboutUs[language])
 		);
 	}
 
@@ -372,10 +375,16 @@ export class UsersService extends DBService<User>
 	 * Note: Depending on user country, language and other settings, we may want later to show different Terms
 	 * @param userId
 	 * @param deviceId
+	 * @param selectedLanguage
 	 * @returns HTML representation of Terms Of Use
 	 */
 	@observableListener()
-	getTermsOfUse(userId: string, deviceId: string): Observable<string> {
+	getTermsOfUse(
+		userId: string,
+		deviceId: string,
+		selectedLanguage: string
+	): Observable<string> {
+		const language = selectedLanguage as ILanguage;
 		return this.devicesService.get(deviceId).pipe(
 			exhaustMap((device) => {
 				if (device === null) {
@@ -392,7 +401,7 @@ export class UsersService extends DBService<User>
 				(oldDevice, newDevice) =>
 					oldDevice.language !== newDevice.language
 			),
-			switchMap((device) => this.watchedFiles.termsOfUse[device.language])
+			switchMap((device) => this.watchedFiles.termsOfUse[language])
 		);
 	}
 
@@ -401,10 +410,16 @@ export class UsersService extends DBService<User>
 	 * Note: Depending on user country, language and other settings, we may want later to show different Policy
 	 * @param userId
 	 * @param deviceId
+	 * @param selectedLanguage
 	 * @returns HTML representation of privacy policy
 	 */
 	@observableListener()
-	getPrivacy(userId: string, deviceId: string): Observable<string> {
+	getPrivacy(
+		userId: string,
+		deviceId: string,
+		selectedLanguage: string
+	): Observable<string> {
+		const language = selectedLanguage as ILanguage;
 		return this.devicesService.get(deviceId).pipe(
 			exhaustMap((device) => {
 				if (device === null) {
@@ -419,12 +434,25 @@ export class UsersService extends DBService<User>
 				(oldDevice, newDevice) =>
 					oldDevice.language !== newDevice.language
 			),
-			switchMap((device) => this.watchedFiles.privacy[device.language])
+			switchMap((device) => this.watchedFiles.privacy[language])
 		);
 	}
 
+	/**
+	 * Get Help Content (HTML)
+	 * Note: Depending on user country, language and other settings, we may want later to show different Help
+	 * @param userId
+	 * @param deviceId
+	 * @param selectedLanguage
+	 * @returns HTML representation of privacy policy
+	 */
 	@observableListener()
-	getHelp(userId: string, deviceId: string): Observable<string> {
+	getHelp(
+		userId: string,
+		deviceId: string,
+		selectedLanguage: string
+	): Observable<string> {
+		const language = selectedLanguage as ILanguage;
 		return this.devicesService.get(deviceId).pipe(
 			exhaustMap((device) => {
 				if (device === null) {
@@ -439,7 +467,7 @@ export class UsersService extends DBService<User>
 				(oldDevice, newDevice) =>
 					oldDevice.language !== newDevice.language
 			),
-			switchMap((device) => this.watchedFiles.help[device.language])
+			switchMap((device) => this.watchedFiles.help[language])
 		);
 	}
 

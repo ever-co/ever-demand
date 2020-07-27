@@ -60,31 +60,55 @@ export class UserRouter implements IUserRouter {
 		return this._userFactory(user);
 	}
 
-	getAboutUs(userId: string, deviceId: string): Observable<string> {
+	getAboutUs(
+		userId: string,
+		deviceId: string,
+		selectedLanguage: string
+	): Observable<string> {
 		return this.router.runAndObserve<string>(
 			'getAboutUs',
 			userId,
-			deviceId
+			deviceId,
+			selectedLanguage
 		);
 	}
 
-	getTermsOfUse(userId: string, deviceId: string): Observable<string> {
+	getTermsOfUse(
+		userId: string,
+		deviceId: string,
+		selectedLanguage: string
+	): Observable<string> {
 		return this.router.runAndObserve<string>(
 			'getTermsOfUse',
 			userId,
-			deviceId
+			deviceId,
+			selectedLanguage
 		);
 	}
 
-	getHelp(userId: string, deviceId: string): Observable<string> {
-		return this.router.runAndObserve<string>('getHelp', userId, deviceId);
+	getHelp(
+		userId: string,
+		deviceId: string,
+		selectedLanguage: string
+	): Observable<string> {
+		return this.router.runAndObserve<string>(
+			'getHelp',
+			userId,
+			deviceId,
+			selectedLanguage
+		);
 	}
 
-	getPrivacy(userId: string, deviceId: string): Observable<string> {
+	getPrivacy(
+		userId: string,
+		deviceId: string,
+		selectedLanguage: string
+	): Observable<string> {
 		return this.router.runAndObserve<string>(
 			'getPrivacy',
 			userId,
-			deviceId
+			deviceId,
+			selectedLanguage
 		);
 	}
 

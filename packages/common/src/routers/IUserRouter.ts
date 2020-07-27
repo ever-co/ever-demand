@@ -21,16 +21,29 @@ interface IUserRouter {
 		geoLocation: GeoLocation
 	): Promise<User>;
 
-	getAboutUs(userId: User['id'], deviceId: Device['id']): Observable<string>;
+	getAboutUs(
+		userId: User['id'],
+		deviceId: Device['id'],
+		selectedLanguage: string
+	): Observable<string>;
 
 	getTermsOfUse(
 		userId: User['id'],
-		deviceId: Device['id']
+		deviceId: Device['id'],
+		selectedLanguage: string
 	): Observable<string>;
 
-	getHelp(userId: User['id'], deviceId: Device['id']): Observable<string>;
+	getHelp(
+		userId: User['id'],
+		deviceId: Device['id'],
+		selectedLanguage: string
+	): Observable<string>;
 
-	getPrivacy(userId: User['id'], deviceId: Device['id']): Observable<string>;
+	getPrivacy(
+		userId: User['id'],
+		deviceId: Device['id'],
+		selectedLanguage: string
+	): Observable<string>;
 }
 
 export default IUserRouter;
