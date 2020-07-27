@@ -197,6 +197,7 @@ export class WarehousesOrdersService
 		products,
 		orderType,
 		options,
+		deliveryNotes,
 	}: IOrderCreateInput): Promise<Order> {
 		if (!options) {
 			options = {};
@@ -270,6 +271,7 @@ export class WarehousesOrdersService
 			orderNumber: await this.getNextOrderNumber(warehouseId),
 			orderType,
 			...(options.autoConfirm ? { isConfirmed: true } : {}),
+			deliveryNotes,
 		});
 
 		// we do all remove operations and notify about warehouse orders change after we remove products from warehouse

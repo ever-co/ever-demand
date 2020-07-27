@@ -234,6 +234,13 @@
 	"YES": "Yes",
 	"NO": "No",
 	"OK": "Ok",
+
+	"FIRSTNAME": "Firstname",
+	"LASTNAME": "Lastname",
+	"EMAIL": "Email Address",
+	"QUARTER": "Quarter",
+	"PHONE": "Phone number",
+
 	"CITY": "City",
 	"STREET": "Street",
 	"HOUSE": "House",

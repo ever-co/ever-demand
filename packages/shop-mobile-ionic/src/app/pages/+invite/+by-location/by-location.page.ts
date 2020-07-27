@@ -28,15 +28,21 @@ import { environment } from 'environments/environment';
 })
 export class ByLocationPage implements OnInit, OnDestroy {
 
-	public house: number;
 	public streetAddress: string;
 	public city: string;
 	public country: number = Country.CM;
+
+  public firstName: string;
+	public lastName: string;
+	public email: string;
+	public phone: string;
+
 	public detectingLocation: boolean = false;  // Set to false for CM ***
 	public showTextarea: boolean = false;
 	public notes: string;
 
-	public apartment: number = 1;
+	public house: number = 10;
+	public apartment: number = 10;
 	public isApartment: boolean = true;
 
 	private readonly ngDestroy$ = new Subject<void>();
@@ -64,8 +70,9 @@ export class ByLocationPage implements OnInit, OnDestroy {
 			typeof s === 'string' && !isEmpty(s);
 
 		return (
+			every([this.firstName+ ' '+this.lastName , this.email], notEmptyString) &&
 			every([this.city, this.streetAddress], notEmptyString) &&
-			every([this.house, this.country], (n) => isNumber(n) && n !== 0)
+			every([this.phone, this.country], (n) => isNumber(n) && n !== 0)
 			&& ((isNumber(this.apartment) && this.apartment !== 0) || !this.isApartment)
 		);
 	}
@@ -84,9 +91,7 @@ export class ByLocationPage implements OnInit, OnDestroy {
 				enableHighAccuracy: true, // will try to use GPS (if enabled) on mobile
 			};
 
-
-			console.log('Step INSIDE getCoodinates **************' );
-
+			//console.log('Step INSIDE getCoodinates **************' );
 			const defaultLat = environment.DEFAULT_LATITUDE;
 			const defaultLng = environment.DEFAULT_LONGITUDE;
 
@@ -184,7 +189,9 @@ export class ByLocationPage implements OnInit, OnDestroy {
 				//   <StateParams.Invite.ByLocation.RegisterUser>{ invite }
 				// );
 				await this.register(invite);
+
 			} else {
+
 				console.log('Creating invite request...');
 				const inviteRequest = await this.createInviteRequest();
 				if (this.store.inviteSystem) {
@@ -205,15 +212,21 @@ export class ByLocationPage implements OnInit, OnDestroy {
 	}
 
 	async register(invite: Invite) {
-		console.log('Im in for the registration : Invite ...');
+		//console.log('Im in for the registration : Invite ...');
 		const user = await this.userAuthRouter.register({
 			user: {
+
+				firstName: this.firstName,
+				lastName: this.lastName,
+				email: this.email,
+				phone: this.phone,
+
 				apartment: invite.apartment,
 				geoLocation: invite.geoLocation,
 			},
 		});
 
-    console.log('Im back with User : '+ user.id);
+    //console.log('Im back with User : '+ user.id);
 
 		localStorage.setItem('_userId', user.id);
 		if (this.store.backToDetails) {
@@ -292,20 +305,19 @@ export class ByLocationPage implements OnInit, OnDestroy {
 	private async createInviteRequest(): Promise<InviteRequest> {
 		const device = { id: this.store.deviceId }; // await this.deviceService.device.pipe(first()).toPromise();
 
-		console.log('Step 01 **************');
-
+		//console.log('Step 01 **************');
 		let coordinatesObj = await this.getCoordinatesByAddress();
 
-			console.log('Step 01 After Geocoder **************'+ coordinatesObj );
+			//console.log('Step 01 After Geocoder **************'+ coordinatesObj );
 
 		if (coordinatesObj == null) {
 			coordinatesObj = await this.getCoordinates();
 		}
 
-		console.log('Step 02 **************');
+		//console.log('Step 02 **************');
 		if (coordinatesObj != null) {
 
-			console.log('Step 03 SUCCESS **************');
+			//console.log('Step 03 SUCCESS **************');
 			return this.inviteRequestRouter.create({
 				geoLocation: {
 					loc: {
@@ -322,7 +334,7 @@ export class ByLocationPage implements OnInit, OnDestroy {
 				deviceId: device.id,
 			});
 		} else {
-			console.log('Step 03 - Error **************');
+			//console.log('Step 03 - Error **************');
 			throw new Error(
 				"Can't get coordinates for the creation of invite request!"
 			);
@@ -450,14 +462,12 @@ export class ByLocationPage implements OnInit, OnDestroy {
 		const city = this.city;
 		const countryName = getCountryName(this.country);
 
-		console.log('Step INSIDE getCoodinatesByAddress 01 **************' );
-
+		//console.log('Step INSIDE getCoodinatesByAddress 01 **************' );
 		if (!streetAddress || !house || !city || !countryName) {
 			return;
 		}
 
-		console.log('Step INSIDE getCoodinatesByAddress 02 **************' );
-
+		//console.log('Step INSIDE getCoodinatesByAddress 02 **************' );
 		const geocoder = new google.maps.Geocoder();
 
 		return new Promise(function (resolve, reject) {

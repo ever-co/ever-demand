@@ -25,6 +25,8 @@ export interface IOrderCreateInput {
 
 	orderType?: DeliveryType;
 	options?: IWarehouseOrdersRouterCreateOptions;
+
+	deliveryNotes?: string;
 }
 
 interface IWarehouseOrdersRouter {

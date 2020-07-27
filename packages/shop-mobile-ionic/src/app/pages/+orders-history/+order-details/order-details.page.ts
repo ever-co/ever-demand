@@ -39,4 +39,9 @@ export class OrderDetailsPage implements OnDestroy {
 		this._ngDestroy$.next();
 		this._ngDestroy$.complete();
 	}
+
+	async consultOrder(order: Order) {
+
+	}
+
 }

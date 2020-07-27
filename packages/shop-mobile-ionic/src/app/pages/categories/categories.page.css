@@ -1,5 +1,5 @@
 .img-wrapper {
-	min-height: 175px;
+	height: 100%;
 	width: 100%;
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -16,7 +16,6 @@
 	top: 25px;
 }
 
-/**
 .bellem_services_grid {
 
   position: fixed;
@@ -27,19 +26,17 @@
 
   display: grid;
   border-style: solid;
-  border-color: red;
-  grid-template-columns: repeat(2, 1fr);
+  border-color: white;
+  grid-template-columns: repeat(1, 1fr);
   grid-template-rows: repeat(4, 1fr);
   grid-gap: 2px;
-
 
 }
 
 .bellem_services_row {
-
+	min-height: 25%;
 }
 
 .bellem_services_col {
-
+	min-width: 50%;
 }
-*/

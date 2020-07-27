@@ -297,7 +297,7 @@ export class OrderInfoPage implements OnInit, OnDestroy {
 		localStorage.removeItem('startDate');
 		localStorage.removeItem('endTime');
 		this.store.orderId = null;
-		this.router.navigate(['/products']);
+		this.router.navigate(['/categories']);
 	}
 
 	// For delivery-status

@@ -12,6 +12,28 @@
 <ion-content dir="{{ 'CURRENT_DIRECTION' | translate }}">
 	<ion-spinner *ngIf="!order"></ion-spinner>
 	<div *ngIf="order">
+
 		<e-cu-order [order]="order" [showDetailsButton]="true"></e-cu-order>
+
+		<!-- TODO - Return to the Order processing -->
+		<div class="box order-process-buttons">
+
+			<ion-row no-padding align-items-center class="header-container brand-light">
+				<ion-col class="col-12">
+					<button
+						class="button button-assertive border-color-brand col-100"
+						[ngClass]="{'disabled': !order}"
+						(click)="consultOrder(order)"
+					>
+						<span>
+								{{ 'Order Status' }}
+						</span>
+					</button>
+				</ion-col>
+			</ion-row>
+
+		</div>
+
+
 	</div>
 </ion-content>
