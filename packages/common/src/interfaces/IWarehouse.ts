@@ -35,6 +35,14 @@ export interface IWarehouseCreateObject extends DBCreateObject {
 	isCashPaymentEnabled?: boolean;
 
 	/**
+	 * Enable or disable in-store mode
+	 *
+	 * @type {boolean}
+	 * @memberof IWarehouseCreateObject
+	 */
+	inStoreMode?: boolean;
+
+	/**
 	 * Warehouse current location (we support 'moving' warehouses/merchants)
 	 *
 	 * @type {IGeoLocationCreateObject}
@@ -154,6 +162,7 @@ interface IWarehouse extends IWarehouseCreateObject, DBRawObject {
 	preferRestrictedCarriersForDelivery?: boolean;
 	ordersShortProcess?: boolean;
 	orderCancelation?: { enabled: boolean; onState: number };
+	inStoreMode?: boolean;
 }
 
 export default IWarehouse;

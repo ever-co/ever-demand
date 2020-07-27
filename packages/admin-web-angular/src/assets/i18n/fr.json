@@ -98,6 +98,7 @@
 			"ADD": "Ajouter",
 			"EDIT": "Éditer",
 			"ZONE_NAME": "Nom de zone",
+			"IN_STORE_MODE": "En mode Store",
 			"ERRORS": {
 				"NAME_IS_REQUIRED": "Le nom de l'entrepôt est requis",
 				"NAME_ATLEAST_3_CHARS": "Le nom doit comporter au moins 3 caractères",
