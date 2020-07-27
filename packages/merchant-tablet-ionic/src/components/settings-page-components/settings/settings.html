@@ -1,11 +1,10 @@
 <div class="merchant-settings" *ngIf="currWarehouse">
 	<ion-grid>
-		<h4 class="row-title">
-			{{ 'SETTINGS_VIEW.SETTINGS_SECTION.DELIVERY_OR_TAKEAWAY_SETTINGS' |
-			translate }}
-		</h4>
 		<ion-row>
 			<ion-col class="col-6">
+				<h4 class="row-title">
+					{{"SETTINGS_VIEW.SETTINGS_SECTION.DELIVERY_SETTINGS"|translate}}
+				</h4>
 				<ion-item mode="ios">
 					<ion-label>
 						{{
@@ -21,6 +20,9 @@
 				</ion-item>
 			</ion-col>
 			<ion-col class="col-6">
+				<h4 class="row-title">
+					{{"SETTINGS_VIEW.SETTINGS_SECTION.TAKEAWAY_SETTINGS"|translate}}
+				</h4>
 				<ion-item mode="ios">
 					<ion-label
 						>{{
@@ -36,16 +38,38 @@
 				</ion-item>
 			</ion-col>
 		</ion-row>
-		<h4 class="row-title">
-			{{ 'SETTINGS_VIEW.SETTINGS_SECTION.PAYMENTS_SETTINGS' | translate }}
-		</h4>
+		<ion-row>
+			<ion-col class="col-6">
+				<h4 class="row-title">
+					{{ 'SETTINGS_VIEW.SETTINGS_SECTION.PAYMENTS_SETTINGS' |
+					translate }}
+				</h4>
 
-		<merchant-payments-settings
-			[currWarehouse]="currWarehouse"
-			#paymentsSettings
-		>
-		</merchant-payments-settings>
-
+				<merchant-payments-settings
+					[currWarehouse]="currWarehouse"
+					#paymentsSettings
+				>
+				</merchant-payments-settings>
+			</ion-col>
+			<ion-col class="col-6">
+				<h4 class="row-title">
+					{{ 'SETTINGS_VIEW.SETTINGS_SECTION.IN_STORE_MODE_SETTINGS' |
+					translate }}
+				</h4>
+				<ion-item mode="ios">
+					<ion-label>
+						{{ 'SETTINGS_VIEW.SETTINGS_SECTION.IN_STORE_MODE' |
+						translate }}
+					</ion-label>
+					<ion-checkbox
+						slot="start"
+						#productsTakeaway="ngModel"
+						[(ngModel)]="currWarehouse.inStoreMode"
+					>
+					</ion-checkbox>
+				</ion-item>
+			</ion-col>
+		</ion-row>
 		<br />
 		<h4 class="row-title">
 			{{ 'SETTINGS_VIEW.SETTINGS_SECTION.BARCODE_QR_CODE_SETTINGS' |
