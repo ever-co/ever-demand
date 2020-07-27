@@ -68,9 +68,10 @@ export class GeoLocationsProductsService
 		searchText?: string
 	): Promise<number> {
 		try {
-			const merchants = await this.geoLocationsWarehousesService.getMerchants(
+			// getMerchants is replaced with getMerchantsInDeliveryZone
+			const merchants = await this.geoLocationsWarehousesService.getMerchantsInDeliveryZone(
 				geoLocation,
-				GeoLocationsWarehousesService.TrackingDistance,
+				// GeoLocationsWarehousesService.TrackingDistance,
 				{
 					fullProducts: true,
 					activeOnly: true,
@@ -115,6 +116,7 @@ export class GeoLocationsProductsService
 		// getMerchants is replaced with getMerchantsInDeliveryZone
 		const merchants = await this.geoLocationsWarehousesService.getMerchantsInDeliveryZone(
 			geoLocation,
+			// GeoLocationsWarehousesService.TrackingDistance,
 			{
 				fullProducts: true,
 				activeOnly: true,
