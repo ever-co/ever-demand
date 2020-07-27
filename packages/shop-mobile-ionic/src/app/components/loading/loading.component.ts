@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
 	selector: 'e-cu-loading',
@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
 	templateUrl: 'loading.component.html',
 })
 export class LoadingComponent {
+	@Input() color: string;
 	text: string;
 
 	constructor() {

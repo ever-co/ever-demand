@@ -20,7 +20,12 @@
 					dir="{{ 'CURRENT_DIRECTION' | translate }}"
 				>
 					<div class="row">
-						<span class="waves-effect waves-classic col-3">
+						<span
+							class="waves-effect waves-classic col-3"
+							[ngClass]="{
+								'col-12': !paymentsEnabled && !isOrderReady()
+							}"
+						>
 							<button
 								class="button button-brand col-100"
 								(click)="undo.emit(true)"
@@ -37,6 +42,7 @@
 							}}"
 						>
 							<button
+								*ngIf="isOrderReady()"
 								class="button button-balanced border-color-brand col-100"
 								(click)="complete.emit(true)"
 							>

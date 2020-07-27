@@ -269,6 +269,7 @@ All other brand and product names are trademarks, registered trademarks or servi
 
 #### Copyright © 2016-present, Ever Co. LTD. All rights reserved.
 
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=ever-co.ever-platform)
 [![Circle CI](https://circleci.com/gh/ever-co/ever.svg?style=svg)](https://circleci.com/gh/ever-co/ever)
 [![codecov](https://codecov.io/gh/ever-co/ever/branch/master/graph/badge.svg)](https://codecov.io/gh/ever-co/ever)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e7b2b38660f44963989ac9d49ae76d4d)](https://www.codacy.com/app/Ever/ever?utm_source=github.com&utm_medium=referral&utm_content=ever-co/ever&utm_campaign=Badge_Grade)

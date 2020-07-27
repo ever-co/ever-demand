@@ -30,6 +30,7 @@ export class GeoLocationService {
 								isManufacturing
 								isCarrierRequired
 								isDeliveryRequired
+								isProductAvailable
 								deliveryTimeMin
 								deliveryTimeMax
 								product {
@@ -71,7 +72,11 @@ export class GeoLocationService {
 				pollInterval: 2000,
 			})
 			.valueChanges.pipe(
-				map((res) => res.data.geoLocationProducts),
+				map((res) =>
+					res.data.geoLocationProducts.filter(
+						(p) => p.warehouseProduct.isProductAvailable === true
+					)
+				),
 				share()
 			);
 	}

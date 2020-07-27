@@ -26,6 +26,7 @@ export class MerchantsService {
 							username
 							name
 							logo
+							isActive
 						}
 					}
 				`,

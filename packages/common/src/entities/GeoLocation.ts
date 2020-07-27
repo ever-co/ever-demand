@@ -59,6 +59,8 @@ class GeoLocation extends DBObject<IGeoLocation, IGeoLocationCreateObject>
 		return getCountryName(this.countryId);
 	}
 
+	set countryName(countryName: CountryName) {}
+
 	get isLocValid(): any {
 		return (
 			this.loc.type === 'Point' &&
