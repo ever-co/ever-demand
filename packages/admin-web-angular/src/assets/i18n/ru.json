@@ -462,7 +462,7 @@
 			"EDIT": "Редактирование",
 			"ZONE_NAME": "Название зоны",
 			"UNALLOWED_ORDER_CANCELATION": "Неразрешенная отмена заказа",
-			"IN_STORE_MODE": "В режиме магазина",
+			"IN_STORE_MODE": "Режим в магазине",
 			"ORDER_CANCELATION_OPTIONS": {
 				"ORDERING": "После заказа",
 				"START_PROCESSING": "После начала обработки",
