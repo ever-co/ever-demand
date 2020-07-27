@@ -144,7 +144,7 @@ export class GeoLocationsWarehousesService
 			fullProducts: boolean;
 			activeOnly: boolean;
 			merchantsIds?: string[];
-			storeMode?: boolean;
+			inStoreMode?: boolean;
 		}
 	): Promise<IWarehouse[]> {
 		const merchantsIds = options.merchantsIds;
@@ -162,7 +162,7 @@ export class GeoLocationsWarehousesService
 					},
 				},
 				options.activeOnly ? { isActive: true } : {},
-				options.storeMode ? { inStoreMode: true } : {},
+				options.inStoreMode ? { inStoreMode: true } : {},
 				merchantsIds && merchantsIds.length > 0
 					? {
 							_id: { $in: merchantsIds },
