@@ -156,11 +156,10 @@ export class ProductsPage implements OnInit, OnDestroy {
 	toggleGetProductsType() {
 		this.changePage = true;
 		this.products = [];
-		// this.loadProducts({
-		// 	count: this.lastLoadProductsCount,
-		// 	imageOrientation: this.lastImageOrientation,
-		// });
-		this.loadProducts();
+		this.loadProducts({
+			count: this.lastLoadProductsCount,
+			imageOrientation: this.lastImageOrientation,
+		});
 	}
 
 	changeStoreMode() {
@@ -176,7 +175,10 @@ export class ProductsPage implements OnInit, OnDestroy {
 		}
 
 		this.changePage = true;
-		this.loadProducts();
+		this.loadProducts({
+			count: this.lastLoadProductsCount,
+			imageOrientation: this.lastImageOrientation,
+		});
 	}
 
 	ngOnDestroy() {
@@ -245,12 +247,13 @@ export class ProductsPage implements OnInit, OnDestroy {
 			.getAllStores()
 			.toPromise();
 
-		let merchantIds = [];
-
+		let merchantIds = environment['MERCHANT_IDS'];
 		if (this.inStore) {
 			merchantIds = [this.inStore];
 		} else {
-			merchantIds = merchants.map((merchant) => merchant.id);
+			if (merchantIds.length === 0) {
+				merchantIds = merchants.map((merchant) => merchant.id);
+			}
 		}
 
 		await this.loadProductsCount(merchantIds, imageOrientation);
@@ -265,6 +268,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 				const isTakeaway =
 					this.store.deliveryType === DeliveryType.Takeaway;
 				let loadProducts = true;
+
 				this.geoLocationProductsService
 					.geoLocationProductsByPaging(
 						this.getOrdersGeoObj,
