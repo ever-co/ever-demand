@@ -139,6 +139,15 @@ export interface IOrderCreateObject extends DBCreateObject {
 	 * @memberof IOrderCreateObject
 	 */
 	orderType?: DeliveryType;
+
+	/**
+	 * Check out DeliveryNotes
+	 *
+	 * @type {string}
+	 * @memberof IOrderCreateObject
+	 */
+	deliveryNotes?: string;
+
 }
 
 interface IOrder extends IOrderCreateObject, DBRawObject {
@@ -154,6 +163,8 @@ interface IOrder extends IOrderCreateObject, DBRawObject {
 	carrierStatus: OrderCarrierStatus;
 	orderNumber: number;
 	totalPrice?: number;
+
+	deliveryNotes?: string;
 }
 
 export default IOrder;

@@ -168,6 +168,16 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 	}
 
 	/**
+	 * Deliver Notes to specify alternative deliveries addresses.
+	 *
+	 * @type {string}
+	 * @memberof Order
+	 */
+	@Schema({ type: string, required: false })
+	@Column()
+	deliveryNotes?: string;
+
+	/**
 	 * Deliver time for order (DateTime when order was actually delivered to customer)
 	 *
 	 * @type {Date}
@@ -393,7 +403,7 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 				return 'MAUVAIS_STATUS';
 		}
 	}
-  
+
 }
 
 export default Order;
