@@ -171,7 +171,6 @@ export class GeoLocationsWarehousesService
 			.populate(options.fullProducts ? 'products.product' : '')
 			.lean()
 			.exec()) as IWarehouse[];
-
 		return merchants;
 	}
 

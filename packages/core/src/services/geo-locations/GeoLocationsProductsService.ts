@@ -158,7 +158,9 @@ export class GeoLocationsProductsService
 				warehouse.products = warehouse.products.filter((wProduct) =>
 					this.filterBySearchText(wProduct, searchText)
 				);
-
+				warehouse.products = warehouse.products.filter(
+					(product) => product.isProductAvailable
+				);
 				return warehouse;
 			}) // remove all warehouse products which count is 0.
 			.map((warehouse) =>

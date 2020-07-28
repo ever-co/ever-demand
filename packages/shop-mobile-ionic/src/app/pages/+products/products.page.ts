@@ -90,7 +90,6 @@ export class ProductsPage implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.continueOrder();
-		this.loadProducts();
 	}
 	async buyItem(currentProduct: ProductInfo) {
 		if (
@@ -303,15 +302,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 						}
 
 						if (loadProducts) {
-							this.products = [];
-							products.forEach((product) => {
-								//TODO MAKE THE FILTERLING FROM THE API
-								if (
-									product.warehouseProduct.isProductAvailable
-								) {
-									this.products.push(product);
-								}
-							});
+							this.products.push(...products);
 						}
 						loadProducts = false;
 						this.areProductsLoaded = true;
