@@ -25,6 +25,7 @@ export class Store {
 	selectedOrder$: BehaviorSubject<IOrder> = new BehaviorSubject(
 		this.selectedOrder
 	);
+	orderId$: BehaviorSubject<string> = new BehaviorSubject(this.orderId);
 
 	set selectedOrder(order: IOrder) {
 		this.selectedOrder$.next(order);
@@ -68,6 +69,7 @@ export class Store {
 			localStorage.removeItem('orderId');
 		} else {
 			localStorage.setItem('orderId', id);
+			this.orderId$.next(id);
 		}
 	}
 

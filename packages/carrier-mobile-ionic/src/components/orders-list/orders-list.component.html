@@ -1,0 +1,53 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-title>{{ 'ORDERS_LIST.TITLE' | translate }}</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen color="light">
+	<ion-card button *ngFor="let order of filteredList">
+		<ion-card-content (click)="selectNewOrder(order.id)">
+			<ion-item>
+				<ion-avatar slot="start">
+					<img [src]="order.warehouse.logo" />
+				</ion-avatar>
+				<ion-label>
+					<p>Restorant: {{ order.warehouse.name }}</p>
+					<p>
+						Phone: {{ order.warehouse.contactPhone || 'Missing' }}
+					</p>
+					<p>
+						Email: {{ order.warehouse.cantactEmail || 'Missing' }}
+					</p>
+				</ion-label>
+			</ion-item>
+
+			<ion-item>
+				<ion-avatar slot="start">
+					<img [src]="order.user.image" />
+				</ion-avatar>
+				<ion-label>
+					<p>
+						Name: {{ order.user.firstName }}
+						{{ order.user.lastName }}
+					</p>
+					<p>Phone: {{ order.user.phone || 'Missing' }}</p>
+					<p>Email: {{ order.user.email || 'Missing' }}</p>
+					<p>Adress: {{ order.user.fullAddress || 'Missing' }}</p>
+				</ion-label>
+			</ion-item>
+			<ion-item lines="none"
+				><ion-label color="tertiary" slot="end"
+					><h1>Tital Price: {{ order.totalPrice }}$</h1></ion-label
+				>
+			</ion-item>
+		</ion-card-content>
+	</ion-card>
+	<h1 *ngIf="!filteredList.length" class="no-orders">Not found orders...</h1>
+</ion-content>
+
+<ion-tab-bar slot="bottom" color="primary">
+	<ion-tab-button (click)="closeOrderListModal()" tab="schedule">
+		<ion-label>{{ 'ORDERS_LIST.BACK' | translate }}</ion-label>
+	</ion-tab-button>
+</ion-tab-bar>

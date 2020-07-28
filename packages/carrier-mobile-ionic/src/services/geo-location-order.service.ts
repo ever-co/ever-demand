@@ -45,4 +45,96 @@ export class GeoLocationOrdersService {
 				share()
 			);
 	}
+
+	getOrdersForWork(
+		geoLocation: IGeoLocation,
+		skippedOrderIds: string[] = [],
+		options: { sort?: string; skip?: number; limit?: number } = {
+			sort: 'asc',
+		},
+		searchObj?: {
+			isCancelled?: boolean;
+			byRegex?: Array<{ key: string; value: string }>;
+		}
+	) {
+		return this.apollo
+			.watchQuery<{ getOrdersForWork: Order[] }>({
+				query: gql`
+					query GetOrdersForWork(
+						$geoLocation: GeoLocationFindInput!
+						$skippedOrderIds: [String!]!
+						$options: GeoLocationOrdersOptions
+						$searchObj: SearchOrdersForWork
+					) {
+						getOrdersForWork(
+							geoLocation: $geoLocation
+							skippedOrderIds: $skippedOrderIds
+							options: $options
+							searchObj: $searchObj
+						) {
+							id
+							carrierStatus
+							carrierStatusText
+							warehouseStatusText
+							createdAt
+							isConfirmed
+							isCancelled
+							isPaid
+							isCompleted
+							totalPrice
+							orderType
+							deliveryTime
+							finishedProcessingTime
+							startDeliveryTime
+							deliveryTimeEstimate
+							orderNumber
+
+							products {
+								count
+							}
+
+							user {
+								id
+								firstName
+								lastName
+								image
+								phone
+								email
+								fullAddress
+								geoLocation {
+									loc {
+										type
+										coordinates
+									}
+									streetAddress
+									house
+									postcode
+									countryName
+									city
+								}
+							}
+							warehouse {
+								id
+								name
+								logo
+								contactPhone
+								contactEmail
+								geoLocation {
+									house
+									postcode
+									countryName
+									city
+								}
+							}
+						}
+					}
+				`,
+				variables: { geoLocation, skippedOrderIds, options, searchObj },
+				pollInterval: 1000,
+			})
+			.valueChanges.pipe(
+				map((res) => res.data.getOrdersForWork),
+				share()
+			);
+	}
 }

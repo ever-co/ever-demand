@@ -27,7 +27,12 @@
 							{{ 'MENU.MAIN' | translate }}
 						</ion-label>
 					</ion-item>
-
+					<ion-item button (click)="openOrdersListModal()">
+						<ion-icon name="documents-outline"></ion-icon>
+						<ion-label>
+							{{ 'MENU.ORDERS_LIST' | translate }}
+						</ion-label>
+					</ion-item>
 					<ion-item
 						routerLink="/deliveries"
 						routerDirection="root"

@@ -10,6 +10,7 @@
 	},
 	"MENU": {
 		"MAIN": "Main",
+		"ORDERS_LIST": "Orders List",
 		"DELIVERIES": "Deliveries",
 		"SETTINGS": "Settings",
 		"LANGUAGE": "Language",
@@ -80,5 +81,9 @@
 	},
 	"LIST_VIEW": {
 		"YOU_NAVIGATED_HERE_FROM": "You navigated here from"
+	},
+	"ORDERS_LIST": {
+		"TITLE": "Select Order for Delivery ... ",
+		"BACK": "BACK"
 	}
 }

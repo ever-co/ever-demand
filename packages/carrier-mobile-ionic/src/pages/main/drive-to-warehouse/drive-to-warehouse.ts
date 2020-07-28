@@ -37,6 +37,7 @@ export class DriveToWarehousePage implements OnInit {
 
 	carrier$;
 	order$;
+	orderId$;
 
 	constructor(
 		private orderRouter: OrderRouter,
@@ -77,9 +78,11 @@ export class DriveToWarehousePage implements OnInit {
 				if (this.order$) {
 					await this.order$.unsubscribe();
 				}
+				//	The previous way of getting selected order by orederId
+				//	const orderId = localStorage.getItem('orderId');
+				//	if (orderId) { code }
 
-				const orderId = localStorage.getItem('orderId');
-				if (orderId) {
+				this.orderId$ = this.store.orderId$.subscribe((orderId) => {
 					this.order$ = this.orderRouter
 						.get(orderId, {
 							populateWarehouse: true,
@@ -112,7 +115,7 @@ export class DriveToWarehousePage implements OnInit {
 							this.carrierMap.setCenter(origin);
 							this.carrierMap.drawRoute(origin, destination);
 						});
-				}
+				});
 			});
 	}
 
