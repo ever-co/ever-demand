@@ -239,7 +239,11 @@
 			"BARCODE_QR_CODE_SETTINGS": "Настройки за баркод / QR код",
 			"ORDER_BARCODE_TYPE": "Тип баркод на поръчката",
 			"BARCODE_DATA": "Данни за баркод",
-			"SCAN_EXISTED": "Сканиране на текущите"
+			"SCAN_EXISTED": "Сканиране на текущите",
+			"DELIVERY_SETTINGS": "Настройки за доставка",
+			"TAKEAWAY_SETTINGS": "Настройки за взимане от място",
+			"IN_STORE_MODE": "В магазинен режим",
+			"IN_STORE_MODE_SETTINGS": "В магазинен режим настройки"
 		}
 	},
 	"LOGIN_VIEW": {

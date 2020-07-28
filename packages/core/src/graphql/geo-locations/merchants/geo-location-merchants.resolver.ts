@@ -18,7 +18,7 @@ export class GeoLocationMerchantsResolver {
 		let merchants = await this.geoLocationsWarehousesService.getMerchants(
 			geoLocation,
 			IN_STORE_DISTANCE,
-			{ fullProducts: false, activeOnly: true }
+			{ fullProducts: false, activeOnly: true, inStoreMode: true }
 		);
 
 		merchants = merchants.sort(
