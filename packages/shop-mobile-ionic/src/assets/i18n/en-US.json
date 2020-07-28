@@ -121,7 +121,7 @@
 			"NOT_PAID_NOTE": "Prepare your wallet (%s in cash)."
 		},
 		"DELIVERY_STATUS": {
-			"WE": "We",
+			"WE": "The Store",
 			"CARRIER": "Carrier",
 			"YOU": "You"
 		},
@@ -262,5 +262,7 @@
 	"SPANISH": "Spanish",
 	"SELECT": "Select",
 	"LOCATION_NOTES": "Location Notes",
-	"ENTER_NOTES_HERE": "Enter notes here"
+	"ENTER_NOTES_HERE": "Enter notes here",
+
+	"ALTERNATIVE_DELIVERY": "Where should we deliver instead ??"
 }

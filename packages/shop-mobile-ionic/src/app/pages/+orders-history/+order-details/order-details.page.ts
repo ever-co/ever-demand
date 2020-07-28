@@ -5,6 +5,8 @@ import Order from '@modules/server.common/entities/Order';
 import { Apollo } from 'apollo-angular';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { OrderDetailsQuery } from './order-details.model';
+import { Store } from '../../../services/store.service';
+import { Router } from '@angular/router';
 
 @Component({
 	templateUrl: 'order-details.page.html',
@@ -17,6 +19,8 @@ export class OrderDetailsPage implements OnDestroy {
 
 	constructor(
 		private readonly _route: ActivatedRoute,
+		private store: Store,
+		private router: Router,
 		private readonly _apollo: Apollo
 	) {
 		this._route.params
@@ -40,7 +44,12 @@ export class OrderDetailsPage implements OnDestroy {
 		this._ngDestroy$.complete();
 	}
 
+
 	async consultOrder(order: Order) {
+
+		//this.store.startOrderDate = order.startDeliveryTime as unknown as string;
+		this.store.orderId = order.id;
+		this.router.navigateByUrl('/order-info');
 
 	}
 
