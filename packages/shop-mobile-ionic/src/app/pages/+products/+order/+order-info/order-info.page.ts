@@ -251,7 +251,7 @@ export class OrderInfoPage implements OnInit, OnDestroy {
 					this.order
 						? (<Order>this.order).totalPrice.toFixed(2)
 						: '00.00'
-				}$`
+				} XAF`
 			);
 		};
 

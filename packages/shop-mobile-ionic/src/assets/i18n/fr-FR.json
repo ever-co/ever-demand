@@ -129,7 +129,7 @@
 			"NOT_PAID_NOTE": "Tenez votre porte-feuille (%s en cash)."
 		},
 		"DELIVERY_STATUS": {
-			"WE": "Nous",
+			"WE": "Fournisseur",
 			"CARRIER": "Livreur",
 			"YOU": "Vous"
 		},
@@ -268,5 +268,9 @@
 	"RUSSIAN": "Russe",
 	"BULGARIAN": "Bulgare",
 	"SPANISH": "Espagnol",
-	"SELECT": "Selectionner"
+	"SELECT": "Selectionner",
+	"LOCATION_NOTES": "Location Notes",
+	"ENTER_NOTES_HERE": "Entrez vos notes",
+
+	"ALTERNATIVE_DELIVERY": "Où devons nous livrer votre commande ??"
 }
