@@ -69,6 +69,7 @@ export class GeoLocationsProductsService
 	): Promise<number> {
 		try {
 			// getMerchants is replaced with getMerchantsInDeliveryZone
+
 			const merchants = await this.geoLocationsWarehousesService.getMerchantsInDeliveryRadius(
 				geoLocation,
 				// GeoLocationsWarehousesService.TrackingDistance,

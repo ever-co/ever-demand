@@ -299,6 +299,7 @@ export class GeoLocationsWarehousesService
 							$expr: {
 								$lte: [
 									'$distanceToCustomer',
+
 									{
 										$ifNull: [
 											'$deliveryAreas.maxDistance',
