@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule, MenuController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { MenuComponent } from './menu.component';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
