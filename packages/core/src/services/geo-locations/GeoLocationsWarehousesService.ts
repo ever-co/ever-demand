@@ -285,7 +285,7 @@ export class GeoLocationsWarehousesService
 		}
 	): Promise<IWarehouse[]> {
 		const merchantsIds = options.merchantsIds;
-		const merchants = await this.warehousesService.Model.aggregate([
+		const merchants = (await this.warehousesService.Model.aggregate([
 			[
 				{
 					$geoNear: {
@@ -316,14 +316,16 @@ export class GeoLocationsWarehousesService
 					),
 				},
 			],
-		]);
+		])) as IWarehouse[];
 
-		const populatedMerchants = (await this.warehousesService.Model.populate(
-			merchants,
-			{ path: 'products.product', options: { lean: true } }
-		)) as IWarehouse[];
+		if (options.fullProducts) {
+			await this.warehousesService.Model.populate(merchants, {
+				path: 'products.product',
+				options: { lean: true },
+			});
+		}
 
-		return populatedMerchants;
+		return merchants;
 	}
 	/**
 	 * Get warehouses available for given location
@@ -374,7 +376,7 @@ export class GeoLocationsWarehousesService
 	): Promise<Warehouse[]> {
 		// TODO: first filter by City / Country and only then look up by coordinates
 
-		const merchants = await this.warehousesService.Model.aggregate([
+		const merchants = (await this.warehousesService.Model.aggregate([
 			[
 				{
 					$geoNear: {
@@ -401,13 +403,15 @@ export class GeoLocationsWarehousesService
 					),
 				},
 			],
-		]);
+		])) as IWarehouse[];
 
-		const populatedMerchants = (await this.warehousesService.Model.populate(
-			merchants,
-			{ path: 'products.product', options: { lean: true } }
-		)) as IWarehouse[];
+		if (options.fullProducts) {
+			await this.warehousesService.Model.populate(merchants, {
+				path: 'products.product',
+				options: { lean: true },
+			});
+		}
 
-		return populatedMerchants.map((warehouse) => new Warehouse(warehouse));
+		return merchants.map((warehouse) => new Warehouse(warehouse));
 	}
 }
