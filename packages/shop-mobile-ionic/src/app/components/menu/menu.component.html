@@ -103,7 +103,7 @@
 							'SIDE_MENU.GROUPS.INFO.ITEMS.FAQ' | translate
 						}}</ion-label>
 					</ion-item>
-					<ion-item (click)="callUs()">
+					<ion-item *ngIf="hasPhoneNumber()" (click)="callUs()">
 						<ion-icon name="call"></ion-icon>
 						<ion-label>{{
 							'SIDE_MENU.GROUPS.NO_TITLE.ITEMS.CALL_US'
