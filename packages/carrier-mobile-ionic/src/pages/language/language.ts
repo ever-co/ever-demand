@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DeviceRouter } from '@modules/client.common.angular2/routers/device-router.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
 	selector: 'page-language',
@@ -9,10 +10,12 @@ import { DeviceRouter } from '@modules/client.common.angular2/routers/device-rou
 })
 export class LanguagePage {
 	language: any = localStorage.getItem('_language');
+	dir: 'ltr' | 'rtl';
 
 	constructor(
 		private _langTranslator: TranslateService,
-		private _deviceRouter: DeviceRouter
+		private _deviceRouter: DeviceRouter,
+		@Inject(DOCUMENT) private document: Document
 	) {
 		console.warn('LanguagePage loaded');
 	}
@@ -32,5 +35,13 @@ export class LanguagePage {
 		if (this.deviceId) {
 			this._deviceRouter.updateLanguage(this.deviceId, this.language);
 		}
+
+		if (this.language === 'he-IL') {
+			this.dir = 'rtl';
+		} else {
+			this.dir = 'ltr';
+		}
+		this.document.documentElement.dir = this.dir;
+		this.document.documentElement.lang = langAbbreviation;
 	}
 }

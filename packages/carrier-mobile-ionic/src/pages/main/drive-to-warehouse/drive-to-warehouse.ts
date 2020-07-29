@@ -14,7 +14,7 @@ import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 import { GeoLocationService } from '../../../services/geo-location.service';
 import { MapComponent } from '../common/map/map.component';
 import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { getIdFromTheDate } from '@modules/server.common/utils';
 
 declare var google: any;
@@ -46,7 +46,8 @@ export class DriveToWarehousePage implements OnInit {
 		private geoLocationService: GeoLocationService,
 		private geolocation: Geolocation,
 		private router: Router,
-		private navCtrl: NavController
+		private navCtrl: NavController,
+		public platform: Platform
 	) {}
 
 	ngOnInit(): void {

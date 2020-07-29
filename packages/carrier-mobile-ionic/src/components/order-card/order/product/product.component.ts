@@ -7,6 +7,7 @@ import {
 import OrderProduct from '@modules/server.common/entities/OrderProduct';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { Store } from '../../../../services/store.service';
+import { Platform } from '@ionic/angular';
 
 @Component({
 	selector: 'e-cu-order-product',
@@ -24,7 +25,8 @@ export class ProductComponent implements OnInit {
 
 	constructor(
 		private readonly translateProductLocales: ProductLocalesService,
-		private readonly store: Store
+		private readonly store: Store,
+		public platform: Platform
 	) {}
 
 	ngOnInit() {}

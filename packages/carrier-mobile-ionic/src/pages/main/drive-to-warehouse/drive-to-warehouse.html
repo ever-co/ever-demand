@@ -7,7 +7,11 @@
 				<span class="left-info"
 					>To: {{ selectedOrder?.user.fullAddress }}</span
 				>
-				<span class="right-text">{{ carrierUserDistance + 'km' }}</span>
+				<span
+					[ngClass]="platform.isRTL ? 'rtl' : 'ltr'"
+					class="right-text"
+					>{{ carrierUserDistance + 'km' }}</span
+				>
 			</div>
 			<div class="center-info">
 				<span>Order ID: {{ selectedOrderID }}</span>

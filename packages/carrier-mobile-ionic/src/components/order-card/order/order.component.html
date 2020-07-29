@@ -33,7 +33,9 @@
 		</section>
 
 		<section class="address">
-			<span class="total-price">${{ totalPrice }}</span>
+			<span [ngClass]="platform.isRTL ? 'rtl' : 'ltr'" class="total-price"
+				>${{ totalPrice }}</span
+			>
 			<div class="top">
 				{{ 'DELIVERY_VIEW.FROM' | translate }}: {{ warehouseName }}
 				<div>{{ warehouseAddress }}</div>
