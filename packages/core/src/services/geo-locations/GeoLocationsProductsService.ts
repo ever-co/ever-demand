@@ -68,9 +68,11 @@ export class GeoLocationsProductsService
 		searchText?: string
 	): Promise<number> {
 		try {
-			const merchants = await this.geoLocationsWarehousesService.getMerchants(
+			// getMerchants is replaced with getMerchantsInDeliveryZone
+
+			const merchants = await this.geoLocationsWarehousesService.getMerchantsInDeliveryRadius(
 				geoLocation,
-				GeoLocationsWarehousesService.TrackingDistance,
+				// GeoLocationsWarehousesService.TrackingDistance,
 				{
 					fullProducts: true,
 					activeOnly: true,
@@ -112,9 +114,10 @@ export class GeoLocationsProductsService
 		options?: IGetGeoLocationProductsOptions,
 		searchText?: string
 	): Promise<ProductInfo[]> {
-		const merchants = await this.geoLocationsWarehousesService.getMerchants(
+		// getMerchants is replaced with getMerchantsInDeliveryZone
+		const merchants = await this.geoLocationsWarehousesService.getMerchantsInDeliveryRadius(
 			geoLocation,
-			GeoLocationsWarehousesService.TrackingDistance,
+			// GeoLocationsWarehousesService.TrackingDistance,
 			{
 				fullProducts: true,
 				activeOnly: true,

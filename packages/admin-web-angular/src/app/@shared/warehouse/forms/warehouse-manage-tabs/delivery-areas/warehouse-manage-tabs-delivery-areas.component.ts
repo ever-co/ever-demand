@@ -139,15 +139,6 @@ export class WarehouseManageTabsDeliveryAreasComponent
 	}
 
 	setValue(data) {
-		this.maxDistance = data.maxDistance;
-		this.mapCoordEvent.pipe(first()).subscribe((location) => {
-			if (location && this.form.get('showOnMap').value) {
-				this._maxDistanceZone = this.createMaxDistanceCircle(
-					location,
-					data.maxDistance
-				);
-			}
-		});
 		// add type
 		if (data && data.features.length > 0) {
 			data.features.forEach((feature) => {
@@ -198,6 +189,18 @@ export class WarehouseManageTabsDeliveryAreasComponent
 
 			this._zoneNumber = data.features.length;
 			this.deliveryZones = data;
+		}
+
+		if (data && data.maxDistance) {
+			this.maxDistance = data.maxDistance;
+			this.mapCoordEvent.pipe(first()).subscribe((location) => {
+				if (location && this.form.get('showOnMap').value) {
+					this._maxDistanceZone = this.createMaxDistanceCircle(
+						location,
+						data.maxDistance
+					);
+				}
+			});
 		}
 	}
 

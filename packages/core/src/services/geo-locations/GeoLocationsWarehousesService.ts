@@ -38,6 +38,15 @@ export class GeoLocationsWarehousesService
 			GeoLocationsWarehousesService.TrackingDistance
 		);
 	}
+	static isInDeliveryRadius(
+		warehouse: Warehouse,
+		geoLocation: GeoLocation
+	): boolean {
+		return Utils.getDistance(warehouse.geoLocation, geoLocation) <=
+			(warehouse.deliveryAreas && warehouse.deliveryAreas['maxDistance'])
+			? warehouse.deliveryAreas['maxDistance']
+			: GeoLocationsWarehousesService.TrackingDistance;
+	}
 
 	constructor(protected warehousesService: WarehousesService) {}
 
@@ -136,6 +145,95 @@ export class GeoLocationsWarehousesService
 		);
 	}
 
+	@observableListener()
+	getInDeliveryRadius(
+		@serialization((g: IGeoLocation) => new GeoLocation(g))
+		geoLocation: GeoLocation,
+		@serialization((o: any) => _.omit(o, ['fullProducts', 'activeOnly']))
+		_options?: { fullProducts?: boolean; activeOnly?: boolean }
+	): Observable<Warehouse[]> {
+		const options = {
+			fullProducts: _options != null && _options.fullProducts != null,
+			activeOnly:
+				_options != null && _options.activeOnly != null
+					? _options.activeOnly
+					: false,
+		};
+
+		return of(null).pipe(
+			concat(
+				this.warehousesService.existence.pipe(
+					filter((existenceEvent) => {
+						let warehouse: Warehouse | null;
+						let oldWarehouse: Warehouse | null;
+
+						switch (existenceEvent.type as ExistenceEventType) {
+							case ExistenceEventType.Created:
+								warehouse = existenceEvent.value;
+
+								if (warehouse == null) {
+									return false;
+								}
+
+								return (
+									GeoLocationsWarehousesService.isInDeliveryRadius(
+										warehouse,
+										geoLocation
+									) &&
+									(options.activeOnly
+										? warehouse.isActive
+										: true)
+								);
+
+							case ExistenceEventType.Updated:
+								warehouse = existenceEvent.value;
+								oldWarehouse = existenceEvent.lastValue;
+
+								if (warehouse == null || oldWarehouse == null) {
+									return false;
+								}
+
+								return (
+									GeoLocationsWarehousesService.isInDeliveryRadius(
+										warehouse,
+										geoLocation
+									) !==
+										GeoLocationsWarehousesService.isInDeliveryRadius(
+											oldWarehouse,
+											geoLocation
+										) &&
+									(options.activeOnly
+										? warehouse.isActive !==
+										  oldWarehouse.isActive
+										: true)
+								);
+
+							case ExistenceEventType.Removed:
+								oldWarehouse = existenceEvent.lastValue;
+
+								if (oldWarehouse == null) {
+									return false;
+								}
+
+								return (
+									GeoLocationsWarehousesService.isInDeliveryRadius(
+										oldWarehouse,
+										geoLocation
+									) &&
+									(options.activeOnly
+										? oldWarehouse.isActive
+										: true)
+								);
+						}
+					}),
+					share()
+				)
+			),
+			exhaustMap(() => this._getInDeliveryRadius(geoLocation, options)),
+			share()
+		);
+	}
+
 	@asyncListener()
 	async getMerchants(
 		geoLocation: IGeoLocation,
@@ -177,6 +275,58 @@ export class GeoLocationsWarehousesService
 		return merchants;
 	}
 
+	@asyncListener()
+	async getMerchantsInDeliveryRadius(
+		geoLocation: IGeoLocation,
+		options: {
+			fullProducts: boolean;
+			activeOnly: boolean;
+			merchantsIds?: string[];
+		}
+	): Promise<IWarehouse[]> {
+		const merchantsIds = options.merchantsIds;
+		const merchants = (await this.warehousesService.Model.aggregate([
+			[
+				{
+					$geoNear: {
+						near: geoLocation.loc,
+						distanceField: 'distanceToCustomer',
+					},
+				},
+				{
+					$match: _.assign(
+						{
+							$expr: {
+								$lte: [
+									'$distanceToCustomer',
+
+									{
+										$ifNull: [
+											'$deliveryAreas.maxDistance',
+											GeoLocationsWarehousesService.TrackingDistance,
+										],
+									},
+								],
+							},
+						},
+						options.activeOnly ? { isActive: true } : {},
+						merchantsIds && merchantsIds.length > 0
+							? { _id: { $in: merchantsIds } }
+							: {}
+					),
+				},
+			],
+		])) as IWarehouse[];
+
+		if (options.fullProducts) {
+			await this.warehousesService.Model.populate(merchants, {
+				path: 'products.product',
+				options: { lean: true },
+			});
+		}
+
+		return merchants;
+	}
 	/**
 	 * Get warehouses available for given location
 	 *
@@ -218,5 +368,50 @@ export class GeoLocationsWarehousesService
 			.exec()) as IWarehouse[];
 
 		return warehouses.map((warehouse) => new Warehouse(warehouse));
+	}
+
+	private async _getInDeliveryRadius(
+		geoLocation: GeoLocation,
+		options: { fullProducts: boolean; activeOnly: boolean }
+	): Promise<Warehouse[]> {
+		// TODO: first filter by City / Country and only then look up by coordinates
+
+		const merchants = (await this.warehousesService.Model.aggregate([
+			[
+				{
+					$geoNear: {
+						near: geoLocation.loc,
+						distanceField: 'distanceToCustomer',
+					},
+				},
+				{
+					$match: _.assign(
+						{
+							$expr: {
+								$lte: [
+									'$distanceToCustomer',
+									{
+										$ifNull: [
+											'$deliveryAreas.maxDistance',
+											GeoLocationsWarehousesService.TrackingDistance,
+										],
+									},
+								],
+							},
+						},
+						options.activeOnly ? { isActive: true } : {}
+					),
+				},
+			],
+		])) as IWarehouse[];
+
+		if (options.fullProducts) {
+			await this.warehousesService.Model.populate(merchants, {
+				path: 'products.product',
+				options: { lean: true },
+			});
+		}
+
+		return merchants.map((warehouse) => new Warehouse(warehouse));
 	}
 }
