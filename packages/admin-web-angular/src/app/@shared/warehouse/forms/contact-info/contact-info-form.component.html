@@ -116,6 +116,7 @@
 							| translate
 					}}
 				</nb-checkbox>
+
 				<input
 					*ngIf="forwardingPhone"
 					type="text"
@@ -125,6 +126,20 @@
 					"
 					formControlName="ordersPhone"
 				/>
+
+				<!--
+				<select
+					*ngIf="forwardingPhone"
+					id="ordersPhone"
+					[formControl]="type"
+					type="select"
+					class="form-control"
+					formControlName="ordersPhone"
+					>
+			    <option [ngValue]="null">Select a service ...</option>
+			    <option *ngFor="let type of services | keyvalue" [ngValue]="type.value">{{type.value}}</option>
+			  </select>
+				-->
 
 				<div
 					*ngIf="

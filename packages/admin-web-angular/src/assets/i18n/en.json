@@ -262,12 +262,12 @@
 				"CONTACT_PHONE": "Contact Phone",
 				"INVALID_PHONE_NUMBER_FORMAT": "Invalid phone number format",
 				"ORDER_FORWARDING_EMAIL": "Order Forwarding Email",
-				"ORDER_FORWARDING_PHONE": "Order Forwarding Phone",
+				"ORDER_FORWARDING_PHONE": "Bell'Em Services associated with Store",
 				"ORDERS_EMAIL": "Orders Email",
 				"ORDERS_EMAIL_IS_REQUIRED": "Orders email is required",
 				"INVALID_EMAIL_FORMAT": "Invalid email format",
-				"ORDERS_PHONE": "Orders Phone",
-				"ORDERS_PHONE_IS_REQUIRED": "Orders phone is required"
+				"ORDERS_PHONE": "Bell'Em Service",
+				"ORDERS_PHONE_IS_REQUIRED": "Service is required (cake|drinks|food|clean|med|messenger|pizza|mart)"
 			},
 			"LOCATION": {
 				"LOCATION": "Location"
@@ -384,6 +384,7 @@
 		"SMART_TABLE_COLUMNS": {
 			"IMAGE": "Image",
 			"NAME": "Name",
+			"SERVICE": "Services",
 			"EMAIL": "Email",
 			"PHONE": "Phone",
 			"CITY": "City",
@@ -429,7 +430,7 @@
 			"PRODUCTS_MANUFACTURING": "Products Manufacturing",
 			"CARRIER_REQUIRED": "Carrier required",
 			"RIGHT_NOW": "Right now",
-			"ORDERS_PHONE": "Orders Phone",
+			"ORDERS_PHONE": "Bell'Em Service",
 			"CONTACT_PHONE": "Contact Phone",
 			"ORDERS_EMAIL": "Orders Email",
 			"CONTACT_EMAIL": "Contact Email",
@@ -480,9 +481,9 @@
 				"NAME_MORE_THAN_255_CHARS": "Name cannot be more than 255 characters long",
 				"LOGO_IS_REQUIRED": "Warehouse logo is required",
 				"INVALID_URL": "Enter a valid logo URL or upload from a device",
-				"PHONE_CONTAINS_ONLY_DIGIT": "The phone number must only contain digits",
+				"PHONE_CONTAINS_ONLY_DIGIT": "Service values (cake|drinks|food|clean|med|messenger|pizza|mart)",
 				"INVALID_EMAIL": "Invalid Email",
-				"ORDERS_PHONE_IS_REQUIRED": "Orders Phone is required",
+				"ORDERS_PHONE_IS_REQUIRED": "Service is required (cake|drinks|food|clean|med|messenger|pizza|mart)",
 				"CONTACT_PHONE_IS_REQUIRED": "Contact Phone is required",
 				"ORDERS_EMAIL_IS_REQUIRED": "Orders Email is required",
 				"CONTACT_EMAIL_IS_REQUIRED": "Contact Email is required",
@@ -498,7 +499,7 @@
 			},
 			"CONTACT_INFO_TAB": {
 				"ORDER_FORWARDING_EMAIL": "Order Forwarding Email",
-				"ORDER_FORWARDING_PHONE": "Order Forwarding Phone"
+				"ORDER_FORWARDING_PHONE": "Bell'Em Services associated with Store"
 			}
 		},
 		"NEW_PRODUCT": {

@@ -14,6 +14,18 @@ export type WarehouseContactInfo = Pick<
 >;
 
 const phoneNumberRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9x]*$/;
+const serviceRegex = ("cake|drinks|food|clean|med|messenger|pizza|mart");
+
+enum services {
+  cake = 'Cake',
+  drinks = 'Drinks',
+  food = 'Food',
+	clean = 'Clean',
+	med = 'Med',
+	messenger = 'Messenger',
+	pizza = 'Pizza',
+  mart = 'Mart'
+}
 
 @Component({
 	selector: 'ea-warehouse-contact-info-form',
@@ -24,7 +36,10 @@ export class ContactInfoFormComponent {
 	readonly form: FormGroup;
 
 	forwardingEmail: boolean;
-	forwardingPhone: boolean;
+	forwardingPhone: boolean = true;
+
+	services = services;
+
 
 	static buildForm(formBuilder: FormBuilder): FormGroup {
 		// would be used in the parent component and injected into this.form
@@ -33,9 +48,10 @@ export class ContactInfoFormComponent {
 			contactPhone: ['', [Validators.pattern(phoneNumberRegex)]],
 			contactEmail: ['', [Validators.email]],
 
-			forwardOrdersUsing: [],
+			forwardOrdersUsing: [ForwardOrdersMethod.Phone],
 
-			ordersPhone: ['', [Validators.pattern(phoneNumberRegex)]],
+			// OrdersPhone will be used to store services
+			ordersPhone: ['', [Validators.pattern(serviceRegex)]],
 			ordersEmail: ['', [Validators.email]],
 		});
 	}
@@ -121,6 +137,7 @@ export class ContactInfoFormComponent {
 	}
 
 	forwardingPhoneChange() {
+		/*
 		this.forwardingPhone = !this.forwardingPhone;
 		let forwardOrdersUsingArr = this.forwardOrdersUsing.value || [];
 
@@ -135,6 +152,8 @@ export class ContactInfoFormComponent {
 		}
 
 		this.forwardOrdersUsing.setValue(forwardOrdersUsingArr);
+		*/
+			this.forwardingPhone = true;
 	}
 
 	forwardingEmailChange() {

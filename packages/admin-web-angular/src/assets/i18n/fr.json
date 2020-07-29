@@ -194,14 +194,15 @@
 		}
 	},
 	"WAREHOUSES_VIEW": {
-		"TITLE": "Entrepôts",
+		"TITLE": "Commerces",
 		"DELETE_WAREHOUSES": "Supprimer la Sélection",
 		"DELETE": "SUPPRIMER",
 		"CREATE": "CREER",
 		"SHOW_ON_MAP": "Montrer sur la carte",
 		"SMART_TABLE_COLUMNS": {
 			"IMAGE": "Image",
-			"NAME": "Prénom",
+			"NAME": "Nom",
+			"SERVICE": "Services",
 			"EMAIL": "Email",
 			"PHONE": "Téléphone",
 			"CITY": "Ville",
@@ -241,7 +242,7 @@
 			"RIGHT_NOW": "Maintenant",
 			"PHONE": "Téléphone",
 			"EMAIL": "Email",
-			"ORDERS_PHONE": "Téléphone de la Commande",
+			"ORDERS_PHONE": "Service Bell'Em",
 			"CONTACT_PHONE": "Téléphone",
 			"ORDERS_EMAIL": "Email de la Commande",
 			"CONTACT_EMAIL": "Email",
@@ -269,9 +270,9 @@
 				"NAME_MORE_THAN_255_CHARS": "Le nom ne peut pas comporter plus de 255 caractères",
 				"LOGO_IS_REQUIRED": "Le logo est requis",
 				"INVALID_URL": "Entrez une URL d'image valide ou recherchez un fichier",
-				"PHONE_CONTAINS_ONLY_DIGIT": "Le numéro de téléphone doit contenir uniquement un chiffre",
+				"PHONE_CONTAINS_ONLY_DIGIT": "Valeurs Service (cake|drinks|food|clean|med|messenger|pizza|mart)",
 				"INVALID_EMAIL": "Email Invalide",
-				"ORDERS_PHONE_IS_REQUIRED": "Orders Phone is required",
+				"ORDERS_PHONE_IS_REQUIRED": "Service obligatoire (cake|drinks|food|clean|med|messenger|pizza|mart)",
 				"CONTACT_PHONE_IS_REQUIRED": "Contact Phone is required",
 				"ORDERS_EMAIL_IS_REQUIRED": "Orders Email is required",
 				"CONTACT_EMAIL_IS_REQUIRED": "Contact Email is required",
@@ -288,7 +289,7 @@
 			},
 			"CONTACT_INFO_TAB": {
 				"ORDER_FORWARDING_EMAIL": "Email de transfert de commande",
-				"ORDER_FORWARDING_PHONE": "Téléphone de transfert de commande"
+				"ORDER_FORWARDING_PHONE": "Services Bell'Em associés au commerce"
 			}
 		},
 		"NEW_PRODUCT": {
@@ -1055,12 +1056,12 @@
 				"CONTACT_PHONE": "Contact Phone",
 				"INVALID_PHONE_NUMBER_FORMAT": "Invalid phone number format",
 				"ORDER_FORWARDING_EMAIL": "Order Forwarding Email",
-				"ORDER_FORWARDING_PHONE": "Order Forwarding Phone",
+				"ORDER_FORWARDING_PHONE": "Services Bell'Em associés au commerce",
 				"ORDERS_EMAIL": "Orders Email",
 				"ORDERS_EMAIL_IS_REQUIRED": "Orders email is required",
 				"INVALID_EMAIL_FORMAT": "Invalid email format",
-				"ORDERS_PHONE": "Orders Phone",
-				"ORDERS_PHONE_IS_REQUIRED": "Orders phone is required"
+				"ORDERS_PHONE": "Service Bell'Em",
+				"ORDERS_PHONE_IS_REQUIRED": "Service obligatoire (cake|drinks|food|clean|med|messenger|pizza|mart)"
 			},
 			"LOCATION": {
 				"LOCATION": "Location"

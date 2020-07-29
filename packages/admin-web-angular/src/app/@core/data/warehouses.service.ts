@@ -77,6 +77,7 @@ export class WarehousesService {
 						getAllStores {
 							id
 							_createdAt
+							ordersPhone
 							geoLocation {
 								loc {
 									coordinates
@@ -98,6 +99,7 @@ export class WarehousesService {
 							id
 							_createdAt
 							name
+							ordersPhone
 							logo
 							geoLocation {
 								loc {
@@ -123,6 +125,7 @@ export class WarehousesService {
 							_id
 							_createdAt
 							name
+							ordersPhone
 							contactEmail
 							contactPhone
 							logo
@@ -155,6 +158,7 @@ export class WarehousesService {
 						nearbyStores(geoLocation: $geoLocation) {
 							_id
 							name
+							ordersPhone
 							contactEmail
 							contactPhone
 							logo
