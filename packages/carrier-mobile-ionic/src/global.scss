@@ -40,6 +40,16 @@ body {
 	overflow: visible !important;
 }
 
+.rtl {
+	float: left !important;
+	left: 0 !important;
+}
+
+.ltr {
+	float: right !important;
+	right: 0 !important;
+}
+
 .ion-page {
 	background-color: $brand-darken;
 }

@@ -1,0 +1,66 @@
+<ion-list>
+	<ion-item-group>
+		<ion-menu-toggle [autoHide]="true">
+			<ion-item
+				routerLink="/main"
+				routerDirection="root"
+				routerLinkActive="activated"
+			>
+				<ion-icon name="bicycle"></ion-icon>
+				<ion-label>
+					{{ 'MENU.MAIN' | translate }}
+				</ion-label>
+			</ion-item>
+
+			<ion-item
+				routerLink="/deliveries"
+				routerDirection="root"
+				routerLinkActive="activated"
+			>
+				<ion-icon name="card"></ion-icon>
+				<ion-label>
+					{{ 'MENU.DELIVERIES' | translate }}
+				</ion-label>
+			</ion-item>
+
+			<ion-item disabled="true">
+				<ion-label>
+					{{ 'MENU.SETTINGS' | translate }}
+				</ion-label>
+			</ion-item>
+
+			<ion-item
+				routerLink="/language"
+				routerDirection="root"
+				routerLinkActive="activated"
+			>
+				<ion-icon name="globe"></ion-icon>
+				<ion-label>
+					{{ 'MENU.LANGUAGE' | translate }}
+				</ion-label>
+			</ion-item>
+
+			<ion-item
+				routerLink="/information/about"
+				routerDirection="root"
+				routerLinkActive="activated"
+			>
+				<ion-icon name="information-circle-outline"></ion-icon>
+				<ion-label>
+					{{ 'MENU.ABOUT_US' | translate }}
+				</ion-label>
+			</ion-item>
+
+			<ion-item
+				routerLink="/information/terms-of-use"
+				routerDirection="root"
+				routerLinkActive="activated"
+			>
+				<ion-icon name="newspaper-outline"></ion-icon>
+				<ion-label>
+					{{ 'MENU.TERMS_OF_USE' | translate }}
+				</ion-label>
+			</ion-item>
+		</ion-menu-toggle>
+	</ion-item-group>
+</ion-list>

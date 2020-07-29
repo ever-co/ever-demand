@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
@@ -6,7 +6,7 @@ import { Mixpanel } from '@ionic-native/mixpanel/ngx';
 import { Network } from '@ionic-native/network/ngx';
 import { Globalization } from '@ionic-native/globalization/ngx';
 import { Device } from '@ionic-native/device/ngx';
-import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
 import { Store } from '../services/store.service';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';
@@ -15,21 +15,13 @@ import { DeviceRouter } from '@modules/client.common.angular2/routers/device-rou
 import { IDeviceCreateObject } from '@modules/server.common/interfaces/IDevice';
 import IPlatform from '@modules/server.common/interfaces/IPlatform';
 import { Router } from '@angular/router';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { DOCUMENT } from '@angular/common';
 
 @Component({
 	selector: 'e-cu-root',
 	templateUrl: 'app.component.html',
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
 	defaultLanguage = '';
-	dir: 'ltr' | 'rtl';
-	side: 'start' | 'end';
-	lang: any;
-
-	private ngDestroy$ = new Subject<void>();
 
 	constructor(
 		public platform: Platform,
@@ -43,32 +35,8 @@ export class AppComponent implements OnInit, OnDestroy {
 		private _langTranslator: TranslateService,
 		private store: Store,
 		private router: Router,
-		private deviceRouter: DeviceRouter,
-		@Inject(DOCUMENT) private document: Document
-	) {
-		this._langTranslator.onLangChange
-			.pipe(takeUntil(this.ngDestroy$))
-			.subscribe((event: LangChangeEvent) => {
-				this.lang = event.lang;
-				this._langTranslator.setDefaultLang(this.lang);
-				if (event.lang === 'he') {
-					this.dir = 'rtl';
-					this.side = 'end';
-				} else {
-					this.dir = 'ltr';
-					this.side = 'start';
-				}
-				this.document
-					.getElementsByTagName('ion-menu')[0]
-					.setAttribute('side', this.side);
-				this.document
-					.getElementsByTagName('html')[0]
-					.setAttribute('lang', this.lang);
-				this.document
-					.getElementsByTagName('html')[0]
-					.setAttribute('dir', this.dir);
-			});
-	}
+		private deviceRouter: DeviceRouter
+	) {}
 
 	ngOnInit(): void {
 		this.initializeApp();
@@ -205,10 +173,5 @@ export class AppComponent implements OnInit, OnDestroy {
 			type: this.device.platform as IPlatform,
 			uuid: this.device.uuid,
 		};
-	}
-
-	ngOnDestroy() {
-		this.ngDestroy$.next();
-		this.ngDestroy$.complete();
 	}
 }

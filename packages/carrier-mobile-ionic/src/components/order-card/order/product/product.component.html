@@ -23,6 +23,11 @@
 				'DELIVERY_VIEW.DETAILS' | translate
 			}}</a>
 		</div>
-		<section class="products-price">${{ price }}</section>
+		<section
+			[ngClass]="platform.isRTL ? 'rtl' : 'ltr'"
+			class="products-price"
+		>
+			${{ price }}
+		</section>
 	</div>
 </div>
