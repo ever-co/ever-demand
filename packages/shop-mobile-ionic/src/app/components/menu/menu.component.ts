@@ -34,17 +34,23 @@ export class MenuComponent {
 		this.loadMerchant();
 	}
 
+	hasPhoneNumber() {
+		return this._ourSupportNumber !== '' ? true : false;
+	}
+
 	async callUs() {
 		try {
 			await CallNumber.callNumber(this._ourSupportNumber, true);
 		} catch (err) {
 			// TODO: implement popup notification
-			const modal = this.modalController.create({
-				component: CallPage,
-				cssClass: 'order-info-modal',
-				componentProps: { modalChange: this.modalChange },
-			});
-			return (await modal).present();
+			if (err) {
+				const modal = this.modalController.create({
+					component: CallPage,
+					cssClass: 'order-info-modal',
+					componentProps: { modalChange: this.modalChange },
+				});
+				return (await modal).present();
+			}
 			// console.error('Call Was Unsuccessful!');
 		}
 	}
