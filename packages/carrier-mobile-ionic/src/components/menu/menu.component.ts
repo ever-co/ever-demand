@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from 'services/store.service';
 import { environment } from 'environments/environment';
+import { Platform } from '@ionic/angular';
 
 @Component({
 	selector: 'e-cu-menu',
@@ -10,7 +11,7 @@ import { environment } from 'environments/environment';
 export class MenuComponent {
 	companyName: string;
 
-	constructor(private store: Store) {
+	constructor(private store: Store, public platform: Platform) {
 		this.companyName = environment.APP_NAME;
 	}
 
