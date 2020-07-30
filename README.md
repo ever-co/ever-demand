@@ -205,21 +205,18 @@ According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform tod
 -   Elvis Arabadjiyski ([Dreemsuncho](https://github.com/Dreemsuncho))
 -   Emil Momchilov ([jew-er](https://github.com/jew-er))
 -   Hristo Hristov ([hrimar](https://github.com/hrimar))
+-   Martin Asenov ([goofy5752](https://github.com/goofy5752))
+-   Pavel Denchev ([PavelDenchev](https://github.com/PavelDenchev))
 -   Tsvetelina Yordanova ([tsvetelina-e-y](https://github.com/tsvetelina-e-y))
+-   Valentin Peshev ([valiopld](https://github.com/valiopld))
 -   Yavor Grancharov ([YavorGrancharov](https://github.com/YavorGrancharov))
 
 #### Designers & QA
 
 -   [Julia Konviser](https://www.linkedin.com/in/julia-konviser-8b917552) (Graphic Designer, QA)
+-   [Yordan Genovski](https://services.ever.co/teammembers/yordan-genovski) (UX/UI/Product Designer)
 
 ### Contributors
-
--   [Adem Hodzic](https://github.com/AdemHodzic)
--   [Deepak Chandwani](https://github.com/deepaksslibra)
--   [Kyle Kitlinski](https://github.com/K-Kit)
--   [Milena Dimova](https://www.linkedin.com/in/dimova-milena-31010414) (UI/UX Designer)
--   [Rachit Magon](https://github.com/rmagon)
--   [Surya Singh](https://github.com/suryasingh)
 
 View full list of our [contributors](https://github.com/ever-co/ever/graphs/contributors).
 
