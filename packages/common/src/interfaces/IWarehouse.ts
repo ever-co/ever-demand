@@ -144,6 +144,7 @@ export interface IWarehouseCreateObject extends DBCreateObject {
 	preferRestrictedCarriersForDelivery?: boolean;
 	ordersShortProcess?: boolean;
 	orderCancelation?: { enabled: boolean; onState: number };
+	carrierCompetition?: boolean;
 }
 
 interface IWarehouse extends IWarehouseCreateObject, DBRawObject {
@@ -163,6 +164,7 @@ interface IWarehouse extends IWarehouseCreateObject, DBRawObject {
 	ordersShortProcess?: boolean;
 	orderCancelation?: { enabled: boolean; onState: number };
 	inStoreMode?: boolean;
+	carrierCompetition?: boolean;
 }
 
 export default IWarehouse;

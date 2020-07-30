@@ -147,7 +147,20 @@ export class GeoLocationsOrdersService
 								},
 							},
 						},
-						{ $project: { carrierCompetitoin: 1 } },
+						{
+							$project: {
+								carrierCompetition: {
+									$cond: {
+										if: {
+											$eq: ['$carrierCompetition', true],
+										},
+										then:
+											OrderCarrierStatus.CarrierSelectedOrder,
+										else: OrderCarrierStatus.NoCarrier,
+									},
+								},
+							},
+						},
 					],
 					as: 'fromWH',
 				},
@@ -167,12 +180,7 @@ export class GeoLocationsOrdersService
 						$expr: {
 							$lte: [
 								'$carrierStatus',
-								{
-									$ifNull: [
-										'$fromWH.carrierCompetitoin',
-										OrderCarrierStatus.CarrierSelectedOrder,
-									],
-								},
+								'$fromWH.carrierCompetition',
 							],
 						},
 						_id: { $nin: skippedOrderIds },
@@ -240,7 +248,20 @@ export class GeoLocationsOrdersService
 								},
 							},
 						},
-						{ $project: { carrierCompetitoin: 1 } },
+						{
+							$project: {
+								carrierCompetition: {
+									$cond: {
+										if: {
+											$eq: ['$carrierCompetition', true],
+										},
+										then:
+											OrderCarrierStatus.CarrierSelectedOrder,
+										else: OrderCarrierStatus.NoCarrier,
+									},
+								},
+							},
+						},
 					],
 					as: 'fromWH',
 				},
@@ -260,12 +281,7 @@ export class GeoLocationsOrdersService
 						$expr: {
 							$lte: [
 								'$carrierStatus',
-								{
-									$ifNull: [
-										'$fromWH.carrierCompetitoin',
-										OrderCarrierStatus.CarrierSelectedOrder,
-									],
-								},
+								'$fromWH.carrierCompetition',
 							],
 						},
 						_id: {
