@@ -26,7 +26,6 @@ import {
 } from '@modules/server.common/interfaces/IProduct';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { IGetGeoLocationProductsOptions } from 'graphql/geo-locations/geo-location.resolver';
-import ICategory from '@modules/server.common/interfaces/ICategory';
 
 @injectable()
 @routerName('geo-location-products')
@@ -137,7 +136,7 @@ export class GeoLocationsProductsService
 	async geoLocationProductsByCategory(
 		@serialization((g: IGeoLocation) => new GeoLocation(g))
 		geoLocation: GeoLocation,
-		category: ICategory,
+		category: string,
 		pagingOptions,
 		options?: IGetGeoLocationProductsOptions,
 		searchText?: string

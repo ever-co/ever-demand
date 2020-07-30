@@ -1,0 +1,35 @@
+img {
+	display: block;
+	max-width: 30%;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #fff;
+}
+
+/* Full-width input fields */
+input {
+	width: 100%;
+	padding: 15px;
+	margin: 5px 0 10px 0;
+	display: inline-block;
+	border: none;
+	background: #f1f1f1;
+}
+
+ion-item {
+	vertical-align: middle;
+}
+
+hr {
+	border: 1px solid #f1f1f1;
+	margin-bottom: 25px;
+}
+
+/* Set a style for all buttons */
+ion-button {
+	align-self: center;
+}
+
+ion-button:hover {
+	opacity: 1;
+}

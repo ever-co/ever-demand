@@ -103,9 +103,13 @@ export const env: any = cleanEnv(
 
 		COMPANY_NAME: str({ default: 'BellEm. LTD' }),
 
-		GOOGLE_MAPS_API_KEY: str({ default: 'AIzaSyAvUNNXFK3xlzKE21uNkSVM1wROVAjd_Ak' }),
+		GOOGLE_MAPS_API_KEY: str({
+			default: 'AIzaSyAvUNNXFK3xlzKE21uNkSVM1wROVAjd_Ak',
+		}),
 
-		GOOGLE_ANALYTICS_API_KEY: str({ default: 'AIzaSyAvUNNXFK3xlzKE21uNkSVM1wROVAjd_Ak' }),
+		GOOGLE_ANALYTICS_API_KEY: str({
+			default: 'AIzaSyAvUNNXFK3xlzKE21uNkSVM1wROVAjd_Ak',
+		}),
 		FAKE_UUID: str({ default: uuid() }),
 
 		// Not secret MixPanel Token
@@ -144,7 +148,7 @@ export const env: any = cleanEnv(
 		// Graphql endpoints for apollo services
 		GQL_ENDPOINT: str({ default: 'http://bellem.cm:5555/graphql' }),
 		GQL_SUBSCRIPTIONS_ENDPOINT: str({
-			default: 'ws://localhost:5050/subscriptions',
+			default: 'ws://bellem.cm:5050/subscriptions',
 		}),
 		SERVICES_ENDPOINT: str({ default: 'http://bellem.cm:5500' }),
 		HTTPS_SERVICES_ENDPOINT: str({ default: 'https://bellem.cm:5501' }),

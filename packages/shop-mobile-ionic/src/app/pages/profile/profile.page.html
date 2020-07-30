@@ -15,5 +15,95 @@
 </ion-header>
 
 <ion-content>
+	<div class="card">
+		<div class="header">
+			<div class="avatar">
+				<img src="{{image}}" alt="" />
+			</div>
+		</div>
+	</div>
 
+	<div class="container">
+		<!--<ion-label for="email"><b>{{ firstName }}</b></ion-label>-->
+
+		<input
+			class="ion-autocomplete"
+			[(ngModel)]="firstName"
+			placeholder="{{ 'FIRSTNAME' | translate }}"
+		/>
+
+		<input
+			class="ion-autocomplete"
+			[(ngModel)]="lastName"
+			placeholder="{{ 'LASTNAME' | translate }}"
+		/>
+
+		<input
+			class="ion-autocomplete"
+			[(ngModel)]="phone"
+			type="number"
+			placeholder="{{ 'PHONE' | translate }}"
+		/>
+
+		<input
+			class="ion-autocomplete"
+			[(ngModel)]="email"
+			placeholder="{{ 'EMAIL' | translate }}"
+		/>
+
+		<input
+			class="ion-autocomplete"
+			[(ngModel)]="quarter"
+			placeholder="{{ 'QUARTER' | translate }}"
+		/>
+
+		<input
+			class="ion-autocomplete"
+			[(ngModel)]="city"
+			placeholder="{{ 'CITY' | translate }}"
+		/>
+
+		<ion-button
+			color="secondary"
+			expand="block"
+			class="submit-button"
+			(click)="updateUser()"
+		>
+			{{ 'PROFILE_VIEW.UPDATE' | translate }}
+		</ion-button>
+
+		<!--
+		<ion-input
+			type="text"
+			value="{{ firstName }}"
+			placeholder="{{ firstName }}"
+			name="firstName"
+			required
+		></ion-input>
+
+		<ion-label for="psw"><b>{{ phone }}:</b></ion-label>
+		<ion-input
+			type="password"
+			placeholder="{{ phone }}"
+			name="psw"
+			required
+		></ion-input>
+
+		<ion-label for="psw-repeat"><b>{{ 'PROFILE_VIEW.NEIGHBORHOOD' | translate }}:</b></ion-label>
+		<ion-input
+			type="password"
+			placeholder="{{ 'PROFILE_VIEW.NEIGHBORHOOD_INPUT' | translate }}"
+			name="psw-repeat"
+			required
+		></ion-input>
+
+		<ion-row>
+			<ion-col>
+				<ion-button type="submit" class="signupbtn"
+					>{{ 'PROFILE_VIEW.VALIDATE' | translate }}</ion-button
+				>
+			</ion-col>
+		</ion-row>
+	-->
+	</div>
 </ion-content>

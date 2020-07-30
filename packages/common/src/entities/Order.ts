@@ -403,7 +403,6 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 				return 'MAUVAIS_STATUS';
 		}
 	}
-
 }
 
 export default Order;

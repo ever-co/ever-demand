@@ -6,7 +6,7 @@
 
 		<ion-title>{{ 'MERCHANTS' | translate }}</ion-title>
 		<ion-buttons slot="end">
-			<ion-button (click)="goToCategoriesPage()">
+			<ion-button (click)="goToCategoriesPage()" (click)="ngOnDestroy()">
 				<i class="fa fa-angle-left back-btn"></i>
 				<span>{{ 'BACK' | translate }}</span>
 			</ion-button>

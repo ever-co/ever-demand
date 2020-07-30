@@ -34,4 +34,39 @@ export class UsersService {
 				share()
 			);
 	}
+
+	getUserById(id: string) {
+		return this._apollo
+			.query({
+				query: gql`
+					query GetUserById($id: String!) {
+						user(id: $id) {
+							_id
+							firstName
+							lastName
+							image
+							email
+							apartment
+							phone
+							isBanned
+							geoLocation {
+								streetAddress
+								city
+								house
+								notes
+								loc {
+									type
+									coordinates
+								}
+							}
+						}
+					}
+				`,
+				variables: { id },
+			})
+			.pipe(
+				map((res) => res.data['user']),
+				share()
+			);
+	}
 }

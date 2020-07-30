@@ -41,7 +41,7 @@ export class GeoLocationMerchantsResolver {
 	async getCloseMerchantsCategory(
 		_,
 		{ geoLocation }: { geoLocation: IGeoLocation },
-		{ category }: { category: ICategory }
+		{ category }: { category: string }
 	) {
 		let merchants = await this.geoLocationsWarehousesService.getCloseMerchantsCategory(
 			geoLocation,

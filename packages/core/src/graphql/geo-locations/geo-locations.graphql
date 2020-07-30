@@ -79,7 +79,7 @@ type Query {
 
 	geoLocationProductsByCategory(
 		geoLocation: GeoLocationFindInput!
-		category: ProductsCategorySearchInput
+		category: String
 		pagingOptions: PagingOptionsInput
 		options: GetGeoLocationProductsOptions
 		searchText: String
