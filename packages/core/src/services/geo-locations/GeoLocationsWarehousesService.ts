@@ -179,7 +179,7 @@ export class GeoLocationsWarehousesService
 	@asyncListener()
 	async getCloseMerchantsCategory(
 		geoLocation: IGeoLocation,
-		category: ICategory,
+		category: string,
 		maxDistance: number,
 		options: {
 			fullProducts: boolean;
@@ -201,6 +201,11 @@ export class GeoLocationsWarehousesService
 						},
 					},
 				},
+
+				// Service filtering
+				//ordersPhone: { $regex: category, $options: 'i' },
+				//username: { $regex: category, $options: 'i' },
+
 				options.activeOnly ? { isActive: true } : {},
 				merchantsIds && merchantsIds.length > 0
 					? {

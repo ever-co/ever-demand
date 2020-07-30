@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GeoLocationsMerchantsService } from 'app/services/geo-location-merchants.service';
 import { Store } from 'app/services/store.service';
@@ -16,7 +16,7 @@ import { environment } from 'environments/environment';
 	templateUrl: './merchants.page.html',
 	styleUrls: ['./merchants.page.scss'],
 })
-export class MerchantsPage implements OnDestroy {
+export class MerchantsPage implements OnInit, OnDestroy {
 	merchants: Warehouse[];
 	searchName: string;
 
@@ -29,7 +29,28 @@ export class MerchantsPage implements OnDestroy {
 		private merchantsService: MerchantsService,
 		private warehouseRouter: WarehouseRouter
 	) {
-		this.loadCloseMerchants();
+		this.loadServiceMerchants();
+	}
+
+	ngOnInit(): void {
+		//this.loadCloseMerchants();
+
+		const categoryValue = this.store.category;
+		console.log(
+			'Je suis bien là d£entree de jeu avec ngOnInit : ' + categoryValue
+		);
+
+		this.loadServiceMerchants();
+	}
+
+	ionViewWillEnter() {
+		const categoryValue = this.store.category;
+		console.log(
+			'Je suis bien là d£entree de jeu avec ViewWillEnter : ' +
+				categoryValue
+		);
+
+		this.loadServiceMerchants();
 	}
 
 	goToProductPage() {
@@ -44,7 +65,8 @@ export class MerchantsPage implements OnDestroy {
 		if (this.searchName) {
 			this.loadSearchMerchants();
 		} else {
-			this.loadCloseMerchants();
+			//this.loadCloseMerchants();
+			this.loadServiceMerchants();
 		}
 	}
 
@@ -69,10 +91,17 @@ export class MerchantsPage implements OnDestroy {
 
 	private async loadCloseMerchants() {
 		const location = await this.getLocation();
-		const category = this.store.category;
+		const categoryValue = this.store.category;
 
+		/*
 		this.merchants = await this.geoLocationsMerchantsService
 			.getCoseMerchants({ loc: location })
+			.pipe(first())
+			.toPromise();
+			*/
+		console.log('Nous sommes bien là avec la valeur : ' + categoryValue);
+		this.merchants = await this.geoLocationsMerchantsService
+			.getCloseMerchantsCategory({ loc: location }, categoryValue)
 			.pipe(first())
 			.toPromise();
 	}
@@ -81,6 +110,18 @@ export class MerchantsPage implements OnDestroy {
 		const location = await this.getLocation();
 		this.merchants = await this.merchantsService.getMerchantsBuyName(
 			this.searchName,
+			{ loc: location }
+		);
+	}
+
+	private async loadServiceMerchants() {
+		const location = await this.getLocation();
+		const categoryValue = this.store.category;
+
+		console.warn('MerchantsPage - Je viens chercher : ' + categoryValue);
+
+		this.merchants = await this.merchantsService.getMerchantsByService(
+			categoryValue.toString(),
 			{ loc: location }
 		);
 	}

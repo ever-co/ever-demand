@@ -21,7 +21,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
 import { GeoLocationProductsService } from 'app/services/geo-location/geo-location-products';
 import { WarehouseProductsService } from 'app/services/merchants/warehouse-products';
-import ICategory from '@modules/server.common/interfaces/ICategory';
+//import ICategory from '@modules/server.common/interfaces/ICategory';
 
 const initializeProductsNumber: number = 10;
 
@@ -46,7 +46,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 
 	private readonly ngDestroy$ = new Subject<void>();
 	getOrdersGeoObj: { loc: ILocation };
-	private category: ICategory;
+	private category: string;
 	private lastLoadProductsCount: number;
 	private lastImageOrientation: number;
 	private productsLocale: string;
@@ -64,7 +64,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 		private warehouseProductsService: WarehouseProductsService
 	) {
 		this.productsLocale = this.store.language || environment.DEFAULT_LOCALE;
-		this.category = { name: 'food' } as ICategory;
+		this.category = 'food';
 
 		if (this.inStore) {
 			// AFN - Modification faite pour desactiver l£option Takeaway
@@ -242,8 +242,8 @@ export class ProductsPage implements OnInit, OnDestroy {
 	}
 
 	async loadProducts(options = {}) {
-		this.category = this.store.category || { name: 'food' };
-		let name = this.category.name;
+		this.category = this.store.category || 'food';
+		let name = this.category;
 
 		this.store.deliveryType = this.isDeliveryRequired
 			? DeliveryType.Delivery
@@ -279,9 +279,9 @@ export class ProductsPage implements OnInit, OnDestroy {
 				this.geoLocationProductsService
 					.geoLocationProductsByCategory(
 						this.getOrdersGeoObj,
-						{
-							name: this.category.toString(),
-						},
+
+						this.category,
+
 						{
 							skip: this.products.length,
 							limit: count ? count : initializeProductsNumber,

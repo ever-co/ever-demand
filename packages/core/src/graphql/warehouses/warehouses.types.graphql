@@ -155,6 +155,11 @@ type Query {
 		searchName: String!
 		geoLocation: GeoLocationFindInput
 	): [Warehouse]!
+
+	getMerchantsByService(
+		searchName: String!
+		geoLocation: GeoLocationFindInput
+	): [Warehouse]!
 }
 
 type ExistingCustomersByStores {

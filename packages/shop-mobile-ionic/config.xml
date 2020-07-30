@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="cm.bellem.mobile.customer" version="0.2.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Bellem Shop</name>
-    <description>Bellem Mobile Shop App</description>
+    <name>Bellem</name>
+    <description>Bellem Mobile App</description>
     <author email="ever@ever.co" href="https://ever.co/">Bellem</author>
     <content src="index.html" />
     <access origin="*" />

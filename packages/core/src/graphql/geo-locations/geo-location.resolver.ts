@@ -65,7 +65,7 @@ export class GeoLocationResolver {
 		}: {
 			geoLocation;
 			options?: IGetGeoLocationProductsOptions;
-			category?;
+			category?: string;
 			pagingOptions;
 			searchText?: string;
 		}

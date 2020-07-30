@@ -1,7 +1,20 @@
 type Query {
 	getCoseMerchants(geoLocation: GeoLocationFindInput!): [Warehouse]!
+
 	getCloseMerchantsCategory(
 		geoLocation: GeoLocationFindInput!
-		category: ProductsCategorySearchInput
+		category: String
+	): [Warehouse]!
+}
+
+type Query {
+	getCloseMerchantsCategory(
+		geoLocation: GeoLocationFindInput!
+		category: String
+	): [Warehouse]!
+
+	getCloseMerchantsCategory(
+		geoLocation: GeoLocationFindInput!
+		category: String
 	): [Warehouse]!
 }

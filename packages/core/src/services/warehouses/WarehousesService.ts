@@ -61,6 +61,7 @@ export class WarehousesService extends DBService<Warehouse>
 
 	/**
 	 * Get Merchants
+	 { ordersPhone: { $regex: searchName, $options: 'i' } }
 	 *
 	 * @param {*} findInput
 	 * @param {IPagingOptions} pagingOptions

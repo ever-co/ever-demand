@@ -241,6 +241,42 @@ export class WarehouseResolver {
 		return merchants.map((m) => new Warehouse(m));
 	}
 
+	@Query()
+	async getMerchantsByService(
+		_,
+		{
+			searchName,
+			geoLocation,
+		}: { searchName: string; geoLocation: IGeoLocation }
+	) {
+		const count = await this._warehousesService.Model.find({
+			ordersPhone: { $regex: searchName, $options: 'i' },
+		})
+			.countDocuments()
+			.exec();
+
+		let merchants = await this._warehousesService.getMerchants(
+			{ ordersPhone: { $regex: searchName, $options: 'i' } },
+			{ skip: 0, limit: count }
+		);
+
+		if (geoLocation) {
+			merchants = merchants.sort(
+				(m1, m2) =>
+					Utils.getDistance(
+						new GeoLocation(m1.geoLocation),
+						new GeoLocation(geoLocation)
+					) -
+					Utils.getDistance(
+						new GeoLocation(m2.geoLocation),
+						new GeoLocation(geoLocation)
+					)
+			);
+		}
+
+		return merchants.map((m) => new Warehouse(m));
+	}
+
 	@Mutation()
 	async warehouseLogin(
 		_,

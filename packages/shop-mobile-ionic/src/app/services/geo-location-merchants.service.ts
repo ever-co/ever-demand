@@ -32,30 +32,33 @@ export class GeoLocationsMerchantsService {
 			);
 	}
 
-	getCloseMerchantsCategory(geoLocation: { loc: ILocation } , category: {category: ICategory} ) {
-	return this._apollo
-		.query({
-			query: gql`
-				query getCloseMerchantsCategory(
-					$geoLocation: GeoLocationFindInput!
-					$category: ProductsCategorySearchInput
-				) {
-					getCloseMerchantsCategory(
-						geoLocation: $geoLocation
-						category: $category
+	getCloseMerchantsCategory(
+		geoLocation: { loc: ILocation },
+		category: string
+	) {
+		return this._apollo
+			.query({
+				query: gql`
+					query getCloseMerchantsCategory(
+						$geoLocation: GeoLocationFindInput!
+						$category: String
 					) {
-						id
-						username
-						name
-						logo
+						getCloseMerchantsCategory(
+							geoLocation: $geoLocation
+							category: $category
+						) {
+							id
+							username
+							name
+							logo
+						}
 					}
-				}
-			`,
-			variables: { geoLocation, category }
-		})
-		.pipe(
-			map((res) => res.data['getCloseMerchantsCategory']),
-			share()
-		);
+				`,
+				variables: { geoLocation, category },
+			})
+			.pipe(
+				map((res) => res.data['getCloseMerchantsCategory']),
+				share()
+			);
 	}
 }

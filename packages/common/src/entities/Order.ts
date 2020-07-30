@@ -170,10 +170,10 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 	/**
 	 * Deliver Notes to specify alternative deliveries addresses.
 	 *
-	 * @type {string}
+	 * @type {String}
 	 * @memberof Order
 	 */
-	@Schema({ type: string, required: false })
+	@Schema({ type: String, required: false })
 	@Column()
 	deliveryNotes?: string;
 
@@ -403,7 +403,6 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 				return 'MAUVAIS_STATUS';
 		}
 	}
-
 }
 
 export default Order;

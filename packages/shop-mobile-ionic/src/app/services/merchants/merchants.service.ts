@@ -35,4 +35,34 @@ export class MerchantsService {
 
 		return res.data['getMerchantsBuyName'];
 	}
+
+	async getMerchantsByService(
+		searchName: string,
+		geoLocation?: { loc: ILocation }
+	) {
+		const res = await this._apollo
+			.query({
+				query: gql`
+					query GetMerchantsByService(
+						$searchName: String!
+						$geoLocation: GeoLocationFindInput
+					) {
+						getMerchantsByService(
+							searchName: $searchName
+							geoLocation: $geoLocation
+						) {
+							id
+							username
+							ordersPhone
+							name
+							logo
+						}
+					}
+				`,
+				variables: { searchName, geoLocation },
+			})
+			.toPromise();
+
+		return res.data['getMerchantsByService'];
+	}
 }

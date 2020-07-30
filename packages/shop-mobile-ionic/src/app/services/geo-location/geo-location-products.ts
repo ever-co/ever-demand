@@ -92,7 +92,7 @@ export class GeoLocationProductsService {
 
 	geoLocationProductsByCategory(
 		geoLocation,
-		category: ICategory,
+		category: string,
 		pagingOptions: IPagingOptions,
 		options?: {
 			isDeliveryRequired?: boolean;
@@ -110,7 +110,7 @@ export class GeoLocationProductsService {
 					query geoLocationProductsByCategory(
 						$geoLocation: GeoLocationFindInput!
 						$options: GetGeoLocationProductsOptions
-						$category: ProductsCategorySearchInput
+						$category: String
 						$pagingOptions: PagingOptionsInput
 						$searchText: String
 					) {
@@ -163,8 +163,14 @@ export class GeoLocationProductsService {
 						}
 					}
 				`,
-				variables: { geoLocation, options, category, pagingOptions, searchText },
-				pollInterval: 2000
+				variables: {
+					geoLocation,
+					options,
+					category,
+					pagingOptions,
+					searchText,
+				},
+				pollInterval: 2000,
 			})
 			.valueChanges.pipe(
 				map((res) => res.data.geoLocationProductsByCategory),
