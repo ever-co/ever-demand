@@ -190,6 +190,7 @@
 			"ACCOUNT": "Compte",
 			"CONTACT_INFO": "Contact Info",
 			"LOCATION": "Localisation",
+			"PAYMENT": "Paiement",
 			"DELIVERY_ZONES": "Zones de livraison"
 		}
 	},
@@ -237,6 +238,7 @@
 			"LOGO": "Logo",
 			"PHOTO": "Photo",
 			"IS_ACTIVE": "C'est actif",
+			"ORDERS_SHORT_PROCESS": "Processus court des commandes",
 			"PRODUCTS_MANUFACTURING": "Fabrication de produits",
 			"CARRIER_REQUIRED": "Transporteur requis",
 			"RIGHT_NOW": "Maintenant",
@@ -252,6 +254,9 @@
 			"NEW_PASSWORD": "Nouveau Mot de Passe",
 			"CONFIRM_PASSWORD": "Confirmation du Mot de passe",
 			"PASSWORDS_DO_NOT_MATCH": "Les mots de passe ne correspondent pas",
+			"SELECT_SHAPE_TO_ADD_ZONE": "Sélectionnez la forme pour ajouter une nouvelle zone",
+			"CIRCLE": "Cercle",
+			"SHAPE": "Forme",
 			"PASSWORD": "Mot de passe",
 			"COUNTRY": "Pays",
 			"USA": "Etats-Unis",
@@ -264,9 +269,24 @@
 			"AUTO_DETECT_COORDINATES": "Détection automatique des coordonnées",
 			"CARRIERS": "Les transporteurs",
 			"USE_ONLY_SPECIFIC_CARRIERS": "N'utilisez que des transporteurs spécifiques",
+			"UNALLOWED_ORDER_CANCELATION": "Annulation de commande non autorisée",
+			"ORDER_CANCELATION_OPTIONS": {
+				"ORDERING": "Après la commande",
+				"START_PROCESSING": "Après le début du traitement",
+				"START_ALLOCATION": "Après le démarrage de l'allocation",
+				"ALLOCATED": "Après attribution",
+				"START_PACKAGING": "Après le démarrage de l'emballage",
+				"PACKAGED": "après l'emballage",
+				"CARRIER_TAKE_WORK": "Après le travail du transporteur",
+				"CARRIER_GOT_IT": "Après que le transporteur l'ait obtenu",
+				"CARRIER_START_DELIVERY": "Après le début de la livraison par le transporteur",
+				"DELIVERED": "Après livraison"
+			},
 			"ERRORS": {
 				"NAME_IS_REQUIRED": "Le nom de l'entrepôt est requis",
+				"SERVICE_IS_REQUIRED": "Le service est requis",
 				"NAME_ATLEAST_3_CHARS": "Le nom doit comporter au moins 3 caractères",
+				"SERVICE_ATLEAST_3_CHARS": "Le service doit comporter au moins 3 caractères",
 				"NAME_MORE_THAN_255_CHARS": "Le nom ne peut pas comporter plus de 255 caractères",
 				"LOGO_IS_REQUIRED": "Le logo est requis",
 				"INVALID_URL": "Entrez une URL d'image valide ou recherchez un fichier",
@@ -281,6 +301,7 @@
 				"COORDINATES_ARE_REQUIRED": "Les coordonnées sont obligatoires",
 				"COUNTRY_IS_REQUIRED": "Pays requis"
 			},
+			"SERVICE": "Service",
 			"WIZARD_TITLES": {
 				"BASIC_INFO": "Informations de base",
 				"CONTACT_INFO": "Informations de contact",
@@ -290,7 +311,8 @@
 			"CONTACT_INFO_TAB": {
 				"ORDER_FORWARDING_EMAIL": "Email de transfert de commande",
 				"ORDER_FORWARDING_PHONE": "Services Bell'Em associés au commerce"
-			}
+			},
+			"SERVICES_LIST": "Liste des services disponible"
 		},
 		"NEW_PRODUCT": {
 			"SELECT_FROM_PRODUCTS_CATALOG": "Sélectionnez dans le catalogue de produits",
@@ -1069,6 +1091,7 @@
 			"PAYMENTS": {
 				"PAYMENTS": "Payments",
 				"ALLOW_ONLINE_PAYMENT": "Allow online payments?",
+				"ALLOW_CASH_PAYMENT": "Autoriser les paiements en espèces?",
 				"STRIPE": {
 					"PAY_BUTTON_TEXT": "Pay Button text",
 					"CURRENCY": "Currency",
