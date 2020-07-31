@@ -28,40 +28,46 @@
 		[ngClass]="productImage?.orientation === 1 ? 'bottom' : 'below'"
 	>
 		<warehouse-logo
+			[ngClass]="document.documentElement.dir === 'rtl' ? 'rtl' : 'ltr'"
 			[logo]="info.warehouseLogo"
 			[light]="true"
 		></warehouse-logo>
 
-		<h1 class="title">
-			{{ localeTranslate(info.warehouseProduct.product.title) }}
-		</h1>
-
-		<h2 class="description">
-			{{ localeTranslate(info.warehouseProduct.product.description) }}
-		</h2>
-
-		<button
-			mat-raised-button
-			(click)="createOrder()"
-			color="accent"
-			class="purchase-button mr-2 d-inline mb-2"
+		<div
+			class="hbrw"
+			[ngClass]="document.documentElement.dir === 'rtl' ? 'rtl' : 'ltr'"
 		>
-			{{ 'PRODUCTS_VIEW.BUY_FOR' | translate }} ${{
-				info.warehouseProduct.price
-			}}
-		</button>
+			<h1 class="title">
+				{{ localeTranslate(info.warehouseProduct.product.title) }}
+			</h1>
 
-		<button
-			mat-button
-			[routerLink]="
-				'details/' +
-				info.warehouseId +
-				'/' +
-				info?.warehouseProduct?.product?.id
-			"
-			class="details-button d-inline mb-2"
-		>
-			{{ 'PRODUCTS_VIEW.DETAILS' | translate }}
-		</button>
+			<h2 class="description">
+				{{ localeTranslate(info.warehouseProduct.product.description) }}
+			</h2>
+
+			<button
+				mat-raised-button
+				(click)="createOrder()"
+				color="accent"
+				class="purchase-button mr-2 d-inline mb-2"
+			>
+				{{ 'PRODUCTS_VIEW.BUY_FOR' | translate }} ${{
+					info.warehouseProduct.price
+				}}
+			</button>
+
+			<button
+				mat-button
+				[routerLink]="
+					'details/' +
+					info.warehouseId +
+					'/' +
+					info?.warehouseProduct?.product?.id
+				"
+				class="details-button d-inline mb-2"
+			>
+				{{ 'PRODUCTS_VIEW.DETAILS' | translate }}
+			</button>
+		</div>
 	</div>
 </mat-card>

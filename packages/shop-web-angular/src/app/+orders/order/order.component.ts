@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, NgZone } from '@angular/core';
+import { Component, Input, OnInit, NgZone, Inject } from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import {
 	animate,
@@ -18,6 +18,7 @@ import { first } from 'rxjs/operators';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { CarrierLocationComponent } from '../location/carrier-location.component';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
 	selector: 'order',
@@ -59,6 +60,7 @@ export class OrderComponent implements OnInit {
 	public modalTitleText: string = 'CONFIRMATION';
 
 	constructor(
+		@Inject(DOCUMENT) public document: Document,
 		private warehouseOrdersRouter: WarehouseOrdersRouter,
 		private readonly warehouseRouter: WarehouseRouter,
 		private readonly carrierRouter: CarrierRouter,

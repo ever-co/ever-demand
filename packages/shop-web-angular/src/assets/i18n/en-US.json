@@ -9,6 +9,7 @@
 	"Orders": "Orders",
 	"Buy for": "Buy for",
 	"DELIVERY": "Delivery",
+	"SELECT_YOUR_LOCATION": "Select your location",
 	"TAKEAWAY": "Takeout",
 	"Details": "Details",
 	"Delivery from": "Delivery from",
@@ -80,7 +81,12 @@
 		"PAY_NOW": "Pay Now",
 		"PRODUCTS": "Products",
 		"ORDERS": "Orders",
-		"ORDER_ID": "order ID:"
+		"ORDER_ID": "order ID:",
+		"SHOW_CARRIER_ON_MAP": "Show carrier on map",
+		"ORER_TYPE": {
+			"DELIVERY": "Delivery",
+			"TAKEAWAY": "Takeaway"
+		}
 	},
 	"ORDER_CARRIER_STATUS": {
 		"CARRIER_STATUS": "Carrier Status",
