@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DeviceRouter } from '@modules/client.common.angular2/routers/device-router.service';
 import { Store } from '../../services/store.service';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
 	selector: 'page-language',
@@ -11,6 +12,7 @@ import ILanguage from '@modules/server.common/interfaces/ILanguage';
 })
 export class LanguagePage implements OnInit {
 	language: ILanguage;
+	dir: 'ltr' | 'rtl';
 
 	OK: string = 'OK';
 	CANCEL: string = 'CANCEL';
@@ -20,7 +22,8 @@ export class LanguagePage implements OnInit {
 	constructor(
 		public translate: TranslateService,
 		private _deviceRouter: DeviceRouter,
-		private store: Store
+		private store: Store,
+		@Inject(DOCUMENT) private document: Document
 	) {}
 
 	ngOnInit() {
@@ -45,6 +48,18 @@ export class LanguagePage implements OnInit {
 		);
 		this.store.language = language;
 		this.translate.use(language);
+
+		const currentLang = localStorage.getItem('_language');
+
+		const langAbbreviation = currentLang.substr(0, 2);
+
+		if (currentLang === 'he-IL') {
+			this.dir = 'rtl';
+		} else {
+			this.dir = 'ltr';
+		}
+		this.document.documentElement.dir = this.dir;
+		this.document.documentElement.lang = langAbbreviation;
 	}
 
 	private _translate(key: string): string {
