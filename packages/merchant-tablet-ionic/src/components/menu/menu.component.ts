@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Store } from 'services/store.service';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
@@ -11,9 +11,6 @@ import { MenuController } from '@ionic/angular';
 	styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnDestroy {
-	@ViewChild('mainMenu', { static: true }) menu: ElementRef;
-	isIL: boolean = false;
-
 	private ngDestroy$ = new Subject<void>();
 
 	constructor(
@@ -37,14 +34,6 @@ export class MenuComponent implements OnDestroy {
 	get maintenanceMode() {
 		return this.store.maintenanceMode;
 	}
-
-	// menuWillOpen() {
-	// 	if(this.document.documentElement.dir === 'rtl') this.isIL = true;
-	// 	else this.isIL = false;
-	// 	if(this.isIL) {
-	// 		this.menu['el']['side'] = 'end';
-	// 	}
-	// }
 
 	menuOpened() {}
 

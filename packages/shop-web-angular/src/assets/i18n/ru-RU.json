@@ -8,6 +8,7 @@
 	"Orders": "Заказы",
 	"Buy for": "Купить для",
 	"DELIVERY": "Доставка",
+	"SELECT_YOUR_LOCATION": "Выберите ваше местоположение",
 	"TAKEAWAY": "Навынос",
 	"Details": "Детали",
 	"Delivery from": "Доставка из",
@@ -31,7 +32,7 @@
 		"TAKEOUT_FROM": "Вынос из",
 		"MINUTES": "мин",
 		"DELIVERY": "Доставка",
-		"TAKEAWAY": "Takeaway",
+		"TAKEAWAY": "Навынос",
 		"READYFOR": "Готово для",
 		"NO_PRODUCTS_FOUND": "Продукты не найдены для",
 		"NO_PRODUCTS": "Нет товаров",
@@ -79,7 +80,12 @@
 		"PAY_NOW": "Заплатить сейчас",
 		"PRODUCTS": "Продукты",
 		"ORDERS": "Заказы",
-		"ORDER_ID": "номер заказа:"
+		"ORDER_ID": "номер заказа:",
+		"SHOW_CARRIER_ON_MAP": "Показать перевозчика на карте",
+		"ORER_TYPE": {
+			"DELIVERY": "Доставка",
+			"TAKEAWAY": "Навынос"
+		}
 	},
 	"ORDER_CARRIER_STATUS": {
 		"CREATED": "Созданный",

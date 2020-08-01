@@ -6,6 +6,7 @@ import {
 	EventEmitter,
 	Output,
 	OnChanges,
+	Inject,
 } from '@angular/core';
 import {
 	animate,
@@ -25,6 +26,7 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { Store } from 'app/services/store';
 import RegistrationSystem from '@modules/server.common/enums/RegistrationSystem';
 import { IProductImage } from '@modules/server.common/interfaces/IProduct';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
 	selector: 'product',
@@ -53,6 +55,7 @@ export class ProductComponent implements OnChanges {
 	private layoutComplete: Observable<void>;
 
 	constructor(
+		@Inject(DOCUMENT) public document: Document,
 		private readonly warehouseOrdersRouter: WarehouseOrdersRouter,
 		private readonly orderRouter: OrderRouter,
 		private readonly router: Router,

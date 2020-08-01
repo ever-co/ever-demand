@@ -8,6 +8,7 @@
 	"Orders": "Поръчки",
 	"Buy for": "Купи за",
 	"DELIVERY": "Доставка",
+	"SELECT_YOUR_LOCATION": "Изберете местоположение",
 	"TAKEAWAY": "За вкъщи",
 	"Details": "Детайли",
 	"Delivery from": "Доставка от",
@@ -79,7 +80,12 @@
 		"PAY_NOW": "Плати сега",
 		"PRODUCTS": "Продукти",
 		"ORDERS": "Поръчки",
-		"ORDER_ID": "Идент. № поръчка:"
+		"ORDER_ID": "Идент. № поръчка:",
+		"SHOW_CARRIER_ON_MAP": "Покажи доставчика на картата",
+		"ORER_TYPE": {
+			"DELIVERY": "Доставка",
+			"TAKEAWAY": "За вкъщи"
+		}
 	},
 	"ORDER_CARRIER_STATUS": {
 		"CREATED": "Създаден",
