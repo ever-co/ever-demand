@@ -1,0 +1,141 @@
+<ion-list>
+	<ion-item-group>
+		<ion-menu-toggle [autoHide]="true">
+			<ion-item
+				routerLink="/products"
+				routerDirection="root"
+				routerLinkActive="activated"
+			>
+				<ion-icon ios="md-basket" md="md-basket"></ion-icon>
+				<ion-label>{{
+					'SIDE_MENU.GROUPS.NO_TITLE.ITEMS.PRODUCTS' | translate
+				}}</ion-label>
+			</ion-item>
+			<ion-item
+				routerLink="/orders-history"
+				routerDirection="root"
+				routerLinkActive="activated"
+			>
+				<ion-icon name="cart"></ion-icon>
+				<ion-label>{{
+					'SIDE_MENU.GROUPS.NO_TITLE.ITEMS.ORDER_HISTORY' | translate
+				}}</ion-label>
+			</ion-item>
+		</ion-menu-toggle>
+	</ion-item-group>
+
+	<ion-item-group *ngIf="merchant">
+		<ion-item-divider>
+			<ion-label>{{
+				'SIDE_MENU.GROUPS.STORE.STORE_TITLE' | translate
+			}}</ion-label>
+		</ion-item-divider>
+
+		<ion-menu-toggle [autoHide]="true">
+			<ion-item>
+				<ion-icon name="hand-left"></ion-icon>
+				<ion-label>{{
+					'SIDE_MENU.GROUPS.STORE.ITEMS.CALL_WAITER' | translate
+				}}</ion-label>
+			</ion-item>
+		</ion-menu-toggle>
+		<ion-menu-toggle [autoHide]="true">
+			<ion-item>
+				<ion-icon name="information-circle"></ion-icon>
+				<ion-label
+					>{{ 'SIDE_MENU.GROUPS.STORE.ITEMS.ABOUT' | translate }}
+					{{ merchant.name }}</ion-label
+				>
+			</ion-item>
+		</ion-menu-toggle>
+	</ion-item-group>
+
+	<ion-item-group>
+		<ion-item-divider>
+			<ion-icon name="settings"></ion-icon>
+			<ion-label>{{
+				'SIDE_MENU.GROUPS.SETTINGS.DIVER_TITLE' | translate
+			}}</ion-label>
+		</ion-item-divider>
+
+		<ion-menu-toggle [autoHide]="true">
+			<ion-item
+				routerLink="/language"
+				routerDirection="root"
+				routerLinkActive="activated"
+			>
+				<ion-icon name="globe"></ion-icon>
+				<ion-label>{{
+					'SIDE_MENU.GROUPS.SETTINGS.ITEMS.LANGUAGE' | translate
+				}}</ion-label>
+			</ion-item>
+		</ion-menu-toggle>
+	</ion-item-group>
+	<ion-item-group>
+		<ion-item-divider>
+			<ion-label>{{
+				'SIDE_MENU.GROUPS.INFO.DIVER_TITLE' | translate
+			}}</ion-label>
+		</ion-item-divider>
+
+		<ion-menu-toggle [autoHide]="true">
+			<ion-item
+				routerLink="/info/help"
+				routerDirection="root"
+				routerLinkActive="activated"
+			>
+				<ion-icon name="help-circle"></ion-icon>
+				<ion-label>{{
+					'SIDE_MENU.GROUPS.INFO.ITEMS.FAQ' | translate
+				}}</ion-label>
+			</ion-item>
+			<ion-item *ngIf="hasPhoneNumber()" (click)="callUs()">
+				<ion-icon name="call"></ion-icon>
+				<ion-label>{{
+					'SIDE_MENU.GROUPS.NO_TITLE.ITEMS.CALL_US' | translate
+				}}</ion-label>
+			</ion-item>
+			<ion-item
+				routerLink="/info/about"
+				routerDirection="root"
+				routerLinkActive="activated"
+			>
+				<ion-icon name="information-circle"></ion-icon>
+				<ion-label>{{
+					'SIDE_MENU.GROUPS.INFO.ITEMS.ABOUT_US' | translate
+				}}</ion-label>
+			</ion-item>
+		</ion-menu-toggle>
+	</ion-item-group>
+
+	<ion-item-group>
+		<ion-item-divider>
+			<ion-label>{{
+				'SIDE_MENU.GROUPS.LEGALS.DIVER_TITLE' | translate
+			}}</ion-label>
+		</ion-item-divider>
+
+		<ion-menu-toggle [autoHide]="true">
+			<ion-item
+				routerLink="/info/privacy"
+				routerDirection="root"
+				routerLinkActive="activated"
+			>
+				<ion-icon name="lock-closed"></ion-icon>
+				<ion-label>{{
+					'SIDE_MENU.GROUPS.LEGALS.ITEMS.PRIVACY' | translate
+				}}</ion-label>
+			</ion-item>
+			<ion-item
+				routerLink="/info/terms-of-use"
+				routerDirection="root"
+				routerLinkActive="activated"
+			>
+				<ion-icon name="list"></ion-icon>
+				<ion-label>{{
+					'SIDE_MENU.GROUPS.LEGALS.ITEMS.TERMS_OF_USE' | translate
+				}}</ion-label>
+			</ion-item>
+		</ion-menu-toggle>
+	</ion-item-group>
+</ion-list>

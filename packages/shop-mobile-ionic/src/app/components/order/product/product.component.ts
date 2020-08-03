@@ -1,7 +1,13 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Input,
+	Inject,
+} from '@angular/core';
 import { ProductLocalesService } from '../../../services/product-locales.service';
 import OrderProduct from '@modules/server.common/entities/OrderProduct';
 import { Store } from '../../../services/store.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
 	selector: 'e-cu-order-product',
@@ -18,6 +24,7 @@ export class ProductComponent {
 	showDetailsButton: boolean = false;
 
 	constructor(
+		@Inject(DOCUMENT) public document: Document,
 		private readonly translateProductLocales: ProductLocalesService,
 		private readonly store: Store
 	) {}
