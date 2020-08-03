@@ -34,6 +34,8 @@ export class DriveToWarehousePage implements OnInit {
 	workTaken: boolean;
 	fromDelivery: boolean;
 	selectedOrderID: string;
+	orderCarrierCompetition: boolean;
+	isTakenFromAnotherCarrier: boolean = false;
 
 	carrier$;
 	order$;
@@ -86,12 +88,26 @@ export class DriveToWarehousePage implements OnInit {
 							populateWarehouse: true,
 						})
 						.subscribe((order) => {
+							this.orderCarrierCompetition =
+								order.warehouse['carrierCompetition'];
+
+							this.isTakenFromAnotherCarrier =
+								!!order.carrierId &&
+								order.carrierId !== this.carrier._id &&
+								order.carrierStatus >
+									(this.orderCarrierCompetition
+										? OrderCarrierStatus.CarrierSelectedOrder
+										: OrderCarrierStatus.NoCarrier);
+
 							this.selectedOrder = order;
 							this.store.selectedOrder = order;
 							this.selectedOrderID = getIdFromTheDate(order);
-							this.workTaken =
-								order.carrierStatus !==
-								OrderCarrierStatus.NoCarrier;
+
+							if (!this.orderCarrierCompetition) {
+								this.workTaken =
+									order.carrierStatus !==
+									OrderCarrierStatus.NoCarrier;
+							}
 
 							const origin = new google.maps.LatLng(
 								position.coords.latitude,
