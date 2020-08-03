@@ -21,7 +21,7 @@
 	<div class="buttons">
 		<div
 			class="button-bar"
-			*ngIf="!workTaken && !selectedOrder?.isCancelled"
+			*ngIf="!workTaken && !selectedOrder?.isCancelled && !isTakenFromAnotherCarrier && !this.orderCarrierCompetition"
 		>
 			<button class="button button-brand" (click)="takeWork()">
 				{{ 'DRIVE_TO_WAREHOUSE_VIEW.TAKE_WORK' | translate }}
@@ -33,7 +33,7 @@
 		</div>
 		<div
 			class="button-bar"
-			*ngIf="workTaken && (!selectedOrder?.isCancelled || fromDelivery)"
+			*ngIf="(workTaken || this.orderCarrierCompetition) && (!selectedOrder?.isCancelled || fromDelivery) && !isTakenFromAnotherCarrier"
 		>
 			<button class="button button-brand" (click)="carrierInWarehouse()">
 				{{ "DRIVE_TO_WAREHOUSE_VIEW.I'M_THERE" | translate }}
@@ -49,7 +49,7 @@
 		</div>
 		<div
 			class="button-bar"
-			*ngIf="selectedOrder?.isCancelled && !fromDelivery"
+			*ngIf="selectedOrder?.isCancelled && !fromDelivery || isTakenFromAnotherCarrier"
 		>
 			<button class="button button-assertive" (click)="unselectOrder()">
 				{{ 'OK' | translate }}

@@ -49,12 +49,14 @@ export class CarrierOrdersRouter implements ICarrierOrdersRouter {
 
 	async selectedForDelivery(
 		carrierId: string,
-		orderIds: string[]
+		orderIds: string[],
+		carrierCompetition?: boolean
 	): Promise<Carrier> {
 		const carrier = await this.router.run<ICarrier>(
 			'selectedForDelivery',
 			carrierId,
-			orderIds
+			orderIds,
+			carrierCompetition
 		);
 		return this._carrierFactory(carrier);
 	}

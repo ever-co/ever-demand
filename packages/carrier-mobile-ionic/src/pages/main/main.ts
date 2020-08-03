@@ -31,6 +31,7 @@ export class MainPage implements OnInit, OnDestroy {
 	private isOnline: boolean;
 	private isMapRendered: boolean;
 	private destroy$ = new Subject<void>();
+	isTakenFromAnotherCarrier: boolean = false;
 
 	constructor(
 		private platform: Platform,
@@ -131,7 +132,11 @@ export class MainPage implements OnInit, OnDestroy {
 	watchOrderStatus() {
 		this.store.selectedOrder$
 			.pipe(takeUntil(this.destroy$))
-			.subscribe((o) => (this.selectedOrder = o));
+			.subscribe((o) => {
+				this.isTakenFromAnotherCarrier =
+					!!o && !!o.carrier && o.carrier !== this.store.carrierId;
+				this.selectedOrder = o;
+			});
 	}
 
 	ngOnDestroy(): void {

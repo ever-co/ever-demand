@@ -23,5 +23,11 @@
 			The customer cancel order
 		</div>
 	</div>
+	<div *ngIf="isTakenFromAnotherCarrier" class="money-amount-container">
+		<div class="money-amount">
+			<!-- TODO add translate -->
+			Another Carrier took the order first !
+		</div>
+	</div>
 	<ion-router-outlet></ion-router-outlet>
 </ion-content>

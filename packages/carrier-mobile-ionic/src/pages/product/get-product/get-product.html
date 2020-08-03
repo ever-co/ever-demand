@@ -5,6 +5,13 @@
 	</div>
 </div>
 
+<div *ngIf="isTakenFromAnotherCarrier" class="money-amount-container">
+	<div class="money-amount">
+		<!-- TODO add translate -->
+		Another Carrier took the order first !
+	</div>
+</div>
+
 <ion-app>
 	<ion-header class="bar-brand bar bar-header disable-user-behavior">
 		<div class="buttons buttons-left header-item">
@@ -42,12 +49,15 @@
 	<ion-row class="full-width">
 		<ion-col>
 			<div class="buttons">
-				<div *ngIf="!selectedOrder?.isCancelled" class="button-bar">
+				<div
+					*ngIf="!selectedOrder?.isCancelled && !isTakenFromAnotherCarrier"
+					class="button-bar"
+				>
 					<button
 						*ngIf="!selectedOrder?.isCancelled"
 						[disabled]="disabledButtons"
 						class="button button-brand"
-						(click)="gotProduct()"
+						(click)="orderCarrierCompetition ? gotProductWithCarrierCompetition() : gotProduct()"
 					>
 						{{ 'GET_PRODUCT_VIEW.GOT_IT' | translate }}
 					</button>
@@ -61,7 +71,10 @@
 					</button>
 				</div>
 
-				<div class="button-bar" *ngIf="selectedOrder?.isCancelled">
+				<div
+					class="button-bar"
+					*ngIf="selectedOrder?.isCancelled || isTakenFromAnotherCarrier"
+				>
 					<button
 						class="button button-assertive"
 						(click)="unselectOrder()"
