@@ -4,10 +4,12 @@
 			<ion-menu-button autoHide="false"></ion-menu-button>
 		</ion-buttons>
 
-		<ion-title>{{ 'TERMS_OF_USE_VIEW.TITLE' | translate }}</ion-title>
+		<ion-title [ngClass]="platform.isRTL ? 'rtl' : 'ltr'"
+			>{{ 'TERMS_OF_USE_VIEW.TITLE' | translate }}</ion-title
+		>
 	</ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [ngClass]="platform.isRTL ? 'rtl' : 'ltr'">
 	<e-cu-loaded-information [html]="useTermsHtml"></e-cu-loaded-information>
 </ion-content>

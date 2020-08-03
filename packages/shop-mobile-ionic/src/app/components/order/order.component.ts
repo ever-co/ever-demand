@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Input,
+	Inject,
+} from '@angular/core';
 import { Store } from '../../services/store.service';
 import OrderStatus from '@modules/server.common/enums/OrderStatus';
 import Order from '@modules/server.common/entities/Order';
@@ -11,6 +16,7 @@ import {
 	transition,
 	trigger,
 } from '@angular/animations';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
 	selector: 'e-cu-order',
@@ -104,7 +110,10 @@ export class OrderComponent {
 		);
 	}
 
-	constructor(private readonly store: Store) {}
+	constructor(
+		@Inject(DOCUMENT) public document: Document,
+		private readonly store: Store
+	) {}
 
 	private _millisToMinutes(ms) {
 		const minutes = Math.floor(ms / 60000);

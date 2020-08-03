@@ -4,7 +4,10 @@
 			<ion-img [src]="image.url" [ngClass]="imageClass"></ion-img>
 		</section>
 
-		<section class="product-content">
+		<section
+			class="product-content"
+			[ngClass]="document.documentElement.dir === 'rtl' ? 'rtl' : 'ltr'"
+		>
 			<div class="title">
 				<span class="text"> {{ title }} </span>&nbsp;&nbsp;
 				<small class="qty rounded"> {{ count }}</small>
@@ -17,10 +20,19 @@
 			</div>
 		</section>
 	</div>
-	<div class="details-outer" *ngIf="showOutsideDetailsButton">
+	<div
+		class="details-outer"
+		*ngIf="showOutsideDetailsButton"
+		[ngClass]="document.documentElement.dir === 'rtl' ? 'rtl' : 'ltr'"
+	>
 		<a [ngClass]="imageClass" href="#">{{
 			'ORDER_HISTORY_VIEW.DETAILS' | translate
 		}}</a>
 	</div>
-	<section class="products-price">${{ price }}</section>
+	<section
+		class="products-price"
+		[ngClass]="document.documentElement.dir === 'rtl' ? 'ltr' : 'rtl'"
+	>
+		${{ price }}
+	</section>
 </div>

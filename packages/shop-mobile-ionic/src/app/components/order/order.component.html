@@ -3,7 +3,10 @@
 		<e-cu-warehouse-logo [logo]="warehouseLogo"></e-cu-warehouse-logo>
 	</section>
 
-	<section class="address">
+	<section
+		class="address"
+		[ngClass]="document.documentElement.dir === 'rtl' ? 'rtl' : 'ltr'"
+	>
 		<div class="top">{{ 'TO' | translate }}: {{ customerAddress }}</div>
 		<div class="bottom">{{ createdAt | date: 'short' }}</div>
 		<span *ngIf="!isTakeaway">
