@@ -464,6 +464,7 @@
 			"ADD": "Añadir",
 			"EDIT": "Editar",
 			"ZONE_NAME": "Nombre de zona",
+			"IN_STORE_MODE": "En modo tienda",
 			"ERRORS": {
 				"NAME_IS_REQUIRED": "Nombre de sucursal requerido",
 				"NAME_ATLEAST_3_CHARS": "El nombre debe tener al menos 3 caractéres",

@@ -21,7 +21,8 @@ import IService from 'services/IService';
 export class GetAboutUsCommand implements ICommand {
 	constructor(
 		public readonly userId: string,
-		public readonly deviceId: string
+		public readonly deviceId: string,
+		public readonly selectedLanguage: string
 	) {}
 }
 
@@ -40,9 +41,13 @@ export class UserCommandService implements IService {
 		private readonly _commandBus: CommandBus
 	) {}
 
-	async exec(userId: string, deviceId: string): Promise<string> {
+	async exec(
+		userId: string,
+		deviceId: string,
+		selectedLanguage: string
+	): Promise<string> {
 		return this._commandBus.execute(
-			new GetAboutUsCommand(userId, deviceId)
+			new GetAboutUsCommand(userId, deviceId, selectedLanguage)
 		);
 	}
 }
@@ -60,12 +65,17 @@ export class GetAboutUsHandler implements ICommandHandler<GetAboutUsCommand> {
 	constructor(private readonly _userService: UsersService) {}
 
 	async execute(command: GetAboutUsCommand) {
-		const { userId, deviceId } = command;
+		const { userId, deviceId, selectedLanguage } = command;
 
 		console.log('COMMAND PARAM 1:', userId);
 		console.log('COMMAND PARAM 2:', deviceId);
+		console.log('COMMAND PARAM 2:', selectedLanguage);
 
-		const result = this._userService.getAboutUs(userId, deviceId);
+		const result = this._userService.getAboutUs(
+			userId,
+			deviceId,
+			selectedLanguage
+		);
 
 		return result;
 	}

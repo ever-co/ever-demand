@@ -13,6 +13,7 @@ import { environment } from '../../../environments/environment';
 import Carrier from '@modules/server.common/entities/Carrier';
 import OrderProduct from '@modules/server.common/entities/OrderProduct';
 import { getCountryName } from '@modules/server.common/entities/GeoLocation';
+import { Platform } from '@ionic/angular';
 
 @Component({
 	selector: 'e-cu-order',
@@ -38,7 +39,7 @@ export class OrderComponent implements OnInit {
 	@Input()
 	showDetailsButton: boolean = false;
 
-	constructor(private readonly store: Store) {}
+	constructor(private readonly store: Store, public platform: Platform) {}
 
 	get carrierId(): string {
 		return this.store.carrierId;

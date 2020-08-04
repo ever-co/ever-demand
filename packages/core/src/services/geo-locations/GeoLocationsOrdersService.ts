@@ -117,7 +117,7 @@ export class GeoLocationsOrdersService
 			{ fullProducts: false, activeOnly: true }
 		);
 
-		const merchantsIds = merchants.map((m) => m._id);
+		const merchantsIds = merchants.map((m) => m._id.toString());
 
 		let searchByRegex = [];
 
@@ -127,23 +127,69 @@ export class GeoLocationsOrdersService
 			});
 		}
 
-		return this.ordersService.Model.find(
-			_.assign(
-				{
-					warehouse: { $in: merchantsIds },
-					warehouseStatus: {
-						$eq: OrderWarehouseStatus.PackagingFinished,
+		const count = await this.ordersService.Model.aggregate([
+			{
+				$lookup: {
+					from: 'warehouses',
+					let: {
+						wh: '$warehouse',
 					},
-					carrierStatus: {
-						$lte: OrderCarrierStatus.CarrierSelectedOrder,
-					},
-					_id: { $nin: skippedOrderIds },
+					pipeline: [
+						{
+							$match: {
+								$expr: {
+									$eq: [
+										{
+											$toString: '$_id',
+										},
+										'$$wh',
+									],
+								},
+							},
+						},
+						{
+							$project: {
+								carrierCompetition: {
+									$cond: {
+										if: {
+											$eq: ['$carrierCompetition', true],
+										},
+										then:
+											OrderCarrierStatus.CarrierSelectedOrder,
+										else: OrderCarrierStatus.NoCarrier,
+									},
+								},
+							},
+						},
+					],
+					as: 'fromWH',
 				},
-				...searchByRegex
-			)
-		)
-			.countDocuments()
-			.exec();
+			},
+			{
+				$unwind: {
+					path: '$fromWH',
+				},
+			},
+			{
+				$match: _.assign(
+					{
+						warehouse: { $in: merchantsIds },
+						warehouseStatus: {
+							$eq: OrderWarehouseStatus.PackagingFinished,
+						},
+						$expr: {
+							$lte: [
+								'$carrierStatus',
+								'$fromWH.carrierCompetition',
+							],
+						},
+						_id: { $nin: skippedOrderIds },
+					},
+					...searchByRegex
+				),
+			},
+		]);
+		return count.length;
 	}
 
 	@asyncListener()
@@ -184,14 +230,59 @@ export class GeoLocationsOrdersService
 
 		const orders = await this.ordersService.Model.aggregate([
 			{
+				$lookup: {
+					from: 'warehouses',
+					let: {
+						wh: '$warehouse',
+					},
+					pipeline: [
+						{
+							$match: {
+								$expr: {
+									$eq: [
+										{
+											$toString: '$_id',
+										},
+										'$$wh',
+									],
+								},
+							},
+						},
+						{
+							$project: {
+								carrierCompetition: {
+									$cond: {
+										if: {
+											$eq: ['$carrierCompetition', true],
+										},
+										then:
+											OrderCarrierStatus.CarrierSelectedOrder,
+										else: OrderCarrierStatus.NoCarrier,
+									},
+								},
+							},
+						},
+					],
+					as: 'fromWH',
+				},
+			},
+			{
+				$unwind: {
+					path: '$fromWH',
+				},
+			},
+			{
 				$match: _.assign(
 					{
 						warehouse: { $in: merchantsIds },
 						warehouseStatus: {
 							$eq: OrderWarehouseStatus.PackagingFinished,
 						},
-						carrierStatus: {
-							$lte: OrderCarrierStatus.CarrierSelectedOrder,
+						$expr: {
+							$lte: [
+								'$carrierStatus',
+								'$fromWH.carrierCompetition',
+							],
 						},
 						_id: {
 							$nin: skippedOrderIds.map((id) => new ObjectId(id)),

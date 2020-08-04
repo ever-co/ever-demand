@@ -14,7 +14,7 @@ import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 import { GeoLocationService } from '../../../services/geo-location.service';
 import { MapComponent } from '../common/map/map.component';
 import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { getIdFromTheDate } from '@modules/server.common/utils';
 
 declare var google: any;
@@ -34,6 +34,8 @@ export class DriveToWarehousePage implements OnInit {
 	workTaken: boolean;
 	fromDelivery: boolean;
 	selectedOrderID: string;
+	orderCarrierCompetition: boolean;
+	isTakenFromAnotherCarrier: boolean = false;
 
 	carrier$;
 	order$;
@@ -46,7 +48,8 @@ export class DriveToWarehousePage implements OnInit {
 		private geoLocationService: GeoLocationService,
 		private geolocation: Geolocation,
 		private router: Router,
-		private navCtrl: NavController
+		private navCtrl: NavController,
+		public platform: Platform
 	) {}
 
 	ngOnInit(): void {
@@ -85,12 +88,26 @@ export class DriveToWarehousePage implements OnInit {
 							populateWarehouse: true,
 						})
 						.subscribe((order) => {
+							this.orderCarrierCompetition =
+								order.warehouse['carrierCompetition'];
+
+							this.isTakenFromAnotherCarrier =
+								!!order.carrierId &&
+								order.carrierId !== this.carrier._id &&
+								order.carrierStatus >
+									(this.orderCarrierCompetition
+										? OrderCarrierStatus.CarrierSelectedOrder
+										: OrderCarrierStatus.NoCarrier);
+
 							this.selectedOrder = order;
 							this.store.selectedOrder = order;
 							this.selectedOrderID = getIdFromTheDate(order);
-							this.workTaken =
-								order.carrierStatus !==
-								OrderCarrierStatus.NoCarrier;
+
+							if (!this.orderCarrierCompetition) {
+								this.workTaken =
+									order.carrierStatus !==
+									OrderCarrierStatus.NoCarrier;
+							}
 
 							const origin = new google.maps.LatLng(
 								position.coords.latitude,

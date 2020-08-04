@@ -240,7 +240,11 @@
 			"BARCODE_QR_CODE_SETTINGS": "ברקוד / קוד QR הגדרות",
 			"ORDER_BARCODE_TYPE": "הקלד סוג ברקוד",
 			"BARCODE_DATA": "נתוני ברקוד",
-			"SCAN_EXISTED": "סרוק קיים"
+			"SCAN_EXISTED": "סרוק קיים",
+			"DELIVERY_SETTINGS": "הגדרות משלוח",
+			"TAKEAWAY_SETTINGS": "הגדרות ברזל",
+			"IN_STORE_MODE": "במצב בחנות",
+			"IN_STORE_MODE_SETTINGS": "הגדרות מצב בחנות"
 		}
 	},
 	"LOGIN_VIEW": {

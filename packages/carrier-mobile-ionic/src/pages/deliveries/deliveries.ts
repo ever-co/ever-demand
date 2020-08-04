@@ -3,6 +3,7 @@ import Order from '@modules/server.common/entities/Order';
 import { Subject } from 'rxjs';
 import { CarriersOrdersService } from '../../services/carriers-orders.service';
 import { Store } from '../../services/store.service';
+import { Platform } from '@ionic/angular';
 
 @Component({
 	selector: 'page-deliveries',
@@ -16,7 +17,8 @@ export class DeliveriesPage implements OnDestroy {
 
 	constructor(
 		private readonly _carriersOrdersService: CarriersOrdersService,
-		private readonly store: Store
+		private readonly store: Store,
+		public platform: Platform
 	) {
 		console.warn('DeliveriesPage loaded');
 

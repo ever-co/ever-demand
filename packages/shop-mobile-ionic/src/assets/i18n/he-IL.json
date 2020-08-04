@@ -182,6 +182,10 @@
 					"ABOUT_US": "עלינו",
 					"TERMS_OF_USE": "תנאי שימוש",
 					"PRIVACY": "פרטיות"
+				},
+				"CALL": {
+					"WE_APPOLOGISE": "אנו מתנצלים",
+					"CALL_UNSUCCESSFULL": "השיחה לא הצליחה"
 				}
 			},
 			"LEGALS": {

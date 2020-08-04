@@ -242,7 +242,11 @@
 			"BARCODE_QR_CODE_SETTINGS": "Ajustes de Código Barras/Código QR",
 			"ORDER_BARCODE_TYPE": "Tipo de Código del Pedido",
 			"BARCODE_DATA": "Datos del Código",
-			"SCAN_EXISTED": "Existía escaneado"
+			"SCAN_EXISTED": "Existía escaneado",
+			"DELIVERY_SETTINGS": "Configuraciones de entrega",
+			"TAKEAWAY_SETTINGS": "Configuraciones para llevar",
+			"IN_STORE_MODE": "Modo en la tienda",
+			"IN_STORE_MODE_SETTINGS": "Configuración del modo en la tienda"
 		}
 	},
 	"LOGIN_VIEW": {

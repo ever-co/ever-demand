@@ -9,7 +9,7 @@
 		matInput
 		class="search-input"
 		value="{{ address }}"
-		placeholder="Select your location"
+		placeholder="{{ 'SELECT_YOUR_LOCATION' | translate }}"
 		(focus)="onFocus($event)"
 		(blur)="onBlur()"
 		(keyup.enter)="onInputEnter()"

@@ -6,7 +6,9 @@
 			<ion-menu-button autoHide="false"></ion-menu-button>
 		</ion-buttons>
 
-		<ion-title>{{ 'LANGUAGE_VIEW.TITLE' | translate }}</ion-title>
+		<ion-title [ngClass]="platform.isRTL ? 'rtl' : 'ltr'"
+			>{{ 'LANGUAGE_VIEW.TITLE' | translate }}</ion-title
+		>
 		<ion-buttons slot="end">
 			<ion-button (click)="goBack()">
 				<i class="fa fa-angle-left back-btn"></i>

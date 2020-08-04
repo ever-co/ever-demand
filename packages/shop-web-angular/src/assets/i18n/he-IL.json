@@ -8,6 +8,7 @@
 	"Orders": "הזמנות",
 	"Buy for": "לקנות ל",
 	"DELIVERY": "משלוח",
+	"SELECT_YOUR_LOCATION": "בחר את המיקום שלך",
 	"TAKEAWAY": "להסיר",
 	"Details": "פרטים",
 	"Delivery from": "משלוח מ",
@@ -79,7 +80,12 @@
 		"PAY_NOW": "שלם עכשיו",
 		"PRODUCTS": "מוצרים",
 		"ORDERS": "הזמנות",
-		"ORDER_ID": "מספר הזמנה:"
+		"ORDER_ID": "מספר הזמנה:",
+		"SHOW_CARRIER_ON_MAP": "הצג ספק על המפה",
+		"ORER_TYPE": {
+			"DELIVERY": "משלוח",
+			"TAKEAWAY": "להסיר"
+		}
 	},
 	"ORDER_CARRIER_STATUS": {
 		"CREATED": "נוצר",

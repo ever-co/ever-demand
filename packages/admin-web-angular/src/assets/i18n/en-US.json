@@ -462,6 +462,8 @@
 			"EDIT": "Edit",
 			"ZONE_NAME": "Zone name",
 			"UNALLOWED_ORDER_CANCELATION": "Unallowed Order Cancelation",
+			"IN_STORE_MODE": "In-store mode",
+			"CARRIER_WORK_COMPETITION": "Carrier Work Competition",
 			"ORDER_CANCELATION_OPTIONS": {
 				"ORDERING": "After Ordering",
 				"START_PROCESSING": "After Start Processing",

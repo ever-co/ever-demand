@@ -80,6 +80,17 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	isCashPaymentEnabled: boolean;
 
 	/**
+	 * Enable or disable in-store mode
+	 *
+	 * @type {boolean}
+	 * @memberof Warehouse
+	 */
+
+	@Types.Boolean(false)
+	@Column()
+	inStoreMode: boolean;
+
+	/**
 	 * Warehouse current location (address)
 	 * Note: we do support "moving" warehouses (e.g. car with products)
 	 *
@@ -351,6 +362,17 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	 */
 	@Schema({ type: { enabled: Boolean, onState: Number }, required: false })
 	orderCancelation?: { enabled: boolean; onState: number };
+
+	/**
+	 * Enable or disable carrier works competition mode
+	 *
+	 * @type {boolean}
+	 * @memberof Warehouse
+	 */
+
+	@Types.Boolean(false)
+	@Column()
+	carrierCompetition?: boolean;
 }
 
 export type WithFullProducts = Warehouse & {

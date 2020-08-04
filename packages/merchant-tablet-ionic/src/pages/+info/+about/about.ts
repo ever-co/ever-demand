@@ -1,46 +1,35 @@
 import { Component, OnDestroy } from '@angular/core';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
-import { Store } from 'services/store.service';
-import { environment } from 'environments/environment';
+import { Subscription } from 'rxjs';
+import { environment } from 'environment';
 
 @Component({
 	selector: 'page-about',
 	templateUrl: 'about.html',
 })
 export class AboutPage implements OnDestroy {
-	public aboutHtml: string;
-
-	private s$: any;
-
+	public useAboutHtml: string = '<h1>Loading...</h1>';
+	public selectedLanguage: string;
+	private sub: Subscription;
+	public deviceId: string;
+	public userId: string;
 	public appVersion: string;
-
-	constructor(private userRouter: UserRouter, private store: Store) {
-		this._getAboutHtml();
+	constructor(private userRouter: UserRouter) {
+		this.selectedLanguage = localStorage.getItem('_language') || 'en-US';
+		this.deviceId = localStorage.getItem('_deviceId');
+		this.userId = localStorage.getItem('_userId');
 		this.appVersion = environment.APP_VERSION;
 	}
 
-	get userId() {
-		return localStorage.getItem('_userId');
+	ngOnInit() {
+		this.sub = this.userRouter
+			.getAboutUs(this.userId, this.deviceId, this.selectedLanguage)
+			.subscribe((html) => {
+				this.useAboutHtml = html;
+			});
 	}
 
-	get deviceId() {
-		return localStorage.getItem('_deviceId');
-	}
-
-	private _getAboutHtml() {
-		const deviceId = this.deviceId;
-		if (this.userId && deviceId) {
-			this.s$ = this.userRouter
-				.getAboutUs(this.userId, deviceId)
-				.subscribe((html) => {
-					this.aboutHtml = html;
-				});
-		}
-	}
-
-	ngOnDestroy(): void {
-		if (this.s$) {
-			this.s$.unsubscribe();
-		}
+	ngOnDestroy() {
+		this.sub.unsubscribe();
 	}
 }

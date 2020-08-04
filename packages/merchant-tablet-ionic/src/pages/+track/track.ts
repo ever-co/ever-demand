@@ -61,7 +61,9 @@ export class TrackPage implements OnInit, OnDestroy {
 		private router: Router,
 		private warehouseService: WarehousesService,
 		private warehouseOrderService: WarehouseOrdersService
-	) {}
+	) {
+		this.route.params.subscribe(() => this.loadData());
+	}
 
 	openModal() {
 		this.filterComponent.close();
@@ -77,7 +79,9 @@ export class TrackPage implements OnInit, OnDestroy {
 		this.router.navigate([`track/${event.value.id}`]);
 	}
 
-	ngOnInit(): void {
+	ngOnInit(): void {}
+
+	loadData() {
 		this.warehouse$ = this.warehouseService
 			.getAllStores()
 			.subscribe((warehouse) => {
@@ -138,6 +142,7 @@ export class TrackPage implements OnInit, OnDestroy {
 								this.showCheckboxFilters = false;
 								this.carriersOnDisplay = [this.selectedCarrier];
 								this.renderCarriers([this.selectedCarrier]);
+								this.filterDisplayedCarriers();
 							} else {
 								this.filterDisplayedCarriers();
 								this.renderCarriers(this.carriersOnDisplay);
