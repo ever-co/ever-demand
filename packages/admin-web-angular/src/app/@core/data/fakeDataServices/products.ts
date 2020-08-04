@@ -414,18 +414,22 @@ export default class FakeDataProducts {
 	}
 
 	private async _getImage() {
-		const url = images.food[_.random(0, images.food.length - 1)];
+		try {
+			const url = images.food[_.random(0, images.food.length - 1)];
 
-		const img: HTMLImageElement = await this._getImageMeta(url);
+			const img: HTMLImageElement = await this._getImageMeta(url);
 
-		const imgOrientation = this._getImageOrientation(img);
+			const imgOrientation = this._getImageOrientation(img);
 
-		return {
-			url: img.src,
-			orientation: imgOrientation,
-			width: img.width,
-			height: img.height,
-		};
+			return {
+				url: img.src,
+				orientation: imgOrientation,
+				width: img.width,
+				height: img.height,
+			};
+		} catch (error) {
+			return error;
+		}
 	}
 
 	private _getImageOrientation(image: HTMLImageElement) {
