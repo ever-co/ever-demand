@@ -182,7 +182,7 @@ export class WarehouseManageTabsDetailsComponent
 			preferRestrictedCarriersForDelivery: [false],
 			carriersIds: [[]],
 			ordersShortProcess: [false],
-			inStoreMode: [],
+			inStoreMode: [false],
 			carrierCompetition: [false],
 
 			enabledOrderCancelation: [false],
@@ -261,6 +261,7 @@ export class WarehouseManageTabsDetailsComponent
 				useOnlyRestrictedCarriersForDelivery: false,
 				preferRestrictedCarriersForDelivery: false,
 				ordersShortProcess: false,
+				inStoreMode: false,
 				carrierCompetition: false,
 				enabledOrderCancelation: basicInfo.orderCancelation
 					? basicInfo.orderCancelation.enabled
