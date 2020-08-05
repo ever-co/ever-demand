@@ -25,6 +25,16 @@ export class WarehouseCarriersRouter implements IWarehouseCarriersRouter {
 			);
 	}
 
+	getUsedCarriers(warehouseId: string): Observable<Carrier[]> {
+		return this.router
+			.runAndObserve<ICarrier[]>('getUsedCarriers', warehouseId)
+			.pipe(
+				map((carriers) =>
+					_.map(carriers, (carrier) => this._carrierFactory(carrier))
+				)
+			);
+	}
+
 	async updatePassword(id: string, password: string): Promise<void> {
 		await this.router.run('updatePassword', id, password);
 	}

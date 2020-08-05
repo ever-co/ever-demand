@@ -19,6 +19,9 @@ import { ConfirmDeletePopupPage } from 'components/confirm-delete-popup/confirm-
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
+import { WarehouseCarriersRouter } from '@modules/client.common.angular2/routers/warehouse-carriers-router.service';
+import { CarrierService } from 'services/carrier.service';
+import { computeStackId } from '@ionic/angular/directives/navigation/stack-utils';
 
 @Component({
 	selector: 'page-carriers',
@@ -40,7 +43,9 @@ export class CarriersPage implements OnInit, OnDestroy {
 		private readonly store: Store,
 		private warehouseRouter: WarehouseRouter,
 		private readonly carrierRouter: CarrierRouter,
-		private warehouseOrdersRouter: WarehouseOrdersRouter
+		private readonly carrierService: CarrierService,
+		private warehouseOrdersRouter: WarehouseOrdersRouter,
+		private readonly warehouseCarriersRouter: WarehouseCarriersRouter
 	) {}
 
 	get deviceId() {
@@ -129,40 +134,56 @@ export class CarriersPage implements OnInit, OnDestroy {
 			this.sourceSmartTable.load(carriersVM);
 		};
 
-		let usedCarriers = [];
+		this.warehouseRouter
+			.get(this.warehouseId)
+			.subscribe(async (warehouse) => {
+				if (warehouse.hasRestrictedCarriers) {
+					this.carriers =
+						(await this.warehouseCarriersRouter
+							.getUsedCarriers(this.warehouseId)
+							.pipe(first())
+							.toPromise()) ||
+						(await this.warehouseCarriersRouter
+							.get(this.warehouseId)
+							.pipe(first())
+							.toPromise());
 
-		this.warehouseOrdersRouter
-			.get(this.store.warehouseId)
-			.pipe(takeUntil(this._ngDestroy$))
-			.subscribe((orders) => {
-				orders = orders.filter((order) => order.isCancelled === false);
-				orders.forEach((o) => {
-					usedCarriers.push(o.carrier);
-				});
-				this.carrierRouter
-					.getAllActive()
-					.subscribe((carriers: Carrier[]) => {
-						this.carriers = carriers.filter((c: Carrier) =>
-							usedCarriers.includes(c.id)
-						);
-						loadData(this.carriers);
-						this.carriers.length === 0
-							? (this.showNoDeliveryIcon = true)
-							: (this.showNoDeliveryIcon = false);
-					});
+					loadData(this.carriers);
+					this.carriers.length === 0
+						? (this.showNoDeliveryIcon = true)
+						: (this.showNoDeliveryIcon = false);
+				} else {
+					this.carrierRouter
+						.getAllActive()
+						.subscribe((carriers: Carrier[]) => {
+							this.carriers = carriers;
+							loadData(this.carriers);
+							this.carriers.length === 0
+								? (this.showNoDeliveryIcon = true)
+								: (this.showNoDeliveryIcon = false);
+						});
+				}
 			});
 
-		// this.warehouseCarriersRouter
-		// 	.get(this.warehouseId)
+		// this.warehouseOrdersRouter
+		// 	.get(this.store.warehouseId)
 		// 	.pipe(takeUntil(this._ngDestroy$))
-		// 	.subscribe((carriers) => {
-		// 		this.carriers = carriers;
-
-		// 		loadData(this.carriers);
-
-		// 		this.carriers.length === 0
-		// 			? (this.showNoDeliveryIcon = true)
-		// 			: (this.showNoDeliveryIcon = false);
+		// 	.subscribe((orders) => {
+		// 		orders = orders.filter((order) => order.isCancelled === false);
+		// 		orders.forEach((o) => {
+		// 			usedCarriers.push(o.carrier);
+		// 		});
+		// 		this.carrierRouter
+		// 			.getAllActive()
+		// 			.subscribe((carriers: Carrier[]) => {
+		// 				this.carriers = carriers.filter((c: Carrier) =>
+		// 					usedCarriers.includes(c.id)
+		// 				);
+		// 				loadData(this.carriers);
+		// 				this.carriers.length === 0
+		// 					? (this.showNoDeliveryIcon = true)
+		// 					: (this.showNoDeliveryIcon = false);
+		// 			});
 		// 	});
 	}
 

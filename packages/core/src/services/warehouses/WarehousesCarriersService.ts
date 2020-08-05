@@ -84,6 +84,42 @@ export class WarehousesCarriersService implements IWarehouseCarriersRouter {
 	}
 
 	/**
+	 * Get Carriers assigned to given Store
+	 * Returns all if warehouse.hasRestrictedCarriers
+	 * @param {String} warehouseId
+	 * @returns {Observable<Carrier[] | null>}
+	 */
+	@observableListener()
+	getUsedCarriers(
+		warehouseId: Warehouse['id']
+	): Observable<Carrier[] | null> {
+		return this.warehousesService.get(warehouseId).pipe(
+			map((warehouse) => {
+				if (!warehouse.hasRestrictedCarriers) {
+					throw new NoWarehouseRestrictedCarriersError();
+				}
+				console.log(warehouse.carriersIds);
+
+				return warehouse.carriersIds;
+			}),
+			distinctUntilChanged((carrierIds1, carrierIds2) => {
+				return _.isEqual(carrierIds1.sort(), carrierIds2.sort());
+			}),
+			exhaustMap((carrierIds) => {
+				return this.carriersService.getMultipleByIds(carrierIds);
+			}),
+			switchMap((carriers) => carriers),
+			catchError((err) => {
+				if (!(err instanceof NoWarehouseRestrictedCarriersError)) {
+					throw err;
+				}
+
+				return of(null);
+			})
+		);
+	}
+
+	/**
 	 * Update carrier password
 	 *
 	 * @param {Carrier['id']} id

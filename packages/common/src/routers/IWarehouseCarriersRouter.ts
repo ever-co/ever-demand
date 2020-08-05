@@ -4,6 +4,7 @@ import Carrier from '../entities/Carrier';
 
 interface IWarehouseCarriersRouter {
 	get(warehouseId: Warehouse['id']): Observable<Carrier[] | null>;
+	getUsedCarriers(warehouseId: Warehouse['id']): Observable<Carrier[] | null>;
 	updatePassword(id: Carrier['id'], password: string): Promise<void>;
 }
 

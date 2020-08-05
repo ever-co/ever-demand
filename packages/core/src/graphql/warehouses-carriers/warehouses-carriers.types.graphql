@@ -1,3 +1,4 @@
 type Query {
 	getStoreCarriers(storeId: String!): [Carrier!]
+	getUsedCarriers(storeId: String!): [Carrier!]
 }
