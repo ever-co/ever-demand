@@ -85,7 +85,7 @@ export class WarehousesCarriersService implements IWarehouseCarriersRouter {
 
 	/**
 	 * Get Carriers assigned to given Store
-	 * Returns all if warehouse.hasRestrictedCarriers
+	 * Returns all used if warehouse.hasRestrictedCarriers
 	 * @param {String} warehouseId
 	 * @returns {Observable<Carrier[] | null>}
 	 */
@@ -98,9 +98,12 @@ export class WarehousesCarriersService implements IWarehouseCarriersRouter {
 				if (!warehouse.hasRestrictedCarriers) {
 					throw new NoWarehouseRestrictedCarriersError();
 				}
-				console.log(warehouse.carriersIds);
+				const usedCarriers = [];
 
-				return warehouse.carriersIds;
+				usedCarriers.push(...warehouse.carriersIds);
+				usedCarriers.push(...warehouse.usedCarriersIds);
+
+				return usedCarriers;
 			}),
 			distinctUntilChanged((carrierIds1, carrierIds2) => {
 				return _.isEqual(carrierIds1.sort(), carrierIds2.sort());

@@ -147,6 +147,9 @@ export class AddCarriersPopupPage implements OnInit, OnDestroy {
 			warehouse.usedCarriersIds.push(carrier.id);
 		} else if (this.choiced === 'existing') {
 			warehouse.hasRestrictedCarriers = true;
+			warehouse.carriersIds.push(
+				...this.carriersCatalog.selecteCarriers.map((c) => c.id)
+			);
 			warehouse.usedCarriersIds.push(
 				...this.carriersCatalog.selecteCarriers.map((c) => c.id)
 			);

@@ -137,16 +137,14 @@ export class CarriersPage implements OnInit, OnDestroy {
 		this.warehouseRouter
 			.get(this.warehouseId)
 			.subscribe(async (warehouse) => {
-				if (warehouse.hasRestrictedCarriers) {
-					this.carriers =
-						(await this.warehouseCarriersRouter
-							.getUsedCarriers(this.warehouseId)
-							.pipe(first())
-							.toPromise()) ||
-						(await this.warehouseCarriersRouter
-							.get(this.warehouseId)
-							.pipe(first())
-							.toPromise());
+				if (
+					warehouse.carriersIds.length ||
+					warehouse.hasRestrictedCarriers
+				) {
+					this.carriers = await this.warehouseCarriersRouter
+						.getUsedCarriers(this.warehouseId)
+						.pipe(first())
+						.toPromise();
 
 					loadData(this.carriers);
 					this.carriers.length === 0
@@ -164,27 +162,6 @@ export class CarriersPage implements OnInit, OnDestroy {
 						});
 				}
 			});
-
-		// this.warehouseOrdersRouter
-		// 	.get(this.store.warehouseId)
-		// 	.pipe(takeUntil(this._ngDestroy$))
-		// 	.subscribe((orders) => {
-		// 		orders = orders.filter((order) => order.isCancelled === false);
-		// 		orders.forEach((o) => {
-		// 			usedCarriers.push(o.carrier);
-		// 		});
-		// 		this.carrierRouter
-		// 			.getAllActive()
-		// 			.subscribe((carriers: Carrier[]) => {
-		// 				this.carriers = carriers.filter((c: Carrier) =>
-		// 					usedCarriers.includes(c.id)
-		// 				);
-		// 				loadData(this.carriers);
-		// 				this.carriers.length === 0
-		// 					? (this.showNoDeliveryIcon = true)
-		// 					: (this.showNoDeliveryIcon = false);
-		// 			});
-		// 	});
 	}
 
 	goToTrackPage() {
