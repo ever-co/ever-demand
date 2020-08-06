@@ -232,7 +232,10 @@ export class WarehouseManageTabsDetailsComponent
 						hasRestrictedCarriers: basicInfo.hasRestrictedCarriers,
 						carriersIds: basicInfo.carriersIds,
 				  }
-				: {}),
+				: {
+						hasRestrictedCarriers: false,
+						carriersIds: basicInfo.carriersIds,
+				  }),
 			...(basicInfo.hasRestrictedCarriers &&
 			basicInfo.carriersIds &&
 			basicInfo.carriersIds.length
