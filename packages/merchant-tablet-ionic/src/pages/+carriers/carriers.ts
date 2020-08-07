@@ -137,10 +137,7 @@ export class CarriersPage implements OnInit, OnDestroy {
 		this.warehouseRouter
 			.get(this.warehouseId)
 			.subscribe(async (warehouse) => {
-				if (
-					warehouse.carriersIds.length ||
-					warehouse.hasRestrictedCarriers
-				) {
+				if (warehouse.hasRestrictedCarriers) {
 					this.carriers = await this.warehouseCarriersRouter
 						.getUsedCarriers(this.warehouseId)
 						.pipe(first())

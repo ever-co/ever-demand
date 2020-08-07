@@ -72,6 +72,7 @@ export class WarehouseManageComponent implements OnInit {
 				...this._currentWarehouse,
 				...tabsInfoRaw.basicInfo,
 				...tabsInfoRaw.contactInfo,
+				usedCarriersIds: this._currentWarehouse.usedCarriersIds,
 				geoLocation: tabsInfoRaw.location,
 				deliveryAreas: tabsInfoRaw.deliveryAreas,
 				isPaymentEnabled: tabsInfoRaw.isPaymentEnabled,
