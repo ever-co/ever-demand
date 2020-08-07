@@ -21,7 +21,6 @@ import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-r
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { WarehouseCarriersRouter } from '@modules/client.common.angular2/routers/warehouse-carriers-router.service';
 import { CarrierService } from 'services/carrier.service';
-import { computeStackId } from '@ionic/angular/directives/navigation/stack-utils';
 
 @Component({
 	selector: 'page-carriers',
