@@ -15,8 +15,8 @@ import { Store } from 'app/services/store';
 		</div>
 	`,
 })
-export class OrdersContainerComponent {	
-	public orders: Order[];
+export class OrdersContainerComponent {
+	public orders: Order[] = [];
 
 	constructor(
 		private readonly userOrdersRouter: UserOrdersRouter,
