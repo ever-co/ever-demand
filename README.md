@@ -11,11 +11,17 @@
 
 ## Demos
 
+**Demos are not available at the moment as we are moving to Kubernetes and showdown old demo server!**
+
+<!---
+
 -   [Admin Website](http://demo.ever.co:4200), use admin user email: `admin@ever.co`, password: `admin`
 -   [Shopping Mobile App](http://demo.ever.co:4201)
 -   [Merchant Ionic Tablet App](http://demo.ever.co:4202)
 -   [Carrier Mobile App](http://demo.ever.co:4203)
 -   [Shopping Website](http://demo.ever.co:3000)
+
+-->
 
 ## Features
 
@@ -201,7 +207,6 @@ According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform tod
 -   Aleksandar Tasev ([AlexTasev](https://github.com/AlexTasev))
 -   Alish Meklyov ([Alish](https://github.com/AlishMekliov931))
 -   Blagovest Gerov ([BlagovestGerov](https://github.com/BlagovestGerov))
--   Boyan Stanchev ([boyanstanchev](https://github.com/boyanstanchev))
 -   Elvis Arabadjiyski ([Dreemsuncho](https://github.com/Dreemsuncho))
 -   Emil Momchilov ([jew-er](https://github.com/jew-er))
 -   Hristo Hristov ([hrimar](https://github.com/hrimar))
