@@ -174,10 +174,13 @@ jobs:
     build-carrier-mobile-ionic:
         <<: *defaults
         working_directory: /tmp/workspace/carrier/mobile-ionic
-        docker:
-            - image: circleci/android:api-29-node
+        machine:
+            image: ubuntu-1604:202004-01
         steps:
             - checkout
+            - node/install:
+                  install-yarn: true
+                  node-version: latest
             - run: *install-deps
             - run:
                   name: Install Yarn
@@ -234,10 +237,13 @@ jobs:
     build-shop-mobile-ionic:
         <<: *defaults
         working_directory: /tmp/workspace/shop/mobile-ionic
-        docker:
-            - image: circleci/android:api-29-node
+        machine:
+            image: ubuntu-1604:202004-01
         steps:
             - checkout
+            - node/install:
+                  install-yarn: true
+                  node-version: latest
             - run: *install-deps
             - run:
                   name: Install Yarn
@@ -333,10 +339,13 @@ jobs:
     build-merchant-tablet-ionic:
         <<: *defaults
         working_directory: /tmp/workspace/merchant/tablet-ionic
-        docker:
-            - image: circleci/android:api-29-node
+        machine:
+            image: ubuntu-1604:202004-01
         steps:
             - checkout
+            - node/install:
+                  install-yarn: true
+                  node-version: latest
             - run: *install-deps
             - run:
                   name: Install Yarn
