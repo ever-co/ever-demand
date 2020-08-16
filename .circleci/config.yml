@@ -70,8 +70,8 @@ aliases:
           yes | sdkmanager "build-tools;29.0.3" --sdk_root=${ANDROID_HOME} || true
           echo "Accepting SDK Licenses"
           yes | sdkmanager --licenses --sdk_root=${ANDROID_HOME} || true
-          # echo "Updating SDK"
-          # yes | sudo /usr/lib/android-sdk/cmdline-tools/tools/bin/sdkmanager --update --sdk_root=${ANDROID_HOME} || true
+          echo "Updating SDK and accepting licenses"
+          yes | sdkmanager --update --sdk_root=${ANDROID_HOME} || true
 
 defaults: &defaults
     # put here anything which is common between all jobs
