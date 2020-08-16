@@ -59,7 +59,7 @@ aliases:
           # echo "Accepting SDK Licenses"
           # yes | sdkmanager --licenses --sdk_root=${ANDROID_HOME} > /dev/null
           echo "Updating SDK"
-          sdkmanager --update
+          yes | sdkmanager --update
           echo "Installing SDK tools"
           yes | sdkmanager "tools" --sdk_root=${ANDROID_HOME}
           echo "Installing SDK platform-tools"
