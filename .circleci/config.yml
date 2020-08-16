@@ -66,8 +66,8 @@ defaults: &defaults
     # we define default work dir, however almost every job redefine it
     working_directory: /tmp/workspace
     environment:
-        JVM_OPTS: -Xmx3200m
-        ANDROID_HOME: /usr/local/android-sdk-linux
+        JVM_OPTS: -Xmx4096m
+        ANDROID_HOME: /usr/lib/android-sdk
 
 jobs:
     build-monorepo-root:
