@@ -61,6 +61,11 @@
 		"snyk-protect": "snyk protect"
 	},
 	"resolutions": {},
+    "dependencies": {				
+		"@angular/core": "^9.1.1",
+        "rxjs": "^6.5.2",
+        "rxjs-compat": "^6.5.2"
+    },
 	"devDependencies": {
 		"@commitlint/cli": "^8.1.0",
 		"@commitlint/config-conventional": "^8.1.0",
