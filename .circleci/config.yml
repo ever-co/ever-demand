@@ -50,7 +50,12 @@ aliases:
       command: |          
           sudo apt update
           sudo apt install openjdk-8-jdk
-          sudo apt install android-sdk        
+          sudo apt install android-sdk
+          export ANDROID_HOME=/usr/lib/android-sdk
+          wget https://dl.google.com/android/repository/commandlinetools-linux-6609375_latest.zip
+          unzip commandlinetools-linux-6609375_latest.zip -d cmdline-tools
+          sudo mv cmdline-tools $ANDROID_HOME/
+          export PATH=$ANDROID_HOME/cmdline-tools/tools/bin:$PATH
           yes | sdkmanager --licenses
           yes | sdkmanager --update
           yes | sdkmanager "tools"
