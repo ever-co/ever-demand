@@ -56,8 +56,8 @@ aliases:
           unzip commandlinetools-linux-6609375_latest.zip -d cmdline-tools
           sudo mv cmdline-tools $ANDROID_HOME/
           export PATH=$ANDROID_HOME/cmdline-tools/tools/bin:$PATH
-          echo "Accepting SDK Licenses"
-          yes | sdkmanager --licenses --sdk_root=${ANDROID_HOME} > /dev/null
+          # echo "Accepting SDK Licenses"
+          # yes | sdkmanager --licenses --sdk_root=${ANDROID_HOME} > /dev/null
           echo "Updating SDK"
           sdkmanager --update
           echo "Installing SDK tools"
