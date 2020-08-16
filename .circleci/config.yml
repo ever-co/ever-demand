@@ -49,7 +49,11 @@ aliases:
       name: Install Android SDK
       command: |          
           sudo apt update 
+          sudo apt install openjdk-8-jdk
           sudo apt install android-sdk
+          yes | /usr/lib/android-sdk/tools/bin/sdkmanager "platforms;android-28"
+          yes | /usr/lib/android-sdk/tools/bin/sdkmanager "build-tools;28.0.3"
+          yes | /usr/lib/android-sdk/tools/bin/sdkmanager --licenses
 
 defaults: &defaults
     # put here anything which is common between all jobs
