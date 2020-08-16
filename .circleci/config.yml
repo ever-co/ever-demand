@@ -61,17 +61,17 @@ aliases:
           # echo "Updating SDK"
           # yes | sudo /usr/lib/android-sdk/cmdline-tools/tools/bin/sdkmanager --update --sdk_root=${ANDROID_HOME} || true
           echo "Installing SDK tools"
-          yes | sdkmanager "tools" --sdk_root=${ANDROID_HOME}
+          yes | sdkmanager "tools" --sdk_root=${ANDROID_HOME} || true
           echo "Installing SDK platform-tools"
-          yes | sdkmanager "platform-tools" --sdk_root=${ANDROID_HOME}
+          yes | sdkmanager "platform-tools" --sdk_root=${ANDROID_HOME} || true
           echo "Installing SDK platforms;android-28"
-          yes | sdkmanager "platforms;android-28" --sdk_root=${ANDROID_HOME}
+          yes | sdkmanager "platforms;android-28" --sdk_root=${ANDROID_HOME} || true
           echo "Installing SDK platforms;android-29"          
-          yes | sdkmanager "platforms;android-29" --sdk_root=${ANDROID_HOME}
+          yes | sdkmanager "platforms;android-29" --sdk_root=${ANDROID_HOME} || true
           echo "Installing SDK build-tools;28.0.3"
-          yes | sdkmanager "build-tools;28.0.3" --sdk_root=${ANDROID_HOME}
+          yes | sdkmanager "build-tools;28.0.3" --sdk_root=${ANDROID_HOME} || true
           echo "Installing SDK build-tools;29.0.3"
-          yes | sdkmanager "build-tools;29.0.3" --sdk_root=${ANDROID_HOME}
+          yes | sdkmanager "build-tools;29.0.3" --sdk_root=${ANDROID_HOME} || true
 
 defaults: &defaults
     # put here anything which is common between all jobs
