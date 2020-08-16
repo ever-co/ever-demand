@@ -45,6 +45,11 @@ aliases:
           rm -rf ~/.yarn
           curl -o- -L https://yarnpkg.com/install.sh | bash
           echo 'export PATH="${PATH}:${HOME}/.yarn/bin:${HOME}/.config/yarn/global/node_modules/.bin"' >> $BASH_ENV
+    - &install-android
+      name: Install Android SDK
+      command: |          
+          sudo apt update 
+          sudo apt install android-sdk
 
 defaults: &defaults
     # put here anything which is common between all jobs
@@ -181,10 +186,11 @@ jobs:
             - node/install:
                   install-yarn: true
                   node-version: latest
-            - run: *install-deps
+            - run: *install-deps            
             - run:
                   name: Install Yarn
                   command: sudo npm install -g yarn --force
+            - run: *install-android
             - run: *install-gradle
             - run:
                   name: 'Pull Submodules'
@@ -248,6 +254,7 @@ jobs:
             - run:
                   name: Install Yarn
                   command: sudo npm install -g yarn --force
+            - run: *install-android
             - run: *install-gradle
             - run:
                   name: 'Pull Submodules'
@@ -350,6 +357,7 @@ jobs:
             - run:
                   name: Install Yarn
                   command: sudo npm install -g yarn --force
+            - run: *install-android
             - run: *install-gradle
             - run:
                   name: 'Pull Submodules'
