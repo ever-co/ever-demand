@@ -57,21 +57,21 @@ aliases:
           sudo mv cmdline-tools $ANDROID_HOME/
           export PATH=$ANDROID_HOME/cmdline-tools/tools/bin:$PATH
           echo "Accepting SDK Licenses"
-          yes | sdkmanager --licenses
+          yes | sdkmanager --licenses --sdk_root=${ANDROID_HOME} > /dev/null
           echo "Updating SDK"
-          yes | sdkmanager --update
+          sdkmanager --update
           echo "Installing SDK tools"
-          sdkmanager "tools"
+          yes | sdkmanager "tools" --sdk_root=${ANDROID_HOME}
           echo "Installing SDK platform-tools"
-          sdkmanager "platform-tools"
+          yes | sdkmanager "platform-tools" --sdk_root=${ANDROID_HOME}
           echo "Installing SDK platforms;android-28"
-          sdkmanager "platforms;android-28"
+          yes | sdkmanager "platforms;android-28" --sdk_root=${ANDROID_HOME}
           echo "Installing SDK platforms;android-29"          
-          sdkmanager "platforms;android-29"
+          yes | sdkmanager "platforms;android-29" --sdk_root=${ANDROID_HOME}
           echo "Installing SDK build-tools;28.0.3"
-          sdkmanager "build-tools;28.0.3"
+          yes | sdkmanager "build-tools;28.0.3" --sdk_root=${ANDROID_HOME}
           echo "Installing SDK build-tools;29.0.3"
-          sdkmanager "build-tools;29.0.3"
+          yes | sdkmanager "build-tools;29.0.3" --sdk_root=${ANDROID_HOME}
 
 defaults: &defaults
     # put here anything which is common between all jobs
