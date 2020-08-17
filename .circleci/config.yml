@@ -57,6 +57,7 @@ aliases:
           sudo mv cmdline-tools $ANDROID_HOME/
           export PATH=$ANDROID_HOME/cmdline-tools/tools/bin:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH
           mkdir ~/.android && echo '### User Sources for Android SDK Manager' > ~/.android/repositories.cfg
+          sudo chown -R $(whoami) $ANDROID_HOME
           echo "Installing SDK tools"
           yes | sdkmanager "tools" --sdk_root=${ANDROID_HOME} || true
           echo "Installing SDK platform-tools"
