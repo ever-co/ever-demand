@@ -1,0 +1,6 @@
+<ion-spinner *ngIf="html == null"></ion-spinner>
+
+<div *ngIf="html != null">
+	<div [innerHTML]="html | safe: 'html'"></div>
+	<h5 class="version">App Version: {{ appVersion }}</h5>
+</div>

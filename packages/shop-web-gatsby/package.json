@@ -1,0 +1,98 @@
+{
+  "name": "@ever-platform/shop-web-gatsby",
+  "version": "0.1.2",
+  "description": "Ever Web Shop using Gatsby",
+  "license": "AGPL-3.0",
+  "homepage": "https://ever.co",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ever-co/ever.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ever-co/ever/issues"
+  },
+  "private": false,
+  "author": {
+    "name": "Ever Co. LTD",
+    "email": "ever@ever.co",
+    "url": "https://ever.co"
+  },
+  "contributors": [
+    {
+      "name": "Ruslan Konviser (Evereq)",
+      "email": "ruslan@ever.co",
+      "url": "https://ever.co"
+    },
+    {
+      "name": "Misha Konviser (Komish)",
+      "email": "michael@ever.co",
+      "url": "https://ever.co"
+    },
+    {
+      "name": "Kyle Kitlinski (k-kit)",
+      "email": "kyle@kkitlinski.com",
+      "url": "https://kkitlinski.com"
+    }
+  ],
+  "scripts": {
+    "build": "gatsby info",
+    "build:rename_me_back_when_fix_build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write src/**/*.{js,jsx,tsx,ts}",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "lint": "tslint --project ./src  --fix",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\"",
+    "codegen": "graphql-codegen"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.15",
+    "@fortawesome/free-solid-svg-icons": "^5.7.2",
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "@material-ui/core": "^4.1.1",
+    "@material-ui/styles": "^4.1.1",
+    "apollo-boost": "^0.3.1",
+    "apollo-client": "^2.5.1",
+    "bulma": "^0.7.4",
+    "dotenv": "^8.0.0",
+    "formik": "^1.5.1",
+    "gatsby": "^2.1.31",
+    "gatsby-image": "^2.0.33",
+    "gatsby-plugin-manifest": "^2.0.24",
+    "gatsby-plugin-material-ui": "^2.0.1",
+    "gatsby-plugin-offline": "^2.0.25",
+    "gatsby-plugin-react-helmet": "^3.0.9",
+    "gatsby-plugin-sharp": "^2.0.28",
+    "gatsby-plugin-styled-components": "^3.0.7",
+    "gatsby-plugin-typescript": "^2.0.11",
+    "gatsby-source-filesystem": "^2.0.24",
+    "gatsby-transformer-sharp": "^2.1.17",
+    "nuka-carousel": "^4.5.8",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.4",
+    "react-apollo-hooks": "^0.4.3",
+    "react-dom": "^16.8.4",
+    "react-google-maps": "^9.4.5",
+    "react-helmet": "^5.2.0",
+    "styled-components": "^4.3.1"
+  },
+  "devDependencies": {
+    "@graphql-codegen/add": "^1.0.4",
+    "@graphql-codegen/cli": "^1.0.4",
+    "@graphql-codegen/typescript": "^1.0.4",
+    "@graphql-codegen/typescript-operations": "^1.0.4",
+    "@types/react": "^16.8.8",
+    "cross-env": "^5.2.0",
+    "gatsby-cli": "^2.6.9",
+    "gatsby-plugin-sass": "^2.0.11",
+    "gatsby-source-graphql": "^2.0.14",
+    "node-sass": "^4.11.0",
+    "prettier": "^1.16.4",
+    "tslint": "^5.14.0",
+    "typescript": "^3.3.3333"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "snyk": false
+}

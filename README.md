@@ -1,14 +1,27 @@
-#### *** If you are running IT Company, check our new project [Gauzy](https://github.com/ever-co/gauzy) ***
-
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ever-co/ever)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/ever)
 [![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/ever-co/ever?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/evereq?utm_source=github&utm_medium=button&utm_term=evereq&utm_campaign=github)
 
-# Open-Source On-Demand Commerce Platform
+# Open-Source Commerce Platform for On-Demand Economy and Digital Marketplaces
 
 [Ever](https://ever.co)® is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform built with [TypeScript](http://www.typescriptlang.org).
 
 ![overview](https://docs.ever.co/docs/assets/overview_small.png)
+
+## Demos
+
+**Demos are not available at the moment as we are moving to Kubernetes and showdown old demo server!**
+
+<!---
+
+-   [Admin Website](http://demo.ever.co:4200), use admin user email: `admin@ever.co`, password: `admin`
+-   [Shopping Mobile App](http://demo.ever.co:4201)
+-   [Merchant Ionic Tablet App](http://demo.ever.co:4202)
+-   [Carrier Mobile App](http://demo.ever.co:4203)
+-   [Shopping Website](http://demo.ever.co:3000)
+
+-->
 
 ## Features
 
@@ -46,11 +59,11 @@ Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_wi
 
 ## Technology Stack and Requirements
 
--   [TypeScript](https://www.typescriptlang.org) language (version >=2.9)
--   [Node.js](https://nodejs.org) (version >=10)
--   [Ionic](https://ionicframework.com) (version 4) for Shopping Mobile App, Carrier Mobile App and Merchant Tablet App
--   Shopping Website developed with [Angular](https://angular.io) 8 using [Angular Starter](https://github.com/gdi2290/angular-starter)
--   Admin Website developed with [Angular](https://angular.io) version 8 using [ngx-admin](https://github.com/akveo/ngx-admin)
+-   [TypeScript](https://www.typescriptlang.org) language
+-   [NodeJs](https://nodejs.org) / [NestJs](https://github.com/nestjs/nest)
+-   [Ionic](https://ionicframework.com) (version 5) for Shopping Mobile App, Carrier Mobile App and Merchant Tablet App
+-   Shopping Website developed with [Angular](https://angular.io) (version 9.1) using [Angular Starter](https://github.com/gdi2290/angular-starter)
+-   Admin Website developed with [Angular](https://angular.io) (version 9.1) using [ngx-admin](https://github.com/akveo/ngx-admin)
 -   Headless Commerce framework (Backend APIs/Server) developed using [Nest](https://github.com/nestjs/nest) with heavy use of our own Pyro module. Supports GraphQL, REST and WS Real-Time APIs (WebSockets using [Socket.io](https://socket.io) library)
 -   [RxJS](http://reactivex.io/rxjs) library used heavy in every part of the Platform
 -   [InversifyJS](http://inversify.io) used for Inversion Control / Dependency Injection in most parts of the Platform. On the Backend/API we also use DI provided by [Nest](https://github.com/nestjs/nest)
@@ -75,28 +88,13 @@ We follow [Gitflow Workflow](https://nvie.com/posts/a-successful-git-branching-m
 Clone the Ever Platform Git repo:
 
 ```
-git clone -c core.symlinks=true --recursive https://github.com/ever-co/ever.git
+git clone https://github.com/ever-co/ever.git
 ```
 
-**IMPORTANT NOTES:**
+**IMPORTANT NOTE:**
 
--   if you want to use development branch (unstable, but latest development) clone using `--branch develop`
--   it's necessary to enable Git symlinks because they used for shared modules (every project has symlinks to shared modules in the /shared folder)
--   because of symlinks, you may need to clone from an elevated command prompt. On Windows run console with "Run as Administrator" option.
-
-If you use Git >= v2.14, it probably makes sense to setup following globally:
-
-```
-git config --global core.symlinks true
-git config --global submodule.recurse true
-```
-
-Notes:
-
--   to setup Symlinks & Submodules recurse locally only (for Ever repo), remove `--global` in the commands above
--   for older Git versions see [this](https://stackoverflow.com/questions/4611512/is-there-a-way-to-make-git-pull-automatically-update-submodules/4611550#4611550)
--   at the moment we are not using Git sub-modules, but it may change in the future (we were using them, but decided to drop for now in favor of symlinks)
--   we are moving from symlinks to npm modules managed by Lerna. See branch https://github.com/ever-co/ever/tree/feature/use-packages
+-   if you want to use develop branch (unstable, but latest development) clone using `--branch develop` (our default branch).
+-   if you want to use release branch (more stable) clone using `--branch master`.
 
 ### Yarn
 
@@ -116,7 +114,17 @@ yarn bootstrap
 
 Above command install required packages in all Platform projects using Lerna.
 
-Note: if above command fails for any reason, you can try to install required packages manually by running `yarn` inside every sub-folder with 'package.json' file
+Note: if above command fails for any reason, you can try to install required packages manually by running `yarn` inside every sub-folder of `packages` folder with 'package.json' file
+
+### Build
+
+You can build all projects in Ever Platform using single command below:
+
+```
+yarn build:all
+```
+
+Note: the parallel build available using `yarn build` command
 
 ### Lerna (manual installation)
 
@@ -141,7 +149,9 @@ yarn lerna bootstrap
 
 The command above install all required packages for every sub-project of the Ever Platform.
 
-Note: if above command fails for any reason, you can try to install required packages manually by running `yarn` inside every sub-folder with 'package.json' file
+Note: if above command fails for any reason, you can try to install required packages manually by running `yarn` inside every sub-folder with 'package.json' file.
+
+After Lerna bootstrap everything you need to run build for all projects as described above in the "Build" section.
 
 ### MongoDB
 
@@ -153,23 +163,27 @@ See relevant section in our [documentation](https://github.com/ever-co/ever/wiki
 
 ### Run Platform Projects
 
-Finally, each project from Ever Platform could start by single command from this list:
+After you build everything (`yarn build:all`, described above), each project from Ever Platform could be started by single command from this list:
 
-* Run API server `yarn run:server`
-* Run Admin Website `yarn run:admin` and open http://localhost:4200
-* Run Shopping Mobile App `yarn run:shopmobile` and open http://localhost:4201
-* Run Merchant Ionic Tablet App `yarn run:merchant` and open http://localhost:4202
-* Run Carrier Mobile app `yarn run:carrier` and open http://localhost:4203
-* Run Shopping Website `yarn run:shopweb` and open http://localhost:3000
+-   Run API server `yarn run:server`
+-   Run Admin Website `yarn run:admin` and open http://localhost:4200
+-   Run Shopping Mobile App `yarn run:shopmobile` and open http://localhost:4201
+-   Run Merchant Ionic Tablet App `yarn run:merchant` and open http://localhost:4202
+-   Run Carrier Mobile app `yarn run:carrier` and open http://localhost:4203
+-   Run Shopping Website `yarn run:shopweb` and open http://localhost:3000
 
-Note 1: during development you can run server with `yarn run:server:dev` to enable watch on TS files changes
+Note 1: it is important to build shared / common platform modules (`yarn build:common` or `yarn build:all`) before running the Platform Core (API) or Apps
 
-Note 2: on the first run, API Server (Backend) creates MongoDB local database `ever_development` with the following (default) Admin user
+Note 2: during development you can run server with `yarn run:server:dev` to enable watch on TS files changes
+
+Note 3: on the first run, API Server (Backend) creates MongoDB local database `ever_development` with the following (default) Admin user
 
 -   email: `admin@ever.co`
 -   password: `admin`
 
 You can use credentials above to login into Platform Admin App.
+
+Note 3: in order to be able to run every project, you need to make sure everything builds, see section "Build" above.
 
 ## Metrics
 
@@ -195,21 +209,21 @@ According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform tod
 -   Aleksandar Tasev ([AlexTasev](https://github.com/AlexTasev))
 -   Alish Meklyov ([Alish](https://github.com/AlishMekliov931))
 -   Blagovest Gerov ([BlagovestGerov](https://github.com/BlagovestGerov))
--   Boyan Stanchev ([boyanstanchev](https://github.com/boyanstanchev))
 -   Elvis Arabadjiyski ([Dreemsuncho](https://github.com/Dreemsuncho))
 -   Emil Momchilov ([jew-er](https://github.com/jew-er))
 -   Hristo Hristov ([hrimar](https://github.com/hrimar))
+-   Martin Asenov ([goofy5752](https://github.com/goofy5752))
+-   Pavel Denchev ([PavelDenchev](https://github.com/PavelDenchev))
+-   Tsvetelina Yordanova ([tsvetelina-e-y](https://github.com/tsvetelina-e-y))
+-   Valentin Peshev ([valiopld](https://github.com/valiopld))
+-   Yavor Grancharov ([YavorGrancharov](https://github.com/YavorGrancharov))
 
 #### Designers & QA
 
 -   [Julia Konviser](https://www.linkedin.com/in/julia-konviser-8b917552) (Graphic Designer, QA)
+-   [Yordan Genovski](https://services.ever.co/teammembers/yordan-genovski) (UX/UI/Product Designer)
 
 ### Contributors
-
--   [Adem Hodzic](https://github.com/AdemHodzic)
--   [Deepak Chandwani](https://github.com/deepaksslibra)
--   [Kyle Kitlinski](https://github.com/K-Kit)
--   [Milena Dimova](https://www.linkedin.com/in/dimova-milena-31010414) (UI/UX Designer)
 
 View full list of our [contributors](https://github.com/ever-co/ever/graphs/contributors).
 
@@ -237,9 +251,10 @@ In a production setup, all client-side to server-side (backend, APIs) communicat
 ## License
 
 This software is available under following licenses:
-- [Ever® Platform Community™ Edition](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-community-edition-license)
-- [Ever® Platform Small Business™](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-small-business-license)
-- [Ever® Platform Enterprise™](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-enterprise-license)
+
+-   [Ever® Platform Community™ Edition](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-community-edition-license)
+-   [Ever® Platform Small Business™](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-small-business-license)
+-   [Ever® Platform Enterprise™](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-enterprise-license)
 
 #### The default Ever® Platform™ license, without a valid Ever® Platform Enterprise™ or Ever® Platform Small Business™ License agreement, is the Ever® Platform Community™ Edition License.
 
@@ -258,6 +273,7 @@ All other brand and product names are trademarks, registered trademarks or servi
 
 #### Copyright © 2016-present, Ever Co. LTD. All rights reserved.
 
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=ever-co.ever-platform)
 [![Circle CI](https://circleci.com/gh/ever-co/ever.svg?style=svg)](https://circleci.com/gh/ever-co/ever)
 [![codecov](https://codecov.io/gh/ever-co/ever/branch/master/graph/badge.svg)](https://codecov.io/gh/ever-co/ever)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e7b2b38660f44963989ac9d49ae76d4d)](https://www.codacy.com/app/Ever/ever?utm_source=github.com&utm_medium=referral&utm_content=ever-co/ever&utm_campaign=Badge_Grade)
@@ -267,4 +283,6 @@ All other brand and product names are trademarks, registered trademarks or servi
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fever.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fever?ref=badge_shield)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io)
 
-#### *** If you are running IT Company, check our new project [Gauzy](https://github.com/ever-co/gauzy) ***
+## P.S.
+- If you are running any business or doing freelance, check our new project [Gauzy](https://github.com/ever-co/gauzy)
+- [We are Hiring: remote TypeScript / NestJS / Angular developers](https://github.com/ever-co/jobs#available-positions)

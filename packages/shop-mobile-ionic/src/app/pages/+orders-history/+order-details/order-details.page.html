@@ -1,0 +1,17 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-buttons slot="start">
+			<ion-menu-button autoHide="false"></ion-menu-button>
+			<!-- TODO replace with back button -->
+		</ion-buttons>
+
+		<ion-title>Order Details</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content dir="{{ 'CURRENT_DIRECTION' | translate }}">
+	<ion-spinner *ngIf="!order"></ion-spinner>
+	<div *ngIf="order">
+		<e-cu-order [order]="order" [showDetailsButton]="true"></e-cu-order>
+	</div>
+</ion-content>

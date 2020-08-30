@@ -1,0 +1,189 @@
+<nb-card *ngIf="selectedOrder">
+	<nb-card-header [hidden]="hideHeader" class="header-color">
+		<ea-order-header-info
+			[selectedOrder]="selectedOrder"
+		></ea-order-header-info>
+	</nb-card-header>
+
+	<nb-card-body class="order-view">
+		<div
+			*ngIf="selectedOrder?.products.length"
+			class="btn-group btn-group-lg actions"
+			aria-label="Order Actions"
+			[hidden]="
+				selectedOrder.warehouseStatus >= 7 || selectedOrder.isCancelled
+			"
+		>
+			<div [hidden]="selectedOrder.warehouseStatus != 0" class="btnOrder">
+				<button
+					[disabled]="!isSelectedOrderActionsAvailable"
+					type="button"
+					class="btn btn-outline-secondary order-btn-margin-bottom"
+					(click)="updateOrderWarehouseStatus(1)"
+					[nbSpinner]="loading"
+					nbSpinnerStatus="success"
+				>
+					<span class="ion-md-skip-forward"></span>
+					{{ 'WAREHOUSE_VIEW.ORDER.CONFIRM' | translate }}
+				</button>
+			</div>
+
+			<div [hidden]="selectedOrder.warehouseStatus != 1" class="btnOrder">
+				<button
+					[disabled]="!isSelectedOrderActionsAvailable"
+					type="button"
+					class="btn btn-startProcessing"
+					(click)="updateOrderWarehouseStatus(2)"
+					[nbSpinner]="loading"
+					nbSpinnerStatus="success"
+				>
+					<span class="ion-md-log-in"></span>
+					{{ 'WAREHOUSE_VIEW.ORDER.START_PROCESSING' | translate }}
+				</button>
+			</div>
+
+			<div [hidden]="selectedOrder.warehouseStatus != 2" class="btnOrder">
+				<button
+					[disabled]="!isSelectedOrderActionsAvailable"
+					type="button"
+					class="btn btn-outline-info btn-rectangle order-btn-margin-bottom"
+					(click)="updateOrderWarehouseStatus(3)"
+					[nbSpinner]="loading"
+					nbSpinnerStatus="success"
+				>
+					<span class="ion-md-list" aria-hidden="true"></span>
+					{{ 'WAREHOUSE_VIEW.ORDER.START_ALLOCATION' | translate }}
+				</button>
+			</div>
+
+			<div [hidden]="selectedOrder.warehouseStatus != 3" class="btnOrder">
+				<button
+					[disabled]="!isSelectedOrderActionsAvailable"
+					type="button"
+					class="btn btn-outline-success btn-sm btn-rectangle"
+					(click)="updateOrderWarehouseStatus(4)"
+					[nbSpinner]="loading"
+					nbSpinnerStatus="success"
+				>
+					<span class="ion-md-clipboard" aria-hidden="true"></span>
+					{{ 'WAREHOUSE_VIEW.ORDER.ALLOCATED' | translate }}
+				</button>
+			</div>
+
+			<div [hidden]="selectedOrder.warehouseStatus != 3" class="btnOrder">
+				<button
+					[disabled]="!isSelectedOrderActionsAvailable"
+					type="button"
+					class="btn btn-outline-danger btn-sm btn-rectangle"
+					(click)="updateOrderWarehouseStatus(200)"
+					[nbSpinner]="loading"
+					nbSpinnerStatus="success"
+				>
+					<span class="ion-md-alert" aria-hidden="true"></span>
+					{{ 'WAREHOUSE_VIEW.ORDER.ALLOCATION_FAILS' | translate }}
+				</button>
+			</div>
+
+			<div [hidden]="selectedOrder.warehouseStatus != 4" class="btnOrder">
+				<button
+					[disabled]="!isSelectedOrderActionsAvailable"
+					type="button"
+					class="btn btn-outline-primary btn-sm btn-rectangle"
+					(click)="updateOrderWarehouseStatus(5)"
+					[nbSpinner]="loading"
+					nbSpinnerStatus="success"
+				>
+					<span class="ion-md-filing" aria-hidden="true"></span>
+					{{ 'WAREHOUSE_VIEW.ORDER.START_PACKAGING' | translate }}
+				</button>
+			</div>
+
+			<div [hidden]="selectedOrder.warehouseStatus != 5" class="btnOrder">
+				<button
+					[disabled]="!isSelectedOrderActionsAvailable"
+					type="button"
+					class="btn btn-outline-success btn-sm btn-rectangle"
+					(click)="updateOrderWarehouseStatus(6)"
+					[nbSpinner]="loading"
+					nbSpinnerStatus="success"
+				>
+					<span class="fa fa fa-archive" aria-hidden="true"></span>
+					{{ 'WAREHOUSE_VIEW.ORDER.PACKAGED' | translate }}
+				</button>
+			</div>
+
+			<div [hidden]="selectedOrder.warehouseStatus != 5" class="btnOrder">
+				<button
+					[disabled]="!isSelectedOrderActionsAvailable"
+					type="button"
+					class="btn btn-outline-danger btn-sm btn-rectangle"
+					(click)="updateOrderWarehouseStatus(201)"
+					[nbSpinner]="loading"
+					nbSpinnerStatus="success"
+				>
+					<span class="ion-md-alert" aria-hidden="true"></span>
+					{{ 'WAREHOUSE_VIEW.ORDER.PACKAGING_FAILS' | translate }}
+				</button>
+			</div>
+
+			<div
+				*ngIf="
+					selectedOrder.warehouseStatus === 6 &&
+					selectedOrder.orderType === orderTypeDelivery
+				"
+				class="btnOrder"
+			>
+				<button
+					[disabled]="
+						!isSelectedOrderActionsAvailable ||
+						selectedOrder.carrierStatus < 2
+					"
+					type="button"
+					class="btn btn-outline-primary btn-sm btn-rectangle"
+					ng-disabled="selectedOrder.carrier == null || selectedOrder.carrierStatus < 2"
+					(click)="updateOrderWarehouseStatus(7)"
+					[nbSpinner]="loading"
+					nbSpinnerStatus="success"
+				>
+					<span class="ion-md-airplane" aria-hidden="true"></span>
+					{{ 'WAREHOUSE_VIEW.ORDER.GIVEN_TO_CARRIER' | translate }}
+				</button>
+			</div>
+			<div
+				*ngIf="
+					selectedOrder.warehouseStatus === 6 &&
+					selectedOrder.orderType === orderTypeTakeaway
+				"
+				class="btnOrder"
+			>
+				<button
+					type="button"
+					class="btn btn-outline-primary btn-sm btn-rectangle"
+					(click)="updateOrderWarehouseStatus(8)"
+					[nbSpinner]="loading"
+					nbSpinnerStatus="success"
+				>
+					<span class="ion-md-happy" aria-hidden="true"></span>
+					{{ 'WAREHOUSE_VIEW.ORDER.GIVEN_TO_CUSTOMER' | translate }}
+				</button>
+			</div>
+		</div>
+
+		<h4
+			*ngIf="!selectedOrder?.products.length"
+			class="text-danger pb-2 pl-3"
+		>
+			{{
+				'WAREHOUSE_VIEW.ORDER.CANT_PROCESSING_WITHOUT_PRODUCTS'
+					| translate
+			}}
+		</h4>
+
+		<div
+			*ngIf="selectedOrder.products.length"
+			class="col-12 no-padding slider"
+		>
+			<image-slider [slideImages]="slideImages"></image-slider>
+		</div>
+	</nb-card-body>
+</nb-card>

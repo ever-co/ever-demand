@@ -1,0 +1,20 @@
+<div id="header" class="bar bar-header bar-brand">
+	<h1 class="title">{{ 'TERMS_OF_USE_VIEW.TITLE' | translate }}</h1>
+	<div class="buttons buttons-left header-item">
+		<span class="left-buttons">
+			<div class="waves-effect waves-classic">
+				<ion-menu-toggle class="button-icon">
+					<ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+				</ion-menu-toggle>
+			</div>
+		</span>
+	</div>
+</div>
+<ion-content padding class="app-view">
+	<loading class="pt-4" [hidden]="useTermsHtml !== null"></loading>
+	<div
+		class="pt-4"
+		*ngIf="useTermsHtml !== null"
+		[innerHTML]="useTermsHtml | safe: 'html'"
+	></div>
+</ion-content>

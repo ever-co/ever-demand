@@ -1,0 +1,51 @@
+<nb-card [nbSpinner]="loading">
+	<div class="modal-header">
+		<span class="modal-title">
+			{{ 'CARRIERS_VIEW.CARRIER_PAGE.REGISTER_NEW_CARRIER' | translate }}
+		</span>
+		<button class="close" aria-label="Close" (click)="cancel()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+
+	<form-wizard
+		class="form-horizontal"
+		[formGroup]="form"
+		[buttonDone]="buttonDone"
+		[buttonNext]="buttonNext"
+		[buttonPrevious]="buttonPrevious"
+	>
+		<wizard-step
+			[title]="'CARRIERS_VIEW.CREATE.BASIC_INFO' | translate"
+			[isValid]="basicInfo.valid"
+		>
+			<br />
+			<ea-carrier-basic-info-form
+				#basicInfoForm
+				[form]="basicInfo"
+				[password]="password"
+			></ea-carrier-basic-info-form>
+		</wizard-step>
+
+		<wizard-step
+			[title]="'CARRIERS_VIEW.CREATE.LOCATION' | translate"
+			[isValid]="location.valid"
+			(onComplete)="createCarrier()"
+		>
+			<br />
+			<ea-location-form
+				#locationForm
+				[form]="location"
+				[showAutocompleteSearch]="true"
+				(mapCoordinatesEmitter)="onCoordinatesChanges($event)"
+				(mapGeometryEmitter)="onGeometrySend($event)"
+			>
+			</ea-location-form>
+
+			<google-map
+				[mapCoordEvent]="mapCoordEmitter"
+				[mapGeometryEvent]="mapGeometryEmitter"
+			></google-map>
+		</wizard-step>
+	</form-wizard>
+</nb-card>

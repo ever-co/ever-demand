@@ -1,0 +1,65 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.make-order-wrapper {
+	background: white !important;
+	.smart-table {
+		tr.ng2-smart-titles > {
+			th.ng2-smart-th.img,
+			th.ng2-smart-th.price,
+			th.ng2-smart-th.available,
+			th.ng2-smart-th.amount {
+				//  Titles for 'price', 'available' and 'amount'.
+				text-align: center;
+			}
+
+			th.ng2-smart-th.img
+				> ng2-st-column-title
+				> div
+				> ng2-smart-table-title
+				> a {
+				// Image title padding 0
+				padding: 0;
+			}
+		}
+		tr > {
+			td:nth-child(n + 3),
+			td:nth-child(1) {
+				text-align: center;
+			}
+		}
+	}
+	table {
+		margin: 0px auto;
+		td {
+			text-align: left;
+		}
+	}
+
+	.ng2-smart-titles {
+		height: 50px !important;
+	}
+
+	nav.ng2-smart-pagination-nav {
+		margin: 0 auto;
+	}
+
+	li {
+		width: 50% !important;
+	}
+
+	.ng2-smart-titles {
+		height: 50px !important;
+	}
+
+	.pagination {
+		line-height: 1 !important;
+	}
+}
+
+.order-button.button {
+	margin-top: 20px !important;
+	color: white !important;
+
+	padding: 0.2rem 1.2rem;
+	font-size: 1.2rem;
+}

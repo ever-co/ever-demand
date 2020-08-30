@@ -1,0 +1,13 @@
+**/*.js
+**/*.js.map
+lib/**/*.js
+lib/**/*.js.map
+locale/**/*.js
+locale/**/*.js.map
+routers/**/*.js
+routers/**/*.js.map
+node_modules
+**/*.d.ts
+**/*.d.ts.map
+build
+dist

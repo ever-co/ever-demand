@@ -1,0 +1,42 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.order-image-container {
+	padding: 0 !important;
+	.order-image {
+		display: block !important;
+		padding: 0 8px 8px 8px;
+
+		.image {
+			height: 90%;
+			position: relative;
+
+			.product-count {
+				background: $assertive;
+				color: white;
+
+				padding: 4px 7px;
+				position: absolute;
+				// right: 0;
+				right: 5px;
+				top: 5px;
+				border-radius: 50%;
+			}
+		}
+
+		.name {
+			height: 10%;
+			background: $brand;
+			color: white;
+			padding: 5px;
+			margin-top: -4px;
+
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+	}
+
+	.product-info {
+		padding-top: 8px;
+	}
+}

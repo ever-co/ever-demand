@@ -1,0 +1,33 @@
+<ion-header class="bar-brand bar bar-header disable-user-behavior">
+	<div class="buttons buttons-left header-item">
+		<span class="left-buttons">
+			<div class="waves-effect waves-classic">
+				<ion-menu-toggle class="button-icon">
+					<ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+				</ion-menu-toggle>
+			</div>
+		</span>
+	</div>
+	<ion-title>
+		<!--
+			<img ng-if="sideMenuCtrl.titleImageSrc" ng-src="{{sideMenuCtrl.titleImageSrc}}" style="height: 15px;"/>
+		-->
+		{{ 'MAIN_VIEW.EVERCO_DRIVER' | translate }}
+	</ion-title>
+</ion-header>
+
+<ion-content class="carrier-view" scroll="false">
+	<div *ngIf="selectedOrder?.isCancelled" class="money-amount-container">
+		<div class="money-amount">
+			<!-- TODO add translate -->
+			The customer cancel order
+		</div>
+	</div>
+	<div *ngIf="isTakenFromAnotherCarrier" class="money-amount-container">
+		<div class="money-amount">
+			<!-- TODO add translate -->
+			Another Carrier took the order first !
+		</div>
+	</div>
+	<ion-router-outlet></ion-router-outlet>
+</ion-content>

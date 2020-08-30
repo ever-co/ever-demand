@@ -1,0 +1,44 @@
+<div class="customers-page">
+	<div id="header" class="bar bar-header bar-brand">
+		<h1 class="title">{{ 'CUSTOMERS_VIEW.CUSTOMERS' | translate }}</h1>
+		<div class="buttons buttons-left header-item">
+			<span class="left-buttons">
+				<div class="waves-effect waves-classic">
+					<ion-menu-toggle class="button-icon">
+						<ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+					</ion-menu-toggle>
+				</div>
+			</span>
+		</div>
+		<div class="button-bar-right-container allowOverflow">
+			<div class="button-bar">
+				<a
+					class="button button-brand"
+					(click)="showCustomerMutationModal()"
+				>
+					{{ 'CUSTOMERS_VIEW.ADD_CUSTOMER' | translate }}
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div id="contentWrapper">
+		<ng2-smart-table
+			*ngIf="!showNoDeliveryIcon"
+			class="smart-table"
+			[settings]="settingsSmartTable"
+			[source]="sourceSmartTable"
+			(create)="showCustomerMutationModal()"
+			(edit)="editCustomer($event)"
+			(delete)="deleteCustomer($event)"
+			(custom)="showAddress($event)"
+		>
+		</ng2-smart-table>
+		<div *ngIf="showNoDeliveryIcon">
+			<div class="no-customers-message">
+				<i class="fa fa-user-times"></i>
+				<h2>NO CUSTOMERS</h2>
+			</div>
+		</div>
+	</div>
+</div>

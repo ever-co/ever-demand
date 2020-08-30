@@ -1,0 +1,43 @@
+<ion-menu
+	menuId="ltr"
+	(ionWillOpen)="menuOpened()"
+	[hidden]="maintenanceMode"
+	contentId="pageContainer"
+	class="menu-left"
+	side="start"
+>
+	<ion-header class="bar-assertive bar bar-header disable-user-behavior">
+		<h1 class="title header-bar-big-title">
+			<!-- <img ng-if="sideMenuCtrl.titleImageSrc" ng-src="{{sideMenuCtrl.titleImageSrc}}" style="height: 15px;"/> -->
+			<span>
+				{{ 'SIDE_MENU.TITLE' | translate }}
+			</span>
+		</h1>
+	</ion-header>
+
+	<ion-content>
+		<e-cu-submenu></e-cu-submenu>
+	</ion-content>
+</ion-menu>
+
+<ion-menu
+	menuId="rtl"
+	(ionWillOpen)="menuOpened()"
+	[hidden]="maintenanceMode"
+	contentId="pageContainer"
+	class="menu-left"
+	side="end"
+>
+	<ion-header class="bar-assertive bar bar-header disable-user-behavior">
+		<h1 class="title header-bar-big-title">
+			<!-- <img ng-if="sideMenuCtrl.titleImageSrc" ng-src="{{sideMenuCtrl.titleImageSrc}}" style="height: 15px;"/> -->
+			<span>
+				{{ 'SIDE_MENU.TITLE' | translate }}
+			</span>
+		</h1>
+	</ion-header>
+
+	<ion-content>
+		<e-cu-submenu></e-cu-submenu>
+	</ion-content>
+</ion-menu>

@@ -1,0 +1,10 @@
+<nb-card>
+	<nb-card-footer>
+		<ng2-smart-table
+			[settings]="settingsSmartTable"
+			[source]="sourceSmartTable"
+			(userRowSelect)="selectOrder($event)"
+		>
+		</ng2-smart-table>
+	</nb-card-footer>
+</nb-card>

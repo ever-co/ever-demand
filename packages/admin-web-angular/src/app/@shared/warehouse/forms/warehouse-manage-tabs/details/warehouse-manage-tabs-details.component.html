@@ -1,0 +1,258 @@
+<div class="col-sm-12" [formGroup]="form" *ngIf="form">
+	<fieldset>
+		<div class="form-group row">
+			<label class="col-sm-2 control-label">{{
+				'WAREHOUSE_VIEW.MUTATION.NAME' | translate
+			}}</label>
+
+			<div class="col-sm-9">
+				<input
+					type="text"
+					class="form-control"
+					placeholder="{{
+						'WAREHOUSE_VIEW.MUTATION.NAME' | translate
+					}}"
+					formControlName="name"
+				/>
+
+				<div
+					*ngIf="name.errors && (name.dirty || name.touched)"
+					class="alert alert-danger"
+				>
+					<div [hidden]="!name.hasError('required')">
+						{{
+							'WAREHOUSE_VIEW.MUTATION.ERRORS.NAME_IS_REQUIRED'
+								| translate
+						}}!
+					</div>
+					<div [hidden]="!name.hasError('minlength')">
+						{{
+							'WAREHOUSE_VIEW.MUTATION.ERRORS.NAME_ATLEAST_3_CHARS'
+								| translate
+						}}!
+					</div>
+					<div [hidden]="!name.hasError('maxlength')">
+						{{
+							'WAREHOUSE_VIEW.MUTATION.ERRORS.NAME_MORE_THAN_30_CHARS'
+								| translate
+						}}!
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-sm-2 control-label">{{
+				'WAREHOUSE_VIEW.MUTATION.PHOTO' | translate
+			}}</label>
+
+			<div class="col-sm-9">
+				<e-cu-file-uploader
+					[placeholder]="uploaderPlaceholder"
+					[name]="name?.value"
+					[fileUrl]="logo?.value"
+					(uploadedImgUrl)="logo.setValue($event)"
+				></e-cu-file-uploader>
+
+				<div *ngIf="logo.invalid" class="alert alert-danger">
+					{{
+						'WAREHOUSE_VIEW.MUTATION.ERRORS.INVALID_URL'
+							| translate
+					}}!
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row" [hidden]="logo.invalid">
+			<label class="col-sm-2 control-label"></label>
+			<div class="col-sm-9">
+				<div class="row preview-img" [hidden]="!showLogoMeta">
+					<div>
+						<img
+							#logoPreview
+							src="{{ logo.value }}"
+							alt="Invalid image"
+							class="img-rounded"
+						/>
+					</div>
+					<div class="removeIcon" (click)="deleteImg()">
+						<div
+							class="ion-md-remove-circle"
+							placeholder="Remove image"
+							title="{{ 'PLACEHOLDER.REMOVE_IMAGE' | translate }}"
+						></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-sm-9 offset-sm-2">
+				<div class="checkbox">
+					<nb-checkbox status="success" formControlName="isActive">{{
+						'WAREHOUSE_VIEW.MUTATION.IS_ACTIVE' | translate
+					}}</nb-checkbox>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-sm-9 offset-sm-2">
+				<div class="checkbox">
+					<nb-checkbox
+						status="success"
+						formControlName="ordersShortProcess"
+					>
+						{{
+							'WAREHOUSE_VIEW.MUTATION.ORDERS_SHORT_PROCESS'
+								| translate
+						}}
+					</nb-checkbox>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-sm-9 offset-sm-2">
+				<div class="checkbox">
+					<nb-checkbox
+						status="success"
+						formControlName="isManufacturing"
+						>{{
+							'WAREHOUSE_VIEW.MUTATION.PRODUCTS_MANUFACTURING'
+								| translate
+						}}</nb-checkbox
+					>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-sm-9 offset-sm-2">
+				<div class="checkbox">
+					<nb-checkbox
+						status="success"
+						formControlName="isCarrierRequired"
+						>{{
+							'WAREHOUSE_VIEW.MUTATION.CARRIER_REQUIRED'
+								| translate
+						}}</nb-checkbox
+					>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-sm-4 offset-sm-2">
+				<div class="checkbox">
+					<nb-checkbox
+						status="success"
+						formControlName="enabledOrderCancelation"
+						>{{
+							'WAREHOUSE_VIEW.MUTATION.UNALLOWED_ORDER_CANCELATION'
+								| translate
+						}}</nb-checkbox
+					>
+				</div>
+			</div>
+			<div class="col-sm-4" *ngIf="enabledOrderCancelation.value">
+				<select
+					class="form-control"
+					formControlName="stateOrderCancelation"
+				>
+					<option
+						*ngFor="let option of orderCancelationOptions"
+						value="{{ option.value }}"
+					>
+						{{
+							'WAREHOUSE_VIEW.MUTATION.ORDER_CANCELATION_OPTIONS.' +
+								option.text | translate
+						}}
+					</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-sm-9 offset-sm-2">
+				<div class="checkbox">
+					<nb-checkbox status="success" formControlName="inStoreMode">
+						{{
+							'WAREHOUSE_VIEW.MUTATION.IN_STORE_MODE' | translate
+						}}
+					</nb-checkbox>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-sm-9 offset-sm-2">
+				<div class="checkbox">
+					<nb-checkbox
+						status="success"
+						formControlName="carrierCompetition"
+					>
+						{{
+							'WAREHOUSE_VIEW.MUTATION.CARRIER_WORK_COMPETITION'
+								| translate
+						}}
+					</nb-checkbox>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-sm-2 control-label">{{
+				'WAREHOUSE_VIEW.MUTATION.CARRIERS' | translate
+			}}</label>
+
+			<div class="col-sm-9">
+				<div class="checkbox">
+					<nb-checkbox
+						status="success"
+						formControlName="hasRestrictedCarriers"
+						>{{
+							'WAREHOUSE_VIEW.MUTATION.USE_ONLY_SPECIFIC_CARRIERS'
+								| translate
+						}}</nb-checkbox
+					>
+				</div>
+
+				<div *ngIf="hasRestrictedCarriers.value">
+					<ss-multiselect-dropdown
+						[options]="carriersOptions"
+						[settings]="{ displayAllSelectedText: true }"
+						formControlName="carriersIds"
+						class="carriers-dropdown"
+					>
+					</ss-multiselect-dropdown>
+				</div>
+			</div>
+		</div>
+
+		<!-- TODO add translate -->
+		<div
+			*ngIf="hasRestrictedCarriers.value && carriersIds?.value.length"
+			class="form-group row"
+		>
+			<label class="col-sm-2 control-label">Delivery</label>
+
+			<div class="col-sm-9">
+				<nb-radio-group
+					[(value)]="delivery"
+					class="row m-0"
+					name="size"
+				>
+					<nb-radio name="size" [value]="'all'">
+						Use All Carriers
+					</nb-radio>
+					<nb-radio name="size" [value]="'onlyStore'">
+						Use Only Store Carriers
+					</nb-radio>
+					<nb-radio name="size" [value]="'preferStore'">
+						Prefer Store Carriers
+					</nb-radio>
+				</nb-radio-group>
+			</div>
+		</div>
+	</fieldset>
+</div>

@@ -1,0 +1,19 @@
+<div
+	class="delivery-info"
+	[ngClass]="{
+		'over-image brand-light': overImage,
+		'show-top': !hasDiscount
+	}"
+>
+	<span class="delivery-sign">
+		<!-- <i class="fa {{ getProductDeliverySignIconName() }}"></i> -->
+		<i class="material-icons">
+			{{ getProductDeliverySignIconName() }}
+		</i>
+	</span>
+
+	<div class="delivery-lines">
+		<small>{{ getProductDeliveryLine1() }}</small>
+		<small>{{ getProductDeliveryLine2() }}</small>
+	</div>
+</div>

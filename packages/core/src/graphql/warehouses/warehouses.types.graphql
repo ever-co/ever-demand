@@ -1,0 +1,221 @@
+type Warehouse {
+	_id: String!
+	id: String!
+	_createdAt: Date!
+
+	# Is Warehouse working now
+	isActive: Boolean!
+
+	# Is Payment enabled
+	isPaymentEnabled: Boolean
+
+	# Warehouse current location
+	geoLocation: GeoLocation!
+
+	# Products available at this warehouse for customer to purchase
+	# TODO products: [WarehouseProduct!]!
+
+	name: String!
+
+	# Url of the logo
+	logo: String!
+
+	username: String!
+
+	contactEmail: String
+	contactPhone: String
+
+	forwardOrdersUsing: [Int!]
+	ordersEmail: String
+	ordersPhone: String
+
+	# Is Warehouse products by default require manufacturing
+	isManufacturing: Boolean
+
+	# Is warehouse products by default become available only when carrier found (Should we search for carrier before or after customer purchases product)
+	isCarrierRequired: Boolean
+
+	devicesIds: [String!]!
+	devices: [Device!]! # Resolved
+	orders: [Order!]! # Resolved
+	users: [User!]! # Resolved
+	hasRestrictedCarriers: Boolean
+	carriersIds: [String!]
+	usedCarriersIds: [String!]
+	carriers: [Carrier!] # Resolved, if hasRestrictedCarriers is false -> returns null
+	orderBarcodeType: Int
+	useOnlyRestrictedCarriersForDelivery: Boolean
+	preferRestrictedCarriersForDelivery: Boolean
+	ordersShortProcess: Boolean
+	orderCancelation: OrderCancelation!
+	inStoreMode: Boolean!
+	carrierCompetition: Boolean!
+}
+
+input WarehouseCreateInput {
+	# Warehouse current location
+	geoLocation: GeoLocationCreateInput!
+
+	name: String!
+	logo: String! # the url of it
+	username: String!
+
+	# Is Warehouse working now
+	isActive: Boolean
+
+	# Is Payment enabled
+	isPaymentEnabled: Boolean
+
+	contactEmail: String
+	contactPhone: String
+
+	forwardOrdersUsing: [Int!]
+	ordersEmail: String
+	ordersPhone: String
+
+	# Is Warehouse products by default require manufacturing
+	isManufacturing: Boolean
+
+	# Is warehouse products by default become available only when carrier found (Should we search for carrier before or after customer purchases product)
+	isCarrierRequired: Boolean
+
+	hasRestrictedCarriers: Boolean
+	carriersIds: [String!]
+	usedCarriersIds: [String!]
+	useOnlyRestrictedCarriersForDelivery: Boolean
+	preferRestrictedCarriersForDelivery: Boolean
+	inStoreMode: Boolean!
+	carrierCompetition: Boolean!
+}
+
+input WarehousesFindInput {
+	# TODO geoLocation: GeoLocation
+
+	isActive: Boolean
+	isPaymentEnabled: Boolean
+
+	name: String
+
+	# Url of the logo
+	logo: String
+
+	username: String
+
+	contactEmail: String
+	contactPhone: String
+
+	forwardOrdersUsing: [Int]
+	ordersEmail: String
+	ordersPhone: String
+
+	# Is Warehouse products by default require manufacturing
+	isManufacturing: Boolean
+
+	# Is warehouse products by default become available only when carrier found (Should we search for carrier before or after customer purchases product)
+	isCarrierRequired: Boolean
+
+	# TODO devices: Device[]
+
+	hasRestrictedCarriers: Boolean
+	carriersIds: [String!]
+	usedCarriersIds: [String!]
+	useOnlyRestrictedCarriersForDelivery: Boolean
+	preferRestrictedCarriersForDelivery: Boolean
+	inStoreMode: Boolean!
+	carrierCompetition: Boolean!
+}
+
+type Query {
+	warehouse(id: String!): Warehouse
+
+	warehouses(
+		findInput: WarehousesFindInput
+		pagingOptions: PagingOptionsInput
+	): [Warehouse]!
+
+	nearbyStores(geoLocation: GeoLocationFindInput!): [Warehouse!]!
+
+	countStoreCustomers(storeId: String!): Int!
+
+	getAllActiveStores(fullProducts: Boolean!): [Warehouse!]!
+
+	getStoreCustomers(storeId: String!): [User!]!
+
+	getStoreProducts(
+		storeId: String!
+		fullProducts: Boolean!
+	): [WarehouseProduct!]!
+
+	getStoreAvailableProducts(storeId: String!): [WarehouseProduct!]!
+
+	getCountExistingCustomers: ExistingCustomersByStores!
+
+	getCountExistingCustomersToday: ExistingCustomersByStores!
+
+	hasExistingStores: Boolean!
+
+	getCountOfMerchants: Int!
+	getAllStores: [Warehouse!]!
+
+	getMerchantsBuyName(
+		searchName: String!
+		geoLocation: GeoLocationFindInput
+	): [Warehouse]!
+}
+
+type ExistingCustomersByStores {
+	total: Int!
+	perStore: [CustomersByStore!]!
+}
+
+type CustomersByStore {
+	storeId: String!
+	customersCount: Int!
+}
+
+type WarehouseLoginInfo {
+	warehouse: Warehouse!
+	token: String!
+}
+
+input WarehouseRegisterInput {
+	warehouse: WarehouseCreateInput!
+	password: String!
+}
+
+input WarehousePasswordUpdateInput {
+	current: String!
+	new: String!
+}
+
+type Mutation {
+	registerWarehouse(registerInput: WarehouseRegisterInput!): Warehouse!
+
+	warehouseLogin(username: String!, password: String!): WarehouseLoginInfo
+
+	removeWarehousesByIds(ids: [String!]!): Void
+
+	updateWarehousePassword(
+		id: String!
+		password: WarehousePasswordUpdateInput!
+	): Void
+
+	updateStoreGeoLocation(
+		storeId: String!
+		geoLocation: GeoLocationCreateObject!
+	): Warehouse!
+}
+
+input GeoLocationCreateObject {
+	loc: Location!
+	countryId: Int!
+	city: String!
+	postcode: String!
+	streetAddress: String!
+	house: String!
+}
+
+type OrderCancelation {
+	enabled: Boolean
+	onState: Int
+}

@@ -1,0 +1,118 @@
+<toaster-container></toaster-container>
+
+<div>
+	<nb-card *ngIf="currentCarrier">
+		<nb-card-header>
+			<!-- back -->
+			<div class="d-inline-flex">
+				<svg
+					viewBox="0 0 24 24"
+					class="control-icon control-icon-left"
+					[routerLink]="['/carriers/' + currentCarrier.id]"
+				>
+					<path
+						d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"
+					/>
+				</svg>
+
+				<h1>{{ 'CARRIERS_VIEW.EDIT.EDIT_CARRIER' | translate }}</h1>
+			</div>
+			<button
+				nbButton
+				size="large"
+				status="success"
+				type="button"
+				class="btn-icon pull-right btn-with-icon no-text-transform"
+				(click)="updateCarrier()"
+				[disabled]="!isCarrierValid"
+			>
+				<i class="ion-md-checkmark mr-1"></i>
+				{{ 'CARRIERS_VIEW.CARRIER_PAGE.SAVE' | translate }}
+			</button>
+		</nb-card-header>
+	</nb-card>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<nb-tabset fullWidth>
+				<nb-tab
+					tabTitle="{{ 'CARRIERS_VIEW.EDIT.BASIC_INFO' | translate }}"
+				>
+					<nb-card [nbSpinner]="loading">
+						<nb-card-header>
+							<div class="text">
+								{{
+									'CARRIERS_VIEW.EDIT.BASIC_INFO' | translate
+								}}
+							</div>
+						</nb-card-header>
+
+						<nb-card-body>
+							<ea-carrier-basic-info-form
+								#basicInfoForm
+								[form]="basicInfo"
+							></ea-carrier-basic-info-form>
+						</nb-card-body>
+					</nb-card>
+				</nb-tab>
+
+				<nb-tab
+					tabTitle="{{ 'CARRIERS_VIEW.EDIT.LOCATION' | translate }}"
+				>
+					<nb-card>
+						<nb-card-header>
+							<div class="text">
+								{{ 'CARRIERS_VIEW.EDIT.LOCATION' | translate }}
+							</div>
+
+							<button
+								(click)="emitMapType('terrain')"
+								class="btn btn-link btn-sm text-dark"
+								id="map-type"
+							>
+								{{ 'TERRAIN' | translate }}
+							</button>
+							<button
+								(click)="emitMapType('satellite')"
+								class="btn btn-link btn-sm text-dark"
+								id="map-type"
+							>
+								{{ 'SATELLITE' | translate }}
+							</button>
+							<button
+								(click)="emitMapType('roadmap')"
+								class="btn btn-link btn-sm text-dark"
+								id="map-type"
+							>
+								{{ 'ROAD_MAP' | translate }}
+							</button>
+						</nb-card-header>
+
+						<nb-card-body>
+							<ea-location-form
+								#locationForm
+								[form]="location"
+								[showAutocompleteSearch]="true"
+								[apartment]="apartment"
+								(mapCoordinatesEmitter)="
+									onCoordinatesChanges($event)
+								"
+								(mapGeometryEmitter)="onGeometrySend($event)"
+							>
+							</ea-location-form>
+						</nb-card-body>
+
+						<nb-card-footer class="p-0">
+							<google-map
+								[mapTypeEvent]="mapTypeEmitter"
+								[mapCoordEvent]="mapCoordEmitter"
+								[mapGeometryEvent]="mapGeometryEmitter"
+							>
+							</google-map>
+						</nb-card-footer>
+					</nb-card>
+				</nb-tab>
+			</nb-tabset>
+		</div>
+	</div>
+</div>

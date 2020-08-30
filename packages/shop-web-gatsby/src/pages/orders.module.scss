@@ -1,0 +1,66 @@
+.order {
+	height: 200px;
+	overflow: hidden;
+	img {
+		height: 180px;
+		max-width: 180px;
+	}
+}
+
+.orders {
+	padding-top: 50px;
+	padding-bottom: 50px;
+
+	margin: auto;
+	width: 50vw;
+}
+
+.payment {
+	text-align: center;
+	margin-top: 51px;
+	position: absolute;
+	right: 79%;
+	// left: calc(25vw - 250px);
+}
+
+@media screen and (max-width: 1499px) /* Tablet */ {
+	.orders {
+		width: 70vw;
+	}
+
+	.payment {
+		left: calc(35vw - 180px);
+	}
+}
+
+@media screen and (max-width: 800px) /* Mobile */ {
+	.orders {
+		width: 90vw;
+	}
+
+	.payment {
+		left: calc(45vw - 180px);
+	}
+}
+
+.payment .payment-button .payment-button-icon {
+	height: 18px;
+	position: relative;
+	top: -1px;
+	margin-right: 5px;
+	fill: #fff;
+}
+
+.payment .payment-note {
+	margin-top: 10px;
+	margin-bottom: 0;
+
+	text-align: center;
+	font-family: Roboto, 'Helvetica Neue', sans-serif;
+	font-weight: 300;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-size: 18px;
+	line-height: 22px;
+	color: rgba(0, 0, 0, 0.8);
+}

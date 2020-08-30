@@ -1,28 +1,14 @@
 {
 	"folders": [
 		{
-			"path": "admin"
-		},
-		{
-			"path": "backend"
-		},
-		{
-			"path": "carrier"
-		},
-		{
-			"path": "merchant"
-		},
-		{
-			"path": "shared"
-		},
-		{
-			"path": "shop"
+			"path": "packages"
 		}
 	],
 	"settings": {
 		"typescript.tsdk": "./node_modules/typescript/lib",
 		"debug.node.autoAttach": "on",
 		"search.usePCRE2": true,
-		"git.ignoreLimitWarning": true
+		"git.ignoreLimitWarning": true,
+		"vsicons.presets.nestjs": true
 	}
 }

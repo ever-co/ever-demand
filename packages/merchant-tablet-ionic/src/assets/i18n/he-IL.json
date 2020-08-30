@@ -1,0 +1,483 @@
+{
+	"LANGUAGE": {
+		"ID": "he-IL",
+		"NAME": "עברית"
+	},
+	"DASHBOARD": "לוּחַ מַחווָנִים",
+	"CURRENT_DIRECTION": "rtl",
+	"SIDEBAR_SIDE": "ימין",
+	"SIDE_MENU": {
+		"TITLE": "אי פעם סוחרים",
+		"GROUPS": {
+			"NO_TITLE": {
+				"DIVER_TITLE": "",
+				"ITEMS": {
+					"WAREHOUSE": "לוּחַ מַחווָנִים"
+				}
+			},
+			"SETTINGS": {
+				"SETTINGS": "הגדרות",
+				"DIVER_TITLE": "הגדרות",
+				"ITEMS": {
+					"LANGUAGE": "(Language) שפה",
+					"SIGN_OUT": "להתנתק"
+				}
+			},
+			"INFO": {
+				"DIVER_TITLE": "מידע",
+				"ITEMS": {
+					"ABOUT_US": "עלינו",
+					"TERMS_OF_USE": "תנאי שימוש"
+				}
+			}
+		}
+	},
+	"CUSTOMERS_VIEW": {
+		"CUSTOMERS": "לקוחות",
+		"ADD_CUSTOMER": "הוסף לקוח",
+		"IMAGE": "תמונה",
+		"NAME": "שֵׁם",
+		"PHONE_NUMBER": "מספר טלפון",
+		"ADDRESSES": "כתובות",
+		"ORDERS": "הזמנות",
+		"TOTAL": "סה'כ",
+		"E_MAIL": "אֶלֶקטרוֹנִי",
+		"ADDRESS_POP_UP": {
+			"CUSTOMER_ADDRESS": "כתובת הלקוח",
+			"COUNTRY": "מדינה",
+			"STREET": "רחוב",
+			"HOUSE": "בית",
+			"APARTMENT": "דירה",
+			"COORDINATES": "קואורדינטות"
+		},
+		"EMAIL_POP_UP": {
+			"CUSTOMER_EMAIL": "דוא'ל לקוח",
+			"SEND_E_MAIL": "שלח אימייל"
+		},
+		"ORDERS_POP_UP": {
+			"CUSTOMER_ORDERS": "הזמנות לקוח",
+			"ALL_ORDERS": "כל ההזמנות",
+			"TOTAL_ORDERS_SUM": "סה'כ סה'כ הזמנות",
+			"COMPLATED": "הושלם",
+			"PAID": "בתשלום"
+		}
+	},
+	"FILE_UPLOADER": {
+		"DRAG_AND_DROP_FILE_HERE": "גרור ושחרר תמונה כאן",
+		"PICTURE_URL": "כתובת אתר של תמונה",
+		"BROWSE": "דפדוף"
+	},
+	"CARRIERS_VIEW": {
+		"CARRIERS_CATALOG": {
+			"IMAGE": "תמונה",
+			"NAME": "שֵׁם",
+			"PHONE": "טלפון",
+			"ADDRESS": "כתובת",
+			"LOGO": "סֵמֶל"
+		},
+		"TRACK_ORDER": "עקוב אחר הסדר",
+		"TRACK_CARRIER": "עקוב אחר ספק",
+		"DELIVERY_TRACKING": "מעקב משלוחים",
+		"CARRIER": "מנשא",
+		"STORE": "חנות",
+		"DELIVERY_COUNT": "ספירת משלוחים",
+		"CUSTOMER": "צרכן",
+		"CARRIERS": "ספקים",
+		"ADD_CARRIERS": "הוסף ספקים",
+		"IMAGE": "תמונה",
+		"NAME": "שֵׁם",
+		"PHONE_NUMBER": "מספר טלפון",
+		"ADDRESSES": "כתובת",
+		"STATUS": "סטָטוּס",
+		"DELIVERIES": "משלוחים",
+		"NO_CARRIERS": "אין ספקים",
+		"WORKING": "עובד",
+		"NOT_WORKING": "לא עובד",
+		"BLOCKED": "נחסם",
+		"DELIVERIES_POP_UP": {
+			"CARRIER_DELIVERIES": "משלוחים",
+			"ALL_DELIVERIES": "כל משלוחים",
+			"DELIVERIES_TODAY": "משלוחים היום",
+			"TOTAL_DISTANCE_TODAY": "סה'כ מרחק היום",
+			"CUSTOMER": "צרכן",
+			"WAREHOUSE": "מַחסָן",
+			"STATUS": "סטָטוּס",
+			"DELIVERY": "מְסִירָה",
+			"NO_DELIVERIES": "אין משלוחים",
+			"COMPLETED": "הושלם",
+			"PAID": "בתשלום"
+		},
+		"ADDRESS": {
+			"CARRIER_ADDRESS": "כתובת הספק",
+			"COUNTRY": "מדינה",
+			"HOUSE": "בַּיִת",
+			"COORDINATES": "קואורדינטות"
+		},
+		"EDIT_CARRIER": {
+			"EDIT_CARRIER": "ערוך ספק"
+		},
+		"ADD_CARRIER": {
+			"ADD_CARRIER": "הוסף ספק",
+			"HOW_TO_ADD": "איך להוסיף",
+			"SELECT_HOW_TO_ADD": "בחר כיצד להוסיף",
+			"ADD": "לְהוֹסִיף",
+			"CARRIERS_CATALOG": "קטלוג ספקים",
+			"SELECT_FROM_CARRIERS_CATALOG": "בחר מתוך קטלוג ספקים",
+			"ADD_NEW_CARRIER": "הוסף ספק חדש",
+			"FIRST_NAME": "שם פרטי",
+			"LAST_NAME": "שם משפחה",
+			"EMAIL": "דוא'ל",
+			"USERNAME": "שם משתמש",
+			"PASSWORD": "סיסמה",
+			"NAME": "שֵׁם",
+			"PHONE": "טלפון",
+			"ADDRESS": "כתובת",
+			"LOGO": "סֵמֶל",
+			"IS_ACTIVE": "פעיל",
+			"CITY": "עִיר",
+			"STREET": "רְחוֹב",
+			"HOUSE": "בַּיִת",
+			"LATITUDE": "קו רוחב",
+			"LONGITUDE": "קו האורך",
+			"COUNTRY": "מדינה",
+			"OK": "בסדר",
+			"CANCEL": "בטל",
+			"PREVIOUS": "קודם",
+			"BACK": "חזרה",
+			"NEXT": "הבא",
+			"DONE": "בוצע",
+			"LOCATION": "מקום",
+			"ZIP": "רוכסן",
+			"PROFILE_DETAILS": "פרטי פרופיל",
+			"BROWSE": "דפדוף",
+			"DRAG_AND_DROP_FILE_HERE": "גרור ושחרר תמונה כאן",
+			"PICTURE_URL": "כתובת אתר של תמונה",
+			"ACCOUNT": "חשבון",
+			"REPEAT": "חזור",
+			"REPEAT_PASSWORD": "חזור על הסיסמה",
+			"PASSWORD_DO_NOT_MATCH": "הסיסמה אינה תואמת",
+			"FIND_ADDRESS": "חפש כתובת",
+			"FORMS": {
+				"ERRORS": {
+					"FIRST_NAME_REQUIRED": "נדרש שם פרטי",
+					"LAST_NAME_REQUIRED": "נדרש שם משפחה",
+					"PHONE_REQUIRED": "טלפון נדרש",
+					"EMAIL_IS_REQUIRED": "נדרש דואל",
+					"MUST_CONTAIN_ONLY_LETTERS": "חייב להכיל רק אותיות",
+					"PHONE_MUST_CONTAINS_ONLY(special_signs)AND_DIGIT_CHARACTER": "מספר הטלפון יכול להתחיל עם '+' והוא חייב להכיל רק: ',,., (רווח), #' 'ותווים ספרותיים"
+				}
+			}
+		},
+		"PROMOTIONS": {
+			"PROMOTIONS": "מבצעים",
+			"NO_PROMOTIONS": "אין מבצעים",
+			"BASIC_INFO": "מידע בסיסי",
+			"TITLE": "כותרת",
+			"ACTIVE_FROM": "פעיל מ-",
+			"ACTIVE_TO": "פעיל ל",
+			"PURCHASES_COUNT": "ספירת רכישות",
+			"IS_ACTIVE": "פעיל",
+			"SELECT_DATE": "בחר תאריך",
+			"DESCRIPTION": "תיאור",
+			"SAVE": "לשמור",
+			"NEXT": "הַבָּא",
+			"BACK": "חזור",
+			"LANGUAGE": "שפה"
+		},
+		"SELECT LANGUAGE": {
+			"USA": "ארה'ב",
+			"ISRAEL": "ישראל",
+			"BULGARIA": "בולגריה"
+		}
+	},
+	"SETTINGS_VIEW": {
+		"SETTINGS": "הגדרות",
+		"OPTIONS": "אפשרויות",
+		"COMMON": "מְשׁוּתָף",
+		"LOCATION": "מקום",
+		"ACCOUNT": "חֶשְׁבּוֹן",
+		"NEW_USERNAME": "שם משתמש חדש",
+		"NAME_MUST_BE_AT_LEAST_4_CHARACTERS_LONG": "על השם להיות באורך של 4 תווים לפחות",
+		"OLD_PASSWORD": "סיסמה ישנה",
+		"NEW_PASSWORD": "סיסמה חדשה",
+		"REPEAT_NEW_PASSWORD": "חזור על סיסמה חדשה",
+		"PASSWORDS_DO_NOT_MATCH": "סיסמאות לא תואמות",
+		"SAVE_CHANGES": "שמור שינויים",
+		"SAVE": "להציל",
+		"CHANGES": "שינויים",
+		"BASIC_INFO": "מידע בסיסי",
+		"NAME": "שם",
+		"NAME_IS_REQUIRED": "נדרש שם",
+		"LOGO": "לוגו",
+		"BROWSE": "עיון",
+		"CONTACT_INFO": "פרטים ליצירת קשר",
+		"E_MAIL": "דואר אלקטרוני",
+		"PHON_NUMBER": "מספר טלפון",
+		"COUNTRY": "מדינה",
+		"CITY": "עיר",
+		"CITY_IS_REQUIRED": "עיר נדרשת",
+		"POSTCODE_optional": "מיקוד (אופציונלי)",
+		"STREET": "רחוב",
+		"STREET_IS_REQUIRED": "רחוב נדרש",
+		"HOUSE": "בית",
+		"HOUSE_IS_REQUIRED": "הבית נדרש",
+		"APARTMENT_optional": "דירה (אופציונלית)",
+		"AUTO_DETECT_COORDINATES": "זיהוי אוטומטי של קואורדינטות",
+		"LATITUDE": "קו רוחב",
+		"LATITUDE_IS_REQUIRED": "Latitude נדרש",
+		"LONGITUDE": "קו האורך",
+		"LONGITUDE_IS_REQUIRED": "קו האורך נדרש",
+		"FIND_ADDRESS": "חפש כתובת",
+		"SELECT_CATEGORIES": "בחר קטגוריות",
+		"OK": "בסדר",
+		"CANCEL": "בטל",
+		"ALLOW_ONLINE_PAYMENTS": "אפשר תשלומים מקוונים",
+		"SETTINGS_SECTION": {
+			"DELIVERY_OR_TAKEAWAY_SETTINGS": "הגדרות משלוח / תפוסה",
+			"PRODUCTS_DELIVERY_BY_DEFAULT": "משלוח מוצרים (כברירת מחדל)",
+			"PRODUCTS_TAKEAWAY_BY_DEFAULT": "מוצרים Takeaway (כברירת מחדל)",
+			"PAYMENTS_SETTINGS": "הגדרות תשלומים",
+			"BARCODE_QR_CODE_SETTINGS": "ברקוד / קוד QR הגדרות",
+			"ORDER_BARCODE_TYPE": "הקלד סוג ברקוד",
+			"BARCODE_DATA": "נתוני ברקוד",
+			"SCAN_EXISTED": "סרוק קיים",
+			"DELIVERY_SETTINGS": "הגדרות משלוח",
+			"TAKEAWAY_SETTINGS": "הגדרות ברזל",
+			"IN_STORE_MODE": "במצב בחנות",
+			"IN_STORE_MODE_SETTINGS": "הגדרות מצב בחנות"
+		}
+	},
+	"LOGIN_VIEW": {
+		"LOGIN": "התחברות"
+	},
+	"LANGUAGE_VIEW": {
+		"TITLE": "בחירת שפה",
+		"OK": "בסדר",
+		"CANCEL": "בטל"
+	},
+	"ABOUT_VIEW": {
+		"TITLE": "עלינו",
+		"APP_VERSION": "גרסת האפליקציה"
+	},
+	"TERMS_OF_USE_VIEW": {
+		"TITLE": "תנאי שימוש"
+	},
+	"WAREHOUSE_VIEW": {
+		"RELEVANT": "רלוונטי",
+		"ALL": "את כל",
+		"LOADING_MORE_DATA": "טוען נתונים נוספים ...",
+		"ORDERS": "הזמנות",
+		"SWITCH_ORDERS": "החלף הזמנות",
+		"NEW_ORDER": "הזמנה חדשה",
+		"PRODUCTS": "מוצרים מובילים",
+		"ARE_YOU_SURE_TO_DELETE": "לְבַטֵל",
+		"REMOVE": "לְהַסִיר",
+		"DELETE": "לִמְחוֹק",
+		"THE_FOLLOWING_DATA": "הנתונים הבאים",
+		"CONFIRM": "לְאַשֵׁר",
+		"CANCEL": "לְבַטֵל",
+		"SELECT_POP_UP": {
+			"SELECT_CATEGORIES": "בחר קטגוריות",
+			"OK": "בסדר",
+			"CANCEL": "בטל"
+		},
+		"ORDER_WAREHOUSE_STATUSES": {
+			"ALL": "את כל",
+			"CANCELLED": "מבוטל",
+			"CREATED": "נוצר",
+			"CONFIRMED": "מְאוּשָׁר",
+			"PROCESSING": "מעבד",
+			"ALLOCATION_STARTED": "ההקצאה החלה",
+			"ALLOCATION_FINISHED": "ההקצאה הסתיימה",
+			"PACKAGING_STARTED": "האריזה התחילה",
+			"PACKAGED": "ארוז",
+			"GIVEN_TO_CARRIER": "נתון למוביל",
+			"TAKEN": "נלקח",
+			"ALLOCATION_FAILED": "ההקצאה נכשלה",
+			"PACKAGING_FAILED": "האריזות נכשלו",
+			"BAD_STATUS": "מצב גרוע",
+			"NO_ACTIVE_ORDERS": "אין הזמנות פעילות",
+			"NO_ORDERS": "אין הזמנות",
+			"NO_PRODUCTS": "אין מוצרים"
+		},
+		"CREATE_PRODUCTS_POPUP": {
+			"ERROR_MSG": "משהו לא בסדר, לא מצליח לבצע סדר!",
+			"NEW_PRODUCT_TYPE": "סוג מוצר חדש",
+			"CREATE_NEW_PRODUCT_TYPE": "צור סוג מוצר חדש",
+			"TITLE": "כותרת",
+			"DESCRIPTION": "תיאור",
+			"CATEGORIES": "קטגוריות",
+			"PRICE": "מחיר",
+			"COUNT": "לספור",
+			"LANGUAGE": "שפה",
+			"COUNT_PLACEHOLDER": "0",
+			"DRAG&DROP_FILE_HERE": "גרור ושחרר קובץ כאן",
+			"DRAG&DROP_PICTURE_HERE": "גרור ושחרר תמונה כאן",
+			"OR_BROWSE": "או לגלוש",
+			"CLICK_TO_UPLOAD_PICTURE": "לחץ כדי להעלות תמונה",
+			"CLICK_TO_UPLOAD_MORE_PICTURE": "לחץ כדי להעלות תמונות נוספות",
+			"CANCEL": "לְבַטֵל",
+			"CREATE": "לִיצוֹר",
+			"ENGLISH": "אנגלית",
+			"HEBREW": "עִברִית",
+			"RUSSIAN": "רוּסִי",
+			"BULGARIAN": "בולגרית",
+			"OPTIONAL": "אופציונאלי",
+			"TAKEAWAY": "להסיר",
+			"DELIVERY": "משלוח",
+			"PRODUCT_AVAILABILITY": "זמינות מוצר"
+		},
+		"NEW_ORDER_VIEW": {
+			"NEW_MANUAL_ORDER": "סדר ידני חדש",
+			"SELECT_EXISTING_CUSTOMER": "בחר לקוח קיים",
+			"ADD_NEW_CUSTOMER": "הוסף לקוח חדש",
+			"FULL_NAME": "שם מלא",
+			"EMAIL": "דוא'ל",
+			"PHONE": "מכשיר טלפון",
+			"ADDRESS": "כתובת",
+			"IMAGE": "תמונה",
+			"PRODUCT": "מוצר",
+			"PRICE": "מחיר",
+			"AVAILABLE": "זמין",
+			"AMOUNT": "כמות",
+			"MAKE_ORDER": "בצע הזמנה",
+			"BASIC_INFO": "מידע בסיסי",
+			"FIRST_NAME": "שם פרטי",
+			"LAST_NAME": "שם משפחה",
+			"EMAIL_IS_INVALID": "דואר אלקטרוני לא תקין",
+			"EMAIL_IS_ALREADY_IN_USE": "דוא'ל כבר בשימוש",
+			"NEXT": "הבא",
+			"ADD_CUSTOMER": "חזור",
+			"BACK": "חזור",
+			"FIND_ADDRESS": "חפש כתובת",
+			"COUNTRY": "מדינה",
+			"CITY": "עיר",
+			"COUNTRY_IS_INVALID": "הארץ אינה חוקית",
+			"CITY_IS_REQUIRED": "עיר נדרשת",
+			"ZIP": "רוכסן",
+			"STREET_ADDRESS": "כתובת רחוב",
+			"STREET_ADDRESS_IS_REQUIRED": "נדרשת כתובת רחוב",
+			"HOUSE_№": "№ הבית",
+			"APARTMENT": "דירה",
+			"SHOW_COORDINATES": "הצג קואורדינטות",
+			"LATITUDE": "קו רוחב",
+			"LONGITUTE": "קו האורך",
+			"HOUSE_IS_REQUIRED": "הבית נדרש"
+		},
+		"EDIT_PICTURE": {
+			"PRODUCT_IMAGES": "תמונות של מוצרים",
+			"SAVE_IMAGES": "שמור תמונות"
+		},
+		"MISC_TEXT": {
+			"CREATE_NEW_ORDER": "צור הזמנה חדשה",
+			"ADD_NEW_PRODUCT": "הוסף מוצר חדש"
+		}
+	},
+	"EDIT_PRODUCT_POP_UP": {
+		"EDIT_PRODUCT_TYPE": "ערוך את סוג המוצר",
+		"UPDATE_AN_EXISTING_PRODUCT": "עדכן מוצר קיים",
+		"CLICK_TO_EDIT_PICTURES": "לחץ כדי לערוך תמונות",
+		"TITLE": "כותרת",
+		"DESCRIPTION": "תיאור",
+		"CATEGORIES": "קטגוריות",
+		"PRICE": "מחיר",
+		"COUNT": "לספור",
+		"LANGUAGE": "שפה",
+		"DRAG&DROP_FILE_HERE": "גרור ושחרר קובץ כאן",
+		"OR_BROWSE": "או לגלוש",
+		"CLICK_TO_UPLAOD_PICTURE": "לחץ כדי להעלות תמונה",
+		"CANCEL": "לְבַטֵל",
+		"UPDATE": "עדכון",
+		"ENGLISH": "אנגלית",
+		"HEBREW": "עִברִית",
+		"RUSSIAN": "רוּסִי",
+		"BULGARIAN": "בולגרית",
+		"SPANISH": "ספרדית"
+	},
+	"ORDER_CANCELED_COMPONENT": {
+		"CANCELED": "מבוטל",
+		"ORDER_CANCELED": "ההזמנה בוטלה",
+		"DELIVERED": "נמסר",
+		"CREATED_AT": "נוצר ב"
+	},
+	"ORDER_CONTROL_BUTTONS_COMPONENT": {
+		"CONFIRM": "לְאַשֵׁר",
+		"START_PROCESSING": "התחל עיבוד",
+		"START_ALLOCATION": "התחל הקצאה",
+		"ALLOCATED": "מוּקצֶה",
+		"START_PACKAGING": "התחל אריזה",
+		"PACKAGED": "ארוז",
+		"FAILED": "נִכשָׁל",
+		"GIVEN_TO_CARRIER": "ניתן ל- מוֹבִיל",
+		"GIVEN_TO_CUSTOMER": "ניתן ללקוח"
+	},
+	"ORDER_CONTROL_BUTTONS": {
+		"CONFIRM": "לְאַשֵׁר",
+		"START_PROCESSING": "התחל עיבוד",
+		"START_ALLOCATION": "התחל הקצאה",
+		"ALLOCATED": "מוּקצֶה",
+		"START_PACKAGING": "התחל אריזה",
+		"PACKAGED": "ארוז",
+		"FAILED": "נִכשָׁל",
+		"GIVEN_TO_CARRIER": "ניתן ל- מוֹבִיל"
+	},
+	"ORDER_DELIVERED_COMPONENT": {
+		"DELIVERED": "נמסר",
+		"CREATED_AT": "נוצר ב",
+		"DELIVERED_AT": "נמסר ב",
+		"DELIVERED_TO": "הועבר ל"
+	},
+	"ORDER_DELIVERY_PROBLEM_COMPONENT": {
+		"DELIVERY_ISSUES": "הנפקות משלוח",
+		"ISSUES_DURING_DELIVERY_TO": "נושאים במהלך משלוח ל",
+		"BY": "על ידי",
+		"CREATED_AT": "נוצר ב"
+	},
+	"ORDER_WAREHOUSE_PREPARATION_PROBLEM_COMPONENT": {
+		"CREATED_AT": "נוצר ב"
+	},
+	"ORDER_WITH_CARRIER_COMPONENT": {
+		"IN_DELIVERY_TO": "במסירה אל",
+		"BY": "על ידי",
+		"CREATED_AT": "נוצר ב"
+	},
+	"ORDER_WITHOUT_CARRIER_COMPONENT": {
+		"CREATED_AT": "נוצר ב",
+		"CANT_PROCESSING_WITHOUT_PRODUCTS": "לא ניתן לעבד את ההזמנה ללא מוצרים."
+	},
+	"ORDER_TITLE_COMPONENT": {
+		"ORDER": "להזמין",
+		"FROM": "מ"
+	},
+	"ORDER_TYPE": {
+		"TYPE": ":סוג הזמנה",
+		"DELIVERY": "מְסִירָה",
+		"TAKEAWAY": "להסיר"
+	},
+	"TRACK_ORDER_POP_UP": {
+		"CARRIER": "המוביל",
+		"TRACK": "עקוב אחר",
+		"CUSTOMER": "צרכן"
+	},
+	"CONNECTION_ERROR_VIEW": {
+		"TITLE": "אין חיבור ל-Ever",
+		"DESCRIPTION": [
+			"בבקשה תוודא שאתה",
+			"מחובר לאינטרנט או תנסה",
+			"את האפליקציה מאוחר יותר."
+		]
+	},
+	"CUSTOMER_ORDERS_POP_UP": {
+		"ORDER_ID": "מספר הזמנה",
+		"DELIVERY": "מְסִירָה",
+		"ADDRESS": "מְסִירָה",
+		"STATUS": "סטָטוּס"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "השרת נפל"
+	},
+	"PROMOTIONS": {
+		"PROMO_PRICE": "מחיר פרומו",
+		"NO_PROMOTIONS": "אין מבצעים"
+	}
+}

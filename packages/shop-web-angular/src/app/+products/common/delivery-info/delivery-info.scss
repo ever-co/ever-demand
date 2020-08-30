@@ -1,0 +1,41 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.delivery-info {
+	background: $brand-lighted;
+	text-align: center;
+	line-height: 1;
+	padding-right: 5px;
+	color: white;
+
+	.delivery-lines {
+		font-size: 80%;
+		small {
+			display: block;
+		}
+	}
+
+	.delivery-sign {
+		i {
+			font-size: 18px;
+		}
+	}
+}
+
+.delivery-info.over-image {
+	opacity: 0.8;
+	position: absolute;
+	right: 10px;
+	top: 60px;
+	font-size: 15px;
+	border-radius: 5px;
+	color: white;
+	padding: 5px;
+	width: 70px;
+
+	line-height: 1;
+	text-align: center;
+}
+
+.delivery-info.over-image.show-top {
+	top: 10px;
+}

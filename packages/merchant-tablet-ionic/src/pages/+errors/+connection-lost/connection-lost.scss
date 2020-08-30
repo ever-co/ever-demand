@@ -1,0 +1,32 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.connection-error-view {
+	padding: 0;
+	.container-data {
+		width: 100%;
+		height: 100%;
+		background: $brand-darken !important;
+		text-align: center;
+	}
+	.connection-error {
+		img {
+			height: 200px;
+		}
+		@include center(absolute);
+
+		.connection-error-title {
+			background: $brand-darken !important;
+
+			color: white;
+		}
+
+		.connection-error-description {
+			color: white;
+		}
+
+		.connection-error-spinner {
+			color: white;
+			font-size: 5vw;
+		}
+	}
+}

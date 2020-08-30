@@ -1,0 +1,45 @@
+<div class="page-promotions">
+	<div id="header" class="bar bar-header bar-brand">
+		<h1 class="title">
+			{{ 'CARRIERS_VIEW.PROMOTIONS.PROMOTIONS' | translate }}
+		</h1>
+		<div class="buttons buttons-left header-item">
+			<span class="left-buttons">
+				<div class="waves-effect waves-classic">
+					<ion-menu-toggle class="button-icon">
+						<ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+					</ion-menu-toggle>
+				</div>
+			</span>
+		</div>
+		<!-- <div class="right-container">
+			<div class="allowOverflow">
+				<div class="button-bar">
+					<a class="button button-brand" (click)="openAddPromotion()">
+						<span class="button-text">
+							{{ 'CARRIERS_VIEW.ADD_PROMOTIONS' | translate
+							}}</span
+						>
+					</a>
+				</div>
+			</div>
+		</div> -->
+	</div>
+	<div id="contentWrapper" scroll="false">
+		<ng2-smart-table
+			class="smart-table"
+			[settings]="settingsSmartTable"
+			[source]="sourceSmartTable"
+			(create)="openAddPromotion()"
+			(edit)="editPromotion($event)"
+			(delete)="deletePromotion($event)"
+		>
+		</ng2-smart-table>
+
+		<div *ngIf="showNoPromotionsIcon">
+			<div class="no-promotions-message">
+				<h2>{{ 'PROMOTIONS.NO_PROMOTIONS' | translate }}</h2>
+			</div>
+		</div>
+	</div>
+</div>

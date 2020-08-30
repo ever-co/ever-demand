@@ -1,0 +1,84 @@
+<nb-tabset #tabSet fullWidth>
+	<nb-tab
+		tabTitle="{{ 'WAREHOUSE_MANAGE.WIZARD_TITLES.DETAILS' | translate }}
+	"
+		class="pt-5 pb-3"
+	>
+		<ea-warehouse-manage-tabs-details
+			#detailsComponent
+			[form]="details"
+		></ea-warehouse-manage-tabs-details>
+	</nb-tab>
+
+	<nb-tab
+		tabTitle="{{ 'WAREHOUSE_MANAGE.WIZARD_TITLES.ACCOUNT' | translate }}
+	"
+		class="pt-5 pb-3"
+	>
+		<ea-warehouse-manage-tabs-account
+			#accountComponent
+			[form]="account"
+		></ea-warehouse-manage-tabs-account>
+	</nb-tab>
+
+	<nb-tab
+		tabTitle="{{
+			'WAREHOUSE_MANAGE.WIZARD_TITLES.CONTACT_INFO' | translate
+		}}
+	"
+		class="pt-5 pb-3"
+	>
+		<ea-warehouse-contact-info-form
+			#contactInfoForm
+			[form]="contactInfo"
+		></ea-warehouse-contact-info-form>
+	</nb-tab>
+
+	<nb-tab
+		tabTitle="{{ 'WAREHOUSE_MANAGE.WIZARD_TITLES.LOCATION' | translate }}
+	"
+		class="pt-5"
+	>
+		<ea-location-form
+			#locationForm
+			[form]="location"
+			[showAutocompleteSearch]="true"
+			(mapCoordinatesEmitter)="onCoordinatesChanges($event)"
+			(mapGeometryEmitter)="onGeometrySend($event)"
+		>
+		</ea-location-form>
+		<br />
+		<google-map
+			[mapCoordEvent]="mapCoordEmitter"
+			[mapGeometryEvent]="mapGeometryEmitter"
+		>
+		</google-map>
+	</nb-tab>
+
+	<nb-tab
+		tabTitle="{{ 'WAREHOUSE_MANAGE.WIZARD_TITLES.PAYMENT' | translate }}
+	"
+		class="pt-5"
+	>
+		<ea-warehouse-payments-settings-form
+			#paymentsSettingsForm
+			[isEdit]="true"
+			[warehouseLogo]="detailsComponent.logo.value"
+			[warehouseCountry]="locationForm.countryId.value"
+		></ea-warehouse-payments-settings-form>
+	</nb-tab>
+
+	<nb-tab
+		tabTitle="{{
+			'WAREHOUSE_MANAGE.WIZARD_TITLES.DELIVERY_ZONES' | translate
+		}}"
+		class="pt-5 pb-3"
+	>
+		<ea-warehouse-manage-tabs-delivery-areas
+			#deliveryAreasForm
+			[mapCoordEvent]="mapCoordEmitter"
+			[form]="deliveryAreas"
+		>
+		</ea-warehouse-manage-tabs-delivery-areas>
+	</nb-tab>
+</nb-tabset>

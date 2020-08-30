@@ -1,0 +1,61 @@
+<form class="carrier-basic-info" [formGroup]="form">
+	<ion-row>
+		<ion-col>
+			<ion-item>
+				<ion-label class="labels" position="floating">{{
+					'CARRIERS_VIEW.PROMOTIONS.PURCHASES_COUNT' | translate
+				}}</ion-label>
+				<ion-input
+					type="number"
+					formControlName="purchasesCount"
+					[placeholder]="
+						'CARRIERS_VIEW.PROMOTIONS.PURCHASES_COUNT' | translate
+					"
+				></ion-input>
+			</ion-item>
+		</ion-col>
+		<ion-col>
+			<ion-item>
+				<ion-label class="labels" position="floating">{{
+					'PROMOTIONS.PROMO_PRICE' | translate
+				}}</ion-label>
+				<ion-input
+					type="number"
+					formControlName="promoPrice"
+					[placeholder]="'PROMOTIONS.PROMO_PRICE' | translate"
+				></ion-input>
+			</ion-item>
+		</ion-col>
+	</ion-row>
+	<ion-row>
+		<ion-col text-center>
+			<ion-item class="">
+				<ion-label class="labels" position="fixed">{{
+					'CARRIERS_VIEW.PROMOTIONS.IS_ACTIVE' | translate
+				}}</ion-label>
+				<ion-checkbox
+					formControlName="active"
+					color="primary"
+				></ion-checkbox>
+			</ion-item>
+		</ion-col>
+	</ion-row>
+	<ion-row>
+		<ion-col text-center>
+			<e-cu-file-uploader (uploadedImgUrl)="image.setValue($event)">
+			</e-cu-file-uploader>
+		</ion-col>
+	</ion-row>
+	<ion-row *ngIf="image">
+		<ion-col text-center>
+			<ion-thumbnail>
+				<ion-img
+					*ngIf="image && image.value"
+					[src]="image.value"
+					#imagePreview
+					[alt]="'Invalid image'"
+				></ion-img>
+			</ion-thumbnail>
+		</ion-col>
+	</ion-row>
+</form>

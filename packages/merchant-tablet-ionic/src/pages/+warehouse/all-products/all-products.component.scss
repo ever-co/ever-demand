@@ -1,0 +1,92 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.product-card-container {
+	border: 0;
+	padding-bottom: 0;
+	.product-card {
+		margin: 0;
+		padding: 0;
+		text-align: center;
+		.product-image-container {
+			cursor: pointer;
+		}
+		.product-image-container:active {
+			background: #000;
+			.product-image {
+				opacity: 0.8;
+			}
+		}
+		.product-buttons {
+			position: absolute;
+			top: 20px;
+			right: 20px;
+			.add-button {
+				padding: 0;
+				font-size: 30px;
+				color: #fff;
+			}
+		}
+		.product-image {
+			width: 100%;
+		}
+		.product-mini-bar {
+			font-size: 17px;
+			background-color: $brand;
+			color: white;
+			text-align: center;
+			margin-bottom: 0;
+			padding-top: 11px;
+			padding-bottom: 11px;
+			margin-top: -4px;
+			.edit-button {
+				margin-top: -4px;
+				border-radius: 3px;
+				color: $brand;
+				float: left;
+				border-color: #ccc;
+				margin-left: 10px;
+				min-width: 10px;
+				padding: 4px;
+				font-size: 16px;
+				line-height: 0;
+				min-height: 10px;
+			}
+			.count {
+				background: #fff;
+				margin-top: -2px;
+				padding: 2px;
+				border-radius: 3px;
+				color: $brand;
+				float: right;
+				margin-right: 10px;
+			}
+		}
+	}
+}
+
+.masonry-container {
+	text-align: center;
+	width: 80%;
+	margin: 0 auto;
+	padding-top: 20px;
+}
+
+ngx-masonry {
+	margin: 0 auto;
+}
+
+.masonry-item {
+	width: 234px;
+	margin-bottom: 10px;
+}
+
+.item-inner {
+	border-bottom: none;
+}
+.pagination {
+	text-align: center;
+	padding-bottom: 10px;
+	padding-left: 0 !important;
+	font-size: 1em;
+	display: block !important;
+}

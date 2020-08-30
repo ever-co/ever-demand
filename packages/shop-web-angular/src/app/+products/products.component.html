@@ -1,0 +1,39 @@
+<mat-card class="products-view" *ngIf="products">
+	<mat-card-title class="text-center">
+		<mat-form-field dividerColor="primary" class="mt-2 search-products">
+			<mat-icon class="mr-3" matPrefix>fastfood</mat-icon>
+			<input
+				[ngModel]="searchModel"
+				(ngModelChange)="changedProducts($event)"
+				type="text"
+				matInput
+				placeholder="{{ 'PRODUCTS_VIEW.SEARCH_PRODUCTS' | translate }}"
+			/>
+			<mat-icon matSuffix>search</mat-icon>
+		</mat-form-field>
+	</mat-card-title>
+	<list-view
+		*ngIf="isListView"
+		(loadProducts)="loadProducts($event)"
+		[products]="products"
+		[productsLoading]="productsLoading"
+		[isWideView]="isWideView"
+	></list-view>
+
+	<carousel-view
+		#carouselView
+		*ngIf="!isListView"
+		(loadProducts)="loadProducts($event)"
+		[products]="products"
+	></carousel-view>
+	<mat-card-content *ngIf="!products.length && !productsLoading" class="p-3">
+		<h4 *ngIf="searchText" class="text-center">
+			{{ 'PRODUCTS_VIEW.NO_PRODUCTS_FOUND' | translate }} "{{
+				searchText
+			}}"!
+		</h4>
+		<h4 *ngIf="!searchText" class="text-center">
+			{{ 'PRODUCTS_VIEW.NO_PRODUCTS' | translate }}
+		</h4>
+	</mat-card-content>
+</mat-card>

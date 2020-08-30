@@ -1,0 +1,47 @@
+<toaster-container></toaster-container>
+
+<div [nbSpinner]="loading">
+	<nb-card *ngIf="_currentWarehouse">
+		<nb-card-header>
+			<div class="d-inline-flex">
+				<svg
+					viewBox="0 0 24 24"
+					class="control-icon control-icon-left"
+					[routerLink]="['/stores/' + _currentWarehouse.id]"
+				>
+					<path
+						d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"
+					/>
+				</svg>
+
+				<h1>{{ 'WAREHOUSE_MANAGE.MANAGE_STORE' | translate }}</h1>
+			</div>
+
+			<button
+				nbButton
+				status="success"
+				type="button"
+				size="large"
+				class="pull-right text-center"
+				(click)="updateWarehouse()"
+				[disabled]="!validForm"
+			>
+				<i class="ion-md-checkmark button-icon mr-1"></i>
+				<span>{{ 'WAREHOUSE_MANAGE.SAVE' | translate }}</span>
+			</button>
+		</nb-card-header>
+	</nb-card>
+
+	<div class="row">
+		<div class="col-md-12">
+			<nb-card>
+				<nb-card-body class="p-0">
+					<ea-warehouse-manage-tabs
+						#warehouseManageTabs
+						[form]="tabsForm"
+					></ea-warehouse-manage-tabs>
+				</nb-card-body>
+			</nb-card>
+		</div>
+	</div>
+</div>

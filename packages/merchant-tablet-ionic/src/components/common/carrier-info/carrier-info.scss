@@ -1,0 +1,64 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.carrier-info {
+	.carrier-image {
+		width: 15%;
+	}
+
+	.header {
+		text-align: left;
+		margin: 0px 10px 0 10px;
+		padding-top: 10px;
+		:first-child {
+			display: flex;
+
+			margin: 0;
+			margin-bottom: 5px;
+		}
+		ion-icon {
+			font-size: 1.8rem;
+			margin-bottom: 0 !important;
+			margin-right: 5px !important;
+		}
+
+		border-bottom: 1px solid #dedede;
+	}
+
+	.body {
+		display: flex;
+		align-items: flex-start;
+		.carrier-image,
+		.carrier-details {
+			padding: 10px;
+			text-align: left;
+			line-height: 1.6;
+
+			.call-icon {
+				font-size: 1.4rem;
+			}
+		}
+		.row {
+			width: 100%;
+
+			.treck-carrier {
+				padding: 10px;
+				margin: 0;
+				text-align: right;
+
+				button {
+					background: $brand;
+					color: white;
+					padding: 10px;
+					border-radius: 2px;
+					display: flex;
+					float: right;
+					align-content: center;
+					align-items: center;
+					ion-icon {
+						margin-right: 3px;
+					}
+				}
+			}
+		}
+	}
+}

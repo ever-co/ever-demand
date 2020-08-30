@@ -1,0 +1,72 @@
+type Query {
+	getProductsWithPagination(
+		id: String!
+		pagingOptions: PagingOptionsInput
+	): [WarehouseProduct!]
+
+	getProductsCount(id: String!): Int
+
+	getWarehouseProduct(
+		warehouseId: String!
+		warehouseProductId: String!
+	): WarehouseProduct
+}
+
+type WarehouseProduct {
+	id: String!
+	_id: String!
+	price: Int!
+	initialPrice: Int!
+	count: Int
+	soldCount: Int!
+	product: Product!
+	isManufacturing: Boolean
+	isCarrierRequired: Boolean
+	isDeliveryRequired: Boolean
+	isProductAvailable: Boolean
+	isTakeaway: Boolean
+	deliveryTimeMin: Int
+	deliveryTimeMax: Int
+}
+
+input WarehouseProductInput {
+	price: Int!
+	initialPrice: Int!
+	count: Int
+	product: String!
+	isManufacturing: Boolean
+	isCarrierRequired: Boolean
+	isDeliveryRequired: Boolean
+	isProductAvailable: Boolean
+	isTakeaway: Boolean
+	deliveryTimeMin: Int
+	deliveryTimeMax: Int
+}
+
+input QuantityUpdateInput {
+	change: Int
+	to: Int
+}
+
+input WarehouseProductUpdateInput {
+	quantity: QuantityUpdateInput
+	price: Int
+}
+
+type Mutation {
+	removeWarehouseProducts(
+		warehouseId: String!
+		productsIds: [String!]!
+	): Boolean
+
+	addWarehouseProducts(
+		warehouseId: String!
+		products: [WarehouseProductInput!]!
+	): [WarehouseProduct!]
+
+	updateWarehouseProduct(
+		warehouseId: String!
+		productId: String!
+		updateInput: WarehouseProductUpdateInput!
+	): WarehouseProduct!
+}

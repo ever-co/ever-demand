@@ -1,0 +1,68 @@
+$assertive: #bd4742;
+$assertive-lighted: #ce4843;
+$assertive-darken: darken($assertive, 5%);
+
+.box {
+	width: 100%;
+
+	&.box-small-padding {
+		padding: 5px;
+		.box-padding {
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	}
+
+	&.box-img {
+		padding: 0;
+	}
+
+	&.box-timer {
+		padding-bottom: 30px;
+	}
+
+	.button {
+		height: 25px;
+
+		&:last-of-type {
+			margin-right: 0;
+		}
+
+		&.button-assertive {
+			background-color: $assertive-darken !important;
+			box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+		}
+	}
+
+	&.box-brand {
+		background-color: $brand-darken !important;
+		&,
+		* {
+			color: white;
+		}
+	}
+
+	&.box-brand-light {
+		background-color: $brand-lighted !important;
+		&,
+		* {
+			color: white;
+		}
+	}
+
+	&.box-success {
+		background-color: $balanced !important;
+		&,
+		* {
+			color: white;
+		}
+	}
+
+	&.box-success-light {
+		background-color: $balanced-lighted !important;
+		&,
+		* {
+			color: white;
+		}
+	}
+}

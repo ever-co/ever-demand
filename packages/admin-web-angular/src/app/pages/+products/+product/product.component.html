@@ -1,0 +1,75 @@
+<nb-card>
+	<nb-card-header>
+		<!-- back -->
+		<svg
+			viewBox="0 0 24 24"
+			class="control-icon control-icon-left"
+			(click)="back()"
+		>
+			<path
+				d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"
+			/>
+		</svg>
+
+		<h1>{{ getTranslatedValue(product?.title) }}</h1>
+	</nb-card-header>
+</nb-card>
+
+<div class="media w-75">
+	<img
+		class="align-self-center img-thumbnail mr-3 w-25"
+		src="{{ getTranslatedValue(product?.images) }}"
+		alt="{{ getTranslatedValue(product?.title) }}"
+	/>
+
+	<div class="media-body">
+		<p class="mt-2">
+			<strong>{{ 'CUSTOMERS_VIEW.DESCRIPTION' | translate }}:</strong>
+			{{ getTranslatedValue(product?.description) }}
+		</p>
+
+		<p>
+			<strong>{{ 'CUSTOMERS_VIEW.DETAILS' | translate }}:</strong>
+			{{ getTranslatedValue(product?.details) }}
+		</p>
+
+		<div>
+			<div>
+				<strong>{{ 'CUSTOMERS_VIEW.CATEGORY' | translate }}: </strong>
+				<span
+					*ngFor="
+						let category of productCategoriesArr;
+						let isLast = last
+					"
+				>
+					{{ getTranslatedValue(category.name)
+					}}{{ isLast ? '' : ', ' }}
+				</span>
+			</div>
+		</div>
+
+		<br />
+
+		<div class="input-group w-25">
+			<div class="input-group-prepend">
+				<label class="input-group-text" for="inputGroupSelect01">
+					<strong>Lang</strong>
+				</label>
+			</div>
+			<select
+				class="custom-select form-control"
+				id="inputGroupSelect01"
+				#langSelect
+				(change)="onProductLangChange(langSelect.value)"
+			>
+				<option
+					*ngFor="let lang of translateService.getLangs()"
+					[value]="lang"
+					[selected]="lang === productLangToShow"
+				>
+					{{ getLanguageFullName(lang) }}
+				</option>
+			</select>
+		</div>
+	</div>
+</div>

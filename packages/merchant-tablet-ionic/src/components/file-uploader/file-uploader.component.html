@@ -1,0 +1,47 @@
+<ion-grid class="file-uploader-container p-0">
+	<ion-row>
+		<input
+			[hidden]="true"
+			(change)="imageUrlChanged()"
+			#fileInput
+			type="file"
+			id="fileInput"
+			ng2FileSelect
+			[uploader]="uploader"
+		/>
+
+		<ion-item mode="{{ itemMode }}" class="upload-input col-10 pr-0 pl-0">
+			<ion-input
+				#shownInput="ngModel"
+				[ngClass]="{ 'ion-input-custom-style': inputCustomStyle }"
+				ng2FileDrop
+				[uploader]="uploader"
+				(change)="imageUrlChanged()"
+				(onFileDrop)="imageUrlChanged()"
+				[placeholder]="isBrowser ? dragAndDrob : pictureURL"
+				type="text"
+				[(ngModel)]="fileUrl"
+			></ion-input>
+		</ion-item>
+		<label class="browseBtnOut col-2">
+			<label
+				*ngIf="isBrowser"
+				class="browseBtnIn {{
+					buttonFullSpace ? 'button-full-space' : ''
+				}}"
+				for="fileInput"
+			>
+				<span>{{ 'FILE_UPLOADER.BROWSE' | translate }}</span>
+			</label>
+			<button
+				*ngIf="!isBrowser"
+				class="browseBtnIn {{
+					buttonFullSpace ? 'button-full-space' : ''
+				}}"
+				(click)="presentActionSheet()"
+			>
+				<span>{{ 'FILE_UPLOADER.BROWSE' | translate }}</span>
+			</button>
+		</label>
+	</ion-row>
+</ion-grid>

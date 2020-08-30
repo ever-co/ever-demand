@@ -1,0 +1,33 @@
+<ion-menu
+	(ionWillOpen)="menuOpened()"
+	contentId="pageContainer"
+	side="start"
+	menuId="ltr"
+>
+	<ion-header>
+		<ion-toolbar color="secondary">
+			<ion-title>{{ 'SIDE_MENU.TITLE' | translate }}</ion-title>
+		</ion-toolbar>
+	</ion-header>
+
+	<ion-content>
+		<e-cu-submenu></e-cu-submenu>
+	</ion-content>
+</ion-menu>
+
+<ion-menu
+	(ionWillOpen)="menuOpened()"
+	contentId="pageContainer"
+	side="end"
+	menuId="rtl"
+>
+	<ion-header>
+		<ion-toolbar color="secondary">
+			<ion-title>{{ 'SIDE_MENU.TITLE' | translate }}</ion-title>
+		</ion-toolbar>
+	</ion-header>
+
+	<ion-content>
+		<e-cu-submenu></e-cu-submenu>
+	</ion-content>
+</ion-menu>

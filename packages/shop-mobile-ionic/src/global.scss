@@ -1,0 +1,143 @@
+// App Global Sass
+// ----------------------------------------------------------------------------
+// Put style rules here that you want to apply globally. These styles are for
+// the entire app and not just one component. Additionally, this file can be
+// also used as an entry point to import other Sass files to be included in the
+// output CSS.
+
+/* Core CSS required for Ionic components to work properly */
+@import '~@ionic/angular/css/core.css';
+
+/* Basic CSS for apps built with Ionic */
+@import '~@ionic/angular/css/normalize.css';
+@import '~@ionic/angular/css/structure.css';
+@import '~@ionic/angular/css/typography.css';
+
+/* Optional CSS utils that can be commented out */
+@import '~@ionic/angular/css/padding.css';
+@import '~@ionic/angular/css/float-elements.css';
+@import '~@ionic/angular/css/text-alignment.css';
+@import '~@ionic/angular/css/text-transformation.css';
+@import '~@ionic/angular/css/flex-utils.css';
+
+@import 'theme/fonts/open-sans-hebrew';
+@import 'theme/fonts/google-font-Roboto';
+@import 'theme/fonts/google-font-Jura';
+
+$fa-font-path: './assets/fonts' !default;
+@import '~font-awesome/scss/font-awesome';
+
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+@import 'theme/box';
+@import 'theme/delivery-status';
+@import 'theme/popup-view';
+
+* {
+	font-family: 'Roboto', sans-serif;
+}
+
+html,
+body {
+	overflow: visible !important;
+}
+
+.ion-page {
+	background-color: $brand-darken;
+}
+
+// This is for remove bad popup background
+ion-popover.popover.popover-ios.hydrated {
+	width: 0px;
+}
+
+ion-popover#ion-overlay-1 {
+	width: 0px;
+}
+
+.popover-content {
+	width: 250px !important;
+}
+
+ion-backdrop {
+	display: none;
+}
+
+.order-info-modal {
+	display: block;
+
+	.modal-wrapper {
+		background: rgba(255, 255, 255, 0);
+	}
+
+	.ion-page {
+		max-width: 250px;
+		margin: 0 auto;
+		display: flex;
+		position: absolute;
+		flex-direction: column;
+		justify-content: center;
+		contain: layout size style;
+		overflow: hidden;
+		background: none;
+	}
+}
+
+.map-info-modal {
+	display: block;
+}
+
+ion-menu-button {
+	color: white !important;
+}
+
+.brand-dark {
+	background: #1f212a;
+}
+
+.brand-light {
+	background: #353748;
+}
+
+.blur-filter {
+	-webkit-filter: blur(2px);
+	-moz-filter: blur(2px);
+	-o-filter: blur(2px);
+	-ms-filter: blur(2px);
+	filter: blur(2px);
+}
+
+.blur-lighter {
+	z-index: 1000;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(255, 255, 255, 0.15);
+}
+
+.max-height {
+	height: 100% !important;
+}
+
+.pl-5px {
+	padding-left: 5px !important;
+}
+
+.brand-dark.products-view {
+	ion-spinner,
+	.infinite-loading-text {
+		color: white !important;
+	}
+}
+
+.ltr {
+	float: left !important;
+	left: 0 !important;
+}
+
+.rtl {
+	float: right !important;
+	right: 0 !important;
+}

@@ -1,0 +1,222 @@
+<div class="col-sm-12" [formGroup]="form" *ngIf="form">
+	<fieldset>
+		<div class="form-group row">
+			<label class="col-sm-2 control-label">{{
+				'WAREHOUSE_VIEW.MUTATION.NAME' | translate
+			}}</label>
+
+			<div class="col-sm-8">
+				<input
+					type="text"
+					class="form-control"
+					placeholder="{{
+						'WAREHOUSE_VIEW.MUTATION.NAME' | translate
+					}}"
+					formControlName="name"
+				/>
+
+				<div
+					*ngIf="name.errors && (name.dirty || name.touched)"
+					class="alert alert-danger"
+				>
+					<div [hidden]="!name.hasError('required')">
+						{{
+							'WAREHOUSE_VIEW.MUTATION.ERRORS.NAME_IS_REQUIRED'
+								| translate
+						}}!
+					</div>
+					<div [hidden]="!name.hasError('minlength')">
+						{{
+							'WAREHOUSE_VIEW.MUTATION.ERRORS.NAME_ATLEAST_3_CHARS'
+								| translate
+						}}!
+					</div>
+					<div [hidden]="!name.hasError('maxlength')">
+						{{
+							'WAREHOUSE_VIEW.MUTATION.ERRORS.NAME_MORE_THAN_30_CHARS'
+								| translate
+						}}!
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-sm-2 control-label">{{
+				'WAREHOUSE_VIEW.MUTATION.PHOTO' | translate
+			}}</label>
+
+			<div class="col-sm-8">
+				<e-cu-file-uploader
+					[placeholder]="uploaderPlaceholder"
+					[name]="name?.value"
+					[fileUrl]="logo?.value"
+					(uploadedImgUrl)="logo.setValue($event)"
+				></e-cu-file-uploader>
+
+				<div *ngIf="logo.invalid" class="alert alert-danger">
+					{{
+						'WAREHOUSE_VIEW.MUTATION.ERRORS.INVALID_URL'
+							| translate
+					}}!
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row" *ngIf="logo.valid">
+			<label class="col-sm-2 control-label"></label>
+			<div class="col-sm-9">
+				<div class="row preview-img" *ngIf="showLogoMeta">
+					<div>
+						<img
+							src="{{ logo.value }}"
+							alt="Invalid image"
+							class="img-rounded"
+						/>
+					</div>
+
+					<div class="removeIcon" (click)="deleteImg()">
+						<div
+							class="ion-md-remove-circle"
+							placeholder="Remove image"
+							title="{{ 'PLACEHOLDER.REMOVE_IMAGE' | translate }}"
+						></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-sm-2 control-label" for="checkbox"
+				>{{ 'WAREHOUSE_VIEW.MUTATION.IS_ACTIVE' | translate }}
+			</label>
+
+			<div class="col-sm-8">
+				<div class="checkbox" style="margin-bottom: 10px;">
+					<input
+						id="checkbox"
+						type="checkbox"
+						formControlName="isActive"
+					/>
+					({{ 'WAREHOUSE_VIEW.MUTATION.RIGHT_NOW' | translate }})
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-sm-2 control-label">{{
+				'WAREHOUSE_VIEW.MUTATION.USERNAME' | translate
+			}}</label>
+
+			<div class="col-sm-8">
+				<input
+					type="text"
+					class="form-control"
+					placeholder="{{
+						'WAREHOUSE_VIEW.MUTATION.USERNAME' | translate
+					}}"
+					formControlName="username"
+					required
+				/>
+
+				<div
+					*ngIf="
+						username.errors && (username.dirty || username.touched)
+					"
+					class="alert alert-danger"
+				>
+					<div [hidden]="!username.hasError('required')">
+						{{
+							'WAREHOUSE_VIEW.MUTATION.ERRORS.USERNAME_IS_REQUIRED'
+								| translate
+						}}!
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row" *ngIf="password">
+			<label class="col-sm-2 control-label">{{
+				'WAREHOUSE_VIEW.MUTATION.PASSWORD' | translate
+			}}</label>
+
+			<div class="col-sm-8">
+				<input
+					type="password"
+					class="form-control"
+					placeholder="{{ 'PLACEHOLDER.PASSWORD' | translate }}"
+					[formControl]="password"
+				/>
+
+				<div
+					*ngIf="
+						password.errors && (password.dirty || password.touched)
+					"
+					class="alert alert-danger"
+				>
+					<div [hidden]="!password.hasError('required')">
+						{{
+							'WAREHOUSE_VIEW.MUTATION.ERRORS.PASSWORD_IS_REQUIRED'
+								| translate
+						}}!
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-sm-2 control-label">{{
+				'WAREHOUSE_VIEW.MUTATION.CARRIERS' | translate
+			}}</label>
+
+			<div class="col-sm-8">
+				<div class="checkbox" style="margin-bottom: 10px;">
+					<input
+						type="checkbox"
+						formControlName="hasRestrictedCarriers"
+					/>
+					{{
+						'WAREHOUSE_VIEW.MUTATION.USE_ONLY_SPECIFIC_CARRIERS'
+							| translate
+					}}
+				</div>
+
+				<div *ngIf="hasRestrictedCarriers.value">
+					<ss-multiselect-dropdown
+						[options]="carriersOptions"
+						[settings]="{ displayAllSelectedText: true }"
+						formControlName="carriersIds"
+						class="carriers-dropdown"
+					>
+					</ss-multiselect-dropdown>
+				</div>
+			</div>
+		</div>
+
+		<!-- TODO add translate -->
+		<div
+			*ngIf="hasRestrictedCarriers.value && carriersIds?.value.length"
+			class="form-group row"
+		>
+			<label class="col-sm-2 control-label">Delivery</label>
+
+			<div class="col-sm-9">
+				<nb-radio-group
+					[(value)]="delivery"
+					class="row m-0"
+					name="size"
+				>
+					<nb-radio name="size" [value]="'all'">
+						Use All Carriers
+					</nb-radio>
+					<nb-radio name="size" [value]="'onlyStore'">
+						Use Only Store Carriers
+					</nb-radio>
+					<nb-radio name="size" [value]="'preferStore'">
+						Prefer Store Carriers
+					</nb-radio>
+				</nb-radio-group>
+			</div>
+		</div>
+	</fieldset>
+</div>

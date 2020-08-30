@@ -1,0 +1,1152 @@
+{
+	"COMMON": {
+		"SAVE": "Запази",
+		"CANCEL": "Отказ",
+		"USA": "САЩ",
+		"ISRAEL": "Израел",
+		"BULGARIA": "България"
+	},
+	"ORDER_VIEW": {
+		"ORDER_HEADER_INFO": {
+			"ORDER": "Поръчка",
+			"MANAGE_ORDER": "Управление на поръчката",
+			"TOTAL": "Обща сума"
+		},
+		"ORDER_PRODUCT_INFO": {
+			"ORDER_PRODUCTS": "Поръчайте продукти",
+			"ADD_PRODUCTS": "Добавете продукти",
+			"REMOVE_PRODUCTS": "Премахване на продуктите",
+			"CANCEL_ORDER": "Отмяна на поръчката",
+			"THE_ORDER_IS_CANCELED": "Поръчката е отменена",
+			"THE_ORDER_IS_GIVEN_TO_CARRIER": "Поръчката се дава на превозвача.",
+			"THE_ORDER_IS_DELIVERED": "Поръчката е доставена.",
+			"ADD_PRODUCTS_MODAL": "Добавяне на продукти",
+			"ADD": "Добавяне",
+			"SUCCESS_TOAST": "Продуктите бяха прибавени към поръчката",
+			"ERROR_TOAST": "Грешка, нещо се обърка",
+			"SMART_TABLE": {
+				"NAME": "Име",
+				"QTY": "КОЛ",
+				"PRICE": "Цена",
+				"IMAGE": "Изображение"
+			}
+		},
+		"ORDER_SIDEBAR": {
+			"CONTACT_DETAILS": "Данни за контакт",
+			"WAREHOUSE": "Склад",
+			"CUSTOMER": "Клиент",
+			"CARRIER": "Носител",
+			"QTY": "кол"
+		},
+		"LOCATION_INFO": {
+			"MAP": "Карта",
+			"DELIVERY_DISTANCE": "Разстояние за доставка:"
+		}
+	},
+	"DASHBOARD_VIEW": {
+		"TOTAL_CUSTOMER": "Общо клиенти",
+		"TOTAL_QUANTITY_OF_EXISTING_CUSTOMERS": "Общо количество съществуващи клиенти",
+		"TOTAL_COMPLETED_ORDERS": "Общо изпълнени поръчки",
+		"TOTAL_QUANTITY_OF_COMPLETED_ORDERS": "Общо количество изпълнени поръчки",
+		"TOTAL_REVENUE": "Общо приходи",
+		"TOTAL_SUM_SUM_OF_ALL_COMPLETED_ORDERS": "Обща сума на всички изпълнени поръчки",
+		"TODAYs_CUSTOMERS": "Днешните клиенти",
+		"TODAYs_QUANTITY_OF_REGISTERED_CUSTOMERS": "Днешното количество на регистрираните клиенти",
+		"TODAYs_COMPLETED_ORDERS": "Днешни завършени поръчки",
+		"TODAYs_QUANTITY_OF_NEW_COMPLETED_ORDERS": "Днешното количество нови попълнени поръчки",
+		"TODAYs_REVENUE": "Днешните приходи",
+		"TODAYs_SUM_OF_COMPLETED_ORDERS": "Днешната сума от изпълнени поръчки",
+		"TILL_AVERAGE": "до средно",
+		"BETTER_THAN_AVERAGE": "над средното",
+		"SELECT_COMPONENT": {
+			"STORES": "Магазини",
+			"CONTACT_DETAILS": "Данни за контакт",
+			"PHONE": "телефон",
+			"EMAIL": "електронна поща",
+			"ORDERS_FORWARDING_WITH": "Поръчки Препращане с",
+			"SELECT_STORE": "Изберете магазин"
+		},
+		"CHARTS": {
+			"ORDERS": "Поръчки",
+			"PROFIT": "Печалба",
+			"TOTAL_ORDERS": "Общо поръчки",
+			"TOTAL_COMPLETED_ORDERS": "Общо изпълнени поръчки",
+			"TOTAL_CANCELLED_ORDERS": "Total canceled orders",
+			"TOTAL_REVENUE_ALL_ORDERS": "Общо приходи от всички поръчки",
+			"TOTAL_REVENUE_COMPLETED_ORDERS": "Общо приходи от изпълнени поръчки",
+			"TOTAL_LOST_REVENUE_CANCELLED_ORDERS": "Total lost revenue from canceled orders",
+			"PAYMENT": "Плащане",
+			"CANCELED": "Отменен",
+			"ALL_ORDERS": "Всички поръчки",
+			"TODAY": "Днес",
+			"LAST_WEEK": "Предишна Седмица",
+			"LAST_MONTH": "Изминал месец",
+			"CURRENT_YEAR": "Текуща Година",
+			"YEARS": "По година",
+			"CUSTOM_PERIOD": "Потребителски Период",
+			"SELECT_PERIOD": "Избери Период",
+			"FROM": "От",
+			"TO": "До",
+			"SELECT": "Избери",
+			"LABELS": {
+				"WEEK": "Седм",
+				"WEEKDAYS": {
+					"MON": "Пн",
+					"TUE": "Вт",
+					"WED": "Ср",
+					"THU": "Чт",
+					"FRI": "Пт",
+					"SAT": "Сб",
+					"SUN": "Нд"
+				},
+				"MONTHS": {
+					"JAN": "Ян",
+					"FEB": "Февр",
+					"MAR": "Март",
+					"APR": "Април",
+					"MAY": "Май",
+					"JUN": "Юни",
+					"JUL": "Юли",
+					"AUG": "Авг",
+					"SEP": "Септ",
+					"OCT": "Окт",
+					"NOV": "Ноем",
+					"DEC": "Дек"
+				}
+			}
+		}
+	},
+	"HEADER_VIEW": {
+		"ADMIN": "Админ",
+		"EVER": "Евер",
+		"PROFILE": "Профил",
+		"LOG_OUT": "Излез от профила си"
+	},
+	"FOOTER_VIEW": {
+		"COPY_RIGHT": "Copyright © 2016-до момента",
+		"ALL_RIGHTS_RESERVED": "Всички права запазени"
+	},
+	"PROFILE_VIEW": {
+		"PROFILE_PAGE": "Профилна страница",
+		"BASIC_INFO": "Основна информация",
+		"ACCOUNT": "Сметка",
+		"USERNAME": "Потребител",
+		"ERROR": "грешка",
+		"EMAIL": "електронна поща",
+		"FIRST_NAME": "Първо Име",
+		"FIRST_NAME_OPTIONAL": "Първо Име (незадължително)",
+		"LAST_NAME": "Фамилно Име (незадължително)",
+		"PICTURE_URL": "URL адрес на картината (по избор)",
+		"BROWSE": "паса",
+		"REMOVE": "Премахване",
+		"SAVE": "Запази",
+		"OLD_PASSWORD": "Стара парола",
+		"NEW_PASSWORD": "Нова парола",
+		"REPEAT_NEW_PASSWORD": "Повтори новата парола",
+		"INVALID_EMAIL_ADDRESS": "Невалиден имейл адрес",
+		"INVALID_URL": "невалиден адрес",
+		"NAME_MUST_CONTAIN_ONLY_LETTERS": "Името трябва да съдържа само букви",
+		"PASSWORDS_DO_NOT_MATCH": "Паролите не съвпадат",
+		"SUCCESSFULLY_CHANGE_PASSWORD": "Успешно промяна на паролата"
+	},
+	"PRODUCTS_VIEW": {
+		"DELETE": "Изтрий",
+		"CREATE": "създавам",
+		"EDIT_VIEW": {
+			"EDIT_PRODUCT": "Редактиране на продукта",
+			"BASIC_INFO": "Основна информация",
+			"SAVE": "Запази"
+		}
+	},
+	"FAKE_DATA": {
+		"FAKE_DATA_GENERATOR": "Генератор на фалшиви данни",
+		"GENERATE_ALL": "Генерирай Всичко",
+		"CREATE_100_USERS": "Създай 100 клиента",
+		"CREATE_100_CARRIERS": "Създай 100 доставчика",
+		"CREATE_100_WAREHOUSES": "Създайте 100 склада",
+		"SETUP": "НАСТРОЙВАНЕ",
+		"GENERATE_INITIAL_DATA": "Генериране на първоначални данни",
+		"CREATE_INVITE": "СЪЗДАЙТЕ ПОКАНИ",
+		"HARDCODED_DATA": "Фиксирани данни",
+		"CLEAR_ALL": "ИЗЧИСТИ ВСИЧКО",
+		"GENERATE_HARDCODED_ONLY": "Генерирайте само фиксирани",
+		"INCLUDED_HARDCODED_DATA": "Включете твърди кодирани данни",
+		"CREATE_1st_INVITE": "Създайте първата покана",
+		"CREATE_2st_INVITE": "Създайте 2-ра покана",
+		"CREATE_3st_INVITE": "Създайте 3-та покана",
+		"CREATE_4st_INVITE": "Създайте 4-та покана",
+		"CREATE_CUSTOMER": "Създаване на клиент",
+		"CREATE_USER": "СЪЗДАЙ ПОТРЕБИТЕЛ",
+		"CREATE_1st_USER": "Създайте първи потребител (с 1-ва покана)",
+		"CREATE_CARRIER": "СЪЗДАЙТЕ КУРИЕР",
+		"CREATE_1st_CARRIER": "Създайте първия куриер",
+		"CREATE_2nd_CARRIER": "Създайте втория куриер",
+		"CREATE_3rd_CARRIER": "Създайте третия куриер",
+		"CREATE_PRODUCT": "СЪЗДАЙТЕ ПРОДУКТ",
+		"CREATE_PEPERONI&MUSHROOM_PIZZA_PRODUCT": "Създаване на продукт за пица Peperoni & Mushroom",
+		"CREATE_SUSHI&CAVIAR_PRODUCT": "Създайте суши & хайвер продукт",
+		"CREATE_SUSHI_MIX_PRODUCT": "Създайте продукт за смесване на суши",
+		"CREATE_PASTA_PRODUCT": "Създайте продукт от макаронени изделия",
+		"CREATE_SUSHI_BOX_PRODUCT": "Създайте продукт за суши кутия",
+		"CREATE_PEPERONI&TOMATO_PIZZA_PRODUCT": "Създайте пица продукт Peperoni & Tomato",
+		"CREATE_WAREHOUSE": "СЪЗДАЙТЕ СКЛАД",
+		"CREATE_1st_WAREHOUSE": "Създайте първия склад",
+		"CREATE_2nd_WAREHOUSE": "Създайте 2-ри склад",
+		"CREATE_3rd_WAREHOUSE": "Създайте 3-ти склад",
+		"CREATE_WAREHOUSE_PRODUCT": "СЪЗДАЙТЕ СКЛАДОВ ПРОДУКТ",
+		"CREATE_1st_WAREHOUSE_PRODUCTS(using_product_number_1_2_3_4_5_and_6)": "Създаване на първите складови продукти (с използване на номера на продуктите 1, 2, 3, 4, 5 и 6)",
+		"CREATE_3rd_WAREHOUSE_PRODUCTS(using_1st_product)": "Създайте 2-ри складови продукти (използвайки продукти 1, 2 и 3",
+		"CREATE_2nd_WAREHOUSE_PRODUCTS(using_product_number_1_2_and_3": "Създайте 3-ти складов продукт (с 1-вия продукт)",
+		"UPDATE_WAREHOUSE_GEO_LOCATION": "МЕСТОПОЛОЖЕНИЕ НА СКЛАДОВАТА СГРАДА",
+		"UPDATE_1ST_WAREHOUSE_GEO_LOCATION": "Обновление местоположения 1-го хранилища",
+		"CREATE_1RD_ORDER(using_1st_warehouse_1st_user_and_1st_product)": "Создайте 1-й заказ (используя 1-й склад, 1-й пользователь и 1-й продукт)",
+		"CREATE_2ND_ORDER(using_1st_warehouse_1st_user_and_2nd_product)": "Создайте 2-й заказ (используя 1-й склад, 1-й пользователь и 2-й продукт)",
+		"CONFIRM_ORDER": "ПОТВЪРДИ ПОРЪЧКАТА",
+		"CREATE_ORDER": "СЪЗДАВАНЕ НА ПОРЪЧКА",
+		"CONFIMR_1st_ORDER": "Потвърдете 1-та поръчка",
+		"CONFIMR_2nd_ORDER": "Потвърдете 2-ра поръчка",
+		"SETUP_MERCHANTS": {
+			"SETUP_MERCHANTS": "Настройки на ресторантите",
+			"PREV": "НАЗАД",
+			"NEXT": "СЛЕДВАЩИЯ",
+			"ADD": "Добави",
+			"BACK": "Обратно",
+			"SAVE": "Запази",
+			"SELECT": "Изберете",
+			"CREATE": "Създай Клиент",
+			"HOW_TO_SET_UP": {
+				"HOW_TO_SET_UP": "Как да настроите"
+			},
+			"STEPPER": {
+				"ACCOUNT": "Акаунт",
+				"BASIC_INFO": "Основна информация",
+				"CONTACT_INFO": "Информация за контакт",
+				"LOCATION": "Местоположение",
+				"PAYMENTS": "Плащания",
+				"MANUFACTURING": "Производство",
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "Настройки за доставка и за вкъщи",
+				"ORDERS_SETTINGS": "Настройки за поръчки",
+				"PRODUCT_CATEGORIES": "Продуктови категории",
+				"PRODUCTS": "Продукти"
+			},
+			"ACCOUNT": {
+				"ACCOUNT": "Сметка",
+				"EMAIL_ADDRESS": "Имейл адрес",
+				"EMAIL": "Електронна поща",
+				"PASSWORD": "Парола",
+				"REPEAT_PASSWORD": "Повтори паролата",
+				"EMAIL_IS_REQUIRED": "Изисква се имейл",
+				"INVALID_EMAIL_FORMAT": "Невалиден имейл формат",
+				"USERNAME": "Потребител",
+				"USERNAME_IS_REQUIRED": "Изисква се потребителско име",
+				"USERNAME_MUST_BE_AT_LEAST_3_CHARACTERS": "Потребителското име трябва да съдържа поне 3 знака",
+				"PASSWORD_IS_REQUIRED": "Изисква се парола",
+				"PASSWORD_MUST_BE_AT_LEAST_4_CHARACTERS": "Паролата трябва да съдържа поне 4 знака",
+				"REPEAT_PASSWORD_IS_REQUIRED": "Изисква се повторна парола",
+				"PASSWORDS_DO_NOT_MATCH": "Паролите не съвпадат"
+			},
+			"BASIC_INFO": {
+				"BASIC_INFO": "Основна информация",
+				"NAME": "Име",
+				"NAME_IS_REQUIRED": "Изисква се име",
+				"NAME_MUST_BE_AT_LEAST_4_CHARACTERS": "Името трябва да е най-малко 4 знака",
+				"PHOTO": "Снимка",
+				"ENTER_A_VALID_LOGO_URL_OR_BROWSE_FROM_A_DEVICE": "Въведете валиден URL адрес на лого или прегледайте от устройството",
+				"REMOVE": "Премахване",
+				"PHOTO_OPTIONAL": "Снимка (по избор)",
+				"BARCODE_DATA": "Данни за баркод",
+				"BARCODE_DATA_IS_REQUIRED": "Необходими са данни за баркода"
+			},
+			"CONTACT_INFO": {
+				"CONTACT_INFO": "Информация за контакт",
+				"CONTACT_PHONE": "Телефон за връзка",
+				"INVALID_PHONE_NUMBER_FORMAT": "Невалиден формат на телефонния номер",
+				"ORDER_FORWARDING_EMAIL": "Избери изпращане на имейл",
+				"ORDER_FORWARDING_PHONE": "Избери изпращане телефон",
+				"ORDERS_EMAIL": "Имейл за поръчки",
+				"ORDERS_EMAIL_IS_REQUIRED": "Изисква се имейл за поръчки",
+				"INVALID_EMAIL_FORMAT": "Невалиден имейл формат",
+				"ORDERS_PHONE": "Телефон за поръчки",
+				"ORDERS_PHONE_IS_REQUIRED": "Изисква се телефонна поръчка"
+			},
+			"LOCATION": {
+				"LOCATION": "Место нахождения"
+			},
+			"PAYMENTS": {
+				"PAYMENTS": "Плащания",
+				"ALLOW_ONLINE_PAYMENT": "Разрешаване на онлайн плащания?",
+				"ALLOW_CASH_PAYMENT": "Разрешаване на плащане в брой?",
+				"STRIPE": {
+					"PAY_BUTTON_TEXT": "Текст на бутона за плащане",
+					"CURRENCY": "Валута",
+					"PAY_BUTTON_TEXT_IS_REQUIRED": "Изисква се текст на бутон за плащане",
+					"CHOOSE_CURRENCY_CODE": "Изберете кода на валутата",
+					"CURRENCY_TEXT_IS_REQUIRED": "Изберете кода на валутата",
+					"COMPANY_BRAND_LOGO": "Лого на фирмената марка",
+					"COMPANY_BRAND_LOGO_IS_REQUIRED": "Изисква се лого на фирмената марка",
+					"INVALID_LOGO_URL": "Невалиден URL адрес на логото",
+					"INVALID_LOGO": "Невалидно лого",
+					"PUBLISHABLE_KEY": "Публикуван ключ",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "Изисква се издателски ключ",
+					"ALLOW_REMEMBER_ME": "Нека ме запамети?",
+					"REMOVE": "Премахни"
+				},
+				"PAYPAL": {
+					"MODE": "Метод",
+					"CHOOSE_PAYPAL_MODE": "Избери PayPal метод",
+					"TYPE": "тип",
+					"CURRENCY": "Валута",
+					"CHOOSE_CURRENCY_CODE": "Изберете кода на валутата",
+					"CURRENCY_TEXT_IS_REQUIRED": "Необходим е текст на валутата",
+					"PUBLISHABLE_KEY": "Публикуван ключ",
+					"PUBLISHABLE_KEY_IS_REQUIRED": "Изисква се публичен ключ",
+					"SECRET_KEY": "Тайният ключ",
+					"SECRET_KEY_IS_REQUIRED": "Изисква се секретен ключ",
+					"PAYMENT_DESCRIPTION": "Описание на плащането",
+					"PAYMENT_DESCRIPTION_IS_REQUIRED": "Изисква се описание на плащането"
+				}
+			},
+			"MANUFACTURING": {
+				"MANUFACTURING": "Производство",
+				"PRODUCTS_MANUFACTURING": "Продукти Производство"
+			},
+			"DELIVERY_AND_TAKEAWAY_SETTINGS": {
+				"DELIVERY_AND_TAKEAWAY_SETTINGS": "Настройки за доставка и за вкъщи",
+				"SELECT_FROM_SHARED_CARRIERS": "Изберете от споделени превозвачи",
+				"ADD_YOUR_CARRIER": "Добавете своя оператор",
+				"EDIT_CARRIER": "Редактиране на носителя",
+				"CARRIER_REQUIRED": "Необходим е превозвач",
+				"PRODUCTS_DELIVERY_BY_DEFAULT": "Доставка на продукти (по подразбиране)",
+				"PRODUCTS_TAKEAWAY_BY_DEFAULT": "Продукти за вкъщи (по подразбиране)",
+				"USE_SELECTED_SHARED_CARRIERS": "Използвайте избрани споделени оператори",
+				"ADD_YOUR_CARRIERS": "Добавете операторите си"
+			},
+			"ORDERS_SETTINGS": {
+				"ORDERS_SETTINGS": "Настройки за поръчки",
+				"ORDER_BARCODE_QR_CODE_TYPES": "Заяви типът баркод/qr код"
+			},
+			"PRODUCT_CATEGORIES": {
+				"PRODUCT_CATEGORIES": "Продуктови категории",
+				"ADD_OWN_PRODUCT_CATEGORY": "Добавете собствена категория продукти"
+			},
+			"PRODUCTS": {
+				"PRODUCTS": "Продукти",
+				"SELECT_FROM_PRODUCTS_CATALOG": "Изберете от каталога с продукти",
+				"CREATE_PRODUCT": "Създайте продукт",
+				"EDIT_PRODUCT": "Редактиране на продукт",
+				"ADD_PRODUCT": "Добавете продукт",
+				"CREATE_NEW_PRODUCT": "Създайте нов продукт"
+			}
+		}
+	},
+	"WAREHOUSE_MANAGE": {
+		"TITLE": "Управление на склада",
+		"MANAGE_STORE": "Управление на магазина",
+		"SAVE": "Запази",
+		"NAME": "Име",
+		"USERNAME": "Потребител",
+		"PASSWORD": "Парола",
+		"COUNTRY": "Държава",
+		"CITY": "Град",
+		"POSTCODE": "Пощенски код",
+		"IS_ACTIVE": "Активен ли е?",
+		"PRODUCTS_MANUFACTURING": "Производство на изделия",
+		"CARRIER_REQUIRED": "Необходим е превозвач",
+		"RIGHT_NOW": "(точно сега)",
+		"CARRIERS": "Превозвачи",
+		"ADDRESS": "Адрес",
+		"CARRIERS_SPECIFIC": "Използвайте само конкретни превозвачи",
+		"VALIDATION": {
+			"NAME": "Името е задължително",
+			"USERNAME": "Изисква се потребителско име",
+			"PASSWORD": "Изисква се парола",
+			"COUNTRY": "Необходима е държава",
+			"CITY": "Градът е задължителен",
+			"STREET": "Улицата е задължителна",
+			"HOUSE": "Необходим е номер на къщата",
+			"POSTCODE": "Пощенски код е задължителен"
+		},
+		"WIZARD_TITLES": {
+			"DETAILS": "Детайли",
+			"ACCOUNT": "Сметка",
+			"CONTACT_INFO": "Информация за контакт",
+			"LOCATION": "Местоположение",
+			"PAYMENT": "Плащане",
+			"DELIVERY_ZONES": "Зони за доставка"
+		}
+	},
+	"WAREHOUSES_VIEW": {
+		"TITLE": "Складове",
+		"DELETE_WAREHOUSES": "Изтрий Селектирани",
+		"DELETE": "Изтрий",
+		"CREATE": "създавам",
+		"SHOW_ON_MAP": "Покажи на карта",
+		"SMART_TABLE_COLUMNS": {
+			"IMAGE": "Изображение",
+			"NAME": "Име",
+			"EMAIL": "Eлектронна Поща",
+			"PHONE": "Телефон",
+			"CITY": "Град",
+			"ADDRESS": "Адрес",
+			"ORDERS_QTY": "Поръчки количество",
+			"ORDERS": "Поръчки"
+		},
+		"INFO": {
+			"STORE_INFO": "Информация за магазина",
+			"STORE_ID": "Идент. № на магазина",
+			"STORE_NAME": "Име на Магазина"
+		},
+		"MERCHANTS": {
+			"TRACK_ALL_MERCHANTS": "Проследи всички търговци",
+			"FILTER_MERCHANTS": "Филтрирай търговци",
+			"FILTER_BY_NAME": "Филтрирай по име",
+			"FILTER_BY_CITY": "Филтрирай по град",
+			"FILTER_BY_COUNTRY": "Филтрирай по държава"
+		}
+	},
+	"WAREHOUSE_VIEW": {
+		"ORDER": {
+			"CONFIRM": "Потвърди",
+			"START_PROCESSING": "Стартирайте обработката",
+			"START_ALLOCATION": "Започнете разпределението",
+			"ALLOCATED": "Разпределени",
+			"ALLOCATION_FAILS": "Разпределението не е успешно",
+			"START_PACKAGING": "Стартирайте опаковането",
+			"PACKAGED": "Опакован",
+			"PACKAGING_FAILS": "Опаковането не успешно",
+			"GIVEN_TO_CARRIER": "Дадено на Куриера",
+			"GIVEN_TO_CUSTOMER": "Дадено на клиента",
+			"ORDER": "Поръчка",
+			"CANT_PROCESSING_WITHOUT_PRODUCTS": "Не може да се обработва поръчката без продукти."
+		},
+		"MUTATION": {
+			"TITLE": "Създай нов склад",
+			"NAME": "Име",
+			"LOGO": "Лого",
+			"PHOTO": "Снимка",
+			"IS_ACTIVE": "Активен ли е?",
+			"PRODUCTS_MANUFACTURING": "Производство на изделия",
+			"CARRIER_REQUIRED": "Необходим е превозвач",
+			"RIGHT_NOW": "Точно сега",
+			"ORDERS_PHONE": "Телефон за поръчки",
+			"CONTACT_PHONE": "Телефон за връзка",
+			"ORDERS_EMAIL": "Имейл за поръчки",
+			"CONTACT_EMAIL": "Емейл за връзка",
+			"FORWARD_ORDERS_WITH": "Препращайте поръчките с",
+			"USERNAME": "Потребител",
+			"OLD_PASSWORD": "Стара парола",
+			"NEW_PASSWORD": "Нова Парола",
+			"CONFIRM_PASSWORD": "Потвърди Парола",
+			"PASSWORDS_DO_NOT_MATCH": "Паролите не съвпадат",
+			"PASSWORD": "Парола",
+			"COUNTRY": "Държава",
+			"USA": "САЩ",
+			"ISRAEL": "Израел",
+			"BULGARIA": "България",
+			"CITY": "Град",
+			"ADDRESS": "Адрес",
+			"POSTCODE": "Пощенски код",
+			"COORDINATES": "Координати",
+			"AUTO_DETECT_COORDINATES": "Автоматично откриване на координати",
+			"CARRIERS": "Превозвачите",
+			"USE_ONLY_SPECIFIC_CARRIERS": "Използвайте само конкретни доставчици",
+			"SELECT_SHAPE_TO_ADD_ZONE": "Изберете форма, за да добавите нова зона",
+			"CIRCLE": "Кръг",
+			"SHAPE": "Форма",
+			"DRAW_SHAPE_ON_MAP": "Начертайте форма на картата",
+			"MINIMUM_AMOUNT": "Минимална сума",
+			"DELIVERY_FEE": "Такса за доставка",
+			"CANCEL": "Отказ",
+			"ADD": "Добави",
+			"EDIT": "Редактирай",
+			"ZONE_NAME": "Име на зона",
+			"IN_STORE_MODE": "В режим на съхраняване",
+			"ERRORS": {
+				"NAME_IS_REQUIRED": "Името на склада е задължително",
+				"NAME_ATLEAST_3_CHARS": "Името трябва да е с дължина най-малко 3 знака",
+				"NAME_MORE_THAN_255_CHARS": "Името не може да има повече от 255 знака",
+				"LOGO_IS_REQUIRED": "Логото е задължително",
+				"INVALID_URL": "Въведете валиден URL адрес на логото или качете от устройство",
+				"PHONE_CONTAINS_ONLY_DIGIT": "Телефонният номер може да започва с '+' и трябва да съдържа само само: '-,., (Интервал), #' и цифри",
+				"INVALID_EMAIL": "Грешен имейл",
+				"ORDERS_PHONE_IS_REQUIRED": "Телефон за поръчките се изисква",
+				"CONTACT_PHONE_IS_REQUIRED": "Необходим е телефон за връзка",
+				"ORDERS_EMAIL_IS_REQUIRED": "Необходим е имейл за поръчките за връзка",
+				"CONTACT_EMAIL_IS_REQUIRED": "Необходим е имейл за връзка",
+				"USERNAME_IS_REQUIRED": "Изисква се потребителско име",
+				"PASSWORD_IS_REQUIRED": "Изисква се парола",
+				"COORDINATES_ARE_REQUIRED": "Необходими са координати",
+				"COUNTRY_IS_REQUIRED": "Необходима е държава"
+			},
+			"WIZARD_TITLES": {
+				"BASIC_INFO": "Основна информация",
+				"CONTACT_INFO": "Информация за контакт",
+				"LOCATION": "Местоположение"
+			},
+			"CONTACT_INFO_TAB": {
+				"ORDER_FORWARDING_EMAIL": "Поръчка за изпращане на имейл",
+				"ORDER_FORWARDING_PHONE": "телефон за обратна връзка"
+			}
+		},
+		"NEW_PRODUCT": {
+			"SELECT_FROM_PRODUCTS_CATALOG": "Изберете от Каталога с продукти",
+			"CREATE_NEW_PRODUCT": "Създайте нов продукт",
+			"HOW_TO_ADD": "Как да добавите",
+			"ADD": "Добави",
+			"SAVE": "Запази",
+			"ADD_PRODUCTS_TO_STORE": "Добавяне на продукти за съхранение",
+			"NOTHING_FOUND": "Нищо не е намерено..."
+		},
+		"SELECT_PRODUCTS": {
+			"TITLE": "Заглавие",
+			"DESCRIPTION": "Описание",
+			"DETAILS": "Детайли",
+			"IMAGES": "Снимки",
+			"CATEGORY": "Категория"
+		},
+		"SAVE": {
+			"PRODUCT_NAME": "Име на продукта",
+			"PRICE": "Цена",
+			"COUNT": "Броя",
+			"DELIVERY": "Доставка",
+			"TAKEAWAY": "Вземам"
+		},
+		"PLACEHOLDER": {
+			"EXAMPLE": "Пример: Domino's Pizza",
+			"IMAGE_URL": "URL адрес на изображението",
+			"HERE_GOES_A_SHORT_DESCRIPTION": "Кратко описание",
+			"HERE_GOES_A_DETAILS_ABOUT_PRODUCT_(OPTION)": "Подробности за продукта (опция)",
+			"REMOVE_IMAGE": "Премахване на изображението"
+		},
+		"CREATE_ORDER_MODAL": {
+			"TITLE": {
+				"CREATE_ORDER": "Създаване на поръчка"
+			},
+			"WIZARD_FORM": {
+				"BUTTON_NEXT": "Продължи",
+				"BUTTON_PREV": "Обратно",
+				"BUTTON_DONE": "Завърши Поръчката",
+				"STEP1": {
+					"TITLE": "Изберете Опция",
+					"SELECT_FROM_EXISTING": "Избери Клиент",
+					"ADD_NEW_CUSTOMER": "Добави Нов"
+				},
+				"STEP2": {
+					"TITLE": {
+						"SELECT_CUSTOMER": "Изберете Клиент",
+						"SELECT_ADD": "Избери/Добави",
+						"ADD_NEW": "Добави Нов"
+					},
+					"SMART_TABLE": {
+						"TITLES": {
+							"FULL_NAME": "Име",
+							"EMAIL": "Имейл",
+							"PHONE": "Телефон",
+							"ADDRESS": "Адрес"
+						}
+					}
+				},
+				"STEP3": {
+					"TITLE": "Създаване Поръчка"
+				}
+			}
+		},
+		"PRODUCTS_TAB": {
+			"PRODUCTS": "Продукти",
+			"ADD_PRODUCTS": "Добавяне на продукти",
+			"DELETE": "Изтрий",
+			"IMAGE": "Изображение",
+			"TITLE": "Заглавие",
+			"DESCRIPTION": "описание",
+			"DETAILS": "детайли",
+			"CATEGORY": "категория",
+			"PRICE": "Цена",
+			"QUANTITY": "количество",
+			"CLICK_ON_PRODUCT_IMAGE_TO_INCREASE_AVAILABLE_QUANTITY": "Кликнете върху Изображение на продукта, за да увеличите наличното количество",
+			"AVAILABILITY": "Наличност",
+			"TYPE": "Тип",
+			"DELIVERY": "Доставка",
+			"TAKEAWAY": "За вкъщи"
+		},
+		"NEW_PRODUCT_TYPE": "Нов тип продукт",
+		"ADD_PRODUCTS": "Добавяне на продукти",
+		"CREATE_ORDER": "Създаване на поръчка",
+		"STATUS": "Статус",
+		"ORDERS": "Поръчки",
+		"WAREHOUSE": "Склад",
+		"PRODUCT": "Продукт",
+		"PRODUCTS": "Продукти",
+		"ORDER_NUMBER": "Номер на поръчка",
+		"CANCELLED": "Отменен",
+		"WAREHOUSE_STATUS": "Състояние на склад",
+		"CARRIER_STATUS": "Статус на превозвача",
+		"PAID": "Платен",
+		"CARRIER": "Носител",
+		"CREATED": "Създаден",
+		"ELAPSED": "Изминало",
+		"CONTACT_DETAILS": "Данни за контакт",
+		"EMAIL": "Имейл",
+		"PHONE": "Телефон",
+		"ORDERS_FORWARDING_DETAILS": "Поръчки за изпращане на подробности",
+		"ORDERS_FORWARDING_WITH": "Поръчки Препращане с",
+		"MANAGE_STORE": "Управление на магазина",
+		"TOP_PRODUCTS": "Топ продукти",
+		"PRODUCTS_MANUFACTURING": "Производство на изделия",
+		"CARRIER_REQUIRED": "Необходим е превозвач",
+		"MANAGE_WAREHOUSE": "Управление на склада",
+		"MANAGE_STORE_PRODUCTS_&_ORDERS": "Управление на складови продукти и поръчки"
+	},
+	"SIMULATION_VIEW": {
+		"SIMULATION": "Симулация",
+		"PURCHASE_PRODUCTS": "Купете продукти",
+		"CREATE_INVITE_REQUEST": "Създаване на заявка за покана",
+		"SEND": "Изпращам",
+		"CREATE_USER": "Създаване на потребител",
+		"ORDER_CONFIRM": "Потвърдете поръчката",
+		"ORDER_CANCEL": "Отмяна на поръчката",
+		"PRODUCTS": "Продукти",
+		"STORE": "Магазин",
+		"ORDER": "Поръчка",
+		"INVITE_REQUEST": "Искане за покана",
+		"INVITE_USER": "Поканете потребител",
+		"TAB_BUTTONS": {
+			"PRODUCTS": "Продукти",
+			"ORDER_HISTORY": "История на поръчките"
+		},
+		"USER_MUTATION": {
+			"TITLE": "Създай потребител",
+			"NAME": "Име",
+			"EMAIL": "Имейл",
+			"COUNTRY": "Държава",
+			"CITY": "Град",
+			"USA": "САЩ",
+			"ISRAEL": "Израел",
+			"BULGARIA": "България",
+			"ADDRESS": "Адрес",
+			"POSTCODE": "Пощенски код",
+			"COORDINATES": "Координати",
+			"AUTO_DETECT_COORDINATES": "Автоматично откриване на координати",
+			"ERRORS": {
+				"FIRST_NAME_IS_REQUIRED": "Първо име е задължително",
+				"LAST_NAME_IS_REQUIRED": "Фамилно име е задължително",
+				"INVALID_EMAIL": "Невалиден Имейл",
+				"EMAIL_IS_REQUIRED": "Имейл е задължителен",
+				"COORDINATES_ARE_REQUIRED": "Координати са задължителни"
+			},
+			"WIZARD_TITLES": {
+				"ADDITIONAL_INFO": "Допълнителна информация",
+				"LOCATION": "Местоположение"
+			}
+		},
+		"SMART_TABLE": {
+			"TITLE": "Заглавие",
+			"ID": "Идент. номер",
+			"IMAGE": "Изображение"
+		},
+		"ORDER_INFO": {
+			"STATUSES": [
+				{
+					"TITLE": "Подготвяме поръчката!",
+					"DETAILS": "Ще я получите между %t минути.",
+					"NOT_PAID_NOTE": "Подгответе портфейла си (%s в брой)."
+				},
+				{
+					"TITLE": "Доставчика е в движение!",
+					"DETAILS": "Ще получите реда в %t min.",
+					"NOT_PAID_NOTE": "Подгответе портфейла си (%s в брой)."
+				},
+				{
+					"TITLE": "Проверете си вратата!",
+					"DETAILS": "Ще получите реда в секунди.",
+					"NOT_PAID_NOTE": "Подгответе портфейла си (%s в брой)."
+				},
+				{
+					"TITLE": "Поръчка завършена!",
+					"DETAILS": "Благодарим Ви, че използвате Ever",
+					"NOT_PAID_NOTE": ""
+				}
+			],
+			"DELIVERY_STATUS": {
+				"WE": "Ние",
+				"CARRIER": "Доставчик",
+				"YOU": "Вие"
+			},
+			"DELIVERY_WRONG": {
+				"DELIVERY_WRONG": "Доставката не беше правилно!",
+				"PROCESSING_WRONG": "Обработката не беше правилно!",
+				"TRY_AGAIN": "Моля, опитайте отново.",
+				"CALL_FOR_DETAILS": "Обадете се за подробности"
+			}
+		},
+		"INSTRUCTIONS_STEPS": {
+			"INSTRUTIONS": "инструкции",
+			"CREATE_USER_STEP": {
+				"CREATE_USER": "Създаване на потребител",
+				"STEP_1": "Етап 1",
+				"ORDER": "Поръчка",
+				"TO_CONTINUE_IS_REQUIRED_TO_REGISTER_IN_THE_SYSTEM": "Стъпка За да продължите, трябва да се регистрирате в системата",
+				"CLICK_ON_BUTTON_CREATE_USER": "Кликнете върху бутона 'Създаване на потребител'",
+				"FILL_THE_FORM_FOR_ADDITIONAL_INFO": "Попълнете формуляра за допълнителна информация (по избор)",
+				"FILL_THE_FORM_FOR_LOCATION_AND_PRESS_DONE_BUTTON": "Попълнете формуляра за местоположение и натиснете бутона DONE"
+			},
+			"ORDER_STEP": {
+				"ORDER": "Поръчка",
+				"STEP_2": "Стъпка 2.",
+				"CREATE_ORDER": "Създаване на поръчка",
+				"CHOICE_SOME_PRODUCTS_FROM_THE_TABLE": "Избор на някои продукти от таблицата (можете да видите повече подробности за това кога натиснете името и изображението му)",
+				"SELECT_PRODUCT": "За да бъде избран, един продукт трябва да натисне реда си.",
+				"SELECT_BUTTON_ORDER_TO_CREATE_ORDER": "Натиснете бутона 'Поръчка', за да създадете поръчка с избрания продукт.",
+				"REVIEW_ORDER_HISTORY": "Преглед на историята на поръчките:",
+				"ON_PRESS_ORDER_HISTORY_TAB": "Натиснете 'История на поръчките', за да видите всички поръчки.",
+				"HERE_YOU_CAN_SEE_DETAILS_ABOUT_EACH_ORDER": "Тук можете да видите подробности за всяка поръчка",
+				"PRESS_ON_CARRIER_ORDER_OR_PRODUCT_NAME": "Натиснете върху носителя, поръчката или името на продукта за повече информация."
+			},
+			"CONFIRM_OR_CANCEL_STEP": {
+				"STEP_3": "Стъпка 3",
+				"CONFIRM_CANCEL_ORDER": "Потвърдете / отменете поръчката",
+				"REAL_TIME": "Реално време",
+				"TRACK_STATUS_ON_YOUR_ORDER": "Проследяване на състоянието на поръчката ви.",
+				"ELAPSED_TIME_FROM_CREATE_TO_DELIVERED": "Проследяване на състоянието на поръчката ви.",
+				"SHOWS_MERCHANT_LOCATION": "Показва местоположението на търговеца.",
+				"SHOWS_CARRIER_LOCATION": "Показване на местоположението на оператора.",
+				"POSSIBILITIES": "Възможности:",
+				"SLIDER_REVIEW_OF_THE_ALL_PRODUCTS": "Преглед на плъзгачите на всички продукти.",
+				"CAN_CANCEL_IT_WITH_ORDER_CANCEL_BUTTON": "Докато поръчката не бъде доставена, потребителят я анулира с бутона 'Откажи поръчката'.",
+				"AFTER_THE_ORDER_IS_DELIVER_USER_CAN_CLICK_BUTTON_ORDER_CONFIRM_TO_CONTINUE": "След подаването на поръчката потребителят може да кликне върху бутона 'Потвърждаване на поръчката', за да продължи."
+			},
+			"INVITE_STEP": {
+				"TO_CONTINUE_ITs_REQUIRED_TO_BE_INVITED_IN_THE_SYSTEM": "За да продължите, трябва да бъдете поканени в системата:",
+				"SEND_INVITE_REQUEST": "Изпратете 'Искане за покана' до системата от формуляра, който ще бъде отворен след натискане на бутона Покана за заявка.",
+				"ALL_INVITE_REQUESTS_ARE_REVIEWED": "Всички заявки за покани се преглеждат от администратор и те могат да бъдат поканени, ако системата е налице близо до местоположението ви (за тестване можете веднага да направите бутона Покани потребител).",
+				"AFTER_YOU_GET_INVITED_BEFORE": "След като се поканите, можете лесно да влезете в системата, просто трябва да въведете вашия поканен код, който ще бъде предоставен от системата (тук ще видите",
+				"AFTER_YOU_GET_INVITED_AFTER": "кода след натискане на бутона Покани, и можете да го въведете, когато натиснете бутона Създаване на потребител)."
+			}
+		}
+	},
+	"CUSTOMERS_VIEW": {
+		"TITLE": "Клиенти",
+		"DELETE_CUSTOMERS": "Изтрий Селектирани",
+		"CREATE_CUSTOMER": "Създай Клиент",
+		"DELETE": "Изтрий",
+		"CREATE": "създавам",
+		"BAN": "BAN",
+		"UNBAN": "UNBAN",
+		"MANAGE_CUSTOMER": "Управление на клиента",
+		"CUSTOMER": "Клиент",
+		"CUSTOMERS_DEVICES": "Клиентски устройства",
+		"INVITE": "Покана",
+		"NOT_INVITED_ONLY": "Не са поканени само",
+		"ORDER": "Поръчка",
+		"ORDERS_STATISTICS": "Статистика на поръчките",
+		"NUMBER_OF_ORDERS": "Общо поръчки",
+		"CANCELED_ORDERS": "Отказани поръчки",
+		"COMPLETED_ORDERS_TOTAL": "Цена общо поръчки",
+		"Order": "Поръчка",
+		"CANCEL_ORDER": "Отмяна на поръчката",
+		"CATEGORY": "Категория",
+		"ORDERS_HISTORY": "История на поръчките",
+		"AVAILABLE_PRODUCTS": "Налични продукти",
+		"NEARBY_STORES": "Магазини наблизо",
+		"INVITES_REQUESTS_MANAGEMENT": "Покана за управление на заявки",
+		"INVITES_MANAGEMENT": "Управлявай поканите",
+		"DESCRIPTION": "Описание",
+		"DETAILS": "Детайли",
+		"MAKE_A_CUSTOM_ORDER": "Направете персонална заявка",
+		"PRODUCT_COUNT": "Продукт брой",
+		"QUANTITY_CAN'T_BE_EMPTY": "Количеството не може да бъде празно",
+		"QUANTITY_CAN'T_BE_0": "Количеството не може да бъде 0",
+		"NOT_ENOUGH_PRODUCTS_AVAILABLE": "Няма достатъчно продукти",
+		"ORDER_INFO": "Информация за поръчката",
+		"ORDER_ID": "Id на поръчката",
+		"STORE_ID": "Идент. № на магазина",
+		"CARRIER_ID": "Идентификационен номер на куриера",
+		"NO_CARRIER": "Няма превозвач",
+		"SMART_TABLE_COLUMNS": {
+			"IMAGE": "Изображение",
+			"NAME": "Име",
+			"EMAIL": "Eлектронна Поща",
+			"PHONE": "Телефон",
+			"ADDRESS": "Адрес",
+			"ORDERS_QTY": "Поръчки количество",
+			"COUNTRY": "Държава",
+			"CITY": "Град",
+			"STREET_ADDRESS": "Адрес на улица",
+			"HOUSE": "Къща",
+			"APARTMENT": "Апартамент",
+			"INVITE_CODE": "Код за покана",
+			"INVITED_DATE": "Поканена дата",
+			"ORDER_NUMBER": "Номер на поръчка",
+			"WAREHOUSE": "Склад",
+			"CARRIER": "Носител",
+			"PRODUCT_LIST": "Списък на продуктите",
+			"STATS": "Статистика",
+			"DELIVERY_TIME": "Време за доставка",
+			"CREATED": "Създаден",
+			"ACTIONS": "Мерки",
+			"PAID": "Платен",
+			"COMPLETED": "Завършен",
+			"CANCELLED": "Отменен",
+			"NOT_DELIVERED": "Не е доставено",
+			"PRODUCT": "Продукт",
+			"PRICE": "Цена",
+			"STORE": "Магазин",
+			"AVAILABLE_COUNT": "Наличен брой",
+			"ORDER": "Поръчка",
+			"STATUS": "Статус"
+		},
+		"EDIT": {
+			"EDIT_CUSTOMER": "Редактиране на клиент",
+			"BASIC_INFO": "Основна информация",
+			"SAVE": "Запази"
+		},
+		"DEVICE": {
+			"ALL_DEVICE": "Всички устройства",
+			"DEVICE_ID": "ID на устройството",
+			"ID": "Идентификационен Номер",
+			"UPDATE": "Актуализация",
+			"LANGUAGE": "език",
+			"TYPE": "тип",
+			"TYPEU": "Тип",
+			"UUID": "Универсален уникален идентификатор",
+			"DEVICE_UUID": "Универсален уникален идентификатор",
+			"UPDATE_DEVICE": "Актуализиране на устройството",
+			"CUSTOMERS_DEVICES": "Клиентски устройства",
+			"DELETE": "Изтрий",
+			"CREATE": "създавам"
+		},
+		"WAREHOUSE": {
+			"WAREHOUSE_INFO": "Информация за складовете",
+			"WAREHOUSE_ID": "Идент. № на склада",
+			"WAREHOUSE_NAME": "Име на склада"
+		},
+		"CUSTOMER_VIEW": {
+			"MANAGE_CUSTOMER": "Управление на клиента",
+			"EDIT": "Редактирай",
+			"CUSTOMER": "Клиент"
+		},
+		"INVITES_VIEW": {
+			"DELETE": "Изтрий",
+			"INVITE": "Покана"
+		}
+	},
+	"CARRIERS_VIEW": {
+		"TITLE": "Доставчици",
+		"DELETE_CARRIERS": "Изтрий селектирани",
+		"CREATE_CARRIER": "Създай Доставчик",
+		"DELETE": "Изтрий",
+		"CREATE_BUTTON": "създавам",
+		"ACTIVE_AND_AVAILABLE_ORDERS": "Активни и налични поръчки",
+		"ORDERS_HISTORY": "История на поръчките",
+		"TRACK": "Проследи",
+		"SMART_TABLE_COLUMNS": {
+			"IMAGE": "Изображение",
+			"NAME": "Име",
+			"PHONE": "Телефон",
+			"STATUS": "Статус",
+			"ADDRESS": "Адрес",
+			"DELIVERIES": "Доставки"
+		},
+		"CARRIER_PAGE": {
+			"WAREHOUSE": "Склад",
+			"CUSTOMER": "Клиент",
+			"SAVE": "Запази",
+			"EDIT": "Редактиране",
+			"CARRIER_INFO": "Информация за превозвача",
+			"CARRIER_ID": "Идентификационен номер на оператора",
+			"REGISTER_NEW_CARRIER": "Регистрирайте нов превозвач",
+			"WAREHOUSE_STATUS": "Статус на склада",
+			"CARRIER_STATUS": "Статус на превозвача",
+			"CREATED": "Създаден",
+			"ARRIVED_TO_CUSTOMER": "Пристигна до клиента",
+			"FAILED": "Провалена",
+			"DELIVERED": "Доставени",
+			"CLIENT_REFUSE_ORDER": "Поръчка отказана от клиента",
+			"AVAIBLE_ORDER_TO_PICK_UP": "Налични поръчки за набиране (всеки превозвач може да вземе няколко поръчки)",
+			"ACTIVE": "Активен",
+			"CARRIER_CAN_BE_SHARED": "Превозвачът може да бъде споделен?",
+			"NOT_ACTIVE": "Неактивен",
+			"WORKING": "Работещ",
+			"NOT_WORKING": "Не работещ",
+			"SELECT_CARRIER": "Изберете оператор",
+			"CARRIER_ORDERS_STATUS": "Статус на Поръчките на Куриера",
+			"Start": "Започни",
+			"PICKED_UP_ORDER": "Получена поръчка",
+			"CANCEL": "Отказ",
+			"Arrived To Client": "Пристигнал до клиента",
+			"No Carrier": "Няма превозвач",
+			"Order Selected For Delivery": "Поръчката е избрана за доставка",
+			"Order Picked Up": "Поръчката е взета",
+			"Order In Delivery": "Поръчка се доставя",
+			"Delivered": "Доставени",
+			"Delivery Issues": "Проблеми при доставката",
+			"Client Refuse to Take Order": "Клиентът отказва да приеме поръчка",
+			"BAD_STATUS": "BAD_STATUS",
+			"Created": "Създаден",
+			"Confirmed": "Потвърдено",
+			"Processing": "Обработване",
+			"Allocation Started": "Разпределението е започнало",
+			"Allocation Finished": "Разпределението е завършено",
+			"Packaging Started": "Опаковането започна",
+			"Packaged": "Опакован",
+			"Given to Carrier": "Дадено на Carrier",
+			"Allocation Failed": "Разпределението не бе успешно",
+			"Packaging Failed": "Опаковането не бе успешно",
+			"LOCATION": "Местоположение",
+			"TIME": "Време",
+			"NAME": "Име"
+		},
+		"EDIT": {
+			"EDIT_CARRIER": "Редактиране на превозвача",
+			"BASIC_INFO": "Основна информация",
+			"LOCATION": "Местоположение",
+			"PHOTO_URL": "URL адрес на снимката",
+			"CONTACT_PHONE": "Свържете се с телефона",
+			"FIRST_NAME": "Първо име",
+			"LAST_NAME": "Фамилия"
+		},
+		"CREATE": {
+			"BASIC_INFO": "Основна информация",
+			"LOCATION": "Местоположение"
+		},
+		"TRACK_PAGE": {
+			"TRACK_ALL_WORKING_CARRIERS": "Проследете всички работещи превозвачи",
+			"FILTER_CARRIERS": "Филтрирай превозвачите",
+			"PHONE": "Телефон",
+			"EMAIL": "Эл. адрес",
+			"ADDRESS": "Адрес",
+			"DELIVERY_COUNT": "Счетчик доставки"
+		}
+	},
+	"PRODUCT_TYPE_VIEW": {
+		"TITLE": "Нов продукт",
+		"WIZARD_FORM": {
+			"VALIDATION_MESSAGES": {
+				"TITLE": "Заглавието е задължително",
+				"THE_LENGHT_OF_THE_TITLE": "Дължината на заглавието трябва да е максимум 255 знака!",
+				"IMAGE": "Снимката е задължителна",
+				"DESCRIPTION": "Описанието е задължително",
+				"LANGUAGE": "Език е задължителен",
+				"THE_LENGHT_OF_THE_DESCRIPTION": "Дължината на описанието трябва да бъде максимум 255 знака!",
+				"PRICE": "Цената е задължителна",
+				"COUNT": "Брой продукти са задължителни"
+			}
+		}
+	},
+	"SHARED": {
+		"FORMS": {
+			"ERRORS": {
+				"FIRST_NAME_REQUIRED": "Името е задължително",
+				"LAST_NAME_REQUIRED": "Изисква се фамилно име",
+				"USERNAME_REQUIRED": "Изисква се потребителско име",
+				"PASSWORD_REQUIRED": "Изисква се парола",
+				"PHONE_REQUIRED": "Необходим е телефон",
+				"LOGO_URL_REQUIRED": "URL адресът на логото трябва да започва с 'https'",
+				"IS_ACTIVE": "Необходимо е полето за активност",
+				"COUNTRY_REQUIRED": "Необходима е държава",
+				"CITY_REQUIRED": "Необходима е държава",
+				"STREET_ADDRESS_REQUIRED": "Изисква се уличен адрес",
+				"HOUSE_REQUIRED": "Необходим е номер на къщата",
+				"COORDINATES_REQUIRED": "Необходими са координати",
+				"MUST_CONTAIN_ONLY_LETTERS": "Трябва да съдържа само букви",
+				"PHONE_MUST_CONTAINS_ONLY(specail_signs)AND_DIGIT_CHARACTER": "Телефонният номер може да започва с '+' и трябва да съдържа само само: '-,., (Интервал), #' и цифри"
+			}
+		},
+		"USER": {
+			"FORMS": {
+				"BASIC_INFO": {
+					"TITLE": "Основно Инфо.",
+					"FIRST_NAME": "Първо Име",
+					"FIRST_NAME_OPTIONAL": "Име (незадължително)",
+					"LAST_NAME_OPTIONAL": "Фамилно име (по избор)",
+					"PHOTO_URL": "URL адрес на снимката",
+					"PICTURE_URL": "URL адрес на картината (по избор)",
+					"EMAIL": "Електронна Поща",
+					"EMAIL_OPTIONAL": "Имейл (по избор)",
+					"ERRORS": {
+						"INVALID_EMAIL": "Невалиден Имейл",
+						"EMAIL_IS_ALREADY_IN_USE": "Имейлът вече е в употреба"
+					}
+				}
+			}
+		},
+		"WAREHOUSE": {
+			"ORDER_MODAL": {
+				"MAKE_ORDER": "Направи Поръчка",
+				"ONLY_AVAILABLE": "Покажи наличните продукти",
+				"ORDER": "Поръчай",
+				"SMART_TABLE": {
+					"TITLES": {
+						"IMG": "Снимка",
+						"PRODUCT": "Продукт",
+						"PRICE": "Цена",
+						"AVAILABLE": "Налично",
+						"AMOUNT": "Количество"
+					}
+				}
+			}
+		}
+	},
+	"MENU_VIEW": {
+		"DASHBOARD": "Табло",
+		"STORES": "Магазини",
+		"PRODUCTS": {
+			"PRODUCTS": "Продукти",
+			"MANAGEMENT": "Управление",
+			"CATEGORIES": "Категории"
+		},
+		"CUSTOMERS": {
+			"CUSTOMERS": "Клиенти",
+			"MANAGEMENT": "Управление",
+			"INVITES": "Покани"
+		},
+		"CARRIERS": "Превозвачи",
+		"SIMULATION": "Симулация",
+		"SETUP": "Настройки"
+	},
+	"CATEGORY_VIEW": {
+		"TITLE": "Заглавие",
+		"IMAGE": "Изображение",
+		"CREATE_BUTTON": "Създай",
+		"DELETE": "Изтрий",
+		"EDIT": {
+			"EDIT_CATEGORY": "Обнови Категория",
+			"CATEGORY_NAME": "Име на категория",
+			"ENTER_THE_CATEGORY_NAME": "Въведете името на категорията",
+			"DONE": "Свършен"
+		},
+		"CREATE": {
+			"CREATE_CATEGORY": "Създайте категория",
+			"CATEGORY_NAME": "Име на категория",
+			"ENTER_THE_CATEGORY_NAME": "Въведете името на категорията",
+			"PHOTO": "Снимка",
+			"BROWSE": "Разгледай",
+			"INVALID_URL": "Невалиден адрес",
+			"REMOVE_IMAGE": "Премахване на изображението",
+			"PHOTO_OPTIONAL": "Снимка (по избор)",
+			"DONE": "Свършен"
+		}
+	},
+	"PLACEHOLDER": {
+		"EXAMPLE": "Пример: Domino's Pizza",
+		"IMAGE_URL": "URL адрес на изображението",
+		"HERE_GOES_A_SHORT_DESCRIPTION": "Кратко описание",
+		"HERE_GOES_A_DETAILS_ABOUT_PRODUCT_(OPTION)": "Подробности за продукта (опция)",
+		"REMOVE_IMAGE": "Премахване на изображението",
+		"PASSWORD": "Парола",
+		"LATITUDE": "Географска ширина",
+		"LONGITUDE": "Географска Дължина",
+		"APARTMENT": "Апартамент",
+		"HOUSE": "Къща",
+		"STREET": "Улица",
+		"ZIP": "Пощенски код",
+		"CITY": "Град",
+		"FIND_ADDRESS": "Намерете адрес"
+	},
+	"STATUS_TEXT": {
+		"Created": "Създаден",
+		"Confirmed": "Потвърдено",
+		"Processing": "Обработване",
+		"Allocation Started": "Разпределението е започнало",
+		"Allocation Finished": "Разпределението е завършено",
+		"Packaging Started": "Опаковането започна",
+		"Packaged": "Опакован",
+		"Given to Carrier": "Дадено на Carrier",
+		"Allocation Failed": "Разпределението не бе успешно",
+		"Packaging Failed": "Опаковането не бе успешно",
+		"No Carrier": "Няма превозвач",
+		"Order Selected For Delivery": "Поръчката е избрана за доставка",
+		"Order Picked Up": "Поръчката е взета",
+		"Order In Delivery": "Поръчка се доставя",
+		"Arrived To Client": "Пристигнал до клиента",
+		"Delivered": "Доставени",
+		"Delivery Issues": "Проблеми при доставката",
+		"Client Refuse to Take Order": "Клиентът отказва да приеме поръчка",
+		"Given to Customer": "Дадено на клиента",
+		"BAD_STATUS": "BAD_STATUS"
+	},
+	"ELAPSED_TIME": {
+		"TITLE": "Изминалото време"
+	},
+	"CONFIRM_MODAL": {
+		"ARE_YOU_SURE": "Сигурен ли си",
+		"ARE_YOU_SURE_YOU_WANT_TO_INCREASE": "Наистина ли искате да увеличите количеството продукти?",
+		"ARE_YOU_SURE_YOU_WANT_TO_DECREASE": "Наистина ли искате да намалите количеството продукти??",
+		"YES": "Да",
+		"NO": "Не"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Няма връзка със сървъра"
+	},
+	"BUTTON_NEXT": "Продължи",
+	"BUTTON_PREV": "Обратно",
+	"BUTTON_DONE": "Завърши Поръчката",
+	"TERRAIN": "Терен",
+	"SATELLITE": "Спътник",
+	"LOCATION": "Местоположение",
+	"ROAD_MAP": "Пътна карта",
+	"Manage warehouse": "Управление на складови продукти и поръчки",
+	"Warehouse": "Склад",
+	"Create Warehouse": "Създаване на склад",
+	"SIMULATION": "Симулатции",
+	"Purchase products": "Купете продукти",
+	"Manage": "Управлявай",
+	"Orders": "Поръчки",
+	"Confirmed": "Потвърдено",
+	"In Delivery": "В процес на доставка",
+	"Not Confirmed": "Непотвърдено",
+	"Not paid": "Неплатен",
+	"Cancelled": "Отменен",
+	"All": "Всички",
+	"CANCEL": "Отказ",
+	"Default Settings": "Настройките по подразбиране",
+	"Products Manufacturing": "Производство на изделия",
+	"Carrier required before sale": "Превозвачът е необходим преди продажбата",
+	"New Product Type": "Превозвачът е необходим преди продажбата",
+	"Products": "Продукти",
+	"Product": "Продукт",
+	"Title": "Заглавие",
+	"Picture Url": "Линк към снимката",
+	"Description": "Описание",
+	"Details": "Детайли",
+	"Price": "Цена",
+	"CATEGORY": "Категория",
+	"LANGUAGE": "Език",
+	"BROWSE": "РАЗГЛЕДАЙ",
+	"ENGLISH": "Английски",
+	"HEBREW": "Иврит",
+	"RUSSIAN": "Руски",
+	"BULGARIAN": "Български",
+	"SPANISH": "Spanish",
+	"SELECT": "Изберете",
+	"Name": "Име",
+	"Id": "Идент. номер",
+	"Warehouse name is required": "Името на склада е задължително",
+	"Name must be at least 1 characters long": "Името трябва да е с дължина поне 1 знак",
+	"Title cannot be more than 255 characters long": "Заглавието не може да има повече от 255 знака",
+	"Logo": "Лого",
+	"Warehouse logo is required": "Необходимо е лого на склад",
+	"is Active": "Активен ли е",
+	"right now": "точно сега",
+	"Unselected": "Unselected",
+	"Phone": "Телефон",
+	"Email": "Електронна поща",
+	"Username": "Потребител",
+	"Username is required": "Изисква се потребителско име",
+	"Password": "Парола",
+	"Country": "Държава",
+	"USA": "САЩ",
+	"Israel": "Израел",
+	"Bulgaria": "България",
+	"City": "Град",
+	"Address": "Адрес",
+	"Postcode": "Пощенски код",
+	"Coordinates": "Координати",
+	"Auto detect coordinates": "Автоматично откриване на координати",
+	"Carriers": "Превозвачите",
+	"Carrier": "Превозвач",
+	"Use only specific carriers": "Използвайте само конкретни носители",
+	"Manage carrier and deliveries": "Управлявайте превозвача и доставките",
+	"Register New Carrier": "Регистрирайте нов превозвач",
+	"Create User": "Създаване на потребител",
+	"OPTIONAL": "по избор"
+}

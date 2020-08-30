@@ -1,0 +1,35 @@
+<carrier-map #map class="map"></carrier-map>
+
+<div class="bottom-container">
+	<div class="info">
+		<span class="left-info">{{ selectedOrder?.user.fullAddress }}</span>
+		<span *ngIf="carrierUserDistance" class="right-text"
+			>{{ carrierUserDistance + 'km' }}</span
+		>
+	</div>
+
+	<div class="buttons">
+		<div class="button-bar">
+			<button
+				*ngIf="!selectedOrder?.isCancelled"
+				[disabled]="disabledButtons"
+				class="button button-brand"
+				(click)="startDelivery()"
+			>
+				{{ 'STARTING_DELIVERY_VIEW.START' | translate }}
+			</button>
+
+			<button
+				[ngSwitch]="selectedOrder?.isCancelled"
+				[disabled]="disabledButtons"
+				class="button button-assertive"
+				(click)="returnProduct()"
+			>
+				<span *ngSwitchCase="false"
+					>{{ 'STARTING_DELIVERY_VIEW.CANCEL' | translate }}</span
+				>
+				<span *ngSwitchCase="true">{{ 'OK' | translate }}</span>
+			</button>
+		</div>
+	</div>
+</div>

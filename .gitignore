@@ -2,6 +2,7 @@
 /dist
 /tmp
 /out-tsc
+/build
 
 # dependencies
 /node_modules
@@ -29,6 +30,7 @@
 /libpeerconnection.log
 npm-debug.log
 yarn-debug.log
+yarn-error.log
 testem.log
 /typings
 
@@ -41,6 +43,11 @@ testem.log
 Thumbs.db
 /admin/website-angular/yarn-error.log
 
-yarn.lock
-/yarn-error.log
 *.lerna_backup
+
+/packages/core/tsconfig.build.tsbuildinfo
+/packages/common-angular/*.tsbuildinfo
+/packages/admin-web-angular/*.tsbuildinfo
+/packages/common/*.tsbuildinfo
+/packages/core/*.tsbuildinfo
+/packages/shop-mobile-ionic/package-lock.json

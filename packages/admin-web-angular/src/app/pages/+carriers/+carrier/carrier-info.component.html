@@ -1,0 +1,36 @@
+<div class="modal-header">
+	<h3>{{ 'CARRIERS_VIEW.CARRIER_PAGE.CARRIER_INFO' | translate }}</h3>
+	<button class="close" aria-label="Close" (click)="cancel()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body">
+	<div>
+		<h6>
+			<strong
+				>{{
+					'CARRIERS_VIEW.CARRIER_PAGE.CARRIER_ID' | translate
+				}}:</strong
+			>
+			<span (click)="redirectToCarrierPage()" class="carrier-redirect">{{
+				carrierId
+			}}</span>
+		</h6>
+	</div>
+	<div>
+		<h6>
+			<strong
+				>{{ 'CARRIERS_VIEW.CARRIER_PAGE.NAME' | translate }}:
+			</strong>
+			<span (click)="redirectToCarrierPage()" class="carrier-redirect"
+				>{{ carrierData?.firstName + ' ' + carrierData?.lastName }}
+			</span>
+		</h6>
+	</div>
+</div>
+
+<div>
+	<pre>
+		<code highlight [language]="['json']" [code]="carrierData | json"></code>
+	</pre>
+</div>

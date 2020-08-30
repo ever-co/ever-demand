@@ -1,0 +1,67 @@
+@import '../../order-info-page';
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.takeaway-popup {
+	z-index: 9999;
+
+	button {
+		padding: 10px 5px !important;
+		border-radius: 5px;
+		display: flex !important;
+		align-content: center !important;
+		align-items: center !important;
+		position: relative;
+		text-align: center;
+		height: 100%;
+
+		span {
+			margin: 0 auto;
+		}
+	}
+
+	.big-button-padding {
+		button {
+			padding: 10px !important;
+		}
+	}
+
+	.order-info {
+		padding-top: 55px;
+		height: 200px;
+		position: relative;
+
+		.show-products {
+			position: absolute;
+			top: 12px;
+			width: 100%;
+			text-align: center;
+			.order-info-icon {
+				color: $balanced-lighted;
+				&:before {
+					font-size: 1rem;
+					margin-right: 5px;
+				}
+			}
+
+			.times-icon {
+				color: $assertive-lighted;
+			}
+		}
+	}
+
+	.money-amount-container {
+		top: 0;
+		width: 100%;
+		background-color: $balanced;
+		opacity: 0.9;
+		z-index: 9999;
+		.money-amount {
+			opacity: 1;
+			font-size: 17px;
+			color: #fff;
+			font-weight: 500;
+			text-align: center;
+			position: relative;
+		}
+	}
+}

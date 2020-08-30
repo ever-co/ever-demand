@@ -1,0 +1,62 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.login-view {
+	background-color: $brand;
+
+	.login-view-content {
+		background-color: $brand;
+		text-align: center;
+		max-width: 500px;
+		width: 80%;
+		@include center(absolute);
+
+		.logo {
+			color: #fff;
+
+			img {
+				width: 80%;
+
+				@media (max-height: 550px) {
+					width: 60%;
+				}
+			}
+		}
+
+		.login-form {
+			margin: auto;
+
+			.login-input {
+				margin-top: 20px;
+				/* text-align: center;
+                border: solid white 4px; */
+				width: 100%;
+				padding: 12px !important;
+				font-size: 24px;
+				border: 0;
+				border-bottom: solid 3px #fff;
+				background: none;
+				display: inline;
+				height: auto;
+				color: #fff;
+				line-height: 1.42857;
+				outline: none;
+				/* prevents textbox highlight in chrome */
+			}
+
+			.login-button {
+				margin-top: 50px;
+				width: 100%;
+				color: white;
+				background: darken($brand, 5%);
+				padding: 16px;
+				font-size: 24px;
+				border: solid darken($brand, 10%) 1px;
+				border-radius: 10px;
+
+				&:active {
+					background-color: darken($brand, 3%);
+				}
+			}
+		}
+	}
+}

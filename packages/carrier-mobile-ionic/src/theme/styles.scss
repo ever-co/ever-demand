@@ -1,0 +1,360 @@
+$home-view-map-height: 116px;
+
+.carrier-view {
+	.map {
+		height: 78%;
+	}
+
+	.bottom-container {
+		bottom: 0;
+		position: fixed;
+		width: 100%;
+		background-color: #f3f3f3;
+		height: 22%;
+		.info {
+			font-size: 16px;
+			padding: 12px 20px 0 20px;
+
+			height: 55%;
+			display: flex !important;
+			align-content: center !important;
+			align-items: center !important;
+			padding-top: 0 !important;
+
+			.right-text.rtl {
+				position: absolute;
+				left: 20px !important;
+			}
+			.right-text.ltr {
+				position: absolute;
+				right: 20px !important;
+			}
+			.left-info {
+				max-width: 80%;
+			}
+		}
+
+		.buttons {
+			text-align: center;
+			font-size: 40px;
+			padding: 0px;
+
+			.button {
+				padding: 10px 30px;
+
+				&.big-text {
+					font-size: 20px;
+				}
+			}
+
+			.button-bar {
+				height: 100%;
+				.button {
+					height: 100% !important;
+					font-size: auto !important;
+					padding: 0 !important;
+				}
+			}
+			height: 45%;
+		}
+	}
+
+	// .product-image {
+	// 	width: 100%;
+	// }
+	.angular-google-map {
+		width: 100%;
+		height: 100%;
+
+		.angular-google-map-container {
+			height: calc(100% - #{$home-view-map-height});
+
+			.map-marker-label {
+				font-size: 15px;
+			}
+		}
+	}
+}
+
+.money-amount-container {
+	top: 0;
+	position: absolute;
+	width: 100%;
+	background-color: $assertive;
+	opacity: 0.8;
+	z-index: 9999;
+
+	.money-amount {
+		opacity: 1;
+		font-size: 17px;
+		padding: 11px;
+		color: #fff;
+		font-weight: 500;
+		text-align: center;
+		position: relative;
+	}
+}
+
+.already-paid-container {
+	top: 0;
+	position: absolute;
+	width: 100%;
+	background-color: $balanced;
+	opacity: 0.8;
+	z-index: 9999;
+
+	.already-paid {
+		opacity: 1;
+		font-size: 15px;
+		padding: 8px;
+		color: #fff;
+		text-align: center;
+		position: relative;
+	}
+}
+
+.font-size-28 {
+	font-size: 28px !important;
+}
+
+// Style from old ionic
+.button-bar {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -moz-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	-moz-box-flex: 1;
+	-moz-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+	width: 100%;
+}
+
+.button-bar > .button {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	-moz-box-flex: 1;
+	-moz-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+	display: block;
+	overflow: hidden;
+
+	padding: 0 16px;
+	width: 0;
+	border-width: 1px 0px 1px 1px;
+	border-radius: 0;
+	text-align: center;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.button.button-brand {
+	background-color: #2a2c39;
+	border-color: #242530;
+	color: #fff;
+}
+
+.button.button-brand.active,
+.button.button-brand.activated {
+	background-color: #282a36;
+	box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button.button-assertive {
+	border-color: #973935;
+	background-color: #bd4742;
+	color: #fff;
+}
+
+.button {
+	border-color: #b2b2b2;
+	background-color: #f8f8f8;
+	color: #444;
+	position: relative;
+	display: inline-block;
+	margin: 0;
+	padding: 0 12px;
+	min-width: 52px;
+	min-height: 47px;
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 2px;
+	vertical-align: top;
+	text-align: center;
+	text-overflow: ellipsis;
+	font-size: 16px;
+	line-height: 42px;
+	cursor: pointer;
+}
+
+.bar.bar-assertive {
+	border-color: #973935;
+	background-color: #bd4742; // background-image: linear-gradient(0deg, #973935, #973935 50%, transparent 50%);
+	color: #fff;
+}
+
+.bar.bar-assertive .title {
+	color: #fff;
+}
+
+.bar-header {
+	top: 0;
+	border-top-width: 0;
+	border-bottom-width: 1px;
+}
+
+.bar.bar-brand {
+	background-image: none;
+	border-bottom: 2px solid #262733;
+	background-color: #2a2c39;
+	color: white !important;
+}
+
+.bar.bar-brand .title {
+	color: white;
+}
+
+.bar.bar-brand .button-icon {
+	color: white;
+}
+
+.bar {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -moz-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0);
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	position: absolute;
+	right: 0;
+	left: 0;
+	z-index: 9;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 5px;
+	width: 100%;
+	height: 44px;
+	border-width: 0;
+	border-style: solid;
+	border-top: 1px solid transparent;
+	border-bottom: 1px solid #ddd;
+	background-color: white;
+	/* border-width: 1px will actually create 2 device pixels on retina */
+	/* this nifty trick sets an actual 1px border on hi-res displays */
+	background-size: 0;
+}
+
+.bar-header {
+	top: 0;
+	border-top-width: 0;
+	border-bottom-width: 1px;
+
+	.disable-user-behavior {
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		-webkit-touch-callout: none;
+		-webkit-tap-highlight-color: transparent;
+		-webkit-tap-highlight-color: transparent;
+		-webkit-user-drag: none;
+		-ms-touch-action: none;
+		-ms-content-zooming: none;
+	}
+}
+
+.bar .buttons-left span {
+	margin-right: 5px;
+	display: inherit;
+}
+
+.button-icon {
+	-webkit-transition: opacity 0.1s;
+	transition: opacity 0.1s;
+	padding: 0 6px;
+	min-width: initial;
+	border-color: transparent;
+	background: none;
+}
+
+.bar .title {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	z-index: 0;
+	overflow: hidden;
+	margin: 0 10px;
+	min-width: 30px;
+	height: 43px;
+	text-align: center;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 17px;
+	font-weight: 500;
+	line-height: 44px;
+}
+
+.bar .button.button-icon:before,
+.bar .button .icon:before,
+.bar .button.icon:before,
+.bar .button.icon-left:before,
+.bar .button.icon-right:before {
+	padding-right: 2px;
+	padding-left: 2px;
+	font-size: 20px;
+	line-height: 32px;
+}
+
+.bar .button.button-icon .icon:before,
+.bar .button.button-icon:before,
+.bar .button.button-icon.icon-left:before,
+.bar .button.button-icon.icon-right:before {
+	vertical-align: top;
+	font-size: 32px;
+	line-height: 32px;
+}
+
+.button-icon .icon:before,
+.button-icon.icon:before {
+	font-size: 32px;
+}
+
+.waves-effect {
+	position: relative;
+	cursor: pointer;
+	display: inline-block;
+	overflow: hidden;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.bar .button-bar > .button,
+.bar .buttons > .button {
+	min-height: 31px;
+	line-height: 32px;
+}
+
+.bar .buttons span {
+	display: inline-block;
+}
+
+.bar .buttons-left span {
+	margin-right: 5px;
+	display: inherit;
+}

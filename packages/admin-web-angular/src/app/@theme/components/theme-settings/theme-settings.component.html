@@ -1,0 +1,61 @@
+<div class="theme-settings">
+	<h6 [hidden]="true">LAYOUTS</h6>
+	<div [hidden]="true" class="settings-row">
+		<a
+			*ngFor="let layout of layouts"
+			href="#"
+			[class.selected]="layout.selected"
+			[attr.title]="layout.name"
+			(click)="layoutSelect(layout)"
+		>
+			<i [attr.class]="layout.icon"></i>
+		</a>
+	</div>
+	<h6 [hidden]="true">SIDEBAR</h6>
+	<div [hidden]="true" class="settings-row">
+		<a
+			*ngFor="let sidebar of sidebars"
+			href="#"
+			[class.selected]="sidebar.selected"
+			[attr.title]="sidebar.name"
+			(click)="sidebarSelect(sidebar)"
+		>
+			<i [attr.class]="sidebar.icon"></i>
+		</a>
+	</div>
+
+	<h6>THEMES</h6>
+	<div class="settings-row theme-button">
+		<!-- <ngx-theme-switcher></ngx-theme-switcher> -->
+		<select
+			[(ngModel)]="currentTheme"
+			(change)="toggleTheme()"
+			status="primary"
+			class="form-control"
+		>
+			<option *ngFor="let theme of themes" [value]="theme.value">
+				{{ theme.name }}</option
+			>
+		</select>
+	</div>
+
+	<h6>LANGUAGE</h6>
+	<div class="settings-row theme-button">
+		<select
+			[(ngModel)]="defaultLanguage"
+			(change)="switchLanguage()"
+			status="primary"
+			class="form-control"
+		>
+			<option *ngFor="let lang of languages" [value]="lang.value">
+				{{ lang.name }}</option
+			>
+		</select>
+	</div>
+
+	<div class="switcher">
+		<ngx-layout-direction-switcher
+			[vertical]="true"
+		></ngx-layout-direction-switcher>
+	</div>
+</div>

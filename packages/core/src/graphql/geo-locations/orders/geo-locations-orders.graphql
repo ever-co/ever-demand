@@ -1,0 +1,37 @@
+type Query {
+	getOrderForWork(
+		geoLocation: GeoLocationFindInput!
+		skippedOrderIds: [String!]!
+		options: GeoLocationOrdersOptions
+		searchObj: SearchOrdersForWork
+	): Order
+
+	getOrdersForWork(
+		geoLocation: GeoLocationFindInput!
+		skippedOrderIds: [String!]!
+		options: GeoLocationOrdersOptions
+		searchObj: SearchOrdersForWork
+	): [Order]!
+
+	getCountOfOrdersForWork(
+		geoLocation: GeoLocationFindInput!
+		skippedOrderIds: [String!]!
+		searchObj: SearchOrdersForWork
+	): Int!
+}
+
+input SearchOrdersForWork {
+	isCancelled: Boolean
+	byRegex: [SearchByRegex]
+}
+
+input SearchByRegex {
+	key: String!
+	value: String!
+}
+
+input GeoLocationOrdersOptions {
+	sort: String
+	limit: Int
+	skip: Int
+}

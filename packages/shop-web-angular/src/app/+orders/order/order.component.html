@@ -1,0 +1,114 @@
+<mat-card class="order">
+	<div class="order-header">
+		<div class="order-status-container">
+			<p class="order-status-text">
+				{{ 'ORDER_VIEW.ORDER_ID' | translate }} #{{ orderNumber }}
+			</p>
+
+			<div class="order-status-text">
+				{{
+					order.orderType
+						? ('ORDER_VIEW.ORER_TYPE.TAKEAWAY' | translate)
+						: ('ORDER_VIEW.ORER_TYPE.DELIVERY' | translate)
+				}}
+			</div>
+
+			<p class="order-status-text">
+				{{ orderStatusTextTranslates | translate
+				}}<svg class="order-status-icon" viewBox="0 0 24 24">
+					<path
+						d="M12,18H6V14H12M21,14V12L20,7H4L3,12V14H4V20H14V14H18V20H20V14M20,4H4V6H20V4Z"
+					/>
+				</svg>
+			</p>
+			<p class="order-status-text">
+				{{ createdAt | date: 'yyyy-MM-dd HH:mm:ss' }}
+			</p>
+		</div>
+	</div>
+	<div
+		class="warehouse-logo-container"
+		[ngClass]="document.documentElement.dir === 'rtl' ? 'rtl' : 'ltr'"
+	>
+		<warehouse-logo
+			[logo]="warehouse?.logo"
+			[border]="true"
+		></warehouse-logo>
+	</div>
+	<div class="products">
+		<div class="product-details" *ngFor="let product of products">
+			<div class="order-info">
+				<div class="product-info">
+					<h1 class="product-name">
+						{{ localeTranslate(product.product.title) }}
+						<span class="product-price">${{ product.price }}</span>
+					</h1>
+					<h2 class="product-description">
+						{{ localeTranslate(product.product.description) }}
+					</h2>
+					<h2 class="customer-notes">
+						Notes:
+						{{ order.user.geoLocation.notes }}
+					</h2>
+				</div>
+			</div>
+			<div class="order-images">
+				<img
+					class="order-picture"
+					[src]="localeTranslate(product.product.images)"
+				/>
+				<span
+					*ngIf="!order.products.length"
+					class="no-product-img order-picture"
+				></span>
+			</div>
+		</div>
+	</div>
+	<div
+		class="order-options"
+		[ngClass]="document.documentElement.dir === 'rtl' ? 'rtl' : 'ltr'"
+	>
+		<button
+			(click)="openDialog()"
+			mat-raised-button
+			color="accent"
+			class="cancel-button"
+			[disabled]="_isButtonDisabled"
+		>
+			<svg viewBox="0 0 24 24">
+				<path
+					d="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z"
+				/>
+			</svg>
+			{{ 'ORDER_VIEW.CANCEL' | translate }}
+		</button>
+		<button mat-raised-button color="accent" class="pay-button">
+			<svg class="payment-button-icon" viewBox="0 0 24 24">
+				<path
+					d="M20,8H4V6H20M20,18H4V12H20M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"
+				/>
+			</svg>
+			{{ 'ORDER_VIEW.PAY' | translate }}
+		</button>
+		<button
+			mat-raised-button
+			color="accent"
+			(click)="openMap()"
+			class="pay-button"
+			*ngIf="carrier"
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="24"
+				height="24"
+				viewBox="0 0 24 24"
+			>
+				<path
+					d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+				/>
+				<path d="M0 0h24v24H0z" fill="none" />
+			</svg>
+			{{ 'ORDER_VIEW.SHOW_CARRIER_ON_MAP' | translate }}
+		</button>
+	</div>
+</mat-card>

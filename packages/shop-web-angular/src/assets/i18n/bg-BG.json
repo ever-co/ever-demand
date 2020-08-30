@@ -1,0 +1,134 @@
+{
+	"Title": "Пример за превод",
+	"Intro": "Здравейте аз съм Артър, на 42 години.",
+	"Cancel": "Отказ",
+	"Pay": "Или плащайте с пари в брой",
+	"Pay now": "Плати сега",
+	"Products": "Продукти",
+	"Orders": "Поръчки",
+	"Buy for": "Купи за",
+	"DELIVERY": "Доставка",
+	"SELECT_YOUR_LOCATION": "Изберете местоположение",
+	"TAKEAWAY": "За вкъщи",
+	"Details": "Детайли",
+	"Delivery from": "Доставка от",
+	"WHAT_IS_YOUR_ADDRESS": "Какъв е Вашият адрес?",
+	"FOR": "за",
+	"MESSAGE_POP_UP": {
+		"CANCEL_ORDER": "Само за 5-10 минути ще ядете това вкусно ястие! Ако го анулирате, ще пропуснете страхотна и вкусна храна и вероятно ще трябва да я хвърлим",
+		"OK": "Добре",
+		"CANCEL": "Отказ",
+		"CONFIRMATION": "Потвърждение",
+		"WRONG_CODE_TRY_AGAIN": "Грешен код, опитайте отново.",
+		"TO_BE_INVITED_ALLOW_GPS": "За да бъдете поканени, позволете GPS."
+	},
+	"PRODUCTS_VIEW": {
+		"SEARCH_PRODUCTS": "напр. Пеперони Пица Суши...",
+		"PRODUCTS": "Продукти",
+		"ORDERS": "Поръчки",
+		"BUY_FOR": "Купи за",
+		"DETAILS": "Детайли",
+		"DELIVERY_FROM": "Доставка от",
+		"TAKEOUT_FROM": "Теглене от",
+		"MINUTES": "мин",
+		"DELIVERY": "Доставка",
+		"TAKEAWAY": "За вкъщи",
+		"READYFOR": "Готов за",
+		"NO_PRODUCTS_FOUND": "Няма намерени продукти за",
+		"NO_PRODUCTS": "Няма продукти",
+		"FASTFOOD": "бързо хранене",
+		"SEARCH": "търсене",
+		"LOADING_MORE_DATA": "Още данни се зареждат ...",
+		"PRODUCT_DETAILS_VIEW": {
+			"BUY_FOR": "Купи за",
+			"DETAILS": "Детайли",
+			"DELIVERY_FROM": "Доставка от",
+			"TAKEOUT_FROM": "Теглене от"
+		}
+	},
+	"LOG_IN_VIEW": {
+		"OR": "Или",
+		"ENTER_BY_ADDRESS": "Въведете чрез адрес",
+		"SIGN_UP_WITH_AN_APP_INVITATION": "Регистрирайте се с покана за приложение",
+		"WE_WILL_SEND_YOU_A_MESSAGE": "Ще ви изпратим съобщение, веднага щом започне да се показва на вашия адрес:",
+		"THANKS_FOR_REGISTERING": "Благодаря за регистрирането!",
+		"WHAT_YOU_SEE_IS_WHAT_YOU_GET": "Това, което виждате, е това, което получавате",
+		"INVITE_CODE": "Код за покана",
+		"NOTIFICATION_MESSAGE": {
+			"WRONG_CODE_TRY_AGAIN": "Грешен код, опитайте отново.",
+			"TO_BE_INVITED_ALLOW_GPS": "За да бъдете поканени, позволете GPS."
+		},
+		"BY_LOCATION_VIEW": {
+			"WHAT_IS_YOUR_ADDRESS": "Какъв е Вашият адрес?",
+			"WE_GUARANTEE_TO_SHOW_ONLY_RELEVANT_PRODUCTS": "Гарантираме да показваме само съответни продукти въз основа на въведения адрес",
+			"SEARCH": "Търсене",
+			"COUNTRY": "Държава...",
+			"APARTMENT": "апартамент",
+			"CONTINUE": "продължи",
+			"PLACEHOLDER": {
+				"SELECTED_CITY": "Избран град",
+				"SELECTED_STREET": "Избрана улица",
+				"HOUSE": "къща",
+				"APARTMENT_OPTIONAL": "Апартамент (опция)"
+			}
+		}
+	},
+	"ORDER_VIEW": {
+		"CANCEL": "Отказ",
+		"CANCEL_ORDER": "Само за 5-10 минути ще ядете това вкусно ястие! Ако го анулирате, ще пропуснете страхотна и вкусна храна и вероятно ще трябва да я хвърлим",
+		"PAY": "Или плащайте с пари в брой",
+		"PAY_NOW": "Плати сега",
+		"PRODUCTS": "Продукти",
+		"ORDERS": "Поръчки",
+		"ORDER_ID": "Идент. № поръчка:",
+		"SHOW_CARRIER_ON_MAP": "Покажи доставчика на картата",
+		"ORER_TYPE": {
+			"DELIVERY": "Доставка",
+			"TAKEAWAY": "За вкъщи"
+		}
+	},
+	"ORDER_CARRIER_STATUS": {
+		"CREATED": "Създаден",
+		"ARRIVED_TO_CUSTOMER": "Пристигна до клиента",
+		"FAILED": "Провалена",
+		"DELIVERED": "Доставени",
+		"CLIENT_REFUSE_ORDER": "Поръчка отказана от клиента",
+		"AVAIBLE_ORDER_TO_PICK_UP": "Налични поръчки за набиране (всеки превозвач може да вземе няколко поръчки)",
+		"ACTIVE": "Активен",
+		"NOT_ACTIVE": "Неактивен",
+		"WORKING": "Работещ",
+		"NOT_WORKING": "Не работещ",
+		"CARRIER_ORDERS_STATUS": "Статус на Поръчките на Куриера",
+		"Start": "Започни",
+		"PICKED_UP_ORDER": "Получена поръчка",
+		"CANCEL": "Отказ",
+		"SELECT_CARRIER": "Изберете оператор",
+		"Arrived To Client": "Пристигнал до клиента",
+		"No Carrier": "Няма превозвач",
+		"Order Selected For Delivery": "Поръчката е избрана за доставка",
+		"Order Picked Up": "Поръчката е взета",
+		"Order In Delivery": "Поръчка се доставя",
+		"Delivered": "Доставени",
+		"Delivery Issues": "Проблеми при доставката",
+		"Client Refuse to Take Order": "Клиентът отказва да приеме поръчка",
+		"BAD_STATUS": "BAD_STATUS",
+		"Created": "Създаден",
+		"Confirmed": "Потвърдено",
+		"Processing": "Обработване",
+		"Allocation Started": "Разпределението е започнало",
+		"Allocation Finished": "Разпределението е завършено",
+		"Packaging Started": "Опаковането започна",
+		"Packaged": "Опакован",
+		"Given to Carrier": "Дадено на Carrier",
+		"Allocation Failed": "Разпределението не бе успешно",
+		"Packaging Failed": "Опаковането не бе успешно",
+		"LOCATION": "Местоположение"
+	},
+	"SETTINGS_VIEW": {
+		"SETTINGS": "Настройки",
+		"LANGUAGE": "език"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Няма връзка със сървъра"
+	}
+}

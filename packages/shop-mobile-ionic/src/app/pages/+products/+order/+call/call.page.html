@@ -1,0 +1,26 @@
+<div class="call-unsuccessfull">
+	<div
+		class="box box-brand text-align-center box-small-padding"
+		dir="{{ 'CURRENT_DIRECTION' | translate }}"
+	>
+		<h4>{{ 'SIDE_MENU.GROUPS.INFO.CALL.WE_APPOLOGISE' | translate }}</h4>
+
+		{{ 'SIDE_MENU.GROUPS.INFO.CALL.CALL_UNSUCCESSFULL' | translate }}
+	</div>
+
+	<div class="box box-brand-light box-small-padding">
+		<ion-row dir="{{ 'CURRENT_DIRECTION' | translate }}">
+			<span
+				class="waves-effect waves-classic no-padding col"
+				style="width: 100%; padding: 0px;"
+			>
+				<button
+					class="button button-assertive col-100"
+					(click)="closePopup()"
+				>
+					<span>{{ 'OK' | translate }}</span>
+				</button>
+			</span>
+		</ion-row>
+	</div>
+</div>

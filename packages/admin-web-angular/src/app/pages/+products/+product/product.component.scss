@@ -1,0 +1,41 @@
+div {
+	font-size: 16px;
+}
+
+p {
+	margin-bottom: 20px;
+}
+
+strong {
+	color: black;
+	opacity: 0.66;
+}
+
+div.input-group {
+	div label {
+		cursor: pointer;
+	}
+
+	select {
+		cursor: pointer;
+	}
+}
+
+img {
+	min-height: 200px;
+}
+
+nb-card-header {
+	min-height: 71px;
+	position: relative;
+
+	.control-icon-left {
+		cursor: pointer;
+		overflow: hidden;
+		vertical-align: middle;
+		width: 1.4em;
+		height: 1.4em;
+		float: left !important;
+		margin-right: 1.25rem;
+	}
+}

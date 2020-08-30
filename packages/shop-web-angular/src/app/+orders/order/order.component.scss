@@ -1,0 +1,201 @@
+.order {
+	z-index: 15;
+	width: 100%;
+	padding: 0;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+	height: fit-content;
+	box-sizing: border-box;
+
+	.no-product-img {
+		border-left: 1px solid #95989a;
+	}
+}
+
+.order-header {
+	background: #2a2c39;
+	width: 100%;
+	padding-right: 20px;
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	box-sizing: border-box;
+	padding-right: 20px;
+
+	.order-status-container {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		padding-left: 20px;
+		justify-content: space-between;
+	}
+
+	.order-status-icon {
+		height: 35px;
+		fill: white;
+	}
+
+	.order-status-text {
+		font-size: 12px;
+		font-weight: normal;
+		text-align: center;
+		color: white;
+		margin: 0px;
+	}
+}
+
+.warehouse-logo-container.ltr {
+	position: absolute;
+	right: calc(150px - 23px);
+	top: 100px;
+}
+
+.warehouse-logo-container.rtl {
+	position: absolute;
+	left: calc(150px - 23px);
+	top: 100px;
+}
+
+.warehouse-logo-container warehouse-logo {
+	width: 46px;
+	height: 46px;
+}
+
+.warehouse-logo-container warehouse-logo img {
+	opacity: 1;
+}
+
+.products {
+	.product-details:last-child {
+		border: none;
+		.order-info {
+			padding-bottom: 50px;
+		}
+	}
+	.product-details {
+		display: flex;
+		justify-content: space-between;
+		height: fit-content;
+		width: 100%;
+		border-bottom: 1px solid rgba(#000, 0.3);
+
+		.side-container {
+			width: 25%;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.order-info {
+			height: fit-content;
+			display: flex;
+			flex-direction: column;
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+	}
+}
+
+.order-options.ltr {
+	display: flex;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	button {
+		margin-right: 20px;
+	}
+
+	margin-bottom: 20px !important;
+	margin-left: 20px;
+}
+
+.order-options.rtl {
+	display: flex;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	button {
+		margin-left: 20px;
+	}
+
+	margin-bottom: 20px !important;
+	margin-right: 20px;
+}
+
+.product-name {
+	font-family: 'Roboto', 'Helvetica Neue Light', 'HelveticaNeue-Light',
+		'Helvetica Neue', Calibri, Helvetica, Arial, sans-serif;
+	font-weight: normal;
+	color: #212121;
+	font-size: 33px;
+}
+
+.product-price {
+	font-family: 'Segoe UI', 'Helvetica Neue Light', 'HelveticaNeue-Light',
+		'Helvetica Neue', Calibri, Helvetica, Arial, sans-serif;
+	font-weight: 200;
+	color: #95989a;
+	font-size: 23px;
+}
+
+.product-description {
+	font-family: 'Roboto', 'Helvetica Neue Light', 'HelveticaNeue-Light',
+		'Helvetica Neue', Calibri, Helvetica, Arial, sans-serif;
+	font-weight: normal;
+	color: rgba(0, 0, 0, 0.8);
+	font-size: 18px;
+}
+
+.customer-notes {
+	font-family: 'Roboto', 'Helvetica Neue Light', 'HelveticaNeue-Light',
+		'Helvetica Neue', Calibri, Helvetica, Arial, sans-serif;
+	font-weight: normal;
+	color: rgba(0, 0, 0, 0.8);
+	font-size: 13px;
+}
+
+.warehouse-info {
+	display: flex;
+	flex-direction: column;
+	font-size: 0.8em;
+	padding-right: 20px;
+	padding-top: 10px;
+	text-align: right;
+
+	span:first-child {
+		font-size: 1em;
+		font-weight: bold;
+	}
+}
+
+.cancel-button svg {
+	position: relative;
+	top: -2px;
+	fill: #fff;
+	width: 19px;
+	height: 19px;
+}
+
+.pay-button svg {
+	position: relative;
+	top: -2px;
+	fill: #fff;
+	width: 19px;
+	height: 19px;
+}
+
+.order-images {
+	min-width: 150px;
+	width: 150px;
+	display: flex;
+	align-items: center;
+	background: #2a2c39;
+}
+
+.order-picture {
+	width: 100%;
+	display: block;
+	height: auto;
+	user-select: none;
+}

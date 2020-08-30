@@ -1,0 +1,61 @@
+type Promotion {
+	_id: String
+	title: [TranslateType]
+	description: [TranslateType]
+	promoPrice: Float
+	warehouse: Warehouse
+	product: Product
+	warehouseId: String
+	productId: String
+	active: Boolean
+	activeFrom: Date
+	activeTo: Date
+	image: String
+	purchasesCount: Int
+}
+
+type TranslateType {
+	locale: String!
+	value: String!
+}
+
+type Product {
+	_id: String!
+}
+
+input PromotionInput {
+	title: [TranslateInput]
+	description: [TranslateInput]
+	promoPrice: Float
+	warehouse: WarehouseInput
+	active: Boolean
+	activeFrom: Date
+	activeTo: Date
+	image: String
+	product: String
+	purchasesCount: Int
+}
+
+input PromotionsFindInput {
+	warehouse: String
+}
+
+input WarehouseInput {
+	_id: String
+}
+
+input TranslateInput {
+	locale: String!
+	value: String!
+}
+
+type Query {
+	promotions(findInput: PromotionsFindInput): [Promotion]
+}
+
+type Mutation {
+	createPromotion(createInput: PromotionInput): Promotion
+	updatePromotion(id: String, updateInput: PromotionInput): Promotion
+	removePromotion(id: String!): Void
+	removePromotionsByIds(ids: [String!]!): Remove
+}

@@ -1,0 +1,61 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.back-btn {
+	font-size: 30px;
+	margin-right: 10px;
+	margin-bottom: 4px;
+}
+
+.merchants-content {
+	.merchants-list {
+		background: $brand-lighted;
+		margin: 0;
+
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		top: 3.8rem;
+	}
+
+	.box {
+		padding: 12px 12px 12px 0;
+		button {
+			padding: 10px;
+			border-radius: 10px;
+			display: flex !important;
+			align-content: center !important;
+			align-items: center !important;
+			position: relative;
+			height: 100%;
+			color: white;
+			text-align: center;
+			font-size: 1rem;
+			span {
+				margin: 0 auto;
+			}
+		}
+	}
+
+	.merchants-list-header {
+		color: white;
+		width: 100%;
+		text-align: center;
+	}
+
+	.merchants-container {
+		position: relative;
+		max-height: 92%;
+		overflow: scroll;
+
+		.not-found-text {
+			color: white;
+			width: 100%;
+			text-align: center;
+		}
+
+		:first-child {
+			margin-top: 0 !important;
+		}
+	}
+}

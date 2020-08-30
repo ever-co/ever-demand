@@ -1,0 +1,30 @@
+.timePassed {
+	color: #f0f0f0;
+	margin: 0 auto;
+	text-align: center;
+	font-style: italic;
+	font-size: 1.1em;
+	padding-top: 15px;
+	span {
+		display: block;
+	}
+}
+
+.order-page {
+	z-index: 9999;
+
+	button {
+		padding: 15px;
+		border-radius: 5px;
+		display: flex !important;
+		align-content: center !important;
+		align-items: center !important;
+		position: relative;
+		text-align: center;
+		height: 100%;
+
+		span {
+			margin: 0 auto;
+		}
+	}
+}

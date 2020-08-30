@@ -1,0 +1,157 @@
+<nb-card class="setup-merchant-delivery-takeaway">
+	<nb-card-header
+		><span *ngIf="currentView == componentViews.main">
+			{{
+				'FAKE_DATA.SETUP_MERCHANTS.DELIVERY_AND_TAKEAWAY_SETTINGS.DELIVERY_AND_TAKEAWAY_SETTINGS'
+					| translate
+			}}
+		</span>
+		<span *ngIf="currentView == componentViews.carriersTable">
+			{{
+				'FAKE_DATA.SETUP_MERCHANTS.DELIVERY_AND_TAKEAWAY_SETTINGS.SELECT_FROM_SHARED_CARRIERS'
+					| translate
+			}}
+		</span>
+		<span *ngIf="currentView == componentViews.addNewCarrier">
+			{{
+				'FAKE_DATA.SETUP_MERCHANTS.DELIVERY_AND_TAKEAWAY_SETTINGS.ADD_YOUR_CARRIER'
+					| translate
+			}}
+		</span>
+		<span *ngIf="currentView == componentViews.editCarrier">
+			{{
+				'FAKE_DATA.SETUP_MERCHANTS.DELIVERY_AND_TAKEAWAY_SETTINGS.EDIT_CARRIER'
+					| translate
+			}}
+		</span>
+	</nb-card-header>
+	<nb-card-body>
+		<div *ngIf="currentView === componentViews.main" class="main-content">
+			<div class="row">
+				<div class="form-group offset-md-2 col-md-4">
+					<nb-checkbox [(ngModel)]="isCarrierRequired">
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.DELIVERY_AND_TAKEAWAY_SETTINGS.CARRIER_REQUIRED'
+								| translate
+						}}
+					</nb-checkbox>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group offset-md-2 col-md-4">
+					<nb-checkbox
+						(change)="productsDeliveryChange()"
+						[(ngModel)]="productsDelivery"
+					>
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.DELIVERY_AND_TAKEAWAY_SETTINGS.PRODUCTS_DELIVERY_BY_DEFAULT'
+								| translate
+						}}
+					</nb-checkbox>
+				</div>
+				<div class="form-group col-md-4">
+					<nb-checkbox [(ngModel)]="productsTakeaway">
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.DELIVERY_AND_TAKEAWAY_SETTINGS.PRODUCTS_TAKEAWAY_BY_DEFAULT'
+								| translate
+						}}
+					</nb-checkbox>
+				</div>
+			</div>
+			<div [hidden]="!productsDelivery" class="row actions">
+				<div class="form-group offset-md-2 col-md-4">
+					<button
+						type="button"
+						class="btn btn-outline-success"
+						(click)="currentView = componentViews.carriersTable"
+					>
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.DELIVERY_AND_TAKEAWAY_SETTINGS.USE_SELECTED_SHARED_CARRIERS'
+								| translate
+						}}
+					</button>
+				</div>
+
+				<div class="form-group col-md-4">
+					<button
+						type="button"
+						class="btn btn-outline-success"
+						(click)="currentView = componentViews.addNewCarrier"
+					>
+						{{
+							'FAKE_DATA.SETUP_MERCHANTS.DELIVERY_AND_TAKEAWAY_SETTINGS.ADD_YOUR_CARRIERS'
+								| translate
+						}}
+					</button>
+				</div>
+
+				<div
+					*ngIf="
+						restrictedCarriers && restrictedCarriers.length !== 0
+					"
+				>
+					<ea-carriers-smart-table
+						[perPage]="carriersPerPage"
+						[selectMode]="null"
+						[redirectPage]="''"
+						[actions]="'show'"
+						[loadWholeData]="restrictedCarriers"
+						(deleteRow)="removeCarrier($event)"
+						(editRow)="editCarrier($event)"
+						#carriersTable
+					></ea-carriers-smart-table>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<ea-merchants-setup-shared-carriers
+				#sharedCarriers
+				[existedCarriersIds]="restrictedCarriersIds"
+				*ngIf="currentView == componentViews.carriersTable"
+			></ea-merchants-setup-shared-carriers>
+		</div>
+
+		<div class="row">
+			<ea-merchants-setup-add-new-carrier
+				#newCarrier
+				[carrierId]="carrierId"
+				*ngIf="
+					currentView == componentViews.addNewCarrier ||
+					currentView == componentViews.editCarrier
+				"
+			></ea-merchants-setup-add-new-carrier>
+		</div>
+	</nb-card-body>
+</nb-card>
+
+<div *ngIf="currentView === componentViews.main">
+	<button nbButton (click)="previousStep.emit()">
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate }}
+	</button>
+	<button nbButton (click)="nextStep.emit()">
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate }}
+	</button>
+</div>
+<div *ngIf="currentView !== componentViews.main">
+	<button nbButton (click)="back()">
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.BACK' | translate }}
+	</button>
+	<button
+		*ngIf="currentView !== componentViews.editCarrier"
+		[disabled]="!haveCarriersForAdd"
+		nbButton
+		(click)="add()"
+	>
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.ADD' | translate }}
+	</button>
+
+	<button
+		*ngIf="currentView === componentViews.editCarrier"
+		[disabled]="!isBasicInfoValid"
+		nbButton
+		(click)="save()"
+	>
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.SAVE' | translate }}
+	</button>
+</div>

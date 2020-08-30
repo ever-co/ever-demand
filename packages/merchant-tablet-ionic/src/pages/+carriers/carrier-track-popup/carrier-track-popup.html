@@ -1,0 +1,63 @@
+<div #gmap id="mapDiv" class="map"></div>
+<div class="sidebar">
+	<i (click)="cancelModal()" class="fa fa-close close-btn"></i>
+	<h2 *ngIf="!user">{{ "CARRIERS_VIEW.TRACK_CARRIER" | translate }}</h2>
+	<h2 *ngIf="user">{{ "CARRIERS_VIEW.DELIVERY_TRACKING" | translate }}</h2>
+	<ul *ngIf="carrier">
+		<div>
+			<img [src]="carrierIcon" />
+			<h4>{{ "CARRIERS_VIEW.CARRIER" | translate }}</h4>
+		</div>
+		<h3>{{ carrier.fullName }}</h3>
+		<small>@{{ carrier.username }} </small>
+		<li><i class="fa fa-phone"></i> {{ carrier.phone}}</li>
+		<li>
+			<i class="fa fa-map-pin"></i> {{ carrier.geoLocation.streetAddress
+			}}
+		</li>
+		<li>
+			<i class="fa fa-map-marker"></i>
+			{{ carrier.geoLocation.loc.coordinates[0].toFixed(6) + ', ' +
+			carrier.geoLocation.loc.coordinates[1].toFixed(6) }}
+		</li>
+		<li>
+			{{ "CARRIERS_VIEW.DELIVERY_COUNT" | translate }} {{
+			carrier.numberOfDeliveries }}
+		</li>
+	</ul>
+	<ul *ngIf="warehouse">
+		<div>
+			<img [src]="storeIcon" />
+			<h4>{{ "CARRIERS_VIEW.STORE" | translate }}</h4>
+		</div>
+		<h3>{{ warehouse.name }}</h3>
+		<li><i class="fa fa-envelope"></i> {{ warehouse.contactEmail }}</li>
+		<li><i class="fa fa-phone"></i> {{ warehouse.contactPhone }}</li>
+		<li>
+			<i class="fa fa-map-pin"></i> {{ warehouse.geoLocation.streetAddress
+			}}
+		</li>
+		<li>
+			<i class="fa fa-map-marker"></i>
+			{{ warehouse.geoLocation.loc.coordinates[0].toFixed(6) + ', ' +
+			warehouse.geoLocation.loc.coordinates[1].toFixed(6) }}
+		</li>
+	</ul>
+	<ul *ngIf="user">
+		<div>
+			<img [src]="userIcon" />
+			<h4>{{ "CARRIERS_VIEW.CUSTOMER" | translate }}</h4>
+		</div>
+		<h3>{{ user.firstName + ' ' + user.lastName }}</h3>
+		<li><i class="fa fa-envelope"></i> {{ user.email }}</li>
+		<li><i class="fa fa-phone"></i> {{ user.phone }}</li>
+		<li>
+			<i class="fa fa-map-pin"></i> {{ user.geoLocation.streetAddress }}
+		</li>
+		<li>
+			<i class="fa fa-map-marker"></i>
+			{{ user.geoLocation.loc.coordinates[0].toFixed(6) + ', ' +
+			user.geoLocation.loc.coordinates[1].toFixed(6) }}
+		</li>
+	</ul>
+</div>

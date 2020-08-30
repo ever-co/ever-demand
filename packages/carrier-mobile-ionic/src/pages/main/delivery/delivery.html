@@ -1,0 +1,55 @@
+<div
+	class="money-amount-container"
+	*ngIf="!selectedOrder?.isPaid && !selectedOrder?. isCancelled"
+>
+	<div class="money-amount">
+		{{ 'DELIVERY_VIEW.THE_CUSTOMER_HAS_TO_PAY' | translate }} ${{
+		selectedOrder?.totalPrice }}!
+	</div>
+</div>
+
+<div
+	class="already-paid-container"
+	*ngIf="selectedOrder?.isPaid && !selectedOrder?. isCancelled"
+>
+	<div class="already-paid">
+		{{ 'DELIVERY_VIEW.CUSTOMER_ALREADY_PAID_WITH_CARD' | translate }}
+	</div>
+</div>
+
+<carrier-map #map class="map"></carrier-map>
+
+<div class="bottom-container">
+	<div class="info">
+		<span class="left-info">{{ selectedOrder?.user.fullAddress }}</span>
+		<span *ngIf="carrierUserDistance" class="right-text"
+			>{{ carrierUserDistance + 'km' }}</span
+		>
+	</div>
+
+	<div class="buttons">
+		<div class="button-bar">
+			<button
+				*ngIf="!selectedOrder?.isCancelled"
+				[disabled]="disabledButtons"
+				class="button button-brand"
+				(click)="delivered()"
+			>
+				{{ 'DELIVERY_VIEW.DELIVERED' | translate }}
+			</button>
+
+			<button
+				[disabled]="disabledButtons"
+				class="button button-assertive"
+				(click)="cancel()"
+			>
+				<span *ngIf="!selectedOrder?.isCancelled"
+					>{{ 'DELIVERY_VIEW.CANCEL' | translate }}</span
+				>
+				<span *ngIf="selectedOrder?.isCancelled"
+					>{{ 'OK' | translate }}</span
+				>
+			</button>
+		</div>
+	</div>
+</div>

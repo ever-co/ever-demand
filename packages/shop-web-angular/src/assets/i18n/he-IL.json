@@ -1,0 +1,134 @@
+{
+	"Title": "דוגמה לדוגמה",
+	"Intro": "שלום אני ארתור, אני בן 42.",
+	"Cancel": "לְבַטֵל",
+	"Pay": "או לשלם במזומן",
+	"Pay now": "שלם עכשיו",
+	"Products": "מוצרים",
+	"Orders": "הזמנות",
+	"Buy for": "לקנות ל",
+	"DELIVERY": "משלוח",
+	"SELECT_YOUR_LOCATION": "בחר את המיקום שלך",
+	"TAKEAWAY": "להסיר",
+	"Details": "פרטים",
+	"Delivery from": "משלוח מ",
+	"WHAT_IS_YOUR_ADDRESS": "מה הכתבת שלך?",
+	"FOR": "ל",
+	"MESSAGE_POP_UP": {
+		"CANCEL_ORDER": "בתוך 5-10 דקות תוכלו לאכול ארוחה טעימה זו! על ידי ביטול זה אתה מתגעגע אוכל נהדר וטעים, ואנחנו כנראה צריך לזרוק אותו",
+		"OK": "בסדר",
+		"CANCEL": "בטל",
+		"CONFIRMATION": "אישור",
+		"WRONG_CODE_TRY_AGAIN": "קוד שגוי, נסה שוב.",
+		"TO_BE_INVITED_ALLOW_GPS": "כדי להיות מוזמן לאפשר GPS."
+	},
+	"PRODUCTS_VIEW": {
+		"SEARCH_PRODUCTS": "למשל פיצה פפרוני סושי ...",
+		"PRODUCTS": "מוצרים",
+		"ORDERS": "הזמנות",
+		"BUY_FOR": "לקנות ל",
+		"DETAILS": "פרטים",
+		"DELIVERY_FROM": "משלוח מ",
+		"TAKEOUT_FROM": "צא מתוך",
+		"MINUTES": "דקות",
+		"DELIVERY": "משלוח",
+		"TAKEAWAY": "להסיר",
+		"READYFOR": "מוכן ל-",
+		"NO_PRODUCTS_FOUND": "לא נמצאו מוצרים עבור",
+		"NO_PRODUCTS": "אין מוצרים",
+		"FASTFOOD": "אוכל מהיר",
+		"SEARCH": "לחפש",
+		"LOADING_MORE_DATA": "טוען נתונים נוספים ...",
+		"PRODUCT_DETAILS_VIEW": {
+			"BUY_FOR": "לקנות ל",
+			"DETAILS": "פרטים",
+			"DELIVERY_FROM": "משלוח מ",
+			"TAKEOUT_FROM": "צא מתוך"
+		}
+	},
+	"LOG_IN_VIEW": {
+		"OR": "או",
+		"ENTER_BY_ADDRESS": "הזן לפי כתובת",
+		"SIGN_UP_WITH_AN_APP_INVITATION": "הירשם באמצעות הזמנה לאפליקציה",
+		"WE_WILL_SEND_YOU_A_MESSAGE": "אנו נשלח לך הודעה ברגע שנתחיל לפעול בכתובת שלך:",
+		"THANKS_FOR_REGISTERING": "תודה על ההרשמה!",
+		"WHAT_YOU_SEE_IS_WHAT_YOU_GET": "מה שאתה רואה זה מה שאתה מקבל",
+		"INVITE_CODE": "קוד הזמנה",
+		"NOTIFICATION_MESSAGE": {
+			"WRONG_CODE_TRY_AGAIN": "קוד שגוי, נסה שוב.",
+			"TO_BE_INVITED_ALLOW_GPS": "כדי להיות מוזמן לאפשר GPS."
+		},
+		"BY_LOCATION_VIEW": {
+			"WHAT_IS_YOUR_ADDRESS": "מה הכתבת שלך?",
+			"WE_GUARANTEE_TO_SHOW_ONLY_RELEVANT_PRODUCTS": "אנו מבטיחים להציג רק מוצרים רלוונטיים על פי הכתובת שהוזנה",
+			"SEARCH": "לחפש",
+			"COUNTRY": "מדינה...",
+			"APARTMENT": "דירה",
+			"CONTINUE": "המשך",
+			"PLACEHOLDER": {
+				"SELECTED_CITY": "עיר נבחרת",
+				"SELECTED_STREET": "רחוב נבחר",
+				"HOUSE": "בית",
+				"APARTMENT_OPTIONAL": "דירה (אופציונלית)"
+			}
+		}
+	},
+	"ORDER_VIEW": {
+		"CANCEL": "לְבַטֵל",
+		"CANCEL_ORDER": "בתוך 5-10 דקות תוכלו לאכול ארוחה טעימה זו! על ידי ביטול זה אתה מתגעגע אוכל נהדר וטעים, ואנחנו כנראה צריך לזרוק אותו",
+		"PAY": "או לשלם במזומן",
+		"PAY_NOW": "שלם עכשיו",
+		"PRODUCTS": "מוצרים",
+		"ORDERS": "הזמנות",
+		"ORDER_ID": "מספר הזמנה:",
+		"SHOW_CARRIER_ON_MAP": "הצג ספק על המפה",
+		"ORER_TYPE": {
+			"DELIVERY": "משלוח",
+			"TAKEAWAY": "להסיר"
+		}
+	},
+	"ORDER_CARRIER_STATUS": {
+		"CREATED": "נוצר",
+		"ARRIVED_TO_CUSTOMER": "הגיע ללקוח",
+		"FAILED": "נִכשָׁל",
+		"DELIVERED": "נמסר",
+		"CLIENT_REFUSE_ORDER": "הזמנת לקוח",
+		"AVAIBLE_ORDER_TO_PICK_UP": "הזמנות זמינות להרים (כל מוביל יכול לאסוף הזמנות מרובות)",
+		"ACTIVE": "פָּעִיל",
+		"NOT_ACTIVE": "לא פעיל",
+		"WORKING": "עובד",
+		"NOT_WORKING": "לא עובד",
+		"SELECT_CARRIER": "בחר ספק",
+		"CARRIER_ORDERS_STATUS": "סטטוס הזמנות של ספק",
+		"Start": "הַתחָלָה",
+		"PICKED_UP_ORDER": "הזמנת הזמנה",
+		"CANCEL": "לְבַטֵל",
+		"Arrived To Client": "הגיע ללקוח",
+		"No Carrier": "אין ספק",
+		"Order Selected For Delivery": "ההזמנה נבחרה למשלוח",
+		"Order Picked Up": "ההזמנה הסתיימה",
+		"Order In Delivery": "סדר בהזמנה",
+		"Delivered": "נמסר",
+		"Delivery Issues": "הנפקות משלוח",
+		"Client Refuse to Take Order": "הלקוח מסרב לקבל הזמנה",
+		"BAD_STATUS": "BAD_STATUS",
+		"Created": "נוצר",
+		"Confirmed": "מְאוּשָׁר",
+		"Processing": "מעבד",
+		"Allocation Started": "ההקצאה החלה",
+		"Allocation Finished": "ההקצאה הסתיימה",
+		"Packaging Started": "האריזה התחילה",
+		"Packaged": "ארוז",
+		"Given to Carrier": "ניתן ל- Carrier",
+		"Allocation Failed": "ההקצאה נכשלה",
+		"Packaging Failed": "האריזות נכשלו",
+		"LOCATION": "מקום"
+	},
+	"SETTINGS_VIEW": {
+		"SETTINGS": "הגדרות",
+		"LANGUAGE": "שפה"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "השרת נפל"
+	}
+}

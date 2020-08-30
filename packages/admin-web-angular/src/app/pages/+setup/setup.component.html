@@ -1,0 +1,24 @@
+<nb-card class="col-12" [nbSpinner]="loading">
+	<nb-card-header>
+		<h1>{{ 'FAKE_DATA.SETUP' | translate }}</h1>
+	</nb-card-header>
+
+	<nb-card-body>
+		<button
+			[disabled]="!fakeDataGenerator"
+			nbButton
+			status="primary"
+			class="mr-3"
+			(click)="navigateToFakeDataPage()"
+		>
+			{{ 'FAKE_DATA.GENERATE_INITIAL_DATA' | translate }}
+		</button>
+		<button
+			nbButton
+			status="primary"
+			(click)="navigateToSetupMerchantsPage()"
+		>
+			{{ 'FAKE_DATA.SETUP_MERCHANTS.SETUP_MERCHANTS' | translate }}
+		</button>
+	</nb-card-body>
+</nb-card>

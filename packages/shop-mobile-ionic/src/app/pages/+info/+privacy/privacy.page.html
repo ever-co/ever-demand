@@ -1,0 +1,15 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-buttons slot="start">
+			<ion-menu-button autoHide="false"></ion-menu-button>
+		</ion-buttons>
+
+		<ion-title [ngClass]="platform.isRTL ? 'rtl' : 'ltr'"
+			>{{ 'PRIVACY_VIEW.TITLE' | translate }}</ion-title
+		>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<e-cu-loaded-information [html]="usePrivacyHtml"></e-cu-loaded-information>
+</ion-content>

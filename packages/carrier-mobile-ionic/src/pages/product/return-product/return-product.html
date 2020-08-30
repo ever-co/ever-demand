@@ -1,0 +1,38 @@
+<div *ngIf="selectedOrder?.isCancelled" class="money-amount-container">
+	<div class="money-amount">
+		<!-- TODO add translate -->
+		The customer cancel order
+	</div>
+</div>
+
+<div class="carrier-view">
+	<img
+		class="product-image"
+		src="{{ (selectedOrder?.products)[0].product.images[0].url }}"
+	/>
+	<div class="bottom-container">
+		<div class="info">
+			<span class="left-info"
+				>{{
+				localeTranslate((selectedOrder?.products)[0]?.product?.title)
+				}}</span
+			>
+			<span class="right-text">#{{ selectedOrder?.orderNumber }}</span>
+		</div>
+		<div class="buttons">
+			<div class="button-bar">
+				<button class="button button-brand" (click)="returnProduct()">
+					{{ 'RETURN_PRODUCT_VIEW.RETURN_PRODUCT' | translate }}
+				</button>
+
+				<button
+					*ngIf="allowCancel"
+					class="button button-assertive"
+					(click)="cancelReturn()"
+				>
+					{{ 'RETURN_PRODUCT_VIEW.CANCEL' | translate }}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

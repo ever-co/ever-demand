@@ -1,0 +1,134 @@
+{
+	"Title": "Пример перевода",
+	"Intro": "Привет, Артур, мне 42 года.",
+	"Cancel": "Отмена",
+	"Pay": "Или оплатить наличными",
+	"Pay now": "Заплатить сейчас",
+	"Products": "Продукты",
+	"Orders": "Заказы",
+	"Buy for": "Купить для",
+	"DELIVERY": "Доставка",
+	"SELECT_YOUR_LOCATION": "Выберите ваше местоположение",
+	"TAKEAWAY": "Навынос",
+	"Details": "Детали",
+	"Delivery from": "Доставка из",
+	"WHAT_IS_YOUR_ADDRESS": "Какой у Вас адрес?",
+	"FOR": "за",
+	"MESSAGE_POP_UP": {
+		"CANCEL_ORDER": "Всего через 5-10 минут вы будете есть эту вкусную еду! Отменив его, вы пропустите отличную и вкусную еду, и нам, вероятно, придется ее бросить",
+		"OK": "Хорошо",
+		"CANCEL": "Отменить",
+		"CONFIRMATION": "Подтверждение",
+		"WRONG_CODE_TRY_AGAIN": "Неправильный код, повторите попытку.",
+		"TO_BE_INVITED_ALLOW_GPS": "Чтобы пригласить, разрешите GPS."
+	},
+	"PRODUCTS_VIEW": {
+		"SEARCH_PRODUCTS": "например, Пепперони Пицца Суши ...",
+		"PRODUCTS": "Продукты",
+		"ORDERS": "Поръчки",
+		"BUY_FOR": "Купить для",
+		"DETAILS": "Детали",
+		"DELIVERY_FROM": "Доставка из",
+		"TAKEOUT_FROM": "Вынос из",
+		"MINUTES": "мин",
+		"DELIVERY": "Доставка",
+		"TAKEAWAY": "Навынос",
+		"READYFOR": "Готово для",
+		"NO_PRODUCTS_FOUND": "Продукты не найдены для",
+		"NO_PRODUCTS": "Нет товаров",
+		"FASTFOOD": "быстрое питание",
+		"SEARCH": "поиск",
+		"LOADING_MORE_DATA": "Загрузка дополнительных данных ...",
+		"PRODUCT_DETAILS_VIEW": {
+			"BUY_FOR": "Купить для",
+			"DETAILS": "Детали",
+			"DELIVERY_FROM": "Доставка из",
+			"TAKEOUT_FROM": "Вынос из"
+		}
+	},
+	"LOG_IN_VIEW": {
+		"OR": "Или",
+		"ENTER_BY_ADDRESS": "Введите адрес",
+		"SIGN_UP_WITH_AN_APP_INVITATION": "Зарегистрируйтесь с приглашением на приложение",
+		"WE_WILL_SEND_YOU_A_MESSAGE": "Мы отправим вам сообщение, как только начнем работать по вашему адресу:",
+		"THANKS_FOR_REGISTERING": "Спасибо, что зарегистрировались!",
+		"WHAT_YOU_SEE_IS_WHAT_YOU_GET": "Что вы видите, это то, что вы получаете",
+		"INVITE_CODE": "Код приглашения",
+		"NOTIFICATION_MESSAGE": {
+			"WRONG_CODE_TRY_AGAIN": "Неправильный код, повторите попытку.",
+			"TO_BE_INVITED_ALLOW_GPS": "Чтобы пригласить, разрешите GPS."
+		},
+		"BY_LOCATION_VIEW": {
+			"WHAT_IS_YOUR_ADDRESS": "Какой у Вас адрес?",
+			"WE_GUARANTEE_TO_SHOW_ONLY_RELEVANT_PRODUCTS": "Мы гарантируем показывать только релевантные продукты на основе введенного адреса",
+			"SEARCH": "поиск",
+			"COUNTRY": "Страна...",
+			"APARTMENT": "квартира",
+			"CONTINUE": "Продолжить",
+			"PLACEHOLDER": {
+				"SELECTED_CITY": "Выбранный город",
+				"SELECTED_STREET": "Выбранная улица",
+				"HOUSE": "жилой дом",
+				"APARTMENT_OPTIONAL": "Апартаменты (по желанию)"
+			}
+		}
+	},
+	"ORDER_VIEW": {
+		"CANCEL": "Отмена",
+		"CANCEL_ORDER": "Всего через 5-10 минут вы будете есть эту вкусную еду! Отменив его, вы пропустите отличную и вкусную еду, и нам, вероятно, придется ее бросить",
+		"PAY": "Или оплатить наличными",
+		"PAY_NOW": "Заплатить сейчас",
+		"PRODUCTS": "Продукты",
+		"ORDERS": "Заказы",
+		"ORDER_ID": "номер заказа:",
+		"SHOW_CARRIER_ON_MAP": "Показать перевозчика на карте",
+		"ORER_TYPE": {
+			"DELIVERY": "Доставка",
+			"TAKEAWAY": "Навынос"
+		}
+	},
+	"ORDER_CARRIER_STATUS": {
+		"CREATED": "Созданный",
+		"ARRIVED_TO_CUSTOMER": "Прибытие в клиенту",
+		"FAILED": "Не смогли",
+		"DELIVERED": "Доставлен",
+		"CLIENT_REFUSE_ORDER": "Заказ клиента",
+		"AVAIBLE_ORDER_TO_PICK_UP": "Доступные заказы для подбора (каждый перевозчик может выбрать несколько заказов)",
+		"ACTIVE": "Активный",
+		"NOT_ACTIVE": "Не активен",
+		"WORKING": "За работой",
+		"NOT_WORKING": "Не работает",
+		"SELECT_CARRIER": "Выбрать перевозчика",
+		"CARRIER_ORDERS_STATUS": "Статус заказов перевозчика",
+		"Start": "Начало",
+		"PICKED_UP_ORDER": "Выбранный заказ",
+		"CANCEL": "Отмена",
+		"Arrived To Client": "Прибыл в клиенту",
+		"No Carrier": "Нет перевозчика",
+		"Order Selected For Delivery": "Заказ выбран для доставки",
+		"Order Picked Up": "Выбранный заказ",
+		"Order In Delivery": "Заказ в доставке",
+		"Delivered": "Доставлен",
+		"Delivery Issues": "Проблемы с доставкой",
+		"Client Refuse to Take Order": "Клиент отказывается принимать заказы",
+		"BAD_STATUS": "BAD_STATUS",
+		"Created": "Созданный",
+		"Confirmed": "Подтвердил",
+		"Processing": "Обработка",
+		"Allocation Started": "Началось распределение",
+		"Allocation Finished": "Выделение завершено",
+		"Packaging Started": "Начало упаковки",
+		"Packaged": "В упаковке",
+		"Given to Carrier": "Предоставлено перевозчику",
+		"Allocation Failed": "Не удалось выполнить распределение",
+		"Packaging Failed": "Ошибка упаковки",
+		"LOCATION": "Место нахождения"
+	},
+	"SETTINGS_VIEW": {
+		"SETTINGS": "настройки",
+		"LANGUAGE": "язык"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Сервер упал"
+	}
+}

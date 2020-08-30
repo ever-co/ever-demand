@@ -1,0 +1,33 @@
+<div class="order-issue">
+	<div
+		class="box box-brand text-align-center"
+		style="padding: 10px;"
+		*ngIf="areIssuesDuringDelivery"
+	>
+		<h4>{{ 'BUY_POPUP.DELIVERY_WRONG.DELIVERY_WRONG' | translate }}</h4>
+		{{ 'BUY_POPUP.DELIVERY_WRONG.TRY_AGAIN' | translate }} (<a
+			style="font-size: 12px;"
+			>{{ 'BUY_POPUP.DELIVERY_WRONG.CALL_FOR_DETAILS' | translate }}</a
+		>)
+	</div>
+
+	<div
+		class="box box-brand text-align-center"
+		style="padding: 10px;"
+		*ngIf="areIssuesDuringWarehouseProcessing"
+	>
+		<h4>{{ 'BUY_POPUP.DELIVERY_WRONG.PROCESSING_WRONG' | translate }}</h4>
+		{{ 'BUY_POPUP.DELIVERY_WRONG.TRY_AGAIN' | translate }}
+	</div>
+
+	<div class="box box-brand-light box-small-padding">
+		<span class="waves-effect waves-classic no-padding-bottom">
+			<button
+				class="button button-assertive col-100"
+				(click)="closePopup()"
+			>
+				<span>{{ 'OK' | translate }}</span>
+			</button>
+		</span>
+	</div>
+</div>

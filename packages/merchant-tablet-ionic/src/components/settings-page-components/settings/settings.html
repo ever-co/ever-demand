@@ -1,0 +1,157 @@
+<div class="merchant-settings" *ngIf="currWarehouse">
+	<ion-grid>
+		<ion-row>
+			<ion-col class="col-6">
+				<h4 class="row-title">
+					{{"SETTINGS_VIEW.SETTINGS_SECTION.DELIVERY_SETTINGS"|translate}}
+				</h4>
+				<ion-item mode="ios">
+					<ion-label>
+						{{
+						'SETTINGS_VIEW.SETTINGS_SECTION.PRODUCTS_DELIVERY_BY_DEFAULT'
+						| translate }}
+					</ion-label>
+					<ion-checkbox
+						slot="start"
+						#productsDelivery="ngModel"
+						[(ngModel)]="currWarehouse.productsDelivery"
+					>
+					</ion-checkbox>
+				</ion-item>
+			</ion-col>
+			<ion-col class="col-6">
+				<h4 class="row-title">
+					{{"SETTINGS_VIEW.SETTINGS_SECTION.TAKEAWAY_SETTINGS"|translate}}
+				</h4>
+				<ion-item mode="ios">
+					<ion-label
+						>{{
+						'SETTINGS_VIEW.SETTINGS_SECTION.PRODUCTS_TAKEAWAY_BY_DEFAULT'
+						| translate }}
+					</ion-label>
+					<ion-checkbox
+						slot="start"
+						#productsTakeaway="ngModel"
+						[(ngModel)]="currWarehouse.productsTakeaway"
+					>
+					</ion-checkbox>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col class="col-6">
+				<h4 class="row-title">
+					{{ 'SETTINGS_VIEW.SETTINGS_SECTION.PAYMENTS_SETTINGS' |
+					translate }}
+				</h4>
+
+				<merchant-payments-settings
+					[currWarehouse]="currWarehouse"
+					#paymentsSettings
+				>
+				</merchant-payments-settings>
+			</ion-col>
+			<ion-col class="col-6">
+				<h4 class="row-title">
+					{{ 'SETTINGS_VIEW.SETTINGS_SECTION.IN_STORE_MODE_SETTINGS' |
+					translate }}
+				</h4>
+				<ion-item mode="ios">
+					<ion-label>
+						{{ 'SETTINGS_VIEW.SETTINGS_SECTION.IN_STORE_MODE' |
+						translate }}
+					</ion-label>
+					<ion-checkbox
+						slot="start"
+						#productsTakeaway="ngModel"
+						[(ngModel)]="currWarehouse.inStoreMode"
+					>
+					</ion-checkbox>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<br />
+		<h4 class="row-title">
+			{{ 'SETTINGS_VIEW.SETTINGS_SECTION.BARCODE_QR_CODE_SETTINGS' |
+			translate }}
+		</h4>
+		<ion-row>
+			<ion-col class="col-6">
+				<ion-item
+					mode="ios"
+					class="input-with-checkbox align-with-label-input"
+				>
+					<ion-label>
+						{{ 'SETTINGS_VIEW.SETTINGS_SECTION.ORDER_BARCODE_TYPE' |
+						translate }}</ion-label
+					>
+					<ion-select
+						#orderBarcodeType="ngModel"
+						[(ngModel)]="currWarehouse.orderBarcodeType"
+					>
+						<ion-select-option
+							*ngFor="let type of orderBarcodeTypes"
+							value="{{ type }}"
+							>{{ getorderBarcodeTypesToString(type)
+							}}</ion-select-option
+						>
+					</ion-select>
+				</ion-item>
+			</ion-col>
+			<ion-col class="col-6">
+				<ion-row>
+					<ion-item mode="ios" class="col-9">
+						<ion-label class="labels" position="floating">
+							{{ 'SETTINGS_VIEW.SETTINGS_SECTION.BARCODE_DATA' |
+							translate }}</ion-label
+						>
+						<ion-input
+							type="text"
+							#barcodeData="ngModel"
+							[(ngModel)]="currWarehouse.barcodeData"
+							debounce="1000"
+							(ionChange)="barcodeDataChange($event)"
+						></ion-input>
+					</ion-item>
+					<label id="scanBtnOut" class="col-3">
+						<button
+							class="p-0 button button-brand-lighted col-100"
+							(click)="scan()"
+						>
+							<i class="fa fa-qrcode"></i>
+							{{ 'SETTINGS_VIEW.SETTINGS_SECTION.SCAN_EXISTED' |
+							translate }}
+						</button>
+					</label>
+				</ion-row>
+				<ion-row>
+					<span *ngIf="barcodetDataUrl" class="barcode-container">
+						<img src="{{ barcodetDataUrl }}" alt=""
+					/></span>
+				</ion-row>
+			</ion-col>
+		</ion-row>
+
+		<br />
+		<ion-row>
+			<ion-col>
+				<ion-button
+					[disabled]="
+						hasChanges(
+							paymentsSettings.isValid,
+							productsDelivery.dirty,
+							productsTakeaway.dirty,
+							orderBarcodeType.dirty,
+							barcodeData.dirty
+						)
+					"
+					class="save-button"
+					(click)="saveChanges()"
+					color="success"
+				>
+					{{ 'SETTINGS_VIEW.SAVE_CHANGES' | translate }}
+				</ion-button>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</div>

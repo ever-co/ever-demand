@@ -1,0 +1,94 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.by-code {
+	background-color: transparent;
+}
+
+.logo {
+	@include top-center(absolute);
+
+	position: absolute;
+	top: calc(50% - 280px / 2);
+	color: #fff;
+
+	img {
+		margin-bottom: 0;
+	}
+
+	.details {
+		margin-top: 7px;
+		opacity: 0.4;
+		font-size: 14px;
+		color: #fff;
+	}
+}
+
+.invite-by-code-content {
+	@include bottom-center(absolute);
+	width: 80%;
+
+	.another-option-wrapper {
+		margin-top: 30px;
+		text-align: center;
+
+		.get-in-by-location-button {
+			width: 80%;
+			margin-bottom: 1em !important;
+			font-size: 20px !important;
+		}
+
+		.social {
+			.facebook-login {
+				--ion-color-primary: #3b5998;
+				--ion-color-primary-rgb: 59, 89, 152;
+				--ion-color-primary-contrast: #ffffff;
+				--ion-color-primary-contrast-rgb: 255, 255, 255;
+				--ion-color-primary-shade: #344e86;
+				--ion-color-primary-tint: #4f6aa2;
+			}
+
+			.google-login {
+				--ion-color-primary: #dd4b39;
+				--ion-color-primary-rgb: 221, 75, 57;
+				--ion-color-primary-contrast: #ffffff;
+				--ion-color-primary-contrast-rgb: 255, 255, 255;
+				--ion-color-primary-shade: #c24232;
+				--ion-color-primary-tint: #e05d4d;
+			}
+		}
+
+		.another-option-or {
+			margin-top: 37px;
+			margin-bottom: 20px;
+			color: #6d6f80;
+			font-size: 16px;
+			text-align: center;
+			width: 100%;
+			.or-what {
+				color: #fff;
+			}
+		}
+
+		.another-option {
+			$color: $assertive-lighted;
+			color: $color;
+			border-bottom: 2px solid $color;
+			padding-bottom: 2px;
+			text-decoration: none;
+			font-size: 23px;
+			cursor: pointer;
+
+			&:active {
+				$color: lighten($color, 5%);
+				color: $color;
+				border-bottom-color: $color;
+			}
+		}
+	}
+
+	.code-input {
+		@extend .everbie-input;
+		margin: 10px auto 50px auto;
+		width: 80%;
+	}
+}

@@ -1,0 +1,57 @@
+input OrderProductCreateInput {
+	count: Int!
+	productId: String!
+}
+
+input OrderCreateInput {
+	userId: String!
+	warehouseId: String!
+	products: [OrderProductCreateInput!]!
+	options: WarehouseOrdersRouterCreateOptions
+	orderType: Int
+}
+
+input WarehouseOrdersRouterCreateOptions {
+	autoConfirm: Boolean!
+}
+
+type Mutation {
+	createOrder(createInput: OrderCreateInput!): Order!
+}
+
+type MerchantsOrders {
+	_id: String
+	ordersCount: Int
+}
+
+type RemovedUserOrdersObj {
+	number: Int
+	modified: Int
+}
+
+type StoreOrdersTableData {
+	orders: [Order]!
+	page: Int!
+}
+
+type Query {
+	getStoreOrders(storeId: String!): [Order!]!
+
+	getNextOrderNumber(storeId: String!): Int!
+
+	getDashboardOrdersChartOrders(storeId: String!): [Order!]!
+
+	getMerchantsOrders: [MerchantsOrders]
+
+	getStoreOrdersTableData(
+		storeId: String!
+		pagingOptions: PagingOptionsInput
+		status: String
+	): StoreOrdersTableData!
+
+	getCountOfStoreOrders(storeId: String!, status: String!): Int!
+
+	getOrdersInDelivery(storeId: String!): [Order]!
+
+	removeUserOrders(storeId: String!, userId: String!): RemovedUserOrdersObj
+}

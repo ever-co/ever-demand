@@ -1,0 +1,59 @@
+<carrier-map #map class="map"></carrier-map>
+
+<div class="bottom-container">
+	<div class="info">
+		<div class="row">
+			<div>
+				<span class="left-info"
+					>To: {{ selectedOrder?.user.fullAddress }}</span
+				>
+				<span
+					[ngClass]="platform.isRTL ? 'rtl' : 'ltr'"
+					class="right-text"
+					>{{ carrierUserDistance + 'km' }}</span
+				>
+			</div>
+			<div class="center-info">
+				<span>Order ID: {{ selectedOrderID }}</span>
+			</div>
+		</div>
+	</div>
+	<div class="buttons">
+		<div
+			class="button-bar"
+			*ngIf="!workTaken && !selectedOrder?.isCancelled && !isTakenFromAnotherCarrier && !this.orderCarrierCompetition"
+		>
+			<button class="button button-brand" (click)="takeWork()">
+				{{ 'DRIVE_TO_WAREHOUSE_VIEW.TAKE_WORK' | translate }}
+			</button>
+
+			<button class="button button-assertive" (click)="skipWork()">
+				{{ 'DRIVE_TO_WAREHOUSE_VIEW.SKIP_WORK' | translate }}
+			</button>
+		</div>
+		<div
+			class="button-bar"
+			*ngIf="(workTaken || this.orderCarrierCompetition) && (!selectedOrder?.isCancelled || fromDelivery) && !isTakenFromAnotherCarrier"
+		>
+			<button class="button button-brand" (click)="carrierInWarehouse()">
+				{{ "DRIVE_TO_WAREHOUSE_VIEW.I'M_THERE" | translate }}
+			</button>
+
+			<button
+				class="button button-assertive"
+				*ngIf="!selectedOrder.isCancelled"
+				(click)="cancelWork()"
+			>
+				{{ 'DRIVE_TO_WAREHOUSE_VIEW.CANCEL' | translate }}
+			</button>
+		</div>
+		<div
+			class="button-bar"
+			*ngIf="selectedOrder?.isCancelled && !fromDelivery || isTakenFromAnotherCarrier"
+		>
+			<button class="button button-assertive" (click)="unselectOrder()">
+				{{ 'OK' | translate }}
+			</button>
+		</div>
+	</div>
+</div>

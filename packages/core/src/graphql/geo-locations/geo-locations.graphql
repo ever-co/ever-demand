@@ -1,0 +1,94 @@
+type Loc {
+	type: String!
+	coordinates: [Float!]!
+}
+
+input LocInput {
+	type: String!
+	coordinates: [Float!]!
+}
+
+type GeoLocationCoordinates {
+	lng: Float!
+	lat: Float!
+}
+
+type GeoLocation {
+	_id: String
+	id: String
+	_createdAt: Date
+	createdAt: Date
+	_updatedAt: Date
+	updatedAt: Date
+	countryId: Int!
+	countryName: String
+	city: String!
+	streetAddress: String!
+	house: String!
+	postcode: String
+	notes: String
+	loc: Loc!
+	coordinates: GeoLocationCoordinates!
+}
+
+type ProductInfo {
+	warehouseProduct: WarehouseProduct!
+	distance: Float!
+	warehouseId: String!
+	warehouseLogo: String!
+}
+
+input GeoLocationCreateInput {
+	countryId: Int!
+	city: String!
+	streetAddress: String!
+	house: String!
+	postcode: String
+	notes: String
+	loc: LocInput!
+}
+
+input GeoLocationUpdateInput {
+	countryId: Int
+	city: String
+	streetAddress: String
+	house: String
+	postcode: String
+	notes: String
+	loc: LocInput
+}
+
+input GeoLocationFindInput {
+	countryId: Int
+	city: String
+	streetAddress: String
+	house: String
+	postcode: String
+	notes: String
+	loc: LocInput
+}
+
+type Query {
+	geoLocationProducts(geoLocation: GeoLocationFindInput!): [ProductInfo]
+	geoLocationProductsByPaging(
+		geoLocation: GeoLocationFindInput!
+		pagingOptions: PagingOptionsInput
+		options: GetGeoLocationProductsOptions
+		searchText: String
+	): [ProductInfo]!
+
+	getCountOfGeoLocationProducts(
+		geoLocation: GeoLocationFindInput!
+		options: GetGeoLocationProductsOptions
+		searchText: String
+	): Int!
+}
+
+input GetGeoLocationProductsOptions {
+	isDeliveryRequired: Boolean
+	isTakeaway: Boolean
+	merchantIds: [String]
+	imageOrientation: Int
+	locale: String
+	withoutCount: Boolean
+}

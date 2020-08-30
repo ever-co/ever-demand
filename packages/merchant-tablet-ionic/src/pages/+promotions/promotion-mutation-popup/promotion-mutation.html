@@ -1,0 +1,55 @@
+<ion-grid class="promotion-mutation-component">
+	<h4 class="custom-title-popup">
+		{{ (promotion ? 'Edit promotion' : 'Add promotion') | translate }}
+	</h4>
+	<button class="close" *ngIf="visible" (click)="cancelModal()">
+		<i class="fa fa-close"></i>
+	</button>
+	<ion-row class="crete-user">
+		<ion-col [hidden]="!isNextStepAvailable">
+			<basic-info-form
+				#basicInfoForm
+				[form]="basicInfo"
+				[promotionData]="promotion"
+			></basic-info-form>
+		</ion-col>
+
+		<ion-col [hidden]="isNextStepAvailable">
+			<details-info-form
+				#promotionDetailsForm
+				[form]="detailsInfo"
+				[promotionData]="promotion"
+			>
+			</details-info-form>
+		</ion-col>
+	</ion-row>
+
+	<ion-row>
+		<ion-col class="text-center mb-3">
+			<ion-button
+				color="light"
+				class="mr-2"
+				*ngIf="!isNextStepAvailable"
+				(click)="isNextStepAvailable = true"
+			>
+				{{ 'CARRIERS_VIEW.PROMOTIONS.BACK' | translate }}
+			</ion-button>
+			<ion-button
+				color="light"
+				class="mr-2"
+				*ngIf="isNextStepAvailable"
+				(click)="isNextStepAvailable = false"
+				[disabled]="basicInfo.invalid"
+			>
+				{{ 'CARRIERS_VIEW.PROMOTIONS.NEXT' | translate }}
+			</ion-button>
+			<ion-button
+				color="dark"
+				(click)="savePromotion()"
+				[disabled]="!basicInfoForm.form.valid"
+			>
+				{{ 'CARRIERS_VIEW.PROMOTIONS.SAVE' | translate }}
+			</ion-button>
+		</ion-col>
+	</ion-row>
+</ion-grid>

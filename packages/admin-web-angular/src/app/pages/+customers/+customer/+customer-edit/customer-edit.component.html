@@ -1,0 +1,102 @@
+<toaster-container></toaster-container>
+
+<div>
+	<nb-card *ngIf="_currentCustomer">
+		<nb-card-header>
+			<div class="d-inline-flex">
+				<svg
+					viewBox="0 0 24 24"
+					class="control-icon control-icon-left"
+					[routerLink]="['/customers/list/' + _currentCustomer.id]"
+				>
+					<path
+						d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"
+					/>
+				</svg>
+
+				<h1>{{ 'CUSTOMERS_VIEW.EDIT.EDIT_CUSTOMER' | translate }}</h1>
+			</div>
+
+			<button
+				nbButton
+				status="success"
+				size="large"
+				class="pull-right text-center"
+				(click)="updateCustomer()"
+				[disabled]="!form.valid"
+			>
+				<i class="ion-md-checkmark button-icon mr-1"></i>
+				<span>{{ 'PRODUCTS_VIEW.EDIT_VIEW.SAVE' | translate }}</span>
+			</button>
+		</nb-card-header>
+	</nb-card>
+
+	<div class="row">
+		<div class="col-md-6">
+			<nb-card [nbSpinner]="loading">
+				<nb-card-header>
+					<div class="text">
+						{{ 'CUSTOMERS_VIEW.EDIT.BASIC_INFO' | translate }}
+					</div>
+				</nb-card-header>
+
+				<nb-card-body>
+					<ea-user-basic-info-form
+						#basicInfoForm
+						[form]="basicInfo"
+					></ea-user-basic-info-form>
+				</nb-card-body>
+			</nb-card>
+		</div>
+
+		<div class="col-md-6">
+			<nb-card [nbSpinner]="loading">
+				<nb-card-header>
+					<div class="text">{{ 'LOCATION' | translate }}</div>
+
+					<button
+						(click)="emitMapType('terrain')"
+						class="btn btn-link btn-sm text-dark"
+						id="map-type"
+					>
+						{{ 'TERRAIN' | translate }}
+					</button>
+					<button
+						(click)="emitMapType('satellite')"
+						class="btn btn-link btn-sm text-dark"
+						id="map-type"
+					>
+						{{ 'SATELLITE' | translate }}
+					</button>
+					<button
+						(click)="emitMapType('roadmap')"
+						class="btn btn-link btn-sm text-dark"
+						id="map-type"
+					>
+						{{ 'ROAD_MAP' | translate }}
+					</button>
+				</nb-card-header>
+
+				<nb-card-body class="p-0">
+					<google-map
+						[mapTypeEvent]="mapTypeEmitter"
+						[mapCoordEvent]="mapCoordEmitter"
+						[mapGeometryEvent]="mapGeometryEmitter"
+					>
+					</google-map>
+				</nb-card-body>
+
+				<nb-card-footer>
+					<ea-location-form
+						#locationForm
+						[form]="location"
+						[showAutocompleteSearch]="true"
+						(mapCoordinatesEmitter)="onCoordinatesChanges($event)"
+						(mapGeometryEmitter)="onGeometrySend($event)"
+					>
+					</ea-location-form>
+				</nb-card-footer>
+			</nb-card>
+		</div>
+	</div>
+</div>

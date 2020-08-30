@@ -1,0 +1,88 @@
+.search-products {
+	height: 100%;
+	.not-found-text {
+		color: white;
+		width: 100%;
+		text-align: center;
+	}
+
+	.merchant-container {
+		height: 4rem;
+
+		.logo-container {
+			display: flex;
+			align-items: center;
+			padding: 0.5rem;
+			justify-content: center;
+
+			ion-avatar {
+				height: 3rem;
+				width: 3rem;
+			}
+		}
+
+		.merchant-name {
+			font-size: 1.2rem;
+		}
+
+		.is-open {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 1.1rem;
+
+			.open {
+				color: green;
+			}
+
+			.close {
+				font-size: unset;
+				color: red;
+			}
+		}
+	}
+
+	.product-container {
+		padding: 0;
+		height: 6rem;
+
+		.image-container {
+			padding: 0;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+
+		.info-container {
+			padding: 0;
+
+			.product-title {
+				font-size: 1.2rem;
+				font-weight: bold;
+			}
+
+			.price {
+				padding: 5px;
+				display: flex;
+				justify-content: flex-end;
+				ion-badge {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					height: 2.5rem;
+					width: 5rem;
+					font-size: 1rem;
+				}
+			}
+			.product-description {
+				text-indent: 30px;
+				padding: 5px;
+			}
+		}
+	}
+	.center {
+		text-align: center;
+		padding: 1rem;
+	}
+}

@@ -1,0 +1,88 @@
+<div *ngIf="selectedOrder?.isCancelled" class="money-amount-container">
+	<div class="money-amount">
+		<!-- TODO add translate -->
+		The customer cancel order
+	</div>
+</div>
+
+<div *ngIf="isTakenFromAnotherCarrier" class="money-amount-container">
+	<div class="money-amount">
+		<!-- TODO add translate -->
+		Another Carrier took the order first !
+	</div>
+</div>
+
+<ion-app>
+	<ion-header class="bar-brand bar bar-header disable-user-behavior">
+		<div class="buttons buttons-left header-item">
+			<span class="left-buttons">
+				<div class="waves-effect waves-classic">
+					<ion-menu-toggle class="button-icon">
+						<ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+					</ion-menu-toggle>
+				</div>
+			</span>
+		</div>
+		<ion-title>
+			<span>{{ 'MAIN_VIEW.EVERCO_DRIVER' | translate }}</span>
+		</ion-title>
+	</ion-header>
+	<ion-content fullscreen class="ion-padding" class="background-content">
+		<ion-slides>
+			<ion-slide
+				*ngFor="let imageUrl of selectedProductImages; let i = index"
+			>
+				<div class="slide">
+					<img src="{{imageUrl}}" />
+					<ion-text style="color: white;">
+						<h3 class="description">
+							{{selectedProductTitles[i]}}
+						</h3>
+						<span class="description"
+							>#{{selectedOrder?.orderNumber}}</span
+						>
+					</ion-text>
+				</div>
+			</ion-slide>
+		</ion-slides>
+	</ion-content>
+	<ion-row class="full-width">
+		<ion-col>
+			<div class="buttons">
+				<div
+					*ngIf="!selectedOrder?.isCancelled && !isTakenFromAnotherCarrier"
+					class="button-bar"
+				>
+					<button
+						*ngIf="!selectedOrder?.isCancelled"
+						[disabled]="disabledButtons"
+						class="button button-brand"
+						(click)="orderCarrierCompetition ? gotProductWithCarrierCompetition() : gotProduct()"
+					>
+						{{ 'GET_PRODUCT_VIEW.GOT_IT' | translate }}
+					</button>
+
+					<button
+						[disabled]="disabledButtons"
+						class="button button-assertive"
+						(click)="cancelWork()"
+					>
+						{{ 'GET_PRODUCT_VIEW.CANCEL' | translate }}
+					</button>
+				</div>
+
+				<div
+					class="button-bar"
+					*ngIf="selectedOrder?.isCancelled || isTakenFromAnotherCarrier"
+				>
+					<button
+						class="button button-assertive"
+						(click)="unselectOrder()"
+					>
+						{{ 'OK' | translate }}
+					</button>
+				</div>
+			</div>
+		</ion-col>
+	</ion-row>
+</ion-app>

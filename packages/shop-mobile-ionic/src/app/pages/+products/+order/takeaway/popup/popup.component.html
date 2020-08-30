@@ -1,0 +1,140 @@
+<div class="takeaway-popup">
+	<div [hidden]="areIssues" dir="{{ 'CURRENT_DIRECTION' | translate }}">
+		<div class="money-amount-container" *ngIf="order?.isPaid">
+			<div class="money-amount">
+				{{ ('BUY_POPUP.ORDER_PAID' | translate) + order?.totalPrice }}!
+			</div>
+		</div>
+		<e-cu-order-takeaway-info-title
+			[order]="order"
+		></e-cu-order-takeaway-info-title>
+
+		<div class="box box-brand-light box-small-padding pb-3 order">
+			<div *ngIf="!inStore">
+				<e-cu-elapsed-time #elapsedTime></e-cu-elapsed-time>
+				<e-cu-order-takeaway-info-store-info
+					[order]="order"
+					[lessInfo]="true"
+					(openMap)="showMapModal()"
+				></e-cu-order-takeaway-info-store-info>
+			</div>
+
+			<div *ngIf="inStore" class="order-info">
+				<span class="show-products text-info">
+					<i
+						*ngIf="order?.warehouse?.contactPhone"
+						class="fa order-info-icon  m-0
+						{{ showProducts ? 'fa-qrcode times-icon' : 'fa-shopping-basket' }}"
+						(click)="showProducts = !showProducts"
+					></i>
+					<small (click)="showProducts = !showProducts"
+						>{{
+							showProducts
+								? ('BUY_POPUP.BUTTONS.SHOW_QR_CODE' | translate)
+								: ('BUY_POPUP.BUTTONS.SHOW_PRODUCTS'
+								  | translate)
+						}}
+					</small>
+				</span>
+				<e-cu-order-takeaway-info-order-info
+					*ngIf="!showProducts"
+					[order]="order"
+					[lessInfo]="true"
+				></e-cu-order-takeaway-info-order-info>
+				<div
+					*ngIf="showProducts"
+					class="products-image-content box text-align-center {{
+						listView
+							? 'products-list-image'
+							: 'products-slides-image'
+					}}"
+				>
+					<img
+						src="{{
+							localeTranslate((order?.products)[0].product.images)
+						}}"
+					/>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div
+		class="box box-brand text-align-center"
+		style="padding: 10px;"
+		*ngIf="areIssuesDuringWarehouseProcessing"
+	>
+		<h4>{{ 'BUY_POPUP.DELIVERY_WRONG.PROCESSING_WRONG' | translate }}</h4>
+		{{ 'BUY_POPUP.DELIVERY_WRONG.TRY_AGAIN' | translate }}
+	</div>
+
+	<div
+		class="box box-brand-light box-small-padding"
+		dir="{{ 'CURRENT_DIRECTION' | translate }}"
+	>
+		<div *ngIf="!order?.isCompleted && !areIssues">
+			<ion-row>
+				<span class="waves-effect waves-classic col-3 no-padding">
+					<button
+						class="button button-brand undo-btn col-100"
+						(click)="undo()"
+					>
+						<span *ngIf="!inStore">{{
+							'BUY_POPUP.BUTTONS.UNDO' | translate
+						}}</span>
+						<span *ngIf="inStore">{{
+							'BUY_POPUP.BUTTONS.CANCEL' | translate
+						}}</span>
+					</button>
+				</span>
+
+				<span
+					class="waves-effect waves-classic pl-5px pr-0 {{
+						paymentsEnabled && order && !order?.isPaid
+							? 'col-4'
+							: 'col-9'
+					}}"
+				>
+					<button
+						*ngIf="!inStore && !inStoreMode"
+						class="button button-balanced border-color-brand col-100"
+						(click)="changeInStore()"
+					>
+						<span>{{
+							'BUY_POPUP.BUTTONS.IM_HERE' | translate
+						}}</span>
+					</button>
+
+					<button
+						*ngIf="inStore || inStoreMode"
+						class="button button-balanced border-color-brand col-100"
+						(click)="complete()"
+					>
+						<span>{{
+							'BUY_POPUP.BUTTONS.GOT_IT' | translate
+						}}</span>
+					</button>
+				</span>
+
+				<e-cu-payment
+					class="waves-effect waves-classic col-5 pl-5px p-0"
+					*ngIf="paymentsEnabled && order && !order?.isPaid"
+					[order]="order"
+					[modalChange]="modalChange"
+					[smallButtons]="true"
+				></e-cu-payment>
+			</ion-row>
+		</div>
+
+		<div *ngIf="areIssues">
+			<span class="waves-effect waves-classic no-padding-bottom">
+				<button
+					class="button button-assertive col-100"
+					(click)="closePopup()"
+				>
+					<span>{{ 'OK' | translate }}</span>
+				</button>
+			</span>
+		</div>
+	</div>
+</div>

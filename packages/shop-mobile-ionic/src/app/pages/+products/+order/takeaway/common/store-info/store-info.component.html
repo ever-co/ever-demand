@@ -1,0 +1,39 @@
+<div
+	class="box takeaway-store-info {{ !lessInfo ? 'text-align-center' : '' }} "
+>
+	<h4 *ngIf="!lessInfo" class="main-title broder-top">
+		{{ 'STORE_INFO' | translate }}
+	</h4>
+	<div *ngIf="!lessInfo">{{ warehouse?.name }}</div>
+
+	<h4 *ngIf="lessInfo" class="main-title broder-top text-align-center">
+		{{ warehouse?.name }}
+	</h4>
+
+	<div *ngIf="!inStore" class="description mb-2">
+		<i
+			*ngIf="lessInfo"
+			class="fa fa-map map-icon current m-0"
+			(click)="openMap.emit()"
+		></i>
+		<span
+			(click)="openMap.emit()"
+			class=" {{ lessInfo ? 'underline' : '' }} "
+			>{{ storeFullAddress }}</span
+		>
+	</div>
+
+	<span class="description">
+		<i
+			*ngIf="warehouse?.contactPhone"
+			class="fa fa-phone call-icon current m-0"
+			(click)="attemptCall(warehouse?.contactPhone)"
+		></i>
+
+		<span
+			class="underline"
+			(click)="attemptCall(warehouse?.contactPhone)"
+			>{{ warehouse?.contactPhone || '' }}</span
+		>
+	</span>
+</div>

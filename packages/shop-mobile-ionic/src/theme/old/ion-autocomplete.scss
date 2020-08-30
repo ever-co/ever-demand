@@ -1,0 +1,50 @@
+.ion-autocomplete-container {
+	direction: rtl;
+
+	background-color: $brand-darken !important;
+
+	.item {
+		background-color: $brand-lighted;
+		color: #eee;
+		border-color: #555 !important;
+	}
+
+	.item-divider {
+		display: none;
+	}
+
+	.icon {
+		color: white;
+	}
+
+	.bar .button.button-clear,
+	.bar button.button-clear {
+		color: white;
+		font-weight: bold;
+	}
+
+	.bar {
+		background-color: $brand-darken !important;
+	}
+
+	.item-input-wrapper {
+		background-color: $brand-darken !important;
+
+		// rtl:
+		padding-right: 0;
+		i {
+			padding-right: 0;
+			padding-left: 6px;
+		}
+	}
+
+	.ion-autocomplete-search {
+		display: block;
+		border: none;
+		margin: 0;
+		padding: 0;
+		color: white;
+		background-color: $brand-darken !important;
+		-webkit-appearance: none;
+	}
+}
