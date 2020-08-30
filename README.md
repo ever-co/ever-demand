@@ -163,7 +163,7 @@ See relevant section in our [documentation](https://github.com/ever-co/ever/wiki
 
 ### Run Platform Projects
 
-Finally, each project from Ever Platform could start by single command from this list:
+After you build everything (`yarn build:all`, described above), each project from Ever Platform could be started by single command from this list:
 
 -   Run API server `yarn run:server`
 -   Run Admin Website `yarn run:admin` and open http://localhost:4200
@@ -172,9 +172,11 @@ Finally, each project from Ever Platform could start by single command from this
 -   Run Carrier Mobile app `yarn run:carrier` and open http://localhost:4203
 -   Run Shopping Website `yarn run:shopweb` and open http://localhost:3000
 
-Note 1: during development you can run server with `yarn run:server:dev` to enable watch on TS files changes
+Note 1: it is important to build shared / common platform modules (`yarn build:common` or `yarn build:all`) before running the Platform Core (API) or Apps
 
-Note 2: on the first run, API Server (Backend) creates MongoDB local database `ever_development` with the following (default) Admin user
+Note 2: during development you can run server with `yarn run:server:dev` to enable watch on TS files changes
+
+Note 3: on the first run, API Server (Backend) creates MongoDB local database `ever_development` with the following (default) Admin user
 
 -   email: `admin@ever.co`
 -   password: `admin`
