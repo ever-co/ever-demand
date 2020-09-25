@@ -206,13 +206,10 @@ According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform tod
 
 #### Developers (alphabetical order)
 
--   Aleksandar Tasev ([AlexTasev](https://github.com/AlexTasev))
 -   Alish Meklyov ([Alish](https://github.com/AlishMekliov931))
 -   Blagovest Gerov ([BlagovestGerov](https://github.com/BlagovestGerov))
 -   Elvis Arabadjiyski ([Dreemsuncho](https://github.com/Dreemsuncho))
--   Emil Momchilov ([jew-er](https://github.com/jew-er))
 -   Hristo Hristov ([hrimar](https://github.com/hrimar))
--   Martin Asenov ([goofy5752](https://github.com/goofy5752))
 -   Pavel Denchev ([PavelDenchev](https://github.com/PavelDenchev))
 -   Tsvetelina Yordanova ([tsvetelina-e-y](https://github.com/tsvetelina-e-y))
 -   Valentin Peshev ([valiopld](https://github.com/valiopld))
