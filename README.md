@@ -7,6 +7,8 @@
 
 [Ever](https://ever.co)® is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform built with [TypeScript](http://www.typescriptlang.org).
 
+You are welcome to check more information about the platform at our official website - **<https://ever.co>**.
+
 ![overview](https://docs.ever.co/docs/assets/overview_small.png)
 
 ## Demos
@@ -226,6 +228,7 @@ View full list of our [contributors](https://github.com/ever-co/ever/graphs/cont
 
 ## Contact Us
 
+-   [Ever.co Website Contact Us page](https://ever.co/contacts)
 -   [Discord Chat](https://discord.gg/msqRJ4w)
 -   [Slack Community](https://join.slack.com/t/everplatform/shared_invite/enQtNzc2NzI1OTgwMjQwLTBkODI3OTU2ZDI1YTQwNWE3OGExYWUwYjE5NThkMjRiYjA0NmFiNzZhYWUzNWViNWI4Nzg2YTc3MzY2MjY0YzU)
 -   [Spectrum Community](https://spectrum.chat/ever)
@@ -255,7 +258,7 @@ This software is available under following licenses:
 
 #### The default Ever® Platform™ license, without a valid Ever® Platform Enterprise™ or Ever® Platform Small Business™ License agreement, is the Ever® Platform Community™ Edition License.
 
-#### Please see [LICENSE.md](LICENSE.md) for more information on licenses.
+#### Please see [LICENSE.md](LICENSE.md) for more information on licenses. You can also [compare our offering](https://ever.co/compare-ever/#compare).
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fever.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fever?ref=badge_large)
 
@@ -281,5 +284,5 @@ All other brand and product names are trademarks, registered trademarks or servi
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io)
 
 ## P.S.
-- If you are running any business or doing freelance, check our new project [Gauzy](https://github.com/ever-co/gauzy)
+- If you are running any business or doing freelance, check our new project [Gauzy](https://github.com/ever-co/gauzy) - Open Business Management Platform
 - [We are Hiring: remote TypeScript / NestJS / Angular developers](https://github.com/ever-co/jobs#available-positions)
