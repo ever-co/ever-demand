@@ -2033,7 +2033,7 @@
     bootstrap "^4.0.0-alpha.6"
 
 "@ever-platform/common-angular@file:packages/common-angular":
-  version "0.3.0"
+  version "0.3.6"
   dependencies:
     "@angular/animations" "^9.1.0"
     "@angular/cdk" "^9.1.3"
@@ -2046,14 +2046,14 @@
     "@angular/platform-browser-dynamic" "^9.1.0"
     "@angular/router" "^9.1.0"
     "@angular/service-worker" "^9.1.0"
-    "@ever-platform/common" "file:C:/Users/Valentin/AppData/Local/Yarn/Cache/v6/npm-@ever-platform-common-angular-0.3.0-c151fcce-ea5c-421f-9bf2-5f1d84c4ef18-1592549754709/node_modules/@ever-platform/common"
+    "@ever-platform/common" "file:../../../Users/evere/AppData/Local/Yarn/Cache/v6/npm-@ever-platform-common-angular-0.3.6-7f01a7f5-320a-4160-8ced-ba424763f993-1601884829956/node_modules/@ever-platform/common"
     "@ngx-translate/core" "^12.1.2"
     "@ngx-translate/http-loader" "^4.0.0"
     tslib "^1.10.0"
     zone.js "~0.10.2"
 
 "@ever-platform/common@file:packages/common":
-  version "0.3.0"
+  version "0.3.24"
   dependencies:
     lodash "^4.17.15"
     mongoose "^5.6.0"
@@ -2595,6 +2595,13 @@
   version "5.25.0"
   resolved "https://registry.yarnpkg.com/@ionic-native/intercom/-/intercom-5.25.0.tgz#611d4e8c3daf50c1e71f76a7baf59a1ed3bd944e"
   integrity sha512-nRuULHYJ1Xu+Z70q4knMti0RyDg4g80jVUZO8fywxM1tpfMpyvxotPsAp9VgbKlFed1kl5O+lqYRFWb7oHD33Q==
+  dependencies:
+    "@types/cordova" latest
+
+"@ionic-native/intercom@^5.28.0":
+  version "5.28.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/intercom/-/intercom-5.28.0.tgz#fd7482f5c62c87e135b5c0b89f531289dc8c811f"
+  integrity sha512-p2x7gCDyoDLXwmIYy6uGHE/6u7Xm4PwZlPO6a1sS4o8pVLmUEG/YrjRm7qdmDOFgp/hx1do+VnRHN3YX8rfI5g==
   dependencies:
     "@types/cordova" latest
 
@@ -7199,21 +7206,21 @@ apache-md5@^1.0.6:
   resolved "https://registry.yarnpkg.com/apache-md5/-/apache-md5-1.1.5.tgz#5d6365ece2ccc32b612f886b2b292e1c96ff3ffb"
   integrity sha512-sbLEIMQrkV7RkIruqTPXxeCMkAAycv4yzTkBzRgOR1BrR5UB7qZtupqxkersTJSf0HZ3sbaNRrNV80TnnM7cUw==
 
-apollo-angular-link-http-common@~1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/apollo-angular-link-http-common/-/apollo-angular-link-http-common-1.9.0.tgz#d3162509d73d6c3c070c6a69fa30ceec9d6a1179"
-  integrity sha512-71jtDYaWyADyVUhNmrWjamJG0ZA/Vcztjc9d8TO7Eea7puIxYlJjGc+u1wBNSdvhLosFCq40kv7BYIPohnGE0A==
-  dependencies:
-    tslib "^1.11.0"
-
-apollo-angular-link-http@^1.7.0:
+apollo-angular-link-http-common@^1.10.0, apollo-angular-link-http-common@~1.10.0:
   version "1.10.0"
-  resolved "https://registry.yarnpkg.com/apollo-angular-link-http/-/apollo-angular-link-http-1.10.0.tgz#7d85cb63a805f163faab7a3617d572a5cdc83c72"
-  integrity sha512-psxo4QmjM0efw8m0gz4pbA/paXbyEvaj/0tw7T8HkyCqPZeQBBhQaahFtpHVfTyYdkDn5LwCZyhDDxO/IzjUzA==
+  resolved "https://registry.yarnpkg.com/apollo-angular-link-http-common/-/apollo-angular-link-http-common-1.10.0.tgz#c8d8666f9f17dbc6e4d60474441548ac83054aac"
+  integrity sha512-Oue8b/naWZvG/oQ+3ZAqaBVreBIwqy16yOk5CpoE7+Gjhett9KGVu/OZcpH89/ifwXyWzHpKnCUnB1fxgbnR7Q==
   dependencies:
-    apollo-angular-link-http-common "~1.9.0"
+    tslib "^2.0.0"
+
+apollo-angular-link-http@^1.11.0:
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/apollo-angular-link-http/-/apollo-angular-link-http-1.11.0.tgz#5465664aac1944881900e845f043cf627af0f812"
+  integrity sha512-/mFytwvHhmWOX3emi8ljpuas8HpwSVOfbKniOeDFSE44g9HsPKkq2bGTucUTUo0Un3cCBEVKei2jTIDVsZPqFA==
+  dependencies:
+    apollo-angular-link-http-common "~1.10.0"
     extract-files "6.0.0"
-    tslib "^1.11.0"
+    tslib "^2.0.0"
 
 apollo-angular@^1.6.0:
   version "1.9.1"
@@ -11261,15 +11268,15 @@ cordova-plugin-inappbrowser@^3.0.0:
   resolved "https://registry.yarnpkg.com/cordova-plugin-inappbrowser/-/cordova-plugin-inappbrowser-3.2.0.tgz#8615e1510dcf796875b420416331b768fee28d86"
   integrity sha512-tYsK0H9M8POmJTVnfyIsiRgoOxnypa9IQIbf/Hsgi7vbgUYRHtBUfvXwq4RhMqLIVrCeJLXF2hTXTDNY0a/eTA==
 
-cordova-plugin-intercom@^7.1.0:
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/cordova-plugin-intercom/-/cordova-plugin-intercom-7.1.1.tgz#b08f4bdc351e951202f33df60e64dfd223575062"
-  integrity sha512-pXkMxgzVSaXY/Z7tE/WAshiEZwH5L0O5rFwSL7CyKj+wvYeieiJMdzu3DC4Q0XRhZTQ5+mqBFTNpWVVn8ELWNw==
-
 cordova-plugin-intercom@^8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/cordova-plugin-intercom/-/cordova-plugin-intercom-8.0.0.tgz#d1aa03d1db06d41e82f2b19e0dbe5b0d4323dd3a"
   integrity sha512-HYZAebtCq2aB0UG+2+Q8R7x5QrhPrrwIH6TObVt23K0UVNXGpFzrBZotty1ibGYxEfwaRNa5X0Eg2ODy8BQHeA==
+
+cordova-plugin-intercom@^9.1.0:
+  version "9.2.1"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-intercom/-/cordova-plugin-intercom-9.2.1.tgz#f058c824324a6a69f0bf7451660a52074580d7a9"
+  integrity sha512-xd+ardS+Tw+PAxCx0F4VXQXrHreo9i0F1HXFH3nZ9624JRb5QgE3Q2FQJJZAk47GEckjUZ1ks0uVsY3tko0+8A==
 
 cordova-plugin-ionic-keyboard@^2.1.3:
   version "2.2.0"
@@ -30507,6 +30514,11 @@ tslib@^1, tslib@^1.0.0, tslib@^1.10.0, tslib@^1.11.0, tslib@^1.11.1, tslib@^1.7.
   version "1.11.2"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.11.2.tgz#9c79d83272c9a7aaf166f73915c9667ecdde3cc9"
   integrity sha512-tTSkux6IGPnUGUd1XAZHcpu85MOkIl5zX49pO+jfsie3eP0B6pyhOlLXm3cAC6T7s+euSDDUUV+Acop5WmtkVg==
+
+tslib@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.0.1.tgz#410eb0d113e5b6356490eec749603725b021b43e"
+  integrity sha512-SgIkNheinmEBgx1IUNirK0TUD4X9yjjBRTqqjggWCU3pUEqIk3/Uwl3yRixYKT6WjQuGiwDv4NomL3wqRCj+CQ==
 
 tslint-config-prettier@^1.18.0:
   version "1.18.0"
