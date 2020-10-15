@@ -313,6 +313,72 @@ export class WarehousesOrdersService
 		return order;
 	}
 
+	// TODO test and fix if needed
+	/**
+	 * Add product to existed order
+	 *
+	 * @param {string} warehouseId
+	 * @param {string} userId
+	 * @param {string} orderId
+	 * @param {IOrderCreateInputProduct} product
+	 * @returns {Promise<Order>}
+	 * @memberof WarehousesOrdersService
+	 */
+	@asyncListener()
+	async addMore(warehouseId, userId, orderId, product): Promise<Order> {
+		// TODO check is existed order has same warehouseId and userId
+
+		let existedOrder = await this.ordersService
+			.get(orderId)
+			.pipe(first())
+			.toPromise();
+
+		const newProducts = [...existedOrder.products, product];
+		const order = await this.ordersService.update(orderId, {
+			products: newProducts,
+		});
+
+		// TODO export  duplicate code
+		await (<any>Bluebird).map(
+			order.products,
+			async (orderProduct: OrderProduct) => {
+				const productId = orderProduct.product.id;
+
+				this.log.info(
+					{
+						warehouseId,
+						productId,
+						count: orderProduct.count,
+					},
+					'Order create remove products call'
+				);
+
+				await this.warehousesProductsService.decreaseCount(
+					warehouseId,
+					productId, // what product availability should be decreased
+					orderProduct.count // how many to remove
+				);
+
+				await this.warehousesProductsService.increaseSoldCount(
+					warehouseId,
+					productId,
+					orderProduct.count
+				);
+
+				this.log.info(
+					{
+						warehouseId,
+						productId,
+						count: orderProduct.count,
+					},
+					'Order create remove products call succeed'
+				);
+			}
+		);
+
+		return order;
+	}
+
 	/**
 	 * Create Order by given customer in the given Store for 1 specific product
 	 * (optimized for single product purchases)
