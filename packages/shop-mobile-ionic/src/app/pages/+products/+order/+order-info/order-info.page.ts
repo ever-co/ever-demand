@@ -274,7 +274,9 @@ export class OrderInfoPage implements OnInit, OnDestroy {
 	}
 
 	undo() {
-		this.showCancelOrderInfoModal();
+		// this.showCancelOrderInfoModal();
+
+		this.router.navigate(['/products']);
 	}
 
 	private async showCancelOrderInfoModal(): Promise<void> {

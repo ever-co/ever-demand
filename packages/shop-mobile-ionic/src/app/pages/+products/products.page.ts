@@ -251,6 +251,14 @@ export class ProductsPage implements OnInit, OnDestroy {
 			merchantIds = [this.inStore];
 		}
 
+		if (
+			merchantIds.length === 0 &&
+			this.store.orderId &&
+			this.store.orderWarehouseId
+		) {
+			merchantIds = [this.store.orderWarehouseId];
+		}
+
 		await this.loadProductsCount(merchantIds, imageOrientation);
 
 		this.changePage = false;

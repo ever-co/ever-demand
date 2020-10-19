@@ -66,6 +66,10 @@ ion-backdrop {
 .order-info-modal {
 	display: block;
 
+	.modal-shadow {
+		display: none;
+	}
+
 	.modal-wrapper {
 		background: rgba(255, 255, 255, 0);
 	}
