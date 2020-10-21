@@ -9,7 +9,7 @@ import { Store } from '../../services/store.service';
 import { Router } from '@angular/router';
 import { IOrderCreateInput } from '@modules/server.common/routers/IWarehouseOrdersRouter';
 import { OrderPage } from './+order/order.page';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { environment } from 'environments/environment';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { GeoLocationService } from '../../services/geo-location';
@@ -21,6 +21,8 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
 import { GeoLocationProductsService } from 'app/services/geo-location/geo-location-products';
 import { WarehouseProductsService } from 'app/services/merchants/warehouse-products';
+import { OrdersService } from 'app/services/orders/orders.service';
+import OrderStatus from '@modules/server.common/enums/OrderStatus';
 
 const initializeProductsNumber: number = 10;
 
@@ -60,7 +62,9 @@ export class ProductsPage implements OnInit, OnDestroy {
 		private modalController: ModalController,
 		private geoLocationService: GeoLocationService,
 		private warehouseRouter: WarehouseRouter,
-		private warehouseProductsService: WarehouseProductsService
+		public navCtrl: NavController,
+		private warehouseProductsService: WarehouseProductsService,
+		private ordersService: OrdersService
 	) {
 		this.productsLocale = this.store.language || environment.DEFAULT_LOCALE;
 
@@ -131,13 +135,13 @@ export class ProductsPage implements OnInit, OnDestroy {
 				}
 
 				if (environment.ORDER_INFO_TYPE === 'page') {
-					this.router.navigate([
+					this.navCtrl.navigateRoot(
 						`${
 							this.store.deliveryType === DeliveryType.Delivery
 								? '/order-info'
 								: '/order-info-takeaway'
-						}`,
-					]);
+						}`
+					);
 				}
 			} catch (error) {
 				const loadedProduct = this.products.find(
@@ -256,7 +260,15 @@ export class ProductsPage implements OnInit, OnDestroy {
 			this.store.orderId &&
 			this.store.orderWarehouseId
 		) {
-			merchantIds = [this.store.orderWarehouseId];
+			const { status } = await this.ordersService
+				.getOrder(this.store.orderId, `{status}`)
+				.pipe(first())
+				.toPromise();
+			if (status < OrderStatus.Delivered) {
+				merchantIds = [this.store.orderWarehouseId];
+			} else {
+				this.store.orderId = null;
+			}
 		}
 
 		await this.loadProductsCount(merchantIds, imageOrientation);

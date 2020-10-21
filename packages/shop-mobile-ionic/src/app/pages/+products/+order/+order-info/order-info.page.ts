@@ -41,6 +41,8 @@ export class OrderInfoPage implements OnInit, OnDestroy {
 
 	public modalOpen: boolean;
 	public modalChange = new EventEmitter<boolean>();
+
+	private clearOrder = true;
 	private readonly ngDestroy$ = new Subject<void>();
 
 	private _pageSubscriptions: Subscription[] = [];
@@ -274,9 +276,12 @@ export class OrderInfoPage implements OnInit, OnDestroy {
 	}
 
 	undo() {
-		// this.showCancelOrderInfoModal();
+		this.showCancelOrderInfoModal();
+	}
 
-		this.router.navigate(['/products']);
+	backToProducts() {
+		this.clearOrder = false;
+		this.router.navigateByUrl('/products', { skipLocationChange: true });
 	}
 
 	private async showCancelOrderInfoModal(): Promise<void> {
@@ -294,8 +299,11 @@ export class OrderInfoPage implements OnInit, OnDestroy {
 	async closePopup() {
 		localStorage.removeItem('startDate');
 		localStorage.removeItem('endTime');
-		this.store.orderId = null;
-		this.router.navigate(['/products']);
+
+		if (this.clearOrder) {
+			this.store.orderId = null;
+			this.router.navigate(['/products']);
+		}
 	}
 
 	// For delivery-status

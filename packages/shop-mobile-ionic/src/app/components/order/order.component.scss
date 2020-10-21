@@ -25,11 +25,16 @@
 			display: inline-block;
 			color: #000000;
 			opacity: 0.54;
+			margin-right: 3px;
 		}
 
 		.delivery-time {
 			color: #008f0e;
 			opacity: 0.73;
+
+			&.pending {
+				color: #488aff;
+			}
 		}
 
 		.order-issue {

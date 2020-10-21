@@ -103,6 +103,10 @@ export class OrderComponent {
 		);
 	}
 
+	get inProcessing() {
+		return this.order && this.order.status < OrderStatus.Delivered;
+	}
+
 	get isTakeaway() {
 		return (
 			this.order &&
