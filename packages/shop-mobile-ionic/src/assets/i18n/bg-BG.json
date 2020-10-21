@@ -248,6 +248,7 @@
 	"FAILED": "Се провали",
 	"CANCELED": "Отменен",
 	"IN_DELIVERY": "При доставка",
+	"PENDING": "В очакване",
 	"COMPLETED": "Завършен",
 	"BROWSE": "РАЗГЛЕДАЙ",
 	"ENGLISH": "Английски",

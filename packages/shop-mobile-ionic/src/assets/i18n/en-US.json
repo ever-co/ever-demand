@@ -248,6 +248,7 @@
 	"FAILED": "Failed",
 	"CANCELED": "Canceled",
 	"IN_DELIVERY": "In Delivery",
+	"PENDING": "Pending",
 	"COMPLETED": "Completed",
 	"BROWSE": "Browse",
 	"ENGLISH": "English",

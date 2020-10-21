@@ -248,6 +248,7 @@
 	"FAILED": "Error",
 	"CANCELED": "Cancelado",
 	"IN_DELIVERY": "En viaje",
+	"PENDING": "Pendiente",
 	"COMPLETED": "Completado",
 	"LOCATION_NOTES": "Notas de ubicación",
 	"ENTER_NOTES_HERE": "Introduce notas aquí"
