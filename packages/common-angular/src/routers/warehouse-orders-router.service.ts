@@ -51,8 +51,8 @@ export class WarehouseOrdersRouter implements IWarehouseOrdersRouter {
 	): Promise<Order> {
 		const order = await this.router.run<IOrder>(
 			'addMore',
-			userId,
 			warehouseId,
+			userId,
 			orderId,
 			products
 		);

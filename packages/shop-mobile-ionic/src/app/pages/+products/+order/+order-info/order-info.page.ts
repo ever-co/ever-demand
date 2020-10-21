@@ -297,10 +297,9 @@ export class OrderInfoPage implements OnInit, OnDestroy {
 	}
 
 	async closePopup() {
-		localStorage.removeItem('startDate');
-		localStorage.removeItem('endTime');
-
 		if (this.clearOrder) {
+			localStorage.removeItem('startDate');
+			localStorage.removeItem('endTime');
 			this.store.orderId = null;
 			this.router.navigate(['/products']);
 		}

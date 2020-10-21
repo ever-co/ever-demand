@@ -122,13 +122,22 @@ export class ProductsPage implements OnInit, OnDestroy {
 			};
 
 			try {
-				const order = await this.warehouseOrdersRouter.create(
-					orderCreateInput
-				);
+				if (!this.store.orderId) {
+					const order = await this.warehouseOrdersRouter.create(
+						orderCreateInput
+					);
 
-				this.store.orderId = order.id;
+					this.store.orderId = order.id;
 
-				this.store.orderWarehouseId = order.warehouseId;
+					this.store.orderWarehouseId = order.warehouseId;
+				} else {
+					await this.warehouseOrdersRouter.addMore(
+						orderCreateInput.warehouseId,
+						orderCreateInput.userId,
+						this.store.orderId,
+						orderCreateInput.products
+					);
+				}
 
 				if (environment.ORDER_INFO_TYPE === 'popup') {
 					this.showOrderInfoModal();
@@ -267,6 +276,8 @@ export class ProductsPage implements OnInit, OnDestroy {
 			if (status < OrderStatus.Delivered) {
 				merchantIds = [this.store.orderWarehouseId];
 			} else {
+				localStorage.removeItem('startDate');
+				localStorage.removeItem('endTime');
 				this.store.orderId = null;
 			}
 		}
