@@ -89,6 +89,10 @@ ion-backdrop {
 
 .map-info-modal {
 	display: block;
+
+	.modal-shadow {
+		display: none;
+	}
 }
 
 ion-menu-button {

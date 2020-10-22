@@ -10,12 +10,16 @@ import { DirectionsLocationComponent } from './carreir-location/carreir-location
 import { OrderInfoHeaderComponent } from './header/order-info-header.component';
 import { PaymentComponent } from './payment/payment.component';
 import { MapModalComponent } from './map-modal/map-modal.component';
+import { OrdersCardModule } from 'app/pages/+orders-history/order-card/order-card.module';
+import { OrderInfoModalComponent } from './order-info-modal/order-info-modal.component';
 
 const COMPONENTS = [
 	DirectionsLocationComponent,
 	OrderInfoHeaderComponent,
 	PaymentComponent,
 	MapModalComponent,
+	OrderInfoHeaderComponent,
+	OrderInfoModalComponent,
 ];
 
 @NgModule({
@@ -27,6 +31,7 @@ const COMPONENTS = [
 		CancelPageModule,
 		IssuePageModule,
 		ElapsedTimeModule,
+		OrdersCardModule,
 	],
 	entryComponents: [...COMPONENTS],
 	declarations: [...COMPONENTS],

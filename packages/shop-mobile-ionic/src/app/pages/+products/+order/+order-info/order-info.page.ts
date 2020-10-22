@@ -21,6 +21,7 @@ import { IssuePage } from '../issue/issue.page';
 import { takeUntil } from 'rxjs/operators';
 import { ElapsedTimeComponent } from 'app/components/elapsed-time/elapsed-time.component';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
+import { OrderInfoModalComponent } from '../common/order-info-modal/order-info-modal.component';
 
 @Component({
 	selector: 'e-cu-order-info',
@@ -282,6 +283,17 @@ export class OrderInfoPage implements OnInit, OnDestroy {
 	backToProducts() {
 		this.clearOrder = false;
 		this.router.navigateByUrl('/products', { skipLocationChange: true });
+	}
+
+	async showProductsModal(): Promise<void> {
+		const modal = await this.modalController.create({
+			component: OrderInfoModalComponent,
+			cssClass: 'products-info-modal',
+			componentProps: {
+				order: this.order,
+			},
+		});
+		return modal.present();
 	}
 
 	private async showCancelOrderInfoModal(): Promise<void> {
