@@ -15,7 +15,7 @@ import { OrderRouter } from '@modules/client.common.angular2/routers/order-route
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '../../../../services/store.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { CancelPage } from '../+cancel/cancel.page';
 import { IssuePage } from '../issue/issue.page';
 import { takeUntil } from 'rxjs/operators';
@@ -53,6 +53,7 @@ export class OrderInfoPage implements OnInit, OnDestroy {
 		private readonly _translateService: TranslateService,
 		private readonly store: Store,
 		public modalController: ModalController,
+		public navCtrl: NavController,
 		private router: Router
 	) {
 		this._trackOrder();
@@ -313,7 +314,7 @@ export class OrderInfoPage implements OnInit, OnDestroy {
 			localStorage.removeItem('startDate');
 			localStorage.removeItem('endTime');
 			this.store.orderId = null;
-			this.router.navigate(['/products']);
+			this.navCtrl.navigateRoot('/products');
 		}
 	}
 
