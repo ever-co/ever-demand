@@ -44,17 +44,25 @@
 					<ion-icon name="search"></ion-icon>
 				</ion-label>
 				<ion-label
-					*ngIf="!navigateToMerchants"
+					*ngIf="!navigateToMerchants && !hasPendingOrder"
 					(click)="changeStoreMode()"
 				>
 					<e-cu-store-sign [inStore]="inStore"></e-cu-store-sign>
 				</ion-label>
 				<ion-label
-					*ngIf="navigateToMerchants"
+					*ngIf="navigateToMerchants && !hasPendingOrder"
 					routerLink="{{ !inStore ? '/merchants' : '' }}"
 					routerDirection="root"
 				>
 					<e-cu-store-sign [inStore]="inStore"></e-cu-store-sign>
+				</ion-label>
+
+				<ion-label
+					*ngIf="hasPendingOrder"
+					routerLink="{{ isDeliveryType ? '/order-info' : '/order-info-takeaway' }}"
+					routerDirection="root"
+				>
+					<e-cu-order-sign></e-cu-order-sign>
 				</ion-label>
 			</ion-col>
 		</ion-row>

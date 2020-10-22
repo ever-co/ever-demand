@@ -85,6 +85,14 @@ export class ProductsPage implements OnInit, OnDestroy {
 		return this.store.inStore;
 	}
 
+	get hasPendingOrder() {
+		return !!this.store.orderId;
+	}
+
+	get isDeliveryType() {
+		return this.store.deliveryType === DeliveryType.Delivery;
+	}
+
 	get navigateToMerchants() {
 		const merchantIds = environment['MERCHANT_IDS'];
 
@@ -122,7 +130,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 			};
 
 			try {
-				if (!this.store.orderId) {
+				if (!this.hasPendingOrder) {
 					const order = await this.warehouseOrdersRouter.create(
 						orderCreateInput
 					);
@@ -266,7 +274,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 
 		if (
 			merchantIds.length === 0 &&
-			this.store.orderId &&
+			this.hasPendingOrder &&
 			this.store.orderWarehouseId
 		) {
 			const { status } = await this.ordersService
@@ -382,7 +390,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 	}
 
 	private hasOrder() {
-		if (this.store.orderId) {
+		if (this.hasPendingOrder) {
 			if (environment.ORDER_INFO_TYPE === 'popup') {
 				this.showOrderInfoModal();
 			}
