@@ -174,12 +174,14 @@ export class ProductsPage implements OnInit, OnDestroy {
 	}
 
 	toggleGetProductsType() {
-		this.changePage = true;
-		this.products = [];
-		this.loadProducts({
-			count: this.lastLoadProductsCount,
-			imageOrientation: this.lastImageOrientation,
-		});
+		if (!this.hasPendingOrder) {
+			this.changePage = true;
+			this.products = [];
+			this.loadProducts({
+				count: this.lastLoadProductsCount,
+				imageOrientation: this.lastImageOrientation,
+			});
+		}
 	}
 
 	changeStoreMode() {

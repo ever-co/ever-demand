@@ -11,6 +11,16 @@
 			<div style="font-size: 80%;" ng-if="!order?.isPaid">
 				{{ byPopupStatuses.NOT_PAID_NOTE }}
 			</div>
+
+			<div style="font-size: 80%;">
+				<i class="fa fa-shopping-basket"></i>
+				<!-- TODO add translate -->
+				<span
+					(click)="showProductsModal()"
+					style="text-decoration: underline; margin-left: 3px;"
+					>View products</span
+				>
+			</div>
 		</div>
 
 		<div class="box box-brand-light box-small-padding">
