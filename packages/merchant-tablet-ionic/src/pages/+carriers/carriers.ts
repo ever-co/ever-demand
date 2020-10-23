@@ -9,7 +9,6 @@ import { AddressesComponent } from '../../components/carriers-table/addresses';
 import { StatusComponent } from '../../components/carriers-table/status';
 import { DeliveriesComponent } from '../../components/carriers-table/deliveries';
 import { ImageComponent } from '../../components/carriers-table/image';
-import { WarehouseCarriersRouter } from '@modules/client.common.angular2/routers/warehouse-carriers-router.service';
 import { Store } from '../../../src/services/store.service';
 import { ModalController } from '@ionic/angular';
 import { AddCarriersPopupPage } from './add-carriers-popup/add-carriers-popup';
@@ -18,6 +17,10 @@ import { CarrierTrackPopup } from './carrier-track-popup/carrier-track-popup';
 import { Router } from '@angular/router';
 import { ConfirmDeletePopupPage } from 'components/confirm-delete-popup/confirm-delete-popup';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
+import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
+import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
+import { WarehouseCarriersRouter } from '@modules/client.common.angular2/routers/warehouse-carriers-router.service';
+import { CarrierService } from 'services/carrier.service';
 
 @Component({
 	selector: 'page-carriers',
@@ -35,10 +38,13 @@ export class CarriersPage implements OnInit, OnDestroy {
 	constructor(
 		private readonly router: Router,
 		public modalCtrl: ModalController,
-		private readonly warehouseCarriersRouter: WarehouseCarriersRouter,
 		private readonly _translateService: TranslateService,
 		private readonly store: Store,
-		private warehouseRouter: WarehouseRouter
+		private warehouseRouter: WarehouseRouter,
+		private readonly carrierRouter: CarrierRouter,
+		private readonly carrierService: CarrierService,
+		private warehouseOrdersRouter: WarehouseOrdersRouter,
+		private readonly warehouseCarriersRouter: WarehouseCarriersRouter
 	) {}
 
 	get deviceId() {
@@ -127,17 +133,30 @@ export class CarriersPage implements OnInit, OnDestroy {
 			this.sourceSmartTable.load(carriersVM);
 		};
 
-		this.warehouseCarriersRouter
+		this.warehouseRouter
 			.get(this.warehouseId)
-			.pipe(takeUntil(this._ngDestroy$))
-			.subscribe((carriers) => {
-				this.carriers = carriers;
+			.subscribe(async (warehouse) => {
+				if (warehouse.hasRestrictedCarriers) {
+					this.carriers = await this.warehouseCarriersRouter
+						.getUsedCarriers(this.warehouseId)
+						.pipe(first())
+						.toPromise();
 
-				loadData(this.carriers);
-
-				this.carriers.length === 0
-					? (this.showNoDeliveryIcon = true)
-					: (this.showNoDeliveryIcon = false);
+					loadData(this.carriers);
+					this.carriers.length === 0
+						? (this.showNoDeliveryIcon = true)
+						: (this.showNoDeliveryIcon = false);
+				} else {
+					this.carrierRouter
+						.getAllActive()
+						.subscribe((carriers: Carrier[]) => {
+							this.carriers = carriers;
+							loadData(this.carriers);
+							this.carriers.length === 0
+								? (this.showNoDeliveryIcon = true)
+								: (this.showNoDeliveryIcon = false);
+						});
+				}
 			});
 	}
 

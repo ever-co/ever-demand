@@ -11,6 +11,9 @@ import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/car
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import _ from 'lodash';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
+import Warehouse from '@modules/server.common/entities/Warehouse';
+import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
+import { first } from 'rxjs/operators';
 
 @Component({
 	selector: 'ea-carrier-orders-status',
@@ -39,7 +42,8 @@ export class CarrierOrdersStatusComponent implements OnDestroy {
 
 	constructor(
 		private carrierOrdersRouter: CarrierOrdersRouter,
-		private orderRouter: OrderRouter
+		private orderRouter: OrderRouter,
+		public warehouseRouter: WarehouseRouter
 	) {
 		this.enumOrderCarrierStatus = OrderCarrierStatus;
 	}
@@ -54,6 +58,14 @@ export class CarrierOrdersStatusComponent implements OnDestroy {
 	}
 
 	async selectOrdersForDelivery() {
+		const warehouse: Warehouse = await this.warehouseRouter
+			.get(this.selectedOrder.warehouse['id'])
+			.pipe(first())
+			.toPromise();
+
+		warehouse.usedCarriersIds.push(this.selectedCarrier.id);
+		this.warehouseRouter.save(warehouse);
+
 		this.pageBtnStates.isSelectOrdersForDeliveryAvailable = false;
 
 		this.selectedOrder.carrierStatus = this.enumOrderCarrierStatus.CarrierSelectedOrder;

@@ -16,6 +16,9 @@ import { MapComponent } from '../common/map/map.component';
 import { Router } from '@angular/router';
 import { NavController, Platform } from '@ionic/angular';
 import { getIdFromTheDate } from '@modules/server.common/utils';
+import Warehouse from '@modules/server.common/entities/Warehouse';
+import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
+import { first } from 'rxjs/operators';
 
 declare var google: any;
 
@@ -36,6 +39,7 @@ export class DriveToWarehousePage implements OnInit {
 	selectedOrderID: string;
 	orderCarrierCompetition: boolean;
 	isTakenFromAnotherCarrier: boolean = false;
+	warehouseId: string;
 
 	carrier$;
 	order$;
@@ -49,7 +53,8 @@ export class DriveToWarehousePage implements OnInit {
 		private geolocation: Geolocation,
 		private router: Router,
 		private navCtrl: NavController,
-		public platform: Platform
+		public platform: Platform,
+		public warehouseRouter: WarehouseRouter
 	) {}
 
 	ngOnInit(): void {
@@ -88,6 +93,7 @@ export class DriveToWarehousePage implements OnInit {
 							populateWarehouse: true,
 						})
 						.subscribe((order) => {
+							this.warehouseId = order.warehouseId;
 							this.orderCarrierCompetition =
 								order.warehouse['carrierCompetition'];
 
@@ -135,6 +141,14 @@ export class DriveToWarehousePage implements OnInit {
 
 	async takeWork() {
 		if (this.carrier && this.selectedOrder) {
+			const warehouse: Warehouse = await this.warehouseRouter
+				.get(this.warehouseId)
+				.pipe(first())
+				.toPromise();
+
+			warehouse.usedCarriersIds.push(this.carrier['id']);
+			this.warehouseRouter.save(warehouse);
+
 			return await this.carrierOrdersRouter.selectedForDelivery(
 				this.carrier['id'],
 				[this.selectedOrder['id']]
