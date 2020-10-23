@@ -17,6 +17,9 @@ import {
 	trigger,
 } from '@angular/animations';
 import { DOCUMENT } from '@angular/common';
+import DeliveryType from '@modules/server.common/enums/DeliveryType';
+import { NavController } from '@ionic/angular';
+import { environment } from 'environments/environment';
 
 @Component({
 	selector: 'e-cu-order',
@@ -103,6 +106,10 @@ export class OrderComponent {
 		);
 	}
 
+	get inProcessing() {
+		return this.order && this.order.status < OrderStatus.Delivered;
+	}
+
 	get isTakeaway() {
 		return (
 			this.order &&
@@ -112,8 +119,21 @@ export class OrderComponent {
 
 	constructor(
 		@Inject(DOCUMENT) public document: Document,
-		private readonly store: Store
+		private readonly store: Store,
+		public navCtrl: NavController
 	) {}
+
+	goToOrder() {
+		if (this.inProcessing && environment.ORDER_INFO_TYPE === 'page') {
+			this.navCtrl.navigateRoot(
+				`${
+					this.store.deliveryType === DeliveryType.Delivery
+						? '/order-info'
+						: '/order-info-takeaway'
+				}`
+			);
+		}
+	}
 
 	private _millisToMinutes(ms) {
 		const minutes = Math.floor(ms / 60000);

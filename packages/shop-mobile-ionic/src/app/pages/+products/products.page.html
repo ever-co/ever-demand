@@ -18,7 +18,7 @@
 			</ion-col>
 			<ion-col class="header-actions">
 				<ion-label
-					*ngIf="!inStore"
+					*ngIf="!inStore && !hasPendingOrder"
 					(click)="isDeliveryRequired = !isDeliveryRequired"
 				>
 					<small [ngClass]="{ 'no-select': isDeliveryRequired }">
@@ -26,35 +26,48 @@
 					></ion-label
 				>
 				<ion-toggle
-					*ngIf="!inStore"
+					*ngIf="!inStore && !hasPendingOrder"
 					color="secondary"
 					class="toggleDeliveryType pr-5px pl-5px"
 					(ionChange)="toggleGetProductsType()"
 					[(ngModel)]="isDeliveryRequired"
 				></ion-toggle>
 				<ion-label
-					*ngIf="!inStore"
+					*ngIf="!inStore && !hasPendingOrder"
 					(click)="isDeliveryRequired = !isDeliveryRequired"
 				>
 					<small [ngClass]="{ 'no-select': !isDeliveryRequired }">
 						{{ 'PRODUCTS_VIEW.DELIVERY' | translate }}
 					</small></ion-label
 				>
-				<ion-label class="pl-3 pr-3" (click)="toggleSearch()">
+				<ion-label
+					*ngIf="!hasPendingOrder"
+					class="pl-3 pr-3 d-flex"
+					(click)="toggleSearch()"
+				>
 					<ion-icon name="search"></ion-icon>
 				</ion-label>
 				<ion-label
-					*ngIf="!navigateToMerchants"
+					*ngIf="!navigateToMerchants && !hasPendingOrder"
 					(click)="changeStoreMode()"
 				>
 					<e-cu-store-sign [inStore]="inStore"></e-cu-store-sign>
 				</ion-label>
 				<ion-label
-					*ngIf="navigateToMerchants"
+					*ngIf="navigateToMerchants && !hasPendingOrder"
 					routerLink="{{ !inStore ? '/merchants' : '' }}"
 					routerDirection="root"
 				>
 					<e-cu-store-sign [inStore]="inStore"></e-cu-store-sign>
+				</ion-label>
+
+				<ion-label
+					*ngIf="hasPendingOrder && hasPendingOrder"
+					(click)="showOrderInfo()"
+				>
+					<e-cu-order-sign
+						[onChangeOrder]="changePendingOrder"
+					></e-cu-order-sign>
 				</ion-label>
 			</ion-col>
 		</ion-row>

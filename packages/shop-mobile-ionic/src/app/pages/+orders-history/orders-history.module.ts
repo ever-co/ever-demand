@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { OrdersHistoryPage } from './orders-history.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { OrderModule } from '../../components/order/order.module';
-import { OrderCardComponent } from './order-card/order-card.component';
+import { OrdersCardModule } from './order-card/order-card.module';
 
 const routes: Routes = [
 	{
@@ -28,9 +28,10 @@ const routes: Routes = [
 		FormsModule,
 		IonicModule,
 		OrderModule,
+		OrdersCardModule,
 		RouterModule.forChild(routes),
 		TranslateModule.forChild(),
 	],
-	declarations: [OrdersHistoryPage, OrderCardComponent],
+	declarations: [OrdersHistoryPage],
 })
 export class OrdersHistoryPageModule {}

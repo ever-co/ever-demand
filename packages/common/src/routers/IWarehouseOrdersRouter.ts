@@ -37,6 +37,13 @@ interface IWarehouseOrdersRouter {
 
 	cancel(orderId: string): Promise<Order>;
 
+	addMore(
+		warehouseId: string,
+		userId: string,
+		orderId: string,
+		products: IOrderCreateInputProduct[]
+	): Promise<Order>;
+
 	createByProductType(
 		userId: string,
 		warehouseId: string,

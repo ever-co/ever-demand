@@ -1,0 +1,24 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
+.order-sign-wrap {
+	text-align: center;
+	line-height: 1;
+	padding-right: 5px;
+
+	.order-sign-lines {
+		font-size: 80%;
+		color: #d0d0d0;
+		small {
+			display: block;
+		}
+	}
+
+	.order-sign {
+		color: $balanced;
+		font-size: 16px;
+		padding-bottom: 3px;
+		* {
+			animation: fide-out 2s ease-in-out infinite !important;
+		}
+	}
+}

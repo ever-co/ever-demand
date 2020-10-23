@@ -36,6 +36,7 @@ import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
+import User from '@ever-platform/common/src/entities/User';
 
 /**
  * Warehouses Orders Service
@@ -206,21 +207,10 @@ export class WarehousesOrdersService
 			autoConfirm: !!options.autoConfirm,
 		};
 
-		const user = await this.usersService
-			.get(userId)
-			.pipe(first())
-			.toPromise();
-
-		const warehouse = (await this.warehousesService
-			.get(warehouseId, true)
-			.pipe(first())
-			.toPromise()) as WithFullProducts;
+		const user = await this._getUser(userId);
+		const warehouse = await this._getWarehouse(warehouseId);
 
 		const warehouseProducts = _.keyBy(warehouse.products, 'productId');
-
-		if (user == null) {
-			throw new Error(`There is no user with the id ${userId}`);
-		}
 
 		this.log.info(
 			{
@@ -233,30 +223,9 @@ export class WarehousesOrdersService
 
 		// If no image was given from client side for an order product,
 		// we should copy it from product in DB
-		const orderProducts = await _.map(
+		const orderProducts = await this._getOrderProducts(
 			products,
-			(args): IOrderProductCreateObject => {
-				const wProduct = warehouseProducts[args.productId];
-
-				if (!wProduct) {
-					throw new Error(
-						`WarehouseOrdersService got call to create(userId, orderProducts) - But there is no product with the id ${args.productId}!`
-					);
-				}
-
-				return {
-					count: args.count,
-					price: wProduct.price,
-					initialPrice: wProduct.initialPrice,
-					deliveryTimeMin: wProduct.deliveryTimeMin,
-					deliveryTimeMax: wProduct.deliveryTimeMax,
-					product: wProduct.product as Product,
-					isManufacturing: wProduct.isManufacturing,
-					isCarrierRequired: wProduct.isCarrierRequired,
-					isDeliveryRequired: wProduct.isDeliveryRequired,
-					isTakeaway: wProduct.isTakeaway,
-				};
-			}
+			warehouseProducts
 		);
 
 		// TODO next should be in the single transaction!
@@ -273,42 +242,60 @@ export class WarehousesOrdersService
 		});
 
 		// we do all remove operations and notify about warehouse orders change after we remove products from warehouse
-		await (<any>Bluebird).map(
-			order.products,
-			async (orderProduct: OrderProduct) => {
-				const productId = orderProduct.product.id;
+		await this._updateProductCount(order, warehouseId);
 
-				this.log.info(
-					{
-						warehouseId,
-						productId,
-						count: orderProduct.count,
-					},
-					'Order create remove products call'
-				);
+		return order;
+	}
 
-				await this.warehousesProductsService.decreaseCount(
-					warehouseId,
-					productId, // what product availability should be decreased
-					orderProduct.count // how many to remove
-				);
+	/**
+	 * Add product to existed order
+	 *
+	 * @param {string} warehouseId
+	 * @param {string} userId
+	 * @param {string} orderId
+	 * @param {IOrderCreateInputProduct} product
+	 * @returns {Promise<Order>}
+	 * @memberof WarehousesOrdersService
+	 */
+	@asyncListener()
+	async addMore(warehouseId, userId, orderId, products): Promise<Order> {
+		const existedOrder = await this.ordersService
+			.get(orderId)
+			.pipe(first())
+			.toPromise();
 
-				await this.warehousesProductsService.increaseSoldCount(
-					warehouseId,
-					productId,
-					orderProduct.count
-				);
+		if (existedOrder.warehouseId !== warehouseId) {
+			throw new Error(
+				`The order is not used by warehouse with Id ${warehouseId}`
+			);
+		}
 
-				this.log.info(
-					{
-						warehouseId,
-						productId,
-						count: orderProduct.count,
-					},
-					'Order create remove products call succeed'
-				);
-			}
+		if (existedOrder.user.id !== userId) {
+			throw new Error(`The order is not used by user with Id ${userId}`);
+		}
+
+		const user = await this._getUser(userId);
+		const warehouse = await this._getWarehouse(warehouseId);
+
+		const warehouseProducts = _.keyBy(warehouse.products, 'productId');
+
+		this.log.info(
+			{ user, warehouseId, orderId, products },
+			'Add more products call'
 		);
+
+		const orderProducts = await this._getOrderProducts(
+			products,
+			warehouseProducts
+		);
+
+		const newProducts = [...existedOrder.products, ...orderProducts];
+
+		const order = await this.ordersService.update(orderId, {
+			products: newProducts,
+		});
+
+		await this._updateProductCount(order, warehouseId);
 
 		return order;
 	}
@@ -524,6 +511,102 @@ export class WarehousesOrdersService
 		);
 
 		return orders;
+	}
+
+	private async _getUser(userId: string): Promise<User> {
+		const user = await this.usersService
+			.get(userId)
+			.pipe(first())
+			.toPromise();
+
+		if (user == null) {
+			throw new Error(`There is no user with the id ${userId}`);
+		}
+
+		return user;
+	}
+
+	private async _getWarehouse(
+		warehouseId: string
+	): Promise<WithFullProducts> {
+		const warehouse = (await this.warehousesService
+			.get(warehouseId, true)
+			.pipe(first())
+			.toPromise()) as WithFullProducts;
+
+		if (warehouse == null) {
+			throw new Error(`There is no warehouse with the id ${warehouseId}`);
+		}
+
+		return warehouse;
+	}
+
+	private async _getOrderProducts(
+		products,
+		warehouseProducts
+	): Promise<IOrderProductCreateObject[]> {
+		return _.map(
+			products,
+			(args): IOrderProductCreateObject => {
+				const wProduct = warehouseProducts[args.productId];
+				if (!wProduct) {
+					throw new Error(
+						`WarehouseOrdersService got call to create(userId, orderProducts) - But there is no product with the id ${args.productId}!`
+					);
+				}
+				return {
+					count: args.count,
+					price: wProduct.price,
+					initialPrice: wProduct.initialPrice,
+					deliveryTimeMin: wProduct.deliveryTimeMin,
+					deliveryTimeMax: wProduct.deliveryTimeMax,
+					product: wProduct.product as Product,
+					isManufacturing: wProduct.isManufacturing,
+					isCarrierRequired: wProduct.isCarrierRequired,
+					isDeliveryRequired: wProduct.isDeliveryRequired,
+					isTakeaway: wProduct.isTakeaway,
+				};
+			}
+		);
+	}
+
+	private async _updateProductCount(order, warehouseId) {
+		await (<any>Bluebird).map(
+			order.products,
+			async (orderProduct: OrderProduct) => {
+				const productId = orderProduct.product.id;
+
+				this.log.info(
+					{
+						warehouseId,
+						productId,
+						count: orderProduct.count,
+					},
+					'Order create remove products call'
+				);
+
+				await this.warehousesProductsService.decreaseCount(
+					warehouseId,
+					productId, // what product availability should be decreased
+					orderProduct.count // how many to remove
+				);
+
+				await this.warehousesProductsService.increaseSoldCount(
+					warehouseId,
+					productId,
+					orderProduct.count
+				);
+
+				this.log.info(
+					{
+						warehouseId,
+						productId,
+						count: orderProduct.count,
+					},
+					'Order create remove products call succeed'
+				);
+			}
+		);
 	}
 }
 

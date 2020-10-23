@@ -8,6 +8,7 @@ import Order from '@modules/server.common/entities/Order';
 import IWarehouseOrdersRouter, {
 	IWarehouseOrdersRouterGetOptions,
 	IOrderCreateInput,
+	IOrderCreateInputProduct,
 } from '@modules/server.common/routers/IWarehouseOrdersRouter';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 
@@ -39,6 +40,22 @@ export class WarehouseOrdersRouter implements IWarehouseOrdersRouter {
 
 	async cancel(orderId: string): Promise<Order> {
 		const order = await this.router.run<IOrder>('cancel', orderId);
+		return this._orderFactory(order);
+	}
+
+	async addMore(
+		warehouseId: string,
+		userId: string,
+		orderId: string,
+		products: IOrderCreateInputProduct[]
+	): Promise<Order> {
+		const order = await this.router.run<IOrder>(
+			'addMore',
+			warehouseId,
+			userId,
+			orderId,
+			products
+		);
 		return this._orderFactory(order);
 	}
 

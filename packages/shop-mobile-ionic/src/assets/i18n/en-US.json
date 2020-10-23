@@ -94,6 +94,8 @@
 				}
 			]
 		},
+
+		"VIEW_ORDER_PRODUCTS": "View Order Products",
 		"STATUSES": [
 			{
 				"TITLE": "We're preparing the order!",
@@ -248,6 +250,7 @@
 	"FAILED": "Failed",
 	"CANCELED": "Canceled",
 	"IN_DELIVERY": "In Delivery",
+	"PENDING": "Pending",
 	"COMPLETED": "Completed",
 	"BROWSE": "Browse",
 	"ENGLISH": "English",

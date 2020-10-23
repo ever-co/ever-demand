@@ -1,0 +1,22 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<!-- TODO add translate -->
+		<ion-title>{{ 'Order Info' | translate }}</ion-title>
+		<ion-buttons slot="end">
+			<ion-button (click)="closeModal()">
+				<span>
+					<i class="fa fa-times back-btn"></i>
+					<span>{{ 'CLOSE' | translate }}</span>
+				</span>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="order-info-modal-wrap">
+	<e-cu-order-card
+		class="order-info-modal"
+		[showAll]="true"
+		[order]="order"
+	></e-cu-order-card>
+</ion-content>

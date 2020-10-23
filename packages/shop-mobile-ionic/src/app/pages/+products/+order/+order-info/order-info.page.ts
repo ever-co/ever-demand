@@ -15,12 +15,13 @@ import { OrderRouter } from '@modules/client.common.angular2/routers/order-route
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '../../../../services/store.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { CancelPage } from '../+cancel/cancel.page';
 import { IssuePage } from '../issue/issue.page';
 import { takeUntil } from 'rxjs/operators';
 import { ElapsedTimeComponent } from 'app/components/elapsed-time/elapsed-time.component';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
+import { OrderInfoModalComponent } from '../common/order-info-modal/order-info-modal.component';
 
 @Component({
 	selector: 'e-cu-order-info',
@@ -41,6 +42,8 @@ export class OrderInfoPage implements OnInit, OnDestroy {
 
 	public modalOpen: boolean;
 	public modalChange = new EventEmitter<boolean>();
+
+	private clearOrder = true;
 	private readonly ngDestroy$ = new Subject<void>();
 
 	private _pageSubscriptions: Subscription[] = [];
@@ -50,6 +53,7 @@ export class OrderInfoPage implements OnInit, OnDestroy {
 		private readonly _translateService: TranslateService,
 		private readonly store: Store,
 		public modalController: ModalController,
+		public navCtrl: NavController,
 		private router: Router
 	) {
 		this._trackOrder();
@@ -277,6 +281,22 @@ export class OrderInfoPage implements OnInit, OnDestroy {
 		this.showCancelOrderInfoModal();
 	}
 
+	backToProducts() {
+		this.clearOrder = false;
+		this.router.navigateByUrl('/products', { skipLocationChange: true });
+	}
+
+	async showProductsModal(): Promise<void> {
+		const modal = await this.modalController.create({
+			component: OrderInfoModalComponent,
+			cssClass: 'products-info-modal',
+			componentProps: {
+				order: this.order,
+			},
+		});
+		return modal.present();
+	}
+
 	private async showCancelOrderInfoModal(): Promise<void> {
 		const modal = await this.modalController.create({
 			component: CancelPage,
@@ -290,10 +310,12 @@ export class OrderInfoPage implements OnInit, OnDestroy {
 	}
 
 	async closePopup() {
-		localStorage.removeItem('startDate');
-		localStorage.removeItem('endTime');
-		this.store.orderId = null;
-		this.router.navigate(['/products']);
+		if (this.clearOrder) {
+			localStorage.removeItem('startDate');
+			localStorage.removeItem('endTime');
+			this.store.orderId = null;
+			this.navCtrl.navigateRoot('/products');
+		}
 	}
 
 	// For delivery-status

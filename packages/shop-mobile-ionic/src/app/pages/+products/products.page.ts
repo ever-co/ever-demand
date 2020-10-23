@@ -9,7 +9,7 @@ import { Store } from '../../services/store.service';
 import { Router } from '@angular/router';
 import { IOrderCreateInput } from '@modules/server.common/routers/IWarehouseOrdersRouter';
 import { OrderPage } from './+order/order.page';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { environment } from 'environments/environment';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { GeoLocationService } from '../../services/geo-location';
@@ -21,6 +21,8 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
 import { GeoLocationProductsService } from 'app/services/geo-location/geo-location-products';
 import { WarehouseProductsService } from 'app/services/merchants/warehouse-products';
+import { OrdersService } from 'app/services/orders/orders.service';
+import OrderStatus from '@modules/server.common/enums/OrderStatus';
 
 const initializeProductsNumber: number = 10;
 
@@ -43,6 +45,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 	$areProductsLoaded = new EventEmitter<boolean>();
 	changePage: boolean;
 	isSearchOpened: boolean = false;
+	changePendingOrder = false;
 
 	private readonly ngDestroy$ = new Subject<void>();
 	getOrdersGeoObj: { loc: ILocation };
@@ -60,7 +63,9 @@ export class ProductsPage implements OnInit, OnDestroy {
 		private modalController: ModalController,
 		private geoLocationService: GeoLocationService,
 		private warehouseRouter: WarehouseRouter,
-		private warehouseProductsService: WarehouseProductsService
+		public navCtrl: NavController,
+		private warehouseProductsService: WarehouseProductsService,
+		private ordersService: OrdersService
 	) {
 		this.productsLocale = this.store.language || environment.DEFAULT_LOCALE;
 
@@ -79,6 +84,14 @@ export class ProductsPage implements OnInit, OnDestroy {
 
 	get inStore() {
 		return this.store.inStore;
+	}
+
+	get hasPendingOrder() {
+		return !!this.store.orderId;
+	}
+
+	get isDeliveryType() {
+		return this.store.deliveryType === DeliveryType.Delivery;
 	}
 
 	get navigateToMerchants() {
@@ -118,27 +131,31 @@ export class ProductsPage implements OnInit, OnDestroy {
 			};
 
 			try {
-				const order = await this.warehouseOrdersRouter.create(
-					orderCreateInput
-				);
+				if (!this.hasPendingOrder) {
+					const order = await this.warehouseOrdersRouter.create(
+						orderCreateInput
+					);
 
-				this.store.orderId = order.id;
+					this.store.orderId = order.id;
 
-				this.store.orderWarehouseId = order.warehouseId;
+					this.store.orderWarehouseId = order.warehouseId;
 
-				if (environment.ORDER_INFO_TYPE === 'popup') {
-					this.showOrderInfoModal();
+					if (environment.ORDER_INFO_TYPE === 'popup') {
+						this.products = this.products.filter(
+							(p) => p.warehouseId == orderCreateInput.warehouseId
+						);
+					}
+				} else {
+					await this.warehouseOrdersRouter.addMore(
+						orderCreateInput.warehouseId,
+						orderCreateInput.userId,
+						this.store.orderId,
+						orderCreateInput.products
+					);
+					this.changePendingOrder = !this.changePendingOrder;
 				}
 
-				if (environment.ORDER_INFO_TYPE === 'page') {
-					this.router.navigate([
-						`${
-							this.store.deliveryType === DeliveryType.Delivery
-								? '/order-info'
-								: '/order-info-takeaway'
-						}`,
-					]);
-				}
+				this.showOrderInfo();
 			} catch (error) {
 				const loadedProduct = this.products.find(
 					(p) =>
@@ -152,13 +169,31 @@ export class ProductsPage implements OnInit, OnDestroy {
 		}
 	}
 
+	showOrderInfo() {
+		if (environment.ORDER_INFO_TYPE === 'popup') {
+			this.showOrderInfoModal();
+		}
+
+		if (environment.ORDER_INFO_TYPE === 'page') {
+			this.navCtrl.navigateRoot(
+				`${
+					this.store.deliveryType === DeliveryType.Delivery
+						? '/order-info'
+						: '/order-info-takeaway'
+				}`
+			);
+		}
+	}
+
 	toggleGetProductsType() {
-		this.changePage = true;
-		this.products = [];
-		this.loadProducts({
-			count: this.lastLoadProductsCount,
-			imageOrientation: this.lastImageOrientation,
-		});
+		if (!this.hasPendingOrder) {
+			this.changePage = true;
+			this.products = [];
+			this.loadProducts({
+				count: this.lastLoadProductsCount,
+				imageOrientation: this.lastImageOrientation,
+			});
+		}
 	}
 
 	changeStoreMode() {
@@ -249,6 +284,24 @@ export class ProductsPage implements OnInit, OnDestroy {
 
 		if ((!merchantIds || merchantIds.length === 0) && this.inStore) {
 			merchantIds = [this.inStore];
+		}
+
+		if (
+			merchantIds.length === 0 &&
+			this.hasPendingOrder &&
+			this.store.orderWarehouseId
+		) {
+			const { status } = await this.ordersService
+				.getOrder(this.store.orderId, `{status}`)
+				.pipe(first())
+				.toPromise();
+			if (status < OrderStatus.Delivered) {
+				merchantIds = [this.store.orderWarehouseId];
+			} else {
+				localStorage.removeItem('startDate');
+				localStorage.removeItem('endTime');
+				this.store.orderId = null;
+			}
 		}
 
 		await this.loadProductsCount(merchantIds, imageOrientation);
@@ -351,7 +404,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 	}
 
 	private hasOrder() {
-		if (this.store.orderId) {
+		if (this.hasPendingOrder) {
 			if (environment.ORDER_INFO_TYPE === 'popup') {
 				this.showOrderInfoModal();
 			}

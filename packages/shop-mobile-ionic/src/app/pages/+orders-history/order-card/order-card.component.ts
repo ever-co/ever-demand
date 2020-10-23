@@ -13,6 +13,9 @@ export class OrderCardComponent {
 	@Input()
 	user: IUser;
 
+	@Input()
+	showAll = false;
+
 	private _order: Order;
 
 	get order() {
@@ -23,12 +26,15 @@ export class OrderCardComponent {
 	set order(order: Order) {
 		// use type annotation
 		this._order = { ...order } as Order;
-		this._order.products = order.products.slice(
-			0,
-			OrderCardComponent.NOT_EXPANDED_MAX_PRODUCTS_AMOUNT
-		);
-		this.notDisplayedProductsAmount =
-			order.products.length - this._order.products.length;
+
+		if (!this.showAll) {
+			this._order.products = order.products.slice(
+				0,
+				OrderCardComponent.NOT_EXPANDED_MAX_PRODUCTS_AMOUNT
+			);
+			this.notDisplayedProductsAmount =
+				order.products.length - this._order.products.length;
+		}
 	}
 
 	notDisplayedProductsAmount: number;
