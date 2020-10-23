@@ -94,6 +94,8 @@
 				}
 			]
 		},
+
+		"VIEW_ORDER_PRODUCTS": "View Order Products",
 		"STATUSES": [
 			{
 				"TITLE": "We're preparing the order!",
