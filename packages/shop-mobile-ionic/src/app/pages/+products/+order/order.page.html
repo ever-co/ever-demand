@@ -1,6 +1,9 @@
 <div class="order-page">
 	<div [hidden]="areIssues" dir="{{ 'CURRENT_DIRECTION' | translate }}">
 		<div class="box box-brand text-align-center">
+			<span (click)="backToProducts()" class="box-close">
+				<i class="fa fa-times"></i>
+			</span>
 			<div class="box-top">
 				<h4 class="main-title mt-0">{{ byPopupStatuses.TITLE }}</h4>
 

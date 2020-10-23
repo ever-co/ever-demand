@@ -1,4 +1,7 @@
 <div class="box box-brand takeaway-title" style="height: 100%;">
+	<span (click)="closeModal.emit()" *ngIf="lessInfo" class="box-close">
+		<i class="fa fa-times"></i>
+	</span>
 	<div style="padding: 30px 20px; padding-bottom: 10px;">
 		<div class="title-content">
 			<h4 class="main-title mt-0">{{ byPopupStatuses.TITLE }}</h4>

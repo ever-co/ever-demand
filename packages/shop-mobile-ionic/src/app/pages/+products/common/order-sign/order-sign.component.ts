@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { OrdersService } from 'app/services/orders/orders.service';
 import { Store } from 'app/services/store.service';
 import { first } from 'rxjs/operators';
@@ -8,12 +8,16 @@ import { first } from 'rxjs/operators';
 	templateUrl: './order-sign.component.html',
 	styleUrls: ['./order-sign.component.scss'],
 })
-export class OrderSignComponent implements OnInit {
+export class OrderSignComponent implements OnChanges {
+	@Input()
+	onChangeOrder: boolean;
+
 	totalPrice = 0;
 
 	constructor(private store: Store, private ordersService: OrdersService) {}
+	ngOnInit(): void {}
 
-	ngOnInit(): void {
+	ngOnChanges(): void {
 		this.getPrice();
 	}
 

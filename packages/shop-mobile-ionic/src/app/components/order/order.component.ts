@@ -19,6 +19,7 @@ import {
 import { DOCUMENT } from '@angular/common';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 import { NavController } from '@ionic/angular';
+import { environment } from 'environments/environment';
 
 @Component({
 	selector: 'e-cu-order',
@@ -123,7 +124,7 @@ export class OrderComponent {
 	) {}
 
 	goToOrder() {
-		if (this.inProcessing) {
+		if (this.inProcessing && environment.ORDER_INFO_TYPE === 'page') {
 			this.navCtrl.navigateRoot(
 				`${
 					this.store.deliveryType === DeliveryType.Delivery

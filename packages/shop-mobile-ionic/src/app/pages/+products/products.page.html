@@ -62,11 +62,12 @@
 				</ion-label>
 
 				<ion-label
-					*ngIf="hasPendingOrder"
-					routerLink="{{ isDeliveryType ? '/order-info' : '/order-info-takeaway' }}"
-					routerDirection="root"
+					*ngIf="hasPendingOrder && hasPendingOrder"
+					(click)="showOrderInfo()"
 				>
-					<e-cu-order-sign></e-cu-order-sign>
+					<e-cu-order-sign
+						[onChangeOrder]="changePendingOrder"
+					></e-cu-order-sign>
 				</ion-label>
 			</ion-col>
 		</ion-row>

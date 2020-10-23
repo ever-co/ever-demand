@@ -6,7 +6,9 @@
 			</div>
 		</div>
 		<e-cu-order-takeaway-info-title
+			[lessInfo]="true"
 			[order]="order"
+			(closeModal)="backToProducts()"
 		></e-cu-order-takeaway-info-title>
 
 		<div class="box box-brand-light box-small-padding pb-3 order">

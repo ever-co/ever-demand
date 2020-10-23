@@ -217,6 +217,11 @@ export class OrderPage implements OnInit, OnDestroy {
 		return modal.present();
 	}
 
+	backToProducts() {
+		this.modalController.dismiss();
+		this.modalChange.emit(false);
+	}
+
 	public get byPopupStatuses() {
 		// this is workaround for access language assets from array.
 		const popupStatuses = `BUY_POPUP.${

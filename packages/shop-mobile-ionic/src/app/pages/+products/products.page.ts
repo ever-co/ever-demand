@@ -45,6 +45,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 	$areProductsLoaded = new EventEmitter<boolean>();
 	changePage: boolean;
 	isSearchOpened: boolean = false;
+	changePendingOrder = false;
 
 	private readonly ngDestroy$ = new Subject<void>();
 	getOrdersGeoObj: { loc: ILocation };
@@ -138,6 +139,12 @@ export class ProductsPage implements OnInit, OnDestroy {
 					this.store.orderId = order.id;
 
 					this.store.orderWarehouseId = order.warehouseId;
+
+					if (environment.ORDER_INFO_TYPE === 'popup') {
+						this.products = this.products.filter(
+							(p) => p.warehouseId == orderCreateInput.warehouseId
+						);
+					}
 				} else {
 					await this.warehouseOrdersRouter.addMore(
 						orderCreateInput.warehouseId,
@@ -145,21 +152,10 @@ export class ProductsPage implements OnInit, OnDestroy {
 						this.store.orderId,
 						orderCreateInput.products
 					);
+					this.changePendingOrder = !this.changePendingOrder;
 				}
 
-				if (environment.ORDER_INFO_TYPE === 'popup') {
-					this.showOrderInfoModal();
-				}
-
-				if (environment.ORDER_INFO_TYPE === 'page') {
-					this.navCtrl.navigateRoot(
-						`${
-							this.store.deliveryType === DeliveryType.Delivery
-								? '/order-info'
-								: '/order-info-takeaway'
-						}`
-					);
-				}
+				this.showOrderInfo();
 			} catch (error) {
 				const loadedProduct = this.products.find(
 					(p) =>
@@ -170,6 +166,22 @@ export class ProductsPage implements OnInit, OnDestroy {
 					loadedProduct['soldOut'] = true;
 				}
 			}
+		}
+	}
+
+	showOrderInfo() {
+		if (environment.ORDER_INFO_TYPE === 'popup') {
+			this.showOrderInfoModal();
+		}
+
+		if (environment.ORDER_INFO_TYPE === 'page') {
+			this.navCtrl.navigateRoot(
+				`${
+					this.store.deliveryType === DeliveryType.Delivery
+						? '/order-info'
+						: '/order-info-takeaway'
+				}`
+			);
 		}
 	}
 

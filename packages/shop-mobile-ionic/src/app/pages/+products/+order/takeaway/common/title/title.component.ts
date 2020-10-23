@@ -1,4 +1,10 @@
-import { Component, OnDestroy, Input } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	Input,
+	Output,
+	EventEmitter,
+} from '@angular/core';
 import { Subscription, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import Order from '@modules/server.common/entities/Order';
@@ -13,6 +19,12 @@ import { OrderInfoModalComponent } from '../../../common/order-info-modal/order-
 export class TakeawayTitleComponent implements OnDestroy {
 	@Input()
 	order: Order | null = null;
+
+	@Input()
+	lessInfo: boolean;
+
+	@Output()
+	closeModal = new EventEmitter();
 
 	private _pageSubscriptions: Subscription[] = [];
 	private readonly ngDestroy$ = new Subject<void>();
