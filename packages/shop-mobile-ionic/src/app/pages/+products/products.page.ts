@@ -23,7 +23,8 @@ import { GeoLocationProductsService } from 'app/services/geo-location/geo-locati
 import { WarehouseProductsService } from 'app/services/merchants/warehouse-products';
 import { OrdersService } from 'app/services/orders/orders.service';
 import OrderStatus from '@modules/server.common/enums/OrderStatus';
-
+import _ from 'lodash';
+import OrderProduct from '@modules/server.common/entities/OrderProduct';
 const initializeProductsNumber: number = 10;
 
 @Component({
@@ -46,6 +47,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 	changePage: boolean;
 	isSearchOpened: boolean = false;
 	changePendingOrder = false;
+	shoppingCartEnable: boolean;
 
 	private readonly ngDestroy$ = new Subject<void>();
 	getOrdersGeoObj: { loc: ILocation };
@@ -68,6 +70,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 		private ordersService: OrdersService
 	) {
 		this.productsLocale = this.store.language || environment.DEFAULT_LOCALE;
+		this.shoppingCartEnable = environment.SHOPPING_CART;
 
 		if (this.inStore) {
 			this.store.deliveryType = DeliveryType.Takeaway;
@@ -87,7 +90,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 	}
 
 	get hasPendingOrder() {
-		return !!this.store.orderId;
+		return !!this.store.orderId || !!this.store.shoppingCartData;
 	}
 
 	get isDeliveryType() {
@@ -114,56 +117,86 @@ export class ProductsPage implements OnInit, OnDestroy {
 			this.store.warehouseId = currentProduct.warehouseId;
 			this.router.navigateByUrl('/invite');
 		} else {
-			const orderCreateInput: IOrderCreateInput = {
-				warehouseId:
-					currentProduct.warehouseId || this.store.warehouseId,
-				products: [
-					{
-						count: 1,
-						productId: currentProduct.warehouseProduct
-							? currentProduct.warehouseProduct.product['id']
-							: currentProduct.product.id,
-					},
-				],
-				userId: this.store.userId,
-				orderType: this.store.deliveryType,
-				options: { autoConfirm: true },
-			};
+			let orderCreateInput;
 
-			try {
-				if (!this.hasPendingOrder) {
-					const order = await this.warehouseOrdersRouter.create(
-						orderCreateInput
-					);
+			if (!!this.store.shoppingCartData) {
+				orderCreateInput = JSON.parse(this.store.shoppingCartData);
 
-					this.store.orderId = order.id;
+				orderCreateInput.products.push({
+					count: 1,
+					productId: currentProduct.warehouseProduct
+						? currentProduct.warehouseProduct.product['id']
+						: currentProduct.product.id,
+				});
+			} else {
+				orderCreateInput = {
+					warehouseId:
+						currentProduct.warehouseId || this.store.warehouseId,
+					products: [
+						{
+							count: 1,
+							productId: currentProduct.warehouseProduct
+								? currentProduct.warehouseProduct.product['id']
+								: currentProduct.product.id,
+						},
+					],
+					userId: this.store.userId,
+					orderType: this.store.deliveryType,
+					options: { autoConfirm: true },
+				};
+			}
 
-					this.store.orderWarehouseId = order.warehouseId;
+			const oldPrice = orderCreateInput['totalPrice'];
+			const currentProductPrice = currentProduct.warehouseProduct.price;
+			orderCreateInput['totalPrice'] = oldPrice
+				? oldPrice + currentProductPrice
+				: currentProductPrice;
 
-					if (environment.ORDER_INFO_TYPE === 'popup') {
-						this.products = this.products.filter(
-							(p) => p.warehouseId == orderCreateInput.warehouseId
-						);
-					}
-				} else {
-					await this.warehouseOrdersRouter.addMore(
-						orderCreateInput.warehouseId,
-						orderCreateInput.userId,
-						this.store.orderId,
-						orderCreateInput.products
-					);
-					this.changePendingOrder = !this.changePendingOrder;
-				}
-
-				this.showOrderInfo();
-			} catch (error) {
-				const loadedProduct = this.products.find(
-					(p) =>
-						p.warehouseProduct.id ===
-						currentProduct.warehouseProduct.id
+			if (this.shoppingCartEnable) {
+				this.store.shoppingCartData = JSON.stringify(orderCreateInput);
+				this.changePendingOrder = !this.changePendingOrder;
+				this.products = this.products.filter(
+					(p) => p.warehouseId == orderCreateInput.warehouseId
 				);
-				if (loadedProduct) {
-					loadedProduct['soldOut'] = true;
+			} else {
+				// TODO delete totalPrice from orderCreateInput
+				try {
+					if (!this.hasPendingOrder) {
+						const order = await this.warehouseOrdersRouter.create(
+							orderCreateInput
+						);
+
+						this.store.orderId = order.id;
+
+						this.store.orderWarehouseId = order.warehouseId;
+
+						if (environment.ORDER_INFO_TYPE === 'popup') {
+							this.products = this.products.filter(
+								(p) =>
+									p.warehouseId ==
+									orderCreateInput.warehouseId
+							);
+						}
+					} else {
+						await this.warehouseOrdersRouter.addMore(
+							orderCreateInput.warehouseId,
+							orderCreateInput.userId,
+							this.store.orderId,
+							orderCreateInput.products
+						);
+						this.changePendingOrder = !this.changePendingOrder;
+					}
+
+					this.showOrderInfo();
+				} catch (error) {
+					const loadedProduct = this.products.find(
+						(p) =>
+							p.warehouseProduct.id ===
+							currentProduct.warehouseProduct.id
+					);
+					if (loadedProduct) {
+						loadedProduct['soldOut'] = true;
+					}
 				}
 			}
 		}
@@ -291,16 +324,23 @@ export class ProductsPage implements OnInit, OnDestroy {
 			this.hasPendingOrder &&
 			this.store.orderWarehouseId
 		) {
-			const { status } = await this.ordersService
-				.getOrder(this.store.orderId, `{status}`)
-				.pipe(first())
-				.toPromise();
-			if (status < OrderStatus.Delivered) {
-				merchantIds = [this.store.orderWarehouseId];
+			if (this.store.shoppingCartData) {
+				const { warehouseId } = JSON.parse(this.store.shoppingCartData);
+
+				merchantIds = [warehouseId];
 			} else {
-				localStorage.removeItem('startDate');
-				localStorage.removeItem('endTime');
-				this.store.orderId = null;
+				const { status } = await this.ordersService
+					.getOrder(this.store.orderId, `{status}`)
+					.pipe(first())
+					.toPromise();
+
+				if (status < OrderStatus.Delivered) {
+					merchantIds = [this.store.orderWarehouseId];
+				} else {
+					localStorage.removeItem('startDate');
+					localStorage.removeItem('endTime');
+					this.store.orderId = null;
+				}
 			}
 		}
 

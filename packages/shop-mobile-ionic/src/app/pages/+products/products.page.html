@@ -61,10 +61,7 @@
 					<e-cu-store-sign [inStore]="inStore"></e-cu-store-sign>
 				</ion-label>
 
-				<ion-label
-					*ngIf="hasPendingOrder && hasPendingOrder"
-					(click)="showOrderInfo()"
-				>
+				<ion-label *ngIf="hasPendingOrder" (click)="showOrderInfo()">
 					<e-cu-order-sign
 						[onChangeOrder]="changePendingOrder"
 					></e-cu-order-sign>
