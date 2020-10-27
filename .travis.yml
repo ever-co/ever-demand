@@ -1,13 +1,13 @@
 language: node_js
 
 sudo: false
-dist: trusty
+dist: xenial
 
 git:
     depth: 3
 
 node_js:
-    - '10'
+    - '14'
 
 cache:
     directories:
