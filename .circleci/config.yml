@@ -52,6 +52,8 @@ aliases:
       command: |
           sudo apt update
           sudo apt install openjdk-8-jdk
+          export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+          export PATH=$PATH:$JAVA_HOME/bin
           sudo apt install android-sdk
           export ANDROID_HOME=/usr/lib/android-sdk
           wget https://dl.google.com/android/repository/commandlinetools-linux-6609375_latest.zip
