@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
-import { NavParams, ModalController } from '@ionic/angular';
+import { NavParams, ModalController, NavController } from '@ionic/angular';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import Order from '@modules/server.common/entities/Order';
@@ -23,6 +23,7 @@ export class IssuePage implements OnInit {
 		private readonly warehouseOrdersRouter: WarehouseOrdersRouter,
 		private readonly store: Store,
 		private router: Router,
+		public navCtrl: NavController,
 		public modalController: ModalController
 	) {
 		this.modalChange = this.navParams.get('modalChange');
@@ -47,7 +48,7 @@ export class IssuePage implements OnInit {
 		localStorage.removeItem('endTime');
 		this.store.orderId = null;
 
-		this.router.navigate(['/products']);
+		this.navCtrl.navigateRoot('/products');
 		await this.modalController.dismiss();
 	}
 }

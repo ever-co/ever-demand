@@ -23,6 +23,7 @@ import { GeoLocationProductsService } from 'app/services/geo-location/geo-locati
 import { WarehouseProductsService } from 'app/services/merchants/warehouse-products';
 import { SearchProductsModule } from './+searchProducts/searchProducts.module';
 import { ProductsService } from '../../services/products.service';
+import { OrdersService } from 'app/services/orders/orders.service';
 
 const routes: Routes = [
 	{
@@ -66,6 +67,7 @@ const routes: Routes = [
 		GeoLocationProductsService,
 		WarehouseProductsService,
 		ProductsService,
+		OrdersService,
 	],
 	declarations: [
 		ProductsPage,

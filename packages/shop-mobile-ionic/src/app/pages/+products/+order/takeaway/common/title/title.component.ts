@@ -1,7 +1,15 @@
-import { Component, OnDestroy, Input } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	Input,
+	Output,
+	EventEmitter,
+} from '@angular/core';
 import { Subscription, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import Order from '@modules/server.common/entities/Order';
+import { ModalController } from '@ionic/angular';
+import { OrderInfoModalComponent } from '../../../common/order-info-modal/order-info-modal.component';
 
 @Component({
 	selector: 'e-cu-order-takeaway-info-title',
@@ -12,10 +20,19 @@ export class TakeawayTitleComponent implements OnDestroy {
 	@Input()
 	order: Order | null = null;
 
+	@Input()
+	lessInfo: boolean;
+
+	@Output()
+	closeModal = new EventEmitter();
+
 	private _pageSubscriptions: Subscription[] = [];
 	private readonly ngDestroy$ = new Subject<void>();
 
-	constructor(private readonly _translateService: TranslateService) {}
+	constructor(
+		private readonly _translateService: TranslateService,
+		private readonly _modalController: ModalController
+	) {}
 
 	get byPopupStatuses() {
 		const popupStatuses = 'BUY_POPUP.STATUSES_TAKEAWAY';
@@ -95,6 +112,17 @@ export class TakeawayTitleComponent implements OnDestroy {
 		}
 
 		return 30 + '-' + 60;
+	}
+
+	async showProductsModal(): Promise<void> {
+		const modal = await this._modalController.create({
+			component: OrderInfoModalComponent,
+			cssClass: 'products-info-modal',
+			componentProps: {
+				order: this.order,
+			},
+		});
+		return modal.present();
 	}
 
 	private _unsubscribeAll() {

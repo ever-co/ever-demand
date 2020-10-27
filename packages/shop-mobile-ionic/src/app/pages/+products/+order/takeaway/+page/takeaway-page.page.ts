@@ -34,6 +34,7 @@ export class OrderTakeawayInfoPage implements OnInit, OnDestroy {
 	productsInfo: boolean;
 	paymentsEnabled: boolean = true;
 
+	private clearOrder = true;
 	private _pageSubscriptions: Subscription[] = [];
 	private readonly ngDestroy$ = new Subject<void>();
 
@@ -91,6 +92,11 @@ export class OrderTakeawayInfoPage implements OnInit, OnDestroy {
 		this.showCancelOrderInfoModal();
 	}
 
+	backToProducts() {
+		this.clearOrder = false;
+		this.router.navigateByUrl('/products', { skipLocationChange: true });
+	}
+
 	completeOrder() {
 		localStorage.removeItem('startDate');
 		localStorage.removeItem('endTime');
@@ -99,7 +105,7 @@ export class OrderTakeawayInfoPage implements OnInit, OnDestroy {
 	}
 
 	clearTimer() {
-		if (this.storeInfo) {
+		if (this.storeInfo && this.clearOrder) {
 			clearInterval(this.storeInfo.elapsedTime.timer);
 		}
 	}

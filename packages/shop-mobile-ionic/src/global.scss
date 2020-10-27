@@ -66,6 +66,10 @@ ion-backdrop {
 .order-info-modal {
 	display: block;
 
+	.modal-shadow {
+		display: none;
+	}
+
 	.modal-wrapper {
 		background: rgba(255, 255, 255, 0);
 	}
@@ -83,8 +87,20 @@ ion-backdrop {
 	}
 }
 
+.order-onfo-view-products {
+	width: 100%;
+	background: $brand;
+	padding: 8px;
+	color: white;
+	text-align: center;
+}
+
 .map-info-modal {
 	display: block;
+
+	.modal-shadow {
+		display: none;
+	}
 }
 
 ion-menu-button {

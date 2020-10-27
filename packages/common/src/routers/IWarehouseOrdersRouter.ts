@@ -24,6 +24,7 @@ export interface IOrderCreateInput {
 	products: IOrderCreateInputProduct[];
 
 	orderType?: DeliveryType;
+	waitForCompletion?: boolean;
 	options?: IWarehouseOrdersRouterCreateOptions;
 }
 
@@ -36,6 +37,13 @@ interface IWarehouseOrdersRouter {
 	create(createInput: IOrderCreateInput): Promise<Order>;
 
 	cancel(orderId: string): Promise<Order>;
+
+	addMore(
+		warehouseId: string,
+		userId: string,
+		orderId: string,
+		products: IOrderCreateInputProduct[]
+	): Promise<Order>;
 
 	createByProductType(
 		userId: string,

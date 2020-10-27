@@ -2,7 +2,7 @@
 	"name": "@ever-platform/common",
 	"description": "Ever Platform Shared Core",
 	"license": "AGPL-3.0",
-	"version": "0.3.24",
+	"version": "0.3.31",
 	"homepage": "https://ever.co",
 	"repository": {
 		"type": "git",

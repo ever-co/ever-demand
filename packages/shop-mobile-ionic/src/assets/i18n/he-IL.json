@@ -87,6 +87,7 @@
 				}
 			]
 		},
+		"VIEW_ORDER_PRODUCTS": "צפו במוצרי הזמנה",
 		"STATUSES": [
 			{
 				"TITLE": "אנחנו מכינים את ההזמנה!",
@@ -241,6 +242,7 @@
 	"FAILED": "נכשל",
 	"CANCELED": "מבוטל",
 	"IN_DELIVERY": "במשלוח",
+	"PENDING": "ממתין ל",
 	"COMPLETED": "הושלם",
 	"BROWSE": "לְדַפדֵף",
 	"ENGLISH": "אנגלית",

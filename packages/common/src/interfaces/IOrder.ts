@@ -54,6 +54,13 @@ export interface IOrderCreateObject extends DBCreateObject {
 	isCancelled?: boolean;
 
 	/**
+	 *
+	 * @type {boolean}
+	 * @memberof IOrderCreateObject
+	 */
+	waitForCompletion?: boolean;
+
+	/**
 	 * Indicate if Order was fully paid
 	 *
 	 * @type {boolean}

@@ -15,6 +15,7 @@ type Order {
 
 	isConfirmed: Boolean!
 	isCancelled: Boolean!
+	waitForCompletion: Boolean
 	isPaid: Boolean!
 	isCompleted: Boolean!
 	totalPrice: Float!

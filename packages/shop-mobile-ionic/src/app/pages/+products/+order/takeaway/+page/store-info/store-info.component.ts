@@ -15,6 +15,7 @@ import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus'
 import { Subject } from 'rxjs';
 import { Store } from 'app/services/store.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'e-cu-order-store-info',
@@ -53,7 +54,8 @@ export class OrderStoreInfo implements OnInit, OnDestroy {
 
 	constructor(
 		public modalController: ModalController,
-		private store: Store
+		private store: Store,
+		private router: Router
 	) {}
 
 	ngOnInit(): void {
@@ -87,6 +89,13 @@ export class OrderStoreInfo implements OnInit, OnDestroy {
 
 	get inStoreMode() {
 		return this.store.inStore;
+	}
+
+	async closePopup() {
+		localStorage.removeItem('startDate');
+		localStorage.removeItem('endTime');
+		this.store.orderId = null;
+		this.router.navigate(['/products']);
 	}
 
 	ngOnDestroy() {

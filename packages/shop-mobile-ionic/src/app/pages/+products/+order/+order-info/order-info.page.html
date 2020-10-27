@@ -1,4 +1,4 @@
-<e-cu-order-info-header (back)="undo()"></e-cu-order-info-header>
+<e-cu-order-info-header (back)="backToProducts()"></e-cu-order-info-header>
 
 <ion-content
 	class="info-container brand-dark"
@@ -8,16 +8,26 @@
 	<div *ngIf="modalOpen" class="blur-lighter"></div>
 	<div dir="{{ 'CURRENT_DIRECTION' | translate }}" class="all">
 		<div class="title">
-			<div
-				class="box box-brand text-align-center"
-				style="padding: 30px 20px;"
-			>
-				<h4 class="main-title">{{ byPopupStatuses.TITLE }}</h4>
+			<div class="box box-brand text-align-center">
+				<div class="box-top">
+					<h4 class="main-title mt-0">{{ byPopupStatuses.TITLE }}</h4>
 
-				<div style="font-size: 80%;">{{ byPopupStatuses.DETAILS }}</div>
+					<div style="font-size: 80%;">
+						{{ byPopupStatuses.DETAILS }}
+					</div>
 
-				<div style="font-size: 80%;" ng-if="!order?.isPaid">
-					{{ byPopupStatuses.NOT_PAID_NOTE }}
+					<div style="font-size: 80%;" ng-if="!order?.isPaid">
+						{{ byPopupStatuses.NOT_PAID_NOTE }}
+					</div>
+				</div>
+
+				<div class="order-onfo-view-products">
+					<i class="fa fa-shopping-basket"></i>
+					<span
+						(click)="showProductsModal()"
+						style="text-decoration: underline; margin-left: 5px;"
+						>{{'BUY_POPUP.VIEW_ORDER_PRODUCTS' | translate}}</span
+					>
 				</div>
 			</div>
 		</div>
