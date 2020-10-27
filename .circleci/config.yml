@@ -93,7 +93,8 @@ jobs:
             - checkout
             - node/install:
                   install-yarn: true
-                  node-version: latest
+                  node-version: node
+            - run: node --version
             - run: *install-deps
             - run: *install-yarn
             - run:
@@ -131,7 +132,8 @@ jobs:
             - checkout
             - node/install:
                   install-yarn: true
-                  node-version: latest
+                  node-version: node
+            - run: node --version
             - run: *install-deps
             - run: *install-yarn
             - run:
@@ -170,7 +172,8 @@ jobs:
             - checkout
             - node/install:
                   install-yarn: true
-                  node-version: latest
+                  node-version: node
+            - run: node --version
             - run: *install-deps
             - run: *install-yarn
             - run:
@@ -209,7 +212,8 @@ jobs:
             - checkout
             - node/install:
                   install-yarn: true
-                  node-version: latest
+                  node-version: node
+            - run: node --version
             - run: *install-deps
             - run:
                   name: Install Yarn
@@ -273,7 +277,8 @@ jobs:
             - checkout
             - node/install:
                   install-yarn: true
-                  node-version: latest
+                  node-version: node
+            - run: node --version
             - run: *install-deps
             - run:
                   name: Install Yarn
@@ -337,7 +342,8 @@ jobs:
             - checkout
             - node/install:
                   install-yarn: true
-                  node-version: latest
+                  node-version: node
+            - run: node --version
             - run: *install-deps
             - run: *install-yarn
             - run:
@@ -376,7 +382,8 @@ jobs:
             - checkout
             - node/install:
                   install-yarn: true
-                  node-version: latest
+                  node-version: node
+            - run: node --version
             - run: *install-deps
             - run:
                   name: Install Yarn
@@ -439,7 +446,8 @@ jobs:
         steps:
             - node/install:
                   install-yarn: true
-                  node-version: latest
+                  node-version: node
+            - run: node --version
             - run: *install-deps
             - run: *install-yarn
             - run: *install-chrome
@@ -468,7 +476,8 @@ jobs:
         steps:
             - node/install:
                   install-yarn: true
-                  node-version: latest
+                  node-version: node
+            - run: node --version
             - run: *install-deps
             - run: *install-yarn
             - run: *install-chrome
@@ -497,7 +506,8 @@ jobs:
         steps:
             - node/install:
                   install-yarn: true
-                  node-version: latest
+                  node-version: node
+            - run: node --version
             - run: *install-deps
             - run: *install-yarn
             - run: *install-chrome
@@ -526,7 +536,8 @@ jobs:
         steps:
             - node/install:
                   install-yarn: true
-                  node-version: latest
+                  node-version: node
+            - run: node --version
             - run: *install-deps
             - run: *install-yarn
             - run: *install-chrome
@@ -555,7 +566,8 @@ jobs:
         steps:
             - node/install:
                   install-yarn: true
-                  node-version: latest
+                  node-version: node
+            - run: node --version
             - run: *install-deps
             - run: *install-yarn
             - run: *install-chrome
