@@ -43,6 +43,11 @@ export class WarehouseOrdersRouter implements IWarehouseOrdersRouter {
 		return this._orderFactory(order);
 	}
 
+	async userComplete(orderId: string): Promise<Order> {
+		const order = await this.router.run<IOrder>('userComplete', orderId);
+		return this._orderFactory(order);
+	}
+
 	async addMore(
 		warehouseId: string,
 		userId: string,

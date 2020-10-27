@@ -197,6 +197,7 @@ export class WarehousesOrdersService
 		userId,
 		products,
 		orderType,
+		waitForCompletion,
 		options,
 	}: IOrderCreateInput): Promise<Order> {
 		if (!options) {
@@ -238,11 +239,28 @@ export class WarehousesOrdersService
 			warehouse: warehouseId,
 			orderNumber: await this.getNextOrderNumber(warehouseId),
 			orderType,
+			waitForCompletion: !!waitForCompletion,
 			...(options.autoConfirm ? { isConfirmed: true } : {}),
 		});
 
 		// we do all remove operations and notify about warehouse orders change after we remove products from warehouse
 		await this._updateProductCount(order, warehouseId);
+
+		return order;
+	}
+
+	/**
+	 * User complete order
+	 *
+	 * @param {string} orderId
+	 * @returns {Promise<Order>}
+	 * @memberof WarehousesOrdersService
+	 */
+	@asyncListener()
+	async userComplete(orderId): Promise<Order> {
+		const order = await this.ordersService.update(orderId, {
+			waitForCompletion: false,
+		});
 
 		return order;
 	}
@@ -613,6 +631,7 @@ export class WarehousesOrdersService
 export function getStoreOrdersFingObj(storeId: string, status: string) {
 	const findObj = {
 		isDeleted: { $eq: false },
+		waitForCompletion: { $eq: false },
 		warehouse: storeId,
 	};
 

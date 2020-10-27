@@ -25,6 +25,8 @@ import { OrdersService } from 'app/services/orders/orders.service';
 import OrderStatus from '@modules/server.common/enums/OrderStatus';
 import _ from 'lodash';
 import OrderProduct from '@modules/server.common/entities/OrderProduct';
+import { OrderInfoModalComponent } from './+order/common/order-info-modal/order-info-modal.component';
+import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 const initializeProductsNumber: number = 10;
 
 @Component({
@@ -65,6 +67,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 		private modalController: ModalController,
 		private geoLocationService: GeoLocationService,
 		private warehouseRouter: WarehouseRouter,
+		private orderRouter: OrderRouter,
 		public navCtrl: NavController,
 		private warehouseProductsService: WarehouseProductsService,
 		private ordersService: OrdersService
@@ -90,7 +93,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 	}
 
 	get hasPendingOrder() {
-		return !!this.store.orderId || !!this.store.shoppingCartData;
+		return !!this.store.orderId;
 	}
 
 	get isDeliveryType() {
@@ -117,97 +120,78 @@ export class ProductsPage implements OnInit, OnDestroy {
 			this.store.warehouseId = currentProduct.warehouseId;
 			this.router.navigateByUrl('/invite');
 		} else {
-			let orderCreateInput;
+			let orderCreateInput = {
+				warehouseId:
+					currentProduct.warehouseId || this.store.warehouseId,
+				products: [
+					{
+						count: 1,
+						productId: currentProduct.warehouseProduct
+							? currentProduct.warehouseProduct.product['id']
+							: currentProduct.product.id,
+					},
+				],
+				userId: this.store.userId,
+				orderType: this.store.deliveryType,
+				waitForCompletion: this.shoppingCartEnable,
+				options: { autoConfirm: true },
+			};
 
-			if (!!this.store.shoppingCartData) {
-				orderCreateInput = JSON.parse(this.store.shoppingCartData);
-
-				orderCreateInput.products.push({
-					count: 1,
-					productId: currentProduct.warehouseProduct
-						? currentProduct.warehouseProduct.product['id']
-						: currentProduct.product.id,
-				});
-			} else {
-				orderCreateInput = {
-					warehouseId:
-						currentProduct.warehouseId || this.store.warehouseId,
-					products: [
-						{
-							count: 1,
-							productId: currentProduct.warehouseProduct
-								? currentProduct.warehouseProduct.product['id']
-								: currentProduct.product.id,
-						},
-					],
-					userId: this.store.userId,
-					orderType: this.store.deliveryType,
-					options: { autoConfirm: true },
-				};
-			}
-
-			const oldPrice = orderCreateInput['totalPrice'];
-			const currentProductPrice = currentProduct.warehouseProduct.price;
-			orderCreateInput['totalPrice'] = oldPrice
-				? oldPrice + currentProductPrice
-				: currentProductPrice;
-
-			if (this.shoppingCartEnable) {
-				this.store.shoppingCartData = JSON.stringify(orderCreateInput);
-				this.changePendingOrder = !this.changePendingOrder;
-				this.products = this.products.filter(
-					(p) => p.warehouseId == orderCreateInput.warehouseId
-				);
-			} else {
-				// TODO delete totalPrice from orderCreateInput
-				try {
-					if (!this.hasPendingOrder) {
-						const order = await this.warehouseOrdersRouter.create(
-							orderCreateInput
-						);
-
-						this.store.orderId = order.id;
-
-						this.store.orderWarehouseId = order.warehouseId;
-
-						if (environment.ORDER_INFO_TYPE === 'popup') {
-							this.products = this.products.filter(
-								(p) =>
-									p.warehouseId ==
-									orderCreateInput.warehouseId
-							);
-						}
-					} else {
-						await this.warehouseOrdersRouter.addMore(
-							orderCreateInput.warehouseId,
-							orderCreateInput.userId,
-							this.store.orderId,
-							orderCreateInput.products
-						);
-						this.changePendingOrder = !this.changePendingOrder;
-					}
-
-					this.showOrderInfo();
-				} catch (error) {
-					const loadedProduct = this.products.find(
-						(p) =>
-							p.warehouseProduct.id ===
-							currentProduct.warehouseProduct.id
+			try {
+				if (!this.hasPendingOrder) {
+					const order = await this.warehouseOrdersRouter.create(
+						orderCreateInput
 					);
-					if (loadedProduct) {
-						loadedProduct['soldOut'] = true;
+
+					this.store.orderId = order.id;
+
+					this.store.orderWarehouseId = order.warehouseId;
+
+					if (environment.ORDER_INFO_TYPE === 'popup') {
+						this.products = this.products.filter(
+							(p) => p.warehouseId == orderCreateInput.warehouseId
+						);
 					}
+				} else {
+					await this.warehouseOrdersRouter.addMore(
+						orderCreateInput.warehouseId,
+						orderCreateInput.userId,
+						this.store.orderId,
+						orderCreateInput.products
+					);
+					this.changePendingOrder = !this.changePendingOrder;
+				}
+
+				this.showOrderInfo();
+			} catch (error) {
+				const loadedProduct = this.products.find(
+					(p) =>
+						p.warehouseProduct.id ===
+						currentProduct.warehouseProduct.id
+				);
+				if (loadedProduct) {
+					loadedProduct['soldOut'] = true;
 				}
 			}
 		}
 	}
 
-	showOrderInfo() {
-		if (environment.ORDER_INFO_TYPE === 'popup') {
-			this.showOrderInfoModal();
+	async showOrderInfo() {
+		if (this.shoppingCartEnable) {
+			const { waitForCompletion } = await this.ordersService
+				.getOrder(this.store.orderId, `{waitForCompletion}`)
+				.pipe(first())
+				.toPromise();
+
+			if (waitForCompletion) {
+				this.showProductsModal();
+				return;
+			}
 		}
 
-		if (environment.ORDER_INFO_TYPE === 'page') {
+		if (environment.ORDER_INFO_TYPE === 'popup') {
+			this.showOrderInfoModal();
+		} else if (environment.ORDER_INFO_TYPE === 'page') {
 			this.navCtrl.navigateRoot(
 				`${
 					this.store.deliveryType === DeliveryType.Delivery
@@ -215,6 +199,30 @@ export class ProductsPage implements OnInit, OnDestroy {
 						: '/order-info-takeaway'
 				}`
 			);
+		}
+	}
+
+	async showProductsModal(): Promise<void> {
+		const order = await this.orderRouter
+			.get(this.store.orderId, { populateWarehouse: true })
+			.pipe(first())
+			.toPromise();
+
+		const modal = await this.modalController.create({
+			component: OrderInfoModalComponent,
+			cssClass: 'products-info-modal',
+			componentProps: {
+				order,
+			},
+		});
+
+		await modal.present();
+
+		const { data } = await modal.onDidDismiss();
+
+		if (data) {
+			await this.warehouseOrdersRouter.userComplete(this.store.orderId);
+			this.showOrderInfo();
 		}
 	}
 
@@ -324,23 +332,17 @@ export class ProductsPage implements OnInit, OnDestroy {
 			this.hasPendingOrder &&
 			this.store.orderWarehouseId
 		) {
-			if (this.store.shoppingCartData) {
-				const { warehouseId } = JSON.parse(this.store.shoppingCartData);
+			const { status } = await this.ordersService
+				.getOrder(this.store.orderId, `{status}`)
+				.pipe(first())
+				.toPromise();
 
-				merchantIds = [warehouseId];
+			if (status < OrderStatus.Delivered) {
+				merchantIds = [this.store.orderWarehouseId];
 			} else {
-				const { status } = await this.ordersService
-					.getOrder(this.store.orderId, `{status}`)
-					.pipe(first())
-					.toPromise();
-
-				if (status < OrderStatus.Delivered) {
-					merchantIds = [this.store.orderWarehouseId];
-				} else {
-					localStorage.removeItem('startDate');
-					localStorage.removeItem('endTime');
-					this.store.orderId = null;
-				}
+				localStorage.removeItem('startDate');
+				localStorage.removeItem('endTime');
+				this.store.orderId = null;
 			}
 		}
 

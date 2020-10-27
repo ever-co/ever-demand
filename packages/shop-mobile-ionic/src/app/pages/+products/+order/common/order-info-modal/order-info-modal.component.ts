@@ -11,8 +11,8 @@ export class OrderInfoModalComponent implements OnDestroy {
 
 	constructor(public modalController: ModalController) {}
 
-	closeModal() {
-		this.modalController.dismiss();
+	closeModal(buy) {
+		this.modalController.dismiss(buy);
 	}
 
 	ngOnDestroy(): void {
