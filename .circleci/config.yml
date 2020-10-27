@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-    node: circleci/node@3.0.0
+    node: circleci/node@4.1.0
 
 aliases:
     - &install-gradle
@@ -88,12 +88,16 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/monorepo-root
         machine:
-            image: ubuntu-1604:202010-01
+            image: ubuntu-2004:202010-01
         steps:
             - checkout
-            - node/install:
-                  install-yarn: true
-                  node-version: node
+            - run:
+                  name: 'Install Node with NVM'
+                  command: |
+                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+                      nvm install v14
+                      nvm alias default v14
             - run: node --version
             - run: *install-deps
             - run: *install-yarn
@@ -127,12 +131,16 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/backend/api
         machine:
-            image: ubuntu-1604:202010-01
+            image: ubuntu-2004:202010-01
         steps:
             - checkout
-            - node/install:
-                  install-yarn: true
-                  node-version: node
+            - run:
+                  name: 'Install Node with NVM'
+                  command: |
+                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+                      nvm install v14
+                      nvm alias default v14
             - run: node --version
             - run: *install-deps
             - run: *install-yarn
@@ -167,12 +175,16 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/admin/website-angular
         machine:
-            image: ubuntu-1604:202010-01
+            image: ubuntu-2004:202010-01
         steps:
             - checkout
-            - node/install:
-                  install-yarn: true
-                  node-version: node
+            - run:
+                  name: 'Install Node with NVM'
+                  command: |
+                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+                      nvm install v14
+                      nvm alias default v14
             - run: node --version
             - run: *install-deps
             - run: *install-yarn
@@ -207,12 +219,16 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/carrier/mobile-ionic
         machine:
-            image: ubuntu-1604:202010-01
+            image: ubuntu-2004:202010-01
         steps:
             - checkout
-            - node/install:
-                  install-yarn: true
-                  node-version: node
+            - run:
+                  name: 'Install Node with NVM'
+                  command: |
+                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+                      nvm install v14
+                      nvm alias default v14
             - run: node --version
             - run: *install-deps
             - run:
@@ -272,12 +288,16 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/shop/mobile-ionic
         machine:
-            image: ubuntu-1604:202010-01
+            image: ubuntu-2004:202010-01
         steps:
             - checkout
-            - node/install:
-                  install-yarn: true
-                  node-version: node
+            - run:
+                  name: 'Install Node with NVM'
+                  command: |
+                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+                      nvm install v14
+                      nvm alias default v14
             - run: node --version
             - run: *install-deps
             - run:
@@ -337,12 +357,16 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/shop/website-angular
         machine:
-            image: ubuntu-1604:202010-01
+            image: ubuntu-2004:202010-01
         steps:
             - checkout
-            - node/install:
-                  install-yarn: true
-                  node-version: node
+            - run:
+                  name: 'Install Node with NVM'
+                  command: |
+                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+                      nvm install v14
+                      nvm alias default v14
             - run: node --version
             - run: *install-deps
             - run: *install-yarn
@@ -377,12 +401,16 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/merchant/tablet-ionic
         machine:
-            image: ubuntu-1604:202010-01
+            image: ubuntu-2004:202010-01
         steps:
             - checkout
-            - node/install:
-                  install-yarn: true
-                  node-version: node
+            - run:
+                  name: 'Install Node with NVM'
+                  command: |
+                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+                      nvm install v14
+                      nvm alias default v14
             - run: node --version
             - run: *install-deps
             - run:
@@ -442,11 +470,15 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/carrier/mobile-ionic
         machine:
-            image: ubuntu-1604:202010-01
+            image: ubuntu-2004:202010-01
         steps:
-            - node/install:
-                  install-yarn: true
-                  node-version: node
+            - run:
+                  name: 'Install Node with NVM'
+                  command: |
+                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+                      nvm install v14
+                      nvm alias default v14
             - run: node --version
             - run: *install-deps
             - run: *install-yarn
@@ -472,11 +504,15 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/shop/mobile-ionic
         machine:
-            image: ubuntu-1604:202010-01
+            image: ubuntu-2004:202010-01
         steps:
-            - node/install:
-                  install-yarn: true
-                  node-version: node
+            - run:
+                  name: 'Install Node with NVM'
+                  command: |
+                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+                      nvm install v14
+                      nvm alias default v14
             - run: node --version
             - run: *install-deps
             - run: *install-yarn
@@ -502,11 +538,15 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/shop/website-angular
         machine:
-            image: ubuntu-1604:202010-01
+            image: ubuntu-2004:202010-01
         steps:
-            - node/install:
-                  install-yarn: true
-                  node-version: node
+            - run:
+                  name: 'Install Node with NVM'
+                  command: |
+                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+                      nvm install v14
+                      nvm alias default v14
             - run: node --version
             - run: *install-deps
             - run: *install-yarn
@@ -532,11 +572,15 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/admin/website-angular
         machine:
-            image: ubuntu-1604:202010-01
+            image: ubuntu-2004:202010-01
         steps:
-            - node/install:
-                  install-yarn: true
-                  node-version: node
+            - run:
+                  name: 'Install Node with NVM'
+                  command: |
+                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+                      nvm install v14
+                      nvm alias default v14
             - run: node --version
             - run: *install-deps
             - run: *install-yarn
@@ -562,11 +606,15 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/backend/api
         machine:
-            image: ubuntu-1604:202010-01
+            image: ubuntu-2004:202010-01
         steps:
-            - node/install:
-                  install-yarn: true
-                  node-version: node
+            - run:
+                  name: 'Install Node with NVM'
+                  command: |
+                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+                      nvm install v14
+                      nvm alias default v14
             - run: node --version
             - run: *install-deps
             - run: *install-yarn
