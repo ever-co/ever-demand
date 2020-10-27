@@ -23,7 +23,10 @@ import { GeoLocationProductsService } from 'app/services/geo-location/geo-locati
 import { WarehouseProductsService } from 'app/services/merchants/warehouse-products';
 import { OrdersService } from 'app/services/orders/orders.service';
 import OrderStatus from '@modules/server.common/enums/OrderStatus';
-
+import _ from 'lodash';
+import OrderProduct from '@modules/server.common/entities/OrderProduct';
+import { OrderInfoModalComponent } from './+order/common/order-info-modal/order-info-modal.component';
+import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 const initializeProductsNumber: number = 10;
 
 @Component({
@@ -46,6 +49,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 	changePage: boolean;
 	isSearchOpened: boolean = false;
 	changePendingOrder = false;
+	shoppingCartEnable: boolean;
 
 	private readonly ngDestroy$ = new Subject<void>();
 	getOrdersGeoObj: { loc: ILocation };
@@ -63,11 +67,13 @@ export class ProductsPage implements OnInit, OnDestroy {
 		private modalController: ModalController,
 		private geoLocationService: GeoLocationService,
 		private warehouseRouter: WarehouseRouter,
+		private orderRouter: OrderRouter,
 		public navCtrl: NavController,
 		private warehouseProductsService: WarehouseProductsService,
 		private ordersService: OrdersService
 	) {
 		this.productsLocale = this.store.language || environment.DEFAULT_LOCALE;
+		this.shoppingCartEnable = environment.SHOPPING_CART;
 
 		if (this.inStore) {
 			this.store.deliveryType = DeliveryType.Takeaway;
@@ -114,7 +120,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 			this.store.warehouseId = currentProduct.warehouseId;
 			this.router.navigateByUrl('/invite');
 		} else {
-			const orderCreateInput: IOrderCreateInput = {
+			let orderCreateInput = {
 				warehouseId:
 					currentProduct.warehouseId || this.store.warehouseId,
 				products: [
@@ -127,6 +133,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 				],
 				userId: this.store.userId,
 				orderType: this.store.deliveryType,
+				waitForCompletion: this.shoppingCartEnable,
 				options: { autoConfirm: true },
 			};
 
@@ -169,12 +176,22 @@ export class ProductsPage implements OnInit, OnDestroy {
 		}
 	}
 
-	showOrderInfo() {
-		if (environment.ORDER_INFO_TYPE === 'popup') {
-			this.showOrderInfoModal();
+	async showOrderInfo() {
+		if (this.shoppingCartEnable) {
+			const { waitForCompletion } = await this.ordersService
+				.getOrder(this.store.orderId, `{waitForCompletion}`)
+				.pipe(first())
+				.toPromise();
+
+			if (waitForCompletion) {
+				this.showProductsModal();
+				return;
+			}
 		}
 
-		if (environment.ORDER_INFO_TYPE === 'page') {
+		if (environment.ORDER_INFO_TYPE === 'popup') {
+			this.showOrderInfoModal();
+		} else if (environment.ORDER_INFO_TYPE === 'page') {
 			this.navCtrl.navigateRoot(
 				`${
 					this.store.deliveryType === DeliveryType.Delivery
@@ -182,6 +199,30 @@ export class ProductsPage implements OnInit, OnDestroy {
 						: '/order-info-takeaway'
 				}`
 			);
+		}
+	}
+
+	async showProductsModal(): Promise<void> {
+		const order = await this.orderRouter
+			.get(this.store.orderId, { populateWarehouse: true })
+			.pipe(first())
+			.toPromise();
+
+		const modal = await this.modalController.create({
+			component: OrderInfoModalComponent,
+			cssClass: 'products-info-modal',
+			componentProps: {
+				order,
+			},
+		});
+
+		await modal.present();
+
+		const { data } = await modal.onDidDismiss();
+
+		if (data) {
+			await this.warehouseOrdersRouter.userComplete(this.store.orderId);
+			this.showOrderInfo();
 		}
 	}
 
@@ -295,6 +336,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 				.getOrder(this.store.orderId, `{status}`)
 				.pipe(first())
 				.toPromise();
+
 			if (status < OrderStatus.Delivered) {
 				merchantIds = [this.store.orderWarehouseId];
 			} else {

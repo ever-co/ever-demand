@@ -24,6 +24,7 @@ export interface IOrderCreateInput {
 	products: IOrderCreateInputProduct[];
 
 	orderType?: DeliveryType;
+	waitForCompletion?: boolean;
 	options?: IWarehouseOrdersRouterCreateOptions;
 }
 

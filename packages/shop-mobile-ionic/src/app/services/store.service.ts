@@ -209,6 +209,14 @@ export class Store {
 		localStorage.setItem('inStore', val);
 	}
 
+	get shoppingCartData() {
+		return localStorage.getItem('shoppingCartData');
+	}
+
+	set shoppingCartData(val: string) {
+		localStorage.setItem('shoppingCartData', val);
+	}
+
 	clearInStore() {
 		localStorage.removeItem('inStore');
 	}

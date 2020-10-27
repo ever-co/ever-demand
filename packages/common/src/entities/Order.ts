@@ -143,6 +143,16 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 	isCancelled: boolean;
 
 	/**
+	 * Is Order wait for completion by user
+	 *
+	 * @type {boolean}
+	 * @memberof Order
+	 */
+	@Types.Boolean(false)
+	@Column()
+	waitForCompletion: boolean;
+
+	/**
 	 * Is Order Paid by Customer
 	 *
 	 * @type {boolean}

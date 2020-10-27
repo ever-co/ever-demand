@@ -19,4 +19,18 @@
 		[showAll]="true"
 		[order]="order"
 	></e-cu-order-card>
+
+	<div class="actions">
+		<ion-button (click)="closeModal(true)" color="secondary" class="col-50">
+			<span>				
+				<span>{{ 'Confirm' | translate }}</span>
+			</span>
+		</ion-button>
+
+		<ion-button (click)="closeModal()" color="success" class="col-50">
+			<span>				
+				<span>{{ 'Add More' | translate }}</span>
+			</span>
+		</ion-button>
+	</div>
 </ion-content>

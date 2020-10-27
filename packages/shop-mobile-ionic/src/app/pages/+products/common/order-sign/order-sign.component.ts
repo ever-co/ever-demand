@@ -23,12 +23,17 @@ export class OrderSignComponent implements OnChanges {
 
 	async getPrice() {
 		const orderId = this.store.orderId;
+		const shoppingCartDataString = this.store.shoppingCartData;
 
 		if (orderId) {
 			const { totalPrice } = await this.ordersService
 				.getOrder(this.store.orderId, `{totalPrice}`)
 				.pipe(first())
 				.toPromise();
+
+			this.totalPrice = totalPrice;
+		} else if (shoppingCartDataString) {
+			const { totalPrice } = JSON.parse(this.store.shoppingCartData);
 
 			this.totalPrice = totalPrice;
 		}
