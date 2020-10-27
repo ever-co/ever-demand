@@ -16,6 +16,8 @@ aliases:
       name: Install Global Dependencies
       command: |
           sudo apt-get update
+          sudo apt install npm
+          sudo apt install build-essential
           sudo npm install --quiet node-gyp -g
           sudo npm install cordova -g
           sudo npm install ionic -g
@@ -231,9 +233,7 @@ jobs:
                       nvm alias default v14
             - run: node --version
             - run: *install-deps
-            - run:
-                  name: Install Yarn
-                  command: sudo npm install -g yarn --force
+            - run: *install-yarn
             - run: *install-android
             - run: *install-gradle
             - run:
@@ -300,9 +300,7 @@ jobs:
                       nvm alias default v14
             - run: node --version
             - run: *install-deps
-            - run:
-                  name: Install Yarn
-                  command: sudo npm install -g yarn --force
+            - run: *install-yarn
             - run: *install-android
             - run: *install-gradle
             - run:
@@ -413,9 +411,7 @@ jobs:
                       nvm alias default v14
             - run: node --version
             - run: *install-deps
-            - run:
-                  name: Install Yarn
-                  command: sudo npm install -g yarn --force
+            - run: *install-yarn
             - run: *install-android
             - run: *install-gradle
             - run:
