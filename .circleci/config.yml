@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-    node: circleci/node@3.0.0
+    node: circleci/node@4.1.0
 
 aliases:
     - &install-gradle
@@ -64,7 +64,7 @@ aliases:
           yes | sdkmanager "platform-tools" --sdk_root=${ANDROID_HOME} || true
           echo "Installing SDK platforms;android-28"
           yes | sdkmanager "platforms;android-28" --sdk_root=${ANDROID_HOME} || true
-          echo "Installing SDK platforms;android-29"          
+          echo "Installing SDK platforms;android-29"
           yes | sdkmanager "platforms;android-29" --sdk_root=${ANDROID_HOME} || true
           echo "Installing SDK build-tools;28.0.3"
           yes | sdkmanager "build-tools;28.0.3" --sdk_root=${ANDROID_HOME} || true
@@ -88,7 +88,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/monorepo-root
         machine:
-            image: ubuntu-1604:202004-01
+            image: ubuntu-2004:202010-01
         steps:
             - checkout
             - node/install:
@@ -126,7 +126,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/backend/api
         machine:
-            image: ubuntu-1604:202004-01
+            image: ubuntu-2004:202010-01
         steps:
             - checkout
             - node/install:
@@ -165,7 +165,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/admin/website-angular
         machine:
-            image: ubuntu-1604:202004-01
+            image: ubuntu-2004:202010-01
         steps:
             - checkout
             - node/install:
@@ -204,7 +204,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/carrier/mobile-ionic
         machine:
-            image: ubuntu-1604:202004-01
+            image: ubuntu-2004:202010-01
         steps:
             - checkout
             - node/install:
@@ -240,9 +240,9 @@ jobs:
             - run:
                   name: Add new android platform
                   command: |
-                      cd packages/carrier-mobile-ionic 
+                      cd packages/carrier-mobile-ionic
                       yarn ionic cordova platform add android@8.0.0 --noresources
-                      ionic config set -g telemetry true                    
+                      ionic config set -g telemetry true
                       # echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
                       # echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
             - run:
@@ -268,7 +268,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/shop/mobile-ionic
         machine:
-            image: ubuntu-1604:202004-01
+            image: ubuntu-2004:202010-01
         steps:
             - checkout
             - node/install:
@@ -306,7 +306,7 @@ jobs:
                   command: |
                       cd packages/shop-mobile-ionic
                       yarn ionic cordova platform add android@8.0.0 --noresources
-                      ionic config set -g telemetry true                    
+                      ionic config set -g telemetry true
                       # echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
                       # echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
             - run:
@@ -332,7 +332,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/shop/website-angular
         machine:
-            image: ubuntu-1604:202004-01
+            image: ubuntu-2004:202010-01
         steps:
             - checkout
             - node/install:
@@ -371,7 +371,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/merchant/tablet-ionic
         machine:
-            image: ubuntu-1604:202004-01
+            image: ubuntu-2004:202010-01
         steps:
             - checkout
             - node/install:
@@ -409,7 +409,7 @@ jobs:
                   command: |
                       cd packages/merchant-tablet-ionic
                       yarn ionic cordova platform add android@8.0.0 --noresources
-                      ionic config set -g telemetry true                    
+                      ionic config set -g telemetry true
                       # echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
                       # echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
             - run:
@@ -435,7 +435,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/carrier/mobile-ionic
         machine:
-            image: ubuntu-1604:202004-01
+            image: ubuntu-2004:202010-01
         steps:
             - node/install:
                   install-yarn: true
@@ -464,7 +464,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/shop/mobile-ionic
         machine:
-            image: ubuntu-1604:202004-01
+            image: ubuntu-2004:202010-01
         steps:
             - node/install:
                   install-yarn: true
@@ -493,7 +493,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/shop/website-angular
         machine:
-            image: ubuntu-1604:202004-01
+            image: ubuntu-2004:202010-01
         steps:
             - node/install:
                   install-yarn: true
@@ -522,7 +522,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/admin/website-angular
         machine:
-            image: ubuntu-1604:202004-01
+            image: ubuntu-2004:202010-01
         steps:
             - node/install:
                   install-yarn: true
@@ -551,7 +551,7 @@ jobs:
         <<: *defaults
         working_directory: /tmp/workspace/backend/api
         machine:
-            image: ubuntu-1604:202004-01
+            image: ubuntu-2004:202010-01
         steps:
             - node/install:
                   install-yarn: true
