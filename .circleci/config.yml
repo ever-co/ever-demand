@@ -58,7 +58,9 @@ aliases:
       name: Install Android SDK
       command: |
           sudo apt update
-          sudo apt install openjdk-8-jdk
+          sudo apt-get remove openjdk*
+          sudo apt-get clean
+          sudo apt-get install openjdk-8-jdk
           which java
           java -version
           sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java 1 --force
