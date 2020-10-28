@@ -4,6 +4,16 @@ orbs:
     node: circleci/node@4.1.0
 
 aliases:
+    - &install-node
+      name: Install Node with NPM using NVM
+      command: |
+          echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+          echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+          nvm install v14
+          nvm alias default v14
+          source $BASH_ENV
+          node --version
+
     - &install-gradle
       name: Install Gradle
       command: |
@@ -12,6 +22,7 @@ aliases:
           echo 'export GRADLE_HOME=/opt/gradle/gradle-4.0.2' >> $BASH_ENV
           echo 'export PATH=$PATH:/opt/gradle/gradle-4.0.2/bin' >> $BASH_ENV
           source $BASH_ENV
+
     - &install-deps
       name: Install Global Dependencies
       command: |
@@ -22,6 +33,7 @@ aliases:
           sudo npm install cordova -g
           sudo npm install ionic -g
           sudo npm config set python /usr/bin/python
+
     - &install-chrome
       name: Install Chrome
       command: |
@@ -30,6 +42,7 @@ aliases:
           sudo dpkg -i google-chrome.deb
           sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
           rm google-chrome.deb
+
     - &install-gradle
       name: Install Gradle
       command: |
@@ -38,6 +51,7 @@ aliases:
           echo 'export GRADLE_HOME=/opt/gradle/gradle-4.0.2' >> $BASH_ENV
           echo 'export PATH=$PATH:/opt/gradle/gradle-4.0.2/bin' >> $BASH_ENV
           source $BASH_ENV
+
     - &install-yarn
       name: Install Latest Yarn
       command: |
@@ -47,6 +61,8 @@ aliases:
           rm -rf ~/.yarn
           curl -o- -L https://yarnpkg.com/install.sh | bash
           echo 'export PATH="${PATH}:${HOME}/.yarn/bin:${HOME}/.config/yarn/global/node_modules/.bin"' >> $BASH_ENV
+          source $BASH_ENV
+
     - &install-android
       name: Install Android SDK
       command: |
@@ -82,9 +98,7 @@ aliases:
           echo "Updating SDK and accepting licenses"
           yes | sudo /usr/lib/android-sdk/cmdline-tools/tools/bin/sdkmanager --update --sdk_root=${ANDROID_HOME} || true
           echo $ANDROID_HOME
-          echo $JAVA_HOME
-          echo $PATH
-          which java
+          source $BASH_ENV
 
 defaults: &defaults
     # put here anything which is common between all jobs
@@ -102,14 +116,7 @@ jobs:
             image: ubuntu-2004:202010-01
         steps:
             - checkout
-            - run:
-                  name: 'Install Node with NVM'
-                  command: |
-                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-                      nvm install v14
-                      nvm alias default v14
-            - run: node --version
+            - run: *install-node
             - run: *install-deps
             - run: *install-yarn
             - run:
@@ -145,14 +152,7 @@ jobs:
             image: ubuntu-2004:202010-01
         steps:
             - checkout
-            - run:
-                  name: 'Install Node with NVM'
-                  command: |
-                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-                      nvm install v14
-                      nvm alias default v14
-            - run: node --version
+            - run: *install-node
             - run: *install-deps
             - run: *install-yarn
             - run:
@@ -189,14 +189,7 @@ jobs:
             image: ubuntu-2004:202010-01
         steps:
             - checkout
-            - run:
-                  name: 'Install Node with NVM'
-                  command: |
-                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-                      nvm install v14
-                      nvm alias default v14
-            - run: node --version
+            - run: *install-node
             - run: *install-deps
             - run: *install-yarn
             - run:
@@ -233,14 +226,7 @@ jobs:
             image: ubuntu-2004:202010-01
         steps:
             - checkout
-            - run:
-                  name: 'Install Node with NVM'
-                  command: |
-                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-                      nvm install v14
-                      nvm alias default v14
-            - run: node --version
+            - run: *install-node
             - run: *install-deps
             - run: *install-yarn
             - run: *install-android
@@ -300,14 +286,7 @@ jobs:
             image: ubuntu-2004:202010-01
         steps:
             - checkout
-            - run:
-                  name: 'Install Node with NVM'
-                  command: |
-                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-                      nvm install v14
-                      nvm alias default v14
-            - run: node --version
+            - run: *install-node
             - run: *install-deps
             - run: *install-yarn
             - run: *install-android
@@ -367,14 +346,7 @@ jobs:
             image: ubuntu-2004:202010-01
         steps:
             - checkout
-            - run:
-                  name: 'Install Node with NVM'
-                  command: |
-                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-                      nvm install v14
-                      nvm alias default v14
-            - run: node --version
+            - run: *install-node
             - run: *install-deps
             - run: *install-yarn
             - run:
@@ -411,14 +383,7 @@ jobs:
             image: ubuntu-2004:202010-01
         steps:
             - checkout
-            - run:
-                  name: 'Install Node with NVM'
-                  command: |
-                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-                      nvm install v14
-                      nvm alias default v14
-            - run: node --version
+            - run: *install-node
             - run: *install-deps
             - run: *install-yarn
             - run: *install-android
@@ -477,14 +442,7 @@ jobs:
         machine:
             image: ubuntu-2004:202010-01
         steps:
-            - run:
-                  name: 'Install Node with NVM'
-                  command: |
-                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-                      nvm install v14
-                      nvm alias default v14
-            - run: node --version
+            - run: *install-node
             - run: *install-deps
             - run: *install-yarn
             - run: *install-chrome
@@ -511,14 +469,7 @@ jobs:
         machine:
             image: ubuntu-2004:202010-01
         steps:
-            - run:
-                  name: 'Install Node with NVM'
-                  command: |
-                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-                      nvm install v14
-                      nvm alias default v14
-            - run: node --version
+            - run: *install-node
             - run: *install-deps
             - run: *install-yarn
             - run: *install-chrome
@@ -545,14 +496,7 @@ jobs:
         machine:
             image: ubuntu-2004:202010-01
         steps:
-            - run:
-                  name: 'Install Node with NVM'
-                  command: |
-                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-                      nvm install v14
-                      nvm alias default v14
-            - run: node --version
+            - run: *install-node
             - run: *install-deps
             - run: *install-yarn
             - run: *install-chrome
@@ -579,14 +523,7 @@ jobs:
         machine:
             image: ubuntu-2004:202010-01
         steps:
-            - run:
-                  name: 'Install Node with NVM'
-                  command: |
-                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-                      nvm install v14
-                      nvm alias default v14
-            - run: node --version
+            - run: *install-node
             - run: *install-deps
             - run: *install-yarn
             - run: *install-chrome
@@ -613,14 +550,7 @@ jobs:
         machine:
             image: ubuntu-2004:202010-01
         steps:
-            - run:
-                  name: 'Install Node with NVM'
-                  command: |
-                      echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-                      echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-                      nvm install v14
-                      nvm alias default v14
-            - run: node --version
+            - run: *install-node
             - run: *install-deps
             - run: *install-yarn
             - run: *install-chrome
