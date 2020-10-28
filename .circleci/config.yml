@@ -43,15 +43,6 @@ aliases:
           sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
           rm google-chrome.deb
 
-    - &install-gradle
-      name: Install Gradle
-      command: |
-          wget https://services.gradle.org/distributions/gradle-4.0.2-bin.zip -P /tmp
-          sudo unzip -d /opt/gradle /tmp/gradle-*.zip
-          echo 'export GRADLE_HOME=/opt/gradle/gradle-4.0.2' >> $BASH_ENV
-          echo 'export PATH=$PATH:/opt/gradle/gradle-4.0.2/bin' >> $BASH_ENV
-          source $BASH_ENV
-
     - &install-yarn
       name: Install Latest Yarn
       command: |
@@ -69,12 +60,14 @@ aliases:
           sudo apt update
           sudo apt install openjdk-8-jdk
           which java
+          java -version
           echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> $BASH_ENV
-          echo $JAVA_HOME
           echo 'export PATH=$PATH:$JAVA_HOME/bin' >> $BASH_ENV
-          echo $PATH
+          source $BASH_ENV
           sudo apt install android-sdk
+          echo 'export ANDROID_SDK_ROOT="/usr/lib/android-sdk"' >> $BASH_ENV
           echo 'export ANDROID_HOME="/usr/lib/android-sdk"' >> $BASH_ENV
+          source $BASH_ENV
           wget https://dl.google.com/android/repository/commandlinetools-linux-6609375_latest.zip
           unzip commandlinetools-linux-6609375_latest.zip -d cmdline-tools
           sudo mv cmdline-tools $ANDROID_HOME/
@@ -97,8 +90,11 @@ aliases:
           yes | sdkmanager --licenses --sdk_root=${ANDROID_HOME} || true
           echo "Updating SDK and accepting licenses"
           yes | sudo /usr/lib/android-sdk/cmdline-tools/tools/bin/sdkmanager --update --sdk_root=${ANDROID_HOME} || true
-          echo $ANDROID_HOME
           source $BASH_ENV
+          echo $JAVA_HOME
+          echo $PATH
+          echo $ANDROID_HOME
+          echo $ANDROID_SDK_ROOT
 
 defaults: &defaults
     # put here anything which is common between all jobs
@@ -106,6 +102,7 @@ defaults: &defaults
     working_directory: /tmp/workspace
     environment:
         JVM_OPTS: -Xmx4096m
+        JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
         ANDROID_HOME: /usr/lib/android-sdk
 
 jobs:
