@@ -52,17 +52,17 @@ aliases:
       command: |
           sudo apt update
           sudo apt install openjdk-8-jdk
-          echo 'export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"' >> $BASH_ENV
-          echo 'export PATH="${PATH}:${JAVA_HOME}/bin"' >> $BASH_ENV
-          echo $JAVA_HOME
-          echo $PATH
           which java
+          echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> $BASH_ENV
+          echo $JAVA_HOME
+          echo 'export PATH=$PATH:$JAVA_HOME/bin' >> $BASH_ENV
+          echo $PATH
           sudo apt install android-sdk
           echo 'export ANDROID_HOME="/usr/lib/android-sdk"' >> $BASH_ENV
           wget https://dl.google.com/android/repository/commandlinetools-linux-6609375_latest.zip
           unzip commandlinetools-linux-6609375_latest.zip -d cmdline-tools
           sudo mv cmdline-tools $ANDROID_HOME/
-          echo 'export PATH=${ANDROID_HOME}/cmdline-tools/tools/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools:${PATH}"' >> $BASH_ENV
+          echo 'export PATH=$ANDROID_HOME/cmdline-tools/tools/bin:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH' >> $BASH_ENV
           mkdir ~/.android && echo '### User Sources for Android SDK Manager' > ~/.android/repositories.cfg
           sudo chown -R $(whoami) $ANDROID_HOME
           echo "Installing SDK tools"
