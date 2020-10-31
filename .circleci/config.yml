@@ -136,6 +136,7 @@ jobs:
                       - yarn-packages-monorepo-root-{{ checksum "yarn.lock" }}
             - run:
                   name: Run Bootstrap
+                  no_output_timeout: 60m
                   command: yarn bootstrap
             - run:
                   name: Run Build All
@@ -172,6 +173,7 @@ jobs:
                       - yarn-packages-backend-api-{{ checksum "yarn.lock" }}
             - run:
                   name: Run Bootstrap
+                  no_output_timeout: 60m
                   command: yarn bootstrap
             - run:
                   name: Run Build Common Packages
@@ -209,6 +211,7 @@ jobs:
                       - yarn-packages-admin-website-angular-{{ checksum "yarn.lock" }}
             - run:
                   name: Run Bootstrap
+                  no_output_timeout: 60m
                   command: yarn bootstrap
             - run:
                   name: Run Build Common Packages
@@ -248,6 +251,7 @@ jobs:
                       - yarn-packages-carrier-mobile-ionic-{{ checksum "yarn.lock" }}
             - run:
                   name: Run Bootstrap
+                  no_output_timeout: 60m
                   command: yarn bootstrap
             - run:
                   name: Run Build Common Packages
@@ -308,6 +312,7 @@ jobs:
                       - yarn-packages-shop-mobile-ionic-{{ checksum "yarn.lock" }}
             - run:
                   name: Run Bootstrap
+                  no_output_timeout: 60m
                   command: yarn bootstrap
             - run:
                   name: Run Build Common Packages
@@ -366,6 +371,7 @@ jobs:
                       - yarn-packages-shop-website-angular-{{ checksum "yarn.lock" }}
             - run:
                   name: Run Bootstrap
+                  no_output_timeout: 60m
                   command: yarn bootstrap
             - run:
                   name: Run Build Common Packages
@@ -405,6 +411,7 @@ jobs:
                       - yarn-packages-merchant-tablet-ionic-{{ checksum "yarn.lock" }}
             - run:
                   name: Run Bootstrap
+                  no_output_timeout: 60m
                   command: yarn bootstrap
             - run:
                   name: Run Build Common Packages
