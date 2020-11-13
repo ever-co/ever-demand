@@ -1,3 +1,5 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
 .product-image {
 	padding-left: 1px;
 	padding-right: 10px;
@@ -70,6 +72,19 @@
 	right: 0px;
 }
 
+.product-remove {
+	position: absolute;
+	bottom: 15px;
+	font-size: 18px;
+	display: flex;
+	color: $assertive-lighted;
+
+	&-out {
+		opacity: 0;
+		transition: 0.2s all ease-in-out;
+	}
+}
+
 .rtl {
 	text-align: right;
 }
@@ -104,11 +119,13 @@
 	position: relative;
 	padding: 0 !important;
 
-	.test {
+	&-row {
 		font-size: 0.8em;
 		display: flex;
 		align-items: center;
 		justify-content: space-around;
+		padding-bottom: 15px;
+		border-bottom: 1px solid #ccc;
 
 		width: 100%;
 	}
