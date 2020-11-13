@@ -313,6 +313,7 @@ export class WarehousesOrdersService
 			products: newProducts,
 		});
 
+		// TODO investigate why bellow function throw error when adding new product
 		await this._updateProductCount(order, warehouseId);
 
 		return order;

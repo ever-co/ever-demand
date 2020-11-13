@@ -38,4 +38,8 @@ export class OrderCardComponent {
 	}
 
 	notDisplayedProductsAmount: number;
+
+	updateOrderData(order) {
+		this._order.products = order.products;
+	}
 }

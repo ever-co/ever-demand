@@ -1,5 +1,8 @@
 <ion-card>
-	<e-cu-order [order]="order"></e-cu-order>
+	<e-cu-order
+		[order]="order"
+		(orderChange)="updateOrderData($event)"
+	></e-cu-order>
 
 	<div class="actions text-center" *ngIf="notDisplayedProductsAmount > 0">
 		<a [routerLink]="['orders-history', order.id]">

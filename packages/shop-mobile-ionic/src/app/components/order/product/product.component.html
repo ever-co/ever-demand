@@ -1,5 +1,5 @@
 <div class="container">
-	<div class="test">
+	<div class="container-row">
 		<section class="product-image">
 			<ion-img [src]="image.url" [ngClass]="imageClass"></ion-img>
 		</section>
@@ -34,5 +34,17 @@
 		[ngClass]="document.documentElement.dir === 'rtl' ? 'ltr' : 'rtl'"
 	>
 		${{ price }}
+	</section>
+
+	<section
+		class="product-remove"
+		[ngClass]="{
+			ltr: document.documentElement.dir === 'rtl',
+			rtl: document.documentElement.dir !== 'rtl',
+			'product-remove-out': isRemove
+		}"
+		(click)="onRemove()"
+	>
+		<i class="fa fa-trash"></i>
 	</section>
 </div>

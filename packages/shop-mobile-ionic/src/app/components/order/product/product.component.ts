@@ -3,6 +3,8 @@ import {
 	Component,
 	Input,
 	Inject,
+	Output,
+	EventEmitter,
 } from '@angular/core';
 import { ProductLocalesService } from '../../../services/product-locales.service';
 import OrderProduct from '@modules/server.common/entities/OrderProduct';
@@ -16,12 +18,17 @@ import { DOCUMENT } from '@angular/common';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductComponent {
+	isRemove: boolean;
+
 	private static MAX_DESCRIPTION_LENGTH: number = 53;
 
 	@Input()
 	orderProduct: OrderProduct;
 	@Input()
 	showDetailsButton: boolean = false;
+
+	@Output()
+	remove = new EventEmitter<OrderProduct>();
 
 	constructor(
 		@Inject(DOCUMENT) public document: Document,
@@ -103,5 +110,10 @@ export class ProductComponent {
 			this.showDetailsButton &&
 			(this.image.orientation !== 1 || isTwoRowsDesc)
 		);
+	}
+
+	onRemove() {
+		this.isRemove = true;
+		this.remove.emit(this.orderProduct);
 	}
 }
