@@ -23,7 +23,22 @@
 			</div>
 
 			<div *ngIf="inProcessing" class="comment">
-				<textarea placeholder="Comment"></textarea>
+				<span
+					*ngIf="hasComment && !showAddComment"
+					class="comment-text"
+					>{{ orderProduct.comment }}</span
+				>
+				<span
+					*ngIf="!hasComment && !showAddComment"
+					(click)="toggleCommentBox()"
+					class="comment-action comment-action-text"
+					>Add Comment</span
+				>
+				<textarea
+					*ngIf="showAddComment"
+					(change)="addComment($event)"
+					placeholder="Comment"
+				></textarea>
 			</div>
 		</section>
 	</div>

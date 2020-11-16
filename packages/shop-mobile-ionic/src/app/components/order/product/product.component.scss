@@ -5,7 +5,7 @@
 	padding-right: 10px;
 	text-align: center;
 
-	&-align-star {
+	&-align-start {
 		align-self: start;
 		margin-top: 3px;
 	}
@@ -67,6 +67,13 @@
 
 	.comment {
 		margin-top: 3px;
+
+		&-action {
+			color: #488aff;
+			&-text {
+				text-decoration: underline;
+			}
+		}
 
 		textarea {
 			width: 200px;

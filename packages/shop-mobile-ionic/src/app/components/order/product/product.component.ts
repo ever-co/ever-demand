@@ -10,6 +10,7 @@ import { ProductLocalesService } from '../../../services/product-locales.service
 import OrderProduct from '@modules/server.common/entities/OrderProduct';
 import { Store } from '../../../services/store.service';
 import { DOCUMENT } from '@angular/common';
+import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 
 @Component({
 	selector: 'e-cu-order-product',
@@ -19,11 +20,14 @@ import { DOCUMENT } from '@angular/common';
 })
 export class ProductComponent {
 	isRemove: boolean;
+	showAddComment = false;
 
 	private static MAX_DESCRIPTION_LENGTH: number = 53;
 
 	@Input()
 	orderProduct: OrderProduct;
+	@Input()
+	orderId: string;
 	@Input()
 	showDetailsButton: boolean = false;
 
@@ -36,6 +40,7 @@ export class ProductComponent {
 	constructor(
 		@Inject(DOCUMENT) public document: Document,
 		private readonly translateProductLocales: ProductLocalesService,
+		private orderRouter: OrderRouter,
 		private readonly store: Store
 	) {}
 
@@ -56,6 +61,10 @@ export class ProductComponent {
 					0,
 					ProductComponent.MAX_DESCRIPTION_LENGTH - 3
 			  ) + '...';
+	}
+
+	get hasComment() {
+		return !!this.orderProduct.comment;
 	}
 
 	get image() {
@@ -118,5 +127,23 @@ export class ProductComponent {
 	onRemove() {
 		this.isRemove = true;
 		this.remove.emit(this.orderProduct);
+	}
+
+	async addComment(e) {
+		const comment = e.target.value;
+		const productId = this.orderProduct.id;
+		const order = await this.orderRouter.addProductComment(
+			this.orderId,
+			productId,
+			comment
+		);
+		this.orderProduct = order.products.find(
+			(p) => p.id == this.orderProduct.id
+		);
+		this.toggleCommentBox();
+	}
+
+	toggleCommentBox() {
+		this.showAddComment = !this.showAddComment;
 	}
 }
