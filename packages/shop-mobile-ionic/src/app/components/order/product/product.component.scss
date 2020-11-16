@@ -75,6 +75,18 @@
 			}
 		}
 
+		&-text {
+			display: flex;
+			align-items: center;
+			color: #000000;
+			font-size: 13px;
+			i {
+				margin-left: 5px;
+				color: #488aff;
+				font-size: 18px;
+			}
+		}
+
 		textarea {
 			width: 200px;
 		}

@@ -22,6 +22,9 @@ export class ProductComponent {
 	isRemove: boolean;
 	showAddComment = false;
 
+	@Output()
+	onAddComment = new EventEmitter<{ comment: string; productId: string }>();
+
 	private static MAX_DESCRIPTION_LENGTH: number = 53;
 
 	@Input()
@@ -140,10 +143,11 @@ export class ProductComponent {
 		this.orderProduct = order.products.find(
 			(p) => p.id == this.orderProduct.id
 		);
-		this.toggleCommentBox();
+
+		this.showAddComment = false;
 	}
 
-	toggleCommentBox() {
-		this.showAddComment = !this.showAddComment;
+	showCommentBox() {
+		this.showAddComment = true;
 	}
 }

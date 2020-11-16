@@ -23,22 +23,30 @@
 			</div>
 
 			<div *ngIf="inProcessing" class="comment">
-				<span
-					*ngIf="hasComment && !showAddComment"
-					class="comment-text"
-					>{{ orderProduct.comment }}</span
-				>
+				<span *ngIf="hasComment && !showAddComment" class="comment-text"
+					>{{ orderProduct.comment }}
+					<i
+						class="fa fa-pencil-square-o"
+						(click)="showCommentBox()"
+					></i>
+				</span>
 				<span
 					*ngIf="!hasComment && !showAddComment"
-					(click)="toggleCommentBox()"
+					(click)="showCommentBox()"
 					class="comment-action comment-action-text"
 					>Add Comment</span
 				>
 				<textarea
 					*ngIf="showAddComment"
-					(change)="addComment($event)"
+					(change)="
+						onAddComment.emit({
+							comment: $event.target.value,
+							productId: orderProduct.id
+						})
+					"
 					placeholder="Comment"
-				></textarea>
+					>{{ orderProduct.comment }}</textarea
+				>
 			</div>
 		</section>
 	</div>

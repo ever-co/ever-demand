@@ -626,9 +626,16 @@ export class OrdersService extends DBService<Order>
 
 		orderProduct.comment = comment;
 
-		return this.update(orderId, {
+		await this.update(orderId, {
 			products: order.products,
 		});
+
+		return this.get(orderId, {
+			populateWarehouse: true,
+			populateCarrier: true,
+		})
+			.pipe(first())
+			.toPromise();
 	}
 
 	@asyncListener()
