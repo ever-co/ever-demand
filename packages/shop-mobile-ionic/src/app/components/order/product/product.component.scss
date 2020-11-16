@@ -5,6 +5,11 @@
 	padding-right: 10px;
 	text-align: center;
 
+	&-align-start {
+		align-self: start;
+		margin-top: 3px;
+	}
+
 	ion-img {
 		&.square {
 			width: 55px;
@@ -57,6 +62,33 @@
 		a {
 			color: #000000;
 			font-size: 13px;
+		}
+	}
+
+	.comment {
+		margin-top: 3px;
+
+		&-action {
+			color: #488aff;
+			&-text {
+				text-decoration: underline;
+			}
+		}
+
+		&-text {
+			display: flex;
+			align-items: center;
+			color: #000000;
+			font-size: 13px;
+			i {
+				margin-left: 5px;
+				color: #488aff;
+				font-size: 18px;
+			}
+		}
+
+		textarea {
+			width: 200px;
 		}
 	}
 }

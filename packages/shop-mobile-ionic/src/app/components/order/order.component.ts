@@ -49,6 +49,9 @@ export class OrderComponent {
 	@Output()
 	orderChange = new EventEmitter<Order>();
 
+	@Output()
+	onAddComment = new EventEmitter<{ comment: string; productId: string }>();
+
 	get id() {
 		return this.order.id;
 	}

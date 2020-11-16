@@ -52,7 +52,10 @@
 		<e-cu-order-product
 			[orderProduct]="product"
 			[showDetailsButton]="showDetailsButton"
+			[inProcessing]="inProcessing"
+			[orderId]="order.id"
 			(remove)="removeProduct(order._id, $event)"
+			(onAddComment)="onAddComment.emit($event)"
 		></e-cu-order-product>
 	</div>
 </div>

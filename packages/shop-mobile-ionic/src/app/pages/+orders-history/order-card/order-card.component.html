@@ -2,6 +2,7 @@
 	<e-cu-order
 		[order]="order"
 		(orderChange)="updateOrderData($event)"
+		(onAddComment)="addComment($event)"
 	></e-cu-order>
 
 	<div class="actions text-center" *ngIf="notDisplayedProductsAmount > 0">
