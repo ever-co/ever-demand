@@ -5,6 +5,11 @@
 	padding-right: 10px;
 	text-align: center;
 
+	&-align-star {
+		align-self: start;
+		margin-top: 3px;
+	}
+
 	ion-img {
 		&.square {
 			width: 55px;
@@ -57,6 +62,14 @@
 		a {
 			color: #000000;
 			font-size: 13px;
+		}
+	}
+
+	.comment {
+		margin-top: 3px;
+
+		textarea {
+			width: 200px;
 		}
 	}
 }

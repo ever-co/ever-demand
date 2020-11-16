@@ -27,6 +27,9 @@ export class ProductComponent {
 	@Input()
 	showDetailsButton: boolean = false;
 
+	@Input()
+	inProcessing: boolean = false;
+
 	@Output()
 	remove = new EventEmitter<OrderProduct>();
 

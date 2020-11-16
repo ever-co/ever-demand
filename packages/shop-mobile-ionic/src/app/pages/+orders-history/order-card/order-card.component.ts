@@ -25,7 +25,8 @@ export class OrderCardComponent {
 	@Input()
 	set order(order: Order) {
 		// use type annotation
-		this._order = { ...order } as Order;
+		const isOrderType = order instanceof Order;
+		this._order = isOrderType ? new Order(order) : ({ ...order } as Order);
 
 		if (!this.showAll) {
 			this._order.products = order.products.slice(
