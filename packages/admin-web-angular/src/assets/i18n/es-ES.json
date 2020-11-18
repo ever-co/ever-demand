@@ -29,7 +29,8 @@
 				"NAME": "Nombre",
 				"QTY": "Cantidad",
 				"PRICE": "Precio",
-				"IMAGE": "Imagen"
+				"IMAGE": "Imagen",
+				"COMMENT": "Comentario"
 			}
 		},
 		"ORDER_SIDEBAR": {

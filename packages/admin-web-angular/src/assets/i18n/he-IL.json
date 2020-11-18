@@ -28,7 +28,8 @@
 				"NAME": "שם",
 				"QTY": "QTY",
 				"PRICE": "מחיר",
-				"IMAGE": "תמונה"
+				"IMAGE": "תמונה",
+				"COMMENT": "תגובה"
 			}
 		},
 		"ORDER_SIDEBAR": {
