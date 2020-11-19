@@ -19,6 +19,9 @@
 			<div class="name">
 				{{ productLocalesService.getTranslate(product.product.title) }}
 			</div>
+			<div *ngIf="!!product.comment" class="comment">
+				<div class="comment-text">{{ product.comment }}</div>
+			</div>
 		</div>
 	</div>
 </div>

@@ -82,6 +82,8 @@ export class OrderProductsComponent implements OnInit, OnChanges, OnDestroy {
 	async loadDataSmartTable() {
 		const loadData = () => {
 			if (this.order) {
+				console.error();
+
 				const productsVM = this.order.products.map(
 					(product: OrderProduct) => {
 						return {
@@ -89,6 +91,7 @@ export class OrderProductsComponent implements OnInit, OnChanges, OnDestroy {
 							price: product.price,
 							qty: product.count,
 							product: product.product,
+							comment: product.comment,
 							image: this._productLocalesService.getTranslate(
 								product.product['images']
 							),
@@ -238,10 +241,11 @@ export class OrderProductsComponent implements OnInit, OnChanges, OnDestroy {
 			getTranslate('IMAGE'),
 			getTranslate('NAME'),
 			getTranslate('QTY'),
-			getTranslate('PRICE')
+			getTranslate('PRICE'),
+			getTranslate('COMMENT')
 		)
 			.pipe(takeUntil(this._ngDestroy$))
-			.subscribe(([id, image, name, qty, price]) => {
+			.subscribe(([id, image, name, qty, price, comment]) => {
 				this.settingsSmartTable = {
 					actions: false,
 					selectMode: 'multi',
@@ -250,6 +254,10 @@ export class OrderProductsComponent implements OnInit, OnChanges, OnDestroy {
 							title: name,
 							renderComponent: ProductTitleRedirectComponent,
 							type: 'custom',
+						},
+						comment: {
+							title: comment,
+							width: '15%',
 						},
 						qty: {
 							title: qty,

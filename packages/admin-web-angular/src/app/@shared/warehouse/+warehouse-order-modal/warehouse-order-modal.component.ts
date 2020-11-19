@@ -17,6 +17,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { takeUntil } from 'rxjs/operators';
+import { MakeOrderCommentComponent } from './make-order-comment.component';
 
 @Component({
 	selector: 'ea-warehouse-order-modal',
@@ -78,6 +79,7 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 					PRICE: `${basePrefix}.${smartTableTitlesPrefix}.PRICE`,
 					AVAILABLE: `${basePrefix}.${smartTableTitlesPrefix}.AVAILABLE`,
 					AMOUNT: `${basePrefix}.${smartTableTitlesPrefix}.AMOUNT`,
+					COMMENT: `${basePrefix}.${smartTableTitlesPrefix}.COMMENT`,
 				},
 			},
 		};
@@ -141,6 +143,7 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 				return {
 					productId: wp.productId,
 					count: 0,
+					comment: '',
 				};
 			}
 		);
@@ -149,7 +152,7 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 			(wp: WarehouseProduct) => {
 				return {
 					img: `
-						<img src="${this._getTranslate(wp.product['images'])}" height="68px"/>
+						<img src="${this._getTranslate(wp.product['images'])}" height="50px"/>
 					`,
 					product: `
 						<span class="float-left">${this._getTranslate(wp.product['title'])}</span>
@@ -159,6 +162,7 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 						<div class="badge badge-pill badge-secondary">${wp.count}</div>
 					`,
 					amount: { productId: wp.productId, available: wp.count },
+					comment: { productId: wp.productId },
 				};
 			}
 		);
@@ -214,6 +218,10 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 			this.TRANSLATE_PREFIXES.SMART_TABLE.TITLES.AMOUNT
 		);
 
+		const comment = this._translate(
+			this.TRANSLATE_PREFIXES.SMART_TABLE.TITLES.COMMENT
+		);
+
 		this.settingsSmartTable = {
 			actions: false,
 			pager: { perPage: 5 },
@@ -267,6 +275,27 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 										this.canOrder
 									);
 								}
+							});
+					},
+				},
+
+				comment: {
+					title: comment,
+					filter: false,
+					type: 'custom',
+					renderComponent: MakeOrderCommentComponent,
+					onComponentInitFunction: (
+						childInstance: MakeOrderCommentComponent
+					) => {
+						childInstance.comment
+							.pipe(takeUntil(this._ngDestroy$))
+							.subscribe((comment) => {
+								const wProduct = this._orderProducts.find(
+									({ productId }) =>
+										productId === childInstance.productId
+								);
+
+								wProduct.comment = comment;
 							});
 					},
 				},

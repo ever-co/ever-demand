@@ -575,6 +575,7 @@ export class WarehousesOrdersService
 				}
 				return {
 					count: args.count,
+					comment: args.comment,
 					price: wProduct.price,
 					initialPrice: wProduct.initialPrice,
 					deliveryTimeMin: wProduct.deliveryTimeMin,

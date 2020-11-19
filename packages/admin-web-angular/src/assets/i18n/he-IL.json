@@ -28,7 +28,8 @@
 				"NAME": "שם",
 				"QTY": "QTY",
 				"PRICE": "מחיר",
-				"IMAGE": "תמונה"
+				"IMAGE": "תמונה",
+				"COMMENT": "תגובה"
 			}
 		},
 		"ORDER_SIDEBAR": {
@@ -980,7 +981,8 @@
 						"PRODUCT": "מוצר",
 						"PRICE": "מחיר",
 						"AVAILABLE": "זמין",
-						"AMOUNT": "כמות"
+						"AMOUNT": "כמות",
+						"COMMENT": "תגובה"
 					}
 				}
 			}
