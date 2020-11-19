@@ -28,7 +28,8 @@
 				"NAME": "Name",
 				"QTY": "QTY",
 				"PRICE": "Price",
-				"IMAGE": "Image"
+				"IMAGE": "Image",
+				"COMMENT": "Comment"
 			}
 		},
 		"ORDER_SIDEBAR": {
@@ -994,7 +995,8 @@
 						"PRODUCT": "Product",
 						"PRICE": "Price",
 						"AVAILABLE": "Available",
-						"AMOUNT": "Amount"
+						"AMOUNT": "Amount",
+						"COMMENT": "Comment"
 					}
 				}
 			}
