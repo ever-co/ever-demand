@@ -996,7 +996,8 @@
 						"PRODUCT": "Product",
 						"PRICE": "Price",
 						"AVAILABLE": "Available",
-						"AMOUNT": "Amount"
+						"AMOUNT": "Amount",
+						"COMMENT": "Comment"
 					}
 				}
 			}
