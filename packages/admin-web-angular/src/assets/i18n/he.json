@@ -29,7 +29,7 @@
 				"QTY": "QTY",
 				"PRICE": "Price",
 				"IMAGE": "Image",
-				"COMMENT": "תגובה"
+				"COMMENT": "Comment"
 			}
 		},
 		"ORDER_SIDEBAR": {
@@ -996,7 +996,7 @@
 						"PRICE": "Price",
 						"AVAILABLE": "Available",
 						"AMOUNT": "Amount",
-						"COMMENT": "תגובה"
+						"COMMENT": "Comment"
 					}
 				}
 			}
