@@ -1,15 +1,26 @@
 <div class="order-page">
 	<div [hidden]="areIssues" dir="{{ 'CURRENT_DIRECTION' | translate }}">
-		<div
-			class="box box-brand text-align-center"
-			style="padding: 20px 20px;"
-		>
-			<h4 class="main-title">{{ byPopupStatuses.TITLE }}</h4>
+		<div class="box box-brand text-align-center">
+			<span (click)="backToProducts()" class="box-close">
+				<i class="fa fa-times"></i>
+			</span>
+			<div class="box-top">
+				<h4 class="main-title mt-0">{{ byPopupStatuses.TITLE }}</h4>
 
-			<div style="font-size: 80%;">{{ byPopupStatuses.DETAILS }}</div>
+				<div style="font-size: 80%;">{{ byPopupStatuses.DETAILS }}</div>
 
-			<div style="font-size: 80%;" ng-if="!order?.isPaid">
-				{{ byPopupStatuses.NOT_PAID_NOTE }}
+				<div style="font-size: 80%;" ng-if="!order?.isPaid">
+					{{ byPopupStatuses.NOT_PAID_NOTE }}
+				</div>
+			</div>
+
+			<div class="order-onfo-view-products">
+				<i class="fa fa-shopping-basket"></i>
+				<span
+					(click)="showProductsModal()"
+					style="text-decoration: underline; margin-left: 5px;"
+					>{{'BUY_POPUP.VIEW_ORDER_PRODUCTS' | translate}}</span
+				>
 			</div>
 		</div>
 

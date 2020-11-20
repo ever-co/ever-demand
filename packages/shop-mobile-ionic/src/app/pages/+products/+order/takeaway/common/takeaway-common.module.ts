@@ -5,6 +5,7 @@ import { TakeawayTitleComponent } from './title/title.component';
 import { TakeawayOrderInfoComponent } from './order-info/order-info.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxBarcodeModule } from '@modules/client.common.angular2/components/ngx-barcode/ngx-barcode.module';
+import { OrderInfoCommonModule } from '../../common/order-info-common.module';
 
 const COMPONENTS = [
 	TakeawayStoreInfoComponent,
@@ -13,7 +14,12 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-	imports: [CommonModule, TranslateModule.forChild(), NgxBarcodeModule],
+	imports: [
+		CommonModule,
+		TranslateModule.forChild(),
+		NgxBarcodeModule,
+		OrderInfoCommonModule,
+	],
 	entryComponents: [],
 	declarations: COMPONENTS,
 	providers: [],

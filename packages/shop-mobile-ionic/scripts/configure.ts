@@ -104,7 +104,9 @@ export const environment: Environment = {
 		env.MERCHANT_IDS && env.MERCHANT_IDS.length > 0
 			? env.MERCHANT_IDS
 			: JSON.stringify([])
-  }
+  },
+
+  SHOPPING_CART: ${env.SHOPPING_CART}
 };
 
 /*

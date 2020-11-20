@@ -4,7 +4,9 @@
 			<ion-menu-button autoHide="false"></ion-menu-button>
 		</ion-buttons>
 
-		<ion-title>{{ 'PRIVACY_VIEW.TITLE' | translate }}</ion-title>
+		<ion-title [ngClass]="platform.isRTL ? 'rtl' : 'ltr'"
+			>{{ 'PRIVACY_VIEW.TITLE' | translate }}</ion-title
+		>
 	</ion-toolbar>
 </ion-header>
 

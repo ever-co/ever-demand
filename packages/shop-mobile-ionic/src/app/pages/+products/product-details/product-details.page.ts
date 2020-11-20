@@ -146,13 +146,13 @@ export class ProductDetailsPage implements AfterViewInit, OnDestroy {
 			}
 
 			if (environment.ORDER_INFO_TYPE === 'page') {
-				this.router.navigate([
+				this.navCtrl.navigateRoot(
 					`${
 						this.store.deliveryType === DeliveryType.Delivery
 							? '/order-info'
 							: '/order-info-takeaway'
-					}`,
-				]);
+					}`
+				);
 			}
 		}
 	}

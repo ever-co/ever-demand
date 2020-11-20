@@ -94,6 +94,7 @@
 				}
 			]
 		},
+		"VIEW_ORDER_PRODUCTS": "Ver productos de pedido",
 		"STATUSES": [
 			{
 				"TITLE": "¡Estamos preparando el pedido!",
@@ -189,6 +190,10 @@
 					"ABOUT_US": "Acerca de",
 					"TERMS_OF_USE": "Condiciones de uso",
 					"PRIVACY": "Privacidad"
+				},
+				"CALL": {
+					"WE_APPOLOGISE": "Pedimos perdón!",
+					"CALL_UNSUCCESSFULL": "La llamada no fue exitosa!"
 				}
 			},
 			"LEGALS": {
@@ -244,6 +249,7 @@
 	"FAILED": "Error",
 	"CANCELED": "Cancelado",
 	"IN_DELIVERY": "En viaje",
+	"PENDING": "Pendiente",
 	"COMPLETED": "Completado",
 	"LOCATION_NOTES": "Notas de ubicación",
 	"ENTER_NOTES_HERE": "Introduce notas aquí"

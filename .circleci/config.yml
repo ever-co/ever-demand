@@ -1,4 +1,7 @@
-version: 2
+version: 2.1
+
+orbs:
+    node: circleci/node@3.0.0
 
 aliases:
     - &install-gradle
@@ -42,23 +45,55 @@ aliases:
           rm -rf ~/.yarn
           curl -o- -L https://yarnpkg.com/install.sh | bash
           echo 'export PATH="${PATH}:${HOME}/.yarn/bin:${HOME}/.config/yarn/global/node_modules/.bin"' >> $BASH_ENV
+    - &install-android
+      name: Install Android SDK
+      command: |
+          sudo apt update
+          sudo apt install openjdk-8-jdk
+          sudo apt install android-sdk
+          export ANDROID_HOME=/usr/lib/android-sdk
+          wget https://dl.google.com/android/repository/commandlinetools-linux-6609375_latest.zip
+          unzip commandlinetools-linux-6609375_latest.zip -d cmdline-tools
+          sudo mv cmdline-tools $ANDROID_HOME/
+          export PATH=$ANDROID_HOME/cmdline-tools/tools/bin:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH
+          mkdir ~/.android && echo '### User Sources for Android SDK Manager' > ~/.android/repositories.cfg
+          sudo chown -R $(whoami) $ANDROID_HOME
+          echo "Installing SDK tools"
+          yes | sdkmanager "tools" --sdk_root=${ANDROID_HOME} || true
+          echo "Installing SDK platform-tools"
+          yes | sdkmanager "platform-tools" --sdk_root=${ANDROID_HOME} || true
+          echo "Installing SDK platforms;android-28"
+          yes | sdkmanager "platforms;android-28" --sdk_root=${ANDROID_HOME} || true
+          echo "Installing SDK platforms;android-29"          
+          yes | sdkmanager "platforms;android-29" --sdk_root=${ANDROID_HOME} || true
+          echo "Installing SDK build-tools;28.0.3"
+          yes | sdkmanager "build-tools;28.0.3" --sdk_root=${ANDROID_HOME} || true
+          echo "Installing SDK build-tools;29.0.3"
+          yes | sdkmanager "build-tools;29.0.3" --sdk_root=${ANDROID_HOME} || true
+          echo "Accepting SDK Licenses"
+          yes | sdkmanager --licenses --sdk_root=${ANDROID_HOME} || true
+          echo "Updating SDK and accepting licenses"
+          yes | sudo /usr/lib/android-sdk/cmdline-tools/tools/bin/sdkmanager --update --sdk_root=${ANDROID_HOME} || true
 
 defaults: &defaults
     # put here anything which is common between all jobs
     # we define default work dir, however almost every job redefine it
     working_directory: /tmp/workspace
     environment:
-        JVM_OPTS: -Xmx3200m
-        ANDROID_HOME: /usr/local/android-sdk-linux
+        JVM_OPTS: -Xmx4096m
+        ANDROID_HOME: /usr/lib/android-sdk
 
 jobs:
     build-monorepo-root:
         <<: *defaults
         working_directory: /tmp/workspace/monorepo-root
-        docker:
-            - image: circleci/node:13.12
+        machine:
+            image: ubuntu-1604:202004-01
         steps:
             - checkout
+            - node/install:
+                  install-yarn: true
+                  node-version: latest
             - run: *install-deps
             - run: *install-yarn
             - run:
@@ -90,10 +125,13 @@ jobs:
     build-backend-api:
         <<: *defaults
         working_directory: /tmp/workspace/backend/api
-        docker:
-            - image: circleci/node:13.12
+        machine:
+            image: ubuntu-1604:202004-01
         steps:
             - checkout
+            - node/install:
+                  install-yarn: true
+                  node-version: latest
             - run: *install-deps
             - run: *install-yarn
             - run:
@@ -126,10 +164,13 @@ jobs:
     build-admin-website-angular:
         <<: *defaults
         working_directory: /tmp/workspace/admin/website-angular
-        docker:
-            - image: circleci/node:13.12
+        machine:
+            image: ubuntu-1604:202004-01
         steps:
             - checkout
+            - node/install:
+                  install-yarn: true
+                  node-version: latest
             - run: *install-deps
             - run: *install-yarn
             - run:
@@ -162,14 +203,18 @@ jobs:
     build-carrier-mobile-ionic:
         <<: *defaults
         working_directory: /tmp/workspace/carrier/mobile-ionic
-        docker:
-            - image: circleci/android:api-29-node
+        machine:
+            image: ubuntu-1604:202004-01
         steps:
             - checkout
+            - node/install:
+                  install-yarn: true
+                  node-version: latest
             - run: *install-deps
             - run:
                   name: Install Yarn
                   command: sudo npm install -g yarn --force
+            - run: *install-android
             - run: *install-gradle
             - run:
                   name: 'Pull Submodules'
@@ -222,14 +267,18 @@ jobs:
     build-shop-mobile-ionic:
         <<: *defaults
         working_directory: /tmp/workspace/shop/mobile-ionic
-        docker:
-            - image: circleci/android:api-29-node
+        machine:
+            image: ubuntu-1604:202004-01
         steps:
             - checkout
+            - node/install:
+                  install-yarn: true
+                  node-version: latest
             - run: *install-deps
             - run:
                   name: Install Yarn
                   command: sudo npm install -g yarn --force
+            - run: *install-android
             - run: *install-gradle
             - run:
                   name: 'Pull Submodules'
@@ -282,10 +331,13 @@ jobs:
     build-shop-website-angular:
         <<: *defaults
         working_directory: /tmp/workspace/shop/website-angular
-        docker:
-            - image: circleci/node:13.12
+        machine:
+            image: ubuntu-1604:202004-01
         steps:
             - checkout
+            - node/install:
+                  install-yarn: true
+                  node-version: latest
             - run: *install-deps
             - run: *install-yarn
             - run:
@@ -318,14 +370,18 @@ jobs:
     build-merchant-tablet-ionic:
         <<: *defaults
         working_directory: /tmp/workspace/merchant/tablet-ionic
-        docker:
-            - image: circleci/android:api-29-node
+        machine:
+            image: ubuntu-1604:202004-01
         steps:
             - checkout
+            - node/install:
+                  install-yarn: true
+                  node-version: latest
             - run: *install-deps
             - run:
                   name: Install Yarn
                   command: sudo npm install -g yarn --force
+            - run: *install-android
             - run: *install-gradle
             - run:
                   name: 'Pull Submodules'
@@ -378,9 +434,12 @@ jobs:
     test-carrier-mobile-ionic:
         <<: *defaults
         working_directory: /tmp/workspace/carrier/mobile-ionic
-        docker:
-            - image: circleci/node:10.16.0-browsers
+        machine:
+            image: ubuntu-1604:202004-01
         steps:
+            - node/install:
+                  install-yarn: true
+                  node-version: latest
             - run: *install-deps
             - run: *install-yarn
             - run: *install-chrome
@@ -404,9 +463,12 @@ jobs:
     test-shop-mobile-ionic:
         <<: *defaults
         working_directory: /tmp/workspace/shop/mobile-ionic
-        docker:
-            - image: circleci/node:10.16.0-browsers
+        machine:
+            image: ubuntu-1604:202004-01
         steps:
+            - node/install:
+                  install-yarn: true
+                  node-version: latest
             - run: *install-deps
             - run: *install-yarn
             - run: *install-chrome
@@ -430,9 +492,12 @@ jobs:
     test-shop-website-angular:
         <<: *defaults
         working_directory: /tmp/workspace/shop/website-angular
-        docker:
-            - image: circleci/node:10.16.0-browsers
+        machine:
+            image: ubuntu-1604:202004-01
         steps:
+            - node/install:
+                  install-yarn: true
+                  node-version: latest
             - run: *install-deps
             - run: *install-yarn
             - run: *install-chrome
@@ -456,9 +521,12 @@ jobs:
     test-admin-website-angular:
         <<: *defaults
         working_directory: /tmp/workspace/admin/website-angular
-        docker:
-            - image: circleci/node:10.16.0-browsers
+        machine:
+            image: ubuntu-1604:202004-01
         steps:
+            - node/install:
+                  install-yarn: true
+                  node-version: latest
             - run: *install-deps
             - run: *install-yarn
             - run: *install-chrome
@@ -482,9 +550,12 @@ jobs:
     test-backend-api:
         <<: *defaults
         working_directory: /tmp/workspace/backend/api
-        docker:
-            - image: circleci/node:10.16.0-browsers
+        machine:
+            image: ubuntu-1604:202004-01
         steps:
+            - node/install:
+                  install-yarn: true
+                  node-version: latest
             - run: *install-deps
             - run: *install-yarn
             - run: *install-chrome

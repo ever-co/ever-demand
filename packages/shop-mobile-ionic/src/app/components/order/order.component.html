@@ -3,29 +3,39 @@
 		<e-cu-warehouse-logo [logo]="warehouseLogo"></e-cu-warehouse-logo>
 	</section>
 
-	<section class="address">
+	<section
+		class="address"
+		[ngClass]="document.documentElement.dir === 'rtl' ? 'rtl' : 'ltr'"
+	>
 		<div class="top">{{ 'TO' | translate }}: {{ customerAddress }}</div>
 		<div class="bottom">{{ createdAt | date: 'short' }}</div>
-		<span *ngIf="!isTakeaway">
-			<small *ngIf="deliveryTime" class="delivery-time">
-				{{ deliveryTime }}</small
-			>
-			<small
-				*ngIf="!deliveryTime && !isCanceled && !isFailed"
-				class="delivery-time"
-			>
-				{{ 'IN_DELIVERY' | translate }}</small
-			>
-			<small *ngIf="!deliveryTime && isCanceled" class="order-issue">
-				{{ 'CANCELED' | translate }}</small
-			>
-			<small *ngIf="!deliveryTime && isFailed" class="order-issue">
-				{{ 'FAILED' | translate }}</small
-			>
+		<span *ngIf="inProcessing">
+			<small class="delivery-time pending">{{
+				'PENDING' | translate
+			}}</small>
 		</span>
-		<small *ngIf="isTakeaway" class="delivery-time">{{
-			'COMPLETED' | translate
-		}}</small>
+		<span *ngIf="!inProcessing">
+			<span *ngIf="!isTakeaway">
+				<small *ngIf="deliveryTime" class="delivery-time">
+					{{ deliveryTime }}</small
+				>
+				<small
+					*ngIf="!deliveryTime && !isCanceled && !isFailed"
+					class="delivery-time"
+				>
+					{{ 'IN_DELIVERY' | translate }}</small
+				>
+				<small *ngIf="!deliveryTime && isCanceled" class="order-issue">
+					{{ 'CANCELED' | translate }}</small
+				>
+				<small *ngIf="!deliveryTime && isFailed" class="order-issue">
+					{{ 'FAILED' | translate }}</small
+				>
+			</span>
+			<small *ngIf="isTakeaway" class="delivery-time">{{
+				'COMPLETED' | translate
+			}}</small>
+		</span>
 	</section>
 
 	<section class="total-price">${{ totalPrice || '0' }}</section>
@@ -33,11 +43,19 @@
 
 <div class="hr"></div>
 
-<div class="order-body">
-	<div class="product-container" *ngFor="let product of order.products">
+<div (click)="goToOrder()" class="order-body">
+	<div
+		class="product-container"
+		[ngClass]="product.price == 0 ? 'deleted-product' : ''"
+		*ngFor="let product of order.products"
+	>
 		<e-cu-order-product
 			[orderProduct]="product"
 			[showDetailsButton]="showDetailsButton"
+			[inProcessing]="inProcessing"
+			[orderId]="order.id"
+			(remove)="removeProduct(order._id, $event)"
+			(onAddComment)="onAddComment.emit($event)"
 		></e-cu-order-product>
 	</div>
 </div>

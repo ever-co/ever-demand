@@ -94,6 +94,8 @@
 				}
 			]
 		},
+
+		"VIEW_ORDER_PRODUCTS": "View Order Products",
 		"STATUSES": [
 			{
 				"TITLE": "We're preparing the order!",
@@ -189,6 +191,10 @@
 					"ABOUT_US": "About Us",
 					"TERMS_OF_USE": "Terms of Use",
 					"PRIVACY": "Privacy"
+				},
+				"CALL": {
+					"WE_APPOLOGISE": "We Apologise!",
+					"CALL_UNSUCCESSFULL": "Call Was Unsuccessful!"
 				}
 			},
 			"LEGALS": {
@@ -244,6 +250,7 @@
 	"FAILED": "Failed",
 	"CANCELED": "Canceled",
 	"IN_DELIVERY": "In Delivery",
+	"PENDING": "Pending",
 	"COMPLETED": "Completed",
 	"BROWSE": "Browse",
 	"ENGLISH": "English",

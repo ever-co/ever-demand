@@ -35,6 +35,7 @@ export type WarehouseManageTabsDetails = Pick<
 	| 'ordersShortProcess'
 	| 'orderCancelation'
 	| 'inStoreMode'
+	| 'carrierCompetition'
 >;
 
 @Component({
@@ -181,7 +182,8 @@ export class WarehouseManageTabsDetailsComponent
 			preferRestrictedCarriersForDelivery: [false],
 			carriersIds: [[]],
 			ordersShortProcess: [false],
-			inStoreMode: [],
+			inStoreMode: [false],
+			carrierCompetition: [false],
 
 			enabledOrderCancelation: [false],
 			stateOrderCancelation: [0],
@@ -210,6 +212,7 @@ export class WarehouseManageTabsDetailsComponent
 			preferRestrictedCarriersForDelivery: boolean;
 			ordersShortProcess: boolean;
 			inStoreMode: boolean;
+			carrierCompetition: boolean;
 
 			enabledOrderCancelation: boolean;
 			stateOrderCancelation: number;
@@ -219,6 +222,7 @@ export class WarehouseManageTabsDetailsComponent
 			ordersShortProcess: basicInfo.ordersShortProcess,
 			isActive: basicInfo.isActive,
 			inStoreMode: basicInfo.inStoreMode,
+			carrierCompetition: basicInfo.carrierCompetition,
 			isManufacturing: basicInfo.isManufacturing,
 			isCarrierRequired: basicInfo.isCarrierRequired,
 			name: basicInfo.name,
@@ -228,7 +232,10 @@ export class WarehouseManageTabsDetailsComponent
 						hasRestrictedCarriers: basicInfo.hasRestrictedCarriers,
 						carriersIds: basicInfo.carriersIds,
 				  }
-				: {}),
+				: {
+						hasRestrictedCarriers: false,
+						carriersIds: basicInfo.carriersIds,
+				  }),
 			...(basicInfo.hasRestrictedCarriers &&
 			basicInfo.carriersIds &&
 			basicInfo.carriersIds.length
@@ -257,6 +264,8 @@ export class WarehouseManageTabsDetailsComponent
 				useOnlyRestrictedCarriersForDelivery: false,
 				preferRestrictedCarriersForDelivery: false,
 				ordersShortProcess: false,
+				inStoreMode: false,
+				carrierCompetition: false,
 				enabledOrderCancelation: basicInfo.orderCancelation
 					? basicInfo.orderCancelation.enabled
 					: false,

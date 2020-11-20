@@ -10,6 +10,23 @@
 	}
 }
 
+.box {
+	position: relative;
+
+	&-top {
+		padding: 30px 20px;
+		padding-bottom: 10px;
+	}
+
+	&-close {
+		top: 10px;
+		right: 10px;
+		position: absolute;
+		display: flex;
+		font-size: 20px;
+	}
+}
+
 .order-page {
 	z-index: 9999;
 

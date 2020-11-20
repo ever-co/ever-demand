@@ -54,6 +54,13 @@ const routes: Routes = [
 			),
 	},
 	{
+		path: 'call-us',
+		loadChildren: () =>
+			import('./+products/+order/+call/call.module').then(
+				(m) => m.CallPageModule
+			),
+	},
+	{
 		path: 'errors',
 		loadChildren: () =>
 			import('./+errors/errors.module').then((m) => m.ErrorsModule),

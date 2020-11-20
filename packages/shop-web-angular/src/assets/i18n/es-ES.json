@@ -8,7 +8,8 @@
 	"Products": "Productos",
 	"Orders": "Pedidos",
 	"Buy for": "Compra por",
-	"DELIVERY": "Delivery",
+	"DELIVERY": "Entrega",
+	"SELECT_YOUR_LOCATION": "Selecciona tu ubicación",
 	"TAKEAWAY": "Para retirar",
 	"Details": "Detalles",
 	"Delivery from": "Delivery desde",
@@ -30,7 +31,7 @@
 		"DELIVERY_FROM": "Entrega desde",
 		"TAKEOUT_FROM": "Para retirar en",
 		"MINUTES": "min",
-		"DELIVERY": "Delivery",
+		"DELIVERY": "Entrega",
 		"TAKEAWAY": "Para retirar",
 		"READYFOR": "Listo para",
 		"NO_PRODUCTS_FOUND": "No se encontraron productos",
@@ -79,7 +80,12 @@
 		"PAY_NOW": "Pagar Ahora",
 		"PRODUCTS": "Productos",
 		"ORDERS": "Pedidos",
-		"ORDER_ID": "Identificador de Pedido:"
+		"ORDER_ID": "Identificador de Pedido:",
+		"SHOW_CARRIER_ON_MAP": "Mostrar operador en el mapa",
+		"ORER_TYPE": {
+			"DELIVERY": "Entrega",
+			"TAKEAWAY": "Para llevar"
+		}
 	},
 	"ORDER_CARRIER_STATUS": {
 		"CARRIER_STATUS": "Estado del Delivery",

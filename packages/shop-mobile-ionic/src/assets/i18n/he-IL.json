@@ -87,6 +87,7 @@
 				}
 			]
 		},
+		"VIEW_ORDER_PRODUCTS": "צפו במוצרי הזמנה",
 		"STATUSES": [
 			{
 				"TITLE": "אנחנו מכינים את ההזמנה!",
@@ -182,6 +183,10 @@
 					"ABOUT_US": "עלינו",
 					"TERMS_OF_USE": "תנאי שימוש",
 					"PRIVACY": "פרטיות"
+				},
+				"CALL": {
+					"WE_APPOLOGISE": "אנו מתנצלים",
+					"CALL_UNSUCCESSFULL": "השיחה לא הצליחה"
 				}
 			},
 			"LEGALS": {
@@ -237,6 +242,7 @@
 	"FAILED": "נכשל",
 	"CANCELED": "מבוטל",
 	"IN_DELIVERY": "במשלוח",
+	"PENDING": "ממתין ל",
 	"COMPLETED": "הושלם",
 	"BROWSE": "לְדַפדֵף",
 	"ENGLISH": "אנגלית",

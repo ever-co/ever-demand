@@ -6,7 +6,11 @@
 			</p>
 
 			<div class="order-status-text">
-				{{ order.orderType ? 'Takeout' : 'Delivery' }}
+				{{
+					order.orderType
+						? ('ORDER_VIEW.ORER_TYPE.TAKEAWAY' | translate)
+						: ('ORDER_VIEW.ORER_TYPE.DELIVERY' | translate)
+				}}
 			</div>
 
 			<p class="order-status-text">
@@ -22,7 +26,10 @@
 			</p>
 		</div>
 	</div>
-	<div class="warehouse-logo-container">
+	<div
+		class="warehouse-logo-container"
+		[ngClass]="document.documentElement.dir === 'rtl' ? 'rtl' : 'ltr'"
+	>
 		<warehouse-logo
 			[logo]="warehouse?.logo"
 			[border]="true"
@@ -57,7 +64,10 @@
 			</div>
 		</div>
 	</div>
-	<div class="order-options">
+	<div
+		class="order-options"
+		[ngClass]="document.documentElement.dir === 'rtl' ? 'rtl' : 'ltr'"
+	>
 		<button
 			(click)="openDialog()"
 			mat-raised-button
@@ -98,7 +108,7 @@
 				/>
 				<path d="M0 0h24v24H0z" fill="none" />
 			</svg>
-			Show carrier on map
+			{{ 'ORDER_VIEW.SHOW_CARRIER_ON_MAP' | translate }}
 		</button>
 	</div>
 </mat-card>

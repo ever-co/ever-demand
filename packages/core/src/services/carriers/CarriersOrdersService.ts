@@ -64,7 +64,8 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 	@asyncListener()
 	async selectedForDelivery(
 		carrierId: string,
-		orderIds: string[]
+		orderIds: string[],
+		carrierCompetition?: boolean
 	): Promise<Carrier> {
 		let carrier = await this.carriersService
 			.get(carrierId)
@@ -75,10 +76,13 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 			if (orderIds.length > 0) {
 				// TODO: check here that not from any status it is possible to move to any other.
 				// Mean if order is status 3, it's not simply possible to update it to status 2.
+				const carrierStatus = carrierCompetition
+					? OrderCarrierStatus.CarrierPickedUpOrder
+					: OrderCarrierStatus.CarrierSelectedOrder;
 
 				await this.ordersService.updateMultipleByIds(orderIds, {
 					carrier: carrierId,
-					carrierStatus: OrderCarrierStatus.CarrierSelectedOrder,
+					carrierStatus,
 				});
 			}
 

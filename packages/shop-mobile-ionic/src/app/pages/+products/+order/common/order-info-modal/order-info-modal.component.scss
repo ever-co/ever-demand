@@ -1,0 +1,22 @@
+.back-btn {
+	font-size: 18px;
+	margin-right: 5px;
+}
+
+.map-modal {
+	.map {
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.order-info-modal-wrap {
+	.actions {
+		display: flex;
+		padding: 20px 10px;
+
+		ion-button {
+			flex: 1;
+		}
+	}
+}

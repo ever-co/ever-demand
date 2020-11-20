@@ -95,7 +95,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 		const modalRef: NgbModalRef = this.modalService.open(
 			WarehouseOrderComponent,
 			{
-				size: 'lg',
+				size: 'xl',
 				container: 'nb-layout',
 				windowClass: 'ng-custom',
 				backdrop: 'static',

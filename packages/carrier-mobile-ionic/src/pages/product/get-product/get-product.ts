@@ -25,6 +25,8 @@ export class GetProductPage implements OnDestroy {
 	private productsLocale: string;
 	selectedProductImages: any;
 	selectedProductTitles: any;
+	orderCarrierCompetition: boolean;
+	isTakenFromAnotherCarrier: boolean = false;
 
 	private destroy$ = new Subject<void>();
 	constructor(
@@ -49,6 +51,22 @@ export class GetProductPage implements OnDestroy {
 			await this.carrierOrdersRouter.updateStatus(
 				this.carrier['id'],
 				OrderCarrierStatus.CarrierPickedUpOrder
+			);
+
+			this.navCtrl.navigateRoot('/main/starting-delivery');
+		} else {
+			// TODO: replace with popup
+			alert('Try again!');
+		}
+		this.disabledButtons = false;
+	}
+	async gotProductWithCarrierCompetition() {
+		this.disabledButtons = true;
+		if (this.carrier && this.selectedOrder) {
+			await this.carrierOrdersRouter.selectedForDelivery(
+				this.carrier['id'],
+				[this.selectedOrder['id']],
+				this.orderCarrierCompetition
 			);
 
 			this.navCtrl.navigateRoot('/main/starting-delivery');
@@ -89,6 +107,17 @@ export class GetProductPage implements OnDestroy {
 			})
 			.pipe(takeUntil(this.destroy$))
 			.subscribe((o) => {
+				this.orderCarrierCompetition =
+					o.warehouse['carrierCompetition'];
+
+				this.isTakenFromAnotherCarrier =
+					!!o.carrierId &&
+					o.carrierId !== this.carrier._id &&
+					o.carrierStatus >
+						(this.orderCarrierCompetition
+							? OrderCarrierStatus.CarrierSelectedOrder
+							: OrderCarrierStatus.NoCarrier);
+
 				this.selectedOrder = o;
 				this.store.selectedOrder = o;
 				this.disabledButtons = false;

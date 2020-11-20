@@ -7,15 +7,23 @@
 
 [Ever](https://ever.co)® is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform built with [TypeScript](http://www.typescriptlang.org).
 
+You are welcome to check more information about the platform at our official website - **<https://ever.co>**.
+
 ![overview](https://docs.ever.co/docs/assets/overview_small.png)
 
 ## Demos
+
+**Demos are not available at the moment as we are moving to Kubernetes and showdown old demo server!**
+
+<!---
 
 -   [Admin Website](http://demo.ever.co:4200), use admin user email: `admin@ever.co`, password: `admin`
 -   [Shopping Mobile App](http://demo.ever.co:4201)
 -   [Merchant Ionic Tablet App](http://demo.ever.co:4202)
 -   [Carrier Mobile App](http://demo.ever.co:4203)
 -   [Shopping Website](http://demo.ever.co:3000)
+
+-->
 
 ## Features
 
@@ -157,7 +165,7 @@ See relevant section in our [documentation](https://github.com/ever-co/ever/wiki
 
 ### Run Platform Projects
 
-Finally, each project from Ever Platform could start by single command from this list:
+After you build everything (`yarn build:all`, described above), each project from Ever Platform could be started by single command from this list:
 
 -   Run API server `yarn run:server`
 -   Run Admin Website `yarn run:admin` and open http://localhost:4200
@@ -166,9 +174,11 @@ Finally, each project from Ever Platform could start by single command from this
 -   Run Carrier Mobile app `yarn run:carrier` and open http://localhost:4203
 -   Run Shopping Website `yarn run:shopweb` and open http://localhost:3000
 
-Note 1: during development you can run server with `yarn run:server:dev` to enable watch on TS files changes
+Note 1: it is important to build shared / common platform modules (`yarn build:common` or `yarn build:all`) before running the Platform Core (API) or Apps
 
-Note 2: on the first run, API Server (Backend) creates MongoDB local database `ever_development` with the following (default) Admin user
+Note 2: during development you can run server with `yarn run:server:dev` to enable watch on TS files changes
+
+Note 3: on the first run, API Server (Backend) creates MongoDB local database `ever_development` with the following (default) Admin user
 
 -   email: `admin@ever.co`
 -   password: `admin`
@@ -198,33 +208,27 @@ According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform tod
 
 #### Developers (alphabetical order)
 
--   Aleksandar Tasev ([AlexTasev](https://github.com/AlexTasev))
 -   Alish Meklyov ([Alish](https://github.com/AlishMekliov931))
 -   Blagovest Gerov ([BlagovestGerov](https://github.com/BlagovestGerov))
--   Boyan Stanchev ([boyanstanchev](https://github.com/boyanstanchev))
 -   Elvis Arabadjiyski ([Dreemsuncho](https://github.com/Dreemsuncho))
--   Emil Momchilov ([jew-er](https://github.com/jew-er))
 -   Hristo Hristov ([hrimar](https://github.com/hrimar))
+-   Pavel Denchev ([PavelDenchev](https://github.com/PavelDenchev))
 -   Tsvetelina Yordanova ([tsvetelina-e-y](https://github.com/tsvetelina-e-y))
+-   Valentin Peshev ([valiopld](https://github.com/valiopld))
 -   Yavor Grancharov ([YavorGrancharov](https://github.com/YavorGrancharov))
 
 #### Designers & QA
 
 -   [Julia Konviser](https://www.linkedin.com/in/julia-konviser-8b917552) (Graphic Designer, QA)
+-   [Yordan Genovski](https://services.ever.co/teammembers/yordan-genovski) (UX/UI/Product Designer)
 
 ### Contributors
-
--   [Adem Hodzic](https://github.com/AdemHodzic)
--   [Deepak Chandwani](https://github.com/deepaksslibra)
--   [Kyle Kitlinski](https://github.com/K-Kit)
--   [Milena Dimova](https://www.linkedin.com/in/dimova-milena-31010414) (UI/UX Designer)
--   [Rachit Magon](https://github.com/rmagon)
--   [Surya Singh](https://github.com/suryasingh)
 
 View full list of our [contributors](https://github.com/ever-co/ever/graphs/contributors).
 
 ## Contact Us
 
+-   [Ever.co Website Contact Us page](https://ever.co/contacts)
 -   [Discord Chat](https://discord.gg/msqRJ4w)
 -   [Slack Community](https://join.slack.com/t/everplatform/shared_invite/enQtNzc2NzI1OTgwMjQwLTBkODI3OTU2ZDI1YTQwNWE3OGExYWUwYjE5NThkMjRiYjA0NmFiNzZhYWUzNWViNWI4Nzg2YTc3MzY2MjY0YzU)
 -   [Spectrum Community](https://spectrum.chat/ever)
@@ -254,7 +258,7 @@ This software is available under following licenses:
 
 #### The default Ever® Platform™ license, without a valid Ever® Platform Enterprise™ or Ever® Platform Small Business™ License agreement, is the Ever® Platform Community™ Edition License.
 
-#### Please see [LICENSE.md](LICENSE.md) for more information on licenses.
+#### Please see [LICENSE.md](LICENSE.md) for more information on licenses. You can also [compare our offering](https://ever.co/compare-ever/#compare).
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fever.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fever?ref=badge_large)
 
@@ -275,10 +279,11 @@ All other brand and product names are trademarks, registered trademarks or servi
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e7b2b38660f44963989ac9d49ae76d4d)](https://www.codacy.com/app/Ever/ever?utm_source=github.com&utm_medium=referral&utm_content=ever-co/ever&utm_campaign=Badge_Grade)
 [![DeepScan grade](https://deepscan.io/api/teams/3293/projects/4849/branches/38566/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=3293&pid=4849&bid=38566)
 [![Known Vulnerabilities](https://snyk.io/test/github/ever-co/ever/badge.svg)](https://snyk.io/test/github/ever-co/ever)
-[![Greenkeeper badge](https://badges.greenkeeper.io/ever-co/ever.svg)](https://greenkeeper.io)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/ever-co/ever.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/ever-co/ever/alerts/)
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/ever-co/ever.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/ever-co/ever/context:javascript)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fever.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fever?ref=badge_shield)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io)
 
 ## P.S.
-- If you are running any business or doing freelance, check our new project [Gauzy](https://github.com/ever-co/gauzy)
+- If you are running any business or doing freelance, check our new project [Gauzy](https://github.com/ever-co/gauzy) - Open Business Management Platform
 - [We are Hiring: remote TypeScript / NestJS / Angular developers](https://github.com/ever-co/jobs#available-positions)

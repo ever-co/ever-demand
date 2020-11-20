@@ -46,9 +46,15 @@
 	}
 }
 
-.warehouse-logo-container {
+.warehouse-logo-container.ltr {
 	position: absolute;
 	right: calc(150px - 23px);
+	top: 100px;
+}
+
+.warehouse-logo-container.rtl {
+	position: absolute;
+	left: calc(150px - 23px);
 	top: 100px;
 }
 
@@ -91,7 +97,7 @@
 	}
 }
 
-.order-options {
+.order-options.ltr {
 	display: flex;
 	position: absolute;
 	left: 0;
@@ -102,6 +108,19 @@
 
 	margin-bottom: 20px !important;
 	margin-left: 20px;
+}
+
+.order-options.rtl {
+	display: flex;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	button {
+		margin-left: 20px;
+	}
+
+	margin-bottom: 20px !important;
+	margin-right: 20px;
 }
 
 .product-name {

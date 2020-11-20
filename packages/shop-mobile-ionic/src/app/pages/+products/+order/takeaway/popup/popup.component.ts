@@ -110,6 +110,11 @@ export class OrderTakeawayInfoPopup implements OnInit, OnDestroy {
 		this.showCancelOrderInfoModal();
 	}
 
+	backToProducts() {
+		this.modalController.dismiss();
+		this.modalChange.emit(false);
+	}
+
 	complete() {
 		this.closePopup();
 	}

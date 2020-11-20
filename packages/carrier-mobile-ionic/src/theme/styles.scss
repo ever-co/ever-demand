@@ -21,7 +21,11 @@ $home-view-map-height: 116px;
 			align-items: center !important;
 			padding-top: 0 !important;
 
-			.right-text {
+			.right-text.rtl {
+				position: absolute;
+				left: 20px !important;
+			}
+			.right-text.ltr {
 				position: absolute;
 				right: 20px !important;
 			}

@@ -362,6 +362,17 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	 */
 	@Schema({ type: { enabled: Boolean, onState: Number }, required: false })
 	orderCancelation?: { enabled: boolean; onState: number };
+
+	/**
+	 * Enable or disable carrier works competition mode
+	 *
+	 * @type {boolean}
+	 * @memberof Warehouse
+	 */
+
+	@Types.Boolean(false)
+	@Column()
+	carrierCompetition?: boolean;
 }
 
 export type WithFullProducts = Warehouse & {

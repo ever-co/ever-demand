@@ -1,7 +1,12 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
-import { PopoverController, ModalController, NavParams } from '@ionic/angular';
+import {
+	PopoverController,
+	ModalController,
+	NavParams,
+	NavController,
+} from '@ionic/angular';
 import { Store } from '../../../../services/store.service';
 import { OrderPage } from '../order.page';
 import { Router } from '@angular/router';
@@ -23,6 +28,7 @@ export class CancelPage {
 		private readonly orderRouter: OrderRouter,
 		private readonly store: Store,
 		public modalController: ModalController,
+		public navCtrl: NavController,
 		private router: Router,
 		private readonly navParams: NavParams
 	) {
@@ -49,7 +55,7 @@ export class CancelPage {
 		this.store.orderId = null;
 
 		if (environment.ORDER_INFO_TYPE === 'page') {
-			this.router.navigate(['/products']);
+			this.navCtrl.navigateRoot('/products');
 		}
 
 		await this.modalController.dismiss();

@@ -2,7 +2,7 @@
 	"name": "@ever-platform/common-angular",
 	"description": "Ever Platform Shared Angular Core",
 	"license": "AGPL-3.0",
-	"version": "0.3.6",
+	"version": "0.3.7",
 	"homepage": "https://ever.co",
 	"repository": {
 		"type": "git",

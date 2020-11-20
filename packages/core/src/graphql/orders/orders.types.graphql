@@ -15,6 +15,7 @@ type Order {
 
 	isConfirmed: Boolean!
 	isCancelled: Boolean!
+	waitForCompletion: Boolean
 	isPaid: Boolean!
 	isCompleted: Boolean!
 	totalPrice: Float!
@@ -56,6 +57,7 @@ type OrderProduct {
 	initialPrice: Float!
 	price: Float!
 	product: Product!
+	comment: String
 }
 
 input OrdersFindInput {

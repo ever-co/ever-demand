@@ -5,6 +5,7 @@ import { map, takeUntil } from 'rxjs/operators';
 import { Store } from '../../services/store.service';
 import { Apollo } from 'apollo-angular';
 import { OrdersHistoryQuery } from './orders-history.model';
+import { Platform } from '@ionic/angular';
 
 @Component({
 	selector: 'e-cu-orders-history',
@@ -26,7 +27,8 @@ export class OrdersHistoryPage implements OnDestroy {
 
 	constructor(
 		private readonly _store: Store,
-		private readonly _apollo: Apollo
+		private readonly _apollo: Apollo,
+		public platform: Platform
 	) {}
 
 	ngOnDestroy() {
