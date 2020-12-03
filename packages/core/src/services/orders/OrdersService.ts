@@ -612,6 +612,33 @@ export class OrdersService extends DBService<Order>
 	}
 
 	@asyncListener()
+	async addProductComment(
+		orderId: Order['id'],
+		productId: string,
+		comment: string
+	): Promise<Order> {
+		await this._throwIfNotExists(orderId);
+
+		const order = await this._get(orderId);
+		const orderProduct = order.products.find(
+			(p: OrderProduct) => p.id === productId
+		);
+
+		orderProduct.comment = comment;
+
+		await this.update(orderId, {
+			products: order.products,
+		});
+
+		return this.get(orderId, {
+			populateWarehouse: true,
+			populateCarrier: true,
+		})
+			.pipe(first())
+			.toPromise();
+	}
+
+	@asyncListener()
 	async cancel(orderId: Order['id']): Promise<Order> {
 		await this._throwIfNotExists(orderId);
 

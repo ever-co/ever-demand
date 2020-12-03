@@ -129,6 +129,7 @@ export class WarehouseOrdersService {
 								products {
 									count
 									price
+									comment
 									product {
 										id
 										_id

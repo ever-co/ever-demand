@@ -116,6 +116,20 @@ export class OrderRouter implements IOrderRouter {
 		return this._orderFactory(order);
 	}
 
+	async addProductComment(
+		orderId: Order['id'],
+		productId: string,
+		comment: string
+	): Promise<Order> {
+		const order = await this.router.run<IOrder>(
+			'addProductComment',
+			orderId,
+			productId,
+			comment
+		);
+		return this._orderFactory(order);
+	}
+
 	protected _orderFactory(order: IOrder) {
 		return order == null ? null : new Order(order);
 	}

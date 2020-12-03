@@ -1,6 +1,7 @@
 input OrderProductCreateInput {
 	count: Int!
 	productId: String!
+	comment: String
 }
 
 input OrderCreateInput {

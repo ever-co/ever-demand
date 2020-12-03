@@ -110,6 +110,16 @@ class OrderProduct extends DBObject<IOrderProduct, IOrderProductCreateObject>
 	@Schema({ required: false, type: Number })
 	@Column()
 	deliveryTimeMax?: number;
+
+	/**
+	 * Comment
+	 *
+	 * @type {string}
+	 * @memberof OrderProduct
+	 */
+	@Schema({ type: String, required: false })
+	@Column()
+	comment?: string;
 }
 
 export default OrderProduct;

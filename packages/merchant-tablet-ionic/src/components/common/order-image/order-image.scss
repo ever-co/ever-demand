@@ -34,6 +34,26 @@
 			white-space: nowrap;
 			overflow: hidden;
 		}
+
+		.comment {
+			color: white;
+			background: $brand;
+			font-size: 14px;
+			padding: 5px;
+			padding-top: 0;
+
+			// comment-text
+			&-text {
+				margin-top: 5px;
+			}
+
+			&::before {
+				content: '';
+				height: 1px;
+				background: white;
+				display: block;
+			}
+		}
 	}
 
 	.product-info {

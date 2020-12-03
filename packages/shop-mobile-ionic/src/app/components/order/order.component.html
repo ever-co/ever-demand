@@ -44,10 +44,18 @@
 <div class="hr"></div>
 
 <div (click)="goToOrder()" class="order-body">
-	<div class="product-container" *ngFor="let product of order.products">
+	<div
+		class="product-container"
+		[ngClass]="product.price == 0 ? 'deleted-product' : ''"
+		*ngFor="let product of order.products"
+	>
 		<e-cu-order-product
 			[orderProduct]="product"
 			[showDetailsButton]="showDetailsButton"
+			[inProcessing]="inProcessing"
+			[orderId]="order.id"
+			(remove)="removeProduct(order._id, $event)"
+			(onAddComment)="onAddComment.emit($event)"
 		></e-cu-order-product>
 	</div>
 </div>

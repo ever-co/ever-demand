@@ -1,6 +1,9 @@
 <div class="container">
-	<div class="test">
-		<section class="product-image">
+	<div class="container-row">
+		<section
+			[ngClass]="{ 'product-image-align-start': inProcessing }"
+			class="product-image"
+		>
 			<ion-img [src]="image.url" [ngClass]="imageClass"></ion-img>
 		</section>
 
@@ -18,6 +21,33 @@
 			<div class="details" *ngIf="showInsideDetailsButton">
 				<a href="#">{{ 'ORDER_HISTORY_VIEW.DETAILS' | translate }}</a>
 			</div>
+
+			<div *ngIf="inProcessing" class="comment">
+				<span *ngIf="hasComment && !showAddComment" class="comment-text"
+					>{{ orderProduct.comment }}
+					<i
+						class="fa fa-pencil-square-o"
+						(click)="showCommentBox()"
+					></i>
+				</span>
+				<span
+					*ngIf="!hasComment && !showAddComment"
+					(click)="showCommentBox()"
+					class="comment-action comment-action-text"
+					>Add Comment</span
+				>
+				<textarea
+					*ngIf="showAddComment"
+					(change)="
+						onAddComment.emit({
+							comment: $event.target.value,
+							productId: orderProduct.id
+						})
+					"
+					placeholder="Comment"
+					>{{ orderProduct.comment }}</textarea
+				>
+			</div>
 		</section>
 	</div>
 	<div
@@ -34,5 +64,18 @@
 		[ngClass]="document.documentElement.dir === 'rtl' ? 'ltr' : 'rtl'"
 	>
 		${{ price }}
+	</section>
+
+	<section
+		*ngIf="inProcessing"
+		class="product-remove"
+		[ngClass]="{
+			ltr: document.documentElement.dir === 'rtl',
+			rtl: document.documentElement.dir !== 'rtl',
+			'product-remove-out': isRemove
+		}"
+		(click)="onRemove()"
+	>
+		<i class="fa fa-trash"></i>
 	</section>
 </div>

@@ -1,7 +1,14 @@
+@import '~@ever-platform/common-angular/src/scss/everbie.common';
+
 .product-image {
 	padding-left: 1px;
 	padding-right: 10px;
 	text-align: center;
+
+	&-align-start {
+		align-self: start;
+		margin-top: 3px;
+	}
 
 	ion-img {
 		&.square {
@@ -57,6 +64,33 @@
 			font-size: 13px;
 		}
 	}
+
+	.comment {
+		margin-top: 3px;
+
+		&-action {
+			color: #488aff;
+			&-text {
+				text-decoration: underline;
+			}
+		}
+
+		&-text {
+			display: flex;
+			align-items: center;
+			color: #000000;
+			font-size: 13px;
+			i {
+				margin-left: 5px;
+				color: #488aff;
+				font-size: 18px;
+			}
+		}
+
+		textarea {
+			width: 200px;
+		}
+	}
 }
 
 .products-price {
@@ -68,6 +102,19 @@
 	position: absolute;
 	top: 0px;
 	right: 0px;
+}
+
+.product-remove {
+	position: absolute;
+	bottom: 15px;
+	font-size: 18px;
+	display: flex;
+	color: $assertive-lighted;
+
+	&-out {
+		opacity: 0;
+		transition: 0.2s all ease-in-out;
+	}
 }
 
 .rtl {
@@ -104,11 +151,13 @@
 	position: relative;
 	padding: 0 !important;
 
-	.test {
+	&-row {
 		font-size: 0.8em;
 		display: flex;
 		align-items: center;
 		justify-content: space-around;
+		padding-bottom: 15px;
+		border-bottom: 1px solid #ccc;
 
 		width: 100%;
 	}

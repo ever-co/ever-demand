@@ -1,11 +1,11 @@
 @import '~@ever-platform/common-angular/src/scss/everbie.common';
 
-ng-progress /deep/ .ng-bar-placeholder {
+:host ::ng-deep ng-progress .ng-bar-placeholder {
 	background-color: #3c4160;
 	height: 5px;
 }
 
-ng-progress /deep/ .ng-bar {
+:host ::ng-deep ng-progress .ng-bar {
 	background-color: #505785;
 }
 

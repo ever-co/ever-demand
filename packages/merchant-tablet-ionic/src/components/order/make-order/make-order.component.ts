@@ -19,6 +19,7 @@ import { WarehouseOrdersService } from '../../../services/warehouse-orders.servi
 import { TranslateService } from '@ngx-translate/core';
 import { AlertController } from '@ionic/angular';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
+import { MakeOrderCommentComponent } from './make-order-comment.component';
 
 @Component({
 	selector: 'make-order',
@@ -128,6 +129,7 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 				return {
 					productId: wp.productId,
 					count: 0,
+					comment: '',
 				};
 			}
 		);
@@ -146,6 +148,7 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 						<div class="text-center"><div class="badge badge-pill badge-secondary text-center">${wp.count}</div></div>
 					`,
 					amount: { productId: wp.productId, available: wp.count },
+					comment: { productId: wp.productId },
 				};
 			}
 		);
@@ -175,68 +178,96 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 			getTranslate('PRODUCT'),
 			getTranslate('PRICE'),
 			getTranslate('AVAILABLE'),
-			getTranslate('AMOUNT')
+			getTranslate('AMOUNT'),
+			getTranslate('COMMENT')
 		)
 			.pipe(takeUntil(this.ngDestroy$))
-			.subscribe(([id, image, product, price, available, amount]) => {
-				this.settingsSmartTable = {
-					actions: false,
-					pager: { perPage: 3 },
-					columns: {
-						img: {
-							title: image,
-							filter: false,
-							type: 'html',
-							width: '50px',
-						},
-						product: {
-							title: product,
-							type: 'html',
-						},
-						price: {
-							title: price,
-							filter: false,
-							type: 'html',
-							compareFunction: (_, first, second) => {
-								const matchFirst = +first.replace('$', '');
-								const matchSecond = +second.replace('$', '');
-								return _ > 0
-									? matchFirst - matchSecond
-									: matchSecond - matchFirst;
+			.subscribe(
+				([id, image, product, price, available, amount, comment]) => {
+					this.settingsSmartTable = {
+						actions: false,
+						pager: { perPage: 3 },
+						columns: {
+							img: {
+								title: image,
+								filter: false,
+								type: 'html',
+								width: '50px',
+							},
+							product: {
+								title: product,
+								type: 'html',
+							},
+							price: {
+								title: price,
+								filter: false,
+								type: 'html',
+								compareFunction: (_, first, second) => {
+									const matchFirst = +first.replace('$', '');
+									const matchSecond = +second.replace(
+										'$',
+										''
+									);
+									return _ > 0
+										? matchFirst - matchSecond
+										: matchSecond - matchFirst;
+								},
+							},
+							available: {
+								title: available,
+								type: 'html',
+								filter: false,
+								compareFunction: this
+									._compareByAvailableProducts,
+							},
+							amount: {
+								title: amount,
+								filter: false,
+								type: 'custom',
+								renderComponent: MakeOrderInputComponent,
+								onComponentInitFunction: (
+									childInstance: MakeOrderInputComponent
+								) => {
+									childInstance.amount
+										.pipe(takeUntil(this._ngDestroy$))
+										.subscribe((count) => {
+											const wProduct = this._orderProducts.find(
+												({ productId }) =>
+													productId ===
+													childInstance.productId
+											);
+											wProduct.count = count;
+											this.isOrderAllowedEmitter.emit(
+												this.canOrder
+											);
+										});
+								},
+							},
+							comment: {
+								title: comment,
+								filter: false,
+								type: 'custom',
+								renderComponent: MakeOrderCommentComponent,
+								onComponentInitFunction: (
+									childInstance: MakeOrderCommentComponent
+								) => {
+									childInstance.comment
+										.pipe(takeUntil(this._ngDestroy$))
+										.subscribe((comment) => {
+											const wProduct = this._orderProducts.find(
+												({ productId }) =>
+													productId ===
+													childInstance.productId
+											);
+
+											wProduct.comment = comment;
+										});
+								},
 							},
 						},
-						available: {
-							title: available,
-							type: 'html',
-							filter: false,
-							compareFunction: this._compareByAvailableProducts,
-						},
-						amount: {
-							title: amount,
-							filter: false,
-							type: 'custom',
-							renderComponent: MakeOrderInputComponent,
-							onComponentInitFunction: (
-								childInstance: MakeOrderInputComponent
-							) => {
-								childInstance.amount
-									.pipe(takeUntil(this._ngDestroy$))
-									.subscribe((count) => {
-										const wProduct = this._orderProducts.find(
-											({ productId }) =>
-												productId ===
-												childInstance.productId
-										);
-										wProduct.count = count;
-										this.isOrderAllowedEmitter.emit(
-											this.canOrder
-										);
-									});
-							},
-						},
-					},
-				};
-			});
+					};
+				}
+			);
 	}
 
 	ngOnDestroy() {
