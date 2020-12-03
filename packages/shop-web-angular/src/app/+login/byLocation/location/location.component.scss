@@ -63,7 +63,7 @@
 	}
 }
 
-:host /deep/ .location-form .mat-checkbox-layout {
+:host ::ng-deep .location-form .mat-checkbox-layout {
 	color: white;
 	.label {
 		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
