@@ -106,7 +106,7 @@ jobs:
               run: |
                   docker push everco/ever-admin-angular:latest
 
-  ever-carrier-ionic:
+    ever-carrier-ionic:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
@@ -156,7 +156,7 @@ jobs:
               run: |
                   docker push everco/ever-carrier-ionic:latest
 
-  ever-merchant-ionic:
+    ever-merchant-ionic:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
@@ -206,7 +206,7 @@ jobs:
               run: |
                   docker push everco/ever-merchant-ionic:latest
 
-  ever-shop-ionic:
+    ever-shop-ionic:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
@@ -256,7 +256,7 @@ jobs:
               run: |
                   docker push everco/ever-shop-ionic:latest
 
-  ever-shop-angular:
+    ever-shop-angular:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
