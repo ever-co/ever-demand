@@ -1,0 +1,150 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+    name: ever-demo-admin-lb
+    annotations:
+        service.beta.kubernetes.io/do-loadbalancer-name: 'admindemo.ever.co'
+        service.beta.kubernetes.io/do-loadbalancer-protocol: 'http2'
+        service.beta.kubernetes.io/do-loadbalancer-http2-ports: '443'
+        # Replace with your Certificate Id. You can get a list of Ids with 'doctl compute certificate list'
+        service.beta.kubernetes.io/do-loadbalancer-certificate-id: '3e7e0327-dd2d-4ffc-9b98-5c79eb4592d5'
+        service.beta.kubernetes.io/do-loadbalancer-size-slug: 'lb-small'
+        service.beta.kubernetes.io/do-loadbalancer-hostname: 'admindemo.ever.co'
+spec:
+    type: LoadBalancer
+    selector:
+        app: ever-demo-admin
+    ports:
+        - name: http
+          protocol: TCP
+          port: 443
+          targetPort: 4200
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+    name: ever-demo-api-lb
+    annotations:
+        service.beta.kubernetes.io/do-loadbalancer-name: 'apidemo.ever.co'
+        service.beta.kubernetes.io/do-loadbalancer-protocol: 'http2'
+        service.beta.kubernetes.io/do-loadbalancer-http2-ports: '443'
+        # Replace with your Certificate Id. You can get a list of Ids with 'doctl compute certificate list'
+        service.beta.kubernetes.io/do-loadbalancer-certificate-id: '3e7e0327-dd2d-4ffc-9b98-5c79eb4592d5'
+        service.beta.kubernetes.io/do-loadbalancer-size-slug: 'lb-small'
+        service.beta.kubernetes.io/do-loadbalancer-hostname: 'apidemo.ever.co'
+spec:
+    type: LoadBalancer
+    selector:
+        app: ever-demo-api
+    ports:
+        - name: http
+          protocol: TCP
+          port: 443
+          targetPort: 5500
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: ever-demo-api
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: ever-demo-api
+    template:
+        metadata:
+            labels:
+                app: ever-demo-api
+        spec:
+            containers:
+                - name: ever-demo-api
+                  image: ghcr.io/ever-co/ever-api:latest
+                  env:
+                      - name: HOST
+                        value: 0.0.0.0                        
+                      - name: DEMO
+                        value: 'true'                      
+                      - name: NODE_ENV
+                        value: 'production'
+                      - name: HTTPPORT
+                        value: '5500'
+                      # We use LB, so no need to expose HTTPS, only HTTPS required  
+                      # - name: HTTPSPORT
+                      #   value: '5501'
+                      - name: GQLPORT
+                        value: '5555'
+                      - name: GQLPORT_SUBSCRIPTIONS
+                        value: '5050'
+                      - name: DB_URI
+                        value: 'mongodb://localhost/ever_development'
+                      - name: ADMIN_PASSWORD_RESET
+                        value: 'true'
+                      - name: FAKE_DATA_GENERATOR
+                        value: 'true'
+                      - name: LOG_LEVEL
+                        value: 'info'
+                  ports:
+                      - containerPort: 5500
+                        protocol: TCP
+                      # We use LB, so no need to expose HTTPS, only HTTPS required    
+                      # - containerPort: 5501
+                      #   protocol: TCP
+                      - containerPort: 5555
+                        protocol: TCP
+                      - containerPort: 5050
+                        protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: ever-demo-admin
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: ever-demo-admin
+    template:
+        metadata:
+            labels:
+                app: ever-demo-admin
+        spec:
+            containers:
+                - name: ever-demo-admin
+                  image: ghcr.io/ever-co/ever-admin-angular:latest
+                  env:
+                      - name: DEMO
+                        value: 'true'
+                      - name: NODE_ENV
+                        value: 'production'
+                      - name: HTTPS_SERVICES_ENDPOINT
+                        value: 'https://apidemo.ever.co'
+                      # We connect via HTTPS, so no need HTTP endpoint address  
+                      # - name: SERVICES_ENDPOINT
+                      #   value: ''
+                      - name: GQL_ENDPOINT
+                        value: 'http://apidemo.ever.co:5555/graphql'
+                      - name: GQL_SUBSCRIPTIONS_ENDPOINT
+                        value: 'ws://apidemo.ever.co:5050/subscriptions'
+                      - name: SENTRY_DSN
+                        value: 'https://7cd381188b6f446ca0e69185227b9031@o51327.ingest.sentry.io/4397292'
+                      - name: CHATWOOT_SDK_TOKEN
+                        value: 'jFoSXEjGmqhUhqU3zfgkFfMt'
+                      - name: GOOGLE_MAPS_API_KEY
+                        value: ''
+                      - name: GOOGLE_PLACE_AUTOCOMPLETE
+                        value: 'false'
+                      - name: DEFAULT_LATITUDE
+                        value: '42.6459136'
+                      - name: DEFAULT_LONGITUDE
+                        value: '23.3332736'
+                      - name: CURRENCY_SYMBOL
+                        value: '$'
+                      - name: DEFAULT_LANGUAGE
+                        value: 'en-US'
+
+                  ports:
+                      - containerPort: 4200
+                        protocol: TCP
