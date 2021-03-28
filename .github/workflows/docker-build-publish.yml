@@ -37,7 +37,7 @@ jobs:
               uses: docker/build-push-action@v2
               with:
                   context: .
-                  file: ./.deploy/core/Dockerfile
+                  file: ./.deploy/api/Dockerfile
                   load: true
                   tags: |
                       ghcr.io/ever-co/ever-api:latest

@@ -65,9 +65,14 @@
 	"git.ignoreLimitWarning": true,
 	"vsicons.presets.nestjs": true,
 	"cSpell.words": [
+		"AGPL",
+		"entrypoint",
 		"envalid",
 		"esnext",
 		"inversify",
+		"logpath",
+		"mongod",
+		"mongodb",
 		"pyro",
 		"snyk",
 		"typeorm"

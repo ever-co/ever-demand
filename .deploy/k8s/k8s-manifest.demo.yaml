@@ -64,14 +64,14 @@ spec:
                   image: ghcr.io/ever-co/ever-api:latest
                   env:
                       - name: HOST
-                        value: 0.0.0.0                        
+                        value: 0.0.0.0
                       - name: DEMO
-                        value: 'true'                      
+                        value: 'true'
                       - name: NODE_ENV
                         value: 'production'
                       - name: HTTPPORT
                         value: '5500'
-                      # We use LB, so no need to expose HTTPS, only HTTPS required  
+                      # We use LB, so no need to expose HTTPS, only HTTPS required
                       # - name: HTTPSPORT
                       #   value: '5501'
                       - name: GQLPORT
@@ -89,7 +89,7 @@ spec:
                   ports:
                       - containerPort: 5500
                         protocol: TCP
-                      # We use LB, so no need to expose HTTPS, only HTTPS required    
+                      # We use LB, so no need to expose HTTPS, only HTTPS required
                       # - containerPort: 5501
                       #   protocol: TCP
                       - containerPort: 5555
@@ -121,7 +121,7 @@ spec:
                         value: 'production'
                       - name: HTTPS_SERVICES_ENDPOINT
                         value: 'https://apidemo.ever.co'
-                      # We connect via HTTPS, so no need HTTP endpoint address  
+                      # We connect via HTTPS, so no need HTTP endpoint address
                       # - name: SERVICES_ENDPOINT
                       #   value: ''
                       - name: GQL_ENDPOINT

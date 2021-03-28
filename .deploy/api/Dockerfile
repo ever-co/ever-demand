@@ -1,4 +1,4 @@
-# Ever Core (API)
+# Ever Platform API (Core)
 
 ARG NODE_OPTIONS
 ARG NODE_ENV
@@ -23,17 +23,16 @@ LABEL maintainer="ever@ever.co"
 
 ENV CI=true
 
-RUN apk update \
+RUN apk --update add bash \
 	&& apk add libexecinfo libexecinfo-dev \
-	&& npm i -g npm \
 	&& apk --no-cache add --virtual builds-deps build-base \
-	snappy g++ snappy-dev gcc libgcc libstdc++ linux-headers autoconf automake make nasm python git \
+	snappy dos2unix g++ snappy-dev gcc libgcc libstdc++ linux-headers autoconf automake make nasm python vips-dev git \
 	&& npm install --quiet node-gyp -g \
 	&& npm config set python /usr/bin/python \
-	mkdir /srv/ever && chown -R node:node /srv/ever
+	&& mkdir /srv/ever && chown -R node:node /srv/ever
 
-COPY wait .deploy/core/entrypoint.sh /
-RUN chmod +x /wait /entrypoint.sh && dos2unix /entrypoint.sh
+COPY wait .deploy/api/entrypoint.compose.sh .deploy/api/entrypoint.prod.sh /
+RUN chmod +x /wait /entrypoint.compose.sh /entrypoint.prod.sh && dos2unix /entrypoint.compose.sh && dos2unix /entrypoint.prod.sh
 
 USER node:node
 
@@ -51,9 +50,9 @@ FROM node:alpine AS development
 
 USER node:node
 
-WORKDIR /srv/gauzy
+WORKDIR /srv/ever
 
-COPY --chown=node:node --from=dependencies /wait /entrypoint.sh /
+COPY --chown=node:node --from=dependencies /wait /entrypoint.compose.sh /entrypoint.prod.sh /
 COPY --chown=node:node --from=dependencies /srv/ever .
 COPY . .
 
@@ -77,20 +76,34 @@ FROM node:alpine AS production
 
 WORKDIR /srv/ever
 
-RUN mkdir /srv/ever && chown node:node /srv/ever
-RUN mkdir -p /srv/ever/packages/core && chown node:node /srv/ever/packages/core
-RUN mkdir -p /srv/ever/packages/common && chown node:node /srv/ever/packages/common
-
-COPY --chown=node:node --from=dependencies /wait ./wait
-COPY --chown=node:node --from=dependencies /entrypoint.sh .
+COPY --chown=node:node --from=dependencies /wait /entrypoint.prod.sh /entrypoint.compose.sh ./
 COPY --chown=node:node --from=dependencies /srv/ever/node_modules ./node_modules
 COPY --chown=node:node --from=build /srv/ever/packages/common/ ./packages/common/
 COPY --chown=node:node --from=build /srv/ever/packages/core/ ./packages/core/
 
+RUN chmod +x wait entrypoint.compose.sh entrypoint.prod.sh
+
 RUN npm install cross-env -g \
 	&& npm install pm2 -g --unsafe-perm \
 	&& touch ormlogs.log && chown node:node ormlogs.log \
-	&& chown node:node wait && chmod +x /wait
+	&& chown node:node wait && chmod +x wait
+
+# Temporary install MongoDB inside container
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/main' >> /etc/apk/repositories
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/community' >> /etc/apk/repositories
+RUN apk update
+RUN apk add --no-cache mongodb
+
+RUN mkdir /data
+RUN cd /data && mkdir db
+
+RUN chown -R mongodb /data/db
+RUN chmod -R a+wxr /data
+RUN chown -R node:node /data
+
+VOLUME /data/db
+
+RUN mkdir tmp && cd tmp && mkdir logs && cd /srv/ever && chown -R node:node tmp/logs
 
 USER node:node
 
@@ -99,9 +112,9 @@ ENV NODE_ENV=${NODE_ENV:-production}
 ENV API_HOST=${API_HOST:-api}
 ENV API_PORT=${API_PORT:-5500}
 ENV API_BASE_URL=${API_BASE_URL:-http://localhost:5500}
-ENV DB_URI=${DB_URI}
-ENV DB_HOST=${DB_HOST:-db}
-ENV DB_NAME=${DB_NAME:-ever}
+ENV DB_URI=${DB_URI:-mongodb://localhost/ever_development}
+ENV DB_HOST=${DB_HOST:-localhost}
+ENV DB_NAME=${DB_NAME:-ever_development}
 ENV DB_PORT=${DB_PORT:-27017}
 ENV DB_USER=${DB_USER}
 ENV DB_PASS=${DB_PASS}
@@ -116,6 +129,9 @@ ENV DEMO=${DEMO:-false}
 # 5555 for GraphQL
 # 5050 for GraphQL Subscriptions
 
-EXPOSE ${PORT} 5501 5050 5555
+EXPOSE ${PORT} 5501 5050 5555 27017 28017
 
-CMD [ "pm2-runtime", "main.js" ]
+ENTRYPOINT [ "./entrypoint.prod.sh" ]
+
+# CMD [ "pm2-runtime", "main.js" ]
+CMD [ "node", "packages/core/build/src/main.js" ]
