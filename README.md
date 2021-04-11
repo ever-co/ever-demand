@@ -283,6 +283,7 @@ All other brand and product names are trademarks, registered trademarks or servi
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/ever-co/ever.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/ever-co/ever/context:javascript)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fever.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fever?ref=badge_shield)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io)
+[![Crowdin](https://badges.crowdin.net/e/581540ddcc7c1cf42a50d0e0a6a3d7f7/localized.svg)](https://ever.crowdin.com/ever)
 
 ## P.S.
 - If you are running any business or doing freelance, check our new project [Gauzy](https://github.com/ever-co/gauzy) - Open Business Management Platform
