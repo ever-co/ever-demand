@@ -197,32 +197,7 @@ According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform tod
 -   You are more than welcome to submit feature requests in the [separate repo](https://github.com/ever-co/feature-requests/issues)
 -   Pull requests are always welcome! Please base pull requests against the _develop_ branch and follow the [contributing guide](.github/CONTRIBUTING.md).
 
-## Collaborators and Contributors
-
-### Development Team
-
-#### Core
-
--   Ruslan Konviser ([Evereq](https://github.com/evereq))
--   Michael Konviser ([Komish](https://github.com/MrKomish))
-
-#### Developers (alphabetical order)
-
--   Alish Meklyov ([Alish](https://github.com/AlishMekliov931))
--   Blagovest Gerov ([BlagovestGerov](https://github.com/BlagovestGerov))
--   Elvis Arabadjiyski ([Dreemsuncho](https://github.com/Dreemsuncho))
--   Hristo Hristov ([hrimar](https://github.com/hrimar))
--   Pavel Denchev ([PavelDenchev](https://github.com/PavelDenchev))
--   Tsvetelina Yordanova ([tsvetelina-e-y](https://github.com/tsvetelina-e-y))
--   Valentin Peshev ([valiopld](https://github.com/valiopld))
--   Yavor Grancharov ([YavorGrancharov](https://github.com/YavorGrancharov))
-
-#### Designers & QA
-
--   [Julia Konviser](https://www.linkedin.com/in/julia-konviser-8b917552) (Graphic Designer, QA)
--   [Yordan Genovski](https://services.ever.co/teammembers/yordan-genovski) (UX/UI/Product Designer)
-
-### Contributors
+## Contributors
 
 View full list of our [contributors](https://github.com/ever-co/ever/graphs/contributors).
 
