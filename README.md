@@ -5,7 +5,7 @@
 
 # Open-Source Commerce Platform for On-Demand Economy and Digital Marketplaces
 
-[Ever](https://ever.co)® Demand™ is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform built with [TypeScript](http://www.typescriptlang.org).
+[Ever® Demand™](https://ever.co) is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform built with [TypeScript](http://www.typescriptlang.org).
 
 You are welcome to check more information about the platform at our official website - **<https://ever.co>**.
 
