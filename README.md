@@ -5,7 +5,7 @@
 
 # Open-Source Commerce Platform for On-Demand Economy and Digital Marketplaces
 
-[Ever](https://ever.co)® is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform built with [TypeScript](http://www.typescriptlang.org).
+[Ever](https://ever.co)® Demand™ is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform built with [TypeScript](http://www.typescriptlang.org).
 
 You are welcome to check more information about the platform at our official website - **<https://ever.co>**.
 
@@ -227,11 +227,11 @@ In a production setup, all client-side to server-side (backend, APIs) communicat
 
 This software is available under following licenses:
 
--   [Ever® Platform Community™ Edition](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-community-edition-license)
--   [Ever® Platform Small Business™](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-small-business-license)
--   [Ever® Platform Enterprise™](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-enterprise-license)
+-   [Ever® Demand™ Platform Community Edition](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-community-edition-license)
+-   [Ever® Demand™ Platform Small Business](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-small-business-license)
+-   [Ever® Demand™ Platform Enterprise](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-enterprise-license)
 
-#### The default Ever® Platform™ license, without a valid Ever® Platform Enterprise™ or Ever® Platform Small Business™ License agreement, is the Ever® Platform Community™ Edition License.
+#### The default Ever® Demand™ Platform license, without a valid Ever® Demand™ Platform Enterprise or Ever® Demand™ Platform Small Business License agreement, is the Ever® Demand™ Platform Community Edition License.
 
 #### Please see [LICENSE.md](LICENSE.md) for more information on licenses. You can also [compare our offering](https://ever.co/compare-ever/#compare).
 
@@ -240,7 +240,7 @@ This software is available under following licenses:
 ## Trademarks
 
 **Ever**® is a registered trademark of [Ever Co. LTD](https://ever.co).  
-**Ever® Platform™**, **Ever® Platform Community™**, **Ever® Platform Small Business™** and **Ever® Platform Enterprise™** are all trademarks of [Ever Co. LTD](https://ever.co).
+**Ever® Demand™**, **Ever® Gauzy™** and **Ever® OpenSaaS™**  are all trademarks of [Ever Co. LTD](https://ever.co).
 
 The trademarks may only be used with the written permission of Ever Co. LTD. and may not be used to promote or otherwise market competitive products or services.
 
@@ -261,5 +261,5 @@ All other brand and product names are trademarks, registered trademarks or servi
 [![Crowdin](https://badges.crowdin.net/e/581540ddcc7c1cf42a50d0e0a6a3d7f7/localized.svg)](https://ever.crowdin.com/ever)
 
 ## P.S.
-- If you are running any business or doing freelance, check our new project [Gauzy](https://github.com/ever-co/gauzy) - Open Business Management Platform
+- If you are running any business or doing freelance, check our new project [Gauzy](https://github.com/ever-co/ever-gauzy) - Open Business Management Platform
 - [We are Hiring: remote TypeScript / NestJS / Angular developers](https://github.com/ever-co/jobs#available-positions)
