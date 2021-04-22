@@ -1,4 +1,4 @@
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ever-co/ever)
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ever-co/ever-demand)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/ever)
 [![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/ever-co/ever?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/evereq?utm_source=github&utm_medium=button&utm_term=evereq&utm_campaign=github)
@@ -77,20 +77,20 @@ Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_wi
 
 ## Documentation
 
-Please refer to our official [Platform Documentation](https://docs.ever.co) and to our [Wiki](https://github.com/ever-co/ever/wiki) (WIP).
+Please refer to our official [Platform Documentation](https://docs.ever.co) and to our [Wiki](https://github.com/ever-co/ever-demand/wiki) (WIP).
 
 For a quick overview of each project in the Platform (Server, Admin, Shops, etc.), you can search for README.md file in the root of the projects folders. For example, see [./backend/api/README.md](backend/api/README.md) for Server (Backend) related overview.
 
 ## Getting Started
 
-We follow [Gitflow Workflow](https://nvie.com/posts/a-successful-git-branching-model), so the [`develop` branch](https://github.com/ever-co/ever/tree/develop) may be in an unstable or even broken state during development. Please use [releases](https://github.com/ever-co/ever/releases) or [`master` branch](https://github.com/ever-co/ever/tree/master) instead of the `develop` branch in order to get more stable code.
+We follow [Gitflow Workflow](https://nvie.com/posts/a-successful-git-branching-model), so the [`develop` branch](https://github.com/ever-co/ever-demand/tree/develop) may be in an unstable or even broken state during development. Please use [releases](https://github.com/ever-co/ever/releases) or [`master` branch](https://github.com/ever-co/ever-demand/tree/master) instead of the `develop` branch in order to get more stable code.
 
 ### Clone Repo
 
 Clone the Ever Platform Git repo:
 
 ```
-git clone https://github.com/ever-co/ever.git
+git clone https://github.com/ever-co/ever-demand.git
 ```
 
 **IMPORTANT NOTE:**
@@ -157,11 +157,11 @@ After Lerna bootstrap everything you need to run build for all projects as descr
 
 ### MongoDB
 
-Ever platform configured to use MongoDB by default and assume you have MongoDB service running and accepting connections on the default `localhost:27017`. Please see relevant section in our [documentation](https://github.com/ever-co/ever/wiki/MongoDB).
+Ever platform configured to use MongoDB by default and assume you have MongoDB service running and accepting connections on the default `localhost:27017`. Please see relevant section in our [documentation](https://github.com/ever-co/ever-demand/wiki/MongoDB).
 
 ### Platform Configuration
 
-See relevant section in our [documentation](https://github.com/ever-co/ever/wiki/Ever-Platform-Configuration).
+See relevant section in our [documentation](https://github.com/ever-co/ever-demand/wiki/Ever-Platform-Configuration).
 
 ### Run Platform Projects
 
@@ -189,7 +189,7 @@ Note 3: in order to be able to run every project, you need to make sure everythi
 
 ## Metrics
 
-According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform today has more than 120K lines of TypeScript, GraphQL, HTML / CSS and other code files. You can get more details in the relevant section of our [documentation](https://github.com/ever-co/ever/wiki/Metrics).
+According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform today has more than 120K lines of TypeScript, GraphQL, HTML / CSS and other code files. You can get more details in the relevant section of our [documentation](https://github.com/ever-co/ever-demand/wiki/Metrics).
 
 ## Contribute
 
@@ -199,7 +199,7 @@ According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform tod
 
 ## Contributors
 
-View full list of our [contributors](https://github.com/ever-co/ever/graphs/contributors).
+View full list of our [contributors](https://github.com/ever-co/ever-demand/graphs/contributors).
 
 ## Contact Us
 
@@ -229,9 +229,9 @@ If you discover any issue regarding security, please disclose the information re
 
 This software is available under following licenses:
 
--   [Ever® Demand™ Platform Community Edition](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-community-edition-license)
--   [Ever® Demand™ Platform Small Business](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-small-business-license)
--   [Ever® Demand™ Platform Enterprise](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-enterprise-license)
+-   [Ever® Demand™ Platform Community Edition](https://github.com/ever-co/ever-demand/blob/master/LICENSE.md#ever-platform-community-edition-license)
+-   [Ever® Demand™ Platform Small Business](https://github.com/ever-co/ever-demand/blob/master/LICENSE.md#ever-platform-small-business-license)
+-   [Ever® Demand™ Platform Enterprise](https://github.com/ever-co/ever-demand/blob/master/LICENSE.md#ever-platform-enterprise-license)
 
 #### The default Ever® Demand™ Platform license, without a valid Ever® Demand™ Platform Enterprise or Ever® Demand™ Platform Small Business License agreement, is the Ever® Demand™ Platform Community Edition License.
 
