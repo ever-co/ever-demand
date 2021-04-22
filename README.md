@@ -223,7 +223,7 @@ See more details in the [LICENSE.md](LICENSE.md).
 
 In a production setup, all client-side to server-side (backend, APIs) communications should be encrypted using HTTPS/WSS/SSL (REST APIs, GraphQL endpoint, Socket.io WebSockets, etc.).
 
-If you discover any issue regarding security, please disclose the information responsibly by sending an email to <security@ever.co> and not by creating a GitHub issue.
+If you discover any issue regarding security, please disclose the information responsibly by sending an email to <mailto:security@ever.co> or on [![huntr](https://cdn.huntr.dev/huntr_security_badge_mono.svg)](https://huntr.dev) and not by creating a GitHub issue.
 
 ## License
 
@@ -251,6 +251,7 @@ All other brand and product names are trademarks, registered trademarks or servi
 #### Copyright © 2016-present, Ever Co. LTD. All rights reserved.
 
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=ever-co.ever-platform)
+[![huntr](https://cdn.huntr.dev/huntr_security_badge_mono.svg)](https://huntr.dev)
 [![Circle CI](https://circleci.com/gh/ever-co/ever.svg?style=svg)](https://circleci.com/gh/ever-co/ever)
 [![codecov](https://codecov.io/gh/ever-co/ever/branch/master/graph/badge.svg)](https://codecov.io/gh/ever-co/ever)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e7b2b38660f44963989ac9d49ae76d4d)](https://www.codacy.com/app/Ever/ever?utm_source=github.com&utm_medium=referral&utm_content=ever-co/ever&utm_campaign=Badge_Grade)
