@@ -40,7 +40,7 @@
 	},
 	"dependencies": {
 		"lodash": "^4.17.15",
-		"mongoose": "^5.6.0",
+		"mongoose": "^6.0.4",
 		"reflect-metadata": "^0.1.13",
 		"rxjs": "^6.5.2",
 		"stripe": "^7.2.0",
