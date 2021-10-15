@@ -6,10 +6,10 @@
   "homepage": "https://ever.co",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ever-co/ever.git"
+    "url": "https://github.com/ever-co/ever-demand.git"
   },
   "bugs": {
-    "url": "https://github.com/ever-co/ever/issues"
+    "url": "https://github.com/ever-co/ever-demand/issues"
   },
   "private": false,
   "author": {
@@ -86,7 +86,7 @@
     "gatsby-cli": "^2.6.9",
     "gatsby-plugin-sass": "^2.0.11",
     "gatsby-source-graphql": "^2.0.14",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.14.1",
     "prettier": "^1.16.4",
     "tslint": "^5.14.0",
     "typescript": "^3.3.3333"

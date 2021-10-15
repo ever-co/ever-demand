@@ -6,10 +6,10 @@
 	"homepage": "https://ever.co",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/ever-co/ever.git"
+		"url": "https://github.com/ever-co/ever-demand.git"
 	},
 	"bugs": {
-		"url": "https://github.com/ever-co/ever/issues"
+		"url": "https://github.com/ever-co/ever-demand/issues"
 	},
 	"private": false,
 	"author": {
@@ -111,7 +111,7 @@
 		"mongoose": "^5.6.0",
 		"morgan": "^1.9.1",
 		"ms": "^2.1.2",
-		"node-sass": "^4.12.0",
+		"node-sass": "^4.14.1",
 		"on-finished": "^2.3.0",
 		"passport": "^0.4.0",
 		"passport-facebook": "^3.0.0",
