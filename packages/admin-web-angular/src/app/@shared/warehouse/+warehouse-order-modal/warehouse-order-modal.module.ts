@@ -6,8 +6,13 @@ import { WarehouseOrderModalComponent } from './warehouse-order-modal.component'
 import { WarehouseOrderInputComponent } from './warehouse-order-input.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
+import { MakeOrderCommentComponent } from './make-order-comment.component';
 
-const COMPONENTS = [WarehouseOrderModalComponent, WarehouseOrderInputComponent];
+const COMPONENTS = [
+	WarehouseOrderModalComponent,
+	WarehouseOrderInputComponent,
+	MakeOrderCommentComponent,
+];
 
 @NgModule({
 	imports: [
@@ -19,7 +24,11 @@ const COMPONENTS = [WarehouseOrderModalComponent, WarehouseOrderInputComponent];
 		TranslateModule.forChild(),
 		NbButtonModule,
 	],
-	declarations: [WarehouseOrderModalComponent, WarehouseOrderInputComponent],
+	declarations: [
+		WarehouseOrderModalComponent,
+		WarehouseOrderInputComponent,
+		MakeOrderCommentComponent,
+	],
 	entryComponents: COMPONENTS,
 	exports: COMPONENTS,
 })

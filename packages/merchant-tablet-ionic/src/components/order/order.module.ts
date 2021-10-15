@@ -14,6 +14,7 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OrderTypeComponent } from './order-type/order-type.component';
+import { MakeOrderCommentComponent } from './make-order/make-order-comment.component';
 
 @NgModule({
 	imports: [
@@ -30,10 +31,15 @@ import { OrderTypeComponent } from './order-type/order-type.component';
 		SelectAddCustomerComponent,
 		MakeOrderComponent,
 		MakeOrderInputComponent,
+		MakeOrderCommentComponent,
 		OrderTypeComponent,
 		AddressComponent,
 	],
-	entryComponents: [AddressComponent, MakeOrderInputComponent],
+	entryComponents: [
+		AddressComponent,
+		MakeOrderInputComponent,
+		MakeOrderCommentComponent,
+	],
 	exports: [
 		OrderComponent,
 		ChooseCustomerOptionComponent,

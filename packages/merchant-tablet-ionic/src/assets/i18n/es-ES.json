@@ -344,6 +344,7 @@
 			"PRODUCT": "Producto",
 			"PRICE": "Precio",
 			"AVAILABLE": "Disponible",
+			"COMMENT": "Comentario",
 			"AMOUNT": "Cantidad",
 			"MAKE_ORDER": "Crear Pedido",
 			"BASIC_INFO": "Información Básica",

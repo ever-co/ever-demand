@@ -27,6 +27,6 @@
 	}
 }
 
-/deep/ input[type='text'] {
+:host ::ng-deep input[type='text'] {
 	color: #333 !important;
 }

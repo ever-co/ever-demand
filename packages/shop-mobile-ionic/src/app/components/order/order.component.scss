@@ -59,14 +59,37 @@
 	width: 100%;
 }
 
+@keyframes product-fade-out {
+	50% {
+		opacity: 0.2;
+		margin-right: calc(100% + 15px);
+		margin-left: calc(-100% + 15px);
+	}
+	100% {
+		margin-right: calc(100% + 15px);
+		margin-left: calc(-100% + 15px);
+		width: 0;
+		height: 0;
+		padding: 0;
+	}
+}
+
 .order-body {
 	padding: 15px;
+	display: flex;
+	flex-direction: column;
 
 	.product-container {
 		padding-bottom: 15px;
 
 		&:last-of-type {
 			padding-bottom: 0;
+		}
+
+		&.deleted-product {
+			animation-name: product-fade-out;
+			animation-duration: 1s;
+			animation-fill-mode: both;
 		}
 	}
 }

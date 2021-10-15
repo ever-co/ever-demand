@@ -138,11 +138,13 @@ jobs:
                   name: Run Bootstrap
                   no_output_timeout: 60m
                   command: yarn bootstrap
+                  no_output_timeout: 60m
             - run:
                   name: Run Build All
                   # note: it should be possible also to run: yarn build,
                   # but for now we don't want parallel builds in Circle
                   command: yarn build:all
+                  no_output_timeout: 60m
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-monorepo-root-{{ checksum "yarn.lock" }}
@@ -175,12 +177,15 @@ jobs:
                   name: Run Bootstrap
                   no_output_timeout: 60m
                   command: yarn bootstrap
+                  no_output_timeout: 60m
             - run:
                   name: Run Build Common Packages
                   command: yarn build:common
+                  no_output_timeout: 60m
             - run:
                   name: Run Build
                   command: yarn build:server
+                  no_output_timeout: 60m
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-backend-api-{{ checksum "yarn.lock" }}
@@ -213,12 +218,15 @@ jobs:
                   name: Run Bootstrap
                   no_output_timeout: 60m
                   command: yarn bootstrap
+                  no_output_timeout: 60m
             - run:
                   name: Run Build Common Packages
                   command: yarn build:common
+                  no_output_timeout: 60m
             - run:
                   name: Run Build
                   command: yarn build:admin
+                  no_output_timeout: 60m
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-admin-website-angular-{{ checksum "yarn.lock" }}
@@ -253,15 +261,19 @@ jobs:
                   name: Run Bootstrap
                   no_output_timeout: 60m
                   command: yarn bootstrap
+                  no_output_timeout: 60m
             - run:
                   name: Run Build Common Packages
                   command: yarn build:common
+                  no_output_timeout: 60m
             - run:
                   name: Run Build
                   command: yarn build:carrier
+                  no_output_timeout: 60m
             - run:
                   name: Run Ionic Build (Production)
                   command: cd packages/carrier-mobile-ionic && yarn ionic:build:prod
+                  no_output_timeout: 60m
             - run:
                   name: Add new android platform
                   command: |
@@ -270,6 +282,7 @@ jobs:
                       ionic config set -g telemetry true
                       # echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
                       # echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
+                  no_output_timeout: 60m
             - run:
                   name: Run Cordova Build for Android (Debug)
                   command: |
@@ -277,6 +290,7 @@ jobs:
                       yarn cordova:build
                       mkdir -p /tmp/apk
                       cp -r platforms/android/app/build/outputs/apk/debug/app-debug.apk /tmp/apk/carrier.apk
+                  no_output_timeout: 60m
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-carrier-mobile-ionic-{{ checksum "yarn.lock" }}
@@ -314,15 +328,19 @@ jobs:
                   name: Run Bootstrap
                   no_output_timeout: 60m
                   command: yarn bootstrap
+                  no_output_timeout: 60m
             - run:
                   name: Run Build Common Packages
                   command: yarn build:common
+                  no_output_timeout: 60m
             - run:
                   name: Run Build
                   command: yarn build:shopmobile
+                  no_output_timeout: 60m
             - run:
                   name: Run Ionic Build (Production)
                   command: cd packages/shop-mobile-ionic && yarn ionic:build:prod
+                  no_output_timeout: 60m
             - run:
                   name: Add new android platform
                   command: |
@@ -331,6 +349,7 @@ jobs:
                       ionic config set -g telemetry true
                       # echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
                       # echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
+                  no_output_timeout: 60m    
             - run:
                   name: Run Cordova Build for Android (Debug)
                   command: |
@@ -338,6 +357,7 @@ jobs:
                       yarn cordova:build
                       mkdir -p /tmp/apk
                       cp -r platforms/android/app/build/outputs/apk/debug/app-debug.apk /tmp/apk/shop.apk
+                  no_output_timeout: 60m    
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-shop-mobile-ionic-{{ checksum "yarn.lock" }}
@@ -373,12 +393,15 @@ jobs:
                   name: Run Bootstrap
                   no_output_timeout: 60m
                   command: yarn bootstrap
+                  no_output_timeout: 60m
             - run:
                   name: Run Build Common Packages
                   command: yarn build:common
+                  no_output_timeout: 60m
             - run:
                   name: Run Build
                   command: yarn build:shopweb
+                  no_output_timeout: 60m
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-shop-website-angular-{{ checksum "yarn.lock" }}
@@ -413,15 +436,19 @@ jobs:
                   name: Run Bootstrap
                   no_output_timeout: 60m
                   command: yarn bootstrap
+                  no_output_timeout: 60m
             - run:
                   name: Run Build Common Packages
                   command: yarn build:common
+                  no_output_timeout: 60m
             - run:
                   name: Run Build
                   command: yarn build:merchant
+                  no_output_timeout: 60m
             - run:
                   name: Run Ionic Build (Production)
                   command: cd packages/merchant-tablet-ionic && yarn ionic:build:prod
+                  no_output_timeout: 60m
             - run:
                   name: Add new android platform
                   command: |
@@ -430,6 +457,7 @@ jobs:
                       ionic config set -g telemetry true
                       # echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
                       # echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
+                  no_output_timeout: 60m    
             - run:
                   name: Run Cordova Build for Android (Debug)
                   command: |
@@ -437,6 +465,7 @@ jobs:
                       yarn cordova:build
                       mkdir -p /tmp/apk
                       cp -r platforms/android/app/build/outputs/apk/debug/app-debug.apk /tmp/apk/merchant.apk
+                  no_output_timeout: 60m    
             - save_cache:
                   name: Save Yarn Package Cache
                   key: yarn-packages-merchant-tablet-ionic-{{ checksum "yarn.lock" }}
@@ -473,9 +502,12 @@ jobs:
             - run:
                   name: Install Dependencies
                   command: cd carrier/mobile-ionic && yarn install
+                  no_output_timeout: 60m
             - run:
                   name: test
                   command: cd carrier/mobile-ionic && yarn test
+                  no_output_timeout: 60m
+
     test-shop-mobile-ionic:
         <<: *defaults
         working_directory: /tmp/workspace/shop/mobile-ionic
@@ -500,9 +532,12 @@ jobs:
             - run:
                   name: Install Dependencies
                   command: cd shop/mobile-ionic && yarn install
+                  no_output_timeout: 60m
             - run:
                   name: test
                   command: cd shop/mobile-ionic && yarn test
+                  no_output_timeout: 60m
+
     test-shop-website-angular:
         <<: *defaults
         working_directory: /tmp/workspace/shop/website-angular
@@ -527,9 +562,12 @@ jobs:
             - run:
                   name: Install Dependencies
                   command: cd shop/website-angular && yarn install
+                  no_output_timeout: 60m
             - run:
                   name: test
                   command: cd shop/website-angular && yarn test
+                  no_output_timeout: 60m
+
     test-admin-website-angular:
         <<: *defaults
         working_directory: /tmp/workspace/admin/website-angular
@@ -554,9 +592,12 @@ jobs:
             - run:
                   name: Install Dependencies
                   command: cd admin/website-angular && yarn install
+                  no_output_timeout: 60m
             - run:
                   name: test
                   command: cd admin/website-angular && yarn test
+                  no_output_timeout: 60m
+
     test-backend-api:
         <<: *defaults
         working_directory: /tmp/workspace/backend/api
@@ -581,9 +622,12 @@ jobs:
             - run:
                   name: Install Dependencies
                   command: cd backend/api && yarn install
+                  no_output_timeout: 60m
             - run:
                   name: test
                   command: cd backend/api && yarn test
+                  no_output_timeout: 60m
+
 workflows:
     version: 2
     build_and_test:

@@ -40,6 +40,7 @@ export interface IOrderProductCreateObject extends DBCreateObject {
 	isCarrierRequired?: boolean;
 	isDeliveryRequired?: boolean;
 	isTakeaway?: boolean;
+	comment?: string;
 }
 
 interface IOrderProduct extends IOrderProductCreateObject, DBRawObject {

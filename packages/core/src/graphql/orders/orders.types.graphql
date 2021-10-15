@@ -57,6 +57,7 @@ type OrderProduct {
 	initialPrice: Float!
 	price: Float!
 	product: Product!
+	comment: String
 }
 
 input OrdersFindInput {

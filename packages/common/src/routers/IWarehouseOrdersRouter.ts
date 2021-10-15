@@ -15,6 +15,7 @@ export interface IWarehouseOrdersRouterCreateOptions {
 
 export interface IOrderCreateInputProduct {
 	count: number;
+	comment?: string;
 	productId: Product['id'];
 }
 

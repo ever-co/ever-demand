@@ -341,6 +341,7 @@
 			"PRODUCT": "Product",
 			"PRICE": "Price",
 			"AVAILABLE": "Available",
+			"COMMENT": "Comment",
 			"AMOUNT": "Amount",
 			"MAKE_ORDER": "Make Order",
 			"BASIC_INFO": "Basic Info",

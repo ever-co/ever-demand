@@ -1,0 +1,307 @@
+name: Build and Publish Docker Images
+
+on:
+    push:
+        branches: [develop,master]
+
+jobs:
+    ever-api:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Set up QEMU
+              uses: docker/setup-qemu-action@v1
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v1
+            - name: Login to DockerHub
+              uses: docker/login-action@v1
+              with:
+                  username: ${{ secrets.DOCKERHUB_USERNAME }}
+                  password: ${{ secrets.DOCKERHUB_TOKEN }}
+            - name: Login to GitHub Container Registry
+              uses: docker/login-action@v1
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.repository_owner }}
+                  password: ${{ secrets.GH_TOKEN }}
+            - name: Install doctl
+              uses: digitalocean/action-doctl@v2
+              with:
+                  token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+            - name: Log in to DigitalOcean Container Registry with short-lived credentials
+              run: doctl registry login --expiry-seconds 3600
+
+            - name: Build
+              uses: docker/build-push-action@v2
+              with:
+                  context: .
+                  file: ./.deploy/api/Dockerfile
+                  load: true
+                  tags: |
+                      ghcr.io/ever-co/ever-api:latest
+                      everco/ever-api:latest
+                      registry.digitalocean.com/ever/ever-api:latest
+
+            - name: Push to DigitalOcean Registry
+              run: |
+                  docker push registry.digitalocean.com/ever/ever-api:latest
+
+            - name: Push to Github Registry
+              run: |
+                  docker push ghcr.io/ever-co/ever-api:latest
+
+            - name: Push to Docker Hub Registry
+              run: |
+                  docker push everco/ever-api:latest
+
+    ever-admin-angular:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Set up QEMU
+              uses: docker/setup-qemu-action@v1
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v1
+            - name: Login to DockerHub
+              uses: docker/login-action@v1
+              with:
+                  username: ${{ secrets.DOCKERHUB_USERNAME }}
+                  password: ${{ secrets.DOCKERHUB_TOKEN }}
+            - name: Login to GitHub Container Registry
+              uses: docker/login-action@v1
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.repository_owner }}
+                  password: ${{ secrets.GH_TOKEN }}
+            - name: Install doctl
+              uses: digitalocean/action-doctl@v2
+              with:
+                  token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+            - name: Log in to DigitalOcean Container Registry with short-lived credentials
+              run: doctl registry login --expiry-seconds 3600
+
+            - name: Build
+              uses: docker/build-push-action@v2
+              with:
+                  context: .
+                  file: ./.deploy/admin-web-angular/Dockerfile
+                  load: true
+                  tags: |
+                      ghcr.io/ever-co/ever-admin-angular:latest
+                      everco/ever-admin-angular:latest
+                      registry.digitalocean.com/ever/ever-admin-angular:latest
+
+            - name: Push to DigitalOcean Registry
+              run: |
+                  docker push registry.digitalocean.com/ever/ever-admin-angular:latest
+
+            - name: Push to Github Registry
+              run: |
+                  docker push ghcr.io/ever-co/ever-admin-angular:latest
+
+            - name: Push to Docker Hub Registry
+              run: |
+                  docker push everco/ever-admin-angular:latest
+
+    ever-carrier-ionic:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Set up QEMU
+              uses: docker/setup-qemu-action@v1
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v1
+            - name: Login to DockerHub
+              uses: docker/login-action@v1
+              with:
+                  username: ${{ secrets.DOCKERHUB_USERNAME }}
+                  password: ${{ secrets.DOCKERHUB_TOKEN }}
+            - name: Login to GitHub Container Registry
+              uses: docker/login-action@v1
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.repository_owner }}
+                  password: ${{ secrets.GH_TOKEN }}
+            - name: Install doctl
+              uses: digitalocean/action-doctl@v2
+              with:
+                  token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+            - name: Log in to DigitalOcean Container Registry with short-lived credentials
+              run: doctl registry login --expiry-seconds 3600
+
+            - name: Build
+              uses: docker/build-push-action@v2
+              with:
+                  context: .
+                  file: ./.deploy/carrier-mobile-ionic/Dockerfile
+                  load: true
+                  tags: |
+                      ghcr.io/ever-co/ever-carrier-ionic:latest
+                      everco/ever-carrier-ionic:latest
+                      registry.digitalocean.com/ever/ever-carrier-ionic:latest
+
+            - name: Push to DigitalOcean Registry
+              run: |
+                  docker push registry.digitalocean.com/ever/ever-carrier-ionic:latest
+
+            - name: Push to Github Registry
+              run: |
+                  docker push ghcr.io/ever-co/ever-carrier-ionic:latest
+
+            - name: Push to Docker Hub Registry
+              run: |
+                  docker push everco/ever-carrier-ionic:latest
+
+    ever-merchant-ionic:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Set up QEMU
+              uses: docker/setup-qemu-action@v1
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v1
+            - name: Login to DockerHub
+              uses: docker/login-action@v1
+              with:
+                  username: ${{ secrets.DOCKERHUB_USERNAME }}
+                  password: ${{ secrets.DOCKERHUB_TOKEN }}
+            - name: Login to GitHub Container Registry
+              uses: docker/login-action@v1
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.repository_owner }}
+                  password: ${{ secrets.GH_TOKEN }}
+            - name: Install doctl
+              uses: digitalocean/action-doctl@v2
+              with:
+                  token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+            - name: Log in to DigitalOcean Container Registry with short-lived credentials
+              run: doctl registry login --expiry-seconds 3600
+
+            - name: Build
+              uses: docker/build-push-action@v2
+              with:
+                  context: .
+                  file: ./.deploy/merchant-tablet-ionic/Dockerfile
+                  load: true
+                  tags: |
+                      ghcr.io/ever-co/ever-merchant-ionic:latest
+                      everco/ever-merchant-ionic:latest
+                      registry.digitalocean.com/ever/ever-merchant-ionic:latest
+
+            - name: Push to DigitalOcean Registry
+              run: |
+                  docker push registry.digitalocean.com/ever/ever-merchant-ionic:latest
+
+            - name: Push to Github Registry
+              run: |
+                  docker push ghcr.io/ever-co/ever-merchant-ionic:latest
+
+            - name: Push to Docker Hub Registry
+              run: |
+                  docker push everco/ever-merchant-ionic:latest
+
+    ever-shop-ionic:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Set up QEMU
+              uses: docker/setup-qemu-action@v1
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v1
+            - name: Login to DockerHub
+              uses: docker/login-action@v1
+              with:
+                  username: ${{ secrets.DOCKERHUB_USERNAME }}
+                  password: ${{ secrets.DOCKERHUB_TOKEN }}
+            - name: Login to GitHub Container Registry
+              uses: docker/login-action@v1
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.repository_owner }}
+                  password: ${{ secrets.GH_TOKEN }}
+            - name: Install doctl
+              uses: digitalocean/action-doctl@v2
+              with:
+                  token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+            - name: Log in to DigitalOcean Container Registry with short-lived credentials
+              run: doctl registry login --expiry-seconds 3600
+
+            - name: Build
+              uses: docker/build-push-action@v2
+              with:
+                  context: .
+                  file: ./.deploy/shop-mobile-ionic/Dockerfile
+                  load: true
+                  tags: |
+                      ghcr.io/ever-co/ever-shop-ionic:latest
+                      everco/ever-shop-ionic:latest
+                      registry.digitalocean.com/ever/ever-shop-ionic:latest
+
+            - name: Push to DigitalOcean Registry
+              run: |
+                  docker push registry.digitalocean.com/ever/ever-shop-ionic:latest
+
+            - name: Push to Github Registry
+              run: |
+                  docker push ghcr.io/ever-co/ever-shop-ionic:latest
+
+            - name: Push to Docker Hub Registry
+              run: |
+                  docker push everco/ever-shop-ionic:latest
+
+    ever-shop-angular:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Set up QEMU
+              uses: docker/setup-qemu-action@v1
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v1
+            - name: Login to DockerHub
+              uses: docker/login-action@v1
+              with:
+                  username: ${{ secrets.DOCKERHUB_USERNAME }}
+                  password: ${{ secrets.DOCKERHUB_TOKEN }}
+            - name: Login to GitHub Container Registry
+              uses: docker/login-action@v1
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.repository_owner }}
+                  password: ${{ secrets.GH_TOKEN }}
+            - name: Install doctl
+              uses: digitalocean/action-doctl@v2
+              with:
+                  token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+            - name: Log in to DigitalOcean Container Registry with short-lived credentials
+              run: doctl registry login --expiry-seconds 3600
+
+            - name: Build
+              uses: docker/build-push-action@v2
+              with:
+                  context: .
+                  file: ./.deploy/shop-web-angular/Dockerfile
+                  load: true
+                  tags: |
+                      ghcr.io/ever-co/ever-shop-angular:latest
+                      everco/ever-shop-angular:latest
+                      registry.digitalocean.com/ever/ever-shop-angular:latest
+
+            - name: Push to DigitalOcean Registry
+              run: |
+                  docker push registry.digitalocean.com/ever/ever-shop-angular:latest
+
+            - name: Push to Github Registry
+              run: |
+                  docker push ghcr.io/ever-co/ever-shop-angular:latest
+
+            - name: Push to Docker Hub Registry
+              run: |
+                  docker push everco/ever-shop-angular:latest

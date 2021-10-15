@@ -169,6 +169,11 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 			.subscribe((v) => {
 				if (v !== this._productLocalesService.currentLocale) {
 					this._productLocalesService.currentLocale = v;
+
+					if (!this.product) {
+						this.images.forEach((i) => (i.locale = v));
+					}
+
 					this.setValue(this.product);
 				}
 			});
@@ -347,7 +352,7 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 	}
 
 	private _setDefaultLocaleValue() {
-		this.locale.setValue('en-US');
+		this.locale.setValue(this._translateService.currentLang || 'en-US');
 	}
 
 	private _bindFormControls() {

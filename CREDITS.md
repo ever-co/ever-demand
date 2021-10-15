@@ -19,3 +19,7 @@ We acknowledge and are grateful to these developers for their contributions to o
 -   Project: Ionic https://github.com/ionic-team/ionic
     Copyright 2015-present Drifty Co.
     License (MIT) https://github.com/ionic-team/ionic/blob/master/LICENSE
+
+-   Project: docker-compose-wait https://github.com/ufoscout/docker-compose-wait
+    A small command-line utility to wait for other docker images to be started while using docker-compose.
+	License (Apache-2.0 License) https://github.com/ufoscout/docker-compose-wait/blob/master/LICENSE
