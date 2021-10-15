@@ -1,6 +1,6 @@
 {
 	"name": "@ever-platform/admin-web-angular",
-	"version": "0.3.11",
+	"version": "0.4.1",
 	"description": "Ever Admin",
 	"license": "AGPL-3.0",
 	"homepage": "https://ever.co",
@@ -136,7 +136,7 @@
 		"ngx-moment": "^3.4.0",
 		"ngx-translate-multi-http-loader": "^3.0.0",
 		"ngx-useful-swiper": "9.0.3",
-		"node-sass": "^4.14.1",
+		"node-sass": "^6.0.1",
 		"normalize.css": "^8.0.1",
 		"pace-js": "1.0.2",
 		"pm2": "^4.2.1",

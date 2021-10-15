@@ -1,6 +1,6 @@
 {
 	"name": "@ever-platform/merchant-tablet-ionic",
-	"version": "0.3.2",
+	"version": "0.4.1",
 	"description": "Ever Merchant Tablet App",
 	"license": "AGPL-3.0",
 	"homepage": "https://ever.co",
@@ -164,7 +164,7 @@
 		"ngx-masonry": "^1.1.4",
 		"ngx-moment": "^3.4.0",
 		"ngx-pagination": "^4.1.0",
-		"node-sass": "^4.14.1",
+		"node-sass": "^6.0.1",
 		"phonegap-plugin-barcodescanner": "^8.0.1",
 		"pm2": "^4.2.1",
 		"qrcode": "^1.4.1",
