@@ -17,18 +17,6 @@
 		"email": "ever@ever.co",
 		"url": "https://ever.co"
 	},
-	"contributors": [
-		{
-			"name": "Ruslan Konviser (Evereq)",
-			"email": "ruslan@ever.co",
-			"url": "https://ever.co"
-		},
-		{
-			"name": "Misha Konviser (Komish)",
-			"email": "michael@ever.co",
-			"url": "https://ever.co"
-		}
-	],
 	"scripts": {
 		"watch": "tsc -p ./tsconfig.build.json -w",
 		"build": "rimraf build && tsc -p ./tsconfig.build.json",
@@ -39,18 +27,18 @@
 		"access": "public"
 	},
 	"dependencies": {
-		"lodash": "^4.17.15",
-		"mongoose": "^5.6.0",
+		"lodash": "^4.17.21",
+		"mongoose": "^6.0.11",
 		"reflect-metadata": "^0.1.13",
-		"rxjs": "^6.5.2",
-		"stripe": "^7.2.0",
-		"typeorm": "^0.2.18"
+		"rxjs": "^7.4.0",
+		"stripe": "^8.183.0",
+		"typeorm": "^0.2.38"
 	},
 	"devDependencies": {
-		"@types/node": "12.11.1",
-		"ts-node": "~8.3.0",
+		"@types/node": "16.11.0",
+		"ts-node": "~10.3.0",
 		"tslint": "^6.1.1",
-		"typescript": "~3.7.5"
+		"typescript": "~4.4.4"
 	},
 	"snyk": false
 }

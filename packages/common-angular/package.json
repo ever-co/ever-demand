@@ -17,18 +17,6 @@
 		"email": "ever@ever.co",
 		"url": "https://ever.co"
 	},
-	"contributors": [
-		{
-			"name": "Ruslan Konviser (Evereq)",
-			"email": "ruslan@ever.co",
-			"url": "https://ever.co"
-		},
-		{
-			"name": "Misha Konviser (Komish)",
-			"email": "michael@ever.co",
-			"url": "https://ever.co"
-		}
-	],
 	"scripts": {
 		"watch": "tsc -p ./tsconfig.build.json -w",
 		"build": "rimraf build && tsc -p ./tsconfig.build.json",
@@ -39,28 +27,28 @@
 		"access": "public"
 	},
 	"dependencies": {
-		"@angular/animations": "^9.1.0",
-		"@angular/cdk": "^9.1.3",
-		"@angular/common": "^9.1.0",
-		"@angular/compiler": "^9.1.0",
-		"@angular/core": "^9.1.0",
-		"@angular/forms": "^9.1.0",
-		"@angular/language-service": "^9.1.0",
-		"@angular/platform-browser": "^9.1.0",
-		"@angular/platform-browser-dynamic": "^9.1.0",
-		"@angular/router": "^9.1.0",
-		"@angular/service-worker": "^9.1.0",
+		"@angular/animations": "^12.2.10",
+		"@angular/cdk": "^12.2.10",
+		"@angular/common": "^12.2.10",
+		"@angular/compiler": "^12.2.10",
+		"@angular/core": "^12.2.10",
+		"@angular/forms": "^12.2.10",
+		"@angular/language-service": "^12.2.10",
+		"@angular/platform-browser": "^12.2.10",
+		"@angular/platform-browser-dynamic": "^12.2.10",
+		"@angular/router": "^12.2.10",
+		"@angular/service-worker": "^12.2.10",
 		"@ever-platform/common": "file:../common",
-		"@ngx-translate/core": "^12.1.2",
-		"@ngx-translate/http-loader": "^4.0.0",
-		"tslib": "^1.10.0",
-		"zone.js": "~0.10.2"
+		"@ngx-translate/core": "^13.0.0",
+		"@ngx-translate/http-loader": "^6.0.0",
+		"tslib": "^2.3.1",
+		"zone.js": "~0.11.4"
 	},
 	"devDependencies": {
-		"@types/node": "12.11.1",
+		"@types/node": "16.11.0",
 		"lint": "^0.7.0",
-		"ts-node": "~8.3.0",
-		"typescript": "~3.7.5"
+		"ts-node": "~10.3.0",
+		"typescript": "~4.4.4"
 	},
 	"snyk": false
 }
