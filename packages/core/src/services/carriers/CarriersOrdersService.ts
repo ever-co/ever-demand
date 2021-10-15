@@ -240,7 +240,7 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 					? this.geoLocationsOrdersService.get(geoLocation, {
 							populateWarehouse: options.populateWarehouse,
 					  })
-					: throwError(
+					: throwError(() =>
 							new Error(
 								`No such a carrier with the id ${carrierId} => can't getAvailable`
 							)

@@ -5,7 +5,7 @@ import { IInviteRequestCreateObject } from '@modules/server.common/interfaces/II
 import InviteRequest from '@modules/server.common/entities/InviteRequest';
 import { DBService, ExistenceEventType } from '@pyro/db-server';
 import { InvitesService } from './InvitesService';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import _ from 'lodash';
 import Invite from '@modules/server.common/entities/Invite';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';

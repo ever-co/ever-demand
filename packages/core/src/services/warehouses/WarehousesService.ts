@@ -18,7 +18,7 @@ import {
 } from '@pyro/io';
 import IService from '../IService';
 import { concat, exhaustMap, tap, first, map, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { DBService } from '@pyro/db-server';
 import { IWarehouseLoginResponse } from '@modules/server.common/routers/IWarehouseRouter';
 import { env } from '../../env';

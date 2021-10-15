@@ -2,6 +2,7 @@ import { getListeners, getRouterName, IRouter } from './router';
 import { ConnectionHandler } from '../connection-handler';
 import { Listener } from '../listener/listener';
 import Logger from 'bunyan';
+import { Server, Namespace } from 'socket.io';
 
 export class RouterHandler {
 	private readonly routerName: string;
@@ -9,7 +10,7 @@ export class RouterHandler {
 	private readonly listeners: Array<Listener<any>>;
 
 	constructor(
-		private readonly io: SocketIO.Server,
+		private readonly io: Server,
 		private readonly router: IRouter,
 		private readonly log: Logger
 	) {
@@ -25,11 +26,12 @@ export class RouterHandler {
 				: null,
 		});
 
-		const routerNamespace: SocketIO.Namespace = this.io.of(
+		const routerNamespace: Namespace = this.io.of(
 			`/${this.routerName}`
 		);
 
-		routerNamespace.setMaxListeners(0);
+		// TODO: figure out why we needed below
+		// routerNamespace.setMaxListeners(0);
 
 		routerNamespace.on('connection', (socket) => {
 			const connectionHandler = new ConnectionHandler(

@@ -53,7 +53,7 @@ export class UsersProductsService implements IUserProductsRouter, IService {
 		return this.devicesService.get(deviceId).pipe(
 			exhaustMap((device) => {
 				if (device === null) {
-					return throwError(
+					return throwError(() =>
 						new Error(`User with the id ${userId} doesn't exist`)
 					);
 				} else {

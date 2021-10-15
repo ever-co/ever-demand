@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 import IInviteRouter from '@modules/server.common/routers/IInviteRouter';
 import { asyncListener, observableListener, routerName } from '@pyro/io';
 import IService from '../IService';
-import { of } from 'rxjs/observable/of';
+import { of, from } from 'rxjs';
 import {
 	concat,
 	exhaustMap,
@@ -21,7 +21,6 @@ import {
 	first,
 	switchMap,
 } from 'rxjs/operators';
-import { from } from 'rxjs/observable/from';
 import _ = require('lodash');
 import { env } from '../../env';
 import { IGeoLocationCreateObject } from '@modules/server.common/interfaces/IGeoLocation';

@@ -11,7 +11,7 @@ import methodOverride from 'method-override';
 import errorhandler from 'errorhandler';
 import socketIO from 'socket.io';
 import express from 'express';
-import mongoose from 'mongoose';
+import mongoose, { ConnectOptions } from 'mongoose';
 import morgan from 'morgan';
 import exphbs from 'express-handlebars';
 import { createEverLogger } from '../helpers/Log';
@@ -164,7 +164,7 @@ export class ServicesApp {
 
 	private async _connectDB() {
 		try {
-			const connectionOptions: mongoose.ConnectionOptions = {
+			const connectionOptions = {
 				useCreateIndex: true,
 				useNewUrlParser: true,
 				autoReconnect: true,
@@ -177,7 +177,8 @@ export class ServicesApp {
 
 			const mongoConnect: mongoose.Mongoose = await mongoose.connect(
 				env.DB_URI,
-				connectionOptions
+				// TODO: connectionOptions now changed to ConnectOptions, so we do not use anymore connectionOptions above
+				// connectionOptions
 			);
 
 			this.db = mongoConnect.connection;

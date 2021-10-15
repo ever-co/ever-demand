@@ -21,8 +21,6 @@ export abstract class EntityService<T extends DBObject<any, any>> {
 
 	protected parse(obj: RawObject<T>): T;
 
-	protected parse(obj: null): null;
-
 	protected parse(obj: RawObject<T> | null): T | null {
 		if (obj == null) {
 			return null;

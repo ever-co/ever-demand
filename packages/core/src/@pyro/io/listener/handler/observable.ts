@@ -4,13 +4,14 @@ import _ from 'lodash';
 import Logger from 'bunyan';
 import { BaseListenerHandler } from './base';
 import { ObservableListener } from '../observable';
+import { Socket } from 'socket.io';
 
 export class ObservableListenerHandler<T> extends BaseListenerHandler<T>
 	implements IListenerHandler<T> {
 	constructor(
 		private readonly router: IRouter,
 		private readonly listener: ObservableListener<T>,
-		private readonly socket: SocketIO.Socket,
+		private readonly socket: Socket,
 		private readonly log: Logger
 	) {
 		super(router, listener, socket, log);

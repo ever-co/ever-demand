@@ -18,7 +18,7 @@ import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 import IGeoLocationWarehousesRouter from '@modules/server.common/routers/IGeoLocationWarehousesRouter';
 import IService from '../IService';
 import { ExistenceEventType } from '@pyro/db-server';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { concat, exhaustMap, filter, share } from 'rxjs/operators';
 
 @injectable()

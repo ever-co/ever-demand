@@ -30,7 +30,7 @@ import OrderStatus from '@modules/server.common/enums/OrderStatus';
 import User from '@modules/server.common/entities/User';
 import { ProductsService } from '../../services/products';
 import { Observable } from 'rxjs';
-import Stripe = require('stripe');
+import { Stripe } from 'stripe'
 
 @injectable()
 @routerName('order')
@@ -39,7 +39,9 @@ export class OrdersService extends DBService<Order>
 	public readonly DBObject: any = Order;
 
 	// TODO: this and other Stripe related things should be inside separate Payments Service
-	private stripe: Stripe = new Stripe(env.STRIPE_SECRET_KEY);
+	private stripe: Stripe = new Stripe(env.STRIPE_SECRET_KEY, {
+		apiVersion: "2020-08-27"
+	});
 
 	protected readonly log: Logger = createEverLogger({
 		name: 'ordersService',
@@ -269,7 +271,7 @@ export class OrdersService extends DBService<Order>
 					.toPromise();
 
 				if (user != null) {
-					const charge: Stripe.charges.ICharge = await this.stripe.charges.create(
+					const charge: Stripe.Charge = await this.stripe.charges.create(
 						{
 							amount: order.totalPrice * 100, // amount in cents, again
 							customer: user.stripeCustomerId,
@@ -324,7 +326,7 @@ export class OrdersService extends DBService<Order>
 
 		this.log.info({ callId, orderId }, '.refundWithStripe(orderId) called');
 
-		let refund: Stripe.refunds.IRefund;
+		let refund: Stripe.Refund;
 		let order: Order | null;
 
 		try {

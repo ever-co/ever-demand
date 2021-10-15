@@ -28,6 +28,7 @@
 		"ncu": "yarn lerna exec -- ncu",
 		"ncu:u": "yarn lerna exec -- ncu -u && yarn lerna bootstrap",
 		"lint": "yarn tslint --fix",
+		"start:api": "yarn run:server",
 		"run:ncu": "yarn ncu --configFileName=.ncurc.json --configFilePath=./",
 		"run:server": "yarn --cwd ./packages/core start",
 		"run:server:dev": "yarn --cwd ./packages/core start:dev",

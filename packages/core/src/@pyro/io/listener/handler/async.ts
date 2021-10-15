@@ -5,13 +5,14 @@ import _ from 'lodash';
 import Logger from 'bunyan';
 import { BaseListenerHandler } from './base';
 import { AsyncListener } from '../async';
+import { Socket } from 'socket.io';
 
 export class AsyncListenerHandler<T> extends BaseListenerHandler<T>
 	implements IListenerHandler<T> {
 	constructor(
 		private readonly router: IRouter,
 		private readonly listener: AsyncListener<T>,
-		private readonly socket: SocketIO.Socket,
+		private readonly socket: Socket,
 		private readonly log: Logger
 	) {
 		super(router, listener, socket, log);
