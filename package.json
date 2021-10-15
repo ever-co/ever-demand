@@ -6,10 +6,10 @@
 	"homepage": "https://ever.co",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/ever-co/ever.git"
+		"url": "https://github.com/ever-co/ever-demand.git"
 	},
 	"bugs": {
-		"url": "https://github.com/ever-co/ever/issues"
+		"url": "https://github.com/ever-co/ever-demand/issues"
 	},
 	"private": true,
 	"author": {
@@ -60,7 +60,9 @@
 		"count": "cross-env yarn cloc packages/core/src packages/shop-web-angular/src packages/carrier-mobile-ionic/src packages/shop-web-angular/src packages/shop-mobile-ionic/src packages/merchant-tablet-ionic/src packages/common-angular packages/common --exclude-dir='node_modules,modules'",
 		"snyk-protect": "snyk protect"
 	},
-	"resolutions": {},
+	"resolutions": {
+		"node-sass": "^4.14.1"
+	},
 	"dependencies": {
 		"@angular/animations": "^9.1.1",
 		"@angular/common": "^9.1.1",
@@ -135,6 +137,7 @@
 		"graphql": "^14.1.1",
 		"graphql-tag": "^2.10.1",
 		"handlebars": "^4.1.2",
+		"node-sass": "^4.14.1",
 		"ionicons": "^4.5.8",
 		"jasmine": "^3.5.0",
 		"jsbarcode": "^3.11.0",

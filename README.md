@@ -56,7 +56,7 @@ You can also track feature requests from the community in the [separate repo](ht
 
 ### Disclaimer
 
-_A word of caution_: We are in α (alpha), i.e. Ever® Platform™ is very much under development (work in progress, WIP).  
+_A word of caution_: We are in α (alpha), i.e. Ever® Platform™ is very much under development (work in progress, WIP).
 Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_winking_eye:
 
 ## Technology Stack and Requirements
@@ -217,8 +217,8 @@ View full list of our [contributors](https://github.com/ever-co/ever-demand/grap
 
 ## Security
 
-Ever Platform follows good security practices, but 100% security cannot be guaranteed in any software!  
-Ever Platform is provided AS IS without any warranty. Use at your own risk!  
+Ever Platform follows good security practices, but 100% security cannot be guaranteed in any software!
+Ever Platform is provided AS IS without any warranty. Use at your own risk!
 See more details in the [LICENSE.md](LICENSE.md).
 
 In a production setup, all client-side to server-side (backend, APIs) communications should be encrypted using HTTPS/WSS/SSL (REST APIs, GraphQL endpoint, Socket.io WebSockets, etc.).
@@ -243,8 +243,8 @@ This software is available under following licenses:
 
 ## Trademarks
 
-**Ever**® is a registered trademark of [Ever Co. LTD](https://ever.co).  
-**Ever® Demand™**, **Ever® Gauzy™** and **Ever® OpenSaaS™**  are all trademarks of [Ever Co. LTD](https://ever.co).
+**Ever**® is a registered trademark of [Ever Co. LTD](https://ever.co).
+**Ever® Demand™**, **Ever® Gauzy™** and **Ever® OpenSaaS™** are all trademarks of [Ever Co. LTD](https://ever.co).
 
 The trademarks may only be used with the written permission of Ever Co. LTD. and may not be used to promote or otherwise market competitive products or services.
 
@@ -266,5 +266,6 @@ All other brand and product names are trademarks, registered trademarks or servi
 [![Crowdin](https://badges.crowdin.net/e/581540ddcc7c1cf42a50d0e0a6a3d7f7/localized.svg)](https://ever.crowdin.com/ever)
 
 ## P.S.
-- If you are running any business or doing freelance, check our new project [Gauzy](https://github.com/ever-co/ever-gauzy) - Open Business Management Platform
-- [We are Hiring: remote TypeScript / NestJS / Angular developers](https://github.com/ever-co/jobs#available-positions)
+
+-   If you are running any business or doing freelance, check our new project [Ever Gauzy](https://github.com/ever-co/ever-gauzy) - Open Business Management Platform (ERP/CRM/HRM)
+-   [We are Hiring: remote TypeScript / NodeJS / NestJS / Angular & React developers](https://github.com/ever-co/jobs#available-positions)
