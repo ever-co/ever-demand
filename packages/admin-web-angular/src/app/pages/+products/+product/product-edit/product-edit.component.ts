@@ -2,13 +2,12 @@ import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { BasicInfoFormComponent } from '../../../../@shared/product/forms/basic-info';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import Product from '@modules/server.common/entities/Product';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../../../../@core/data/products.service';
 import { takeUntil, first, switchMap } from 'rxjs/operators';
 import { ToasterService } from 'angular2-toaster';
 import { ProductsCategoryService } from '../../../../@core/data/productsCategory.service';
-import 'rxjs/add/operator/switchMap';
 import { Location } from '@angular/common';
 
 @Component({
