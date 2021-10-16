@@ -25,7 +25,7 @@ import Bluebird from 'bluebird';
 import { AdminsService } from './admins';
 import ipstack = require('ipstack');
 import requestIp = require('request-ip');
-import { createConnection } from 'typeorm';
+import { ConnectionOptions, createConnection } from 'typeorm';
 import { IWarehouseCreateObject } from '@modules/server.common/interfaces/IWarehouse';
 import { getDummyImage } from '@modules/server.common/utils';
 import Admin from '@modules/server.common/entities/Admin';
@@ -40,6 +40,8 @@ import User from '@modules/server.common/entities/User';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import Promotion from '@modules/server.common/entities/Promotion';
 import { ConfigService } from '../config/config.service';
+
+const conf = require('dotenv').config();
 
 // local IPs
 const INTERNAL_IPS = ['127.0.0.1', '::1'];
@@ -118,21 +120,24 @@ export class ServicesApp {
 		// list of entities for which Repositories will be greated in TypeORM
 		const entities = ServicesApp.getEntities();
 
-		const conn = await createConnection({
-			name: 'typeorm',
-			// TODO: put this into settings (it's mongo only during testing of TypeORM integration!)
-			type: 'mongodb',
-			url: env.DB_URI,
-			entities,
-			synchronize: true,
-			useNewUrlParser: true,
-			autoReconnect: true,
-			reconnectTries: Number.MAX_VALUE,
-			poolSize: ServicesApp._poolSize,
-			connectTimeoutMS: ServicesApp._connectTimeoutMS,
-			logging: true,
-			useUnifiedTopology: true,
-		});
+		const connectionSettings: ConnectionOptions =
+			{
+				name: 'typeorm',
+				// TODO: put this into settings (it's mongo only during testing of TypeORM integration!)
+				type: 'mongodb',
+				url: env.DB_URI,
+				entities,
+				synchronize: true,
+				useNewUrlParser: true,
+				// autoReconnect: true,
+				// reconnectTries: Number.MAX_VALUE,
+				// poolSize: ServicesApp._poolSize,
+				connectTimeoutMS: ServicesApp._connectTimeoutMS,
+				logging: true,
+				useUnifiedTopology: true,
+			};
+
+		const conn = await createConnection(connectionSettings);
 
 		console.log(
 			`TypeORM DB connection created. DB connected: ${conn.isConnected}`
@@ -443,8 +448,6 @@ export class ServicesApp {
 		const httpsPort = this.expressApp.get('httpsPort');
 		const httpPort = this.expressApp.get('httpPort');
 
-		const conf = require('dotenv').config();
-
 		const environment = this.expressApp.get('environment');
 
 		this.log.info(
@@ -616,7 +619,7 @@ export class ServicesApp {
 				passport[
 					'_strategies'
 				].session.base_redirect_url = this._getBaseUrl(
-					req.headers.referer
+					req.header('referer')
 				);
 				next();
 			},

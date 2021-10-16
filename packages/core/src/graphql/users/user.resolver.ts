@@ -1,4 +1,4 @@
-import { Mutation, Query, ResolveProperty, Resolver } from '@nestjs/graphql';
+import { Mutation, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { UsersOrdersService, UsersService } from '../../services/users';
 import { first } from 'rxjs/operators';
 import {
@@ -167,7 +167,7 @@ export class UserResolver {
 		return this._usersService.removeMultipleByIds(usersIds);
 	}
 
-	@ResolveProperty('devices')
+	@ResolveField('devices')
 	async getDevices(_user: IUser) {
 		const user = new User(_user);
 		return (

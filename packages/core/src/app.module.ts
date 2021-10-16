@@ -49,7 +49,7 @@ import { mergeTypeDefs } from '@graphql-tools/merge';
 import { loadFilesSync } from '@graphql-tools/load-files';
 
 import { GetAboutUsHandler } from './services/users';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ServicesModule } from './services/services.module';
 import { ServicesApp } from './services/services.app';
 import { CurrencyModule } from './graphql/currency/currency.module';
@@ -87,6 +87,16 @@ export const EventHandlers = [];
 
 const entities = ServicesApp.getEntities();
 
+const connectionSettings: TypeOrmModuleOptions = {
+	type: 'mongodb',
+	url: env.DB_URI,
+	entities,
+	synchronize: true,
+	useNewUrlParser: true,
+	// autoReconnect: true,
+	logging: true,
+};
+
 @Module({
 	controllers: [TestController],
 	providers: [...CommandHandlers, ...EventHandlers],
@@ -99,15 +109,7 @@ const entities = ServicesApp.getEntities();
 		AppsSettingsModule,
 		ConfigModule,
 		// configure TypeORM Connection which will be possible to use inside NestJS (e.g. resolvers)
-		TypeOrmModule.forRoot({
-			type: 'mongodb',
-			url: env.DB_URI,
-			entities,
-			synchronize: true,
-			useNewUrlParser: true,
-			autoReconnect: true,
-			logging: true,
-		}),
+		TypeOrmModule.forRoot(connectionSettings),
 		// define which repositories shall be registered in the current scope (each entity will have own repository).
 		// Thanks to that we can inject the XXXXRepository to the NestJS using the @InjectRepository() decorator
 		// NOTE: this could be used inside NestJS only, not inside our services

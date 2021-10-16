@@ -2,7 +2,9 @@
 // We are using dotenv (.env) for consistency with other Platform projects
 // This is Angular app and all settings will be loaded into the client browser!
 
-import { cleanEnv, num, str, bool, makeValidator } from 'envalid';
+require('dotenv').config();
+
+import { cleanEnv, num, str, bool, makeValidator, CleanOptions } from 'envalid';
 import { v4 as uuid } from 'uuid';
 
 export type Env = Readonly<{
@@ -80,7 +82,11 @@ export type Env = Readonly<{
 	SHOPPING_CART: boolean;
 }>;
 
-const merchantIDs: any = makeValidator((x) => x, 'merchantIDs');
+// TODO: validate better merchantIDs
+const merchantIDs: any = makeValidator(x => { return x; });
+
+const opt: CleanOptions<Env> = {
+};
 
 export const env: any = cleanEnv(
 	process.env,
@@ -161,7 +167,7 @@ export const env: any = cleanEnv(
 		FAKE_INVITE_CODE: num({ default: 8321 }),
 		FAKE_INVITE_COUNTRY_ID: num({ default: 21 }),
 
-		// For maintenance micro service. Ever maintanance API URL: https://maintenance.ever.co/status
+		// For maintenance micro service. Ever maintenance API URL: https://maintenance.ever.co/status
 		SETTINGS_APP_TYPE: str({ default: 'shop-mobile' }),
 		SETTINGS_MAINTENANCE_API_URL: str({
 			default: '',
@@ -178,5 +184,5 @@ export const env: any = cleanEnv(
 		PORT: num({ default: 4201 }),
 		SHOPPING_CART: bool({ default: false }),
 	},
-	{ strict: true, dotEnvPath: __dirname + '/../.env' }
+	opt
 );

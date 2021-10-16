@@ -1,4 +1,6 @@
-import { cleanEnv, num, port, str, ValidatorSpec, bool } from 'envalid';
+require('dotenv').config();
+
+import { cleanEnv, num, port, str, ValidatorSpec, bool, CleanOptions } from 'envalid';
 
 export type Environments = 'production' | 'development' | 'test';
 
@@ -68,9 +70,16 @@ export type Env = Readonly<{
 	MAX_SOCKETS?: number;
 }>;
 
+const opt: CleanOptions<Env> = {
+};
+
 export const env: Env = cleanEnv(
 	process.env,
 	{
+		isDev: bool({ default: true }),
+		isTest: bool({ default: false }),
+		isProd: bool({ default: false }),
+
 		NODE_ENV: str({
 			choices: ['production', 'development', 'test'],
 			default: 'development',
@@ -150,16 +159,19 @@ export const env: Env = cleanEnv(
 		ARCGIS_CLIENT_ID: str({ default: '' }),
 		ARCGIS_CLIENT_SECRET: str({ default: '' }),
 		IP_STACK_API_KEY: str({ default: '' }),
+
 		LOG_LEVEL: str({
 			choices: ['trace', 'debug', 'info', 'warn', 'error', 'fatal'],
 			default: 'error',
 		}),
+
 		ENGINE_API_KEY: str({
 			desc:
 				'Apollo Engine Key (optional, see https://www.apollographql.com/docs/platform/schema-registry)',
 			default: '',
 		}),
+
 		MAX_SOCKETS: num({ default: Infinity }),
 	},
-	{ strict: true, dotEnvPath: __dirname + '/../.env' }
+	opt
 );

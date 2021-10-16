@@ -1,4 +1,4 @@
-import { Mutation, Query, ResolveProperty, Resolver } from '@nestjs/graphql';
+import { Mutation, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { default as IWarehouse } from '@modules/server.common/interfaces/IWarehouse';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import {
@@ -276,7 +276,7 @@ export class WarehouseResolver {
 		return this._warehousesService.removeMultipleByIds(ids);
 	}
 
-	@ResolveProperty('devices')
+	@ResolveField('devices')
 	async getDevices(_warehouse: IWarehouse) {
 		const warehouse = new Warehouse(_warehouse);
 		return this._devicesService
@@ -285,7 +285,7 @@ export class WarehouseResolver {
 			.toPromise();
 	}
 
-	@ResolveProperty('orders')
+	@ResolveField('orders')
 	async getOrders(_warehouse: IWarehouse) {
 		const warehouse = new Warehouse(_warehouse);
 		return this._warehousesOrdersService
@@ -294,7 +294,7 @@ export class WarehouseResolver {
 			.toPromise();
 	}
 
-	@ResolveProperty('users')
+	@ResolveField('users')
 	async getUsers(_warehouse: IWarehouse) {
 		const warehouse = new Warehouse(_warehouse);
 
@@ -304,7 +304,7 @@ export class WarehouseResolver {
 			.toPromise();
 	}
 
-	@ResolveProperty('carriers')
+	@ResolveField('carriers')
 	async getCarriers(_warehouse: IWarehouse) {
 		const warehouse = new Warehouse(_warehouse);
 

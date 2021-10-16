@@ -2,7 +2,9 @@
 // We are using dotenv (.env) for consistency with other Platform projects
 // This is Angular app and all settings will be loaded into the client browser!
 
-import { cleanEnv, num, str, bool } from 'envalid';
+require('dotenv').config();
+
+import { cleanEnv, num, str, bool, CleanOptions } from 'envalid';
 
 export type Env = Readonly<{
 	production: boolean;
@@ -32,6 +34,9 @@ export type Env = Readonly<{
 	PORT: number;
 }>;
 
+const opt: CleanOptions<Env> = {
+};
+
 export const env: Env = cleanEnv(
 	process.env,
 	{
@@ -57,7 +62,7 @@ export const env: Env = cleanEnv(
 		DELIVERY_TIME_MIN: num({ default: 30 }),
 		DELIVERY_TIME_MAX: num({ default: 60 }),
 
-		// For maintenance micro service. Ever maintanance API URL: https://maintenance.ever.co/status
+		// For maintenance micro service. Ever maintenance API URL: https://maintenance.ever.co/status
 		SETTINGS_APP_TYPE: str({ default: 'shop-web' }),
 		SETTINGS_MAINTENANCE_API_URL: str({
 			default: '',
@@ -67,5 +72,5 @@ export const env: Env = cleanEnv(
 		WEB_MEMORY: num({ default: 2048 }),
 		PORT: num({ default: 3000 }),
 	},
-	{ strict: true, dotEnvPath: __dirname + '/../.env' }
+	opt
 );
