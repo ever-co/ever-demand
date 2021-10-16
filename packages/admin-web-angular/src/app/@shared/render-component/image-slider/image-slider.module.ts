@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
+import { SwiperModule } from 'swiper/angular';
 import { ImageSliderComponent } from './image.slider.component';
+
 @NgModule({
-	imports: [NgxUsefulSwiperModule, CommonModule],
+	imports: [SwiperModule, CommonModule],
 	declarations: [ImageSliderComponent],
 	exports: [ImageSliderComponent],
 })

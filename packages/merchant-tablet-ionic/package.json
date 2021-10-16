@@ -45,7 +45,6 @@
 		"cordova:run:prod:device": "cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=4096 yarn run config:prod && yarn ionic cordova run android --prod --release --device"
 	},
 	"dependencies": {
-		"@akveo/ng2-completer": "9.0.1",
 		"@angular/animations": "^12.2.10",
 		"@angular/common": "^12.2.10",
 		"@angular/compiler": "^12.2.10",
@@ -149,6 +148,7 @@
 		"neo-async": "^2.6.2",
 		"ng2-file-upload": "^1.4.0",
 		"ng2-smart-table": "^1.7.2",
+		"ng2-completer": "^9.0.1",
 		"ngx-masonry": "^12.0.0",
 		"ngx-moment": "^5.0.0",
 		"ngx-pagination": "^5.1.1",

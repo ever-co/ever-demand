@@ -71,6 +71,7 @@
 		"@angular/service-worker": "^12.2.10",
 		"rxjs": "^7.4.0",
 		"ng2-smart-table": "^1.7.2",
+		"ng2-completer": "^9.0.1",
 		"unleash": "^2.0.2",
 		"@ionic-native/barcode-scanner": "^5.36.0",
 		"@ionic-native/call-number": "^5.36.0",
