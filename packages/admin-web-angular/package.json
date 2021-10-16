@@ -124,7 +124,6 @@
 		"ngx-moment": "^5.0.0",
 		"ngx-translate-multi-http-loader": "^3.0.0",
 		"ngx-useful-swiper": "10.0.1",
-		"node-sass": "^6.0.1",
 		"normalize.css": "^8.0.1",
 		"pace-js": "1.2.4",
 		"pm2": "^5.1.2",
@@ -177,7 +176,7 @@
 		"protractor": "~7.0.0",
 		"ts-node": "~10.3.0",
 		"tslint": "~5.20.1",
-		"typescript": "~4.4.4"
+		"typescript": "~4.2.4"
 	},
 	"engines": {
 		"node": ">=14.4.0",

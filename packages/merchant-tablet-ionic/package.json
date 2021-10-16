@@ -152,7 +152,6 @@
 		"ngx-masonry": "^12.0.0",
 		"ngx-moment": "^5.0.0",
 		"ngx-pagination": "^5.1.1",
-		"node-sass": "^6.0.1",
 		"phonegap-plugin-barcodescanner": "^8.0.1",
 		"pm2": "^5.1.2",
 		"qrcode": "^1.4.4",
@@ -196,7 +195,7 @@
 		"protractor": "~7.0.0",
 		"ts-node": "~10.3.0",
 		"tslint": "~5.20.1",
-		"typescript": "~4.4.4"
+		"typescript": "~4.2.4"
 	},
 	"config": {
 		"ionic_webpack": "./config/webpack.config.js"

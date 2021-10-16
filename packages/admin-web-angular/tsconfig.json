@@ -36,7 +36,6 @@
 	},
 	"files": ["src/main.ts", "src/polyfills.ts"],
 	"angularCompilerOptions": {
-		"enableIvy": false,
 		"annotateForClosureCompiler": true,
 		"skipTemplateCodegen": true,
 		"fullTemplateTypeCheck": true,

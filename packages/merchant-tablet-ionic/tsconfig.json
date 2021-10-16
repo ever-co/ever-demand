@@ -42,7 +42,6 @@
 		"rewriteTsconfig": false
 	},
 	"angularCompilerOptions": {
-		"enableIvy": false,
 		"preserveWhitespaces": false,
 		"strictInjectionParameters": true,
 		"fullTemplateTypeCheck": true,

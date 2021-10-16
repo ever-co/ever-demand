@@ -66,6 +66,7 @@
 	"vsicons.presets.nestjs": true,
 	"cSpell.words": [
 		"AGPL",
+		"Codegen",
 		"CQRS",
 		"entrypoint",
 		"envalid",
@@ -78,9 +79,11 @@
 		"MIXPANEL",
 		"mongod",
 		"mongodb",
+		"Progressbar",
 		"pyro",
 		"snyk",
-		"typeorm"
+		"typeorm",
+		"Whitespaces"
 	],
 	"deepscan.enable": true
 }
