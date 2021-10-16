@@ -1,16 +1,17 @@
 version: '3.7'
 
 services:
-    mongo:
+    db:
         image: mongo
-        container_name: mongo
-        ports:
-            - '27017:27017'
+        container_name: db
+        restart: always
         environment:
             - MONGO_DATA_DIR=/data/db
             - MONGO_LOG_DIR=/dev/null
         volumes:
             - mongo_data:/data/db
+        ports:
+            - '27017:27017'
         command: mongod --logpath=/dev/null # --quiet
         networks:
             - overlay
@@ -26,7 +27,7 @@ services:
             NODE_ENV: production
         restart: on-failure
         depends_on:
-            - core
+            - api
         ports:
             - 4200:4200
         networks:
@@ -43,7 +44,7 @@ services:
             NODE_ENV: production
         restart: on-failure
         depends_on:
-            - core
+            - api
         ports:
             - 3000:3000
         networks:
@@ -60,7 +61,7 @@ services:
             NODE_ENV: production
         restart: on-failure
         depends_on:
-            - core
+            - api
         ports:
             - 4203:4200
             - 4204:4203
@@ -78,7 +79,7 @@ services:
             NODE_ENV: production
         restart: on-failure
         depends_on:
-            - core
+            - api
         ports:
             - 4201:4201
         networks:
@@ -95,32 +96,39 @@ services:
             NODE_ENV: production
         restart: on-failure
         depends_on:
-            - core
+            - api
         ports:
             - 4202:4202
         networks:
             - overlay
 
-    core:
-        container_name: core
-        image: ever-core:latest
+    api:
+        container_name: api
+        image: ever-api:latest
         build:
             context: .
-            dockerfile: .deploy/core/Dockerfile
+            dockerfile: .deploy/api/Dockerfile
+            args:
+                NODE_ENV: ${NODE_ENV:-development}
         environment:
-            NODE_ENV: production
-            WAIT_HOSTS: mongo:27017
-            DB_URI: mongodb://mongo/ever_development
-            TESTING_DB_URI: mongodb://mongo/ever_testing
+            NODE_ENV: ${NODE_ENV:-development}
+            WAIT_HOSTS: db:27017
+            DB_HOST: db
+            DB_URI: mongodb://db/ever_development
+            TESTING_DB_URI: mongodb://db/ever_testing
+        env_file:
+            - .env
+        entrypoint: './entrypoint.compose.sh'
+        command: ['node', 'packages/core/build/src/main.js']
         restart: on-failure
         depends_on:
-            - mongo
+            - db
         links:
-            - mongo
-        volumes:
-            - .:/srv/ever
-            - root_node_modules:/srv/ever/node_modules
-            - core_node_modules:/srv/ever/packages/core/node_modules
+            - db
+        # volumes:
+        #    - .:/srv/ever
+        #    - root_node_modules:/srv/ever/node_modules
+        #    - core_node_modules:/srv/ever/packages/core/node_modules
         ports:
             - 5500:5500
             - 5501:5501

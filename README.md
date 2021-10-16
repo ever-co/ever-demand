@@ -1,11 +1,11 @@
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ever-co/ever)
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ever-co/ever-demand)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/ever)
 [![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/ever-co/ever?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/evereq?utm_source=github&utm_medium=button&utm_term=evereq&utm_campaign=github)
 
 # Open-Source Commerce Platform for On-Demand Economy and Digital Marketplaces
 
-[Ever](https://ever.co)® is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform built with [TypeScript](http://www.typescriptlang.org).
+[Ever® Demand™](https://ever.co) is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform built with [TypeScript](http://www.typescriptlang.org).
 
 You are welcome to check more information about the platform at our official website - **<https://ever.co>**.
 
@@ -77,20 +77,20 @@ Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_wi
 
 ## Documentation
 
-Please refer to our official [Platform Documentation](https://docs.ever.co) and to our [Wiki](https://github.com/ever-co/ever/wiki) (WIP).
+Please refer to our official [Platform Documentation](https://docs.ever.co) and to our [Wiki](https://github.com/ever-co/ever-demand/wiki) (WIP).
 
 For a quick overview of each project in the Platform (Server, Admin, Shops, etc.), you can search for README.md file in the root of the projects folders. For example, see [./backend/api/README.md](backend/api/README.md) for Server (Backend) related overview.
 
 ## Getting Started
 
-We follow [Gitflow Workflow](https://nvie.com/posts/a-successful-git-branching-model), so the [`develop` branch](https://github.com/ever-co/ever/tree/develop) may be in an unstable or even broken state during development. Please use [releases](https://github.com/ever-co/ever/releases) or [`master` branch](https://github.com/ever-co/ever/tree/master) instead of the `develop` branch in order to get more stable code.
+We follow [Gitflow Workflow](https://nvie.com/posts/a-successful-git-branching-model), so the [`develop` branch](https://github.com/ever-co/ever-demand/tree/develop) may be in an unstable or even broken state during development. Please use [releases](https://github.com/ever-co/ever/releases) or [`master` branch](https://github.com/ever-co/ever-demand/tree/master) instead of the `develop` branch in order to get more stable code.
 
 ### Clone Repo
 
 Clone the Ever Platform Git repo:
 
 ```
-git clone https://github.com/ever-co/ever.git
+git clone https://github.com/ever-co/ever-demand.git
 ```
 
 **IMPORTANT NOTE:**
@@ -157,11 +157,11 @@ After Lerna bootstrap everything you need to run build for all projects as descr
 
 ### MongoDB
 
-Ever platform configured to use MongoDB by default and assume you have MongoDB service running and accepting connections on the default `localhost:27017`. Please see relevant section in our [documentation](https://github.com/ever-co/ever/wiki/MongoDB).
+Ever platform configured to use MongoDB by default and assume you have MongoDB service running and accepting connections on the default `localhost:27017`. Please see relevant section in our [documentation](https://github.com/ever-co/ever-demand/wiki/MongoDB).
 
 ### Platform Configuration
 
-See relevant section in our [documentation](https://github.com/ever-co/ever/wiki/Ever-Platform-Configuration).
+See relevant section in our [documentation](https://github.com/ever-co/ever-demand/wiki/Ever-Platform-Configuration).
 
 ### Run Platform Projects
 
@@ -189,7 +189,7 @@ Note 3: in order to be able to run every project, you need to make sure everythi
 
 ## Metrics
 
-According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform today has more than 120K lines of TypeScript, GraphQL, HTML / CSS and other code files. You can get more details in the relevant section of our [documentation](https://github.com/ever-co/ever/wiki/Metrics).
+According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform today has more than 120K lines of TypeScript, GraphQL, HTML / CSS and other code files. You can get more details in the relevant section of our [documentation](https://github.com/ever-co/ever-demand/wiki/Metrics).
 
 ## Contribute
 
@@ -197,34 +197,9 @@ According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform tod
 -   You are more than welcome to submit feature requests in the [separate repo](https://github.com/ever-co/feature-requests/issues)
 -   Pull requests are always welcome! Please base pull requests against the _develop_ branch and follow the [contributing guide](.github/CONTRIBUTING.md).
 
-## Collaborators and Contributors
+## Contributors
 
-### Development Team
-
-#### Core
-
--   Ruslan Konviser ([Evereq](https://github.com/evereq))
--   Michael Konviser ([Komish](https://github.com/MrKomish))
-
-#### Developers (alphabetical order)
-
--   Alish Meklyov ([Alish](https://github.com/AlishMekliov931))
--   Blagovest Gerov ([BlagovestGerov](https://github.com/BlagovestGerov))
--   Elvis Arabadjiyski ([Dreemsuncho](https://github.com/Dreemsuncho))
--   Hristo Hristov ([hrimar](https://github.com/hrimar))
--   Pavel Denchev ([PavelDenchev](https://github.com/PavelDenchev))
--   Tsvetelina Yordanova ([tsvetelina-e-y](https://github.com/tsvetelina-e-y))
--   Valentin Peshev ([valiopld](https://github.com/valiopld))
--   Yavor Grancharov ([YavorGrancharov](https://github.com/YavorGrancharov))
-
-#### Designers & QA
-
--   [Julia Konviser](https://www.linkedin.com/in/julia-konviser-8b917552) (Graphic Designer, QA)
--   [Yordan Genovski](https://services.ever.co/teammembers/yordan-genovski) (UX/UI/Product Designer)
-
-### Contributors
-
-View full list of our [contributors](https://github.com/ever-co/ever/graphs/contributors).
+View full list of our [contributors](https://github.com/ever-co/ever-demand/graphs/contributors).
 
 ## Contact Us
 
@@ -248,15 +223,19 @@ See more details in the [LICENSE.md](LICENSE.md).
 
 In a production setup, all client-side to server-side (backend, APIs) communications should be encrypted using HTTPS/WSS/SSL (REST APIs, GraphQL endpoint, Socket.io WebSockets, etc.).
 
+If you discover any issue regarding security, please disclose the information responsibly by sending an email to <mailto:security@ever.co> or on [![huntr](https://cdn.huntr.dev/huntr_security_badge_mono.svg)](https://huntr.dev) and not by creating a GitHub issue.
+
 ## License
+
+We support the open-source community. If you're building awesome non-profit/open-source projects, we're happy to help and will provide (subject to [acceptance criteria](https://github.com/ever-co/ever-demand/wiki/Free-license-and-hosting-for-Non-profit-and-Open-Source-projects)) Ever Demand Enterprise edition license and free hosting option! Feel free to contact us at <mailto:ever@ever.co> to make a request. More details explained in our [Wiki](https://github.com/ever-co/ever-demand/wiki/Free-license-and-hosting-for-Non-profit-and-Open-Source-projects).
 
 This software is available under following licenses:
 
--   [Ever® Platform Community™ Edition](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-community-edition-license)
--   [Ever® Platform Small Business™](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-small-business-license)
--   [Ever® Platform Enterprise™](https://github.com/ever-co/ever/blob/master/LICENSE.md#ever-platform-enterprise-license)
+-   [Ever® Demand™ Platform Community Edition](https://github.com/ever-co/ever-demand/blob/master/LICENSE.md#ever-platform-community-edition-license)
+-   [Ever® Demand™ Platform Small Business](https://github.com/ever-co/ever-demand/blob/master/LICENSE.md#ever-platform-small-business-license)
+-   [Ever® Demand™ Platform Enterprise](https://github.com/ever-co/ever-demand/blob/master/LICENSE.md#ever-platform-enterprise-license)
 
-#### The default Ever® Platform™ license, without a valid Ever® Platform Enterprise™ or Ever® Platform Small Business™ License agreement, is the Ever® Platform Community™ Edition License.
+#### The default Ever® Demand™ Platform license, without a valid Ever® Demand™ Platform Enterprise or Ever® Demand™ Platform Small Business License agreement, is the Ever® Demand™ Platform Community Edition License.
 
 #### Please see [LICENSE.md](LICENSE.md) for more information on licenses. You can also [compare our offering](https://ever.co/compare-ever/#compare).
 
@@ -265,7 +244,7 @@ This software is available under following licenses:
 ## Trademarks
 
 **Ever**® is a registered trademark of [Ever Co. LTD](https://ever.co).  
-**Ever® Platform™**, **Ever® Platform Community™**, **Ever® Platform Small Business™** and **Ever® Platform Enterprise™** are all trademarks of [Ever Co. LTD](https://ever.co).
+**Ever® Demand™**, **Ever® Gauzy™** and **Ever® OpenSaaS™**  are all trademarks of [Ever Co. LTD](https://ever.co).
 
 The trademarks may only be used with the written permission of Ever Co. LTD. and may not be used to promote or otherwise market competitive products or services.
 
@@ -274,16 +253,18 @@ All other brand and product names are trademarks, registered trademarks or servi
 #### Copyright © 2016-present, Ever Co. LTD. All rights reserved.
 
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=ever-co.ever-platform)
-[![Circle CI](https://circleci.com/gh/ever-co/ever.svg?style=svg)](https://circleci.com/gh/ever-co/ever)
-[![codecov](https://codecov.io/gh/ever-co/ever/branch/master/graph/badge.svg)](https://codecov.io/gh/ever-co/ever)
+[![huntr](https://cdn.huntr.dev/huntr_security_badge_mono.svg)](https://huntr.dev)
+[![Circle CI](https://circleci.com/gh/ever-co/ever-demand.svg?style=svg)](https://circleci.com/gh/ever-co/ever-demand)
+[![codecov](https://codecov.io/gh/ever-co/ever-demand/branch/master/graph/badge.svg)](https://codecov.io/gh/ever-co/ever-demand)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e7b2b38660f44963989ac9d49ae76d4d)](https://www.codacy.com/app/Ever/ever?utm_source=github.com&utm_medium=referral&utm_content=ever-co/ever&utm_campaign=Badge_Grade)
 [![DeepScan grade](https://deepscan.io/api/teams/3293/projects/4849/branches/38566/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=3293&pid=4849&bid=38566)
-[![Known Vulnerabilities](https://snyk.io/test/github/ever-co/ever/badge.svg)](https://snyk.io/test/github/ever-co/ever)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/ever-co/ever.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/ever-co/ever/alerts/)
-[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/ever-co/ever.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/ever-co/ever/context:javascript)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fever.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fever?ref=badge_shield)
+[![Known Vulnerabilities](https://snyk.io/test/github/ever-co/ever-demand/badge.svg)](https://snyk.io/test/github/ever-co/ever-demand)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/ever-co/ever-demand.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/ever-co/ever-demand/alerts/)
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/ever-co/ever-demand.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/ever-co/ever-demand/context:javascript)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fever-demand.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fever-demand?ref=badge_shield)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io)
+[![Crowdin](https://badges.crowdin.net/e/581540ddcc7c1cf42a50d0e0a6a3d7f7/localized.svg)](https://ever.crowdin.com/ever)
 
 ## P.S.
-- If you are running any business or doing freelance, check our new project [Gauzy](https://github.com/ever-co/gauzy) - Open Business Management Platform
+- If you are running any business or doing freelance, check our new project [Gauzy](https://github.com/ever-co/ever-gauzy) - Open Business Management Platform
 - [We are Hiring: remote TypeScript / NestJS / Angular developers](https://github.com/ever-co/jobs#available-positions)
