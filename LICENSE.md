@@ -2,13 +2,18 @@
 
 Copyright © 2016-present, Ever Co. LTD. All rights reserved.
 
+This document represent official information about our licensing, make sure you read and understand it before start using software and source code.
+
+- Check more detailed information about licensing in our [Wiki](https://github.com/ever-co/ever-demand/wiki/Licensing).
+- You can also ask any questions in the [Issue](https://github.com/ever-co/ever-demand/issues/1428) or [Contact Us](https://github.com/ever-co/ever-demand#contact-us).
+
 This software is available under an Open Source Licenses ("Community Edition"). It is suitable if your business can comply with the requirements of corresponding open-source licenses, see more information below (e.g. requirements to release your modifications under the same open-source licenses for the benefits of our community).
 
 Alternatively, commercial versions of the software must be used in accordance with the terms and conditions of separate written agreement between you and Ever Co. LTD. With commercial license, your source code (including your changes) is kept proprietary. You can purchase a commercial licenses at https://ever.co/pricing.
 
 In addition, Ever Co. LTD holds copyright and/or sufficient licenses to all components of the Ever Platform, and therefore can grant, at its sole discretion, the ability for companies, individuals, or organizations to create proprietary modules which may be dynamically linked at runtime with the portions of Ever Platform which fall under our copyright/license umbrella.
 
-We support the open-source community. If you're building awesome non-profit/open-source projects, we're happy to help and will provide (subject to [acceptance criteria](https://github.com/ever-co/ever-demand/wiki/Free-license-and-hosting-for-Non-profit-and-Open-Source-projects)) Ever Demand Enterprise edition license and free hosting option! Feel free to contact us at <mailto:ever@ever.co> to make a request. More details explained in our [Wiki](https://github.com/ever-co/ever-demand/wiki/Free-license-and-hosting-for-Non-profit-and-Open-Source-projects).
+We support the open-source community. If you're building awesome non-profit/open-source projects, we're happy to help and will provide (subject to [acceptance criteria](https://github.com/ever-co/ever-demand/wiki/Free-license-and-hosting-for-Non-profit-and-Open-Source-projects)) Ever Demand Enterprise edition license and free hosting option! Feel free to contact us at <mailto:ever@ever.co> to make a request. More details about licensing for non-profit/open-source projects explained in our [Wiki](https://github.com/ever-co/ever-demand/wiki/Free-license-and-hosting-for-Non-profit-and-Open-Source-projects).
 
 **The default Ever Platform license, without a valid Ever Platform Small Business or Ever Platform Enterprise License agreement, is the Ever Platform Community Edition License.**
 
@@ -39,7 +44,7 @@ For example, for AGPL v3 (strongest copyleft license we use) conditions can be s
 - Contributors provide an express grant of patent rights.
 - When a modified version is used to provide a service over a network, the complete source code of the modified version must be made available.
 
-Feel free to [Contact Us](https://github.com/ever-co/ever#contact-us) for an additional information about used open-source licenses!
+Feel free to [Contact Us](https://github.com/ever-co/ever-demand#contact-us) for an additional information about used open-source licenses!
 
 ### _Ever Platform Small Business_ License
 
