@@ -2236,7 +2236,7 @@
     "@angular/platform-browser-dynamic" "^12.2.10"
     "@angular/router" "^12.2.10"
     "@angular/service-worker" "^12.2.10"
-    "@ever-platform/common" "file:C:/Users/Precision T3610/AppData/Local/Yarn/Cache/v6/npm-@ever-platform-common-angular-0.4.1-ed758215-e97e-45e6-baa5-ef384fbde4a5-1634379091761/node_modules/@ever-platform/common"
+    "@ever-platform/common" "file:../../Users/Admin/AppData/Local/Yarn/Cache/v6/npm-@ever-platform-common-angular-0.4.1-7adfd70c-e923-40cb-b329-e2c49a325782-1634817011429/node_modules/@ever-platform/common"
     "@ngx-translate/core" "^13.0.0"
     "@ngx-translate/http-loader" "^6.0.0"
     tslib "^2.3.1"
@@ -13898,6 +13898,13 @@ dom-walk@^0.1.0:
   resolved "https://registry.yarnpkg.com/dom-walk/-/dom-walk-0.1.2.tgz#0c548bef048f4d1f2a97249002236060daa3fd84"
   integrity sha512-6QvTW9mrGeIegrFXdtQi9pk7O/nSK6lSdXW2eqUspN5LWD7UTji2Fqw5V2YLjBpHEoU9Xl/eUWNpDeZvoyOv2w==
 
+dom7@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/dom7/-/dom7-3.0.0.tgz#b861ce5d67a6becd7aaa3ad02942ff14b1240331"
+  integrity sha512-oNlcUdHsC4zb7Msx7JN3K0Nro1dzJ48knvBOnDPKJ2GV9wl1i5vydJZUSyOfrkKFDZEud/jBsTk92S/VGSAe/g==
+  dependencies:
+    ssr-window "^3.0.0-alpha.1"
+
 dom7@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/dom7/-/dom7-4.0.0.tgz#69c8fb9b170c92d64f385fdc37f81456e82b80a1"
@@ -24073,6 +24080,13 @@ ngx-progressbar@^6.1.1:
   dependencies:
     tslib "^2.0.0"
 
+ngx-swiper-wrapper@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-swiper-wrapper/-/ngx-swiper-wrapper-10.0.0.tgz#afca849a17d64f00d5b16e5040f4bdae0549e06d"
+  integrity sha512-cP7yCV1j9fyPkaEu4muec+4ChwpYq1zn62qR6HcZttZgPcqaSEd8yLB7fp61ASAWR31iKUycVhqNtmsYstMXpA==
+  dependencies:
+    tslib "^2.0.0"
+
 ngx-toastr@^14.1.3:
   version "14.1.3"
   resolved "https://registry.yarnpkg.com/ngx-toastr/-/ngx-toastr-14.1.3.tgz#93b45e8893e454b636e33ea7cdbd786942441086"
@@ -24087,13 +24101,6 @@ ngx-translate-multi-http-loader@^3.0.0:
   dependencies:
     deepmerge "2.1.1"
     tslib "^1.9.0"
-
-ngx-useful-swiper@10.0.1:
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/ngx-useful-swiper/-/ngx-useful-swiper-10.0.1.tgz#1f4840c17508fbd3f8da1d4b646cfb87fef5c661"
-  integrity sha512-mkjdcnx7ampyzlv3F8wzNfeVvRfS0frJjLUljIL0VGUkKGBW9D0C4zvENygY5kjX8KMRJk4wh0c1pA3S7prLzw==
-  dependencies:
-    tslib "^2.0.0"
 
 nice-napi@^1.0.2:
   version "1.0.2"
@@ -30767,6 +30774,11 @@ sshpk@^1.7.0:
     safer-buffer "^2.0.2"
     tweetnacl "~0.14.0"
 
+ssr-window@^3.0.0, ssr-window@^3.0.0-alpha.1:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/ssr-window/-/ssr-window-3.0.0.tgz#fd5b82801638943e0cc704c4691801435af7ac37"
+  integrity sha512-q+8UfWDg9Itrg0yWK7oe5p/XRCJpJF9OBtXfOPgSJl+u3Xd5KI328RUEvUqSMVM9CiQUEf1QdBzJMkYGErj9QA==
+
 ssr-window@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/ssr-window/-/ssr-window-4.0.0.tgz#4ee82fc360c5f88a022f321740bcfec59ada1a61"
@@ -31670,6 +31682,14 @@ swap-case@^2.0.2:
   integrity sha512-kc6S2YS/2yXbtkSMunBtKdah4VFETZ8Oh6ONSmSd9bRxhqTrtARUCBUiWXH3xVPpvR7tz2CSnkuXVE42EcGnMw==
   dependencies:
     tslib "^2.0.3"
+
+swiper@6.4.15:
+  version "6.4.15"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-6.4.15.tgz#0fb153b3000c0dd26ab21ea9e8d1ab0ebe9e33cb"
+  integrity sha512-FuURJ7hE9lCxPnXIJRKu2QCe+roE8CZV2WYsZxz+dcEd3kebgK0JRvV32HpM3LmFOz7UW+k2Dkdfxekk2kTfMg==
+  dependencies:
+    dom7 "^3.0.0"
+    ssr-window "^3.0.0"
 
 swiper@^7.0.8:
   version "7.0.8"
