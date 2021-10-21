@@ -19,7 +19,7 @@ export class SelectWarehouseComponent implements ViewCell, OnInit {
 	@Input()
 	public rowData: any;
 
-	protected renderValue: string;
+	public renderValue: string;
 
 	constructor(private readonly _router: Router) {}
 

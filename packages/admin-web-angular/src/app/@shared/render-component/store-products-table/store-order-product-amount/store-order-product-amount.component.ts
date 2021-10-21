@@ -1,7 +1,5 @@
 import {
 	Component,
-	Output,
-	EventEmitter,
 	OnInit,
 	OnDestroy,
 } from '@angular/core';
@@ -13,7 +11,6 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfimationModalComponent } from '@app/@shared/confirmation-modal/confirmation-modal.component';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
-import { root } from 'rxjs/internal/util/root';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -54,7 +51,6 @@ export class StoreOrderProductAmountComponent
 
 	ngOnInit() {
 		this.productID = this.rowData.product.id;
-		this.storeID = this.rowData.storeId;
 		this.storeID = this.rowData.storeId;
 		this.productAmount = this.value;
 		this.productTitle = this.localeTranslate(this.rowData.product.title);

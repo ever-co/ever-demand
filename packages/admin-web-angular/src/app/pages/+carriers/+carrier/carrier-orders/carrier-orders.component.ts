@@ -17,9 +17,8 @@ import { OrderRouter } from '@modules/client.common.angular2/routers/order-route
 import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 import _ from 'lodash';
 import { LocalDataSource } from 'ng2-smart-table';
-import { Subject, Observable } from 'rxjs/Rx';
 import { TranslateService } from '@ngx-translate/core';
-import { forkJoin, Subscription } from 'rxjs';
+import { forkJoin, Subject, Subscription } from 'rxjs';
 import { CreatedComponent } from '../../../../@shared/render-component/created/created.component';
 import { CarriersService } from '@app/@core/data/carriers.service';
 import { GeoLocationOrdersService } from '@app/@core/data/geo-location-orders.service';
@@ -52,7 +51,7 @@ export class CarrierOrdersComponent
 	protected currentOrders: Order[];
 	protected settingsSmartTable: object;
 	protected sourceSmartTable: LocalDataSource = new LocalDataSource();
-	protected enumOrderCarrierStatus: typeof OrderCarrierStatus = OrderCarrierStatus;
+	public enumOrderCarrierStatus: typeof OrderCarrierStatus = OrderCarrierStatus;
 
 	private _isWork: boolean;
 	private dataCount: number;
@@ -210,7 +209,7 @@ export class CarrierOrdersComponent
 		);
 	}
 
-	protected async updateOrderCarrierStatus(status: OrderCarrierStatus) {
+	public async updateOrderCarrierStatus(status: OrderCarrierStatus) {
 		this.selectedOrder = await this.orderRouter.updateCarrierStatus(
 			this.selectedOrder.id,
 			status

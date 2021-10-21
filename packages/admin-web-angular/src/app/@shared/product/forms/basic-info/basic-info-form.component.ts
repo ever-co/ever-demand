@@ -184,7 +184,7 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 	ngOnDestroy() {
 		this.onLocaleChanges.unsubscribe();
 		this.form.reset();
-		this._ngDestroy$.next();
+		this._ngDestroy$.next(true);
 		this._ngDestroy$.complete();
 	}
 

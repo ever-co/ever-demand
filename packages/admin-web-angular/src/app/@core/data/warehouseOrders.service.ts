@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { IOrderCreateInput } from '@modules/server.common/routers/IWarehouseOrdersRouter';
 import Order from '@modules/server.common/entities/Order';
 import { map } from 'rxjs/operators';
-import 'rxjs/add/operator/map';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 
 @Injectable()

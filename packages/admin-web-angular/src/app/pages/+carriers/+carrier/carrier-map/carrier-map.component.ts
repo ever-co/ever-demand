@@ -165,7 +165,7 @@ export class CarrierMapComponent {
 	}
 
 	ngOnDestroy() {
-		this.ngDestroy$.next();
+		this.ngDestroy$.next(true);
 		this.ngDestroy$.complete();
 
 		if (this.interval) {

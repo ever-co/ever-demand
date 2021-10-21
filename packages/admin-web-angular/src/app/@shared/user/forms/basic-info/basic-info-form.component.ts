@@ -19,9 +19,8 @@ import { IUserCreateObject } from '@modules/server.common/interfaces/IUser';
 import { UsersService } from '../../../../@core/data/users.service';
 import { FormHelpers } from '../../../forms/helpers';
 import { ActivatedRoute } from '@angular/router';
-import 'rxjs/add/operator/debounceTime';
 import { TranslateService } from '@ngx-translate/core';
-import { first, takeUntil, debounceTime } from 'rxjs/operators';
+import { first, debounceTime } from 'rxjs/operators';
 
 export type CustomerBasicInfo = Pick<
 	IUserCreateObject,
@@ -135,7 +134,7 @@ export class BasicInfoFormComponent
 						ctrlEmail.value &&
 						ctrlEmail.value.length > 0
 					) {
-						emailSearch$.next();
+						emailSearch$.next(true);
 					}
 				},
 			],
@@ -174,7 +173,7 @@ export class BasicInfoFormComponent
 	}
 
 	ngOnDestroy() {
-		this._ngDestroy$.next();
+		this._ngDestroy$.next(true);
 		this._ngDestroy$.complete();
 		BasicInfoFormComponent.destroy();
 	}

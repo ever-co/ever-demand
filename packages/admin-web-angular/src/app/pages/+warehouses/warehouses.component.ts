@@ -33,8 +33,8 @@ export class WarehousesComponent implements AfterViewInit, OnDestroy {
 
 	private ngDestroy$ = new Subject<void>();
 
-	protected settingsSmartTable: object;
-	protected sourceSmartTable = new LocalDataSource();
+	public settingsSmartTable: object;
+	public sourceSmartTable = new LocalDataSource();
 
 	private _selectedWarehouses: WarehouseViewModel[] = [];
 

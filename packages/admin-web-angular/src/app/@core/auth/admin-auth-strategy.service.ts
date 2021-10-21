@@ -1,4 +1,4 @@
-import { Observable, from, of } from 'rxjs';
+import { Observable, from, of as observableOf } from 'rxjs';
 import { NbAuthResult, NbAuthStrategy } from '@nebular/auth';
 import { ActivatedRoute } from '@angular/router';
 import { Apollo } from 'apollo-angular';
@@ -168,7 +168,7 @@ export class AdminAuthStrategy extends NbAuthStrategy {
 				catchError((err) => {
 					console.error(err);
 
-					return of(
+					return observableOf(
 						new NbAuthResult(
 							false,
 							err,
@@ -190,7 +190,7 @@ export class AdminAuthStrategy extends NbAuthStrategy {
 		const { email, fullName, password, confirmPassword, terms } = args;
 
 		if (password !== confirmPassword) {
-			return Observable.of(
+			return observableOf(
 				new NbAuthResult(false, null, null, [
 					"The passwords don't match.",
 				])
@@ -264,7 +264,7 @@ export class AdminAuthStrategy extends NbAuthStrategy {
 				catchError((err) => {
 					console.error(err);
 
-					return of(
+					return observableOf(
 						new NbAuthResult(
 							false,
 							err,

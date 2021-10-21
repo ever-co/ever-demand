@@ -78,7 +78,7 @@ export class NotificationsComponent {
 		this.toasterService.clear();
 	}
 
-	private showToast(type: string, title: string, body: string) {
+	private showToast(type: any, title: string, body: string) {
 		this.config = new ToasterConfig({
 			positionClass: this.position,
 			timeout: this.timeout,
