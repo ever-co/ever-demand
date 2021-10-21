@@ -161,7 +161,7 @@ export class CarrierComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.ngDestroy$.next();
+		this.ngDestroy$.next(true);
 		this.ngDestroy$.complete();
 		if (this.carriers$) {
 			this.carriers$.unsubscribe();

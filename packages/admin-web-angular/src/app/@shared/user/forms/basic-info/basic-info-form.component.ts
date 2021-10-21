@@ -173,7 +173,7 @@ export class BasicInfoFormComponent
 	}
 
 	ngOnDestroy() {
-		this._ngDestroy$.next(true);
+		this._ngDestroy$.next();
 		this._ngDestroy$.complete();
 		BasicInfoFormComponent.destroy();
 	}

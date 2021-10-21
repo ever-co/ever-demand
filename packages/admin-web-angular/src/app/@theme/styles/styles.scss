@@ -25,8 +25,9 @@
 
 @import '~@ng-select/ng-select/themes/default.theme.css';
 
-// In the future versions of ngx-highlight we need to import theme globally
-// @import 'node_modules/highlight.js/styles/github';
+// In this versions of ngx-highlight we need to import theme globally
+@import '~highlight.js/styles/github.css';
+
 // install the framework and custom global styles
 @include nb-install() {
 	// framework global styles

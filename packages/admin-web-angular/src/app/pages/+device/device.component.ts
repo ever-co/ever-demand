@@ -26,8 +26,8 @@ export class DeviceComponent implements OnDestroy, OnInit {
 
 	static noInfoSign = '';
 
-	protected sourceSmartTable: LocalDataSource = new LocalDataSource();
-	protected settingsSmartTable: object;
+	public sourceSmartTable: LocalDataSource = new LocalDataSource();
+	public settingsSmartTable: object;
 
 	constructor(
 		private readonly _deviceService: DeviceService,

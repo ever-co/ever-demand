@@ -185,7 +185,7 @@ export class CarrierTrackingComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.ngDestroy$.next();
+		this.ngDestroy$.next(true);
 		this.ngDestroy$.complete();
 		this.carriers = [];
 		if (this.interval) {

@@ -72,7 +72,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 	includeHardcodedData: boolean = true;
 
 	public loading: FakeDataBtnState;
-	protected isBtnDisabled: FakeDataBtnState;
+	public isBtnDisabled: FakeDataBtnState;
 
 	private _existingWarehouses: Warehouse[] = [];
 	private _ngDestroy$ = new Subject<void>();
