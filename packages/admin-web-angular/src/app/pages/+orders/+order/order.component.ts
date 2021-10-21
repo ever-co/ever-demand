@@ -190,7 +190,7 @@ export class OrderComponent implements OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.ngDestroy$.next();
+		this.ngDestroy$.next(true);
 		this.ngDestroy$.complete();
 	}
 }

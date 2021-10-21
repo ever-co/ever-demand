@@ -9,7 +9,7 @@ import { SimpleTimer } from 'ng2-simple-timer';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ToasterModule } from 'angular2-toaster';
-import { Apollo, ApolloModule } from 'apollo-angular';
+import { Apollo } from 'apollo-angular';
 import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink } from 'apollo-link';
@@ -43,7 +43,6 @@ import { ServerSettingsService } from './@core/services/server-settings.service'
 		BrowserAnimationsModule,
 		HttpClientModule,
 		AppRoutingModule,
-		ApolloModule,
 		HttpLinkModule,
 		TranslateModule.forRoot({
 			loader: {

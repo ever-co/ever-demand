@@ -54,7 +54,7 @@ export class InvitesRequestsComponent implements OnDestroy, AfterViewChecked {
 	private noInfoSign = '';
 	private selectedInvitesRequests: any[] = [];
 	private addClick: boolean;
-	private notInvitedOnly: boolean = true;
+	public notInvitedOnly: boolean = true;
 	private dataCount: number;
 	private $invitesRequests: any;
 	private currentPage: number = 1;
