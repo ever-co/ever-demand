@@ -41,7 +41,7 @@
 
 		<div class="json-info" *ngIf="showCode">
 			<div>
-				<pre><code highlight [language]="['json']" [code]="selectedWarehouse | json" class="iconInfo"></code></pre>
+				<pre><code [highlight]="selectedWarehouse | json" [languages]="['json']" class="iconInfo"></code></pre>
 			</div>
 		</div>
 	</div>

@@ -105,7 +105,7 @@ export class SetupMerchantsComponent {
 					this.stepDeliveryAndTakeaway.restrictedCarriersIds.length >
 					0,
 				carriersIds: this.stepDeliveryAndTakeaway.restrictedCarriersIds,
-				orderBarcodeType: this.stepOrdersSettings.iorderBarcodeType,
+				orderBarcodeType: this.stepOrdersSettings.iOrderBarcodeType,
 				isActive: true,
 				paymentGateways: this.stepPayments.paymentsGateways,
 				isCashPaymentEnabled: this.stepPayments.isCashPaymentEnabled,

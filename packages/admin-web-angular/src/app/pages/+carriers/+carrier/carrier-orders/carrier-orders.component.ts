@@ -18,7 +18,7 @@ import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 import _ from 'lodash';
 import { LocalDataSource } from 'ng2-smart-table';
 import { TranslateService } from '@ngx-translate/core';
-import { forkJoin, Subject, Subscription } from 'rxjs';
+import { forkJoin, Observable, Subject, Subscription } from 'rxjs';
 import { CreatedComponent } from '../../../../@shared/render-component/created/created.component';
 import { CarriersService } from '@app/@core/data/carriers.service';
 import { GeoLocationOrdersService } from '@app/@core/data/geo-location-orders.service';
@@ -32,7 +32,7 @@ let oldSearch = '';
 
 @Component({
 	selector: 'ea-carrier-orders',
-	templateUrl: '/carrier-orders.component.html',
+	templateUrl: './carrier-orders.component.html',
 	styleUrls: ['./carrier-orders.component.scss'],
 })
 export class CarrierOrdersComponent

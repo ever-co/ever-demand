@@ -43,7 +43,7 @@
 
 		<div class="json-info" *ngIf="showCode">
 			<div>
-				<pre><code style="height:300px" highlight [language]="['json']" [code]="selectedOrder | json" class="iconInfo"></code></pre>
+				<pre><code style="height:300px" [highlight]="selectedOrder | json" [languages]="['json']" class="iconInfo"></code></pre>
 			</div>
 		</div>
 	</div>
