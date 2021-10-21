@@ -27,7 +27,6 @@ import { NbButtonModule } from '@nebular/theme';
 		NbButtonModule,
 	],
 	declarations: [InvitesRequestsComponent, CountryRenderComponent],
-	entryComponents: [CountryRenderComponent],
 	providers: [
 		JsonPipe,
 		InvitesRequestsService,

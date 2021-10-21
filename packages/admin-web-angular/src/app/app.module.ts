@@ -1,6 +1,7 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -36,6 +37,7 @@ import { ServerSettingsService } from './@core/services/server-settings.service'
 @NgModule({
 	imports: [
 		BrowserModule,
+		FormsModule,
 		FormWizardModule,
 		// See comment above about Font-Awesome in ngx-admin
 		// FontAwesomeModule,

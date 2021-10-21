@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { PriceCountInputComponent } from './price-countInput/price-countInput.component';
 import { RedirectIdComponent } from './redirect-id';
-import { CommonModule } from '@angular/common';
 import { ThemeModule } from '../../@theme';
 import { RedirectNameComponent } from './name-redirect/name-redirect.component';
 import { CreatedComponent } from './created/created.component';
@@ -38,11 +39,11 @@ const COMPONENTS = [
 @NgModule({
 	imports: [
 		CommonModule,
+		FormsModule,
 		ThemeModule,
 		MomentModule,
 		TranslateModule.forChild(),
 	],
-	declarations: COMPONENTS,
-	entryComponents: COMPONENTS,
+	declarations: COMPONENTS
 })
 export class RenderComponentsModule {}
