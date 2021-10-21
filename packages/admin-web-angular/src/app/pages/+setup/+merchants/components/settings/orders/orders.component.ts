@@ -10,19 +10,22 @@ import QRCode from 'qrcode';
 	styleUrls: ['./orders.component.scss'],
 })
 export class SetupMerchantOrdersSettingsComponent {
+
 	@Output()
 	previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();
+
 	@Output()
 	nextStep: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 	@Input()
 	canCreateMerchant: boolean = false;
 
-	iorderBarcodeType: OrderBarcodeTypes = OrderBarcodeTypes.QR;
-	barcodetData: string;
-	barcodetDataUrl: string;
+	iOrderBarcodeType: OrderBarcodeTypes = OrderBarcodeTypes.QR;
+	barcodeData: string;
+	barcodeDataUrl: string;
 	isQRCode: boolean = true;
 	ngxBarcodeFormat: string;
+	img: string;
 
 	orderBarcodeTypes = [
 		{
@@ -49,8 +52,8 @@ export class SetupMerchantOrdersSettingsComponent {
 
 	async loadBarcodetDataUrl() {
 		const dummyId = Date.now();
-		this.barcodetDataUrl = await QRCode.toDataURL(dummyId.toString());
-		this.barcodetData = dummyId.toString();
+		this.barcodeDataUrl = await QRCode.toDataURL(dummyId.toString());
+		this.barcodeData = dummyId.toString();
 	}
 
 	typeChange(type) {
