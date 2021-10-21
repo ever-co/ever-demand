@@ -29,7 +29,7 @@ const COMPONENTS = [
 		CommonModule,
 		ThemeModule,
 		RouterModule,
-		HighlightModule.forRoot({ theme: 'github' }),
+		HighlightModule,
 		TranslateModule.forChild(),
 	],
 	declarations: COMPONENTS,

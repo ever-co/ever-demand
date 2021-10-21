@@ -21,7 +21,7 @@ import { NbButtonModule } from '@nebular/theme';
 		ThemeModule,
 		ToasterModule.forRoot(),
 		TranslateModule.forChild(),
-		HighlightModule.forRoot({ theme: 'github' }),
+		HighlightModule,
 		InvitesRequestsTableModule,
 		ConfirmationModalModule,
 		NbButtonModule,

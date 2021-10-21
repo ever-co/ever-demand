@@ -105,7 +105,7 @@ stories.addDecorator(
 			ToasterModule.forRoot(),
 			RouterModule.forRoot([]),
 			TranslateModule.forChild(),
-			HighlightModule.forRoot({ theme: 'github' }),
+			HighlightModule,
 			RenderComponentsModule,
 			WarehouseMutationModule,
 			CustomerOrdersTableModule,

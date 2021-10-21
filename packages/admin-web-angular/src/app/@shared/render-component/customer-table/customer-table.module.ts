@@ -12,7 +12,7 @@ const COMPONENTS = [CustomerImageComponent, CustomerOrdersNumberComponent];
 	imports: [
 		CommonModule,
 		ThemeModule,
-		HighlightModule.forRoot({ theme: 'github' }),
+		HighlightModule,
 		TranslateModule.forChild(),
 	],
 	declarations: COMPONENTS,

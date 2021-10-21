@@ -35,7 +35,7 @@ import { WarehouseTrackModule } from './+warehouse-track/warehouse-track.module'
 				deps: [HttpClient],
 			},
 		}),
-		HighlightModule.forRoot({ theme: 'github' }),
+		HighlightModule,
 		RenderComponentsModule,
 		WarehouseTableModule,
 		NbSpinnerModule,

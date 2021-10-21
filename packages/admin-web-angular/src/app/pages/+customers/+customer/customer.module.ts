@@ -45,7 +45,7 @@ const routes = [
 		ToasterModule.forRoot(),
 		RouterModule.forChild(routes),
 		TranslateModule.forChild(),
-		HighlightModule.forRoot({ theme: 'github' }),
+		HighlightModule,
 		RenderComponentsModule,
 		WarehouseMutationModule,
 		CustomerOrdersTableModule,

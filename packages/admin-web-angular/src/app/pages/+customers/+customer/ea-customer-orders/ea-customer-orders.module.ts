@@ -19,7 +19,7 @@ import { CustomerOrdersComponent } from './ea-customer-orders.component';
 		ThemeModule,
 		ToasterModule.forRoot(),
 		TranslateModule.forChild(),
-		HighlightModule.forRoot({ theme: 'github' }),
+		HighlightModule,
 		RenderComponentsModule,
 		CustomerOrdersTableModule,
 	],

@@ -19,7 +19,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 		ToasterModule.forRoot(),
 		TranslateModule.forChild(),
 		RouterModule.forChild(routes),
-		HighlightModule.forRoot({ theme: 'github' }),
+		HighlightModule,
 	],
 	declarations: [ProductComponent],
 })
