@@ -61,7 +61,7 @@
 		"@angular/platform-browser-dynamic": "^12.2.10",
 		"@angular/router": "^12.2.10",
 		"@asymmetrik/ngx-leaflet": "^8.1.0",
-		"@ever-co/angular2-wizard": "^0.5.0",
+		"@ever-co/angular2-wizard": "^0.5.4",
 		"@ever-platform/common": "file:../common",
 		"@ever-platform/common-angular": "file:../common-angular",
 		"@fortawesome/fontawesome-free": "^5.15.4",

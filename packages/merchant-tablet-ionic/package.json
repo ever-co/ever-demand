@@ -86,7 +86,7 @@
 		"@ng-select/ng-select": "^7.3.0",
 		"@ngx-translate/core": "^13.0.0",
 		"@ngx-translate/http-loader": "^6.0.0",
-		"angular2-wizard": "^0.4.0",
+		"@ever-co/angular2-wizard": "^0.5.4",
 		"apollo-angular": "^2.6.0",
 		"apollo-angular-link-http": "^1.11.0",
 		"apollo-angular-link-http-common": "^1.10.0",

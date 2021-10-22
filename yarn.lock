@@ -2215,10 +2215,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@ever-co/angular2-wizard@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@ever-co/angular2-wizard/-/angular2-wizard-0.5.0.tgz#d304182923af1e98223a18566618d0eca6ecb075"
-  integrity sha512-eqjABd0MfSPyQ+zgsrJksse/6/ylClc2nwaQTyftFobvW57tqBu+rkIn2xeGoM4UtnrRdsNvcHIDCLvb/p+qMw==
+"@ever-co/angular2-wizard@^0.5.4":
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/@ever-co/angular2-wizard/-/angular2-wizard-0.5.4.tgz#b830bcb9a8455ee7122a274f50a13309a6f2ff9b"
+  integrity sha512-K/69nnXj5eoeZ/PkXqe2uwpUdGEImfBemrOgEFnKimyqgn6wSYoY6Pfslujuil+NzdGME6YzLqnOuLozXHcGaQ==
   dependencies:
     bootstrap "^4.6.0"
 
@@ -2236,7 +2236,7 @@
     "@angular/platform-browser-dynamic" "^12.2.10"
     "@angular/router" "^12.2.10"
     "@angular/service-worker" "^12.2.10"
-    "@ever-platform/common" "file:../../Users/Admin/AppData/Local/Yarn/Cache/v6/npm-@ever-platform-common-angular-0.4.1-377137f2-5aac-49d4-bc3e-f6b5b56e749c-1634897227305/node_modules/@ever-platform/common"
+    "@ever-platform/common" "file:../../../YarnCache/v6/npm-@ever-platform-common-angular-0.4.1-3a49cb9a-2fdc-46d2-960d-0d0e493d172f-1634942100266/node_modules/@ever-platform/common"
     "@ngx-translate/core" "^13.0.0"
     "@ngx-translate/http-loader" "^6.0.0"
     tslib "^2.3.1"
@@ -8074,13 +8074,6 @@ angular2-uuid@^1.1.1:
   resolved "https://registry.yarnpkg.com/angular2-uuid/-/angular2-uuid-1.1.1.tgz#72f03cd532b7f40032eb1ecfb9f8457384be956e"
   integrity sha1-cvA81TK39AAy6x7PufhFc4S+lW4=
 
-angular2-wizard@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/angular2-wizard/-/angular2-wizard-0.4.0.tgz#78a92778dc8ec64f2074a53bd981a4a2127f1939"
-  integrity sha1-eKkneNyOxk8gdKU72YGkohJ/GTk=
-  dependencies:
-    bootstrap "^4.0.0-alpha.6"
-
 anser@^2.0.1:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/anser/-/anser-2.1.0.tgz#a7309c9f29886f19af56cb30c79fc60ea483944e"
@@ -9810,7 +9803,7 @@ boom@7.x.x:
   dependencies:
     hoek "6.x.x"
 
-bootstrap@^4.0.0-alpha.6, bootstrap@^4.6.0:
+bootstrap@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.6.0.tgz#97b9f29ac98f98dfa43bf7468262d84392552fd7"
   integrity sha512-Io55IuQY3kydzHtbGvQya3H+KorS/M9rSNyfCGCg9WZ4pyT/lCxIlpJgG1GXW/PswzC84Tr2fBYi+7+jFVQQBw==

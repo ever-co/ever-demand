@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { AddCarriersPopupPage } from './add-carriers-popup';
-import { FormWizardModule } from 'angular2-wizard';
+import { FormWizardModule } from '@ever-co/angular2-wizard';
 import { AddChoiceComponent } from './add-choice/add-choice';
 import { CarriersCatalogComponent } from './carriers-catalog/carriers-catalog';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
