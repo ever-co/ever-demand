@@ -12,7 +12,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ToasterModule } from 'angular2-toaster';
 import { Apollo } from 'apollo-angular';
 import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { InMemoryCache } from '@apollo/client/core';
 import { ApolloLink } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
 import { setContext } from 'apollo-link-context';
@@ -64,7 +64,7 @@ import { ServerSettingsService } from './@core/services/server-settings.service'
 			 * If you only need custom modules,
 			 * please refer to [Custom Build] section.
 			 */
-			echarts: () => import('echarts'), // or import('./path-to-my-custom-echarts')
+			echarts: () => import('echarts')
 		}),
 	],
 	declarations: [AppComponent],
