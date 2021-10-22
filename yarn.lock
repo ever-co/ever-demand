@@ -2215,11 +2215,13 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@ever-co/angular2-wizard@^0.5.4":
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/@ever-co/angular2-wizard/-/angular2-wizard-0.5.4.tgz#b830bcb9a8455ee7122a274f50a13309a6f2ff9b"
-  integrity sha512-K/69nnXj5eoeZ/PkXqe2uwpUdGEImfBemrOgEFnKimyqgn6wSYoY6Pfslujuil+NzdGME6YzLqnOuLozXHcGaQ==
+"@ever-co/angular2-wizard@^0.5.5":
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/@ever-co/angular2-wizard/-/angular2-wizard-0.5.5.tgz#dd6b0bcac20d72c64270f719d664fe971888f6bf"
+  integrity sha512-3IrA6771nOLXHCFk/kpBxgNGcbMSzYeiSioLtwma5/+kj4eqxvbEBYOUkJE/31o/sFsCta2Op80Ihc/ntq2gpA==
   dependencies:
+    "@angular/cli" "^12.2.10"
+    "@angular/compiler-cli" "^12.2.10"
     bootstrap "^4.6.0"
 
 "@ever-platform/common-angular@file:packages/common-angular":
@@ -2236,7 +2238,7 @@
     "@angular/platform-browser-dynamic" "^12.2.10"
     "@angular/router" "^12.2.10"
     "@angular/service-worker" "^12.2.10"
-    "@ever-platform/common" "file:../../../YarnCache/v6/npm-@ever-platform-common-angular-0.4.1-3a49cb9a-2fdc-46d2-960d-0d0e493d172f-1634942100266/node_modules/@ever-platform/common"
+    "@ever-platform/common" "file:../../../YarnCache/v6/npm-@ever-platform-common-angular-0.4.1-c21e2158-128c-4d26-baf2-3c95b075b71e-1634943643635/node_modules/@ever-platform/common"
     "@ngx-translate/core" "^13.0.0"
     "@ngx-translate/http-loader" "^6.0.0"
     tslib "^2.3.1"
