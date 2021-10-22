@@ -16,6 +16,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
 import { setContext } from 'apollo-link-context';
+import { NgxEchartsModule } from 'ngx-echarts';
 import { getOperationAST } from 'graphql/utilities/getOperationAST';
 import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
@@ -57,6 +58,14 @@ import { ServerSettingsService } from './@core/services/server-settings.service'
 		NgbModule,
 		ThemeModule.forRoot(),
 		CoreModule.forRoot(),
+		NgxEchartsModule.forRoot({
+			/**
+			 * This will import all modules from echarts.
+			 * If you only need custom modules,
+			 * please refer to [Custom Build] section.
+			 */
+			echarts: () => import('echarts'), // or import('./path-to-my-custom-echarts')
+		}),
 	],
 	declarations: [AppComponent],
 	bootstrap: [AppComponent],

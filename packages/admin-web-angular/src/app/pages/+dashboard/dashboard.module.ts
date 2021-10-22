@@ -6,7 +6,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ThemeModule } from '../../@theme';
 import { ChartsPanelComponent } from './charts-panel/charts-panel.component';
 import { OrdersChartComponent } from './charts-panel/charts/orders-chart/orders-chart.component';
+// duplicate OrdersChartComponent
+import { OrdersChartComponent as RootOrdersChartComponent } from './charts-panel/charts/orders-chart.component';
 import { ProfitChartComponent } from './charts-panel/charts/profit-chart/profit-chart.component';
+// duplicate ProfitChartComponent
+import { ProfitChartComponent as RootProfitChartComponent } from './charts-panel/charts/profit-chart.component';
 import { ChartPanelHeaderComponent } from './charts-panel/chart-panel-header/chart-panel-header.component';
 import { ChartPanelSummaryComponent } from './charts-panel/chart-panel-summary/chart-panel-summary.component';
 import { NgxEchartsModule } from 'ngx-echarts';
@@ -34,7 +38,9 @@ export const routes: Routes = [
 	imports: [
 		CommonModule,
 		ThemeModule,
-		NgxEchartsModule,
+		NgxEchartsModule.forRoot({
+			echarts: () => import('echarts')
+		}),
 		ToasterModule,
 		TranslateModule.forChild(),
 		RouterModule.forChild(routes),
@@ -49,7 +55,9 @@ export const routes: Routes = [
 		ChartPanelHeaderComponent,
 		ChartPanelSummaryComponent,
 		OrdersChartComponent,
+		RootOrdersChartComponent,
 		ProfitChartComponent,
+		RootProfitChartComponent,
 		LegendChartComponent,
 		DashboardSelectStoreComponent,
 	],
@@ -58,7 +66,9 @@ export const routes: Routes = [
 		ChartPanelHeaderComponent,
 		ChartPanelSummaryComponent,
 		OrdersChartComponent,
+		RootOrdersChartComponent,
 		ProfitChartComponent,
+		RootProfitChartComponent,
 		LegendChartComponent,
 	],
 	providers: [
