@@ -29,7 +29,7 @@ const perPage = 3;
 
 @Component({
 	selector: 'ea-carrier-orders-history',
-	templateUrl: '/carrier-orders-history.component.html',
+	templateUrl: './carrier-orders-history.component.html',
 	styleUrls: ['./carrier-orders-history.component.scss'],
 })
 export class CarrierOrdersHistoryComponent
