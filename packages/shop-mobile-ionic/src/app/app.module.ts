@@ -7,7 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { RouteReuseStrategy } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { IonicStorageModule } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage-angular';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@modules/client.common.angular2/common.module';
@@ -17,8 +17,8 @@ import { AppComponent } from './app.component';
 // import { Logger } from 'angular2-logger/core';
 import { environment } from 'environments/environment';
 import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
-import { Apollo, ApolloModule } from 'apollo-angular';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { Apollo } from 'apollo-angular';
+import { InMemoryCache } from '@apollo/client/core';
 import { WebSocketLink } from 'apollo-link-ws';
 import { setContext } from 'apollo-link-context';
 import { ApolloLink } from 'apollo-link';
@@ -43,7 +43,6 @@ import { CallPageModule } from './pages/+products/+order/+call/call.module';
 		HttpClientModule,
 		BrowserAnimationsModule,
 		MenuModule,
-		ApolloModule,
 		CallPageModule,
 		HttpLinkModule,
 		IonicModule.forRoot(),

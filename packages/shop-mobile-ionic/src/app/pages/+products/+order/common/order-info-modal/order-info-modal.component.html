@@ -3,7 +3,7 @@
 		<!-- TODO add translate -->
 		<ion-title>{{ 'Order Info' | translate }}</ion-title>
 		<ion-buttons slot="end">
-			<ion-button (click)="closeModal()">
+			<ion-button (click)="closeModal(true)">
 				<span>
 					<i class="fa fa-times back-btn"></i>
 					<span>{{ 'CLOSE' | translate }}</span>
@@ -27,7 +27,7 @@
 			</span>
 		</ion-button>
 
-		<ion-button (click)="closeModal()" color="success" class="col-50">
+		<ion-button (click)="closeModal(true)" color="success" class="col-50">
 			<span>
 				<span>{{ 'Add More' | translate }}</span>
 			</span>
