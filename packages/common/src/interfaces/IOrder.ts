@@ -153,7 +153,7 @@ interface IOrder extends IOrderCreateObject, DBRawObject {
 	user: IUser;
 	warehouse: IWarehouse | string;
 	products: IOrderProduct[];
-	carrier?: Carrier | string | null;
+	carrier?: Carrier;
 	isConfirmed: boolean;
 	isCancelled: boolean;
 	isPaid: boolean;

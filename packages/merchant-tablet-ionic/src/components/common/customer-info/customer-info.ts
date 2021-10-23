@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import UserOrder from '@modules/server.common/entities/UserOrder';
+import User from '@modules/server.common/entities/User';
 
 @Component({
 	selector: 'customer-info',
@@ -8,7 +8,7 @@ import UserOrder from '@modules/server.common/entities/UserOrder';
 })
 export class CustomerInfoComponent {
 	@Input()
-	public user: UserOrder;
+	public user: User;
 
 	constructor() {}
 

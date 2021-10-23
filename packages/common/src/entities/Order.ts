@@ -245,7 +245,7 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 	 * @memberof Order
 	 */
 	@Types.Ref(Carrier, { required: false })
-	carrier?: Carrier | string | null;
+	carrier?: Carrier;
 
 	@Types.Boolean(false)
 	@Column()

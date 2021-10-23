@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import Order from '@modules/server.common/entities/Order';
+import IOrder from '@modules/server.common/interfaces/IOrder';
 import { ModalController } from '@ionic/angular';
 import { OrderMapPopupPage } from 'components/order-map-popup/order-map-popup';
 
@@ -10,7 +10,7 @@ import { OrderMapPopupPage } from 'components/order-map-popup/order-map-popup';
 })
 export class CarrierInfoComponent {
 	@Input()
-	public order: Order;
+	public order: IOrder;
 
 	constructor(public modalCtrl: ModalController) {}
 
