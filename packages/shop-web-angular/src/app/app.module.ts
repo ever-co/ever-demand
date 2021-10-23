@@ -40,9 +40,9 @@ import { MaintenanceService } from '@modules/client.common.angular2/services/mai
 import { AppModuleGuard } from './app.module.guard';
 import { MaintenanceModuleGuard } from './+maintenance-info/maintenance-info.module.guard';
 import { GoogleMapsLoader } from '@modules/client.common.angular2/services/googleMapsLoader';
-import { ApolloModule, Apollo } from 'apollo-angular';
+import { Apollo } from 'apollo-angular';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { InMemoryCache } from '@apollo/client/core';
 import { setContext } from 'apollo-link-context';
 import { Store } from './services/store';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -51,6 +51,7 @@ import { GeoLocationService } from './services/geo-location';
 import { LocationPopupModalModule } from './shared/location-popup/location-popup.module';
 import { AuthGuard } from './authentication/auth.guard';
 import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
+import { AboutComponent } from './about/about.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -138,11 +139,11 @@ const APP_PROVIDERS = [
 		ToolbarComponent,
 		NoContentComponent,
 		SidenavContentComponent,
+		AboutComponent
 	],
 	imports: [
 		BrowserModule,
 		HttpClientModule,
-		ApolloModule,
 		TranslateModule.forRoot({
 			loader: {
 				provide: TranslateLoader,

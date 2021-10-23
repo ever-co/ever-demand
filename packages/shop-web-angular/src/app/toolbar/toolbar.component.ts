@@ -76,7 +76,7 @@ export class ToolbarComponent implements AfterViewInit {
 		await this.reload();
 	}
 
-	private tryFindNewAddress(address: string) {
+	public tryFindNewAddress(address: string) {
 		const geocoder = new google.maps.Geocoder();
 
 		geocoder.geocode(
