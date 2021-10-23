@@ -2239,7 +2239,7 @@
     "@angular/platform-browser-dynamic" "^12.2.10"
     "@angular/router" "^12.2.10"
     "@angular/service-worker" "^12.2.10"
-    "@ever-platform/common" "file:../../../YarnCache/v6/npm-@ever-platform-common-angular-0.4.1-80ddc4a9-bde3-48e4-9a61-722d71342f8d-1634945121505/node_modules/@ever-platform/common"
+    "@ever-platform/common" "file:../../Users/Admin/AppData/Local/Yarn/Cache/v6/npm-@ever-platform-common-angular-0.4.1-b65ce70a-a4ab-4a2b-b1ff-059e831b0642-1634988191658/node_modules/@ever-platform/common"
     "@ngx-translate/core" "^13.0.0"
     "@ngx-translate/http-loader" "^6.0.0"
     tslib "^2.3.1"
@@ -3294,7 +3294,15 @@
   resolved "https://registry.yarnpkg.com/@ionic/pro/-/pro-2.0.4.tgz#d9531ddaaf11098b75dde5aad5fea47b23632322"
   integrity sha512-8/tLniY1A2VUgphWvNzebm5hqZoaJTdQlPIReQHxFAAuwGyY+8aakLM1EhvXTC8a68J0mWSs2/wgepSWq1wNlw==
 
-"@ionic/storage@^3.0.6":
+"@ionic/storage-angular@^3.0.6":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@ionic/storage-angular/-/storage-angular-3.0.6.tgz#9e658449f248e59f1743768f072ec93055222d1b"
+  integrity sha512-ZXlIFWGU27aCxVFgZb0KFJFtWwnn6+HK6v0rMGzjN8f7oV2ewXaQ2dl1gTw/A8YoozTVPOFxwfFHCjhWLFR1Fw==
+  dependencies:
+    "@ionic/storage" "^3.0.4"
+    tslib "^1.10.0"
+
+"@ionic/storage@^3.0.4", "@ionic/storage@^3.0.6":
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/@ionic/storage/-/storage-3.0.6.tgz#77affcf39afffa86536c97b388ad9c8ecc56d6d1"
   integrity sha512-sw+zSJINIpbQCGZR9mEtb9N0WmZLuhcMVqOZJBqLuDACAMdXqG39zmp5nSVqhGI1/9X3nd0K5gVn6icyVfUnUg==
