@@ -20,7 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
 	selector: 'es-login-by-location',
 	styleUrls: ['./byLocation.component.scss'],
-	templateUrl: '/byLocation.component.html',
+	templateUrl: './byLocation.component.html',
 })
 export class LoginByLocationComponent implements OnInit {
 	@ViewChild('locationForm')
@@ -39,7 +39,7 @@ export class LoginByLocationComponent implements OnInit {
 
 	public authLogo = environment.AUTH_LOGO;
 
-	private coordinates: ILocation;
+	public coordinates: ILocation;
 
 	constructor(
 		protected inviteRouter: InviteRouter,

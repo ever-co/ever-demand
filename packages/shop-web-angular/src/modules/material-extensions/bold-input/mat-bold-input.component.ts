@@ -63,7 +63,7 @@ export class MatBoldInputComponent extends InputComponent
 		}
 	}
 
-	private onFocus() {
+	public onFocus(event) {
 		if (this.focusTimeout != null) {
 			return;
 		}
@@ -73,7 +73,7 @@ export class MatBoldInputComponent extends InputComponent
 		}, this.RIPPLE_FADE_IN_DURATION / this.rippleSpeedFactor);
 	}
 
-	private onBlur() {
+	public onBlur() {
 		this.isFocused = false;
 
 		if (this.focusTimeout != null) {

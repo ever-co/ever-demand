@@ -35,7 +35,9 @@ export class BuyProductComponent {
 		);
 	}
 
-	protected localeTranslate(member: ILocaleMember[]) {
+	public localeTranslate(member: ILocaleMember[]) {
 		return this._productLocalesService.getTranslate(member);
 	}
+
+	public cancel() { }
 }

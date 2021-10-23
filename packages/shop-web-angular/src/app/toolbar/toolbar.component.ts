@@ -93,7 +93,7 @@ export class ToolbarComponent implements AfterViewInit {
 		);
 	}
 
-	private async loadAddress(findNew: boolean = false) {
+	public async loadAddress(findNew: boolean = false) {
 		let geoLocationForProducts: GeoLocation;
 
 		const isProductionEnv = environment.production;

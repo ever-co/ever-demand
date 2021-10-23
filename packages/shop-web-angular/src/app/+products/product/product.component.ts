@@ -2,7 +2,6 @@ import { Router } from '@angular/router';
 import {
 	Component,
 	Input,
-	AfterViewInit,
 	EventEmitter,
 	Output,
 	OnChanges,
@@ -16,7 +15,6 @@ import {
 	trigger,
 } from '@angular/animations';
 import { Observable } from 'rxjs';
-import 'rxjs/add/observable/fromEvent';
 import { ElementQueries } from 'css-element-queries/src/ElementQueries';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
@@ -118,7 +116,7 @@ export class ProductComponent implements OnChanges {
 		}
 	}
 
-	protected localeTranslate(member: ILocaleMember[]): string {
+	public localeTranslate(member: ILocaleMember[]): string {
 		return this._productLocalesService.getTranslate(member);
 	}
 
