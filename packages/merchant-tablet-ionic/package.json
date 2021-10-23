@@ -55,7 +55,7 @@
 		"@angular/platform-browser-dynamic": "^12.2.10",
 		"@angular/router": "^12.2.10",
 		"@angular/service-worker": "^12.2.10",
-		"@ever-co/angular2-wizard": "^0.5.6",
+		"@ever-co/angular2-wizard": "^0.6.2",
 		"@ever-platform/common": "file:../common",
 		"@ever-platform/common-angular": "file:../common-angular",
 		"@ionic-native/barcode-scanner": "^5.36.0",

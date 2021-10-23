@@ -4,7 +4,6 @@
 		"baseUrl": "./src",
 		"outDir": "./build",
 		"rootDir": "./src",
-		"target": "es5",
 		"types": ["node", "reflect-metadata", "jest"],
 		"paths": {
 			"@pyro/*": ["@pyro/*", "/@pyro/*"]

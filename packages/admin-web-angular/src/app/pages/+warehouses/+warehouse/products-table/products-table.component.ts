@@ -17,7 +17,7 @@ import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehou
 import { Subscription } from 'apollo-client/util/Observable';
 import { Router } from '@angular/router';
 import { NotifyService } from '../../../../@core/services/notify/notify.service';
-import { ConfimationModalComponent } from '../../../../@shared/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from '../../../../@shared/confirmation-modal/confirmation-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
 	WarehouseProductViewModel,
@@ -58,12 +58,12 @@ export class ProductsTableComponent implements OnDestroy {
 	}
 
 	removeProduct(ev) {
-		const activeModal = this.modalService.open(ConfimationModalComponent, {
+		const activeModal = this.modalService.open(ConfirmationModalComponent, {
 			size: 'sm',
 			container: 'nb-layout',
 			backdrop: 'static',
 		});
-		const modalComponent: ConfimationModalComponent =
+		const modalComponent: ConfirmationModalComponent =
 			activeModal.componentInstance;
 
 		modalComponent.confirmEvent

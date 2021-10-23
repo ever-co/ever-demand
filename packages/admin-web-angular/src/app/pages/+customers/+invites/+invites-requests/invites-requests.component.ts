@@ -22,7 +22,7 @@ import { StatusComponent } from '../../../../@shared/render-component/invites-re
 import { InvitedDateComponent } from '../../../../@shared/render-component/invites-requests/invited-date.component';
 import { NotifyService } from '@app/@core/services/notify/notify.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfimationModalComponent } from '../../../../@shared/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from '../../../../@shared/confirmation-modal/confirmation-modal.component';
 import { InviteViewModel } from '../invites.component';
 
 // import { ToasterService } from 'angular2-toaster';
@@ -178,13 +178,13 @@ export class InvitesRequestsComponent implements OnDestroy, AfterViewChecked {
 	}
 
 	async deleteConfirm(e): Promise<void> {
-		const activeModal = this.modalService.open(ConfimationModalComponent, {
+		const activeModal = this.modalService.open(ConfirmationModalComponent, {
 			size: 'sm',
 			container: 'nb-layout',
 			backdrop: 'static',
 		});
 
-		const modalComponent: ConfimationModalComponent =
+		const modalComponent: ConfirmationModalComponent =
 			activeModal.componentInstance;
 
 		await modalComponent.confirmEvent

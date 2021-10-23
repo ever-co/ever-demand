@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 	styleUrls: ['./confirmation-modal.component.scss'],
 	templateUrl: './confirmation-modal.component.html',
 })
-export class ConfimationModalComponent implements OnInit, OnDestroy {
+export class ConfirmationModalComponent implements OnInit, OnDestroy {
 	public ngDestroy$ = new Subject<void>();
 
 	public prefix: string = 'CONFIRM_MODAL.';

@@ -17,7 +17,7 @@ import { RedirectNameComponent } from '../../@shared/render-component/name-redir
 import { WarehouseActionsComponent } from '../../@shared/render-component/warehouse-table/warehouse-actions/warehouse-actions.component';
 import { WarehouseImageComponent } from '../../@shared/render-component/warehouse-table/warehouse-image/warehouse-image.component';
 import { WarehouseOrdersNumberComponent } from '../../@shared/render-component/warehouse-table/warehouse-orders-number/warehouse-orders-number.component';
-import { ConfimationModalComponent } from '../../@shared/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from '../../@shared/confirmation-modal/confirmation-modal.component';
 import { WarehouseEmailComponent } from '../../@shared/render-component/warehouse-table/warehouse-email/warehouse-email.component';
 import { WarehousePhoneComponent } from '../../@shared/render-component/warehouse-table/warehouse-phone/warehouse-phone.component';
 
@@ -80,12 +80,12 @@ export class WarehousesComponent implements AfterViewInit, OnDestroy {
 	}
 
 	async deleteSelectedRows() {
-		const activeModal = this.modalService.open(ConfimationModalComponent, {
+		const activeModal = this.modalService.open(ConfirmationModalComponent, {
 			size: 'sm',
 			container: 'nb-layout',
 			backdrop: 'static',
 		});
-		const modalComponent: ConfimationModalComponent =
+		const modalComponent: ConfirmationModalComponent =
 			activeModal.componentInstance;
 
 		await modalComponent.confirmEvent

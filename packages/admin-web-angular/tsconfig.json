@@ -4,10 +4,10 @@
 	"compilerOptions": {
 		"outDir": "./dist/out-tsc",
 		"module": "commonjs",
-		"target": "es2015",
+		"target": "es2016",
 		"baseUrl": "./src",
 		"experimentalDecorators": true,
-		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"],
+		"types": ["node", "jest", "reflect-metadata", "googlemaps", "jasmine"],
 		"paths": {
 			"@angular/*": ["../node_modules/@angular/*"],
 			"@modules/server.common/*": ["../../common/src/*"],
@@ -36,10 +36,11 @@
 	},
 	"files": ["src/main.ts", "src/polyfills.ts"],
 	"angularCompilerOptions": {
+		"strictTemplates": false,
+		"strictInjectionParameters": false,
 		"annotateForClosureCompiler": true,
 		"skipTemplateCodegen": true,
-		"fullTemplateTypeCheck": true,
-		"strictInjectionParameters": true,
+		"fullTemplateTypeCheck": false,
 		"enableResourceInlining": true
 	},
 	"include": ["./src", "../common/**/*.ts", "../common-angular/**/*.ts"]

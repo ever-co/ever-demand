@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable, forkJoin, Subject } from 'rxjs';
 import { takeUntil, first } from 'rxjs/operators';
 import { NotifyService } from '../../@core/services/notify/notify.service';
-import { ConfimationModalComponent } from '../../@shared/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from '../../@shared/confirmation-modal/confirmation-modal.component';
 
 @Component({
 	selector: 'ea-device',
@@ -100,12 +100,12 @@ export class DeviceComponent implements OnDestroy, OnInit {
 	}
 
 	async deleteDevice(e) {
-		const activeModal = this._modalService.open(ConfimationModalComponent, {
+		const activeModal = this._modalService.open(ConfirmationModalComponent, {
 			size: 'sm',
 			container: 'nb-layout',
 			backdrop: 'static',
 		});
-		const modalComponent: ConfimationModalComponent =
+		const modalComponent: ConfirmationModalComponent =
 			activeModal.componentInstance;
 
 		await modalComponent.confirmEvent

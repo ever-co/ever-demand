@@ -4,8 +4,10 @@
 		"baseUrl": "./src",
 		"outDir": "./build",
 		"rootDir": "./",
-		"target": "es6",
 		"types": ["node", "reflect-metadata", "jest"],
+		"esModuleInterop": true,
+		"incremental": true,
+		"tsBuildInfoFile": "./tsconfig.tsbuildinfo",
 		"experimentalDecorators": true,
 		"paths": {
 			"@modules/server.common/*": [

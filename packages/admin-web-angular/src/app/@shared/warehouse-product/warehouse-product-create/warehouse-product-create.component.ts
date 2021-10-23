@@ -123,6 +123,10 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 		return this.basicInfo && this.basicInfo.valid && this.isSetp2;
 	}
 
+	async createProduct() {
+		// TODO: implement (we have same method in other component already)
+	}
+
 	async addProducts() {
 		this.loading = true;
 		try {

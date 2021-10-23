@@ -17,7 +17,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { NotifyService } from '@app/@core/services/notify/notify.service';
-import { ConfimationModalComponent } from '@app/@shared/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from '@app/@shared/confirmation-modal/confirmation-modal.component';
 import { CategoryImageComponent } from './category-image.component';
 
 interface ProductViewModel {
@@ -95,12 +95,12 @@ export class CategoriesTableComponent implements OnInit, OnDestroy {
 	}
 
 	async deleteCategory(e) {
-		const activeModal = this.modalService.open(ConfimationModalComponent, {
+		const activeModal = this.modalService.open(ConfirmationModalComponent, {
 			size: 'sm',
 			container: 'nb-layout',
 			backdrop: 'static',
 		});
-		const modalComponent: ConfimationModalComponent =
+		const modalComponent: ConfirmationModalComponent =
 			activeModal.componentInstance;
 
 		this.confirmSub$ = await modalComponent.confirmEvent

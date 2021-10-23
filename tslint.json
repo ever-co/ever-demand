@@ -59,7 +59,7 @@
 			"element",
 			[
 				"ngx",
-				"ea" // ea = ever admin
+				"ea"
 			],
 			"kebab-case"
 		],
