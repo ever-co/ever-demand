@@ -54,15 +54,16 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 	public loading: boolean;
 
 	public warehouses: Warehouse[];
-	protected topWarehouseProducts: WarehouseProduct[];
+	public topWarehouseProducts: WarehouseProduct[];
 	public warehouse: Warehouse;
 	public selectedWarehouse: Warehouse;
-	protected warehouseID: string;
+	public warehouseID: string;
 	public selectedOrder: Order;
-	protected timers: string[] = [];
 	public settingsSmartTable: object;
 	public sourceSmartTable: LocalDataSource = new LocalDataSource();
-	protected isSelectedOrderActionsAvailable: boolean = true;
+	public isSelectedOrderActionsAvailable: boolean = true;
+
+	protected timers: string[] = [];
 
 	private dataCount: number;
 	private $storeOrders;

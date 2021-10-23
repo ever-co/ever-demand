@@ -20,6 +20,8 @@ export class ProductCreateComponent implements OnInit {
 	public loading: boolean;
 	public productsCategories: any;
 	public BUTTON_DONE: string = 'BUTTON_DONE';
+	public BUTTON_NEXT: string = 'BUTTON_NEXT';
+	public BUTTON_PREVIOUS: string = 'BUTTON_PREVIOUS';
 
 	readonly form: FormGroup = this._formBuilder.group({
 		basicInfo: BasicInfoFormComponent.buildForm(this._formBuilder),
@@ -43,6 +45,14 @@ export class ProductCreateComponent implements OnInit {
 		return this._translate(this.BUTTON_DONE);
 	}
 
+	get buttonNext() {
+		return this._translate(this.BUTTON_NEXT);
+	}
+
+	get buttonPrevious() {
+		return this._translate(this.BUTTON_PREVIOUS);
+	}
+
 	async createProduct() {
 		if (this.basicInfo.valid) {
 			const productCreateObject: IProductCreateObject = await this.basicInfoForm.setupProductCreateObject();
@@ -57,12 +67,12 @@ export class ProductCreateComponent implements OnInit {
 				const message = `Product ${productCreateObject.title[0].value} is created`;
 
 				this._notifyService.success(message);
-				this._cancelModal();
+				this.cancelModal();
 			} catch (error) {
 				const message = `Something went wrong!`;
 				this.loading = false;
 				this._notifyService.error(message);
-				this._cancelModal();
+				this.cancelModal();
 			}
 		}
 	}
@@ -77,7 +87,7 @@ export class ProductCreateComponent implements OnInit {
 		return translationResult;
 	}
 
-	private _cancelModal() {
+	public cancelModal() {
 		this._activeModal.dismiss('canceled');
 	}
 }

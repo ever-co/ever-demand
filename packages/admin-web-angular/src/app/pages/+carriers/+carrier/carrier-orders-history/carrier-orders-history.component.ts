@@ -38,17 +38,18 @@ export class CarrierOrdersHistoryComponent
 
 	@Input()
 	protected carrierOrderOptions: ICarrierOrdersRouterGetOptions;
+
 	@Input()
 	protected selectedCarrier: Carrier;
 
 	@Output()
 	protected selectedOrderEvent = new EventEmitter<Order>();
 
-	protected selectedOrder: Order;
-	protected currentOrders: Order[] = [];
-	protected settingsSmartTable: object;
-	protected sourceSmartTable: LocalDataSource = new LocalDataSource();
-	protected enumOrderCarrierStatus: typeof OrderCarrierStatus = OrderCarrierStatus;
+	public selectedOrder: Order;
+	public currentOrders: Order[] = [];
+	public settingsSmartTable: object;
+	public sourceSmartTable: LocalDataSource = new LocalDataSource();
+	public enumOrderCarrierStatus: typeof OrderCarrierStatus = OrderCarrierStatus;
 
 	private dataCount: number;
 	$ordersHistory: Subscription;

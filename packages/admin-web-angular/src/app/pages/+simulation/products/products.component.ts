@@ -20,14 +20,15 @@ export interface ProductViewModel {
 	templateUrl: './products.component.html',
 })
 export class SimulationProductsComponent implements OnDestroy {
-	protected sourceSmartTable: LocalDataSource = new LocalDataSource();
-	protected settingsSmartTable: object;
 	private _ngDestroy$ = new Subject<void>();
 
+	public sourceSmartTable: LocalDataSource = new LocalDataSource();
+	public settingsSmartTable: object;
 	public selectedProducts: ProductViewModel[] = [];
 	public selectProducts$: EventEmitter<any> = new EventEmitter();
 	public selectProductsChange$: EventEmitter<any> = new EventEmitter();
-	inFilter: boolean;
+
+	public inFilter: boolean;
 
 	constructor(private readonly _translateService: TranslateService) {
 		this._loadSmartTableSettings();
