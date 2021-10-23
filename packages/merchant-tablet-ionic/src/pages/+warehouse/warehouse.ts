@@ -39,7 +39,7 @@ export enum OrderStatus {
 
 @Component({
 	selector: 'page-warehouse',
-	templateUrl: 'warehouse.html',
+	templateUrl: './warehouse.html',
 	styleUrls: ['./warehouse.scss'],
 })
 export class WarehousePage implements OnInit {

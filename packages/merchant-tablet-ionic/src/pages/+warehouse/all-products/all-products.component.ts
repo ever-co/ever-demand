@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { WarehouseProductsService } from '../../../services/warehouse-products.service';
 import { Subscription } from 'rxjs';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
@@ -41,7 +41,8 @@ export class AllProductsComponent implements OnInit, OnDestroy {
 	public masonryOptions: NgxMasonryOptions = {
 		itemSelector: '.masonry-item',
 		columnWidth: 234,
-		transitionDuration: '0.2s',
+		// transitionDuration option not supported
+		// transitionDuration: '0.2s',
 		gutter: 10,
 		resize: true,
 		initLayout: true,
