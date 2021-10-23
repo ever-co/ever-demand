@@ -47,7 +47,6 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 
 			if (
 				order.warehouse &&
-				order.warehouse != null &&
 				typeof order.warehouse !== 'string'
 			) {
 				this.warehouse = new Warehouse(order.warehouse as IWarehouse);
@@ -55,13 +54,12 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 
 			if (
 				order.carrier &&
-				order.carrier != null &&
 				typeof order.carrier !== 'string'
 			) {
 				this.carrier = new Carrier(order.carrier as ICarrier);
 			}
 
-			if (order.products && order.products != null) {
+			if (order.products) {
 				this.products = _.map(
 					order.products,
 					(orderProduct: IOrderProduct) => {

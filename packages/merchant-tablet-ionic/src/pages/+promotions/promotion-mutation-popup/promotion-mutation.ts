@@ -57,7 +57,7 @@ export class PromotionMutation implements OnDestroy {
 	) {}
 
 	ngOnDestroy(): void {
-		this._ngDestroy$.next();
+		this._ngDestroy$.next(true);
 		this._ngDestroy$.unsubscribe();
 	}
 

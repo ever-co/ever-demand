@@ -5,7 +5,7 @@ import {
 	Output,
 	Input,
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { UserAuthRouter } from '@modules/client.common.angular2/routers/user-auth-router.service';
 import { BasicInfoFormComponent } from '../forms/basic-info/basic-info-form.component';
@@ -28,7 +28,7 @@ export class UserMutationComponent {
 	});
 
 	readonly basicInfo = this.form.get('basicInfo') as FormGroup;
-	readonly apartment = this.form.get('apartment') as FormGroup;
+	readonly apartment = this.form.get('apartment') as FormControl;
 	readonly location = this.form.get('location') as FormGroup;
 
 	@ViewChild('basicInfoForm')

@@ -1,14 +1,17 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { Apollo, ApolloModule } from 'apollo-angular';
+import { Apollo } from 'apollo-angular';
 import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { InMemoryCache } from '@apollo/client/core';
 import { setContext } from 'apollo-link-context';
 import { Store } from '../services/store.service';
 import { environment } from '../environments/environment';
 
 @NgModule({
-	exports: [HttpClientModule, ApolloModule, HttpLinkModule],
+	exports: [
+		HttpClientModule,
+		HttpLinkModule
+	],
 })
 export class GraphQLModule {
 	constructor(

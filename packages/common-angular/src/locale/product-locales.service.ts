@@ -111,6 +111,7 @@ export class ProductLocalesService {
 				break;
 			case 'bg-BG':
 				translateLang = 'bg-BG';
+				break;
 			case 'es-ES':
 				translateLang = 'es-ES';
 				break;
