@@ -26,6 +26,11 @@
 								"glob": "**/*",
 								"input": "../../node_modules/leaflet/dist/images",
 								"output": "/assets/img/markers"
+							},
+							{
+								"glob": "**/*.svg",
+								"input": "../../node_modules/ionicons/dist/ionicons/svg",
+								"output": "/assets/svg"
 							}
 						],
 						"allowedCommonJsDependencies": [
@@ -35,7 +40,6 @@
 							"../../node_modules/bootstrap/dist/css/bootstrap.css",
 							"../../node_modules/typeface-exo/index.css",
 							"../../node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
-							"../../node_modules/ionicons/dist/scss/ionicons.scss",
 							"../../node_modules/@fortawesome/fontawesome-free/css/all.css",
 							"../../node_modules/socicon/css/socicon.css",
 							"../../node_modules/angular-tree-component/dist/angular-tree-component.css",
@@ -127,7 +131,6 @@
 							"../../node_modules/bootstrap/dist/css/bootstrap.css",
 							"../../node_modules/typeface-exo/index.css",
 							"../../node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
-							"../../node_modules/ionicons/dist/scss/ionicons.scss",
 							"../../node_modules/@fortawesome/fontawesome-free/css/all.css",
 							"../../node_modules/socicon/css/socicon.css",
 							"../../node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
@@ -142,6 +145,11 @@
 								"glob": "**/*",
 								"input": "../../node_modules/leaflet/dist/images",
 								"output": "/assets/img/markers"
+							},
+							{
+								"glob": "**/*.svg",
+								"input": "../../node_modules/ionicons/dist/ionicons/svg",
+								"output": "/assets/svg"
 							}
 						]
 					}
