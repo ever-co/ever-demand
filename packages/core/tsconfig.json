@@ -6,8 +6,7 @@
 		"rootDir": "./",
 		"types": ["node", "reflect-metadata", "jest"],
 		"esModuleInterop": true,
-		"incremental": true,
-		"tsBuildInfoFile": "./tsconfig.tsbuildinfo",
+		"incremental": false,
 		"experimentalDecorators": true,
 		"paths": {
 			"@modules/server.common/*": [
