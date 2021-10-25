@@ -11,11 +11,10 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ToasterModule } from 'angular2-toaster';
 import { Apollo } from 'apollo-angular';
-import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
-import { InMemoryCache } from '@apollo/client/core';
-import { ApolloLink } from 'apollo-link';
-import { WebSocketLink } from 'apollo-link-ws';
-import { setContext } from 'apollo-link-context';
+import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
+import { ApolloLink, InMemoryCache } from '@apollo/client/core';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { setContext } from '@apollo/client/link/context';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { getOperationAST } from 'graphql/utilities/getOperationAST';
 import { CoreModule } from './@core/core.module';
@@ -46,7 +45,6 @@ import { ServerSettingsService } from './@core/services/server-settings.service'
 		BrowserAnimationsModule,
 		HttpClientModule,
 		AppRoutingModule,
-		HttpLinkModule,
 		TranslateModule.forRoot({
 			loader: {
 				provide: TranslateLoader,
@@ -107,12 +105,12 @@ import { ServerSettingsService } from './@core/services/server-settings.service'
 export class AppModule {
 	constructor(apollo: Apollo, httpLink: HttpLink, private store: Store) {
 		// Create an http link:
-		const http = httpLink.create({
+		const http: HttpLinkHandler = httpLink.create({
 			uri: environment.GQL_ENDPOINT,
 		});
 
 		// Create a WebSocket link:
-		const ws = new WebSocketLink({
+		const ws: WebSocketLink = new WebSocketLink({
 			uri: environment.GQL_SUBSCRIPTIONS_ENDPOINT,
 			options: {
 				reconnect: true,
@@ -120,7 +118,7 @@ export class AppModule {
 			},
 		});
 
-		const authLink = setContext((_, { headers }) => {
+		const authLink: ApolloLink = setContext((_, { headers }) => {
 			// get the authentication token from local storage if it exists
 			const token = store.token;
 			// return the headers to the context so httpLink can read them
