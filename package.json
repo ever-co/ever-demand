@@ -338,7 +338,11 @@
 	},
 	"workspaces": {
 		"packages": [
-			"packages/*"
+			"libs/*",
+			"apps/*",
+			"tools",
+			"packages/*",
+			"packages/plugins/*"
 		],
 		"nohoist": [
 			"**/@types/jasmine",
@@ -346,8 +350,6 @@
 			"**/@nebular",
 			"**/@angular*/**",
 			"**/@ngtools/**",
-			"**/@ever-co",
-			"**/@ever-co/**",
 			"**/@ngx-translate",
 			"**/@ngx-translate/**"
 		]

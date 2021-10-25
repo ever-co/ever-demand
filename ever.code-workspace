@@ -1,7 +1,10 @@
 {
 	"folders": [
 		{
-			"path": "packages"
+			"path": "apps"
+		},
+		{
+			"path": "libs"
 		}
 	],
 	"settings": {

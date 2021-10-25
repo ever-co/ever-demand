@@ -4,5 +4,11 @@
 	"repository": "https://github.com/ever-co/ever.git",
 	"private": true,
 	"resolutions": {},
-	"workspaces": ["packages/*"]
+	"workspaces": [
+		"libs/*",
+		"apps/*",
+		"tools",
+		"packages/*",
+		"packages/plugins/*"
+	]
 }
