@@ -41,9 +41,9 @@ import { AppModuleGuard } from './app.module.guard';
 import { MaintenanceModuleGuard } from './+maintenance-info/maintenance-info.module.guard';
 import { GoogleMapsLoader } from '@modules/client.common.angular2/services/googleMapsLoader';
 import { Apollo } from 'apollo-angular';
-import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
-import { InMemoryCache } from '@apollo/client/core';
-import { setContext } from 'apollo-link-context';
+import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
+import { ApolloLink, InMemoryCache } from '@apollo/client/core';
+import { setContext } from '@apollo/client/link/context';
 import { Store } from './services/store';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
@@ -153,7 +153,6 @@ const APP_PROVIDERS = [
 		}),
 		BrowserAnimationsModule,
 		FormsModule,
-		HttpLinkModule,
 		RouterModule.forRoot(ROUTES, {
 			useHash: Boolean(history.pushState) === false,
 			// enableTracing: true,
@@ -190,12 +189,16 @@ const APP_PROVIDERS = [
 	],
 })
 export class AppModule {
-	constructor(apollo: Apollo, httpLink: HttpLink, store: Store) {
-		const http = httpLink.create({
+	constructor(
+		private readonly apollo: Apollo,
+		private readonly httpLink: HttpLink,
+		private readonly store: Store
+	) {
+		const http: HttpLinkHandler = httpLink.create({
 			uri: environment.GQL_ENDPOINT,
 		});
 
-		const authLink = setContext((_, { headers }) => {
+		const authLink: ApolloLink = setContext((_, { headers }) => {
 			// get the authentication token from local storage if it exists
 			const token = store.token;
 			// return the headers to the context so httpLink can read them
