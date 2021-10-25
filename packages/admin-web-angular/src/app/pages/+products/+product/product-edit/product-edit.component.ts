@@ -57,7 +57,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
 		return this.basicInfo.valid && this.status === 'changes';
 	}
 
-	protected async updateProduct() {
+	public async updateProduct() {
 		try {
 			const res = await this.basicInfoForm.setupProductCreateObject();
 			this.loading = true;

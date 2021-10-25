@@ -15,7 +15,7 @@ const perPage = 5;
 @Component({
 	selector: 'ea-products',
 	templateUrl: './products.component.html',
-	styleUrls: ['/products.component.scss'],
+	styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnDestroy, AfterViewInit {
 	@ViewChild('productsTable', { static: true })
@@ -94,7 +94,7 @@ export class ProductsComponent implements OnDestroy, AfterViewInit {
 		}
 	}
 
-	protected get hasSelectedProducts(): boolean {
+	public get hasSelectedProducts(): boolean {
 		return this.productsTable.hasSelectedProducts;
 	}
 

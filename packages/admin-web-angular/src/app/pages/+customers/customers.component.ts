@@ -41,7 +41,7 @@ const perPage = 7;
 @Component({
 	selector: 'ea-customers',
 	templateUrl: './customers.component.html',
-	styleUrls: ['/customers.component.scss'],
+	styleUrls: ['./customers.component.scss'],
 })
 export class CustomersComponent implements AfterViewInit, OnDestroy {
 	private ngDestroy$ = new Subject<void>();
@@ -53,8 +53,8 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 	protected customers: User[] = [];
 	protected orders: Order[] = [];
 
-	protected settingsSmartTable: object;
-	protected sourceSmartTable = new LocalDataSource();
+	public settingsSmartTable: object;
+	public sourceSmartTable = new LocalDataSource();
 
 	private _selectedCustomers: CustomerViewModel[] = [];
 	private dataCount: number;
@@ -73,7 +73,7 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 		this._loadSettingsSmartTable();
 	}
 
-	protected get hasSelectedCustomers(): boolean {
+	public get hasSelectedCustomers(): boolean {
 		return this._selectedCustomers.length > 0;
 	}
 
@@ -89,7 +89,7 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 		this._router.navigate(['/customers/list' + userId]);
 	}
 
-	protected showCreateUserModal() {
+	public showCreateUserModal() {
 		this._modalService.open(UserMutationComponent, {
 			size: 'lg',
 			container: 'nb-layout',
@@ -98,11 +98,11 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 		});
 	}
 
-	protected selectCustomerTmp(ev) {
+	public selectCustomerTmp(ev) {
 		this._selectedCustomers = ev.selected;
 	}
 
-	protected deleteSelectedRows() {
+	public deleteSelectedRows() {
 		const idsForDelete: string[] = this._selectedCustomers.map((w) => w.id);
 
 		try {
@@ -126,7 +126,7 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 		}
 	}
 
-	protected banSelectedRows() {
+	public banSelectedRows() {
 		if (this.isUserBanned) {
 			this.showUnbanPopup();
 		} else {

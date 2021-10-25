@@ -12,7 +12,7 @@ import { NotifyService } from '@app/@core/services/notify/notify.service';
 @Component({
 	selector: 'ea-categories',
 	templateUrl: './categories.component.html',
-	styleUrls: ['/categories.component.scss'],
+	styleUrls: ['./categories.component.scss'],
 })
 export class CategoriesComponent implements OnDestroy {
 	@ViewChild('categoriesTable', { static: true })
@@ -32,7 +32,7 @@ export class CategoriesComponent implements OnDestroy {
 		this._loadDataSmartTable();
 	}
 
-	protected get hasSelectedCategories(): boolean {
+	public get hasSelectedCategories(): boolean {
 		return this.categoriesTable.hasSelectedCategories;
 	}
 

@@ -31,7 +31,7 @@ export class CustomerStoresComponent implements OnInit, OnDestroy {
 
 	params$: any;
 
-	protected sourceEventEmitter = new EventEmitter<WarehouseViewModel[]>();
+	public sourceEventEmitter = new EventEmitter<WarehouseViewModel[]>();
 
 	private _selectedCustomerDestroy$ = new Subject<void>();
 	private _ngDestroy$ = new Subject<void>();

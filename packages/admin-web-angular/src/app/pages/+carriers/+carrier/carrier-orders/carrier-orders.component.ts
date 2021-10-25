@@ -41,16 +41,17 @@ export class CarrierOrdersComponent
 
 	@Input()
 	protected carrierOrderOptions: ICarrierOrdersRouterGetOptions;
+
 	@Input()
-	protected selectedCarrier: Carrier;
+	public selectedCarrier: Carrier;
 
 	@Output()
 	protected selectedOrderEvent = new EventEmitter<Order>();
 
 	public selectedOrder: Order;
 	protected currentOrders: Order[];
-	protected settingsSmartTable: object;
-	protected sourceSmartTable: LocalDataSource = new LocalDataSource();
+	public settingsSmartTable: object;
+	public sourceSmartTable: LocalDataSource = new LocalDataSource();
 	public enumOrderCarrierStatus: typeof OrderCarrierStatus = OrderCarrierStatus;
 
 	private _isWork: boolean;
@@ -199,7 +200,7 @@ export class CarrierOrdersComponent
 		});
 	}
 
-	protected get canControl(): boolean {
+	public get canControl(): boolean {
 		return _.some(this.currentOrders, (order) =>
 			order
 				? OrderCarrierStatus.CarrierPickedUpOrder <=

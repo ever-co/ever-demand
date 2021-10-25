@@ -34,7 +34,7 @@ export class CarrierComponent implements OnInit, OnDestroy {
 	private inDeliveryOrders: Order[] = [];
 	private closeOrders: Order[] = [];
 
-	protected selectedCarrier: ICarrierCreateObject;
+	public selectedCarrier: ICarrierCreateObject;
 	private carriers$: any;
 	private currentTab: string;
 

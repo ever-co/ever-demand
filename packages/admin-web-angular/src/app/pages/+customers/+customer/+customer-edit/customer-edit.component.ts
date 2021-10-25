@@ -34,7 +34,7 @@ export class CustomerEditComponent implements OnInit {
 	readonly basicInfo = this.form.get('basicInfo') as FormControl;
 	readonly location = this.form.get('location') as FormControl;
 
-	private _currentCustomer: User;
+	public _currentCustomer: User;
 
 	constructor(
 		private readonly _activatedRoute: ActivatedRoute,
