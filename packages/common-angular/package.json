@@ -2,7 +2,7 @@
 	"name": "@ever-platform/common-angular",
 	"description": "Ever Platform Shared Angular Core",
 	"license": "AGPL-3.0",
-	"version": "0.4.1",
+	"version": "0.4.2",
 	"homepage": "https://ever.co",
 	"repository": {
 		"type": "git",
@@ -38,7 +38,7 @@
 		"@angular/platform-browser-dynamic": "^12.2.10",
 		"@angular/router": "^12.2.10",
 		"@angular/service-worker": "^12.2.10",
-		"@ever-platform/common": "0.4.2",
+		"@ever-platform/common": "^0.4.2",
 		"@ngx-translate/core": "^13.0.0",
 		"@ngx-translate/http-loader": "^6.0.0",
 		"tslib": "^2.3.1",
