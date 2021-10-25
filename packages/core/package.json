@@ -40,7 +40,7 @@
 	},
 	"dependencies": {
 		"@captemulation/get-parameter-names": "^1.4.2",
-		"@ever-platform/common": "file:../common",
+		"@ever-platform/common": "0.4.1",
 		"@nestjs/common": "^8.1.1",
 		"@nestjs/core": "^8.1.1",
 		"@nestjs/cqrs": "^8.0.0",

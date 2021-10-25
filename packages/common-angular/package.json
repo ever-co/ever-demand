@@ -38,7 +38,7 @@
 		"@angular/platform-browser-dynamic": "^12.2.10",
 		"@angular/router": "^12.2.10",
 		"@angular/service-worker": "^12.2.10",
-		"@ever-platform/common": "file:../common",
+		"@ever-platform/common": "0.4.1",
 		"@ngx-translate/core": "^13.0.0",
 		"@ngx-translate/http-loader": "^6.0.0",
 		"tslib": "^2.3.1",
