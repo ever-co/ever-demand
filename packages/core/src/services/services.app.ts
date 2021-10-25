@@ -115,9 +115,12 @@ export class ServicesApp {
 	}
 
 	static async CreateTypeORMConnection() {
+
+		console.log('Creating TypeORM Connection');
+
 		const typeORMLog = createEverLogger({ name: 'TypeORM' });
 
-		// list of entities for which Repositories will be greated in TypeORM
+		// list of entities for which Repositories will be created in TypeORM
 		const entities = ServicesApp.getEntities();
 
 		const connectionSettings: ConnectionOptions =

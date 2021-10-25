@@ -3,7 +3,7 @@
 	"compilerOptions": {
 		"baseUrl": "./src",
 		"outDir": "./build",
-		"rootDir": "./",
+		"rootDir": "./src",
 		"types": ["node", "reflect-metadata", "jest"],
 		"esModuleInterop": true,
 		"incremental": false,
@@ -19,10 +19,5 @@
 			]
 		}
 	},
-	"include": ["./src/**/*.ts"],
-	"references": [
-		{
-			"path": "../common"
-		}
-	]
+	"include": ["./src/**/*.ts", "../../common/**/*.ts"]
 }

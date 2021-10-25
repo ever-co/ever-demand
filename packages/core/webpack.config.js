@@ -29,7 +29,7 @@ module.exports = {
 		loggingTrace: true,		
 		assets: true,
 	},
-	entry: ['webpack/hot/poll?100', './src/nest-bootstrap.ts'],
+	entry: ['./src/nest-bootstrap.ts'],
 	watch: false,
 	optimization: {
         concatenateModules: false,

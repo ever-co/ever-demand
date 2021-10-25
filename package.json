@@ -31,7 +31,7 @@
 		"lint": "yarn tslint --fix",
 		"start:api": "yarn run:server",
 		"run:ncu": "yarn ncu --configFileName=.ncurc.json --configFilePath=./",
-		"run:server": "yarn --cwd ./packages/core start",
+		"run:server": "yarn run build:common && yarn --cwd ./packages/core run build && yarn --cwd ./packages/core run start",
 		"run:server:dev": "yarn --cwd ./packages/core start:dev",
 		"run:admin": "yarn --cwd ./packages/admin-web-angular start",
 		"run:merchant": "yarn --cwd ./packages/merchant-tablet-ionic start",

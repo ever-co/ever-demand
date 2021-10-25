@@ -25,17 +25,20 @@ export abstract class DBObject<
 	static modelName = '';
 
 	constructor(obj: RawObject) {
-		_.assign(this, obj);
 
-		if (
-			mongoose != null &&
-			mongoose.Types != null &&
-			mongoose.Types.ObjectId != null
-		) {
-			if (obj && obj['_id']) {
-				this['_id'] = mongoose.Types.ObjectId.createFromHexString(
-					obj['_id'].toString()
-				);
+		if (obj != undefined) {
+			_.assign(this, obj);
+
+			if (
+				mongoose != null &&
+				mongoose.Types != null &&
+				mongoose.Types.ObjectId != null
+			) {
+				if (obj && obj['_id']) {
+					this['_id'] = mongoose.Types.ObjectId.createFromHexString(
+						obj['_id'].toString()
+					);
+				}
 			}
 		}
 	}
