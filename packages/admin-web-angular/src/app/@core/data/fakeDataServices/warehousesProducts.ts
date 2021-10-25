@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IWarehouseProductCreateObject } from '@modules/server.common/interfaces/IWarehouseProduct';
 import faker from 'faker';
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 enum IsDeliveryTakeawayStatus {
 	Takeaway = 0,

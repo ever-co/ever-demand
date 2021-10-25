@@ -1,6 +1,6 @@
 import { IRouter } from '../../router/router';
 import { IListenerHandler } from './handler';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import Logger from 'bunyan';
 import { BaseListenerHandler } from './base';
 import { ObservableListener } from '../observable';

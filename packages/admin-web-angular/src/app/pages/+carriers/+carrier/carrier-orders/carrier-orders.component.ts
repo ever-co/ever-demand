@@ -7,7 +7,6 @@ import {
 	Output,
 	AfterViewInit,
 } from '@angular/core';
-
 import Order from '@modules/server.common/entities/Order';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import { ICarrierOrdersRouterGetOptions } from '@modules/server.common/routers/ICarrierOrdersRouter';
@@ -15,7 +14,7 @@ import Carrier from '@modules/server.common/entities/Carrier';
 import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/carrier-orders-router.service';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { LocalDataSource } from 'ng2-smart-table';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin, Observable, Subject, Subscription } from 'rxjs';

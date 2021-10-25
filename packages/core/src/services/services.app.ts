@@ -305,9 +305,17 @@ export class ServicesApp {
 
 	private async _registerModels() {
 		await (<any>Bluebird).map(this.services, async (service) => {
-			if ((service as any).DBObject != null) {
-				// get the model to register it's schema indexes in db
-				await getModel((service as any).DBObject).createIndexes();
+			const obj = (service as any).DBObject;
+
+			if (obj != null) {
+				console.log('Service DBObject Name: ' +  obj.modelName);
+
+				const model = getModel(obj);
+
+				if (model) {
+					// get the model to register it's schema indexes in db
+					await model.createIndexes();
+				}
 			}
 		});
 	}

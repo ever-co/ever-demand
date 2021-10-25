@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router, RouterFactory } from '../lib/router';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 import IWarehouseProduct, {
 	IWarehouseProductCreateObject,

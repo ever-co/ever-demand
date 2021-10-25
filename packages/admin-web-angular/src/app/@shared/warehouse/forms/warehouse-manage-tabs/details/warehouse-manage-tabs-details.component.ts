@@ -17,7 +17,7 @@ import { first } from 'rxjs/operators';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { FormHelpers } from '../../../../forms/helpers';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import isUrl from 'is-url';
 import { TranslateService } from '@ngx-translate/core';
 

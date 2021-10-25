@@ -8,7 +8,7 @@ import { OrderRouter } from '@modules/client.common.angular2/routers/order-route
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { OrdersFilterModes } from '../../filters/orders-filters';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { Store } from '../../../src/services/store.service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';

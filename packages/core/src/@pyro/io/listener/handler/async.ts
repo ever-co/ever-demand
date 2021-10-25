@@ -1,7 +1,7 @@
 import { IRouter } from '../../router/router';
 import { IListenerHandler } from './handler';
 import { v1 as uuid } from 'uuid';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import Logger from 'bunyan';
 import { BaseListenerHandler } from './base';
 import { AsyncListener } from '../async';

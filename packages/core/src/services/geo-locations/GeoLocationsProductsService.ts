@@ -4,7 +4,7 @@ import { WarehousesService } from '../warehouses';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import Utils from '@modules/server.common/utils';
 import { createEverLogger } from '../../helpers/Log';
 import { GeoLocationsWarehousesService } from './GeoLocationsWarehousesService';

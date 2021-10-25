@@ -42,7 +42,7 @@ import { InvitesService } from '@app/@core/data/invites.service';
 import { InvitesRequestsService } from '@app/@core/data/invites-requests.service';
 import { UsersService } from '@app/@core/data/users.service';
 import { environment } from 'environments/environment';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { CurrenciesService } from '@app/@core/data/currencies.service';
 
 const NEED_DEFAULT_SETTINGS_MESSAGE =

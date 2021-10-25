@@ -9,7 +9,7 @@ import { UserMutationComponent } from '../../@shared/user/user-mutation';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, forkJoin } from 'rxjs';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { takeUntil, first } from 'rxjs/operators';

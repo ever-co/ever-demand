@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import Logger from 'bunyan';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { createEverLogger } from '../../helpers/Log';
 import { routerName, asyncListener } from '@pyro/io';
 import IService from '../IService';

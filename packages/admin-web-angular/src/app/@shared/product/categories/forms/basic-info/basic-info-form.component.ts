@@ -13,7 +13,7 @@ import {
 	FormBuilder,
 } from '@angular/forms';
 import isUrl from 'is-url';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { TranslateService } from '@ngx-translate/core';
 import { first } from 'rxjs/operators';
 import { IProductsCategoryCreateObject } from '@modules/server.common/interfaces/IProductsCategory';

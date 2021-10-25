@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { Router, RouterFactory } from '../lib/router';
 import { map } from 'rxjs/operators';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 import IWarehouseCarriersRouter from '@modules/server.common/routers/IWarehouseCarriersRouter';
 import Carrier from '@modules/server.common/entities/Carrier';

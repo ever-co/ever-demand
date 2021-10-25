@@ -2,7 +2,7 @@ import { inject, injectable } from 'inversify';
 import { OrdersService } from '../orders';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import Logger from 'bunyan';
 import Order from '@modules/server.common/entities/Order';
 import { createEverLogger } from '../../helpers/Log';

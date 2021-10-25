@@ -1,5 +1,5 @@
 import Logger from 'bunyan';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { createEverLogger } from '../../helpers/Log';
 import { ProductsService } from '../products';
 import { OrdersService } from '../orders';

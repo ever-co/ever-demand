@@ -23,7 +23,7 @@ import { GeoLocationProductsService } from 'app/services/geo-location/geo-locati
 import { WarehouseProductsService } from 'app/services/merchants/warehouse-products';
 import { OrdersService } from 'app/services/orders/orders.service';
 import OrderStatus from '@modules/server.common/enums/OrderStatus';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import OrderProduct from '@modules/server.common/entities/OrderProduct';
 import { OrderInfoModalComponent } from './+order/common/order-info-modal/order-info-modal.component';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';

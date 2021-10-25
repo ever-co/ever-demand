@@ -9,7 +9,7 @@ import Order from '@modules/server.common/entities/Order';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/carrier-orders-router.service';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 
 @Component({

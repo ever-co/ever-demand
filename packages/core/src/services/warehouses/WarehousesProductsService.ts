@@ -6,7 +6,7 @@ import { WarehousesService } from './WarehousesService';
 import IWarehouseProduct, {
 	IWarehouseProductCreateObject,
 } from '@modules/server.common/interfaces/IWarehouseProduct';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import IWarehouse from '@modules/server.common/interfaces/IWarehouse';
 import { ExistenceEventType, DBService } from '@pyro/db-server';

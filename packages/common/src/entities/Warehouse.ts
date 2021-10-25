@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { DBObject, getSchema, ModelName, Schema, Types } from '../@pyro/db';
 import GeoLocation from './GeoLocation';
 import WarehouseProduct, { WithPopulatedProduct } from './WarehouseProduct';
@@ -13,7 +13,7 @@ import PaymentGateway from './PaymentGateway';
  * Warehouse / Merchant / Store
  * We are using all of above as synonyms today, however at some point we will have
  * multiple warehouses per each store OR multiple stores using same warehouse.
- * So, while we think Merchant and Store are interchangable,
+ * So, while we think Merchant and Store are interchangeable,
  * in the future versions of Ever Platform, we will have Merchants and Warehouses as separated entities
  *
  * @class Warehouse

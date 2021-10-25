@@ -12,7 +12,7 @@ import {
 	switchMap,
 } from 'rxjs/operators';
 import { routerName, observableListener, asyncListener } from '@pyro/io';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import IWarehouseCarriersRouter from '@modules/server.common/routers/IWarehouseCarriersRouter';
 import { env } from '../../env';
 import { AuthService, AuthServiceFactory } from '../auth';

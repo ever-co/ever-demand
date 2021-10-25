@@ -7,14 +7,13 @@ import {
 	Output,
 	AfterViewInit,
 } from '@angular/core';
-
 import Order from '@modules/server.common/entities/Order';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import { ICarrierOrdersRouterGetOptions } from '@modules/server.common/routers/ICarrierOrdersRouter';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/carrier-orders-router.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { forkJoin, Observable, Subscription } from 'rxjs';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Subject } from 'rxjs';

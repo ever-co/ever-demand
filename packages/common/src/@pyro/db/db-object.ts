@@ -2,9 +2,9 @@ import { getPreSchema } from './schema';
 import { DBRawObject } from './db-raw-object';
 import { DBCreateObject } from './db-create-object';
 import { PyroObjectId } from './object-id';
-import mongoose from 'mongoose';
+import * as mongoose from 'mongoose';
 import { toDate } from '../../utils';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { Column, PrimaryColumn } from 'typeorm';
 
 export interface DBObjectClass extends Function {

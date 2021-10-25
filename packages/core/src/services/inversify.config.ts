@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Container, interfaces, ContainerModule } from 'inversify';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { IRoutersManager, RoutersManager, RouterSymbol } from '@pyro/io';
 import { CarriersOrdersService, CarriersService } from './carriers';
 import {

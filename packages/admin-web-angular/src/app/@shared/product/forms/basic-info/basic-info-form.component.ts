@@ -24,7 +24,7 @@ import { Subject } from 'rxjs';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { FormHelpers } from '../../../forms/helpers';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import isUrl from 'is-url';
 import { takeUntil, first } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';

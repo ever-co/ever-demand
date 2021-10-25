@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import ICarrier from '@modules/server.common/interfaces/ICarrier';
 import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { Store } from '../../../services/store.service';
 import { GeoLocationOrdersService } from '../../../services/geo-location-order.service';

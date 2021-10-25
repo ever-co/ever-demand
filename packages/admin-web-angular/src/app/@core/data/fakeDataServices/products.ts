@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IProductCreateObject } from '@modules/server.common/interfaces/IProduct';
 import faker from 'faker';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { IProductsCategory } from '@modules/server.common/interfaces/IProductsCategory';
 import { images } from '@modules/server.common/data/image-urls';
 import { productNames } from '@modules/server.common/data/food-product-names';

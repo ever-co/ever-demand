@@ -4,7 +4,7 @@ import Logger from 'bunyan';
 import { getListenerType, Listener } from '../listener';
 import { ListenerType } from '../types';
 import { getListenerSerializer } from '../serialization';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import getArgsNames from '@captemulation/get-parameter-names';
 import { Socket } from 'socket.io';
 

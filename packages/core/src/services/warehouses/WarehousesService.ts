@@ -1,5 +1,5 @@
 import Logger from 'bunyan';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { inject, injectable } from 'inversify';
 import { ProductsService } from '../products';
 import { createEverLogger } from '../../helpers/Log';
