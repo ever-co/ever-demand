@@ -2222,36 +2222,6 @@
   dependencies:
     tslib "^2.3.0"
 
-"@ever-platform/common-angular@file:packages/common-angular":
-  version "0.4.1"
-  dependencies:
-    "@angular/animations" "^12.2.10"
-    "@angular/cdk" "^12.2.10"
-    "@angular/common" "^12.2.10"
-    "@angular/compiler" "^12.2.10"
-    "@angular/core" "^12.2.10"
-    "@angular/forms" "^12.2.10"
-    "@angular/language-service" "^12.2.10"
-    "@angular/platform-browser" "^12.2.10"
-    "@angular/platform-browser-dynamic" "^12.2.10"
-    "@angular/router" "^12.2.10"
-    "@angular/service-worker" "^12.2.10"
-    "@ever-platform/common" "file:../../../YarnCache/v6/npm-@ever-platform-common-angular-0.4.1-ee638aaf-6745-489a-9db3-5272f5ac1f06-1635014461810/node_modules/@ever-platform/common"
-    "@ngx-translate/core" "^13.0.0"
-    "@ngx-translate/http-loader" "^6.0.0"
-    tslib "^2.3.1"
-    zone.js "~0.11.4"
-
-"@ever-platform/common@file:packages/common":
-  version "0.4.1"
-  dependencies:
-    lodash "^4.17.21"
-    mongoose "^6.0.11"
-    reflect-metadata "^0.1.13"
-    rxjs "^7.4.0"
-    stripe "^8.183.0"
-    typeorm "^0.2.38"
-
 "@foliojs-fork/fontkit@^1.9.1":
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/@foliojs-fork/fontkit/-/fontkit-1.9.1.tgz#8124649168eb5273f580f66697a139fb5041296b"
