@@ -1,6 +1,6 @@
 {
 	"name": "@ever-platform/shop-web-angular",
-	"version": "0.4.2",
+	"version": "0.4.3",
 	"description": "Ever Web Shop",
 	"license": "AGPL-3.0",
 	"homepage": "https://ever.co",
@@ -107,8 +107,8 @@
 		"@angular/platform-server": "^12.2.10",
 		"@angular/router": "^12.2.10",
 		"@angular/service-worker": "^12.2.10",
-		"@ever-platform/common": "^0.4.2",
-		"@ever-platform/common-angular": "^0.4.2",
+		"@ever-platform/common": "^0.4.3",
+		"@ever-platform/common-angular": "^0.4.3",
 		"@fortawesome/angular-fontawesome": "^0.9.0",
 		"@fortawesome/fontawesome-free": "^5.15.4",
 		"@fortawesome/fontawesome-svg-core": "^1.2.36",

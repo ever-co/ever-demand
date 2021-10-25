@@ -9,15 +9,20 @@
 		"incremental": false,
 		"experimentalDecorators": true,
 		"paths": {
-			"@modules/server.common/*": [
-				"@modules/server.common/*",
-				"../node_modules/@ever-platform/common/src/*"
-			],
 			"@pyro/*": [
 				"@pyro/*",
-				"../node_modules/@ever-platform/common/src/@pyro/*"
+				"../../../node_modules/@ever-platform/common/src/@pyro/*"
+			],
+			"@modules/server.common/*": [
+				"@modules/server.common/*",
+				"../../../node_modules/@ever-platform/common/src/*"
 			]
 		}
 	},
-	"include": ["./src"]
+	"include": ["./src/**/*.ts"],
+	"references": [
+		{
+			"path": "../common"
+		}
+	]
 }

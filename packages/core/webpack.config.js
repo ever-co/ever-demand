@@ -12,13 +12,34 @@ const devtool = isProduction ? false : 'inline-source-map';
 console.log('The custom config is used now');
 
 module.exports = {
+	stats: {
+		env: true,
+		errors: true,
+		errorDetails: true,
+		errorStack: true,
+		outputPath: true,
+		publicPath: true,
+		entrypoints: true,
+		chunkGroups: true,		
+		chunks: true,		
+		modules: true,
+		moduleTrace: true,
+		children: true,
+		logging: 'verbose',
+		loggingTrace: true,		
+		assets: true,
+	},
 	entry: ['webpack/hot/poll?100', './src/nest-bootstrap.ts'],
 	watch: false,
+	optimization: {
+        concatenateModules: false,
+		minimize: false,		
+    },
 	externals: [
 		nodeExternals({
 			modulesDir: path.resolve(__dirname, '../../node_modules'),
 		}),
-	],
+	],	
 	target: 'node',
 	module: {
 		rules: [
@@ -34,7 +55,7 @@ module.exports = {
 			{
 				test: /\.(ts|tsx)?$/,
 				loader: 'ts-loader',
-				options: { allowTsInNodeModules: true },
+				options: {  transpileOnly: true, allowTsInNodeModules: true }
 			},
 		],
 	},
@@ -45,12 +66,12 @@ module.exports = {
 		symlinks: false,
 		alias: {
 			'@modules/server.common': path.resolve(
-				'./node_modules/@ever-platform/common/src'
+				'../../node_modules/@ever-platform/common/src'
 			),
 			'@pyro/io': path.resolve('./src/@pyro/io'),
 			'@pyro/db-server': path.resolve('./src/@pyro/db-server'),
 			'@pyro': path.resolve(
-				'./node_modules/@ever-platform/common/src/@pyro/'
+				'../../node_modules/@ever-platform/common/src/@pyro/'
 			),
 		},
 	},
