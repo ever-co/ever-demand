@@ -10,6 +10,9 @@
 		"types": ["node", "jest", "reflect-metadata", "googlemaps", "jasmine"],
 		"paths": {
 			"@angular/*": ["../node_modules/@angular/*"],
+			"@nebular/*": [
+				"../../../node_modules/@nebular/*"
+			],
 			"@modules/server.common/*": ["../../common/src/*"],
 			"@modules/client.common.angular2/*": ["../../common-angular/src/*"],
 			"@pyro/*": ["../../common/src/@pyro/*"],
