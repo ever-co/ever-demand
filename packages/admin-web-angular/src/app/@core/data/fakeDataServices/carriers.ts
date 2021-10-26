@@ -26,18 +26,18 @@ export default class FakeDataCarriers {
 								isDeleted: false,
 								firstName,
 								lastName: faker.name.lastName(),
-								status: faker.random.number({
+								status: faker.datatype.number({
 									min: 0,
 									max: 2,
 								}) as CarrierStatus,
 								phone: faker.phone.phoneNumber(),
 								username: faker.internet.userName(),
 								logo: faker.image.avatar(),
-								numberOfDeliveries: faker.random.number({
+								numberOfDeliveries: faker.datatype.number({
 									min: 200,
 									max: 20000,
 								}),
-								deliveriesCountToday: faker.random.number({
+								deliveriesCountToday: faker.datatype.number({
 									min: 0,
 									max: 60,
 								}),
@@ -46,8 +46,8 @@ export default class FakeDataCarriers {
 									city: faker.address.city(),
 									postcode: faker.address.zipCode(),
 									streetAddress: faker.address.streetAddress(),
-									house: faker.random.number(199).toString(),
-									countryId: faker.random.number(
+									house: faker.datatype.number(199).toString(),
+									countryId: faker.datatype.number(
 										220
 									) as Country,
 									loc: {
@@ -72,11 +72,11 @@ export default class FakeDataCarriers {
 							phone: '052-315-2346',
 							username: 'mike',
 							logo: faker.image.avatar(),
-							numberOfDeliveries: faker.random.number({
+							numberOfDeliveries: faker.datatype.number({
 								min: 200,
 								max: 20000,
 							}),
-							deliveriesCountToday: faker.random.number({
+							deliveriesCountToday: faker.datatype.number({
 								min: 0,
 								max: 60,
 							}),
@@ -108,11 +108,11 @@ export default class FakeDataCarriers {
 							phone: '052-311-5711',
 							username: 'tom',
 							logo: faker.image.avatar(),
-							numberOfDeliveries: faker.random.number({
+							numberOfDeliveries: faker.datatype.number({
 								min: 200,
 								max: 20000,
 							}),
-							deliveriesCountToday: faker.random.number({
+							deliveriesCountToday: faker.datatype.number({
 								min: 0,
 								max: 60,
 							}),
@@ -143,11 +143,11 @@ export default class FakeDataCarriers {
 							phone: '052-311-5711',
 							username: 'josh',
 							logo: faker.image.avatar(),
-							numberOfDeliveries: faker.random.number({
+							numberOfDeliveries: faker.datatype.number({
 								min: 200,
 								max: 20000,
 							}),
-							deliveriesCountToday: faker.random.number({
+							deliveriesCountToday: faker.datatype.number({
 								min: 0,
 								max: 60,
 							}),

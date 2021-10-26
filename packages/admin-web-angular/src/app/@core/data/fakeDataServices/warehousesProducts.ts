@@ -41,7 +41,7 @@ export default class FakeDataWarehousesProducts {
 			price,
 			isCarrierRequired: true,
 			isManufacturing: true,
-			count: faker.random.number({ min: 1, max: 10 }),
+			count: faker.datatype.number({ min: 1, max: 10 }),
 			isDeliveryRequired: currentTakeawayDeliveryState.isDeliveryRequired,
 			isTakeaway: currentTakeawayDeliveryState.isTakeAway,
 		};
@@ -71,7 +71,7 @@ export default class FakeDataWarehousesProducts {
 	}
 
 	private get getRandomPrice(): number {
-		return 5 + faker.random.number(150);
+		return 5 + faker.datatype.number(150);
 	}
 
 	private _setNextWarehouseProductIsDeliveryTakeawayStatus() {

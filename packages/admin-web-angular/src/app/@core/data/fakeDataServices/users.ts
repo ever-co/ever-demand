@@ -16,14 +16,14 @@ export default class FakeDataUsers {
 				email: faker.internet.email(),
 				phone: faker.phone.phoneNumber(),
 				image: faker.image.avatar(),
-				apartment: faker.random.number(199).toString(),
+				apartment: faker.datatype.number(199).toString(),
 				geoLocation: {
-					countryId: faker.random.number(200) as Country,
+					countryId: faker.datatype.number(200) as Country,
 					city: faker.address.city(),
 					postcode: faker.address.zipCode(),
 					notes: faker.lorem.text(1),
 					streetAddress: faker.address.streetAddress(),
-					house: faker.random.number(199).toString(),
+					house: faker.datatype.number(199).toString(),
 					loc: {
 						type: 'Point',
 						coordinates: [

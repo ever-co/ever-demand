@@ -267,7 +267,7 @@ export class InvitesService extends DBService<Invite>
 		// TODO: make TSlint happy
 		// tslint:disable-next-line:no-object-literal-type-assertion
 		return {
-			countryId: faker.random.number(Country.ZW) as Country,
+			countryId: faker.datatype.number(Country.ZW) as Country,
 			city: faker.address.city(),
 			house: houseNumber,
 			loc: {

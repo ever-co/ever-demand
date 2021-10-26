@@ -507,7 +507,7 @@ export class UsersService extends DBService<User>
 			const isBanned = Math.random() < 0.02;
 
 			const geoLocation: IGeoLocationCreateObject = {
-				countryId: faker.random.number(Country.ZW) as Country,
+				countryId: faker.datatype.number(Country.ZW) as Country,
 				city: faker.address.city(),
 				house: `${customerCount}`,
 				loc: {

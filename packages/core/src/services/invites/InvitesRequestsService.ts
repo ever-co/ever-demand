@@ -354,7 +354,7 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 		defaultLat: number
 	): IGeoLocationCreateObject {
 		const GeoLocation: IGeoLocationCreateObject = {
-			countryId: faker.random.number(Country.ZW) as Country,
+			countryId: faker.datatype.number(Country.ZW) as Country,
 			city: faker.address.city(),
 			house: houseNumber,
 			loc: {

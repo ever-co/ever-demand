@@ -48,8 +48,8 @@ export default class FakeDataWarehouses {
 									city: faker.address.city(),
 									postcode: faker.address.zipCode(),
 									streetAddress: faker.address.streetAddress(),
-									house: faker.random.number(199).toString(),
-									countryId: faker.random.number(
+									house: faker.datatype.number(199).toString(),
+									countryId: faker.datatype.number(
 										1
 									) as Country,
 									loc: {
@@ -226,8 +226,8 @@ export default class FakeDataWarehouses {
 				city: faker.address.city(),
 				postcode: faker.address.zipCode(),
 				streetAddress: faker.address.streetAddress(),
-				house: faker.random.number(199).toString(),
-				countryId: faker.random.number(1) as Country,
+				house: faker.datatype.number(199).toString(),
+				countryId: faker.datatype.number(1) as Country,
 				loc: {
 					type: 'Point',
 					coordinates: [lng + 0.05, lat - 0.08],
