@@ -40,7 +40,7 @@ import {
 import { of } from 'rxjs';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';
 import _ = require('lodash');
-import faker from 'faker';
+import * as faker from 'faker';
 import { WarehousesService } from '../../services/warehouses';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 import { Stripe } from 'stripe';

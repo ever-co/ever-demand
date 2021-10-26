@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IInviteCreateObject } from '@modules/server.common/interfaces/IInvite';
 import { Country } from '@modules/server.common/entities/GeoLocation';
-import faker from 'faker';
+import * as faker from 'faker';
 import { environment } from 'environments/environment';
 
 const NEED_DEFAULT_SETTINGS_MESSAGE =

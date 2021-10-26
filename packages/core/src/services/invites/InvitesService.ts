@@ -25,7 +25,7 @@ import _ = require('lodash');
 import { env } from '../../env';
 import { IGeoLocationCreateObject } from '@modules/server.common/interfaces/IGeoLocation';
 import { IInviteRequestCreateObject } from '@modules/server.common/interfaces/IInviteRequest';
-import faker from 'faker';
+import * as faker from 'faker';
 import { Country } from '@modules/server.common/entities/GeoLocation';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 

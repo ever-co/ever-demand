@@ -2,7 +2,7 @@
 import 'jest';
 import { servicesContainer } from '../../services/inversify.config';
 import { GeoLocationsWarehousesService } from '../../services/geo-locations';
-import faker from 'faker';
+import * as faker from 'faker';
 import ForwardOrdersMethod from '@modules/server.common/enums/ForwardOrdersMethod';
 import {
 	Country,

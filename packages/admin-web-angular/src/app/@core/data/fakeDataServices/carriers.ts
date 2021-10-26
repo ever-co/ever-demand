@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 import { Country } from '@modules/server.common/entities/GeoLocation';
-import faker from 'faker';
+import * as faker from 'faker';
 import { ICarrierRegistrationInput } from '@modules/server.common/routers/ICarrierRouter';
 import { environment } from 'environments/environment';
 

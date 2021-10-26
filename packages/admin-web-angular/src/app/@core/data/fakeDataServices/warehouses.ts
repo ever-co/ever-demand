@@ -5,7 +5,7 @@ import ForwardOrdersMethod from '@modules/server.common/enums/ForwardOrdersMetho
 import { IWarehouseRegistrationInput } from '@modules/server.common/routers/IWarehouseRouter';
 import { getFakeImg } from '@modules/server.common/utils';
 import { environment } from 'environments/environment';
-import faker from 'faker';
+import * as faker from 'faker';
 import * as _ from 'lodash';
 // import { _appIdRandomProviderFactory } from '@angular/core/src/application_tokens';
 

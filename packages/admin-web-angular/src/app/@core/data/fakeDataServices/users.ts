@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import Invite from '@modules/server.common/entities/Invite';
 import IEnterByCode from '@modules/server.common/interfaces/IEnterByCode';
 import { Country } from '@modules/server.common/entities/GeoLocation';
-import faker from 'faker';
+import * as faker from 'faker';
 import { IUserRegistrationInput } from '@modules/server.common/routers/IUserAuthRouter';
 import { environment } from '../../../../environments/environment';
 

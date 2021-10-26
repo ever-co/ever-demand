@@ -22,7 +22,7 @@ import { filter, first, map, switchMap } from 'rxjs/operators';
 import { IGeoLocationCreateObject } from '@modules/server.common/interfaces/IGeoLocation';
 import { Country } from '@modules/server.common/entities/GeoLocation';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
-import faker from 'faker';
+import * as faker from 'faker';
 
 @injectable()
 @routerName('invite-request')

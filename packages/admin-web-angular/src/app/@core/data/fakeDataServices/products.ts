@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IProductCreateObject } from '@modules/server.common/interfaces/IProduct';
-import faker from 'faker';
+import * as faker from 'faker';
 import * as _ from 'lodash';
 import { IProductsCategory } from '@modules/server.common/interfaces/IProductsCategory';
 import { images } from '@modules/server.common/data/image-urls';
