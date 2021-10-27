@@ -6,6 +6,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 import { NgxMasonryOptions } from 'ngx-masonry';
 import { ModalController } from '@ionic/angular';
+import IWarehouseProduct from '@modules/server.common/interfaces/IWarehouseProduct';
 
 @Component({
 	selector: 'merchant-all-products',
@@ -20,19 +21,19 @@ export class AllProductsComponent implements OnInit, OnDestroy {
 	presentCreateProductPopover: () => void;
 
 	@Input()
-	addProduct: (string) => void;
+	addProduct: (id: string) => void;
 
 	@Input()
 	getWarehouseProductImageUrl: () => void;
 
 	@Input()
-	openEditProductModal: () => void;
+	openEditProductModal: (warehouseProduct: IWarehouseProduct) => void;
 
 	@Input()
-	truncateTitle: () => void;
+	truncateTitle: (title: any) => void;
 
 	@Input()
-	localeTranslate: () => void;
+	localeTranslate: (title: any) => void;
 
 	private products$: Subscription;
 
