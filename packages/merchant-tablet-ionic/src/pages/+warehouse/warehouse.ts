@@ -57,7 +57,7 @@ export class WarehousePage implements OnInit {
 	orderStatus: boolean;
 
 	filter: any; //todo
-	keys = Object.keys;
+	keys: any = Object.keys;
 	statuses = OrderStatus;
 
 	constructor(
@@ -149,7 +149,7 @@ export class WarehousePage implements OnInit {
 		this.isOrderContainerLive = !this.isOrderContainerLive;
 	}
 
-	getWarehouseProductImageUrl(p: Product) {
+	getWarehouseProductImageUrl(p: Product): string | void {
 		if (p instanceof Product) {
 			const productImg = p.images.filter((i) =>
 				i.locale.includes(this.language)
@@ -249,7 +249,7 @@ export class WarehousePage implements OnInit {
 		return this.orderStatus;
 	}
 
-	getWarehouseStatus(orderWarehouseStatusNumber: OrderWarehouseStatus) {
+	getWarehouseStatus(orderWarehouseStatusNumber: OrderWarehouseStatus): string {
 		const basePath = 'WAREHOUSE_VIEW.ORDER_WAREHOUSE_STATUSES.';
 		switch (orderWarehouseStatusNumber) {
 			case OrderWarehouseStatus.NoStatus:

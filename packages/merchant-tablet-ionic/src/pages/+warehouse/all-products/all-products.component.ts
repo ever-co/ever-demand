@@ -24,7 +24,7 @@ export class AllProductsComponent implements OnInit, OnDestroy {
 	addProduct: (id: string) => void;
 
 	@Input()
-	getWarehouseProductImageUrl: () => void;
+	getWarehouseProductImageUrl: (url: any) => void;
 
 	@Input()
 	openEditProductModal: (warehouseProduct: IWarehouseProduct) => void;
