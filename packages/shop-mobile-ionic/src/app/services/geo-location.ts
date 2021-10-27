@@ -3,7 +3,7 @@ import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
 import { Geolocation } from '@ionic-native/geolocation';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { environment } from 'environments/environment';
-import { Subscribable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 interface Coords {
@@ -28,7 +28,7 @@ export class GeoLocationService {
 					type: 'Point',
 					coordinates: [coords.longitude, coords.latitude],
 				};
-				if (!location) {
+				if (!coords.longitude || coords.latitude) {
 					throw new Error(`Can't detect location`);
 				}
 
@@ -91,7 +91,7 @@ export class GeoLocationService {
 		});
 	}
 
-	private getLocationByIP(): Subscribable<Coords | null> {
+	private getLocationByIP(): Observable<Coords | null> {
 		return this.http.get(
 			environment.SERVICES_ENDPOINT + '/getLocationByIP',
 			{ headers: this.headers }

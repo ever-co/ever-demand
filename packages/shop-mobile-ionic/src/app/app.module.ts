@@ -16,12 +16,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 // import { Logger } from 'angular2-logger/core';
 import { environment } from 'environments/environment';
-import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
+import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
 import { Apollo } from 'apollo-angular';
-import { InMemoryCache } from '@apollo/client/core';
-import { WebSocketLink } from 'apollo-link-ws';
-import { setContext } from 'apollo-link-context';
-import { ApolloLink } from 'apollo-link';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { setContext } from '@apollo/client/link/context';
+import { ApolloLink, InMemoryCache } from '@apollo/client/core';
 import { getOperationAST } from 'graphql';
 import { Store } from './services/store.service';
 import { ServerSettings } from './services/server-settings';
@@ -44,7 +43,6 @@ import { CallPageModule } from './pages/+products/+order/+call/call.module';
 		BrowserAnimationsModule,
 		MenuModule,
 		CallPageModule,
-		HttpLinkModule,
 		IonicModule.forRoot(),
 		IonicStorageModule.forRoot(),
 		TranslateModule.forRoot({
@@ -114,12 +112,12 @@ export class AppModule {
 
 	private _setupApolloAngular() {
 		// Create an http link
-		const http = this.httpLink.create({
+		const http: HttpLinkHandler = this.httpLink.create({
 			uri: environment.GQL_ENDPOINT,
 		});
 
 		// Create a WebSocket link
-		const ws = new WebSocketLink({
+		const ws: WebSocketLink = new WebSocketLink({
 			uri: environment.GQL_SUBSCRIPTIONS_ENDPOINT,
 			options: {
 				reconnect: true,
@@ -127,7 +125,7 @@ export class AppModule {
 			},
 		});
 
-		const authLink = setContext((_, { headers }) => {
+		const authLink: ApolloLink = setContext((_, { headers }) => {
 			// get the authentication token from local storage if it exists
 			const token = this.store.token;
 			// return the headers to the context so httpLink can read them
