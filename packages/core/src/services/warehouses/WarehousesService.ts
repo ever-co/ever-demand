@@ -306,7 +306,7 @@ export class WarehousesService extends DBService<Warehouse>
 		warehouse = _.clone(warehouse);
 
 		_.each(warehouse.products, (warehouseProduct) => {
-			warehouseProduct.product = warehouseProduct.productId;
+			warehouseProduct.product = warehouseProduct.product;
 		});
 
 		return this.update(warehouse.id, warehouse);

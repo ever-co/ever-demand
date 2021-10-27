@@ -9,7 +9,7 @@ import IWarehouseProduct, {
 import * as _ from 'lodash';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import IWarehouse from '@modules/server.common/interfaces/IWarehouse';
-import { ExistenceEventType, DBService } from '@pyro/db-server';
+import { ExistenceEventType } from '@pyro/db-server';
 import { Observable, throwError } from 'rxjs';
 import IWarehouseProductsRouter from '@modules/server.common/routers/IWarehouseProductsRouter';
 import {
@@ -395,7 +395,7 @@ export class WarehousesProductsService
 		}
 
 		const updatedWarehouseProduct = _.clone(_updatedWarehouseProduct);
-		updatedWarehouseProduct.product = updatedWarehouseProduct.productId;
+		updatedWarehouseProduct.product = updatedWarehouseProduct.product;
 
 		const updatedWarehouse = (
 			await this.warehousesService.updateMultiple(
