@@ -40,6 +40,7 @@
 						],
 						"styles": [
 							"../../node_modules/bootstrap/dist/css/bootstrap.min.css",
+							"../../node_modules/font-awesome/scss/font-awesome.scss",
 							{
 								"input": "src/theme/variables.scss"
 							},
@@ -102,12 +103,9 @@
 						"karmaConfig": "src/karma.conf.js",
 						"styles": [
 							"../../node_modules/bootstrap/dist/css/bootstrap.min.css",
-							{
-								"input": "src/theme/variables.scss"
-							},
-							{
-								"input": "src/global.scss"
-							}
+							"../../node_modules/font-awesome/scss/font-awesome.scss",
+							"src/theme/variables.scss",
+							"src/global.scss"
 						],
 						"scripts": [],
 						"assets": [
