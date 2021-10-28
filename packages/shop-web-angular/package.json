@@ -71,7 +71,7 @@
 		"server": "yarn run server:dev",
 		"start:prod:hmr": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 ANGULAR_CONF_FILE=./config.prod.json yarn run config:dev && yarn run server:dev:hmr",
 		"start:hmr": "yarn run server:dev:hmr",
-		"start": "yarn run server:dev",
+		"start": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run config:dev && ng serve",
 		"start:aot": "yarn run server:aot:dev",
 		"test": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run config:dev && karma start",
 		"test:sonar": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 SONAR_QUBE=1 yarn run config:dev && yarn run lint && karma start",
