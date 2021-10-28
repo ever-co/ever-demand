@@ -1,6 +1,5 @@
 import { Component, NgZone, ViewChild, AfterViewInit } from '@angular/core';
 import { SidenavService } from '../sidenav/sidenav.service';
-import { styleVariables } from '../../styles/variables';
 import { Store } from 'app/services/store';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 import { Router } from '@angular/router';
@@ -21,7 +20,6 @@ import { environment } from 'environments/environment';
 	templateUrl: './toolbar.component.html',
 })
 export class ToolbarComponent implements AfterViewInit {
-	styleVariables: typeof styleVariables = styleVariables;
 	isDeliveryRequired: boolean;
 
 	@ViewChild('matSearch')

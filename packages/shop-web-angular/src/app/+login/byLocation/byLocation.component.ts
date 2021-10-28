@@ -1,12 +1,11 @@
 import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
-import { styleVariables } from '../../../styles/variables';
 import { first, map } from 'rxjs/operators';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { InviteRequestRouter } from '@modules/client.common.angular2/routers/invite-request-router.service';
 import { HttpClient } from '@angular/common/http';
 import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
 import InviteRequest from '@modules/server.common/entities/InviteRequest';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import User from '@modules/server.common/entities/User';
 import { GeoLocationRouter } from '@modules/client.common.angular2/routers/geo-location-router.service';
@@ -32,8 +31,6 @@ export class LoginByLocationComponent implements OnInit {
 
 	public mapCoordEmitter = new EventEmitter<number[]>();
 	public mapGeometryEmitter = new EventEmitter<any>();
-
-	public readonly styleVariables: typeof styleVariables = styleVariables;
 
 	public readonly toolbarDisabled = true;
 
