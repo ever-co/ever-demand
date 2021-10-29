@@ -4,7 +4,7 @@ import { WarehousesService } from '../warehouses';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
-import * as _ from 'lodash';
+import _, { chain, clone, sortBy } from 'underscore';
 import Utils from '@modules/server.common/utils';
 import { createEverLogger } from '../../helpers/Log';
 import { GeoLocationsWarehousesService } from './GeoLocationsWarehousesService';
@@ -17,8 +17,7 @@ import {
 } from '@pyro/io';
 import IGeoLocationProductsRouter from '@modules/server.common/routers/IGeoLocationProductsRouter';
 import IService from '../IService';
-import { map, first } from 'rxjs/operators';
-import IWarehouseProduct from '@modules/server.common/interfaces/IWarehouseProduct';
+import { map } from 'rxjs/operators';
 import {
 	IProductTitle,
 	IProductDescription,
@@ -26,6 +25,8 @@ import {
 } from '@modules/server.common/interfaces/IProduct';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { IGetGeoLocationProductsOptions } from 'graphql/geo-locations/geo-location.resolver';
+import IWarehouse from '@ever-platform/common/src/interfaces/IWarehouse';
+import IWarehouseProduct from '@ever-platform/common/src/interfaces/IWarehouseProduct';
 
 @injectable()
 @routerName('geo-location-products')
@@ -138,27 +139,25 @@ export class GeoLocationsProductsService
 		options?: IGetGeoLocationProductsOptions,
 		searchText?: string
 	): ProductInfo[] {
-		const underscore_: any = _; // TODO: remove sh..t
-		return underscore_(warehouses)
-			.map((_warehouse) => {
-				const warehouse = _.clone(_warehouse);
+		return chain(warehouses)
+			.map((_warehouse: IWarehouse) => {
+				const warehouse = clone(_warehouse);
 
 				if (!options || !options.withoutCount) {
 					warehouse.products = warehouse.products.filter(
-						(wProduct) => wProduct.count > 0
+						(wProduct: IWarehouseProduct) => wProduct.count > 0
 					);
 				}
 
 				if (options) {
-					warehouse.products = warehouse.products.filter((wProduct) =>
+					warehouse.products = warehouse.products.filter((wProduct: IWarehouseProduct) =>
 						this.productsFilter(wProduct, options)
 					);
 				}
 
-				warehouse.products = warehouse.products.filter((wProduct) =>
+				warehouse.products = warehouse.products.filter((wProduct: IWarehouseProduct) =>
 					this.filterBySearchText(wProduct, searchText)
 				);
-
 				return warehouse;
 			}) // remove all warehouse products which count is 0.
 			.map((warehouse) =>
@@ -176,11 +175,8 @@ export class GeoLocationsProductsService
 			)
 			.flatten()
 			.groupBy((productInfo) => productInfo.warehouseProduct.productId)
-			.map((productInfos: ProductInfo[], productId) => {
-				return _.minBy(
-					productInfos,
-					(productInfo) => productInfo.distance
-				);
+			.map((productInfos: ProductInfo[]) => {
+				return sortBy(productInfos, 'distance');
 			})
 			.filter((productInfo) => !_.isUndefined(productInfo))
 			.map((productInfo) => productInfo as ProductInfo)
