@@ -4,7 +4,7 @@ import { CarrierMutationComponent } from '../../@shared/carrier/carrier-mutation
 import { Subject } from 'rxjs';
 import { ToasterService } from 'angular2-toaster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import * as _ from 'lodash';
+import * as _ from 'underscore';
 import { CarriersSmartTableComponent } from '@app/@shared/carrier/carriers-table/carriers-table.component';
 import { takeUntil, first } from 'rxjs/operators';
 import Carrier from '@modules/server.common/entities/Carrier';

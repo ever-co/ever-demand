@@ -7,9 +7,9 @@
 <div>
 	<form-wizard
 		[formGroup]="form"
-		[doneText]="buttonDone"
-		[nextText]="buttonNext"
-		[previousText]="buttonPrevious"
+		[doneText]="'BUTTON_DONE' | translate"
+		[nextText]="'BUTTON_NEXT' | translate"
+		[previousText]="'BUTTON_PREV' | translate"
 		[nbSpinner]="loading"
 		#formWizard
 		class="form-horizontal"

@@ -11,9 +11,9 @@
 	<form-wizard
 		class="form-horizontal"
 		[formGroup]="form"
-		[doneText]="buttonDone"
-		[nextText]="buttonNext"
-		[previousText]="buttonPrevious"
+		[doneText]="'BUTTON_DONE' | translate"
+		[nextText]="'BUTTON_NEXT' | translate"
+		[previousText]="'BUTTON_PREV' | translate"
 	>
 		<wizard-step
 			[title]="'CARRIERS_VIEW.CREATE.BASIC_INFO' | translate"
