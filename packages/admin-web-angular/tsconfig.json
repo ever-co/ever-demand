@@ -46,5 +46,9 @@
 		"fullTemplateTypeCheck": false,
 		"enableResourceInlining": true
 	},
-	"include": ["./src", "../common/**/*.ts", "../common-angular/**/*.ts"]
+	"include": [
+		"./src/**/*.d.ts",
+		"../common/**/*d.ts",
+		"../common-angular/**/*d.ts"
+	]
 }

@@ -1,12 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, JsonPipe } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { FormWizardModule, WizardComponent } from '@ever-co/angular2-wizard';
+import { FormWizardModule } from '@ever-co/angular2-wizard';
 import { ToasterModule } from 'angular2-toaster';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ThemeModule } from '../../@theme';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { WarehousesComponent } from './warehouses.component';
 import { WarehousesRoutingModule } from './warehouses-routing.module';
 import { WarehouseMutationModule } from '../../@shared/warehouse/warehouse-mutation';
@@ -16,6 +13,7 @@ import { WarehouseTableModule } from '../../@shared/render-component/warehouse-t
 import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 import { ConfirmationModalModule } from '@app/@shared/confirmation-modal/confirmation-modal.module';
 import { WarehouseTrackModule } from './+warehouse-track/warehouse-track.module';
+import { TranslateModule } from '@app/@shared/translate/translate.module';
 
 @NgModule({
 	imports: [
@@ -28,13 +26,7 @@ import { WarehouseTrackModule } from './+warehouse-track/warehouse-track.module'
 		ConfirmationModalModule,
 		WarehouseTrackModule,
 		ToasterModule.forRoot(),
-		TranslateModule.forChild({
-			loader: {
-				provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
-				deps: [HttpClient],
-			},
-		}),
+		TranslateModule,
 		HighlightModule,
 		RenderComponentsModule,
 		WarehouseTableModule,
@@ -42,11 +34,6 @@ import { WarehouseTrackModule } from './+warehouse-track/warehouse-track.module'
 		NbButtonModule,
 	],
 	declarations: [WarehousesComponent],
-	entryComponents: [WizardComponent],
 	providers: [JsonPipe],
 })
 export class WarehousesModule {}
-
-export function HttpLoaderFactory(http: HttpClient) {
-	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}

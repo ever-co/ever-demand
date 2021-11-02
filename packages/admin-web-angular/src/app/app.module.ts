@@ -8,7 +8,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormWizardModule } from '@ever-co/angular2-wizard';
 import { SimpleTimer } from 'ng2-simple-timer';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ToasterModule } from 'angular2-toaster';
 import { Apollo } from 'apollo-angular';
 import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
@@ -31,6 +30,7 @@ import { MaintenanceModuleGuard } from './pages/+maintenance-info/maintenance-in
 import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
 import { ServerSettingsService } from './@core/services/server-settings.service';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { HttpLoaderFactory } from './@shared/translate/translate.module';
 
 // It's more 'standard' way to use Font-Awesome module and special package,
 // but for some reason ngx-admin works without it. So we leave next line commented for now.
@@ -105,7 +105,11 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 	],
 })
 export class AppModule {
-	constructor(apollo: Apollo, httpLink: HttpLink, private store: Store) {
+	constructor(
+		private apollo: Apollo,
+		private httpLink: HttpLink,
+		private store: Store
+	) {
 		// Create an http link:
 		const http: HttpLinkHandler = httpLink.create({
 			uri: environment.GQL_ENDPOINT,
@@ -165,10 +169,6 @@ export class AppModule {
 			cache: new InMemoryCache(),
 		});
 	}
-}
-
-export function HttpLoaderFactory(http: HttpClient) {
-	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 export function googleMapsLoaderFactory(provider: GoogleMapsLoader) {
