@@ -10,7 +10,8 @@ import {
 	Types,
 	getSchema,
 } from '../@pyro/db';
-import { map, sum } from 'underscore';
+import { map } from 'underscore';
+import { sum }from 'lodash';
 
 import OrderWarehouseStatus, {
 	warehouseStatusToString,

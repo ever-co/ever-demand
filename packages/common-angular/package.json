@@ -42,6 +42,8 @@
 		"@ngx-translate/core": "^13.0.0",
 		"@ngx-translate/http-loader": "^6.0.0",
 		"tslib": "^2.3.1",
+		"underscore": "^1.13.1",
+		"underscore.string": "^3.3.5",
 		"zone.js": "~0.11.4"
 	},
 	"devDependencies": {

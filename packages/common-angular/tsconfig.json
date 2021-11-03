@@ -15,5 +15,8 @@
 			]
 		}
 	},
-	"include": ["./src/**/*.ts", "../../common/**/*.ts"]
+	"include": [
+		"./src/**/*.d.ts",
+		"../../common/**/*d.ts"
+	]
 }
