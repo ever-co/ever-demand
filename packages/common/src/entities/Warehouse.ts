@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import { map } from 'underscore';
 import { DBObject, getSchema, ModelName, Schema, Types } from '../@pyro/db';
 import GeoLocation from './GeoLocation';
 import WarehouseProduct, { WithPopulatedProduct } from './WarehouseProduct';
@@ -33,7 +33,7 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 			}
 
 			if (warehouse.products) {
-				this.products = _.map(
+				this.products = map(
 					warehouse.products,
 					(warehouseProduct: IWarehouseProduct) => {
 						return new WarehouseProduct(warehouseProduct);

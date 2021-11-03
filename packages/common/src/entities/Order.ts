@@ -10,7 +10,7 @@ import {
 	Types,
 	getSchema,
 } from '../@pyro/db';
-import * as _ from 'lodash';
+import { map, sum } from 'underscore';
 
 import OrderWarehouseStatus, {
 	warehouseStatusToString,
@@ -60,7 +60,7 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 			}
 
 			if (order.products) {
-				this.products = _.map(
+				this.products = map(
 					order.products,
 					(orderProduct: IOrderProduct) => {
 						return new OrderProduct(orderProduct);
@@ -301,8 +301,8 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 	 * @memberof Order
 	 */
 	get totalPrice(): number {
-		return _.sum(
-			_.map(
+		return sum(
+			map(
 				this.products,
 				(product: OrderProduct) => product.count * product.price
 			)

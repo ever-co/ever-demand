@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import * as _ from 'underscore';
 import { map } from 'rxjs/operators';
 import { RouterFactory, Router } from '../lib/router';
 import { Observable } from 'rxjs';

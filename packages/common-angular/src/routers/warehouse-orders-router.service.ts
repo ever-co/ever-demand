@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router, RouterFactory } from '../lib/router';
-import * as _ from 'lodash';
+import * as _ from 'underscore';
 import { Injectable } from '@angular/core';
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import Order from '@modules/server.common/entities/Order';
