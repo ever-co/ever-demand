@@ -31,6 +31,7 @@ import { ServerConnectionService } from '@modules/client.common.angular2/service
 import { ServerSettingsService } from './@core/services/server-settings.service';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { HttpLoaderFactory } from './@shared/translate/translate.module';
+import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 
 // It's more 'standard' way to use Font-Awesome module and special package,
 // but for some reason ngx-admin works without it. So we leave next line commented for now.
@@ -66,6 +67,7 @@ import { HttpLoaderFactory } from './@shared/translate/translate.module';
 			 */
 			echarts: () => import('echarts')
 		}),
+		HighlightModule
 	],
 	declarations: [AppComponent],
 	bootstrap: [AppComponent],
@@ -102,6 +104,12 @@ import { HttpLoaderFactory } from './@shared/translate/translate.module';
 		SimpleTimer,
 		AppModuleGuard,
 		MaintenanceModuleGuard,
+		{
+			provide: HIGHLIGHT_OPTIONS,
+			useValue: {
+			  	fullLibraryLoader: () => import('highlight.js')
+			}
+		}
 	],
 })
 export class AppModule {
