@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IWarehouseProductCreateObject } from '@modules/server.common/interfaces/IWarehouseProduct';
 import * as faker from 'faker';
-import * as _ from 'lodash';
+import { random } from 'underscore';
 
 enum IsDeliveryTakeawayStatus {
 	Takeaway = 0,
@@ -55,7 +55,7 @@ export default class FakeDataWarehousesProducts {
 
 				return {
 					product: id,
-					initialPrice: price + _.random(20),
+					initialPrice: price + random(20),
 					price,
 					isCarrierRequired: true,
 					isManufacturing: true,

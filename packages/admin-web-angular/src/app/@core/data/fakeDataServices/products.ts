@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IProductCreateObject } from '@modules/server.common/interfaces/IProduct';
 import * as faker from 'faker';
-import * as _ from 'lodash';
+import { random } from 'underscore';
 import { IProductsCategory } from '@modules/server.common/interfaces/IProductsCategory';
 import { images } from '@modules/server.common/data/image-urls';
 import { productNames } from '@modules/server.common/data/food-product-names';
@@ -415,7 +415,7 @@ export default class FakeDataProducts {
 
 	private async _getImage() {
 		try {
-			const url = images.food[_.random(0, images.food.length - 1)];
+			const url = images.food[random(0, images.food.length - 1)];
 
 			const img: HTMLImageElement = await this._getImageMeta(url);
 
@@ -450,6 +450,6 @@ export default class FakeDataProducts {
 	}
 
 	private _getRandomProductName(): string {
-		return productNames[_.random(0, productNames.length - 1)];
+		return productNames[random(0, productNames.length - 1)];
 	}
 }

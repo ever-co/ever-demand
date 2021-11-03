@@ -8,7 +8,6 @@ import { WarehousesService } from '../../@core/data/warehouses.service';
 import { OrdersService } from '../../@core/data/orders.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { Observable, forkJoin, Subject } from 'rxjs';
-import * as _ from 'lodash';
 import { takeUntil } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
 import { WarehouseViewModel } from '../../models/WarehouseViewModel';

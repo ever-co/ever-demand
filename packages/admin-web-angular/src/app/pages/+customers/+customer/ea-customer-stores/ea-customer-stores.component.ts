@@ -16,7 +16,6 @@ import { ToasterService } from 'angular2-toaster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatest, Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
-import * as _ from 'lodash';
 import { ActivatedRoute } from '@angular/router';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 

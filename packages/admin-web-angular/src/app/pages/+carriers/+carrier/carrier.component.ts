@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import { find } from 'underscore';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ICarrierCreateObject } from '@modules/server.common/interfaces/ICarrier';
@@ -74,7 +74,7 @@ export class CarrierComponent implements OnInit, OnDestroy {
 	public get shouldShowOrdersStatusesControl() {
 		return (
 			this.selectedOrdersId.length > 0 &&
-			_.find(
+			find(
 				this.currentOrders,
 				(order) => order.id === this.selectedOrdersId[0]
 			)!.carrierStatus <= OrderCarrierStatus.CarrierSelectedOrder

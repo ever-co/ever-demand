@@ -42,7 +42,7 @@ import { InvitesService } from '@app/@core/data/invites.service';
 import { InvitesRequestsService } from '@app/@core/data/invites-requests.service';
 import { UsersService } from '@app/@core/data/users.service';
 import { environment } from 'environments/environment';
-import * as _ from 'lodash';
+import { random }from 'underscore';
 import { CurrenciesService } from '@app/@core/data/currencies.service';
 
 const NEED_DEFAULT_SETTINGS_MESSAGE =
@@ -988,7 +988,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 
 		const getRandomCategory = () => {
 			return this._productCategories[
-				_.random(this._productCategories.length - 1)
+				random(this._productCategories.length - 1)
 			];
 		};
 		const productCreateObject = await this.fakeDataProducts.getRandomProduct(

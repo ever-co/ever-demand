@@ -9,7 +9,7 @@ import Order from '@modules/server.common/entities/Order';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/carrier-orders-router.service';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
-import * as _ from 'lodash';
+import { map } from 'underscore';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 
 @Component({
@@ -46,7 +46,7 @@ export class CarrierOrdersStatusComponent implements OnDestroy {
 
 	public get ordersIds(): string[] {
 		this.orders.push(this.selectedOrder);
-		return _.map(this.orders, (order) => order.id);
+		return map(this.orders, (order) => order.id);
 	}
 
 	public get ordersCarrierStatus() {

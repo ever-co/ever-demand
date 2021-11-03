@@ -6,7 +6,7 @@ import { IWarehouseRegistrationInput } from '@modules/server.common/routers/IWar
 import { getFakeImg } from '@modules/server.common/utils';
 import { environment } from 'environments/environment';
 import * as faker from 'faker';
-import * as _ from 'lodash';
+import { random } from 'underscore';
 // import { _appIdRandomProviderFactory } from '@angular/core/src/application_tokens';
 
 const NEED_DEFAULT_SETTINGS_MESSAGE =
@@ -244,11 +244,11 @@ export default class FakeDataWarehouses {
 		const currentYear = now.getFullYear();
 		const startYear = currentYear - yearsRange;
 
-		const storeYear = _.random(startYear, currentYear);
-		const storeMonth = _.random(11);
-		const storeDate = _.random(31);
-		const storeHours = _.random(23);
-		const storeMinutes = _.random(59);
+		const storeYear = random(startYear, currentYear);
+		const storeMonth = random(11);
+		const storeDate = random(31);
+		const storeHours = random(23);
+		const storeMinutes = random(59);
 
 		const storeCreatedAt = new Date(
 			storeYear,
@@ -260,7 +260,7 @@ export default class FakeDataWarehouses {
 
 		if (storeCreatedAt > now) {
 			const diff = storeCreatedAt.getTime() - now.getTime();
-			storeCreatedAt.setTime(now.getTime() - _.random(diff));
+			storeCreatedAt.setTime(now.getTime() - random(diff));
 		}
 
 		return storeCreatedAt;
