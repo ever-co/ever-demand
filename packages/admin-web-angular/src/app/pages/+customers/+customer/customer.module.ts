@@ -8,9 +8,7 @@ import { HighlightModule } from 'ngx-highlightjs';
 import { ThemeModule } from '../../../@theme';
 import { CustomerComponent } from './customer.component';
 import { CustomerInfoComponent } from './ea-customer-info/ea-customer-info.component';
-import { CustomerProductsComponent } from './ea-customer-products/ea-customer-products/ea-customer-products.component';
-// duplicate CustomerProductsComponent
-import { CustomerProductsComponent as RootCustomerProductsComponent } from './ea-customer-products/ea-customer-products.component';
+import { CustomerProductsComponent } from './ea-customer-products/ea-customer-products.component';
 import { CustomerLocationComponent } from './ea-customer-location/ea-customer-location.component';
 import { CustomerStoresComponent } from './ea-customer-stores/ea-customer-stores.component';
 import { CustomerOrdersTableModule } from '../../../@shared/render-component/customer-orders-table/customer-orders-table.module';
@@ -64,10 +62,8 @@ const routes = [
 		CustomerLocationComponent,
 		CustomerInfoComponent,
 		CustomerProductsComponent,
-		RootCustomerProductsComponent,
 		CustomerStoresComponent,
-		CustomerMetricsComponent,
-	],
-	entryComponents: [],
+		CustomerMetricsComponent
+	]
 })
 export class CustomerModule {}
