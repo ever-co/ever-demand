@@ -11,9 +11,9 @@
 		#wizzardFrom
 		class="form-horizontal"
 		[formGroup]="form"
-		[doneText]="buttonDone"
-		[nextText]="buttonNext"
-		[previousText]="buttonPrevious"
+		[doneText]="'BUTTON_DONE' | translate"
+		[nextText]="'BUTTON_NEXT' | translate"
+		[previousText]="'BUTTON_PREV' | translate"
 		[nbSpinner]="loading"
 	>
 		<wizard-step
@@ -21,6 +21,7 @@
 			(onNext)="onStep1Next()"
 			[title]="'WAREHOUSE_VIEW.NEW_PRODUCT.HOW_TO_ADD' | translate"
 			[isValid]="hasCoiced"
+			[showPrev]="false"
 		>
 			<hr />
 			<ea-warehouse-add-choice
@@ -60,6 +61,7 @@
 			[isValid]="validAllProducts()"
 			(onComplete)="addProducts()"
 			(onPrev)="onStep3Prev()"
+			[showNext]="false"
 		>
 			<hr />
 			<ea-add-warehouse-products-table

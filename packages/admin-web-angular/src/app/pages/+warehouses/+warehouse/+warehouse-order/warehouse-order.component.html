@@ -17,7 +17,7 @@
 	<wizard-step
 		[title]="TRANSLATE_PREFIXES.STEP1.TITLE | translate"
 		[isValid]="false"
-		[showNext]="false"
+		[showPrev]="false"
 		class="step-1"
 	>
 		<nb-card>
@@ -69,6 +69,7 @@
 		[title]="TRANSLATE_PREFIXES.STEP3.TITLE | translate"
 		[isValid]="isOrderAllowed"
 		(onComplete)="completeOrder()"
+		[showNext]="false"
 	>
 		<ea-warehouse-order-modal
 			#warehouseOrderModal

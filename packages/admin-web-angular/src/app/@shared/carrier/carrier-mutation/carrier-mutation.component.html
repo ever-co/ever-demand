@@ -18,6 +18,7 @@
 		<wizard-step
 			[title]="'CARRIERS_VIEW.CREATE.BASIC_INFO' | translate"
 			[isValid]="basicInfo.valid"
+			[showPrev]="false"
 		>
 			<br />
 			<ea-carrier-basic-info-form
@@ -26,10 +27,10 @@
 				[password]="password"
 			></ea-carrier-basic-info-form>
 		</wizard-step>
-
 		<wizard-step
 			[title]="'CARRIERS_VIEW.CREATE.LOCATION' | translate"
 			[isValid]="location.valid"
+			[showNext]="false"
 			(onComplete)="createCarrier()"
 		>
 			<br />
@@ -41,7 +42,6 @@
 				(mapGeometryEmitter)="onGeometrySend($event)"
 			>
 			</ea-location-form>
-
 			<google-map
 				[mapCoordEvent]="mapCoordEmitter"
 				[mapGeometryEvent]="mapGeometryEmitter"

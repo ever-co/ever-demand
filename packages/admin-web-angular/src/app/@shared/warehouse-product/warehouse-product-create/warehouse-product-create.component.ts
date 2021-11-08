@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { WarehouseAddChoiceComponent } from '../forms';
 import { takeUntil, first } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { firstValueFrom, Subject } from 'rxjs';
 import { BasicInfoFormComponent } from '../../product/forms';
 import { ProductsTableComponent } from '../../product/forms/products-table';
 import { ProductsService } from '../../../@core/data/products.service';
@@ -33,9 +33,6 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 	currentThemeCosmic: boolean = false;
 
 	warehouseId: string;
-	BUTTON_DONE: string = 'BUTTON_DONE';
-	BUTTON_NEXT: string = 'BUTTON_NEXT';
-	BUTTON_PREV: string = 'BUTTON_PREV';
 	productsCategories: ProductsCategory[];
 	selectedWarehouse: Warehouse;
 	perPage: number;
@@ -102,17 +99,6 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 		if (this._themeService.currentTheme === 'cosmic') {
 			this.currentThemeCosmic = true;
 		}
-	}
-	get buttonDone() {
-		return this._translate(this.BUTTON_DONE);
-	}
-
-	get buttonNext() {
-		return this._translate(this.BUTTON_NEXT);
-	}
-
-	get buttonPrevious() {
-		return this._translate(this.BUTTON_PREV);
 	}
 
 	get hasCoiced() {
@@ -259,10 +245,9 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 	}
 
 	async loadProductCategories() {
-		this.productsCategories = await this._productsCategoryService
-			.getCategories()
-			.pipe(first())
-			.toPromise();
+		this.productsCategories = await firstValueFrom(
+			this._productsCategoryService.getCategories()
+		);
 	}
 
 	cancel() {
@@ -271,16 +256,6 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 
 	private async getDataCount(existedProductsIds: string[]) {
 		return this._productsService.getCountOfProducts(existedProductsIds);
-	}
-
-	private _translate(key: string): string {
-		let translationResult = '';
-
-		this._translateService.get(key).subscribe((res) => {
-			translationResult = res;
-		});
-
-		return translationResult;
 	}
 
 	ngOnDestroy() {
