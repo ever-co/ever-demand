@@ -7,8 +7,10 @@
 
 @import '~@nebular/bootstrap/styles/globals';
 
+@import '~angular2-toaster/toaster';
+
 // toaster styles copied from 'angular2-toaster' package
-@import './toaster';
+// @import './toaster';
 
 // custom global ng-bootstrap modal
 @import './ng-bootstrap.modal';

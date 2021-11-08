@@ -23,7 +23,7 @@
 					<button
 						nbButton
 						status="success"
-						class="d-inline-block"
+						class="mr-1 d-inline-block"
 						(click)="addProducts()"
 					>
 						<i class="ion-md-add button-icon mr-1"></i
@@ -35,7 +35,7 @@
 					<button
 						nbButton
 						status="warning"
-						class="mr-2 d-inline-block"
+						class="ml-1 d-inline-block"
 						[disabled]="!selectedProducts.length"
 						(click)="removeSelectedProducts()"
 						[nbSpinner]="loading"
@@ -51,7 +51,7 @@
 					<button
 						nbButton
 						status="danger"
-						class="mr-2 d-inline-block float-right"
+						class="d-inline-block float-right"
 						(click)="cancelOrder()"
 						[nbSpinner]="loading"
 					>

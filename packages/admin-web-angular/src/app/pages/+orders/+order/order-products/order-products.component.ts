@@ -31,7 +31,7 @@ interface OrderProductsViewModel {
 @Component({
 	selector: 'ea-order-products',
 	templateUrl: './order-products.component.html',
-	styleUrls: ['/order-products.component.scss'],
+	styleUrls: ['./order-products.component.scss'],
 })
 export class OrderProductsComponent implements OnInit, OnChanges, OnDestroy {
 	public selectedProducts: OrderProductsViewModel[] = [];
