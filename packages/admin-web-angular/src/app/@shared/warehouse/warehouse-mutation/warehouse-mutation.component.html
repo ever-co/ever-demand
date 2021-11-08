@@ -10,13 +10,14 @@
 <form-wizard
 	class="form-horizontal"
 	[formGroup]="form"
-	[doneText]="buttonDone"
-	[nextText]="buttonNext"
-	[previousText]="buttonPrevious"
+	[doneText]="'BUTTON_DONE' | translate"
+	[nextText]="'BUTTON_NEXT' | translate"
+	[previousText]="'BUTTON_PREV' | translate"
 >
 	<wizard-step
 		[title]="'WAREHOUSE_VIEW.MUTATION.WIZARD_TITLES.BASIC_INFO' | translate"
 		[isValid]="basicInfo.valid && password.valid"
+		[showPrev]="false"
 	>
 		<div class="pt-5"></div>
 		<ea-warehouse-basic-info-form
@@ -68,6 +69,7 @@
 		[title]="'Payment'"
 		[isValid]="paymentsSettingsForm.isPaymentValid"
 		(onComplete)="createWarehouse()"
+		[showNext]="false"
 	>
 		<div class="pt-4"></div>
 
