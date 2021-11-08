@@ -17,6 +17,7 @@ import Product from '@modules/server.common/entities/Product';
 import * as _ from 'lodash';
 import { ObjectId } from 'bson';
 import { FakeOrdersService } from '../../services/fake-data/FakeOrdersService';
+import { firstValueFrom } from 'rxjs';
 
 @Resolver('Order')
 export class OrderResolver {
@@ -612,7 +613,9 @@ export class OrderResolver {
 
 	@Query('getOrder')
 	async getOrder(_context, { id }: { id: string }): Promise<Order> {
-		return this._ordersService.get(id).pipe(first()).toPromise();
+		return firstValueFrom(
+			this._ordersService.get(id)
+		);
 	}
 
 	@Query('orders')

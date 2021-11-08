@@ -930,22 +930,20 @@ export class OrdersService extends DBService<Order>
 		id: string,
 		options: { populateWarehouse?: boolean; populateCarrier?: boolean } = {}
 	): Promise<Order> {
-		let toPopulate = '';
-
+		const query = this.Model.findById(id);
 		if (options.populateCarrier) {
-			toPopulate += 'carrier ';
+			query.populate('carrier');
 		}
-
 		if (options.populateWarehouse) {
-			toPopulate += 'warehouse ';
+			query.populate('warehouse');
 		}
-
 		return new Order(
-			(await this.Model.findById(id)
-				.populate(toPopulate)
-				.sort({ _createdAt: -1, orderNumber: -1 })
-				.lean()
-				.exec()) as IOrder
+			(
+				await query
+					.sort({ _createdAt: -1, orderNumber: -1 })
+					.lean()
+					.exec()
+			) as IOrder
 		);
 	}
 
