@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
 import OrderBarcodeTypes, {
 	orderBarcodeTypesToString,
 } from '@modules/server.common/enums/OrderBarcodeTypes';
-import QRCode from 'qrcode';
+import * as QRCode from 'qrcode';
 
 @Component({
 	selector: 'ea-merchants-setup-orders-settings',
@@ -47,13 +47,13 @@ export class SetupMerchantOrdersSettingsComponent {
 	];
 
 	constructor() {
-		this.loadBarcodetDataUrl();
+		this.loadBarcodeDataUrl();
 	}
 
-	async loadBarcodetDataUrl() {
-		const dummyId = Date.now();
-		this.barcodeDataUrl = await QRCode.toDataURL(dummyId.toString());
-		this.barcodeData = dummyId.toString();
+	async loadBarcodeDataUrl() {
+		const dummyId = Date.now().toString();
+		this.barcodeDataUrl = await QRCode.toDataURL(dummyId);
+		this.barcodeData = dummyId;
 	}
 
 	typeChange(type) {

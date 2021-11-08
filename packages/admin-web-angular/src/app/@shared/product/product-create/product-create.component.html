@@ -15,9 +15,10 @@
 		class="form-horizontal"
 	>
 		<wizard-step
-			[title]="''"
 			[isValid]="basicInfo.valid"
 			(onComplete)="createProduct()"
+			[showNext]="false"
+			[showPrev]="false"
 		>
 			<ea-product-basic-info-form
 				#basicInfoForm

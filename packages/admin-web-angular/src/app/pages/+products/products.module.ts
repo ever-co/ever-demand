@@ -55,7 +55,6 @@ const routes: Routes = [
 		CategoryEditComponent,
 		CategoriesComponent,
 	],
-	entryComponents: [CategoryCreateComponent, CategoryEditComponent],
 	providers: [JsonPipe, NotifyService],
 })
 export class ProductsModule {

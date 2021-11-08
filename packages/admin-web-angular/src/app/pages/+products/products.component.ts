@@ -3,7 +3,7 @@ import { takeUntil, first } from 'rxjs/operators';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsService } from '../../@core/data/products.service';
 import Product from '@modules/server.common/entities/Product';
-import { Subject } from 'rxjs';
+import { firstValueFrom, Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProductCreateComponent } from '../../@shared/product/product-create';
 import { ProductsTableComponent } from '../../@shared/product/forms/products-table';
@@ -73,11 +73,9 @@ export class ProductsComponent implements OnDestroy, AfterViewInit {
 
 		try {
 			this.loading = true;
-
-			await this._productsService
-				.removeByIds(idsForDelete)
-				.pipe(first())
-				.toPromise();
+			await firstValueFrom(
+				this._productsService.removeByIds(idsForDelete)
+			);
 
 			this.loading = false;
 
@@ -99,14 +97,12 @@ export class ProductsComponent implements OnDestroy, AfterViewInit {
 	}
 
 	private async getCategories() {
-		this.productsCategories = await this.productsCategoryService
-			.getCategories()
-			.pipe(first())
-			.toPromise();
+		this.productsCategories = await firstValueFrom(
+			this.productsCategoryService.getCategories()
+		);
 	}
 
 	private async _loadDataSmartTable(page: number = 1) {
-		let products: Product[] = [];
 		if (this.$products) {
 			await this.$products.unsubscribe();
 		}
@@ -120,9 +116,10 @@ export class ProductsComponent implements OnDestroy, AfterViewInit {
 				this.productsTable.perPage = perPage;
 
 				const dataCount = await this.getDataCount();
-				products = p;
+				let products: Product[] = p;
+
 				this.productsTable.loadDataSmartTable(
-					products,
+					products || [],
 					dataCount,
 					page
 				);
