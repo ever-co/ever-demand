@@ -41,6 +41,12 @@
 							},
 							"src/manifest.json"
 						],
+						"allowedCommonJsDependencies": [
+							"uuid",
+							"underscore.string",
+							"qrcode",
+							"ngx-masonry"
+						],
 						"styles": [
 							"../../node_modules/bootstrap/dist/css/bootstrap.min.css",
 							"../../node_modules/font-awesome/scss/font-awesome.scss",
