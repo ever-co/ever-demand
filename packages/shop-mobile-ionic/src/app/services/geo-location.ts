@@ -28,7 +28,7 @@ export class GeoLocationService {
 					type: 'Point',
 					coordinates: [coords.longitude, coords.latitude],
 				};
-				if (!coords.longitude || coords.latitude) {
+				if (!coords.longitude || !coords.latitude) {
 					throw new Error(`Can't detect location`);
 				}
 
