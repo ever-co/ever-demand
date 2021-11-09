@@ -4,7 +4,7 @@ import { UserProductsRouter } from '@modules/client.common.angular2/routers/user
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
 import { takeUntil, first } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { firstValueFrom, Subject } from 'rxjs';
 import { Store } from '../../services/store.service';
 import { Router } from '@angular/router';
 import { IOrderCreateInput } from '@modules/server.common/routers/IWarehouseOrdersRouter';
@@ -332,11 +332,9 @@ export class ProductsPage implements OnInit, OnDestroy {
 			this.hasPendingOrder &&
 			this.store.orderWarehouseId
 		) {
-			const { status } = await this.ordersService
-				.getOrder(this.store.orderId, `{status}`)
-				.pipe(first())
-				.toPromise();
-
+			const { status } = await firstValueFrom(
+				this.ordersService.getOrder(this.store.orderId, `{status}`)
+			);
 			if (status < OrderStatus.Delivered) {
 				merchantIds = [this.store.orderWarehouseId];
 			} else {
@@ -487,13 +485,13 @@ export class ProductsPage implements OnInit, OnDestroy {
 
 	private async loadMerchant() {
 		if (this.store.inStore) {
-			this.merchant = await this.warehouseRouter
-				.get(this.store.inStore, false)
-				.pipe(first())
-				.toPromise();
+			this.merchant = await firstValueFrom(
+				this.warehouseRouter.get(this.store.inStore, false)
+			);
 		}
 		this.loadProducts();
 	}
+
 	toggleSearch() {
 		this.isSearchOpened = !this.isSearchOpened;
 	}

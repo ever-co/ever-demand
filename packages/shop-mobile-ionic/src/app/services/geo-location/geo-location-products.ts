@@ -86,7 +86,7 @@ export class GeoLocationProductsService {
 			})
 			.valueChanges.pipe(
 				map((res) =>
-					res.data.geoLocationProductsByPaging.filter(
+					res.data.geoLocationProductsByPaging.filter(Boolean).filter(
 						(p) => p.warehouseProduct.isProductAvailable === true
 					)
 				),
