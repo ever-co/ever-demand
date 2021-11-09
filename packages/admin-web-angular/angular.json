@@ -19,9 +19,14 @@
 						"tsConfig": "tsconfig.json",
 						"polyfills": "src/polyfills.ts",
 						"assets": [
-							"src/assets",
 							"src/favicon.ico",
 							"src/favicon.png",
+							{
+								"glob": "**/*",
+								"input": "src/assets/",
+								"ignore": ["**/*.css"],
+								"output": "/assets/"
+							},
 							{
 								"glob": "**/*",
 								"input": "../../node_modules/leaflet/dist/images",
@@ -138,9 +143,14 @@
 							"src/app/@theme/styles/styles.scss"
 						],
 						"assets": [
-							"src/assets",
 							"src/favicon.ico",
 							"src/favicon.png",
+							{
+								"glob": "**/*",
+								"input": "src/assets/",
+								"ignore": ["**/*.css"],
+								"output": "/assets/"
+							},
 							{
 								"glob": "**/*",
 								"input": "../../node_modules/leaflet/dist/images",
