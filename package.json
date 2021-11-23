@@ -143,7 +143,7 @@
 		"mx.ferreyra.callnumber": "0.0.2",
 		"neo-async": "^2.6.1",
 		"phonegap-plugin-barcodescanner": "^8.0.1",
-		"qrcode": "^1.4.1",
+		"qrcode": "^1.5.0",
 		"reflect-metadata": "^0.1.13",
 		"rxjs": "^6.5.2",
 		"rxjs-compat": "^6.5.2",
