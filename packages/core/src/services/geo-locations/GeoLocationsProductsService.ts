@@ -25,7 +25,7 @@ import {
 } from '@modules/server.common/interfaces/IProduct';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { IGetGeoLocationProductsOptions } from 'graphql/geo-locations/geo-location.resolver';
-import IWarehouseProduct from '@ever-platform/common/src/interfaces/IWarehouseProduct';
+import IWarehouseProduct from '@modules/server.common/interfaces/IWarehouseProduct';
 
 @injectable()
 @routerName('geo-location-products')

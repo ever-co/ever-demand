@@ -5,6 +5,7 @@ ARG NODE_ENV
 ARG API_BASE_URL
 ARG API_HOST
 ARG API_PORT
+ARG SENTRY_DSN
 ARG DB_URI
 ARG DB_HOST
 ARG DB_NAME
@@ -17,7 +18,7 @@ ARG DEMO
 ARG HOST
 ARG PORT
 
-FROM node:alpine AS dependencies
+FROM node:16-alpine3.11 AS dependencies
 
 LABEL maintainer="ever@ever.co"
 
@@ -25,8 +26,8 @@ ENV CI=true
 
 RUN apk --update add bash \
 	&& apk add libexecinfo libexecinfo-dev \
-	&& apk --no-cache add --virtual builds-deps build-base \
-	snappy dos2unix g++ snappy-dev gcc libgcc libstdc++ linux-headers autoconf automake make nasm python vips-dev git \
+	&& apk add --no-cache --virtual build-dependencies build-base \
+	snappy dos2unix g++ snappy-dev gcc libgcc libstdc++ linux-headers autoconf automake make nasm python2 py2-setuptools vips-dev git \
 	&& npm install --quiet node-gyp -g \
 	&& npm config set python /usr/bin/python \
 	&& mkdir /srv/ever && chown -R node:node /srv/ever
@@ -40,13 +41,13 @@ WORKDIR /srv/ever
 
 COPY --chown=node:node package.json yarn.lock lerna.json package.workspaces.json tsconfig.base.json ./
 COPY --chown=node:node packages/core/package.json ./packages/core/package.json
+COPY --chown=node:node packages/common/package.json ./packages/common/package.json
 COPY --chown=node:node .snyk ./.snyk
 COPY --chown=node:node packages/core/.snyk ./packages/core/.snyk
-COPY --chown=node:node packages/common ./packages/common
 
-RUN yarn install --frozen-lockfile && yarn cache clean
+RUN yarn bootstrap && yarn cache clean
 
-FROM node:alpine AS development
+FROM node:16-alpine3.11 AS development
 
 USER node:node
 
@@ -56,7 +57,7 @@ COPY --chown=node:node --from=dependencies /wait /entrypoint.compose.sh /entrypo
 COPY --chown=node:node --from=dependencies /srv/ever .
 COPY . .
 
-FROM node:alpine AS build
+FROM node:16-alpine3.11 AS build
 
 WORKDIR /srv/ever
 
@@ -72,7 +73,7 @@ ENV IS_DOCKER=true
 
 RUN yarn build:server
 
-FROM node:alpine AS production
+FROM node:16-alpine3.11 AS production
 
 WORKDIR /srv/ever
 
@@ -112,6 +113,7 @@ ENV NODE_ENV=${NODE_ENV:-production}
 ENV API_HOST=${API_HOST:-api}
 ENV API_PORT=${API_PORT:-5500}
 ENV API_BASE_URL=${API_BASE_URL:-http://localhost:5500}
+ENV SENTRY_DSN=${SENTRY_DSN}
 ENV DB_URI=${DB_URI:-mongodb://localhost/ever_development}
 ENV DB_HOST=${DB_HOST:-localhost}
 ENV DB_NAME=${DB_NAME:-ever_development}

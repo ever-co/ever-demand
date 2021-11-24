@@ -176,6 +176,7 @@
 		"@types/stripe": "^8.0.416",
 		"@types/uuid": "^8.3.1",
 		"@types/ws": "^8.2.0",
+		"rimraf": "^3.0.2",
 		"ts-node": "~10.3.0",
 		"tslint": "^6.1.1",
 		"typescript": "~4.2.4"
