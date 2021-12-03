@@ -1,4 +1,4 @@
-# Ever Platform Admin UI (Angular)
+# Ever Demand Platform Admin UI (Angular)
 
 ARG API_BASE_URL
 ARG API_HOST
@@ -69,9 +69,11 @@ COPY --chown=node:node --from=development /srv/ever .
 
 ENV NODE_OPTIONS=${NODE_OPTIONS:-"--max-old-space-size=2048"}
 ENV NODE_ENV=${NODE_ENV:-production}
+
 ENV API_BASE_URL=${API_BASE_URL:-http://localhost:3000}
 ENV CLIENT_BASE_URL=${CLIENT_BASE_URL:-http://localhost:4200}
 ENV SENTRY_DSN=${SENTRY_DSN}
+
 ENV CHATWOOT_SDK_TOKEN=${CHATWOOT_SDK_TOKEN}
 ENV CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
 ENV CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
@@ -80,6 +82,7 @@ ENV GOOGLE_PLACE_AUTOCOMPLETE=${GOOGLE_PLACE_AUTOCOMPLETE:-false}
 ENV DEFAULT_LATITUDE=${DEFAULT_LATITUDE:-42.6459136}
 ENV DEFAULT_LONGITUDE=${DEFAULT_LONGITUDE:-23.3332736}
 ENV DEFAULT_CURRENCY=${DEFAULT_CURRENCY:-USD}_DSN}
+
 ENV DEMO=${DEMO:-false}
 
 ENV IS_DOCKER=true
@@ -100,14 +103,15 @@ COPY --chown=nginx:nginx --from=build /srv/ever/packages/admin-web-angular/build
 RUN chmod +x wait entrypoint.compose.sh entrypoint.prod.sh && \
     chmod a+rw /etc/nginx/conf.d/compose.conf.template /etc/nginx/conf.d/prod.conf.template
 
+ENV API_BASE_URL=${API_BASE_URL:-http://localhost:3000}
+ENV CLIENT_BASE_URL=${CLIENT_BASE_URL:-http://localhost:4200}
+ENV SENTRY_DSN=${SENTRY_DSN}
+
 ENV API_HOST=${API_HOST:-api}
 ENV API_PORT=${API_PORT:-3000}
-ENV API_BASE_URL=${API_BASE_URL:-http://localhost:3000}
 ENV WEB_HOST=${WEB_HOST:-0.0.0.0}
 ENV WEB_PORT=${WEB_PORT:-4200}
-ENV NODE_OPTIONS=${NODE_OPTIONS:-"--max-old-space-size=2048"}
-ENV NODE_ENV=${NODE_ENV:-production}
-ENV SENTRY_DSN=${SENTRY_DSN}
+
 ENV DEMO=${DEMO:-false}
 
 EXPOSE ${WEB_PORT}

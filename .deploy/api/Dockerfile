@@ -1,4 +1,4 @@
-# Ever Platform API (Core)
+# Ever Demand Platform API (Core)
 
 ARG NODE_OPTIONS
 ARG NODE_ENV
