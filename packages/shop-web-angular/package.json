@@ -127,7 +127,7 @@
 		"core-js": "^3.18.3",
 		"css-element-queries": "^1.2.3",
 		"fstream": "^1.0.12",
-		"graphql": "^16.0.1",
+		"graphql": "15.7.2",
 		"graphql-tag": "^2.12.6",
 		"handlebars": "^4.7.7",
 		"http-server": "^13.0.2",
