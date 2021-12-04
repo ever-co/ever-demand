@@ -13,8 +13,8 @@ import { routes, NbAuthModule } from '@nebular/auth';
 import { NotifyService } from '@app/@core/services/notify/notify.service';
 import { DeviceService } from '@app/@core/data/device.service';
 import { APOLLO_OPTIONS } from 'apollo-angular';
-import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
 import { PipesModule } from '@modules/client.common.angular2/pipes/pipes.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FileUploaderModule } from '@app/@shared/file-uploader/file-uploader.module';
@@ -56,7 +56,6 @@ stories.addDecorator(
 			ToasterModule.forRoot(),
 			RouterModule.forChild(routes),
 			NbAuthModule,
-			HttpLinkModule,
 			PipesModule,
 			FileUploaderModule,
 			Ng2SmartTableModule,

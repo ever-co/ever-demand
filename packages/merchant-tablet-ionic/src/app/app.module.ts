@@ -15,7 +15,6 @@ import { MenuModule } from '../components/menu/menu.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from 'environments/environment';
-import { HttpLinkModule } from 'apollo-angular-link-http';
 import { FileUploadModule } from 'ng2-file-upload';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
@@ -46,7 +45,6 @@ import { ServerConnectionService } from '@modules/client.common.angular2/service
 		HttpClientModule,
 		BrowserAnimationsModule,
 		MenuModule,
-		HttpLinkModule,
 		IonicModule.forRoot(),
 		IonicStorageModule.forRoot(),
 		GraphQLModule,
