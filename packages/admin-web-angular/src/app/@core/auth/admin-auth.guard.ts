@@ -5,8 +5,7 @@ import {
 	Router,
 	RouterStateSnapshot,
 } from '@angular/router';
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
+import { Apollo, gql } from 'apollo-angular';
 
 @Injectable()
 export class AdminAuthGuard implements CanActivate {

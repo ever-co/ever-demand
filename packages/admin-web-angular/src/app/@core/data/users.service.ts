@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import { Apollo, gql } from 'apollo-angular';
 import User from '@modules/server.common/entities/User';
 import { map, share } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import gql from 'graphql-tag';
 import IUser, {
 	IResponseGenerate1000Customers,
 } from '@modules/server.common/interfaces/IUser';

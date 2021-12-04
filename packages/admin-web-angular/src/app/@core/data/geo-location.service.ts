@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
-import { Apollo } from 'apollo-angular';
+import { Apollo, gql } from 'apollo-angular';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
 import { Observable } from 'rxjs';
-import gql from 'graphql-tag';
 import { map, share } from 'rxjs/operators';
 
 @Injectable()

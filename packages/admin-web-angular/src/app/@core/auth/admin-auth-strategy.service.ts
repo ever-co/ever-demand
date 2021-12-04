@@ -1,8 +1,7 @@
 import { Observable, from, of as observableOf } from 'rxjs';
 import { NbAuthResult, NbAuthStrategy } from '@nebular/auth';
 import { ActivatedRoute } from '@angular/router';
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
+import { Apollo, gql } from 'apollo-angular';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Store } from '../data/store.service';

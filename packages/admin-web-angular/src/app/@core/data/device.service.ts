@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
-import gql from 'graphql-tag';
 import { map, share, first } from 'rxjs/operators';
 import Device from '@modules/server.common/entities/Device';
 import { IDeviceRawObject } from '@modules/server.common/interfaces/IDevice';

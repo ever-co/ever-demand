@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
+import { Apollo, gql } from 'apollo-angular';
 import { map, share } from 'rxjs/operators';
 
 @Injectable()

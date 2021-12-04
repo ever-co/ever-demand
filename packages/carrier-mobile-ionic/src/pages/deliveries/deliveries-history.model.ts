@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from 'apollo-angular';
 import { OrderFragment } from '../../components/order-card/order/order.model';
 
 export const OrdersHistoryQuery = gql`
