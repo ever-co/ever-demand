@@ -98,7 +98,13 @@ if (isSSL) {
 	fs.writeFileSync(sslCertPath, sslCert);
 }
 
+// TODO: put to config
+const connectTimeoutMS: number = 40000;
+
+// NOTE: same settings are used in services.app.ts, we should unify both!
 const connectionSettings: TypeOrmModuleOptions = {
+	name: 'app',
+	// TODO: put this into settings (it's mongo only during testing of TypeORM integration!)
 	type: 'mongodb',
 	url: env.DB_URI,
 	ssl: isSSL,
@@ -112,8 +118,10 @@ const connectionSettings: TypeOrmModuleOptions = {
 	synchronize: true,
 	useNewUrlParser: true,
 	// autoReconnect: true,
+	connectTimeoutMS: connectTimeoutMS,
 	logging: true,
 	logger: 'file', //Removes console logging, instead logs all queries in a file ormlogs.log
+	useUnifiedTopology: true,
 };
 
 @Module({
