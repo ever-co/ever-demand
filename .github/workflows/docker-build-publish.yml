@@ -5,7 +5,6 @@ on:
         branches:
           - develop
           - master
-          - feature/packages-updates
 
 jobs:
     ever-api:
