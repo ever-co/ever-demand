@@ -2,9 +2,7 @@ import {
 	MiddlewareConsumer,
 	Module,
 	NestModule,
-	OnModuleInit,
-	HttpServer,
-	Inject,
+	OnModuleInit
 } from '@nestjs/common';
 import mongoose from 'mongoose';
 import { GraphQLSchema } from 'graphql';
@@ -87,9 +85,24 @@ export const EventHandlers = [];
 
 const entities = ServicesApp.getEntities();
 
+const isSSL = process.env.DB_SSL_MODE && process.env.DB_SSL_MODE !== 'false';
+
+let sslCert;
+
+if (isSSL) {
+	sslCert = process.env.DB_CA_CERT;
+}
+
 const connectionSettings: TypeOrmModuleOptions = {
 	type: 'mongodb',
 	url: env.DB_URI,
+	ssl: isSSL,
+	sslCert: isSSL ? sslCert : undefined,
+	host: process.env.DB_HOST || 'localhost',
+	username: process.env.DB_USER,
+	password: process.env.DB_PASS,
+	database: process.env.DB_NAME || 'ever_development',
+	port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 27017,
 	entities,
 	synchronize: true,
 	useNewUrlParser: true,

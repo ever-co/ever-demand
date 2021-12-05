@@ -123,12 +123,27 @@ export class ServicesApp {
 		// list of entities for which Repositories will be created in TypeORM
 		const entities = ServicesApp.getEntities();
 
+		const isSSL = process.env.DB_SSL_MODE && process.env.DB_SSL_MODE !== 'false';
+
+		let sslCert;
+
+        if (isSSL) {
+			sslCert = process.env.DB_CA_CERT;
+        }
+
 		const connectionSettings: ConnectionOptions =
 			{
 				name: 'typeorm',
 				// TODO: put this into settings (it's mongo only during testing of TypeORM integration!)
 				type: 'mongodb',
 				url: env.DB_URI,
+				ssl: isSSL,
+				sslCert: isSSL ? sslCert : undefined,
+				host: process.env.DB_HOST || 'localhost',
+				username: process.env.DB_USER,
+          		password: process.env.DB_PASS,
+          		database: process.env.DB_NAME || 'ever_development',
+				port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 27017,
 				entities,
 				synchronize: true,
 				useNewUrlParser: true,
@@ -137,6 +152,7 @@ export class ServicesApp {
 				// poolSize: ServicesApp._poolSize,
 				connectTimeoutMS: ServicesApp._connectTimeoutMS,
 				logging: true,
+				logger: 'file', //Removes console logging, instead logs all queries in a file ormlogs.log
 				useUnifiedTopology: true,
 			};
 

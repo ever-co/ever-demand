@@ -28,8 +28,15 @@ jobs:
 
             - name: Apply k8s manifests changes in DigitalOcean k8s cluster (if any)
               run: |
-                  export DB_HOST=yoyoyoyo
                   envsubst < $GITHUB_WORKSPACE/.deploy/k8s/k8s-manifest.demo.yaml | kubectl --context do-sfo2-k8s-ever apply -f -
+              env:
+                DB_URI: ${{ secrets.DB_URI }}
+                DB_HOST: ${{ secrets.DB_HOST }}
+                DB_USER: ${{ secrets.DB_USER }}
+                DB_PASS: ${{ secrets.DB_PASS }}
+                DB_NAME: 'ever_demo'
+                DB_CA_CERT: ${{ secrets.DB_CA_CERT }}
+                DB_SSL_MODE: 'true'
 
             # we need this step because for now we just use :latest tag
             # note: for production we will use different strategy later
