@@ -79,7 +79,7 @@ FROM node:16-alpine3.11 AS build
 
 WORKDIR /srv/ever
 
-RUN mkdir dist
+RUN mkdir www
 
 COPY --chown=node:node --from=development /srv/ever .
 
