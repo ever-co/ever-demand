@@ -36,6 +36,7 @@ ARG SETTINGS_MAINTENANCE_API_URL
 FROM node:16-alpine3.11 AS dependencies
 
 LABEL maintainer="ever@ever.co"
+LABEL org.opencontainers.image.source https://github.com/ever-co/ever-demand
 
 ENV CI=true
 

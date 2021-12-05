@@ -21,6 +21,7 @@ ARG PORT
 FROM node:16-alpine3.11 AS dependencies
 
 LABEL maintainer="ever@ever.co"
+LABEL org.opencontainers.image.source https://github.com/ever-co/ever-demand
 
 ENV CI=true
 
@@ -138,4 +139,4 @@ EXPOSE ${PORT} 5501 5050 5555 27017 28017
 ENTRYPOINT [ "./entrypoint.prod.sh" ]
 
 # CMD [ "pm2-runtime", "main.js" ]
-CMD [ "node", "packages/core/build/src/main.js" ]
+CMD [ "node", "packages/core/build/main.js" ]
