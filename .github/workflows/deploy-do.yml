@@ -28,7 +28,8 @@ jobs:
 
             - name: Apply k8s manifests changes in DigitalOcean k8s cluster (if any)
               run: |
-                  kubectl --context do-sfo2-k8s-ever apply -f $GITHUB_WORKSPACE/.deploy/k8s/k8s-manifest.demo.yaml
+                  export DB_HOST=yoyoyoyo
+                  envsubst < $GITHUB_WORKSPACE/.deploy/k8s/k8s-manifest.demo.yaml | kubectl --context do-sfo2-k8s-ever apply -f -
 
             # we need this step because for now we just use :latest tag
             # note: for production we will use different strategy later

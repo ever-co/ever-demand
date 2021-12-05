@@ -92,21 +92,6 @@ RUN npm install cross-env -g \
 	&& touch ormlogs.log && chown node:node ormlogs.log \
 	&& chown node:node wait && chmod +x wait
 
-# Temporary install MongoDB inside container
-RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.14/main' >> /etc/apk/repositories
-RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.14/community' >> /etc/apk/repositories
-RUN apk update
-RUN apk add --no-cache mongodb
-
-RUN mkdir /data
-RUN cd /data && mkdir db
-
-RUN chown -R mongodb /data/db
-RUN chmod -R a+wxr /data
-RUN chown -R node:node /data
-
-VOLUME /data/db
-
 RUN mkdir tmp && cd tmp && mkdir logs && cd /srv/ever && chown -R node:node tmp/logs
 
 USER node:node
