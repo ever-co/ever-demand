@@ -1,3 +1,4 @@
+import fs from 'fs';
 import {
 	MiddlewareConsumer,
 	Module,
@@ -87,19 +88,20 @@ const entities = ServicesApp.getEntities();
 
 const isSSL = process.env.DB_SSL_MODE && process.env.DB_SSL_MODE !== 'false';
 
-let sslCert;
+let sslCertPath = 'ca-certificate.crt';
 
 if (isSSL) {
 	const base64data = process.env.DB_CA_CERT;
 	const buff = Buffer.from(base64data, 'base64');
-	sslCert = buff.toString('ascii');
+	const sslCert = buff.toString('ascii');
+	fs.writeFileSync(sslCertPath, sslCert);
 }
 
 const connectionSettings: TypeOrmModuleOptions = {
 	type: 'mongodb',
 	url: env.DB_URI,
 	ssl: isSSL,
-	sslCA: isSSL ? [sslCert] : undefined,
+	sslCA: isSSL ? [sslCertPath] : undefined,
 	host: process.env.DB_HOST || 'localhost',
 	username: process.env.DB_USER,
 	password: process.env.DB_PASS,
@@ -110,6 +112,7 @@ const connectionSettings: TypeOrmModuleOptions = {
 	useNewUrlParser: true,
 	// autoReconnect: true,
 	logging: true,
+	logger: 'file', //Removes console logging, instead logs all queries in a file ormlogs.log
 };
 
 @Module({

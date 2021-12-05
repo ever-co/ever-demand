@@ -1,9 +1,9 @@
+import fs from 'fs';
 import { inject, injectable, multiInject } from 'inversify';
 import https from 'https';
 import http from 'http';
 import path from 'path';
 import pem from 'pem';
-import fs from 'fs';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import passport from 'passport';
@@ -11,7 +11,7 @@ import methodOverride from 'method-override';
 import errorhandler from 'errorhandler';
 import socketIO from 'socket.io';
 import express from 'express';
-import mongoose, { ConnectOptions } from 'mongoose';
+import mongoose from 'mongoose';
 import morgan from 'morgan';
 import exphbs from 'express-handlebars';
 import { createEverLogger } from '../helpers/Log';
@@ -125,12 +125,13 @@ export class ServicesApp {
 
 		const isSSL = process.env.DB_SSL_MODE && process.env.DB_SSL_MODE !== 'false';
 
-		let sslCert;
+		let sslCertPath = 'ca-certificate.crt';
 
         if (isSSL) {
 			const base64data = process.env.DB_CA_CERT;
 			const buff = Buffer.from(base64data, 'base64');
-			sslCert = buff.toString('ascii');
+			const sslCert = buff.toString('ascii');
+			fs.writeFileSync(sslCertPath, sslCert);
 		}
 
 		const connectionSettings: ConnectionOptions =
@@ -140,7 +141,7 @@ export class ServicesApp {
 				type: 'mongodb',
 				url: env.DB_URI,
 				ssl: isSSL,
-				sslCA: isSSL ? [sslCert] : undefined,
+				sslCA: isSSL ? [sslCertPath] : undefined,
 				host: process.env.DB_HOST || 'localhost',
 				username: process.env.DB_USER,
           		password: process.env.DB_PASS,
