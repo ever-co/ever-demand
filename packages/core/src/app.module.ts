@@ -90,7 +90,9 @@ const isSSL = process.env.DB_SSL_MODE && process.env.DB_SSL_MODE !== 'false';
 let sslCert;
 
 if (isSSL) {
-	sslCert = process.env.DB_CA_CERT;
+	const base64data = process.env.DB_CA_CERT;
+	const buff = Buffer.from(base64data, 'base64');
+	sslCert = buff.toString('ascii');
 }
 
 const connectionSettings: TypeOrmModuleOptions = {
