@@ -18,7 +18,7 @@ ARG DEMO
 ARG HOST
 ARG PORT
 
-FROM node:16-alpine3.11 AS dependencies
+FROM node:16-alpine3.14 AS dependencies
 
 LABEL maintainer="ever@ever.co"
 LABEL org.opencontainers.image.source https://github.com/ever-co/ever-demand
@@ -50,7 +50,7 @@ COPY --chown=node:node packages/core/.snyk ./packages/core/.snyk
 
 RUN yarn bootstrap && yarn cache clean
 
-FROM node:16-alpine3.11 AS development
+FROM node:16-alpine3.14 AS development
 
 USER node:node
 
@@ -60,7 +60,7 @@ COPY --chown=node:node --from=dependencies /wait /entrypoint.compose.sh /entrypo
 COPY --chown=node:node --from=dependencies /srv/ever .
 COPY . .
 
-FROM node:16-alpine3.11 AS build
+FROM node:16-alpine3.14 AS build
 
 WORKDIR /srv/ever
 
@@ -76,7 +76,7 @@ ENV IS_DOCKER=true
 
 RUN yarn build:server
 
-FROM node:16-alpine3.11 AS production
+FROM node:16-alpine3.14 AS production
 
 WORKDIR /srv/ever
 
@@ -93,8 +93,8 @@ RUN npm install cross-env -g \
 	&& chown node:node wait && chmod +x wait
 
 # Temporary install MongoDB inside container
-RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/main' >> /etc/apk/repositories
-RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/community' >> /etc/apk/repositories
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.14/main' >> /etc/apk/repositories
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.14/community' >> /etc/apk/repositories
 RUN apk update
 RUN apk add --no-cache mongodb
 

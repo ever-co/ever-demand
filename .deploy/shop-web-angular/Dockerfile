@@ -17,7 +17,7 @@ ARG DEMO
 ARG WEB_HOST
 ARG WEB_PORT
 
-FROM node:16-alpine3.11 AS dependencies
+FROM node:16-alpine3.14 AS dependencies
 
 LABEL maintainer="ever@ever.co"
 LABEL org.opencontainers.image.source https://github.com/ever-co/ever-demand
@@ -50,7 +50,7 @@ COPY --chown=node:node packages/common-angular/package.json ./packages/common-an
 
 RUN yarn bootstrap && yarn cache clean
 
-FROM node:16-alpine3.11 AS development
+FROM node:16-alpine3.14 AS development
 
 USER node:node
 
@@ -60,7 +60,7 @@ COPY --chown=node:node --from=dependencies /wait /entrypoint.compose.sh /entrypo
 COPY --chown=node:node --from=dependencies /srv/ever .
 COPY . .
 
-FROM node:16-alpine3.11 AS build
+FROM node:16-alpine3.14 AS build
 
 WORKDIR /srv/ever
 

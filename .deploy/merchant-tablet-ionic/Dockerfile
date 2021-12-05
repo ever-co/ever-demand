@@ -33,7 +33,7 @@ ARG HTTPS_SERVICES_ENDPOINT
 ARG SETTINGS_APP_TYPE
 ARG SETTINGS_MAINTENANCE_API_URL
 
-FROM node:16-alpine3.11 AS dependencies
+FROM node:16-alpine3.14 AS dependencies
 
 LABEL maintainer="ever@ever.co"
 LABEL org.opencontainers.image.source https://github.com/ever-co/ever-demand
@@ -66,7 +66,7 @@ COPY --chown=node:node packages/common-angular/package.json ./packages/common-an
 
 RUN yarn bootstrap && yarn cache clean
 
-FROM node:16-alpine3.11 AS development
+FROM node:16-alpine3.14 AS development
 
 USER node:node
 
@@ -76,7 +76,7 @@ COPY --chown=node:node --from=dependencies /wait /entrypoint.compose.sh /entrypo
 COPY --chown=node:node --from=dependencies /srv/ever .
 COPY . .
 
-FROM node:16-alpine3.11 AS build
+FROM node:16-alpine3.14 AS build
 
 WORKDIR /srv/ever
 
@@ -122,7 +122,7 @@ ENV IS_DOCKER=true
 
 RUN yarn build:merchant
 
-FROM node:16-alpine3.11 AS production
+FROM nginx:alpine AS production
 
 # USER nginx:nginx
 
