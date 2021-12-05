@@ -125,7 +125,10 @@ export class ServicesApp {
 
 		const isSSL = process.env.DB_SSL_MODE && process.env.DB_SSL_MODE !== 'false';
 
-		let sslCertPath = 'ca-certificate.crt';
+		// let's temporary save Cert in ./tmp/logs folder because we have write access to it
+		let sslCertPath = `${env.LOGS_PATH}/ca-certificate.crt`;
+
+		console.log(`Using temp SSL Cert Path: ${sslCertPath}`);
 
         if (isSSL) {
 			const base64data = process.env.DB_CA_CERT;
