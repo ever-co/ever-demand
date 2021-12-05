@@ -99,7 +99,7 @@ const connectionSettings: TypeOrmModuleOptions = {
 	type: 'mongodb',
 	url: env.DB_URI,
 	ssl: isSSL,
-	sslCert: isSSL ? sslCert : undefined,
+	sslCA: isSSL ? [sslCert] : undefined,
 	host: process.env.DB_HOST || 'localhost',
 	username: process.env.DB_USER,
 	password: process.env.DB_PASS,
