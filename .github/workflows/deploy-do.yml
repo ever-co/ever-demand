@@ -3,12 +3,9 @@ name: Deploy to DigitalOcean
 on:
     workflow_run:
         workflows: ['Build and Publish Docker Images']
-        branches:
-          - develop
-          - master
-          - feature/packages-updates
+        branches: ['develop', 'master', 'feature/packages-updates']
         types:
-            - completed
+          - completed
 
 jobs:
     deploy-do:
