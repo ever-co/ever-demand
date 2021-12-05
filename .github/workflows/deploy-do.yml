@@ -39,3 +39,7 @@ jobs:
               run: |
                   kubectl --context do-sfo2-k8s-ever rollout restart deployment/ever-demo-api
                   kubectl --context do-sfo2-k8s-ever rollout restart deployment/ever-demo-admin
+                  kubectl --context do-sfo2-k8s-ever rollout restart deployment/ever-demo-carrier-mobile-ionic
+                  kubectl --context do-sfo2-k8s-ever rollout restart deployment/ever-demo-shop-mobile-ionic
+                  kubectl --context do-sfo2-k8s-ever rollout restart deployment/ever-demo-merchant-tablet-ionic
+                  kubectl --context do-sfo2-k8s-ever rollout restart deployment/ever-demo-shop-web-angular
