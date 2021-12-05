@@ -5,12 +5,11 @@ import { ToasterService } from 'angular2-toaster';
 import { BasicInfoFormComponent } from '../forms/basic-info';
 import { LocationFormComponent } from '../../forms/location';
 import { UserAuthRouter } from '@modules/client.common.angular2/routers/user-auth-router.service';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'ea-user-mutation',
 	templateUrl: './user-mutation.component.html',
-	styleUrls: ['/user-mutation.component.scss'],
+	styleUrls: ['./user-mutation.component.scss'],
 })
 export class UserMutationComponent {
 	@ViewChild('basicInfoForm')
@@ -22,10 +21,6 @@ export class UserMutationComponent {
 	mapTypeEmitter = new EventEmitter<string>();
 	mapCoordEmitter = new EventEmitter<number[]>();
 	mapGeometryEmitter = new EventEmitter<any>();
-
-	public BUTTON_DONE: string = 'BUTTON_DONE';
-	public BUTTON_NEXT: string = 'BUTTON_NEXT';
-	public BUTTON_PREV: string = 'BUTTON_PREV';
 
 	readonly form: FormGroup = this.formBuilder.group({
 		basicInfo: BasicInfoFormComponent.buildForm(this.formBuilder),
@@ -43,21 +38,8 @@ export class UserMutationComponent {
 		protected readonly userAuthRouter: UserAuthRouter,
 		private readonly toasterService: ToasterService,
 		private readonly activeModal: NgbActiveModal,
-		private readonly formBuilder: FormBuilder,
-		private readonly translateService: TranslateService
+		private readonly formBuilder: FormBuilder
 	) {}
-
-	get buttonDone() {
-		return this._translate(this.BUTTON_DONE);
-	}
-
-	get buttonNext() {
-		return this._translate(this.BUTTON_NEXT);
-	}
-
-	get buttonPrevious() {
-		return this._translate(this.BUTTON_PREV);
-	}
 
 	onCoordinatesChanges(coords: number[]) {
 		this.mapCoordEmitter.emit(coords);
@@ -103,15 +85,5 @@ export class UserMutationComponent {
 
 	cancel() {
 		this.activeModal.dismiss('canceled');
-	}
-
-	private _translate(key: string): string {
-		let translationResult = '';
-
-		this.translateService.get(key).subscribe((res) => {
-			translationResult = res;
-		});
-
-		return translationResult;
 	}
 }

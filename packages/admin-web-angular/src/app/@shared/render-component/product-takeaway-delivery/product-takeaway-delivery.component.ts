@@ -16,7 +16,7 @@ import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 			<div>
 				<nb-checkbox
 					[(ngModel)]="isDelivery"
-					(checkedChange)="isDeliveryChange($event)"
+					(checkedChange)="isDeliveryChange()"
 					>{{
 						'WAREHOUSE_VIEW.PRODUCTS_TAB.DELIVERY' | translate
 					}}</nb-checkbox
@@ -25,7 +25,7 @@ import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 			<div>
 				<nb-checkbox
 					[(ngModel)]="isTakeaway"
-					(checkedChange)="isTakeawayChange($event)"
+					(checkedChange)="isTakeawayChange()"
 					>{{
 						'WAREHOUSE_VIEW.PRODUCTS_TAB.TAKEAWAY' | translate
 					}}</nb-checkbox

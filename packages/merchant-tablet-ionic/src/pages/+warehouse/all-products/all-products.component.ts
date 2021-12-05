@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { WarehouseProductsService } from '../../../services/warehouse-products.service';
 import { Subscription } from 'rxjs';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
@@ -6,6 +6,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 import { NgxMasonryOptions } from 'ngx-masonry';
 import { ModalController } from '@ionic/angular';
+import IWarehouseProduct from '@modules/server.common/interfaces/IWarehouseProduct';
 
 @Component({
 	selector: 'merchant-all-products',
@@ -20,19 +21,19 @@ export class AllProductsComponent implements OnInit, OnDestroy {
 	presentCreateProductPopover: () => void;
 
 	@Input()
-	addProduct: (string) => void;
+	addProduct: (id: string) => void;
 
 	@Input()
-	getWarehouseProductImageUrl: () => void;
+	getWarehouseProductImageUrl: (url: any) => void;
 
 	@Input()
-	openEditProductModal: () => void;
+	openEditProductModal: (warehouseProduct: IWarehouseProduct) => void;
 
 	@Input()
-	truncateTitle: () => void;
+	truncateTitle: (title: any) => void;
 
 	@Input()
-	localeTranslate: () => void;
+	localeTranslate: (title: any) => void;
 
 	private products$: Subscription;
 
@@ -41,7 +42,8 @@ export class AllProductsComponent implements OnInit, OnDestroy {
 	public masonryOptions: NgxMasonryOptions = {
 		itemSelector: '.masonry-item',
 		columnWidth: 234,
-		transitionDuration: '0.2s',
+		// transitionDuration option not supported
+		// transitionDuration: '0.2s',
 		gutter: 10,
 		resize: true,
 		initLayout: true,

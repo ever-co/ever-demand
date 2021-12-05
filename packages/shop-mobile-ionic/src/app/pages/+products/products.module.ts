@@ -11,7 +11,7 @@ import { ProductsPageGuard } from './products.page.guard';
 import { OrderModuleGuard } from './+order/order.module.guard';
 import { WarehouseLogoModule } from '../../components/warehouse-logo/warehouse-logo.module';
 import { ProductsViewComponent } from './products-view/products-view.component';
-import { NgProgressModule } from '@ngx-progressbar/core';
+import { NgProgressModule } from 'ngx-progressbar';
 import { OrderPageModule } from './+order/order.module';
 import { CancelPageModule } from './+order/+cancel/cancel.module';
 import { GeoLocationService } from '../../services/geo-location';

@@ -44,6 +44,6 @@
 	</nb-card-body>
 
 	<nb-card-footer *ngIf="showCode">
-		<pre><code highlight [language]="['json']" [code]="user | json"></code></pre>
+		<pre><code [highlight]="user | json" [languages]="['json']"></code></pre>
 	</nb-card-footer>
 </nb-card>

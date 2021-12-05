@@ -1,4 +1,4 @@
-import { Query, ResolveProperty, Resolver, Mutation } from '@nestjs/graphql';
+import { Query, ResolveField, Resolver, Mutation } from '@nestjs/graphql';
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import CarriersService from '../../services/carriers/CarriersService';
 import Order from '@modules/server.common/entities/Order';
@@ -14,9 +14,10 @@ import { UsersService } from '../../services/users';
 import IProduct from '@modules/server.common/interfaces/IProduct';
 import { ProductsService } from '../../services/products';
 import Product from '@modules/server.common/entities/Product';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { ObjectId } from 'bson';
 import { FakeOrdersService } from '../../services/fake-data/FakeOrdersService';
+import { firstValueFrom } from 'rxjs';
 
 @Resolver('Order')
 export class OrderResolver {
@@ -612,7 +613,9 @@ export class OrderResolver {
 
 	@Query('getOrder')
 	async getOrder(_context, { id }: { id: string }): Promise<Order> {
-		return this._ordersService.get(id).pipe(first()).toPromise();
+		return firstValueFrom(
+			this._ordersService.get(id)
+		);
 	}
 
 	@Query('orders')
@@ -742,7 +745,7 @@ export class OrderResolver {
 		return this._ordersService.payWithStripe(orderId, cardId);
 	}
 
-	@ResolveProperty('carrier')
+	@ResolveField('carrier')
 	async getCarrier(_order: IOrder): Promise<Carrier> {
 		const order = new Order(_order);
 
@@ -754,7 +757,7 @@ export class OrderResolver {
 					.toPromise();
 	}
 
-	@ResolveProperty('warehouse')
+	@ResolveField('warehouse')
 	async getWarehouse(_order: IOrder): Promise<Warehouse> {
 		const order = new Order(_order);
 

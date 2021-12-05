@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ThemeModule, HttpLoaderFactory } from '@app/@theme';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
+import { ThemeModule } from '@app/@theme';
+import { TranslateModule } from '@app/@shared/translate/translate.module';
 import { ProductsTableComponent } from './products-table.component';
 import { ToasterModule } from 'angular2-toaster';
 import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
@@ -16,14 +15,7 @@ const COMPONENTS = [ProductsTableComponent];
 		CommonModule,
 		ThemeModule,
 		ToasterModule.forChild(),
-		TranslateModule.forChild({
-			loader: {
-				provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
-				deps: [HttpClient],
-			},
-		}),
-
+		TranslateModule,
 		NbSpinnerModule,
 		ConfirmationModalModule,
 		WarehouseProductFormsModule,

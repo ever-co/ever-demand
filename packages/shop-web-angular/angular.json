@@ -67,18 +67,18 @@
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"options": {
-						"browserTarget": "ever-admin:build"
+						"browserTarget": "ever-shop-web:build"
 					},
 					"configurations": {
 						"production": {
-							"browserTarget": "ever-admin:build:production"
+							"browserTarget": "ever-shop-web:build:production"
 						}
 					}
 				},
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
 					"options": {
-						"browserTarget": "ever-admin:build"
+						"browserTarget": "ever-shop-web:build"
 					}
 				},
 				"test": {
@@ -116,7 +116,7 @@
 				}
 			}
 		},
-		"ever-admin-e2e": {
+		"ever-shop-web-e2e": {
 			"root": "",
 			"sourceRoot": "",
 			"projectType": "application",
@@ -125,7 +125,7 @@
 					"builder": "@angular-devkit/build-angular:protractor",
 					"options": {
 						"protractorConfig": "./protractor.conf.js",
-						"devServerTarget": "ever-admin:serve"
+						"devServerTarget": "ever-shop-web:serve"
 					}
 				},
 				"lint": {

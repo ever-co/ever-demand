@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IWarehouseProductCreateObject } from '@modules/server.common/interfaces/IWarehouseProduct';
-import faker from 'faker';
-import _ from 'lodash';
+import * as faker from 'faker';
+import { random } from 'underscore';
 
 enum IsDeliveryTakeawayStatus {
 	Takeaway = 0,
@@ -41,7 +41,7 @@ export default class FakeDataWarehousesProducts {
 			price,
 			isCarrierRequired: true,
 			isManufacturing: true,
-			count: faker.random.number({ min: 1, max: 10 }),
+			count: faker.datatype.number({ min: 1, max: 10 }),
 			isDeliveryRequired: currentTakeawayDeliveryState.isDeliveryRequired,
 			isTakeaway: currentTakeawayDeliveryState.isTakeAway,
 		};
@@ -55,7 +55,7 @@ export default class FakeDataWarehousesProducts {
 
 				return {
 					product: id,
-					initialPrice: price + _.random(20),
+					initialPrice: price + random(20),
 					price,
 					isCarrierRequired: true,
 					isManufacturing: true,
@@ -71,7 +71,7 @@ export default class FakeDataWarehousesProducts {
 	}
 
 	private get getRandomPrice(): number {
-		return 5 + faker.random.number(150);
+		return 5 + faker.datatype.number(150);
 	}
 
 	private _setNextWarehouseProductIsDeliveryTakeawayStatus() {

@@ -8,7 +8,6 @@ import {
 	Validators,
 } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import 'rxjs/operators/map';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import User from '@modules/server.common/entities/User';

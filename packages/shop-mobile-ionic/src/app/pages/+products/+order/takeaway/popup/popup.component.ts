@@ -33,6 +33,7 @@ export class OrderTakeawayInfoPopup implements OnInit, OnDestroy {
 	paymentsEnabled: boolean = true;
 	inStore: boolean;
 	showProducts: boolean = true;
+	listView: string;
 
 	private _pageSubscriptions: Subscription[] = [];
 

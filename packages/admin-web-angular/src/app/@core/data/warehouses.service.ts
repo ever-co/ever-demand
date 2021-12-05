@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import { Apollo, gql } from 'apollo-angular';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { map, share } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import gql from 'graphql-tag';
 import IWarehouse from '@modules/server.common/interfaces/IWarehouse';
 import IWarehouseProductCreateObject from '@modules/server.common/interfaces/IWarehouseProduct';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';

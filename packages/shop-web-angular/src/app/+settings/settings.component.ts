@@ -14,7 +14,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	public dir: 'ltr' | 'rtl';
 
 	constructor(
-		private translateService: TranslateService,
+		public readonly translateService: TranslateService,
 		@Inject(DOCUMENT) public document: Document
 	) {
 		this.defaultLanguage = environment['DEFAULT_LANGUAGE'];

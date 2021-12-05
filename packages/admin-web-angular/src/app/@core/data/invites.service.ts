@@ -1,8 +1,7 @@
-import { Apollo } from 'apollo-angular';
+import { Apollo, gql } from 'apollo-angular';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import Invite from '@modules/server.common/entities/Invite';
-import gql from 'graphql-tag';
 import { map, share } from 'rxjs/operators';
 import {
 	IInviteUpdateObject,

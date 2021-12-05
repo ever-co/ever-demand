@@ -4,7 +4,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsCategoryService } from '../../../@core/data/productsCategory.service';
 import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import { CategoryCreateComponent } from '../../../@shared/product/categories/category-create/category-create.component';
-import { Subject } from 'rxjs';
+import { firstValueFrom, Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CategoriesTableComponent } from '../../../@shared/product/categories/categories-table/categories-table.component';
 import { NotifyService } from '@app/@core/services/notify/notify.service';
@@ -12,7 +12,7 @@ import { NotifyService } from '@app/@core/services/notify/notify.service';
 @Component({
 	selector: 'ea-categories',
 	templateUrl: './categories.component.html',
-	styleUrls: ['/categories.component.scss'],
+	styleUrls: ['./categories.component.scss'],
 })
 export class CategoriesComponent implements OnDestroy {
 	@ViewChild('categoriesTable', { static: true })
@@ -32,7 +32,7 @@ export class CategoriesComponent implements OnDestroy {
 		this._loadDataSmartTable();
 	}
 
-	protected get hasSelectedCategories(): boolean {
+	public get hasSelectedCategories(): boolean {
 		return this.categoriesTable.hasSelectedCategories;
 	}
 
@@ -53,10 +53,9 @@ export class CategoriesComponent implements OnDestroy {
 
 		try {
 			this.loading = true;
-			await this._productsCategoryService
-				.removeByIds(idsArray)
-				.pipe()
-				.toPromise();
+			await firstValueFrom(
+				this._productsCategoryService.removeByIds(idsArray).pipe()
+			);
 			this.loading = false;
 			const message = `Selected are removed!`;
 			this._notifyService.success(message);

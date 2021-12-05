@@ -1,14 +1,22 @@
 {
 	"folders": [
 		{
-			"path": "packages"
+			"path": "apps"
+		},
+		{
+			"path": "libs"
 		}
 	],
 	"settings": {
 		"typescript.tsdk": "./node_modules/typescript/lib",
-		"debug.node.autoAttach": "on",
+		"debug.node.autoAttach": "off",
 		"search.usePCRE2": true,
 		"git.ignoreLimitWarning": true,
+		"checkpoints.showActiveFileOnly": true,
+		"deepscan.enable": true,
+		"cSpell.words": [
+			"toastr"
+		],
 		"vsicons.presets.nestjs": true
 	}
 }

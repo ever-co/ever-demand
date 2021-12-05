@@ -7,7 +7,7 @@ import {
 import OrderStatus from '@modules/server.common/enums/OrderStatus';
 import Order from '@modules/server.common/entities/Order';
 import Warehouse from '@modules/server.common/entities/Warehouse';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { Store } from '../../../services/store.service';
 import { environment } from '../../../environments/environment';
 import Carrier from '@modules/server.common/entities/Carrier';

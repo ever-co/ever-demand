@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
+import { Apollo, gql } from 'apollo-angular';
 import { map, share } from 'rxjs/operators';
 import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
 
@@ -8,14 +7,14 @@ import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
 export class GeoLocationsMerchantsService {
 	constructor(private readonly _apollo: Apollo) {}
 
-	getCoseMerchants(geoLocation: { loc: ILocation }) {
+	getCloseMerchants(geoLocation: { loc: ILocation }) {
 		return this._apollo
 			.query({
 				query: gql`
-					query GetCoseMerchants(
+					query getCloseMerchants(
 						$geoLocation: GeoLocationFindInput!
 					) {
-						getCoseMerchants(geoLocation: $geoLocation) {
+						getCloseMerchants(geoLocation: $geoLocation) {
 							id
 							username
 							name
@@ -26,7 +25,7 @@ export class GeoLocationsMerchantsService {
 				variables: { geoLocation },
 			})
 			.pipe(
-				map((res) => res.data['getCoseMerchants']),
+				map((res) => res.data['getCloseMerchants']),
 				share()
 			);
 	}

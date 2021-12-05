@@ -1,7 +1,5 @@
 import {
 	Component,
-	Output,
-	EventEmitter,
 	OnInit,
 	OnDestroy,
 } from '@angular/core';
@@ -11,9 +9,8 @@ import { ToasterService } from 'angular2-toaster';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfimationModalComponent } from '@app/@shared/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from '@app/@shared/confirmation-modal/confirmation-modal.component';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
-import { root } from 'rxjs/internal/util/root';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -55,7 +52,6 @@ export class StoreOrderProductAmountComponent
 	ngOnInit() {
 		this.productID = this.rowData.product.id;
 		this.storeID = this.rowData.storeId;
-		this.storeID = this.rowData.storeId;
 		this.productAmount = this.value;
 		this.productTitle = this.localeTranslate(this.rowData.product.title);
 		this.orderId = this.rowData.orderId;
@@ -79,14 +75,14 @@ export class StoreOrderProductAmountComponent
 	async addProduct() {
 		if (this.availableProducts > 0) {
 			const activeModal = this.modalService.open(
-				ConfimationModalComponent,
+				ConfirmationModalComponent,
 				{
 					size: 'sm',
 					container: 'nb-layout',
 					backdrop: 'static',
 				}
 			);
-			const modalComponent: ConfimationModalComponent =
+			const modalComponent: ConfirmationModalComponent =
 				activeModal.componentInstance;
 
 			modalComponent.mainText = 'ARE_YOU_SURE_YOU_WANT_TO_INCREASE';
@@ -132,14 +128,14 @@ export class StoreOrderProductAmountComponent
 	async removeProduct() {
 		if (this.productAmount >= 1) {
 			const activeModal = this.modalService.open(
-				ConfimationModalComponent,
+				ConfirmationModalComponent,
 				{
 					size: 'sm',
 					container: 'nb-layout',
 					backdrop: 'static',
 				}
 			);
-			const modalComponent: ConfimationModalComponent =
+			const modalComponent: ConfirmationModalComponent =
 				activeModal.componentInstance;
 
 			modalComponent.mainText = 'ARE_YOU_SURE_YOU_WANT_TO_DECREASE';

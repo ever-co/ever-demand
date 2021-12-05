@@ -20,7 +20,7 @@ import { Subscription } from 'rxjs';
 })
 export class AllOrdersComponent implements OnInit, OnDestroy, OnChanges {
 	@Input()
-	getWarehouseStatus: () => void;
+	getWarehouseStatus: (status: any) => void;
 
 	@Input()
 	onUpdateWarehouseStatus: any;

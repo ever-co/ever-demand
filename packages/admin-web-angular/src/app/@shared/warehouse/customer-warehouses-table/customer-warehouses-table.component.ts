@@ -29,8 +29,8 @@ export class CustomerWarehousesTableComponent
 	@Input()
 	selectWarehouseTmp: (ev) => void;
 
-	protected settingsSmartTable: any;
-	protected sourceSmartTable = new LocalDataSource();
+	public settingsSmartTable: any;
+	public sourceSmartTable = new LocalDataSource();
 
 	private _ngDestroy$ = new Subject<void>();
 

@@ -22,7 +22,7 @@ const COMPONENTS = [
 		ThemeModule,
 		ToasterModule,
 		TranslateModule.forChild(),
-		HighlightModule.forRoot({ theme: 'github' }),
+		HighlightModule,
 		Ng2SmartTableModule,
 		WarehouseTableModule,
 	],

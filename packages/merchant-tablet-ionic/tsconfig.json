@@ -31,18 +31,25 @@
 		"noUnusedLocals": false,
 		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"]
 	},
+	"files": [
+        "src/main.ts",
+        "src/polyfills.ts"
+    ],
 	"include": [
-		"src/**/*.ts",
+		"src/**/*d.ts",
 		"./*.ts",
-		"../common/**/*.ts",
-		"../common-angular/**/*.ts"
+		"../common/**/*d.ts",
+		"../common-angular/**/*d.ts"
 	],
-	"exclude": ["node_modules", "src/**/*.spec.ts", "src/**/__tests__/*.ts"],
+	"exclude": [
+		"node_modules",
+		"src/**/*.spec.ts",
+		"src/**/__tests__/*.ts"
+	],
 	"atom": {
 		"rewriteTsconfig": false
 	},
 	"angularCompilerOptions": {
-		"enableIvy": false,
 		"preserveWhitespaces": false,
 		"strictInjectionParameters": true,
 		"fullTemplateTypeCheck": true,

@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import Logger from 'bunyan';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import Utils from '@modules/server.common/utils';
 import { createEverLogger } from '../../helpers/Log';
 import { WarehousesService } from '../warehouses';
@@ -18,7 +18,7 @@ import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 import IGeoLocationWarehousesRouter from '@modules/server.common/routers/IGeoLocationWarehousesRouter';
 import IService from '../IService';
 import { ExistenceEventType } from '@pyro/db-server';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { concat, exhaustMap, filter, share } from 'rxjs/operators';
 
 @injectable()

@@ -8,7 +8,6 @@ import { WarehousesService } from '../../@core/data/warehouses.service';
 import { OrdersService } from '../../@core/data/orders.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { Observable, forkJoin, Subject } from 'rxjs';
-import _ from 'lodash';
 import { takeUntil } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
 import { WarehouseViewModel } from '../../models/WarehouseViewModel';
@@ -17,7 +16,7 @@ import { RedirectNameComponent } from '../../@shared/render-component/name-redir
 import { WarehouseActionsComponent } from '../../@shared/render-component/warehouse-table/warehouse-actions/warehouse-actions.component';
 import { WarehouseImageComponent } from '../../@shared/render-component/warehouse-table/warehouse-image/warehouse-image.component';
 import { WarehouseOrdersNumberComponent } from '../../@shared/render-component/warehouse-table/warehouse-orders-number/warehouse-orders-number.component';
-import { ConfimationModalComponent } from '../../@shared/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from '../../@shared/confirmation-modal/confirmation-modal.component';
 import { WarehouseEmailComponent } from '../../@shared/render-component/warehouse-table/warehouse-email/warehouse-email.component';
 import { WarehousePhoneComponent } from '../../@shared/render-component/warehouse-table/warehouse-phone/warehouse-phone.component';
 
@@ -33,8 +32,8 @@ export class WarehousesComponent implements AfterViewInit, OnDestroy {
 
 	private ngDestroy$ = new Subject<void>();
 
-	protected settingsSmartTable: object;
-	protected sourceSmartTable = new LocalDataSource();
+	public settingsSmartTable: object;
+	public sourceSmartTable = new LocalDataSource();
 
 	private _selectedWarehouses: WarehouseViewModel[] = [];
 
@@ -80,12 +79,12 @@ export class WarehousesComponent implements AfterViewInit, OnDestroy {
 	}
 
 	async deleteSelectedRows() {
-		const activeModal = this.modalService.open(ConfimationModalComponent, {
+		const activeModal = this.modalService.open(ConfirmationModalComponent, {
 			size: 'sm',
 			container: 'nb-layout',
 			backdrop: 'static',
 		});
-		const modalComponent: ConfimationModalComponent =
+		const modalComponent: ConfirmationModalComponent =
 			activeModal.componentInstance;
 
 		await modalComponent.confirmEvent

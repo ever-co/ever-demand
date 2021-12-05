@@ -19,7 +19,7 @@ import { ProductCategoriesComponent } from '../../../render-component/product-ca
 import { ProductsCategoryService } from '../../../../@core/data/productsCategory.service';
 import { NotifyService } from '@app/@core/services/notify/notify.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfimationModalComponent } from '../../../confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from '../../../confirmation-modal/confirmation-modal.component';
 import { ProductCheckboxComponent } from '@app/@shared/render-component/product-checkbox/product-checkbox';
 import { ProductTitleComponent } from '@app/@shared/render-component/product-title/product-title.component';
 import { ProductImageComponent } from '@app/@shared/render-component/product-image/product-image.component';
@@ -84,12 +84,12 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 	}
 
 	async deleteProduct(event) {
-		const activeModal = this.modalService.open(ConfimationModalComponent, {
+		const activeModal = this.modalService.open(ConfirmationModalComponent, {
 			size: 'sm',
 			container: 'nb-layout',
 			backdrop: 'static',
 		});
-		const modalComponent: ConfimationModalComponent =
+		const modalComponent: ConfirmationModalComponent =
 			activeModal.componentInstance;
 
 		this.confirmSub$ = await modalComponent.confirmEvent

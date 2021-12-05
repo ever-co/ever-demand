@@ -7,6 +7,7 @@ import { getListenerType, Listener } from './listener/listener';
 import { ListenerType } from './listener/types';
 import { AsyncListener } from './listener/async';
 import { ObservableListener } from './listener/observable';
+import { Socket } from 'socket.io';
 
 export class ConnectionHandler {
 	private readonly listeners: Array<Listener<any>> = getListeners(
@@ -16,7 +17,7 @@ export class ConnectionHandler {
 	private readonly routerName: string = getRouterName(this.router);
 
 	constructor(
-		private readonly socket: SocketIO.Socket,
+		private readonly socket: Socket,
 		private readonly router: IRouter,
 		private readonly log: Logger
 	) {}

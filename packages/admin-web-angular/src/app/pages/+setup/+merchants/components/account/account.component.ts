@@ -1,4 +1,4 @@
-import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -12,8 +12,12 @@ export class SetupMerchantAccountComponent {
 
 	@Output()
 	previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();
+
 	@Output()
 	nextStep: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+	@Input() showNext: boolean = true;
+  	@Input() showPrev: boolean = true;
 
 	accountModel = {
 		email: '',

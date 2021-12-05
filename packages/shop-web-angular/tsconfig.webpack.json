@@ -28,8 +28,7 @@
 		}
 	},
 	"angularCompilerOptions": {
-		"skipMetadataEmit": true,
-		"enableIvy": false
+		"skipMetadataEmit": true
 	},
 	"include": [
 		"./src",

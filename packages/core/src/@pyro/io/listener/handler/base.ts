@@ -4,8 +4,9 @@ import Logger from 'bunyan';
 import { getListenerType, Listener } from '../listener';
 import { ListenerType } from '../types';
 import { getListenerSerializer } from '../serialization';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import getArgsNames from '@captemulation/get-parameter-names';
+import { Socket } from 'socket.io';
 
 export abstract class BaseListenerHandler<T> implements IListenerHandler<T> {
 	protected readonly serializer: (args: any[]) => any[];
@@ -21,7 +22,7 @@ export abstract class BaseListenerHandler<T> implements IListenerHandler<T> {
 	constructor(
 		private readonly _router: IRouter,
 		private readonly _listener: Listener<T>,
-		private readonly _socket: SocketIO.Socket,
+		private readonly _socket: Socket,
 		private readonly _log: Logger
 	) {
 		this.serializer = getListenerSerializer(_listener);

@@ -32,7 +32,7 @@ import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 		ToasterModule.forRoot(),
 		TranslateModule.forChild(),
 		RouterModule.forChild(routes),
-		HighlightModule.forRoot({ theme: 'github' }),
+		HighlightModule,
 		UserMutationModule,
 		InviteRequestModalModule,
 		ByCodeModalModule,

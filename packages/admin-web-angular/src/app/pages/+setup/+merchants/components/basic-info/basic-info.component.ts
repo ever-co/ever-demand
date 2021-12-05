@@ -7,9 +7,9 @@ import {
 	EventEmitter,
 } from '@angular/core';
 import { NgForm, NgModel } from '@angular/forms';
-import QRCode from 'qrcode';
+import * as QRCode from 'qrcode';
 import { TranslateService } from '@ngx-translate/core';
-import { first, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { getDummyImage } from '@modules/server.common/utils';
 
@@ -34,7 +34,7 @@ export class SetupMerchantBasicInfoComponent implements OnInit, OnDestroy {
 
 	// TODO add translate
 	uploaderPlaceholder: string = 'Photo (optional)';
-	barcodetDataUrl: string;
+	barcodeDataUrl: string;
 	invalidUrl: boolean;
 	basicInfoModel = {
 		name: '',
@@ -79,11 +79,11 @@ export class SetupMerchantBasicInfoComponent implements OnInit, OnDestroy {
 
 	async barcodeDataChange() {
 		if (this.basicInfoModel.barcodeData) {
-			this.barcodetDataUrl = await QRCode.toDataURL(
+			this.barcodeDataUrl = await QRCode.toDataURL(
 				this.basicInfoModel.barcodeData
 			);
 		} else {
-			this.barcodetDataUrl = null;
+			this.barcodeDataUrl = null;
 		}
 	}
 

@@ -1,4 +1,4 @@
-import { filter } from 'lodash';
+import { filter } from 'underscore';
 import Order from '@modules/server.common/entities/Order';
 import OrderStatus from '@modules/server.common/enums/OrderStatus';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';

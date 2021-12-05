@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ViewCell } from 'ng2-smart-table';
 import { Store } from '../../services/store.service';
 import { CallNumber } from '@ionic-native/call-number/ngx';
-import User from '@modules/server.common/entities/User';
+import UserOrder from '@modules/server.common/entities/UserOrder';
 
 @Component({
 	selector: 'user-phone',
@@ -24,7 +24,7 @@ export class UserPhoneComponent implements ViewCell, OnInit {
 	rowData: any;
 
 	@Input()
-	user: User;
+	user: UserOrder;
 
 	constructor(private store: Store, public callNumber: CallNumber) {}
 

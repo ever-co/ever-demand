@@ -24,6 +24,7 @@ export class TakeawayOrderInfoComponent implements OnInit, OnDestroy {
 	barcodetDataUrl: string;
 	bcFormat: OrderBarcodeTypes;
 	bcWidth: number = 0.7;
+	img: string;
 
 	private readonly ngDestroy$ = new Subject<void>();
 

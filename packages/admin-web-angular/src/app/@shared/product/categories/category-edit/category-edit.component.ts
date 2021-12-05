@@ -1,6 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import 'rxjs/operators/map';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ProductsCategoryService } from '../../../../@core/data/productsCategory.service';

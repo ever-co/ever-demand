@@ -54,24 +54,9 @@ import 'core-js/proposals/reflect-metadata';
 /***************************************************************************************************
  * Zone JS is required by Angular itself.
  */
-import 'zone.js/dist/zone';
+import 'zone.js';
 // import 'zone.js/dist/long-stack-trace-zone' // async stack traces with zone.js included for dev
 
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
-
-/**
- * Date, currency, decimal and percent pipes.
- * Needed for: All but Chrome, Firefox, Edge, IE11 and Safari 10
- */
-// import 'intl';  // Run `npm install --save intl`.
-/**
- * Need to import at least one locale-data with intl.
- */
-// import 'intl/locale-data/jsonp/en';
-if ('production' === ENV) {
-	// Production
-} else {
-	// Development
-}

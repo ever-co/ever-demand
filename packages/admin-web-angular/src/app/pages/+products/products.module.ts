@@ -40,7 +40,7 @@ const routes: Routes = [
 		ToasterModule.forRoot(),
 		RouterModule.forChild(routes),
 		TranslateModule.forChild(),
-		HighlightModule.forRoot({ theme: 'github' }),
+		HighlightModule,
 		ProductCreateModule,
 		ProductFormsModule,
 		NbSpinnerModule,
@@ -55,7 +55,6 @@ const routes: Routes = [
 		CategoryEditComponent,
 		CategoriesComponent,
 	],
-	entryComponents: [CategoryCreateComponent, CategoryEditComponent],
 	providers: [JsonPipe, NotifyService],
 })
 export class ProductsModule {

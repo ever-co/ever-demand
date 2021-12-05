@@ -7,8 +7,8 @@
 	</button>
 	<form-wizard #wizzardFrom [ngClass]="{ 'second-step': choicedNew }">
 		<wizard-step
-			#wizzardFromStep1
-			[isValid]="choiced"
+			#wizardFromStep1
+			[isValid]="choicedNew"
 			[title]="wizardStepsTitle.step1"
 		>
 			<add-choice #addChoice (click)="onStep1Next(choiced)"></add-choice>

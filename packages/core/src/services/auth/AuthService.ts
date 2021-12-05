@@ -52,7 +52,7 @@ export class AuthService<T extends IAuthable> extends EntityService<T> {
 			await this.Model.findById(id).select('+hash').lean().exec()
 		);
 
-		if (entity.hash != null) {
+		if (entity != null && entity.hash != null) {
 			throw new Error(
 				'Password already exists, please call updatePassword instead.'
 			);

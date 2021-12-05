@@ -15,13 +15,16 @@ export class SubscriptionsService implements OnModuleDestroy {
 		options: ServerOptions = {},
 		socketOptions: WebSocket.ServerOptions = {}
 	) {
+
+		const o: ServerOptions  = {
+			execute,
+			subscribe,
+			schema,
+			...options,
+		};
+
 		this.subscriptionServer = new SubscriptionServer(
-			{
-				execute,
-				subscribe,
-				schema,
-				...options,
-			},
+			o,
 			{
 				server: this.ws,
 				path: '/subscriptions',

@@ -40,10 +40,10 @@ import { MaintenanceService } from '@modules/client.common.angular2/services/mai
 import { AppModuleGuard } from './app.module.guard';
 import { MaintenanceModuleGuard } from './+maintenance-info/maintenance-info.module.guard';
 import { GoogleMapsLoader } from '@modules/client.common.angular2/services/googleMapsLoader';
-import { ApolloModule, Apollo } from 'apollo-angular';
-import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { setContext } from 'apollo-link-context';
+import { Apollo } from 'apollo-angular';
+import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
+import { ApolloLink, InMemoryCache } from '@apollo/client/core';
+import { setContext } from '@apollo/client/link/context';
 import { Store } from './services/store';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
@@ -51,6 +51,7 @@ import { GeoLocationService } from './services/geo-location';
 import { LocationPopupModalModule } from './shared/location-popup/location-popup.module';
 import { AuthGuard } from './authentication/auth.guard';
 import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
+import { AboutComponent } from './about/about.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -138,11 +139,11 @@ const APP_PROVIDERS = [
 		ToolbarComponent,
 		NoContentComponent,
 		SidenavContentComponent,
+		AboutComponent
 	],
 	imports: [
 		BrowserModule,
 		HttpClientModule,
-		ApolloModule,
 		TranslateModule.forRoot({
 			loader: {
 				provide: TranslateLoader,
@@ -152,7 +153,6 @@ const APP_PROVIDERS = [
 		}),
 		BrowserAnimationsModule,
 		FormsModule,
-		HttpLinkModule,
 		RouterModule.forRoot(ROUTES, {
 			useHash: Boolean(history.pushState) === false,
 			// enableTracing: true,
@@ -189,12 +189,16 @@ const APP_PROVIDERS = [
 	],
 })
 export class AppModule {
-	constructor(apollo: Apollo, httpLink: HttpLink, store: Store) {
-		const http = httpLink.create({
+	constructor(
+		private readonly apollo: Apollo,
+		private readonly httpLink: HttpLink,
+		private readonly store: Store
+	) {
+		const http: HttpLinkHandler = httpLink.create({
 			uri: environment.GQL_ENDPOINT,
 		});
 
-		const authLink = setContext((_, { headers }) => {
+		const authLink: ApolloLink = setContext((_, { headers }) => {
 			// get the authentication token from local storage if it exists
 			const token = store.token;
 			// return the headers to the context so httpLink can read them

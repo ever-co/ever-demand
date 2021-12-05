@@ -1,6 +1,5 @@
 import { Component, NgZone, ViewChild, AfterViewInit } from '@angular/core';
 import { SidenavService } from '../sidenav/sidenav.service';
-import { styleVariables } from '../../styles/variables';
 import { Store } from 'app/services/store';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 import { Router } from '@angular/router';
@@ -21,7 +20,6 @@ import { environment } from 'environments/environment';
 	templateUrl: './toolbar.component.html',
 })
 export class ToolbarComponent implements AfterViewInit {
-	styleVariables: typeof styleVariables = styleVariables;
 	isDeliveryRequired: boolean;
 
 	@ViewChild('matSearch')
@@ -76,7 +74,7 @@ export class ToolbarComponent implements AfterViewInit {
 		await this.reload();
 	}
 
-	private tryFindNewAddress(address: string) {
+	public tryFindNewAddress(address: string) {
 		const geocoder = new google.maps.Geocoder();
 
 		geocoder.geocode(
@@ -93,7 +91,7 @@ export class ToolbarComponent implements AfterViewInit {
 		);
 	}
 
-	private async loadAddress(findNew: boolean = false) {
+	public async loadAddress(findNew: boolean = false) {
 		let geoLocationForProducts: GeoLocation;
 
 		const isProductionEnv = environment.production;

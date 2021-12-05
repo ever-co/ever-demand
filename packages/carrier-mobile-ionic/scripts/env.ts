@@ -2,7 +2,9 @@
 // We are using dotenv (.env) for consistency with other Platform projects
 // This is Angular app and all settings will be loaded into the client browser!
 
-import { cleanEnv, num, str, bool } from 'envalid';
+require('dotenv').config();
+
+import { cleanEnv, num, str, bool, CleanOptions } from 'envalid';
 import { v4 as uuid } from 'uuid';
 
 export type Env = Readonly<{
@@ -46,6 +48,9 @@ export type Env = Readonly<{
 	PORT: number;
 }>;
 
+const opt: CleanOptions<Env> = {
+};
+
 export const env: Env = cleanEnv(
 	process.env,
 	{
@@ -88,7 +93,7 @@ export const env: Env = cleanEnv(
 		SERVICES_ENDPOINT: str({ default: 'http://localhost:5500' }),
 		HTTPS_SERVICES_ENDPOINT: str({ default: 'https://localhost:5501' }),
 
-		// For maintenance micro service. Ever maintanance API URL: https://maintenance.ever.co/status
+		// For maintenance micro service. Ever maintenance API URL: https://maintenance.ever.co/status
 		SETTINGS_APP_TYPE: str({ default: 'carrier-mobile' }),
 		SETTINGS_MAINTENANCE_API_URL: str({
 			default: '',
@@ -98,5 +103,5 @@ export const env: Env = cleanEnv(
 		WEB_MEMORY: num({ default: 2048 }),
 		PORT: num({ default: 4203 }),
 	},
-	{ strict: true, dotEnvPath: __dirname + '/../.env' }
+	opt
 );

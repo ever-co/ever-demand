@@ -14,7 +14,7 @@ import { OrderRouter } from '@modules/client.common.angular2/routers/order-route
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToasterService } from 'angular2-toaster';
-import { ConfimationModalComponent } from '../../../../@shared/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from '../../../../@shared/confirmation-modal/confirmation-modal.component';
 import { StoreOrderProductAmountComponent } from '../../../../@shared/render-component/store-products-table/store-order-product-amount/store-order-product-amount.component';
 import { ProductTitleRedirectComponent } from '../../../../@shared/render-component/product-title-redirect/product-title-redirect.component';
 import { StoreProductPriceComponent } from '../../../../@shared/render-component/store-products-table/store-product-price.component';
@@ -31,7 +31,7 @@ interface OrderProductsViewModel {
 @Component({
 	selector: 'ea-order-products',
 	templateUrl: './order-products.component.html',
-	styleUrls: ['/order-products.component.scss'],
+	styleUrls: ['./order-products.component.scss'],
 })
 export class OrderProductsComponent implements OnInit, OnChanges, OnDestroy {
 	public selectedProducts: OrderProductsViewModel[] = [];
@@ -196,12 +196,12 @@ export class OrderProductsComponent implements OnInit, OnChanges, OnDestroy {
 	}
 
 	async cancelOrder() {
-		const activeModal = this.modalService.open(ConfimationModalComponent, {
+		const activeModal = this.modalService.open(ConfirmationModalComponent, {
 			size: 'sm',
 			container: 'nb-layout',
 			backdrop: 'static',
 		});
-		const modalComponent: ConfimationModalComponent =
+		const modalComponent: ConfirmationModalComponent =
 			activeModal.componentInstance;
 
 		await modalComponent.confirmEvent

@@ -8,7 +8,7 @@ import { OrderRouter } from '@modules/client.common.angular2/routers/order-route
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { OrdersFilterModes } from '../../filters/orders-filters';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { Store } from '../../../src/services/store.service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
@@ -39,7 +39,7 @@ export enum OrderStatus {
 
 @Component({
 	selector: 'page-warehouse',
-	templateUrl: 'warehouse.html',
+	templateUrl: './warehouse.html',
 	styleUrls: ['./warehouse.scss'],
 })
 export class WarehousePage implements OnInit {
@@ -57,7 +57,7 @@ export class WarehousePage implements OnInit {
 	orderStatus: boolean;
 
 	filter: any; //todo
-	keys = Object.keys;
+	keys: any = Object.keys;
 	statuses = OrderStatus;
 
 	constructor(
@@ -149,7 +149,7 @@ export class WarehousePage implements OnInit {
 		this.isOrderContainerLive = !this.isOrderContainerLive;
 	}
 
-	getWarehouseProductImageUrl(p: Product) {
+	getWarehouseProductImageUrl(p: Product): string | void {
 		if (p instanceof Product) {
 			const productImg = p.images.filter((i) =>
 				i.locale.includes(this.language)
@@ -249,7 +249,7 @@ export class WarehousePage implements OnInit {
 		return this.orderStatus;
 	}
 
-	getWarehouseStatus(orderWarehouseStatusNumber: OrderWarehouseStatus) {
+	getWarehouseStatus(orderWarehouseStatusNumber: OrderWarehouseStatus): string {
 		const basePath = 'WAREHOUSE_VIEW.ORDER_WAREHOUSE_STATUSES.';
 		switch (orderWarehouseStatusNumber) {
 			case OrderWarehouseStatus.NoStatus:

@@ -1,8 +1,7 @@
-import { Observable, from, of } from 'rxjs';
+import { Observable, from, of as observableOf } from 'rxjs';
 import { NbAuthResult, NbAuthStrategy } from '@nebular/auth';
 import { ActivatedRoute } from '@angular/router';
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
+import { Apollo, gql } from 'apollo-angular';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Store } from '../data/store.service';
@@ -168,7 +167,7 @@ export class AdminAuthStrategy extends NbAuthStrategy {
 				catchError((err) => {
 					console.error(err);
 
-					return of(
+					return observableOf(
 						new NbAuthResult(
 							false,
 							err,
@@ -190,7 +189,7 @@ export class AdminAuthStrategy extends NbAuthStrategy {
 		const { email, fullName, password, confirmPassword, terms } = args;
 
 		if (password !== confirmPassword) {
-			return Observable.of(
+			return observableOf(
 				new NbAuthResult(false, null, null, [
 					"The passwords don't match.",
 				])
@@ -264,7 +263,7 @@ export class AdminAuthStrategy extends NbAuthStrategy {
 				catchError((err) => {
 					console.error(err);
 
-					return of(
+					return observableOf(
 						new NbAuthResult(
 							false,
 							err,

@@ -16,7 +16,6 @@ import { ToasterService } from 'angular2-toaster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatest, Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
-import _ from 'lodash';
 import { ActivatedRoute } from '@angular/router';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 
@@ -31,7 +30,7 @@ export class CustomerStoresComponent implements OnInit, OnDestroy {
 
 	params$: any;
 
-	protected sourceEventEmitter = new EventEmitter<WarehouseViewModel[]>();
+	public sourceEventEmitter = new EventEmitter<WarehouseViewModel[]>();
 
 	private _selectedCustomerDestroy$ = new Subject<void>();
 	private _ngDestroy$ = new Subject<void>();

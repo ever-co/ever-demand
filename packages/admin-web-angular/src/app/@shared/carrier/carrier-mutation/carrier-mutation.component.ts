@@ -14,7 +14,6 @@ import { BasicInfoFormComponent } from '../forms';
 import { LocationFormComponent } from '../../forms/location';
 
 import { getDummyImage } from '@modules/server.common/utils';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'ea-carrier-mutation',
@@ -47,29 +46,12 @@ export class CarrierMutationComponent implements AfterViewInit {
 		google.maps.places.PlaceGeometry | google.maps.GeocoderGeometry
 	>();
 
-	public BUTTON_DONE: string = 'BUTTON_DONE';
-	public BUTTON_NEXT: string = 'BUTTON_NEXT';
-	public BUTTON_PREV: string = 'BUTTON_PREV';
-
 	constructor(
 		private toasterService: ToasterService,
 		private readonly activeModal: NgbActiveModal,
 		private readonly formBuilder: FormBuilder,
-		protected carrierRouter: CarrierRouter,
-		private readonly _translateService: TranslateService
+		protected carrierRouter: CarrierRouter
 	) {}
-
-	get buttonDone() {
-		return this._translate(this.BUTTON_DONE);
-	}
-
-	get buttonNext() {
-		return this._translate(this.BUTTON_NEXT);
-	}
-
-	get buttonPrevious() {
-		return this._translate(this.BUTTON_PREV);
-	}
 
 	ngAfterViewInit(): void {
 		if (this.locationForm) {
@@ -134,15 +116,5 @@ export class CarrierMutationComponent implements AfterViewInit {
 
 	cancel() {
 		this.activeModal.dismiss('canceled');
-	}
-
-	private _translate(key: string): string {
-		let translationResult = '';
-
-		this._translateService.get(key).subscribe((res) => {
-			translationResult = res;
-		});
-
-		return translationResult;
 	}
 }

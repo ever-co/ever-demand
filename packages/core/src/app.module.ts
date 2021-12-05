@@ -38,15 +38,40 @@ import { DataModule } from './graphql/data/data.module';
 import { CarriersOrdersModule } from './graphql/carriers-orders/carriers-orders.module';
 import { GeoLocationOrdersModule } from './graphql/geo-locations/orders/geo-location-orders.module';
 import { GeoLocationMerchantsModule } from './graphql/geo-locations/merchants/geo-location-merchants.module';
-import { ApolloServer, makeExecutableSchema } from 'apollo-server-express';
-import { fileLoader, mergeTypes } from 'merge-graphql-schemas';
+import { ApolloServer } from 'apollo-server-express';
+import { ApolloServerPluginLandingPageGraphQLPlayground, ApolloServerPluginLandingPageGraphQLPlaygroundOptions } from 'apollo-server-core';
+
+// See https://www.apollographql.com/docs/apollo-server/migration/
+import { makeExecutableSchema } from '@graphql-tools/schema';
+
+// See https://www.graphql-tools.com/docs/migration/migration-from-merge-graphql-schemas
+import { mergeTypeDefs } from '@graphql-tools/merge';
+import { loadFilesSync } from '@graphql-tools/load-files';
+
 import { GetAboutUsHandler } from './services/users';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ServicesModule } from './services/services.module';
 import { ServicesApp } from './services/services.app';
 import { CurrencyModule } from './graphql/currency/currency.module';
 import { PromotionModule } from './graphql/products/promotions/promotion.module';
 import { AppsSettingsModule } from './graphql/apps-settings/apps-settings.module';
+
+type Config = Parameters<typeof mergeTypeDefs>[1];
+
+const mergeTypes = (types: any[], options?: { schemaDefinition?: boolean, all?: boolean } & Partial<Config>) => {
+	const schemaDefinition = options && typeof options.schemaDefinition === 'boolean'
+	  ? options.schemaDefinition
+	  : true;
+
+	return mergeTypeDefs(types, {
+	  useSchemaDefinition: schemaDefinition,
+	  forceSchemaDefinition: schemaDefinition,
+	  throwOnConflict: true,
+	  commentDescriptions: true,
+	  reverseDirectives: true,
+	  ...options,
+	});
+  };
 
 const port = env.GQLPORT;
 
@@ -62,6 +87,16 @@ export const EventHandlers = [];
 
 const entities = ServicesApp.getEntities();
 
+const connectionSettings: TypeOrmModuleOptions = {
+	type: 'mongodb',
+	url: env.DB_URI,
+	entities,
+	synchronize: true,
+	useNewUrlParser: true,
+	// autoReconnect: true,
+	logging: true,
+};
+
 @Module({
 	controllers: [TestController],
 	providers: [...CommandHandlers, ...EventHandlers],
@@ -74,15 +109,7 @@ const entities = ServicesApp.getEntities();
 		AppsSettingsModule,
 		ConfigModule,
 		// configure TypeORM Connection which will be possible to use inside NestJS (e.g. resolvers)
-		TypeOrmModule.forRoot({
-			type: 'mongodb',
-			url: env.DB_URI,
-			entities,
-			synchronize: true,
-			useNewUrlParser: true,
-			autoReconnect: true,
-			logging: true,
-		}),
+		TypeOrmModule.forRoot(connectionSettings),
 		// define which repositories shall be registered in the current scope (each entity will have own repository).
 		// Thanks to that we can inject the XXXXRepository to the NestJS using the @InjectRepository() decorator
 		// NOTE: this could be used inside NestJS only, not inside our services
@@ -169,20 +196,27 @@ export class ApplicationModule implements NestModule, OnModuleInit {
 		Creates GraphQL Apollo Server manually
 	*/
 	createServer(schema: GraphQLSchema): ApolloServer {
+
+		const playgroundOptions: ApolloServerPluginLandingPageGraphQLPlaygroundOptions =
+			{
+				endpoint: `http://localhost:${port}/graphql`,
+				subscriptionEndpoint: `ws://localhost:${port}/subscriptions`,
+				settings: {
+					'editor.theme': 'dark'
+				}
+			};
+
 		return new ApolloServer({
 			schema,
 			context: ({ req, res }) => ({
 				req,
 			}),
-			playground: {
-				endpoint: `http://localhost:${port}/graphql`,
-				subscriptionEndpoint: `ws://localhost:${port}/subscriptions`,
-				settings: {
-					'editor.theme': 'dark',
-				},
-			},
+			plugins: [
+				ApolloServerPluginLandingPageGraphQLPlayground(playgroundOptions)
+			]
 		});
 	}
+
 
 	/*
 		Creates GraphQL Schema manually.
@@ -193,7 +227,7 @@ export class ApplicationModule implements NestModule, OnModuleInit {
 
 		console.log(`Searching for *.graphql files`);
 
-		const typesArray = fileLoader(graphqlPath);
+		const typesArray = loadFilesSync(graphqlPath);
 
 		const typeDefs = mergeTypes(typesArray, { all: true });
 

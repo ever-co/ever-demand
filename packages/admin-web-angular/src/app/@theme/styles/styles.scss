@@ -1,13 +1,16 @@
 // themes - our custom or/and out of the box themes
 @import 'themes';
+
 // framework component themes (styles tied to theme variables)
 @import '~@nebular/theme/styles/globals';
-@import '~@nebular/auth/styles/all';
+@import '~@nebular/auth/styles/globals';
 
 @import '~@nebular/bootstrap/styles/globals';
 
+@import '~angular2-toaster/toaster';
+
 // toaster styles copied from 'angular2-toaster' package
-@import './toaster';
+// @import './toaster';
 
 // custom global ng-bootstrap modal
 @import './ng-bootstrap.modal';
@@ -25,8 +28,9 @@
 
 @import '~@ng-select/ng-select/themes/default.theme.css';
 
-// In the future versions of ngx-highlight we need to import theme globally
-// @import 'node_modules/highlight.js/styles/github';
+// In this versions of ngx-highlight we need to import theme globally
+@import '~highlight.js/styles/github.css';
+
 // install the framework and custom global styles
 @include nb-install() {
 	// framework global styles

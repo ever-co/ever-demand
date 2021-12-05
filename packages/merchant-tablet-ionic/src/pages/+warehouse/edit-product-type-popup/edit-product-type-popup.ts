@@ -421,7 +421,7 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 
 		this.productRouter.save(this.product).then((product: Product) => {
 			this.product = product;
-			this.warehouseProduct.product = product.id;
+			this.warehouseProduct.product = product;
 			this.warehouseProduct.isDeliveryRequired = this.takaProductDelivery;
 			this.warehouseProduct.isTakeaway = this.takaProductTakeaway;
 			this.warehouseProduct.isProductAvailable = this.isAvailable;

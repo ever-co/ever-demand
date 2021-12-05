@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from 'apollo-angular';
 import { OrderProductFragment } from './product/product.model';
 
 export const OrderFragment = gql`

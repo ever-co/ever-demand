@@ -13,9 +13,9 @@ import { routes, NbAuthModule } from '@nebular/auth';
 import { NotifyService } from '@app/@core/services/notify/notify.service';
 import { DeviceMutationComponent } from './device-mutation/device-mutation.component';
 import { DeviceService } from '@app/@core/data/device.service';
-import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
-import { HttpLink } from 'apollo-angular-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
 import { PipesModule } from '@modules/client.common.angular2/pipes/pipes.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -49,7 +49,6 @@ stories.addDecorator(
 			I18nModule,
 			RouterModule.forChild(routes),
 			NbAuthModule,
-			ApolloModule,
 			PipesModule,
 		],
 		providers: [

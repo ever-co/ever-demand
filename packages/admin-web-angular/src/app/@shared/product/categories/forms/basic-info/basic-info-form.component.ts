@@ -12,10 +12,9 @@ import {
 	AbstractControl,
 	FormBuilder,
 } from '@angular/forms';
-import isUrl from 'is-url';
-import _ from 'lodash';
+import * as isUrl from 'is-url';
+import * as _ from 'underscore';
 import { TranslateService } from '@ngx-translate/core';
-import { first } from 'rxjs/operators';
 import { IProductsCategoryCreateObject } from '@modules/server.common/interfaces/IProductsCategory';
 
 @Component({
@@ -30,8 +29,6 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 	@Input()
 	category: { title: string; image: string };
 
-	uploaderPlaceholder: string;
-
 	readonly form: FormGroup = this.fb.group({
 		name: ['', Validators.required],
 		image: [
@@ -39,7 +36,6 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 			[
 				(control: AbstractControl) => {
 					const imageUrl = control.value;
-
 					if (!isUrl(imageUrl) && !_.isEmpty(imageUrl)) {
 						return { invalidUrl: true };
 					}
@@ -139,8 +135,6 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 			this.name.setValue(this.category.title);
 			this.image.setValue(this.category.image);
 		}
-
-		this.getUploaderPlaceholderText();
 	}
 
 	deleteImg() {
@@ -149,13 +143,6 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 
 	ngAfterViewInit() {
 		this._setupLogoUrlValidation();
-	}
-
-	private async getUploaderPlaceholderText() {
-		this.uploaderPlaceholder = await this._langTranslateService
-			.get('CATEGORY_VIEW.CREATE.PHOTO_OPTIONAL')
-			.pipe(first())
-			.toPromise();
 	}
 
 	private _setupLogoUrlValidation() {

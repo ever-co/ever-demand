@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import { Apollo, gql } from 'apollo-angular';
 import Product from '@modules/server.common/entities/Product';
 import { IProductCreateObject } from '@modules/server.common/interfaces/IProduct';
 import { Observable } from 'rxjs';
 import { map, share } from 'rxjs/operators';
-import gql from 'graphql-tag';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 
 interface RemovedObject {

@@ -6,7 +6,7 @@ import {
 	Input,
 	ViewChild,
 } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
@@ -14,10 +14,9 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
-import { Subscription } from 'apollo-client/util/Observable';
 import { Router } from '@angular/router';
 import { NotifyService } from '../../../../@core/services/notify/notify.service';
-import { ConfimationModalComponent } from '../../../../@shared/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from '../../../../@shared/confirmation-modal/confirmation-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
 	WarehouseProductViewModel,
@@ -58,12 +57,12 @@ export class ProductsTableComponent implements OnDestroy {
 	}
 
 	removeProduct(ev) {
-		const activeModal = this.modalService.open(ConfimationModalComponent, {
+		const activeModal = this.modalService.open(ConfirmationModalComponent, {
 			size: 'sm',
 			container: 'nb-layout',
 			backdrop: 'static',
 		});
-		const modalComponent: ConfimationModalComponent =
+		const modalComponent: ConfirmationModalComponent =
 			activeModal.componentInstance;
 
 		modalComponent.confirmEvent

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
-import { first, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
 import { WarehousesService } from '../../../../@core/data/warehouses.service';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
@@ -12,21 +12,12 @@ import { StoreOrderProductsComponent } from '../../../../@shared/render-componen
 import { OrderBtnOrderProductsComponent } from '../../../../@shared/render-component/customer-products-table/order-btn-order-products/order-btn-order-products.component';
 import { GeoLocationService } from '../../../../@core/data/geo-location.service';
 import { TranslateService } from '@ngx-translate/core';
-import { forkJoin, Observable, Subject } from 'rxjs';
+import { firstValueFrom, forkJoin, Observable, Subject } from 'rxjs';
 
 @Component({
 	selector: 'ea-customer-products',
-	styleUrls: ['./ea-customer-products.scss'],
-	template: `
-		<nb-card>
-			<nb-card-body>
-				<ng2-smart-table
-					[settings]="settingsSmartTable"
-					[source]="sourceSmartTable"
-				></ng2-smart-table>
-			</nb-card-body>
-		</nb-card>
-	`,
+	templateUrl: './ea-customer-products.component.html',
+	styleUrls: ['./ea-customer-products.scss']
 })
 export class CustomerProductsComponent implements OnDestroy, OnInit {
 	private ngDestroy$ = new Subject<void>();
@@ -51,15 +42,12 @@ export class CustomerProductsComponent implements OnDestroy, OnInit {
 	) {
 		this.params$ = this._router.params.subscribe(async (res) => {
 			this.userId = res.id;
-			const user = await this.userRouter
-				.get(this.userId)
-				.pipe(first())
-				.toPromise();
-
+			const user = await firstValueFrom(
+				this.userRouter.get(this.userId)
+			);
 			if (user == null) {
 				throw new Error(`User can't be found (id: ${this.userId})`);
 			}
-
 			this.availableProductsSubscription$ = this.geoLocationProductService
 				.getGeoLocationProducts(user.geoLocation)
 				.subscribe((products) => {
@@ -159,10 +147,9 @@ export class CustomerProductsComponent implements OnDestroy, OnInit {
 	}
 
 	private async _loadWarehouses() {
-		this.warehouses = await this._warehousesService
-			.getStores()
-			.pipe(first())
-			.toPromise();
+		this.warehouses = await firstValueFrom(
+			this._warehousesService.getStores()
+		);
 	}
 
 	ngOnDestroy(): void {

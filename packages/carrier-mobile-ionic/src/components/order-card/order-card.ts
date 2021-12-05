@@ -4,8 +4,8 @@ import ICarrier from '@modules/server.common/interfaces/ICarrier';
 
 @Component({
 	selector: 'order-card',
-	templateUrl: 'order-card.html',
-	styles: ['order-card.scss'],
+	templateUrl: './order-card.html',
+	styleUrls: ['./order-card.scss']
 })
 export class OrderCardComponent implements OnInit {
 	private static NOT_EXPANDED_MAX_PRODUCTS_AMOUNT = 3;

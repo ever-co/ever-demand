@@ -31,7 +31,7 @@
 
 		<div class="col-sm-9">
 			<e-cu-file-uploader
-				[placeholder]="uploaderPlaceholder"
+				[placeholder]="'CATEGORY_VIEW.CREATE.PHOTO_OPTIONAL' | translate"
 				[name]="name?.value"
 				[fileUrl]="image?.value"
 				(uploadedImgUrl)="image.setValue($event)"

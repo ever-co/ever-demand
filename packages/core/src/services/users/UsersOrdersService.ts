@@ -1,5 +1,5 @@
 import { inject, injectable, LazyServiceIdentifer } from 'inversify';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { OrdersService } from '../orders';
 import Order from '@modules/server.common/entities/Order';
 import { UsersService } from './UsersService';

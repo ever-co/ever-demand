@@ -11,9 +11,9 @@
 	<form-wizard
 		class="form-horizontal"
 		[formGroup]="form"
-		[buttonDone]="buttonDone"
-		[buttonNext]="buttonNext"
-		[buttonPrevious]="buttonPrevious"
+		[doneText]="'BUTTON_DONE' | translate"
+		[nextText]="'BUTTON_NEXT' | translate"
+		[previousText]="'BUTTON_PREV' | translate"
 	>
 		<wizard-step
 			[title]="
@@ -21,6 +21,7 @@
 					| translate
 			"
 			[isValid]="basicInfo.valid"
+			[showPrev]="false"
 		>
 			<br />
 			<ea-user-basic-info-form
@@ -37,6 +38,7 @@
 			"
 			(onComplete)="create()"
 			[isValid]="location.valid"
+			[showNext]="false"
 		>
 			<br />
 			<ea-location-form

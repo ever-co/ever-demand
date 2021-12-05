@@ -1,4 +1,4 @@
-import { ToasterService, Toast } from 'angular2-toaster';
+import { ToasterService, Toast, ToastType } from 'angular2-toaster';
 import { Injectable } from '@angular/core';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class NotifyService {
 		this._notify();
 	}
 
-	private _setupToast(type: string, title: string, body: string) {
+	private _setupToast(type: ToastType, title: string, body: string) {
 		this._toast = { type, title, body };
 	}
 

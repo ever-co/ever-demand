@@ -1,5 +1,5 @@
 import Logger from 'bunyan';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { createEverLogger } from '../../helpers/Log';
 import { ProductsService } from '../products';
 import { OrdersService } from '../orders';
@@ -240,7 +240,7 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 					? this.geoLocationsOrdersService.get(geoLocation, {
 							populateWarehouse: options.populateWarehouse,
 					  })
-					: throwError(
+					: throwError(() =>
 							new Error(
 								`No such a carrier with the id ${carrierId} => can't getAvailable`
 							)

@@ -16,7 +16,7 @@ import {
 	routerName,
 	serialization,
 } from '@pyro/io';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { observeFile } from '../../utils';
 import GeoLocation, {
 	Country,
@@ -37,14 +37,13 @@ import {
 	tap,
 	map,
 } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import { _throw } from 'rxjs/observable/throw';
+import { of } from 'rxjs';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';
 import _ = require('lodash');
-import faker from 'faker';
+import * as faker from 'faker';
 import { WarehousesService } from '../../services/warehouses';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
-import Stripe = require('stripe');
+import { Stripe } from 'stripe';
 
 interface IWatchedFiles {
 	aboutUs: { [language in ILanguage]: Observable<string> };
@@ -70,7 +69,9 @@ export class UsersService extends DBService<User>
 	public readonly DBObject: any = User;
 
 	// TODO: this and other Stripe related things should be inside separate Payments Service
-	private stripe = new Stripe(env.STRIPE_SECRET_KEY);
+	private stripe = new Stripe(env.STRIPE_SECRET_KEY, {
+		apiVersion: "2020-08-27"
+	 });
 
 	protected readonly log: Logger = createEverLogger({
 		name: 'usersService',
@@ -209,11 +210,11 @@ export class UsersService extends DBService<User>
 	 * TODO: move to separate Stripe (Payments) Service
 	 *
 	 * @param {string} userId
-	 * @returns {Promise<Stripe.cards.ICard[]>}
+	 * @returns {Promise<Stripe.Stripe.Card[]>}
 	 * @memberof UsersService
 	 */
 	@asyncListener()
-	async getCards(userId: string): Promise<Stripe.cards.ICard[]> {
+	async getCards(userId: string): Promise<Stripe.Card[]> {
 		await this.throwIfNotExists(userId);
 
 		const user = await this.get(userId).pipe(first()).toPromise();
@@ -227,7 +228,7 @@ export class UsersService extends DBService<User>
 							object: 'card',
 						}
 					)
-				).data;
+				).data.map(source => source as Stripe.Card);
 			} else {
 				return [];
 			}
@@ -259,7 +260,7 @@ export class UsersService extends DBService<User>
 			'.addPaymentMethod(userId, tokenId) called'
 		);
 
-		let card: Stripe.cards.ICard;
+		let card: Stripe.Card;
 
 		try {
 			let user = await this.get(userId).pipe(first()).toPromise();
@@ -284,7 +285,7 @@ export class UsersService extends DBService<User>
 					{
 						source: tokenId,
 					}
-				)) as Stripe.cards.ICard;
+				)) as Stripe.Card;
 			} else {
 				throw new Error(`User with the id ${userId} doesn't exist`);
 			}
@@ -355,9 +356,11 @@ export class UsersService extends DBService<User>
 		return this.devicesService.get(deviceId).pipe(
 			exhaustMap((device) => {
 				if (device === null) {
-					return _throw(
+					/* TODO: return Error here
+					return (
 						new Error(`User with the id ${userId} doesn't exist`)
 					);
+					*/
 				} else {
 					return of(device);
 				}
@@ -388,7 +391,7 @@ export class UsersService extends DBService<User>
 		return this.devicesService.get(deviceId).pipe(
 			exhaustMap((device) => {
 				if (device === null) {
-					return _throw(
+					return throwError( () =>
 						new Error(
 							`Device with the id ${deviceId} doesn't exist`
 						)
@@ -423,7 +426,7 @@ export class UsersService extends DBService<User>
 		return this.devicesService.get(deviceId).pipe(
 			exhaustMap((device) => {
 				if (device === null) {
-					return _throw(
+					return throwError( () =>
 						new Error(`User with the id ${userId} doesn't exist`)
 					);
 				} else {
@@ -456,7 +459,7 @@ export class UsersService extends DBService<User>
 		return this.devicesService.get(deviceId).pipe(
 			exhaustMap((device) => {
 				if (device === null) {
-					return _throw(
+					return throwError(() =>
 						new Error(`User with the id ${userId} doesn't exist`)
 					);
 				} else {
@@ -504,7 +507,7 @@ export class UsersService extends DBService<User>
 			const isBanned = Math.random() < 0.02;
 
 			const geoLocation: IGeoLocationCreateObject = {
-				countryId: faker.random.number(Country.ZW) as Country,
+				countryId: faker.datatype.number(Country.ZW) as Country,
 				city: faker.address.city(),
 				house: `${customerCount}`,
 				loc: {

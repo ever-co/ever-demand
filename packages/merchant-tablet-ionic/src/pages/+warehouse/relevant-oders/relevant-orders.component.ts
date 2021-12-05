@@ -1,7 +1,6 @@
 import {
 	Component,
 	Input,
-	ViewChild,
 	AfterViewInit,
 	OnDestroy,
 	OnChanges,
@@ -24,7 +23,7 @@ const showOrdersNumber: number = 10;
 export class RelevantOrdersComponent
 	implements AfterViewInit, OnDestroy, OnChanges, OnDestroy {
 	@Input()
-	getWarehouseStatus: () => void;
+	getWarehouseStatus: (status: any) => void;
 
 	@Input()
 	onUpdateWarehouseStatus: any;

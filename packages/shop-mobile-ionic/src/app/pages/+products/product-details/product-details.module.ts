@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-import { NgProgressModule } from '@ngx-progressbar/core';
+import { NgProgressModule } from 'ngx-progressbar';
 import { IonicModule } from '@ionic/angular';
 import { ProductDetailsPage } from './product-details.page';
 import { WarehouseLogoModule } from '../../../components/warehouse-logo/warehouse-logo.module';

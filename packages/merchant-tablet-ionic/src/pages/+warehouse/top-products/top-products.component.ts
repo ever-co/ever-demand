@@ -4,6 +4,7 @@ import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { ModalController } from '@ionic/angular';
+import Product from '@modules/server.common/entities/Product';
 
 @Component({
 	selector: 'merchant-top-products',
@@ -18,19 +19,19 @@ export class TopProductsComponent implements OnInit, OnDestroy {
 	presentCreateProductPopover: () => void;
 
 	@Input()
-	addProduct: () => void;
+	addProduct: (id: string) => void;
 
 	@Input()
-	getWarehouseProductImageUrl: () => void;
+	getWarehouseProductImageUrl: (product: Product) => void;
 
 	@Input()
-	openEditProductModal: () => void;
+	openEditProductModal: (warehouseProduct: WarehouseProduct) => void;
 
 	@Input()
-	truncateTitle: () => void;
+	truncateTitle: (title: any) => void;
 
 	@Input()
-	localeTranslate: () => void;
+	localeTranslate: (title: any) => void;
 
 	topProducts$: Subscription;
 	topProducts: WarehouseProduct[] = [];

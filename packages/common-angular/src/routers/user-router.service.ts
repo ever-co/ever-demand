@@ -8,7 +8,7 @@ import IUser, {
 } from '@modules/server.common/interfaces/IUser';
 import User from '@modules/server.common/entities/User';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
-import Stripe from 'stripe';
+import { Stripe } from 'stripe';
 
 @Injectable()
 export class UserRouter implements IUserRouter {
@@ -43,8 +43,8 @@ export class UserRouter implements IUserRouter {
 		return this.router.run<string>('addPaymentMethod', userId, tokenId);
 	}
 
-	getCards(userId: string): Promise<Stripe.cards.ICard[]> {
-		return this.router.run<Stripe.cards.ICard[]>('getCards', userId);
+	getCards(userId: string): Promise<Stripe.Card[]> {
+		return this.router.run<Stripe.Card[]>('getCards', userId);
 	}
 
 	async updateEmail(userId: string, email: string): Promise<User> {

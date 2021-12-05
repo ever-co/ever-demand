@@ -6,11 +6,11 @@ import { WarehousesService } from './WarehousesService';
 import IWarehouseProduct, {
 	IWarehouseProductCreateObject,
 } from '@modules/server.common/interfaces/IWarehouseProduct';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import IWarehouse from '@modules/server.common/interfaces/IWarehouse';
-import { ExistenceEventType, DBService } from '@pyro/db-server';
-import { Observable } from 'rxjs';
+import { ExistenceEventType } from '@pyro/db-server';
+import { Observable, throwError } from 'rxjs';
 import IWarehouseProductsRouter from '@modules/server.common/routers/IWarehouseProductsRouter';
 import {
 	asyncListener,
@@ -21,8 +21,7 @@ import {
 import IProduct from '@modules/server.common/interfaces/IProduct';
 import IService from '../IService';
 import { exhaustMap, first, map } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import { _throw } from 'rxjs/observable/throw';
+import { of } from 'rxjs';
 import mongoose = require('mongoose');
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 
@@ -60,9 +59,9 @@ export class WarehousesProductsService
 		fullProducts: boolean = true
 	): Observable<WarehouseProduct[]> {
 		return this.warehousesService.get(warehouseId, fullProducts).pipe(
-			exhaustMap((warehouse) => {
+			exhaustMap((warehouse: Warehouse) => {
 				if (warehouse === null) {
-					return _throw(
+					return throwError(() =>
 						new Error(
 							`Warehouse with the id ${warehouseId} doesn't exist`
 						)
@@ -71,7 +70,7 @@ export class WarehousesProductsService
 					return of(warehouse);
 				}
 			}),
-			map((warehouse) => warehouse.products)
+			map((warehouse: Warehouse) => warehouse.products)
 		);
 	}
 
@@ -396,7 +395,7 @@ export class WarehousesProductsService
 		}
 
 		const updatedWarehouseProduct = _.clone(_updatedWarehouseProduct);
-		updatedWarehouseProduct.product = updatedWarehouseProduct.productId;
+		updatedWarehouseProduct.product = updatedWarehouseProduct.product;
 
 		const updatedWarehouse = (
 			await this.warehousesService.updateMultiple(
@@ -638,7 +637,7 @@ export class WarehousesProductsService
 		return this.warehousesService.get(warehouseId, true).pipe(
 			exhaustMap((warehouse) => {
 				if (warehouse === null) {
-					return _throw(
+					return throwError( () =>
 						new Error(
 							`Warehouse with the id ${warehouseId} doesn't exist`
 						)

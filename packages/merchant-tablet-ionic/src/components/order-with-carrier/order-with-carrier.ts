@@ -11,7 +11,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 })
 export class OrderWithCarrierComponent {
 	@Input()
-	getWarehouseStatus: () => void;
+	getWarehouseStatus: (status: any) => void;
 
 	@Input()
 	order: Order;

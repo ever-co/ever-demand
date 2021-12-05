@@ -1,5 +1,5 @@
 import Logger from 'bunyan';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { inject, injectable } from 'inversify';
 import { ProductsService } from '../products';
 import { createEverLogger } from '../../helpers/Log';
@@ -18,7 +18,7 @@ import {
 } from '@pyro/io';
 import IService from '../IService';
 import { concat, exhaustMap, tap, first, map, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { DBService } from '@pyro/db-server';
 import { IWarehouseLoginResponse } from '@modules/server.common/routers/IWarehouseRouter';
 import { env } from '../../env';
@@ -306,7 +306,7 @@ export class WarehousesService extends DBService<Warehouse>
 		warehouse = _.clone(warehouse);
 
 		_.each(warehouse.products, (warehouseProduct) => {
-			warehouseProduct.product = warehouseProduct.productId;
+			warehouseProduct.product = warehouseProduct.product;
 		});
 
 		return this.update(warehouse.id, warehouse);

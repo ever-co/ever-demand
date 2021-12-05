@@ -282,12 +282,12 @@ export class OrderPage implements OnInit, OnDestroy {
 		clearInterval(this.elapsedTime.timer);
 	}
 
-	protected undo() {
+	public undo() {
 		this.modalController.dismiss();
 		this.showCancelOrderInfoModal();
 	}
 
-	protected async closePopup() {
+	public async closePopup() {
 		this.modalChange.emit(false);
 		if (this.areIssues) {
 			await this._orderCancel();

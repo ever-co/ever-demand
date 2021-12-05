@@ -1,5 +1,5 @@
 // imports from lodash have to be combined
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { every, isEmpty, isNumber } from 'lodash';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { InviteRequestRouter } from '@modules/client.common.angular2/routers/invite-request-router.service';

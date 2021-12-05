@@ -1,11 +1,10 @@
 import { Component, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
-
 import { CarriersService } from '../../@core/data/carriers.service';
 import { CarrierMutationComponent } from '../../@shared/carrier/carrier-mutation';
 import { Subject } from 'rxjs';
 import { ToasterService } from 'angular2-toaster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import _ from 'lodash';
+import * as _ from 'underscore';
 import { CarriersSmartTableComponent } from '@app/@shared/carrier/carriers-table/carriers-table.component';
 import { takeUntil, first } from 'rxjs/operators';
 import Carrier from '@modules/server.common/entities/Carrier';

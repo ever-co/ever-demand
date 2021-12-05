@@ -1,16 +1,16 @@
 import { InjectionToken } from '@angular/core';
-import { Observable, of, fromEvent } from 'rxjs';
+import { Observable, of  } from 'rxjs';
 import {
 	delay,
 	filter,
 	map,
-	merge,
+	mergeWith,
 	publishReplay,
 	refCount,
 	share,
 } from 'rxjs/operators';
-import 'rxjs/add/observable/fromEvent';
-import _io from 'socket.io-client';
+
+import { io as _io, Socket as SocketIOClientSocket } from 'socket.io-client';
 
 export enum ConnectionStatus {
 	NotConnected,
@@ -23,12 +23,12 @@ export const SOCKET_IO = new InjectionToken('socket.io');
 
 export class Socket {
 	public subscribersCounter: number = 0;
-	public ioSocket: SocketIOClient.Socket;
+	public ioSocket: SocketIOClientSocket;
 
 	public connectionStatus: Observable<ConnectionStatus> = of(
 		ConnectionStatus.NotConnected
 	).pipe(
-		merge(
+		mergeWith(
 			this.fromEvent('connect').pipe(
 				map(() => ConnectionStatus.Connected)
 			),

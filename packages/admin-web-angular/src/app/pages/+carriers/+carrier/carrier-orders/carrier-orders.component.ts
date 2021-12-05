@@ -7,7 +7,6 @@ import {
 	Output,
 	AfterViewInit,
 } from '@angular/core';
-
 import Order from '@modules/server.common/entities/Order';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import { ICarrierOrdersRouterGetOptions } from '@modules/server.common/routers/ICarrierOrdersRouter';
@@ -15,11 +14,10 @@ import Carrier from '@modules/server.common/entities/Carrier';
 import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/carrier-orders-router.service';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
-import _ from 'lodash';
+import { some } from 'underscore';
 import { LocalDataSource } from 'ng2-smart-table';
-import { Subject, Observable } from 'rxjs/Rx';
 import { TranslateService } from '@ngx-translate/core';
-import { forkJoin, Subscription } from 'rxjs';
+import { forkJoin, Observable, Subject, Subscription } from 'rxjs';
 import { CreatedComponent } from '../../../../@shared/render-component/created/created.component';
 import { CarriersService } from '@app/@core/data/carriers.service';
 import { GeoLocationOrdersService } from '@app/@core/data/geo-location-orders.service';
@@ -33,7 +31,7 @@ let oldSearch = '';
 
 @Component({
 	selector: 'ea-carrier-orders',
-	templateUrl: '/carrier-orders.component.html',
+	templateUrl: './carrier-orders.component.html',
 	styleUrls: ['./carrier-orders.component.scss'],
 })
 export class CarrierOrdersComponent
@@ -42,17 +40,18 @@ export class CarrierOrdersComponent
 
 	@Input()
 	protected carrierOrderOptions: ICarrierOrdersRouterGetOptions;
+
 	@Input()
-	protected selectedCarrier: Carrier;
+	public selectedCarrier: Carrier;
 
 	@Output()
 	protected selectedOrderEvent = new EventEmitter<Order>();
 
 	public selectedOrder: Order;
 	protected currentOrders: Order[];
-	protected settingsSmartTable: object;
-	protected sourceSmartTable: LocalDataSource = new LocalDataSource();
-	protected enumOrderCarrierStatus: typeof OrderCarrierStatus = OrderCarrierStatus;
+	public settingsSmartTable: object;
+	public sourceSmartTable: LocalDataSource = new LocalDataSource();
+	public enumOrderCarrierStatus: typeof OrderCarrierStatus = OrderCarrierStatus;
 
 	private _isWork: boolean;
 	private dataCount: number;
@@ -200,8 +199,8 @@ export class CarrierOrdersComponent
 		});
 	}
 
-	protected get canControl(): boolean {
-		return _.some(this.currentOrders, (order) =>
+	public get canControl(): boolean {
+		return some(this.currentOrders, (order) =>
 			order
 				? OrderCarrierStatus.CarrierPickedUpOrder <=
 						order.carrierStatus &&
@@ -210,7 +209,7 @@ export class CarrierOrdersComponent
 		);
 	}
 
-	protected async updateOrderCarrierStatus(status: OrderCarrierStatus) {
+	public async updateOrderCarrierStatus(status: OrderCarrierStatus) {
 		this.selectedOrder = await this.orderRouter.updateCarrierStatus(
 			this.selectedOrder.id,
 			status

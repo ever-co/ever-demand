@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import { Apollo, gql } from 'apollo-angular';
 import Carrier from '@modules/server.common/entities/Carrier';
-import gql from 'graphql-tag';
 import { Observable } from 'rxjs';
 import { map, share } from 'rxjs/operators';
 import ICarrier from '@modules/server.common/interfaces/ICarrier';

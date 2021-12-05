@@ -5,8 +5,8 @@ import { IInviteRequestCreateObject } from '@modules/server.common/interfaces/II
 import InviteRequest from '@modules/server.common/entities/InviteRequest';
 import { DBService, ExistenceEventType } from '@pyro/db-server';
 import { InvitesService } from './InvitesService';
-import { Subscription } from 'rxjs/Subscription';
-import _ from 'lodash';
+import { Subscription } from 'rxjs';
+import * as _ from 'lodash';
 import Invite from '@modules/server.common/entities/Invite';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';
 import requestPromise from 'request-promise';
@@ -22,7 +22,7 @@ import { filter, first, map, switchMap } from 'rxjs/operators';
 import { IGeoLocationCreateObject } from '@modules/server.common/interfaces/IGeoLocation';
 import { Country } from '@modules/server.common/entities/GeoLocation';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
-import faker from 'faker';
+import * as faker from 'faker';
 
 @injectable()
 @routerName('invite-request')
@@ -354,7 +354,7 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 		defaultLat: number
 	): IGeoLocationCreateObject {
 		const GeoLocation: IGeoLocationCreateObject = {
-			countryId: faker.random.number(Country.ZW) as Country,
+			countryId: faker.datatype.number(Country.ZW) as Country,
 			city: faker.address.city(),
 			house: houseNumber,
 			loc: {

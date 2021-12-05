@@ -5,8 +5,8 @@ import ForwardOrdersMethod from '@modules/server.common/enums/ForwardOrdersMetho
 import { IWarehouseRegistrationInput } from '@modules/server.common/routers/IWarehouseRouter';
 import { getFakeImg } from '@modules/server.common/utils';
 import { environment } from 'environments/environment';
-import faker from 'faker';
-import _ from 'lodash';
+import * as faker from 'faker';
+import { random } from 'underscore';
 // import { _appIdRandomProviderFactory } from '@angular/core/src/application_tokens';
 
 const NEED_DEFAULT_SETTINGS_MESSAGE =
@@ -48,8 +48,8 @@ export default class FakeDataWarehouses {
 									city: faker.address.city(),
 									postcode: faker.address.zipCode(),
 									streetAddress: faker.address.streetAddress(),
-									house: faker.random.number(199).toString(),
-									countryId: faker.random.number(
+									house: faker.datatype.number(199).toString(),
+									countryId: faker.datatype.number(
 										1
 									) as Country,
 									loc: {
@@ -226,8 +226,8 @@ export default class FakeDataWarehouses {
 				city: faker.address.city(),
 				postcode: faker.address.zipCode(),
 				streetAddress: faker.address.streetAddress(),
-				house: faker.random.number(199).toString(),
-				countryId: faker.random.number(1) as Country,
+				house: faker.datatype.number(199).toString(),
+				countryId: faker.datatype.number(1) as Country,
 				loc: {
 					type: 'Point',
 					coordinates: [lng + 0.05, lat - 0.08],
@@ -244,11 +244,11 @@ export default class FakeDataWarehouses {
 		const currentYear = now.getFullYear();
 		const startYear = currentYear - yearsRange;
 
-		const storeYear = _.random(startYear, currentYear);
-		const storeMonth = _.random(11);
-		const storeDate = _.random(31);
-		const storeHours = _.random(23);
-		const storeMinutes = _.random(59);
+		const storeYear = random(startYear, currentYear);
+		const storeMonth = random(11);
+		const storeDate = random(31);
+		const storeHours = random(23);
+		const storeMinutes = random(59);
 
 		const storeCreatedAt = new Date(
 			storeYear,
@@ -260,7 +260,7 @@ export default class FakeDataWarehouses {
 
 		if (storeCreatedAt > now) {
 			const diff = storeCreatedAt.getTime() - now.getTime();
-			storeCreatedAt.setTime(now.getTime() - _.random(diff));
+			storeCreatedAt.setTime(now.getTime() - random(diff));
 		}
 
 		return storeCreatedAt;

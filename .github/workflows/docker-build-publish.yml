@@ -2,7 +2,9 @@ name: Build and Publish Docker Images
 
 on:
     push:
-        branches: [develop,master]
+        branches:
+          - develop
+          - master
 
 jobs:
     ever-api:
