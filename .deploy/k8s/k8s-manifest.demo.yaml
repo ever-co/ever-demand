@@ -111,17 +111,17 @@ spec:
                       - name: SENTRY_DSN
                         value: 'https://7cd381188b6f446ca0e69185227b9031@o51327.ingest.sentry.io/4397292'
                       - name: DB_URI
-                        value: $DB_URI
+                        value: '$DB_URI'
                       - name: DB_HOST
-                        value: $DB_HOST
+                        value: '$DB_HOST'
                       - name: DB_SSL_MODE
-                        value: $DB_SSL_MODE
+                        value: '$DB_SSL_MODE'
                       - name: DB_CA_CERT
-                        value: $DB_CA_CERT
+                        value: '$DB_CA_CERT'
                       - name: DB_USER
-                        value: $DB_USER
+                        value: '$DB_USER'
                       - name: DB_PASS
-                        value: $DB_PASS
+                        value: '$DB_PASS'
                       - name: DB_TYPE
                         value: 'mongodb'
                       - name: DB_NAME
