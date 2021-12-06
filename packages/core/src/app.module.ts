@@ -122,9 +122,9 @@ const connectionSettings: TypeOrmModuleOptions = {
 	entities,
 	synchronize: true,
 	useNewUrlParser: true,
-	autoReconnect: true,
-	reconnectTries: Number.MAX_VALUE,
-	poolSize: poolSize,
+	// autoReconnect: true,
+	// reconnectTries: Number.MAX_VALUE,
+	// poolSize: poolSize,
 	connectTimeoutMS: connectTimeoutMS,
 	logging: true,
 	logger: 'file', //Removes console logging, instead logs all queries in a file ormlogs.log

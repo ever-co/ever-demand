@@ -156,9 +156,9 @@ export class ServicesApp {
 				entities,
 				synchronize: true,
 				useNewUrlParser: true,
-				autoReconnect: true,
-				reconnectTries: Number.MAX_VALUE,
-				poolSize: ServicesApp._poolSize,
+				// autoReconnect: true,
+				// reconnectTries: Number.MAX_VALUE,
+				// poolSize: ServicesApp._poolSize,
 				connectTimeoutMS: ServicesApp._connectTimeoutMS,
 				logging: true,
 				logger: 'file', //Removes console logging, instead logs all queries in a file ormlogs.log
