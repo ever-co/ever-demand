@@ -116,7 +116,7 @@ export class ServicesApp {
 
 	static async CreateTypeORMConnection() {
 
-		console.log('Creating TypeORM Connection');
+		console.log('Creating TypeORM Connection...');
 
 		const typeORMLog = createEverLogger({ name: 'TypeORM' });
 
@@ -137,8 +137,11 @@ export class ServicesApp {
 			fs.writeFileSync(sslCertPath, sslCert);
 		}
 
+		// This is special connection we create during "bootstrap" of the system that is needed for our Repositories to use
+		// We also using another "default" connection defined in app.module.ts using `TypeOrmModule.forRoot(connectionSettings)` which will be used in other places.
 		const connectionSettings: ConnectionOptions =
 			{
+				// Note: do not change this connection name
 				name: 'typeorm',
 				// TODO: put this into settings (it's mongo only during testing of TypeORM integration!)
 				type: 'mongodb',
@@ -153,9 +156,9 @@ export class ServicesApp {
 				entities,
 				synchronize: true,
 				useNewUrlParser: true,
-				// autoReconnect: true,
-				// reconnectTries: Number.MAX_VALUE,
-				// poolSize: ServicesApp._poolSize,
+				autoReconnect: true,
+				reconnectTries: Number.MAX_VALUE,
+				poolSize: ServicesApp._poolSize,
 				connectTimeoutMS: ServicesApp._connectTimeoutMS,
 				logging: true,
 				logger: 'file', //Removes console logging, instead logs all queries in a file ormlogs.log
@@ -194,21 +197,34 @@ export class ServicesApp {
 
 	private async _connectDB() {
 		try {
-			const connectionOptions = {
-				useCreateIndex: true,
-				useNewUrlParser: true,
-				autoReconnect: true,
-				useFindAndModify: false,
-				reconnectTries: Number.MAX_VALUE,
-				poolSize: ServicesApp._poolSize,
+
+			const isSSL = process.env.DB_SSL_MODE && process.env.DB_SSL_MODE !== 'false';
+
+			// let's temporary save Cert in ./tmp/logs folder because we have write access to it
+			let sslCertPath = `${env.LOGS_PATH}/ca-certificate.crt`;
+
+			console.log(`Using temp SSL Cert Path: ${sslCertPath}`);
+
+        	if (isSSL) {
+				const base64data = process.env.DB_CA_CERT;
+				const buff = Buffer.from(base64data, 'base64');
+				const sslCert = buff.toString('ascii');
+				fs.writeFileSync(sslCertPath, sslCert);
+			}
+
+			const connectionOptions: mongoose.ConnectOptions = {
+				ssl: isSSL,
+				sslCA: isSSL ? sslCertPath : undefined,
+				user: process.env.DB_USER,
+          		pass: process.env.DB_PASS,
+          		dbName: process.env.DB_NAME || 'ever_development',
 				connectTimeoutMS: ServicesApp._connectTimeoutMS,
-				useUnifiedTopology: true,
+				appName: 'ever_demand'
 			};
 
 			const mongoConnect: mongoose.Mongoose = await mongoose.connect(
 				env.DB_URI,
-				// TODO: connectionOptions now changed to ConnectOptions, so we do not use anymore connectionOptions above
-				// connectionOptions
+				connectionOptions
 			);
 
 			this.db = mongoConnect.connection;

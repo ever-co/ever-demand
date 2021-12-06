@@ -101,9 +101,14 @@ if (isSSL) {
 // TODO: put to config
 const connectTimeoutMS: number = 40000;
 
-// NOTE: same settings are used in services.app.ts, we should unify both!
+// TODO: put to config (we also may want to increase it)
+const poolSize: number = 50;
+
+// We creating default connection for TypeORM.
+// It might be used in every place where we do not explicitly require connection with some name.
+// For example, we are using connection named "typeorm" inside our repositories
 const connectionSettings: TypeOrmModuleOptions = {
-	name: 'app',
+	// Note: do not change this connection name, it should be default one!
 	// TODO: put this into settings (it's mongo only during testing of TypeORM integration!)
 	type: 'mongodb',
 	url: env.DB_URI,
@@ -117,7 +122,9 @@ const connectionSettings: TypeOrmModuleOptions = {
 	entities,
 	synchronize: true,
 	useNewUrlParser: true,
-	// autoReconnect: true,
+	autoReconnect: true,
+	reconnectTries: Number.MAX_VALUE,
+	poolSize: poolSize,
 	connectTimeoutMS: connectTimeoutMS,
 	logging: true,
 	logger: 'file', //Removes console logging, instead logs all queries in a file ormlogs.log
