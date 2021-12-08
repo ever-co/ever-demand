@@ -43,7 +43,7 @@
     "@angular-devkit/core" "12.2.13"
     rxjs "6.6.7"
 
-"@angular-devkit/build-angular@^12.0.0", "@angular-devkit/build-angular@^12.2.10", "@angular-devkit/build-angular@~12.2.10", "@angular-devkit/build-angular@~12.2.7", "@angular-devkit/build-angular@~13.0.4":
+"@angular-devkit/build-angular@^12.0.0", "@angular-devkit/build-angular@^12.2.10", "@angular-devkit/build-angular@^13.0.4", "@angular-devkit/build-angular@~12.2.10", "@angular-devkit/build-angular@~12.2.7":
   version "12.2.13"
   resolved "https://registry.yarnpkg.com/@angular-devkit/build-angular/-/build-angular-12.2.13.tgz#f5564d3ec9db132956473bb904bb3590482f5b36"
   integrity sha512-iJ1P/RZ1hk2n/HtEqB5ohXvHa+Hf0BXShYskSGrn6/klcTb0eJTCREsFxHk7mNEmRIGPWkjbLAslqpPgwiagXg==
@@ -5257,10 +5257,10 @@
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-12.2.13.tgz#44d711edfa39d175a2d655aa5c6f9968dfedcc35"
   integrity sha512-krAwMyRqOaC1S0+IxAFid9F6A6ABip2DJ0tgCx26X+1Vw/d1GKtV9ZqDJFizMf5k1ywl9aBlhOazWpq5d6i+gw==
 
-"@ngtools/webpack@^12.2.10":
-  version "12.2.14"
-  resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-12.2.14.tgz#5ee931d650a3d0a5ac18af4ff6c936818d6d886a"
-  integrity sha512-dla6JgLWKAo7k4K3O+ouo104wO3BFs+MIOCXoGF4Lp/1pKPSt0orYmvZFBkDZPmyBFYRw9wpL2WHnAAyip40Cw==
+"@ngtools/webpack@^13.0.4":
+  version "13.0.4"
+  resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-13.0.4.tgz#9389c95fdbefb48fe061a30d81aab2f83bbf2081"
+  integrity sha512-kH0kYOQvbv6SnVdcdi21AbJo17H1HSGlCy/8C1ujLdgtT6enKMnx9onYIoZSmb5U98GqYc+DV/W0HwpHwRcOoQ==
 
 "@ngx-translate/core@^13.0.0":
   version "13.0.0"
