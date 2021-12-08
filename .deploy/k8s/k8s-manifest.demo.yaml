@@ -37,13 +37,81 @@ metadata:
 spec:
     type: LoadBalancer
     selector:
-        app: ever-demo-shop
+        app: ever-demo-shop-web-angular
     ports:
         - name: http
           protocol: TCP
           port: 443
           targetPort: 4200
 
+---
+kind: Service
+apiVersion: v1
+metadata:
+    name: ever-demo-mobile-shop-lb
+    annotations:
+        service.beta.kubernetes.io/do-loadbalancer-name: 'mobileshopdemo.ever.co'
+        service.beta.kubernetes.io/do-loadbalancer-protocol: 'http2'
+        service.beta.kubernetes.io/do-loadbalancer-http2-ports: '443'
+        # Replace with your Certificate Id. You can get a list of Ids with 'doctl compute certificate list'
+        service.beta.kubernetes.io/do-loadbalancer-certificate-id: 'a93346c1-d63b-4c33-84c5-4589787428ca'
+        service.beta.kubernetes.io/do-loadbalancer-size-slug: 'lb-small'
+        service.beta.kubernetes.io/do-loadbalancer-hostname: 'mobileshopdemo.ever.co'
+spec:
+    type: LoadBalancer
+    selector:
+        app: ever-demo-shop-mobile-ionic
+    ports:
+        - name: http
+          protocol: TCP
+          port: 443
+          targetPort: 4201
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+    name: ever-demo-carrier-mobile-ionic-lb
+    annotations:
+        service.beta.kubernetes.io/do-loadbalancer-name: 'mobilecarrierdemo.ever.co'
+        service.beta.kubernetes.io/do-loadbalancer-protocol: 'http2'
+        service.beta.kubernetes.io/do-loadbalancer-http2-ports: '443'
+        # Replace with your Certificate Id. You can get a list of Ids with 'doctl compute certificate list'
+        service.beta.kubernetes.io/do-loadbalancer-certificate-id: 'a93346c1-d63b-4c33-84c5-4589787428ca'
+        service.beta.kubernetes.io/do-loadbalancer-size-slug: 'lb-small'
+        service.beta.kubernetes.io/do-loadbalancer-hostname: 'mobilecarrierdemo.ever.co'
+spec:
+    type: LoadBalancer
+    selector:
+        app: ever-demo-carrier-mobile-ionic
+    ports:
+        - name: http
+          protocol: TCP
+          port: 443
+          targetPort: 4203
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+    name: ever-demo-merchant-tablet-ionic-lb
+    annotations:
+        service.beta.kubernetes.io/do-loadbalancer-name: 'merchantdemo.ever.co'
+        service.beta.kubernetes.io/do-loadbalancer-protocol: 'http2'
+        service.beta.kubernetes.io/do-loadbalancer-http2-ports: '443'
+        # Replace with your Certificate Id. You can get a list of Ids with 'doctl compute certificate list'
+        service.beta.kubernetes.io/do-loadbalancer-certificate-id: 'a93346c1-d63b-4c33-84c5-4589787428ca'
+        service.beta.kubernetes.io/do-loadbalancer-size-slug: 'lb-small'
+        service.beta.kubernetes.io/do-loadbalancer-hostname: 'merchantdemo.ever.co'
+spec:
+    type: LoadBalancer
+    selector:
+        app: ever-demo-merchant-tablet-ionic
+    ports:
+        - name: http
+          protocol: TCP
+          port: 443
+          targetPort: 4202
 
 ---
 kind: Service

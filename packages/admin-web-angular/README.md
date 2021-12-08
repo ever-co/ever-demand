@@ -1,1 +1,1 @@
-# Ever Demand Admin
+# Ever Demand Admin Web App (Angular)

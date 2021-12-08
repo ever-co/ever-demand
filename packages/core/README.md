@@ -1,4 +1,4 @@
-# Ever Backend API
+# Ever Demand Backend API (Core)
 
 This is a real-time API backend project, written in [TypeScript](https://www.typescriptlang.org/) using [NodeJS](https://nodejs.org/), [Nest](https://nestjs.com), [ExpressJS](https://expressjs.com/) and other libraries.
 

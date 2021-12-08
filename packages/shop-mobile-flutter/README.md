@@ -1,1 +1,1 @@
-# Ever Shop Mobile App (Flutter)
+# Ever Shop Mobile App (Flutter version)
