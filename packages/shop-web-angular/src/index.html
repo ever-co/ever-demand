@@ -4,28 +4,11 @@
 		<meta charset="utf-8" />
 		<meta http-equiv="x-ua-compatible" content="ie=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>
-			<%= htmlWebpackPlugin.options.title %>
-		</title>
-		<meta
-			name="description"
-			content="<%= htmlWebpackPlugin.options.metadata.description %>"
-		/>
-		<!-- base url -->
-		<base href="<%= htmlWebpackPlugin.options.metadata.baseUrl %>" />
-
-		<% if (webpackConfig.htmlElements.headTags) { %>
-		<!-- Configured Head Tags  -->
-		<%= webpackConfig.htmlElements.headTags %> <% } %> <%=
-		htmlWebpackPlugin.files.webpackManifest %> <% if
-		(htmlWebpackPlugin.options.metadata.isDevServer &&
-		htmlWebpackPlugin.options.metadata.HMR !== true) { %>
-		<!-- Webpack Dev Server reload -->
-		<script src="/webpack-dev-server.js"></script>
-		<% } %>
+		<title>Ever</title>
+		<meta name="description" content="Ever Web Shop" />
+		<base href="/">
 
 		<!-- Async Google Tag Manager: change gtmKey value inside config.prod.conf to your to be your site's ID-->
-		<% if (htmlWebpackPlugin.options.gtmKey) { %>
 		<!-- Google Tag Manager -->
 		<script>
 			(function (w, d, s, l, i) {
@@ -45,14 +28,13 @@
 				document,
 				'script',
 				'dataLayer',
-				'<%= htmlWebpackPlugin.options.gtmKey %>'
+				'GTM-XXXXXXX'
 			);
 		</script>
 		<!-- End Google Tag Manager -->
-		<% } %>
 		<!-- End Google Analytics -->
 
-		<!-- CSS will be injected by webpack here -->
+		<!-- CSS will be injected here -->
 		<!-- Preload link tags will be injected by webpack here -->
 
 		<style type="text/css">
@@ -79,9 +61,7 @@
 				width: 200px;
 				height: 200px;
 				position: absolute;
-
-				background: url(./assets/img/ever-logo.svg) center center
-					no-repeat;
+				background: url(./assets/img/ever-logo.svg) center center no-repeat;
 			}
 
 			@keyframes example {
@@ -99,7 +79,6 @@
 	</head>
 
 	<body>
-		<% if (htmlWebpackPlugin.options.gtmKey) { %>
 		<!-- Google Tag Manager (noscript) -->
 		<noscript
 			><iframe
@@ -110,15 +89,14 @@
 			></iframe
 		></noscript>
 		<!-- End Google Tag Manager (noscript) -->
-		<% } %>
 
 		<app>
-			<!-- loading layout replaced by app after startupp -->
+			<!-- loading layout replaced by app after startup -->
 			<div class="app-loading">
 				<div class="logo-loading"></div>
 				<!-- <svg class="spinner" viewBox="25 25 50 50">
-						<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
-					</svg> -->
+					<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+				</svg> -->
 			</div>
 		</app>
 

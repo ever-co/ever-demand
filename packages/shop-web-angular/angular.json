@@ -15,9 +15,9 @@
 						"preserveSymlinks": true,
 						"outputPath": "build",
 						"index": "src/index.html",
-						"main": "src/main.browser.ts",
-						"tsConfig": "tsconfig.webpack.json",
-						"polyfills": "src/polyfills.browser.ts",
+						"main": "src/main.ts",
+						"tsConfig": "tsconfig.app.json",
+						"polyfills": "src/polyfills.ts",
 						"assets": [
 							"src/assets",
 							"src/favicon.ico",
