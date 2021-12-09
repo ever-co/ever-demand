@@ -141,15 +141,15 @@ spec:
     selector:
         app: ever-demo-api
     ports:
-        - name: rest_api_http
+        - name: rest-api-http
           protocol: TCP
           port: 443
           targetPort: 5500
-        - name: gql_api_http
+        - name: gql-api-http
           protocol: TCP
           port: 5555
           targetPort: 5555
-        - name: gql_subscriptions_ws
+        - name: gql-subscriptions-ws
           protocol: TCP
           port: 5050
           targetPort: 5050
