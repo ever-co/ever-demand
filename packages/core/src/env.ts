@@ -92,10 +92,10 @@ export const env: Env = cleanEnv(
 		WEB_MEMORY: num({ default: 2048 }),
 
 		API_HOST: str({ default: '127.0.0.1'}),
-		HTTPSPORT: port({ default: 5501 }),
+		HTTPSPORT: port({ default: 2087 }),
 		HTTPPORT: port({ default: 5500 }),
-		GQLPORT: port({ default: 5555 }),
-		GQLPORT_SUBSCRIPTIONS: port({ default: 5050 }),
+		GQLPORT: port({ default: 8443 }),
+		GQLPORT_SUBSCRIPTIONS: port({ default: 2086 }),
 
 		HTTPS_CERT_PATH: str({ default: 'certificates/https/cert.pem' }),
 		HTTPS_KEY_PATH: str({ default: 'certificates/https/key.pem' }),

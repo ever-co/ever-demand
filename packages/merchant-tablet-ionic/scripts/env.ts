@@ -61,12 +61,12 @@ export const env: Env = cleanEnv(
 		production: bool({ default: false }),
 
 		SERVICES_ENDPOINT: str({ default: 'http://localhost:5500' }),
-		HTTPS_SERVICES_ENDPOINT: str({ default: 'https://localhost:5501' }),
+		HTTPS_SERVICES_ENDPOINT: str({ default: 'https://localhost:2087' }),
 
 		// Graphql endpoints for apollo services
-		GQL_ENDPOINT: str({ default: 'http://localhost:5555/graphql' }),
+		GQL_ENDPOINT: str({ default: 'http://localhost:8443/graphql' }),
 		GQL_SUBSCRIPTIONS_ENDPOINT: str({
-			default: 'ws://localhost:5050/subscriptions',
+			default: 'ws://localhost:2086/subscriptions',
 		}),
 
 		APP_VERSION: str({ default: '0.2.0' }),

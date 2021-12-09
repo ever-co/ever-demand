@@ -2,7 +2,7 @@ import { createServer } from 'http';
 
 import { SUBSCRIPTION_SERVER } from './subscription.constants';
 
-export const createSubscriptionProviders = (port: number = 5050) => [
+export const createSubscriptionProviders = (port: number) => [
 	{
 		provide: SUBSCRIPTION_SERVER,
 

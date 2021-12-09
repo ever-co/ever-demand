@@ -86,12 +86,12 @@ export const env: Env = cleanEnv(
 		DEFAULT_LANGUAGE: str({ default: 'en' }),
 
 		// Graphql endpoints for apollo services
-		GQL_ENDPOINT: str({ default: 'http://localhost:5555/graphql' }),
+		GQL_ENDPOINT: str({ default: 'http://localhost:8443/graphql' }),
 		GQL_SUBSCRIPTIONS_ENDPOINT: str({
-			default: 'ws://localhost:5050/subscriptions',
+			default: 'ws://localhost:2086/subscriptions',
 		}),
 		SERVICES_ENDPOINT: str({ default: 'http://localhost:5500' }),
-		HTTPS_SERVICES_ENDPOINT: str({ default: 'https://localhost:5501' }),
+		HTTPS_SERVICES_ENDPOINT: str({ default: 'https://localhost:2087' }),
 
 		// For maintenance micro service. Ever maintenance API URL: https://maintenance.ever.co/status
 		SETTINGS_APP_TYPE: str({ default: 'carrier-mobile' }),

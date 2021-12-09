@@ -1,6 +1,6 @@
 generates:
   ./ever-types.ts:
-    schema: http://localhost:5555/graphql
+    schema: http://localhost:8443/graphql
     documents: src/**/*.{ts,tsx}
     pluckConfig:
       modules:

@@ -48,10 +48,10 @@ export const env: Env = cleanEnv(
 		DEFAULT_LANGUAGE: str({ default: 'en-US' }),
 
 		SERVICES_ENDPOINT: str({ default: 'http://localhost:5500' }),
-		HTTPS_SERVICES_ENDPOINT: str({ default: 'https://localhost:5501' }),
-		GQL_ENDPOINT: str({ default: 'http://localhost:5555/graphql' }),
+		HTTPS_SERVICES_ENDPOINT: str({ default: 'https://localhost:2087' }),
+		GQL_ENDPOINT: str({ default: 'http://localhost:8443/graphql' }),
 		GQL_SUBSCRIPTIONS_ENDPOINT: str({
-			default: 'ws://localhost:5050/subscriptions',
+			default: 'ws://localhost:2086/subscriptions',
 		}),
 
 		AUTH_LOGO: str({ default: 'assets/img/ever-logo.svg' }),

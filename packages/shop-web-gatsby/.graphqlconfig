@@ -8,7 +8,7 @@
         "introspect": true
       },
       "ever": {
-        "url": "https://apidemo.ever.co:5555/graphql",
+        "url": "https://apidemo.ever.co:8443/graphql",
         "introspect": true
       }
     }

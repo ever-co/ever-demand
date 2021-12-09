@@ -131,9 +131,9 @@ services:
         #    - core_node_modules:/srv/ever/packages/core/node_modules
         ports:
             - 5500:5500
-            - 5501:5501
-            - 5050:5050
-            - 5555:5555
+            - 2087:2087
+            - 2086:2086
+            - 8443:8443
         networks:
             - overlay
 
