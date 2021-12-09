@@ -121,20 +121,38 @@ metadata:
     annotations:
         service.beta.kubernetes.io/do-loadbalancer-name: 'apidemo.ever.co'
         service.beta.kubernetes.io/do-loadbalancer-protocol: 'http2'
-        service.beta.kubernetes.io/do-loadbalancer-http2-ports: '443'
+
+        # GraphQL Subscriptions use WebSockets on Port 5050
+        service.beta.kubernetes.io/do-loadbalancer-http-ports: '5050'
+
+        # Rest API works on 443, GraphQL API works on 5555
+        service.beta.kubernetes.io/do-loadbalancer-http2-ports: '443,5555'
+
         # Replace with your Certificate Id. You can get a list of Ids with 'doctl compute certificate list'
         service.beta.kubernetes.io/do-loadbalancer-certificate-id: 'a93346c1-d63b-4c33-84c5-4589787428ca'
         service.beta.kubernetes.io/do-loadbalancer-size-slug: 'lb-small'
         service.beta.kubernetes.io/do-loadbalancer-hostname: 'apidemo.ever.co'
+
+        service.beta.kubernetes.io/do-loadbalancer-sticky-sessions-type: 'cookies'
+        service.beta.kubernetes.io/do-loadbalancer-sticky-sessions-cookie-name: 'route'
+        service.beta.kubernetes.io/do-loadbalancer-sticky-sessions-cookie-ttl: '34650'
 spec:
     type: LoadBalancer
     selector:
         app: ever-demo-api
     ports:
-        - name: http
+        - name: rest_api_http
           protocol: TCP
           port: 443
           targetPort: 5500
+        - name: gql_api_http
+          protocol: TCP
+          port: 5555
+          targetPort: 5555
+        - name: gql_subscriptions_ws
+          protocol: TCP
+          port: 5050
+          targetPort: 5050
 
 ---
 apiVersion: apps/v1
@@ -168,6 +186,7 @@ spec:
                       #   value: '5501'
                       - name: GQLPORT
                         value: '5555'
+                      # WebSockets (WS) used for GraphQL Subscriptions
                       - name: GQLPORT_SUBSCRIPTIONS
                         value: '5050'
                       - name: ADMIN_PASSWORD_RESET
@@ -239,7 +258,7 @@ spec:
                       # - name: SERVICES_ENDPOINT
                       #   value: ''
                       - name: GQL_ENDPOINT
-                        value: 'http://apidemo.ever.co:5555/graphql'
+                        value: 'https://apidemo.ever.co:5555/graphql'
                       - name: GQL_SUBSCRIPTIONS_ENDPOINT
                         value: 'ws://apidemo.ever.co:5050/subscriptions'
                       - name: SENTRY_DSN

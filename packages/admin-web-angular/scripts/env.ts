@@ -9,6 +9,9 @@ import { cleanEnv, num, str, bool, CleanOptions } from 'envalid';
 export type Env = Readonly<{
 	production: boolean;
 
+	// Set to true if build / runs in Docker
+	IS_DOCKER: boolean;
+
 	SERVICES_ENDPOINT: string;
 	HTTPS_SERVICES_ENDPOINT: string;
 	GQL_ENDPOINT: string;
@@ -57,6 +60,8 @@ export const env: Env = cleanEnv(
 	process.env,
 	{
 		production: bool({ default: false }),
+
+		IS_DOCKER: bool({ default: false }),
 
 		SERVICES_ENDPOINT: str({ default: 'http://localhost:5500' }),
 		HTTPS_SERVICES_ENDPOINT: str({ default: 'https://localhost:5501' }),
