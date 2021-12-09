@@ -81,7 +81,6 @@
 							"optimization": true,
 							"outputHashing": "all",
 							"sourceMap": false,
-							"extractCss": true,
 							"namedChunks": false,
 							"aot": true,
 							"extractLicenses": true,
@@ -163,14 +162,6 @@
 							}
 						]
 					}
-				},
-				"lint": {
-					"builder": "@angular-devkit/build-angular:tslint",
-					"options": {
-						"tsConfig": ["tsconfig.json", "tsconfig.spec.json"],
-						"typeCheck": true,
-						"exclude": ["**/node_modules/**/*"]
-					}
 				}
 			}
 		},
@@ -184,13 +175,6 @@
 					"options": {
 						"protractorConfig": "./protractor.conf.js",
 						"devServerTarget": "ever-admin:serve"
-					}
-				},
-				"lint": {
-					"builder": "@angular-devkit/build-angular:tslint",
-					"options": {
-						"tsConfig": ["tsconfig.e2e.json"],
-						"exclude": ["**/node_modules/**/*"]
 					}
 				}
 			}
