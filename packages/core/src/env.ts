@@ -123,8 +123,8 @@ export const env: Env = cleanEnv(
 		FACEBOOK_APP_ID: str({ default: '' }),
 		FACEBOOK_APP_SECRET: str({ default: '' }),
 
-		EXPRESS_SESSION_SECRET: str({ default: 'ever-demand' }),
-		JWT_SECRET: str({ default: 'ever-demand' }),
+		EXPRESS_SESSION_SECRET: str({ default: 'demand' }),
+		JWT_SECRET: str({ default: 'secretKey' }),
 
 		ADMIN_PASSWORD_BCRYPT_SALT_ROUNDS: num({
 			desc: 'Used for passwords encryption, recommended value: 12',
