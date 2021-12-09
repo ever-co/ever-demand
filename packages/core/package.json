@@ -180,7 +180,7 @@
 		"rimraf": "^3.0.2",
 		"ts-node": "~10.3.0",
 		"tslint": "^6.1.1",
-		"typescript": "~4.2.4"
+		"typescript": "~4.4.4"
 	},
 	"nyc": {
 		"include": [
