@@ -14,6 +14,9 @@ export type Env = Readonly<{
 	WEB_CONCURRENCY: number;
 	WEB_MEMORY: number;
 
+	EXPRESS_SESSION_SECRET: string;
+
+	API_HOST: string;
 	HTTPSPORT: number;
 	HTTPPORT: number;
 	GQLPORT: number;
@@ -88,6 +91,7 @@ export const env: Env = cleanEnv(
 		WEB_CONCURRENCY: num({ default: 1 }),
 		WEB_MEMORY: num({ default: 2048 }),
 
+		API_HOST: str({ default: '127.0.0.1'}),
 		HTTPSPORT: port({ default: 5501 }),
 		HTTPPORT: port({ default: 5500 }),
 		GQLPORT: port({ default: 5555 }),
@@ -119,7 +123,8 @@ export const env: Env = cleanEnv(
 		FACEBOOK_APP_ID: str({ default: '' }),
 		FACEBOOK_APP_SECRET: str({ default: '' }),
 
-		JWT_SECRET: str({ default: 'default' }),
+		EXPRESS_SESSION_SECRET: str({ default: 'ever-demand' }),
+		JWT_SECRET: str({ default: 'ever-demand' }),
 
 		ADMIN_PASSWORD_BCRYPT_SALT_ROUNDS: num({
 			desc: 'Used for passwords encryption, recommended value: 12',

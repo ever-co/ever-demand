@@ -179,6 +179,8 @@ spec:
                         value: 'true'
                       - name: NODE_ENV
                         value: 'production'
+                      - name: API_HOST
+                        value: '0.0.0.0'
                       - name: HTTPPORT
                         value: '5500'
                       # We use LB, so no need to expose HTTPS, only HTTPS required
@@ -222,7 +224,7 @@ spec:
                   ports:
                       - containerPort: 5500
                         protocol: TCP
-                      # We use LB, so no need to expose HTTPS, only HTTPS required
+                      # We use LB, so no need to expose HTTPS, only HTTP required
                       # - containerPort: 5501
                       #   protocol: TCP
                       - containerPort: 5555

@@ -415,12 +415,13 @@ export class ServicesApp {
 
 		this.httpServer.setTimeout(timeout);
 
+		this.expressApp.set('host', env.API_HOST);
 		this.expressApp.set('httpsPort', env.HTTPSPORT);
 		this.expressApp.set('httpPort', env.HTTPPORT);
 		this.expressApp.set('environment', env.NODE_ENV);
 
 		// CORS configuration
-		// TODO: we may want to restric access some way
+		// TODO: we may want to restrict access some way
 		// (but needs to be careful because we serve some HTML pages for all clients too, e.g. About Us)
 		this.expressApp.use(
 			(<any>cors)({
@@ -494,6 +495,7 @@ export class ServicesApp {
 		this._setupAuthRoutes();
 		this._setupStaticRoutes();
 
+		const host = this.expressApp.get('host');
 		const httpsPort = this.expressApp.get('httpsPort');
 		const httpPort = this.expressApp.get('httpPort');
 
@@ -501,6 +503,7 @@ export class ServicesApp {
 
 		this.log.info(
 			{
+				host,
 				httpsPort,
 				httpPort,
 				environment,
@@ -512,13 +515,13 @@ export class ServicesApp {
 
 		if (httpsPort && httpsPort > 0 && this.httpsServer) {
 			// app listen on https
-			this.httpsServer.listen(httpsPort, () => {
+			this.httpsServer.listen(httpsPort, host, () => {
 				this.log.info(
-					{ port: httpsPort },
+					{ port: httpsPort, host: host },
 					'Express https server listening'
 				);
 				console.log(
-					`Express https server listening on port ${httpsPort}`
+					`Express https server listening on ${host}:${httpsPort}`
 				);
 			});
 		} else {
@@ -529,13 +532,13 @@ export class ServicesApp {
 
 		if (httpPort && httpPort > 0) {
 			// app listen on http
-			this.httpServer.listen(httpPort, () => {
+			this.httpServer.listen(httpPort, host, () => {
 				this.log.info(
-					{ port: httpPort },
+					{ port: httpPort, host: host },
 					'Express http server listening'
 				);
 				console.log(
-					`Express http server listening on port ${httpPort}`
+					`Express http server listening on ${host}:${httpPort}`
 				);
 			});
 		}

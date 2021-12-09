@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import fs from 'fs';
 import {
 	MiddlewareConsumer,
@@ -73,9 +74,10 @@ const mergeTypes = (types: any[], options?: { schemaDefinition?: boolean, all?: 
   };
 
 const port = env.GQLPORT;
+const host = env.API_HOST;
 
 const log: Logger = createEverLogger({
-	name: 'ApplicationModule from NestJS',
+	name: 'NestJS ApplicationModule',
 });
 
 // Add here all CQRS command handlers
@@ -152,7 +154,7 @@ const connectionSettings: TypeOrmModuleOptions = {
 		GraphQLModule.forRoot({
 			typePaths: ['./**/*.graphql'],
 			installSubscriptionHandlers: true,
-			debug: true,
+			debug: !env.isProd,
 			playground: true,
 			context: ({ req, res }) => ({
 				req,
@@ -196,6 +198,9 @@ export class ApplicationModule implements NestModule, OnModuleInit {
 	}
 
 	configure(consumer: MiddlewareConsumer) {
+
+		console.log(chalk.green(`Configuring NestJS ApplicationModule`));
+
 		// trick for GraphQL vs MongoDB ObjectId type.
 		// See https://github.com/apollographql/apollo-server/issues/1633 and
 		// https://github.com/apollographql/apollo-server/issues/1649#issuecomment-420840287
@@ -221,9 +226,8 @@ export class ApplicationModule implements NestModule, OnModuleInit {
 
 		*/
 
-		log.info(
-			`GraphQL playground available at http://localhost:${port}/graphql`
-		);
+		log.info(`GraphQL Playground available at http://${host}:${port}/graphql`);
+		console.log(chalk.green(`GraphQL Playground available at http://${host}:${port}/graphql`));
 	}
 
 	/*
@@ -233,8 +237,8 @@ export class ApplicationModule implements NestModule, OnModuleInit {
 
 		const playgroundOptions: ApolloServerPluginLandingPageGraphQLPlaygroundOptions =
 			{
-				endpoint: `http://localhost:${port}/graphql`,
-				subscriptionEndpoint: `ws://localhost:${port}/subscriptions`,
+				endpoint: `http://${host}:${port}/graphql`,
+				subscriptionEndpoint: `ws://${host}:${port}/subscriptions`,
 				settings: {
 					'editor.theme': 'dark'
 				}
