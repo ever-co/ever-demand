@@ -11,17 +11,16 @@ import { GoogleMapModule } from 'app/+login/byLocation/google-map/google-map.mod
 const COMPONENTS = [LocationPopupComponent];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		MatDialogModule,
-		MatButtonModule,
-		MatCardModule,
-		TranslateModule.forChild(),
-		LocationFormModule,
-		GoogleMapModule,
-	],
-	declarations: COMPONENTS,
-	entryComponents: COMPONENTS,
-	exports: COMPONENTS,
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatCardModule,
+        TranslateModule.forChild(),
+        LocationFormModule,
+        GoogleMapModule,
+    ],
+    declarations: COMPONENTS,
+    exports: COMPONENTS
 })
 export class LocationPopupModalModule {}

@@ -22,32 +22,29 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-	declarations: [
-		OrdersContainerComponent,
-		OrdersComponent,
-		OrderComponent,
-		CarrierLocationComponent,
-		// MessagePopUpComponent
-	],
-	entryComponents: [CarrierLocationComponent],
-	imports: [
-		CommonModule,
-		MessagePopUpModalModule,
-		TranslateModule.forChild({
-			loader: {
-				provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
-				deps: [HttpClient],
-			},
-		}),
-		FormsModule,
-		RouterModule.forChild(routes),
-
-		MatDialogModule,
-		MatButtonModule,
-		MatCardModule,
-
-		WarehouseLogoModule,
-	],
+    declarations: [
+        OrdersContainerComponent,
+        OrdersComponent,
+        OrderComponent,
+        CarrierLocationComponent,
+        // MessagePopUpComponent
+    ],
+    imports: [
+        CommonModule,
+        MessagePopUpModalModule,
+        TranslateModule.forChild({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient],
+            },
+        }),
+        FormsModule,
+        RouterModule.forChild(routes),
+        MatDialogModule,
+        MatButtonModule,
+        MatCardModule,
+        WarehouseLogoModule,
+    ]
 })
 export class OrdersModule {}
