@@ -11,18 +11,17 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-	imports: [
-		FormWizardModule,
-		Ng2SmartTableModule,
-		FileUploadModule,
-		FormsModule,
-		ReactiveFormsModule,
-		TranslateModule.forChild(),
-		ThemeModule,
-		NgSelectModule,
-	],
-	entryComponents: [TrackComponent],
-	declarations: [TrackComponent, CarrierTrackingComponent],
-	providers: [NgbActiveModal],
+    imports: [
+        FormWizardModule,
+        Ng2SmartTableModule,
+        FileUploadModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TranslateModule.forChild(),
+        ThemeModule,
+        NgSelectModule,
+    ],
+    declarations: [TrackComponent, CarrierTrackingComponent],
+    providers: [NgbActiveModal]
 })
 export class TrackModule {}

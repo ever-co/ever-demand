@@ -18,16 +18,15 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-	imports: [
-		ThemeModule,
-		ToasterModule,
-		TranslateModule.forChild(),
-		HighlightModule,
-		Ng2SmartTableModule,
-		WarehouseTableModule,
-	],
-	declarations: COMPONENTS,
-	exports: COMPONENTS,
-	entryComponents: COMPONENTS,
+    imports: [
+        ThemeModule,
+        ToasterModule,
+        TranslateModule.forChild(),
+        HighlightModule,
+        Ng2SmartTableModule,
+        WarehouseTableModule,
+    ],
+    declarations: COMPONENTS,
+    exports: COMPONENTS
 })
 export class CustomerWarehousesTableModule {}

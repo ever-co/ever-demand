@@ -5,9 +5,8 @@ import { ByCodeModalComponent } from './by-code-modal.component';
 import { NbButtonModule } from '@nebular/theme';
 
 @NgModule({
-	imports: [ThemeModule, TranslateModule.forChild(), NbButtonModule],
-	exports: [ByCodeModalComponent],
-	declarations: [ByCodeModalComponent],
-	entryComponents: [ByCodeModalComponent],
+    imports: [ThemeModule, TranslateModule.forChild(), NbButtonModule],
+    exports: [ByCodeModalComponent],
+    declarations: [ByCodeModalComponent]
 })
 export class ByCodeModalModule {}

@@ -18,15 +18,14 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		ThemeModule,
-		NbSpinnerModule,
-		ConfirmationModalModule,
-		NbButtonModule,
-	],
-	declarations: COMPONENTS,
-	entryComponents: COMPONENTS,
-	exports: COMPONENTS,
+    imports: [
+        CommonModule,
+        ThemeModule,
+        NbSpinnerModule,
+        ConfirmationModalModule,
+        NbButtonModule,
+    ],
+    declarations: COMPONENTS,
+    exports: COMPONENTS
 })
 export class StoreProductsTableModule {}

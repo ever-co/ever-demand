@@ -26,37 +26,36 @@ import { FormsModule } from '@angular/forms';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		ThemeModule,
-		FormWizardModule,
-		Ng2SmartTableModule,
-		CarrierLocationModule,
-		CarrierMutationModule,
-		CarriersTableModule,
-		RenderComponentsModule,
-		ToasterModule.forRoot(),
-		TranslateModule.forChild(),
-		RouterModule.forChild(routes),
-		HighlightModule,
-		NbSpinnerModule,
-		CarrierOrdersTableModule,
-		NgSelectModule,
-		FormsModule,
-		NbButtonModule,
-	],
-	declarations: [
-		CarrierComponent,
-		CarrierInfoComponent,
-		CarrierOrdersStatusComponent,
-		CarrierOrdersComponent,
-		CarrierOrdersHistoryComponent,
-	],
-	entryComponents: [],
-	providers: [
-		CarriersService,
-		GeoLocationOrdersService,
-		CarriersOrdersService,
-	],
+    imports: [
+        CommonModule,
+        ThemeModule,
+        FormWizardModule,
+        Ng2SmartTableModule,
+        CarrierLocationModule,
+        CarrierMutationModule,
+        CarriersTableModule,
+        RenderComponentsModule,
+        ToasterModule.forRoot(),
+        TranslateModule.forChild(),
+        RouterModule.forChild(routes),
+        HighlightModule,
+        NbSpinnerModule,
+        CarrierOrdersTableModule,
+        NgSelectModule,
+        FormsModule,
+        NbButtonModule,
+    ],
+    declarations: [
+        CarrierComponent,
+        CarrierInfoComponent,
+        CarrierOrdersStatusComponent,
+        CarrierOrdersComponent,
+        CarrierOrdersHistoryComponent,
+    ],
+    providers: [
+        CarriersService,
+        GeoLocationOrdersService,
+        CarriersOrdersService,
+    ]
 })
 export class CarrierModule {}

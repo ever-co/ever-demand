@@ -8,14 +8,13 @@ import { TranslateModule } from '@ngx-translate/core';
 const COMPONENTS = [SimulationJsonComponent];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		ThemeModule,
-		JsonModalModule,
-		TranslateModule.forChild(),
-	],
-	declarations: COMPONENTS,
-	entryComponents: COMPONENTS,
-	exports: COMPONENTS,
+    imports: [
+        CommonModule,
+        ThemeModule,
+        JsonModalModule,
+        TranslateModule.forChild(),
+    ],
+    declarations: COMPONENTS,
+    exports: COMPONENTS
 })
 export class SimulationTableModule {}

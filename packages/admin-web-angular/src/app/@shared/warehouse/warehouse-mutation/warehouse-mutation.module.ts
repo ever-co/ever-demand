@@ -9,17 +9,16 @@ import { GoogleMapModule } from '../../forms/google-map/google-map.module';
 import { NbSpinnerModule } from '@nebular/theme';
 
 @NgModule({
-	imports: [
-		ThemeModule,
-		FormWizardModule,
-		TranslateModule.forChild(),
-		WarehouseFormsModule,
-		LocationFormModule,
-		GoogleMapModule,
-		NbSpinnerModule,
-	],
-	exports: [WarehouseMutationComponent],
-	declarations: [WarehouseMutationComponent],
-	entryComponents: [WarehouseMutationComponent],
+    imports: [
+        ThemeModule,
+        FormWizardModule,
+        TranslateModule.forChild(),
+        WarehouseFormsModule,
+        LocationFormModule,
+        GoogleMapModule,
+        NbSpinnerModule,
+    ],
+    exports: [WarehouseMutationComponent],
+    declarations: [WarehouseMutationComponent]
 })
 export class WarehouseMutationModule {}

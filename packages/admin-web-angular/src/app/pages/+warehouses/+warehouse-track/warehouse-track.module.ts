@@ -10,18 +10,17 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { WarehouseTrackComponent } from './warehouse-track.component';
 
 @NgModule({
-	imports: [
-		FormWizardModule,
-		Ng2SmartTableModule,
-		FileUploadModule,
-		FormsModule,
-		ReactiveFormsModule,
-		TranslateModule.forChild(),
-		ThemeModule,
-		NgSelectModule,
-	],
-	entryComponents: [WarehouseTrackComponent],
-	declarations: [WarehouseTrackComponent],
-	providers: [NgbActiveModal],
+    imports: [
+        FormWizardModule,
+        Ng2SmartTableModule,
+        FileUploadModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TranslateModule.forChild(),
+        ThemeModule,
+        NgSelectModule,
+    ],
+    declarations: [WarehouseTrackComponent],
+    providers: [NgbActiveModal]
 })
 export class WarehouseTrackModule {}
