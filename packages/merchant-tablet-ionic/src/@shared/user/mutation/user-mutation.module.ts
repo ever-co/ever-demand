@@ -9,17 +9,16 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-	imports: [
-		TranslateModule.forChild(),
-		UserFormsModule,
-		GoogleMapModule,
-		IonicModule,
-		CommonModule,
-		FormsModule,
-	],
-	providers: [UsersService],
-	exports: [UserMutationComponent],
-	declarations: [UserMutationComponent],
-	entryComponents: [UserMutationComponent],
+    imports: [
+        TranslateModule.forChild(),
+        UserFormsModule,
+        GoogleMapModule,
+        IonicModule,
+        CommonModule,
+        FormsModule,
+    ],
+    providers: [UsersService],
+    exports: [UserMutationComponent],
+    declarations: [UserMutationComponent]
 })
 export class UserMutationModule {}

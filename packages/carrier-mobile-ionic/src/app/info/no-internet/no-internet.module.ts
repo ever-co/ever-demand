@@ -13,14 +13,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	declarations: [NoInternetPage],
-	imports: [
-		CommonModule,
-		TranslateModule.forChild(),
-		RouterModule.forChild(routes),
-		IonicModule,
-	],
-	entryComponents: [NoInternetPage],
-	exports: [NoInternetPage],
+    declarations: [NoInternetPage],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        RouterModule.forChild(routes),
+        IonicModule,
+    ],
+    exports: [NoInternetPage]
 })
 export class NoInternerModule {}

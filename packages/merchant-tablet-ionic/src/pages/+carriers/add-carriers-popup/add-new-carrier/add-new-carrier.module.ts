@@ -13,23 +13,22 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-	declarations: [AddNewCarrierComponent],
-	entryComponents: [AddNewCarrierComponent],
-	exports: [AddNewCarrierComponent],
-	imports: [
-		FormWizardModule,
-		Ng2SmartTableModule,
-		FileUploadModule,
-		FormsModule,
-		ReactiveFormsModule,
-		CarrierBasicFormsModule,
-		CarrierAccountFormsModule,
-		CarrierLocationFormsModule,
-		GoogleMapModule,
-		TranslateModule.forChild(),
-		IonicModule,
-		CommonModule,
-		FormsModule,
-	],
+    declarations: [AddNewCarrierComponent],
+    exports: [AddNewCarrierComponent],
+    imports: [
+        FormWizardModule,
+        Ng2SmartTableModule,
+        FileUploadModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CarrierBasicFormsModule,
+        CarrierAccountFormsModule,
+        CarrierLocationFormsModule,
+        GoogleMapModule,
+        TranslateModule.forChild(),
+        IonicModule,
+        CommonModule,
+        FormsModule,
+    ]
 })
 export class AddNewCarriersPopupPageModule {}

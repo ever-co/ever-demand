@@ -17,35 +17,30 @@ import { OrderTypeComponent } from './order-type/order-type.component';
 import { MakeOrderCommentComponent } from './make-order/make-order-comment.component';
 
 @NgModule({
-	imports: [
-		Ng2SmartTableModule,
-		IonicModule,
-		CommonModule,
-		FormsModule,
-		UserMutationModule,
-		TranslateModule.forChild(),
-	],
-	declarations: [
-		OrderComponent,
-		ChooseCustomerOptionComponent,
-		SelectAddCustomerComponent,
-		MakeOrderComponent,
-		MakeOrderInputComponent,
-		MakeOrderCommentComponent,
-		OrderTypeComponent,
-		AddressComponent,
-	],
-	entryComponents: [
-		AddressComponent,
-		MakeOrderInputComponent,
-		MakeOrderCommentComponent,
-	],
-	exports: [
-		OrderComponent,
-		ChooseCustomerOptionComponent,
-		SelectAddCustomerComponent,
-		MakeOrderComponent,
-	],
-	providers: [UsersService, WarehouseOrdersService],
+    imports: [
+        Ng2SmartTableModule,
+        IonicModule,
+        CommonModule,
+        FormsModule,
+        UserMutationModule,
+        TranslateModule.forChild(),
+    ],
+    declarations: [
+        OrderComponent,
+        ChooseCustomerOptionComponent,
+        SelectAddCustomerComponent,
+        MakeOrderComponent,
+        MakeOrderInputComponent,
+        MakeOrderCommentComponent,
+        OrderTypeComponent,
+        AddressComponent,
+    ],
+    exports: [
+        OrderComponent,
+        ChooseCustomerOptionComponent,
+        SelectAddCustomerComponent,
+        MakeOrderComponent,
+    ],
+    providers: [UsersService, WarehouseOrdersService]
 })
 export class OrderModule {}

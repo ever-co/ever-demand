@@ -14,15 +14,14 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		TranslateModule.forChild(),
-		NgxBarcodeModule,
-		OrderInfoCommonModule,
-	],
-	entryComponents: [],
-	declarations: COMPONENTS,
-	providers: [],
-	exports: COMPONENTS,
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        NgxBarcodeModule,
+        OrderInfoCommonModule,
+    ],
+    declarations: COMPONENTS,
+    providers: [],
+    exports: COMPONENTS
 })
 export class TakeawayCommonModule {}

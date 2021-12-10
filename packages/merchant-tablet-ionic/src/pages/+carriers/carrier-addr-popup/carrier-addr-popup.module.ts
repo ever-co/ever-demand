@@ -6,13 +6,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-	declarations: [CarrierAddrPopupPage],
-	entryComponents: [CarrierAddrPopupPage],
-	imports: [
-		TranslateModule.forChild(),
-		IonicModule,
-		CommonModule,
-		FormsModule,
-	],
+    declarations: [CarrierAddrPopupPage],
+    imports: [
+        TranslateModule.forChild(),
+        IonicModule,
+        CommonModule,
+        FormsModule,
+    ]
 })
 export class CarrierAddrPopupPageModule {}

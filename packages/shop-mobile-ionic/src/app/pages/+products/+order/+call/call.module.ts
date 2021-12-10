@@ -14,15 +14,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		RouterModule.forChild(routes),
-		TranslateModule.forChild(),
-	],
-	declarations: [CallPage],
-	entryComponents: [CallPage],
-	exports: [CallPage],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        RouterModule.forChild(routes),
+        TranslateModule.forChild(),
+    ],
+    declarations: [CallPage],
+    exports: [CallPage]
 })
 export class CallPageModule {}

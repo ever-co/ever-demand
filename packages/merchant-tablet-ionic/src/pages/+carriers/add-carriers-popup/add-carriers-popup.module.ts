@@ -19,17 +19,16 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-	declarations: COMPONENTS,
-	entryComponents: COMPONENTS,
-	exports: COMPONENTS,
-	imports: [
-		IonicModule,
-		CommonModule,
-		FormsModule,
-		FormWizardModule,
-		Ng2SmartTableModule,
-		AddNewCarriersPopupPageModule,
-		TranslateModule.forChild(),
-	],
+    declarations: COMPONENTS,
+    exports: COMPONENTS,
+    imports: [
+        IonicModule,
+        CommonModule,
+        FormsModule,
+        FormWizardModule,
+        Ng2SmartTableModule,
+        AddNewCarriersPopupPageModule,
+        TranslateModule.forChild(),
+    ]
 })
 export class AddCarriersPopupPageModule {}

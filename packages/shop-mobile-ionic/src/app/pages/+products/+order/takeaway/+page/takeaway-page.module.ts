@@ -19,20 +19,19 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		RouterModule.forChild(routes),
-		TranslateModule.forChild(),
-		CancelPageModule,
-		IssuePageModule,
-		OrderInfoCommonModule,
-		OrderStoreInfoModule,
-		OrderProductsInfoModule,
-	],
-	entryComponents: [],
-	declarations: [OrderTakeawayInfoPage],
-	providers: [],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        RouterModule.forChild(routes),
+        TranslateModule.forChild(),
+        CancelPageModule,
+        IssuePageModule,
+        OrderInfoCommonModule,
+        OrderStoreInfoModule,
+        OrderProductsInfoModule,
+    ],
+    declarations: [OrderTakeawayInfoPage],
+    providers: []
 })
 export class OrderTakeawayInfoPageModule {}

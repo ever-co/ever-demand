@@ -11,19 +11,18 @@ import { ElapsedTimeModule } from 'app/components/elapsed-time/elapsed-time.modu
 import { TakeawayCommonModule } from '../common/takeaway-common.module';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		TranslateModule.forChild(),
-		CancelPageModule,
-		IssuePageModule,
-		OrderInfoCommonModule,
-		ElapsedTimeModule,
-		TakeawayCommonModule,
-	],
-	entryComponents: [OrderTakeawayInfoPopup],
-	declarations: [OrderTakeawayInfoPopup],
-	providers: [],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        TranslateModule.forChild(),
+        CancelPageModule,
+        IssuePageModule,
+        OrderInfoCommonModule,
+        ElapsedTimeModule,
+        TakeawayCommonModule,
+    ],
+    declarations: [OrderTakeawayInfoPopup],
+    providers: []
 })
 export class OrderTakeawayInfoPopupModule {}

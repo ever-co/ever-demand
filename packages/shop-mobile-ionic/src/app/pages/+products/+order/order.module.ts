@@ -18,25 +18,24 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		RouterModule.forChild(routes),
-		TranslateModule.forChild(),
-		ElapsedTimeModule,
-		OrderInfoCommonModule,
-	],
-	entryComponents: [OrderPage],
-	declarations: [OrderPage, OrderPopupComponent],
-	providers: [
-		StripeLoader,
-		{
-			provide: OrderPageModule,
-			useFactory: stripeLoaderFactory,
-			deps: [StripeLoader],
-		},
-	],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        RouterModule.forChild(routes),
+        TranslateModule.forChild(),
+        ElapsedTimeModule,
+        OrderInfoCommonModule,
+    ],
+    declarations: [OrderPage, OrderPopupComponent],
+    providers: [
+        StripeLoader,
+        {
+            provide: OrderPageModule,
+            useFactory: stripeLoaderFactory,
+            deps: [StripeLoader],
+        },
+    ]
 })
 export class OrderPageModule {}
 

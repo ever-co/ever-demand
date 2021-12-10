@@ -18,18 +18,17 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	declarations: [PromotionTable],
-	imports: [
-		CommonModule,
-		RouterModule.forChild(routes),
-		TranslateModule.forChild(),
-		IonicModule,
-		Ng2SmartTableModule,
-		ConfirmDeletePopupModule,
-		ComponentsModule,
-	],
-	providers: [PromotionService],
-	exports: [RouterModule],
-	entryComponents: [ImageTableComponent],
+    declarations: [PromotionTable],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        TranslateModule.forChild(),
+        IonicModule,
+        Ng2SmartTableModule,
+        ConfirmDeletePopupModule,
+        ComponentsModule,
+    ],
+    providers: [PromotionService],
+    exports: [RouterModule]
 })
 export class PromotionTableModule {}

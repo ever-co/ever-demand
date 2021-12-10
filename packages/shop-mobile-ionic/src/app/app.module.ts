@@ -35,71 +35,70 @@ import { ServerConnectionService } from '@modules/client.common.angular2/service
 import { CallPageModule } from './pages/+products/+order/+call/call.module';
 
 @NgModule({
-	declarations: [AppComponent],
-	imports: [
-		BrowserModule,
-		AppRoutingModule,
-		HttpClientModule,
-		BrowserAnimationsModule,
-		MenuModule,
-		CallPageModule,
-		IonicModule.forRoot(),
-		IonicStorageModule.forRoot(),
-		TranslateModule.forRoot({
-			loader: {
-				provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
-				deps: [HttpClient],
-			},
-		}),
-		CommonModule.forRoot({
-			apiUrl: environment.SERVICES_ENDPOINT,
-		}),
-		ServiceWorkerModule.register('ngsw-worker.js', {
-			enabled: environment.production,
-		}),
-	],
-	entryComponents: [AppComponent],
-	providers: [
-		InAppBrowser,
-		SplashScreen,
-		StatusBar,
-		Network,
-		Device,
-		ServerConnectionService,
-		{
-			provide: APP_INITIALIZER,
-			useFactory: serverConnectionFactory,
-			deps: [ServerConnectionService, Store],
-			multi: true,
-		},
-		GoogleMapsLoader,
-		{
-			provide: APP_INITIALIZER,
-			useFactory: googleMapsLoaderFactory,
-			deps: [GoogleMapsLoader],
-			multi: true,
-		},
-		MaintenanceService,
-		{
-			provide: APP_INITIALIZER,
-			useFactory: maintenanceFactory,
-			deps: [MaintenanceService],
-			multi: true,
-		},
-		ServerSettings,
-		{
-			provide: APP_INITIALIZER,
-			useFactory: serverSettingsFactory,
-			deps: [ServerSettings],
-			multi: true,
-		},
-		{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-		// Logger,
-		PagesModuleGuard,
-		MaintenanceModuleGuard,
-	],
-	bootstrap: [AppComponent],
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MenuModule,
+        CallPageModule,
+        IonicModule.forRoot(),
+        IonicStorageModule.forRoot(),
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient],
+            },
+        }),
+        CommonModule.forRoot({
+            apiUrl: environment.SERVICES_ENDPOINT,
+        }),
+        ServiceWorkerModule.register('ngsw-worker.js', {
+            enabled: environment.production,
+        }),
+    ],
+    providers: [
+        InAppBrowser,
+        SplashScreen,
+        StatusBar,
+        Network,
+        Device,
+        ServerConnectionService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: serverConnectionFactory,
+            deps: [ServerConnectionService, Store],
+            multi: true,
+        },
+        GoogleMapsLoader,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: googleMapsLoaderFactory,
+            deps: [GoogleMapsLoader],
+            multi: true,
+        },
+        MaintenanceService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: maintenanceFactory,
+            deps: [MaintenanceService],
+            multi: true,
+        },
+        ServerSettings,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: serverSettingsFactory,
+            deps: [ServerSettings],
+            multi: true,
+        },
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        // Logger,
+        PagesModuleGuard,
+        MaintenanceModuleGuard,
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 	constructor(
