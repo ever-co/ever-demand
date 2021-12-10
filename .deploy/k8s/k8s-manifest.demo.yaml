@@ -195,10 +195,14 @@ spec:
                         value: 'true'
                       - name: FAKE_DATA_GENERATOR
                         value: 'true'
+                      - name: SETTING_INVITES_ENABLED
+                        value: 'true'
+                      - name: SETTINGS_REGISTRATIONS_REQUIRED_ON_START
+                        value: 'false'
                       - name: LOG_LEVEL
                         value: 'info'
                       - name: SENTRY_DSN
-                        value: 'https://7cd381188b6f446ca0e69185227b9031@o51327.ingest.sentry.io/4397292'
+                        value: '$SENTRY_DSN'
                       - name: DB_URI
                         value: '$DB_URI'
                       - name: DB_HOST
@@ -214,13 +218,81 @@ spec:
                       - name: DB_TYPE
                         value: 'mongodb'
                       - name: DB_NAME
-                        value: 'ever_demo'
+                        value: '$DB_NAME'
                       - name: DB_PORT
-                        value: '27017'
+                        value: '$DB_PORT'
                       - name: AWS_ACCESS_KEY_ID
                         value: '$AWS_ACCESS_KEY_ID'
                       - name: AWS_SECRET_ACCESS_KEY
                         value: '$AWS_SECRET_ACCESS_KEY'
+                      - name: AWS_REGION
+                        value: '$AWS_REGION'
+                      - name: AWS_S3_BUCKET
+                        value: '$AWS_S3_BUCKET'
+                      - name: EXPRESS_SESSION_SECRET
+                        value: '$EXPRESS_SESSION_SECRET'
+                      - name: JWT_SECRET
+                        value: '$JWT_SECRET'
+                      - name: CLOUDINARY_API_KEY
+                        value: '$CLOUDINARY_API_KEY'
+                      - name: CLOUDINARY_API_SECRET
+                        value: '$CLOUDINARY_API_SECRET'
+                      - name: CLOUDINARY_CLOUD_NAME
+                        value: '$CLOUDINARY_CLOUD_NAME'
+                      - name: MAIL_FROM_ADDRESS
+                        value: '$MAIL_FROM_ADDRESS'
+                      - name: MAIL_HOST
+                        value: '$MAIL_HOST'
+                      - name: MAIL_PORT
+                        value: '$MAIL_PORT'
+                      - name: MAIL_USERNAME
+                        value: '$MAIL_USERNAME'
+                      - name: MAIL_PASSWORD
+                        value: '$MAIL_PASSWORD'
+                      - name: ALLOW_SUPER_ADMIN_ROLE
+                        value: '$ALLOW_SUPER_ADMIN_ROLE'
+                      - name: GOOGLE_APP_ID
+                        value: '$GOOGLE_APP_ID'
+                      - name: GOOGLE_APP_SECRET
+                        value: '$GOOGLE_APP_SECRET'
+                      - name: GOOGLE_CALLBACK_URL
+                        value: '$GOOGLE_CALLBACK_URL'
+                      - name: FACEBOOK_APP_ID
+                        value: '$FACEBOOK_APP_ID'
+                      - name: FACEBOOK_APP_SECRET
+                        value: '$FACEBOOK_APP_SECRET'
+                      - name: FACEBOOK_GRAPH_VERSION
+                        value: '$FACEBOOK_GRAPH_VERSION'
+                      - name: FACEBOOK_CALLBACK_URL
+                        value: '$FACEBOOK_CALLBACK_URL'
+                      - name: UNLEASH_APP_NAME
+                        value: '$UNLEASH_APP_NAME'
+                      - name: UNLEASH_API_URL
+                        value: '$UNLEASH_API_URL'
+                      - name: UNLEASH_INSTANCE_ID
+                        value: '$UNLEASH_INSTANCE_ID'
+                      - name: UNLEASH_REFRESH_INTERVAL
+                        value: '$UNLEASH_REFRESH_INTERVAL'
+                      - name: UNLEASH_METRICS_INTERVAL
+                        value: '$UNLEASH_METRICS_INTERVAL'
+                      - name: STRIPE_SECRET_KEY
+                        value: '$STRIPE_SECRET_KEY'
+                      - name: URBAN_AIRSHIP_KEY
+                        value: '$URBAN_AIRSHIP_KEY'
+                      - name: URBAN_AIRSHIP_SECRET
+                        value: '$URBAN_AIRSHIP_SECRET'
+                      - name: KEYMETRICS_MACHINE_NAME
+                        value: '$KEYMETRICS_MACHINE_NAME'
+                      - name: KEYMETRICS_SECRET_KEY
+                        value: '$KEYMETRICS_SECRET_KEY'
+                      - name: KEYMETRICS_PUBLIC_KEY
+                        value: '$KEYMETRICS_PUBLIC_KEY'
+                      - name: ARCGIS_CLIENT_ID
+                        value: '$ARCGIS_CLIENT_ID'
+                      - name: ARCGIS_CLIENT_SECRET
+                        value: '$ARCGIS_CLIENT_SECRET'
+                      - name: ENGINE_API_KEY
+                        value: '$ENGINE_API_KEY'
                   ports:
                       - containerPort: 5500
                         protocol: TCP
