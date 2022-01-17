@@ -16,22 +16,21 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-	declarations: [EditProductTypePopupPage],
-	entryComponents: [EditProductTypePopupPage],
-	providers: [FileTransfer, ProductsCategoryService],
-	imports: [
-		FileUploadModule,
-		TranslateModule.forChild({
-			loader: {
-				provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
-				deps: [HttpClient],
-			},
-		}),
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		ProductImagesPopupModule,
-	],
+    declarations: [EditProductTypePopupPage],
+    providers: [FileTransfer, ProductsCategoryService],
+    imports: [
+        FileUploadModule,
+        TranslateModule.forChild({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient],
+            },
+        }),
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        ProductImagesPopupModule,
+    ]
 })
 export class EditProductTypePopupPageModule {}

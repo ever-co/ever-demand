@@ -13,27 +13,22 @@ import { CustomerOrdersTableModule } from '@app/@shared/render-component/custome
 import { CustomerOrdersComponent } from './ea-customer-orders.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		Ng2SmartTableModule,
-		ThemeModule,
-		ToasterModule.forRoot(),
-		TranslateModule.forChild(),
-		HighlightModule,
-		RenderComponentsModule,
-		CustomerOrdersTableModule,
-	],
-	declarations: [
-		OrderInfoComponent,
-		OrderCancelComponent,
-		CustomerOrdersComponent,
-		CustomOrderComponent,
-	],
-	entryComponents: [
-		OrderInfoComponent,
-		OrderCancelComponent,
-		CustomOrderComponent,
-	],
-	exports: [CustomerOrdersComponent],
+    imports: [
+        CommonModule,
+        Ng2SmartTableModule,
+        ThemeModule,
+        ToasterModule.forRoot(),
+        TranslateModule.forChild(),
+        HighlightModule,
+        RenderComponentsModule,
+        CustomerOrdersTableModule,
+    ],
+    declarations: [
+        OrderInfoComponent,
+        OrderCancelComponent,
+        CustomerOrdersComponent,
+        CustomOrderComponent,
+    ],
+    exports: [CustomerOrdersComponent]
 })
 export class CustomerOrdersModule {}

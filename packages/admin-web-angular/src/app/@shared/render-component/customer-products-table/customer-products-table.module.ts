@@ -16,9 +16,8 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-	imports: [CommonModule, ThemeModule, TranslateModule.forChild()],
-	declarations: COMPONENTS,
-	entryComponents: COMPONENTS,
-	exports: COMPONENTS,
+    imports: [CommonModule, ThemeModule, TranslateModule.forChild()],
+    declarations: COMPONENTS,
+    exports: COMPONENTS
 })
 export class CustomerProductsTableModule {}

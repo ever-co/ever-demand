@@ -24,36 +24,32 @@ import { RenderComponentsModule } from '@app/@shared/render-component/render-com
 import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		ThemeModule,
-		FormWizardModule,
-		Ng2SmartTableModule,
-		ToasterModule.forRoot(),
-		TranslateModule.forChild(),
-		RouterModule.forChild(routes),
-		HighlightModule,
-		UserMutationModule,
-		InviteRequestModalModule,
-		ByCodeModalModule,
-		WarehouseMutationModule,
-		SimulationTableModule,
-		CustomerOrdersModule,
-		SimulationOrderModule,
-		RenderComponentsModule,
-		NbSpinnerModule,
-		NbButtonModule,
-	],
-
-	declarations: [
-		SimulationComponent,
-		SimulationProductsComponent,
-		SimulationInstructionsComponent,
-	],
-
-	entryComponents: [],
-
-	providers: [AdminStorageService, JsonPipe, GeoLocationService],
+    imports: [
+        CommonModule,
+        ThemeModule,
+        FormWizardModule,
+        Ng2SmartTableModule,
+        ToasterModule.forRoot(),
+        TranslateModule.forChild(),
+        RouterModule.forChild(routes),
+        HighlightModule,
+        UserMutationModule,
+        InviteRequestModalModule,
+        ByCodeModalModule,
+        WarehouseMutationModule,
+        SimulationTableModule,
+        CustomerOrdersModule,
+        SimulationOrderModule,
+        RenderComponentsModule,
+        NbSpinnerModule,
+        NbButtonModule,
+    ],
+    declarations: [
+        SimulationComponent,
+        SimulationProductsComponent,
+        SimulationInstructionsComponent,
+    ],
+    providers: [AdminStorageService, JsonPipe, GeoLocationService]
 })
 export class SimulationModule {
 	public static routes = routes;

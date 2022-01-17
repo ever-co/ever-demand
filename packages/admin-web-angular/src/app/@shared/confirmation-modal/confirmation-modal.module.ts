@@ -9,16 +9,15 @@ import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 const COMPONENTS = [ConfirmationModalComponent];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		ThemeModule,
-		TranslateModule.forChild(),
-		ToasterModule.forRoot(),
-		NbSpinnerModule,
-		NbButtonModule,
-	],
-	declarations: COMPONENTS,
-	entryComponents: COMPONENTS,
-	exports: COMPONENTS,
+    imports: [
+        CommonModule,
+        ThemeModule,
+        TranslateModule.forChild(),
+        ToasterModule.forRoot(),
+        NbSpinnerModule,
+        NbButtonModule,
+    ],
+    declarations: COMPONENTS,
+    exports: COMPONENTS
 })
 export class ConfirmationModalModule {}

@@ -9,18 +9,17 @@ import { CommonModule } from '@angular/common';
 import { ConfirmDeletePopupPage } from './confirm-delete-popup';
 
 @NgModule({
-	declarations: [ConfirmDeletePopupPage],
-	entryComponents: [ConfirmDeletePopupPage],
-	imports: [
-		FormWizardModule,
-		Ng2SmartTableModule,
-		FileUploadModule,
-		FormsModule,
-		ReactiveFormsModule,
-		TranslateModule.forChild(),
-		IonicModule,
-		CommonModule,
-		FormsModule,
-	],
+    declarations: [ConfirmDeletePopupPage],
+    imports: [
+        FormWizardModule,
+        Ng2SmartTableModule,
+        FileUploadModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TranslateModule.forChild(),
+        IonicModule,
+        CommonModule,
+        FormsModule,
+    ]
 })
 export class ConfirmDeletePopupModule {}

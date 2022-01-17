@@ -40,13 +40,7 @@ const components = [
 ];
 
 @NgModule({
-	imports: [ThemeModule, UiFeaturesRoutingModule, ButtonsModule],
-	declarations: [...components],
-	entryComponents: [
-		ModalComponent,
-		NgxPopoverCardComponent,
-		NgxPopoverFormComponent,
-		NgxPopoverTabsComponent,
-	],
+    imports: [ThemeModule, UiFeaturesRoutingModule, ButtonsModule],
+    declarations: [...components]
 })
 export class UiFeaturesModule {}

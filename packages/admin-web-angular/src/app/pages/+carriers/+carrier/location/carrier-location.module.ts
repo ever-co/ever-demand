@@ -9,19 +9,18 @@ import { TranslateModule } from '@ngx-translate/core';
 import { environment } from 'environments/environment';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		ThemeModule,
-		AgmCoreModule.forRoot({
-			apiKey: environment.GOOGLE_MAPS_API_KEY,
-			libraries: ['places'],
-		}),
-		LeafletModule,
-		TranslateModule.forChild(),
-		NgxEchartsModule,
-	],
-	declarations: [CarrierLocationComponent],
-	exports: [CarrierLocationComponent],
-	entryComponents: [CarrierLocationComponent],
+    imports: [
+        CommonModule,
+        ThemeModule,
+        AgmCoreModule.forRoot({
+            apiKey: environment.GOOGLE_MAPS_API_KEY,
+            libraries: ['places'],
+        }),
+        LeafletModule,
+        TranslateModule.forChild(),
+        NgxEchartsModule,
+    ],
+    declarations: [CarrierLocationComponent],
+    exports: [CarrierLocationComponent]
 })
 export class CarrierLocationModule {}

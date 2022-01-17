@@ -8,16 +8,15 @@ import { OrderModule } from 'app/components/order/order.module';
 import { OrderCardComponent } from './order-card.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		OrderModule,
-		RouterModule,
-		TranslateModule.forChild(),
-	],
-	declarations: [OrderCardComponent],
-	exports: [OrderCardComponent],
-	entryComponents: [OrderCardComponent],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        OrderModule,
+        RouterModule,
+        TranslateModule.forChild(),
+    ],
+    declarations: [OrderCardComponent],
+    exports: [OrderCardComponent]
 })
 export class OrdersCardModule {}

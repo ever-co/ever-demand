@@ -11,19 +11,17 @@ import { FileUploaderModule } from '@app/@shared/file-uploader/file-uploader.mod
 const EDIT_PROFILE_COMPONENTS = [AccountComponent, BasicInfoComponent];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		ThemeModule,
-		ToasterModule.forRoot(),
-		TranslateModule.forChild(),
-		FileUploaderModule,
-		NbSpinnerModule,
-		NbButtonModule,
-	],
-	declarations: [...EDIT_PROFILE_COMPONENTS],
-	exports: [...EDIT_PROFILE_COMPONENTS],
-	entryComponents: [],
-
-	providers: [],
+    imports: [
+        CommonModule,
+        ThemeModule,
+        ToasterModule.forRoot(),
+        TranslateModule.forChild(),
+        FileUploaderModule,
+        NbSpinnerModule,
+        NbButtonModule,
+    ],
+    declarations: [...EDIT_PROFILE_COMPONENTS],
+    exports: [...EDIT_PROFILE_COMPONENTS],
+    providers: []
 })
 export class EditProfileModule {}

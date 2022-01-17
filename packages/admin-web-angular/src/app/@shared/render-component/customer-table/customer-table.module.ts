@@ -9,14 +9,13 @@ import { CustomerOrdersNumberComponent } from './customer-orders-number/customer
 const COMPONENTS = [CustomerImageComponent, CustomerOrdersNumberComponent];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		ThemeModule,
-		HighlightModule,
-		TranslateModule.forChild(),
-	],
-	declarations: COMPONENTS,
-	entryComponents: COMPONENTS,
-	exports: COMPONENTS,
+    imports: [
+        CommonModule,
+        ThemeModule,
+        HighlightModule,
+        TranslateModule.forChild(),
+    ],
+    declarations: COMPONENTS,
+    exports: COMPONENTS
 })
 export class CustomerTableModule {}

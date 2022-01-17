@@ -10,16 +10,15 @@ import { IonicModule } from '@ionic/angular';
 import { ProductImagesPopupModule } from '../product-pictures-popup/product-images-popup.module';
 
 @NgModule({
-	declarations: [CreateProductTypePopupPage],
-	entryComponents: [CreateProductTypePopupPage],
-	providers: [FileTransfer, ProductsCategoryService],
-	imports: [
-		FileUploadModule,
-		TranslateModule.forChild(),
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		ProductImagesPopupModule,
-	],
+    declarations: [CreateProductTypePopupPage],
+    providers: [FileTransfer, ProductsCategoryService],
+    imports: [
+        FileUploadModule,
+        TranslateModule.forChild(),
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        ProductImagesPopupModule,
+    ]
 })
 export class CreateProductTypePopupPageModule {}

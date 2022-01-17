@@ -13,9 +13,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	declarations: [MaintenanceInfoPage],
-	imports: [CommonModule, RouterModule.forChild(routes), PipesModule],
-	entryComponents: [MaintenanceInfoPage],
-	exports: [MaintenanceInfoPage],
+    declarations: [MaintenanceInfoPage],
+    imports: [CommonModule, RouterModule.forChild(routes), PipesModule],
+    exports: [MaintenanceInfoPage]
 })
 export class MaintenanceInfoPageModule {}

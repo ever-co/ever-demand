@@ -18,18 +18,15 @@ export const routes: Routes = [
 const PROFILE_COMPONENTS = [ProfileComponent];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		ThemeModule,
-		ToasterModule.forRoot(),
-		TranslateModule.forChild(),
-		RouterModule.forChild(routes),
-		EditProfileModule,
-	],
-	declarations: [...PROFILE_COMPONENTS],
-
-	entryComponents: [],
-
-	providers: [AdminsService],
+    imports: [
+        CommonModule,
+        ThemeModule,
+        ToasterModule.forRoot(),
+        TranslateModule.forChild(),
+        RouterModule.forChild(routes),
+        EditProfileModule,
+    ],
+    declarations: [...PROFILE_COMPONENTS],
+    providers: [AdminsService]
 })
 export class ProfileModule {}

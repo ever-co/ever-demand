@@ -35,48 +35,38 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		ThemeModule,
-		NgxEchartsModule.forRoot({
-			echarts: () => import('echarts')
-		}),
-		ToasterModule,
-		TranslateModule.forChild(),
-		RouterModule.forChild(routes),
-		NbSpinnerModule,
-		PipesModule,
-		NgSelectModule,
-		FormsModule,
-	],
-	declarations: [
-		DashboardComponent,
-		ChartsPanelComponent,
-		ChartPanelHeaderComponent,
-		ChartPanelSummaryComponent,
-		OrdersChartComponent,
-		RootOrdersChartComponent,
-		ProfitChartComponent,
-		RootProfitChartComponent,
-		LegendChartComponent,
-		DashboardSelectStoreComponent,
-	],
-	entryComponents: [
-		ChartsPanelComponent,
-		ChartPanelHeaderComponent,
-		ChartPanelSummaryComponent,
-		OrdersChartComponent,
-		RootOrdersChartComponent,
-		ProfitChartComponent,
-		RootProfitChartComponent,
-		LegendChartComponent,
-	],
-	providers: [
-		LayoutService,
-		OrdersProfitChartService,
-		OrdersChartService,
-		ProfitChartService,
-		PeriodsService,
-	],
+    imports: [
+        CommonModule,
+        ThemeModule,
+        NgxEchartsModule.forRoot({
+            echarts: () => import('echarts')
+        }),
+        ToasterModule,
+        TranslateModule.forChild(),
+        RouterModule.forChild(routes),
+        NbSpinnerModule,
+        PipesModule,
+        NgSelectModule,
+        FormsModule,
+    ],
+    declarations: [
+        DashboardComponent,
+        ChartsPanelComponent,
+        ChartPanelHeaderComponent,
+        ChartPanelSummaryComponent,
+        OrdersChartComponent,
+        RootOrdersChartComponent,
+        ProfitChartComponent,
+        RootProfitChartComponent,
+        LegendChartComponent,
+        DashboardSelectStoreComponent,
+    ],
+    providers: [
+        LayoutService,
+        OrdersProfitChartService,
+        OrdersChartService,
+        ProfitChartService,
+        PeriodsService,
+    ]
 })
 export class DashboardModule {}

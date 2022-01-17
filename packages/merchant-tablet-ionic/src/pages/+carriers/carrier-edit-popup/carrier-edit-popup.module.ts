@@ -14,22 +14,21 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-	declarations: [CarrierEditPopupPage],
-	entryComponents: [CarrierEditPopupPage],
-	imports: [
-		FormWizardModule,
-		Ng2SmartTableModule,
-		FileUploadModule,
-		FormsModule,
-		ReactiveFormsModule,
-		CarrierBasicFormsModule,
-		CarrierAccountFormsModule,
-		CarrierLocationFormsModule,
-		GoogleMapModule,
-		TranslateModule.forChild(),
-		IonicModule,
-		CommonModule,
-	],
-	providers: [CarrierService],
+    declarations: [CarrierEditPopupPage],
+    imports: [
+        FormWizardModule,
+        Ng2SmartTableModule,
+        FileUploadModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CarrierBasicFormsModule,
+        CarrierAccountFormsModule,
+        CarrierLocationFormsModule,
+        GoogleMapModule,
+        TranslateModule.forChild(),
+        IonicModule,
+        CommonModule,
+    ],
+    providers: [CarrierService]
 })
 export class CarrierEditPopupModule {}

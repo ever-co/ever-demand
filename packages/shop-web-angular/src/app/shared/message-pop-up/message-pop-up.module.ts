@@ -9,15 +9,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 const COMPONENTS = [MessagePopUpComponent];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		MatDialogModule,
-		MatButtonModule,
-		MatCardModule,
-		TranslateModule.forChild(),
-	],
-	declarations: COMPONENTS,
-	entryComponents: COMPONENTS,
-	exports: COMPONENTS,
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatCardModule,
+        TranslateModule.forChild(),
+    ],
+    declarations: COMPONENTS,
+    exports: COMPONENTS
 })
 export class MessagePopUpModalModule {}

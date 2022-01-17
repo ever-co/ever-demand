@@ -29,36 +29,29 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	declarations: [
-		CarriersPage,
-		ImageComponent,
-		AddressesComponent,
-		StatusComponent,
-		DeliveriesComponent,
-	],
-	imports: [
-		PipesModule,
-		ComponentsModule,
-		TranslateModule.forChild(),
-		Ng2SmartTableModule,
-		IonicModule,
-		CommonModule,
-		FormsModule,
-		RouterModule.forChild(routes),
-		AddCarriersPopupPageModule,
-		CarrierAddrPopupPageModule,
-		CarrierDeliveriesPopupPageModule,
-		CarrierEditPopupModule,
-		ConfirmDeletePopupModule,
-		CarrierTrackPopupModule,
-	],
-	entryComponents: [
-		ImageComponent,
-		AddressesComponent,
-		StatusComponent,
-		DeliveriesComponent,
-		PhoneComponent,
-	],
-	providers: [WarehouseCarriersRouter],
+    declarations: [
+        CarriersPage,
+        ImageComponent,
+        AddressesComponent,
+        StatusComponent,
+        DeliveriesComponent,
+    ],
+    imports: [
+        PipesModule,
+        ComponentsModule,
+        TranslateModule.forChild(),
+        Ng2SmartTableModule,
+        IonicModule,
+        CommonModule,
+        FormsModule,
+        RouterModule.forChild(routes),
+        AddCarriersPopupPageModule,
+        CarrierAddrPopupPageModule,
+        CarrierDeliveriesPopupPageModule,
+        CarrierEditPopupModule,
+        ConfirmDeletePopupModule,
+        CarrierTrackPopupModule,
+    ],
+    providers: [WarehouseCarriersRouter]
 })
 export class CarrierssPageModule {}

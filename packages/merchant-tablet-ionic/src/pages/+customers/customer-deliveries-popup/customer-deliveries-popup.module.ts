@@ -11,26 +11,19 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 @NgModule({
-	declarations: [
-		CustomerDeliveriesPopupPage,
-		OrderIdComponent,
-		DeliveryComponent,
-		AddressComponent,
-		StatusComponent,
-	],
-	imports: [
-		TranslateModule.forChild(),
-		Ng2SmartTableModule,
-		IonicModule,
-		CommonModule,
-		FormsModule,
-	],
-	entryComponents: [
-		CustomerDeliveriesPopupPage,
-		OrderIdComponent,
-		DeliveryComponent,
-		AddressComponent,
-		StatusComponent,
-	],
+    declarations: [
+        CustomerDeliveriesPopupPage,
+        OrderIdComponent,
+        DeliveryComponent,
+        AddressComponent,
+        StatusComponent,
+    ],
+    imports: [
+        TranslateModule.forChild(),
+        Ng2SmartTableModule,
+        IonicModule,
+        CommonModule,
+        FormsModule,
+    ]
 })
 export class CustomerDeliveriesPopupPageModule {}

@@ -11,18 +11,14 @@ const ORDER_MAP_COMPONENTS = [
 	CarrierLocationComponent,
 ];
 @NgModule({
-	imports: [
-		CommonModule,
-		ThemeModule,
-		ToasterModule.forRoot(),
-		TranslateModule.forChild(),
-	],
-
-	declarations: [...ORDER_MAP_COMPONENTS],
-	exports: [...ORDER_MAP_COMPONENTS],
-
-	entryComponents: [],
-
-	providers: [],
+    imports: [
+        CommonModule,
+        ThemeModule,
+        ToasterModule.forRoot(),
+        TranslateModule.forChild(),
+    ],
+    declarations: [...ORDER_MAP_COMPONENTS],
+    exports: [...ORDER_MAP_COMPONENTS],
+    providers: []
 })
 export class OrderMapModule {}

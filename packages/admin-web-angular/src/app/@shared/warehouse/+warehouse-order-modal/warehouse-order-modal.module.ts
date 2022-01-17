@@ -15,21 +15,20 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		ThemeModule,
-		Ng2SmartTableModule,
-		NbSpinnerModule,
-		NbSpinnerModule,
-		TranslateModule.forChild(),
-		NbButtonModule,
-	],
-	declarations: [
-		WarehouseOrderModalComponent,
-		WarehouseOrderInputComponent,
-		MakeOrderCommentComponent,
-	],
-	entryComponents: COMPONENTS,
-	exports: COMPONENTS,
+    imports: [
+        CommonModule,
+        ThemeModule,
+        Ng2SmartTableModule,
+        NbSpinnerModule,
+        NbSpinnerModule,
+        TranslateModule.forChild(),
+        NbButtonModule,
+    ],
+    declarations: [
+        WarehouseOrderModalComponent,
+        WarehouseOrderInputComponent,
+        MakeOrderCommentComponent,
+    ],
+    exports: COMPONENTS
 })
 export class WarehouseOrderModalModule {}

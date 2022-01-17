@@ -8,16 +8,15 @@ import { CarrierMapComponent } from './carrier-map.component';
 import { ThemeModule } from '@app/@theme';
 
 @NgModule({
-	declarations: [CarrierMapComponent],
-	imports: [
-		FormWizardModule,
-		Ng2SmartTableModule,
-		FileUploadModule,
-		FormsModule,
-		ReactiveFormsModule,
-		TranslateModule.forChild(),
-		ThemeModule,
-	],
-	entryComponents: [CarrierMapComponent],
+    declarations: [CarrierMapComponent],
+    imports: [
+        FormWizardModule,
+        Ng2SmartTableModule,
+        FileUploadModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TranslateModule.forChild(),
+        ThemeModule,
+    ]
 })
 export class CarrierMapModule {}

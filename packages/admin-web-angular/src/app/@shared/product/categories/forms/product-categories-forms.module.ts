@@ -12,22 +12,21 @@ import { CategoryImageComponent } from '../categories-table/category-image.compo
 import { ConfirmationModalModule } from '@app/@shared/confirmation-modal/confirmation-modal.module';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		ThemeModule,
-		TranslateModule.forChild(),
-		FileUploaderModule,
-		Ng2SmartTableModule,
-		NbSpinnerModule,
-		FormsModule,
-		ConfirmationModalModule,
-	],
-	declarations: [
-		BasicInfoFormComponent,
-		CategoriesTableComponent,
-		CategoryImageComponent,
-	],
-	exports: [BasicInfoFormComponent, CategoriesTableComponent],
-	entryComponents: [CategoryImageComponent],
+    imports: [
+        CommonModule,
+        ThemeModule,
+        TranslateModule.forChild(),
+        FileUploaderModule,
+        Ng2SmartTableModule,
+        NbSpinnerModule,
+        FormsModule,
+        ConfirmationModalModule,
+    ],
+    declarations: [
+        BasicInfoFormComponent,
+        CategoriesTableComponent,
+        CategoryImageComponent,
+    ],
+    exports: [BasicInfoFormComponent, CategoriesTableComponent]
 })
 export class ProductCategoriesFormsModule {}

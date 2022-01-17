@@ -8,9 +8,8 @@ import { UserOrderComponent } from './user-order-component';
 const COMPONENTS = [StoreOrderComponent, UserOrderComponent];
 
 @NgModule({
-	imports: [CommonModule, ThemeModule, TranslateModule.forChild()],
-	declarations: COMPONENTS,
-	entryComponents: COMPONENTS,
-	exports: COMPONENTS,
+    imports: [CommonModule, ThemeModule, TranslateModule.forChild()],
+    declarations: COMPONENTS,
+    exports: COMPONENTS
 })
 export class CarrierOrdersTableModule {}
