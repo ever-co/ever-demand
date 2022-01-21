@@ -44,6 +44,7 @@ import * as faker from 'faker';
 import { WarehousesService } from '../../services/warehouses';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 import { Stripe } from 'stripe';
+import * as path from 'path';
 
 interface IWatchedFiles {
 	aboutUs: { [language in ILanguage]: Observable<string> };
@@ -96,7 +97,7 @@ export class UsersService extends DBService<User>
 					['en-US', 'he-IL', 'ru-RU', 'bg-BG'],
 					_.map(['en-US', 'he-IL', 'ru-RU', 'bg-BG'], (language) =>
 						observeFile(
-							`${__dirname}/../../../../res/templates/${folder}/${language}.hbs`
+							`${path.resolve(__dirname, '../../../', ...['res', 'templates'])}/${folder}/${language}.hbs`
 						).pipe(
 							tap({ error: (err) => this.log.error(err) }),
 							publishReplay(1),
