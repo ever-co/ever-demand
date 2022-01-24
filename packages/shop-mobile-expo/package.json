@@ -15,9 +15,6 @@
 		"email": "ever@ever.co",
 		"url": "https://ever.co"
 	},
-	"contributors": [
-		"@MNAth_ | https://github.com/Nesoulink"
-	],
 	"scripts": {
 		"config": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn ts-node ./scripts/configure.ts",
 		"config:dev": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run config -- --environment=dev",
