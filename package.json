@@ -36,6 +36,7 @@
 		"run:admin": "yarn --cwd ./packages/admin-web-angular start",
 		"run:merchant": "yarn --cwd ./packages/merchant-tablet-ionic start",
 		"run:shopmobile": "yarn --cwd ./packages/shop-mobile-ionic start",
+		"run:shopexpo": "yarn --cwd ./packages/shop-mobile-expo start",
 		"run:shopweb": "yarn --cwd ./packages/shop-web-angular start",
 		"run:carrier": "yarn --cwd ./packages/carrier-mobile-ionic start",
 		"build:server": "yarn run build:common && yarn lerna run build --scope @ever-platform/core",
