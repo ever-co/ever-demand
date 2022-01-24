@@ -1,0 +1,30 @@
+{
+	"expo": {
+		"name": "code-base-expo",
+		"slug": "code-base-expo",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./src/assets/img/appIcons/icon.png",
+		"splash": {
+			"image": "./src/assets/img/appIcons/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#ffffff"
+		},
+		"updates": {
+			"fallbackToCacheTimeout": 0
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"supportsTablet": true
+		},
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./src/assets/img/appIcons/adaptive-icon.png",
+				"backgroundColor": "#FFFFFF"
+			}
+		},
+		"web": {
+			"favicon": "./src/assets/img/appIcons/favicon.png"
+		}
+	}
+}
