@@ -2,22 +2,22 @@
 // We are using dotenv (.env) for consistency with other Platform projects
 // This is Expo app and all settings will be loaded into the client browser!
 
-import {env} from './env';
-import {writeFile, unlinkSync} from 'fs';
-import {argv} from 'yargs';
+import { env } from './env';
+import { writeFile, unlinkSync } from 'fs';
+import { argv } from 'yargs';
 
 const environment = argv.environment;
 const isProd = environment === 'prod' || !__DEV__;
 
 if (!env.GOOGLE_MAPS_API_KEY) {
 	console.warn(
-		'WARNING: No Google Maps API Key defined in the .env. Google Maps may not be visible!',
+		'WARNING: No Google Maps API Key defined in the .env. Google Maps may not be visible!'
 	);
 }
 
 if (!env.STRIPE_PUBLISHABLE_KEY) {
 	console.warn(
-		'WARNING: No Stripe Publishable Key defined in the .env. Stripe payments may not be available!',
+		'WARNING: No Stripe Publishable Key defined in the .env. Stripe payments may not be available!'
 	);
 }
 
@@ -148,8 +148,8 @@ writeFile(
 			console.log(err);
 		} else {
 			console.log(
-				`Generated Second environment file: ${envFileDestOther}`,
+				`Generated Second environment file: ${envFileDestOther}`
 			);
 		}
-	},
+	}
 );

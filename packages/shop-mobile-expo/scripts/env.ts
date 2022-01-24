@@ -4,8 +4,8 @@
 
 require('dotenv').config();
 
-import {cleanEnv, num, str, bool, makeValidator, CleanOptions} from 'envalid';
-import {v4 as uuid} from 'uuid';
+import { cleanEnv, num, str, bool, makeValidator, CleanOptions } from 'envalid';
+import { v4 as uuid } from 'uuid';
 
 export type Env = Readonly<{
 	production: boolean;
@@ -83,7 +83,7 @@ export type Env = Readonly<{
 }>;
 
 // TODO: validate better merchantIDs
-const merchantIDs: any = makeValidator(x => {
+const merchantIDs: any = makeValidator((x) => {
 	return x;
 });
 
@@ -92,43 +92,43 @@ const opt: CleanOptions<Env> = {};
 export const env: any = cleanEnv(
 	process.env,
 	{
-		production: bool({default: false}),
+		production: bool({ default: false }),
 
-		VERSION: str({default: '1.0.0'}),
+		VERSION: str({ default: '1.0.0' }),
 
 		// 'slides' | 'list'
-		PRODUCTS_VIEW_TYPE: str({default: 'slides'}),
+		PRODUCTS_VIEW_TYPE: str({ default: 'slides' }),
 
 		// 'popup' or 'page'
-		ORDER_INFO_TYPE: str({default: 'page'}),
+		ORDER_INFO_TYPE: str({ default: 'page' }),
 
 		API_FILE_UPLOAD_URL: str({
 			default: 'https://api.cloudinary.com/v1_1/evereq/upload',
 		}),
 
-		INVITE_BY_CODE_LOGO: str({default: 'assets/imgs/ever-logo.svg'}),
-		NO_INTERNET_LOGO: str({default: 'assets/imgs/logo.png'}),
+		INVITE_BY_CODE_LOGO: str({ default: 'assets/imgs/ever-logo.svg' }),
+		NO_INTERNET_LOGO: str({ default: 'assets/imgs/logo.png' }),
 
-		COMPANY_NAME: str({default: 'Ever Co. LTD'}),
+		COMPANY_NAME: str({ default: 'Ever Co. LTD' }),
 
-		GOOGLE_MAPS_API_KEY: str({default: ''}),
+		GOOGLE_MAPS_API_KEY: str({ default: '' }),
 
-		GOOGLE_ANALYTICS_API_KEY: str({default: ''}),
-		FAKE_UUID: str({default: uuid()}),
+		GOOGLE_ANALYTICS_API_KEY: str({ default: '' }),
+		FAKE_UUID: str({ default: uuid() }),
 
 		// Not secret MixPanel Token
-		MIXPANEL_API_KEY: str({default: ''}),
+		MIXPANEL_API_KEY: str({ default: '' }),
 
-		DEFAULT_LANGUAGE: str({default: 'en-US'}),
+		DEFAULT_LANGUAGE: str({ default: 'en-US' }),
 
-		DEFAULT_LOCALE: str({default: 'en-US'}),
+		DEFAULT_LOCALE: str({ default: 'en-US' }),
 
-		DELIVERY_TIME_MIN: num({default: 30}),
-		DELIVERY_TIME_MAX: num({default: 60}),
+		DELIVERY_TIME_MIN: num({ default: 30 }),
+		DELIVERY_TIME_MAX: num({ default: 60 }),
 
-		SUPPORT_NUMBER: str({default: '0888888888'}),
+		SUPPORT_NUMBER: str({ default: '0888888888' }),
 
-		STRIPE_PUBLISHABLE_KEY: str({default: ''}),
+		STRIPE_PUBLISHABLE_KEY: str({ default: '' }),
 
 		// TODO: replace logo with recent one!
 		STRIPE_POP_UP_LOGO: str({
@@ -146,30 +146,30 @@ export const env: any = cleanEnv(
 			default: 'http://maps.google.com/mapfiles/kml/pal4/icon54.png',
 		}),
 
-		DEFAULT_LATITUDE: num({default: 42.6459136}),
-		DEFAULT_LONGITUDE: num({default: 23.3332736}),
+		DEFAULT_LATITUDE: num({ default: 42.6459136 }),
+		DEFAULT_LONGITUDE: num({ default: 23.3332736 }),
 
 		// Graphql endpoints for apollo services
-		GQL_ENDPOINT: str({default: 'http://localhost:8443/graphql'}),
+		GQL_ENDPOINT: str({ default: 'http://localhost:8443/graphql' }),
 		GQL_SUBSCRIPTIONS_ENDPOINT: str({
 			default: 'ws://localhost:2086/subscriptions',
 		}),
-		SERVICES_ENDPOINT: str({default: 'http://localhost:5500'}),
-		HTTPS_SERVICES_ENDPOINT: str({default: 'https://localhost:2087'}),
+		SERVICES_ENDPOINT: str({ default: 'http://localhost:5500' }),
+		HTTPS_SERVICES_ENDPOINT: str({ default: 'https://localhost:2087' }),
 
-		FAKE_INVITE_ID: str({default: '1ae9d04f9010d834f8906881'}),
-		FAKE_INVITE_CITY: str({default: 'Sofia'}),
-		FAKE_INVITE_POSTCODE: str({default: '1700'}),
-		FAKE_INVITE_ADDRESS: str({default: 'Simeonovsko shose'}),
-		FAKE_INVITE_HOUSE: str({default: '104'}),
-		FAKE_INVITE_CREATED_AT: str({default: '2018-05-02T14:50:55.658Z'}),
-		FAKE_INVITE_UPDATED_AT: str({default: '2018-05-02T14:50:55.658Z'}),
-		FAKE_INVITE_APARTMENT: str({default: '3'}),
-		FAKE_INVITE_CODE: num({default: 8321}),
-		FAKE_INVITE_COUNTRY_ID: num({default: 21}),
+		FAKE_INVITE_ID: str({ default: '1ae9d04f9010d834f8906881' }),
+		FAKE_INVITE_CITY: str({ default: 'Sofia' }),
+		FAKE_INVITE_POSTCODE: str({ default: '1700' }),
+		FAKE_INVITE_ADDRESS: str({ default: 'Simeonovsko shose' }),
+		FAKE_INVITE_HOUSE: str({ default: '104' }),
+		FAKE_INVITE_CREATED_AT: str({ default: '2018-05-02T14:50:55.658Z' }),
+		FAKE_INVITE_UPDATED_AT: str({ default: '2018-05-02T14:50:55.658Z' }),
+		FAKE_INVITE_APARTMENT: str({ default: '3' }),
+		FAKE_INVITE_CODE: num({ default: 8321 }),
+		FAKE_INVITE_COUNTRY_ID: num({ default: 21 }),
 
 		// For maintenance micro service. Ever maintenance API URL: https://maintenance.ever.co/status
-		SETTINGS_APP_TYPE: str({default: 'shop-mobile'}),
+		SETTINGS_APP_TYPE: str({ default: 'shop-mobile' }),
 		SETTINGS_MAINTENANCE_API_URL: str({
 			default: '',
 		}),
@@ -180,10 +180,10 @@ export const env: any = cleanEnv(
 				// Add existing merchant ids
 			],
 		}),
-		WEB_CONCURRENCY: num({default: 1}),
-		WEB_MEMORY: num({default: 2048}),
-		PORT: num({default: 4201}),
-		SHOPPING_CART: bool({default: false}),
+		WEB_CONCURRENCY: num({ default: 1 }),
+		WEB_MEMORY: num({ default: 2048 }),
+		PORT: num({ default: 4201 }),
+		SHOPPING_CART: bool({ default: false }),
 	},
-	opt,
+	opt
 );
