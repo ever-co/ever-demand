@@ -1,10 +1,10 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // TYPES
-import type { RootState } from "../../index";
+import type { RootState } from '../../index';
 
 // CONSTANTS
-import GROUPS from "./groups";
+import GROUPS from './groups';
 
 interface NavigationState {
 	group: string;
@@ -15,7 +15,7 @@ const initialState: NavigationState = {
 };
 
 export const navigationSlice = createSlice({
-	name: "navigation",
+	name: 'navigation',
 	initialState,
 	reducers: {
 		setGroup: (state, action: PayloadAction<string>) => {
