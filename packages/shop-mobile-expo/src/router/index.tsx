@@ -12,7 +12,8 @@ import { getGroup, setGroup } from '../store/features/navigation';
 import NAV_GROUPS from '../store/features/navigation/groups';
 
 // SCREENS
-import SCREENS from '../screens';
+import DrawerNavigation from './Drawer';
+import Screens from '../screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -38,18 +39,16 @@ const Router = ({}) => {
 				return (
 					<Stack.Screen
 						name="Stack/Loading"
-						component={SCREENS.Loading}
+						component={Screens.Loading}
 					/>
 				);
 			case NAV_GROUPS.APP:
-				return (
-					<Stack.Screen name="Stack/Main" component={SCREENS.Home} />
-				);
+				return <DrawerNavigation />;
 			default:
 				return (
 					<Stack.Screen
 						name="Stack/Blank_"
-						component={SCREENS.Blank_}
+						component={Screens.Blank_}
 					/>
 				);
 		}
