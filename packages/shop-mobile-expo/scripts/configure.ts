@@ -136,7 +136,7 @@ writeFile(`./src/environments/${envFileDest}`, envFileContent, function (err) {
 	if (err) {
 		console.log(err);
 	} else {
-		console.log(`Generated Angular environment file: ${envFileDest}`);
+		console.log(`Generated ts environment file: ${envFileDest}`);
 	}
 });
 
