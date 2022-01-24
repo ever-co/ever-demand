@@ -1,7 +1,23 @@
 {
-	"name": "code-base-expo",
+	"name": "@ever-platform/shop-mobile-expo",
+	"description": "Ever Shop Mobile App build with expo",
 	"version": "1.0.0",
 	"main": "node_modules/expo/AppEntry.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ever-co/ever-demand.git"
+	},
+	"bugs": {
+		"url": "https://github.com/ever-co/ever-demand/issues"
+	},
+	"author": {
+		"name": "Ever Co. LTD",
+		"email": "ever@ever.co",
+		"url": "https://ever.co"
+	},
+	"contributors": [
+		"@MNAth_ | https://github.com/Nesoulink"
+	],
 	"scripts": {
 		"config": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn ts-node ./scripts/configure.ts",
 		"config:dev": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run config -- --environment=dev",
