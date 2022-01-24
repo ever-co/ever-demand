@@ -1,18 +1,18 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // HOOKS
-import { useAppSelector, useAppDispatch } from "../store/hooks";
+import { useAppSelector, useAppDispatch } from '../store/hooks';
 
 // ACTIONS & SELECTORS
-import { getGroup, setGroup } from "../store/features/navigation/slice";
+import { getGroup, setGroup } from '../store/features/navigation';
 
 // CONSTANTS
-import NAV_GROUPS from "../store/features/navigation/groups";
+import NAV_GROUPS from '../store/features/navigation/groups';
 
 // SCREENS
-import SCREENS from "../screens";
+import SCREENS from '../screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,12 +36,22 @@ const Router = ({}) => {
 		switch (getNavGroup) {
 			case NAV_GROUPS.LOADING:
 				return (
-					<Stack.Screen name="Stack/Loading" component={SCREENS.Loading} />
+					<Stack.Screen
+						name="Stack/Loading"
+						component={SCREENS.Loading}
+					/>
 				);
 			case NAV_GROUPS.APP:
-				return <Stack.Screen name="Stack/Main" component={SCREENS.Home} />;
+				return (
+					<Stack.Screen name="Stack/Main" component={SCREENS.Home} />
+				);
 			default:
-				return <Stack.Screen name="Stack/Blank_" component={SCREENS.Blank_} />;
+				return (
+					<Stack.Screen
+						name="Stack/Blank_"
+						component={SCREENS.Blank_}
+					/>
+				);
 		}
 	};
 
@@ -50,9 +60,9 @@ const Router = ({}) => {
 			<Stack.Navigator
 				screenOptions={{
 					headerShown: false,
-					presentation: "card",
+					presentation: 'card',
 				}}
-				defaultScreenOptions={{ presentation: "card" }}
+				defaultScreenOptions={{ presentation: 'card' }}
 			>
 				{Routes()}
 			</Stack.Navigator>
