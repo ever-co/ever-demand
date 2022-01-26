@@ -23,7 +23,7 @@ import { CONSTANT_COLOR as CC, GLOBAL_STYLE as GS } from '../assets/ts/styles';
 type IconProps = typeof Icon.defaultProps;
 
 export type TouchableCardPropsType = {
-	title?: null | string;
+	title?: null | React.ReactNode | string;
 	description?: null | string;
 	textOneLine?: boolean;
 	icon?: IconProps;
@@ -47,7 +47,7 @@ export type TouchableCardPropsType = {
 	loading?: false;
 	loaderColor?: string;
 	disabled?: false;
-	children?: any;
+	children?: React.ReactNode;
 };
 
 const TouchableCard: React.FC<TouchableCardPropsType> = ({
