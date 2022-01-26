@@ -22,7 +22,7 @@ import { CONSTANT_COLOR as CC, GLOBAL_STYLE as GS } from '../assets/ts/styles';
 
 type IconProps = typeof Icon.defaultProps;
 
-export type TouchableCardType = {
+export type TouchableCardPropsType = {
 	title?: null | string;
 	description?: null | string;
 	textOneLine?: boolean;
@@ -50,7 +50,7 @@ export type TouchableCardType = {
 	children?: any;
 };
 
-const TouchableCard: React.FC<TouchableCardType> = ({
+const TouchableCard: React.FC<TouchableCardPropsType> = ({
 	title = null,
 	description = null,
 	textOneLine = true,
