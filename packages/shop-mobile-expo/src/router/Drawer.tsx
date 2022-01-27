@@ -7,7 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import SCREENS from '../screens';
 
 // ROUTES
-import ROUTES_GROUPS from './routes';
+import ROUTES_GROUPS from './drawer.routes';
 
 // COMPONENTS
 import CustomDrawer from '../components/Drawer';
@@ -17,7 +17,7 @@ import { GLOBAL_STYLE as GS } from '../assets/ts/styles';
 
 const Drawer = createDrawerNavigator();
 
-export default () => {
+const DrawerNavigation: React.FC = () => {
 	const dimensions = useWindowDimensions();
 
 	return (
@@ -47,3 +47,5 @@ export default () => {
 		</NavigationContainer>
 	);
 };
+
+export default DrawerNavigation;
