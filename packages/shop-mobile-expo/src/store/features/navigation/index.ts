@@ -4,13 +4,15 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../index';
 
 // CONSTANTS
-import GROUPS from './groups';
+import GROUPS, { GroupNameType } from '../../../router/groups.routes';
 
-interface NavigationState {
-	group: string;
-}
+// LOCAL TYPES
+export type NavigationGroupType = GroupNameType | null;
+export type NavigationStateType = {
+	group: GroupNameType | null;
+};
 
-const initialState: NavigationState = {
+const initialState: NavigationStateType = {
 	group: GROUPS.LOADING,
 };
 
@@ -18,7 +20,7 @@ export const navigationSlice = createSlice({
 	name: 'navigation',
 	initialState,
 	reducers: {
-		setGroup: (state, action: PayloadAction<string>) => {
+		setGroup: (state, action: PayloadAction<NavigationGroupType>) => {
 			state.group = action.payload;
 		},
 	},
