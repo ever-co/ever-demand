@@ -8,12 +8,10 @@ import { useAppSelector, useAppDispatch } from '../store/hooks';
 // ACTIONS & SELECTORS
 import { getGroup, setGroup } from '../store/features/navigation';
 
-// CONSTANTS
-import NAV_GROUPS from '../store/features/navigation/groups';
-
-// SCREENS
+// ROUTING
+import NAV_GROUPS from './groups.routes';
+import STACK_ROUTES from './stack.routes';
 import DrawerNavigation from './Drawer';
-import Screens from '../screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,24 +32,15 @@ const Router = ({}) => {
 	}, []);
 
 	const Routes = () => {
-		switch (getNavGroup) {
-			case NAV_GROUPS.LOADING:
-				return (
-					<Stack.Screen
-						name="Stack/Loading"
-						component={Screens.Loading}
-					/>
-				);
-			case NAV_GROUPS.APP:
-				return <DrawerNavigation />;
-			default:
-				return (
-					<Stack.Screen
-						name="Stack/Blank_"
-						component={Screens.Blank_}
-					/>
-				);
-		}
+		const safeGroup = getNavGroup || 'BLANK';
+		return (
+			<>
+				{safeGroup === NAV_GROUPS.APP && <DrawerNavigation />}
+				{STACK_ROUTES[safeGroup].map((stackScreenProps) => (
+					<Stack.Screen {...stackScreenProps} />
+				))}
+			</>
+		);
 	};
 
 	return (
