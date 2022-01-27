@@ -22,13 +22,13 @@ import LinkItem from './Item';
 // LOCAL TYPES
 export type ContentProps = {
 	ScrollViewProps?: ScrollViewProps;
-	drawerContentProps: DrawerContentComponentProps;
+	drawerContentProps?: DrawerContentComponentProps;
 	linksGroups: RoutesGroupType[];
 };
 
 const CustomDrawer: React.FC<ContentProps> = ({
 	ScrollViewProps = {},
-	drawerContentProps,
+	drawerContentProps = {},
 	linksGroups = [],
 }) => {
 	return (
