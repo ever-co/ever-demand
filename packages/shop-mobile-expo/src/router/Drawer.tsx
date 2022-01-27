@@ -4,7 +4,13 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 
 // SCREENS
-import Screens from '../screens';
+import SCREENS from '../screens';
+
+// ROUTES
+import ROUTES_GROUPS from './routes';
+
+// COMPONENTS
+import CustomDrawer from '../components/Drawer';
 
 // STYLES
 import { GLOBAL_STYLE as GS } from '../assets/ts/styles';
@@ -18,7 +24,7 @@ export default () => {
 		<NavigationContainer>
 			<Drawer.Navigator
 				initialRouteName="Home"
-				drawerType={dimensions.width >= 768 ? 'permanent' : 'front'}
+				detach
 				option={{
 					header: {
 						title: 'Ever',
@@ -28,8 +34,15 @@ export default () => {
 						},
 					},
 				}}
+				drawerType={dimensions.width >= 768 ? 'permanent' : 'front'}
+				drawerContent={(props: any) => (
+					<CustomDrawer
+						drawerContentProps={props}
+						linksGroups={ROUTES_GROUPS}
+					/>
+				)}
 			>
-				<Drawer.Screen name="Home" component={Screens.Home} />
+				<Drawer.Screen name="Home" component={SCREENS.Home} />
 			</Drawer.Navigator>
 		</NavigationContainer>
 	);
