@@ -2,15 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // TYPES
 import type { RootState } from '../../index';
+import type { NavigationStateType, NavigationGroupType } from './types';
 
 // CONSTANTS
-import GROUPS, { GroupNameType } from '../../../router/groups.routes';
-
-// LOCAL TYPES
-export type NavigationGroupType = GroupNameType | null;
-export type NavigationStateType = {
-	group: GroupNameType | null;
-};
+import GROUPS from '../../../router/groups.routes';
 
 const initialState: NavigationStateType = {
 	group: GROUPS.LOADING,
