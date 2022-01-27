@@ -1,7 +1,7 @@
 // TYPES
 export type RoutesNameGroupType = 'APP' | 'LOADING' | 'BLANK';
 export type RouteGroupType = {
-	[name in RoutesNameGroupType]: RoutesNameGroupType;
+	readonly [name in RoutesNameGroupType]: RoutesNameGroupType;
 };
 
 const ROUTE_GROUPS: RouteGroupType = {
