@@ -1,10 +1,10 @@
 // TYPES
-export type RoutesNameGroupType = 'APP' | 'LOADING' | 'BLANK';
-export type RouteGroupType = {
-	readonly [name in RoutesNameGroupType]: RoutesNameGroupType;
+export type GroupNameType = 'APP' | 'LOADING' | 'BLANK';
+export type RoutesGroupType = {
+	readonly [name in GroupNameType]: GroupNameType;
 };
 
-const ROUTE_GROUPS: RouteGroupType = {
+const ROUTE_GROUPS: RoutesGroupType = {
 	APP: 'APP',
 	LOADING: 'LOADING',
 	BLANK: 'BLANK',
