@@ -2,7 +2,7 @@ import * as React from 'react';
 import { DrawerItem } from '@react-navigation/drawer';
 
 // TYPES
-import { LinkItem } from '../../router/routes';
+import { LinkItem } from '../../router/drawer.routes';
 
 // COMPONENTS
 import TouchableCard, { TouchableCardPropsType } from '../TouchableCard';

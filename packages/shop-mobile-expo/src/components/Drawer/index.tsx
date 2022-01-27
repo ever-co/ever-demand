@@ -7,7 +7,7 @@ import {
 } from '@react-navigation/drawer';
 
 // CONSTANTS
-import { RoutesGroupType } from '../../router/routes';
+import { RoutesGroupType } from '../../router/drawer.routes';
 
 // COMPONENTS
 import Icon from '../Icon';
