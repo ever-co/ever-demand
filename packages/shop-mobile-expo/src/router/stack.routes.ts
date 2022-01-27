@@ -1,8 +1,7 @@
-import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // TYPES
-import { GroupNameType } from './groups.routes';
+import { GroupNameType } from '../store/features/navigation/types';
 
 // UTILS
 import { getReactComponentProps } from '../helpers/utils';

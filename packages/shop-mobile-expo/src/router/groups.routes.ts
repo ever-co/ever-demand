@@ -1,5 +1,5 @@
-// TYPES
-export type GroupNameType = 'APP' | 'LOADING' | 'BLANK';
+import { GroupNameType } from '../store/features/navigation/types';
+
 export type RoutesGroupType = {
 	readonly [name in GroupNameType]: GroupNameType;
 };
