@@ -1,5 +1,5 @@
 // TYPES
-import { IconNameType } from '../components/Icon';
+import type { IconNameType } from "../components/Icon";
 
 // LOCAL TYPES
 export type LinkItem = {
@@ -14,6 +14,18 @@ export type RoutesGroupType = {
 	linkItems?: LinkItem[];
 };
 
-const ROUTES_GROUPS: RoutesGroupType[] = [];
+const ROUTES_GROUPS: RoutesGroupType[] = [
+	{
+		title: "",
+		linkItems: [
+			{
+				label: "Products",
+				path: "STACK/PRODUCTS",
+				icon: "shoppingcart",
+				external: false,
+			},
+		],
+	},
+];
 
 export default ROUTES_GROUPS;
