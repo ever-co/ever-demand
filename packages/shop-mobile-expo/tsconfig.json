@@ -14,15 +14,7 @@
 		"skipLibCheck": false,
 		"resolveJsonModule": true,
 		"paths": {
-			"@modules/server.common/*": ["../../common/src/*"],
-			"@modules/client.common.angular2/*": ["../../common-angular/src/*"],
-			"@pyro/*": ["../../common/src/@pyro/*"],
-			"mongoose": ["../../common-angular/src/mongoose-placeholder"],
-			"typeorm": ["../../common-angular/src/typeorm-placeholder"],
-			"environment": ["./environments/environment"],
-			"core-js/es7/reflect": [
-				"../../../node_modules/core-js/proposals/reflect-metadata"
-			]
+			"environment": ["./src/environments/environment.ts"]
 		}
 	},
 	"exclude": [
