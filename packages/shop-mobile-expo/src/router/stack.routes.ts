@@ -1,13 +1,14 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 // TYPES
-import { GroupNameType } from '../store/features/navigation/types';
+import { GroupNameType } from "../store/features/navigation/types";
 
 // UTILS
-import { getReactComponentProps } from '../helpers/utils';
+import { getReactComponentProps } from "../helpers/utils";
 
 // SCREENS
-import SCREENS from '../screens/index';
+import DrawerNavigation from "./Drawer";
+import SCREENS from "../screens/index";
 
 const StackScreen = createNativeStackNavigator().Screen;
 const StackScreenProps = getReactComponentProps(StackScreen);
@@ -19,16 +20,21 @@ export type ScreenGroupType = {
 };
 
 const ROUTES_GROUPS: ScreenGroupType = {
-	APP: [],
+	APP: [
+		{
+			name: "STACK/HOME",
+			component: DrawerNavigation,
+		},
+	],
 	BLANK: [
 		{
-			name: 'STACK/BLANK_',
+			name: "STACK/BLANK_",
 			component: SCREENS.Blank_,
 		},
 	],
 	LOADING: [
 		{
-			name: 'STACK/LOADING',
+			name: "STACK/LOADING",
 			component: SCREENS.Loading,
 		},
 	],

@@ -11,7 +11,6 @@ import { getGroup, setGroup } from "../store/features/navigation";
 // ROUTING
 import NAV_GROUPS from "./groups.routes";
 import STACK_ROUTES from "./stack.routes";
-import DrawerNavigation from "./Drawer";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,7 +34,6 @@ const Router = ({}) => {
 		const safeGroup = getNavGroup || "BLANK";
 		return (
 			<>
-				{safeGroup === NAV_GROUPS.APP && <DrawerNavigation />}
 				{STACK_ROUTES[safeGroup].map((stackScreenProps, id) => (
 					<Stack.Screen key={id} {...stackScreenProps} />
 				))}
