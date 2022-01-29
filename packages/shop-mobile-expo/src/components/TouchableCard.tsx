@@ -29,7 +29,7 @@ export type TouchableCardPropsType = {
 	indicatorText?: null | string;
 	indicatorTextSize?: number;
 	indicatorTextColor?: null | string;
-	img?: string | object;
+	img?: string | object | undefined;
 	onPress?: (event: GestureResponderEvent) => any;
 	style?: ViewStyle;
 	cardStyle?: ViewStyle;
@@ -54,7 +54,7 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 	indicatorText = null,
 	indicatorTextSize = 10,
 	indicatorTextColor = null,
-	img = "",
+	img = undefined,
 	onPress = undefined,
 	style = {},
 	cardStyle = {},
@@ -64,7 +64,7 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 	imgStyle = {},
 	height = 75,
 	loading = false,
-	loaderColor = CC.secondary,
+	loaderColor = CC.gray,
 	disabled = false,
 	rippleColor = "",
 	children = null,
@@ -115,13 +115,17 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 											>
 												{iconProps && !img && (
 													<Icon
-														{...{ color: CC.secondary, size: 35, ...iconProps }}
+														{...{ color: CC.gray, size: 35, ...iconProps }}
 													/>
 												)}
 												{!isEmpty(img) && (
 													<Image
 														source={
-															typeof img === "string" ? { uri: img } : img
+															typeof img === "string"
+																? { uri: img }
+																: img
+																? img
+																: {}
 														}
 														style={{
 															...GS.shadowSm,
@@ -168,7 +172,7 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 									<View style={{ ...GS.centered, ...GS.px1 }}>
 										<Icon
 											{...{
-												color: CC.secondary,
+												color: CC.gray,
 												size: 16,
 												...indicatorIconProps,
 											}}
