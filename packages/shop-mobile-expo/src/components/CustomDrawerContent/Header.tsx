@@ -23,9 +23,9 @@ const DrawerHeader = () => {
 	return (
 		<SafeAreaView
 			style={{
-				...GS.bgSecondary,
-				...GS.shadow,
 				...GS.w100,
+				...GS.shadowLg,
+				...GS.bgSecondary,
 				position: "absolute",
 				borderBottomStartRadius: CS.SPACE_SM,
 				borderBottomEndRadius: CS.SPACE_SM,
