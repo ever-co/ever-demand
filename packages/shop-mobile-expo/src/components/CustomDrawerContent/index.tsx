@@ -5,19 +5,25 @@ import {
 	DrawerContentScrollView,
 	DrawerContentComponentProps,
 } from "@react-navigation/drawer";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+// HELPERS
+import { isEmpty } from "../../helpers/utils";
 
 // CONSTANTS
 import { RoutesGroupType } from "../../router/drawer.routes";
 
 // COMPONENTS
 import Icon from "../Icon";
+import Header from "./Header";
+import Item from "./Item";
 
 // STYLES
 import {
 	GLOBAL_STYLE as GS,
 	CONSTANT_COLOR as CC,
+	CONSTANT_SIZE as CS,
 } from "../../assets/ts/styles";
-import LinkItem from "./Item";
 
 // LOCAL TYPES
 export type ContentProps = {
@@ -32,33 +38,51 @@ const CustomDrawer: React.FC<ContentProps> = ({
 	linksGroups = [],
 }) => {
 	return (
-		<DrawerContentScrollView {...ScrollViewProps}>
-			{linksGroups.map((linksGroup, linksGroup_id) => (
-				<View key={linksGroup_id} style={{ ...GS.mb2 }}>
-					<View style={{ ...GS.inlineItems, ...GS.mb1 }}>
-						{linksGroup?.icon && (
-							<Icon
-								name={linksGroup?.icon}
-								size={16}
-								color={CC.grayLight}
-								style={{
-									...GS.mr2,
-								}}
-							/>
-						)}
-						<Title style={{ fontSize: 16 }}>{linksGroup.title}</Title>
-					</View>
-					{linksGroup?.linkItems &&
-						linksGroup.linkItems.map((linkItem, linkItem_id) => (
-							<LinkItem
-								key={linkItem_id}
-								label={linkItem.label}
-								path={linkItem.path}
-							/>
-						))}
-				</View>
-			))}
-		</DrawerContentScrollView>
+		<View style={{ ...GS.h100, position: "relative" }}>
+			<Header />
+
+			<SafeAreaView style={{ flex: 1 }}>
+				<DrawerContentScrollView {...ScrollViewProps}>
+					<View style={{ height: CS.DRAWER_HEADER_HEIGHT }} />
+					{linksGroups.map((linksGroup, linksGroup_id) => (
+						<View key={linksGroup_id} style={{ ...GS.mb2 }}>
+							<View style={{ ...GS.inlineItems, ...GS.mb1 }}>
+								{linksGroup?.icon && (
+									<Icon
+										name={linksGroup?.icon}
+										size={16}
+										color={CC.grayLight}
+										style={{
+											...GS.mr2,
+										}}
+									/>
+								)}
+								{!isEmpty(linksGroup.title) && (
+									<Title
+										style={{
+											...GS.ml2,
+											...GS.txtCapitalize,
+											fontSize: CS.FONT_SIZE_MD,
+											color: CC.gray,
+										}}
+									>
+										{linksGroup.title}
+									</Title>
+								)}
+							</View>
+							{linksGroup?.linkItems &&
+								linksGroup.linkItems.map((linkItem, linkItem_id) => (
+									<Item
+										key={linkItem_id}
+										label={linkItem.label}
+										path={linkItem.path}
+									/>
+								))}
+						</View>
+					))}
+				</DrawerContentScrollView>
+			</SafeAreaView>
+		</View>
 	);
 };
 
