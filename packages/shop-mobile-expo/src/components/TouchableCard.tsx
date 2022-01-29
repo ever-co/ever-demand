@@ -1,7 +1,6 @@
 import React from "react";
 import {
 	View,
-	TouchableNativeFeedback,
 	Image,
 	ViewStyle,
 	TextStyle,
@@ -9,30 +8,24 @@ import {
 	ActivityIndicator,
 	GestureResponderEvent,
 } from "react-native";
-import { Card } from "react-native-paper";
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import { Card, TouchableRipple } from "react-native-paper";
 
 // HELPERS
 import { isEmpty } from "../helpers/utils";
 
 // COMPONENTS
 import PaperText from "./PaperText";
+import Icon, { IconPropsType } from "../components/Icon";
 
 // STYLES
 import { CONSTANT_COLOR as CC, GLOBAL_STYLE as GS } from "../assets/ts/styles";
-
-type IconProps = typeof Icon.defaultProps;
 
 export type TouchableCardPropsType = {
 	title?: null | React.ReactNode | string;
 	description?: null | string;
 	textOneLine?: boolean;
-	icon?: IconProps;
-	iconSize?: number;
-	iconColor?: string;
-	indicatorIcon?: IconProps;
-	indicatorIconSize?: number;
-	indicatorIconColor?: string;
+	iconProps?: IconPropsType;
+	indicatorIconProps?: IconPropsType;
 	indicatorText?: null | string;
 	indicatorTextSize?: number;
 	indicatorTextColor?: null | string;
@@ -48,6 +41,7 @@ export type TouchableCardPropsType = {
 	loading?: false;
 	loaderColor?: string;
 	disabled?: false;
+	rippleColor?: string;
 	children?: React.ReactNode;
 };
 
@@ -55,12 +49,8 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 	title = null,
 	description = null,
 	textOneLine = true,
-	icon = null,
-	iconSize = 35,
-	iconColor = CC.secondary,
-	indicatorIcon = null,
-	indicatorIconSize = 16,
-	indicatorIconColor = CC.secondary,
+	iconProps = undefined,
+	indicatorIconProps = undefined,
 	indicatorText = null,
 	indicatorTextSize = 10,
 	indicatorTextColor = null,
@@ -76,22 +66,28 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 	loading = false,
 	loaderColor = CC.secondary,
 	disabled = false,
+	rippleColor = "",
 	children = null,
 }) => {
 	return (
 		<View style={{ flex: 1, ...style }}>
-			<TouchableNativeFeedback
-				{...{
-					disabled: !onPress || disabled,
-					...(onPress ? { onPress } : {}),
+			<Card
+				style={{
+					...GS.shadowSm,
+					borderRadius: 10,
+					overflow: "hidden",
+					...cardStyle,
 				}}
 			>
-				<Card
-					style={{
-						...GS.shadowSm,
-						borderRadius: 10,
-						overflow: "hidden",
-						...cardStyle,
+				<TouchableRipple
+					{...{
+						disabled: !onPress || disabled,
+						...(onPress ? { onPress } : {}),
+						rippleColor,
+						style: {
+							...GS.w100,
+							...GS.h100,
+						},
 					}}
 				>
 					<Card.Content
@@ -110,15 +106,17 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 							<>
 								{!!children
 									? children
-									: (icon || img) && (
+									: (iconProps || img) && (
 											<View
 												style={{
 													...GS.centered,
 													...GS.mr2,
 												}}
 											>
-												{icon && !img && (
-													<Icon name={icon} size={iconSize} color={iconColor} />
+												{iconProps && !img && (
+													<Icon
+														{...{ color: CC.secondary, size: 35, ...iconProps }}
+													/>
 												)}
 												{!isEmpty(img) && (
 													<Image
@@ -166,12 +164,14 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 									)}
 								</View>
 
-								{!isEmpty(indicatorIcon) && !indicatorText && (
+								{!isEmpty(indicatorIconProps) && !indicatorText && (
 									<View style={{ ...GS.centered, ...GS.px1 }}>
 										<Icon
-											name={indicatorIcon}
-											size={indicatorIconSize}
-											color={indicatorIconColor}
+											{...{
+												color: CC.secondary,
+												size: 16,
+												...indicatorIconProps,
+											}}
 										/>
 									</View>
 								)}
@@ -182,7 +182,7 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 											...GS.centered,
 											...GS.px1,
 											fontSize: indicatorTextSize,
-											color: indicatorTextColor || indicatorIconColor,
+											color: indicatorTextColor || CC.primary,
 										}}
 									>
 										{indicatorText}
@@ -191,8 +191,8 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 							</>
 						)}
 					</Card.Content>
-				</Card>
-			</TouchableNativeFeedback>
+				</TouchableRipple>
+			</Card>
 		</View>
 	);
 };
