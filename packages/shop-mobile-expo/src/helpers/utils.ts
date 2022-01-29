@@ -1,4 +1,4 @@
-import { ComponentType } from 'react';
+import { ComponentType } from "react";
 
 /**
  *
@@ -18,21 +18,21 @@ export function getReactComponentProps<Props>(
  */
 export function isEmpty(data: any) {
 	switch (typeof data) {
-		case 'object':
-			for (var prop in data) {
+		case "object":
+			for (let prop in data) {
 				if (data.hasOwnProperty(prop)) {
 					return false;
 				}
 			}
 			return JSON.stringify(data) === JSON.stringify({}) || data === null;
 
-		case 'string':
+		case "string":
 			return !!!data && !!!data.trim().length && data != null;
 
-		case 'number':
+		case "number":
 			return !!!data && !(data != NaN);
 
-		case 'boolean':
+		case "boolean":
 			return !data;
 
 		default:
@@ -51,15 +51,14 @@ export function testObjectItem(
 	object: { [key: string]: any },
 	except: string[] = []
 ) {
-	if (typeof object != 'object')
-		return console.warn('This function require a object');
+	if (typeof object != "object")
+		return console.warn("This function require a object");
 
 	let arrayKey = [];
 
 	for (const key in object) {
 		if (Object.hasOwnProperty.call(object, key)) {
-			if (isEmpty(object[key]) && except.includes(key))
-				arrayKey.push(key);
+			if (isEmpty(object[key]) && except.includes(key)) arrayKey.push(key);
 		}
 	}
 	return arrayKey;
@@ -71,8 +70,8 @@ export function testObjectItem(
  * @returns
  */
 export function plural(length: number) {
-	if (length > 1) return 's';
-	else return '';
+	if (length > 1) return "s";
+	else return "";
 }
 
 /**
@@ -80,14 +79,14 @@ export function plural(length: number) {
  * @param date
  * @returns
  */
-export function formatNativeDate(date = '') {
-	var d = new Date(date),
-		month = '' + (d.getMonth() + 1),
-		day = '' + d.getDate(),
+export function formatNativeDate(date = "") {
+	let d = new Date(date),
+		month = "" + (d.getMonth() + 1),
+		day = "" + d.getDate(),
 		year = d.getFullYear();
 
-	if (month.length < 2) month = '0' + month;
-	if (day.length < 2) day = '0' + day;
+	if (month.length < 2) month = "0" + month;
+	if (day.length < 2) day = "0" + day;
 
-	return [year, month, day].join('-');
+	return [year, month, day].join("-");
 }
