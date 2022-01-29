@@ -11,7 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { isEmpty } from "../../helpers/utils";
 
 // CONSTANTS
-import { RoutesGroupType } from "../../router/drawer.routes";
+import { DrawerRoutesGroupType } from "../../router/drawer.routes";
 
 // COMPONENTS
 import Icon from "../Icon";
@@ -29,7 +29,7 @@ import {
 export type ContentProps = {
 	ScrollViewProps?: ScrollViewProps;
 	drawerContentProps?: DrawerContentComponentProps;
-	linksGroups: RoutesGroupType[];
+	linksGroups: DrawerRoutesGroupType[];
 };
 
 const CustomDrawer: React.FC<ContentProps> = ({
