@@ -1,31 +1,36 @@
+import { createDrawerNavigator } from "@react-navigation/drawer";
+
 // TYPES
 import type { IconNameType } from "../components/Icon";
 
+// HELPERS
+import { getReactComponentProps } from "../helpers/utils";
+
+// SCREENS
+import SCREENS from "../screens";
+
+const DrawerScreen = createDrawerNavigator().Screen;
+const DrawerScreenProps = getReactComponentProps(DrawerScreen);
+
 // LOCAL TYPES
-export type LinkItem = {
+export type DrawerLinkItem = {
 	label: string;
 	path: string;
 	icon?: IconNameType;
 	external?: boolean;
 };
-export type RoutesGroupType = {
+export type DrawerRoutesGroupType = {
 	title: string;
 	icon?: IconNameType;
-	linkItems?: LinkItem[];
+	linkItems?: DrawerLinkItem[];
 };
+export type DrawerScreenType = typeof DrawerScreenProps;
 
-const ROUTES_GROUPS: RoutesGroupType[] = [
+const DRAWER_ROUTES: DrawerScreenType[] = [
 	{
-		title: "",
-		linkItems: [
-			{
-				label: "Products",
-				path: "STACK/PRODUCTS",
-				icon: "shoppingcart",
-				external: false,
-			},
-		],
+		name: "DRAWER/HOME",
+		component: SCREENS.Home,
 	},
 ];
 
-export default ROUTES_GROUPS;
+export default DRAWER_ROUTES;
