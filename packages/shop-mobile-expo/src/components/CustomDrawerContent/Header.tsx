@@ -5,6 +5,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 // COMPONENTS
 import PaperText from "../PaperText";
 
+// SELECTORS
+import { useAppSelector } from "../../store/hooks";
+import { getLanguage } from "../../store/features/translation";
+
 // STYLES
 import {
 	GLOBAL_STYLE as GS,
@@ -13,6 +17,9 @@ import {
 } from "../../assets/ts/styles";
 
 const DrawerHeader = () => {
+	// SELECTORS
+	const LANGUAGE = useAppSelector(getLanguage);
+
 	return (
 		<SafeAreaView
 			style={{
@@ -33,7 +40,7 @@ const DrawerHeader = () => {
 				<PaperText
 					style={{ ...GS.fontBold, color: CC.light, fontSize: CS.FONT_SIZE_MD }}
 				>
-					Ever Shop
+					{LANGUAGE.SIDE_MENU.TITLE}
 				</PaperText>
 			</View>
 		</SafeAreaView>
