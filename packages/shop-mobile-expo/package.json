@@ -2,7 +2,7 @@
 	"name": "@ever-platform/shop-mobile-expo",
 	"description": "Ever Shop Mobile App build with expo",
 	"version": "1.0.0",
-	"main": "node_modules/expo/AppEntry.js",
+	"main": "App.tsx",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/ever-co/ever-demand.git"
@@ -49,7 +49,7 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.9",
-		"@babel/runtime": "^7.12.5",
+		"@babel/runtime": "^7.16.7",
 		"@react-native-community/eslint-config": "^2.0.0",
 		"@types/jest": "^26.0.23",
 		"@types/react-native": "^0.66.4",
