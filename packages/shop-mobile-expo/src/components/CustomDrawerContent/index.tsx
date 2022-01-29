@@ -1,6 +1,7 @@
 import React from "react";
 import { View, ScrollViewProps } from "react-native";
 import { Title } from "react-native-paper";
+import { useRoute } from "@react-navigation/native";
 import {
 	DrawerContentScrollView,
 	DrawerContentComponentProps,
@@ -37,6 +38,7 @@ const CustomDrawer: React.FC<ContentProps> = ({
 	drawerContentProps = {},
 	linksGroups = [],
 }) => {
+	const route = useRoute();
 	return (
 		<View style={{ ...GS.h100, position: "relative" }}>
 			<Header />
@@ -49,7 +51,7 @@ const CustomDrawer: React.FC<ContentProps> = ({
 							<View style={{ ...GS.inlineItems, ...GS.mb1 }}>
 								{linksGroup?.icon && (
 									<Icon
-										name={linksGroup?.icon}
+										name={linksGroup.icon}
 										size={16}
 										color={CC.grayLight}
 										style={{
@@ -76,6 +78,8 @@ const CustomDrawer: React.FC<ContentProps> = ({
 										key={linkItem_id}
 										label={linkItem.label}
 										path={linkItem.path}
+										icon={linkItem.icon}
+										focused={route.name === linkItem.path}
 									/>
 								))}
 						</View>
