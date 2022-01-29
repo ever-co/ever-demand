@@ -1,4 +1,4 @@
-import Icon_ from "@expo/vector-icons/AntDesign";
+import Icon_ from "@expo/vector-icons/Feather";
 
 // HELPERS
 import { getReactComponentProps } from "../helpers/utils";
