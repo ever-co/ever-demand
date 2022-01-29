@@ -430,27 +430,21 @@ export const GLOBAL_STYLE = StyleSheet.create({
 		elevation: 0,
 	},
 	shadowSm: {
-		shadowColor: CONSTANT_COLOR.secondary,
+		shadowColor: CONSTANT_COLOR.gray,
 		shadowOffset: { width: 0, height: 1 },
 		shadowRadius: 5,
 		shadowOpacity: 0.2,
 		elevation: 2,
 	},
 	shadow: {
-		shadowColor: CONSTANT_COLOR.secondary,
+		shadowColor: CONSTANT_COLOR.gray,
 		shadowOffset: { width: 1, height: 1.5 },
 		shadowRadius: 5,
 		shadowOpacity: 0.5,
 		elevation: 5,
 	},
 	shadowLg: {
-		// shadowColor: CONSTANT_COLOR.secondary,
-		// shadowOffset: { width: 2, height: 2 },
-		// shadowOpacity: 0.7,
-		// shadowRadius: 5,
-		// elevation: 8.5,
-
-		shadowColor: isIOS ? "#000" : CONSTANT_COLOR.secondary,
+		shadowColor: isIOS ? "#000" : CONSTANT_COLOR.gray,
 		shadowOffset: {
 			width: isIOS ? 0 : 2,
 			height: 2,
@@ -477,23 +471,23 @@ export const GLOBAL_STYLE = StyleSheet.create({
 		borderWidth: 0,
 	},
 	borderSm: {
-		borderColor: CONSTANT_COLOR.secondaryLight,
+		borderColor: CONSTANT_COLOR.gray,
 		borderWidth: 0.5,
 	},
 	border: {
-		borderColor: CONSTANT_COLOR.secondaryLight,
+		borderColor: CONSTANT_COLOR.gray,
 		borderWidth: 1,
 	},
 	borderMd: {
-		borderColor: CONSTANT_COLOR.secondaryLight,
+		borderColor: CONSTANT_COLOR.gray,
 		borderWidth: 2,
 	},
 	borderLg: {
-		borderColor: CONSTANT_COLOR.secondaryLight,
+		borderColor: CONSTANT_COLOR.gray,
 		borderWidth: 4,
 	},
 	separator: {
-		borderTopColor: CONSTANT_COLOR.secondaryLight,
+		borderTopColor: CONSTANT_COLOR.gray,
 		borderTopWidth: 1,
 		marginVertical: 10,
 		padding: 0,
@@ -552,7 +546,7 @@ export const GLOBAL_STYLE = StyleSheet.create({
 	selectItem: {
 		width: "100%",
 		height: "100%",
-		color: CONSTANT_COLOR.secondaryLight,
+		color: CONSTANT_COLOR.gray,
 		fontSize: 15,
 	},
 	statsContainer: {
@@ -568,12 +562,12 @@ export const GLOBAL_STYLE = StyleSheet.create({
 		flex: 1,
 	},
 	statAmount: {
-		color: CONSTANT_COLOR.secondary,
+		color: CONSTANT_COLOR.gray,
 		fontSize: 18,
 		fontWeight: "bold",
 	},
 	statTitle: {
-		color: CONSTANT_COLOR.secondaryLight,
+		color: CONSTANT_COLOR.gray,
 		fontSize: 12,
 		fontWeight: "500",
 		textTransform: "capitalize",
@@ -586,7 +580,7 @@ export const GLOBAL_STYLE = StyleSheet.create({
 		marginBottom: 20,
 	},
 	inputTitle: {
-		color: CONSTANT_COLOR.secondaryLight,
+		color: CONSTANT_COLOR.gray,
 		fontSize: 10,
 		textTransform: "uppercase",
 		marginBottom: 0,
@@ -600,7 +594,7 @@ export const GLOBAL_STYLE = StyleSheet.create({
 		height: 40,
 		borderBottomWidth: 1,
 		borderBottomColor: CONSTANT_COLOR.primary,
-		color: CONSTANT_COLOR.secondaryLight,
+		color: CONSTANT_COLOR.gray,
 		fontSize: 15,
 		paddingHorizontal: 10,
 	},
