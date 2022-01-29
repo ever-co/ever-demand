@@ -1,7 +1,7 @@
-import { StyleSheet, Dimensions, Platform } from 'react-native';
+import { StyleSheet, Dimensions, Platform } from "react-native";
 
-export const isIOS = Platform.OS === 'ios';
-export const isAndroid = Platform.OS === 'android';
+export const isIOS = Platform.OS === "ios";
+export const isAndroid = Platform.OS === "android";
 
 export const CONSTANT_SIZE = {
 	FONT_SIZE_SM: 11,
@@ -17,29 +17,30 @@ export const CONSTANT_SIZE = {
 	SPACE_XLG: 40,
 	BOTTOM_NAVBAR_HEIGHT: 80,
 	STATUS_BAR_HEIGHT: 24,
-	SCREEN_HEIGHT: Dimensions.get('screen').height,
-	SCREEN_WIDTH: Dimensions.get('screen').width,
-	WINDOW_HEIGHT: Dimensions.get('window').height,
-	WINDOW_WIDTH: Dimensions.get('window').width,
+	SCREEN_HEIGHT: Dimensions.get("screen").height,
+	SCREEN_WIDTH: Dimensions.get("screen").width,
+	WINDOW_HEIGHT: Dimensions.get("window").height,
+	WINDOW_WIDTH: Dimensions.get("window").width,
+	DRAWER_HEADER_HEIGHT: 56,
 };
 
 export const CONSTANT_COLOR = {
-	primary: '#2A2C39',
-	primaryLight: '#444654',
-	primaryHightLight: '#676977',
-	light: '#E6E6E6',
-	secondary: '#BD4742',
-	secondaryLight: '#d36b67',
-	secondaryHighLight: '#f27f7b',
-	gray: '#8f96a7',
-	grayLight: '#b3bbce',
-	grayHighLight: '#dce3f4',
+	primary: "#2A2C39",
+	primaryLight: "#444654",
+	primaryHightLight: "#676977",
+	light: "#E6E6E6",
+	secondary: "#BD4742",
+	secondaryLight: "#d36b67",
+	secondaryHighLight: "#f27f7b",
+	gray: "#8f96a7",
+	grayLight: "#b3bbce",
+	grayHighLight: "#dce3f4",
 
-	success: '#25d366',
-	danger: '#e02a2a',
-	warning: '#f7b947',
-	white: '#FFF',
-	input: '#edeef2',
+	success: "#25d366",
+	danger: "#e02a2a",
+	warning: "#f7b947",
+	white: "#FFF",
+	input: "#edeef2",
 };
 
 export const GLOBAL_STYLE = StyleSheet.create({
@@ -78,7 +79,7 @@ export const GLOBAL_STYLE = StyleSheet.create({
 		backgroundColor: CONSTANT_COLOR.success,
 	},
 	bgTransparent: {
-		backgroundColor: 'transparent',
+		backgroundColor: "transparent",
 	},
 	txtPrimary: {
 		color: CONSTANT_COLOR.primary,
@@ -99,26 +100,26 @@ export const GLOBAL_STYLE = StyleSheet.create({
 		color: CONSTANT_COLOR.danger,
 	},
 	txtCenter: {
-		textAlign: 'center',
+		textAlign: "center",
 	},
 	txtUpper: {
-		textTransform: 'uppercase',
+		textTransform: "uppercase",
 	},
 	txtLower: {
-		textTransform: 'lowercase',
+		textTransform: "lowercase",
 	},
 	txtCapitalize: {
-		textTransform: 'capitalize',
+		textTransform: "capitalize",
 	},
 	fontBold: {
-		fontWeight: 'bold',
+		fontWeight: "bold",
 	},
 	fontItalic: {
-		fontStyle: 'italic',
+		fontStyle: "italic",
 	},
 	centered: {
-		justifyContent: 'center',
-		alignItems: 'center',
+		justifyContent: "center",
+		alignItems: "center",
 	},
 	container: {
 		marginHorizontal: 20,
@@ -126,7 +127,7 @@ export const GLOBAL_STYLE = StyleSheet.create({
 	},
 	content: {},
 	dNone: {
-		display: 'none',
+		display: "none",
 	},
 	section: {
 		backgroundColor: CONSTANT_COLOR.light,
@@ -136,32 +137,32 @@ export const GLOBAL_STYLE = StyleSheet.create({
 	titleSection: {
 		color: CONSTANT_COLOR.secondary,
 		marginBottom: 10,
-		textTransform: 'uppercase',
-		fontWeight: 'bold',
+		textTransform: "uppercase",
+		fontWeight: "bold",
 	},
 	w100: {
-		width: '100%',
+		width: "100%",
 	},
 	w75: {
-		width: '75%',
+		width: "75%",
 	},
 	w50: {
-		width: '50%',
+		width: "50%",
 	},
 	w25: {
-		width: '25%',
+		width: "25%",
 	},
 	h100: {
-		height: '100%',
+		height: "100%",
 	},
 	h75: {
-		height: '75%',
+		height: "75%",
 	},
 	h50: {
-		height: '50%',
+		height: "50%",
 	},
 	h25: {
-		height: '25%',
+		height: "25%",
 	},
 	m0: {
 		margin: 0,
@@ -418,11 +419,11 @@ export const GLOBAL_STYLE = StyleSheet.create({
 	imgCover: {
 		height: undefined,
 		width: undefined,
-		resizeMode: 'cover',
+		resizeMode: "cover",
 		flex: 1,
 	},
 	noShadow: {
-		shadowColor: 'transparent',
+		shadowColor: "transparent",
 		shadowOffset: { width: 0, height: 0 },
 		shadowRadius: 0,
 		shadowOpacity: 0,
@@ -449,7 +450,7 @@ export const GLOBAL_STYLE = StyleSheet.create({
 		// shadowRadius: 5,
 		// elevation: 8.5,
 
-		shadowColor: isIOS ? '#000' : CONSTANT_COLOR.secondary,
+		shadowColor: isIOS ? "#000" : CONSTANT_COLOR.secondary,
 		shadowOffset: {
 			width: isIOS ? 0 : 2,
 			height: 2,
@@ -472,7 +473,7 @@ export const GLOBAL_STYLE = StyleSheet.create({
 		borderRadius: 30,
 	},
 	noBorder: {
-		borderColor: 'transparent',
+		borderColor: "transparent",
 		borderWidth: 0,
 	},
 	borderSm: {
@@ -498,44 +499,44 @@ export const GLOBAL_STYLE = StyleSheet.create({
 		padding: 0,
 	},
 	overlay: {
-		position: 'absolute',
+		position: "absolute",
 		flex: 1,
-		height: '100%',
-		width: '100%',
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: 'rgba(0,0,0,0.3)',
+		height: "100%",
+		width: "100%",
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: "rgba(0,0,0,0.3)",
 	},
 	card: {
-		position: 'relative',
+		position: "relative",
 		padding: 15,
 		borderRadius: 10,
-		backgroundColor: 'white',
+		backgroundColor: "white",
 	},
 	cardBtnClose: {
-		position: 'absolute',
+		position: "absolute",
 		right: 10,
 	},
 	tabsContainer: {
 		backgroundColor: CONSTANT_COLOR.light,
-		flexDirection: 'row',
-		alignItems: 'stretch',
+		flexDirection: "row",
+		alignItems: "stretch",
 	},
 	tab: {
 		paddingVertical: 12,
 		borderBottomWidth: 3,
 		borderBottomColor: CONSTANT_COLOR.light,
 		flex: 1,
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'center',
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "center",
 	},
 	activeTab: {
 		borderBottomColor: CONSTANT_COLOR.primary,
 	},
 	tabName: {
 		color: CONSTANT_COLOR.primary,
-		fontWeight: 'bold',
+		fontWeight: "bold",
 	},
 	tabIcon: {
 		marginRight: 4,
@@ -546,36 +547,36 @@ export const GLOBAL_STYLE = StyleSheet.create({
 		width: 130,
 		height: 35,
 		paddingHorizontal: 0,
-		alignItems: 'center',
+		alignItems: "center",
 	},
 	selectItem: {
-		width: '100%',
-		height: '100%',
+		width: "100%",
+		height: "100%",
 		color: CONSTANT_COLOR.secondaryLight,
 		fontSize: 15,
 	},
 	statsContainer: {
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center',
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
 		marginHorizontal: 30,
 		marginVertical: 10,
 	},
 	stat: {
-		alignItems: 'center',
-		justifyContent: 'center',
+		alignItems: "center",
+		justifyContent: "center",
 		flex: 1,
 	},
 	statAmount: {
 		color: CONSTANT_COLOR.secondary,
 		fontSize: 18,
-		fontWeight: 'bold',
+		fontWeight: "bold",
 	},
 	statTitle: {
 		color: CONSTANT_COLOR.secondaryLight,
 		fontSize: 12,
-		fontWeight: '500',
-		textTransform: 'capitalize',
+		fontWeight: "500",
+		textTransform: "capitalize",
 		marginTop: 4,
 	},
 	form: {
@@ -587,12 +588,12 @@ export const GLOBAL_STYLE = StyleSheet.create({
 	inputTitle: {
 		color: CONSTANT_COLOR.secondaryLight,
 		fontSize: 10,
-		textTransform: 'uppercase',
+		textTransform: "uppercase",
 		marginBottom: 0,
 	},
 	inputGroup: {
-		flexDirection: 'row',
-		alignItems: 'stretch',
+		flexDirection: "row",
+		alignItems: "stretch",
 	},
 	appendTag: {},
 	input: {
@@ -608,47 +609,47 @@ export const GLOBAL_STYLE = StyleSheet.create({
 		backgroundColor: CONSTANT_COLOR.light,
 	},
 	column: {
-		flexDirection: 'column',
+		flexDirection: "column",
 	},
 	row: {
-		flexDirection: 'row',
+		flexDirection: "row",
 	},
 	inlineItems: {
-		flexDirection: 'row',
-		alignItems: 'center',
+		flexDirection: "row",
+		alignItems: "center",
 	},
 	justifyContentBetween: {
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center',
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
 	},
 	tableBtn: {
 		padding: 5,
-		flexDirection: 'row',
-		justifyContent: 'center',
+		flexDirection: "row",
+		justifyContent: "center",
 		marginHorizontal: 5,
 		paddingHorizontal: 10,
 		borderRadius: 5,
 	},
 	errorContainer: {
 		paddingVertical: 20,
-		alignItems: 'center',
-		justifyContent: 'center',
+		alignItems: "center",
+		justifyContent: "center",
 	},
 	errorMessage: {
 		color: CONSTANT_COLOR.primary,
 		fontSize: 13,
-		fontWeight: '400',
-		textAlign: 'center',
+		fontWeight: "400",
+		textAlign: "center",
 	},
 	btn: {
 		height: 45,
 		borderRadius: 5,
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'center',
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "center",
 		borderWidth: 1,
-		borderColor: 'rgba(0,0,0,0)',
+		borderColor: "rgba(0,0,0,0)",
 		marginVertical: 5,
 		paddingHorizontal: 20,
 	},
@@ -665,26 +666,26 @@ export const GLOBAL_STYLE = StyleSheet.create({
 		borderColor: CONSTANT_COLOR.secondary,
 	},
 	btnTopLeft: {
-		position: 'absolute',
+		position: "absolute",
 		top: 30,
 		left: 20,
 		width: 40,
 		height: 40,
 		borderRadius: 40 / 2,
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: 'rgba(22, 22, 43, 0.2)',
+		alignItems: "center",
+		justifyContent: "center",
+		backgroundColor: "rgba(22, 22, 43, 0.2)",
 	},
 	btnBottomRight: {
-		position: 'absolute',
+		position: "absolute",
 		bottom: 20,
 		right: 20,
 		width: 40,
 		height: 40,
 		borderRadius: 40 / 2,
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: 'rgba(22, 22, 43, 0.2)',
+		alignItems: "center",
+		justifyContent: "center",
+		backgroundColor: "rgba(22, 22, 43, 0.2)",
 	},
 	accordionTitle: {
 		color: CONSTANT_COLOR.secondary,
@@ -693,38 +694,38 @@ export const GLOBAL_STYLE = StyleSheet.create({
 		flex: 1,
 		height: undefined,
 		width: undefined,
-		resizeMode: 'cover',
+		resizeMode: "cover",
 	},
 	inputPicker: {
 		borderColor: CONSTANT_COLOR.input,
 		borderWidth: 1,
 		height: 30,
-		width: '100%',
+		width: "100%",
 		color: CONSTANT_COLOR.gray,
 		borderRadius: 7,
-		display: 'flex',
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'space-between',
+		display: "flex",
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
 		paddingHorizontal: 5,
 	},
 	inputPickerLabel: {
 		fontSize: 12,
 		color: CONSTANT_COLOR.gray,
 		paddingRight: 0,
-		width: '85%',
+		width: "85%",
 	},
 	inputPickerIcon: {
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'flex-end',
-		width: '15%',
+		display: "flex",
+		flexDirection: "row",
+		justifyContent: "flex-end",
+		width: "15%",
 	},
 	textarea: {
 		borderColor: CONSTANT_COLOR.grayLight,
 		borderWidth: 1,
 		borderRadius: 5,
-		overflow: 'hidden',
+		overflow: "hidden",
 		height: 100,
 	},
 });
