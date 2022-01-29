@@ -18,6 +18,8 @@ const DrawerHeader = () => {
 			style={{
 				...GS.bgSecondary,
 				...GS.shadow,
+				...GS.w100,
+				position: "absolute",
 				borderBottomStartRadius: CS.SPACE_SM,
 				borderBottomEndRadius: CS.SPACE_SM,
 			}}
