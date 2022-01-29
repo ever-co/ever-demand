@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
 	View,
 	TouchableNativeFeedback,
@@ -7,18 +7,19 @@ import {
 	TextStyle,
 	ImageStyle,
 	ActivityIndicator,
-} from 'react-native';
-import { Card } from 'react-native-paper';
-import Icon from '@expo/vector-icons/MaterialCommunityIcons';
+	GestureResponderEvent,
+} from "react-native";
+import { Card } from "react-native-paper";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 // HELPERS
-import { isEmpty } from '../helpers/utils';
+import { isEmpty } from "../helpers/utils";
 
 // COMPONENTS
-import PaperText from './PaperText';
+import PaperText from "./PaperText";
 
 // STYLES
-import { CONSTANT_COLOR as CC, GLOBAL_STYLE as GS } from '../assets/ts/styles';
+import { CONSTANT_COLOR as CC, GLOBAL_STYLE as GS } from "../assets/ts/styles";
 
 type IconProps = typeof Icon.defaultProps;
 
@@ -36,7 +37,7 @@ export type TouchableCardPropsType = {
 	indicatorTextSize?: number;
 	indicatorTextColor?: null | string;
 	img?: string | object;
-	onPress?: undefined;
+	onPress?: (event: GestureResponderEvent) => any;
 	style?: ViewStyle;
 	cardStyle?: ViewStyle;
 	cardStyleContent?: ViewStyle;
@@ -63,7 +64,7 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 	indicatorText = null,
 	indicatorTextSize = 10,
 	indicatorTextColor = null,
-	img = '',
+	img = "",
 	onPress = undefined,
 	style = {},
 	cardStyle = {},
@@ -89,26 +90,21 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 					style={{
 						...GS.shadowSm,
 						borderRadius: 10,
-						overflow: 'hidden',
+						overflow: "hidden",
 						...cardStyle,
 					}}
 				>
 					<Card.Content
 						style={{
 							...GS.row,
-							alignItems: 'center',
+							alignItems: "center",
 							height,
 							...cardStyleContent,
 						}}
 					>
 						{loading ? (
-							<View
-								style={{ ...GS.h100, ...GS.centered, flex: 1 }}
-							>
-								<ActivityIndicator
-									color={loaderColor}
-									size="small"
-								/>
+							<View style={{ ...GS.h100, ...GS.centered, flex: 1 }}>
+								<ActivityIndicator color={loaderColor} size="small" />
 							</View>
 						) : (
 							<>
@@ -122,27 +118,19 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 												}}
 											>
 												{icon && !img && (
-													<Icon
-														name={icon}
-														size={iconSize}
-														color={iconColor}
-													/>
+													<Icon name={icon} size={iconSize} color={iconColor} />
 												)}
 												{!isEmpty(img) && (
 													<Image
 														source={
-															typeof img ===
-															'string'
-																? { uri: img }
-																: img
+															typeof img === "string" ? { uri: img } : img
 														}
 														style={{
 															...GS.shadowSm,
 															width: 40,
 															height: 40,
 															borderRadius: 20,
-															resizeMode:
-																'contain',
+															resizeMode: "contain",
 															...imgStyle,
 														}}
 													/>
@@ -153,14 +141,12 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 								<View
 									style={{
 										flex: 1,
-										justifyContent: 'center',
+										justifyContent: "center",
 									}}
 								>
 									{!isEmpty(title) && (
 										<PaperText
-											{...(textOneLine
-												? { numberOfLines: 1 }
-												: {})}
+											{...(textOneLine ? { numberOfLines: 1 } : {})}
 											style={{
 												fontSize: 18,
 												paddingBottom: 2,
@@ -172,9 +158,7 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 									)}
 									{!isEmpty(description) && (
 										<PaperText
-											{...(textOneLine
-												? { numberOfLines: 1 }
-												: {})}
+											{...(textOneLine ? { numberOfLines: 1 } : {})}
 											style={{ ...descriptionStyle }}
 										>
 											{description}
@@ -198,9 +182,7 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 											...GS.centered,
 											...GS.px1,
 											fontSize: indicatorTextSize,
-											color:
-												indicatorTextColor ||
-												indicatorIconColor,
+											color: indicatorTextColor || indicatorIconColor,
 										}}
 									>
 										{indicatorText}
