@@ -14,12 +14,12 @@ const StackScreen = createNativeStackNavigator().Screen;
 const StackScreenProps = getReactComponentProps(StackScreen);
 
 // LOCAL TYPES
-export type ScreenType = typeof StackScreenProps;
-export type ScreenGroupType = {
-	[name in GroupNameType]: ScreenType[];
+export type StackScreenType = typeof StackScreenProps;
+export type StackScreenGroupType = {
+	[name in GroupNameType]: StackScreenType[];
 };
 
-const ROUTES_GROUPS: ScreenGroupType = {
+const STACK_ROUTES_GROUPS: StackScreenGroupType = {
 	APP: [
 		{
 			name: "STACK/HOME",
@@ -40,4 +40,4 @@ const ROUTES_GROUPS: ScreenGroupType = {
 	],
 };
 
-export default ROUTES_GROUPS;
+export default STACK_ROUTES_GROUPS;
