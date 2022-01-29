@@ -1,6 +1,5 @@
 import * as React from "react";
 import { View } from "react-native";
-import { DrawerItem } from "@react-navigation/drawer";
 
 // TYPES
 import { DrawerLinkItem } from "../../router/drawer.routes";
@@ -17,12 +16,21 @@ import {
 	CONSTANT_SIZE as CS,
 } from "../../assets/ts/styles";
 
-const Item: React.FC<DrawerLinkItem> = ({ label, path, icon, external }) => {
+const Item: React.FC<DrawerLinkItem> = ({
+	label,
+	path,
+	icon,
+	external,
+	focused,
+}) => {
 	return (
 		<TouchableCard
 			style={{ ...GS.w100, ...GS.inlineItems, ...GS.mb1 }}
 			cardStyle={{ ...GS.w100, ...GS.px0, borderRadius: 0 }}
-			cardStyleContent={{ ...GS.px2 }}
+			cardStyleContent={{
+				...GS.px2,
+				backgroundColor: focused ? CC.secondaryHighLight + "20" : "transparent",
+			}}
 			height={50}
 			rippleColor={CC.secondaryHighLight + "3f"}
 			iconProps={
@@ -36,8 +44,20 @@ const Item: React.FC<DrawerLinkItem> = ({ label, path, icon, external }) => {
 					  }
 					: undefined
 			}
+			indicatorIconProps={
+				focused
+					? {
+							name: "codepen-circle",
+							size: 8,
+							color: CC.secondary,
+					  }
+					: undefined
+			}
 			title={label}
-			titleStyle={{ color: CC.primaryLight, fontSize: CS.FONT_SIZE }}
+			titleStyle={{
+				color: focused ? CC.primary : CC.primaryLight,
+				fontSize: CS.FONT_SIZE,
+			}}
 			onPress={() => {
 				return console.log("Function not implemented.");
 			}}
