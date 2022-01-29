@@ -7,7 +7,7 @@ import { GroupNameType } from "../store/features/navigation/types";
 import { getReactComponentProps } from "../helpers/utils";
 
 // SCREENS
-import DrawerNavigation from "./Drawer";
+import DrawerNavigator from "./DrawerNavigator";
 import SCREENS from "../screens/index";
 
 const StackScreen = createNativeStackNavigator().Screen;
@@ -23,7 +23,7 @@ const ROUTES_GROUPS: ScreenGroupType = {
 	APP: [
 		{
 			name: "STACK/HOME",
-			component: DrawerNavigation,
+			component: DrawerNavigator,
 		},
 	],
 	BLANK: [
