@@ -1,9 +1,14 @@
-import AntDesign from '@expo/vector-icons/AntDesign';
+import Icon_ from "@expo/vector-icons/AntDesign";
 
-export type IconElementType = typeof AntDesign;
-export type IconNameType = keyof typeof AntDesign.glyphMap;
-export type IconSizeType = keyof typeof AntDesign.defaultProps;
+// HELPERS
+import { getReactComponentProps } from "../helpers/utils";
 
-const Icon: IconElementType = AntDesign;
+const IconProps = getReactComponentProps(Icon_);
+
+export type IconPropsType = typeof IconProps;
+export type IconComponentType = typeof Icon_;
+export type IconNameType = keyof typeof Icon_.glyphMap;
+
+const Icon: IconComponentType = Icon_;
 
 export default Icon;
