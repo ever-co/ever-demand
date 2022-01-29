@@ -1,3 +1,4 @@
+import "react-native-gesture-handler";
 import React from "react";
 import { Provider } from "react-redux";
 import Icon from "@expo/vector-icons/AntDesign";
@@ -13,7 +14,8 @@ import Router from "./router";
 // STYLES
 import { CONSTANT_COLOR as CC, GLOBAL_STYLE as GS } from "./assets/ts/styles";
 
-type ThemeType = typeof DefaultTheme;
+// LOCAL TYPES
+export type ThemeType = typeof DefaultTheme;
 
 const theme: ThemeType = {
 	...DefaultTheme,
