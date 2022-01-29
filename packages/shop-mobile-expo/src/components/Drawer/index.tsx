@@ -1,23 +1,23 @@
-import React from 'react';
-import { View, ScrollViewProps } from 'react-native';
-import { Title } from 'react-native-paper';
+import React from "react";
+import { View, ScrollViewProps } from "react-native";
+import { Title } from "react-native-paper";
 import {
 	DrawerContentScrollView,
 	DrawerContentComponentProps,
-} from '@react-navigation/drawer';
+} from "@react-navigation/drawer";
 
 // CONSTANTS
-import { RoutesGroupType } from '../../router/drawer.routes';
+import { RoutesGroupType } from "../../router/drawer.routes";
 
 // COMPONENTS
-import Icon from '../Icon';
+import Icon from "../Icon";
 
 // STYLES
 import {
 	GLOBAL_STYLE as GS,
 	CONSTANT_COLOR as CC,
-} from '../../assets/ts/styles';
-import LinkItem from './Item';
+} from "../../assets/ts/styles";
+import LinkItem from "./Item";
 
 // LOCAL TYPES
 export type ContentProps = {
@@ -33,8 +33,8 @@ const CustomDrawer: React.FC<ContentProps> = ({
 }) => {
 	return (
 		<DrawerContentScrollView {...ScrollViewProps}>
-			{linksGroups.map((linksGroup) => (
-				<View style={{ ...GS.mb2 }}>
+			{linksGroups.map((linksGroup, linksGroup_id) => (
+				<View key={linksGroup_id} style={{ ...GS.mb2 }}>
 					<View style={{ ...GS.inlineItems, ...GS.mb1 }}>
 						{linksGroup?.icon && (
 							<Icon
@@ -46,13 +46,12 @@ const CustomDrawer: React.FC<ContentProps> = ({
 								}}
 							/>
 						)}
-						<Title style={{ fontSize: 16 }}>
-							{linksGroup.title}
-						</Title>
+						<Title style={{ fontSize: 16 }}>{linksGroup.title}</Title>
 					</View>
 					{linksGroup?.linkItems &&
-						linksGroup.linkItems.map((linkItem) => (
+						linksGroup.linkItems.map((linkItem, linkItem_id) => (
 							<LinkItem
+								key={linkItem_id}
 								label={linkItem.label}
 								path={linkItem.path}
 							/>
