@@ -38,7 +38,11 @@ const DrawerHeader = () => {
 				}}
 			>
 				<PaperText
-					style={{ ...GS.fontBold, color: CC.light, fontSize: CS.FONT_SIZE_MD }}
+					style={{
+						...GS.FF_Lobster,
+						color: CC.light,
+						fontSize: CS.FONT_SIZE_XLG,
+					}}
 				>
 					{LANGUAGE.SIDE_MENU.TITLE}
 				</PaperText>
