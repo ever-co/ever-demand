@@ -1,14 +1,12 @@
 import * as React from "react";
 import { View, Linking } from "react-native";
-import { CommonActions, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 // TYPES
 import { DrawerLinkItem } from "../../router/drawer.routes";
 
 // COMPONENTS
 import TouchableCard from "../TouchableCard";
-import Icon from "../Icon";
-import PaperText from "../PaperText";
 
 // STYLES
 import {
