@@ -30,10 +30,11 @@ const theme: ThemeType = {
 		...DefaultTheme.colors,
 		primary: CC.primary,
 		accent: CC.primaryLight,
-		background: CC.light,
+		background: CC.primary,
 		surface: CC.white,
-		disabled: CC.grayHighLight,
-		placeholder: CC.grayLight,
+		disabled: CC.grayLight,
+		text: CC.light,
+		placeholder: CC.grayHighLight,
 		error: CC.danger,
 	},
 	fonts: {
@@ -47,12 +48,14 @@ const theme: ThemeType = {
 setCustomTextInput({
 	style: {
 		...GS.FF_Nunito,
+		color: CC.light,
 	},
 });
 
 setCustomText({
 	style: {
 		...GS.FF_Nunito,
+		color: CC.light,
 	},
 });
 
