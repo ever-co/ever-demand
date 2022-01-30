@@ -12,6 +12,9 @@ import { getGroup, setGroup } from "../store/features/navigation";
 import NAV_GROUPS from "./groups.routes";
 import STACK_ROUTES from "./stack.routes";
 
+// STYLES
+import { GLOBAL_STYLE as GS } from "../assets/ts/styles";
+
 const Stack = createNativeStackNavigator();
 
 // NAVIGATION COMPONENT
@@ -47,6 +50,9 @@ const Router = ({}) => {
 				screenOptions={{
 					headerShown: false,
 					presentation: "card",
+					contentStyle: {
+						...GS.bgPrimary,
+					},
 				}}
 				defaultScreenOptions={{ presentation: "card" }}
 			>

@@ -6,6 +6,7 @@
 		"version": "1.0.0",
 		"orientation": "portrait",
 		"primaryColor": "#2A2C39",
+		"backgroundColor": "#2A2C39",
 		"icon": "./src/assets/img/appIcons/icon.png",
 		"splash": {
 			"image": "./src/assets/img/appIcons/splash.png",
