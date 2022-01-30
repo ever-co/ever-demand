@@ -64,7 +64,7 @@ const CustomDrawer: React.FC<ContentProps> = ({
 										style={{
 											...GS.ml2,
 											...GS.txtCapitalize,
-											fontSize: CS.FONT_SIZE_MD,
+											fontSize: CS.FONT_SIZE,
 											color: CC.gray,
 										}}
 									>
