@@ -5,13 +5,15 @@ import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import { setCustomTextInput, setCustomText } from "react-native-global-props";
 import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
-import Icon from "@expo/vector-icons/AntDesign";
 
 // STORE
 import { store } from "./store";
 
 // ROUTER
 import Router from "./router";
+
+// COMPONENTS
+import Icon from "./components/Icon";
 
 // STYLES
 import { CONSTANT_COLOR as CC, GLOBAL_STYLE as GS } from "./assets/ts/styles";
