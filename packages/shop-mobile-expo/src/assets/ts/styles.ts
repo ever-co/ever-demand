@@ -67,16 +67,16 @@ export const GLOBAL_STYLE = StyleSheet.create({
 	},
 	screen: {
 		flex: 1,
-		backgroundColor: CONSTANT_COLOR.white,
+		backgroundColor: CONSTANT_COLOR.primary,
 	},
 	screenStatic: {
 		height: CONSTANT_SIZE.SCREEN_HEIGHT,
-		backgroundColor: CONSTANT_COLOR.white,
+		backgroundColor: CONSTANT_COLOR.primary,
 	},
 	screenStaticNav: {
 		flex: 1,
 		marginBottom: CONSTANT_SIZE.BOTTOM_NAVBAR_HEIGHT,
-		backgroundColor: CONSTANT_COLOR.white,
+		backgroundColor: CONSTANT_COLOR.primary,
 	},
 	bgPrimary: {
 		backgroundColor: CONSTANT_COLOR.primary,
