@@ -165,8 +165,8 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 									}}
 									labelStyle={{
 										...GS.ml2,
-										...GS.my1,
-										fontSize: CS.FONT_SIZE,
+										marginVertical: CS.SPACE_SM,
+										fontSize: CS.FONT_SIZE - 1,
 									}}
 									theme={{ colors: { primary: CC.light } }}
 								>
