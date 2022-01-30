@@ -29,7 +29,7 @@ const theme: ThemeType = {
 	colors: {
 		...DefaultTheme.colors,
 		primary: CC.primary,
-		accent: CC.primaryLight,
+		accent: CC.secondary,
 		background: CC.primary,
 		surface: CC.white,
 		disabled: CC.grayLight,
