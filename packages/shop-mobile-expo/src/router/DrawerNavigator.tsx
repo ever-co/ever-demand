@@ -44,7 +44,7 @@ const DrawerNavigator: React.FC = () => {
 			linkItems: [
 				{
 					label: LANGUAGE.SIDE_MENU.GROUPS.SETTINGS.ITEMS.LANGUAGE,
-					path: "DRAWER/LANGUAGES",
+					path: "DRAWER/TRANSLATION",
 					icon: "align-center",
 					external: false,
 				},

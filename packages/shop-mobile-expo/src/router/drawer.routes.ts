@@ -32,6 +32,10 @@ const DRAWER_ROUTES: DrawerScreenType[] = [
 		name: "DRAWER/HOME",
 		component: SCREENS.Home,
 	},
+	{
+		name: "DRAWER/TRANSLATION",
+		component: SCREENS.Translation,
+	},
 ];
 
 export default DRAWER_ROUTES;
