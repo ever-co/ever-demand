@@ -18,6 +18,7 @@ export type DrawerLinkItem = {
 	path: string;
 	icon?: IconNameType;
 	external?: boolean;
+	focused?: boolean;
 };
 export type DrawerRoutesGroupType = {
 	title: string;
