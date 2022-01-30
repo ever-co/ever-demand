@@ -7,7 +7,7 @@ import PaperText from "../PaperText";
 
 // SELECTORS
 import { useAppSelector } from "../../store/hooks";
-import { getLanguage } from "../../store/features/translation";
+import { getLang, getLanguage } from "../../store/features/translation";
 
 // STYLES
 import {
@@ -18,7 +18,8 @@ import {
 
 const DrawerHeader = () => {
 	// SELECTORS
-	const LANGUAGE = useAppSelector(getLanguage);
+	const currentLanguage = useAppSelector(getLanguage);
+	const currentLang = useAppSelector(getLang);
 
 	return (
 		<SafeAreaView
@@ -42,9 +43,10 @@ const DrawerHeader = () => {
 						...GS.FF_Lobster,
 						color: CC.light,
 						fontSize: CS.FONT_SIZE_XLG,
+						transform: currentLang === "HEBREW" ? [{ scaleX: -1 }] : [],
 					}}
 				>
-					{LANGUAGE.SIDE_MENU.TITLE}
+					{currentLanguage.SIDE_MENU.TITLE}
 				</PaperText>
 			</View>
 		</SafeAreaView>

@@ -1,4 +1,5 @@
 import React from "react";
+import { View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -6,6 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
 
 // ACTIONS & SELECTORS
+import { getLang } from "../store/features/translation";
 import { getGroup, setGroup } from "../store/features/navigation";
 
 // ROUTING
@@ -24,6 +26,7 @@ const Router = ({}) => {
 
 	// SELECTORS
 	const getNavGroup = useAppSelector(getGroup);
+	const getCurrentLang = useAppSelector(getLang);
 
 	// EFFECTS
 	React.useEffect(() => {
@@ -45,20 +48,28 @@ const Router = ({}) => {
 	};
 
 	return (
-		<NavigationContainer>
-			<Stack.Navigator
-				screenOptions={{
-					headerShown: false,
-					presentation: "card",
-					contentStyle: {
-						...GS.bgPrimary,
-					},
-				}}
-				defaultScreenOptions={{ presentation: "card" }}
-			>
-				{Routes()}
-			</Stack.Navigator>
-		</NavigationContainer>
+		<View
+			style={{
+				...GS.w100,
+				...GS.h100,
+				transform: getCurrentLang === "HEBREW" ? [{ scaleX: -1 }] : [],
+			}}
+		>
+			<NavigationContainer>
+				<Stack.Navigator
+					screenOptions={{
+						headerShown: false,
+						presentation: "card",
+						contentStyle: {
+							...GS.bgPrimary,
+						},
+					}}
+					defaultScreenOptions={{ presentation: "card" }}
+				>
+					{Routes()}
+				</Stack.Navigator>
+			</NavigationContainer>
+		</View>
 	);
 };
 
