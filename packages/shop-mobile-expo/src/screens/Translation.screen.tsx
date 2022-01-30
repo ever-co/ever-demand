@@ -25,7 +25,7 @@ function HomeScreen({}) {
 				backgroundColor="transparent"
 				barStyle="light-content"
 			/>
-			<CustomScreenHeader title={LANGUAGE.LANGUAGE_VIEW.TITLE} showBackBtn />
+			<CustomScreenHeader title={LANGUAGE.LANGUAGE_VIEW.TITLE} showHomeBtn />
 
 			<ScrollView style={{ ...GS.h100, ...GS.pt3 }}>
 				<PaperText>Lang 1</PaperText>

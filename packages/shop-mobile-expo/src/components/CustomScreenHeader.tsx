@@ -16,6 +16,7 @@ import { useAppSelector } from "../store/hooks";
 import { getLanguage } from "../store/features/translation";
 
 // COMPONENTS
+import Icon from "./Icon";
 import PaperText from "./PaperText";
 
 // STYLES
@@ -32,6 +33,8 @@ export type CustomScreenHeaderType = {
 	showControls?: boolean;
 	controlOnPressSearch?: Function;
 	controlOnPressStore?: Function;
+	showHomeBtn?: boolean;
+	onPressHomeBtn?: Function;
 	showBackBtn?: boolean;
 	onPressBackBtn?: Function;
 };
@@ -42,8 +45,10 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 	showControls = false,
 	controlOnPressSearch = () => {},
 	controlOnPressStore = () => {},
+	showHomeBtn = false,
+	onPressHomeBtn,
 	showBackBtn = false,
-	onPressBackBtn = () => {},
+	onPressBackBtn,
 }) => {
 	// SELECTORS
 	const LANGUAGE = useAppSelector(getLanguage);
@@ -102,7 +107,13 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 							}}
 						>
 							{!!title && (
-								<Title style={{ ...GS.mb1, fontSize: CS.FONT_SIZE_MD }}>
+								<Title
+									style={{
+										...GS.mb1,
+										...GS.FF_NunitoBold,
+										fontSize: CS.FONT_SIZE_MD - 1,
+									}}
+								>
 									{title}
 								</Title>
 							)}
@@ -137,8 +148,7 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 										color={CC.light}
 										size={CS.FONT_SIZE_SM * 1.6}
 										style={{ ...GS.ml0 }}
-										// @ts-ignore
-										onPress={controlOnPressSearch}
+										onPress={() => controlOnPressSearch()}
 									/>
 
 									<View style={{ ...GS.roundedLg, overflow: "hidden" }}>
@@ -155,23 +165,68 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 							)}
 
 							{showBackBtn && (
-								<Button
-									icon="chevron-left"
-									mode="outlined"
-									onPress={() => onPressBackBtn()}
+								<View
 									style={{
-										borderColor: CC.light,
-										borderWidth: 1,
+										...GS.roundedSm,
+										overflow: "hidden",
 									}}
-									labelStyle={{
-										...GS.ml2,
-										marginVertical: CS.SPACE_SM,
-										fontSize: CS.FONT_SIZE - 2,
-									}}
-									theme={{ colors: { primary: CC.light } }}
 								>
-									{LANGUAGE.PRODUCTS_VIEW.DETAILS.BACK}
-								</Button>
+									<TouchableRipple
+										onPress={() =>
+											onPressBackBtn ? onPressBackBtn() : navigation.goBack()
+										}
+									>
+										<View
+											style={{
+												...GS.inlineItems,
+												padding: CS.DRAWER_HEADER_HEIGHT / 6.5,
+											}}
+										>
+											<Icon
+												name="chevron-left"
+												color={CC.light}
+												size={CS.DRAWER_HEADER_HEIGHT / 2.5}
+												style={{ marginLeft: -6, ...GS.mr1 }}
+											/>
+											<PaperText>
+												{LANGUAGE.PRODUCTS_VIEW.DETAILS.BACK}
+											</PaperText>
+										</View>
+									</TouchableRipple>
+								</View>
+							)}
+
+							{showHomeBtn && (
+								<View
+									style={{
+										...GS.roundedSm,
+										overflow: "hidden",
+									}}
+								>
+									<TouchableRipple
+										onPress={() =>
+											onPressHomeBtn
+												? onPressHomeBtn()
+												: //@ts-ignore TODO: search to solve the nex line
+												  navigation.navigate("DRAWER/HOME")
+										}
+									>
+										<View
+											style={{
+												...GS.inlineItems,
+												padding: CS.DRAWER_HEADER_HEIGHT / 6.5,
+											}}
+										>
+											<Icon
+												name="shopping-bag"
+												color={CC.light}
+												size={CS.DRAWER_HEADER_HEIGHT / 2.5}
+												style={{ ...GS.ml0, ...GS.mr1 }}
+											/>
+											<PaperText>{LANGUAGE.PRODUCTS_VIEW.TITLE}</PaperText>
+										</View>
+									</TouchableRipple>
+								</View>
 							)}
 						</View>
 					)}
