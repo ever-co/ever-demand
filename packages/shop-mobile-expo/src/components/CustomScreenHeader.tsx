@@ -124,7 +124,11 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 										style={{ ...GS.inlineItems, ...GS.mr2 }}
 									>
 										<PaperText
-											style={{ ...GS.txtCapitalize, fontSize: CS.FONT_SIZE_SM }}
+											style={{
+												...GS.txtCapitalize,
+												fontSize: CS.FONT_SIZE_SM,
+												opacity: tmpSwitchValue ? 0.4 : 1,
+											}}
 										>
 											{LANGUAGE.PRODUCTS_VIEW.TAKEAWAY}
 										</PaperText>
@@ -137,7 +141,11 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 											}}
 										/>
 										<PaperText
-											style={{ ...GS.txtCapitalize, fontSize: CS.FONT_SIZE_SM }}
+											style={{
+												...GS.txtCapitalize,
+												fontSize: CS.FONT_SIZE_SM,
+												opacity: tmpSwitchValue ? 1 : 0.4,
+											}}
 										>
 											{LANGUAGE.PRODUCTS_VIEW.DELIVERY}
 										</PaperText>
