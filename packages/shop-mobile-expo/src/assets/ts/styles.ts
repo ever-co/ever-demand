@@ -28,7 +28,7 @@ export const CONSTANT_COLOR = {
 	primary: "#2A2C39",
 	primaryLight: "#444654",
 	primaryHightLight: "#676977",
-	light: "#E6E6E6",
+	light: "#EfEfEf",
 	secondary: "#BD4742",
 	secondaryLight: "#d36b67",
 	secondaryHighLight: "#f27f7b",
@@ -44,6 +44,27 @@ export const CONSTANT_COLOR = {
 };
 
 export const GLOBAL_STYLE = StyleSheet.create({
+	FF_NunitoExtraLight: {
+		fontFamily: "Nunito-ExtraLight",
+	},
+	FF_NunitoLight: {
+		fontFamily: "Nunito-Light",
+	},
+	FF_Nunito: {
+		fontFamily: "Nunito-Regular",
+	},
+	FF_NunitoSemiBold: {
+		fontFamily: "Nunito-SemiBold",
+	},
+	FF_NunitoBold: {
+		fontFamily: "Nunito-Bold",
+	},
+	FF_NunitoBlack: {
+		fontFamily: "Nunito-Black",
+	},
+	FF_Lobster: {
+		fontFamily: "Lobster-Regular",
+	},
 	screen: {
 		flex: 1,
 		backgroundColor: CONSTANT_COLOR.white,
