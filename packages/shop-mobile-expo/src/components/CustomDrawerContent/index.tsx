@@ -1,7 +1,6 @@
 import React from "react";
 import { View, ScrollViewProps } from "react-native";
 import { Title } from "react-native-paper";
-import { useRoute } from "@react-navigation/native";
 import {
 	DrawerContentScrollView,
 	DrawerContentComponentProps,
@@ -28,16 +27,18 @@ import {
 // LOCAL TYPES
 export type ContentProps = {
 	ScrollViewProps?: ScrollViewProps;
-	drawerContentProps?: DrawerContentComponentProps;
+	drawerContentProps: DrawerContentComponentProps;
 	linksGroups: DrawerRoutesGroupType[];
 };
 
 const CustomDrawer: React.FC<ContentProps> = ({
 	ScrollViewProps = {},
-	drawerContentProps = {},
+	drawerContentProps,
 	linksGroups = [],
 }) => {
-	const route = useRoute();
+	const navigationState = drawerContentProps.navigation.getState();
+	const currentRouteName = navigationState.routeNames[navigationState.index];
+
 	return (
 		<View style={{ ...GS.h100, position: "relative" }}>
 			<Header />
@@ -77,7 +78,7 @@ const CustomDrawer: React.FC<ContentProps> = ({
 										label={linkItem.label}
 										path={linkItem.path}
 										icon={linkItem.icon}
-										focused={route.name === linkItem.path}
+										focused={currentRouteName === linkItem.path}
 									/>
 								))}
 						</View>

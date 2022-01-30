@@ -26,7 +26,7 @@ const DrawerNavigator: React.FC = () => {
 			linkItems: [
 				{
 					label: LANGUAGE.SIDE_MENU.GROUPS.NO_TITLE.ITEMS.PRODUCTS,
-					path: "STACK/HOME",
+					path: "DRAWER/HOME",
 					icon: "shopping-bag",
 					external: false,
 				},
