@@ -1,5 +1,6 @@
 import * as React from "react";
-import { View } from "react-native";
+import { View, Linking } from "react-native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 
 // TYPES
 import { DrawerLinkItem } from "../../router/drawer.routes";
@@ -23,6 +24,7 @@ const Item: React.FC<DrawerLinkItem> = ({
 	external,
 	focused,
 }) => {
+	const navigation = useNavigation();
 	return (
 		<View style={{ position: "relative", ...GS.w100, ...GS.mb1 }}>
 			<TouchableCard
@@ -53,7 +55,10 @@ const Item: React.FC<DrawerLinkItem> = ({
 					fontSize: CS.FONT_SIZE,
 				}}
 				onPress={() => {
-					return console.log("Function not implemented.");
+					if (external) return Linking.openURL(path);
+					// @ts-ignore TODO: search to resolve this next line
+					navigation.navigate({ name: path });
+					console.log(path);
 				}}
 			/>
 
