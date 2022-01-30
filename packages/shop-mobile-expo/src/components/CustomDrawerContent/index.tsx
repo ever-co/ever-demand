@@ -6,7 +6,6 @@ import {
 	DrawerContentScrollView,
 	DrawerContentComponentProps,
 } from "@react-navigation/drawer";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 // HELPERS
 import { isEmpty } from "../../helpers/utils";
@@ -43,9 +42,8 @@ const CustomDrawer: React.FC<ContentProps> = ({
 		<View style={{ ...GS.h100, position: "relative" }}>
 			<Header />
 
-			<SafeAreaView style={{ flex: 1 }}>
+			<View style={{ flex: 1 }}>
 				<DrawerContentScrollView {...ScrollViewProps}>
-					<View style={{ height: CS.DRAWER_HEADER_HEIGHT }} />
 					{linksGroups.map((linksGroup, linksGroup_id) => (
 						<View key={linksGroup_id} style={{ ...GS.mb2 }}>
 							<View style={{ ...GS.inlineItems, ...GS.mb1 }}>
@@ -85,7 +83,7 @@ const CustomDrawer: React.FC<ContentProps> = ({
 						</View>
 					))}
 				</DrawerContentScrollView>
-			</SafeAreaView>
+			</View>
 		</View>
 	);
 };
