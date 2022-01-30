@@ -29,6 +29,7 @@ export const CONSTANT_COLOR = {
 	primaryLight: "#444654",
 	primaryHightLight: "#676977",
 	light: "#EfEfEf",
+	dark: "#131314",
 	secondary: "#BD4742",
 	secondaryLight: "#d36b67",
 	secondaryHighLight: "#f27f7b",
@@ -451,21 +452,21 @@ export const GLOBAL_STYLE = StyleSheet.create({
 		elevation: 0,
 	},
 	shadowSm: {
-		shadowColor: CONSTANT_COLOR.gray,
+		shadowColor: CONSTANT_COLOR.dark,
 		shadowOffset: { width: 0, height: 1 },
 		shadowRadius: 5,
 		shadowOpacity: 0.2,
 		elevation: 2,
 	},
 	shadow: {
-		shadowColor: CONSTANT_COLOR.gray,
+		shadowColor: CONSTANT_COLOR.dark,
 		shadowOffset: { width: 1, height: 1.5 },
 		shadowRadius: 5,
 		shadowOpacity: 0.5,
 		elevation: 5,
 	},
 	shadowLg: {
-		shadowColor: isIOS ? "#000" : CONSTANT_COLOR.gray,
+		shadowColor: isIOS ? "#000" : CONSTANT_COLOR.dark,
 		shadowOffset: {
 			width: isIOS ? 0 : 2,
 			height: 2,
