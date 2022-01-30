@@ -29,10 +29,10 @@ const Item: React.FC<DrawerLinkItem> = ({
 			cardStyle={{ ...GS.w100, ...GS.px0, borderRadius: 0 }}
 			cardStyleContent={{
 				...GS.px2,
-				backgroundColor: focused ? CC.secondaryHighLight + "20" : "transparent",
+				backgroundColor: focused ? CC.primaryHightLight + "20" : "transparent",
 			}}
 			height={50}
-			rippleColor={CC.secondaryHighLight + "3f"}
+			rippleColor={CC.primaryHightLight + "3f"}
 			iconProps={
 				icon
 					? {
@@ -41,15 +41,6 @@ const Item: React.FC<DrawerLinkItem> = ({
 							name: icon,
 							// TODO: think to use this feature (below e.g)
 							//focused ? 'heart' : 'heart-outline'
-					  }
-					: undefined
-			}
-			indicatorIconProps={
-				focused
-					? {
-							name: "codepen-circle",
-							size: 8,
-							color: CC.secondary,
 					  }
 					: undefined
 			}
