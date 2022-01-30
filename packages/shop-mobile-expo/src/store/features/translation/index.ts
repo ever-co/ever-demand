@@ -12,14 +12,14 @@ import {
 import type { RootState } from "../../index";
 
 export const supportedLangs: supportedLangsType = {
-	bg_BG: "bg_BG",
-	en_US: "en_US",
-	es_ES: "es_ES",
-	he_IL: "he_IL",
-	ru_RU: "ru_RU",
+	BULGARIAN: "BULGARIAN",
+	ENGLISH: "ENGLISH",
+	SPANISH: "SPANISH",
+	HEBREW: "HEBREW",
+	RUSSIAN: "RUSSIAN",
 };
 export const initialState: TranslationStateType = {
-	lang: supportedLangs.en_US,
+	lang: supportedLangs.ENGLISH,
 };
 export const translationSlice = createSlice({
 	name: "translation",

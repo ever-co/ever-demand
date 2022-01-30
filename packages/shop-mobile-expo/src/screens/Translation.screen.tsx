@@ -10,7 +10,7 @@ import FocusAwareStatusBar from "../components/FocusAwareStatusBar";
 import PaperText from "../components/PaperText";
 
 // STYLES
-import { GLOBAL_STYLE as GS } from "../assets/ts/styles";
+import { GLOBAL_STYLE as GS, CONSTANT_COLOR as CC } from "../assets/ts/styles";
 import { ScrollView } from "react-native-gesture-handler";
 import CustomScreenHeader from "../components/CustomScreenHeader";
 
@@ -27,9 +27,11 @@ function HomeScreen({}) {
 			/>
 			<CustomScreenHeader title={LANGUAGE.LANGUAGE_VIEW.TITLE} showHomeBtn />
 
-			<ScrollView style={{ ...GS.h100, ...GS.pt3 }}>
-				<PaperText>Lang 1</PaperText>
-				<PaperText>Lang 2</PaperText>
+			<ScrollView
+				style={{ ...GS.h100, ...GS.pt4, ...GS.px2, ...GS.bgLight }}
+				scrollEnabled
+			>
+				<PaperText style={{ color: CC.primary }}>Lang 1</PaperText>
 			</ScrollView>
 		</View>
 	);

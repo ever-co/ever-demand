@@ -16,11 +16,11 @@ const LANGUAGES: {
 		| typeof he_IL
 		| typeof ru_RU;
 } = {
-	bg_BG: bg_BG,
-	en_US: en_US,
-	es_ES: es_ES,
-	he_IL: he_IL,
-	ru_RU: ru_RU,
+	BULGARIAN: bg_BG,
+	ENGLISH: en_US,
+	SPANISH: es_ES,
+	HEBREW: he_IL,
+	RUSSIAN: ru_RU,
 };
 
 export default LANGUAGES;

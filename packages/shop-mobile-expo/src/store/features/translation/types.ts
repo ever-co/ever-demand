@@ -2,7 +2,12 @@
 import LANGUAGES from "./lang";
 
 // TYPES
-export type supportedLangType = "bg_BG" | "en_US" | "es_ES" | "he_IL" | "ru_RU";
+export type supportedLangType =
+	| "BULGARIAN"
+	| "ENGLISH"
+	| "SPANISH"
+	| "HEBREW"
+	| "RUSSIAN";
 export type supportedLangsType = {
 	readonly [name in supportedLangType]: supportedLangType;
 };
