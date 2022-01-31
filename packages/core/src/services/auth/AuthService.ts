@@ -6,9 +6,9 @@ import bcrypt from 'bcrypt';
 import { injectable, interfaces } from 'inversify';
 import { RawObject } from '@pyro/db/db-raw-object';
 
-// have to combine the two imports
-import jwt from 'jsonwebtoken';
-import { JsonWebTokenError } from 'jsonwebtoken';
+// combined the two imports
+// import jwt from 'jsonwebtoken';
+import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 
 interface IAuthableCreateObject extends DBCreateObject {
 	hash?: string;

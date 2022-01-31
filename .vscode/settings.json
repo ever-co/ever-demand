@@ -95,5 +95,6 @@
 		"typeorm",
 		"Whitespaces"
 	],
-	"deepscan.enable": true
+	"deepscan.enable": true,
+	"angular.enable-strict-mode-prompt": false
 }
