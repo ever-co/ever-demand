@@ -1,4 +1,3 @@
-# Ever Shop Mobile App (Flutter version)
 # shop_flutter_mobile
 
 A new Flutter project.
