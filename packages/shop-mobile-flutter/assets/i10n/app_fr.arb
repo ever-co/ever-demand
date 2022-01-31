@@ -1,0 +1,6 @@
+{
+    "welcome": "Bienvenu chez Ever",
+    "@welcome": {
+      "description": "Ceci est un exemple de code qui permet de verifier si la localisation marche"
+    }
+}
