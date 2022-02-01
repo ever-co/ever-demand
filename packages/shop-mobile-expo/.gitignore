@@ -8,6 +8,7 @@ npm-debug.*
 *.key
 *.mobileprovision
 *.orig.*
+*.lock
 web-build/
 
 # macOS
@@ -24,5 +25,3 @@ jest/
 .env.prod
 /src/environments/environment.ts
 /src/environments/environment.prod.ts
-
-**.lock
