@@ -54,6 +54,7 @@
 		"@babel/core": "^7.12.9",
 		"@babel/runtime": "^7.16.7",
 		"@react-native-community/eslint-config": "^2.0.0",
+		"@types/expo": "^33.0.1",
 		"@types/jest": "^26.0.23",
 		"@types/react-native": "^0.64.3",
 		"@types/react-native-global-props": "^1.1.1",
