@@ -1,30 +1,24 @@
-import React, { useState } from "react";
-import { View, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import {
-	IconButton,
-	Title,
-	Switch,
-	TouchableRipple,
-	Button,
-} from "react-native-paper";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import React, { useState } from 'react';
+import { View, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { IconButton, Title, Switch, TouchableRipple } from 'react-native-paper';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 // SELECTORS
-import { useAppSelector } from "../store/hooks";
-import { getLanguage } from "../store/features/translation";
+import { useAppSelector } from '../store/hooks';
+import { getLanguage } from '../store/features/translation';
 
 // COMPONENTS
-import Icon from "./Icon";
-import PaperText from "./PaperText";
+import Icon from './Icon';
+import PaperText from './PaperText';
 
 // STYLES
 import {
 	GLOBAL_STYLE as GS,
 	CONSTANT_SIZE as CS,
 	CONSTANT_COLOR as CC,
-} from "../assets/ts/styles";
+} from '../assets/ts/styles';
 
 // LOCAL TYPES
 export type CustomScreenHeaderType = {
@@ -74,7 +68,7 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 				style={{
 					...GS.row,
 					...GS.px2,
-					alignItems: "stretch",
+					alignItems: 'stretch',
 					height: CS.DRAWER_HEADER_HEIGHT,
 				}}
 			>
@@ -120,21 +114,29 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 							{!!showControls && (
 								<View style={{ ...GS.inlineItems }}>
 									<TouchableOpacity
-										onPress={() => setTmpSwitchValue(!tmpSwitchValue)}
+										onPress={() =>
+											setTmpSwitchValue(!tmpSwitchValue)
+										}
 										style={{ ...GS.inlineItems, ...GS.mr2 }}
 									>
 										<PaperText
 											style={{
 												...GS.txtCapitalize,
 												fontSize: CS.FONT_SIZE_SM,
-												opacity: tmpSwitchValue ? 0.4 : 1,
+												opacity: tmpSwitchValue
+													? 0.4
+													: 1,
 											}}
 										>
 											{LANGUAGE.PRODUCTS_VIEW.TAKEAWAY}
 										</PaperText>
 										<Switch
 											value={tmpSwitchValue}
-											onValueChange={() => setTmpSwitchValue(!tmpSwitchValue)}
+											onValueChange={() =>
+												setTmpSwitchValue(
+													!tmpSwitchValue
+												)
+											}
 											style={{
 												marginHorizontal: -3,
 												transform: [{ scale: 0.74 }],
@@ -144,7 +146,9 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 											style={{
 												...GS.txtCapitalize,
 												fontSize: CS.FONT_SIZE_SM,
-												opacity: tmpSwitchValue ? 1 : 0.4,
+												opacity: tmpSwitchValue
+													? 1
+													: 0.4,
 											}}
 										>
 											{LANGUAGE.PRODUCTS_VIEW.DELIVERY}
@@ -159,11 +163,20 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 										onPress={() => controlOnPressSearch()}
 									/>
 
-									<View style={{ ...GS.roundedLg, overflow: "hidden" }}>
-										<TouchableRipple onPress={() => controlOnPressStore()}>
+									<View
+										style={{
+											...GS.roundedLg,
+											overflow: 'hidden',
+										}}
+									>
+										<TouchableRipple
+											onPress={() =>
+												controlOnPressStore()
+											}
+										>
 											<MaterialIcons
 												name="storefront"
-												color={CC.light}
+												color={CC.success}
 												size={CS.FONT_SIZE_SM * 1.6}
 												style={{ ...GS.m1 }}
 											/>
@@ -176,28 +189,41 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 								<View
 									style={{
 										...GS.roundedSm,
-										overflow: "hidden",
+										overflow: 'hidden',
 									}}
 								>
 									<TouchableRipple
 										onPress={() =>
-											onPressBackBtn ? onPressBackBtn() : navigation.goBack()
+											onPressBackBtn
+												? onPressBackBtn()
+												: navigation.goBack()
 										}
 									>
 										<View
 											style={{
 												...GS.inlineItems,
-												padding: CS.DRAWER_HEADER_HEIGHT / 6.5,
+												padding:
+													CS.DRAWER_HEADER_HEIGHT /
+													6.5,
 											}}
 										>
 											<Icon
 												name="chevron-left"
 												color={CC.light}
-												size={CS.DRAWER_HEADER_HEIGHT / 2.5}
-												style={{ marginLeft: -6, ...GS.mr1 }}
+												size={
+													CS.DRAWER_HEADER_HEIGHT /
+													2.5
+												}
+												style={{
+													marginLeft: -6,
+													...GS.mr1,
+												}}
 											/>
 											<PaperText>
-												{LANGUAGE.PRODUCTS_VIEW.DETAILS.BACK}
+												{
+													LANGUAGE.PRODUCTS_VIEW
+														.DETAILS.BACK
+												}
 											</PaperText>
 										</View>
 									</TouchableRipple>
@@ -208,30 +234,39 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 								<View
 									style={{
 										...GS.roundedSm,
-										overflow: "hidden",
+										overflow: 'hidden',
 									}}
 								>
 									<TouchableRipple
 										onPress={() =>
 											onPressHomeBtn
 												? onPressHomeBtn()
-												: //@ts-ignore TODO: search to solve the nex line
-												  navigation.navigate("DRAWER/HOME")
+												: navigation.navigate(
+														//@ts-ignore TODO: search to solve the next line issue
+														'DRAWER/HOME'
+												  )
 										}
 									>
 										<View
 											style={{
 												...GS.inlineItems,
-												padding: CS.DRAWER_HEADER_HEIGHT / 6.5,
+												padding:
+													CS.DRAWER_HEADER_HEIGHT /
+													6.5,
 											}}
 										>
 											<Icon
 												name="shopping-bag"
 												color={CC.light}
-												size={CS.DRAWER_HEADER_HEIGHT / 2.5}
+												size={
+													CS.DRAWER_HEADER_HEIGHT /
+													2.5
+												}
 												style={{ ...GS.ml0, ...GS.mr1 }}
 											/>
-											<PaperText>{LANGUAGE.PRODUCTS_VIEW.TITLE}</PaperText>
+											<PaperText>
+												{LANGUAGE.PRODUCTS_VIEW.TITLE}
+											</PaperText>
 										</View>
 									</TouchableRipple>
 								</View>
