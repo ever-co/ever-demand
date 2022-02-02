@@ -1,11 +1,4 @@
 {
-	"BROWSE": "Vistazo",
-	"ENGLISH": "Inglés",
-	"HEBREW": "Hebreo",
-	"RUSSIAN": "Ruso",
-	"BULGARIAN": "Búlgaro",
-	"SPANISH": "Español",
-	"SELECT": "Seleccione",
 	"LANGUAGE": {
 		"ID": "es-ES",
 		"NAME": "Español"
@@ -251,6 +244,13 @@
 	"IN_DELIVERY": "En viaje",
 	"PENDING": "Pendiente",
 	"COMPLETED": "Completado",
+	"BROWSE": "Vistazo",
+	"ENGLISH": "Inglés",
+	"HEBREW": "Hebreo",
+	"RUSSIAN": "Ruso",
+	"BULGARIAN": "Búlgaro",
+	"SPANISH": "Español",
+	"SELECT": "Seleccione",
 	"LOCATION_NOTES": "Notas de ubicación",
 	"ENTER_NOTES_HERE": "Introduce notas aquí"
 }
