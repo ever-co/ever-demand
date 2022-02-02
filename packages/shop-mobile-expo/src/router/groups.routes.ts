@@ -8,6 +8,7 @@ const ROUTE_GROUPS: RoutesGroupType = {
 	APP: 'APP',
 	LOADING: 'LOADING',
 	BLANK: 'BLANK',
+	REGISTRATION: 'REGISTRATION',
 };
 
 export default ROUTE_GROUPS;
