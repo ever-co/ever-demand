@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:bottom_nav_bar/bottom_nav_bar.dart';
+import 'package:shop_flutter_mobile/screens/other/nav.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,6 +15,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Color myHexColor;
+    myHexColor = const Color(0x1F212A);
     return MaterialApp(
       title: 'Ever',
       debugShowCheckedModeBanner: false,
@@ -24,6 +28,10 @@ class MyApp extends StatelessWidget {
       supportedLocales: [
         const Locale('en', ''), //support for english
         const Locale('es', ''), //support for spanish
+        const Locale('fr', ''), //support for french
+        const Locale('he', ''), //support for hebrew
+        const Locale('ru', ''), //support for russian
+        const Locale('bg', ''), //support for bulgarian
       ],
       theme: ThemeData(
         // This is the theme of your application.
@@ -35,9 +43,10 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
+
         primarySwatch: Colors.deepOrange,
       ),
-      home: const MyHomePage(title: 'Ever Demand'),
+      home: Nav(),
     );
   }
 }
