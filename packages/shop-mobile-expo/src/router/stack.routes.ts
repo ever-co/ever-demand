@@ -38,7 +38,12 @@ const STACK_ROUTES_GROUPS: StackScreenGroupType = {
 			component: SCREENS.Loading,
 		},
 	],
-	REGISTRATION: [],
+	REGISTRATION: [
+		{
+			name: 'STACK/SIGN_UP',
+			component: SCREENS.REGISTRATION.SIGN_UP,
+		},
+	],
 };
 
 export default STACK_ROUTES_GROUPS;

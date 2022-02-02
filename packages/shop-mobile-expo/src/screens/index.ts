@@ -1,15 +1,29 @@
-// SCREENS
-import LoadingScreen from "./Loading.screen";
-import Blank_Screen from "./Blank_.screen";
+//
+import LoadingScreen from './Loading.screen';
+import Blank_Screen from './Blank_.screen';
 
-import HomeScreen from "./Home.screen";
-import TranslationScreen from "./Translation.screen";
+// REGISTRATION
+import SignUpScreen from './registration/Signup.screen';
+import GeoScreen from './registration/Geo.screen';
 
-export default {
+// APP
+import HomeScreen from './Home.screen';
+import TranslationScreen from './Translation.screen';
+
+// TODO: create a type for screens object
+
+const SCREENS = {
 	// SCREENS
 	Loading: LoadingScreen,
 	Blank_: Blank_Screen,
-
-	Home: HomeScreen,
-	Translation: TranslationScreen,
+	APP: {
+		Home: HomeScreen,
+		Translation: TranslationScreen,
+	},
+	REGISTRATION: {
+		SIGN_UP: SignUpScreen,
+		GEO: GeoScreen,
+	},
 };
+
+export default SCREENS;
