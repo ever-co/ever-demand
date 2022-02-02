@@ -1,13 +1,14 @@
 // LANGUAGES
-import LANGUAGES from "./lang";
+import LANGUAGES from './lang';
 
 // TYPES
 export type supportedLangType =
-	| "BULGARIAN"
-	| "ENGLISH"
-	| "SPANISH"
-	| "HEBREW"
-	| "RUSSIAN";
+	| 'BULGARIAN'
+	| 'ENGLISH'
+	| 'FRENCH'
+	| 'HEBREW'
+	| 'RUSSIAN'
+	| 'SPANISH';
 export type supportedLangsType = {
 	readonly [name in supportedLangType]: supportedLangType;
 };
