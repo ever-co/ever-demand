@@ -53,11 +53,12 @@ function HomeScreen({}) {
 				}}
 				scrollEnabled
 			>
-				{Object.keys(supportedLangs).map((lang: string) => {
+				{Object.keys(supportedLangs).map((lang: string, id) => {
 					let L = lang as supportedLangType;
 
 					return (
 						<TouchableCard
+							key={id}
 							style={{ ...GS.inlineItems, ...GS.mb2 }}
 							cardStyle={{ ...GS.w100, borderRadius: 5 }}
 							cardStyleContent={{ borderRadius: 0 }}
