@@ -7,9 +7,11 @@ import { useAppSelector } from "../../store/hooks";
 import { getLanguage } from "../../store/features/translation";
 
 // COMPONENTS
-import FocusAwareStatusBar from "../../components/FocusAwareStatusBar";
-import PaperText from "../../components/PaperText";
-import CustomScreenHeader from "../../components/CustomScreenHeader";
+import {
+	FocusAwareStatusBar,
+	PaperText,
+	CustomScreenHeader,
+} from "../../components/Common";
 
 // STYLES
 import { GLOBAL_STYLE as GS } from "../../assets/ts/styles";

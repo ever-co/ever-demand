@@ -1,9 +1,11 @@
 import React from "react";
 import { View, ActivityIndicator } from "react-native";
 
+// COMPONENTS
+import { FocusAwareStatusBar } from "../components/Common";
+
 // STYLES
 import { GLOBAL_STYLE as GS, CONSTANT_COLOR as CC } from "../assets/ts/styles";
-import FocusAwareStatusBar from "../components/FocusAwareStatusBar";
 
 export default ({}) => {
 	// STATES

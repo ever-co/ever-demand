@@ -15,11 +15,12 @@ import {
 } from "../../store/features/translation";
 
 // COMPONENTS
-import TouchableCard from "../../components/TouchableCard";
-import FocusAwareStatusBar from "../../components/FocusAwareStatusBar";
-import PaperText from "../../components/PaperText";
-import CustomScreenHeader from "../../components/CustomScreenHeader";
-
+import {
+	TouchableCard,
+	FocusAwareStatusBar,
+	PaperText,
+	CustomScreenHeader,
+} from "../../components/Common";
 // STYLES
 import {
 	GLOBAL_STYLE as GS,
