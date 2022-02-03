@@ -3,29 +3,29 @@ import { View, ScrollView } from "react-native";
 import { RadioButton } from "react-native-paper";
 
 // TYPES
-import type { supportedLangType } from "../store/features/translation/types";
+import type { supportedLangType } from "../../store/features/translation/types";
 
 // ACTIONS & SELECTORS
-import { useAppSelector, useAppDispatch } from "../store/hooks";
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import {
 	getLang,
 	getLanguage,
 	supportedLangs,
 	setLang,
-} from "../store/features/translation";
+} from "../../store/features/translation";
 
 // COMPONENTS
-import TouchableCard from "../components/TouchableCard";
-import FocusAwareStatusBar from "../components/FocusAwareStatusBar";
-import PaperText from "../components/PaperText";
-import CustomScreenHeader from "../components/CustomScreenHeader";
+import TouchableCard from "../../components/TouchableCard";
+import FocusAwareStatusBar from "../../components/FocusAwareStatusBar";
+import PaperText from "../../components/PaperText";
+import CustomScreenHeader from "../../components/CustomScreenHeader";
 
 // STYLES
 import {
 	GLOBAL_STYLE as GS,
 	CONSTANT_COLOR as CC,
 	CONSTANT_SIZE as CS,
-} from "../assets/ts/styles";
+} from "../../assets/ts/styles";
 
 function HomeScreen({}) {
 	// ACTIONS

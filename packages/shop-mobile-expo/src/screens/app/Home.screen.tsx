@@ -3,16 +3,16 @@ import { View, ActivityIndicator, FlatList } from "react-native";
 import { gql, useQuery } from "@apollo/client";
 
 // SELECTORS
-import { useAppSelector } from "../store/hooks";
-import { getLanguage } from "../store/features/translation";
+import { useAppSelector } from "../../store/hooks";
+import { getLanguage } from "../../store/features/translation";
 
 // COMPONENTS
-import FocusAwareStatusBar from "../components/FocusAwareStatusBar";
-import PaperText from "../components/PaperText";
-import CustomScreenHeader from "../components/CustomScreenHeader";
+import FocusAwareStatusBar from "../../components/FocusAwareStatusBar";
+import PaperText from "../../components/PaperText";
+import CustomScreenHeader from "../../components/CustomScreenHeader";
 
 // STYLES
-import { GLOBAL_STYLE as GS } from "../assets/ts/styles";
+import { GLOBAL_STYLE as GS } from "../../assets/ts/styles";
 
 // QUERY
 const CHAPTERS_QUERY = gql`
