@@ -7,8 +7,8 @@ import SignUpScreen from "./registration/SignUp.screen";
 import GeoScreen from "./registration/Geo.screen";
 
 // APP
-import HomeScreen from "./Home.screen";
-import TranslationScreen from "./Translation.screen";
+import HomeScreen from "./app/Home.screen";
+import TranslationScreen from "./app/Translation.screen";
 
 // TODO: create a type for screens object
 

@@ -48,18 +48,20 @@ function HomeScreen({}) {
 			) : (
 				<FlatList
 					data={data.chapters}
-					renderItem={({ item }) => (
-						<PaperText
-							style={{
-								...GS.px2,
-								...GS.py3,
-								...GS.mb2,
-								...GS.shadow,
-							}}
-						>
-							{item?.header || item?.subheader}
-						</PaperText>
-					)}
+					renderItem={({ item }) => {
+						return (
+							<PaperText
+								style={{
+									...GS.px2,
+									...GS.py3,
+									...GS.mb2,
+									...GS.shadow,
+								}}
+							>
+								{item?.title || item?.header || item?.subheader}
+							</PaperText>
+						);
+					}}
 					keyExtractor={(item) => item.id.toString()}
 					style={{ ...GS.h100, ...GS.pt3 }}
 				/>
