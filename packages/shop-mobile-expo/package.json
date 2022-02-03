@@ -28,7 +28,6 @@
 		"test": "jest"
 	},
 	"dependencies": {
-		"@babel/runtime": "^7.17.0",
 		"@react-native-async-storage/async-storage": "^1.15.17",
 		"@react-navigation/drawer": "^5.12.9",
 		"@react-navigation/native": "6.0.6",
@@ -53,7 +52,7 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.9",
-		"@babel/runtime": "^7.16.7",
+		"@babel/runtime": "^7.17.0",
 		"@react-native-community/eslint-config": "^2.0.0",
 		"@types/expo": "^33.0.1",
 		"@types/jest": "^26.0.23",
