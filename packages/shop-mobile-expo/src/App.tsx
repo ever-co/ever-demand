@@ -20,7 +20,11 @@ import Router from "./router";
 import { Icon } from "./components/Common";
 
 // STYLES
-import { CONSTANT_COLOR as CC, GLOBAL_STYLE as GS } from "./assets/ts/styles";
+import {
+	CONSTANT_COLOR as CC,
+	GLOBAL_STYLE as GS,
+	CONSTANT_SIZE as CS,
+} from "./assets/ts/styles";
 
 // LOCAL TYPES
 export type PaperThemeType = typeof DefaultTheme;
@@ -37,7 +41,7 @@ const paperTheme: PaperThemeType = {
 	...DefaultTheme,
 	dark: false,
 	mode: "adaptive",
-	roundness: 4,
+	roundness: CS.SPACE - 4,
 	colors: {
 		...DefaultTheme.colors,
 		primary: CC.primary,
