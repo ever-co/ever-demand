@@ -20,9 +20,9 @@
 		"allowJs": true,
 		"baseUrl": ".",
 		"paths": {
-			"*": ["src/*", "src/assets/*"],
-			"assets/*": ["src/assets/*"],
-			"environment": ["./src/environments/environment.ts"]
+			"*": ["src/*"],
+			"@assets": ["src/assets/*"],
+			"@environment": ["./src/environments/environment.ts"]
 		},
 		"removeComments": true,
 		"typeRoots": ["node_modules/@types", "./src/@types"]
