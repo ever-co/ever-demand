@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { DrawerLinkItem } from "../../router/drawer.routes";
 
 // COMPONENTS
-import TouchableCard from "../TouchableCard";
+import { TouchableCard } from "../Common";
 
 // STYLES
 import {

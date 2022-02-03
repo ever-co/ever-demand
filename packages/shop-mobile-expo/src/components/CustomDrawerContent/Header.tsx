@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 // COMPONENTS
-import PaperText from "../PaperText";
+import { PaperText } from "../Common";
 
 // SELECTORS
 import { useAppSelector } from "../../store/hooks";

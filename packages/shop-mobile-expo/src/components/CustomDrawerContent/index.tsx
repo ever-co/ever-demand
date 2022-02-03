@@ -13,7 +13,7 @@ import { isEmpty } from "../../helpers/utils";
 import { DrawerRoutesGroupType } from "../../router/drawer.routes";
 
 // COMPONENTS
-import Icon from "../Icon";
+import { Icon } from "../Common";
 import Header from "./Header";
 import Item from "./Item";
 
