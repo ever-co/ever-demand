@@ -1,10 +1,14 @@
 import "react-native-gesture-handler";
 import React from "react";
-import { Provider } from "react-redux";
+import { Provider as ReduxProvider } from "react-redux";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import { setCustomTextInput, setCustomText } from "react-native-global-props";
-import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
+import AppLoading from "expo-app-loading";
+
+// ENVIRONMENT
+import ENV from "@environment";
 
 // STORE
 import { store } from "./store";
@@ -19,9 +23,15 @@ import Icon from "./components/Icon";
 import { CONSTANT_COLOR as CC, GLOBAL_STYLE as GS } from "./assets/ts/styles";
 
 // LOCAL TYPES
-export type ThemeType = typeof DefaultTheme;
+export type PaperThemeType = typeof DefaultTheme;
 
-const theme: ThemeType = {
+// Initialize Apollo Client
+const apolloClient = new ApolloClient({
+	uri: ENV.GQL_ENDPOINT,
+	cache: new InMemoryCache(),
+});
+
+const paperTheme: PaperThemeType = {
 	...DefaultTheme,
 	dark: false,
 	mode: "adaptive",
@@ -73,13 +83,15 @@ export default function App() {
 	return !fontsLoaded ? (
 		<AppLoading />
 	) : (
-		<Provider store={store}>
-			<PaperProvider
-				theme={theme}
-				settings={{ icon: (props: any) => <Icon {...props} /> }}
-			>
-				<Router />
-			</PaperProvider>
-		</Provider>
+		<ApolloProvider client={apolloClient}>
+			<ReduxProvider store={store}>
+				<PaperProvider
+					theme={paperTheme}
+					settings={{ icon: (props: any) => <Icon {...props} /> }}
+				>
+					<Router />
+				</PaperProvider>
+			</ReduxProvider>
+		</ApolloProvider>
 	);
 }
