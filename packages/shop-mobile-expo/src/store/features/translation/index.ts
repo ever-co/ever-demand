@@ -14,9 +14,10 @@ import type { RootState } from "../../index";
 export const supportedLangs: supportedLangsType = {
 	BULGARIAN: "BULGARIAN",
 	ENGLISH: "ENGLISH",
-	SPANISH: "SPANISH",
 	HEBREW: "HEBREW",
+	FRENCH: "FRENCH",
 	RUSSIAN: "RUSSIAN",
+	SPANISH: "SPANISH",
 };
 export const initialState: TranslationStateType = {
 	lang: supportedLangs.ENGLISH,
