@@ -2,7 +2,7 @@ import React from "react";
 import { View, ActivityIndicator } from "react-native";
 
 // STYLES
-import { GLOBAL_STYLE as GS } from "../assets/ts/styles";
+import { GLOBAL_STYLE as GS, CONSTANT_COLOR as CC } from "../assets/ts/styles";
 import FocusAwareStatusBar from "../components/FocusAwareStatusBar";
 
 export default ({}) => {
@@ -16,7 +16,7 @@ export default ({}) => {
 				backgroundColor="transparent"
 			/>
 
-			<ActivityIndicator size="large" />
+			<ActivityIndicator size="large" color={CC.light} />
 		</View>
 	);
 };

@@ -1,11 +1,21 @@
-import { View, Text } from 'react-native';
-import React from 'react';
+import React from "react";
+import { Text } from "react-native";
+
+import { SafeAreaView } from "react-native-safe-area-context";
+
+// COMPONENTS
+import FocusAwareStatusBar from "../../components/FocusAwareStatusBar";
 
 const SignUpScreen = () => {
 	return (
-		<View>
+		<SafeAreaView>
+			<FocusAwareStatusBar
+				translucent={true}
+				backgroundColor="transparent"
+				barStyle="light-content"
+			/>
 			<Text>Sign Up</Text>
-		</View>
+		</SafeAreaView>
 	);
 };
 
