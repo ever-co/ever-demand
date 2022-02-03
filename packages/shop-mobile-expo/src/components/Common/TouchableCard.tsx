@@ -11,14 +11,17 @@ import {
 import { Card, TouchableRipple } from "react-native-paper";
 
 // HELPERS
-import { isEmpty } from "../helpers/utils";
+import { isEmpty } from "../../helpers/utils";
 
 // COMPONENTS
 import PaperText from "./PaperText";
-import Icon, { IconPropsType } from "../components/Icon";
+import Icon, { IconPropsType } from "./Icon";
 
 // STYLES
-import { CONSTANT_COLOR as CC, GLOBAL_STYLE as GS } from "../assets/ts/styles";
+import {
+	CONSTANT_COLOR as CC,
+	GLOBAL_STYLE as GS,
+} from "../../assets/ts/styles";
 
 export type TouchableCardPropsType = {
 	title?: null | React.ReactNode | string;
