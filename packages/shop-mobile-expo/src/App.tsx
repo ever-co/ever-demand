@@ -17,7 +17,7 @@ import { store } from "./store";
 import Router from "./router";
 
 // COMPONENTS
-import Icon from "./components/Icon";
+import { Icon } from "./components/Common";
 
 // STYLES
 import { CONSTANT_COLOR as CC, GLOBAL_STYLE as GS } from "./assets/ts/styles";

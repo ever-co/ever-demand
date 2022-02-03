@@ -11,10 +11,11 @@ import { FocusAwareStatusBar } from "../../components/Common";
 
 // STYLES
 import { GLOBAL_STYLE as GS } from "../../assets/ts/styles";
+import { Button } from "react-native-paper";
 
 const SignUpScreen = () => {
 	// SELECTORS
-	const getCurrentLanguage = useAppSelector(getLanguage);
+	const currentLanguage = useAppSelector(getLanguage);
 
 	return (
 		<SafeAreaView style={{ ...GS.screen }}>
@@ -44,12 +45,16 @@ const SignUpScreen = () => {
 						style={{ ...GS.w100, height: 100, marginBottom: -10 }}
 					/>
 					<Text style={{ ...GS.txtCapitalize }}>
-						{getCurrentLanguage.INVITE_VIEW.BY_CODE.LOGO.DETAILS}
+						{currentLanguage.INVITE_VIEW.BY_CODE.LOGO.DETAILS}
 					</Text>
 				</View>
 
 				{/* Social Networks buttons */}
-				<View style={{ ...GS.py4 }}></View>
+				<View style={{ ...GS.py4 }}>
+					<Button style={{}}>
+						{currentLanguage.INVITE_VIEW.GET_IN_BY_ADDRESS}
+					</Button>
+				</View>
 			</View>
 		</SafeAreaView>
 	);
