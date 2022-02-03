@@ -67,7 +67,11 @@ function HomeScreen({}) {
 						>
 							<View style={{ ...GS.justifyContentBetween, ...GS.w100 }}>
 								<PaperText
-									style={{ color: CC.primary, fontSize: CS.FONT_SIZE_MD }}
+									style={{
+										...GS.txtCapitalize,
+										color: CC.primary,
+										fontSize: CS.FONT_SIZE_MD,
+									}}
 								>
 									{
 										// @ts-ignore

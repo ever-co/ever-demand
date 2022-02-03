@@ -1,5 +1,7 @@
 import React from "react";
-import { View } from "react-native";
+import { View, ActivityIndicator, FlatList } from "react-native";
+import { gql, useQuery } from "@apollo/client";
+
 // SELECTORS
 import { useAppSelector } from "../store/hooks";
 import { getLanguage } from "../store/features/translation";
@@ -7,15 +9,28 @@ import { getLanguage } from "../store/features/translation";
 // COMPONENTS
 import FocusAwareStatusBar from "../components/FocusAwareStatusBar";
 import PaperText from "../components/PaperText";
+import CustomScreenHeader from "../components/CustomScreenHeader";
 
 // STYLES
 import { GLOBAL_STYLE as GS } from "../assets/ts/styles";
-import { ScrollView } from "react-native-gesture-handler";
-import CustomScreenHeader from "../components/CustomScreenHeader";
+
+// QUERY
+const CHAPTERS_QUERY = gql`
+	query Chapters {
+		chapters {
+			id
+			number
+			title
+		}
+	}
+`;
 
 function HomeScreen({}) {
 	// SELECTORS
 	const LANGUAGE = useAppSelector(getLanguage);
+
+	//
+	const { data, loading } = useQuery(CHAPTERS_QUERY);
 
 	return (
 		<View style={{ ...GS.screen }}>
@@ -26,9 +41,29 @@ function HomeScreen({}) {
 			/>
 			<CustomScreenHeader title={LANGUAGE.PRODUCTS_VIEW.TITLE} showControls />
 
-			<ScrollView style={{ ...GS.h100, ...GS.pt3 }}>
-				<PaperText>No data</PaperText>
-			</ScrollView>
+			{loading ? (
+				<View style={{ ...GS.centered, ...GS.w100, flex: 1 }}>
+					<ActivityIndicator color={"#FFF"} size={25} />
+				</View>
+			) : (
+				<FlatList
+					data={data.chapters}
+					renderItem={({ item }) => (
+						<PaperText
+							style={{
+								...GS.px2,
+								...GS.py3,
+								...GS.mb2,
+								...GS.shadow,
+							}}
+						>
+							{item?.header || item?.subheader}
+						</PaperText>
+					)}
+					keyExtractor={(item) => item.id.toString()}
+					style={{ ...GS.h100, ...GS.pt3 }}
+				/>
+			)}
 		</View>
 	);
 }
