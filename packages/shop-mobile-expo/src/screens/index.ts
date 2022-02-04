@@ -4,7 +4,7 @@ import Blank_Screen from "./Blank_.screen";
 
 // REGISTRATION
 import SignUpScreen from "./registration/SignUp.screen";
-import GeoScreen from "./registration/Geo.screen";
+import GetUserAddressScreen from "./registration/GetUserAddress.screen";
 
 // APP
 import HomeScreen from "./app/Home.screen";
@@ -22,7 +22,7 @@ const SCREENS = {
 	},
 	REGISTRATION: {
 		SIGN_UP: SignUpScreen,
-		GEO: GeoScreen,
+		GET_USER_ADDRESS: GetUserAddressScreen,
 	},
 };
 
