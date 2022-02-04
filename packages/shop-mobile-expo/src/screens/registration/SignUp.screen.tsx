@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from 'react-native-paper';
+// tslint:disable-next-line: no-implicit-dependencies no-submodule-imports
 import AntDesignIcon from '@expo/vector-icons/AntDesign';
 
 // SELECTORS
@@ -87,7 +88,7 @@ const SignUpScreen = () => {
 						<View style={{ ...GS.inlineItems, ...GS.centered }}>
 							<Button
 								mode='contained'
-								style={STYELS.networkBtnFacebook}>
+								style={STYLES.networkBtnFacebook}>
 								<AntDesignIcon
 									name='facebook-square'
 									color={CC.light}
@@ -99,7 +100,7 @@ const SignUpScreen = () => {
 
 							<Button
 								mode='contained'
-								style={STYELS.networkBtnGoogle}>
+								style={STYLES.networkBtnGoogle}>
 								<AntDesignIcon
 									name='google'
 									color={CC.light}
