@@ -10,11 +10,11 @@ import { getReactComponentProps } from '../helpers/utils';
 import DrawerNavigator from './DrawerNavigator';
 import SCREENS from '../screens/index';
 
-const StackScreen = createNativeStackNavigator().Screen;
-const StackScreenProps = getReactComponentProps(StackScreen);
+const STACK_SCREEN = createNativeStackNavigator().Screen;
+const STACK_SCREEN_PROPS = getReactComponentProps(STACK_SCREEN);
 
 // LOCAL TYPES
-export type StackScreenType = typeof StackScreenProps;
+export type StackScreenType = typeof STACK_SCREEN_PROPS;
 export type StackScreenGroupType = {
 	[name in GroupNameType]: StackScreenType[];
 };
@@ -42,6 +42,10 @@ const STACK_ROUTES_GROUPS: StackScreenGroupType = {
 		{
 			name: 'STACK/SIGN_UP',
 			component: SCREENS.REGISTRATION.SIGN_UP,
+		},
+		{
+			name: 'STACK/GET_ADDRESS',
+			component: SCREENS.REGISTRATION.GET_USER_ADDRESS,
 		},
 	],
 };
