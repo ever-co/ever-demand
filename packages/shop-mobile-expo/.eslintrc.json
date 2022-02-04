@@ -10,7 +10,8 @@
 				"@typescript-eslint/no-shadow": ["error"],
 				"no-shadow": "off",
 				"no-undef": "off",
-				"jsx-quotes": ["warn", "prefer-single"]
+				"jsx-quotes": ["warn", "prefer-single"],
+                "no-spaced-func": "off"
 			}
 		}
 	]
