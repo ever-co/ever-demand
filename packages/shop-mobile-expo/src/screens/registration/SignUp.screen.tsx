@@ -1,25 +1,29 @@
-import React from "react";
-import { Text, View, Image } from "react-native";
-import { Button } from "react-native-paper";
-import AntDesignIcon from "@expo/vector-icons/AntDesign";
+import React from 'react';
+import { Text, View, Image, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Button } from 'react-native-paper';
+import AntDesignIcon from '@expo/vector-icons/AntDesign';
 
 // SELECTORS
-import { useAppSelector } from "../../store/hooks";
-import { getLanguage } from "../../store/features/translation";
+import { useAppSelector } from '../../store/hooks';
+import { getLanguage } from '../../store/features/translation';
 
 // COMPONENTS
-import { FocusAwareStatusBar, PaperText } from "../../components/Common";
+import { FocusAwareStatusBar, PaperText } from '../../components/Common';
 
 // STYLES
 import {
 	GLOBAL_STYLE as GS,
 	CONSTANT_SIZE as CS,
 	CONSTANT_COLOR as CC,
-} from "../../assets/ts/styles";
+} from '../../assets/ts/styles';
 
 const SignUpScreen = () => {
 	// SELECTORS
 	const currentLanguage = useAppSelector(getLanguage);
+
+	// NAVIGATIOn
+	const navigation = useNavigation();
 
 	return (
 		<View style={{ ...GS.screen }}>
@@ -29,35 +33,15 @@ const SignUpScreen = () => {
 				barStyle="light-content"
 			/>
 
-			<View
-				style={{
-					...GS.screen,
-					...GS.bgTransparent,
-					...GS.px5,
-					...GS.pb5,
-					...GS.mx5,
-					zIndex: 1,
-				}}
-			>
+			<View style={STYLES.container}>
 				{/*  Title logo */}
-				<View
-					style={{
-						...GS.centered,
-						flex: 1,
-					}}
-				>
+				<View style={STYLES.titleLogoContainer}>
 					<Image
-						source={require("../../assets/img/ever/logo.png")}
+						source={require('../../assets/img/ever/logo.png')}
 						resizeMode="contain"
-						style={{ ...GS.w100, height: 100, marginBottom: -20 }}
+						style={STYLES.logoImg}
 					/>
-					<Text
-						style={{
-							...GS.txtCapitalize,
-							fontSize: CS.FONT_SIZE + 1,
-							opacity: 0.7,
-						}}
-					>
+					<Text style={STYLES.logoTitle}>
 						{currentLanguage.INVITE_VIEW.BY_CODE.LOGO.DETAILS}
 					</Text>
 				</View>
@@ -69,7 +53,11 @@ const SignUpScreen = () => {
 							mode="contained"
 							style={{ ...GS.bgSecondary, ...GS.py1, ...GS.mb2 }}
 							labelStyle={{ ...GS.txtCapitalize }}
-						>
+							onPress={() =>
+								navigation.navigate(
+									'STACK/GET_ADDRESS' as never,
+								)
+							}>
 							{currentLanguage.INVITE_VIEW.GET_IN_BY_ADDRESS}
 						</Button>
 
@@ -81,8 +69,7 @@ const SignUpScreen = () => {
 									...GS.mr2,
 									flex: 1,
 									backgroundColor: CC.facebook,
-								}}
-							>
+								}}>
 								<AntDesignIcon
 									name="facebook-square"
 									color={CC.light}
@@ -92,8 +79,7 @@ const SignUpScreen = () => {
 
 							<Button
 								mode="contained"
-								style={{ flex: 1, backgroundColor: CC.google }}
-							>
+								style={{ flex: 1, backgroundColor: CC.google }}>
 								<AntDesignIcon
 									name="google"
 									color={CC.light}
@@ -109,9 +95,8 @@ const SignUpScreen = () => {
 								...GS.txtLower,
 								color: CC.gray,
 								fontSize: CS.FONT_SIZE + 3,
-							}}
-						>
-							{currentLanguage.OR}{" "}
+							}}>
+							{currentLanguage.OR}{' '}
 							<Text style={{ ...GS.fontBold, color: CC.light }}>
 								{currentLanguage.INVITE_VIEW.BY_CODE.OR_WHAT}
 							</Text>
@@ -126,8 +111,7 @@ const SignUpScreen = () => {
 								...GS.txtCapitalize,
 								color: CC.gray,
 								fontSize: CS.FONT_SIZE + 3,
-							}}
-						>
+							}}>
 							{currentLanguage.INVITE_VIEW.BY_CODE.INVITE_CODE}
 						</Button>
 					</View>
@@ -138,3 +122,24 @@ const SignUpScreen = () => {
 };
 
 export default SignUpScreen;
+
+const STYLES = StyleSheet.create({
+	container: {
+		...GS.screen,
+		...GS.bgTransparent,
+		...GS.px5,
+		...GS.pb5,
+		...GS.mx5,
+		zIndex: 1,
+	},
+	titleLogoContainer: {
+		...GS.centered,
+		flex: 1,
+	},
+	logoImg: { ...GS.w100, height: 100, marginBottom: -20 },
+	logoTitle: {
+		...GS.txtCapitalize,
+		fontSize: CS.FONT_SIZE + 1,
+		opacity: 0.7,
+	},
+});
