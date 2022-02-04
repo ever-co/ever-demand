@@ -1,9 +1,9 @@
 // This file provide all custom commons components of the app
-import CustomScreenHeader_ from "./CustomScreenHeader";
-import FocusAwareStatusBar_ from "./FocusAwareStatusBar";
-import Icon_ from "./Icon";
-import PaperText_ from "./PaperText";
-import TouchableCard_ from "./TouchableCard";
+import CustomScreenHeader_ from './CustomScreenHeader';
+import FocusAwareStatusBar_ from './FocusAwareStatusBar';
+import Icon_ from './Icon';
+import PaperText_ from './PaperText';
+import TouchableCard_ from './TouchableCard';
 
 // TODO: add type for components constant
 

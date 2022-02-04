@@ -1,7 +1,7 @@
-import Icon_ from "@expo/vector-icons/Feather";
+import Icon_ from '@expo/vector-icons/Feather';
 
 // HELPERS
-import { getReactComponentProps } from "../../helpers/utils";
+import { getReactComponentProps } from '../../helpers/utils';
 
 const IconProps = getReactComponentProps(Icon_);
 

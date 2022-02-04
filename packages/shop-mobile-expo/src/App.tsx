@@ -1,30 +1,30 @@
-import "react-native-gesture-handler";
-import React from "react";
-import { Provider as ReduxProvider } from "react-redux";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
-import { setCustomTextInput, setCustomText } from "react-native-global-props";
-import { useFonts } from "expo-font";
-import AppLoading from "expo-app-loading";
+import 'react-native-gesture-handler';
+import React from 'react';
+import { Provider as ReduxProvider } from 'react-redux';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { setCustomTextInput, setCustomText } from 'react-native-global-props';
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 // ENVIRONMENT
 //import ENV from "./environments/environment";
 
 // STORE
-import { store } from "./store";
+import { store } from './store';
 
 // ROUTER
-import Router from "./router";
+import Router from './router';
 
 // COMPONENTS
-import { Icon } from "./components/Common";
+import { Icon } from './components/Common';
 
 // STYLES
 import {
 	CONSTANT_COLOR as CC,
 	GLOBAL_STYLE as GS,
 	CONSTANT_SIZE as CS,
-} from "./assets/ts/styles";
+} from './assets/ts/styles';
 
 // LOCAL TYPES
 export type PaperThemeType = typeof DefaultTheme;
@@ -32,15 +32,15 @@ export type PaperThemeType = typeof DefaultTheme;
 // Initialize Apollo Client
 const apolloClient = new ApolloClient({
 	//uri: ENV.GQL_ENDPOINT,
-	uri: "https://api.graphql.guide/graphql",
+	uri: 'https://api.graphql.guide/graphql',
 	cache: new InMemoryCache(),
-	defaultOptions: { watchQuery: { fetchPolicy: "cache-and-network" } },
+	defaultOptions: { watchQuery: { fetchPolicy: 'cache-and-network' } },
 });
 
 const paperTheme: PaperThemeType = {
 	...DefaultTheme,
 	dark: false,
-	mode: "adaptive",
+	mode: 'adaptive',
 	roundness: CS.SPACE - 4,
 	colors: {
 		...DefaultTheme.colors,
@@ -77,13 +77,13 @@ setCustomText({
 
 export default function App() {
 	const [fontsLoaded] = useFonts({
-		"Nunito-ExtraLight": require("./assets/fonts/Nunito/Nunito-ExtraLight.ttf"),
-		"Nunito-Light": require("./assets/fonts/Nunito/Nunito-Light.ttf"),
-		"Nunito-Regular": require("./assets/fonts/Nunito/Nunito-Regular.ttf"),
-		"Nunito-SemiBold": require("./assets/fonts/Nunito/Nunito-SemiBold.ttf"),
-		"Nunito-Bold": require("./assets/fonts/Nunito/Nunito-Bold.ttf"),
-		"Nunito-Black": require("./assets/fonts/Nunito/Nunito-Black.ttf"),
-		"Lobster-Regular": require("./assets/fonts/Lobster/Lobster-Regular.ttf"),
+		'Nunito-ExtraLight': require('./assets/fonts/Nunito/Nunito-ExtraLight.ttf'),
+		'Nunito-Light': require('./assets/fonts/Nunito/Nunito-Light.ttf'),
+		'Nunito-Regular': require('./assets/fonts/Nunito/Nunito-Regular.ttf'),
+		'Nunito-SemiBold': require('./assets/fonts/Nunito/Nunito-SemiBold.ttf'),
+		'Nunito-Bold': require('./assets/fonts/Nunito/Nunito-Bold.ttf'),
+		'Nunito-Black': require('./assets/fonts/Nunito/Nunito-Black.ttf'),
+		'Lobster-Regular': require('./assets/fonts/Lobster/Lobster-Regular.ttf'),
 	});
 
 	return !fontsLoaded ? (
@@ -93,8 +93,7 @@ export default function App() {
 			<ReduxProvider store={store}>
 				<PaperProvider
 					theme={paperTheme}
-					settings={{ icon: (props: any) => <Icon {...props} /> }}
-				>
+					settings={{ icon: (props: any) => <Icon {...props} /> }}>
 					<Router />
 				</PaperProvider>
 			</ReduxProvider>

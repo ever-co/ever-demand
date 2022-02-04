@@ -1,9 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 
 // REDUCERS
-import navigationReducer from "./features/navigation";
-import translationReducer from "./features/translation";
-import userReducer from "./features/user";
+import navigationReducer from './features/navigation';
+import translationReducer from './features/translation';
+import userReducer from './features/user';
 
 export const store = configureStore({
 	reducer: {

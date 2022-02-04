@@ -18,6 +18,29 @@ import {
 	CONSTANT_COLOR as CC,
 } from '../../assets/ts/styles';
 
+const STYLES = StyleSheet.create({
+	container: {
+		...GS.screen,
+		...GS.bgTransparent,
+		...GS.px5,
+		...GS.pb5,
+		...GS.mx5,
+		zIndex: 1,
+	},
+	titleLogoContainer: {
+		...GS.centered,
+		flex: 1,
+	},
+	logoImg: { ...GS.w100, height: 100, marginBottom: -20 },
+	logoTitle: {
+		...GS.txtCapitalize,
+		fontSize: CS.FONT_SIZE + 1,
+		opacity: 0.7,
+	},
+	networkBtnFacebook: { flex: 1, backgroundColor: CC.facebook },
+	networkBtnGoogle: { flex: 1, backgroundColor: CC.google },
+});
+
 const SignUpScreen = () => {
 	// SELECTORS
 	const currentLanguage = useAppSelector(getLanguage);
@@ -30,15 +53,15 @@ const SignUpScreen = () => {
 			<FocusAwareStatusBar
 				translucent={false}
 				backgroundColor={CC.primary}
-				barStyle="light-content"
+				barStyle='light-content'
 			/>
 
 			<View style={STYLES.container}>
-				{/*  Title logo */}
+				{/*  title logo */}
 				<View style={STYLES.titleLogoContainer}>
 					<Image
 						source={require('../../assets/img/ever/logo.png')}
-						resizeMode="contain"
+						resizeMode='contain'
 						style={STYLES.logoImg}
 					/>
 					<Text style={STYLES.logoTitle}>
@@ -50,7 +73,7 @@ const SignUpScreen = () => {
 				<View style={{ ...GS.py4 }}>
 					<View>
 						<Button
-							mode="contained"
+							mode='contained'
 							style={{ ...GS.bgSecondary, ...GS.py1, ...GS.mb2 }}
 							labelStyle={{ ...GS.txtCapitalize }}
 							onPress={() =>
@@ -63,25 +86,22 @@ const SignUpScreen = () => {
 
 						<View style={{ ...GS.inlineItems, ...GS.centered }}>
 							<Button
-								mode="contained"
-								style={{
-									...GS.bgSecondary,
-									...GS.mr2,
-									flex: 1,
-									backgroundColor: CC.facebook,
-								}}>
+								mode='contained'
+								style={STYELS.networkBtnFacebook}>
 								<AntDesignIcon
-									name="facebook-square"
+									name='facebook-square'
 									color={CC.light}
 									size={CS.FONT_SIZE * 2}
 								/>
 							</Button>
 
+							<View style={{ ...GS.mr2 }} />
+
 							<Button
-								mode="contained"
-								style={{ flex: 1, backgroundColor: CC.google }}>
+								mode='contained'
+								style={STYELS.networkBtnGoogle}>
 								<AntDesignIcon
-									name="google"
+									name='google'
 									color={CC.light}
 									size={CS.FONT_SIZE * 2}
 								/>
@@ -105,7 +125,7 @@ const SignUpScreen = () => {
 
 					<View>
 						<Button
-							mode="outlined"
+							mode='outlined'
 							style={{ ...GS.py1, borderColor: CC.gray }}
 							labelStyle={{
 								...GS.txtCapitalize,
@@ -122,24 +142,3 @@ const SignUpScreen = () => {
 };
 
 export default SignUpScreen;
-
-const STYLES = StyleSheet.create({
-	container: {
-		...GS.screen,
-		...GS.bgTransparent,
-		...GS.px5,
-		...GS.pb5,
-		...GS.mx5,
-		zIndex: 1,
-	},
-	titleLogoContainer: {
-		...GS.centered,
-		flex: 1,
-	},
-	logoImg: { ...GS.w100, height: 100, marginBottom: -20 },
-	logoTitle: {
-		...GS.txtCapitalize,
-		fontSize: CS.FONT_SIZE + 1,
-		opacity: 0.7,
-	},
-});

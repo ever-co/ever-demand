@@ -1,18 +1,18 @@
-import React from "react";
-import { View, ScrollView } from "react-native";
-import { RadioButton } from "react-native-paper";
+import React from 'react';
+import { View, ScrollView } from 'react-native';
+import { RadioButton } from 'react-native-paper';
 
 // TYPES
-import type { supportedLangType } from "../../store/features/translation/types";
+import type { supportedLangType } from '../../store/features/translation/types';
 
 // ACTIONS & SELECTORS
-import { useAppSelector, useAppDispatch } from "../../store/hooks";
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import {
 	getLang,
 	getLanguage,
 	supportedLangs,
 	setLang,
-} from "../../store/features/translation";
+} from '../../store/features/translation';
 
 // COMPONENTS
 import {
@@ -20,13 +20,13 @@ import {
 	FocusAwareStatusBar,
 	PaperText,
 	CustomScreenHeader,
-} from "../../components/Common";
+} from '../../components/Common';
 // STYLES
 import {
 	GLOBAL_STYLE as GS,
 	CONSTANT_COLOR as CC,
 	CONSTANT_SIZE as CS,
-} from "../../assets/ts/styles";
+} from '../../assets/ts/styles';
 
 function HomeScreen({}) {
 	// ACTIONS
@@ -43,7 +43,10 @@ function HomeScreen({}) {
 				backgroundColor="transparent"
 				barStyle="light-content"
 			/>
-			<CustomScreenHeader title={languages.LANGUAGE_VIEW.TITLE} showHomeBtn />
+			<CustomScreenHeader
+				title={languages.LANGUAGE_VIEW.TITLE}
+				showHomeBtn
+			/>
 
 			<ScrollView
 				style={{
@@ -52,8 +55,7 @@ function HomeScreen({}) {
 					...GS.px2,
 					...GS.bgLight,
 				}}
-				scrollEnabled
-			>
+				scrollEnabled>
 				{Object.keys(supportedLangs).map((lang: string, id) => {
 					let L = lang as supportedLangType;
 
@@ -64,16 +66,18 @@ function HomeScreen({}) {
 							cardStyle={{ ...GS.w100, borderRadius: 5 }}
 							cardStyleContent={{ borderRadius: 0 }}
 							height={CS.FONT_SIZE_MD * 3}
-							onPress={() => translate(setLang(L))}
-						>
-							<View style={{ ...GS.justifyContentBetween, ...GS.w100 }}>
+							onPress={() => translate(setLang(L))}>
+							<View
+								style={{
+									...GS.justifyContentBetween,
+									...GS.w100,
+								}}>
 								<PaperText
 									style={{
 										...GS.txtCapitalize,
 										color: CC.primary,
 										fontSize: CS.FONT_SIZE_MD,
-									}}
-								>
+									}}>
 									{
 										// @ts-ignore
 										languages[lang]
@@ -81,7 +85,11 @@ function HomeScreen({}) {
 								</PaperText>
 
 								<RadioButton
-									status={lang === currentLang ? "checked" : "unchecked"}
+									status={
+										lang === currentLang
+											? 'checked'
+											: 'unchecked'
+									}
 									uncheckedColor={CC.primaryHightLight}
 									value={lang}
 									onPress={() => translate(setLang(L))}

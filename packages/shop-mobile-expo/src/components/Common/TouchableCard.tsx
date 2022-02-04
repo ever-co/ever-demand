@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
 	View,
 	Image,
@@ -7,21 +7,22 @@ import {
 	ImageStyle,
 	ActivityIndicator,
 	GestureResponderEvent,
-} from "react-native";
-import { Card, TouchableRipple } from "react-native-paper";
+	StyleSheet,
+} from 'react-native';
+import { Card, TouchableRipple } from 'react-native-paper';
 
 // HELPERS
-import { isEmpty } from "../../helpers/utils";
+import { isEmpty } from '../../helpers/utils';
 
 // COMPONENTS
-import PaperText from "./PaperText";
-import Icon, { IconPropsType } from "./Icon";
+import PaperText from './PaperText';
+import Icon, { IconPropsType } from './Icon';
 
 // STYLES
 import {
 	CONSTANT_COLOR as CC,
 	GLOBAL_STYLE as GS,
-} from "../../assets/ts/styles";
+} from '../../assets/ts/styles';
 
 export type TouchableCardPropsType = {
 	title?: null | React.ReactNode | string;
@@ -69,19 +70,12 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 	loading = false,
 	loaderColor = CC.gray,
 	disabled = false,
-	rippleColor = "",
+	rippleColor = '',
 	children = null,
 }) => {
 	return (
-		<View style={{ flex: 1, ...style }}>
-			<Card
-				style={{
-					...GS.shadowSm,
-					borderRadius: 10,
-					overflow: "hidden",
-					...cardStyle,
-				}}
-			>
+		<View style={{ ...STYLES.main, ...style }}>
+			<Card style={{ ...STYLES.main, ...cardStyle }}>
 				<TouchableRipple
 					{...{
 						disabled: !onPress || disabled,
@@ -91,97 +85,99 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 							...GS.w100,
 							...GS.h100,
 						},
-					}}
-				>
+					}}>
 					<Card.Content
 						style={{
-							...GS.row,
-							alignItems: "center",
+							...STYLES.cardContent,
 							height,
 							...cardStyleContent,
-						}}
-					>
+						}}>
 						{loading ? (
-							<View style={{ ...GS.h100, ...GS.centered, flex: 1 }}>
-								<ActivityIndicator color={loaderColor} size="small" />
+							<View style={STYLES.loaderContainer}>
+								<ActivityIndicator
+									color={loaderColor}
+									size="small"
+								/>
 							</View>
 						) : (
 							<>
-								{!!children
+								{children
 									? children
 									: (iconProps || img) && (
 											<View
 												style={{
 													...GS.centered,
 													...GS.mr2,
-												}}
-											>
+												}}>
 												{iconProps && !img && (
 													<Icon
-														{...{ color: CC.gray, size: 35, ...iconProps }}
+														{...{
+															color: CC.gray,
+															size: 35,
+															...iconProps,
+														}}
 													/>
 												)}
 												{!isEmpty(img) && (
 													<Image
 														source={
-															typeof img === "string"
+															typeof img ===
+															'string'
 																? { uri: img }
 																: img
 																? img
 																: {}
 														}
 														style={{
-															...GS.shadowSm,
-															width: 40,
-															height: 40,
-															borderRadius: 20,
-															resizeMode: "contain",
+															...STYLES.cardImg,
 															...imgStyle,
 														}}
 													/>
 												)}
 											</View>
+											// eslint-disable-next-line no-mixed-spaces-and-tabs
 									  )}
 
-								<View
-									style={{
-										flex: 1,
-										justifyContent: "center",
-									}}
-								>
+								<View style={STYLES.cardTextContent}>
 									{!isEmpty(title) && (
 										<PaperText
-											{...(textOneLine ? { numberOfLines: 1 } : {})}
+											{...(textOneLine
+												? { numberOfLines: 1 }
+												: {})}
 											style={{
-												fontSize: 18,
-												paddingBottom: 2,
+												...STYLES.cardTextContentTitle,
 												...titleStyle,
-											}}
-										>
+											}}>
 											{title}
 										</PaperText>
 									)}
 									{!isEmpty(description) && (
 										<PaperText
-											{...(textOneLine ? { numberOfLines: 1 } : {})}
-											style={{ ...descriptionStyle }}
-										>
+											{...(textOneLine
+												? { numberOfLines: 1 }
+												: {})}
+											style={{ ...descriptionStyle }}>
 											{description}
 										</PaperText>
 									)}
 								</View>
 
-								{!isEmpty(indicatorIconProps) && !indicatorText && (
-									<View style={{ ...GS.centered, ...GS.px1 }}>
-										<Icon
-											{...{
-												color: CC.gray,
-												size: 16,
-												...indicatorIconProps,
-											}}
-										/>
-									</View>
-								)}
+								{!isEmpty(indicatorIconProps) &&
+									!indicatorText && (
+										<View
+											style={{
+												...GS.centered,
+												...GS.px1,
+											}}>
+											<Icon
+												{...{
+													color: CC.gray,
+													size: 16,
+													...indicatorIconProps,
+												}}
+											/>
+										</View>
+									)}
 
 								{!isEmpty(indicatorText) && (
 									<PaperText
@@ -189,9 +185,10 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 											...GS.centered,
 											...GS.px1,
 											fontSize: indicatorTextSize,
-											color: indicatorTextColor || CC.primary,
-										}}
-									>
+											color:
+												indicatorTextColor ||
+												CC.primary,
+										}}>
 										{indicatorText}
 									</PaperText>
 								)}
@@ -205,3 +202,29 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 };
 
 export default TouchableCard;
+
+const STYLES = StyleSheet.create({
+	main: { flex: 1 },
+	card: {
+		...GS.shadowSm,
+		borderRadius: 10,
+		overflow: 'hidden',
+	},
+	cardContent: {
+		...GS.row,
+		alignItems: 'center',
+	},
+	loaderContainer: { ...GS.h100, ...GS.centered, flex: 1 },
+	cardImg: {
+		...GS.shadowSm,
+		width: 40,
+		height: 40,
+		borderRadius: 20,
+		resizeMode: 'contain',
+	},
+	cardTextContent: {
+		flex: 1,
+		justifyContent: 'center',
+	},
+	cardTextContentTitle: { fontSize: 18, paddingBottom: 2 },
+});

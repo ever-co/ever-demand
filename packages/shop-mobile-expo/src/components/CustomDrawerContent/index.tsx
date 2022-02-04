@@ -1,32 +1,32 @@
-import React from "react";
-import { View, ScrollViewProps } from "react-native";
-import { Title } from "react-native-paper";
+import React from 'react';
+import { View, ScrollViewProps as ScrollViewProps_ } from 'react-native';
+import { Title } from 'react-native-paper';
 import {
 	DrawerContentScrollView,
 	DrawerContentComponentProps,
-} from "@react-navigation/drawer";
+} from '@react-navigation/drawer';
 
 // HELPERS
-import { isEmpty } from "../../helpers/utils";
+import { isEmpty } from '../../helpers/utils';
 
 // CONSTANTS
-import { DrawerRoutesGroupType } from "../../router/drawer.routes";
+import { DrawerRoutesGroupType } from '../../router/drawer.routes';
 
 // COMPONENTS
-import { Icon } from "../Common";
-import Header from "./Header";
-import Item from "./Item";
+import { Icon } from '../Common';
+import Header from './Header';
+import Item from './Item';
 
 // STYLES
 import {
 	GLOBAL_STYLE as GS,
 	CONSTANT_COLOR as CC,
 	CONSTANT_SIZE as CS,
-} from "../../assets/ts/styles";
+} from '../../assets/ts/styles';
 
 // LOCAL TYPES
 export type ContentProps = {
-	ScrollViewProps?: ScrollViewProps;
+	ScrollViewProps?: ScrollViewProps_;
 	drawerContentProps: DrawerContentComponentProps;
 	linksGroups: DrawerRoutesGroupType[];
 };
@@ -40,7 +40,7 @@ const CustomDrawer: React.FC<ContentProps> = ({
 	const currentRouteName = navigationState.routeNames[navigationState.index];
 
 	return (
-		<View style={{ ...GS.h100, position: "relative" }}>
+		<View style={{ ...GS.h100, position: 'relative' }}>
 			<Header />
 
 			<View style={{ flex: 1 }}>
@@ -65,22 +65,26 @@ const CustomDrawer: React.FC<ContentProps> = ({
 											...GS.txtCapitalize,
 											fontSize: CS.FONT_SIZE,
 											color: CC.gray,
-										}}
-									>
+										}}>
 										{linksGroup.title}
 									</Title>
 								)}
 							</View>
 							{linksGroup?.linkItems &&
-								linksGroup.linkItems.map((linkItem, linkItem_id) => (
-									<Item
-										key={linkItem_id}
-										label={linkItem.label}
-										path={linkItem.path}
-										icon={linkItem.icon}
-										focused={currentRouteName === linkItem.path}
-									/>
-								))}
+								linksGroup.linkItems.map(
+									(linkItem, linkItem_id) => (
+										<Item
+											key={linkItem_id}
+											label={linkItem.label}
+											path={linkItem.path}
+											icon={linkItem.icon}
+											focused={
+												currentRouteName ===
+												linkItem.path
+											}
+										/>
+									),
+								)}
 						</View>
 					))}
 				</DrawerContentScrollView>

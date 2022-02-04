@@ -1,29 +1,29 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // LANGUAGES
-import LANGUAGES from "./lang";
+import LANGUAGES from './lang';
 
 // TYPES
 import {
 	supportedLangType,
 	supportedLangsType,
 	TranslationStateType,
-} from "./types";
-import type { RootState } from "../../index";
+} from './types';
+import type { RootState } from '../../index';
 
 export const supportedLangs: supportedLangsType = {
-	BULGARIAN: "BULGARIAN",
-	ENGLISH: "ENGLISH",
-	HEBREW: "HEBREW",
-	FRENCH: "FRENCH",
-	RUSSIAN: "RUSSIAN",
-	SPANISH: "SPANISH",
+	BULGARIAN: 'BULGARIAN',
+	ENGLISH: 'ENGLISH',
+	HEBREW: 'HEBREW',
+	FRENCH: 'FRENCH',
+	RUSSIAN: 'RUSSIAN',
+	SPANISH: 'SPANISH',
 };
 export const initialState: TranslationStateType = {
 	lang: supportedLangs.ENGLISH,
 };
 export const translationSlice = createSlice({
-	name: "translation",
+	name: 'translation',
 	initialState,
 	reducers: {
 		setLang: (state, action: PayloadAction<supportedLangType>) => {
