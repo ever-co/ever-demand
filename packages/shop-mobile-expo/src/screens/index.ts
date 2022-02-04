@@ -4,7 +4,7 @@ import Blank_Screen from './Blank_.screen';
 
 // REGISTRATION
 import SignUpScreen from './registration/SignUp.screen';
-import GetUserAddressScreen from './registration/GetUserAddress.screen';
+import SignUpByAddressScreen from './registration/SignUpByAddress.screen';
 
 // APP
 import HomeScreen from './app/Home.screen';
@@ -22,7 +22,7 @@ const SCREENS = {
 	},
 	REGISTRATION: {
 		SIGN_UP: SignUpScreen,
-		GET_USER_ADDRESS: GetUserAddressScreen,
+		SIGN_UP_BY_ADDRESS: SignUpByAddressScreen,
 	},
 };
 

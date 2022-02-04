@@ -79,7 +79,7 @@ const SignUpScreen = () => {
 							labelStyle={{ ...GS.txtCapitalize, ...GS.py1 }}
 							onPress={() =>
 								navigation.navigate(
-									'STACK/GET_ADDRESS' as never,
+									'STACK/SIGN_UP_BY_ADDRESS' as never,
 								)
 							}>
 							{currentLanguage.INVITE_VIEW.GET_IN_BY_ADDRESS}

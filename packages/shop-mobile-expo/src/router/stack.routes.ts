@@ -44,8 +44,8 @@ const STACK_ROUTES_GROUPS: StackScreenGroupType = {
 			component: SCREENS.REGISTRATION.SIGN_UP,
 		},
 		{
-			name: 'STACK/GET_ADDRESS',
-			component: SCREENS.REGISTRATION.GET_USER_ADDRESS,
+			name: 'STACK/SIGN_UP_BY_ADDRESS',
+			component: SCREENS.REGISTRATION.SIGN_UP_BY_ADDRESS,
 		},
 	],
 };
