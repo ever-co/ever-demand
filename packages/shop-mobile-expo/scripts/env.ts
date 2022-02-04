@@ -185,5 +185,5 @@ export const env: any = cleanEnv(
 		PORT: num({ default: 4201 }),
 		SHOPPING_CART: bool({ default: false }),
 	},
-	opt
+	opt,
 );

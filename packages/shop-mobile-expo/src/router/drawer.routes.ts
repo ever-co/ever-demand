@@ -1,13 +1,13 @@
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 // TYPES
-import type { IconNameType } from "../components/Common/Icon";
+import type { IconNameType } from '../components/Common/Icon';
 
 // HELPERS
-import { getReactComponentProps } from "../helpers/utils";
+import { getReactComponentProps } from '../helpers/utils';
 
 // SCREENS
-import SCREENS from "../screens";
+import SCREENS from '../screens';
 
 const DrawerScreen = createDrawerNavigator().Screen;
 const DrawerScreenProps = getReactComponentProps(DrawerScreen);
@@ -29,11 +29,11 @@ export type DrawerScreenType = typeof DrawerScreenProps;
 
 const DRAWER_ROUTES: DrawerScreenType[] = [
 	{
-		name: "DRAWER/HOME",
+		name: 'DRAWER/HOME',
 		component: SCREENS.APP.Home,
 	},
 	{
-		name: "DRAWER/TRANSLATION",
+		name: 'DRAWER/TRANSLATION',
 		component: SCREENS.APP.Translation,
 	},
 ];

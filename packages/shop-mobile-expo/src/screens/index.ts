@@ -1,14 +1,14 @@
 //
-import LoadingScreen from "./Loading.screen";
-import Blank_Screen from "./Blank_.screen";
+import LoadingScreen from './Loading.screen';
+import Blank_Screen from './Blank_.screen';
 
 // REGISTRATION
-import SignUpScreen from "./registration/SignUp.screen";
-import GetUserAddressScreen from "./registration/GetUserAddress.screen";
+import SignUpScreen from './registration/SignUp.screen';
+import GetUserAddressScreen from './registration/GetUserAddress.screen';
 
 // APP
-import HomeScreen from "./app/Home.screen";
-import TranslationScreen from "./app/Translation.screen";
+import HomeScreen from './app/Home.screen';
+import TranslationScreen from './app/Translation.screen';
 
 // TODO: create a type for screens object
 

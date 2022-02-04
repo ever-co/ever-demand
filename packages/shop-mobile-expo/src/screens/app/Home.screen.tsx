@@ -1,20 +1,20 @@
-import React from "react";
-import { View, ActivityIndicator, FlatList } from "react-native";
-import { gql, useQuery } from "@apollo/client";
+import React from 'react';
+import { View, ActivityIndicator, FlatList } from 'react-native';
+import { gql, useQuery } from '@apollo/client';
 
 // SELECTORS
-import { useAppSelector } from "../../store/hooks";
-import { getLanguage } from "../../store/features/translation";
+import { useAppSelector } from '../../store/hooks';
+import { getLanguage } from '../../store/features/translation';
 
 // COMPONENTS
 import {
 	FocusAwareStatusBar,
 	PaperText,
 	CustomScreenHeader,
-} from "../../components/Common";
+} from '../../components/Common';
 
 // STYLES
-import { GLOBAL_STYLE as GS } from "../../assets/ts/styles";
+import { GLOBAL_STYLE as GS } from '../../assets/ts/styles';
 
 // QUERY
 const CHAPTERS_QUERY = gql`
@@ -41,11 +41,14 @@ function HomeScreen({}) {
 				backgroundColor="transparent"
 				barStyle="light-content"
 			/>
-			<CustomScreenHeader title={LANGUAGE.PRODUCTS_VIEW.TITLE} showControls />
+			<CustomScreenHeader
+				title={LANGUAGE.PRODUCTS_VIEW.TITLE}
+				showControls
+			/>
 
 			{loading ? (
 				<View style={{ ...GS.centered, ...GS.w100, flex: 1 }}>
-					<ActivityIndicator color={"#FFF"} size={25} />
+					<ActivityIndicator color={'#FFF'} size={25} />
 				</View>
 			) : (
 				<FlatList
@@ -58,8 +61,7 @@ function HomeScreen({}) {
 									...GS.py3,
 									...GS.mb2,
 									...GS.shadow,
-								}}
-							>
+								}}>
 								{item?.title || item?.header || item?.subheader}
 							</PaperText>
 						);

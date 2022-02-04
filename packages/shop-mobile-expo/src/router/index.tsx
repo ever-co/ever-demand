@@ -1,21 +1,21 @@
-import React from "react";
-import { View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from 'react';
+import { View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // HOOKS
-import { useAppSelector, useAppDispatch } from "../store/hooks";
+import { useAppSelector, useAppDispatch } from '../store/hooks';
 
 // ACTIONS & SELECTORS
-import { getLang } from "../store/features/translation";
-import { getGroup, setGroup } from "../store/features/navigation";
+import { getLang } from '../store/features/translation';
+import { getGroup, setGroup } from '../store/features/navigation';
 
 // ROUTING
-import NAV_GROUPS from "./groups.routes";
-import STACK_ROUTES from "./stack.routes";
+import NAV_GROUPS from './groups.routes';
+import STACK_ROUTES from './stack.routes';
 
 // STYLES
-import { GLOBAL_STYLE as GS } from "../assets/ts/styles";
+import { GLOBAL_STYLE as GS } from '../assets/ts/styles';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,10 +34,10 @@ const Router = ({}) => {
 			setNavGroup(setGroup(NAV_GROUPS.REGISTRATION));
 		}, 3000);
 		return () => {};
-	}, []);
+	});
 
 	const Routes = () => {
-		const safeGroup = getCurrentNavGroup || "BLANK";
+		const safeGroup = getCurrentNavGroup || 'BLANK';
 		return (
 			<>
 				{STACK_ROUTES[safeGroup].map((stackScreenProps, id) => (
@@ -52,20 +52,18 @@ const Router = ({}) => {
 			style={{
 				...GS.w100,
 				...GS.h100,
-				transform: getCurrentLang === "HEBREW" ? [{ scaleX: -1 }] : [],
-			}}
-		>
+				transform: getCurrentLang === 'HEBREW' ? [{ scaleX: -1 }] : [],
+			}}>
 			<NavigationContainer>
 				<Stack.Navigator
 					screenOptions={{
 						headerShown: false,
-						presentation: "card",
+						presentation: 'card',
 						contentStyle: {
 							...GS.bgPrimary,
 						},
 					}}
-					defaultScreenOptions={{ presentation: "card" }}
-				>
+					defaultScreenOptions={{ presentation: 'card' }}>
 					{Routes()}
 				</Stack.Navigator>
 			</NavigationContainer>
