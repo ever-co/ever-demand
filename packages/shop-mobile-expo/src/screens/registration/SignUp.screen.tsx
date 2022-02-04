@@ -75,8 +75,8 @@ const SignUpScreen = () => {
 					<View>
 						<Button
 							mode='contained'
-							style={{ ...GS.bgSecondary, ...GS.py1, ...GS.mb2 }}
-							labelStyle={{ ...GS.txtCapitalize }}
+							style={{ ...GS.bgSecondary, ...GS.mb2 }}
+							labelStyle={{ ...GS.txtCapitalize, ...GS.py1 }}
 							onPress={() =>
 								navigation.navigate(
 									'STACK/GET_ADDRESS' as never,
