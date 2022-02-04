@@ -1,16 +1,23 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-// import { useNavigation } from '@react-navigation/native';
-// import { Button } from 'react-native-paper';
-// tslint:disable-next-line: no-implicit-dependencies no-submodule-imports
-// import AntDesignIcon from '@expo/vector-icons/AntDesign';
+import {
+	View,
+	StyleSheet,
+	ActivityIndicator,
+	Button as NativeBtn,
+	Text as NativeTxt,
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-// SELECTORS
-// import { useAppSelector } from '../../store/hooks';
-// import { getLanguage } from '../../store/features/translation';
+// CONSTANTS
+import GROUPS from '../../router/groups.routes';
+
+// ACTIONS & SELECTORS
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { getLanguage } from '../../store/features/translation';
+import { setGroup } from '../../store/features/navigation';
 
 // COMPONENTS
-import { FocusAwareStatusBar } from '../../components/Common';
+import { FocusAwareStatusBar, PaperText } from '../../components/Common';
 
 // STYLES
 import {
@@ -26,17 +33,30 @@ const STYLES = StyleSheet.create({
 		...GS.px5,
 		...GS.pb5,
 		...GS.mx5,
-		zIndex: 1,
 	},
-	titleLogoContainer: {
+	section1: {
 		...GS.centered,
-		flex: 1,
+		...GS.py2,
+		flex: 3,
 	},
-	logoImg: { ...GS.w100, height: 100, marginBottom: -20 },
-	logoTitle: {
-		...GS.txtCapitalize,
-		fontSize: CS.FONT_SIZE + 1,
-		opacity: 0.7,
+	section1Title: {
+		...GS.txtCenter,
+		...GS.mb3,
+		...GS.FF_NunitoBold,
+		fontSize: CS.FONT_SIZE_LG * 1.8,
+	},
+	section1SubTitle: {
+		...GS.txtCenter,
+		...GS.FF_NunitoBold,
+		fontSize: CS.FONT_SIZE_MD,
+		opacity: 0.6,
+	},
+	section2: { ...GS.py2, flex: 2, alignItems: 'center' },
+	section2Title: {
+		...GS.txtCenter,
+		...GS.mb5,
+		...GS.FF_NunitoBold,
+		fontSize: CS.FONT_SIZE_SM * 2,
 	},
 	networkBtnFacebook: { flex: 1, backgroundColor: CC.facebook },
 	networkBtnGoogle: { flex: 1, backgroundColor: CC.google },
@@ -44,10 +64,50 @@ const STYLES = StyleSheet.create({
 
 const SignUpByAddressScreen = () => {
 	// SELECTORS
-	// const currentLanguage = useAppSelector(getLanguage);
+	const currentLanguage = useAppSelector(getLanguage);
+
+	// ACTIONS
+	const setNavigationGroup = useAppDispatch();
 
 	// NAVIGATIOn
-	// const navigation = useNavigation();
+	const navigation = useNavigation();
+
+	// STATES
+	const [warningDialog, setWarningDialog] = React.useState<boolean>(false);
+	const [canGoBack, setCanGoBack] = React.useState<boolean>(false);
+	const [preventBackCallBack, setPreventBackCallBack] = React.useState<
+		() => any
+	>(() => {});
+
+	// EFFECTS
+	React.useEffect(() => {
+		setTimeout(() => {
+			setNavigationGroup(setGroup(GROUPS.APP));
+		}, 4500);
+	}, [setNavigationGroup]);
+
+	React.useEffect(() => {
+		navigation.addListener('beforeRemove', (e) => {
+			if (canGoBack) {
+				return;
+			}
+
+			// Prevent default behavior of leaving the screen
+			e.preventDefault();
+			setWarningDialog(true);
+
+			// Prompt the user before leaving the screen
+			setPreventBackCallBack(() => {
+				return () => {
+					setCanGoBack(true);
+					setWarningDialog(false);
+					navigation.dispatch(e.data.action);
+				};
+			});
+		});
+
+		return () => navigation.removeListener('beforeRemove', () => null);
+	}, [navigation, canGoBack, warningDialog]);
 
 	return (
 		<View style={{ ...GS.screen }}>
@@ -57,7 +117,63 @@ const SignUpByAddressScreen = () => {
 				barStyle='light-content'
 			/>
 
-			<View style={STYLES.container} />
+			<View style={STYLES.container}>
+				{/* section1 */}
+				<View style={STYLES.section1}>
+					<PaperText style={STYLES.section1Title}>
+						{currentLanguage.INVITE_VIEW.YOUR_ADDRESS}
+					</PaperText>
+
+					<PaperText style={STYLES.section1SubTitle}>
+						{currentLanguage.INVITE_VIEW.LAUNCH_NOTIFICATION}
+					</PaperText>
+				</View>
+
+				{/* section2 */}
+				<View style={STYLES.section2}>
+					<PaperText style={STYLES.section2Title}>
+						{currentLanguage.INVITE_VIEW.DETECTING_LOCATION}
+					</PaperText>
+
+					<ActivityIndicator color={CC.light} style={{ ...GS.mt5 }} />
+				</View>
+			</View>
+
+			{warningDialog && (
+				<View style={{ ...GS.overlay, ...GS.centered, ...GS.p5 }}>
+					<View
+						style={{
+							...GS.bgLight,
+							...GS.roundedMd,
+							...GS.w100,
+							...GS.shadow,
+							...GS.py4,
+							...GS.px2,
+						}}>
+						<NativeTxt
+							style={{
+								...GS.mb4,
+								fontSize: CS.FONT_SIZE_LG,
+								...GS.txtPrimary,
+							}}>
+							Leave?
+						</NativeTxt>
+
+						<View style={{ ...GS.mb2 }}>
+							<NativeBtn
+								title='Leave'
+								color={CC.danger}
+								onPress={() => preventBackCallBack()}
+							/>
+						</View>
+
+						<NativeBtn
+							title="Don't leave"
+							onPress={() => setWarningDialog(false)}
+						/>
+					</View>
+				</View>
+			)}
 		</View>
 	);
 };
