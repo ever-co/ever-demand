@@ -34,7 +34,7 @@ const Router = ({}) => {
 			setNavGroup(setGroup(NAV_GROUPS.REGISTRATION));
 		}, 3000);
 		return () => {};
-	});
+	}, [setNavGroup]);
 
 	const Routes = () => {
 		const safeGroup = getCurrentNavGroup || 'BLANK';
