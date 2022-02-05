@@ -3,8 +3,9 @@ import {
 	View,
 	StyleSheet,
 	ActivityIndicator,
-	Button as NativeBtn,
-	Text as NativeTxt,
+	Alert,
+	// Button as NativeBtn,
+	// Text as NativeTxt,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -75,14 +76,15 @@ const SignUpByAddressScreen = () => {
 	// STATES
 	const [warningDialog, setWarningDialog] = React.useState<boolean>(false);
 	const [canGoBack, setCanGoBack] = React.useState<boolean>(false);
-	const [preventBackCallBack, setPreventBackCallBack] = React.useState<
-		() => any
-	>(() => {});
+	// const [preventBackCallBack, setPreventBackCallBack] = React.useState<
+	// 	() => any
+	// >(() => { });
 
 	// EFFECTS
 	React.useEffect(() => {
 		setTimeout(() => {
 			setNavigationGroup(setGroup(GROUPS.APP));
+			setCanGoBack(true);
 		}, 4500);
 	}, [setNavigationGroup]);
 
@@ -97,13 +99,31 @@ const SignUpByAddressScreen = () => {
 			setWarningDialog(true);
 
 			// Prompt the user before leaving the screen
-			setPreventBackCallBack(() => {
-				return () => {
-					setCanGoBack(true);
-					setWarningDialog(false);
-					navigation.dispatch(e.data.action);
-				};
-			});
+			// setPreventBackCallBack(() => {
+			// 	return () => {
+			// 		setCanGoBack(true);
+			// 		setWarningDialog(false);
+			// 		navigation.dispatch(e.data.action);
+			// 	};
+			// });
+
+			Alert.alert(
+				'Discard changes?',
+				"Your device isn't yet recognized. Are you sure to leave the screen?",
+				[
+					{ text: "Don't leave", style: 'cancel', onPress: () => {} },
+					{
+						text: 'leave',
+						style: 'destructive',
+						// If the user confirmed, then we dispatch the action we blocked earlier
+						// This will continue the action that had triggered the removal of the screen
+						onPress: () => {
+							setCanGoBack(true);
+							navigation.dispatch(e.data.action);
+						},
+					},
+				],
+			);
 		});
 
 		return () => navigation.removeListener('beforeRemove', () => null);
@@ -139,7 +159,8 @@ const SignUpByAddressScreen = () => {
 				</View>
 			</View>
 
-			{warningDialog && (
+			{/* TODO: find how to use custom alert (disable due to slowing device) */}
+			{/*{warningDialog && (
 				<View style={{ ...GS.overlay, ...GS.centered, ...GS.p5 }}>
 					<View
 						style={{
@@ -173,7 +194,7 @@ const SignUpByAddressScreen = () => {
 						/>
 					</View>
 				</View>
-			)}
+			)}*/}
 		</View>
 	);
 };
