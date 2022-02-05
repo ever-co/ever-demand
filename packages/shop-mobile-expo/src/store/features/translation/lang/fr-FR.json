@@ -11,7 +11,7 @@
 	"SIDEBAR_SIDE": "gauche",
 	"INVITE_VIEW": {
 		"WELCOME_TO": "Bienvenu(e) à",
-		"EVER": "Ever Shop",
+		"EVER": "Ever",
 		"INFO_MISSING": "Certaines informations sont manquantes!",
 		"YOUR_INVITE_CODE": "Votre code d'invitation",
 		"INVITED_TEXT": {
@@ -164,7 +164,7 @@
 		}
 	},
 	"SIDE_MENU": {
-		"TITLE": "Ever",
+		"TITLE": "Ever Shop",
 		"GROUPS": {
 			"NO_TITLE": {
 				"DIVER_TITLE": "",
