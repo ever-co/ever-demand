@@ -2,11 +2,11 @@ import React from 'react';
 import {
 	View,
 	StyleSheet,
-	ActivityIndicator,
 	Alert,
 	// Button as NativeBtn,
 	// Text as NativeTxt,
 } from 'react-native';
+import { ActivityIndicator } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
 // CONSTANTS
@@ -160,7 +160,7 @@ const SignUpByAddressScreen = () => {
 			</View>
 
 			{/* TODO: find how to use custom alert (disable due to slowing device) */}
-			{/*{warningDialog && (
+			{/* {warningDialog && (
 				<View style={{ ...GS.overlay, ...GS.centered, ...GS.p5 }}>
 					<View
 						style={{
@@ -194,7 +194,7 @@ const SignUpByAddressScreen = () => {
 						/>
 					</View>
 				</View>
-			)}*/}
+			)} */}
 		</View>
 	);
 };
