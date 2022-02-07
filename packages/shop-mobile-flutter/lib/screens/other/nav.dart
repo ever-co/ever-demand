@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 
 class Nav extends StatefulWidget {
+  const Nav({Key? key}) : super(key: key);
+
   @override
   _NavState createState() => _NavState();
 }
 
 class _NavState extends State<Nav> {
-  int _selectedIndex = 0;
-  List<Widget> _widgetOptions = <Widget>[
-    Text('Index 0: Home'),
-    Text('Index 1: Business'),
-    Text('Index 2: School'),
-  ];
+  //int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,15 +21,15 @@ class _NavState extends State<Nav> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text('Home'),
+            label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.message),
-            title: Text('Messages'),
+            label: 'Messages',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_add),
-            title: Text('Profile'),
+            label: 'Profile',
           ),
         ],
       ),
