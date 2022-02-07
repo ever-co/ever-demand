@@ -2,7 +2,7 @@
 	"name": "@ever-platform/shop-mobile-expo",
 	"description": "Ever Shop Mobile App build with expo",
 	"version": "1.0.0",
-	"main": "App.tsx",
+	"main": "__generated__/AppEntry.js",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/ever-co/ever-demand.git"
@@ -25,7 +25,8 @@
 		"web": "expo start --web",
 		"eject": "expo eject",
 		"lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-		"test": "jest"
+		"test": "jest",
+		"postinstall": "expo-yarn-workspaces postinstall"
 	},
 	"dependencies": {
 		"@apollo/client": "^3.5.8",
@@ -64,8 +65,10 @@
 		"@typescript-eslint/parser": "^5.7.0",
 		"babel-jest": "^26.6.3",
 		"eslint": "^7.14.0",
+		"expo-yarn-workspaces": "^1.7.0",
 		"jest": "^26.6.3",
 		"jest-expo": "^44.0.1",
+		"metro-config": "^0.67.0",
 		"metro-react-native-babel-preset": "^0.66.2",
 		"react-test-renderer": "^17.0.2",
 		"typescript": "^4.4.4"
