@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shop_flutter_mobile/assets/fonts/mainColors.dart';
 import 'package:shop_flutter_mobile/screens/authentification/animations/delayed_animation.dart';
 // import 'package:flutter_localizations/flutter_localizations.dart';
 
-const Color dRed = Color(0xFF252836);
+const Color dRed = Color(0xFF292B38);
 const Color everSubtitle = Color(0xFF64656C);
 const Color everSignin = Color(0xFFBD4742);
 
@@ -29,9 +28,24 @@ class LoginPage extends StatelessWidget {
                 alignment: Alignment.center,
                 height: 300,
                 margin: const EdgeInsets.only(top: 50, bottom: 20),
-                child: Image.asset('imgs/icon.png'),
+                child: Image.asset('imgs/ever.png'), // Ever logo loading
               ),
             ),
+            /* DelayedAnimation(
+              // this one controls the logo animation
+              delay: 1500,
+              child: Container(
+                alignment: Alignment.center,
+                height: 300,
+                margin: const EdgeInsets.only(top: 10, bottom: 10),
+                child: const Text("Food Delivery & Takeout",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    )), // Ever logo loading
+              ),
+            ), */
             DelayedAnimation(
               // this one controls the button animation
               delay: 3500,
