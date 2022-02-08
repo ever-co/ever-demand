@@ -22,10 +22,10 @@ class _DelayedAnimationState extends State<DelayedAnimation>
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-    final curve = CurvedAnimation(
+    /* final curve = CurvedAnimation(
       parent: _controller,
       curve: Curves.decelerate,
-    );
+    ); */
     _animOffset = Tween<Offset>(
       begin: const Offset(0.0, 0.5),
       end: Offset.zero,

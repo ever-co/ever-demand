@@ -1,0 +1,264 @@
+{
+	"language": "en",
+    "@language": {
+        "id": "en-US",
+        "name": "English"
+    },
+    "currentDirection": "ltr",
+    "sidebarSide": "left",
+    "inviteView": {
+        "welcomeTo": "Welcome to",
+        "Ever": "Ever",
+        "infoMissing": "Some of the information missing!",
+        "yourInviteCode": "Your invite code",
+        "invitedText": {
+            "title": "Thank you for sign up!",
+            "details": "We will send you a notification with an invite code when we launch at:"
+        },
+        "notInvitedByCode": {
+            "title": "Wrong code!",
+            "details": "Please make sure you at the place that came with your code."
+        },
+        "cantAccessLocation": "Can't access your location.",
+        "cantAccessLocationGetInByAdress": "Can't access your location, please try to get in by address.",
+        "getInByAddress": "Sign up by Address",
+        "getIn": "Get inside!",
+        "yourAddress": "Let us know your Address",
+        "launchNotification": "We promise to show only relevant products according to your address",
+        "byCode": {
+            "orWhat": "sign up by Invite",
+            "invited": "Sign in with Invite Code",
+            "logo": {
+                "details": "Food Delivery & Takeout"
+            },
+            "inviteCode": "Invite Code"
+        },
+        "detectingLocation": "Please wait, we attempting to detect your current address..."
+    },
+    "productsView": {
+        "title":"Products",
+        "buyButton": {
+            "pre": "Buy for ",
+            "suf": ""
+        },
+        "notAvailable": "Product not available",
+        "minutes": "min",
+        "delivery": "Delivery",
+        "takeAway": "Takeout",
+        "readyFor": "Ready for",
+        "details": {
+            "details": "Details",
+            "back": "Back",
+            "includes": "Includes",
+            "buyFor": "Buy for"
+        }
+    },
+    "helpView": {
+        "title": "Help"
+    },
+    "orderHistoryView": {
+        "title": "Order history",
+        "details": "Details"
+    },
+    "lastPurchasesView": {
+        "title": "Last Purchases",
+        "nothingOrdered": "No orders yet",
+        "toProducts": "To Products"
+    },
+    "aboutView": {
+        "title": "About Us"
+    },
+    "termsOfUseView": {
+        "title": "Terms of Use"
+    },
+    "privacyView": {
+        "title": "Privacy"
+    },
+    "languageView": {
+        "title": "Select Language"
+    },
+    "searchView": {
+        "viewMore": "View More",
+        "emptyList": "No Products Or Merchants Found ... ",
+        "searchPlaceHolder": "Product Or Restorant Name",
+        "open": "Open",
+        "closed": "Closed"
+    },
+    "buyPopUp": {
+        "orderPaid": "The order is paid $",
+        "cancel": {
+            "statuses": [
+                {
+                    "title": "The order was cancel while Warehouse Preparation!",
+                    "details": "",
+                    "notPaidNote": ""
+                }
+            ]
+        },
+        "viewOrderProducts": "View Order Products",
+        "statuses": [
+            {
+                "title": "We're preparing the order!",
+                "details": "You will get it in %t minutes.",
+                "notPaidNote": "Prepare your wallet (%s in cash)."
+            },
+            {
+                "title": "Carrier on the way!",
+                "detaisl": "You will get the order in %t min.",
+                "notPaidNote": "Prepare your wallet (%s in cash)."
+            },
+            {
+                "title": "Check your door!",
+                "details": "You will get the order in seconds.",
+                "notPaidNote": "Prepare your wallet (%s in cash)."
+            },
+            {
+                "title": "Order Completed!",
+                "details": "Thanks for using Ever",
+                "notPaidNote": ""
+            }
+        ],
+        "statusesTakeaway": {
+            "title": "We're preparing the order!",
+            "details": "You can get it in %t minutes.",
+            "notPaidNote": "Prepare your wallet (%s in cash)."
+        },
+        "deliveryStatus": {
+            "we": "We",
+            "carrier": "Carrier",
+            "you": "You"
+        },
+        "deliveryWrong": {
+            "deliveryWrong ": "The Delivery Went Wrong!",
+            "processinWrong": "Processing Went Wrong!",
+            "tryAgain": "Please try again.",
+            "callForDetails": "Call for details"
+        },
+        "elapsedTime": {
+            "title": "Elapsed time"
+        },
+        "buttons": {
+            "undo": "Undo",
+            "payNow": "Pay with Card",
+            "payX": "Pay {{amount}}",
+            "payWithFixedCard": "Pay with",
+            "paid": "Paid",
+            "end": "Bon appetit!",
+            "cancel": "Cancel",
+            "gotIt": "Got It!",
+            "imHere": "I'm here",
+            "showQrCode": "Show QR Code",
+            "showProducts": "Show Products"
+        },
+        "undoPop": {
+            "title": "Are you sure?",
+            "details": [
+                "Undo will return you the money, but you will",
+                "lose",
+                "the order!"
+            ]
+        }
+    },
+    "sideMenu": {
+        "title": "Ever",
+        "groups": {
+            "noTitle": {
+                "diverTitle": "",
+                "items": {
+                    "products": "Products",
+                    "lastPurchases": "Last Purchases",
+                    "callUs": "Call Us",
+                    "orderHistory": "Order history"
+                }
+            },
+            "store": {
+                "storeTitle": "Store",
+                "items": {
+                    "callWaiter": "Call Waiter",
+                    "about": "About"
+                }
+            },
+            "settings": {
+                "diverTitle": "Settings",
+                "items": {
+                    "language": "Language"
+                }
+            },
+            "info": {
+                "diverTitle": "Information",
+                "items": {
+                    "faq": "Help",
+                    "aboutUs": "About Us",
+                    "termsOfUse": "Terms of Use",
+                    "privacy": "Privacy"
+                },
+                "call": {
+                    "weApologise": "We Apologise!",
+                    "callUnsuccessfull": "Call Was Unsuccessful!"
+                }
+            },
+            "legals": {
+                "diverTitle": "LEGAL",
+                "items": {
+                    "termsOfUse": "Terms of Use",
+                    "privacy": "Privacy"
+                }
+            }
+        }
+    },
+    "timer": {
+        "minutes": "Minutes",
+        "seconds": "Seconds"
+    },
+    "connectionErrorView": {
+        "title": "No connection to Ever",
+        "description": [
+            "Please make sure you are",
+            "connected to the internet",
+            "or try Ever app later."
+        ]
+    },
+    "merchantsView": {
+        "closeToYou": "Merchants close to you",
+        "name": "Merchant name",
+        "withName": "Merchants with name"
+    },
+    "noServerView": {
+        "noServer": "Server connection is lost"
+    },
+    "or": "Or",
+    "orLowercase": "or",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "Ok",
+    "city": "City",
+    "street": "Street",
+    "house": "House",
+    "appartement": "Apartment",
+    "back": "Back",
+    "more": "more",
+    "to": "To",
+    "storeInfo": "Store Info",
+    "map": "Map",
+    "orderInfo": "Order Info",
+    "close": "Close",
+    "scan": "Scan",
+    "merchants": "Merchants",
+    "notFoundNOT_FOUND": "Not Found!",
+    "inStore": "In Store",
+    "exitStore": "Exit Store",
+    "failed": "Failed",
+    "canceled": "Canceled",
+    "inDelivery": "In Delivery",
+    "pending": "Pending",
+    "completed": "Completed",
+    "browse": "Browse",
+    "english": "English",
+    "hebrew": "Hebrew",
+    "russian": "Russian",
+    "bulgarian": "Bulgarian",
+    "spanish": "Spanish",
+    "select": "Select",
+    "locationNotes": "Location Notes",
+    "enterNotesHere": "Enter notes here"
+}

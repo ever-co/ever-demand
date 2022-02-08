@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shop_flutter_mobile/screens/authentification/login.dart';
+//import 'package:shop_flutter_mobile/screens/authentification/login.dart';
+import 'package:shop_flutter_mobile/screens/authentification/signup_address1.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-//import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-const Color dRed = Color(0xFF2A2C39);
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +32,7 @@ class MyApp extends StatelessWidget {
       title: 'Ever',
       debugShowCheckedModeBanner: false,
       home:
-          LoginPage(), // calling the login Page as the first screen, no splashscreen
+          SignupAdress(), // calling the login Page as the first screen, no splashscreen
     );
   }
 }
