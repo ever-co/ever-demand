@@ -257,10 +257,11 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 						position: 'left',
 					},
 					edit: {
-						editButtonContent: '<i class="ion-md-create"></i>',
+						editButtonContent: '<i class="fa fa-fw fa-edit"></i>',
 					},
 					delete: {
-						deleteButtonContent: '<i class="ion-md-trash"></i>',
+						deleteButtonContent:
+							'<i class="fa fa-fw fa-trash"></i>',
 						confirmDelete: true,
 					},
 					mode: 'external',
