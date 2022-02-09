@@ -198,9 +198,8 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 		this.$subSlectProducts = this.selectProducts$
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(({ current, allData }) => {
-				allData.find((d) => d && d.id === current['id'])[
-					'checked'
-				] = !current.checked;
+				allData.find((d) => d && d.id === current['id'])['checked'] =
+					!current.checked;
 
 				if (current.checked) {
 					this._selectedProducts.push(current);
