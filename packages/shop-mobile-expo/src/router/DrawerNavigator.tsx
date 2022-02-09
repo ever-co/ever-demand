@@ -28,14 +28,12 @@ const DrawerNavigator: React.FC = () => {
 					label: LANGUAGE.SIDE_MENU.GROUPS.NO_TITLE.ITEMS.PRODUCTS,
 					path: 'DRAWER/HOME',
 					icon: 'shopping-bag',
-					external: false,
 				},
 				{
 					label: LANGUAGE.SIDE_MENU.GROUPS.NO_TITLE.ITEMS
 						.ORDER_HISTORY,
 					path: 'DRAWER/ORDER_HISTORY',
 					icon: 'shopping-cart',
-					external: false,
 				},
 			],
 		},
@@ -47,7 +45,6 @@ const DrawerNavigator: React.FC = () => {
 					label: LANGUAGE.SIDE_MENU.GROUPS.SETTINGS.ITEMS.LANGUAGE,
 					path: 'DRAWER/TRANSLATION',
 					icon: 'align-center',
-					external: false,
 				},
 			],
 		},
@@ -57,21 +54,21 @@ const DrawerNavigator: React.FC = () => {
 			linkItems: [
 				{
 					label: LANGUAGE.SIDE_MENU.GROUPS.INFO.ITEMS.FAQ,
-					path: 'DRAWER/LANGUAGES',
+					path: 'https://google.com',
 					icon: 'help-circle',
-					external: false,
+					external: true,
 				},
 				{
 					label: LANGUAGE.SIDE_MENU.GROUPS.NO_TITLE.ITEMS.CALL_US,
-					path: 'DRAWER/LANGUAGES',
+					path: 'https://google.com',
 					icon: 'phone',
-					external: false,
+					external: true,
 				},
 				{
 					label: LANGUAGE.SIDE_MENU.GROUPS.INFO.ITEMS.ABOUT_US,
-					path: 'DRAWER/LANGUAGES',
+					path: 'https://google.com',
 					icon: 'info',
-					external: false,
+					external: true,
 				},
 			],
 		},
@@ -81,15 +78,15 @@ const DrawerNavigator: React.FC = () => {
 			linkItems: [
 				{
 					label: LANGUAGE.SIDE_MENU.GROUPS.LEGALS.ITEMS.PRIVACY,
-					path: 'DRAWER/LANGUAGES',
+					path: 'https://google.com',
 					icon: 'lock',
-					external: false,
+					external: true,
 				},
 				{
 					label: LANGUAGE.SIDE_MENU.GROUPS.LEGALS.ITEMS.TERMS_OF_USE,
-					path: 'DRAWER/LANGUAGES',
+					path: 'https://google.com',
 					icon: 'list',
-					external: false,
+					external: true,
 				},
 			],
 		},
@@ -97,8 +94,8 @@ const DrawerNavigator: React.FC = () => {
 
 	return (
 		<Drawer.Navigator
-			initialRouteName="Home"
-			defaultStatus="open"
+			initialRouteName='Home'
+			defaultStatus='open'
 			drawerType={dimensions.width >= 768 ? 'permanent' : 'front'}
 			drawerContent={(props: any) => (
 				<CustomDrawerContent
