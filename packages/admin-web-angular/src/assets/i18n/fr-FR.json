@@ -1,0 +1,255 @@
+{
+	"COMMON": {
+		"SAVE": "Sauvegarder",
+		"CANCEL": "Annuler",
+		"USA": "Etats-Unis",
+		"ISRAEL": "Israël",
+		"BULGARIA": "Bulgarie"
+	},
+	"WAREHOUSE_MANAGE": {
+		"TITLE": "Gérer l'entrepôt",
+		"NAME": "Prénom",
+		"USERNAME": "Nom d'utilisateur",
+		"PASSWORD": "Mot de passe",
+		"COUNTRY": "Pays",
+		"CITY": "Ville",
+		"POSTCODE": "Code postal",
+		"IS_ACTIVE": "C'est actif",
+		"PRODUCTS_MANUFACTURING": "Fabrication de produits",
+		"CARRIER_REQUIRED": "Transporteur requis",
+		"ADDRESS": "Adresse",
+		"RIGHT_NOW": "(maintenant)",
+		"CARRIERS": "Les transporteurs",
+		"CARRIERS_SPECIFIC": "N'utilisez que des transporteurs spécifiques",
+		"VALIDATION": {
+			"NAME": "Le nom est requis",
+			"USERNAME": "Nom d'utilisateur est nécessaire",
+			"PASSWORD": "Mot de passe requis",
+			"COUNTRY": "Pays requis",
+			"CITY": "La ville est requise",
+			"STREET": "La rue est requise",
+			"HOUSE": "Le numéro de maison est requis",
+			"POSTCODE": "Code postal requis"
+		},
+		"WIZARD_TITLES": {
+			"DETAILS": "Détails",
+			"ACCOUNT": "Compte",
+			"CONTACT_INFO": "Informations de contact",
+			"LOCATION": "Emplacement",
+			"PAYMENT": "Paiement",
+			"DELIVERY_ZONES": "Zones de livraison"
+		}
+	},
+	"WAREHOUSES_VIEW": {
+		"TITLE": "Entrepôts",
+		"DELETE_WAREHOUSES": "Supprimer la Sélection",
+		"SHOW_ON_MAP": "Afficher sur la carte",
+		"SMART_TABLE_COLUMNS": {
+			"NAME": "Prénom",
+			"EMAIL": "Email",
+			"PHONE": "Téléphone",
+			"CITY": "Ville",
+			"ADDRESS": "Adresse",
+			"ORDERS_QTY": "Commandes quantité"
+		},
+		"MERCHANTS": {
+			"TRACK_ALL_MERCHANTS": "Suivre tous les marchands",
+			"FILTER_MERCHANTS": "Filtrer les marchands",
+			"FILTER_BY_NAME": "Filtrer par nom",
+			"FILTER_BY_CITY": "Filtrer par ville",
+			"FILTER_BY_COUNTRY": "Filtrer par pays"
+		}
+	},
+	"WAREHOUSE_VIEW": {
+		"ORDER": {
+			"GIVEN_TO_CARRIER": "Donné au client",
+			"CANT_PROCESSING_WITHOUT_PRODUCTS": "Impossible de traiter la commande sans les produits."
+		},
+		"MUTATION": {
+			"TITLE": "Créer un nouvel entrepôt",
+			"NAME": "Prénom",
+			"LOGO": "Logo",
+			"IS_ACTIVE": "C'est actif",
+			"PRODUCTS_MANUFACTURING": "Fabrication de produits",
+			"CARRIER_REQUIRED": "Transporteur requis",
+			"RIGHT_NOW": "Maintenant",
+			"PHONE": "Téléphone",
+			"EMAIL": "Email",
+			"USERNAME": "Nom d'utilisateur",
+			"PASSWORD": "Mot de passe",
+			"COUNTRY": "Pays",
+			"USA": "Etats-Unis",
+			"ISRAEL": "Israël",
+			"BULGARIA": "Bulgarie",
+			"CITY": "Ville",
+			"ADDRESS": "Adresse",
+			"POSTCODE": "Code postal",
+			"COORDINATES": "Coordonnées",
+			"AUTO_DETECT_COORDINATES": "Détection automatique des coordonnées",
+			"CARRIERS": "Les transporteurs",
+			"USE_ONLY_SPECIFIC_CARRIERS": "N'utilisez que des transporteurs spécifiques",
+			"SELECT_SHAPE_TO_ADD_ZONE": "Sélectionnez la forme pour ajouter une nouvelle zone",
+			"CIRCLE": "Cercle",
+			"SHAPE": "Forme",
+			"DRAW_SHAPE_ON_MAP": "Dessinez une forme sur la carte",
+			"MINIMUM_AMOUNT": "Montant minimal",
+			"DELIVERY_FEE": "Frais de livraison",
+			"CANCEL": "Annuler",
+			"ADD": "Ajouter",
+			"EDIT": "Éditer",
+			"ZONE_NAME": "Nom de zone",
+			"IN_STORE_MODE": "En mode Store",
+			"ERRORS": {
+				"NAME_IS_REQUIRED": "Le nom de l'entrepôt est requis",
+				"NAME_ATLEAST_3_CHARS": "Le nom doit comporter au moins 3 caractères",
+				"NAME_MORE_THAN_255_CHARS": "Le nom ne peut pas comporter plus de 255 caractères",
+				"LOGO_IS_REQUIRED": "Le logo est requis",
+				"INVALID_URL": "Entrez une URL d'image valide ou recherchez un fichier",
+				"PHONE_CONTAINS_ONLY_DIGIT": "Le numéro de téléphone doit contenir uniquement un chiffre",
+				"USERNAME_IS_REQUIRED": "Nom d'utilisateur est nécessaire",
+				"PASSWORD_IS_REQUIRED": "Mot de passe requis",
+				"COORDINATES_ARE_REQUIRED": "Les coordonnées sont obligatoires",
+				"COUNTRY_IS_REQUIRED": "Pays requis"
+			},
+			"WIZARD_TITLES": {
+				"BASIC_INFO": "Informations de base",
+				"CONTACT_INFO": "Informations de contact",
+				"LOCATION": "Emplacement",
+				"DELIVERY_ZONES": "Zones de livraison"
+			}
+		},
+		"ADD_PRODUCTS": "Ajouter des produits",
+		"PRODUCTS": "Les produits",
+		"ORDER_NUMBER": "Numéro de commande",
+		"CANCELLED": "Annulé",
+		"WAREHOUSE_STATUS": "Statut d'entrepôt",
+		"CARRIER_STATUS": "Statut de transporteur",
+		"PAID": "Payé",
+		"MANAGE_STORE": "Gérer le magasin",
+		"TOP_PRODUCTS": "Top produits",
+		"PRODUCTS_MANUFACTURING": "Fabrication de produits",
+		"CARRIER_REQUIRED": "Transporteur requis",
+		"MANAGE_WAREHOUSE": "Gérer l'entrepôt"
+	},
+	"SIMULATION_VIEW": {
+		"SIMULATION": "Simulation",
+		"PURCHASE_PRODUCTS": "Acheter des produits",
+		"CREATE_USER": "Créer un utilisateur",
+		"ORDER_CONFIRM": "Commande Confirmer",
+		"ORDER_CANCEL": "Commande Annuler",
+		"PRODUCTS": "Des produits",
+		"ORDER": "Ordre",
+		"USER_MUTATION": {
+			"TITLE": "Créer un client",
+			"NAME": "Prénom",
+			"EMAIL": "Email",
+			"COUNTRY": "Pays",
+			"CITY": "Ville",
+			"USA": "Etats-Unis",
+			"ISRAEL": "Israël",
+			"BULGARIA": "Bulgarie",
+			"ADDRESS": "Adresse",
+			"POSTCODE": "Code postal",
+			"COORDINATES": "Coordonnées",
+			"AUTO_DETECT_COORDINATES": "Détection automatique des coordonnées",
+			"ERRORS": {
+				"FIRST_NAME_IS_REQUIRED": "Le prénom est requis",
+				"LAST_NAME_IS_REQUIRED": "Le nom est requis",
+				"EMAIL_IS_REQUIRED": "Le courriel est requis",
+				"COORDINATES_ARE_REQUIRED": "Les coordonnées sont obligatoiresd"
+			},
+			"WIZARD_TITLES": {
+				"ADDITIONAL_INFO": "Information additionnelle",
+				"LOCATION": "Emplacement"
+			}
+		}
+	},
+	"CUSTOMERS_VIEW": {
+		"TITLE": "Les clients",
+		"DELETE_CUSTOMERS": "Supprimer la Sélection",
+		"CREATE_CUSTOMER": "Créer un client",
+		"ORDERS_STATISTICS": "Statistiques de commande",
+		"NUMBER_OF_ORDERS": "Total des commandes",
+		"CANCELED_ORDERS": "Commandes rendues",
+		"COMPLETED_ORDERS_TOTAL": "Prix de toutes les commandes",
+		"CUSTOMERS_DEVICES": "Appareils clients",
+		"NOT_INVITED_ONLY": "Pas invité seulement",
+		"SMART_TABLE_COLUMNS": {
+			"NAME": "Prénom",
+			"EMAIL": "Email",
+			"PHONE": "Téléphone",
+			"COUNTRY": "Pays",
+			"CITY": "Ville",
+			"ADDRESS": "Adresse",
+			"ORDERS_QTY": "Commandes quantité",
+			"ACTIONS": "Aactes",
+			"INVITED_DATE": "Date d'invitation",
+			"STATUS": "Statut"
+		}
+	},
+	"CARRIERS_VIEW": {
+		"TITLE": "Les transporteurs",
+		"DELETE_CARRIERS": "Supprimer sélectionnée",
+		"CREATE_CARRIER": "Créer un transporteur",
+		"SMART_TABLE_COLUMNS": {
+			"NAME": "Prénom",
+			"PHONE": "Téléphone",
+			"STATUS": "Statut",
+			"ADDRESS": "Adresse",
+			"DELIVERIES": "Livraisons"
+		}
+	},
+	"PRODUCT_TYPE_VIEW": {
+		"TITLE": "Nouveau produit",
+		"WIZARD_FORM": {
+			"VALIDATION_MESSAGES": {
+				"TITLE": "Titre requis",
+				"IMAGE": "L'image est requise",
+				"DESCRIPTION": "La description est requise",
+				"LANGUAGE": "La langue est requise",
+				"PRICE": "Le prix est requis",
+				"COUNT": "Le nombre de produits est requis"
+			}
+		}
+	},
+	"SHARED": {
+		"FORMS": {
+			"ERRORS": {
+				"FIRST_NAME_REQUIRED": "Le prénom est requis",
+				"LAST_NAME_REQUIRED": "Le nom est requis",
+				"USERNAME_REQUIRED": "Nom d'utilisateur est nécessaire",
+				"PASSWORD_REQUIRED": "Mot de passe requis",
+				"PHONE_REQUIRED": "Le téléphone est requis",
+				"LOGO_URL_REQUIRED": "L'URL du logo doit commencer par 'https'",
+				"IS_ACTIVE": "Est-ce que le champ actif est requis",
+				"COUNTRY_REQUIRED": "Pays requis",
+				"CITY_REQUIRED": "Pays requis",
+				"STREET_ADDRESS_REQUIRED": "L'adresse est requise",
+				"HOUSE_REQUIRED": "Le numéro de maison est requis",
+				"COORDINATES_REQUIRED": "Les coordonnées sont obligatoires",
+				"MUST_CONTAIN_ONLY_LETTERS": "Doit contenir uniquement des lettres"
+			}
+		}
+	},
+	"Manage warehouse": "Gérer les produits et les commandes d'entrepôt",
+	"Warehouse": "Entrepôt",
+	"Create Warehouse": "Créer un entrepôt",
+	"SIMULATION": "Simulation",
+	"Purchase products": "Acheter des produits",
+	"Manage": "Gérer",
+	"Orders": "Ordres",
+	"Confirmed": "Confirmé",
+	"In Delivery": "En livraison",
+	"Not Confirmed": "Non confirmé",
+	"Not paid": "Impayé",
+	"Create 100 warehouses": "Créer 100 entrepôts",
+	"Cancelled": "Annulé",
+	"All": "Tout",
+	"Default Settings": "Paramètres par défaut",
+	"Products Manufacturing": "Fabrication de produits",
+	"Carrier required before sale": "Transporteur requis avant la vente",
+	"New Product Type": "Transporteur requis avant la vente",
+	"Products": "Des produits",
+	"New Product": "Nouveau produit",
+	"OPTIONAL": "optionnel"
+}
