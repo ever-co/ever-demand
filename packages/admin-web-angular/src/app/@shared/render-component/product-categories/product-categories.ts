@@ -10,8 +10,9 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 			}
 
 			div img {
-				width: 40px;
-				height: 40px;
+				width: 35px;
+				height: 35px;
+				border-radius: 50%;
 			}
 		`,
 	],
@@ -20,7 +21,6 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 export class ProductCategoriesComponent implements ViewCell, OnInit {
 	value: any;
 	rowData: any;
-
 	categoriesArr = [];
 
 	constructor(private readonly _localeTranslate: ProductLocalesService) {}

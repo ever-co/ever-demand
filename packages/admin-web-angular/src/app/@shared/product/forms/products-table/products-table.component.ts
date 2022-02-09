@@ -46,11 +46,11 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 	selectProducts$: EventEmitter<any> = new EventEmitter();
 	$subSlectProducts: Subscription;
 	pagesChanges$: EventEmitter<number> = new EventEmitter();
+
 	@Input()
 	perPage: number = 0;
 	@Input()
 	hiddenTableActions: boolean;
-
 	@Input()
 	boxShadow: string;
 
