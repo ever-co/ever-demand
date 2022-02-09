@@ -33,6 +33,10 @@ const DRAWER_ROUTES: DrawerScreenType[] = [
 		component: SCREENS.APP.Home,
 	},
 	{
+		name: 'DRAWER/ORDER_HISTORY',
+		component: SCREENS.APP.OrderHistory,
+	},
+	{
 		name: 'DRAWER/TRANSLATION',
 		component: SCREENS.APP.Translation,
 	},
