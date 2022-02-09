@@ -20,7 +20,16 @@
 	"browserslist": [
 		"> 1%",
 		"last 2 versions",
-		"IE 11"
+		"IE 11",
+		"last 1 Chrome version",
+		"last 1 Firefox version",
+		"last 2 Edge major versions",
+		"last 2 Safari major versions",
+		"last 2 iOS major versions",
+		"Firefox ESR",
+		"not IE 9-10",
+		"not ios_saf 15.2-15.3",
+		"not safari 15.2-15.3"
 	],
 	"scripts": {
 		"config": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn ts-node -P tsconfig.commonjs.json ./scripts/configure.ts",
