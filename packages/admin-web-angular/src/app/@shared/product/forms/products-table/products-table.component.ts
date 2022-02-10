@@ -46,11 +46,11 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 	selectProducts$: EventEmitter<any> = new EventEmitter();
 	$subSlectProducts: Subscription;
 	pagesChanges$: EventEmitter<number> = new EventEmitter();
+
 	@Input()
 	perPage: number = 0;
 	@Input()
 	hiddenTableActions: boolean;
-
 	@Input()
 	boxShadow: string;
 
@@ -198,9 +198,8 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 		this.$subSlectProducts = this.selectProducts$
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(({ current, allData }) => {
-				allData.find((d) => d && d.id === current['id'])[
-					'checked'
-				] = !current.checked;
+				allData.find((d) => d && d.id === current['id'])['checked'] =
+					!current.checked;
 
 				if (current.checked) {
 					this._selectedProducts.push(current);
@@ -258,10 +257,11 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 						position: 'left',
 					},
 					edit: {
-						editButtonContent: '<i class="ion-md-create"></i>',
+						editButtonContent: '<i class="fa fa-fw fa-edit"></i>',
 					},
 					delete: {
-						deleteButtonContent: '<i class="ion-md-trash"></i>',
+						deleteButtonContent:
+							'<i class="fa fa-fw fa-trash"></i>',
 						confirmDelete: true,
 					},
 					mode: 'external',
