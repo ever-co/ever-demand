@@ -1,255 +1,153 @@
 {
-	"LANGUAGE": {
-		"ID": "he-IL",
-		"NAME": "עברית"
+	"language": "he",
+    "@language": {
+        "id": "he-IL",
+        "name": "Hebrew",
+		"description": "Hebrew"
 	},
-	"CURRENT_DIRECTION": "rtl",
-	"SIDEBAR_SIDE": "right",
-	"INVITE_VIEW": {
-		"WELCOME_TO": "ברוך הבא ל-",
-		"EVER": "Ever",
-		"INFO_MISSING": "אנא מלא את המידע החסר.",
-		"YOUR_INVITE_CODE": "קוד ההזמנה שלך",
-		"INVITED_TEXT": {
-			"TITLE": "תודה על ההרשמה!",
-			"DETAILS": "אנחנו נשלח לך הודעה ברגע שנתחיל לפעול בכתובת שלך:"
-		},
-		"NOT_INVITED_BY_CODE": {
-			"TITLE": "קוד שגוי!",
-			"DETAILS": "תוודא בבקשה שאתה במקום שמצורף לקוד שלך!"
-		},
-		"CANT_ACCESS_LOCATION": "אין גישה למיקום שלך.",
-		"CANT_ACCESS_LOCATION_GET_IN_BY_ADDRESS": "אין גישה למיקום שלך, אנא נסה להיכנס באמצעות הכתובת.",
-		"GET_IN_BY_ADDRESS": "הירשם עם כתובת",
-		"GET_IN": "כנס",
-		"YOUR_ADDRESS": "מה הכתובת שלך?",
-		"LAUNCH_NOTIFICATION": "אנחנו מבטיחים להראות רק מוצרים רלוונטיים בהתאם לכתובת שהוכנסה",
-		"BY_CODE": {
-			"OR_WHAT": "הירשם באמצעות הזמנה",
-			"INVITED": "היכנס עם הזמנה לאפליקציה",
-			"LOGO": {
-				"DETAILS": "משלוחי אוכל וטייק אווי"
-			},
-			"INVITE_CODE": "קוד הזמנה"
-		},
-		"DETECTING_LOCATION": "רק רגע... אנחנו מנסים לזהות את הכתובת שלך."
-	},
-	"PRODUCTS_VIEW": {
-		"TITLE": "המוצרים שלנו",
-		"BUY_BUTTON": {
-			"PRE": "",
-			"SUF": "-קנה ב"
-		},
-		"NOT_AVAILABLE": "המוצר אינו זמין",
-		"MINUTES": "דקות",
-		"DELIVERY": "משלוח",
-		"TAKEAWAY": "Takeaway",
-		"READYFOR": "מוכן ל-",
-		"DETAILS": {
-			"DETAILS": "פרטים",
-			"BACK": "חזרה",
-			"INCLUDES": "כולל",
-			"BUY_FOR": "קנה עבור"
-		}
-	},
-	"HELP_VIEW": {
-		"TITLE": "עֶזרָה"
-	},
-	"ORDER_HISTORY_VIEW": {
-		"TITLE": "היסטוריית הזמנות",
-		"DETAILS": "פרטים"
-	},
-	"LAST_PURCHASES_VIEW": {
-		"TITLE": "רכישות אחרונות",
-		"NOTHING_ORDERED": "עדיין לא הזמנת שום דבר",
-		"TO_PRODUCTS": "למוצרים"
-	},
-	"ABOUT_VIEW": {
-		"TITLE": "עלינו"
-	},
-	"TERMS_OF_USE_VIEW": {
-		"TITLE": "תנאי שימוש"
-	},
-	"PRIVACY_VIEW": {
-		"TITLE": "פרטיות"
-	},
-	"LANGUAGE_VIEW": {
-		"TITLE": "בחירת שפה"
-	},
-	"BUY_POPUP": {
-		"ORDER_PAID": "ההזמנה משולמת $",
-		"CANCEL": {
-			"STATUSES": [
-				{
-					"TITLE": "ההזמנה בוטלה תוך כדי הכנת מחסן!",
-					"DETAILS": "",
-					"NOT_PAID_NOTE": ""
-				}
-			]
-		},
-		"VIEW_ORDER_PRODUCTS": "צפו במוצרי הזמנה",
-		"STATUSES": [
-			{
-				"TITLE": "אנחנו מכינים את ההזמנה!",
-				"DETAILS": "ההזמנה תהיה בידך בעוד %t דקות.",
-				"NOT_PAID_NOTE": "תכין/י את הארנק (%s במזומן)."
-			},
-			{
-				"TITLE": "השליח בדרך!",
-				"DETAILS": "ההזמנה תהיה בידך בעוד %t דקות.",
-				"NOT_PAID_NOTE": "תכין/י את הארנק (%s במזומן)."
-			},
-			{
-				"TITLE": "בדוק את הדלת שלך!",
-				"DETAILS": "ההזמנה תהיה בידך בעוד רגע.",
-				"NOT_PAID_NOTE": "תכין/י את הארנק (%s במזומן)."
-			},
-			{
-				"TITLE": "ההזמנה הושלמה!",
-				"DETAILS": "תודה על השימוש ב-Ever",
-				"NOT_PAID_NOTE": "תכין/י את הארנק (%s במזומן)."
-			}
-		],
-		"STATUSES_TAKEAWAY": {
-			"TITLE": "אנחנו מכינים את ההזמנה!",
-			"DETAILS": "אתה יכול להכניס אותו %t דקות.",
-			"NOT_PAID_NOTE": "תכין/י את הארנק (%s במזומן)."
-		},
-		"DELIVERY_STATUS": {
-			"WE": "אנחנו",
-			"CARRIER": "השליח",
-			"YOU": "אתה"
-		},
-		"DELIVERY_WRONG": {
-			"DELIVERY_WRONG": "המסירה השתבשה!",
-			"PROCESSING_WRONG": "עיבוד התבצעה טעות!",
-			"TRY_AGAIN": "בבקשה נסה שוב.",
-			"CALL_FOR_DETAILS": "התקשר לקבלת פרטים"
-		},
-		"ELAPSED_TIME": {
-			"TITLE": "הזמן שחלף"
-		},
-		"BUTTONS": {
-			"UNDO": "ביטול",
-			"PAY_NOW": "תשלום באשראי",
-			"PAY_WITH_FIXED_CARD": "שלם בעזרת",
-			"PAY_X": "לשלם {{amount}}",
-			"PAID": "שולם באשראי",
-			"END": "בתאבון!",
-			"CANCEL": "בטל",
-			"GOT_IT": "הבנתי",
-			"IM_HERE": "אני כאן",
-			"SHOW_QR_CODE": "הצג קוד QR",
-			"SHOW_PRODUCTS": "הצג מוצרים"
-		},
-		"UNDO_POPUP": {
-			"TITLE": "אתה בטוח?",
-			"DETAILS": [
-				"החזרת הכסף אולי תחזיר לך את כספך, אבל תנפץ את",
-				"ההזמנה שלך!",
-				""
-			]
-		}
-	},
-	"SIDE_MENU": {
-		"TITLE": "Ever",
-		"GROUPS": {
-			"NO_TITLE": {
-				"DIVER_TITLE": "",
-				"ITEMS": {
-					"PRODUCTS": "מוצרים",
-					"LAST_PURCHASES": "רכישות אחרונות",
-					"CALL_US": "התקשר אלינו",
-					"ORDER_HISTORY": "היסטוריית הזמנות"
-				}
-			},
-			"STORE": {
-				"STORE_TITLE": "חנות",
-				"ITEMS": {
-					"CALL_WAITER": "התקשר למלצר",
-					"ABOUT": "על אודות"
-				}
-			},
-			"SETTINGS": {
-				"DIVER_TITLE": "הגדרות",
-				"ITEMS": {
-					"LANGUAGE": "(Language) שפה"
-				}
-			},
-			"INFO": {
-				"DIVER_TITLE": "מידע",
-				"ITEMS": {
-					"FAQ": "עזרה",
-					"ABOUT_US": "עלינו",
-					"TERMS_OF_USE": "תנאי שימוש",
-					"PRIVACY": "פרטיות"
-				},
-				"CALL": {
-					"WE_APPOLOGISE": "אנו מתנצלים",
-					"CALL_UNSUCCESSFULL": "השיחה לא הצליחה"
-				}
-			},
-			"LEGALS": {
-				"DIVER_TITLE": "אלמוגים",
-				"ITEMS": {
-					"TERMS_OF_USE": "תנאי שימוש",
-					"PRIVACY": "פרטיות"
-				}
-			}
-		}
-	},
-	"TIMER": {
-		"MINUTES": "דקות",
-		"SECONDS": "שניות"
-	},
-	"CONNECTION_ERROR_VIEW": {
-		"TITLE": "אין חיבור ל-Ever",
-		"DESCRIPTION": [
-			"בבקשה תוודא שאתה",
-			"מחובר לאינטרנט או תנסה",
-			"את האפליקציה מאוחר יותר."
-		]
-	},
-	"MERCHANTS_VIEW": {
-		"CLOSE_TO_YOU": "סוחרים קרובים אליך",
-		"NAME": "שם סוחר",
-		"WITH_NAME": "סוחרים עם שם"
-	},
-	"NO_SERVER_VIEW": {
-		"NO_SERVER": "השרת נפל"
-	},
-	"OR": "או",
-	"OR_LOWERCASE": "או",
-	"YES": "כן",
-	"NO": "לא",
-	"OK": "אוקי",
-	"CITY": "עיר",
-	"STREET": "רחוב",
-	"HOUSE": "בית",
-	"APARTMENT": "דירה",
-	"BACK": "לחזור",
-	"MORE": "יותר",
-	"TO": "ל",
-	"STORE_INFO": "מידע חנות",
-	"MAP": "מפה",
-	"ORDER_INFO": "פרטי הזמנה",
-	"CLOSE": "סגור",
-	"SCAN": "סרוק",
-	"MERCHANTS": "סוחרים",
-	"NOT_FOUND": "אין תוצאות!",
-	"IN_STORE": "בחנות",
-	"EXIT_STORE": "צא מהחנות",
-	"FAILED": "נכשל",
-	"CANCELED": "מבוטל",
-	"IN_DELIVERY": "במשלוח",
-	"PENDING": "ממתין ל",
-	"COMPLETED": "הושלם",
-	"BROWSE": "לְדַפדֵף",
-	"ENGLISH": "אנגלית",
-	"HEBREW": "עִברִית",
-	"RUSSIAN": "רוּסִי",
-	"BULGARIAN": "בולגרית",
-	"SELECT": "בחר",
-	"LOCATION_NOTES": "הערות מיקום",
-	"ENTER_NOTES_HERE": "הזן הערות כאן"
+    "currentDirection": "ltr",
+    "sidebarSide": "left",
+    "welcomeTo": "ברוך הבא ל",
+    "ever": "אֵיִ פַּעַם",
+    "infoMissing": "חלק מהמידע חסר!",
+    "yourInviteCode": "קוד ההזמנה שלך",
+    "invitedTextTitle":"תודה שנרשמת!",
+    "invitedTextDetails": "אנו נשלח לך הודעה עם קוד הזמנה כאשר נשיק ב:",
+	"notInvitedByCodeTitle":"קוד שגוי!",
+    "notInvitedByCodeDetails": "אנא ודא שאתה נמצא במקום שהגיע עם הקוד שלך.",
+    "cantAccessLocation": "לא ניתן לגשת למיקום שלך.",
+    "cantAccessLocationGetInByAdress": "לא מצליח לגשת למיקום שלך, אנא נסה להיכנס לפי כתובת.",
+    "getInByAddress": "הרשמה לפי כתובת",
+    "getInside": "היכנס!",
+    "yourAddress": "תן לנו את הכתובת שלך",
+    "launchNotification": "אנו מבטיחים להציג רק מוצרים רלוונטיים לפי הכתובת שלך",
+    "signUpByCode": "הרשמה באמצעות קוד",
+	"signUpByInvite": "הירשם בהזמנה",
+    "signinByInvite": "היכנס עם קוד הזמנה",
+	"logoMotto":"משלוח מזון והשלמת אוכל",
+	"@logoMotto": {
+        "details": "משלוח מזון והשלמת אוכל"
+    },
+    "inviteCode": "קוד הזמנה",
+	"inviteCodePlaceholder": "הזן את קוד ההזמנה שלך",
+    "detectingLocation": "אנא המתן, אנו מנסים לזהות את הכתובת הנוכחית שלך...",
+    "productsViewTitle":"מוצרים",
+    "productsbuyButtonpre":"לקנות ל",
+    "productsNotAvailable": "המוצר אינו זמין",
+    "min": "דקה",
+    "delivery": "מְסִירָה",
+    "takeAway": "להוציא",
+    "readyFor": "מוכן ל",
+	"details": "פרטים",
+    "includes": "כולל",
+    "buyFor": "לקנות ל",
+    "help": "עֶזרָה",
+    "lastPurchases":"רכישות אחרונות",
+    "nothingOrdered": "עדיין אין הזמנות",
+    "toProducts": "למוצרים",
+    "aboutus":  "עלינו",
+    "termsOfUse": "תנאי שימוש",
+    "privacyView": "פְּרָטִיוּת",
+    "languageView":"בחר שפה",
+    "viewMore":"ראה עוד",
+    "noProductsOrMerchants": "לא נמצאו מוצרים או סוחרים... ",
+    "searchPlaceHolder": "שם המוצר או המסעדה",
+    "open": "לִפְתוֹחַ",
+    "closed": "סָגוּר",
+    "buyPopUpOrderPaid": "ההזמנה משולמת $",
+	"buyPopUpCancelstatuses":"ההזמנה בוטלה בזמן הכנת המחסן!",
+	"buyPopUpCancelstatusesDelivery":"ההזמנה בוטלה בזמן המשלוח!",
+    "viewOrderProducts": "צפה במוצרי הזמנה",
+    "viewOrderProductsStatuses": "אנחנו מכינים את ההזמנה!",
+    "youWillGetItInMinutes": "תקבל אותו תוך %t דקות.",
+    "prepareYourWallet": "הכן את הארנק שלך (%s במזומן).",
+	"carrierOnTheWay": "הכן את הארנק שלך (%s במזומן).",
+	"checkYourDoor": "בדוק את הדלת שלך!",
+    "youWillGetItInSeconds": "אתה תקבל את ההזמנה תוך שניות.",
+	"orderCompleted": "הזמנה הושלמה!",
+    "thanksForUsingEver": "תודה על השימוש ב- Ever",
+    "weRePreparingTheOrder": "אנחנו מכינים את ההזמנה!",
+    "we": "אָנוּ",
+    "carrier": "מוֹבִיל",
+    "you": "אתה",
+    "deliveryWentWrong": "המשלוח השתבש!",
+    "processingWentWrong": "העיבוד השתבש",
+    "pleaseTryAgain": "בבקשה נסה שוב.",
+    "callForDetails": "התקשרו לפרטים",
+	"elapsedTime":"זמן שחלף",
+    "undo": "לבטל",
+    "payWithCard": "שלם עם כרטיס",
+    "payX": "שלם {{ סכום }}",
+    "payWith": "לשלם עם",
+    "paid": "שולם",
+    "bonAppetit": "בתאבון!",
+    "cancel": "לְבַטֵל",
+    "gotIt": "הבנת!",
+    "imHere": "אני כאן",
+    "showQrCode": "הצג קוד QR",
+    "showProducts": "הצג מוצרים",
+    "areYouSure": "האם אתה בטוח?",
+    "undoWillReturnMoney":"ביטול יחזיר לך את הכסף, אבל תאבד את ההזמנה.",
+    "sideMenuTitle": "Ever",
+	"sideMenuProducts": "מוצרים",
+    "callUs": "להיתקשר אליךs",
+    "orderHistory": "היסטוריית הזמנות",
+    "store": "חנות",
+    "callWaiter": "התקשר למלצר",
+    "about": "על אודות",
+    "settings": "הגדרות",
+	"information": "מֵידָע",
+    "faq": "עֶזרָה",
+	"aboutUs": "עלינו",
+    "privacy": "פְּרָטִיוּת",
+	"weApologise": "אנו מתנצלים!",
+    "callUnsuccessfull": "השיחה לא הצליחה!",
+	"legal": "משפטי",
+    "minutes": "דקות",
+    "seconds": "שניות",
+	"noConnectionToEver": "אין קשר ל-Ever",
+    "@noConnectionToEver":
+	{
+		"description":
+            "אנא ודא שאתה מחובר לאינטרנט ונסה את אפליקציית Ever מאוחר יותר"
+    },
+    "merchantsViewCloseToYou": "סוחרים קרובים אליך",
+    "merchantsViewname": "שם סוחר",
+    "merchantsViewwithName": "סוחרים עם שם",
+    "noServerView":"חיבור השרת אבד",
+    "or": "אוֹ",
+    "orLowercase": "אוֹ",
+    "yes": "כן",
+    "no": "לא",
+    "ok": "בסדר",
+    "city": "עִיר",
+    "street": "רְחוֹב",
+    "house": "בַּיִת",
+    "appartement": "דִירָה",
+    "back": "חזור",
+    "more": "יותר",
+    "to": "ל",
+    "storeInfo": "מידע על החנות",
+    "map": "מַפָּה",
+    "orderInfo": "פרטי הזמנה",
+    "close": "סגור",
+    "scan": "לִסְרוֹק",
+    "merchants": "סוחרים",
+    "notFoundNOT_FOUND": "לא נמצא!",
+    "inStore": "בחנות",
+    "exitStore": "צא מחנות",
+    "failed": "נִכשָׁל",
+    "canceled": "מבוטל",
+    "inDelivery": "במשלוח",
+    "pending": "ממתין ל",
+    "completed": "הושלם",
+    "browse": "לְדַפדֵף",
+    "english": "אנגלית",
+    "hebrew": "עִברִית",
+    "russian": "רוּסִי",
+    "bulgarian": "בולגרית",
+    "spanish": "ספרדית",
+    "select": "בחר",
+    "locationNotes": "הערות מיקום",
+    "enterNotesHere": "הזן הערות כאן"
 }
