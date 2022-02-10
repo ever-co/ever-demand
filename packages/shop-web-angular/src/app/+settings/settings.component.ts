@@ -31,6 +31,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 				'bg-BG',
 				'he-IL',
 				'ru-RU',
+				'fr-FR',
 			]);
 
 			translateService.setDefaultLang('en-US');
@@ -41,7 +42,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			if (this.defaultLanguage) {
 				translateService.use(this.defaultLanguage);
 			} else {
-				browserLang.match(/en-US|es-ES|bg-BG|he-IL|ru-RU/)
+				browserLang.match(/en-US|es-ES|bg-BG|he-IL|ru-RU|fr-FR/)
 					? browserLang
 					: 'en-US';
 			}

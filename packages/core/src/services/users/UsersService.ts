@@ -65,14 +65,16 @@ interface IWatchedFiles {
  */
 @injectable()
 @routerName('user')
-export class UsersService extends DBService<User>
-	implements IUserRouter, IService {
+export class UsersService
+	extends DBService<User>
+	implements IUserRouter, IService
+{
 	public readonly DBObject: any = User;
 
 	// TODO: this and other Stripe related things should be inside separate Payments Service
 	private stripe = new Stripe(env.STRIPE_SECRET_KEY, {
-		apiVersion: "2020-08-27"
-	 });
+		apiVersion: '2020-08-27',
+	});
 
 	protected readonly log: Logger = createEverLogger({
 		name: 'usersService',
@@ -94,15 +96,21 @@ export class UsersService extends DBService<User>
 			['aboutUs', 'privacy', 'termsOfUse', 'help'],
 			_.map(['about_us', 'privacy', 'terms_of_use', 'help'], (folder) =>
 				_.zipObject(
-					['en-US', 'he-IL', 'ru-RU', 'bg-BG'],
-					_.map(['en-US', 'he-IL', 'ru-RU', 'bg-BG'], (language) =>
-						observeFile(
-							`${path.resolve(__dirname, '../../../', ...['res', 'templates'])}/${folder}/${language}.hbs`
-						).pipe(
-							tap({ error: (err) => this.log.error(err) }),
-							publishReplay(1),
-							refCount<string>()
-						)
+					['en-US', 'he-IL', 'ru-RU', 'bg-BG', 'fr-FR'],
+					_.map(
+						['en-US', 'he-IL', 'ru-RU', 'bg-BG', 'fr-FR'],
+						(language) =>
+							observeFile(
+								`${path.resolve(
+									__dirname,
+									'../../../',
+									...['res', 'templates']
+								)}/${folder}/${language}.hbs`
+							).pipe(
+								tap({ error: (err) => this.log.error(err) }),
+								publishReplay(1),
+								refCount<string>()
+							)
 					)
 				)
 			)
@@ -229,7 +237,7 @@ export class UsersService extends DBService<User>
 							object: 'card',
 						}
 					)
-				).data.map(source => source as Stripe.Card);
+				).data.map((source) => source as Stripe.Card);
 			} else {
 				return [];
 			}
@@ -392,10 +400,11 @@ export class UsersService extends DBService<User>
 		return this.devicesService.get(deviceId).pipe(
 			exhaustMap((device) => {
 				if (device === null) {
-					return throwError( () =>
-						new Error(
-							`Device with the id ${deviceId} doesn't exist`
-						)
+					return throwError(
+						() =>
+							new Error(
+								`Device with the id ${deviceId} doesn't exist`
+							)
 					);
 				} else {
 					return of(device);
@@ -427,8 +436,11 @@ export class UsersService extends DBService<User>
 		return this.devicesService.get(deviceId).pipe(
 			exhaustMap((device) => {
 				if (device === null) {
-					return throwError( () =>
-						new Error(`User with the id ${userId} doesn't exist`)
+					return throwError(
+						() =>
+							new Error(
+								`User with the id ${userId} doesn't exist`
+							)
 					);
 				} else {
 					return of(device);
@@ -460,8 +472,11 @@ export class UsersService extends DBService<User>
 		return this.devicesService.get(deviceId).pipe(
 			exhaustMap((device) => {
 				if (device === null) {
-					return throwError(() =>
-						new Error(`User with the id ${userId} doesn't exist`)
+					return throwError(
+						() =>
+							new Error(
+								`User with the id ${userId} doesn't exist`
+							)
 					);
 				} else {
 					return of(device);

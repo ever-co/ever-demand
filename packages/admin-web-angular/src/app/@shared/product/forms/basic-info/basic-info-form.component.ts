@@ -110,9 +110,8 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 					Validators.required,
 					(control: AbstractControl) => {
 						const value = control.value;
-						const hasImage = BasicInfoFormComponent.hasValidImage(
-							value
-						);
+						const hasImage =
+							BasicInfoFormComponent.hasValidImage(value);
 						if (hasImage) {
 							return null;
 						} else {

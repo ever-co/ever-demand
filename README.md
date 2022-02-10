@@ -25,6 +25,11 @@ You are welcome to check more information about the platform at our official web
 
 -->
 
+## Video Intros
+
+- Introduction of both Ever Demand and Ever Gauzy platforms - [view video](https://www.loom.com/share/ff9a9b1fa3a849cca5cf68a6d502443b) (~30 min) or [download](https://media.githubusercontent.com/media/ever-co/ever-demand-docs/master/docs/assets/videos/EverDemandAndGauzyIntro.mp4)
+- Introduction to Ever Demand Mobile Shop customer experience (UX) - [view video](https://www.loom.com/share/488f774e6b6d4ee88107443ce4522f1f) (~30 min) or [download](https://media.githubusercontent.com/media/ever-co/ever-demand-docs/master/docs/assets/videos/EverDemandMobileShopIntro.mp4)
+
 ## Features
 
 -   Modern & Open Platform for **On-Demand Economy** and **Digital Marketplaces**
