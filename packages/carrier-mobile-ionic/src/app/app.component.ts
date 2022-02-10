@@ -117,14 +117,22 @@ export class AppComponent implements OnInit {
 		console.log(this.defaultLanguage);
 
 		const lang = (localStorage.getItem('_language') as ILanguage) || null;
-		const langs = { he: 'he', ru: 'ru', bg: 'bg', en: 'en', es: 'es' };
-		// This 4 lines is here because of bug => without this lines, lang translation doesn't work.
+		const langs = {
+			he: 'he',
+			ru: 'ru',
+			bg: 'bg',
+			en: 'en',
+			es: 'es',
+			fr: 'fr',
+		};
+		// This 6 lines is here because of bug => without this lines, lang translation doesn't work.
 		// (The bug is unknown)
 		this._langTranslator.use(langs.he);
 		this._langTranslator.use(langs.ru);
 		this._langTranslator.use(langs.bg);
 		this._langTranslator.use(langs.en);
 		this._langTranslator.use(langs.es);
+		this._langTranslator.use(langs.fr);
 
 		this._langTranslator.resetLang(langs.en);
 

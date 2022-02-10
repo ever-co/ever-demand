@@ -76,7 +76,8 @@
 		"BULGARIAN": "Bulgarian",
 		"HEBREW": "Hebrew",
 		"RUSSIAN": "Rusian",
-		"SPANISH": "Spanish"
+		"SPANISH": "Spanish",
+		"French": "French"
 	},
 	"LIST_VIEW": {
 		"YOU_NAVIGATED_HERE_FROM": "You navigated here from"
