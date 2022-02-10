@@ -13,24 +13,16 @@
 		<div class="col popup-half">
 			<div class="popup-input-container">
 				<label>
-					<span class="popup-input-description"
-						>{{ 'EDIT_PRODUCT_POP_UP.TITLE' | translate }}</span
-					>
+					<span class="popup-input-description">{{ 'EDIT_PRODUCT_POP_UP.TITLE' | translate }}</span>
 					<input class="popup-input" [(ngModel)]="productTitle" />
 				</label>
 			</div>
 
 			<div class="popup-input-container">
 				<label>
-					<span class="popup-input-description"
-						>{{ 'EDIT_PRODUCT_POP_UP.DESCRIPTION' | translate
-						}}</span
-					>
-					<textarea
-						class="popup-input"
-						rows="4"
-						[(ngModel)]="productDescription"
-					></textarea>
+					<span class="popup-input-description">{{ 'EDIT_PRODUCT_POP_UP.DESCRIPTION' | translate
+						}}</span>
+					<textarea class="popup-input" rows="4" [(ngModel)]="productDescription"></textarea>
 				</label>
 			</div>
 
@@ -40,17 +32,9 @@
 						{{ 'EDIT_PRODUCT_POP_UP.CATEGORIES' | translate }}
 					</span>
 					<ion-item id="multiple-select">
-						<ion-select
-							[(ngModel)]="selectedProductCategories"
-							multiple="true"
-							[interfaceOptions]="selectOptionTitle"
-							[okText]="buttonOK"
-							[cancelText]="buttonCancel"
-						>
-							<ion-select-option
-								[value]="category.id"
-								*ngFor="let category of productsCategories"
-							>
+						<ion-select [(ngModel)]="selectedProductCategories" multiple="true"
+							[interfaceOptions]="selectOptionTitle" [okText]="buttonOK" [cancelText]="buttonCancel">
+							<ion-select-option [value]="category.id" *ngFor="let category of productsCategories">
 								{{ localeTranslateService.getTranslate(
 								category.name ) }}
 							</ion-select-option>
@@ -63,16 +47,10 @@
 				<div class="col no-padding-left pl-0 pr-0">
 					<div class="popup-input-container">
 						<label>
-							<span class="popup-input-description"
-								>{{ 'EDIT_PRODUCT_POP_UP.PRICE' | translate
-								}}</span
-							>
-							<input
-								class="popup-input"
-								type="number"
-								placeholder="$"
-								[(ngModel)]="warehouseProduct.price"
-							/>
+							<span class="popup-input-description">{{ 'EDIT_PRODUCT_POP_UP.PRICE' | translate
+								}}</span>
+							<input class="popup-input" type="number" placeholder="$"
+								[(ngModel)]="warehouseProduct.price" />
 						</label>
 					</div>
 				</div>
@@ -80,16 +58,10 @@
 				<div class="col no-padding-right">
 					<div class="popup-input-container">
 						<label>
-							<span class="popup-input-description"
-								>{{ 'EDIT_PRODUCT_POP_UP.COUNT' | translate
-								}}</span
-							>
-							<input
-								class="popup-input"
-								type="number"
-								placeholder="0 to just create"
-								[(ngModel)]="warehouseProduct.count"
-							/>
+							<span class="popup-input-description">{{ 'EDIT_PRODUCT_POP_UP.COUNT' | translate
+								}}</span>
+							<input class="popup-input" type="number" placeholder="0 to just create"
+								[(ngModel)]="warehouseProduct.count" />
 						</label>
 					</div>
 				</div>
@@ -97,34 +69,21 @@
 				<div class="col no-padding-right pr-0">
 					<div class="popup-input-container">
 						<label>
-							<span class="popup-input-description"
-								>{{ 'EDIT_PRODUCT_POP_UP.LANGUAGE' | translate
-								}}</span
-							>
-							<select
-								class="popup-input select"
-								[(ngModel)]="currentLocale"
-							>
-								<option value="en-US"
-									>{{ 'EDIT_PRODUCT_POP_UP.ENGLISH' |
-									translate }}</option
-								>
-								<option value="he-IL"
-									>{{ 'EDIT_PRODUCT_POP_UP.HEBREW' | translate
-									}}</option
-								>
-								<option value="ru-RU"
-									>{{ 'EDIT_PRODUCT_POP_UP.RUSSIAN' |
-									translate }}</option
-								>
-								<option value="bg-BG"
-									>{{ 'EDIT_PRODUCT_POP_UP.BULGARIAN' |
-									translate }}</option
-								>
-								<option value="es-ES"
-									>{{ 'EDIT_PRODUCT_POP_UP.SPANISH' |
-									translate }}</option
-								>
+							<span class="popup-input-description">{{ 'EDIT_PRODUCT_POP_UP.LANGUAGE' | translate
+								}}</span>
+							<select class="popup-input select" [(ngModel)]="currentLocale">
+								<option value="en-US">{{ 'EDIT_PRODUCT_POP_UP.ENGLISH' |
+									translate }}</option>
+								<option value="he-IL">{{ 'EDIT_PRODUCT_POP_UP.HEBREW' | translate
+									}}</option>
+								<option value="ru-RU">{{ 'EDIT_PRODUCT_POP_UP.RUSSIAN' |
+									translate }}</option>
+								<option value="bg-BG">{{ 'EDIT_PRODUCT_POP_UP.BULGARIAN' |
+									translate }}</option>
+								<option value="es-ES">{{ 'EDIT_PRODUCT_POP_UP.SPANISH' |
+									translate }}</option>
+								<option value="es-ES">{{ 'EDIT_PRODUCT_POP_UP.FRENCH' |
+									translate }}</option>
 							</select>
 						</label>
 					</div>
@@ -132,60 +91,33 @@
 			</ion-row>
 			<ion-row class="row">
 				<ion-col class="col">
-					<ion-checkbox
-						class="mr-3"
-						[(ngModel)]="isAvailable"
-						(ionChange)="clickHandler()"
-					>
+					<ion-checkbox class="mr-3" [(ngModel)]="isAvailable" (ionChange)="clickHandler()">
 					</ion-checkbox>
-					<ion-label
-						>{{'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.PRODUCT_AVAILABILITY'|translate}}</ion-label
-					>
+					<ion-label>{{'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.PRODUCT_AVAILABILITY'|translate}}</ion-label>
 				</ion-col>
 			</ion-row>
 
 			<ion-row class="row getProductType">
 				<ion-col class="pl-0 col-6">
 					<ion-item class="coord-box">
-						<ion-checkbox
-							class="mr-3"
-							[(ngModel)]="takaProductDelivery"
-							(ionChange)="getProductTypeChange('Delivery')"
-						></ion-checkbox>
-						<ion-label
-							>{{'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.DELIVERY'|translate}}</ion-label
-						>
+						<ion-checkbox class="mr-3" [(ngModel)]="takaProductDelivery"
+							(ionChange)="getProductTypeChange('Delivery')"></ion-checkbox>
+						<ion-label>{{'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.DELIVERY'|translate}}</ion-label>
 					</ion-item>
 				</ion-col>
 				<ion-col class="pl-0 col-6">
 					<ion-item class="coord-box">
-						<ion-checkbox
-							class="mr-3"
-							[(ngModel)]="takaProductTakeaway"
-							(ionChange)="getProductTypeChange('Takeaway')"
-						></ion-checkbox>
-						<ion-label
-							>{{'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.TAKEAWAY'|translate}}</ion-label
-						>
+						<ion-checkbox class="mr-3" [(ngModel)]="takaProductTakeaway"
+							(ionChange)="getProductTypeChange('Takeaway')"></ion-checkbox>
+						<ion-label>{{'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.TAKEAWAY'|translate}}</ion-label>
 					</ion-item>
 				</ion-col>
 			</ion-row>
 		</div>
 
-		<div
-			ng2FileDrop
-			[uploader]="uploader"
-			class="col popup-half"
-			style="margin: auto;"
-		>
-			<div
-				ngf-select="imageSelected($file)"
-				ngf-pattern="'image/*'"
-				class="upload-button"
-				#imageHolder
-				id="image-holder"
-				(click)="hasImage && showPicturesPopup()"
-			>
+		<div ng2FileDrop [uploader]="uploader" class="col popup-half" style="margin: auto;">
+			<div ngf-select="imageSelected($file)" ngf-pattern="'image/*'" class="upload-button" #imageHolder
+				id="image-holder" (click)="hasImage && showPicturesPopup()">
 				<h6 *ngIf="isBrowser && !hasImage" class="dragDrop">
 					{{ 'EDIT_PRODUCT_POP_UP.DRAG&DROP_FILE_HERE' | translate }}
 
@@ -193,22 +125,13 @@
 					<br />{{ 'EDIT_PRODUCT_POP_UP.OR_BROWSE' | translate }}
 				</h6>
 
-				<input
-					*ngIf="!hasImage"
-					ng2FileSelect
-					type="file"
-					id="fileInput"
-					[uploader]="uploader"
-					(change)="imageUrlChanged($event)"
-				/>
+				<input *ngIf="!hasImage" ng2FileSelect type="file" id="fileInput" [uploader]="uploader"
+					(change)="imageUrlChanged($event)" />
 
 				<div class="{{ hasImage ? 'no-upload-input' : '' }} ">
 					<label *ngIf="!isBrowser">
-						<ion-icon
-							(click)="!hasImage && presentActionSheet()"
-							class="upload-icon"
-							name="{{ hasImage ? 'images' : 'cloud-upload' }}"
-						></ion-icon>
+						<ion-icon (click)="!hasImage && presentActionSheet()" class="upload-icon"
+							name="{{ hasImage ? 'images' : 'cloud-upload' }}"></ion-icon>
 						<h3 class="upload-text">
 							{{ hasImage ?
 							('EDIT_PRODUCT_POP_UP.CLICK_TO_EDIT_PICTURES' |
@@ -219,10 +142,7 @@
 					</label>
 
 					<label *ngIf="isBrowser" for="fileInput">
-						<ion-icon
-							class="upload-icon"
-							name="{{ hasImage ? 'images' : 'cloud-upload' }}"
-						></ion-icon>
+						<ion-icon class="upload-icon" name="{{ hasImage ? 'images' : 'cloud-upload' }}"></ion-icon>
 						<h3 class="upload-text">
 							{{ hasImage ?
 							('EDIT_PRODUCT_POP_UP.CLICK_TO_EDIT_PICTURES' |
@@ -239,11 +159,7 @@
 					{{ 'EDIT_PRODUCT_POP_UP.CANCEL' | translate }}
 				</button>
 
-				<button
-					class="button button-brand"
-					[disabled]="!isReadyToUpdate"
-					(click)="updateProduct()"
-				>
+				<button class="button button-brand" [disabled]="!isReadyToUpdate" (click)="updateProduct()">
 					{{ 'EDIT_PRODUCT_POP_UP.UPDATE' | translate }}
 				</button>
 			</div>
