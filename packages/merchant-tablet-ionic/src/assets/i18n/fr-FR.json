@@ -1,0 +1,480 @@
+{
+	"LANGUAGE": {
+		"ID": "en-US",
+		"NAME": "English"
+	},
+	"DASHBOARD": "Dashboard",
+	"CURRENT_DIRECTION": "ltr",
+	"SIDEBAR_SIDE": "left",
+	"SIDE_MENU": {
+		"TITLE": "Ever Merchants",
+		"GROUPS": {
+			"NO_TITLE": {
+				"DIVER_TITLE": "",
+				"ITEMS": {
+					"WAREHOUSE": "Dashboard"
+				}
+			},
+			"SETTINGS": {
+				"SETTINGS": "Settings",
+				"DIVER_TITLE": "Settings",
+				"ITEMS": {
+					"LANGUAGE": "Language",
+					"SIGN_OUT": "Sign out"
+				}
+			},
+			"INFO": {
+				"DIVER_TITLE": "Info",
+				"ITEMS": {
+					"ABOUT_US": "About Us",
+					"TERMS_OF_USE": "Terms of Use"
+				}
+			}
+		}
+	},
+	"CUSTOMERS_VIEW": {
+		"CUSTOMERS": "Customers",
+		"ADD_CUSTOMER": "Add customer",
+		"IMAGE": "Image",
+		"NAME": "Name",
+		"PHONE_NUMBER": "Phone number",
+		"ADDRESSES": "Addresses",
+		"ORDERS": "Orders",
+		"TOTAL": "Total",
+		"E_MAIL": "Email",
+		"ADDRESS_POP_UP": {
+			"CUSTOMER_ADDRESS": "Customer Address",
+			"COUNTRY": "Country",
+			"STREET": "Street",
+			"HOUSE": "House",
+			"APARTMENT": "Apartment",
+			"COORDINATES": "Coordinates"
+		},
+		"EMAIL_POP_UP": {
+			"CUSTOMER_EMAIL": "Customer Email",
+			"SEND_E_MAIL": "Send E-mail"
+		},
+		"ORDERS_POP_UP": {
+			"CUSTOMER_ORDERS": "Customer Orders",
+			"ALL_ORDERS": "All Orders",
+			"TOTAL_ORDERS_SUM": "Total Orders Sum",
+			"COMPLATED": "Completed",
+			"PAID": "Paid"
+		}
+	},
+	"FILE_UPLOADER": {
+		"DRAG_AND_DROP_FILE_HERE": "Drag & Drop Image here",
+		"PICTURE_URL": "Picture url",
+		"BROWSE": "BROWSE"
+	},
+	"CARRIERS_VIEW": {
+		"CARRIERS_CATALOG": {
+			"IMAGE": "Image",
+			"NAME": "Name",
+			"PHONE": "Phone",
+			"ADDRESS": "Address",
+			"LOGO": "Logo"
+		},
+		"TRACK_ORDER": "Track order",
+		"TRACK_CARRIER": "Track Carrier",
+		"DELIVERY_TRACKING": "Delivery Tracking",
+		"CARRIER": "Carrier",
+		"STORE": "Store",
+		"DELIVERY_COUNT": "Delivery count:",
+		"CUSTOMER": "Customer",
+		"CARRIERS": "Carriers",
+		"ADD_CARRIERS": "Add Carriers",
+		"IMAGE": "Image",
+		"NAME": "Name",
+		"PHONE_NUMBER": "Phone number",
+		"ADDRESSES": "Address",
+		"STATUS": "Status",
+		"DELIVERIES": "Deliveries",
+		"NO_CARRIERS": "NO CARRIERS",
+		"WORKING": "Working",
+		"NOT_WORKING": "Not working",
+		"BLOCKED": "Blocked",
+		"DELIVERIES_POP_UP": {
+			"CARRIER_DELIVERIES": "Carrier Deliveries",
+			"ALL_DELIVERIES": "All Deliveries",
+			"DELIVERIES_TODAY": "Deliveries Today",
+			"TOTAL_DISTANCE_TODAY": "Total Distance Today",
+			"CUSTOMER": "Customer",
+			"WAREHOUSE": "Warehouse",
+			"STATUS": "Status",
+			"DELIVERY": "Delivery",
+			"NO_DELIVERIES": "No Deliveries",
+			"COMPLETED": "Completed",
+			"PAID": "Paid"
+		},
+		"ADDRESS": {
+			"CARRIER_ADDRESS": "Carrier Address",
+			"COUNTRY": "Country",
+			"HOUSE": "House",
+			"COORDINATES": "Coordinates"
+		},
+		"EDIT_CARRIER": {
+			"EDIT_CARRIER": "Edit carrier"
+		},
+		"ADD_CARRIER": {
+			"ADD_CARRIER": "Add carrier",
+			"HOW_TO_ADD": "How to add",
+			"SELECT_HOW_TO_ADD": "Select How To Add",
+			"ADD": "Add",
+			"CARRIERS_CATALOG": "Carriers Catalog",
+			"SELECT_FROM_CARRIERS_CATALOG": "Select from Carriers Catalog",
+			"ADD_NEW_CARRIER": "Add new carrier",
+			"FIRST_NAME": "First Name",
+			"LAST_NAME": "Last Name",
+			"EMAIL": "Email",
+			"USERNAME": "Username",
+			"PASSWORD": "Password",
+			"NAME": "Name",
+			"PHONE": "Phone",
+			"ADDRESS": "Address",
+			"LOGO": "Logo",
+			"IS_ACTIVE": "Is active",
+			"CITY": "City",
+			"STREET": "Street",
+			"HOUSE": "House",
+			"LATITUDE": "Latitude",
+			"LONGITUDE": "Longitude",
+			"COUNTRY": "Country",
+			"OK": "OK",
+			"CANCEL": "CANCEL",
+			"PREVIOUS": "PREVIOUS",
+			"BACK": "BACK",
+			"NEXT": "NEXT",
+			"DONE": "DONE",
+			"LOCATION": "LOCATION",
+			"ZIP": "ZIP",
+			"PROFILE_DETAILS": "PROFILE DETAILS",
+			"BROWSE": "BROWSE",
+			"DRAG_AND_DROP_FILE_HERE": "Drag & Drop Image here",
+			"PICTURE_URL": "Picture url",
+			"ACCOUNT": "ACCOUNT",
+			"REPEAT": "Repeat",
+			"REPEAT_PASSWORD": "Repeat password",
+			"PASSWORD_DO_NOT_MATCH": "Password do not match",
+			"FIND_ADDRESS": "Find Address",
+			"FORMS": {
+				"ERRORS": {
+					"FIRST_NAME_REQUIRED": "First name is required",
+					"LAST_NAME_REQUIRED": "Last name is required",
+					"PHONE_REQUIRED": "Phone is required",
+					"EMAIL_IS_REQUIRED": "Email is required",
+					"MUST_CONTAIN_ONLY_LETTERS": "Must contain only letters",
+					"PHONE_MUST_CONTAINS_ONLY(special_signs)AND_DIGIT_CHARACTER": "Phone number can start with '+' or '(some numbers)' and must contains only only: '-, ., (space), #'' and digit characters"
+				}
+			}
+		},
+		"PROMOTIONS": {
+			"PROMOTIONS": "Promotions",
+			"NO_PROMOTIONS": "No promotions",
+			"BASIC_INFO": "Basic Info",
+			"TITLE": "Title",
+			"ACTIVE_FROM": "Active from",
+			"ACTIVE_TO": "Active to",
+			"PURCHASES_COUNT": "Purchases count",
+			"IS_ACTIVE": "Is active",
+			"SELECT_DATE": "Select date",
+			"DESCRIPTION": "Description",
+			"SAVE": "Save",
+			"NEXT": "Next",
+			"BACK": "Back",
+			"LANGUAGE": "Language",
+			"ACTIVE": "Active",
+			"IMAGE": "Image",
+			"STATUS": "Status"
+		},
+		"SELECT LANGUAGE": {
+			"USA": "USA",
+			"ISRAEL": "Israel",
+			"BULGARIA": "Bulgaria"
+		}
+	},
+	"SETTINGS_VIEW": {
+		"SETTINGS": "Settings",
+		"OPTIONS": "Настройки",
+		"COMMON": "Common",
+		"LOCATION": "Location",
+		"ACCOUNT": "Account",
+		"NEW_USERNAME": "New Username",
+		"NAME_MUST_BE_AT_LEAST_4_CHARACTERS_LONG": "Name must be at least 4 characters long",
+		"OLD_PASSWORD": "Old Password",
+		"NEW_PASSWORD": "New Password",
+		"REPEAT_NEW_PASSWORD": "Repeat New Password",
+		"PASSWORDS_DO_NOT_MATCH": "Passwords do not match",
+		"SAVE_CHANGES": "Save Changes",
+		"SAVE": "Save",
+		"CHANGES": "Changes",
+		"BASIC_INFO": "Basic Info",
+		"NAME": "Name",
+		"NAME_IS_REQUIRED": "Name is required",
+		"LOGO": "Logo",
+		"BROWSE": "Browse",
+		"CONTACT_INFO": "Contact Info",
+		"E_MAIL": "E-mail",
+		"PHON_NUMBER": "Phone Number",
+		"COUNTRY": "Country",
+		"CITY": "City",
+		"CITY_IS_REQUIRED": "City is required",
+		"POSTCODE_optional": "Postcode (optional)",
+		"STREET": "Street",
+		"STREET_IS_REQUIRED": "Street is required",
+		"HOUSE": "House",
+		"HOUSE_IS_REQUIRED": "House is required",
+		"APARTMENT_optional": "Apartment (optional)",
+		"AUTO_DETECT_COORDINATES": "Auto detect coordinates",
+		"LATITUDE": "Latitude",
+		"LATITUDE_IS_REQUIRED": "Latitude is required",
+		"LONGITUDE": "Longitude",
+		"LONGITUDE_IS_REQUIRED": "Longitude is required",
+		"FIND_ADDRESS": "Find Address",
+		"OK": "OK",
+		"CANCEL": "CANCEL",
+		"ALLOW_ONLINE_PAYMENTS": "Allow online payments",
+		"SETTINGS_SECTION": {
+			"DELIVERY_OR_TAKEAWAY_SETTINGS": "Delivery/Takeaway Settings",
+			"PRODUCTS_DELIVERY_BY_DEFAULT": "Products Delivery (by default)",
+			"PRODUCTS_TAKEAWAY_BY_DEFAULT": "Products Takeaway (by default)",
+			"PAYMENTS_SETTINGS": "Payments Settings",
+			"BARCODE_QR_CODE_SETTINGS": "Barcode/QR code Settings",
+			"ORDER_BARCODE_TYPE": "Order barcode type",
+			"BARCODE_DATA": "Barcode data",
+			"SCAN_EXISTED": "Scan Existed",
+			"DELIVERY_SETTINGS": "Delivery settings",
+			"TAKEAWAY_SETTINGS": "Takeaway settings",
+			"IN_STORE_MODE": "In-store mode",
+			"IN_STORE_MODE_SETTINGS": "In-store mode settings"
+		}
+	},
+	"LOGIN_VIEW": {
+		"LOGIN": "Login"
+	},
+	"LANGUAGE_VIEW": {
+		"TITLE": "Select Language",
+		"OK": "OK",
+		"CANCEL": "CANCEL"
+	},
+	"ABOUT_VIEW": {
+		"TITLE": "About Us",
+		"APP_VERSION": "App Version"
+	},
+	"TERMS_OF_USE_VIEW": {
+		"TITLE": "Terms of Use"
+	},
+	"WAREHOUSE_VIEW": {
+		"RELEVANT": "Relevant",
+		"ALL": "All",
+		"LOADING_MORE_DATA": "Loading more data...",
+		"ORDERS": "Orders",
+		"SWITCH_ORDERS": "Switch Orders",
+		"NEW_ORDER": "New Order",
+		"PRODUCTS": "Top Products",
+		"ARE_YOU_SURE_TO_DELETE": "Are you sure you want to ",
+		"REMOVE": "Remove",
+		"DELETE": "Delete",
+		"THE_FOLLOWING_DATA": "the following data",
+		"CONFIRM": "Confirm",
+		"CANCEL": "Cancel",
+		"SELECT_POP_UP": {
+			"SELECT_CATEGORIES": "Select Categories",
+			"OK": "OK",
+			"CANCEL": "CANCEL"
+		},
+		"ORDER_WAREHOUSE_STATUSES": {
+			"ALL": "All",
+			"CANCELLED": "Cancelled",
+			"CREATED": "Created",
+			"CONFIRMED": "Confirmed",
+			"PROCESSING": "Processing",
+			"ALLOCATION_STARTED": "Allocation Started",
+			"ALLOCATION_FINISHED": "Allocation Finished",
+			"PACKAGING_STARTED": "Packaging Started",
+			"PACKAGED": "Packaged",
+			"GIVEN_TO_CARRIER": "Given to Carrier",
+			"TAKEN": "Taken",
+			"ALLOCATION_FAILED": "Allocation Failed",
+			"PACKAGING_FAILED": "Packaging Failed",
+			"BAD_STATUS": "Bad Status",
+			"NO_ACTIVE_ORDERS": "No Active Orders",
+			"NO_ORDERS": "No Orders",
+			"NO_PRODUCTS": "No Products"
+		},
+		"CREATE_PRODUCTS_POPUP": {
+			"ERROR_MSG": "Something is wrong, unable to place order!",
+			"NEW_PRODUCT_TYPE": "New Product Type",
+			"CREATE_NEW_PRODUCT_TYPE": "Create a new product type",
+			"TITLE": "Title",
+			"DESCRIPTION": "Description",
+			"CATEGORIES": "Categories",
+			"PRICE": "Price",
+			"COUNT": "Count",
+			"LANGUAGE": "Language",
+			"COUNT_PLACEHOLDER": "0",
+			"DRAG&DROP_FILE_HERE": "Drag & Drop File here",
+			"DRAG&DROP_PICTURE_HERE": "Drag & Drop Picture here",
+			"OR_BROWSE": "or browse",
+			"CLICK_TO_UPLOAD_PICTURE": "Click to Upload Picture",
+			"CLICK_TO_UPLOAD_MORE_PICTURE": "Click to Upload More Pictures",
+			"CANCEL": "Cancel",
+			"CREATE": "Create",
+			"ENGLISH": "English",
+			"HEBREW": "Hebrew",
+			"RUSSIAN": "Russian",
+			"BULGARIAN": "Bulgarian",
+			"SPANISH": "Spanish",
+			"FRENCH": "French",
+			"OPTIONAL": "optional",
+			"TAKEAWAY": "Takeaway",
+			"DELIVERY": "Delivery",
+			"PRODUCT_AVAILABILITY": "Product availability"
+		},
+		"NEW_ORDER_VIEW": {
+			"NEW_MANUAL_ORDER": "New Manual Order",
+			"SELECT_EXISTING_CUSTOMER": "Select Existing Customer",
+			"ADD_NEW_CUSTOMER": "Add New Customer",
+			"FULL_NAME": "Full Name",
+			"EMAIL": "Email",
+			"PHONE": "Phone",
+			"ADDRESS": "Address",
+			"IMAGE": "Image",
+			"PRODUCT": "Product",
+			"PRICE": "Price",
+			"AVAILABLE": "Available",
+			"COMMENT": "Comment",
+			"AMOUNT": "Amount",
+			"MAKE_ORDER": "Make Order",
+			"BASIC_INFO": "Basic Info",
+			"FIRST_NAME": "First Name",
+			"LAST_NAME": "Last Name",
+			"EMAIL_IS_INVALID": "Email is invalid",
+			"EMAIL_IS_ALREADY_IN_USE": "Email is already in use",
+			"NEXT": "Next",
+			"ADD_CUSTOMER": "Add Customer",
+			"BACK": "Back",
+			"FIND_ADDRESS": "Find Address",
+			"COUNTRY": "Country",
+			"CITY": "City",
+			"COUNTRY_IS_INVALID": "Country is invalid",
+			"CITY_IS_REQUIRED": "City is required",
+			"ZIP": "ZIP",
+			"STREET_ADDRESS": "Street Address",
+			"STREET_ADDRESS_IS_REQUIRED": "Street address is required",
+			"HOUSE_№": "House №",
+			"APARTMENT": "Apartment",
+			"SHOW_COORDINATES": "Show Coordinates",
+			"LATITUDE": "Latitude",
+			"LONGITUTE": "Longitude",
+			"HOUSE_IS_REQUIRED": "House is required"
+		},
+		"EDIT_PICTURE": {
+			"PRODUCT_IMAGES": "Product images",
+			"SAVE_IMAGES": "Save images"
+		},
+		"MISC_TEXT": {
+			"CREATE_NEW_ORDER": "Create New Order",
+			"ADD_NEW_PRODUCT": "Add New Product"
+		}
+	},
+	"EDIT_PRODUCT_POP_UP": {
+		"EDIT_PRODUCT_TYPE": "Edit product type",
+		"UPDATE_AN_EXISTING_PRODUCT": "Update an existing product",
+		"CLICK_TO_EDIT_PICTURES": "Click to Edit Pictures",
+		"TITLE": "Title",
+		"DESCRIPTION": "Description",
+		"CATEGORIES": "Categories",
+		"PRICE": "Price",
+		"COUNT": "Count",
+		"LANGUAGE": "Language",
+		"DRAG&DROP_FILE_HERE": "Drag & Drop File here",
+		"OR_BROWSE": "or browse",
+		"CLICK_TO_UPLAOD_PICTURE": "Click to Upload Picture",
+		"CANCEL": "Cancel",
+		"UPDATE": "Update",
+		"ENGLISH": "English",
+		"HEBREW": "Hebrew",
+		"RUSSIAN": "Russian",
+		"BULGARIAN": "Bulgarian",
+		"SPANISH": "Spanish",
+		"FRENCH": "French",
+		"OPTIONAL": "optional"
+	},
+	"ORDER_CANCELED_COMPONENT": {
+		"CANCELED": "Canceled",
+		"ORDER_CANCELED": "Order canceled",
+		"DELIVERED": "Delivered",
+		"CREATED_AT": "Created at"
+	},
+	"ORDER_CONTROL_BUTTONS_COMPONENT": {
+		"CONFIRM": "Confirm",
+		"START_PROCESSING": "Start Processing",
+		"START_ALLOCATION": "Start Allocation",
+		"ALLOCATED": "Allocated",
+		"START_PACKAGING": "Start Packaging",
+		"PACKAGED": "Packaged",
+		"FAILED": "Failed",
+		"GIVEN_TO_CARRIER": "Given to Carrier",
+		"GIVEN_TO_CUSTOMER": "Given to Customer"
+	},
+	"ORDER_DELIVERED_COMPONENT": {
+		"DELIVERED": "Delivered",
+		"CREATED_AT": "Created at",
+		"DELIVERED_AT": "Delivered at",
+		"DELIVERED_TO": "Delivered to"
+	},
+	"ORDER_DELIVERY_PROBLEM_COMPONENT": {
+		"DELIVERY_ISSUES": "Delivery Issues",
+		"ISSUES_DURING_DELIVERY_TO": "Issues During Delivery to",
+		"BY": "By",
+		"CREATED_AT": "Created at"
+	},
+	"ORDER_WAREHOUSE_PREPARATION_PROBLEM_COMPONENT": {
+		"CREATED_AT": "Created at"
+	},
+	"ORDER_WITH_CARRIER_COMPONENT": {
+		"IN_DELIVERY_TO": "In Delivery To",
+		"BY": "By ",
+		"CREATED_AT": "Created at"
+	},
+	"ORDER_WITHOUT_CARRIER_COMPONENT": {
+		"CREATED_AT": "Created at",
+		"CANT_PROCESSING_WITHOUT_PRODUCTS": "Can't processing the order without products."
+	},
+	"ORDER_TITLE_COMPONENT": {
+		"ORDER": "Order",
+		"FROM": "from"
+	},
+	"ORDER_TYPE": {
+		"TYPE": "Order type:",
+		"DELIVERY": "Delivery",
+		"TAKEAWAY": "Takeaway"
+	},
+	"TRACK_ORDER_POP_UP": {
+		"CARRIER": "Carrier",
+		"TRACK": "Track",
+		"CUSTOMER": "Customer"
+	},
+	"CONNECTION_ERROR_VIEW": {
+		"TITLE": "No connection to Ever",
+		"DESCRIPTION": [
+			"Please make sure you are",
+			"connected to the internet",
+			"or try Ever app later."
+		]
+	},
+	"CUSTOMER_ORDERS_POP_UP": {
+		"ORDER_ID": "Order ID",
+		"DELIVERY": "Delivery",
+		"ADDRESS": "Address",
+		"STATUS": "Status"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Server connection is lost"
+	},
+	"PROMOTIONS": {
+		"PROMO_PRICE": "Promo price",
+		"NO_PROMOTIONS": "No Promotions"
+	}
+}
