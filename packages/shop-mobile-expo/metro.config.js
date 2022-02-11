@@ -1,4 +1,5 @@
-// Learn more https://docs.expo.io/guides/customizing-metro
+// ? Expo monorepo config. More at https://docs.expo.dev/guides/monorepos/
+// ? Learn more https://docs.expo.io/guides/customizing-metro
 const { getDefaultConfig } = require('expo/metro-config');
 const path = require('path');
 
@@ -7,9 +8,9 @@ const workspaceRoot = path.resolve(__dirname, '../..');
 const projectRoot = __dirname;
 
 const config = getDefaultConfig(projectRoot);
-// 1. Watch all files within the monorepo (require watchman installed! disabled for now)
+
+// ? require watchman installed! disabled for now
 // config.watchFolders = [workspaceRoot];
-// 2. Let Metro know where to resolve packages, and in what order
 config.resolver.sourceExts.push('cjs');
 config.resolver.nodeModulesPaths = [
 	path.resolve(projectRoot, 'node_modules'),
@@ -20,8 +21,8 @@ console.log('Expo config =====>', config);
 
 module.exports = config;
 
+// ? Expo yarn-workspaces config
 // const { createMetroConfiguration } = require('expo-yarn-workspaces');
-
 // const config = createMetroConfiguration(__dirname);
 
 // console.log('Expo config =====>', config);
