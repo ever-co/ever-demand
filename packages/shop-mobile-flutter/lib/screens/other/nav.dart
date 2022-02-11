@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_flutter_mobile/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const customColor = AppColors();
 
@@ -17,7 +18,7 @@ class _NavState extends State<Nav> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: customColor.dRed,
-        title: const Text('Ever Demand'),
+        title: Text(AppLocalizations.of(context)!.ever),
         centerTitle: true,
       ),
       body: const Text('Home'),
