@@ -1,13 +1,14 @@
 import React from 'react';
-import { Text, View, Image, StyleSheet } from 'react-native';
+import { Text, View, Image, StyleSheet, ToastAndroid } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from 'react-native-paper';
 // tslint:disable-next-line: no-implicit-dependencies no-submodule-imports
 import AntDesignIcon from '@expo/vector-icons/AntDesign';
 import { gql, useQuery } from '@apollo/client';
 
-// SELECTORS
-import { useAppSelector } from '../../store/hooks';
+// ACTIONS & SELECTORS
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { setUserData } from '../../store/features/user';
 import { getLanguage } from '../../store/features/translation';
 
 // COMPONENTS
@@ -44,13 +45,19 @@ const STYLES = StyleSheet.create({
 });
 
 const SignUpScreen = () => {
+	// ACTIONS
+	const dispatcher = useAppDispatch();
+
 	// SELECTORS
 	const currentLanguage = useAppSelector(getLanguage);
 
-	// NAVIGATIOn
+	// NAVIGATION
 	const navigation = useNavigation();
 
-	// QUERY
+	// STATES
+	const [firstUser, setFirstUser] = React.useState(null);
+
+	// QUERIES
 	const USERS_QUERY = gql`
 		query Users {
 			users {
@@ -73,12 +80,28 @@ const SignUpScreen = () => {
 			}
 		}
 	`;
-	//
 	const { data, loading, error } = useQuery(USERS_QUERY);
 
-	// EFFECTS
+	// FUNCTIONS
+	const onSignUpbyAdresse = () => {
+		if (!firstUser) {
+			return ToastAndroid.show(
+				'No user found, please create one :(',
+				ToastAndroid.SHORT,
+			);
+		}
+
+		dispatcher(setUserData(firstUser));
+		navigation.navigate('STACK/SIGN_UP_BY_ADDRESS' as never);
+	};
+
+	//  EFFECTS
 	React.useEffect(() => {
 		console.log(data, loading, error);
+
+		if (data && data?.users && data.users?.length) {
+			setFirstUser(data.users[0]);
+		}
 	}, [data, loading, error]);
 
 	return (
@@ -107,14 +130,14 @@ const SignUpScreen = () => {
 					<View>
 						<Button
 							loading={loading}
+							disabled={loading}
 							mode='contained'
-							style={{ ...GS.bgSecondary, ...GS.mb2 }}
+							style={{
+								...(loading ? GS.bgLight : GS.bgSecondary),
+								...GS.mb2,
+							}}
 							labelStyle={{ ...GS.txtCapitalize, ...GS.py1 }}
-							onPress={() =>
-								navigation.navigate(
-									'STACK/SIGN_UP_BY_ADDRESS' as never,
-								)
-							}>
+							onPress={() => onSignUpbyAdresse()}>
 							{currentLanguage.INVITE_VIEW.GET_IN_BY_ADDRESS}
 						</Button>
 
