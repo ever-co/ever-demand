@@ -106,7 +106,11 @@ const ProductItem = (props: ProductItemType) => {
 			</View>
 			<Image
 				style={styles.prodImg}
-				source={{ uri: props.data?.product?.images[0] }}
+				source={{
+					uri: props.data?.product?.images[
+						props.data?.id ? props.data?.id : 0
+					],
+				}}
 			/>
 			<View style={{ ...styles.section, ...styles.footer }}>
 				<Button
