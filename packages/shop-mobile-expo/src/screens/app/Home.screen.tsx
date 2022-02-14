@@ -26,7 +26,11 @@ const PRODUCT_INFO_TEMPLATE = {
 	product: {
 		title: 'Product name',
 		description: 'Product description',
-		images: [''],
+		images: [
+			'https://media.istockphoto.com/photos/japanese-restaurant-sushi-dish-picture-id497022342?k=20&m=497022342&s=612x612&w=0&h=VkCoBfI4q67KiRfyIJ-bQx3S1EyjTfEWL2DtP9Ird-0=',
+			'https://media.istockphoto.com/photos/chopstick-with-nigiri-sushi-piece-picture-id1053855542?k=20&m=1053855542&s=612x612&w=0&h=lU0-h01vg4dCrbh9ftIkuyAudi8texy7_gdAQKgLyjA=',
+			'https://media.istockphoto.com/photos/close-up-of-sashimi-sushi-set-with-chopsticks-and-soy-picture-id521800854?k=20&m=521800854&s=612x612&w=0&h=Bzh6dyGUgbf_FFoyoz7vRrvZhz-kskvbdjB3cyssIbM=',
+		],
 	},
 };
 
@@ -47,6 +51,11 @@ function HomeScreen({}) {
 	// STYLES
 	const styles = StyleSheet.create({
 		loaderContainer: { ...GS.centered, ...GS.w100, flex: 1 },
+		productItemContainer: {
+			...GS.mx1,
+			...GS.mt2,
+			...GS.mb1,
+		},
 	});
 
 	// EFFECT
@@ -75,11 +84,15 @@ function HomeScreen({}) {
 					data={new Array(data?.getCountOfProducts || 0).fill(
 						PRODUCT_INFO_TEMPLATE,
 					)}
-					renderItem={({}) => {
-						return <ProductItem />;
+					renderItem={({ item, index }) => {
+						return (
+							<View style={styles.productItemContainer}>
+								<ProductItem data={{ ...item, id: index }} />
+							</View>
+						);
 					}}
 					keyExtractor={(_item, _index) => _index.toString()}
-					style={{ ...GS.h100, ...GS.pt3 }}
+					style={{ ...GS.h100 }}
 				/>
 			) : (
 				<View style={{ ...GS.screen, ...GS.centered }}>
