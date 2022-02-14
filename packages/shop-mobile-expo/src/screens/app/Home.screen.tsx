@@ -10,8 +10,8 @@ import { getLanguage } from '../../store/features/translation';
 // COMPONENTS
 import {
 	FocusAwareStatusBar,
-	PaperText,
 	CustomScreenHeader,
+	ProductItem,
 } from '../../components/Common';
 
 // STYLES
@@ -75,18 +75,8 @@ function HomeScreen({}) {
 					data={new Array(data?.getCountOfProducts || 0).fill(
 						PRODUCT_INFO_TEMPLATE,
 					)}
-					renderItem={({ item }) => {
-						return (
-							<PaperText
-								style={{
-									...GS.px2,
-									...GS.py3,
-									...GS.mb2,
-									...GS.shadow,
-								}}>
-								{item.product.title}
-							</PaperText>
-						);
+					renderItem={({}) => {
+						return <ProductItem />;
 					}}
 					keyExtractor={(_item, _index) => _index.toString()}
 					style={{ ...GS.h100, ...GS.pt3 }}
