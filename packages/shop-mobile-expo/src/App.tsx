@@ -8,7 +8,7 @@ import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
 
 // ENVIRONMENT
-//import ENV from "./environments/environment";
+import ENV from './environments/environment';
 
 // STORE
 import { store } from './store';
@@ -31,8 +31,7 @@ export type PaperThemeType = typeof DefaultTheme;
 
 // Initialize Apollo Client
 const apolloClient = new ApolloClient({
-	//uri: ENV.GQL_ENDPOINT,
-	uri: 'https://api.graphql.guide/graphql',
+	uri: ENV.GQL_ENDPOINT,
 	cache: new InMemoryCache(),
 	defaultOptions: { watchQuery: { fetchPolicy: 'cache-and-network' } },
 });
