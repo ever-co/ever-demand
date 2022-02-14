@@ -78,7 +78,7 @@ const ProductItem = (props: ProductItemType) => {
 			<View style={{ ...styles.section, ...styles.header }}>
 				<TouchableOpacity style={styles.headerAvatarContainer}>
 					<Avatar.Image
-						size={CS.FONT_SIZE_XLG * 2.5}
+						size={CS.FONT_SIZE_XLG * 2.2}
 						source={{
 							uri: 'https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fHN1c2hpfGVufDB8fDB8fA%3D%3D&w=1000&q=80',
 						}}
