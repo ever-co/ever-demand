@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Button } from 'react-native-paper';
 // tslint:disable-next-line: no-implicit-dependencies no-submodule-imports
 import AntDesignIcon from '@expo/vector-icons/AntDesign';
+import { gql, useQuery } from '@apollo/client';
 
 // SELECTORS
 import { useAppSelector } from '../../store/hooks';
@@ -49,6 +50,37 @@ const SignUpScreen = () => {
 	// NAVIGATIOn
 	const navigation = useNavigation();
 
+	// QUERY
+	const USERS_QUERY = gql`
+		query Users {
+			users {
+				_id
+				firstName
+				lastName
+				email
+				apartment
+				phone
+				geoLocation {
+					countryId
+					city
+					house
+					streetAddress
+					loc {
+						type
+						coordinates
+					}
+				}
+			}
+		}
+	`;
+	//
+	const { data, loading, error } = useQuery(USERS_QUERY);
+
+	// EFFECTS
+	React.useEffect(() => {
+		console.log(data, loading, error);
+	}, [data, loading, error]);
+
 	return (
 		<View style={{ ...GS.screen }}>
 			<FocusAwareStatusBar
@@ -74,6 +106,7 @@ const SignUpScreen = () => {
 				<View style={{ ...GS.py4 }}>
 					<View>
 						<Button
+							loading={loading}
 							mode='contained'
 							style={{ ...GS.bgSecondary, ...GS.mb2 }}
 							labelStyle={{ ...GS.txtCapitalize, ...GS.py1 }}
