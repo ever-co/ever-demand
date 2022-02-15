@@ -18,6 +18,7 @@ const OrderHistoryItem = () => {
 
 	const STYLES = StyleSheet.create({
 		container: {
+			...GS.shadow,
 			overflow: 'hidden',
 		},
 		header: {
