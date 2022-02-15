@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shop_flutter_mobile/screens/authentification/login.dart';
-import 'package:shop_flutter_mobile/screens/other/nav.dart';
+// import 'package:shop_flutter_mobile/screens/other/nav.dart';
 
 void main() {
   runApp(const MyApp());

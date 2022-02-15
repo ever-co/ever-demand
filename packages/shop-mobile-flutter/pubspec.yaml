@@ -54,6 +54,12 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  fonts:
+    - family: PlutoHeavyItalic
+      fonts:
+      - asset: assets/fonts/PlutoHeavyItalic.ttf
+        style: italic
+        weight: 700
   generate: true
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -61,9 +67,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-assets:
-  - assets/imgs/ever.png
-  - assets/imgs/icon.png
+  assets:
+    - assets/imgs/ever.png
+    - assets/imgs/icon.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
@@ -77,7 +83,7 @@ assets:
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
-  # example:
+  # example: 
   # fonts:
   #   - family: Schyler
   #     fonts:
