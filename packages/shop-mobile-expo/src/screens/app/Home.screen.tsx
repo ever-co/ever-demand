@@ -70,6 +70,7 @@ function HomeScreen({}) {
 				backgroundColor='transparent'
 				barStyle='light-content'
 			/>
+
 			<CustomScreenHeader
 				title={LANGUAGE.PRODUCTS_VIEW.TITLE}
 				showControls
