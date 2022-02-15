@@ -1,0 +1,136 @@
+{
+	"Title": "Translation example",
+	"Intro": "Hello I am Arthur, I am 42 years old.",
+	"Cancel": "Cancel",
+	"Cancel Order": "In just 5-10 minutes you will be aeting this delicious meal! By canceling it you will miss a great and tasty food, and we will likely have to throw it",
+	"Pay": "Or pay with cash",
+	"Pay now": "Pay Now",
+	"Products": "Products",
+	"Orders": "Orders",
+	"Buy for": "Buy for",
+	"DELIVERY": "Delivery",
+	"SELECT_YOUR_LOCATION": "Select your location",
+	"TAKEAWAY": "Takeout",
+	"Details": "Details",
+	"Delivery from": "Delivery from",
+	"WHAT_IS_YOUR_ADDRESS": "What is your address?",
+	"FOR": "for",
+	"MESSAGE_POP_UP": {
+		"CANCEL_ORDER": "In just 5-10 minutes you will be eating this delicious meal! By canceling it you will miss a great and tasty food, and we will likely have to throw it",
+		"OK": "OK",
+		"CANCEL": "Cancel",
+		"CONFIRMATION": "Confirmation",
+		"WRONG_CODE_TRY_AGAIN": "Wrong code, try again.",
+		"TO_BE_INVITED_ALLOW_GPS": "To be invited allow GPS."
+	},
+	"PRODUCTS_VIEW": {
+		"SEARCH_PRODUCTS": "e.g Pepperoni Pizza Sushi...",
+		"PRODUCTS": "Products",
+		"ORDERS": "Orders",
+		"BUY_FOR": "Buy for",
+		"DETAILS": "Details",
+		"DELIVERY_FROM": "Delivery from",
+		"TAKEOUT_FROM": "Takeout from",
+		"MINUTES": "min",
+		"DELIVERY": "Delivery",
+		"TAKEAWAY": "Takeout",
+		"READYFOR": "Ready for",
+		"NO_PRODUCTS_FOUND": "No products found for",
+		"NO_PRODUCTS": "No products.",
+		"FASTFOOD": "fastfood",
+		"SEARCH": "search",
+		"LOADING_MORE_DATA": "Loading more data...",
+		"PRODUCT_DETAILS_VIEW": {
+			"BUY_FOR": "Buy for",
+			"DETAILS": "Details",
+			"DELIVERY_FROM": "Delivery from",
+			"TAKEOUT_FROM": "Takeout from"
+		}
+	},
+	"LOG_IN_VIEW": {
+		"OR": "Or",
+		"ENTER_BY_ADDRESS": "Enter by Address",
+		"SIGN_UP_WITH_AN_APP_INVITATION": "Sign up with an app invitation",
+		"WE_WILL_SEND_YOU_A_MESSAGE": "We'll send you a message as soon as we start running at your address:",
+		"THANKS_FOR_REGISTERING": "Thanks for registering!",
+		"WHAT_YOU_SEE_IS_WHAT_YOU_GET": "What you See, is what you Get",
+		"INVITE_CODE": "Invite Code",
+		"NOTIFICATION_MESSAGE": {
+			"WRONG_CODE_TRY_AGAIN": "Wrong code, try again.",
+			"TO_BE_INVITED_ALLOW_GPS": "To be invited allow GPS."
+		},
+		"BY_LOCATION_VIEW": {
+			"WHAT_IS_YOUR_ADDRESS": "What is your address?",
+			"WE_GUARANTEE_TO_SHOW_ONLY_RELEVANT_PRODUCTS": "We guarantee to show only relevant products based on the address entered",
+			"SEARCH": "search",
+			"COUNTRY": "Country...",
+			"APARTMENT": "Apartment",
+			"CONTINUE": "Continue",
+			"PLACEHOLDER": {
+				"SELECTED_CITY": "Selected City",
+				"SELECTED_STREET": "Selected Street",
+				"HOUSE": "house",
+				"APARTMENT_OPTIONAL": "Apartment (optional)"
+			}
+		}
+	},
+	"ORDER_VIEW": {
+		"CANCEL": "Cancel",
+		"CANCEL_ORDER": "In just 5-10 minutes you will be eating this delicious meal! By canceling it you will miss a great and tasty food, and we will likely have to throw it",
+		"PAY": "Or pay with cash",
+		"PAY_NOW": "Pay Now",
+		"PRODUCTS": "Products",
+		"ORDERS": "Orders",
+		"ORDER_ID": "order ID:",
+		"SHOW_CARRIER_ON_MAP": "Show carrier on map",
+		"ORER_TYPE": {
+			"DELIVERY": "Delivery",
+			"TAKEAWAY": "Takeaway"
+		}
+	},
+	"ORDER_CARRIER_STATUS": {
+		"CARRIER_STATUS": "Carrier Status",
+		"CREATED": "Created",
+		"ARRIVED_TO_CUSTOMER": "Arrived to Customer",
+		"FAILED": "Failed",
+		"DELIVERED": "Delivered",
+		"CLIENT_REFUSE_ORDER": "Client Refuse Order",
+		"AVAIBLE_ORDER_TO_PICK_UP": "Available Orders to pick up (each carrier can pick up multiple orders)",
+		"ACTIVE": "Active",
+		"NOT_ACTIVE": "Not Active",
+		"WORKING": "Working",
+		"NOT_WORKING": "Not Working",
+		"SELECT_CARRIER": "Select carrier",
+		"CARRIER_ORDERS_STATUS": "Carrier orders status",
+		"Start": "Start",
+		"PICKED_UP_ORDER": "Picked Up Order",
+		"CANCEL": "Cancel",
+		"Arrived To Client": "Arrived To Client",
+		"No Carrier": "No Carrier",
+		"Order Selected For Delivery": "Order Selected For Delivery",
+		"Order Picked Up": "Order Picked Up",
+		"Order In Delivery": "Order In Delivery",
+		"Delivered": "Delivered",
+		"Delivery Issues": "Delivery Issues",
+		"Client Refuse to Take Order": "Client Refuse to Take Order",
+		"BAD_STATUS": "BAD_STATUS",
+		"Created": "Created",
+		"Confirmed": "Confirmed",
+		"Processing": "Processing",
+		"Allocation Started": "Allocation Started",
+		"Allocation Finished": "Allocation Finished",
+		"Packaging Started": "Packaging Started",
+		"Packaged": "Packaged",
+		"Given to Carrier": "Given to Carrier",
+		"Allocation Failed": "Allocation Failed",
+		"Packaging Failed": "Packaging Failed",
+		"LOCATION": "Location"
+	},
+	"SETTINGS_VIEW": {
+		"SETTINGS": "Settings",
+		"LANGUAGE": "Language"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Server connection is lost"
+	}
+}

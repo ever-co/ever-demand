@@ -322,6 +322,8 @@
 			"HEBREW": "עִברִית",
 			"RUSSIAN": "רוּסִי",
 			"BULGARIAN": "בולגרית",
+			"SPANISH": "ספרדית",
+			"FRENCH": "צָרְפָתִית",
 			"OPTIONAL": "אופציונאלי",
 			"TAKEAWAY": "להסיר",
 			"DELIVERY": "משלוח",
@@ -393,7 +395,8 @@
 		"HEBREW": "עִברִית",
 		"RUSSIAN": "רוּסִי",
 		"BULGARIAN": "בולגרית",
-		"SPANISH": "ספרדית"
+		"SPANISH": "ספרדית",
+		"FRENCH": "צָרְפָתִית"
 	},
 	"ORDER_CANCELED_COMPONENT": {
 		"CANCELED": "מבוטל",

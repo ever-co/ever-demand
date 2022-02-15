@@ -26,8 +26,10 @@ import * as faker from 'faker';
 
 @injectable()
 @routerName('invite-request')
-export class InvitesRequestsService extends DBService<InviteRequest>
-	implements IInviteRequestRouter, IService {
+export class InvitesRequestsService
+	extends DBService<InviteRequest>
+	implements IInviteRequestRouter, IService
+{
 	public readonly DBObject: any = InviteRequest;
 	protected readonly log: Logger = createEverLogger({
 		name: 'invitesRequestsService',
@@ -300,8 +302,7 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 						},
 					},
 					ios: {
-						alert:
-							'Ever тольуо что запустился по Вашему адресу. Удачи!',
+						alert: 'Ever тольуо что запустился по Вашему адресу. Удачи!',
 						extra: {
 							event: launched,
 							invite: JSON.stringify(invite),
@@ -327,6 +328,41 @@ export class InvitesRequestsService extends DBService<InviteRequest>
 					},
 				};
 			case 'he-IL':
+				return {
+					android: {
+						title: 'Ever הושק זה עתה!',
+						alert: 'לחץ כדי לראות כמה מוצרים זמינים.',
+						extra: {
+							event: launched,
+							invite: JSON.stringify(invite),
+						},
+					},
+					ios: {
+						alert: 'Ever הושק זה עתה בכתובת שלך. תעשה חיים!',
+						extra: {
+							event: launched,
+							invite: JSON.stringify(invite),
+						},
+					},
+				};
+			case 'fr-FR':
+				return {
+					android: {
+						title: "Ever vient d'être lancé !",
+						alert: 'Cliquez pour voir quelques produits disponibles.',
+						extra: {
+							event: launched,
+							invite: JSON.stringify(invite),
+						},
+					},
+					ios: {
+						alert: "Ever vient d'être lancé à votre adresse. S'amuser!",
+						extra: {
+							event: launched,
+							invite: JSON.stringify(invite),
+						},
+					},
+				};
 			default:
 				return {
 					android: {
