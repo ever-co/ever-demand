@@ -19,6 +19,12 @@ import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { getLanguage } from '../../store/features/translation';
 // import { setGroup } from '../../store/features/navigation';
 
+// HELPERS
+import {
+	getFormattedAddress,
+	FormattedAddressInterface,
+} from '../../helpers/location';
+
 // COMPONENTS
 import { FocusAwareStatusBar, PaperText } from '../../components/Common';
 
@@ -45,8 +51,10 @@ const SignUpByAddressScreen = () => {
 	const [, /* preventBackCallBack */ setPreventBackCallBack] = React.useState<
 		() => any
 	>(() => {});
-	const [location, setLocation] =
+	const [currentPosition, setCurrentPosition] =
 		React.useState<Location.LocationObject | null>(null);
+	const [formattedAddress, setFormattedAddress] =
+		React.useState<FormattedAddressInterface | null>(null);
 	const [errorMsg, setErrorMsg] = React.useState<string | null>(null);
 
 	// DATA
@@ -89,12 +97,6 @@ const SignUpByAddressScreen = () => {
 	// EFFECTS
 	React.useEffect(() => {
 		(async () => {
-			interface addressType {
-				locality: string;
-				thoroughfare: string;
-				country: string;
-			}
-
 			const { status } =
 				await Location.requestForegroundPermissionsAsync();
 
@@ -110,28 +112,13 @@ const SignUpByAddressScreen = () => {
 				return;
 			}
 
-			const _location = await Location.getCurrentPositionAsync({});
-			setLocation(_location);
+			const CURRENT_POSITION = await Location.getCurrentPositionAsync({});
+			const FORMATTED_ADDRESS = await getFormattedAddress(
+				CURRENT_POSITION.coords,
+			);
 
-			if (_location?.coords) {
-				const LocationGeocodedAddress =
-					await Location.reverseGeocodeAsync({
-						longitude: _location?.coords?.longitude,
-						latitude: _location?.coords?.latitude,
-					});
-
-				console.log(LocationGeocodedAddress);
-				if (LocationGeocodedAddress.length) {
-					const firstLocationAddress = LocationGeocodedAddress[0];
-					const formatedAddress: addressType = {
-						locality: firstLocationAddress.region as string,
-						country: firstLocationAddress.country as string,
-						thoroughfare: firstLocationAddress.street as string,
-					};
-
-					console.log('\nLocation allowed ===> ', formatedAddress);
-				}
-			}
+			setCurrentPosition(CURRENT_POSITION);
+			setFormattedAddress(FORMATTED_ADDRESS);
 		})();
 	}, [navigation]);
 
@@ -141,8 +128,13 @@ const SignUpByAddressScreen = () => {
 	}, [setNavigationGroup]);
 
 	React.useEffect(() => {
-		console.log('\nLocation error ===> ', location, errorMsg);
-	}, [location, errorMsg]);
+		console.log(
+			'\nLocation error ===> ',
+			currentPosition,
+			errorMsg,
+			formattedAddress,
+		);
+	}, [currentPosition, errorMsg, formattedAddress]);
 
 	React.useEffect(() => {
 		navigation.addListener('beforeRemove', (e) => {
