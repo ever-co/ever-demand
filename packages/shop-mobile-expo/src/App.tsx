@@ -6,6 +6,7 @@ import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { setCustomTextInput, setCustomText } from 'react-native-global-props';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
+import FlashMessage from 'react-native-flash-message';
 
 // ENVIRONMENT
 import ENV from './environments/environment';
@@ -60,20 +61,6 @@ const paperTheme: PaperThemeType = {
 	},
 };
 
-setCustomTextInput({
-	style: {
-		...GS.FF_Nunito,
-		color: CC.light,
-	},
-});
-
-setCustomText({
-	style: {
-		...GS.FF_Nunito,
-		color: CC.light,
-	},
-});
-
 export default function App() {
 	const [fontsLoaded] = useFonts({
 		'Nunito-ExtraLight': require('./assets/fonts/Nunito/Nunito-ExtraLight.ttf'),
@@ -85,6 +72,24 @@ export default function App() {
 		'Lobster-Regular': require('./assets/fonts/Lobster/Lobster-Regular.ttf'),
 	});
 
+	React.useEffect(() => {
+		if (fontsLoaded) {
+			setCustomTextInput({
+				style: {
+					...GS.FF_Nunito,
+					color: CC.light,
+				},
+			});
+
+			setCustomText({
+				style: {
+					...GS.FF_Nunito,
+					color: CC.light,
+				},
+			});
+		}
+	}, [fontsLoaded]);
+
 	return !fontsLoaded ? (
 		<AppLoading />
 	) : (
@@ -94,6 +99,7 @@ export default function App() {
 					theme={paperTheme}
 					settings={{ icon: (props: any) => <Icon {...props} /> }}>
 					<Router />
+					<FlashMessage position='bottom' />
 				</PaperProvider>
 			</ReduxProvider>
 		</ApolloProvider>
