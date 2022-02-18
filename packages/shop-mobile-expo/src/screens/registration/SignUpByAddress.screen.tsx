@@ -8,14 +8,16 @@ import {
 } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import * as Location from 'expo-location';
+import { showMessage } from 'react-native-flash-message';
 
 // CONSTANTS
-import GROUPS from '../../router/groups.routes';
+// import GROUPS from '../../router/groups.routes';
 
 // ACTIONS & SELECTORS
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { getLanguage } from '../../store/features/translation';
-import { setGroup } from '../../store/features/navigation';
+// import { setGroup } from '../../store/features/navigation';
 
 // COMPONENTS
 import { FocusAwareStatusBar, PaperText } from '../../components/Common';
@@ -26,42 +28,6 @@ import {
 	CONSTANT_SIZE as CS,
 	CONSTANT_COLOR as CC,
 } from '../../assets/ts/styles';
-
-const STYLES = StyleSheet.create({
-	container: {
-		...GS.screen,
-		...GS.bgTransparent,
-		...GS.px5,
-		...GS.pb5,
-		...GS.mx5,
-	},
-	section1: {
-		...GS.centered,
-		...GS.py2,
-		flex: 3,
-	},
-	section1Title: {
-		...GS.txtCenter,
-		...GS.mb3,
-		...GS.FF_NunitoBold,
-		fontSize: CS.FONT_SIZE_LG * 1.8,
-	},
-	section1SubTitle: {
-		...GS.txtCenter,
-		...GS.FF_NunitoBold,
-		fontSize: CS.FONT_SIZE_MD,
-		opacity: 0.6,
-	},
-	section2: { ...GS.py2, flex: 2, alignItems: 'center' },
-	section2Title: {
-		...GS.txtCenter,
-		...GS.mb5,
-		...GS.FF_NunitoBold,
-		fontSize: CS.FONT_SIZE_SM * 2,
-	},
-	networkBtnFacebook: { flex: 1, backgroundColor: CC.facebook },
-	networkBtnGoogle: { flex: 1, backgroundColor: CC.google },
-});
 
 const SignUpByAddressScreen = () => {
 	// SELECTORS
@@ -76,17 +42,81 @@ const SignUpByAddressScreen = () => {
 	// STATES
 	const [warningDialog, setWarningDialog] = React.useState<boolean>(false);
 	const [canGoBack, setCanGoBack] = React.useState<boolean>(false);
-	// const [preventBackCallBack, setPreventBackCallBack] = React.useState<
-	// 	() => any
-	// >(() => { });
+	const [, /* preventBackCallBack */ setPreventBackCallBack] = React.useState<
+		() => any
+	>(() => {});
+	const [location, setLocation] =
+		React.useState<Location.LocationObject | null>(null);
+	const [errorMsg, setErrorMsg] = React.useState<string | null>(null);
+
+	// DATA
+	const STYLES = StyleSheet.create({
+		container: {
+			...GS.screen,
+			...GS.bgTransparent,
+			...GS.px5,
+			...GS.pb5,
+			...GS.mx5,
+		},
+		section1: {
+			...GS.centered,
+			...GS.py2,
+			flex: 3,
+		},
+		section1Title: {
+			...GS.txtCenter,
+			...GS.mb3,
+			...GS.FF_NunitoBold,
+			fontSize: CS.FONT_SIZE_LG * 1.8,
+		},
+		section1SubTitle: {
+			...GS.txtCenter,
+			...GS.FF_NunitoBold,
+			fontSize: CS.FONT_SIZE_MD,
+			opacity: 0.6,
+		},
+		section2: { ...GS.py2, flex: 2, alignItems: 'center' },
+		section2Title: {
+			...GS.txtCenter,
+			...GS.mb5,
+			...GS.FF_NunitoBold,
+			fontSize: CS.FONT_SIZE_SM * 2,
+		},
+		networkBtnFacebook: { flex: 1, backgroundColor: CC.facebook },
+		networkBtnGoogle: { flex: 1, backgroundColor: CC.google },
+	});
 
 	// EFFECTS
 	React.useEffect(() => {
-		setTimeout(() => {
-			setNavigationGroup(setGroup(GROUPS.APP));
-			setCanGoBack(true);
-		}, 4500);
+		(async () => {
+			const { status } =
+				await Location.requestForegroundPermissionsAsync();
+			if (status !== 'granted') {
+				const _errorMessage =
+					'Permission to access location was denied';
+				setErrorMsg(_errorMessage);
+				showMessage({ message: _errorMessage });
+				setCanGoBack(true);
+				setTimeout(() => {
+					navigation.goBack();
+				}, 100);
+				return;
+			}
+
+			const _location = await Location.getCurrentPositionAsync({});
+			console.log(_location);
+			setLocation(_location);
+		})();
+	}, [navigation]);
+
+	React.useEffect(() => {
+		// setCanGoBack(true);
+		// setNavigationGroup(setGroup(GROUPS.APP));
 	}, [setNavigationGroup]);
+
+	React.useEffect(() => {
+		console.log(location, errorMsg);
+	}, [location, errorMsg]);
 
 	React.useEffect(() => {
 		navigation.addListener('beforeRemove', (e) => {
@@ -99,24 +129,22 @@ const SignUpByAddressScreen = () => {
 			setWarningDialog(true);
 
 			// Prompt the user before leaving the screen
-			// setPreventBackCallBack(() => {
-			// 	return () => {
-			// 		setCanGoBack(true);
-			// 		setWarningDialog(false);
-			// 		navigation.dispatch(e.data.action);
-			// 	};
-			// });
+			setPreventBackCallBack(() => {
+				return () => {
+					setCanGoBack(true);
+					setWarningDialog(false);
+					navigation.dispatch(e.data.action);
+				};
+			});
 
 			Alert.alert(
 				'Discard changes?',
-				"Your device isn't yet recognized. Are you sure to leave the screen?",
+				"Your location isn't yet recognized. Are you sure to leave the screen?",
 				[
 					{ text: "Don't leave", style: 'cancel', onPress: () => {} },
 					{
 						text: 'leave',
 						style: 'destructive',
-						// If the user confirmed, then we dispatch the action we blocked earlier
-						// This will continue the action that had triggered the removal of the screen
 						onPress: () => {
 							setCanGoBack(true);
 							navigation.dispatch(e.data.action);
@@ -159,7 +187,7 @@ const SignUpByAddressScreen = () => {
 				</View>
 			</View>
 
-			{/* TODO: find how to use custom alert (disable due to slowing device) */}
+			{/* TODO: find how to use custom alert (disable due to slowing virtual device) */}
 			{/* {warningDialog && (
 				<View style={{ ...GS.overlay, ...GS.centered, ...GS.p5 }}>
 					<View
