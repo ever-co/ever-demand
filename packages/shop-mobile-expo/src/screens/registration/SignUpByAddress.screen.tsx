@@ -89,8 +89,15 @@ const SignUpByAddressScreen = () => {
 	// EFFECTS
 	React.useEffect(() => {
 		(async () => {
+			interface addressType {
+				locality: string;
+				thoroughfare: string;
+				country: string;
+			}
+
 			const { status } =
 				await Location.requestForegroundPermissionsAsync();
+
 			if (status !== 'granted') {
 				const _errorMessage =
 					'Permission to access location was denied';
@@ -104,8 +111,27 @@ const SignUpByAddressScreen = () => {
 			}
 
 			const _location = await Location.getCurrentPositionAsync({});
-			console.log(_location);
 			setLocation(_location);
+
+			if (_location?.coords) {
+				const LocationGeocodedAddress =
+					await Location.reverseGeocodeAsync({
+						longitude: _location?.coords?.longitude,
+						latitude: _location?.coords?.latitude,
+					});
+
+				console.log(LocationGeocodedAddress);
+				if (LocationGeocodedAddress.length) {
+					const firstLocationAddress = LocationGeocodedAddress[0];
+					const formatedAddress: addressType = {
+						locality: firstLocationAddress.region as string,
+						country: firstLocationAddress.country as string,
+						thoroughfare: firstLocationAddress.street as string,
+					};
+
+					console.log('\nLocation allowed ===> ', formatedAddress);
+				}
+			}
 		})();
 	}, [navigation]);
 
@@ -115,7 +141,7 @@ const SignUpByAddressScreen = () => {
 	}, [setNavigationGroup]);
 
 	React.useEffect(() => {
-		console.log(location, errorMsg);
+		console.log('\nLocation error ===> ', location, errorMsg);
 	}, [location, errorMsg]);
 
 	React.useEffect(() => {
