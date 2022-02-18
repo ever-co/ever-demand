@@ -6,7 +6,7 @@ import {
 	// Button as NativeBtn,
 	// Text as NativeTxt,
 } from 'react-native';
-import { ActivityIndicator } from 'react-native-paper';
+import { ActivityIndicator, TextInput } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import { showMessage } from 'react-native-flash-message';
@@ -35,6 +35,14 @@ import {
 	CONSTANT_COLOR as CC,
 } from '../../assets/ts/styles';
 
+// TYPES
+export interface FormInterface {
+	firstName: string;
+	lastName: string;
+	house: string;
+	apartment: string;
+}
+
 const SignUpByAddressScreen = () => {
 	// SELECTORS
 	const currentLanguage = useAppSelector(getLanguage);
@@ -47,6 +55,13 @@ const SignUpByAddressScreen = () => {
 
 	// STATES
 	const [warningDialog, setWarningDialog] = React.useState<boolean>(false);
+	const [form, setForm] = React.useState<FormInterface>({
+		firstName: '',
+		lastName: '',
+		house: '',
+		apartment: '',
+	});
+	const [loading, setLoading] = React.useState<boolean>(true);
 	const [canGoBack, setCanGoBack] = React.useState<boolean>(false);
 	const [, /* preventBackCallBack */ setPreventBackCallBack] = React.useState<
 		() => any
@@ -90,12 +105,13 @@ const SignUpByAddressScreen = () => {
 			...GS.FF_NunitoBold,
 			fontSize: CS.FONT_SIZE_SM * 2,
 		},
-		networkBtnFacebook: { flex: 1, backgroundColor: CC.facebook },
-		networkBtnGoogle: { flex: 1, backgroundColor: CC.google },
+		formContainer: {},
+		formInput: {},
 	});
 
 	// EFFECTS
 	React.useEffect(() => {
+		setLoading(false);
 		(async () => {
 			const { status } =
 				await Location.requestForegroundPermissionsAsync();
@@ -119,6 +135,7 @@ const SignUpByAddressScreen = () => {
 
 			setCurrentPosition(CURRENT_POSITION);
 			setFormattedAddress(FORMATTED_ADDRESS);
+			setLoading(false);
 		})();
 	}, [navigation]);
 
@@ -183,6 +200,7 @@ const SignUpByAddressScreen = () => {
 				barStyle='light-content'
 			/>
 
+			{/* Loading view */}
 			<View style={STYLES.container}>
 				{/* section1 */}
 				<View style={STYLES.section1}>
@@ -201,7 +219,68 @@ const SignUpByAddressScreen = () => {
 						{currentLanguage.INVITE_VIEW.DETECTING_LOCATION}
 					</PaperText>
 
-					<ActivityIndicator color={CC.light} style={{ ...GS.mt5 }} />
+					{loading ? (
+						<ActivityIndicator
+							color={CC.light}
+							style={{ ...GS.mt5 }}
+						/>
+					) : (
+						<View style={STYLES.formContainer}>
+							<TextInput
+								style={STYLES.formInput}
+								autoComplete={true}
+								placeholder='First name'
+								value={form.firstName}
+								onChangeText={(text) =>
+									setForm((prevForm) => ({
+										...prevForm,
+										firstName: text,
+									}))
+								}
+							/>
+
+							<TextInput
+								style={STYLES.formInput}
+								autoComplete={true}
+								placeholder='Last name'
+								value={form.lastName}
+								onChangeText={(text) =>
+									setForm((prevForm) => ({
+										...prevForm,
+										lastName: text,
+									}))
+								}
+							/>
+
+							<View style={{ ...GS.inlineItems }}>
+								<TextInput
+									style={{ ...STYLES.formInput, ...GS.mr2 }}
+									autoComplete={true}
+									placeholder='House'
+									value={form.house}
+									onChangeText={(text) =>
+										setForm((prevForm) => ({
+											...prevForm,
+											house: text,
+										}))
+									}
+								/>
+
+								<TextInput
+									style={STYLES.formInput}
+									autoComplete={true}
+									placeholder='Apartment'
+									value={form.firstName}
+									onChangeText={(text) =>
+										setForm((prevForm) => ({
+											...prevForm,
+											apartment: text,
+										}))
+									}
+								/>
+							</View>
+						</View>
+					)}
 				</View>
 			</View>
 
