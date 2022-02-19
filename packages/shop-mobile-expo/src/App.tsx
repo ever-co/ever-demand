@@ -47,7 +47,7 @@ const paperTheme: PaperThemeType = {
 		primary: CC.secondary,
 		accent: CC.secondaryLight,
 		background: CC.primary,
-		surface: CC.primaryHightLight,
+		surface: CC.white,
 		onSurface: CC.grayHighLight,
 		disabled: CC.grayLight,
 		text: CC.light,
