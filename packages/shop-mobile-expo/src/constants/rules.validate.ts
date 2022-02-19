@@ -20,12 +20,12 @@ export const NUMERIC_FORMAT = {
 	pattern: /^[0-9]+$/,
 };
 
-export const REQUIRE_NOT_EMPTY = {
+export const REQUIRE_NOT_EMPTY_PRESENCE = {
 	presence: NOT_ALLOW_EMPTY_PRESENCE,
 };
 
 export const REQUIRE_EMAIL = {
-	...REQUIRE_NOT_EMPTY,
+	...REQUIRE_NOT_EMPTY_PRESENCE,
 	email: true,
 };
 
