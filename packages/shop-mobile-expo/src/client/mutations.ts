@@ -6,11 +6,17 @@ import { gql, TypedDocumentNode } from '@apollo/client';
  * @type TypedDocumentNode
  */
 export const REGISTER_USER: TypedDocumentNode = gql`
-	mutation Mutation($registerInput: UserRegisterInput!) {
+	mutation RegisterUser($registerInput: UserRegisterInput!) {
 		registerUser(registerInput: $registerInput) {
 			firstName
 			lastName
+			phone
 			id
+			apartment
+			image
+			createdAt
+			fullAddress
+			email
 		}
 	}
 `;
