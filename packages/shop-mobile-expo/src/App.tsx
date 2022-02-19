@@ -41,7 +41,7 @@ const paperTheme: PaperThemeType = {
 	...DefaultTheme,
 	dark: false,
 	mode: 'adaptive',
-	roundness: CS.SPACE - 4,
+	roundness: CS.SPACE_SM - 2,
 	colors: {
 		...DefaultTheme.colors,
 		primary: CC.primary,
