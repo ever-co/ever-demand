@@ -1,9 +1,13 @@
 // This file contain rule validation constants for validate.js
 
+// import { validate } from 'validate.js';
+
+// TODO: Type constants
+
 /**
  * Require a non-empty field
  */
-export const REQUIRE_PRESENCE = {
+export const NOT_ALLOW_EMPTY_PRESENCE = {
 	allowEmpty: false,
 };
 
@@ -16,16 +20,25 @@ export const NUMERIC_FORMAT = {
 	pattern: /^[0-9]+$/,
 };
 
+export const REQUIRE_NOT_EMPTY = {
+	presence: NOT_ALLOW_EMPTY_PRESENCE,
+};
+
 export const REQUIRE_EMAIL = {
-	...REQUIRE_PRESENCE,
+	...REQUIRE_NOT_EMPTY,
+	email: true,
 };
 
 export const REQUIRE_NUMERIC = {
-	...NUMERIC_FORMAT,
+	format: {
+		...NUMERIC_FORMAT,
+	},
 	strict: true,
 };
 
 export const REQUIRE_NUMERIC_NOT_STRICK = {
-	...NUMERIC_FORMAT,
+	format: {
+		...NUMERIC_FORMAT,
+	},
 	strict: false,
 };
