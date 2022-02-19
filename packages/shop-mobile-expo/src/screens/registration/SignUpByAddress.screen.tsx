@@ -169,6 +169,7 @@ const SignUpByAddressScreen = () => {
 		},
 	});
 
+	// TODO: Add more constraints
 	const VALIDATION_CONSTRAINT: { [name in FormInputNameType]?: object } = {
 		firstName: REQUIRE_NOT_EMPTY_PRESENCE,
 		lastName: REQUIRE_NOT_EMPTY_PRESENCE,
