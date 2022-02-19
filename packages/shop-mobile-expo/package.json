@@ -63,7 +63,7 @@
 		"@babel/runtime": "^7.17.0",
 		"@react-native-community/eslint-config": "^2.0.0",
 		"@types/jest": "^26.0.23",
-		"@types/react-native": "^0.64.3",
+		"@types/react-native": "^0.66.16",
 		"@types/react-native-global-props": "^1.1.1",
 		"@types/react-test-renderer": "^17.0.1",
 		"@typescript-eslint/eslint-plugin": "^5.7.0",
