@@ -1,3 +1,8 @@
+// TODO: Add more comments
+
+/**
+ * Minimal user info to create a user.
+ */
 export interface RegisterUserArgsInterface {
 	registerInput: {
 		user: {
