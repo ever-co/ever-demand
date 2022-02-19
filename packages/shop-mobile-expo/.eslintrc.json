@@ -11,8 +11,13 @@
 				"no-shadow": "off",
 				"no-undef": "off",
 				"jsx-quotes": ["error", "prefer-single"],
-                "no-spaced-func": "off",
-                "spaced-comment":["error", "always", { "block": { "balanced": true } }]
+				"no-spaced-func": "off",
+				"spaced-comment": [
+					"error",
+					"always",
+					{ "block": { "balanced": true } }
+				],
+				"no-mixed-spaces-and-tabs": ["off", "smart-tabs"]
 			}
 		}
 	]
