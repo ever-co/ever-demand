@@ -1,11 +1,12 @@
 import * as Location from 'expo-location';
 
 export interface FormattedLocationInterface {
-	locality: string;
-	thoroughfare: string;
-	country: string;
 	latitude: number;
 	longitude: number;
+	countryId: number;
+	country: string;
+	streetAddress: string;
+	city: string;
 }
 
 /**
@@ -23,15 +24,15 @@ export const getFormattedLocation: (
 			latitude: coords?.latitude,
 		});
 
-		console.log(LocationGeoCoded);
 		if (LocationGeoCoded.length) {
 			const firstLocationGeoCoded = LocationGeoCoded[0];
 			const formattedLocation: FormattedLocationInterface = {
-				locality: firstLocationGeoCoded.region as string,
+				longitude: coords.longitude,
+				latitude: coords.latitude,
+				city: firstLocationGeoCoded.city as string,
 				country: firstLocationGeoCoded.country as string,
-				thoroughfare: firstLocationGeoCoded.street as string,
-				latitude: coords?.longitude,
-				longitude: coords?.longitude,
+				countryId: 0,
+				streetAddress: firstLocationGeoCoded.street as string,
 			};
 
 			return formattedLocation;
