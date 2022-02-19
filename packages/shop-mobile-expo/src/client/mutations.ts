@@ -17,6 +17,12 @@ export const REGISTER_USER_MUTATION: TypedDocumentNode = gql`
 			createdAt
 			fullAddress
 			email
+			geoLocation {
+				city
+				countryName
+				streetAddress
+				house
+			}
 		}
 	}
 `;
