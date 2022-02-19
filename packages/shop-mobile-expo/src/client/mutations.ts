@@ -5,8 +5,8 @@ import { gql, TypedDocumentNode } from '@apollo/client';
  *
  * @type TypedDocumentNode
  */
-export const REGISTER_USER: TypedDocumentNode = gql`
-	mutation RegisterUser($registerInput: UserRegisterInput!) {
+export const REGISTER_USER_MUTATION: TypedDocumentNode = gql`
+	mutation RegisterUserMutation($registerInput: UserRegisterInput!) {
 		registerUser(registerInput: $registerInput) {
 			firstName
 			lastName
