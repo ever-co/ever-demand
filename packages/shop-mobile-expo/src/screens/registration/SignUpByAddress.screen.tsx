@@ -6,7 +6,7 @@ import {
 	Alert,
 	TouchableOpacity,
 	// Button as NativeBtn,
-	// Text as NativeTxt,
+	TextInput as NativeTextInput,
 } from 'react-native';
 import {
 	ActivityIndicator,
@@ -84,7 +84,6 @@ const SignUpByAddressScreen = () => {
 	const [formApartmentCheckbox, setFormApartmentCheckbox] =
 		React.useState<boolean>(true);
 	const [formErrors, setFormErrors] = React.useState<FormErrorsType>({});
-	const [loading, setLoading] = React.useState<boolean>(true);
 	const [canGoBack, setCanGoBack] = React.useState<boolean>(false);
 	const [, /* preventBackCallBack */ setPreventBackCallBack] = React.useState<
 		() => any
@@ -93,6 +92,9 @@ const SignUpByAddressScreen = () => {
 		React.useState<Location.LocationObject | null>(null);
 	const [formattedAddress, setFormattedAddress] =
 		React.useState<FormattedAddressInterface | null>(null);
+	const [addressLoading, setAddressLoading] = React.useState<boolean>(true);
+	const [submitFormLoading, setSubmitFormLoading] =
+		React.useState<boolean>(false);
 
 	// DATA
 	const STYLES = StyleSheet.create({
@@ -149,7 +151,14 @@ const SignUpByAddressScreen = () => {
 			color: CC.light,
 			fontSize: CS.FONT_SIZE + 3,
 		},
-		formSubmitBtn: { ...GS.bgSecondary },
+		formSubmitBtn: {
+			...(submitFormLoading
+				? {
+						backgroundColor: CC.secondaryLight,
+						// tslint:disable-next-line: indent
+				  }
+				: GS.bgSecondary),
+		},
 		formSkipBtn: { ...GS.bgLight },
 		formErrorHelperText: {
 			textAlign: 'center',
@@ -166,6 +175,13 @@ const SignUpByAddressScreen = () => {
 		house: REQUIRE_NOT_EMPTY_PRESENCE,
 		apartment: REQUIRE_NOT_EMPTY_PRESENCE,
 	};
+
+	// REFS
+	const SCREEN_SCROLL_VIEW_REF = React.useRef<ScrollView | null>(null);
+	const FIRST_NAME_INPUT_REF = React.useRef<NativeTextInput | null>(null);
+	const LAST_NAME_INPUT_REF = React.useRef<NativeTextInput | null>(null);
+	const HOUSE_INPUT_REF = React.useRef<NativeTextInput | null>(null);
+	const APARTMENT_INPUT_REF = React.useRef<NativeTextInput | null>(null);
 
 	// FUNCTIONS
 	const onSubmitForm = () => {
@@ -190,15 +206,17 @@ const SignUpByAddressScreen = () => {
 		);
 
 		if (VALIDATION_RESULT) {
-			return setFormErrors(VALIDATION_RESULT);
+			setFormErrors(VALIDATION_RESULT);
+			SCREEN_SCROLL_VIEW_REF?.current?.scrollTo({ y: 0 });
+			return;
 		}
 
-		setLoading(true);
+		setSubmitFormLoading(true);
 	};
 
 	// EFFECTS
 	React.useEffect(() => {
-		setLoading(false);
+		setAddressLoading(false);
 		(async () => {
 			const { status } =
 				await Location.requestForegroundPermissionsAsync();
@@ -220,7 +238,7 @@ const SignUpByAddressScreen = () => {
 
 			setCurrentPosition(CURRENT_POSITION);
 			setFormattedAddress(FORMATTED_ADDRESS);
-			setLoading(false);
+			setAddressLoading(false);
 		})();
 	}, [NAVIGATION]);
 
@@ -257,8 +275,8 @@ const SignUpByAddressScreen = () => {
 			});
 
 			Alert.alert(
-				'Discard changes?',
-				"Your location isn't yet recognized. Are you sure to leave the screen?",
+				'Leave sign-up?',
+				"Your account isn't yet created! Are you sure to leave the screen?",
 				[
 					{ text: "Don't leave", style: 'cancel', onPress: () => {} },
 					{
@@ -277,7 +295,7 @@ const SignUpByAddressScreen = () => {
 	}, [NAVIGATION, canGoBack, warningDialog]);
 
 	return (
-		<ScrollView style={{ ...GS.screenStatic }}>
+		<ScrollView ref={SCREEN_SCROLL_VIEW_REF} style={{ ...GS.screenStatic }}>
 			<FocusAwareStatusBar
 				translucent={false}
 				backgroundColor={CC.primary}
@@ -299,7 +317,7 @@ const SignUpByAddressScreen = () => {
 
 				{/* section2 */}
 				<View style={STYLES.section2}>
-					{loading ? (
+					{addressLoading ? (
 						<>
 							<PaperText style={STYLES.section2Title}>
 								{
@@ -316,6 +334,7 @@ const SignUpByAddressScreen = () => {
 						<View style={STYLES.formContainer}>
 							<View style={STYLES.formInputContainer}>
 								<TextInput
+									ref={FIRST_NAME_INPUT_REF}
 									value={form.firstName}
 									placeholder='First name'
 									autoComplete='name'
@@ -324,6 +343,11 @@ const SignUpByAddressScreen = () => {
 									style={STYLES.formInput}
 									error={!!formErrors.firstName}
 									mode='outlined'
+									returnKeyLabel='next'
+									returnKeyType='next'
+									onSubmitEditing={() =>
+										LAST_NAME_INPUT_REF?.current?.focus()
+									}
 									onChangeText={(text) =>
 										setForm((prevForm) => ({
 											...prevForm,
@@ -344,6 +368,7 @@ const SignUpByAddressScreen = () => {
 
 							<View style={STYLES.formInputContainer}>
 								<TextInput
+									ref={LAST_NAME_INPUT_REF}
 									value={form.lastName}
 									placeholder='Last name'
 									autoComplete='name-family'
@@ -352,6 +377,11 @@ const SignUpByAddressScreen = () => {
 									style={STYLES.formInput}
 									error={!!formErrors.lastName}
 									mode='outlined'
+									returnKeyLabel='next'
+									returnKeyType='next'
+									onSubmitEditing={() =>
+										HOUSE_INPUT_REF?.current?.focus()
+									}
 									onChangeText={(text) =>
 										setForm((prevForm) => ({
 											...prevForm,
@@ -376,6 +406,7 @@ const SignUpByAddressScreen = () => {
 										...STYLES.formInputContainerRow,
 									}}>
 									<TextInput
+										ref={HOUSE_INPUT_REF}
 										value={form.house}
 										placeholder='House'
 										keyboardType='default'
@@ -385,6 +416,11 @@ const SignUpByAddressScreen = () => {
 										}}
 										error={!!formErrors.house}
 										mode='outlined'
+										returnKeyLabel='next'
+										returnKeyType='next'
+										onSubmitEditing={() =>
+											APARTMENT_INPUT_REF?.current?.focus()
+										}
 										onChangeText={(text) =>
 											setForm((prevForm) => ({
 												...prevForm,
@@ -408,6 +444,7 @@ const SignUpByAddressScreen = () => {
 										...STYLES.formInputContainerRow,
 									}}>
 									<TextInput
+										ref={APARTMENT_INPUT_REF}
 										value={
 											formApartmentCheckbox
 												? form.apartment
@@ -431,6 +468,9 @@ const SignUpByAddressScreen = () => {
 											colors: { primary: CC.secondary },
 										}}
 										mode='outlined'
+										returnKeyLabel='done'
+										returnKeyType='done'
+										onSubmitEditing={onSubmitForm}
 										onChangeText={(text) =>
 											setForm((prevForm) => ({
 												...prevForm,
@@ -485,18 +525,21 @@ const SignUpByAddressScreen = () => {
 							</View>
 
 							<Button
-								onPress={onSubmitForm}
+								loading={submitFormLoading}
+								disabled={submitFormLoading}
 								uppercase={false}
 								style={{
 									...STYLES.formBtn,
 									...STYLES.formSubmitBtn,
 								}}
 								labelStyle={STYLES.formBtnLabel}
-								theme={{ colors: { primary: CC.primary } }}>
+								theme={{ colors: { primary: CC.primary } }}
+								onPress={onSubmitForm}>
 								Submit
 							</Button>
 
 							<Button
+								disabled={submitFormLoading}
 								uppercase={false}
 								style={{
 									...STYLES.formBtn,
