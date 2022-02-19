@@ -44,13 +44,14 @@ const paperTheme: PaperThemeType = {
 	roundness: CS.SPACE_SM - 2,
 	colors: {
 		...DefaultTheme.colors,
-		primary: CC.primary,
-		accent: CC.secondary,
+		primary: CC.secondary,
+		accent: CC.secondaryLight,
 		background: CC.primary,
-		surface: CC.white,
+		surface: CC.primaryHightLight,
+		onSurface: CC.grayHighLight,
 		disabled: CC.grayLight,
 		text: CC.light,
-		placeholder: CC.grayHighLight,
+		placeholder: CC.grayLight,
 		error: CC.danger,
 	},
 	fonts: {
