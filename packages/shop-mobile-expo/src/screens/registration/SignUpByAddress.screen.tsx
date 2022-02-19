@@ -38,7 +38,7 @@ import {
 import { FocusAwareStatusBar, PaperText } from '../../components/Common';
 
 //  CONSTANTS
-import { REQUIRE_PRESENCE } from '../../constants/rules.validate';
+import { REQUIRE_NOT_EMPTY_PRESENCE } from '../../constants/rules.validate';
 
 // STYLES
 import {
@@ -151,13 +151,20 @@ const SignUpByAddressScreen = () => {
 		},
 		formSubmitBtn: { ...GS.bgSecondary },
 		formSkipBtn: { ...GS.bgLight },
+		formErrorHelperText: {
+			textAlign: 'center',
+		},
+		formErrorHelperTextApartment: {
+			...GS.mb2,
+			marginTop: -(CS.SPACE - 5),
+		},
 	});
 
-	const VALIDATION_CONSTRAINT = {
-		firstName: REQUIRE_PRESENCE,
-		lastName: REQUIRE_PRESENCE,
-		house: REQUIRE_PRESENCE,
-		apartment: REQUIRE_PRESENCE,
+	const VALIDATION_CONSTRAINT: { [name in FormInputNameType]?: object } = {
+		firstName: REQUIRE_NOT_EMPTY_PRESENCE,
+		lastName: REQUIRE_NOT_EMPTY_PRESENCE,
+		house: REQUIRE_NOT_EMPTY_PRESENCE,
+		apartment: REQUIRE_NOT_EMPTY_PRESENCE,
 	};
 
 	// FUNCTIONS
@@ -169,9 +176,17 @@ const SignUpByAddressScreen = () => {
 			...formattedAddress,
 		};
 
+		const FORMATTED_CONSTRAINTS = {
+			...VALIDATION_CONSTRAINT,
+		};
+
+		if (!formApartmentCheckbox) {
+			delete FORMATTED_CONSTRAINTS.apartment;
+		}
+
 		const VALIDATION_RESULT = validate(
 			FORMATTED_FORM,
-			VALIDATION_CONSTRAINT,
+			FORMATTED_CONSTRAINTS,
 		);
 
 		if (VALIDATION_RESULT) {
@@ -305,8 +320,9 @@ const SignUpByAddressScreen = () => {
 									placeholder='First name'
 									autoComplete='name'
 									textContentType='name'
-									error={!!formErrors.firstName}
+									keyboardType='name-phone-pad'
 									style={STYLES.formInput}
+									error={!!formErrors.firstName}
 									mode='outlined'
 									onChangeText={(text) =>
 										setForm((prevForm) => ({
@@ -318,6 +334,7 @@ const SignUpByAddressScreen = () => {
 
 								<HelperText
 									visible={!!formErrors?.firstName}
+									style={STYLES.formErrorHelperText}
 									type='error'>
 									{formErrors?.firstName
 										? formErrors.firstName[0]
@@ -333,6 +350,7 @@ const SignUpByAddressScreen = () => {
 									textContentType='familyName'
 									keyboardType='name-phone-pad'
 									style={STYLES.formInput}
+									error={!!formErrors.lastName}
 									mode='outlined'
 									onChangeText={(text) =>
 										setForm((prevForm) => ({
@@ -343,6 +361,7 @@ const SignUpByAddressScreen = () => {
 								/>
 								<HelperText
 									visible={!!formErrors?.lastName}
+									style={STYLES.formErrorHelperText}
 									type='error'>
 									{formErrors.lastName
 										? formErrors.lastName[0]
@@ -364,6 +383,7 @@ const SignUpByAddressScreen = () => {
 											...STYLES.formInput,
 											...GS.mr2,
 										}}
+										error={!!formErrors.house}
 										mode='outlined'
 										onChangeText={(text) =>
 											setForm((prevForm) => ({
@@ -374,6 +394,7 @@ const SignUpByAddressScreen = () => {
 									/>
 									<HelperText
 										visible={!!formErrors?.house}
+										style={STYLES.formErrorHelperText}
 										type='error'>
 										{formErrors.house
 											? formErrors.house[0]
@@ -392,10 +413,14 @@ const SignUpByAddressScreen = () => {
 												? form.apartment
 												: ''
 										}
-										disabled={!formApartmentCheckbox}
-										editable={formApartmentCheckbox}
 										placeholder={CURRENT_LANGUAGE.APARTMENT}
 										keyboardType='default'
+										error={
+											!!formErrors.apartment &&
+											formApartmentCheckbox
+										}
+										disabled={!formApartmentCheckbox}
+										editable={formApartmentCheckbox}
 										style={{
 											...STYLES.formInput,
 											...(!formApartmentCheckbox
@@ -420,7 +445,10 @@ const SignUpByAddressScreen = () => {
 												!formApartmentCheckbox,
 											)
 										}
-										style={GS.justifyContentBetween}>
+										style={{
+											...GS.justifyContentBetween,
+											...GS.mb0,
+										}}>
 										<PaperText>
 											{CURRENT_LANGUAGE.APARTMENT}
 										</PaperText>
@@ -440,8 +468,15 @@ const SignUpByAddressScreen = () => {
 									</TouchableOpacity>
 
 									<HelperText
-										visible={!!formErrors?.apartment}
-										type='error'>
+										visible={
+											!!formErrors?.apartment &&
+											formApartmentCheckbox
+										}
+										type='error'
+										style={{
+											...STYLES.formErrorHelperText,
+											...STYLES.formErrorHelperTextApartment,
+										}}>
 										{formErrors.apartment
 											? formErrors.apartment[0]
 											: ''}
