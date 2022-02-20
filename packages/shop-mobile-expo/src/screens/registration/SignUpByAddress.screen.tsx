@@ -19,26 +19,32 @@ import { useNavigation } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import { showMessage } from 'react-native-flash-message';
 import { validate } from 'validate.js';
+import { useMutation } from '@apollo/client';
+
+// TYPES/INTERFACES
+import { RegisterUserArgsInterface } from '../../client/argumentInterfaces';
 
 // CONSTANTS
-// import GROUPS from '../../router/groups.routes';
+import GROUPS from '../../router/groups.routes';
+import { REQUIRE_NOT_EMPTY_PRESENCE } from '../../constants/rules.validate';
+
+// MUTATIONS
+import { REGISTER_USER_MUTATION } from '../../client/mutations';
 
 // ACTIONS & SELECTORS
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { setUserData } from '../../store/features/user';
 import { getLanguage } from '../../store/features/translation';
-// import { setGroup } from '../../store/features/navigation';
+import { setGroup } from '../../store/features/navigation';
 
 // HELPERS
 import {
-	getFormattedAddress,
-	FormattedAddressInterface,
+	getFormattedLocation,
+	FormattedLocationInterface,
 } from '../../helpers/location';
 
 // COMPONENTS
 import { FocusAwareStatusBar, PaperText } from '../../components/Common';
-
-//  CONSTANTS
-import { REQUIRE_NOT_EMPTY_PRESENCE } from '../../constants/rules.validate';
 
 // STYLES
 import {
@@ -68,7 +74,7 @@ const SignUpByAddressScreen = () => {
 	const CURRENT_LANGUAGE = useAppSelector(getLanguage);
 
 	// ACTIONS
-	const SET_NAVIGATION_GROUP = useAppDispatch();
+	const reduxDispatch = useAppDispatch();
 
 	// NAVIGATION
 	const NAVIGATION = useNavigation();
@@ -90,8 +96,8 @@ const SignUpByAddressScreen = () => {
 	>(() => {});
 	const [currentPosition, setCurrentPosition] =
 		React.useState<Location.LocationObject | null>(null);
-	const [formattedAddress, setFormattedAddress] =
-		React.useState<FormattedAddressInterface | null>(null);
+	const [formattedLocation, setFormattedLocation] =
+		React.useState<FormattedLocationInterface | null>(null);
 	const [addressLoading, setAddressLoading] = React.useState<boolean>(true);
 	const [submitFormLoading, setSubmitFormLoading] =
 		React.useState<boolean>(false);
@@ -184,13 +190,16 @@ const SignUpByAddressScreen = () => {
 	const HOUSE_INPUT_REF = React.useRef<NativeTextInput | null>(null);
 	const APARTMENT_INPUT_REF = React.useRef<NativeTextInput | null>(null);
 
+	// MUTATIONS
+	const [registerUser] = useMutation(REGISTER_USER_MUTATION);
+
 	// FUNCTIONS
 	const onSubmitForm = () => {
 		setFormErrors({});
 
 		const FORMATTED_FORM = {
 			...form,
-			...formattedAddress,
+			...formattedLocation,
 		};
 
 		const FORMATTED_CONSTRAINTS = {
@@ -213,6 +222,55 @@ const SignUpByAddressScreen = () => {
 		}
 
 		setSubmitFormLoading(true);
+		const NEW_USER_DATA: RegisterUserArgsInterface = {
+			registerInput: {
+				user: {
+					firstName: FORMATTED_FORM.firstName,
+					lastName: FORMATTED_FORM.lastName,
+					apartment: formApartmentCheckbox
+						? FORMATTED_FORM.apartment
+						: '',
+					geoLocation: {
+						loc: {
+							coordinates: [
+								FORMATTED_FORM.longitude as number,
+								FORMATTED_FORM.latitude as number,
+							],
+							type: 'Point',
+						},
+						house: FORMATTED_FORM.house,
+						streetAddress: FORMATTED_FORM.streetAddress as string,
+						city: FORMATTED_FORM.city as string,
+						countryId: FORMATTED_FORM.countryId as number,
+					},
+				},
+			},
+		};
+
+		console.log(NEW_USER_DATA);
+		registerUser({
+			variables: {
+				...NEW_USER_DATA,
+			},
+			onCompleted: (TData) => {
+				reduxDispatch(setUserData(TData));
+				reduxDispatch(setGroup(GROUPS.APP));
+				showMessage({
+					message: 'Successful account creation',
+					type: 'success',
+				});
+				setSubmitFormLoading(false);
+			},
+			onError: (ApolloError) => {
+				console.log('ApolloError ==>', ApolloError);
+				showMessage({
+					message: ApolloError.name,
+					description: ApolloError.message,
+					type: 'danger',
+				});
+				setSubmitFormLoading(false);
+			},
+		});
 	};
 
 	// EFFECTS
@@ -233,28 +291,28 @@ const SignUpByAddressScreen = () => {
 			}
 
 			const CURRENT_POSITION = await Location.getCurrentPositionAsync({});
-			const FORMATTED_ADDRESS = await getFormattedAddress(
+			const FORMATTED_ADDRESS = await getFormattedLocation(
 				CURRENT_POSITION.coords,
 			);
 
 			setCurrentPosition(CURRENT_POSITION);
-			setFormattedAddress(FORMATTED_ADDRESS);
+			setFormattedLocation(FORMATTED_ADDRESS);
 			setAddressLoading(false);
 		})();
 	}, [NAVIGATION]);
 
 	React.useEffect(() => {
 		// setCanGoBack(true);
-		// SET_NAVIGATION_GROUP(setGroup(GROUPS.APP));
-	}, [SET_NAVIGATION_GROUP]);
+		// reduxDispatch(setGroup(GROUPS.APP));
+	}, [reduxDispatch]);
 
 	React.useEffect(() => {
 		console.log(
 			'\nLocation error ===> ',
 			currentPosition,
-			formattedAddress,
+			formattedLocation,
 		);
-	}, [currentPosition, formattedAddress]);
+	}, [currentPosition, formattedLocation]);
 
 	React.useEffect(() => {
 		NAVIGATION.addListener('beforeRemove', (e) => {
