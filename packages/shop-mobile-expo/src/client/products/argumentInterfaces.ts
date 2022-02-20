@@ -104,7 +104,7 @@ export interface WarehouseProductInterface {
 export interface GetGeoLocationProductsOptions {
 	isDeliveryRequired?: MaybeType<ScalarsInterface['Boolean']>;
 	isTakeaway?: MaybeType<ScalarsInterface['Boolean']>;
-	merchantIds?: MaybeType<Array<MaybeType<ScalarsInterface['String']>>>;
+	merchantIds?: MaybeType<MaybeType<ScalarsInterface['String']>[]>;
 	imageOrientation?: MaybeType<ScalarsInterface['Int']>;
 	locale?: MaybeType<ScalarsInterface['String']>;
 	wihoutCount?: MaybeType<ScalarsInterface['Boolean']>;
