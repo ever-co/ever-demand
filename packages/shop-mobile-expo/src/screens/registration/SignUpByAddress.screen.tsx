@@ -248,7 +248,7 @@ const SignUpByAddressScreen = () => {
 				...CREATE_INVITE_INPUT,
 			},
 			onCompleted: (TData) => {
-				reduxDispatch(setUserData(TData));
+				reduxDispatch(setUserData(TData.createInvite));
 				reduxDispatch(setGroup(GROUPS.APP));
 				showMessage({
 					message: "Great job 🎉, you're sign-up as invite",
