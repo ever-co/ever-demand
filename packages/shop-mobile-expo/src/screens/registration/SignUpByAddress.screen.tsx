@@ -230,14 +230,17 @@ const SignUpByAddressScreen = () => {
 						: '',
 					geoLocation: {
 						countryId: 0,
-						city: 'null',
-						streetAddress: 'null',
-						house: 'null',
+						city: FORMATTED_FORM.city,
+						streetAddress: FORMATTED_FORM.streetAddress as string,
+						house: FORMATTED_FORM.house,
 						postcode: null,
 						notes: null,
 						loc: {
 							type: 'Point',
-							coordinates: [0, 0],
+							coordinates: [
+								FORMATTED_FORM.longitude as number,
+								FORMATTED_FORM.latitude as number,
+							],
 						},
 					},
 				},
