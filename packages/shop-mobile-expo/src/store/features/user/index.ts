@@ -15,8 +15,8 @@ export const navigationSlice = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {
-		setData: (state, payload: PayloadAction<any>) => {
-			state.data = payload;
+		setData: (state, cation: PayloadAction<any>) => {
+			state.data = cation.payload;
 		},
 	},
 });
