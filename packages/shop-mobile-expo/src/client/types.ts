@@ -15,7 +15,7 @@ export interface GeoLocationInterface {
 	house: ScalarsInterface['String'];
 	postcode?: MaybeType<ScalarsInterface['String']>;
 	loc: LocInterface;
-	coordinates: GeoLocationCoordinatesInterface;
+	coordinates?: GeoLocationCoordinatesInterface;
 }
 
 export interface GeoLocationCoordinatesInterface {
