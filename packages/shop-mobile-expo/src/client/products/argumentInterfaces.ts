@@ -2,6 +2,7 @@ import type {
 	ImageInterface,
 	TranslateInterface,
 	PagingOptionsInputInterface,
+	GeoLocationInputInterface,
 } from '../types';
 import type { MaybeType, ScalarsInterface } from '../../types';
 
@@ -100,11 +101,21 @@ export interface WarehouseProductInterface {
 	deliveryTimeMax?: MaybeType<ScalarsInterface['Int']>;
 }
 
+export interface GetGeoLocationProductsOptions {
+	isDeliveryRequired?: MaybeType<ScalarsInterface['Boolean']>;
+	isTakeaway?: MaybeType<ScalarsInterface['Boolean']>;
+	merchantIds?: MaybeType<Array<MaybeType<ScalarsInterface['String']>>>;
+	imageOrientation?: MaybeType<ScalarsInterface['Int']>;
+	locale?: MaybeType<ScalarsInterface['String']>;
+	wihoutCount?: MaybeType<ScalarsInterface['Boolean']>;
+}
+
 /**
  *
  */
 export interface ProductsQueryArgsInterface {
-	findInput?: MaybeType<ProductsFindInputInterface>;
+	searchText?: MaybeType<ScalarsInterface['String']>;
 	pagingOptions?: MaybeType<PagingOptionsInputInterface>;
-	existedProductsIds?: MaybeType<ScalarsInterface['String']>;
+	options?: MaybeType<GetGeoLocationProductsOptions>;
+	geoLocation: GeoLocationInputInterface;
 }
