@@ -4,6 +4,9 @@ import { Avatar, Title, Button } from 'react-native-paper';
 // tslint:disable-next-line: no-implicit-dependencies no-submodule-imports
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+// TYPES
+import type { ProductInfoInterface } from '../../client/products/argumentInterfaces';
+
 // COMPONENTS
 import { PaperText } from '../../components/Common';
 
@@ -14,9 +17,12 @@ import {
 	CONSTANT_COLOR as CC,
 } from '../../assets/ts/styles';
 
-export type ProductItemType = any;
+// TYPES
+export interface ProductItemType {
+	data: ProductInfoInterface;
+}
 
-const ProductItem = (props: ProductItemType) => {
+const ProductItem: React.FC<ProductItemType> = (props: ProductItemType) => {
 	const styles = StyleSheet.create({
 		container: {
 			...GS.w100,
@@ -80,16 +86,24 @@ const ProductItem = (props: ProductItemType) => {
 					<Avatar.Image
 						size={CS.FONT_SIZE_XLG * 2.2}
 						source={{
-							uri: 'https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fHN1c2hpfGVufDB8fDB8fA%3D%3D&w=1000&q=80',
+							uri: props?.data?.warehouseLogo
+								? props?.data?.warehouseLogo
+								: 'https://media.istockphoto.com/vectors/flat-design-home-or-homepage-icon-vector-illustration-vector-id1134930193?k=20&m=1134930193&s=170667a&w=0&h=8b4ri9ib7s-Hz3Z6fnRWfygmf5Zb_UvA2PQJv4ukmic=',
 						}}
 					/>
 				</TouchableOpacity>
 				<View style={styles.headerContent}>
 					<Title style={styles.headerContentTitle}>
-						{props.data?.product?.title}
+						{
+							props?.data?.warehouseProduct?.product?.title[0]
+								?.value
+						}
 					</Title>
 					<PaperText style={styles.headerContentDescription}>
-						{props.data?.product?.description}
+						{
+							props?.data?.warehouseProduct?.product
+								?.description[0]?.value
+						}
 					</PaperText>
 				</View>
 				<View style={styles.headerAvailability}>
@@ -107,9 +121,9 @@ const ProductItem = (props: ProductItemType) => {
 			<Image
 				style={styles.prodImg}
 				source={{
-					uri: props.data?.product?.images[
-						props.data?.id ? props.data?.id : 0
-					],
+					uri: props?.data?.warehouseProduct?.product?.images?.length
+						? props?.data?.warehouseProduct?.product?.images[0].url
+						: 'https://static.vecteezy.com/system/resources/previews/004/941/788/original/cardboard-boxes-or-packaging-paper-and-shipping-box-carton-parcels-and-delivery-packages-pile-flat-warehouse-goods-and-cargo-transportation-design-illustration-vector.jpg',
 				}}
 			/>
 			<View style={{ ...styles.section, ...styles.footer }}>
@@ -120,7 +134,7 @@ const ProductItem = (props: ProductItemType) => {
 						...GS.FF_NunitoSemiBold,
 						color: CC.light,
 					}}>
-					Buy for $42
+					Buy for ${42}
 				</Button>
 				<Button
 					uppercase={false}
