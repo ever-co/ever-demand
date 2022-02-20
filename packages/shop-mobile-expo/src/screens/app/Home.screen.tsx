@@ -1,11 +1,18 @@
 import React from 'react';
 import { View, ActivityIndicator, FlatList, StyleSheet } from 'react-native';
 import { Title } from 'react-native-paper';
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+
+// TYPES/INTERFACES
+import type { ProductsQueryArgsInterface } from '../../client/products/argumentInterfaces';
 
 // SELECTORS
 import { useAppSelector } from '../../store/hooks';
+import { getUserData } from '../../store/features/user';
 import { getLanguage } from '../../store/features/translation';
+
+// QUERIES
+import { GEO_LOCATION_PRODUCTS_BY_PAGING } from '../../client/products/queries';
 
 // COMPONENTS
 import {
@@ -17,35 +24,42 @@ import {
 // STYLES
 import { GLOBAL_STYLE as GS } from '../../assets/ts/styles';
 
-const PRODUCT_INFO_TEMPLATE = {
-	initialPrice: 10,
-	price: 11,
-	deliveryTimeMin: 5,
-	deliveryTimeMax: 10,
-	count: 10,
-	product: {
-		title: 'Product name',
-		description: 'Product description',
-		images: [
-			'https://media.istockphoto.com/photos/japanese-restaurant-sushi-dish-picture-id497022342?k=20&m=497022342&s=612x612&w=0&h=VkCoBfI4q67KiRfyIJ-bQx3S1EyjTfEWL2DtP9Ird-0=',
-			'https://media.istockphoto.com/photos/chopstick-with-nigiri-sushi-piece-picture-id1053855542?k=20&m=1053855542&s=612x612&w=0&h=lU0-h01vg4dCrbh9ftIkuyAudi8texy7_gdAQKgLyjA=',
-			'https://media.istockphoto.com/photos/close-up-of-sashimi-sushi-set-with-chopsticks-and-soy-picture-id521800854?k=20&m=521800854&s=612x612&w=0&h=Bzh6dyGUgbf_FFoyoz7vRrvZhz-kskvbdjB3cyssIbM=',
-		],
-	},
-};
-
 function HomeScreen({}) {
 	// SELECTORS
 	const LANGUAGE = useAppSelector(getLanguage);
+	const USER_DATA = useAppSelector(getUserData);
+	console.log('USER_DATA ===>', USER_DATA);
+	// DATA
+	const PRODUCTS_QUERY_ARGS_INTERFACE: ProductsQueryArgsInterface = {
+		geoLocation: {
+			loc: {
+				type: 'Point',
+				coordinates: [
+					USER_DATA?.geoLocation
+						? USER_DATA?.geoLocation?.coordinates?.lng
+						: 0,
+					USER_DATA?.geoLocation
+						? USER_DATA?.geoLocation?.coordinates?.lat
+						: 0,
+				],
+			},
+		},
+	};
 
 	// QUERIES
-	const PRODUCTS_QUERY = gql`
-		query Products {
-			getCountOfProducts
-		}
-	`;
-	const { data, loading, error } = useQuery(PRODUCTS_QUERY, {
-		variables: {},
+	const PRODUCTS_QUERY_RESPONSE = useQuery(GEO_LOCATION_PRODUCTS_BY_PAGING, {
+		variables: {
+			...PRODUCTS_QUERY_ARGS_INTERFACE,
+		},
+		onCompleted: (TData) => {
+			console.log(
+				'PRODUCTS_QUERY_ARGS_INTERFACE ===>',
+				PRODUCTS_QUERY_ARGS_INTERFACE,
+				'\n',
+				'TData ===>',
+				TData,
+			);
+		},
 	});
 
 	// STYLES
@@ -57,11 +71,6 @@ function HomeScreen({}) {
 			...GS.mb1,
 		},
 	});
-
-	// EFFECT
-	React.useEffect(() => {
-		console.log('Products ==>', data, loading, error);
-	}, [data, loading, error]);
 
 	return (
 		<View style={{ ...GS.screen }}>
@@ -76,15 +85,19 @@ function HomeScreen({}) {
 				showControls
 			/>
 
-			{loading ? (
+			{PRODUCTS_QUERY_RESPONSE.loading ? (
 				<View style={styles.loaderContainer}>
 					<ActivityIndicator color={'#FFF'} size={25} />
 				</View>
-			) : data?.getCountOfProducts ? (
+			) : PRODUCTS_QUERY_RESPONSE.data?.geoLocationProductsByPaging &&
+			  // tslint:disable-next-line: indent
+			  PRODUCTS_QUERY_RESPONSE.data?.geoLocationProductsByPaging
+					.length ? (
 				<FlatList
-					data={new Array(data?.getCountOfProducts || 0).fill(
-						PRODUCT_INFO_TEMPLATE,
-					)}
+					data={
+						PRODUCTS_QUERY_RESPONSE.data
+							?.geoLocationProductsByPaging
+					}
 					renderItem={({ item, index }) => {
 						return (
 							<View style={styles.productItemContainer}>
