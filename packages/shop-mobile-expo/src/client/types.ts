@@ -45,11 +45,11 @@ export interface LocInputInterface {
 }
 
 export interface GeoLocationInputInterface {
-	countryId: ScalarsInterface['Int'];
+	countryId?: MaybeType<ScalarsInterface['Int']>;
 	countryName?: MaybeType<ScalarsInterface['String']>;
-	city: ScalarsInterface['String'];
-	streetAddress: ScalarsInterface['String'];
-	house: ScalarsInterface['String'];
+	city?: MaybeType<ScalarsInterface['String']>;
+	streetAddress?: MaybeType<ScalarsInterface['String']>;
+	house?: MaybeType<ScalarsInterface['String']>;
 	postcode?: MaybeType<ScalarsInterface['String']>;
 	loc: LocationInterface;
 }
