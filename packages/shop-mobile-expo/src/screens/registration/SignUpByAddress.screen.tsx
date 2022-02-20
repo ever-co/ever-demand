@@ -112,14 +112,14 @@ const SignUpByAddressScreen = () => {
 			...GS.bgTransparent,
 			...GS.px5,
 			...GS.pb5,
-			...GS.mx5,
 		},
 		section1: {
 			...GS.centered,
-			...GS.py5,
-			...GS.my5,
-			height: CS.FONT_SIZE_LG * 1.8 * 5,
-			marginTop: CS.FONT_SIZE_LG * 1.8 * 3,
+			...GS.pt5,
+			...GS.mt5,
+			...GS.pb3,
+			...GS.mb3,
+			marginTop: CS.FONT_SIZE_LG * 3,
 		},
 		section1Title: {
 			...GS.txtCenter,
@@ -460,7 +460,7 @@ const SignUpByAddressScreen = () => {
 									<TextInput
 										ref={HOUSE_INPUT_REF}
 										value={form.house}
-										placeholder='House'
+										placeholder={CURRENT_LANGUAGE.HOUSE}
 										keyboardType='default'
 										style={{
 											...STYLES.formInput,
