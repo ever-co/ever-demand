@@ -14,6 +14,7 @@ import {
 	Button,
 	HelperText,
 	Checkbox,
+	Text,
 } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import * as Location from 'expo-location';
@@ -54,11 +55,7 @@ import {
 } from '../../assets/ts/styles';
 
 // TYPE
-export type FormInputNameType =
-	| 'firstName'
-	| 'lastName'
-	| 'house'
-	| 'apartment';
+export type FormInputNameType = 'city' | 'street' | 'house' | 'apartment';
 export type FormType = {
 	[name in FormInputNameType]: string;
 };
@@ -82,8 +79,8 @@ const SignUpByAddressScreen = () => {
 	// STATES
 	const [warningDialog, setWarningDialog] = React.useState<boolean>(false);
 	const [form, setForm] = React.useState<FormType>({
-		firstName: '',
-		lastName: '',
+		city: '',
+		street: '',
 		house: '',
 		apartment: '',
 	});
@@ -177,16 +174,16 @@ const SignUpByAddressScreen = () => {
 
 	// TODO: Add more constraints
 	const VALIDATION_CONSTRAINT: { [name in FormInputNameType]?: object } = {
-		firstName: REQUIRE_NOT_EMPTY_PRESENCE,
-		lastName: REQUIRE_NOT_EMPTY_PRESENCE,
+		city: REQUIRE_NOT_EMPTY_PRESENCE,
+		street: REQUIRE_NOT_EMPTY_PRESENCE,
 		house: REQUIRE_NOT_EMPTY_PRESENCE,
 		apartment: REQUIRE_NOT_EMPTY_PRESENCE,
 	};
 
 	// REFS
 	const SCREEN_SCROLL_VIEW_REF = React.useRef<ScrollView | null>(null);
-	const FIRST_NAME_INPUT_REF = React.useRef<NativeTextInput | null>(null);
-	const LAST_NAME_INPUT_REF = React.useRef<NativeTextInput | null>(null);
+	const CITY_INPUT_REF = React.useRef<NativeTextInput | null>(null);
+	const STREET_INPUT_REF = React.useRef<NativeTextInput | null>(null);
 	const HOUSE_INPUT_REF = React.useRef<NativeTextInput | null>(null);
 	const APARTMENT_INPUT_REF = React.useRef<NativeTextInput | null>(null);
 
@@ -254,7 +251,7 @@ const SignUpByAddressScreen = () => {
 				reduxDispatch(setUserData(TData));
 				reduxDispatch(setGroup(GROUPS.APP));
 				showMessage({
-					message: 'Successful account creation',
+					message: "Great job 🎉, you're sign-up as invite",
 					type: 'success',
 				});
 				setSubmitFormLoading(false);
@@ -391,48 +388,46 @@ const SignUpByAddressScreen = () => {
 						<View style={STYLES.formContainer}>
 							<View style={STYLES.formInputContainer}>
 								<TextInput
-									ref={FIRST_NAME_INPUT_REF}
-									value={form.firstName}
-									placeholder='First name'
-									autoComplete='name'
-									textContentType='name'
-									keyboardType='name-phone-pad'
+									ref={CITY_INPUT_REF}
+									value={form.city}
+									placeholder={CURRENT_LANGUAGE.CITY}
+									autoComplete='street-address'
+									textContentType='addressCity'
+									keyboardType='default'
 									style={STYLES.formInput}
-									error={!!formErrors.firstName}
+									error={!!formErrors.city}
 									mode='outlined'
 									returnKeyLabel='next'
 									returnKeyType='next'
 									onSubmitEditing={() =>
-										LAST_NAME_INPUT_REF?.current?.focus()
+										STREET_INPUT_REF?.current?.focus()
 									}
 									onChangeText={(text) =>
 										setForm((prevForm) => ({
 											...prevForm,
-											firstName: text,
+											city: text,
 										}))
 									}
 								/>
 
 								<HelperText
-									visible={!!formErrors?.firstName}
+									visible={!!formErrors?.city}
 									style={STYLES.formErrorHelperText}
 									type='error'>
-									{formErrors?.firstName
-										? formErrors.firstName[0]
-										: ''}
+									{formErrors?.city ? formErrors.city[0] : ''}
 								</HelperText>
 							</View>
 
 							<View style={STYLES.formInputContainer}>
 								<TextInput
-									ref={LAST_NAME_INPUT_REF}
-									value={form.lastName}
-									placeholder='Last name'
-									autoComplete='name-family'
-									textContentType='familyName'
-									keyboardType='name-phone-pad'
+									ref={STREET_INPUT_REF}
+									value={form.street}
+									placeholder={CURRENT_LANGUAGE.STREET}
+									autoComplete='street-address'
+									textContentType='fullStreetAddress'
+									keyboardType='default'
 									style={STYLES.formInput}
-									error={!!formErrors.lastName}
+									error={!!formErrors.street}
 									mode='outlined'
 									returnKeyLabel='next'
 									returnKeyType='next'
@@ -442,16 +437,16 @@ const SignUpByAddressScreen = () => {
 									onChangeText={(text) =>
 										setForm((prevForm) => ({
 											...prevForm,
-											lastName: text,
+											street: text,
 										}))
 									}
 								/>
 								<HelperText
-									visible={!!formErrors?.lastName}
+									visible={!!formErrors?.street}
 									style={STYLES.formErrorHelperText}
 									type='error'>
-									{formErrors.lastName
-										? formErrors.lastName[0]
+									{formErrors.street
+										? formErrors.street[0]
 										: ''}
 								</HelperText>
 							</View>
@@ -595,19 +590,17 @@ const SignUpByAddressScreen = () => {
 								Submit
 							</Button>
 
-							<Button
-								disabled={submitFormLoading}
-								uppercase={false}
-								style={{
-									...STYLES.formBtn,
-									...STYLES.formSkipBtn,
-								}}
-								labelStyle={{
-									...STYLES.formBtnLabel,
-									color: CC.dark,
-								}}>
-								Skip
-							</Button>
+							<View style={{ ...GS.centered }}>
+								<TouchableOpacity disabled={submitFormLoading}>
+									<Text style={GS.mt2}>
+										<Text style={GS.txtSecondary}>
+											Click here
+										</Text>{' '}
+										to skip this step and fill these fields
+										later
+									</Text>
+								</TouchableOpacity>
+							</View>
 						</View>
 					)}
 				</View>
