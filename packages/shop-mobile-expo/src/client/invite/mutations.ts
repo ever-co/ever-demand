@@ -5,8 +5,8 @@ import { gql, TypedDocumentNode } from '@apollo/client';
  *
  * @type TypedDocumentNode
  */
-export const REGISTER_USER_MUTATION: TypedDocumentNode = gql`
-	mutation CreateInviteMutation($createInput: InviteCreateInput!) {
+export const CREATE_INVITE_BY_LOCATION_MUTATION: TypedDocumentNode = gql`
+	mutation CreateInviteByLocationMutation($createInput: InviteCreateInput!) {
 		createInvite(createInput: $createInput) {
 			id
 			code

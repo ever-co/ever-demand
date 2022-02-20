@@ -43,6 +43,10 @@ export interface QueryGetInviteByLocationArgsInterface {
 	info?: MaybeType<InviteByLocationInputInterface>;
 }
 
+export interface CreateInviteByLocationMutationArgsInterface {
+	createInput: InviteCreateInputInterface;
+}
+
 export interface InviteCreateInputInterface {
 	code?: MaybeType<ScalarsInterface['String']>;
 	apartment: ScalarsInterface['String'];
