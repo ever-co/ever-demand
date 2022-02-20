@@ -22,14 +22,14 @@ import { validate } from 'validate.js';
 import { useMutation } from '@apollo/client';
 
 // TYPES/INTERFACES
-import { RegisterUserArgsInterface } from '../../client/user/argumentInterfaces';
+import { CreateInviteByLocationMutationArgsInterface } from '../../client/invite/argumentInterfaces';
 
 // CONSTANTS
 import GROUPS from '../../router/groups.routes';
 import { REQUIRE_NOT_EMPTY_PRESENCE } from '../../constants/rules.validate';
 
 // MUTATIONS
-import { REGISTER_USER_MUTATION } from '../../client/user/mutations';
+import { CREATE_INVITE_BY_LOCATION_MUTATION } from '../../client/invite/mutations';
 
 // ACTIONS & SELECTORS
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
@@ -191,7 +191,9 @@ const SignUpByAddressScreen = () => {
 	const APARTMENT_INPUT_REF = React.useRef<NativeTextInput | null>(null);
 
 	// MUTATIONS
-	const [registerUser] = useMutation(REGISTER_USER_MUTATION);
+	const [handleCreatInviteByLocation] = useMutation(
+		CREATE_INVITE_BY_LOCATION_MUTATION,
+	);
 
 	// FUNCTIONS
 	const onSubmitForm = () => {
@@ -222,35 +224,31 @@ const SignUpByAddressScreen = () => {
 		}
 
 		setSubmitFormLoading(true);
-		const NEW_USER_DATA: RegisterUserArgsInterface = {
-			registerInput: {
-				user: {
-					firstName: FORMATTED_FORM.firstName,
-					lastName: FORMATTED_FORM.lastName,
+
+		const CREATE_INVITE_INPUT: CreateInviteByLocationMutationArgsInterface =
+			{
+				createInput: {
 					apartment: formApartmentCheckbox
 						? FORMATTED_FORM.apartment
 						: '',
 					geoLocation: {
+						countryId: 0,
+						city: 'null',
+						streetAddress: 'null',
+						house: 'null',
+						postcode: null,
+						notes: null,
 						loc: {
-							coordinates: [
-								FORMATTED_FORM.longitude as number,
-								FORMATTED_FORM.latitude as number,
-							],
 							type: 'Point',
+							coordinates: [0, 0],
 						},
-						house: FORMATTED_FORM.house,
-						streetAddress: FORMATTED_FORM.streetAddress as string,
-						city: FORMATTED_FORM.city as string,
-						countryId: FORMATTED_FORM.countryId as number,
 					},
 				},
-			},
-		};
+			};
 
-		console.log(NEW_USER_DATA);
-		registerUser({
+		handleCreatInviteByLocation({
 			variables: {
-				...NEW_USER_DATA,
+				...CREATE_INVITE_INPUT,
 			},
 			onCompleted: (TData) => {
 				reduxDispatch(setUserData(TData));
