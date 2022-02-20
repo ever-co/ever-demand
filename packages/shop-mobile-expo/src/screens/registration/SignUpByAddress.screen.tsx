@@ -270,7 +270,7 @@ const SignUpByAddressScreen = () => {
 
 	// EFFECTS
 	React.useEffect(() => {
-		setAddressLoading(false);
+		setAddressLoading(true);
 		(async () => {
 			const { status } =
 				await Location.requestForegroundPermissionsAsync();
