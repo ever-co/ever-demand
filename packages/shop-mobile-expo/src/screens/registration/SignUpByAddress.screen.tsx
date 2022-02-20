@@ -22,14 +22,14 @@ import { validate } from 'validate.js';
 import { useMutation } from '@apollo/client';
 
 // TYPES/INTERFACES
-import { RegisterUserArgsInterface } from '../../client/argumentInterfaces';
+import { RegisterUserArgsInterface } from '../../client/user/argumentInterfaces';
 
 // CONSTANTS
 import GROUPS from '../../router/groups.routes';
 import { REQUIRE_NOT_EMPTY_PRESENCE } from '../../constants/rules.validate';
 
 // MUTATIONS
-import { REGISTER_USER_MUTATION } from '../../client/mutations';
+import { REGISTER_USER_MUTATION } from '../../client/user/mutations';
 
 // ACTIONS & SELECTORS
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
