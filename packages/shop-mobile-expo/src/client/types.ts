@@ -58,3 +58,27 @@ export interface LocationInterface {
 	type: ScalarsInterface['String'];
 	coordinates: ScalarsInterface['Float'][];
 }
+
+export interface PagingOptionsInputInterface {
+	sort?: MaybeType<PagingSortInputInterface>;
+	limit?: MaybeType<ScalarsInterface['Int']>;
+	skip?: MaybeType<ScalarsInterface['Int']>;
+}
+
+export interface PagingSortInputInterface {
+	field: ScalarsInterface['String'];
+	sortBy: ScalarsInterface['String'];
+}
+
+export interface ImageInterface {
+	locale: ScalarsInterface['String'];
+	url: ScalarsInterface['String'];
+	width: ScalarsInterface['Int'];
+	height: ScalarsInterface['Int'];
+	orientation: ScalarsInterface['Int'];
+}
+
+export interface TranslateInterface {
+	locale: ScalarsInterface['String'];
+	value: ScalarsInterface['String'];
+}
