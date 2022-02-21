@@ -14,6 +14,12 @@ export const navigationSlice = createSlice({
 	name: 'user',
 	initialState: INITIAL_STATE,
 	reducers: {
+		setUser: (state, cation: PayloadAction<UserStateType>) => {
+			state.data = cation.payload.data;
+			state.isLoggedIn = cation.payload.isLoggedIn;
+
+			asyncStorage.setItem('user', JSON.stringify(state));
+		},
 		setData: (state, cation: PayloadAction<any>) => {
 			state.data = cation.payload;
 			asyncStorage.setItem('user', JSON.stringify(state));
@@ -22,6 +28,7 @@ export const navigationSlice = createSlice({
 });
 
 // ACTIONS
+export const setUser = navigationSlice.actions.setUser;
 export const setUserData = navigationSlice.actions.setData;
 
 // SELECTORS
