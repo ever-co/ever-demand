@@ -1,55 +1,69 @@
-export interface Environment {
-	production: boolean;
+export default interface Environment {
+	// TODO: Add more descriptive comments.
+	/** App environment */
+	PRODUCTION: boolean;
 
+	/** App version */
 	VERSION: string;
 
-	// 'slides' | 'list'
-	PRODUCTS_VIEW_TYPE: string;
+	/** Default state of products view type' */
+	PRODUCTS_VIEW_TYPE: 'slides' | 'list';
 
-	// 'popup' or 'page'
-	ORDER_INFO_TYPE: string;
-
-	API_FILE_UPLOAD_URL: string;
-
-	INVITE_BY_CODE_LOGO: string;
-	NO_INTERNET_LOGO: string;
+	/** Default state of order info state */
+	ORDER_INFO_TYPE: 'popup' | 'page';
 
 	COMPANY_NAME: string;
 
-	GOOGLE_MAPS_API_KEY: string;
+	/** Url of images */
+	IMAGE_URL: {
+		INVITE_BY_CODE_LOGO: string;
+		NO_INTERNET_LOGO: string;
+		MAP_MERCHANT_ICON: string;
+		MAP_USER_ICON: string;
+		MAP_CARRIER_ICON: string;
+	};
 
-	GOOGLE_ANALYTICS_API_KEY: string;
+	GOOGLE: {
+		MAPS_API_KEY: string;
+		ANALYTICS_API_KEY: string;
+	};
 
 	FAKE_UUID: string;
 
-	// Not secret MixPanel Token
+	/**
+	 *  Not secret MixPanel Token
+	 */
 	MIXPANEL_API_KEY: string;
 
-	DEFAULT_LANGUAGE: string;
-	DEFAULT_LOCALE: string;
+	LANGUAGE: {
+		LANG: string;
+		LOCALE: string;
+	};
 
-	DELIVERY_TIME_MIN: number;
-	DELIVERY_TIME_MAX: number;
+	DELIVERY_TIME: {
+		MIN: number;
+		MAX: number;
+	};
 
 	SUPPORT_NUMBER: string;
 
-	STRIPE_PUBLISHABLE_KEY: string;
+	STRIP: {
+		PUBLISHABLE_KEY: string;
+		POP_UP_LOGO: string;
+	};
 
-	STRIPE_POP_UP_LOGO: string;
+	COORDINATE: {
+		LATITUDE: number;
+		LONGITUDE: number;
+	};
 
-	MAP_MERCHANT_ICON_LINK: string;
-
-	MAP_USER_ICON_LINK: string;
-
-	MAP_CARRIER_ICON_LINK: string;
-
-	DEFAULT_LATITUDE: number;
-	DEFAULT_LONGITUDE: number;
-
-	GQL_ENDPOINT: string;
-	GQL_SUBSCRIPTIONS_ENDPOINT: string;
-	SERVICES_ENDPOINT: string;
-	HTTPS_SERVICES_ENDPOINT: string;
+	ENDPOINT: {
+		GQL: string;
+		GQL_SUBSCRIPTIONS: string;
+		SERVICES: string;
+		HTTPS_SERVICES: string;
+		API_FILE_UPLOAD: string;
+	};
 
 	FAKE_INVITE: {
 		ID: string;
@@ -64,11 +78,13 @@ export interface Environment {
 		COUNTRY_ID: number;
 	};
 
-	// For maintenance micro service
-	SETTINGS_APP_TYPE: string;
-	SETTINGS_MAINTENANCE_API_URL: string;
+	/** For maintenance micro service */
+	SETTINGS: {
+		APP_TYPE: string;
+		MAINTENANCE_API_URL: string;
+	};
 
-	// For "single" merchant (multiple branches)
+	/** For "single" merchant (multiple branches) */
 	MERCHANT_IDS: string[];
 
 	SHOPPING_CART: boolean;
