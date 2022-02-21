@@ -154,7 +154,6 @@ export default environment;
  * import the following file, but please comment it out in isProd mode
  * because it will have performance impact when throw error
  */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
 
 `;
 
