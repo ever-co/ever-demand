@@ -8,7 +8,7 @@ import { cleanEnv, num, str, bool, makeValidator, CleanOptions } from 'envalid';
 import { v4 as uuid } from 'uuid';
 
 export type Env = Readonly<{
-	production: boolean;
+	PRODUCTION: boolean;
 
 	VERSION: string;
 
@@ -21,6 +21,7 @@ export type Env = Readonly<{
 	API_FILE_UPLOAD_URL: string;
 
 	INVITE_BY_CODE_LOGO: string;
+
 	NO_INTERNET_LOGO: string;
 
 	COMPANY_NAME: string;
@@ -28,15 +29,18 @@ export type Env = Readonly<{
 	GOOGLE_MAPS_API_KEY: string;
 
 	GOOGLE_ANALYTICS_API_KEY: string;
+
 	FAKE_UUID: string;
 
 	// Not secret MixPanel Token
 	MIXPANEL_API_KEY: string;
 
 	DEFAULT_LANGUAGE: string;
+
 	DEFAULT_LOCALE: string;
 
 	DELIVERY_TIME_MIN: number;
+
 	DELIVERY_TIME_MAX: number;
 
 	SUPPORT_NUMBER: string;
@@ -47,7 +51,9 @@ export type Env = Readonly<{
 	STRIPE_POP_UP_LOGO: string;
 
 	MAP_MERCHANT_ICON_LINK: string;
+
 	MAP_USER_ICON_LINK: string;
+
 	MAP_CARRIER_ICON_LINK: string;
 
 	DEFAULT_LATITUDE: number;
@@ -55,30 +61,47 @@ export type Env = Readonly<{
 
 	// Graphql endpoints for apollo services
 	GQL_ENDPOINT: string;
+
 	GQL_SUBSCRIPTIONS_ENDPOINT: string;
+
 	SERVICES_ENDPOINT: string;
+
 	HTTPS_SERVICES_ENDPOINT: string;
 
 	FAKE_INVITE_ID: string;
+
 	FAKE_INVITE_CITY: string;
+
 	FAKE_INVITE_POSTCODE: string;
+
 	FAKE_INVITE_ADDRESS: string;
+
 	FAKE_INVITE_HOUSE: string;
+
 	FAKE_INVITE_CREATED_AT: string;
+
 	FAKE_INVITE_UPDATED_AT: string;
+
 	FAKE_INVITE_APARTMENT: string;
+
 	FAKE_INVITE_CODE: number;
+
 	FAKE_INVITE_COUNTRY_ID: number;
 
 	// For maintenance micro service
 	SETTINGS_APP_TYPE?: string;
+
 	SETTINGS_MAINTENANCE_API_URL?: string;
 
 	// For "single" merchant (multiple branches)
 	MERCHANT_IDS?: string[];
+
 	WEB_CONCURRENCY: number;
+
 	WEB_MEMORY: number;
+
 	PORT: number;
+
 	SHOPPING_CART: boolean;
 }>;
 
@@ -89,10 +112,10 @@ const merchantIDs: any = makeValidator((x) => {
 
 const opt: CleanOptions<Env> = {};
 
-export const env: any = cleanEnv(
+export const env = cleanEnv(
 	process.env,
 	{
-		production: bool({ default: false }),
+		PRODUCTION: bool({ default: false }),
 
 		VERSION: str({ default: '1.0.0' }),
 
