@@ -32,7 +32,7 @@ export type PaperThemeType = typeof DefaultTheme;
 
 // Initialize Apollo Client
 const apolloClient = new ApolloClient({
-	uri: ENV.GQL_ENDPOINT,
+	uri: ENV.ENDPOINT.GQL,
 	cache: new InMemoryCache(),
 	defaultOptions: { watchQuery: { fetchPolicy: 'cache-and-network' } },
 });
