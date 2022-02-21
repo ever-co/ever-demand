@@ -27,123 +27,121 @@ const envFileContent = `// NOTE: Auto-generated file
 // 'ng build --env=prod' then 'environment.prod.ts' will be used instead.
 // The list of which env maps to which file can be found in '.angular-cli.json'.
 
-import Environment from './model';
+import type Environment from './model';
 
-environment: Environment = {
+const environment: Environment = {
 	// TODO: Add more descriptive comments.
 	/**
 	 * App default environment
 	 *
-	 * @type ${typeof isProd}
+	 * @type boolean
 	 */
-	PRODUCTION: ${isProd},
+	PRODUCTION: false,
 
 	/**
 	 * App version
 	 *
-	 * @type ${typeof env.VERSION}
+	 * @type string
 	 */
-	VERSION: '${env.VERSION}',
+	VERSION: '1.0.0',
 
 	/**
 	 * @type 'slides' | 'list'
 	 */
-	PRODUCTS_VIEW_TYPE: '${env.PRODUCTS_VIEW_TYPE}',
+	PRODUCTS_VIEW_TYPE: 'slides',
 
 	/**
 	 * Order info behavior type
 	 *
 	 * @type 'popup' | 'page'
-	 * */
-	ORDER_INFO_TYPE: '${env.ORDER_INFO_TYPE}',
+	 */
+	ORDER_INFO_TYPE: 'page',
 
-	COMPANY_NAME: '${env.COMPANY_NAME}',
+	COMPANY_NAME: 'Ever Co. LTD',
 
 	/**
 	 * Contain images url
 	 */
 	IMAGE_URL: {
-		INVITE_BY_CODE_LOGO: '${env.INVITE_BY_CODE_LOGO}',
-		NO_INTERNET_LOGO: '${env.NO_INTERNET_LOGO}',
-		MAP_MERCHANT_ICON: '${env.MAP_MERCHANT_ICON_LINK}',
-		MAP_USER_ICON: '${env.MAP_USER_ICON_LINK}',
-		MAP_CARRIER_ICON: '${env.MAP_CARRIER_ICON_LINK}',
-	}
+		INVITE_BY_CODE_LOGO: 'assets/imgs/ever-logo.svg',
+		NO_INTERNET_LOGO: 'assets/imgs/logo.png',
+		MAP_MERCHANT_ICON:
+			'http://maps.google.com/mapfiles/kml/pal3/icon21.png',
+		MAP_USER_ICON: 'http://maps.google.com/mapfiles/kml/pal3/icon48.png',
+		MAP_CARRIER_ICON: 'http://maps.google.com/mapfiles/kml/pal4/icon54.png',
+	},
 
 	GOOGLE: {
-		MAPS_API_KEY: '${env.GOOGLE_MAPS_API_KEY}',
-		ANALYTICS_API_KEY: '${env.GOOGLE_ANALYTICS_API_KEY}',
+		MAPS_API_KEY: '',
+		ANALYTICS_API_KEY: '',
 	},
 
-	FAKE_UUID: '${env.FAKE_UUID}',
+	FAKE_UUID: 'ceffd77c-8cc1-47ac-b9b8-889f057aba3d',
 
 	// Not secret MixPanel Token
-	MIXPANEL_API_KEY: '${env.MIXPANEL_API_KEY}',
+	MIXPANEL_API_KEY: '',
 
 	LANGUAGE: {
-		LANG: '${env.DEFAULT_LANGUAGE}',
-		LOCALE: '${env.DEFAULT_LOCALE}',
+		LANG: 'en-US',
+		LOCALE: 'en-US',
 	},
 
-	DELIVERY_TIME:{
-		MIN: ${env.DELIVERY_TIME_MIN},
-		MAX: ${env.DELIVERY_TIME_MAX},
+	DELIVERY_TIME: {
+		MIN: 30,
+		MAX: 60,
 	},
 
-	SUPPORT_NUMBER: '${env.SUPPORT_NUMBER}',
+	SUPPORT_NUMBER: '0888888888',
 
 	STRIP: {
-		PUBLISHABLE_KEY: '${env.STRIPE_PUBLISHABLE_KEY}',
-		POP_UP_LOGO: '${env.STRIPE_POP_UP_LOGO}',
+		PUBLISHABLE_KEY: '',
+		POP_UP_LOGO:
+			'https://bitbucket-assetroot.s3.amazonaws.com/c/photos/2016/Jan/30/1263967991-1-everbie-avatar.png',
 	},
 
 	COORDINATE: {
-		LATITUDE: ${env.DEFAULT_LATITUDE},
-		LONGITUDE: ${env.DEFAULT_LONGITUDE},
+		LATITUDE: 42.6459136,
+		LONGITUDE: 23.3332736,
 	},
 
 	/**
 	 * Contain endpoints
 	 */
 	ENDPOINT: {
-		GQL:'${env.GQL_ENDPOINT}',
-		GQL_SUBSCRIPTIONS:'${env.GQL_SUBSCRIPTIONS_ENDPOINT}',
-		SERVICES: '${env.SERVICES_ENDPOINT}',
-		HTTPS_SERVICES: '${env.HTTPS_SERVICES_ENDPOINT}',
-		API_FILE_UPLOAD: '${env.API_FILE_UPLOAD_URL}',
+		GQL: 'http://localhost:8443/graphql',
+		GQL_SUBSCRIPTIONS: 'ws://localhost:2086/subscriptions',
+		SERVICES: 'http://localhost:5500',
+		HTTPS_SERVICES: 'https://localhost:2087',
+		API_FILE_UPLOAD: 'https://api.cloudinary.com/v1_1/evereq/upload',
 	},
 
 	FAKE_INVITE: {
-		ID: '${env.FAKE_INVITE_ID}',
-		CITY: '${env.FAKE_INVITE_CITY}',
-		POSTCODE: '${env.FAKE_INVITE_POSTCODE}',
-		ADDRESS: '${env.FAKE_INVITE_ADDRESS}',
-		HOUSE: '${env.FAKE_INVITE_HOUSE}',
-		CREATED_AT: '${env.FAKE_INVITE_CREATED_AT}',
-		UPDATED_AT: '${env.FAKE_INVITE_UPDATED_AT}',
-		APARTMENT: '${env.FAKE_INVITE_APARTMENT}',
-		CODE: ${env.FAKE_INVITE_CODE},
-		COUNTRY_ID: ${env.FAKE_INVITE_COUNTRY_ID}
+		ID: '1ae9d04f9010d834f8906881',
+		CITY: 'Sofia',
+		POSTCODE: '1700',
+		ADDRESS: 'Simeonovsko shose',
+		HOUSE: '104',
+		CREATED_AT: '2018-05-02T14:50:55.658Z',
+		UPDATED_AT: '2018-05-02T14:50:55.658Z',
+		APARTMENT: '3',
+		CODE: 8321,
+		COUNTRY_ID: 21,
 	},
 
 	/**
 	 * For maintenance micro service
 	 */
 	SETTINGS: {
-		APP_TYPE: '${env.SETTINGS_APP_TYPE}',
-		MAINTENANCE_API_URL: '${env.SETTINGS_MAINTENANCE_API_URL}',
+		APP_TYPE: 'shop-mobile',
+		MAINTENANCE_API_URL: '',
 	},
 
 	/**
 	 * For "single" merchant (multiple branches)
 	 */
-	MERCHANT_IDS: ${
-		env.MERCHANT_IDS && env.MERCHANT_IDS.length > 0
-			? env.MERCHANT_IDS
-			: JSON.stringify([])
-	},
+	MERCHANT_IDS: [],
 
-	SHOPPING_CART: ${env.SHOPPING_CART}
+	SHOPPING_CART: false,
 };
 
 export default environment;
