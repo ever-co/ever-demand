@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_flutter_mobile/colors.dart';
 import 'package:shop_flutter_mobile/screens/animations/delayed_animation.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shop_flutter_mobile/screens/authentification/signup_thanks.dart';
 
 const customColor = AppColors();
 
@@ -69,6 +70,36 @@ class _SignupAdressState extends State<SignupAdress> {
                             textAlign: TextAlign.center),
                       ),
                     ],
+                  ),
+                ),
+              ),
+              DelayedAnimation(
+                // this one controls the button animation
+                delay: 1800,
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  margin: const EdgeInsets.only(top: 50),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const SignupThanks()));
+                    },
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        // side: const BorderSide(color: white),
+                      )),
+                      backgroundColor:
+                          MaterialStateProperty.all(customColor.everSignin),
+                      foregroundColor: MaterialStateProperty.all(Colors.white),
+                      textStyle: MaterialStateProperty.all(const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      )),
+                    ),
+                    child: Text(AppLocalizations.of(context)!.getInByAddress),
                   ),
                 ),
               ),

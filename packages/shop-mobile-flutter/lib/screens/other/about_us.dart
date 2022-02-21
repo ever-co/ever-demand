@@ -20,13 +20,14 @@ class _AboutUsState extends State<AboutUs> {
       //body: getBody,
       backgroundColor: customColor.dRed,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: customColor.dRed,
         title: Text(
           AppLocalizations.of(context)!.aboutus,
           style: const TextStyle(
             color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            fontWeight: FontWeight.normal,
           ),
         ),
       ),
@@ -66,16 +67,6 @@ class _AboutUsState extends State<AboutUs> {
                               color: customColor.greyColor,
                               fontStyle: FontStyle.normal,
                               fontSize: 18,
-                            ),
-                            textAlign: TextAlign.center),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 30),
-                        child: Text(address,
-                            style: TextStyle(
-                              color: customColor.whiteColor,
-                              fontStyle: FontStyle.normal,
-                              fontSize: 16,
                             ),
                             textAlign: TextAlign.center),
                       ),

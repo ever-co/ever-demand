@@ -5,6 +5,7 @@ import 'package:shop_flutter_mobile/screens/animations/delayed_animation.dart';
 import 'package:shop_flutter_mobile/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shop_flutter_mobile/screens/authentification/signup_address1.dart';
+import 'package:shop_flutter_mobile/screens/authentification/signup_thanks.dart';
 // import 'package:shop_flutter_mobile/screens/other/nav.dart';
 
 const customColor = AppColors();
@@ -58,7 +59,7 @@ class LoginPage extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const SignupAdress()));
+                          builder: (context) => const SignupThanks()));
                     },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -93,7 +94,7 @@ class LoginPage extends StatelessWidget {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const SignupAdress(),
+                              builder: (context) => const SignupThanks(),
                             ),
                           );
                         },
@@ -189,26 +190,39 @@ class LoginPage extends StatelessWidget {
                       ]),
                 ),
               ),
-              DelayedAnimation(
-                // this one controls the logo animation
-                delay: 1500,
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 300,
-                  // margin: const EdgeInsets.only(top: 30, bottom: 30),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                    child: TextField(
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: customColor.whiteColor,
-                          ),
+              Container(
+                padding: const EdgeInsets.all(30),
+                child: Theme(
+                  data: ThemeData(
+                    primaryColor: customColor.whiteColor,
+                    primaryColorDark: customColor.dRed,
+                  ),
+                  child: TextFormField(
+                    cursorColor: Colors.black,
+                    keyboardType: TextInputType.text,
+                    textAlignVertical: TextAlignVertical.center,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                    decoration: const InputDecoration(
+                      //isCollapsed: true,
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.all(10),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.grey,
                         ),
+                        borderRadius: BorderRadius.all(Radius.circular(6)),
                       ),
+                      hintText: "Invite Code",
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 16,
+                      ),
+                      labelText: "Invite Code",
+                      labelStyle: TextStyle(color: Colors.grey, fontSize: 16),
                     ),
                   ),
                 ),

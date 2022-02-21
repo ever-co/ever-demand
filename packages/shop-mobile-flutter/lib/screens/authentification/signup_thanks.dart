@@ -34,7 +34,7 @@ class _SignupThanksState extends State<SignupThanks> {
                 child: Container(
                     alignment: Alignment.center,
                     // height: 50,
-                    margin: const EdgeInsets.only(top: 50, bottom: 100),
+                    margin: const EdgeInsets.only(top: 100, bottom: 30),
                     child: Column(
                       children: [
                         Text(AppLocalizations.of(context)!.ever,
@@ -79,7 +79,7 @@ class _SignupThanksState extends State<SignupThanks> {
                             style: TextStyle(
                               color: customColor.greyColor,
                               fontStyle: FontStyle.normal,
-                              fontSize: 18,
+                              fontSize: 16,
                             ),
                             textAlign: TextAlign.center),
                       ),
@@ -87,7 +87,7 @@ class _SignupThanksState extends State<SignupThanks> {
                         margin: const EdgeInsets.only(top: 30),
                         child: Text(address,
                             style: TextStyle(
-                              color: customColor.whiteColor,
+                              color: customColor.greyColor,
                               fontStyle: FontStyle.normal,
                               fontSize: 16,
                             ),
@@ -105,7 +105,7 @@ class _SignupThanksState extends State<SignupThanks> {
                                 textAlign: TextAlign.center),
                       ),
                       Container(
-                        padding: const EdgeInsets.all(40),
+                        padding: const EdgeInsets.all(30),
                         child: Theme(
                           data: ThemeData(
                             primaryColor: customColor.whiteColor,

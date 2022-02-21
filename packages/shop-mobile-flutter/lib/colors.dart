@@ -7,7 +7,7 @@ class AppColors {
   final whiteColor = const Color(0xFFFFFFFF);
   final facebookColor = const Color(0xFF3B5998);
   final googleColor = const Color(0xFFDD4B39);
-  final greyColor = const Color(0xFF75767B);
+  final greyColor = const Color(0xFF6A6A6A);
 
   const AppColors();
 }
