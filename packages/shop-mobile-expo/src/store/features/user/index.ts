@@ -1,22 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-// import AsyncStorage from 'async';
+import asyncStorage from '@react-native-async-storage/async-storage';
 
 // TYPES
+import type { UserStateType } from './types';
 import type { RootState } from '../../index';
 
-type UserState = any;
-
-const initialState: UserState = {
+const INITIAL_STATE: UserStateType = {
 	data: null,
+	isLoggedIn: false,
 };
 
 export const navigationSlice = createSlice({
 	name: 'user',
-	initialState,
+	initialState: INITIAL_STATE,
 	reducers: {
 		setData: (state, cation: PayloadAction<any>) => {
 			state.data = cation.payload;
+			asyncStorage.setItem('user', JSON.stringify(state));
 		},
 	},
 });
