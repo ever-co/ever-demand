@@ -17,7 +17,9 @@
 					"always",
 					{ "block": { "balanced": true } }
 				],
-				"no-mixed-spaces-and-tabs": ["off", "smart-tabs"]
+				"no-mixed-spaces-and-tabs": ["off", "smart-tabs"],
+				"no-extra-semi": "error",
+				"semi": "off"
 			}
 		}
 	]
