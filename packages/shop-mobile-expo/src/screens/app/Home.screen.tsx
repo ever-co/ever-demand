@@ -1,9 +1,12 @@
 import React from 'react';
 import { View, ActivityIndicator, FlatList, StyleSheet } from 'react-native';
-import { Title } from 'react-native-paper';
+import { Title, Text, Button } from 'react-native-paper';
 import { useQuery } from '@apollo/client';
 
+// CONFIGS
+
 // TYPES/INTERFACES
+import type ENV from '../../environments/model';
 import type { ProductsQueryArgsInterface } from '../../client/products/argumentInterfaces';
 
 // SELECTORS
@@ -29,6 +32,11 @@ function HomeScreen({}) {
 	const LANGUAGE = useAppSelector(getLanguage);
 	const USER_DATA = useAppSelector(getUserData);
 	console.log('USER_DATA ===>', USER_DATA);
+
+	// STATES
+	const [viewType, setViewType] =
+		React.useState<ENV['PRODUCTS_VIEW_TYPE']>('list');
+
 	// DATA
 	const PRODUCTS_QUERY_ARGS_INTERFACE: ProductsQueryArgsInterface = {
 		geoLocation: {
@@ -85,6 +93,11 @@ function HomeScreen({}) {
 				showControls
 			/>
 
+			<View>
+				<Button onPress={() => setViewType('list')}>List</Button>
+				<Button onPress={() => setViewType('slides')}>Slide</Button>
+			</View>
+
 			{PRODUCTS_QUERY_RESPONSE.loading ? (
 				<View style={styles.loaderContainer}>
 					<ActivityIndicator color={'#FFF'} size={25} />
@@ -93,21 +106,28 @@ function HomeScreen({}) {
 			  // tslint:disable-next-line: indent
 			  PRODUCTS_QUERY_RESPONSE.data?.geoLocationProductsByPaging
 					.length ? (
-				<FlatList
-					data={
-						PRODUCTS_QUERY_RESPONSE.data
-							?.geoLocationProductsByPaging
-					}
-					renderItem={({ item, index }) => {
-						return (
-							<View style={styles.productItemContainer}>
-								<ProductItem data={{ ...item, id: index }} />
-							</View>
-						);
-					}}
-					keyExtractor={(_item, _index) => _index.toString()}
-					style={{ ...GS.h100 }}
-				/>
+				viewType === 'list' ? (
+					<FlatList
+						data={
+							PRODUCTS_QUERY_RESPONSE.data
+								?.geoLocationProductsByPaging
+						}
+						renderItem={({ item, index }) => {
+							return (
+								<View style={styles.productItemContainer}>
+									<ProductItem
+										type={viewType}
+										data={{ ...item, id: index }}
+									/>
+								</View>
+							);
+						}}
+						keyExtractor={(_item, _index) => _index.toString()}
+						style={{ ...GS.h100 }}
+					/>
+				) : (
+					<Text>Nothing setup</Text>
+				)
 			) : (
 				<View style={{ ...GS.screen, ...GS.centered }}>
 					<Title>Nothing to buy for now.</Title>

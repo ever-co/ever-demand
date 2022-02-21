@@ -1,28 +1,26 @@
 import React from 'react';
 import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
-import { Avatar, Title, Button } from 'react-native-paper';
+import { Avatar, Title, Text, Button } from 'react-native-paper';
 // tslint:disable-next-line: no-implicit-dependencies no-submodule-imports
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 // TYPES
-import type { ProductInfoInterface } from '../../client/products/argumentInterfaces';
-
-// COMPONENTS
-import { PaperText } from '../../components/Common';
+import type { ProductInfoInterface } from '../../../client/products/argumentInterfaces';
 
 // STYLES
 import {
 	GLOBAL_STYLE as GS,
 	CONSTANT_SIZE as CS,
 	CONSTANT_COLOR as CC,
-} from '../../assets/ts/styles';
+} from '../../../assets/ts/styles';
 
-// TYPES
+// LOCAL TYPES
 export interface ProductItemType {
 	data: ProductInfoInterface;
 }
 
-const ProductItem: React.FC<ProductItemType> = (props: ProductItemType) => {
+const ProductItemList: React.FC<ProductItemType> = (props: ProductItemType) => {
+	// LOCAL STYLES
 	const styles = StyleSheet.create({
 		container: {
 			...GS.w100,
@@ -99,12 +97,12 @@ const ProductItem: React.FC<ProductItemType> = (props: ProductItemType) => {
 								?.value
 						}
 					</Title>
-					<PaperText style={styles.headerContentDescription}>
+					<Text style={styles.headerContentDescription}>
 						{
 							props?.data?.warehouseProduct?.product
 								?.description[0]?.value
 						}
-					</PaperText>
+					</Text>
 				</View>
 				<View style={styles.headerAvailability}>
 					<Ionicons
@@ -113,9 +111,9 @@ const ProductItem: React.FC<ProductItemType> = (props: ProductItemType) => {
 						name='flash'
 					/>
 
-					<PaperText style={styles.headerAvailabilityText}>
+					<Text style={styles.headerAvailabilityText}>
 						Ready for takeaway
-					</PaperText>
+					</Text>
 				</View>
 			</View>
 			<Image
@@ -150,4 +148,4 @@ const ProductItem: React.FC<ProductItemType> = (props: ProductItemType) => {
 	);
 };
 
-export default ProductItem;
+export default ProductItemList;
