@@ -1,3 +1,5 @@
+import type { supportedLangType } from '../store/features/translation/types';
+
 export default interface Environment {
 	// TODO: Add more descriptive comments.
 	/** App environment */
@@ -36,8 +38,8 @@ export default interface Environment {
 	MIXPANEL_API_KEY: string;
 
 	LANGUAGE: {
-		LANG: string;
-		LOCALE: string;
+		LANG: supportedLangType;
+		LOCALE: supportedLangType;
 	};
 
 	DELIVERY_TIME: {

@@ -82,8 +82,8 @@ const environment: Environment = {
 	MIXPANEL_API_KEY: '',
 
 	LANGUAGE: {
-		LANG: 'en-US',
-		LOCALE: 'en-US',
+		LANG: 'ENGLISH',
+		LOCALE: 'ENGLISH',
 	},
 
 	DELIVERY_TIME: {
