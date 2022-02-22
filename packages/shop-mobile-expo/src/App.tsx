@@ -2,7 +2,6 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
-import FlashMessage from 'react-native-flash-message';
 
 // ROUTER
 import Router from './router';
@@ -31,10 +30,7 @@ export default function App() {
 			<ApolloProvider>
 				<PaperProvider>
 					<AppProvider>
-						<>
-							<Router />
-							<FlashMessage position='bottom' />
-						</>
+						<Router />
 					</AppProvider>
 				</PaperProvider>
 			</ApolloProvider>
