@@ -1,6 +1,7 @@
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setCustomTextInput, setCustomText } from 'react-native-global-props';
+import FlashMessage from 'react-native-flash-message';
 
 // TYPES
 import type { UserStateType } from '../../store/features/user/types';
@@ -66,7 +67,12 @@ const AppGuard: React.FC<Props> = (props) => {
 		});
 	}, []);
 
-	return props.children;
+	return (
+		<>
+			{props.children}
+			<FlashMessage position='bottom' />
+		</>
+	);
 };
 
 export default AppGuard;
