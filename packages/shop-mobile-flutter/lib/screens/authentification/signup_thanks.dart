@@ -30,27 +30,30 @@ class _SignupThanksState extends State<SignupThanks> {
             children: [
               DelayedAnimation(
                 // this one controls the logo animation
-                delay: 1500,
+                delay: 500,
                 child: Container(
-                    alignment: Alignment.center,
-                    // height: 50,
-                    margin: const EdgeInsets.only(top: 100, bottom: 30),
-                    child: Column(
-                      children: [
-                        Text(AppLocalizations.of(context)!.ever,
-                            style: TextStyle(
-                              color: customColor.whiteColor,
-                              fontFamily: 'PlutoHeavyItalic',
-                              fontSize: 80,
-                            )),
-                        Text(AppLocalizations.of(context)!.logoMotto,
-                            style: TextStyle(
-                              color: customColor.greyColor,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            )),
-                      ],
-                    )),
+                  alignment: Alignment.center,
+                  // height: 50,
+                  margin: const EdgeInsets.only(top: 80, bottom: 30),
+                  child: Column(
+                    children: [
+                      Text(AppLocalizations.of(context)!.ever,
+                          style: TextStyle(
+                            color: customColor.whiteColor,
+                            fontFamily: 'PlutoHeavyItalic',
+                            fontSize: 80,
+                          )),
+                      Text(
+                        AppLocalizations.of(context)!.logoMotto,
+                        style: TextStyle(
+                          color: customColor.greyColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               DelayedAnimation(
                 // this one controls the logo animation
@@ -58,7 +61,7 @@ class _SignupThanksState extends State<SignupThanks> {
                 child: Container(
                   alignment: Alignment.center,
                   // height: 50,
-                  margin: const EdgeInsets.only(top: 50, bottom: 100),
+                  margin: const EdgeInsets.only(top: 50, bottom: 30),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

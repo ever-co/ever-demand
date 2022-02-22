@@ -1,3 +1,5 @@
+// ignore_for_file: dead_code
+
 import 'package:flutter/material.dart';
 import 'package:shop_flutter_mobile/colors.dart';
 import 'package:shop_flutter_mobile/screens/animations/delayed_animation.dart';
@@ -27,48 +29,67 @@ class _SignupAdressState extends State<SignupAdress> {
           ),
           child: Column(
             children: [
+              const SizedBox(height: 120),
+              DelayedAnimation(
+                // this one controls the logo animation
+                delay: 100,
+                child: Container(
+                    alignment: Alignment.center,
+                    // height: 100,
+                    margin: const EdgeInsets.only(top: 10),
+                    child: Column(
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.yourAddress,
+                          style: TextStyle(
+                            color: customColor.whiteColor,
+                            fontSize: 25,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    )),
+              ),
               DelayedAnimation(
                 // this one controls the logo animation
                 delay: 1500,
                 child: Container(
                   alignment: Alignment.center,
                   // height: 50,
-                  margin: const EdgeInsets.only(top: 50, bottom: 100),
+                  margin: const EdgeInsets.only(top: 10, bottom: 10),
+                  child: Column(
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.launchNotification,
+                        style: TextStyle(
+                          color: customColor.greyColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              DelayedAnimation(
+                // this one controls the logo animation
+                delay: 200,
+                child: Container(
+                  alignment: Alignment.center,
+                  // height: 50,
+                  margin: const EdgeInsets.only(top: 30, bottom: 50),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        AppLocalizations.of(context)!.yourAddress,
-                        style: TextStyle(
-                          color: customColor.whiteColor,
-                          fontSize: 24,
-                        ),
-                      ),
-                      Text(AppLocalizations.of(context)!.launchNotification,
-                          style: TextStyle(
-                            color: customColor.greyColor,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 14,
-                          ),
-                          textAlign: TextAlign.center),
+                      const SizedBox(height: 20),
                       Text(AppLocalizations.of(context)!.detectingLocation,
                           style: TextStyle(
                             color: customColor.whiteColor,
                             fontStyle: FontStyle.normal,
-                            fontSize: 20,
+                            fontSize: 16,
                           ),
                           textAlign: TextAlign.center),
-                      Container(
-                        margin: const EdgeInsets.only(top: 20),
-                        child: Text(
-                            AppLocalizations.of(context)!.detectingLocation,
-                            style: TextStyle(
-                              color: customColor.whiteColor,
-                              fontStyle: FontStyle.normal,
-                              fontSize: 20,
-                            ),
-                            textAlign: TextAlign.center),
-                      ),
                     ],
                   ),
                 ),
@@ -80,7 +101,7 @@ class _SignupAdressState extends State<SignupAdress> {
                   width: double.infinity,
                   height: 50,
                   margin: const EdgeInsets.only(top: 50),
-                  child: ElevatedButton(
+                  child: ElevatedButton.icon(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const SignupThanks()));
@@ -99,7 +120,12 @@ class _SignupAdressState extends State<SignupAdress> {
                         fontSize: 16,
                       )),
                     ),
-                    child: Text(AppLocalizations.of(context)!.getInByAddress),
+                    label: Text(AppLocalizations.of(context)!.getInByAddress),
+                    icon: const Icon(
+                      Icons.location_on,
+                      size: 25.0,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),

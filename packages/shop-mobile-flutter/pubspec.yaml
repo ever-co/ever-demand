@@ -38,6 +38,8 @@ dependencies:
   google_fonts: ^2.2.0
   bottom_nav_bar: ^1.0.3
   font_awesome_flutter: ^9.2.0
+  flutter_signin_button: ^2.0.0
+  # geolocator: ^8.0.5
 
 dev_dependencies:
   flutter_test:

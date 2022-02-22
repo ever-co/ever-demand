@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shop_flutter_mobile/screens/animations/delayed_animation.dart';
 import 'package:shop_flutter_mobile/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shop_flutter_mobile/screens/authentification/signup_address1.dart';
-import 'package:shop_flutter_mobile/screens/authentification/signup_thanks.dart';
+import 'package:shop_flutter_mobile/screens/authentification/signup_address2.dart';
+// import 'package:shop_flutter_mobile/screens/authentification/signup_thanks.dart';
+// import 'package:flutter_signin_button/flutter_signin_button.dart';
 // import 'package:shop_flutter_mobile/screens/other/nav.dart';
 
 const customColor = AppColors();
@@ -27,11 +30,11 @@ class LoginPage extends StatelessWidget {
             children: [
               DelayedAnimation(
                 // this one controls the logo animation
-                delay: 1500,
+                delay: 100,
                 child: Container(
                     alignment: Alignment.center,
                     // height: 50,
-                    margin: const EdgeInsets.only(top: 50, bottom: 100),
+                    margin: const EdgeInsets.only(top: 50, bottom: 80),
                     child: Column(
                       children: [
                         Text(AppLocalizations.of(context)!.ever,
@@ -51,29 +54,32 @@ class LoginPage extends StatelessWidget {
               ),
               DelayedAnimation(
                 // this one controls the button animation
-                delay: 1800,
+                delay: 150,
                 child: Container(
                   width: double.infinity,
-                  height: 50,
+                  height: 40,
                   margin: const EdgeInsets.only(top: 50),
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const SignupThanks()));
+                          builder: (context) => const SignupAdress()));
                     },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                        // side: const BorderSide(color: white),
-                      )),
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          // side: const BorderSide(color: white),
+                        ),
+                      ),
                       backgroundColor:
                           MaterialStateProperty.all(customColor.everSignin),
                       foregroundColor: MaterialStateProperty.all(Colors.white),
-                      textStyle: MaterialStateProperty.all(const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      )),
+                      textStyle: MaterialStateProperty.all(
+                        const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
                     child: Text(AppLocalizations.of(context)!.getInByAddress),
                   ),
@@ -81,73 +87,90 @@ class LoginPage extends StatelessWidget {
               ),
               DelayedAnimation(
                 // this one controls the button animation
-                delay: 1800,
+                delay: 200,
                 child: Container(
                   width: double.infinity,
-                  height: 50,
+                  height: 40,
                   margin: const EdgeInsets.only(top: 10, bottom: 10),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const SignupThanks(),
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const SignupAdress(),
+                              ),
+                            );
+                          },
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                                // side: const BorderSide(color: white),
+                              ),
                             ),
-                          );
-                        },
-                        style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0),
+                            backgroundColor: MaterialStateProperty.all(
+                                customColor.facebookColor),
+                            foregroundColor:
+                                MaterialStateProperty.all(Colors.white),
+                            textStyle: MaterialStateProperty.all(
+                              const TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
                             ),
                           ),
-                          backgroundColor:
-                              MaterialStateProperty.all(customColor.everSignin),
-                          foregroundColor:
-                              MaterialStateProperty.all(Colors.white),
-                          textStyle: MaterialStateProperty.all(
-                            const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
+                          label: const Text("Facebook"),
+                          icon: const Icon(
+                            Icons.facebook,
+                            size: 30.0,
+                            color: Colors.white,
                           ),
                         ),
-                        child:
-                            Text(AppLocalizations.of(context)!.getInByAddress),
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const SignupAdress(),
+                      const SizedBox(
+                        //Use of SizedBox
+                        width: 8,
+                      ),
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const SignupAdress2(),
+                              ),
+                            );
+                          },
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                                // side: const BorderSide(color: white),
+                              ),
                             ),
-                          );
-                        },
-                        style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                              // side: const BorderSide(color: white),
+                            backgroundColor: MaterialStateProperty.all(
+                                customColor.googleColor),
+                            foregroundColor:
+                                MaterialStateProperty.all(Colors.white),
+                            textStyle: MaterialStateProperty.all(
+                              const TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
                             ),
                           ),
-                          backgroundColor:
-                              MaterialStateProperty.all(customColor.everSignin),
-                          foregroundColor:
-                              MaterialStateProperty.all(Colors.white),
-                          textStyle: MaterialStateProperty.all(
-                            const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
+                          label: const Text("Google"),
+                          icon: const Icon(
+                            Icons.g_translate,
+                            size: 30.0,
+                            color: Colors.white,
                           ),
                         ),
-                        child:
-                            Text(AppLocalizations.of(context)!.getInByAddress),
                       ),
                     ],
                   ),
@@ -155,7 +178,7 @@ class LoginPage extends StatelessWidget {
               ),
               DelayedAnimation(
                 // this one controls the button animation
-                delay: 1800,
+                delay: 250,
                 child: Container(
                   width: double.infinity,
                   height: 50,
@@ -165,24 +188,24 @@ class LoginPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Flexible(
-                          flex: 50, // 50%
+                          flex: 10, // 50%
                           child: Text(AppLocalizations.of(context)!.or,
                               style: TextStyle(
                                 color: customColor.greyColor,
-                                fontSize: 18,
+                                fontSize: 14,
                               )),
                         ),
                         const Flexible(
-                          flex: 50, // 50%
+                          flex: 10, // 50%
                           child: Text(" "),
                         ),
                         Flexible(
-                          flex: 50, // 50%
+                          flex: 80, // 50%
                           child: Text(
                             AppLocalizations.of(context)!.signUpByInvite,
                             style: TextStyle(
                               color: customColor.whiteColor,
-                              fontSize: 18,
+                              fontSize: 14,
                               fontWeight: FontWeight.normal,
                             ),
                           ),
@@ -190,39 +213,43 @@ class LoginPage extends StatelessWidget {
                       ]),
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.all(30),
-                child: Theme(
-                  data: ThemeData(
-                    primaryColor: customColor.whiteColor,
-                    primaryColorDark: customColor.dRed,
-                  ),
-                  child: TextFormField(
-                    cursorColor: Colors.black,
-                    keyboardType: TextInputType.text,
-                    textAlignVertical: TextAlignVertical.center,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
+              DelayedAnimation(
+                // this one controls the button animation
+                delay: 300,
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: Theme(
+                    data: ThemeData(
+                      primaryColor: customColor.whiteColor,
+                      primaryColorDark: customColor.dRed,
                     ),
-                    decoration: const InputDecoration(
-                      //isCollapsed: true,
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.all(10),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.grey,
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(6)),
-                      ),
-                      hintText: "Invite Code",
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
+                    child: TextFormField(
+                      cursorColor: Colors.black,
+                      keyboardType: TextInputType.text,
+                      textAlignVertical: TextAlignVertical.center,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.white,
                         fontSize: 16,
                       ),
-                      labelText: "Invite Code",
-                      labelStyle: TextStyle(color: Colors.grey, fontSize: 16),
+                      decoration: const InputDecoration(
+                        //isCollapsed: true,
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 10),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(6)),
+                        ),
+                        hintText: "Invite Code",
+                        hintStyle: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 16,
+                        ),
+                        labelText: "Invite Code",
+                        labelStyle: TextStyle(color: Colors.grey, fontSize: 16),
+                      ),
                     ),
                   ),
                 ),
