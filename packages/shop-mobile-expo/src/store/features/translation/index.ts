@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // LANGUAGES
 import LANGUAGES from './lang';
@@ -28,6 +29,8 @@ export const translationSlice = createSlice({
 	reducers: {
 		setLang: (state, action: PayloadAction<supportedLangType>) => {
 			state.lang = action.payload;
+
+			AsyncStorage.setItem('translation', JSON.stringify(state));
 		},
 	},
 });
@@ -39,4 +42,6 @@ export const { setLang } = translationSlice.actions;
 export const getLang = (state: RootState) => state.translation.lang;
 export const getLanguage = (state: RootState) =>
 	LANGUAGES[state.translation.lang];
+
+// REDUCER
 export default translationSlice.reducer;

@@ -5,10 +5,12 @@ import FlashMessage from 'react-native-flash-message';
 
 // TYPES
 import type { UserStateType } from '../../store/features/user/types';
+import type { TranslationStateType } from '../../store/features/translation/types';
 
 // ACTIONS & SELECTORS
 import { useAppDispatch } from '../../store/hooks';
 import { setUser } from '../../store/features/user';
+import { setLang, supportedLangs } from '../../store/features/translation';
 import { setGroup } from '../../store/features/navigation';
 
 // CONSTANTS
@@ -51,6 +53,36 @@ const AppGuard: React.FC<Props> = (props) => {
 			}
 
 			return dispatch(setGroup(NAV_GROUPS.REGISTRATION));
+		})();
+
+		return () => {};
+	});
+
+	// set default language
+	React.useEffect(() => {
+		(async () => {
+			const LOCAL_TRANSLATION_JSON = await AsyncStorage.getItem(
+				'translation',
+			);
+
+			if (
+				LOCAL_TRANSLATION_JSON !== null &&
+				!isEmpty(LOCAL_TRANSLATION_JSON)
+			) {
+				const LOCAL_TRANSLATION = JSON.parse(
+					LOCAL_TRANSLATION_JSON,
+				) as TranslationStateType;
+
+				console.log('LOCAL_TRANSLATION ===>', LOCAL_TRANSLATION);
+
+				if (
+					LOCAL_TRANSLATION.lang &&
+					typeof LOCAL_TRANSLATION.lang === 'string' &&
+					Object.keys(supportedLangs).includes(LOCAL_TRANSLATION.lang)
+				) {
+					dispatch(setLang(LOCAL_TRANSLATION.lang));
+				}
+			}
 		})();
 
 		return () => {};
