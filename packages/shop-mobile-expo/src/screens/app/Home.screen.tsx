@@ -1,13 +1,17 @@
 import React from 'react';
 import { View, ActivityIndicator, FlatList, StyleSheet } from 'react-native';
-import { Title, Text, Button } from 'react-native-paper';
+import { Title, Button } from 'react-native-paper';
 import { useQuery } from '@apollo/client';
+import PagerView from 'react-native-pager-view';
 
 // CONFIGS
 
 // TYPES/INTERFACES
 import type ENV from '../../environments/model';
-import type { ProductsQueryArgsInterface } from '../../client/products/argumentInterfaces';
+import type {
+	ProductInfoInterface,
+	ProductsQueryArgsInterface,
+} from '../../client/products/argumentInterfaces';
 
 // SELECTORS
 import { useAppSelector } from '../../store/hooks';
@@ -126,7 +130,19 @@ function HomeScreen({}) {
 						style={{ ...GS.h100 }}
 					/>
 				) : (
-					<Text>Nothing setup</Text>
+					<PagerView style={{ ...GS.screen }}>
+						{PRODUCTS_QUERY_RESPONSE.data?.geoLocationProductsByPaging?.map(
+							(item: ProductInfoInterface, index: number) => (
+								<View key={index}>
+									<ProductItem
+										key={index}
+										type={viewType}
+										data={{ ...item }}
+									/>
+								</View>
+							),
+						)}
+					</PagerView>
 				)
 			) : (
 				<View style={{ ...GS.screen, ...GS.centered }}>

@@ -7,6 +7,7 @@ import type { ProductInfoInterface } from '../../../client/products/argumentInte
 
 // COMPONENTS
 import ProductItemVertical from './List';
+import ProductItemHorizontal from './Slide';
 
 // LOCAL TYPES
 export interface ProductItemType {
@@ -18,9 +19,8 @@ const ProductItem: React.FC<ProductItemType> = (props) => {
 	switch (props.type) {
 		case 'list':
 			return <ProductItemVertical data={props.data} />;
-
 		case 'slides':
-			return <ProductItemVertical data={props.data} />;
+			return <ProductItemHorizontal data={props.data} />;
 		default:
 			return <Text>Type invalid</Text>;
 	}
