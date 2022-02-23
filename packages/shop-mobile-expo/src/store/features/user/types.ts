@@ -1,4 +1,4 @@
-// TYPES
+// TYPES/INTERFACES
 import type ENV from '../../../environments/model';
 
 export interface UserStateType {
