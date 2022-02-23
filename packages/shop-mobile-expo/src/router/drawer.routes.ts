@@ -13,18 +13,18 @@ const DrawerScreen = createDrawerNavigator().Screen;
 const DrawerScreenProps = getReactComponentProps(DrawerScreen);
 
 // LOCAL TYPES
-export type DrawerLinkItem = {
+export interface DrawerLinkItem {
 	label: string;
 	path: string;
 	icon?: IconNameType;
 	external?: boolean;
 	focused?: boolean;
-};
-export type DrawerRoutesGroupType = {
+}
+export interface DrawerRoutesGroupType {
 	title: string;
 	icon?: IconNameType;
 	linkItems?: DrawerLinkItem[];
-};
+}
 export type DrawerScreenType = typeof DrawerScreenProps;
 
 const DRAWER_ROUTES: DrawerScreenType[] = [
@@ -35,6 +35,10 @@ const DRAWER_ROUTES: DrawerScreenType[] = [
 	{
 		name: 'DRAWER/ORDER_HISTORY',
 		component: SCREENS.APP.OrderHistory,
+	},
+	{
+		name: 'DRAWER/ACCOUNT',
+		component: SCREENS.APP.Account,
 	},
 	{
 		name: 'DRAWER/TRANSLATION',

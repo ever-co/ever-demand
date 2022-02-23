@@ -42,6 +42,11 @@ const DrawerNavigator: React.FC = () => {
 			title: LANGUAGE.SIDE_MENU.GROUPS.SETTINGS.DIVER_TITLE,
 			linkItems: [
 				{
+					label: 'Account & Preferences',
+					path: 'DRAWER/ACCOUNT',
+					icon: 'user',
+				},
+				{
 					label: LANGUAGE.SIDE_MENU.GROUPS.SETTINGS.ITEMS.LANGUAGE,
 					path: 'DRAWER/TRANSLATION',
 					icon: 'align-center',

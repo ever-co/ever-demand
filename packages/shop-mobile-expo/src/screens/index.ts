@@ -9,6 +9,7 @@ import SignUpByAddressScreen from './registration/SignUpByAddress.screen';
 // APP
 import HomeScreen from './app/Home.screen';
 import OrderHistoryScreen from './app/OrderHistory.screen';
+import AccountScreen from './app/Account.screen';
 import TranslationScreen from './app/Translation.screen';
 
 // TODO: create a type for screens object
@@ -20,6 +21,7 @@ const SCREENS = {
 	APP: {
 		Home: HomeScreen,
 		OrderHistory: OrderHistoryScreen,
+		Account: AccountScreen,
 		Translation: TranslationScreen,
 	},
 	REGISTRATION: {
