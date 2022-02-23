@@ -96,7 +96,7 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 	loading = false,
 	loaderColor = CC.gray,
 	disabled = false,
-	rippleColor = '',
+	rippleColor = CC.secondary + '10',
 	children = null,
 }) => {
 	return (
