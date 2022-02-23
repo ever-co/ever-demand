@@ -33,20 +33,21 @@ const AppGuard: React.FC<Props> = (props) => {
 	const dispatch = useAppDispatch();
 
 	// EFFECTS
-	// Auto login user
+	// Set default route group of the user
 	React.useEffect(() => {
 		(async () => {
 			const LOCAL_USER_JSON = await AsyncStorage.getItem('user');
 
-			if (LOCAL_USER_JSON == null || isEmpty(LOCAL_USER_JSON)) {
-				return;
-			}
+			if (LOCAL_USER_JSON !== null && !isEmpty(LOCAL_USER_JSON)) {
+				const LOCAL_USER = JSON.parse(LOCAL_USER_JSON) as UserStateType;
 
-			const LOCAL_USER = JSON.parse(LOCAL_USER_JSON) as UserStateType;
+				console.log('LOCAL_USER ===>', LOCAL_USER);
 
-			dispatch(setUser(LOCAL_USER));
-			if (LOCAL_USER.isLoggedIn) {
-				return dispatch(setGroup(NAV_GROUPS.APP));
+				dispatch(setUser(LOCAL_USER));
+				if (LOCAL_USER.isLoggedIn) {
+					dispatch(setGroup(NAV_GROUPS.APP));
+					return;
+				}
 			}
 
 			return dispatch(setGroup(NAV_GROUPS.REGISTRATION));
