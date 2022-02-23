@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 
 // TYPES
@@ -28,7 +28,7 @@ import {
 	CONSTANT_SIZE as CS,
 } from '../../assets/ts/styles';
 
-function HomeScreen({}) {
+function TranslationScreen({}) {
 	// ACTIONS
 	const translate = useAppDispatch();
 
@@ -36,35 +36,41 @@ function HomeScreen({}) {
 	const currentLang = useAppSelector(getLang);
 	const languages = useAppSelector(getLanguage);
 
+	const STYLES = StyleSheet.create({
+		container: { ...GS.screen },
+		scrollView: {
+			...GS.h100,
+			...GS.pt4,
+			...GS.px2,
+			...GS.bgLight,
+		},
+		langItem: { ...GS.inlineItems, ...GS.mb2 },
+		langItemCard: { ...GS.w100, borderRadius: 5 },
+		langItemCardContent: { borderRadius: 0 },
+	});
+
 	return (
-		<View style={{ ...GS.screen }}>
+		<View style={STYLES.container}>
 			<FocusAwareStatusBar
 				translucent={true}
-				backgroundColor="transparent"
-				barStyle="light-content"
+				backgroundColor='transparent'
+				barStyle='light-content'
 			/>
 			<CustomScreenHeader
 				title={languages.LANGUAGE_VIEW.TITLE}
 				showHomeBtn
 			/>
 
-			<ScrollView
-				style={{
-					...GS.h100,
-					...GS.pt4,
-					...GS.px2,
-					...GS.bgLight,
-				}}
-				scrollEnabled>
+			<ScrollView style={STYLES.scrollView} scrollEnabled>
 				{Object.keys(supportedLangs).map((lang: string, id) => {
-					let L = lang as supportedLangType;
+					const L = lang as supportedLangType;
 
 					return (
 						<TouchableCard
 							key={id}
-							style={{ ...GS.inlineItems, ...GS.mb2 }}
-							cardStyle={{ ...GS.w100, borderRadius: 5 }}
-							cardStyleContent={{ borderRadius: 0 }}
+							style={STYLES.langItem}
+							cardStyle={STYLES.langItemCard}
+							cardStyleContent={STYLES.langItemCardContent}
 							height={CS.FONT_SIZE_MD * 3}
 							onPress={() => translate(setLang(L))}>
 							<View
@@ -103,4 +109,4 @@ function HomeScreen({}) {
 	);
 }
 
-export default HomeScreen;
+export default TranslationScreen;
