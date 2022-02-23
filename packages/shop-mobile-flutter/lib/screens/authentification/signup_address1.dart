@@ -1,5 +1,4 @@
 // ignore_for_file: dead_code
-
 import 'package:flutter/material.dart';
 import 'package:shop_flutter_mobile/colors.dart';
 import 'package:shop_flutter_mobile/screens/animations/delayed_animation.dart';
@@ -52,7 +51,7 @@ class _SignupAdressState extends State<SignupAdress> {
               ),
               DelayedAnimation(
                 // this one controls the logo animation
-                delay: 1500,
+                delay: 200,
                 child: Container(
                   alignment: Alignment.center,
                   // height: 50,
@@ -74,7 +73,7 @@ class _SignupAdressState extends State<SignupAdress> {
               ),
               DelayedAnimation(
                 // this one controls the logo animation
-                delay: 200,
+                delay: 300,
                 child: Container(
                   alignment: Alignment.center,
                   // height: 50,
@@ -96,7 +95,7 @@ class _SignupAdressState extends State<SignupAdress> {
               ),
               DelayedAnimation(
                 // this one controls the button animation
-                delay: 1800,
+                delay: 100,
                 child: Container(
                   width: double.infinity,
                   height: 50,
