@@ -33,7 +33,7 @@ const AppGuard: React.FC<Props> = (props) => {
 	const dispatch = useAppDispatch();
 
 	// EFFECTS
-	// Set default route group of the user
+	// Set default route group of the current user
 	React.useEffect(() => {
 		(async () => {
 			const LOCAL_USER_JSON = await AsyncStorage.getItem('user');
