@@ -1,13 +1,12 @@
 import React from 'react';
 import { View, ActivityIndicator, FlatList, StyleSheet } from 'react-native';
-import { Title, Button } from 'react-native-paper';
+import { Title } from 'react-native-paper';
 import { useQuery } from '@apollo/client';
 import PagerView from 'react-native-pager-view';
 
 // CONFIGS
 
 // TYPES/INTERFACES
-import type ENV from '../../environments/model';
 import type {
 	ProductInfoInterface,
 	ProductsQueryArgsInterface,
@@ -15,8 +14,10 @@ import type {
 
 // SELECTORS
 import { useAppSelector } from '../../store/hooks';
-import { getUserData } from '../../store/features/user';
+import { getUserData, getProductViewType } from '../../store/features/user';
 import { getLanguage } from '../../store/features/translation';
+
+// ACTIONS
 
 // QUERIES
 import { GEO_LOCATION_PRODUCTS_BY_PAGING } from '../../client/products/queries';
@@ -35,11 +36,10 @@ function HomeScreen({}) {
 	// SELECTORS
 	const LANGUAGE = useAppSelector(getLanguage);
 	const USER_DATA = useAppSelector(getUserData);
+	const VIEW_TYPE = useAppSelector(getProductViewType);
 	console.log('USER_DATA ===>', USER_DATA);
 
 	// STATES
-	const [viewType, setViewType] =
-		React.useState<ENV['PRODUCTS_VIEW_TYPE']>('list');
 
 	// DATA
 	const PRODUCTS_QUERY_ARGS_INTERFACE: ProductsQueryArgsInterface = {
@@ -97,11 +97,6 @@ function HomeScreen({}) {
 				showControls
 			/>
 
-			<View>
-				<Button onPress={() => setViewType('list')}>List</Button>
-				<Button onPress={() => setViewType('slides')}>Slide</Button>
-			</View>
-
 			{PRODUCTS_QUERY_RESPONSE.loading ? (
 				<View style={styles.loaderContainer}>
 					<ActivityIndicator color={'#FFF'} size={25} />
@@ -110,7 +105,7 @@ function HomeScreen({}) {
 			  // tslint:disable-next-line: indent
 			  PRODUCTS_QUERY_RESPONSE.data?.geoLocationProductsByPaging
 					.length ? (
-				viewType === 'list' ? (
+				VIEW_TYPE === 'list' ? (
 					<FlatList
 						data={
 							PRODUCTS_QUERY_RESPONSE.data
@@ -120,7 +115,7 @@ function HomeScreen({}) {
 							return (
 								<View style={styles.productItemContainer}>
 									<ProductItem
-										type={viewType}
+										type={VIEW_TYPE}
 										data={{ ...item, id: index }}
 									/>
 								</View>
@@ -136,7 +131,7 @@ function HomeScreen({}) {
 								<View key={index}>
 									<ProductItem
 										key={index}
-										type={viewType}
+										type={VIEW_TYPE}
 										data={{ ...item }}
 									/>
 								</View>
