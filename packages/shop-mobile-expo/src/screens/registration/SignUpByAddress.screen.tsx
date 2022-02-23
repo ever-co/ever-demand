@@ -34,7 +34,7 @@ import { CREATE_INVITE_BY_LOCATION_MUTATION } from '../../client/invite/mutation
 
 // ACTIONS & SELECTORS
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { setUserData } from '../../store/features/user';
+import { onUserSignUpByAddressSuccess } from '../../store/features/user';
 import { getLanguage } from '../../store/features/translation';
 import { setGroup } from '../../store/features/navigation';
 
@@ -251,7 +251,7 @@ const SignUpByAddressScreen = () => {
 				...CREATE_INVITE_INPUT,
 			},
 			onCompleted: (TData) => {
-				reduxDispatch(setUserData(TData.createInvite));
+				reduxDispatch(onUserSignUpByAddressSuccess(TData.createInvite));
 				reduxDispatch(setGroup(GROUPS.APP));
 				showMessage({
 					message: "Great job 🎉, you're sign-up as invite",
