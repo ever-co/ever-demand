@@ -11,6 +11,9 @@ import { useAppDispatch } from '../../store/hooks';
 import { setUser } from '../../store/features/user';
 import { setGroup } from '../../store/features/navigation';
 
+// CONSTANTS
+import NAV_GROUPS from '../../router/groups.routes';
+
 // HELPERS
 import { isEmpty } from '../../helpers/utils';
 
@@ -43,8 +46,10 @@ const AppGuard: React.FC<Props> = (props) => {
 
 			dispatch(setUser(LOCAL_USER));
 			if (LOCAL_USER.isLoggedIn) {
-				dispatch(setGroup('APP'));
+				return dispatch(setGroup(NAV_GROUPS.APP));
 			}
+
+			return dispatch(setGroup(NAV_GROUPS.REGISTRATION));
 		})();
 
 		return () => {};

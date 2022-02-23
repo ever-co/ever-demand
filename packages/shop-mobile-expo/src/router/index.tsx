@@ -4,14 +4,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // HOOKS
-import { useAppSelector, useAppDispatch } from '../store/hooks';
+import { useAppSelector } from '../store/hooks';
 
 // ACTIONS & SELECTORS
 import { getLang } from '../store/features/translation';
-import { getGroup, setGroup } from '../store/features/navigation';
+import { getGroup } from '../store/features/navigation';
 
 // ROUTING
-import NAV_GROUPS from './groups.routes';
 import STACK_ROUTES from './stack.routes';
 
 // STYLES
@@ -21,20 +20,9 @@ const Stack = createNativeStackNavigator();
 
 // NAVIGATION COMPONENT
 const Router = ({}) => {
-	// ACTIONS
-	const setNavGroup = useAppDispatch();
-
 	// SELECTORS
 	const getCurrentNavGroup = useAppSelector(getGroup);
 	const getCurrentLang = useAppSelector(getLang);
-
-	// EFFECTS
-	React.useEffect(() => {
-		setTimeout(() => {
-			setNavGroup(setGroup(NAV_GROUPS.REGISTRATION));
-		}, 3000);
-		return () => {};
-	}, [setNavGroup]);
 
 	const Routes = () => {
 		const safeGroup = getCurrentNavGroup || 'BLANK';
