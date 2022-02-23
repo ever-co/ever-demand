@@ -22,6 +22,16 @@ export const navigationSlice = createSlice({
 		},
 		setData: (state, cation: PayloadAction<any>) => {
 			state.data = cation.payload;
+
+			asyncStorage.setItem('user', JSON.stringify(state));
+		},
+		onUserSignUpByAddressSuccess: (
+			state,
+			cation: PayloadAction<UserStateType>,
+		) => {
+			state.data = cation.payload;
+			state.isLoggedIn = true;
+
 			asyncStorage.setItem('user', JSON.stringify(state));
 		},
 	},
@@ -30,6 +40,8 @@ export const navigationSlice = createSlice({
 // ACTIONS
 export const setUser = navigationSlice.actions.setUser;
 export const setUserData = navigationSlice.actions.setData;
+export const onUserSignUpByAddressSuccess =
+	navigationSlice.actions.onUserSignUpByAddressSuccess;
 
 // SELECTORS
 export const getUserObject = (state: RootState) => state.user;
