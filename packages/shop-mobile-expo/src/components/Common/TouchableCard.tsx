@@ -24,7 +24,7 @@ import {
 	GLOBAL_STYLE as GS,
 } from '../../assets/ts/styles';
 
-export type TouchableCardPropsType = {
+export interface TouchableCardPropsType {
 	title?: null | React.ReactNode | string;
 	description?: null | string;
 	textOneLine?: boolean;
@@ -39,7 +39,7 @@ export type TouchableCardPropsType = {
 	cardStyle?: ViewStyle;
 	cardStyleContent?: ViewStyle;
 	titleStyle?: TextStyle;
-	descriptionStyle?: ViewStyle;
+	descriptionStyle?: TextStyle;
 	imgStyle?: ImageStyle;
 	height?: number;
 	loading?: false;
@@ -47,19 +47,45 @@ export type TouchableCardPropsType = {
 	disabled?: false;
 	rippleColor?: string;
 	children?: React.ReactNode;
-};
+}
+
+const STYLES = StyleSheet.create({
+	main: { flex: 1 },
+	card: {
+		...GS.shadowSm,
+		borderRadius: 10,
+		overflow: 'hidden',
+	},
+	cardContent: {
+		...GS.row,
+		alignItems: 'center',
+	},
+	loaderContainer: { ...GS.h100, ...GS.centered, flex: 1 },
+	cardImg: {
+		...GS.shadowSm,
+		width: 40,
+		height: 40,
+		borderRadius: 20,
+		resizeMode: 'contain',
+	},
+	cardTextContent: {
+		flex: 1,
+		justifyContent: 'center',
+	},
+	cardTextContentTitle: { fontSize: 18, paddingBottom: 2 },
+});
 
 const TouchableCard: React.FC<TouchableCardPropsType> = ({
 	title = null,
 	description = null,
 	textOneLine = true,
-	iconProps = undefined,
-	indicatorIconProps = undefined,
+	iconProps,
+	indicatorIconProps,
 	indicatorText = null,
 	indicatorTextSize = 10,
 	indicatorTextColor = null,
-	img = undefined,
-	onPress = undefined,
+	img,
+	onPress,
 	style = {},
 	cardStyle = {},
 	cardStyleContent = {},
@@ -96,7 +122,7 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 							<View style={STYLES.loaderContainer}>
 								<ActivityIndicator
 									color={loaderColor}
-									size="small"
+									size='small'
 								/>
 							</View>
 						) : (
@@ -135,7 +161,6 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 													/>
 												)}
 											</View>
-											// eslint-disable-next-line no-mixed-spaces-and-tabs
 									  )}
 
 								<View style={STYLES.cardTextContent}>
@@ -202,29 +227,3 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 };
 
 export default TouchableCard;
-
-const STYLES = StyleSheet.create({
-	main: { flex: 1 },
-	card: {
-		...GS.shadowSm,
-		borderRadius: 10,
-		overflow: 'hidden',
-	},
-	cardContent: {
-		...GS.row,
-		alignItems: 'center',
-	},
-	loaderContainer: { ...GS.h100, ...GS.centered, flex: 1 },
-	cardImg: {
-		...GS.shadowSm,
-		width: 40,
-		height: 40,
-		borderRadius: 20,
-		resizeMode: 'contain',
-	},
-	cardTextContent: {
-		flex: 1,
-		justifyContent: 'center',
-	},
-	cardTextContentTitle: { fontSize: 18, paddingBottom: 2 },
-});
