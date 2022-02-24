@@ -3,6 +3,7 @@ import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { IconButton, Title, Switch, TouchableRipple } from 'react-native-paper';
+// tslint:disable-next-line: no-implicit-dependencies no-submodule-imports
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 // SELECTORS
@@ -21,17 +22,17 @@ import {
 } from '../../assets/ts/styles';
 
 // LOCAL TYPES
-export type CustomScreenHeaderType = {
+export interface CustomScreenHeaderType {
 	title?: string;
 	children?: React.ReactChild;
 	showControls?: boolean;
-	controlOnPressSearch?: Function;
-	controlOnPressStore?: Function;
+	controlOnPressSearch?: () => any;
+	controlOnPressStore?: () => any;
 	showHomeBtn?: boolean;
-	onPressHomeBtn?: Function;
+	onPressHomeBtn?: () => any;
 	showBackBtn?: boolean;
-	onPressBackBtn?: Function;
-};
+	onPressBackBtn?: () => any;
+}
 
 const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 	title,
@@ -53,13 +54,62 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 	// STATES
 	const [tmpSwitchValue, setTmpSwitchValue] = useState(false);
 
+	// DATA
+
+	const STYLES = StyleSheet.create({
+		safeArea: {
+			...GS.bgPrimaryLight,
+			...GS.w100,
+			...GS.shadowLg,
+			marginBottom: -CS.SPACE_SM,
+			borderBottomEndRadius: CS.SPACE_SM,
+			borderBottomStartRadius: CS.SPACE_SM,
+		},
+		main: {
+			...GS.row,
+			...GS.px2,
+			alignItems: 'stretch',
+			height: CS.DRAWER_HEADER_HEIGHT,
+		},
+		menuBtnContainer: { ...GS.centered, ...GS.mr1 },
+		contentContainer: {
+			...GS.inlineItems,
+			flex: 1,
+		},
+		contentContainerChildren: {
+			...GS.justifyContentBetween,
+			flex: 1,
+		},
+		contentTitle: {
+			...GS.mb1,
+			...GS.FF_NunitoBold,
+			fontSize: CS.FONT_SIZE_MD - 1,
+		},
+		productsStatusText: {
+			...GS.txtCapitalize,
+			fontSize: CS.FONT_SIZE_SM,
+			opacity: 0.4,
+		},
+		productsStatusTextFocused: {
+			opacity: 1,
+		},
+		productsStatusSwitch: {
+			marginHorizontal: -3,
+			transform: [{ scale: 0.74 }],
+		},
+		storeBtnContainer: {
+			...GS.roundedLg,
+			overflow: 'hidden',
+		},
+	});
+
 	return (
 		<SafeAreaView style={STYLES.safeArea}>
 			<View style={STYLES.main}>
 				{/* drawer menu btn */}
 				<View style={STYLES.menuBtnContainer}>
 					<IconButton
-						icon="menu"
+						icon='menu'
 						color={CC.light}
 						size={CS.DRAWER_HEADER_HEIGHT / 2.4}
 						style={{ ...GS.mx0 }}
@@ -119,11 +169,17 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 									</TouchableOpacity>
 
 									<IconButton
-										icon="search"
+										icon='search'
 										color={CC.light}
 										size={CS.FONT_SIZE_SM * 1.6}
 										style={{ ...GS.ml0 }}
-										onPress={() => controlOnPressSearch()}
+										onPress={() =>
+											controlOnPressSearch
+												? controlOnPressSearch()
+												: navigation.navigate(
+														'DRAWER/MERCHANTS_SEARCH' as never,
+												  )
+										}
 									/>
 
 									<View style={STYLES.storeBtnContainer}>
@@ -132,7 +188,7 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 												controlOnPressStore()
 											}>
 											<MaterialIcons
-												name="storefront"
+												name='storefront'
 												color={CC.success}
 												size={CS.FONT_SIZE_SM * 1.6}
 												style={{ ...GS.m1 }}
@@ -162,7 +218,7 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 													6.5,
 											}}>
 											<Icon
-												name="chevron-left"
+												name='chevron-left'
 												color={CC.light}
 												size={
 													CS.DRAWER_HEADER_HEIGHT /
@@ -195,7 +251,7 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 											onPressHomeBtn
 												? onPressHomeBtn()
 												: navigation.navigate(
-														//@ts-ignore TODO: search to solve the next line issue
+														// @ts-ignore TODO: search to solve the next line issue
 														'DRAWER/HOME',
 												  )
 										}>
@@ -207,7 +263,7 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 													6.5,
 											}}>
 											<Icon
-												name="shopping-bag"
+												name='shopping-bag'
 												color={CC.light}
 												size={
 													CS.DRAWER_HEADER_HEIGHT /
@@ -231,50 +287,3 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 };
 
 export default CustomScreenHeader;
-
-const STYLES = StyleSheet.create({
-	safeArea: {
-		...GS.bgPrimaryLight,
-		...GS.w100,
-		...GS.shadowLg,
-		marginBottom: -CS.SPACE_SM,
-		borderBottomEndRadius: CS.SPACE_SM,
-		borderBottomStartRadius: CS.SPACE_SM,
-	},
-	main: {
-		...GS.row,
-		...GS.px2,
-		alignItems: 'stretch',
-		height: CS.DRAWER_HEADER_HEIGHT,
-	},
-	menuBtnContainer: { ...GS.centered, ...GS.mr1 },
-	contentContainer: {
-		...GS.inlineItems,
-		flex: 1,
-	},
-	contentContainerChildren: {
-		...GS.justifyContentBetween,
-		flex: 1,
-	},
-	contentTitle: {
-		...GS.mb1,
-		...GS.FF_NunitoBold,
-		fontSize: CS.FONT_SIZE_MD - 1,
-	},
-	productsStatusText: {
-		...GS.txtCapitalize,
-		fontSize: CS.FONT_SIZE_SM,
-		opacity: 0.4,
-	},
-	productsStatusTextFocused: {
-		opacity: 1,
-	},
-	productsStatusSwitch: {
-		marginHorizontal: -3,
-		transform: [{ scale: 0.74 }],
-	},
-	storeBtnContainer: {
-		...GS.roundedLg,
-		overflow: 'hidden',
-	},
-});
