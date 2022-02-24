@@ -11,6 +11,7 @@ import HomeScreen from './app/Home.screen';
 import OrderHistoryScreen from './app/OrderHistory.screen';
 import AccountScreen from './app/Account.screen';
 import TranslationScreen from './app/Translation.screen';
+import MerchantsSearchScreen from './app/MerchantsSearch.screen';
 
 // TODO: create a type for screens object
 
@@ -23,6 +24,7 @@ const SCREENS = {
 		OrderHistory: OrderHistoryScreen,
 		Account: AccountScreen,
 		Translation: TranslationScreen,
+		MerchantsSearch: MerchantsSearchScreen,
 	},
 	REGISTRATION: {
 		SIGN_UP: SignUpScreen,
