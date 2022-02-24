@@ -27,16 +27,16 @@ export const navigationSlice = createSlice({
 
 			asyncStorage.setItem('user', JSON.stringify(state));
 		},
-		onUserSignUpByAddressSuccess: (
-			state,
-			cation: PayloadAction<ENV['PRODUCTS_VIEW_TYPE']>,
-		) => {
+		onUserSignUpByAddressSuccess: (state, cation: PayloadAction<any>) => {
 			state.data = cation.payload;
 			state.isLoggedIn = true;
 
 			asyncStorage.setItem('user', JSON.stringify(state));
 		},
-		setProductViewType: (state, cation: PayloadAction<any>) => {
+		setProductViewType: (
+			state,
+			cation: PayloadAction<ENV['PRODUCTS_VIEW_TYPE']>,
+		) => {
 			state.productViewType = cation.payload;
 
 			asyncStorage.setItem('user', JSON.stringify(state));
