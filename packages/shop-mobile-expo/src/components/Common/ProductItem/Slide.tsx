@@ -37,7 +37,7 @@ const ProductItemSlide: React.FC<ProductItemType> = (
 			flex: 1,
 		},
 		containerAvailabilities: {
-			...GS.mt2,
+			...GS.mt4,
 			...GS.mr2,
 			position: 'absolute',
 			top: 0,
