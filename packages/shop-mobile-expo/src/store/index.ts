@@ -1,4 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
+import logger from 'redux-logger';
+
+// CONSTANTS
+import ENV from '../environments/environment';
 
 // REDUCERS
 import navigationReducer from './features/navigation';
@@ -14,7 +18,8 @@ export const store = configureStore({
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
 			serializableCheck: false,
-		}),
+		}).concat(logger),
+	devTools: __DEV__ || !ENV.PRODUCTION,
 });
 
 // TYPES
