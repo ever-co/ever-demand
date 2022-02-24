@@ -35,15 +35,13 @@ const AppGuard: React.FC<Props> = (props) => {
 	const dispatch = useAppDispatch();
 
 	// EFFECTS
-	// Set default route group of the current user
+	// Set local user and default route group
 	React.useEffect(() => {
 		(async () => {
 			const LOCAL_USER_JSON = await AsyncStorage.getItem('user');
 
 			if (LOCAL_USER_JSON !== null && !isEmpty(LOCAL_USER_JSON)) {
 				const LOCAL_USER = JSON.parse(LOCAL_USER_JSON) as UserStateType;
-
-				console.log('LOCAL_USER ===>', LOCAL_USER);
 
 				dispatch(setUser(LOCAL_USER));
 				if (LOCAL_USER.isLoggedIn) {
@@ -72,8 +70,6 @@ const AppGuard: React.FC<Props> = (props) => {
 				const LOCAL_TRANSLATION = JSON.parse(
 					LOCAL_TRANSLATION_JSON,
 				) as TranslationStateType;
-
-				console.log('LOCAL_TRANSLATION ===>', LOCAL_TRANSLATION);
 
 				if (
 					LOCAL_TRANSLATION.lang &&

@@ -19,6 +19,7 @@ export const navigationSlice = createSlice({
 		setUser: (state, cation: PayloadAction<UserStateType>) => {
 			state.data = cation.payload.data;
 			state.isLoggedIn = cation.payload.isLoggedIn;
+			state.productViewType = cation.payload.productViewType;
 
 			asyncStorage.setItem('user', JSON.stringify(state));
 		},

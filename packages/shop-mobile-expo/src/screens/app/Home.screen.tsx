@@ -37,7 +37,6 @@ function HomeScreen({}) {
 	const LANGUAGE = useAppSelector(getLanguage);
 	const USER_DATA = useAppSelector(getUserData);
 	const VIEW_TYPE = useAppSelector(getProductViewType);
-	console.log('USER_DATA ===>', USER_DATA);
 
 	// STATES
 
@@ -62,15 +61,6 @@ function HomeScreen({}) {
 	const PRODUCTS_QUERY_RESPONSE = useQuery(GEO_LOCATION_PRODUCTS_BY_PAGING, {
 		variables: {
 			...PRODUCTS_QUERY_ARGS_INTERFACE,
-		},
-		onCompleted: (TData) => {
-			console.log(
-				'PRODUCTS_QUERY_ARGS_INTERFACE ===>',
-				PRODUCTS_QUERY_ARGS_INTERFACE,
-				'\n',
-				'TData ===>',
-				TData,
-			);
 		},
 	});
 
@@ -102,7 +92,6 @@ function HomeScreen({}) {
 					<ActivityIndicator color={'#FFF'} size={25} />
 				</View>
 			) : PRODUCTS_QUERY_RESPONSE.data?.geoLocationProductsByPaging &&
-			  // tslint:disable-next-line: indent
 			  PRODUCTS_QUERY_RESPONSE.data?.geoLocationProductsByPaging
 					.length ? (
 				VIEW_TYPE === 'list' ? (
