@@ -38,7 +38,7 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 	title,
 	children,
 	showControls = false,
-	controlOnPressSearch = () => {},
+	controlOnPressSearch,
 	controlOnPressStore = () => {},
 	showHomeBtn = false,
 	onPressHomeBtn,
