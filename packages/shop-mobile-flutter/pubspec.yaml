@@ -41,6 +41,7 @@ dependencies:
   flutter_signin_button: ^2.0.0
   flutter_launcher_icons: ^0.9.2
   flutter_icons: ^1.1.0
+  screen_loader: ^4.0.1
   # geolocator: ^8.0.5
 
 dev_dependencies:

@@ -4,6 +4,7 @@ import 'package:shop_flutter_mobile/colors.dart';
 import 'package:shop_flutter_mobile/screens/animations/delayed_animation.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shop_flutter_mobile/screens/authentification/signup_thanks.dart';
+import 'package:shop_flutter_mobile/screens/app_widgets/buttons/circular_indicator.dart';
 
 const customColor = AppColors();
 
@@ -15,6 +16,9 @@ class SignupAdress extends StatefulWidget {
 }
 
 class _SignupAdressState extends State<SignupAdress> {
+  bool isStretched = false;
+  bool isDone = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,7 +104,7 @@ class _SignupAdressState extends State<SignupAdress> {
                   width: double.infinity,
                   height: 50,
                   margin: const EdgeInsets.only(top: 50),
-                  child: ElevatedButton.icon(
+                  child: /* ElevatedButton.icon(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const SignupThanks()));
@@ -125,7 +129,8 @@ class _SignupAdressState extends State<SignupAdress> {
                       size: 25.0,
                       color: Colors.white,
                     ),
-                  ),
+                  ), */
+                      const CircularIndicator(),
                 ),
               ),
             ],
