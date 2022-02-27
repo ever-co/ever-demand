@@ -3,7 +3,7 @@
 		"name": "@ever-platform/shop-mobile-expo",
 		"slug": "shop-mobile-expo",
 		"description": "Ever Shop Mobile App build with expo",
-		"version": "1.0.0",
+		"version": "0.4.3",
 		"orientation": "portrait",
 		"primaryColor": "#2A2C39",
 		"backgroundColor": "#2A2C39",
