@@ -66,17 +66,19 @@ Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_wi
 
 ## Technology Stack and Requirements
 
--   [TypeScript](https://www.typescriptlang.org) language
--   [NodeJs](https://nodejs.org) / [NestJs](https://github.com/nestjs/nest)
--   [Ionic](https://ionicframework.com) (version 5) for Shopping Mobile App, Carrier Mobile App and Merchant Tablet App
--   Shopping Website developed with [Angular](https://angular.io) (version 9.1) using [Angular Starter](https://github.com/gdi2290/angular-starter)
--   Admin Website developed with [Angular](https://angular.io) (version 9.1) using [ngx-admin](https://github.com/akveo/ngx-admin)
--   Headless Commerce framework (Backend APIs/Server) developed using [Nest](https://github.com/nestjs/nest) with heavy use of our own Pyro module. Supports GraphQL, REST and WS Real-Time APIs (WebSockets using [Socket.io](https://socket.io) library)
--   [RxJS](http://reactivex.io/rxjs) library used heavy in every part of the Platform
--   [InversifyJS](http://inversify.io) used for Inversion Control / Dependency Injection in most parts of the Platform. On the Backend/API we also use DI provided by [Nest](https://github.com/nestjs/nest)
--   [MongoDB](https://www.mongodb.com) Database used with [Mongoose](https://mongoosejs.com) ORM (supported MongoDB version >= 3.2; we recommend version >=4)
+-   Full-stack [TypeScript](https://www.typescriptlang.org) - frontends and [NodeJs](https://nodejs.org)/[Nest](https://github.com/nestjs/nest) backend.
+-   Headless Commerce framework (Backend APIs/Server) developed using [Nest](https://github.com/nestjs/nest). Supports GraphQL, REST and WS Real-Time APIs (WebSockets using [Socket.io](https://socket.io) library).
+-   [Ionic](https://ionicframework.com) (version 5) for Carrier Mobile App and Merchant Tablet App.
+-   Shopping Mobile App built with [Ionic](https://ionicframework.com) (version 5).
+-   Shopping Mobile App built with [React Native](https://github.com/facebook/react-native) using [Expo](https://github.com/expo/expo) (WIP).
+-   Shopping Mobile App built with [Flutter](https://github.com/flutter/flutter) / Dart (WIP).
+-   Shopping Website developed with [Angular](https://angular.io) (version 9.1) using [Angular Starter](https://github.com/gdi2290/angular-starter).
+-   Admin Website developed with [Angular](https://angular.io) (version 9.1) using [ngx-admin](https://github.com/akveo/ngx-admin).
+-   [RxJS](http://reactivex.io/rxjs) library used heavy in every part of the Platform.
+-   [InversifyJS](http://inversify.io) used for Inversion Control / Dependency Injection in most parts of the Platform. On the Backend/API we also use DI provided by [Nest](https://github.com/nestjs/nest).
+-   [MongoDB](https://www.mongodb.com) Database used with [Mongoose](https://mongoosejs.com) ORM (supported MongoDB version >= 3.2; we recommend version >=4).
 -   We have ongoing effort (WIP) to add support for other databases using [TypeORM](https://github.com/typeorm/typeorm) and [Prisma](https://github.com/prisma/prisma). Following additional DBs will be fully supported: MySQL, PostgreSQL, MariaDB, SQLite, MS SQL Server and Oracle.
--   For production, we integrate and recommend to use [PM2](https://github.com/Unitech/pm2)
+-   For production, we integrate and recommend to use [PM2](https://github.com/Unitech/pm2).
 
 #### See also README.md and CREDITS.md files in relevant folders for lists of libraries and software included in the Platform, information about licenses and other details.
 
