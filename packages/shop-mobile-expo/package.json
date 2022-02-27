@@ -1,8 +1,9 @@
 {
-	"name": "@ever-platform/shop-mobile-expo",
-	"description": "Ever Shop Mobile App build with expo",
-	"version": "1.0.0",
-	"main": "App.tsx",
+	"name": "@ever-platform/shop-mobile-expo",	
+	"version": "0.4.3",
+    "description": "Ever Shop Mobile App built with Expo (ReactNative)",
+    "license": "GPL-3.0",
+	"homepage": "https://ever.co/",	
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/ever-co/ever-demand.git"
@@ -10,11 +11,13 @@
 	"bugs": {
 		"url": "https://github.com/ever-co/ever-demand/issues"
 	},
+    "private": true,    
 	"author": {
 		"name": "Ever Co. LTD",
 		"email": "ever@ever.co",
 		"url": "https://ever.co"
 	},
+    "main": "App.tsx",
 	"scripts": {
 		"config": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn ts-node ./scripts/configure.ts",
 		"config:dev": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run config -- --environment=dev",
@@ -100,6 +103,10 @@
 			"node"
 		]
 	},
+    "engines": {
+		"node": ">=14.4.0",
+		"yarn": ">=1.13.0"
+	},
 	"production": false,
-	"private": true
+    "snyk": false
 }
