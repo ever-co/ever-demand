@@ -23,7 +23,7 @@ jest/
 # environment files
 .env*
 !.env.template
-*/environment*
+*/environments/environment*
 
 # others
 .editorconfig
