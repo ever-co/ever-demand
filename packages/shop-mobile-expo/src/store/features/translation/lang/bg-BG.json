@@ -1,0 +1,264 @@
+{
+	"LANGUAGE": {
+		"ID": "bg-BG",
+		"NAME": "Bulgarian"
+	},
+	"CURRENT_DIRECTION": "ltr",
+	"SIDEBAR_SIDE": "left",
+	"INVITE_VIEW": {
+		"WELCOME_TO": "Добре дошли",
+		"EVER": "Евър",
+		"INFO_MISSING": "Част от информацията липсва!",
+		"YOUR_INVITE_CODE": "Вашият поканен код",
+		"INVITED_TEXT": {
+			"TITLE": "Благодарим Ви, че се регистрирате!",
+			"DETAILS": "Ще ви изпратим известие с код за покана, когато стартираме:"
+		},
+		"NOT_INVITED_BY_CODE": {
+			"TITLE": "Грешен код!",
+			"DETAILS": "Моля, уверете се, че сте на мястото, където сте получили кода си."
+		},
+		"CANT_ACCESS_LOCATION": "Няма достъп до местоположението ви.",
+		"CANT_ACCESS_LOCATION_GET_IN_BY_ADDRESS": "Нямате достъп до местоположението си. Моля, опитайте да влезете по адрес.",
+		"GET_IN_BY_ADDRESS": "Регистрирайте се по адрес",
+		"GET_IN": "Влез вътре!",
+		"YOUR_ADDRESS": "Уведомете Вашия адрес",
+		"LAUNCH_NOTIFICATION": "Обещаваме да показваме само подходящи продукти според вашия адрес",
+		"BY_CODE": {
+			"OR_WHAT": "Регистрирайте се чрез покана",
+			"INVITED": "Влезте с Invite Code",
+			"LOGO": {
+				"DETAILS": "Доставка и вземане на храна"
+			},
+			"INVITE_CODE": "Код за покана"
+		},
+		"DETECTING_LOCATION": "Моля, изчакайте, опитваме се да открием настоящия си адрес ..."
+	},
+	"PRODUCTS_VIEW": {
+		"TITLE": "Продукти",
+		"BUY_BUTTON": {
+			"PRE": "Купи за",
+			"SUF": ""
+		},
+		"NOT_AVAILABLE": "Продуктът не е наличен",
+		"MINUTES": "мин",
+		"DELIVERY": "Доставка",
+		"TAKEAWAY": "За вкъщи",
+		"READYFOR": "Готов за",
+		"DETAILS": {
+			"DETAILS": "Детайли",
+			"BACK": "Обратно",
+			"INCLUDES": "Включва",
+			"BUY_FOR": "Купи за"
+		}
+	},
+	"HELP_VIEW": {
+		"TITLE": "Помощ"
+	},
+	"ORDER_HISTORY_VIEW": {
+		"TITLE": "История на поръчките",
+		"DETAILS": "Детайли"
+	},
+	"LAST_PURCHASES_VIEW": {
+		"TITLE": "Последни покупки",
+		"NOTHING_ORDERED": "Все още няма поръчки",
+		"TO_PRODUCTS": "Към продукти"
+	},
+	"ABOUT_VIEW": {
+		"TITLE": "За нас"
+	},
+	"TERMS_OF_USE_VIEW": {
+		"TITLE": "Условия за ползване"
+	},
+	"PRIVACY_VIEW": {
+		"TITLE": "Поверителност"
+	},
+	"LANGUAGE_VIEW": {
+		"TITLE": "Избери език"
+	},
+	"SEARCH_VIEW": {
+		"VIEW_MORE": "Виж още",
+		"EMPTY_LIST": "Няма намерени продукти или ресторанти ... ",
+		"SEARCH_PLACEHOLDER": "Продукт или ресторант",
+		"OPEN": "Отворено",
+		"CLOSED": "Затворено"
+	},
+	"BUY_POPUP": {
+		"ORDER_PAID": "Поръчката е платена $",
+		"CANCEL": {
+			"STATUSES": [
+				{
+					"TITLE": "Поръчката беше анулирана по време на подготовката на склада!",
+					"DETAILS": "",
+					"NOT_PAID_NOTE": ""
+				}
+			]
+		},
+		"VIEW_ORDER_PRODUCTS": "Преглед на продукти за поръчка",
+		"STATUSES": [
+			{
+				"TITLE": "Подготвяме поръчката!",
+				"DETAILS": "Ще я получите между %t минути.",
+				"NOT_PAID_NOTE": "Подгответе портфейла си (%s в брой)."
+			},
+			{
+				"TITLE": "Доставчика е в движение!",
+				"DETAILS": "Ще получите реда в %t min.",
+				"NOT_PAID_NOTE": "Подгответе портфейла си (%s в брой)."
+			},
+			{
+				"TITLE": "Проверете си вратата!",
+				"DETAILS": "Ще получите реда в секунди.",
+				"NOT_PAID_NOTE": "Подгответе портфейла си (%s в брой)."
+			},
+			{
+				"TITLE": "Поръчка завършена!",
+				"DETAILS": "Благодарим Ви, че използвате Ever",
+				"NOT_PAID_NOTE": ""
+			}
+		],
+		"STATUSES_TAKEAWAY": {
+			"TITLE": "Подготвяме поръчката!",
+			"DETAILS": "Можете да го получите между %t минути.",
+			"NOT_PAID_NOTE": "Подгответе портфейла си (%s в брой)."
+		},
+		"DELIVERY_STATUS": {
+			"WE": "Ние",
+			"CARRIER": "Доставчик",
+			"YOU": "Вие"
+		},
+		"DELIVERY_WRONG": {
+			"DELIVERY_WRONG": "Доставката не беше правилно!",
+			"PROCESSING_WRONG": "Обработката не беше правилно!",
+			"TRY_AGAIN": "Моля, опитайте отново.",
+			"CALL_FOR_DETAILS": "Обадете се за подробности"
+		},
+		"ELAPSED_TIME": {
+			"TITLE": "Изминалото време"
+		},
+		"BUTTONS": {
+			"UNDO": "Отмяна",
+			"PAY_NOW": "Плащане с карта",
+			"PAY_X": "Платете {{ сума }}",
+			"PAY_WITH_FIXED_CARD": "Плати с",
+			"PAID": "Платено",
+			"END": "Добър апетит!",
+			"CANCEL": "Отказ",
+			"GOT_IT": "Схванах го",
+			"IM_HERE": "Тук съм",
+			"SHOW_QR_CODE": "Показване на QR код",
+			"SHOW_PRODUCTS": "Показване на продукти"
+		},
+		"UNDO_POPUP": {
+			"TITLE": "Сигурни ли сте?",
+			"DETAILS": [
+				"Отмяната ще Ви върне парите, но вие ще",
+				"загубите",
+				"поръчката!"
+			]
+		}
+	},
+	"SIDE_MENU": {
+		"TITLE": "Ever Shop",
+		"GROUPS": {
+			"NO_TITLE": {
+				"DIVER_TITLE": "",
+				"ITEMS": {
+					"PRODUCTS": "Продукти",
+					"LAST_PURCHASES": "Последни покупки",
+					"CALL_US": "Обадете ни се",
+					"ORDER_HISTORY": "История на поръчките"
+				}
+			},
+			"STORE": {
+				"STORE_TITLE": "Магазин",
+				"ITEMS": {
+					"CALL_WAITER": "Обадете се на сервитьор",
+					"ABOUT": "Относно"
+				}
+			},
+			"SETTINGS": {
+				"DIVER_TITLE": "Настройки",
+				"ITEMS": {
+					"LANGUAGE": "Език"
+				}
+			},
+			"INFO": {
+				"DIVER_TITLE": "Информация",
+				"ITEMS": {
+					"FAQ": "Помогне",
+					"ABOUT_US": "За нас",
+					"TERMS_OF_USE": "Условия за ползване",
+					"PRIVACY": "Поверителност"
+				},
+				"CALL": {
+					"WE_APPOLOGISE": "Извиняваме се!",
+					"CALL_UNSUCCESSFULL": "Обаждането беше неуспешно!"
+				}
+			},
+			"LEGALS": {
+				"DIVER_TITLE": "Юридически",
+				"ITEMS": {
+					"TERMS_OF_USE": "Условия за ползване",
+					"PRIVACY": "Поверителност"
+				}
+			}
+		}
+	},
+	"TIMER": {
+		"MINUTES": "Минути",
+		"SECONDS": "Секунди"
+	},
+	"CONNECTION_ERROR_VIEW": {
+		"TITLE": "Няма връзка с Ever",
+		"DESCRIPTION": [
+			"Моля, уверете се, че сте",
+			"свързани с интернет",
+			"или опитайте по-късно."
+		]
+	},
+	"MERCHANTS_VIEW": {
+		"CLOSE_TO_YOU": "Търговци близо до вас",
+		"NAME": "Име на търговеца",
+		"WITH_NAME": "Търговци с име"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Няма връзка със сървъра"
+	},
+	"OR": "Или",
+	"OR_LOWERCASE": "или",
+	"YES": "Да",
+	"NO": "Не",
+	"OK": "Добре",
+	"CITY": "Сити",
+	"STREET": "Улица",
+	"HOUSE": "Къща",
+	"APARTMENT": "Апартамент",
+	"BACK": "Обратно",
+	"MORE": "повече",
+	"TO": "До",
+	"STORE_INFO": "Информация за магазина",
+	"MAP": "Карта",
+	"ORDER_INFO": "Информация за поръчката",
+	"CLOSE": "Затворен",
+	"SCAN": "Търсене",
+	"MERCHANTS": "Купечество",
+	"NOT_FOUND": "Няма резултати!",
+	"IN_STORE": "В магазина",
+	"EXIT_STORE": "Излезте от магазина",
+	"FAILED": "Се провали",
+	"CANCELED": "Отменен",
+	"IN_DELIVERY": "При доставка",
+	"PENDING": "В очакване",
+	"COMPLETED": "Завършен",
+	"BROWSE": "РАЗГЛЕДАЙ",
+	"ENGLISH": "Английски",
+	"HEBREW": "Иврит",
+	"RUSSIAN": "Руски",
+	"BULGARIAN": "Български",
+	"SPANISH": "испански",
+	"FRENCH": "Френски",
+	"SELECT": "Изберете",
+	"LOCATION_NOTES": "Бележки за местоположението",
+	"ENTER_NOTES_HERE": "Въведете бележки тук"
+}

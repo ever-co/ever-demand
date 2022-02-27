@@ -1,0 +1,26 @@
+{
+	"root": true,
+	"extends": "@react-native-community",
+	"parser": "@typescript-eslint/parser",
+	"plugins": ["@typescript-eslint"],
+	"overrides": [
+		{
+			"files": ["*.ts", "*.tsx"],
+			"rules": {
+				"@typescript-eslint/no-shadow": ["error"],
+				"no-shadow": "off",
+				"no-undef": "off",
+				"jsx-quotes": ["error", "prefer-single"],
+				"no-spaced-func": "off",
+				"spaced-comment": [
+					"error",
+					"always",
+					{ "block": { "balanced": true } }
+				],
+				"no-mixed-spaces-and-tabs": ["off", "smart-tabs"],
+				"no-extra-semi": "error",
+				"semi": "off"
+			}
+		}
+	]
+}
