@@ -30,7 +30,7 @@ class _SignupThanksState extends State<SignupThanks> {
             children: [
               DelayedAnimation(
                 // this one controls the logo animation
-                delay: 500,
+                delay: 100,
                 child: Container(
                   alignment: Alignment.center,
                   // height: 50,
@@ -57,7 +57,7 @@ class _SignupThanksState extends State<SignupThanks> {
               ),
               DelayedAnimation(
                 // this one controls the logo animation
-                delay: 1500,
+                delay: 200,
                 child: Container(
                   alignment: Alignment.center,
                   // height: 50,

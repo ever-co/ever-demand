@@ -10,7 +10,6 @@ const customColor = AppColors();
 
 class SignupAdress extends StatefulWidget {
   const SignupAdress({Key? key}) : super(key: key);
-
   @override
   _SignupAdressState createState() => _SignupAdressState();
 }
@@ -104,7 +103,7 @@ class _SignupAdressState extends State<SignupAdress> {
                   width: double.infinity,
                   height: 50,
                   margin: const EdgeInsets.only(top: 50),
-                  child: /* ElevatedButton.icon(
+                  child: ElevatedButton.icon(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const SignupThanks()));
@@ -129,8 +128,7 @@ class _SignupAdressState extends State<SignupAdress> {
                       size: 25.0,
                       color: Colors.white,
                     ),
-                  ), */
-                      const CircularIndicator(),
+                  ),
                 ),
               ),
             ],

@@ -3,15 +3,17 @@ import 'package:screen_loader/screen_loader.dart';
 
 void main() {
   configScreenLoader(
-    loader: AlertDialog(
+    loader: const AlertDialog(
       title: Text('Gobal Loader..'),
     ),
     bgBlur: 20.0,
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Screen(),
+      home: const Screen(),
     );
   }
 }
@@ -73,6 +75,7 @@ class _ScreenState extends State<Screen> with ScreenLoader {
 }
 
 /// A Stateless screen
+// ignore: must_be_immutable
 class BasicScreen extends StatelessWidget with ScreenLoader {
   BasicScreen({Key? key}) : super(key: key);
 

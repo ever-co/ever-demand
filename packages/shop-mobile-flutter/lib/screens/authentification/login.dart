@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shop_flutter_mobile/screens/animations/delayed_animation.dart';
 import 'package:shop_flutter_mobile/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -124,9 +124,9 @@ class LoginPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                          label: const Text("Facebook"),
-                          icon: const Icon(
-                            Icons.facebook,
+                          label: const Text(""),
+                          icon: const FaIcon(
+                            FontAwesomeIcons.facebookSquare,
                             size: 30.0,
                             color: Colors.white,
                           ),
@@ -164,10 +164,10 @@ class LoginPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                          label: const Text("Google"),
-                          icon: const Icon(
-                            Icons.g_translate,
-                            size: 30.0,
+                          label: const Text(""),
+                          icon: const FaIcon(
+                            FontAwesomeIcons.google,
+                            size: 25.0,
                             color: Colors.white,
                           ),
                         ),

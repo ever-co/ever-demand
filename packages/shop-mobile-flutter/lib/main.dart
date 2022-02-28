@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shop_flutter_mobile/screens/authentification/login.dart';
-// import 'package:shop_flutter_mobile/screens/authentification/signup_address1.dart';
-//import 'package:shop_flutter_mobile/screens/authentification/signup_address1.dart';
-// import 'package:shop_flutter_mobile/screens/authentification/signup_thanks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-//import 'package:shop_flutter_mobile/screens/other/about_us.dart';
-// import 'package:geolocator/geolocator.dart';
-// import 'package:shop_flutter_mobile/screens/other/nav.dart';
+import 'package:shop_flutter_mobile/screens/products/products.dart';
+import 'package:shop_flutter_mobile/screens/app_widgets/menu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,7 +34,7 @@ class MyApp extends StatelessWidget {
       title: 'Ever',
       debugShowCheckedModeBanner: false,
       home:
-          LoginPage(), // calling the login Page as the first screen, no splashscreen
+          MenuBar(), // calling the login Page as the first screen, no splashscreen
     );
   }
 }

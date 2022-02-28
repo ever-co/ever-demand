@@ -51,7 +51,7 @@ class _SignupAdress2State extends State<SignupAdress2> {
               ),
               DelayedAnimation(
                 // this one controls the logo animation
-                delay: 400,
+                delay: 200,
                 child: Container(
                   alignment: Alignment.center,
                   // height: 50,
@@ -72,7 +72,7 @@ class _SignupAdress2State extends State<SignupAdress2> {
                 ),
               ),
               DelayedAnimation(
-                delay: 500,
+                delay: 300,
                 child: Container(
                   padding: const EdgeInsets.all(10),
                   child: Theme(
@@ -112,7 +112,7 @@ class _SignupAdress2State extends State<SignupAdress2> {
                 ),
               ),
               DelayedAnimation(
-                delay: 500,
+                delay: 400,
                 child: Container(
                   padding: const EdgeInsets.all(10),
                   child: Theme(
@@ -153,7 +153,7 @@ class _SignupAdress2State extends State<SignupAdress2> {
               ),
               DelayedAnimation(
                 // this one controls the button animation
-                delay: 200,
+                delay: 500,
                 child: SizedBox(
                   width: double.infinity,
                   height: 70,
@@ -254,7 +254,7 @@ class _SignupAdress2State extends State<SignupAdress2> {
               ),
               DelayedAnimation(
                 // this one controls the button animation
-                delay: 200,
+                delay: 600,
                 child: Container(
                   width: double.infinity,
                   height: 70,
