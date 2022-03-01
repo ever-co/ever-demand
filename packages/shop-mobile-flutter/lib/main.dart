@@ -3,7 +3,7 @@ import 'package:shop_flutter_mobile/screens/authentification/login.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shop_flutter_mobile/screens/products/products.dart';
-import 'package:shop_flutter_mobile/screens/app_widgets/menu.dart';
+import 'package:shop_flutter_mobile/screens/menu/menu.dart';
 
 void main() {
   runApp(const MyApp());
