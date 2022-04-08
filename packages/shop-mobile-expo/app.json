@@ -28,6 +28,10 @@
 			"translucent": true,
 			"backgroundColor": "#00000000"
 		},
+		"androidNavigationBar": {
+			"backgroundColor": "#2A2C39",
+			"barStyle": "light-content"
+		},
 		"android": {
 			"package": "com.everDemand.shopMobileExpo",
 			"versionCode": 1,
