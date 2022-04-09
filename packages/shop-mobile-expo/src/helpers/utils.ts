@@ -16,6 +16,7 @@ export function checkServer(
 	timeout: number = 2000,
 	onSuccessCallback: (msg?: string) => any = () => {},
 	onErrorCallback: (msg?: string) => any = () => {},
+	strick: boolean = false,
 ): Promise<void> {
 	// eslint-disable-next-line no-undef
 	const controller = new AbortController();
@@ -28,9 +29,17 @@ export function checkServer(
 				controller.abort();
 			}, timeout),
 		)
-		.then((response) => {
-			console.log('✅ Check server response:', response.status);
-			onSuccessCallback(response.status.toString());
+		.then((res) => {
+			if (
+				strick &&
+				!((res.status >= 200 && res.status < 300) || res.status === 304)
+			) {
+				console.log('🛑 Check server error:', res.status);
+				return onErrorCallback(res.status.toString());
+			}
+
+			console.log('✅ Check server response:', res.status);
+			onSuccessCallback(res.status.toString());
 		})
 		.catch((error) => {
 			console.log('🛑 Check server error:', error);
