@@ -106,9 +106,7 @@ export type Env = Readonly<{
 }>;
 
 // TODO: validate better merchantIDs
-const merchantIDs: any = makeValidator((x) => {
-	return x;
-});
+const merchantIDs: any = makeValidator((x) => x);
 
 const opt: CleanOptions<Env> = {};
 
