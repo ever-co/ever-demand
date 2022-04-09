@@ -88,6 +88,12 @@ export const GLOBAL_STYLE = StyleSheet.create({
 	bgPrimaryLight: {
 		backgroundColor: CONSTANT_COLOR.primaryLight,
 	},
+	bgSecondary: {
+		backgroundColor: CONSTANT_COLOR.secondary,
+	},
+	bgSecondaryLight: {
+		backgroundColor: CONSTANT_COLOR.secondaryLight,
+	},
 	bgLight: {
 		backgroundColor: CONSTANT_COLOR.light,
 	},
@@ -105,6 +111,12 @@ export const GLOBAL_STYLE = StyleSheet.create({
 	},
 	txtPrimaryLight: {
 		color: CONSTANT_COLOR.primaryLight,
+	},
+	txtSecondary: {
+		color: CONSTANT_COLOR.secondary,
+	},
+	txtSecondaryLight: {
+		color: CONSTANT_COLOR.secondaryLight,
 	},
 	txtSuccess: {
 		color: CONSTANT_COLOR.success,
