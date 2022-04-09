@@ -88,12 +88,6 @@ export const GLOBAL_STYLE = StyleSheet.create({
 	bgPrimaryLight: {
 		backgroundColor: CONSTANT_COLOR.primaryLight,
 	},
-	bgSecondary: {
-		backgroundColor: CONSTANT_COLOR.secondary,
-	},
-	bgSecondaryLight: {
-		backgroundColor: CONSTANT_COLOR.secondaryLight,
-	},
 	bgLight: {
 		backgroundColor: CONSTANT_COLOR.light,
 	},
@@ -111,12 +105,6 @@ export const GLOBAL_STYLE = StyleSheet.create({
 	},
 	txtPrimaryLight: {
 		color: CONSTANT_COLOR.primaryLight,
-	},
-	txtSecondary: {
-		color: CONSTANT_COLOR.secondary,
-	},
-	txtSecondaryLight: {
-		color: CONSTANT_COLOR.secondaryLight,
 	},
 	txtSuccess: {
 		color: CONSTANT_COLOR.success,
@@ -479,6 +467,9 @@ export const GLOBAL_STYLE = StyleSheet.create({
 
 		elevation: 8.5,
 	},
+	rounded0: {
+		borderRadius: 0,
+	},
 	roundedSm: {
 		borderRadius: 5,
 	},
@@ -525,6 +516,27 @@ export const GLOBAL_STYLE = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: 'rgba(0,0,0,0.3)',
+	},
+	positionAbsolute: {
+		position: 'absolute',
+	},
+	positionRelative: {
+		position: 'relative',
+	},
+	positionReset: {
+		position: undefined,
+	},
+	t0: {
+		top: 0,
+	},
+	b0: {
+		bottom: 0,
+	},
+	l0: {
+		left: 0,
+	},
+	r0: {
+		right: 0,
 	},
 	card: {
 		position: 'relative',
@@ -633,6 +645,17 @@ export const GLOBAL_STYLE = StyleSheet.create({
 	row: {
 		flexDirection: 'row',
 	},
+	alignBaseline: { alignItems: 'baseline' },
+	alignCenter: { alignItems: 'center' },
+	alignEnd: { alignItems: 'flex-end' },
+	alignStart: { alignItems: 'flex-start' },
+	alignStretch: { alignItems: 'stretch' },
+	justifyCenter: { justifyContent: 'center' },
+	justifyEnd: { justifyContent: 'flex-end' },
+	justifyStart: { justifyContent: 'flex-start' },
+	justifyAround: { justifyContent: 'space-around' },
+	justifyBetween: { justifyContent: 'space-between' },
+	justifyEvenly: { justifyContent: 'space-evenly' },
 	inlineItems: {
 		flexDirection: 'row',
 		alignItems: 'center',
@@ -641,6 +664,12 @@ export const GLOBAL_STYLE = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
+	},
+	flex1: {
+		flex: 1,
+	},
+	flexWrap: {
+		flexWrap: 'wrap',
 	},
 	tableBtn: {
 		padding: 5,
