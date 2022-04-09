@@ -29,11 +29,11 @@ export function checkServer(
 			}, timeout),
 		)
 		.then((response) => {
-			console.log('Check server response:', response.status);
+			console.log('✅ Check server response:', response.status);
 			onSuccessCallback(response.status.toString());
 		})
 		.catch((error) => {
-			console.error('Check server error:', error);
+			console.log('🛑 Check server error:', error);
 			onErrorCallback(error.message);
 		});
 }
