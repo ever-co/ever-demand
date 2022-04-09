@@ -11,6 +11,33 @@ export function getReactComponentProps<Props>(
 	return {} as unknown as Props;
 }
 
+export function checkServer(
+	url: string,
+	timeout: number = 2000,
+	onSuccessCallback: (msg?: string) => any = () => {},
+	onErrorCallback: (msg?: string) => any = () => {},
+): Promise<void> {
+	// eslint-disable-next-line no-undef
+	const controller = new AbortController();
+	const signal = controller.signal;
+	const options = { mode: 'no-cors', signal };
+	return fetch(url, options as any)
+		.then(
+			// @ts-ignore
+			setTimeout(() => {
+				controller.abort();
+			}, timeout),
+		)
+		.then((response) => {
+			console.log('Check server response:', response.status);
+			onSuccessCallback(response.status.toString());
+		})
+		.catch((error) => {
+			console.error('Check server error:', error);
+			onErrorCallback(error.message);
+		});
+}
+
 /**
  *
  * @param data
