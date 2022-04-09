@@ -11,10 +11,11 @@ import {
 	View,
 	Modal,
 	ActivityIndicator,
+	TouchableWithoutFeedback,
 } from 'react-native';
 
 // HELPERS
-import { isEmpty } from '../../helpers/utils';
+import { checkServer, isEmpty } from '../../helpers/utils';
 
 // ENVIRONMENT
 import ENV from '../../environments/environment';
@@ -39,7 +40,11 @@ const ApolloProvider: React.FC<Props> = (props) => {
 		ENV.PRODUCTION || __DEV__,
 	);
 	const [serverHostInpMsg, setServerHostInpMsg] = React.useState<string>('');
-	const [serverHostLoading] = React.useState<boolean>(false);
+	const [serverHostLoading, setServerHostLoading] =
+		React.useState<boolean>(false);
+
+	// REFS
+	const serverHostInpRef = React.useRef<TextInput>(null);
 
 	// FUNCTIONS
 	const onConfirmHost = async () => {
@@ -48,15 +53,24 @@ const ApolloProvider: React.FC<Props> = (props) => {
 			return setServerHostInpMsg("Can't be empty");
 		}
 
-		const FORMATTED_URI = `http://${serverHostInp}/graphql`;
-		// setServerHostLoading(true);
+		const FORMATTED_HOST = `https://${serverHostInp}`;
+		const FORMATTED_URI = FORMATTED_HOST + '/graphql';
 
-		// if (!(await serverReachable(serverHostInp))) {
-		// 	return setServerHostInpMsg("Can't connect on this host");
-		// }
+		setServerHostLoading(true);
 
-		setServerHost(FORMATTED_URI);
-		setShowDialogUriConf(false);
+		await checkServer(
+			FORMATTED_URI,
+			5000,
+			() => {
+				setServerHost(FORMATTED_URI);
+				setShowDialogUriConf(false);
+			},
+			(errMsg) => {
+				setServerHostInpMsg("Can't connect on this host: " + errMsg);
+			},
+		).finally(() => {
+			setServerHostLoading(false);
+		});
 	};
 
 	const onCancelHost = () => {
@@ -66,7 +80,7 @@ const ApolloProvider: React.FC<Props> = (props) => {
 
 	// CONFIG
 	const APOLLO_CLIENT = new ApolloClient({
-		uri: ENV.ENDPOINT.GQL,
+		uri: serverHost || ENV.ENDPOINT.GQL,
 		cache: new InMemoryCache(),
 		defaultOptions: { watchQuery: { fetchPolicy: 'cache-and-network' } },
 	});
@@ -78,80 +92,88 @@ const ApolloProvider: React.FC<Props> = (props) => {
 				onDismiss={function (): void {}}
 				style={{ ...GS.bgTransparent }}
 				transparent>
-				<View
-					style={{
-						...GS.flex1,
-						...GS.centered,
-						...GS.px4,
+				<TouchableWithoutFeedback
+					onPress={() => {
+						serverHostInpRef.current?.blur();
 					}}>
 					<View
 						style={{
-							...GS.bgLight,
-							...GS.py5,
-							...GS.px4,
-							...GS.w100,
-							...GS.rounded,
-							...GS.shadowLg,
+							...GS.flex1,
 							...GS.centered,
+							...GS.px4,
 						}}>
-						<Text style={{ ...GS.txtPrimary, ...GS.txtCenter }}>
-							{`You're running the this application in development mode
+						<View
+							style={{
+								...GS.bgLight,
+								...GS.py5,
+								...GS.px4,
+								...GS.w100,
+								...GS.rounded,
+								...GS.shadowLg,
+								...GS.centered,
+							}}>
+							<Text style={{ ...GS.txtPrimary, ...GS.txtCenter }}>
+								{`You're running the this application in development mode
 					\nWe're not able to determinate the Api Host that you use.
 					\nIf you're on "${ENV.ENDPOINT.GQL}", you can just cancel otherwise you've to specify your host`}
-						</Text>
-
-						<View style={{ ...GS.w100, ...GS.my4 }}>
-							<TextInput
-								value={serverHostInp}
-								placeholder='Ex: 10.0.2.2:8443'
-								onChangeText={(text) => {
-									setServerHostInp(text);
-								}}
-								style={{
-									...GS.input,
-									...GS.w100,
-									color: CC.primary,
-								}}
-							/>
-
-							<Text
-								style={{
-									color: CC.danger,
-								}}>
-								{serverHostInpMsg}
 							</Text>
-						</View>
 
-						<View style={{ ...GS.inlineItems, ...GS.mt4 }}>
-							<View
-								style={{
-									...GS.mr2,
-									...GS.flex1,
-									...(serverHostLoading ? GS.centered : {}),
-								}}>
-								{serverHostLoading ? (
-									<ActivityIndicator
-										size={CS.FONT_SIZE}
-										color={CC.primary}
-									/>
-								) : (
-									<Button
-										title='Confirm'
-										color={CC.primary}
-										onPress={onConfirmHost}
-									/>
-								)}
-							</View>
-							<View style={{ ...GS.flex1 }}>
-								<Button
-									title='Cancel'
-									color={CC.gray}
-									onPress={onCancelHost}
+							<View style={{ ...GS.w100, ...GS.my4 }}>
+								<TextInput
+									ref={serverHostInpRef}
+									value={serverHostInp}
+									placeholder='Ex: 10.0.2.2:8443'
+									onChangeText={(text) => {
+										setServerHostInp(text);
+									}}
+									style={{
+										...GS.input,
+										...GS.w100,
+										color: CC.primary,
+									}}
 								/>
+
+								<Text
+									style={{
+										color: CC.danger,
+									}}>
+									{serverHostInpMsg}
+								</Text>
+							</View>
+
+							<View style={{ ...GS.inlineItems, ...GS.mt4 }}>
+								<View
+									style={{
+										...GS.mr2,
+										...GS.flex1,
+										...(serverHostLoading
+											? GS.centered
+											: {}),
+									}}>
+									{serverHostLoading ? (
+										<ActivityIndicator
+											size={CS.FONT_SIZE}
+											color={CC.primary}
+										/>
+									) : (
+										<Button
+											title='Confirm'
+											color={CC.primary}
+											onPress={onConfirmHost}
+										/>
+									)}
+								</View>
+								<View style={{ ...GS.flex1 }}>
+									<Button
+										title='Cancel'
+										color={CC.gray}
+										onPress={onCancelHost}
+									/>
+								</View>
 							</View>
 						</View>
 					</View>
-				</View>
+				</TouchableWithoutFeedback>
 			</Modal>
 			{props.children}
 		</Provider>
