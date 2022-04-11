@@ -13,6 +13,7 @@ import {
 	ActivityIndicator,
 	TouchableWithoutFeedback,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // HELPERS
 import { checkServer, isEmpty } from '../../helpers/utils';
@@ -56,6 +57,7 @@ const ApolloProvider: React.FC<Props> = (props) => {
 		const FORMATTED_HOST = `https://${serverHostInp}`;
 		const FORMATTED_URI = FORMATTED_HOST + '/graphql';
 
+		AsyncStorage.setItem('serverHost', serverHostInp);
 		setServerHostLoading(true);
 
 		await checkServer(
@@ -84,6 +86,17 @@ const ApolloProvider: React.FC<Props> = (props) => {
 		cache: new InMemoryCache(),
 		defaultOptions: { watchQuery: { fetchPolicy: 'cache-and-network' } },
 	});
+
+	// EFFECTS
+	React.useEffect(() => {
+		(async () => {
+			const LOCAL_SERVER_HOST = await AsyncStorage.getItem('serverHost');
+
+			if (typeof LOCAL_SERVER_HOST === 'string') {
+				setServerHostInp(LOCAL_SERVER_HOST);
+			}
+		})();
+	}, []);
 
 	return (
 		<Provider client={APOLLO_CLIENT}>
