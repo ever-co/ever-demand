@@ -16,29 +16,35 @@ export const navigationSlice = createSlice({
 	name: 'user',
 	initialState: INITIAL_STATE,
 	reducers: {
-		setUser: (state, cation: PayloadAction<UserStateType>) => {
-			state.data = cation.payload.data;
-			state.isLoggedIn = cation.payload.isLoggedIn;
-			state.productViewType = cation.payload.productViewType;
+		setUser: (state, action: PayloadAction<UserStateType>) => {
+			state.data = action.payload.data;
+			state.isLoggedIn = action.payload.isLoggedIn;
+			state.productViewType = action.payload.productViewType;
 
 			asyncStorage.setItem('user', JSON.stringify(state));
 		},
-		setData: (state, cation: PayloadAction<any>) => {
-			state.data = cation.payload;
+		setData: (state, action: PayloadAction<any>) => {
+			state.data = action.payload;
 
 			asyncStorage.setItem('user', JSON.stringify(state));
 		},
-		onUserSignUpByAddressSuccess: (state, cation: PayloadAction<any>) => {
-			state.data = cation.payload;
+		onUserSignUpByAddressSuccess: (state, action: PayloadAction<any>) => {
+			state.data = action.payload;
 			state.isLoggedIn = true;
 
 			asyncStorage.setItem('user', JSON.stringify(state));
 		},
 		setProductViewType: (
 			state,
-			cation: PayloadAction<ENV['PRODUCTS_VIEW_TYPE']>,
+			action: PayloadAction<ENV['PRODUCTS_VIEW_TYPE']>,
 		) => {
-			state.productViewType = cation.payload;
+			state.productViewType = action.payload;
+
+			asyncStorage.setItem('user', JSON.stringify(state));
+		},
+		resetUser: (state) => {
+			state.data = INITIAL_STATE.data;
+			state.isLoggedIn = INITIAL_STATE.isLoggedIn;
 
 			asyncStorage.setItem('user', JSON.stringify(state));
 		},
@@ -51,6 +57,7 @@ export const setUserData = navigationSlice.actions.setData;
 export const onUserSignUpByAddressSuccess =
 	navigationSlice.actions.onUserSignUpByAddressSuccess;
 export const setProductViewType = navigationSlice.actions.setProductViewType;
+export const resetUser = navigationSlice.actions.resetUser;
 
 // SELECTORS
 export const getUserObject = (state: RootState) => state.user;
