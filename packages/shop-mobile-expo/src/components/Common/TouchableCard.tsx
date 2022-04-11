@@ -72,7 +72,7 @@ const STYLES = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 	},
-	cardTextContentTitle: { fontSize: 18, paddingBottom: 2 },
+	cardTextContentTitle: { fontSize: 18, paddingBottom: 2, color: CC.primary },
 });
 
 const TouchableCard: React.FC<TouchableCardPropsType> = ({
@@ -98,132 +98,126 @@ const TouchableCard: React.FC<TouchableCardPropsType> = ({
 	disabled = false,
 	rippleColor = CC.secondary + '10',
 	children = null,
-}) => {
-	return (
-		<View style={{ ...STYLES.main, ...style }}>
-			<Card style={{ ...STYLES.main, ...cardStyle }}>
-				<TouchableRipple
-					{...{
-						disabled: !onPress || disabled,
-						...(onPress ? { onPress } : {}),
-						rippleColor,
-						style: {
-							...GS.w100,
-							...GS.h100,
-						},
+}) => (
+	<View style={{ ...STYLES.main, ...style }}>
+		<Card style={{ ...STYLES.main, ...cardStyle }}>
+			<TouchableRipple
+				{...{
+					disabled: !onPress || disabled,
+					...(onPress ? { onPress } : {}),
+					rippleColor,
+					style: {
+						...GS.w100,
+						...GS.h100,
+					},
+				}}>
+				<Card.Content
+					style={{
+						...STYLES.cardContent,
+						height,
+						...cardStyleContent,
 					}}>
-					<Card.Content
-						style={{
-							...STYLES.cardContent,
-							height,
-							...cardStyleContent,
-						}}>
-						{loading ? (
-							<View style={STYLES.loaderContainer}>
-								<ActivityIndicator
-									color={loaderColor}
-									size='small'
-								/>
-							</View>
-						) : (
-							<>
-								{children
-									? children
-									: (iconProps || img) && (
-											<View
-												style={{
-													...GS.centered,
-													...GS.mr2,
-												}}>
-												{iconProps && !img && (
-													<Icon
-														{...{
-															color: CC.gray,
-															size: 35,
-															...iconProps,
-														}}
-													/>
-												)}
-												{!isEmpty(img) && (
-													<Image
-														source={
-															typeof img ===
-															'string'
-																? { uri: img }
-																: img
-																? img
-																: {}
-														}
-														style={{
-															...STYLES.cardImg,
-															...imgStyle,
-														}}
-													/>
-												)}
-											</View>
-									  )}
-
-								<View style={STYLES.cardTextContent}>
-									{!isEmpty(title) && (
-										<PaperText
-											{...(textOneLine
-												? { numberOfLines: 1 }
-												: {})}
-											style={{
-												...STYLES.cardTextContentTitle,
-												...titleStyle,
-											}}>
-											{title}
-										</PaperText>
-									)}
-									{!isEmpty(description) && (
-										<PaperText
-											{...(textOneLine
-												? { numberOfLines: 1 }
-												: {})}
-											style={{ ...descriptionStyle }}>
-											{description}
-										</PaperText>
-									)}
-								</View>
-
-								{!isEmpty(indicatorIconProps) &&
-									!indicatorText && (
+					{loading ? (
+						<View style={STYLES.loaderContainer}>
+							<ActivityIndicator
+								color={loaderColor}
+								size='small'
+							/>
+						</View>
+					) : (
+						<>
+							{children
+								? children
+								: (iconProps || img) && (
 										<View
 											style={{
 												...GS.centered,
-												...GS.px1,
+												...GS.mr2,
 											}}>
-											<Icon
-												{...{
-													color: CC.gray,
-													size: 16,
-													...indicatorIconProps,
-												}}
-											/>
+											{iconProps && !img && (
+												<Icon
+													{...{
+														color: CC.gray,
+														size: 35,
+														...iconProps,
+													}}
+												/>
+											)}
+											{!isEmpty(img) && (
+												<Image
+													source={
+														typeof img === 'string'
+															? { uri: img }
+															: img
+															? img
+															: {}
+													}
+													style={{
+														...STYLES.cardImg,
+														...imgStyle,
+													}}
+												/>
+											)}
 										</View>
-									)}
+								  )}
 
-								{!isEmpty(indicatorText) && (
+							<View style={STYLES.cardTextContent}>
+								{!isEmpty(title) && (
 									<PaperText
+										{...(textOneLine
+											? { numberOfLines: 1 }
+											: {})}
 										style={{
-											...GS.centered,
-											...GS.px1,
-											fontSize: indicatorTextSize,
-											color:
-												indicatorTextColor ||
-												CC.primary,
+											...STYLES.cardTextContentTitle,
+											...titleStyle,
 										}}>
-										{indicatorText}
+										{title}
 									</PaperText>
 								)}
-							</>
-						)}
-					</Card.Content>
-				</TouchableRipple>
-			</Card>
-		</View>
-	);
-};
+								{!isEmpty(description) && (
+									<PaperText
+										{...(textOneLine
+											? { numberOfLines: 1 }
+											: {})}
+										style={{ ...descriptionStyle }}>
+										{description}
+									</PaperText>
+								)}
+							</View>
+
+							{!isEmpty(indicatorIconProps) && !indicatorText && (
+								<View
+									style={{
+										...GS.centered,
+										...GS.px1,
+									}}>
+									<Icon
+										{...{
+											color: CC.gray,
+											size: 16,
+											...indicatorIconProps,
+										}}
+									/>
+								</View>
+							)}
+
+							{!isEmpty(indicatorText) && (
+								<PaperText
+									style={{
+										...GS.centered,
+										...GS.px1,
+										fontSize: indicatorTextSize,
+										color: indicatorTextColor || CC.primary,
+									}}>
+									{indicatorText}
+								</PaperText>
+							)}
+						</>
+					)}
+				</Card.Content>
+			</TouchableRipple>
+		</Card>
+	</View>
+);
 
 export default TouchableCard;
