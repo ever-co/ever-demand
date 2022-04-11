@@ -31,6 +31,7 @@ import {
 import {
 	GLOBAL_STYLE as GS,
 	CONSTANT_COLOR as CC,
+	CONSTANT_SIZE as CS,
 } from '../../assets/ts/styles';
 
 function MerchantsSearch({}) {
@@ -60,19 +61,21 @@ function MerchantsSearch({}) {
 		loaderContainer: { ...GS.centered, ...GS.w100, flex: 1 },
 		searchContainer: {
 			...GS.px2,
-			...GS.pt4,
-			...GS.pb3,
-			...GS.inlineItems,
+			...GS.row,
+			...GS.centered,
+			...GS.pt2,
+			height: 90,
 			backgroundColor: CC.dark,
 		},
+		containerSearchInput: { ...GS.flex1, ...GS.mr2, height: 57 },
 		searchInput: {
-			...GS.mr2,
-			...GS.my0,
 			...GS.bgLight,
-			flex: 1,
+			...GS.flex1,
+			marginTop: -6,
 			color: CC.dark,
-			height: 57,
+			fontSize: CS.FONT_SIZE - 1,
 		},
+		scanBtn: { ...GS.p0, ...GS.my0, ...GS.justifyCenter, height: 57 },
 	});
 
 	return (
@@ -89,25 +92,32 @@ function MerchantsSearch({}) {
 			/>
 
 			<View style={STYLES.searchContainer}>
-				<TextInput
-					value={searchValue}
-					placeholder='Search here'
-					style={STYLES.searchInput}
-					theme={{ colors: { text: CC.dark } }}
-					placeholderTextColor={CC.gray}
-					left={
-						<TextInput.Icon
-							name='search'
-							color={CC.dark}
-							size={20}
-						/>
-					}
-					onChangeText={(text) => setSearchValue(text)}
-					mode='outlined'
-				/>
+				<View style={STYLES.containerSearchInput}>
+					<TextInput
+						value={searchValue}
+						placeholder='Search here'
+						style={STYLES.searchInput}
+						theme={{
+							colors: { text: CC.dark },
+							roundness: CS.SPACE,
+						}}
+						placeholderTextColor={CC.gray}
+						left={
+							<TextInput.Icon
+								name='search'
+								color={CC.dark}
+								size={18}
+								style={GS.mt1}
+							/>
+						}
+						onChangeText={(text) => setSearchValue(text)}
+						mode='outlined'
+					/>
+				</View>
 
 				<Button
-					style={{ ...GS.py2, ...GS.my0 }}
+					style={STYLES.scanBtn}
+					theme={{ roundness: CS.SPACE }}
 					uppercase={false}
 					mode='contained'>
 					<MaterialIcon
@@ -121,7 +131,7 @@ function MerchantsSearch({}) {
 
 			{false ? (
 				<View style={STYLES.loaderContainer}>
-					<ActivityIndicator color={'#FFF'} size={25} />
+					<ActivityIndicator color={CC.white} size={25} />
 				</View>
 			) : true ? (
 				<ScrollView
@@ -131,6 +141,7 @@ function MerchantsSearch({}) {
 						<TouchableCard
 							key={index}
 							title='Item'
+							titleStyle={{ color: CC.primary }}
 							onPress={() => {}}
 						/>
 					))}
