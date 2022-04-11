@@ -7,13 +7,19 @@ import MaterialIcon from '@expo/vector-icons/MaterialCommunityIcons';
 // TYPES
 import type ENV_TYPE from '../../environments/model';
 
-// ACTIONS & SELECTORS
+// STORE
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import {
 	getUserData,
 	getProductViewType,
 	setProductViewType,
+	resetUser,
 } from '../../store/features/user';
+import { setGroup } from '../../store/features/navigation';
+
+// ROUTER
+import ROUTE_GROUPS from '../../router/groups.routes';
+
 // COMPONENTS
 import {
 	TouchableCard,
@@ -45,7 +51,7 @@ function AccountScreen({}) {
 	const [logOutDialog, setLogOutDialog] = React.useState<boolean>(false);
 
 	// DATA
-	const IS_INVITE = USER_DATA.__typename === 'Invite';
+	const IS_INVITE = USER_DATA?.__typename === 'Invite';
 
 	const STYLES = StyleSheet.create({
 		container: { ...GS.screen, ...GS.bgLight },
@@ -116,6 +122,11 @@ function AccountScreen({}) {
 		setProductViewDialog(false);
 	};
 
+	const onSignOut = () => {
+		dispatch(resetUser());
+		dispatch(setGroup(ROUTE_GROUPS.REGISTRATION));
+	};
+
 	return (
 		<>
 			<Dialog
@@ -134,7 +145,7 @@ function AccountScreen({}) {
 						children: 'Sign out',
 						uppercase: false,
 						labelStyle: { color: CC.danger },
-						onPress: () => {},
+						onPress: onSignOut,
 					},
 				]}
 			/>
