@@ -323,12 +323,10 @@ const SignUpByAddressScreen = () => {
 			setWarningDialog(true);
 
 			// Prompt the user before leaving the screen
-			setPreventBackCallBack(() => {
-				return () => {
-					setCanGoBack(true);
-					setWarningDialog(false);
-					NAVIGATION.dispatch(e.data.action);
-				};
+			setPreventBackCallBack(() => () => {
+				setCanGoBack(true);
+				setWarningDialog(false);
+				NAVIGATION.dispatch(e.data.action);
 			});
 
 			Alert.alert(
