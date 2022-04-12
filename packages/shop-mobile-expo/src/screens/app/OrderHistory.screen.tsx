@@ -1,9 +1,15 @@
 import React from 'react';
-import { View, ActivityIndicator, FlatList, StyleSheet } from 'react-native';
+import {
+	View,
+	ActivityIndicator,
+	FlatList,
+	StyleSheet,
+	ScrollView,
+} from 'react-native';
 import { Title } from 'react-native-paper';
 import { gql, useQuery } from '@apollo/client';
 
-// SELECTORS
+// STORE
 import { useAppSelector } from '../../store/hooks';
 import { getLanguage } from '../../store/features/translation';
 
@@ -31,7 +37,7 @@ const OrderHistoryScreen = () => {
 			generatePastOrdersPerCarrier
 		}
 	`;
-	const { data, loading, error } = useQuery(ORDERS_QUERY, {
+	const ORDERS_QUERY_RES = useQuery(ORDERS_QUERY, {
 		variables: {},
 	});
 
@@ -55,8 +61,17 @@ const OrderHistoryScreen = () => {
 
 	// EFFECT
 	React.useEffect(() => {
-		console.log('Orders ==>', data, loading, error);
-	}, [data, loading, error]);
+		console.log(
+			'Orders ==>',
+			ORDERS_QUERY_RES?.data,
+			ORDERS_QUERY_RES?.loading,
+			ORDERS_QUERY_RES?.error,
+		);
+	}, [
+		ORDERS_QUERY_RES.data,
+		ORDERS_QUERY_RES.loading,
+		ORDERS_QUERY_RES.error,
+	]);
 
 	return (
 		<View style={{ ...GS.screen }}>
@@ -71,27 +86,29 @@ const OrderHistoryScreen = () => {
 				showHomeBtn
 			/>
 
-			{loading ? (
+			{ORDERS_QUERY_RES?.loading ? (
 				<View style={STYLES.loaderContainer}>
 					<ActivityIndicator color={'#FFF'} size={25} />
 				</View>
 			) : [''] ? (
 				<FlatList
 					data={['', '', '']}
-					renderItem={() => {
-						return (
-							<View style={STYLES.orderHistoryItemContainer}>
-								<OrderHistoryItem />
-							</View>
-						);
-					}}
+					renderItem={() => (
+						<View style={STYLES.orderHistoryItemContainer}>
+							<OrderHistoryItem />
+						</View>
+					)}
 					keyExtractor={(_item, _index) => _index.toString()}
 					style={{ ...GS.h100 }}
 				/>
 			) : (
-				<View style={{ ...GS.screen, ...GS.centered }}>
-					<Title>Nothing ordered.</Title>
-				</View>
+				<ScrollView
+					style={{ ...GS.screen }}
+					contentContainerStyle={{ ...GS.screen, ...GS.centered }}>
+					<Title>
+						{LANGUAGE.LAST_PURCHASES_VIEW.NOTHING_ORDERED}
+					</Title>
+				</ScrollView>
 			)}
 		</View>
 	);
