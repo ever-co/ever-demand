@@ -38,8 +38,6 @@ function HomeScreen({}) {
 	const USER_DATA = useAppSelector(getUserData);
 	const VIEW_TYPE = useAppSelector(getProductViewType);
 
-	// STATES
-
 	// DATA
 	const PRODUCTS_QUERY_ARGS_INTERFACE: ProductsQueryArgsInterface = {
 		geoLocation: {
@@ -100,16 +98,14 @@ function HomeScreen({}) {
 							PRODUCTS_QUERY_RESPONSE.data
 								?.geoLocationProductsByPaging
 						}
-						renderItem={({ item, index }) => {
-							return (
-								<View style={styles.productItemContainer}>
-									<ProductItem
-										type={VIEW_TYPE}
-										data={{ ...item, id: index }}
-									/>
-								</View>
-							);
-						}}
+						renderItem={({ item, index }) => (
+							<View style={styles.productItemContainer}>
+								<ProductItem
+									type={VIEW_TYPE}
+									data={{ ...item, id: index }}
+								/>
+							</View>
+						)}
 						keyExtractor={(_item, _index) => _index.toString()}
 						style={{ ...GS.h100 }}
 					/>
