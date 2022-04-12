@@ -1,21 +1,21 @@
 import React from 'react';
 import { View, ActivityIndicator, StyleSheet, ScrollView } from 'react-native';
-import { Button, TextInput, Title } from 'react-native-paper';
+import { Button, TextInput, Title, Text } from 'react-native-paper';
 // import { useQuery } from '@apollo/client';
 // tslint:disable-next-line: no-implicit-dependencies no-submodule-imports
 import MaterialIcon from '@expo/vector-icons/MaterialCommunityIcons';
-
-// CONFIGS
+import { debounce } from 'lodash';
 
 // TYPES/INTERFACES
 import type {} from '../../client/products/argumentInterfaces';
 
-// SELECTORS
+// HELPERS
+import { isEmpty } from '../../helpers/utils';
+
+// STORE
 import { useAppSelector } from '../../store/hooks';
 // import { getUserData } from '../../store/features/user';
 import { getLanguage } from '../../store/features/translation';
-
-// ACTIONS
 
 // QUERIES
 // import { GEO_LOCATION_PRODUCTS_BY_PAGING } from '../../client/products/queries';
@@ -40,8 +40,9 @@ function MerchantsSearch({}) {
 	// const USER_DATA = useAppSelector(getUserData);
 
 	// STATES
-	const [searchValue, setSearchValue] = React.useState<string>('');
-	// const [dataLoading, setDataLoading] = React.useState<boolean>(false);
+	const [merchantList, setMerchantList] = React.useState<any[]>([]);
+	const [searchedValue, setSearchedValue] = React.useState<string>('');
+	const [dataLoading, setDataLoading] = React.useState<boolean>(false);
 
 	// DATA
 	// const MERCHANTS_SEARCH_QUERY_ARGS: any = {};
@@ -55,8 +56,6 @@ function MerchantsSearch({}) {
 	// 		},
 	// 	},
 	// );
-
-	// STYLES
 	const STYLES = StyleSheet.create({
 		loaderContainer: { ...GS.centered, ...GS.w100, flex: 1 },
 		searchContainer: {
@@ -76,7 +75,27 @@ function MerchantsSearch({}) {
 			fontSize: CS.FONT_SIZE - 1,
 		},
 		scanBtn: { ...GS.p0, ...GS.my0, ...GS.justifyCenter, height: 57 },
+		searchedText: { ...GS.FF_NunitoBold, ...GS.txtUpper },
 	});
+
+	// FUNCTIONS
+	const debouncedFetchData = React.useMemo(
+		() =>
+			debounce((text: string) => {
+				console.log('API launched ====>', text);
+				setMerchantList([]);
+				setDataLoading(false);
+			}, 500),
+		[],
+	);
+
+	// EFFECTS
+	React.useEffect(() => {
+		debouncedFetchData(searchedValue);
+
+		return () => debouncedFetchData.cancel();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [searchedValue]);
 
 	return (
 		<View style={{ ...GS.screen }}>
@@ -94,7 +113,7 @@ function MerchantsSearch({}) {
 			<View style={STYLES.searchContainer}>
 				<View style={STYLES.containerSearchInput}>
 					<TextInput
-						value={searchValue}
+						value={searchedValue}
 						placeholder='Search here'
 						style={STYLES.searchInput}
 						theme={{
@@ -110,7 +129,10 @@ function MerchantsSearch({}) {
 								style={GS.mt1}
 							/>
 						}
-						onChangeText={(text) => setSearchValue(text)}
+						onChangeText={(text) => {
+							setDataLoading(true);
+							setSearchedValue(text);
+						}}
 						mode='outlined'
 					/>
 				</View>
@@ -129,19 +151,30 @@ function MerchantsSearch({}) {
 				</Button>
 			</View>
 
-			{false ? (
+			{!isEmpty(searchedValue) && (
+				<View style={{ ...GS.centered, ...GS.pt3, ...GS.pb4 }}>
+					<Text style={STYLES.searchedText}>
+						{LANGUAGE.MERCHANTS_VIEW.WITH_NAME} "{searchedValue}"
+					</Text>
+				</View>
+			)}
+
+			{dataLoading ? (
 				<View style={STYLES.loaderContainer}>
 					<ActivityIndicator color={CC.white} size={25} />
 				</View>
-			) : true ? (
+			) : merchantList.length ? (
 				<ScrollView
 					style={{ ...GS.screen }}
 					contentContainerStyle={{ ...GS.px2 }}>
 					{[''].map((_item, index) => (
 						<TouchableCard
 							key={index}
+							img='https://github.com/ever-co/ever-demand-docs/blob/master/docs/assets/shop/mobile/in-store/merchants_near_search.png?raw=true'
 							title='Item'
 							titleStyle={{ color: CC.primary }}
+							indicatorIconProps={{ name: 'chevron-right' }}
+							height={65}
 							onPress={() => {}}
 						/>
 					))}
