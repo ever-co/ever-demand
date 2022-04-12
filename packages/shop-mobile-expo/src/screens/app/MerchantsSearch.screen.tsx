@@ -1,24 +1,27 @@
 import React from 'react';
 import { View, ActivityIndicator, StyleSheet, ScrollView } from 'react-native';
 import { Button, TextInput, Title, Text } from 'react-native-paper';
-import { useQuery, useLazyQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 // tslint:disable-next-line: no-implicit-dependencies no-submodule-imports
 import MaterialIcon from '@expo/vector-icons/MaterialCommunityIcons';
 import { debounce } from 'lodash';
 
 // TYPES/INTERFACES
-import type {} from '../../client/products/argumentInterfaces';
+import {
+	QueryGetMerchantsByNameArgsInterface,
+	MerchantsSearchedInterface,
+} from '../../client/merchants/argumentInterfaces';
 
 // HELPERS
 import { isEmpty } from '../../helpers/utils';
 
 // STORE
 import { useAppSelector } from '../../store/hooks';
-// import { getUserData } from '../../store/features/user';
+import { getUserData } from '../../store/features/user';
 import { getLanguage } from '../../store/features/translation';
 
 // QUERIES
-import { GEO_LOCATION_PRODUCTS_BY_PAGING } from '../../client/products/queries';
+import { GET_MERCHANTS_QUERY } from '../../client/merchants/queries';
 
 // COMPONENTS
 import {
@@ -37,24 +40,14 @@ import {
 function MerchantsSearch({}) {
 	// SELECTORS
 	const LANGUAGE = useAppSelector(getLanguage);
-	// const USER_DATA = useAppSelector(getUserData);
+	const USER_DATA = useAppSelector(getUserData);
 
 	// STATES
 	const [searchedValue, setSearchedValue] = React.useState<string>('');
 	const [dataLoading, setDataLoading] = React.useState<boolean>(false);
 
-	// DATA
-	const MERCHANTS_SEARCH_QUERY_ARGS: any = {};
-
 	// QUERIES
-	const MERCHANTS_SEARCH_QUERY = useLazyQuery(
-		GEO_LOCATION_PRODUCTS_BY_PAGING,
-		{
-			variables: {
-				...MERCHANTS_SEARCH_QUERY_ARGS,
-			},
-		},
-	);
+	const MERCHANTS_SEARCH_QUERY = useLazyQuery(GET_MERCHANTS_QUERY);
 
 	const STYLES = StyleSheet.create({
 		loaderContainer: { ...GS.centered, ...GS.w100, flex: 1 },
@@ -82,24 +75,51 @@ function MerchantsSearch({}) {
 	const debouncedFetchData = React.useMemo(
 		() =>
 			debounce((text: string) => {
+				const MERCHANT_SEARCH_QUERY_ARGS: QueryGetMerchantsByNameArgsInterface =
+					{
+						searchName: text,
+						...(isEmpty(text)
+							? {
+									geoLocation: {
+										city: USER_DATA?.geoLocation.city,
+										countryId:
+											USER_DATA?.geoLocation?.countryId,
+										countryName:
+											USER_DATA?.geoLocation?.countryName,
+										streetAddress:
+											USER_DATA?.geoLocation
+												?.streetAddress,
+										postcode:
+											USER_DATA?.geoLocation?.postcode,
+										house: USER_DATA?.geoLocation?.house,
+										loc: {
+											type:
+												USER_DATA?.geoLocation
+													?.coordinates?.__typename ||
+												'',
+											coordinates: [
+												USER_DATA?.geoLocation
+													?.coordinates?.lng || 0,
+												USER_DATA?.geoLocation
+													?.coordinates?.lat || 0,
+											],
+										},
+									},
+							  }
+							: {}),
+					};
 				setDataLoading(false);
-				MERCHANTS_SEARCH_QUERY[0]();
-				console.log(
-					'API launched ====>',
-					text,
-					MERCHANTS_SEARCH_QUERY[1].data,
-				);
+				MERCHANTS_SEARCH_QUERY[0]({
+					variables: MERCHANT_SEARCH_QUERY_ARGS,
+				});
 			}, 500),
-		[MERCHANTS_SEARCH_QUERY.data],
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[],
 	);
 
 	// EFFECTS
 	React.useEffect(() => {
-		if (!isEmpty(searchedValue)) {
-			debouncedFetchData(searchedValue);
-		} else {
-			setDataLoading(false);
-		}
+		debouncedFetchData(searchedValue);
 
 		return () => debouncedFetchData.cancel();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -174,18 +194,23 @@ function MerchantsSearch({}) {
 				<View style={STYLES.loaderContainer}>
 					<ActivityIndicator color={CC.white} size={25} />
 				</View>
-			) : MERCHANTS_SEARCH_QUERY[1]?.data?.length ? (
+			) : MERCHANTS_SEARCH_QUERY[1]?.data?.getMerchantsBuyName?.length ? (
 				<ScrollView
 					style={{ ...GS.screen }}
 					contentContainerStyle={{ ...GS.px2 }}>
-					{[''].map((_item, index) => (
+					{(MERCHANTS_SEARCH_QUERY[1]?.data
+						? (MERCHANTS_SEARCH_QUERY[1]?.data
+								?.getMerchantsBuyName as MerchantsSearchedInterface[])
+						: []
+					).map((_item, _index) => (
 						<TouchableCard
-							key={index}
-							img='https://github.com/ever-co/ever-demand-docs/blob/master/docs/assets/shop/mobile/in-store/merchants_near_search.png?raw=true'
-							title='Item'
+							key={_index}
+							img={_item.logo}
+							title={_item.name}
 							titleStyle={{ color: CC.primary }}
 							indicatorIconProps={{ name: 'chevron-right' }}
 							height={65}
+							style={GS.mb2}
 							onPress={() => {}}
 						/>
 					))}
