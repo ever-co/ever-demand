@@ -30,7 +30,7 @@ export interface UserInterface {
 		countryId: number;
 		countryName: string;
 		createdAt: string;
-		house: 1;
+		house: string;
 		id: string;
 		notes: string | null;
 		postcode: string | null;
