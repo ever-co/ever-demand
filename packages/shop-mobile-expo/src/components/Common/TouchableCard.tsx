@@ -62,11 +62,10 @@ const STYLES = StyleSheet.create({
 	},
 	loaderContainer: { ...GS.h100, ...GS.centered, flex: 1 },
 	cardImg: {
-		...GS.shadowSm,
 		width: 40,
 		height: 40,
 		borderRadius: 20,
-		resizeMode: 'contain',
+		resizeMode: 'cover',
 	},
 	cardTextContent: {
 		flex: 1,
