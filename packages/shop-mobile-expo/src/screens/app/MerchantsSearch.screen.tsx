@@ -122,7 +122,7 @@ function MerchantsSearch({}) {
 				<View style={STYLES.containerSearchInput}>
 					<TextInput
 						value={searchedValue}
-						placeholder='Search here'
+						placeholder={LANGUAGE.MERCHANTS_VIEW.NAME}
 						style={STYLES.searchInput}
 						theme={{
 							colors: { text: CC.dark },
@@ -155,17 +155,20 @@ function MerchantsSearch({}) {
 						color={CC.light}
 						size={16}
 					/>{' '}
-					Scan
+					{LANGUAGE.SCAN}
 				</Button>
 			</View>
 
-			{!isEmpty(searchedValue) && (
-				<View style={{ ...GS.centered, ...GS.pt3, ...GS.pb4 }}>
-					<Text style={STYLES.searchedText}>
-						{LANGUAGE.MERCHANTS_VIEW.WITH_NAME} "{searchedValue}"
-					</Text>
-				</View>
-			)}
+			<View style={{ ...GS.centered, ...GS.pt3, ...GS.pb4 }}>
+				<Text style={STYLES.searchedText}>
+					{!isEmpty(searchedValue)
+						? LANGUAGE.MERCHANTS_VIEW.WITH_NAME +
+						  ' "' +
+						  searchedValue +
+						  '"'
+						: LANGUAGE.MERCHANTS_VIEW.CLOSE_TO_YOU}
+				</Text>
+			</View>
 
 			{MERCHANTS_SEARCH_QUERY[1].loading || dataLoading ? (
 				<View style={STYLES.loaderContainer}>
@@ -191,7 +194,7 @@ function MerchantsSearch({}) {
 				<ScrollView
 					style={{ ...GS.screen }}
 					contentContainerStyle={{ ...GS.screen, ...GS.centered }}>
-					<Title>Nothing found!</Title>
+					<Title>{LANGUAGE.NOT_FOUND}</Title>
 				</ScrollView>
 			)}
 		</View>
