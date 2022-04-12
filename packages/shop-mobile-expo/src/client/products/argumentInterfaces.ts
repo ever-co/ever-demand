@@ -7,6 +7,7 @@ import type {
 import type { MaybeType, ScalarsInterface } from '../../types';
 
 // TODO: Add more comments
+// TODO: Move other types outside of argumentInterfaces file
 
 export interface ProductInterface {
 	_id: ScalarsInterface['String'];
