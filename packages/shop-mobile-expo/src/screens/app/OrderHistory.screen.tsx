@@ -7,11 +7,17 @@ import {
 	ScrollView,
 } from 'react-native';
 import { Title } from 'react-native-paper';
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { showMessage } from 'react-native-flash-message';
 
 // STORE
 import { useAppSelector } from '../../store/hooks';
 import { getLanguage } from '../../store/features/translation';
+import { getUserData } from '../../store/features/user/index';
+
+// QUERIES CLIENT
+import { GET_ORDER_HISTORY_QUERY } from '../../client/orders/queries';
+import { QueryGetOrdersArgsInterface } from '../../client/orders/argumentInterfaces';
 
 // COMPONENTS
 import {
@@ -30,15 +36,14 @@ import {
 const OrderHistoryScreen = () => {
 	// SELECTORS
 	const LANGUAGE = useAppSelector(getLanguage);
+	const USER_DATA = useAppSelector(getUserData);
 
 	// QUERIES
-	const ORDERS_QUERY = gql`
-		query Orders {
-			generatePastOrdersPerCarrier
-		}
-	`;
-	const ORDERS_QUERY_RES = useQuery(ORDERS_QUERY, {
-		variables: {},
+	const GET_ORDER_HISTORY_QUERY_ARGS: QueryGetOrdersArgsInterface = {
+		userId: USER_DATA?.id || '',
+	};
+	const ORDERS_QUERY_RES = useQuery(GET_ORDER_HISTORY_QUERY, {
+		variables: GET_ORDER_HISTORY_QUERY_ARGS,
 	});
 
 	// STYLES
@@ -61,17 +66,18 @@ const OrderHistoryScreen = () => {
 
 	// EFFECT
 	React.useEffect(() => {
-		console.log(
-			'Orders ==>',
-			ORDERS_QUERY_RES?.data,
-			ORDERS_QUERY_RES?.loading,
-			ORDERS_QUERY_RES?.error,
-		);
-	}, [
-		ORDERS_QUERY_RES.data,
-		ORDERS_QUERY_RES.loading,
-		ORDERS_QUERY_RES.error,
-	]);
+		showMessage({
+			message: 'Please, create a user account',
+			type: 'warning',
+		});
+
+		if (ORDERS_QUERY_RES?.data?.Error) {
+			showMessage({
+				message: ORDERS_QUERY_RES?.data?.Error,
+				type: 'warning',
+			});
+		}
+	}, [ORDERS_QUERY_RES.data, ORDERS_QUERY_RES.loading]);
 
 	return (
 		<View style={{ ...GS.screen }}>
@@ -88,9 +94,9 @@ const OrderHistoryScreen = () => {
 
 			{ORDERS_QUERY_RES?.loading ? (
 				<View style={STYLES.loaderContainer}>
-					<ActivityIndicator color={'#FFF'} size={25} />
+					<ActivityIndicator color='#FFF' size={25} />
 				</View>
-			) : [''] ? (
+			) : USER_DATA?.__typename !== 'Invite' && [].length ? (
 				<FlatList
 					data={['', '', '']}
 					renderItem={() => (
