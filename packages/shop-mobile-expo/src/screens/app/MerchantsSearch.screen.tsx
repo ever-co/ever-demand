@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, ActivityIndicator, StyleSheet, ScrollView } from 'react-native';
 import { Button, TextInput, Title, Text } from 'react-native-paper';
-// import { useQuery } from '@apollo/client';
+import { useQuery, useLazyQuery } from '@apollo/client';
 // tslint:disable-next-line: no-implicit-dependencies no-submodule-imports
 import MaterialIcon from '@expo/vector-icons/MaterialCommunityIcons';
 import { debounce } from 'lodash';
@@ -18,7 +18,7 @@ import { useAppSelector } from '../../store/hooks';
 import { getLanguage } from '../../store/features/translation';
 
 // QUERIES
-// import { GEO_LOCATION_PRODUCTS_BY_PAGING } from '../../client/products/queries';
+import { GEO_LOCATION_PRODUCTS_BY_PAGING } from '../../client/products/queries';
 
 // COMPONENTS
 import {
@@ -40,22 +40,22 @@ function MerchantsSearch({}) {
 	// const USER_DATA = useAppSelector(getUserData);
 
 	// STATES
-	const [merchantList, setMerchantList] = React.useState<any[]>([]);
 	const [searchedValue, setSearchedValue] = React.useState<string>('');
 	const [dataLoading, setDataLoading] = React.useState<boolean>(false);
 
 	// DATA
-	// const MERCHANTS_SEARCH_QUERY_ARGS: any = {};
+	const MERCHANTS_SEARCH_QUERY_ARGS: any = {};
 
 	// QUERIES
-	// const MERCHANTS_SEARCH_QUERY_RESPONSE = useQuery(
-	// 	GEO_LOCATION_PRODUCTS_BY_PAGING,
-	// 	{
-	// 		variables: {
-	// 			...MERCHANTS_SEARCH_QUERY_ARGS,
-	// 		},
-	// 	},
-	// );
+	const MERCHANTS_SEARCH_QUERY = useLazyQuery(
+		GEO_LOCATION_PRODUCTS_BY_PAGING,
+		{
+			variables: {
+				...MERCHANTS_SEARCH_QUERY_ARGS,
+			},
+		},
+	);
+
 	const STYLES = StyleSheet.create({
 		loaderContainer: { ...GS.centered, ...GS.w100, flex: 1 },
 		searchContainer: {
@@ -82,16 +82,24 @@ function MerchantsSearch({}) {
 	const debouncedFetchData = React.useMemo(
 		() =>
 			debounce((text: string) => {
-				console.log('API launched ====>', text);
-				setMerchantList([]);
 				setDataLoading(false);
+				MERCHANTS_SEARCH_QUERY[0]();
+				console.log(
+					'API launched ====>',
+					text,
+					MERCHANTS_SEARCH_QUERY[1].data,
+				);
 			}, 500),
-		[],
+		[MERCHANTS_SEARCH_QUERY.data],
 	);
 
 	// EFFECTS
 	React.useEffect(() => {
-		debouncedFetchData(searchedValue);
+		if (!isEmpty(searchedValue)) {
+			debouncedFetchData(searchedValue);
+		} else {
+			setDataLoading(false);
+		}
 
 		return () => debouncedFetchData.cancel();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -159,11 +167,11 @@ function MerchantsSearch({}) {
 				</View>
 			)}
 
-			{dataLoading ? (
+			{MERCHANTS_SEARCH_QUERY[1].loading || dataLoading ? (
 				<View style={STYLES.loaderContainer}>
 					<ActivityIndicator color={CC.white} size={25} />
 				</View>
-			) : merchantList.length ? (
+			) : MERCHANTS_SEARCH_QUERY[1]?.data?.length ? (
 				<ScrollView
 					style={{ ...GS.screen }}
 					contentContainerStyle={{ ...GS.px2 }}>
@@ -180,9 +188,11 @@ function MerchantsSearch({}) {
 					))}
 				</ScrollView>
 			) : (
-				<View style={{ ...GS.screen, ...GS.centered }}>
+				<ScrollView
+					style={{ ...GS.screen }}
+					contentContainerStyle={{ ...GS.screen, ...GS.centered }}>
 					<Title>Nothing found!</Title>
-				</View>
+				</ScrollView>
 			)}
 		</View>
 	);
