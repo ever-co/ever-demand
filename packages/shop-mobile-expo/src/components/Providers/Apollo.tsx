@@ -38,7 +38,7 @@ const ApolloProvider: React.FC<Props> = (props) => {
 	const [serverHostInp, setServerHostInp] = React.useState<string>('');
 	const [serverHost, setServerHost] = React.useState<string | null>(null);
 	const [showDialogUriConf, setShowDialogUriConf] = React.useState<boolean>(
-		ENV.PRODUCTION || __DEV__,
+		ENV.PRODUCTION,
 	);
 	const [serverHostInpMsg, setServerHostInpMsg] = React.useState<string>('');
 	const [serverHostLoading, setServerHostLoading] =
