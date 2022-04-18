@@ -1,6 +1,8 @@
+/* eslint-disable max-len */
 import React from 'react';
 import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import { Avatar, Title, Text, Button } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 // tslint:disable-next-line: no-implicit-dependencies no-submodule-imports
 import Ionicons from '@expo/vector-icons/Ionicons';
 
@@ -17,11 +19,15 @@ import {
 // LOCAL TYPES
 export interface ProductItemType {
 	data: ProductInfoInterface;
+	onPressProfile: (profileId: string) => any;
 }
 
 const ProductItemSlide: React.FC<ProductItemType> = (
 	props: ProductItemType,
 ) => {
+	// NAVIGATION
+	const NAVIGATION = useNavigation();
+
 	// DATA
 	const AVATAR_WAREHOUSE_SIZE = CS.FONT_SIZE_XLG * 2.5;
 	const STYLES = StyleSheet.create({
@@ -112,6 +118,16 @@ const ProductItemSlide: React.FC<ProductItemType> = (
 		},
 	});
 
+	// FUNCTIONS
+	const onPressProfile = () => {
+		NAVIGATION.navigate(
+			'DRAWER/IN_STORE' as never,
+			{
+				warehouseId: props.data.warehouseId,
+			} as never,
+		);
+	};
+
 	return (
 		<View style={STYLES.container}>
 			<Image
@@ -172,7 +188,9 @@ const ProductItemSlide: React.FC<ProductItemType> = (
 					</Text>
 				</View>
 
-				<TouchableOpacity style={STYLES.headerAvatarContainer}>
+				<TouchableOpacity
+					style={STYLES.headerAvatarContainer}
+					onPress={onPressProfile}>
 					<Avatar.Image
 						size={AVATAR_WAREHOUSE_SIZE}
 						source={{

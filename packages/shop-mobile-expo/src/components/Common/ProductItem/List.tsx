@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react';
 import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import { Avatar, Title, Text, Button } from 'react-native-paper';
@@ -13,6 +14,7 @@ import {
 	CONSTANT_SIZE as CS,
 	CONSTANT_COLOR as CC,
 } from '../../../assets/ts/styles';
+import { useNavigation } from '@react-navigation/native';
 
 // LOCAL TYPES
 export interface ProductItemType {
@@ -20,8 +22,21 @@ export interface ProductItemType {
 }
 
 const ProductItemList: React.FC<ProductItemType> = (props: ProductItemType) => {
+	// NAVIGATION
+	const NAVIGATION = useNavigation();
+
+	// FUNCTIONS
+	const onPressProfile = () => {
+		NAVIGATION.navigate(
+			'DRAWER/IN_STORE' as never,
+			{
+				warehouseId: props.data.warehouseId,
+			} as never,
+		);
+	};
+
 	// LOCAL STYLES
-	const styles = StyleSheet.create({
+	const STYLES = StyleSheet.create({
 		container: {
 			...GS.w100,
 			...GS.rounded,
@@ -78,9 +93,11 @@ const ProductItemList: React.FC<ProductItemType> = (props: ProductItemType) => {
 	});
 
 	return (
-		<View style={styles.container}>
-			<View style={{ ...styles.section, ...styles.header }}>
-				<TouchableOpacity style={styles.headerAvatarContainer}>
+		<View style={STYLES.container}>
+			<View style={{ ...STYLES.section, ...STYLES.header }}>
+				<TouchableOpacity
+					style={STYLES.headerAvatarContainer}
+					onPress={onPressProfile}>
 					<Avatar.Image
 						size={CS.FONT_SIZE_XLG * 2.2}
 						source={{
@@ -90,44 +107,44 @@ const ProductItemList: React.FC<ProductItemType> = (props: ProductItemType) => {
 						}}
 					/>
 				</TouchableOpacity>
-				<View style={styles.headerContent}>
-					<Title style={styles.headerContentTitle}>
+				<View style={STYLES.headerContent}>
+					<Title style={STYLES.headerContentTitle}>
 						{
 							props?.data?.warehouseProduct?.product?.title[0]
 								?.value
 						}
 					</Title>
-					<Text style={styles.headerContentDescription}>
+					<Text style={STYLES.headerContentDescription}>
 						{
 							props?.data?.warehouseProduct?.product
 								?.description[0]?.value
 						}
 					</Text>
 				</View>
-				<View style={styles.headerAvailability}>
+				<View style={STYLES.headerAvailability}>
 					<Ionicons
 						size={CS.FONT_SIZE_XLG}
 						color={CC.light}
 						name='flash'
 					/>
 
-					<Text style={styles.headerAvailabilityText}>
+					<Text style={STYLES.headerAvailabilityText}>
 						Ready for takeaway
 					</Text>
 				</View>
 			</View>
 			<Image
-				style={styles.prodImg}
+				style={STYLES.prodImg}
 				source={{
 					uri: props?.data?.warehouseProduct?.product?.images?.length
 						? props?.data?.warehouseProduct?.product?.images[0].url
 						: 'https://static.vecteezy.com/system/resources/previews/004/941/788/original/cardboard-boxes-or-packaging-paper-and-shipping-box-carton-parcels-and-delivery-packages-pile-flat-warehouse-goods-and-cargo-transportation-design-illustration-vector.jpg',
 				}}
 			/>
-			<View style={{ ...styles.section, ...styles.footer }}>
+			<View style={{ ...STYLES.section, ...STYLES.footer }}>
 				<Button
 					uppercase={false}
-					style={{ ...styles.footerBtn, ...styles.footerBuyBtn }}
+					style={{ ...STYLES.footerBtn, ...STYLES.footerBuyBtn }}
 					labelStyle={{
 						...GS.FF_NunitoSemiBold,
 						color: CC.light,
@@ -136,7 +153,7 @@ const ProductItemList: React.FC<ProductItemType> = (props: ProductItemType) => {
 				</Button>
 				<Button
 					uppercase={false}
-					style={{ ...styles.footerBtn, ...styles.footerDetailBtn }}
+					style={{ ...STYLES.footerBtn, ...STYLES.footerDetailBtn }}
 					labelStyle={{
 						...GS.FF_NunitoSemiBold,
 						color: CC.light,
