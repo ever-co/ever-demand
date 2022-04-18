@@ -48,6 +48,10 @@ const DRAWER_ROUTES: DrawerScreenType[] = [
 		name: 'DRAWER/MERCHANTS_SEARCH',
 		component: SCREENS.APP.MerchantsSearch,
 	},
+	{
+		name: 'DRAWER/IN_STORE',
+		component: SCREENS.APP.InStore,
+	},
 ];
 
 export default DRAWER_ROUTES;
