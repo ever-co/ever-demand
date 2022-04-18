@@ -62,7 +62,7 @@ const ApolloProvider: React.FC<Props> = (props) => {
 
 		await checkServer(
 			FORMATTED_URI,
-			5000,
+			6000,
 			() => {
 				setServerHost(FORMATTED_URI);
 				setShowDialogUriConf(false);
