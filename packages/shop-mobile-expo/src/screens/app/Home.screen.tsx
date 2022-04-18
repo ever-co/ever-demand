@@ -63,7 +63,7 @@ function HomeScreen({}) {
 	});
 
 	// STYLES
-	const styles = StyleSheet.create({
+	const STYLES = StyleSheet.create({
 		loaderContainer: { ...GS.centered, ...GS.w100, flex: 1 },
 		productItemContainer: {
 			...GS.mx1,
@@ -86,7 +86,7 @@ function HomeScreen({}) {
 			/>
 
 			{PRODUCTS_QUERY_RESPONSE.loading ? (
-				<View style={styles.loaderContainer}>
+				<View style={STYLES.loaderContainer}>
 					<ActivityIndicator color={'#FFF'} size={25} />
 				</View>
 			) : PRODUCTS_QUERY_RESPONSE.data?.geoLocationProductsByPaging &&
@@ -99,7 +99,7 @@ function HomeScreen({}) {
 								?.geoLocationProductsByPaging
 						}
 						renderItem={({ item, index }) => (
-							<View style={styles.productItemContainer}>
+							<View style={STYLES.productItemContainer}>
 								<ProductItem
 									type={VIEW_TYPE}
 									data={{ ...item, id: index }}
