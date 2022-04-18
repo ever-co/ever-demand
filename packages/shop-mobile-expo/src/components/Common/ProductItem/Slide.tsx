@@ -19,7 +19,6 @@ import {
 // LOCAL TYPES
 export interface ProductItemType {
 	data: ProductInfoInterface;
-	onPressProfile: (profileId: string) => any;
 }
 
 const ProductItemSlide: React.FC<ProductItemType> = (
