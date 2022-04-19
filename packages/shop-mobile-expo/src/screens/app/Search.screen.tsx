@@ -1,16 +1,18 @@
 import React from 'react';
 import { View, ActivityIndicator, StyleSheet, ScrollView } from 'react-native';
-import { Button, TextInput, Title, Text } from 'react-native-paper';
+import { TextInput, Title, Text } from 'react-native-paper';
 import { useLazyQuery } from '@apollo/client';
-// tslint:disable-next-line: no-implicit-dependencies no-submodule-imports
-import MaterialIcon from '@expo/vector-icons/MaterialCommunityIcons';
 import { debounce } from 'lodash';
 
 // TYPES/INTERFACES
-import {
+import type {
 	QueryGetMerchantsByNameArgsInterface,
 	MerchantsSearchedInterface,
 } from '../../client/merchants/argumentInterfaces';
+import type {
+	ProductsQueryArgsInterface,
+	ProductInfoInterface,
+} from '../../client/products/argumentInterfaces';
 
 // HELPERS
 import { isEmpty } from '../../helpers/utils';
@@ -22,12 +24,14 @@ import { getLanguage } from '../../store/features/translation';
 
 // QUERIES
 import { GET_MERCHANTS_QUERY } from '../../client/merchants/queries';
+import { GEO_LOCATION_PRODUCTS_BY_PAGING } from '../../client/products/queries';
 
 // COMPONENTS
 import {
 	FocusAwareStatusBar,
 	CustomScreenHeader,
 	TouchableCard,
+	ProductHistoryItem,
 } from '../../components/Common';
 
 // STYLES
@@ -47,8 +51,10 @@ function SearchScreen({}) {
 	const [dataLoading, setDataLoading] = React.useState<boolean>(false);
 
 	// QUERIES
-	const SEARCH_QUERY = useLazyQuery(GET_MERCHANTS_QUERY);
+	const MERCHANTS_SEARCH_QUERY = useLazyQuery(GET_MERCHANTS_QUERY);
+	const PRODUCTS_SEARCH_QUERY = useLazyQuery(GEO_LOCATION_PRODUCTS_BY_PAGING);
 
+	// STYLES
 	const STYLES = StyleSheet.create({
 		loaderContainer: { ...GS.centered, ...GS.w100, flex: 1 },
 		searchContainer: {
@@ -59,7 +65,7 @@ function SearchScreen({}) {
 			height: 90,
 			backgroundColor: CC.dark,
 		},
-		containerSearchInput: { ...GS.flex1, ...GS.mr2, height: 57 },
+		containerSearchInput: { ...GS.flex1, height: 57 },
 		searchInput: {
 			...GS.bgLight,
 			...GS.flex1,
@@ -75,42 +81,48 @@ function SearchScreen({}) {
 	const debouncedFetchData = React.useMemo(
 		() =>
 			debounce((text: string) => {
-				const MERCHANT_SEARCH_QUERY_ARGS: QueryGetMerchantsByNameArgsInterface =
+				const MERCHANTS_SEARCH_QUERY_ARGS: QueryGetMerchantsByNameArgsInterface =
 					{
 						searchName: text,
-						...(isEmpty(text)
-							? {
-									geoLocation: {
-										city: USER_DATA?.geoLocation.city,
-										countryId:
-											USER_DATA?.geoLocation?.countryId,
-										countryName:
-											USER_DATA?.geoLocation?.countryName,
-										streetAddress:
-											USER_DATA?.geoLocation
-												?.streetAddress,
-										postcode:
-											USER_DATA?.geoLocation?.postcode,
-										house: USER_DATA?.geoLocation?.house,
-										loc: {
-											type:
-												USER_DATA?.geoLocation
-													?.coordinates?.__typename ||
-												'',
-											coordinates: [
-												USER_DATA?.geoLocation
-													?.coordinates?.lng || 0,
-												USER_DATA?.geoLocation
-													?.coordinates?.lat || 0,
-											],
-										},
-									},
-							  }
-							: {}),
+						geoLocation: {
+							loc: {
+								type:
+									USER_DATA?.geoLocation?.coordinates
+										?.__typename || 'Point',
+								coordinates: [
+									USER_DATA?.geoLocation?.coordinates?.lng ||
+										0,
+									USER_DATA?.geoLocation?.coordinates?.lat ||
+										0,
+								],
+							},
+						},
 					};
+				const PRODUCTS_SEARCH_QUERY_ARGS: ProductsQueryArgsInterface = {
+					geoLocation: {
+						loc: {
+							type:
+								USER_DATA?.geoLocation?.coordinates
+									?.__typename || 'Point',
+							coordinates: [
+								USER_DATA?.geoLocation
+									? USER_DATA?.geoLocation?.coordinates?.lng
+									: 0,
+								USER_DATA?.geoLocation
+									? USER_DATA?.geoLocation?.coordinates?.lat
+									: 0,
+							],
+						},
+					},
+					searchText: text,
+				};
+
 				setDataLoading(false);
-				SEARCH_QUERY[0]({
-					variables: MERCHANT_SEARCH_QUERY_ARGS,
+				MERCHANTS_SEARCH_QUERY[0]({
+					variables: MERCHANTS_SEARCH_QUERY_ARGS,
+				});
+				PRODUCTS_SEARCH_QUERY[0]({
+					variables: PRODUCTS_SEARCH_QUERY_ARGS,
 				});
 			}, 500),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -134,7 +146,9 @@ function SearchScreen({}) {
 			/>
 
 			<CustomScreenHeader
-				title={LANGUAGE.PRODUCTS_VIEW.TITLE}
+				title={
+					LANGUAGE.PRODUCTS_VIEW.TITLE + ' / ' + LANGUAGE.MERCHANTS
+				}
 				showBackBtn
 			/>
 
@@ -142,7 +156,7 @@ function SearchScreen({}) {
 				<View style={STYLES.containerSearchInput}>
 					<TextInput
 						value={searchedValue}
-						placeholder={LANGUAGE.MERCHANTS_VIEW.NAME}
+						placeholder={LANGUAGE.SEARCH_VIEW.SEARCH_PLACEHOLDER?.toLowerCase()}
 						style={STYLES.searchInput}
 						theme={{
 							colors: { text: CC.dark },
@@ -164,62 +178,87 @@ function SearchScreen({}) {
 						mode='outlined'
 					/>
 				</View>
-
-				<Button
-					style={STYLES.scanBtn}
-					theme={{ roundness: CS.SPACE }}
-					uppercase={false}
-					mode='contained'>
-					<MaterialIcon
-						name='qrcode-scan'
-						color={CC.light}
-						size={16}
-					/>{' '}
-					{LANGUAGE.SCAN}
-				</Button>
 			</View>
 
-			<View style={{ ...GS.centered, ...GS.pt3, ...GS.pb4 }}>
-				<Text style={STYLES.searchedText}>
-					{!isEmpty(searchedValue)
-						? LANGUAGE.MERCHANTS_VIEW.WITH_NAME +
-						  ' "' +
-						  searchedValue +
-						  '"'
-						: LANGUAGE.MERCHANTS_VIEW.CLOSE_TO_YOU}
-				</Text>
-			</View>
-
-			{SEARCH_QUERY[1].loading || dataLoading ? (
+			{MERCHANTS_SEARCH_QUERY[1].loading ||
+			PRODUCTS_SEARCH_QUERY[1].loading ||
+			dataLoading ? (
 				<View style={STYLES.loaderContainer}>
 					<ActivityIndicator color={CC.white} size={25} />
 				</View>
-			) : SEARCH_QUERY[1]?.data?.getMerchantsBuyName?.length ? (
+			) : MERCHANTS_SEARCH_QUERY[1]?.data?.getMerchantsBuyName?.length ||
+			  PRODUCTS_SEARCH_QUERY[1]?.data?.geoLocationProductsByPaging
+					?.length ? (
 				<ScrollView
 					style={{ ...GS.screen }}
 					contentContainerStyle={{ ...GS.px2 }}>
-					{(SEARCH_QUERY[1]?.data
-						? (SEARCH_QUERY[1]?.data
-								?.getMerchantsBuyName as MerchantsSearchedInterface[])
-						: []
-					).map((_item, _index) => (
-						<TouchableCard
-							key={_index}
-							img={_item.logo}
-							title={_item.name}
-							titleStyle={{ color: CC.primary }}
-							indicatorIconProps={{ name: 'chevron-right' }}
-							height={65}
-							style={GS.mb2}
-							onPress={() => {}}
-						/>
-					))}
+					<View>
+						<View style={{ ...GS.centered, ...GS.pt3, ...GS.pb4 }}>
+							<Text style={STYLES.searchedText}>
+								{LANGUAGE.MERCHANTS}
+							</Text>
+						</View>
+
+						{(MERCHANTS_SEARCH_QUERY[1]?.data
+							? (MERCHANTS_SEARCH_QUERY[1]?.data
+									?.getMerchantsBuyName as MerchantsSearchedInterface[])
+							: []
+						).map((_item, _index) => (
+							<TouchableCard
+								key={_index}
+								img={_item.logo}
+								title={_item.name}
+								titleStyle={{ color: CC.primary }}
+								indicatorIconProps={{ name: 'chevron-right' }}
+								height={65}
+								style={GS.mb2}
+								onPress={() => {}}
+							/>
+						))}
+					</View>
+
+					<View>
+						<View style={{ ...GS.centered, ...GS.pt3, ...GS.pb4 }}>
+							<Text style={STYLES.searchedText}>
+								{LANGUAGE.PRODUCTS_VIEW.TITLE}
+							</Text>
+						</View>
+
+						{(PRODUCTS_SEARCH_QUERY[1]?.data
+							? (PRODUCTS_SEARCH_QUERY[1]?.data
+									?.geoLocationProductsByPaging as ProductInfoInterface[])
+							: []
+						).map((_item, _index) => (
+							<View key={_index} style={GS.mb2}>
+								<ProductHistoryItem
+									image={
+										_item?.warehouseProduct?.product
+											?.images[0].url
+									}
+									title={
+										_item?.warehouseProduct?.product
+											?.title[0]?.value
+									}
+									description={
+										_item?.warehouseProduct?.product
+											?.description[0].value
+									}
+									amount={_item?.warehouseProduct?.price}
+									onPress={() => {}}
+								/>
+							</View>
+						))}
+					</View>
 				</ScrollView>
 			) : (
 				<ScrollView
 					style={{ ...GS.screen }}
-					contentContainerStyle={{ ...GS.screen, ...GS.centered }}>
-					<Title>{LANGUAGE.NOT_FOUND}</Title>
+					contentContainerStyle={{
+						...GS.screen,
+						...GS.centered,
+						...GS.px2,
+					}}>
+					<Title>{LANGUAGE.SEARCH_VIEW.EMPTY_LIST}</Title>
 				</ScrollView>
 			)}
 		</View>
