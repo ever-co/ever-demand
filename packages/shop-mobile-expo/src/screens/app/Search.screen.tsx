@@ -205,7 +205,15 @@ function SearchScreen({}) {
 								img={_item.logo}
 								title={_item.name}
 								titleStyle={{ color: CC.primary }}
-								indicatorIconProps={{ name: 'chevron-right' }}
+								indicatorText={
+									_item?.isActive
+										? LANGUAGE.SEARCH_VIEW.OPEN
+										: LANGUAGE.SEARCH_VIEW.CLOSED
+								}
+								indicatorTextColor={
+									_item?.isActive ? CC.success : CC.danger
+								}
+								indicatorTextSize={CS.FONT_SIZE}
 								height={65}
 								style={GS.mb2}
 								onPress={() => {}}
