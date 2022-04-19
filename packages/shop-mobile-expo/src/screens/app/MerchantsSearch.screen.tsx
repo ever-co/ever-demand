@@ -134,7 +134,7 @@ function MerchantsSearch({}) {
 			/>
 
 			<CustomScreenHeader
-				title={LANGUAGE.PRODUCTS_VIEW.TITLE}
+				title={LANGUAGE.MERCHANTS_VIEW.NAME}
 				showBackBtn
 			/>
 
