@@ -82,7 +82,7 @@
 	},
 	"SEARCH_VIEW": {
 		"VIEW_MORE": "Voir plus",
-		"EMPTY_LIST": "Aucun produit ou marchand trouvé ... ",
+		"EMPTY_LIST": "Aucun produit ou marchand trouvé ...",
 		"SEARCH_PLACEHOLDER": "Produit ou Nom du restaurant",
 		"OPEN": "Ouvert",
 		"CLOSED": "Fermé"

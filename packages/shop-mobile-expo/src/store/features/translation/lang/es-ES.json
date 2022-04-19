@@ -218,6 +218,13 @@
 	"NO_SERVER_VIEW": {
 		"NO_SERVER": "Se perdió la conexión con el servidor"
 	},
+	"SEARCH_VIEW": {
+		"VIEW_MORE": "Ver más",
+		"EMPTY_LIST": "No se encontraron productos ni comerciantes...",
+		"SEARCH_PLACEHOLDER": "Nombre del producto o restaurante",
+		"OPEN": "Abierto",
+		"CLOSED": "Cerrado"
+	},
 	"OR": "O",
 	"OR_LOWERCASE": "o",
 	"YES": "Si",
