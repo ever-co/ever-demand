@@ -85,6 +85,14 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 			...GS.FF_NunitoBold,
 			fontSize: CS.FONT_SIZE_MD - 1,
 		},
+		btnWrapper: {
+			...GS.roundedSm,
+			overflow: 'hidden',
+		},
+		backBtnIcon: {
+			marginLeft: -6,
+			...GS.mr1,
+		},
 		productsStatusText: {
 			...GS.txtCapitalize,
 			fontSize: CS.FONT_SIZE_SM,
@@ -199,11 +207,7 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 							)}
 
 							{showBackBtn && (
-								<View
-									style={{
-										...GS.roundedSm,
-										overflow: 'hidden',
-									}}>
+								<View style={STYLES.btnWrapper}>
 									<TouchableRipple
 										onPress={() =>
 											onPressBackBtn
@@ -224,10 +228,7 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 													CS.DRAWER_HEADER_HEIGHT /
 													2.5
 												}
-												style={{
-													marginLeft: -6,
-													...GS.mr1,
-												}}
+												style={STYLES.backBtnIcon}
 											/>
 											<PaperText>
 												{
@@ -241,11 +242,7 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 							)}
 
 							{showHomeBtn && (
-								<View
-									style={{
-										...GS.roundedSm,
-										overflow: 'hidden',
-									}}>
+								<View style={STYLES.btnWrapper}>
 									<TouchableRipple
 										onPress={() =>
 											onPressHomeBtn
