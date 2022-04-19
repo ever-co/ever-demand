@@ -45,6 +45,10 @@ const DRAWER_ROUTES: DrawerScreenType[] = [
 		component: SCREENS.APP.Translation,
 	},
 	{
+		name: 'DRAWER/SEARCH',
+		component: SCREENS.APP.Search,
+	},
+	{
 		name: 'DRAWER/MERCHANTS_SEARCH',
 		component: SCREENS.APP.MerchantsSearch,
 	},

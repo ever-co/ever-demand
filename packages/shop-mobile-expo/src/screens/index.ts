@@ -11,6 +11,7 @@ import HomeScreen from './app/Home.screen';
 import OrderHistoryScreen from './app/OrderHistory.screen';
 import AccountScreen from './app/Account.screen';
 import TranslationScreen from './app/Translation.screen';
+import SearchScreen from './app/Search.screen';
 import MerchantsSearchScreen from './app/MerchantsSearch.screen';
 import InStoreScreen from './app/InStore.screen';
 
@@ -25,6 +26,7 @@ const SCREENS = {
 		OrderHistory: OrderHistoryScreen,
 		Account: AccountScreen,
 		Translation: TranslationScreen,
+		Search: SearchScreen,
 		MerchantsSearch: MerchantsSearchScreen,
 		InStore: InStoreScreen,
 	},
