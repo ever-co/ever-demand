@@ -81,17 +81,6 @@ function MerchantsSearch({}) {
 						...(isEmpty(text)
 							? {
 									geoLocation: {
-										city: USER_DATA?.geoLocation.city,
-										countryId:
-											USER_DATA?.geoLocation?.countryId,
-										countryName:
-											USER_DATA?.geoLocation?.countryName,
-										streetAddress:
-											USER_DATA?.geoLocation
-												?.streetAddress,
-										postcode:
-											USER_DATA?.geoLocation?.postcode,
-										house: USER_DATA?.geoLocation?.house,
 										loc: {
 											type:
 												USER_DATA?.geoLocation
