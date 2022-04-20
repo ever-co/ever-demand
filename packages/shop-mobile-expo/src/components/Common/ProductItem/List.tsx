@@ -6,7 +6,7 @@ import { Avatar, Title, Text, Button } from 'react-native-paper';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 // TYPES
-import type { ProductInfoInterface } from '../../../client/products/argumentInterfaces';
+import type { ProductItemType } from './index';
 
 // STYLES
 import {
@@ -14,27 +14,13 @@ import {
 	CONSTANT_SIZE as CS,
 	CONSTANT_COLOR as CC,
 } from '../../../assets/ts/styles';
-import { useNavigation } from '@react-navigation/native';
 
-// LOCAL TYPES
-export interface ProductItemType {
-	data: ProductInfoInterface;
+export interface Props {
+	data: ProductItemType['data'];
+	onPressProfile: () => any;
 }
 
-const ProductItemList: React.FC<ProductItemType> = (props: ProductItemType) => {
-	// NAVIGATION
-	const NAVIGATION = useNavigation();
-
-	// FUNCTIONS
-	const onPressProfile = () => {
-		NAVIGATION.navigate(
-			'DRAWER/IN_STORE' as never,
-			{
-				warehouseId: props.data.warehouseId,
-			} as never,
-		);
-	};
-
+const ProductItemList: React.FC<Props> = (props) => {
 	// LOCAL STYLES
 	const STYLES = StyleSheet.create({
 		container: {
@@ -97,7 +83,7 @@ const ProductItemList: React.FC<ProductItemType> = (props: ProductItemType) => {
 			<View style={{ ...STYLES.section, ...STYLES.header }}>
 				<TouchableOpacity
 					style={STYLES.headerAvatarContainer}
-					onPress={onPressProfile}>
+					onPress={props?.onPressProfile}>
 					<Avatar.Image
 						size={CS.FONT_SIZE_XLG * 2.2}
 						source={{
@@ -109,16 +95,10 @@ const ProductItemList: React.FC<ProductItemType> = (props: ProductItemType) => {
 				</TouchableOpacity>
 				<View style={STYLES.headerContent}>
 					<Title style={STYLES.headerContentTitle}>
-						{
-							props?.data?.warehouseProduct?.product?.title[0]
-								?.value
-						}
+						{props?.data.title}
 					</Title>
 					<Text style={STYLES.headerContentDescription}>
-						{
-							props?.data?.warehouseProduct?.product
-								?.description[0]?.value
-						}
+						{props?.data.description}
 					</Text>
 				</View>
 				<View style={STYLES.headerAvailability}>
@@ -136,8 +116,8 @@ const ProductItemList: React.FC<ProductItemType> = (props: ProductItemType) => {
 			<Image
 				style={STYLES.prodImg}
 				source={{
-					uri: props?.data?.warehouseProduct?.product?.images?.length
-						? props?.data?.warehouseProduct?.product?.images[0].url
+					uri: props?.data?.coverImage
+						? props?.data?.coverImage
 						: 'https://static.vecteezy.com/system/resources/previews/004/941/788/original/cardboard-boxes-or-packaging-paper-and-shipping-box-carton-parcels-and-delivery-packages-pile-flat-warehouse-goods-and-cargo-transportation-design-illustration-vector.jpg',
 				}}
 			/>

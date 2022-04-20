@@ -2,12 +2,11 @@
 import React from 'react';
 import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import { Avatar, Title, Text, Button } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
 // tslint:disable-next-line: no-implicit-dependencies no-submodule-imports
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 // TYPES
-import type { ProductInfoInterface } from '../../../client/products/argumentInterfaces';
+import type { ProductItemType } from '.';
 
 // STYLES
 import {
@@ -17,18 +16,16 @@ import {
 } from '../../../assets/ts/styles';
 
 // LOCAL TYPES
-export interface ProductItemType {
-	data: ProductInfoInterface;
+export interface Props {
+	data: ProductItemType['data'];
+	onPressProfile: () => any;
 }
 
-const ProductItemSlide: React.FC<ProductItemType> = (
-	props: ProductItemType,
-) => {
-	// NAVIGATION
-	const NAVIGATION = useNavigation();
-
+const ProductItemSlide: React.FC<Props> = (props) => {
 	// DATA
 	const AVATAR_WAREHOUSE_SIZE = CS.FONT_SIZE_XLG * 2.5;
+
+	// LOCAL STYLES
 	const STYLES = StyleSheet.create({
 		container: {
 			...GS.h100,
@@ -117,23 +114,13 @@ const ProductItemSlide: React.FC<ProductItemType> = (
 		},
 	});
 
-	// FUNCTIONS
-	const onPressProfile = () => {
-		NAVIGATION.navigate(
-			'DRAWER/IN_STORE' as never,
-			{
-				warehouseId: props.data.warehouseId,
-			} as never,
-		);
-	};
-
 	return (
 		<View style={STYLES.container}>
 			<Image
 				style={STYLES.prodImg}
 				source={{
-					uri: props?.data?.warehouseProduct?.product?.images?.length
-						? props?.data?.warehouseProduct?.product?.images[0].url
+					uri: props?.data.coverImage
+						? props?.data.coverImage
 						: 'https://static.vecteezy.com/system/resources/previews/004/941/788/original/cardboard-boxes-or-packaging-paper-and-shipping-box-carton-parcels-and-delivery-packages-pile-flat-warehouse-goods-and-cargo-transportation-design-illustration-vector.jpg',
 				}}
 			/>
@@ -174,22 +161,16 @@ const ProductItemSlide: React.FC<ProductItemType> = (
 			<View style={{ ...STYLES.section, ...STYLES.header }}>
 				<View style={STYLES.headerContent}>
 					<Title style={STYLES.headerContentTitle}>
-						{
-							props?.data?.warehouseProduct?.product?.title[0]
-								?.value
-						}
+						{props?.data.title}
 					</Title>
 					<Text style={STYLES.headerContentDescription}>
-						{
-							props?.data?.warehouseProduct?.product
-								?.description[0]?.value
-						}
+						{props?.data?.description}
 					</Text>
 				</View>
 
 				<TouchableOpacity
 					style={STYLES.headerAvatarContainer}
-					onPress={onPressProfile}>
+					onPress={props.onPressProfile}>
 					<Avatar.Image
 						size={AVATAR_WAREHOUSE_SIZE}
 						source={{
