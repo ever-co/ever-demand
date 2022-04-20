@@ -6,7 +6,7 @@ import { Avatar, Title, Text, Button } from 'react-native-paper';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 // TYPES
-import type { ProductItemType } from './index';
+import type { PropsItemInterface } from './index';
 
 // STYLES
 import {
@@ -15,12 +15,7 @@ import {
 	CONSTANT_COLOR as CC,
 } from '../../../assets/ts/styles';
 
-export interface Props {
-	data: ProductItemType['data'];
-	onPressProfile: () => any;
-}
-
-const ProductItemList: React.FC<Props> = (props) => {
+const ProductItemList: React.FC<PropsItemInterface> = (props) => {
 	// LOCAL STYLES
 	const STYLES = StyleSheet.create({
 		container: {
@@ -137,7 +132,8 @@ const ProductItemList: React.FC<Props> = (props) => {
 					labelStyle={{
 						...GS.FF_NunitoSemiBold,
 						color: CC.light,
-					}}>
+					}}
+					onPress={props.onPressDetails}>
 					Details
 				</Button>
 			</View>

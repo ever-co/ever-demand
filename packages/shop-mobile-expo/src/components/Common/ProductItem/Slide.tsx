@@ -6,7 +6,7 @@ import { Avatar, Title, Text, Button } from 'react-native-paper';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 // TYPES
-import type { ProductItemType } from '.';
+import type { PropsItemInterface } from '.';
 
 // STYLES
 import {
@@ -15,13 +15,7 @@ import {
 	CONSTANT_COLOR as CC,
 } from '../../../assets/ts/styles';
 
-// LOCAL TYPES
-export interface Props {
-	data: ProductItemType['data'];
-	onPressProfile: () => any;
-}
-
-const ProductItemSlide: React.FC<Props> = (props) => {
+const ProductItemSlide: React.FC<PropsItemInterface> = (props) => {
 	// DATA
 	const AVATAR_WAREHOUSE_SIZE = CS.FONT_SIZE_XLG * 2.5;
 
@@ -198,7 +192,8 @@ const ProductItemSlide: React.FC<Props> = (props) => {
 					labelStyle={{
 						...GS.FF_NunitoSemiBold,
 						color: CC.light,
-					}}>
+					}}
+					onPress={props.onPressDetails}>
 					Details
 				</Button>
 			</View>

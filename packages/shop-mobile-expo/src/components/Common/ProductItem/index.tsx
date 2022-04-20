@@ -13,7 +13,7 @@ import ProductItemVertical from './List';
 import ProductItemHorizontal from './Slide';
 
 // LOCAL TYPES
-export interface ProductItemType {
+export interface ProductItemInterface {
 	data: {
 		warehouseId: string;
 		warehouseLogo?: string;
@@ -26,17 +26,22 @@ export interface ProductItemType {
 	type: ENV['PRODUCTS_VIEW_TYPE'];
 }
 
-const ProductItem: React.FC<ProductItemType> = (props) => {
+export interface PropsItemInterface {
+	data: ProductItemInterface['data'];
+	onPressProfile: () => any;
+	onPressDetails: () => any;
+}
+
+const ProductItem: React.FC<ProductItemInterface> = (props) => {
 	// NAVIGATION
 	const NAVIGATION = useNavigation();
 
-	// DATA
-	const ROUTE_WAREHOUSE_ID = {
-		warehouseId: props?.data.warehouseId,
-	};
-
 	// FUNCTIONS
 	const onPressProfile = () => {
+		const ROUTE_WAREHOUSE_ID = {
+			warehouseId: props?.data.warehouseId,
+		};
+
 		if (!isEmpty(ROUTE_WAREHOUSE_ID.warehouseId)) {
 			NAVIGATION.navigate(
 				'DRAWER/IN_STORE' as never,
@@ -45,17 +50,30 @@ const ProductItem: React.FC<ProductItemType> = (props) => {
 		}
 	};
 
+	const onPressDetails = () => {
+		const ROUTE_PRODUCT_ID = {
+			productId: props?.data.productId,
+		};
+
+		if (!isEmpty(ROUTE_PRODUCT_ID.productId)) {
+			NAVIGATION.navigate(
+				'DRAWER/PRODUCT_DETAILS' as never,
+				ROUTE_PRODUCT_ID as never,
+			);
+		}
+	};
+
 	switch (props.type) {
 		case 'list':
 			return (
 				<ProductItemVertical
-					{...{ data: props.data, onPressProfile }}
+					{...{ data: props.data, onPressProfile, onPressDetails }}
 				/>
 			);
 		case 'slides':
 			return (
 				<ProductItemHorizontal
-					{...{ data: props.data, onPressProfile }}
+					{...{ data: props.data, onPressProfile, onPressDetails }}
 				/>
 			);
 		default:
