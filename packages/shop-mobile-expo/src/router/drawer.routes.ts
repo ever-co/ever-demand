@@ -55,6 +55,9 @@ const DRAWER_ROUTES: DrawerScreenType[] = [
 	{
 		name: 'DRAWER/IN_STORE',
 		component: SCREENS.APP.InStore,
+		options: {
+			unmountOnBlur: true,
+		},
 	},
 ];
 
