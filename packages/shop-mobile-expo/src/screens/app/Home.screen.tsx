@@ -98,11 +98,27 @@ function HomeScreen({}) {
 							PRODUCTS_QUERY_RESPONSE.data
 								?.geoLocationProductsByPaging
 						}
-						renderItem={({ item, index }) => (
+						renderItem={({ item }) => (
 							<View style={STYLES.productItemContainer}>
 								<ProductItem
 									type={VIEW_TYPE}
-									data={{ ...item, id: index }}
+									data={{
+										warehouseId: item.warehouseId,
+										warehouseLogo: item.warehouseLogo,
+										productId:
+											item.warehouseProduct.product.id,
+										title: item.warehouseProduct.product
+											.title[0].value,
+										description:
+											item.warehouseProduct.product
+												.description[0].value,
+										coverImage: item.warehouseProduct
+											.product.images.length
+											? item.warehouseProduct.product
+													.images[0].url
+											: undefined,
+										price: item.warehouseProduct.price,
+									}}
 								/>
 							</View>
 						)}
@@ -117,7 +133,24 @@ function HomeScreen({}) {
 									<ProductItem
 										key={index}
 										type={VIEW_TYPE}
-										data={{ ...item }}
+										data={{
+											warehouseId: item.warehouseId,
+											warehouseLogo: item.warehouseLogo,
+											productId:
+												item.warehouseProduct.product
+													.id,
+											title: item.warehouseProduct.product
+												.title[0].value,
+											description:
+												item.warehouseProduct.product
+													.description[0].value,
+											coverImage: item.warehouseProduct
+												.product.images.length
+												? item.warehouseProduct.product
+														.images[0].url
+												: undefined,
+											price: item.warehouseProduct.price,
+										}}
 									/>
 								</View>
 							),

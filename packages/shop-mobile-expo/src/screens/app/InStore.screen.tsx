@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, ActivityIndicator, FlatList, StyleSheet } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import { Title } from 'react-native-paper';
 import { useQuery } from '@apollo/client';
 import PagerView from 'react-native-pager-view';
@@ -7,20 +8,18 @@ import PagerView from 'react-native-pager-view';
 // CONFIGS
 
 // TYPES/INTERFACES
-import type {
-	ProductInfoInterface,
-	ProductsQueryArgsInterface,
-} from '../../client/products/argumentInterfaces';
+import type { QueryGetStoreProductsArgs } from '../../client/merchants/argumentInterfaces';
+import type { WarehouseProductInterface } from '../../client/products/argumentInterfaces';
 
 // SELECTORS
 import { useAppSelector } from '../../store/hooks';
-import { getUserData, getProductViewType } from '../../store/features/user';
+import { getProductViewType } from '../../store/features/user';
 import { getLanguage } from '../../store/features/translation';
 
 // ACTIONS
 
 // QUERIES
-import { GEO_LOCATION_PRODUCTS_BY_PAGING } from '../../client/products/queries';
+import { GET_STORED_PRODUCT } from '../../client/merchants/queries';
 
 // COMPONENTS
 import {
@@ -33,32 +32,28 @@ import {
 import { GLOBAL_STYLE as GS } from '../../assets/ts/styles';
 
 function InStoreScreen({}) {
+	// NAVIGATION
+	const ROUTE = useRoute();
+
 	// SELECTORS
 	const LANGUAGE = useAppSelector(getLanguage);
-	const USER_DATA = useAppSelector(getUserData);
+	// const USER_DATA = useAppSelector(getUserData);
 	const VIEW_TYPE = useAppSelector(getProductViewType);
 
+	// ROUTE PARAMS
+	const WAREHOUSE_ID =
+		(ROUTE?.params as { warehouseId: string })?.warehouseId || '';
+
 	// DATA
-	const PRODUCTS_QUERY_ARGS_INTERFACE: ProductsQueryArgsInterface = {
-		geoLocation: {
-			loc: {
-				type: 'Point',
-				coordinates: [
-					USER_DATA?.geoLocation
-						? USER_DATA?.geoLocation?.coordinates?.lng
-						: 0,
-					USER_DATA?.geoLocation
-						? USER_DATA?.geoLocation?.coordinates?.lat
-						: 0,
-				],
-			},
-		},
+	const WAREHOUSE_PRODUCTS_QUERY_ARGS_INTERFACE: QueryGetStoreProductsArgs = {
+		storeId: WAREHOUSE_ID,
+		fullProducts: true,
 	};
 
 	// QUERIES
-	const PRODUCTS_QUERY_RESPONSE = useQuery(GEO_LOCATION_PRODUCTS_BY_PAGING, {
+	const WAREHOUSE_PRODUCTS_QUERY_RESPONSE = useQuery(GET_STORED_PRODUCT, {
 		variables: {
-			...PRODUCTS_QUERY_ARGS_INTERFACE,
+			...WAREHOUSE_PRODUCTS_QUERY_ARGS_INTERFACE,
 		},
 	});
 
@@ -72,6 +67,11 @@ function InStoreScreen({}) {
 		},
 	});
 
+	// EFFECTS
+	React.useEffect(() => {
+		console.log('WAREHOUSE_ID ===>', WAREHOUSE_ID);
+	}, [WAREHOUSE_ID]);
+
 	return (
 		<View style={{ ...GS.screen }}>
 			<FocusAwareStatusBar
@@ -82,24 +82,35 @@ function InStoreScreen({}) {
 
 			<CustomScreenHeader title={LANGUAGE.IN_STORE} showBackBtn />
 
-			{PRODUCTS_QUERY_RESPONSE.loading ? (
+			{WAREHOUSE_PRODUCTS_QUERY_RESPONSE.loading ? (
 				<View style={STYLES.loaderContainer}>
 					<ActivityIndicator color={'#FFF'} size={25} />
 				</View>
-			) : PRODUCTS_QUERY_RESPONSE.data?.geoLocationProductsByPaging &&
-			  PRODUCTS_QUERY_RESPONSE.data?.geoLocationProductsByPaging
+			) : WAREHOUSE_PRODUCTS_QUERY_RESPONSE.data?.getStoreProducts &&
+			  WAREHOUSE_PRODUCTS_QUERY_RESPONSE.data?.getStoreProducts
 					.length ? (
 				VIEW_TYPE === 'list' ? (
 					<FlatList
 						data={
-							PRODUCTS_QUERY_RESPONSE.data
-								?.geoLocationProductsByPaging
+							WAREHOUSE_PRODUCTS_QUERY_RESPONSE.data
+								?.getStoreProducts as WarehouseProductInterface[]
 						}
-						renderItem={({ item, index }) => (
+						renderItem={({ item }) => (
 							<View style={STYLES.productItemContainer}>
 								<ProductItem
 									type={VIEW_TYPE}
-									data={{ ...item, id: index }}
+									data={{
+										warehouseId: item.id,
+										warehouseLogo: undefined,
+										productId: item.product.id,
+										title: item.product.title[0].value,
+										description:
+											item.product.description[0].value,
+										coverImage: item.product.images.length
+											? item.product.images[0].url
+											: undefined,
+										price: item.price,
+									}}
 								/>
 							</View>
 						)}
@@ -108,13 +119,29 @@ function InStoreScreen({}) {
 					/>
 				) : (
 					<PagerView style={{ ...GS.screen }}>
-						{PRODUCTS_QUERY_RESPONSE.data?.geoLocationProductsByPaging?.map(
-							(item: ProductInfoInterface, index: number) => (
+						{WAREHOUSE_PRODUCTS_QUERY_RESPONSE.data?.getStoreProducts?.map(
+							(
+								item: WarehouseProductInterface,
+								index: number,
+							) => (
 								<View key={index}>
 									<ProductItem
 										key={index}
 										type={VIEW_TYPE}
-										data={{ ...item }}
+										data={{
+											warehouseId: item.id,
+											warehouseLogo: undefined,
+											productId: item.product.id,
+											title: item.product.title[0].value,
+											description:
+												item.product.description[0]
+													.value,
+											coverImage: item.product.images
+												.length
+												? item.product.images[0].url
+												: undefined,
+											price: item.price,
+										}}
 									/>
 								</View>
 							),
