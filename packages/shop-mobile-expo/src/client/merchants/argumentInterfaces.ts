@@ -23,3 +23,8 @@ export interface QueryGetMerchantsByNameArgsInterface {
 	searchName: ScalarsInterface['String'];
 	geoLocation?: MaybeType<GeoLocationInputInterface>;
 }
+
+export interface QueryGetStoreProductsArgs {
+	storeId: ScalarsInterface['String'];
+	fullProducts: ScalarsInterface['Boolean'];
+}
