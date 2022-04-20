@@ -14,6 +14,7 @@ import TranslationScreen from './app/Translation.screen';
 import SearchScreen from './app/Search.screen';
 import MerchantsSearchScreen from './app/MerchantsSearch.screen';
 import InStoreScreen from './app/InStore.screen';
+import ProductDetailsScreen from './app/ProductDetails';
 
 // TODO: create a type for screens object
 
@@ -29,6 +30,7 @@ const SCREENS = {
 		Search: SearchScreen,
 		MerchantsSearch: MerchantsSearchScreen,
 		InStore: InStoreScreen,
+		ProductDetails: ProductDetailsScreen,
 	},
 	REGISTRATION: {
 		SIGN_UP: SignUpScreen,

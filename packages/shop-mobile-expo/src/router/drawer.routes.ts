@@ -59,6 +59,13 @@ const DRAWER_ROUTES: DrawerScreenType[] = [
 			unmountOnBlur: true,
 		},
 	},
+	{
+		name: 'DRAWER/PRODUCT_DETAILS',
+		component: SCREENS.APP.ProductDetails,
+		options: {
+			unmountOnBlur: true,
+		},
+	},
 ];
 
 export default DRAWER_ROUTES;
