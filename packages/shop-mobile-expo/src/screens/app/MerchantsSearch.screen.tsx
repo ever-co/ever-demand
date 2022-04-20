@@ -2,6 +2,7 @@ import React from 'react';
 import { View, ActivityIndicator, StyleSheet, ScrollView } from 'react-native';
 import { Button, TextInput, Title, Text } from 'react-native-paper';
 import { useLazyQuery } from '@apollo/client';
+import { useNavigation } from '@react-navigation/native';
 // tslint:disable-next-line: no-implicit-dependencies no-submodule-imports
 import MaterialIcon from '@expo/vector-icons/MaterialCommunityIcons';
 import { debounce } from 'lodash';
@@ -38,6 +39,9 @@ import {
 } from '../../assets/ts/styles';
 
 function MerchantsSearch({}) {
+	// NAVIGATION
+	const NAVIGATION = useNavigation();
+
 	// SELECTORS
 	const LANGUAGE = useAppSelector(getLanguage);
 	const USER_DATA = useAppSelector(getUserData);
@@ -105,6 +109,18 @@ function MerchantsSearch({}) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[],
 	);
+
+	const onPressMerchant = (warehouseId: string) => {
+		if (!isEmpty(warehouseId)) {
+			const ROUTE_WAREHOUSE_ID = {
+				warehouseId,
+			};
+			NAVIGATION.navigate(
+				'DRAWER/IN_STORE' as never,
+				ROUTE_WAREHOUSE_ID as never,
+			);
+		}
+	};
 
 	// EFFECTS
 	React.useEffect(() => {
@@ -200,7 +216,7 @@ function MerchantsSearch({}) {
 							indicatorIconProps={{ name: 'chevron-right' }}
 							height={65}
 							style={GS.mb2}
-							onPress={() => {}}
+							onPress={() => onPressMerchant(_item.id)}
 						/>
 					))}
 				</ScrollView>

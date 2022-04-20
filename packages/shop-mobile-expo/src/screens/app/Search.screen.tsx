@@ -3,6 +3,7 @@ import { View, ActivityIndicator, StyleSheet, ScrollView } from 'react-native';
 import { TextInput, Title, Text } from 'react-native-paper';
 import { useLazyQuery } from '@apollo/client';
 import { debounce } from 'lodash';
+import { useNavigation } from '@react-navigation/native';
 
 // TYPES/INTERFACES
 import type {
@@ -13,6 +14,9 @@ import type {
 	ProductsQueryArgsInterface,
 	ProductInfoInterface,
 } from '../../client/products/argumentInterfaces';
+
+// HELPERS
+import { isEmpty } from '../../helpers/utils';
 
 // STORE
 import { useAppSelector } from '../../store/hooks';
@@ -39,6 +43,9 @@ import {
 } from '../../assets/ts/styles';
 
 function SearchScreen({}) {
+	// NAVIGATION
+	const NAVIGATION = useNavigation();
+
 	// SELECTORS
 	const LANGUAGE = useAppSelector(getLanguage);
 	const USER_DATA = useAppSelector(getUserData);
@@ -125,6 +132,18 @@ function SearchScreen({}) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[],
 	);
+
+	const onPressMerchant = (warehouseId: string) => {
+		if (!isEmpty(warehouseId)) {
+			const ROUTE_WAREHOUSE_ID = {
+				warehouseId,
+			};
+			NAVIGATION.navigate(
+				'DRAWER/IN_STORE' as never,
+				ROUTE_WAREHOUSE_ID as never,
+			);
+		}
+	};
 
 	// EFFECTS
 	React.useEffect(() => {
@@ -217,7 +236,7 @@ function SearchScreen({}) {
 								indicatorTextSize={CS.FONT_SIZE}
 								height={65}
 								style={GS.mb2}
-								onPress={() => {}}
+								onPress={() => onPressMerchant(_item?.id)}
 							/>
 						))}
 					</View>
