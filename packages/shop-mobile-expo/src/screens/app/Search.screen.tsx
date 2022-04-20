@@ -13,6 +13,7 @@ import type {
 	ProductsQueryArgsInterface,
 	ProductInfoInterface,
 } from '../../client/products/argumentInterfaces';
+
 // STORE
 import { useAppSelector } from '../../store/hooks';
 import { getUserData } from '../../store/features/user';
