@@ -51,14 +51,15 @@ const ProductItem: React.FC<ProductItemInterface> = (props) => {
 	};
 
 	const onPressDetails = () => {
-		const ROUTE_PRODUCT_ID = {
+		const ROUTE_PRODUCT = {
 			productId: props?.data.productId,
+			warehouseId: props?.data.warehouseId,
 		};
 
-		if (!isEmpty(ROUTE_PRODUCT_ID.productId)) {
+		if (!isEmpty(ROUTE_PRODUCT.productId)) {
 			NAVIGATION.navigate(
 				'DRAWER/PRODUCT_DETAILS' as never,
-				ROUTE_PRODUCT_ID as never,
+				ROUTE_PRODUCT as never,
 			);
 		}
 	};
