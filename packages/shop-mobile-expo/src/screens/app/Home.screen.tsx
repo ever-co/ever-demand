@@ -105,8 +105,7 @@ function HomeScreen({}) {
 									data={{
 										warehouseId: item.warehouseId,
 										warehouseLogo: item.warehouseLogo,
-										productId:
-											item.warehouseProduct.product.id,
+										productId: item.warehouseProduct.id,
 										title: item.warehouseProduct.product
 											.title[0].value,
 										description:
@@ -136,9 +135,7 @@ function HomeScreen({}) {
 										data={{
 											warehouseId: item.warehouseId,
 											warehouseLogo: item.warehouseLogo,
-											productId:
-												item.warehouseProduct.product
-													.id,
+											productId: item.warehouseProduct.id,
 											title: item.warehouseProduct.product
 												.title[0].value,
 											description:
