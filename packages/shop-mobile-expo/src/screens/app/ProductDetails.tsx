@@ -1,7 +1,13 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { useRoute } from '@react-navigation/native';
-import { StyleSheet, View, ScrollView, Image } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import {
+	StyleSheet,
+	View,
+	ScrollView,
+	Image,
+	TouchableOpacity,
+} from 'react-native';
 import {
 	Text,
 	Paragraph,
@@ -9,6 +15,9 @@ import {
 	Button,
 	Avatar,
 } from 'react-native-paper';
+
+// HELPERS
+import { isEmpty } from '../../helpers/utils';
 
 // CLIENTS
 import { WAREHOUSE_PRODUCT_QUERY } from '../../client/products/queries';
@@ -32,7 +41,8 @@ import {
 } from '../../assets/ts/styles';
 
 const ProductDetails = () => {
-	// ROUTE
+	// NAVIGATION
+	const NAVIGATION = useNavigation();
 	const ROUTE = useRoute();
 
 	// SELECTORS
@@ -87,10 +97,19 @@ const ProductDetails = () => {
 		},
 	});
 
-	console.log(
-		'WAREHOUSE_PRODUCT_QUERY_RESPONSE?.data',
-		WAREHOUSE_PRODUCT_QUERY_RESPONSE?.data,
-	);
+	// FUNCTION
+	const onPressProfile = () => {
+		const ROUTE_WAREHOUSE_ID = {
+			warehouseId: (ROUTE?.params as any)?.warehouseId || '',
+		};
+
+		if (!isEmpty(ROUTE_WAREHOUSE_ID.warehouseId)) {
+			NAVIGATION.navigate(
+				'DRAWER/IN_STORE' as never,
+				ROUTE_WAREHOUSE_ID as never,
+			);
+		}
+	};
 
 	return (
 		<View style={GS.screen}>
@@ -112,14 +131,16 @@ const ProductDetails = () => {
 			) : (
 				<>
 					<View style={STYLES.header}>
-						<Avatar.Image
-							source={{
-								uri: WAREHOUSE_PRODUCT_QUERY_RESPONSE?.data
-									?.warehouse?.logo,
-							}}
-							style={GS.mr3}
-							size={50}
-						/>
+						<TouchableOpacity onPress={onPressProfile}>
+							<Avatar.Image
+								source={{
+									uri: WAREHOUSE_PRODUCT_QUERY_RESPONSE?.data
+										?.warehouse?.logo,
+								}}
+								style={GS.mr3}
+								size={50}
+							/>
+						</TouchableOpacity>
 
 						<View style={GS.flex1}>
 							<Text style={STYLES.headerTitle}>
