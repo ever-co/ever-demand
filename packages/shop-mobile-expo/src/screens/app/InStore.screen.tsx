@@ -67,11 +67,6 @@ function InStoreScreen({}) {
 		},
 	});
 
-	// EFFECTS
-	React.useEffect(() => {
-		console.log('WAREHOUSE_ID ===>', WAREHOUSE_ID);
-	}, [WAREHOUSE_ID]);
-
 	return (
 		<View style={{ ...GS.screen }}>
 			<FocusAwareStatusBar
@@ -80,7 +75,17 @@ function InStoreScreen({}) {
 				barStyle='light-content'
 			/>
 
-			<CustomScreenHeader title={LANGUAGE.IN_STORE} showBackBtn />
+			<CustomScreenHeader
+				title={
+					LANGUAGE.IN_STORE +
+					(WAREHOUSE_PRODUCTS_QUERY_RESPONSE?.data?.warehouse?.name
+						? ' / ' +
+						  WAREHOUSE_PRODUCTS_QUERY_RESPONSE?.data?.warehouse
+								?.name
+						: '')
+				}
+				showBackBtn
+			/>
 
 			{WAREHOUSE_PRODUCTS_QUERY_RESPONSE.loading ? (
 				<View style={STYLES.loaderContainer}>
