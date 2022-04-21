@@ -184,7 +184,7 @@ const ProductItemSlide: React.FC<PropsItemInterface> = (props) => {
 						...GS.FF_NunitoSemiBold,
 						color: CC.light,
 					}}>
-					Buy for ${42}
+					Buy for ${props?.data.price}
 				</Button>
 				<Button
 					uppercase={false}
