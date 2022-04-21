@@ -72,5 +72,10 @@ export const GET_STORED_PRODUCT: TypedDocumentNode = gql`
 			deliveryTimeMin
 			deliveryTimeMax
 		}
+		warehouse(id: $storeId) {
+			name
+			logo
+			id
+		}
 	}
 `;
