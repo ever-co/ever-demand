@@ -38,6 +38,95 @@ export const PRODUCTS_QUERY: TypedDocumentNode = gql`
 	}
 `;
 
+export const PRODUCT_QUERY: TypedDocumentNode = gql`
+	query ProductQuery($productId: String!) {
+		product(id: $productId) {
+			_id
+			id
+			title {
+				value
+				locale
+			}
+			description {
+				locale
+				value
+			}
+			details {
+				locale
+				value
+			}
+			images {
+				locale
+				url
+				width
+				height
+				orientation
+			}
+			categories
+			_createdAt
+			_updatedAt
+		}
+	}
+`;
+
+export const WAREHOUSE_PRODUCT_QUERY: TypedDocumentNode = gql`
+	query GetWarehouseProduct(
+		$warehouseId: String!
+		$warehouseProductId: String!
+	) {
+		getWarehouseProduct(
+			warehouseId: $warehouseId
+			warehouseProductId: $warehouseProductId
+		) {
+			_id
+			price
+			initialPrice
+			count
+			soldCount
+			product {
+				_id
+				id
+				title {
+					locale
+					value
+				}
+				description {
+					locale
+					value
+				}
+				details {
+					locale
+					value
+				}
+				images {
+					locale
+					url
+					width
+					height
+					orientation
+				}
+				categories
+				_createdAt
+				_updatedAt
+			}
+			isManufacturing
+			isCarrierRequired
+			isDeliveryRequired
+			isProductAvailable
+			isTakeaway
+			deliveryTimeMin
+			deliveryTimeMax
+			id
+		}
+
+		warehouse(id: $warehouseId) {
+			name
+			logo
+			id
+		}
+	}
+`;
+
 export const GEO_LOCATION_PRODUCTS_BY_PAGING = gql`
 	query GeoLocationProductsByPaging(
 		$geoLocation: GeoLocationFindInput!

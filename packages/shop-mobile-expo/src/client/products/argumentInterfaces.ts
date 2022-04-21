@@ -120,3 +120,12 @@ export interface ProductsQueryArgsInterface {
 	options?: MaybeType<GetGeoLocationProductsOptions>;
 	geoLocation: GeoLocationInputInterface;
 }
+
+export interface ProductQueryArgsInterface {
+	productId: ScalarsInterface['String'];
+}
+
+export interface QueryGetWarehouseProductArgs {
+	warehouseId: ScalarsInterface['String'];
+	warehouseProductId: ScalarsInterface['String'];
+}
