@@ -138,9 +138,13 @@ function InStoreScreen({}) {
 										key={index}
 										type={VIEW_TYPE}
 										data={{
-											warehouseId: item.id,
-											warehouseLogo: undefined,
-											productId: item.product.id,
+											warehouseId:
+												WAREHOUSE_PRODUCTS_QUERY_RESPONSE
+													.data?.warehouse?.id,
+											warehouseLogo:
+												WAREHOUSE_PRODUCTS_QUERY_RESPONSE
+													.data?.warehouse?.logo,
+											productId: item.id,
 											title: item.product.title[0].value,
 											description:
 												item.product.description[0]
