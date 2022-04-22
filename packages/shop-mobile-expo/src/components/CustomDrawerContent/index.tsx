@@ -74,14 +74,16 @@ const CustomDrawer: React.FC<ContentProps> = ({
 								linksGroup.linkItems.map(
 									(linkItem, linkItem_id) => (
 										<Item
-											key={linkItem_id}
-											label={linkItem.label}
-											path={linkItem.path}
-											icon={linkItem.icon}
-											focused={
-												currentRouteName ===
-												linkItem.path
-											}
+											{...{
+												key: linkItem_id,
+												label: linkItem.label,
+												path: linkItem.path,
+												icon: linkItem.icon,
+												focused:
+													currentRouteName ===
+													linkItem.path,
+												external: linkItem.external,
+											}}
 										/>
 									),
 								)}
