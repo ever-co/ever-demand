@@ -145,6 +145,19 @@ function SearchScreen({}) {
 		}
 	};
 
+	const onPressProduct = (productId: string, warehouseId: string) => {
+		if (!isEmpty(warehouseId)) {
+			const ROUTE_PARAMS = {
+				productId,
+				warehouseId,
+			};
+			NAVIGATION.navigate(
+				'DRAWER/PRODUCT_DETAILS' as never,
+				ROUTE_PARAMS as never,
+			);
+		}
+	};
+
 	// EFFECTS
 	React.useEffect(() => {
 		debouncedFetchData(searchedValue);
@@ -268,7 +281,12 @@ function SearchScreen({}) {
 											?.description[0].value
 									}
 									amount={_item?.warehouseProduct?.price}
-									onPress={() => {}}
+									onPress={() =>
+										onPressProduct(
+											_item?.warehouseProduct.id,
+											_item?.warehouseId,
+										)
+									}
 								/>
 							</View>
 						))}
