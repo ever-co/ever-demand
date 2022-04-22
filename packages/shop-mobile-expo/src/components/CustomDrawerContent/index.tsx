@@ -25,11 +25,11 @@ import {
 } from '../../assets/ts/styles';
 
 // LOCAL TYPES
-export type ContentProps = {
+export interface ContentProps {
 	ScrollViewProps?: ScrollViewProps_;
 	drawerContentProps: DrawerContentComponentProps;
 	linksGroups: DrawerRoutesGroupType[];
-};
+}
 
 const CustomDrawer: React.FC<ContentProps> = ({
 	ScrollViewProps = {},
