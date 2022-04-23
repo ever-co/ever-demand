@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
-import { Card, Title, Text, RadioButton } from 'react-native-paper';
+import { Card, Title, Text, RadioButton, Button } from 'react-native-paper';
 // tslint:disable-next-line: no-implicit-dependencies no-submodule-imports
 import MaterialIcon from '@expo/vector-icons/MaterialCommunityIcons';
+import { useNavigation } from '@react-navigation/native';
 
 // TYPES
 import type ENV_TYPE from '../../environments/model';
@@ -45,6 +46,9 @@ function AccountScreen({}) {
 	const PRODUCT_VIEW_TYPE = useAppSelector(getProductViewType);
 	// const CURRENT_LANG = useAppSelector(getLang);
 
+	// NAVIGATION
+	const NAVIGATION = useNavigation();
+
 	// STATES
 	const [productViewDialog, setProductViewDialog] =
 		React.useState<boolean>(false);
@@ -57,7 +61,7 @@ function AccountScreen({}) {
 		container: { ...GS.screen, ...GS.bgLight },
 		dialogProductViewContent: { height: 180 },
 		userInfoCard: {
-			...GS.py5,
+			...GS.pt5,
 			backgroundColor: CC.white,
 			borderBottomLeftRadius: CS.SPACE,
 			borderBottomRightRadius: CS.SPACE,
@@ -120,6 +124,14 @@ function AccountScreen({}) {
 	const onSelectProductView = (value: ENV_TYPE['PRODUCTS_VIEW_TYPE']) => {
 		dispatch(setProductViewType(value));
 		setProductViewDialog(false);
+	};
+
+	const onGoToRegistration = () => {
+		const NAV_PARAMS = { fromAdd: true };
+		dispatch(setGroup(ROUTE_GROUPS.REGISTRATION));
+		setTimeout(() => {
+			NAVIGATION.navigate('STACK/SIGN_UP' as never, NAV_PARAMS as never);
+		}, 200);
 	};
 
 	const onSignOut = () => {
@@ -319,6 +331,13 @@ function AccountScreen({}) {
 										</Text>
 									</View>
 								</View>
+
+								<Button
+									uppercase={false}
+									style={{ ...GS.mt4, ...GS.w100 }}
+									onPress={onGoToRegistration}>
+									Register
+								</Button>
 							</>
 						) : (
 							<View />
