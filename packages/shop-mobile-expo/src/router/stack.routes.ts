@@ -29,13 +29,13 @@ const STACK_ROUTES_GROUPS: StackScreenGroupType = {
 	BLANK: [
 		{
 			name: 'STACK/BLANK_',
-			component: SCREENS.Blank_,
+			component: SCREENS.BLANK_,
 		},
 	],
 	LOADING: [
 		{
 			name: 'STACK/LOADING',
-			component: SCREENS.Loading,
+			component: SCREENS.LOADING,
 		},
 	],
 	REGISTRATION: [
