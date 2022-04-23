@@ -3,8 +3,10 @@ import LoadingScreen from './Loading.screen';
 import Blank_Screen from './Blank_.screen';
 
 // REGISTRATION
-import SignUpScreen from './registration/SignUp.screen';
-import SignUpByAddressScreen from './registration/SignUpByAddress.screen';
+import HomeAuthScreen from './authentication/Home.screen';
+import SignUpScreen from './authentication/SignUp.screen';
+import SignInScreen from './authentication/SignIn.screen';
+import SignUpByAddressScreen from './authentication/SignUpByAddress.screen';
 
 // APP
 import HomeScreen from './app/Home.screen';
@@ -20,19 +22,21 @@ import ProductDetailsScreen from './app/ProductDetails';
 
 const SCREENS = {
 	// SCREENS
-	Loading: LoadingScreen,
-	Blank_: Blank_Screen,
+	LOADING: LoadingScreen,
+	BLANK_: Blank_Screen,
 	APP: {
-		Home: HomeScreen,
-		OrderHistory: OrderHistoryScreen,
-		Account: AccountScreen,
-		Translation: TranslationScreen,
-		Search: SearchScreen,
-		MerchantsSearch: MerchantsSearchScreen,
-		InStore: InStoreScreen,
-		ProductDetails: ProductDetailsScreen,
+		HOME: HomeScreen,
+		ORDER_HISTORY: OrderHistoryScreen,
+		ACCOUNT: AccountScreen,
+		TRANSLATION: TranslationScreen,
+		SEARCH: SearchScreen,
+		MERCHANTS_SEARCH: MerchantsSearchScreen,
+		IN_STORE: InStoreScreen,
+		PRODUCT_DETAILS: ProductDetailsScreen,
 	},
 	REGISTRATION: {
+		HOME: HomeAuthScreen,
+		SIGN_IN: SignInScreen,
 		SIGN_UP: SignUpScreen,
 		SIGN_UP_BY_ADDRESS: SignUpByAddressScreen,
 	},
