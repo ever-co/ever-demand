@@ -40,8 +40,16 @@ const STACK_ROUTES_GROUPS: StackScreenGroupType = {
 	],
 	REGISTRATION: [
 		{
+			name: 'STACK/HOME',
+			component: SCREENS.REGISTRATION.HOME,
+		},
+		{
 			name: 'STACK/SIGN_UP',
 			component: SCREENS.REGISTRATION.SIGN_UP,
+		},
+		{
+			name: 'STACK/SIGN_IN',
+			component: SCREENS.REGISTRATION.SIGN_IN,
 		},
 		{
 			name: 'STACK/SIGN_UP_BY_ADDRESS',
