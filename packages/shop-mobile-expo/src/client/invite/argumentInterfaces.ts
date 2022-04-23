@@ -4,6 +4,7 @@ import type {
 	GeoLocationInterface,
 	GeoLocationCreateInputInterface,
 	GeoLocationInputInterface,
+	LocationInterface,
 } from '../types';
 
 // TODO: Add descriptive comments for types/interfaces
@@ -20,7 +21,7 @@ export interface InviteInterface {
 }
 
 export interface InviteByCodeInputInterface {
-	location: Location;
+	location: LocationInterface;
 	inviteCode: ScalarsInterface['String'];
 	firstName?: MaybeType<ScalarsInterface['String']>;
 	lastName?: MaybeType<ScalarsInterface['String']>;
