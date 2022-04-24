@@ -42,7 +42,7 @@ function AccountScreen({}) {
 	const dispatch = useAppDispatch();
 
 	// SELECTORS
-	const USER_DATA = useAppSelector(getUserData);
+	const USER_DATA = useAppSelector(getUserData) as any;
 	const PRODUCT_VIEW_TYPE = useAppSelector(getProductViewType);
 	// const CURRENT_LANG = useAppSelector(getLang);
 
@@ -312,7 +312,7 @@ function AccountScreen({}) {
 											style={
 												STYLES.userInfoInfosItemSubTitle
 											}>
-											{USER_DATA.geoLocation.city}
+											{USER_DATA.geoLocation?.city}
 										</Text>
 									</View>
 
