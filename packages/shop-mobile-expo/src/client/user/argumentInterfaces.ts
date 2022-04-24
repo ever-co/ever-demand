@@ -17,3 +17,8 @@ export interface UserRegisterInputInterface {
 	user: UserCreateInputInterface;
 	password?: MaybeType<ScalarsInterface['String']>;
 }
+
+export interface MutationUserLoginArgs {
+	email: ScalarsInterface['String'];
+	password: ScalarsInterface['String'];
+}

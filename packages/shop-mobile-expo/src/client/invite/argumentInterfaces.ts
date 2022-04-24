@@ -20,6 +20,31 @@ export interface InviteInterface {
 	geoLocation: GeoLocationInterface;
 }
 
+export interface NewInviteInterface {
+	__typename: string;
+	apartment: string | number;
+	code: string | number;
+	geoLocation: {
+		__typename: string;
+		city: string;
+		coordinates: {
+			__typename: string;
+			lat: number;
+			lng: number;
+		};
+		countryId: number;
+		countryName: string;
+		createdAt: string;
+		house: string;
+		id: string;
+		notes: string | null;
+		postcode: string | null;
+		streetAddress: string;
+		updatedAt: string;
+	};
+	id: string;
+}
+
 export interface InviteByCodeInputInterface {
 	location: LocationInterface;
 	inviteCode: ScalarsInterface['String'];
