@@ -234,8 +234,8 @@ const SignUpScreen = () => {
 		setFormErrors({});
 
 		const FORMATTED_FORM = {
-			...form,
 			...formattedLocation,
+			...form,
 		};
 
 		const FORMATTED_CONSTRAINTS = {
@@ -267,14 +267,17 @@ const SignUpScreen = () => {
 				geoLocation: {
 					countryId: 0,
 					city:
+						FORMATTED_FORM.city ||
 						CURRENT_USER_DATA?.geoLocation?.city ||
-						FORMATTED_FORM.city,
+						'',
 					streetAddress:
+						(FORMATTED_FORM.streetAddress as string) ||
 						CURRENT_USER_DATA?.geoLocation?.streetAddress ||
-						(FORMATTED_FORM.streetAddress as string),
+						'',
 					house:
+						FORMATTED_FORM.house ||
 						CURRENT_USER_DATA?.geoLocation?.house ||
-						FORMATTED_FORM.house,
+						'',
 					postcode: null,
 					notes: null,
 					loc: {
@@ -345,7 +348,11 @@ const SignUpScreen = () => {
 				const FORMATTED_ADDRESS = await getFormattedLocation(
 					CURRENT_POSITION.coords,
 				);
-
+				setForm({
+					...form,
+					city: FORMATTED_ADDRESS?.city || '',
+					street: FORMATTED_ADDRESS?.streetAddress || '',
+				});
 				setCurrentPosition(CURRENT_POSITION);
 				setFormattedLocation(FORMATTED_ADDRESS);
 				setAddressLoading(false);
