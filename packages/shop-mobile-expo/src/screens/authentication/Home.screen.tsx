@@ -50,7 +50,15 @@ const HomeAuthScreen = () => {
 	const navigation = useNavigation();
 
 	// FUNCTIONS
-	const onPressSignUpByAddress = () => {
+	const onPressSignUp = () => {
+		navigation.navigate('STACK/SIGN_UP' as never);
+	};
+
+	const onPressSignIn = () => {
+		navigation.navigate('STACK/SIGN_IN' as never);
+	};
+
+	const onPressInvite = () => {
 		navigation.navigate('STACK/SIGN_UP_BY_ADDRESS' as never);
 	};
 
@@ -85,8 +93,19 @@ const HomeAuthScreen = () => {
 								...GS.mb2,
 							}}
 							labelStyle={{ ...GS.txtCapitalize, ...GS.py1 }}
-							onPress={() => onPressSignUpByAddress()}>
+							onPress={() => onPressSignUp()}>
 							{currentLanguage.INVITE_VIEW.GET_IN_BY_ADDRESS}
+						</Button>
+
+						<Button
+							mode='contained'
+							style={{
+								...GS.bgSecondary,
+								...GS.mb2,
+							}}
+							labelStyle={{ ...GS.txtCapitalize, ...GS.py1 }}
+							onPress={() => onPressSignIn()}>
+							Sign In
 						</Button>
 
 						<View style={{ ...GS.inlineItems, ...GS.centered }}>
@@ -136,7 +155,8 @@ const HomeAuthScreen = () => {
 								...GS.txtCapitalize,
 								color: CC.gray,
 								fontSize: CS.FONT_SIZE + 3,
-							}}>
+							}}
+							onPress={onPressInvite}>
 							{currentLanguage.INVITE_VIEW.BY_CODE.INVITE_CODE}
 						</Button>
 					</View>
