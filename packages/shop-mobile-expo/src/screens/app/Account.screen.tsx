@@ -127,7 +127,7 @@ function AccountScreen({}) {
 	};
 
 	const onGoToRegistration = () => {
-		const NAV_PARAMS = { fromAdd: true };
+		const NAV_PARAMS = { fromApp: true };
 		dispatch(setGroup(ROUTE_GROUPS.REGISTRATION));
 		setTimeout(() => {
 			NAVIGATION.navigate('STACK/SIGN_UP' as never, NAV_PARAMS as never);
