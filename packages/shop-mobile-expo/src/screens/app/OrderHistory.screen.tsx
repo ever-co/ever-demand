@@ -40,7 +40,7 @@ const OrderHistoryScreen = () => {
 
 	// QUERIES
 	const GET_ORDER_HISTORY_QUERY_ARGS: QueryGetOrdersArgsInterface = {
-		userId: USER_DATA?.id || '',
+		userId: USER_DATA?.user?.id || '',
 	};
 	const ORDERS_QUERY_RES = useQuery(GET_ORDER_HISTORY_QUERY, {
 		variables: GET_ORDER_HISTORY_QUERY_ARGS,
@@ -71,13 +71,13 @@ const OrderHistoryScreen = () => {
 			type: 'warning',
 		});
 
-		if (ORDERS_QUERY_RES?.data?.Error) {
+		if (!USER_DATA?.user?.id || ORDERS_QUERY_RES?.data?.Error) {
 			showMessage({
 				message: ORDERS_QUERY_RES?.data?.Error,
 				type: 'warning',
 			});
 		}
-	}, [ORDERS_QUERY_RES.data, ORDERS_QUERY_RES.loading]);
+	}, [ORDERS_QUERY_RES?.data, ORDERS_QUERY_RES.loading, USER_DATA?.user?.id]);
 
 	return (
 		<View style={{ ...GS.screen }}>
@@ -96,7 +96,7 @@ const OrderHistoryScreen = () => {
 				<View style={STYLES.loaderContainer}>
 					<ActivityIndicator color='#FFF' size={25} />
 				</View>
-			) : USER_DATA?.__typename !== 'Invite' && [].length ? (
+			) : ORDERS_QUERY_RES?.data ? (
 				<FlatList
 					data={['', '', '']}
 					renderItem={() => (

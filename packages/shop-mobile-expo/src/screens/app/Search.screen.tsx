@@ -85,39 +85,26 @@ function SearchScreen({}) {
 	const debouncedFetchData = React.useMemo(
 		() =>
 			debounce((text: string) => {
+				const GEO_LOCATION = {
+					loc: USER_DATA?.user?.geoLocation?.loc || {
+						type:
+							USER_DATA?.invite?.geoLocation?.coordinates
+								?.__typename || 'Point',
+						coordinates: [
+							USER_DATA?.invite?.geoLocation?.coordinates?.lng ||
+								0,
+							USER_DATA?.invite?.geoLocation?.coordinates?.lat ||
+								0,
+						],
+					},
+				};
 				const MERCHANTS_SEARCH_QUERY_ARGS: QueryGetMerchantsByNameArgsInterface =
 					{
 						searchName: text,
-						geoLocation: {
-							loc: {
-								type:
-									USER_DATA?.geoLocation?.coordinates
-										?.__typename || 'Point',
-								coordinates: [
-									USER_DATA?.geoLocation?.coordinates?.lng ||
-										0,
-									USER_DATA?.geoLocation?.coordinates?.lat ||
-										0,
-								],
-							},
-						},
+						geoLocation: GEO_LOCATION,
 					};
 				const PRODUCTS_SEARCH_QUERY_ARGS: ProductsQueryArgsInterface = {
-					geoLocation: {
-						loc: {
-							type:
-								USER_DATA?.geoLocation?.coordinates
-									?.__typename || 'Point',
-							coordinates: [
-								USER_DATA?.geoLocation
-									? USER_DATA?.geoLocation?.coordinates?.lng
-									: 0,
-								USER_DATA?.geoLocation
-									? USER_DATA?.geoLocation?.coordinates?.lat
-									: 0,
-							],
-						},
-					},
+					geoLocation: GEO_LOCATION,
 					searchText: text,
 				};
 

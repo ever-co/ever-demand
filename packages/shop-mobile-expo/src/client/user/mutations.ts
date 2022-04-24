@@ -34,6 +34,23 @@ export const USER_LOGIN: TypedDocumentNode = gql`
 				id
 				geoLocation {
 					createdAt
+					id
+					updatedAt
+					countryName
+					city
+					countryId
+					streetAddress
+					postcode
+					house
+					notes
+					loc {
+						type
+						coordinates
+					}
+					coordinates {
+						lng
+						lat
+					}
 				}
 				apartment
 				firstName

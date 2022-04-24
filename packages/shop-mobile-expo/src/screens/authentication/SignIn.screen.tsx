@@ -178,7 +178,12 @@ const SignInScreen = () => {
 					return;
 				}
 
-				reduxDispatch(onUserSignUpByAddressSuccess(TData.userLogin));
+				reduxDispatch(
+					onUserSignUpByAddressSuccess({
+						user: TData.userLogin,
+						invite: null,
+					}),
+				);
 				reduxDispatch(setGroup(GROUPS.APP));
 				showMessage({
 					message: "Welcome back 🎉, you're sign-in as user",

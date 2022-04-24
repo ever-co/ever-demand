@@ -85,15 +85,16 @@ function MerchantsSearch({}) {
 						...(isEmpty(text)
 							? {
 									geoLocation: {
-										loc: {
+										loc: USER_DATA?.user?.geoLocation
+											?.loc || {
 											type:
-												USER_DATA?.geoLocation
+												USER_DATA?.invite?.geoLocation
 													?.coordinates?.__typename ||
-												'',
+												'Point',
 											coordinates: [
-												USER_DATA?.geoLocation
+												USER_DATA?.invite?.geoLocation
 													?.coordinates?.lng || 0,
-												USER_DATA?.geoLocation
+												USER_DATA?.invite?.geoLocation
 													?.coordinates?.lat || 0,
 											],
 										},

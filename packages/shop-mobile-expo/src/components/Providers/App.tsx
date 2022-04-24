@@ -44,7 +44,10 @@ const AppGuard: React.FC<Props> = (props) => {
 				const LOCAL_USER = JSON.parse(LOCAL_USER_JSON) as UserStateType;
 
 				dispatch(setUser(LOCAL_USER));
-				if (LOCAL_USER.isLoggedIn && LOCAL_USER.data) {
+				if (
+					LOCAL_USER.isLoggedIn &&
+					(LOCAL_USER.data.user || LOCAL_USER.data.invite)
+				) {
 					dispatch(setGroup(NAV_GROUPS.APP));
 					return;
 				}

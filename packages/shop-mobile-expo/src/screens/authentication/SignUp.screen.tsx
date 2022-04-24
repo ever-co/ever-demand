@@ -266,27 +266,16 @@ const SignUpScreen = () => {
 				apartment: FORMATTED_FORM.apartment,
 				geoLocation: {
 					countryId: 0,
-					city:
-						FORMATTED_FORM.city ||
-						CURRENT_USER_DATA?.geoLocation?.city ||
-						'',
-					streetAddress:
-						(FORMATTED_FORM.streetAddress as string) ||
-						CURRENT_USER_DATA?.geoLocation?.streetAddress ||
-						'',
-					house:
-						FORMATTED_FORM.house ||
-						CURRENT_USER_DATA?.geoLocation?.house ||
-						'',
+					city: FORMATTED_FORM.city,
+					streetAddress: FORMATTED_FORM.streetAddress as string,
+					house: FORMATTED_FORM.house,
 					postcode: null,
 					notes: null,
 					loc: {
 						type: 'Point',
 						coordinates: [
-							CURRENT_USER_DATA?.geoLocation?.coordinates?.lng ||
-								(FORMATTED_FORM.longitude as number),
-							CURRENT_USER_DATA?.geoLocation?.coordinates?.lat ||
-								(FORMATTED_FORM.latitude as number),
+							FORMATTED_FORM?.longitude || 0,
+							FORMATTED_FORM?.latitude || 0,
 						],
 					},
 				},
@@ -299,7 +288,12 @@ const SignUpScreen = () => {
 				registerInput: CREATE_INVITE_INPUT,
 			},
 			onCompleted: (TData) => {
-				reduxDispatch(onUserSignUpByAddressSuccess(TData.data));
+				reduxDispatch(
+					onUserSignUpByAddressSuccess({
+						invite: null,
+						user: TData.data,
+					}),
+				);
 				reduxDispatch(setGroup(GROUPS.APP));
 				showMessage({
 					message: "Great job 🎉, you're sign-up as user",
@@ -359,13 +353,14 @@ const SignUpScreen = () => {
 			})();
 		} else {
 			setAddressLoading(false);
-			if (CURRENT_USER_DATA?.__typename === 'Invite') {
+			if (CURRENT_USER_DATA?.invite?.__typename === 'Invite') {
 				setForm({
 					...form,
-					city: CURRENT_USER_DATA?.geoLocation.city,
-					street: CURRENT_USER_DATA?.geoLocation.streetAddress,
-					house: CURRENT_USER_DATA?.geoLocation.house,
-					apartment: CURRENT_USER_DATA?.apartment?.toString(),
+					city: CURRENT_USER_DATA?.invite?.geoLocation.city,
+					street: CURRENT_USER_DATA?.invite?.geoLocation
+						.streetAddress,
+					house: CURRENT_USER_DATA?.invite?.geoLocation.house,
+					apartment: CURRENT_USER_DATA?.invite?.apartment?.toString(),
 				});
 			}
 		}

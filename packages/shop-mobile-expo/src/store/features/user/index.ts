@@ -7,7 +7,10 @@ import type { UserStateType } from './types';
 import type { RootState } from '../../index';
 
 const INITIAL_STATE: UserStateType = {
-	data: null,
+	data: {
+		invite: null,
+		user: null,
+	},
 	isLoggedIn: false,
 	productViewType: 'list',
 };
@@ -23,12 +26,15 @@ export const navigationSlice = createSlice({
 
 			asyncStorage.setItem('user', JSON.stringify(state));
 		},
-		setData: (state, action: PayloadAction<any>) => {
+		setData: (state, action: PayloadAction<UserStateType['data']>) => {
 			state.data = action.payload;
 
 			asyncStorage.setItem('user', JSON.stringify(state));
 		},
-		onUserSignUpByAddressSuccess: (state, action: PayloadAction<any>) => {
+		onUserSignUpByAddressSuccess: (
+			state,
+			action: PayloadAction<UserStateType['data']>,
+		) => {
 			state.data = action.payload;
 			state.isLoggedIn = true;
 

@@ -1,8 +1,6 @@
 // This file will contain some global types
 // that will be used in the react app
 
-import { GetGeoLocationProductsOptions } from '../client/products/argumentInterfaces';
-
 // TODO: add more comments
 export type MaybeType<T> = T | null;
 
@@ -36,7 +34,7 @@ export interface Loc {
 	coordinates: ScalarsInterface['Float'][];
 }
 
-export interface GeoLocation {
+export interface GeoLocationInterface {
 	_id?: MaybeType<ScalarsInterface['String']>;
 	id?: MaybeType<ScalarsInterface['String']>;
 	_createdAt?: MaybeType<ScalarsInterface['Date']>;
@@ -56,7 +54,7 @@ export interface GeoLocation {
 export interface UserInterface {
 	_id: ScalarsInterface['String'];
 	id: ScalarsInterface['String'];
-	geoLocation: GetGeoLocationProductsOptions;
+	geoLocation: GeoLocationInterface;
 	apartment: ScalarsInterface['String'];
 	firstName?: MaybeType<ScalarsInterface['String']>;
 	lastName?: MaybeType<ScalarsInterface['String']>;
