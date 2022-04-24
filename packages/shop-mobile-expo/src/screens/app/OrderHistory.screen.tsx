@@ -40,7 +40,7 @@ const OrderHistoryScreen = () => {
 
 	// QUERIES
 	const GET_ORDER_HISTORY_QUERY_ARGS: QueryGetOrdersArgsInterface = {
-		userId: USER_DATA?.user?.id || '',
+		userId: USER_DATA?.user?.user?.id || '',
 	};
 	const ORDERS_QUERY_RES = useQuery(GET_ORDER_HISTORY_QUERY, {
 		variables: GET_ORDER_HISTORY_QUERY_ARGS,
@@ -71,13 +71,17 @@ const OrderHistoryScreen = () => {
 			type: 'warning',
 		});
 
-		if (!USER_DATA?.user?.id || ORDERS_QUERY_RES?.data?.Error) {
+		if (!USER_DATA?.user?.user?.id || ORDERS_QUERY_RES?.data?.Error) {
 			showMessage({
 				message: ORDERS_QUERY_RES?.data?.Error,
 				type: 'warning',
 			});
 		}
-	}, [ORDERS_QUERY_RES?.data, ORDERS_QUERY_RES.loading, USER_DATA?.user?.id]);
+	}, [
+		ORDERS_QUERY_RES?.data,
+		ORDERS_QUERY_RES.loading,
+		USER_DATA?.user?.user?.id,
+	]);
 
 	return (
 		<View style={{ ...GS.screen }}>

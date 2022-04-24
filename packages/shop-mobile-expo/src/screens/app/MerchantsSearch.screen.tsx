@@ -85,17 +85,23 @@ function MerchantsSearch({}) {
 						...(isEmpty(text)
 							? {
 									geoLocation: {
-										loc: USER_DATA?.user?.geoLocation
-											?.loc || {
-											type:
-												USER_DATA?.invite?.geoLocation
-													?.coordinates?.__typename ||
-												'Point',
+										loc: {
+											type: 'Point',
 											coordinates: [
-												USER_DATA?.invite?.geoLocation
-													?.coordinates?.lng || 0,
-												USER_DATA?.invite?.geoLocation
-													?.coordinates?.lat || 0,
+												USER_DATA?.user?.user
+													.geoLocation?.coordinates
+													.lng ||
+													USER_DATA?.invite
+														?.geoLocation
+														?.coordinates?.lng ||
+													0,
+												USER_DATA?.user?.user
+													.geoLocation?.coordinates
+													.lat ||
+													USER_DATA?.invite
+														?.geoLocation
+														?.coordinates?.lat ||
+													0,
 											],
 										},
 									},

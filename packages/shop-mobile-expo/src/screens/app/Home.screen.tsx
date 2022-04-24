@@ -44,11 +44,11 @@ function HomeScreen({}) {
 			loc: {
 				type: 'Point',
 				coordinates: [
-					USER_DATA?.invite?.geoLocation?.coordinates?.lng ||
-						USER_DATA?.user?.geoLocation?.coordinates?.lng ||
+					USER_DATA?.user?.user.geoLocation?.coordinates.lng ||
+						USER_DATA?.invite?.geoLocation?.coordinates?.lng ||
 						0,
-					USER_DATA?.invite?.geoLocation?.coordinates?.lng ||
-						USER_DATA?.user?.geoLocation?.coordinates?.lng ||
+					USER_DATA?.user?.user.geoLocation?.coordinates.lat ||
+						USER_DATA?.invite?.geoLocation?.coordinates?.lat ||
 						0,
 				],
 			},

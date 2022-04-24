@@ -1,12 +1,12 @@
 // TYPES/INTERFACES
 import type ENV from '../../../environments/model';
 import { NewInviteInterface } from '../../../client/invite/argumentInterfaces';
-import { UserInterface } from '../../../types/index';
+import { UserLoginInfoInterface } from '../../../types/index';
 
 export interface UserStateType {
 	data: {
 		invite?: NewInviteInterface | null;
-		user?: UserInterface | null;
+		user?: UserLoginInfoInterface | null;
 	};
 	isLoggedIn: boolean;
 	productViewType: ENV['PRODUCTS_VIEW_TYPE'];
