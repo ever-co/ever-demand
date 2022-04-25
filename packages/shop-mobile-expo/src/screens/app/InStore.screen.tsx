@@ -129,10 +129,7 @@ function InStoreScreen({}) {
 						showsVerticalScrollIndicator={false}
 					/>
 				) : (
-					<PagerView
-						style={{ ...GS.screen }}
-						overScrollMode='never'
-						showsVerticalScrollIndicator={false}>
+					<PagerView style={{ ...GS.screen }} overScrollMode='never'>
 						{WAREHOUSE_PRODUCTS_QUERY_RESPONSE.data?.getStoreProducts?.map(
 							(
 								item: WarehouseProductInterface,
