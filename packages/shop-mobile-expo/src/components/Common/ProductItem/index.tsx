@@ -68,13 +68,21 @@ const ProductItem: React.FC<ProductItemInterface> = (props) => {
 		case 'list':
 			return (
 				<ProductItemVertical
-					{...{ data: props.data, onPressProfile, onPressDetails }}
+					{...{
+						data: props.data,
+						onPressProfile,
+						onPressDetails,
+					}}
 				/>
 			);
 		case 'slides':
 			return (
 				<ProductItemHorizontal
-					{...{ data: props.data, onPressProfile, onPressDetails }}
+					{...{
+						data: props.data,
+						onPressProfile,
+						onPressDetails,
+					}}
 				/>
 			);
 		default:

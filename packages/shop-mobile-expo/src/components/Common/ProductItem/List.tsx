@@ -8,6 +8,9 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 // TYPES
 import type { PropsItemInterface } from './index';
 
+// COMPONENTS
+import BuyProductBtn from '../../BuyProductBtn';
+
 // STYLES
 import {
 	GLOBAL_STYLE as GS,
@@ -117,15 +120,19 @@ const ProductItemList: React.FC<PropsItemInterface> = (props) => {
 				}}
 			/>
 			<View style={{ ...STYLES.section, ...STYLES.footer }}>
-				<Button
-					uppercase={false}
-					style={{ ...STYLES.footerBtn, ...STYLES.footerBuyBtn }}
-					labelStyle={{
-						...GS.FF_NunitoSemiBold,
-						color: CC.light,
-					}}>
-					Buy for ${props?.data?.price}
-				</Button>
+				<BuyProductBtn
+					amount={props?.data.price}
+					productId={props?.data.productId}
+					buttonProps={{
+						uppercase: false,
+						style: { ...STYLES.footerBtn, ...STYLES.footerBuyBtn },
+						labelStyle: {
+							...GS.FF_NunitoSemiBold,
+							color: CC.light,
+						},
+					}}
+				/>
+
 				<Button
 					uppercase={false}
 					style={{ ...STYLES.footerBtn, ...STYLES.footerDetailBtn }}

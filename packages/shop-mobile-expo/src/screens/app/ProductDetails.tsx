@@ -8,13 +8,7 @@ import {
 	Image,
 	TouchableOpacity,
 } from 'react-native';
-import {
-	Text,
-	Paragraph,
-	ActivityIndicator,
-	Button,
-	Avatar,
-} from 'react-native-paper';
+import { Text, Paragraph, ActivityIndicator, Avatar } from 'react-native-paper';
 
 // HELPERS
 import { isEmpty } from '../../helpers/utils';
@@ -32,6 +26,7 @@ import {
 	CustomScreenHeader,
 	FocusAwareStatusBar,
 } from '../../components/Common';
+import BuyProductBtn from '../../components/BuyProductBtn';
 
 // STYLES
 import {
@@ -198,17 +193,21 @@ const ProductDetails = () => {
 					</ScrollView>
 
 					<View style={GS.p1}>
-						<Button
-							uppercase={false}
-							mode='contained'
-							contentStyle={STYLES.buyBtn}>
-							Buy for{' '}
-							{
+						<BuyProductBtn
+							amount={
 								WAREHOUSE_PRODUCT_QUERY_RESPONSE?.data
 									?.getWarehouseProduct?.price
 							}
-							$
-						</Button>
+							productId={
+								WAREHOUSE_PRODUCT_QUERY_RESPONSE?.data
+									?.getWarehouseProduct?.product?.id
+							}
+							buttonProps={{
+								uppercase: false,
+								mode: 'contained',
+								contentStyle: STYLES.buyBtn,
+							}}
+						/>
 					</View>
 				</>
 			)}
