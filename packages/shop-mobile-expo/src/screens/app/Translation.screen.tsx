@@ -61,7 +61,10 @@ function TranslationScreen({}) {
 				showHomeBtn
 			/>
 
-			<ScrollView style={STYLES.scrollView} scrollEnabled>
+			<ScrollView
+				style={STYLES.scrollView}
+				overScrollMode='never'
+				showsVerticalScrollIndicator={false}>
 				{Object.keys(supportedLangs).map((lang: string, id) => {
 					const L = lang as supportedLangType;
 

@@ -209,7 +209,9 @@ function MerchantsSearch({}) {
 			) : MERCHANTS_SEARCH_QUERY[1]?.data?.getMerchantsBuyName?.length ? (
 				<ScrollView
 					style={{ ...GS.screen }}
-					contentContainerStyle={{ ...GS.px2 }}>
+					contentContainerStyle={{ ...GS.px2 }}
+					overScrollMode='never'
+					showsVerticalScrollIndicator={false}>
 					{(MERCHANTS_SEARCH_QUERY[1]?.data
 						? (MERCHANTS_SEARCH_QUERY[1]?.data
 								?.getMerchantsBuyName as MerchantsSearchedInterface[])

@@ -405,7 +405,11 @@ const SignUpScreen = () => {
 	}, [NAVIGATION, canGoBack, warningDialog]);
 
 	return (
-		<ScrollView ref={SCREEN_SCROLL_VIEW_REF} style={{ ...GS.screenStatic }}>
+		<ScrollView
+			ref={SCREEN_SCROLL_VIEW_REF}
+			style={{ ...GS.screenStatic }}
+			overScrollMode='never'
+			showsVerticalScrollIndicator={false}>
 			<FocusAwareStatusBar
 				translucent={false}
 				backgroundColor={CC.primary}

@@ -34,8 +34,9 @@ export interface GeolocationInputInterface {
 	countryId?: ScalarsInterface['Int'];
 	house?: ScalarsInterface['String'];
 	loc?: LocationInterface;
-	streetAddress?: ScalarsInterface['String'];
+	notes?: MaybeType<ScalarsInterface['String']>;
 	postcode?: MaybeType<ScalarsInterface['String']>;
+	streetAddress?: ScalarsInterface['String'];
 }
 
 export interface PagingSortInputInterface {

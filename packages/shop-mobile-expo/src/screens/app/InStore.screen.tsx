@@ -125,9 +125,14 @@ function InStoreScreen({}) {
 						)}
 						keyExtractor={(_item, _index) => _index.toString()}
 						style={{ ...GS.h100 }}
+						overScrollMode='never'
+						showsVerticalScrollIndicator={false}
 					/>
 				) : (
-					<PagerView style={{ ...GS.screen }}>
+					<PagerView
+						style={{ ...GS.screen }}
+						overScrollMode='never'
+						showsVerticalScrollIndicator={false}>
 						{WAREHOUSE_PRODUCTS_QUERY_RESPONSE.data?.getStoreProducts?.map(
 							(
 								item: WarehouseProductInterface,

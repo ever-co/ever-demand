@@ -110,6 +110,8 @@ const OrderHistoryScreen = () => {
 					)}
 					keyExtractor={(_item, _index) => _index.toString()}
 					style={{ ...GS.h100 }}
+					overScrollMode='never'
+					showsVerticalScrollIndicator={false}
 				/>
 			) : (
 				<ScrollView

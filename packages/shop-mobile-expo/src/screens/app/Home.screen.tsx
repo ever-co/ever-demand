@@ -118,9 +118,11 @@ function HomeScreen({}) {
 						)}
 						keyExtractor={(_item, _index) => _index.toString()}
 						style={{ ...GS.h100 }}
+						overScrollMode='never'
+						showsVerticalScrollIndicator={false}
 					/>
 				) : (
-					<PagerView style={{ ...GS.screen }}>
+					<PagerView style={{ ...GS.screen }} overScrollMode='never'>
 						{PRODUCTS_QUERY_RESPONSE.data?.geoLocationProductsByPaging?.map(
 							(item: ProductInfoInterface, index: number) => (
 								<View key={index}>

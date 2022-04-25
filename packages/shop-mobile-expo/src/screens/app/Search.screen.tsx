@@ -210,7 +210,9 @@ function SearchScreen({}) {
 					?.length ? (
 				<ScrollView
 					style={{ ...GS.screen }}
-					contentContainerStyle={{ ...GS.px2 }}>
+					contentContainerStyle={{ ...GS.px2 }}
+					overScrollMode='never'
+					showsVerticalScrollIndicator={false}>
 					<View>
 						<View style={{ ...GS.centered, ...GS.pt3, ...GS.pb4 }}>
 							<Text style={STYLES.searchedText}>
