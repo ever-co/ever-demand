@@ -21,7 +21,7 @@ import { validate } from 'validate.js';
 import { useMutation } from '@apollo/client';
 
 // TYPES/INTERFACES
-import { UserRegisterInputInterface } from '../../client/user/argumentInterfaces';
+import type { UserRegisterArgsInterface } from '../../client/user/argumentInterfaces';
 
 // CONSTANTS
 import GROUPS from '../../router/groups.routes';
@@ -258,7 +258,7 @@ const SignUpScreen = () => {
 		}
 
 		setSubmitFormLoading(true);
-		const CREATE_INVITE_INPUT: UserRegisterInputInterface = {
+		const CREATE_INVITE_INPUT: UserRegisterArgsInterface = {
 			user: {
 				email: FORMATTED_FORM.email,
 				firstName: FORMATTED_FORM.firstName,

@@ -10,10 +10,8 @@ import type {
 	QueryGetMerchantsByNameArgsInterface,
 	MerchantsSearchedInterface,
 } from '../../client/merchants/argumentInterfaces';
-import type {
-	ProductsQueryArgsInterface,
-	ProductInfoInterface,
-} from '../../client/products/argumentInterfaces';
+import type { ProductInfoInterface } from '../../client/types';
+import type { QueryGeolocationProductsByPagingArgsInterface } from '../../client/products/argumentInterfaces';
 
 // HELPERS
 import { isEmpty } from '../../helpers/utils';
@@ -90,12 +88,12 @@ function SearchScreen({}) {
 						type: 'Point',
 						coordinates: [
 							USER_DATA?.user?.user.geoLocation?.coordinates
-								.lng ||
+								?.lng ||
 								USER_DATA?.invite?.geoLocation?.coordinates
 									?.lng ||
 								0,
 							USER_DATA?.user?.user.geoLocation?.coordinates
-								.lat ||
+								?.lat ||
 								USER_DATA?.invite?.geoLocation?.coordinates
 									?.lat ||
 								0,
@@ -107,10 +105,11 @@ function SearchScreen({}) {
 						searchName: text,
 						geoLocation: GEO_LOCATION,
 					};
-				const PRODUCTS_SEARCH_QUERY_ARGS: ProductsQueryArgsInterface = {
-					geoLocation: GEO_LOCATION,
-					searchText: text,
-				};
+				const PRODUCTS_SEARCH_QUERY_ARGS: QueryGeolocationProductsByPagingArgsInterface =
+					{
+						geoLocation: GEO_LOCATION,
+						searchText: text,
+					};
 
 				setDataLoading(false);
 				MERCHANTS_SEARCH_QUERY[0]({

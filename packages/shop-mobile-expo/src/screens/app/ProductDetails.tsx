@@ -21,7 +21,7 @@ import { isEmpty } from '../../helpers/utils';
 
 // CLIENTS
 import { WAREHOUSE_PRODUCT_QUERY } from '../../client/products/queries';
-import { QueryGetWarehouseProductArgs } from '../../client/products/argumentInterfaces';
+import { QueryGetWarehouseProductArgsInterface } from '../../client/products/argumentInterfaces';
 
 // STORE
 import { useAppSelector } from '../../store/hooks';
@@ -49,7 +49,7 @@ const ProductDetails = () => {
 	const LANGUAGE = useAppSelector(getLanguage);
 
 	// QUERIES
-	const WAREHOUSE_PRODUCT_QUERY_ARGS_INTERFACE: QueryGetWarehouseProductArgs =
+	const WAREHOUSE_PRODUCT_QUERY_ARGS_INTERFACE: QueryGetWarehouseProductArgsInterface =
 		{
 			warehouseId: (ROUTE?.params as any)?.warehouseId || '',
 			warehouseProductId: (ROUTE?.params as any)?.productId || '',

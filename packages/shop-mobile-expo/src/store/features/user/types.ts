@@ -1,7 +1,9 @@
 // TYPES/INTERFACES
 import type ENV from '../../../environments/model';
-import { NewInviteInterface } from '../../../client/invite/argumentInterfaces';
-import { UserLoginInfoInterface } from '../../../types/index';
+import {
+	UserLoginInfoInterface,
+	NewInviteInterface,
+} from '../../../client/types';
 
 export interface UserStateType {
 	data: {

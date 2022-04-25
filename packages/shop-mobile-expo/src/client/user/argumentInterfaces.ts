@@ -1,5 +1,5 @@
 import type { MaybeType, ScalarsInterface } from '../../types/index';
-import type { GeoLocationCreateInputInterface } from '../types';
+import type { GeolocationInputInterface } from '../types';
 
 // TODO: Add more comments
 
@@ -9,16 +9,16 @@ export interface UserCreateInputInterface {
 	lastName?: MaybeType<ScalarsInterface['String']>;
 	phone?: MaybeType<ScalarsInterface['String']>;
 	image?: MaybeType<ScalarsInterface['String']>;
-	geoLocation: GeoLocationCreateInputInterface;
+	geoLocation: GeolocationInputInterface;
 	apartment: ScalarsInterface['String'];
 }
 
-export interface UserRegisterInputInterface {
+export interface UserRegisterArgsInterface {
 	user: UserCreateInputInterface;
 	password?: MaybeType<ScalarsInterface['String']>;
 }
 
-export interface MutationUserLoginArgs {
+export interface UserLoginArgsInterface {
 	email: ScalarsInterface['String'];
 	password: ScalarsInterface['String'];
 }

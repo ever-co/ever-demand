@@ -68,6 +68,8 @@ export const resetUser = navigationSlice.actions.resetUser;
 // SELECTORS
 export const getUserObject = (state: RootState) => state.user;
 export const getUserData = (state: RootState) => state.user.data;
+export const getIsInvite = (state: RootState) =>
+	!!(state?.user?.data?.invite && state?.user?.data?.user !== null);
 export const getProductViewType = (state: RootState) =>
 	state.user.productViewType;
 

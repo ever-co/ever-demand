@@ -4,20 +4,14 @@ import { Title } from 'react-native-paper';
 import { useQuery } from '@apollo/client';
 import PagerView from 'react-native-pager-view';
 
-// CONFIGS
-
 // TYPES/INTERFACES
-import type {
-	ProductInfoInterface,
-	ProductsQueryArgsInterface,
-} from '../../client/products/argumentInterfaces';
+import type { ProductInfoInterface } from '../../client/types';
+import type { QueryGeolocationProductsByPagingArgsInterface } from '../../client/products/argumentInterfaces';
 
 // SELECTORS
 import { useAppSelector } from '../../store/hooks';
 import { getUserData, getProductViewType } from '../../store/features/user';
 import { getLanguage } from '../../store/features/translation';
-
-// ACTIONS
 
 // QUERIES
 import { GEO_LOCATION_PRODUCTS_BY_PAGING } from '../../client/products/queries';
@@ -39,21 +33,22 @@ function HomeScreen({}) {
 	const VIEW_TYPE = useAppSelector(getProductViewType);
 
 	// DATA
-	const PRODUCTS_QUERY_ARGS_INTERFACE: ProductsQueryArgsInterface = {
-		geoLocation: {
-			loc: {
-				type: 'Point',
-				coordinates: [
-					USER_DATA?.user?.user.geoLocation?.coordinates.lng ||
-						USER_DATA?.invite?.geoLocation?.coordinates?.lng ||
-						0,
-					USER_DATA?.user?.user.geoLocation?.coordinates.lat ||
-						USER_DATA?.invite?.geoLocation?.coordinates?.lat ||
-						0,
-				],
+	const PRODUCTS_QUERY_ARGS_INTERFACE: QueryGeolocationProductsByPagingArgsInterface =
+		{
+			geoLocation: {
+				loc: {
+					type: 'Point',
+					coordinates: [
+						USER_DATA?.user?.user.geoLocation?.coordinates?.lng ||
+							USER_DATA?.invite?.geoLocation?.coordinates?.lng ||
+							0,
+						USER_DATA?.user?.user.geoLocation?.coordinates?.lat ||
+							USER_DATA?.invite?.geoLocation?.coordinates?.lat ||
+							0,
+					],
+				},
 			},
-		},
-	};
+		};
 
 	// QUERIES
 	const PRODUCTS_QUERY_RESPONSE = useQuery(GEO_LOCATION_PRODUCTS_BY_PAGING, {

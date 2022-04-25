@@ -1,55 +1,20 @@
 // TYPES
 import type { MaybeType, ScalarsInterface } from '../../types/index';
-import type {
-	GeoLocationInterface,
-	GeoLocationCreateInputInterface,
-	GeoLocationInputInterface,
-	LocationInterface,
-} from '../types';
+import type { GeolocationInterface, LocationInterface } from '../types';
 
 // TODO: Add descriptive comments for types/interfaces
-
-/**
- * Invite structure
- */
-export interface InviteInterface {
-	_id: ScalarsInterface['String'];
-	id: ScalarsInterface['String'];
-	code: ScalarsInterface['String'];
-	apartment: ScalarsInterface['String'];
-	geoLocation: GeoLocationInterface;
-}
-
-export interface NewInviteInterface {
-	__typename: string;
-	apartment: string | number;
-	code: string | number;
-	geoLocation: {
-		__typename: string;
-		city: string;
-		coordinates: {
-			__typename: string;
-			lat: number;
-			lng: number;
-		};
-		countryId: number;
-		countryName: string;
-		createdAt: string;
-		house: string;
-		id: string;
-		notes: string | null;
-		postcode: string | null;
-		streetAddress: string;
-		updatedAt: string;
-	};
-	id: string;
-}
 
 export interface InviteByCodeInputInterface {
 	location: LocationInterface;
 	inviteCode: ScalarsInterface['String'];
 	firstName?: MaybeType<ScalarsInterface['String']>;
 	lastName?: MaybeType<ScalarsInterface['String']>;
+}
+
+export interface InviteCreateInputInterface {
+	code?: MaybeType<ScalarsInterface['String']>;
+	apartment: ScalarsInterface['String'];
+	geoLocation: GeolocationInterface;
 }
 
 export interface InviteByLocationInputInterface {
@@ -71,16 +36,4 @@ export interface QueryGetInviteByLocationArgsInterface {
 
 export interface CreateInviteByLocationMutationArgsInterface {
 	createInput: InviteCreateInputInterface;
-}
-
-export interface InviteCreateInputInterface {
-	code?: MaybeType<ScalarsInterface['String']>;
-	apartment: ScalarsInterface['String'];
-	geoLocation: GeoLocationCreateInputInterface;
-}
-
-export interface InviteInputInterface {
-	code: ScalarsInterface['String'];
-	apartment: ScalarsInterface['String'];
-	geoLocation: GeoLocationInputInterface;
 }

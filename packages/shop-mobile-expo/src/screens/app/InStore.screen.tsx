@@ -8,8 +8,8 @@ import PagerView from 'react-native-pager-view';
 // CONFIGS
 
 // TYPES/INTERFACES
+import type { WarehouseProductInterface } from '../../client/types';
 import type { QueryGetStoreProductsArgs } from '../../client/merchants/argumentInterfaces';
-import type { WarehouseProductInterface } from '../../client/products/argumentInterfaces';
 
 // SELECTORS
 import { useAppSelector } from '../../store/hooks';

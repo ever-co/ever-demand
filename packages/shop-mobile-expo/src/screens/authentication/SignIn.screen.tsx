@@ -13,7 +13,7 @@ import { validate } from 'validate.js';
 import { useMutation } from '@apollo/client';
 
 // TYPES/INTERFACES
-import { MutationUserLoginArgs } from '../../client/user/argumentInterfaces';
+import type { UserLoginArgsInterface } from '../../client/user/argumentInterfaces';
 
 // CONSTANTS
 import GROUPS from '../../router/groups.routes';
@@ -158,7 +158,7 @@ const SignInScreen = () => {
 		}
 
 		setSubmitFormLoading(true);
-		const USER_LOGIN_INPUT: MutationUserLoginArgs = {
+		const USER_LOGIN_INPUT: UserLoginArgsInterface = {
 			email: FORMATTED_FORM.email,
 			password: FORMATTED_FORM.password,
 		};

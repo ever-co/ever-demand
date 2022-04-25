@@ -90,14 +90,14 @@ function MerchantsSearch({}) {
 											coordinates: [
 												USER_DATA?.user?.user
 													.geoLocation?.coordinates
-													.lng ||
+													?.lng ||
 													USER_DATA?.invite
 														?.geoLocation
 														?.coordinates?.lng ||
 													0,
 												USER_DATA?.user?.user
 													.geoLocation?.coordinates
-													.lat ||
+													?.lat ||
 													USER_DATA?.invite
 														?.geoLocation
 														?.coordinates?.lat ||
