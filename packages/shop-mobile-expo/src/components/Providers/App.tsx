@@ -8,9 +8,13 @@ import type { UserStateType } from '../../store/features/user/types';
 import type { TranslationStateType } from '../../store/features/translation/types';
 
 // ACTIONS & SELECTORS
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { setUser } from '../../store/features/user';
 import { setLang, supportedLangs } from '../../store/features/translation';
+import {
+	getPreselectedProduct,
+	setPreselectedProduct,
+} from '../../store/features/order';
 import { setGroup } from '../../store/features/navigation';
 
 // CONSTANTS
@@ -24,6 +28,7 @@ import {
 	CONSTANT_COLOR as CC,
 	GLOBAL_STYLE as GS,
 } from '../../assets/ts/styles';
+import OrderWarnDialog from '../OrderDialog/Warn';
 
 // LOCAL TYPES
 export interface Props {
@@ -33,6 +38,9 @@ export interface Props {
 const AppGuard: React.FC<Props> = (props) => {
 	// DISPATCHER
 	const dispatch = useAppDispatch();
+
+	// SELECTORS
+	const PRESELECTED_PRODUCT = useAppSelector(getPreselectedProduct);
 
 	// EFFECTS
 	// Set local user and default route group
@@ -108,6 +116,10 @@ const AppGuard: React.FC<Props> = (props) => {
 		<>
 			{props.children}
 			<FlashMessage position='bottom' />
+			<OrderWarnDialog
+				visible={!!PRESELECTED_PRODUCT}
+				onDismiss={() => dispatch(setPreselectedProduct(null))}
+			/>
 		</>
 	);
 };
