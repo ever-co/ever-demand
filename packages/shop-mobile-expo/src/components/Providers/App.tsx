@@ -9,7 +9,7 @@ import type { TranslationStateType } from '../../store/features/translation/type
 
 // ACTIONS & SELECTORS
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { setUser } from '../../store/features/user';
+import { getOrderInfoType, setUser } from '../../store/features/user';
 import { setLang, supportedLangs } from '../../store/features/translation';
 import {
 	getPreselectedProduct,
@@ -19,6 +19,7 @@ import { setGroup } from '../../store/features/navigation';
 
 // CONSTANTS
 import NAV_GROUPS from '../../router/groups.routes';
+import OrderWarnDialog from '../OrderDialog/Warn';
 
 // HELPERS
 import { isEmpty } from '../../helpers/utils';
@@ -28,19 +29,19 @@ import {
 	CONSTANT_COLOR as CC,
 	GLOBAL_STYLE as GS,
 } from '../../assets/ts/styles';
-import OrderWarnDialog from '../OrderDialog/Warn';
 
 // LOCAL TYPES
 export interface Props {
 	children: React.ReactElement<any>;
 }
 
-const AppGuard: React.FC<Props> = (props) => {
+const AppProvider: React.FC<Props> = (props) => {
 	// DISPATCHER
 	const dispatch = useAppDispatch();
 
 	// SELECTORS
 	const PRESELECTED_PRODUCT = useAppSelector(getPreselectedProduct);
+	const ORDER_INFO_TYPE = useAppSelector(getOrderInfoType);
 
 	// EFFECTS
 	// Set local user and default route group
@@ -115,13 +116,19 @@ const AppGuard: React.FC<Props> = (props) => {
 	return (
 		<>
 			{props.children}
+
 			<FlashMessage position='bottom' />
-			<OrderWarnDialog
-				visible={!!PRESELECTED_PRODUCT}
-				onDismiss={() => dispatch(setPreselectedProduct(null))}
-			/>
+
+			{ORDER_INFO_TYPE === 'popup' && !!PRESELECTED_PRODUCT && (
+				<OrderWarnDialog
+					visible={
+						ORDER_INFO_TYPE === 'popup' && !!PRESELECTED_PRODUCT
+					}
+					onDismiss={() => dispatch(setPreselectedProduct(null))}
+				/>
+			)}
 		</>
 	);
 };
 
-export default AppGuard;
+export default AppProvider;

@@ -66,6 +66,13 @@ const DRAWER_ROUTES: DrawerScreenType[] = [
 			unmountOnBlur: true,
 		},
 	},
+	{
+		name: 'DRAWER/ORDER',
+		component: SCREENS.APP.ORDER,
+		options: {
+			unmountOnBlur: true,
+		},
+	},
 ];
 
 export default DRAWER_ROUTES;
