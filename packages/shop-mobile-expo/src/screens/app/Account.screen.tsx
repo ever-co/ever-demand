@@ -56,6 +56,7 @@ function AccountScreen({}) {
 
 	// DATA
 	const IS_INVITE = USER_DATA?.__typename === 'Invite';
+	const CURRENT_USER_DATA = IS_INVITE ? USER_DATA : USER_DATA?.user?.user;
 
 	const STYLES = StyleSheet.create({
 		container: { ...GS.screen, ...GS.bgLight },
@@ -81,11 +82,16 @@ function AccountScreen({}) {
 			...GS.m2,
 		},
 		userInfoTitle: {
-			...GS.mb4,
+			...GS.mb0,
+			...GS.pb0,
 			color: CC.primary,
 			textAlign: 'center',
 		},
-		userInfoInfosContainer: { ...GS.inlineItems, width: '100%' },
+		userInfoSubTitle: {
+			color: CC.gray,
+			textAlign: 'center',
+		},
+		userInfoInfosContainer: { ...GS.inlineItems, ...GS.mt4, width: '100%' },
 		userInfoInfosItem: { ...GS.centered, flex: 1 },
 		userInfoInfosItemTitle: {
 			color: CC.gray,
@@ -270,77 +276,68 @@ function AccountScreen({}) {
 
 				<Card style={STYLES.userInfoCard}>
 					<Card.Content style={STYLES.userInfoCardContent}>
-						{IS_INVITE ? (
-							<>
-								<View style={STYLES.userAvatarContainer}>
-									<Icon
-										name='user'
-										color={CC.gray}
-										size={60}
-										style={STYLES.avatarIcon}
-									/>
-								</View>
+						<View style={STYLES.userAvatarContainer}>
+							<Icon
+								name='user'
+								color={CC.gray}
+								size={60}
+								style={STYLES.avatarIcon}
+							/>
+						</View>
 
-								<Title style={STYLES.userInfoTitle}>
-									{USER_DATA.__typename}
-								</Title>
+						<Title style={STYLES.userInfoTitle}>
+							{IS_INVITE
+								? CURRENT_USER_DATA?.__typename
+								: `${CURRENT_USER_DATA?.firstName || ''} ${
+										CURRENT_USER_DATA?.lastName || ''
+								  }`}
+						</Title>
 
-								<View style={STYLES.userInfoInfosContainer}>
-									<View style={STYLES.userInfoInfosItem}>
-										<Text
-											style={
-												STYLES.userInfoInfosItemTitle
-											}>
-											Country
-										</Text>
-										<Text
-											style={
-												STYLES.userInfoInfosItemSubTitle
-											}>
-											{USER_DATA.geoLocation.countryName}
-										</Text>
-									</View>
+						{!IS_INVITE && (
+							<Text style={STYLES.userInfoSubTitle}>
+								{CURRENT_USER_DATA?.email}
+							</Text>
+						)}
 
-									<View style={STYLES.userInfoInfosItem}>
-										<Text
-											style={
-												STYLES.userInfoInfosItemTitle
-											}>
-											City
-										</Text>
-										<Text
-											style={
-												STYLES.userInfoInfosItemSubTitle
-											}>
-											{USER_DATA.geoLocation?.city}
-										</Text>
-									</View>
+						<View style={STYLES.userInfoInfosContainer}>
+							<View style={STYLES.userInfoInfosItem}>
+								<Text style={STYLES.userInfoInfosItemTitle}>
+									Country
+								</Text>
+								<Text style={STYLES.userInfoInfosItemSubTitle}>
+									{
+										CURRENT_USER_DATA?.geoLocation
+											?.countryName
+									}
+								</Text>
+							</View>
 
-									<View style={STYLES.userInfoInfosItem}>
-										<Text
-											style={
-												STYLES.userInfoInfosItemTitle
-											}>
-											Apartment
-										</Text>
-										<Text
-											style={
-												STYLES.userInfoInfosItemSubTitle
-											}>
-											{USER_DATA.apartment}
-										</Text>
-									</View>
-								</View>
+							<View style={STYLES.userInfoInfosItem}>
+								<Text style={STYLES.userInfoInfosItemTitle}>
+									City
+								</Text>
+								<Text style={STYLES.userInfoInfosItemSubTitle}>
+									{CURRENT_USER_DATA?.geoLocation?.city}
+								</Text>
+							</View>
 
-								<Button
-									uppercase={false}
-									style={{ ...GS.mt4, ...GS.w100 }}
-									onPress={onGoToRegistration}>
-									Register
-								</Button>
-							</>
-						) : (
-							<View />
+							<View style={STYLES.userInfoInfosItem}>
+								<Text style={STYLES.userInfoInfosItemTitle}>
+									Apartment
+								</Text>
+								<Text style={STYLES.userInfoInfosItemSubTitle}>
+									{CURRENT_USER_DATA?.apartment}
+								</Text>
+							</View>
+						</View>
+
+						{IS_INVITE && (
+							<Button
+								uppercase={false}
+								style={{ ...GS.mt4, ...GS.w100 }}
+								onPress={onGoToRegistration}>
+								Register
+							</Button>
 						)}
 					</Card.Content>
 				</Card>
