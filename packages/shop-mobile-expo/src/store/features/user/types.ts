@@ -12,4 +12,5 @@ export interface UserStateType {
 	};
 	isLoggedIn: boolean;
 	productViewType: ENV['PRODUCTS_VIEW_TYPE'];
+	orderInfoType: ENV['ORDER_INFO_TYPE'];
 }
