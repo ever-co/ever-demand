@@ -263,6 +263,100 @@ function AccountScreen({}) {
 				</View>
 			</Dialog>
 
+			<Dialog
+				visible={productViewDialog}
+				onDismiss={() => setProductViewDialog(false)}
+				title={'Product View'}>
+				<View style={STYLES.dialogProductViewContent}>
+					<TouchableCard
+						style={STYLES.optionItem}
+						cardStyle={{ ...STYLES.optionItemCard, ...GS.noShadow }}
+						cardStyleContent={STYLES.optionItemCardContent}
+						onPress={() => onSelectProductView('list')}>
+						<View
+							style={{
+								...GS.inlineItems,
+								...GS.w100,
+								...GS.h100,
+							}}>
+							<Icon
+								size={CS.FONT_SIZE_XLG}
+								color={CC.primary}
+								name='square'
+								style={{ ...GS.mr2 }}
+							/>
+							<View
+								style={
+									STYLES.optionItemCardContentContainerText
+								}>
+								<Text style={STYLES.optionItemCardContentText}>
+									Use dialog box
+								</Text>
+								<Text
+									style={STYLES.optionItemCardContentSubText}>
+									Display order info with a dialog box
+								</Text>
+							</View>
+
+							<RadioButton
+								status={
+									PRODUCT_VIEW_TYPE === 'list'
+										? 'checked'
+										: 'unchecked'
+								}
+								uncheckedColor={CC.primaryHightLight}
+								value={'list'}
+								onPress={() => onSelectProductView('list')}
+							/>
+						</View>
+					</TouchableCard>
+
+					<TouchableCard
+						style={STYLES.optionItem}
+						cardStyle={{ ...STYLES.optionItemCard, ...GS.noShadow }}
+						cardStyleContent={STYLES.optionItemCardContent}
+						onPress={() => onSelectProductView('slides')}>
+						<View
+							style={{
+								...GS.justifyContentBetween,
+								...GS.w100,
+							}}>
+							<MaterialIcon
+								size={CS.FONT_SIZE_XLG}
+								color={CC.primary}
+								name='arrow-expand-horizontal'
+								style={{ ...GS.mr2 }}
+							/>
+
+							<View
+								style={
+									STYLES.optionItemCardContentContainerText
+								}>
+								<Text style={STYLES.optionItemCardContentText}>
+									Slides
+								</Text>
+								<Text
+									style={STYLES.optionItemCardContentSubText}>
+									Use slide view (swipe by left or right) in
+									home
+								</Text>
+							</View>
+
+							<RadioButton
+								status={
+									PRODUCT_VIEW_TYPE === 'slides'
+										? 'checked'
+										: 'unchecked'
+								}
+								uncheckedColor={CC.primaryHightLight}
+								value={'slides'}
+								onPress={() => onSelectProductView('slides')}
+							/>
+						</View>
+					</TouchableCard>
+				</View>
+			</Dialog>
+
 			<View style={STYLES.container}>
 				<FocusAwareStatusBar
 					translucent={true}
@@ -362,6 +456,19 @@ function AccountScreen({}) {
 						description='Select the mode of product view'
 						descriptionStyle={{ color: CC.gray }}
 						iconProps={{ name: 'columns', size: CS.FONT_SIZE_XLG }}
+						style={STYLES.optionItem}
+						cardStyle={STYLES.optionItemCard}
+						cardStyleContent={STYLES.optionItemCardContent}
+						height={CS.FONT_SIZE_XLG * 3}
+						onPress={() => setProductViewDialog(true)}
+					/>
+
+					<TouchableCard
+						title={'Order info type'}
+						titleStyle={{ color: CC.primary }}
+						description='Select the mode of Order info view'
+						descriptionStyle={{ color: CC.gray }}
+						iconProps={{ name: 'layers', size: CS.FONT_SIZE_XLG }}
 						style={STYLES.optionItem}
 						cardStyle={STYLES.optionItemCard}
 						cardStyleContent={STYLES.optionItemCardContent}
