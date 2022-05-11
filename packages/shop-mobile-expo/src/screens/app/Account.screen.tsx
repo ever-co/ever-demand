@@ -300,7 +300,7 @@ function AccountScreen({}) {
 									STYLES.optionItemCardContentContainerText
 								}>
 								<Text style={STYLES.optionItemCardContentText}>
-									Use dialog box
+									Popup
 								</Text>
 								<Text
 									style={STYLES.optionItemCardContentSubText}>
