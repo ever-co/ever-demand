@@ -15,6 +15,8 @@ import {
 	getProductViewType,
 	setProductViewType,
 	resetUser,
+	getOrderInfoType,
+	setOrderInfoType,
 } from '../../store/features/user';
 import { setGroup } from '../../store/features/navigation';
 
@@ -44,6 +46,7 @@ function AccountScreen({}) {
 	// SELECTORS
 	const USER_DATA = useAppSelector(getUserData) as any;
 	const PRODUCT_VIEW_TYPE = useAppSelector(getProductViewType);
+	const ORDER_INFO_VIEW = useAppSelector(getOrderInfoType);
 	// const CURRENT_LANG = useAppSelector(getLang);
 
 	// NAVIGATION
@@ -51,6 +54,8 @@ function AccountScreen({}) {
 
 	// STATES
 	const [productViewDialog, setProductViewDialog] =
+		React.useState<boolean>(false);
+	const [orderInfoTypeDialog, setOrderInfoTypeDialog] =
 		React.useState<boolean>(false);
 	const [logOutDialog, setLogOutDialog] = React.useState<boolean>(false);
 
@@ -130,6 +135,11 @@ function AccountScreen({}) {
 	const onSelectProductView = (value: ENV_TYPE['PRODUCTS_VIEW_TYPE']) => {
 		dispatch(setProductViewType(value));
 		setProductViewDialog(false);
+	};
+
+	const onSelectOrderInfoView = (value: ENV_TYPE['ORDER_INFO_TYPE']) => {
+		dispatch(setOrderInfoType(value));
+		setOrderInfoTypeDialog(false);
 	};
 
 	const onGoToRegistration = () => {
@@ -264,15 +274,15 @@ function AccountScreen({}) {
 			</Dialog>
 
 			<Dialog
-				visible={productViewDialog}
-				onDismiss={() => setProductViewDialog(false)}
+				visible={orderInfoTypeDialog}
+				onDismiss={() => setOrderInfoTypeDialog(false)}
 				title={'Product View'}>
 				<View style={STYLES.dialogProductViewContent}>
 					<TouchableCard
 						style={STYLES.optionItem}
 						cardStyle={{ ...STYLES.optionItemCard, ...GS.noShadow }}
 						cardStyleContent={STYLES.optionItemCardContent}
-						onPress={() => onSelectProductView('list')}>
+						onPress={() => onSelectOrderInfoView('popup')}>
 						<View
 							style={{
 								...GS.inlineItems,
@@ -282,7 +292,7 @@ function AccountScreen({}) {
 							<Icon
 								size={CS.FONT_SIZE_XLG}
 								color={CC.primary}
-								name='square'
+								name='box'
 								style={{ ...GS.mr2 }}
 							/>
 							<View
@@ -300,13 +310,13 @@ function AccountScreen({}) {
 
 							<RadioButton
 								status={
-									PRODUCT_VIEW_TYPE === 'list'
+									ORDER_INFO_VIEW === 'popup'
 										? 'checked'
 										: 'unchecked'
 								}
 								uncheckedColor={CC.primaryHightLight}
-								value={'list'}
-								onPress={() => onSelectProductView('list')}
+								value={'popup'}
+								onPress={() => onSelectOrderInfoView('popup')}
 							/>
 						</View>
 					</TouchableCard>
@@ -315,16 +325,16 @@ function AccountScreen({}) {
 						style={STYLES.optionItem}
 						cardStyle={{ ...STYLES.optionItemCard, ...GS.noShadow }}
 						cardStyleContent={STYLES.optionItemCardContent}
-						onPress={() => onSelectProductView('slides')}>
+						onPress={() => onSelectOrderInfoView('page')}>
 						<View
 							style={{
 								...GS.justifyContentBetween,
 								...GS.w100,
 							}}>
-							<MaterialIcon
+							<Icon
 								size={CS.FONT_SIZE_XLG}
 								color={CC.primary}
-								name='arrow-expand-horizontal'
+								name='smartphone'
 								style={{ ...GS.mr2 }}
 							/>
 
@@ -333,24 +343,23 @@ function AccountScreen({}) {
 									STYLES.optionItemCardContentContainerText
 								}>
 								<Text style={STYLES.optionItemCardContentText}>
-									Slides
+									Page
 								</Text>
 								<Text
 									style={STYLES.optionItemCardContentSubText}>
-									Use slide view (swipe by left or right) in
-									home
+									Use page view for order info
 								</Text>
 							</View>
 
 							<RadioButton
 								status={
-									PRODUCT_VIEW_TYPE === 'slides'
+									ORDER_INFO_VIEW === 'page'
 										? 'checked'
 										: 'unchecked'
 								}
 								uncheckedColor={CC.primaryHightLight}
-								value={'slides'}
-								onPress={() => onSelectProductView('slides')}
+								value={'page'}
+								onPress={() => onSelectOrderInfoView('page')}
 							/>
 						</View>
 					</TouchableCard>
@@ -473,7 +482,7 @@ function AccountScreen({}) {
 						cardStyle={STYLES.optionItemCard}
 						cardStyleContent={STYLES.optionItemCardContent}
 						height={CS.FONT_SIZE_XLG * 3}
-						onPress={() => setProductViewDialog(true)}
+						onPress={() => setOrderInfoTypeDialog(true)}
 					/>
 				</ScrollView>
 			</View>

@@ -26,6 +26,7 @@ export const navigationSlice = createSlice({
 			state.data = action.payload.data;
 			state.isLoggedIn = action.payload.isLoggedIn;
 			state.productViewType = action.payload.productViewType;
+			state.orderInfoType = action.payload.orderInfoType;
 
 			asyncStorage.setItem('user', JSON.stringify(state));
 		},
