@@ -55,7 +55,7 @@ const AppProvider: React.FC<Props> = (props) => {
 				dispatch(setUser(LOCAL_USER));
 				if (
 					LOCAL_USER.isLoggedIn &&
-					(LOCAL_USER?.data?.user || LOCAL_USER?.data?.invite)
+					(LOCAL_USER?.data?.user?.token || LOCAL_USER?.data?.invite)
 				) {
 					dispatch(setGroup(NAV_GROUPS.APP));
 					return;

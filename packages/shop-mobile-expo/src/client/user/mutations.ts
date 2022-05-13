@@ -23,6 +23,7 @@ export const REGISTER_USER_MUTATION: TypedDocumentNode = gql`
 				streetAddress
 				house
 			}
+			isBanned
 		}
 	}
 `;

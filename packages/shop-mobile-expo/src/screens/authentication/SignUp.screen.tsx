@@ -21,7 +21,10 @@ import { validate } from 'validate.js';
 import { useMutation } from '@apollo/client';
 
 // TYPES/INTERFACES
-import type { UserRegisterArgsInterface } from '../../client/user/argumentInterfaces';
+import type {
+	UserLoginArgsInterface,
+	UserRegisterArgsInterface,
+} from '../../client/user/argumentInterfaces';
 
 // CONSTANTS
 import GROUPS from '../../router/groups.routes';
@@ -31,7 +34,10 @@ import {
 } from '../../constants/rules.validate';
 
 // MUTATIONS
-import { REGISTER_USER_MUTATION } from '../../client/user/mutations';
+import {
+	REGISTER_USER_MUTATION,
+	USER_LOGIN,
+} from '../../client/user/mutations';
 
 // ACTIONS & SELECTORS
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
@@ -159,6 +165,7 @@ const SignUpScreen = () => {
 
 	// MUTATIONS
 	const [handleUserRegistration] = useMutation(REGISTER_USER_MUTATION);
+	const [handleUserLogin] = useMutation(USER_LOGIN);
 
 	// LOCAL STYLES
 	const STYLES = StyleSheet.create({
@@ -256,7 +263,6 @@ const SignUpScreen = () => {
 			SCREEN_SCROLL_VIEW_REF?.current?.scrollTo({ y: 0 });
 			return;
 		}
-
 		setSubmitFormLoading(true);
 		const CREATE_INVITE_INPUT: UserRegisterArgsInterface = {
 			user: {
@@ -267,7 +273,7 @@ const SignUpScreen = () => {
 				geoLocation: {
 					countryId: 0,
 					city: FORMATTED_FORM.city,
-					streetAddress: FORMATTED_FORM.streetAddress as string,
+					streetAddress: FORMATTED_FORM.street,
 					house: FORMATTED_FORM.house,
 					postcode: null,
 					notes: null,
@@ -288,18 +294,58 @@ const SignUpScreen = () => {
 				registerInput: CREATE_INVITE_INPUT,
 			},
 			onCompleted: (TData) => {
-				reduxDispatch(
-					onUserSignUpByAddressSuccess({
-						invite: null,
-						user: TData.data,
-					}),
-				);
-				reduxDispatch(setGroup(GROUPS.APP));
-				showMessage({
-					message: "Great job 🎉, you're sign-up as user",
-					type: 'success',
+				if (!TData?.registerUser) {
+					setSubmitFormLoading(false);
+				}
+
+				const USER_LOGIN_INPUT: UserLoginArgsInterface = {
+					email: TData.registerUser.email,
+					password: FORMATTED_FORM.password,
+				};
+
+				handleUserLogin({
+					variables: {
+						...USER_LOGIN_INPUT,
+					},
+					onCompleted: (TDataSignIn) => {
+						console.log('TDataSignIn', TDataSignIn);
+						setSubmitFormLoading(false);
+						if (!TDataSignIn?.userLogin) {
+							showMessage({
+								message: 'Wrong email or password',
+								type: 'warning',
+							});
+							return;
+						}
+
+						reduxDispatch(
+							onUserSignUpByAddressSuccess({
+								user: TDataSignIn.userLogin,
+								invite: null,
+							}),
+						);
+
+						reduxDispatch(setGroup(GROUPS.APP));
+
+						showMessage({
+							message: "Great job 🎉, you're sign-up as user",
+							type: 'success',
+						});
+					},
+					onError: (ApolloError) => {
+						console.log(
+							'ApolloError ==>',
+							ApolloError,
+							USER_LOGIN_INPUT,
+						);
+						showMessage({
+							message: ApolloError.name,
+							description: ApolloError.message,
+							type: 'danger',
+						});
+						setSubmitFormLoading(false);
+					},
 				});
-				setSubmitFormLoading(false);
 			},
 			onError: (ApolloError) => {
 				console.log(
