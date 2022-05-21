@@ -63,8 +63,12 @@ const ProductItemList: React.FC<PropsItemInterface> = (props) => {
 		},
 		footer: {},
 		footerBtn: {
-			...GS.py1,
 			minWidth: CS.FONT_SIZE_XLG * 6,
+		},
+		footerBtnLabel: {
+			...GS.FF_NunitoSemiBold,
+			...GS.py1,
+			color: CC.light,
 		},
 		footerBuyBtn: {
 			...GS.bgSecondary,
@@ -126,20 +130,14 @@ const ProductItemList: React.FC<PropsItemInterface> = (props) => {
 					buttonProps={{
 						uppercase: false,
 						style: { ...STYLES.footerBtn, ...STYLES.footerBuyBtn },
-						labelStyle: {
-							...GS.FF_NunitoSemiBold,
-							color: CC.light,
-						},
+						labelStyle: STYLES.footerBtnLabel,
 					}}
 				/>
 
 				<Button
 					uppercase={false}
 					style={{ ...STYLES.footerBtn, ...STYLES.footerDetailBtn }}
-					labelStyle={{
-						...GS.FF_NunitoSemiBold,
-						color: CC.light,
-					}}
+					labelStyle={STYLES.footerBtnLabel}
 					onPress={props.onPressDetails}>
 					Details
 				</Button>
