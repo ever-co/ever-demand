@@ -133,7 +133,7 @@ const ProductItemSlide: React.FC<PropsItemInterface> = (props) => {
 							...STYLES.availabilitiesItemTextLG,
 							...STYLES.availabilitiesItemTextPrice,
 						}}>
-						$139
+						${props?.data?.price}
 					</Text>
 
 					<View style={{ ...GS.centered, ...GS.row }}>
