@@ -8,8 +8,9 @@ import { ModifyPropertiesTypes } from '../types';
 import { getReactComponentProps } from '../helpers/utils';
 
 // STORE
-import { useAppDispatch } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { setPreselectedProduct } from '../store/features/order';
+import { getLanguage } from '../store/features/translation';
 
 const BUTTON_PROPS = getReactComponentProps(Button);
 
@@ -26,6 +27,9 @@ const BuyProductBtn: React.FC<Props> = ({ amount, productId, buttonProps }) => {
 	// DISPATCHERS
 	const dispatch = useAppDispatch();
 
+	// SELECTORS
+	const LANGUAGE = useAppSelector(getLanguage);
+
 	// FUNCTIONS
 	const onPressBuy = () => {
 		dispatch(setPreselectedProduct(productId));
@@ -33,7 +37,8 @@ const BuyProductBtn: React.FC<Props> = ({ amount, productId, buttonProps }) => {
 
 	return (
 		<Button {...{ ...buttonProps, onPress: onPressBuy }}>
-			Buy for ${amount}
+			{LANGUAGE.PRODUCTS_VIEW.BUY_BUTTON.PRE}${amount}
+			{LANGUAGE.PRODUCTS_VIEW.BUY_BUTTON.SUF}
 		</Button>
 	);
 };
