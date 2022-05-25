@@ -79,6 +79,7 @@ const SignInScreen = () => {
 	const SCREEN_SCROLL_VIEW_REF = React.useRef<ScrollView | null>(null);
 	const EMAIL_INPUT_REF = React.useRef<NativeTextInput | null>(null);
 	const PASSWORD_INPUT_REF = React.useRef<NativeTextInput | null>(null);
+
 	// MUTATIONS
 	const [handleUserLogin] = useMutation(USER_LOGIN);
 
