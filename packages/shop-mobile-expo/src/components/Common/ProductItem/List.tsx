@@ -127,6 +127,7 @@ const ProductItemList: React.FC<PropsItemInterface> = (props) => {
 				<BuyProductBtn
 					amount={props?.data.price}
 					productId={props?.data.productId}
+					warehouseId={props?.data.warehouseId}
 					buttonProps={{
 						uppercase: false,
 						style: { ...STYLES.footerBtn, ...STYLES.footerBuyBtn },
