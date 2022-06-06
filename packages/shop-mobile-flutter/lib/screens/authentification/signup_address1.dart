@@ -1,10 +1,9 @@
 // ignore_for_file: dead_code
 import 'package:flutter/material.dart';
-import 'package:shop_flutter_mobile/colors.dart';
-import 'package:shop_flutter_mobile/screens/animations/delayed_animation.dart';
+import 'package:shop_flutter_mobile/constants/colors.dart';
+import 'package:shop_flutter_mobile/widgets/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shop_flutter_mobile/screens/authentification/signup_thanks.dart';
-import 'package:shop_flutter_mobile/screens/app_widgets/buttons/circular_indicator.dart';
 
 const customColor = AppColors();
 

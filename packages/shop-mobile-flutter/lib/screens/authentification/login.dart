@@ -1,14 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shop_flutter_mobile/screens/animations/delayed_animation.dart';
-import 'package:shop_flutter_mobile/colors.dart';
+import 'package:shop_flutter_mobile/widgets/widgets.dart';
+import 'package:shop_flutter_mobile/constants/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shop_flutter_mobile/screens/authentification/signup_address1.dart';
 import 'package:shop_flutter_mobile/screens/authentification/signup_address2.dart';
 // import 'package:shop_flutter_mobile/screens/authentification/signup_thanks.dart';
-// import 'package:flutter_signin_button/flutter_signin_button.dart';
 // import 'package:shop_flutter_mobile/screens/other/nav.dart';
 
 const customColor = AppColors();
@@ -22,35 +19,37 @@ class LoginPage extends StatelessWidget {
       backgroundColor: customColor.dRed,
       body: SingleChildScrollView(
         child: Container(
-          margin: const EdgeInsets.symmetric(
-            vertical: 60,
-            horizontal: 30,
-          ),
+          margin: const EdgeInsets.symmetric(vertical: 60, horizontal: 30),
           child: Column(
             children: [
               DelayedAnimation(
                 // this one controls the logo animation
                 delay: 100,
                 child: Container(
-                    alignment: Alignment.center,
-                    // height: 50,
-                    margin: const EdgeInsets.only(top: 50, bottom: 80),
-                    child: Column(
-                      children: [
-                        Text(AppLocalizations.of(context)!.ever,
-                            style: TextStyle(
-                              color: customColor.whiteColor,
-                              fontFamily: 'PlutoHeavyItalic',
-                              fontSize: 80,
-                            )),
-                        Text(AppLocalizations.of(context)!.logoMotto,
-                            style: TextStyle(
-                              color: customColor.greyColor,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            )),
-                      ],
-                    )),
+                  alignment: Alignment.center,
+                  // height: 50,
+                  margin: const EdgeInsets.only(top: 50, bottom: 80),
+                  child: Column(
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.ever,
+                        style: TextStyle(
+                          color: customColor.whiteColor,
+                          fontFamily: 'PlutoHeavyItalic',
+                          fontSize: 80,
+                        ),
+                      ),
+                      Text(
+                        AppLocalizations.of(context)!.logoMotto,
+                        style: TextStyle(
+                          color: customColor.greyColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               DelayedAnimation(
                 // this one controls the button animation
@@ -189,11 +188,13 @@ class LoginPage extends StatelessWidget {
                       children: <Widget>[
                         Flexible(
                           flex: 10, // 50%
-                          child: Text(AppLocalizations.of(context)!.or,
-                              style: TextStyle(
-                                color: customColor.greyColor,
-                                fontSize: 14,
-                              )),
+                          child: Text(
+                            AppLocalizations.of(context)!.or,
+                            style: TextStyle(
+                              color: customColor.greyColor,
+                              fontSize: 14,
+                            ),
+                          ),
                         ),
                         const Flexible(
                           flex: 10, // 50%
