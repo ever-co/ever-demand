@@ -7,14 +7,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const customColor = AppColors();
 
-class SignupAdress2 extends StatefulWidget {
-  const SignupAdress2({Key? key}) : super(key: key);
+class SignupAdress2Screen extends StatefulWidget {
+  const SignupAdress2Screen({Key? key}) : super(key: key);
 
   @override
-  _SignupAdress2State createState() => _SignupAdress2State();
+  _SignupAdress2ScreenState createState() => _SignupAdress2ScreenState();
 }
 
-class _SignupAdress2State extends State<SignupAdress2> {
+class _SignupAdress2ScreenState extends State<SignupAdress2Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

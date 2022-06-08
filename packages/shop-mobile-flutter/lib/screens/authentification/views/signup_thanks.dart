@@ -1,19 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_flutter_mobile/constants/colors.dart';
 import 'package:shop_flutter_mobile/widgets/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-const customColor = AppColors();
-
-class SignupThanks extends StatefulWidget {
-  const SignupThanks({Key? key}) : super(key: key);
+class SignupThanksScreen extends StatefulWidget {
+  const SignupThanksScreen({Key? key}) : super(key: key);
 
   @override
-  _SignupThanksState createState() => _SignupThanksState();
+  _SignupThanksScreenState createState() => _SignupThanksScreenState();
 }
 
-class _SignupThanksState extends State<SignupThanks> {
+class _SignupThanksScreenState extends State<SignupThanksScreen> {
+  final customColor = const AppColors();
+
   @override
   Widget build(BuildContext context) {
     String address = "3, Av. Tulipiers, Les Volcans, Goma, Goma";
@@ -23,7 +22,7 @@ class _SignupThanksState extends State<SignupThanks> {
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.symmetric(
-            vertical: 60,
+            vertical: 20,
             horizontal: 30,
           ),
           child: Column(
@@ -34,7 +33,8 @@ class _SignupThanksState extends State<SignupThanks> {
                 child: Container(
                   alignment: Alignment.center,
                   // height: 50,
-                  margin: const EdgeInsets.only(top: 80, bottom: 30),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 60, horizontal: 30),
                   child: Column(
                     children: [
                       Text(AppLocalizations.of(context)!.ever,
@@ -61,7 +61,7 @@ class _SignupThanksState extends State<SignupThanks> {
                 child: Container(
                   alignment: Alignment.center,
                   // height: 50,
-                  margin: const EdgeInsets.only(top: 50, bottom: 30),
+                  margin: const EdgeInsets.only(bottom: 30),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -126,7 +126,7 @@ class _SignupThanksState extends State<SignupThanks> {
                             decoration: const InputDecoration(
                               //isCollapsed: true,
                               border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.all(10),
+                              contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 10),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: Colors.grey,
@@ -139,9 +139,9 @@ class _SignupThanksState extends State<SignupThanks> {
                                 color: Colors.grey,
                                 fontSize: 16,
                               ),
-                              labelText: "Invite Code",
-                              labelStyle:
-                                  TextStyle(color: Colors.grey, fontSize: 16),
+                              hintMaxLines: 1,
+                              // labelText: "Invite Code",
+                              // labelStyle: TextStyle(color: Colors.grey, fontSize: 16),
                             ),
                           ),
                         ),

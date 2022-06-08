@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:shop_flutter_mobile/screens/menu/menu.dart';
+import 'package:shop_flutter_mobile/constants/colors.dart';
+import 'package:shop_flutter_mobile/utils/navigations.dart';
+
+const customColor = AppColors();
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -9,16 +13,28 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Ever',
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
+      theme: ThemeData(
+        primaryColor: customColor.primaryColor,
+        scaffoldBackgroundColor: customColor.scaffoldBackgroundColor,
+        appBarTheme: AppBarTheme(
+          backgroundColor: customColor.appBarColor,
+          elevation: 0,
+          centerTitle: true,
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: customColor.appBarColor,
+          ),
+        ),
+      ),
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [
+      supportedLocales: const [
         Locale('en', ''), // English, no country code
         Locale('es', ''), // Spanish, no country code
         Locale('fr', ''), // French, no country code
@@ -26,8 +42,10 @@ class MyApp extends StatelessWidget {
         Locale('ru', ''), // Russian, no country code
         Locale('he', ''), // Hebrew, no country code
       ],
-      home:
-          MenuBar(), // calling the login Page as the first screen, no splashscreen
+      initialRoute: "/login",
+      routes: routeNavigations,
+      //   home:
+      //       const MenuBar(), // calling the login Page as the first screen, no splashscreen
     );
   }
 }

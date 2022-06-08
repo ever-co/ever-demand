@@ -1,20 +1,18 @@
 import "package:flutter/material.dart";
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shop_flutter_mobile/constants/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shop_flutter_mobile/screens/screens.dart';
 import 'package:shop_flutter_mobile/widgets/widgets.dart';
 
-const customColor = AppColors();
-
-class MenuBar extends StatefulWidget {
-  const MenuBar({Key? key}) : super(key: key);
+class ProductsScreen extends StatefulWidget {
+  const ProductsScreen({Key? key}) : super(key: key);
 
   @override
-  _MenuBarState createState() => _MenuBarState();
+  State<ProductsScreen> createState() => _ProductsScreenState();
 }
 
-class _MenuBarState extends State<MenuBar> {
+class _ProductsScreenState extends State<ProductsScreen> {
+  final customColor = const AppColors();
   bool isSwitched = false;
 
   @override
@@ -58,7 +56,14 @@ class _MenuBarState extends State<MenuBar> {
           //   ),
         ],
       ),
-      body: const ProductSlide(),
+      drawer: const AppDrawer(),
+      body: ListView.builder(
+        padding: const EdgeInsets.symmetric(vertical: 10.0),
+        itemCount: 3,
+        itemBuilder: (context, index) {
+          return const ProductItem();
+        },
+      ),
     );
   }
 }

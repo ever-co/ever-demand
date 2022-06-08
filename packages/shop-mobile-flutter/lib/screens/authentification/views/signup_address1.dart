@@ -3,17 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:shop_flutter_mobile/constants/colors.dart';
 import 'package:shop_flutter_mobile/widgets/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:shop_flutter_mobile/screens/authentification/signup_thanks.dart';
+import 'signup_thanks.dart';
 
-const customColor = AppColors();
-
-class SignupAdress extends StatefulWidget {
-  const SignupAdress({Key? key}) : super(key: key);
+class SignupAdressScreen extends StatefulWidget {
+  const SignupAdressScreen({Key? key}) : super(key: key);
   @override
-  _SignupAdressState createState() => _SignupAdressState();
+  _SignupAdressScreenState createState() => _SignupAdressScreenState();
 }
 
-class _SignupAdressState extends State<SignupAdress> {
+class _SignupAdressScreenState extends State<SignupAdressScreen> {
+  final customColor = const AppColors();
   bool isStretched = false;
   bool isDone = true;
 
@@ -105,7 +104,7 @@ class _SignupAdressState extends State<SignupAdress> {
                   child: ElevatedButton.icon(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const SignupThanks()));
+                          builder: (context) => const SignupThanksScreen()));
                     },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
