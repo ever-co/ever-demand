@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:shop_flutter_mobile/widgets/drawers/app_drawer.dart';
+import 'package:shop_flutter_mobile/widgets/widgets.dart';
 
 class InfoTermsOfUseScreen extends StatefulWidget {
   const InfoTermsOfUseScreen({Key? key}) : super(key: key);
