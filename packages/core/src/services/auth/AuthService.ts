@@ -5,10 +5,7 @@ import { WrongPasswordError } from '@modules/server.common/errors/WrongPasswordE
 import bcrypt from 'bcrypt';
 import { injectable, interfaces } from 'inversify';
 import { RawObject } from '@pyro/db/db-raw-object';
-
-// have to combine the two imports
-import jwt from 'jsonwebtoken';
-import { JsonWebTokenError } from 'jsonwebtoken';
+import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 
 interface IAuthableCreateObject extends DBCreateObject {
 	hash?: string;

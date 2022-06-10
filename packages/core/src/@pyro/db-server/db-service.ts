@@ -1,10 +1,9 @@
 import mongoose from 'mongoose';
 import * as _ from 'lodash';
 import Logger from 'bunyan';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, from, of } from 'rxjs';
 import { injectable } from 'inversify';
 import { ExistenceEvent, ExistenceEventType } from './existence';
-import { from, of } from 'rxjs';
 import { concat, exhaustMap, filter, map, share, tap } from 'rxjs/operators';
 import { v1 as uuid } from 'uuid';
 import { IDbService } from '@pyro/db-server/i-db-service';

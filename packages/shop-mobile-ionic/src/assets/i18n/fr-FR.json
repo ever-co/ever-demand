@@ -1,4 +1,8 @@
 {
+    "welcome": "Bienvenu(e) chez Ever",
+    "@welcome": {
+      "description": "Message de bienvenue"
+    },
 	"LANGUAGE": {
 		"ID": "fr-FR",
 		"NAME": "Francais"
@@ -256,9 +260,8 @@
 	"ENGLISH": "Anglais",
 	"HEBREW": "Hébreu",
 	"RUSSIAN": "Russe",
-	"BULGARIAN": "bulgare",
+	"BULGARIAN": "",
 	"SPANISH": "Espagnol",
-	"FRENCH": "français",
 	"SELECT": "Sélectionner",
 	"LOCATION_NOTES": "Notes de localisation",
 	"ENTER_NOTES_HERE": "Entrez ici vos notes"

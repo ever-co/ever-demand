@@ -129,7 +129,7 @@ const connectionSettings: TypeOrmModuleOptions = {
 	// poolSize: poolSize,
 	connectTimeoutMS: connectTimeoutMS,
 	logging: true,
-	logger: 'file', //Removes console logging, instead logs all queries in a file ormlogs.log
+	logger: 'file', // Removes console logging, instead logs all queries in a file ormlogs.log
 	useUnifiedTopology: true,
 };
 
@@ -159,6 +159,7 @@ const connectionSettings: TypeOrmModuleOptions = {
 			context: ({ req, res }) => ({
 				req,
 			}),
+
 		}),
 		InvitesModule,
 		DevicesModule,
