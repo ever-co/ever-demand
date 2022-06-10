@@ -22,7 +22,7 @@ export class GeoLocationOrdersResolver {
 			options: GeoLocationOrdersOptions;
 			searchObj?: {
 				isCancelled?: boolean;
-				byRegex?: Array<{ key: string; value: string }>;
+				byRegex?: { key: string; value: string }[];
 			};
 		}
 	) {
@@ -48,7 +48,7 @@ export class GeoLocationOrdersResolver {
 			geoLocation: IGeoLocation;
 			skippedOrderIds: string[];
 			options: GeoLocationOrdersOptions;
-			searchObj?: { byRegex: Array<{ key: string; value: string }> };
+			searchObj?: { byRegex: { key: string; value: string }[] };
 		}
 	) {
 		const orders = await this.geoLocationsOrdersService.getOrdersForWork(
@@ -71,7 +71,7 @@ export class GeoLocationOrdersResolver {
 		}: {
 			geoLocation: IGeoLocation;
 			skippedOrderIds: string[];
-			searchObj?: { byRegex: Array<{ key: string; value: string }> };
+			searchObj?: { byRegex: { key: string; value: string }[] };
 		}
 	) {
 		return this.geoLocationsOrdersService.getCountOfOrdersForWork(

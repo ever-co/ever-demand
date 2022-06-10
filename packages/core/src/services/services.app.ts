@@ -138,7 +138,8 @@ export class ServicesApp {
 		}
 
 		// This is special connection we create during "bootstrap" of the system that is needed for our Repositories to use
-		// We also using another "default" connection defined in app.module.ts using `TypeOrmModule.forRoot(connectionSettings)` which will be used in other places.
+		// We also using another "default" connection defined in app.module.ts
+		// using `TypeOrmModule.forRoot(connectionSettings)` which will be used in other places.
 		const connectionSettings: ConnectionOptions =
 			{
 				// Note: do not change this connection name
@@ -161,7 +162,7 @@ export class ServicesApp {
 				// poolSize: ServicesApp._poolSize,
 				connectTimeoutMS: ServicesApp._connectTimeoutMS,
 				logging: true,
-				logger: 'file', //Removes console logging, instead logs all queries in a file ormlogs.log
+				logger: 'file', // Removes console logging, instead logs all queries in a file ormlogs.log
 				useUnifiedTopology: true,
 			};
 
