@@ -1,25 +1,10 @@
-# shop_flutter_mobile
+# Ever Shop Mobile App (Flutter version)
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-Setting up Your Development Environment
+## Setting up Your Development Environment
 
 Find instructions for setting up your development machine with the Flutter framework on Flutter’s Get started page. The specific steps vary by platform, but they follow this basic format:
 
-    1.Download the installation bundle for your development machine’s operating system to get the latest stable release of the Flutter SDK.
+    1. Download the installation bundle for your development machine’s operating system to get the latest stable release of the Flutter SDK.
     2. Extract the installation bundle in the desired location.
     3. Add the flutter tool to your path.
     4. Run the flutter doctor command, which alerts you to any problems with the Flutter installation.
@@ -40,20 +25,16 @@ Even if your final target is mobile, using a web or desktop app during developme
 
 NOTE: TO BUILD AND TEST ON IOS SIMULATOR OR AN IOS DEVICE, YOU’LL NEED TO USE MACOS WITH XCODE. ALSO, EVEN IF YOU’RE PLANNING TO USE VS CODE AS YOUR MAIN IDE, THE EASIEST WAY TO GET THE ANDROID SDK AND ANDROID EMULATOR IS TO INSTALL ANDROID STUDIO AS WELL.
 
-clone or download the latest version of the project on https://github.com/ever-co/ever-demand
+Clone or download the latest version of the project on https://github.com/ever-co/ever-demand
+Open the project in either VS Code or Android Studio.
 
-then
-You can open the project in either VS Code or Android Studio.
-
-Open it in VS Code by opening the root folder. You’ll need to fetch packages before running the project. Do so by pressing Command-Shift-P on MacOS or Control-Shift-P on Windows or Linux to open the command palette and running the Flutter: Get Packages command.
+Open it in VS Code by opening the root folder. You’ll need to fetch packages before running the project. 
+Do so by pressing Command-Shift-P on MacOS or Control-Shift-P on Windows or Linux to open the command palette and running the Flutter: Get Packages command.
 
 To open the project in Android Studio, choose Open an existing project from the Welcome to Android Studio screen and navigate to choose the root folder of the final project. Then choose Get dependencies on the 'Pub get' has not been run line in Android Studio.
 
-Ever Flutter Structure
+## Project Structure
 
-Ever Demand
-https://github.com/ever-co/ever-demand/tree/develop/packages/shop-mobile-flutter
-shop_mobile-flutter
     -> assets : here we have fonts, i18n, colors and images
     -> lib : here are all the codes
         -> models
