@@ -1,29 +1,20 @@
 // TYPES
 import type { MaybeType, ScalarsInterface } from '../../types/index';
-import type {
-	GeoLocationInterface,
-	GeoLocationCreateInputInterface,
-	GeoLocationInputInterface,
-} from '../types';
+import type { GeolocationInterface, LocationInterface } from '../types';
 
 // TODO: Add descriptive comments for types/interfaces
 
-/**
- * Invite structure
- */
-export interface InviteInterface {
-	_id: ScalarsInterface['String'];
-	id: ScalarsInterface['String'];
-	code: ScalarsInterface['String'];
-	apartment: ScalarsInterface['String'];
-	geoLocation: GeoLocationInterface;
-}
-
 export interface InviteByCodeInputInterface {
-	location: Location;
+	location: LocationInterface;
 	inviteCode: ScalarsInterface['String'];
 	firstName?: MaybeType<ScalarsInterface['String']>;
 	lastName?: MaybeType<ScalarsInterface['String']>;
+}
+
+export interface InviteCreateInputInterface {
+	code?: MaybeType<ScalarsInterface['String']>;
+	apartment: ScalarsInterface['String'];
+	geoLocation: GeolocationInterface;
 }
 
 export interface InviteByLocationInputInterface {
@@ -45,16 +36,4 @@ export interface QueryGetInviteByLocationArgsInterface {
 
 export interface CreateInviteByLocationMutationArgsInterface {
 	createInput: InviteCreateInputInterface;
-}
-
-export interface InviteCreateInputInterface {
-	code?: MaybeType<ScalarsInterface['String']>;
-	apartment: ScalarsInterface['String'];
-	geoLocation: GeoLocationCreateInputInterface;
-}
-
-export interface InviteInputInterface {
-	code: ScalarsInterface['String'];
-	apartment: ScalarsInterface['String'];
-	geoLocation: GeoLocationInputInterface;
 }

@@ -8,13 +8,18 @@ import type { UserStateType } from '../../store/features/user/types';
 import type { TranslationStateType } from '../../store/features/translation/types';
 
 // ACTIONS & SELECTORS
-import { useAppDispatch } from '../../store/hooks';
-import { setUser } from '../../store/features/user';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { getOrderInfoType, setUser } from '../../store/features/user';
 import { setLang, supportedLangs } from '../../store/features/translation';
+import {
+	getPreselectedProduct,
+	setPreselectedProduct,
+} from '../../store/features/order';
 import { setGroup } from '../../store/features/navigation';
 
 // CONSTANTS
 import NAV_GROUPS from '../../router/groups.routes';
+import OrderWarnDialog from '../OrderDialog/Warn';
 
 // HELPERS
 import { isEmpty } from '../../helpers/utils';
@@ -30,9 +35,13 @@ export interface Props {
 	children: React.ReactElement<any>;
 }
 
-const AppGuard: React.FC<Props> = (props) => {
+const AppProvider: React.FC<Props> = (props) => {
 	// DISPATCHER
 	const dispatch = useAppDispatch();
+
+	// SELECTORS
+	const PRESELECTED_PRODUCT = useAppSelector(getPreselectedProduct);
+	const ORDER_INFO_TYPE = useAppSelector(getOrderInfoType);
 
 	// EFFECTS
 	// Set local user and default route group
@@ -44,7 +53,10 @@ const AppGuard: React.FC<Props> = (props) => {
 				const LOCAL_USER = JSON.parse(LOCAL_USER_JSON) as UserStateType;
 
 				dispatch(setUser(LOCAL_USER));
-				if (LOCAL_USER.isLoggedIn) {
+				if (
+					LOCAL_USER.isLoggedIn &&
+					(LOCAL_USER?.data?.user?.token || LOCAL_USER?.data?.invite)
+				) {
 					dispatch(setGroup(NAV_GROUPS.APP));
 					return;
 				}
@@ -104,9 +116,19 @@ const AppGuard: React.FC<Props> = (props) => {
 	return (
 		<>
 			{props.children}
+
 			<FlashMessage position='bottom' />
+
+			{ORDER_INFO_TYPE === 'popup' && !!PRESELECTED_PRODUCT && (
+				<OrderWarnDialog
+					visible={
+						ORDER_INFO_TYPE === 'popup' && !!PRESELECTED_PRODUCT
+					}
+					onDismiss={() => dispatch(setPreselectedProduct(null))}
+				/>
+			)}
 		</>
 	);
 };
 
-export default AppGuard;
+export default AppProvider;

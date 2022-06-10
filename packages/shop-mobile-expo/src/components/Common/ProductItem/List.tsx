@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react';
 import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import { Avatar, Title, Text, Button } from 'react-native-paper';
@@ -5,7 +6,10 @@ import { Avatar, Title, Text, Button } from 'react-native-paper';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 // TYPES
-import type { ProductInfoInterface } from '../../../client/products/argumentInterfaces';
+import type { PropsItemInterface } from './index';
+
+// COMPONENTS
+import BuyProductBtn from '../../BuyProductBtn';
 
 // STYLES
 import {
@@ -14,14 +18,9 @@ import {
 	CONSTANT_COLOR as CC,
 } from '../../../assets/ts/styles';
 
-// LOCAL TYPES
-export interface ProductItemType {
-	data: ProductInfoInterface;
-}
-
-const ProductItemList: React.FC<ProductItemType> = (props: ProductItemType) => {
+const ProductItemList: React.FC<PropsItemInterface> = (props) => {
 	// LOCAL STYLES
-	const styles = StyleSheet.create({
+	const STYLES = StyleSheet.create({
 		container: {
 			...GS.w100,
 			...GS.rounded,
@@ -64,8 +63,12 @@ const ProductItemList: React.FC<ProductItemType> = (props: ProductItemType) => {
 		},
 		footer: {},
 		footerBtn: {
-			...GS.py1,
 			minWidth: CS.FONT_SIZE_XLG * 6,
+		},
+		footerBtnLabel: {
+			...GS.FF_NunitoSemiBold,
+			...GS.py1,
+			color: CC.light,
 		},
 		footerBuyBtn: {
 			...GS.bgSecondary,
@@ -78,9 +81,11 @@ const ProductItemList: React.FC<ProductItemType> = (props: ProductItemType) => {
 	});
 
 	return (
-		<View style={styles.container}>
-			<View style={{ ...styles.section, ...styles.header }}>
-				<TouchableOpacity style={styles.headerAvatarContainer}>
+		<View style={STYLES.container}>
+			<View style={{ ...STYLES.section, ...STYLES.header }}>
+				<TouchableOpacity
+					style={STYLES.headerAvatarContainer}
+					onPress={props?.onPressProfile}>
 					<Avatar.Image
 						size={CS.FONT_SIZE_XLG * 2.2}
 						source={{
@@ -90,57 +95,51 @@ const ProductItemList: React.FC<ProductItemType> = (props: ProductItemType) => {
 						}}
 					/>
 				</TouchableOpacity>
-				<View style={styles.headerContent}>
-					<Title style={styles.headerContentTitle}>
-						{
-							props?.data?.warehouseProduct?.product?.title[0]
-								?.value
-						}
+				<View style={STYLES.headerContent}>
+					<Title style={STYLES.headerContentTitle}>
+						{props?.data.title}
 					</Title>
-					<Text style={styles.headerContentDescription}>
-						{
-							props?.data?.warehouseProduct?.product
-								?.description[0]?.value
-						}
+					<Text style={STYLES.headerContentDescription}>
+						{props?.data.description}
 					</Text>
 				</View>
-				<View style={styles.headerAvailability}>
+				<View style={STYLES.headerAvailability}>
 					<Ionicons
 						size={CS.FONT_SIZE_XLG}
 						color={CC.light}
 						name='flash'
 					/>
 
-					<Text style={styles.headerAvailabilityText}>
+					<Text style={STYLES.headerAvailabilityText}>
 						Ready for takeaway
 					</Text>
 				</View>
 			</View>
 			<Image
-				style={styles.prodImg}
+				style={STYLES.prodImg}
 				source={{
-					uri: props?.data?.warehouseProduct?.product?.images?.length
-						? props?.data?.warehouseProduct?.product?.images[0].url
+					uri: props?.data?.coverImage
+						? props?.data?.coverImage
 						: 'https://static.vecteezy.com/system/resources/previews/004/941/788/original/cardboard-boxes-or-packaging-paper-and-shipping-box-carton-parcels-and-delivery-packages-pile-flat-warehouse-goods-and-cargo-transportation-design-illustration-vector.jpg',
 				}}
 			/>
-			<View style={{ ...styles.section, ...styles.footer }}>
+			<View style={{ ...STYLES.section, ...STYLES.footer }}>
+				<BuyProductBtn
+					amount={props?.data.price}
+					productId={props?.data.productId}
+					warehouseId={props?.data.warehouseId}
+					buttonProps={{
+						uppercase: false,
+						style: { ...STYLES.footerBtn, ...STYLES.footerBuyBtn },
+						labelStyle: STYLES.footerBtnLabel,
+					}}
+				/>
+
 				<Button
 					uppercase={false}
-					style={{ ...styles.footerBtn, ...styles.footerBuyBtn }}
-					labelStyle={{
-						...GS.FF_NunitoSemiBold,
-						color: CC.light,
-					}}>
-					Buy for ${42}
-				</Button>
-				<Button
-					uppercase={false}
-					style={{ ...styles.footerBtn, ...styles.footerDetailBtn }}
-					labelStyle={{
-						...GS.FF_NunitoSemiBold,
-						color: CC.light,
-					}}>
+					style={{ ...STYLES.footerBtn, ...STYLES.footerDetailBtn }}
+					labelStyle={STYLES.footerBtnLabel}
+					onPress={props.onPressDetails}>
 					Details
 				</Button>
 			</View>

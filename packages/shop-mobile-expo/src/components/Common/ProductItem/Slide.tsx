@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react';
 import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import { Avatar, Title, Text, Button } from 'react-native-paper';
@@ -5,7 +6,10 @@ import { Avatar, Title, Text, Button } from 'react-native-paper';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 // TYPES
-import type { ProductInfoInterface } from '../../../client/products/argumentInterfaces';
+import type { PropsItemInterface } from '.';
+
+// COMPONENTS
+import BuyProductBtn from '../../BuyProductBtn';
 
 // STYLES
 import {
@@ -14,16 +18,11 @@ import {
 	CONSTANT_COLOR as CC,
 } from '../../../assets/ts/styles';
 
-// LOCAL TYPES
-export interface ProductItemType {
-	data: ProductInfoInterface;
-}
-
-const ProductItemSlide: React.FC<ProductItemType> = (
-	props: ProductItemType,
-) => {
+const ProductItemSlide: React.FC<PropsItemInterface> = (props) => {
 	// DATA
 	const AVATAR_WAREHOUSE_SIZE = CS.FONT_SIZE_XLG * 2.5;
+
+	// LOCAL STYLES
 	const STYLES = StyleSheet.create({
 		container: {
 			...GS.h100,
@@ -99,8 +98,12 @@ const ProductItemSlide: React.FC<ProductItemType> = (
 		},
 		footer: {},
 		footerBtn: {
-			...GS.py1,
 			minWidth: CS.FONT_SIZE_XLG * 6,
+		},
+		footerBtnLabel: {
+			...GS.FF_NunitoSemiBold,
+			...GS.py1,
+			color: CC.light,
 		},
 		footerBuyBtn: {
 			...GS.bgSecondary,
@@ -117,8 +120,8 @@ const ProductItemSlide: React.FC<ProductItemType> = (
 			<Image
 				style={STYLES.prodImg}
 				source={{
-					uri: props?.data?.warehouseProduct?.product?.images?.length
-						? props?.data?.warehouseProduct?.product?.images[0].url
+					uri: props?.data.coverImage
+						? props?.data.coverImage
 						: 'https://static.vecteezy.com/system/resources/previews/004/941/788/original/cardboard-boxes-or-packaging-paper-and-shipping-box-carton-parcels-and-delivery-packages-pile-flat-warehouse-goods-and-cargo-transportation-design-illustration-vector.jpg',
 				}}
 			/>
@@ -130,7 +133,7 @@ const ProductItemSlide: React.FC<ProductItemType> = (
 							...STYLES.availabilitiesItemTextLG,
 							...STYLES.availabilitiesItemTextPrice,
 						}}>
-						$139
+						${props?.data?.price}
 					</Text>
 
 					<View style={{ ...GS.centered, ...GS.row }}>
@@ -159,20 +162,16 @@ const ProductItemSlide: React.FC<ProductItemType> = (
 			<View style={{ ...STYLES.section, ...STYLES.header }}>
 				<View style={STYLES.headerContent}>
 					<Title style={STYLES.headerContentTitle}>
-						{
-							props?.data?.warehouseProduct?.product?.title[0]
-								?.value
-						}
+						{props?.data.title}
 					</Title>
 					<Text style={STYLES.headerContentDescription}>
-						{
-							props?.data?.warehouseProduct?.product
-								?.description[0]?.value
-						}
+						{props?.data?.description}
 					</Text>
 				</View>
 
-				<TouchableOpacity style={STYLES.headerAvatarContainer}>
+				<TouchableOpacity
+					style={STYLES.headerAvatarContainer}
+					onPress={props.onPressProfile}>
 					<Avatar.Image
 						size={AVATAR_WAREHOUSE_SIZE}
 						source={{
@@ -185,22 +184,22 @@ const ProductItemSlide: React.FC<ProductItemType> = (
 			</View>
 
 			<View style={{ ...STYLES.section, ...STYLES.footer }}>
-				<Button
-					uppercase={false}
-					style={{ ...STYLES.footerBtn, ...STYLES.footerBuyBtn }}
-					labelStyle={{
-						...GS.FF_NunitoSemiBold,
-						color: CC.light,
-					}}>
-					Buy for ${42}
-				</Button>
+				<BuyProductBtn
+					amount={props?.data.price}
+					productId={props?.data.productId}
+					warehouseId={props?.data.warehouseId}
+					buttonProps={{
+						uppercase: false,
+						style: { ...STYLES.footerBtn, ...STYLES.footerBuyBtn },
+						labelStyle: STYLES.footerBtnLabel,
+					}}
+				/>
+
 				<Button
 					uppercase={false}
 					style={{ ...STYLES.footerBtn, ...STYLES.footerDetailBtn }}
-					labelStyle={{
-						...GS.FF_NunitoSemiBold,
-						color: CC.light,
-					}}>
+					labelStyle={STYLES.footerBtnLabel}
+					onPress={props.onPressDetails}>
 					Details
 				</Button>
 			</View>

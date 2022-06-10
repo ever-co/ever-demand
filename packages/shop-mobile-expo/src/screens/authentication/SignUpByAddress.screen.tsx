@@ -91,7 +91,7 @@ const SignUpByAddressScreen = () => {
 	const [, /* preventBackCallBack */ setPreventBackCallBack] = React.useState<
 		() => any
 	>(() => {});
-	const [currentPosition, setCurrentPosition] =
+	const [, setCurrentPosition] =
 		React.useState<Location.LocationObject | null>(null);
 	const [formattedLocation, setFormattedLocation] =
 		React.useState<FormattedLocationInterface | null>(null);
@@ -251,7 +251,12 @@ const SignUpByAddressScreen = () => {
 				...CREATE_INVITE_INPUT,
 			},
 			onCompleted: (TData) => {
-				reduxDispatch(onUserSignUpByAddressSuccess(TData.createInvite));
+				reduxDispatch(
+					onUserSignUpByAddressSuccess({
+						user: null,
+						invite: TData.createInvite,
+					}),
+				);
 				reduxDispatch(setGroup(GROUPS.APP));
 				showMessage({
 					message: "Great job 🎉, you're sign-up as invite",
@@ -300,19 +305,6 @@ const SignUpByAddressScreen = () => {
 	}, [NAVIGATION]);
 
 	React.useEffect(() => {
-		// setCanGoBack(true);
-		// reduxDispatch(setGroup(GROUPS.APP));
-	}, [reduxDispatch]);
-
-	React.useEffect(() => {
-		console.log(
-			'\nLocation error ===> ',
-			currentPosition,
-			formattedLocation,
-		);
-	}, [currentPosition, formattedLocation]);
-
-	React.useEffect(() => {
 		NAVIGATION.addListener('beforeRemove', (e) => {
 			if (canGoBack) {
 				return;
@@ -323,12 +315,10 @@ const SignUpByAddressScreen = () => {
 			setWarningDialog(true);
 
 			// Prompt the user before leaving the screen
-			setPreventBackCallBack(() => {
-				return () => {
-					setCanGoBack(true);
-					setWarningDialog(false);
-					NAVIGATION.dispatch(e.data.action);
-				};
+			setPreventBackCallBack(() => () => {
+				setCanGoBack(true);
+				setWarningDialog(false);
+				NAVIGATION.dispatch(e.data.action);
 			});
 
 			Alert.alert(
@@ -352,7 +342,11 @@ const SignUpByAddressScreen = () => {
 	}, [NAVIGATION, canGoBack, warningDialog]);
 
 	return (
-		<ScrollView ref={SCREEN_SCROLL_VIEW_REF} style={{ ...GS.screenStatic }}>
+		<ScrollView
+			ref={SCREEN_SCROLL_VIEW_REF}
+			style={{ ...GS.screenStatic }}
+			overScrollMode='never'
+			showsVerticalScrollIndicator={false}>
 			<FocusAwareStatusBar
 				translucent={false}
 				backgroundColor={CC.primary}

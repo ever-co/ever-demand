@@ -107,7 +107,8 @@ const environment: Environment = {
 	/**
 	 * Contain app endpoints
 	 *
-	 * _🚧 warning: if you're using a AVD (Android Virtual Device) and localhost don't works, replace it with **10.0.2.2**_
+	 * _🚧 warning: if you're using a AVD (Android Virtual Device)_
+	 * _and localhost doesn't works, replace it with **10.0.2.2**_
 	 */
 	ENDPOINT: {
 		GQL: 'http://localhost:8443/graphql',

@@ -1,24 +1,28 @@
 import React from 'react';
 import { View, ActivityIndicator, StyleSheet, ScrollView } from 'react-native';
-import { Button, TextInput, Title } from 'react-native-paper';
-// import { useQuery } from '@apollo/client';
+import { Button, TextInput, Title, Text } from 'react-native-paper';
+import { useLazyQuery } from '@apollo/client';
+import { useNavigation } from '@react-navigation/native';
 // tslint:disable-next-line: no-implicit-dependencies no-submodule-imports
 import MaterialIcon from '@expo/vector-icons/MaterialCommunityIcons';
-
-// CONFIGS
+import { debounce } from 'lodash';
 
 // TYPES/INTERFACES
-import type {} from '../../client/products/argumentInterfaces';
+import {
+	QueryGetMerchantsByNameArgsInterface,
+	MerchantsSearchedInterface,
+} from '../../client/merchants/argumentInterfaces';
 
-// SELECTORS
+// HELPERS
+import { isEmpty } from '../../helpers/utils';
+
+// STORE
 import { useAppSelector } from '../../store/hooks';
-// import { getUserData } from '../../store/features/user';
+import { getUserData } from '../../store/features/user';
 import { getLanguage } from '../../store/features/translation';
 
-// ACTIONS
-
 // QUERIES
-// import { GEO_LOCATION_PRODUCTS_BY_PAGING } from '../../client/products/queries';
+import { GET_MERCHANTS_QUERY } from '../../client/merchants/queries';
 
 // COMPONENTS
 import {
@@ -31,49 +35,107 @@ import {
 import {
 	GLOBAL_STYLE as GS,
 	CONSTANT_COLOR as CC,
+	CONSTANT_SIZE as CS,
 } from '../../assets/ts/styles';
 
 function MerchantsSearch({}) {
+	// NAVIGATION
+	const NAVIGATION = useNavigation();
+
 	// SELECTORS
 	const LANGUAGE = useAppSelector(getLanguage);
-	// const USER_DATA = useAppSelector(getUserData);
+	const USER_DATA = useAppSelector(getUserData);
 
 	// STATES
-	const [searchValue, setSearchValue] = React.useState<string>('');
-	// const [dataLoading, setDataLoading] = React.useState<boolean>(false);
-
-	// DATA
-	// const MERCHANTS_SEARCH_QUERY_ARGS: any = {};
+	const [searchedValue, setSearchedValue] = React.useState<string>('');
+	const [dataLoading, setDataLoading] = React.useState<boolean>(false);
 
 	// QUERIES
-	// const MERCHANTS_SEARCH_QUERY_RESPONSE = useQuery(
-	// 	GEO_LOCATION_PRODUCTS_BY_PAGING,
-	// 	{
-	// 		variables: {
-	// 			...MERCHANTS_SEARCH_QUERY_ARGS,
-	// 		},
-	// 	},
-	// );
+	const MERCHANTS_SEARCH_QUERY = useLazyQuery(GET_MERCHANTS_QUERY);
 
-	// STYLES
 	const STYLES = StyleSheet.create({
 		loaderContainer: { ...GS.centered, ...GS.w100, flex: 1 },
 		searchContainer: {
 			...GS.px2,
-			...GS.pt4,
-			...GS.pb3,
-			...GS.inlineItems,
+			...GS.row,
+			...GS.centered,
+			...GS.pt2,
+			height: 90,
 			backgroundColor: CC.dark,
 		},
+		containerSearchInput: { ...GS.flex1, ...GS.mr2, height: 57 },
 		searchInput: {
-			...GS.mr2,
-			...GS.my0,
 			...GS.bgLight,
-			flex: 1,
+			...GS.flex1,
+			marginTop: -6,
 			color: CC.dark,
-			height: 57,
+			fontSize: CS.FONT_SIZE - 1,
 		},
+		scanBtn: { ...GS.p0, ...GS.my0, ...GS.justifyCenter, height: 57 },
+		searchedText: { ...GS.FF_NunitoBold, ...GS.txtUpper },
 	});
+
+	// FUNCTIONS
+	const debouncedFetchData = React.useMemo(
+		() =>
+			debounce((text: string) => {
+				const MERCHANT_SEARCH_QUERY_ARGS: QueryGetMerchantsByNameArgsInterface =
+					{
+						searchName: text,
+						...(isEmpty(text)
+							? {
+									geoLocation: {
+										loc: {
+											type: 'Point',
+											coordinates: [
+												USER_DATA?.user?.user
+													.geoLocation?.coordinates
+													?.lng ||
+													USER_DATA?.invite
+														?.geoLocation
+														?.coordinates?.lng ||
+													0,
+												USER_DATA?.user?.user
+													.geoLocation?.coordinates
+													?.lat ||
+													USER_DATA?.invite
+														?.geoLocation
+														?.coordinates?.lat ||
+													0,
+											],
+										},
+									},
+							  }
+							: {}),
+					};
+				setDataLoading(false);
+				MERCHANTS_SEARCH_QUERY[0]({
+					variables: MERCHANT_SEARCH_QUERY_ARGS,
+				});
+			}, 500),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[],
+	);
+
+	const onPressMerchant = (warehouseId: string) => {
+		if (!isEmpty(warehouseId)) {
+			const ROUTE_WAREHOUSE_ID = {
+				warehouseId,
+			};
+			NAVIGATION.navigate(
+				'DRAWER/IN_STORE' as never,
+				ROUTE_WAREHOUSE_ID as never,
+			);
+		}
+	};
+
+	// EFFECTS
+	React.useEffect(() => {
+		debouncedFetchData(searchedValue);
+
+		return () => debouncedFetchData.cancel();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [searchedValue]);
 
 	return (
 		<View style={{ ...GS.screen }}>
@@ -84,30 +146,40 @@ function MerchantsSearch({}) {
 			/>
 
 			<CustomScreenHeader
-				title={LANGUAGE.PRODUCTS_VIEW.TITLE}
+				title={LANGUAGE.MERCHANTS_VIEW.NAME}
 				showBackBtn
 			/>
 
 			<View style={STYLES.searchContainer}>
-				<TextInput
-					value={searchValue}
-					placeholder='Search here'
-					style={STYLES.searchInput}
-					theme={{ colors: { text: CC.dark } }}
-					placeholderTextColor={CC.gray}
-					left={
-						<TextInput.Icon
-							name='search'
-							color={CC.dark}
-							size={20}
-						/>
-					}
-					onChangeText={(text) => setSearchValue(text)}
-					mode='outlined'
-				/>
+				<View style={STYLES.containerSearchInput}>
+					<TextInput
+						value={searchedValue}
+						placeholder={LANGUAGE.MERCHANTS_VIEW.NAME}
+						style={STYLES.searchInput}
+						theme={{
+							colors: { text: CC.dark },
+							roundness: CS.SPACE,
+						}}
+						placeholderTextColor={CC.gray}
+						left={
+							<TextInput.Icon
+								name='search'
+								color={CC.dark}
+								size={18}
+								style={GS.mt1}
+							/>
+						}
+						onChangeText={(text) => {
+							setDataLoading(true);
+							setSearchedValue(text);
+						}}
+						mode='outlined'
+					/>
+				</View>
 
 				<Button
-					style={{ ...GS.py2, ...GS.my0 }}
+					style={STYLES.scanBtn}
+					theme={{ roundness: CS.SPACE }}
 					uppercase={false}
 					mode='contained'>
 					<MaterialIcon
@@ -115,30 +187,54 @@ function MerchantsSearch({}) {
 						color={CC.light}
 						size={16}
 					/>{' '}
-					Scan
+					{LANGUAGE.SCAN}
 				</Button>
 			</View>
 
-			{false ? (
+			<View style={{ ...GS.centered, ...GS.pt3, ...GS.pb4 }}>
+				<Text style={STYLES.searchedText}>
+					{!isEmpty(searchedValue)
+						? LANGUAGE.MERCHANTS_VIEW.WITH_NAME +
+						  ' "' +
+						  searchedValue +
+						  '"'
+						: LANGUAGE.MERCHANTS_VIEW.CLOSE_TO_YOU}
+				</Text>
+			</View>
+
+			{MERCHANTS_SEARCH_QUERY[1].loading || dataLoading ? (
 				<View style={STYLES.loaderContainer}>
-					<ActivityIndicator color={'#FFF'} size={25} />
+					<ActivityIndicator color={CC.white} size={25} />
 				</View>
-			) : true ? (
+			) : MERCHANTS_SEARCH_QUERY[1]?.data?.getMerchantsBuyName?.length ? (
 				<ScrollView
 					style={{ ...GS.screen }}
-					contentContainerStyle={{ ...GS.px2 }}>
-					{[''].map((_item, index) => (
+					contentContainerStyle={{ ...GS.px2 }}
+					overScrollMode='never'
+					showsVerticalScrollIndicator={false}>
+					{(MERCHANTS_SEARCH_QUERY[1]?.data
+						? (MERCHANTS_SEARCH_QUERY[1]?.data
+								?.getMerchantsBuyName as MerchantsSearchedInterface[])
+						: []
+					).map((_item, _index) => (
 						<TouchableCard
-							key={index}
-							title='Item'
-							onPress={() => {}}
+							key={_index}
+							img={_item.logo}
+							title={_item.name}
+							titleStyle={{ color: CC.primary }}
+							indicatorIconProps={{ name: 'chevron-right' }}
+							height={65}
+							style={GS.mb2}
+							onPress={() => onPressMerchant(_item.id)}
 						/>
 					))}
 				</ScrollView>
 			) : (
-				<View style={{ ...GS.screen, ...GS.centered }}>
-					<Title>Nothing found!</Title>
-				</View>
+				<ScrollView
+					style={{ ...GS.screen }}
+					contentContainerStyle={{ ...GS.screen, ...GS.centered }}>
+					<Title>{LANGUAGE.NOT_FOUND}</Title>
+				</ScrollView>
 			)}
 		</View>
 	);

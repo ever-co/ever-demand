@@ -1,13 +1,19 @@
 import * as React from 'react';
 import { useWindowDimensions } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 // TYPES
 import DRAWER_ROUTES, { DrawerRoutesGroupType } from './drawer.routes';
 
 // SELECTORS
+import { getOrderInfoType } from '../store/features/user';
 import { useAppSelector } from '../store/hooks';
 import { getLanguage } from '../store/features/translation';
+import {
+	getPreselectedProduct,
+	setPreselectedProduct,
+} from '../store/features/order';
 
 // COMPONENTS
 import CustomDrawerContent from '../components/CustomDrawerContent';
@@ -17,6 +23,11 @@ const Drawer = createDrawerNavigator();
 const DrawerNavigator: React.FC = () => {
 	// SELECTORS
 	const LANGUAGE = useAppSelector(getLanguage);
+	const PRESELECTED_PRODUCT = useAppSelector(getPreselectedProduct);
+	const ORDER_INFO_TYPE = useAppSelector(getOrderInfoType);
+
+	// NAVIGATION
+	const NAVIGATION = useNavigation();
 
 	// DATA
 	const dimensions = useWindowDimensions();
@@ -96,6 +107,24 @@ const DrawerNavigator: React.FC = () => {
 			],
 		},
 	];
+
+	// EFFECTS
+	React.useEffect(() => {
+		if (PRESELECTED_PRODUCT && ORDER_INFO_TYPE === 'page') {
+			const SELECTED_PRODUCT = {
+				selectedProduct: PRESELECTED_PRODUCT,
+			};
+
+			NAVIGATION.navigate(
+				'DRAWER/ORDER' as never,
+				SELECTED_PRODUCT as never,
+			);
+			setPreselectedProduct(null);
+		}
+
+		return () => {};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [PRESELECTED_PRODUCT]);
 
 	return (
 		<Drawer.Navigator
