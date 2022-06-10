@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop_flutter_mobile/colors.dart';
+import 'package:shop_flutter_mobile/constants/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const customColor = AppColors();

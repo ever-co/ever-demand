@@ -1,11 +1,9 @@
 import "package:flutter/material.dart";
-import "package:flutter/cupertino.dart";
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:shop_flutter_mobile/colors.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shop_flutter_mobile/screens/app_widgets/app_drawer.dart';
-import 'package:shop_flutter_mobile/screens/app_widgets/appbar.dart';
-import 'package:shop_flutter_mobile/screens/products/products.dart';
+import 'package:shop_flutter_mobile/constants/colors.dart';
+import 'package:shop_flutter_mobile/screens/screens.dart';
+import 'package:shop_flutter_mobile/widgets/widgets.dart';
 
 const customColor = AppColors();
 
@@ -18,12 +16,14 @@ class MenuBar extends StatefulWidget {
 
 class _MenuBarState extends State<MenuBar> {
   bool isSwitched = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.productsViewTitle),
         centerTitle: false,
+        elevation: 0.0,
         actions: [
           IconButton(
             iconSize: 50,
@@ -35,7 +35,6 @@ class _MenuBarState extends State<MenuBar> {
             onChanged: (value) {
               setState(() {
                 isSwitched = value;
-                //print(isSwitched);
               });
             },
             activeTrackColor: customColor.greyColor,
@@ -46,11 +45,20 @@ class _MenuBarState extends State<MenuBar> {
             icon: Text(AppLocalizations.of(context)!.delivery),
             onPressed: () {},
           ),
+          //   InkWell(
+          //     child: Column(
+          //       children: const [
+          //         Icon(Icons.login_outlined, size: 14),
+          //         Text(
+          //           'In store',
+          //           style: TextStyle(fontSize: 11.0),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
         ],
-        backgroundColor: customColor.dRed,
       ),
-      drawer: appDrawer(context),
-      body: Products(),
+      body: const ProductSlide(),
     );
   }
 }
