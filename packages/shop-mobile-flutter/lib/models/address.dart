@@ -10,7 +10,7 @@ class Address {
   final String? house;
   final Location? loc;
 
-  Address({
+  const Address({
     this.countryId,
     this.city,
     this.postcode,
@@ -21,7 +21,7 @@ class Address {
   });
 
   Address getEmptyAddress() {
-    return Address(
+    return const Address(
       countryId: null,
       city: '',
       postcode: '',

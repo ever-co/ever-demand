@@ -2,14 +2,20 @@ class Location {
   final String type;
   final List<double> coordinates;
 
-  const Location({required this.type, required this.coordinates});
+  const Location({
+    required this.type,
+    required this.coordinates,
+  });
 }
 
 class GeoLocationCoordinates {
   final double lng;
   final double lat;
 
-  const GeoLocationCoordinates({required this.lng, required this.lat});
+  const GeoLocationCoordinates({
+    required this.lng,
+    required this.lat,
+  });
 }
 
 class GeoLocation {

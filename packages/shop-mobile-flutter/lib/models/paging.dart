@@ -2,7 +2,10 @@ class PagingSortInput {
   final String field;
   final String sortBy;
 
-  const PagingSortInput({required this.field, required this.sortBy});
+  const PagingSortInput({
+    required this.field,
+    required this.sortBy,
+  });
 }
 
 class PagingOptionsInput {
@@ -10,5 +13,9 @@ class PagingOptionsInput {
   final int? limit;
   final int? skip;
 
-  const PagingOptionsInput({this.sort, this.limit, this.skip});
+  const PagingOptionsInput({
+    this.sort,
+    this.limit,
+    this.skip,
+  });
 }
