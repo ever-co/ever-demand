@@ -1,24 +1,24 @@
+import type { MaybeType, ScalarsInterface } from '../../types/index';
+import type { GeolocationInputInterface } from '../types';
+
 // TODO: Add more comments
 
-/**
- * Minimal user info to create a user.
- */
-export interface RegisterUserArgsInterface {
-	registerInput: {
-		user: {
-			lastName: string;
-			firstName: string;
-			geoLocation: {
-				loc: {
-					coordinates: [number, number];
-					type: string;
-				};
-				house: string;
-				streetAddress: string;
-				city: string;
-				countryId: number;
-			};
-			apartment: string;
-		};
-	};
+export interface UserCreateInputInterface {
+	email?: MaybeType<ScalarsInterface['String']>;
+	firstName?: MaybeType<ScalarsInterface['String']>;
+	lastName?: MaybeType<ScalarsInterface['String']>;
+	phone?: MaybeType<ScalarsInterface['String']>;
+	image?: MaybeType<ScalarsInterface['String']>;
+	geoLocation: GeolocationInputInterface;
+	apartment: ScalarsInterface['String'];
+}
+
+export interface UserRegisterArgsInterface {
+	user: UserCreateInputInterface;
+	password?: MaybeType<ScalarsInterface['String']>;
+}
+
+export interface UserLoginArgsInterface {
+	email: ScalarsInterface['String'];
+	password: ScalarsInterface['String'];
 }

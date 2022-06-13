@@ -30,23 +30,48 @@ export type DrawerScreenType = typeof DrawerScreenProps;
 const DRAWER_ROUTES: DrawerScreenType[] = [
 	{
 		name: 'DRAWER/HOME',
-		component: SCREENS.APP.Home,
+		component: SCREENS.APP.HOME,
 	},
 	{
 		name: 'DRAWER/ORDER_HISTORY',
-		component: SCREENS.APP.OrderHistory,
+		component: SCREENS.APP.ORDER_HISTORY,
 	},
 	{
 		name: 'DRAWER/ACCOUNT',
-		component: SCREENS.APP.Account,
+		component: SCREENS.APP.ACCOUNT,
 	},
 	{
 		name: 'DRAWER/TRANSLATION',
-		component: SCREENS.APP.Translation,
+		component: SCREENS.APP.TRANSLATION,
+	},
+	{
+		name: 'DRAWER/SEARCH',
+		component: SCREENS.APP.SEARCH,
 	},
 	{
 		name: 'DRAWER/MERCHANTS_SEARCH',
-		component: SCREENS.APP.MerchantsSearch,
+		component: SCREENS.APP.MERCHANTS_SEARCH,
+	},
+	{
+		name: 'DRAWER/IN_STORE',
+		component: SCREENS.APP.IN_STORE,
+		options: {
+			unmountOnBlur: true,
+		},
+	},
+	{
+		name: 'DRAWER/PRODUCT_DETAILS',
+		component: SCREENS.APP.PRODUCT_DETAILS,
+		options: {
+			unmountOnBlur: true,
+		},
+	},
+	{
+		name: 'DRAWER/ORDER',
+		component: SCREENS.APP.ORDER,
+		options: {
+			unmountOnBlur: true,
+		},
 	},
 ];
 

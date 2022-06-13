@@ -39,7 +39,7 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 	children,
 	showControls = false,
 	controlOnPressSearch,
-	controlOnPressStore = () => {},
+	controlOnPressStore,
 	showHomeBtn = false,
 	onPressHomeBtn,
 	showBackBtn = false,
@@ -84,6 +84,14 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 			...GS.mb1,
 			...GS.FF_NunitoBold,
 			fontSize: CS.FONT_SIZE_MD - 1,
+		},
+		btnWrapper: {
+			...GS.roundedSm,
+			overflow: 'hidden',
+		},
+		backBtnIcon: {
+			marginLeft: -6,
+			...GS.mr1,
 		},
 		productsStatusText: {
 			...GS.txtCapitalize,
@@ -177,21 +185,26 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 											controlOnPressSearch
 												? controlOnPressSearch()
 												: navigation.navigate(
-														'DRAWER/MERCHANTS_SEARCH' as never,
+														'DRAWER/SEARCH' as never,
 												  )
 										}
 									/>
 
 									<View style={STYLES.storeBtnContainer}>
 										<TouchableRipple
+											rippleColor={CC.light + '6f'}
 											onPress={() =>
-												controlOnPressStore()
+												controlOnPressStore
+													? controlOnPressStore()
+													: navigation.navigate(
+															'DRAWER/MERCHANTS_SEARCH' as never,
+													  )
 											}>
 											<MaterialIcons
 												name='storefront'
 												color={CC.success}
 												size={CS.FONT_SIZE_SM * 1.6}
-												style={{ ...GS.m1 }}
+												style={GS.m2}
 											/>
 										</TouchableRipple>
 									</View>
@@ -199,11 +212,7 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 							)}
 
 							{showBackBtn && (
-								<View
-									style={{
-										...GS.roundedSm,
-										overflow: 'hidden',
-									}}>
+								<View style={STYLES.btnWrapper}>
 									<TouchableRipple
 										onPress={() =>
 											onPressBackBtn
@@ -224,10 +233,7 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 													CS.DRAWER_HEADER_HEIGHT /
 													2.5
 												}
-												style={{
-													marginLeft: -6,
-													...GS.mr1,
-												}}
+												style={STYLES.backBtnIcon}
 											/>
 											<PaperText>
 												{
@@ -241,11 +247,7 @@ const CustomScreenHeader: React.FC<CustomScreenHeaderType> = ({
 							)}
 
 							{showHomeBtn && (
-								<View
-									style={{
-										...GS.roundedSm,
-										overflow: 'hidden',
-									}}>
+								<View style={STYLES.btnWrapper}>
 									<TouchableRipple
 										onPress={() =>
 											onPressHomeBtn

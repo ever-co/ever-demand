@@ -22,7 +22,33 @@ const Item: React.FC<DrawerLinkItem> = ({
 	external,
 	focused,
 }) => {
+	// NAVIGATION
 	const navigation = useNavigation();
+
+	// LOCAL STYLES
+	const STYLES = StyleSheet.create({
+		container: { position: 'relative', ...GS.w100, ...GS.mb1 },
+		touchable: { ...GS.w100, ...GS.inlineItems, zIndex: 1 },
+		touchableCard: { ...GS.w100, ...GS.px0, borderRadius: 0 },
+		touchableCardContent: {
+			...GS.px2,
+		},
+		touchableCardContentFocused: {
+			backgroundColor: CC.primaryHightLight + '20',
+		},
+		focusedIndicator: {
+			...GS.h100,
+			...GS.bgSecondary,
+			position: 'absolute',
+			top: 0,
+			left: 0,
+			width: 4,
+			borderTopEndRadius: 4,
+			borderBottomEndRadius: 4,
+			zIndex: 2,
+		},
+	});
+
 	return (
 		<View style={STYLES.container}>
 			<TouchableCard
@@ -41,8 +67,7 @@ const Item: React.FC<DrawerLinkItem> = ({
 								size: CS.FONT_SIZE * 1.5,
 								name: icon,
 								// TODO: think to use this feature (below e.g)
-								//focused ? 'heart' : 'heart-outline'
-								// eslint-disable-next-line no-mixed-spaces-and-tabs
+								// focused ? 'heart' : 'heart-outline'
 						  }
 						: undefined
 				}
@@ -70,26 +95,3 @@ const Item: React.FC<DrawerLinkItem> = ({
 };
 
 export default Item;
-
-const STYLES = StyleSheet.create({
-	container: { position: 'relative', ...GS.w100, ...GS.mb1 },
-	touchable: { ...GS.w100, ...GS.inlineItems, zIndex: 1 },
-	touchableCard: { ...GS.w100, ...GS.px0, borderRadius: 0 },
-	touchableCardContent: {
-		...GS.px2,
-	},
-	touchableCardContentFocused: {
-		backgroundColor: CC.primaryHightLight + '20',
-	},
-	focusedIndicator: {
-		...GS.h100,
-		...GS.bgSecondary,
-		position: 'absolute',
-		top: 0,
-		left: 0,
-		width: 4,
-		borderTopEndRadius: 4,
-		borderBottomEndRadius: 4,
-		zIndex: 2,
-	},
-});

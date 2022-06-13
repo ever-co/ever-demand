@@ -21,11 +21,11 @@ const Stack = createNativeStackNavigator();
 // NAVIGATION COMPONENT
 const Router = ({}) => {
 	// SELECTORS
-	const getCurrentNavGroup = useAppSelector(getGroup);
-	const getCurrentLang = useAppSelector(getLang);
+	const CURRENT_NAV_GROUP = useAppSelector(getGroup);
+	const CURRENT_LANG = useAppSelector(getLang);
 
 	const Routes = () => {
-		const safeGroup = getCurrentNavGroup || 'BLANK';
+		const safeGroup = CURRENT_NAV_GROUP || 'BLANK';
 		return (
 			<>
 				{STACK_ROUTES[safeGroup].map((stackScreenProps, id) => (
@@ -40,7 +40,7 @@ const Router = ({}) => {
 			style={{
 				...GS.w100,
 				...GS.h100,
-				transform: getCurrentLang === 'HEBREW' ? [{ scaleX: -1 }] : [],
+				transform: CURRENT_LANG === 'HEBREW' ? [{ scaleX: -1 }] : [],
 			}}>
 			<NavigationContainer>
 				<Stack.Navigator

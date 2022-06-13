@@ -25,11 +25,11 @@ import {
 } from '../../assets/ts/styles';
 
 // LOCAL TYPES
-export type ContentProps = {
+export interface ContentProps {
 	ScrollViewProps?: ScrollViewProps_;
 	drawerContentProps: DrawerContentComponentProps;
 	linksGroups: DrawerRoutesGroupType[];
-};
+}
 
 const CustomDrawer: React.FC<ContentProps> = ({
 	ScrollViewProps = {},
@@ -74,14 +74,16 @@ const CustomDrawer: React.FC<ContentProps> = ({
 								linksGroup.linkItems.map(
 									(linkItem, linkItem_id) => (
 										<Item
-											key={linkItem_id}
-											label={linkItem.label}
-											path={linkItem.path}
-											icon={linkItem.icon}
-											focused={
-												currentRouteName ===
-												linkItem.path
-											}
+											{...{
+												key: linkItem_id,
+												label: linkItem.label,
+												path: linkItem.path,
+												icon: linkItem.icon,
+												focused:
+													currentRouteName ===
+													linkItem.path,
+												external: linkItem.external,
+											}}
 										/>
 									),
 								)}

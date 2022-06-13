@@ -6,6 +6,7 @@ import Icon_ from './Icon';
 import OrderHistoryItem_ from './OrderHistoryItem';
 import PaperText_ from './PaperText';
 import ProductItem_ from './ProductItem';
+import ProductHistoryItem_ from './ProductHistoryItem';
 import TouchableCard_ from './TouchableCard';
 
 // TODO: add type for components constant
@@ -17,6 +18,7 @@ export const Icon = Icon_;
 export const OrderHistoryItem = OrderHistoryItem_;
 export const PaperText = PaperText_;
 export const ProductItem = ProductItem_;
+export const ProductHistoryItem = ProductHistoryItem_;
 export const TouchableCard = TouchableCard_;
 
 const components = {
@@ -27,6 +29,7 @@ const components = {
 	OrderHistoryItem,
 	PaperText,
 	ProductItem,
+	ProductHistoryItem,
 	TouchableCard,
 };
 

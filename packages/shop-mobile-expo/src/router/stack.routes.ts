@@ -29,19 +29,27 @@ const STACK_ROUTES_GROUPS: StackScreenGroupType = {
 	BLANK: [
 		{
 			name: 'STACK/BLANK_',
-			component: SCREENS.Blank_,
+			component: SCREENS.BLANK_,
 		},
 	],
 	LOADING: [
 		{
 			name: 'STACK/LOADING',
-			component: SCREENS.Loading,
+			component: SCREENS.LOADING,
 		},
 	],
 	REGISTRATION: [
 		{
+			name: 'STACK/HOME',
+			component: SCREENS.REGISTRATION.HOME,
+		},
+		{
 			name: 'STACK/SIGN_UP',
 			component: SCREENS.REGISTRATION.SIGN_UP,
+		},
+		{
+			name: 'STACK/SIGN_IN',
+			component: SCREENS.REGISTRATION.SIGN_IN,
 		},
 		{
 			name: 'STACK/SIGN_UP_BY_ADDRESS',

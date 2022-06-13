@@ -8,12 +8,14 @@ import ENV from '../environments/environment';
 import navigationReducer from './features/navigation';
 import translationReducer from './features/translation';
 import userReducer from './features/user';
+import orderReducer from './features/order';
 
 export const store = configureStore({
 	reducer: {
 		user: userReducer,
 		navigation: navigationReducer,
 		translation: translationReducer,
+		order: orderReducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({

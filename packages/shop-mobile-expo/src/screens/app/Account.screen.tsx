@@ -1,19 +1,28 @@
 import React from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
-import { Card, Title, Text, RadioButton } from 'react-native-paper';
+import { Card, Title, Text, RadioButton, Button } from 'react-native-paper';
 // tslint:disable-next-line: no-implicit-dependencies no-submodule-imports
 import MaterialIcon from '@expo/vector-icons/MaterialCommunityIcons';
+import { useNavigation } from '@react-navigation/native';
 
 // TYPES
 import type ENV_TYPE from '../../environments/model';
 
-// ACTIONS & SELECTORS
+// STORE
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import {
 	getUserData,
 	getProductViewType,
 	setProductViewType,
+	resetUser,
+	getOrderInfoType,
+	setOrderInfoType,
 } from '../../store/features/user';
+import { setGroup } from '../../store/features/navigation';
+
+// ROUTER
+import ROUTE_GROUPS from '../../router/groups.routes';
+
 // COMPONENTS
 import {
 	TouchableCard,
@@ -35,23 +44,30 @@ function AccountScreen({}) {
 	const dispatch = useAppDispatch();
 
 	// SELECTORS
-	const USER_DATA = useAppSelector(getUserData);
+	const USER_DATA = useAppSelector(getUserData) as any;
 	const PRODUCT_VIEW_TYPE = useAppSelector(getProductViewType);
+	const ORDER_INFO_VIEW = useAppSelector(getOrderInfoType);
 	// const CURRENT_LANG = useAppSelector(getLang);
+
+	// NAVIGATION
+	const NAVIGATION = useNavigation();
 
 	// STATES
 	const [productViewDialog, setProductViewDialog] =
 		React.useState<boolean>(false);
+	const [orderInfoTypeDialog, setOrderInfoTypeDialog] =
+		React.useState<boolean>(false);
 	const [logOutDialog, setLogOutDialog] = React.useState<boolean>(false);
 
 	// DATA
-	const IS_INVITE = USER_DATA.__typename === 'Invite';
+	const IS_INVITE = USER_DATA?.__typename === 'Invite';
+	const CURRENT_USER_DATA = IS_INVITE ? USER_DATA : USER_DATA?.user?.user;
 
 	const STYLES = StyleSheet.create({
 		container: { ...GS.screen, ...GS.bgLight },
 		dialogProductViewContent: { height: 180 },
 		userInfoCard: {
-			...GS.py5,
+			...GS.pt5,
 			backgroundColor: CC.white,
 			borderBottomLeftRadius: CS.SPACE,
 			borderBottomRightRadius: CS.SPACE,
@@ -71,11 +87,16 @@ function AccountScreen({}) {
 			...GS.m2,
 		},
 		userInfoTitle: {
-			...GS.mb4,
+			...GS.mb0,
+			...GS.pb0,
 			color: CC.primary,
 			textAlign: 'center',
 		},
-		userInfoInfosContainer: { ...GS.inlineItems, width: '100%' },
+		userInfoSubTitle: {
+			color: CC.gray,
+			textAlign: 'center',
+		},
+		userInfoInfosContainer: { ...GS.inlineItems, ...GS.mt4, width: '100%' },
 		userInfoInfosItem: { ...GS.centered, flex: 1 },
 		userInfoInfosItemTitle: {
 			color: CC.gray,
@@ -116,6 +137,24 @@ function AccountScreen({}) {
 		setProductViewDialog(false);
 	};
 
+	const onSelectOrderInfoView = (value: ENV_TYPE['ORDER_INFO_TYPE']) => {
+		dispatch(setOrderInfoType(value));
+		setOrderInfoTypeDialog(false);
+	};
+
+	const onGoToRegistration = () => {
+		const NAV_PARAMS = { fromApp: true };
+		dispatch(setGroup(ROUTE_GROUPS.REGISTRATION));
+		setTimeout(() => {
+			NAVIGATION.navigate('STACK/SIGN_UP' as never, NAV_PARAMS as never);
+		}, 200);
+	};
+
+	const onSignOut = () => {
+		dispatch(resetUser());
+		dispatch(setGroup(ROUTE_GROUPS.REGISTRATION));
+	};
+
 	return (
 		<>
 			<Dialog
@@ -134,7 +173,7 @@ function AccountScreen({}) {
 						children: 'Sign out',
 						uppercase: false,
 						labelStyle: { color: CC.danger },
-						onPress: () => {},
+						onPress: onSignOut,
 					},
 				]}
 			/>
@@ -234,6 +273,99 @@ function AccountScreen({}) {
 				</View>
 			</Dialog>
 
+			<Dialog
+				visible={orderInfoTypeDialog}
+				onDismiss={() => setOrderInfoTypeDialog(false)}
+				title={'Product View'}>
+				<View style={STYLES.dialogProductViewContent}>
+					<TouchableCard
+						style={STYLES.optionItem}
+						cardStyle={{ ...STYLES.optionItemCard, ...GS.noShadow }}
+						cardStyleContent={STYLES.optionItemCardContent}
+						onPress={() => onSelectOrderInfoView('popup')}>
+						<View
+							style={{
+								...GS.inlineItems,
+								...GS.w100,
+								...GS.h100,
+							}}>
+							<Icon
+								size={CS.FONT_SIZE_XLG}
+								color={CC.primary}
+								name='box'
+								style={{ ...GS.mr2 }}
+							/>
+							<View
+								style={
+									STYLES.optionItemCardContentContainerText
+								}>
+								<Text style={STYLES.optionItemCardContentText}>
+									Popup
+								</Text>
+								<Text
+									style={STYLES.optionItemCardContentSubText}>
+									Display order info with a dialog box
+								</Text>
+							</View>
+
+							<RadioButton
+								status={
+									ORDER_INFO_VIEW === 'popup'
+										? 'checked'
+										: 'unchecked'
+								}
+								uncheckedColor={CC.primaryHightLight}
+								value={'popup'}
+								onPress={() => onSelectOrderInfoView('popup')}
+							/>
+						</View>
+					</TouchableCard>
+
+					<TouchableCard
+						style={STYLES.optionItem}
+						cardStyle={{ ...STYLES.optionItemCard, ...GS.noShadow }}
+						cardStyleContent={STYLES.optionItemCardContent}
+						onPress={() => onSelectOrderInfoView('page')}>
+						<View
+							style={{
+								...GS.justifyContentBetween,
+								...GS.w100,
+							}}>
+							<Icon
+								size={CS.FONT_SIZE_XLG}
+								color={CC.primary}
+								name='smartphone'
+								style={{ ...GS.mr2 }}
+							/>
+
+							<View
+								style={
+									STYLES.optionItemCardContentContainerText
+								}>
+								<Text style={STYLES.optionItemCardContentText}>
+									Page
+								</Text>
+								<Text
+									style={STYLES.optionItemCardContentSubText}>
+									Use page view for order info
+								</Text>
+							</View>
+
+							<RadioButton
+								status={
+									ORDER_INFO_VIEW === 'page'
+										? 'checked'
+										: 'unchecked'
+								}
+								uncheckedColor={CC.primaryHightLight}
+								value={'page'}
+								onPress={() => onSelectOrderInfoView('page')}
+							/>
+						</View>
+					</TouchableCard>
+				</View>
+			</Dialog>
+
 			<View style={STYLES.container}>
 				<FocusAwareStatusBar
 					translucent={true}
@@ -247,70 +379,68 @@ function AccountScreen({}) {
 
 				<Card style={STYLES.userInfoCard}>
 					<Card.Content style={STYLES.userInfoCardContent}>
-						{IS_INVITE ? (
-							<>
-								<View style={STYLES.userAvatarContainer}>
-									<Icon
-										name='user'
-										color={CC.gray}
-										size={60}
-										style={STYLES.avatarIcon}
-									/>
-								</View>
+						<View style={STYLES.userAvatarContainer}>
+							<Icon
+								name='user'
+								color={CC.gray}
+								size={60}
+								style={STYLES.avatarIcon}
+							/>
+						</View>
 
-								<Title style={STYLES.userInfoTitle}>
-									{USER_DATA.__typename}
-								</Title>
+						<Title style={STYLES.userInfoTitle}>
+							{IS_INVITE
+								? CURRENT_USER_DATA?.__typename
+								: `${CURRENT_USER_DATA?.firstName || ''} ${
+										CURRENT_USER_DATA?.lastName || ''
+								  }`}
+						</Title>
 
-								<View style={STYLES.userInfoInfosContainer}>
-									<View style={STYLES.userInfoInfosItem}>
-										<Text
-											style={
-												STYLES.userInfoInfosItemTitle
-											}>
-											Country
-										</Text>
-										<Text
-											style={
-												STYLES.userInfoInfosItemSubTitle
-											}>
-											{USER_DATA.geoLocation.countryName}
-										</Text>
-									</View>
+						{!IS_INVITE && (
+							<Text style={STYLES.userInfoSubTitle}>
+								{CURRENT_USER_DATA?.email}
+							</Text>
+						)}
 
-									<View style={STYLES.userInfoInfosItem}>
-										<Text
-											style={
-												STYLES.userInfoInfosItemTitle
-											}>
-											City
-										</Text>
-										<Text
-											style={
-												STYLES.userInfoInfosItemSubTitle
-											}>
-											{USER_DATA.geoLocation.city}
-										</Text>
-									</View>
+						<View style={STYLES.userInfoInfosContainer}>
+							<View style={STYLES.userInfoInfosItem}>
+								<Text style={STYLES.userInfoInfosItemTitle}>
+									Country
+								</Text>
+								<Text style={STYLES.userInfoInfosItemSubTitle}>
+									{
+										CURRENT_USER_DATA?.geoLocation
+											?.countryName
+									}
+								</Text>
+							</View>
 
-									<View style={STYLES.userInfoInfosItem}>
-										<Text
-											style={
-												STYLES.userInfoInfosItemTitle
-											}>
-											Apartment
-										</Text>
-										<Text
-											style={
-												STYLES.userInfoInfosItemSubTitle
-											}>
-											{USER_DATA.apartment}
-										</Text>
-									</View>
-								</View>
-							</>
-						) : (
-							<View />
+							<View style={STYLES.userInfoInfosItem}>
+								<Text style={STYLES.userInfoInfosItemTitle}>
+									City
+								</Text>
+								<Text style={STYLES.userInfoInfosItemSubTitle}>
+									{CURRENT_USER_DATA?.geoLocation?.city}
+								</Text>
+							</View>
+
+							<View style={STYLES.userInfoInfosItem}>
+								<Text style={STYLES.userInfoInfosItemTitle}>
+									Apartment
+								</Text>
+								<Text style={STYLES.userInfoInfosItemSubTitle}>
+									{CURRENT_USER_DATA?.apartment}
+								</Text>
+							</View>
+						</View>
+
+						{IS_INVITE && (
+							<Button
+								uppercase={false}
+								style={{ ...GS.mt4, ...GS.w100 }}
+								onPress={onGoToRegistration}>
+								Register
+							</Button>
 						)}
 					</Card.Content>
 				</Card>
@@ -340,6 +470,19 @@ function AccountScreen({}) {
 						cardStyleContent={STYLES.optionItemCardContent}
 						height={CS.FONT_SIZE_XLG * 3}
 						onPress={() => setProductViewDialog(true)}
+					/>
+
+					<TouchableCard
+						title={'Order info type'}
+						titleStyle={{ color: CC.primary }}
+						description='Select the mode of Order info view'
+						descriptionStyle={{ color: CC.gray }}
+						iconProps={{ name: 'layers', size: CS.FONT_SIZE_XLG }}
+						style={STYLES.optionItem}
+						cardStyle={STYLES.optionItemCard}
+						cardStyleContent={STYLES.optionItemCardContent}
+						height={CS.FONT_SIZE_XLG * 3}
+						onPress={() => setOrderInfoTypeDialog(true)}
 					/>
 				</ScrollView>
 			</View>

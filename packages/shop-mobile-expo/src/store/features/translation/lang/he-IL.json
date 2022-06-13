@@ -215,6 +215,13 @@
 		"NAME": "שם סוחר",
 		"WITH_NAME": "סוחרים עם שם"
 	},
+	"SEARCH_VIEW": {
+		"VIEW_MORE": "ראה עוד",
+		"EMPTY_LIST": "לא נמצאו מוצרים או סוחרים...",
+		"SEARCH_PLACEHOLDER": "שם המוצר או המסעדה",
+		"OPEN": "לִפְתוֹחַ",
+		"CLOSED": "סָגוּר"
+	},
 	"NO_SERVER_VIEW": {
 		"NO_SERVER": "השרת נפל"
 	},
