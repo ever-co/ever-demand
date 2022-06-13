@@ -5,15 +5,13 @@ import 'package:shop_flutter_mobile/screens/products/products.dart';
 class ProductItem extends StatelessWidget {
   const ProductItem({Key? key}) : super(key: key);
 
-  final customColor = const AppColors();
-
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
-        color: customColor.primaryColorShade,
+        color: primaryColorShade,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,32 +37,35 @@ class ProductItem extends StatelessWidget {
                 right: 10,
                 child: Container(
                   padding: const EdgeInsets.symmetric(
-                      vertical: 5.0, horizontal: 10.0),
+                    vertical: 3.5,
+                    horizontal: 8.5,
+                  ),
                   decoration: BoxDecoration(
-                      color: customColor.primaryColor.withOpacity(0.8),
-                      borderRadius: BorderRadius.circular(8.0)),
+                    color: primaryColor.withOpacity(0.8),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
                   child: Column(
                     children: [
                       const Text(
                         '\$50',
                         style: TextStyle(
-                          decoration: TextDecoration.lineThrough,
-                          color: Colors.white,
-                          fontSize: 18.0,
-                        ),
+                            decoration: TextDecoration.lineThrough,
+                            color: Colors.white),
                       ),
+                      const SizedBox(height: 1.5),
                       Row(
                         children: const [
                           Icon(
                             Icons.cut_outlined,
                             color: Colors.white,
-                            size: 16.0,
+                            size: 15.0,
                           ),
-                          SizedBox(width: 3.0),
+                          SizedBox(width: 1.5),
                           Text(
                             '19%',
-                            style:
-                                TextStyle(fontSize: 18.0, color: Colors.white),
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
                           ),
                         ],
                       ),
@@ -87,7 +88,7 @@ class ProductItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                     elevation: 0,
-                    color: customColor.everSignin,
+                    color: everSignin,
                     onPressed: () {},
                     child: const Text(
                       'Buy for 40\$',
@@ -106,7 +107,7 @@ class ProductItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                     elevation: 0,
-                    color: customColor.primaryColor,
+                    color: primaryColor,
                     onPressed: () => Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => const ProductDetailsScreen(),

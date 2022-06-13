@@ -11,14 +11,12 @@ class SignupThanksScreen extends StatefulWidget {
 }
 
 class _SignupThanksScreenState extends State<SignupThanksScreen> {
-  final customColor = const AppColors();
-
   @override
   Widget build(BuildContext context) {
     String address = "3, Av. Tulipiers, Les Volcans, Goma, Goma";
     return Scaffold(
       //body: getBody,
-      backgroundColor: customColor.dRed,
+      backgroundColor: dRed,
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.symmetric(
@@ -37,16 +35,18 @@ class _SignupThanksScreenState extends State<SignupThanksScreen> {
                       const EdgeInsets.symmetric(vertical: 60, horizontal: 30),
                   child: Column(
                     children: [
-                      Text(AppLocalizations.of(context)!.ever,
-                          style: TextStyle(
-                            color: customColor.whiteColor,
-                            fontFamily: 'PlutoHeavyItalic',
-                            fontSize: 80,
-                          )),
+                      Text(
+                        AppLocalizations.of(context)!.ever,
+                        style: const TextStyle(
+                          color: whiteColor,
+                          fontFamily: 'PlutoHeavyItalic',
+                          fontSize: 80,
+                        ),
+                      ),
                       Text(
                         AppLocalizations.of(context)!.logoMotto,
-                        style: TextStyle(
-                          color: customColor.greyColor,
+                        style: const TextStyle(
+                          color: greyColor,
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
@@ -69,8 +69,8 @@ class _SignupThanksScreenState extends State<SignupThanksScreen> {
                         margin: const EdgeInsets.only(top: 20),
                         child: Text(
                           AppLocalizations.of(context)!.invitedTextTitle,
-                          style: TextStyle(
-                            color: customColor.whiteColor,
+                          style: const TextStyle(
+                            color: whiteColor,
                             fontSize: 20,
                           ),
                         ),
@@ -78,41 +78,45 @@ class _SignupThanksScreenState extends State<SignupThanksScreen> {
                       Container(
                         margin: const EdgeInsets.only(top: 20),
                         child: Text(
-                            AppLocalizations.of(context)!.invitedTextDetails,
-                            style: TextStyle(
-                              color: customColor.greyColor,
-                              fontStyle: FontStyle.normal,
-                              fontSize: 16,
-                            ),
-                            textAlign: TextAlign.center),
+                          AppLocalizations.of(context)!.invitedTextDetails,
+                          style: const TextStyle(
+                            color: greyColor,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 30),
-                        child: Text(address,
-                            style: TextStyle(
-                              color: customColor.greyColor,
-                              fontStyle: FontStyle.normal,
-                              fontSize: 16,
-                            ),
-                            textAlign: TextAlign.center),
+                        child: Text(
+                          address,
+                          style: const TextStyle(
+                            color: greyColor,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 20),
-                        child:
-                            Text(AppLocalizations.of(context)!.signinByInvite,
-                                style: TextStyle(
-                                  color: customColor.whiteColor,
-                                  fontStyle: FontStyle.normal,
-                                  fontSize: 16,
-                                ),
-                                textAlign: TextAlign.center),
+                        child: Text(
+                          AppLocalizations.of(context)!.signinByInvite,
+                          style: const TextStyle(
+                            color: whiteColor,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                       Container(
                         padding: const EdgeInsets.all(30),
                         child: Theme(
                           data: ThemeData(
-                            primaryColor: customColor.whiteColor,
-                            primaryColorDark: customColor.dRed,
+                            primaryColor: whiteColor,
+                            primaryColorDark: dRed,
                           ),
                           child: TextFormField(
                             cursorColor: Colors.black,

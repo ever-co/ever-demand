@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:shop_flutter_mobile/constants/colors.dart';
 import 'package:shop_flutter_mobile/widgets/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-// import 'package:shop_flutter_mobile/screens/authentification/signup_thanks.dart';
-
-const customColor = AppColors();
 
 class SignupAdress2Screen extends StatefulWidget {
   const SignupAdress2Screen({Key? key}) : super(key: key);
@@ -19,7 +16,7 @@ class _SignupAdress2ScreenState extends State<SignupAdress2Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       //body: getBody,
-      backgroundColor: customColor.dRed,
+      backgroundColor: dRed,
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.symmetric(
@@ -40,8 +37,8 @@ class _SignupAdress2ScreenState extends State<SignupAdress2Screen> {
                       children: [
                         Text(
                           AppLocalizations.of(context)!.yourAddress,
-                          style: TextStyle(
-                            color: customColor.whiteColor,
+                          style: const TextStyle(
+                            color: whiteColor,
                             fontSize: 25,
                           ),
                           textAlign: TextAlign.center,
@@ -60,8 +57,8 @@ class _SignupAdress2ScreenState extends State<SignupAdress2Screen> {
                     children: [
                       Text(
                         AppLocalizations.of(context)!.launchNotification,
-                        style: TextStyle(
-                          color: customColor.greyColor,
+                        style: const TextStyle(
+                          color: greyColor,
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
@@ -77,8 +74,8 @@ class _SignupAdress2ScreenState extends State<SignupAdress2Screen> {
                   padding: const EdgeInsets.all(10),
                   child: Theme(
                     data: ThemeData(
-                      primaryColor: customColor.whiteColor,
-                      primaryColorDark: customColor.dRed,
+                      primaryColor: whiteColor,
+                      primaryColorDark: dRed,
                     ),
                     child: TextFormField(
                       cursorColor: Colors.black,
@@ -105,7 +102,10 @@ class _SignupAdress2ScreenState extends State<SignupAdress2Screen> {
                           fontSize: 16,
                         ),
                         labelText: "Address 1",
-                        labelStyle: TextStyle(color: Colors.grey, fontSize: 16),
+                        labelStyle: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ),
@@ -117,8 +117,8 @@ class _SignupAdress2ScreenState extends State<SignupAdress2Screen> {
                   padding: const EdgeInsets.all(10),
                   child: Theme(
                     data: ThemeData(
-                      primaryColor: customColor.whiteColor,
-                      primaryColorDark: customColor.dRed,
+                      primaryColor: whiteColor,
+                      primaryColorDark: dRed,
                     ),
                     child: TextFormField(
                       cursorColor: Colors.black,
@@ -167,8 +167,8 @@ class _SignupAdress2ScreenState extends State<SignupAdress2Screen> {
                           padding: const EdgeInsets.all(10),
                           child: Theme(
                             data: ThemeData(
-                              primaryColor: customColor.whiteColor,
-                              primaryColorDark: customColor.dRed,
+                              primaryColor: whiteColor,
+                              primaryColorDark: dRed,
                             ),
                             child: TextFormField(
                               cursorColor: Colors.black,
@@ -212,8 +212,8 @@ class _SignupAdress2ScreenState extends State<SignupAdress2Screen> {
                           padding: const EdgeInsets.all(10),
                           child: Theme(
                             data: ThemeData(
-                              primaryColor: customColor.whiteColor,
-                              primaryColorDark: customColor.dRed,
+                              primaryColor: whiteColor,
+                              primaryColorDark: dRed,
                             ),
                             child: TextFormField(
                               cursorColor: Colors.black,
@@ -268,8 +268,8 @@ class _SignupAdress2ScreenState extends State<SignupAdress2Screen> {
                           padding: const EdgeInsets.all(10),
                           child: Theme(
                             data: ThemeData(
-                              primaryColor: customColor.whiteColor,
-                              primaryColorDark: customColor.dRed,
+                              primaryColor: whiteColor,
+                              primaryColorDark: dRed,
                             ),
                             child: Column(
                               children: <Widget>[

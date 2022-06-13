@@ -3,8 +3,6 @@ import 'package:shop_flutter_mobile/widgets/widgets.dart';
 import 'package:shop_flutter_mobile/constants/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-const customColor = AppColors();
-
 class AboutUs extends StatefulWidget {
   const AboutUs({Key? key}) : super(key: key);
 
@@ -17,10 +15,10 @@ class _AboutUsState extends State<AboutUs> {
   Widget build(BuildContext context) {
     return Scaffold(
       //body: getBody,
-      backgroundColor: customColor.dRed,
+      backgroundColor: dRed,
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: customColor.dRed,
+        backgroundColor: dRed,
         title: Text(
           AppLocalizations.of(context)!.aboutus,
           style: const TextStyle(
@@ -52,8 +50,8 @@ class _AboutUsState extends State<AboutUs> {
                         margin: const EdgeInsets.only(top: 20),
                         child: Text(
                           AppLocalizations.of(context)!.invitedTextTitle,
-                          style: TextStyle(
-                            color: customColor.whiteColor,
+                          style: const TextStyle(
+                            color: whiteColor,
                             fontSize: 20,
                           ),
                         ),
@@ -62,8 +60,8 @@ class _AboutUsState extends State<AboutUs> {
                         margin: const EdgeInsets.only(top: 20),
                         child: Text(
                             AppLocalizations.of(context)!.invitedTextDetails,
-                            style: TextStyle(
-                              color: customColor.greyColor,
+                            style: const TextStyle(
+                              color: greyColor,
                               fontStyle: FontStyle.normal,
                               fontSize: 18,
                             ),
@@ -71,21 +69,22 @@ class _AboutUsState extends State<AboutUs> {
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 20),
-                        child:
-                            Text(AppLocalizations.of(context)!.signinByInvite,
-                                style: TextStyle(
-                                  color: customColor.whiteColor,
-                                  fontStyle: FontStyle.normal,
-                                  fontSize: 16,
-                                ),
-                                textAlign: TextAlign.center),
+                        child: Text(
+                          AppLocalizations.of(context)!.signinByInvite,
+                          style: const TextStyle(
+                            color: whiteColor,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                       Container(
                         padding: const EdgeInsets.all(40),
                         child: Theme(
                           data: ThemeData(
-                            primaryColor: customColor.whiteColor,
-                            primaryColorDark: customColor.dRed,
+                            primaryColor: whiteColor,
+                            primaryColorDark: dRed,
                           ),
                           child: TextFormField(
                             cursorColor: Colors.black,
@@ -113,8 +112,10 @@ class _AboutUsState extends State<AboutUs> {
                                 fontSize: 16,
                               ),
                               labelText: "Invite Code",
-                              labelStyle:
-                                  TextStyle(color: Colors.grey, fontSize: 16),
+                              labelStyle: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         ),

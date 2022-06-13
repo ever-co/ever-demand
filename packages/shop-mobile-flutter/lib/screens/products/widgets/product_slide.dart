@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shop_flutter_mobile/constants/colors.dart';
-import 'package:shop_flutter_mobile/screens/products/products.dart';
+import 'package:shop_flutter_mobile/screens/screens.dart';
+import 'package:shop_flutter_mobile/widgets/widgets.dart';
 
 class ProductSlide extends StatelessWidget {
   const ProductSlide({Key? key}) : super(key: key);
-
-  final customColor = const AppColors();
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +65,11 @@ class ProductSlide extends StatelessWidget {
                               borderRadius: BorderRadius.circular(5.0),
                             ),
                             elevation: 0,
-                            color: customColor.everSignin,
-                            onPressed: () {},
+                            color: everSignin,
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .restorablePush(orderDialog2);
+                            },
                             child: const Text(
                               'Buy for 40\$',
                               style: TextStyle(
@@ -84,7 +87,7 @@ class ProductSlide extends StatelessWidget {
                               borderRadius: BorderRadius.circular(5.0),
                             ),
                             elevation: 0,
-                            color: customColor.primaryColor,
+                            color: primaryColor,
                             onPressed: () => Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) =>
@@ -122,20 +125,22 @@ class ProductSlide extends StatelessWidget {
           child: Column(
             children: [
               Container(
+                width: 80.0,
                 padding: const EdgeInsets.symmetric(
-                    vertical: 10.0, horizontal: 15.0),
+                  vertical: 5.0,
+                  horizontal: 7.5,
+                ),
                 decoration: BoxDecoration(
-                  color: customColor.primaryColor.withOpacity(0.6),
+                  color: primaryColor.withOpacity(0.6),
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: Column(
                   children: const [
+                    Icon(Icons.bolt, color: Colors.white),
+                    SizedBox(height: 1.5),
                     Text(
-                      '30-60 min',
-                      style: TextStyle(fontSize: 10.0, color: Colors.white),
-                    ),
-                    Text(
-                      'Delivery',
+                      'Ready for Takeout',
+                      textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 10.0, color: Colors.white),
                     ),
                   ],
@@ -143,10 +148,13 @@ class ProductSlide extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Container(
+                width: 80.0,
                 padding: const EdgeInsets.symmetric(
-                    vertical: 10.0, horizontal: 15.0),
+                  vertical: 5.0,
+                  horizontal: 7.5,
+                ),
                 decoration: BoxDecoration(
-                  color: customColor.primaryColor.withOpacity(0.6),
+                  color: primaryColor.withOpacity(0.6),
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: Column(

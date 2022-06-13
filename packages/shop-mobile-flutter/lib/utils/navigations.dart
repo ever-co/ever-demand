@@ -41,9 +41,12 @@ final Map<String, WidgetBuilder> routeNavigations = {
   "/order-card": (context) => const OrderCardScreen(),
   "/order-details": (context) => const OrderDetailsScreen(),
   "/order-history": (context) => const OrdersHistoryScreen(),
+  "/order-pay": (context) => const OrderPayScreen(),
+  "/order-item": (context) => const OrderItemScreen(),
   /*
 	* Order Screens
 	*/
   "/products": (context) => const ProductsScreen(),
   "/product-details": (context) => const ProductDetailsScreen(),
+  "/products-store": (context) => const ProductStoreScreen(),
 };

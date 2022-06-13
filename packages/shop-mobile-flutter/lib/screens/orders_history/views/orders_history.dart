@@ -19,7 +19,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
         title: Text(AppLocalizations.of(context)!.orderHistory),
       ),
       drawer: const AppDrawer(),
-      backgroundColor: customColor.whiteColor,
+      backgroundColor: whiteColor,
       body: ListView.builder(
         itemCount: 10,
         itemBuilder: (BuildContext context, int index) {
@@ -45,7 +45,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                             'Completed',
                             style: TextStyle(
                               fontSize: 11,
-                              color: customColor.successColor,
+                              color: successColor,
                             ),
                           )
                         ],

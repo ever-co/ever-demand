@@ -12,8 +12,6 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  final customColor = const AppColors();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +31,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       bottomSheet: Container(
         height: 70.0,
         width: double.infinity,
-        decoration: BoxDecoration(color: customColor.signupBackgroundColor),
+        decoration: const BoxDecoration(color: signupBackgroundColor),
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
         child: MaterialButton(
           padding: const EdgeInsets.symmetric(vertical: 13),
@@ -41,7 +39,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             borderRadius: BorderRadius.circular(5.0),
           ),
           elevation: 0,
-          color: customColor.everSignin,
+          color: everSignin,
           onPressed: () {},
           child: const Text(
             'Buy for 40\$',
@@ -56,7 +54,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              color: customColor.primaryColorShade,
+              color: primaryColorShade,
               padding:
                   const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
               child: const ProductHeader(isDetailScreen: true),

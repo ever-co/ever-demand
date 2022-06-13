@@ -5,8 +5,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shop_flutter_mobile/constants/colors.dart';
 import 'package:shop_flutter_mobile/utils/navigations.dart';
 
-const customColor = AppColors();
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -17,14 +15,14 @@ class MyApp extends StatelessWidget {
       title: 'Ever',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: customColor.primaryColor,
-        scaffoldBackgroundColor: customColor.scaffoldBackgroundColor,
-        appBarTheme: AppBarTheme(
-          backgroundColor: customColor.appBarColor,
+        primaryColor: primaryColor,
+        scaffoldBackgroundColor: scaffoldBackgroundColor,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: appBarColor,
           elevation: 0,
           centerTitle: true,
           systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: customColor.appBarColor,
+            statusBarColor: appBarColor,
           ),
         ),
       ),

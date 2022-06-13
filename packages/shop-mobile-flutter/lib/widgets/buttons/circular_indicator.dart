@@ -10,7 +10,6 @@ class CircularIndicator extends StatefulWidget {
 }
 
 class CircularIndicatorWidget extends State {
-  final customColor = const AppColors();
   bool visible = true;
 
   loadProgress() {
@@ -48,8 +47,7 @@ class CircularIndicatorWidget extends State {
                 borderRadius: BorderRadius.circular(12.0),
                 // side: const BorderSide(color: white),
               )),
-              backgroundColor:
-                  MaterialStateProperty.all(customColor.everSignin),
+              backgroundColor: MaterialStateProperty.all(everSignin),
               foregroundColor: MaterialStateProperty.all(Colors.white),
               textStyle: MaterialStateProperty.all(const TextStyle(
                 color: Colors.white,

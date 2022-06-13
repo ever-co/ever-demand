@@ -12,7 +12,6 @@ class ProductsScreen extends StatefulWidget {
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
-  final customColor = const AppColors();
   bool isSwitched = false;
 
   @override
@@ -35,8 +34,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 isSwitched = value;
               });
             },
-            activeTrackColor: customColor.greyColor,
-            activeColor: customColor.everSignin,
+            activeTrackColor: greyColor,
+            activeColor: everSignin,
           ),
           IconButton(
             iconSize: 50,

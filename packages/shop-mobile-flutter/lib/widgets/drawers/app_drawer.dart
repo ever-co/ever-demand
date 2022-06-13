@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:shop_flutter_mobile/app.dart';
 import 'package:shop_flutter_mobile/constants/colors.dart';
 
 class AppDrawer extends StatelessWidget {
-  final customColor = const AppColors();
   const AppDrawer({Key? key}) : super(key: key);
 
   Widget subheaderNavigation({String title = '', bool? isSettings = false}) {
@@ -41,18 +39,42 @@ class AppDrawer extends StatelessWidget {
               accountEmail: Text('aldizele@gmail.com'),
             ),
           ),
+          // Products
           NavigationItem(
             title: AppLocalizations.of(context)!.productsViewTitle,
             iconData: const Icon(Icons.shopping_basket),
-            onPress: () {},
             routeName: "/products",
           ),
+          //   Order History
           NavigationItem(
             title: AppLocalizations.of(context)!.orderHistory,
             iconData: const Icon(Icons.shopping_cart_outlined),
-            onPress: () {},
             routeName: "/order-history",
           ),
+
+          const Divider(
+            height: 1,
+            thickness: 1,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              AppLocalizations.of(context)!.store,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          //   Call Waiter
+          NavigationItem(
+            title: AppLocalizations.of(context)!.callWaiter,
+            routeName: "/merchants",
+          ),
+          //   About Store
+          NavigationItem(
+            title: '${AppLocalizations.of(context)!.about} Pizza Troya',
+            iconData: const Icon(Icons.info),
+            routeName: "/products-store",
+          ),
+
           const Divider(
             height: 1,
             thickness: 1,
@@ -60,16 +82,21 @@ class AppDrawer extends StatelessWidget {
           // Settings
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text(
-              AppLocalizations.of(context)!.settings,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.settings,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const Icon(Icons.settings, size: 16)
+              ],
             ),
           ),
-          //
+          // Language
           NavigationItem(
             title: "Language",
             iconData: const Icon(Icons.language),
-            onPress: () {},
             routeName: "/language",
           ),
           const Divider(
@@ -84,23 +111,22 @@ class AppDrawer extends StatelessWidget {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
-          //
+          // Help
           NavigationItem(
             title: AppLocalizations.of(context)!.help,
             iconData: const Icon(Icons.help_outline),
-            onPress: () {},
             routeName: "/info-help",
           ),
+          //   Call Us
           NavigationItem(
             title: AppLocalizations.of(context)!.callUs,
             iconData: const Icon(Icons.phone),
-            onPress: () {},
             routeName: "/info-callus",
           ),
+          //   About Us
           NavigationItem(
             title: AppLocalizations.of(context)!.aboutUs,
             iconData: const Icon(Icons.info_outline),
-            onPress: () {},
             routeName: "/info-about",
           ),
           const Divider(
@@ -115,16 +141,16 @@ class AppDrawer extends StatelessWidget {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
+          //   Privacy
           NavigationItem(
             title: AppLocalizations.of(context)!.privacy,
             iconData: const Icon(Icons.lock_outline),
-            onPress: () {},
             routeName: "/info-privacy",
           ),
+          //   Terms of use
           NavigationItem(
             title: AppLocalizations.of(context)!.termsOfUse,
             iconData: const Icon(Icons.list_alt_outlined),
-            onPress: () {},
             routeName: "/info-terms-of-use",
           ),
         ],
@@ -135,15 +161,13 @@ class AppDrawer extends StatelessWidget {
 
 class NavigationItem extends StatelessWidget {
   final String title;
-  final Widget iconData;
-  final Function onPress;
+  final Widget? iconData;
   final String routeName;
 
   const NavigationItem({
     Key? key,
     required this.title,
-    required this.iconData,
-    required this.onPress,
+    this.iconData,
     required this.routeName,
   }) : super(key: key);
 
@@ -156,31 +180,13 @@ class NavigationItem extends StatelessWidget {
           ..pushNamed(routeName);
       },
       title: Text(title),
-      leading: iconData,
+      leading: iconData ?? const SizedBox(height: 5, width: 5),
+      horizontalTitleGap: 5.0,
       selected: ModalRoute.of(context)!.settings.name == routeName,
       dense: true,
-      focusColor: customColor.everSignin,
-      selectedColor: customColor.everSignin,
-      hoverColor: customColor.everSignin,
-      //   selected: ModalRoute.of(context).settings.name
-      //   child: Container(
-      //     padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
-      //     decoration: BoxDecoration(
-      //       border: Border(
-      //         bottom: BorderSide(
-      //           color: Theme.of(context).dividerColor.withOpacity(0.1),
-      //           width: 1,
-      //         ),
-      //       ),
-      //     ),
-      //     child: Row(
-      //       children: [
-      //         iconData,
-      //         const SizedBox(width: 20.0),
-      //         Text(title),
-      //       ],
-      //     ),
-      //   ),
+      focusColor: everSignin,
+      selectedColor: everSignin,
+      hoverColor: everSignin,
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shop_flutter_mobile/constants/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shop_flutter_mobile/widgets/widgets.dart';
 
@@ -11,8 +10,6 @@ class InfoAboutScreen extends StatefulWidget {
 }
 
 class _InfoAboutScreenState extends State<InfoAboutScreen> {
-  final customColor = const AppColors();
-
   @override
   Widget build(BuildContext context) {
     const TextStyle sentenceTheme = TextStyle(color: Colors.white54);

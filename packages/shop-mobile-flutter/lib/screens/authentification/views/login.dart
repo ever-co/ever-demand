@@ -10,12 +10,11 @@ import 'signup_address2.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
-  final customColor = const AppColors();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: customColor.dRed,
+      backgroundColor: dRed,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -35,16 +34,16 @@ class LoginScreen extends StatelessWidget {
                         children: [
                           Text(
                             AppLocalizations.of(context)!.ever,
-                            style: TextStyle(
-                              color: customColor.whiteColor,
+                            style: const TextStyle(
+                              color: whiteColor,
                               fontFamily: 'PlutoHeavyItalic',
                               fontSize: 80,
                             ),
                           ),
                           Text(
                             AppLocalizations.of(context)!.logoMotto,
-                            style: TextStyle(
-                              color: customColor.greyColor,
+                            style: const TextStyle(
+                              color: greyColor,
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                             ),
@@ -62,9 +61,11 @@ class LoginScreen extends StatelessWidget {
                       margin: const EdgeInsets.only(top: 50),
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  const SignupAdressScreen()));
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const SignupAdressScreen(),
+                            ),
+                          );
                         },
                         style: ButtonStyle(
                           shape:
@@ -75,7 +76,7 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                           backgroundColor:
-                              MaterialStateProperty.all(customColor.everSignin),
+                              MaterialStateProperty.all(everSignin),
                           foregroundColor:
                               MaterialStateProperty.all(Colors.white),
                           textStyle: MaterialStateProperty.all(
@@ -119,8 +120,8 @@ class LoginScreen extends StatelessWidget {
                                     // side: const BorderSide(color: white),
                                   ),
                                 ),
-                                backgroundColor: MaterialStateProperty.all(
-                                    customColor.facebookColor),
+                                backgroundColor:
+                                    MaterialStateProperty.all(facebookColor),
                                 foregroundColor:
                                     MaterialStateProperty.all(Colors.white),
                                 textStyle: MaterialStateProperty.all(
@@ -160,8 +161,8 @@ class LoginScreen extends StatelessWidget {
                                     // side: const BorderSide(color: white),
                                   ),
                                 ),
-                                backgroundColor: MaterialStateProperty.all(
-                                    customColor.googleColor),
+                                backgroundColor:
+                                    MaterialStateProperty.all(googleColor),
                                 foregroundColor:
                                     MaterialStateProperty.all(Colors.white),
                                 textStyle: MaterialStateProperty.all(
@@ -198,8 +199,8 @@ class LoginScreen extends StatelessWidget {
                               flex: 10, // 50%
                               child: Text(
                                 AppLocalizations.of(context)!.or,
-                                style: TextStyle(
-                                  color: customColor.greyColor,
+                                style: const TextStyle(
+                                  color: greyColor,
                                   fontSize: 14,
                                 ),
                               ),
@@ -212,8 +213,8 @@ class LoginScreen extends StatelessWidget {
                               flex: 80, // 50%
                               child: Text(
                                 AppLocalizations.of(context)!.signUpByInvite,
-                                style: TextStyle(
-                                  color: customColor.whiteColor,
+                                style: const TextStyle(
+                                  color: whiteColor,
                                   fontSize: 14,
                                   fontWeight: FontWeight.normal,
                                 ),
@@ -229,8 +230,8 @@ class LoginScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(10),
                       child: Theme(
                         data: ThemeData(
-                          primaryColor: customColor.whiteColor,
-                          primaryColorDark: customColor.dRed,
+                          primaryColor: whiteColor,
+                          primaryColorDark: dRed,
                         ),
                         child: TextFormField(
                           cursorColor: Colors.black,

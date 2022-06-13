@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shop_flutter_mobile/constants/colors.dart';
-import 'package:shop_flutter_mobile/widgets/drawers/app_drawer.dart';
+import 'package:shop_flutter_mobile/widgets/widgets.dart';
 
 class OrderInfoScreen extends StatefulWidget {
   const OrderInfoScreen({Key? key}) : super(key: key);
@@ -11,14 +11,12 @@ class OrderInfoScreen extends StatefulWidget {
 }
 
 class _OrderInfoScreenState extends State<OrderInfoScreen> {
-  final customColor = const AppColors();
-
   final snackBar = const SnackBar(
-    backgroundColor: Color(0xff10dc60),
+    // backgroundColor: Color(0xff10dc60),
     behavior: SnackBarBehavior.fixed,
     content: Text(
       'Yay! A SnackBar!',
-      //   style: TextStyle(color: Colors.white),
+      style: TextStyle(color: successColor),
     ),
   );
 
@@ -57,8 +55,10 @@ class _OrderInfoScreenState extends State<OrderInfoScreen> {
                     'You can get it in 30-60 minutes.',
                     style: TextStyle(color: Colors.white),
                   ),
-                  const Text("Prepare your wallet(75.00\$ in cash).",
-                      style: TextStyle(color: Colors.white)),
+                  const Text(
+                    "Prepare your wallet (75.00\$ in cash).",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ],
               ),
             ),
@@ -76,12 +76,16 @@ class _OrderInfoScreenState extends State<OrderInfoScreen> {
               ),
               columns: [
                 DataColumn(
-                  label: Text(AppLocalizations.of(context)!.elapsedTime,
-                      style: const TextStyle(color: Colors.white)),
+                  label: Text(
+                    AppLocalizations.of(context)!.elapsedTime,
+                    style: const TextStyle(color: Colors.white),
+                  ),
                 ),
                 DataColumn(
-                  label: Text(AppLocalizations.of(context)!.storeInfo,
-                      style: const TextStyle(color: Colors.white)),
+                  label: Text(
+                    AppLocalizations.of(context)!.storeInfo,
+                    style: const TextStyle(color: Colors.white),
+                  ),
                 ),
               ],
               rows: const [
@@ -90,12 +94,14 @@ class _OrderInfoScreenState extends State<OrderInfoScreen> {
                     DataCell(
                       Text(
                         '00:07',
+                        textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
                     DataCell(
                       Text(
                         'Pizza Troya',
+                        textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -103,13 +109,14 @@ class _OrderInfoScreenState extends State<OrderInfoScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 20.0),
+            const SizedBox(height: 40.0),
+            // const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
                 Icon(
                   Icons.phone,
-                  color: Colors.white,
+                  color: successColor,
                   size: 16,
                 ),
                 SizedBox(width: 5.0),
@@ -117,7 +124,8 @@ class _OrderInfoScreenState extends State<OrderInfoScreen> {
                   "(391) 475-03282836",
                   style: TextStyle(
                     color: Colors.white,
-                    decoration: TextDecoration.underline,
+                    fontStyle: FontStyle.italic,
+                    // decoration: TextDecoration.underline,
                   ),
                 ),
               ],
@@ -126,7 +134,7 @@ class _OrderInfoScreenState extends State<OrderInfoScreen> {
         ),
       ),
       bottomSheet: Container(
-        color: customColor.scaffoldBackgroundColor,
+        color: scaffoldBackgroundColor,
         padding: const EdgeInsets.all(5.0),
         child: Row(
           children: [
@@ -134,10 +142,12 @@ class _OrderInfoScreenState extends State<OrderInfoScreen> {
               padding: const EdgeInsets.symmetric(vertical: 12.5),
               elevation: 0.0,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0),
+                borderRadius: BorderRadius.circular(8.0),
               ),
-              color: customColor.primaryColorShade,
-              onPressed: () {},
+              color: primaryColorShade,
+              onPressed: () {
+                Navigator.of(context).restorablePush(confirmDialog);
+              },
               child: Text(
                 AppLocalizations.of(context)!.undo,
                 style: const TextStyle(color: Colors.white),
@@ -149,11 +159,13 @@ class _OrderInfoScreenState extends State<OrderInfoScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 12.5),
                 elevation: 0.0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
-                color: customColor.successColorShade,
-                onPressed: () =>
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar),
+                color: successColorShade,
+                onPressed: () {
+                  // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  Navigator.of(context).pushNamed('/order-pay');
+                },
                 child: Text(
                   AppLocalizations.of(context)!.gotIt,
                   style: const TextStyle(color: Colors.white),

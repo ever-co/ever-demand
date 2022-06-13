@@ -12,7 +12,6 @@ class SignupAdressScreen extends StatefulWidget {
 }
 
 class _SignupAdressScreenState extends State<SignupAdressScreen> {
-  final customColor = const AppColors();
   bool isStretched = false;
   bool isDone = true;
 
@@ -20,7 +19,7 @@ class _SignupAdressScreenState extends State<SignupAdressScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       //body: getBody,
-      backgroundColor: customColor.dRed,
+      backgroundColor: dRed,
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.symmetric(
@@ -41,8 +40,8 @@ class _SignupAdressScreenState extends State<SignupAdressScreen> {
                       children: [
                         Text(
                           AppLocalizations.of(context)!.yourAddress,
-                          style: TextStyle(
-                            color: customColor.whiteColor,
+                          style: const TextStyle(
+                            color: whiteColor,
                             fontSize: 25,
                           ),
                           textAlign: TextAlign.center,
@@ -61,8 +60,8 @@ class _SignupAdressScreenState extends State<SignupAdressScreen> {
                     children: [
                       Text(
                         AppLocalizations.of(context)!.launchNotification,
-                        style: TextStyle(
-                          color: customColor.greyColor,
+                        style: const TextStyle(
+                          color: greyColor,
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
@@ -83,13 +82,15 @@ class _SignupAdressScreenState extends State<SignupAdressScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const SizedBox(height: 20),
-                      Text(AppLocalizations.of(context)!.detectingLocation,
-                          style: TextStyle(
-                            color: customColor.whiteColor,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 16,
-                          ),
-                          textAlign: TextAlign.center),
+                      Text(
+                        AppLocalizations.of(context)!.detectingLocation,
+                        style: const TextStyle(
+                          color: whiteColor,
+                          fontStyle: FontStyle.normal,
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ],
                   ),
                 ),
@@ -112,8 +113,7 @@ class _SignupAdressScreenState extends State<SignupAdressScreen> {
                         borderRadius: BorderRadius.circular(12.0),
                         // side: const BorderSide(color: white),
                       )),
-                      backgroundColor:
-                          MaterialStateProperty.all(customColor.everSignin),
+                      backgroundColor: MaterialStateProperty.all(everSignin),
                       foregroundColor: MaterialStateProperty.all(Colors.white),
                       textStyle: MaterialStateProperty.all(const TextStyle(
                         color: Colors.white,
