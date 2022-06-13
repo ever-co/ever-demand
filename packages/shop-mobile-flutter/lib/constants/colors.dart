@@ -14,6 +14,7 @@ class AppColors {
 
   // Scaffold Background Color
   final Color scaffoldBackgroundColor = const Color(0xFF1F212A);
+  final Color blackButton = const Color(0x001F212A);
 
   // Primary Color
   final Color primaryColor = const Color(0xff2a2c39);

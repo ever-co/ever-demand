@@ -60,7 +60,10 @@ class AppDrawer extends StatelessWidget {
           // Settings
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text(AppLocalizations.of(context)!.settings),
+            child: Text(
+              AppLocalizations.of(context)!.settings,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
           //
           NavigationItem(
@@ -76,7 +79,10 @@ class AppDrawer extends StatelessWidget {
           // Information
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text(AppLocalizations.of(context)!.information),
+            child: Text(
+              AppLocalizations.of(context)!.information,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
           //
           NavigationItem(
@@ -104,7 +110,10 @@ class AppDrawer extends StatelessWidget {
           // Legals
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text(AppLocalizations.of(context)!.legal),
+            child: Text(
+              AppLocalizations.of(context)!.legal,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
           NavigationItem(
             title: AppLocalizations.of(context)!.privacy,
