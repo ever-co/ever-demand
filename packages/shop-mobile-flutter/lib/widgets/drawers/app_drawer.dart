@@ -5,153 +5,96 @@ import 'package:shop_flutter_mobile/constants/colors.dart';
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
 
-  Widget subheaderNavigation({String title = '', bool? isSettings = false}) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-      decoration: BoxDecoration(color: Colors.grey.withOpacity(0.2)),
-      child: Row(
-        children: [
-          if (isSettings!) const Icon(Icons.settings),
-          if (isSettings) const SizedBox(width: 20.0),
-          Text(
-            title,
-            style: const TextStyle(fontWeight: FontWeight.w600),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.redAccent,
-            ),
-            child: UserAccountsDrawerHeader(
-              decoration: BoxDecoration(color: Colors.redAccent),
-              margin: EdgeInsets.zero,
-              accountName: Text('Aaron Dizele'),
-              accountEmail: Text('aldizele@gmail.com'),
-            ),
-          ),
+          // Header
+          const NavigationHeader(),
+
           // Products
-          NavigationItem(
-            title: AppLocalizations.of(context)!.productsViewTitle,
-            iconData: const Icon(Icons.shopping_basket),
-            routeName: "/products",
+          NavigationDestination(
+            label: AppLocalizations.of(context)!.productsViewTitle,
+            icon: const Icon(Icons.shopping_basket),
+            route: "/products",
           ),
           //   Order History
-          NavigationItem(
-            title: AppLocalizations.of(context)!.orderHistory,
-            iconData: const Icon(Icons.shopping_cart_outlined),
-            routeName: "/order-history",
+          NavigationDestination(
+            label: AppLocalizations.of(context)!.orderHistory,
+            icon: const Icon(Icons.shopping_cart_outlined),
+            route: "/order-history",
           ),
 
-          const Divider(
-            height: 1,
-            thickness: 1,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              AppLocalizations.of(context)!.store,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
+          // Store Subhead
+          NavigationSubhead(label: AppLocalizations.of(context)!.store),
+
           //   Call Waiter
-          NavigationItem(
-            title: AppLocalizations.of(context)!.callWaiter,
-            routeName: "/merchants",
-          ),
-          //   About Store
-          NavigationItem(
-            title: '${AppLocalizations.of(context)!.about} Pizza Troya',
-            iconData: const Icon(Icons.info),
-            routeName: "/products-store",
+          NavigationDestination(
+            label: AppLocalizations.of(context)!.callWaiter,
+            route: "/merchants",
           ),
 
-          const Divider(
-            height: 1,
-            thickness: 1,
+          //   About Store
+          NavigationDestination(
+            label: '${AppLocalizations.of(context)!.about} Pizza Troya',
+            icon: const Icon(Icons.info),
+            route: "/products-store",
           ),
-          // Settings
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.settings,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                const Icon(Icons.settings, size: 16)
-              ],
-            ),
+
+          // Settings Subhead
+          NavigationSubhead(
+            label: AppLocalizations.of(context)!.settings,
+            icon: Icons.settings,
           ),
+
           // Language
-          NavigationItem(
-            title: "Language",
-            iconData: const Icon(Icons.language),
-            routeName: "/language",
+          const NavigationDestination(
+            label: "Language",
+            icon: Icon(Icons.language),
+            route: "/language",
           ),
-          const Divider(
-            height: 1,
-            thickness: 1,
-          ),
-          // Information
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              AppLocalizations.of(context)!.information,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
+
+          // Information Subhead
+          NavigationSubhead(label: AppLocalizations.of(context)!.information),
+
           // Help
-          NavigationItem(
-            title: AppLocalizations.of(context)!.help,
-            iconData: const Icon(Icons.help_outline),
-            routeName: "/info-help",
+          NavigationDestination(
+            label: AppLocalizations.of(context)!.help,
+            icon: const Icon(Icons.help_outline),
+            route: "/info-help",
           ),
+
           //   Call Us
-          NavigationItem(
-            title: AppLocalizations.of(context)!.callUs,
-            iconData: const Icon(Icons.phone),
-            routeName: "/info-callus",
+          NavigationDestination(
+            label: AppLocalizations.of(context)!.callUs,
+            icon: const Icon(Icons.phone),
+            route: "/info-callus",
           ),
+
           //   About Us
-          NavigationItem(
-            title: AppLocalizations.of(context)!.aboutUs,
-            iconData: const Icon(Icons.info_outline),
-            routeName: "/info-about",
+          NavigationDestination(
+            label: AppLocalizations.of(context)!.aboutUs,
+            icon: const Icon(Icons.info_outline),
+            route: "/info-about",
           ),
-          const Divider(
-            height: 1,
-            thickness: 1,
-          ),
-          // Legals
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              AppLocalizations.of(context)!.legal,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
+
+          // Legal Subhead
+          NavigationSubhead(label: AppLocalizations.of(context)!.legal),
+
           //   Privacy
-          NavigationItem(
-            title: AppLocalizations.of(context)!.privacy,
-            iconData: const Icon(Icons.lock_outline),
-            routeName: "/info-privacy",
+          NavigationDestination(
+            label: AppLocalizations.of(context)!.privacy,
+            icon: const Icon(Icons.lock_outline),
+            route: "/info-privacy",
           ),
+
           //   Terms of use
-          NavigationItem(
-            title: AppLocalizations.of(context)!.termsOfUse,
-            iconData: const Icon(Icons.list_alt_outlined),
-            routeName: "/info-terms-of-use",
+          NavigationDestination(
+            label: AppLocalizations.of(context)!.termsOfUse,
+            icon: const Icon(Icons.list_alt_outlined),
+            route: "/info-terms-of-use",
           ),
         ],
       ),
@@ -159,16 +102,16 @@ class AppDrawer extends StatelessWidget {
   }
 }
 
-class NavigationItem extends StatelessWidget {
-  final String title;
-  final Widget? iconData;
-  final String routeName;
+class NavigationDestination extends StatelessWidget {
+  final String label;
+  final Widget? icon;
+  final String route;
 
-  const NavigationItem({
+  const NavigationDestination({
     Key? key,
-    required this.title,
-    this.iconData,
-    required this.routeName,
+    required this.label,
+    this.icon,
+    required this.route,
   }) : super(key: key);
 
   @override
@@ -177,16 +120,73 @@ class NavigationItem extends StatelessWidget {
       onTap: () {
         Navigator.of(context)
           ..pop()
-          ..pushNamed(routeName);
+          ..pushNamed(route);
       },
-      title: Text(title),
-      leading: iconData ?? const SizedBox(height: 5, width: 5),
+      title: Text(label),
+      leading: icon ?? const SizedBox(height: 5, width: 5),
       horizontalTitleGap: 5.0,
-      selected: ModalRoute.of(context)!.settings.name == routeName,
+      selected: ModalRoute.of(context)!.settings.name == route,
       dense: true,
       focusColor: everSignin,
       selectedColor: everSignin,
       hoverColor: everSignin,
+    );
+  }
+}
+
+class NavigationSubhead extends StatelessWidget {
+  const NavigationSubhead({
+    Key? key,
+    required this.label,
+    this.icon,
+  }) : super(key: key);
+
+  final String label;
+  final IconData? icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Divider(height: 1, thickness: 1),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                label,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              if (icon != null) Icon(icon, size: 16),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class NavigationHeader extends StatelessWidget {
+  const NavigationHeader({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DrawerHeader(
+      decoration: const BoxDecoration(color: Colors.redAccent),
+      child: UserAccountsDrawerHeader(
+        decoration: const BoxDecoration(color: Colors.redAccent),
+        margin: EdgeInsets.zero,
+        accountName: Text(
+          'Aaron Dizele',
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge!
+              .copyWith(color: Colors.white),
+        ),
+        accountEmail: const Text('aldizele@gmail.com'),
+      ),
     );
   }
 }

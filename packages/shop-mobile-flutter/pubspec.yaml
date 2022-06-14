@@ -35,22 +35,32 @@ dependencies:
 
   intl: ^0.17.0 # added this so that we can manage localization in this app
 
+  # Fonts & Icons
   font_awesome_flutter: ^10.1.0
-  flutter_launcher_icons: ^0.9.2
   flutter_icons: ^1.1.0
+  flutter_launcher_icons: ^0.9.2
+  google_fonts: ^3.0.1
+
   screen_loader: ^4.0.1
-  # geolocator: ^8.0.5
+  geolocator: ^8.0.5
 
   # Service Locator
   get_it: ^7.2.0
 
+  # Hook
+  flutter_hooks: ^0.18.4
+
   # Remote API
   http: ^0.13.4
   connectivity_plus: ^2.3.1
+  graphql_flutter: ^5.1.0
 
   # Local cache
   shared_preferences: ^2.0.15
   path_provider: ^2.0.10
+
+  # Environment variable
+  flutter_dotenv: ^5.0.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -77,6 +87,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/imgs/
+    - .env.template
 
   fonts:
     - family: PlutoHeavyItalic

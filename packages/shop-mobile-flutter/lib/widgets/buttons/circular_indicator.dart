@@ -32,13 +32,15 @@ class CircularIndicatorWidget extends State {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Visibility(
-              maintainSize: true,
-              maintainAnimation: true,
-              maintainState: true,
-              visible: visible,
-              child: Container(
-                  margin: const EdgeInsets.only(top: 50, bottom: 30),
-                  child: const CircularProgressIndicator())),
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
+            visible: visible,
+            child: Container(
+              margin: const EdgeInsets.only(top: 50, bottom: 30),
+              child: const CircularProgressIndicator(),
+            ),
+          ),
           ElevatedButton.icon(
             onPressed: loadProgress,
             style: ButtonStyle(
