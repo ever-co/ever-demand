@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 String get host {
   return '127.0.0.1';
 }
 
-final graphqlEndpoint = 'http://$host:3000/graphql';
-final subscriptionEndpoint = 'ws://$host:3000/subscriptions';
+final String graphqlEndpoint = dotenv.env['GQL_ENDPOINT'] as String;
+final String subscriptionEndpoint =
+    dotenv.env['GQL_SUBSCRIPTIONS_ENDPOINT'] as String;
 
 String? uuidFromObject(Object? object) {
   if (object is Map<String, Object>) {
