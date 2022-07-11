@@ -8,6 +8,7 @@ import PaperText_ from './PaperText';
 import ProductItem_ from './ProductItem';
 import ProductHistoryItem_ from './ProductHistoryItem';
 import TouchableCard_ from './TouchableCard';
+import ModalConnectHost_ from './ModalConnectHost';
 
 // TODO: add type for components constant
 
@@ -20,6 +21,7 @@ export const PaperText = PaperText_;
 export const ProductItem = ProductItem_;
 export const ProductHistoryItem = ProductHistoryItem_;
 export const TouchableCard = TouchableCard_;
+export const ModalConnectHost = ModalConnectHost_;
 
 const components = {
 	CustomScreenHeader,
@@ -31,6 +33,7 @@ const components = {
 	ProductItem,
 	ProductHistoryItem,
 	TouchableCard,
+	ModalConnectHost,
 };
 
 export default components;
