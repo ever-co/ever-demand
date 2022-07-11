@@ -33,7 +33,7 @@ const ApolloProvider: React.FC<Props> = (props) => {
 		<Provider client={APOLLO_CLIENT}>
 			<ModalConnectHost
 				visible={showDialogUriConf}
-				onDismiss={function (): void {}}
+				onDismiss={() => setShowDialogUriConf(false)}
 				onSuccessConnect={(host) => {
 					setServerHost(host);
 					setShowDialogUriConf(false);
