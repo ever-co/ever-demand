@@ -10,8 +10,6 @@ import ProductHistoryItem_ from './ProductHistoryItem';
 import TouchableCard_ from './TouchableCard';
 import ModalConnectHost_ from './ModalConnectHost';
 
-// TODO: add type for components constant
-
 export const CustomScreenHeader = CustomScreenHeader_;
 export const FocusAwareStatusBar = FocusAwareStatusBar_;
 export const Dialog = Dialog_;
@@ -22,18 +20,3 @@ export const ProductItem = ProductItem_;
 export const ProductHistoryItem = ProductHistoryItem_;
 export const TouchableCard = TouchableCard_;
 export const ModalConnectHost = ModalConnectHost_;
-
-const components = {
-	CustomScreenHeader,
-	FocusAwareStatusBar,
-	Dialog,
-	Icon,
-	OrderHistoryItem,
-	PaperText,
-	ProductItem,
-	ProductHistoryItem,
-	TouchableCard,
-	ModalConnectHost,
-};
-
-export default components;
