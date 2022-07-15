@@ -207,6 +207,10 @@ const ProductDetails = () => {
 								mode: 'contained',
 								contentStyle: STYLES.buyBtn,
 							}}
+							warehouseId={
+								WAREHOUSE_PRODUCT_QUERY_RESPONSE?.data
+									?.warehouse?.id
+							}
 						/>
 					</View>
 				</>

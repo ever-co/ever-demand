@@ -67,6 +67,8 @@ function InStoreScreen({}) {
 		},
 	});
 
+	console.log(WAREHOUSE_PRODUCTS_QUERY_RESPONSE.data);
+
 	return (
 		<View style={{ ...GS.screen }}>
 			<FocusAwareStatusBar
@@ -111,7 +113,8 @@ function InStoreScreen({}) {
 										warehouseLogo:
 											WAREHOUSE_PRODUCTS_QUERY_RESPONSE
 												.data?.warehouse?.logo,
-										productId: item.id,
+										productId: item.product.id,
+										product_id: item.id,
 										title: item.product.title[0].value,
 										description:
 											item.product.description[0].value,
@@ -146,7 +149,8 @@ function InStoreScreen({}) {
 											warehouseLogo:
 												WAREHOUSE_PRODUCTS_QUERY_RESPONSE
 													.data?.warehouse?.logo,
-											productId: item.id,
+											productId: item.product.id,
+											product_id: item.id,
 											title: item.product.title[0].value,
 											description:
 												item.product.description[0]

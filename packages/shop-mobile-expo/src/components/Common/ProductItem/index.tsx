@@ -18,6 +18,7 @@ export interface ProductItemInterface {
 		warehouseId: string;
 		warehouseLogo?: string;
 		productId: string;
+		product_id: string;
 		title: string;
 		description: string;
 		price: number;
@@ -52,7 +53,7 @@ const ProductItem: React.FC<ProductItemInterface> = (props) => {
 
 	const onPressDetails = () => {
 		const ROUTE_PRODUCT = {
-			productId: props?.data.productId,
+			productId: props?.data.product_id,
 			warehouseId: props?.data.warehouseId,
 		};
 
