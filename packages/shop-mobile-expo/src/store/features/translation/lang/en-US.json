@@ -7,7 +7,7 @@
 	"SIDEBAR_SIDE": "left",
 	"INVITE_VIEW": {
 		"WELCOME_TO": "Welcome to",
-		"EVER": "Ever Shop",
+		"EVER": "Ever",
 		"INFO_MISSING": "Some of the information missing!",
 		"YOUR_INVITE_CODE": "Your invite code",
 		"INVITED_TEXT": {
@@ -160,7 +160,7 @@
 		}
 	},
 	"SIDE_MENU": {
-		"TITLE": "Ever Shop",
+		"TITLE": "Ever",
 		"GROUPS": {
 			"NO_TITLE": {
 				"DIVER_TITLE": "",

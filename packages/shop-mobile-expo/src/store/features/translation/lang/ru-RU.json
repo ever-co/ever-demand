@@ -7,7 +7,7 @@
 	"SIDEBAR_SIDE": "left",
 	"INVITE_VIEW": {
 		"WELCOME_TO": "Добро Пожаловать в",
-		"EVER": "Ever Shop",
+		"EVER": "Ever",
 		"INFO_MISSING": "Некоторая информация отсутствует!",
 		"YOUR_INVITE_CODE": "Ваш код приглашения",
 		"INVITED_TEXT": {
@@ -151,7 +151,7 @@
 		}
 	},
 	"SIDE_MENU": {
-		"TITLE": "Ever Shop",
+		"TITLE": "Ever",
 		"GROUPS": {
 			"NO_TITLE": {
 				"DIVER_TITLE": "",
