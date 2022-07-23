@@ -167,3 +167,37 @@ export interface ProductInfoInterface {
 	warehouseId: ScalarsInterface['String'];
 	warehouseLogo: ScalarsInterface['String'];
 }
+
+export interface OrderWarehouse {
+	id: ScalarsInterface['String'];
+	logo: ScalarsInterface['String'];
+}
+
+export interface OrderProductImageInterface {
+	locale: ScalarsInterface['String'];
+	orientation: ScalarsInterface['Int'];
+	url: ScalarsInterface['String'];
+}
+
+export interface OrderProductItemInterface {
+	images: OrderProductImageInterface[];
+	title: TranslateInterface[];
+	description: TranslateInterface[];
+}
+
+export interface OrderProductsInterface {
+	count: ScalarsInterface['Int'];
+	price: ScalarsInterface['Int'];
+	isTakeaway: MaybeType<ScalarsInterface['Boolean']>;
+	product: OrderProductItemInterface;
+}
+export interface OrderHistoryInterface {
+	id: ScalarsInterface['String'];
+	deliveryTime: MaybeType<ScalarsInterface['Int']>;
+	warehouseId: ScalarsInterface['String'];
+	createdAt: MaybeType<ScalarsInterface['Date']>;
+	status: ScalarsInterface['Int'];
+	user: UserInterface;
+	warehouse: OrderWarehouse;
+	products: OrderProductsInterface[];
+}

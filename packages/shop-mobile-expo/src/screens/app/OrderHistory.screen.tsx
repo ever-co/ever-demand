@@ -32,6 +32,7 @@ import {
 	// CONSTANT_SIZE as CS,
 	// CONSTANT_COLOR as CC,
 } from '../../assets/ts/styles';
+import { OrderHistoryInterface } from 'client/types';
 
 const OrderHistoryScreen = () => {
 	// SELECTORS
@@ -66,11 +67,6 @@ const OrderHistoryScreen = () => {
 
 	// EFFECT
 	React.useEffect(() => {
-		showMessage({
-			message: 'Please, create a user account',
-			type: 'warning',
-		});
-
 		if (!USER_DATA?.user?.user?.id || ORDERS_QUERY_RES?.data?.Error) {
 			showMessage({
 				message: ORDERS_QUERY_RES?.data?.Error,
@@ -102,10 +98,24 @@ const OrderHistoryScreen = () => {
 				</View>
 			) : ORDERS_QUERY_RES?.data ? (
 				<FlatList
-					data={['', '', '']}
-					renderItem={() => (
+					data={
+						ORDERS_QUERY_RES?.data
+							?.getOrders as OrderHistoryInterface[]
+					}
+					renderItem={({ item }) => (
 						<View style={STYLES.orderHistoryItemContainer}>
-							<OrderHistoryItem />
+							<OrderHistoryItem
+								data={{
+									createdAt: item.createdAt,
+									orderStatus: item.status,
+									products: item.products,
+									customerCity: item.user.geoLocation.city,
+									customerStreetAddress:
+										item.user.geoLocation.streetAddress,
+									customerHouse: item.user.geoLocation.house,
+									warehouseLogo: item.warehouse.logo,
+								}}
+							/>
 						</View>
 					)}
 					keyExtractor={(_item, _index) => _index.toString()}
