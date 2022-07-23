@@ -38,7 +38,7 @@ const DrawerHeader = () => {
 				}}>
 				<PaperText
 					style={{
-						...GS.FF_Lobster,
+						...GS.FF_NunitoBold,
 						color: CC.light,
 						fontSize: CS.FONT_SIZE_XLG,
 						transform:

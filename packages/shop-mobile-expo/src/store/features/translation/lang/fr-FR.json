@@ -164,7 +164,7 @@
 		}
 	},
 	"SIDE_MENU": {
-		"TITLE": "Ever Shop",
+		"TITLE": "Ever",
 		"GROUPS": {
 			"NO_TITLE": {
 				"DIVER_TITLE": "",
@@ -241,7 +241,7 @@
 	"APARTMENT": "Numéro d'appartement",
 	"BACK": "Retour",
 	"MORE": "Plus",
-	"TO": "à",
+	"TO": "À",
 	"STORE_INFO": "Magasin",
 	"MAP": "Carte",
 	"ORDER_INFO": "Commande",

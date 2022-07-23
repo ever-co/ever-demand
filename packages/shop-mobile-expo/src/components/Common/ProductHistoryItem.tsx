@@ -13,10 +13,11 @@ import {
 } from '../../assets/ts/styles';
 
 export interface Props {
-	image: string;
+	image: string | undefined;
 	title: string;
 	description?: string;
 	amount?: number;
+	count?: number;
 	onPress: () => any;
 }
 
@@ -25,6 +26,7 @@ const ProductHistoryItem: React.FC<Props> = ({
 	title,
 	description,
 	amount = 0,
+	count,
 	onPress,
 }) => {
 	// DATA
@@ -70,6 +72,19 @@ const ProductHistoryItem: React.FC<Props> = ({
 			...GS.txtPrimaryLight,
 			...GS.FF_NunitoSemiBold,
 		},
+		productContentCount: {
+			color: CC.primary,
+			fontSize: CS.FONT_SIZE_SM - 2,
+		},
+		productCountContent: {
+			width: CS.FONT_SIZE_SM + 1,
+			backgroundColor: CC.grayLight,
+			borderRadius: CS.SPACE_SM - 3,
+			...GS.centered,
+			height: CS.FONT_SIZE_SM + 1,
+			marginLeft: CS.SPACE_SM,
+			...GS.mt1,
+		},
 	});
 
 	return (
@@ -90,7 +105,15 @@ const ProductHistoryItem: React.FC<Props> = ({
 					/>
 				</View>
 				<View style={STYLES.productContent}>
-					<Text style={STYLES.productContentTitle}>{title}</Text>
+					<View style={GS.row}>
+						<Text style={STYLES.productContentTitle}>{title}</Text>
+						<View style={STYLES.productCountContent}>
+							<Text style={STYLES.productContentCount}>
+								{count}
+							</Text>
+						</View>
+					</View>
+
 					{!!description && (
 						<PaperText style={STYLES.productContentDescription}>
 							{description}
