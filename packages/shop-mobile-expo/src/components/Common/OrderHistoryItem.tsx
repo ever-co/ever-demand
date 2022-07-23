@@ -13,6 +13,8 @@ import {
 	CONSTANT_COLOR as CC,
 } from '../../assets/ts/styles';
 import { OrderProductsInterface } from 'client/types';
+import { useAppSelector } from '../../store/hooks';
+import { getLanguage } from '../../store/features/translation';
 
 export interface OrderHistoryItemInterface {
 	data: {
@@ -33,6 +35,7 @@ export interface PropsItemInterface {
 const OrderHistoryItem: React.FC<OrderHistoryItemInterface> = (props) => {
 	// DATA
 	const { data } = props;
+	const LANGUAGE = useAppSelector(getLanguage);
 
 	const STYLES = StyleSheet.create({
 		container: {
@@ -125,8 +128,8 @@ const OrderHistoryItem: React.FC<OrderHistoryItemInterface> = (props) => {
 
 				<View style={STYLES.headerContent}>
 					<PaperText style={STYLES.headerContentTitle}>
-						To:
-						{data.customerStreetAddress +
+
+						{LANGUAGE.TO+": "+data.customerStreetAddress +
 							' ' +
 							data.customerHouse +
 							', ' +
@@ -144,7 +147,7 @@ const OrderHistoryItem: React.FC<OrderHistoryItemInterface> = (props) => {
 									: GS.txtSuccess,
 							]}>
 							{' '}
-							{data.orderStatus === 0 ? 'Failed' : 'Completed'}
+							{data.orderStatus === 0 ? LANGUAGE.FAILED : LANGUAGE.COMPLETED}
 						</PaperText>
 					</View>
 				</View>
