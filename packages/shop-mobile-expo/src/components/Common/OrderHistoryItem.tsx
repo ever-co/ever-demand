@@ -1,10 +1,10 @@
 /* eslint-disable max-len */
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { Card, Avatar, Title } from 'react-native-paper';
 
 // COMPONENTS
-import { PaperText } from '../../components/Common';
+import { PaperText, ProductHistoryItem } from '../../components/Common';
 
 // STYLES
 import {
@@ -12,10 +12,27 @@ import {
 	CONSTANT_SIZE as CS,
 	CONSTANT_COLOR as CC,
 } from '../../assets/ts/styles';
-import ProductHistoryItem from './ProductHistoryItem';
+import { OrderProductsInterface } from 'client/types';
 
-const OrderHistoryItem = () => {
+export interface OrderHistoryItemInterface {
+	data: {
+		warehouseLogo?: string;
+		createdAt: Date;
+		orderStatus: number;
+		customerCity: string;
+		customerStreetAddress: string;
+		customerHouse?: string;
+		products: OrderProductsInterface[];
+	};
+}
+
+export interface PropsItemInterface {
+	data: OrderHistoryItemInterface['data'];
+}
+
+const OrderHistoryItem: React.FC<OrderHistoryItemInterface> = (props) => {
 	// DATA
+	const { data } = props;
 
 	const STYLES = StyleSheet.create({
 		container: {
@@ -38,10 +55,10 @@ const OrderHistoryItem = () => {
 		},
 		headerContentTitle: {
 			...GS.txtPrimaryLight,
-			fontSize: CS.FONT_SIZE_MD,
+			fontSize: CS.FONT_SIZE_MD - 2,
 		},
 		headerContentDescription: {
-			fontSize: CS.FONT_SIZE_MD,
+			fontSize: CS.FONT_SIZE_SM,
 			color: CC.gray,
 		},
 		headerAmount: {
@@ -58,7 +75,39 @@ const OrderHistoryItem = () => {
 			borderWidth: 0.5,
 			borderColor: CC.primaryHightLight,
 		},
+		headerStatusText: {
+			fontSize: CS.FONT_SIZE_SM,
+		},
+		wrapProductItem: {
+			...GS.py1,
+			...GS.pl1,
+		},
 	});
+
+	const d = new Date(data.createdAt);
+	// Format Creation Date
+	const getFormattedTime = (str: string) => {
+		let h = str.substring(0, 2);
+		let min = str.substring(3, 5);
+		if (parseInt(h) > 12) return parseInt(h) - 12 + ':' + min + ' PM';
+		else return h + ':' + min + ' AM';
+	};
+
+	const formattedDate =
+		d.toLocaleDateString() +
+		', ' +
+		getFormattedTime(d.toLocaleTimeString());
+
+		// TOTAL PRICE
+	const getTotalPrice = () => {
+		var sum = 0;
+		for (let i = 0; i < data.products.length; i++) {
+			let productTotalPrice =
+				data.products[i].price * data.products[i].count;
+			sum += productTotalPrice;
+		}
+		return sum;
+	};
 
 	return (
 		<Card style={STYLES.container}>
@@ -66,7 +115,9 @@ const OrderHistoryItem = () => {
 				<View style={STYLES.headerAvatarContainer}>
 					<Avatar.Image
 						source={{
-							uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8Uk1GaGARRuNQv504qGbwiprC197kYLM7Sg&usqp=CAU',
+							uri: data?.warehouseLogo
+								? data?.warehouseLogo
+								: 'https://media.istockphoto.com/vectors/flat-design-home-or-homepage-icon-vector-illustration-vector-id1134930193?k=20&m=1134930193&s=170667a&w=0&h=8b4ri9ib7s-Hz3Z6fnRWfygmf5Zb_UvA2PQJv4ukmic=',
 						}}
 						size={CS.FONT_SIZE * 4}
 					/>
@@ -74,21 +125,55 @@ const OrderHistoryItem = () => {
 
 				<View style={STYLES.headerContent}>
 					<PaperText style={STYLES.headerContentTitle}>
-						Title
+						To:
+						{data.customerStreetAddress +
+							' ' +
+							data.customerHouse +
+							', ' +
+							data.customerCity}
 					</PaperText>
-					<PaperText style={STYLES.headerContentDescription}>
-						Description
-					</PaperText>
+					<View style={GS.row}>
+						<PaperText style={STYLES.headerContentDescription}>
+							{formattedDate}
+						</PaperText>
+						<PaperText
+							style={[
+								STYLES.headerStatusText,
+								data.orderStatus === 0
+									? GS.txtDanger
+									: GS.txtSuccess,
+							]}>
+							{' '}
+							{data.orderStatus === 0 ? 'Failed' : 'Completed'}
+						</PaperText>
+					</View>
 				</View>
 
 				<View style={STYLES.headerAmount}>
-					<Title style={STYLES.headerAmountText}>$00</Title>
+					<Title style={STYLES.headerAmountText}>
+						${getTotalPrice()}
+					</Title>
 				</View>
 			</View>
 			<View style={STYLES.separator} />
-			<View>
-				<ProductHistoryItem image='' title={''} onPress={() => {}} />
-			</View>
+			<FlatList
+				data={data.products as OrderProductsInterface[]}
+				renderItem={({ item }) => (
+					<View style={STYLES.wrapProductItem}>
+						<ProductHistoryItem
+							amount={item.price * item.count}
+							image={item.product.images[0].url}
+							description={item.product.description[0].value}
+							count={item.count}
+							title={item.product.title[0].value}
+							onPress={() => {}}
+						/>
+					</View>
+				)}
+				keyExtractor={(_item, _index) => _index.toString()}
+				overScrollMode='never'
+				showsVerticalScrollIndicator={false}
+			/>
 		</Card>
 	);
 };
