@@ -225,6 +225,11 @@
 		"OPEN": "Abierto",
 		"CLOSED": "Cerrado"
 	},
+	"QR_SCAN_VIEW":{
+		"SCAN_AGAIN":"QR-code scanned, refresh to start over.",
+		"SCAN_EVER_ONLY":"Scanner for Qr-code Ever only.",
+		"UNKOWN_MERCHANT":"Merchant not known."
+	},
 	"OR": "O",
 	"OR_LOWERCASE": "o",
 	"YES": "Si",

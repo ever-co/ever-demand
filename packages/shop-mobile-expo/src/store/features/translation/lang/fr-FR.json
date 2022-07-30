@@ -87,6 +87,11 @@
 		"OPEN": "Ouvert",
 		"CLOSED": "Fermé"
 	},
+	"QR_SCAN_VIEW":{
+		"SCAN_AGAIN":"QR-code scanné, rafraîchir pour recommencer.",
+		"SCAN_EVER_ONLY":"Scanneur pour Qr-code Ever uniquement.",
+		"UNKOWN_MERCHANT":"Marchand non connu."
+	},
 	"BUY_POPUP": {
 		"ORDER_PAID": "La commande a été payée $",
 		"CANCEL": {

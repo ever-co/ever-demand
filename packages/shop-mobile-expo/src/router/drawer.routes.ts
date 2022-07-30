@@ -53,6 +53,10 @@ const DRAWER_ROUTES: DrawerScreenType[] = [
 		component: SCREENS.APP.MERCHANTS_SEARCH,
 	},
 	{
+		name: 'DRAWER/MERCHANT_QR_SCAN',
+		component: SCREENS.APP.MERCHANT_QR_SCAN,
+	},
+	{
 		name: 'DRAWER/IN_STORE',
 		component: SCREENS.APP.IN_STORE,
 		options: {

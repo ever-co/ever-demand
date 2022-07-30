@@ -221,6 +221,11 @@
 		"OPEN": "Открытым",
 		"CLOSED": "Закрыто"
 	},
+	"QR_SCAN_VIEW":{
+		"SCAN_AGAIN":"QR-code scanned, refresh to start over.",
+		"SCAN_EVER_ONLY":"Scanner for Qr-code Ever only.",
+		"UNKOWN_MERCHANT":"Merchant not known."
+	},
 	"NO_SERVER_VIEW": {
 		"NO_SERVER": "Сервер упал"
 	},

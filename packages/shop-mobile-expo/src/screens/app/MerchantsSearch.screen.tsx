@@ -181,6 +181,9 @@ function MerchantsSearch({}) {
 					style={STYLES.scanBtn}
 					theme={{ roundness: CS.SPACE }}
 					uppercase={false}
+					onPress={() =>
+						NAVIGATION.navigate('DRAWER/MERCHANT_QR_SCAN' as never)
+					}
 					mode='contained'>
 					<MaterialIcon
 						name='qrcode-scan'
@@ -232,7 +235,10 @@ function MerchantsSearch({}) {
 			) : (
 				<ScrollView
 					style={{ ...GS.screen }}
-					contentContainerStyle={{ ...GS.screen, ...GS.centered }}>
+					contentContainerStyle={{
+						...GS.screen,
+						...GS.centered,
+					}}>
 					<Title>{LANGUAGE.NOT_FOUND}</Title>
 				</ScrollView>
 			)}
