@@ -80,7 +80,7 @@ export const GET_STORED_PRODUCT: TypedDocumentNode = gql`
 	}
 `;
 
-export const GET_STORE_QUERY: TypedDocumentNode = gql`
+export const GET_ALL_STORE_QUERY: TypedDocumentNode = gql`
 	query GetAllStores {
 		getAllStores {
 			id

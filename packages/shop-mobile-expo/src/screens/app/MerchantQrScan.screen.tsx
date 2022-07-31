@@ -25,7 +25,7 @@ import {
 } from '../../assets/ts/styles';
 import { isEmpty } from 'validate.js';
 import { useQuery } from '@apollo/client';
-import { GET_STORE_QUERY } from '../../client/merchants/queries';
+import { GET_ALL_STORE_QUERY } from '../../client/merchants/queries';
 
 type IWarehouse = {
 	id: string;
@@ -33,15 +33,15 @@ type IWarehouse = {
 
 const MerchantQrScanSearch = () => {
 	const [hasPermission, setHasPermission] = useState<Boolean>();
-	const [scanned, setScanned] = useState(false);
+	const [scanned, setScanned] = useState<Boolean>(false);
 	const [flash, setFlash] = useState<boolean>(false);
-	const [load, setLoad] = useState(true);
+	const [load, setLoad] = useState<Boolean>(true);
 
 	const LANGUAGE = useAppSelector(getLanguage);
 	const NAVIGATION = useNavigation();
 	const isFocused = useIsFocused();
 
-	const STORE_QUERY_RESPONSE = useQuery(GET_STORE_QUERY);
+	const ALL_STORE_QUERY_RESPONSE = useQuery(GET_ALL_STORE_QUERY);
 
 	React.useEffect(() => {
 		(async () => {
@@ -57,7 +57,7 @@ const MerchantQrScanSearch = () => {
 					warehouseId: data,
 				};
 
-				const store = STORE_QUERY_RESPONSE?.data?.getAllStores.find(
+				const store = ALL_STORE_QUERY_RESPONSE?.data?.getAllStores.find(
 					(t: IWarehouse) => t.id === data,
 				);
 
@@ -74,7 +74,6 @@ const MerchantQrScanSearch = () => {
 				}
 			}
 		}
-
 		setScanned(true);
 	};
 
@@ -95,7 +94,7 @@ const MerchantQrScanSearch = () => {
 	const cameraHeight = Math.round((screenWidth * 16) / 9);
 
 	return (
-		<View style={{ flex: 1 }}>
+		<View style={GS.flex1}>
 			<View>
 				<FocusAwareStatusBar
 					translucent={true}
