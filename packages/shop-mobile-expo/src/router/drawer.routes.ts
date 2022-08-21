@@ -77,6 +77,34 @@ const DRAWER_ROUTES: DrawerScreenType[] = [
 			unmountOnBlur: true,
 		},
 	},
+	{
+		name: 'DRAWER/HELP',
+		component: SCREENS.INFO.HELP,
+		options: {
+			unmountOnBlur: true,
+		},
+	},
+	{
+		name: 'DRAWER/ABOUT_US',
+		component: SCREENS.INFO.ABOUT_US,
+		options: {
+			unmountOnBlur: true,
+		},
+	},
+	{
+		name: 'DRAWER/TERMS_OF_USE',
+		component: SCREENS.INFO.TERMS_OF_USE,
+		options: {
+			unmountOnBlur: true,
+		},
+	},
+	{
+		name: 'DRAWER/PRIVACY',
+		component: SCREENS.INFO.PRIVACY,
+		options: {
+			unmountOnBlur: true,
+		},
+	},
 ];
 
 export default DRAWER_ROUTES;

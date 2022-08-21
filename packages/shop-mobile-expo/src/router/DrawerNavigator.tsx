@@ -70,9 +70,8 @@ const DrawerNavigator: React.FC = () => {
 			linkItems: [
 				{
 					label: LANGUAGE.SIDE_MENU.GROUPS.INFO.ITEMS.FAQ,
-					path: 'https://google.com',
+					path: 'DRAWER/HELP',
 					icon: 'help-circle',
-					external: true,
 				},
 				{
 					label: LANGUAGE.SIDE_MENU.GROUPS.NO_TITLE.ITEMS.CALL_US,
@@ -82,9 +81,8 @@ const DrawerNavigator: React.FC = () => {
 				},
 				{
 					label: LANGUAGE.SIDE_MENU.GROUPS.INFO.ITEMS.ABOUT_US,
-					path: 'https://google.com',
-					icon: 'info',
-					external: true,
+					path: 'DRAWER/ABOUT_US',
+					icon: 'info'
 				},
 			],
 		},
@@ -94,15 +92,13 @@ const DrawerNavigator: React.FC = () => {
 			linkItems: [
 				{
 					label: LANGUAGE.SIDE_MENU.GROUPS.LEGALS.ITEMS.PRIVACY,
-					path: 'https://google.com',
+					path: 'DRAWER/PRIVACY',
 					icon: 'lock',
-					external: true,
 				},
 				{
 					label: LANGUAGE.SIDE_MENU.GROUPS.LEGALS.ITEMS.TERMS_OF_USE,
-					path: 'https://google.com',
+					path: 'DRAWER/TERMS_OF_USE',
 					icon: 'list',
-					external: true,
 				},
 			],
 		},

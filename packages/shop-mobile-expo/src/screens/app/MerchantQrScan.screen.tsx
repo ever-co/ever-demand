@@ -69,7 +69,7 @@ const MerchantQrScanSearch = () => {
 				} else {
 					showMessage({
 						message: ' ' + LANGUAGE.QR_SCAN_VIEW.UNKOWN_MERCHANT,
-						type: 'warning',
+						type: 'danger',
 					});
 				}
 			}

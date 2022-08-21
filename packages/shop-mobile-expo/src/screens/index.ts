@@ -20,6 +20,12 @@ import ProductDetailsScreen from './app/ProductDetails';
 import OrderScreen from './app/Order.screen';
 import MerchantQrScanSearch from './app/MerchantQrScan.screen';
 
+// INFO
+import HelpScreen from './info/Help.screen';
+import AboutUsScreen from './info/AboutUs.screen';
+import TermsOfUseScreen from './info/TermsOfUse.screen';
+import PrivacyScreen from './info/Privacy.screen';
+
 // TODO: create a type for screens object
 
 const SCREENS = {
@@ -36,7 +42,13 @@ const SCREENS = {
 		IN_STORE: InStoreScreen,
 		PRODUCT_DETAILS: ProductDetailsScreen,
 		ORDER: OrderScreen,
-		MERCHANT_QR_SCAN:MerchantQrScanSearch,
+		MERCHANT_QR_SCAN: MerchantQrScanSearch,
+	},
+	INFO: {
+		HELP: HelpScreen,
+		ABOUT_US: AboutUsScreen,
+		TERMS_OF_USE: TermsOfUseScreen,
+		PRIVACY: PrivacyScreen,
 	},
 	REGISTRATION: {
 		HOME: HomeAuthScreen,
