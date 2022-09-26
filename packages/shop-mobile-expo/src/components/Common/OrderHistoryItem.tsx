@@ -1,7 +1,9 @@
-/* eslint-disable max-len */
 import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { Card, Avatar, Title } from 'react-native-paper';
+
+// TYPES
+import type { OrderProductsInterface } from '../../client/types';
 
 // COMPONENTS
 import { PaperText, ProductHistoryItem } from '../../components/Common';
@@ -12,7 +14,6 @@ import {
 	CONSTANT_SIZE as CS,
 	CONSTANT_COLOR as CC,
 } from '../../assets/ts/styles';
-import { OrderProductsInterface } from 'client/types';
 
 export interface OrderHistoryItemInterface {
 	data: {
@@ -87,9 +88,10 @@ const OrderHistoryItem: React.FC<OrderHistoryItemInterface> = (props) => {
 	const d = new Date(data.createdAt);
 	// Format Creation Date
 	const getFormattedTime = (str: string) => {
-		let h = str.substring(0, 2);
-		let min = str.substring(3, 5);
-		if (parseInt(h) > 12) return parseInt(h) - 12 + ':' + min + ' PM';
+		const h = str.substring(0, 2);
+		const min = str.substring(3, 5);
+		if (parseInt(h, 10) > 12)
+			return parseInt(h, 10) - 12 + ':' + min + ' PM';
 		else return h + ':' + min + ' AM';
 	};
 
@@ -98,14 +100,14 @@ const OrderHistoryItem: React.FC<OrderHistoryItemInterface> = (props) => {
 		', ' +
 		getFormattedTime(d.toLocaleTimeString());
 
-		// TOTAL PRICE
+	// TOTAL PRICE
 	const getTotalPrice = () => {
-		var sum = 0;
-		for (let i = 0; i < data.products.length; i++) {
-			let productTotalPrice =
-				data.products[i].price * data.products[i].count;
+		let sum = 0;
+		for (const iterator of data.products) {
+			const productTotalPrice = iterator.price * iterator.count;
 			sum += productTotalPrice;
 		}
+
 		return sum;
 	};
 
