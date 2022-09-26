@@ -21,10 +21,10 @@ import OrderScreen from './app/Order.screen';
 import MerchantQrScanSearch from './app/MerchantQrScan.screen';
 
 // INFO
-import HelpScreen from './info/Help.screen';
-import AboutUsScreen from './info/AboutUs.screen';
-import TermsOfUseScreen from './info/TermsOfUse.screen';
-import PrivacyScreen from './info/Privacy.screen';
+import HelpScreen from './app/Help.screen';
+import AboutUsScreen from './app/AboutUs.screen';
+import TermsOfUseScreen from './app/TermsOfUse.screen';
+import PrivacyScreen from './app/Privacy.screen';
 
 // TODO: create a type for screens object
 
