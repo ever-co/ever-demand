@@ -263,7 +263,7 @@ All other brand and product names are trademarks, registered trademarks or servi
 [![huntr](https://cdn.huntr.dev/huntr_security_badge_mono.svg)](https://huntr.dev)
 [![Circle CI](https://circleci.com/gh/ever-co/ever-demand.svg?style=svg)](https://circleci.com/gh/ever-co/ever-demand)
 [![codecov](https://codecov.io/gh/ever-co/ever-demand/branch/master/graph/badge.svg)](https://codecov.io/gh/ever-co/ever-demand)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e7b2b38660f44963989ac9d49ae76d4d)](https://www.codacy.com/app/Ever/ever?utm_source=github.com&utm_medium=referral&utm_content=ever-co/ever&utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/8c46f9eb9df64aa9859dea4d572059ac)](https://www.codacy.com/gh/ever-co/ever-gauzy/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ever-co/ever-gauzy&amp;utm_campaign=Badge_Grade)
 [![DeepScan grade](https://deepscan.io/api/teams/3293/projects/4849/branches/38566/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=3293&pid=4849&bid=38566)
 [![Known Vulnerabilities](https://snyk.io/test/github/ever-co/ever-demand/badge.svg)](https://snyk.io/test/github/ever-co/ever-demand)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/ever-co/ever-demand.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/ever-co/ever-demand/alerts/)
