@@ -86,7 +86,7 @@
 		"@ng-select/ng-select": "^7.3.0",
 		"@ngx-translate/core": "^13.0.0",
 		"@ngx-translate/http-loader": "^6.0.0",
-		"@swimlane/ngx-charts": "^19.1.0",
+		"@swimlane/ngx-charts": "^20.1.2",
 		"angular-2-dropdown-multiselect": "^1.9.0",
 		"angular-tree-component": "^8.3.0",
 		"angular2-chartjs": "^0.5.1",
