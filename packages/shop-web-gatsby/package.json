@@ -38,7 +38,7 @@
     "bulma": "^0.9.3",
     "dotenv": "^10.0.0",
     "formik": "^2.2.9",
-    "gatsby": "^4.0.0",
+    "gatsby": "^5.4.0",
     "gatsby-image": "^3.11.0",
     "gatsby-plugin-manifest": "^4.0.0",
     "gatsby-plugin-material-ui": "^4.0.3",
