@@ -1,9 +1,11 @@
+# Open-Source Commerce Platform for On-Demand Economy and Digital Marketplaces
+
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ever-co/ever-demand)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/ever)
 [![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/ever-co/ever?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/evereq?utm_source=github&utm_medium=button&utm_term=evereq&utm_campaign=github)
 
-# Open-Source Commerce Platform for On-Demand Economy and Digital Marketplaces
+## ⭐️ What is it?
 
 [Ever® Demand™](https://ever.co) is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform built with [TypeScript](http://www.typescriptlang.org).
 
@@ -11,7 +13,7 @@ You are welcome to check more information about the platform at our official web
 
 ![overview](https://docs.ever.co/docs/assets/overview_small.png)
 
-## Demos
+## 💻 Demos
 
 **Demos are not available at the moment as we are moving to Kubernetes and showdown old demo server!**
 
@@ -30,7 +32,9 @@ You are welcome to check more information about the platform at our official web
 - Introduction of both Ever Demand and Ever Gauzy platforms - [view video](https://www.loom.com/share/ff9a9b1fa3a849cca5cf68a6d502443b) (~30 min) or [download](https://media.githubusercontent.com/media/ever-co/ever-demand-docs/master/docs/assets/videos/EverDemandAndGauzyIntro.mp4)
 - Introduction to Ever Demand Mobile Shop customer experience (UX) - [view video](https://www.loom.com/share/488f774e6b6d4ee88107443ce4522f1f) (~30 min) or [download](https://media.githubusercontent.com/media/ever-co/ever-demand-docs/master/docs/assets/videos/EverDemandMobileShopIntro.mp4)
 
-## Features
+## ✨ Features
+
+### Current Features
 
 -   Modern & Open Platform for **On-Demand Economy** and **Digital Marketplaces**
 -   Supports Single-Store and Multi-Store / Multi-Vendor / Peer-to-Peer Marketplaces
@@ -50,7 +54,7 @@ You are welcome to check more information about the platform at our official web
 -   Gateway and Payment Processing (currently supported Payments Gateway - [Stripe](https://stripe.com))
 -   Plugins / Extensions / Custom Fields (WIP)
 
-## Planned Features
+### Planned Features
 
 -   Tax Calculations
 -   Third-party Shipping providers integrations
@@ -64,7 +68,7 @@ You can also track feature requests from the community in the [separate repo](ht
 _A word of caution_: We are in α (alpha), i.e. Ever® Platform™ is very much under development (work in progress, WIP).
 Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_winking_eye:
 
-## Technology Stack and Requirements
+## 🧱 Technology Stack and Requirements
 
 -   Full-stack [TypeScript](https://www.typescriptlang.org) - frontends and [NodeJs](https://nodejs.org)/[Nest](https://github.com/nestjs/nest) backend.
 -   Headless Commerce framework (Backend APIs/Server) developed using [Nest](https://github.com/nestjs/nest). Supports GraphQL, REST and WS Real-Time APIs (WebSockets using [Socket.io](https://socket.io) library).
@@ -82,13 +86,13 @@ Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_wi
 
 #### See also README.md and CREDITS.md files in relevant folders for lists of libraries and software included in the Platform, information about licenses and other details.
 
-## Documentation
+## 📄 Documentation
 
 Please refer to our official [Platform Documentation](https://docs.ever.co) and to our [Wiki](https://github.com/ever-co/ever-demand/wiki) (WIP).
 
 For a quick overview of each project in the Platform (Server, Admin, Shops, etc.), you can search for README.md file in the root of the projects folders. For example, see [./backend/api/README.md](backend/api/README.md) for Server (Backend) related overview.
 
-## Getting Started
+## 🚀 Getting Started
 
 We follow [Gitflow Workflow](https://nvie.com/posts/a-successful-git-branching-model), so the [`develop` branch](https://github.com/ever-co/ever-demand/tree/develop) may be in an unstable or even broken state during development. Please use [releases](https://github.com/ever-co/ever/releases) or [`master` branch](https://github.com/ever-co/ever-demand/tree/master) instead of the `develop` branch in order to get more stable code.
 
@@ -198,17 +202,7 @@ Note 3: in order to be able to run every project, you need to make sure everythi
 
 According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform today has more than 120K lines of TypeScript, GraphQL, HTML / CSS and other code files. You can get more details in the relevant section of our [documentation](https://github.com/ever-co/ever-demand/wiki/Metrics).
 
-## Contribute
-
--   Please give us :star: on Github, it **helps**!
--   You are more than welcome to submit feature requests in the [separate repo](https://github.com/ever-co/feature-requests/issues)
--   Pull requests are always welcome! Please base pull requests against the _develop_ branch and follow the [contributing guide](.github/CONTRIBUTING.md).
-
-## Contributors
-
-View full list of our [contributors](https://github.com/ever-co/ever-demand/graphs/contributors).
-
-## Contact Us
+## 💌 Contact Us
 
 -   [Ever.co Website Contact Us page](https://ever.co/contacts)
 -   [Discord Chat](https://discord.gg/msqRJ4w)
@@ -222,7 +216,7 @@ View full list of our [contributors](https://github.com/ever-co/ever-demand/grap
 -   [Ever Platform @ Twitter](https://twitter.com/everplatform)
 -   [Ever Platform @ Facebook](https://www.facebook.com/everplatform)
 
-## Security
+## 🔐 Security
 
 Ever Platform follows good security practices, but 100% security cannot be guaranteed in any software!
 Ever Platform is provided AS IS without any warranty. Use at your own risk!
@@ -232,7 +226,7 @@ In a production setup, all client-side to server-side (backend, APIs) communicat
 
 If you discover any issue regarding security, please disclose the information responsibly by sending an email to <mailto:security@ever.co> or on [![huntr](https://cdn.huntr.dev/huntr_security_badge_mono.svg)](https://huntr.dev) and not by creating a GitHub issue.
 
-## License
+## 🛡️ License
 
 We support the open-source community. If you're building awesome non-profit/open-source projects, we're happy to help and will provide (subject to [acceptance criteria](https://github.com/ever-co/ever-demand/wiki/Free-license-and-hosting-for-Non-profit-and-Open-Source-projects)) Ever Demand Enterprise edition license and free hosting option! Feel free to contact us at <mailto:ever@ever.co> to make a request. More details explained in our [Wiki](https://github.com/ever-co/ever-demand/wiki/Free-license-and-hosting-for-Non-profit-and-Open-Source-projects).
 
@@ -257,7 +251,24 @@ The trademarks may only be used with the written permission of Ever Co. LTD. and
 
 All other brand and product names are trademarks, registered trademarks or service marks of their respective holders.
 
+## 🍺 Contribute
+
+-   Please give us :star: on Github, it **helps**!
+-   You are more than welcome to submit feature requests in the [separate repo](https://github.com/ever-co/feature-requests/issues)
+-   Pull requests are always welcome! Please base pull requests against the _develop_ branch and follow the [contributing guide](.github/CONTRIBUTING.md).
+
+## 💪 Thanks to our Contributors
+
+See our contributors list in [CONTRIBUTORS.md](https://github.com/ever-co/ever-demand/blob/develop/.github/CONTRIBUTORS.md).  
+You can also view full list of our [contributors tracked by Github](https://github.com/ever-co/ever-demand/graphs/contributors).
+
+<img src="https://contributors-img.web.app/image?repo=ever-co/ever-demand" />
+
+## ©️ Copyright
+
 #### Copyright © 2016-present, Ever Co. LTD. All rights reserved.
+
+---
 
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=ever-co.ever-platform)
 [![huntr](https://cdn.huntr.dev/huntr_security_badge_mono.svg)](https://huntr.dev)
@@ -272,7 +283,7 @@ All other brand and product names are trademarks, registered trademarks or servi
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io)
 [![Crowdin](https://badges.crowdin.net/e/581540ddcc7c1cf42a50d0e0a6a3d7f7/localized.svg)](https://ever.crowdin.com/ever)
 
-## P.S.
+## 🔥 P.S.
 
 -   If you are running any business or doing freelance, check our new project [Ever Gauzy](https://github.com/ever-co/ever-gauzy) - Open Business Management Platform (ERP/CRM/HRM)
 -   [We are Hiring: remote TypeScript / NodeJS / NestJS / Angular & React developers](https://github.com/ever-co/jobs#available-positions)
