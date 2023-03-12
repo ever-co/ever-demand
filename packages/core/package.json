@@ -110,7 +110,7 @@
 		"faker": "^5.5.3",
 		"fstream": "^1.0.12",
 		"fs-extra": "^9.1.0",
-		"graphql": "15.7.2",
+		"graphql": "15.8.0",
 		"graphql-tools": "^8.2.0",
 		"graphql-playground-middleware-express": "^1.7.23",
 		"graphql-subscriptions": "^2.0.0",
