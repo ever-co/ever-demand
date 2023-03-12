@@ -95,7 +95,7 @@
 		"cordova-plugin-camera": "^6.0.0",
 		"cordova-plugin-device": "^2.0.3",
 		"cordova-plugin-dialogs": "^2.0.2",
-		"cordova-plugin-email-composer": "^0.9.2",
+		"cordova-plugin-email-composer": "^0.10.1",
 		"cordova-plugin-geolocation": "^4.1.0",
 		"cordova-plugin-globalization": "^1.11.0",
 		"cordova-plugin-google-analytics": "^1.9.0",
