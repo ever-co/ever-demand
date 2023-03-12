@@ -49,7 +49,7 @@
 		"@angular/compiler": "^13.1.0",
 		"@angular/core": "^13.1.0",
 		"@angular/forms": "^13.1.0",
-		"@angular/language-service": "~13.1.0",
+		"@angular/language-service": "~13.3.12",
 		"@angular/platform-browser": "^13.1.0",
 		"@angular/platform-browser-dynamic": "^13.1.0",
 		"@angular/router": "^13.1.0",
