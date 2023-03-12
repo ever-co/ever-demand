@@ -126,7 +126,7 @@
 		"lodash": "^4.17.21",
 		"lodash.mergewith": "^4.6.2",
 		"mongoose": "^6.0.11",
-		"mpath": "^0.8.4",
+		"mpath": "^0.9.0",
 		"mquery": "^4.0.0",
 		"mx.ferreyra.callnumber": "0.0.2",
 		"neo-async": "^2.6.2",
