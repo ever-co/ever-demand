@@ -27,14 +27,14 @@ exports.env = envalid_1.cleanEnv(
 		DEFAULT_LONGITUDE: envalid_1.num({ default: 23.3932736 }),
 		DEFAULT_LANGUAGE: envalid_1.str({ default: 'en' }),
 		GQL_ENDPOINT: envalid_1.str({
-			default: 'http://localhost:5555/graphql',
+			default: 'http://localhost:8443/graphql',
 		}),
 		GQL_SUBSCRIPTIONS_ENDPOINT: envalid_1.str({
-			default: 'ws://localhost:5050/subscriptions',
+			default: 'ws://localhost:2086/subscriptions',
 		}),
 		SERVICES_ENDPOINT: envalid_1.str({ default: 'http://localhost:5500' }),
 		HTTPS_SERVICES_ENDPOINT: envalid_1.str({
-			default: 'https://localhost:5501',
+			default: 'https://localhost:2087',
 		}),
 		SETTINGS_APP_TYPE: envalid_1.str({ default: 'carrier-mobile' }),
 		SETTINGS_MAINTENANCE_API_URL: envalid_1.str({
