@@ -5,7 +5,13 @@
 [![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/ever-co/ever?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/evereq?utm_source=github&utm_medium=button&utm_term=evereq&utm_campaign=github)
 
-## ⭐️ What is it?
+## 💡 What's New
+
+We released [Ever Gauzy Teams](https://github.com/ever-co/ever-gauzy-teams) platform for Work & Project Management.  
+Please check <https://github.com/ever-co/ever-gauzy-teams> and make it ⭐ on GitHub!  
+It's built with React / ReactNative stack and connects to headless [Ever Gauzy Platform](https://github.com/ever-co/ever-gauzy) APIs.
+
+## 🌟 What is it
 
 [Ever® Demand™](https://ever.co) is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform built with [TypeScript](http://www.typescriptlang.org).
 
