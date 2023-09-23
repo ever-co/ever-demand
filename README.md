@@ -1,4 +1,4 @@
-# Open-Source Commerce Platform for On-Demand Economy and Digital Marketplaces
+# Open Commerce Platform
 
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ever-co/ever-demand)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/ever)
@@ -7,14 +7,15 @@
 
 ## 💡 What's New
 
-We released [Ever Gauzy Teams](https://github.com/ever-co/ever-gauzy-teams) platform for Work & Project Management.  
+We released [Ever Gauzy Teams](https://github.com/ever-co/ever-gauzy-teams) - an Open Work and Project Management Platform.  
 Please check <https://github.com/ever-co/ever-gauzy-teams> and make it ⭐ on GitHub!  
 It's built with a React / ReactNative stack and connects to headless [Ever Gauzy Platform](https://github.com/ever-co/ever-gauzy) APIs.
 
 ## 🌟 What is it
 
-[Ever® Demand™](https://ever.co) is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform built with [TypeScript](http://www.typescriptlang.org).
+[Ever® Demand™](https://ever.co) - Open Platform for **Collaborative**, **On-Demand** and **Sharing** **Economies**.  
 
+It's an Open-Source, Real-Time, and Reactive Platform built with [TypeScript](http://www.typescriptlang.org).  
 You are welcome to check more information about the platform at our official website - **<https://ever.co>**.
 
 ![overview](https://docs.ever.co/docs/assets/overview_small.png)
@@ -42,8 +43,7 @@ You are welcome to check more information about the platform at our official web
 
 ### Current Features
 
--   Modern & Open Platform for **On-Demand Economy** and **Digital Marketplaces**
--   Supports Single-Store and Multi-Store / Multi-Vendor / Peer-to-Peer Marketplaces
+-   Supports Single-Store and Multi-Store / Multi-Vendor / Peer-to-Peer / Digital Marketplaces
 -   Everything Reactive, Real-Time, and Blazing Fast!
 -   Headless Commerce framework, which allows different implementations of store-fronts, Admin UIs, and client apps. It exposes rich GraphQL, REST, and WS APIs.
 -   Mobile ordering App for customers to make On-Demand orders (Hybrid / PWA, iOS and Android using Ionic / Ionic Native)
@@ -55,7 +55,7 @@ You are welcome to check more information about the platform at our official web
 -   Product catalogs (global and per Merchant) with Multiple Product Images
 -   Inventory/Stock Management and Real-time Order Management/Processing across the Platform
 -   Deliveries/Shipping management and processing across the Platform (shipping with real-time location tracking for On-Demand orders)
--   Real-time discounts, promotions and products/services availability updates
+-   Real-time discounts, promotions, and product/service availability updates
 -   Customer registration, Guest Checkouts, Invitations (optional)
 -   Gateway and Payment Processing (currently supported Payments Gateway - [Stripe](https://stripe.com))
 -   Plugins / Extensions / Custom Fields (WIP)
@@ -63,7 +63,7 @@ You are welcome to check more information about the platform at our official web
 ### Planned Features
 
 -   Tax Calculations
--   Third-party Shipping providers integrations
+-   Third-party Shipping provider integrations
 -   User Roles / Permissions across Platform
 -   Large product catalogs with product variants, facets, and full-text search
 
@@ -129,7 +129,7 @@ npm install -g yarn@latest
 
 ### Quick installation
 
-After Git repo is cloned, just run the following command to install/bootstrap all dependencies:
+After this GitHub repo is cloned, just run the following command to install/bootstrap all dependencies:
 
 ```
 yarn bootstrap
@@ -228,8 +228,8 @@ According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform tod
 
 ## 🔐 Security
 
-Ever Demand Platform follows good security practices, but 100% security cannot be guaranteed in any software!
-Ever Demand Platform is provided AS IS without any warranty. Use at your own risk!
+Ever® Demand™ Platform follows good security practices, but 100% security cannot be guaranteed in any software!
+Ever® Demand™ Platform is provided AS IS without any warranty. Use at your own risk!
 See more details in the [LICENSE.md](LICENSE.md).
 
 In a production setup, all client-side to server-side (backend, APIs) communications should be encrypted using HTTPS/WSS/SSL (REST APIs, GraphQL endpoint, Socket.io WebSockets, etc.).
