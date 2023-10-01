@@ -7,8 +7,8 @@
 
 ## 💡 What's New
 
-We released [Ever Gauzy Teams](https://github.com/ever-co/ever-gauzy-teams) - an Open Work and Project Management Platform.  
-Please check <https://github.com/ever-co/ever-gauzy-teams> and make it ⭐ on GitHub!  
+We released [Ever Teams](https://github.com/ever-co/ever-teams) - an Open Work and Project Management Platform.  
+Please check <https://github.com/ever-co/ever-teams> and make it ⭐ on GitHub!  
 It's built with a React / ReactNative stack and connects to headless [Ever Gauzy Platform](https://github.com/ever-co/ever-gauzy) APIs.
 
 ## 🌟 What is it
