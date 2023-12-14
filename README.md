@@ -9,7 +9,7 @@
 
 We released [Ever Teams](https://github.com/ever-co/ever-teams) - an Open Work and Project Management Platform.  
 Please check <https://github.com/ever-co/ever-teams> and make it ⭐ on GitHub!  
-It's built with a React / ReactNative stack and connects to headless [Ever Gauzy Platform](https://github.com/ever-co/ever-gauzy) APIs.
+It's built with a React and React Native stack and connects to headless [Ever Gauzy Platform](https://github.com/ever-co/ever-gauzy) APIs.
 
 ## 🌟 What is it
 
@@ -18,7 +18,7 @@ It's built with a React / ReactNative stack and connects to headless [Ever Gauzy
 It's an Open-Source, Real-Time, and Reactive Platform built with [TypeScript](http://www.typescriptlang.org).  
 You are welcome to check more information about the platform at our official website - **<https://ever.co>**.
 
-![overview](https://docs.ever.co/docs/assets/overview_small.png)
+![overview](https://docs.ever.co/overview_small.png)
 
 ## 💻 Demos
 
