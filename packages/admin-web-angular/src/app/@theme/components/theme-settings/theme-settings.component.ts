@@ -34,6 +34,10 @@ export class ThemeSettingsComponent {
 			value: 'es-ES',
 			name: 'Spanish',
 		},
+		{
+			value: 'fr-FR',
+			name: 'French'
+		}
 	];
 
 	themes = [
@@ -73,7 +77,7 @@ export class ThemeSettingsComponent {
 	) {
 		this.defaultLanguage = environment['DEFAULT_LANGUAGE'];
 
-		translate.addLangs(['en-US', 'bg-BG', 'he-IL', 'ru-RU', 'es-ES']);
+		translate.addLangs(['en-US', 'bg-BG', 'he-IL', 'ru-RU', 'es-ES', 'fr-FR']);
 		translate.setDefaultLang('en-US');
 
 		const browserLang = translate.getBrowserLang();
@@ -81,7 +85,7 @@ export class ThemeSettingsComponent {
 			translate.use(this.defaultLanguage);
 		} else {
 			translate.use(
-				browserLang.match(/en-US|bg-BG|he-IL|ru-RU|es-ES/)
+				browserLang.match(/en-US|bg-BG|he-IL|ru-RU|es-ES|fr-FR/)
 					? browserLang
 					: 'en-US'
 			);
