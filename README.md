@@ -304,6 +304,7 @@ You can also view a full list of our [contributors tracked by Github](https://gi
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fever-demand.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fever-demand?ref=badge_shield)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io)
 [![Crowdin](https://badges.crowdin.net/e/581540ddcc7c1cf42a50d0e0a6a3d7f7/localized.svg)](https://ever.crowdin.com/ever)
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/ever-co/ever-demand?utm_source=oss&utm_medium=github&utm_campaign=ever-co%2Fever-demand&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
 
 ## 🔥 P.S.
 
