@@ -1,11 +1,18 @@
 name: Deploy to DigitalOcean
 
 on:
-    workflow_run:
-        workflows: ['Build and Publish Docker Images']
-        branches: [ develop, master ]
-        types:
-          - completed
+    push:
+        branches:
+          - develop
+          - stage
+          - master
+
+# on:
+#    workflow_run:
+#        workflows: ['Build and Publish Docker Images']
+#        branches: [ develop, stage, master ]
+#        types:
+#          - completed
 
 jobs:
     deploy-dev:
