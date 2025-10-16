@@ -4,6 +4,7 @@ on:
     push:
         branches:
           - develop
+          - stage
           - master
 
 jobs:
