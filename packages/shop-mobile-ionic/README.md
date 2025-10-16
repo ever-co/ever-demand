@@ -1,1 +1,1 @@
-# Ever Shop Mobile App (Ionic)
+# Ever Demand Shop Mobile App (Ionic version)

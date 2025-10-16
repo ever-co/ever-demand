@@ -4,7 +4,7 @@ import { DBService, getModel, IDBService } from '@pyro/db-server';
 import { DBCreateObject, DBObject, DBRawObject, PyroObjectId, Schema, Types } from '@pyro/db';
 import Logger from 'bunyan';
 import mongoose from 'mongoose';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { loggerMock } from '../../loggerMock';
 import { take, toArray } from 'rxjs/operators';
 

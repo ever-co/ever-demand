@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 import IInviteRouter from '@modules/server.common/routers/IInviteRouter';
 import { asyncListener, observableListener, routerName } from '@pyro/io';
 import IService from '../IService';
-import { of } from 'rxjs/observable/of';
+import { of, from } from 'rxjs';
 import {
 	concat,
 	exhaustMap,
@@ -21,12 +21,11 @@ import {
 	first,
 	switchMap,
 } from 'rxjs/operators';
-import { from } from 'rxjs/observable/from';
 import _ = require('lodash');
 import { env } from '../../env';
 import { IGeoLocationCreateObject } from '@modules/server.common/interfaces/IGeoLocation';
 import { IInviteRequestCreateObject } from '@modules/server.common/interfaces/IInviteRequest';
-import faker from 'faker';
+import * as faker from 'faker';
 import { Country } from '@modules/server.common/entities/GeoLocation';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 
@@ -268,7 +267,7 @@ export class InvitesService extends DBService<Invite>
 		// TODO: make TSlint happy
 		// tslint:disable-next-line:no-object-literal-type-assertion
 		return {
-			countryId: faker.random.number(Country.ZW) as Country,
+			countryId: faker.datatype.number(Country.ZW) as Country,
 			city: faker.address.city(),
 			house: houseNumber,
 			loc: {

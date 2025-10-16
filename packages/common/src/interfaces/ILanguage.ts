@@ -1,5 +1,5 @@
 // TODO: add other locales
-type ILanguage = 'he-IL' | 'en-US' | 'ru-RU' | 'bg-BG' | 'es-ES';
+type ILanguage = 'he-IL' | 'en-US' | 'ru-RU' | 'bg-BG' | 'es-ES' | 'fr-FR';
 
 export default ILanguage;
 
@@ -9,6 +9,7 @@ export enum LanguageCodesEnum {
 	RUSSIAN = 'ru-RU',
 	BULGARIAN = 'bg-BG',
 	SPANISH = 'es-ES',
+	FRENCH = 'fr-FR',
 }
 
 export enum LanguagesEnum {
@@ -17,4 +18,5 @@ export enum LanguagesEnum {
 	RUSSIAN = 'RUSSIAN',
 	BULGARIAN = 'BULGARIAN',
 	SPANISH = 'SPANISH',
+	FRENCH = 'FRENCH',
 }

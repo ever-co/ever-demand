@@ -1,17 +1,26 @@
+# Open Commerce Platform
+
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ever-co/ever-demand)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/ever)
 [![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/ever-co/ever?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/evereq?utm_source=github&utm_medium=button&utm_term=evereq&utm_campaign=github)
 
-# Open-Source Commerce Platform for On-Demand Economy and Digital Marketplaces
+## 💡 What's New
 
-[Ever® Demand™](https://ever.co) is an Open-Source, Real-Time, Reactive, **On-Demand** Commerce Platform built with [TypeScript](http://www.typescriptlang.org).
+We released [Ever Teams](https://github.com/ever-co/ever-teams) - an Open Work and Project Management Platform.  
+Please check <https://github.com/ever-co/ever-teams> and make it ⭐ on GitHub!  
+It's built with a React and React Native stack and connects to headless [Ever Gauzy Platform](https://github.com/ever-co/ever-gauzy) APIs.
 
+## 🌟 What is it
+
+[Ever® Demand™](https://ever.co) - Open Platform for **Collaborative**, **On-Demand** and **Sharing** **Economies**.  
+
+It's an Open-Source, Real-Time, and Reactive Platform built with [TypeScript](http://www.typescriptlang.org).  
 You are welcome to check more information about the platform at our official website - **<https://ever.co>**.
 
-![overview](https://docs.ever.co/docs/assets/overview_small.png)
+![overview](https://docs.ever.co/overview_small.png)
 
-## Demos
+## 💻 Demos
 
 **Demos are not available at the moment as we are moving to Kubernetes and showdown old demo server!**
 
@@ -25,63 +34,75 @@ You are welcome to check more information about the platform at our official web
 
 -->
 
-## Features
+## Video Intros
 
--   Modern & Open Platform for **On-Demand Economy** and **Digital Marketplaces**
--   Supports Single-Store and Multi-Store / Multi-Vendor / Peer-to-Peer Marketplaces
--   Everything Reactive, Real-Time and Blazing Fast!
--   Headless Commerce framework, which allows different implementations of store-fronts, Admin UIs and client apps. It exposes rich GraphQL, REST and WS APIs.
+- Introduction of both Ever Demand and Ever Gauzy platforms - [view video](https://www.loom.com/share/ff9a9b1fa3a849cca5cf68a6d502443b) (~30 min) or [download](https://media.githubusercontent.com/media/ever-co/ever-demand-docs/master/docs/assets/videos/EverDemandAndGauzyIntro.mp4)
+- Introduction to Ever Demand Mobile Shop customer experience (UX) - [view video](https://www.loom.com/share/488f774e6b6d4ee88107443ce4522f1f) (~30 min) or [download](https://media.githubusercontent.com/media/ever-co/ever-demand-docs/master/docs/assets/videos/EverDemandMobileShopIntro.mp4)
+
+## ✨ Features
+
+### Current Features
+
+-   Supports Single-Store and Multi-Store / Multi-Vendor / Peer-to-Peer / Digital Marketplaces
+-   Everything Reactive, Real-Time, and Blazing Fast!
+-   Headless Commerce framework, which allows different implementations of store-fronts, Admin UIs, and client apps. It exposes rich GraphQL, REST, and WS APIs.
 -   Mobile ordering App for customers to make On-Demand orders (Hybrid / PWA, iOS and Android using Ionic / Ionic Native)
--   Carrier (Driver) Mobile App for deliveries by carriers, drivers or service providers (iOS and Android using Ionic / Ionic Native)
+-   Carrier (Driver) Mobile App for deliveries by carriers, drivers, or service providers (iOS and Android using Ionic / Ionic Native)
 -   Customizing Shopping e-commerce Website for customers to make in-browser On-Demand purchases of food, goods or services
 -   Merchant Tablet App for Stores/Merchants/Warehouses to manage & track orders, organize deliveries, etc.
 -   Admin Website used to manage all platform features and settings in the single Web-based interface
 -   Multi-language and culture settings across Platform (i18N)
--   Products Catalogs (global and per Merchant) with Multiple Product Images
+-   Product catalogs (global and per Merchant) with Multiple Product Images
 -   Inventory/Stock Management and Real-time Order Management/Processing across the Platform
--   Deliveries/Shipping management and processing across Platform (shipping with real-time location tracking for On-Demand orders)
--   Real-Time discounts, promotions and products/services availability updates
--   Customers registration, Guest Checkouts, Invitations (optional)
+-   Deliveries/Shipping management and processing across the Platform (shipping with real-time location tracking for On-Demand orders)
+-   Real-time discounts, promotions, and product/service availability updates
+-   Customer registration, Guest Checkouts, Invitations (optional)
 -   Gateway and Payment Processing (currently supported Payments Gateway - [Stripe](https://stripe.com))
 -   Plugins / Extensions / Custom Fields (WIP)
 
-## Planned Features
+### Planned Features
 
 -   Tax Calculations
--   Third-party Shipping providers integrations
--   Users Roles / Permissions across Platform
--   Large products catalogs with products variants, facets and full-text search
+-   Third-party Shipping provider integrations
+-   User Roles / Permissions across Platform
+-   Large product catalogs with product variants, facets, and full-text search
 
 You can also track feature requests from the community in the [separate repo](https://github.com/ever-co/feature-requests/issues).
 
 ### Disclaimer
 
-_A word of caution_: We are in α (alpha), i.e. Ever® Platform™ is very much under development (work in progress, WIP).  
+_A word of caution_: We are in α (alpha), i.e. Ever® Platform™ is very much under development (work in progress, WIP).
 Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_winking_eye:
 
-## Technology Stack and Requirements
+## 🧱 Technology Stack and Requirements
 
--   [TypeScript](https://www.typescriptlang.org) language
--   [NodeJs](https://nodejs.org) / [NestJs](https://github.com/nestjs/nest)
--   [Ionic](https://ionicframework.com) (version 5) for Shopping Mobile App, Carrier Mobile App and Merchant Tablet App
--   Shopping Website developed with [Angular](https://angular.io) (version 9.1) using [Angular Starter](https://github.com/gdi2290/angular-starter)
--   Admin Website developed with [Angular](https://angular.io) (version 9.1) using [ngx-admin](https://github.com/akveo/ngx-admin)
--   Headless Commerce framework (Backend APIs/Server) developed using [Nest](https://github.com/nestjs/nest) with heavy use of our own Pyro module. Supports GraphQL, REST and WS Real-Time APIs (WebSockets using [Socket.io](https://socket.io) library)
--   [RxJS](http://reactivex.io/rxjs) library used heavy in every part of the Platform
--   [InversifyJS](http://inversify.io) used for Inversion Control / Dependency Injection in most parts of the Platform. On the Backend/API we also use DI provided by [Nest](https://github.com/nestjs/nest)
--   [MongoDB](https://www.mongodb.com) Database used with [Mongoose](https://mongoosejs.com) ORM (supported MongoDB version >= 3.2; we recommend version >=4)
--   We have ongoing effort (WIP) to add support for other databases using [TypeORM](https://github.com/typeorm/typeorm) and [Prisma](https://github.com/prisma/prisma). Following additional DBs will be fully supported: MySQL, PostgreSQL, MariaDB, SQLite, MS SQL Server and Oracle.
--   For production, we integrate and recommend to use [PM2](https://github.com/Unitech/pm2)
+-   Full-stack [TypeScript](https://www.typescriptlang.org) - frontends and [NodeJs](https://nodejs.org)/[Nest](https://github.com/nestjs/nest) backend.
+-   Headless Commerce framework (Backend APIs/Server) developed using [Nest](https://github.com/nestjs/nest). Supports GraphQL, REST and WS Real-Time APIs (WebSockets using [Socket.io](https://socket.io) library).
+-   [Ionic](https://ionicframework.com) (version 5) for Carrier Mobile App and Merchant Tablet App.
+-   Shopping Mobile App built with [Ionic](https://ionicframework.com) (version 5).
+-   Shopping Mobile App built with [React Native](https://github.com/facebook/react-native) using [Expo](https://github.com/expo/expo) (WIP).
+-   Shopping Mobile App built with [Flutter](https://github.com/flutter/flutter) / Dart (WIP).
+-   Shopping Website developed with [Angular](https://angular.io) (version 9.1) using [Angular Starter](https://github.com/gdi2290/angular-starter).
+-   Admin Website developed with [Angular](https://angular.io) (version 9.1) using [ngx-admin](https://github.com/akveo/ngx-admin).
+-   [RxJS](http://reactivex.io/rxjs) library used heavily in every part of the Platform.
+-   [InversifyJS](http://inversify.io) used for Inversion Control / Dependency Injection in most parts of the Platform. On the Backend/API we also use DI provided by [Nest](https://github.com/nestjs/nest).
+-   [MongoDB](https://www.mongodb.com) Database used with [Mongoose](https://mongoosejs.com) ORM (supported MongoDB version >= 3.2; we recommend version >=4).
+-   We have an ongoing effort (WIP) to add support for other databases using [TypeORM](https://github.com/typeorm/typeorm) and [Prisma](https://github.com/prisma/prisma). The following additional DBs will be fully supported: MySQL, PostgreSQL, MariaDB, SQLite, MS SQL Server, and Oracle.
+-   For production, we integrate and recommend using [PM2](https://github.com/Unitech/pm2).
 
 #### See also README.md and CREDITS.md files in relevant folders for lists of libraries and software included in the Platform, information about licenses and other details.
 
-## Documentation
+## 📄 Documentation
 
 Please refer to our official [Platform Documentation](https://docs.ever.co) and to our [Wiki](https://github.com/ever-co/ever-demand/wiki) (WIP).
 
-For a quick overview of each project in the Platform (Server, Admin, Shops, etc.), you can search for README.md file in the root of the projects folders. For example, see [./backend/api/README.md](backend/api/README.md) for Server (Backend) related overview.
+For a quick overview of each project in the Platform (Server, Admin, Shops, etc.), you can search for the README.md file in the root of the project's folders. For example, see [./backend/api/README.md](backend/api/README.md) for Server (Backend) related overview.
 
-## Getting Started
+## 📊 Activity
+
+![Alt](https://repobeats.axiom.co/api/embed/4e666433c785034fea1712b91f5f7d09ed009385.svg "Repobeats analytics image")
+
+## 🚀 Getting Started
 
 We follow [Gitflow Workflow](https://nvie.com/posts/a-successful-git-branching-model), so the [`develop` branch](https://github.com/ever-co/ever-demand/tree/develop) may be in an unstable or even broken state during development. Please use [releases](https://github.com/ever-co/ever/releases) or [`master` branch](https://github.com/ever-co/ever-demand/tree/master) instead of the `develop` branch in order to get more stable code.
 
@@ -95,12 +116,12 @@ git clone https://github.com/ever-co/ever-demand.git
 
 **IMPORTANT NOTE:**
 
--   if you want to use develop branch (unstable, but latest development) clone using `--branch develop` (our default branch).
--   if you want to use release branch (more stable) clone using `--branch master`.
+-   If you want to use a develop branch (unstable, but latest development) clone using `--branch develop` (our default branch).
+-   If you want to use a release branch (more stable) clone use `--branch master`.
 
 ### Yarn
 
-Currently, we are using `Yarn` (instead of `npm`), so make sure you have latest Yarn version installed before running Ever Platform:
+Currently, we are using `Yarn` (instead of `npm`), so make sure you have the latest Yarn version installed before running Ever Platform:
 
 ```
 npm install -g yarn@latest
@@ -108,30 +129,30 @@ npm install -g yarn@latest
 
 ### Quick installation
 
-After git repo cloned, just run following command to install/bootstrap all dependencies:
+After this GitHub repo is cloned, just run the following command to install/bootstrap all dependencies:
 
 ```
 yarn bootstrap
 ```
 
-Above command install required packages in all Platform projects using Lerna.
+The above command installs the required packages in all Platform projects using Lerna.
 
-Note: if above command fails for any reason, you can try to install required packages manually by running `yarn` inside every sub-folder of `packages` folder with 'package.json' file
+Note: if the above command fails for any reason, you can try to install the required packages manually by running `yarn` inside every sub-folder of the `packages` folder with the 'package.json' file
 
 ### Build
 
-You can build all projects in Ever Platform using single command below:
+You can build all projects in Ever Platform using the single command below:
 
 ```
 yarn build:all
 ```
 
-Note: the parallel build available using `yarn build` command
+Note: The parallel build is available using `yarn build` command
 
 ### Lerna (manual installation)
 
 We are using [Lerna](https://github.com/lerna/lerna) for mono-repo management.
-You need to run the following command from the working folder where you cloned Ever git repo, which install Lerna together with other packages:
+You need to run the following command from the working folder where you cloned the Ever Demand Git repo, which installs Lerna together with other packages:
 
 ```
 yarn
@@ -143,25 +164,25 @@ You may instead install Lerna globally:
 npm install lerna@latest -g
 ```
 
-Now, after Lerna installed (locally or globally), you need to Bootstrap all dependencies manually:
+Now, after Lerna is installed (locally or globally), you need to Bootstrap all dependencies manually:
 
 ```
 yarn lerna bootstrap
 ```
 
-The command above install all required packages for every sub-project of the Ever Platform.
+The command above installs all required packages for every sub-project of the Ever Platform.
 
-Note: if above command fails for any reason, you can try to install required packages manually by running `yarn` inside every sub-folder with 'package.json' file.
+Note: if the above command fails for any reason, you can try to install the required packages manually by running `yarn` inside every sub-folder with 'package.json' file.
 
-After Lerna bootstrap everything you need to run build for all projects as described above in the "Build" section.
+After Lerna bootstraps everything you need to run the build for all projects as described above in the "Build" section.
 
 ### MongoDB
 
-Ever platform configured to use MongoDB by default and assume you have MongoDB service running and accepting connections on the default `localhost:27017`. Please see relevant section in our [documentation](https://github.com/ever-co/ever-demand/wiki/MongoDB).
+Ever Demand platform configured to use MongoDB by default and assume you have MongoDB service running and accepting connections on the default `localhost:27017`. Please see relevant section in our [documentation](https://github.com/ever-co/ever-demand/wiki/MongoDB).
 
 ### Platform Configuration
 
-See relevant section in our [documentation](https://github.com/ever-co/ever-demand/wiki/Ever-Platform-Configuration).
+See the relevant section in our [documentation](https://github.com/ever-co/ever-demand/wiki/Ever-Platform-Configuration).
 
 ### Run Platform Projects
 
@@ -174,34 +195,24 @@ After you build everything (`yarn build:all`, described above), each project fro
 -   Run Carrier Mobile app `yarn run:carrier` and open http://localhost:4203
 -   Run Shopping Website `yarn run:shopweb` and open http://localhost:3000
 
-Note 1: it is important to build shared / common platform modules (`yarn build:common` or `yarn build:all`) before running the Platform Core (API) or Apps
+Note 1: It is important to build shared / common platform modules (`yarn build:common` or `yarn build:all`) before running the Platform Core (API) or Apps
 
-Note 2: during development you can run server with `yarn run:server:dev` to enable watch on TS files changes
+Note 2: During development, you can run a server with `yarn run:server:dev` to enable watch on TS file changes
 
-Note 3: on the first run, API Server (Backend) creates MongoDB local database `ever_development` with the following (default) Admin user
+Note 3: On the first run, the API Server (Backend) creates MongoDB local database `ever_development` with the following (default) Admin user
 
 -   email: `admin@ever.co`
 -   password: `admin`
 
-You can use credentials above to login into Platform Admin App.
+You can use the credentials above to login into Platform Admin App.
 
-Note 3: in order to be able to run every project, you need to make sure everything builds, see section "Build" above.
+Note 3: In order to be able to run every project, you need to make sure everything builds, see section "Build" above.
 
 ## Metrics
 
 According to [cloc](https://github.com/AlDanial/cloc) project, Ever Platform today has more than 120K lines of TypeScript, GraphQL, HTML / CSS and other code files. You can get more details in the relevant section of our [documentation](https://github.com/ever-co/ever-demand/wiki/Metrics).
 
-## Contribute
-
--   Please give us :star: on Github, it **helps**!
--   You are more than welcome to submit feature requests in the [separate repo](https://github.com/ever-co/feature-requests/issues)
--   Pull requests are always welcome! Please base pull requests against the _develop_ branch and follow the [contributing guide](.github/CONTRIBUTING.md).
-
-## Contributors
-
-View full list of our [contributors](https://github.com/ever-co/ever-demand/graphs/contributors).
-
-## Contact Us
+## 💌 Contact Us
 
 -   [Ever.co Website Contact Us page](https://ever.co/contacts)
 -   [Discord Chat](https://discord.gg/msqRJ4w)
@@ -215,21 +226,21 @@ View full list of our [contributors](https://github.com/ever-co/ever-demand/grap
 -   [Ever Platform @ Twitter](https://twitter.com/everplatform)
 -   [Ever Platform @ Facebook](https://www.facebook.com/everplatform)
 
-## Security
+## 🔐 Security
 
-Ever Platform follows good security practices, but 100% security cannot be guaranteed in any software!  
-Ever Platform is provided AS IS without any warranty. Use at your own risk!  
+Ever® Demand™ Platform follows good security practices, but 100% security cannot be guaranteed in any software!
+Ever® Demand™ Platform is provided AS IS without any warranty. Use at your own risk!
 See more details in the [LICENSE.md](LICENSE.md).
 
 In a production setup, all client-side to server-side (backend, APIs) communications should be encrypted using HTTPS/WSS/SSL (REST APIs, GraphQL endpoint, Socket.io WebSockets, etc.).
 
 If you discover any issue regarding security, please disclose the information responsibly by sending an email to <mailto:security@ever.co> or on [![huntr](https://cdn.huntr.dev/huntr_security_badge_mono.svg)](https://huntr.dev) and not by creating a GitHub issue.
 
-## License
+## 🛡️ License
 
-We support the open-source community. If you're building awesome non-profit/open-source projects, we're happy to help and will provide (subject to [acceptance criteria](https://github.com/ever-co/ever-demand/wiki/Free-license-and-hosting-for-Non-profit-and-Open-Source-projects)) Ever Demand Enterprise edition license and free hosting option! Feel free to contact us at <mailto:ever@ever.co> to make a request. More details explained in our [Wiki](https://github.com/ever-co/ever-demand/wiki/Free-license-and-hosting-for-Non-profit-and-Open-Source-projects).
+We support the open-source community. If you're building awesome non-profit/open-source projects, we're happy to help and will provide (subject to [acceptance criteria](https://github.com/ever-co/ever-demand/wiki/Free-license-and-hosting-for-Non-profit-and-Open-Source-projects)) Ever Demand Enterprise edition license and free hosting option! Feel free to contact us at <mailto:ever@ever.co> to make a request. More details are explained in our [Wiki](https://github.com/ever-co/ever-demand/wiki/Free-license-and-hosting-for-Non-profit-and-Open-Source-projects).
 
-This software is available under following licenses:
+This software is available under the following licenses:
 
 -   [Ever® Demand™ Platform Community Edition](https://github.com/ever-co/ever-demand/blob/master/LICENSE.md#ever-platform-community-edition-license)
 -   [Ever® Demand™ Platform Small Business](https://github.com/ever-co/ever-demand/blob/master/LICENSE.md#ever-platform-small-business-license)
@@ -243,20 +254,49 @@ This software is available under following licenses:
 
 ## Trademarks
 
-**Ever**® is a registered trademark of [Ever Co. LTD](https://ever.co).  
-**Ever® Demand™**, **Ever® Gauzy™** and **Ever® OpenSaaS™**  are all trademarks of [Ever Co. LTD](https://ever.co).
+**Ever**® is a registered trademark of [Ever Co. LTD](https://ever.co).
+**Ever® Demand™**, **Ever® Gauzy™** and **Ever® OpenSaaS™** are all trademarks of [Ever Co. LTD](https://ever.co).
 
 The trademarks may only be used with the written permission of Ever Co. LTD. and may not be used to promote or otherwise market competitive products or services.
 
-All other brand and product names are trademarks, registered trademarks or service marks of their respective holders.
+All other brand and product names are trademarks, registered trademarks, or service marks of their respective holders.
+
+## 🍺 Contribute
+
+-   Please give us :star: on Github, it **helps**!
+-   You are more than welcome to submit feature requests in the [separate repo](https://github.com/ever-co/feature-requests/issues)
+-   Pull requests are always welcome! Please base pull requests against the _develop_ branch and follow the [contributing guide](.github/CONTRIBUTING.md).
+
+## 💪 Thanks to our Contributors
+
+See our contributors list in [CONTRIBUTORS.md](https://github.com/ever-co/ever-demand/blob/develop/.github/CONTRIBUTORS.md).  
+You can also view a full list of our [contributors tracked by Github](https://github.com/ever-co/ever-demand/graphs/contributors).
+
+<img src="https://contributors-img.web.app/image?repo=ever-co/ever-demand" />
+
+## ⭐ Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=ever-co/ever-demand&type=Date)](https://star-history.com/#ever-co/ever-demand&Date)
+
+## ❤️ Powered By
+
+<p>
+  <a href="https://www.digitalocean.com/?utm_medium=opensource&utm_source=ever-co">
+    <img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/PoweredByDO/DO_Powered_by_Badge_blue.svg" width="201px">
+  </a>
+</p>
+
+## ©️ Copyright
 
 #### Copyright © 2016-present, Ever Co. LTD. All rights reserved.
+
+---
 
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=ever-co.ever-platform)
 [![huntr](https://cdn.huntr.dev/huntr_security_badge_mono.svg)](https://huntr.dev)
 [![Circle CI](https://circleci.com/gh/ever-co/ever-demand.svg?style=svg)](https://circleci.com/gh/ever-co/ever-demand)
 [![codecov](https://codecov.io/gh/ever-co/ever-demand/branch/master/graph/badge.svg)](https://codecov.io/gh/ever-co/ever-demand)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e7b2b38660f44963989ac9d49ae76d4d)](https://www.codacy.com/app/Ever/ever?utm_source=github.com&utm_medium=referral&utm_content=ever-co/ever&utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/ec4b3c9e71ff42919563f1809de4e601)](https://www.codacy.com/gh/ever-co/ever-demand/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ever-co/ever-demand&amp;utm_campaign=Badge_Grade)
 [![DeepScan grade](https://deepscan.io/api/teams/3293/projects/4849/branches/38566/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=3293&pid=4849&bid=38566)
 [![Known Vulnerabilities](https://snyk.io/test/github/ever-co/ever-demand/badge.svg)](https://snyk.io/test/github/ever-co/ever-demand)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/ever-co/ever-demand.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/ever-co/ever-demand/alerts/)
@@ -264,7 +304,9 @@ All other brand and product names are trademarks, registered trademarks or servi
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fever-demand.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fever-demand?ref=badge_shield)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io)
 [![Crowdin](https://badges.crowdin.net/e/581540ddcc7c1cf42a50d0e0a6a3d7f7/localized.svg)](https://ever.crowdin.com/ever)
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/ever-co/ever-demand?utm_source=oss&utm_medium=github&utm_campaign=ever-co%2Fever-demand&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
 
-## P.S.
-- If you are running any business or doing freelance, check our new project [Gauzy](https://github.com/ever-co/ever-gauzy) - Open Business Management Platform
-- [We are Hiring: remote TypeScript / NestJS / Angular developers](https://github.com/ever-co/jobs#available-positions)
+## 🔥 P.S.
+
+-   If you are running any business or doing freelance, check our new project [Ever Gauzy](https://github.com/ever-co/ever-gauzy) - Open Business Management Platform (ERP/CRM/HRM)
+-   [We are Hiring: remote TypeScript / NodeJS / NestJS / Angular & React developers](https://github.com/ever-co/jobs#available-positions)

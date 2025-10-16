@@ -38,8 +38,14 @@
 							},
 							"src/manifest.json"
 						],
+						"allowedCommonJsDependencies": [
+							"uuid",
+							"subscriptions-transport-ws",
+							"qrcode"
+						],
 						"styles": [
 							"../../node_modules/bootstrap/dist/css/bootstrap.min.css",
+							"../../node_modules/font-awesome/scss/font-awesome.scss",
 							{
 								"input": "src/theme/variables.scss"
 							},
@@ -66,7 +72,6 @@
 							"optimization": true,
 							"outputHashing": "all",
 							"sourceMap": false,
-							"extractCss": true,
 							"namedChunks": false,
 							"aot": false,
 							"extractLicenses": true,
@@ -102,12 +107,9 @@
 						"karmaConfig": "src/karma.conf.js",
 						"styles": [
 							"../../node_modules/bootstrap/dist/css/bootstrap.min.css",
-							{
-								"input": "src/theme/variables.scss"
-							},
-							{
-								"input": "src/global.scss"
-							}
+							"../../node_modules/font-awesome/scss/font-awesome.scss",
+							"src/theme/variables.scss",
+							"src/global.scss"
 						],
 						"scripts": [],
 						"assets": [
@@ -123,16 +125,6 @@
 							},
 							"src/manifest.json"
 						]
-					}
-				},
-				"lint": {
-					"builder": "@angular-devkit/build-angular:tslint",
-					"options": {
-						"tsConfig": [
-							"src/tsconfig.app.json",
-							"src/tsconfig.spec.json"
-						],
-						"exclude": ["**/node_modules/**"]
 					}
 				},
 				"ionic-cordova-build": {
@@ -171,13 +163,6 @@
 					"options": {
 						"protractorConfig": "e2e/protractor.conf.js",
 						"devServerTarget": "app:serve"
-					}
-				},
-				"lint": {
-					"builder": "@angular-devkit/build-angular:tslint",
-					"options": {
-						"tsConfig": "e2e/tsconfig.e2e.json",
-						"exclude": ["**/node_modules/**"]
 					}
 				}
 			}

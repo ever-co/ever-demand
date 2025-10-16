@@ -6,7 +6,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ThemeModule } from '../../@theme';
 import { ChartsPanelComponent } from './charts-panel/charts-panel.component';
 import { OrdersChartComponent } from './charts-panel/charts/orders-chart/orders-chart.component';
+// duplicate OrdersChartComponent
+import { OrdersChartComponent as RootOrdersChartComponent } from './charts-panel/charts/orders-chart.component';
 import { ProfitChartComponent } from './charts-panel/charts/profit-chart/profit-chart.component';
+// duplicate ProfitChartComponent
+import { ProfitChartComponent as RootProfitChartComponent } from './charts-panel/charts/profit-chart.component';
 import { ChartPanelHeaderComponent } from './charts-panel/chart-panel-header/chart-panel-header.component';
 import { ChartPanelSummaryComponent } from './charts-panel/chart-panel-summary/chart-panel-summary.component';
 import { NgxEchartsModule } from 'ngx-echarts';
@@ -31,42 +35,38 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		ThemeModule,
-		NgxEchartsModule,
-		ToasterModule,
-		TranslateModule.forChild(),
-		RouterModule.forChild(routes),
-		NbSpinnerModule,
-		PipesModule,
-		NgSelectModule,
-		FormsModule,
-	],
-	declarations: [
-		DashboardComponent,
-		ChartsPanelComponent,
-		ChartPanelHeaderComponent,
-		ChartPanelSummaryComponent,
-		OrdersChartComponent,
-		ProfitChartComponent,
-		LegendChartComponent,
-		DashboardSelectStoreComponent,
-	],
-	entryComponents: [
-		ChartsPanelComponent,
-		ChartPanelHeaderComponent,
-		ChartPanelSummaryComponent,
-		OrdersChartComponent,
-		ProfitChartComponent,
-		LegendChartComponent,
-	],
-	providers: [
-		LayoutService,
-		OrdersProfitChartService,
-		OrdersChartService,
-		ProfitChartService,
-		PeriodsService,
-	],
+    imports: [
+        CommonModule,
+        ThemeModule,
+        NgxEchartsModule.forRoot({
+            echarts: () => import('echarts')
+        }),
+        ToasterModule,
+        TranslateModule.forChild(),
+        RouterModule.forChild(routes),
+        NbSpinnerModule,
+        PipesModule,
+        NgSelectModule,
+        FormsModule,
+    ],
+    declarations: [
+        DashboardComponent,
+        ChartsPanelComponent,
+        ChartPanelHeaderComponent,
+        ChartPanelSummaryComponent,
+        OrdersChartComponent,
+        RootOrdersChartComponent,
+        ProfitChartComponent,
+        RootProfitChartComponent,
+        LegendChartComponent,
+        DashboardSelectStoreComponent,
+    ],
+    providers: [
+        LayoutService,
+        OrdersProfitChartService,
+        OrdersChartService,
+        ProfitChartService,
+        PeriodsService,
+    ]
 })
 export class DashboardModule {}

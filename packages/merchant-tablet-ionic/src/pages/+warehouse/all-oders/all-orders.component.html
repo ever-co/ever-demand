@@ -72,9 +72,9 @@
 		*ngIf="!focusedOrder"
 		class="pagination"
 		(pageChange)="loadPage($event)"
-		directionLinks="true"
-		autoHide="true"
-		responsive="true"
+		[directionLinks]="true"
+		[autoHide]="true"
+		[responsive]="true"
 		previousLabel="Previous"
 		nextLabel="Next"
 	>

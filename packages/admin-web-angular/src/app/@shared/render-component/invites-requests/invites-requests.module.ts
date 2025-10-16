@@ -7,9 +7,8 @@ import { InvitedDateComponent } from './invited-date.component';
 const COMPONENTS = [StatusComponent, InvitedDateComponent];
 
 @NgModule({
-	imports: [CommonModule, ThemeModule],
-	declarations: COMPONENTS,
-	entryComponents: COMPONENTS,
-	exports: COMPONENTS,
+    imports: [CommonModule, ThemeModule],
+    declarations: COMPONENTS,
+    exports: COMPONENTS
 })
 export class InvitesRequestsTableModule {}

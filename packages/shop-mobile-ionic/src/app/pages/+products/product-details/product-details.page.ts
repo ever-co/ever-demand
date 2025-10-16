@@ -92,7 +92,7 @@ export class ProductDetailsPage implements AfterViewInit, OnDestroy {
 				init() {
 					self.swiper = this; // this = swiper instance here
 
-					(window as any).swiper = this.swiper; // used for debugging
+					(window as any).swiper = self.swiper; // used for debugging
 
 					self.swiperEvents$.next('init');
 				},

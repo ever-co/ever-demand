@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import { Apollo, gql } from 'apollo-angular';
 import Order from '@modules/server.common/entities/Order';
 import { map, share } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import gql from 'graphql-tag';
 
 @Injectable()
 export class OrdersService {

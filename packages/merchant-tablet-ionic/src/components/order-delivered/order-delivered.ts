@@ -9,7 +9,7 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 })
 export class OrderDeliveredComponent {
 	@Input()
-	getWarehouseStatus: () => void;
+	getWarehouseStatus: (status: string) => void;
 
 	@Input()
 	order: Order;

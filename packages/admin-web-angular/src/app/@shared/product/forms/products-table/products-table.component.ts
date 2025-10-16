@@ -19,7 +19,7 @@ import { ProductCategoriesComponent } from '../../../render-component/product-ca
 import { ProductsCategoryService } from '../../../../@core/data/productsCategory.service';
 import { NotifyService } from '@app/@core/services/notify/notify.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfimationModalComponent } from '../../../confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from '../../../confirmation-modal/confirmation-modal.component';
 import { ProductCheckboxComponent } from '@app/@shared/render-component/product-checkbox/product-checkbox';
 import { ProductTitleComponent } from '@app/@shared/render-component/product-title/product-title.component';
 import { ProductImageComponent } from '@app/@shared/render-component/product-image/product-image.component';
@@ -46,11 +46,11 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 	selectProducts$: EventEmitter<any> = new EventEmitter();
 	$subSlectProducts: Subscription;
 	pagesChanges$: EventEmitter<number> = new EventEmitter();
+
 	@Input()
 	perPage: number = 0;
 	@Input()
 	hiddenTableActions: boolean;
-
 	@Input()
 	boxShadow: string;
 
@@ -84,12 +84,12 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 	}
 
 	async deleteProduct(event) {
-		const activeModal = this.modalService.open(ConfimationModalComponent, {
+		const activeModal = this.modalService.open(ConfirmationModalComponent, {
 			size: 'sm',
 			container: 'nb-layout',
 			backdrop: 'static',
 		});
-		const modalComponent: ConfimationModalComponent =
+		const modalComponent: ConfirmationModalComponent =
 			activeModal.componentInstance;
 
 		this.confirmSub$ = await modalComponent.confirmEvent
@@ -198,9 +198,8 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 		this.$subSlectProducts = this.selectProducts$
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(({ current, allData }) => {
-				allData.find((d) => d && d.id === current['id'])[
-					'checked'
-				] = !current.checked;
+				allData.find((d) => d && d.id === current['id'])['checked'] =
+					!current.checked;
 
 				if (current.checked) {
 					this._selectedProducts.push(current);
@@ -258,10 +257,11 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 						position: 'left',
 					},
 					edit: {
-						editButtonContent: '<i class="ion-md-create"></i>',
+						editButtonContent: '<i class="fa fa-fw fa-edit"></i>',
 					},
 					delete: {
-						deleteButtonContent: '<i class="ion-md-trash"></i>',
+						deleteButtonContent:
+							'<i class="fa fa-fw fa-trash"></i>',
 						confirmDelete: true,
 					},
 					mode: 'external',

@@ -1,4 +1,4 @@
-import { ViewChild, Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { ViewChild, Component, Input, OnInit, OnDestroy, EventEmitter } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -22,7 +22,7 @@ export class GoogleMapComponent implements OnInit, OnDestroy {
 	mapTypeEvent: Observable<string>;
 
 	@Input()
-	mapCoordEvent: Observable<google.maps.LatLng>;
+	mapCoordEvent: EventEmitter<google.maps.LatLng | google.maps.LatLngLiteral>;
 
 	@Input()
 	mapGeometryEvent: Observable<

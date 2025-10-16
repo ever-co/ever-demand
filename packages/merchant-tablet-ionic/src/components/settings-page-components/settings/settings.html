@@ -136,15 +136,7 @@
 		<ion-row>
 			<ion-col>
 				<ion-button
-					[disabled]="
-						hasChanges(
-							paymentsSettings.isValid,
-							productsDelivery.dirty,
-							productsTakeaway.dirty,
-							orderBarcodeType.dirty,
-							barcodeData.dirty
-						)
-					"
+					[disabled]="hasChanges()"
 					class="save-button"
 					(click)="saveChanges()"
 					color="success"

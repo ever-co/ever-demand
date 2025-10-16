@@ -1,7 +1,5 @@
 import {
 	Component,
-	ViewChild,
-	ElementRef,
 	OnInit,
 	OnDestroy,
 } from '@angular/core';
@@ -12,8 +10,6 @@ import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 import { generateObjectIdString } from '@modules/server.common/utils';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { Store } from '../../services/store.service';
-import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
-import { GeoLocationService } from '../../services/geo-location.service';
 import { Platform } from '@ionic/angular';
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { Subject } from 'rxjs';
@@ -27,9 +23,7 @@ import { takeUntil } from 'rxjs/operators';
 export class MainPage implements OnInit, OnDestroy {
 	selectedOrder: IOrder;
 
-	private watch: any;
 	private isOnline: boolean;
-	private isMapRendered: boolean;
 	private destroy$ = new Subject<void>();
 	isTakenFromAnotherCarrier: boolean = false;
 
@@ -37,7 +31,6 @@ export class MainPage implements OnInit, OnDestroy {
 		private platform: Platform,
 		private carrierRouter: CarrierRouter,
 		private geolocation: Geolocation,
-		private geoLocationService: GeoLocationService,
 		private store: Store
 	) {}
 
@@ -134,7 +127,7 @@ export class MainPage implements OnInit, OnDestroy {
 			.pipe(takeUntil(this.destroy$))
 			.subscribe((o) => {
 				this.isTakenFromAnotherCarrier =
-					!!o && !!o.carrier && o.carrier !== this.store.carrierId;
+					!!o && !!o.carrier && o.carrier.id !== this.store.carrierId;
 				this.selectedOrder = o;
 			});
 	}

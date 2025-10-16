@@ -10,7 +10,6 @@ import { ToasterService } from 'angular2-toaster';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BasicInfoFormComponent, ContactInfoFormComponent } from '../forms';
 import { LocationFormComponent } from '../../forms/location';
-import { TranslateService } from '@ngx-translate/core';
 import { PaymentsSettingsFormComponent } from '../forms/payments-settings/payments-settings-form.component';
 
 @Component({
@@ -20,10 +19,6 @@ import { PaymentsSettingsFormComponent } from '../forms/payments-settings/paymen
 })
 export class WarehouseMutationComponent implements AfterViewInit {
 	loading: boolean;
-
-	public BUTTON_DONE: string = 'BUTTON_DONE';
-	public BUTTON_NEXT: string = 'BUTTON_NEXT';
-	public BUTTON_PREV: string = 'BUTTON_PREV';
 
 	@ViewChild('basicInfoForm')
 	basicInfoForm: BasicInfoFormComponent;
@@ -56,21 +51,8 @@ export class WarehouseMutationComponent implements AfterViewInit {
 		private readonly activeModal: NgbActiveModal,
 		private readonly formBuilder: FormBuilder,
 		private readonly toasterService: ToasterService,
-		private readonly warehouseRouter: WarehouseRouter,
-		private readonly _translateService: TranslateService
+		private readonly warehouseRouter: WarehouseRouter
 	) {}
-
-	get buttonDone() {
-		return this._translate(this.BUTTON_DONE);
-	}
-
-	get buttonNext() {
-		return this._translate(this.BUTTON_NEXT);
-	}
-
-	get buttonPrevious() {
-		return this._translate(this.BUTTON_PREV);
-	}
 
 	get isValidContactInfo() {
 		return this.contactInfoForm.validForm !== undefined
@@ -143,15 +125,5 @@ export class WarehouseMutationComponent implements AfterViewInit {
 
 	cancel() {
 		this.activeModal.dismiss('canceled');
-	}
-
-	private _translate(key: string): string {
-		let translationResult = '';
-
-		this._translateService.get(key).subscribe((res) => {
-			translationResult = res;
-		});
-
-		return translationResult;
 	}
 }

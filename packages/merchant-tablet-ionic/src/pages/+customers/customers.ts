@@ -20,7 +20,6 @@ import { CustomerAddrPopupPage } from './customer-addr-popup/customer-addr-popup
 import { ConfirmDeletePopupPage } from 'components/confirm-delete-popup/confirm-delete-popup';
 import { WarehouseOrdersService } from 'services/warehouse-orders.service';
 import { takeUntil } from 'rxjs/operators';
-import 'rxjs/add/operator/takeUntil';
 
 @Component({
 	selector: 'page-customers',

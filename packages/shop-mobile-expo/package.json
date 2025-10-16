@@ -1,0 +1,114 @@
+{
+	"name": "@ever-platform/shop-mobile-expo",
+	"version": "0.4.3",
+	"description": "Ever Shop Mobile App built with Expo (ReactNative)",
+	"license": "GPL-3.0",
+	"homepage": "https://ever.co/",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ever-co/ever-demand.git"
+	},
+	"bugs": {
+		"url": "https://github.com/ever-co/ever-demand/issues"
+	},
+	"private": true,
+	"author": {
+		"name": "Ever Co. LTD",
+		"email": "ever@ever.co",
+		"url": "https://ever.co"
+	},
+	"main": "App.tsx",
+	"scripts": {
+		"config": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn ts-node ./scripts/configure.ts",
+		"config:dev": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run config -- --environment=dev",
+		"config:prod": "cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=4096 yarn run config -- --environment=prod",
+		"start": "expo start",
+		"android": "expo start --android",
+		"ios": "expo start --ios",
+		"web": "expo start --web",
+		"eject": "expo eject",
+		"lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+		"test": "jest"
+	},
+	"dependencies": {
+		"@apollo/client": "^3.5.8",
+		"@react-native-async-storage/async-storage": "~1.15.0",
+		"@react-native-community/netinfo": "7.1.3",
+		"@react-navigation/drawer": "^5.12.9",
+		"@react-navigation/native": "6.0.6",
+		"@react-navigation/native-stack": "6.2.5",
+		"@reduxjs/toolkit": "1.7.1",
+		"expo": "~44.0.0",
+		"expo-app-loading": "~1.3.0",
+		"expo-font": "~10.0.4",
+		"expo-location": "~14.0.1",
+		"expo-status-bar": "~1.2.0",
+		"expo-system-ui": "~1.1.0",
+		"expo-updates": "~0.11.6",
+		"graphql": "^16.3.0",
+		"lodash": "^4.17.21",
+		"lodash.debounce": "^4.0.8",
+		"react": "17.0.2",
+		"react-dom": "17.0.1",
+		"react-native": "0.64.3",
+		"react-native-flash-message": "^0.2.1",
+		"react-native-gesture-handler": "~2.1.0",
+		"react-native-global-props": "1.1.5",
+		"react-native-maps": "0.29.4",
+		"react-native-pager-view": "5.4.9",
+		"react-native-paper": "4.11.2",
+		"react-native-reanimated": "~2.3.1",
+		"react-native-safe-area-context": "3.3.2",
+		"react-native-screens": "~3.10.1",
+		"react-native-web": "0.17.1",
+		"react-redux": "7.2.6",
+		"redux-logger": "^3.0.6",
+		"validate.js": "^0.13.1"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.12.9",
+		"@babel/runtime": "^7.17.0",
+		"@react-native-community/eslint-config": "^2.0.0",
+		"@types/jest": "^26.0.23",
+		"@types/react-native": "^0.66.16",
+		"@types/react-native-global-props": "^1.1.1",
+		"@types/react-test-renderer": "^17.0.1",
+		"@types/redux-logger": "^3.0.9",
+		"@typescript-eslint/eslint-plugin": "^5.7.0",
+		"@typescript-eslint/parser": "^5.7.0",
+		"babel-jest": "^26.6.3",
+		"cross-env": "^7.0.3",
+		"dotenv": "^16.0.0",
+		"envalid": "^7.2.2",
+		"eslint": "^7.14.0",
+		"jest": "^26.6.3",
+		"jest-expo": "^44.0.1",
+		"metro-config": "^0.67.0",
+		"metro-react-native-babel-preset": "^0.66.2",
+		"react-test-renderer": "^17.0.2",
+		"ts-node": "^10.5.0",
+		"typescript": "^4.4.4",
+		"uuid": "^8.3.2",
+		"yargs": "^17.3.1"
+	},
+	"resolutions": {
+		"@types/react": "^17"
+	},
+	"jest": {
+		"preset": "jest-expo",
+		"moduleFileExtensions": [
+			"ts",
+			"tsx",
+			"js",
+			"jsx",
+			"json",
+			"node"
+		]
+	},
+	"engines": {
+		"node": ">=14.4.0",
+		"yarn": ">=1.13.0"
+	},
+	"production": false,
+	"snyk": false
+}

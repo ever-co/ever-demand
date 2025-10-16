@@ -36,7 +36,7 @@ const defaultLat = environment.DEFAULT_LATITUDE || 0;
 @Component({
 	selector: 'es-location-form',
 	styleUrls: ['./location.component.scss'],
-	templateUrl: '/location.component.html',
+	templateUrl: './location.component.html',
 })
 export class LocationFormComponent
 	implements OnInit, AfterViewInit, OnChanges, OnDestroy {

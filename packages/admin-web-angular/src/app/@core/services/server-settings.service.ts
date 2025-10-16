@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '../data/store.service';
-import { Apollo } from 'apollo-angular';
+import { Apollo, gql } from 'apollo-angular';
 import { IAdminAppSettings } from '@modules/server.common/interfaces/IAppsSettings';
-import gql from 'graphql-tag';
 import { take, map } from 'rxjs/operators';
 
 @Injectable({

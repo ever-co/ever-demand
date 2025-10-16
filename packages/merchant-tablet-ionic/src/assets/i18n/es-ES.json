@@ -326,6 +326,8 @@
 			"RUSSIAN": "Ruso",
 			"BULGARIAN": "Bulgaro",
 			"ESPAÑOL": "Español",
+			"SPANISH": "Español",
+			"FRENCH": "Francés",
 			"OPTIONAL": "Opcional",
 			"TAKEAWAY": "Retirar",
 			"DELIVERY": "Repartir",
@@ -403,6 +405,7 @@
 		"BULGARIAN": "Bulgaro",
 		"ESPAÑOL": "Español",
 		"SPANISH": "Español",
+		"FRENCH": "Francés",
 		"OPTIONAL": "Opcional"
 	},
 	"ORDER_CANCELED_COMPONENT": {

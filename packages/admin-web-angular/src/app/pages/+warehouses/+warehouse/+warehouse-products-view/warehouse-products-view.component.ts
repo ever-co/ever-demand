@@ -33,8 +33,8 @@ export class WarehouseProductsViewComponent
 	implements OnInit, OnDestroy, OnChanges {
 	private _ngDestroy$ = new Subject<void>();
 
-	protected warehouseID: string;
-	protected topWarehouseProducts: WarehouseProduct[];
+	public warehouseID: string;
+	public topWarehouseProducts: WarehouseProduct[];
 
 	public productTitle: string;
 

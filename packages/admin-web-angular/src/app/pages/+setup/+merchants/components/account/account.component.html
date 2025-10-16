@@ -213,9 +213,15 @@
 	</nb-card-body>
 </nb-card>
 
-<button nbButton disabled (click)="previousStep.emit()">
-	{{ 'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate }}
-</button>
-<button nbButton (click)="nextStep.emit()" [disabled]="!formValid">
-	{{ 'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate }}
-</button>
+<ng-container *ngIf="showPrev">
+	<button nbButton disabled (click)="previousStep.emit()">
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.PREV' | translate }}
+	</button>
+</ng-container>
+<ng-container *ngIf="showNext">
+	<button nbButton (click)="nextStep.emit()" [disabled]="!formValid">
+		{{ 'FAKE_DATA.SETUP_MERCHANTS.NEXT' | translate }}
+	</button>
+</ng-container>
+
+

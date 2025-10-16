@@ -1,0 +1,268 @@
+{
+    "welcome": "Bienvenu(e) chez Ever",
+    "@welcome": {
+      "description": "Message de bienvenue"
+    },
+	"LANGUAGE": {
+		"ID": "fr-FR",
+		"NAME": "Francais"
+	},
+	"CURRENT_DIRECTION": "ltr",
+	"SIDEBAR_SIDE": "gauche",
+	"INVITE_VIEW": {
+		"WELCOME_TO": "Bienvenu(e) à",
+		"EVER": "Ever",
+		"INFO_MISSING": "Certaines informations sont manquantes!",
+		"YOUR_INVITE_CODE": "Votre code d'invitation",
+		"INVITED_TEXT": {
+			"TITLE": "Merci de votre enregistrement!",
+			"DETAILS": "Nous allons vous enoyer une notification contenant votre code d'invitation dès que nous lançons à :"
+		},
+		"NOT_INVITED_BY_CODE": {
+			"TITLE": "Le code est incorrect!",
+			"DETAILS": "Rassurez vous que vous êtes bien à l'endroit d'où a été reçu votre code"
+		},
+		"CANT_ACCESS_LOCATION": "Nous n'arrivons à detecter votre emplacement",
+		"CANT_ACCESS_LOCATION_GET_IN_BY_ADDRESS": "Nous n'arrivons pas à reconnaitre votre emplacement, veuillez essayer de rentrer les informations de votre adresse.",
+		"GET_IN_BY_ADDRESS": "S'enregistrement à partir d'une adresse",
+		"GET_IN": "On y va!",
+		"YOUR_ADDRESS": "Laissez nous detecter votre adresse",
+		"LAUNCH_NOTIFICATION": "Nous vous affichons que des produits bien spécifiques à votre adresse",
+		"BY_CODE": {
+			"OR_WHAT": "S'enregistrer avec un code d'invitation",
+			"INVITED": "Se connecter avec le code d'invitation",
+			"LOGO": {
+				"DETAILS": "Livraison express des repas & Take Away"
+			},
+			"INVITE_CODE": "Code d'invitation"
+		},
+		"DETECTING_LOCATION": "Veuillez patienter, le temps de detecter votre adresse actuelle..."
+	},
+	"PRODUCTS_VIEW": {
+		"TITLE": "Produits",
+		"BUY_BUTTON": {
+			"PRE": "Acheter ",
+			"SUF": ""
+		},
+		"NOT_AVAILABLE": "Produit non disponible",
+		"MINUTES": "min",
+		"DELIVERY": "Livraisons",
+		"TAKEAWAY": "A emporter",
+		"READYFOR": "Prêt à",
+		"DETAILS": {
+			"DETAILS": "Details",
+			"BACK": "Retour",
+			"INCLUDES": "Inclus",
+			"BUY_FOR": "Acheter"
+		}
+	},
+	"HELP_VIEW": {
+		"TITLE": "Aide"
+	},
+	"ORDER_HISTORY_VIEW": {
+		"TITLE": "Historique de commandes",
+		"DETAILS": "Details"
+	},
+	"LAST_PURCHASES_VIEW": {
+		"TITLE": "Derniers achats",
+		"NOTHING_ORDERED": "Aucune commande",
+		"TO_PRODUCTS": "Aux produits"
+	},
+	"ABOUT_VIEW": {
+		"TITLE": "A propos de nous"
+	},
+	"TERMS_OF_USE_VIEW": {
+		"TITLE": "Conditions d'utilisation"
+	},
+	"PRIVACY_VIEW": {
+		"TITLE": "Politique de confidentialité"
+	},
+	"LANGUAGE_VIEW": {
+		"TITLE": "Choisissez votre langue"
+	},
+	"SEARCH_VIEW": {
+		"VIEW_MORE": "Voir plus",
+		"EMPTY_LIST": "Aucun produit ou marchand trouvé ... ",
+		"SEARCH_PLACEHOLDER": "Produit ou Nom du restaurant",
+		"OPEN": "Ouvert",
+		"CLOSED": "Fermé"
+	},
+	"BUY_POPUP": {
+		"ORDER_PAID": "La commande a été payée $",
+		"CANCEL": {
+			"STATUSES": [
+				{
+					"TITLE": "La commande a été annulée lors de la synchronisation de l'entrepôt!",
+					"DETAILS": "",
+					"NOT_PAID_NOTE": ""
+				}
+			]
+		},
+
+		"VIEW_ORDER_PRODUCTS": "Voir les produits commandés",
+		"STATUSES": [
+			{
+				"TITLE": "En préparation de votre commande!",
+				"DETAILS": "Nous y serons dans %t minutes.",
+				"NOT_PAID_NOTE": "Préparez votre portefeuille (%s en cash)."
+			},
+			{
+				"TITLE": "Le livreur est en route!",
+				"DETAILS": "Vous allez recevoir votre commande dans %t min.",
+				"NOT_PAID_NOTE": "Préparez votre portefeuille (%s en cash).."
+			},
+			{
+				"TITLE": "Checkez à votre porte!",
+				"DETAILS": "Votre commande sera la dans quelques seconds.",
+				"NOT_PAID_NOTE": "Préparez votre portefeuille (%s en cash)"
+			},
+			{
+				"TITLE": "Commande complète!",
+				"DETAILS": "Merci d'utiliser Ever",
+				"NOT_PAID_NOTE": ""
+			}
+		],
+		"STATUSES_TAKEAWAY": {
+			"TITLE": "En préparation de votre commande!",
+			"DETAILS": "Nous y serons dans %t minutes.",
+			"NOT_PAID_NOTE": "Préparez votre portefeuille (%s en cash)."
+		},
+		"DELIVERY_STATUS": {
+			"WE": "Nous",
+			"CARRIER": "Livreur",
+			"YOU": "Vous"
+		},
+		"DELIVERY_WRONG": {
+			"DELIVERY_WRONG": "La livraison n'a pas été correcte!",
+			"PROCESSING_WRONG": "La livraison n'a pas abouti!",
+			"TRY_AGAIN": "SVP Réessayez.",
+			"CALL_FOR_DETAILS": "Details"
+		},
+		"ELAPSED_TIME": {
+			"TITLE": "Temps écoulé"
+		},
+		"BUTTONS": {
+			"UNDO": "Annuler",
+			"PAY_NOW": "Payer avec une carte",
+			"PAY_X": "Paiement {{amount}}",
+			"PAY_WITH_FIXED_CARD": "Payer avec",
+			"PAID": "Payé",
+			"END": "Bon appetit!",
+			"CANCEL": "Annuler",
+			"GOT_IT": "J'ai compris!",
+			"IM_HERE": "Je suis ici",
+			"SHOW_QR_CODE": "Montrez votre QR Code",
+			"SHOW_PRODUCTS": "Voir les produits"
+		},
+		"UNDO_POPUP": {
+			"TITLE": "Etes vous sure?",
+			"DETAILS": [
+				"En cas d'annulation le montant payé vous est retourné, mais vous",
+				"perdez",
+				"votre commande!"
+			]
+		}
+	},
+	"SIDE_MENU": {
+		"TITLE": "Ever",
+		"GROUPS": {
+			"NO_TITLE": {
+				"DIVER_TITLE": "",
+				"ITEMS": {
+					"PRODUCTS": "Produits",
+					"LAST_PURCHASES": "Derniers achats",
+					"CALL_US": "Appelez-nous",
+					"ORDER_HISTORY": "Historique de commandes"
+				}
+			},
+			"STORE": {
+				"STORE_TITLE": "Magasin",
+				"ITEMS": {
+					"CALL_WAITER": "Appelez le serveur",
+					"ABOUT": "A propos de nous"
+				}
+			},
+			"SETTINGS": {
+				"DIVER_TITLE": "Paramètres",
+				"ITEMS": {
+					"LANGUAGE": "Langue"
+				}
+			},
+			"INFO": {
+				"DIVER_TITLE": "Information",
+				"ITEMS": {
+					"FAQ": "Aide",
+					"ABOUT_US": "A propos de nous",
+					"TERMS_OF_USE": "Conditions d'utilisation",
+					"PRIVACY": "Politique de confidentialité"
+				},
+				"CALL": {
+					"WE_APPOLOGISE": "Nous nous excusons pour la gêne occasionnée.",
+					"CALL_UNSUCCESSFULL": "L'appel n'a pas abouti."
+				}
+			},
+			"LEGALS": {
+				"DIVER_TITLE": "LEGAL",
+				"ITEMS": {
+					"TERMS_OF_USE": "Conditions d'utilisation",
+					"PRIVACY": "Politique de confidentialité"
+				}
+			}
+		}
+	},
+	"TIMER": {
+		"MINUTES": "Minutes",
+		"SECONDS": "Seconds"
+	},
+	"CONNECTION_ERROR_VIEW": {
+		"TITLE": "Aucune connexion à Ever",
+		"DESCRIPTION": [
+			"Assurez vous que vous êtes",
+			"connecté à internet",
+			"ou essayer de relancer Ever app"
+		]
+	},
+	"MERCHANTS_VIEW": {
+		"CLOSE_TO_YOU": "Vendeurs proches de vous",
+		"NAME": "Nom du vendeur",
+		"WITH_NAME": "Vendeur avec noms"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "La connexion au serveur a été perdue"
+	},
+	"OR": "Ou",
+	"OR_LOWERCASE": "ou",
+	"YES": "Oui",
+	"NO": "Non",
+	"OK": "Ok",
+	"CITY": "Ville ou Cité",
+	"STREET": "Avenue, Rue",
+	"HOUSE": "Numéro de maison",
+	"APARTMENT": "Numéro d'appartement",
+	"BACK": "Retour",
+	"MORE": "Plus",
+	"TO": "à",
+	"STORE_INFO": "Magasin",
+	"MAP": "Carte",
+	"ORDER_INFO": "Commande",
+	"CLOSE": "Fermer",
+	"SCAN": "Scanner",
+	"MERCHANTS": "Vendeurs",
+	"NOT_FOUND": "Non trouvé!",
+	"IN_STORE": "Dans le magasin",
+	"EXIT_STORE": "Sortir du magasin",
+	"FAILED": "Échec",
+	"CANCELED": "Annulé",
+	"IN_DELIVERY": "En livraison",
+	"PENDING": "En attente",
+	"COMPLETED": "Terminé",
+	"BROWSE": "Parcourir",
+	"ENGLISH": "Anglais",
+	"HEBREW": "Hébreu",
+	"RUSSIAN": "Russe",
+	"BULGARIAN": "",
+	"SPANISH": "Espagnol",
+	"SELECT": "Sélectionner",
+	"LOCATION_NOTES": "Notes de localisation",
+	"ENTER_NOTES_HERE": "Entrez ici vos notes"
+}

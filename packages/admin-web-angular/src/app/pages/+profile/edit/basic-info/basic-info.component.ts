@@ -13,7 +13,6 @@ import { AdminsService } from '../../../../@core/data/admins.service';
 import { getDummyImage } from '@modules/server.common/utils';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from '@ngx-translate/core';
-import 'rxjs/add/operator/debounceTime';
 
 @Component({
 	selector: 'ea-basic-info',

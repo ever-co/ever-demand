@@ -1,3 +1,4 @@
+/.angular/cache
 **/*.js
 **/*.js.map
 **/*.d.ts

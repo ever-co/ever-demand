@@ -10,9 +10,9 @@ import {
 } from '@angular/core';
 
 import {
-	AbstractControl,
 	FormArray,
 	FormBuilder,
+	FormControl,
 	FormGroup,
 	Validators,
 } from '@angular/forms';
@@ -45,7 +45,7 @@ export class LocationFormComponent implements OnInit, AfterViewInit {
 	readonly form: FormGroup;
 
 	@Input()
-	readonly apartment?: AbstractControl;
+	readonly apartment?: FormControl;
 
 	@Input()
 	userData: User;
@@ -157,7 +157,7 @@ export class LocationFormComponent implements OnInit, AfterViewInit {
 		return form;
 	}
 
-	static buildApartmentForm(formBuilder: FormBuilder): AbstractControl {
+	static buildApartmentForm(formBuilder: FormBuilder): FormControl {
 		return formBuilder.control('');
 	}
 

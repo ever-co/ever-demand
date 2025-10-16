@@ -1,4 +1,6 @@
-import { cleanEnv, num, port, str, ValidatorSpec, bool } from 'envalid';
+require('dotenv').config();
+
+import { cleanEnv, num, port, str, ValidatorSpec, bool, CleanOptions } from 'envalid';
 
 export type Environments = 'production' | 'development' | 'test';
 
@@ -12,6 +14,9 @@ export type Env = Readonly<{
 	WEB_CONCURRENCY: number;
 	WEB_MEMORY: number;
 
+	EXPRESS_SESSION_SECRET: string;
+
+	API_HOST: string;
 	HTTPSPORT: number;
 	HTTPPORT: number;
 	GQLPORT: number;
@@ -68,9 +73,16 @@ export type Env = Readonly<{
 	MAX_SOCKETS?: number;
 }>;
 
+const opt: CleanOptions<Env> = {
+};
+
 export const env: Env = cleanEnv(
 	process.env,
 	{
+		isDev: bool({ default: true }),
+		isTest: bool({ default: false }),
+		isProd: bool({ default: false }),
+
 		NODE_ENV: str({
 			choices: ['production', 'development', 'test'],
 			default: 'development',
@@ -79,10 +91,11 @@ export const env: Env = cleanEnv(
 		WEB_CONCURRENCY: num({ default: 1 }),
 		WEB_MEMORY: num({ default: 2048 }),
 
-		HTTPSPORT: port({ default: 5501 }),
+		API_HOST: str({ default: '127.0.0.1'}),
+		HTTPSPORT: port({ default: 2087 }),
 		HTTPPORT: port({ default: 5500 }),
-		GQLPORT: port({ default: 5555 }),
-		GQLPORT_SUBSCRIPTIONS: port({ default: 5050 }),
+		GQLPORT: port({ default: 8443 }),
+		GQLPORT_SUBSCRIPTIONS: port({ default: 2086 }),
 
 		HTTPS_CERT_PATH: str({ default: 'certificates/https/cert.pem' }),
 		HTTPS_KEY_PATH: str({ default: 'certificates/https/key.pem' }),
@@ -110,7 +123,8 @@ export const env: Env = cleanEnv(
 		FACEBOOK_APP_ID: str({ default: '' }),
 		FACEBOOK_APP_SECRET: str({ default: '' }),
 
-		JWT_SECRET: str({ default: 'default' }),
+		EXPRESS_SESSION_SECRET: str({ default: 'demand' }),
+		JWT_SECRET: str({ default: 'secretKey' }),
 
 		ADMIN_PASSWORD_BCRYPT_SALT_ROUNDS: num({
 			desc: 'Used for passwords encryption, recommended value: 12',
@@ -150,16 +164,19 @@ export const env: Env = cleanEnv(
 		ARCGIS_CLIENT_ID: str({ default: '' }),
 		ARCGIS_CLIENT_SECRET: str({ default: '' }),
 		IP_STACK_API_KEY: str({ default: '' }),
+
 		LOG_LEVEL: str({
 			choices: ['trace', 'debug', 'info', 'warn', 'error', 'fatal'],
 			default: 'error',
 		}),
+
 		ENGINE_API_KEY: str({
 			desc:
 				'Apollo Engine Key (optional, see https://www.apollographql.com/docs/platform/schema-registry)',
 			default: '',
 		}),
+
 		MAX_SOCKETS: num({ default: Infinity }),
 	},
-	{ strict: true, dotEnvPath: __dirname + '/../.env' }
+	opt
 );

@@ -2,7 +2,7 @@ import { Component, Input, EventEmitter } from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { Store } from 'app/services/store.service';
-import Stripe from 'stripe';
+import { Stripe } from 'stripe';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { environment } from 'environments/environment';
 import { ModalController } from '@ionic/angular';
@@ -23,7 +23,7 @@ export class PaymentComponent {
 	@Input()
 	smallButtons: boolean;
 
-	userCard: Stripe.cards.ICard | null = null;
+	userCard: Stripe.Card | null = null;
 
 	private stripePublishableKey: string = environment.STRIPE_PUBLISHABLE_KEY;
 

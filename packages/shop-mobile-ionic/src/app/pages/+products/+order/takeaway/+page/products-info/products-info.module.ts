@@ -8,17 +8,16 @@ import { OrderInfoCommonModule } from '../../../common/order-info-common.module'
 import { TakeawayCommonModule } from '../../common/takeaway-common.module';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		TranslateModule.forChild(),
-		OrderInfoCommonModule,
-		TakeawayCommonModule,
-	],
-	entryComponents: [],
-	declarations: [OrderProductsInfo],
-	providers: [],
-	exports: [OrderProductsInfo],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        TranslateModule.forChild(),
+        OrderInfoCommonModule,
+        TakeawayCommonModule,
+    ],
+    declarations: [OrderProductsInfo],
+    providers: [],
+    exports: [OrderProductsInfo]
 })
 export class OrderProductsInfoModule {}

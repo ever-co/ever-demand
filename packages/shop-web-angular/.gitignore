@@ -91,3 +91,6 @@ webpack-cache
 .env.prod
 /src/environments/environment.ts
 /src/environments/environment.prod.ts
+
+# misc
+/.angular/cache

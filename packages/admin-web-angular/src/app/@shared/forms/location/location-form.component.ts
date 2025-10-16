@@ -24,7 +24,7 @@ import {
 } from '@modules/server.common/entities/GeoLocation';
 import { FormHelpers } from '../helpers';
 
-import { pick, isEmpty } from 'lodash';
+import { pick, isEmpty } from 'underscore';
 import { ToasterService } from 'angular2-toaster';
 
 import { countries } from '@modules/server.common/data/abbreviation-to-country';

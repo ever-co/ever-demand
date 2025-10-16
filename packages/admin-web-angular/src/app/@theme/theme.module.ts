@@ -124,22 +124,21 @@ const NB_THEME_PROVIDERS = [
 ];
 
 @NgModule({
-	imports: [
-		...BASE_MODULES,
-		...NB_MODULES,
-		HttpClientModule,
-		TranslateModule.forChild({
-			loader: {
-				provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
-				deps: [HttpClient],
-			},
-		}),
-		PipesModule,
-	],
-	exports: [...BASE_MODULES, ...NB_MODULES, ...COMPONENTS],
-	declarations: [...COMPONENTS],
-	entryComponents: [...ENTRY_COMPONENTS],
+    imports: [
+        ...BASE_MODULES,
+        ...NB_MODULES,
+        HttpClientModule,
+        TranslateModule.forChild({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient],
+            },
+        }),
+        PipesModule,
+    ],
+    exports: [...BASE_MODULES, ...NB_MODULES, ...COMPONENTS],
+    declarations: [...COMPONENTS]
 })
 export class ThemeModule {
 	static forRoot(): ModuleWithProviders<ThemeModule> {

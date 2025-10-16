@@ -11,18 +11,17 @@ import { PromotionFormsModule } from '../promotion-forms/promotion-forms.module'
 const COMPONENTS = [PromotionMutation];
 
 @NgModule({
-	declarations: COMPONENTS,
-	entryComponents: COMPONENTS,
-	exports: COMPONENTS,
-	imports: [
-		CommonModule,
-		TranslateModule.forChild(),
-		IonicModule,
-		Ng2SmartTableModule,
-		FormsModule,
-		ReactiveFormsModule,
-		PromotionFormsModule,
-	],
-	providers: [PromotionService],
+    declarations: COMPONENTS,
+    exports: COMPONENTS,
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        IonicModule,
+        Ng2SmartTableModule,
+        FormsModule,
+        ReactiveFormsModule,
+        PromotionFormsModule,
+    ],
+    providers: [PromotionService]
 })
 export class PromotionMutationModule {}

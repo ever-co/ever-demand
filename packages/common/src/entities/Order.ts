@@ -10,7 +10,8 @@ import {
 	Types,
 	getSchema,
 } from '../@pyro/db';
-import _ from 'lodash';
+import { map } from 'underscore';
+import { sum } from 'lodash';
 
 import OrderWarehouseStatus, {
 	warehouseStatusToString,
@@ -45,24 +46,16 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 				this.user = new UserOrder(order.user);
 			}
 
-			if (
-				order.warehouse &&
-				order.warehouse != null &&
-				typeof order.warehouse !== 'string'
-			) {
+			if (order.warehouse && typeof order.warehouse !== 'string') {
 				this.warehouse = new Warehouse(order.warehouse as IWarehouse);
 			}
 
-			if (
-				order.carrier &&
-				order.carrier != null &&
-				typeof order.carrier !== 'string'
-			) {
+			if (order.carrier && typeof order.carrier !== 'string') {
 				this.carrier = new Carrier(order.carrier as ICarrier);
 			}
 
-			if (order.products && order.products != null) {
-				this.products = _.map(
+			if (order.products) {
+				this.products = map(
 					order.products,
 					(orderProduct: IOrderProduct) => {
 						return new OrderProduct(orderProduct);
@@ -247,7 +240,7 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 	 * @memberof Order
 	 */
 	@Types.Ref(Carrier, { required: false })
-	carrier?: Carrier | string | null;
+	carrier?: Carrier;
 
 	@Types.Boolean(false)
 	@Column()
@@ -303,8 +296,8 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 	 * @memberof Order
 	 */
 	get totalPrice(): number {
-		return _.sum(
-			_.map(
+		return sum(
+			map(
 				this.products,
 				(product: OrderProduct) => product.count * product.price
 			)
@@ -330,6 +323,8 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 				return this._getStatusTextBulgarian();
 			case 'es-ES':
 				return this._getStatusTextSpanish();
+			case 'fr-FR':
+				return this._getStatusTextFrench();
 			default:
 				return 'BAD_STATUS';
 		}
@@ -465,6 +460,26 @@ class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
 				return 'Problema de preparación';
 			case OrderStatus.CarrierIssue:
 				return 'Problema de envio';
+			default:
+				return 'BAD_STATUS';
+		}
+	}
+
+	private _getStatusTextFrench(): string {
+		switch (this.status) {
+			case OrderStatus.WarehousePreparation:
+				return 'Preparation';
+			case OrderStatus.InDelivery:
+				return 'En Livraison';
+			case OrderStatus.Delivered:
+				return 'livré';
+			case OrderStatus.CanceledWhileWarehousePreparation:
+			case OrderStatus.CanceledWhileInDelivery:
+				return 'Annulé';
+			case OrderStatus.WarehouseIssue:
+				return 'Problème de préparation';
+			case OrderStatus.CarrierIssue:
+				return 'Problème de livraison';
 			default:
 				return 'BAD_STATUS';
 		}

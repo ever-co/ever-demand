@@ -6,13 +6,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-	declarations: [CustomerEmailPopupPage],
-	entryComponents: [CustomerEmailPopupPage],
-	imports: [
-		TranslateModule.forChild(),
-		IonicModule,
-		CommonModule,
-		FormsModule,
-	],
+    declarations: [CustomerEmailPopupPage],
+    imports: [
+        TranslateModule.forChild(),
+        IonicModule,
+        CommonModule,
+        FormsModule,
+    ]
 })
 export class CustomerEmailPopupPageModule {}

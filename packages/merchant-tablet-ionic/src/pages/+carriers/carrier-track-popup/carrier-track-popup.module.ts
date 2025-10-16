@@ -7,9 +7,8 @@ import { CommonModule } from '@angular/common';
 import { WarehousesService } from '../../../../src/services/warehouses.service';
 
 @NgModule({
-	declarations: [CarrierTrackPopup],
-	entryComponents: [CarrierTrackPopup],
-	imports: [TranslateModule.forChild(), IonicModule, CommonModule],
-	providers: [CarrierService, WarehousesService],
+    declarations: [CarrierTrackPopup],
+    imports: [TranslateModule.forChild(), IonicModule, CommonModule],
+    providers: [CarrierService, WarehousesService]
 })
 export class CarrierTrackPopupModule {}

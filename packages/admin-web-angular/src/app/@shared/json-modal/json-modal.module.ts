@@ -12,10 +12,9 @@ const COMPONENTS = [JsonModalComponent];
 		CommonModule,
 		ThemeModule,
 		TranslateModule.forChild(),
-		HighlightModule.forRoot({ theme: 'github' }),
+		HighlightModule,
 	],
 	declarations: COMPONENTS,
-	entryComponents: COMPONENTS,
-	exports: COMPONENTS,
+	exports: COMPONENTS
 })
 export class JsonModalModule {}

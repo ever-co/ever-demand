@@ -14,7 +14,6 @@ import {
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ToolbarController } from '../app.component';
-import { styleVariables } from '../../styles/variables';
 import { Router } from '@angular/router';
 import { InviteRequestRouter } from '@modules/client.common.angular2/routers/invite-request-router.service';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
@@ -50,7 +49,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class LoginComponent implements ToolbarController, OnInit, OnDestroy {
 	public HTTPS_SERVICES_ENDPOINT: string;
-	public readonly styleVariables: typeof styleVariables = styleVariables;
 
 	public msgAllowGPS: string = 'TO_BE_INVITED_ALLOW_GPS';
 

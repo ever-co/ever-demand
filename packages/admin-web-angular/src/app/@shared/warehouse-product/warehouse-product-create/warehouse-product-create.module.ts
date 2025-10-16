@@ -9,17 +9,16 @@ import { NbSpinnerModule } from '@nebular/theme';
 import { NotifyService } from '@app/@core/services/notify/notify.service';
 
 @NgModule({
-	imports: [
-		ThemeModule,
-		FormWizardModule,
-		TranslateModule.forChild(),
-		WarehouseProductFormsModule,
-		ProductFormsModule,
-		NbSpinnerModule,
-	],
-	providers: [NotifyService],
-	exports: [WarehouseProductCreateComponent],
-	declarations: [WarehouseProductCreateComponent],
-	entryComponents: [WarehouseProductCreateComponent],
+    imports: [
+        ThemeModule,
+        FormWizardModule,
+        TranslateModule.forChild(),
+        WarehouseProductFormsModule,
+        ProductFormsModule,
+        NbSpinnerModule,
+    ],
+    providers: [NotifyService],
+    exports: [WarehouseProductCreateComponent],
+    declarations: [WarehouseProductCreateComponent]
 })
 export class WarehouseProductCreateModule {}

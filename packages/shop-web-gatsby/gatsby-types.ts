@@ -1114,7 +1114,7 @@ export type Ever = {
 	getProductsWithPagination?: Maybe<Array<Ever_WarehouseProduct>>;
 	getProductsCount?: Maybe<Scalars['Int']>;
 	getWarehouseProduct?: Maybe<Ever_WarehouseProduct>;
-	getCoseMerchants: Array<Maybe<Ever_Warehouse>>;
+	getCloseMerchants: Array<Maybe<Ever_Warehouse>>;
 	getOrderForWork?: Maybe<Ever_Order>;
 	getOrdersForWork: Array<Maybe<Ever_Order>>;
 	getCountOfOrdersForWork: Scalars['Int'];
@@ -1413,7 +1413,7 @@ export type EverGetWarehouseProductArgs = {
 	warehouseProductId: Scalars['String'];
 };
 
-export type EverGetCoseMerchantsArgs = {
+export type EvergetCloseMerchantsArgs = {
 	geoLocation: Ever_GeoLocationFindInput;
 };
 

@@ -1,4 +1,5 @@
 require('dotenv').config();
+
 const pm2 = require('pm2');
 
 import { env } from '../scripts/env';

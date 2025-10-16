@@ -98,7 +98,7 @@ export class WarehouseOrdersTableComponent
 		});
 	}
 
-	protected selectOrder(warehouseOrderProducts) {
+	public selectOrder(warehouseOrderProducts) {
 		this.selectedOrder =
 			this.selectedOrder === warehouseOrderProducts.data
 				? null

@@ -11,6 +11,7 @@ import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { environment } from 'environments/environment';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
 	templateUrl: './merchants.page.html',
@@ -65,10 +66,9 @@ export class MerchantsPage implements OnDestroy {
 
 	private async loadCloseMerchants() {
 		const location = await this.getLocation();
-		this.merchants = await this.geoLocationsMerchantsService
-			.getCoseMerchants({ loc: location })
-			.pipe(first())
-			.toPromise();
+		this.merchants = await firstValueFrom(
+			this.geoLocationsMerchantsService.getCloseMerchants({ loc: location })
+		);
 	}
 
 	private async loadSearchMerchants() {

@@ -1,4 +1,4 @@
-import { Mutation, Query, ResolveProperty, Resolver } from '@nestjs/graphql';
+import { Mutation, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { CarriersService } from '../../services/carriers';
 import { default as ICarrier } from '@modules/server.common/interfaces/ICarrier';
 import Carrier from '@modules/server.common/entities/Carrier';
@@ -124,7 +124,7 @@ export class CarrierResolver {
 		return this._carriersService.removeMultipleByIds(carriersIds);
 	}
 
-	@ResolveProperty('devices')
+	@ResolveField('devices')
 	async getDevices(_carrier: ICarrier): Promise<Device[]> {
 		const carrier = new Carrier(_carrier);
 

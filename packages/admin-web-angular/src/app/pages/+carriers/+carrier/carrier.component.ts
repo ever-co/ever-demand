@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { find } from 'underscore';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ICarrierCreateObject } from '@modules/server.common/interfaces/ICarrier';
@@ -34,7 +34,7 @@ export class CarrierComponent implements OnInit, OnDestroy {
 	private inDeliveryOrders: Order[] = [];
 	private closeOrders: Order[] = [];
 
-	protected selectedCarrier: ICarrierCreateObject;
+	public selectedCarrier: ICarrierCreateObject;
 	private carriers$: any;
 	private currentTab: string;
 
@@ -74,7 +74,7 @@ export class CarrierComponent implements OnInit, OnDestroy {
 	public get shouldShowOrdersStatusesControl() {
 		return (
 			this.selectedOrdersId.length > 0 &&
-			_.find(
+			find(
 				this.currentOrders,
 				(order) => order.id === this.selectedOrdersId[0]
 			)!.carrierStatus <= OrderCarrierStatus.CarrierSelectedOrder
@@ -161,7 +161,7 @@ export class CarrierComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.ngDestroy$.next();
+		this.ngDestroy$.next(true);
 		this.ngDestroy$.complete();
 		if (this.carriers$) {
 			this.carriers$.unsubscribe();

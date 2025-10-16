@@ -1,6 +1,6 @@
 import { map } from 'rxjs/operators';
 import { Router, RouterFactory } from '../lib/router';
-import _ from 'lodash';
+import * as _ from 'underscore';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import IGeoLocationOrdersRouter, {

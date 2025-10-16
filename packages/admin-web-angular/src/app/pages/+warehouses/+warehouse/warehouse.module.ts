@@ -1,13 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ToasterModule } from 'angular2-toaster';
 import { ThemeModule } from '../../../@theme';
 import { WarehouseComponent } from './warehouse.component';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { WarehouseProductCreateModule } from '../../../@shared/warehouse-product/warehouse-product-create';
 import { WarehouseTableModule } from '../../../@shared/render-component/warehouse-table/warehouse-table.module';
 import { WarehouseOrderModule } from './+warehouse-order/warehouse-order.module';
@@ -20,6 +17,7 @@ import { WarehouseMainInfoViewModule } from './warehouse-main-info/warehouse-mai
 import { WarehouseSelectViewModule } from './warehouse-select-view/warehouse-select-view.module';
 import { WarehouseOrderViewModule } from './warehouse-order-view/warehouse-order-view.module';
 import { WarehouseOrdersTableModule } from './warehouse-orders-table/warehouse-orders-table.module';
+import { TranslateModule } from '@app/@shared/translate/translate.module';
 
 const routes: Routes = [
 	{
@@ -42,13 +40,7 @@ const routes: Routes = [
 		ThemeModule,
 		Ng2SmartTableModule,
 		WarehouseTableModule,
-		TranslateModule.forChild({
-			loader: {
-				provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
-				deps: [HttpClient],
-			},
-		}),
+		TranslateModule,
 		RouterModule.forChild(routes),
 		WarehouseProductCreateModule,
 		WarehouseOrderModule,
@@ -67,8 +59,4 @@ const routes: Routes = [
 })
 export class WarehouseModule {
 	public static routes = routes;
-}
-
-export function HttpLoaderFactory(http: HttpClient) {
-	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }

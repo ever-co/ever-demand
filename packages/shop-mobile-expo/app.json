@@ -1,0 +1,47 @@
+{
+	"expo": {
+		"name": "ever-demand-shop-mobile-expo",
+		"slug": "ever-demand-shop-mobile-expo",
+		"owner": "everco",
+		"description": "Ever Shop Mobile App build with expo",
+		"version": "0.4.3",
+		"orientation": "portrait",
+		"primaryColor": "#2A2C39",
+		"backgroundColor": "#2A2C39",
+		"icon": "./src/assets/img/appIcons/icon.png",
+		"splash": {
+			"image": "./src/assets/img/appIcons/splash.png",
+			"resizeMode": "cover",
+			"backgroundColor": "#2A2C39"
+		},
+		"updates": {
+			"fallbackToCacheTimeout": 0
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"bundleIdentifier": "com.everDemand.shopMobileExpo",
+			"buildNumber": "0.4.3",
+			"supportsTablet": true
+		},
+		"androidStatusBar": {
+			"barStyle": "light-content",
+			"translucent": true,
+			"backgroundColor": "#00000000"
+		},
+		"androidNavigationBar": {
+			"backgroundColor": "#2A2C39",
+			"barStyle": "light-content"
+		},
+		"android": {
+			"package": "com.everDemand.shopMobileExpo",
+			"versionCode": 1,
+			"adaptiveIcon": {
+				"foregroundImage": "./src/assets/img/appIcons/adaptive-icon.png",
+				"backgroundColor": "#2A2C39"
+			}
+		},
+		"web": {
+			"favicon": "./src/assets/img/appIcons/favicon.png"
+		}
+	}
+}

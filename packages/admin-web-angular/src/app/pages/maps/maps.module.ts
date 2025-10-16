@@ -13,7 +13,7 @@ import { environment } from 'environments/environment';
 			apiKey: environment.GOOGLE_MAPS_API_KEY,
 			libraries: ['places'],
 		}),
-		LeafletModule.forRoot(),
+		LeafletModule,
 		MapsRoutingModule,
 		NgxEchartsModule,
 	],

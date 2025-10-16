@@ -36,7 +36,7 @@ import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
-import User from '@ever-platform/common/src/entities/User';
+import User from '@modules/server.common/entities/User';
 
 /**
  * Warehouses Orders Service

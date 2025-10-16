@@ -7,7 +7,7 @@
 	</div>
 	<div class="body">
 		<div *ngIf="order.carrier.logo" class="carrier-image">
-			<img src="{{ order.carrier.logo }}" alt="" />
+			<img [src]="order.carrier.logo" alt="" />
 		</div>
 		<div class="row m-0">
 			<div class="carrier-details col-9">

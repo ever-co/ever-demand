@@ -16,6 +16,7 @@ export class OrderInfoComponent implements OnInit {
 	public order$: Observable<Order>;
 
 	public selectedOrder: any;
+	public showCode: boolean;
 
 	constructor(
 		private readonly _orderService: OrdersService,

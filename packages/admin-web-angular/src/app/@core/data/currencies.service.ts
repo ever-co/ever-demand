@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import Currency from '@modules/server.common/entities/Currency';
-import gql from 'graphql-tag';
 import { map, share } from 'rxjs/operators';
 
 export interface CurrencyMutationRespone {

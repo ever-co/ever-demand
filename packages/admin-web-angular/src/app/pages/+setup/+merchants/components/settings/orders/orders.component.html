@@ -16,7 +16,7 @@
 				</label>
 				<nb-radio-group
 					(valueChange)="typeChange($event)"
-					[(ngModel)]="iorderBarcodeType"
+					[(ngModel)]="iOrderBarcodeType"
 				>
 					<nb-radio
 						*ngFor="let type of orderBarcodeTypes"
@@ -30,12 +30,12 @@
 				<div class="row preview-barcode">
 					<img
 						*ngIf="isQRCode"
-						src="{{ barcodetDataUrl }}"
+						[src]="barcodeDataUrl"
 						alt="Invalid image"
 					/>
 					<ngx-barcode
 						*ngIf="!isQRCode"
-						[bc-value]="barcodetData"
+						[bc-value]="barcodeData"
 						[bc-format]="ngxBarcodeFormat"
 						[bc-element-type]="img"
 						[bc-height]="30"

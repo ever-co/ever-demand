@@ -192,6 +192,16 @@ export class WarehouseTrackComponent implements OnInit {
 		});
 	}
 
+	public selectedCarrier(): boolean {
+		// TODO: implement
+		return true;
+	}
+
+	public selectedStore(): boolean {
+		// TODO: implement
+		return true;
+	}
+
 	goBack() {
 		this.location.back();
 	}

@@ -265,7 +265,7 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 	}
 
 	ngOnDestroy() {
-		this.ngDestroy$.next();
+		this.ngDestroy$.next(true);
 		this.ngDestroy$.complete();
 
 		if (this.interval) {

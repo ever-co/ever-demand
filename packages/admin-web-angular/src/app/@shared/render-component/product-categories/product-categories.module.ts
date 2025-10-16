@@ -6,9 +6,8 @@ import { ProductCategoriesComponent } from './product-categories';
 const COMPONENTS = [ProductCategoriesComponent];
 
 @NgModule({
-	imports: [CommonModule, ThemeModule],
-	declarations: COMPONENTS,
-	entryComponents: COMPONENTS,
-	exports: COMPONENTS,
+    imports: [CommonModule, ThemeModule],
+    declarations: COMPONENTS,
+    exports: COMPONENTS
 })
 export class ProductCategoriesModule {}

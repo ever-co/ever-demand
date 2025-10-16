@@ -43,6 +43,7 @@ testem.log
 Thumbs.db
 /admin/website-angular/yarn-error.log
 
+.env
 *.lerna_backup
 
 /packages/core/tsconfig.build.tsbuildinfo

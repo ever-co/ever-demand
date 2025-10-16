@@ -6,7 +6,7 @@ import IUserOrdersRouter from '@modules/server.common/routers/IUserOrdersRouter'
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import Order from '@modules/server.common/entities/Order';
 import IOrderProductInfo from '@modules/server.common/interfaces/IOrderProductInfo';
-import _ from 'lodash';
+import * as _ from 'underscore';
 
 @Injectable()
 export class UserOrdersRouter implements IUserOrdersRouter {

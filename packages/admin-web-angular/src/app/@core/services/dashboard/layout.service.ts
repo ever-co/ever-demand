@@ -7,7 +7,7 @@ export class LayoutService {
 	protected layoutSize$ = new Subject();
 
 	changeLayoutSize() {
-		this.layoutSize$.next();
+		this.layoutSize$.next(true);
 	}
 
 	onChangeLayoutSize(): Observable<any> {

@@ -322,6 +322,8 @@
 			"HEBREW": "Иврит",
 			"RUSSIAN": "Русский",
 			"BULGARIAN": "Болгарский",
+			"SPANISH": "Испанский",
+			"FRENCH": "Французский",
 			"OPTIONAL": "необязательный",
 			"TAKEAWAY": "Навынос",
 			"DELIVERY": "Доставка",
@@ -393,7 +395,8 @@
 		"HEBREW": "Иврит",
 		"RUSSIAN": "Русский",
 		"BULGARIAN": "Болгарский",
-		"SPANISH": "Испанский"
+		"SPANISH": "Испанский",
+		"FRENCH": "Французский"
 	},
 	"ORDER_CANCELED_COMPONENT": {
 		"CANCELED": "отменен",

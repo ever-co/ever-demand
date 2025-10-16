@@ -23,7 +23,7 @@ import { CountryRenderComponent } from './country-render/country-render.componen
 import { TranslateService } from '@ngx-translate/core';
 import { NotifyService } from '@app/@core/services/notify/notify.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfimationModalComponent } from '../../../@shared/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from '../../../@shared/confirmation-modal/confirmation-modal.component';
 
 export interface InviteViewModel {
 	id: string;
@@ -130,12 +130,12 @@ export class InvitesComponent implements OnInit, OnDestroy, AfterViewChecked {
 	}
 
 	async deleteConfirm(e) {
-		const activeModal = this.modalService.open(ConfimationModalComponent, {
+		const activeModal = this.modalService.open(ConfirmationModalComponent, {
 			size: 'sm',
 			container: 'nb-layout',
 			backdrop: 'static',
 		});
-		const modalComponent: ConfimationModalComponent =
+		const modalComponent: ConfirmationModalComponent =
 			activeModal.componentInstance;
 
 		await modalComponent.confirmEvent

@@ -24,8 +24,8 @@ import { Subject } from 'rxjs';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { FormHelpers } from '../../../forms/helpers';
-import _ from 'lodash';
-import isUrl from 'is-url';
+import { pick } from 'underscore';
+import * as isUrl from 'is-url';
 import { takeUntil, first } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -110,9 +110,8 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 					Validators.required,
 					(control: AbstractControl) => {
 						const value = control.value;
-						const hasImage = BasicInfoFormComponent.hasValidImage(
-							value
-						);
+						const hasImage =
+							BasicInfoFormComponent.hasValidImage(value);
 						if (hasImage) {
 							return null;
 						} else {
@@ -184,7 +183,7 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 	ngOnDestroy() {
 		this.onLocaleChanges.unsubscribe();
 		this.form.reset();
-		this._ngDestroy$.next();
+		this._ngDestroy$.next(true);
 		this._ngDestroy$.complete();
 	}
 
@@ -255,7 +254,7 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 				selectedProductCategories: [...this.product.categories],
 			};
 
-			this.form.setValue(_.pick(product1, Object.keys(this.getValue())));
+			this.form.setValue(pick(product1, Object.keys(this.getValue())));
 		}
 	}
 

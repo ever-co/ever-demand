@@ -58,23 +58,22 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	declarations: [MainPage],
-	imports: [
-		CommonModule,
-		IonicModule,
-		RouterModule.forChild(routes),
-		TranslateModule.forChild(),
-	],
-	entryComponents: [MainPage],
-	providers: [
-		Geolocation,
-		Vibration,
-		LocalNotifications,
-		GeoLocationService,
-		HomeModuleGuard,
-		DriveToWarehouseModuleGuard,
-		StartingDeliveryModuleGuard,
-		DeliveryModuleGuard,
-	],
+    declarations: [MainPage],
+    imports: [
+        CommonModule,
+        IonicModule,
+        RouterModule.forChild(routes),
+        TranslateModule.forChild(),
+    ],
+    providers: [
+        Geolocation,
+        Vibration,
+        LocalNotifications,
+        GeoLocationService,
+        HomeModuleGuard,
+        DriveToWarehouseModuleGuard,
+        StartingDeliveryModuleGuard,
+        DeliveryModuleGuard,
+    ]
 })
 export class MainPageModule {}

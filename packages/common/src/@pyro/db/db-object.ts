@@ -2,9 +2,9 @@ import { getPreSchema } from './schema';
 import { DBRawObject } from './db-raw-object';
 import { DBCreateObject } from './db-create-object';
 import { PyroObjectId } from './object-id';
-import mongoose from 'mongoose';
+import * as mongoose from 'mongoose';
 import { toDate } from '../../utils';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { Column, PrimaryColumn } from 'typeorm';
 
 export interface DBObjectClass extends Function {
@@ -14,7 +14,8 @@ export interface DBObjectClass extends Function {
 export abstract class DBObject<
 	RawObject extends CreateObject & DBRawObject,
 	CreateObject extends DBCreateObject
-> implements DBRawObject {
+> implements DBRawObject
+{
 	// to allow inferring the generic args types
 	readonly CreateObjectTYPE: CreateObject;
 
@@ -24,17 +25,20 @@ export abstract class DBObject<
 	static modelName = '';
 
 	constructor(obj: RawObject) {
-		_.assign(this, obj);
 
-		if (
-			mongoose != null &&
-			mongoose.Types != null &&
-			mongoose.Types.ObjectId != null
-		) {
-			if (obj && obj['_id']) {
-				this['_id'] = mongoose.Types.ObjectId.createFromHexString(
-					obj['_id'].toString()
-				);
+		if (obj != undefined) {
+			_.assign(this, obj);
+
+			if (
+				mongoose != null &&
+				mongoose.Types != null &&
+				mongoose.Types.ObjectId != null
+			) {
+				if (obj && obj['_id']) {
+					this['_id'] = mongoose.Types.ObjectId.createFromHexString(
+						obj['_id'].toString()
+					);
+				}
 			}
 		}
 	}

@@ -4,20 +4,19 @@
 		"baseUrl": "./src",
 		"outDir": "./build",
 		"rootDir": "./src",
-		"target": "es5",
 		"paths": {
 			"@pyro/*": [
+				"@pyro/*",
 				"../../../node_modules/@ever-platform/common/src/@pyro/*"
 			],
 			"@modules/server.common/*": [
+				"@modules/server.common/*",
 				"../../../node_modules/@ever-platform/common/src/*"
 			]
 		}
 	},
-	"include": ["./src/**/*.ts"],
-	"references": [
-		{
-			"path": "../common"
-		}
+	"include": [
+		"./src/**/*.d.ts",
+		"../../common/**/*d.ts"
 	]
 }

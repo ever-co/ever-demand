@@ -123,7 +123,7 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 						ctrlEmail.value &&
 						ctrlEmail.value.length > 0
 					) {
-						emailSearch$.next();
+						emailSearch$.next(true);
 					}
 				},
 			],

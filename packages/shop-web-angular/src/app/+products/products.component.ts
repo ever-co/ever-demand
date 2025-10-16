@@ -1,6 +1,5 @@
 import {
 	Component,
-	ElementRef,
 	OnDestroy,
 	OnInit,
 	ViewChild,
@@ -13,7 +12,6 @@ import { Router } from '@angular/router';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import {
 	first,
-	takeUntil,
 	debounceTime,
 	distinctUntilChanged,
 } from 'rxjs/operators';
@@ -26,8 +24,6 @@ import { WarehouseProductsService } from 'app/services/warehouse-products';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 import { Subject } from 'rxjs';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
 import { CarouselViewComponent } from './views/carousel/carousel-view.component';
 import { environment } from 'environments/environment';
 

@@ -4,8 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-	declarations: [CustomerAddrPopupPage],
-	entryComponents: [CustomerAddrPopupPage],
-	imports: [TranslateModule.forChild(), CommonModule],
+    declarations: [CustomerAddrPopupPage],
+    imports: [TranslateModule.forChild(), CommonModule]
 })
 export class CustomerAddrPopupPageModule {}

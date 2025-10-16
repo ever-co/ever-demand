@@ -1,0 +1,264 @@
+{
+	"LANGUAGE": {
+		"ID": "es-ES",
+		"NAME": "Español"
+	},
+	"CURRENT_DIRECTION": "ltr",
+	"SIDEBAR_SIDE": "left",
+	"INVITE_VIEW": {
+		"WELCOME_TO": "Bienvenido a",
+		"EVER": "Tu-Pedido",
+		"INFO_MISSING": "¡Falta información!",
+		"YOUR_INVITE_CODE": "Su código de invitado",
+		"INVITED_TEXT": {
+			"TITLE": "¡Gracias por registrarte!",
+			"DETAILS": "Le enviaremos una notificación con un código de invitación cuando lancemos en:"
+		},
+		"NOT_INVITED_BY_CODE": {
+			"TITLE": "¡Código erroneo!",
+			"DETAILS": "Asegúrate de estar en el lugar que dice tu código"
+		},
+		"CANT_ACCESS_LOCATION": "No se puede acceder a tu ubicación",
+		"CANT_ACCESS_LOCATION_GET_IN_BY_ADDRESS": "No se puede acceder a tu ubicación, intenta ingresar por dirección",
+		"GET_IN_BY_ADDRESS": "Registrarse por dirección",
+		"GET_IN": "¡Entrar!",
+		"YOUR_ADDRESS": "Escribe tu dirección",
+		"LAUNCH_NOTIFICATION": "Prometemos mostrar solo productos relevantes de acuerdo con su dirección",
+		"BY_CODE": {
+			"OR_WHAT": "Entrar con invitación",
+			"INVITED": "Inicie sesión con el código de invitación",
+			"LOGO": {
+				"DETAILS": "Entrega de Comida y Comida para Llevar"
+			},
+			"INVITE_CODE": "Código de invitación"
+		},
+		"DETECTING_LOCATION": "Estamos intentando detectar tu dirección actual..."
+	},
+	"PRODUCTS_VIEW": {
+		"TITLE": "Productos",
+		"BUY_BUTTON": {
+			"PRE": "Comprar por ",
+			"SUF": ""
+		},
+		"NOT_AVAILABLE": "Producto no disponible",
+		"MINUTES": "min",
+		"DELIVERY": "Delivery",
+		"TAKEAWAY": "Para retirar",
+		"READYFOR": "Listo para",
+		"DETAILS": {
+			"DETAILS": "Detalles",
+			"BACK": "Regresar",
+			"INCLUDES": "Incluye",
+			"BUY_FOR": "Comprar por "
+		}
+	},
+	"HELP_VIEW": {
+		"TITLE": "Ayuda"
+	},
+	"ORDER_HISTORY_VIEW": {
+		"TITLE": "Historial de Pedidos",
+		"DETAILS": "Detalles"
+	},
+	"LAST_PURCHASES_VIEW": {
+		"TITLE": "Ultimas Compras",
+		"NOTHING_ORDERED": "No existen pedidos todavía",
+		"TO_PRODUCTS": "A Prodcutos"
+	},
+	"ABOUT_VIEW": {
+		"TITLE": "Acerca de"
+	},
+	"TERMS_OF_USE_VIEW": {
+		"TITLE": "Términos de uso"
+	},
+	"PRIVACY_VIEW": {
+		"TITLE": "Privacidad"
+	},
+	"LANGUAGE_VIEW": {
+		"TITLE": "Seleccionar Idioma"
+	},
+	"BUY_POPUP": {
+		"ORDER_PAID": "El pedido cuesta $",
+		"CANCEL": {
+			"STATUSES": [
+				{
+					"TITLE": "El pedido se canceló mientras se preparaba el almacén!",
+					"DETAILS": "",
+					"NOT_PAID_NOTE": ""
+				}
+			]
+		},
+		"VIEW_ORDER_PRODUCTS": "Ver productos de pedido",
+		"STATUSES": [
+			{
+				"TITLE": "¡Estamos preparando el pedido!",
+				"DETAILS": "Lo tendrás en %t minutos",
+				"NOT_PAID_NOTE": "Ten pronto %s en efectivo"
+			},
+			{
+				"TITLE": "¡Delivery en camino!",
+				"DETAILS": "Recibirás el pedido en %t minutos",
+				"NOT_PAID_NOTE": "Ten pronto %s en efectivo"
+			},
+			{
+				"TITLE": "¡Ya estamos en tu casa!",
+				"DETAILS": "Recibirás el pedido en segundos",
+				"NOT_PAID_NOTE": "Ten pronto %s en efectivo"
+			},
+			{
+				"TITLE": "¡Pedido Completado!",
+				"DETAILS": "Gracias por usar nuestro servicio",
+				"NOT_PAID_NOTE": ""
+			}
+		],
+		"STATUSES_TAKEAWAY": {
+			"TITLE": "¡Estamos preparando el pedido!",
+			"DETAILS": "Lo tendrás en %t minutos",
+			"NOT_PAID_NOTE": "Ten pronto %s en efectivo"
+		},
+		"DELIVERY_STATUS": {
+			"WE": "Nosotros",
+			"CARRIER": "Delivery",
+			"YOU": "Tú"
+		},
+		"DELIVERY_WRONG": {
+			"DELIVERY_WRONG": "¡La entrega salió mal!",
+			"PROCESSING_WRONG": "¡El procesamiento fue mal!",
+			"TRY_AGAIN": "Por favor, intenta de nuevo",
+			"CALL_FOR_DETAILS": "Llama por detalles"
+		},
+		"ELAPSED_TIME": {
+			"TITLE": "Tiempo transcurrido"
+		},
+		"BUTTONS": {
+			"UNDO": "Deshacer",
+			"PAY_NOW": "Pagar con Tarjeta",
+			"PAY_X": "Pagar {{amount}}",
+			"PAY_WITH_FIXED_CARD": "Pagar con",
+			"PAID": "Pago",
+			"END": "¡Buen apetito!",
+			"CANCEL": "Cancelar",
+			"GOT_IT": "¡Lo tengo!",
+			"IM_HERE": "Estamos aquí",
+			"SHOW_QR_CODE": "Mostrar código QR",
+			"SHOW_PRODUCTS": "Mostrar productos"
+		},
+		"UNDO_POPUP": {
+			"TITLE": "Estás seguro?",
+			"DETAILS": [
+				"¡Deshacer te devolverá el dinero, pero",
+				"perderás",
+				"el pedido!"
+			]
+		}
+	},
+	"SIDE_MENU": {
+		"TITLE": "Ever Shop",
+		"GROUPS": {
+			"NO_TITLE": {
+				"DIVER_TITLE": "",
+				"ITEMS": {
+					"PRODUCTS": "Productos",
+					"LAST_PURCHASES": "Ultimas Compras",
+					"CALL_US": "Llámanos",
+					"ORDER_HISTORY": "Historial de pedidos"
+				}
+			},
+			"STORE": {
+				"STORE_TITLE": "Comercio",
+				"ITEMS": {
+					"CALL_WAITER": "Llámanos",
+					"ABOUT": "Acerca de"
+				}
+			},
+			"SETTINGS": {
+				"DIVER_TITLE": "Configuraciones",
+				"ITEMS": {
+					"LANGUAGE": "Idioma"
+				}
+			},
+			"INFO": {
+				"DIVER_TITLE": "Información",
+				"ITEMS": {
+					"FAQ": "Ayuda",
+					"ABOUT_US": "Acerca de",
+					"TERMS_OF_USE": "Condiciones de uso",
+					"PRIVACY": "Privacidad"
+				},
+				"CALL": {
+					"WE_APPOLOGISE": "Pedimos perdón!",
+					"CALL_UNSUCCESSFULL": "La llamada no fue exitosa!"
+				}
+			},
+			"LEGALS": {
+				"DIVER_TITLE": "LEGAL",
+				"ITEMS": {
+					"TERMS_OF_USE": "Condiciones de uso",
+					"PRIVACY": "Privacidad"
+				}
+			}
+		}
+	},
+	"TIMER": {
+		"MINUTES": "Minutos",
+		"SECONDS": "Segundos"
+	},
+	"CONNECTION_ERROR_VIEW": {
+		"TITLE": "No hay conexión al Servidor",
+		"DESCRIPTION": [
+			"Por favor asegúrate de que estás",
+			"conectado a Internet",
+			"o inténtalo mas tarde"
+		]
+	},
+	"MERCHANTS_VIEW": {
+		"CLOSE_TO_YOU": "Comerciantes cerca de ti",
+		"NAME": "Nombre del Comercio",
+		"WITH_NAME": "Comercios"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Se perdió la conexión con el servidor"
+	},
+	"SEARCH_VIEW": {
+		"VIEW_MORE": "Ver más",
+		"EMPTY_LIST": "No se encontraron productos ni comerciantes...",
+		"SEARCH_PLACEHOLDER": "Nombre del producto o restaurante",
+		"OPEN": "Abierto",
+		"CLOSED": "Cerrado"
+	},
+	"OR": "O",
+	"OR_LOWERCASE": "o",
+	"YES": "Si",
+	"NO": "No",
+	"OK": "Ok",
+	"CITY": "Ciudad",
+	"STREET": "Calle",
+	"HOUSE": "Número de puerta",
+	"APARTMENT": "Apartmento",
+	"BACK": "Volver",
+	"MORE": "Más",
+	"TO": "Hacia",
+	"STORE_INFO": "Información del Comercio",
+	"MAP": "Mapa",
+	"ORDER_INFO": "Información del Pedido",
+	"CLOSE": "Cerrar",
+	"SCAN": "Escanear",
+	"MERCHANTS": "Comercios",
+	"NOT_FOUND": "¡No hay resultados!",
+	"IN_STORE": "En el comercio",
+	"EXIT_STORE": "Salir del comercio",
+	"FAILED": "Error",
+	"CANCELED": "Cancelado",
+	"IN_DELIVERY": "En viaje",
+	"PENDING": "Pendiente",
+	"COMPLETED": "Completado",
+	"BROWSE": "Vistazo",
+	"ENGLISH": "Inglés",
+	"HEBREW": "Hebreo",
+	"RUSSIAN": "Ruso",
+	"BULGARIAN": "Búlgaro",
+	"SPANISH": "Español",
+	"FRENCH": "Francés",
+	"SELECT": "Seleccione",
+	"LOCATION_NOTES": "Notas de ubicación",
+	"ENTER_NOTES_HERE": "Introduce notas aquí"
+}

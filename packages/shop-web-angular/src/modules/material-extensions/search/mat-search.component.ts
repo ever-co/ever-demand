@@ -54,7 +54,7 @@ export class MatSearchComponent {
 
 	private focusTimeout: number | null = null;
 
-	onFocus() {
+	onFocus(event) {
 		if (this.focusTimeout != null) {
 			return;
 		}

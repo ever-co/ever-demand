@@ -5,7 +5,7 @@ import IService from 'services/IService';
 import Promotion from '@modules/server.common/entities/Promotion';
 import { createEverLogger } from '../../helpers/Log';
 import Logger from 'bunyan';
-import { IPromotionCreateObject } from '@ever-platform/common/src/interfaces/IPromotion';
+import { IPromotionCreateObject } from '@modules/server.common/interfaces/IPromotion';
 import { first } from 'rxjs/operators';
 import _ = require('lodash');
 

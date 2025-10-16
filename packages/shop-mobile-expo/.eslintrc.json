@@ -1,0 +1,125 @@
+{
+	"root": true,
+	"extends": "@react-native-community",
+	"env": {
+		"es6": true
+	},
+	"parser": "@typescript-eslint/parser",
+	"plugins": ["@typescript-eslint"],
+	"rules": {
+		"@typescript-eslint/consistent-type-assertions": "off",
+		"@typescript-eslint/consistent-type-definitions": "error",
+		"@typescript-eslint/dot-notation": "off",
+		"@typescript-eslint/explicit-member-accessibility": [
+			"off",
+			{
+				"accessibility": "explicit"
+			}
+		],
+		"@typescript-eslint/indent": "off",
+		"@typescript-eslint/member-delimiter-style": [
+			"error",
+			{
+				"multiline": {
+					"delimiter": "semi",
+					"requireLast": true
+				},
+				"singleline": {
+					"delimiter": "semi",
+					"requireLast": false
+				}
+			}
+		],
+		"@typescript-eslint/member-ordering": "off",
+		"@typescript-eslint/naming-convention": "off",
+		"@typescript-eslint/no-empty-function": "off",
+		"@typescript-eslint/no-empty-interface": "off",
+		"@typescript-eslint/no-misused-new": "error",
+		"@typescript-eslint/no-namespace": "off",
+		"@typescript-eslint/no-non-null-assertion": "off",
+		"@typescript-eslint/no-shadow": [
+			"error",
+			{
+				"hoist": "all"
+			}
+		],
+		"@typescript-eslint/no-use-before-define": ["error"],
+		"@typescript-eslint/prefer-function-type": "error",
+		"@typescript-eslint/quotes": [
+			"error",
+			"single",
+			{
+				"avoidEscape": true
+			}
+		],
+		"@typescript-eslint/semi": ["error", "always"],
+		"@typescript-eslint/type-annotation-spacing": "error",
+		"@typescript-eslint/unified-signatures": "error",
+		"arrow-body-style": "error",
+		"brace-style": ["off", "off"],
+		"comma-dangle": ["off", "always-multiline"],
+		"constructor-super": "error",
+		"dot-notation": "off",
+		"eol-last": "error",
+		"eqeqeq": ["error", "smart"],
+		"guard-for-in": "error",
+		"id-denylist": "off",
+		"id-match": "off",
+		"import/order": "off",
+		"indent": "off",
+		"max-classes-per-file": ["off", 1],
+		"max-len": [
+			"error",
+			{
+				"code": 120
+			}
+		],
+		"no-caller": "error",
+		"no-console": "off",
+		"no-debugger": "error",
+		"no-empty": "off",
+		"no-empty-function": "off",
+		"no-eval": "error",
+		"no-fallthrough": "error",
+		"no-multiple-empty-lines": "off",
+		"no-new-wrappers": "error",
+		"no-restricted-imports": "error",
+		"no-shadow": "error",
+		"no-throw-literal": "error",
+		"no-trailing-spaces": "error",
+		"no-undef-init": "error",
+		"no-underscore-dangle": "off",
+		"no-unused-labels": "error",
+		"no-use-before-define": "off",
+		"no-var": "error",
+		"prefer-arrow/prefer-arrow-functions": "off",
+		"prefer-const": "error",
+		"quote-props": "off",
+		"quotes": "error",
+		"radix": "error",
+		"semi": "off",
+		"valid-typeof": "error"
+	},
+	"overrides": [
+		{
+			"files": ["*.ts", "*.tsx"],
+			"rules": {
+				"prettier/prettier": [
+					"error",
+					{
+						"endOfLine": "auto"
+					}
+				],
+				"no-extra-semi": "error",
+				"no-mixed-spaces-and-tabs": ["off", "smart-tabs"],
+				"no-spaced-func": "off",
+				"jsx-quotes": ["error", "prefer-single"],
+				"spaced-comment": [
+					"error",
+					"always",
+					{ "block": { "balanced": true }, "markers": ["/"] }
+				]
+			}
+		}
+	]
+}

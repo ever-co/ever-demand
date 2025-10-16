@@ -18,7 +18,7 @@ import { combineLatest, of, throwError, Observable } from 'rxjs';
 @injectable()
 @routerName('user-products')
 export class UsersProductsService implements IUserProductsRouter, IService {
-	private static templatesDirPath: string = `${__dirname}/../../../../res/templates/`;
+	private static templatesDirPath: string = `${__dirname}/../../../res/templates/`;
 
 	protected _placeholderTemplateFileName: string =
 		UsersProductsService.templatesDirPath + `user_products_placeholder.hbs`;
@@ -53,7 +53,7 @@ export class UsersProductsService implements IUserProductsRouter, IService {
 		return this.devicesService.get(deviceId).pipe(
 			exhaustMap((device) => {
 				if (device === null) {
-					return throwError(
+					return throwError(() =>
 						new Error(`User with the id ${userId} doesn't exist`)
 					);
 				} else {

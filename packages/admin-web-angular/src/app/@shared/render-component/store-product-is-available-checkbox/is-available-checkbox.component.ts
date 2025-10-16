@@ -6,7 +6,7 @@ import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers
 		<div class="checkbox-container">
 			<nb-checkbox
 				[(ngModel)]="isChecked"
-				(checkedChange)="clickHandler($event)"
+				(checkedChange)="clickHandler()"
 			></nb-checkbox>
 		</div>
 	`,

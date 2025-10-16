@@ -2,7 +2,9 @@
 // We are using dotenv (.env) for consistency with other Platform projects
 // This is Angular app and all settings will be loaded into the client browser!
 
-import { cleanEnv, num, str, bool, makeValidator } from 'envalid';
+require('dotenv').config();
+
+import { cleanEnv, num, str, bool, CleanOptions } from 'envalid';
 import { v4 as uuid } from 'uuid';
 
 export type Env = Readonly<{
@@ -50,18 +52,21 @@ export type Env = Readonly<{
 	PORT: number;
 }>;
 
+const opt: CleanOptions<Env> = {
+};
+
 export const env: Env = cleanEnv(
 	process.env,
 	{
 		production: bool({ default: false }),
 
 		SERVICES_ENDPOINT: str({ default: 'http://localhost:5500' }),
-		HTTPS_SERVICES_ENDPOINT: str({ default: 'https://localhost:5501' }),
+		HTTPS_SERVICES_ENDPOINT: str({ default: 'https://localhost:2087' }),
 
 		// Graphql endpoints for apollo services
-		GQL_ENDPOINT: str({ default: 'http://localhost:5555/graphql' }),
+		GQL_ENDPOINT: str({ default: 'http://localhost:8443/graphql' }),
 		GQL_SUBSCRIPTIONS_ENDPOINT: str({
-			default: 'ws://localhost:5050/subscriptions',
+			default: 'ws://localhost:2086/subscriptions',
 		}),
 
 		APP_VERSION: str({ default: '0.2.0' }),
@@ -93,7 +98,7 @@ export const env: Env = cleanEnv(
 			default: 'http://maps.google.com/mapfiles/kml/pal4/icon54.png',
 		}),
 
-		// For maintenance micro service. Ever maintanance API URL: https://maintenance.ever.co/status
+		// For maintenance micro service. Ever maintenance API URL: https://maintenance.ever.co/status
 		SETTINGS_APP_TYPE: str({ default: 'merchant-tablet' }),
 		SETTINGS_MAINTENANCE_API_URL: str({
 			default: '',
@@ -103,5 +108,5 @@ export const env: Env = cleanEnv(
 		WEB_MEMORY: num({ default: 2048 }),
 		PORT: num({ default: 4202 }),
 	},
-	{ strict: true, dotEnvPath: __dirname + '/../.env' }
+	opt
 );

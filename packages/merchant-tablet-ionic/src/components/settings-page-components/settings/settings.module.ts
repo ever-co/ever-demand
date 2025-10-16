@@ -14,25 +14,24 @@ import { CurrenciesService } from 'services/currencies.service';
 import { PayPalGatewayComponent } from './payments/payPal/payPal';
 
 @NgModule({
-	declarations: [
-		SettingsComponent,
-		SettingsPaymentsComponent,
-		PaymentMutationComponent,
-		StripeGatewayComponent,
-		PayPalGatewayComponent,
-	],
-	entryComponents: [PaymentMutationComponent],
-	imports: [
-		CommonModule,
-		TranslateModule.forChild(),
-		IonicModule,
-		FormsModule,
-		ReactiveFormsModule,
-		NgSelectModule,
-		ConfirmDeletePopupModule,
-		FileUploaderModule,
-	],
-	exports: [SettingsComponent],
-	providers: [CurrenciesService],
+    declarations: [
+        SettingsComponent,
+        SettingsPaymentsComponent,
+        PaymentMutationComponent,
+        StripeGatewayComponent,
+        PayPalGatewayComponent,
+    ],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        IonicModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgSelectModule,
+        ConfirmDeletePopupModule,
+        FileUploaderModule,
+    ],
+    exports: [SettingsComponent],
+    providers: [CurrenciesService]
 })
 export class MerchantSettingsComponentModule {}

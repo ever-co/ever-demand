@@ -8,16 +8,15 @@ import { InviteRequestModalComponent } from './invite-request-modal.component';
 import { NbButtonModule } from '@nebular/theme';
 
 @NgModule({
-	imports: [
-		ThemeModule,
-		FormWizardModule,
-		TranslateModule.forChild(),
-		LocationFormModule,
-		GoogleMapModule,
-		NbButtonModule,
-	],
-	exports: [InviteRequestModalComponent],
-	declarations: [InviteRequestModalComponent],
-	entryComponents: [InviteRequestModalComponent],
+    imports: [
+        ThemeModule,
+        FormWizardModule,
+        TranslateModule.forChild(),
+        LocationFormModule,
+        GoogleMapModule,
+        NbButtonModule,
+    ],
+    exports: [InviteRequestModalComponent],
+    declarations: [InviteRequestModalComponent]
 })
 export class InviteRequestModalModule {}

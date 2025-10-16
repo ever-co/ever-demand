@@ -1,14 +1,15 @@
 import Logger from 'bunyan';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { inject, injectable } from 'inversify';
 import { ProductsService } from '../products';
 import { createEverLogger } from '../../helpers/Log';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { default as IWarehouse } from '@modules/server.common/interfaces/IWarehouse';
 import { IGeoLocationCreateObject } from '@modules/server.common/interfaces/IGeoLocation';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import IWarehouseRouter, {
 	IWarehouseRegistrationInput,
+	IWarehouseLoginResponse,
 } from '@modules/server.common/routers/IWarehouseRouter';
 import {
 	asyncListener,
@@ -18,9 +19,7 @@ import {
 } from '@pyro/io';
 import IService from '../IService';
 import { concat, exhaustMap, tap, first, map, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
 import { DBService } from '@pyro/db-server';
-import { IWarehouseLoginResponse } from '@modules/server.common/routers/IWarehouseRouter';
 import { env } from '../../env';
 import { AuthService, AuthServiceFactory } from '../auth';
 import { v1 as uuid } from 'uuid';
@@ -172,7 +171,7 @@ export class WarehousesService extends DBService<Warehouse>
 						hash: await this.authService.getPasswordHash(
 							input.password
 						),
-				  }
+					}
 				: {}),
 		});
 		return warehouse;
@@ -306,7 +305,7 @@ export class WarehousesService extends DBService<Warehouse>
 		warehouse = _.clone(warehouse);
 
 		_.each(warehouse.products, (warehouseProduct) => {
-			warehouseProduct.product = warehouseProduct.productId;
+			warehouseProduct.product = warehouseProduct.product;
 		});
 
 		return this.update(warehouse.id, warehouse);

@@ -42,7 +42,7 @@ import { InvitesService } from '@app/@core/data/invites.service';
 import { InvitesRequestsService } from '@app/@core/data/invites-requests.service';
 import { UsersService } from '@app/@core/data/users.service';
 import { environment } from 'environments/environment';
-import _ from 'lodash';
+import { random }from 'underscore';
 import { CurrenciesService } from '@app/@core/data/currencies.service';
 
 const NEED_DEFAULT_SETTINGS_MESSAGE =
@@ -72,7 +72,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 	includeHardcodedData: boolean = true;
 
 	public loading: FakeDataBtnState;
-	protected isBtnDisabled: FakeDataBtnState;
+	public isBtnDisabled: FakeDataBtnState;
 
 	private _existingWarehouses: Warehouse[] = [];
 	private _ngDestroy$ = new Subject<void>();
@@ -369,7 +369,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 	}> = [];
 
 	async createPeperoniAndMushroomPizzaProduct(
-		categories: IProductsCategory[]
+		categories?: IProductsCategory[]
 	) {
 		this.isBtnDisabled.product1 = true;
 		this.loading.product1 = true;
@@ -388,7 +388,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		this._notify.product(this.peperoniAndMushroomPizzaProduct.id);
 	}
 
-	async createSushiAndCaviarMixProduct(categories: IProductsCategory[]) {
+	async createSushiAndCaviarMixProduct(categories?: IProductsCategory[]) {
 		this.isBtnDisabled.product2 = true;
 		this.loading.product2 = true;
 
@@ -404,7 +404,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		this._notify.product(this.sushiAndCaviarMixProduct.id);
 	}
 
-	async createSushiMixProduct(categories: IProductsCategory[]) {
+	async createSushiMixProduct(categories?: IProductsCategory[]) {
 		this.isBtnDisabled.product3 = true;
 		this.loading.product3 = true;
 
@@ -420,7 +420,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		this._notify.product(this.sushiMixProduct.id);
 	}
 
-	async createPastaProduct(categories: IProductsCategory[]) {
+	async createPastaProduct(categories?: IProductsCategory[]) {
 		this.isBtnDisabled.product4 = true;
 		this.loading.product4 = true;
 
@@ -436,7 +436,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		this._notify.product(this.pastaProduct.id);
 	}
 
-	async createSushiBoxProduct(categories: IProductsCategory[]) {
+	async createSushiBoxProduct(categories?: IProductsCategory[]) {
 		this.isBtnDisabled.product5 = true;
 		this.loading.product5 = true;
 
@@ -452,7 +452,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		this._notify.product(this.sushiBoxProduct.id);
 	}
 
-	async createPeperoniAndTomatoPizzaProduct(categories: IProductsCategory[]) {
+	async createPeperoniAndTomatoPizzaProduct(categories?: IProductsCategory[]) {
 		this.isBtnDisabled.product6 = true;
 		this.loading.product6 = true;
 
@@ -988,7 +988,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 
 		const getRandomCategory = () => {
 			return this._productCategories[
-				_.random(this._productCategories.length - 1)
+				random(this._productCategories.length - 1)
 			];
 		};
 		const productCreateObject = await this.fakeDataProducts.getRandomProduct(

@@ -1,6 +1,6 @@
 import { Resolver, Query } from '@nestjs/graphql';
 import { AppsSettingsService } from '../../services/apps-settings';
-import { IAdminAppSettings } from '@ever-platform/common/src/interfaces/IAppsSettings';
+import { IAdminAppSettings } from '@modules/server.common/interfaces/IAppsSettings';
 
 @Resolver('AppsSettings')
 export class AdminResolver {

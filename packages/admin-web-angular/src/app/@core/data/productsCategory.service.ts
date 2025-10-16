@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map, share } from 'rxjs/operators';
-import gql from 'graphql-tag';
 import { IProductsCategoryCreateObject } from '@modules/server.common/interfaces/IProductsCategory';
 import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import { getDummyImage } from '@modules/server.common/utils';

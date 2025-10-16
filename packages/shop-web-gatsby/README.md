@@ -1,4 +1,4 @@
-# Ever Gatsby Starter
+# Ever Demand Web Shop (Gatsby version)
 
 This is a starter app built with [Gatsby](https://www.gatsbyjs.org) and powered by [Ever](https://www.ever.dev/).
 

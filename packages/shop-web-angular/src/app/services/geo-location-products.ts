@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
+import { Apollo, gql } from 'apollo-angular';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
-
 import { Observable } from 'rxjs';
 import { map, share } from 'rxjs/operators';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';

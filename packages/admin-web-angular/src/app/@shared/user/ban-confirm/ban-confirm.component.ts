@@ -9,7 +9,7 @@ import { CustomerViewModel } from '@app/pages/+customers/customers.component';
 })
 export class BanConfirmComponent implements OnInit {
 	@Input() user: CustomerViewModel;
-	constructor(private readonly modal: NgbActiveModal) {}
+	constructor(public readonly modal: NgbActiveModal) {}
 
 	ngOnInit() {}
 }

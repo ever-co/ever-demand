@@ -6,7 +6,7 @@ import { env } from './env';
 import { writeFile, unlinkSync } from 'fs';
 import { argv } from 'yargs';
 
-const environment = argv.environment;
+const environment = argv["environment"];
 const isProd = environment === 'prod';
 
 if (!env.GOOGLE_MAPS_API_KEY) {

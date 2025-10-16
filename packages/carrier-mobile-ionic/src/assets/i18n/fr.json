@@ -1,0 +1,85 @@
+{
+	"LANGUAGE": {
+		"ID": "fr-FR",
+		"NAME": "Français"
+	},
+	"CURRENT_DIRECTION": "Ltr",
+	"SIDEBAR_SIDE": "Gauche",
+	"MAIN_VIEW": {
+		"EVERCO_DRIVER": "Transporteur"
+	},
+	"MENU": {
+		"MAIN": "Principal",
+		"DELIVERIES": "Livraisons",
+		"SETTINGS": "Paramètres",
+		"LANGUAGE": "Langue",
+		"ABOUT_US": "Qui sommes-nous",
+		"TERMS_OF_USE": "Conditions d’utilisation"
+	},
+	"DELIVERY_VIEW": {
+		"THE_CUSTOMER_HAS_TO_PAY": "Le Client doit payer",
+		"CUSTOMER_ALREADY_PAID_WITH_CARD": "Client déjà payé par carte!",
+		"DELIVERED": "Livré",
+		"CANCEL": "Annuler",
+		"DELIVERIES_HISTORY": "Historique des livraisons",
+		"TO": "To",
+		"FROM": "From",
+		"ID": "ID",
+		"IS_PAID": "Is Paid",
+		"CANCELED": "Canceled",
+		"CONFIRMED": "Confirmed",
+		"DETAILS": "Details"
+	},
+	"DRIVE_TO_WAREHOUSE_VIEW": {
+		"TAKE_WORK": "Take work",
+		"SKIP_WORK": "Skip Work",
+		"I'M_THERE": "I'm there",
+		"CANCEL": "Annuler"
+	},
+	"HOME_VIEW": {
+		"DELIVERIES": "Livraisons",
+		"WORKING": "en marche",
+		"NOT_WORKING": "Ne marche pas",
+		"START_WORKING": "Commence à fonctionner",
+		"STOP_WORKING": "Arrêt"
+	},
+	"STARTING_DELIVERY_VIEW": {
+		"START": "Commencer",
+		"CANCEL": "Annuler"
+	},
+	"NO_INTERNET_VIEW": {
+		"NETWORK_WAS_DISCONNECTED": "Network was disconnected"
+	},
+	"NO_SERVER_VIEW": {
+		"NO_SERVER": "Server connection is lost"
+	},
+	"GET_PRODUCT_VIEW": {
+		"GOT_IT": "Ok",
+		"CANCEL": "Annuler"
+	},
+	"RETURN_PRODUCT_VIEW": {
+		"RETURN_PRODUCT": "Return Product",
+		"CANCEL": "Annuler"
+	},
+	"LOGIN_VIEW": {
+		"LOGIN": "Connexion"
+	},
+	"ABOUT_VIEW": {
+		"TITLE": "Qui sommes-nous"
+	},
+	"TERMS_OF_USE_VIEW": {
+		"TITLE": "Conditions d’utilisation"
+	},
+	"LANGUAGE_VIEW": {
+		"TITLE": "Sélectionner la langue",
+		"ENGLISH": "Anglais",
+		"BULGARIAN": "Bulgarian",
+		"HEBREW": "Hebrew",
+		"RUSSIAN": "Russe",
+		"SPANISH": "Spanish",
+		"FRENCH": "Français"
+	},
+	"LIST_VIEW": {
+		"YOU_NAVIGATED_HERE_FROM": "You navigated here from"
+	}
+}

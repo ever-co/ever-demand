@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormWizardModule } from 'angular2-wizard';
+import { FormWizardModule } from '@ever-co/angular2-wizard';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { TranslateModule } from '@ngx-translate/core';
 import { AddNewCarrierComponent } from './add-new-carrier';
@@ -13,23 +13,22 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-	declarations: [AddNewCarrierComponent],
-	entryComponents: [AddNewCarrierComponent],
-	exports: [AddNewCarrierComponent],
-	imports: [
-		FormWizardModule,
-		Ng2SmartTableModule,
-		FileUploadModule,
-		FormsModule,
-		ReactiveFormsModule,
-		CarrierBasicFormsModule,
-		CarrierAccountFormsModule,
-		CarrierLocationFormsModule,
-		GoogleMapModule,
-		TranslateModule.forChild(),
-		IonicModule,
-		CommonModule,
-		FormsModule,
-	],
+    declarations: [AddNewCarrierComponent],
+    exports: [AddNewCarrierComponent],
+    imports: [
+        FormWizardModule,
+        Ng2SmartTableModule,
+        FileUploadModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CarrierBasicFormsModule,
+        CarrierAccountFormsModule,
+        CarrierLocationFormsModule,
+        GoogleMapModule,
+        TranslateModule.forChild(),
+        IonicModule,
+        CommonModule,
+        FormsModule,
+    ]
 })
 export class AddNewCarriersPopupPageModule {}

@@ -4,15 +4,15 @@ import Order from '@modules/server.common/entities/Order';
 
 @Component({
 	selector: 'order-image',
-	styleUrls: ['./order-image.scss'],
-	templateUrl: 'order-image.html',
+	templateUrl: './order-image.html',
+	styleUrls: ['./order-image.scss']
 })
 export class OrderImageComponent {
 	@Input()
 	order: Order;
 
 	constructor(
-		private readonly productLocalesService: ProductLocalesService
+		public readonly productLocalesService: ProductLocalesService
 	) {}
 
 	getOrderDate(date: Date) {

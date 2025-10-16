@@ -19,21 +19,20 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		ThemeModule,
-		Ng2SmartTableModule,
-		NbSpinnerModule,
-		ConfirmationModalModule,
-		ToasterModule.forRoot(),
-		TranslateModule.forChild(),
-		RouterModule.forChild(routes),
-		NbButtonModule,
-	],
-	providers: [NotifyService],
-	declarations: [DeviceComponent, DeviceMutationComponent],
-	entryComponents: [DeviceMutationComponent],
-	exports: [],
+    imports: [
+        CommonModule,
+        ThemeModule,
+        Ng2SmartTableModule,
+        NbSpinnerModule,
+        ConfirmationModalModule,
+        ToasterModule.forRoot(),
+        TranslateModule.forChild(),
+        RouterModule.forChild(routes),
+        NbButtonModule,
+    ],
+    providers: [NotifyService],
+    declarations: [DeviceComponent, DeviceMutationComponent],
+    exports: []
 })
 export class DeviceModule {
 	public static routes = routes;

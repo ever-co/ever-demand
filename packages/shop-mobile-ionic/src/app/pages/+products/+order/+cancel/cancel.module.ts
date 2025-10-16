@@ -14,14 +14,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		RouterModule.forChild(routes),
-		TranslateModule.forChild(),
-	],
-	declarations: [CancelPage],
-	entryComponents: [CancelPage],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        RouterModule.forChild(routes),
+        TranslateModule.forChild(),
+    ],
+    declarations: [CancelPage]
 })
 export class CancelPageModule {}

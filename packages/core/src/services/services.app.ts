@@ -1,9 +1,9 @@
+import fs from 'fs';
 import { inject, injectable, multiInject } from 'inversify';
 import https from 'https';
 import http from 'http';
 import path from 'path';
 import pem from 'pem';
-import fs from 'fs';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import passport from 'passport';
@@ -25,7 +25,7 @@ import Bluebird from 'bluebird';
 import { AdminsService } from './admins';
 import ipstack = require('ipstack');
 import requestIp = require('request-ip');
-import { createConnection } from 'typeorm';
+import { ConnectionOptions, createConnection } from 'typeorm';
 import { IWarehouseCreateObject } from '@modules/server.common/interfaces/IWarehouse';
 import { getDummyImage } from '@modules/server.common/utils';
 import Admin from '@modules/server.common/entities/Admin';
@@ -40,6 +40,8 @@ import User from '@modules/server.common/entities/User';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import Promotion from '@modules/server.common/entities/Promotion';
 import { ConfigService } from '../config/config.service';
+
+const conf = require('dotenv').config();
 
 // local IPs
 const INTERNAL_IPS = ['127.0.0.1', '::1'];
@@ -113,26 +115,58 @@ export class ServicesApp {
 	}
 
 	static async CreateTypeORMConnection() {
+
+		console.log('Creating TypeORM Connection...');
+
 		const typeORMLog = createEverLogger({ name: 'TypeORM' });
 
-		// list of entities for which Repositories will be greated in TypeORM
+		// list of entities for which Repositories will be created in TypeORM
 		const entities = ServicesApp.getEntities();
 
-		const conn = await createConnection({
-			name: 'typeorm',
-			// TODO: put this into settings (it's mongo only during testing of TypeORM integration!)
-			type: 'mongodb',
-			url: env.DB_URI,
-			entities,
-			synchronize: true,
-			useNewUrlParser: true,
-			autoReconnect: true,
-			reconnectTries: Number.MAX_VALUE,
-			poolSize: ServicesApp._poolSize,
-			connectTimeoutMS: ServicesApp._connectTimeoutMS,
-			logging: true,
-			useUnifiedTopology: true,
-		});
+		const isSSL = process.env.DB_SSL_MODE && process.env.DB_SSL_MODE !== 'false';
+
+		// let's temporary save Cert in ./tmp/logs folder because we have write access to it
+		let sslCertPath = `${env.LOGS_PATH}/ca-certificate.crt`;
+
+		console.log(`Using temp SSL Cert Path: ${sslCertPath}`);
+
+        if (isSSL) {
+			const base64data = process.env.DB_CA_CERT;
+			const buff = Buffer.from(base64data, 'base64');
+			const sslCert = buff.toString('ascii');
+			fs.writeFileSync(sslCertPath, sslCert);
+		}
+
+		// This is special connection we create during "bootstrap" of the system that is needed for our Repositories to use
+		// We also using another "default" connection defined in app.module.ts
+		// using `TypeOrmModule.forRoot(connectionSettings)` which will be used in other places.
+		const connectionSettings: ConnectionOptions =
+			{
+				// Note: do not change this connection name
+				name: 'typeorm',
+				// TODO: put this into settings (it's mongo only during testing of TypeORM integration!)
+				type: 'mongodb',
+				url: env.DB_URI,
+				ssl: isSSL,
+				sslCA: isSSL ? [sslCertPath] : undefined,
+				host: process.env.DB_HOST || 'localhost',
+				username: process.env.DB_USER,
+          		password: process.env.DB_PASS,
+          		database: process.env.DB_NAME || 'ever_development',
+				port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 27017,
+				entities,
+				synchronize: true,
+				useNewUrlParser: true,
+				// autoReconnect: true,
+				// reconnectTries: Number.MAX_VALUE,
+				// poolSize: ServicesApp._poolSize,
+				connectTimeoutMS: ServicesApp._connectTimeoutMS,
+				logging: true,
+				logger: 'file', // Removes console logging, instead logs all queries in a file ormlogs.log
+				useUnifiedTopology: true,
+			};
+
+		const conn = await createConnection(connectionSettings);
 
 		console.log(
 			`TypeORM DB connection created. DB connected: ${conn.isConnected}`
@@ -164,15 +198,29 @@ export class ServicesApp {
 
 	private async _connectDB() {
 		try {
-			const connectionOptions: mongoose.ConnectionOptions = {
-				useCreateIndex: true,
-				useNewUrlParser: true,
-				autoReconnect: true,
-				useFindAndModify: false,
-				reconnectTries: Number.MAX_VALUE,
-				poolSize: ServicesApp._poolSize,
+
+			const isSSL = process.env.DB_SSL_MODE && process.env.DB_SSL_MODE !== 'false';
+
+			// let's temporary save Cert in ./tmp/logs folder because we have write access to it
+			let sslCertPath = `${env.LOGS_PATH}/ca-certificate.crt`;
+
+			console.log(`Using temp SSL Cert Path: ${sslCertPath}`);
+
+        	if (isSSL) {
+				const base64data = process.env.DB_CA_CERT;
+				const buff = Buffer.from(base64data, 'base64');
+				const sslCert = buff.toString('ascii');
+				fs.writeFileSync(sslCertPath, sslCert);
+			}
+
+			const connectionOptions: mongoose.ConnectOptions = {
+				ssl: isSSL,
+				sslCA: isSSL ? sslCertPath : undefined,
+				user: process.env.DB_USER,
+          		pass: process.env.DB_PASS,
+          		dbName: process.env.DB_NAME || 'ever_development',
 				connectTimeoutMS: ServicesApp._connectTimeoutMS,
-				useUnifiedTopology: true,
+				appName: 'ever_demand'
 			};
 
 			const mongoConnect: mongoose.Mongoose = await mongoose.connect(
@@ -296,9 +344,17 @@ export class ServicesApp {
 
 	private async _registerModels() {
 		await (<any>Bluebird).map(this.services, async (service) => {
-			if ((service as any).DBObject != null) {
-				// get the model to register it's schema indexes in db
-				await getModel((service as any).DBObject).createIndexes();
+			const obj = (service as any).DBObject;
+
+			if (obj != null) {
+				console.log('Service DBObject Name: ' +  obj.modelName);
+
+				const model = getModel(obj);
+
+				if (model) {
+					// get the model to register it's schema indexes in db
+					await model.createIndexes();
+				}
 			}
 		});
 	}
@@ -360,12 +416,13 @@ export class ServicesApp {
 
 		this.httpServer.setTimeout(timeout);
 
+		this.expressApp.set('host', env.API_HOST);
 		this.expressApp.set('httpsPort', env.HTTPSPORT);
 		this.expressApp.set('httpPort', env.HTTPPORT);
 		this.expressApp.set('environment', env.NODE_ENV);
 
 		// CORS configuration
-		// TODO: we may want to restric access some way
+		// TODO: we may want to restrict access some way
 		// (but needs to be careful because we serve some HTML pages for all clients too, e.g. About Us)
 		this.expressApp.use(
 			(<any>cors)({
@@ -439,15 +496,15 @@ export class ServicesApp {
 		this._setupAuthRoutes();
 		this._setupStaticRoutes();
 
+		const host = this.expressApp.get('host');
 		const httpsPort = this.expressApp.get('httpsPort');
 		const httpPort = this.expressApp.get('httpPort');
-
-		const conf = require('dotenv').config();
 
 		const environment = this.expressApp.get('environment');
 
 		this.log.info(
 			{
+				host,
 				httpsPort,
 				httpPort,
 				environment,
@@ -459,13 +516,13 @@ export class ServicesApp {
 
 		if (httpsPort && httpsPort > 0 && this.httpsServer) {
 			// app listen on https
-			this.httpsServer.listen(httpsPort, () => {
+			this.httpsServer.listen(httpsPort, host, () => {
 				this.log.info(
-					{ port: httpsPort },
+					{ port: httpsPort, host: host },
 					'Express https server listening'
 				);
 				console.log(
-					`Express https server listening on port ${httpsPort}`
+					`Express https server listening on ${host}:${httpsPort}`
 				);
 			});
 		} else {
@@ -476,13 +533,13 @@ export class ServicesApp {
 
 		if (httpPort && httpPort > 0) {
 			// app listen on http
-			this.httpServer.listen(httpPort, () => {
+			this.httpServer.listen(httpPort, host, () => {
 				this.log.info(
-					{ port: httpPort },
+					{ port: httpPort, host: host },
 					'Express http server listening'
 				);
 				console.log(
-					`Express http server listening on port ${httpPort}`
+					`Express http server listening on ${host}:${httpPort}`
 				);
 			});
 		}
@@ -615,7 +672,7 @@ export class ServicesApp {
 				passport[
 					'_strategies'
 				].session.base_redirect_url = this._getBaseUrl(
-					req.headers.referer
+					req.header('referer')
 				);
 				next();
 			},

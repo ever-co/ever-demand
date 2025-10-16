@@ -1,1 +1,1 @@
-# Ever Web Shop
+# Ever Demand Web Shop (Angular version)

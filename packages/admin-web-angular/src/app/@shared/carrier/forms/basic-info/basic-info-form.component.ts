@@ -14,9 +14,9 @@ import {
 	Validators,
 } from '@angular/forms';
 import { ICarrierCreateObject } from '@modules/server.common/interfaces/ICarrier';
-import _ from 'lodash';
+import { isEmpty, pick } from 'underscore';
 import { FormHelpers } from '../../../forms/helpers';
-import isUrl from 'is-url';
+import * as isUrl from 'is-url';
 import { TranslateService } from '@ngx-translate/core';
 import { first } from 'rxjs/operators';
 
@@ -119,7 +119,7 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 					(control: AbstractControl) => {
 						const imageUrl = control.value;
 
-						if (!isUrl(imageUrl) && !_.isEmpty(imageUrl)) {
+						if (!isUrl(imageUrl) && !isEmpty(imageUrl)) {
 							return { invalidImageUrl: true };
 						}
 
@@ -149,7 +149,7 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 	setValue<T extends CarrierBasicInfo>(basicInfo: T) {
 		FormHelpers.deepMark(this.form, 'dirty');
 
-		this.form.setValue(_.pick(basicInfo, Object.keys(this.getValue())));
+		this.form.setValue(pick(basicInfo, Object.keys(this.getValue())));
 	}
 
 	getPassword(): string {

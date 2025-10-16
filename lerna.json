@@ -1,13 +1,15 @@
 {
-	"lerna": "3.11.1",
+	"lerna": "3.13.0",
+	"npmClient": "yarn",
+	"version": "0.3.0",
 	"concurrency": 8,
-	"version": "independent",
 	"changelog": {
 		"repo": "ever-co/ever",
 		"cacheDir": ".changelog",
 		"labels": {}
 	},
-	"stream": true,
+	"packages": ["packages/*"],
+	"useWorkspaces": true,
 	"command": {
 		"bootstrap": {},
 		"publish": {
@@ -17,9 +19,11 @@
 		},
 		"version": {
 			"push": false
+		},
+		"clean": {
+			"yes": true
 		}
 	},
-	"packages": ["packages/*"],
-	"npmClient": "yarn",
-	"useWorkspaces": true
+	"npmClientArgs": ["--no-package-lock"],
+	"stream": true
 }

@@ -1079,7 +1079,7 @@ export type Query = {
 	getProductsWithPagination?: Maybe<Array<WarehouseProduct>>;
 	getProductsCount?: Maybe<Scalars['Int']>;
 	getWarehouseProduct?: Maybe<WarehouseProduct>;
-	getCoseMerchants: Array<Maybe<Warehouse>>;
+	getCloseMerchants: Array<Maybe<Warehouse>>;
 	getOrderForWork?: Maybe<Order>;
 	getOrdersForWork: Array<Maybe<Order>>;
 	getCountOfOrdersForWork: Scalars['Int'];
@@ -1378,7 +1378,7 @@ export type QueryGetWarehouseProductArgs = {
 	warehouseProductId: Scalars['String'];
 };
 
-export type QueryGetCoseMerchantsArgs = {
+export type QuerygetCloseMerchantsArgs = {
 	geoLocation: GeoLocationFindInput;
 };
 

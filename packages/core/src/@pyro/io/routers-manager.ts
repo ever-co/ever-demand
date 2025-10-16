@@ -3,9 +3,10 @@ import { injectable, multiInject } from 'inversify';
 import { IRouter, RouterSymbol } from './router/router';
 import { RouterHandler } from './router/handler';
 import Logger from 'bunyan';
+import { Server } from 'socket.io';
 
 export interface IRoutersManager {
-	startListening(io: SocketIO.Server);
+	startListening(io: Server);
 }
 
 @injectable()
@@ -14,9 +15,9 @@ export class RoutersManager implements IRoutersManager {
 
 	protected log: Logger = createEverLogger({ name: 'io' });
 
-	protected io: SocketIO.Server;
+	protected io: Server;
 
-	async startListening(io: SocketIO.Server) {
+	async startListening(io: Server) {
 		this.io = io;
 
 		this.routers.forEach(async (router) => {

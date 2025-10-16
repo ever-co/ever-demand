@@ -22,7 +22,6 @@
 					</nb-card-body>
 				</nb-card>
 			</div>
-
 			<div class="col-4">
 				<nb-card>
 					<nb-card-header>
@@ -122,21 +121,9 @@
 										<b>{{ selectedStore.name }}</b>
 									</h6>
 									<ul>
-										<li>
-											Phone:
-											{{ selectedStore.contactPhone }}
-										</li>
-										<li>
-											Email:
-											{{ selectedStore.contactEmail }}
-										</li>
-										<li>
-											Address:
-											{{
-												selectedStore.geoLocation
-													.streetAddress
-											}}
-										</li>
+										<li> Phone: {{ selectedStore?.contactPhone }} </li>
+										<li> Email: {{ selectedStore?.contactEmail }} </li>
+										<li *ngIf="selectedStore.geoLocation"> Address: {{ selectedStore?.geoLocation?.streetAddress }} </li>
 									</ul>
 								</div>
 								<div class="carrier" *ngIf="selectedCarrier">
@@ -144,22 +131,9 @@
 										<b>{{ selectedCarrier.fullName }}</b>
 									</h6>
 									<ul>
-										<li>
-											Delivery Count:
-											{{
-												selectedCarrier.numberOfDeliveries
-											}}
-										</li>
-										<li>
-											Phone: {{ selectedCarrier.phone }}
-										</li>
-										<li>
-											Address:
-											{{
-												selectedCarrier.geoLocation
-													.streetAddress
-											}}
-										</li>
+										<li> Delivery Count: {{ selectedCarrier.numberOfDeliveries }} </li>
+										<li> Phone: {{ selectedCarrier.phone }} </li>
+										<li *ngIf="selectedCarrier.geoLocation"> Address: {{ selectedStore?.geoLocation?.streetAddress }} </li>
 									</ul>
 								</div>
 							</div>

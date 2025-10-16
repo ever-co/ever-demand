@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import { Apollo, gql } from 'apollo-angular';
 import Warehouse from '@modules/server.common/entities/Warehouse';
-import gql from 'graphql-tag';
 import { map, share } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 

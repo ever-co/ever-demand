@@ -17,8 +17,8 @@ import { first } from 'rxjs/operators';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { FormHelpers } from '../../../../forms/helpers';
-import _ from 'lodash';
-import isUrl from 'is-url';
+import * as _ from 'lodash';
+import * as isUrl from 'is-url';
 import { TranslateService } from '@ngx-translate/core';
 
 export type WarehouseManageTabsDetails = Pick<
@@ -184,7 +184,6 @@ export class WarehouseManageTabsDetailsComponent
 			ordersShortProcess: [false],
 			inStoreMode: [false],
 			carrierCompetition: [false],
-
 			enabledOrderCancelation: [false],
 			stateOrderCancelation: [0],
 		});
@@ -213,7 +212,6 @@ export class WarehouseManageTabsDetailsComponent
 			ordersShortProcess: boolean;
 			inStoreMode: boolean;
 			carrierCompetition: boolean;
-
 			enabledOrderCancelation: boolean;
 			stateOrderCancelation: number;
 		};

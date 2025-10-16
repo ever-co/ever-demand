@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BasicInfoFormComponent } from '../forms';
 import { IProductCreateObject } from '@modules/server.common/interfaces/IProduct';
 import { ProductsService } from '../../../@core/data/products.service';
+import { firstValueFrom } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { NotifyService } from '@app/@core/services/notify/notify.service';
@@ -19,7 +20,6 @@ export class ProductCreateComponent implements OnInit {
 
 	public loading: boolean;
 	public productsCategories: any;
-	public BUTTON_DONE: string = 'BUTTON_DONE';
 
 	readonly form: FormGroup = this._formBuilder.group({
 		basicInfo: BasicInfoFormComponent.buildForm(this._formBuilder),
@@ -39,45 +39,30 @@ export class ProductCreateComponent implements OnInit {
 		this.basicInfoForm.productCategories = this.productsCategories;
 	}
 
-	get buttonDone() {
-		return this._translate(this.BUTTON_DONE);
-	}
-
 	async createProduct() {
 		if (this.basicInfo.valid) {
 			const productCreateObject: IProductCreateObject = await this.basicInfoForm.setupProductCreateObject();
-
 			try {
 				this.loading = true;
-				await this._productsService
-					.create(productCreateObject)
-					.pipe(first())
-					.toPromise();
-				this.loading = false;
-				const message = `Product ${productCreateObject.title[0].value} is created`;
+				await firstValueFrom(
+					this._productsService.create(productCreateObject).pipe(first())
+				).finally(() => {
+					this.loading = false;
+				})
 
+				const message = `Product ${productCreateObject.title[0].value} is created`;
 				this._notifyService.success(message);
-				this._cancelModal();
+				this.cancelModal();
 			} catch (error) {
 				const message = `Something went wrong!`;
 				this.loading = false;
 				this._notifyService.error(message);
-				this._cancelModal();
+				this.cancelModal();
 			}
 		}
 	}
 
-	private _translate(key: string): string {
-		let translationResult = '';
-
-		this._translateService.get(key).subscribe((res) => {
-			translationResult = res;
-		});
-
-		return translationResult;
-	}
-
-	private _cancelModal() {
+	public cancelModal() {
 		this._activeModal.dismiss('canceled');
 	}
 }

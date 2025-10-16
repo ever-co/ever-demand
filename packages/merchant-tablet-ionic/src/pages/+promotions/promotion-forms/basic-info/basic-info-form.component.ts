@@ -112,7 +112,7 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 		return basicInfoValue as IPromotionCreateObject;
 	}
 
-	getLanguageCode(language: LanguagesEnum) {
+	getLanguageCode(language: string) {
 		return LanguageCodesEnum[language];
 	}
 

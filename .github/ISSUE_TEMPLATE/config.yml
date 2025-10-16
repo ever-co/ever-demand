@@ -1,0 +1,7 @@
+---
+blank_issues_enabled: true
+contact_links:
+  -
+    about: "Please check the Wiki before filing new issues"
+    name: "Wiki"
+    url: "https://github.com/ever-co/ever-demand/wiki"

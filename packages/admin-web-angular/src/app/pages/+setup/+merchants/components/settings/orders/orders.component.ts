@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
 import OrderBarcodeTypes, {
 	orderBarcodeTypesToString,
 } from '@modules/server.common/enums/OrderBarcodeTypes';
-import QRCode from 'qrcode';
+import * as QRCode from 'qrcode';
 
 @Component({
 	selector: 'ea-merchants-setup-orders-settings',
@@ -10,19 +10,22 @@ import QRCode from 'qrcode';
 	styleUrls: ['./orders.component.scss'],
 })
 export class SetupMerchantOrdersSettingsComponent {
+
 	@Output()
 	previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();
+
 	@Output()
 	nextStep: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 	@Input()
 	canCreateMerchant: boolean = false;
 
-	iorderBarcodeType: OrderBarcodeTypes = OrderBarcodeTypes.QR;
-	barcodetData: string;
-	barcodetDataUrl: string;
+	iOrderBarcodeType: OrderBarcodeTypes = OrderBarcodeTypes.QR;
+	barcodeData: string;
+	barcodeDataUrl: string;
 	isQRCode: boolean = true;
 	ngxBarcodeFormat: string;
+	img: string;
 
 	orderBarcodeTypes = [
 		{
@@ -44,13 +47,13 @@ export class SetupMerchantOrdersSettingsComponent {
 	];
 
 	constructor() {
-		this.loadBarcodetDataUrl();
+		this.loadBarcodeDataUrl();
 	}
 
-	async loadBarcodetDataUrl() {
-		const dummyId = Date.now();
-		this.barcodetDataUrl = await QRCode.toDataURL(dummyId.toString());
-		this.barcodetData = dummyId.toString();
+	async loadBarcodeDataUrl() {
+		const dummyId = Date.now().toString();
+		this.barcodeDataUrl = await QRCode.toDataURL(dummyId);
+		this.barcodeData = dummyId;
 	}
 
 	typeChange(type) {

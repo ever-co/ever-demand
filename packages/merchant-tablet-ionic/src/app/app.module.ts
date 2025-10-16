@@ -7,7 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { RouteReuseStrategy } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { IonicStorageModule } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage-angular';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CommonModule } from '@modules/client.common.angular2/common.module';
@@ -15,7 +15,6 @@ import { MenuModule } from '../components/menu/menu.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from 'environments/environment';
-import { HttpLinkModule } from 'apollo-angular-link-http';
 import { FileUploadModule } from 'ng2-file-upload';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
@@ -39,77 +38,75 @@ import { Device } from '@ionic-native/device/ngx';
 import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
 
 @NgModule({
-	declarations: [AppComponent],
-	imports: [
-		BrowserModule,
-		AppRoutingModule,
-		HttpClientModule,
-		BrowserAnimationsModule,
-		MenuModule,
-		HttpLinkModule,
-		IonicModule.forRoot(),
-		IonicStorageModule.forRoot(),
-		GraphQLModule,
-		TranslateModule.forRoot({
-			loader: {
-				provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
-				deps: [HttpClient],
-			},
-		}),
-		CommonModule.forRoot({
-			apiUrl: environment.SERVICES_ENDPOINT,
-		}),
-		FileUploadModule,
-		UserMutationModule,
-		ServiceWorkerModule.register('ngsw-worker.js', {
-			enabled: environment.production,
-		}),
-	],
-	entryComponents: [AppComponent],
-	providers: [
-		InAppBrowser,
-		SplashScreen,
-		StatusBar,
-		Network,
-		Device,
-		GoogleMapsLoader,
-		{
-			provide: APP_INITIALIZER,
-			useFactory: googleMapsLoaderFactory,
-			deps: [GoogleMapsLoader],
-			multi: true,
-		},
-		ServerConnectionService,
-		{
-			provide: APP_INITIALIZER,
-			useFactory: serverConnectionFactory,
-			deps: [ServerConnectionService, Store],
-			multi: true,
-		},
-		MaintenanceService,
-		{
-			provide: APP_INITIALIZER,
-			useFactory: maintenanceFactory,
-			deps: [MaintenanceService],
-			multi: true,
-		},
-		// { provide: ErrorHandler, useClass: IonicErrorHandler },
-		{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-		PagesModuleGuard,
-		MaintenanceModuleGuard,
-		Store,
-		CallNumber,
-		EmailComposer,
-		Globalization,
-		GoogleAnalytics,
-		Intercom,
-		Mixpanel,
-		ScreenOrientation,
-		Camera,
-		BarcodeScanner,
-	],
-	bootstrap: [AppComponent],
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MenuModule,
+        IonicModule.forRoot(),
+        IonicStorageModule.forRoot(),
+        GraphQLModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient],
+            },
+        }),
+        CommonModule.forRoot({
+            apiUrl: environment.SERVICES_ENDPOINT,
+        }),
+        FileUploadModule,
+        UserMutationModule,
+        ServiceWorkerModule.register('ngsw-worker.js', {
+            enabled: environment.production,
+        }),
+    ],
+    providers: [
+        InAppBrowser,
+        SplashScreen,
+        StatusBar,
+        Network,
+        Device,
+        GoogleMapsLoader,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: googleMapsLoaderFactory,
+            deps: [GoogleMapsLoader],
+            multi: true,
+        },
+        ServerConnectionService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: serverConnectionFactory,
+            deps: [ServerConnectionService, Store],
+            multi: true,
+        },
+        MaintenanceService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: maintenanceFactory,
+            deps: [MaintenanceService],
+            multi: true,
+        },
+        // { provide: ErrorHandler, useClass: IonicErrorHandler },
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        PagesModuleGuard,
+        MaintenanceModuleGuard,
+        Store,
+        CallNumber,
+        EmailComposer,
+        Globalization,
+        GoogleAnalytics,
+        Intercom,
+        Mixpanel,
+        ScreenOrientation,
+        Camera,
+        BarcodeScanner,
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 	constructor() {}

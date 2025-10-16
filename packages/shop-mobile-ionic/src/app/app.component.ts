@@ -42,6 +42,7 @@ export class AppComponent {
 			'he-IL',
 			'ru-RU',
 			'es-ES',
+			'fr-FR',
 		]);
 
 		_translateService.setDefaultLang('en-US');
@@ -52,7 +53,7 @@ export class AppComponent {
 			_translateService.use(this.defaultLanguage);
 		} else {
 			_translateService.use(
-				browserLang.match(/en-US|bg-BG|he-HE|ru-RU|es-ES/)
+				browserLang.match(/en-US|bg-BG|he-HE|ru-RU|es-ES|fr-FR/)
 					? browserLang
 					: 'en-US'
 			);

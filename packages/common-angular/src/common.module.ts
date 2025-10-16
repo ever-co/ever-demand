@@ -12,7 +12,7 @@ interface CommonModuleConfig {
 	imports: [CommonLibModule, RoutersModule, LocaleModule],
 })
 export class CommonModule {
-	static forRoot(options: CommonModuleConfig): ModuleWithProviders {
+	static forRoot(options: CommonModuleConfig): ModuleWithProviders<CommonModule> {
 		return {
 			ngModule: CommonModule,
 			providers: [{ provide: API_URL, useValue: options.apiUrl }],

@@ -7,9 +7,7 @@ import { MerchantsPage } from './merchants.page';
 import { GeoLocationsMerchantsService } from 'app/services/geo-location-merchants.service';
 import { GeoLocationService } from 'app/services/geo-location';
 import { MerchantsService } from 'app/services/merchants/merchants.service';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpLoaderFactory } from 'app/app.module';
-import { HttpClient } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
 	{

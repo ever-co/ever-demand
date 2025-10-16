@@ -9,11 +9,21 @@ export function getModel<Document extends mongoose.Document>(
 	let Model = Reflect.getMetadata(modelMetadata, DBObject);
 
 	if (Model == null) {
-		Model = mongoose.model<Document>(
-			DBObject.modelName,
-			getSchema(DBObject)
-		);
-		Reflect.defineMetadata(modelMetadata, Model, DBObject);
+
+		const modelName = DBObject.modelName;
+
+		console.log('MongoDB Model Name: ' + modelName);
+
+		const schema = getSchema(DBObject);
+
+		try
+		{
+			Model = mongoose.model<Document>(modelName, schema);
+			Reflect.defineMetadata(modelMetadata, Model, DBObject);
+		} catch (e) {
+			console.log('MongoDB Schema with issues: ' + JSON.stringify(schema));
+			console.error(e);
+		}
 	}
 
 	return Model;

@@ -5,10 +5,7 @@ import { WrongPasswordError } from '@modules/server.common/errors/WrongPasswordE
 import bcrypt from 'bcrypt';
 import { injectable, interfaces } from 'inversify';
 import { RawObject } from '@pyro/db/db-raw-object';
-
-// have to combine the two imports
-import jwt from 'jsonwebtoken';
-import { JsonWebTokenError } from 'jsonwebtoken';
+import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 
 interface IAuthableCreateObject extends DBCreateObject {
 	hash?: string;
@@ -52,7 +49,7 @@ export class AuthService<T extends IAuthable> extends EntityService<T> {
 			await this.Model.findById(id).select('+hash').lean().exec()
 		);
 
-		if (entity.hash != null) {
+		if (entity != null && entity.hash != null) {
 			throw new Error(
 				'Password already exists, please call updatePassword instead.'
 			);

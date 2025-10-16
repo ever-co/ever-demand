@@ -27,11 +27,11 @@ export class AddCarriersPopupPage implements OnInit, OnDestroy {
 	@ViewChild('addChoice', { static: true })
 	addChoiceComponent: AddChoiceComponent;
 
-	@ViewChild('wizzardFrom', { static: true })
-	wizzardFrom: any;
+	@ViewChild('wizardFrom', { static: true })
+	wizardFrom: any;
 
-	@ViewChild('wizzardFromStep1', { static: true })
-	wizzardFromStep1: any;
+	@ViewChild('wizardFromStep1', { static: true })
+	wizardFromStep1: any;
 
 	@ViewChild('wizardFormStep2', { static: true })
 	wizardFormStep2: any;
@@ -53,11 +53,11 @@ export class AddCarriersPopupPage implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit() {
-		this.wizzardFromStep1.showNext = false;
+		this.wizardFromStep1.showNext = false;
 
 		this.choice$ = this.addChoiceComponent.choice.subscribe(async (res) => {
 			this.choiced = res;
-			this.wizzardFrom.next();
+			this.wizardFrom.next();
 		});
 	}
 
@@ -65,14 +65,14 @@ export class AddCarriersPopupPage implements OnInit, OnDestroy {
 		const prevOrdNext: string = data;
 
 		if (prevOrdNext === 'previous') {
-			this.wizzardFrom.previous();
+			this.wizardFrom.previous();
 			this.choicedNew = false;
 		}
 	}
 
 	completeCreateCarrier(data) {
 		if (data === 'complete') {
-			this.wizzardFrom.complete();
+			this.wizardFrom.complete();
 		}
 	}
 

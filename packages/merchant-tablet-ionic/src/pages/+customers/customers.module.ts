@@ -27,33 +27,25 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	declarations: [
-		CustomersPage,
-		ImageUserComponent,
-		AddressComponent,
-		OrdersComponent,
-		TotalComponent,
-		EmailComponent,
-	],
-	imports: [
-		PipesModule,
-		ComponentsModule,
-		IonicModule,
-		RouterModule.forChild(routes),
-		CommonModule,
-		FormsModule,
-		TranslateModule.forChild(),
-		Ng2SmartTableModule,
-		ConfirmDeletePopupModule,
-	],
-	entryComponents: [
-		UserPhoneComponent,
-		ImageUserComponent,
-		AddressComponent,
-		OrdersComponent,
-		TotalComponent,
-		EmailComponent,
-	],
-	providers: [WarehouseUsersService, OrdersService, WarehouseOrdersService],
+    declarations: [
+        CustomersPage,
+        ImageUserComponent,
+        AddressComponent,
+        OrdersComponent,
+        TotalComponent,
+        EmailComponent,
+    ],
+    imports: [
+        PipesModule,
+        ComponentsModule,
+        IonicModule,
+        RouterModule.forChild(routes),
+        CommonModule,
+        FormsModule,
+        TranslateModule.forChild(),
+        Ng2SmartTableModule,
+        ConfirmDeletePopupModule,
+    ],
+    providers: [WarehouseUsersService, OrdersService, WarehouseOrdersService]
 })
 export class CustomersPageModule {}

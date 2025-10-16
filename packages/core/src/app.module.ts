@@ -1,10 +1,10 @@
+import chalk from 'chalk';
+import fs from 'fs';
 import {
 	MiddlewareConsumer,
 	Module,
 	NestModule,
-	OnModuleInit,
-	HttpServer,
-	Inject,
+	OnModuleInit
 } from '@nestjs/common';
 import mongoose from 'mongoose';
 import { GraphQLSchema } from 'graphql';
@@ -38,20 +38,46 @@ import { DataModule } from './graphql/data/data.module';
 import { CarriersOrdersModule } from './graphql/carriers-orders/carriers-orders.module';
 import { GeoLocationOrdersModule } from './graphql/geo-locations/orders/geo-location-orders.module';
 import { GeoLocationMerchantsModule } from './graphql/geo-locations/merchants/geo-location-merchants.module';
-import { ApolloServer, makeExecutableSchema } from 'apollo-server-express';
-import { fileLoader, mergeTypes } from 'merge-graphql-schemas';
+import { ApolloServer } from 'apollo-server-express';
+import { ApolloServerPluginLandingPageGraphQLPlayground, ApolloServerPluginLandingPageGraphQLPlaygroundOptions } from 'apollo-server-core';
+
+// See https://www.apollographql.com/docs/apollo-server/migration/
+import { makeExecutableSchema } from '@graphql-tools/schema';
+
+// See https://www.graphql-tools.com/docs/migration/migration-from-merge-graphql-schemas
+import { mergeTypeDefs } from '@graphql-tools/merge';
+import { loadFilesSync } from '@graphql-tools/load-files';
+
 import { GetAboutUsHandler } from './services/users';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ServicesModule } from './services/services.module';
 import { ServicesApp } from './services/services.app';
 import { CurrencyModule } from './graphql/currency/currency.module';
 import { PromotionModule } from './graphql/products/promotions/promotion.module';
 import { AppsSettingsModule } from './graphql/apps-settings/apps-settings.module';
 
+type Config = Parameters<typeof mergeTypeDefs>[1];
+
+const mergeTypes = (types: any[], options?: { schemaDefinition?: boolean, all?: boolean } & Partial<Config>) => {
+	const schemaDefinition = options && typeof options.schemaDefinition === 'boolean'
+	  ? options.schemaDefinition
+	  : true;
+
+	return mergeTypeDefs(types, {
+	  useSchemaDefinition: schemaDefinition,
+	  forceSchemaDefinition: schemaDefinition,
+	  throwOnConflict: true,
+	  commentDescriptions: true,
+	  reverseDirectives: true,
+	  ...options,
+	});
+  };
+
 const port = env.GQLPORT;
+const host = env.API_HOST;
 
 const log: Logger = createEverLogger({
-	name: 'ApplicationModule from NestJS',
+	name: 'NestJS ApplicationModule',
 });
 
 // Add here all CQRS command handlers
@@ -61,6 +87,51 @@ export const CommandHandlers = [GetAboutUsHandler];
 export const EventHandlers = [];
 
 const entities = ServicesApp.getEntities();
+
+const isSSL = process.env.DB_SSL_MODE && process.env.DB_SSL_MODE !== 'false';
+
+// let's temporary save Cert in ./tmp/logs folder because we have write access to it
+let sslCertPath = `${env.LOGS_PATH}/ca-certificate.crt`;
+
+if (isSSL) {
+	const base64data = process.env.DB_CA_CERT;
+	const buff = Buffer.from(base64data, 'base64');
+	const sslCert = buff.toString('ascii');
+	fs.writeFileSync(sslCertPath, sslCert);
+}
+
+// TODO: put to config
+const connectTimeoutMS: number = 40000;
+
+// TODO: put to config (we also may want to increase it)
+const poolSize: number = 50;
+
+// We creating default connection for TypeORM.
+// It might be used in every place where we do not explicitly require connection with some name.
+// For example, we are using connection named "typeorm" inside our repositories
+const connectionSettings: TypeOrmModuleOptions = {
+	// Note: do not change this connection name, it should be default one!
+	// TODO: put this into settings (it's mongo only during testing of TypeORM integration!)
+	type: 'mongodb',
+	url: env.DB_URI,
+	ssl: isSSL,
+	sslCA: isSSL ? [sslCertPath] : undefined,
+	host: process.env.DB_HOST || 'localhost',
+	username: process.env.DB_USER,
+	password: process.env.DB_PASS,
+	database: process.env.DB_NAME || 'ever_development',
+	port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 27017,
+	entities,
+	synchronize: true,
+	useNewUrlParser: true,
+	// autoReconnect: true,
+	// reconnectTries: Number.MAX_VALUE,
+	// poolSize: poolSize,
+	connectTimeoutMS: connectTimeoutMS,
+	logging: true,
+	logger: 'file', // Removes console logging, instead logs all queries in a file ormlogs.log
+	useUnifiedTopology: true,
+};
 
 @Module({
 	controllers: [TestController],
@@ -74,15 +145,7 @@ const entities = ServicesApp.getEntities();
 		AppsSettingsModule,
 		ConfigModule,
 		// configure TypeORM Connection which will be possible to use inside NestJS (e.g. resolvers)
-		TypeOrmModule.forRoot({
-			type: 'mongodb',
-			url: env.DB_URI,
-			entities,
-			synchronize: true,
-			useNewUrlParser: true,
-			autoReconnect: true,
-			logging: true,
-		}),
+		TypeOrmModule.forRoot(connectionSettings),
 		// define which repositories shall be registered in the current scope (each entity will have own repository).
 		// Thanks to that we can inject the XXXXRepository to the NestJS using the @InjectRepository() decorator
 		// NOTE: this could be used inside NestJS only, not inside our services
@@ -91,11 +154,12 @@ const entities = ServicesApp.getEntities();
 		GraphQLModule.forRoot({
 			typePaths: ['./**/*.graphql'],
 			installSubscriptionHandlers: true,
-			debug: true,
+			debug: !env.isProd,
 			playground: true,
 			context: ({ req, res }) => ({
 				req,
 			}),
+
 		}),
 		InvitesModule,
 		DevicesModule,
@@ -135,6 +199,9 @@ export class ApplicationModule implements NestModule, OnModuleInit {
 	}
 
 	configure(consumer: MiddlewareConsumer) {
+
+		console.log(chalk.green(`Configuring NestJS ApplicationModule`));
+
 		// trick for GraphQL vs MongoDB ObjectId type.
 		// See https://github.com/apollographql/apollo-server/issues/1633 and
 		// https://github.com/apollographql/apollo-server/issues/1649#issuecomment-420840287
@@ -160,29 +227,35 @@ export class ApplicationModule implements NestModule, OnModuleInit {
 
 		*/
 
-		log.info(
-			`GraphQL playground available at http://localhost:${port}/graphql`
-		);
+		log.info(`GraphQL Playground available at http://${host}:${port}/graphql`);
+		console.log(chalk.green(`GraphQL Playground available at http://${host}:${port}/graphql`));
 	}
 
 	/*
 		Creates GraphQL Apollo Server manually
 	*/
 	createServer(schema: GraphQLSchema): ApolloServer {
+
+		const playgroundOptions: ApolloServerPluginLandingPageGraphQLPlaygroundOptions =
+			{
+				endpoint: `http://${host}:${port}/graphql`,
+				subscriptionEndpoint: `ws://${host}:${port}/subscriptions`,
+				settings: {
+					'editor.theme': 'dark'
+				}
+			};
+
 		return new ApolloServer({
 			schema,
 			context: ({ req, res }) => ({
 				req,
 			}),
-			playground: {
-				endpoint: `http://localhost:${port}/graphql`,
-				subscriptionEndpoint: `ws://localhost:${port}/subscriptions`,
-				settings: {
-					'editor.theme': 'dark',
-				},
-			},
+			plugins: [
+				ApolloServerPluginLandingPageGraphQLPlayground(playgroundOptions)
+			]
 		});
 	}
+
 
 	/*
 		Creates GraphQL Schema manually.
@@ -193,7 +266,7 @@ export class ApplicationModule implements NestModule, OnModuleInit {
 
 		console.log(`Searching for *.graphql files`);
 
-		const typesArray = fileLoader(graphqlPath);
+		const typesArray = loadFilesSync(graphqlPath);
 
 		const typeDefs = mergeTypes(typesArray, { all: true });
 

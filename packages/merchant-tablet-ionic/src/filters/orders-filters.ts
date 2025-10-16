@@ -1,7 +1,7 @@
 import Order from '@modules/server.common/entities/Order';
 import OrderStatus from '@modules/server.common/enums/OrderStatus';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 export type OrdersFilterModes =
 	| 'ready'

@@ -53,7 +53,7 @@ export class WarehouseSelectViewComponent
 	ngOnChanges() {}
 	ngOnInit() {}
 
-	protected selectWarehouse(warehouse: Warehouse) {
+	public selectWarehouse(warehouse: Warehouse) {
 		this.warehouse = warehouse;
 		this.selectWarehouseEvent.emit(warehouse);
 		console.log(this.selectedWarehouse);

@@ -4,12 +4,15 @@
 	"compilerOptions": {
 		"outDir": "./dist/out-tsc",
 		"module": "commonjs",
-		"target": "es2015",
+		"target": "es2016",
 		"baseUrl": "./src",
 		"experimentalDecorators": true,
-		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"],
+		"types": ["node", "jest", "reflect-metadata", "googlemaps", "jasmine"],
 		"paths": {
 			"@angular/*": ["../node_modules/@angular/*"],
+			"@nebular/*": [
+				"../../../node_modules/@nebular/*"
+			],
 			"@modules/server.common/*": ["../../common/src/*"],
 			"@modules/client.common.angular2/*": ["../../common-angular/src/*"],
 			"@pyro/*": ["../../common/src/@pyro/*"],
@@ -36,12 +39,16 @@
 	},
 	"files": ["src/main.ts", "src/polyfills.ts"],
 	"angularCompilerOptions": {
-		"enableIvy": false,
+		"strictTemplates": false,
+		"strictInjectionParameters": false,
 		"annotateForClosureCompiler": true,
 		"skipTemplateCodegen": true,
-		"fullTemplateTypeCheck": true,
-		"strictInjectionParameters": true,
+		"fullTemplateTypeCheck": false,
 		"enableResourceInlining": true
 	},
-	"include": ["./src", "../common/**/*.ts", "../common-angular/**/*.ts"]
+	"include": [
+		"./src/**/*.d.ts",
+		"../common/**/*d.ts",
+		"../common-angular/**/*d.ts"
+	]
 }

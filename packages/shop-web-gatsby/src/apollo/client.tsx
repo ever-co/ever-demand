@@ -6,8 +6,7 @@ import {
 } from 'apollo-boost';
 import { onError } from 'apollo-link-error';
 import fetch from 'isomorphic-fetch';
-// @ts-ignore
-// @ts-ignore
+
 export const client = new ApolloClient({
 	uri: process.env.GQL_ENDPOINT,
 	link: ApolloLink.from([

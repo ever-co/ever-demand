@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 import IProductInfo from '../interfaces/IProductInfo';
 import Product from './Product';
 import { IOrderProductCreateObject } from '../interfaces/IOrderProduct';

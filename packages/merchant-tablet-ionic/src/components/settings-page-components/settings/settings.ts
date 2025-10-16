@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, Input, AfterViewInit } from '@angular/core';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import OrderBarcodeTypes, {
 	orderBarcodeTypesToString,

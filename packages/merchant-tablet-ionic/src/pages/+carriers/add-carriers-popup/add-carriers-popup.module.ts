@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { AddCarriersPopupPage } from './add-carriers-popup';
-import { FormWizardModule } from 'angular2-wizard';
+import { FormWizardModule } from '@ever-co/angular2-wizard';
 import { AddChoiceComponent } from './add-choice/add-choice';
 import { CarriersCatalogComponent } from './carriers-catalog/carriers-catalog';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -19,17 +19,16 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-	declarations: COMPONENTS,
-	entryComponents: COMPONENTS,
-	exports: COMPONENTS,
-	imports: [
-		IonicModule,
-		CommonModule,
-		FormsModule,
-		FormWizardModule,
-		Ng2SmartTableModule,
-		AddNewCarriersPopupPageModule,
-		TranslateModule.forChild(),
-	],
+    declarations: COMPONENTS,
+    exports: COMPONENTS,
+    imports: [
+        IonicModule,
+        CommonModule,
+        FormsModule,
+        FormWizardModule,
+        Ng2SmartTableModule,
+        AddNewCarriersPopupPageModule,
+        TranslateModule.forChild(),
+    ]
 })
 export class AddCarriersPopupPageModule {}

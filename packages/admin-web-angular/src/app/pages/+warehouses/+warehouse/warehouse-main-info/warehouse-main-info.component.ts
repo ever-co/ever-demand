@@ -11,8 +11,8 @@ export class WarehouseMainInfoViewComponent
 	implements OnInit, OnDestroy, OnChanges {
 	private _ngDestroy$ = new Subject<void>();
 
-	protected isManufacturing: boolean;
-	protected isCarrierRequired: boolean;
+	public isManufacturing: boolean;
+	public isCarrierRequired: boolean;
 
 	@Input()
 	public selectedWarehouse: Warehouse;

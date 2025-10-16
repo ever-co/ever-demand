@@ -1,7 +1,7 @@
 import { Resolver, Query, Mutation } from '@nestjs/graphql';
-import { IPromotionCreateObject } from '@ever-platform/common/src/interfaces/IPromotion';
+import { IPromotionCreateObject } from '@modules/server.common/interfaces/IPromotion';
 import { PromotionService } from '../../../services/products/PromotionService';
-import Promotion from '@ever-platform/common/src/entities/Promotion';
+import Promotion from '@modules/server.common/entities/Promotion';
 
 @Resolver('Promotion')
 export class PromotionResolver {

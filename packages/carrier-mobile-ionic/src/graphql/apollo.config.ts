@@ -1,20 +1,25 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { Apollo, ApolloModule } from 'apollo-angular';
-import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { setContext } from 'apollo-link-context';
+import { Apollo } from 'apollo-angular';
+import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
+import { ApolloLink, InMemoryCache } from '@apollo/client/core';
+import { setContext } from '@apollo/client/link/context';
 import { environment } from '../environments/environment';
 
 @NgModule({
-	exports: [HttpClientModule, ApolloModule, HttpLinkModule],
+	exports: [
+		HttpClientModule
+	],
 })
 export class GraphQLModule {
-	constructor(apollo: Apollo, httpLink: HttpLink) {
+	constructor(
+		private readonly apollo: Apollo,
+		private readonly httpLink: HttpLink
+	) {
 		const uri = environment.GQL_ENDPOINT;
-		const http = httpLink.create({ uri });
+		const http: HttpLinkHandler = httpLink.create({ uri });
 
-		const authLink = setContext((_, { headers }) => {
+		const authLink: ApolloLink = setContext((_, { headers }) => {
 			// get the authentication token from local storage if it exists
 			const token = localStorage.getItem('token');
 			// return the headers to the context so httpLink can read them

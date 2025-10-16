@@ -39,7 +39,6 @@
 		"../common-angular/**/*.ts"
 	],
 	"angularCompilerOptions": {
-		"enableIvy": false,
 		"annotateForClosureCompiler": true,
 		"skipTemplateCodegen": true,
 		"fullTemplateTypeCheck": true,

@@ -76,7 +76,7 @@ export class OrderComponent implements OnDestroy {
 			details.push(warehouse.contactPhone);
 			details.push(warehouse.contactEmail);
 		}
-		if (warehouse.geoLocation) {
+		if (warehouse && warehouse.geoLocation) {
 			details.push(this.getFullAddress(warehouse.geoLocation));
 		}
 		return details.filter((d) => d);
@@ -96,7 +96,7 @@ export class OrderComponent implements OnDestroy {
 			details.push(user.phone);
 			details.push(user.email);
 		}
-		if (user.geoLocation) {
+		if (user && user.geoLocation) {
 			details.push(user.fullAddress);
 
 			user.geoLocation.notes =
@@ -119,7 +119,7 @@ export class OrderComponent implements OnDestroy {
 			);
 			details.push(carrier.phone);
 		}
-		if (carrier.geoLocation) {
+		if (carrier && carrier.geoLocation) {
 			details.push(this.getFullAddress(carrier.geoLocation));
 		}
 		return details.filter((d) => d);
@@ -190,7 +190,7 @@ export class OrderComponent implements OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.ngDestroy$.next();
+		this.ngDestroy$.next(true);
 		this.ngDestroy$.complete();
 	}
 }

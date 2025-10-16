@@ -22,10 +22,10 @@ import { IconsService } from './icons.service';
 	`,
 })
 export class IconComponent implements OnInit {
-	private readonly IconsService: typeof IconsService = IconsService;
+	public readonly IconsService: typeof IconsService = IconsService;
 
 	@Input()
-	private readonly type: string;
+	public readonly type: string;
 
 	constructor(private readonly iconsService: IconsService) {}
 

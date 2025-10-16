@@ -23,19 +23,18 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		TranslateModule.forChild(),
-		CancelPageModule,
-		IssuePageModule,
-		ElapsedTimeModule,
-		OrdersCardModule,
-	],
-	entryComponents: [...COMPONENTS],
-	declarations: [...COMPONENTS],
-	exports: [...COMPONENTS],
-	providers: [],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        TranslateModule.forChild(),
+        CancelPageModule,
+        IssuePageModule,
+        ElapsedTimeModule,
+        OrdersCardModule,
+    ],
+    declarations: [...COMPONENTS],
+    exports: [...COMPONENTS],
+    providers: []
 })
 export class OrderInfoCommonModule {}

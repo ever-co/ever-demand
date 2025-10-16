@@ -1,8 +1,7 @@
 {
 	"extends": ["tslint:latest", "tslint-config-prettier"],
 	"rulesDirectory": [
-		"../../node_modules/codelyzer",
-		"../../node_modules/rxjs-tslint"
+		"../../node_modules/codelyzer"
 	],
 	"linterOptions": {
 		"exclude": ["node_modules", "dist"]
@@ -64,10 +63,10 @@
 			"element",
 			[
 				"google",
-				"e-cu", // e-cu = ever customer
+				"e-cu",
 				"ngx",
-				"ea", // ea = ever admin
-				"es" // es = ever store
+				"ea",
+				"es"
 			],
 			"kebab-case"
 		],

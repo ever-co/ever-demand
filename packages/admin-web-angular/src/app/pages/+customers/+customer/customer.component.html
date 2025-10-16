@@ -1,6 +1,6 @@
 <toaster-container> </toaster-container>
 
-<div *ngIf="user$ | async as user" class="row">
+<div *ngIf="(user$ | async) as user" class="row">
 	<div class="col-md-8">
 		<nb-card>
 			<nb-card-header class="row">
@@ -64,8 +64,7 @@
 							'CUSTOMERS_VIEW.NEARBY_STORES' | translate
 						}}"
 					>
-						<ea-customer-stores [currentUser]="selectedUser">
-						</ea-customer-stores>
+						<ea-customer-stores [currentUser]="selectedUser"></ea-customer-stores>
 					</nb-tab>
 				</nb-tabset>
 			</nb-card-body>

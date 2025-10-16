@@ -7,15 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { FileUploaderModule } from 'components/file-uploader/file-uploader.module';
 
 @NgModule({
-	declarations: [ProductImagesPopup],
-	entryComponents: [ProductImagesPopup],
-	providers: [],
-	imports: [
-		FileUploaderModule,
-		TranslateModule.forChild(),
-		CommonModule,
-		FormsModule,
-		IonicModule,
-	],
+    declarations: [ProductImagesPopup],
+    providers: [],
+    imports: [
+        FileUploaderModule,
+        TranslateModule.forChild(),
+        CommonModule,
+        FormsModule,
+        IonicModule,
+    ]
 })
 export class ProductImagesPopupModule {}

@@ -18,9 +18,8 @@ import {
 	SwiperInterface as Swiper,
 	SwiperOptions,
 } from '@ionic/core/dist/ionic/swiper/swiper-interface';
-import { differenceBy, pullAllBy } from 'lodash';
 // TODO Fix Progress Bar
-// import { NgProgress } from '@ngx-progressbar/core';
+// import { NgProgress } from 'ngx-progressbar';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { Router } from '@angular/router';
 import { Store } from '../../../../services/store.service';
@@ -93,7 +92,7 @@ export class ProductsSlidesViewComponent
 			on: {
 				init() {
 					self.swiper = this; // this = swiper instance here
-					(window as any).swiper = this.swiper; // used for debugging
+					(window as any).swiper = self.swiper; // used for debugging
 
 					self.swiperEvents$.next('init');
 				},

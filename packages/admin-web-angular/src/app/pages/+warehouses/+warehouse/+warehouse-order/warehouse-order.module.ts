@@ -13,19 +13,18 @@ import { NbSpinnerModule } from '@nebular/theme';
 import { ThemeModule } from '../../../../@theme';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		ThemeModule,
-		FormWizardModule,
-		Ng2SmartTableModule,
-		TranslateModule.forChild(),
-		UserFormsModule,
-		LocationFormModule,
-		GoogleMapModule,
-		WarehouseOrderModalModule,
-		NbSpinnerModule,
-	],
-	declarations: [WarehouseOrderComponent, WarehouseOrderCreateUserComponent],
-	entryComponents: [WarehouseOrderComponent],
+    imports: [
+        CommonModule,
+        ThemeModule,
+        FormWizardModule,
+        Ng2SmartTableModule,
+        TranslateModule.forChild(),
+        UserFormsModule,
+        LocationFormModule,
+        GoogleMapModule,
+        WarehouseOrderModalModule,
+        NbSpinnerModule,
+    ],
+    declarations: [WarehouseOrderComponent, WarehouseOrderCreateUserComponent]
 })
 export class WarehouseOrderModule {}

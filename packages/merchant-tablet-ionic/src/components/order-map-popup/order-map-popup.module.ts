@@ -5,9 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-	declarations: [OrderMapPopupPage],
-	imports: [TranslateModule.forChild(), IonicModule, CommonModule],
-	exports: [OrderMapPopupPage],
-	entryComponents: [OrderMapPopupPage],
+    declarations: [OrderMapPopupPage],
+    imports: [TranslateModule.forChild(), IonicModule, CommonModule],
+    exports: [OrderMapPopupPage]
 })
 export class OrderMapPopupPageModule {}

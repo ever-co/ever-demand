@@ -43,7 +43,7 @@
 	<div class="settings-row theme-button">
 		<select
 			[(ngModel)]="defaultLanguage"
-			(change)="switchLanguage()"
+			(change)="switchLanguage($event)"
 			status="primary"
 			class="form-control"
 		>

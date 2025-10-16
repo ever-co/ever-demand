@@ -1,6 +1,6 @@
 import GeoLocation from './entities/GeoLocation';
 import { ILocation } from './interfaces/IGeoLocation';
-import { sample } from 'lodash';
+import { sample } from 'underscore';
 import Order from './entities/Order';
 
 namespace Utils {

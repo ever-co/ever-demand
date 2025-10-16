@@ -1,20 +1,20 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormWizardModule } from '@ever-co/angular2-wizard';
 import { SimpleTimer } from 'ng2-simple-timer';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ToasterModule } from 'angular2-toaster';
-import { Apollo, ApolloModule } from 'apollo-angular';
-import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloLink } from 'apollo-link';
-import { WebSocketLink } from 'apollo-link-ws';
-import { setContext } from 'apollo-link-context';
+import { Apollo } from 'apollo-angular';
+import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
+import { ApolloLink, InMemoryCache } from '@apollo/client/core';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { setContext } from '@apollo/client/link/context';
+import { NgxEchartsModule } from 'ngx-echarts';
 import { getOperationAST } from 'graphql/utilities/getOperationAST';
 import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
@@ -29,6 +29,9 @@ import { AppModuleGuard } from './app.module.guard';
 import { MaintenanceModuleGuard } from './pages/+maintenance-info/maintenance-info.module.guard';
 import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
 import { ServerSettingsService } from './@core/services/server-settings.service';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { HttpLoaderFactory } from './@shared/translate/translate.module';
+import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 
 // It's more 'standard' way to use Font-Awesome module and special package,
 // but for some reason ngx-admin works without it. So we leave next line commented for now.
@@ -36,6 +39,7 @@ import { ServerSettingsService } from './@core/services/server-settings.service'
 @NgModule({
 	imports: [
 		BrowserModule,
+		FormsModule,
 		FormWizardModule,
 		// See comment above about Font-Awesome in ngx-admin
 		// FontAwesomeModule,
@@ -43,8 +47,6 @@ import { ServerSettingsService } from './@core/services/server-settings.service'
 		BrowserAnimationsModule,
 		HttpClientModule,
 		AppRoutingModule,
-		ApolloModule,
-		HttpLinkModule,
 		TranslateModule.forRoot({
 			loader: {
 				provide: TranslateLoader,
@@ -54,8 +56,18 @@ import { ServerSettingsService } from './@core/services/server-settings.service'
 		}),
 		CommonModule.forRoot({ apiUrl: environment.SERVICES_ENDPOINT }),
 		NgbModule,
+		NbEvaIconsModule,
 		ThemeModule.forRoot(),
 		CoreModule.forRoot(),
+		NgxEchartsModule.forRoot({
+			/**
+			 * This will import all modules from echarts.
+			 * If you only need custom modules,
+			 * please refer to [Custom Build] section.
+			 */
+			echarts: () => import('echarts')
+		}),
+		HighlightModule
 	],
 	declarations: [AppComponent],
 	bootstrap: [AppComponent],
@@ -92,17 +104,27 @@ import { ServerSettingsService } from './@core/services/server-settings.service'
 		SimpleTimer,
 		AppModuleGuard,
 		MaintenanceModuleGuard,
+		{
+			provide: HIGHLIGHT_OPTIONS,
+			useValue: {
+			  	fullLibraryLoader: () => import('highlight.js')
+			}
+		}
 	],
 })
 export class AppModule {
-	constructor(apollo: Apollo, httpLink: HttpLink, private store: Store) {
+	constructor(
+		private apollo: Apollo,
+		private httpLink: HttpLink,
+		private store: Store
+	) {
 		// Create an http link:
-		const http = httpLink.create({
+		const http: HttpLinkHandler = httpLink.create({
 			uri: environment.GQL_ENDPOINT,
 		});
 
 		// Create a WebSocket link:
-		const ws = new WebSocketLink({
+		const ws: WebSocketLink = new WebSocketLink({
 			uri: environment.GQL_SUBSCRIPTIONS_ENDPOINT,
 			options: {
 				reconnect: true,
@@ -110,7 +132,7 @@ export class AppModule {
 			},
 		});
 
-		const authLink = setContext((_, { headers }) => {
+		const authLink: ApolloLink = setContext((_, { headers }) => {
 			// get the authentication token from local storage if it exists
 			const token = store.token;
 			// return the headers to the context so httpLink can read them
@@ -155,10 +177,6 @@ export class AppModule {
 			cache: new InMemoryCache(),
 		});
 	}
-}
-
-export function HttpLoaderFactory(http: HttpClient) {
-	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 export function googleMapsLoaderFactory(provider: GoogleMapsLoader) {

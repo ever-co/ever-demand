@@ -9,18 +9,17 @@ import { OrderStoreInfo } from './store-info.component';
 import { TakeawayCommonModule } from '../../common/takeaway-common.module';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		TranslateModule.forChild(),
-		ElapsedTimeModule,
-		OrderInfoCommonModule,
-		TakeawayCommonModule,
-	],
-	entryComponents: [],
-	declarations: [OrderStoreInfo],
-	providers: [],
-	exports: [OrderStoreInfo],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        TranslateModule.forChild(),
+        ElapsedTimeModule,
+        OrderInfoCommonModule,
+        TakeawayCommonModule,
+    ],
+    declarations: [OrderStoreInfo],
+    providers: [],
+    exports: [OrderStoreInfo]
 })
 export class OrderStoreInfoModule {}

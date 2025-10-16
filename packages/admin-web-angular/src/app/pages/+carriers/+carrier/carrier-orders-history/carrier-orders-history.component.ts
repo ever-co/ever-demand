@@ -7,14 +7,11 @@ import {
 	Output,
 	AfterViewInit,
 } from '@angular/core';
-
 import Order from '@modules/server.common/entities/Order';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import { ICarrierOrdersRouterGetOptions } from '@modules/server.common/routers/ICarrierOrdersRouter';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/carrier-orders-router.service';
-import Warehouse from '@modules/server.common/entities/Warehouse';
-import _ from 'lodash';
 import { forkJoin, Observable, Subscription } from 'rxjs';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Subject } from 'rxjs';
@@ -23,13 +20,13 @@ import { CreatedComponent } from '../../../../@shared/render-component/created/c
 import { CarriersOrdersService } from '@app/@core/data/carriers-orders.service';
 import { StoreOrderComponent } from '@app/@shared/render-component/carrier-orders-table/store-order.component';
 import { UserOrderComponent } from '@app/@shared/render-component/carrier-orders-table/user-order-component';
-import { takeUntil, first } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 const perPage = 3;
 
 @Component({
 	selector: 'ea-carrier-orders-history',
-	templateUrl: '/carrier-orders-history.component.html',
+	templateUrl: './carrier-orders-history.component.html',
 	styleUrls: ['./carrier-orders-history.component.scss'],
 })
 export class CarrierOrdersHistoryComponent
@@ -38,17 +35,18 @@ export class CarrierOrdersHistoryComponent
 
 	@Input()
 	protected carrierOrderOptions: ICarrierOrdersRouterGetOptions;
+
 	@Input()
 	protected selectedCarrier: Carrier;
 
 	@Output()
 	protected selectedOrderEvent = new EventEmitter<Order>();
 
-	protected selectedOrder: Order;
-	protected currentOrders: Order[] = [];
-	protected settingsSmartTable: object;
-	protected sourceSmartTable: LocalDataSource = new LocalDataSource();
-	protected enumOrderCarrierStatus: typeof OrderCarrierStatus = OrderCarrierStatus;
+	public selectedOrder: Order;
+	public currentOrders: Order[] = [];
+	public settingsSmartTable: object;
+	public sourceSmartTable: LocalDataSource = new LocalDataSource();
+	public enumOrderCarrierStatus: typeof OrderCarrierStatus = OrderCarrierStatus;
 
 	private dataCount: number;
 	$ordersHistory: Subscription;
@@ -222,7 +220,7 @@ export class CarrierOrdersHistoryComponent
 
 	private async loadSmartTableData(page = 1) {
 		if (this.$ordersHistory) {
-			await this.$ordersHistory.unsubscribe();
+			this.$ordersHistory.unsubscribe();
 		}
 
 		this.$ordersHistory = await this.carriersOrdersService

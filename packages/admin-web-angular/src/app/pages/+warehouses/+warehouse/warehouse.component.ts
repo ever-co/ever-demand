@@ -53,16 +53,17 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 	public allOrders: Order[] = [];
 	public loading: boolean;
 
-	protected warehouses: Warehouse[];
-	protected topWarehouseProducts: WarehouseProduct[];
-	protected warehouse: Warehouse;
-	protected warehouseID: string;
-	protected selectedWarehouse: Warehouse;
-	protected selectedOrder: Order;
+	public warehouses: Warehouse[];
+	public topWarehouseProducts: WarehouseProduct[];
+	public warehouse: Warehouse;
+	public selectedWarehouse: Warehouse;
+	public warehouseID: string;
+	public selectedOrder: Order;
+	public settingsSmartTable: object;
+	public sourceSmartTable: LocalDataSource = new LocalDataSource();
+	public isSelectedOrderActionsAvailable: boolean = true;
+
 	protected timers: string[] = [];
-	protected settingsSmartTable: object;
-	protected sourceSmartTable: LocalDataSource = new LocalDataSource();
-	protected isSelectedOrderActionsAvailable: boolean = true;
 
 	private dataCount: number;
 	private $storeOrders;
@@ -126,7 +127,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 		return this.orders;
 	}
 
-	protected selectOrder(warehouseOrderProducts) {
+	public selectOrder(warehouseOrderProducts) {
 		this.selectedOrder =
 			this.selectedOrder === warehouseOrderProducts.data
 				? null
@@ -155,7 +156,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 		});
 	}
 
-	protected openAddProductTypeModel() {
+	public openAddProductTypeModel() {
 		const activeModal = this.modalService.open(
 			WarehouseProductCreateComponent,
 			{

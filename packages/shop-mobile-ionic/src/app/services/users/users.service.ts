@@ -1,6 +1,5 @@
-import { Apollo } from 'apollo-angular';
+import { Apollo, gql } from 'apollo-angular';
 import { Injectable } from '@angular/core';
-import gql from 'graphql-tag';
 import { map, share } from 'rxjs/operators';
 import IUser from '@modules/server.common/interfaces/IUser';
 

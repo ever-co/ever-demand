@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Subscribable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 
 interface Coords {
@@ -79,7 +79,7 @@ export class GeoLocationService {
 		});
 	}
 
-	private getLocationByIP(): Subscribable<Coords | null> {
+	private getLocationByIP(): Observable<Coords | null> {
 		return this.http.get(
 			environment.SERVICES_ENDPOINT + '/getLocationByIP',
 			{ headers: this.headers }
