@@ -8,12 +8,14 @@ on:
           - completed
 
 jobs:
-    deploy-do:
-        runs-on: ubuntu-latest
+    deploy-dev:
+        runs-on: ubuntu-22.04
+
+        environment: dev
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             - name: Install doctl
               uses: digitalocean/action-doctl@v2
@@ -25,6 +27,19 @@ jobs:
 
             - name: Save DigitalOcean kubeconfig with short-lived credentials
               run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 k8s-ever
+
+            - name: Generate TLS Secrets
+              run: |
+                  rm -f ${HOME}/ingress.crt ${HOME}/ingress.key
+                  echo "${{ secrets.INGRESS_CERT }}" | base64 --decode > ${HOME}/ingress.crt
+                  echo "${{ secrets.INGRESS_CERT_KEY }}" | base64 --decode > ${HOME}/ingress.key
+
+                  kubectl create secret tls admindemo.ever.co-tls --save-config --dry-run=client --cert=${HOME}/ingress.crt --key=${HOME}/ingress.key -o yaml | kubectl --context do-sfo2-k8s-ever apply -f -
+                  kubectl create secret tls shopdemo.ever.co-tls --save-config --dry-run=client --cert=${HOME}/ingress.crt --key=${HOME}/ingress.key -o yaml | kubectl --context do-sfo2-k8s-ever apply -f -
+                  kubectl create secret tls mobileshopdemo.ever.co-tls --save-config --dry-run=client --cert=${HOME}/ingress.crt --key=${HOME}/ingress.key -o yaml | kubectl --context do-sfo2-k8s-ever apply -f -
+                  kubectl create secret tls mobilecarrierdemo.ever.co-tls --save-config --dry-run=client --cert=${HOME}/ingress.crt --key=${HOME}/ingress.key -o yaml | kubectl --context do-sfo2-k8s-ever apply -f -
+                  kubectl create secret tls merchantdemo.ever.co-tls --save-config --dry-run=client --cert=${HOME}/ingress.crt --key=${HOME}/ingress.key -o yaml | kubectl --context do-sfo2-k8s-ever apply -f -
+                  kubectl create secret tls apidemo.ever.co-tls --save-config --dry-run=client --cert=${HOME}/ingress.crt --key=${HOME}/ingress.key -o yaml | kubectl --context do-sfo2-k8s-ever apply -f -
 
             - name: Write MongoDB Certificate file
               run: |

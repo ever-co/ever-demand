@@ -3,147 +3,219 @@ kind: Service
 apiVersion: v1
 metadata:
     name: ever-demo-admin-lb
-    annotations:
-        service.beta.kubernetes.io/do-loadbalancer-name: 'admindemo.ever.co'
-        service.beta.kubernetes.io/do-loadbalancer-protocol: 'http2'
-        service.beta.kubernetes.io/do-loadbalancer-http2-ports: '443'
-        # Replace with your Certificate Id. You can get a list of Ids with 'doctl compute certificate list'
-        service.beta.kubernetes.io/do-loadbalancer-certificate-id: 'a93346c1-d63b-4c33-84c5-4589787428ca'
-        service.beta.kubernetes.io/do-loadbalancer-size-slug: 'lb-small'
-        service.beta.kubernetes.io/do-loadbalancer-hostname: 'admindemo.ever.co'
 spec:
-    type: LoadBalancer
+    type: ClusterIP
     selector:
         app: ever-demo-admin
     ports:
         - name: http
           protocol: TCP
-          port: 443
+          port: 80
           targetPort: 4200
+
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+    name: ever-demo-admin-lb-ingress
+    namespace: default
+    annotations:
+        nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+spec:
+    ingressClassName: nginx
+    rules:
+        - host: admindemo.ever.co
+          http:
+              paths:
+                  - path: /
+                    pathType: Prefix
+                    backend:
+                        service:
+                            name: ever-demo-admin-lb
+                            port:
+                                number: 80
+    tls:
+        - hosts:
+              - admindemo.ever.co
+          secretName: admindemo.ever.co-tls
 
 ---
 kind: Service
 apiVersion: v1
 metadata:
     name: ever-demo-shop-lb
-    annotations:
-        service.beta.kubernetes.io/do-loadbalancer-name: 'shopdemo.ever.co'
-        service.beta.kubernetes.io/do-loadbalancer-protocol: 'http2'
-        service.beta.kubernetes.io/do-loadbalancer-http2-ports: '443'
-        # Replace with your Certificate Id. You can get a list of Ids with 'doctl compute certificate list'
-        service.beta.kubernetes.io/do-loadbalancer-certificate-id: 'a93346c1-d63b-4c33-84c5-4589787428ca'
-        service.beta.kubernetes.io/do-loadbalancer-size-slug: 'lb-small'
-        service.beta.kubernetes.io/do-loadbalancer-hostname: 'shopdemo.ever.co'
 spec:
-    type: LoadBalancer
+    type: ClusterIP
     selector:
         app: ever-demo-shop-web-angular
     ports:
         - name: http
           protocol: TCP
-          port: 443
+          port: 80
           targetPort: 4200
+
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+    name: ever-demo-shop-lb-ingress
+    namespace: default
+    annotations:
+        nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+spec:
+    ingressClassName: nginx
+    rules:
+        - host: shopdemo.ever.co
+          http:
+              paths:
+                  - path: /
+                    pathType: Prefix
+                    backend:
+                        service:
+                            name: ever-demo-shop-lb
+                            port:
+                                number: 80
+    tls:
+        - hosts:
+              - shopdemo.ever.co
+          secretName: shopdemo.ever.co-tls
 
 ---
 kind: Service
 apiVersion: v1
 metadata:
     name: ever-demo-mobile-shop-lb
-    annotations:
-        service.beta.kubernetes.io/do-loadbalancer-name: 'mobileshopdemo.ever.co'
-        service.beta.kubernetes.io/do-loadbalancer-protocol: 'http2'
-        service.beta.kubernetes.io/do-loadbalancer-http2-ports: '443'
-        # Replace with your Certificate Id. You can get a list of Ids with 'doctl compute certificate list'
-        service.beta.kubernetes.io/do-loadbalancer-certificate-id: 'a93346c1-d63b-4c33-84c5-4589787428ca'
-        service.beta.kubernetes.io/do-loadbalancer-size-slug: 'lb-small'
-        service.beta.kubernetes.io/do-loadbalancer-hostname: 'mobileshopdemo.ever.co'
 spec:
-    type: LoadBalancer
+    type: ClusterIP
     selector:
         app: ever-demo-shop-mobile-ionic
     ports:
         - name: http
           protocol: TCP
-          port: 443
+          port: 80
           targetPort: 4201
+
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+    name: ever-demo-mobile-shop-lb-ingress
+    namespace: default
+    annotations:
+        nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+spec:
+    ingressClassName: nginx
+    rules:
+        - host: mobileshopdemo.ever.co
+          http:
+              paths:
+                  - path: /
+                    pathType: Prefix
+                    backend:
+                        service:
+                            name: ever-demo-mobile-shop-lb
+                            port:
+                                number: 80
+    tls:
+        - hosts:
+              - mobileshopdemo.ever.co
+          secretName: mobileshopdemo.ever.co-tls
 
 ---
 kind: Service
 apiVersion: v1
 metadata:
     name: ever-demo-carrier-mobile-ionic-lb
-    annotations:
-        service.beta.kubernetes.io/do-loadbalancer-name: 'mobilecarrierdemo.ever.co'
-        service.beta.kubernetes.io/do-loadbalancer-protocol: 'http2'
-        service.beta.kubernetes.io/do-loadbalancer-http2-ports: '443'
-        # Replace with your Certificate Id. You can get a list of Ids with 'doctl compute certificate list'
-        service.beta.kubernetes.io/do-loadbalancer-certificate-id: 'a93346c1-d63b-4c33-84c5-4589787428ca'
-        service.beta.kubernetes.io/do-loadbalancer-size-slug: 'lb-small'
-        service.beta.kubernetes.io/do-loadbalancer-hostname: 'mobilecarrierdemo.ever.co'
 spec:
-    type: LoadBalancer
+    type: ClusterIP
     selector:
         app: ever-demo-carrier-mobile-ionic
     ports:
         - name: http
           protocol: TCP
-          port: 443
+          port: 80
           targetPort: 4203
+
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+    name: ever-demo-carrier-mobile-ionic-lb-ingress
+    namespace: default
+    annotations:
+        nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+spec:
+    ingressClassName: nginx
+    rules:
+        - host: mobilecarrierdemo.ever.co
+          http:
+              paths:
+                  - path: /
+                    pathType: Prefix
+                    backend:
+                        service:
+                            name: ever-demo-carrier-mobile-ionic-lb
+                            port:
+                                number: 80
+    tls:
+        - hosts:
+              - mobilecarrierdemo.ever.co
+          secretName: mobilecarrierdemo.ever.co-tls
 
 ---
 kind: Service
 apiVersion: v1
 metadata:
     name: ever-demo-merchant-tablet-ionic-lb
-    annotations:
-        service.beta.kubernetes.io/do-loadbalancer-name: 'merchantdemo.ever.co'
-        service.beta.kubernetes.io/do-loadbalancer-protocol: 'http2'
-        service.beta.kubernetes.io/do-loadbalancer-http2-ports: '443'
-        # Replace with your Certificate Id. You can get a list of Ids with 'doctl compute certificate list'
-        service.beta.kubernetes.io/do-loadbalancer-certificate-id: 'a93346c1-d63b-4c33-84c5-4589787428ca'
-        service.beta.kubernetes.io/do-loadbalancer-size-slug: 'lb-small'
-        service.beta.kubernetes.io/do-loadbalancer-hostname: 'merchantdemo.ever.co'
 spec:
-    type: LoadBalancer
+    type: ClusterIP
     selector:
         app: ever-demo-merchant-tablet-ionic
     ports:
         - name: http
           protocol: TCP
-          port: 443
+          port: 80
           targetPort: 4202
+
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+    name: ever-demo-merchant-tablet-ionic-lb-ingress
+    namespace: default
+    annotations:
+        nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+spec:
+    ingressClassName: nginx
+    rules:
+        - host: merchantdemo.ever.co
+          http:
+              paths:
+                  - path: /
+                    pathType: Prefix
+                    backend:
+                        service:
+                            name: ever-demo-merchant-tablet-ionic-lb
+                            port:
+                                number: 80
+    tls:
+        - hosts:
+              - merchantdemo.ever.co
+          secretName: merchantdemo.ever.co-tls
 
 ---
 kind: Service
 apiVersion: v1
 metadata:
     name: ever-demo-api-lb
-    annotations:
-        service.beta.kubernetes.io/do-loadbalancer-name: 'apidemo.ever.co'
-        service.beta.kubernetes.io/do-loadbalancer-protocol: 'http2'
-
-        # GraphQL Subscriptions use WebSockets on Port 2086
-        service.beta.kubernetes.io/do-loadbalancer-http-ports: '2086'
-
-        # Rest API works on 443, GraphQL API works on 8443
-        service.beta.kubernetes.io/do-loadbalancer-http2-ports: '443,8443'
-
-        # Replace with your Certificate Id. You can get a list of Ids with 'doctl compute certificate list'
-        service.beta.kubernetes.io/do-loadbalancer-certificate-id: 'a93346c1-d63b-4c33-84c5-4589787428ca'
-        service.beta.kubernetes.io/do-loadbalancer-size-slug: 'lb-small'
-        service.beta.kubernetes.io/do-loadbalancer-hostname: 'apidemo.ever.co'
-
-        service.beta.kubernetes.io/do-loadbalancer-sticky-sessions-type: 'cookies'
-        service.beta.kubernetes.io/do-loadbalancer-sticky-sessions-cookie-name: 'route'
-        service.beta.kubernetes.io/do-loadbalancer-sticky-sessions-cookie-ttl: '34650'
 spec:
-    type: LoadBalancer
+    type: ClusterIP
     selector:
         app: ever-demo-api
     ports:
         - name: rest-api-http
           protocol: TCP
-          port: 443
+          port: 80
           targetPort: 5500
         - name: gql-api-http
           protocol: TCP
@@ -153,6 +225,32 @@ spec:
           protocol: TCP
           port: 2086
           targetPort: 2086
+
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+    name: ever-demo-api-lb-ingress
+    namespace: default
+    annotations:
+        nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+spec:
+    ingressClassName: nginx
+    rules:
+        - host: apidemo.ever.co
+          http:
+              paths:
+                  - path: /
+                    pathType: Prefix
+                    backend:
+                        service:
+                            name: ever-demo-api-lb
+                            port:
+                                number: 80
+    tls:
+        - hosts:
+              - apidemo.ever.co
+          secretName: apidemo.ever.co-tls
 
 ---
 apiVersion: apps/v1
