@@ -9,7 +9,7 @@ on:
 
 jobs:
     ever-api:
-        runs-on: ubuntu-latest
+        runs-on: ever-k8s-linux-x64-4
         steps:
             - name: Checkout
               uses: actions/checkout@v2
@@ -60,7 +60,7 @@ jobs:
                   docker push everco/ever-api:latest
 
     ever-admin-angular:
-        runs-on: ubuntu-latest
+        runs-on: ever-k8s-linux-x64-4
         steps:
             - name: Checkout
               uses: actions/checkout@v2
@@ -110,7 +110,7 @@ jobs:
                   docker push everco/ever-admin-angular:latest
 
     ever-carrier-ionic:
-        runs-on: ubuntu-latest
+        runs-on: ever-k8s-linux-x64-4
         steps:
             - name: Checkout
               uses: actions/checkout@v2
@@ -160,7 +160,7 @@ jobs:
                   docker push everco/ever-carrier-ionic:latest
 
     ever-merchant-ionic:
-        runs-on: ubuntu-latest
+        runs-on: ever-k8s-linux-x64-4
         steps:
             - name: Checkout
               uses: actions/checkout@v2
@@ -210,7 +210,7 @@ jobs:
                   docker push everco/ever-merchant-ionic:latest
 
     ever-shop-ionic:
-        runs-on: ubuntu-latest
+        runs-on: ever-k8s-linux-x64-4
         steps:
             - name: Checkout
               uses: actions/checkout@v2
@@ -260,7 +260,7 @@ jobs:
                   docker push everco/ever-shop-ionic:latest
 
     ever-shop-angular:
-        runs-on: ubuntu-latest
+        runs-on: ever-k8s-linux-x64-4
         steps:
             - name: Checkout
               uses: actions/checkout@v2
