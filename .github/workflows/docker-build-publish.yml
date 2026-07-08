@@ -9,7 +9,7 @@ on:
 
 jobs:
     ever-api:
-        runs-on: ubuntu-latest
+        runs-on: ${{ vars.RUNNER_LINUX_X64_4 || 'ubuntu-latest' }}
         steps:
             - name: Checkout
               uses: actions/checkout@v2
@@ -29,11 +29,13 @@ jobs:
                   username: ${{ github.repository_owner }}
                   password: ${{ secrets.GH_TOKEN }}
             - name: Install doctl
+              if: ${{ vars.DO_ENABLED == 'true' }}
               uses: digitalocean/action-doctl@v2
               with:
                   token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
             - name: Log in to DigitalOcean Container Registry with short-lived credentials
+              if: ${{ vars.DO_ENABLED == 'true' }}
               run: doctl registry login --expiry-seconds 3600
 
             - name: Build
@@ -48,6 +50,7 @@ jobs:
                       registry.digitalocean.com/ever/ever-api:latest
 
             - name: Push to DigitalOcean Registry
+              if: ${{ vars.DO_ENABLED == 'true' }}
               run: |
                   docker push registry.digitalocean.com/ever/ever-api:latest
 
@@ -60,7 +63,7 @@ jobs:
                   docker push everco/ever-api:latest
 
     ever-admin-angular:
-        runs-on: ubuntu-latest
+        runs-on: ${{ vars.RUNNER_LINUX_X64_4 || 'ubuntu-latest' }}
         steps:
             - name: Checkout
               uses: actions/checkout@v2
@@ -80,10 +83,12 @@ jobs:
                   username: ${{ github.repository_owner }}
                   password: ${{ secrets.GH_TOKEN }}
             - name: Install doctl
+              if: ${{ vars.DO_ENABLED == 'true' }}
               uses: digitalocean/action-doctl@v2
               with:
                   token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
             - name: Log in to DigitalOcean Container Registry with short-lived credentials
+              if: ${{ vars.DO_ENABLED == 'true' }}
               run: doctl registry login --expiry-seconds 3600
 
             - name: Build
@@ -98,6 +103,7 @@ jobs:
                       registry.digitalocean.com/ever/ever-admin-angular:latest
 
             - name: Push to DigitalOcean Registry
+              if: ${{ vars.DO_ENABLED == 'true' }}
               run: |
                   docker push registry.digitalocean.com/ever/ever-admin-angular:latest
 
@@ -110,7 +116,7 @@ jobs:
                   docker push everco/ever-admin-angular:latest
 
     ever-carrier-ionic:
-        runs-on: ubuntu-latest
+        runs-on: ${{ vars.RUNNER_LINUX_X64_4 || 'ubuntu-latest' }}
         steps:
             - name: Checkout
               uses: actions/checkout@v2
@@ -130,10 +136,12 @@ jobs:
                   username: ${{ github.repository_owner }}
                   password: ${{ secrets.GH_TOKEN }}
             - name: Install doctl
+              if: ${{ vars.DO_ENABLED == 'true' }}
               uses: digitalocean/action-doctl@v2
               with:
                   token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
             - name: Log in to DigitalOcean Container Registry with short-lived credentials
+              if: ${{ vars.DO_ENABLED == 'true' }}
               run: doctl registry login --expiry-seconds 3600
 
             - name: Build
@@ -148,6 +156,7 @@ jobs:
                       registry.digitalocean.com/ever/ever-carrier-ionic:latest
 
             - name: Push to DigitalOcean Registry
+              if: ${{ vars.DO_ENABLED == 'true' }}
               run: |
                   docker push registry.digitalocean.com/ever/ever-carrier-ionic:latest
 
@@ -160,7 +169,7 @@ jobs:
                   docker push everco/ever-carrier-ionic:latest
 
     ever-merchant-ionic:
-        runs-on: ubuntu-latest
+        runs-on: ${{ vars.RUNNER_LINUX_X64_4 || 'ubuntu-latest' }}
         steps:
             - name: Checkout
               uses: actions/checkout@v2
@@ -180,10 +189,12 @@ jobs:
                   username: ${{ github.repository_owner }}
                   password: ${{ secrets.GH_TOKEN }}
             - name: Install doctl
+              if: ${{ vars.DO_ENABLED == 'true' }}
               uses: digitalocean/action-doctl@v2
               with:
                   token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
             - name: Log in to DigitalOcean Container Registry with short-lived credentials
+              if: ${{ vars.DO_ENABLED == 'true' }}
               run: doctl registry login --expiry-seconds 3600
 
             - name: Build
@@ -198,6 +209,7 @@ jobs:
                       registry.digitalocean.com/ever/ever-merchant-ionic:latest
 
             - name: Push to DigitalOcean Registry
+              if: ${{ vars.DO_ENABLED == 'true' }}
               run: |
                   docker push registry.digitalocean.com/ever/ever-merchant-ionic:latest
 
@@ -210,7 +222,7 @@ jobs:
                   docker push everco/ever-merchant-ionic:latest
 
     ever-shop-ionic:
-        runs-on: ubuntu-latest
+        runs-on: ${{ vars.RUNNER_LINUX_X64_4 || 'ubuntu-latest' }}
         steps:
             - name: Checkout
               uses: actions/checkout@v2
@@ -230,10 +242,12 @@ jobs:
                   username: ${{ github.repository_owner }}
                   password: ${{ secrets.GH_TOKEN }}
             - name: Install doctl
+              if: ${{ vars.DO_ENABLED == 'true' }}
               uses: digitalocean/action-doctl@v2
               with:
                   token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
             - name: Log in to DigitalOcean Container Registry with short-lived credentials
+              if: ${{ vars.DO_ENABLED == 'true' }}
               run: doctl registry login --expiry-seconds 3600
 
             - name: Build
@@ -248,6 +262,7 @@ jobs:
                       registry.digitalocean.com/ever/ever-shop-ionic:latest
 
             - name: Push to DigitalOcean Registry
+              if: ${{ vars.DO_ENABLED == 'true' }}
               run: |
                   docker push registry.digitalocean.com/ever/ever-shop-ionic:latest
 
@@ -260,7 +275,7 @@ jobs:
                   docker push everco/ever-shop-ionic:latest
 
     ever-shop-angular:
-        runs-on: ubuntu-latest
+        runs-on: ${{ vars.RUNNER_LINUX_X64_4 || 'ubuntu-latest' }}
         steps:
             - name: Checkout
               uses: actions/checkout@v2
@@ -280,10 +295,12 @@ jobs:
                   username: ${{ github.repository_owner }}
                   password: ${{ secrets.GH_TOKEN }}
             - name: Install doctl
+              if: ${{ vars.DO_ENABLED == 'true' }}
               uses: digitalocean/action-doctl@v2
               with:
                   token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
             - name: Log in to DigitalOcean Container Registry with short-lived credentials
+              if: ${{ vars.DO_ENABLED == 'true' }}
               run: doctl registry login --expiry-seconds 3600
 
             - name: Build
@@ -298,6 +315,7 @@ jobs:
                       registry.digitalocean.com/ever/ever-shop-angular:latest
 
             - name: Push to DigitalOcean Registry
+              if: ${{ vars.DO_ENABLED == 'true' }}
               run: |
                   docker push registry.digitalocean.com/ever/ever-shop-angular:latest
 
