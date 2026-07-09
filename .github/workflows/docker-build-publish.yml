@@ -44,6 +44,8 @@ jobs:
                   context: .
                   file: ./.deploy/api/Dockerfile
                   load: true
+                  build-args: |
+                      VERDACCIO_REGISTRY=${{ vars.VERDACCIO_REGISTRY }}
                   tags: |
                       ghcr.io/ever-co/ever-api:latest
                       everco/ever-api:latest
@@ -97,6 +99,8 @@ jobs:
                   context: .
                   file: ./.deploy/admin-web-angular/Dockerfile
                   load: true
+                  build-args: |
+                      VERDACCIO_REGISTRY=${{ vars.VERDACCIO_REGISTRY }}
                   tags: |
                       ghcr.io/ever-co/ever-admin-angular:latest
                       everco/ever-admin-angular:latest
@@ -150,6 +154,8 @@ jobs:
                   context: .
                   file: ./.deploy/carrier-mobile-ionic/Dockerfile
                   load: true
+                  build-args: |
+                      VERDACCIO_REGISTRY=${{ vars.VERDACCIO_REGISTRY }}
                   tags: |
                       ghcr.io/ever-co/ever-carrier-ionic:latest
                       everco/ever-carrier-ionic:latest
@@ -203,6 +209,8 @@ jobs:
                   context: .
                   file: ./.deploy/merchant-tablet-ionic/Dockerfile
                   load: true
+                  build-args: |
+                      VERDACCIO_REGISTRY=${{ vars.VERDACCIO_REGISTRY }}
                   tags: |
                       ghcr.io/ever-co/ever-merchant-ionic:latest
                       everco/ever-merchant-ionic:latest
@@ -256,6 +264,8 @@ jobs:
                   context: .
                   file: ./.deploy/shop-mobile-ionic/Dockerfile
                   load: true
+                  build-args: |
+                      VERDACCIO_REGISTRY=${{ vars.VERDACCIO_REGISTRY }}
                   tags: |
                       ghcr.io/ever-co/ever-shop-ionic:latest
                       everco/ever-shop-ionic:latest
@@ -309,6 +319,8 @@ jobs:
                   context: .
                   file: ./.deploy/shop-web-angular/Dockerfile
                   load: true
+                  build-args: |
+                      VERDACCIO_REGISTRY=${{ vars.VERDACCIO_REGISTRY }}
                   tags: |
                       ghcr.io/ever-co/ever-shop-angular:latest
                       everco/ever-shop-angular:latest
