@@ -16,7 +16,7 @@ on:
 
 jobs:
     deploy-dev:
-        runs-on: ubuntu-22.04
+        runs-on: ${{ vars.RUNNER_LINUX_X64_4 || 'ubuntu-latest' }}
 
         environment: dev
 
