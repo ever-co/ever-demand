@@ -64,6 +64,16 @@ COPY --chown=node:node .snyk ./.snyk
 COPY --chown=node:node packages/common/package.json ./packages/common/package.json
 COPY --chown=node:node packages/common-angular/package.json ./packages/common-angular/package.json
 
+# Prefer the internal Verdaccio cache when VERDACCIO_REGISTRY is set (anonymous, backward-compatible);
+# empty (e.g. a fork) falls back to public npm. Writes the registry to .npmrc + .yarnrc and best-effort
+# (non-fatal) rewrites yarn.lock resolved URLs so the frozen-lockfile install below stays consistent.
+ARG VERDACCIO_REGISTRY=""
+RUN if [ -n "$VERDACCIO_REGISTRY" ]; then \
+		echo "registry=${VERDACCIO_REGISTRY}" >> /srv/ever/.npmrc && \
+		echo "registry \"${VERDACCIO_REGISTRY}\"" >> /srv/ever/.yarnrc && \
+		{ sed -i "s|https://registry.yarnpkg.com|${VERDACCIO_REGISTRY%/}|g; s|https://registry.npmjs.org|${VERDACCIO_REGISTRY%/}|g" /srv/ever/yarn.lock 2>/dev/null || true; }; \
+	fi
+
 RUN yarn bootstrap && yarn cache clean
 
 FROM node:16-alpine3.14 AS development
