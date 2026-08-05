@@ -157,7 +157,7 @@
 		"extract-text-webpack-plugin": "^3.0.2",
 		"file-loader": "^6.2.0",
 		"find-root": "^1.1.0",
-		"gh-pages": "^3.2.3",
+		"gh-pages": "^5.0.0",
 		"html-loader": "^2.1.2",
 		"html-webpack-plugin": "^5.4.0",
 		"husky": "^7.0.2",
