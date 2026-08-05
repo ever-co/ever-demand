@@ -7,9 +7,8 @@
 
 ## 💡 What's New
 
-We released [Ever Teams](https://github.com/ever-co/ever-teams) - an Open Work and Project Management Platform.  
-Please check <https://github.com/ever-co/ever-teams> and make it ⭐ on GitHub!  
-It's built with a React and React Native stack and connects to headless [Ever Gauzy Platform](https://github.com/ever-co/ever-gauzy) APIs.
+- 🔥🔥🔥 we just released [Ever Works](https://github.com/ever-works/ever-works) - An open agentic runtime that autonomously researches, ships, and maintains entire businesses, 24/7. Please grab it now from <https://github.com/ever-works/ever-works> and make it ⭐⭐⭐ on GitHub!
+- if you like Ever Demand, you should also check [Ever Gauzy](https://github.com/ever-co/ever-gauzy) - Open Business Management Platform (ERP/CRM/HRM/ATS/PM). Please check <https://github.com/ever-co/ever-gauzy> and make it ⭐ on GitHub!
 
 ## 🌟 What is it
 
