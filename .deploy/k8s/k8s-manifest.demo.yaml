@@ -434,7 +434,7 @@ spec:
                       - name: GQL_SUBSCRIPTIONS_ENDPOINT
                         value: 'ws://apidemo.ever.co:2086/subscriptions'
                       - name: SENTRY_DSN
-                        value: 'https://7cd381188b6f446ca0e69185227b9031@o51327.ingest.sentry.io/4397292'
+                        value: '$SENTRY_DSN'
                       - name: CHATWOOT_SDK_TOKEN
                         value: 'jFoSXEjGmqhUhqU3zfgkFfMt'
                       - name: GOOGLE_MAPS_API_KEY
@@ -487,7 +487,7 @@ spec:
                       - name: GQL_SUBSCRIPTIONS_ENDPOINT
                         value: 'ws://apidemo.ever.co:2086/subscriptions'
                       - name: SENTRY_DSN
-                        value: 'https://7cd381188b6f446ca0e69185227b9031@o51327.ingest.sentry.io/4397292'
+                        value: '$SENTRY_DSN'
                       - name: CHATWOOT_SDK_TOKEN
                         value: 'jFoSXEjGmqhUhqU3zfgkFfMt'
                       - name: GOOGLE_MAPS_API_KEY
@@ -540,7 +540,7 @@ spec:
                       - name: GQL_SUBSCRIPTIONS_ENDPOINT
                         value: 'ws://apidemo.ever.co:2086/subscriptions'
                       - name: SENTRY_DSN
-                        value: 'https://7cd381188b6f446ca0e69185227b9031@o51327.ingest.sentry.io/4397292'
+                        value: '$SENTRY_DSN'
                       - name: CHATWOOT_SDK_TOKEN
                         value: 'jFoSXEjGmqhUhqU3zfgkFfMt'
                       - name: GOOGLE_MAPS_API_KEY
@@ -593,7 +593,7 @@ spec:
                       - name: GQL_SUBSCRIPTIONS_ENDPOINT
                         value: 'ws://apidemo.ever.co:2086/subscriptions'
                       - name: SENTRY_DSN
-                        value: 'https://7cd381188b6f446ca0e69185227b9031@o51327.ingest.sentry.io/4397292'
+                        value: '$SENTRY_DSN'
                       - name: CHATWOOT_SDK_TOKEN
                         value: 'jFoSXEjGmqhUhqU3zfgkFfMt'
                       - name: GOOGLE_MAPS_API_KEY
@@ -646,7 +646,7 @@ spec:
                       - name: GQL_SUBSCRIPTIONS_ENDPOINT
                         value: 'ws://apidemo.ever.co:2086/subscriptions'
                       - name: SENTRY_DSN
-                        value: 'https://7cd381188b6f446ca0e69185227b9031@o51327.ingest.sentry.io/4397292'
+                        value: '$SENTRY_DSN'
                       - name: CHATWOOT_SDK_TOKEN
                         value: 'jFoSXEjGmqhUhqU3zfgkFfMt'
                       - name: GOOGLE_MAPS_API_KEY
