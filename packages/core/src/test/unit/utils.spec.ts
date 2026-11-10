@@ -9,7 +9,7 @@ import { ILocation } from '../../../../common/src/interfaces/IGeoLocation';
 describe('Utils.getLocDistance', () => {
 	// GeoJSON / MongoDB order is [longitude, latitude].
 	const point = (lng: number, lat: number): ILocation => ({
-		type: 'Point',
+		type: 'Point' as const,
 		coordinates: [lng, lat],
 	});
 
