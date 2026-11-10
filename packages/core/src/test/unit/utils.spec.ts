@@ -4,12 +4,13 @@ jest.mock('underscore', () => ({ sample: (arr: any[]) => arr[0] }), {
 });
 
 import Utils from '../../../../common/src/utils';
+import { ILocation } from '../../../../common/src/interfaces/IGeoLocation';
 
 describe('Utils.getLocDistance', () => {
 	// GeoJSON / MongoDB order is [longitude, latitude].
-	const point = (lng: number, lat: number) => ({
+	const point = (lng: number, lat: number): ILocation => ({
 		type: 'Point',
-		coordinates: [lng, lat] as [number, number],
+		coordinates: [lng, lat],
 	});
 
 	it('treats coordinates as [lng, lat] (km between two points 10 degrees of longitude apart at 60N)', () => {
