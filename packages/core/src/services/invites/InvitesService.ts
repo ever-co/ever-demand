@@ -125,7 +125,9 @@ export class InvitesService extends DBService<Invite>
 							Utils.getLocDistance(
 								invite.geoLocation.loc,
 								info.location
-							) <= InvitesService.InviteWorkingDistance &&
+							) *
+								1000 <= // km -> meters (InviteWorkingDistance is in meters)
+								InvitesService.InviteWorkingDistance &&
 							invite.code === info.inviteCode
 						);
 					})

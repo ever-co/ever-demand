@@ -51,10 +51,11 @@ namespace Utils {
 
 	export function getLocDistance(loc1: ILocation, loc2: ILocation): number {
 		return calcCrow(
-			loc1.coordinates[0],
+			// GeoJSON order is [lng, lat]; calcCrow expects (lat, lng)
 			loc1.coordinates[1],
-			loc2.coordinates[0],
-			loc2.coordinates[1]
+			loc1.coordinates[0],
+			loc2.coordinates[1],
+			loc2.coordinates[0]
 		);
 	}
 
