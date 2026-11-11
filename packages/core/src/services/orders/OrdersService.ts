@@ -3,6 +3,7 @@ import Bluebird from 'bluebird';
 import { inject, injectable, LazyServiceIdentifer } from 'inversify';
 import { env } from '../../env';
 import { WarehousesService, WarehousesProductsService } from '../warehouses';
+import { assertValidOrderProductCount } from '../warehouses/orderProductCount';
 import { createEverLogger } from '../../helpers/Log';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
@@ -378,6 +379,11 @@ export class OrdersService extends DBService<Order>
 		products,
 		warehouseId: Warehouse['id']
 	): Promise<Order> {
+		// validate before any stock is touched
+		for (const p of products) {
+			assertValidOrderProductCount(p.count, p.productId);
+		}
+
 		await this._throwIfNotExists(orderId);
 
 		const order = await this._get(orderId);
@@ -475,6 +481,11 @@ export class OrdersService extends DBService<Order>
 		products: any, // TODO: specify correct Type
 		warehouseId: Warehouse['id']
 	): Promise<Order> {
+		// validate before any stock is touched
+		for (const p of products) {
+			assertValidOrderProductCount(p.count, p.productId);
+		}
+
 		await this._throwIfNotExists(orderId);
 
 		const order = await this._get(orderId);
