@@ -145,14 +145,14 @@ export function getIdFromTheDate(order: Order): string {
 			!order['createdAt'] ? 'createdAt' : 'orderNumber'
 		} is missing!`;
 	}
-	const [day, month, year] = new Date(order['createdAt'])
-		.toLocaleDateString()
-		.split('/');
-
-	let d = ('0' + day).slice(-2);
-	d = d.substr(-2);
-	let m = ('0' + month).slice(-2);
-	m = m.substr(-2);
+	// Build the date from its numeric parts (local time) instead of parsing
+	// toLocaleDateString(): that output depends on the runtime locale, so the
+	// same order got a different number (day/month swapped, or "undefined")
+	// depending on the browser or server language.
+	const date = new Date(order['createdAt']);
+	const d = ('0' + date.getDate()).slice(-2);
+	const m = ('0' + (date.getMonth() + 1)).slice(-2);
+	const year = date.getFullYear();
 
 	return `${d}${m}${year}-${order.orderNumber}`;
 }
