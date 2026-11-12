@@ -174,10 +174,14 @@ export class OrdersService extends DBService<Order>
 
 		// Not every status can follow any other: e.g. an order in status 3 cannot move back to status 2
 		const currentOrder = await this._get(orderId);
-		assertCarrierStatusTransition(
-			currentOrder.carrierStatus ?? OrderCarrierStatus.NoCarrier,
-			status
-		);
+		const currentStatus =
+			currentOrder.carrierStatus ?? OrderCarrierStatus.NoCarrier;
+		assertCarrierStatusTransition(currentStatus, status);
+
+		if (currentStatus === status) {
+			// idempotent retry: nothing to write and no side effects to repeat
+			return currentOrder;
+		}
 
 		try {
 			const updateObj: any = { carrierStatus: status };
@@ -233,10 +237,14 @@ export class OrdersService extends DBService<Order>
 		await this._throwIfNotExists(orderId);
 
 		const currentOrder = await this._get(orderId);
-		assertWarehouseStatusTransition(
-			currentOrder.warehouseStatus ?? OrderWarehouseStatus.NoStatus,
-			status
-		);
+		const currentStatus =
+			currentOrder.warehouseStatus ?? OrderWarehouseStatus.NoStatus;
+		assertWarehouseStatusTransition(currentStatus, status);
+
+		if (currentStatus === status) {
+			// idempotent retry: nothing to write and no side effects to repeat
+			return currentOrder;
+		}
 
 		const updateObj: any = { warehouseStatus: status };
 		const finishedProcessingStatuses = [

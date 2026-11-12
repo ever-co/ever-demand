@@ -8,7 +8,9 @@ import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseSta
  *  - Setting the status an order already has is always allowed (idempotent retries from mobile apps).
  *  - The regular flow only moves forward (steps may be skipped, never reverted).
  *  - A failure/issue status can be reached from any non-final status.
- *  - A failure status can only be recovered to the stages that retry the failed work.
+ *  - A failure status can only be recovered to the stages that retry the failed work
+ *    (never to another failure status).
+ *  - The client can refuse the order only after the carrier arrived or after an issue.
  *  - Final statuses (delivered / given to customer / client refused) cannot be changed.
  */
 
@@ -49,10 +51,7 @@ export const CARRIER_STATUS_TRANSITIONS = buildTable<OrderCarrierStatus>(
 		OrderCarrierStatus.CarrierArrivedToCustomer,
 		OrderCarrierStatus.DeliveryCompleted,
 	],
-	[
-		OrderCarrierStatus.IssuesDuringDelivery,
-		OrderCarrierStatus.ClientRefuseTakingOrder,
-	],
+	[OrderCarrierStatus.IssuesDuringDelivery],
 	[OrderCarrierStatus.DeliveryCompleted],
 	[
 		// Issue resolved: delivery continues, or the client refuses the order afterwards
@@ -65,6 +64,16 @@ export const CARRIER_STATUS_TRANSITIONS = buildTable<OrderCarrierStatus>(
 				OrderCarrierStatus.ClientRefuseTakingOrder,
 			],
 		],
+		// The client can only refuse the order once the carrier arrived (or after an issue); final status
+		[
+			OrderCarrierStatus.CarrierArrivedToCustomer,
+			[
+				OrderCarrierStatus.DeliveryCompleted,
+				OrderCarrierStatus.IssuesDuringDelivery,
+				OrderCarrierStatus.ClientRefuseTakingOrder,
+			],
+		],
+		[OrderCarrierStatus.ClientRefuseTakingOrder, []],
 	]
 );
 
@@ -92,7 +101,6 @@ export const WAREHOUSE_STATUS_TRANSITIONS = buildTable<OrderWarehouseStatus>(
 			[
 				OrderWarehouseStatus.WarehouseStartedProcessing,
 				OrderWarehouseStatus.AllocationStarted,
-				OrderWarehouseStatus.PackagingFailed,
 			],
 		],
 		// Retry packaging after a failure
@@ -101,7 +109,6 @@ export const WAREHOUSE_STATUS_TRANSITIONS = buildTable<OrderWarehouseStatus>(
 			[
 				OrderWarehouseStatus.AllocationFinished,
 				OrderWarehouseStatus.PackagingStarted,
-				OrderWarehouseStatus.AllocationFailed,
 			],
 		],
 	]

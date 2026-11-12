@@ -44,6 +44,11 @@ describe('order carrier status transitions', () => {
 		// an issue cannot be "recovered" back before the delivery started
 		[C.IssuesDuringDelivery, C.NoCarrier],
 		[C.IssuesDuringDelivery, C.CarrierSelectedOrder],
+		// the client can only refuse after the carrier arrived or after an issue
+		[C.NoCarrier, C.ClientRefuseTakingOrder],
+		[C.CarrierSelectedOrder, C.ClientRefuseTakingOrder],
+		[C.CarrierPickedUpOrder, C.ClientRefuseTakingOrder],
+		[C.CarrierStartDelivery, C.ClientRefuseTakingOrder],
 	])('rejects %i -> %i', (from, to) => {
 		expect(isCarrierStatusTransitionAllowed(from, to)).toBe(false);
 		expect(() => assertCarrierStatusTransition(from, to)).toThrow(
@@ -119,6 +124,9 @@ describe('order warehouse status transitions', () => {
 		[W.AllocationFailed, W.GivenToCustomer],
 		[W.PackagingFailed, W.GivenToCarrier],
 		[W.AllocationFailed, W.ReadyForProcessing],
+		// a failure cannot move to the other failure (the other stage never ran)
+		[W.AllocationFailed, W.PackagingFailed],
+		[W.PackagingFailed, W.AllocationFailed],
 	])('rejects %i -> %i', (from, to) => {
 		expect(isWarehouseStatusTransitionAllowed(from, to)).toBe(false);
 		expect(() => assertWarehouseStatusTransition(from, to)).toThrow(
