@@ -87,6 +87,25 @@ describe('GeoLocationsService.getAddressByCoordinatesUsingArcGIS', () => {
 		expect(loggedText()).toContain('status 200');
 	});
 
+	it('redacts credentials echoed in the provider error message', async () => {
+		mockedAxios.post.mockResolvedValue({
+			status: 200,
+			data: {
+				error: {
+					code: 400,
+					message: `Invalid client_secret=${SECRET} for ${CLIENT_ID}`,
+				},
+			},
+		});
+
+		const result = await service.getAddressByCoordinatesUsingArcGIS(42, 23);
+
+		expect(result).toBeNull();
+		expect(loggedText()).not.toContain(SECRET);
+		expect(loggedText()).not.toContain(CLIENT_ID);
+		expect(loggedText()).toContain('[redacted]');
+	});
+
 	it('does not log the secret when the request throws an axios-like error', async () => {
 		const err: any = new Error(
 			`Request failed with status code 401 (client_secret=${SECRET})`

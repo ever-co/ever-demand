@@ -155,9 +155,11 @@ export class GeoLocationsService implements IGeoLocationsRouter, IService {
 		if (!error) {
 			return '';
 		}
-		const code = error.code ? ` ${error.code}` : '';
+		const code = error.code ? ` ${this.redact(String(error.code))}` : '';
 		const message =
-			typeof error.message === 'string' ? `: ${error.message}` : '';
+			typeof error.message === 'string'
+				? `: ${this.redact(error.message)}`
+				: '';
 		return ` (error${code}${message})`;
 	}
 
@@ -170,13 +172,22 @@ export class GeoLocationsService implements IGeoLocationsRouter, IService {
 			err && err.response && err.response.status
 				? `status ${err.response.status}, `
 				: '';
-		let message =
+		const message =
 			err && typeof err.message === 'string' ? err.message : 'unknown';
+		return `${status}${this.redact(message)}`;
+	}
+
+	/**
+	 * Replaces the configured credentials in any externally supplied text
+	 * (provider or transport messages) and bounds its length before logging.
+	 */
+	private redact(text: string): string {
+		let result = text;
 		for (const secret of [this.arcgisClientSecret, this.arcgisClientID]) {
 			if (secret) {
-				message = message.split(secret).join('[redacted]');
+				result = result.split(secret).join('[redacted]');
 			}
 		}
-		return `${status}${message}`;
+		return result.length > 200 ? `${result.slice(0, 200)}...` : result;
 	}
 }
