@@ -1,5 +1,6 @@
 import {
 	assertValidOrderProductCount,
+	assertValidOrderProductCounts,
 	MAX_ORDER_PRODUCT_COUNT,
 } from '../../../services/warehouses/orderProductCount';
 
@@ -48,5 +49,36 @@ describe('assertValidOrderProductCount', () => {
 		expect(() => assertValidOrderProductCount(-1, 'product-42')).toThrow(
 			/product-42/
 		);
+	});
+});
+
+describe('assertValidOrderProductCounts', () => {
+	it('accepts an empty list and a list of valid counts', () => {
+		expect(() => assertValidOrderProductCounts([])).not.toThrow();
+		expect(() =>
+			assertValidOrderProductCounts([
+				{ productId: 'p1', count: 1 },
+				{ productId: 'p2', count: MAX_ORDER_PRODUCT_COUNT },
+			])
+		).not.toThrow();
+	});
+
+	it('throws when one entry of several has an invalid count', () => {
+		expect(() =>
+			assertValidOrderProductCounts([
+				{ productId: 'p1', count: 2 },
+				{ productId: 'p2', count: 0 },
+				{ productId: 'p3', count: 3 },
+			])
+		).toThrow(/Invalid quantity/);
+	});
+
+	it("names the offending entry's productId", () => {
+		expect(() =>
+			assertValidOrderProductCounts([
+				{ productId: 'p1', count: 2 },
+				{ productId: 'product-77', count: 0 },
+			])
+		).toThrow(/product-77/);
 	});
 });

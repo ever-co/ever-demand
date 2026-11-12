@@ -30,3 +30,17 @@ export function assertValidOrderProductCount(
 		);
 	}
 }
+
+/**
+ * Checks the quantity of every product in an order request.
+ *
+ * @param {Array<{ count: unknown; productId: string }>} products requested products
+ * @throws {Error} when any quantity is not an integer in the allowed range
+ */
+export function assertValidOrderProductCounts(
+	products: Array<{ count: unknown; productId: string }>
+): void {
+	for (const p of products) {
+		assertValidOrderProductCount(p.count, p.productId);
+	}
+}
