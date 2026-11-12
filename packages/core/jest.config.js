@@ -3,9 +3,9 @@ module.exports = {
 	testURL: 'http://localhost',
 	testEnvironment: 'node',
 	transform: {
-		'^.+\.tsx?$': 'ts-jest',
+		'^.+\\.tsx?$': 'ts-jest',
 	},
-	testRegex: '(/__tests__/.*|(\.|/)(test|spec))\.tsx?$',
+	testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
 	moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
 	moduleNameMapper: {
 		'^@pyro/db-server(.*)$': '<rootDir>/src/@pyro/db-server$1',
