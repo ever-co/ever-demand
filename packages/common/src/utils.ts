@@ -50,10 +50,8 @@ namespace Utils {
 	}
 
 	export function getLocDistance(loc1: ILocation, loc2: ILocation): number {
-		// GeoJSON (and so MongoDB) lists the longitude first: [lng, lat].
-		// calcCrow expects (lat, lng), so the indexes must be swapped here,
-		// otherwise longitudes are treated as latitudes and every distance is wrong.
 		return calcCrow(
+			// GeoJSON order is [lng, lat]; calcCrow expects (lat, lng)
 			loc1.coordinates[1],
 			loc1.coordinates[0],
 			loc2.coordinates[1],
