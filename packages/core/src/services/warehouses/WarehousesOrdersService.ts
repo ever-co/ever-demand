@@ -12,6 +12,7 @@ import { OrdersService } from '../orders';
 import { IOrderProductCreateObject } from '@modules/server.common/interfaces/IOrderProduct';
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { WarehousesProductsService } from './WarehousesProductsService';
+import { assertValidOrderProductCount } from './orderProductCount';
 import IWarehouseOrdersRouter, {
 	IOrderCreateInput,
 } from '@modules/server.common/routers/IWarehouseOrdersRouter';
@@ -573,6 +574,9 @@ export class WarehousesOrdersService
 						`WarehouseOrdersService got call to create(userId, orderProducts) - But there is no product with the id ${args.productId}!`
 					);
 				}
+
+				assertValidOrderProductCount(args.count, args.productId);
+
 				return {
 					count: args.count,
 					comment: args.comment,

@@ -3,6 +3,7 @@ import Bluebird from 'bluebird';
 import { inject, injectable, LazyServiceIdentifer } from 'inversify';
 import { env } from '../../env';
 import { WarehousesService, WarehousesProductsService } from '../warehouses';
+import { assertValidOrderProductCounts } from '../warehouses/orderProductCount';
 import { createEverLogger } from '../../helpers/Log';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
@@ -404,6 +405,8 @@ export class OrdersService extends DBService<Order>
 	): Promise<Order> {
 		await this._throwIfNotExists(orderId);
 
+		assertValidOrderProductCounts(products);
+
 		const order = await this._get(orderId);
 		const oldProductsIds = order.products.map(
 			(p: OrderProduct) => p.product.id
@@ -500,6 +503,8 @@ export class OrdersService extends DBService<Order>
 		warehouseId: Warehouse['id']
 	): Promise<Order> {
 		await this._throwIfNotExists(orderId);
+
+		assertValidOrderProductCounts(products);
 
 		const order = await this._get(orderId);
 
