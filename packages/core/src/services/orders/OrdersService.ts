@@ -31,6 +31,10 @@ import User from '@modules/server.common/entities/User';
 import { ProductsService } from '../../services/products';
 import { Observable } from 'rxjs';
 import { Stripe } from 'stripe'
+import {
+	assertCarrierStatusTransition,
+	assertWarehouseStatusTransition,
+} from './orderStatusTransitions';
 
 @injectable()
 @routerName('order')
@@ -166,9 +170,18 @@ export class OrdersService extends DBService<Order>
 		orderId: Order['id'],
 		status: OrderCarrierStatus
 	): Promise<Order> {
-		// TODO: check here that not from any status it is possible to move to any other.
-		// Mean if order is status 3, it's not simply possible to update it to status 2.
 		await this._throwIfNotExists(orderId);
+
+		// Not every status can follow any other: e.g. an order in status 3 cannot move back to status 2
+		const currentOrder = await this._get(orderId);
+		const currentStatus =
+			currentOrder.carrierStatus ?? OrderCarrierStatus.NoCarrier;
+		assertCarrierStatusTransition(currentStatus, status);
+
+		if (currentStatus === status) {
+			// idempotent retry: nothing to write and no side effects to repeat
+			return currentOrder;
+		}
 
 		try {
 			const updateObj: any = { carrierStatus: status };
@@ -222,6 +235,17 @@ export class OrdersService extends DBService<Order>
 		status: OrderWarehouseStatus
 	): Promise<Order> {
 		await this._throwIfNotExists(orderId);
+
+		const currentOrder = await this._get(orderId);
+		const currentStatus =
+			currentOrder.warehouseStatus ?? OrderWarehouseStatus.NoStatus;
+		assertWarehouseStatusTransition(currentStatus, status);
+
+		if (currentStatus === status) {
+			// idempotent retry: nothing to write and no side effects to repeat
+			return currentOrder;
+		}
+
 		const updateObj: any = { warehouseStatus: status };
 		const finishedProcessingStatuses = [
 			OrderWarehouseStatus.PackagingFailed,
