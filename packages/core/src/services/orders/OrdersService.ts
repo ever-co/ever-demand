@@ -4,6 +4,7 @@ import { inject, injectable, LazyServiceIdentifer } from 'inversify';
 import { env } from '../../env';
 import { WarehousesService, WarehousesProductsService } from '../warehouses';
 import { assertValidOrderProductCounts } from '../warehouses/orderProductCount';
+import { toStripeAmountInCents } from './stripeAmount';
 import { createEverLogger } from '../../helpers/Log';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
@@ -298,7 +299,7 @@ export class OrdersService extends DBService<Order>
 				if (user != null) {
 					const charge: Stripe.Charge = await this.stripe.charges.create(
 						{
-							amount: order.totalPrice * 100, // amount in cents, again
+							amount: toStripeAmountInCents(order.totalPrice), // whole cents
 							customer: user.stripeCustomerId,
 							source: cardId,
 							currency: 'ils',
