@@ -143,7 +143,9 @@ export class GeoLocationsService implements IGeoLocationsRouter, IService {
 					this.log.info(
 						`Attempted to reverse Geocode coordinates: ${lat}, ${lng}. ` +
 							`Got empty response: ${
-								resp ? inspect(resp.data) : ''
+								resp
+									? this.redact(inspect(resp.data), token)
+									: ''
 							}`
 					);
 					return null;
@@ -202,27 +204,44 @@ export class GeoLocationsService implements IGeoLocationsRouter, IService {
 	 */
 	private redact(text: string, accessToken?: string): string {
 		let result = text;
+		const variants = new Set<string>();
 		for (const secret of [
 			this.arcgisClientSecret,
 			this.arcgisClientID,
 			accessToken,
 		]) {
-			if (!secret) {
-				continue;
-			}
-			const encoded = encodeURIComponent(secret);
-			const variants = new Set([
-				secret,
-				encoded,
-				encoded.replace(/%20/g, '+'),
-			]);
-			// Longest first so a variant containing another is fully replaced.
-			for (const variant of Array.from(variants).sort(
-				(a, b) => b.length - a.length
-			)) {
-				result = result.split(variant).join('[redacted]');
+			if (secret) {
+				this.encodedVariants(secret).forEach((v) => variants.add(v));
 			}
 		}
+		// Longest first across all values so a variant containing another
+		// is fully replaced before the shorter one is tried.
+		for (const variant of Array.from(variants).sort(
+			(a, b) => b.length - a.length
+		)) {
+			result = result.split(variant).join('[redacted]');
+		}
 		return result.length > 200 ? `${result.slice(0, 200)}...` : result;
+	}
+
+	/**
+	 * Every form in which a value may appear in an echoed request: raw,
+	 * `encodeURIComponent`, form-encoded (`%20` -> `+`), the stricter encoding
+	 * `URLSearchParams` produces (also escapes `!'()~`), and the lowercase-hex
+	 * spelling of each percent-encoded form.
+	 */
+	private encodedVariants(value: string): string[] {
+		const uri = encodeURIComponent(value);
+		const strict = uri.replace(
+			/[!'()~]/g,
+			(c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`
+		);
+		const formUri = uri.replace(/%20/g, '+');
+		const formStrict = strict.replace(/%20/g, '+');
+		const forms = [value, uri, strict, formUri, formStrict];
+		const lowerHex = forms.map((f) =>
+			f.replace(/%[0-9A-F]{2}/g, (m) => m.toLowerCase())
+		);
+		return forms.concat(lowerHex);
 	}
 }

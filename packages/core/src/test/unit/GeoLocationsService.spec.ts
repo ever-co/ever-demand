@@ -174,6 +174,44 @@ describe('GeoLocationsService.getAddressByCoordinatesUsingArcGIS', () => {
 			expect(loggedText()).toContain('[redacted]');
 		});
 
+		it('redacts the URLSearchParams-encoded secret and lowercase-hex forms', async () => {
+			const tricky = "p!w'(d)~*/é x";
+			(service as any).arcgisClientSecret = tricky;
+			const body = new URLSearchParams({ client_secret: tricky }).toString();
+			const echoed = body.slice('client_secret='.length);
+			const lower = echoed.replace(/%[0-9A-F]{2}/g, (m) => m.toLowerCase());
+			expect(echoed).toContain('%21'); // differs from encodeURIComponent
+			mockedAxios.post.mockResolvedValue({
+				status: 200,
+				data: { error: { code: 400, message: `${echoed} ${lower}` } },
+			});
+
+			await service.getAddressByCoordinatesUsingArcGIS(42, 23);
+
+			expect(loggedText()).not.toContain(echoed);
+			expect(loggedText()).not.toContain(lower);
+			expect(loggedText()).toContain('[redacted]');
+		});
+
+		it('redacts the access token in an empty-response log line', async () => {
+			mockedAxios.post.mockResolvedValue({
+				status: 200,
+				data: { access_token: 'tok-echo-777' },
+			});
+			mockedAxios.get.mockResolvedValue({
+				data: { echoed: 'tok-echo-777' },
+			});
+
+			const result = await service.getAddressByCoordinatesUsingArcGIS(
+				42,
+				23
+			);
+
+			expect(result).toBeNull();
+			expect(loggedText()).not.toContain('tok-echo-777');
+			expect(loggedText()).toContain('[redacted]');
+		});
+
 		it('redacts the access token echoed by a failing reverse-geocode request', async () => {
 			const token = 'tok en/abc+123';
 			mockedAxios.post.mockResolvedValue({
