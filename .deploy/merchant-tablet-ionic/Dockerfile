@@ -42,12 +42,12 @@ ENV CI=true
 
 RUN apk --update add bash \
 	&& apk add libexecinfo libexecinfo-dev \
-	&& npm i -g npm \
+	&& npm i -g npm@8.19.4 \
 	&& apk add --no-cache --virtual build-dependencies build-base \
 	snappy dos2unix g++ snappy-dev gcc libgcc libstdc++ linux-headers autoconf automake make nasm python2 py2-setuptools vips-dev git \
-	&& npm install --quiet node-gyp -g \
+	&& npm install --quiet node-gyp@9.4.0 -g \
 	&& npm config set python /usr/bin/python \
-	&& npm install yarn -g --force \
+	&& npm install yarn@1.22.22 -g --force \
 	&& mkdir /srv/ever && chown -R node:node /srv/ever
 
 COPY wait .deploy/merchant-tablet-ionic/entrypoint.compose.sh .deploy/merchant-tablet-ionic/entrypoint.prod.sh /
