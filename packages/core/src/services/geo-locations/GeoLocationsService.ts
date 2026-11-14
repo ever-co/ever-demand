@@ -238,7 +238,12 @@ export class GeoLocationsService implements IGeoLocationsRouter, IService {
 		);
 		const formUri = uri.replace(/%20/g, '+');
 		const formStrict = strict.replace(/%20/g, '+');
-		const forms = [value, uri, strict, formUri, formStrict];
+		// The exact encoder used for the token request body, so this variant
+		// matches the POST body whatever the runtime's escaping rules are.
+		const formBody = new URLSearchParams({ v: value })
+			.toString()
+			.slice('v='.length);
+		const forms = [value, uri, strict, formUri, formStrict, formBody];
 		const lowerHex = forms.map((f) =>
 			f.replace(/%[0-9A-F]{2}/g, (m) => m.toLowerCase())
 		);

@@ -180,7 +180,10 @@ describe('GeoLocationsService.getAddressByCoordinatesUsingArcGIS', () => {
 			const body = new URLSearchParams({ client_secret: tricky }).toString();
 			const echoed = body.slice('client_secret='.length);
 			const lower = echoed.replace(/%[0-9A-F]{2}/g, (m) => m.toLowerCase());
-			expect(echoed).toContain('%21'); // differs from encodeURIComponent
+			// differs from encodeURIComponent, which leaves !'()~ unescaped
+			expect(echoed).not.toBe(encodeURIComponent(tricky).replace(/%20/g, '+'));
+			expect(echoed).toContain('%21');
+			expect(echoed).toContain('%7E');
 			mockedAxios.post.mockResolvedValue({
 				status: 200,
 				data: { error: { code: 400, message: `${echoed} ${lower}` } },
