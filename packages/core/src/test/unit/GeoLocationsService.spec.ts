@@ -124,6 +124,93 @@ describe('GeoLocationsService.getAddressByCoordinatesUsingArcGIS', () => {
 		expect(loggedText()).toContain('status 401');
 	});
 
+	it('sends the access token only in a header, never in the reverse-geocode URL', async () => {
+		mockedAxios.post.mockResolvedValue({
+			status: 200,
+			data: { access_token: 'tok-abc/123' },
+		});
+		mockedAxios.get.mockResolvedValue({
+			data: { address: { City: 'Sofia' } },
+		});
+
+		await service.getAddressByCoordinatesUsingArcGIS(42, 23);
+
+		expect(mockedAxios.get).toHaveBeenCalledTimes(1);
+		const [url, config] = mockedAxios.get.mock.calls[0];
+		expect(String(url)).not.toContain('token=');
+		expect(String(url)).not.toContain('tok-abc');
+		expect(config.headers['X-Esri-Authorization']).toBe(
+			'Bearer tok-abc/123'
+		);
+		const query = new URL(String(url)).searchParams;
+		expect(query.get('forStorage')).toBe('true');
+		expect(query.get('location')).toBe('23,42');
+		expect(query.get('distance')).toBe('200');
+		expect(query.get('f')).toBe('json');
+	});
+
+	describe('redaction of encoded credentials and the access token', () => {
+		const SPECIAL_SECRET = 'se cret/&=+é';
+		const URL_ENCODED = encodeURIComponent(SPECIAL_SECRET);
+		const FORM_ENCODED = URL_ENCODED.replace(/%20/g, '+');
+
+		beforeEach(() => {
+			(service as any).arcgisClientSecret = SPECIAL_SECRET;
+		});
+
+		it.each([
+			['URL-encoded', URL_ENCODED],
+			['form-encoded', FORM_ENCODED],
+		])('redacts the %s client secret in a provider error', async (_n, v) => {
+			expect(v).not.toBe(SPECIAL_SECRET);
+			mockedAxios.post.mockResolvedValue({
+				status: 200,
+				data: { error: { code: 400, message: `Bad request: ${v}` } },
+			});
+
+			await service.getAddressByCoordinatesUsingArcGIS(42, 23);
+
+			expect(loggedText()).not.toContain(v);
+			expect(loggedText()).toContain('[redacted]');
+		});
+
+		it('redacts the access token echoed by a failing reverse-geocode request', async () => {
+			const token = 'tok en/abc+123';
+			mockedAxios.post.mockResolvedValue({
+				status: 200,
+				data: { access_token: token },
+			});
+			const variants = [
+				token,
+				encodeURIComponent(token),
+				encodeURIComponent(token).replace(/%20/g, '+'),
+			];
+			const err: any = new Error(
+				`Request failed: ${variants.join(' | ')}`
+			);
+			err.response = { status: 498 };
+			mockedAxios.get.mockRejectedValue(err);
+
+			const result = await service.getAddressByCoordinatesUsingArcGIS(
+				42,
+				23
+			);
+
+			expect(result).toBeNull();
+			for (const variant of variants) {
+				expect(loggedText()).not.toContain(variant);
+			}
+			expect(loggedText()).toContain('[redacted]');
+			expect(loggedText()).toContain('status 498');
+		});
+
+		it('keeps the 200-character cap and leaves unrelated text intact', () => {
+			const redact = (service as any).redact.bind(service);
+			expect(redact('plain message')).toBe('plain message');
+			expect(redact('x'.repeat(300)).length).toBe(203);
+		});
+	});
+
 	it('still returns null without calling the network when credentials are missing', async () => {
 		(service as any).arcgisClientSecret = '';
 
