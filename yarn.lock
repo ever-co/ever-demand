@@ -30281,13 +30281,6 @@ passport-strategy@1.x.x, passport-strategy@^1.0.0:
   resolved "https://registry.yarnpkg.com/passport-strategy/-/passport-strategy-1.0.0.tgz#b5539aa8fc225a3d1ad179476ddf236b440f52e4"
   integrity sha1-tVOaqPwiWj0a0XlHbd8ja0QPUuQ=
 
-passport-url@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/passport-url/-/passport-url-1.0.4.tgz#82614906b0d47a56c180ed72cbc7cc1bf34929fb"
-  integrity sha1-gmFJBrDUelbBgO1yy8fMG/NJKfs=
-  dependencies:
-    passport-strategy "1.x.x"
-
 passport@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/passport/-/passport-0.5.0.tgz#7914aaa55844f9dce8c3aa28f7d6b73647ee0169"

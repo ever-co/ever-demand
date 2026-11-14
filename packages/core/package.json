@@ -154,7 +154,6 @@
 		"passport-google-oauth20": "^2.0.0",
 		"passport-http-bearer": "^1.0.1",
 		"passport-local": "^1.0.0",
-		"passport-url": "^1.0.4",
 		"pdfmake": "^0.2.0",
 		"pg": "^8.6.0",
 		"pg-query-stream": "^4.1.0",
