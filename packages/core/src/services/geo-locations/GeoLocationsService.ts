@@ -39,6 +39,9 @@ export class GeoLocationsService implements IGeoLocationsRouter, IService {
 			return null;
 		}
 
+		// Kept per call (not on the instance) so concurrent requests never share it.
+		let accessToken: string | undefined;
+
 		try {
 			this.log.info(
 				`Attempt to reverse Geocode coordinates: ${lat},${lng}`
@@ -77,14 +80,25 @@ export class GeoLocationsService implements IGeoLocationsRouter, IService {
 				);
 				return null;
 			} else {
-				const token = tokenResult.data['access_token'];
+				const token = String(tokenResult.data['access_token']);
+				accessToken = token;
 
-				// tslint:disable-next-line:max-line-length
-				const requestBaseUrl = `https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=${lng}%2C${lat}&distance=200&f=json`;
+				const query = new URLSearchParams({
+					location: `${lng},${lat}`,
+					distance: '200',
+					f: 'json',
+					forStorage: 'true',
+				}).toString();
 
-				const requestUrl = `${requestBaseUrl}&forStorage=true&token=${token}`;
+				const requestUrl = `https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?${query}`;
 
-				const resp = await axios.get(requestUrl);
+				// The token goes in a header, never in the URL
+				// (URLs end up in proxy/gateway logs and error traces).
+				const resp = await axios.get(requestUrl, {
+					headers: {
+						'X-Esri-Authorization': `Bearer ${token}`,
+					},
+				});
 
 				if (
 					resp &&
@@ -129,7 +143,9 @@ export class GeoLocationsService implements IGeoLocationsRouter, IService {
 					this.log.info(
 						`Attempted to reverse Geocode coordinates: ${lat}, ${lng}. ` +
 							`Got empty response: ${
-								resp ? inspect(resp.data) : ''
+								resp
+									? this.redact(inspect(resp.data), token)
+									: ''
 							}`
 					);
 					return null;
@@ -140,7 +156,10 @@ export class GeoLocationsService implements IGeoLocationsRouter, IService {
 			// Never log the error object itself: axios errors carry the request config
 			// (URL, headers, body), which includes credentials and tokens.
 			this.log.info(
-				`Reverse Geocode failed: ${this.describeRequestError(err)}`
+				`Reverse Geocode failed: ${this.describeRequestError(
+					err,
+					accessToken
+				)}`
 			);
 			return null;
 		}
@@ -167,27 +186,67 @@ export class GeoLocationsService implements IGeoLocationsRouter, IService {
 	 * Status code and short reason only; redacts the configured credentials
 	 * in case a message echoes them.
 	 */
-	private describeRequestError(err: any): string {
+	private describeRequestError(err: any, accessToken?: string): string {
 		const status =
 			err && err.response && err.response.status
 				? `status ${err.response.status}, `
 				: '';
 		const message =
 			err && typeof err.message === 'string' ? err.message : 'unknown';
-		return `${status}${this.redact(message)}`;
+		return `${status}${this.redact(message, accessToken)}`;
 	}
 
 	/**
-	 * Replaces the configured credentials in any externally supplied text
-	 * (provider or transport messages) and bounds its length before logging.
+	 * Replaces the configured credentials and the access token in any
+	 * externally supplied text (provider or transport messages) and bounds its
+	 * length before logging. Each value is replaced raw, URL-encoded and
+	 * form-encoded (`+` for space), as echoed requests may carry any of them.
 	 */
-	private redact(text: string): string {
+	private redact(text: string, accessToken?: string): string {
 		let result = text;
-		for (const secret of [this.arcgisClientSecret, this.arcgisClientID]) {
+		const variants = new Set<string>();
+		for (const secret of [
+			this.arcgisClientSecret,
+			this.arcgisClientID,
+			accessToken,
+		]) {
 			if (secret) {
-				result = result.split(secret).join('[redacted]');
+				this.encodedVariants(secret).forEach((v) => variants.add(v));
 			}
 		}
+		// Longest first across all values so a variant containing another
+		// is fully replaced before the shorter one is tried.
+		for (const variant of Array.from(variants).sort(
+			(a, b) => b.length - a.length
+		)) {
+			result = result.split(variant).join('[redacted]');
+		}
 		return result.length > 200 ? `${result.slice(0, 200)}...` : result;
+	}
+
+	/**
+	 * Every form in which a value may appear in an echoed request: raw,
+	 * `encodeURIComponent`, form-encoded (`%20` -> `+`), the stricter encoding
+	 * `URLSearchParams` produces (also escapes `!'()~`), and the lowercase-hex
+	 * spelling of each percent-encoded form.
+	 */
+	private encodedVariants(value: string): string[] {
+		const uri = encodeURIComponent(value);
+		const strict = uri.replace(
+			/[!'()~]/g,
+			(c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`
+		);
+		const formUri = uri.replace(/%20/g, '+');
+		const formStrict = strict.replace(/%20/g, '+');
+		// The exact encoder used for the token request body, so this variant
+		// matches the POST body whatever the runtime's escaping rules are.
+		const formBody = new URLSearchParams({ v: value })
+			.toString()
+			.slice('v='.length);
+		const forms = [value, uri, strict, formUri, formStrict, formBody];
+		const lowerHex = forms.map((f) =>
+			f.replace(/%[0-9A-F]{2}/g, (m) => m.toLowerCase())
+		);
+		return forms.concat(lowerHex);
 	}
 }
