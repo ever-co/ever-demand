@@ -24,6 +24,7 @@ import { exhaustMap, first, map } from 'rxjs/operators';
 import { of } from 'rxjs';
 import mongoose = require('mongoose');
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
+import { paginateBySoldCount } from './paginateBySoldCount';
 
 const noGetProductTypeMessage = `There should be true at least one of the two - "isCarrierRequired" or "isTakeaway"!`;
 
@@ -81,24 +82,7 @@ export class WarehousesProductsService
 	): Promise<WarehouseProduct[]> {
 		const allProducts = await this.get(id).pipe(first()).toPromise();
 
-		const products = [...allProducts];
-
-		if (pagingOptions.limit && pagingOptions.skip) {
-			return products
-				.slice(pagingOptions.skip)
-				.slice(0, pagingOptions.limit)
-				.sort((a, b) => b.soldCount - a.soldCount);
-		} else if (pagingOptions.limit) {
-			return products
-				.slice(0, pagingOptions.limit)
-				.sort((a, b) => b.soldCount - a.soldCount);
-		} else if (pagingOptions.skip) {
-			return products
-				.slice(pagingOptions.skip)
-				.sort((a, b) => b.soldCount - a.soldCount);
-		}
-
-		return products.sort((a, b) => b.soldCount - a.soldCount);
+		return paginateBySoldCount(allProducts, pagingOptions);
 	}
 
 	@asyncListener()
