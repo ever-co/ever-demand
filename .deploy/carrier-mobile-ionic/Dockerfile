@@ -48,7 +48,7 @@ RUN apk --update add bash \
 	&& npm install --quiet node-gyp@9.4.0 -g \
 	&& npm config set python /usr/bin/python \
 	&& npm install yarn@1.22.22 -g --force \
-	&& mkdir /srv/ever && chown -R node:node /srv/ever
+	&& mkdir /srv/ever && echo "network-timeout 600000" > /srv/ever/.yarnrc && chown -R node:node /srv/ever
 
 COPY wait .deploy/carrier-mobile-ionic/entrypoint.compose.sh .deploy/carrier-mobile-ionic/entrypoint.prod.sh /
 
