@@ -2,6 +2,7 @@
 	"Title": "דוגמה לדוגמה",
 	"Intro": "שלום אני ארתור, אני בן 42.",
 	"Cancel": "לְבַטֵל",
+	"Cancel Order": "בתוך 5-10 דקות תוכלו לאכול ארוחה טעימה זו! על ידי ביטול זה אתה מתגעגע אוכל נהדר וטעים, ואנחנו כנראה צריך לזרוק אותו",
 	"Pay": "או לשלם במזומן",
 	"Pay now": "שלם עכשיו",
 	"Products": "מוצרים",
@@ -88,6 +89,7 @@
 		}
 	},
 	"ORDER_CARRIER_STATUS": {
+		"CARRIER_STATUS": "סטטוס ספק",
 		"CREATED": "נוצר",
 		"ARRIVED_TO_CUSTOMER": "הגיע ללקוח",
 		"FAILED": "נִכשָׁל",
@@ -119,7 +121,7 @@
 		"Allocation Finished": "ההקצאה הסתיימה",
 		"Packaging Started": "האריזה התחילה",
 		"Packaged": "ארוז",
-		"Given to Carrier": "ניתן ל- Carrier",
+		"Given to Carrier": "נמסר לספק",
 		"Allocation Failed": "ההקצאה נכשלה",
 		"Packaging Failed": "האריזות נכשלו",
 		"LOCATION": "מקום"
