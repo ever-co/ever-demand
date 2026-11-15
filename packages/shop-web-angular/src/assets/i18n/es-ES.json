@@ -12,11 +12,12 @@
 	"SELECT_YOUR_LOCATION": "Selecciona tu ubicación",
 	"TAKEAWAY": "Para retirar",
 	"Details": "Detalles",
-	"Delivery from": "Delivery desde",
+	"Delivery from": "Entrega desde",
 	"WHAT_IS_YOUR_ADDRESS": "Cuál es tu dirección?",
 	"FOR": "para",
 	"MESSAGE_POP_UP": {
 		"CANCEL_ORDER": "¡En solo 5-10 minutos degustarás esta deliciosa comida!",
+		"OK": "OK",
 		"CANCEL": "Cancelar",
 		"CONFIRMATION": "Confirmación",
 		"WRONG_CODE_TRY_AGAIN": "Código erroneo, pruebe de nuevo",
