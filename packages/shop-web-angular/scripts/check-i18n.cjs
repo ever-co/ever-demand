@@ -41,6 +41,14 @@ const locales = fs
 	.filter((file) => file.endsWith('.json') && file !== REFERENCE)
 	.sort();
 
+// Refuse to pass vacuously: an empty reference or no locale files means nothing was compared.
+if (referenceKeys.length === 0 || locales.length === 0) {
+	console.error(
+		`Nothing to compare in ${I18N_DIR}: ${referenceKeys.length} reference keys, ${locales.length} locale files.`
+	);
+	process.exit(1);
+}
+
 let failed = false;
 
 for (const locale of locales) {
