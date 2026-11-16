@@ -177,13 +177,44 @@ export abstract class DBService<T extends DBObject<any, any>>
 	 * the create input, so they must be stripped before logging or returning.
 	 */
 	protected omitHiddenFields<O extends object>(obj: O): O {
-		const paths = this.Model?.schema?.paths || {};
+		const hiddenFields = this.collectHiddenPaths(this.Model?.schema);
 
-		const hiddenFields = Object.keys(paths).filter(
-			(path) => paths[path]?.options?.select === false
-		);
+		return hiddenFields.length > 0
+			? (_.omit(obj, hiddenFields) as O)
+			: obj;
+	}
 
-		return _.omit(obj, hiddenFields) as O;
+	/**
+	 * Collects dotted names of all `select: false` paths, descending into
+	 * single embedded schemas (document arrays are not covered).
+	 */
+	private collectHiddenPaths(
+		schema: any,
+		prefix = '',
+		depth = 0
+	): string[] {
+		const paths = schema?.paths;
+
+		if (!paths || depth > 5) {
+			return [];
+		}
+
+		const hidden: string[] = [];
+
+		for (const name of Object.keys(paths)) {
+			const path = paths[name];
+			const fullName = prefix + name;
+
+			if (path?.options?.select === false) {
+				hidden.push(fullName);
+			} else if (path?.schema && !path.$isMongooseDocumentArray) {
+				hidden.push(
+					...this.collectHiddenPaths(path.schema, `${fullName}.`, depth + 1)
+				);
+			}
+		}
+
+		return hidden;
 	}
 
 	/**

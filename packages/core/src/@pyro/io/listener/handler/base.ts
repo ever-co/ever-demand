@@ -10,14 +10,26 @@ import { Socket } from 'socket.io';
 
 const MASKED_VALUE = '***';
 
+const MAX_MASK_DEPTH = 20;
+
 /**
  * Returns a deep copy of `value` where the value of every key named
  * `password` (at any depth) is replaced with a mask, so credentials never
  * reach the logs. Objects are never mutated.
  */
-export function maskPasswords(value: any, seen = new WeakSet<object>()): any {
+export function maskPasswords(
+	value: any,
+	seen = new WeakSet<object>(),
+	depth = 0
+): any {
 	if (value === null || typeof value !== 'object') {
 		return value;
+	}
+
+	// Bounds the recursion so a hostile, deeply nested argument cannot
+	// overflow the stack inside logCall. Anything deeper is not logged.
+	if (depth >= MAX_MASK_DEPTH) {
+		return '[Truncated]';
 	}
 
 	if (seen.has(value)) {
@@ -29,7 +41,7 @@ export function maskPasswords(value: any, seen = new WeakSet<object>()): any {
 	let masked: any;
 
 	if (Array.isArray(value)) {
-		masked = value.map((item) => maskPasswords(item, seen));
+		masked = value.map((item) => maskPasswords(item, seen, depth + 1));
 	} else if (value instanceof Date || Buffer.isBuffer(value)) {
 		masked = value;
 	} else {
@@ -39,7 +51,7 @@ export function maskPasswords(value: any, seen = new WeakSet<object>()): any {
 			masked[key] =
 				key === 'password'
 					? MASKED_VALUE
-					: maskPasswords(value[key], seen);
+					: maskPasswords(value[key], seen, depth + 1);
 		}
 	}
 

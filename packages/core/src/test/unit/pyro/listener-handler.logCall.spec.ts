@@ -83,6 +83,24 @@ describe('maskPasswords', () => {
 		expect(input.password).toBe('p1');
 	});
 
+	it('does not overflow the stack on very deep input', () => {
+		const root: any = {};
+		let node = root;
+		for (let i = 0; i < 100000; i++) {
+			node.next = {};
+			node = node.next;
+		}
+
+		expect(() => maskPasswords(root)).not.toThrow();
+		expect(JSON.stringify(maskPasswords(root))).toContain('[Truncated]');
+	});
+
+	it('still masks passwords at moderate depth', () => {
+		const input = { a: { b: { c: { password: 'deepSecret' } } } };
+
+		expect(maskPasswords(input).a.b.c.password).toBe('***');
+	});
+
 	it('leaves other values untouched and survives cycles', () => {
 		const date = new Date(0);
 		const cyclic: any = { when: date, n: 1, s: 'x', nil: null };

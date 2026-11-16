@@ -94,6 +94,40 @@ describe('DBService.create', () => {
 		expect(allLoggedText()).not.toContain(HASH);
 	});
 
+	it('strips select:false fields of embedded schemas everywhere', async () => {
+		model.schema = {
+			paths: {
+				total: { options: {} },
+				user: {
+					options: {},
+					schema: {
+						paths: {
+							email: { options: {} },
+							hash: { options: { select: false } },
+						},
+					},
+				},
+			},
+		};
+
+		const emitted: any[] = [];
+		service.existence.subscribe((event) => emitted.push(event.value));
+
+		const result = await service.create({
+			total: 5,
+			user: { email: 'a@b.c', hash: HASH },
+		} as any);
+
+		expect(result.user.email).toBe('a@b.c');
+		expect(result.user).not.toHaveProperty('hash');
+		expect(emitted[0].user).not.toHaveProperty('hash');
+		expect(allLoggedText()).not.toContain(HASH);
+		expect(model.create).toHaveBeenCalledWith({
+			total: 5,
+			user: { email: 'a@b.c', hash: HASH },
+		});
+	});
+
 	it('keeps all fields when the schema has no select:false paths', async () => {
 		model.schema = { paths: { email: { options: {} } } };
 
