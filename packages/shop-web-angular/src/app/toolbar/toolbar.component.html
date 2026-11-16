@@ -1,7 +1,7 @@
 <mat-toolbar class="toolbar" color="primary">
-	<div mat-button class="logo" [routerLink]="['/']">
-		<img src="assets/img/ever-logo.svg" />
-	</div>
+	<a class="logo" routerLink="/">
+		<img src="assets/img/ever-logo.svg" [alt]="'HOME' | translate" />
+	</a>
 
 	<div class="menu-brand-separator"></div>
 
@@ -57,8 +57,17 @@
 	</section>
 
 	<div class="nav">
-		<button mat-button class="nav-option" [routerLink]="['/settings']">
-			<ever-icon type="settings" class="nav-icon"></ever-icon>
+		<button
+			mat-button
+			class="nav-option"
+			[routerLink]="['/settings']"
+			[attr.aria-label]="'SETTINGS_VIEW.SETTINGS' | translate"
+		>
+			<ever-icon
+				type="settings"
+				class="nav-icon"
+				aria-hidden="true"
+			></ever-icon>
 		</button>
 	</div>
 </mat-toolbar>

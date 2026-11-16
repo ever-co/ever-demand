@@ -49,6 +49,12 @@
 		}
 	}
 
+	// The logo is a real link now, so keyboard users need a visible focus ring.
+	.logo:focus-visible {
+		outline: 2px solid #fff;
+		outline-offset: 4px;
+	}
+
 	.logo:hover {
 		// background: transparent !important;
 		// 	opacity: 1 ;

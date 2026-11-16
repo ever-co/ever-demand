@@ -6,8 +6,11 @@
 					mat-icon-button
 					class="back-button"
 					[routerLink]="['/products']"
+					[attr.aria-label]="
+						'PRODUCTS_VIEW.PRODUCT_DETAILS_VIEW.BACK' | translate
+					"
 				>
-					<svg viewBox="0 0 24 24">
+					<svg viewBox="0 0 24 24" aria-hidden="true">
 						<path
 							fill="#000000"
 							fill-opacity="0.54"
@@ -110,16 +113,24 @@
 					<button
 						class="drag-button left"
 						(click)="dragScroll.moveLeft()"
+						[attr.aria-label]="
+							'PRODUCTS_VIEW.PRODUCT_DETAILS_VIEW.PREVIOUS_IMAGE'
+								| translate
+						"
 					>
-						<i class="material-icons">
+						<i class="material-icons" aria-hidden="true">
 							keyboard_arrow_left
 						</i>
 					</button>
 					<button
 						class="drag-button right"
 						(click)="dragScroll.moveRight()"
+						[attr.aria-label]="
+							'PRODUCTS_VIEW.PRODUCT_DETAILS_VIEW.NEXT_IMAGE'
+								| translate
+						"
 					>
-						<i class="material-icons">
+						<i class="material-icons" aria-hidden="true">
 							keyboard_arrow_right
 						</i>
 					</button>
