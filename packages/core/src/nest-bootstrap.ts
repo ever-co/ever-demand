@@ -9,7 +9,7 @@ import { createEverLogger } from './helpers/Log';
 import { EverbieNestJSLogger } from './helpers/NestJSLogger';
 import { INestApplication } from '@nestjs/common';
 // import { SentryService } from '@ntegral/nestjs-sentry';
-import expressSession from 'express-session';
+import { createSessionMiddleware } from './helpers/session-middleware';
 import helmet from 'helmet';
 
 const log: Logger = createEverLogger({ name: 'bootstrapNest' });
@@ -43,8 +43,9 @@ export async function bootstrapNest(): Promise<void> {
 	// the csurf module requires either a session middleware or cookie-parser to be initialized first.
 	// app.use(csurf());
 
+	// Health probes (/api/health, /api/health/ready) are skipped so they do not create sessions.
 	app.use(
-		expressSession({
+		createSessionMiddleware({
 			secret: env.EXPRESS_SESSION_SECRET,
 			resave: true,
 			saveUninitialized: true

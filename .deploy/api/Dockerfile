@@ -223,6 +223,13 @@ ENV UNLEASH_METRICS_INTERVAL=${UNLEASH_METRICS_INTERVAL}
 
 EXPOSE ${HTTPPORT} ${HTTPSPORT} ${GQLPORT} ${GQLPORT_SUBSCRIPTIONS}
 
+# Liveness probe: GET /api/health on the GraphQL/HTTP port (GQLPORT, 8443 by default).
+# Uses node (always present in this image) so no extra package is needed. It connects to
+# API_HOST (the address the API binds to), falling back to 127.0.0.1.
+# The long start period covers the API boot (migrations / seeding); failures inside it do not count.
+HEALTHCHECK --interval=30s --timeout=5s --start-period=90s --retries=3 \
+	CMD node -e "require('http').get({host:process.env.API_HOST||'127.0.0.1',port:process.env.GQLPORT||8443,path:'/api/health',timeout:4000},r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1)).on('timeout',function(){this.destroy();process.exit(1)})"
+
 ENTRYPOINT [ "./entrypoint.prod.sh" ]
 
 CMD [ "pm2-runtime", "packages/core/build/main.js" ]
