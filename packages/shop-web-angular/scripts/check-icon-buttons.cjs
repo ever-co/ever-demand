@@ -5,11 +5,13 @@
  * text and no accessible name (`aria-label`, `[attr.aria-label]` or
  * `aria-labelledby`).
  *
- * What counts as visible text: anything left after removing `<svg>`, `<mat-icon>`,
+ * What counts as visible text: text that is not inside `<svg>`, `<mat-icon>`,
  * `<ever-icon>`, `<i class="material-icons">` (a ligature such as
- * `keyboard_arrow_left` is read aloud letter by letter, it is not a label) and
- * every element marked `aria-hidden="true"`. Template interpolations such as
- * `{{ 'KEY' | translate }}` count as text.
+ * `keyboard_arrow_left` is read aloud letter by letter, it is not a label) or an
+ * element marked `aria-hidden="true"`, `hidden` or `style="display: none"`.
+ * Everything nested in such an element is ignored too, including a nested element
+ * of the same name. Template interpolations such as `{{ 'KEY' | translate }}`
+ * count as text; an empty `{{ }}` does not.
  *
  * Usage: node scripts/check-icon-buttons.cjs
  *
@@ -37,24 +39,67 @@ function blank(match) {
 	return match.replace(/[^\n]/g, ' ');
 }
 
-/** Returns the text a sighted user would see inside a button's content. */
+const VOID_TAGS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr']);
+const ICON_TAGS = new Set(['svg', 'mat-icon', 'ever-icon']);
+// Static attributes that hide an element from screen readers or from view.
+const HIDDEN_ATTR_RES = [
+	/(?:^|\s)(?:\[attr\.)?aria-hidden\]?\s*=\s*(?:"\s*(?:'true'|true)\s*"|'\s*(?:"true"|true)\s*')/i,
+	/(?:^|\s)hidden(?=\s|=|$)/i,
+	/(?:^|\s)style\s*=\s*(?:"[^"]*|'[^']*)\bdisplay\s*:\s*none/i
+];
+const ICON_CLASS_RE = /(?:^|\s)class\s*=\s*(?:"[^"]*|'[^']*)\bmaterial-icons\b/i;
+// A tag (with quote-aware attributes), a run of text, or a stray `<`.
+const TOKEN_RE = /<(\/?)([a-zA-Z][\w-]*)((?:[^>"']|"[^"]*"|'[^']*')*)>|[^<]+|</g;
+
+/** True when an element must not count as visible text: hidden, or an icon whose ligature is not a label. */
+function isIgnored(name, attributes) {
+	return (
+		ICON_TAGS.has(name) ||
+		(name === 'i' && ICON_CLASS_RE.test(' ' + attributes)) ||
+		HIDDEN_ATTR_RES.some((re) => re.test(' ' + attributes))
+	);
+}
+
+/**
+ * Returns the text a sighted user would see inside a button's content.
+ *
+ * Walks the tags with a stack, so an ignored element hides everything nested in
+ * it, even when it contains another element of the same name.
+ */
 function visibleText(inner) {
-	let text = inner
-		.replace(/<!--[\s\S]*?-->/g, ' ')
-		.replace(/<svg\b[\s\S]*?<\/svg\s*>/gi, ' ')
-		.replace(/<(mat-icon|ever-icon)\b[\s\S]*?<\/\1\s*>/gi, ' ')
-		.replace(/<ever-icon\b[^>]*\/>/gi, ' ')
-		.replace(/<i\b[^>]*\bclass\s*=\s*"[^"]*\bmaterial-icons\b[^"]*"[^>]*>[\s\S]*?<\/i\s*>/gi, ' ');
-
-	// Drop elements hidden from assistive technology (innermost first, so nesting is handled).
-	const hidden = /<([a-z][\w-]*)\b(?:[^>"']|"[^"]*"|'[^']*')*\baria-hidden\s*=\s*"true"(?:[^>"']|"[^"]*"|'[^']*')*>[\s\S]*?<\/\1\s*>/gi;
-	let previous;
-	do {
-		previous = text;
-		text = text.replace(hidden, ' ');
-	} while (text !== previous);
-
-	return text.replace(/<[^>]*>/g, ' ').replace(/&nbsp;/g, ' ').trim();
+	const stack = [];
+	let ignoredDepth = 0;
+	let text = '';
+	let token;
+	TOKEN_RE.lastIndex = 0;
+	inner = inner.replace(/<!--[\s\S]*?-->/g, ' ');
+	while ((token = TOKEN_RE.exec(inner)) !== null) {
+		const [whole, closing, rawName, attributes] = token;
+		if (rawName === undefined) {
+			if (ignoredDepth === 0 && whole !== '<') {
+				text += whole;
+			}
+			continue;
+		}
+		const name = rawName.toLowerCase();
+		if (closing) {
+			const index = stack.map((entry) => entry.name).lastIndexOf(name);
+			if (index >= 0) {
+				stack.splice(index).forEach((entry) => {
+					ignoredDepth -= entry.ignored ? 1 : 0;
+				});
+			}
+			continue;
+		}
+		if (VOID_TAGS.has(name) || /\/\s*$/.test(attributes)) {
+			continue;
+		}
+		const ignored = isIgnored(name, attributes);
+		stack.push({ name, ignored });
+		ignoredDepth += ignored ? 1 : 0;
+	}
+	// An empty interpolation renders nothing, so it is not a label either.
+	return text.replace(/\{\{\s*\}\}/g, ' ').replace(/&nbsp;/g, ' ').trim();
 }
 
 /** Returns one problem description per unnamed icon-only button of `html`. */
