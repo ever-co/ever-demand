@@ -132,17 +132,24 @@ export abstract class DBService<T extends DBObject<any, any>>
 	async create(createObject: CreateObject<T>): Promise<T> {
 		const callId = uuid();
 
-		this.log.info({ callId, createObject }, '.create(createObject) called');
+		const loggableCreateObject = this.omitHiddenFields(createObject);
+
+		this.log.info(
+			{ callId, createObject: loggableCreateObject },
+			'.create(createObject) called'
+		);
 
 		let object;
 
 		try {
 			const document = await this.Model.create(createObject);
 
-			object = this.parse(document.toObject() as RawObject<T>);
+			object = this.parse(
+				this.omitHiddenFields(document.toObject()) as RawObject<T>
+			);
 		} catch (error) {
 			this.log.error(
-				{ callId, createObject, error },
+				{ callId, createObject: loggableCreateObject, error },
 				'.create(createObject) thrown error!'
 			);
 			throw error;
@@ -156,11 +163,27 @@ export abstract class DBService<T extends DBObject<any, any>>
 		});
 
 		this.log.info(
-			{ callId, createObject, object },
+			{ callId, createObject: loggableCreateObject, object },
 			'.create(createObject) created object'
 		);
 
 		return object;
+	}
+
+	/**
+	 * Returns a shallow copy of `obj` without the fields the schema marks
+	 * as `select: false` (e.g. password hashes). Such fields are hidden from
+	 * queries, but they are still present on a freshly created document and on
+	 * the create input, so they must be stripped before logging or returning.
+	 */
+	protected omitHiddenFields<O extends object>(obj: O): O {
+		const paths = this.Model?.schema?.paths || {};
+
+		const hiddenFields = Object.keys(paths).filter(
+			(path) => paths[path]?.options?.select === false
+		);
+
+		return _.omit(obj, hiddenFields) as O;
 	}
 
 	/**

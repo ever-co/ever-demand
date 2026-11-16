@@ -8,6 +8,46 @@ import * as _ from 'lodash';
 import getArgsNames from '@captemulation/get-parameter-names';
 import { Socket } from 'socket.io';
 
+const MASKED_VALUE = '***';
+
+/**
+ * Returns a deep copy of `value` where the value of every key named
+ * `password` (at any depth) is replaced with a mask, so credentials never
+ * reach the logs. Objects are never mutated.
+ */
+export function maskPasswords(value: any, seen = new WeakSet<object>()): any {
+	if (value === null || typeof value !== 'object') {
+		return value;
+	}
+
+	if (seen.has(value)) {
+		return '[Circular]';
+	}
+
+	seen.add(value);
+
+	let masked: any;
+
+	if (Array.isArray(value)) {
+		masked = value.map((item) => maskPasswords(item, seen));
+	} else if (value instanceof Date || Buffer.isBuffer(value)) {
+		masked = value;
+	} else {
+		masked = {};
+
+		for (const key of Object.keys(value)) {
+			masked[key] =
+				key === 'password'
+					? MASKED_VALUE
+					: maskPasswords(value[key], seen);
+		}
+	}
+
+	seen.delete(value);
+
+	return masked;
+}
+
 export abstract class BaseListenerHandler<T> implements IListenerHandler<T> {
 	protected readonly serializer: (args: any[]) => any[];
 
@@ -48,7 +88,7 @@ export abstract class BaseListenerHandler<T> implements IListenerHandler<T> {
 			{
 				...this.baseLogDetails,
 				callId,
-				args: _.zipObject(this.listenerArgumentsNames, args),
+				args: maskPasswords(_.zipObject(this.listenerArgumentsNames, args)),
 			},
 			`Listener called`
 		);
