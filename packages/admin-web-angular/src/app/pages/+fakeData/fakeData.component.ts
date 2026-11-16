@@ -957,8 +957,12 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 
 		await this._createWarehouseProducts(warehouse.id, [p1.id, p2.id]);
 
-		await this._createOrder(user.id, warehouse.id, p1.id);
-		await this._createOrder(user.id, warehouse.id, p2.id);
+		// Some fake customers are created banned, and the server refuses
+		// orders from banned customers, so only the others get orders.
+		if (!user.isBanned) {
+			await this._createOrder(user.id, warehouse.id, p1.id);
+			await this._createOrder(user.id, warehouse.id, p2.id);
+		}
 
 		this._notify.user(user.id);
 	}
