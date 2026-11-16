@@ -15,6 +15,7 @@
 	"Delivery from": "Entrega desde",
 	"WHAT_IS_YOUR_ADDRESS": "Cuál es tu dirección?",
 	"FOR": "para",
+	"HOME": "Inicio",
 	"MESSAGE_POP_UP": {
 		"CANCEL_ORDER": "¡En solo 5-10 minutos degustarás esta deliciosa comida!",
 		"OK": "OK",
@@ -44,7 +45,10 @@
 			"BUY_FOR": "Comprar por",
 			"DETAILS": "Detalles",
 			"DELIVERY_FROM": "Entrega desde",
-			"TAKEOUT_FROM": "Para retirar en"
+			"TAKEOUT_FROM": "Para retirar en",
+			"BACK": "Atrás",
+			"PREVIOUS_IMAGE": "Imagen anterior",
+			"NEXT_IMAGE": "Imagen siguiente"
 		}
 	},
 	"LOG_IN_VIEW": {
@@ -82,6 +86,7 @@
 		"PRODUCTS": "Productos",
 		"ORDERS": "Pedidos",
 		"ORDER_ID": "Identificador de Pedido:",
+		"NOTES": "Notas:",
 		"SHOW_CARRIER_ON_MAP": "Mostrar operador en el mapa",
 		"ORER_TYPE": {
 			"DELIVERY": "Entrega",
