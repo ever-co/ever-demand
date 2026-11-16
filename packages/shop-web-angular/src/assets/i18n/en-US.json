@@ -47,8 +47,8 @@
 			"DELIVERY_FROM": "Delivery from",
 			"TAKEOUT_FROM": "Takeout from",
 			"BACK": "Back",
-			"PREVIOUS_IMAGE": "Previous image",
-			"NEXT_IMAGE": "Next image"
+			"PREVIOUS_IMAGE": "Scroll thumbnails left",
+			"NEXT_IMAGE": "Scroll thumbnails right"
 		}
 	},
 	"LOG_IN_VIEW": {

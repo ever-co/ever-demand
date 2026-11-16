@@ -47,8 +47,8 @@
 			"DELIVERY_FROM": "Entrega desde",
 			"TAKEOUT_FROM": "Para retirar en",
 			"BACK": "Atrás",
-			"PREVIOUS_IMAGE": "Imagen anterior",
-			"NEXT_IMAGE": "Imagen siguiente"
+			"PREVIOUS_IMAGE": "Desplazar miniaturas a la izquierda",
+			"NEXT_IMAGE": "Desplazar miniaturas a la derecha"
 		}
 	},
 	"LOG_IN_VIEW": {

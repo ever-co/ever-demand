@@ -47,8 +47,8 @@
 			"DELIVERY_FROM": "Доставка из",
 			"TAKEOUT_FROM": "Вынос из",
 			"BACK": "Назад",
-			"PREVIOUS_IMAGE": "Предыдущее изображение",
-			"NEXT_IMAGE": "Следующее изображение"
+			"PREVIOUS_IMAGE": "Прокрутить миниатюры влево",
+			"NEXT_IMAGE": "Прокрутить миниатюры вправо"
 		}
 	},
 	"LOG_IN_VIEW": {

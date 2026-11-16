@@ -125,37 +125,45 @@ function countButtons(html) {
 	return (source.match(BUTTON_RE) || []).length;
 }
 
-let failed = false;
-let totalButtons = 0;
+function main() {
+	let failed = false;
+	let totalButtons = 0;
 
-for (const template of TEMPLATES) {
-	const file = path.join(APP_DIR, template);
-	const html = fs.readFileSync(file, 'utf8');
-	const buttons = countButtons(html);
-	const problems = findProblems(html);
-	totalButtons += buttons;
+	for (const template of TEMPLATES) {
+		const file = path.join(APP_DIR, template);
+		const html = fs.readFileSync(file, 'utf8');
+		const buttons = countButtons(html);
+		const problems = findProblems(html);
+		totalButtons += buttons;
 
-	if (problems.length === 0) {
-		console.log(`OK    ${template} (${buttons} buttons)`);
-		continue;
+		if (problems.length === 0) {
+			console.log(`OK    ${template} (${buttons} buttons)`);
+			continue;
+		}
+
+		failed = true;
+		console.error(`FAIL  ${template}`);
+		problems.forEach(({ line, snippet }) =>
+			console.error(`  line ${line}: button has no visible text and no aria-label: ${snippet}`)
+		);
 	}
 
-	failed = true;
-	console.error(`FAIL  ${template}`);
-	problems.forEach(({ line, snippet }) =>
-		console.error(`  line ${line}: button has no visible text and no aria-label: ${snippet}`)
-	);
+	// Refuse to pass vacuously: if the templates moved or the pattern broke, nothing was checked.
+	if (totalButtons === 0) {
+		console.error(`No <button> found in ${TEMPLATES.length} templates; the check is not looking at anything.`);
+		process.exit(1);
+	}
+
+	if (failed) {
+		console.error('\nGive icon-only buttons a translated aria-label and mark the icon aria-hidden="true".');
+		process.exit(1);
+	}
+
+	console.log(`\nAll ${totalButtons} buttons in ${TEMPLATES.length} templates have a visible text or an aria-label.`);
 }
 
-// Refuse to pass vacuously: if the templates moved or the pattern broke, nothing was checked.
-if (totalButtons === 0) {
-	console.error(`No <button> found in ${TEMPLATES.length} templates; the check is not looking at anything.`);
-	process.exit(1);
+if (require.main === module) {
+	main();
 }
 
-if (failed) {
-	console.error('\nGive icon-only buttons a translated aria-label and mark the icon aria-hidden="true".');
-	process.exit(1);
-}
-
-console.log(`\nAll ${totalButtons} buttons in ${TEMPLATES.length} templates have a visible text or an aria-label.`);
+module.exports = { findProblems, visibleText };

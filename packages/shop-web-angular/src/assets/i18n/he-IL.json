@@ -47,8 +47,8 @@
 			"DELIVERY_FROM": "משלוח מ",
 			"TAKEOUT_FROM": "צא מתוך",
 			"BACK": "חזרה",
-			"PREVIOUS_IMAGE": "התמונה הקודמת",
-			"NEXT_IMAGE": "התמונה הבאה"
+			"PREVIOUS_IMAGE": "גלילת התמונות הממוזערות שמאלה",
+			"NEXT_IMAGE": "גלילת התמונות הממוזערות ימינה"
 		}
 	},
 	"LOG_IN_VIEW": {
