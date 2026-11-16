@@ -63,6 +63,7 @@ describe('health endpoints over HTTP', () => {
 		const res = await request(app.getHttpServer()).get('/api/health/ready');
 
 		expect(res.status).toBe(503);
+		expect(res.headers['cache-control']).toBe('no-store');
 		expect(res.body.status).toBe('unavailable');
 		expect(res.body.checks).toEqual({ database: 'unavailable' });
 	});
@@ -73,5 +74,7 @@ describe('health endpoints over HTTP', () => {
 		const res = await request(app.getHttpServer()).get('/api/health/ready');
 
 		expect(res.status).toBe(503);
+		expect(res.headers['cache-control']).toBe('no-store');
+		expect(res.body.checks).toEqual({ database: 'unavailable' });
 	});
 });

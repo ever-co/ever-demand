@@ -1,4 +1,3 @@
-import { ServiceUnavailableException } from '@nestjs/common';
 import { buildHealthReport } from '../../controllers/health/health';
 import { HealthController } from '../../controllers/health/health.controller';
 
@@ -33,18 +32,23 @@ describe('HealthController', () => {
 		expect(report.checks.database).toBe('unavailable');
 	});
 
-	it('readiness returns the report when the database is connected', () => {
-		const report = new HealthController(connected).ready();
+	it('readiness keeps the default status when the database is connected', () => {
+		const res = { status: jest.fn() };
+		const report = new HealthController(connected).ready(res);
 		expect(report.status).toBe('ok');
+		expect(res.status).not.toHaveBeenCalled();
 	});
 
-	it('readiness throws 503 when the database is disconnected', () => {
-		const controller = new HealthController(disconnected);
-		expect(() => controller.ready()).toThrow(ServiceUnavailableException);
+	it('readiness sets 503 when the database is disconnected', () => {
+		const res = { status: jest.fn() };
+		const report = new HealthController(disconnected).ready(res);
+		expect(report.status).toBe('unavailable');
+		expect(res.status).toHaveBeenCalledWith(503);
 	});
 
-	it('readiness throws 503 when there is no connection at all', () => {
-		const controller = new HealthController(undefined);
-		expect(() => controller.ready()).toThrow(ServiceUnavailableException);
+	it('readiness sets 503 when there is no connection at all', () => {
+		const res = { status: jest.fn() };
+		new HealthController(undefined).ready(res);
+		expect(res.status).toHaveBeenCalledWith(503);
 	});
 });

@@ -2,10 +2,12 @@ import {
 	Controller,
 	Get,
 	Header,
+	HttpStatus,
 	Optional,
-	ServiceUnavailableException,
+	Res,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import type { Response } from 'express';
 import { Connection } from 'typeorm';
 import { buildHealthReport, HealthReport } from './health';
 
@@ -28,16 +30,18 @@ export class HealthController {
 		return buildHealthReport(this.isDatabaseConnected(), process.uptime());
 	}
 
+	// The status is set on the response (instead of throwing an exception) so that
+	// the `Cache-Control: no-store` header is also sent with a 503.
 	@Get('ready')
 	@Header('Cache-Control', 'no-store')
-	ready(): HealthReport {
+	ready(@Res({ passthrough: true }) res: Pick<Response, 'status'>): HealthReport {
 		const report = buildHealthReport(
 			this.isDatabaseConnected(),
 			process.uptime()
 		);
 
 		if (report.status !== 'ok') {
-			throw new ServiceUnavailableException(report);
+			res.status(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 
 		return report;
