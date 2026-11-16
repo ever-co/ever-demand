@@ -11,7 +11,7 @@ export interface HealthReport {
 
 /**
  * Builds the body of the health endpoints.
- * Kept free of NestJS/TypeORM so it can be unit tested on its own.
+ * Kept free of NestJS and the database driver so it can be unit tested on its own.
  *
  * @param {boolean} isDatabaseConnected whether the database connection is established
  * @param {number} uptimeSeconds process uptime in seconds
