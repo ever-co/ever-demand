@@ -25,6 +25,7 @@ import { env } from './env';
 import { createEverLogger } from './helpers/Log';
 import { CommandBus, EventBus, CqrsModule } from '@nestjs/cqrs';
 import { TestController } from './controllers/test.controller';
+import { HealthController } from './controllers/health/health.controller';
 import { ModuleRef } from '@nestjs/core';
 import { GeoLocationsModule } from './graphql/geo-locations/geo-locations.module';
 import { SCALARS } from './graphql/scalars';
@@ -134,7 +135,7 @@ const connectionSettings: TypeOrmModuleOptions = {
 };
 
 @Module({
-	controllers: [TestController],
+	controllers: [TestController, HealthController],
 	providers: [...CommandHandlers, ...EventHandlers],
 	imports: [
 		DataModule,
