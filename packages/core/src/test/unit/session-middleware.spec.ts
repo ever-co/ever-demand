@@ -81,12 +81,12 @@ describe('session middleware and health probes', () => {
 		}).compile();
 
 		app = moduleRef.createNestApplication();
-		// same options and order as the real bootstrap (see nest-bootstrap.ts)
+		// same options and order as the real bootstrap (see nest-bootstrap.ts);
+		// `saveUninitialized: false` comes from createSessionMiddleware itself
 		app.use(
 			createSessionMiddleware({
 				secret: 'test-secret',
 				resave: true,
-				saveUninitialized: false,
 				store,
 			})
 		);
@@ -149,6 +149,7 @@ describe('session middleware and health probes', () => {
 		expect(ok.body).toEqual({ user: 'user-1' });
 		expect(ok.headers['set-cookie']).toBeUndefined();
 		expect(denied.status).toBe(401);
+		expect(denied.headers['set-cookie']).toBeUndefined();
 		expect(await sessionCount(store)).toBe(0);
 	});
 

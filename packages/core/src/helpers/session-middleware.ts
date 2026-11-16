@@ -4,7 +4,7 @@ import type { NextFunction, Request, RequestHandler, Response } from 'express';
 /**
  * Probe endpoints (see controllers/health). They are hit every few seconds by
  * orchestrators without cookies. They are skipped explicitly so they never
- * create a session or set a cookie, whatever `saveUninitialized` is set to.
+ * create a session or set a cookie.
  */
 const SESSIONLESS_PATHS = new Set(['/api/health', '/api/health/ready']);
 
@@ -30,11 +30,17 @@ export function isSessionlessPath(path: string | undefined): boolean {
  * Builds the `express-session` middleware, skipping the health probe routes
  * (no session is created and no cookie is set for them). Every other route
  * gets the regular session behaviour.
+ *
+ * `saveUninitialized` is always `false`: a session is only stored (and a cookie
+ * only set) once a handler writes to it, so cookieless requests do not leak
+ * entries in the in-memory store. Nothing in the API reads `req.session`
+ * (auth is Passport/JWT). It is fixed here, not left to callers, so the unit
+ * tests cover the same setting the app runs with.
  */
 export function createSessionMiddleware(
-	options: SessionOptions
+	options: Omit<SessionOptions, 'saveUninitialized'>
 ): RequestHandler {
-	const session = expressSession(options);
+	const session = expressSession({ ...options, saveUninitialized: false });
 
 	return (req: Request, res: Response, next: NextFunction) => {
 		if (isSessionlessPath(req.path)) {
