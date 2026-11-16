@@ -2,7 +2,6 @@ import { Resolver, Query, Mutation } from '@nestjs/graphql';
 import { InvitesRequestsService } from '../../services/invites';
 import { IInviteRequestCreateObject } from '@modules/server.common/interfaces/IInviteRequest';
 import { first } from 'rxjs/operators';
-import Invite from '@modules/server.common/entities/Invite';
 import InviteRequest from '@modules/server.common/entities/InviteRequest';
 import { UseGuards } from '@nestjs/common';
 import { FakeDataGuard } from '../../auth/guards/fake-data.guard';
@@ -28,23 +27,6 @@ export class InviteRequestResolver {
 	@Query('inviteRequest')
 	async getInviteRequest(_, { id }: { id: string }) {
 		return this._invitesRequestsService.get(id).pipe(first()).toPromise();
-	}
-
-	@Query('notifyAboutLaunch')
-	async notifyAboutLaunch(
-		_,
-		{
-			invite,
-			devicesIds,
-		}: {
-			invite: Invite;
-			devicesIds: string[];
-		}
-	) {
-		return this._invitesRequestsService.notifyAboutLaunch(
-			invite,
-			devicesIds
-		);
 	}
 
 	@Query('invitesRequests')

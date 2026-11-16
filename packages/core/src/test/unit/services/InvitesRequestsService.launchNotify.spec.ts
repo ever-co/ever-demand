@@ -132,8 +132,10 @@ describe('InvitesRequestsService launch push', () => {
 			aggregate: jest.fn(() => aggregateOverStoredRequests()),
 		};
 
+		// notifyAboutLaunch is private (internal to the invite-created
+		// subscription), so it is reached through `any`.
 		notifyAboutLaunch = jest
-			.spyOn(service, 'notifyAboutLaunch')
+			.spyOn(service as any, 'notifyAboutLaunch')
 			.mockResolvedValue(undefined);
 	});
 
