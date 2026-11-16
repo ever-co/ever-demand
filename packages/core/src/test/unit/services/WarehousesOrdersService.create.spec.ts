@@ -2,7 +2,8 @@ import 'reflect-metadata';
 import { of } from 'rxjs';
 
 // Keep the heavy service graph (mongoose models, env, router wiring) out of
-// this unit test: only the quantity validation inside `create()` is exercised.
+// this unit test: only the quantity and customer checks inside `create()` are
+// exercised.
 jest.mock('@pyro/io', () => ({
 	asyncListener: () => () => undefined,
 	observableListener: () => () => undefined,
@@ -24,8 +25,9 @@ jest.mock('../../../services/users', () => ({ UsersService: class {} }));
 
 import { WarehousesOrdersService } from '../../../services/warehouses/WarehousesOrdersService';
 
-describe('WarehousesOrdersService.create quantity validation', () => {
+describe('WarehousesOrdersService.create validation', () => {
 	let ordersService: { create: jest.Mock };
+	let usersService: { get: jest.Mock };
 	let service: WarehousesOrdersService;
 
 	const createWith = (count: any) =>
@@ -40,7 +42,7 @@ describe('WarehousesOrdersService.create quantity validation', () => {
 			create: jest.fn().mockResolvedValue({ products: [] }),
 		};
 
-		const usersService = { get: jest.fn(() => of({ id: 'u1' })) };
+		usersService = { get: jest.fn(() => of({ id: 'u1' })) };
 		const warehousesService = {
 			get: jest.fn(() =>
 				of({
@@ -73,5 +75,12 @@ describe('WarehousesOrdersService.create quantity validation', () => {
 	it('still creates an order for a valid quantity', async () => {
 		await createWith(2);
 		expect(ordersService.create).toHaveBeenCalledTimes(1);
+	});
+
+	it('rejects a banned customer and does not create an order', async () => {
+		usersService.get.mockReturnValue(of({ id: 'u1', isBanned: true }));
+
+		await expect(createWith(2)).rejects.toThrow('Customer u1 is banned');
+		expect(ordersService.create).not.toHaveBeenCalled();
 	});
 });
