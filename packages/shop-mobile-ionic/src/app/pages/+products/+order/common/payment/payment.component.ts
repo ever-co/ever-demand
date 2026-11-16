@@ -25,6 +25,10 @@ export class PaymentComponent {
 
 	userCard: Stripe.Card | null = null;
 
+	// True while a card payment request is in flight, so a double tap
+	// does not send a second payment for the same order.
+	paying: boolean = false;
+
 	private stripePublishableKey: string = environment.STRIPE_PUBLISHABLE_KEY;
 
 	constructor(
@@ -38,6 +42,10 @@ export class PaymentComponent {
 	}
 
 	async payWithUserCard() {
+		if (this.paying) {
+			return;
+		}
+
 		if (!this.stripePublishableKey) {
 			throw Error("Can't pay in app");
 		}
@@ -46,10 +54,16 @@ export class PaymentComponent {
 			throw new Error('userCard is null');
 		}
 
-		return this.orderRouter.payWithStripe(
-			this.store.orderId,
-			this.userCard.id
-		);
+		this.paying = true;
+
+		try {
+			return await this.orderRouter.payWithStripe(
+				this.store.orderId,
+				this.userCard.id
+			);
+		} finally {
+			this.paying = false;
+		}
 	}
 
 	async toPaymentStage() {

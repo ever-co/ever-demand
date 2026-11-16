@@ -291,6 +291,16 @@ export class OrdersService extends DBService<Order>
 			if (_order != null) {
 				order = _order;
 
+				// A double tap or a retry must not charge the customer again,
+				// and a cancelled order must not be charged at all.
+				if (order.isPaid) {
+					throw new Error('Order is already paid');
+				}
+
+				if (order.isCancelled) {
+					throw new Error('Order is cancelled and can not be paid');
+				}
+
 				const user = await this.usersService
 					.get(order.user.id)
 					.pipe(first())
@@ -307,6 +317,11 @@ export class OrdersService extends DBService<Order>
 							metadata: {
 								orderId,
 							},
+						},
+						{
+							// Two concurrent calls for one order and card
+							// create a single charge.
+							idempotencyKey: `order-${orderId}-card-${cardId}`,
 						}
 					);
 
