@@ -27,6 +27,7 @@ import { concat, exhaustMap, filter, first, share } from 'rxjs/operators';
 import { of, from } from 'rxjs';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
+import DeliveryType from '@modules/server.common/enums/DeliveryType';
 import { GeoLocationOrdersOptions } from './GeoLocationOrdersOptions';
 import { ObjectId } from 'bson';
 
@@ -176,13 +177,16 @@ export class GeoLocationsOrdersService
 						warehouseStatus: {
 							$eq: OrderWarehouseStatus.PackagingFinished,
 						},
+						orderType: DeliveryType.Delivery,
 						$expr: {
 							$lte: [
 								'$carrierStatus',
 								'$fromWH.carrierCompetition',
 							],
 						},
-						_id: { $nin: skippedOrderIds },
+						_id: {
+							$nin: skippedOrderIds.map((id) => new ObjectId(id)),
+						},
 					},
 					...searchByRegex
 				),
@@ -277,6 +281,7 @@ export class GeoLocationsOrdersService
 						warehouseStatus: {
 							$eq: OrderWarehouseStatus.PackagingFinished,
 						},
+						orderType: DeliveryType.Delivery,
 						$expr: {
 							$lte: [
 								'$carrierStatus',
@@ -305,10 +310,7 @@ export class GeoLocationsOrdersService
 			.limit(options.limit || 1)
 			.exec();
 
-		return orders
-			.filter((o) => o !== null)
-			.filter((o) => o.orderType === 0)
-			.map((o) => new Order(o));
+		return orders.filter((o) => o !== null).map((o) => new Order(o));
 	}
 
 	/**
