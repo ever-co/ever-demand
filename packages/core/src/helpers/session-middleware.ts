@@ -3,8 +3,8 @@ import type { NextFunction, Request, RequestHandler, Response } from 'express';
 
 /**
  * Probe endpoints (see controllers/health). They are hit every few seconds by
- * orchestrators without cookies, so with `saveUninitialized: true` each hit
- * would create a session in the in-memory store that is never freed.
+ * orchestrators without cookies. They are skipped explicitly so they never
+ * create a session or set a cookie, whatever `saveUninitialized` is set to.
  */
 const SESSIONLESS_PATHS = new Set(['/api/health', '/api/health/ready']);
 

@@ -401,6 +401,31 @@ spec:
                         protocol: TCP
                       - containerPort: 2086
                         protocol: TCP
+                  # Probes use GQLPORT (8443). Liveness must not depend on MongoDB,
+                  # only readiness does (see .deploy/k8s/README.md, "Health probes").
+                  # Other probes start only after the startup probe succeeds
+                  # (up to 5s x 30 = 150s, longer than the image HEALTHCHECK start period).
+                  startupProbe:
+                      httpGet:
+                          path: /api/health
+                          port: 8443
+                      periodSeconds: 5
+                      timeoutSeconds: 5
+                      failureThreshold: 30
+                  livenessProbe:
+                      httpGet:
+                          path: /api/health
+                          port: 8443
+                      periodSeconds: 20
+                      timeoutSeconds: 5
+                      failureThreshold: 3
+                  readinessProbe:
+                      httpGet:
+                          path: /api/health/ready
+                          port: 8443
+                      periodSeconds: 10
+                      timeoutSeconds: 5
+                      failureThreshold: 3
 ---
 apiVersion: apps/v1
 kind: Deployment

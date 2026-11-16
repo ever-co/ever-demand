@@ -31,11 +31,11 @@ The API exposes two unauthenticated endpoints on the GraphQL/HTTP port (`8443`, 
 | `GET /api/health`       | Liveness: the process is up and serving requests. Does not depend on the database.            | `200` with `{ status, checks, uptimeSeconds }`                    |
 | `GET /api/health/ready` | Readiness: the API can serve traffic; `200` only while the MongoDB connection is established. | `200`, or `503` with the same body while MongoDB is not connected |
 
-Both send `Cache-Control: no-store` and never create a session (the session middleware skips them).
+Both send `Cache-Control: no-store` and never create a session (the session middleware skips them). The session middleware runs with `saveUninitialized: false`, so no other cookieless request creates a session either; nothing in the API reads `req.session` (authentication is Passport/JWT).
 
 The API image defines a Docker `HEALTHCHECK` that calls `/api/health` (interval 30s, timeout 5s, start period 90s, 3 retries).
 
-Recommended Kubernetes probe settings for the API container. The demo deployment is the `ever-demo-api` container in `k8s-manifest.demo.yaml` (applied by `.github/workflows/deploy-do.yml`); it does not define these probes yet. Set them there, or wherever your API `Deployment` is defined:
+Recommended Kubernetes probe settings for the API container. The demo deployment (the `ever-demo-api` container in `k8s-manifest.demo.yaml`, applied by `.github/workflows/deploy-do.yml`) defines exactly these probes. Use the same settings wherever your own API `Deployment` is defined:
 
 ```yaml
 startupProbe:
@@ -55,6 +55,8 @@ readinessProbe:
 ```
 
 The examples use `8443`, the default `GQLPORT`. If the API is configured with a different `GQLPORT`, set every probe `port` (and the container port) to that same value, otherwise the startup probe fails and the container is restarted. The Docker `HEALTHCHECK` reads `GQLPORT` itself, so it needs no change.
+
+The liveness probe tolerates about 60s of failures (3 x 20s) and, being independent of MongoDB, does not restart the pod during a short database blip; the readiness probe only takes the pod out of the Service meanwhile.
 
 Do not point the liveness probe at `/api/health/ready`: a database outage would then restart every API pod instead of just removing them from the Service.
 
