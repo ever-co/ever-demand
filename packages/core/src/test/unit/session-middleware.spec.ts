@@ -1,6 +1,16 @@
-import { Controller, Get, INestApplication } from '@nestjs/common';
+import {
+	Controller,
+	Get,
+	INestApplication,
+	Injectable,
+	Req,
+	UseGuards,
+} from '@nestjs/common';
+import { AuthGuard, PassportModule, PassportStrategy } from '@nestjs/passport';
 import { Test } from '@nestjs/testing';
 import expressSession from 'express-session';
+import { sign } from 'jsonwebtoken';
+import { ExtractJwt, Strategy } from 'passport-jwt';
 import request from 'supertest';
 import {
 	HEALTH_DB_CONNECTION,
@@ -11,11 +21,40 @@ import {
 	isSessionlessPath,
 } from '../../helpers/session-middleware';
 
+const JWT_TEST_SECRET = 'jwt-test-secret';
+
+// Same wiring as the real API strategies: Bearer token in, user out, no session.
+@Injectable()
+class TestJwtStrategy extends PassportStrategy(Strategy) {
+	constructor() {
+		super({
+			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+			secretOrKey: JWT_TEST_SECRET,
+		});
+	}
+
+	validate(payload: { sub: string }) {
+		return { id: payload.sub };
+	}
+}
+
 @Controller('ping')
 class PingController {
 	@Get()
 	ping() {
 		return { pong: true };
+	}
+
+	@Get('write')
+	write(@Req() req: any) {
+		req.session.touched = true;
+		return { written: true };
+	}
+
+	@Get('secure')
+	@UseGuards(AuthGuard('jwt'))
+	secure(@Req() req: any) {
+		return { user: req.user.id };
 	}
 }
 
@@ -34,18 +73,20 @@ describe('session middleware and health probes', () => {
 
 		const moduleRef = await Test.createTestingModule({
 			controllers: [HealthController, PingController],
+			imports: [PassportModule],
 			providers: [
 				{ provide: HEALTH_DB_CONNECTION, useValue: { readyState: 1 } },
+				TestJwtStrategy,
 			],
 		}).compile();
 
 		app = moduleRef.createNestApplication();
-		// same options and order as the real bootstrap (see nest-bootstrap.ts)
+		// same options and order as the real bootstrap (see nest-bootstrap.ts);
+		// `saveUninitialized: false` comes from createSessionMiddleware itself
 		app.use(
 			createSessionMiddleware({
 				secret: 'test-secret',
 				resave: true,
-				saveUninitialized: true,
 				store,
 			})
 		);
@@ -78,12 +119,38 @@ describe('session middleware and health probes', () => {
 		expect(await sessionCount(store)).toBe(0);
 	});
 
-	it('still creates a session and sets the cookie for a normal route', async () => {
+	it('creates no session and sets no cookie for a cookieless request to a normal route', async () => {
 		const res = await request(app.getHttpServer()).get('/api/ping');
+
+		expect(res.status).toBe(200);
+		expect(res.headers['set-cookie']).toBeUndefined();
+		expect(await sessionCount(store)).toBe(0);
+	});
+
+	it('still stores a session once a handler writes to it', async () => {
+		const res = await request(app.getHttpServer()).get('/api/ping/write');
 
 		expect(res.status).toBe(200);
 		expect(res.headers['set-cookie']?.[0]).toMatch(/^connect\.sid=/);
 		expect(await sessionCount(store)).toBe(1);
+	});
+
+	it('authenticates with a Bearer JWT (Passport) and needs no session or cookie', async () => {
+		const token = sign({ sub: 'user-1' }, JWT_TEST_SECRET);
+
+		const ok = await request(app.getHttpServer())
+			.get('/api/ping/secure')
+			.set('Authorization', `Bearer ${token}`);
+		const denied = await request(app.getHttpServer()).get(
+			'/api/ping/secure'
+		);
+
+		expect(ok.status).toBe(200);
+		expect(ok.body).toEqual({ user: 'user-1' });
+		expect(ok.headers['set-cookie']).toBeUndefined();
+		expect(denied.status).toBe(401);
+		expect(denied.headers['set-cookie']).toBeUndefined();
+		expect(await sessionCount(store)).toBe(0);
 	});
 
 	it('does not skip look-alike paths', () => {

@@ -43,12 +43,14 @@ export async function bootstrapNest(): Promise<void> {
 	// the csurf module requires either a session middleware or cookie-parser to be initialized first.
 	// app.use(csurf());
 
-	// Health probes (/api/health, /api/health/ready) are skipped so they do not create sessions.
+	// The middleware always uses `saveUninitialized: false`: nothing in the app reads
+	// `req.session` (auth is Passport/JWT), so a session is only stored once something
+	// writes to it; otherwise every cookieless request would leak an entry in the
+	// in-memory store. Health probes (/api/health, /api/health/ready) never get a session.
 	app.use(
 		createSessionMiddleware({
 			secret: env.EXPRESS_SESSION_SECRET,
-			resave: true,
-			saveUninitialized: true
+			resave: true
 		})
 	);
 
