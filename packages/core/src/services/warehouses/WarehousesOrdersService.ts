@@ -308,6 +308,10 @@ export class WarehousesOrdersService
 			warehouseProducts
 		);
 
+		// Check stock before the order is saved, so a failed add leaves both
+		// the order and the stock as they were.
+		this._assertStockAvailable(products, warehouseProducts);
+
 		const newProducts = [...existedOrder.products, ...orderProducts];
 
 		const order = await this.ordersService.update(orderId, {
@@ -316,7 +320,10 @@ export class WarehousesOrdersService
 
 		// Only the newly added products must leave stock: the products that
 		// were already in the order were counted when the order was created.
-		await this._updateProductCount({ products: orderProducts }, warehouseId);
+		await this._updateProductCount(
+			{ products: orderProducts },
+			warehouseId
+		);
 
 		return order;
 	}
@@ -593,6 +600,31 @@ export class WarehousesOrdersService
 				};
 			}
 		);
+	}
+
+	/**
+	 * Throws when the store does not hold enough stock for the requested
+	 * products. Quantities asked for the same product on several lines are
+	 * added up first.
+	 */
+	private _assertStockAvailable(
+		products: { productId: string; count: number }[],
+		warehouseProducts: _.Dictionary<{ count: number }>
+	): void {
+		const requested = new Map<string, number>();
+
+		// Iterate like _getOrderProducts() does, so both accept the same input.
+		_.forEach(products, ({ productId, count }) => {
+			requested.set(productId, (requested.get(productId) || 0) + count);
+		});
+
+		requested.forEach((count, productId) => {
+			if (warehouseProducts[productId].count < count) {
+				throw new Error(
+					`Request to remove more products than available for the product with the id ${productId}`
+				);
+			}
+		});
 	}
 
 	private async _updateProductCount(order, warehouseId) {
