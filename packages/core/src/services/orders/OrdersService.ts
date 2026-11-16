@@ -37,6 +37,7 @@ import {
 	assertCarrierStatusTransition,
 	assertWarehouseStatusTransition,
 } from './orderStatusTransitions';
+import { orderCompletionFilters } from './orderCompletionFilters';
 
 @injectable()
 @routerName('order')
@@ -53,32 +54,7 @@ export class OrdersService extends DBService<Order>
 		name: 'ordersService',
 	});
 
-	static readonly FindObjects = {
-		isCompleted: {
-			$or: [
-				{
-					isPaid: true,
-					carrierStatus: OrderCarrierStatus.DeliveryCompleted,
-				},
-				{
-					isCancelled: true,
-				},
-			],
-		},
-		isNotCompleted: {
-			$and: [
-				{
-					isPaid: false,
-					carrierStatus: {
-						$ne: OrderCarrierStatus.DeliveryCompleted,
-					},
-				},
-				{
-					isCancelled: false,
-				},
-			],
-		},
-	};
+	static readonly FindObjects = orderCompletionFilters;
 
 	constructor(
 		@inject(new LazyServiceIdentifer(() => WarehousesService))

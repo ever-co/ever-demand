@@ -252,6 +252,7 @@
 		"nodemon": "^2.0.4",
 		"prettier": "^2.2.1",
 		"rimraf": "^3.0.2",
+		"sift": "13.5.2",
 		"supertest": "^6.0.1",
 		"ts-jest": "^26.4.4",
 		"ts-node": "~10.3.0",
