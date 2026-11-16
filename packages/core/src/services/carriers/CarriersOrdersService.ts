@@ -7,7 +7,7 @@ import CarriersService from './CarriersService';
 import Carrier from '@modules/server.common/entities/Carrier';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import { inject, injectable } from 'inversify';
-import { WarehousesOrdersService } from '../warehouses';
+import { WarehousesOrdersService, WarehousesService } from '../warehouses';
 import ICarrierOrdersRouter from '@modules/server.common/routers/ICarrierOrdersRouter';
 import { asyncListener, observableListener, routerName } from '@pyro/io';
 import IService from '../IService';
@@ -45,6 +45,14 @@ const activeCarrierStatuses = [
 	OrderCarrierStatus.CarrierArrivedToCustomer,
 ];
 
+/**
+ * Carrier statuses of the orders a carrier can give back with `cancelDelivery`:
+ * the active ones, once the carrier has the order.
+ */
+const cancellableCarrierStatuses = activeCarrierStatuses.filter(
+	(status) => status !== OrderCarrierStatus.NoCarrier
+);
+
 @injectable()
 @routerName('carrier-orders')
 export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
@@ -71,7 +79,9 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 		@inject(GeoLocationsOrdersService)
 		protected geoLocationsOrdersService: GeoLocationsOrdersService,
 		@inject(WarehousesOrdersService)
-		protected warehousesOrdersService: WarehousesOrdersService
+		protected warehousesOrdersService: WarehousesOrdersService,
+		@inject(WarehousesService)
+		protected warehousesService: WarehousesService
 	) {}
 
 	@asyncListener()
@@ -87,16 +97,56 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 
 		if (carrier != null) {
 			if (orderIds.length > 0) {
-				// TODO: check here that not from any status it is possible to move to any other.
-				// Mean if order is status 3, it's not simply possible to update it to status 2.
 				const carrierStatus = carrierCompetition
 					? OrderCarrierStatus.CarrierPickedUpOrder
 					: OrderCarrierStatus.CarrierSelectedOrder;
 
-				await this.ordersService.updateMultipleByIds(orderIds, {
-					carrier: carrierId,
-					carrierStatus,
-				});
+				const competitionWarehouseIds =
+					await this.getCarrierCompetitionWarehouseIds(orderIds);
+
+				// Only orders a carrier may still take: not cancelled, and free,
+				// already selected by this carrier, or selected by another
+				// carrier in a store where carriers compete for orders (the
+				// orders `GeoLocationsOrdersService` offers). An order picked
+				// up, in delivery or finished keeps its carrier and status.
+				const orders = await this.ordersService.updateMultiple(
+					{
+						_id: { $in: orderIds },
+						isDeleted: { $eq: false },
+						isCancelled: { $eq: false },
+						$or: [
+							{ carrierStatus: OrderCarrierStatus.NoCarrier },
+							{
+								carrier: carrierId,
+								carrierStatus:
+									OrderCarrierStatus.CarrierSelectedOrder,
+							},
+							{
+								warehouse: { $in: competitionWarehouseIds },
+								carrierStatus:
+									OrderCarrierStatus.CarrierSelectedOrder,
+							},
+						],
+					},
+					{
+						carrier: carrierId,
+						carrierStatus,
+					}
+				);
+
+				// `updateMultiple` returns the orders its first read matched, as
+				// they are after the write. The write checks the filter again,
+				// so an order another carrier took in between keeps that
+				// carrier: count only the orders this carrier now has.
+				const takenOrders = orders.filter(
+					(order) =>
+						order.carrierId === carrierId &&
+						order.carrierStatus === carrierStatus
+				);
+
+				if (takenOrders.length === 0) {
+					throw new Error('Orders are no longer available');
+				}
 			}
 
 			carrier = await this.carriersService
@@ -219,23 +269,33 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 	): Promise<Carrier> {
 		await this.carriersService.throwIfNotExists(carrierId);
 
-		const _orders = await this.ordersService.find({
+		const requestedOrders = await this.ordersService.find({
 			_id: { $in: orderIds },
 			isDeleted: { $eq: false },
 		});
-		const ordersIdsFiltered = _orders.map((d) => d.id);
 
-		const orders = await this.ordersService.updateMultipleByIds(
-			ordersIdsFiltered,
+		// Only this carrier's orders that are still in progress, checked by
+		// the write itself. Another carrier's order, or one delivered,
+		// returned or refused, keeps its carrier and status.
+		await this.ordersService.updateMultiple(
+			{
+				_id: { $in: orderIds },
+				isDeleted: { $eq: false },
+				carrier: carrierId,
+				carrierStatus: { $in: cancellableCarrierStatuses },
+			},
 			{
 				$unset: { carrier: 1 },
 				carrierStatus: OrderCarrierStatus.NoCarrier,
 			}
 		);
 
+		// The carrier gives up every requested order, as before. This
+		// includes an order in a competition store that it never took: the
+		// carrier app offers Cancel on it, and it must stop being offered.
 		await this.skipOrders(
 			carrierId,
-			_.map(orders, (order) => order.id)
+			_.map(requestedOrders, (order) => order.id)
 		);
 
 		return this.carriersService.updateStatus(carrierId, 0);
@@ -443,6 +503,36 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 			this.log.error(err);
 			throw err;
 		}
+	}
+
+	/**
+	 * Ids of the stores with `carrierCompetition` among the stores of the given
+	 * orders that a carrier has selected. In those stores every carrier is
+	 * offered such an order and may still take it.
+	 */
+	private async getCarrierCompetitionWarehouseIds(
+		orderIds: string[]
+	): Promise<string[]> {
+		const selectedOrders = await this.ordersService.find({
+			_id: { $in: orderIds },
+			isDeleted: { $eq: false },
+			carrierStatus: OrderCarrierStatus.CarrierSelectedOrder,
+		});
+
+		const warehouseIds = _.uniq(
+			selectedOrders.map((order) => order.warehouseId)
+		);
+
+		if (warehouseIds.length === 0) {
+			return [];
+		}
+
+		const warehouses = await this.warehousesService.find({
+			_id: { $in: warehouseIds },
+			carrierCompetition: true,
+		});
+
+		return warehouses.map((warehouse) => warehouse.id);
 	}
 
 	private getOrdersForWorkFilter(carrierId: string) {
