@@ -170,7 +170,7 @@ export class UsersAuthService extends EntityService<User>
 	): Promise<IUserLoginResponse | null> {
 		const res = await this.authService.login({ email }, password);
 
-		if (!res || res.entity.isDeleted) {
+		if (!res || res.entity.isDeleted || res.entity.isBanned) {
 			return null;
 		}
 

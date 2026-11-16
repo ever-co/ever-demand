@@ -551,6 +551,10 @@ export class WarehousesOrdersService
 			throw new Error(`There is no user with the id ${userId}`);
 		}
 
+		if (user.isBanned) {
+			throw new Error(`Customer ${userId} is banned`);
+		}
+
 		return user;
 	}
 
