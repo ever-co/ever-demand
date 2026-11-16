@@ -18,6 +18,8 @@ import * as _ from 'lodash';
 import { ObjectId } from 'bson';
 import { FakeOrdersService } from '../../services/fake-data/FakeOrdersService';
 import { firstValueFrom } from 'rxjs';
+import { UseGuards } from '@nestjs/common';
+import { FakeDataGuard } from '../../auth/guards/fake-data.guard';
 
 @Resolver('Order')
 export class OrderResolver {
@@ -208,6 +210,7 @@ export class OrderResolver {
 	};
 
 	@Query()
+	@UseGuards(FakeDataGuard)
 	async generateActiveAndAvailableOrdersPerCarrier() {
 		const commonOptionsFlag = { isDeleted: { $eq: false } };
 
@@ -242,6 +245,7 @@ export class OrderResolver {
 	}
 
 	@Query()
+	@UseGuards(FakeDataGuard)
 	async generatePastOrdersPerCarrier() {
 		const commonOptionsFlag = { isDeleted: { $eq: false } };
 
@@ -295,6 +299,7 @@ export class OrderResolver {
 	}
 
 	@Query()
+	@UseGuards(FakeDataGuard)
 	async addTakenOrders(_context, { carrierIds }: { carrierIds: string[] }) {
 		const commonOptionsFlag = { isDeleted: { $eq: false } };
 
@@ -365,6 +370,7 @@ export class OrderResolver {
 	}
 
 	@Query()
+	@UseGuards(FakeDataGuard)
 	async addOrdersToTake() {
 		const commonOptionsFlag = { isDeleted: { $eq: false } };
 
@@ -427,6 +433,7 @@ export class OrderResolver {
 	}
 
 	@Query()
+	@UseGuards(FakeDataGuard)
 	async generateRandomOrdersCurrentStore(
 		_context,
 		{
@@ -484,6 +491,7 @@ export class OrderResolver {
 	}
 
 	@Query()
+	@UseGuards(FakeDataGuard)
 	async generateOrdersByCustomerId(
 		_context,
 		{
