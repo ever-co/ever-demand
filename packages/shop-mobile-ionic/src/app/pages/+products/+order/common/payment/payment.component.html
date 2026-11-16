@@ -11,6 +11,7 @@
 		<button
 			class="button button-assertive border-color-brand col-100"
 			(click)="payWithUserCard()"
+			[disabled]="paying"
 			*ngIf="!order?.isPaid && userCard"
 		>
 			<span
