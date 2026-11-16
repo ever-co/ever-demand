@@ -33,7 +33,7 @@ export class ObservableListenerHandler<T> extends BaseListenerHandler<T>
 						{
 							...this.baseLogDetails,
 							callId,
-							value,
+							value: this.toLoggable(value),
 						},
 						`Listener emitted next value`
 					);

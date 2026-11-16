@@ -128,10 +128,33 @@ describe('DBService.create', () => {
 		});
 	});
 
+	it('does not mutate an embedded class instance in the create input', async () => {
+		model.schema = {
+			paths: {
+				user: {
+					options: {},
+					schema: { paths: { hash: { options: { select: false } } } },
+				},
+			},
+		};
+
+		const user = new FakeDBObject({ email: 'a@b.c', hash: HASH });
+
+		const result = await service.create({ user } as any);
+
+		expect(user.hash).toBe(HASH);
+		expect(model.create.mock.calls[0][0].user.hash).toBe(HASH);
+		expect(result.user).not.toHaveProperty('hash');
+		expect(allLoggedText()).not.toContain(HASH);
+	});
+
 	it('keeps all fields when the schema has no select:false paths', async () => {
 		model.schema = { paths: { email: { options: {} } } };
 
-		const result = await service.create({ email: 'a@b.c', hash: 'x' } as any);
+		const result = await service.create({
+			email: 'a@b.c',
+			hash: 'x',
+		} as any);
 
 		expect(result.hash).toBe('x');
 	});

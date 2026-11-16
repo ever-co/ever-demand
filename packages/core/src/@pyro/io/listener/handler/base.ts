@@ -13,9 +13,21 @@ const MASKED_VALUE = '***';
 const MAX_MASK_DEPTH = 20;
 
 /**
- * Returns a deep copy of `value` where the value of every key named
- * `password` (at any depth) is replaced with a mask, so credentials never
- * reach the logs. Objects are never mutated.
+ * Keys whose values never reach the logs: passwords (`password`,
+ * `currentPassword`, ...), secrets, password hashes (`hash`) and auth tokens
+ * (`token`, `accessToken`, ...). Case-insensitive.
+ */
+const SECRET_KEY = /password|secret|^hash$|token$/i;
+
+export function isSecretKey(key: string): boolean {
+	return SECRET_KEY.test(key);
+}
+
+/**
+ * Returns a deep copy of `value` where the value of every secret key (see
+ * `isSecretKey`), at any depth, is replaced with a mask, so passwords,
+ * password hashes and auth tokens never reach the logs. Objects are never
+ * mutated.
  */
 export function maskPasswords(
 	value: any,
@@ -36,22 +48,37 @@ export function maskPasswords(
 		return '[Circular]';
 	}
 
+	if (value instanceof Date || Buffer.isBuffer(value)) {
+		return value;
+	}
+
+	// ObjectIds, mongoose documents and other objects with their own JSON
+	// form are logged as that form, as JSON.stringify (and bunyan) would.
+	if (
+		!Array.isArray(value) &&
+		!_.isPlainObject(value) &&
+		typeof value.toJSON === 'function'
+	) {
+		const json = value.toJSON();
+
+		if (json !== value) {
+			return maskPasswords(json, seen, depth + 1);
+		}
+	}
+
 	seen.add(value);
 
 	let masked: any;
 
 	if (Array.isArray(value)) {
 		masked = value.map((item) => maskPasswords(item, seen, depth + 1));
-	} else if (value instanceof Date || Buffer.isBuffer(value)) {
-		masked = value;
 	} else {
 		masked = {};
 
 		for (const key of Object.keys(value)) {
-			masked[key] =
-				key === 'password'
-					? MASKED_VALUE
-					: maskPasswords(value[key], seen, depth + 1);
+			masked[key] = isSecretKey(key)
+				? MASKED_VALUE
+				: maskPasswords(value[key], seen, depth + 1);
 		}
 	}
 
@@ -100,10 +127,24 @@ export abstract class BaseListenerHandler<T> implements IListenerHandler<T> {
 			{
 				...this.baseLogDetails,
 				callId,
-				args: maskPasswords(_.zipObject(this.listenerArgumentsNames, args)),
+				args: this.toLoggable(
+					_.zipObject(this.listenerArgumentsNames, args)
+				),
 			},
 			`Listener called`
 		);
+	}
+
+	/**
+	 * Masks secrets in a value before it is logged. Never throws, so a value
+	 * that cannot be copied cannot break the call that is being logged.
+	 */
+	protected toLoggable(value: any): any {
+		try {
+			return maskPasswords(value);
+		} catch (err) {
+			return '[Unloggable]';
+		}
 	}
 
 	protected serializeError(_error) {

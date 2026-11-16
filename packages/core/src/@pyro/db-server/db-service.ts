@@ -14,6 +14,39 @@ import { FindObject } from '@pyro/db/db-find-object';
 import { UpdateObject } from '@pyro/db/db-update-object';
 import { EntityService } from '@pyro/db-server/entity-service';
 
+/**
+ * Returns `obj` without the property at `path`. Copies only the objects on
+ * the way to that property (keeping their prototypes) and never mutates
+ * `obj`; returns `obj` itself when the property is absent.
+ */
+function omitPath<O>(obj: O, path: string[]): O {
+	const [key, ...rest] = path;
+
+	if (
+		obj == null ||
+		typeof obj !== 'object' ||
+		!Object.prototype.hasOwnProperty.call(obj, key)
+	) {
+		return obj;
+	}
+
+	const copy = Object.assign(Object.create(Object.getPrototypeOf(obj)), obj);
+
+	if (rest.length === 0) {
+		delete copy[key];
+	} else {
+		const child = omitPath(obj[key], rest);
+
+		if (child === obj[key]) {
+			return obj;
+		}
+
+		copy[key] = child;
+	}
+
+	return copy;
+}
+
 @injectable()
 export abstract class DBService<T extends DBObject<any, any>>
 	extends EntityService<T>
@@ -171,28 +204,27 @@ export abstract class DBService<T extends DBObject<any, any>>
 	}
 
 	/**
-	 * Returns a shallow copy of `obj` without the fields the schema marks
+	 * Returns a copy of `obj` without the fields the schema marks
 	 * as `select: false` (e.g. password hashes). Such fields are hidden from
 	 * queries, but they are still present on a freshly created document and on
 	 * the create input, so they must be stripped before logging or returning.
+	 * `obj` (including nested class instances) is never mutated, so the hash
+	 * still reaches the model.
 	 */
 	protected omitHiddenFields<O extends object>(obj: O): O {
 		const hiddenFields = this.collectHiddenPaths(this.Model?.schema);
 
-		return hiddenFields.length > 0
-			? (_.omit(obj, hiddenFields) as O)
-			: obj;
+		return hiddenFields.reduce(
+			(result, field) => omitPath(result, field.split('.')),
+			obj
+		);
 	}
 
 	/**
 	 * Collects dotted names of all `select: false` paths, descending into
 	 * single embedded schemas (document arrays are not covered).
 	 */
-	private collectHiddenPaths(
-		schema: any,
-		prefix = '',
-		depth = 0
-	): string[] {
+	private collectHiddenPaths(schema: any, prefix = '', depth = 0): string[] {
 		const paths = schema?.paths;
 
 		if (!paths || depth > 5) {
@@ -209,7 +241,11 @@ export abstract class DBService<T extends DBObject<any, any>>
 				hidden.push(fullName);
 			} else if (path?.schema && !path.$isMongooseDocumentArray) {
 				hidden.push(
-					...this.collectHiddenPaths(path.schema, `${fullName}.`, depth + 1)
+					...this.collectHiddenPaths(
+						path.schema,
+						`${fullName}.`,
+						depth + 1
+					)
 				);
 			}
 		}
