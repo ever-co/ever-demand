@@ -67,6 +67,7 @@ describe('CarriersOrdersService.updateStatus', () => {
 			{} as any,
 			{ updateMultiple } as any,
 			{} as any,
+			{} as any,
 			{} as any
 		);
 	});
