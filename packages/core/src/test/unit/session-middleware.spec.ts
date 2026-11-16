@@ -57,16 +57,18 @@ describe('session middleware and health probes', () => {
 		await app?.close();
 	});
 
-	it.each(['/api/health', '/api/health/ready', '/api/health/', '/api/HEALTH'])(
-		'%s sets no session cookie and creates no session',
-		async (path) => {
-			const res = await request(app.getHttpServer()).get(path);
+	it.each([
+		'/api/health',
+		'/api/health/ready',
+		'/api/health/',
+		'/api/HEALTH',
+	])('%s sets no session cookie and creates no session', async (path) => {
+		const res = await request(app.getHttpServer()).get(path);
 
-			expect(res.status).toBe(200);
-			expect(res.headers['set-cookie']).toBeUndefined();
-			expect(await sessionCount(store)).toBe(0);
-		}
-	);
+		expect(res.status).toBe(200);
+		expect(res.headers['set-cookie']).toBeUndefined();
+		expect(await sessionCount(store)).toBe(0);
+	});
 
 	it('ignores the query string when matching the health path', async () => {
 		const res = await request(app.getHttpServer()).get('/api/health?x=1');
@@ -92,5 +94,24 @@ describe('session middleware and health probes', () => {
 		expect(isSessionlessPath('/api/ping/api/health')).toBe(false);
 		expect(isSessionlessPath('')).toBe(false);
 		expect(isSessionlessPath(undefined)).toBe(false);
+	});
+
+	it('matches like Express routing: one optional trailing slash, any case', () => {
+		expect(isSessionlessPath('/API/Health/Ready/')).toBe(true);
+		// Express does not route these to the health controller (404), so they keep the session
+		expect(isSessionlessPath('/api/health//')).toBe(false);
+		expect(isSessionlessPath('/api/health/ready//')).toBe(false);
+	});
+
+	it('returns quickly for a very long path (no quadratic regex on every request)', () => {
+		// ~16 KB is the most Node accepts in a request line by default
+		const path = '/' + '/'.repeat(16000) + 'a';
+		const start = Date.now();
+
+		expect(isSessionlessPath(path)).toBe(false);
+		expect(isSessionlessPath('/api/health' + '/'.repeat(16000))).toBe(
+			false
+		);
+		expect(Date.now() - start).toBeLessThan(50);
 	});
 });

@@ -26,16 +26,16 @@ Note: it assume we have context called `do-sfo2-k8s-ever` defined already
 
 The API exposes two unauthenticated endpoints on the GraphQL/HTTP port (`8443`, `GQLPORT`):
 
-| Endpoint                | Meaning                                                                                                | Responses                                                      |
-| ----------------------- | ------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------- |
-| `GET /api/health`       | Liveness: the process is up and serving requests. Does not depend on the database.                     | `200` with `{ status, checks, uptimeSeconds }`                 |
-| `GET /api/health/ready` | Readiness: the API can serve traffic; `200` only while the MongoDB connection is established.          | `200`, or `503` with the same body while MongoDB is not connected |
+| Endpoint                | Meaning                                                                                       | Responses                                                         |
+| ----------------------- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `GET /api/health`       | Liveness: the process is up and serving requests. Does not depend on the database.            | `200` with `{ status, checks, uptimeSeconds }`                    |
+| `GET /api/health/ready` | Readiness: the API can serve traffic; `200` only while the MongoDB connection is established. | `200`, or `503` with the same body while MongoDB is not connected |
 
 Both send `Cache-Control: no-store` and never create a session (the session middleware skips them).
 
 The API image defines a Docker `HEALTHCHECK` that calls `/api/health` (interval 30s, timeout 5s, start period 90s, 3 retries).
 
-Recommended Kubernetes probe settings for the API container. The deployment manifests live outside this repository or are managed separately, so set these where the API `Deployment` is defined (for example the `ever-api` container in `k8s-manifest*.yaml`):
+Recommended Kubernetes probe settings for the API container. The demo deployment is the `ever-demo-api` container in `k8s-manifest.demo.yaml` (applied by `.github/workflows/deploy-do.yml`); it does not define these probes yet. Set them there, or wherever your API `Deployment` is defined:
 
 ```yaml
 startupProbe:
