@@ -31,7 +31,7 @@ The API exposes two unauthenticated endpoints on the GraphQL/HTTP port (`8443`, 
 | `GET /api/health`       | Liveness: the process is up and serving requests. Does not depend on the database.            | `200` with `{ status, checks, uptimeSeconds }`                    |
 | `GET /api/health/ready` | Readiness: the API can serve traffic; `200` only while the MongoDB connection is established. | `200`, or `503` with the same body while MongoDB is not connected |
 
-Both send `Cache-Control: no-store` and never create a session (the session middleware skips them). The session middleware runs with `saveUninitialized: false`, so no other cookieless request creates a session either; nothing in the API reads `req.session` (authentication is Passport/JWT).
+Both send `Cache-Control: no-store` and never create a session (the session middleware skips them). The session middleware runs with `saveUninitialized: false`, so other cookieless requests do not persist a session unless a handler modifies it; nothing in the API reads `req.session` (authentication is Passport/JWT).
 
 The API image defines a Docker `HEALTHCHECK` that calls `/api/health` (interval 30s, timeout 5s, start period 90s, 3 retries).
 
@@ -41,6 +41,7 @@ Recommended Kubernetes probe settings for the API container. The demo deployment
 startupProbe:
     httpGet: { path: /api/health, port: 8443 }
     periodSeconds: 5
+    timeoutSeconds: 5
     failureThreshold: 30 # up to ~150s to boot
 livenessProbe:
     httpGet: { path: /api/health, port: 8443 }
