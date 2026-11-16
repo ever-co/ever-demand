@@ -52,24 +52,10 @@ export class InvitesRequestsService
 				map((existenceEvent) => existenceEvent.value as Invite)
 			)
 			.subscribe(async (invite) => {
-				interface AggregateResult {
-					_id: string; // deviceId
-					createdAt: string;
-				}
+				const devicesIds = await this._getDeviceIdsToNotify(invite);
 
-				const results: AggregateResult[] = await this.Model.aggregate()
-					.sort({ channelId: 1, _createdAt: 1 })
-					.group({
-						_id: '$deviceId',
-						createdAt: { $last: '$_createdAt' },
-					})
-					.exec();
-
-				if (results.length > 0) {
-					await this.notifyAboutLaunch(
-						invite,
-						_.map(results, (result) => result._id)
-					);
+				if (devicesIds.length > 0) {
+					await this.notifyAboutLaunch(invite, devicesIds);
 				}
 			});
 	}
@@ -228,6 +214,38 @@ export class InvitesRequestsService
 		}
 
 		await this.Model.insertMany(invitesRequestsToCreate);
+	}
+
+	/**
+	 * Devices that requested an invite for exactly the address of the given
+	 * invite (the same fields InvitesService.getByLocation matches on).
+	 * The launch push carries the invite (code and address), so it must
+	 * reach only these devices.
+	 */
+	private async _getDeviceIdsToNotify(invite: Invite): Promise<string[]> {
+		interface AggregateResult {
+			_id: string; // deviceId
+			createdAt: string;
+		}
+
+		const results: AggregateResult[] = await this.Model.aggregate()
+			.match({
+				'geoLocation.countryId': invite.geoLocation.countryId,
+				'geoLocation.city': invite.geoLocation.city,
+				'geoLocation.streetAddress': invite.geoLocation.streetAddress,
+				'geoLocation.house': invite.geoLocation.house,
+				apartment: invite.apartment,
+				deviceId: { $ne: null },
+				isDeleted: { $eq: false },
+			})
+			.sort({ channelId: 1, _createdAt: 1 })
+			.group({
+				_id: '$deviceId',
+				createdAt: { $last: '$_createdAt' },
+			})
+			.exec();
+
+		return _.map(results, (result) => result._id);
 	}
 
 	private _getLaunchAudience(devices: Device[]) {
