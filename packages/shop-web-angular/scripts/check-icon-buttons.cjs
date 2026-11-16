@@ -32,7 +32,34 @@ const TEMPLATES = [
 
 // Opening tag whose attributes may contain `>` inside quotes (e.g. `(click)="a > b"`).
 const BUTTON_RE = /<button\b((?:[^>"']|"[^"]*"|'[^']*')*)>([\s\S]*?)<\/button\s*>/gi;
-const ARIA_NAME_RE = /(?:^|\s)(?:\[attr\.aria-label\]|aria-label|aria-labelledby|\[attr\.aria-labelledby\])\s*=\s*(?:"[^"]*[^"\s][^"]*"|'[^']*[^'\s][^']*')/i;
+// One attribute: a name, then an optional double-quoted, single-quoted or bare value.
+const ATTRIBUTE_RE = /([^\s"'=/>]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g;
+const ARIA_NAME_ATTRIBUTES = new Set(['aria-label', '[attr.aria-label]', 'aria-labelledby', '[attr.aria-labelledby]']);
+
+/**
+ * Parses the attributes of an opening tag into `{ name, value }` pairs (`value` is
+ * null for a boolean attribute). Matching by attribute name, instead of searching
+ * the raw attribute text, keeps a word inside a quoted value, such as
+ * `title="Show hidden files"`, from being read as an attribute.
+ */
+function parseAttributes(attributes) {
+	const parsed = [];
+	let match;
+	ATTRIBUTE_RE.lastIndex = 0;
+	while ((match = ATTRIBUTE_RE.exec(attributes)) !== null) {
+		const [, name, doubleQuoted, singleQuoted, bare] = match;
+		const value = [doubleQuoted, singleQuoted, bare].find((part) => part !== undefined);
+		parsed.push({ name: name.toLowerCase(), value: value === undefined ? null : value });
+	}
+	return parsed;
+}
+
+/** True when the tag has a non-blank `aria-label` or `aria-labelledby` (static or bound). */
+function hasAriaName(attributes) {
+	return parseAttributes(attributes).some(
+		({ name, value }) => ARIA_NAME_ATTRIBUTES.has(name) && value !== null && value.trim() !== ''
+	);
+}
 
 /** Blank out a match with spaces/newlines so character offsets and line numbers stay valid. */
 function blank(match) {
@@ -41,22 +68,30 @@ function blank(match) {
 
 const VOID_TAGS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr']);
 const ICON_TAGS = new Set(['svg', 'mat-icon', 'ever-icon']);
-// Static attributes that hide an element from screen readers or from view.
-const HIDDEN_ATTR_RES = [
-	/(?:^|\s)(?:\[attr\.)?aria-hidden\]?\s*=\s*(?:"\s*(?:'true'|true)\s*"|'\s*(?:"true"|true)\s*')/i,
-	/(?:^|\s)hidden(?=\s|=|$)/i,
-	/(?:^|\s)style\s*=\s*(?:"[^"]*|'[^']*)\bdisplay\s*:\s*none/i
-];
-const ICON_CLASS_RE = /(?:^|\s)class\s*=\s*(?:"[^"]*|'[^']*)\bmaterial-icons\b/i;
+// `aria-hidden="true"`, or `[attr.aria-hidden]="true"` / `"'true'"`.
+const ARIA_HIDDEN_VALUES = new Set(['true', "'true'", '"true"']);
+
+/** True when a static attribute hides the element from screen readers or from view. */
+function isHiddenAttribute({ name, value }) {
+	const trimmed = value === null ? '' : value.trim().toLowerCase();
+	return (
+		name === 'hidden' ||
+		((name === 'aria-hidden' || name === '[attr.aria-hidden]') && ARIA_HIDDEN_VALUES.has(trimmed)) ||
+		(name === 'style' && /\bdisplay\s*:\s*none/.test(trimmed))
+	);
+}
+
 // A tag (with quote-aware attributes), a run of text, or a stray `<`.
 const TOKEN_RE = /<(\/?)([a-zA-Z][\w-]*)((?:[^>"']|"[^"]*"|'[^']*')*)>|[^<]+|</g;
 
 /** True when an element must not count as visible text: hidden, or an icon whose ligature is not a label. */
 function isIgnored(name, attributes) {
+	const parsed = parseAttributes(attributes);
 	return (
 		ICON_TAGS.has(name) ||
-		(name === 'i' && ICON_CLASS_RE.test(' ' + attributes)) ||
-		HIDDEN_ATTR_RES.some((re) => re.test(' ' + attributes))
+		(name === 'i' &&
+			parsed.some((attribute) => attribute.name === 'class' && /\bmaterial-icons\b/i.test(attribute.value || ''))) ||
+		parsed.some(isHiddenAttribute)
 	);
 }
 
@@ -110,7 +145,7 @@ function findProblems(html) {
 	BUTTON_RE.lastIndex = 0;
 	while ((match = BUTTON_RE.exec(source)) !== null) {
 		const [, attributes, inner] = match;
-		if (ARIA_NAME_RE.test(' ' + attributes) || visibleText(inner).length > 0) {
+		if (hasAriaName(attributes) || visibleText(inner).length > 0) {
 			continue;
 		}
 		const line = source.slice(0, match.index).split('\n').length;

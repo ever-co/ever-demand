@@ -24,7 +24,8 @@ const UNNAMED = {
 	'display none': '<button><span style="display: none">Close</span></button>',
 	'empty interpolation': '<button>{{ }}</button>',
 	'empty aria-label': '<button aria-label="">\n<svg></svg></button>',
-	'whitespace and comment only': '<button> <!-- Close --> &nbsp; </button>'
+	'whitespace and comment only': '<button> <!-- Close --> &nbsp; </button>',
+	'aria-label text inside another attribute value': '<button title="see aria-label=\'Close\'"><svg></svg></button>'
 };
 
 /** Buttons that have a visible text or an accessible name: none may be reported. */
@@ -35,6 +36,8 @@ const NAMED = {
 	'text after a nested hidden element':
 		'<button><span aria-hidden="true"><span>icon</span>decorative</span> Close</button>',
 	'text inside a visible wrapper': '<button><span><b>Close</b></span></button>',
+	'the word hidden inside another attribute value': '<button><span title="Show hidden files">Show files</span></button>',
+	'aria-hidden text inside another attribute value': '<button><span title="no aria-hidden=\'true\' here">Go</span></button>',
 	'aria-label': '<button aria-label="Close"><svg></svg></button>',
 	'bound aria-label': "<button [attr.aria-label]=\"'CLOSE' | translate\"><i class=\"material-icons\">close</i></button>",
 	'aria-labelledby': '<button aria-labelledby="title"><svg></svg></button>',
