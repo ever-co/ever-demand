@@ -31,6 +31,19 @@ import {
 } from 'rxjs/operators';
 import { throwError, of, Observable } from 'rxjs';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
+import { isCarrierStatusTransitionAllowed } from '../orders/orderStatusTransitions';
+
+/**
+ * Carrier statuses of the orders a carrier is still working on. An order that
+ * was delivered, returned with an issue or refused by the client is not one.
+ */
+const activeCarrierStatuses = [
+	OrderCarrierStatus.NoCarrier,
+	OrderCarrierStatus.CarrierSelectedOrder,
+	OrderCarrierStatus.CarrierPickedUpOrder,
+	OrderCarrierStatus.CarrierStartDelivery,
+	OrderCarrierStatus.CarrierArrivedToCustomer,
+];
 
 @injectable()
 @routerName('carrier-orders')
@@ -132,8 +145,18 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 
 		await this.carriersService.throwIfNotExists(carrierId);
 
+		// Only orders the carrier is still working on, and only those that may
+		// move to `status` (the rules `OrdersService.updateCarrierStatus` uses).
+		// Delivered, returned or refused orders keep their status, paid or not.
+		const fromStatuses = activeCarrierStatuses.filter((current) =>
+			isCarrierStatusTransitionAllowed(current, status)
+		);
+
 		const findObj = _.extend(
-			{ carrier: carrierId },
+			{
+				carrier: carrierId,
+				carrierStatus: { $in: fromStatuses },
+			},
 			OrdersService.FindObjects.isNotCompleted
 		);
 

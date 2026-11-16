@@ -138,4 +138,75 @@ describe('CarriersOrdersService.updateStatus', () => {
 			matches(carrierOrder({ isPaid: true, carrier: 'carrier-2' }))
 		).toBe(false);
 	});
+
+	it.each([
+		['returned with an issue', OrderCarrierStatus.IssuesDuringDelivery],
+		['refused by the client', OrderCarrierStatus.ClientRefuseTakingOrder],
+	])(
+		'leaves out an order already %s, paid or not',
+		async (_label, finishedStatus: OrderCarrierStatus) => {
+			for (const status of [
+				OrderCarrierStatus.CarrierPickedUpOrder,
+				OrderCarrierStatus.CarrierStartDelivery,
+			]) {
+				updateMultiple.mockClear();
+				const { matches } = await filterUsedFor(status);
+
+				for (const isPaid of [false, true]) {
+					expect(
+						matches(
+							carrierOrder({
+								isPaid,
+								carrierStatus: finishedStatus,
+							})
+						)
+					).toBe(false);
+				}
+			}
+		}
+	);
+
+	it('does not move a paid order in delivery back to picked up', async () => {
+		const { matches } = await filterUsedFor(
+			OrderCarrierStatus.CarrierPickedUpOrder
+		);
+
+		expect(
+			matches(
+				carrierOrder({
+					isPaid: true,
+					carrierStatus: OrderCarrierStatus.CarrierStartDelivery,
+				})
+			)
+		).toBe(false);
+	});
+
+	it('Start delivery still updates a paid order already picked up', async () => {
+		const { matches } = await filterUsedFor(
+			OrderCarrierStatus.CarrierStartDelivery
+		);
+
+		expect(
+			matches(
+				carrierOrder({
+					isPaid: true,
+					carrierStatus: OrderCarrierStatus.CarrierPickedUpOrder,
+				})
+			)
+		).toBe(true);
+	});
+
+	it('leaves out an unpaid order already delivered', async () => {
+		const { matches } = await filterUsedFor(
+			OrderCarrierStatus.CarrierStartDelivery
+		);
+
+		expect(
+			matches(
+				carrierOrder({
+					carrierStatus: OrderCarrierStatus.DeliveryCompleted,
+				})
+			)
+		).toBe(false);
+	});
 });
