@@ -93,4 +93,27 @@ describe('UsersService info templates', () => {
 			)
 		).rejects.toThrow(/doesn't exist/);
 	});
+
+	it.each([
+		['getAboutUs', 'about_us'],
+		['getTermsOfUse', 'terms_of_use'],
+		['getPrivacy', 'privacy'],
+		['getHelp', 'help'],
+	])(
+		'%s serves English for es-ES and reports a missing device',
+		async (method, folder) => {
+			const getPage = (language: string) =>
+				firstValueFrom(
+					(service as any)[method]('u1', 'd1', language).pipe(take(1))
+				);
+
+			withDevice({ language: 'es-ES' });
+			expect(await getPage('es-ES')).toBe(template(folder, 'en-US'));
+
+			withDevice(null);
+			await expect(getPage('es-ES')).rejects.toThrow(
+				"Device with the id d1 doesn't exist"
+			);
+		}
+	);
 });
