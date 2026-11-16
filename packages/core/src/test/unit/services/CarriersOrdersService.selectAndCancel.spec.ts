@@ -47,6 +47,7 @@ interface SampleOrder {
 	warehouse: string;
 	warehouseId: string;
 	carrier?: string;
+	carrierId: string | null;
 	carrierStatus: OrderCarrierStatus;
 	isCancelled: boolean;
 	isDeleted: boolean;
@@ -74,7 +75,9 @@ const stores: SampleStore[] = [
 
 function sampleOrder(
 	id: string,
-	overrides: Partial<Omit<SampleOrder, '_id' | 'id' | 'warehouseId'>> = {}
+	overrides: Partial<
+		Omit<SampleOrder, '_id' | 'id' | 'warehouseId' | 'carrierId'>
+	> = {}
 ): SampleOrder {
 	const order = {
 		warehouse: plainStoreId,
@@ -84,20 +87,45 @@ function sampleOrder(
 		...overrides,
 	};
 
-	return { ...order, _id: id, id, warehouseId: order.warehouse };
+	return {
+		...order,
+		_id: id,
+		id,
+		warehouseId: order.warehouse,
+		carrierId: order.carrier || null,
+	};
+}
+
+/**
+ * A copy of the order with `$set` fields and `$unset` applied, the way
+ * MongoDB applies an update. The order passed in is not changed.
+ */
+function applyUpdate(order: SampleOrder, updateObj: any): SampleOrder {
+	const { $unset, ...set } = updateObj;
+	const updated: any = { ...order, ...set };
+
+	Object.keys($unset || {}).forEach((key) => delete updated[key]);
+	updated.carrierId = updated.carrier || null;
+
+	return updated;
 }
 
 describe('CarriersOrdersService.selectedForDelivery and cancelDelivery', () => {
 	const carrier = { id: carrierId };
 
 	let orders: SampleOrder[];
+	let beforeWrite: () => void;
 	let service: CarriersOrdersService;
 	let find: jest.Mock;
 	let updateMultiple: jest.Mock;
 	let updateMultipleByIds: jest.Mock;
+	let updateCarrier: jest.Mock;
 
 	beforeEach(() => {
 		orders = [];
+		// Runs between the read and the write of an update, to stand for
+		// another carrier's call that lands in between.
+		beforeWrite = () => undefined;
 
 		const matching = <T>(items: T[], conditions: any) => {
 			const test = sift(conditions);
@@ -105,17 +133,38 @@ describe('CarriersOrdersService.selectedForDelivery and cancelDelivery', () => {
 		};
 
 		find = jest.fn(async (conditions: any) => matching(orders, conditions));
-		updateMultiple = jest.fn(async (findObj: any) =>
-			matching(orders, findObj)
-		);
-		updateMultipleByIds = jest.fn(async (ids: string[]) =>
-			orders.filter((order) => ids.includes(order.id))
-		);
+
+		// Like `DBService.updateMultiple`: read the matching orders, write with
+		// the same filter, then return the orders it read as they are now.
+		updateMultiple = jest.fn(async (findObj: any, updateObj: any) => {
+			const foundIds = matching(orders, findObj).map((order) => order.id);
+
+			beforeWrite();
+
+			const test = sift(findObj);
+			orders = orders.map((order) =>
+				test(order) ? applyUpdate(order, updateObj) : order
+			);
+
+			return orders.filter((order) => foundIds.includes(order.id));
+		});
+
+		updateMultipleByIds = jest.fn(async (ids: string[], updateObj: any) => {
+			beforeWrite();
+
+			orders = orders.map((order) =>
+				ids.includes(order.id) ? applyUpdate(order, updateObj) : order
+			);
+
+			return orders.filter((order) => ids.includes(order.id));
+		});
+
+		updateCarrier = jest.fn(async () => carrier);
 
 		const carriersService = {
 			get: jest.fn(() => of(carrier)),
 			throwIfNotExists: jest.fn(async () => undefined),
-			update: jest.fn(async () => carrier),
+			update: updateCarrier,
 			updateStatus: jest.fn(async () => carrier),
 		};
 
@@ -253,6 +302,29 @@ describe('CarriersOrdersService.selectedForDelivery and cancelDelivery', () => {
 			expect(lastSelectCall().matches(order)).toBe(false);
 		});
 
+		it('rejects the carrier that loses a race for the same free order', async () => {
+			const order = sampleOrder('raced', {
+				warehouse: competitionStoreId,
+			});
+
+			// The other carrier picks the order up after this call read it
+			// and before it writes.
+			beforeWrite = () => {
+				orders = orders.map((current) =>
+					applyUpdate(current, {
+						carrier: otherCarrierId,
+						carrierStatus: OrderCarrierStatus.CarrierPickedUpOrder,
+					})
+				);
+			};
+
+			await expect(select(order, true)).rejects.toThrow(
+				'Orders are no longer available'
+			);
+
+			expect(orders[0].carrier).toBe(otherCarrierId);
+		});
+
 		it('updates only the orders still available when some are not', async () => {
 			const free = sampleOrder('free');
 			const delivered = sampleOrder('delivered', {
@@ -273,14 +345,19 @@ describe('CarriersOrdersService.selectedForDelivery and cancelDelivery', () => {
 	});
 
 	describe('cancelDelivery', () => {
+		/** Cancels the order and returns it as it is afterwards. */
 		async function cancel(order: SampleOrder) {
 			orders = [order];
 
 			await service.cancelDelivery(carrierId, [order.id]);
 
-			expect(updateMultipleByIds).toHaveBeenCalledTimes(1);
+			return orders[0];
+		}
 
-			return updateMultipleByIds.mock.calls[0][0] as string[];
+		function skippedOrderIds(): string[] {
+			expect(updateCarrier).toHaveBeenCalledTimes(1);
+
+			return updateCarrier.mock.calls[0][1].$push.skippedOrderIds.$each;
 		}
 
 		it.each([
@@ -295,7 +372,11 @@ describe('CarriersOrdersService.selectedForDelivery and cancelDelivery', () => {
 					carrierStatus,
 				});
 
-				expect(await cancel(order)).toEqual([order.id]);
+				const after = await cancel(order);
+
+				expect(after.carrier).toBeUndefined();
+				expect(after.carrierStatus).toBe(OrderCarrierStatus.NoCarrier);
+				expect(skippedOrderIds()).toEqual([order.id]);
 			}
 		);
 
@@ -305,7 +386,7 @@ describe('CarriersOrdersService.selectedForDelivery and cancelDelivery', () => {
 				carrierStatus: OrderCarrierStatus.CarrierSelectedOrder,
 			});
 
-			expect(await cancel(order)).toEqual([]);
+			expect(await cancel(order)).toEqual(order);
 		});
 
 		it('leaves a delivered order alone', async () => {
@@ -314,7 +395,43 @@ describe('CarriersOrdersService.selectedForDelivery and cancelDelivery', () => {
 				carrierStatus: OrderCarrierStatus.DeliveryCompleted,
 			});
 
-			expect(await cancel(order)).toEqual([]);
+			expect(await cancel(order)).toEqual(order);
+		});
+
+		it('leaves an order alone that another carrier takes before the write', async () => {
+			const order = sampleOrder('raced', {
+				warehouse: competitionStoreId,
+				carrier: carrierId,
+				carrierStatus: OrderCarrierStatus.CarrierSelectedOrder,
+			});
+
+			beforeWrite = () => {
+				orders = orders.map((current) =>
+					applyUpdate(current, {
+						carrier: otherCarrierId,
+						carrierStatus: OrderCarrierStatus.CarrierPickedUpOrder,
+					})
+				);
+			};
+
+			const after = await cancel(order);
+
+			expect(after.carrier).toBe(otherCarrierId);
+			expect(after.carrierStatus).toBe(
+				OrderCarrierStatus.CarrierPickedUpOrder
+			);
+		});
+
+		it('still skips a competition order the carrier gives up without taking it', async () => {
+			// In a competition store the carrier app offers Cancel on a free
+			// order (drive-to-warehouse and get-product). The order must stop
+			// being offered to this carrier, as it was before the filter.
+			const order = sampleOrder('offered', {
+				warehouse: competitionStoreId,
+			});
+
+			expect(await cancel(order)).toEqual(order);
+			expect(skippedOrderIds()).toEqual([order.id]);
 		});
 	});
 });

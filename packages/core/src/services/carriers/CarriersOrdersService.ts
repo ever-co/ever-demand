@@ -134,7 +134,17 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 					}
 				);
 
-				if (orders.length === 0) {
+				// `updateMultiple` returns the orders its first read matched, as
+				// they are after the write. The write checks the filter again,
+				// so an order another carrier took in between keeps that
+				// carrier: count only the orders this carrier now has.
+				const takenOrders = orders.filter(
+					(order) =>
+						order.carrierId === carrierId &&
+						order.carrierStatus === carrierStatus
+				);
+
+				if (takenOrders.length === 0) {
 					throw new Error('Orders are no longer available');
 				}
 			}
@@ -259,28 +269,33 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 	): Promise<Carrier> {
 		await this.carriersService.throwIfNotExists(carrierId);
 
-		// Only this carrier's orders that are still in progress. Another
-		// carrier's order, or one delivered, returned or refused, keeps its
-		// carrier and status.
-		const _orders = await this.ordersService.find({
+		const requestedOrders = await this.ordersService.find({
 			_id: { $in: orderIds },
 			isDeleted: { $eq: false },
-			carrier: carrierId,
-			carrierStatus: { $in: cancellableCarrierStatuses },
 		});
-		const ordersIdsFiltered = _orders.map((d) => d.id);
 
-		const orders = await this.ordersService.updateMultipleByIds(
-			ordersIdsFiltered,
+		// Only this carrier's orders that are still in progress, checked by
+		// the write itself. Another carrier's order, or one delivered,
+		// returned or refused, keeps its carrier and status.
+		await this.ordersService.updateMultiple(
+			{
+				_id: { $in: orderIds },
+				isDeleted: { $eq: false },
+				carrier: carrierId,
+				carrierStatus: { $in: cancellableCarrierStatuses },
+			},
 			{
 				$unset: { carrier: 1 },
 				carrierStatus: OrderCarrierStatus.NoCarrier,
 			}
 		);
 
+		// The carrier gives up every requested order, as before. This
+		// includes an order in a competition store that it never took: the
+		// carrier app offers Cancel on it, and it must stop being offered.
 		await this.skipOrders(
 			carrierId,
-			_.map(orders, (order) => order.id)
+			_.map(requestedOrders, (order) => order.id)
 		);
 
 		return this.carriersService.updateStatus(carrierId, 0);
