@@ -54,6 +54,8 @@ readinessProbe:
     failureThreshold: 3
 ```
 
+The examples use `8443`, the default `GQLPORT`. If the API is configured with a different `GQLPORT`, set every probe `port` (and the container port) to that same value, otherwise the startup probe fails and the container is restarted. The Docker `HEALTHCHECK` reads `GQLPORT` itself, so it needs no change.
+
 Do not point the liveness probe at `/api/health/ready`: a database outage would then restart every API pod instead of just removing them from the Service.
 
 ## Monitoring
