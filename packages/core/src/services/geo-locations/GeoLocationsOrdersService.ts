@@ -30,6 +30,18 @@ import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus'
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 import { GeoLocationOrdersOptions } from './GeoLocationOrdersOptions';
 import { ObjectId } from 'bson';
+import { isObjectIdHexString } from '../../helpers/objectIds';
+
+/**
+ * The carrier's skipped order ids as ObjectIds for a `$nin`. A bad id already
+ * stored on the carrier is left out, since `new ObjectId()` would throw on it
+ * and break the whole work list.
+ */
+function skippedObjectIds(skippedOrderIds: string[]): ObjectId[] {
+	return skippedOrderIds
+		.filter(isObjectIdHexString)
+		.map((id) => new ObjectId(id));
+}
 
 @injectable()
 @routerName('geo-location-orders')
@@ -185,7 +197,7 @@ export class GeoLocationsOrdersService
 							],
 						},
 						_id: {
-							$nin: skippedOrderIds.map((id) => new ObjectId(id)),
+							$nin: skippedObjectIds(skippedOrderIds),
 						},
 					},
 					...searchByRegex
@@ -289,7 +301,7 @@ export class GeoLocationsOrdersService
 							],
 						},
 						_id: {
-							$nin: skippedOrderIds.map((id) => new ObjectId(id)),
+							$nin: skippedObjectIds(skippedOrderIds),
 						},
 					},
 					...searchByRegex

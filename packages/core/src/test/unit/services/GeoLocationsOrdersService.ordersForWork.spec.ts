@@ -119,4 +119,35 @@ describe('GeoLocationsOrdersService work queries', () => {
 		excluded.forEach((id) => expect(id).toBeInstanceOf(ObjectId));
 		expect(excluded.map((id) => id.toString())).toEqual(skippedOrderIds);
 	});
+
+	describe('with a bad id already stored on the carrier', () => {
+		const validId = '5c4f1b3e2d4a1b001234567a';
+		// 'x' makes `new ObjectId()` throw; 'twelve-chars' is the 12-character
+		// form `ObjectId.isValid()` accepts as 12 raw bytes.
+		const storedIds = ['x', 'twelve-chars', validId];
+
+		it('getOrdersForWork still runs and excludes the valid id', async () => {
+			await expect(
+				service.getOrdersForWork(geoLocation, storedIds, {
+					sort: 'asc',
+				})
+			).resolves.toEqual([]);
+
+			const excluded = topLevelMatch(pipelines[0])._id.$nin;
+
+			excluded.forEach((id) => expect(id).toBeInstanceOf(ObjectId));
+			expect(excluded.map((id) => id.toString())).toEqual([validId]);
+		});
+
+		it('getCountOfOrdersForWork still runs and excludes the valid id', async () => {
+			await expect(
+				service.getCountOfOrdersForWork(geoLocation, storedIds)
+			).resolves.toBe(0);
+
+			const excluded = topLevelMatch(pipelines[0])._id.$nin;
+
+			excluded.forEach((id) => expect(id).toBeInstanceOf(ObjectId));
+			expect(excluded.map((id) => id.toString())).toEqual([validId]);
+		});
+	});
 });
