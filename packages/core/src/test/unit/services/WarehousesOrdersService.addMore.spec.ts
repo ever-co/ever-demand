@@ -26,6 +26,7 @@ import { WarehousesOrdersService } from '../../../services/warehouses/Warehouses
 
 describe('WarehousesOrdersService.addMore stock accounting', () => {
 	let ordersService: { get: jest.Mock; update: jest.Mock };
+	let usersService: { get: jest.Mock };
 	let warehousesProductsService: {
 		decreaseCount: jest.Mock;
 		increaseSoldCount: jest.Mock;
@@ -73,7 +74,7 @@ describe('WarehousesOrdersService.addMore stock accounting', () => {
 			}),
 		};
 
-		const usersService = { get: jest.fn(() => of({ id: 'u1' })) };
+		usersService = { get: jest.fn(() => of({ id: 'u1' })) };
 		const warehousesService = {
 			get: jest.fn(() =>
 				of({
@@ -184,6 +185,18 @@ describe('WarehousesOrdersService.addMore stock accounting', () => {
 		).rejects.toThrow(/more products than available/);
 
 		expect(ordersService.update).not.toHaveBeenCalled();
+		expect(stock).toEqual({ p1: 4, p2: 3 });
+	});
+
+	it('rejects a banned customer and leaves the order and stock alone', async () => {
+		usersService.get.mockReturnValue(of({ id: 'u1', isBanned: true }));
+
+		await expect(
+			service.addMore('w1', 'u1', 'o1', [{ productId: 'p2', count: 1 }])
+		).rejects.toThrow('Customer u1 is banned');
+
+		expect(ordersService.update).not.toHaveBeenCalled();
+		expect(warehousesProductsService.decreaseCount).not.toHaveBeenCalled();
 		expect(stock).toEqual({ p1: 4, p2: 3 });
 	});
 });
