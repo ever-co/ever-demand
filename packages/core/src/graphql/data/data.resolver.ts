@@ -1,4 +1,6 @@
 import { Query, Resolver } from '@nestjs/graphql';
+import { UseGuards } from '@nestjs/common';
+import { FakeDataGuard } from '../../auth/guards/fake-data.guard';
 import { InvitesService } from '../../services/invites/InvitesService';
 import { AdminsService } from '../../services/admins';
 import { CarriersService } from '../../services/carriers';
@@ -29,8 +31,9 @@ export class DataResolver {
 	) {}
 
 	@Query('clearAll')
+	@UseGuards(FakeDataGuard)
 	async clearAll() {
-		[
+		const services = [
 			this._adminsService,
 			this._carriersService,
 			this._devicesService,
@@ -41,19 +44,13 @@ export class DataResolver {
 			this._productsCategoriesService,
 			this._usersService,
 			this._storesService,
-		].forEach((service) => {
-			service.Model.updateMany({}, { isDeleted: true }, (err, raw) => {
-				if (err !== null) {
-					const collectionName = service.constructor.name.replace(
-						'Service',
-						''
-					);
-					throw new Error(
-						`Cannot update '${collectionName}' collection`
-					);
-				}
-			});
-		});
+		];
+
+		await Promise.all(
+			services.map((s) =>
+				s.Model.updateMany({}, { isDeleted: true }).exec()
+			)
+		);
 
 		return true;
 	}
