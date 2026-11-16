@@ -47,11 +47,21 @@ import { Stripe } from 'stripe';
 import * as path from 'path';
 
 interface IWatchedFiles {
-	aboutUs: { [language in ILanguage]: Observable<string> };
-	privacy: { [language in ILanguage]: Observable<string> };
-	termsOfUse: { [language in ILanguage]: Observable<string> };
-	help: { [language in ILanguage]: Observable<string> };
+	aboutUs: { [language in ILanguage]?: Observable<string> };
+	privacy: { [language in ILanguage]?: Observable<string> };
+	termsOfUse: { [language in ILanguage]?: Observable<string> };
+	help: { [language in ILanguage]?: Observable<string> };
 }
+
+// Languages that have About Us / Privacy / Terms / Help files in res/templates.
+// Any other language (e.g. es-ES, fr-FR) is served the English pages.
+const INFO_TEMPLATE_LANGUAGES: ILanguage[] = [
+	'en-US',
+	'he-IL',
+	'ru-RU',
+	'bg-BG',
+];
+const DEFAULT_INFO_TEMPLATE_LANGUAGE: ILanguage = 'en-US';
 
 /**
  * Customers Service
@@ -96,25 +106,84 @@ export class UsersService
 			['aboutUs', 'privacy', 'termsOfUse', 'help'],
 			_.map(['about_us', 'privacy', 'terms_of_use', 'help'], (folder) =>
 				_.zipObject(
-					['en-US', 'he-IL', 'ru-RU', 'bg-BG', 'fr-FR'],
-					_.map(
-						['en-US', 'he-IL', 'ru-RU', 'bg-BG', 'fr-FR'],
-						(language) =>
-							observeFile(
-								`${path.resolve(
-									__dirname,
-									'../../../',
-									...['res', 'templates']
-								)}/${folder}/${language}.hbs`
-							).pipe(
-								tap({ error: (err) => this.log.error(err) }),
-								publishReplay(1),
-								refCount<string>()
-							)
+					INFO_TEMPLATE_LANGUAGES,
+					_.map(INFO_TEMPLATE_LANGUAGES, (language) =>
+						observeFile(
+							`${path.resolve(
+								__dirname,
+								'../../../',
+								...['res', 'templates']
+							)}/${folder}/${language}.hbs`
+						).pipe(
+							tap({ error: (err) => this.log.error(err) }),
+							publishReplay(1),
+							refCount<string>()
+						)
 					)
 				)
 			)
 		) as any;
+	}
+
+	/**
+	 * Language whose template is served for an info page: the requested one
+	 * when res/templates has it, English otherwise.
+	 *
+	 * @param {keyof IWatchedFiles} section
+	 * @param {string} selectedLanguage
+	 * @returns {ILanguage}
+	 * @memberof UsersService
+	 */
+	private getInfoTemplateLanguage(
+		section: keyof IWatchedFiles,
+		selectedLanguage: string
+	): ILanguage {
+		return Object.prototype.hasOwnProperty.call(
+			this.watchedFiles[section],
+			selectedLanguage
+		)
+			? (selectedLanguage as ILanguage)
+			: DEFAULT_INFO_TEMPLATE_LANGUAGE;
+	}
+
+	/**
+	 * HTML of an info page (About Us, Terms Of Use, Privacy, Help) for a device,
+	 * in the requested language when res/templates has it, English otherwise.
+	 *
+	 * @param {keyof IWatchedFiles} section
+	 * @param {string} deviceId
+	 * @param {string} selectedLanguage
+	 * @returns {Observable<string>}
+	 * @memberof UsersService
+	 */
+	private getInfoPage(
+		section: keyof IWatchedFiles,
+		deviceId: string,
+		selectedLanguage: string
+	): Observable<string> {
+		const language = this.getInfoTemplateLanguage(
+			section,
+			selectedLanguage
+		);
+		return this.devicesService.get(deviceId).pipe(
+			exhaustMap((device) => {
+				if (device === null) {
+					return throwError(
+						() =>
+							new Error(
+								`Device with the id ${deviceId} doesn't exist`
+							)
+					);
+				} else {
+					return of(device);
+				}
+			}),
+			distinctUntilChanged(
+				(oldDevice, newDevice) =>
+					oldDevice.language !== newDevice.language
+			),
+			switchMap(() => this.watchedFiles[section][language])
+		);
 	}
 
 	/**
@@ -361,25 +430,7 @@ export class UsersService
 		deviceId: string,
 		selectedLanguage: string
 	): Observable<string> /*returns html*/ {
-		const language = selectedLanguage as ILanguage;
-		return this.devicesService.get(deviceId).pipe(
-			exhaustMap((device) => {
-				if (device === null) {
-					/* TODO: return Error here
-					return (
-						new Error(`User with the id ${userId} doesn't exist`)
-					);
-					*/
-				} else {
-					return of(device);
-				}
-			}),
-			distinctUntilChanged(
-				(oldDevice, newDevice) =>
-					oldDevice.language !== newDevice.language
-			),
-			switchMap((device) => this.watchedFiles.aboutUs[language])
-		);
+		return this.getInfoPage('aboutUs', deviceId, selectedLanguage);
 	}
 
 	/**
@@ -396,26 +447,7 @@ export class UsersService
 		deviceId: string,
 		selectedLanguage: string
 	): Observable<string> {
-		const language = selectedLanguage as ILanguage;
-		return this.devicesService.get(deviceId).pipe(
-			exhaustMap((device) => {
-				if (device === null) {
-					return throwError(
-						() =>
-							new Error(
-								`Device with the id ${deviceId} doesn't exist`
-							)
-					);
-				} else {
-					return of(device);
-				}
-			}),
-			distinctUntilChanged(
-				(oldDevice, newDevice) =>
-					oldDevice.language !== newDevice.language
-			),
-			switchMap((device) => this.watchedFiles.termsOfUse[language])
-		);
+		return this.getInfoPage('termsOfUse', deviceId, selectedLanguage);
 	}
 
 	/**
@@ -432,26 +464,7 @@ export class UsersService
 		deviceId: string,
 		selectedLanguage: string
 	): Observable<string> {
-		const language = selectedLanguage as ILanguage;
-		return this.devicesService.get(deviceId).pipe(
-			exhaustMap((device) => {
-				if (device === null) {
-					return throwError(
-						() =>
-							new Error(
-								`User with the id ${userId} doesn't exist`
-							)
-					);
-				} else {
-					return of(device);
-				}
-			}),
-			distinctUntilChanged(
-				(oldDevice, newDevice) =>
-					oldDevice.language !== newDevice.language
-			),
-			switchMap((device) => this.watchedFiles.privacy[language])
-		);
+		return this.getInfoPage('privacy', deviceId, selectedLanguage);
 	}
 
 	/**
@@ -468,26 +481,7 @@ export class UsersService
 		deviceId: string,
 		selectedLanguage: string
 	): Observable<string> {
-		const language = selectedLanguage as ILanguage;
-		return this.devicesService.get(deviceId).pipe(
-			exhaustMap((device) => {
-				if (device === null) {
-					return throwError(
-						() =>
-							new Error(
-								`User with the id ${userId} doesn't exist`
-							)
-					);
-				} else {
-					return of(device);
-				}
-			}),
-			distinctUntilChanged(
-				(oldDevice, newDevice) =>
-					oldDevice.language !== newDevice.language
-			),
-			switchMap((device) => this.watchedFiles.help[language])
-		);
+		return this.getInfoPage('help', deviceId, selectedLanguage);
 	}
 
 	/**
