@@ -34,7 +34,7 @@ export class AsyncListenerHandler<T> extends BaseListenerHandler<T>
 				{
 					...this.baseLogDetails,
 					callId,
-					result: data,
+					result: this.toLoggable(data),
 				},
 				`Listener completed`
 			);
