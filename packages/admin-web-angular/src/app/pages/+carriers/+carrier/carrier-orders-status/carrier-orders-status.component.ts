@@ -11,6 +11,7 @@ import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/car
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import { map } from 'underscore';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
+import { ToasterService } from 'angular2-toaster';
 
 @Component({
 	selector: 'ea-carrier-orders-status',
@@ -39,7 +40,8 @@ export class CarrierOrdersStatusComponent implements OnDestroy {
 
 	constructor(
 		private carrierOrdersRouter: CarrierOrdersRouter,
-		private orderRouter: OrderRouter
+		private orderRouter: OrderRouter,
+		private readonly _toasterService: ToasterService
 	) {
 		this.enumOrderCarrierStatus = OrderCarrierStatus;
 	}
@@ -56,18 +58,29 @@ export class CarrierOrdersStatusComponent implements OnDestroy {
 	async selectOrdersForDelivery() {
 		this.pageBtnStates.isSelectOrdersForDeliveryAvailable = false;
 
-		this.selectedOrder.carrierStatus = this.enumOrderCarrierStatus.CarrierSelectedOrder;
+		// The status is set before the server answers, so keep the old one:
+		// the server refuses when another carrier took the order or it was
+		// cancelled, and the card must then show the Start button again.
+		const order = this.selectedOrder;
+		const previousCarrierStatus = order.carrierStatus;
+
+		order.carrierStatus = this.enumOrderCarrierStatus.CarrierSelectedOrder;
 
 		this.loading = true;
 
-		await this.carrierOrdersRouter.selectedForDelivery(
-			this.selectedCarrier.id,
-			this.ordersIds
-		);
+		try {
+			await this.carrierOrdersRouter.selectedForDelivery(
+				this.selectedCarrier.id,
+				this.ordersIds
+			);
+		} catch (error) {
+			order.carrierStatus = previousCarrierStatus;
+			this._showError(error);
+		} finally {
+			this.loading = false;
 
-		this.loading = false;
-
-		this.pageBtnStates.isSelectOrdersForDeliveryAvailable = true;
+			this.pageBtnStates.isSelectOrdersForDeliveryAvailable = true;
+		}
 	}
 
 	async updateCarrierOrdersStatus(status: OrderCarrierStatus) {
@@ -75,18 +88,26 @@ export class CarrierOrdersStatusComponent implements OnDestroy {
 
 		this.loading = true;
 
-		this.selectedOrder.carrierStatus = status;
+		const order = this.selectedOrder;
+		const previousCarrierStatus = order.carrierStatus;
 
-		this.selectedOrder = await this.orderRouter.updateCarrierStatus(
-			this.selectedOrder.id,
-			status
-		);
+		order.carrierStatus = status;
 
-		this.getChangeOrder.emit(this.selectedOrder);
+		try {
+			this.selectedOrder = await this.orderRouter.updateCarrierStatus(
+				order.id,
+				status
+			);
 
-		this.loading = false;
+			this.getChangeOrder.emit(this.selectedOrder);
+		} catch (error) {
+			order.carrierStatus = previousCarrierStatus;
+			this._showError(error);
+		} finally {
+			this.loading = false;
 
-		this.pageBtnStates.isCarrierPickupOrder = true;
+			this.pageBtnStates.isCarrierPickupOrder = true;
+		}
 	}
 
 	async cancelDelivery() {
@@ -94,16 +115,28 @@ export class CarrierOrdersStatusComponent implements OnDestroy {
 
 		this.loading = true;
 
-		await this.carrierOrdersRouter.cancelDelivery(
-			this.selectedCarrier.id,
-			this.ordersIds
-		);
+		try {
+			await this.carrierOrdersRouter.cancelDelivery(
+				this.selectedCarrier.id,
+				this.ordersIds
+			);
 
-		this.selectedOrder = null;
-		this.getChangeOrder.emit(null);
-		this.loading = false;
-		this.pageBtnStates.isCarrierPickupOrder = true;
+			this.selectedOrder = null;
+			this.getChangeOrder.emit(null);
+		} catch (error) {
+			this._showError(error);
+		} finally {
+			this.loading = false;
+			this.pageBtnStates.isCarrierPickupOrder = true;
+		}
 	}
 
 	ngOnDestroy() {}
+
+	private _showError(error: any) {
+		this._toasterService.pop(
+			'error',
+			error && error.message ? error.message : `${error}`
+		);
+	}
 }

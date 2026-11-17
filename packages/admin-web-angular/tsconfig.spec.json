@@ -3,7 +3,6 @@
 	"compilerOptions": {
 		"baseUrl": "./src",
 		"outDir": "./build",
-		"rootDir": "./",
 		"target": "es5",
 		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"],
 		"paths": {
@@ -33,5 +32,6 @@
 		"./src/modules/client.common.angular2/mongoose-placeholder.ts",
 		"./src/modules/client.common.angular2/typeorm-placeholder.ts",
 		"./src/modules/**/*.ts"
-	]
+	],
+	"exclude": ["./src/**/*.stories.ts"]
 }
