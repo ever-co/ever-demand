@@ -98,6 +98,16 @@ describe('CarriersService skippedOrderIds input', () => {
 		expect(mockDb.update).not.toHaveBeenCalled();
 	});
 
+	it('register and updateById reject skippedOrderIds set to null', async () => {
+		await expect(service.register(registerInput(null))).rejects.toThrow();
+		await expect(
+			service.updateById(carrierId, { skippedOrderIds: null })
+		).rejects.toThrow();
+
+		expect(mockDb.create).not.toHaveBeenCalled();
+		expect(mockDb.update).not.toHaveBeenCalled();
+	});
+
 	it('updateById still updates other fields and valid skipped ids', async () => {
 		await service.updateById(carrierId, { firstName: 'New' });
 		await service.updateById(carrierId, { skippedOrderIds: [orderId] });

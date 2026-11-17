@@ -36,6 +36,17 @@ describe('CarrierResolver.updateCarrier skippedOrderIds', () => {
 		expect(update).not.toHaveBeenCalled();
 	});
 
+	it('rejects skippedOrderIds set to null', async () => {
+		await expect(
+			resolver.updateCarrier(undefined, {
+				id,
+				updateInput: { skippedOrderIds: null },
+			})
+		).rejects.toThrow();
+
+		expect(update).not.toHaveBeenCalled();
+	});
+
 	it('still updates with valid skipped ids or none', async () => {
 		await resolver.updateCarrier(undefined, {
 			id,

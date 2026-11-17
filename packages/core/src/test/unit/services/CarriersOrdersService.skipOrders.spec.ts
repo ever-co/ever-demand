@@ -91,8 +91,18 @@ describe('CarriersOrdersService.skipOrders', () => {
 		expect(update).toHaveBeenCalledTimes(1);
 		expect(update).toHaveBeenCalledWith(carrierId, {
 			$addToSet: {
-				skippedOrderIds: { $each: [orderId, otherOrderId] },
+				skippedOrderIds: {
+					$each: [orderId, otherOrderId.toLowerCase()],
+				},
 			},
+		});
+	});
+
+	it('stores ids in lower case, so another spelling is not stored twice', async () => {
+		await service.skipOrders(carrierId, [orderId.toUpperCase()]);
+
+		expect(update).toHaveBeenCalledWith(carrierId, {
+			$addToSet: { skippedOrderIds: { $each: [orderId] } },
 		});
 	});
 });

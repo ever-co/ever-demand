@@ -35,12 +35,14 @@ export function throwIfInvalidOrderIds(orderIds: unknown): void {
 /**
  * Throws when a carrier create or update object sets `skippedOrderIds` to
  * anything but a list of 24-character hex ObjectIds. Leaving the field out
- * is fine.
+ * is fine. `null` is rejected: a carrier saved with a null list cannot load
+ * work (the work queries need a list) or skip orders (`$addToSet` needs an
+ * array).
  */
 export function throwIfInvalidSkippedOrderIds(
 	carrierInput: { skippedOrderIds?: unknown } | null | undefined
 ): void {
-	if (carrierInput && carrierInput.skippedOrderIds != null) {
+	if (carrierInput && carrierInput.skippedOrderIds !== undefined) {
 		throwIfInvalidOrderIds(carrierInput.skippedOrderIds);
 	}
 }

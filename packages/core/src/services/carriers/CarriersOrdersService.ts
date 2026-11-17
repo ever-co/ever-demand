@@ -131,11 +131,13 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 
 		await this.carriersService.throwIfNotExists(carrierId);
 
-		// $addToSet: skipping an order again does not store it twice.
+		// $addToSet: skipping an order again does not store it twice. Ids are
+		// stored in lower case, so an upper-case spelling of the same order
+		// is not added a second time.
 		return this.carriersService.update(carrierId, {
 			$addToSet: {
 				skippedOrderIds: {
-					$each: ordersIds,
+					$each: ordersIds.map((id) => id.toLowerCase()),
 				},
 			},
 		});
