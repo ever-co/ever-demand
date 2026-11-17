@@ -13,6 +13,7 @@ import { inject, injectable } from 'inversify';
 import { first, map, switchMap } from 'rxjs/operators';
 import { Repository } from 'typeorm';
 import Logger from 'bunyan';
+import { stripProtectedFields } from '../stripProtectedFields';
 
 // TODO: Rename! "Admin" is not a great name, but currently "Users" mean "Customers"...
 /**
@@ -127,7 +128,7 @@ export class AdminsService extends DBService<Admin> implements IAdminRouter {
 		updateObject: Partial<Admin>
 	): Promise<Admin> {
 		await this.throwIfNotExists(id);
-		return super.update(id, updateObject);
+		return super.update(id, stripProtectedFields(updateObject));
 	}
 
 	async throwIfNotExists(adminId: string) {
