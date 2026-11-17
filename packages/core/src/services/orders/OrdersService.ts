@@ -35,6 +35,7 @@ import { Observable } from 'rxjs';
 import { Stripe } from 'stripe'
 import {
 	assertCarrierStatusTransition,
+	assertOrderCanBeCancelled,
 	assertWarehouseStatusTransition,
 } from './orderStatusTransitions';
 import { orderCompletionFilters } from './orderCompletionFilters';
@@ -664,6 +665,9 @@ export class OrdersService extends DBService<Order>
 	@asyncListener()
 	async cancel(orderId: Order['id']): Promise<Order> {
 		await this._throwIfNotExists(orderId);
+
+		// A delivered order must stay delivered: this listener is public too
+		assertOrderCanBeCancelled(await this._get(orderId));
 
 		return this.update(orderId, {
 			isCancelled: true,
