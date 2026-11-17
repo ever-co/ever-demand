@@ -18,6 +18,7 @@ import {
 	serialization,
 } from '@pyro/io';
 import IService from '../IService';
+import { stripProtectedFields } from '../stripProtectedFields';
 import { concat, exhaustMap, tap, first, map, switchMap } from 'rxjs/operators';
 import { DBService } from '@pyro/db-server';
 import { env } from '../../env';
@@ -308,7 +309,7 @@ export class WarehousesService extends DBService<Warehouse>
 			warehouseProduct.product = warehouseProduct.product;
 		});
 
-		return this.update(warehouse.id, warehouse);
+		return this.update(warehouse.id, stripProtectedFields(warehouse));
 	}
 
 	/**
