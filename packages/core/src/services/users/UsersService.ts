@@ -26,6 +26,7 @@ import IGeoLocation, {
 } from '@modules/server.common/interfaces/IGeoLocation';
 import { DevicesService } from '../devices';
 import IService from '../IService';
+import { stripProtectedFields } from '../stripProtectedFields';
 import { v1 as uuid } from 'uuid';
 import {
 	distinctUntilChanged,
@@ -262,7 +263,7 @@ export class UsersService
 		userCreateObject: IUserCreateObject
 	): Promise<User> {
 		await this.throwIfNotExists(id);
-		return super.update(id, userCreateObject);
+		return super.update(id, stripProtectedFields(userCreateObject));
 	}
 
 	/**

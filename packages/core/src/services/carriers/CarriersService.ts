@@ -23,6 +23,7 @@ import { env } from '../../env';
 import { AuthService, AuthServiceFactory } from '../auth';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 import { throwIfInvalidSkippedOrderIds } from '../../helpers/objectIds';
+import { stripProtectedFields } from '../stripProtectedFields';
 
 @injectable()
 @routerName('carrier')
@@ -177,7 +178,7 @@ export class CarriersService extends DBService<Carrier>
 		throwIfInvalidSkippedOrderIds(updateObject);
 
 		await this.throwIfNotExists(id);
-		return super.update(id, updateObject);
+		return super.update(id, stripProtectedFields(updateObject));
 	}
 
 	async increaseNumberOfDeliveries(
