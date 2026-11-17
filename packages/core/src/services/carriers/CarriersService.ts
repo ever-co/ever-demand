@@ -22,6 +22,7 @@ import { exhaustMap, filter, first, map, switchMap } from 'rxjs/operators';
 import { env } from '../../env';
 import { AuthService, AuthServiceFactory } from '../auth';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
+import { throwIfInvalidSkippedOrderIds } from '../../helpers/objectIds';
 
 @injectable()
 @routerName('carrier')
@@ -84,6 +85,8 @@ export class CarriersService extends DBService<Carrier>
 
 	@asyncListener()
 	async register(input: ICarrierRegistrationInput) {
+		throwIfInvalidSkippedOrderIds(input.carrier);
+
 		const carrier = await super.create({
 			...input.carrier,
 			...(input.password
@@ -171,6 +174,8 @@ export class CarriersService extends DBService<Carrier>
 		id: Carrier['id'],
 		updateObject: Partial<Carrier>
 	): Promise<Carrier> {
+		throwIfInvalidSkippedOrderIds(updateObject);
+
 		await this.throwIfNotExists(id);
 		return super.update(id, updateObject);
 	}

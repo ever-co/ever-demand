@@ -10,6 +10,7 @@ import {
 } from '@modules/server.common/routers/ICarrierRouter';
 import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 import Device from '@modules/server.common/entities/Device';
+import { throwIfInvalidSkippedOrderIds } from '../../helpers/objectIds';
 
 @Resolver('Carrier')
 export class CarrierResolver {
@@ -102,6 +103,8 @@ export class CarrierResolver {
 		_,
 		{ id, updateInput }: { id: string; updateInput }
 	): Promise<Carrier> {
+		throwIfInvalidSkippedOrderIds(updateInput);
+
 		await this._carriersService.throwIfNotExists(id);
 		return this._carriersService.update(id, updateInput);
 	}

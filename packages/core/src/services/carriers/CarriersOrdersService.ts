@@ -32,6 +32,7 @@ import {
 import { throwError, of, Observable } from 'rxjs';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
 import { isCarrierStatusTransitionAllowed } from '../orders/orderStatusTransitions';
+import { throwIfInvalidOrderIds } from '../../helpers/objectIds';
 
 /**
  * Carrier statuses of the orders a carrier is still working on. An order that
@@ -174,12 +175,19 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 
 	@asyncListener()
 	async skipOrders(carrierId: string, ordersIds: string[]): Promise<Carrier> {
+		// The carrier's work queries turn every skipped id into an ObjectId,
+		// so one bad id would break that carrier's work list.
+		throwIfInvalidOrderIds(ordersIds);
+
 		await this.carriersService.throwIfNotExists(carrierId);
 
+		// $addToSet: skipping an order again does not store it twice. Ids are
+		// stored in lower case, so an upper-case spelling of the same order
+		// is not added a second time.
 		return this.carriersService.update(carrierId, {
-			$push: {
+			$addToSet: {
 				skippedOrderIds: {
-					$each: ordersIds,
+					$each: ordersIds.map((id) => id.toLowerCase()),
 				},
 			},
 		});
