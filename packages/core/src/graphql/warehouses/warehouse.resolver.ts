@@ -21,6 +21,7 @@ import IGeoLocation, {
 import User from '@modules/server.common/entities/User';
 import Utils from '@modules/server.common/utils';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
+import { escapeRegExp } from 'lodash';
 
 @Resolver('Warehouse')
 export class WarehouseResolver {
@@ -213,14 +214,17 @@ export class WarehouseResolver {
 			geoLocation,
 		}: { searchName: string; geoLocation: IGeoLocation }
 	) {
+		// Match the typed or scanned text literally: a raw regex breaks on '(' or '['.
+		const pattern = escapeRegExp(String(searchName ?? '').trim());
+
 		const count = await this._warehousesService.Model.find({
-			name: { $regex: searchName, $options: 'i' },
+			name: { $regex: pattern, $options: 'i' },
 		})
 			.countDocuments()
 			.exec();
 
 		let merchants = await this._warehousesService.getMerchants(
-			{ name: { $regex: searchName, $options: 'i' } },
+			{ name: { $regex: pattern, $options: 'i' } },
 			{ skip: 0, limit: count }
 		);
 
