@@ -43,6 +43,44 @@ function skippedObjectIds(skippedOrderIds: string[]): ObjectId[] {
 		.map((id) => new ObjectId(id));
 }
 
+/**
+ * Order fields a carrier work order search may match. The admin carrier
+ * orders page searches by the customer's first name only.
+ */
+const WORK_SEARCH_KEYS = ['user.firstName'];
+
+/**
+ * The caller's search for the carrier work order queries, as an `$and` so it
+ * can only narrow the nearby-store, status, delivery and skipped-order filters,
+ * never replace them. A key outside WORK_SEARCH_KEYS is skipped, each value is
+ * matched as plain text, and `isCancelled` is used only when it is a boolean.
+ */
+function workSearchMatch(
+	byRegex?: { key: string; value: string }[],
+	isCancelled?: boolean
+): { $and?: object[] } {
+	const filters: object[] = [];
+
+	if (Array.isArray(byRegex)) {
+		byRegex.forEach((s) => {
+			if (s != null && WORK_SEARCH_KEYS.includes(s.key)) {
+				filters.push({
+					[s.key]: {
+						$regex: _.escapeRegExp(String(s.value ?? '')),
+						$options: 'i',
+					},
+				});
+			}
+		});
+	}
+
+	if (typeof isCancelled === 'boolean') {
+		filters.push({ isCancelled });
+	}
+
+	return filters.length > 0 ? { $and: filters } : {};
+}
+
 @injectable()
 @routerName('geo-location-orders')
 export class GeoLocationsOrdersService
@@ -131,13 +169,7 @@ export class GeoLocationsOrdersService
 
 		const merchantsIds = merchants.map((m) => m._id.toString());
 
-		let searchByRegex = [];
-
-		if (searchObj && searchObj.byRegex.length > 0) {
-			searchByRegex = searchObj.byRegex.map((s) => {
-				return { [s.key]: { $regex: s.value, $options: 'i' } };
-			});
-		}
+		const searchMatch = workSearchMatch(searchObj?.byRegex);
 
 		const count = await this.ordersService.Model.aggregate([
 			{
@@ -183,25 +215,20 @@ export class GeoLocationsOrdersService
 				},
 			},
 			{
-				$match: _.assign(
-					{
-						warehouse: { $in: merchantsIds },
-						warehouseStatus: {
-							$eq: OrderWarehouseStatus.PackagingFinished,
-						},
-						orderType: DeliveryType.Delivery,
-						$expr: {
-							$lte: [
-								'$carrierStatus',
-								'$fromWH.carrierCompetition',
-							],
-						},
-						_id: {
-							$nin: skippedObjectIds(skippedOrderIds),
-						},
+				$match: {
+					warehouse: { $in: merchantsIds },
+					warehouseStatus: {
+						$eq: OrderWarehouseStatus.PackagingFinished,
 					},
-					...searchByRegex
-				),
+					orderType: DeliveryType.Delivery,
+					$expr: {
+						$lte: ['$carrierStatus', '$fromWH.carrierCompetition'],
+					},
+					_id: {
+						$nin: skippedObjectIds(skippedOrderIds),
+					},
+					...searchMatch,
+				},
 			},
 		]);
 		return count.length;
@@ -225,23 +252,10 @@ export class GeoLocationsOrdersService
 
 		const merchantsIds = merchants.map((m) => m._id.toString());
 
-		let searchByRegex = [];
-
-		if (searchObj) {
-			const byRegex = searchObj.byRegex;
-
-			if (byRegex && byRegex.length > 0) {
-				searchByRegex = byRegex.map((s) => {
-					return { [s.key]: { $regex: s.value, $options: 'i' } };
-				});
-			}
-
-			const isCancelled = searchObj.isCancelled;
-
-			if (isCancelled != null) {
-				searchByRegex.push({ isCancelled });
-			}
-		}
+		const searchMatch = workSearchMatch(
+			searchObj?.byRegex,
+			searchObj?.isCancelled
+		);
 
 		const orders = await this.ordersService.Model.aggregate([
 			{
@@ -287,25 +301,20 @@ export class GeoLocationsOrdersService
 				},
 			},
 			{
-				$match: _.assign(
-					{
-						warehouse: { $in: merchantsIds },
-						warehouseStatus: {
-							$eq: OrderWarehouseStatus.PackagingFinished,
-						},
-						orderType: DeliveryType.Delivery,
-						$expr: {
-							$lte: [
-								'$carrierStatus',
-								'$fromWH.carrierCompetition',
-							],
-						},
-						_id: {
-							$nin: skippedObjectIds(skippedOrderIds),
-						},
+				$match: {
+					warehouse: { $in: merchantsIds },
+					warehouseStatus: {
+						$eq: OrderWarehouseStatus.PackagingFinished,
 					},
-					...searchByRegex
-				),
+					orderType: DeliveryType.Delivery,
+					$expr: {
+						$lte: ['$carrierStatus', '$fromWH.carrierCompetition'],
+					},
+					_id: {
+						$nin: skippedObjectIds(skippedOrderIds),
+					},
+					...searchMatch,
+				},
 			},
 			{
 				$sort: {
