@@ -17,7 +17,9 @@ const PROTECTED_FIELDS: ReadonlyArray<string> = [
 
 function isProtectedKey(key: string): boolean {
 	return (
-		PROTECTED_FIELDS.includes(key) ||
+		// Mongoose maps a dotted path such as `hash.0` or `hash.` to the
+		// `hash` field, so a key is checked by its first path segment.
+		PROTECTED_FIELDS.includes(key.split('.')[0]) ||
 		// A MongoDB update operator such as `$set` or `$unset` could write a
 		// protected field by another route.
 		key.startsWith('$') ||
@@ -29,7 +31,8 @@ function isProtectedKey(key: string): boolean {
 
 /**
  * Returns a shallow copy of `updateObject` without hash, isBanned, isDeleted,
- * _createdAt, _updatedAt and any key starting with '$'. The input is not
+ * _createdAt, _updatedAt, any dotted path into one of them (such as `hash.0`)
+ * and any key starting with '$'. The input is not
  * changed. An array (a MongoDB update pipeline), null or any other non-object
  * gives an empty update.
  */

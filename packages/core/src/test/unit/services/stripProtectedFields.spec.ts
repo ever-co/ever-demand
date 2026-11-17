@@ -16,6 +16,22 @@ describe('stripProtectedFields', () => {
 		).toEqual({ firstName: 'New' });
 	});
 
+	it('drops a dotted path into a protected field', () => {
+		// Mongoose casts `hash.0` and `hash.` against the `hash` path, and
+		// MongoDB writes `hash.0` when the account has no hash yet.
+		expect(
+			stripProtectedFields({
+				firstName: 'New',
+				'hash.0': 'h',
+				'hash.': 'h',
+				'isBanned.0': false,
+				'isDeleted.x': false,
+				'_updatedAt.0': 1,
+				'geoLocation.city': 'City',
+			} as any)
+		).toEqual({ firstName: 'New', 'geoLocation.city': 'City' });
+	});
+
 	it('returns a copy and leaves the input as it was', () => {
 		const input = { firstName: 'New', hash: 'h' };
 
