@@ -56,6 +56,13 @@ export class CarrierOrdersStatusComponent implements OnDestroy {
 	}
 
 	async selectOrdersForDelivery() {
+		// One request at a time: the Picked up and Cancel buttons appear as
+		// soon as Start is pressed, so a double-click on Start would start a
+		// pick up that saves this select's unconfirmed status as its own.
+		if (this.loading) {
+			return;
+		}
+
 		this.pageBtnStates.isSelectOrdersForDeliveryAvailable = false;
 
 		// The status is set before the server answers, so keep the old one:
@@ -84,6 +91,10 @@ export class CarrierOrdersStatusComponent implements OnDestroy {
 	}
 
 	async updateCarrierOrdersStatus(status: OrderCarrierStatus) {
+		if (this.loading) {
+			return;
+		}
+
 		this.pageBtnStates.isCarrierPickupOrder = false;
 
 		this.loading = true;
@@ -111,6 +122,10 @@ export class CarrierOrdersStatusComponent implements OnDestroy {
 	}
 
 	async cancelDelivery() {
+		if (this.loading) {
+			return;
+		}
+
 		this.pageBtnStates.isCarrierPickupOrder = false;
 
 		this.loading = true;

@@ -106,6 +106,42 @@ describe('CarrierOrdersStatusComponent', () => {
 			expect(orderActionButtons().length).toBe(2);
 			expect(toasterService.pop).not.toHaveBeenCalled();
 		});
+
+		it('does not start a pick up or cancel while the select is pending', async () => {
+			let refuseSelect: (error: Error) => void;
+			carrierOrdersRouter.selectedForDelivery.and.returnValue(
+				new Promise<any>((_resolve, reject) => (refuseSelect = reject))
+			);
+
+			const select = component.selectOrdersForDelivery();
+			fixture.detectChanges();
+
+			// Start is gone and Picked up / Cancel show while the server
+			// has not answered: a double-click on Start lands on them.
+			expect(startButton()).toBeNull();
+			expect(orderActionButtons().length).toBe(2);
+			orderActionButtons().forEach((button) => {
+				expect(button.disabled).toBe(true);
+				button.click();
+			});
+			await component.updateCarrierOrdersStatus(
+				OrderCarrierStatus.CarrierPickedUpOrder
+			);
+			await component.cancelDelivery();
+
+			expect(orderRouter.updateCarrierStatus).not.toHaveBeenCalled();
+			expect(carrierOrdersRouter.cancelDelivery).not.toHaveBeenCalled();
+
+			refuseSelect(refusal());
+			await select;
+			fixture.detectChanges();
+
+			expect(component.selectedOrder.carrierStatus).toBe(
+				OrderCarrierStatus.NoCarrier
+			);
+			expect(startButton()).not.toBeNull();
+			expect(startButton()!.disabled).toBe(false);
+		});
 	});
 
 	describe('once the order is selected', () => {

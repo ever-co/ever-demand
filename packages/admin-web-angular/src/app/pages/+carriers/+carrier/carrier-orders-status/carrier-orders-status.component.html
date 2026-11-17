@@ -34,7 +34,9 @@
 					"
 				>
 					<button
-						[disabled]="!pageBtnStates.isCarrierPickupOrder"
+						[disabled]="
+							loading || !pageBtnStates.isCarrierPickupOrder
+						"
 						type="button"
 						nbButton
 						outline
@@ -57,7 +59,9 @@
 					</button>
 
 					<button
-						[disabled]="!pageBtnStates.isCarrierPickupOrder"
+						[disabled]="
+							loading || !pageBtnStates.isCarrierPickupOrder
+						"
 						type="button"
 						nbButton
 						outline
