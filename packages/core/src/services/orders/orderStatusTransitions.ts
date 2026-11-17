@@ -173,3 +173,24 @@ export function assertWarehouseStatusTransition(
 		);
 	}
 }
+
+/**
+ * Throws if the order was already handed over to the customer (delivered by the carrier
+ * or given to the customer by the store): such an order can not be cancelled any more,
+ * because cancelling would put its products back into store stock.
+ * Issue, refusal and failure statuses stay cancellable.
+ */
+export function assertOrderCanBeCancelled(order: {
+	id?: string;
+	carrierStatus?: OrderCarrierStatus;
+	warehouseStatus?: OrderWarehouseStatus;
+}): void {
+	if (
+		order.carrierStatus === OrderCarrierStatus.DeliveryCompleted ||
+		order.warehouseStatus === OrderWarehouseStatus.GivenToCustomer
+	) {
+		throw new Error(
+			`Order ${order.id} was already given to the customer and can not be cancelled!`
+		);
+	}
+}

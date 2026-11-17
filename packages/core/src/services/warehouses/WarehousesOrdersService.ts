@@ -9,6 +9,7 @@ import Product from '@modules/server.common/entities/Product';
 import { WarehousesService } from './WarehousesService';
 import { ProductsService } from '../products';
 import { OrdersService } from '../orders';
+import { assertOrderCanBeCancelled } from '../orders/orderStatusTransitions';
 import { IOrderProductCreateObject } from '@modules/server.common/interfaces/IOrderProduct';
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { WarehousesProductsService } from './WarehousesProductsService';
@@ -386,9 +387,13 @@ export class WarehousesOrdersService
 		}
 
 		if (order.isCancelled) {
+			// A second cancel (double tap, two devices) gets the order back, not undefined
 			this.log.warn(`Order with id ${orderId} is already cancelled!`);
-			return;
+			return order;
 		}
+
+		// A delivered order must not be cancelled: its products would go back into stock
+		assertOrderCanBeCancelled(order);
 
 		// canceling order
 		order = await this.ordersService.cancel(orderId);
