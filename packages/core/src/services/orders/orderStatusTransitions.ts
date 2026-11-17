@@ -194,3 +194,23 @@ export function assertOrderCanBeCancelled(order: {
 		);
 	}
 }
+
+/**
+ * Mongo filter for an order that is not cancelled. Status writes match only
+ * such an order, so a cancel that lands after their check makes them match nothing.
+ */
+export const notCancelledOrderFilter = {
+	isCancelled: { $ne: true },
+};
+
+/**
+ * Mongo filter for an order that can still be cancelled: not cancelled yet and
+ * not given to the customer (the rule of `assertOrderCanBeCancelled`). The cancel
+ * write matches only such an order, so of two cancels at once only one writes it,
+ * and a delivery that lands after the check makes it match nothing.
+ */
+export const cancellableOrderFilter = {
+	...notCancelledOrderFilter,
+	carrierStatus: { $ne: OrderCarrierStatus.DeliveryCompleted },
+	warehouseStatus: { $ne: OrderWarehouseStatus.GivenToCustomer },
+};

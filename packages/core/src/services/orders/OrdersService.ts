@@ -10,7 +10,7 @@ import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus'
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
 import { UsersService } from '../users';
 import Order from '@modules/server.common/entities/Order';
-import { DBService } from '@pyro/db-server';
+import { DBService, ExistenceEventType } from '@pyro/db-server';
 import {
 	default as IOrder,
 	IOrderCreateObject,
@@ -37,8 +37,20 @@ import {
 	assertCarrierStatusTransition,
 	assertOrderCanBeCancelled,
 	assertWarehouseStatusTransition,
+	cancellableOrderFilter,
+	notCancelledOrderFilter,
 } from './orderStatusTransitions';
 import { orderCompletionFilters } from './orderCompletionFilters';
+
+/**
+ * A cancelled order was put back in stock and may be refunded:
+ * it must not become delivered or paid afterwards.
+ */
+function orderIsCancelledError(orderId: string): Error {
+	return new Error(
+		`Order ${orderId} is cancelled, so its status can not change!`
+	);
+}
 
 @injectable()
 @routerName('order')
@@ -153,6 +165,11 @@ export class OrdersService extends DBService<Order>
 
 		// Not every status can follow any other: e.g. an order in status 3 cannot move back to status 2
 		const currentOrder = await this._get(orderId);
+
+		if (currentOrder.isCancelled) {
+			throw orderIsCancelledError(orderId);
+		}
+
 		const currentStatus =
 			currentOrder.carrierStatus ?? OrderCarrierStatus.NoCarrier;
 		assertCarrierStatusTransition(currentStatus, status);
@@ -186,7 +203,16 @@ export class OrdersService extends DBService<Order>
 				updateObj.finishedProcessingTime = Date.now();
 			}
 
-			const order = await this.update(orderId, updateObj);
+			// Matches nothing when a cancel landed after the check above
+			const order = await this._updateIfMatches(
+				orderId,
+				notCancelledOrderFilter,
+				updateObj
+			);
+
+			if (order == null) {
+				throw orderIsCancelledError(orderId);
+			}
 
 			if (order.carrierId != null) {
 				if (status === OrderCarrierStatus.DeliveryCompleted) {
@@ -216,6 +242,11 @@ export class OrdersService extends DBService<Order>
 		await this._throwIfNotExists(orderId);
 
 		const currentOrder = await this._get(orderId);
+
+		if (currentOrder.isCancelled) {
+			throw orderIsCancelledError(orderId);
+		}
+
 		const currentStatus =
 			currentOrder.warehouseStatus ?? OrderWarehouseStatus.NoStatus;
 		assertWarehouseStatusTransition(currentStatus, status);
@@ -237,7 +268,19 @@ export class OrdersService extends DBService<Order>
 			updateObj.isPaid = true;
 			updateObj.finishedProcessingTime = Date.now();
 		}
-		return this.update(orderId, updateObj);
+
+		// Matches nothing when a cancel landed after the check above
+		const order = await this._updateIfMatches(
+			orderId,
+			notCancelledOrderFilter,
+			updateObj
+		);
+
+		if (order == null) {
+			throw orderIsCancelledError(orderId);
+		}
+
+		return order;
 	}
 
 	/**
@@ -682,17 +725,37 @@ export class OrdersService extends DBService<Order>
 			.toPromise();
 	}
 
+	/**
+	 * Cancels the order with one conditional write that matches only an order
+	 * that is not cancelled and not given to the customer yet.
+	 *
+	 * @returns the cancelled order, or null when another cancel got there
+	 * first (nothing written, so the caller must not restock again)
+	 * @throws when the order was given to the customer, also when that
+	 * happened after the first check
+	 */
 	@asyncListener()
-	async cancel(orderId: Order['id']): Promise<Order> {
+	async cancel(orderId: Order['id']): Promise<Order | null> {
 		await this._throwIfNotExists(orderId);
 
 		// A delivered order must stay delivered: this listener is public too
 		assertOrderCanBeCancelled(await this._get(orderId));
 
-		return this.update(orderId, {
-			isCancelled: true,
-			finishedProcessingTime: Date.now(),
-		});
+		const cancelled = await this._updateIfMatches(
+			orderId,
+			cancellableOrderFilter,
+			{
+				isCancelled: true,
+				finishedProcessingTime: Date.now(),
+			}
+		);
+
+		if (cancelled == null) {
+			// Delivered after the check above, or cancelled by another call
+			assertOrderCanBeCancelled(await this._get(orderId));
+		}
+
+		return cancelled;
 	}
 
 	/**
@@ -990,6 +1053,44 @@ export class OrdersService extends DBService<Order>
 					.exec()
 			) as IOrder
 		);
+	}
+
+	/**
+	 * Writes `updateObj` only while the order still matches `conditions`, in
+	 * one atomic findOneAndUpdate, and emits the same update event as `update`.
+	 *
+	 * @returns the updated order, or null when the order did not match
+	 * (nothing written)
+	 */
+	private async _updateIfMatches(
+		orderId: Order['id'],
+		conditions: object,
+		updateObj: any
+	): Promise<Order | null> {
+		const lastValue = await this.getCurrent(orderId);
+
+		const raw = (await this.Model.findOneAndUpdate(
+			{ _id: orderId, ...conditions },
+			updateObj,
+			{ new: true }
+		)
+			.lean()
+			.exec()) as IOrder | null;
+
+		if (raw == null) {
+			return null;
+		}
+
+		const order = new Order(raw);
+
+		this.existence.next({
+			id: orderId,
+			value: order,
+			lastValue,
+			type: ExistenceEventType.Updated,
+		});
+
+		return order;
 	}
 
 	private async _throwIfNotExists(orderId: string): Promise<void> {
