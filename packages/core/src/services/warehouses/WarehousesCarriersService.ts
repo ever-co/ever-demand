@@ -84,15 +84,38 @@ export class WarehousesCarriersService implements IWarehouseCarriersRouter {
 	}
 
 	/**
-	 * Update carrier password
+	 * Update the password of a carrier the calling merchant uses.
+	 * Refused unless `token` is a valid merchant ('warehouse') login token
+	 * and the carrier is in that merchant's usedCarriersIds.
 	 *
 	 * @param {Carrier['id']} id
 	 * @param {String} password
+	 * @param {String} token - the merchant's login token
 	 * @returns {Promise<void>}
 	 * @memberof WarehousesCarriersService
 	 */
 	@asyncListener()
-	async updatePassword(id: Carrier['id'], password: string): Promise<void> {
+	async updatePassword(
+		id: Carrier['id'],
+		password: string,
+		token: string
+	): Promise<void> {
+		const warehouseId = this.authService.getVerifiedId(token, 'warehouse');
+
+		if (warehouseId == null) {
+			throw new Error('Not authorized to update the carrier password');
+		}
+
+		const warehouse = await this.warehousesService.getCurrent(warehouseId);
+
+		if (
+			warehouse == null ||
+			warehouse.isDeleted ||
+			!_.includes(warehouse.usedCarriersIds, id)
+		) {
+			throw new Error('Not authorized to update the carrier password');
+		}
+
 		await this.carriersService.throwIfNotExists(id);
 		await this.authService._savePassword(id, password);
 	}

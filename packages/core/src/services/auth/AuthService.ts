@@ -110,6 +110,45 @@ export class AuthService<T extends IAuthable> extends EntityService<T> {
 	}
 
 	/**
+	 * Verifies a login token with env.JWT_SECRET and returns the id it was
+	 * issued for. Returns null when the token is missing, invalid or was
+	 * issued for another role.
+	 *
+	 * @param {string} token - the jwt token
+	 * @param {string} [role=this.role] - the role the token must carry
+	 * @returns {(string | null)}
+	 */
+	getVerifiedId(token: string, role: string = this.role): string | null {
+		if (typeof token !== 'string' || token === '') {
+			return null;
+		}
+
+		try {
+			const payload = jwt.verify(token, env.JWT_SECRET, {
+				algorithms: ['HS256'],
+			}) as { id?: unknown; role?: unknown } | string;
+
+			if (
+				payload == null ||
+				typeof payload !== 'object' ||
+				payload.role !== role ||
+				typeof payload.id !== 'string' ||
+				payload.id === ''
+			) {
+				return null;
+			}
+
+			return payload.id;
+		} catch (err) {
+			if (err instanceof JsonWebTokenError) {
+				return null;
+			} else {
+				throw err;
+			}
+		}
+	}
+
+	/**
 	 * @param {string} token - the jwt token
 	 * @returns {Promise<boolean>}
 	 */
