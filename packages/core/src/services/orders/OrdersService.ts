@@ -328,7 +328,10 @@ export class OrdersService extends DBService<Order>
 	}
 
 	/**
-	 * Refund money for cancelled order via Stripe
+	 * Refund money for cancelled order via Stripe.
+	 * Refuses orders that are not cancelled, and orders that were delivered
+	 * (carrier DeliveryCompleted or warehouse GivenToCustomer). Issue and
+	 * refusal statuses stay refundable once the order is cancelled.
 	 * TODO: move to Payments Service
 	 *
 	 * @param {Order['id']} orderId
@@ -350,6 +353,23 @@ export class OrdersService extends DBService<Order>
 			order = await this.get(orderId).pipe(first()).toPromise();
 
 			if (order != null) {
+				if (!order.isCancelled) {
+					throw new Error(
+						`Order ${orderId} is not cancelled, so it cannot be refunded`
+					);
+				}
+
+				if (
+					order.carrierStatus ===
+						OrderCarrierStatus.DeliveryCompleted ||
+					order.warehouseStatus ===
+						OrderWarehouseStatus.GivenToCustomer
+				) {
+					throw new Error(
+						`Order ${orderId} was delivered to the customer, so it cannot be refunded`
+					);
+				}
+
 				if (order.stripeChargeId != null) {
 					refund = await this.stripe.refunds.create({
 						charge: order.stripeChargeId,
