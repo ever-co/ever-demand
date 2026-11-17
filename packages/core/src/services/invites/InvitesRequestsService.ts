@@ -78,8 +78,14 @@ export class InvitesRequestsService
 		return super.create(inviteRequest);
 	}
 
-	@asyncListener()
-	async notifyAboutLaunch(
+	/**
+	 * Pushes the launch notification for `invite` to `devicesIds`.
+	 * Called only by the invite-created subscription above, which picks the
+	 * devices that requested this invite's address. It must stay off the
+	 * socket router and the GraphQL API: a caller could otherwise push any
+	 * invite to any device through the platform's push account.
+	 */
+	private async notifyAboutLaunch(
 		invite: Invite,
 		devicesIds: string[]
 	): Promise<void> {
