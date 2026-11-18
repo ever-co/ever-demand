@@ -129,6 +129,26 @@ describe('WarehousesOrdersService.cancel', () => {
 		).not.toHaveBeenCalled();
 	});
 
+	it('does not restock when its conditional cancel write matched nothing, and returns the cancelled order', async () => {
+		// Another cancel passed the same checks and wrote the order first:
+		// OrdersService.cancel resolves to null because this write changed nothing
+		const cancelledByTheOtherCall = { ...order, isCancelled: true };
+		ordersService.get
+			.mockReturnValueOnce(of(order))
+			.mockReturnValueOnce(of(cancelledByTheOtherCall));
+		ordersService.cancel.mockResolvedValueOnce(null);
+
+		const result = await service.cancel('o1');
+
+		expect(ordersService.cancel).toHaveBeenCalledWith('o1');
+		expect(result).toBe(cancelledByTheOtherCall);
+		expect(result.isCancelled).toBe(true);
+		expect(warehousesProductsService.add).not.toHaveBeenCalled();
+		expect(
+			warehousesProductsService.decreaseSoldCount
+		).not.toHaveBeenCalled();
+	});
+
 	it.each([
 		['carrier issue during delivery (204)', { carrierStatus: 204 }],
 		['client refused the order (205)', { carrierStatus: 205 }],

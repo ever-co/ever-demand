@@ -395,8 +395,16 @@ export class WarehousesOrdersService
 		// A delivered order must not be cancelled: its products would go back into stock
 		assertOrderCanBeCancelled(order);
 
-		// canceling order
-		order = await this.ordersService.cancel(orderId);
+		// canceling order: a conditional write, so of two cancels at once only one restocks
+		const cancelled = await this.ordersService.cancel(orderId);
+
+		if (cancelled == null) {
+			// Another cancel wrote the order first and puts the products back itself
+			this.log.warn(`Order with id ${orderId} is already cancelled!`);
+			return this.ordersService.get(orderId).pipe(first()).toPromise();
+		}
+
+		order = cancelled;
 
 		if (order.isConfirmed) {
 			// TODO: return payment back and cancel shipping
