@@ -231,6 +231,10 @@ export class WarehousesOrdersService
 			warehouseProducts
 		);
 
+		// Check stock before the order is saved, so a short line leaves no
+		// order behind and takes no stock from the other lines.
+		this._assertStockAvailable(products, warehouseProducts);
+
 		// TODO next should be in the single transaction!
 		// (i.e. create order and decrease product availability in the warehouse)
 		// http://mongoosejs.com/docs/transactions.html
