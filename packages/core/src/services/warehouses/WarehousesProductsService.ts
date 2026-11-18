@@ -145,7 +145,7 @@ export class WarehousesProductsService
 			const productId = p.product['id'];
 			return !productsIds.includes(productId);
 		});
-		await this.warehousesService.save(warehouse);
+		await this.warehousesService._save(warehouse);
 
 		return warehouse.products;
 	}

@@ -77,12 +77,14 @@ export class WarehouseRouter implements IWarehouseRouter {
 
 	async updateGeoLocation(
 		warehouseId: string,
-		geoLocation: IGeoLocationCreateObject
+		geoLocation: IGeoLocationCreateObject,
+		token: string
 	): Promise<Warehouse> {
 		const warehouse = await this.router.run<IWarehouse>(
 			'updateGeoLocation',
 			warehouseId,
-			geoLocation
+			geoLocation,
+			token
 		);
 		return this._warehouseFactory(warehouse);
 	}
@@ -96,18 +98,20 @@ export class WarehouseRouter implements IWarehouseRouter {
 
 	async updateAvailability(
 		warehouseId: string,
-		isAvailable: boolean
+		isAvailable: boolean,
+		token: string
 	): Promise<Warehouse> {
 		const warehouse = await this.router.run<IWarehouse>(
 			'updateAvailability',
 			warehouseId,
-			isAvailable
+			isAvailable,
+			token
 		);
 		return this._warehouseFactory(warehouse);
 	}
 
-	async save(w: Warehouse): Promise<Warehouse> {
-		const warehouse = await this.router.run<IWarehouse>('save', w);
+	async save(w: Warehouse, token: string): Promise<Warehouse> {
+		const warehouse = await this.router.run<IWarehouse>('save', w, token);
 		return this._warehouseFactory(warehouse);
 	}
 

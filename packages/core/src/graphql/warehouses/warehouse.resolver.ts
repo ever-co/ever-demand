@@ -259,12 +259,18 @@ export class WarehouseResolver {
 		{
 			storeId,
 			geoLocation,
+			token,
 		}: {
 			storeId: string;
 			geoLocation: IGeoLocationCreateObject;
+			token: string;
 		}
 	) {
-		return this._warehousesService.updateGeoLocation(storeId, geoLocation);
+		return this._warehousesService.updateGeoLocation(
+			storeId,
+			geoLocation,
+			token
+		);
 	}
 
 	@Mutation()

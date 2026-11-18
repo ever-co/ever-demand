@@ -8,6 +8,7 @@ import { LocationFormComponent } from '../../../../@shared/forms/location';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { WarehouseManageTabsComponent } from '../../../../@shared/warehouse/forms/warehouse-manage-tabs/warehouse-manage-tabs.component';
+import { Store } from '@app/@core/data/store.service';
 
 @Component({
 	selector: 'ea-warehouse-manage',
@@ -42,7 +43,8 @@ export class WarehouseManageComponent implements OnInit {
 		private readonly _formBuilder: FormBuilder,
 		private readonly activatedRoute: ActivatedRoute,
 		private readonly toasterService: ToasterService,
-		private readonly warehouseRouter: WarehouseRouter
+		private readonly warehouseRouter: WarehouseRouter,
+		private readonly store: Store
 	) {}
 
 	ngOnInit() {
@@ -94,7 +96,8 @@ export class WarehouseManageComponent implements OnInit {
 			}
 
 			const warehouse = await this.warehouseRouter.save(
-				warehouseRaw as Warehouse
+				warehouseRaw as Warehouse,
+				this.store.token
 			);
 
 			this.loading = false;

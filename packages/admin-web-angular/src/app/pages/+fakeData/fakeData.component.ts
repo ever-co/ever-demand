@@ -44,6 +44,7 @@ import { UsersService } from '@app/@core/data/users.service';
 import { environment } from 'environments/environment';
 import { random }from 'underscore';
 import { CurrenciesService } from '@app/@core/data/currencies.service';
+import { Store } from '@app/@core/data/store.service';
 
 const NEED_DEFAULT_SETTINGS_MESSAGE =
 	"Can't generate fake data without DEFAULT_LONGITUDE and DEFAULT_LATITUDE";
@@ -104,7 +105,8 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		private readonly _inviteRequestsService: InvitesRequestsService,
 		private readonly _notifyService: NotifyService,
 		private readonly _usersService: UsersService,
-		private readonly _currenciesService: CurrenciesService
+		private readonly _currenciesService: CurrenciesService,
+		private readonly store: Store
 	) {
 		this._setupButtonStatuses();
 		this._setupButtonLoading();
@@ -577,7 +579,8 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		const newGeoLocation = this.fakeDataWarehouses.getNewGeoLocation1();
 		await this.warehouseRouter.updateGeoLocation(
 			this.warehouse1.id,
-			newGeoLocation
+			newGeoLocation,
+			this.store.token
 		);
 
 		this.isBtnDisabled.warehouseGeoLocation = false;
