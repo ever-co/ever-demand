@@ -84,9 +84,21 @@ export class WarehousesCarriersService implements IWarehouseCarriersRouter {
 	}
 
 	/**
-	 * Update the password of a carrier the calling merchant uses.
-	 * Refused unless `token` is a valid merchant ('warehouse') login token
-	 * and the carrier is in that merchant's usedCarriersIds.
+	 * Update the password of a carrier that only the calling merchant uses.
+	 * Refused unless `token` is a valid merchant ('warehouse') login token,
+	 * the carrier is in that merchant's usedCarriersIds, no other merchant
+	 * (not deleted) lists the carrier and the carrier exists and is not a
+	 * shared carrier.
+	 *
+	 * Merchants can write their own usedCarriersIds (warehouse.register and
+	 * warehouse.save), so listing a carrier alone proves nothing. A carrier
+	 * that another merchant also lists cannot be reset by either of them.
+	 * Known gap: a carrier that no merchant lists yet can still be claimed by
+	 * registering a merchant that lists it. Closing that needs auth or a
+	 * server-set owner on warehouse.register/save.
+	 *
+	 * Every refusal throws the same error, so a caller learns nothing about
+	 * which check failed.
 	 *
 	 * @param {Carrier['id']} id
 	 * @param {String} password
@@ -100,10 +112,13 @@ export class WarehousesCarriersService implements IWarehouseCarriersRouter {
 		password: string,
 		token: string
 	): Promise<void> {
+		const notAuthorized = () =>
+			new Error('Not authorized to update the carrier password');
+
 		const warehouseId = this.authService.getVerifiedId(token, 'warehouse');
 
 		if (warehouseId == null) {
-			throw new Error('Not authorized to update the carrier password');
+			throw notAuthorized();
 		}
 
 		const warehouse = await this.warehousesService.getCurrent(warehouseId);
@@ -113,10 +128,27 @@ export class WarehousesCarriersService implements IWarehouseCarriersRouter {
 			warehouse.isDeleted ||
 			!_.includes(warehouse.usedCarriersIds, id)
 		) {
-			throw new Error('Not authorized to update the carrier password');
+			throw notAuthorized();
 		}
 
-		await this.carriersService.throwIfNotExists(id);
+		// `id` matched an entry of usedCarriersIds above, so it is a plain id
+		// string and safe to put in a query.
+		const otherWarehousesUsingCarrier = await this.warehousesService.count({
+			_id: { $ne: warehouse.id },
+			usedCarriersIds: id,
+			isDeleted: { $ne: true },
+		});
+
+		if (otherWarehousesUsingCarrier > 0) {
+			throw notAuthorized();
+		}
+
+		const carrier = await this.carriersService.getCurrent(id);
+
+		if (carrier == null || carrier.isDeleted || carrier.isSharedCarrier) {
+			throw notAuthorized();
+		}
+
 		await this.authService._savePassword(id, password);
 	}
 }
