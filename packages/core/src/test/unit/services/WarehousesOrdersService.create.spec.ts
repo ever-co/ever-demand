@@ -2,8 +2,8 @@ import 'reflect-metadata';
 import { of } from 'rxjs';
 
 // Keep the heavy service graph (mongoose models, env, router wiring) out of
-// this unit test: only the quantity and customer checks inside `create()` are
-// exercised.
+// this unit test: only the quantity, customer and stock checks inside
+// `create()` are exercised.
 jest.mock('@pyro/io', () => ({
 	asyncListener: () => () => undefined,
 	observableListener: () => () => undefined,
@@ -47,7 +47,9 @@ describe('WarehousesOrdersService.create validation', () => {
 			get: jest.fn(() =>
 				of({
 					id: 'w1',
-					products: [{ productId: 'p1', price: 10, product: {} }],
+					products: [
+						{ productId: 'p1', price: 10, count: 5, product: {} },
+					],
 				})
 			),
 		};
@@ -81,6 +83,27 @@ describe('WarehousesOrdersService.create validation', () => {
 		usersService.get.mockReturnValue(of({ id: 'u1', isBanned: true }));
 
 		await expect(createWith(2)).rejects.toThrow('Customer u1 is banned');
+		expect(ordersService.create).not.toHaveBeenCalled();
+	});
+
+	it('rejects a count above stock and creates no order', async () => {
+		await expect(createWith(6)).rejects.toThrow(
+			/more products than available/
+		);
+		expect(ordersService.create).not.toHaveBeenCalled();
+	});
+
+	it('adds up repeated lines of one product before checking stock', async () => {
+		await expect(
+			service.create({
+				warehouseId: 'w1',
+				userId: 'u1',
+				products: [
+					{ productId: 'p1', count: 3 },
+					{ productId: 'p1', count: 3 },
+				],
+			} as any)
+		).rejects.toThrow(/more products than available/);
 		expect(ordersService.create).not.toHaveBeenCalled();
 	});
 });
