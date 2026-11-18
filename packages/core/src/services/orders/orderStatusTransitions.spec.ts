@@ -162,6 +162,28 @@ describe('assertOrderProductsCanChange', () => {
 	it.each([
 		[{ isCancelled: true }, /is cancelled/],
 		[{ carrierStatus: C.DeliveryCompleted }, /was already handed over/],
+		// The carrier app moves the carrier status only: the store status stays PackagingFinished
+		[
+			{
+				carrierStatus: C.CarrierPickedUpOrder,
+				warehouseStatus: W.PackagingFinished,
+			},
+			/was already handed over/,
+		],
+		[
+			{
+				carrierStatus: C.CarrierStartDelivery,
+				warehouseStatus: W.PackagingFinished,
+			},
+			/was already handed over/,
+		],
+		[
+			{
+				carrierStatus: C.CarrierArrivedToCustomer,
+				warehouseStatus: W.PackagingFinished,
+			},
+			/was already handed over/,
+		],
 		[{ warehouseStatus: W.GivenToCarrier }, /was already handed over/],
 		[{ warehouseStatus: W.GivenToCustomer }, /was already handed over/],
 	])('refuses %p', (order, message) => {
@@ -173,6 +195,12 @@ describe('assertOrderProductsCanChange', () => {
 	it.each([
 		[{ isCancelled: false, warehouseStatus: W.PackagingFinished }],
 		[{ carrierStatus: C.NoCarrier, warehouseStatus: W.NoStatus }],
+		[
+			{
+				carrierStatus: C.CarrierSelectedOrder,
+				warehouseStatus: W.PackagingFinished,
+			},
+		],
 		[{ carrierStatus: C.IssuesDuringDelivery }],
 		[{ warehouseStatus: W.AllocationFailed }],
 	])('allows %p', (order) => {

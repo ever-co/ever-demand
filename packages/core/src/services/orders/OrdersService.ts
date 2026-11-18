@@ -499,7 +499,7 @@ export class OrdersService extends DBService<Order>
 
 		const warehouseProducts = _.keyBy(warehouse.products, 'productId');
 
-		const newOrderProducts = await _.map(
+		const newOrderProducts = _.map(
 			addedProducts,
 			(args): IOrderProductCreateObject => {
 				const wProduct = warehouseProducts[args.productId];

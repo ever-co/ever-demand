@@ -161,6 +161,13 @@ describe('OrdersService order product changes', () => {
 			},
 		],
 		[
+			'picked up by its carrier while the store status is still PackagingFinished',
+			{
+				carrierStatus: OrderCarrierStatus.CarrierPickedUpOrder,
+				warehouseStatus: OrderWarehouseStatus.PackagingFinished,
+			},
+		],
+		[
 			'given to the customer (takeaway)',
 			{ warehouseStatus: OrderWarehouseStatus.GivenToCustomer },
 		],

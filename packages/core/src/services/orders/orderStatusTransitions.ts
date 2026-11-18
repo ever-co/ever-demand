@@ -196,6 +196,18 @@ export function assertOrderCanBeCancelled(order: {
 }
 
 /**
+ * Carrier statuses of an order whose products are already with the carrier or the
+ * customer. The carrier app sets them without changing the store status, so an
+ * order picked up by its carrier can still be `PackagingFinished` for the store.
+ */
+const HANDED_OVER_CARRIER_STATUSES: OrderCarrierStatus[] = [
+	OrderCarrierStatus.CarrierPickedUpOrder,
+	OrderCarrierStatus.CarrierStartDelivery,
+	OrderCarrierStatus.CarrierArrivedToCustomer,
+	OrderCarrierStatus.DeliveryCompleted,
+];
+
+/**
  * Throws if the products of the order can no longer be added, decreased or removed:
  * a cancelled order already put its products back into store stock, and an order
  * handed over to the carrier or to the customer already left the store. Changing
@@ -214,7 +226,7 @@ export function assertOrderProductsCanChange(order: {
 	}
 
 	if (
-		order.carrierStatus === OrderCarrierStatus.DeliveryCompleted ||
+		HANDED_OVER_CARRIER_STATUSES.includes(order.carrierStatus) ||
 		order.warehouseStatus === OrderWarehouseStatus.GivenToCarrier ||
 		order.warehouseStatus === OrderWarehouseStatus.GivenToCustomer
 	) {
