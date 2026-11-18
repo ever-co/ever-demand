@@ -36,6 +36,7 @@ import { Stripe } from 'stripe'
 import {
 	assertCarrierStatusTransition,
 	assertOrderCanBeCancelled,
+	assertOrderProductsCanChange,
 	assertWarehouseStatusTransition,
 	cancellableOrderFilter,
 	notCancelledOrderFilter,
@@ -50,6 +51,17 @@ function orderIsCancelledError(orderId: string): Error {
 	return new Error(
 		`Order ${orderId} is cancelled, so its status can not change!`
 	);
+}
+
+/**
+ * Stock of an order is only ever taken from or put back into the store of the order.
+ */
+function assertOrderStore(order: Order, warehouseId: Warehouse['id']): void {
+	if (warehouseId !== order.warehouseId) {
+		throw new Error(
+			`Order ${order.id} belongs to another store, not to the store ${warehouseId}!`
+		);
+	}
 }
 
 @injectable()
@@ -464,50 +476,31 @@ export class OrdersService extends DBService<Order>
 		assertValidOrderProductCounts(products);
 
 		const order = await this._get(orderId);
+
+		assertOrderProductsCanChange(order);
+		assertOrderStore(order, warehouseId);
+
 		const oldProductsIds = order.products.map(
 			(p: OrderProduct) => p.product.id
 		);
 		const newProductsIds = products.map((p) => p.productId);
 
-		for (const product of order.products) {
-			if (newProductsIds.includes(product.product.id)) {
-				const newProduct = products.find(
-					(p: { productId: string }) =>
-						p.productId === product.product.id
-				);
-
-				if (newProduct) {
-					product.count += newProduct.count;
-
-					await this.warehousesProductsService.decreaseCount(
-						warehouseId,
-						newProduct.productId, // what product availability should be decreased
-						newProduct.count // how many to remove
-					);
-
-					await this.warehousesProductsService.increaseSoldCount(
-						warehouseId,
-						newProduct.productId,
-						newProduct.count
-					);
-				}
-			}
-		}
-
-		products = products.filter(
+		const addedProducts = products.filter(
 			(p: { [x: string]: string }) =>
 				!oldProductsIds.includes(p['productId'])
 		);
 
+		// Build the new lines before any stock write: a product the store
+		// does not sell throws here and leaves the stock untouched
 		const warehouse = (await this.warehousesService
-			.get(warehouseId, true)
+			.get(order.warehouseId, true)
 			.pipe(first())
 			.toPromise()) as WithFullProducts;
 
 		const warehouseProducts = _.keyBy(warehouse.products, 'productId');
 
-		const newOrderProducts = await _.map(
-			products,
+		const newOrderProducts = _.map(
+			addedProducts,
 			(args): IOrderProductCreateObject => {
 				const wProduct = warehouseProducts[args.productId];
 
@@ -533,15 +526,40 @@ export class OrdersService extends DBService<Order>
 			}
 		);
 
-		for (const product of products) {
+		for (const product of order.products) {
+			if (newProductsIds.includes(product.product.id)) {
+				const newProduct = products.find(
+					(p: { productId: string }) =>
+						p.productId === product.product.id
+				);
+
+				if (newProduct) {
+					product.count += newProduct.count;
+
+					await this.warehousesProductsService.decreaseCount(
+						order.warehouseId,
+						newProduct.productId, // what product availability should be decreased
+						newProduct.count // how many to remove
+					);
+
+					await this.warehousesProductsService.increaseSoldCount(
+						order.warehouseId,
+						newProduct.productId,
+						newProduct.count
+					);
+				}
+			}
+		}
+
+		for (const product of addedProducts) {
 			await this.warehousesProductsService.decreaseCount(
-				warehouseId,
+				order.warehouseId,
 				product.productId,
 				product.count
 			);
 
 			await this.warehousesProductsService.increaseSoldCount(
-				warehouseId,
+				order.warehouseId,
 				product.productId,
 				product.count
 			);
@@ -564,98 +582,56 @@ export class OrdersService extends DBService<Order>
 
 		const order = await this._get(orderId);
 
-		const oldProductsIds = order.products.map(
-			(p: OrderProduct) => p.product.id
-		);
+		assertOrderProductsCanChange(order);
+		assertOrderStore(order, warehouseId);
 
-		const newProductsIds = products.map((p) => p.productId);
+		// Check every line before any stock write: a refused line must not
+		// leave the earlier lines restocked while the order stays the same
+		const decreases = new Map<
+			string,
+			{ orderProduct: OrderProduct; count: number }
+		>();
 
-		for (const product of order.products) {
-			if (newProductsIds.includes(product.product.id)) {
-				const newProduct = products.find(
-					(p: { productId: string }) =>
-						p.productId === product.product.id
-				);
-
-				if (newProduct) {
-					product.count -= newProduct.count;
-					if (product.count >= 1) {
-						await this.warehousesProductsService.decreaseSoldCount(
-							warehouseId,
-							// what product availability should be decreased
-							newProduct.productId,
-							// how many to remove
-							newProduct.count
-						);
-
-						await this.warehousesProductsService.increaseCount(
-							warehouseId,
-							newProduct.productId,
-							newProduct.count
-						);
-					} else {
-						throw new Error(
-							`You can not decrease product to be === 0 !`
-						);
-					}
-				}
-			}
-		}
-
-		products = products.filter(
-			(p: { [x: string]: string }) =>
-				!oldProductsIds.includes(p['productId'])
-		);
-
-		const warehouse = (await this.warehousesService
-			.get(warehouseId, true)
-			.pipe(first())
-			.toPromise()) as WithFullProducts;
-
-		const warehouseProducts = _.keyBy(warehouse.products, 'productId');
-
-		const newOrderProducts = await _.map(
-			products,
-			(args): IOrderProductCreateObject => {
-				const wProduct = warehouseProducts[args.productId];
-
-				if (!wProduct) {
-					throw new Error(
-						`WarehouseOrdersService got call to create(userId, orderProducts) - But there is no product with the id ${args.productId}!`
-					);
-				}
-
-				return {
-					count: args.count,
-					price: wProduct.price,
-					initialPrice: wProduct.initialPrice,
-					deliveryTimeMin: wProduct.deliveryTimeMin,
-					deliveryTimeMax: wProduct.deliveryTimeMax,
-					product: wProduct.product as Product,
-					isManufacturing: wProduct.isManufacturing,
-					isCarrierRequired: wProduct.isCarrierRequired,
-					isDeliveryRequired: wProduct.isDeliveryRequired,
-					isTakeaway: wProduct.isTakeaway,
-				};
-			}
-		);
-
-		for (const product of products) {
-			await this.warehousesProductsService.decreaseCount(
-				warehouseId,
-				product.productId,
-				product.count
+		for (const { productId, count } of products) {
+			const orderProduct = order.products.find(
+				(p: OrderProduct) => p.product.id === productId
 			);
 
-			await this.warehousesProductsService.increaseSoldCount(
-				warehouseId,
-				product.productId,
-				product.count
+			if (!orderProduct) {
+				throw new Error(
+					`Order ${orderId} has no product with the id ${productId}!`
+				);
+			}
+
+			const decrease = decreases.has(productId)
+				? decreases.get(productId).count + count
+				: count;
+
+			if (orderProduct.count - decrease < 1) {
+				throw new Error(`You can not decrease product to be === 0 !`);
+			}
+
+			decreases.set(productId, { orderProduct, count: decrease });
+		}
+
+		for (const [productId, { orderProduct, count }] of decreases) {
+			orderProduct.count -= count;
+
+			await this.warehousesProductsService.decreaseSoldCount(
+				order.warehouseId,
+				productId,
+				count
+			);
+
+			await this.warehousesProductsService.increaseCount(
+				order.warehouseId,
+				productId,
+				count
 			);
 		}
 
 		return this.update(orderId, {
-			products: [...order.products, ...newOrderProducts],
+			products: order.products,
 		});
 	}
 
@@ -667,6 +643,9 @@ export class OrdersService extends DBService<Order>
 		await this._throwIfNotExists(orderId);
 
 		const order = await this._get(orderId);
+
+		// A cancelled or handed over order must not put its products back into stock again
+		assertOrderProductsCanChange(order);
 
 		const newProducts = order.products.filter(
 			(p: OrderProduct) => !productsIds.includes(p.product.id)
