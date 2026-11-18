@@ -249,6 +249,46 @@ describe('WarehousesCarriersService.updatePassword', () => {
 		await expectRefused(warehouse1Token, deletedCarrierId);
 	});
 
+	it('refuses a non-canonical spelling of another store carrier id', async () => {
+		// usedCarriersIds holds plain strings and is compared exactly, but the
+		// carrier lookup casts the id to an ObjectId, whose hex is
+		// case-insensitive. A store that registered itself with the victim's
+		// id in upper case must not reach the victim's carrier.
+		const victimId = '5f1e2d3c4b5a69788796a5b4';
+		const aliasId = victimId.toUpperCase();
+		const attackerToken = sign({
+			id: 'warehouse-alias',
+			role: 'warehouse',
+		});
+
+		warehouses['warehouse-victim'] = {
+			id: 'warehouse-victim',
+			isDeleted: false,
+			usedCarriersIds: [victimId],
+		};
+		warehouses['warehouse-alias'] = {
+			id: 'warehouse-alias',
+			isDeleted: false,
+			usedCarriersIds: [aliasId],
+		};
+		carriers[victimId] = {
+			id: victimId,
+			isDeleted: false,
+			isSharedCarrier: false,
+		};
+		carriersService.getCurrent.mockImplementation(
+			async (id: string) => carriers[String(id).toLowerCase()] || null
+		);
+
+		try {
+			await expectRefused(attackerToken, aliasId);
+		} finally {
+			delete warehouses['warehouse-victim'];
+			delete warehouses['warehouse-alias'];
+			delete carriers[victimId];
+		}
+	});
+
 	it("saves the password for the warehouse's own carrier", async () => {
 		await expect(
 			service.updatePassword(

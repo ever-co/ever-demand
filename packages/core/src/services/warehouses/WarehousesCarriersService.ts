@@ -145,7 +145,17 @@ export class WarehousesCarriersService implements IWarehouseCarriersRouter {
 
 		const carrier = await this.carriersService.getCurrent(id);
 
-		if (carrier == null || carrier.isDeleted || carrier.isSharedCarrier) {
+		// The two checks above compare `id` as an exact string against
+		// usedCarriersIds, but getCurrent casts it to an ObjectId, whose hex is
+		// case-insensitive. Without this, a store that lists the victim's id in
+		// upper case passes both checks (the victim's store lists it in lower
+		// case) and resets the victim's carrier. Only the canonical id counts.
+		if (
+			carrier == null ||
+			String(carrier.id) !== id ||
+			carrier.isDeleted ||
+			carrier.isSharedCarrier
+		) {
 			throw notAuthorized();
 		}
 
