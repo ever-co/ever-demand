@@ -30,17 +30,21 @@ interface IWarehouseRouter {
 		password: { current?: string; new: string }
 	): Promise<void>;
 
+	// The write listeners below take the store's own login token (or an admin
+	// login token) and refuse any other caller.
 	updateGeoLocation(
 		warehouseId: string,
-		geoLocation: IGeoLocationCreateObject
+		geoLocation: IGeoLocationCreateObject,
+		token: string
 	): Promise<Warehouse>;
 
 	updateAvailability(
 		warehouseId: string,
-		isAvailable: boolean
+		isAvailable: boolean,
+		token: string
 	): Promise<Warehouse>;
 
-	save(warehouse: Warehouse): Promise<Warehouse>;
+	save(warehouse: Warehouse, token: string): Promise<Warehouse>;
 }
 
 export default IWarehouseRouter;

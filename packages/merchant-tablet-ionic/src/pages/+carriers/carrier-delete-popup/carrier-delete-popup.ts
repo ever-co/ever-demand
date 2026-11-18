@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { first } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular';
+import { Store } from '../../../services/store.service';
 
 @Component({
 	selector: 'carrier-delete-popup',
@@ -14,7 +15,8 @@ export class CarrierDeletePopupPage {
 
 	constructor(
 		public modalCtrl: ModalController,
-		private warehouseRouter: WarehouseRouter
+		private warehouseRouter: WarehouseRouter,
+		private store: Store
 	) {}
 
 	get getWarehouseId() {
@@ -39,7 +41,7 @@ export class CarrierDeletePopupPage {
 			(x) => x !== carrierId
 		);
 
-		await this.warehouseRouter.save(merchant);
+		await this.warehouseRouter.save(merchant, this.store.token);
 
 		this.cancelModal();
 	}

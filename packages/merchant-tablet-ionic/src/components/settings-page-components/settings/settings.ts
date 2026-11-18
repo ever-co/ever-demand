@@ -7,6 +7,7 @@ import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehou
 import QRCode from 'qrcode';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { AlertController } from '@ionic/angular';
+import { Store } from '../../../services/store.service';
 
 @Component({
 	selector: 'merchant-settings',
@@ -35,7 +36,8 @@ export class SettingsComponent implements AfterViewInit {
 	constructor(
 		private warehouseRouter: WarehouseRouter,
 		public alertController: AlertController,
-		private barcodeScanner: BarcodeScanner
+		private barcodeScanner: BarcodeScanner,
+		private store: Store
 	) {}
 
 	ngAfterViewInit(): void {
@@ -56,7 +58,10 @@ export class SettingsComponent implements AfterViewInit {
 
 	async saveChanges() {
 		try {
-			await this.warehouseRouter.save(this.currWarehouse);
+			await this.warehouseRouter.save(
+				this.currWarehouse,
+				this.store.token
+			);
 			const alert = await this.alertController.create({
 				cssClass: 'success-info',
 				message: 'Successfully saved changes',

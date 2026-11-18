@@ -152,7 +152,7 @@ export class AddCarriersPopupPage implements OnInit, OnDestroy {
 			);
 		}
 
-		this.warehouseRouter.save(warehouse);
+		this.warehouseRouter.save(warehouse, this.store.token);
 	}
 
 	cancelModal() {

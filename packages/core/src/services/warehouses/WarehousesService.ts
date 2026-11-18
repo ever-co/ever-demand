@@ -257,17 +257,21 @@ export class WarehousesService extends DBService<Warehouse>
 	 * Set new location for existed warehouse
 	 * Note: we support moving merchants. For example, some people/companies sell products on the "go".
 	 * In such case, this method will be called periodically to update Merchant location in real-time
+	 * Refused unless `token` is the store's own login token or an admin token.
 	 *
 	 * @param {string} warehouseId
 	 * @param {IGeoLocationCreateObject} geoLocation
+	 * @param {string} token - the store's (or an admin's) login token
 	 * @returns {Promise<Warehouse>}
 	 * @memberof WarehousesService
 	 */
 	@asyncListener()
 	async updateGeoLocation(
 		warehouseId: string,
-		geoLocation: IGeoLocationCreateObject
+		geoLocation: IGeoLocationCreateObject,
+		token: string
 	): Promise<Warehouse> {
+		this.throwIfNotAuthorized(warehouseId, token);
 		await this.throwIfNotExists(warehouseId);
 		return this.update(warehouseId, { geoLocation });
 	}
@@ -275,32 +279,54 @@ export class WarehousesService extends DBService<Warehouse>
 	/**
 	 * Set warehouse to available or not available
 	 * (e.g. warehouse close or open etc)
+	 * Refused unless `token` is the store's own login token or an admin token.
 	 *
 	 * @param {string} warehouseId
 	 * @param {boolean} isAvailable
+	 * @param {string} token - the store's (or an admin's) login token
 	 * @returns {Promise<Warehouse>}
 	 * @memberof WarehousesService
 	 */
 	@asyncListener()
 	async updateAvailability(
 		warehouseId: string,
-		isAvailable: boolean
+		isAvailable: boolean,
+		token: string
 	): Promise<Warehouse> {
+		this.throwIfNotAuthorized(warehouseId, token);
 		await this.throwIfNotExists(warehouseId);
 		return this.update(warehouseId, { isActive: isAvailable });
 	}
 
 	/**
 	 * Update Merchant details
+	 * Refused unless `token` is the store's own login token or an admin token.
 	 *
 	 * @param {Warehouse} warehouse
+	 * @param {string} token - the store's (or an admin's) login token
 	 * @returns {Promise<Warehouse>}
 	 * @memberof WarehousesService
 	 */
 	@asyncListener()
 	async save(
-		@serialization((w: IWarehouse) => new Warehouse(w)) warehouse: Warehouse
+		@serialization((w: IWarehouse) => new Warehouse(w))
+		warehouse: Warehouse,
+		token: string
 	): Promise<Warehouse> {
+		this.throwIfNotAuthorized(warehouse.id, token);
+		return this._save(warehouse);
+	}
+
+	/**
+	 * Writes Merchant details without a token check. Only for in-process
+	 * callers that loaded the store themselves (not a socket listener); the
+	 * `save` listener checks the caller's token and then calls this.
+	 *
+	 * @param {Warehouse} warehouse
+	 * @returns {Promise<Warehouse>}
+	 * @memberof WarehousesService
+	 */
+	async _save(warehouse: Warehouse): Promise<Warehouse> {
 		await this.throwIfNotExists(warehouse.id);
 
 		warehouse = _.clone(warehouse);
@@ -325,6 +351,30 @@ export class WarehousesService extends DBService<Warehouse>
 		if (!store || store.isDeleted) {
 			throw Error(`Store with id '${storeId}' does not exists!`);
 		}
+	}
+
+	/**
+	 * Throws unless `token` is the login token of the store `warehouseId`
+	 * (role 'warehouse') or an admin login token (role 'admin'). Runs before
+	 * the store is looked up and every refusal throws the same error, so a
+	 * caller learns nothing about which check failed or whether the store
+	 * exists.
+	 *
+	 * @param {string} warehouseId
+	 * @param {string} token
+	 * @memberof WarehousesService
+	 */
+	private throwIfNotAuthorized(warehouseId: string, token: string): void {
+		const tokenStoreId = this.authService.getVerifiedId(token, 'warehouse');
+
+		if (
+			(tokenStoreId != null && tokenStoreId === warehouseId) ||
+			this.authService.getVerifiedId(token, 'admin') != null
+		) {
+			return;
+		}
+
+		throw new Error('Not authorized to update the store');
 	}
 
 	private async _get(id: string, fullProducts = false): Promise<Warehouse> {

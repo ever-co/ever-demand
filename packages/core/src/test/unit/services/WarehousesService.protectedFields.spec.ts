@@ -39,6 +39,9 @@ import { WarehousesService } from '../../../services/warehouses/WarehousesServic
 
 describe('WarehousesService.save protected fields', () => {
 	const warehouseId = '5c4f1b3e2d4a1b0012345678';
+	// `save` first checks the caller's login token (see
+	// WarehousesService.writeAuth.spec.ts); these calls carry the store's own.
+	const storeToken = 'store-token';
 
 	let service: WarehousesService;
 
@@ -66,7 +69,15 @@ describe('WarehousesService.save protected fields', () => {
 		mockDb.get.mockReset();
 		mockDb.get.mockReturnValue(of({ id: warehouseId, isDeleted: false }));
 
-		service = new WarehousesService({} as any, (() => ({})) as any);
+		service = new WarehousesService(
+			{} as any,
+			(() => ({
+				getVerifiedId: (token: string, role: string) =>
+					token === storeToken && role === 'warehouse'
+						? warehouseId
+						: null,
+			})) as any
+		);
 	});
 
 	it('does not write hash, isBanned, isDeleted or a $ operator', async () => {
@@ -77,7 +88,8 @@ describe('WarehousesService.save protected fields', () => {
 				isBanned: false,
 				isDeleted: false,
 				$set: { hash: 'h' },
-			})
+			}),
+			storeToken
 		);
 
 		const updateObject = sentToUpdate();
@@ -96,7 +108,8 @@ describe('WarehousesService.save protected fields', () => {
 				_createdAt: '2020-01-01T00:00:00.000Z',
 				_updatedAt: '2020-01-01T00:00:00.000Z',
 				$unset: { isDeleted: 1 },
-			})
+			}),
+			storeToken
 		);
 
 		expect(Object.keys(sentToUpdate()).sort()).toEqual([
@@ -112,7 +125,8 @@ describe('WarehousesService.save protected fields', () => {
 				name: 'New name',
 				isActive: true,
 				contactEmail: 'store@example.com',
-			})
+			}),
+			storeToken
 		);
 
 		const updateObject = sentToUpdate();

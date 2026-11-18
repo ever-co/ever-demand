@@ -98,7 +98,7 @@ export class CarriersPage implements OnInit, OnDestroy {
 				(x) => x !== carrierId
 			);
 
-			await this.warehouseRouter.save(merchant);
+			await this.warehouseRouter.save(merchant, this.store.token);
 		}
 	}
 

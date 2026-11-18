@@ -200,9 +200,11 @@ type Mutation {
 		password: WarehousePasswordUpdateInput!
 	): Void
 
+	# token: the store's own login token or an admin login token
 	updateStoreGeoLocation(
 		storeId: String!
 		geoLocation: GeoLocationCreateObject!
+		token: String!
 	): Warehouse!
 }
 

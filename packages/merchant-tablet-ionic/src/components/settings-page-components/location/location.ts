@@ -25,6 +25,7 @@ import {
 import { isEmpty } from 'lodash';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertController } from '@ionic/angular';
+import { Store } from '../../../services/store.service';
 
 @Component({
 	selector: 'merchant-location',
@@ -65,7 +66,8 @@ export class LocationComponent implements OnInit, OnChanges, OnDestroy {
 		private formBuilder: FormBuilder,
 		private warehouseRouter: WarehouseRouter,
 		public alertController: AlertController,
-		private translate: TranslateService
+		private translate: TranslateService,
+		private store: Store
 	) {
 		this.buildForm();
 		this.bindFormControls();
@@ -111,7 +113,10 @@ export class LocationComponent implements OnInit, OnChanges, OnDestroy {
 
 	async saveChanges() {
 		this.prepareUpdate();
-		const warehouse = await this.warehouseRouter.save(this.currWarehouse);
+		const warehouse = await this.warehouseRouter.save(
+			this.currWarehouse,
+			this.store.token
+		);
 		const alert = await this.alertController.create({
 			cssClass: 'success-info',
 			message: 'Successfully saved changes',

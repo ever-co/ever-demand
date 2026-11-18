@@ -752,6 +752,7 @@ export type MutationUpdateWarehousePasswordArgs = {
 export type MutationUpdateStoreGeoLocationArgs = {
 	storeId: Scalars['String'];
 	geoLocation: GeoLocationCreateObject;
+	token: Scalars['String'];
 };
 
 export type MutationCreateOrderArgs = {

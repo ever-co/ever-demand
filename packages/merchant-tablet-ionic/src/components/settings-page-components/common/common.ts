@@ -8,6 +8,7 @@ import {
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { AlertController } from '@ionic/angular';
+import { Store } from '../../../services/store.service';
 
 @Component({
 	selector: 'merchant-common',
@@ -26,7 +27,8 @@ export class CommonComponent implements OnChanges {
 	constructor(
 		private formBuilder: FormBuilder,
 		private warehouseRouter: WarehouseRouter,
-		public alertController: AlertController
+		public alertController: AlertController,
+		private store: Store
 	) {
 		this.buildForm();
 		this.bindFormControls();
@@ -34,7 +36,7 @@ export class CommonComponent implements OnChanges {
 
 	async saveChanges() {
 		this.prepareUpdate();
-		await this.warehouseRouter.save(this.currWarehouse);
+		await this.warehouseRouter.save(this.currWarehouse, this.store.token);
 		const alert = await this.alertController.create({
 			cssClass: 'success-info',
 			message: 'Successfully saved changes',

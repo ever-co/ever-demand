@@ -8,6 +8,7 @@ import {
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { AlertController } from '@ionic/angular';
+import { Store } from '../../../services/store.service';
 
 @Component({
 	selector: 'merchant-account',
@@ -27,7 +28,8 @@ export class AccountComponent implements OnInit, OnChanges, OnDestroy {
 	constructor(
 		private formBuilder: FormBuilder,
 		private warehouseRouter: WarehouseRouter,
-		public alertController: AlertController
+		public alertController: AlertController,
+		private store: Store
 	) {
 		this.buildForm();
 		this.bindFormControls();
@@ -35,7 +37,7 @@ export class AccountComponent implements OnInit, OnChanges, OnDestroy {
 
 	async saveChanges() {
 		this.prepareUpdate();
-		await this.warehouseRouter.save(this.currWarehouse);
+		await this.warehouseRouter.save(this.currWarehouse, this.store.token);
 		if (this.password.value) {
 			try {
 				await this.warehouseRouter.updatePassword(

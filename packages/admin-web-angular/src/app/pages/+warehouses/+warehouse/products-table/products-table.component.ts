@@ -22,6 +22,7 @@ import {
 	WarehouseProductViewModel,
 	WarehouseProductsComponent,
 } from '@app/@shared/warehouse-product/forms/warehouse-products-table';
+import { Store } from '@app/@core/data/store.service';
 
 @Component({
 	selector: 'ea-store-products-table',
@@ -49,7 +50,8 @@ export class ProductsTableComponent implements OnDestroy {
 		private readonly warehouseRouter: WarehouseRouter,
 		private readonly _router: Router,
 		private readonly _notifyService: NotifyService,
-		private readonly modalService: NgbModal
+		private readonly modalService: NgbModal,
+		private readonly store: Store
 	) {}
 
 	editProduct(ev) {
@@ -104,7 +106,7 @@ export class ProductsTableComponent implements OnDestroy {
 						.map((product) => product.id)
 						.includes(p.productId)
 			);
-			this.warehouseRouter.save(this.warehouse);
+			this.warehouseRouter.save(this.warehouse, this.store.token);
 			this.loading = false;
 			const message = 'Selected products are deleted!';
 			this._notifyService.success(message);

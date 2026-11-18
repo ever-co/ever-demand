@@ -21,6 +21,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
+import { Store } from '@app/@core/data/store.service';
 
 const SHOW_TOP_PRODUCTS_QUANTITY: number = 10;
 
@@ -46,7 +47,8 @@ export class WarehouseProductsViewComponent
 		private _productLocalesService: ProductLocalesService,
 		private warehouseRouter: WarehouseRouter,
 		private readonly _router: Router,
-		private toasterService: ToasterService
+		private toasterService: ToasterService,
+		private readonly store: Store
 	) {}
 
 	ngOnChanges() {
@@ -60,7 +62,7 @@ export class WarehouseProductsViewComponent
 		this.warehouse.products = this.warehouse.products.filter(
 			(p: WarehouseProduct) => p.id !== warehouseProduct.id
 		);
-		this.warehouseRouter.save(this.warehouse);
+		this.warehouseRouter.save(this.warehouse, this.store.token);
 	}
 
 	editProduct(warehouseProduct: WarehouseProduct) {

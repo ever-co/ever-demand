@@ -19,6 +19,7 @@ import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehou
 import { NotifyService } from '@app/@core/services/notify/notify.service';
 import Product from '@modules/server.common/entities/Product';
 import { Router } from '@angular/router';
+import { Store } from '@app/@core/data/store.service';
 
 @Component({
 	selector: 'ea-merchants-setup-products',
@@ -66,7 +67,8 @@ export class SetupMerchantProductsComponent implements OnChanges, OnDestroy {
 		private warehouseProductsRouter: WarehouseProductsRouter,
 		private warehouseRouter: WarehouseRouter,
 		private notifyService: NotifyService,
-		private router: Router
+		private router: Router,
+		private readonly store: Store
 	) {}
 
 	get haveProductsForAdd() {
@@ -130,7 +132,7 @@ export class SetupMerchantProductsComponent implements OnChanges, OnDestroy {
 					(p: WarehouseProduct) => p.productId !== data.id
 				);
 
-				await this.warehouseRouter.save(store);
+				await this.warehouseRouter.save(store, this.store.token);
 			} else {
 				throw new Error("Store id don't exist");
 			}
