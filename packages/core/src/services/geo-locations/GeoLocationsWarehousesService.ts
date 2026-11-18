@@ -160,6 +160,7 @@ export class GeoLocationsWarehousesService
 							$maxDistance: maxDistance,
 						},
 					},
+					isDeleted: { $eq: false },
 				},
 				options.activeOnly ? { isActive: true } : {},
 				options.inStoreMode ? { inStoreMode: true } : {},
@@ -209,6 +210,7 @@ export class GeoLocationsWarehousesService
 							$maxDistance: maxDistance,
 						},
 					},
+					isDeleted: { $eq: false },
 				},
 				options.activeOnly ? { isActive: true } : {}
 			)
