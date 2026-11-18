@@ -18,6 +18,7 @@ import { CarrierService } from '../../../services/carrier.service';
 import { ModalController } from '@ionic/angular';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { WarehouseCarriersRouter } from '@modules/client.common.angular2/routers/warehouse-carriers-router.service';
+import { Store } from '../../../services/store.service';
 
 @Component({
 	selector: 'carrier-edit-popup',
@@ -61,7 +62,8 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 	constructor(
 		public modalCtrl: ModalController,
 		private _carrierService: CarrierService,
-		private warehouseCarriersRouter: WarehouseCarriersRouter
+		private warehouseCarriersRouter: WarehouseCarriersRouter,
+		private store: Store
 	) {}
 
 	ngOnInit(): void {}
@@ -119,7 +121,8 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 		if (account.password) {
 			await this.warehouseCarriersRouter.updatePassword(
 				carrier.id,
-				account.password
+				account.password,
+				this.store.token
 			);
 		}
 
