@@ -2,6 +2,7 @@ import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus'
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
 import {
 	assertCarrierStatusTransition,
+	assertOrderProductsCanChange,
 	assertWarehouseStatusTransition,
 	isCarrierStatusTransitionAllowed,
 	isWarehouseStatusTransitionAllowed,
@@ -151,5 +152,32 @@ describe('order warehouse status transitions', () => {
 		expect(() =>
 			assertWarehouseStatusTransition(W.NoStatus, 99 as any)
 		).toThrow(/Unknown warehouse status/);
+	});
+});
+
+describe('assertOrderProductsCanChange', () => {
+	const C = OrderCarrierStatus;
+	const W = OrderWarehouseStatus;
+
+	it.each([
+		[{ isCancelled: true }, /is cancelled/],
+		[{ carrierStatus: C.DeliveryCompleted }, /was already handed over/],
+		[{ warehouseStatus: W.GivenToCarrier }, /was already handed over/],
+		[{ warehouseStatus: W.GivenToCustomer }, /was already handed over/],
+	])('refuses %p', (order, message) => {
+		expect(() =>
+			assertOrderProductsCanChange({ id: 'o1', ...order })
+		).toThrow(message);
+	});
+
+	it.each([
+		[{ isCancelled: false, warehouseStatus: W.PackagingFinished }],
+		[{ carrierStatus: C.NoCarrier, warehouseStatus: W.NoStatus }],
+		[{ carrierStatus: C.IssuesDuringDelivery }],
+		[{ warehouseStatus: W.AllocationFailed }],
+	])('allows %p', (order) => {
+		expect(() =>
+			assertOrderProductsCanChange({ id: 'o1', ...order })
+		).not.toThrow();
 	});
 });

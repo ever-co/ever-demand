@@ -196,6 +196,35 @@ export function assertOrderCanBeCancelled(order: {
 }
 
 /**
+ * Throws if the products of the order can no longer be added, decreased or removed:
+ * a cancelled order already put its products back into store stock, and an order
+ * handed over to the carrier or to the customer already left the store. Changing
+ * the products of such an order would restock (or take) them a second time.
+ */
+export function assertOrderProductsCanChange(order: {
+	id?: string;
+	isCancelled?: boolean;
+	carrierStatus?: OrderCarrierStatus;
+	warehouseStatus?: OrderWarehouseStatus;
+}): void {
+	if (order.isCancelled) {
+		throw new Error(
+			`Order ${order.id} is cancelled, so its products can not change!`
+		);
+	}
+
+	if (
+		order.carrierStatus === OrderCarrierStatus.DeliveryCompleted ||
+		order.warehouseStatus === OrderWarehouseStatus.GivenToCarrier ||
+		order.warehouseStatus === OrderWarehouseStatus.GivenToCustomer
+	) {
+		throw new Error(
+			`Order ${order.id} was already handed over, so its products can not change!`
+		);
+	}
+}
+
+/**
  * Mongo filter for an order that is not cancelled. Status writes match only
  * such an order, so a cancel that lands after their check makes them match nothing.
  */
