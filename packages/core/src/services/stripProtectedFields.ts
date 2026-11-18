@@ -1,6 +1,7 @@
 /**
  * Fields the generic socket update listeners (WarehousesService.save,
- * CarriersService.updateById and UsersService.updateUser) must never write.
+ * CarriersService.updateById, UsersService.updateUser and
+ * AdminsService.updateById) must never write.
  * Anyone who opens a socket to those routers can call them, so without this
  * a caller could set its own password hash and then log in, undo a ban or
  * restore a deleted account. Each field has its own server-side writer: the
