@@ -144,7 +144,7 @@ describe('OrdersService order product changes', () => {
 
 	// Orders whose products were already put back into stock (cancelled)
 	// or left the store (handed over to the carrier or to the customer)
-	const lockedOrders: Array<[string, Record<string, any>]> = [
+	const lockedOrders: [string, Record<string, any>][] = [
 		['cancelled', { isCancelled: true }],
 		[
 			'delivered by the carrier',
