@@ -56,7 +56,8 @@
 		"@angular-devkit/build-angular": "~13.1.0",
 		"@angular-devkit/architect": "^0.1301.0",
 		"@angular-devkit/core": "^13.1.0",
-		"rxjs": "^7.4.0"
+		"rxjs": "^7.4.0",
+		"@babel/traverse": "^7.29.14"
 	},
 	"dependencies": {
 		"@angular/animations": "^13.1.0",
