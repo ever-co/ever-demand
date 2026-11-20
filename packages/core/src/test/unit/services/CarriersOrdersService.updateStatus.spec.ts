@@ -48,13 +48,16 @@ interface SampleOrder {
 
 describe('CarriersOrdersService.updateStatus', () => {
 	const carrierId = 'carrier-1';
-	const carrier = { id: carrierId };
+	let carrier: any;
 
 	let service: CarriersOrdersService;
 	let updateMultiple: jest.Mock;
+	let update: jest.Mock;
 
 	beforeEach(() => {
+		carrier = { id: carrierId };
 		updateMultiple = jest.fn(async () => []);
+		update = jest.fn(async () => undefined);
 
 		const carriersService = {
 			throwIfNotExists: jest.fn(async () => undefined),
@@ -65,7 +68,7 @@ describe('CarriersOrdersService.updateStatus', () => {
 		service = new CarriersOrdersService(
 			carriersService as any,
 			{} as any,
-			{ updateMultiple } as any,
+			{ updateMultiple, update } as any,
 			{} as any,
 			{} as any,
 			{} as any
@@ -195,6 +198,117 @@ describe('CarriersOrdersService.updateStatus', () => {
 				})
 			)
 		).toBe(true);
+	});
+
+	describe('delivery time estimate', () => {
+		const geoLocation = (lng: number, lat: number) => ({
+			loc: { type: 'Point', coordinates: [lng, lat] },
+		});
+
+		const orderFor = (id: string, customerLocation?: any) => ({
+			id,
+			user: customerLocation ? { geoLocation: customerLocation } : {},
+		});
+
+		it.each([
+			['Got product', OrderCarrierStatus.CarrierPickedUpOrder],
+			['Start delivery', OrderCarrierStatus.CarrierStartDelivery],
+		])(
+			'%s stores the time from the carrier to each customer',
+			async (_label, status: OrderCarrierStatus) => {
+				carrier.geoLocation = geoLocation(0, 0);
+				updateMultiple.mockResolvedValue([
+					// about 1.1 km and about 11 km away
+					orderFor('near', geoLocation(0, 0.01)),
+					orderFor('far', geoLocation(0, 0.1)),
+				]);
+
+				await service.updateStatus(carrierId, status);
+
+				expect(update).toHaveBeenCalledTimes(2);
+				const [nearId, nearUpdate] = update.mock.calls[0];
+				const [farId, farUpdate] = update.mock.calls[1];
+
+				expect(nearId).toBe('near');
+				expect(farId).toBe('far');
+				expect(nearUpdate.deliveryTimeEstimate).toBeGreaterThan(0);
+				expect(farUpdate.deliveryTimeEstimate).toBeGreaterThan(
+					nearUpdate.deliveryTimeEstimate
+				);
+				expect(Object.keys(nearUpdate)).toEqual(['deliveryTimeEstimate']);
+			}
+		);
+
+		it('leaves the estimate alone when the carrier has no location', async () => {
+			updateMultiple.mockResolvedValue([
+				orderFor('o1', geoLocation(0, 0.01)),
+			]);
+
+			await service.updateStatus(
+				carrierId,
+				OrderCarrierStatus.CarrierStartDelivery
+			);
+
+			expect(update).not.toHaveBeenCalled();
+		});
+
+		it('skips an order without a customer location and still estimates the rest', async () => {
+			carrier.geoLocation = geoLocation(0, 0);
+			updateMultiple.mockResolvedValue([
+				orderFor('no-location'),
+				orderFor('with-location', geoLocation(0, 0.01)),
+			]);
+
+			await service.updateStatus(
+				carrierId,
+				OrderCarrierStatus.CarrierStartDelivery
+			);
+
+			expect(update).toHaveBeenCalledTimes(1);
+			expect(update.mock.calls[0][0]).toBe('with-location');
+		});
+
+		it('does not fail the status change when saving an estimate fails', async () => {
+			carrier.geoLocation = geoLocation(0, 0);
+			updateMultiple.mockResolvedValue([
+				orderFor('o1', geoLocation(0, 0.01)),
+				orderFor('o2', geoLocation(0, 0.02)),
+			]);
+			update.mockRejectedValueOnce(new Error('db down'));
+
+			await expect(
+				service.updateStatus(
+					carrierId,
+					OrderCarrierStatus.CarrierStartDelivery
+				)
+			).resolves.toBeDefined();
+
+			expect(update).toHaveBeenCalledTimes(2);
+		});
+
+		it.each([
+			['delivered', OrderCarrierStatus.DeliveryCompleted],
+			['returned with an issue', OrderCarrierStatus.IssuesDuringDelivery],
+			['refused by the client', OrderCarrierStatus.ClientRefuseTakingOrder],
+		])(
+			'resets the estimate to 0 for an order %s',
+			async (_label, status: OrderCarrierStatus) => {
+				carrier.geoLocation = geoLocation(0, 0);
+				const { updateObj } = await filterUsedFor(status);
+
+				expect(updateObj.deliveryTimeEstimate).toBe(0);
+				expect(update).not.toHaveBeenCalled();
+			}
+		);
+
+		it('does not touch the estimate for other statuses', async () => {
+			const { updateObj } = await filterUsedFor(
+				OrderCarrierStatus.CarrierArrivedToCustomer
+			);
+
+			expect(updateObj).not.toHaveProperty('deliveryTimeEstimate');
+			expect(update).not.toHaveBeenCalled();
+		});
 	});
 
 	it('leaves out an unpaid order already delivered', async () => {
