@@ -17,7 +17,8 @@ import {
 	GeoLocationsOrdersService,
 	GeoLocationOrdersOptions,
 } from '../geo-locations';
-import { getDistance } from '@modules/server.common/utils';
+import Utils, { getDistance } from '@modules/server.common/utils';
+import { estimateDeliverySeconds } from '../../helpers/deliveryEstimate';
 import { ExistenceEventType } from '@pyro/db-server';
 import {
 	concat,
@@ -242,14 +243,25 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 
 		if (finishedProcessingStatuses.includes(status)) {
 			updateObj.finishedProcessingTime = Date.now();
+			// Nothing is left to deliver: no time estimate either.
+			updateObj.deliveryTimeEstimate = 0;
 		}
 
-		if ((await this.carriersService.getCurrent(carrierId)) != null) {
+		const currentCarrier = await this.carriersService.getCurrent(carrierId);
+
+		if (currentCarrier != null) {
 			try {
 				const orders = await this.ordersService.updateMultiple(
 					findObj,
 					updateObj
 				);
+
+				if (
+					status === OrderCarrierStatus.CarrierStartDelivery ||
+					status === OrderCarrierStatus.CarrierPickedUpOrder
+				) {
+					await this.setDeliveryTimeEstimates(currentCarrier, orders);
+				}
 
 				if (status === OrderCarrierStatus.DeliveryCompleted) {
 					return await this.carriersService.increaseNumberOfDeliveries(
@@ -510,6 +522,45 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 		} catch (err) {
 			this.log.error(err);
 			throw err;
+		}
+	}
+
+	/**
+	 * Stores, for each order, how many seconds the carrier needs to reach the
+	 * customer from where the carrier is now (`Order.deliveryTimeEstimate`).
+	 * An order or carrier without a location keeps its estimate. A failure
+	 * here is logged and never fails the status change itself.
+	 */
+	private async setDeliveryTimeEstimates(
+		carrier: Carrier,
+		orders: Order[]
+	): Promise<void> {
+		const carrierLoc = carrier?.geoLocation?.loc;
+
+		if (!carrierLoc || !Array.isArray(carrierLoc.coordinates)) {
+			return;
+		}
+
+		for (const order of orders) {
+			try {
+				const customerLoc = order?.user?.geoLocation?.loc;
+
+				if (!customerLoc || !Array.isArray(customerLoc.coordinates)) {
+					continue;
+				}
+
+				const deliveryTimeEstimate = estimateDeliverySeconds(
+					Utils.getLocDistance(carrierLoc, customerLoc)
+				);
+
+				if (deliveryTimeEstimate > 0) {
+					await this.ordersService.update(order.id, {
+						deliveryTimeEstimate,
+					});
+				}
+			} catch (err) {
+				this.log.error(err);
+			}
 		}
 	}
 
