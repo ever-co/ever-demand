@@ -31,7 +31,10 @@ import {
 } from 'rxjs/operators';
 import { throwError, of, Observable } from 'rxjs';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
-import { isCarrierStatusTransitionAllowed } from '../orders/orderStatusTransitions';
+import {
+	isCarrierStatusTransitionAllowed,
+	notCancelledOrderFilter,
+} from '../orders/orderStatusTransitions';
 import { throwIfInvalidOrderIds } from '../../helpers/objectIds';
 
 /**
@@ -543,8 +546,16 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 		return warehouses.map((warehouse) => warehouse.id);
 	}
 
+	/**
+	 * Mongo filter for the orders a carrier still works on: not cancelled, not
+	 * deleted, not finished and ready for or given to the carrier. A cancelled
+	 * order keeps its carrier and carrier status, so without the cancel check it
+	 * would stay the carrier's current order.
+	 */
 	private getOrdersForWorkFilter(carrierId: string) {
 		return {
+			...notCancelledOrderFilter,
+			isDeleted: { $eq: false },
 			carrierStatus: {
 				$nin: [
 					OrderCarrierStatus.IssuesDuringDelivery,
