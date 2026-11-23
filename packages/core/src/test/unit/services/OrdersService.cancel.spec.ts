@@ -270,6 +270,92 @@ describe('OrdersService writes on cancelled orders', () => {
 		});
 	});
 
+	describe('confirm', () => {
+		it('refuses to confirm a cancelled order and does not write it', async () => {
+			stored.isCancelled = true;
+
+			await expect(service.confirm(ORDER_ID)).rejects.toThrow(
+				/is cancelled/
+			);
+
+			expect(update).not.toHaveBeenCalled();
+			expect(model.findOneAndUpdate).not.toHaveBeenCalled();
+			expect(stored.isConfirmed).toBeUndefined();
+			expect(stored.warehouseStatus).toBe(
+				OrderWarehouseStatus.GivenToCarrier
+			);
+		});
+
+		it('refuses when the order is cancelled between the read and the write', async () => {
+			get.mockResolvedValueOnce(read());
+			stored.isCancelled = true;
+
+			await expect(service.confirm(ORDER_ID)).rejects.toThrow(
+				/is cancelled/
+			);
+
+			expect(update).not.toHaveBeenCalled();
+			expect(stored.isConfirmed).toBeUndefined();
+		});
+
+		it('confirms an open order with a write that skips cancelled orders', async () => {
+			const order = await service.confirm(ORDER_ID);
+
+			expect(order.isConfirmed).toBe(true);
+			expect(order.warehouseStatus).toBe(
+				OrderWarehouseStatus.ReadyForProcessing
+			);
+			expect(update).not.toHaveBeenCalled();
+			expect(model.findOneAndUpdate).toHaveBeenCalledWith(
+				{ _id: ORDER_ID, isCancelled: { $ne: true } },
+				{
+					isConfirmed: true,
+					warehouseStatus: OrderWarehouseStatus.ReadyForProcessing,
+				},
+				{ new: true }
+			);
+		});
+	});
+
+	describe('paid', () => {
+		it('refuses to mark a cancelled order as paid and does not write it', async () => {
+			stored.isCancelled = true;
+
+			await expect(service.paid(ORDER_ID)).rejects.toThrow(
+				/is cancelled/
+			);
+
+			expect(update).not.toHaveBeenCalled();
+			expect(model.findOneAndUpdate).not.toHaveBeenCalled();
+			expect(stored.isPaid).toBe(false);
+		});
+
+		it('refuses when the order is cancelled between the read and the write', async () => {
+			get.mockResolvedValueOnce(read());
+			stored.isCancelled = true;
+
+			await expect(service.paid(ORDER_ID)).rejects.toThrow(
+				/is cancelled/
+			);
+
+			expect(update).not.toHaveBeenCalled();
+			expect(stored.isPaid).toBe(false);
+		});
+
+		it('marks an open order as paid with a write that skips cancelled orders', async () => {
+			const order = await service.paid(ORDER_ID);
+
+			expect(order.isPaid).toBe(true);
+			expect(stored.isPaid).toBe(true);
+			expect(update).not.toHaveBeenCalled();
+			expect(model.findOneAndUpdate).toHaveBeenCalledWith(
+				{ _id: ORDER_ID, isCancelled: { $ne: true } },
+				{ isPaid: true },
+				{ new: true }
+			);
+		});
+	});
+
 	describe('updateWarehouseStatus', () => {
 		beforeEach(() => {
 			stored.carrier = undefined;

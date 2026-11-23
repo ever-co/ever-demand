@@ -459,10 +459,25 @@ export class OrdersService extends DBService<Order>
 	async confirm(orderId: Order['id']): Promise<Order> {
 		await this._throwIfNotExists(orderId);
 
-		return this.update(orderId, {
-			isConfirmed: true,
-			warehouseStatus: OrderWarehouseStatus.ReadyForProcessing,
-		});
+		if ((await this._get(orderId)).isCancelled) {
+			throw orderIsCancelledError(orderId);
+		}
+
+		// Matches nothing when a cancel landed after the check above
+		const order = await this._updateIfMatches(
+			orderId,
+			notCancelledOrderFilter,
+			{
+				isConfirmed: true,
+				warehouseStatus: OrderWarehouseStatus.ReadyForProcessing,
+			}
+		);
+
+		if (order == null) {
+			throw orderIsCancelledError(orderId);
+		}
+
+		return order;
 	}
 
 	@asyncListener()
@@ -748,7 +763,22 @@ export class OrdersService extends DBService<Order>
 	async paid(orderId: Order['id']): Promise<Order> {
 		await this._throwIfNotExists(orderId);
 
-		return this.update(orderId, { isPaid: true });
+		if ((await this._get(orderId)).isCancelled) {
+			throw orderIsCancelledError(orderId);
+		}
+
+		// Matches nothing when a cancel landed after the check above
+		const order = await this._updateIfMatches(
+			orderId,
+			notCancelledOrderFilter,
+			{ isPaid: true }
+		);
+
+		if (order == null) {
+			throw orderIsCancelledError(orderId);
+		}
+
+		return order;
 	}
 
 	@asyncListener()
