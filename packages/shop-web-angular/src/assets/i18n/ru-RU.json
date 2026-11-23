@@ -59,6 +59,8 @@
 		"THANKS_FOR_REGISTERING": "Спасибо, что зарегистрировались!",
 		"WHAT_YOU_SEE_IS_WHAT_YOU_GET": "Что вы видите, это то, что вы получаете",
 		"INVITE_CODE": "Код приглашения",
+		"CONTINUE_WITH_FACEBOOK": "Продолжить через Facebook",
+		"CONTINUE_WITH_GOOGLE": "Продолжить через Google",
 		"NOTIFICATION_MESSAGE": {
 			"WRONG_CODE_TRY_AGAIN": "Неправильный код, повторите попытку.",
 			"TO_BE_INVITED_ALLOW_GPS": "Чтобы пригласить, разрешите GPS."

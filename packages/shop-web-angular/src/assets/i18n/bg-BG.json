@@ -59,6 +59,8 @@
 		"THANKS_FOR_REGISTERING": "Благодаря за регистрирането!",
 		"WHAT_YOU_SEE_IS_WHAT_YOU_GET": "Това, което виждате, е това, което получавате",
 		"INVITE_CODE": "Код за покана",
+		"CONTINUE_WITH_FACEBOOK": "Продължете с Facebook",
+		"CONTINUE_WITH_GOOGLE": "Продължете с Google",
 		"NOTIFICATION_MESSAGE": {
 			"WRONG_CODE_TRY_AGAIN": "Грешен код, опитайте отново.",
 			"TO_BE_INVITED_ALLOW_GPS": "За да бъдете поканени, позволете GPS."
