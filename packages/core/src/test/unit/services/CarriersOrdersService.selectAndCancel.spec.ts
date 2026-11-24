@@ -383,6 +383,9 @@ describe('CarriersOrdersService.selectedForDelivery and cancelDelivery', () => {
 	});
 
 	describe('cancelDelivery', () => {
+		// cancelDelivery hands the order ids to skipOrders, which only takes
+		// 24-character hex ObjectId strings and stores them in lower case.
+
 		/** Cancels the order and returns it as it is afterwards. */
 		async function cancel(order: SampleOrder) {
 			orders = [order];
@@ -395,7 +398,8 @@ describe('CarriersOrdersService.selectedForDelivery and cancelDelivery', () => {
 		function skippedOrderIds(): string[] {
 			expect(updateCarrier).toHaveBeenCalledTimes(1);
 
-			return updateCarrier.mock.calls[0][1].$push.skippedOrderIds.$each;
+			return updateCarrier.mock.calls[0][1].$addToSet.skippedOrderIds
+				.$each;
 		}
 
 		it.each([
@@ -405,7 +409,7 @@ describe('CarriersOrdersService.selectedForDelivery and cancelDelivery', () => {
 		])(
 			'unassigns an order of the carrier that is %s',
 			async (_label, carrierStatus: OrderCarrierStatus) => {
-				const order = sampleOrder('mine', {
+				const order = sampleOrder('5f1a2b3c4d5e6f7a8b9c0d01', {
 					carrier: carrierId,
 					carrierStatus,
 				});
@@ -414,7 +418,7 @@ describe('CarriersOrdersService.selectedForDelivery and cancelDelivery', () => {
 
 				expect(after.carrier).toBeUndefined();
 				expect(after.carrierStatus).toBe(OrderCarrierStatus.NoCarrier);
-				expect(skippedOrderIds()).toEqual([order.id]);
+				expect(skippedOrderIds()).toEqual([order.id.toLowerCase()]);
 			}
 		);
 
@@ -433,7 +437,7 @@ describe('CarriersOrdersService.selectedForDelivery and cancelDelivery', () => {
 		});
 
 		it("leaves another carrier's order alone", async () => {
-			const order = sampleOrder('theirs', {
+			const order = sampleOrder('5f1a2b3c4d5e6f7a8b9c0d02', {
 				carrier: otherCarrierId,
 				carrierStatus: OrderCarrierStatus.CarrierSelectedOrder,
 			});
@@ -442,7 +446,7 @@ describe('CarriersOrdersService.selectedForDelivery and cancelDelivery', () => {
 		});
 
 		it('leaves a delivered order alone', async () => {
-			const order = sampleOrder('delivered', {
+			const order = sampleOrder('5f1a2b3c4d5e6f7a8b9c0d03', {
 				carrier: carrierId,
 				carrierStatus: OrderCarrierStatus.DeliveryCompleted,
 			});
@@ -451,7 +455,7 @@ describe('CarriersOrdersService.selectedForDelivery and cancelDelivery', () => {
 		});
 
 		it('leaves an order alone that another carrier takes before the write', async () => {
-			const order = sampleOrder('raced', {
+			const order = sampleOrder('5f1a2b3c4d5e6f7a8b9c0d04', {
 				warehouse: competitionStoreId,
 				carrier: carrierId,
 				carrierStatus: OrderCarrierStatus.CarrierSelectedOrder,
@@ -478,12 +482,12 @@ describe('CarriersOrdersService.selectedForDelivery and cancelDelivery', () => {
 			// In a competition store the carrier app offers Cancel on a free
 			// order (drive-to-warehouse and get-product). The order must stop
 			// being offered to this carrier, as it was before the filter.
-			const order = sampleOrder('offered', {
+			const order = sampleOrder('5f1a2b3c4d5e6f7a8b9c0d05', {
 				warehouse: competitionStoreId,
 			});
 
 			expect(await cancel(order)).toEqual(order);
-			expect(skippedOrderIds()).toEqual([order.id]);
+			expect(skippedOrderIds()).toEqual([order.id.toLowerCase()]);
 		});
 	});
 });
