@@ -400,10 +400,22 @@ export class OrdersService extends DBService<Order>
 								}
 							);
 						} catch (err) {
-							this.log.error(
-								{ callId, orderId, chargeId, err },
-								'.payWithStripe(orderId, cardId) could not refund the charge of a cancelled order'
-							);
+							// refundWithStripe from the app may have refunded
+							// this charge first: the money is back already.
+							if (
+								err != null &&
+								err.code === 'charge_already_refunded'
+							) {
+								this.log.info(
+									{ callId, orderId, chargeId, err },
+									'.payWithStripe(orderId, cardId) the charge of a cancelled order was already refunded'
+								);
+							} else {
+								this.log.error(
+									{ callId, orderId, chargeId, err },
+									'.payWithStripe(orderId, cardId) could not refund the charge of a cancelled order'
+								);
+							}
 						}
 
 						throw orderIsCancelledError(orderId);
@@ -437,6 +449,8 @@ export class OrdersService extends DBService<Order>
 	 * Refuses orders that are not cancelled, and orders that were delivered
 	 * (carrier DeliveryCompleted or warehouse GivenToCustomer). Issue and
 	 * refusal statuses stay refundable once the order is cancelled.
+	 * A charge Stripe reports as already refunded resolves with the order,
+	 * so a repeated cancel still completes; any other Stripe error rejects.
 	 * TODO: move to Payments Service
 	 *
 	 * @param {Order['id']} orderId
@@ -476,9 +490,29 @@ export class OrdersService extends DBService<Order>
 				}
 
 				if (order.stripeChargeId != null) {
-					refund = await this.stripe.refunds.create({
-						charge: order.stripeChargeId,
-					});
+					const chargeId = order.stripeChargeId;
+
+					try {
+						refund = await this.stripe.refunds.create({
+							charge: chargeId,
+						});
+					} catch (err) {
+						// A repeated cancel (double tap, a lost reply) or
+						// payWithStripe refunded this charge before: the
+						// customer has the money back, so the cancel is done.
+						if (
+							err != null &&
+							err.code === 'charge_already_refunded'
+						) {
+							this.log.info(
+								{ callId, orderId, chargeId, err },
+								'.refundWithStripe(orderId) charge was already refunded'
+							);
+							return order;
+						}
+
+						throw err;
+					}
 
 					this.log.info(
 						{ callId, orderId, refund },
