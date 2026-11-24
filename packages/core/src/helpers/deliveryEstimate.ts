@@ -39,7 +39,9 @@ export function estimateDeliverySeconds(
 	}
 
 	const speed =
-		typeof speedKmh === 'number' && Number.isFinite(speedKmh) && speedKmh > 0
+		typeof speedKmh === 'number' &&
+		Number.isFinite(speedKmh) &&
+		speedKmh > 0
 			? speedKmh
 			: DEFAULT_CARRIER_SPEED_KMH;
 

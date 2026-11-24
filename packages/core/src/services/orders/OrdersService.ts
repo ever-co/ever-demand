@@ -213,6 +213,8 @@ export class OrdersService extends DBService<Order>
 			];
 			if (finishedProcessingStatuses.includes(status)) {
 				updateObj.finishedProcessingTime = Date.now();
+				// Nothing is left to deliver: no time estimate either.
+				updateObj.deliveryTimeEstimate = 0;
 			}
 
 			// Matches nothing when a cancel landed after the check above

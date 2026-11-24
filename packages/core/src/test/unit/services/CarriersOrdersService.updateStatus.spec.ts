@@ -205,10 +205,27 @@ describe('CarriersOrdersService.updateStatus', () => {
 			loc: { type: 'Point', coordinates: [lng, lat] },
 		});
 
-		const orderFor = (id: string, customerLocation?: any) => ({
+		/**
+		 * An order as `updateMultiple` returns it after the status write:
+		 * this carrier's, in `status` (Start delivery unless given).
+		 */
+		const orderFor = (
+			id: string,
+			customerLocation?: any,
+			overrides: any = {}
+		) => ({
 			id,
+			carrierId,
+			carrierStatus: OrderCarrierStatus.CarrierStartDelivery,
 			user: customerLocation ? { geoLocation: customerLocation } : {},
+			...overrides,
 		});
+
+		/** The estimate writes: every `updateMultiple` call after the status write. */
+		const estimateWrites = () =>
+			updateMultiple.mock.calls
+				.slice(1)
+				.map(([findObj, updateObj]) => ({ findObj, updateObj }));
 
 		it.each([
 			['Got product', OrderCarrierStatus.CarrierPickedUpOrder],
@@ -219,25 +236,92 @@ describe('CarriersOrdersService.updateStatus', () => {
 				carrier.geoLocation = geoLocation(0, 0);
 				updateMultiple.mockResolvedValue([
 					// about 1.1 km and about 11 km away
-					orderFor('near', geoLocation(0, 0.01)),
-					orderFor('far', geoLocation(0, 0.1)),
+					orderFor('near', geoLocation(0, 0.01), {
+						carrierStatus: status,
+					}),
+					orderFor('far', geoLocation(0, 0.1), {
+						carrierStatus: status,
+					}),
 				]);
 
 				await service.updateStatus(carrierId, status);
 
-				expect(update).toHaveBeenCalledTimes(2);
-				const [nearId, nearUpdate] = update.mock.calls[0];
-				const [farId, farUpdate] = update.mock.calls[1];
+				const writes = estimateWrites();
+				expect(writes).toHaveLength(2);
+				const [near, far] = writes;
 
-				expect(nearId).toBe('near');
-				expect(farId).toBe('far');
-				expect(nearUpdate.deliveryTimeEstimate).toBeGreaterThan(0);
-				expect(farUpdate.deliveryTimeEstimate).toBeGreaterThan(
-					nearUpdate.deliveryTimeEstimate
+				expect(near.findObj._id).toBe('near');
+				expect(far.findObj._id).toBe('far');
+				expect(near.updateObj.deliveryTimeEstimate).toBeGreaterThan(0);
+				expect(far.updateObj.deliveryTimeEstimate).toBeGreaterThan(
+					near.updateObj.deliveryTimeEstimate
 				);
-				expect(Object.keys(nearUpdate)).toEqual(['deliveryTimeEstimate']);
+				expect(Object.keys(near.updateObj)).toEqual([
+					'deliveryTimeEstimate',
+				]);
+				expect(update).not.toHaveBeenCalled();
 			}
 		);
+
+		it('writes an estimate only while the order still has this carrier and status', async () => {
+			carrier.geoLocation = geoLocation(0, 0);
+			updateMultiple.mockResolvedValue([
+				orderFor('o1', geoLocation(0, 0.01)),
+			]);
+
+			await service.updateStatus(
+				carrierId,
+				OrderCarrierStatus.CarrierStartDelivery
+			);
+
+			const [{ findObj }] = estimateWrites();
+			const matches = (order: any) => sift(findObj)(order);
+			const inDelivery = {
+				_id: 'o1',
+				carrier: carrierId,
+				carrierStatus: OrderCarrierStatus.CarrierStartDelivery,
+				isCancelled: false,
+			};
+
+			expect(matches(inDelivery)).toBe(true);
+			// delivered, returned or cancelled after the status write
+			expect(
+				matches({
+					...inDelivery,
+					carrierStatus: OrderCarrierStatus.DeliveryCompleted,
+				})
+			).toBe(false);
+			expect(
+				matches({
+					...inDelivery,
+					carrierStatus: OrderCarrierStatus.IssuesDuringDelivery,
+				})
+			).toBe(false);
+			expect(matches({ ...inDelivery, isCancelled: true })).toBe(false);
+			expect(matches({ ...inDelivery, carrier: 'carrier-2' })).toBe(
+				false
+			);
+		});
+
+		it('skips an order the status write left alone', async () => {
+			carrier.geoLocation = geoLocation(0, 0);
+			updateMultiple.mockResolvedValue([
+				// read by updateMultiple, then delivered before its write
+				orderFor('delivered', geoLocation(0, 0.01), {
+					carrierStatus: OrderCarrierStatus.DeliveryCompleted,
+				}),
+				orderFor('moved', geoLocation(0, 0.01)),
+			]);
+
+			await service.updateStatus(
+				carrierId,
+				OrderCarrierStatus.CarrierStartDelivery
+			);
+
+			expect(estimateWrites().map((w) => w.findObj._id)).toEqual([
+				'moved',
+			]);
+		});
 
 		it('leaves the estimate alone when the carrier has no location', async () => {
 			updateMultiple.mockResolvedValue([
@@ -249,6 +333,7 @@ describe('CarriersOrdersService.updateStatus', () => {
 				OrderCarrierStatus.CarrierStartDelivery
 			);
 
+			expect(estimateWrites()).toHaveLength(0);
 			expect(update).not.toHaveBeenCalled();
 		});
 
@@ -264,17 +349,21 @@ describe('CarriersOrdersService.updateStatus', () => {
 				OrderCarrierStatus.CarrierStartDelivery
 			);
 
-			expect(update).toHaveBeenCalledTimes(1);
-			expect(update.mock.calls[0][0]).toBe('with-location');
+			expect(estimateWrites().map((w) => w.findObj._id)).toEqual([
+				'with-location',
+			]);
 		});
 
 		it('does not fail the status change when saving an estimate fails', async () => {
 			carrier.geoLocation = geoLocation(0, 0);
-			updateMultiple.mockResolvedValue([
+			const orders = [
 				orderFor('o1', geoLocation(0, 0.01)),
 				orderFor('o2', geoLocation(0, 0.02)),
-			]);
-			update.mockRejectedValueOnce(new Error('db down'));
+			];
+			updateMultiple
+				.mockResolvedValueOnce(orders)
+				.mockRejectedValueOnce(new Error('db down'))
+				.mockResolvedValue(orders);
 
 			await expect(
 				service.updateStatus(
@@ -283,13 +372,16 @@ describe('CarriersOrdersService.updateStatus', () => {
 				)
 			).resolves.toBeDefined();
 
-			expect(update).toHaveBeenCalledTimes(2);
+			expect(estimateWrites()).toHaveLength(2);
 		});
 
 		it.each([
 			['delivered', OrderCarrierStatus.DeliveryCompleted],
 			['returned with an issue', OrderCarrierStatus.IssuesDuringDelivery],
-			['refused by the client', OrderCarrierStatus.ClientRefuseTakingOrder],
+			[
+				'refused by the client',
+				OrderCarrierStatus.ClientRefuseTakingOrder,
+			],
 		])(
 			'resets the estimate to 0 for an order %s',
 			async (_label, status: OrderCarrierStatus) => {

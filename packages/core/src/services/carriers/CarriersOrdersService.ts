@@ -149,6 +149,16 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 				if (takenOrders.length === 0) {
 					throw new Error('Orders are no longer available');
 				}
+
+				// In a competition store taking the order is "Got product"
+				if (carrierCompetition) {
+					await this.setDeliveryTimeEstimates(
+						carrierId,
+						carrier,
+						takenOrders,
+						carrierStatus
+					);
+				}
 			}
 
 			carrier = await this.carriersService
@@ -260,7 +270,12 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 					status === OrderCarrierStatus.CarrierStartDelivery ||
 					status === OrderCarrierStatus.CarrierPickedUpOrder
 				) {
-					await this.setDeliveryTimeEstimates(currentCarrier, orders);
+					await this.setDeliveryTimeEstimates(
+						carrierId,
+						currentCarrier,
+						orders,
+						status
+					);
 				}
 
 				if (status === OrderCarrierStatus.DeliveryCompleted) {
@@ -307,6 +322,8 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 			{
 				$unset: { carrier: 1 },
 				carrierStatus: OrderCarrierStatus.NoCarrier,
+				// No carrier is on the way any more
+				deliveryTimeEstimate: 0,
 			}
 		);
 
@@ -526,14 +543,17 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 	}
 
 	/**
-	 * Stores, for each order, how many seconds the carrier needs to reach the
-	 * customer from where the carrier is now (`Order.deliveryTimeEstimate`).
-	 * An order or carrier without a location keeps its estimate. A failure
-	 * here is logged and never fails the status change itself.
+	 * Stores, for each order the carrier now has in `status`, how many seconds
+	 * the carrier needs to reach the customer from where the carrier is now
+	 * (`Order.deliveryTimeEstimate`). An order or carrier without a location
+	 * keeps its estimate. A failure here is logged and never fails the status
+	 * change itself.
 	 */
 	private async setDeliveryTimeEstimates(
+		carrierId: string,
 		carrier: Carrier,
-		orders: Order[]
+		orders: Order[],
+		status: OrderCarrierStatus
 	): Promise<void> {
 		const carrierLoc = carrier?.geoLocation?.loc;
 
@@ -541,27 +561,50 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 			return;
 		}
 
-		for (const order of orders) {
-			try {
-				const customerLoc = order?.user?.geoLocation?.loc;
+		// `updateMultiple` returns every order its first read matched, also
+		// one its write then left alone: estimate only the orders it moved.
+		const movedOrders = orders.filter(
+			(order) =>
+				order != null &&
+				order.carrierId === carrierId &&
+				order.carrierStatus === status
+		);
 
-				if (!customerLoc || !Array.isArray(customerLoc.coordinates)) {
-					continue;
+		await Promise.all(
+			movedOrders.map(async (order) => {
+				try {
+					const customerLoc = order.user?.geoLocation?.loc;
+
+					if (
+						!customerLoc ||
+						!Array.isArray(customerLoc.coordinates)
+					) {
+						return;
+					}
+
+					const deliveryTimeEstimate = estimateDeliverySeconds(
+						Utils.getLocDistance(carrierLoc, customerLoc)
+					);
+
+					if (deliveryTimeEstimate > 0) {
+						// Written only while the order still has this carrier
+						// and status: a delivery, return or cancel that lands
+						// in between keeps its cleared estimate.
+						await this.ordersService.updateMultiple(
+							{
+								_id: order.id,
+								carrier: carrierId,
+								carrierStatus: status,
+								isCancelled: { $ne: true },
+							},
+							{ deliveryTimeEstimate }
+						);
+					}
+				} catch (err) {
+					this.log.error(err);
 				}
-
-				const deliveryTimeEstimate = estimateDeliverySeconds(
-					Utils.getLocDistance(carrierLoc, customerLoc)
-				);
-
-				if (deliveryTimeEstimate > 0) {
-					await this.ordersService.update(order.id, {
-						deliveryTimeEstimate,
-					});
-				}
-			} catch (err) {
-				this.log.error(err);
-			}
-		}
+			})
+		);
 	}
 
 	/**
