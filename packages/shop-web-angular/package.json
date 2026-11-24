@@ -87,7 +87,7 @@
 		"watch:aot:dev": "yarn run build:aot:dev -- --watch",
 		"watch:prod": "yarn run build:prod -- --watch",
 		"watch:aot:prod": "yarn run build:aot:prod -- --watch",
-		"watch:test": "yarn run test -- --auto-watch --no-single-run",
+		"watch:test": "yarn run test -- --watch=true",
 		"watch": "yarn run watch:dev",
 		"webdriver-manager": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run config:dev && node --max_old_space_size=4096 ../../node_modules/protractor/bin/webdriver-manager",
 		"webdriver:start": "cross-env NODE_ENV=development NODE_OPTIONS=--max_old_space_size=4096 yarn run config:dev && node --max_old_space_size=4096 ../../node_modules/protractor/bin/webdriver-manager start",

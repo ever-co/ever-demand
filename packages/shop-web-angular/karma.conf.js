@@ -2,6 +2,15 @@
 // https://karma-runner.github.io/6.3/config/configuration-file.html
 
 module.exports = function (config) {
+	// `ng test --code-coverage` adds the `coverage` reporter (karma-coverage,
+	// not installed here) unless a coverage reporter is listed already, so
+	// list the installed coverage-istanbul reporter for coverage runs.
+	const codeCoverage = Boolean(
+		config.buildWebpack &&
+			config.buildWebpack.options &&
+			config.buildWebpack.options.codeCoverage
+	);
+
 	config.set({
 		basePath: '',
 		frameworks: ['jasmine', '@angular-devkit/build-angular'],
@@ -20,7 +29,9 @@ module.exports = function (config) {
 			reports: ['html', 'lcovonly', 'text-summary'],
 			fixWebpackSourcePaths: true,
 		},
-		reporters: ['progress', 'kjhtml'],
+		reporters: codeCoverage
+			? ['progress', 'kjhtml', 'coverage-istanbul']
+			: ['progress', 'kjhtml'],
 		port: 9876,
 		colors: true,
 		logLevel: config.LOG_INFO,

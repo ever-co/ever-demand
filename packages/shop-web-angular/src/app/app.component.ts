@@ -90,7 +90,7 @@ export class AppComponent implements OnInit {
 			// Same as Settings > switchLanguage: Hebrew reads right to left
 			this.document.documentElement.dir =
 				language === 'he-IL' ? 'rtl' : 'ltr';
-			this.document.documentElement.lang = language.substr(0, 2);
+			this.document.documentElement.lang = language.substring(0, 2);
 		}
 	}
 
