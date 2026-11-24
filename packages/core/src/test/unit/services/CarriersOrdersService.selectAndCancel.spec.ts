@@ -51,6 +51,8 @@ interface SampleOrder {
 	carrierStatus: OrderCarrierStatus;
 	isCancelled: boolean;
 	isDeleted: boolean;
+	user?: any;
+	deliveryTimeEstimate?: number;
 }
 
 interface SampleStore {
@@ -111,7 +113,7 @@ function applyUpdate(order: SampleOrder, updateObj: any): SampleOrder {
 }
 
 describe('CarriersOrdersService.selectedForDelivery and cancelDelivery', () => {
-	const carrier = { id: carrierId };
+	const carrier: { id: string; geoLocation?: any } = { id: carrierId };
 
 	let orders: SampleOrder[];
 	let beforeWrite: () => void;
@@ -123,6 +125,7 @@ describe('CarriersOrdersService.selectedForDelivery and cancelDelivery', () => {
 
 	beforeEach(() => {
 		orders = [];
+		delete carrier.geoLocation;
 		// Runs between the read and the write of an update, to stand for
 		// another carrier's call that lands in between.
 		beforeWrite = () => undefined;
@@ -288,6 +291,41 @@ describe('CarriersOrdersService.selectedForDelivery and cancelDelivery', () => {
 			});
 		});
 
+		describe('delivery time estimate', () => {
+			const geoLocation = (lng: number, lat: number) => ({
+				loc: { type: 'Point', coordinates: [lng, lat] },
+			});
+
+			beforeEach(() => {
+				carrier.geoLocation = geoLocation(0, 0);
+			});
+
+			it('is stored when a competition pick-up takes the order', async () => {
+				const order = sampleOrder('contested', {
+					warehouse: competitionStoreId,
+					user: { geoLocation: geoLocation(0, 0.01) },
+				});
+
+				await select(order, true);
+
+				expect(orders[0].carrierStatus).toBe(
+					OrderCarrierStatus.CarrierPickedUpOrder
+				);
+				expect(orders[0].deliveryTimeEstimate).toBeGreaterThan(0);
+			});
+
+			it('is not stored when a carrier only selects the order', async () => {
+				const order = sampleOrder('free', {
+					user: { geoLocation: geoLocation(0, 0.01) },
+				});
+
+				await select(order);
+
+				expect(updateMultiple).toHaveBeenCalledTimes(1);
+				expect(orders[0].deliveryTimeEstimate).toBeUndefined();
+			});
+		});
+
 		it("does not let a late carrier overwrite the competition winner's pick-up", async () => {
 			const order = sampleOrder('won', {
 				warehouse: competitionStoreId,
@@ -379,6 +417,20 @@ describe('CarriersOrdersService.selectedForDelivery and cancelDelivery', () => {
 				expect(skippedOrderIds()).toEqual([order.id]);
 			}
 		);
+
+		it('clears the delivery time estimate of an order it gives back', async () => {
+			// skipOrders only takes real ObjectId strings
+			const order = sampleOrder('5f1a2b3c4d5e6f7a8b9c0d1e', {
+				carrier: carrierId,
+				carrierStatus: OrderCarrierStatus.CarrierStartDelivery,
+				deliveryTimeEstimate: 900,
+			});
+
+			const after = await cancel(order);
+
+			expect(after.carrierStatus).toBe(OrderCarrierStatus.NoCarrier);
+			expect(after.deliveryTimeEstimate).toBe(0);
+		});
 
 		it("leaves another carrier's order alone", async () => {
 			const order = sampleOrder('theirs', {

@@ -17,7 +17,8 @@ import {
 	GeoLocationsOrdersService,
 	GeoLocationOrdersOptions,
 } from '../geo-locations';
-import { getDistance } from '@modules/server.common/utils';
+import Utils, { getDistance } from '@modules/server.common/utils';
+import { estimateDeliverySeconds } from '../../helpers/deliveryEstimate';
 import { ExistenceEventType } from '@pyro/db-server';
 import {
 	concat,
@@ -151,6 +152,16 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 				if (takenOrders.length === 0) {
 					throw new Error('Orders are no longer available');
 				}
+
+				// In a competition store taking the order is "Got product"
+				if (carrierCompetition) {
+					await this.setDeliveryTimeEstimates(
+						carrierId,
+						carrier,
+						takenOrders,
+						carrierStatus
+					);
+				}
 			}
 
 			carrier = await this.carriersService
@@ -245,14 +256,30 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 
 		if (finishedProcessingStatuses.includes(status)) {
 			updateObj.finishedProcessingTime = Date.now();
+			// Nothing is left to deliver: no time estimate either.
+			updateObj.deliveryTimeEstimate = 0;
 		}
 
-		if ((await this.carriersService.getCurrent(carrierId)) != null) {
+		const currentCarrier = await this.carriersService.getCurrent(carrierId);
+
+		if (currentCarrier != null) {
 			try {
 				const orders = await this.ordersService.updateMultiple(
 					findObj,
 					updateObj
 				);
+
+				if (
+					status === OrderCarrierStatus.CarrierStartDelivery ||
+					status === OrderCarrierStatus.CarrierPickedUpOrder
+				) {
+					await this.setDeliveryTimeEstimates(
+						carrierId,
+						currentCarrier,
+						orders,
+						status
+					);
+				}
 
 				if (status === OrderCarrierStatus.DeliveryCompleted) {
 					return await this.carriersService.increaseNumberOfDeliveries(
@@ -298,6 +325,8 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 			{
 				$unset: { carrier: 1 },
 				carrierStatus: OrderCarrierStatus.NoCarrier,
+				// No carrier is on the way any more
+				deliveryTimeEstimate: 0,
 			}
 		);
 
@@ -514,6 +543,71 @@ export class CarriersOrdersService implements ICarrierOrdersRouter, IService {
 			this.log.error(err);
 			throw err;
 		}
+	}
+
+	/**
+	 * Stores, for each order the carrier now has in `status`, how many seconds
+	 * the carrier needs to reach the customer from where the carrier is now
+	 * (`Order.deliveryTimeEstimate`). An order or carrier without a location
+	 * keeps its estimate. A failure here is logged and never fails the status
+	 * change itself.
+	 */
+	private async setDeliveryTimeEstimates(
+		carrierId: string,
+		carrier: Carrier,
+		orders: Order[],
+		status: OrderCarrierStatus
+	): Promise<void> {
+		const carrierLoc = carrier?.geoLocation?.loc;
+
+		if (!carrierLoc || !Array.isArray(carrierLoc.coordinates)) {
+			return;
+		}
+
+		// `updateMultiple` returns every order its first read matched, also
+		// one its write then left alone: estimate only the orders it moved.
+		const movedOrders = orders.filter(
+			(order) =>
+				order != null &&
+				order.carrierId === carrierId &&
+				order.carrierStatus === status
+		);
+
+		await Promise.all(
+			movedOrders.map(async (order) => {
+				try {
+					const customerLoc = order.user?.geoLocation?.loc;
+
+					if (
+						!customerLoc ||
+						!Array.isArray(customerLoc.coordinates)
+					) {
+						return;
+					}
+
+					const deliveryTimeEstimate = estimateDeliverySeconds(
+						Utils.getLocDistance(carrierLoc, customerLoc)
+					);
+
+					if (deliveryTimeEstimate > 0) {
+						// Written only while the order still has this carrier
+						// and status: a delivery, return or cancel that lands
+						// in between keeps its cleared estimate.
+						await this.ordersService.updateMultiple(
+							{
+								_id: order.id,
+								carrier: carrierId,
+								carrierStatus: status,
+								isCancelled: { $ne: true },
+							},
+							{ deliveryTimeEstimate }
+						);
+					}
+				} catch (err) {
+					this.log.error(err);
+				}
+			})
+		);
 	}
 
 	/**
