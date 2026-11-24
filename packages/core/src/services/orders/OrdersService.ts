@@ -362,9 +362,19 @@ export class OrdersService extends DBService<Order>
 
 					// Matches nothing when a cancel landed while Stripe was
 					// charging: a cancelled order must not become paid.
+					// Also matches nothing when a call with another card paid
+					// the order first, so its charge id is never overwritten.
+					// A call with the same card shares this charge (one
+					// idempotency key), so it still matches.
 					const paidOrder = await this._updateIfMatches(
 						orderId,
-						notCancelledOrderFilter,
+						{
+							...notCancelledOrderFilter,
+							$or: [
+								{ isPaid: { $ne: true } },
+								{ stripeChargeId: charge.id },
+							],
+						},
 						{
 							stripeChargeId: charge.id,
 							isPaid: true,
@@ -373,6 +383,89 @@ export class OrdersService extends DBService<Order>
 
 					if (paidOrder == null) {
 						const chargeId = charge.id;
+
+						// When this read fails, the charge is still refunded below
+						let latestOrder: Order | null = null;
+
+						try {
+							latestOrder = await this.getCurrent(orderId);
+						} catch (err) {
+							this.log.error(
+								{ callId, orderId, chargeId, err },
+								'.payWithStripe(orderId, cardId) could not read the order after the paid write matched nothing'
+							);
+						}
+
+						// Another charge paid the order first, even when it was
+						// cancelled since: that charge stays on the order, so
+						// only this second charge is refunded here.
+						if (
+							latestOrder != null &&
+							latestOrder.isPaid &&
+							latestOrder.stripeChargeId !== chargeId
+						) {
+							this.log.warn(
+								{
+									callId,
+									orderId,
+									chargeId,
+									paidChargeId: latestOrder.stripeChargeId,
+								},
+								'.payWithStripe(orderId, cardId) order was paid with another charge during the charge, refunding it'
+							);
+
+							try {
+								await this.stripe.refunds.create(
+									{ charge: chargeId },
+									{
+										idempotencyKey: `refund-order-${orderId}-charge-${chargeId}`,
+									}
+								);
+							} catch (err) {
+								this.log.error(
+									{ callId, orderId, chargeId, err },
+									'.payWithStripe(orderId, cardId) could not refund the second charge of a paid order'
+								);
+							}
+
+							throw new Error('Order is already paid');
+						}
+
+						// The read failed, so the order may be paid with another
+						// charge, which the cancelled path below would replace.
+						// Store this charge only on an unpaid order, then refund it.
+						if (latestOrder == null) {
+							try {
+								await this._updateIfMatches(
+									orderId,
+									{ isPaid: { $ne: true } },
+									{ stripeChargeId: chargeId }
+								);
+							} catch (err) {
+								this.log.error(
+									{ callId, orderId, chargeId, err },
+									'.payWithStripe(orderId, cardId) could not store the charge of an order it could not read'
+								);
+							}
+
+							try {
+								await this.stripe.refunds.create(
+									{ charge: chargeId },
+									{
+										idempotencyKey: `refund-order-${orderId}-charge-${chargeId}`,
+									}
+								);
+							} catch (err) {
+								this.log.error(
+									{ callId, orderId, chargeId, err },
+									'.payWithStripe(orderId, cardId) could not refund the charge of an order it could not read'
+								);
+							}
+
+							throw new Error(
+								`Order ${orderId} is cancelled or already paid`
+							);
+						}
 
 						this.log.warn(
 							{ callId, orderId, chargeId },

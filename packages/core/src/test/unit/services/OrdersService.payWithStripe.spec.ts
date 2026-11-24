@@ -49,13 +49,17 @@ const USER_ID = '5f1a2b3c4d5e6f7a8b9c0d2f';
 /**
  * Stand-in for the orders collection holding one order. Its findOneAndUpdate
  * applies the filter the way MongoDB does for the operators used here (plain
- * equality and $ne): a write whose filter does not match changes nothing and
- * resolves to null.
+ * equality, $ne and $or): a write whose filter does not match changes nothing
+ * and resolves to null.
  */
 function fakeOrdersModel(stored: Record<string, any>) {
-	const matches = (filter: Record<string, any>) =>
+	const matches = (filter: Record<string, any>): boolean =>
 		Object.keys(filter).every((key) => {
 			const condition = filter[key];
+
+			if (key === '$or') {
+				return condition.some(matches);
+			}
 
 			return condition != null &&
 				typeof condition === 'object' &&
@@ -190,7 +194,11 @@ describe('OrdersService.payWithStripe', () => {
 		);
 		expect(model.findOneAndUpdate).toHaveBeenCalledTimes(1);
 		expect(model.findOneAndUpdate).toHaveBeenCalledWith(
-			{ _id: ORDER_ID, isCancelled: { $ne: true } },
+			{
+				_id: ORDER_ID,
+				isCancelled: { $ne: true },
+				$or: [{ isPaid: { $ne: true } }, { stripeChargeId: 'ch_1' }],
+			},
 			{ stripeChargeId: 'ch_1', isPaid: true },
 			{ new: true }
 		);
@@ -312,6 +320,222 @@ describe('OrdersService.payWithStripe', () => {
 			expect(mockRefundsCreate).toHaveBeenCalledWith(
 				{ charge: 'ch_1' },
 				{ idempotencyKey: `refund-order-${ORDER_ID}-charge-ch_1` }
+			);
+		});
+
+		it('still refunds the charge when reading the order again fails', async () => {
+			const readError = new Error('Database is unavailable');
+			// The first read is the one before the paid write
+			(service as any).getCurrent
+				.mockImplementationOnce(async () => read())
+				.mockRejectedValueOnce(readError);
+
+			await expect(
+				service.payWithStripe(ORDER_ID, 'card_1')
+			).rejects.toThrow(/cancelled/);
+
+			expect(stored.isPaid).toBe(false);
+			// Stored only because the order is unpaid
+			expect(stored.stripeChargeId).toBe('ch_1');
+			expect(update).not.toHaveBeenCalled();
+			expect(mockLog.error).toHaveBeenCalledWith(
+				expect.objectContaining({
+					orderId: ORDER_ID,
+					chargeId: 'ch_1',
+					err: readError,
+				}),
+				expect.any(String)
+			);
+			expect(mockRefundsCreate).toHaveBeenCalledTimes(1);
+			expect(mockRefundsCreate).toHaveBeenCalledWith(
+				{ charge: 'ch_1' },
+				{ idempotencyKey: `refund-order-${ORDER_ID}-charge-ch_1` }
+			);
+		});
+	});
+
+	describe('when two calls pay the order at once', () => {
+		// Charges in the order the calls asked for them; each one resolves only
+		// when the test says so.
+		let pendingCharges: {
+			source: string;
+			resolve: (charge: { id: string }) => void;
+		}[];
+		// Resolves once both calls passed the isPaid check and are charging
+		let bothCharging: Promise<void>;
+
+		const pendingCharge = (source: string) => {
+			const charge = pendingCharges.find((c) => c.source === source);
+
+			if (charge == null) {
+				throw new Error(`No pending charge for ${source}`);
+			}
+
+			return charge;
+		};
+
+		beforeEach(() => {
+			pendingCharges = [];
+
+			let onBothCharging: () => void = () => undefined;
+			bothCharging = new Promise<void>((resolve) => {
+				onBothCharging = resolve;
+			});
+
+			mockChargesCreate.mockImplementation(
+				({ source }: { source: string }) =>
+					new Promise((resolve) => {
+						pendingCharges.push({ source, resolve });
+
+						if (pendingCharges.length === 2) {
+							onBothCharging();
+						}
+					})
+			);
+		});
+
+		it('keeps the first charge of another card and refunds the second one', async () => {
+			const first = service.payWithStripe(ORDER_ID, 'card_1');
+			const second = service.payWithStripe(ORDER_ID, 'card_2');
+
+			await bothCharging;
+
+			pendingCharge('card_1').resolve({ id: 'ch_1' });
+			const paid = await first;
+
+			pendingCharge('card_2').resolve({ id: 'ch_2' });
+			await expect(second).rejects.toThrow('Order is already paid');
+
+			expect(mockChargesCreate).toHaveBeenCalledTimes(2);
+			expect(paid.isPaid).toBe(true);
+			expect(stored.isPaid).toBe(true);
+			expect(stored.stripeChargeId).toBe('ch_1');
+			expect(update).not.toHaveBeenCalled();
+
+			expect(mockRefundsCreate).toHaveBeenCalledTimes(1);
+			expect(mockRefundsCreate).toHaveBeenCalledWith(
+				{ charge: 'ch_2' },
+				{ idempotencyKey: `refund-order-${ORDER_ID}-charge-ch_2` }
+			);
+			expect(mockLog.warn).toHaveBeenCalledWith(
+				expect.objectContaining({
+					orderId: ORDER_ID,
+					chargeId: 'ch_2',
+				}),
+				expect.any(String)
+			);
+		});
+
+		it('lets two calls with the same card share one charge and refunds nothing', async () => {
+			const first = service.payWithStripe(ORDER_ID, 'card_1');
+			const second = service.payWithStripe(ORDER_ID, 'card_1');
+
+			await bothCharging;
+
+			// One idempotency key, so Stripe returns the same charge to both calls
+			pendingCharges[0].resolve({ id: 'ch_1' });
+			const paidFirst = await first;
+
+			pendingCharges[1].resolve({ id: 'ch_1' });
+			const paidSecond = await second;
+
+			expect(mockChargesCreate).toHaveBeenCalledTimes(2);
+			expect(mockChargesCreate.mock.calls[0][1]).toEqual(
+				mockChargesCreate.mock.calls[1][1]
+			);
+			expect(paidFirst.isPaid).toBe(true);
+			expect(paidSecond.isPaid).toBe(true);
+			expect(model.findOneAndUpdate).toHaveBeenCalledTimes(2);
+			expect(stored.isPaid).toBe(true);
+			expect(stored.stripeChargeId).toBe('ch_1');
+			expect(update).not.toHaveBeenCalled();
+			expect(mockRefundsCreate).not.toHaveBeenCalled();
+		});
+
+		it('still rejects and keeps the first charge when the refund of the second one fails', async () => {
+			const refundError = new Error('Stripe is unavailable');
+			mockRefundsCreate.mockRejectedValue(refundError);
+
+			const first = service.payWithStripe(ORDER_ID, 'card_1');
+			const second = service.payWithStripe(ORDER_ID, 'card_2');
+
+			await bothCharging;
+
+			pendingCharge('card_1').resolve({ id: 'ch_1' });
+			await first;
+
+			pendingCharge('card_2').resolve({ id: 'ch_2' });
+			await expect(second).rejects.toThrow('Order is already paid');
+
+			expect(stored.stripeChargeId).toBe('ch_1');
+			expect(mockRefundsCreate).toHaveBeenCalledTimes(1);
+			expect(mockLog.error).toHaveBeenCalledWith(
+				expect.objectContaining({
+					orderId: ORDER_ID,
+					chargeId: 'ch_2',
+					err: refundError,
+				}),
+				expect.any(String)
+			);
+		});
+
+		it('keeps the first charge and refunds the second one when reading the order again fails', async () => {
+			const first = service.payWithStripe(ORDER_ID, 'card_1');
+			const second = service.payWithStripe(ORDER_ID, 'card_2');
+
+			await bothCharging;
+
+			pendingCharge('card_1').resolve({ id: 'ch_1' });
+			await first;
+
+			const readError = new Error('Database is unavailable');
+			// The first read is the one before the paid write of ch_2
+			(service as any).getCurrent
+				.mockImplementationOnce(async () => read())
+				.mockRejectedValueOnce(readError);
+
+			pendingCharge('card_2').resolve({ id: 'ch_2' });
+			await expect(second).rejects.toThrow('already paid');
+
+			expect(stored.isPaid).toBe(true);
+			expect(stored.stripeChargeId).toBe('ch_1');
+			expect(update).not.toHaveBeenCalled();
+			expect(mockLog.error).toHaveBeenCalledWith(
+				expect.objectContaining({
+					orderId: ORDER_ID,
+					chargeId: 'ch_2',
+					err: readError,
+				}),
+				expect.any(String)
+			);
+			expect(mockRefundsCreate).toHaveBeenCalledTimes(1);
+			expect(mockRefundsCreate).toHaveBeenCalledWith(
+				{ charge: 'ch_2' },
+				{ idempotencyKey: `refund-order-${ORDER_ID}-charge-ch_2` }
+			);
+		});
+
+		it('keeps the first charge when the paid order is also cancelled during the second charge', async () => {
+			const first = service.payWithStripe(ORDER_ID, 'card_1');
+			const second = service.payWithStripe(ORDER_ID, 'card_2');
+
+			await bothCharging;
+
+			pendingCharge('card_1').resolve({ id: 'ch_1' });
+			await first;
+
+			// The cancel refunds ch_1 through refundWithStripe, so ch_1 must stay
+			stored.isCancelled = true;
+
+			pendingCharge('card_2').resolve({ id: 'ch_2' });
+			await expect(second).rejects.toThrow('Order is already paid');
+
+			expect(stored.stripeChargeId).toBe('ch_1');
+			expect(update).not.toHaveBeenCalled();
+			expect(mockRefundsCreate).toHaveBeenCalledTimes(1);
+			expect(mockRefundsCreate).toHaveBeenCalledWith(
+				{ charge: 'ch_2' },
+				{ idempotencyKey: `refund-order-${ORDER_ID}-charge-ch_2` }
 			);
 		});
 	});
