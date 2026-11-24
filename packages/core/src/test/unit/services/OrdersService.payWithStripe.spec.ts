@@ -260,6 +260,36 @@ describe('OrdersService.payWithStripe', () => {
 			);
 		});
 
+		it('logs at info, not error, when Stripe says the charge was already refunded', async () => {
+			// refundWithStripe from the app refunded the shared charge first
+			const alreadyRefunded = {
+				type: 'StripeInvalidRequestError',
+				code: 'charge_already_refunded',
+				message: 'Charge ch_1 has already been refunded.',
+			};
+			mockRefundsCreate.mockRejectedValue(alreadyRefunded);
+
+			await expect(
+				service.payWithStripe(ORDER_ID, 'card_1')
+			).rejects.toThrow(/cancelled/);
+
+			expect(stored.isPaid).toBe(false);
+			expect(stored.stripeChargeId).toBe('ch_1');
+			expect(mockRefundsCreate).toHaveBeenCalledTimes(1);
+			expect(mockLog.info).toHaveBeenCalledWith(
+				expect.objectContaining({
+					orderId: ORDER_ID,
+					chargeId: 'ch_1',
+					err: alreadyRefunded,
+				}),
+				expect.any(String)
+			);
+			expect(mockLog.error).not.toHaveBeenCalledWith(
+				expect.objectContaining({ err: alreadyRefunded }),
+				expect.any(String)
+			);
+		});
+
 		it('still refunds the charge when storing its id fails', async () => {
 			const storeError = new Error('Database is unavailable');
 			update.mockRejectedValue(storeError);
