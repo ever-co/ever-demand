@@ -25,7 +25,15 @@ const UNNAMED = {
 	'empty interpolation': '<button>{{ }}</button>',
 	'empty aria-label': '<button aria-label="">\n<svg></svg></button>',
 	'whitespace and comment only': '<button> <!-- Close --> &nbsp; </button>',
-	'aria-label text inside another attribute value': '<button title="see aria-label=\'Close\'"><svg></svg></button>'
+	'aria-label text inside another attribute value': '<button title="see aria-label=\'Close\'"><svg></svg></button>',
+	'link with only an icon component': '<a href="/auth/google" class="login-button"><fa-icon [icon]="[\'fab\', \'google\']"></fa-icon></a>',
+	'link with only an aria-hidden icon':
+		'<a\n\thref="/auth/facebook"\n>\n\t<fa-icon [icon]="[\'fab\', \'facebook\']" aria-hidden="true"></fa-icon>\n</a>',
+	'link with only a decorative image': '<a routerLink="/"><img src="logo.svg" alt="" /></a>',
+	'link with an image that has no alt': '<a routerLink="/"><img src="logo.svg" /></a>',
+	'link with an image bound to an empty alt': '<a routerLink="/"><img src="logo.svg" [alt]="\'\'" /></a>',
+	'link with an aria-hidden image': '<a routerLink="/"><img src="logo.svg" alt="Home" aria-hidden="true" /></a>',
+	'upper-case link tag': '<A href="/x"><svg></svg></A>'
 };
 
 /** Buttons that have a visible text or an accessible name: none may be reported. */
@@ -41,7 +49,14 @@ const NAMED = {
 	'aria-label': '<button aria-label="Close"><svg></svg></button>',
 	'bound aria-label': "<button [attr.aria-label]=\"'CLOSE' | translate\"><i class=\"material-icons\">close</i></button>",
 	'aria-labelledby': '<button aria-labelledby="title"><svg></svg></button>',
-	'attribute value containing a greater-than sign': '<button (click)="a > b && go()">Go</button>'
+	'attribute value containing a greater-than sign': '<button (click)="a > b && go()">Go</button>',
+	'link with text': '<a href="/about">About</a>',
+	'link with a bound aria-label and an aria-hidden icon':
+		'<a\n\thref="/auth/google"\n\t[attr.aria-label]="\'LOG_IN_VIEW.CONTINUE_WITH_GOOGLE\' | translate"\n>\n\t<fa-icon [icon]="[\'fab\', \'google\']" aria-hidden="true"></fa-icon>\n</a>',
+	'link with an image that has a translated alt': '<a routerLink="/"><img src="logo.svg" [alt]="\'HOME\' | translate" /></a>',
+	'button with an image that has an alt': '<button><img src="close.svg" alt="Close"></button>',
+	'an abbr tag is not taken for an a tag': '<abbr title="x"><svg></svg></abbr>',
+	'an area tag is not taken for an a tag': '<map><area href="/x" alt="X"></map>'
 };
 
 let failures = 0;
@@ -66,6 +81,12 @@ assert.strictEqual(
 	findProblems('<div>\n<button>Ok</button>\n<button><svg></svg></button>\n</div>')[0].line,
 	3,
 	'the reported line number must point at the offending button'
+);
+
+assert.strictEqual(
+	findProblems('<div>\n<a href="/">Home</a>\n<a href="/x"><svg></svg></a>\n</div>')[0].tag,
+	'a',
+	'a problem on a link must name the <a> tag'
 );
 
 if (failures > 0) {

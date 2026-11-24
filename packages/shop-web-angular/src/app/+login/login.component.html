@@ -55,16 +55,26 @@
 			<a
 				href="{{ HTTPS_SERVICES_ENDPOINT }}/auth/facebook"
 				class="login-button fbIcon"
-					[attr.aria-label]="'LOG_IN_VIEW.CONTINUE_WITH_FACEBOOK' | translate"
+				[attr.aria-label]="
+					'LOG_IN_VIEW.CONTINUE_WITH_FACEBOOK' | translate
+				"
 			>
-				<fa-icon [icon]="['fab', 'facebook']" aria-hidden="true"></fa-icon>
+				<fa-icon
+					[icon]="['fab', 'facebook']"
+					aria-hidden="true"
+				></fa-icon>
 			</a>
 			<a
 				href="{{ HTTPS_SERVICES_ENDPOINT }}/auth/google"
 				class="login-button googleIcon"
-					[attr.aria-label]="'LOG_IN_VIEW.CONTINUE_WITH_GOOGLE' | translate"
+				[attr.aria-label]="
+					'LOG_IN_VIEW.CONTINUE_WITH_GOOGLE' | translate
+				"
 			>
-				<fa-icon [icon]="['fab', 'google']" aria-hidden="true"></fa-icon>
+				<fa-icon
+					[icon]="['fab', 'google']"
+					aria-hidden="true"
+				></fa-icon>
 			</a>
 		</div>
 	</form>
