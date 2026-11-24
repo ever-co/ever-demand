@@ -360,10 +360,56 @@ export class OrdersService extends DBService<Order>
 						}
 					);
 
-					order = await this.update(orderId, {
-						stripeChargeId: charge.id,
-						isPaid: true,
-					});
+					// Matches nothing when a cancel landed while Stripe was
+					// charging: a cancelled order must not become paid.
+					const paidOrder = await this._updateIfMatches(
+						orderId,
+						notCancelledOrderFilter,
+						{
+							stripeChargeId: charge.id,
+							isPaid: true,
+						}
+					);
+
+					if (paidOrder == null) {
+						const chargeId = charge.id;
+
+						this.log.warn(
+							{ callId, orderId, chargeId },
+							'.payWithStripe(orderId, cardId) order was cancelled during the charge, refunding it'
+						);
+
+						// Keep the charge traceable, so refundWithStripe can
+						// retry when the refund below fails.
+						try {
+							await this.update(orderId, {
+								stripeChargeId: chargeId,
+							});
+						} catch (err) {
+							this.log.error(
+								{ callId, orderId, chargeId, err },
+								'.payWithStripe(orderId, cardId) could not store the charge of a cancelled order'
+							);
+						}
+
+						try {
+							await this.stripe.refunds.create(
+								{ charge: chargeId },
+								{
+									idempotencyKey: `refund-order-${orderId}-charge-${chargeId}`,
+								}
+							);
+						} catch (err) {
+							this.log.error(
+								{ callId, orderId, chargeId, err },
+								'.payWithStripe(orderId, cardId) could not refund the charge of a cancelled order'
+							);
+						}
+
+						throw orderIsCancelledError(orderId);
+					}
+
+					order = paidOrder;
 				} else {
 					throw new Error('User specified in order is not found!');
 				}
