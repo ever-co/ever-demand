@@ -1,4 +1,3 @@
-import 'jasmine';
 import { ActivatedRoute, Data } from '@angular/router';
 import { inject, TestBed } from '@angular/core/testing';
 import { AboutComponent } from './about.component';

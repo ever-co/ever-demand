@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
 import { Store } from 'app/services/store';
+import { getBrowserLanguage } from 'app/services/browser-language';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -21,13 +22,7 @@ export class ServerDownPage implements OnDestroy {
 		private translate: TranslateService,
 		private serverConnectionService: ServerConnectionService
 	) {
-		const browserLang = translate.getBrowserLang();
-
-		translate.use(
-			browserLang.match(/en-US|bg-BG|he-IL|ru-RU|es-ES/)
-				? browserLang
-				: 'en-US'
-		);
+		translate.use(translate.currentLang || getBrowserLanguage(translate));
 
 		this.noInternetLogo = environment['NO_INTERNET_LOGO'];
 		this.testConnection();

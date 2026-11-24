@@ -1,14 +1,20 @@
 import {
 	Component,
+	Inject,
 	OnDestroy,
 	OnInit,
 	ViewChild,
 	ViewEncapsulation,
 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { AppState } from './app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from './services/store';
+import {
+	getBrowserLanguage,
+	SUPPORTED_LANGUAGES,
+} from './services/browser-language';
 
 export interface ToolbarController {
 	toolbarDisabled: boolean;
@@ -64,7 +70,8 @@ export class AppComponent implements OnInit {
 	constructor(
 		public appState: AppState,
 		private translateService: TranslateService,
-		private store: Store
+		private store: Store,
+		@Inject(DOCUMENT) private document: Document
 	) {
 		// Here we initialize translates for the all app, when loads for the first time. Do not remove it
 
@@ -73,23 +80,17 @@ export class AppComponent implements OnInit {
 			translateService.setDefaultLang(current);
 		} else {
 			// TODO: load list of supported languages from config service
-			translateService.addLangs([
-				'en-US',
-				'es-ES',
-				'bg-BG',
-				'he-IL',
-				'ru-RU',
-			]);
+			translateService.addLangs(SUPPORTED_LANGUAGES);
 
 			translateService.setDefaultLang('en-US');
 
-			const browserLang = translateService.getBrowserLang();
-			// TODO: load list of supported languages from config service
-			translateService.use(
-				browserLang.match(/en-US|bg-BG|he-HE|ru-RU|es-ES/)
-					? browserLang
-					: 'en-US'
-			);
+			const language = getBrowserLanguage(translateService);
+			translateService.use(language);
+
+			// Same as Settings > switchLanguage: Hebrew reads right to left
+			this.document.documentElement.dir =
+				language === 'he-IL' ? 'rtl' : 'ltr';
+			this.document.documentElement.lang = language.substring(0, 2);
 		}
 	}
 
