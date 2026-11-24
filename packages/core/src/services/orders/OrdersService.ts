@@ -42,6 +42,7 @@ import {
 	notCancelledOrderFilter,
 } from './orderStatusTransitions';
 import { orderCompletionFilters } from './orderCompletionFilters';
+import { findOrderProductForComment } from './orderProductComment';
 
 /**
  * A cancelled order was put back in stock and may be refunded:
@@ -686,8 +687,12 @@ export class OrdersService extends DBService<Order>
 		await this._throwIfNotExists(orderId);
 
 		const order = await this._get(orderId);
-		const orderProduct = order.products.find(
-			(p: OrderProduct) => p.id === productId
+		// Throws a clear error for an unknown line or a bad comment, instead of
+		// a TypeError on `undefined`
+		const orderProduct = findOrderProductForComment(
+			order,
+			productId,
+			comment
 		);
 
 		orderProduct.comment = comment;
