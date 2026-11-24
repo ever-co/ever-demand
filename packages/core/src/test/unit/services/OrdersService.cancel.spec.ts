@@ -40,19 +40,30 @@ const ORDER_ID = '5f1a2b3c4d5e6f7a8b9c0d1e';
 /**
  * Stand-in for the orders collection holding one order. Its findOneAndUpdate
  * applies the filter the way MongoDB does for the operators used here (plain
- * equality and $ne): a write whose filter does not match changes nothing and
- * resolves to null.
+ * equality, $ne and $in, where a null in $in also matches a missing field): a
+ * write whose filter does not match changes nothing and resolves to null.
  */
 function fakeOrdersModel(stored: Record<string, any>) {
+	const isOperator = (condition: any, operator: string) =>
+		condition != null &&
+		typeof condition === 'object' &&
+		operator in condition;
+
 	const matches = (filter: Record<string, any>) =>
 		Object.keys(filter).every((key) => {
 			const condition = filter[key];
 
-			return condition != null &&
-				typeof condition === 'object' &&
-				'$ne' in condition
-				? stored[key] !== condition.$ne
-				: String(stored[key]) === String(condition);
+			if (isOperator(condition, '$ne')) {
+				return stored[key] !== condition.$ne;
+			}
+
+			if (isOperator(condition, '$in')) {
+				return condition.$in.some((value: any) =>
+					value === null ? stored[key] == null : stored[key] === value
+				);
+			}
+
+			return String(stored[key]) === String(condition);
 		});
 
 	return {
@@ -271,6 +282,26 @@ describe('OrdersService writes on cancelled orders', () => {
 	});
 
 	describe('confirm', () => {
+		// The write may only match an order that is open and not yet worked on
+		const confirmableFilter = {
+			_id: ORDER_ID,
+			isCancelled: { $ne: true },
+			warehouseStatus: {
+				$in: [
+					OrderWarehouseStatus.NoStatus,
+					OrderWarehouseStatus.ReadyForProcessing,
+					null,
+				],
+			},
+		};
+
+		beforeEach(() => {
+			// A new order the customer has not confirmed yet
+			stored.carrier = undefined;
+			stored.carrierStatus = OrderCarrierStatus.NoCarrier;
+			stored.warehouseStatus = OrderWarehouseStatus.NoStatus;
+		});
+
 		it('refuses to confirm a cancelled order and does not write it', async () => {
 			stored.isCancelled = true;
 
@@ -281,9 +312,7 @@ describe('OrdersService writes on cancelled orders', () => {
 			expect(update).not.toHaveBeenCalled();
 			expect(model.findOneAndUpdate).not.toHaveBeenCalled();
 			expect(stored.isConfirmed).toBeUndefined();
-			expect(stored.warehouseStatus).toBe(
-				OrderWarehouseStatus.GivenToCarrier
-			);
+			expect(stored.warehouseStatus).toBe(OrderWarehouseStatus.NoStatus);
 		});
 
 		it('refuses when the order is cancelled between the read and the write', async () => {
@@ -296,24 +325,116 @@ describe('OrdersService writes on cancelled orders', () => {
 
 			expect(update).not.toHaveBeenCalled();
 			expect(stored.isConfirmed).toBeUndefined();
+			expect(existenceNext).not.toHaveBeenCalled();
 		});
 
-		it('confirms an open order with a write that skips cancelled orders', async () => {
+		it('confirms a new order with a write that matches only an open, unstarted order', async () => {
 			const order = await service.confirm(ORDER_ID);
 
 			expect(order.isConfirmed).toBe(true);
 			expect(order.warehouseStatus).toBe(
 				OrderWarehouseStatus.ReadyForProcessing
 			);
+			expect(stored.warehouseStatus).toBe(
+				OrderWarehouseStatus.ReadyForProcessing
+			);
 			expect(update).not.toHaveBeenCalled();
+			expect(model.findOneAndUpdate).toHaveBeenCalledTimes(1);
 			expect(model.findOneAndUpdate).toHaveBeenCalledWith(
-				{ _id: ORDER_ID, isCancelled: { $ne: true } },
+				confirmableFilter,
 				{
 					isConfirmed: true,
 					warehouseStatus: OrderWarehouseStatus.ReadyForProcessing,
 				},
 				{ new: true }
 			);
+		});
+
+		it('confirms an order that has no warehouse status yet', async () => {
+			delete stored.warehouseStatus;
+
+			const order = await service.confirm(ORDER_ID);
+
+			expect(order.isConfirmed).toBe(true);
+			expect(stored.warehouseStatus).toBe(
+				OrderWarehouseStatus.ReadyForProcessing
+			);
+		});
+
+		it('returns an order that is already confirmed unchanged, without a write', async () => {
+			// The apps call confirm again after the payment
+			stored.isConfirmed = true;
+			stored.warehouseStatus = OrderWarehouseStatus.ReadyForProcessing;
+
+			const order = await service.confirm(ORDER_ID);
+
+			expect(order).toEqual(read());
+			expect(update).not.toHaveBeenCalled();
+			expect(model.findOneAndUpdate).not.toHaveBeenCalled();
+			expect(existenceNext).not.toHaveBeenCalled();
+		});
+
+		it.each([
+			['GivenToCustomer', OrderWarehouseStatus.GivenToCustomer],
+			['GivenToCarrier', OrderWarehouseStatus.GivenToCarrier],
+			['PackagingFinished', OrderWarehouseStatus.PackagingFinished],
+			['AllocationFailed', OrderWarehouseStatus.AllocationFailed],
+		])(
+			'refuses to move an order in %s back to ReadyForProcessing and does not write it',
+			async (_name, status) => {
+				stored.isConfirmed = true;
+				stored.warehouseStatus = status;
+
+				await expect(service.confirm(ORDER_ID)).rejects.toThrow(
+					/Invalid order warehouse status transition/
+				);
+
+				expect(update).not.toHaveBeenCalled();
+				expect(model.findOneAndUpdate).not.toHaveBeenCalled();
+				expect(stored.warehouseStatus).toBe(status);
+				expect(existenceNext).not.toHaveBeenCalled();
+			}
+		);
+
+		it('keeps a takeaway order given to the customer uncancellable', async () => {
+			stored.isConfirmed = true;
+			stored.isPaid = true;
+			stored.warehouseStatus = OrderWarehouseStatus.GivenToCustomer;
+
+			await expect(service.confirm(ORDER_ID)).rejects.toThrow(
+				/Invalid order warehouse status transition/
+			);
+			await expect(service.cancel(ORDER_ID)).rejects.toThrow(
+				/can not be cancelled/
+			);
+
+			expect(stored.warehouseStatus).toBe(
+				OrderWarehouseStatus.GivenToCustomer
+			);
+			expect(stored.isCancelled).toBe(false);
+		});
+
+		it('refuses when the store moves the order on between the read and the write', async () => {
+			// The store starts processing between the check and the write
+			get.mockResolvedValueOnce(read());
+			stored.warehouseStatus =
+				OrderWarehouseStatus.WarehouseStartedProcessing;
+
+			await expect(service.confirm(ORDER_ID)).rejects.toThrow(
+				/Invalid order warehouse status transition/
+			);
+
+			expect(update).not.toHaveBeenCalled();
+			expect(model.findOneAndUpdate).toHaveBeenCalledWith(
+				confirmableFilter,
+				expect.anything(),
+				{ new: true }
+			);
+			expect(stored.warehouseStatus).toBe(
+				OrderWarehouseStatus.WarehouseStartedProcessing
+			);
+			expect(stored.isConfirmed).toBeUndefined();
+			expect(existenceNext).not.toHaveBeenCalled();
 		});
 	});
 

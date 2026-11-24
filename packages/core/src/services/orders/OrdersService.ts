@@ -458,18 +458,57 @@ export class OrdersService extends DBService<Order>
 		}
 	}
 
+	/**
+	 * Confirms the order: it becomes ReadyForProcessing for the store.
+	 * Only an order the store has not started yet (NoStatus or already
+	 * ReadyForProcessing) can be confirmed. This listener is public, so
+	 * it must never move an order the store already works on, or handed over,
+	 * back to ReadyForProcessing: such an order could be cancelled, restocked
+	 * and refunded again.
+	 *
+	 * @returns the confirmed order, unchanged when it was confirmed already
+	 * @throws when the order is cancelled or already past ReadyForProcessing,
+	 * also when that happened after the first check
+	 */
 	@asyncListener()
 	async confirm(orderId: Order['id']): Promise<Order> {
 		await this._throwIfNotExists(orderId);
 
-		if ((await this._get(orderId)).isCancelled) {
+		const currentOrder = await this._get(orderId);
+
+		if (currentOrder.isCancelled) {
 			throw orderIsCancelledError(orderId);
 		}
 
-		// Matches nothing when a cancel landed after the check above
+		const currentStatus =
+			currentOrder.warehouseStatus ?? OrderWarehouseStatus.NoStatus;
+
+		if (
+			currentOrder.isConfirmed &&
+			currentStatus === OrderWarehouseStatus.ReadyForProcessing
+		) {
+			// The apps confirm again after the payment: nothing to write
+			return currentOrder;
+		}
+
+		assertWarehouseStatusTransition(
+			currentStatus,
+			OrderWarehouseStatus.ReadyForProcessing
+		);
+
+		// Matches nothing when a cancel or a store status change landed after the checks above
 		const order = await this._updateIfMatches(
 			orderId,
-			notCancelledOrderFilter,
+			{
+				...notCancelledOrderFilter,
+				warehouseStatus: {
+					$in: [
+						OrderWarehouseStatus.NoStatus,
+						OrderWarehouseStatus.ReadyForProcessing,
+						null,
+					],
+				},
+			},
 			{
 				isConfirmed: true,
 				warehouseStatus: OrderWarehouseStatus.ReadyForProcessing,
@@ -477,7 +516,18 @@ export class OrdersService extends DBService<Order>
 		);
 
 		if (order == null) {
-			throw orderIsCancelledError(orderId);
+			const latestOrder = await this._get(orderId);
+
+			if (latestOrder.isCancelled) {
+				throw orderIsCancelledError(orderId);
+			}
+
+			assertWarehouseStatusTransition(
+				latestOrder.warehouseStatus ?? OrderWarehouseStatus.NoStatus,
+				OrderWarehouseStatus.ReadyForProcessing
+			);
+
+			throw new Error(`Order ${orderId} could not be confirmed!`);
 		}
 
 		return order;
