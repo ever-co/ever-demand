@@ -59,6 +59,8 @@
 		"THANKS_FOR_REGISTERING": "Thanks for registering!",
 		"WHAT_YOU_SEE_IS_WHAT_YOU_GET": "What you See, is what you Get",
 		"INVITE_CODE": "Invite Code",
+		"CONTINUE_WITH_FACEBOOK": "Continue with Facebook",
+		"CONTINUE_WITH_GOOGLE": "Continue with Google",
 		"NOTIFICATION_MESSAGE": {
 			"WRONG_CODE_TRY_AGAIN": "Wrong code, try again.",
 			"TO_BE_INVITED_ALLOW_GPS": "To be invited allow GPS."

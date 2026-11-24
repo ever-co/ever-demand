@@ -1,8 +1,9 @@
 /**
- * Guards against icon-only buttons that screen readers announce as just "button".
+ * Guards against icon-only buttons and links that screen readers announce as just
+ * "button" or "link".
  *
- * Fails (exit code 1) when a `<button>` in the checked templates has no visible
- * text and no accessible name (`aria-label`, `[attr.aria-label]` or
+ * Fails (exit code 1) when a `<button>` or `<a>` in the checked templates has no
+ * visible text and no accessible name (`aria-label`, `[attr.aria-label]` or
  * `aria-labelledby`).
  *
  * What counts as visible text: text that is not inside `<svg>`, `<mat-icon>`,
@@ -11,7 +12,8 @@
  * element marked `aria-hidden="true"`, `hidden` or `style="display: none"`.
  * Everything nested in such an element is ignored too, including a nested element
  * of the same name. Template interpolations such as `{{ 'KEY' | translate }}`
- * count as text; an empty `{{ }}` does not.
+ * count as text; an empty `{{ }}` does not. An `<img>` with a non-blank `alt`
+ * (static or bound) names its button or link too; `alt=""` does not.
  *
  * Usage: node scripts/check-icon-buttons.cjs
  *
@@ -27,11 +29,12 @@ const APP_DIR = path.join(__dirname, '..', 'src', 'app');
 const TEMPLATES = [
 	'toolbar/toolbar.component.html',
 	'+products/product-details/product-details.component.html',
-	'+orders/order/order.component.html'
+	'+orders/order/order.component.html',
+	'+login/login.component.html'
 ];
 
-// Opening tag whose attributes may contain `>` inside quotes (e.g. `(click)="a > b"`).
-const BUTTON_RE = /<button\b((?:[^>"']|"[^"]*"|'[^']*')*)>([\s\S]*?)<\/button\s*>/gi;
+// A `<button>` or `<a>` whose opening tag may contain `>` inside quotes (e.g. `(click)="a > b"`).
+const CONTROL_RE = /<(button|a)\b((?:[^>"']|"[^"]*"|'[^']*')*)>([\s\S]*?)<\/\1\s*>/gi;
 // One attribute: a name, then an optional double-quoted, single-quoted or bare value.
 const ATTRIBUTE_RE = /([^\s"'=/>]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g;
 const ARIA_NAME_ATTRIBUTES = new Set(['aria-label', '[attr.aria-label]', 'aria-labelledby', '[attr.aria-labelledby]']);
@@ -95,8 +98,18 @@ function isIgnored(name, attributes) {
 	);
 }
 
+const ALT_ATTRIBUTES = new Set(['alt', '[alt]', '[attr.alt]']);
+
+/** The `alt` text of an `<img>` tag, or '' when it has none, a blank one, or a bound empty string. */
+function altText(attributes) {
+	const alt = parseAttributes(attributes).find(({ name }) => ALT_ATTRIBUTES.has(name));
+	const value = alt && alt.value !== null ? alt.value.trim() : '';
+	const boundEmpty = alt && alt.name !== 'alt' && (value === "''" || value === '""');
+	return boundEmpty ? '' : value;
+}
+
 /**
- * Returns the text a sighted user would see inside a button's content.
+ * Returns the text a screen reader would read for a button's or link's content.
  *
  * Walks the tags with a stack, so an ignored element hides everything nested in
  * it, even when it contains another element of the same name.
@@ -127,6 +140,10 @@ function visibleText(inner) {
 			continue;
 		}
 		if (VOID_TAGS.has(name) || /\/\s*$/.test(attributes)) {
+			// An image's alt text names the button or link it sits in.
+			if (name === 'img' && ignoredDepth === 0 && !isIgnored(name, attributes)) {
+				text += ` ${altText(attributes)} `;
+			}
 			continue;
 		}
 		const ignored = isIgnored(name, attributes);
@@ -137,64 +154,66 @@ function visibleText(inner) {
 	return text.replace(/\{\{\s*\}\}/g, ' ').replace(/&nbsp;/g, ' ').trim();
 }
 
-/** Returns one problem description per unnamed icon-only button of `html`. */
+/** Returns one problem description per unnamed icon-only button or link of `html`. */
 function findProblems(html) {
 	const problems = [];
 	const source = html.replace(/<!--[\s\S]*?-->/g, blank);
 	let match;
-	BUTTON_RE.lastIndex = 0;
-	while ((match = BUTTON_RE.exec(source)) !== null) {
-		const [, attributes, inner] = match;
+	CONTROL_RE.lastIndex = 0;
+	while ((match = CONTROL_RE.exec(source)) !== null) {
+		const [, tag, attributes, inner] = match;
 		if (hasAriaName(attributes) || visibleText(inner).length > 0) {
 			continue;
 		}
 		const line = source.slice(0, match.index).split('\n').length;
-		problems.push({ line, snippet: match[0].split('\n')[0].trim() });
+		problems.push({ line, tag: tag.toLowerCase(), snippet: match[0].split('\n')[0].trim() });
 	}
 	return problems;
 }
 
-/** Counts the buttons of `html`, so the check can refuse to pass vacuously. */
-function countButtons(html) {
+/** Counts the buttons and links of `html`, so the check can refuse to pass vacuously. */
+function countControls(html) {
 	const source = html.replace(/<!--[\s\S]*?-->/g, blank);
-	return (source.match(BUTTON_RE) || []).length;
+	return (source.match(CONTROL_RE) || []).length;
 }
 
 function main() {
 	let failed = false;
-	let totalButtons = 0;
+	let totalControls = 0;
 
 	for (const template of TEMPLATES) {
 		const file = path.join(APP_DIR, template);
 		const html = fs.readFileSync(file, 'utf8');
-		const buttons = countButtons(html);
+		const controls = countControls(html);
 		const problems = findProblems(html);
-		totalButtons += buttons;
+		totalControls += controls;
 
 		if (problems.length === 0) {
-			console.log(`OK    ${template} (${buttons} buttons)`);
+			console.log(`OK    ${template} (${controls} buttons and links)`);
 			continue;
 		}
 
 		failed = true;
 		console.error(`FAIL  ${template}`);
-		problems.forEach(({ line, snippet }) =>
-			console.error(`  line ${line}: button has no visible text and no aria-label: ${snippet}`)
+		problems.forEach(({ line, tag, snippet }) =>
+			console.error(`  line ${line}: <${tag}> has no visible text and no aria-label: ${snippet}`)
 		);
 	}
 
 	// Refuse to pass vacuously: if the templates moved or the pattern broke, nothing was checked.
-	if (totalButtons === 0) {
-		console.error(`No <button> found in ${TEMPLATES.length} templates; the check is not looking at anything.`);
+	if (totalControls === 0) {
+		console.error(`No <button> or <a> found in ${TEMPLATES.length} templates; the check is not looking at anything.`);
 		process.exit(1);
 	}
 
 	if (failed) {
-		console.error('\nGive icon-only buttons a translated aria-label and mark the icon aria-hidden="true".');
+		console.error('\nGive icon-only buttons and links a translated aria-label and mark the icon aria-hidden="true".');
 		process.exit(1);
 	}
 
-	console.log(`\nAll ${totalButtons} buttons in ${TEMPLATES.length} templates have a visible text or an aria-label.`);
+	console.log(
+		`\nAll ${totalControls} buttons and links in ${TEMPLATES.length} templates have a visible text or an aria-label.`
+	);
 }
 
 if (require.main === module) {

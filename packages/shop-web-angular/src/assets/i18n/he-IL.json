@@ -59,6 +59,8 @@
 		"THANKS_FOR_REGISTERING": "תודה על ההרשמה!",
 		"WHAT_YOU_SEE_IS_WHAT_YOU_GET": "מה שאתה רואה זה מה שאתה מקבל",
 		"INVITE_CODE": "קוד הזמנה",
+		"CONTINUE_WITH_FACEBOOK": "המשך עם Facebook",
+		"CONTINUE_WITH_GOOGLE": "המשך עם Google",
 		"NOTIFICATION_MESSAGE": {
 			"WRONG_CODE_TRY_AGAIN": "קוד שגוי, נסה שוב.",
 			"TO_BE_INVITED_ALLOW_GPS": "כדי להיות מוזמן לאפשר GPS."
