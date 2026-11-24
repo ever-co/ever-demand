@@ -305,6 +305,9 @@ describe('OrdersService.payWithStripe', () => {
 			).rejects.toThrow(/cancelled/);
 
 			expect(stored.isPaid).toBe(false);
+			// Stored only because the order is unpaid
+			expect(stored.stripeChargeId).toBe('ch_1');
+			expect(update).not.toHaveBeenCalled();
 			expect(mockLog.error).toHaveBeenCalledWith(
 				expect.objectContaining({
 					orderId: ORDER_ID,
@@ -443,6 +446,42 @@ describe('OrdersService.payWithStripe', () => {
 					err: refundError,
 				}),
 				expect.any(String)
+			);
+		});
+
+		it('keeps the first charge and refunds the second one when reading the order again fails', async () => {
+			const first = service.payWithStripe(ORDER_ID, 'card_1');
+			const second = service.payWithStripe(ORDER_ID, 'card_2');
+
+			await bothCharging;
+
+			pendingCharge('card_1').resolve({ id: 'ch_1' });
+			await first;
+
+			const readError = new Error('Database is unavailable');
+			// The first read is the one before the paid write of ch_2
+			(service as any).getCurrent
+				.mockImplementationOnce(async () => read())
+				.mockRejectedValueOnce(readError);
+
+			pendingCharge('card_2').resolve({ id: 'ch_2' });
+			await expect(second).rejects.toThrow('already paid');
+
+			expect(stored.isPaid).toBe(true);
+			expect(stored.stripeChargeId).toBe('ch_1');
+			expect(update).not.toHaveBeenCalled();
+			expect(mockLog.error).toHaveBeenCalledWith(
+				expect.objectContaining({
+					orderId: ORDER_ID,
+					chargeId: 'ch_2',
+					err: readError,
+				}),
+				expect.any(String)
+			);
+			expect(mockRefundsCreate).toHaveBeenCalledTimes(1);
+			expect(mockRefundsCreate).toHaveBeenCalledWith(
+				{ charge: 'ch_2' },
+				{ idempotencyKey: `refund-order-${ORDER_ID}-charge-ch_2` }
 			);
 		});
 

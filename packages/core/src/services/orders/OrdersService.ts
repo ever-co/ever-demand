@@ -384,7 +384,7 @@ export class OrdersService extends DBService<Order>
 					if (paidOrder == null) {
 						const chargeId = charge.id;
 
-						// When this read fails, the refund path below still runs
+						// When this read fails, the charge is still refunded below
 						let latestOrder: Order | null = null;
 
 						try {
@@ -429,6 +429,42 @@ export class OrdersService extends DBService<Order>
 							}
 
 							throw new Error('Order is already paid');
+						}
+
+						// The read failed, so the order may be paid with another
+						// charge, which the cancelled path below would replace.
+						// Store this charge only on an unpaid order, then refund it.
+						if (latestOrder == null) {
+							try {
+								await this._updateIfMatches(
+									orderId,
+									{ isPaid: { $ne: true } },
+									{ stripeChargeId: chargeId }
+								);
+							} catch (err) {
+								this.log.error(
+									{ callId, orderId, chargeId, err },
+									'.payWithStripe(orderId, cardId) could not store the charge of an order it could not read'
+								);
+							}
+
+							try {
+								await this.stripe.refunds.create(
+									{ charge: chargeId },
+									{
+										idempotencyKey: `refund-order-${orderId}-charge-${chargeId}`,
+									}
+								);
+							} catch (err) {
+								this.log.error(
+									{ callId, orderId, chargeId, err },
+									'.payWithStripe(orderId, cardId) could not refund the charge of an order it could not read'
+								);
+							}
+
+							throw new Error(
+								`Order ${orderId} is cancelled or already paid`
+							);
 						}
 
 						this.log.warn(
