@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, Inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'environments/environment';
 import { DOCUMENT } from '@angular/common';
+import { getBrowserLanguage } from '../services/browser-language';
 
 @Component({
 	selector: 'settings',
@@ -36,15 +37,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
 			translateService.setDefaultLang('en-US');
 
-			const browserLang = translateService.getBrowserLang();
-			// TODO: load list of supported languages from config service
-
 			if (this.defaultLanguage) {
 				translateService.use(this.defaultLanguage);
 			} else {
-				browserLang.match(/en-US|es-ES|bg-BG|he-IL|ru-RU|fr-FR/)
-					? browserLang
-					: 'en-US';
+				translateService.use(getBrowserLanguage(translateService));
 			}
 
 			this.selectedLang = this.translateService.currentLang;
