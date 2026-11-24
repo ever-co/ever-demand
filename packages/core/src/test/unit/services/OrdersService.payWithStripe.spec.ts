@@ -259,5 +259,30 @@ describe('OrdersService.payWithStripe', () => {
 				expect.any(String)
 			);
 		});
+
+		it('still refunds the charge when storing its id fails', async () => {
+			const storeError = new Error('Database is unavailable');
+			update.mockRejectedValue(storeError);
+
+			await expect(
+				service.payWithStripe(ORDER_ID, 'card_1')
+			).rejects.toThrow(/cancelled/);
+
+			expect(stored.isPaid).toBe(false);
+			expect(update).toHaveBeenCalledTimes(1);
+			expect(mockLog.error).toHaveBeenCalledWith(
+				expect.objectContaining({
+					orderId: ORDER_ID,
+					chargeId: 'ch_1',
+					err: storeError,
+				}),
+				expect.any(String)
+			);
+			expect(mockRefundsCreate).toHaveBeenCalledTimes(1);
+			expect(mockRefundsCreate).toHaveBeenCalledWith(
+				{ charge: 'ch_1' },
+				{ idempotencyKey: `refund-order-${ORDER_ID}-charge-ch_1` }
+			);
+		});
 	});
 });
