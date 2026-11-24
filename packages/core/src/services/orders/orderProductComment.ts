@@ -17,9 +17,7 @@ export function findOrderProductForComment<T extends { id?: string }>(
 	productId: string,
 	comment: unknown
 ): T {
-	const orderProduct = (order.products || []).find(
-		(p) => p.id === productId
-	);
+	const orderProduct = (order.products || []).find((p) => p.id === productId);
 
 	if (!orderProduct) {
 		throw new Error(
