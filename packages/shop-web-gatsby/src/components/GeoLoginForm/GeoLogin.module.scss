@@ -1,4 +1,4 @@
-@import '../../styles/styles.module.scss';
+@use '../../styles/variables' as *;
 
 :host {
 	width: 100%;

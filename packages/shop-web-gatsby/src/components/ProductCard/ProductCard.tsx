@@ -5,20 +5,32 @@ import {
 	CardActions,
 	CardContent,
 	Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import { navigate } from 'gatsby';
-import styles from './ProductCard.module.scss';
-import { matchLocale } from '../../utilities/utilities';
-//import { Test } from './ProductCard.styles';
+import * as styles from './ProductCard.module.scss';
+import { matchLocale } from '../../utilities/locale';
+import type { GeoLocationProductsByPagingQuery } from '../../gql/graphql';
 
-const ProductCard = ({ item, addToCart }) => {
+export type ProductInfo =
+	GeoLocationProductsByPagingQuery['geoLocationProductsByPaging'][number];
+
+interface ProductCardProps {
+	item: ProductInfo;
+	addToCart: (item: ProductInfo) => void;
+}
+
+/** One product of the grid: image, title, description, "buy" and "details". */
+const ProductCard = ({ item, addToCart }: ProductCardProps) => {
 	const { product } = item.warehouseProduct;
+	const image = product.images[0];
+	const title = matchLocale(product.title);
+
 	return (
 		<Card className={styles.card}>
-			<img src={product.images[0].url} />
+			{image && <img src={image.url} alt={title} loading="lazy" />}
 			<CardContent>
 				<div className={styles.cardContent}>
-					<Typography variant={'h5'}>{matchLocale(product.title)}</Typography>
+					<Typography variant={'h5'}>{title}</Typography>
 					<Typography variant={'body1'}>
 						{matchLocale(product.description)}
 					</Typography>
@@ -26,15 +38,13 @@ const ProductCard = ({ item, addToCart }) => {
 						<Button
 							variant={'contained'}
 							color={'secondary'}
-							onClick={() => {
-								addToCart(item);
-							}}
+							onClick={() => addToCart(item)}
 						>
 							Buy for: ${item.warehouseProduct.price.toFixed(2)}
 						</Button>
 						<Button
 							variant={'contained'}
-							onClick={() => navigate(`/${product.id}`)}
+							onClick={() => navigate(`/products/${product.id}`)}
 						>
 							Details
 						</Button>
@@ -43,14 +53,6 @@ const ProductCard = ({ item, addToCart }) => {
 			</CardContent>
 		</Card>
 	);
-};
-
-ProductCard.propTypes = {
-	// bla: PropTypes.string,
-};
-
-ProductCard.defaultProps = {
-	// bla: 'test',
 };
 
 export default ProductCard;

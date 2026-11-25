@@ -1,98 +1,39 @@
 /**
- * SEO component that queries for data with
- *  Gatsby's useStaticQuery React hook
+ * Head tags of a page, for Gatsby's Head API (it replaced react-helmet):
  *
- * See: https://www.gatsbyjs.org/docs/use-static-query/
+ *   export const Head = () => <Seo title="Orders" />;
  */
-
-import { graphql, useStaticQuery } from 'gatsby';
-import PropTypes from 'prop-types';
 import React from 'react';
-import Helmet from 'react-helmet';
+import { siteMetadata } from '../site';
 
-function SEO({ description, lang, meta, keywords, title }: any) {
-	const { site } = useStaticQuery(
-		graphql`
-			query {
-				site {
-					siteMetadata {
-						title
-						description
-						author
-					}
-				}
-			}
-		`,
-	);
+interface SeoProps {
+	title: string;
+	description?: string;
+	lang?: string;
+	keywords?: string[];
+}
 
-	const metaDescription = description || site.siteMetadata.description;
+function Seo({ title, description, lang = 'en', keywords = [] }: SeoProps) {
+	const metaDescription = description || siteMetadata.description;
+	const fullTitle = `${title} | ${siteMetadata.title}`;
 
 	return (
-		<Helmet
-			htmlAttributes={{
-				lang,
-			}}
-			title={title}
-			titleTemplate={`%s | ${site.siteMetadata.title}`}
-			meta={[
-				{
-					name: `description`,
-					content: metaDescription,
-				},
-				{
-					property: `og:title`,
-					content: title,
-				},
-				{
-					property: `og:description`,
-					content: metaDescription,
-				},
-				{
-					property: `og:type`,
-					content: `website`,
-				},
-				{
-					name: `twitter:card`,
-					content: `summary`,
-				},
-				{
-					name: `twitter:creator`,
-					content: site.siteMetadata.author,
-				},
-				{
-					name: `twitter:title`,
-					content: title,
-				},
-				{
-					name: `twitter:description`,
-					content: metaDescription,
-				},
-			]
-				.concat(
-					keywords.length > 0
-						? {
-								name: `keywords`,
-								content: keywords.join(`, `),
-						  }
-						: [],
-				)
-				.concat(meta)}
-		/>
+		<>
+			<html lang={lang} />
+			<title>{fullTitle}</title>
+			<meta name="description" content={metaDescription} />
+			<meta property="og:title" content={title} />
+			<meta property="og:description" content={metaDescription} />
+			<meta property="og:type" content="website" />
+			<meta name="twitter:card" content="summary" />
+			<meta name="twitter:creator" content={siteMetadata.author} />
+			<meta name="twitter:title" content={title} />
+			<meta name="twitter:description" content={metaDescription} />
+			{keywords.length > 0 && (
+				<meta name="keywords" content={keywords.join(', ')} />
+			)}
+		</>
 	);
 }
 
-SEO.defaultProps = {
-	lang: `en`,
-	meta: [],
-	keywords: [],
-};
-
-SEO.propTypes = {
-	description: PropTypes.string,
-	lang: PropTypes.string,
-	meta: PropTypes.array,
-	keywords: PropTypes.arrayOf(PropTypes.string),
-	title: PropTypes.string.isRequired,
-};
-
-export default SEO;
+export default Seo;
