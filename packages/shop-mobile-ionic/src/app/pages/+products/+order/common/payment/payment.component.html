@@ -4,6 +4,7 @@
 			*ngIf="!order?.isPaid && !userCard"
 			class="button button-assertive border-color-brand col-100"
 			(click)="toPaymentStage()"
+			[disabled]="paying"
 		>
 			<span>{{ 'BUY_POPUP.BUTTONS.PAY_NOW' | translate }}</span>
 		</button>
