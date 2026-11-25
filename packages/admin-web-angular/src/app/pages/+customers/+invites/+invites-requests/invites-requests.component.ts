@@ -78,29 +78,8 @@ export class InvitesRequestsComponent implements OnDestroy, AfterViewChecked {
 
 	ngAfterViewChecked(): void {
 		this.loadSmartTableTranslates();
-
-		if (
-			this._elRef.nativeElement.querySelector(
-				'.angular2-smart-action-add-create',
-			)
-		) {
-			const firstRow = 2;
-			const columnOffset = 0;
-
-			const td = this._renderer.createElement('td');
-
-			const tr =
-				this._elRef.nativeElement.getElementsByTagName('tr')[firstRow];
-
-			const refChild = tr.childNodes[columnOffset];
-
-			if (!this.addClick) {
-				this._renderer.insertBefore(tr, td, refChild);
-				this.addClick = true;
-			}
-		} else {
-			this.addClick = false;
-		}
+		// (the old DOM hack that added the multi-select cell to the inline create row is gone:
+		// angular2-smart-table renders that cell itself)
 	}
 
 	get hasSelectedInvitesRequests(): boolean {

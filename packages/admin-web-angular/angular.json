@@ -36,7 +36,9 @@
 						},
 						"index": "src/index.html",
 						"browser": "src/main.ts",
-						"polyfills": ["src/polyfills.ts"],
+						"polyfills": [
+							"src/polyfills.ts"
+						],
 						"tsConfig": "tsconfig.app.json",
 						"inlineStyleLanguage": "scss",
 						"assets": [
@@ -45,7 +47,9 @@
 							{
 								"glob": "**/*",
 								"input": "src/assets/",
-								"ignore": ["**/*.css"],
+								"ignore": [
+									"**/*.css"
+								],
 								"output": "/assets/"
 							}
 						],
@@ -60,7 +64,10 @@
 							"src/app/@theme/styles/styles.scss"
 						],
 						"stylePreprocessorOptions": {
-							"includePaths": ["src/app", "src/assets"],
+							"includePaths": [
+								"src/app",
+								"src/assets"
+							],
 							"sass": {
 								"silenceDeprecations": [
 									"color-functions",
@@ -71,8 +78,13 @@
 								]
 							}
 						},
-						"scripts": ["node_modules/pace-js/pace.min.js"],
+						"scripts": [
+							"node_modules/pace-js/pace.min.js"
+						],
 						"allowedCommonJsDependencies": [
+							"eva-icons",
+							"lodash",
+							"reflect-metadata",
 							"highlight.js",
 							"qrcode",
 							"is-url",
@@ -113,6 +125,13 @@
 							"extractLicenses": false,
 							"sourceMap": true,
 							"namedChunks": true
+						},
+						"test": {
+							"optimization": false,
+							"extractLicenses": false,
+							"sourceMap": true,
+							"namedChunks": true,
+							"aot": false
 						}
 					},
 					"defaultConfiguration": "production"
@@ -135,9 +154,10 @@
 				"test": {
 					"builder": "@angular/build:unit-test",
 					"options": {
-						"buildTarget": "ever-admin:build:development",
+						"buildTarget": "ever-admin:build:test",
 						"tsConfig": "tsconfig.spec.json",
 						"runner": "vitest",
+						"runnerConfig": "vitest-base.config.ts",
 						"watch": false
 					}
 				}

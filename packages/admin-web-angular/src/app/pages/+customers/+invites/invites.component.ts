@@ -76,27 +76,9 @@ export class InvitesComponent implements OnInit, OnDestroy, AfterViewChecked {
 		this.smartTableChange();
 	}
 
-	ngAfterViewChecked(): void {
-		if (
-			this._elRef.nativeElement.querySelector(
-				'.angular2-smart-action-add-create',
-			)
-		) {
-			const firstRow = 2;
-			const columnOffset = 0;
-
-			const td = this._renderer.createElement('td');
-			const tr =
-				this._elRef.nativeElement.getElementsByTagName('tr')[firstRow];
-			const refChild = tr.childNodes[columnOffset];
-			if (!this.addClick2 && tr.className !== 'ng-star-inserted') {
-				this._renderer.insertBefore(tr, td, refChild);
-				this.addClick2 = true;
-			}
-		} else {
-			this.addClick2 = false;
-		}
-	}
+	// ng2-smart-table left the multi-select column out of the inline create row and a
+	// DOM hack added the missing cell here; angular2-smart-table renders that cell itself.
+	ngAfterViewChecked(): void {}
 
 	get hasSelectedInvites(): boolean {
 		return this.selectedInvites.length > 0;

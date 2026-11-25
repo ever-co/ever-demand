@@ -47,9 +47,9 @@ export async function isApiUp(): Promise<boolean> {
 				method: 'POST',
 				headers: { 'content-type': 'application/json' },
 				body: JSON.stringify({ query: '{ __typename }' }),
-				signal: AbortSignal.timeout(3000),
+				signal: AbortSignal.timeout(10_000),
 			}),
-			fetch(SERVICES_URL, { signal: AbortSignal.timeout(3000) }),
+			fetch(SERVICES_URL, { signal: AbortSignal.timeout(10_000) }),
 		]);
 		apiUp = gqlRes.ok && servicesRes.status < 500;
 	} catch {
@@ -73,7 +73,8 @@ export async function login(page: Page, email = ADMIN.email, password = ADMIN.pa
 	await page.locator('#input-email').fill(email);
 	await page.locator('#input-password').fill(password);
 	await page.getByRole('button', { name: /log in/i }).click();
-	await expect(page).not.toHaveURL(/#\/auth\/login/, { timeout: 30_000 });
+	// sign-in-redirect sends the admin to the dashboard, or to the setup when there is no store yet
+	await expect(page).toHaveURL(/#\/(dashboard|setup)/, { timeout: 30_000 });
 }
 
 /** Waits for the smart table of the current screen to render at least its header. */

@@ -18,6 +18,7 @@ import { ToasterService } from '@app/@core/toaster';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { resultErrors } from '@app/graphql/result-errors';
 
 @Component({
 	standalone: false,
@@ -86,8 +87,9 @@ export class AccountComponent implements OnInit, OnDestroy {
 				})
 				.pipe(first())
 				.toPromise();
-			if (res.errors) {
-				this.toasterService.pop('error', res.errors[0].message);
+			const errors = resultErrors(res);
+			if (errors) {
+				this.toasterService.pop('error', errors[0].message);
 			} else {
 				this.toasterService.pop(
 					'success',

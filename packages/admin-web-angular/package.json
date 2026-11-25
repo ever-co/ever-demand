@@ -25,8 +25,10 @@
 		"start": "pnpm run config:dev && ng serve",
 		"build": "pnpm run config:prod && ng build",
 		"build:dev": "pnpm run config:dev && ng build --configuration development",
+		"serve:build": "node scripts/serve-build.ts",
 		"typecheck": "pnpm run config:dev && tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.spec.json --noEmit",
-		"test": "pnpm run config:dev && ng test",
+		"test": "pnpm run config:dev && ng test && node --test scripts/",
+		"test:scripts": "node --test scripts/",
 		"e2e": "pnpm --filter @ever-platform/e2e exec playwright test --project=admin",
 		"clean": "rimraf build .angular"
 	},
