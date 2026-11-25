@@ -3,7 +3,6 @@
  * links to OpenStreetMap (directions when there are two points).
  */
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import React from 'react';
 import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { colors } from '../theme';

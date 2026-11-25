@@ -1,6 +1,5 @@
 /** Small product widgets: merchant logo, discount badge, delivery badge, Buy / Details buttons. */
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import React from 'react';
 import { Image, StyleSheet, Text, View, type ViewStyle } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';

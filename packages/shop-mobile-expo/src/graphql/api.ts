@@ -1,6 +1,6 @@
 /** GraphQL services of the Ionic app (`services/*`), as functions over an Apollo client. */
 import type { ApolloClient } from '@apollo/client';
-import { Observable, map } from 'rxjs';
+import { Observable, filter, map } from 'rxjs';
 import type { Location, Merchant, Order, ProductInfo, WarehouseProduct } from '../domain/types';
 import {
 	GENERATE_ORDERS_BY_CUSTOMER_ID,
@@ -42,6 +42,12 @@ export function availableProducts(rows: Array<ProductInfo | null> | null | undef
 		.filter((row) => row.warehouseProduct?.isProductAvailable === true);
 }
 
+/** `client.query` returning only `data` (errorPolicy `all`: rows that resolved still come back). */
+async function queryData<T>(client: ApolloClient, options: ApolloClient.QueryOptions): Promise<T | undefined> {
+	const result = await client.query(options);
+	return result.data as T | undefined;
+}
+
 export function createGraphQLApi(client: ApolloClient) {
 	return {
 		/** Product feed rows, polled every 2 s (watchQuery). */
@@ -58,6 +64,8 @@ export function createGraphQLApi(client: ApolloClient) {
 				pollInterval,
 			});
 			return query.pipe(
+				// Apollo 4 first emits a loading result without data; the feed only wants answers.
+				filter((result) => !result.loading),
 				map((result) =>
 					availableProducts(
 						(result.data as { geoLocationProductsByPaging?: Array<ProductInfo | null> } | undefined)
@@ -73,7 +81,7 @@ export function createGraphQLApi(client: ApolloClient) {
 			options?: GeoLocationProductsOptions,
 			searchText?: string,
 		): Promise<ProductInfo[]> {
-			const { data } = await client.query<{ geoLocationProductsByPaging: Array<ProductInfo | null> }>({
+			const data = await queryData<{ geoLocationProductsByPaging: Array<ProductInfo | null> }>(client, {
 				query: GEO_LOCATION_PRODUCTS_BY_PAGING,
 				variables: { geoLocation, options, pagingOptions, searchText },
 			});
@@ -85,7 +93,7 @@ export function createGraphQLApi(client: ApolloClient) {
 			options?: GeoLocationProductsOptions,
 			searchText?: string,
 		): Promise<number> {
-			const { data } = await client.query<{ getCountOfGeoLocationProducts: number }>({
+			const data = await queryData<{ getCountOfGeoLocationProducts: number }>(client, {
 				query: GET_COUNT_OF_GEO_LOCATION_PRODUCTS,
 				variables: { geoLocation, options, searchText },
 			});
@@ -96,7 +104,7 @@ export function createGraphQLApi(client: ApolloClient) {
 			warehouseId: string,
 			warehouseProductId: string,
 		): Promise<WarehouseProduct | null> {
-			const { data } = await client.query<{ getWarehouseProduct: WarehouseProduct | null }>({
+			const data = await queryData<{ getWarehouseProduct: WarehouseProduct | null }>(client, {
 				query: GET_WAREHOUSE_PRODUCT,
 				variables: { warehouseId, warehouseProductId },
 			});
@@ -104,7 +112,7 @@ export function createGraphQLApi(client: ApolloClient) {
 		},
 
 		async getCloseMerchants(geoLocation: GeoLocationFind): Promise<Merchant[]> {
-			const { data } = await client.query<{ getCloseMerchants: Merchant[] }>({
+			const data = await queryData<{ getCloseMerchants: Merchant[] }>(client, {
 				query: GET_CLOSE_MERCHANTS,
 				variables: { geoLocation },
 			});
@@ -112,7 +120,7 @@ export function createGraphQLApi(client: ApolloClient) {
 		},
 
 		async getMerchantsByName(searchName: string, geoLocation?: GeoLocationFind): Promise<Merchant[]> {
-			const { data } = await client.query<{ getMerchantsBuyName: Merchant[] }>({
+			const data = await queryData<{ getMerchantsBuyName: Merchant[] }>(client, {
 				query: GET_MERCHANTS_BY_NAME,
 				variables: { searchName, geoLocation },
 			});
@@ -120,7 +128,7 @@ export function createGraphQLApi(client: ApolloClient) {
 		},
 
 		async getOrderStatus(id: string): Promise<number | null> {
-			const { data } = await client.query<{ getOrder: Pick<Order, 'status'> | null }>({
+			const data = await queryData<{ getOrder: Pick<Order, 'status'> | null }>(client, {
 				query: GET_ORDER_STATUS,
 				variables: { id },
 			});
@@ -128,7 +136,7 @@ export function createGraphQLApi(client: ApolloClient) {
 		},
 
 		async getOrderWaitForCompletion(id: string): Promise<boolean> {
-			const { data } = await client.query<{ getOrder: Pick<Order, 'waitForCompletion'> | null }>({
+			const data = await queryData<{ getOrder: Pick<Order, 'waitForCompletion'> | null }>(client, {
 				query: GET_ORDER_WAIT_FOR_COMPLETION,
 				variables: { id },
 			});
@@ -136,7 +144,7 @@ export function createGraphQLApi(client: ApolloClient) {
 		},
 
 		async getOrderTotalPrice(id: string): Promise<number> {
-			const { data } = await client.query<{ getOrder: Pick<Order, 'totalPrice'> | null }>({
+			const data = await queryData<{ getOrder: Pick<Order, 'totalPrice'> | null }>(client, {
 				query: GET_ORDER_TOTAL_PRICE,
 				variables: { id },
 			});
@@ -145,7 +153,7 @@ export function createGraphQLApi(client: ApolloClient) {
 
 		/** Seeds demo orders for the fake invite code. */
 		async generateOrdersByCustomerId(numberOfOrders: number, customerId: string): Promise<void> {
-			await client.query({
+			await queryData(client, {
 				query: GENERATE_ORDERS_BY_CUSTOMER_ID,
 				variables: { numberOfOrders, customerId },
 			});

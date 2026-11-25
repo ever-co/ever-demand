@@ -3,7 +3,7 @@
  * to `user.addPaymentMethod` like the Stripe Checkout token of the Ionic app.
  */
 import { CardField, StripeProvider, createToken } from '@stripe/stripe-react-native';
-import React, { forwardRef, useImperativeHandle, useState } from 'react';
+import { forwardRef, useImperativeHandle, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { colors } from '../theme';
 

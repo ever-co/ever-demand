@@ -1,5 +1,5 @@
 /** Search panel of the feed (Ionic `search-products`): merchants and products by text. */
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Badge, Button, Card, Searchbar } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';

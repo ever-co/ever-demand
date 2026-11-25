@@ -2,7 +2,8 @@
  * GraphQL documents of the Ionic shop app, copied verbatim (feature inventory §1.4), so the Expo
  * app needs no schema change.
  */
-import { gql } from '@apollo/client';
+import { gql, type TypedDocumentNode } from '@apollo/client';
+import type { Order } from '../domain/types';
 
 export const GEO_LOCATION_PRODUCTS_BY_PAGING = gql`
 	query GeoLocationProductsByPaging(
@@ -225,7 +226,7 @@ const ORDER_FRAGMENT = gql`
 	${ORDER_PRODUCT_FRAGMENT}
 `;
 
-export const ORDERS_HISTORY = gql`
+export const ORDERS_HISTORY: TypedDocumentNode<{ getOrders: Order[] }, { userId: string }> = gql`
 	query OrdersHistoryPageQuery($userId: String!) {
 		getOrders(userId: $userId) {
 			...OrderFragment
@@ -234,7 +235,7 @@ export const ORDERS_HISTORY = gql`
 	${ORDER_FRAGMENT}
 `;
 
-export const ORDER_DETAILS = gql`
+export const ORDER_DETAILS: TypedDocumentNode<{ getOrder: Order | null }, { id: string }> = gql`
 	query OrderDetailsPageQuery($id: String!) {
 		getOrder(id: $id) {
 			...OrderFragment

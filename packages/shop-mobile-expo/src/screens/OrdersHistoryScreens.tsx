@@ -1,8 +1,7 @@
 /** Orders history and order details (`/orders-history`, `/orders-history/:id`, §4.13). */
 import { useQuery } from '@apollo/client/react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
-import React from 'react';
+import { useRoute, type RouteProp } from '@react-navigation/native';
 import { ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +12,7 @@ import { isOrderInProcessing } from '../domain/order';
 import type { Order } from '../domain/types';
 import { ORDER_DETAILS, ORDERS_HISTORY } from '../graphql/documents';
 import { useGuard } from '../hooks/useGuard';
-import { goBack, navigateRoot } from '../navigation/actions';
+import { goBack, navigate, navigateRoot } from '../navigation/actions';
 import type { RootParamList } from '../navigation/types';
 import { useServices } from '../services/container';
 import { useAppSelector } from '../store';
@@ -23,14 +22,13 @@ export function OrdersHistoryScreen() {
 	const allowed = useGuard('OrdersHistory');
 	const { t } = useTranslation();
 	const { env } = useServices();
-	const navigation = useNavigation();
 	const userId = useAppSelector((state) => state.session.userId);
 	const deliveryType = useAppSelector((state) => state.session.deliveryType);
-	const { data, loading } = useQuery<{ getOrders: Order[] }>(ORDERS_HISTORY, {
+	const { data, loading } = useQuery(ORDERS_HISTORY, {
 		variables: { userId: userId ?? '' },
 		skip: !userId,
 	});
-	const orders = data?.getOrders;
+	const orders = data?.getOrders as Order[] | undefined;
 
 	const openOrder = (order: Order) => {
 		// Tapping an order in progress opens its tracking page (page mode only).
@@ -57,7 +55,7 @@ export function OrdersHistoryScreen() {
 						<OrderCard
 							order={item}
 							onPress={() => openOrder(item)}
-							onMore={() => navigation.navigate('OrderDetails' as never, { id: item.id } as never)}
+							onMore={() => navigate('OrderDetails', { id: item.id })}
 						/>
 					)}
 					testID='orders-list'
@@ -79,12 +77,12 @@ export function OrderDetailsScreen() {
 	const allowed = useGuard('OrderDetails');
 	const { t } = useTranslation();
 	const { params } = useRoute<RouteProp<RootParamList, 'OrderDetails'>>();
-	const { data } = useQuery<{ getOrder: Order | null }>(ORDER_DETAILS, {
+	const { data } = useQuery(ORDER_DETAILS, {
 		variables: { id: params?.id ?? '' },
 		skip: !params?.id,
 		fetchPolicy: 'network-only',
 	});
-	const order = data?.getOrder;
+	const order = data?.getOrder as Order | null | undefined;
 
 	if (!allowed) {
 		return <View style={styles.screen} />;

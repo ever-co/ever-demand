@@ -3,7 +3,6 @@
  * In the shopping-cart flow every button (Close too, like the Ionic `dismiss(true)`) confirms the
  * cart with `warehouse-orders.userComplete` and shows the order info again.
  */
-import React from 'react';
 import { ActivityIndicator, StyleSheet, Text } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';

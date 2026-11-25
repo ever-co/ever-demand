@@ -1,5 +1,4 @@
 /** Renders the open order modal (the Ionic `ModalController`), one at a time. */
-import React from 'react';
 import { useAppSelector } from '../store';
 import { NewCardModal } from './NewCardModal';
 import { OrderModal } from './OrderModal';

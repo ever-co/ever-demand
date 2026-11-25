@@ -1,6 +1,6 @@
 /** Product details (`/products/product-details/:id?backUrl&warehouseId`, feature inventory §4.6). */
 import { useRoute, type RouteProp } from '@react-navigation/native';
-import React, { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { ActivityIndicator, FlatList, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { AppHeader } from '../components/AppHeader';

@@ -1,5 +1,4 @@
 /** Delivery order popup (`OrderPage` modal, feature inventory §4.7, popup mode). */
-import React from 'react';
 import { Button } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import { PaymentButtons } from '../components/PaymentButtons';

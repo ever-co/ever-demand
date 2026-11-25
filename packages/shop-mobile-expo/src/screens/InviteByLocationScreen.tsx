@@ -1,5 +1,5 @@
 /** First run: invite by address (`/invite/by-location`, feature inventory §4.3). */
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
 	ActivityIndicator,
 	KeyboardAvoidingView,

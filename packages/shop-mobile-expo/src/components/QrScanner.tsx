@@ -1,6 +1,6 @@
 /** Store code scanner for the merchants page "Scan" button (Cordova BarcodeScanner before). */
 import { CameraView, useCameraPermissions } from 'expo-camera';
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button, Modal, Portal } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';

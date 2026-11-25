@@ -1,5 +1,5 @@
 /** Order tracking pages (`/order-info`, `/order-info-takeaway`, feature inventory §4.7, §4.8). */
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';

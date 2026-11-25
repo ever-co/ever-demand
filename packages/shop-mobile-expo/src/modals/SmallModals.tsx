@@ -1,5 +1,5 @@
 /** Cancel ("Undo"), issue, "call unsuccessful" and map modals (§4.10, §4.11, §4.12, §4.8). */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';

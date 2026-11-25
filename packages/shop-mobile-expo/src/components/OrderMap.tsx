@@ -3,7 +3,7 @@
  * the first two points. The Ionic app drew Google driving directions; this draws the straight line
  * (directions need a Google Directions key, see docs/latest-stack/shop-mobile-expo.md).
  */
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import { env } from '../config/env';

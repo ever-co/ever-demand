@@ -1,6 +1,6 @@
 /** Merchants list (`/merchants`, feature inventory §4.14). */
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { Button, List, Searchbar } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';

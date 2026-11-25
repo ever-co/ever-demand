@@ -3,7 +3,7 @@
  * (default) or a 1-D barcode in the merchant's `orderBarcodeType`, plus the short order number.
  */
 import JsBarcode from 'jsbarcode';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import Svg, { Rect } from 'react-native-svg';

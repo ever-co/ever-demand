@@ -8,6 +8,20 @@ import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { isSubscriptionOperation } from '@apollo/client/utilities';
 import { createClient } from 'graphql-ws';
 
+/** Default error policies of the Ionic client (Apollo 4 types them through this declaration). */
+declare module '@apollo/client' {
+	export namespace ApolloClient {
+		export namespace DeclareDefaultOptions {
+			interface WatchQuery {
+				errorPolicy: 'ignore';
+			}
+			interface Query {
+				errorPolicy: 'all';
+			}
+		}
+	}
+}
+
 export interface GraphQLClientOptions {
 	httpEndpoint: string;
 	subscriptionsEndpoint: string;

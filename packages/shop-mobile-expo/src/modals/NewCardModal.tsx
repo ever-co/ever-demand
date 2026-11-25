@@ -6,7 +6,7 @@
  * Closing it, after a payment or not, runs `close()` once: in popup mode that reopens the order
  * popup (#1651).
  */
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';

@@ -1,5 +1,5 @@
 /** Product feed layouts: slides (one card per page, swiped) and list (cards, infinite scroll). */
-import React, { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import {
 	ActivityIndicator,
 	FlatList,
@@ -8,7 +8,7 @@ import {
 	Text,
 	View,
 	type LayoutChangeEvent,
-	type ViewToken,
+	type ListViewToken,
 } from 'react-native';
 import { Button, Card } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
@@ -126,7 +126,7 @@ export function ProductsListView(props: ProductViewProps) {
 				<EmptyFeed loaded={props.loaded} placeholder={props.placeholder} count={props.products.length} />
 			}
 			ListFooterComponent={
-				props.loaded || shown.length === 0 ? null : <ActivityIndicator color={colors.light} />
+				props.loaded || shown.length === 0 ? undefined : <ActivityIndicator color={colors.light} />
 			}
 		/>
 	);
@@ -139,7 +139,7 @@ export function ProductsSlidesView(props: ProductViewProps) {
 	const propsRef = useRef(props);
 	propsRef.current = props;
 
-	const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: ViewToken[] }) => {
+	const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: ListViewToken[] }) => {
 		const current = viewableItems[0]?.index ?? 0;
 		setIndex(current);
 		const { products, productsCount, onLoadMore } = propsRef.current;

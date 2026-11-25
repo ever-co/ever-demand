@@ -1,6 +1,6 @@
 /** Takeaway order popup (`OrderTakeawayInfoPopup`, feature inventory §4.8, popup mode). */
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
