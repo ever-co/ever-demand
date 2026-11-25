@@ -203,3 +203,25 @@ pnpm test             # Vitest, --maxWorkers=2
 pnpm typecheck
 pnpm codegen          # after changing a query (reads packages/core/src/graphql)
 ```
+
+### Verified
+
+- `pnpm install`, `pnpm typecheck`, `pnpm codegen` (documents validated against the core schema).
+- `pnpm test`: 44 Vitest specs pass (helpers, auth, location, context redirect, every component,
+  every page with mocked GraphQL, hydration hook).
+- `pnpm build` on Node 26.13.1: passes in ~4-10 min without a running API. Gatsby prints
+  ` ERROR  UNKNOWN` once while writing page data: that is a worker's `DEP0040 punycode`
+  deprecation warning on stderr (a dependency of Gatsby), not a build error; the build exits 0.
+- `pnpm serve` + headless Chromium against the upgraded API: sign-up page for a new visitor,
+  products from the API, orders/product errors of the API shown, settings, 404; no uncaught
+  errors (the static-HTML/hydration mismatch of the orders and product pages is fixed).
+
+## Held back
+
+Nothing is held back for a version reason. Notes:
+
+- `graphql` stays on 16.15 (not 17.1): the core lane's `@apollo/server` 5 peers `^16.11`.
+- Gatsby 5.16 is the newest Gatsby; its `engines` say `node <26`, but it installs, builds and
+  serves on Node 26.13.1 (see above).
+- `node:26-alpine` is 26.13.0 today; pnpm warns that the workspace wants `>=26.13.1` (warning
+  only, the image builds).
