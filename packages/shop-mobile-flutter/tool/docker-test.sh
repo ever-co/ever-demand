@@ -7,6 +7,9 @@
 #   tool/docker-test.sh                          # all steps
 #   tool/docker-test.sh analyze test             # some steps
 #   STEPS: analyze test integration build-web build-apk
+#   tool/docker-test.sh live                     # e2e against a running API
+#     (LIVE_SERVICES_ENDPOINT / LIVE_GQL_ENDPOINT / LIVE_GQL_SUBSCRIPTIONS_ENDPOINT,
+#      default: the host's 5500 / 8443 / 2086 through host.docker.internal)
 #
 # The repo is mounted read-only and copied into the container (bind mounts
 # from Windows are slow for Gradle and the analyzer). Results land in
@@ -40,6 +43,9 @@ MSYS_NO_PATHCONV=1 docker run --rm \
   -v ever-flutter-android-sdk:/opt/android-sdk-linux \
   -e "STEPS=$STEPS" \
   -e "FLUTTER_TEST_CONCURRENCY=${FLUTTER_TEST_CONCURRENCY:-2}" \
+  -e "LIVE_SERVICES_ENDPOINT=${LIVE_SERVICES_ENDPOINT:-http://host.docker.internal:5500}" \
+  -e "LIVE_GQL_ENDPOINT=${LIVE_GQL_ENDPOINT:-http://host.docker.internal:8443/graphql}" \
+  -e "LIVE_GQL_SUBSCRIPTIONS_ENDPOINT=${LIVE_GQL_SUBSCRIPTIONS_ENDPOINT:-ws://host.docker.internal:2086/subscriptions}" \
   "$IMAGE" bash -c '
 set -euo pipefail
 W=/work/packages/shop-mobile-flutter
@@ -77,6 +83,19 @@ for step in $STEPS; do
           done
           flutter test --dart-define=INTEGRATION_TEST_SHOULD_REPORT_RESULTS_TO_NATIVE=false integration_headless 2>&1 | tee /out/integration.txt | tail -5
           grep -q "All tests passed" /out/integration.txt || status=1 ;;
+    # integration_test/live_api_test.dart against a running API (not in the
+    # default steps). From the container the host is host.docker.internal.
+    live)
+          mkdir -p integration_headless
+          echo "import \"../integration_test/live_api_test.dart\" as t; void main() => t.main();" > integration_headless/live_api_test.dart
+          flutter test \
+            --dart-define=INTEGRATION_TEST_SHOULD_REPORT_RESULTS_TO_NATIVE=false \
+            --dart-define=LIVE_API=true \
+            --dart-define=SERVICES_ENDPOINT="$LIVE_SERVICES_ENDPOINT" \
+            --dart-define=GQL_ENDPOINT="$LIVE_GQL_ENDPOINT" \
+            --dart-define=GQL_SUBSCRIPTIONS_ENDPOINT="$LIVE_GQL_SUBSCRIPTIONS_ENDPOINT" \
+            integration_headless/live_api_test.dart 2>&1 | tee /out/live.txt | tail -8
+          grep -q "All tests passed" /out/live.txt || status=1 ;;
     build-web) flutter build web --release 2>&1 | tee /out/build-web.txt | tail -5
           tar -C build -czf /out/web.tar.gz web || status=1 ;;
     build-apk) flutter build apk --debug 2>&1 | tee /out/build-apk.txt | tail -5

@@ -101,10 +101,11 @@ class GraphQLClientService implements GraphQLService {
     final Map<String, dynamic>? data = result.data;
     if (data == null) {
       final OperationException? e = result.exception;
+      final List<GraphQLError> errors = e?.graphqlErrors ?? <GraphQLError>[];
       throw GraphQLRequestError(
-        e?.graphqlErrors.map((GraphQLError g) => g.message).join('; ') ??
-            e?.linkException?.toString() ??
-            'No data',
+        errors.isNotEmpty
+            ? errors.map((GraphQLError g) => g.message).join('; ')
+            : (e?.linkException?.toString() ?? 'No data'),
         exception: e,
       );
     }
