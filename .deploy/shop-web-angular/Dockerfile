@@ -5,7 +5,7 @@
 #
 # The endpoints are baked into the bundle at build time (scripts/configure.ts reads the env),
 # so pass them as build args, e.g. --build-arg GQL_ENDPOINT=https://api.example.com/graphql.
-# The image serves the static app with nginx on port 4200.
+# The image serves the static app (dist/browser) with nginx on port 4200.
 
 ARG NODE_IMAGE=node:26-alpine
 
@@ -80,7 +80,7 @@ RUN apk add --no-cache dos2unix
 COPY --chown=nginx:nginx wait .deploy/shop-web-angular/entrypoint.prod.sh .deploy/shop-web-angular/entrypoint.compose.sh ./
 COPY --chown=nginx:nginx .deploy/shop-web-angular/nginx.compose.conf /etc/nginx/conf.d/compose.conf.template
 COPY --chown=nginx:nginx .deploy/shop-web-angular/nginx.prod.conf /etc/nginx/conf.d/prod.conf.template
-COPY --chown=nginx:nginx --from=build /srv/ever/packages/shop-web-angular/build/browser .
+COPY --chown=nginx:nginx --from=build /srv/ever/packages/shop-web-angular/dist/browser .
 
 RUN dos2unix entrypoint.prod.sh entrypoint.compose.sh && \
 	chmod +x wait entrypoint.compose.sh entrypoint.prod.sh && \

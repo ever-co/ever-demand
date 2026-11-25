@@ -27,7 +27,7 @@
 		"typecheck": "tsc -p tsconfig.json --noEmit",
 		"test": "vitest run --maxWorkers=2",
 		"test:watch": "vitest --maxWorkers=2",
-		"format": "prettier --write \"src/**/*.{js,jsx,tsx,ts}\""
+		"format": "prettier --write \"src/**/*.{js,jsx,tsx,ts}\" \"*.{ts,tsx}\""
 	},
 	"dependencies": {
 		"@apollo/client": "^4.3.8",
@@ -41,7 +41,7 @@
 		"gatsby-plugin-manifest": "^5.16.0",
 		"gatsby-plugin-sass": "^6.16.0",
 		"gatsby-plugin-styled-components": "^6.16.0",
-		"graphql": "^17.1.0",
+		"graphql": "^16.15.0",
 		"nuka-carousel": "^8.2.0",
 		"react": "^19.3.1",
 		"react-dom": "^19.3.1",

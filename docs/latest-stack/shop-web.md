@@ -16,7 +16,7 @@ Both packages are in `pnpm-workspace.yaml`.
 | Unit tests | Karma + Jasmine | Vitest 5.1 + jsdom 31 (`@angular/build:unit-test`) |
 | e2e | Protractor | Playwright 1.65 (`e2e/tests/shop-web`) |
 | TypeScript | 4.5 | 6.0.3 |
-| @apollo/client / apollo-angular / graphql | 3.5 / 2.6 / 15.7 | 4.3.8 / 14.2.0 / 17.1.0 |
+| @apollo/client / apollo-angular / graphql | 3.5 / 2.6 / 15.7 | 4.3.8 / 14.2.0 / 16.15.0 (the core lane's major: @apollo/server 5 rejects 17) |
 | graphql-ws | - | 6.4.3 (`GraphQLWsLink`, lazy) |
 | @ngx-translate/core / http-loader | 13 / 6 | 18.1 / 18.1 (through the common-angular shim) |
 | @fortawesome/* | angular-fontawesome 0.9, FA 5 | angular-fontawesome 5.1, FA 7.3 |
@@ -80,7 +80,7 @@ and Vite (dev server prebundling, Vitest) resolves their imports from the app's 
 - `configure.ts` writes the same settings to `environment.ts` and `environment.prod.ts`
   (production replaces one with the other); `enableProdMode`/debug tools are gone (the
   builder handles production mode).
-- Output is `build/browser` (netlify.toml and firebase.json updated). The package's own
+- Output is `dist/browser` (netlify.toml and firebase.json updated). The package's own
   `Dockerfile`, `Dockerfile-dev` and `docker-compose.yml` were deleted: they ran `npm i` inside
   the package, which cannot resolve the `workspace:*` dependencies. `.deploy/shop-web-angular` is
   the image.
@@ -92,7 +92,7 @@ export PATH="/c/nvm/v26.13.1:$PATH"
 pnpm install
 cd packages/shop-web-angular
 pnpm start            # config:dev + ng serve on http://localhost:3000
-pnpm build            # config:prod + production build into build/browser
+pnpm build            # config:prod + production build into dist/browser
 pnpm test             # Vitest through @angular/build:unit-test (112 specs)
 pnpm typecheck        # app + specs
 pnpm i18n:check && pnpm a11y:check-icon-buttons && pnpm a11y:check-icon-buttons:test
@@ -121,7 +121,7 @@ pnpm --filter @ever-platform/e2e exec playwright test --project=shop-web
 
 `node:26-alpine` + `npm i -g pnpm@12.23.0`, frozen install of the shop and its workspace
 dependencies only, production build (endpoints as `--build-arg`), then `nginx:alpine` serving
-`build/browser` on 4200 (the k8s target port) with the existing entrypoints.
+`dist/browser` on 4200 (the k8s target port) with the existing entrypoints.
 `Dockerfile.dockerignore` keeps host `node_modules`/`.angular`/`build` out of the context.
 Verified: `docker build -f .deploy/shop-web-angular/Dockerfile .` succeeds and the container serves
 `/` and deep links.
@@ -141,7 +141,7 @@ settings, product details).
 | gatsby | 4 | 5.16.1 |
 | react / react-dom | 17 | 19.3.1 (newest React that Gatsby 5 accepts: `^18 \|\| ^19`) |
 | UI | @material-ui/core 4 + gatsby-plugin-material-ui | @mui/material 9.6 + @emotion 11 + gatsby-plugin-emotion 8.16 |
-| Data | react-apollo-hooks + apollo-boost, gatsby-source-graphql | @apollo/client 4.3.8 (`@apollo/client/react`), graphql 17.1 |
+| Data | react-apollo-hooks + apollo-boost, gatsby-source-graphql | @apollo/client 4.3.8 (`@apollo/client/react`), graphql 16.15 (core lane) |
 | Codegen | @graphql-codegen 2 (typescript + operations, live API) | @graphql-codegen/cli 8 + client-preset 7, schema from `packages/core/src/graphql/**/*.graphql` |
 | styled-components | 5 | 6.7 (+ gatsby-plugin-styled-components 6.16) |
 | nuka-carousel | 4 | 8.2 |
