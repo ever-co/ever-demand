@@ -31,6 +31,7 @@ export type Env = Readonly<{
 	TESTING_DB_URI: string;
 
 	STRIPE_SECRET_KEY: string;
+	STRIPE_CURRENCY?: string;
 
 	URBAN_AIRSHIP_KEY: string;
 	URBAN_AIRSHIP_SECRET: string;
@@ -106,6 +107,11 @@ export const env: Env = cleanEnv(
 		TESTING_DB_URI: str({ default: 'mongodb://localhost/ever_testing' }),
 
 		STRIPE_SECRET_KEY: str({ default: '' }),
+		STRIPE_CURRENCY: str({
+			desc:
+				'Three-letter currency code used for card charges, e.g. usd (empty = ils). Currencies without 100 minor units, like jpy, are not supported.',
+			default: '',
+		}),
 
 		URBAN_AIRSHIP_KEY: str({ default: '' }),
 		URBAN_AIRSHIP_SECRET: str({ default: '' }),
