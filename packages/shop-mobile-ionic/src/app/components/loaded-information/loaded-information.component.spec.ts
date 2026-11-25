@@ -1,5 +1,4 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { PipesModule } from '@modules/client.common.angular2/pipes/pipes.module';
 import { LoadedInformationComponent } from './loaded-information.component';
 
 describe('LoadedInformationComponent', () => {
@@ -10,7 +9,6 @@ describe('LoadedInformationComponent', () => {
 		waitForAsync(() => {
 			TestBed.configureTestingModule({
 				declarations: [LoadedInformationComponent],
-				imports: [PipesModule],
 			}).compileComponents();
 		})
 	);
