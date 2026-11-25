@@ -10,9 +10,7 @@ import { CarrierDeliveriesPopupPage } from '../../pages/+carriers/carrier-delive
 	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<div class="text-center">
-			<ion-icon
-				ios="ios-information-circle"
-				md="md-information-circle"
+			<ion-icon name="information-circle"
 			></ion-icon>
 		</div>
 		<div class="text-center">
