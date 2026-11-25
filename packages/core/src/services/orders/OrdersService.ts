@@ -459,9 +459,11 @@ export class OrdersService extends DBService<Order>
 						// Stripe may have charged the card although the call
 						// rejected (a connection reset or a timeout), or the
 						// paid write failed after the charge. A cancel that
-						// ran meanwhile found no charge yet to refund.
-						await this._refundLostStripeChargesIfCancelled(
+						// ran meanwhile found no charge yet to refund, and a
+						// call with another card may have paid the order.
+						await this._refundLostStripeChargesAfterFailure(
 							orderId,
+							user.stripeCustomerId,
 							callId
 						);
 
@@ -629,17 +631,20 @@ export class OrdersService extends DBService<Order>
 	 * may have charged the card anyway. A cancel that ran while Stripe was
 	 * charging found no charge to refund, so the charges of an order that is
 	 * now cancelled and unpaid are refunded here, with the key payWithStripe
-	 * refunds them with, so none is refunded twice. An order that is not
-	 * cancelled is left alone: a retry pays with its charge, and a later
-	 * cancel refunds it.
+	 * refunds them with, so none is refunded twice. On an order another
+	 * charge paid meanwhile, also a cancelled one, every other charge is
+	 * refunded. An unpaid order that is not cancelled is left alone: a retry
+	 * pays with its charge, and a later cancel refunds it.
 	 * Never rejects: errors are logged, so the caller rethrows its own error.
 	 *
 	 * @param {Order['id']} orderId
+	 * @param {string} [customerId] Stripe customer the order was charged to
 	 * @param {string} callId payWithStripe call, for the log
 	 * @returns {Promise<void>}
 	 */
-	private async _refundLostStripeChargesIfCancelled(
+	private async _refundLostStripeChargesAfterFailure(
 		orderId: Order['id'],
+		customerId: string | undefined,
 		callId: string
 	): Promise<void> {
 		let latestOrder: Order | null;
@@ -655,11 +660,24 @@ export class OrdersService extends DBService<Order>
 			return;
 		}
 
-		if (
-			latestOrder == null ||
-			!latestOrder.isCancelled ||
-			latestOrder.isPaid
-		) {
+		if (latestOrder == null) {
+			return;
+		}
+
+		// Another charge paid the order first, e.g. one of a call with
+		// another card, even when it was cancelled since: that charge stays
+		// on the order, and refundWithStripe refunds only it.
+		if (latestOrder.isPaid) {
+			await this._refundOtherStripeChargesOfPaidOrder(
+				latestOrder,
+				customerId,
+				callId
+			);
+
+			return;
+		}
+
+		if (!latestOrder.isCancelled) {
 			return;
 		}
 
@@ -670,6 +688,76 @@ export class OrdersService extends DBService<Order>
 
 		// Never rejects
 		await this.refundLostStripeCharges(latestOrder);
+	}
+
+	/**
+	 * Refunds the charges of a paid order other than the one it was paid
+	 * with, e.g. one Stripe made for a call whose answer was lost while a
+	 * call with another card paid the order. The order keeps its charge id.
+	 * Never rejects: errors are logged.
+	 *
+	 * @param {Order} order the paid order as read after the failure
+	 * @param {string} [customerId] Stripe customer the order was charged to
+	 * @param {string} callId payWithStripe call, for the log
+	 * @returns {Promise<void>}
+	 */
+	private async _refundOtherStripeChargesOfPaidOrder(
+		order: Order,
+		customerId: string | undefined,
+		callId: string
+	): Promise<void> {
+		const orderId = order.id;
+		const paidChargeId = order.stripeChargeId;
+
+		let charges: Stripe.Charge[];
+
+		try {
+			charges = await this._unrefundedStripeChargesOfOrder(
+				orderId,
+				customerId
+			);
+		} catch (err) {
+			this.log.error(
+				{ callId, orderId, paidChargeId, err },
+				'.payWithStripe(orderId, cardId) could not look for other charges of the paid order'
+			);
+
+			return;
+		}
+
+		for (const charge of charges) {
+			const chargeId = charge.id;
+
+			if (chargeId === paidChargeId) {
+				continue;
+			}
+
+			this.log.warn(
+				{ callId, orderId, chargeId, paidChargeId },
+				'.payWithStripe(orderId, cardId) order was paid with another charge while the charge or the paid write failed, refunding it'
+			);
+
+			try {
+				await this.stripe.refunds.create(
+					{ charge: chargeId },
+					{
+						idempotencyKey: `refund-order-${orderId}-charge-${chargeId}`,
+					}
+				);
+			} catch (err) {
+				if (err != null && err.code === 'charge_already_refunded') {
+					this.log.info(
+						{ callId, orderId, chargeId, err },
+						'.payWithStripe(orderId, cardId) the other charge of the paid order was already refunded'
+					);
+				} else {
+					this.log.error(
+						{ callId, orderId, chargeId, err },
+						'.payWithStripe(orderId, cardId) could not refund the other charge of the paid order'
+					);
+				}
+			}
+		}
 	}
 
 	/**
