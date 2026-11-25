@@ -420,8 +420,11 @@ ships to the browser).
 ### 3.1 Start-up sequence (`app.module.ts` APP_INITIALIZERs, in this order, all awaited)
 
 1. **Server check** (`ServerConnectionService.load`): HTTP GET `SERVICES_ENDPOINT`. On an HTTP error,
-   `localStorage.serverConnection = error.status` (so `0` when unreachable). **(quirk)** it is never
-   reset to a non-zero value on success at start; only the server-down page overwrites it.
+   `localStorage.serverConnection = error.status` (so `0` when unreachable). **(quirk)** the check
+   only "passes" because it fails: the API root answers 404 (or non-JSON), which stores `404`. A
+   missing key reads as `Number(null) === 0`, i.e. "down", so a root that answered valid JSON would
+   send the app to the server-down page. A rebuild should treat "unreachable" as down and anything
+   else as up.
 2. **Google Maps loader**: injects the Maps script and waits for its callback. **(quirk)** with no
    network to Google this never resolves and the app never starts.
 3. **Maintenance** (`MaintenanceService.load(SETTINGS_APP_TYPE, SETTINGS_MAINTENANCE_API_URL)`):

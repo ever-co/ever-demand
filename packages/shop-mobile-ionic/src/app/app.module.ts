@@ -7,6 +7,7 @@ import {
 import {
 	provideHttpClient,
 	withInterceptorsFromDi,
+	withXhr,
 } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -77,7 +78,7 @@ declare module '@apollo/client' {
 		// getters, setInterval timers), so keep it explicitly: Angular 21+
 		// defaults to zoneless.
 		provideZoneChangeDetection(),
-		provideHttpClient(withInterceptorsFromDi()),
+		provideHttpClient(withXhr(), withInterceptorsFromDi()),
 		provideApollo(apolloOptionsFactory),
 		// A service worker only makes sense for the web build; the native
 		// app serves its files from the device.
@@ -93,17 +94,17 @@ declare module '@apollo/client' {
 		provideAppInitializer(() =>
 			inject(ServerConnectionService).load(
 				environment.SERVICES_ENDPOINT,
-				inject(Store)
-			)
+				inject(Store),
+			),
 		),
 		provideAppInitializer(() =>
-			inject(GoogleMapsLoader).load(environment.GOOGLE_MAPS_API_KEY)
+			inject(GoogleMapsLoader).load(environment.GOOGLE_MAPS_API_KEY),
 		),
 		provideAppInitializer(() =>
 			inject(MaintenanceService).load(
 				environment['SETTINGS_APP_TYPE'],
-				environment['SETTINGS_MAINTENANCE_API_URL']
-			)
+				environment['SETTINGS_MAINTENANCE_API_URL'],
+			),
 		),
 		provideAppInitializer(() => inject(ServerSettings).load()),
 		{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
@@ -131,7 +132,7 @@ export function apolloOptionsFactory(): ApolloClient.Options {
 			lazy: true,
 			retryAttempts: Infinity,
 			shouldRetry: () => true,
-		})
+		}),
 	);
 
 	const authLink = new SetContextLink((prevContext) => {
@@ -152,7 +153,7 @@ export function apolloOptionsFactory(): ApolloClient.Options {
 				(operation) => {
 					const operationAST = getOperationAST(
 						operation.query,
-						operation.operationName
+						operation.operationName,
 					);
 					return (
 						!!operationAST &&
@@ -160,8 +161,8 @@ export function apolloOptionsFactory(): ApolloClient.Options {
 					);
 				},
 				ws,
-				http
-			)
+				http,
+			),
 		),
 		defaultOptions: {
 			watchQuery: {

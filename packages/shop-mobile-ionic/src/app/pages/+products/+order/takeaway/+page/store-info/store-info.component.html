@@ -7,8 +7,10 @@
 	</div>
 	<div class="maps">
 		<e-cu-directions-location
-			[origin]="order?.user?.geoLocation"
-			[destination]="order?.warehouse?.geoLocation"
+			[origin]="$safeNavigationMigration(order?.user?.geoLocation)"
+			[destination]="
+				$safeNavigationMigration(order?.warehouse?.geoLocation)
+			"
 			*ngIf="order && !inStoreMode"
 		></e-cu-directions-location>
 		<div class="store-logo">
