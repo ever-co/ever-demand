@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModalController, Platform } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
@@ -7,6 +7,7 @@ import { OrderRouter } from '@modules/client.common.angular2/routers/order-route
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { Store } from 'app/services/store.service';
+import { environment } from 'environments/environment';
 import { PaymentComponent } from './payment.component';
 
 interface Deferred<T> {
@@ -37,6 +38,8 @@ describe('PaymentComponent new-card payment', () => {
 	let orderRouter: jasmine.SpyObj<OrderRouter>;
 	let configure: jasmine.Spy;
 	let tokenHandlers: Array<(token: any) => Promise<void>>;
+	let closedHandlers: Array<() => void>;
+	let modalController: jasmine.SpyObj<ModalController>;
 	let originalStripeCheckout: any;
 	let orderId: jasmine.Spy;
 
@@ -72,10 +75,12 @@ describe('PaymentComponent new-card payment', () => {
 
 	beforeEach(async () => {
 		tokenHandlers = [];
+		closedHandlers = [];
 		configure = jasmine
 			.createSpy('StripeCheckout.configure')
 			.and.callFake((options) => {
 				tokenHandlers.push(options.token);
+				closedHandlers.push(options.closed);
 				return { open: jasmine.createSpy('open') };
 			});
 		originalStripeCheckout = (window as any).StripeCheckout;
@@ -98,12 +103,12 @@ describe('PaymentComponent new-card payment', () => {
 		]);
 		orderRouter.confirm.and.returnValue(Promise.resolve(paidOrder()));
 
-		const modalController = jasmine.createSpyObj('ModalController', [
+		modalController = jasmine.createSpyObj('ModalController', [
 			'dismiss',
 			'create',
 		]);
 		modalController.create.and.returnValue(
-			Promise.resolve({ present: () => Promise.resolve() })
+			Promise.resolve({ present: () => Promise.resolve() } as any)
 		);
 
 		await TestBed.configureTestingModule({
@@ -530,6 +535,94 @@ describe('PaymentComponent new-card payment', () => {
 					['order-2', 'card-1'],
 				])
 			);
+		});
+	});
+
+	// In popup mode toPaymentStage dismisses the order info modal and
+	// opens it again when Checkout is done. Checkout calls closed whenever
+	// its popup closes, also after a successful token, and browsers differ
+	// in which of the two callbacks runs first.
+	describe('opening the order info modal after Checkout', () => {
+		let originalOrderInfoType: string;
+		let modalChange: EventEmitter<boolean>;
+
+		beforeEach(() => {
+			originalOrderInfoType = environment.ORDER_INFO_TYPE;
+			environment.ORDER_INFO_TYPE = 'popup';
+
+			modalChange = new EventEmitter<boolean>();
+			spyOn(modalChange, 'emit');
+			component.modalChange = modalChange;
+
+			orderRouter.payWithStripe.and.returnValue(
+				Promise.resolve(paidOrder())
+			);
+		});
+
+		afterEach(() => {
+			environment.ORDER_INFO_TYPE = originalOrderInfoType;
+		});
+
+		it('opens the order info modal once when closed runs before the token callback', async () => {
+			await component.toPaymentStage();
+
+			closedHandlers[0]();
+			await tokenHandlers[0](cardToken('tok_first'));
+			await settle();
+
+			expect(orderRouter.payWithStripe).toHaveBeenCalledTimes(1);
+			expect(modalController.create).toHaveBeenCalledTimes(1);
+			expect(modalChange.emit).toHaveBeenCalledTimes(1);
+		});
+
+		it('opens the order info modal once when the token callback runs before closed', async () => {
+			await component.toPaymentStage();
+
+			await tokenHandlers[0](cardToken('tok_first'));
+			closedHandlers[0]();
+			await settle();
+
+			expect(orderRouter.payWithStripe).toHaveBeenCalledTimes(1);
+			expect(modalController.create).toHaveBeenCalledTimes(1);
+			expect(modalChange.emit).toHaveBeenCalledTimes(1);
+		});
+
+		it('still opens the order info modal when the customer closes Checkout without paying', async () => {
+			await component.toPaymentStage();
+
+			closedHandlers[0]();
+			await settle();
+
+			expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
+			expect(modalController.create).toHaveBeenCalledTimes(1);
+			expect(modalChange.emit).toHaveBeenCalledTimes(1);
+		});
+
+		it('opens the order info modal again for the next Checkout session', async () => {
+			await component.toPaymentStage();
+			closedHandlers[0]();
+			await settle();
+
+			await component.toPaymentStage();
+			closedHandlers[1]();
+			await settle();
+
+			expect(configure).toHaveBeenCalledTimes(2);
+			expect(modalController.create).toHaveBeenCalledTimes(2);
+		});
+
+		it('does not open the order info modal in page mode', async () => {
+			environment.ORDER_INFO_TYPE = 'page';
+
+			await component.toPaymentStage();
+			closedHandlers[0]();
+			await tokenHandlers[0](cardToken('tok_first'));
+			await settle();
+
+			expect(orderRouter.payWithStripe).toHaveBeenCalledTimes(1);
+			expect(modalController.dismiss).not.toHaveBeenCalled();
+			expect(modalController.create).not.toHaveBeenCalled();
+			expect(modalChange.emit).not.toHaveBeenCalled();
 		});
 	});
 });
