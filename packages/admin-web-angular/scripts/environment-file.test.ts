@@ -30,8 +30,6 @@ const env = {
 	SETTINGS_APP_TYPE: 'admin',
 	SETTINGS_MAINTENANCE_API_URL: '',
 	DEFAULT_LANGUAGE: 'en-US',
-	WEB_CONCURRENCY: 1,
-	WEB_MEMORY: 2048,
 	PORT: 4200,
 } satisfies Env;
 

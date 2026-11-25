@@ -1,5 +1,5 @@
 // Serves the production build (`dist/`) as static files, for smoke and e2e runs without the
-// dev server. Replaces the old connect / pm2 static server.
+// dev server (a plain node:http server; the Docker image serves the same files with nginx).
 //
 // Usage: node scripts/serve-build.ts [--port=4200] [--dir=dist]
 

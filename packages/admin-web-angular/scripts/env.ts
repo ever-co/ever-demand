@@ -55,8 +55,6 @@ export type Env = Readonly<{
 
 	DEFAULT_LANGUAGE: string;
 
-	WEB_CONCURRENCY: number;
-	WEB_MEMORY: number;
 	PORT: number;
 }>;
 
@@ -121,7 +119,5 @@ export const env: Env = cleanEnv(process.env, {
 
 	DEFAULT_LANGUAGE: str({ default: 'en-US' }),
 
-	WEB_CONCURRENCY: num({ default: 1 }),
-	WEB_MEMORY: num({ default: 2048 }),
 	PORT: num({ default: 4200 }),
 });

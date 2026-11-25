@@ -17,7 +17,8 @@ All commands from `packages/admin-web-angular`, with Node 26 on `PATH`
 | Generate `src/environments/environment*.ts` from `.env` / env vars | `pnpm run config:dev` or `pnpm run config:prod` (`node scripts/configure.ts`, Node type stripping) |
 | Dev server on http://localhost:4200 | `pnpm start` |
 | Production build to `dist/` | `pnpm build` |
-| Serve `dist/` (static, SPA fallback) | `pnpm serve:build` (or `node e2e/serve-apps.mjs admin` from the root) |
+| Local production preview | `pnpm ng serve --configuration production` |
+| Serve `dist/` (static, SPA fallback, plain node:http) | `pnpm serve:build` (or `node e2e/serve-apps.mjs admin` from the root) |
 | Unit tests (Vitest, `@angular/build:unit-test`, 2 workers) | `pnpm test` (also runs `node --test scripts/`) |
 | Typecheck | `pnpm typecheck` |
 | e2e (Playwright, needs the app on :4200 and the API) | `pnpm e2e` or `pnpm --filter @ever-platform/e2e exec playwright test --project=admin` |
@@ -62,7 +63,7 @@ pace-js 1.3.1, envalid 9, Vitest 5.1 + jsdom 31.
 | ng-bootstrap `ngbRadioGroup` / `ngbButton` (removed in ng-bootstrap 15) | plain Bootstrap toggle buttons | store order filters. |
 | ionicons 5 (no icon font) | ionicons 4.6.3 CSS font | the templates use `ion-md-*` classes, which only ionicons 4 ships (they rendered as nothing before). |
 | socicon, roboto-fontface/typeface-exo | socicon removed (unused); fonts kept (already latest) | |
-| Karma/Jasmine, Protractor, tslint/codelyzer, Storybook 6, @angular-builders/custom-webpack, rxjs-compat, jquery, core-js/intl polyfills, pm2 + connect static server | Vitest, Playwright (`e2e/tests/admin`), `scripts/serve-build.ts` | Storybook was removed, not upgraded. |
+| Karma/Jasmine, Protractor, tslint/codelyzer, Storybook 6, @angular-builders/custom-webpack, rxjs-compat, jquery, core-js/intl polyfills, **pm2** + connect static server (`app.ts`, `pm2bootstrap.ts`, `start:server:*` scripts, `WEB_CONCURRENCY` / `WEB_MEMORY` env keys) | Vitest, Playwright (`e2e/tests/admin`), `scripts/serve-build.ts` | Storybook was removed, not upgraded. No PM2 anywhere (owner rule): production is the nginx image. |
 
 ## Decisions and notes
 
@@ -104,6 +105,18 @@ pace-js 1.3.1, envalid 9, Vitest 5.1 + jsdom 31.
 | Google Maps Drawing library | Google deprecated `google.maps.drawing` (gone from `@types/google.maps`); the delivery-zone drawing still calls it untyped. If Google has switched it off, delivery zones need a Terra Draw rewrite. |
 | Old Google Maps services (DirectionsService, DistanceMatrix) | deprecated by Google but still working (console warnings only). |
 
+## Integration notes
+
+- **No PM2** (owner rule, license): the Docker image builds the static bundle and serves it with
+  nginx (`ENTRYPOINT ["./entrypoint.prod.sh"]` ends with `exec "$@"`, `CMD ["nginx", "-g", "daemon off;"]`).
+  No secret defaults: `GOOGLE_MAPS_API_KEY` defaults to `''` and comes from the environment.
+
+- Merged `origin/feat/latest-stack` (core API, `assignRaw` entity fix, `_<id>_complete` socket fix,
+  graphql 16). `pnpm-workspace.yaml` keeps the admin entry, the Nebular `peerDependencyRules`, the
+  Vitest `minimumReleaseAgeExclude` lines and `patchedDependencies`.
+- Subscriptions use graphql-ws with `connectionParams: { authorization: 'Bearer <jwt>' }`, as the
+  core lane documents.
+
 ## Tests
 
 - **Unit (Vitest)**: 13 files / 82 tests: GraphQL services (stores, products, categories,
@@ -117,3 +130,10 @@ pace-js 1.3.1, envalid 9, Vitest 5.1 + jsdom 31.
   and product page, invites inline editor, customers and carriers pages. Specs that need the API
   skip themselves when it is not reachable. Inline invite creation geocodes through Google, so it
   only runs with `E2E_GOOGLE_MAPS=1` (an admin build with a working Maps key).
+
+Last verification (after merging `origin/feat/latest-stack`, core lane API on :5500/:8443/:2086):
+`pnpm typecheck` 0 errors; `pnpm test` 13 files / 82 tests + 3 node:test passed; `pnpm build`
+OK (3.74 MB initial, 459 kB transferred); Playwright `--project=admin` against `dist/` served
+statically: 27 passed, 1 skipped (the Maps-key invite create). Dockerfile: `docker build --check`
+passes (only the SecretsUsedInArgOrEnv heuristic on the password charset); the full image build was
+not run on the shared PC (memory).
