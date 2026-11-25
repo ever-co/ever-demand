@@ -381,9 +381,13 @@ export class OrdersService extends DBService<Order>
 					// unpaid. A retry with another card or currency, or after
 					// the key expired, has another idempotency key, and Stripe
 					// would charge the customer again: pay with that charge.
+					const amount = toStripeAmountInCents(order.totalPrice);
+
 					const earlierCharge = await this._findStripeChargeOfOrder(
 						orderId,
 						user.stripeCustomerId,
+						amount,
+						currency,
 						callId
 					);
 
@@ -404,7 +408,7 @@ export class OrdersService extends DBService<Order>
 					} else {
 						charge = await this.stripe.charges.create(
 							{
-								amount: toStripeAmountInCents(order.totalPrice), // whole cents
+								amount, // whole cents
 								customer: user.stripeCustomerId,
 								source: cardId,
 								currency,
@@ -621,8 +625,17 @@ export class OrdersService extends DBService<Order>
 	private async _findStripeChargeOfOrder(
 		orderId: Order['id'],
 		customerId: string | undefined,
+		amount: number,
+		currency: string,
 		callId: string
 	): Promise<Stripe.Charge | null> {
+		// Without a customer, the list would hold the charges of every
+		// customer. A card is charged only through its customer, so there
+		// is no earlier charge to find.
+		if (customerId == null || customerId === '') {
+			return null;
+		}
+
 		let charges: Stripe.ApiList<Stripe.Charge>;
 
 		try {
@@ -652,9 +665,14 @@ export class OrdersService extends DBService<Order>
 		);
 
 		// A partly refunded or disputed charge no longer holds the whole
-		// payment, so it must not mark the order paid.
+		// payment, and a charge of another amount or currency is not the
+		// payment of the order as it is now: neither marks the order paid.
 		const charge = chargesOfOrder.find(
-			(c) => !(c.amount_refunded > 0) && !c.disputed
+			(c) =>
+				!(c.amount_refunded > 0) &&
+				!c.disputed &&
+				c.amount === amount &&
+				c.currency === currency
 		);
 
 		if (charge != null) {
@@ -670,11 +688,11 @@ export class OrdersService extends DBService<Order>
 					orderId,
 					chargeIds: chargesOfOrder.map((c) => c.id),
 				},
-				'.payWithStripe(orderId, cardId) found an earlier charge of the order that was partly refunded or disputed'
+				'.payWithStripe(orderId, cardId) found an earlier charge of the order that was partly refunded, disputed, or of another amount or currency'
 			);
 
 			throw new Error(
-				`Order ${orderId} has an earlier charge that was partly refunded or disputed, so it was not charged again`
+				`Order ${orderId} has an earlier charge that was partly refunded or disputed, or is of another amount or currency, so it was not charged again`
 			);
 		}
 

@@ -98,11 +98,16 @@ function listedCharge(fields: {
 	refunded?: boolean;
 	amountRefunded?: number;
 	disputed?: boolean;
+	amount?: number;
+	currency?: string;
 }) {
 	return {
 		id: fields.id,
 		object: 'charge',
 		customer: 'cus_1',
+		// The test order: 19.99 in ils, the currency when none is configured
+		amount: fields.amount === undefined ? 1999 : fields.amount,
+		currency: fields.currency || 'ils',
 		status: fields.status || 'succeeded',
 		paid: (fields.status || 'succeeded') === 'succeeded',
 		refunded: fields.refunded === true,
@@ -458,6 +463,8 @@ describe('OrdersService.payWithStripe', () => {
 		it.each([
 			['partly refunded', { amountRefunded: 1000 }],
 			['disputed', { disputed: true }],
+			['of another amount', { amount: 999 }],
+			['in another currency', { currency: 'usd' }],
 		])(
 			'refuses the payment and does not charge when the earlier charge of the order was %s',
 			async (_case, fields) => {
@@ -473,7 +480,7 @@ describe('OrdersService.payWithStripe', () => {
 
 				await expect(
 					service.payWithStripe(ORDER_ID, 'card_2')
-				).rejects.toThrow(/partly refunded or disputed/);
+				).rejects.toThrow(/so it was not charged again/);
 
 				expect(mockChargesCreate).not.toHaveBeenCalled();
 				expect(model.findOneAndUpdate).not.toHaveBeenCalled();
@@ -499,6 +506,18 @@ describe('OrdersService.payWithStripe', () => {
 			expect(mockChargesCreate).not.toHaveBeenCalled();
 			expect(paid.isPaid).toBe(true);
 			expect(stored.stripeChargeId).toBe('ch_whole');
+		});
+
+		it('does not list the charges of every customer when the user has no Stripe customer', async () => {
+			(service as any).usersService = {
+				get: jest.fn(() => of({ id: USER_ID })),
+			};
+
+			const paid = await service.payWithStripe(ORDER_ID, 'card_1');
+
+			expect(mockChargesList).not.toHaveBeenCalled();
+			expect(mockChargesCreate).toHaveBeenCalledTimes(1);
+			expect(paid.isPaid).toBe(true);
 		});
 
 		it('refuses the payment and does not charge when the earlier charges can not be listed', async () => {
