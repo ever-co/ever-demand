@@ -197,7 +197,18 @@ pnpm --filter @ever-platform/e2e exec playwright test --project=shop-expo
 Docker (web build + nginx on 8081): `.deploy/shop-mobile-expo/Dockerfile`; `EXPO_PUBLIC_*` values are
 build args because Expo inlines them.
 
-## Verification
+## Verification (2026-11-25, Node 26.13.1, pnpm 12.23.0)
 
-See the final report of the lane for the command results (typecheck, Jest, web and Android exports,
-expo-doctor, Playwright).
+| Check | Result |
+| --- | --- |
+| `pnpm install --filter @ever-platform/shop-mobile-expo...` (isolated node_modules) | ok, no peer warnings; Metro resolves the pnpm layout without workarounds |
+| `tsc --noEmit` | no errors |
+| `jest --maxWorkers=1` | 11 suites, 161 tests passed |
+| `expo export --platform web` | ok, 2172 modules, one 4 MB bundle |
+| `expo export --platform android` | ok, 2825 modules, Hermes bytecode 7.1 MB (no Android SDK on this PC: JS side only) |
+| `expo-doctor` 1.21.8 | 20/20 checks passed |
+| Playwright `--project=shop-expo` against the local API (5500 / 8443 / 2086) and the served web build | 11 passed (smoke: shell, deep links, Hebrew RTL, connection lost, no console errors; flows: first visit, browse-first Buy → invite → order page → cancel, details, search, menu / history / about / language, merchants → store mode, stale user) |
+
+Not verified: iOS / Android on a device or emulator (no SDK on this PC; the native modules are the
+SDK 58 pins and the Android bundle builds), card payments with a real Stripe test key (the rules are
+unit and screen tested with mocks), the camera scanner on a device.
