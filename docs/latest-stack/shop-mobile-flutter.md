@@ -225,7 +225,18 @@ No schema or router change is needed: every GraphQL document validates against
 `packages/core/src/graphql` (unit test), and every router method is an existing pyro listener.
 Nothing in this lane edits `packages/core`.
 
-## Verification
+## Verification (2026-11-26, `tool/docker-test.sh` in `ever-demand-flutter:3.50.1`)
 
-See the final report in the lane hand-off for the command results of the last run
-(`tool/docker-test.sh`).
+| Step | Result |
+| --- | --- |
+| `flutter analyze` | No issues found |
+| `flutter test test` | 191 tests, all passed (2 min 47 s, concurrency 2) |
+| `integration` (integration_test/*.dart on the flutter tester) | `app_test.dart` passed; `live_api_test.dart` skipped (needs `LIVE_API=true`) |
+| `live` (live_api_test.dart against the upgraded core API on this PC, via host.docker.internal) | passed: start-up + settings + `device.create`, browse-first buy → invite by location (invite system off: invite request → invite → `user-auth.register`) → resumed buy → `warehouse-orders.create` → live `order.get` tracking page with "Pay with card" → Undo → `warehouse-orders.cancel` |
+| `flutter build web --release` | built (`build/web`, 14 MB tar.gz). Wasm dry run: `socket_io_common` 3.1.1 is not Wasm-ready (JS interop type check); the JS build is unaffected |
+| `flutter build apk --debug` | see below |
+
+`flutter test integration_test` itself needs a device; the image has no emulator (no KVM in Docker
+Desktop) and no Linux desktop toolchain, so the integration files run through wrappers on the
+flutter tester (`IntegrationTestWidgetsFlutterBinding`, real network, no native reporting). On a
+device or emulator run `flutter test integration_test`.
