@@ -1,4 +1,5 @@
 import {
+	AfterViewInit,
 	ChangeDetectionStrategy,
 	Component,
 	Inject,
@@ -20,7 +21,7 @@ import { MenuController } from '@ionic/angular/lazy';
 	templateUrl: './menu.component.html',
 	styleUrls: ['./menu.component.scss'],
 })
-export class MenuComponent implements OnDestroy {
+export class MenuComponent implements AfterViewInit, OnDestroy {
 	merchant: Warehouse;
 
 	private ngDestroy$ = new Subject<void>();
@@ -36,14 +37,25 @@ export class MenuComponent implements OnDestroy {
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe((event: LangChangeEvent) => {
 				console.log(event.lang);
-				if (event.lang === 'he-IL') {
-					this.menuCtrl.enable(true, 'rtl');
-					this.menuCtrl.enable(false, 'ltr');
-				} else {
-					this.menuCtrl.enable(true, 'ltr');
-					this.menuCtrl.enable(false, 'rtl');
-				}
+				this.enableMenuFor(event.lang);
 			});
+	}
+
+	ngAfterViewInit() {
+		// The start language is set before this menu exists (Store), so its
+		// change event is gone: enable the menu for it here, or both menus
+		// stay enabled and the menu button may open the right-hand one.
+		this.enableMenuFor(this.translateService.getCurrentLang());
+	}
+
+	private enableMenuFor(lang: string | null) {
+		if (lang === 'he-IL') {
+			this.menuCtrl.enable(true, 'rtl');
+			this.menuCtrl.enable(false, 'ltr');
+		} else {
+			this.menuCtrl.enable(true, 'ltr');
+			this.menuCtrl.enable(false, 'rtl');
+		}
 	}
 
 	get maintenanceMode() {
