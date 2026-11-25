@@ -1,4 +1,7 @@
-import { env } from './env';
+import { assertProductionSecrets, env } from './env';
+
+// Stop before anything listens when production would sign tokens with a missing or well-known secret.
+assertProductionSecrets();
 
 // attempt to set memory limit for NodeJS to be greater than default
 // (aprox 1.7Gb)

@@ -9,12 +9,6 @@ import { env } from '../../env';
 
 const jwtSecret = env.JWT_SECRET;
 
-if (jwtSecret === 'default') {
-	console.log(
-		'Warning: default JWT_SECRET used. Please add your own to config!'
-	);
-}
-
 export const createJwtData = {
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 	secretOrKey: jwtSecret,

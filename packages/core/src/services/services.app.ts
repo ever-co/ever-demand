@@ -26,6 +26,7 @@ import requestIp = require('request-ip');
 import { IWarehouseCreateObject } from '@modules/server.common/interfaces/IWarehouse';
 import { getDummyImage } from '@modules/server.common/utils';
 import { ConfigService } from '../config/config.service';
+import { firstAdminPassword } from './admins/firstAdminPassword';
 import {
 	getTypeORMEntities,
 	initTypeORMDataSource,
@@ -224,14 +225,20 @@ export class ServicesApp {
 	 * @memberof ServicesApp
 	 */
 	private async _registerEntityAdministrator() {
-		const adminEmail = 'admin@ever.co'; // TODO: put to config
-		const adminPassword = 'admin'; // TODO: put to config
+		const adminEmail = env.ADMIN_EMAIL;
+		const adminPassword = firstAdminPassword(env, process.env.DEMO === 'true');
 
 		const adminCollectionCount = await this._adminsService.count({
 			email: adminEmail,
 		});
 
 		if (adminCollectionCount === 0) {
+			if (!adminPassword) {
+				this.log.error(
+					`No admin "${adminEmail}" exists yet and ADMIN_PASSWORD is not set: set ADMIN_PASSWORD to create the first admin (production has no default password).`
+				);
+				return;
+			}
 			this._adminsService.register({
 				admin: {
 					email: adminEmail,
