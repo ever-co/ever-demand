@@ -7,6 +7,7 @@ import { OrderRouter } from '@modules/client.common.angular2/routers/order-route
 import { STRIPE_CURRENCY_CHANGED_ERROR } from '@modules/server.common/routers/IOrderRouter';
 import { environment } from 'environments/environment';
 import { ModalController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { OrderPage } from '../../order.page';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
@@ -61,7 +62,8 @@ export class PaymentComponent {
 		private orderRouter: OrderRouter,
 		private store: Store,
 		public modalController: ModalController,
-		private readonly _translateProductLocales: ProductLocalesService
+		private readonly _translateProductLocales: ProductLocalesService,
+		private readonly _translateService: TranslateService
 	) {
 		this.getUserCard();
 		// Never rejects: a failed load is logged, and Pay now loads it again
@@ -96,7 +98,7 @@ export class PaymentComponent {
 			// paid or cancelled) or the socket dropped. The click handler
 			// drops the returned promise, so tell the customer here and
 			// resolve: a rejection would escape it unseen.
-			alert('Payment Failed!');
+			this.tellCustomer('BUY_POPUP.PAYMENT_FAILED');
 			console.error('Payment Failed!', err);
 		} finally {
 			this.paying = false;
@@ -121,7 +123,7 @@ export class PaymentComponent {
 
 		if (currency == null) {
 			if (!this.loadingStripeCurrency) {
-				alert('Payment Failed!');
+				this.tellCustomer('BUY_POPUP.PAYMENT_FAILED');
 				void this.getStripeCurrency();
 			}
 			return;
@@ -192,7 +194,7 @@ export class PaymentComponent {
 								console.error('Could not confirm the order!');
 							}
 						} catch (err) {
-							alert('Payment Failed!');
+							this.tellCustomer('BUY_POPUP.PAYMENT_FAILED');
 							console.error('Payment Failed!', err);
 
 							if (err?.name === STRIPE_CURRENCY_CHANGED_ERROR) {
@@ -204,14 +206,17 @@ export class PaymentComponent {
 							}
 						}
 					} catch (err) {
-						alert('Payment Failed!');
+						this.tellCustomer('BUY_POPUP.PAYMENT_FAILED');
 						console.error('Payment Method creation failed!', err);
 					}
 				} catch (err) {
 					// updateEmail fails when the email typed in Checkout
 					// belongs to another customer. Tell the customer here,
 					// because a rejection would escape the Stripe callback.
-					alert('Payment Failed!');
+					// The message asks to check the email or use another
+					// one; it does not say the email is taken, so it never
+					// tells whether an email has an account.
+					this.tellCustomer('BUY_POPUP.EMAIL_NOT_SAVED');
 					console.error('Email update failed!', err);
 				} finally {
 					this.paying = false;
@@ -270,5 +275,11 @@ export class PaymentComponent {
 
 	private localeTranslate(member: ILocaleMember[]): string {
 		return this._translateProductLocales.getTranslate(member);
+	}
+
+	// Shows a BUY_POPUP message in the app language, never server error
+	// text.
+	private tellCustomer(key: string): void {
+		alert(this._translateService.instant(key));
 	}
 }

@@ -227,7 +227,7 @@ describe('PaymentComponent new-card payment', () => {
 		expect(component.paying).toBe(false);
 	});
 
-	it('tells the customer and clears the guard when the email update fails', async () => {
+	it('asks the customer to check the email, and clears the guard, when the email update fails', async () => {
 		// The email typed in Checkout belongs to another customer, so
 		// updateEmail fails on the unique email index.
 		const error = new Error('E11000 duplicate key error: email');
@@ -238,7 +238,15 @@ describe('PaymentComponent new-card payment', () => {
 			tokenHandlers[0](cardToken('tok_first'))
 		).toBeResolved();
 
-		expect(window.alert).toHaveBeenCalledOnceWith('Payment Failed!');
+		// TranslateModule.forRoot() has no translations, so instant
+		// returns the key. The email step has its own message, not the
+		// generic one, and never the server error.
+		expect(window.alert).toHaveBeenCalledOnceWith(
+			'BUY_POPUP.EMAIL_NOT_SAVED'
+		);
+		expect(window.alert).not.toHaveBeenCalledWith(
+			'BUY_POPUP.PAYMENT_FAILED'
+		);
 		expect(console.error).toHaveBeenCalledWith(jasmine.any(String), error);
 		expect(userRouter.addPaymentMethod).not.toHaveBeenCalled();
 		expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
@@ -283,7 +291,7 @@ describe('PaymentComponent new-card payment', () => {
 		payment.reject(new Error('Your card was declined.'));
 		await done;
 
-		expect(window.alert).toHaveBeenCalledWith('Payment Failed!');
+		expect(window.alert).toHaveBeenCalledWith('BUY_POPUP.PAYMENT_FAILED');
 		expect(component.paying).toBe(false);
 
 		await component.toPaymentStage();
@@ -317,7 +325,9 @@ describe('PaymentComponent new-card payment', () => {
 			tokenHandlers[0](cardToken('tok_first'))
 		).toBeResolved();
 
-		expect(window.alert).toHaveBeenCalledOnceWith('Payment Failed!');
+		expect(window.alert).toHaveBeenCalledOnceWith(
+			'BUY_POPUP.PAYMENT_FAILED'
+		);
 		expect(console.error).toHaveBeenCalledWith(jasmine.any(String), error);
 		expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
 		expect(component.paying).toBe(false);
@@ -349,7 +359,9 @@ describe('PaymentComponent new-card payment', () => {
 			payment.reject(declined);
 			await settle();
 
-			expect(window.alert).toHaveBeenCalledOnceWith('Payment Failed!');
+			expect(window.alert).toHaveBeenCalledOnceWith(
+				'BUY_POPUP.PAYMENT_FAILED'
+			);
 			expect(console.error).toHaveBeenCalledWith(
 				jasmine.any(String),
 				declined
@@ -430,7 +442,9 @@ describe('PaymentComponent new-card payment', () => {
 			await payment.componentInstance.toPaymentStage();
 
 			expect(configure).not.toHaveBeenCalled();
-			expect(window.alert).toHaveBeenCalledOnceWith('Payment Failed!');
+			expect(window.alert).toHaveBeenCalledOnceWith(
+				'BUY_POPUP.PAYMENT_FAILED'
+			);
 			expect(orderRouter.getStripeCurrency).toHaveBeenCalledTimes(2);
 
 			await settle();
@@ -485,7 +499,9 @@ describe('PaymentComponent new-card payment', () => {
 			);
 			await settle();
 
-			expect(window.alert).toHaveBeenCalledOnceWith('Payment Failed!');
+			expect(window.alert).toHaveBeenCalledOnceWith(
+				'BUY_POPUP.PAYMENT_FAILED'
+			);
 			expect(orderRouter.getStripeCurrency).toHaveBeenCalledTimes(2);
 			// No popup in the refused currency while the new one loads
 			expect(payNowButton(fixtureWithRefusal).disabled).toBe(true);
@@ -518,7 +534,9 @@ describe('PaymentComponent new-card payment', () => {
 			);
 			await settle();
 
-			expect(window.alert).toHaveBeenCalledOnceWith('Payment Failed!');
+			expect(window.alert).toHaveBeenCalledOnceWith(
+				'BUY_POPUP.PAYMENT_FAILED'
+			);
 			expect(orderRouter.getStripeCurrency).toHaveBeenCalledTimes(1);
 
 			await payment.toPaymentStage();
@@ -701,7 +719,9 @@ describe('PaymentComponent new-card payment', () => {
 			await expectAsync(first).toBeResolvedTo(undefined);
 			await expectAsync(blocked).toBeResolvedTo(undefined);
 			// Only the charge that ran tells the customer
-			expect(window.alert).toHaveBeenCalledOnceWith('Payment Failed!');
+			expect(window.alert).toHaveBeenCalledOnceWith(
+				'BUY_POPUP.PAYMENT_FAILED'
+			);
 
 			orderRouter.payWithStripe.and.returnValue(
 				Promise.resolve(paidOrder())

@@ -145,7 +145,9 @@ describe('PaymentComponent when the socket drops during a payment', () => {
 			'BUY_POPUP.BUTTONS.PAY_WITH_FIXED_CARD'
 		);
 		expect(payButton().disabled).toBe(false);
-		expect(window.alert).toHaveBeenCalledOnceWith('Payment Failed!');
+		expect(window.alert).toHaveBeenCalledOnceWith(
+			'BUY_POPUP.PAYMENT_FAILED'
+		);
 		expect(console.error).toHaveBeenCalledWith(
 			'Payment Failed!',
 			jasmine.objectContaining({ name: 'SocketDisconnectedError' })
@@ -178,7 +180,7 @@ describe('PaymentComponent when the socket drops during a payment', () => {
 		expect(store.isPaying('order-1')).toBe(false);
 		expect(payButton().textContent).toContain('BUY_POPUP.BUTTONS.PAY_NOW');
 		expect(payButton().disabled).toBe(false);
-		expect(window.alert).toHaveBeenCalledWith('Payment Failed!');
+		expect(window.alert).toHaveBeenCalledWith('BUY_POPUP.PAYMENT_FAILED');
 		expect(console.error).toHaveBeenCalledWith(
 			'Payment Failed!',
 			jasmine.objectContaining({ name: 'SocketDisconnectedError' })
