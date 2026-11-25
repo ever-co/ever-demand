@@ -91,6 +91,13 @@ export class PaymentComponent {
 				orderId,
 				this.userCard.id
 			);
+		} catch (err) {
+			// The card was declined, the server refused the order (already
+			// paid or cancelled) or the socket dropped. The click handler
+			// drops the returned promise, so tell the customer here and
+			// resolve: a rejection would escape it unseen.
+			alert('Payment Failed!');
+			console.error('Payment Failed!', err);
 		} finally {
 			this.paying = false;
 			this.store.stopPaying(orderId);

@@ -121,7 +121,7 @@ describe('PaymentComponent when the socket drops during a payment', () => {
 		(window as any).StripeCheckout = originalStripeCheckout;
 	});
 
-	it('rejects a saved-card payment and frees Pay with card when the socket drops before the answer', async () => {
+	it('shows Payment Failed and frees Pay with card when the socket drops during the saved-card charge', async () => {
 		component.userCard = savedCard();
 		const outcome = track(component.payWithUserCard());
 		await settle();
@@ -145,9 +145,14 @@ describe('PaymentComponent when the socket drops during a payment', () => {
 			'BUY_POPUP.BUTTONS.PAY_WITH_FIXED_CARD'
 		);
 		expect(payButton().disabled).toBe(false);
-		expect(outcome.error).toEqual(
+		expect(window.alert).toHaveBeenCalledOnceWith('Payment Failed!');
+		expect(console.error).toHaveBeenCalledWith(
+			'Payment Failed!',
 			jasmine.objectContaining({ name: 'SocketDisconnectedError' })
 		);
+		// Settles without a rejection, so nothing escapes the click handler
+		expect(outcome.settled).toBe(true);
+		expect(outcome.error).toBeUndefined();
 	});
 
 	it('shows Payment Failed and frees Pay now when the socket drops before the new-card charge is answered', async () => {

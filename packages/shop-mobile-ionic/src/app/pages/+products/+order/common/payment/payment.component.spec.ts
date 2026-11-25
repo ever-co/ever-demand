@@ -324,6 +324,48 @@ describe('PaymentComponent new-card payment', () => {
 		expect(TestBed.inject(Store).isPaying('order-1')).toBe(false);
 	});
 
+	describe('saved-card payment', () => {
+		const payWithCardButton = (): HTMLButtonElement => {
+			fixture.detectChanges();
+			return fixture.nativeElement.querySelector('button');
+		};
+
+		it('tells the customer once and frees Pay with card when the saved card is declined', async () => {
+			const payment = deferred<any>();
+			orderRouter.payWithStripe.and.returnValue(payment.promise);
+			const declined = new Error('Your card was declined.');
+			component.userCard = savedCard();
+
+			// The tap drops the promise payWithUserCard returns
+			payWithCardButton().click();
+			await settle();
+
+			expect(orderRouter.payWithStripe).toHaveBeenCalledOnceWith(
+				'order-1',
+				'card-saved'
+			);
+			expect(payWithCardButton().disabled).toBe(true);
+
+			payment.reject(declined);
+			await settle();
+
+			expect(window.alert).toHaveBeenCalledOnceWith('Payment Failed!');
+			expect(console.error).toHaveBeenCalledWith(
+				jasmine.any(String),
+				declined
+			);
+			expect(component.paying).toBe(false);
+			expect(TestBed.inject(Store).isPaying('order-1')).toBe(false);
+
+			const button = payWithCardButton();
+
+			expect(button.textContent).toContain(
+				'BUY_POPUP.BUTTONS.PAY_WITH_FIXED_CARD'
+			);
+			expect(button.disabled).toBe(false);
+		});
+	});
+
 	describe('card popup currency', () => {
 		const payNowButton = (
 			payment: ComponentFixture<PaymentComponent>
@@ -639,24 +681,27 @@ describe('PaymentComponent new-card payment', () => {
 			expect(configure).toHaveBeenCalledTimes(2);
 		});
 
-		it('clears the guard after a saved-card payment is rejected', async () => {
+		it('clears the guard and tells the customer once after a saved-card payment is rejected', async () => {
 			const payment = deferred<any>();
 			orderRouter.payWithStripe.and.returnValue(payment.promise);
 
 			component.userCard = savedCard();
-			const first = component.payWithUserCard().catch((err) => err);
+			const first = component.payWithUserCard();
 
 			const second = (await createPayment()).componentInstance;
 			second.userCard = savedCard();
-			const blocked = second.payWithUserCard().catch((err) => err);
+			const blocked = second.payWithUserCard();
 			await settle();
 
 			expect(orderRouter.payWithStripe).toHaveBeenCalledTimes(1);
 
 			payment.reject(new Error('Your card was declined.'));
 
-			expect((await first).message).toBe('Your card was declined.');
-			await blocked;
+			// Settles, so nothing escapes the click handler
+			await expectAsync(first).toBeResolvedTo(undefined);
+			await expectAsync(blocked).toBeResolvedTo(undefined);
+			// Only the charge that ran tells the customer
+			expect(window.alert).toHaveBeenCalledOnceWith('Payment Failed!');
 
 			orderRouter.payWithStripe.and.returnValue(
 				Promise.resolve(paidOrder())
@@ -664,6 +709,7 @@ describe('PaymentComponent new-card payment', () => {
 			await second.payWithUserCard();
 
 			expect(orderRouter.payWithStripe).toHaveBeenCalledTimes(2);
+			expect(window.alert).toHaveBeenCalledTimes(1);
 		});
 
 		it('does not block a payment for a different order', async () => {
