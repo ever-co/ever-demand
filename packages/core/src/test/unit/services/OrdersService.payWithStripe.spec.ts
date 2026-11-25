@@ -96,6 +96,8 @@ function listedCharge(fields: {
 	orderId: string;
 	status?: string;
 	refunded?: boolean;
+	amountRefunded?: number;
+	disputed?: boolean;
 }) {
 	return {
 		id: fields.id,
@@ -104,6 +106,8 @@ function listedCharge(fields: {
 		status: fields.status || 'succeeded',
 		paid: (fields.status || 'succeeded') === 'succeeded',
 		refunded: fields.refunded === true,
+		amount_refunded: fields.amountRefunded || 0,
+		disputed: fields.disputed === true,
 		metadata: { orderId: fields.orderId },
 	};
 }
@@ -449,6 +453,52 @@ describe('OrdersService.payWithStripe', () => {
 			expect(paid.isPaid).toBe(true);
 			expect(stored.stripeChargeId).toBe('ch_1');
 			expect(mockRefundsCreate).not.toHaveBeenCalled();
+		});
+
+		it.each([
+			['partly refunded', { amountRefunded: 1000 }],
+			['disputed', { disputed: true }],
+		])(
+			'refuses the payment and does not charge when the earlier charge of the order was %s',
+			async (_case, fields) => {
+				mockChargesList.mockResolvedValue(
+					chargeList([
+						listedCharge({
+							id: 'ch_lost',
+							orderId: ORDER_ID,
+							...fields,
+						}),
+					])
+				);
+
+				await expect(
+					service.payWithStripe(ORDER_ID, 'card_2')
+				).rejects.toThrow(/partly refunded or disputed/);
+
+				expect(mockChargesCreate).not.toHaveBeenCalled();
+				expect(model.findOneAndUpdate).not.toHaveBeenCalled();
+				expect(stored.isPaid).toBe(false);
+				expect(mockRefundsCreate).not.toHaveBeenCalled();
+			}
+		);
+
+		it('pays with a whole earlier charge of the order even when an older one was disputed', async () => {
+			mockChargesList.mockResolvedValue(
+				chargeList([
+					listedCharge({ id: 'ch_whole', orderId: ORDER_ID }),
+					listedCharge({
+						id: 'ch_disputed',
+						orderId: ORDER_ID,
+						disputed: true,
+					}),
+				])
+			);
+
+			const paid = await service.payWithStripe(ORDER_ID, 'card_2');
+
+			expect(mockChargesCreate).not.toHaveBeenCalled();
+			expect(paid.isPaid).toBe(true);
+			expect(stored.stripeChargeId).toBe('ch_whole');
 		});
 
 		it('refuses the payment and does not charge when the earlier charges can not be listed', async () => {

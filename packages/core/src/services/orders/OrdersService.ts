@@ -614,7 +614,8 @@ export class OrdersService extends DBService<Order>
 	 * @param {string} callId payWithStripe call, for the log
 	 * @returns {Promise<Stripe.Charge | null>} null when the newest 100
 	 * charges of the customer hold none for the order
-	 * @throws {Error} when Stripe can not list the charges: the caller then
+	 * @throws {Error} when Stripe can not list the charges, or when the only
+	 * charges of the order were partly refunded or disputed: the caller then
 	 * refuses the payment instead of charging a card that may be charged already
 	 */
 	private async _findStripeChargeOfOrder(
@@ -642,7 +643,7 @@ export class OrdersService extends DBService<Order>
 			);
 		}
 
-		const charge = charges.data.find(
+		const chargesOfOrder = charges.data.filter(
 			(c) =>
 				c.status === 'succeeded' &&
 				!c.refunded &&
@@ -650,7 +651,34 @@ export class OrdersService extends DBService<Order>
 				c.metadata.orderId === String(orderId)
 		);
 
-		return charge != null ? charge : null;
+		// A partly refunded or disputed charge no longer holds the whole
+		// payment, so it must not mark the order paid.
+		const charge = chargesOfOrder.find(
+			(c) => !(c.amount_refunded > 0) && !c.disputed
+		);
+
+		if (charge != null) {
+			return charge;
+		}
+
+		// Charging again could make the customer pay twice: refuse instead,
+		// so the charge is checked by hand.
+		if (chargesOfOrder.length > 0) {
+			this.log.error(
+				{
+					callId,
+					orderId,
+					chargeIds: chargesOfOrder.map((c) => c.id),
+				},
+				'.payWithStripe(orderId, cardId) found an earlier charge of the order that was partly refunded or disputed'
+			);
+
+			throw new Error(
+				`Order ${orderId} has an earlier charge that was partly refunded or disputed, so it was not charged again`
+			);
+		}
+
+		return null;
 	}
 
 	/**
