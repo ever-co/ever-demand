@@ -1,5 +1,6 @@
 // adapted from https://github.com/yobryon/ngx-barcode (MIT © Bryon Williams)
 import {
+	ChangeDetectionStrategy,
 	Component,
 	Input,
 	OnChanges,
@@ -8,12 +9,11 @@ import {
 	ElementRef,
 } from '@angular/core';
 
-declare var require: any;
-
-const jsbarcode = require('jsbarcode');
+import jsbarcode from 'jsbarcode';
 
 @Component({
 	standalone: false,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	selector: 'ngx-barcode',
 	template: ` <div #bcElement [class]="cssClass"></div> `,
 	styles: [],
