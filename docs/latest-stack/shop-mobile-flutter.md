@@ -219,11 +219,24 @@ in-memory pyro server that speaks the wire protocol, `fake_graphql.dart` answers
   `LSApplicationQueriesSchemes`. The application id stays `com.example.shop_flutter_mobile` (the Cordova
   app is `co.ever.customer`); pick the store id before publishing.
 
+## Contract items that do not apply
+
+- No `package.json`, so no `pnpm-workspace.yaml` entry and no pnpm lockfile change; the Flutter
+  lockfile is `packages/shop-mobile-flutter/pubspec.lock`.
+- No `.deploy/shop-mobile-flutter/` existed and none was added; `flutter build web` output is static
+  files (`tool/out/web.tar.gz`).
+- e2e lives in `integration_test/` (Flutter web renders to a canvas, so the Playwright workspace
+  `e2e/` would only see pixels); `live_api_test.dart` is the API e2e.
+
 ## Backend operations
 
 No schema or router change is needed: every GraphQL document validates against
 `packages/core/src/graphql` (unit test), and every router method is an existing pyro listener.
-Nothing in this lane edits `packages/core`.
+Nothing in this lane edits `packages/core`. Besides the inventory's documents the order sign in the
+feed header uses `GetOrder { totalPrice }` (the Ionic `order-sign` component does the same). Server
+behaviour to know (core lane notes): `getCloseMerchants` lists only stores in `inStoreMode`, so the
+merchants page "close to you" list can be empty on demo data; GraphQL is POST only (the `graphql`
+package's `HttpLink` posts JSON).
 
 ## Verification (2026-11-26, `tool/docker-test.sh` in `ever-demand-flutter:3.50.1`)
 
