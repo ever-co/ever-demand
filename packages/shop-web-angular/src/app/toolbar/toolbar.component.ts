@@ -1,4 +1,10 @@
-import { Component, NgZone, ViewChild, AfterViewInit } from '@angular/core';
+import {
+	Component,
+	NgZone,
+	ViewChild,
+	AfterViewInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { SidenavService } from '../sidenav/sidenav.service';
 import { Store } from 'app/services/store';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
@@ -15,6 +21,7 @@ import { LocationPopupComponent } from 'app/shared/location-popup/location-popup
 import { environment } from 'environments/environment';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'toolbar',
 	styleUrls: ['./toolbar.component.scss'],

@@ -7,6 +7,7 @@ import {
 	OnDestroy,
 	OnInit,
 	Output,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 
 import { MasonryOptions } from './masonry-options';
@@ -20,6 +21,7 @@ import { MasonryOptions } from './masonry-options';
  * container is as wide as the columns that fit in its parent, so `margin: auto` centers it.
  */
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: '[masonry], masonry',
 	template: '<ng-content></ng-content>',

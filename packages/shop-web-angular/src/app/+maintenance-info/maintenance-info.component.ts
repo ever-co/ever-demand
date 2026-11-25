@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MaintenanceService } from '@modules/client.common.angular2/services/maintenance.service';
 import { environment } from 'environments/environment';
 import { ToolbarController } from 'app/app.component';
@@ -6,6 +6,7 @@ import { Store } from 'app/services/store';
 import { Router } from '@angular/router';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	template: `
 		<div

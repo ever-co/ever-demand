@@ -5,6 +5,7 @@ import {
 	Input,
 	ViewChild,
 	OnInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatRipple } from '@angular/material/core';
@@ -12,6 +13,7 @@ import { MatRipple } from '@angular/material/core';
 import { InputComponent } from './input-component';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'mat-bold-input',
 	styleUrls: ['./mat-bold-input.component.scss'],

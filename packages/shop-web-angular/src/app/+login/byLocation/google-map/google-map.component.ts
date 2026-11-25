@@ -5,6 +5,7 @@ import {
 	OnDestroy,
 	OnInit,
 	ViewChild,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { GoogleMap } from '@angular/google-maps';
 import { Observable, Subject } from 'rxjs';
@@ -16,6 +17,7 @@ import { takeUntil } from 'rxjs/operators';
  * Built on `@angular/google-maps` (the Maps JS API itself is loaded by `GoogleMapsLoader`).
  */
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'ngx-google-map',
 	styles: [

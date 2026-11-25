@@ -1,7 +1,8 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'product-discount',
 	styleUrls: ['./discount.scss'],

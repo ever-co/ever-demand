@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, NgZone, Inject } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	NgZone,
+	Inject,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import {
 	animate,
@@ -21,6 +28,7 @@ import { CarrierLocationComponent } from '../location/carrier-location.component
 import { DOCUMENT } from '@angular/common';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'order',
 	animations: [

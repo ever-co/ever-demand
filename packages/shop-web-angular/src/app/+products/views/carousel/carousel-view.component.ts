@@ -1,4 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+	Component,
+	Input,
+	Output,
+	EventEmitter,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
@@ -10,6 +16,7 @@ import { IProductImage } from '@modules/server.common/interfaces/IProduct';
  * (A small native replacement for ngx-hm-carousel, which does not support Angular 22.)
  */
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'carousel-view',
 	styleUrls: ['./carousel-view.component.scss'],

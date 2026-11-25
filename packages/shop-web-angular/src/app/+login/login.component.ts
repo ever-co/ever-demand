@@ -4,6 +4,7 @@ import {
 	ElementRef,
 	ViewChild,
 	OnDestroy,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import {
 	AbstractControl,
@@ -43,6 +44,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
 // tslint:disable-next-line:max-classes-per-file
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'login',
 	styleUrls: ['./login.component.scss'],

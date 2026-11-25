@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
@@ -8,6 +8,7 @@ import { getBrowserLanguage } from 'app/services/browser-language';
 import { environment } from 'environments/environment';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	styleUrls: ['./server-down.page.scss'],
 	templateUrl: 'server-down.page.html',

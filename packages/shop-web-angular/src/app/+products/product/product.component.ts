@@ -6,6 +6,7 @@ import {
 	Output,
 	OnChanges,
 	Inject,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import {
 	animate,
@@ -26,6 +27,7 @@ import { IProductImage } from '@modules/server.common/interfaces/IProduct';
 import { DOCUMENT } from '@angular/common';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'product',
 	animations: [

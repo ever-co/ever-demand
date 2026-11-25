@@ -1,4 +1,10 @@
-import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	EventEmitter,
+	ViewChild,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { first, map } from 'rxjs/operators';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { InviteRequestRouter } from '@modules/client.common.angular2/routers/invite-request-router.service';
@@ -17,6 +23,7 @@ import { GeoLocationService } from 'app/services/geo-location';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'es-login-by-location',
 	styleUrls: ['./byLocation.component.scss'],

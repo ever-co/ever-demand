@@ -1,4 +1,4 @@
-import { Component, Inject, NgZone, OnInit } from '@angular/core';
+import { Component, Inject, NgZone, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MapDirectionsService } from '@angular/google-maps';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { first } from 'rxjs/operators';
@@ -31,6 +31,7 @@ const ICONS = {
  * driving route between the customer and the store. Built on `@angular/google-maps`.
  */
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'ea-carrier-location',
 	styleUrls: ['./carrier-location.component.scss'],

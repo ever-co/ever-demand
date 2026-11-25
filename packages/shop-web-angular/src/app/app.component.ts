@@ -4,6 +4,7 @@ import {
 	OnInit,
 	ViewChild,
 	ViewEncapsulation,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
@@ -26,6 +27,7 @@ export const ROOT_SELECTOR = 'app';
  * Top Level Component
  */
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'app',
 	encapsulation: ViewEncapsulation.None,

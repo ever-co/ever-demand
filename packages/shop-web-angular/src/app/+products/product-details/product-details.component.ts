@@ -1,4 +1,10 @@
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import {
+	Component,
+	HostBinding,
+	OnDestroy,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -27,6 +33,7 @@ interface RouteParams {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'product-details',
 	styleUrls: ['./product-details.component.scss'],

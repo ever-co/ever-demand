@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, Inject } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	OnInit,
+	Inject,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'environments/environment';
 import { DOCUMENT } from '@angular/common';
@@ -8,6 +14,7 @@ import {
 } from '../services/browser-language';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'settings',
 	styleUrls: ['./settings.component.scss'],

@@ -9,6 +9,7 @@ import {
 	ViewChild,
 	AfterViewInit,
 	OnDestroy,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { IUserCreateObject } from '@modules/server.common/interfaces/IUser';
@@ -47,6 +48,7 @@ const defaultLng = environment.DEFAULT_LONGITUDE || 0;
 const defaultLat = environment.DEFAULT_LATITUDE || 0;
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'es-location-form',
 	styleUrls: ['./location.component.scss'],

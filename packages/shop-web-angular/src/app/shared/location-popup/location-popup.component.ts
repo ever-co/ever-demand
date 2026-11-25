@@ -5,6 +5,7 @@ import {
 	EventEmitter,
 	AfterViewInit,
 	ViewChild,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -18,6 +19,7 @@ import GeoLocation, {
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	styleUrls: ['./location-popup.component.scss'],
 	templateUrl: './location-popup.component.html',
