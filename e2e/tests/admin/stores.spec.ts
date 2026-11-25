@@ -105,6 +105,8 @@ test.describe('stores', () => {
 		const row = page.locator('ng2-smart-table tbody tr').filter({ hasText: renamed }).first();
 		await row.locator('input[type="checkbox"]').check();
 		await page.locator('nb-card-header button').filter({ hasText: /delete/i }).click();
+		// "Are you sure?" confirmation modal
+		await modal(page).getByRole('button', { name: /yes/i }).click();
 
 		await expect(page.locator('ng2-smart-table tbody tr').filter({ hasText: renamed })).toHaveCount(0, {
 			timeout: 30_000,
