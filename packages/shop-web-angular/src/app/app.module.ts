@@ -56,12 +56,18 @@ import { createApolloOptions } from './apollo-options';
 
 const APP_PROVIDERS = [
 	ServerConnectionService,
-	provideAppInitializer(() =>
-		inject(ServerConnectionService).load(
-			environment.SERVICES_ENDPOINT,
-			inject(Store)
-		)
-	),
+	ServerSettings,
+	provideAppInitializer(() => {
+		const serverConnection = inject(ServerConnectionService);
+		const serverSettings = inject(ServerSettings);
+		const store = inject(Store);
+
+		// The settings (invites, registration) are read only once the connection check has
+		// stored its result; in parallel, the first visit always skipped them.
+		return serverConnection
+			.load(environment.SERVICES_ENDPOINT, store)
+			.then(() => serverSettings.load());
+	}),
 	MaintenanceService,
 	provideAppInitializer(() =>
 		inject(MaintenanceService).load(
@@ -75,8 +81,6 @@ const APP_PROVIDERS = [
 	),
 	AppState,
 	SidenavService,
-	ServerSettings,
-	provideAppInitializer(() => inject(ServerSettings).load()),
 ];
 
 @NgModule({
