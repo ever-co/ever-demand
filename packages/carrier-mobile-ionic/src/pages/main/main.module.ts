@@ -1,13 +1,10 @@
 import { NgModule } from '@angular/core';
 import { MainPage } from './main';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { Vibration } from '@ionic-native/vibration/ngx';
 import { CommonModule } from '@angular/common';
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { GeoLocationService } from '../../services/geo-location.service';
 import { Routes, RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular/lazy';
 import { HomeModuleGuard } from './home/home.module.guard';
 import { DeliveryModuleGuard } from './delivery/delivery.module.guard';
 import { StartingDeliveryModuleGuard } from './starting-delivery/starting-delivery.module.guard';
@@ -66,9 +63,6 @@ const routes: Routes = [
         TranslateModule.forChild(),
     ],
     providers: [
-        Geolocation,
-        Vibration,
-        LocalNotifications,
         GeoLocationService,
         HomeModuleGuard,
         DriveToWarehouseModuleGuard,

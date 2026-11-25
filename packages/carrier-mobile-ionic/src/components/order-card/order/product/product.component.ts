@@ -7,9 +7,10 @@ import {
 import OrderProduct from '@modules/server.common/entities/OrderProduct';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { Store } from '../../../../services/store.service';
-import { Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular/lazy';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-order-product',
 	styleUrls: ['./product.component.scss'],
 	templateUrl: './product.component.html',

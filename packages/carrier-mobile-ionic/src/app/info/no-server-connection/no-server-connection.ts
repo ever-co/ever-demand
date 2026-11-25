@@ -5,6 +5,7 @@ import { ServerConnectionService } from '@modules/client.common.angular2/service
 import { Router } from '@angular/router';
 
 @Component({
+	standalone: false,
 	selector: 'no-server-connection',
 	styleUrls: [`../information.scss`],
 	templateUrl: 'no-server-connection.html',

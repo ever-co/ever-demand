@@ -1,12 +1,13 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Store } from 'services/store.service';
-import { Platform, MenuController } from '@ionic/angular';
+import { Store } from '../../services/store.service';
+import { Platform, MenuController } from '@ionic/angular/lazy';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
-import { environment } from 'environments/environment';
+import { environment } from '../../environments/environment';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-menu',
 	templateUrl: './menu.component.html',
 	styleUrls: ['./menu.component.scss'],

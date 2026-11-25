@@ -5,6 +5,7 @@ import { Store } from '../../../services/store.service';
 import { Router } from '@angular/router';
 
 @Component({
+	standalone: false,
 	selector: 'page-maintenance-info',
 	templateUrl: 'maintenance-info.html',
 })

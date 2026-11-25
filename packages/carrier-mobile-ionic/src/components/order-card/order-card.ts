@@ -3,6 +3,7 @@ import Order from '@modules/server.common/entities/Order';
 import ICarrier from '@modules/server.common/interfaces/ICarrier';
 
 @Component({
+	standalone: false,
 	selector: 'order-card',
 	templateUrl: './order-card.html',
 	styleUrls: ['./order-card.scss']

@@ -9,17 +9,17 @@ import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/carrier-orders-router.service';
 import { Store } from '../../../services/store.service';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { CurrentPositionService } from '../../../services/native/current-position.service';
 import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 import { GeoLocationService } from '../../../services/geo-location.service';
 import { MapComponent } from '../common/map/map.component';
 import { Router } from '@angular/router';
-import { NavController, Platform } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular/lazy';
 import { getIdFromTheDate } from '@modules/server.common/utils';
 
-declare var google: any;
 
 @Component({
+	standalone: false,
 	selector: 'page-drive-to-warehouse',
 	templateUrl: 'drive-to-warehouse.html',
 	styleUrls: ['drive-to-warehouse.scss'],
@@ -46,7 +46,7 @@ export class DriveToWarehousePage implements OnInit {
 		private carrierOrdersRouter: CarrierOrdersRouter,
 		private store: Store,
 		private geoLocationService: GeoLocationService,
-		private geolocation: Geolocation,
+		private geolocation: CurrentPositionService,
 		private router: Router,
 		private navCtrl: NavController,
 		public platform: Platform
@@ -109,10 +109,7 @@ export class DriveToWarehousePage implements OnInit {
 									OrderCarrierStatus.NoCarrier;
 							}
 
-							const origin = new google.maps.LatLng(
-								position.coords.latitude,
-								position.coords.longitude
-							);
+							const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
 
 							const merchantGeo = order.warehouse['geoLocation'];
 
@@ -121,10 +118,7 @@ export class DriveToWarehousePage implements OnInit {
 								dbGeoInput as GeoLocation
 							).toFixed(2);
 
-							const destination = new google.maps.LatLng(
-								merchantGeo.loc.coordinates[1],
-								merchantGeo.loc.coordinates[0]
-							);
+							const destination = { lat: merchantGeo.loc.coordinates[1], lng: merchantGeo.loc.coordinates[0] };
 
 							this.carrierMap.setCenter(origin);
 							this.carrierMap.drawRoute(origin, destination);

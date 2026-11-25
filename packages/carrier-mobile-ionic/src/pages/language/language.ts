@@ -4,6 +4,7 @@ import { DeviceRouter } from '@modules/client.common.angular2/routers/device-rou
 import { DOCUMENT } from '@angular/common';
 
 @Component({
+	standalone: false,
 	selector: 'page-language',
 	templateUrl: 'language.html',
 	styleUrls: ['language.scss'],

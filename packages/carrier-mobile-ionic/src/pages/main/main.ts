@@ -5,17 +5,18 @@ import {
 } from '@angular/core';
 
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { CurrentPositionService } from '../../services/native/current-position.service';
 import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 import { generateObjectIdString } from '@modules/server.common/utils';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { Store } from '../../services/store.service';
-import { Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular/lazy';
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'page-main',
 	templateUrl: 'main.html',
 	styleUrls: ['main.scss'],
@@ -30,7 +31,7 @@ export class MainPage implements OnInit, OnDestroy {
 	constructor(
 		private platform: Platform,
 		private carrierRouter: CarrierRouter,
-		private geolocation: Geolocation,
+		private geolocation: CurrentPositionService,
 		private store: Store
 	) {}
 

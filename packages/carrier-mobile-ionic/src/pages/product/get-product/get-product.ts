@@ -10,10 +10,11 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import { Store } from '../../../services/store.service';
 import { first, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { NavController } from '@ionic/angular';
-import { environment } from 'environments/environment';
+import { NavController } from '@ionic/angular/lazy';
+import { environment } from '../../../environments/environment';
 
 @Component({
+	standalone: false,
 	selector: 'page-get-product',
 	templateUrl: 'get-product.html',
 	styleUrls: ['./get-product.scss'],

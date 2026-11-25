@@ -6,12 +6,13 @@ import IOrder from '@modules/server.common/interfaces/IOrder';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { first, takeUntil } from 'rxjs/operators';
-import { Store } from 'services/store.service';
+import { Store } from '../../../services/store.service';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import { Subject } from 'rxjs';
-import { NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular/lazy';
 
 @Component({
+	standalone: false,
 	selector: 'page-return-product',
 	templateUrl: 'return-product.html',
 })

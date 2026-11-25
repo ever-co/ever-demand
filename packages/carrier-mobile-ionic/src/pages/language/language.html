@@ -3,7 +3,7 @@
 		<span class="left-buttons">
 			<div class="waves-effect waves-classic">
 				<ion-menu-toggle class="button-icon">
-					<ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+					<ion-icon name="menu"></ion-icon>
 				</ion-menu-toggle>
 			</div>
 		</span>
@@ -13,35 +13,29 @@
 	</ion-title>
 </ion-header>
 
-<ion-content scroll="false" padding class="language-content">
+<ion-content class="language-content ion-padding">
 	<div class="content">
 		<ion-radio-group [(ngModel)]="language" (ionChange)="languageChange()">
 			<ion-item>
-				<ion-label>{{ 'LANGUAGE_VIEW.ENGLISH' | translate }}</ion-label>
-				<ion-radio value="en-US"></ion-radio>
+				<ion-radio value="en-US" justify="space-between">{{ 'LANGUAGE_VIEW.ENGLISH' | translate }}</ion-radio>
 			</ion-item>
 
 			<ion-item>
-				<ion-label>{{ 'LANGUAGE_VIEW.BULGARIAN' | translate }}</ion-label>
-				<ion-radio value="bg-BG"></ion-radio>
+				<ion-radio value="bg-BG" justify="space-between">{{ 'LANGUAGE_VIEW.BULGARIAN' | translate }}</ion-radio>
 			</ion-item>
 
 			<ion-item>
-				<ion-label>{{ 'LANGUAGE_VIEW.HEBREW' | translate }}</ion-label>
-				<ion-radio value="he-IL"></ion-radio>
+				<ion-radio value="he-IL" justify="space-between">{{ 'LANGUAGE_VIEW.HEBREW' | translate }}</ion-radio>
 			</ion-item>
 
 			<ion-item>
-				<ion-label>{{ 'LANGUAGE_VIEW.RUSSIAN' | translate }}</ion-label>
-				<ion-radio value="ru-RU"></ion-radio>
+				<ion-radio value="ru-RU" justify="space-between">{{ 'LANGUAGE_VIEW.RUSSIAN' | translate }}</ion-radio>
 			</ion-item>
 			<ion-item>
-				<ion-label>{{ 'LANGUAGE_VIEW.SPANISH' | translate }}</ion-label>
-				<ion-radio value="es-ES"></ion-radio>
+				<ion-radio value="es-ES" justify="space-between">{{ 'LANGUAGE_VIEW.SPANISH' | translate }}</ion-radio>
 			</ion-item>
 			<ion-item>
-				<ion-label>{{ 'LANGUAGE_VIEW.FRENCH' | translate }}</ion-label>
-				<ion-radio value="fr-FR"></ion-radio>
+				<ion-radio value="fr-FR" justify="space-between">{{ 'LANGUAGE_VIEW.FRENCH' | translate }}</ion-radio>
 			</ion-item>
 		</ion-radio-group>
 	</div>

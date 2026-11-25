@@ -3,9 +3,10 @@ import Order from '@modules/server.common/entities/Order';
 import { Subject } from 'rxjs';
 import { CarriersOrdersService } from '../../services/carriers-orders.service';
 import { Store } from '../../services/store.service';
-import { Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular/lazy';
 
 @Component({
+	standalone: false,
 	selector: 'page-deliveries',
 	templateUrl: './deliveries.html',
 	styleUrls: ['deliveries.scss'],

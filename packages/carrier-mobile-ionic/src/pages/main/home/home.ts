@@ -2,19 +2,18 @@ import { Component, ViewChild } from '@angular/core';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import ICarrier from '@modules/server.common/interfaces/ICarrier';
 import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
-import * as _ from 'lodash';
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { LocalNotificationService } from '../../../services/native/local-notification.service';
 import { Store } from '../../../services/store.service';
 import { GeoLocationOrdersService } from '../../../services/geo-location-order.service';
 import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { CurrentPositionService } from '../../../services/native/current-position.service';
 import { GeoLocationService } from '../../../services/geo-location.service';
 import { MapComponent } from '../common/map/map.component';
 import { Router } from '@angular/router';
 
-declare var google: any;
 
 @Component({
+	standalone: false,
 	selector: 'page-home',
 	templateUrl: 'home.html',
 })
@@ -31,10 +30,10 @@ export class HomePage {
 
 	constructor(
 		private carrierRouter: CarrierRouter,
-		private localNotifications: LocalNotifications,
+		private localNotifications: LocalNotificationService,
 		private store: Store,
 		private geoLocationOrdersService: GeoLocationOrdersService,
-		private geolocation: Geolocation,
+		private geolocation: CurrentPositionService,
 		private geoLocationService: GeoLocationService,
 		private router: Router
 	) {}
@@ -75,9 +74,6 @@ export class HomePage {
 			id: 1,
 			title: 'Attention',
 			text: 'New order nearby you!',
-			led: 'FFFF00',
-			vibrate: true,
-			wakeup: false,
 		});
 	}
 
@@ -104,10 +100,7 @@ export class HomePage {
 				} as IGeoLocation;
 
 				this.carrierMap.addMarker(
-					new google.maps.LatLng(
-						position.coords.latitude,
-						position.coords.longitude
-					)
+					{ lat: position.coords.latitude, lng: position.coords.longitude }
 				);
 
 				if (this.order$) {
@@ -179,10 +172,7 @@ export class HomePage {
 				}
 
 				this.carrierMap.setCenter(
-					new google.maps.LatLng(
-						position.coords.latitude,
-						position.coords.longitude
-					)
+					{ lat: position.coords.latitude, lng: position.coords.longitude }
 				);
 			});
 	}

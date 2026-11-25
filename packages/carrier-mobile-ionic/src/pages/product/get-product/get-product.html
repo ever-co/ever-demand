@@ -12,13 +12,14 @@
 	</div>
 </div>
 
-<ion-app>
+<!-- Was a nested <ion-app>; one ion-app per app is enough (Ionic 7+). -->
+<div class="get-product-page">
 	<ion-header class="bar-brand bar bar-header disable-user-behavior">
 		<div class="buttons buttons-left header-item">
 			<span class="left-buttons">
 				<div class="waves-effect waves-classic">
 					<ion-menu-toggle class="button-icon">
-						<ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+						<ion-icon name="menu"></ion-icon>
 					</ion-menu-toggle>
 				</div>
 			</span>
@@ -27,9 +28,9 @@
 			<span>{{ 'MAIN_VIEW.EVERCO_DRIVER' | translate }}</span>
 		</ion-title>
 	</ion-header>
-	<ion-content fullscreen class="ion-padding" class="background-content">
-		<ion-slides>
-			<ion-slide
+	<ion-content [fullscreen]="true" class="ion-padding background-content">
+		<swiper-container>
+			<swiper-slide
 				*ngFor="let imageUrl of selectedProductImages; let i = index"
 			>
 				<div class="slide">
@@ -43,8 +44,8 @@
 						>
 					</ion-text>
 				</div>
-			</ion-slide>
-		</ion-slides>
+			</swiper-slide>
+		</swiper-container>
 	</ion-content>
 	<ion-row class="full-width">
 		<ion-col>
@@ -85,4 +86,4 @@
 			</div>
 		</ion-col>
 	</ion-row>
-</ion-app>
+</div>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, CanLoad, Route } from '@angular/router';
-import { Store } from 'services/store.service';
+import { Store } from '../../services/store.service';
 
 @Injectable()
 export class InfoModuleGuard implements CanLoad {

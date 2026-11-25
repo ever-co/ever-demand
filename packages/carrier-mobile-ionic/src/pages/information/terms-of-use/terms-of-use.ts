@@ -4,6 +4,7 @@ import { UserRouter } from '@modules/client.common.angular2/routers/user-router.
 import { Subscription } from 'rxjs';
 
 @Component({
+	standalone: false,
 	selector: 'page-terms-of-use',
 	templateUrl: 'terms-of-use.html',
 	styleUrls: ['terms-of-use.scss'],

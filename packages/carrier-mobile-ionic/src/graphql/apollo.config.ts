@@ -1,49 +1,85 @@
-import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { Apollo } from 'apollo-angular';
-import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
-import { ApolloLink, InMemoryCache } from '@apollo/client/core';
-import { setContext } from '@apollo/client/link/context';
+import { inject, NgModule } from '@angular/core';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideApollo } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
+import { SetContextLink } from '@apollo/client/link/context';
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
+import { OperationTypeNode } from 'graphql';
+import { createClient } from 'graphql-ws';
 import { environment } from '../environments/environment';
 
-@NgModule({
-	exports: [
-		HttpClientModule
-	],
-})
-export class GraphQLModule {
-	constructor(
-		private readonly apollo: Apollo,
-		private readonly httpLink: HttpLink
-	) {
-		const uri = environment.GQL_ENDPOINT;
-		const http: HttpLinkHandler = httpLink.create({ uri });
-
-		const authLink: ApolloLink = setContext((_, { headers }) => {
-			// get the authentication token from local storage if it exists
-			const token = localStorage.getItem('token');
-			// return the headers to the context so httpLink can read them
-			return {
-				headers: {
-					...headers,
-					authorization: token ? `Bearer ${token}` : '',
-				},
-			};
-		});
-
-		apollo.create({
-			link: authLink.concat(http),
-			cache: new InMemoryCache(),
-			defaultOptions: {
-				watchQuery: {
-					fetchPolicy: 'network-only',
-					errorPolicy: 'ignore',
-				},
-				query: {
-					fetchPolicy: 'network-only',
-					errorPolicy: 'all',
-				},
-			},
-		});
+// Apollo Client 4 types the results by the default error policies, so they are declared here.
+declare module '@apollo/client' {
+	export namespace ApolloClient {
+		export namespace DeclareDefaultOptions {
+			interface WatchQuery {
+				errorPolicy: 'ignore';
+			}
+			interface Query {
+				errorPolicy: 'all';
+			}
+		}
 	}
 }
+
+function authorization(): string {
+	// get the authentication token from local storage if it exists
+	const token = localStorage.getItem('token');
+	return token ? `Bearer ${token}` : '';
+}
+
+/**
+ * Apollo Client 4 options: HTTP for queries and mutations, graphql-ws for subscriptions
+ * (`subscriptions-transport-ws` is dead). The WebSocket only opens when a subscription runs.
+ */
+export function createApolloOptions(httpLink: HttpLink): ApolloClient.Options {
+	const http = httpLink.create({ uri: environment.GQL_ENDPOINT });
+
+	const auth = new SetContextLink((prevContext) => ({
+		headers: {
+			...prevContext.headers,
+			authorization: authorization(),
+		},
+	}));
+
+	const ws = new GraphQLWsLink(
+		createClient({
+			url: environment.GQL_SUBSCRIPTIONS_ENDPOINT,
+			lazy: true,
+			connectionParams: () => ({ authorization: authorization() }),
+		})
+	);
+
+	const link = ApolloLink.split(
+		(operation) =>
+			operation.operationType === OperationTypeNode.SUBSCRIPTION,
+		ws,
+		auth.concat(http)
+	);
+
+	return {
+		link,
+		cache: new InMemoryCache(),
+		defaultOptions: {
+			watchQuery: {
+				fetchPolicy: 'network-only',
+				errorPolicy: 'ignore',
+				// Apollo 3 behaviour: no extra "loading" emissions on polls and refetches.
+				notifyOnNetworkStatusChange: false,
+			},
+			query: {
+				fetchPolicy: 'network-only',
+				errorPolicy: 'all',
+			},
+		},
+	};
+}
+
+@NgModule({
+	providers: [
+		provideHttpClient(withInterceptorsFromDi()),
+		provideApollo(() => createApolloOptions(inject(HttpLink))),
+	],
+})
+export class GraphQLModule {}
