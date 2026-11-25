@@ -290,6 +290,33 @@ export async function seedStoreWithProduct(): Promise<SeededProduct> {
 	};
 }
 
+/** Registers a customer at the default location through GraphQL; returns the user id. */
+export async function registerCustomer(): Promise<string> {
+	const res = await gql<{ registerUser: { id: string } }>(
+		`mutation Register($registerInput: UserRegisterInput!) {
+			registerUser(registerInput: $registerInput) { id }
+		}`,
+		{
+			registerInput: {
+				user: {
+					apartment: '0',
+					geoLocation: {
+						countryId: COUNTRY_BG,
+						city: 'Sofia',
+						streetAddress: 'Vitosha',
+						house: '1',
+						loc: {
+							type: 'Point',
+							coordinates: [DEFAULT_LOCATION.lng, DEFAULT_LOCATION.lat],
+						},
+					},
+				},
+			},
+		}
+	);
+	return must(res, 'registerUser').registerUser.id;
+}
+
 /** Removes the store and the product of `seedStoreWithProduct` (orders stay, as history). */
 export async function removeSeed(seed: SeededProduct | undefined): Promise<void> {
 	if (!seed) {

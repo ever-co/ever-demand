@@ -116,6 +116,11 @@ pnpm --filter @ever-platform/e2e exec playwright test --project=shop-web
 - `products.spec.ts`, `register-and-order.spec.ts` need the API and skip themselves while it is
   down. They seed a store and a product at the default location through GraphQL (admin login),
   remove them afterwards, and serve an offline Google Maps stub (no key, no internet needed).
+  With the API defaults (no invites, no registration on start) the address form is reached by
+  buying as an anonymous visitor, as in the app; a customer without orders is registered
+  through GraphQL.
+- Result against the upgraded API (core lane, ports 5500/8443/2086) and the production build
+  served by `node e2e/serve-apps.mjs shop-web`: **15/15 passed**.
 
 ### Deploy image (`.deploy/shop-web-angular/Dockerfile`)
 
