@@ -125,7 +125,7 @@ export const env: Env = cleanEnv(
 
 		STRIPE_SECRET_KEY: str({ default: '' }),
 		STRIPE_CURRENCY: stripeCurrency({
-			desc: 'Three-letter currency code of card charges, e.g. usd (unset or blank = ils). Currencies without 100 minor units, such as jpy, are refused. Change it only while no card payment is in progress.',
+			desc: 'Three-letter currency code of card charges, e.g. usd (unset or blank = ils). Currencies without 100 minor units, such as jpy, are refused. Change it only while no card payment is in progress. Set a currency other than ils only once every shop in use, installed apps too, loads it from the server: an older shop still shows ILS in its card popup.',
 			default: DEFAULT_STRIPE_CURRENCY,
 		}),
 
