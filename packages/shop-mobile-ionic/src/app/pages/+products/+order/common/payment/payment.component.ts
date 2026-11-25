@@ -67,6 +67,12 @@ export class PaymentComponent {
 	}
 
 	async toPaymentStage() {
+		// A second card popup while the first new-card payment runs would
+		// save another card and charge the order again under its id.
+		if (this.paying) {
+			return;
+		}
+
 		if (!this.stripePublishableKey) {
 			throw Error("Can't pay in app");
 		}
@@ -90,37 +96,49 @@ export class PaymentComponent {
 			currency: 'ILS', // TODO: load currency from server!
 			allowRememberMe: false,
 			token: async (token) => {
-				const user = await this.userRouter.updateEmail(
-					this.store.userId,
-					token['email'] as string
-				);
+				if (this.paying) {
+					return;
+				}
+
+				// Set before the first await so the Pay now button is
+				// disabled for the whole card save, charge and confirm.
+				this.paying = true;
 
 				try {
-					const cardId = await this.userRouter.addPaymentMethod(
-						user.id,
-						token.id
+					const user = await this.userRouter.updateEmail(
+						this.store.userId,
+						token['email'] as string
 					);
 
 					try {
-						let order = await this.orderRouter.payWithStripe(
-							this.store.orderId,
-							cardId
+						const cardId = await this.userRouter.addPaymentMethod(
+							user.id,
+							token.id
 						);
-						console.log('Payment Done!');
+
 						try {
-							order = await this.orderRouter.confirm(
-								this.store.orderId
+							let order = await this.orderRouter.payWithStripe(
+								this.store.orderId,
+								cardId
 							);
-							console.log('Order Confirmed!');
+							console.log('Payment Done!');
+							try {
+								order = await this.orderRouter.confirm(
+									this.store.orderId
+								);
+								console.log('Order Confirmed!');
+							} catch (err) {
+								console.error('Could not confirm the order!');
+							}
 						} catch (err) {
-							console.error('Could not confirm the order!');
+							alert('Payment Failed!');
+							console.error('Payment Failed!', err);
 						}
 					} catch (err) {
-						alert('Payment Failed!');
-						console.error('Payment Failed!', err);
+						console.error('Payment Method creation failed!', err);
 					}
-				} catch (err) {
-					console.error('Payment Method creation failed!', err);
+				} finally {
+					this.paying = false;
 				}
 				close();
 			},
