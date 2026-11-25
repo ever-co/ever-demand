@@ -119,7 +119,9 @@ export function ProductsScreen() {
 				active && setLocation(toLocation(coords));
 			} catch (error) {
 				console.warn(error);
-				if (active) {
+				// A visitor gets a one-time invite (the address gives the location). A customer stays:
+				// the invite guard would send them straight back here.
+				if (active && !store.getState().session.userId) {
 					dispatch(sessionActions.setRegistrationSystem(RegistrationSystem.Once));
 					navigateRoot(inviteEntry(store.getState().session));
 				}
@@ -138,18 +140,14 @@ export function ProductsScreen() {
 		locale: language || env.DEFAULT_LOCALE,
 	});
 
-	// A new feed whenever its filters change (delivery type, store mode, location).
+	// A new feed whenever its filters change (delivery type, store mode, location, language).
 	const { reset, loadMore } = feed;
 	useEffect(() => {
 		reset();
-	}, [reset, deliveryType, inStore, location]);
-
-	useEffect(() => {
-		if (location && feed.products.length === 0 && !feed.loaded) {
+		if (location) {
 			void loadMore();
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [loadMore, location]);
+	}, [loadMore, location, reset]);
 
 	// Resume a Buy that started before the invite (`continueOrder`), and in popup mode show the
 	// open order (`hasOrder`).

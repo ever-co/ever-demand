@@ -47,7 +47,11 @@ jest.mock('react-native-webview', () => {
 	const { Text } = require('react-native');
 	return {
 		WebView: ({ source }: { source: { html: string } }) =>
-			React.createElement(Text, { testID: 'webview-html' }, source.html.replace(/<[^>]+>/g, ' ').trim()),
+			React.createElement(
+				Text,
+				{ testID: 'webview-html' },
+				(source.html.match(/<body>([\s\S]*)<\/body>/)?.[1] ?? source.html).replace(/<[^>]+>/g, ' ').trim(),
+			),
 	};
 });
 

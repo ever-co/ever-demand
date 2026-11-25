@@ -6,6 +6,7 @@ import {
 	Image,
 	StyleSheet,
 	Text,
+	useWindowDimensions,
 	View,
 	type LayoutChangeEvent,
 	type ListViewToken,
@@ -134,7 +135,13 @@ export function ProductsListView(props: ProductViewProps) {
 
 export function ProductsSlidesView(props: ProductViewProps) {
 	const shown = visibleProducts(props.products);
-	const [size, setSize] = useState({ width: 0, height: 0 });
+	const window = useWindowDimensions();
+	const [measured, setSize] = useState({ width: 0, height: 0 });
+	// Until the first layout (and in tests) the window size stands in.
+	const size = {
+		width: measured.width || window.width,
+		height: measured.height || Math.max(0, window.height - 64),
+	};
 	const [index, setIndex] = useState(0);
 	const propsRef = useRef(props);
 	propsRef.current = props;

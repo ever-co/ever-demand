@@ -7,14 +7,15 @@ import {
 	createNavigatorFactory,
 	DrawerRouter,
 	useNavigationBuilder,
-	type DefaultNavigatorOptions,
 	type DrawerNavigationState,
 	type ParamListBase,
 } from '@react-navigation/native';
 import { createElement, type ReactNode } from 'react';
 import { ScrollView, View } from 'react-native';
 
-type Props = DefaultNavigatorOptions<ParamListBase, string | undefined, DrawerNavigationState<ParamListBase>, object, object, unknown> & {
+type Props = {
+	children?: ReactNode;
+	screenOptions?: unknown;
 	drawerContent?: (props: unknown) => ReactNode;
 	backBehavior?: 'history' | 'initialRoute' | 'firstRoute' | 'order' | 'none';
 	initialRouteName?: string;

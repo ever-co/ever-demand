@@ -12,7 +12,6 @@ import { Button, TextInput } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import { CardForm, type CardFormHandle } from '../components/CardForm';
 import { getStripeCurrency, setStripeCurrency, usePaymentDeps } from '../components/PaymentButtons';
-import { env } from '../config/env';
 import { DeliveryType } from '../domain/enums';
 import { pickTranslation } from '../domain/product';
 import type { Order } from '../domain/types';
@@ -30,7 +29,7 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function NewCardModal({ orderId }: { orderId: string }) {
 	const { t } = useTranslation();
-	const { routers } = useServices();
+	const { routers, env } = useServices();
 	const store = useAppStore();
 	const dispatch = useAppDispatch();
 	const language = useLanguage();

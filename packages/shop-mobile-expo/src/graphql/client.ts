@@ -22,6 +22,12 @@ declare module '@apollo/client' {
 	}
 }
 
+/** The Ionic default options: watch queries ignore errors, one-off queries return what resolved. */
+export const DEFAULT_OPTIONS = {
+	watchQuery: { fetchPolicy: 'network-only', errorPolicy: 'ignore' },
+	query: { fetchPolicy: 'network-only', errorPolicy: 'all' },
+} as const;
+
 export interface GraphQLClientOptions {
 	httpEndpoint: string;
 	subscriptionsEndpoint: string;
@@ -55,9 +61,6 @@ export function createApolloClient({
 			ApolloLink.split(({ query }) => isSubscriptionOperation(query), ws, http),
 		]),
 		cache: new InMemoryCache(),
-		defaultOptions: {
-			watchQuery: { fetchPolicy: 'network-only', errorPolicy: 'ignore' },
-			query: { fetchPolicy: 'network-only', errorPolicy: 'all' },
-		},
+		defaultOptions: DEFAULT_OPTIONS,
 	});
 }

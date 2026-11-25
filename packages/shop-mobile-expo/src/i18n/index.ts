@@ -109,6 +109,8 @@ export function createI18n(language: Language = FALLBACK_LANGUAGE): I18n {
 		fallbackLng: FALLBACK_LANGUAGE,
 		supportedLngs: [...LANGUAGES],
 		interpolation: { escapeValue: false },
+		// ngx-translate returns "" for empty values (e.g. PRODUCTS_VIEW.BUY_BUTTON.SUF), not the key.
+		returnEmptyString: true,
 		returnNull: false,
 		initAsync: false,
 	});

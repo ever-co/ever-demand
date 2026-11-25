@@ -1,5 +1,6 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { MockLink } from '@apollo/client/testing';
+import { DEFAULT_OPTIONS } from './client';
 import { firstValueFrom } from 'rxjs';
 import { productInfo } from '../test/fixtures';
 import { availableProducts, createGraphQLApi } from './api';
@@ -56,7 +57,7 @@ function typed(row: ReturnType<typeof productInfo>) {
 }
 
 function client(mocks: ConstructorParameters<typeof MockLink>[0]) {
-	return createGraphQLApi(new ApolloClient({ link: new MockLink(mocks), cache: new InMemoryCache() }));
+	return createGraphQLApi(new ApolloClient({ link: new MockLink(mocks), cache: new InMemoryCache(), defaultOptions: DEFAULT_OPTIONS }));
 }
 
 describe('GraphQL services (documents of the Ionic app)', () => {

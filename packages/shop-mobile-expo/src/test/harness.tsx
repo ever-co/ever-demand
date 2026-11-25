@@ -1,6 +1,7 @@
 /** Test doubles for the app services and a helper that renders the app at one route. */
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { MockLink } from '@apollo/client/testing';
+import { DEFAULT_OPTIONS } from '../graphql/client';
 import { render } from '@testing-library/react-native';
 import { of } from 'rxjs';
 import { AppRoot } from '../App';
@@ -106,7 +107,7 @@ export function createTestServices(
 		env: { ...baseEnv, ...options.env },
 		routers: options.routers ?? createMockRouters(),
 		graphql: options.graphql ?? createMockGraphQL(),
-		apollo: new ApolloClient({ link: new MockLink(options.mocks ?? []), cache: new InMemoryCache() }),
+		apollo: new ApolloClient({ link: new MockLink(options.mocks ?? []), cache: new InMemoryCache(), defaultOptions: DEFAULT_OPTIONS }),
 		location: {
 			getCurrentCoords: jest.fn(async () => ({ latitude: 42.6459136, longitude: 23.3332736 })),
 			getDeviceCoords: jest.fn(async () => null),
