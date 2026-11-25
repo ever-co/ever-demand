@@ -1,6 +1,7 @@
 import { of } from 'rxjs';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
+import { environment } from '../environments/environment';
 import { LoginPage } from './+login/login';
 import { OrderState, WarehousePage } from './+warehouse/warehouse';
 // The page NgModules give the AOT test build the template scope of the pages.
@@ -22,7 +23,7 @@ describe('Merchant pages', () => {
 			router = { navigate: vi.fn() };
 		});
 
-		it('starts from a clean session with the default credentials', () => {
+		it('starts from a clean session with the configured prefill', () => {
 			localStorage.setItem('_warehouseId', 'old');
 			localStorage.setItem('token', 'old');
 
@@ -30,8 +31,9 @@ describe('Merchant pages', () => {
 
 			expect(localStorage.getItem('_warehouseId')).toBeNull();
 			expect(localStorage.getItem('token')).toBeNull();
-			expect(p.username).toBeTruthy();
-			expect(p.password).toBeTruthy();
+			expect(p.username).toBe(environment.DEFAULT_LOGIN_USERNAME);
+			// no password default: demo builds set DEFAULT_LOGIN_PASSWORD explicitly
+			expect(p.password).toBe(environment.DEFAULT_LOGIN_PASSWORD);
 		});
 
 		it('stores the session and opens the warehouse page', async () => {
