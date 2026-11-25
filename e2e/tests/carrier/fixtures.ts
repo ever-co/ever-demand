@@ -9,6 +9,9 @@ export const SOFIA = { lat: 42.6459136, lng: 23.3932736 };
 
 const uid = () => `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
 
+/** Person names must match /^[a-z ,.'-]+$/i in the API, so digits become letters. */
+const lettersOnly = (value: string) => value.replace(/[0-9]/g, (d) => 'abcdefghij'[Number(d)]);
+
 function geoLocation(lat = SOFIA.lat, lng = SOFIA.lng) {
 	return {
 		countryId: 21, // Bulgaria
@@ -83,8 +86,8 @@ export async function createCustomer(): Promise<{ id: string; email: string }> {
 				password: `pw-${id}`,
 				user: {
 					email,
-					firstName: 'E2E',
-					lastName: `Customer ${id}`,
+					firstName: 'Ellie',
+					lastName: `Customer ${lettersOnly(id)}`,
 					phone: '+359888111111',
 					apartment: '3',
 					// a few hundred metres from the store
@@ -194,7 +197,7 @@ export async function createCarrier(): Promise<Carrier> {
 	const id = uid();
 	const username = `e2e-carrier-${id}`;
 	const password = `pw-${id}`;
-	const firstName = 'E2E';
+	const firstName = 'Emma';
 	const data = await must<{ registerCarrier: { id: string } }>(
 		`mutation RegisterCarrier($registerInput: CarrierRegisterInput!) {
 			registerCarrier(registerInput: $registerInput) { id }
@@ -204,7 +207,7 @@ export async function createCarrier(): Promise<Carrier> {
 				password,
 				carrier: {
 					firstName,
-					lastName: `Carrier ${id}`,
+					lastName: `Carrier ${lettersOnly(id)}`,
 					username,
 					password,
 					email: `${username}@example.com`,

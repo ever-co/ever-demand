@@ -70,14 +70,14 @@ test('the menu opens the deliveries history, language and about pages', async ({
 	await expect(page.getByText('Deliveries History')).toBeVisible();
 
 	await page.goto('/language');
-	await expect(page.getByText('Select language')).toBeVisible();
+	await expect(page.locator('#languageTitle')).toHaveText(/Select language/);
 	await page.locator('ion-radio[value="bg-BG"]').click();
 	await expect.poll(() => page.evaluate(() => localStorage.getItem('_language'))).toBe('bg-BG');
 	await page.locator('ion-radio[value="en-US"]').click();
-	await expect(page.getByText('Select language')).toBeVisible();
+	await expect(page.locator('#languageTitle')).toHaveText(/Select language/);
 
 	await page.goto('/information/about');
-	await expect(page.getByText('About Us')).toBeVisible();
+	await expect(page.locator('#aboutTitle')).toHaveText(/About Us/);
 	await expect(page.getByText(/App Version/)).toBeVisible();
 });
 
@@ -110,11 +110,10 @@ test('a whole delivery: take the order, pick it up, deliver it', async ({ page }
 	await expect(page.getByText(/The Customer has to pay|Customer already paid/)).toBeVisible();
 
 	await page.getByRole('button', { name: 'Delivered' }).click();
-	await expect(page).toHaveURL(/\/main\/home$/);
 	await expect.poll(async () => (await getOrder(orderId)).carrierStatus, { timeout: 20_000 }).toBe(5);
-
-	await page.getByRole('button', { name: 'Stop Working' }).click();
-	await expect(page.getByText('Not Working')).toBeVisible();
+	// still online: home, or straight on to the next packaged order nearby
+	await expect(page).toHaveURL(/\/main\/(home|drive-to-warehouse)$/);
+	await expect.poll(() => page.evaluate(() => localStorage.getItem('orderId'))).not.toBe(orderId);
 
 	// the completed order shows up in the deliveries history
 	await page.goto('/deliveries');
