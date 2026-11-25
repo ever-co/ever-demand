@@ -4,6 +4,7 @@ import { Store } from 'app/services/store.service';
 import { first } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-order-sign',
 	templateUrl: './order-sign.component.html',
 	styleUrls: ['./order-sign.component.scss'],

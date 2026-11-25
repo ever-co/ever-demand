@@ -8,7 +8,7 @@ import {
 	TestBed,
 } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { GeoLocationRouter } from '@modules/client.common.angular2/routers/geo-location-router.service';
 import { InviteRequestRouter } from '@modules/client.common.angular2/routers/invite-request-router.service';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';

@@ -6,9 +6,10 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import { first, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular/lazy';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-menu',
 	templateUrl: './menu.component.html',
 	styleUrls: ['./menu.component.scss'],

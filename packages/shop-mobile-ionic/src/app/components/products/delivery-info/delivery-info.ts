@@ -10,6 +10,7 @@ const defaultDeliveryTimeMin = environment.DELIVERY_TIME_MIN;
 const defaultDeliveryTimeMax = environment.DELIVERY_TIME_MAX;
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-delivery-info',
 	styleUrls: ['./delivery-info.scss'],
 	template: `

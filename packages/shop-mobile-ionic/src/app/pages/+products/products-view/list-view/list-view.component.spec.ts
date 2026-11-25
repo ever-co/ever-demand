@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { PipesModule } from '@modules/client.common.angular2/pipes/pipes.module';
 import { ProductsListViewComponent } from './list-view.component';

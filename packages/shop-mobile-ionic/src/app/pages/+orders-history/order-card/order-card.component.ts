@@ -4,6 +4,7 @@ import Order from '@modules/server.common/entities/Order';
 import IUser from '@modules/server.common/interfaces/IUser';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-order-card',
 	styleUrls: ['./order-card.component.scss'],
 	templateUrl: './order-card.component.html',

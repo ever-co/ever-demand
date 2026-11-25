@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-loading',
 	styleUrls: ['./loading.component.scss'],
 	templateUrl: 'loading.component.html',

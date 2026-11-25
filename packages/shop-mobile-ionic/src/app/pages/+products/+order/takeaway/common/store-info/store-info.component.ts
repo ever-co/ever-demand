@@ -7,11 +7,12 @@ import {
 } from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import { getCountryName } from '@modules/server.common/entities';
-import { CallNumber } from '@ionic-native/call-number';
+import { callNumber } from 'app/services/native/phone';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { Store } from 'app/services/store.service';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-order-takeaway-info-store-info',
 	templateUrl: './store-info.component.html',
 	styleUrls: ['./store-info.component.scss'],
@@ -58,7 +59,7 @@ export class TakeawayStoreInfoComponent implements OnDestroy {
 
 	async attemptCall(phone) {
 		try {
-			await CallNumber.callNumber(phone, true);
+			callNumber(phone);
 		} catch (err) {
 			// TODO: implement popup notification
 			console.warn('Call Was Unsuccessful!');

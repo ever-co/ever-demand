@@ -5,6 +5,7 @@ import { Store } from 'app/services/store.service';
 import { Router } from '@angular/router';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-maintenance-info',
 	templateUrl: './maintenance-info.page.html',
 	styleUrls: ['./maintenance-info.page.scss'],

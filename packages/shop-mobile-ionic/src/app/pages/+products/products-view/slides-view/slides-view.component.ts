@@ -1,6 +1,7 @@
 import {
 	AfterViewInit,
 	Component,
+	ElementRef,
 	EventEmitter,
 	Input,
 	NgZone,
@@ -14,26 +15,25 @@ import {
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { Subject } from 'rxjs';
-import {
-	SwiperInterface as Swiper,
-	SwiperOptions,
-} from '@ionic/core/dist/ionic/swiper/swiper-interface';
+import type { SwiperContainer } from 'swiper/element';
+import type { Swiper, SwiperOptions } from 'swiper/types';
 // TODO Fix Progress Bar
 // import { NgProgress } from 'ngx-progressbar';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { Router } from '@angular/router';
 import { Store } from '../../../../services/store.service';
-import { IonSlides } from '@ionic/angular';
 
 const initializeProductsNumber: number = 10;
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-products-slides-view',
 	templateUrl: './slides-view.component.html',
 	styleUrls: ['./slides-view.component.scss'],
 })
 export class ProductsSlidesViewComponent
-	implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+	implements OnInit, AfterViewInit, OnChanges, OnDestroy
+{
 	@Input()
 	products: ProductInfo[];
 
@@ -58,19 +58,20 @@ export class ProductsSlidesViewComponent
 	@Output()
 	goToDetailsPage = new EventEmitter<ProductInfo>();
 
-	@ViewChild(IonSlides)
-	slides: IonSlides;
+	// ion-slides was removed in Ionic 7. The feed is a Swiper element now
+	// (registered in main.ts) with the same options as before.
+	@ViewChild('slides')
+	slides: ElementRef<SwiperContainer>;
 
 	imageOrientation: number = 1;
 	product: ProductInfo;
 
-	// http://idangero.us/swiper/api/#events
+	// https://swiperjs.com/swiper-api#events
 	readonly swiperOptions: SwiperOptions;
 
 	private swiper: Swiper;
 	private readonly swiperEvents$ = new Subject<'init' | 'next' | 'prev'>();
 	private readonly ngDestroy$ = new Subject<void>();
-	private slides$: any;
 	private static MAX_DESCRIPTION_LENGTH: number = 45;
 
 	constructor(
@@ -81,20 +82,20 @@ export class ProductsSlidesViewComponent
 		private router: Router,
 		private store: Store
 	) {
-		// tslint:disable-next-line:no-this-assignment
-		const self = this;
-
 		this.swiperOptions = {
 			autoHeight: true,
 			resistance: true,
 			watchSlidesProgress: true,
 			longSwipes: false,
+			// Slides come and go with *ngFor, so Swiper watches them.
+			observer: true,
+			observeParents: true,
 			on: {
-				init() {
-					self.swiper = this; // this = swiper instance here
-					(window as any).swiper = self.swiper; // used for debugging
+				init: (swiper: Swiper) => {
+					this.swiper = swiper;
+					(window as any).swiper = swiper; // used for debugging
 
-					self.swiperEvents$.next('init');
+					this.swiperEvents$.next('init');
 				},
 				transitionStart: () => {
 					if (this.swiper) {
@@ -123,32 +124,9 @@ export class ProductsSlidesViewComponent
 	}
 
 	ngOnChanges({ products }: { products: SimpleChange }) {
-		if (products && products.currentValue.length === 0 && this.slides) {
-			this.slides.slideTo(0);
+		if (products && products.currentValue.length === 0 && this.swiper) {
+			this.swiper.slideTo(0);
 		}
-
-		//This logic works when all products are loaded in the begin
-		// if (!products || products.isFirstChange()) {
-		// 	return;
-		// }
-		// const previousProducts = products.previousValue as ProductInfo[];
-		// const currentProducts = products.currentValue as ProductInfo[];
-		// const removedProducts: ProductInfo[] = differenceBy(
-		// 	previousProducts,
-		// 	currentProducts,
-		// 	'warehouseProduct.id'
-		// );
-		// const newProducts: ProductInfo[] = differenceBy(
-		// 	currentProducts,
-		// 	previousProducts,
-		// 	'warehouseProduct.id'
-		// );
-		// pullAllBy(
-		// 	currentProducts,
-		// 	removedProducts /*TODO without(removedProducts, this.currentProduct)*/,
-		// 	'warehouseProduct.id'
-		// ); // remove all removed products that are not the one shown
-		// currentProducts.push(...newProducts); // add all the new products at the end
 	}
 
 	ngAfterViewInit() {
@@ -157,18 +135,30 @@ export class ProductsSlidesViewComponent
 		// this.progressBar.set(100 / this.products.length);
 
 		this._loadData(0);
-		this.slides$ = this.slides.ionSlideWillChange.subscribe(async () => {
-			const index = await this.slides.getActiveIndex();
 
-			if (this.products.length - 1 <= index + 1) {
-				this.loadProducts.emit({
-					count: initializeProductsNumber,
-					imageOrientation: this.imageOrientation,
-				});
-			}
+		const element = this.slides?.nativeElement;
 
-			this._loadData(index);
-		});
+		// The Swiper element is not registered in unit tests (jsdom).
+		if (element && typeof element.initialize === 'function') {
+			Object.assign(element, this.swiperOptions);
+			element.initialize();
+			this.swiper = this.swiper || element.swiper;
+		}
+	}
+
+	// Swiper's slideChangeTransitionStart is the event ion-slides called
+	// ionSlideWillChange.
+	onSlideWillChange() {
+		const index = this.swiper ? this.swiper.activeIndex : 0;
+
+		if (this.products.length - 1 <= index + 1) {
+			this.loadProducts.emit({
+				count: initializeProductsNumber,
+				imageOrientation: this.imageOrientation,
+			});
+		}
+
+		this._loadData(index);
 	}
 
 	shortenDescription(desc: string) {
@@ -177,7 +167,7 @@ export class ProductsSlidesViewComponent
 			: desc.substr(
 					0,
 					ProductsSlidesViewComponent.MAX_DESCRIPTION_LENGTH - 3
-			  ) + '...';
+				) + '...';
 	}
 
 	localeTranslate(member: ILocaleMember[]): string {
@@ -186,10 +176,6 @@ export class ProductsSlidesViewComponent
 
 	ngOnDestroy() {
 		this.swiperEvents$.complete();
-
-		if (this.slides$) {
-			this.slides$.unsubscribe();
-		}
 
 		this.ngDestroy$.next();
 		this.ngDestroy$.complete();

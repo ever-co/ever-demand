@@ -10,7 +10,7 @@ import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus'
 import Order from '@modules/server.common/entities/Order';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 import { Store } from 'app/services/store.service';
 import { IssuePage } from '../../issue/issue.page';
 import { Router } from '@angular/router';
@@ -20,6 +20,7 @@ import { OrderStoreInfo } from './store-info/store-info.component';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 
 @Component({
+	standalone: false,
 	templateUrl: './takeaway-page.page.html',
 	styleUrls: ['./takeaway-page.page.scss'],
 })

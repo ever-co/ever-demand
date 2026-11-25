@@ -7,7 +7,7 @@
 			<ion-col *ngIf="inStore" class="col-9 p-1 header-title">
 				<ion-label>
 					<strong class="products-title">
-						<span class="merchant-name pr-1">
+						<span class="merchant-name pe-1">
 							{{ merchant?.name }}
 						</span>
 						<span
@@ -27,6 +27,7 @@
 				>
 				<ion-toggle
 					*ngIf="!inStore && !hasPendingOrder"
+					aria-label="Takeaway / Delivery"
 					color="secondary"
 					class="toggleDeliveryType pr-5px pl-5px"
 					(ionChange)="toggleGetProductsType()"
@@ -42,7 +43,7 @@
 				>
 				<ion-label
 					*ngIf="!hasPendingOrder"
-					class="pl-3 pr-3 d-flex"
+					class="ps-3 pe-3 d-flex"
 					(click)="toggleSearch()"
 				>
 					<ion-icon name="search"></ion-icon>

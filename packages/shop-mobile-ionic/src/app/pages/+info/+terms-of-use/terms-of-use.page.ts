@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { Subscription } from 'rxjs';
-import { Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular/lazy';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-terms-of-use',
 	templateUrl: './terms-of-use.page.html',
 	styleUrls: ['./terms-of-use.page.scss'],

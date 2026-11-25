@@ -1,18 +1,18 @@
 import {
 	Component,
+	ElementRef,
 	OnDestroy,
 	AfterViewInit,
 	NgZone,
 	EventEmitter,
+	ViewChild,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '../../../services/store.service';
-import {
-	SwiperInterface as Swiper,
-	SwiperOptions,
-} from '@ionic/core/dist/ionic/swiper/swiper-interface';
+import type { SwiperContainer } from 'swiper/element';
+import type { Swiper, SwiperOptions } from 'swiper/types';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
-import { NavController, ModalController } from '@ionic/angular';
+import { NavController, ModalController } from '@ionic/angular/lazy';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { OrderPage } from '../+order/order.page';
@@ -31,6 +31,7 @@ import { takeUntil, first } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-product-details',
 	templateUrl: './product-details.page.html',
 	styleUrls: ['./product-details.page.scss'],
@@ -53,6 +54,23 @@ export class ProductDetailsPage implements AfterViewInit, OnDestroy {
 	public modalOpen: boolean;
 	public modalChange = new EventEmitter<boolean>();
 	public soldOut: boolean;
+
+	// ion-slides was removed in Ionic 7: the images carousel is a Swiper
+	// element. It appears once the product images are known (*ngIf).
+	@ViewChild('slides')
+	set slidesElement(ref: ElementRef<SwiperContainer> | undefined) {
+		const element = ref?.nativeElement;
+
+		// The Swiper element is not registered in unit tests (jsdom).
+		if (
+			element &&
+			!element.swiper &&
+			typeof element.initialize === 'function'
+		) {
+			Object.assign(element, this.swiperOptions);
+			element.initialize();
+		}
+	}
 
 	constructor(
 		private route: ActivatedRoute,
@@ -88,9 +106,11 @@ export class ProductDetailsPage implements AfterViewInit, OnDestroy {
 			resistance: true,
 			watchSlidesProgress: true,
 			longSwipes: false,
+			observer: true,
+			observeParents: true,
 			on: {
-				init() {
-					self.swiper = this; // this = swiper instance here
+				init(swiper: Swiper) {
+					self.swiper = swiper;
 
 					(window as any).swiper = self.swiper; // used for debugging
 

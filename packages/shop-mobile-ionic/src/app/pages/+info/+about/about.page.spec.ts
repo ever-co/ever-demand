@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Platform } from '@ionic/angular';
-import { TranslateModule } from '@ngx-translate/core';
+import { Platform } from '@ionic/angular/lazy';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { of } from 'rxjs';
 import { AboutPage } from './about.page';

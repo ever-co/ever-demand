@@ -6,8 +6,8 @@ import {
 	NavController,
 	NavParams,
 	PopoverController,
-} from '@ionic/angular';
-import { TranslateModule } from '@ngx-translate/core';
+} from '@ionic/angular/lazy';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { Store } from '../../../../services/store.service';

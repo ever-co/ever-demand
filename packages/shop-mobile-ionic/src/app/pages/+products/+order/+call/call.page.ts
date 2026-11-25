@@ -1,7 +1,8 @@
 import { Component, EventEmitter } from '@angular/core';
-import { PopoverController, ModalController, NavParams } from '@ionic/angular';
+import { PopoverController, ModalController, NavParams } from '@ionic/angular/lazy';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-call',
 	templateUrl: './call.page.html',
 	styleUrls: ['./call.page.scss'],

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular/lazy';
 import { OrderProductsInfo } from './products-info.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { OrderInfoCommonModule } from '../../../common/order-info-common.module';
 import { TakeawayCommonModule } from '../../common/takeaway-common.module';
 

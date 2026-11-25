@@ -57,12 +57,13 @@
 						alt=""
 					/>
 				</div>
-				<ion-slides
+				<swiper-container
+					#slides
 					*ngIf="images && images.length !== 0"
-					[options]="swiperOptions"
+					init="false"
 					dir="{{ 'CURRENT_DIRECTION' | translate }}"
 				>
-					<ion-slide
+					<swiper-slide
 						*ngFor="let image of images"
 						class="slide-content"
 					>
@@ -70,8 +71,8 @@
 							src="{{ image.url }}"
 							*ngIf="product.product.images.length !== 0"
 						/>
-					</ion-slide>
-				</ion-slides>
+					</swiper-slide>
+				</swiper-container>
 			</ion-row>
 
 			<ion-row size="12" class="list-content">

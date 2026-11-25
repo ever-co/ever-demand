@@ -1,8 +1,8 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { ModalController, NavController } from '@ionic/angular';
-import { TranslateModule } from '@ngx-translate/core';
+import { ModalController, NavController } from '@ionic/angular/lazy';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { UserProductsRouter } from '@modules/client.common.angular2/routers/user-products-router.service';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';

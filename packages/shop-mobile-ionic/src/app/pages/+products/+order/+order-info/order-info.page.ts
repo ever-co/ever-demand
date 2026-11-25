@@ -15,7 +15,7 @@ import { OrderRouter } from '@modules/client.common.angular2/routers/order-route
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '../../../../services/store.service';
-import { ModalController, NavController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular/lazy';
 import { CancelPage } from '../+cancel/cancel.page';
 import { IssuePage } from '../issue/issue.page';
 import { takeUntil } from 'rxjs/operators';
@@ -24,6 +24,7 @@ import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseSta
 import { OrderInfoModalComponent } from '../common/order-info-modal/order-info-modal.component';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-order-info',
 	templateUrl: './order-info.page.html',
 	styleUrls: ['./order-info.page.scss'],

@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { UserAuthRouter } from '@modules/client.common.angular2/routers/user-auth-router.service';
 import { OrdersService } from 'app/services/orders/orders.service';

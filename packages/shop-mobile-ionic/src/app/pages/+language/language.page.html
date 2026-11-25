@@ -1,4 +1,4 @@
-<!-- this files uses translations from ./language.i18n.json -->
+<!-- Ionic 8 removed the legacy ion-label + ion-radio form: the label is the radio content now -->
 
 <ion-header>
 	<ion-toolbar color="primary">
@@ -20,28 +20,34 @@
 	<ion-list>
 		<ion-radio-group [(ngModel)]="language">
 			<ion-item>
-				<ion-label>{{ 'ENGLISH' | translate }}</ion-label>
-				<ion-radio value="en-US"></ion-radio>
+				<ion-radio value="en-US" justify="space-between">{{
+					'ENGLISH' | translate
+				}}</ion-radio>
 			</ion-item>
 			<ion-item>
-				<ion-label>{{ 'BULGARIAN' | translate }}</ion-label>
-				<ion-radio value="bg-BG"></ion-radio>
+				<ion-radio value="bg-BG" justify="space-between">{{
+					'BULGARIAN' | translate
+				}}</ion-radio>
 			</ion-item>
 			<ion-item>
-				<ion-label>{{ 'HEBREW' | translate }}</ion-label>
-				<ion-radio value="he-IL"></ion-radio>
+				<ion-radio value="he-IL" justify="space-between">{{
+					'HEBREW' | translate
+				}}</ion-radio>
 			</ion-item>
 			<ion-item>
-				<ion-label>{{ 'RUSSIAN' | translate }}</ion-label>
-				<ion-radio value="ru-RU"></ion-radio>
+				<ion-radio value="ru-RU" justify="space-between">{{
+					'RUSSIAN' | translate
+				}}</ion-radio>
 			</ion-item>
 			<ion-item>
-				<ion-label>{{ 'SPANISH' | translate }}</ion-label>
-				<ion-radio value="es-ES"></ion-radio>
+				<ion-radio value="es-ES" justify="space-between">{{
+					'SPANISH' | translate
+				}}</ion-radio>
 			</ion-item>
 			<ion-item>
-				<ion-label>{{ 'FRENCH' | translate }}</ion-label>
-				<ion-radio value="fr-FR"></ion-radio>
+				<ion-radio value="fr-FR" justify="space-between">{{
+					'FRENCH' | translate
+				}}</ion-radio>
 			</ion-item>
 		</ion-radio-group>
 	</ion-list>

@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 
 @Component({
+	standalone: false,
 	templateUrl: './map-modal.component.html',
 	styleUrls: ['./map-modal.component.scss'],
 })

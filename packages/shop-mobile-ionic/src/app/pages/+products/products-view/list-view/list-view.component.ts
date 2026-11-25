@@ -7,6 +7,7 @@ import { first } from 'rxjs/operators';
 const initializeProductsNumber: number = 10;
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-products-list-view',
 	templateUrl: './list-view.component.html',
 	styleUrls: ['./list-view.component.scss'],

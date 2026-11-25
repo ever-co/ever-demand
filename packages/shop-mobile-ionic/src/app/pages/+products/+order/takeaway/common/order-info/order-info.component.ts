@@ -10,6 +10,7 @@ import OrderBarcodeTypes, {
 } from '@modules/server.common/enums/OrderBarcodeTypes';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-order-takeaway-info-order-info',
 	templateUrl: './order-info.component.html',
 	styleUrls: ['./order-info.component.scss'],

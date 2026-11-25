@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
-import { NavParams, ModalController, NavController } from '@ionic/angular';
+import { NavParams, ModalController, NavController } from '@ionic/angular/lazy';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import Order from '@modules/server.common/entities/Order';
@@ -7,6 +7,7 @@ import { Store } from 'app/services/store.service';
 import { Router } from '@angular/router';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-issue',
 	templateUrl: './issue.page.html',
 	styleUrls: ['./issue.page.scss'],

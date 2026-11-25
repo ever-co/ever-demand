@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular/lazy';
 import { LoadedInformationComponent } from './loaded-information.component';
 import { PipesModule } from '@modules/client.common.angular2/pipes/pipes.module';
 

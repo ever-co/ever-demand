@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-order-info-header',
 	templateUrl: './order-info-header.component.html',
 	styles: [

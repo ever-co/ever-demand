@@ -9,7 +9,7 @@ import { Store } from '../../services/store.service';
 import { Router } from '@angular/router';
 import { IOrderCreateInput } from '@modules/server.common/routers/IWarehouseOrdersRouter';
 import { OrderPage } from './+order/order.page';
-import { ModalController, NavController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular/lazy';
 import { environment } from 'environments/environment';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { GeoLocationService } from '../../services/geo-location';
@@ -30,6 +30,7 @@ import { OrderRouter } from '@modules/client.common.angular2/routers/order-route
 const initializeProductsNumber: number = 10;
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-products',
 	templateUrl: './products.page.html',
 	styleUrls: ['./products.page.scss'],

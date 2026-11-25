@@ -5,7 +5,7 @@ import {
 	EventEmitter,
 	ViewChild,
 } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController, NavParams } from '@ionic/angular/lazy';
 import { Store } from 'app/services/store.service';
 import { CancelPage } from '../../+cancel/cancel.page';
 import { Subscription } from 'rxjs';
@@ -21,6 +21,7 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 
 @Component({
+	standalone: false,
 	templateUrl: './popup.component.html',
 	styleUrls: ['./popup.component.scss'],
 })

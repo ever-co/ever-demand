@@ -20,6 +20,7 @@ import { GeoLocationProductsService } from 'app/services/geo-location/geo-locati
 import { ProductsService } from '../../../services/products.service';
 
 @Component({
+	standalone: false,
 	selector: 'search-products',
 	templateUrl: './searchProducts.component.html',
 	styleUrls: ['./searchProducts.style.scss'],

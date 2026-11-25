@@ -2,10 +2,11 @@
 // We are using dotenv (.env) for consistency with other Platform projects
 // This is Angular app and all settings will be loaded into the client browser!
 
-require('dotenv').config();
-
-import { cleanEnv, num, str, bool, makeValidator, CleanOptions } from 'envalid';
-import { v4 as uuid } from 'uuid';
+// Runs with Node's TypeScript type stripping (`node scripts/configure.ts`), so this file only
+// uses erasable TypeScript syntax and ES module imports.
+import 'dotenv/config';
+import { cleanEnv, num, str, bool, makeValidator } from 'envalid';
+import { randomUUID } from 'node:crypto';
 
 export type Env = Readonly<{
 	production: boolean;
@@ -83,10 +84,9 @@ export type Env = Readonly<{
 }>;
 
 // TODO: validate better merchantIDs
-const merchantIDs: any = makeValidator(x => { return x; });
-
-const opt: CleanOptions<Env> = {
-};
+const merchantIDs: any = makeValidator((x: any) => {
+	return x;
+});
 
 export const env: any = cleanEnv(
 	process.env,
@@ -113,7 +113,7 @@ export const env: any = cleanEnv(
 		GOOGLE_MAPS_API_KEY: str({ default: '' }),
 
 		GOOGLE_ANALYTICS_API_KEY: str({ default: '' }),
-		FAKE_UUID: str({ default: uuid() }),
+		FAKE_UUID: str({ default: randomUUID() }),
 
 		// Not secret MixPanel Token
 		MIXPANEL_API_KEY: str({ default: '' }),
@@ -183,6 +183,5 @@ export const env: any = cleanEnv(
 		WEB_MEMORY: num({ default: 2048 }),
 		PORT: num({ default: 4201 }),
 		SHOPPING_CART: bool({ default: false }),
-	},
-	opt
+	}
 );

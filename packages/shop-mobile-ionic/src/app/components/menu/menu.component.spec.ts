@@ -1,6 +1,6 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MenuController } from '@ionic/angular';
-import { TranslateModule } from '@ngx-translate/core';
+import { MenuController } from '@ionic/angular/lazy';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { Store } from 'app/services/store.service';
 import { MenuComponent } from './menu.component';

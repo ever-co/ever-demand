@@ -1,6 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
 
 import { first } from 'rxjs/operators';
 import { Store } from 'app/services/store.service';
@@ -8,6 +7,7 @@ import { Router } from '@angular/router';
 import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
 
 @Component({
+	standalone: false,
 	styleUrls: ['./server-down.page.scss'],
 	templateUrl: 'server-down.page.html',
 })

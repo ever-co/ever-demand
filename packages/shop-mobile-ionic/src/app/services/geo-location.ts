@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
-import { Geolocation } from '@ionic-native/geolocation';
+import { Geolocation } from '@capacitor/geolocation';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';

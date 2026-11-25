@@ -1,212 +1,181 @@
-import { NgModule, APP_INITIALIZER } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {
+	NgModule,
+	inject,
+	provideAppInitializer,
+	provideZoneChangeDetection,
+} from '@angular/core';
+import {
+	provideHttpClient,
+	withInterceptorsFromDi,
+} from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { RouteReuseStrategy } from '@angular/router';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { provideServiceWorker } from '@angular/service-worker';
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular/lazy';
 import { IonicStorageModule } from '@ionic/storage-angular';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import { Capacitor } from '@capacitor/core';
+import { provideApollo } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
+import { SetContextLink } from '@apollo/client/link/context';
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
+import { createClient } from 'graphql-ws';
+import { getOperationAST } from 'graphql';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { CommonModule } from '@modules/client.common.angular2/common.module';
+import { GoogleMapsLoader } from '@modules/client.common.angular2/services/googleMapsLoader';
+import { MaintenanceService } from '@modules/client.common.angular2/services/maintenance.service';
+import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
+import { environment } from 'environments/environment';
 import { MenuModule } from './components/menu/menu.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-// import { Logger } from 'angular2-logger/core';
-import { environment } from 'environments/environment';
-import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
-import { Apollo } from 'apollo-angular';
-import { WebSocketLink } from '@apollo/client/link/ws';
-import { setContext } from '@apollo/client/link/context';
-import { ApolloLink, InMemoryCache } from '@apollo/client/core';
-import { getOperationAST } from 'graphql';
 import { Store } from './services/store.service';
 import { ServerSettings } from './services/server-settings';
-import { GoogleMapsLoader } from '@modules/client.common.angular2/services/googleMapsLoader';
-import { MaintenanceService } from '@modules/client.common.angular2/services/maintenance.service';
 import { PagesModuleGuard } from './pages/pages.module.guard';
 import { MaintenanceModuleGuard } from './maintenance-info/maintenance-info.module.guard';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { Network } from '@ionic-native/network/ngx';
-import { Device } from '@ionic-native/device/ngx';
-import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
 import { CallPageModule } from './pages/+products/+order/+call/call.module';
 
+// Apollo Client 4 types the default options: declare the error policies the
+// app uses (see apolloOptionsFactory).
+declare module '@apollo/client' {
+	namespace ApolloClient {
+		namespace DeclareDefaultOptions {
+			interface WatchQuery {
+				errorPolicy: 'ignore';
+			}
+			interface Query {
+				errorPolicy: 'all';
+			}
+		}
+	}
+}
+
 @NgModule({
-    declarations: [AppComponent],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        MenuModule,
-        CallPageModule,
-        IonicModule.forRoot(),
-        IonicStorageModule.forRoot(),
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient],
-            },
-        }),
-        CommonModule.forRoot({
-            apiUrl: environment.SERVICES_ENDPOINT,
-        }),
-        ServiceWorkerModule.register('ngsw-worker.js', {
-            enabled: environment.production,
-        }),
-    ],
-    providers: [
-        InAppBrowser,
-        SplashScreen,
-        StatusBar,
-        Network,
-        Device,
-        ServerConnectionService,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: serverConnectionFactory,
-            deps: [ServerConnectionService, Store],
-            multi: true,
-        },
-        GoogleMapsLoader,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: googleMapsLoaderFactory,
-            deps: [GoogleMapsLoader],
-            multi: true,
-        },
-        MaintenanceService,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: maintenanceFactory,
-            deps: [MaintenanceService],
-            multi: true,
-        },
-        ServerSettings,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: serverSettingsFactory,
-            deps: [ServerSettings],
-            multi: true,
-        },
-        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-        // Logger,
-        PagesModuleGuard,
-        MaintenanceModuleGuard,
-    ],
-    bootstrap: [AppComponent]
+	declarations: [AppComponent],
+	imports: [
+		BrowserModule,
+		AppRoutingModule,
+		MenuModule,
+		CallPageModule,
+		IonicModule.forRoot(),
+		IonicStorageModule.forRoot(),
+		TranslateModule.forRoot({
+			loader: provideTranslateHttpLoader({
+				prefix: './assets/i18n/',
+				suffix: '.json',
+			}),
+			fallbackLang: 'en-US',
+		}),
+		CommonModule.forRoot({
+			apiUrl: environment.SERVICES_ENDPOINT,
+		}),
+	],
+	providers: [
+		// The app relies on zone.js change detection (mutated fields,
+		// getters, setInterval timers), so keep it explicitly: Angular 21+
+		// defaults to zoneless.
+		provideZoneChangeDetection(),
+		provideHttpClient(withInterceptorsFromDi()),
+		provideApollo(apolloOptionsFactory),
+		// A service worker only makes sense for the web build; the native
+		// app serves its files from the device.
+		provideServiceWorker('ngsw-worker.js', {
+			enabled: environment.production && !Capacitor.isNativePlatform(),
+		}),
+		ServerConnectionService,
+		GoogleMapsLoader,
+		MaintenanceService,
+		ServerSettings,
+		// Same order as before. Angular starts every initializer, then
+		// waits for all of them.
+		provideAppInitializer(() =>
+			inject(ServerConnectionService).load(
+				environment.SERVICES_ENDPOINT,
+				inject(Store)
+			)
+		),
+		provideAppInitializer(() =>
+			inject(GoogleMapsLoader).load(environment.GOOGLE_MAPS_API_KEY)
+		),
+		provideAppInitializer(() =>
+			inject(MaintenanceService).load(
+				environment['SETTINGS_APP_TYPE'],
+				environment['SETTINGS_MAINTENANCE_API_URL']
+			)
+		),
+		provideAppInitializer(() => inject(ServerSettings).load()),
+		{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+		PagesModuleGuard,
+		MaintenanceModuleGuard,
+	],
+	bootstrap: [AppComponent],
 })
-export class AppModule {
-	constructor(
-		private readonly apollo: Apollo,
-		private readonly httpLink: HttpLink,
-		private readonly store: Store
-	) {
-		this._setupApolloAngular();
-	}
+export class AppModule {}
 
-	private _setupApolloAngular() {
-		// Create an http link
-		const http: HttpLinkHandler = this.httpLink.create({
-			uri: environment.GQL_ENDPOINT,
-		});
+export function apolloOptionsFactory(): ApolloClient.Options {
+	const httpLink = inject(HttpLink);
+	const store = inject(Store);
 
-		// Create a WebSocket link
-		const ws: WebSocketLink = new WebSocketLink({
-			uri: environment.GQL_SUBSCRIPTIONS_ENDPOINT,
-			options: {
-				reconnect: true,
-				lazy: true,
+	// Create an http link
+	const http = httpLink.create({
+		uri: environment.GQL_ENDPOINT,
+	});
+
+	// Subscriptions use the graphql-ws protocol (subscriptions-transport-ws
+	// is dead). Lazy, and it keeps reconnecting like the old link did.
+	const ws = new GraphQLWsLink(
+		createClient({
+			url: environment.GQL_SUBSCRIPTIONS_ENDPOINT,
+			lazy: true,
+			retryAttempts: Infinity,
+			shouldRetry: () => true,
+		})
+	);
+
+	const authLink = new SetContextLink((prevContext) => {
+		// get the authentication token from local storage if it exists
+		const token = store.token;
+		// return the headers to the context so httpLink can read them
+		return {
+			headers: {
+				...prevContext.headers,
+				authorization: token ? `Bearer ${token}` : '',
 			},
-		});
+		};
+	});
 
-		const authLink: ApolloLink = setContext((_, { headers }) => {
-			// get the authentication token from local storage if it exists
-			const token = this.store.token;
-			// return the headers to the context so httpLink can read them
-			return {
-				headers: {
-					...headers,
-					authorization: token ? `Bearer ${token}` : '',
+	return {
+		link: authLink.concat(
+			ApolloLink.split(
+				(operation) => {
+					const operationAST = getOperationAST(
+						operation.query,
+						operation.operationName
+					);
+					return (
+						!!operationAST &&
+						operationAST.operation === 'subscription'
+					);
 				},
-			};
-		});
-
-		this.apollo.create({
-			link: authLink.concat(
-				ApolloLink.split(
-					(operation) => {
-						const operationAST = getOperationAST(
-							operation.query,
-							operation.operationName
-						);
-						return (
-							!!operationAST &&
-							operationAST.operation === 'subscription'
-						);
-					},
-					ws,
-					http
-				)
-			),
-			defaultOptions: {
-				watchQuery: {
-					fetchPolicy: 'network-only',
-					errorPolicy: 'ignore',
-				},
-				query: {
-					fetchPolicy: 'network-only',
-					errorPolicy: 'all',
-				},
+				ws,
+				http
+			)
+		),
+		defaultOptions: {
+			watchQuery: {
+				fetchPolicy: 'network-only',
+				errorPolicy: 'ignore',
+				// Apollo Client 4 turned this on by default; the pages expect
+				// one emission per result, as with Apollo Client 3.
+				notifyOnNetworkStatusChange: false,
 			},
-			cache: new InMemoryCache(),
-		});
-	}
-}
-
-export function HttpLoaderFactory(http: HttpClient) {
-	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
-
-/*
-export function serverSettingsFactory(
-	serverSettings: ServerSettings,
-	serverConnectionService: ServerConnectionService,
-	store: Store
-) {
-	return async () => {
-		await serverConnectionService.load(
-			environment.SERVICES_ENDPOINT,
-			store
-		);
-		await serverSettings.load();
+			query: {
+				fetchPolicy: 'network-only',
+				errorPolicy: 'all',
+			},
+		},
+		cache: new InMemoryCache(),
 	};
-}
-*/
-
-export function serverSettingsFactory(provider: ServerSettings) {
-	return () => provider.load();
-}
-
-export function maintenanceFactory(provider: MaintenanceService) {
-	return () =>
-		provider.load(
-			environment['SETTINGS_APP_TYPE'],
-			environment['SETTINGS_MAINTENANCE_API_URL']
-		);
-}
-
-export function googleMapsLoaderFactory(provider: GoogleMapsLoader) {
-	return () => provider.load(environment.GOOGLE_MAPS_API_KEY);
-}
-
-export function serverConnectionFactory(
-	provider: ServerConnectionService,
-	store: Store
-) {
-	return () => provider.load(environment.SERVICES_ENDPOINT, store);
 }

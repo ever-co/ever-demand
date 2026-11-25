@@ -8,12 +8,13 @@ import { GeoLocationService } from 'app/services/geo-location';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { MerchantsService } from 'app/services/merchants/merchants.service';
 import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { scanBarcode } from 'app/services/native/barcode-scanner';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { environment } from 'environments/environment';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
+	standalone: false,
 	templateUrl: './merchants.page.html',
 	styleUrls: ['./merchants.page.scss'],
 })
@@ -52,8 +53,10 @@ export class MerchantsPage implements OnDestroy {
 
 	async scanQR() {
 		try {
-			const data = await BarcodeScanner.scan();
-			this.loadScanedMerchant(data.text);
+			const text = await scanBarcode();
+			if (text) {
+				this.loadScanedMerchant(text);
+			}
 		} catch (error) {
 			alert(error);
 			console.log('Error', error);

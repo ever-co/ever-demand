@@ -6,7 +6,7 @@ import {
 	ModalController,
 	NavParams,
 	NavController,
-} from '@ionic/angular';
+} from '@ionic/angular/lazy';
 import { Store } from '../../../../services/store.service';
 import { OrderPage } from '../order.page';
 import { Router } from '@angular/router';
@@ -15,6 +15,7 @@ import DeliveryType from '@modules/server.common/enums/DeliveryType';
 import { OrderTakeawayInfoPopup } from '../takeaway/popup/popup.component';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-cancel',
 	templateUrl: './cancel.page.html',
 	styleUrls: ['./cancel.page.scss'],

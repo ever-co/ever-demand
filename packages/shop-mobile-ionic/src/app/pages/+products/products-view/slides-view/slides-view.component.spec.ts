@@ -1,7 +1,7 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
-import { TranslateModule } from '@ngx-translate/core';
+import { IonicModule } from '@ionic/angular/lazy';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { PipesModule } from '@modules/client.common.angular2/pipes/pipes.module';
 import { Store } from '../../../../services/store.service';

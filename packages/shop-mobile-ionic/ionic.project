@@ -1,8 +1,0 @@
-{
-  "name": "ever-shop-mobile",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular",
-  "app_id": "897e13e3" 
-}

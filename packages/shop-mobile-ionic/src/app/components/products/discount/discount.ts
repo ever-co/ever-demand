@@ -2,6 +2,7 @@ import { Component, Input, Output } from '@angular/core';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-discount',
 	styleUrls: ['./discount.scss'],
 	template: `

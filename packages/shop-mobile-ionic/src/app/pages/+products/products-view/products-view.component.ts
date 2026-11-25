@@ -13,6 +13,7 @@ import { WarehouseProductsService } from 'app/services/merchants/warehouse-produ
 import { ProductsService } from '../../../services/products.service';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-products-view',
 	templateUrl: './products-view.component.html',
 	styleUrls: ['./products-view.component.scss'],

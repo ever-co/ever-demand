@@ -7,6 +7,7 @@ import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { OrderDetailsQuery } from './order-details.model';
 
 @Component({
+	standalone: false,
 	templateUrl: 'order-details.page.html',
 	styleUrls: ['./order-details.page.scss'],
 })
