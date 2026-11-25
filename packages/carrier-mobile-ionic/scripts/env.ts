@@ -51,9 +51,6 @@ export type Env = Readonly<{
 	SETTINGS_APP_TYPE?: string;
 	SETTINGS_MAINTENANCE_API_URL?: string;
 
-	WEB_CONCURRENCY: number;
-	WEB_MEMORY: number;
-	PORT: number;
 }>;
 
 export const env: Env = cleanEnv(process.env, {
@@ -73,7 +70,8 @@ export const env: Env = cleanEnv(process.env, {
 	APP_NAME: str({ default: 'Ever® Carrier' }),
 
 	DEFAULT_LOGIN_USERNAME: str({ default: 'ever' }),
-	DEFAULT_LOGIN_PASSWORD: str({ default: 'changeme' }),
+	// Demo builds may prefill the login form through the environment; never a default.
+	DEFAULT_LOGIN_PASSWORD: str({ default: '' }),
 
 	GOOGLE_MAPS_API_KEY: str({ default: '' }),
 
@@ -102,7 +100,4 @@ export const env: Env = cleanEnv(process.env, {
 		default: '',
 	}),
 
-	WEB_CONCURRENCY: num({ default: 1 }),
-	WEB_MEMORY: num({ default: 2048 }),
-	PORT: num({ default: 4203 }),
 });

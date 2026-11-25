@@ -6,7 +6,7 @@
 // so only erasable TypeScript syntax is allowed here.
 
 import { randomUUID } from 'node:crypto';
-import { bool, cleanEnv, num, str } from 'envalid';
+import { bool, cleanEnv, str } from 'envalid';
 
 // Node's built-in replacement for `dotenv`: a missing .env file is fine.
 try {
@@ -55,9 +55,6 @@ export type Env = Readonly<{
 	// For maintenance micro service
 	SETTINGS_APP_TYPE?: string;
 	SETTINGS_MAINTENANCE_API_URL?: string;
-	WEB_CONCURRENCY: number;
-	WEB_MEMORY: number;
-	PORT: number;
 }>;
 
 export const env: Env = cleanEnv(process.env, {
@@ -79,7 +76,8 @@ export const env: Env = cleanEnv(process.env, {
 	}),
 
 	DEFAULT_LOGIN_USERNAME: str({ default: 'hut_pizza' }),
-	DEFAULT_LOGIN_PASSWORD: str({ default: '123456' }),
+	// Demo builds may prefill the login form through the environment; never a default.
+	DEFAULT_LOGIN_PASSWORD: str({ default: '' }),
 
 	LOGIN_LOGO: str({ default: 'assets/imgs/ever-logo.svg' }),
 	NO_INTERNET_LOGO: str({ default: 'assets/imgs/logo.png' }),
@@ -107,7 +105,4 @@ export const env: Env = cleanEnv(process.env, {
 		default: '',
 	}),
 	DEFAULT_LANGUAGE: str({ default: 'en-US' }),
-	WEB_CONCURRENCY: num({ default: 1 }),
-	WEB_MEMORY: num({ default: 2048 }),
-	PORT: num({ default: 4202 }),
 });
