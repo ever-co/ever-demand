@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import { Subject } from 'rxjs';
 import { CarriersOrdersService } from '../../services/carriers-orders.service';
@@ -9,6 +9,7 @@ import { Platform } from '@ionic/angular/lazy';
 	standalone: false,
 	selector: 'page-deliveries',
 	templateUrl: './deliveries.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['deliveries.scss'],
 })
 export class DeliveriesPage implements OnDestroy {
@@ -19,7 +20,7 @@ export class DeliveriesPage implements OnDestroy {
 	constructor(
 		private readonly _carriersOrdersService: CarriersOrdersService,
 		private readonly store: Store,
-		public platform: Platform
+		public platform: Platform,
 	) {
 		console.warn('DeliveriesPage loaded');
 
@@ -35,13 +36,14 @@ export class DeliveriesPage implements OnDestroy {
 	}
 
 	private async _getAllCompletedOrders() {
-		this.currentCompletedOrders = await this._carriersOrdersService.getCarrierOrders(
-			this._carrierId,
-			{
-				populateWarehouse: true,
-				completion: 'all',
-			}
-		);
+		this.currentCompletedOrders =
+			await this._carriersOrdersService.getCarrierOrders(
+				this._carrierId,
+				{
+					populateWarehouse: true,
+					completion: 'all',
+				},
+			);
 
 		console.warn('Orders - ' + this.currentCompletedOrders.length);
 	}

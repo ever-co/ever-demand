@@ -21,6 +21,20 @@ import './product/return-product/return-product.module';
  * -> starting delivery (start) -> delivery (delivered) or return product (issue).
  */
 describe('Carrier order flow', () => {
+	it('pages use eager change detection (Angular 22 defaults to OnPush)', () => {
+		// socket.io, Apollo, promise and timer callbacks set plain fields on these pages
+		for (const page of [
+			HomePage,
+			DriveToWarehousePage,
+			StartingDeliveryPage,
+			DeliveryPage,
+			GetProductPage,
+			ReturnProductPage,
+		]) {
+			expect((page as any).ɵcmp.onPush, page.name).toBe(false);
+		}
+	});
+
 	let store: Record<string, any>;
 	let router: { navigateByUrl: any; navigate: any };
 	let navCtrl: { navigateRoot: any };

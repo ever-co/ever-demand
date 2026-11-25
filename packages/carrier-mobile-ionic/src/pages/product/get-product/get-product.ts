@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import ICarrier from '@modules/server.common/interfaces/ICarrier';
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
@@ -17,6 +17,7 @@ import { environment } from '../../../environments/environment';
 	standalone: false,
 	selector: 'page-get-product',
 	templateUrl: 'get-product.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./get-product.scss'],
 })
 export class GetProductPage implements OnDestroy {
@@ -36,7 +37,7 @@ export class GetProductPage implements OnDestroy {
 		private carrierOrdersRouter: CarrierOrdersRouter,
 		private _translateProductLocales: ProductLocalesService,
 		private store: Store,
-		private navCtrl: NavController
+		private navCtrl: NavController,
 	) {
 		this.productsLocale =
 			this.store.language || environment.DEFAULT_LANGUAGE;
@@ -51,7 +52,7 @@ export class GetProductPage implements OnDestroy {
 		if (this.carrier && this.selectedOrder) {
 			await this.carrierOrdersRouter.updateStatus(
 				this.carrier['id'],
-				OrderCarrierStatus.CarrierPickedUpOrder
+				OrderCarrierStatus.CarrierPickedUpOrder,
 			);
 
 			this.navCtrl.navigateRoot('/main/starting-delivery');
@@ -67,7 +68,7 @@ export class GetProductPage implements OnDestroy {
 			await this.carrierOrdersRouter.selectedForDelivery(
 				this.carrier['id'],
 				[this.selectedOrder['id']],
-				this.orderCarrierCompetition
+				this.orderCarrierCompetition,
 			);
 
 			this.navCtrl.navigateRoot('/main/starting-delivery');

@@ -1,4 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { Subscription } from 'rxjs';
@@ -7,6 +12,7 @@ import { Subscription } from 'rxjs';
 	standalone: false,
 	selector: 'page-terms-of-use',
 	templateUrl: 'terms-of-use.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['terms-of-use.scss'],
 })
 export class TermsOfUsePage implements OnInit, OnDestroy {

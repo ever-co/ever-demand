@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular/lazy';
 import { TranslateService } from '@ngx-translate/core';
@@ -25,6 +25,7 @@ export const SUPPORTED_LANGUAGES = {
 @Component({
 	selector: 'e-cu-root',
 	templateUrl: 'app.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 })
 export class AppComponent implements OnInit {
@@ -39,7 +40,7 @@ export class AppComponent implements OnInit {
 		private readonly _langTranslator: TranslateService,
 		private readonly store: Store,
 		private readonly router: Router,
-		private readonly deviceRouter: DeviceRouter
+		private readonly deviceRouter: DeviceRouter,
 	) {}
 
 	ngOnInit(): void {
@@ -75,7 +76,10 @@ export class AppComponent implements OnInit {
 	}
 
 	async preferredLanguage() {
-		console.log('Preferred Language', await this.deviceInfo.getPreferredLanguage());
+		console.log(
+			'Preferred Language',
+			await this.deviceInfo.getPreferredLanguage(),
+		);
 	}
 
 	get showInformationPage() {

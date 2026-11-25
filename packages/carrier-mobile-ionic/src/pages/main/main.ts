@@ -2,6 +2,7 @@ import {
 	Component,
 	OnInit,
 	OnDestroy,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
@@ -19,6 +20,7 @@ import { takeUntil } from 'rxjs/operators';
 	standalone: false,
 	selector: 'page-main',
 	templateUrl: 'main.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['main.scss'],
 })
 export class MainPage implements OnInit, OnDestroy {
@@ -32,7 +34,7 @@ export class MainPage implements OnInit, OnDestroy {
 		private platform: Platform,
 		private carrierRouter: CarrierRouter,
 		private geolocation: CurrentPositionService,
-		private store: Store
+		private store: Store,
 	) {}
 
 	ngOnInit(): void {
@@ -71,21 +73,21 @@ export class MainPage implements OnInit, OnDestroy {
 											.updateGeoLocation(
 												carrier.id,
 												new GeoLocation({
-													_createdAt: new Date().toString(),
-													_updatedAt: new Date().toString(),
+													_createdAt:
+														new Date().toString(),
+													_updatedAt:
+														new Date().toString(),
 													_id: generateObjectIdString(),
-													city:
-														carrier.geoLocation
-															.city,
+													city: carrier.geoLocation
+														.city,
 													countryId:
 														carrier.geoLocation
 															.countryId,
 													streetAddress:
 														carrier.geoLocation
 															.streetAddress,
-													house:
-														carrier.geoLocation
-															.house,
+													house: carrier.geoLocation
+														.house,
 													postcode: carrier
 														.geoLocation.postcode
 														? carrier.geoLocation
@@ -98,11 +100,11 @@ export class MainPage implements OnInit, OnDestroy {
 															currentLat,
 														],
 													},
-												})
+												}),
 											)
 											.then(() => {
 												console.log(
-													'User location updated.'
+													'User location updated.',
 												);
 												carrier$.unsubscribe();
 											});
@@ -113,7 +115,7 @@ export class MainPage implements OnInit, OnDestroy {
 								.catch((error) => {
 									console.log(
 										'Error getting location',
-										error
+										error,
 									);
 									carrier$.unsubscribe();
 								});

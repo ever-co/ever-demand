@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DeviceRouter } from '@modules/client.common.angular2/routers/device-router.service';
 import { DOCUMENT } from '@angular/common';
@@ -7,6 +7,7 @@ import { DOCUMENT } from '@angular/common';
 	standalone: false,
 	selector: 'page-language',
 	templateUrl: 'language.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['language.scss'],
 })
 export class LanguagePage {
@@ -16,7 +17,7 @@ export class LanguagePage {
 	constructor(
 		private _langTranslator: TranslateService,
 		private _deviceRouter: DeviceRouter,
-		@Inject(DOCUMENT) private document: Document
+		@Inject(DOCUMENT) private document: Document,
 	) {
 		console.warn('LanguagePage loaded');
 	}

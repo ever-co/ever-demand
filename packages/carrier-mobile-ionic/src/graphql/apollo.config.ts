@@ -1,5 +1,9 @@
 import { inject, NgModule } from '@angular/core';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+	provideHttpClient,
+	withInterceptorsFromDi,
+	withXhr,
+} from '@angular/common/http';
 import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
@@ -48,14 +52,14 @@ export function createApolloOptions(httpLink: HttpLink): ApolloClient.Options {
 			url: environment.GQL_SUBSCRIPTIONS_ENDPOINT,
 			lazy: true,
 			connectionParams: () => ({ authorization: authorization() }),
-		})
+		}),
 	);
 
 	const link = ApolloLink.split(
 		(operation) =>
 			operation.operationType === OperationTypeNode.SUBSCRIPTION,
 		ws,
-		auth.concat(http)
+		auth.concat(http),
 	);
 
 	return {
@@ -78,7 +82,7 @@ export function createApolloOptions(httpLink: HttpLink): ApolloClient.Options {
 
 @NgModule({
 	providers: [
-		provideHttpClient(withInterceptorsFromDi()),
+		provideHttpClient(withXhr(), withInterceptorsFromDi()),
 		provideApollo(() => createApolloOptions(inject(HttpLink))),
 	],
 })

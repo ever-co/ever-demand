@@ -1,4 +1,9 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
@@ -17,11 +22,11 @@ import { Router } from '@angular/router';
 import { NavController, Platform } from '@ionic/angular/lazy';
 import { getIdFromTheDate } from '@modules/server.common/utils';
 
-
 @Component({
 	standalone: false,
 	selector: 'page-drive-to-warehouse',
 	templateUrl: 'drive-to-warehouse.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['drive-to-warehouse.scss'],
 })
 export class DriveToWarehousePage implements OnInit {
@@ -49,7 +54,7 @@ export class DriveToWarehousePage implements OnInit {
 		private geolocation: CurrentPositionService,
 		private router: Router,
 		private navCtrl: NavController,
-		public platform: Platform
+		public platform: Platform,
 	) {}
 
 	ngOnInit(): void {
@@ -109,16 +114,22 @@ export class DriveToWarehousePage implements OnInit {
 									OrderCarrierStatus.NoCarrier;
 							}
 
-							const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
+							const origin = {
+								lat: position.coords.latitude,
+								lng: position.coords.longitude,
+							};
 
 							const merchantGeo = order.warehouse['geoLocation'];
 
 							this.carrierUserDistance = Utils.getDistance(
 								merchantGeo,
-								dbGeoInput as GeoLocation
+								dbGeoInput as GeoLocation,
 							).toFixed(2);
 
-							const destination = { lat: merchantGeo.loc.coordinates[1], lng: merchantGeo.loc.coordinates[0] };
+							const destination = {
+								lat: merchantGeo.loc.coordinates[1],
+								lng: merchantGeo.loc.coordinates[0],
+							};
 
 							this.carrierMap.setCenter(origin);
 							this.carrierMap.drawRoute(origin, destination);
@@ -131,7 +142,7 @@ export class DriveToWarehousePage implements OnInit {
 		if (this.carrier && this.selectedOrder) {
 			return await this.carrierOrdersRouter.selectedForDelivery(
 				this.carrier['id'],
-				[this.selectedOrder['id']]
+				[this.selectedOrder['id']],
 			);
 		} else {
 			// TODO: replace with some popup
@@ -176,7 +187,7 @@ export class DriveToWarehousePage implements OnInit {
 			if (this.carrier && this.selectedOrder) {
 				await this.carrierOrdersRouter.cancelDelivery(
 					this.carrier['id'],
-					[this.selectedOrder['id']]
+					[this.selectedOrder['id']],
 				);
 				this.unselectOrder();
 			}

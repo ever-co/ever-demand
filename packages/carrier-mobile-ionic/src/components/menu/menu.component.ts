@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '../../services/store.service';
 import { Platform, MenuController } from '@ionic/angular/lazy';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
 	standalone: false,
 	selector: 'e-cu-menu',
 	templateUrl: './menu.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnDestroy {
@@ -21,7 +22,7 @@ export class MenuComponent implements OnDestroy {
 		private store: Store,
 		public platform: Platform,
 		private translateService: TranslateService,
-		private menuCtrl: MenuController
+		private menuCtrl: MenuController,
 	) {
 		this.companyName = environment.APP_NAME;
 		this.translateService.onLangChange

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { NetworkStatusService } from '../../../services/native/network-status.service';
 import { first } from 'rxjs/operators';
@@ -9,6 +9,7 @@ import { Store } from '../../../services/store.service';
 	standalone: false,
 	selector: 'no-internet',
 	styleUrls: [`../information.scss`],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<div class="info-page" scroll="false">
 			<div class="view-content">
@@ -34,7 +35,7 @@ export class NoInternetPage {
 	constructor(
 		private network: NetworkStatusService,
 		private router: Router,
-		private store: Store
+		private store: Store,
 	) {
 		this.noInternetLogo = environment.NO_INTERNET_LOGO;
 

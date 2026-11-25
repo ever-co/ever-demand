@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import ICarrier from '@modules/server.common/interfaces/ICarrier';
@@ -14,6 +14,7 @@ import { NavController } from '@ionic/angular/lazy';
 @Component({
 	standalone: false,
 	selector: 'page-return-product',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'return-product.html',
 })
 export class ReturnProductPage implements OnDestroy {
@@ -27,7 +28,7 @@ export class ReturnProductPage implements OnDestroy {
 		private carrierRouter: CarrierRouter,
 		private orderRouter: OrderRouter,
 		private store: Store,
-		private navCtrl: NavController
+		private navCtrl: NavController,
 	) {}
 
 	get allowCancel() {
@@ -59,7 +60,7 @@ export class ReturnProductPage implements OnDestroy {
 		if (!this.selectedOrder.isCancelled) {
 			await this.orderRouter.updateCarrierStatus(
 				this.store.orderId,
-				OrderCarrierStatus.IssuesDuringDelivery
+				OrderCarrierStatus.IssuesDuringDelivery,
 			);
 
 			this.unselectOrder();

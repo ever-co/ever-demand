@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Store } from '../../../services/store.service';
 import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 	standalone: false,
 	selector: 'no-server-connection',
 	styleUrls: [`../information.scss`],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'no-server-connection.html',
 })
 export class NoServerConnectionComponent {
@@ -17,7 +18,7 @@ export class NoServerConnectionComponent {
 	constructor(
 		private store: Store,
 		private router: Router,
-		private serverConnectionService: ServerConnectionService
+		private serverConnectionService: ServerConnectionService,
 	) {
 		this.noInternetLogo = environment.NO_INTERNET_LOGO;
 		this.testConnection();
@@ -27,7 +28,7 @@ export class NoServerConnectionComponent {
 		this.interval = setInterval(async () => {
 			await this.serverConnectionService.checkServerConnection(
 				environment.SERVICES_ENDPOINT,
-				this.store
+				this.store,
 			);
 
 			if (!this.store.showInformationPage) {

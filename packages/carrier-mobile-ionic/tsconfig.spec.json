@@ -4,5 +4,13 @@
 		"outDir": "./out-tsc/spec",
 		"types": ["node", "google.maps", "vitest/globals"]
 	},
-	"include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
+	"include": ["src/**/*.spec.ts", "src/**/*.d.ts"],
+	"angularCompilerOptions": {
+		"extendedDiagnostics": {
+			"checks": {
+				"nullishCoalescingNotNullable": "suppress",
+				"optionalChainNotNullable": "suppress"
+			}
+		}
+	}
 }

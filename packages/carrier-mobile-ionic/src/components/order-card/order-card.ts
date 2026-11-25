@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import ICarrier from '@modules/server.common/interfaces/ICarrier';
 
@@ -6,7 +11,8 @@ import ICarrier from '@modules/server.common/interfaces/ICarrier';
 	standalone: false,
 	selector: 'order-card',
 	templateUrl: './order-card.html',
-	styleUrls: ['./order-card.scss']
+	changeDetection: ChangeDetectionStrategy.Eager,
+	styleUrls: ['./order-card.scss'],
 })
 export class OrderCardComponent implements OnInit {
 	private static NOT_EXPANDED_MAX_PRODUCTS_AMOUNT = 3;

@@ -8,13 +8,13 @@
 <div class="carrier-view">
 	<img
 		class="product-image"
-		src="{{ (selectedOrder?.products)[0].product.images[0].url }}"
+		src="{{ selectedOrder?.products?.[0]?.product?.images?.[0]?.url }}"
 	/>
 	<div class="bottom-container">
 		<div class="info">
 			<span class="left-info"
 				>{{
-				localeTranslate((selectedOrder?.products)[0]?.product?.title)
+				localeTranslate(selectedOrder?.products?.[0]?.product?.title)
 				}}</span
 			>
 			<span class="right-text">#{{ selectedOrder?.orderNumber }}</span>

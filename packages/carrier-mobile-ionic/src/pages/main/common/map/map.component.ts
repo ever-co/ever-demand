@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+	Component,
+	ElementRef,
+	OnInit,
+	ViewChild,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 
 export interface MapPoint {
 	lat: number;
@@ -17,6 +23,7 @@ function mapsApi(): typeof google.maps | null {
 @Component({
 	selector: 'carrier-map',
 	templateUrl: 'map.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 })
 export class MapComponent implements OnInit {
@@ -66,10 +73,12 @@ export class MapComponent implements OnInit {
 			{ origin, destination, travelMode: maps.TravelMode.DRIVING },
 			(res, status) => {
 				if (status === maps.DirectionsStatus.OK) {
-					this.directionsRenderer.setDirections({ routes: [] } as any);
+					this.directionsRenderer.setDirections({
+						routes: [],
+					} as any);
 					this.directionsRenderer.setDirections(res);
 				}
-			}
+			},
 		);
 	}
 }

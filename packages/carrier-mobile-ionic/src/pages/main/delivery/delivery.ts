@@ -1,4 +1,10 @@
-import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	AfterViewInit,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
@@ -14,10 +20,10 @@ import { Store } from '../../../services/store.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
-
 @Component({
 	standalone: false,
 	selector: 'page-delivery',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'delivery.html',
 })
 export class DeliveryPage implements AfterViewInit, OnDestroy {
@@ -40,7 +46,7 @@ export class DeliveryPage implements AfterViewInit, OnDestroy {
 		private geoLocationService: GeoLocationService,
 		private geolocation: CurrentPositionService,
 		private router: Router,
-		private store: Store
+		private store: Store,
 	) {}
 
 	async delivered() {
@@ -54,7 +60,7 @@ export class DeliveryPage implements AfterViewInit, OnDestroy {
 
 			await this.orderRouter.updateCarrierStatus(
 				this.selectedOrder['id'],
-				OrderCarrierStatus.DeliveryCompleted
+				OrderCarrierStatus.DeliveryCompleted,
 			);
 
 			this.analytics.track('Order Delivered');
@@ -112,15 +118,21 @@ export class DeliveryPage implements AfterViewInit, OnDestroy {
 					},
 				} as IGeoLocation;
 
-				const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
+				const origin = {
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				};
 				const userGeo = order.user['geoLocation'];
 
 				this.carrierUserDistance = Utils.getDistance(
 					userGeo,
-					dbGeoInput as GeoLocation
+					dbGeoInput as GeoLocation,
 				).toFixed(2);
 
-				const destination = { lat: userGeo.loc.coordinates[1], lng: userGeo.loc.coordinates[0] };
+				const destination = {
+					lat: userGeo.loc.coordinates[1],
+					lng: userGeo.loc.coordinates[0],
+				};
 
 				this.carrierMap.setCenter(origin);
 				this.carrierMap.drawRoute(origin, destination);

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import ICarrier from '@modules/server.common/interfaces/ICarrier';
 import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
@@ -11,10 +11,10 @@ import { GeoLocationService } from '../../../services/geo-location.service';
 import { MapComponent } from '../common/map/map.component';
 import { Router } from '@angular/router';
 
-
 @Component({
 	standalone: false,
 	selector: 'page-home',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'home.html',
 })
 export class HomePage {
@@ -35,7 +35,7 @@ export class HomePage {
 		private geoLocationOrdersService: GeoLocationOrdersService,
 		private geolocation: CurrentPositionService,
 		private geoLocationService: GeoLocationService,
-		private router: Router
+		private router: Router,
 	) {}
 
 	ionViewWillEnter() {
@@ -52,7 +52,7 @@ export class HomePage {
 	async startWorking() {
 		const res = await this.carrierRouter.updateStatus(
 			this.store.carrierId,
-			CarrierStatus.Online
+			CarrierStatus.Online,
 		);
 
 		this.isWorking = res.status === CarrierStatus.Online;
@@ -61,7 +61,7 @@ export class HomePage {
 	async stopWorking() {
 		const res = await this.carrierRouter.updateStatus(
 			this.store.carrierId,
-			CarrierStatus.Offline
+			CarrierStatus.Offline,
 		);
 
 		this.isWorking = res.status === CarrierStatus.Online;
@@ -99,9 +99,10 @@ export class HomePage {
 					},
 				} as IGeoLocation;
 
-				this.carrierMap.addMarker(
-					{ lat: position.coords.latitude, lng: position.coords.longitude }
-				);
+				this.carrierMap.addMarker({
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				});
 
 				if (this.order$) {
 					await this.order$.unsubscribe();
@@ -115,7 +116,7 @@ export class HomePage {
 							{ sort: 'asc' },
 							{
 								isCancelled: false,
-							}
+							},
 						)
 
 						.subscribe(async (order) => {
@@ -132,7 +133,7 @@ export class HomePage {
 
 								this.router.navigateByUrl(
 									'/main/drive-to-warehouse',
-									{ skipLocationChange: false }
+									{ skipLocationChange: false },
 								);
 							}
 						});
@@ -171,9 +172,10 @@ export class HomePage {
 					// 	});
 				}
 
-				this.carrierMap.setCenter(
-					{ lat: position.coords.latitude, lng: position.coords.longitude }
-				);
+				this.carrierMap.setCenter({
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				});
 			});
 	}
 
