@@ -6,6 +6,7 @@ import {
 	EventEmitter,
 	Input,
 	OnChanges,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 
 import { Subject, Observable } from 'rxjs';
@@ -23,10 +24,12 @@ import DeliveryType from '@modules/server.common/enums/DeliveryType';
 	standalone: false,
 	selector: 'ea-warehouse-order-view',
 	styleUrls: ['./warehouse-order-view.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './warehouse-order-view.component.html',
 })
 export class WarehouseOrderViewComponent
-	implements OnInit, OnDestroy, OnChanges {
+	implements OnInit, OnDestroy, OnChanges
+{
 	@Input()
 	selectedOrder: Order;
 	@Input()
@@ -46,14 +49,14 @@ export class WarehouseOrderViewComponent
 	constructor(
 		private orderRouter: OrderRouter,
 		private _productLocalesService: ProductLocalesService,
-		private readonly translateService: TranslateService
+		private readonly translateService: TranslateService,
 	) {
 		this._applyTranslationOnSmartTable();
 	}
 
 	ngOnChanges() {
 		this.selectedOrder.products.map((p) =>
-			p.product.images.sort((i1, i2) => i2.orientation - i1.orientation)
+			p.product.images.sort((i1, i2) => i2.orientation - i1.orientation),
 		);
 
 		if (this.slideshow && this.selectedOrder.products.length === 1) {
@@ -83,7 +86,7 @@ export class WarehouseOrderViewComponent
 	getSlideImage() {
 		const images = this.selectedOrder.products.map((p) => {
 			const productTitle = this._productLocalesService.getTranslate(
-				p.product.title
+				p.product.title,
 			);
 			const productCount = p.count;
 			const productPrice = p.price;
@@ -95,7 +98,7 @@ export class WarehouseOrderViewComponent
 					environment.CURRENCY_SYMBOL + productPrice
 				}, ${this.QTY}: ${productCount})`,
 				title: this._productLocalesService.getTranslate(
-					p.product.description
+					p.product.description,
 				),
 				style: {
 					height: '100%',
@@ -111,7 +114,7 @@ export class WarehouseOrderViewComponent
 		this.loading = true;
 		await this.orderRouter.updateWarehouseStatus(
 			this.selectedOrder.id,
-			status
+			status,
 		);
 		this.selectedOrder.warehouseStatus = status;
 

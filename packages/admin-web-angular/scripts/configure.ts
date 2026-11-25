@@ -20,7 +20,7 @@ const isProd = values.environment === 'prod';
 
 if (!env.GOOGLE_MAPS_API_KEY) {
 	console.warn(
-		'WARNING: No Google Maps API Key defined in the .env. Google Maps may not be visible!'
+		'WARNING: No Google Maps API Key defined in the .env. Google Maps may not be visible!',
 	);
 }
 

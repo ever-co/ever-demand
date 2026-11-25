@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, EventEmitter } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	ViewChild,
+	EventEmitter,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BasicInfoFormComponent } from '../../../../@shared/carrier/forms';
@@ -13,6 +19,7 @@ import { map, first } from 'rxjs/operators';
 	standalone: false,
 	selector: 'ea-carrier-edit',
 	templateUrl: './carrier-edit.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./carrier-edit.component.scss'],
 })
 export class CarrierEditComponent implements OnInit {
@@ -39,7 +46,7 @@ export class CarrierEditComponent implements OnInit {
 	readonly apartment = this.form.get('apartment') as FormControl;
 
 	readonly carrierId$ = this.activatedRoute.params.pipe(map((p) => p['id']));
-	
+
 	public currentCarrier: Carrier;
 
 	constructor(
@@ -47,14 +54,14 @@ export class CarrierEditComponent implements OnInit {
 		private readonly activatedRoute: ActivatedRoute,
 		private readonly formBuilder: FormBuilder,
 		private readonly carrierRouter: CarrierRouter,
-		private readonly router: Router
+		private readonly router: Router,
 	) {}
 
 	get isCarrierValid() {
 		return this.basicInfo.valid && this.location.valid;
 	}
 
-	ngOnInit() {		
+	ngOnInit() {
 		const id = this.activatedRoute.snapshot.params.id;
 
 		this.carrierRouter
@@ -64,7 +71,7 @@ export class CarrierEditComponent implements OnInit {
 				if (!carrier) {
 					this.toasterService.pop(
 						'error',
-						`Carrier with id ${id} doesn't exist!`
+						`Carrier with id ${id} doesn't exist!`,
 					);
 				}
 
@@ -109,18 +116,18 @@ export class CarrierEditComponent implements OnInit {
 				{
 					...basicInfo,
 					geoLocation: geoLocationInput as IGeoLocation,
-				}
+				},
 			);
 			this.loading = false;
 			this.toasterService.pop(
 				'success',
-				`Carrier ${carrier.firstName} was updated`
+				`Carrier ${carrier.firstName} was updated`,
 			);
 		} catch (err) {
 			this.loading = false;
 			this.toasterService.pop(
 				'error',
-				`Error in updating carrier: "${err.message}"`
+				`Error in updating carrier: "${err.message}"`,
 			);
 		}
 	}

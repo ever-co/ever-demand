@@ -5,6 +5,7 @@ import {
 	ElementRef,
 	AfterViewInit,
 	OnInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import {
 	AbstractControl,
@@ -36,6 +37,7 @@ export type CarrierBasicInfo = Pick<
 	standalone: false,
 	selector: 'ea-carrier-basic-info-form',
 	templateUrl: 'basic-info-form.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['basic-info-form.component.scss'],
 })
 export class BasicInfoFormComponent implements OnInit, AfterViewInit {
@@ -179,7 +181,8 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 		this.uploaderPlaceholder += ' (optional)';
 	}
 
-	private static phoneNumberRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9x]*$/;
+	private static phoneNumberRegex =
+		/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9x]*$/;
 
 	private _setupCarrierLogoUrlValidation() {
 		this.logoImagePreview.nativeElement.onload = () => {

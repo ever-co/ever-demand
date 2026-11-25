@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ViewCell } from '@app/@shared/smart-table';
 import { OrderInfoComponent } from '../../../../pages/+customers/+customer/ea-customer-orders/order-info/order-info.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -6,6 +11,7 @@ import { OrderCancelComponent } from '../../../../pages/+customers/+customer/ea-
 
 @Component({
 	standalone: false,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './customer-order-actions.component.html',
 })
 export class CustomerOrderActionsComponent implements ViewCell, OnInit {

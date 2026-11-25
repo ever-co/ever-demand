@@ -5,6 +5,7 @@ import {
 	OnInit,
 	ViewChild,
 	ElementRef,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import {
 	FormBuilder,
@@ -41,6 +42,7 @@ import {
 	standalone: false,
 	selector: 'ea-product-basic-info-form',
 	styleUrls: ['./basic-info-form.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'basic-info-form.component.html',
 })
 export class BasicInfoFormComponent implements OnDestroy, OnInit {
@@ -130,7 +132,7 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 
 	constructor(
 		private _productLocalesService: ProductLocalesService,
-		private _translateService: TranslateService
+		private _translateService: TranslateService,
 	) {
 		this.getUploaderPlaceholderText();
 	}
@@ -236,7 +238,7 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 		if (this.product) {
 			let image = '';
 			const imgs = product.images.filter(
-				(i) => i.locale === this.locale.value
+				(i) => i.locale === this.locale.value,
 			);
 			if (imgs) {
 				image = imgs.map((i) => i.url).join(' ');
@@ -246,13 +248,13 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 
 			const product1 = {
 				title: this._productLocalesService.getMemberValue(
-					product.title
+					product.title,
 				),
 				description: this._productLocalesService.getMemberValue(
-					product.description
+					product.description,
 				),
 				details: this._productLocalesService.getMemberValue(
-					product.details
+					product.details,
 				),
 				image,
 				locale: this.locale.value,
@@ -269,7 +271,7 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 		const productLocale = this._locale;
 
 		const productImages: IProductImage[] = this.images.filter(
-			(i) => i.locale === productLocale && isUrl(i.url)
+			(i) => i.locale === productLocale && isUrl(i.url),
 		);
 
 		const productTitle: IProductTitle = {
@@ -344,7 +346,7 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 	imgOnError() {
 		if (this.imageControl.value !== '') {
 			const hasImage = BasicInfoFormComponent.hasValidImage(
-				this.image.value
+				this.image.value,
 			);
 
 			if (hasImage) {
@@ -356,7 +358,9 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 	}
 
 	private _setDefaultLocaleValue() {
-		this.locale.setValue(this._translateService.getCurrentLang() || 'en-US');
+		this.locale.setValue(
+			this._translateService.getCurrentLang() || 'en-US',
+		);
 	}
 
 	private _bindFormControls() {
@@ -367,7 +371,7 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 		this.category = this._getFormControlByName('category');
 		this.locale = this._getFormControlByName('locale');
 		this.selectedProductCategories = this._getFormControlByName(
-			'selectedProductCategories'
+			'selectedProductCategories',
 		);
 	}
 
@@ -380,7 +384,7 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 			this._getFormControlByName(name).value;
 
 		this._selectedProductCategories = getInputVal(
-			'selectedProductCategories'
+			'selectedProductCategories',
 		);
 		this.actualCategories = [];
 

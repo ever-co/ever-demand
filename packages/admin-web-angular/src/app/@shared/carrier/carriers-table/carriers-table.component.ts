@@ -6,6 +6,7 @@ import {
 	OnInit,
 	EventEmitter,
 	Output,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { LocalDataSource } from '@app/@shared/smart-table';
 import { TranslateService } from '@ngx-translate/core';
@@ -32,10 +33,12 @@ export interface CarrierSmartTableObject {
 	standalone: false,
 	selector: 'ea-carriers-smart-table',
 	templateUrl: 'carriers-table.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['carriers-table.component.scss'],
 })
 export class CarriersSmartTableComponent
-	implements OnDestroy, OnInit, AfterViewInit {
+	implements OnDestroy, OnInit, AfterViewInit
+{
 	static noInfoSign = '';
 
 	@Input()
@@ -105,7 +108,7 @@ export class CarriersSmartTableComponent
 			getTranslate('PHONE'),
 			getTranslate('STATUS'),
 			getTranslate('ADDRESS'),
-			getTranslate('DELIVERIES')
+			getTranslate('DELIVERIES'),
 		)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(
@@ -163,7 +166,7 @@ export class CarriersSmartTableComponent
 							perPage,
 						},
 					};
-				}
+				},
 			);
 	}
 

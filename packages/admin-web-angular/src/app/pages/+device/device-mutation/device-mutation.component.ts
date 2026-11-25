@@ -1,4 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import Device from '@modules/server.common/entities/Device';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -10,6 +15,7 @@ import { NotifyService } from '../../../@core/services/notify/notify.service';
 @Component({
 	standalone: false,
 	selector: 'ea-device-mutation',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './device-mutation.component.html',
 })
 export class DeviceMutationComponent implements OnDestroy, OnInit {
@@ -33,7 +39,7 @@ export class DeviceMutationComponent implements OnDestroy, OnInit {
 		private readonly activeModal: NgbActiveModal,
 		private readonly fb: FormBuilder,
 		private readonly deviceService: DeviceService,
-		private readonly _notifyService: NotifyService
+		private readonly _notifyService: NotifyService,
 	) {}
 
 	cancel() {

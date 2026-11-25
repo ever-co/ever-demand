@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ViewCell } from '@app/@shared/smart-table';
 import { ToasterService } from '@app/@core/toaster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -9,6 +14,7 @@ import { WarehouseInfoComponent } from './warehouse-info/warehouse-info.componen
 @Component({
 	standalone: false,
 	styleUrls: ['./warehouse-order.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './warehouse-order.component.html',
 })
 export class WarehouseOrderComponent implements ViewCell, OnInit {
@@ -27,7 +33,7 @@ export class WarehouseOrderComponent implements ViewCell, OnInit {
 		private readonly _modalService: NgbModal,
 		private readonly _warehouseOrdersService: WarehouseOrdersService,
 		private readonly _toasterService: ToasterService,
-		private readonly modalService: NgbModal
+		private readonly modalService: NgbModal,
 	) {}
 
 	ngOnInit() {}
@@ -35,7 +41,7 @@ export class WarehouseOrderComponent implements ViewCell, OnInit {
 	openWarehouseOrderModal() {
 		const componentRef = this._modalService.open(
 			WarehouseOrderModalComponent,
-			{ size: 'lg' }
+			{ size: 'lg' },
 		);
 		const instance: WarehouseOrderModalComponent =
 			componentRef.componentInstance;
@@ -51,7 +57,7 @@ export class WarehouseOrderComponent implements ViewCell, OnInit {
 				.subscribe(() => {
 					this._toasterService.pop(
 						`success`,
-						`The order is finished!`
+						`The order is finished!`,
 					);
 					componentRef.close();
 				});

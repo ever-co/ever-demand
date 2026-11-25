@@ -1,4 +1,10 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import {
+	Component,
+	Output,
+	EventEmitter,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ViewCell } from '@app/@shared/smart-table';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 import { ToasterService } from '@app/@core/toaster';
@@ -8,6 +14,7 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 @Component({
 	standalone: false,
 	styleUrls: ['store-product-amount.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'store-product-amount.component.html',
 })
 export class StoreProductAmountComponent implements ViewCell, OnInit {
@@ -24,7 +31,7 @@ export class StoreProductAmountComponent implements ViewCell, OnInit {
 	constructor(
 		private productLocalesService: ProductLocalesService,
 		private toasterService: ToasterService,
-		private warehouseProductsRouter: WarehouseProductsRouter
+		private warehouseProductsRouter: WarehouseProductsRouter,
 	) {}
 
 	ngOnInit() {
@@ -44,12 +51,12 @@ export class StoreProductAmountComponent implements ViewCell, OnInit {
 		this.warehouseProductsRouter.increaseCount(
 			this.storeID,
 			this.productID,
-			1
+			1,
 		);
 		// this.loading = false;
 		this.toasterService.pop(
 			'info',
-			`${this.productTitle} product amound increased!`
+			`${this.productTitle} product amound increased!`,
 		);
 	}
 
@@ -58,13 +65,13 @@ export class StoreProductAmountComponent implements ViewCell, OnInit {
 		this.warehouseProductsRouter.decreaseCount(
 			this.storeID,
 			this.productID,
-			1
+			1,
 		);
 		// this.loading = false;
 
 		this.toasterService.pop(
 			'info',
-			`${this.productTitle} product amound decreased!`
+			`${this.productTitle} product amound decreased!`,
 		);
 	}
 }

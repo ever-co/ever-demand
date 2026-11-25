@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 
@@ -12,6 +17,7 @@ import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 			}
 		`,
 	],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<div>
 			<div>
@@ -64,7 +70,7 @@ export class ProductTakeawayDeliveryComponent implements OnInit {
 		await this.warehouseProductRouter.changeProductDelivery(
 			this.wareHouseId,
 			this.productId,
-			this.rowData.isDeliveryRequired
+			this.rowData.isDeliveryRequired,
 		);
 	}
 
@@ -79,7 +85,7 @@ export class ProductTakeawayDeliveryComponent implements OnInit {
 		await this.warehouseProductRouter.changeProductTakeaway(
 			this.wareHouseId,
 			this.productId,
-			this.rowData.isTakeaway
+			this.rowData.isTakeaway,
 		);
 	}
 }

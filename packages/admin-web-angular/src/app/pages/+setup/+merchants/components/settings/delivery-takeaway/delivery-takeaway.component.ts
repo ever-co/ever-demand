@@ -6,6 +6,7 @@ import {
 	Input,
 	Output,
 	EventEmitter,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { SetupMerchantSharedCarriersComponent } from './shared-carriers/shared-carriers.component';
 import {
@@ -21,10 +22,12 @@ import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-r
 	standalone: false,
 	selector: 'ea-merchants-setup-delivery-takeaway',
 	templateUrl: './delivery-takeaway.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./delivery-takeaway.component.scss'],
 })
 export class SetupMerchantDeliveryAndTakeawayComponent
-	implements AfterViewInit, OnDestroy {
+	implements AfterViewInit, OnDestroy
+{
 	@ViewChild('newCarrier')
 	newCarrier: SetupMerchantAddNewCarrierComponent;
 	@ViewChild('sharedCarriers')
@@ -64,8 +67,8 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 		let hasSelectedCarriers = false;
 
 		if (this.sharedCarriers) {
-			hasSelectedCarriers = this.sharedCarriers.carriersTable
-				.hasSelectedCarriers;
+			hasSelectedCarriers =
+				this.sharedCarriers.carriersTable.hasSelectedCarriers;
 		}
 
 		if (this.newCarrier) {
@@ -127,7 +130,7 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 			});
 
 			this.restrictedCarriers.unshift(
-				CarriersSmartTableComponent.getCarrierSmartTableObject(carrier)
+				CarriersSmartTableComponent.getCarrierSmartTableObject(carrier),
 			);
 		}
 		this.currentView = this.componentViews.main;
@@ -141,10 +144,10 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 		});
 
 		this.restrictedCarriers = this.restrictedCarriers.filter(
-			(c) => c.id !== this.carrierId
+			(c) => c.id !== this.carrierId,
 		);
 		this.restrictedCarriers.unshift(
-			CarriersSmartTableComponent.getCarrierSmartTableObject(carrier)
+			CarriersSmartTableComponent.getCarrierSmartTableObject(carrier),
 		);
 		this.carrierId = null;
 
@@ -164,7 +167,7 @@ export class SetupMerchantDeliveryAndTakeawayComponent
 	removeCarrier(e) {
 		if (this.restrictedCarriers) {
 			this.restrictedCarriers = this.restrictedCarriers.filter(
-				(c) => c.id !== e.data.id
+				(c) => c.id !== e.data.id,
 			);
 		}
 

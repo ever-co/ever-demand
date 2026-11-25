@@ -5,6 +5,7 @@ import {
 	Renderer2,
 	AfterViewChecked,
 	OnInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 
 import { Subject, Observable, forkJoin } from 'rxjs';
@@ -41,6 +42,7 @@ const perPage = 10;
 	standalone: false,
 	selector: 'ea-invites',
 	templateUrl: './invites.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['/invites.component.scss'],
 })
 export class InvitesComponent implements OnInit, OnDestroy, AfterViewChecked {
@@ -64,7 +66,7 @@ export class InvitesComponent implements OnInit, OnDestroy, AfterViewChecked {
 		private readonly _renderer: Renderer2,
 		private readonly _translateService: TranslateService,
 		private readonly _notifyService: NotifyService,
-		private readonly modalService: NgbModal
+		private readonly modalService: NgbModal,
 	) {}
 
 	ngOnInit() {
@@ -77,16 +79,15 @@ export class InvitesComponent implements OnInit, OnDestroy, AfterViewChecked {
 	ngAfterViewChecked(): void {
 		if (
 			this._elRef.nativeElement.querySelector(
-				'.angular2-smart-action-add-create'
+				'.angular2-smart-action-add-create',
 			)
 		) {
 			const firstRow = 2;
 			const columnOffset = 0;
 
 			const td = this._renderer.createElement('td');
-			const tr = this._elRef.nativeElement.getElementsByTagName('tr')[
-				firstRow
-			];
+			const tr =
+				this._elRef.nativeElement.getElementsByTagName('tr')[firstRow];
 			const refChild = tr.childNodes[columnOffset];
 			if (!this.addClick2 && tr.className !== 'ng-star-inserted') {
 				this._renderer.insertBefore(tr, td, refChild);
@@ -109,9 +110,10 @@ export class InvitesComponent implements OnInit, OnDestroy, AfterViewChecked {
 		try {
 			this.loading = true;
 			const createDataObject = this.inviteCreateObject(e.newData);
-			const createInput = await this._invitesService.getCreateInviteObject(
-				createDataObject
-			);
+			const createInput =
+				await this._invitesService.getCreateInviteObject(
+					createDataObject,
+				);
 			await this._invitesService
 				.createInvite(createInput)
 				.pipe(first())
@@ -167,9 +169,10 @@ export class InvitesComponent implements OnInit, OnDestroy, AfterViewChecked {
 		try {
 			this.loading = true;
 			const createDataObject = this.inviteCreateObject(e.newData);
-			const createInput = await this._invitesService.getCreateInviteObject(
-				createDataObject
-			);
+			const createInput =
+				await this._invitesService.getCreateInviteObject(
+					createDataObject,
+				);
 
 			const res = await this._invitesService
 				.updateInvite(e.data.id, createInput)
@@ -227,7 +230,7 @@ export class InvitesComponent implements OnInit, OnDestroy, AfterViewChecked {
 			getTranslate('STREET_ADDRESS'),
 			getTranslate('HOUSE'),
 			getTranslate('APARTMENT'),
-			getTranslate('INVITE_CODE')
+			getTranslate('INVITE_CODE'),
 		)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(
@@ -279,7 +282,7 @@ export class InvitesComponent implements OnInit, OnDestroy, AfterViewChecked {
 							perPage,
 						},
 					};
-				}
+				},
 			);
 	}
 

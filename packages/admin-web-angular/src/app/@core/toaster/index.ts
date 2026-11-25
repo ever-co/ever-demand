@@ -4,6 +4,7 @@ import {
 	Input,
 	ModuleWithProviders,
 	NgModule,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { NbToastRef, NbToastrService } from '@nebular/theme';
 import { Observable, of } from 'rxjs';
@@ -15,7 +16,8 @@ import { Observable, of } from 'rxjs';
  * `toasterService.pop(type, title, body)`; the toasts now show through `NbToastrService`
  * (one global container, so `<toaster-container>` is only a placeholder).
  */
-export type ToastType = 'success' | 'error' | 'warning' | 'info' | 'wait' | string;
+export type ToastType =
+	'success' | 'error' | 'warning' | 'info' | 'wait' | string;
 
 export enum BodyOutputType {
 	Default,
@@ -87,7 +89,11 @@ export class ToasterService {
 		return toast;
 	}
 
-	popAsync(type: ToastType | Toast, title?: string, body?: any): Observable<Toast> {
+	popAsync(
+		type: ToastType | Toast,
+		title?: string,
+		body?: any,
+	): Observable<Toast> {
 		return of(this.pop(type, title, body));
 	}
 
@@ -106,6 +112,7 @@ export class ToasterService {
 @Component({
 	selector: 'toaster-container',
 	standalone: false,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: '',
 })
 export class ToasterContainerComponent {

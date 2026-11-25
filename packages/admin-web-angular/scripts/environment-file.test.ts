@@ -39,7 +39,10 @@ test('writes the real values outside Docker', () => {
 	const out = renderEnvironment(env, { isProd: true, isDocker: false });
 	assert.match(out, /production: true,/);
 	assert.match(out, /GQL_ENDPOINT: "http:\/\/localhost:8443\/graphql",/);
-	assert.match(out, /GQL_SUBSCRIPTIONS_ENDPOINT: "ws:\/\/localhost:2086\/subscriptions",/);
+	assert.match(
+		out,
+		/GQL_SUBSCRIPTIONS_ENDPOINT: "ws:\/\/localhost:2086\/subscriptions",/,
+	);
 	assert.match(out, /DEFAULT_LATITUDE: 42.6459136,/);
 	// quotes in values are escaped, so the generated module stays valid
 	assert.match(out, /COMPANY_NAME: "Ever Co. 'LTD'",/);
@@ -48,7 +51,12 @@ test('writes the real values outside Docker', () => {
 
 test('writes DOCKER_ placeholders for the entrypoint sed in Docker', () => {
 	const out = renderEnvironment(env, { isProd: true, isDocker: true });
-	for (const key of ['SERVICES_ENDPOINT', 'GQL_ENDPOINT', 'GOOGLE_MAPS_API_KEY', 'SETTINGS_MAINTENANCE_API_URL']) {
+	for (const key of [
+		'SERVICES_ENDPOINT',
+		'GQL_ENDPOINT',
+		'GOOGLE_MAPS_API_KEY',
+		'SETTINGS_MAINTENANCE_API_URL',
+	]) {
 		assert.match(out, new RegExp(`${key}: "DOCKER_${key}",`));
 	}
 	// numbers keep their build-time value (the entrypoint does not replace them)
@@ -56,5 +64,8 @@ test('writes DOCKER_ placeholders for the entrypoint sed in Docker', () => {
 });
 
 test('marks dev builds as non production', () => {
-	assert.match(renderEnvironment(env, { isProd: false, isDocker: false }), /production: false,/);
+	assert.match(
+		renderEnvironment(env, { isProd: false, isDocker: false }),
+		/production: false,/,
+	);
 });

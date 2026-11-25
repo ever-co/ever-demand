@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { TranslateService } from '@ngx-translate/core';
 import { NbMenuItem } from '@nebular/theme';
@@ -6,6 +6,7 @@ import { NbMenuItem } from '@nebular/theme';
 @Component({
 	standalone: false,
 	selector: 'ea-pages',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './pages.component.html',
 })
 export class PagesComponent {
@@ -37,13 +38,13 @@ export class PagesComponent {
 				children: [
 					{
 						title: this.getTranslation(
-							'MENU_VIEW.PRODUCTS.MANAGEMENT'
+							'MENU_VIEW.PRODUCTS.MANAGEMENT',
 						),
 						link: '/products/list',
 					},
 					{
 						title: this.getTranslation(
-							'MENU_VIEW.PRODUCTS.CATEGORIES'
+							'MENU_VIEW.PRODUCTS.CATEGORIES',
 						),
 						link: '/products/categories',
 						pathMatch: 'prefix',
@@ -57,13 +58,13 @@ export class PagesComponent {
 				children: [
 					{
 						title: this.getTranslation(
-							'MENU_VIEW.CUSTOMERS.MANAGEMENT'
+							'MENU_VIEW.CUSTOMERS.MANAGEMENT',
 						),
 						link: '/customers/list',
 					},
 					{
 						title: this.getTranslation(
-							'MENU_VIEW.CUSTOMERS.INVITES'
+							'MENU_VIEW.CUSTOMERS.INVITES',
 						),
 						link: '/customers/invites',
 						pathMatch: 'prefix',

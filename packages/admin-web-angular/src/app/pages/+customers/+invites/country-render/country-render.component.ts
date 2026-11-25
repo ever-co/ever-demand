@@ -1,4 +1,9 @@
-import { Component, AfterViewInit, Input } from '@angular/core';
+import {
+	Component,
+	AfterViewInit,
+	Input,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { DefaultEditor, Cell } from '@app/@shared/smart-table';
 
 import {
@@ -9,10 +14,13 @@ import {
 
 @Component({
 	standalone: false,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './country-render.component.html',
 })
-export class CountryRenderComponent extends DefaultEditor
-	implements AfterViewInit {
+export class CountryRenderComponent
+	extends DefaultEditor
+	implements AfterViewInit
+{
 	@Input()
 	cell: Cell;
 

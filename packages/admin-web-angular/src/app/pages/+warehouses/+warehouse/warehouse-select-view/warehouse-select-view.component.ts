@@ -7,6 +7,7 @@ import {
 	Input,
 	OnChanges,
 	Output,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -26,10 +27,12 @@ import Order from '@modules/server.common/entities/Order';
 	standalone: false,
 	selector: 'ea-warehouse-select-view',
 	styleUrls: ['./warehouse-select-view.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './warehouse-select-view.component.html',
 })
 export class WarehouseSelectViewComponent
-	implements OnInit, OnDestroy, OnChanges {
+	implements OnInit, OnDestroy, OnChanges
+{
 	private _ngDestroy$ = new Subject<void>();
 
 	@Output()
@@ -48,7 +51,7 @@ export class WarehouseSelectViewComponent
 		private readonly modalService: NgbModal,
 		private warehouseRouter: WarehouseRouter,
 		private readonly _route: ActivatedRoute,
-		private readonly _toasterService: ToasterService
+		private readonly _toasterService: ToasterService,
 	) {}
 
 	ngOnChanges() {}

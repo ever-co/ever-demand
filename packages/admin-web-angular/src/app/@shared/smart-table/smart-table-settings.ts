@@ -1,9 +1,4 @@
-import type {
-	Cell,
-	IColumn,
-	IColumns,
-	Settings,
-} from 'angular2-smart-table';
+import type { Cell, IColumn, IColumns, Settings } from 'angular2-smart-table';
 
 /**
  * The column settings the admin screens were written for (ng2-smart-table 1.x).

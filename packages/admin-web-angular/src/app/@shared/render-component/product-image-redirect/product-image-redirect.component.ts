@@ -1,4 +1,4 @@
-import { OnInit, Component } from '@angular/core';
+import { OnInit, Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ViewCell } from '@app/@shared/smart-table';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
@@ -6,6 +6,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 @Component({
 	standalone: false,
 	styles: ['img { cursor: pointer }'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: ` <img src="{{ imageUrl }}" (click)="redirect()" width="60" /> `,
 })
 export class ProductImageRedirectComponent implements ViewCell, OnInit {
@@ -16,12 +17,12 @@ export class ProductImageRedirectComponent implements ViewCell, OnInit {
 
 	constructor(
 		private readonly _router: Router,
-		private readonly _localeTranslate: ProductLocalesService
+		private readonly _localeTranslate: ProductLocalesService,
 	) {}
 
 	ngOnInit() {
 		this.imageUrl = this._localeTranslate.getTranslate(
-			this.rowData.product.images
+			this.rowData.product.images,
 		);
 	}
 

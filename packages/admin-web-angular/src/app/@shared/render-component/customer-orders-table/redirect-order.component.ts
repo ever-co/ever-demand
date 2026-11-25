@@ -1,10 +1,17 @@
-import { Component, Input, OnInit, EventEmitter } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	EventEmitter,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ViewCell } from '@app/@shared/smart-table';
 import { Router } from '@angular/router';
 import { getIdFromTheDate } from '@modules/server.common/utils';
 
 @Component({
 	standalone: false,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<button class="btn btn-sm btn-outline-secondary" (click)="redirect()">
 			{{ orderId }}

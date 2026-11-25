@@ -6,6 +6,7 @@ import {
 	EventEmitter,
 	Input,
 	OnChanges,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToasterService } from '@app/@core/toaster';
@@ -29,10 +30,12 @@ const SHOW_TOP_PRODUCTS_QUANTITY: number = 10;
 	standalone: false,
 	selector: 'ea-warehouse-products-view',
 	styleUrls: ['./warehouse-products-view.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './warehouse-products-view.component.html',
 })
 export class WarehouseProductsViewComponent
-	implements OnInit, OnDestroy, OnChanges {
+	implements OnInit, OnDestroy, OnChanges
+{
 	private _ngDestroy$ = new Subject<void>();
 
 	public warehouseID: string;
@@ -49,7 +52,7 @@ export class WarehouseProductsViewComponent
 		private warehouseRouter: WarehouseRouter,
 		private readonly _router: Router,
 		private toasterService: ToasterService,
-		private readonly store: Store
+		private readonly store: Store,
 	) {}
 
 	ngOnChanges() {
@@ -61,7 +64,7 @@ export class WarehouseProductsViewComponent
 
 	removeProduct(warehouseProduct: WarehouseProduct) {
 		this.warehouse.products = this.warehouse.products.filter(
-			(p: WarehouseProduct) => p.id !== warehouseProduct.id
+			(p: WarehouseProduct) => p.id !== warehouseProduct.id,
 		);
 		this.warehouseRouter.save(this.warehouse, this.store.token);
 	}
@@ -76,15 +79,15 @@ export class WarehouseProductsViewComponent
 		this.warehouseProductsRouter.increaseCount(
 			this.warehouse.id,
 			warehouseProduct.productId,
-			1
+			1,
 		);
 		this.productTitle = this.localeTranslate(
-			warehouseProduct.product['title']
+			warehouseProduct.product['title'],
 		);
 
 		this.toasterService.pop(
 			'info',
-			`${this.productTitle} product amound increased!`
+			`${this.productTitle} product amound increased!`,
 		);
 	}
 

@@ -5,6 +5,7 @@ import {
 	OnDestroy,
 	Output,
 	EventEmitter,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { NgForm, NgModel } from '@angular/forms';
 import * as QRCode from 'qrcode';
@@ -17,6 +18,7 @@ import { getDummyImage } from '@modules/server.common/utils';
 	standalone: false,
 	selector: 'ea-merchants-setup-basic-info',
 	templateUrl: './basic-info.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./basic-info.component.scss'],
 })
 export class SetupMerchantBasicInfoComponent implements OnInit, OnDestroy {
@@ -81,7 +83,7 @@ export class SetupMerchantBasicInfoComponent implements OnInit, OnDestroy {
 	async barcodeDataChange() {
 		if (this.basicInfoModel.barcodeData) {
 			this.barcodeDataUrl = await QRCode.toDataURL(
-				this.basicInfoModel.barcodeData
+				this.basicInfoModel.barcodeData,
 			);
 		} else {
 			this.barcodeDataUrl = null;

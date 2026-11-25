@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { Router } from '@angular/router';
@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 @Component({
 	standalone: false,
 	templateUrl: 'warehouse-info.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['warehouse-info.component.scss'],
 })
 export class WarehouseTableInfoComponent implements OnInit {
@@ -13,7 +14,7 @@ export class WarehouseTableInfoComponent implements OnInit {
 
 	constructor(
 		private readonly activeModal: NgbActiveModal,
-		private router: Router
+		private router: Router,
 	) {}
 
 	cancel() {

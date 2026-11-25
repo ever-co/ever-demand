@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ViewCell } from '@app/@shared/smart-table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { WarehouseTableInfoComponent } from '../../../../pages/+warehouses/+warehouse/warehouse-info/warehouse-info.component';
@@ -6,6 +11,7 @@ import { WarehouseTableInfoComponent } from '../../../../pages/+warehouses/+ware
 @Component({
 	standalone: false,
 	styleUrls: ['warehouse-actions.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './warehouse-actions.component.html',
 })
 export class WarehouseActionsComponent implements ViewCell, OnInit {
@@ -21,7 +27,7 @@ export class WarehouseActionsComponent implements ViewCell, OnInit {
 	openInfo() {
 		const activeModal = this.modalService.open(
 			WarehouseTableInfoComponent,
-			{ size: 'lg', container: 'nb-layout' }
+			{ size: 'lg', container: 'nb-layout' },
 		);
 		const modalComponent: WarehouseTableInfoComponent =
 			activeModal.componentInstance;

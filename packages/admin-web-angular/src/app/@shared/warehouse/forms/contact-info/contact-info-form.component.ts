@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import ForwardOrdersMethod from '@modules/server.common/enums/ForwardOrdersMethod';
 import { IWarehouseCreateObject } from '@modules/server.common/interfaces/IWarehouse';
@@ -18,6 +18,7 @@ const phoneNumberRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9x]*$/;
 @Component({
 	standalone: false,
 	selector: 'ea-warehouse-contact-info-form',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'contact-info-form.component.html',
 })
 export class ContactInfoFormComponent {
@@ -84,10 +85,10 @@ export class ContactInfoFormComponent {
 
 		if (contactInfo.forwardOrdersUsing) {
 			this.forwardingEmail = contactInfo.forwardOrdersUsing.includes(
-				ForwardOrdersMethod.Email
+				ForwardOrdersMethod.Email,
 			);
 			this.forwardingPhone = contactInfo.forwardOrdersUsing.includes(
-				ForwardOrdersMethod.Phone
+				ForwardOrdersMethod.Phone,
 			);
 		}
 	}
@@ -126,7 +127,7 @@ export class ContactInfoFormComponent {
 		let forwardOrdersUsingArr = this.forwardOrdersUsing.value || [];
 
 		forwardOrdersUsingArr = forwardOrdersUsingArr.filter(
-			(v) => v !== ForwardOrdersMethod.Phone
+			(v) => v !== ForwardOrdersMethod.Phone,
 		);
 
 		if (this.forwardingPhone) {
@@ -143,7 +144,7 @@ export class ContactInfoFormComponent {
 		let forwardOrdersUsingArr = this.forwardOrdersUsing.value || [];
 
 		forwardOrdersUsingArr = forwardOrdersUsingArr.filter(
-			(v) => v !== ForwardOrdersMethod.Email
+			(v) => v !== ForwardOrdersMethod.Email,
 		);
 
 		if (this.forwardingEmail) {

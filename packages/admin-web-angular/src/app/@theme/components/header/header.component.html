@@ -9,8 +9,10 @@
 		</a>
 
 		<div class="logo" (click)="navigateHome()">
-			<span> {{ 'HEADER_VIEW.EVER' | translate }}</span
-			><span class="ever-simbol">®</span>
+			<span> {{ 'HEADER_VIEW.EVER' | translate }}</span><span
+				class="ever-simbol"
+				>®</span
+			>
 			<span>{{ 'HEADER_VIEW.ADMIN' | translate }}</span>
 		</div>
 	</div>
@@ -30,8 +32,8 @@
 		<nb-action class="admin-menu" *ngIf="admin$ | async; let admin">
 			<nb-user
 				[nbContextMenu]="adminMenu"
-				[name]="admin?.name"
-				[picture]="admin?.pictureUrl"
+				[name]="$safeNavigationMigration(admin?.name)"
+				[picture]="$safeNavigationMigration(admin?.pictureUrl)"
 			></nb-user>
 		</nb-action>
 		<!--

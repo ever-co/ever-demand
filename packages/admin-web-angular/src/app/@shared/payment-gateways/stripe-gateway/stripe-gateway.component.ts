@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges, ViewChild } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnChanges,
+	ViewChild,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import PaymentGateways, {
 	paymentGatewaysToString,
 	paymentGatewaysLogo,
@@ -13,6 +19,7 @@ import { Subject } from 'rxjs';
 @Component({
 	standalone: false,
 	selector: 'ea-stripe-gateway',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './stripe-gateway.component.html',
 })
 export class StripeGatewayComponent {

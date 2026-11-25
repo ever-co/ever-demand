@@ -1,4 +1,9 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import {
+	Component,
+	Input,
+	ViewChild,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import PaymentGateways, {
 	paymentGatewaysToString,
 	paymentGatewaysLogo,
@@ -10,6 +15,7 @@ import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaym
 @Component({
 	standalone: false,
 	selector: 'ea-payPal-gateway',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './payPal-gateway.component.html',
 })
 export class PayPalGatewayComponent {

@@ -1,4 +1,11 @@
-import { Component, OnDestroy, Input, ViewChild, OnInit } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	Input,
+	ViewChild,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import Order from '@modules/server.common/entities/Order';
@@ -19,6 +26,7 @@ export enum DeliveryStatus {
 	standalone: false,
 	selector: 'ea-simulation-order',
 	templateUrl: './order.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./order.component.scss'],
 })
 export class SimulationOrderComponent implements OnDestroy, OnInit {
@@ -34,7 +42,7 @@ export class SimulationOrderComponent implements OnDestroy, OnInit {
 
 	constructor(
 		private readonly _translateService: TranslateService,
-		private readonly _localeTranslate: ProductLocalesService
+		private readonly _localeTranslate: ProductLocalesService,
 	) {}
 
 	ngOnInit() {
@@ -50,7 +58,7 @@ export class SimulationOrderComponent implements OnDestroy, OnInit {
 				url: this._localeTranslate.getTranslate(p.product.images),
 				caption: this._localeTranslate.getTranslate(p.product.title),
 				title: this._localeTranslate.getTranslate(
-					p.product.description
+					p.product.description,
 				),
 				style: {
 					height: '100%',
@@ -195,7 +203,7 @@ export class SimulationOrderComponent implements OnDestroy, OnInit {
 					this.order
 						? (<Order>this.order).totalPrice.toFixed(2)
 						: '00.00'
-				}$`
+				}$`,
 			);
 		};
 

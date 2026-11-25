@@ -6,6 +6,7 @@ import {
 	OnDestroy,
 	Output,
 	AfterViewInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
@@ -28,10 +29,12 @@ const perPage = 3;
 	standalone: false,
 	selector: 'ea-carrier-orders-history',
 	templateUrl: './carrier-orders-history.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./carrier-orders-history.component.scss'],
 })
 export class CarrierOrdersHistoryComponent
-	implements OnDestroy, OnChanges, AfterViewInit {
+	implements OnDestroy, OnChanges, AfterViewInit
+{
 	private ngDestroy$ = new Subject<void>();
 
 	@Input()
@@ -47,7 +50,8 @@ export class CarrierOrdersHistoryComponent
 	public currentOrders: Order[] = [];
 	public settingsSmartTable: object;
 	public sourceSmartTable: LocalDataSource = new LocalDataSource();
-	public enumOrderCarrierStatus: typeof OrderCarrierStatus = OrderCarrierStatus;
+	public enumOrderCarrierStatus: typeof OrderCarrierStatus =
+		OrderCarrierStatus;
 
 	private dataCount: number;
 	$ordersHistory: Subscription;
@@ -55,7 +59,7 @@ export class CarrierOrdersHistoryComponent
 	constructor(
 		private carrierOrdersRouter: CarrierOrdersRouter,
 		private _translateService: TranslateService,
-		private carriersOrdersService: CarriersOrdersService
+		private carriersOrdersService: CarriersOrdersService,
 	) {
 		this._setupSmartTable();
 	}
@@ -131,7 +135,7 @@ export class CarrierOrdersHistoryComponent
 			getTranslate('CUSTOMER'),
 			getTranslate('WAREHOUSE_STATUS'),
 			getTranslate('CARRIER_STATUS'),
-			getTranslate('TIME')
+			getTranslate('TIME'),
 		)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(
@@ -197,7 +201,7 @@ export class CarrierOrdersHistoryComponent
 							perPage: 3,
 						},
 					};
-				}
+				},
 			);
 	}
 
@@ -214,9 +218,10 @@ export class CarrierOrdersHistoryComponent
 	}
 
 	private async loadDataCount() {
-		this.dataCount = await this.carriersOrdersService.getCountOfCarrierOrdersHistory(
-			this.selectedCarrier.id
-		);
+		this.dataCount =
+			await this.carriersOrdersService.getCountOfCarrierOrdersHistory(
+				this.selectedCarrier.id,
+			);
 	}
 
 	private async loadSmartTableData(page = 1) {
@@ -236,7 +241,7 @@ export class CarrierOrdersHistoryComponent
 				this.currentOrders.splice(
 					perPage * (page - 1),
 					perPage,
-					...orders
+					...orders,
 				);
 				this.sourceSmartTable.load(this.currentOrders);
 			});

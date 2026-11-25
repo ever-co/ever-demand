@@ -5,6 +5,7 @@ import {
 	Input,
 	OnInit,
 	OnDestroy,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { LocalDataSource } from '@app/@shared/smart-table';
 import { WarehouseViewModel } from '../../../models/WarehouseViewModel';
@@ -18,10 +19,12 @@ import { takeUntil } from 'rxjs/operators';
 	standalone: false,
 	selector: 'ea-customer-warehouses-table',
 	styleUrls: ['./customer-warehouses-table.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './customer-warehouses-table.component.html',
 })
 export class CustomerWarehousesTableComponent
-	implements OnInit, AfterViewInit, OnDestroy {
+	implements OnInit, AfterViewInit, OnDestroy
+{
 	private ngDestroy$ = new Subject<void>();
 
 	@Input()
@@ -54,7 +57,7 @@ export class CustomerWarehousesTableComponent
 	// This is just workaround to show some search icon on smart table, in the future maybe we must find better solution.
 	private _addCustomHTMLElements(): any {
 		const target = document.querySelector(
-			'#nearby-stores ng2-smart-table .angular2-smart-filters > th:nth-child(1)'
+			'#nearby-stores ng2-smart-table .angular2-smart-filters > th:nth-child(1)',
 		);
 		if (target) {
 			target.innerHTML =
@@ -81,7 +84,7 @@ export class CustomerWarehousesTableComponent
 			getTranslate('CITY'),
 			getTranslate('ADDRESS'),
 			getTranslate('ORDERS_QTY'),
-			getTranslate('ACTIONS')
+			getTranslate('ACTIONS'),
 		)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(
@@ -130,7 +133,7 @@ export class CustomerWarehousesTableComponent
 							perPage: 3,
 						},
 					};
-				}
+				},
 			);
 	}
 

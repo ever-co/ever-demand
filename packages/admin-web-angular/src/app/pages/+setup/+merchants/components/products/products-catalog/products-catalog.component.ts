@@ -1,4 +1,11 @@
-import { Component, ViewChild, Input, OnInit, OnDestroy } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	Input,
+	OnInit,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ProductsTableComponent } from '@app/@shared/product/forms/products-table';
 import { first, takeUntil } from 'rxjs/operators';
 import { ProductsService } from '@app/@core/data/products.service';
@@ -7,10 +14,12 @@ import { Subject } from 'rxjs';
 @Component({
 	standalone: false,
 	selector: 'ea-merchants-setup-products-catalog',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './products-catalog.component.html',
 })
 export class SetupMerchantProductsCatalogComponent
-	implements OnInit, OnDestroy {
+	implements OnInit, OnDestroy
+{
 	@ViewChild('productsTable', { static: true })
 	productsTable: ProductsTableComponent;
 
@@ -39,7 +48,7 @@ export class SetupMerchantProductsCatalogComponent
 					skip: this.perPage * (page - 1),
 					limit: this.perPage,
 				},
-				this.existedProductsIds
+				this.existedProductsIds,
 			)
 			.pipe(first())
 			.toPromise();

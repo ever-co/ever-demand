@@ -1,4 +1,10 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import {
+	Component,
+	Output,
+	EventEmitter,
+	Input,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import OrderBarcodeTypes, {
 	orderBarcodeTypesToString,
 } from '@modules/server.common/enums/OrderBarcodeTypes';
@@ -8,10 +14,10 @@ import * as QRCode from 'qrcode';
 	standalone: false,
 	selector: 'ea-merchants-setup-orders-settings',
 	templateUrl: './orders.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./orders.component.scss'],
 })
 export class SetupMerchantOrdersSettingsComponent {
-
 	@Output()
 	previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();
 

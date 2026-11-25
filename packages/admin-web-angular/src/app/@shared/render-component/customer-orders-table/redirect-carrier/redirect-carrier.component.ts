@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ViewCell } from '@app/@shared/smart-table';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -9,6 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
 	standalone: false,
 	styleUrls: ['./redirect-carrier.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './redirect-carrier.component.html',
 })
 export class RedirectCarrierComponent implements ViewCell, OnInit {
@@ -23,13 +29,13 @@ export class RedirectCarrierComponent implements ViewCell, OnInit {
 	constructor(
 		private readonly router: Router,
 		private readonly carriersService: CarriersService,
-		private translate: TranslateService
+		private translate: TranslateService,
 	) {}
 
 	ngOnInit() {
 		if (this.rowData.carrierId) {
 			this.carrier$ = this.carriersService.getCarrierById(
-				this.rowData.carrierId
+				this.rowData.carrierId,
 			);
 		}
 		this.carrierStatusText =

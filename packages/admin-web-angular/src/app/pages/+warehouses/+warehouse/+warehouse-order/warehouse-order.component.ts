@@ -4,6 +4,7 @@ import {
 	OnInit,
 	OnDestroy,
 	EventEmitter,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
@@ -26,6 +27,7 @@ const perPage = 5;
 @Component({
 	standalone: false,
 	styleUrls: ['./warehouse-order.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './warehouse-order.component.html',
 })
 export class WarehouseOrderComponent implements OnInit, OnDestroy {
@@ -33,7 +35,7 @@ export class WarehouseOrderComponent implements OnInit, OnDestroy {
 
 	warehouseId: string;
 	titleSelectAdd: string = this._translate(
-		this.TRANSLATE_PREFIXES.STEP2.TITLE.SELECT_ADD
+		this.TRANSLATE_PREFIXES.STEP2.TITLE.SELECT_ADD,
 	);
 	isSelectedFromExisting: boolean;
 	showNextButton: boolean = false;
@@ -73,7 +75,7 @@ export class WarehouseOrderComponent implements OnInit, OnDestroy {
 		private readonly _toasterService: ToasterService,
 		private readonly _translateService: TranslateService,
 		private readonly _usersService: UsersService,
-		private readonly _warehouseOrdersService: WarehouseOrdersService
+		private readonly _warehouseOrdersService: WarehouseOrdersService,
 	) {}
 
 	get TRANSLATE_PREFIXES() {
@@ -162,16 +164,16 @@ export class WarehouseOrderComponent implements OnInit, OnDestroy {
 					this.loading = false;
 					this._toasterService.pop(
 						`success`,
-						`User ${this.userSelected.name} finish the order`
+						`User ${this.userSelected.name} finish the order`,
 					);
 				},
 				() => {
 					this.loading = false;
 					this._toasterService.pop(
 						'error',
-						'Something is wrong, unable to place order'
+						'Something is wrong, unable to place order',
 					);
-				}
+				},
 			);
 	}
 
@@ -191,7 +193,7 @@ export class WarehouseOrderComponent implements OnInit, OnDestroy {
 
 	selectExistingCustomer() {
 		this.titleSelectAdd = this._translate(
-			this.TRANSLATE_PREFIXES.STEP2.TITLE.SELECT_CUSTOMER
+			this.TRANSLATE_PREFIXES.STEP2.TITLE.SELECT_CUSTOMER,
 		);
 
 		this.isSelectedFromExisting = true;
@@ -203,7 +205,7 @@ export class WarehouseOrderComponent implements OnInit, OnDestroy {
 
 	addNewCustomer() {
 		this.titleSelectAdd = this._translate(
-			this.TRANSLATE_PREFIXES.STEP2.TITLE.ADD_NEW
+			this.TRANSLATE_PREFIXES.STEP2.TITLE.ADD_NEW,
 		);
 
 		this.isSelectedFromExisting = false;
@@ -252,7 +254,7 @@ export class WarehouseOrderComponent implements OnInit, OnDestroy {
 
 				if (currentStepIndex === 0) {
 					this.titleSelectAdd = this._translate(
-						this.TRANSLATE_PREFIXES.STEP2.TITLE.SELECT_ADD
+						this.TRANSLATE_PREFIXES.STEP2.TITLE.SELECT_ADD,
 					);
 				}
 				if (currentStepIndex === 2 && this._isAllowedToCreateCustomer) {
@@ -263,16 +265,16 @@ export class WarehouseOrderComponent implements OnInit, OnDestroy {
 
 	private _setupSmartTableSettings() {
 		const fullName = this._translate(
-			this.TRANSLATE_PREFIXES.STEP2.SMART_TABLE.TITLES.FULL_NAME
+			this.TRANSLATE_PREFIXES.STEP2.SMART_TABLE.TITLES.FULL_NAME,
 		);
 		const email = this._translate(
-			this.TRANSLATE_PREFIXES.STEP2.SMART_TABLE.TITLES.EMAIL
+			this.TRANSLATE_PREFIXES.STEP2.SMART_TABLE.TITLES.EMAIL,
 		);
 		const phone = this._translate(
-			this.TRANSLATE_PREFIXES.STEP2.SMART_TABLE.TITLES.PHONE
+			this.TRANSLATE_PREFIXES.STEP2.SMART_TABLE.TITLES.PHONE,
 		);
 		const address = this._translate(
-			this.TRANSLATE_PREFIXES.STEP2.SMART_TABLE.TITLES.ADDRESS
+			this.TRANSLATE_PREFIXES.STEP2.SMART_TABLE.TITLES.ADDRESS,
 		);
 
 		this.settingsSmartTable = {
@@ -308,7 +310,7 @@ export class WarehouseOrderComponent implements OnInit, OnDestroy {
 				usersData.splice(
 					perPage * (page - 1),
 					perPage,
-					...formattedData
+					...formattedData,
 				);
 
 				await this.sourceSmartTable.load(usersData);

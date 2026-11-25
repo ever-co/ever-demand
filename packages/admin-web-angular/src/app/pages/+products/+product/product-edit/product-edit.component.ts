@@ -1,4 +1,10 @@
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	OnInit,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { BasicInfoFormComponent } from '../../../../@shared/product/forms/basic-info';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import Product from '@modules/server.common/entities/Product';
@@ -13,6 +19,7 @@ import { Location } from '@angular/common';
 @Component({
 	standalone: false,
 	styleUrls: ['./product-edit.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './product-edit.component.html',
 })
 export class ProductEditComponent implements OnInit, OnDestroy {
@@ -43,14 +50,14 @@ export class ProductEditComponent implements OnInit, OnDestroy {
 		private readonly toasterService: ToasterService,
 		private readonly router: Router,
 		private readonly productsCategoryService: ProductsCategoryService,
-		private location: Location
+		private location: Location,
 	) {
 		this.loadProductCategories();
 
 		this.product$ = this.activatedRoute.params.pipe(
 			switchMap((p) => {
 				return this.productsService.getProductById(p.id);
-			})
+			}),
 		);
 	}
 
@@ -76,7 +83,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
 
 			this.toasterService.pop(
 				'success',
-				`Product ${updatedProd.title} was updated!`
+				`Product ${updatedProd.title} was updated!`,
 			);
 			this.loading = false;
 			await this.router.navigate([`/products/list/${updatedProd.id}`], {
@@ -86,7 +93,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
 			this.loading = false;
 			this.toasterService.pop(
 				'error',
-				`Error in updating carrier: "${err.message}"`
+				`Error in updating carrier: "${err.message}"`,
 			);
 		}
 	}

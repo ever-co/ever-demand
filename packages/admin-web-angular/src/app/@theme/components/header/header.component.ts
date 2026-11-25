@@ -1,4 +1,10 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnDestroy,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { NbMenuService, NbSidebarService, NbMenuItem } from '@nebular/theme';
 import { Subject, Observable } from 'rxjs';
 import { AdminsService } from '../../../@core/data/admins.service';
@@ -10,6 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 	standalone: false,
 	selector: 'ngx-header',
 	styleUrls: ['./header.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './header.component.html',
 })
 export class HeaderComponent implements OnInit, OnDestroy {
@@ -27,7 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 		private menuService: NbMenuService,
 		private adminsService: AdminsService,
 		private store: Store,
-		private translateService: TranslateService
+		private translateService: TranslateService,
 	) {
 		this.initialize();
 		this._applyTranslationOnSmartTable();

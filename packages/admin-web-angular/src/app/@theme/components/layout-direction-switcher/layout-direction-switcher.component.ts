@@ -1,10 +1,16 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { NbLayoutDirection, NbLayoutDirectionService } from '@nebular/theme';
 import { takeWhile } from 'rxjs/operators';
 
 @Component({
 	standalone: false,
 	selector: 'ngx-layout-direction-switcher',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './layout-direction-switcher.component.html',
 })
 export class LayoutDirectionSwitcherComponent implements OnDestroy {
@@ -21,7 +27,7 @@ export class LayoutDirectionSwitcherComponent implements OnDestroy {
 			.onDirectionChange()
 			.pipe(takeWhile(() => this.alive))
 			.subscribe(
-				(newDirection) => (this.currentDirection = newDirection)
+				(newDirection) => (this.currentDirection = newDirection),
 			);
 	}
 

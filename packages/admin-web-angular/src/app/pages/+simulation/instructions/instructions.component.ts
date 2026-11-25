@@ -1,4 +1,9 @@
-import { Component, OnDestroy, Input } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	Input,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { Subject } from 'rxjs';
 
 export enum Step {
@@ -11,6 +16,7 @@ export enum Step {
 	standalone: false,
 	selector: 'ea-simulation-instructions',
 	templateUrl: './instructions.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./instructions.component.scss'],
 })
 export class SimulationInstructionsComponent implements OnDestroy {

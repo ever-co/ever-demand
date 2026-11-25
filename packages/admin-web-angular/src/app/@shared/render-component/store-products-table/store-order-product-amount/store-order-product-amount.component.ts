@@ -2,6 +2,7 @@ import {
 	Component,
 	OnInit,
 	OnDestroy,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { ViewCell } from '@app/@shared/smart-table';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
@@ -17,10 +18,12 @@ import { Subject } from 'rxjs';
 @Component({
 	standalone: false,
 	styleUrls: ['store-order-product-amount.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'store-order-product-amount.component.html',
 })
 export class StoreOrderProductAmountComponent
-	implements ViewCell, OnInit, OnDestroy {
+	implements ViewCell, OnInit, OnDestroy
+{
 	value: any;
 	rowData: any;
 
@@ -47,7 +50,7 @@ export class StoreOrderProductAmountComponent
 		private toasterService: ToasterService,
 		private warehouseProductsRouter: WarehouseProductsRouter,
 		private readonly modalService: NgbModal,
-		private readonly orderRouter: OrderRouter
+		private readonly orderRouter: OrderRouter,
 	) {}
 
 	ngOnInit() {
@@ -81,7 +84,7 @@ export class StoreOrderProductAmountComponent
 					size: 'sm',
 					container: 'nb-layout',
 					backdrop: 'static',
-				}
+				},
 			);
 			const modalComponent: ConfirmationModalComponent =
 				activeModal.componentInstance;
@@ -98,12 +101,12 @@ export class StoreOrderProductAmountComponent
 						.addProducts(
 							this.orderId,
 							this.productObj,
-							this.orderWarehouseId
+							this.orderWarehouseId,
 						)
 						.then((r) => {
 							this.toasterService.pop(
 								`info`,
-								`Increased amount of the order's product!`
+								`Increased amount of the order's product!`,
 							);
 						})
 						.catch((err) => {
@@ -120,7 +123,7 @@ export class StoreOrderProductAmountComponent
 		} else {
 			this.toasterService.pop(
 				`error`,
-				`There are no more available products!`
+				`There are no more available products!`,
 			);
 		}
 		this.loading = false;
@@ -134,7 +137,7 @@ export class StoreOrderProductAmountComponent
 					size: 'sm',
 					container: 'nb-layout',
 					backdrop: 'static',
-				}
+				},
 			);
 			const modalComponent: ConfirmationModalComponent =
 				activeModal.componentInstance;
@@ -149,19 +152,19 @@ export class StoreOrderProductAmountComponent
 						.decreaseOrderProducts(
 							this.orderId,
 							this.productObj,
-							this.orderWarehouseId
+							this.orderWarehouseId,
 						)
 						.then((r) => {
 							this.toasterService.pop(
 								`info`,
-								`Decreased amount of the order's product!`
+								`Decreased amount of the order's product!`,
 							);
 						})
 						.catch((err) => {
 							this.toasterService.pop(
 								`error`,
 								`You can not decrease the qty
-							of the product to 0, but you can remove selected product!`
+							of the product to 0, but you can remove selected product!`,
 							);
 						});
 					modalComponent.cancel();
@@ -169,7 +172,7 @@ export class StoreOrderProductAmountComponent
 		} else {
 			this.toasterService.pop(
 				`error`,
-				`There are no products for remove!`
+				`There are no products for remove!`,
 			);
 		}
 		this.loading = false;

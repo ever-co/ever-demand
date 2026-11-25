@@ -91,7 +91,9 @@
 							nbButton
 							status="danger"
 							id="orderCancel"
-							[disabled]="order?.isCompleted"
+							[disabled]="
+								$safeNavigationMigration(order?.isCompleted)
+							"
 							(click)="orderCancel()"
 							[nbSpinner]="loading"
 						>
@@ -122,7 +124,7 @@
 					>
 						<ea-customer-orders
 							#orderHistoryTable
-							[userId]="user?.id"
+							[userId]="$safeNavigationMigration(user?.id)"
 						></ea-customer-orders>
 					</nb-tab>
 				</nb-tabset>

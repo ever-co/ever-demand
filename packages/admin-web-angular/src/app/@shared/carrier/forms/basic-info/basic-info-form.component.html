@@ -180,8 +180,8 @@
 				<div class="col-sm-10">
 					<e-cu-file-uploader
 						[placeholder]="uploaderPlaceholder"
-						[name]="username?.value"
-						[fileUrl]="logo?.value"
+						[name]="$safeNavigationMigration(username?.value)"
+						[fileUrl]="$safeNavigationMigration(logo?.value)"
 						(uploadedImgUrl)="logo.setValue($event)"
 					></e-cu-file-uploader>
 

@@ -1,8 +1,15 @@
-import { Component, Input, EventEmitter, OnInit } from '@angular/core';
+import {
+	Component,
+	Input,
+	EventEmitter,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ViewCell } from '@app/@shared/smart-table';
 
 @Component({
 	standalone: false,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './checkbox.component.html',
 })
 export class CheckboxComponent implements ViewCell, OnInit {

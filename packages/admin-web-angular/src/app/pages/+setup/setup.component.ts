@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { Store } from '@app/@core/data/store.service';
@@ -6,6 +6,7 @@ import { Store } from '@app/@core/data/store.service';
 @Component({
 	standalone: false,
 	styleUrls: ['./setup.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './setup.component.html',
 })
 export class SetupComponent implements OnInit {
@@ -14,7 +15,7 @@ export class SetupComponent implements OnInit {
 
 	constructor(
 		private readonly _router: Router,
-		private readonly _store: Store
+		private readonly _store: Store,
 	) {}
 	ngOnInit(): void {
 		this.fakeDataGenerator = !!+this._store.fakeDataGenerator;

@@ -4,6 +4,7 @@ import {
 	OnDestroy,
 	OnInit,
 	EventEmitter,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LocalDataSource } from '@app/@shared/smart-table';
@@ -37,6 +38,7 @@ interface ProductViewModel {
 	standalone: false,
 	selector: 'ea-products-table',
 	styleUrls: ['./products-table.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'products-table.component.html',
 })
 export class ProductsTableComponent implements OnInit, OnDestroy {
@@ -70,7 +72,7 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 		private readonly _productLocalesService: ProductLocalesService,
 		private readonly _productsCategoryService: ProductsCategoryService,
 		private readonly _notifyService: NotifyService,
-		private readonly modalService: NgbModal
+		private readonly modalService: NgbModal,
 	) {}
 
 	ngOnInit(): void {
@@ -138,7 +140,7 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 				this.categoriesInfo = categories;
 				this.loadDataSmartTable(
 					this.products || [],
-					this.dataCount || 0
+					this.dataCount || 0,
 				);
 			});
 	}
@@ -155,14 +157,14 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 	async loadDataSmartTable(
 		products: Product[],
 		dataCount: number,
-		page: number = 1
+		page: number = 1,
 	) {
 		this.dataCount = dataCount;
 		this.products = products;
 		let productsVM = products.map((product) => {
 			return {
 				checked: this.selectedProducts.find(
-					(d) => d.id === product['id']
+					(d) => d.id === product['id'],
 				),
 				title:
 					this.localeTranslate(product.title) ||
@@ -172,7 +174,7 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 					ProductsTableComponent.noInfoSign,
 				details: product.details[0]
 					? this.localeTranslate(product.details) ||
-					  ProductsTableComponent.noInfoSign
+						ProductsTableComponent.noInfoSign
 					: ProductsTableComponent.noInfoSign,
 				categories: {
 					ids: product.categories,
@@ -181,7 +183,9 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 						this.categoriesInfo
 							.filter((c) => product.categories.includes(c.id))
 							.map((c) =>
-								this._productLocalesService.getTranslate(c.name)
+								this._productLocalesService.getTranslate(
+									c.name,
+								),
 							)
 							.toString(),
 				},
@@ -206,7 +210,7 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 					this._selectedProducts.push(current);
 				} else {
 					this._selectedProducts = this._selectedProducts.filter(
-						(p) => p.id !== current.id
+						(p) => p.id !== current.id,
 					);
 				}
 				this.sourceSmartTable.load(allData);
@@ -216,7 +220,7 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 		productsData.splice(
 			this.perPage * (page - 1),
 			this.perPage,
-			...productsVM
+			...productsVM,
 		);
 		this.sourceSmartTable.load(productsData);
 	}
@@ -248,7 +252,7 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 			getTranslate('DESCRIPTION'),
 			getTranslate('DETAILS'),
 			getTranslate('IMAGES'),
-			getTranslate('CATEGORY')
+			getTranslate('CATEGORY'),
 		)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(([id, name, description, details, images, category]) => {
@@ -286,7 +290,7 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 							renderComponent: ProductCategoriesComponent,
 							filterFunction(
 								cell?: any,
-								search?: string
+								search?: string,
 							): boolean {
 								if (cell.search.includes(search)) {
 									return true;
@@ -316,7 +320,7 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 				this._loadSettingsSmartTable();
 				this.loadDataSmartTable(
 					this.products || [],
-					this.dataCount || 0
+					this.dataCount || 0,
 				);
 			});
 	}

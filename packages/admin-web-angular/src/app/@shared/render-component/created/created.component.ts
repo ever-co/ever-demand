@@ -5,6 +5,7 @@ import {
 	OnDestroy,
 	ElementRef,
 	ViewChild,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { ViewCell } from '@app/@shared/smart-table';
 import { timer, Subject } from 'rxjs';
@@ -14,6 +15,7 @@ import OrderStatus from '@modules/server.common/enums/OrderStatus';
 
 @Component({
 	standalone: false,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './created.component.html',
 })
 export class CreatedComponent implements ViewCell, OnInit, OnDestroy {
@@ -35,7 +37,7 @@ export class CreatedComponent implements ViewCell, OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.createdAt = new Date(
-			<any>this.rowData.createdAt
+			<any>this.rowData.createdAt,
 		).toLocaleDateString();
 		if (!this.notProcessing) {
 			if (this.rowData.startDeliveryTime) {
@@ -50,7 +52,7 @@ export class CreatedComponent implements ViewCell, OnInit, OnDestroy {
 			) {
 				const start = new Date(
 					this.rowData.deliveryTime ||
-						this.rowData.finishedProcessingTime
+						this.rowData.finishedProcessingTime,
 				);
 				const end = new Date(this.rowData.startDeliveryTime);
 

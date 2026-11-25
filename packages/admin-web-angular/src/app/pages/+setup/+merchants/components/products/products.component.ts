@@ -6,6 +6,7 @@ import {
 	OnDestroy,
 	Input,
 	OnChanges,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { SetupMerchantProductsCatalogComponent } from './products-catalog/products-catalog.component';
 import { SetupMerchantAddProductsComponent } from './add-products/add-products.component';
@@ -25,6 +26,7 @@ import { Store } from '@app/@core/data/store.service';
 	standalone: false,
 	selector: 'ea-merchants-setup-products',
 	templateUrl: './products.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./products.component.scss'],
 })
 export class SetupMerchantProductsComponent implements OnChanges, OnDestroy {
@@ -69,15 +71,15 @@ export class SetupMerchantProductsComponent implements OnChanges, OnDestroy {
 		private warehouseRouter: WarehouseRouter,
 		private notifyService: NotifyService,
 		private router: Router,
-		private readonly store: Store
+		private readonly store: Store,
 	) {}
 
 	get haveProductsForAdd() {
 		let hasSelectedCarriers = false;
 
 		if (this.productsCatalog) {
-			hasSelectedCarriers = this.productsCatalog.productsTable
-				.hasSelectedProducts;
+			hasSelectedCarriers =
+				this.productsCatalog.productsTable.hasSelectedProducts;
 		}
 
 		return hasSelectedCarriers;
@@ -130,7 +132,7 @@ export class SetupMerchantProductsComponent implements OnChanges, OnDestroy {
 					.toPromise();
 
 				store.products = store.products.filter(
-					(p: WarehouseProduct) => p.productId !== data.id
+					(p: WarehouseProduct) => p.productId !== data.id,
 				);
 
 				await this.warehouseRouter.save(store, this.store.token);
@@ -157,7 +159,7 @@ export class SetupMerchantProductsComponent implements OnChanges, OnDestroy {
 
 					this.productsTable.loadDataSmartTable(
 						products,
-						this.storeId
+						this.storeId,
 					);
 
 					this.storeProducts = products;

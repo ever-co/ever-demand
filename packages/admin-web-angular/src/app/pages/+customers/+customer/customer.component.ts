@@ -1,4 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '../../../@core/data/users.service';
 import User from '@modules/server.common/entities/User';
@@ -9,6 +14,7 @@ import { first, takeUntil, switchMap } from 'rxjs/operators';
 	standalone: false,
 	selector: 'ea-customer',
 	templateUrl: './customer.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./customer.component.scss'],
 })
 export class CustomerComponent implements OnInit, OnDestroy {
@@ -21,14 +27,14 @@ export class CustomerComponent implements OnInit, OnDestroy {
 	constructor(
 		private readonly _userService: UsersService,
 		private readonly _router: ActivatedRoute,
-		private readonly _route: Router
+		private readonly _route: Router,
 	) {}
 
 	ngOnInit() {
 		this.user$ = this._router.params.pipe(
 			switchMap((p) => {
 				return this._userService.getUserById(p.id);
-			})
+			}),
 		);
 
 		(async () => {
@@ -59,7 +65,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
 	private async _selectCurrentUser() {
 		const routeParams = await this._router.params.pipe(first()).toPromise();
 		this.selectedUser = this.users.filter(
-			(u) => u.id === routeParams.id
+			(u) => u.id === routeParams.id,
 		)[0];
 	}
 }

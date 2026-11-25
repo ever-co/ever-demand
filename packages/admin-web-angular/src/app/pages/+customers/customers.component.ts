@@ -1,4 +1,9 @@
-import { AfterViewInit, Component, OnDestroy } from '@angular/core';
+import {
+	AfterViewInit,
+	Component,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalDataSource } from '@app/@shared/smart-table';
 import { UsersService } from '../../@core/data/users.service';
@@ -40,6 +45,7 @@ const perPage = 7;
 	standalone: false,
 	selector: 'ea-customers',
 	templateUrl: './customers.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./customers.component.scss'],
 })
 export class CustomersComponent implements AfterViewInit, OnDestroy {
@@ -67,7 +73,7 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 		private readonly _usersService: UsersService,
 		private readonly _modalService: NgbModal,
 		private readonly _translateService: TranslateService,
-		private readonly _notifyService: NotifyService
+		private readonly _notifyService: NotifyService,
 	) {
 		this._loadSettingsSmartTable();
 	}
@@ -185,7 +191,7 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 			getTranslate('COUNTRY'),
 			getTranslate('CITY'),
 			getTranslate('ADDRESS'),
-			getTranslate('ORDERS_QTY')
+			getTranslate('ORDERS_QTY'),
 		).subscribe(
 			([
 				id,
@@ -251,7 +257,7 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 						perPage,
 					},
 				};
-			}
+			},
 		);
 	}
 
@@ -262,13 +268,14 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 		let users: User[] = [];
 
 		const loadData = async () => {
-			const usersOrders = await this._ordersService.getUsersOrdersCountInfo(
-				users.map((u) => u.id)
-			);
+			const usersOrders =
+				await this._ordersService.getUsersOrdersCountInfo(
+					users.map((u) => u.id),
+				);
 
 			let usersVM = users.map((user) => {
 				const userOrders = usersOrders.find(
-					(res) => res['id'] === user.id
+					(res) => res['id'] === user.id,
 				);
 
 				return {
@@ -278,10 +285,10 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 						user.firstName && user.lastName
 							? `${user.firstName} ${user.lastName}`
 							: user.firstName
-							? user.firstName
-							: user.lastName
-							? user.lastName
-							: user.id,
+								? user.firstName
+								: user.lastName
+									? user.lastName
+									: user.id,
 					email: user.email || CustomersComponent.noInfoSign,
 					phone: user.phone || CustomersComponent.noInfoSign,
 					country:
@@ -337,7 +344,7 @@ export class CustomersComponent implements AfterViewInit, OnDestroy {
 	// This is just workaround to show some search icon on smart table, in the future maybe we must find better solution.
 	private _addCustomHTMLElements(): any {
 		const target = document.querySelector(
-			'tr.angular2-smart-filters > th:nth-child(1)'
+			'tr.angular2-smart-filters > th:nth-child(1)',
 		);
 		if (target) {
 			target.innerHTML =

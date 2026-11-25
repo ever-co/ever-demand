@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
 	provideHttpClient,
 	withInterceptorsFromDi,
+	withXhr,
 } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NbToastrModule } from '@nebular/theme';
@@ -65,7 +66,7 @@ import { loadGoogleMaps } from './@core/utils/google-maps-loader';
 	providers: [
 		// The app relies on Zone.js change detection (Angular 21+ defaults to zoneless).
 		provideZoneChangeDetection(),
-		provideHttpClient(withInterceptorsFromDi()),
+		provideHttpClient(withXhr(), withInterceptorsFromDi()),
 		provideGraphQL(),
 		provideEchartsCore({ echarts: () => import('echarts') }),
 		provideHighlightOptions({
@@ -75,18 +76,18 @@ import { loadGoogleMaps } from './@core/utils/google-maps-loader';
 		provideAppInitializer(() =>
 			inject(ServerConnectionService).load(
 				environment.SERVICES_ENDPOINT,
-				inject(Store)
-			)
+				inject(Store),
+			),
 		),
 		provideAppInitializer(() =>
-			loadGoogleMaps(environment.GOOGLE_MAPS_API_KEY)
+			loadGoogleMaps(environment.GOOGLE_MAPS_API_KEY),
 		),
 		MaintenanceService,
 		provideAppInitializer(() =>
 			inject(MaintenanceService).load(
 				environment['SETTINGS_APP_TYPE'],
-				environment['SETTINGS_MAINTENANCE_API_URL']
-			)
+				environment['SETTINGS_MAINTENANCE_API_URL'],
+			),
 		),
 		provideAppInitializer(() => inject(ServerSettingsService).load()),
 		{ provide: APP_BASE_HREF, useValue: '/' },

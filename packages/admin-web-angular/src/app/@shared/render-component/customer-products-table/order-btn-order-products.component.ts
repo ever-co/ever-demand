@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ViewCell } from '@app/@shared/smart-table';
 import { CustomOrderComponent } from '../../../pages/+customers/+customer/ea-customer-products/custom-order';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -6,6 +11,7 @@ import Product from '@modules/server.common/entities/Product';
 
 @Component({
 	standalone: false,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<div class="product">
 			<div (click)="openModal()" class="btn btn-custom">

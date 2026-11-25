@@ -4,6 +4,7 @@ import {
 	OnDestroy,
 	Output,
 	EventEmitter,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import Carrier from '@modules/server.common/entities/Carrier';
@@ -17,6 +18,7 @@ import { ToasterService } from '@app/@core/toaster';
 	standalone: false,
 	selector: 'ea-carrier-orders-status',
 	styleUrls: ['./carrier-orders-status.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'carrier-orders-status.component.html',
 })
 export class CarrierOrdersStatusComponent implements OnDestroy {
@@ -42,7 +44,7 @@ export class CarrierOrdersStatusComponent implements OnDestroy {
 	constructor(
 		private carrierOrdersRouter: CarrierOrdersRouter,
 		private orderRouter: OrderRouter,
-		private readonly _toasterService: ToasterService
+		private readonly _toasterService: ToasterService,
 	) {
 		this.enumOrderCarrierStatus = OrderCarrierStatus;
 	}
@@ -79,7 +81,7 @@ export class CarrierOrdersStatusComponent implements OnDestroy {
 		try {
 			await this.carrierOrdersRouter.selectedForDelivery(
 				this.selectedCarrier.id,
-				this.ordersIds
+				this.ordersIds,
 			);
 		} catch (error) {
 			order.carrierStatus = previousCarrierStatus;
@@ -108,7 +110,7 @@ export class CarrierOrdersStatusComponent implements OnDestroy {
 		try {
 			this.selectedOrder = await this.orderRouter.updateCarrierStatus(
 				order.id,
-				status
+				status,
 			);
 
 			this.getChangeOrder.emit(this.selectedOrder);
@@ -134,7 +136,7 @@ export class CarrierOrdersStatusComponent implements OnDestroy {
 		try {
 			await this.carrierOrdersRouter.cancelDelivery(
 				this.selectedCarrier.id,
-				this.ordersIds
+				this.ordersIds,
 			);
 
 			this.selectedOrder = null;
@@ -152,7 +154,7 @@ export class CarrierOrdersStatusComponent implements OnDestroy {
 	private _showError(error: any) {
 		this._toasterService.pop(
 			'error',
-			error && error.message ? error.message : `${error}`
+			error && error.message ? error.message : `${error}`,
 		);
 	}
 }

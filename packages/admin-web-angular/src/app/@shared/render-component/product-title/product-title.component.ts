@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
 	standalone: false,
 	styleUrls: ['./product-title.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './product-title.component.html',
 })
 export class ProductTitleComponent {

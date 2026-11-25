@@ -1,4 +1,11 @@
-import { Component, OnDestroy, ViewChild, OnInit, Input } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	ViewChild,
+	OnInit,
+	Input,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { OrdersChartComponent } from './charts/orders-chart/orders-chart.component';
 import { ProfitChartComponent } from './charts/profit-chart/profit-chart.component';
 import { TranslateService } from '@ngx-translate/core';
@@ -29,6 +36,7 @@ interface IOrdersChartModel {
 	standalone: false,
 	selector: 'ea-ecommerce-charts',
 	styleUrls: ['./charts-panel.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './charts-panel.component.html',
 })
 export class ChartsPanelComponent implements OnInit, OnDestroy {
@@ -84,7 +92,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		private readonly _translateService: TranslateService,
 		private readonly _ordersProfitChartService: OrdersProfitChartService,
 		private readonly _periodService: PeriodsService,
-		private readonly _ordersChartService: OrdersChartService
+		private readonly _ordersChartService: OrdersChartService,
 	) {
 		this._ordersProfitChartService
 			.getOrderProfitChartSummary()
@@ -138,23 +146,23 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 
 		return {
 			TOTAL_ORDERS_OVER_PERIOD: this._translate(
-				`${rootPrefix}.TOTAL_ORDERS`
+				`${rootPrefix}.TOTAL_ORDERS`,
 			),
 			TOTAL_COMPLETED_ORDERS_OVER_PERIOD: this._translate(
-				`${rootPrefix}.TOTAL_COMPLETED_ORDERS`
+				`${rootPrefix}.TOTAL_COMPLETED_ORDERS`,
 			),
 			TOTAL_CANCELLED_ORDERS_OVER_PERIOD: this._translate(
-				`${rootPrefix}.TOTAL_CANCELLED_ORDERS`
+				`${rootPrefix}.TOTAL_CANCELLED_ORDERS`,
 			),
 
 			TOTAL_REVENUE_OVER_PERIOD: this._translate(
-				`${rootPrefix}.TOTAL_REVENUE_ALL_ORDERS`
+				`${rootPrefix}.TOTAL_REVENUE_ALL_ORDERS`,
 			),
 			TOTAL_REVENUE_COMPLETED_ORDERS_OVER_PERIOD: this._translate(
-				`${rootPrefix}.TOTAL_REVENUE_COMPLETED_ORDERS`
+				`${rootPrefix}.TOTAL_REVENUE_COMPLETED_ORDERS`,
 			),
 			TOTAL_REVENUE_CANCELLED_ORDERS_OVER_PERIOD: this._translate(
-				`${rootPrefix}.TOTAL_LOST_REVENUE_CANCELLED_ORDERS`
+				`${rootPrefix}.TOTAL_LOST_REVENUE_CANCELLED_ORDERS`,
 			),
 		};
 	}
@@ -343,16 +351,14 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				const orderMonth = orderDateCreated.getMonth();
 				const orderYear = orderDateCreated.getFullYear();
 
-				const orderDateRange = this._periodService.getDateLabelKey(
-					orderDateCreated
-				);
+				const orderDateRange =
+					this._periodService.getDateLabelKey(orderDateCreated);
 				const orderWeekRange = this._periodService.getWeekLabelKey(
 					orderDateCreated,
-					this._getDateWeekNumber
+					this._getDateWeekNumber,
 				);
-				const orderMonthRange = this._periodService.getMonthLabelKey(
-					orderDateCreated
-				);
+				const orderMonthRange =
+					this._periodService.getMonthLabelKey(orderDateCreated);
 
 				if (this._isOrderChartSelected) {
 					this._incrementOrdersAmountSummary(order);
@@ -366,7 +372,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 						orderDateRange,
 						orderWeekRange,
 						orderMonthRange,
-						order.isCancelled
+						order.isCancelled,
 					);
 				} else {
 					const orderTotalPrice = order.totalPrice;
@@ -382,7 +388,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 						orderWeekRange,
 						orderMonthRange,
 						orderTotalPrice,
-						order.isCancelled
+						order.isCancelled,
 					);
 				}
 			});
@@ -405,7 +411,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 
 	private _incrementOrdersProfitSummary(
 		order: Order,
-		orderTotalPrice: number
+		orderTotalPrice: number,
 	) {
 		this._chartPanelSummaryTotal += orderTotalPrice;
 		order.isCancelled
@@ -422,7 +428,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		orderDateRange: string,
 		orderWeekRange: string,
 		orderMonthRange: string,
-		isCancelled: boolean
+		isCancelled: boolean,
 	) {
 		this._setupOrdersChartTotal(
 			orderHour,
@@ -432,7 +438,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 			orderYear,
 			orderDateRange,
 			orderWeekRange,
-			orderMonthRange
+			orderMonthRange,
 		);
 
 		if (isCancelled) {
@@ -444,7 +450,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				orderYear,
 				orderDateRange,
 				orderWeekRange,
-				orderMonthRange
+				orderMonthRange,
 			);
 		} else {
 			this._setupOrdersChartCompleted(
@@ -455,7 +461,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				orderYear,
 				orderDateRange,
 				orderWeekRange,
-				orderMonthRange
+				orderMonthRange,
 			);
 		}
 	}
@@ -470,7 +476,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		orderWeekRange: string,
 		orderMonthRange: string,
 		orderTotalPrice: number,
-		isCancelled: boolean
+		isCancelled: boolean,
 	) {
 		this._setupProfitChartTotal(
 			orderHour,
@@ -481,7 +487,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 			orderDateRange,
 			orderWeekRange,
 			orderMonthRange,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 
 		if (isCancelled) {
@@ -494,7 +500,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				orderDateRange,
 				orderWeekRange,
 				orderMonthRange,
-				orderTotalPrice
+				orderTotalPrice,
 			);
 		} else {
 			this._setupProfitChartCompleted(
@@ -506,7 +512,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				orderDateRange,
 				orderWeekRange,
 				orderMonthRange,
-				orderTotalPrice
+				orderTotalPrice,
 			);
 		}
 	}
@@ -519,7 +525,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		orderYear: number,
 		orderDateRange: string,
 		orderWeekRange: string,
-		orderMonthRange: string
+		orderMonthRange: string,
 	) {
 		switch (this.period) {
 			case ChartsPanelComponent._PERIODS.today:
@@ -528,19 +534,19 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 			case ChartsPanelComponent._PERIODS.lastWeek:
 				this._incrementTotalOrdersAmount(
 					this._ordersLastWeek,
-					orderWeekDay
+					orderWeekDay,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.lastMonth:
 				this._incrementTotalOrdersAmount(
 					this._ordersLastMonth,
-					orderDate
+					orderDate,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.currentYear:
 				this._incrementTotalOrdersAmount(
 					this._ordersCurrentYear,
-					orderMonth
+					orderMonth,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.years:
@@ -552,25 +558,25 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 			case ChartsPanelComponent._PERIODS.rangeDays:
 				this._incrementTotalOrdersAmount(
 					this._ordersDateRange,
-					orderDateRange
+					orderDateRange,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.rangeWeeks:
 				this._incrementTotalOrdersAmount(
 					this._ordersWeeksRange,
-					orderWeekRange
+					orderWeekRange,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.rangeMonths:
 				this._incrementTotalOrdersAmount(
 					this._ordersMonthsRange,
-					orderMonthRange
+					orderMonthRange,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.rangeYears:
 				this._incrementTotalOrdersAmount(
 					this._ordersYearsRange,
-					orderYear
+					orderYear,
 				);
 				break;
 		}
@@ -614,67 +620,67 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		orderYear: number,
 		orderDateRange: string,
 		orderWeekRange: string,
-		orderMonthRange: string
+		orderMonthRange: string,
 	) {
 		switch (this.period) {
 			case ChartsPanelComponent._PERIODS.today:
 				this._incrementCanceledOrdersAmount(
 					this._ordersToday,
-					orderHour
+					orderHour,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.lastWeek:
 				this._incrementCanceledOrdersAmount(
 					this._ordersLastWeek,
-					orderWeekDay
+					orderWeekDay,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.lastMonth:
 				this._incrementCanceledOrdersAmount(
 					this._ordersLastMonth,
-					orderDate
+					orderDate,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.currentYear:
 				this._incrementCanceledOrdersAmount(
 					this._ordersCurrentYear,
-					orderMonth
+					orderMonth,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.years:
 				this._incrementCanceledOrdersAmount(
 					this._ordersYears,
-					orderYear
+					orderYear,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.rangeDay:
 				this._incrementCanceledOrdersAmount(
 					this._ordersToday,
-					orderHour
+					orderHour,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.rangeDays:
 				this._incrementCanceledOrdersAmount(
 					this._ordersDateRange,
-					orderDateRange
+					orderDateRange,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.rangeWeeks:
 				this._incrementCanceledOrdersAmount(
 					this._ordersWeeksRange,
-					orderWeekRange
+					orderWeekRange,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.rangeMonths:
 				this._incrementCanceledOrdersAmount(
 					this._ordersMonthsRange,
-					orderMonthRange
+					orderMonthRange,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.rangeYears:
 				this._incrementCanceledOrdersAmount(
 					this._ordersYearsRange,
-					orderYear
+					orderYear,
 				);
 				break;
 		}
@@ -718,67 +724,67 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		orderYear: number,
 		orderDateRange: string,
 		orderWeekRange: string,
-		orderMonthRange: string
+		orderMonthRange: string,
 	) {
 		switch (this.period) {
 			case ChartsPanelComponent._PERIODS.today:
 				this._incrementCompletedOrdersAmount(
 					this._ordersToday,
-					orderHour
+					orderHour,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.lastWeek:
 				this._incrementCompletedOrdersAmount(
 					this._ordersLastWeek,
-					orderWeekDay
+					orderWeekDay,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.lastMonth:
 				this._incrementCompletedOrdersAmount(
 					this._ordersLastMonth,
-					orderDate
+					orderDate,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.currentYear:
 				this._incrementCompletedOrdersAmount(
 					this._ordersCurrentYear,
-					orderMonth
+					orderMonth,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.years:
 				this._incrementCompletedOrdersAmount(
 					this._ordersYears,
-					orderYear
+					orderYear,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.rangeDay:
 				this._incrementCompletedOrdersAmount(
 					this._ordersToday,
-					orderHour
+					orderHour,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.rangeDays:
 				this._incrementCompletedOrdersAmount(
 					this._ordersDateRange,
-					orderDateRange
+					orderDateRange,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.rangeWeeks:
 				this._incrementCompletedOrdersAmount(
 					this._ordersWeeksRange,
-					orderWeekRange
+					orderWeekRange,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.rangeMonths:
 				this._incrementCompletedOrdersAmount(
 					this._ordersMonthsRange,
-					orderMonthRange
+					orderMonthRange,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.rangeYears:
 				this._incrementCompletedOrdersAmount(
 					this._ordersYearsRange,
-					orderYear
+					orderYear,
 				);
 				break;
 		}
@@ -823,21 +829,21 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		orderDateRange: string,
 		orderWeekRange: string,
 		orderMonthRange: string,
-		orderTotalPrice: number
+		orderTotalPrice: number,
 	) {
 		switch (this.period) {
 			case ChartsPanelComponent._PERIODS.today:
 				this._incrementTotalOrdersProfit(
 					this._ordersToday,
 					orderHour,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.lastWeek:
 				this._incrementTotalOrdersProfit(
 					this._ordersLastWeek,
 					orderWeekDay,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 
 				break;
@@ -845,7 +851,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				this._incrementTotalOrdersProfit(
 					this._ordersLastMonth,
 					orderDate,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 
 				break;
@@ -853,7 +859,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				this._incrementTotalOrdersProfit(
 					this._ordersCurrentYear,
 					orderMonth,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 
 				break;
@@ -861,21 +867,21 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				this._incrementTotalOrdersProfit(
 					this._ordersYears,
 					orderYear,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.rangeDay:
 				this._incrementTotalOrdersProfit(
 					this._ordersToday,
 					orderHour,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.rangeDays:
 				this._incrementTotalOrdersProfit(
 					this._ordersDateRange,
 					orderDateRange,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 
 				break;
@@ -883,7 +889,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				this._incrementTotalOrdersProfit(
 					this._ordersWeeksRange,
 					orderWeekRange,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 
 				break;
@@ -891,7 +897,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				this._incrementTotalOrdersProfit(
 					this._ordersMonthsRange,
 					orderMonthRange,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 
 				break;
@@ -899,7 +905,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				this._incrementTotalOrdersProfit(
 					this._ordersYearsRange,
 					orderYear,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 				break;
 		}
@@ -947,21 +953,21 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		orderDateRange: string,
 		orderWeekRange: string,
 		orderMonthRange: string,
-		orderTotalPrice: number
+		orderTotalPrice: number,
 	) {
 		switch (this.period) {
 			case ChartsPanelComponent._PERIODS.today:
 				this._incrementCanceledOrdersProfit(
 					this._ordersToday,
 					orderHour,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.lastWeek:
 				this._incrementCanceledOrdersProfit(
 					this._ordersLastWeek,
 					orderWeekDay,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 
 				break;
@@ -969,7 +975,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				this._incrementCanceledOrdersProfit(
 					this._ordersLastMonth,
 					orderDate,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 
 				break;
@@ -977,7 +983,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				this._incrementCanceledOrdersProfit(
 					this._ordersCurrentYear,
 					orderMonth,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 
 				break;
@@ -985,21 +991,21 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				this._incrementCanceledOrdersProfit(
 					this._ordersYears,
 					orderYear,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.rangeDay:
 				this._incrementCanceledOrdersProfit(
 					this._ordersToday,
 					orderHour,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.rangeDays:
 				this._incrementCanceledOrdersProfit(
 					this._ordersDateRange,
 					orderDateRange,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 
 				break;
@@ -1007,7 +1013,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				this._incrementCanceledOrdersProfit(
 					this._ordersWeeksRange,
 					orderWeekRange,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 
 				break;
@@ -1015,7 +1021,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				this._incrementCanceledOrdersProfit(
 					this._ordersMonthsRange,
 					orderMonthRange,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 
 				break;
@@ -1023,7 +1029,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				this._incrementCanceledOrdersProfit(
 					this._ordersYearsRange,
 					orderYear,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 				break;
 		}
@@ -1071,21 +1077,21 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		orderDateRange: string,
 		orderWeekRange: string,
 		orderMonthRange: string,
-		orderTotalPrice: number
+		orderTotalPrice: number,
 	) {
 		switch (this.period) {
 			case ChartsPanelComponent._PERIODS.today:
 				this._incrementCompletedOrdersProfit(
 					this._ordersToday,
 					orderHour,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.lastWeek:
 				this._incrementCompletedOrdersProfit(
 					this._ordersLastWeek,
 					orderWeekDay,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 
 				break;
@@ -1093,7 +1099,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				this._incrementCompletedOrdersProfit(
 					this._ordersLastMonth,
 					orderDate,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 
 				break;
@@ -1101,7 +1107,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				this._incrementCompletedOrdersProfit(
 					this._ordersCurrentYear,
 					orderMonth,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 
 				break;
@@ -1109,21 +1115,21 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				this._incrementCompletedOrdersProfit(
 					this._ordersYears,
 					orderYear,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.rangeDay:
 				this._incrementCompletedOrdersProfit(
 					this._ordersToday,
 					orderHour,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 				break;
 			case ChartsPanelComponent._PERIODS.rangeDays:
 				this._incrementCompletedOrdersProfit(
 					this._ordersDateRange,
 					orderDateRange,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 
 				break;
@@ -1131,7 +1137,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				this._incrementCompletedOrdersProfit(
 					this._ordersWeeksRange,
 					orderWeekRange,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 
 				break;
@@ -1139,7 +1145,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				this._incrementCompletedOrdersProfit(
 					this._ordersMonthsRange,
 					orderMonthRange,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 
 				break;
@@ -1147,7 +1153,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 				this._incrementCompletedOrdersProfit(
 					this._ordersYearsRange,
 					orderYear,
-					orderTotalPrice
+					orderTotalPrice,
 				);
 				break;
 		}
@@ -1194,7 +1200,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		orderWeekDay: number,
 		orderDate: number,
 		orderMonth: number,
-		orderYear: number
+		orderYear: number,
 	) {
 		this._incrementTotalOrdersAmount(this._ordersLastWeek, orderWeekDay);
 
@@ -1209,18 +1215,18 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		orderDateRange: string,
 		orderWeekRange: string,
 		orderMonthRange: string,
-		orderYear: number
+		orderYear: number,
 	) {
 		this._incrementTotalOrdersAmount(this._ordersDateRange, orderDateRange);
 
 		this._incrementTotalOrdersAmount(
 			this._ordersWeeksRange,
-			orderWeekRange
+			orderWeekRange,
 		);
 
 		this._incrementTotalOrdersAmount(
 			this._ordersMonthsRange,
-			orderMonthRange
+			orderMonthRange,
 		);
 
 		this._incrementTotalOrdersAmount(this._ordersYearsRange, orderYear);
@@ -1234,7 +1240,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		orderWeekDay: number,
 		orderDate: number,
 		orderMonth: number,
-		orderYear: number
+		orderYear: number,
 	) {
 		this._incrementCanceledOrdersAmount(this._ordersLastWeek, orderWeekDay);
 
@@ -1242,7 +1248,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 
 		this._incrementCanceledOrdersAmount(
 			this._ordersCurrentYear,
-			orderMonth
+			orderMonth,
 		);
 
 		this._incrementCanceledOrdersAmount(this._ordersYears, orderYear);
@@ -1252,21 +1258,21 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		orderDateRange: string,
 		orderWeekRange: string,
 		orderMonthRange: string,
-		orderYear: number
+		orderYear: number,
 	) {
 		this._incrementCanceledOrdersAmount(
 			this._ordersDateRange,
-			orderDateRange
+			orderDateRange,
 		);
 
 		this._incrementCanceledOrdersAmount(
 			this._ordersWeeksRange,
-			orderWeekRange
+			orderWeekRange,
 		);
 
 		this._incrementCanceledOrdersAmount(
 			this._ordersMonthsRange,
-			orderMonthRange
+			orderMonthRange,
 		);
 
 		this._incrementCanceledOrdersAmount(this._ordersYearsRange, orderYear);
@@ -1280,18 +1286,18 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		orderWeekDay: number,
 		orderDate: number,
 		orderMonth: number,
-		orderYear: number
+		orderYear: number,
 	) {
 		this._incrementCompletedOrdersAmount(
 			this._ordersLastWeek,
-			orderWeekDay
+			orderWeekDay,
 		);
 
 		this._incrementCompletedOrdersAmount(this._ordersLastMonth, orderDate);
 
 		this._incrementCompletedOrdersAmount(
 			this._ordersCurrentYear,
-			orderMonth
+			orderMonth,
 		);
 
 		this._incrementCompletedOrdersAmount(this._ordersYears, orderYear);
@@ -1301,21 +1307,21 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		orderDateRange: string,
 		orderWeekRange: string,
 		orderMonthRange: string,
-		orderYear: number
+		orderYear: number,
 	) {
 		this._incrementCompletedOrdersAmount(
 			this._ordersDateRange,
-			orderDateRange
+			orderDateRange,
 		);
 
 		this._incrementCompletedOrdersAmount(
 			this._ordersWeeksRange,
-			orderWeekRange
+			orderWeekRange,
 		);
 
 		this._incrementCompletedOrdersAmount(
 			this._ordersMonthsRange,
-			orderMonthRange
+			orderMonthRange,
 		);
 
 		this._incrementCompletedOrdersAmount(this._ordersYearsRange, orderYear);
@@ -1323,12 +1329,12 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 
 	private _setupProfitChartTotalCommon(
 		orderHour: number,
-		orderTotalPrice: number
+		orderTotalPrice: number,
 	) {
 		this._incrementTotalOrdersProfit(
 			this._ordersToday,
 			orderHour,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 	}
 
@@ -1337,30 +1343,30 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		orderDate: number,
 		orderMonth: number,
 		orderYear: number,
-		orderTotalPrice: number
+		orderTotalPrice: number,
 	) {
 		this._incrementTotalOrdersProfit(
 			this._ordersLastWeek,
 			orderWeekDay,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 
 		this._incrementTotalOrdersProfit(
 			this._ordersLastMonth,
 			orderDate,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 
 		this._incrementTotalOrdersProfit(
 			this._ordersCurrentYear,
 			orderMonth,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 
 		this._incrementTotalOrdersProfit(
 			this._ordersYears,
 			orderYear,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 	}
 
@@ -1369,41 +1375,41 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		orderWeekRange: string,
 		orderMonthRange: string,
 		orderYear: number,
-		orderTotalPrice: number
+		orderTotalPrice: number,
 	) {
 		this._incrementTotalOrdersProfit(
 			this._ordersDateRange,
 			orderDateRange,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 
 		this._incrementTotalOrdersProfit(
 			this._ordersWeeksRange,
 			orderWeekRange,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 
 		this._incrementTotalOrdersProfit(
 			this._ordersMonthsRange,
 			orderMonthRange,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 
 		this._incrementTotalOrdersProfit(
 			this._ordersYearsRange,
 			orderYear,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 	}
 
 	private _setupProfitChartCancelledCommon(
 		orderHour: number,
-		orderTotalPrice: number
+		orderTotalPrice: number,
 	) {
 		this._incrementCanceledOrdersProfit(
 			this._ordersToday,
 			orderHour,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 	}
 
@@ -1412,30 +1418,30 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		orderDate: number,
 		orderMonth: number,
 		orderYear: number,
-		orderTotalPrice: number
+		orderTotalPrice: number,
 	) {
 		this._incrementCanceledOrdersProfit(
 			this._ordersLastWeek,
 			orderWeekDay,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 
 		this._incrementCanceledOrdersProfit(
 			this._ordersLastMonth,
 			orderDate,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 
 		this._incrementCanceledOrdersProfit(
 			this._ordersCurrentYear,
 			orderMonth,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 
 		this._incrementCanceledOrdersProfit(
 			this._ordersYears,
 			orderYear,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 	}
 
@@ -1444,41 +1450,41 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		orderTotalPrice: number,
 		orderWeekRange: string,
 		orderMonthRange: string,
-		orderYear: number
+		orderYear: number,
 	) {
 		this._incrementCanceledOrdersProfit(
 			this._ordersDateRange,
 			orderDateRange,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 
 		this._incrementCanceledOrdersProfit(
 			this._ordersWeeksRange,
 			orderWeekRange,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 
 		this._incrementCanceledOrdersProfit(
 			this._ordersMonthsRange,
 			orderMonthRange,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 
 		this._incrementCanceledOrdersProfit(
 			this._ordersYearsRange,
 			orderYear,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 	}
 
 	private _setupProfitChartCompletedCommon(
 		orderHour: number,
-		orderTotalPrice: number
+		orderTotalPrice: number,
 	) {
 		this._incrementCompletedOrdersProfit(
 			this._ordersToday,
 			orderHour,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 	}
 
@@ -1487,30 +1493,30 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		orderDate: number,
 		orderMonth: number,
 		orderYear: number,
-		orderTotalPrice: number
+		orderTotalPrice: number,
 	) {
 		this._incrementCompletedOrdersProfit(
 			this._ordersLastWeek,
 			orderWeekDay,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 
 		this._incrementCompletedOrdersProfit(
 			this._ordersLastMonth,
 			orderDate,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 
 		this._incrementCompletedOrdersProfit(
 			this._ordersCurrentYear,
 			orderMonth,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 
 		this._incrementCompletedOrdersProfit(
 			this._ordersYears,
 			orderYear,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 	}
 
@@ -1519,36 +1525,36 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		orderTotalPrice: number,
 		orderWeekRange: string,
 		orderMonthRange: string,
-		orderYear: number
+		orderYear: number,
 	) {
 		this._incrementCompletedOrdersProfit(
 			this._ordersDateRange,
 			orderDateRange,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 
 		this._incrementCompletedOrdersProfit(
 			this._ordersWeeksRange,
 			orderWeekRange,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 
 		this._incrementCompletedOrdersProfit(
 			this._ordersMonthsRange,
 			orderMonthRange,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 
 		this._incrementCompletedOrdersProfit(
 			this._ordersYearsRange,
 			orderYear,
-			orderTotalPrice
+			orderTotalPrice,
 		);
 	}
 
 	private _incrementTotalOrdersAmount(
 		varToStore: IOrdersChartModel,
-		key: number | string
+		key: number | string,
 	) {
 		if (!varToStore.total[key]) {
 			varToStore.total[key] = 0;
@@ -1558,7 +1564,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 
 	private _incrementCanceledOrdersAmount(
 		varToStore: IOrdersChartModel,
-		key: number | string
+		key: number | string,
 	) {
 		if (!varToStore.cancelled[key]) {
 			varToStore.cancelled[key] = 0;
@@ -1568,7 +1574,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 
 	private _incrementCompletedOrdersAmount(
 		varToStore: IOrdersChartModel,
-		key: number | string
+		key: number | string,
 	) {
 		if (!varToStore.completed[key]) {
 			varToStore.completed[key] = 0;
@@ -1579,7 +1585,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 	private _incrementTotalOrdersProfit(
 		varToStore: IOrdersChartModel,
 		key: number | string,
-		value: number
+		value: number,
 	) {
 		if (!varToStore.total[key]) {
 			varToStore.total[key] = 0;
@@ -1590,7 +1596,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 	private _incrementCanceledOrdersProfit(
 		varToStore: IOrdersChartModel,
 		key: number | string,
-		value: number
+		value: number,
 	) {
 		if (!varToStore.cancelled[key]) {
 			varToStore.cancelled[key] = 0;
@@ -1601,7 +1607,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 	private _incrementCompletedOrdersProfit(
 		varToStore: IOrdersChartModel,
 		key: number | string,
-		value: number
+		value: number,
 	) {
 		if (!varToStore.completed[key]) {
 			varToStore.completed[key] = 0;
@@ -1664,7 +1670,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		this.ordersChartData = {
 			chartLabel: this._ordersChartService.getDataLabels(
 				hours.length,
-				hours
+				hours,
 			),
 			linesData: initialLinesData,
 		};
@@ -1696,7 +1702,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		this.ordersChartData = {
 			chartLabel: this._ordersChartService.getDataLabels(
 				weeksDays.length,
-				weeksDays
+				weeksDays,
 			),
 			linesData: initialLinesData,
 		};
@@ -1728,7 +1734,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		this.ordersChartData = {
 			chartLabel: this._ordersChartService.getDataLabels(
 				dates.length,
-				dates
+				dates,
 			),
 			linesData: initialLinesData,
 		};
@@ -1765,7 +1771,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		this.ordersChartData = {
 			chartLabel: this._ordersChartService.getDataLabels(
 				months.length,
-				months
+				months,
 			),
 			linesData: initialLinesData,
 		};
@@ -1796,7 +1802,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		this.ordersChartData = {
 			chartLabel: this._ordersChartService.getDataLabels(
 				years.length,
-				years
+				years,
 			),
 			linesData: initialLinesData,
 		};
@@ -1819,7 +1825,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 
 	private _setupOrdersChartForDaysRange() {
 		const { keys, labels } = this._periodService.getDatesLabelsKeys(
-			this._dateLabelRange
+			this._dateLabelRange,
 		);
 
 		const initialLinesData = this._getInitialChartData(labels.length);
@@ -1827,7 +1833,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		this.ordersChartData = {
 			chartLabel: this._ordersChartService.getDataLabels(
 				labels.length,
-				labels
+				labels,
 			),
 			linesData: initialLinesData,
 		};
@@ -1851,7 +1857,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 	private _setupOrdersChartForWeeksRange() {
 		const { keys, labels } = this._periodService.getWeekLabelsKeys(
 			this._dateLabelRange,
-			this._getDateWeekNumber
+			this._getDateWeekNumber,
 		);
 
 		const initialLinesData = this._getInitialChartData(labels.length);
@@ -1859,7 +1865,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		this.ordersChartData = {
 			chartLabel: this._ordersChartService.getDataLabels(
 				labels.length,
-				labels
+				labels,
 			),
 			linesData: initialLinesData,
 		};
@@ -1882,7 +1888,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 
 	private _setupOrdersChartForMonthsRange() {
 		const { keys, labels } = this._periodService.getMonthLabelsKeys(
-			this._dateLabelRange
+			this._dateLabelRange,
 		);
 
 		const initialLinesData = this._getInitialChartData(labels.length);
@@ -1890,7 +1896,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		this.ordersChartData = {
 			chartLabel: this._ordersChartService.getDataLabels(
 				labels.length,
-				labels
+				labels,
 			),
 			linesData: initialLinesData,
 		};
@@ -1918,7 +1924,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		this.ordersChartData = {
 			chartLabel: this._ordersChartService.getDataLabels(
 				years.length,
-				years
+				years,
 			),
 			linesData: initialLinesData,
 		};
@@ -1946,7 +1952,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		this.profitChartData = {
 			chartLabel: this._ordersChartService.getDataLabels(
 				hours.length,
-				hours
+				hours,
 			),
 			data: initialLinesData,
 		};
@@ -1978,7 +1984,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		this.profitChartData = {
 			chartLabel: this._ordersChartService.getDataLabels(
 				weeks.length,
-				weeks
+				weeks,
 			),
 			data: initialLinesData,
 		};
@@ -2010,7 +2016,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		this.profitChartData = {
 			chartLabel: this._ordersChartService.getDataLabels(
 				dates.length,
-				dates
+				dates,
 			),
 			data: initialLinesData,
 		};
@@ -2045,7 +2051,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		this.profitChartData = {
 			chartLabel: this._ordersChartService.getDataLabels(
 				months.length,
-				months
+				months,
 			),
 			data: initialLinesData,
 		};
@@ -2072,7 +2078,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		this.profitChartData = {
 			chartLabel: this._ordersChartService.getDataLabels(
 				years.length,
-				years
+				years,
 			),
 			data: initialLinesData,
 		};
@@ -2095,7 +2101,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 
 	private _setupProfitChartForDaysRange() {
 		const { keys, labels } = this._periodService.getDatesLabelsKeys(
-			this._dateLabelRange
+			this._dateLabelRange,
 		);
 
 		const initialLinesData = this._getInitialChartData(labels.length);
@@ -2103,7 +2109,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		this.profitChartData = {
 			chartLabel: this._ordersChartService.getDataLabels(
 				labels.length,
-				labels
+				labels,
 			),
 			data: initialLinesData,
 		};
@@ -2127,7 +2133,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 	private _setupProfitChartForWeeksRange() {
 		const { keys, labels } = this._periodService.getWeekLabelsKeys(
 			this._dateLabelRange,
-			this._getDateWeekNumber
+			this._getDateWeekNumber,
 		);
 
 		const initialLinesData = this._getInitialChartData(labels.length);
@@ -2135,7 +2141,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		this.profitChartData = {
 			chartLabel: this._ordersChartService.getDataLabels(
 				labels.length,
-				labels
+				labels,
 			),
 			data: initialLinesData,
 		};
@@ -2158,7 +2164,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 
 	private _setupProfitChartForMonthsRange() {
 		const { keys, labels } = this._periodService.getMonthLabelsKeys(
-			this._dateLabelRange
+			this._dateLabelRange,
 		);
 
 		const initialLinesData = this._getInitialChartData(labels.length);
@@ -2166,7 +2172,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		this.profitChartData = {
 			chartLabel: this._ordersChartService.getDataLabels(
 				labels.length,
-				labels
+				labels,
 			),
 			data: initialLinesData,
 		};
@@ -2194,7 +2200,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 		this.profitChartData = {
 			chartLabel: this._ordersChartService.getDataLabels(
 				years.length,
-				years
+				years,
 			),
 			data: initialLinesData,
 		};
@@ -2283,7 +2289,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 	private _isOrderCustomDayPeriodMatch(order: Order): boolean {
 		const dateToCompareDay = this._dateLabelRange.from.getDate();
 		const dateToCompareWeek = this._getDateWeekNumber(
-			this._dateLabelRange.from
+			this._dateLabelRange.from,
 		);
 		const dateToCompareMonth = this._dateLabelRange.from.getMonth();
 		const dateToCompareYear = this._dateLabelRange.from.getFullYear();
@@ -2440,7 +2446,7 @@ export class ChartsPanelComponent implements OnInit, OnDestroy {
 
 		return (
 			Math.ceil(
-				(firstThursday - (target as any)) / (7 * 24 * 3600 * 1000)
+				(firstThursday - (target as any)) / (7 * 24 * 3600 * 1000),
 			) + 1
 		);
 	}

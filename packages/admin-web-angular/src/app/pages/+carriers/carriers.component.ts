@@ -1,4 +1,10 @@
-import { Component, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	ViewChild,
+	AfterViewInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { CarriersService } from '../../@core/data/carriers.service';
 import { CarrierMutationComponent } from '../../@shared/carrier/carrier-mutation';
 import { Subject } from 'rxjs';
@@ -17,6 +23,7 @@ const perPage = 5;
 	standalone: false,
 	selector: 'ea-carriers',
 	templateUrl: 'carriers.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['carriers.component.scss'],
 })
 export class CarriersComponent implements OnDestroy, AfterViewInit {
@@ -34,7 +41,7 @@ export class CarriersComponent implements OnDestroy, AfterViewInit {
 		private readonly _carriersService: CarriersService,
 		private readonly _toasterService: ToasterService,
 		private readonly modalService: NgbModal,
-		private readonly _translateService: TranslateService
+		private readonly _translateService: TranslateService,
 	) {
 		this._applyTranslationOnSmartTable();
 	}
@@ -50,7 +57,7 @@ export class CarriersComponent implements OnDestroy, AfterViewInit {
 
 	async deleteSelectedCarriers() {
 		const idsForDelete: string[] = this.carriersTable.selectedCarriers.map(
-			(c) => c.id
+			(c) => c.id,
 		);
 		this.loading = true;
 
@@ -63,8 +70,8 @@ export class CarriersComponent implements OnDestroy, AfterViewInit {
 			this.carriersTable.selectedCarriers.forEach((carrier) =>
 				this._toasterService.pop(
 					`success`,
-					`Carrier ${carrier['name']} DELETED`
-				)
+					`Carrier ${carrier['name']} DELETED`,
+				),
 			);
 
 			this.carriersTable.selectedCarriers = [];
@@ -98,7 +105,7 @@ export class CarriersComponent implements OnDestroy, AfterViewInit {
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(async (data: Carrier[]) => {
 				const carriersVm = data.map(
-					CarriersSmartTableComponent.getCarrierSmartTableObject
+					CarriersSmartTableComponent.getCarrierSmartTableObject,
 				);
 
 				await this.loadDataCount();
@@ -108,7 +115,7 @@ export class CarriersComponent implements OnDestroy, AfterViewInit {
 				carriersData.splice(
 					perPage * (page - 1),
 					perPage,
-					...carriersVm
+					...carriersVm,
 				);
 
 				await this.carriersTable.loadData(carriersData);

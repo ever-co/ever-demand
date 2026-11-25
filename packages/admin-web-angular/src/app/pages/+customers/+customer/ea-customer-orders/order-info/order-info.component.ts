@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import { OrdersService } from '../../../../../@core/data/orders.service';
 import { Observable } from 'rxjs';
@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 @Component({
 	standalone: false,
 	styleUrls: ['./order-info.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './order-info.component.html',
 })
 export class OrderInfoComponent implements OnInit {
@@ -22,7 +23,7 @@ export class OrderInfoComponent implements OnInit {
 	constructor(
 		private readonly _orderService: OrdersService,
 		private readonly activeModal: NgbActiveModal,
-		private router: Router
+		private router: Router,
 	) {}
 
 	cancel() {

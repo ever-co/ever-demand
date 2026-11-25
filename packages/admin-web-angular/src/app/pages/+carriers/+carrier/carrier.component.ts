@@ -1,5 +1,11 @@
 import { find } from 'underscore';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	OnInit,
+	ViewChild,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { Subject } from 'rxjs';
 import { ICarrierCreateObject } from '@modules/server.common/interfaces/ICarrier';
 import { ICarrierOrdersRouterGetOptions } from '@modules/server.common/routers/ICarrierOrdersRouter';
@@ -17,6 +23,7 @@ import { CarrierOrdersComponent } from './carrier-orders/carrier-orders.componen
 	standalone: false,
 	selector: 'ea-carrier',
 	templateUrl: './carrier.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./carrier.component.scss'],
 })
 export class CarrierComponent implements OnInit, OnDestroy {
@@ -53,7 +60,7 @@ export class CarrierComponent implements OnInit, OnDestroy {
 		private readonly _route: ActivatedRoute,
 		private readonly _router: Router,
 		private readonly _toasterService: ToasterService,
-		private carriersService: CarriersService
+		private carriersService: CarriersService,
 	) {}
 
 	ngOnInit() {
@@ -77,7 +84,7 @@ export class CarrierComponent implements OnInit, OnDestroy {
 			this.selectedOrdersId.length > 0 &&
 			find(
 				this.currentOrders,
-				(order) => order.id === this.selectedOrdersId[0]
+				(order) => order.id === this.selectedOrdersId[0],
 			)!.carrierStatus <= OrderCarrierStatus.CarrierSelectedOrder
 		);
 	}
@@ -148,14 +155,14 @@ export class CarrierComponent implements OnInit, OnDestroy {
 		const carrierId = p.id;
 		if (carrierId !== undefined) {
 			const carrier = this.carriers.find(
-				(c) => c._id.toString() === carrierId
+				(c) => c._id.toString() === carrierId,
 			);
 			if (carrier !== undefined) {
 				this.carrierSelect(carrier as Carrier);
 			} else {
 				this._toasterService.pop(
 					`warning`,
-					`Carrier with id '${carrierId}' is not active!`
+					`Carrier with id '${carrierId}' is not active!`,
 				);
 			}
 		}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CarriersService } from '@app/@core/data/carriers.service';
 import Carrier from '@modules/server.common/entities/Carrier';
@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 @Component({
 	standalone: false,
 	templateUrl: './carrier-info.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styles: ['.carrier-redirect { cursor: pointer; margin-left: 5px}'],
 })
 export class CarrierTableInfoComponent implements OnInit {
@@ -17,7 +18,7 @@ export class CarrierTableInfoComponent implements OnInit {
 	constructor(
 		private readonly activeModal: NgbActiveModal,
 		private readonly carrierService: CarriersService,
-		private readonly router: Router
+		private readonly router: Router,
 	) {}
 
 	cancel() {

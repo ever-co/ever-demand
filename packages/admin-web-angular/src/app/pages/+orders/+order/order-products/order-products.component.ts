@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, OnChanges, OnDestroy } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	OnChanges,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { LocalDataSource } from '@app/@shared/smart-table';
 import { Subject, forkJoin, Observable } from 'rxjs';
 import Order from '@modules/server.common/entities/Order';
@@ -32,6 +39,7 @@ interface OrderProductsViewModel {
 	standalone: false,
 	selector: 'ea-order-products',
 	templateUrl: './order-products.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./order-products.component.scss'],
 })
 export class OrderProductsComponent implements OnInit, OnChanges, OnDestroy {
@@ -58,7 +66,7 @@ export class OrderProductsComponent implements OnInit, OnChanges, OnDestroy {
 		private readonly orderRouter: OrderRouter,
 		private readonly _translateService: TranslateService,
 		private readonly router: Router,
-		private readonly _toasterService: ToasterService
+		private readonly _toasterService: ToasterService,
 	) {
 		this._loadSmartTableSettings();
 	}
@@ -94,14 +102,14 @@ export class OrderProductsComponent implements OnInit, OnChanges, OnDestroy {
 							product: product.product,
 							comment: product.comment,
 							image: this._productLocalesService.getTranslate(
-								product.product['images']
+								product.product['images'],
 							),
 							disableImg: true,
 							orderId: this.order.id,
 							orderWarehouseId: this.order.warehouseId,
 							warehouseProducts: this.order.warehouse['products'],
 						};
-					}
+					},
 				);
 
 				this.sourceSmartTable.load(productsVM);
@@ -124,7 +132,7 @@ export class OrderProductsComponent implements OnInit, OnChanges, OnDestroy {
 			getTranslatedWords('ADD_PRODUCTS_MODAL'),
 			getTranslatedWords('ADD'),
 			getTranslatedWords('SUCCESS_TOAST'),
-			getTranslatedWords('ERROR_TOAST')
+			getTranslatedWords('ERROR_TOAST'),
 		)
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe(([addProduct, add, successToast, errorToast]) => {
@@ -144,7 +152,7 @@ export class OrderProductsComponent implements OnInit, OnChanges, OnDestroy {
 					container: 'nb-layout',
 					windowClass: 'ng-custom',
 					backdrop: 'static',
-				}
+				},
 			);
 			const instance: WarehouseOrderModalComponent =
 				componentRef.componentInstance;
@@ -162,7 +170,7 @@ export class OrderProductsComponent implements OnInit, OnChanges, OnDestroy {
 				.then((r) => {
 					this._toasterService.pop(
 						`success`,
-						`${this.toastSuccMsg}!`
+						`${this.toastSuccMsg}!`,
 					);
 				})
 				.catch((err) => {
@@ -180,14 +188,14 @@ export class OrderProductsComponent implements OnInit, OnChanges, OnDestroy {
 				this.loading = true;
 				const order = await this.orderRouter.removeProducts(
 					this.order.id,
-					productsIds
+					productsIds,
 				);
 
 				this.selectedProducts = [];
 				this.loading = false;
 				this._toasterService.pop(
 					`success`,
-					`Selected products are deleted!`
+					`Selected products are deleted!`,
 				);
 			} catch (error) {
 				this.loading = false;
@@ -212,18 +220,18 @@ export class OrderProductsComponent implements OnInit, OnChanges, OnDestroy {
 					try {
 						this.loading = true;
 						const res = this.warehouseOrdersRouter.cancel(
-							this.order.id
+							this.order.id,
 						);
 						this.loading = false;
 						this._toasterService.pop(
 							`success`,
-							`Order is canceled!`
+							`Order is canceled!`,
 						);
 					} catch (error) {
 						this.loading = false;
 						this._toasterService.pop(
 							'error',
-							`Error: "${error.message}"`
+							`Error: "${error.message}"`,
 						);
 					}
 					// const res = await this.warehouseOrdersRouter.cancel(this.order.id);
@@ -243,7 +251,7 @@ export class OrderProductsComponent implements OnInit, OnChanges, OnDestroy {
 			getTranslate('NAME'),
 			getTranslate('QTY'),
 			getTranslate('PRICE'),
-			getTranslate('COMMENT')
+			getTranslate('COMMENT'),
 		)
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe(([id, image, name, qty, price, comment]) => {

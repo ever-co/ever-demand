@@ -1,4 +1,10 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import {
 	FormGroup,
 	FormBuilder,
@@ -10,6 +16,7 @@ import {
 	standalone: false,
 	selector: 'ea-warehouse-manage-tabs-account',
 	styleUrls: ['./warehouse-manage-tabs-account.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './warehouse-manage-tabs-account.component.html',
 })
 export class WarehouseManageTabsAccountComponent implements OnInit, OnDestroy {

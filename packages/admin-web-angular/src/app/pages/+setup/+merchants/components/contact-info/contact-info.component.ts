@@ -1,10 +1,17 @@
-import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	Output,
+	EventEmitter,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
 	standalone: false,
 	selector: 'ea-merchants-setup-contact-info',
 	templateUrl: './contact-info.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./contact-info.component.scss'],
 })
 export class SetupMerchantContactInfoComponent {

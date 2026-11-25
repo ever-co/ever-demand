@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ViewCell } from '@app/@shared/smart-table';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 @Component({
@@ -11,6 +16,7 @@ import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers
 			></nb-checkbox>
 		</div>
 	`,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styles: [
 		`
 			.checkbox-container {
@@ -44,7 +50,7 @@ export class IsAvailableCheckBox implements ViewCell, OnInit {
 		await this.warehouseProductRouter.changeProductAvailability(
 			this.wareHouseId,
 			this.productId,
-			this.rowData.isProductAvailable
+			this.rowData.isProductAvailable,
 		);
 	}
 }

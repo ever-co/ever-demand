@@ -4,6 +4,7 @@ import {
 	Output,
 	EventEmitter,
 	ViewChild,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { environment } from 'environments/environment';
@@ -15,6 +16,7 @@ import { NgModel } from '@angular/forms';
 	standalone: false,
 	selector: 'e-cu-file-uploader',
 	templateUrl: './file-uploader.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./file-uploader.component.scss'],
 })
 export class FileUploaderComponent {
@@ -35,16 +37,15 @@ export class FileUploaderComponent {
 	@Output()
 	uploadedImgUrl: EventEmitter<string> = new EventEmitter<string>();
 	@Output()
-	uploadedImgObj: EventEmitter<IProductImage> = new EventEmitter<
-		IProductImage
-	>();
+	uploadedImgObj: EventEmitter<IProductImage> =
+		new EventEmitter<IProductImage>();
 
 	uploader: FileUploader;
 
 	private oldValue: string;
 
 	constructor(
-		public readonly localeTranslateService: ProductLocalesService
+		public readonly localeTranslateService: ProductLocalesService,
 	) {}
 
 	ngOnInit(): void {
@@ -69,7 +70,7 @@ export class FileUploaderComponent {
 		this.uploader.onSuccessItem = (
 			item: any,
 			response: string,
-			status: number
+			status: number,
 		) => {
 			const data = JSON.parse(response);
 			this.fileUrl = data.url;
@@ -110,7 +111,7 @@ export class FileUploaderComponent {
 
 		this.uploader.onBuildItemForm = (
 			fileItem: any,
-			form: FormData
+			form: FormData,
 		): any => {
 			form.append('upload_preset', 'everbie-products-images');
 

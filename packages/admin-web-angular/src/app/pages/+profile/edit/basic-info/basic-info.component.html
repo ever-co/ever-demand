@@ -117,8 +117,8 @@
 				<div class="col-12">
 					<e-cu-file-uploader
 						[placeholder]="uploaderPlaceholder"
-						[name]="username?.value"
-						[fileUrl]="picture?.value"
+						[name]="$safeNavigationMigration(username?.value)"
+						[fileUrl]="$safeNavigationMigration(picture?.value)"
 						[customClass]="
 							picture.invalid
 								? picture.errors

@@ -5,6 +5,7 @@ import {
 	OnInit,
 	AfterViewInit,
 	Input,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import {
 	FormGroup,
@@ -21,6 +22,7 @@ import { IProductsCategoryCreateObject } from '@modules/server.common/interfaces
 	standalone: false,
 	selector: 'ea-product-category-basic-info-form',
 	templateUrl: 'basic-info-form.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['basic-info-form.component.scss'],
 })
 export class BasicInfoFormComponent implements OnInit, AfterViewInit {
@@ -49,7 +51,7 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 
 	constructor(
 		private readonly fb: FormBuilder,
-		private readonly _langTranslateService: TranslateService
+		private readonly _langTranslateService: TranslateService,
 	) {}
 
 	get image() {
@@ -112,9 +114,9 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 					? {
 							locale: usedLanguage,
 							value: this.name.value,
-					  }
+						}
 					: { locale, value };
-			}
+			},
 		);
 		if (!newCategoryNames.some((c) => c.locale === usedLanguage)) {
 			newCategoryNames.push({

@@ -5,6 +5,7 @@ import {
 	Input,
 	Output,
 	EventEmitter,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { AddWarehouseProductsComponent } from '@app/@shared/warehouse-product/forms/add-warehouse-products-table';
 import Product from '@modules/server.common/entities/Product';
@@ -15,6 +16,7 @@ import { NotifyService } from '@app/@core/services/notify/notify.service';
 @Component({
 	standalone: false,
 	selector: 'ea-merchants-setup-add-products',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './add-products.component.html',
 })
 export class SetupMerchantAddProductsComponent implements OnInit {
@@ -31,20 +33,20 @@ export class SetupMerchantAddProductsComponent implements OnInit {
 
 	constructor(
 		private warehousesService: WarehousesService,
-		private notifyService: NotifyService
+		private notifyService: NotifyService,
 	) {}
 
 	ngOnInit(): void {
 		this.addWarehouseProductsTable.loadDataSmartTable(
 			this.products || [],
-			this.storeId
+			this.storeId,
 		);
 	}
 
 	async add() {
 		try {
-			const productsForAdd = this.addWarehouseProductsTable
-				.allWarehouseProducts;
+			const productsForAdd =
+				this.addWarehouseProductsTable.allWarehouseProducts;
 
 			await this.warehousesService
 				.addProducts(this.storeId, productsForAdd)

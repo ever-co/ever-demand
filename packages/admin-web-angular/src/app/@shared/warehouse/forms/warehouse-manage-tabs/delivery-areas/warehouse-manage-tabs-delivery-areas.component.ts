@@ -1,4 +1,11 @@
-import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	ViewChild,
+	Input,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, first } from 'rxjs/operators';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -7,10 +14,12 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 	standalone: false,
 	selector: 'ea-warehouse-manage-tabs-delivery-areas',
 	styleUrls: ['./warehouse-manage-tabs-delivery-areas.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './warehouse-manage-tabs-delivery-areas.component.html',
 })
 export class WarehouseManageTabsDeliveryAreasComponent
-	implements OnInit, OnDestroy {
+	implements OnInit, OnDestroy
+{
 	@ViewChild('gmap', { static: true })
 	mapElement: any;
 
@@ -147,7 +156,7 @@ export class WarehouseManageTabsDeliveryAreasComponent
 				if (location && this.form.get('showOnMap').value) {
 					this._maxDistanceZone = this.createMaxDistanceCircle(
 						location,
-						data.maxDistance
+						data.maxDistance,
 					);
 				}
 			});
@@ -184,7 +193,7 @@ export class WarehouseManageTabsDeliveryAreasComponent
 						fillOpacity: 0.45,
 						fillColor: '#1E90FF',
 						paths: this._mapCoordinates(
-							feature.geometry.coordinates
+							feature.geometry.coordinates,
 						),
 					});
 
@@ -285,13 +294,13 @@ export class WarehouseManageTabsDeliveryAreasComponent
 				this._addZoneEventListeners(newZone);
 
 				this.setSelection(newZone);
-			}
+			},
 		);
 
 		google.maps.event.addListener(
 			this._drawingManager,
 			'drawingmode_changed',
-			this._clearSelection
+			this._clearSelection,
 		);
 	}
 
@@ -440,7 +449,7 @@ export class WarehouseManageTabsDeliveryAreasComponent
 
 		this._map = new google.maps.Map(
 			this.mapElement.nativeElement,
-			optionsMap
+			optionsMap,
 		);
 
 		google.maps.event.addListener(this._map, 'click', this._clearSelection);
@@ -453,7 +462,7 @@ export class WarehouseManageTabsDeliveryAreasComponent
 		if (this._storeLocation && this.form.get('showOnMap').value) {
 			this._maxDistanceZone = this.createMaxDistanceCircle(
 				this._storeLocation,
-				this.maxDistance
+				this.maxDistance,
 			);
 		}
 	}

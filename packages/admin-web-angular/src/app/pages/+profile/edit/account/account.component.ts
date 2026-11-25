@@ -1,4 +1,10 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import {
 	FormGroup,
 	AbstractControl,
@@ -17,6 +23,7 @@ import { TranslateService } from '@ngx-translate/core';
 	standalone: false,
 	selector: 'ea-account',
 	styleUrls: ['/account.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './account.component.html',
 })
 export class AccountComponent implements OnInit, OnDestroy {
@@ -47,7 +54,7 @@ export class AccountComponent implements OnInit, OnDestroy {
 		private adminsService: AdminsService,
 		private toasterService: ToasterService,
 		private router: Router,
-		private _translateService: TranslateService
+		private _translateService: TranslateService,
 	) {
 		this.buildForm();
 		this.bindFormControls();
@@ -84,7 +91,7 @@ export class AccountComponent implements OnInit, OnDestroy {
 			} else {
 				this.toasterService.pop(
 					'success',
-					this.successfullyChangePassword()
+					this.successfullyChangePassword(),
 				);
 				this.router.navigate(['/auth/logout']);
 			}

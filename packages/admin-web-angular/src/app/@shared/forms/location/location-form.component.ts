@@ -6,6 +6,7 @@ import {
 	ViewChild,
 	ElementRef,
 	AfterViewInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import {
 	AbstractControl,
@@ -34,6 +35,7 @@ import { environment } from 'environments/environment';
 	standalone: false,
 	selector: 'ea-location-form',
 	styleUrls: ['./location-form.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'location-form.component.html',
 })
 export class LocationFormComponent implements AfterViewInit {
@@ -138,7 +140,7 @@ export class LocationFormComponent implements AfterViewInit {
 				[
 					(ctrl) =>
 						LocationFormComponent.COUNTRIES.map(
-							(c) => c.id
+							(c) => c.id,
 						).includes(ctrl.value),
 				],
 			],
@@ -261,7 +263,7 @@ export class LocationFormComponent implements AfterViewInit {
 						this._applyNewPlaceOnTheMap(place);
 						this._applyFormattedAddress(formattedAddress);
 					}
-				}
+				},
 			);
 		}
 	}
@@ -285,20 +287,19 @@ export class LocationFormComponent implements AfterViewInit {
 					this._applyNewPlaceOnTheMap(place, useGeometryLatLng);
 					this._applyFormattedAddress(formattedAddress);
 				}
-			}
+			},
 		);
 	}
 
 	private _emitCoordinates(
-		location: google.maps.LatLng | google.maps.LatLngLiteral
+		location: google.maps.LatLng | google.maps.LatLngLiteral,
 	) {
 		this.mapCoordinatesEmitter.emit(location);
 	}
 
 	private _emitGeometry(
 		geometry:
-			| google.maps.places.PlaceGeometry
-			| google.maps.GeocoderGeometry
+			google.maps.places.PlaceGeometry | google.maps.GeocoderGeometry,
 	) {
 		this.mapGeometryEmitter.emit(geometry);
 	}
@@ -306,19 +307,19 @@ export class LocationFormComponent implements AfterViewInit {
 	private _popInvalidAddressMessage() {
 		this.toasterService.pop(
 			'warning',
-			'Invalid address, please try again!'
+			'Invalid address, please try again!',
 		);
 	}
 
 	private _setupGoogleAutocompleteOptions(
-		autocomplete: google.maps.places.Autocomplete
+		autocomplete: google.maps.places.Autocomplete,
 	) {
 		autocomplete['setFields'](['address_components', 'geometry']);
 	}
 
 	private _applyNewPlaceOnTheMap(
 		place: google.maps.places.PlaceResult | google.maps.GeocoderResult,
-		useGeometryLatLng: boolean = true
+		useGeometryLatLng: boolean = true,
 	) {
 		if (place.geometry === undefined || place.geometry === null) {
 			this._popInvalidAddressMessage();
@@ -340,18 +341,18 @@ export class LocationFormComponent implements AfterViewInit {
 	}
 
 	private _listenForGoogleAutocompleteAddressChanges(
-		autocomplete: google.maps.places.Autocomplete
+		autocomplete: google.maps.places.Autocomplete,
 	) {
 		autocomplete.addListener('place_changed', (_) => {
-			const place: google.maps.places.PlaceResult = autocomplete.getPlace();
+			const place: google.maps.places.PlaceResult =
+				autocomplete.getPlace();
 			this._applyNewPlaceOnTheMap(place);
 		});
 	}
 
 	private _gatherAddressInformation(
 		locationResult:
-			| google.maps.GeocoderResult
-			| google.maps.places.PlaceResult
+			google.maps.GeocoderResult | google.maps.places.PlaceResult,
 	) {
 		const longName = 'long_name';
 		const shortName = 'short_name';
@@ -418,14 +419,14 @@ export class LocationFormComponent implements AfterViewInit {
 			city,
 			streetName,
 			streetNumber,
-			postcode
+			postcode,
 		);
 	}
 
 	private _initGoogleAutocompleteApi() {
 		if (this.searchElement) {
 			const autocomplete = new google.maps.places.Autocomplete(
-				this.searchElement.nativeElement
+				this.searchElement.nativeElement,
 			);
 
 			this._setupGoogleAutocompleteOptions(autocomplete);
@@ -439,7 +440,7 @@ export class LocationFormComponent implements AfterViewInit {
 		city,
 		streetName,
 		streetNumber,
-		postcode
+		postcode,
 	) {
 		if (!isEmpty(countryId)) {
 			this.countryId.setValue(Country[countryId]);

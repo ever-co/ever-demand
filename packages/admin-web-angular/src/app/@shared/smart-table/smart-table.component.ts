@@ -6,6 +6,7 @@ import {
 	Output,
 	SimpleChanges,
 	ViewChild,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import {
 	Angular2SmartTableComponent,
@@ -52,6 +53,7 @@ import { LegacySettings, toSmartTableSettings } from './smart-table-settings';
 			(afterGridInit)="afterGridInit.emit($event)"
 		></angular2-smart-table>
 	`,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styles: [':host { display: block; }'],
 })
 export class Ng2SmartTableComponent implements OnChanges {

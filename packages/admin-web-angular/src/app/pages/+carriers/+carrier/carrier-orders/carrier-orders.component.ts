@@ -6,6 +6,7 @@ import {
 	OnDestroy,
 	Output,
 	AfterViewInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
@@ -33,10 +34,12 @@ let oldSearch = '';
 	standalone: false,
 	selector: 'ea-carrier-orders',
 	templateUrl: './carrier-orders.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./carrier-orders.component.scss'],
 })
 export class CarrierOrdersComponent
-	implements OnDestroy, OnChanges, AfterViewInit {
+	implements OnDestroy, OnChanges, AfterViewInit
+{
 	private ngDestroy$ = new Subject<void>();
 
 	@Input()
@@ -52,7 +55,8 @@ export class CarrierOrdersComponent
 	protected currentOrders: Order[];
 	public settingsSmartTable: object;
 	public sourceSmartTable: LocalDataSource = new LocalDataSource();
-	public enumOrderCarrierStatus: typeof OrderCarrierStatus = OrderCarrierStatus;
+	public enumOrderCarrierStatus: typeof OrderCarrierStatus =
+		OrderCarrierStatus;
 
 	private _isWork: boolean;
 	private dataCount: number;
@@ -68,7 +72,7 @@ export class CarrierOrdersComponent
 		private orderRouter: OrderRouter,
 		private _translateService: TranslateService,
 		private carriersService: CarriersService,
-		private geoLocationOrdersService: GeoLocationOrdersService
+		private geoLocationOrdersService: GeoLocationOrdersService,
 	) {
 		this._setupSmartTable();
 	}
@@ -103,7 +107,7 @@ export class CarrierOrdersComponent
 				await this.loadSmartTableData(1, {
 					byRegex: [{ key: 'user.firstName', value: searchText }],
 				});
-			}
+			},
 		);
 	}
 
@@ -205,15 +209,15 @@ export class CarrierOrdersComponent
 			order
 				? OrderCarrierStatus.CarrierPickedUpOrder <=
 						order.carrierStatus &&
-				  OrderCarrierStatus.DeliveryCompleted >= order.carrierStatus
-				: false
+					OrderCarrierStatus.DeliveryCompleted >= order.carrierStatus
+				: false,
 		);
 	}
 
 	public async updateOrderCarrierStatus(status: OrderCarrierStatus) {
 		this.selectedOrder = await this.orderRouter.updateCarrierStatus(
 			this.selectedOrder.id,
-			status
+			status,
 		);
 
 		await this.loadSmartTableData();
@@ -230,7 +234,7 @@ export class CarrierOrdersComponent
 			getTranslate('CUSTOMER'),
 			getTranslate('WAREHOUSE_STATUS'),
 			getTranslate('CARRIER_STATUS'),
-			getTranslate('CREATED')
+			getTranslate('CREATED'),
 		).subscribe(
 			([
 				id,
@@ -256,7 +260,7 @@ export class CarrierOrdersComponent
 							width: '20%',
 							filterFunction(
 								cell?: string,
-								search?: string
+								search?: string,
 							): boolean {
 								if (!searchCustomer && oldSearch !== search) {
 									oldSearch = search;
@@ -266,7 +270,7 @@ export class CarrierOrdersComponent
 										searchCustomer = false;
 
 										CarrierOrdersComponent.$customerSearch.emit(
-											search
+											search,
 										);
 									}, 1000);
 								}
@@ -280,7 +284,7 @@ export class CarrierOrdersComponent
 							valuePrepareFunction: (_, order: Order) => {
 								let warehouseStat = 'BAD_STATUS';
 								getTranslate(
-									order.warehouseStatusText
+									order.warehouseStatusText,
 								).subscribe((y) => {
 									warehouseStat = y;
 								});
@@ -296,7 +300,7 @@ export class CarrierOrdersComponent
 								getTranslate(order.carrierStatusText).subscribe(
 									(y) => {
 										carrierStat = y;
-									}
+									},
 								);
 
 								return carrierStat;
@@ -313,7 +317,7 @@ export class CarrierOrdersComponent
 						perPage,
 					},
 				};
-			}
+			},
 		);
 	}
 
@@ -326,16 +330,17 @@ export class CarrierOrdersComponent
 				coordinates: this.selectedCarrier.geoLocation.loc.coordinates,
 			},
 		};
-		this.dataCount = await this.geoLocationOrdersService.getCountOfOrdersForWork(
-			getOrdersGeoObj as GeoLocation,
-			this.selectedCarrier.skippedOrderIds,
-			searchObj
-		);
+		this.dataCount =
+			await this.geoLocationOrdersService.getCountOfOrdersForWork(
+				getOrdersGeoObj as GeoLocation,
+				this.selectedCarrier.skippedOrderIds,
+				searchObj,
+			);
 	}
 
 	private async loadSmartTableData(
 		page = 1,
-		searchObj?: { byRegex: Array<{ key: string; value: string }> }
+		searchObj?: { byRegex: Array<{ key: string; value: string }> },
 	) {
 		const getOrdersGeoObj = {
 			loc: {
@@ -356,12 +361,13 @@ export class CarrierOrdersComponent
 					skip: perPage * (page - 1),
 					limit: perPage,
 				},
-				searchObj
+				searchObj,
 			)
 			.subscribe(async (ordersForWork: Order[]) => {
-				const currentOrder = await this.carriersService.getCarrierCurrentOrder(
-					this.selectedCarrier.id
-				);
+				const currentOrder =
+					await this.carriersService.getCarrierCurrentOrder(
+						this.selectedCarrier.id,
+					);
 
 				if (currentOrder) {
 					this.currentOrders = [currentOrder];
@@ -370,7 +376,7 @@ export class CarrierOrdersComponent
 					this.currentOrders.splice(
 						perPage * (page - 1),
 						perPage,
-						...ordersForWork
+						...ordersForWork,
 					);
 				}
 

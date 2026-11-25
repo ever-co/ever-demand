@@ -1,4 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	ViewChild,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ToasterService } from '@app/@core/toaster';
@@ -14,6 +19,7 @@ import { Store } from '@app/@core/data/store.service';
 	standalone: false,
 	selector: 'ea-warehouse-manage',
 	templateUrl: './warehouse-manage.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./warehouse-manage.component.scss'],
 })
 export class WarehouseManageComponent implements OnInit {
@@ -35,7 +41,7 @@ export class WarehouseManageComponent implements OnInit {
 	readonly tabsForm = this.form.get('tabsForm') as FormControl;
 
 	readonly warehouseId$ = this.activatedRoute.params.pipe(
-		map((p) => p['id'])
+		map((p) => p['id']),
 	);
 
 	_currentWarehouse: Warehouse;
@@ -45,7 +51,7 @@ export class WarehouseManageComponent implements OnInit {
 		private readonly activatedRoute: ActivatedRoute,
 		private readonly toasterService: ToasterService,
 		private readonly warehouseRouter: WarehouseRouter,
-		private readonly store: Store
+		private readonly store: Store,
 	) {}
 
 	ngOnInit() {
@@ -92,13 +98,13 @@ export class WarehouseManageComponent implements OnInit {
 					{
 						current: passwordOld,
 						new: passwordNew,
-					}
+					},
 				);
 			}
 
 			const warehouse = await this.warehouseRouter.save(
 				warehouseRaw as Warehouse,
-				this.store.token
+				this.store.token,
 			);
 
 			this.loading = false;
@@ -118,7 +124,7 @@ export class WarehouseManageComponent implements OnInit {
 			this.loading = false;
 			this.toasterService.pop(
 				'error',
-				`Error in updating customer: "${err.message}"`
+				`Error in updating customer: "${err.message}"`,
 			);
 		}
 	}
@@ -126,7 +132,7 @@ export class WarehouseManageComponent implements OnInit {
 	private _showWarehouseUpdateSuccessMessage(warehouse) {
 		this.toasterService.pop(
 			'success',
-			`Store ${warehouse.name} was updated`
+			`Store ${warehouse.name} was updated`,
 		);
 	}
 }

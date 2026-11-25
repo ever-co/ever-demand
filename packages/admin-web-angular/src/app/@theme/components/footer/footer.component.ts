@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { environment } from 'environments/environment';
 
 @Component({
 	standalone: false,
 	selector: 'ngx-footer',
 	styleUrls: ['./footer.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './footer.component.html',
 })
 export class FooterComponent {

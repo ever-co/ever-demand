@@ -28,13 +28,18 @@ declare module '@apollo/client' {
 }
 
 /** `true` for subscription operations, which go over graphql-ws instead of HTTP. */
-export function isSubscription(query: DocumentNode, operationName?: string): boolean {
+export function isSubscription(
+	query: DocumentNode,
+	operationName?: string,
+): boolean {
 	const definition = getOperationAST(query, operationName);
 	return !!definition && definition.operation === 'subscription';
 }
 
 /** Adds `Authorization: Bearer <token>` from the store to every operation. */
-export function createAuthLink(getToken: () => string | null | undefined): ApolloLink {
+export function createAuthLink(
+	getToken: () => string | null | undefined,
+): ApolloLink {
 	return new SetContextLink((prevContext) => {
 		const token = getToken();
 		return {
@@ -47,7 +52,9 @@ export function createAuthLink(getToken: () => string | null | undefined): Apoll
 }
 
 /** Same defaults as the Apollo 2 / 3 setup the screens were written for. */
-export const DEFAULT_OPTIONS: NonNullable<ApolloClient.Options['defaultOptions']> = {
+export const DEFAULT_OPTIONS: NonNullable<
+	ApolloClient.Options['defaultOptions']
+> = {
 	watchQuery: {
 		fetchPolicy: 'network-only',
 		errorPolicy: 'ignore',
@@ -66,7 +73,7 @@ export const DEFAULT_OPTIONS: NonNullable<ApolloClient.Options['defaultOptions']
 
 export function createApolloOptions(
 	httpLink: HttpLink,
-	getToken: () => string | null | undefined
+	getToken: () => string | null | undefined,
 ): ApolloClient.Options {
 	const http = httpLink.create({ uri: environment.GQL_ENDPOINT });
 
@@ -82,16 +89,17 @@ export function createApolloOptions(
 				const token = getToken();
 				return token ? { authorization: `Bearer ${token}` } : {};
 			},
-		})
+		}),
 	);
 
 	return {
 		link: ApolloLink.from([
 			createAuthLink(getToken),
 			ApolloLink.split(
-				({ query, operationName }) => isSubscription(query, operationName),
+				({ query, operationName }) =>
+					isSubscription(query, operationName),
 				ws,
-				http
+				http,
 			),
 		]),
 		cache: new InMemoryCache(),

@@ -49,8 +49,8 @@
 			<div class="col-sm-8">
 				<e-cu-file-uploader
 					[placeholder]="uploaderPlaceholder"
-					[name]="name?.value"
-					[fileUrl]="logo?.value"
+					[name]="$safeNavigationMigration(name?.value)"
+					[fileUrl]="$safeNavigationMigration(logo?.value)"
 					(uploadedImgUrl)="logo.setValue($event)"
 				></e-cu-file-uploader>
 
@@ -92,7 +92,7 @@
 			</label>
 
 			<div class="col-sm-8">
-				<div class="checkbox" style="margin-bottom: 10px;">
+				<div class="checkbox" style="margin-bottom: 10px">
 					<input
 						id="checkbox"
 						type="checkbox"
@@ -170,7 +170,7 @@
 			}}</label>
 
 			<div class="col-sm-8">
-				<div class="checkbox" style="margin-bottom: 10px;">
+				<div class="checkbox" style="margin-bottom: 10px">
 					<input
 						type="checkbox"
 						formControlName="hasRestrictedCarriers"
@@ -183,16 +183,16 @@
 
 				<div *ngIf="hasRestrictedCarriers.value">
 					<ng-select
-					[items]="carriersOptions"
-					bindLabel="name"
-					bindValue="id"
-					[multiple]="true"
-					[closeOnSelect]="false"
-					[searchable]="true"
-					formControlName="carriersIds"
-					class="carriers-dropdown"
-				>
-				</ng-select>
+						[items]="carriersOptions"
+						bindLabel="name"
+						bindValue="id"
+						[multiple]="true"
+						[closeOnSelect]="false"
+						[searchable]="true"
+						formControlName="carriersIds"
+						class="carriers-dropdown"
+					>
+					</ng-select>
 				</div>
 			</div>
 		</div>

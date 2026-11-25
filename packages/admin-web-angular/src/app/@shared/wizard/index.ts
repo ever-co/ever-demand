@@ -7,6 +7,7 @@ import {
 	NgModule,
 	Output,
 	QueryList,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -23,6 +24,7 @@ import { CommonModule } from '@angular/common';
 @Component({
 	selector: 'wizard-step',
 	standalone: false,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<div [hidden]="!isActive">
 			<ng-content></ng-content>
@@ -68,7 +70,7 @@ export class WizardStepComponent {
 							active: step.isActive,
 							enabled: !step.isDisabled,
 							disabled: step.isDisabled,
-							completed: isCompleted
+							completed: isCompleted,
 						}"
 					>
 						<a (click)="goToStep(step)">{{ step.title }}</a>
@@ -108,6 +110,7 @@ export class WizardStepComponent {
 			</div>
 		</div>
 	`,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styles: [
 		`
 			.card {

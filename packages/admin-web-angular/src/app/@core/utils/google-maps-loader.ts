@@ -10,7 +10,7 @@ let loading: Promise<boolean> | undefined;
 export function loadGoogleMaps(
 	apiKey: string,
 	doc: Document = document,
-	timeoutMs = 15000
+	timeoutMs = 15000,
 ): Promise<boolean> {
 	if ((globalThis as any).google?.maps) {
 		return Promise.resolve(true);

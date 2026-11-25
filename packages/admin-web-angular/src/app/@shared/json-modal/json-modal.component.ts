@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
 	standalone: false,
 	styleUrls: ['./json-modal.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './json-modal.component.html',
 })
 export class JsonModalComponent implements OnInit {

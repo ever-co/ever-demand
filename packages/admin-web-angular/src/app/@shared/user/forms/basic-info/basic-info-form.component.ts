@@ -6,6 +6,7 @@ import {
 	ElementRef,
 	AfterViewInit,
 	OnInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import {
 	FormBuilder,
@@ -31,10 +32,12 @@ export type CustomerBasicInfo = Pick<
 	standalone: false,
 	selector: 'ea-user-basic-info-form',
 	styleUrls: ['./basic-info-form.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'basic-info-form.component.html',
 })
 export class BasicInfoFormComponent
-	implements OnInit, OnDestroy, AfterViewInit {
+	implements OnInit, OnDestroy, AfterViewInit
+{
 	@ViewChild('logoImagePreview')
 	logoImagePreview: ElementRef;
 
@@ -52,7 +55,7 @@ export class BasicInfoFormComponent
 	constructor(
 		private translateService: TranslateService,
 		private readonly _usersService: UsersService,
-		private readonly _route: ActivatedRoute
+		private readonly _route: ActivatedRoute,
 	) {
 		const customerId = this._route.snapshot.paramMap.get('id');
 		BasicInfoFormComponent.initialize(this._usersService, customerId);

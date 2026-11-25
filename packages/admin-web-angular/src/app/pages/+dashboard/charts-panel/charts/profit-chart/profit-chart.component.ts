@@ -4,6 +4,7 @@ import {
 	OnChanges,
 	AfterViewInit,
 	OnDestroy,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 // The gradients only need echarts' graphic helpers; ngx-echarts lazy-loads the full library.
@@ -16,10 +17,12 @@ import { LayoutService } from '@app/@core/services/dashboard/layout.service';
 	standalone: false,
 	selector: 'ea-profit-chart',
 	styleUrls: ['./profit-chart.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './profit-chart.component.html',
 })
 export class ProfitChartComponent
-	implements OnChanges, AfterViewInit, OnDestroy {
+	implements OnChanges, AfterViewInit, OnDestroy
+{
 	@Input()
 	profitChartData: ProfitChart;
 
@@ -30,7 +33,7 @@ export class ProfitChartComponent
 
 	constructor(
 		private theme: NbThemeService,
-		private layoutService: LayoutService
+		private layoutService: LayoutService,
 	) {
 		this.layoutService
 			.onChangeLayoutSize()
@@ -133,7 +136,7 @@ export class ProfitChartComponent
 										offset: 1,
 										color: eTheme.firstLineGradTo,
 									},
-								]
+								],
 							),
 						},
 					},
@@ -159,7 +162,7 @@ export class ProfitChartComponent
 										offset: 1,
 										color: eTheme.secondLineGradTo,
 									},
-								]
+								],
 							),
 						},
 					},
@@ -185,7 +188,7 @@ export class ProfitChartComponent
 										offset: 1,
 										color: eTheme.thirdLineGradTo,
 									},
-								]
+								],
 							),
 						},
 					},

@@ -4,6 +4,7 @@ import {
 	Input,
 	OnDestroy,
 	OnInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { WarehouseViewModel } from '../../../../models/WarehouseViewModel';
 import { WarehousesService } from '../../../../@core/data/warehouses.service';
@@ -23,6 +24,7 @@ import { UserRouter } from '@modules/client.common.angular2/routers/user-router.
 	standalone: false,
 	selector: 'ea-customer-stores',
 	styleUrls: ['./ea-customer-stores.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './ea-customer-stores.component.html',
 })
 export class CustomerStoresComponent implements OnInit, OnDestroy {
@@ -44,7 +46,7 @@ export class CustomerStoresComponent implements OnInit, OnDestroy {
 		private readonly _warehousesService: WarehousesService,
 		private readonly _ordersService: OrdersService,
 		private readonly _router: ActivatedRoute,
-		private userRouter: UserRouter
+		private userRouter: UserRouter,
 	) {
 		this.params$ = this._router.params.subscribe(async (res) => {
 			const user = await this.userRouter
@@ -78,15 +80,15 @@ export class CustomerStoresComponent implements OnInit, OnDestroy {
 
 	deleteSelectedRows() {
 		const idsForDelete: string[] = this._selectedWarehouses.map(
-			(w) => w.id
+			(w) => w.id,
 		);
 
 		this._warehousesService.removeByIds(idsForDelete).subscribe(() => {
 			this._selectedWarehouses.forEach((warehouse) =>
 				this._toasterService.pop(
 					`success`,
-					`Warehouse '${warehouse.name}' DELETED`
-				)
+					`Warehouse '${warehouse.name}' DELETED`,
+				),
 			);
 			this._selectedWarehouses = [];
 		});
@@ -103,15 +105,16 @@ export class CustomerStoresComponent implements OnInit, OnDestroy {
 	}
 
 	private async _setupStoresData(warehouses) {
-		const merchantsOrders = await this._ordersService.getMerchantsOrdersCountInfo(
-			warehouses.map((w) => w.id)
-		);
+		const merchantsOrders =
+			await this._ordersService.getMerchantsOrdersCountInfo(
+				warehouses.map((w) => w.id),
+			);
 
 		const noInfoSign = '';
 
 		const sourceResult = warehouses.map((warehouse) => {
 			const merchantOrders = merchantsOrders.find(
-				(res) => res['id'] === warehouse.id
+				(res) => res['id'] === warehouse.id,
 			);
 			return {
 				id: warehouse.id,
@@ -121,8 +124,8 @@ export class CustomerStoresComponent implements OnInit, OnDestroy {
 				city: warehouse.geoLocation.city || noInfoSign,
 				address: `
 					St. ${warehouse.geoLocation.streetAddress || noInfoSign}, House № ${
-					warehouse.geoLocation.house || noInfoSign
-				}
+						warehouse.geoLocation.house || noInfoSign
+					}
 				`,
 				ordersQty: merchantOrders ? merchantOrders.ordersCount : 0,
 				actions: {

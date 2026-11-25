@@ -1,10 +1,11 @@
-import { OnInit, Component } from '@angular/core';
+import { OnInit, Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ViewCell } from '@app/@shared/smart-table';
 
 @Component({
 	standalone: false,
 	styleUrls: ['customer-image.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'customer-image.component.html',
 })
 export class CustomerImageComponent implements ViewCell, OnInit {

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { NbPopoverDirective, NbThemeService } from '@nebular/theme';
 import { AnalyticsService } from '../../../../@core/utils/analytics.service';
 import { NbJSThemeOptions } from '@nebular/theme';
@@ -7,6 +7,7 @@ import { NbJSThemeOptions } from '@nebular/theme';
 	standalone: false,
 	selector: 'ngx-theme-switcher-list',
 	templateUrl: './theme-switcher-list.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./theme-switcher-list.component.scss'],
 })
 export class ThemeSwitcherListComponent {
@@ -39,7 +40,7 @@ export class ThemeSwitcherListComponent {
 
 	constructor(
 		private themeService: NbThemeService,
-		private analyticsService: AnalyticsService
+		private analyticsService: AnalyticsService,
 	) {}
 	onToggleTheme(themeKey: string) {
 		this.themeService.changeTheme(themeKey);

@@ -41,7 +41,10 @@ export interface RenderOptions {
 	isDocker: boolean;
 }
 
-export function renderEnvironment(env: Env, { isProd, isDocker }: RenderOptions): string {
+export function renderEnvironment(
+	env: Env,
+	{ isProd, isDocker }: RenderOptions,
+): string {
 	const lines: string[] = [`\tproduction: ${isProd},`];
 
 	for (const key of STRING_KEYS) {

@@ -1,9 +1,15 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import {
+	Component,
+	Output,
+	EventEmitter,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 
 @Component({
 	standalone: false,
 	selector: 'ea-merchants-setup-manufacturing',
 	templateUrl: './manufacturing.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./manufacturing.component.scss'],
 })
 export class SetupMerchantManufacturingComponent {

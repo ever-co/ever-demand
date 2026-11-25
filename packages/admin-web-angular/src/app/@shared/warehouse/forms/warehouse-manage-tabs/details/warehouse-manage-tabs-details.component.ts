@@ -5,6 +5,7 @@ import {
 	ElementRef,
 	AfterViewInit,
 	OnInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import {
 	AbstractControl,
@@ -46,10 +47,12 @@ export type WarehouseManageTabsDetails = Pick<
 	standalone: false,
 	selector: 'ea-warehouse-manage-tabs-details',
 	styleUrls: ['./warehouse-manage-tabs-details.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './warehouse-manage-tabs-details.component.html',
 })
 export class WarehouseManageTabsDetailsComponent
-	implements OnInit, AfterViewInit {
+	implements OnInit, AfterViewInit
+{
 	@ViewChild('fileInput')
 	fileInput: ElementRef;
 
@@ -81,7 +84,7 @@ export class WarehouseManageTabsDetailsComponent
 
 	constructor(
 		private readonly _carrierRouter: CarrierRouter,
-		private readonly _translateService: TranslateService
+		private readonly _translateService: TranslateService,
 	) {}
 
 	get inStoreMode() {
@@ -234,11 +237,11 @@ export class WarehouseManageTabsDetailsComponent
 				? {
 						hasRestrictedCarriers: basicInfo.hasRestrictedCarriers,
 						carriersIds: basicInfo.carriersIds,
-				  }
+					}
 				: {
 						hasRestrictedCarriers: false,
 						carriersIds: basicInfo.carriersIds,
-				  }),
+					}),
 			...(basicInfo.hasRestrictedCarriers &&
 			basicInfo.carriersIds &&
 			basicInfo.carriersIds.length
@@ -247,11 +250,11 @@ export class WarehouseManageTabsDetailsComponent
 							basicInfo.useOnlyRestrictedCarriersForDelivery,
 						preferRestrictedCarriersForDelivery:
 							basicInfo.preferRestrictedCarriersForDelivery,
-				  }
+					}
 				: {
 						useOnlyRestrictedCarriersForDelivery: false,
 						preferRestrictedCarriersForDelivery: false,
-				  }),
+					}),
 			orderCancelation: {
 				enabled: basicInfo.enabledOrderCancelation,
 				onState: Number(basicInfo.stateOrderCancelation),
@@ -276,7 +279,7 @@ export class WarehouseManageTabsDetailsComponent
 					? basicInfo.orderCancelation.onState
 					: 0,
 			},
-			basicInfo
+			basicInfo,
 		);
 
 		//Remove orderCancelation from the list becouse its  not actually form control
@@ -293,7 +296,7 @@ export class WarehouseManageTabsDetailsComponent
 				'preferRestrictedCarriersForDelivery',
 				'enabledOrderCancelation',
 				'stateOrderCancelation',
-			])
+			]),
 		);
 
 		const onlyStore = basicInfo.useOnlyRestrictedCarriersForDelivery;

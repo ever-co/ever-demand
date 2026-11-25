@@ -5,6 +5,7 @@ import {
 	OnInit,
 	Output,
 	EventEmitter,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { LocalDataSource } from '@app/@shared/smart-table';
 import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
@@ -32,6 +33,7 @@ interface ProductViewModel {
 	standalone: false,
 	selector: 'ea-categories-table',
 	styleUrls: ['./categories-table.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './categories-table.component.html',
 })
 export class CategoriesTableComponent implements OnInit, OnDestroy {
@@ -65,7 +67,7 @@ export class CategoriesTableComponent implements OnInit, OnDestroy {
 		private readonly _productLocalesService: ProductLocalesService,
 		private readonly _modalService: NgbModal,
 		private readonly _notifyService: NotifyService,
-		private readonly modalService: NgbModal
+		private readonly modalService: NgbModal,
 	) {}
 
 	get hasSelectedCategories(): boolean {

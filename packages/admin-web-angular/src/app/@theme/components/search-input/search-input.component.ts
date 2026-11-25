@@ -4,12 +4,14 @@ import {
 	EventEmitter,
 	Output,
 	ViewChild,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 
 @Component({
 	standalone: false,
 	selector: 'ngx-search-input',
 	styleUrls: ['./search-input.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<i class="control-icon ion ion-ios-search" (click)="showInput()"></i>
 		<input

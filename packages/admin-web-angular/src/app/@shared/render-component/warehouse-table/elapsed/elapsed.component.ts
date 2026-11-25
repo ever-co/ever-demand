@@ -5,6 +5,7 @@ import {
 	OnDestroy,
 	ElementRef,
 	ViewChild,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { ViewCell } from '@app/@shared/smart-table';
 import { timer, Subject } from 'rxjs';
@@ -16,6 +17,7 @@ import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseSta
 
 @Component({
 	standalone: false,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: ` <span #elapsedTime></span> `,
 })
 export class ElapsedComponent implements ViewCell, OnInit, OnDestroy {
@@ -54,7 +56,7 @@ export class ElapsedComponent implements ViewCell, OnInit, OnDestroy {
 			) {
 				const start = new Date(
 					this.rowData.order.deliveryTime ||
-						this.rowData.order.finishedProcessingTime
+						this.rowData.order.finishedProcessingTime,
 				);
 				const end = new Date(this.rowData.createdAt);
 

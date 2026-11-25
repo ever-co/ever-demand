@@ -1,8 +1,15 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ViewCell } from '@app/@shared/smart-table';
 
 @Component({
 	standalone: false,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './price-countInput.component.html',
 })
 export class PriceCountInputComponent implements ViewCell, OnInit {

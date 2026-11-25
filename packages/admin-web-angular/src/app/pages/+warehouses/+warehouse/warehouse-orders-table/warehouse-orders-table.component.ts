@@ -4,6 +4,7 @@ import {
 	OnDestroy,
 	OnChanges,
 	AfterViewInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { LocalDataSource } from '@app/@shared/smart-table';
 import { Subject, Observable, forkJoin } from 'rxjs';
@@ -27,10 +28,12 @@ import { takeUntil } from 'rxjs/operators';
 	standalone: false,
 	selector: 'ea-warehouse-orders-table',
 	styleUrls: ['./warehouse-orders-table.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './warehouse-orders-table.component.html',
 })
 export class WarehouseOrdersTableComponent
-	implements OnInit, OnDestroy, OnChanges, AfterViewInit {
+	implements OnInit, OnDestroy, OnChanges, AfterViewInit
+{
 	private _ngDestroy$ = new Subject<void>();
 
 	public orders: Order[] = [];
@@ -47,7 +50,7 @@ export class WarehouseOrdersTableComponent
 		private _translateService: TranslateService,
 		private readonly modalService: NgbModal,
 		private _productLocalesService: ProductLocalesService,
-		private warehouseOrdersRouter: WarehouseOrdersRouter
+		private warehouseOrdersRouter: WarehouseOrdersRouter,
 	) {
 		this._loadTableSettings();
 		this._listenForEntityLocaleTranslate();
@@ -64,10 +67,12 @@ export class WarehouseOrdersTableComponent
 				container: 'nb-layout',
 				windowClass: 'ng-custom',
 				backdrop: 'static',
-			}
+			},
 		);
 
-		(modalRef.componentInstance as WarehouseOrderComponent).orderFinishedEmitter
+		(
+			modalRef.componentInstance as WarehouseOrderComponent
+		).orderFinishedEmitter
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe(() => {
 				modalRef.close();
@@ -113,7 +118,7 @@ export class WarehouseOrdersTableComponent
 			const raw: Date = new Date(<any>order._createdAt);
 			const formatted: string = new DatePipe('en-EN').transform(
 				raw,
-				'dd-MMM-yyyy hh:mm:ss'
+				'dd-MMM-yyyy hh:mm:ss',
 			);
 
 			const columnTitlePrefix = 'STATUS_TEXT.';
@@ -126,7 +131,7 @@ export class WarehouseOrdersTableComponent
 				getTranslate(order.carrierStatusText),
 				getTranslate('CARRIER'),
 				getTranslate('CREATED'),
-				getTranslate('ELAPSED')
+				getTranslate('ELAPSED'),
 			)
 				.pipe(takeUntil(this._ngDestroy$))
 				.subscribe(
@@ -152,7 +157,7 @@ export class WarehouseOrdersTableComponent
 								? `
 							<div *ngIf= 'false' >
 								<img width="32" height="32" src="${this.localeTranslate(
-									order.products[0].product.images
+									order.products[0].product.images,
 								)}" />
 								<h6 class="d-inline-block">
 									${this.localeTranslate(order.products[0].product.title)}
@@ -165,7 +170,7 @@ export class WarehouseOrdersTableComponent
 							carrierStatusHtml: `<div class="badge text-bg-secondary">${carrierStatusText}</div>`,
 							created: formatted,
 						});
-					}
+					},
 				);
 		});
 		return data;
@@ -205,7 +210,7 @@ export class WarehouseOrdersTableComponent
 			getTranslate('STATUS'),
 			getTranslate('CARRIER'),
 			getTranslate('CREATED'),
-			getTranslate('ELAPSED')
+			getTranslate('ELAPSED'),
 		)
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe(
@@ -246,7 +251,7 @@ export class WarehouseOrdersTableComponent
 							perPage: 3,
 						},
 					};
-				}
+				},
 			);
 	}
 

@@ -5,6 +5,7 @@ import {
 	Output,
 	EventEmitter,
 	Input,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { LocalDataSource } from '@app/@shared/smart-table';
 import { StoreProductPriceComponent } from '@app/@shared/render-component/store-products-table/store-product-price.component';
@@ -41,6 +42,7 @@ export interface WarehouseProductViewModel {
 @Component({
 	standalone: false,
 	selector: 'ea-warehouse-products-table',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './warehouse-products-table.component.html',
 })
 export class WarehouseProductsComponent implements OnInit, OnDestroy {
@@ -64,7 +66,7 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 	constructor(
 		private readonly _translateService: TranslateService,
 		private readonly _productLocalesService: ProductLocalesService,
-		private readonly _productsCategoryService: ProductsCategoryService
+		private readonly _productsCategoryService: ProductsCategoryService,
 	) {}
 
 	get hasSelectedProducts(): boolean {
@@ -87,16 +89,16 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 			return {
 				id: product.productId,
 				image: this._productLocalesService.getTranslate(
-					product.product['images']
+					product.product['images'],
 				),
 				title: this._productLocalesService.getTranslate(
-					product.product['title']
+					product.product['title'],
 				),
 				description: this._productLocalesService.getTranslate(
-					product.product['description']
+					product.product['description'],
 				),
 				details: this._productLocalesService.getTranslate(
-					product.product['details']
+					product.product['details'],
 				),
 				categories: {
 					ids: product.product['categories'],
@@ -104,10 +106,12 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 						this.categoriesInfo &&
 						this.categoriesInfo
 							.filter((c) =>
-								product.product['categories'].includes(c.id)
+								product.product['categories'].includes(c.id),
 							)
 							.map((c) =>
-								this._productLocalesService.getTranslate(c.name)
+								this._productLocalesService.getTranslate(
+									c.name,
+								),
 							)
 							.toString(),
 				},
@@ -153,7 +157,7 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 			getTranslate('PRICE'),
 			getTranslate('QUANTITY'),
 			getTranslate('AVAILABILITY'),
-			getTranslate('TYPE')
+			getTranslate('TYPE'),
 		)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(
@@ -204,7 +208,7 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 								renderComponent: ProductCategoriesComponent,
 								filterFunction(
 									cell?: any,
-									search?: string
+									search?: string,
 								): boolean {
 									if (cell.search.includes(search)) {
 										return true;
@@ -232,7 +236,8 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 							type: {
 								title: type,
 								type: 'custom',
-								renderComponent: ProductTakeawayDeliveryComponent,
+								renderComponent:
+									ProductTakeawayDeliveryComponent,
 							},
 						},
 						pager: {
@@ -240,7 +245,7 @@ export class WarehouseProductsComponent implements OnInit, OnDestroy {
 							perPage: this.perPage,
 						},
 					};
-				}
+				},
 			);
 	}
 

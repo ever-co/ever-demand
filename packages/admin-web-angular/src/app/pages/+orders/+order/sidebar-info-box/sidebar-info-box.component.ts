@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
 	standalone: false,
 	selector: 'ea-order-sidebar-info-box',
 	templateUrl: './sidebar-info-box.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./sidebar-info-box.component.scss'],
 })
 export class SidebarInfoBoxComponent {

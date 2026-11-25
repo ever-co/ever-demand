@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { register } from 'swiper/element/bundle';
 
 // Registers <swiper-container> / <swiper-slide> (Swiper Element, the web-component build of
@@ -16,6 +16,7 @@ export interface SlideImage {
 	standalone: false,
 	selector: 'image-slider',
 	styleUrls: ['./image-slider.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './image-slider.component.html',
 })
 export class ImageSliderComponent {

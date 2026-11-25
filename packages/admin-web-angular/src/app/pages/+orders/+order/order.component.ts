@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import Order from '@modules/server.common/entities/Order';
@@ -19,6 +19,7 @@ const service = new google.maps.DistanceMatrixService();
 	standalone: false,
 	selector: 'ea-order',
 	templateUrl: './order.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./order.component.scss'],
 })
 export class OrderComponent implements OnDestroy {
@@ -36,7 +37,7 @@ export class OrderComponent implements OnDestroy {
 	constructor(
 		private readonly _router: ActivatedRoute,
 		private readonly orderRouter: OrderRouter,
-		private readonly translateService: TranslateService
+		private readonly translateService: TranslateService,
 	) {
 		const id = this._router.snapshot.params.id;
 
@@ -116,7 +117,7 @@ export class OrderComponent implements OnDestroy {
 			details.push(
 				carrier.firstName
 					? carrier.firstName + ' ' + carrier.lastName
-					: carrier.username
+					: carrier.username,
 			);
 			details.push(carrier.phone);
 		}
@@ -147,13 +148,13 @@ export class OrderComponent implements OnDestroy {
 					origins: [
 						new google.maps.LatLng(
 							geoLocation1.coordinates.lat,
-							geoLocation1.coordinates.lng
+							geoLocation1.coordinates.lng,
 						),
 					],
 					destinations: [
 						new google.maps.LatLng(
 							geoLocation2.coordinates.lat,
-							geoLocation2.coordinates.lng
+							geoLocation2.coordinates.lng,
 						),
 					],
 					travelMode: google.maps.TravelMode.DRIVING,
@@ -166,7 +167,7 @@ export class OrderComponent implements OnDestroy {
 						this.distance =
 							response.rows[0].elements[0].distance['text'];
 					}
-				}
+				},
 			);
 		}
 

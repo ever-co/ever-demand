@@ -1,4 +1,9 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { WarehousesService } from '@app/@core/data/warehouses.service';
 import { environment } from 'environments/environment';
 import Warehouse from '@modules/server.common/entities/Warehouse';
@@ -10,6 +15,7 @@ import { Location } from '@angular/common';
 @Component({
 	standalone: false,
 	templateUrl: './warehouse-track.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./warehouse-track.component.scss'],
 })
 export class WarehouseTrackComponent implements OnInit {
@@ -28,7 +34,7 @@ export class WarehouseTrackComponent implements OnInit {
 
 	constructor(
 		private warehouseService: WarehousesService,
-		private location: Location
+		private location: Location,
 	) {}
 
 	ngOnInit(): void {
@@ -41,17 +47,17 @@ export class WarehouseTrackComponent implements OnInit {
 
 				if (this.merchantMarkers.length === 0) {
 					this.listOfCities = Array.from(
-						new Set(store.map((mer) => mer.geoLocation.city))
+						new Set(store.map((mer) => mer.geoLocation.city)),
 					).sort();
 					this.listOfCountries = Array.from(
 						new Set(
 							store.map((mer) =>
-								getCountryName(mer.geoLocation.countryId)
-							)
-						)
+								getCountryName(mer.geoLocation.countryId),
+							),
+						),
 					).sort();
 					this.listOfMerchants = this.setSort(
-						store.map((mer) => mer.name)
+						store.map((mer) => mer.name),
 					);
 					this.populateMarkers(store, this.merchantMarkers);
 				} else if (store.length === this.merchantMarkers.length) {
@@ -84,7 +90,7 @@ export class WarehouseTrackComponent implements OnInit {
 
 			this.deleteMarkerStorage();
 			const filteredMerchants = this.merchants.filter(
-				(mer) => mer.name === this.merchantName
+				(mer) => mer.name === this.merchantName,
 			);
 			this.populateMarkers(filteredMerchants, this.merchantMarkers);
 		} else {
@@ -99,11 +105,11 @@ export class WarehouseTrackComponent implements OnInit {
 			this.merchantName = undefined;
 			this.deleteMarkerStorage();
 			const filteredMerchants = this.merchants.filter(
-				(mer) => mer.geoLocation.city === this.merchantCity
+				(mer) => mer.geoLocation.city === this.merchantCity,
 			);
 			this.populateMarkers(filteredMerchants, this.merchantMarkers);
 			this.listOfMerchants = this.setSort(
-				filteredMerchants.map((mer) => mer.name)
+				filteredMerchants.map((mer) => mer.name),
 			);
 		} else {
 			this.deleteMarkerStorage();
@@ -120,13 +126,13 @@ export class WarehouseTrackComponent implements OnInit {
 			const filteredMerchants = this.merchants.filter(
 				(mer) =>
 					getCountryName(mer.geoLocation.countryId) ===
-					this.merchantCountry
+					this.merchantCountry,
 			);
 			this.listOfCities = this.setSort(
-				filteredMerchants.map((mer) => mer.geoLocation.city)
+				filteredMerchants.map((mer) => mer.geoLocation.city),
 			);
 			this.listOfMerchants = this.setSort(
-				filteredMerchants.map((mer) => mer.name)
+				filteredMerchants.map((mer) => mer.name),
 			);
 			this.populateMarkers(filteredMerchants, this.merchantMarkers);
 		} else {
@@ -141,7 +147,7 @@ export class WarehouseTrackComponent implements OnInit {
 		merchantArray.forEach((mer) => {
 			const coords = new google.maps.LatLng(
 				mer.geoLocation.loc.coordinates[1],
-				mer.geoLocation.loc.coordinates[0]
+				mer.geoLocation.loc.coordinates[0],
 			);
 			const storeIcon = environment.MAP_MERCHANT_ICON_LINK;
 			const marker = this.addMarker(coords, this.map, storeIcon);
@@ -156,7 +162,7 @@ export class WarehouseTrackComponent implements OnInit {
 		merchantArray.forEach((mer, index) => {
 			const newCoords = new google.maps.LatLng(
 				mer.geoLocation.loc.coordinates[1],
-				mer.geoLocation.loc.coordinates[0]
+				mer.geoLocation.loc.coordinates[0],
 			);
 			let markerIndex;
 			const marker = this.merchantMarkers.find((markerItem, i) => {
@@ -170,7 +176,7 @@ export class WarehouseTrackComponent implements OnInit {
 			if (marker) {
 				if (!newCoords.equals(marker.marker.getPosition())) {
 					this.merchantMarkers[markerIndex].marker.setPosition(
-						newCoords
+						newCoords,
 					);
 				}
 			}

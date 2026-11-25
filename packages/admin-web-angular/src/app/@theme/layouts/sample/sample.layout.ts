@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { delay, takeWhile, withLatestFrom } from 'rxjs/operators';
 import {
 	NbMediaBreakpoint,
@@ -16,6 +16,7 @@ import { StateService } from '../../../@core/data/state.service';
 	standalone: false,
 	selector: 'ngx-sample-layout',
 	styleUrls: ['./sample.layout.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'sample.layout.html',
 })
 export class SampleLayoutComponent implements OnDestroy {
@@ -72,7 +73,7 @@ export class SampleLayoutComponent implements OnDestroy {
 		protected menuService: NbMenuService,
 		protected themeService: NbThemeService,
 		protected bpService: NbMediaBreakpointsService,
-		protected sidebarService: NbSidebarService
+		protected sidebarService: NbSidebarService,
 	) {
 		this.stateService
 			.onLayoutState()
@@ -92,17 +93,17 @@ export class SampleLayoutComponent implements OnDestroy {
 			.pipe(
 				takeWhile(() => this.alive),
 				withLatestFrom(this.themeService.onMediaQueryChange()),
-				delay(20)
+				delay(20),
 			)
 			.subscribe(
 				([item, [bpFrom, bpTo]]: [
 					any,
-					[NbMediaBreakpoint, NbMediaBreakpoint]
+					[NbMediaBreakpoint, NbMediaBreakpoint],
 				]) => {
 					if (bpTo.width <= isBp.width) {
 						this.sidebarService.collapse('menu-sidebar');
 					}
-				}
+				},
 			);
 
 		this.themeService

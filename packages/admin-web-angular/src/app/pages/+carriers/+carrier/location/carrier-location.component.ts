@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	OnInit,
+	ViewChild,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { Subject } from 'rxjs';
 // TODO: import 'style-loader!leaflet/dist/leaflet.css';
 import { ActivatedRoute } from '@angular/router';
@@ -18,6 +24,7 @@ const directionsService = new google.maps.DirectionsService();
 	standalone: false,
 	selector: 'ea-carrier-location',
 	styleUrls: ['./carrier-location.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './carrier-location.component.html',
 })
 export class CarrierLocationComponent implements OnDestroy, OnInit {
@@ -39,7 +46,7 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 		private route: ActivatedRoute,
 		private carrierRouter: CarrierRouter,
 		private carrierOrdersRouter: CarrierOrdersRouter,
-		private carriersService: CarriersService
+		private carriersService: CarriersService,
 	) {}
 
 	ngOnInit(): void {
@@ -59,7 +66,7 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 					}
 					const newCoordinates = new google.maps.LatLng(
 						carrier.geoLocation.coordinates.lat,
-						carrier.geoLocation.coordinates.lng
+						carrier.geoLocation.coordinates.lng,
 					);
 					if (this.marker) {
 						this.marker.setMap(null);
@@ -67,9 +74,10 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 					let isWorking = false;
 
 					this.interval = setInterval(async () => {
-						const order = await this.carriersService.getCarrierCurrentOrder(
-							carrierId
-						);
+						const order =
+							await this.carriersService.getCarrierCurrentOrder(
+								carrierId,
+							);
 
 						if (order) {
 							if (!isWorking) {
@@ -79,36 +87,36 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 									environment.MAP_MERCHANT_ICON_LINK;
 								const userIcon = environment.MAP_USER_ICON_LINK;
 								user.geoLocation = new GeoLocation(
-									user.geoLocation
+									user.geoLocation,
 								);
 								this.userMarker = this.addMarker(
 									new google.maps.LatLng(
 										user.geoLocation.coordinates.lat,
-										user.geoLocation.coordinates.lng
+										user.geoLocation.coordinates.lng,
 									),
 									this.map,
-									userIcon
+									userIcon,
 								);
 								warehouse.geoLocation = new GeoLocation(
-									warehouse.geoLocation
+									warehouse.geoLocation,
 								);
 								this.warehouseMarker = this.addMarker(
 									new google.maps.LatLng(
-										warehouse[
-											'geoLocation'
-										].coordinates.lat,
-										warehouse['geoLocation'].coordinates.lng
+										warehouse['geoLocation'].coordinates
+											.lat,
+										warehouse['geoLocation'].coordinates
+											.lng,
 									),
 									this.map,
-									warehouseIcon
+									warehouseIcon,
 								);
 								const start = new google.maps.LatLng(
 									user.geoLocation.coordinates.lat,
-									user.geoLocation.coordinates.lng
+									user.geoLocation.coordinates.lng,
 								);
 								const end = new google.maps.LatLng(
 									warehouse['geoLocation'].coordinates.lat,
-									warehouse['geoLocation'].coordinates.lng
+									warehouse['geoLocation'].coordinates.lng,
 								);
 								const request = {
 									origin: start,
@@ -116,14 +124,16 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 									travelMode: 'DRIVING',
 								};
 
-								directionsService.route(request, function (
-									res,
-									stat
-								) {
-									if (stat === 'OK') {
-										directionsDisplay.setDirections(res);
-									}
-								});
+								directionsService.route(
+									request,
+									function (res, stat) {
+										if (stat === 'OK') {
+											directionsDisplay.setDirections(
+												res,
+											);
+										}
+									},
+								);
 								directionsDisplay.setOptions({
 									suppressMarkers: true,
 								});
@@ -132,7 +142,7 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 								const bounds = new google.maps.LatLngBounds();
 								bounds.extend(this.marker.getPosition());
 								bounds.extend(
-									this.warehouseMarker.getPosition()
+									this.warehouseMarker.getPosition(),
 								);
 								bounds.extend(this.userMarker.getPosition());
 								this.map.fitBounds(bounds);
@@ -155,16 +165,15 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 									</ul>
 									`;
 
-								const userInfoWindow = new google.maps.InfoWindow(
-									{
+								const userInfoWindow =
+									new google.maps.InfoWindow({
 										content: userInfoContent,
-									}
-								);
+									});
 
 								this.userMarker.addListener('click', () => {
 									userInfoWindow.open(
 										this.map,
-										this.userMarker
+										this.userMarker,
 									);
 								});
 								const warehouseInfoContent = `
@@ -185,20 +194,19 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 									</ul>
 									`;
 
-								const warehouseInfoWindow = new google.maps.InfoWindow(
-									{
+								const warehouseInfoWindow =
+									new google.maps.InfoWindow({
 										content: warehouseInfoContent,
-									}
-								);
+									});
 
 								this.warehouseMarker.addListener(
 									'click',
 									() => {
 										warehouseInfoWindow.open(
 											this.map,
-											this.warehouseMarker
+											this.warehouseMarker,
 										);
-									}
+									},
 								);
 							}
 						} else {
@@ -219,7 +227,7 @@ export class CarrierLocationComponent implements OnDestroy, OnInit {
 					this.marker = this.addMarker(
 						newCoordinates,
 						this.map,
-						carierIcon
+						carierIcon,
 					);
 					const carrierInfoContent = `
 					<h3>  ${carrier.fullName}</h3>

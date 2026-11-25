@@ -78,8 +78,8 @@
 			<div class="col-sm-10">
 				<e-cu-file-uploader
 					[placeholder]="uploaderPlaceholder"
-					[name]="firstName?.value"
-					[fileUrl]="image?.value"
+					[name]="$safeNavigationMigration(firstName?.value)"
+					[fileUrl]="$safeNavigationMigration(image?.value)"
 					(uploadedImgUrl)="image.setValue($event)"
 				></e-cu-file-uploader>
 				<div *ngIf="image.invalid" class="alert alert-danger">

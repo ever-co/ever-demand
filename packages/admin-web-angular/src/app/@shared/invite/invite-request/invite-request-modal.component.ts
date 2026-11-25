@@ -1,4 +1,9 @@
-import { Component, ViewChild, EventEmitter } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	EventEmitter,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { LocationFormComponent } from '@app/@shared/forms/location';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { ToasterService } from '@app/@core/toaster';
@@ -10,6 +15,7 @@ import { InviteRequestRouter } from '@modules/client.common.angular2/routers/inv
 	standalone: false,
 	selector: 'ea-invite-request-modal',
 	templateUrl: './invite-request-modal.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['/invite-request-modal.component.scss'],
 })
 export class InviteRequestModalComponent {
@@ -32,7 +38,7 @@ export class InviteRequestModalComponent {
 		private readonly toasterService: ToasterService,
 		private readonly activeModal: NgbActiveModal,
 		private readonly formBuilder: FormBuilder,
-		private readonly inviteRequestRouter: InviteRequestRouter
+		private readonly inviteRequestRouter: InviteRequestRouter,
 	) {}
 
 	onCoordinatesChanges(coords: number[]) {
@@ -50,17 +56,17 @@ export class InviteRequestModalComponent {
 	async create() {
 		try {
 			const inciteRequest = await this.inviteRequestRouter.create(
-				this.getInviteRequestCreateObj()
+				this.getInviteRequestCreateObj(),
 			);
 			this.toasterService.pop(
 				'success',
-				`Successful create invite request`
+				`Successful create invite request`,
 			);
 			this.activeModal.close(inciteRequest);
 		} catch (err) {
 			this.toasterService.pop(
 				'error',
-				`Error in creating invite request: "${err.message}"`
+				`Error in creating invite request: "${err.message}"`,
 			);
 		}
 	}

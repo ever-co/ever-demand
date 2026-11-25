@@ -117,7 +117,13 @@
 		*ngIf="currentView === componentViews.productsTable"
 		[disabled]="!haveProductsForAdd"
 		nbButton
-		(click)="select(productsCatalog?.productsTable.selectedProducts)"
+		(click)="
+			select(
+				$safeNavigationMigration(
+					productsCatalog?.productsTable.selectedProducts
+				)
+			)
+		"
 	>
 		{{ 'FAKE_DATA.SETUP_MERCHANTS.SELECT' | translate }}
 	</button>

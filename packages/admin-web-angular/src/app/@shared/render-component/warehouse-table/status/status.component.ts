@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ViewCell } from '@app/@shared/smart-table';
 
 @Component({
@@ -18,6 +23,7 @@ import { ViewCell } from '@app/@shared/smart-table';
 			}
 		`,
 	],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './status.component.html',
 })
 export class StatusComponent implements ViewCell, OnInit {

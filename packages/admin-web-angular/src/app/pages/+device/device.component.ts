@@ -1,4 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { DeviceService } from '../../@core/data/device.service';
 import Device from '@modules/server.common/entities/Device';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -14,6 +19,7 @@ import { ConfirmationModalComponent } from '../../@shared/confirmation-modal/con
 	standalone: false,
 	selector: 'ea-device',
 	styleUrls: ['./device.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './device.component.html',
 })
 export class DeviceComponent implements OnDestroy, OnInit {
@@ -34,7 +40,7 @@ export class DeviceComponent implements OnDestroy, OnInit {
 		private readonly _deviceService: DeviceService,
 		private readonly _modalService: NgbModal,
 		private readonly _translateService: TranslateService,
-		private readonly _notifyService: NotifyService
+		private readonly _notifyService: NotifyService,
 	) {
 		this._loadSmartTableSettings();
 		this._setupDataForSmartTable();
@@ -101,11 +107,14 @@ export class DeviceComponent implements OnDestroy, OnInit {
 	}
 
 	async deleteDevice(e) {
-		const activeModal = this._modalService.open(ConfirmationModalComponent, {
-			size: 'sm',
-			container: 'nb-layout',
-			backdrop: 'static',
-		});
+		const activeModal = this._modalService.open(
+			ConfirmationModalComponent,
+			{
+				size: 'sm',
+				container: 'nb-layout',
+				backdrop: 'static',
+			},
+		);
 		const modalComponent: ConfirmationModalComponent =
 			activeModal.componentInstance;
 
@@ -156,7 +165,7 @@ export class DeviceComponent implements OnDestroy, OnInit {
 			getTranslate('ID'),
 			getTranslate('LANGUAGE'),
 			getTranslate('TYPE'),
-			getTranslate('UUID')
+			getTranslate('UUID'),
 		)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(([id, language, type, uuid]) => {

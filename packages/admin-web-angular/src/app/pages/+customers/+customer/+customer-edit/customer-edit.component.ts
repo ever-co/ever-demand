@@ -1,4 +1,10 @@
-import { Component, ViewChild, EventEmitter, OnInit } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	EventEmitter,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
@@ -12,6 +18,7 @@ import User from '@modules/server.common/entities/User';
 @Component({
 	standalone: false,
 	templateUrl: './customer-edit.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./customer-edit.component.scss'],
 })
 export class CustomerEditComponent implements OnInit {
@@ -42,7 +49,7 @@ export class CustomerEditComponent implements OnInit {
 		private readonly _router: Router,
 		private readonly _formBuilder: FormBuilder,
 		private readonly _customerRouter: UserRouter,
-		private readonly _toasterService: ToasterService
+		private readonly _toasterService: ToasterService,
 	) {}
 
 	ngOnInit() {
@@ -55,7 +62,7 @@ export class CustomerEditComponent implements OnInit {
 				if (!customer) {
 					this._toasterService.pop(
 						'error',
-						`Customer with id ${id} doesn't exist!`
+						`Customer with id ${id} doesn't exist!`,
 					);
 				}
 
@@ -100,12 +107,12 @@ export class CustomerEditComponent implements OnInit {
 				{
 					...this.basicInfoForm.getValue(),
 					geoLocation: geoLocationInput as IGeoLocation,
-				}
+				},
 			);
 			this.loading = false;
 			this._toasterService.pop(
 				'success',
-				`Customer ${customer.firstName} was updated`
+				`Customer ${customer.firstName} was updated`,
 			);
 			await this._router.navigate([`/customers/list/${customer.id}`], {
 				relativeTo: this._activatedRoute,
@@ -114,7 +121,7 @@ export class CustomerEditComponent implements OnInit {
 			this.loading = false;
 			this._toasterService.pop(
 				'error',
-				`Error in updating customer: "${err.message}"`
+				`Error in updating customer: "${err.message}"`,
 			);
 		}
 	}

@@ -1,10 +1,18 @@
-import { Component, ViewChild, Output, EventEmitter, Input } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	Output,
+	EventEmitter,
+	Input,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
 	standalone: false,
 	selector: 'ea-merchants-setup-account',
 	templateUrl: './account.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./account.component.scss'],
 })
 export class SetupMerchantAccountComponent {
@@ -18,7 +26,7 @@ export class SetupMerchantAccountComponent {
 	nextStep: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 	@Input() showNext: boolean = true;
-  	@Input() showPrev: boolean = true;
+	@Input() showPrev: boolean = true;
 
 	accountModel = {
 		email: '',
@@ -39,7 +47,7 @@ export class SetupMerchantAccountComponent {
 		if (targetIndex > 0 && this.accountModel.username === '') {
 			let defaultUsername = this.accountModel.email.substring(
 				0,
-				targetIndex
+				targetIndex,
 			);
 
 			this.accountModel.username = defaultUsername;

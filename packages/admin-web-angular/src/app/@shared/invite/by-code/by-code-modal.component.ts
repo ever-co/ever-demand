@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { UserAuthRouter } from '@modules/client.common.angular2/routers/user-auth-router.service';
@@ -8,6 +8,7 @@ import { first } from 'rxjs/operators';
 
 @Component({
 	standalone: false,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './by-code-modal.component.html',
 })
 export class ByCodeModalComponent {
@@ -18,7 +19,7 @@ export class ByCodeModalComponent {
 		private readonly inviteRouter: InviteRouter,
 		private readonly userAuthRouter: UserAuthRouter,
 		private readonly toasterService: ToasterService,
-		private readonly activeModal: NgbActiveModal
+		private readonly activeModal: NgbActiveModal,
 	) {}
 
 	closeModal() {
@@ -45,7 +46,7 @@ export class ByCodeModalComponent {
 					});
 					this.toasterService.pop(
 						'success',
-						`Successful logen with code`
+						`Successful logen with code`,
 					);
 					this.activeModal.close(user);
 				} else {

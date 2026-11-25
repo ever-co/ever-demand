@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ViewCell } from '@app/@shared/smart-table';
 import { Router } from '@angular/router';
 import OrderProduct from '@modules/server.common/entities/OrderProduct';
@@ -7,6 +12,7 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 
 @Component({
 	standalone: false,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './redirect-product.component.html',
 })
 export class RedirectProductComponent implements ViewCell, OnInit {
@@ -19,14 +25,14 @@ export class RedirectProductComponent implements ViewCell, OnInit {
 
 	constructor(
 		private readonly router: Router,
-		private _productLocalesService: ProductLocalesService
+		private _productLocalesService: ProductLocalesService,
 	) {}
 
 	ngOnInit(): void {
 		if (this.rowData.products.length) {
 			this.product = this.rowData.products[0];
 			this.productTitle = this.localeTranslate(
-				this.rowData.products[0].product.title
+				this.rowData.products[0].product.title,
 			);
 		}
 	}

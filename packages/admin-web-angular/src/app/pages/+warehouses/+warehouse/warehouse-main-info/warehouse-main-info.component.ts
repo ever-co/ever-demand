@@ -1,4 +1,11 @@
-import { Component, OnInit, OnDestroy, Input, OnChanges } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	OnDestroy,
+	Input,
+	OnChanges,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { Subject } from 'rxjs';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 
@@ -6,10 +13,12 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 	standalone: false,
 	selector: 'ea-warehouse-main-info',
 	styleUrls: ['./warehouse-main-info.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './warehouse-main-info.component.html',
 })
 export class WarehouseMainInfoViewComponent
-	implements OnInit, OnDestroy, OnChanges {
+	implements OnInit, OnDestroy, OnChanges
+{
 	private _ngDestroy$ = new Subject<void>();
 
 	public isManufacturing: boolean;
