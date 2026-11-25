@@ -39,6 +39,8 @@ export interface LocationService {
 	getCurrentCoords(): Promise<Coordinates>;
 	/** Device GPS only (no defaults, no IP lookup), null when unavailable. */
 	getDeviceCoords(): Promise<Coordinates | null>;
+	/** Forward geocode of a typed address (platform geocoder; null on the web or when unknown). */
+	geocodeAddress(address: string): Promise<Coordinates | null>;
 }
 
 export function createLocationService(
@@ -83,8 +85,18 @@ export function createLocationService(
 		}
 	}
 
+	async function geocodeAddress(address: string): Promise<Coordinates | null> {
+		try {
+			const [first] = await withTimeout(ExpoLocation.geocodeAsync(address), 15000);
+			return first ? { latitude: first.latitude, longitude: first.longitude } : null;
+		} catch {
+			return null;
+		}
+	}
+
 	return {
 		getDeviceCoords,
+		geocodeAddress,
 		async getCurrentCoords() {
 			if (env.DEFAULT_LATITUDE && env.DEFAULT_LONGITUDE) {
 				return { latitude: env.DEFAULT_LATITUDE, longitude: env.DEFAULT_LONGITUDE };

@@ -18,6 +18,7 @@ jest.mock('@react-navigation/drawer', () => require('./src/test/drawerMock'));
 jest.mock('expo-location', () => ({
 	Accuracy: { High: 4 },
 	requestForegroundPermissionsAsync: jest.fn(async () => ({ status: 'denied' })),
+	geocodeAsync: jest.fn(async () => []),
 	getCurrentPositionAsync: jest.fn(async () => {
 		throw new Error('no location in tests');
 	}),

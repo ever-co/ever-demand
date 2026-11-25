@@ -148,8 +148,12 @@ export function InviteByLocationScreen() {
 				return;
 			}
 
-			// No invite at this address: ask for one, at the address' coordinates.
-			const coords = await services.location.getCurrentCoords();
+			// No invite at this address: ask for one, at the address' coordinates (the Ionic app used the
+			// Google geocoder), else at the current location.
+			const coords =
+				(await services.location.geocodeAddress(
+					`${form.streetAddress.trim()} ${house}, ${form.city.trim()}, ${countryName(form.countryId) ?? ''}`,
+				)) ?? (await services.location.getCurrentCoords());
 			const request = await routers.inviteRequest.create({
 				geoLocation: {
 					loc: { type: 'Point', coordinates: [coords.longitude, coords.latitude] },

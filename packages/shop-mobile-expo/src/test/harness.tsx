@@ -111,6 +111,7 @@ export function createTestServices(
 		location: {
 			getCurrentCoords: jest.fn(async () => ({ latitude: 42.6459136, longitude: 23.3332736 })),
 			getDeviceCoords: jest.fn(async () => null),
+			geocodeAddress: jest.fn(async () => null),
 			...options.location,
 		},
 		platform: 'ios',
