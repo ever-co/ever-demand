@@ -1,18 +1,70 @@
-import 'jasmine';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClient } from '@angular/common/http';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { GeoLocationRouter } from '@modules/client.common.angular2/routers/geo-location-router.service';
+import { InviteRequestRouter } from '@modules/client.common.angular2/routers/invite-request-router.service';
+import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
+import { UserAuthRouter } from '@modules/client.common.angular2/routers/user-auth-router.service';
+import { Store } from '../../../services/store.service';
 import { ByLocationPage } from './by-location.page';
 
 describe('ByLocationPage', () => {
 	let component: ByLocationPage;
 	let fixture: ComponentFixture<ByLocationPage>;
 
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
-			declarations: [ByLocationPage],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
-	}));
+	beforeEach(
+		waitForAsync(() => {
+			TestBed.configureTestingModule({
+				declarations: [ByLocationPage],
+				imports: [TranslateModule.forRoot()],
+				providers: [
+					{ provide: Store, useValue: {} },
+					{
+						provide: HttpClient,
+						useValue: jasmine.createSpyObj('HttpClient', ['get']),
+					},
+					{
+						provide: Router,
+						useValue: jasmine.createSpyObj('Router', [
+							'navigate',
+							'navigateByUrl',
+						]),
+					},
+					{
+						provide: UserAuthRouter,
+						useValue: jasmine.createSpyObj('UserAuthRouter', [
+							'register',
+						]),
+					},
+					{
+						provide: InviteRouter,
+						useValue: jasmine.createSpyObj('InviteRouter', [
+							'create',
+						]),
+					},
+					{
+						provide: InviteRequestRouter,
+						useValue: jasmine.createSpyObj('InviteRequestRouter', [
+							'create',
+						]),
+					},
+					// ngOnInit looks the address up after 50 ms. The lookup never
+					// answers, so it does not run into a later spec.
+					{
+						provide: GeoLocationRouter,
+						useValue: jasmine.createSpyObj('GeoLocationRouter', {
+							getAddressByCoordinatesUsingArcGIS: new Promise(
+								() => {}
+							),
+						}),
+					},
+				],
+				schemas: [CUSTOM_ELEMENTS_SCHEMA],
+			}).compileComponents();
+		})
+	);
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(ByLocationPage);

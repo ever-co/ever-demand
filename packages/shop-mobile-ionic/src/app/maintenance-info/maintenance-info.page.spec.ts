@@ -1,5 +1,9 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { PipesModule } from '@modules/client.common.angular2/pipes/pipes.module';
+import { MaintenanceService } from '@modules/client.common.angular2/services/maintenance.service';
+import { Store } from 'app/services/store.service';
 
 import { MaintenanceInfoPage } from './maintenance-info.page';
 
@@ -7,12 +11,37 @@ describe('MaintenanceInfoPage', () => {
 	let component: MaintenanceInfoPage;
 	let fixture: ComponentFixture<MaintenanceInfoPage>;
 
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
-			declarations: [MaintenanceInfoPage],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
-	}));
+	beforeEach(
+		waitForAsync(() => {
+			TestBed.configureTestingModule({
+				declarations: [MaintenanceInfoPage],
+				imports: [PipesModule],
+				providers: [
+					// The status poll reports the maintenance as over, so it stops.
+					{
+						provide: MaintenanceService,
+						useValue: jasmine.createSpyObj('MaintenanceService', {
+							getMessage: Promise.resolve(''),
+							getStatus: Promise.resolve(false),
+						}),
+					},
+					{
+						provide: Store,
+						useValue: jasmine.createSpyObj(
+							'Store',
+							['clearMaintenanceMode'],
+							{ maintenanceMode: 'maintenance' }
+						),
+					},
+					{
+						provide: Router,
+						useValue: jasmine.createSpyObj('Router', ['navigate']),
+					},
+				],
+				schemas: [CUSTOM_ELEMENTS_SCHEMA],
+			}).compileComponents();
+		})
+	);
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(MaintenanceInfoPage);
