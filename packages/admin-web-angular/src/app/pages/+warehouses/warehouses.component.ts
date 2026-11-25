@@ -122,9 +122,13 @@ export class WarehousesComponent implements AfterViewInit, OnDestroy {
 
 	// This is just workaround to show some search icon on smart table, in the future maybe we must find better solution.
 	private _addCustomHTMLElements(): any {
-		document.querySelector(
-			'tr.ng2-smart-filters > th:nth-child(1)'
-		).innerHTML = '<i class="fa fa-search" style="font-size: 1.3em"/>';
+		const target = document.querySelector(
+			'tr.angular2-smart-filters > th:nth-child(1)'
+		);
+		if (target) {
+			target.innerHTML =
+				'<i class="fa fa-search" style="font-size: 1.3em"></i>';
+		}
 	}
 
 	private _selectWarehouse(warehouseId: string) {

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
+	selector: 'ea-warehouse-email',
 	standalone: false,
 	styleUrls: ['./warehouse-email.component.scss'],
 	templateUrl: './warehouse-email.component.html',

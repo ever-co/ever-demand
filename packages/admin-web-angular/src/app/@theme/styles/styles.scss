@@ -72,7 +72,7 @@
 			transform: scale(1.4) !important;
 		}
 
-		th[ng2-st-checkbox-select-all] {
+		th[angular2-st-checkbox-select-all] {
 			cursor: pointer !important;
 
 			input[type='checkbox'] {
@@ -83,11 +83,11 @@
 }
 
 // Smart table styles
-.products-table td.ng2-smart-actions.ng-star-inserted {
+.products-table td.angular2-smart-actions.ng-star-inserted {
 	padding: 0 !important;
 }
 
-.category-table td.ng2-smart-actions.ng-star-inserted {
+.category-table td.angular2-smart-actions.ng-star-inserted {
 	padding: 0 !important;
 }
 
@@ -251,7 +251,7 @@ h6 {
 	font-weight: 500 !important;
 }
 
-.ng2-smart-action.ng-star-inserted i {
+.angular2-smart-action.ng-star-inserted i {
 	font-size: 1.5rem;
 }
 

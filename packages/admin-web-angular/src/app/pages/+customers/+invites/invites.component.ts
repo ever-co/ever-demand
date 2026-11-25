@@ -77,7 +77,7 @@ export class InvitesComponent implements OnInit, OnDestroy, AfterViewChecked {
 	ngAfterViewChecked(): void {
 		if (
 			this._elRef.nativeElement.querySelector(
-				'.ng2-smart-action-add-create'
+				'.angular2-smart-action-add-create'
 			)
 		) {
 			const firstRow = 2;

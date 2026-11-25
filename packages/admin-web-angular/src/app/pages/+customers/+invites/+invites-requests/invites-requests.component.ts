@@ -79,7 +79,7 @@ export class InvitesRequestsComponent implements OnDestroy, AfterViewChecked {
 
 		if (
 			this._elRef.nativeElement.querySelector(
-				'.ng2-smart-action-add-create'
+				'.angular2-smart-action-add-create'
 			)
 		) {
 			const firstRow = 2;
