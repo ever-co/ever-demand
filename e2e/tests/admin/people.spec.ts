@@ -41,7 +41,12 @@ test.describe('customers, invites and carriers', () => {
 		await expect(country.locator('option')).not.toHaveCount(0);
 		await country.selectOption({ label: 'Bulgaria' });
 		// the editor cells line up with the column headers (no extra leading cell)
-		const headerCells = await page.locator('ng2-smart-table thead tr.angular2-smart-titles > *').count();
+		// (the invite requests tab renders a second table: count in the first one)
+		const headerCells = await page
+			.locator('ng2-smart-table')
+			.first()
+			.locator('thead tr.angular2-smart-titles > *')
+			.count();
 		expect(await form.locator('> td, > th').count()).toBe(headerCells);
 
 		await form.locator('.angular2-smart-action-add-cancel').click();

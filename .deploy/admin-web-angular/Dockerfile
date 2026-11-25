@@ -1,164 +1,100 @@
-# Ever Demand Platform Admin UI (Angular)
+# Ever Demand Platform Admin UI (Angular 22, pnpm workspace)
+#
+# Build from the repository root:
+#   docker build -f .deploy/admin-web-angular/Dockerfile -t ever-demand-admin .
+#
+# The image is built once and configured at start: the build writes DOCKER_<KEY> placeholders into
+# the Angular environment (IS_DOCKER=true) and entrypoint.*.sh replaces them with the container's
+# environment variables before nginx starts.
 
-ARG API_BASE_URL
-ARG API_HOST
-ARG API_PORT
-ARG CLIENT_BASE_URL
-ARG DEMO
-ARG WEB_HOST
-ARG WEB_PORT
-ARG HTTPS_SERVICES_ENDPOINT
-ARG SERVICES_ENDPOINT
-ARG GQL_ENDPOINT
-ARG GQL_SUBSCRIPTIONS_ENDPOINT
-ARG SENTRY_DSN
-ARG CHATWOOT_SDK_TOKEN
-ARG CLOUDINARY_CLOUD_NAME
-ARG CLOUDINARY_API_KEY
-ARG GOOGLE_MAPS_API_KEY
-ARG GOOGLE_PLACE_AUTOCOMPLETE
-ARG DEFAULT_LATITUDE
-ARG DEFAULT_LONGITUDE
-ARG DEFAULT_CURRENCY
-ARG DEFAULT_LANGUAGE
-ARG CURRENCY_SYMBOL
-ARG NO_INTERNET_LOGO
-ARG MAP_MERCHANT_ICON_LINK
-ARG MAP_USER_ICON_LINK
-ARG MAP_CARRIER_ICON_LINK
-ARG API_FILE_UPLOAD_URL
-ARG COMPANY_NAME
-ARG COMPANY_SITE_LINK
-ARG COMPANY_GITHUB_LINK
-ARG COMPANY_FACEBOOK_LINK
-ARG COMPANY_TWITTER_LINK
-ARG COMPANY_LINKEDIN_LINK
-ARG GENERATE_PASSWORD_CHARSET
-ARG SETTINGS_APP_TYPE
-ARG SETTINGS_MAINTENANCE_API_URL
+ARG NODE_VERSION=26
+ARG PNPM_VERSION=12.23.0
 
-FROM node:16-alpine3.14 AS dependencies
+FROM node:${NODE_VERSION}-alpine AS build
+
+ARG PNPM_VERSION
+# Prefer an internal Verdaccio cache when VERDACCIO_REGISTRY is set; empty falls back to npmjs.
+ARG VERDACCIO_REGISTRY=""
 
 LABEL maintainer="ever@ever.co"
-LABEL org.opencontainers.image.source https://github.com/ever-co/ever-demand
+LABEL org.opencontainers.image.source=https://github.com/ever-co/ever-demand
 
 ENV CI=true
+# husky (root "prepare" script) is a no-op in the image
+ENV HUSKY=0
 
-RUN apk --update add bash \
-	&& apk add libexecinfo libexecinfo-dev \
-	&& npm i -g npm@8.19.4 \
-	&& apk add --no-cache --virtual build-dependencies build-base \
-	snappy dos2unix g++ snappy-dev gcc libgcc libstdc++ linux-headers autoconf automake make nasm python2 py2-setuptools vips-dev git \
-	&& npm install --quiet node-gyp@9.4.0 -g \
-	&& npm config set python /usr/bin/python \
-	&& npm install yarn@1.22.22 -g --force \
-	&& mkdir /srv/ever && echo "network-timeout 600000" > /srv/ever/.yarnrc && chown -R node:node /srv/ever
-
-COPY wait .deploy/admin-web-angular/entrypoint.compose.sh .deploy/admin-web-angular/entrypoint.prod.sh /
-
-RUN chmod +x /wait /entrypoint.compose.sh /entrypoint.prod.sh && dos2unix /entrypoint.compose.sh && dos2unix /entrypoint.prod.sh
-
-USER node:node
+# Node 25+ no longer bundles corepack: install pnpm directly.
+RUN npm i -g pnpm@${PNPM_VERSION} \
+	&& if [ -n "$VERDACCIO_REGISTRY" ]; then npm config set registry "$VERDACCIO_REGISTRY"; fi
 
 WORKDIR /srv/ever
 
-COPY --chown=node:node package.json yarn.lock lerna.json package.workspaces.json tsconfig.base.json ./
-COPY --chown=node:node packages/admin-web-angular/package.json ./packages/admin-web-angular/package.json
-COPY --chown=node:node .snyk ./.snyk
-COPY --chown=node:node packages/common/package.json ./packages/common/package.json
-COPY --chown=node:node packages/common-angular/package.json ./packages/common-angular/package.json
+# 1. download every locked package (cached layer: only the lockfile and the workspace settings)
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml .npmrc ./
+COPY patches ./patches
+RUN pnpm fetch
 
-# Prefer the internal Verdaccio cache when VERDACCIO_REGISTRY is set (anonymous, backward-compatible);
-# empty (e.g. a fork) falls back to public npm. Writes the registry to .npmrc + .yarnrc and best-effort
-# (non-fatal) rewrites yarn.lock resolved URLs so the frozen-lockfile install below stays consistent.
-ARG VERDACCIO_REGISTRY=""
-RUN if [ -n "$VERDACCIO_REGISTRY" ]; then \
-		echo "registry=${VERDACCIO_REGISTRY}" >> /srv/ever/.npmrc && \
-		echo "registry \"${VERDACCIO_REGISTRY}\"" >> /srv/ever/.yarnrc && \
-		{ sed -i "s|https://registry.yarnpkg.com|${VERDACCIO_REGISTRY%/}|g; s|https://registry.npmjs.org|${VERDACCIO_REGISTRY%/}|g" /srv/ever/yarn.lock 2>/dev/null || true; }; \
-	fi
-
-RUN yarn bootstrap && yarn cache clean
-
-FROM node:16-alpine3.14 AS development
-
-USER node:node
-
-WORKDIR /srv/ever
-
-COPY --chown=node:node --from=dependencies /wait /entrypoint.compose.sh /entrypoint.prod.sh /
-COPY --chown=node:node --from=dependencies /srv/ever .
+# 2. sources (filtered by Dockerfile.dockerignore) and an offline install of the admin and the
+#    workspace packages it compiles from source (common, common-angular)
 COPY . .
+RUN pnpm install --offline --frozen-lockfile --filter "@ever-platform/admin-web-angular..."
 
-FROM node:16-alpine3.14 AS build
-
-WORKDIR /srv/ever
-
-RUN mkdir dist
-
-COPY --chown=node:node --from=development /srv/ever .
-
-ENV NODE_OPTIONS=${NODE_OPTIONS:-"--max-old-space-size=2048"}
-ENV NODE_ENV=${NODE_ENV:-production}
-
+ENV NODE_ENV=production
+ENV NODE_OPTIONS=--max-old-space-size=4096
 ENV IS_DOCKER=true
 
-RUN yarn build:admin
+RUN pnpm --filter @ever-platform/admin-web-angular build
 
 FROM nginx:alpine AS production
 
-# USER nginx:nginx
-
 WORKDIR /srv/ever
 
-COPY --chown=nginx:nginx --from=dependencies /wait /entrypoint.prod.sh /entrypoint.compose.sh ./
+COPY --chown=nginx:nginx wait .deploy/admin-web-angular/entrypoint.compose.sh .deploy/admin-web-angular/entrypoint.prod.sh ./
 COPY --chown=nginx:nginx .deploy/admin-web-angular/nginx.compose.conf /etc/nginx/conf.d/compose.conf.template
 COPY --chown=nginx:nginx .deploy/admin-web-angular/nginx.prod.conf /etc/nginx/conf.d/prod.conf.template
 COPY --chown=nginx:nginx --from=build /srv/ever/packages/admin-web-angular/build .
 
-RUN chmod +x wait entrypoint.compose.sh entrypoint.prod.sh && \
-    chmod a+rw /etc/nginx/conf.d/compose.conf.template /etc/nginx/conf.d/prod.conf.template
+RUN apk add --no-cache dos2unix \
+	&& dos2unix entrypoint.compose.sh entrypoint.prod.sh \
+	&& chmod +x wait entrypoint.compose.sh entrypoint.prod.sh \
+	&& chmod a+rw /etc/nginx/conf.d/compose.conf.template /etc/nginx/conf.d/prod.conf.template
 
-ENV API_HOST=${API_HOST:-api}
-ENV API_PORT=${API_PORT:-3000}
+ENV API_HOST=api
+ENV API_PORT=3000
 
-ENV API_BASE_URL=${API_BASE_URL:-http://localhost:3000}
-ENV CLIENT_BASE_URL=${CLIENT_BASE_URL:-http://localhost:4200}
-ENV WEB_HOST=${WEB_HOST:-0.0.0.0}
-ENV WEB_PORT=${WEB_PORT:-4200}
-ENV DEMO=${DEMO:-false}
+ENV API_BASE_URL=http://localhost:3000
+ENV CLIENT_BASE_URL=http://localhost:4200
+ENV WEB_HOST=0.0.0.0
+ENV WEB_PORT=4200
+ENV DEMO=false
 
-ENV HTTPS_SERVICES_ENDPOINT=${HTTPS_SERVICES_ENDPOINT}
-ENV SERVICES_ENDPOINT=${SERVICES_ENDPOINT}
-ENV GQL_ENDPOINT=${GQL_ENDPOINT}
-ENV GQL_SUBSCRIPTIONS_ENDPOINT=${GQL_SUBSCRIPTIONS_ENDPOINT}
-ENV SENTRY_DSN=${SENTRY_DSN}
-ENV CHATWOOT_SDK_TOKEN=${CHATWOOT_SDK_TOKEN}
-ENV CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
-ENV CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
-ENV GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}
-ENV GOOGLE_PLACE_AUTOCOMPLETE=${GOOGLE_PLACE_AUTOCOMPLETE:-false}
-ENV DEFAULT_LATITUDE=${DEFAULT_LATITUDE:-42.6459136}
-ENV DEFAULT_LONGITUDE=${DEFAULT_LONGITUDE:-23.3332736}
-ENV DEFAULT_CURRENCY=${DEFAULT_CURRENCY:-USD}_DSN}
-ENV DEFAULT_LANGUAGE=${DEFAULT_LANGUAGE}
-ENV CURRENCY_SYMBOL=${CURRENCY_SYMBOL}
-ENV NO_INTERNET_LOGO=${NO_INTERNET_LOGO}
-ENV MAP_MERCHANT_ICON_LINK=${MAP_MERCHANT_ICON_LINK}
-ENV MAP_USER_ICON_LINK=${MAP_USER_ICON_LINK}
-ENV MAP_CARRIER_ICON_LINK=${MAP_CARRIER_ICON_LINK}
-ENV API_FILE_UPLOAD_URL=${API_FILE_UPLOAD_URL}
-ENV COMPANY_NAME=${COMPANY_NAME}
-ENV COMPANY_SITE_LINK=${COMPANY_SITE_LINK}
-ENV COMPANY_GITHUB_LINK=${COMPANY_GITHUB_LINK}
-ENV COMPANY_FACEBOOK_LINK=${COMPANY_FACEBOOK_LINK}
-ENV COMPANY_TWITTER_LINK=${COMPANY_TWITTER_LINK}
-ENV COMPANY_LINKEDIN_LINK=${COMPANY_LINKEDIN_LINK}
-ENV GENERATE_PASSWORD_CHARSET=${GENERATE_PASSWORD_CHARSET}
-ENV SETTINGS_APP_TYPE=${SETTINGS_APP_TYPE}
-ENV SETTINGS_MAINTENANCE_API_URL=${SETTINGS_MAINTENANCE_API_URL}
+ENV HTTPS_SERVICES_ENDPOINT=https://localhost:2087
+ENV SERVICES_ENDPOINT=http://localhost:5500
+ENV GQL_ENDPOINT=http://localhost:8443/graphql
+ENV GQL_SUBSCRIPTIONS_ENDPOINT=ws://localhost:2086/subscriptions
+ENV GOOGLE_MAPS_API_KEY=
+ENV GOOGLE_PLACE_AUTOCOMPLETE=false
+ENV DEFAULT_LATITUDE=42.6459136
+ENV DEFAULT_LONGITUDE=23.3332736
+ENV DEFAULT_CURRENCY=USD
+ENV DEFAULT_LANGUAGE=en-US
+ENV CURRENCY_SYMBOL="\$"
+ENV NO_INTERNET_LOGO=assets/images/ever-logo.svg
+ENV MAP_MERCHANT_ICON_LINK=http://maps.google.com/mapfiles/kml/pal3/icon21.png
+ENV MAP_USER_ICON_LINK=http://maps.google.com/mapfiles/kml/pal3/icon48.png
+ENV MAP_CARRIER_ICON_LINK=http://maps.google.com/mapfiles/kml/pal4/icon54.png
+ENV API_FILE_UPLOAD_URL=https://api.cloudinary.com/v1_1/evereq/upload
+ENV COMPANY_NAME="Ever Co. LTD"
+ENV COMPANY_SITE_LINK=https://ever.co/
+ENV COMPANY_GITHUB_LINK=https://github.com/ever-co
+ENV COMPANY_FACEBOOK_LINK=https://www.facebook.com/evercoapp
+ENV COMPANY_TWITTER_LINK=https://twitter.com/evercoapp
+ENV COMPANY_LINKEDIN_LINK=https://www.linkedin.com/company/ever-co.
+ENV GENERATE_PASSWORD_CHARSET="abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\$_"
+ENV SETTINGS_APP_TYPE=admin
+ENV SETTINGS_MAINTENANCE_API_URL=
 
-EXPOSE ${WEB_PORT}
+EXPOSE 4200
 
 ENTRYPOINT [ "./entrypoint.prod.sh" ]
 

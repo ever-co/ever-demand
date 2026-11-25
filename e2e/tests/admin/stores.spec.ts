@@ -74,7 +74,14 @@ test.describe('stores', () => {
 		await expectTable(page);
 		await filterTable(page, 'Name', storeName);
 
-		await page.locator('ng2-smart-table tbody tr').filter({ hasText: storeName }).first().click();
+		// the store name (RedirectNameComponent render cell) links to the store page
+		await page
+			.locator('ng2-smart-table tbody tr')
+			.filter({ hasText: storeName })
+			.first()
+			.locator('.redirectBtn')
+			.first()
+			.click();
 		await expect(page).toHaveURL(/#\/stores\/[0-9a-f]{24}/, { timeout: 30_000 });
 		const storeUrl = page.url();
 

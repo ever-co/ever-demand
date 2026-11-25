@@ -13,7 +13,8 @@ const API_DOWN_PATTERNS = [
 	/socket\.io/i,
 	/WebSocket/i,
 	/Http failure response/i,
-	/maps\.googleapis\.com|Google Maps JavaScript API/i,
+	// no Google Maps key in dev / CI: the Maps, Places and Geocoding calls fail
+	/maps\.googleapis\.com|Google Maps JavaScript API|Geocoding Service|Google Maps Platform/i,
 ];
 
 export function isApiNoise(text: string): boolean {

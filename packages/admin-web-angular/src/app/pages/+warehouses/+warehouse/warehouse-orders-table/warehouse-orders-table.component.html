@@ -20,66 +20,74 @@
 		<div class="row">
 			<div class="col-md-4">
 				<div
-					ngbRadioGroup
+					role="group"
 					class="btn-group btn-group-toggle btn-outline-toggle-group btn-group-full-width btn-toggle-radio-group"
 				>
 					<label
-						ngbButtonLabel
 						class="btn btn-outline-secondary btn-tn"
+						[class.active]="filterMode === 'ready'"
 					>
 						<input
-							ngbButton
 							type="radio"
+							class="btn-check"
 							value="ready"
+							[checked]="filterMode === 'ready'"
 							(click)="filterOrders('ready')"
 						/>
 						{{ 'Confirmed' | translate }}
 					</label>
 
 					<label
-						ngbButtonLabel
 						class="btn btn-outline-secondary btn-tn"
+						[class.active]="filterMode === 'in_delivery'"
 					>
 						<input
-							ngbButton
 							type="radio"
+							class="btn-check"
 							value="in_delivery"
+							[checked]="filterMode === 'in_delivery'"
 							(click)="filterOrders('in_delivery')"
 						/>
 						{{ 'In Delivery' | translate }}
 					</label>
 
 					<label
-						ngbButtonLabel
 						class="btn btn-outline-secondary btn-tn"
+						[class.active]="filterMode === 'not_confirmed'"
 					>
 						<input
-							ngbButton
 							type="radio"
+							class="btn-check"
 							value="not_confirmed"
+							[checked]="filterMode === 'not_confirmed'"
 							(click)="filterOrders('not_confirmed')"
 						/>
 						{{ 'Not Confirmed' | translate }}
 					</label>
 
 					<label
-						ngbButtonLabel
 						class="btn btn-outline-secondary btn-tn"
+						[class.active]="filterMode === 'cancelled'"
 					>
 						<input
-							ngbButton
 							type="radio"
+							class="btn-check"
 							value="cancelled"
+							[checked]="filterMode === 'cancelled'"
 							(click)="filterOrders('cancelled')"
 						/>
 						{{ 'Cancelled' | translate }}
 					</label>
 
-					<label ngbButtonLabel class="btn-outline-secondary btn-tn">
+					<label
+						class="btn-outline-secondary btn-tn"
+						[class.active]="filterMode === 'all'"
+					>
 						<input
-							ngbButton
 							type="radio"
+							class="btn-check"
 							value="all"
+							[checked]="filterMode === 'all'"
 							(click)="filterOrders('all')"
 						/>
 						{{ 'All' | translate }}
