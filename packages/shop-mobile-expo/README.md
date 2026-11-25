@@ -1,87 +1,52 @@
 # @ever-platform/shop-mobile-expo
 
-> 🛑 **NOT YET COMPATIBLE**: Currently this package don't works fine with Lerna mono-repo logic.
-> To be able to run this package locally, you've to extract the package outside of @ever-platform and then install dependencies (see [setup](#-setup) section).
-> But this package depend on @ever-platform server, don't forget to start the api...
+Ever Demand customer shop app built with Expo (React Native) for iOS, Android and the web. It has
+the feature scope of the Ionic shop app (`packages/shop-mobile-ionic`) and talks to the same API:
+the socket.io "pyro" RPC routers and GraphQL.
 
-## 📋 Contents
+Stack: Expo SDK 58, React Native 0.88, React 19.3, React Navigation 7, react-native-paper 5,
+Redux Toolkit 2, Apollo Client 4 + graphql-ws, socket.io-client 4.8, i18next, TypeScript 6.
+Details, versions and the feature parity checklist: `docs/latest-stack/shop-mobile-expo.md`.
 
--   [Contents](#-contents)
--   [Demo](#-demo)
--   [Setup](#-setup)
--   [Testing](#-testing)
--   [Contribution](#-contribution)
+## Run
 
-## 🤳 Demo
+From the repo root (pnpm 12, Node 26):
 
-> We used expo to test our application easily and quickly.
-> So you must first install expo on your mobile and then test the demo version.
+```sh
+pnpm install --filter @ever-platform/shop-mobile-expo...
+cd packages/shop-mobile-expo
+cp .env.template .env          # optional, defaults point at http://localhost:5500 etc.
+pnpm start                     # Expo dev server (press a / i / w)
+pnpm web                       # web dev server on http://localhost:8081
+```
 
-Copy that link -> **[https://exp.host/@everco/ever-demand-shop-mobile-expo](https://exp.host/@everco/ever-demand-shop-mobile-expo)** and past it into your expo app to preview demo.
+The API must run at the endpoints in `.env` (`pnpm run:server` from the root).
 
-## ⚡ Setup
+## Build and test
 
-<!-- TODO: Add more folders and files descriptions -->
+```sh
+pnpm typecheck                 # tsc --noEmit
+pnpm test                      # Jest (jest-expo) + React Native Testing Library
+pnpm export:web                # static web build in dist/
+pnpm serve:web                 # serves dist/ on :8081 for the Playwright suite
+pnpm export:android            # Android JS bundle (no Android SDK needed)
+pnpm doctor                    # expo-doctor
+```
 
-### 📋 Package structure
+e2e (Playwright, web build): `pnpm --filter @ever-platform/e2e exec playwright test --project=shop-expo`
+with the web build served on port 8081.
 
-    .
-    ├── .expo-shared
-    ├── script
-    ├── src
-      ├── assets # Contain app assets (imgs, fonts, ...)
-      ├── client # Contain ApolloGraphQL queries, mutations and relative types
-      ├── components # Contain components used in the app
-      ├── constants
-      ├── helpers # Class/Functions that provides useful feature
-      ├── environments
-      ├── router
-      ├── screens
-      ├── store
-      ├── types # Contain global types
-      └── App.tsx
-    ├── .env.template
-    ├── .eslintrc.json
-    ├── .gitignore
-    ├── .prettierrc.json
-    ├── .watchmanconfig
-    ├── app.json
-    ├── App.spec.tsx
-    ├── App.tsx
-    ├── babel.config.js
-    ├── metro.config.js
-    ├── package.json
-    ├── README.md
-    └── tsconfig.json
+## Layout
 
-### 🌟 Before install
-
-**🚧 Before installing et running project locally, make sure you have :**
-
--   The latest Yarn version installed in your computer **(note that we're only use Yarn)**
--   Node.js V14.x.x or higher installed in your computer
--   Expo 5.x.x or higher installed in your computer
--   The latest version of expo app installed in your phone (or virtual device)
-
-### ⚡ Installation & Running
-
--   Install dependencies `Yarn`. run `yarn add`.
--   Create environment files by running `yarn run config`.
--   After these steps, run `yarn run start` command to start bundle server
-
-> 🚧 If you can't connect to the server, maybe the endpoint aren't compatible.
-> To update them, got to `./src/environments/environment.ts` and change urls props into `ENDPOINT` prop from `http://localhost/...` to `<http://10.0.2.2/>...
-
-<!--  -->
-
-> 💡 If you still can't connect to the API, we recommend that you consult the wiki where we explain how to expose your local network: <https://github.com/ever-co/ever-demand/wiki/Expose-Local-Network>
-
-## 🧪 Testing
-
-We're using Jest to test our application.
-
-To run all tests, run `yarn run test`
-
-### 🤝 Contribution
-
-Please refer to the [guide of the platform](https://github.com/ever-co/ever-demand/#contribute)
+    src/
+      App.tsx            providers, start-up checks, language
+      config/env.ts      EXPO_PUBLIC_* settings
+      domain/            enums, server object types, order / product helpers (no packages/common import)
+      rpc/               pyro socket.io RPC client + typed routers
+      graphql/           Apollo client, the Ionic GraphQL documents, services
+      store/             Redux Toolkit: session (persisted) and ui (modals, payments in flight)
+      services/          start-up, location, orders, payments
+      navigation/        drawer navigator, web paths, guards, side menu
+      screens/ modals/ components/
+      i18n/              i18next + the Ionic translation files
+      test/              Jest harness, fixtures, drawer mock
