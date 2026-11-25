@@ -4,8 +4,37 @@ import { DBCreateObject } from './db-create-object';
 import { PyroObjectId } from './object-id';
 import * as mongoose from 'mongoose';
 import { toDate } from '../../utils';
-import * as _ from 'lodash';
 import { Column, PrimaryColumn } from 'typeorm';
+
+/**
+ * `true` when `key` is a getter without a setter somewhere on the prototype chain
+ * (`id`, `createdAt`, `fullName`, ...). Assigning to it throws in strict mode, which every
+ * ES module bundle is, so such keys of the raw object are skipped (the getter still derives the
+ * value from the raw fields).
+ */
+function isReadonlyAccessor(target: object, key: string): boolean {
+	for (
+		let proto = Object.getPrototypeOf(target);
+		proto != null && proto !== Object.prototype;
+		proto = Object.getPrototypeOf(proto)
+	) {
+		const descriptor = Object.getOwnPropertyDescriptor(proto, key);
+		if (descriptor) {
+			return descriptor.get !== undefined && descriptor.set === undefined;
+		}
+	}
+	return false;
+}
+
+/** `_.assign(target, source)` that leaves read-only accessors alone. */
+export function assignRaw<T extends object>(target: T, source: object): T {
+	for (const key of Object.keys(source)) {
+		if (!isReadonlyAccessor(target, key)) {
+			target[key] = source[key];
+		}
+	}
+	return target;
+}
 
 export interface DBObjectClass extends Function {
 	modelName?: string;
@@ -27,7 +56,7 @@ export abstract class DBObject<
 	constructor(obj: RawObject) {
 
 		if (obj != undefined) {
-			_.assign(this, obj);
+			assignRaw(this, obj);
 
 			if (
 				mongoose != null &&
