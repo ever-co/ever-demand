@@ -41,6 +41,7 @@ jest.mock('stripe', () => ({
 	})),
 }));
 
+import { STRIPE_CURRENCY_CHANGED_ERROR } from '@modules/server.common/routers/IOrderRouter';
 import { env } from '../../../env';
 import { OrdersService } from '../../../services/orders/OrdersService';
 
@@ -232,11 +233,14 @@ describe('OrdersService.payWithStripe', () => {
 			// page stayed open.
 			mockedEnv.STRIPE_CURRENCY = 'usd';
 
+			// The shop reloads the currency on this error name
 			await expect(
 				service.payWithStripe(ORDER_ID, 'card_1', 'ILS')
-			).rejects.toThrow(
-				'Charge currency is usd, but the customer was shown ILS'
-			);
+			).rejects.toMatchObject({
+				name: STRIPE_CURRENCY_CHANGED_ERROR,
+				message:
+					'Charge currency is usd, but the customer was shown ILS',
+			});
 
 			expect(mockChargesCreate).not.toHaveBeenCalled();
 			expect(stored.isPaid).toBe(false);

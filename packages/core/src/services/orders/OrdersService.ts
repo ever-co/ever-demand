@@ -20,7 +20,9 @@ import {
 	IOrderCreateObject,
 } from '@modules/server.common/interfaces/IOrder';
 import CarriersService from '../carriers/CarriersService';
-import IOrderRouter from '@modules/server.common/routers/IOrderRouter';
+import IOrderRouter, {
+	STRIPE_CURRENCY_CHANGED_ERROR,
+} from '@modules/server.common/routers/IOrderRouter';
 import { asyncListener, observableListener, routerName } from '@pyro/io';
 import IService from '../IService';
 import { exhaustMap, first, switchMap, map } from 'rxjs/operators';
@@ -370,22 +372,7 @@ export class OrdersService extends DBService<Order>
 					.toPromise();
 
 				if (user != null) {
-					// env.ts refuses a bad STRIPE_CURRENCY at boot; this
-					// check also keeps a currency that is not split into
-					// 100 minor units away from the cents amount below.
-					const currency = resolveStripeCurrency(env.STRIPE_CURRENCY);
-
-					// The setting changed after the shop loaded it, e.g. with
-					// a restart while the page stayed open: never charge in a
-					// currency the customer was not shown.
-					if (
-						shownCurrency != null &&
-						String(shownCurrency).trim().toLowerCase() !== currency
-					) {
-						throw new Error(
-							`Charge currency is ${currency}, but the customer was shown ${shownCurrency}`
-						);
-					}
+					const currency = this._stripeChargeCurrency(shownCurrency);
 
 					const charge: Stripe.Charge = await this.stripe.charges.create(
 						{
@@ -586,6 +573,34 @@ export class OrdersService extends DBService<Order>
 		);
 
 		return order;
+	}
+
+	/**
+	 * Currency to charge a card in. env.ts refuses a bad STRIPE_CURRENCY at
+	 * boot; resolving it again also keeps a currency that is not split into
+	 * 100 minor units away from the cents amount.
+	 *
+	 * @param {string} [shownCurrency] currency the customer was shown
+	 * @returns {string} lower-case code, e.g. `usd`
+	 * @throws {Error} named STRIPE_CURRENCY_CHANGED_ERROR when the customer
+	 * was shown another currency, e.g. after a restart with a new setting
+	 * while the shop page stayed open
+	 */
+	private _stripeChargeCurrency(shownCurrency?: string): string {
+		const currency = resolveStripeCurrency(env.STRIPE_CURRENCY);
+
+		if (
+			shownCurrency != null &&
+			String(shownCurrency).trim().toLowerCase() !== currency
+		) {
+			const error = new Error(
+				`Charge currency is ${currency}, but the customer was shown ${shownCurrency}`
+			);
+			error.name = STRIPE_CURRENCY_CHANGED_ERROR;
+			throw error;
+		}
+
+		return currency;
 	}
 
 	/**

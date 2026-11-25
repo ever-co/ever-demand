@@ -6,6 +6,7 @@ import { UserRouter } from '@modules/client.common.angular2/routers/user-router.
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
+import { STRIPE_CURRENCY_CHANGED_ERROR } from '@modules/server.common/routers/IOrderRouter';
 import { Store } from 'app/services/store.service';
 import { environment } from 'environments/environment';
 import { PaymentComponent } from './payment.component';
@@ -419,18 +420,53 @@ describe('PaymentComponent new-card payment', () => {
 			);
 		});
 
-		it('loads the currency again after a refused charge, so the next popup shows the new one', async () => {
+		it('waits for the new currency after the server refused the shown one', async () => {
 			// The server restarted with another currency while the page
 			// stayed open, so it refuses the charge in the shown one.
+			const reloaded = deferred<string>();
 			orderRouter.getStripeCurrency.calls.reset();
 			orderRouter.getStripeCurrency.and.returnValues(
 				Promise.resolve('ils'),
-				Promise.resolve('usd')
+				reloaded.promise
 			);
+			const refused = new Error(
+				'Charge currency is usd, but the customer was shown ILS'
+			);
+			refused.name = STRIPE_CURRENCY_CHANGED_ERROR;
+			orderRouter.payWithStripe.and.rejectWith(refused);
+			const fixtureWithRefusal = await createPayment();
+			const payment = fixtureWithRefusal.componentInstance;
+
+			await payment.toPaymentStage();
+			await tokenHandlers[tokenHandlers.length - 1](
+				cardToken('tok_first')
+			);
+			await settle();
+
+			expect(window.alert).toHaveBeenCalledOnceWith('Payment Failed!');
+			expect(orderRouter.getStripeCurrency).toHaveBeenCalledTimes(2);
+			// No popup in the refused currency while the new one loads
+			expect(payNowButton(fixtureWithRefusal).disabled).toBe(true);
+
+			await payment.toPaymentStage();
+
+			expect(configure).toHaveBeenCalledTimes(1);
+
+			reloaded.resolve('usd');
+			await settle();
+
+			expect(payNowButton(fixtureWithRefusal).disabled).toBe(false);
+
+			await payment.toPaymentStage();
+
+			expect(configure).toHaveBeenCalledTimes(2);
+			expect(configure.calls.mostRecent().args[0].currency).toBe('USD');
+		});
+
+		it('keeps the currency after a declined card', async () => {
+			orderRouter.getStripeCurrency.calls.reset();
 			orderRouter.payWithStripe.and.rejectWith(
-				new Error(
-					'Charge currency is usd, but the customer was shown ILS'
-				)
+				new Error('Your card was declined.')
 			);
 			const payment = (await createPayment()).componentInstance;
 
@@ -441,11 +477,12 @@ describe('PaymentComponent new-card payment', () => {
 			await settle();
 
 			expect(window.alert).toHaveBeenCalledOnceWith('Payment Failed!');
-			expect(orderRouter.getStripeCurrency).toHaveBeenCalledTimes(2);
+			expect(orderRouter.getStripeCurrency).toHaveBeenCalledTimes(1);
 
 			await payment.toPaymentStage();
 
-			expect(configure.calls.mostRecent().args[0].currency).toBe('USD');
+			expect(configure).toHaveBeenCalledTimes(2);
+			expect(configure.calls.mostRecent().args[0].currency).toBe('ILS');
 		});
 	});
 

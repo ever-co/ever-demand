@@ -4,6 +4,7 @@ import { UserRouter } from '@modules/client.common.angular2/routers/user-router.
 import { Store } from 'app/services/store.service';
 import { Stripe } from 'stripe';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
+import { STRIPE_CURRENCY_CHANGED_ERROR } from '@modules/server.common/routers/IOrderRouter';
 import { environment } from 'environments/environment';
 import { ModalController } from '@ionic/angular';
 import { OrderPage } from '../../order.page';
@@ -186,9 +187,17 @@ export class PaymentComponent {
 						} catch (err) {
 							alert('Payment Failed!');
 							console.error('Payment Failed!', err);
-							// The charge currency may have changed since it
-							// was loaded: show the current one next time.
-							void this.getStripeCurrency();
+
+							if (
+								err != null &&
+								err.name === STRIPE_CURRENCY_CHANGED_ERROR
+							) {
+								// The setting changed since the currency was
+								// loaded: Pay now waits for the new one, so
+								// no popup shows the refused one again.
+								this.stripeCurrency = null;
+								void this.getStripeCurrency();
+							}
 						}
 					} catch (err) {
 						alert('Payment Failed!');
