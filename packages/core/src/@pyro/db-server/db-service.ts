@@ -266,7 +266,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 		this.log.info({ callId }, '.removeAll() called!');
 
 		try {
-			await this.Model.remove({}).exec();
+			await this.Model.deleteMany({}).exec();
 		} catch (err) {
 			this.log.error({ callId, err }, '.removeAll() thrown error!');
 			throw err;
@@ -291,7 +291,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 		let lastValue: T | null;
 
 		try {
-			const lastValueRaw = (await this.Model.findByIdAndRemove(objectId)
+			const lastValueRaw = (await this.Model.findByIdAndDelete(objectId)
 				.lean()
 				.exec()) as RawObject<T>;
 
@@ -380,12 +380,11 @@ export abstract class DBService<T extends DBObject<any, any>>
 	 * @memberof DBService
 	 */
 	async removeMultipleByIds(ids: T['id'][]): Promise<void> {
-		this.Model.update(
+		await this.Model.updateMany(
 			{
 				_id: { $in: ids.map((id) => this.getObjectId(id)) },
 			},
-			{ isDeleted: true },
-			{ multi: true }
+			{ isDeleted: true }
 		).exec();
 	}
 

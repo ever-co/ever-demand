@@ -1,9 +1,9 @@
 import Logger from 'bunyan';
-import { existsSync } from 'fs';
-import mkdirp from 'mkdirp';
+import { existsSync, mkdirSync } from 'fs';
 import { env } from '../env';
 import _ = require('lodash');
-import createCWStream from 'bunyan-cloudwatch';
+import { CloudWatchLogsClient } from '@aws-sdk/client-cloudwatch-logs';
+import { CloudWatchStream } from './cloudwatch-stream';
 import os from 'os';
 import PrettyStream from 'bunyan-prettystream';
 
@@ -13,6 +13,9 @@ export interface LogArgs {
 }
 
 let isLogsFolderExists = env.LOGS_PATH ? existsSync(env.LOGS_PATH) : false;
+
+// one client for all CloudWatch streams (created on the first production logger)
+let cloudWatchClient: CloudWatchLogsClient | undefined;
 
 const getAdditionalLoggerStreams = ({ name }: LogArgs): Logger.Stream[] => {
 	const hostname = os.hostname();
@@ -24,12 +27,14 @@ const getAdditionalLoggerStreams = ({ name }: LogArgs): Logger.Stream[] => {
 			let stream: any;
 
 			try {
-				stream = createCWStream({
+				cloudWatchClient ??= new CloudWatchLogsClient({
+					region: 'us-east-1',
+				});
+
+				stream = new CloudWatchStream({
 					logGroupName: 'ever/api',
 					logStreamName: `${type}_${name}_${hostname}`,
-					cloudWatchLogsOptions: {
-						region: 'us-east-1',
-					},
+					client: cloudWatchClient,
 				});
 			} catch (err) {
 				console.log(err);
@@ -52,7 +57,7 @@ prettyStdOut.pipe(process.stdout);
 
 export function createEverLogger({ name }: LogArgs): Logger {
 	if (!isLogsFolderExists) {
-		mkdirp.sync(env.LOGS_PATH);
+		mkdirSync(env.LOGS_PATH, { recursive: true });
 		isLogsFolderExists = true;
 	}
 

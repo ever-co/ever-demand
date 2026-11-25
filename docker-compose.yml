@@ -114,12 +114,14 @@ services:
             NODE_ENV: ${NODE_ENV:-development}
             WAIT_HOSTS: db:27017
             DB_HOST: db
+            DB_PORT: 27017
             DB_URI: mongodb://db/ever_development
             TESTING_DB_URI: mongodb://db/ever_testing
         env_file:
             - .env
-        entrypoint: './entrypoint.compose.sh'
-        command: ['node', 'packages/core/build/src/main.js']
+        # the image runs from /srv/ever/packages/core (see .deploy/api/Dockerfile)
+        entrypoint: '/entrypoint.compose.sh'
+        command: ['node', 'build/main.js']
         restart: on-failure
         depends_on:
             - db

@@ -36,6 +36,29 @@ const noGetProductTypeMessage = `There should be true at least one of the two - 
  * @implements {IWarehouseProductsRouter}
  * @implements {IService}
  */
+/**
+ * `$set` of every field of a warehouse product, matched by the positional
+ * `products.$`. The element is not replaced as a whole (`'products.$': obj`):
+ * Mongoose 7+ then also sets `products.$._updatedAt` (sub-document
+ * timestamps), a path MongoDB refuses next to `products.$`.
+ */
+export function warehouseProductUpdate(
+	warehouseProduct: WarehouseProduct
+): Record<string, unknown> {
+	const update: Record<string, unknown> = {};
+
+	for (const [field, value] of Object.entries(warehouseProduct)) {
+		if (
+			value !== undefined &&
+			!['_id', '_createdAt', '_updatedAt'].includes(field)
+		) {
+			update[`products.$.${field}`] = value;
+		}
+	}
+
+	return update;
+}
+
 @injectable()
 @routerName('warehouse-products')
 export class WarehousesProductsService
@@ -379,7 +402,10 @@ export class WarehousesProductsService
 		}
 
 		const updatedWarehouseProduct = _.clone(_updatedWarehouseProduct);
-		updatedWarehouseProduct.product = updatedWarehouseProduct.product;
+		// The warehouse stores the product as a ref (its id), but the product
+		// is usually populated here: write the id, as the original code did.
+		// Mongoose refuses to cast a Product object to the ref.
+		updatedWarehouseProduct.product = updatedWarehouseProduct.productId as any;
 
 		const updatedWarehouse = (
 			await this.warehousesService.updateMultiple(
@@ -387,9 +413,7 @@ export class WarehousesProductsService
 					_id: new mongoose.Types.ObjectId(warehouseId),
 					'products._id': updatedWarehouseProduct._id,
 				},
-				{
-					'products.$': updatedWarehouseProduct,
-				}
+				warehouseProductUpdate(updatedWarehouseProduct)
 			)
 		)[0];
 

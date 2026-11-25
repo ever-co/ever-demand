@@ -1,38 +1,15 @@
 {
+	"extends": "expo/tsconfig.base",
 	"compilerOptions": {
-		"allowSyntheticDefaultImports": true,
-		"esModuleInterop": true,
-		"experimentalDecorators": true,
-		"forceConsistentCasingInFileNames": true,
-		"importHelpers": true,
-		"jsx": "react-native",
-		"lib": ["dom", "esnext"],
-		"moduleResolution": "node",
-		"noFallthroughCasesInSwitch": true,
-		"noEmit": true,
-		"noEmitHelpers": true,
+		"strict": true,
 		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"skipLibCheck": true,
-		"strict": true,
-		"target": "esnext",
-		"allowJs": true,
-		"baseUrl": ".",
-		"paths": {
-			"*": ["src/*"],
-			"@assets": ["src/assets/*"],
-			"@environment": ["./src/environments/environment.ts"]
-		},
-		"removeComments": true,
-		"typeRoots": ["node_modules/@types", "./src/@types"]
+		"resolveJsonModule": true,
+		"types": ["jest", "node"]
 	},
-	"include": ["src"],
-	"exclude": [
-		"node_modules",
-		"babel.config.js",
-		"metro.config.js",
-		"jest.config.js"
-	],
-	"extends": "expo/tsconfig.base"
+	"include": ["index.ts", "app.config.ts", "src/**/*.ts", "src/**/*.tsx", "jest.setup.ts"],
+	"exclude": ["node_modules", "dist", "dist-android"]
 }

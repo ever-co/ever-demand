@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import { assignRaw } from '../@pyro/db/db-object';
 import IProductInfo from '../interfaces/IProductInfo';
 import Product from './Product';
 import { IOrderProductCreateObject } from '../interfaces/IOrderProduct';
@@ -14,7 +14,7 @@ import WarehouseProduct from './WarehouseProduct';
 class ProductInfo implements IProductInfo {
 	constructor(productInfo: IProductInfo) {
 		if (productInfo) {
-			_.assign(this, productInfo);
+			assignRaw(this, productInfo);
 
 			if (productInfo.warehouseProduct) {
 				this.warehouseProduct = new WarehouseProduct(

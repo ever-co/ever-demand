@@ -7,29 +7,41 @@ console.log('Setting NodeJS Max memory usage limit to ' + env.WEB_MEMORY);
 v8.setFlagsFromString('--max_old_space_size=' + env.WEB_MEMORY);
 
 import 'reflect-metadata';
-import sourceMapSupport from 'source-map-support';
-import moduleAlias from 'module-alias';
+import path from 'path';
+import moduleAlias = require('module-alias');
 
 try {
-	if (global.v8debug) {
-		global.v8debug.Debug.setBreakOnException();
-	}
+	// Stack traces point at the TypeScript sources (build/*.js.map)
+	process.setSourceMapsEnabled(true);
 
-	sourceMapSupport.install();
+	// The compiled code keeps the TypeScript path aliases: map them to our own
+	// @pyro folders and to the compiled output of @ever-platform/common.
+	// Absolute paths, because the files of common use the aliases too and,
+	// with pnpm, `@ever-platform/common` can only be resolved from core.
+	const commonBuild = path.join(
+		path.dirname(require.resolve('@ever-platform/common/package.json')),
+		'build'
+	);
 
 	moduleAlias.addAliases({
-		'@pyro/db-server': __dirname + '/@pyro/db-server',
-		'@pyro/io': __dirname + '/@pyro/io',
-		'@pyro/db': '@ever-platform/common/build/@pyro/db',
-		'@modules/server.common': '@ever-platform/common/build/',
+		'@pyro/db-server': path.join(__dirname, '@pyro/db-server'),
+		'@pyro/io': path.join(__dirname, '@pyro/io'),
+		'@pyro/db': path.join(commonBuild, '@pyro/db'),
+		'@modules/server.common': commonBuild,
 	});
 } catch (err) {
 	console.error(err);
 }
 
-import BluebirdPromise from 'bluebird';
 import mongoose from 'mongoose';
+
+// Mongoose 6 (used before) dropped query filter properties that are not in the
+// schema; Mongoose 7+ keeps them by default. Keep the old behaviour, so the
+// existing queries match the same documents. Set before any schema is created.
+mongoose.set('strictQuery', true);
+
 import { createEverLogger } from './helpers/Log';
+import { initTypeORMDataSource } from './helpers/typeorm';
 import { servicesContainer } from './services/inversify.config';
 import { ServicesApp } from './services/services.app';
 
@@ -61,18 +73,22 @@ process.on('unhandledRejection', (err, promise) => {
 	console.error(err);
 });
 
-(mongoose as any).Promise = BluebirdPromise;
-
 (async () => {
 	// needs to test TypeORM connection and for it to be ready before we initialize Services
-	await ServicesApp.CreateTypeORMConnection();
+	const dataSource = await initTypeORMDataSource();
 
-	const app = servicesContainer.get<ServicesApp>(ServicesApp);
+	console.log(
+		`TypeORM DB connection created. DB connected: ${dataSource.isInitialized}`
+	);
+
+	// Services are created (inversify) only now, because some of them use
+	// TypeORM repositories from the connection above.
+	const app = servicesContainer.get(ServicesApp);
 
 	await app.start(async () => {
 		// load NestJS modules dynamically, because needs all services to be initialized before
-		const bootstrapNest = await require('./nest-bootstrap').bootstrapNest;
+		const { bootstrapNest }: typeof import('./nest-bootstrap') = require('./nest-bootstrap');
 		// bootstrap NestJS modules/controllers/DI/etc
-		bootstrapNest();
+		await bootstrapNest();
 	});
 })();

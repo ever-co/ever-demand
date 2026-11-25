@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { UsersService } from './UsersService';
 import { routerName } from '@pyro/io';
-import IService from 'services/IService';
+import IService from '../IService';
 
 @routerName('social-register-service')
 @injectable()

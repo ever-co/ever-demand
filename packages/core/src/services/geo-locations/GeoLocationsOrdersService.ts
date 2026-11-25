@@ -7,7 +7,6 @@ import Logger from 'bunyan';
 import Order from '@modules/server.common/entities/Order';
 import { createEverLogger } from '../../helpers/Log';
 import { GeoLocationsWarehousesService } from './GeoLocationsWarehousesService';
-import Bluebird from 'bluebird';
 import {
 	WarehousesProductsService,
 	WarehousesOrdersService,
@@ -29,7 +28,7 @@ import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseSta
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 import { GeoLocationOrdersOptions } from './GeoLocationOrdersOptions';
-import { ObjectId } from 'bson';
+import { ObjectId } from 'mongodb';
 import { isObjectIdHexString } from '../../helpers/objectIds';
 
 /**
@@ -366,7 +365,7 @@ export class GeoLocationsOrdersService
 		);
 
 		const orders = _.flatten(
-			await Bluebird.map(warehouses, async (warehouse: Warehouse) => {
+			await Promise.all(warehouses.map(async (warehouse: Warehouse): Promise<Order[]> => {
 				const warehouseOrders = await this.warehousesOrdersService
 					.get(warehouse.id, {
 						populateCarrier: !!options.populateCarrier,
@@ -391,7 +390,7 @@ export class GeoLocationsOrdersService
 				);
 
 				return warehouseOrders;
-			})
+			}))
 		);
 
 		this.log.info(

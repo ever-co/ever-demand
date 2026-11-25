@@ -1,4 +1,4 @@
-import { inject, injectable, LazyServiceIdentifer } from 'inversify';
+import { inject, injectable, LazyServiceIdentifier } from 'inversify';
 import * as _ from 'lodash';
 import { OrdersService } from '../orders';
 import Order from '@modules/server.common/entities/Order';
@@ -34,9 +34,9 @@ export class UsersOrdersService implements IUserOrdersRouter, IService {
 	});
 
 	constructor(
-		@inject(new LazyServiceIdentifer(() => OrdersService))
+		@inject(new LazyServiceIdentifier(() => OrdersService))
 		protected ordersService: OrdersService,
-		@inject(new LazyServiceIdentifer(() => UsersService))
+		@inject(new LazyServiceIdentifier(() => UsersService))
 		protected usersService: UsersService
 	) {}
 

@@ -33,7 +33,8 @@ jest.mock('../../../services/products', () => ({ ProductsService: class {} }));
 // Fake payment provider: every `new Stripe()` shares this refunds.create.
 const mockRefundsCreate = jest.fn();
 jest.mock('stripe', () => ({
-	Stripe: jest.fn().mockImplementation(() => ({
+	__esModule: true,
+	default: jest.fn().mockImplementation(() => ({
 		charges: { create: jest.fn() },
 		refunds: { create: mockRefundsCreate },
 	})),

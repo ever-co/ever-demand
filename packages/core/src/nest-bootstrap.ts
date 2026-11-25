@@ -1,6 +1,6 @@
-import chalk from 'chalk';
+import { styleText } from 'node:util';
 import { urlencoded, json } from 'express';
-import { NestFactory, Reflector } from '@nestjs/core';
+import { NestFactory } from '@nestjs/core';
 import { ApplicationModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { env } from './env';
@@ -14,17 +14,14 @@ import helmet from 'helmet';
 
 const log: Logger = createEverLogger({ name: 'bootstrapNest' });
 
-declare const module: any;
-
-export async function bootstrapNest(): Promise<void> {
+export async function bootstrapNest(): Promise<INestApplication> {
 
 	const app: INestApplication = await NestFactory.create(ApplicationModule, {
 		logger: new EverbieNestJSLogger(),
 	});
 
 	// This will lock all routes and make them accessible by authenticated users only.
-	const reflector = app.get(Reflector);
-	// app.useGlobalGuards(new AuthGuard(reflector));
+	// app.useGlobalGuards(new AuthGuard(app.get(Reflector)));
 
 	// app.useLogger(app.get(SentryService));
 	app.use(json({ limit: '50mb' }));
@@ -54,7 +51,18 @@ export async function bootstrapNest(): Promise<void> {
 		})
 	);
 
-	app.use(helmet());
+	// The GraphiQL landing page (GET /graphql) loads its scripts from a CDN,
+	// which the default Content-Security-Policy refuses: no CSP there, the
+	// other helmet headers everywhere.
+	const securityHeaders = helmet();
+	const securityHeadersWithoutCsp = helmet({ contentSecurityPolicy: false });
+	app.use((req, res, next) =>
+		(req.path === '/graphql' ? securityHeadersWithoutCsp : securityHeaders)(
+			req,
+			res,
+			next
+		)
+	);
 	const globalPrefix = 'api';
 	app.setGlobalPrefix(globalPrefix);
 
@@ -74,21 +82,20 @@ export async function bootstrapNest(): Promise<void> {
 		host = '0.0.0.0';
 	}
 
-	console.log(chalk.green(`Configured Host: ${host}`));
-	console.log(chalk.green(`Configured Port: ${port}`));
+	console.log(styleText('green', `Configured Host: ${host}`));
+	console.log(styleText('green', `Configured Port: ${port}`));
 
 	log.info(`Swagger UI available at http://${host}:${port}/swg`);
-	console.log(chalk.green(`Swagger UI available at http://${host}:${port}/swg`));
+	console.log(styleText('green', `Swagger UI available at http://${host}:${port}/swg`));
 
 	log.info(`REST API will be available at http://${host}:${port}/${globalPrefix}`);
-	console.log(chalk.green(`REST API will be available at http://${host}:${port}/${globalPrefix}`));
+	console.log(styleText('green', `REST API will be available at http://${host}:${port}/${globalPrefix}`));
 
-	await app.listen(port, host, () => {
-		console.log(chalk.magenta(`REST API Listening at http://${host}:${port}/${globalPrefix}`));
-	});
+	await app.listen(port, host);
 
-	if (module.hot) {
-		module.hot.accept();
-		module.hot.dispose((_) => app.close());
-	}
+	console.log(
+		styleText('magenta', `REST API Listening at http://${host}:${port}/${globalPrefix}`)
+	);
+
+	return app;
 }
