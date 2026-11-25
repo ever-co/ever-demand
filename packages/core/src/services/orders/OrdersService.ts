@@ -325,6 +325,8 @@ export class OrdersService extends DBService<Order>
 	 * by STRIPE_CURRENCY (`ils` when unset). When the customer already has a
 	 * charge for the order that succeeded and was not refunded, e.g. one
 	 * whose answer was lost, the order is paid with it and no card is charged.
+	 * When the charge or the paid write fails on an order cancelled meanwhile,
+	 * the charges Stripe made for it are refunded before the error is rethrown.
 	 * TODO: move to separate Payments Service
 	 *
 	 * @param {Order['id']} orderId
@@ -392,65 +394,79 @@ export class OrdersService extends DBService<Order>
 					);
 
 					let charge: Stripe.Charge;
+					let paidOrder: Order | null;
 
-					if (earlierCharge != null) {
-						this.log.warn(
-							{
-								callId,
-								orderId,
-								cardId,
-								chargeId: earlierCharge.id,
-							},
-							'.payWithStripe(orderId, cardId) found an earlier charge of the order, paying with it instead of charging again'
-						);
-
-						charge = earlierCharge;
-					} else {
-						charge = await this.stripe.charges.create(
-							{
-								amount, // whole cents
-								customer: user.stripeCustomerId,
-								source: cardId,
-								currency,
-								description: 'Order id: ' + orderId,
-								metadata: {
-									orderId,
-								},
-							},
-							{
-								// Two concurrent calls for one order and card
-								// create a single charge. The key holds the
-								// currency, so a retry after the setting changed
-								// is not refused as a reused key.
-								idempotencyKey: stripeChargeIdempotencyKey(
+					try {
+						if (earlierCharge != null) {
+							this.log.warn(
+								{
+									callId,
 									orderId,
 									cardId,
-									currency
-								),
+									chargeId: earlierCharge.id,
+								},
+								'.payWithStripe(orderId, cardId) found an earlier charge of the order, paying with it instead of charging again'
+							);
+
+							charge = earlierCharge;
+						} else {
+							charge = await this.stripe.charges.create(
+								{
+									amount, // whole cents
+									customer: user.stripeCustomerId,
+									source: cardId,
+									currency,
+									description: 'Order id: ' + orderId,
+									metadata: {
+										orderId,
+									},
+								},
+								{
+									// Two concurrent calls for one order and card
+									// create a single charge. The key holds the
+									// currency, so a retry after the setting changed
+									// is not refused as a reused key.
+									idempotencyKey: stripeChargeIdempotencyKey(
+										orderId,
+										cardId,
+										currency
+									),
+								}
+							);
+						}
+
+						// Matches nothing when a cancel landed while Stripe was
+						// charging: a cancelled order must not become paid.
+						// Also matches nothing when a call with another card paid
+						// the order first, so its charge id is never overwritten.
+						// A call with the same card shares this charge (one
+						// idempotency key), so it still matches.
+						paidOrder = await this._updateIfMatches(
+							orderId,
+							{
+								...notCancelledOrderFilter,
+								$or: [
+									{ isPaid: { $ne: true } },
+									{ stripeChargeId: charge.id },
+								],
+							},
+							{
+								stripeChargeId: charge.id,
+								isPaid: true,
 							}
 						);
-					}
+					} catch (err) {
+						// Stripe may have charged the card although the call
+						// rejected (a connection reset or a timeout), or the
+						// paid write failed after the charge. A cancel that
+						// ran meanwhile found no charge yet to refund.
+						await this._refundLostStripeChargesIfCancelled(
+							orderId,
+							callId
+						);
 
-					// Matches nothing when a cancel landed while Stripe was
-					// charging: a cancelled order must not become paid.
-					// Also matches nothing when a call with another card paid
-					// the order first, so its charge id is never overwritten.
-					// A call with the same card shares this charge (one
-					// idempotency key), so it still matches.
-					const paidOrder = await this._updateIfMatches(
-						orderId,
-						{
-							...notCancelledOrderFilter,
-							$or: [
-								{ isPaid: { $ne: true } },
-								{ stripeChargeId: charge.id },
-							],
-						},
-						{
-							stripeChargeId: charge.id,
-							isPaid: true,
-						}
-					);
+						throw err;
+					}
 
 					if (paidOrder == null) {
 						const chargeId = charge.id;
@@ -606,6 +622,54 @@ export class OrdersService extends DBService<Order>
 		);
 
 		return order;
+	}
+
+	/**
+	 * Runs after the charge or the paid write of payWithStripe failed: Stripe
+	 * may have charged the card anyway. A cancel that ran while Stripe was
+	 * charging found no charge to refund, so the charges of an order that is
+	 * now cancelled and unpaid are refunded here, with the key payWithStripe
+	 * refunds them with, so none is refunded twice. An order that is not
+	 * cancelled is left alone: a retry pays with its charge, and a later
+	 * cancel refunds it.
+	 * Never rejects: errors are logged, so the caller rethrows its own error.
+	 *
+	 * @param {Order['id']} orderId
+	 * @param {string} callId payWithStripe call, for the log
+	 * @returns {Promise<void>}
+	 */
+	private async _refundLostStripeChargesIfCancelled(
+		orderId: Order['id'],
+		callId: string
+	): Promise<void> {
+		let latestOrder: Order | null;
+
+		try {
+			latestOrder = await this.getCurrent(orderId);
+		} catch (err) {
+			this.log.error(
+				{ callId, orderId, err },
+				'.payWithStripe(orderId, cardId) could not read the order after the charge or the paid write failed'
+			);
+
+			return;
+		}
+
+		if (
+			latestOrder == null ||
+			!latestOrder.isCancelled ||
+			latestOrder.isPaid
+		) {
+			return;
+		}
+
+		this.log.warn(
+			{ callId, orderId },
+			'.payWithStripe(orderId, cardId) order was cancelled while the charge or the paid write failed, refunding its lost charges'
+		);
+
+		// Never rejects
+		await this.refundLostStripeCharges(latestOrder);
 	}
 
 	/**
