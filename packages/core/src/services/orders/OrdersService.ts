@@ -5,6 +5,10 @@ import { env } from '../../env';
 import { WarehousesService, WarehousesProductsService } from '../warehouses';
 import { assertValidOrderProductCounts } from '../warehouses/orderProductCount';
 import { toStripeAmountInCents } from './stripeAmount';
+import {
+	resolveStripeCurrency,
+	stripeChargeIdempotencyKey,
+} from './stripeCurrency';
 import { createEverLogger } from '../../helpers/Log';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
@@ -16,7 +20,9 @@ import {
 	IOrderCreateObject,
 } from '@modules/server.common/interfaces/IOrder';
 import CarriersService from '../carriers/CarriersService';
-import IOrderRouter from '@modules/server.common/routers/IOrderRouter';
+import IOrderRouter, {
+	STRIPE_CURRENCY_CHANGED_ERROR,
+} from '@modules/server.common/routers/IOrderRouter';
 import { asyncListener, observableListener, routerName } from '@pyro/io';
 import IService from '../IService';
 import { exhaustMap, first, switchMap, map } from 'rxjs/operators';
@@ -299,16 +305,40 @@ export class OrdersService extends DBService<Order>
 	}
 
 	/**
-	 * Pay with Stripe for given order with given CC
+	 * Currency of card charges, so a shop shows the same currency in its
+	 * card popup as the one the card is charged in
+	 *
+	 * @returns {Promise<string>} lower-case code, e.g. `usd` (`ils` when
+	 * STRIPE_CURRENCY is unset)
+	 * @memberof OrdersService
+	 */
+	@asyncListener()
+	getStripeCurrency(): Promise<string> {
+		// A throw in then() rejects the promise instead of escaping
+		return Promise.resolve().then(() =>
+			resolveStripeCurrency(env.STRIPE_CURRENCY)
+		);
+	}
+
+	/**
+	 * Pay with Stripe for given order with given CC, in the currency set
+	 * by STRIPE_CURRENCY (`ils` when unset)
 	 * TODO: move to separate Payments Service
 	 *
 	 * @param {Order['id']} orderId
 	 * @param {string} cardId CC Id which will be used to pay
+	 * @param {string} [shownCurrency] currency the shop showed the customer,
+	 * e.g. in its card popup. The charge is refused when it differs from the
+	 * configured one.
 	 * @returns {Promise<Order>}
 	 * @memberof OrdersService
 	 */
 	@asyncListener()
-	async payWithStripe(orderId: Order['id'], cardId: string): Promise<Order> {
+	async payWithStripe(
+		orderId: Order['id'],
+		cardId: string,
+		shownCurrency?: string
+	): Promise<Order> {
 		await this._throwIfNotExists(orderId);
 
 		const callId = uuid();
@@ -342,12 +372,14 @@ export class OrdersService extends DBService<Order>
 					.toPromise();
 
 				if (user != null) {
+					const currency = this._stripeChargeCurrency(shownCurrency);
+
 					const charge: Stripe.Charge = await this.stripe.charges.create(
 						{
 							amount: toStripeAmountInCents(order.totalPrice), // whole cents
 							customer: user.stripeCustomerId,
 							source: cardId,
-							currency: 'ils',
+							currency,
 							description: 'Order id: ' + orderId,
 							metadata: {
 								orderId,
@@ -355,8 +387,14 @@ export class OrdersService extends DBService<Order>
 						},
 						{
 							// Two concurrent calls for one order and card
-							// create a single charge.
-							idempotencyKey: `order-${orderId}-card-${cardId}`,
+							// create a single charge. The key holds the
+							// currency, so a retry after the setting changed
+							// is not refused as a reused key.
+							idempotencyKey: stripeChargeIdempotencyKey(
+								orderId,
+								cardId,
+								currency
+							),
 						}
 					);
 
@@ -535,6 +573,34 @@ export class OrdersService extends DBService<Order>
 		);
 
 		return order;
+	}
+
+	/**
+	 * Currency to charge a card in. env.ts refuses a bad STRIPE_CURRENCY at
+	 * boot; resolving it again also keeps a currency that is not split into
+	 * 100 minor units away from the cents amount.
+	 *
+	 * @param {string} [shownCurrency] currency the customer was shown
+	 * @returns {string} lower-case code, e.g. `usd`
+	 * @throws {Error} named STRIPE_CURRENCY_CHANGED_ERROR when the customer
+	 * was shown another currency, e.g. after a restart with a new setting
+	 * while the shop page stayed open
+	 */
+	private _stripeChargeCurrency(shownCurrency?: string): string {
+		const currency = resolveStripeCurrency(env.STRIPE_CURRENCY);
+
+		if (
+			shownCurrency != null &&
+			String(shownCurrency).trim().toLowerCase() !== currency
+		) {
+			const error = new Error(
+				`Charge currency is ${currency}, but the customer was shown ${shownCurrency}`
+			);
+			error.name = STRIPE_CURRENCY_CHANGED_ERROR;
+			throw error;
+		}
+
+		return currency;
 	}
 
 	/**

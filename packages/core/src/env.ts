@@ -1,6 +1,23 @@
 require('dotenv').config();
 
-import { cleanEnv, num, port, str, ValidatorSpec, bool, CleanOptions } from 'envalid';
+import {
+	cleanEnv,
+	num,
+	port,
+	str,
+	ValidatorSpec,
+	bool,
+	CleanOptions,
+	makeValidator,
+} from 'envalid';
+import {
+	DEFAULT_STRIPE_CURRENCY,
+	resolveStripeCurrency,
+} from './services/orders/stripeCurrency';
+
+// Checked at boot: an invalid currency stops the server with a clear message
+// instead of failing every card payment.
+const stripeCurrency = makeValidator<string>(resolveStripeCurrency);
 
 export type Environments = 'production' | 'development' | 'test';
 
@@ -31,6 +48,7 @@ export type Env = Readonly<{
 	TESTING_DB_URI: string;
 
 	STRIPE_SECRET_KEY: string;
+	STRIPE_CURRENCY: string;
 
 	URBAN_AIRSHIP_KEY: string;
 	URBAN_AIRSHIP_SECRET: string;
@@ -106,6 +124,10 @@ export const env: Env = cleanEnv(
 		TESTING_DB_URI: str({ default: 'mongodb://localhost/ever_testing' }),
 
 		STRIPE_SECRET_KEY: str({ default: '' }),
+		STRIPE_CURRENCY: stripeCurrency({
+			desc: 'Three-letter currency code of card charges, e.g. usd (unset or blank = ils). Currencies without 100 minor units, such as jpy, are refused. Change it only while no card payment is in progress. Set a currency other than ils only once every shop in use, installed apps too, loads it from the server: an older shop still shows ILS in its card popup.',
+			default: DEFAULT_STRIPE_CURRENCY,
+		}),
 
 		URBAN_AIRSHIP_KEY: str({ default: '' }),
 		URBAN_AIRSHIP_SECRET: str({ default: '' }),

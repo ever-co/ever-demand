@@ -4,6 +4,13 @@ import OrderCarrierStatus from '../enums/OrderCarrierStatus';
 import OrderWarehouseStatus from '../enums/OrderWarehouseStatus';
 import Warehouse from '../entities/Warehouse';
 
+/**
+ * Error name of a payWithStripe call refused because the charge currency
+ * is not the one the customer was shown, e.g. after a restart with a new
+ * STRIPE_CURRENCY. The shop then loads the currency again.
+ */
+export const STRIPE_CURRENCY_CHANGED_ERROR = 'StripeCurrencyChangedError';
+
 export interface IOrderRouterGetOptions {
 	populateWarehouse?: boolean;
 	populateCarrier?: boolean;
@@ -35,7 +42,20 @@ interface IOrderRouter {
 
 	removeProducts(orderId: Order['id'], productsIds: string[]): Promise<Order>;
 
-	payWithStripe(orderId: Order['id'], cardId: string): Promise<Order>;
+	/**
+	 * @param shownCurrency currency the customer was shown, if any. The
+	 * server refuses the charge when it is not the charge currency.
+	 */
+	payWithStripe(
+		orderId: Order['id'],
+		cardId: string,
+		shownCurrency?: string
+	): Promise<Order>;
+
+	/**
+	 * Currency payWithStripe charges in: a lower-case code, e.g. `usd`
+	 */
+	getStripeCurrency(): Promise<string>;
 
 	refundWithStripe(orderId: Order['id']): Promise<Order>;
 }
