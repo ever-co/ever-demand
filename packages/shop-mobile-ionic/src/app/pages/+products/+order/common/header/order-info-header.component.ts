@@ -1,6 +1,12 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Output,
+	EventEmitter,
+} from '@angular/core';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-order-info-header',
 	templateUrl: './order-info-header.component.html',

@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	OnInit,
+} from '@angular/core';
 import { Store } from 'app/services/store.service';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-elapsed-time',
 	templateUrl: './elapsed-time.component.html',

@@ -1,4 +1,5 @@
 import {
+	ChangeDetectionStrategy,
 	Component,
 	OnDestroy,
 	OnInit,
@@ -28,6 +29,7 @@ export enum DeliveryStatus {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	templateUrl: './order.page.html',
 	styleUrls: ['./order.page.scss'],

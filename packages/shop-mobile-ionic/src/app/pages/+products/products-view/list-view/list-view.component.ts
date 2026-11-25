@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	EventEmitter,
+	Input,
+	Output,
+	OnInit,
+} from '@angular/core';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
@@ -7,6 +14,7 @@ import { first } from 'rxjs/operators';
 const initializeProductsNumber: number = 10;
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-products-list-view',
 	templateUrl: './list-view.component.html',

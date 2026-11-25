@@ -1,4 +1,8 @@
-import { Component, OnDestroy } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	OnDestroy,
+} from '@angular/core';
 import { environment } from '../../environments/environment';
 
 import { first } from 'rxjs/operators';
@@ -7,6 +11,7 @@ import { Router } from '@angular/router';
 import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	styleUrls: ['./server-down.page.scss'],
 	templateUrl: 'server-down.page.html',

@@ -1,9 +1,14 @@
-import { Component, Input } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Input,
+} from '@angular/core';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import Order from '@modules/server.common/entities/Order';
 import IUser from '@modules/server.common/interfaces/IUser';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-order-card',
 	styleUrls: ['./order-card.component.scss'],

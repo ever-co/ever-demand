@@ -1,156 +1,112 @@
-# Ever Demand Platform Shop Mobile App (Ionic)
+# Ever Demand Platform Shop Mobile App (Ionic / Angular), web build served by nginx.
+# Build from the repository root:
+#   docker build -f .deploy/shop-mobile-ionic/Dockerfile -t ever-demand-shop-mobile .
+# The native Android / iOS apps are built with Capacitor instead (see
+# docs/latest-stack/shop-mobile-ionic.md).
 
-ARG API_BASE_URL
-ARG API_HOST
-ARG API_PORT
-ARG CLIENT_BASE_URL
-ARG DEMO
-ARG WEB_HOST
-ARG WEB_PORT
-ARG HTTPS_SERVICES_ENDPOINT
+FROM node:26-alpine AS build
+
+LABEL maintainer="ever@ever.co"
+LABEL org.opencontainers.image.source=https://github.com/ever-co/ever-demand
+
+# Settings baked into the generated environment.ts (scripts/env.ts). All of them are public:
+# the app runs in the browser.
 ARG SERVICES_ENDPOINT
+ARG HTTPS_SERVICES_ENDPOINT
 ARG GQL_ENDPOINT
 ARG GQL_SUBSCRIPTIONS_ENDPOINT
-ARG SENTRY_DSN
-ARG CHATWOOT_SDK_TOKEN
-ARG CLOUDINARY_CLOUD_NAME
-ARG CLOUDINARY_API_KEY
 ARG GOOGLE_MAPS_API_KEY
 ARG GOOGLE_ANALYTICS_API_KEY
-ARG GOOGLE_PLACE_AUTOCOMPLETE
+ARG STRIPE_PUBLISHABLE_KEY
 ARG DEFAULT_LATITUDE
 ARG DEFAULT_LONGITUDE
-ARG DEFAULT_CURRENCY
 ARG DEFAULT_LANGUAGE
-ARG DEFAULT_CUSTOMER_LOGO
-ARG LOGIN_LOGO
+ARG DEFAULT_LOCALE
 ARG NO_INTERNET_LOGO
+ARG INVITE_BY_CODE_LOGO
 ARG COMPANY_NAME
-ARG APP_NAME
 ARG MIXPANEL_API_KEY
-ARG DEFAULT_LOGIN_USERNAME
-ARG DEFAULT_LOGIN_PASSWORD
+ARG PRODUCTS_VIEW_TYPE
+ARG ORDER_INFO_TYPE
+ARG SUPPORT_NUMBER
+ARG MERCHANT_IDS
+ARG SHOPPING_CART
 ARG SETTINGS_APP_TYPE
 ARG SETTINGS_MAINTENANCE_API_URL
 
-FROM node:16-alpine3.14 AS dependencies
-
-LABEL maintainer="ever@ever.co"
-LABEL org.opencontainers.image.source https://github.com/ever-co/ever-demand
+# Prefer the internal Verdaccio cache when VERDACCIO_REGISTRY is set (anonymous); empty
+# (e.g. a fork) falls back to the public npm registry.
+ARG VERDACCIO_REGISTRY=""
 
 ENV CI=true
+ENV NODE_OPTIONS=--max-old-space-size=4096
 
-RUN apk --update add bash \
-	&& apk add libexecinfo libexecinfo-dev \
-	&& npm i -g npm@8.19.4 \
-	&& apk add --no-cache --virtual build-dependencies build-base \
-	snappy dos2unix g++ snappy-dev gcc libgcc libstdc++ linux-headers autoconf automake make nasm python2 py2-setuptools vips-dev git \
-	&& npm install --quiet node-gyp@9.4.0 -g \
-	&& npm config set python /usr/bin/python \
-	&& npm install yarn@1.22.22 -g --force \
-	&& mkdir /srv/ever && echo "network-timeout 600000" > /srv/ever/.yarnrc && chown -R node:node /srv/ever
-
-COPY wait .deploy/shop-mobile-ionic/entrypoint.compose.sh .deploy/shop-mobile-ionic/entrypoint.prod.sh /
-
-RUN chmod +x /wait /entrypoint.compose.sh /entrypoint.prod.sh && dos2unix /entrypoint.compose.sh && dos2unix /entrypoint.prod.sh
-
-USER node:node
+# Node 25+ no longer bundles corepack.
+RUN npm i -g pnpm@12.23.0
 
 WORKDIR /srv/ever
 
-COPY --chown=node:node package.json yarn.lock lerna.json package.workspaces.json tsconfig.base.json ./
-COPY --chown=node:node packages/shop-mobile-ionic/package.json ./packages/shop-mobile-ionic/package.json
-COPY --chown=node:node .snyk ./.snyk
-COPY --chown=node:node packages/common/package.json ./packages/common/package.json
-COPY --chown=node:node packages/common-angular/package.json ./packages/common-angular/package.json
+# Workspace manifests first, so the install layer is cached until a manifest changes.
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc tsconfig.base.json ./
+COPY packages/common/package.json packages/common/package.json
+COPY packages/common-angular/package.json packages/common-angular/package.json
+COPY packages/shop-mobile-ionic/package.json packages/shop-mobile-ionic/package.json
 
-# Prefer the internal Verdaccio cache when VERDACCIO_REGISTRY is set (anonymous, backward-compatible);
-# empty (e.g. a fork) falls back to public npm. Writes the registry to .npmrc + .yarnrc and best-effort
-# (non-fatal) rewrites yarn.lock resolved URLs so the frozen-lockfile install below stays consistent.
-ARG VERDACCIO_REGISTRY=""
-RUN if [ -n "$VERDACCIO_REGISTRY" ]; then \
-		echo "registry=${VERDACCIO_REGISTRY}" >> /srv/ever/.npmrc && \
-		echo "registry \"${VERDACCIO_REGISTRY}\"" >> /srv/ever/.yarnrc && \
-		{ sed -i "s|https://registry.yarnpkg.com|${VERDACCIO_REGISTRY%/}|g; s|https://registry.npmjs.org|${VERDACCIO_REGISTRY%/}|g" /srv/ever/yarn.lock 2>/dev/null || true; }; \
-	fi
+RUN if [ -n "$VERDACCIO_REGISTRY" ]; then echo "registry=${VERDACCIO_REGISTRY}" >> .npmrc; fi \
+	&& pnpm install --frozen-lockfile \
+		--filter "@ever-platform/shop-mobile-ionic..."
 
-RUN yarn bootstrap && yarn cache clean
+COPY packages/common packages/common
+COPY packages/common-angular packages/common-angular
+COPY packages/shop-mobile-ionic packages/shop-mobile-ionic
 
-FROM node:16-alpine3.14 AS development
-
-USER node:node
-
-WORKDIR /srv/ever
-
-COPY --chown=node:node --from=dependencies /wait /entrypoint.compose.sh /entrypoint.prod.sh /
-COPY --chown=node:node --from=dependencies /srv/ever .
-COPY . .
-
-FROM node:16-alpine3.14 AS build
-
-WORKDIR /srv/ever
-
-RUN mkdir www
-
-COPY --chown=node:node --from=development /srv/ever .
-
-ENV NODE_OPTIONS=${NODE_OPTIONS:-"--max-old-space-size=2048"}
-ENV NODE_ENV=${NODE_ENV:-production}
-
-ENV IS_DOCKER=true
-
-RUN yarn build:shopmobile
+RUN SERVICES_ENDPOINT="${SERVICES_ENDPOINT:-http://localhost:5500}" \
+	HTTPS_SERVICES_ENDPOINT="${HTTPS_SERVICES_ENDPOINT:-https://localhost:2087}" \
+	GQL_ENDPOINT="${GQL_ENDPOINT:-http://localhost:8443/graphql}" \
+	GQL_SUBSCRIPTIONS_ENDPOINT="${GQL_SUBSCRIPTIONS_ENDPOINT:-ws://localhost:2086/subscriptions}" \
+	GOOGLE_MAPS_API_KEY="${GOOGLE_MAPS_API_KEY}" \
+	GOOGLE_ANALYTICS_API_KEY="${GOOGLE_ANALYTICS_API_KEY}" \
+	STRIPE_PUBLISHABLE_KEY="${STRIPE_PUBLISHABLE_KEY}" \
+	DEFAULT_LATITUDE="${DEFAULT_LATITUDE:-42.6459136}" \
+	DEFAULT_LONGITUDE="${DEFAULT_LONGITUDE:-23.3332736}" \
+	DEFAULT_LANGUAGE="${DEFAULT_LANGUAGE:-en-US}" \
+	DEFAULT_LOCALE="${DEFAULT_LOCALE:-en-US}" \
+	NO_INTERNET_LOGO="${NO_INTERNET_LOGO:-assets/imgs/logo.png}" \
+	INVITE_BY_CODE_LOGO="${INVITE_BY_CODE_LOGO:-assets/imgs/ever-logo.svg}" \
+	COMPANY_NAME="${COMPANY_NAME:-Ever Co. LTD}" \
+	MIXPANEL_API_KEY="${MIXPANEL_API_KEY}" \
+	PRODUCTS_VIEW_TYPE="${PRODUCTS_VIEW_TYPE:-slides}" \
+	ORDER_INFO_TYPE="${ORDER_INFO_TYPE:-page}" \
+	SUPPORT_NUMBER="${SUPPORT_NUMBER:-0888888888}" \
+	MERCHANT_IDS="${MERCHANT_IDS:-[]}" \
+	SHOPPING_CART="${SHOPPING_CART:-false}" \
+	SETTINGS_APP_TYPE="${SETTINGS_APP_TYPE:-shop-mobile}" \
+	SETTINGS_MAINTENANCE_API_URL="${SETTINGS_MAINTENANCE_API_URL}" \
+	pnpm --filter @ever-platform/shop-mobile-ionic run build:prod
 
 FROM nginx:alpine AS production
 
-# USER nginx:nginx
-
 WORKDIR /srv/ever
 
-COPY --chown=nginx:nginx --from=dependencies /wait /entrypoint.prod.sh /entrypoint.compose.sh ./
+COPY --chown=nginx:nginx wait .deploy/shop-mobile-ionic/entrypoint.compose.sh .deploy/shop-mobile-ionic/entrypoint.prod.sh ./
 COPY --chown=nginx:nginx .deploy/shop-mobile-ionic/nginx.compose.conf /etc/nginx/conf.d/compose.conf.template
 COPY --chown=nginx:nginx .deploy/shop-mobile-ionic/nginx.prod.conf /etc/nginx/conf.d/prod.conf.template
 COPY --chown=nginx:nginx --from=build /srv/ever/packages/shop-mobile-ionic/www .
 
-RUN chmod +x wait entrypoint.compose.sh entrypoint.prod.sh && \
-    chmod a+rw /etc/nginx/conf.d/compose.conf.template /etc/nginx/conf.d/prod.conf.template
+RUN apk add --no-cache dos2unix \
+	&& dos2unix entrypoint.compose.sh entrypoint.prod.sh \
+	&& chmod +x wait entrypoint.compose.sh entrypoint.prod.sh \
+	&& chmod a+rw /etc/nginx/conf.d/compose.conf.template /etc/nginx/conf.d/prod.conf.template
 
-ENV API_HOST=${API_HOST:-api}
-ENV API_PORT=${API_PORT:-3000}
+ENV API_HOST=api
+ENV API_PORT=3000
+ENV API_BASE_URL=http://localhost:3000
+ENV CLIENT_BASE_URL=http://localhost:4201
+ENV WEB_HOST=0.0.0.0
+ENV WEB_PORT=4201
+ENV DEMO=false
 
-ENV API_BASE_URL=${API_BASE_URL:-http://localhost:3000}
-ENV CLIENT_BASE_URL=${CLIENT_BASE_URL:-http://localhost:4201}
-ENV WEB_HOST=${WEB_HOST:-0.0.0.0}
-ENV WEB_PORT=${WEB_PORT:-4201}
-ENV DEMO=${DEMO:-false}
-
-ENV HTTPS_SERVICES_ENDPOINT=${HTTPS_SERVICES_ENDPOINT}
-ENV SERVICES_ENDPOINT=${SERVICES_ENDPOINT}
-ENV GQL_ENDPOINT=${GQL_ENDPOINT}
-ENV GQL_SUBSCRIPTIONS_ENDPOINT=${GQL_SUBSCRIPTIONS_ENDPOINT}
-ENV SENTRY_DSN=${SENTRY_DSN}
-ENV CHATWOOT_SDK_TOKEN=${CHATWOOT_SDK_TOKEN}
-ENV CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
-ENV CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
-ENV GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}
-ENV GOOGLE_ANALYTICS_API_KEY=${GOOGLE_ANALYTICS_API_KEY}
-ENV GOOGLE_PLACE_AUTOCOMPLETE=${GOOGLE_PLACE_AUTOCOMPLETE:-false}
-ENV DEFAULT_LATITUDE=${DEFAULT_LATITUDE:-42.6459136}
-ENV DEFAULT_LONGITUDE=${DEFAULT_LONGITUDE:-23.3332736}
-ENV DEFAULT_CURRENCY=${DEFAULT_CURRENCY:-USD}_DSN}
-ENV DEFAULT_LANGUAGE=${DEFAULT_LANGUAGE:-en}
-ENV DEFAULT_CUSTOMER_LOGO=${DEFAULT_CUSTOMER_LOGO}
-ENV LOGIN_LOGO=${LOGIN_LOGO}
-ENV NO_INTERNET_LOGO=${NO_INTERNET_LOGO}
-ENV COMPANY_NAME=${COMPANY_NAME}
-ENV APP_NAME=${APP_NAME}
-ENV MIXPANEL_API_KEY=${MIXPANEL_API_KEY}
-ENV DEFAULT_LOGIN_USERNAME=${DEFAULT_LOGIN_USERNAME}
-ENV DEFAULT_LOGIN_PASSWORD=${DEFAULT_LOGIN_PASSWORD}
-ENV SETTINGS_APP_TYPE=${SETTINGS_APP_TYPE}
-ENV SETTINGS_MAINTENANCE_API_URL=${SETTINGS_MAINTENANCE_API_URL}
-
-EXPOSE ${WEB_PORT}
+EXPOSE 4201
 
 ENTRYPOINT [ "./entrypoint.prod.sh" ]
 

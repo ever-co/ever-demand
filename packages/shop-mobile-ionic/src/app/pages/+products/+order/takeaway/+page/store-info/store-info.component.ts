@@ -1,4 +1,5 @@
 import {
+	ChangeDetectionStrategy,
 	Component,
 	OnInit,
 	ViewChild,
@@ -18,6 +19,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import { Router } from '@angular/router';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-order-store-info',
 	templateUrl: './store-info.component.html',

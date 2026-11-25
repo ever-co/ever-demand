@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import {
 	ModalController,
@@ -7,70 +7,69 @@ import {
 	NavParams,
 	PopoverController,
 } from '@ionic/angular/lazy';
-import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { Store } from '../../../../services/store.service';
 import { CancelPage } from './cancel.page';
+import { createSpyObj } from 'app/testing/spies';
+import { translateTesting } from 'app/testing/translate';
 
 describe('CancelPage', () => {
 	let component: CancelPage;
 	let fixture: ComponentFixture<CancelPage>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
+	beforeEach(async () => {
+			await TestBed.configureTestingModule({
 				declarations: [CancelPage],
-				imports: [TranslateModule.forRoot()],
+				imports: [...translateTesting()],
 				providers: [
 					{
 						provide: PopoverController,
-						useValue: jasmine.createSpyObj('PopoverController', [
+						useValue: createSpyObj('PopoverController', [
 							'dismiss',
 						]),
 					},
 					{
 						provide: WarehouseOrdersRouter,
-						useValue: jasmine.createSpyObj(
+						useValue: createSpyObj(
 							'WarehouseOrdersRouter',
 							['cancel']
 						),
 					},
 					{
 						provide: OrderRouter,
-						useValue: jasmine.createSpyObj('OrderRouter', [
+						useValue: createSpyObj('OrderRouter', [
 							'refundWithStripe',
 						]),
 					},
 					{ provide: Store, useValue: { orderId: 'order-1' } },
 					{
 						provide: ModalController,
-						useValue: jasmine.createSpyObj('ModalController', [
+						useValue: createSpyObj('ModalController', [
 							'create',
 							'dismiss',
 						]),
 					},
 					{
 						provide: NavController,
-						useValue: jasmine.createSpyObj('NavController', [
+						useValue: createSpyObj('NavController', [
 							'navigateRoot',
 						]),
 					},
 					{
 						provide: Router,
-						useValue: jasmine.createSpyObj('Router', ['navigate']),
+						useValue: createSpyObj('Router', ['navigate']),
 					},
 					{
 						provide: NavParams,
-						useValue: jasmine.createSpyObj('NavParams', {
+						useValue: createSpyObj('NavParams', {
 							get: undefined,
 						}),
 					},
 				],
 				schemas: [CUSTOM_ELEMENTS_SCHEMA],
 			}).compileComponents();
-		})
-	);
+	});
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(CancelPage);

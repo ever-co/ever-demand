@@ -1,4 +1,5 @@
 import {
+	ChangeDetectionStrategy,
 	AfterViewInit,
 	Component,
 	ElementRef,
@@ -26,6 +27,7 @@ import { Store } from '../../../../services/store.service';
 const initializeProductsNumber: number = 10;
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-products-slides-view',
 	templateUrl: './slides-view.component.html',

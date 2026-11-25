@@ -1,4 +1,5 @@
 import {
+	ChangeDetectionStrategy,
 	Component,
 	OnInit,
 	ViewChild,
@@ -10,6 +11,7 @@ import { environment } from 'environments/environment';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-directions-location',
 	template: ` <div style="height:100%" #gmap></div> `,

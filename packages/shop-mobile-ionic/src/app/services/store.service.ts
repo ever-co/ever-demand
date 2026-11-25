@@ -5,12 +5,11 @@ import Device from '@modules/server.common/entities/Device';
 import User from '@modules/server.common/entities/User';
 import InviteRequest from '@modules/server.common/entities/InviteRequest';
 import { TranslateService } from '@ngx-translate/core';
-import { Capacitor } from '@capacitor/core';
-import { Device as DevicePlugin } from '@capacitor/device';
 import { Platform } from '@ionic/angular/lazy';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { first } from 'rxjs/operators';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
+import { NativeService } from './native/native.service';
 
 // TODO use https://beta.ionicframework.com/docs/building/storage
 
@@ -29,7 +28,8 @@ export class Store {
 		private readonly _translateService: TranslateService,
 		private readonly platform: Platform,
 		private readonly inviteRouter: InviteRouter,
-		private readonly userRouter: UserRouter
+		private readonly userRouter: UserRouter,
+		private readonly native: NativeService
 	) {
 		this._initLanguage();
 	}
@@ -290,8 +290,8 @@ export class Store {
 		} else {
 			// Two-letter code on both: the device language on a phone (was
 			// Cordova Globalization), else the browser language.
-			const browserLang = Capacitor.isNativePlatform()
-				? (await DevicePlugin.getLanguageCode()).value
+			const browserLang = this.native.isNative()
+				? await this.native.languageCode()
 				: this._translateService.getBrowserLang();
 			if (langs[browserLang]) {
 				this._translateService.use(langs[browserLang]);

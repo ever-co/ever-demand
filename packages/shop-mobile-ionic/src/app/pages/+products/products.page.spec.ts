@@ -1,8 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { ModalController, NavController } from '@ionic/angular/lazy';
-import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { UserProductsRouter } from '@modules/client.common.angular2/routers/user-products-router.service';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
@@ -14,26 +13,27 @@ import { OrdersService } from 'app/services/orders/orders.service';
 import { GeoLocationService } from '../../services/geo-location';
 import { Store } from '../../services/store.service';
 import { ProductsPage } from './products.page';
+import { createSpyObj } from 'app/testing/spies';
+import { translateTesting } from 'app/testing/translate';
 
 describe('ProductsPage', () => {
 	let component: ProductsPage;
 	let fixture: ComponentFixture<ProductsPage>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
+	beforeEach(async () => {
+			await TestBed.configureTestingModule({
 				declarations: [ProductsPage],
-				imports: [TranslateModule.forRoot()],
+				imports: [...translateTesting()],
 				providers: [
 					// No user, no store mode, no pending order and nothing to buy.
 					{ provide: Store, useValue: { language: 'en-US' } },
 					{
 						provide: UserRouter,
-						useValue: jasmine.createSpyObj('UserRouter', ['get']),
+						useValue: createSpyObj('UserRouter', ['get']),
 					},
 					{
 						provide: GeoLocationProductsService,
-						useValue: jasmine.createSpyObj(
+						useValue: createSpyObj(
 							'GeoLocationProductsService',
 							[
 								'geoLocationProductsByPaging',
@@ -43,71 +43,70 @@ describe('ProductsPage', () => {
 					},
 					{
 						provide: WarehouseOrdersRouter,
-						useValue: jasmine.createSpyObj(
+						useValue: createSpyObj(
 							'WarehouseOrdersRouter',
 							['create']
 						),
 					},
 					{
 						provide: UserProductsRouter,
-						useValue: jasmine.createSpyObj('UserProductsRouter', [
+						useValue: createSpyObj('UserProductsRouter', [
 							'getPlaceholder',
 						]),
 					},
 					{
 						provide: Router,
-						useValue: jasmine.createSpyObj('Router', [
+						useValue: createSpyObj('Router', [
 							'navigate',
 							'navigateByUrl',
 						]),
 					},
 					{
 						provide: ModalController,
-						useValue: jasmine.createSpyObj('ModalController', [
+						useValue: createSpyObj('ModalController', [
 							'create',
 						]),
 					},
 					// The location never resolves, so no products load.
 					{
 						provide: GeoLocationService,
-						useValue: jasmine.createSpyObj('GeoLocationService', {
+						useValue: createSpyObj('GeoLocationService', {
 							getCurrentGeoLocation: new Promise(() => {}),
 						}),
 					},
 					{
 						provide: WarehouseRouter,
-						useValue: jasmine.createSpyObj('WarehouseRouter', [
+						useValue: createSpyObj('WarehouseRouter', [
 							'get',
 						]),
 					},
 					{
 						provide: OrderRouter,
-						useValue: jasmine.createSpyObj('OrderRouter', ['get']),
+						useValue: createSpyObj('OrderRouter', ['get']),
 					},
 					{
 						provide: NavController,
-						useValue: jasmine.createSpyObj('NavController', [
+						useValue: createSpyObj('NavController', [
 							'navigateRoot',
 						]),
 					},
 					{
 						provide: WarehouseProductsService,
-						useValue: jasmine.createSpyObj(
+						useValue: createSpyObj(
 							'WarehouseProductsService',
 							['getWarehouseProduct']
 						),
 					},
 					{
 						provide: OrdersService,
-						useValue: jasmine.createSpyObj('OrdersService', [
+						useValue: createSpyObj('OrdersService', [
 							'getOrder',
 						]),
 					},
 				],
 				schemas: [CUSTOM_ELEMENTS_SCHEMA],
 			}).compileComponents();
-		})
-	);
+	});
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(ProductsPage);

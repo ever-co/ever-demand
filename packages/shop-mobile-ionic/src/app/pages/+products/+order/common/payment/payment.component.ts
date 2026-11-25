@@ -1,4 +1,9 @@
-import { Component, Input, EventEmitter } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Input,
+	EventEmitter,
+} from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { Store } from 'app/services/store.service';
@@ -13,6 +18,7 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-payment',
 	templateUrl: './payment.component.html',

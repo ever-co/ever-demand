@@ -1,20 +1,20 @@
-import { Component } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+} from '@angular/core';
 import { Location } from '@angular/common';
 import { Platform } from '@ionic/angular/lazy';
-import { Capacitor } from '@capacitor/core';
-import { StatusBar, Style } from '@capacitor/status-bar';
-import { SplashScreen } from '@capacitor/splash-screen';
-import { Network } from '@capacitor/network';
-import { Device } from '@capacitor/device';
 import { TranslateService } from '@ngx-translate/core';
 import { DeviceRouter } from '@modules/client.common.angular2/routers/device-router.service';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';
 import IPlatform from '@modules/server.common/interfaces/IPlatform';
 import { Router } from '@angular/router';
 import { Store } from './services/store.service';
+import { NativeService } from './services/native/native.service';
 import { environment } from 'environments/environment';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-root',
 	templateUrl: 'app.component.html',
@@ -28,7 +28,8 @@ export class AppComponent {
 		private readonly router: Router,
 		private readonly deviceRouter: DeviceRouter,
 		private readonly _translateService: TranslateService,
-		private readonly location: Location
+		private readonly location: Location,
+		private readonly native: NativeService
 	) {
 		this._initializeApp();
 
@@ -68,7 +69,7 @@ export class AppComponent {
 				)
 			);
 		} else {
-			if (Capacitor.isNativePlatform()) {
+			if (this.native.isNative()) {
 				console.error(
 					"DeviceService can't getChannelId() because UrbanAirship plugin isn't installed!"
 				);
@@ -83,14 +84,14 @@ export class AppComponent {
 
 	getPlatform(): IPlatform {
 		// 'android' | 'ios' on a device, 'web' in a browser
-		return Capacitor.isNativePlatform()
-			? (Capacitor.getPlatform() as IPlatform)
+		return this.native.isNative()
+			? (this.native.platform() as IPlatform)
 			: 'browser';
 	}
 
 	async getUUID(): Promise<string> {
-		return Capacitor.isNativePlatform()
-			? (await Device.getId()).identifier
+		return this.native.isNative()
+			? await this.native.deviceId()
 			: environment.FAKE_UUID;
 	}
 
@@ -101,9 +102,9 @@ export class AppComponent {
 	private async _watchNetworkConnection() {
 		// The Capacitor plugin also works in a browser (online / offline
 		// events), like the Cordova one did on a device.
-		let connected = (await Network.getStatus()).connected;
+		let connected = (await this.native.networkStatus()).connected;
 
-		await Network.addListener('networkStatusChange', async (status) => {
+		await this.native.onNetworkStatusChange(async (status) => {
 			if (status.connected === connected) {
 				return;
 			}
@@ -129,10 +130,10 @@ export class AppComponent {
 
 		await this._watchNetworkConnection();
 
-		if (Capacitor.isNativePlatform()) {
+		if (this.native.isNative()) {
 			// Was StatusBar.styleBlackOpaque(): light text on a dark bar.
-			await StatusBar.setStyle({ style: Style.Dark });
-			await SplashScreen.hide();
+			await this.native.useDarkStatusBar();
+			await this.native.hideSplashScreen();
 		}
 
 		if (!this.store.deviceId) {

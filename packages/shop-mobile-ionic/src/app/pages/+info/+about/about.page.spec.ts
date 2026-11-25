@@ -1,24 +1,24 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Platform } from '@ionic/angular/lazy';
-import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { of } from 'rxjs';
 import { AboutPage } from './about.page';
+import { createSpyObj } from 'app/testing/spies';
+import { translateTesting } from 'app/testing/translate';
 
 describe('AboutPage', () => {
 	let component: AboutPage;
 	let fixture: ComponentFixture<AboutPage>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
+	beforeEach(async () => {
+			await TestBed.configureTestingModule({
 				declarations: [AboutPage],
-				imports: [TranslateModule.forRoot()],
+				imports: [...translateTesting()],
 				providers: [
 					{
 						provide: UserRouter,
-						useValue: jasmine.createSpyObj('UserRouter', {
+						useValue: createSpyObj('UserRouter', {
 							getAboutUs: of(''),
 						}),
 					},
@@ -26,8 +26,7 @@ describe('AboutPage', () => {
 				],
 				schemas: [CUSTOM_ELEMENTS_SCHEMA],
 			}).compileComponents();
-		})
-	);
+	});
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(AboutPage);

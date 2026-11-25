@@ -1,4 +1,5 @@
 import {
+	ChangeDetectionStrategy,
 	Component,
 	ViewChild,
 	ElementRef,
@@ -15,6 +16,7 @@ const warehouseIcon = environment.MAP_MERCHANT_ICON_LINK;
 const userIcon = environment.MAP_USER_ICON_LINK;
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-user-warehouse-location',
 	template: ` <div style="height:100%" #gmap></div> `,

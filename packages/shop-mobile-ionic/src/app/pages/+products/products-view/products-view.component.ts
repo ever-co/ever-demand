@@ -1,4 +1,5 @@
 import {
+	ChangeDetectionStrategy,
 	Component,
 	EventEmitter,
 	Input,
@@ -13,6 +14,7 @@ import { WarehouseProductsService } from 'app/services/merchants/warehouse-produ
 import { ProductsService } from '../../../services/products.service';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-products-view',
 	templateUrl: './products-view.component.html',

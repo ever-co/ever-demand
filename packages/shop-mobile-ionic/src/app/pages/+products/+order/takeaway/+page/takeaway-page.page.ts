@@ -1,4 +1,5 @@
 import {
+	ChangeDetectionStrategy,
 	OnInit,
 	Component,
 	EventEmitter,
@@ -20,6 +21,7 @@ import { OrderStoreInfo } from './store-info/store-info.component';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	templateUrl: './takeaway-page.page.html',
 	styleUrls: ['./takeaway-page.page.scss'],

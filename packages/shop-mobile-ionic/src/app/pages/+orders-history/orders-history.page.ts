@@ -1,4 +1,8 @@
-import { Component, OnDestroy } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	OnDestroy,
+} from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import { Subject } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
@@ -8,6 +12,7 @@ import { OrdersHistoryQuery } from './orders-history.model';
 import { Platform } from '@ionic/angular/lazy';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-orders-history',
 	templateUrl: './orders-history.page.html',

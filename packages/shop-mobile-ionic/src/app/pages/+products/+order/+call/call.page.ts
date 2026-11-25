@@ -1,7 +1,12 @@
-import { Component, EventEmitter } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	EventEmitter,
+} from '@angular/core';
 import { PopoverController, ModalController, NavParams } from '@ionic/angular/lazy';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-call',
 	templateUrl: './call.page.html',

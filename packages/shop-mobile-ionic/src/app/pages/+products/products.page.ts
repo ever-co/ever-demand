@@ -1,4 +1,10 @@
-import { Component, OnDestroy, EventEmitter, OnInit } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	OnDestroy,
+	EventEmitter,
+	OnInit,
+} from '@angular/core';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { UserProductsRouter } from '@modules/client.common.angular2/routers/user-products-router.service';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
@@ -30,6 +36,7 @@ import { OrderRouter } from '@modules/client.common.angular2/routers/order-route
 const initializeProductsNumber: number = 10;
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-products',
 	templateUrl: './products.page.html',

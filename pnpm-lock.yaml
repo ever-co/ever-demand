@@ -478,6 +478,9 @@ importers:
       tslib:
         specifier: ^2.9.1
         version: 2.9.1
+      underscore:
+        specifier: ^1.13.8
+        version: 1.13.8
       uuid:
         specifier: ^14.0.3
         version: 14.0.3

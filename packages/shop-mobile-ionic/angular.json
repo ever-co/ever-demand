@@ -46,8 +46,8 @@
 							"node_modules/@fortawesome/fontawesome-free/css/all.min.css",
 							"node_modules/@fortawesome/fontawesome-free/css/v4-shims.min.css",
 							"node_modules/swiper/swiper-bundle.min.css",
-							"src/theme/variables.scss",
-							"src/global.scss"
+							"src/global.scss",
+							"src/theme/variables.scss"
 						],
 						"stylePreprocessorOptions": {
 							"includePaths": ["src", "node_modules"],
@@ -111,6 +111,7 @@
 						"runner": "vitest",
 						"runnerConfig": "vitest.config.ts",
 						"setupFiles": ["src/test-setup.ts"],
+						"providersFile": "src/test-providers.ts",
 						"include": ["src/**/*.spec.ts"]
 					}
 				}

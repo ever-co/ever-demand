@@ -1,47 +1,47 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModalController, NavParams, PopoverController } from '@ionic/angular/lazy';
-import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { NEVER } from 'rxjs';
 import { Store } from '../../../services/store.service';
 import { OrderPage } from './order.page';
+import { createSpyObj } from 'app/testing/spies';
+import { translateTesting } from 'app/testing/translate';
 
 describe('OrderPage', () => {
 	let component: OrderPage;
 	let fixture: ComponentFixture<OrderPage>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
+	beforeEach(async () => {
+			await TestBed.configureTestingModule({
 				declarations: [OrderPage],
-				imports: [TranslateModule.forRoot()],
+				imports: [...translateTesting()],
 				providers: [
 					{
 						provide: PopoverController,
-						useValue: jasmine.createSpyObj('PopoverController', [
+						useValue: createSpyObj('PopoverController', [
 							'dismiss',
 						]),
 					},
 					// The order and the warehouse never load.
 					{
 						provide: OrderRouter,
-						useValue: jasmine.createSpyObj('OrderRouter', {
+						useValue: createSpyObj('OrderRouter', {
 							get: NEVER,
 						}),
 					},
 					{
 						provide: WarehouseOrdersRouter,
-						useValue: jasmine.createSpyObj(
+						useValue: createSpyObj(
 							'WarehouseOrdersRouter',
 							['cancel']
 						),
 					},
 					{
 						provide: WarehouseRouter,
-						useValue: jasmine.createSpyObj('WarehouseRouter', {
+						useValue: createSpyObj('WarehouseRouter', {
 							get: NEVER,
 						}),
 					},
@@ -51,13 +51,13 @@ describe('OrderPage', () => {
 					},
 					{
 						provide: NavParams,
-						useValue: jasmine.createSpyObj('NavParams', {
+						useValue: createSpyObj('NavParams', {
 							get: undefined,
 						}),
 					},
 					{
 						provide: ModalController,
-						useValue: jasmine.createSpyObj('ModalController', [
+						useValue: createSpyObj('ModalController', [
 							'create',
 							'dismiss',
 						]),
@@ -65,8 +65,7 @@ describe('OrderPage', () => {
 				],
 				schemas: [CUSTOM_ELEMENTS_SCHEMA],
 			}).compileComponents();
-		})
-	);
+	});
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(OrderPage);

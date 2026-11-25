@@ -1,10 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	OnInit,
+	OnDestroy,
+} from '@angular/core';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { Subscription } from 'rxjs';
 import { DeviceRouter } from '@modules/client.common.angular2/routers/device-router.service';
 import { Platform } from '@ionic/angular/lazy';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-about',
 	templateUrl: './about.page.html',

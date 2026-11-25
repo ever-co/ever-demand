@@ -1,82 +1,81 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
-	fakeAsync,
-	tick,
-	waitForAsync,
 	ComponentFixture,
 	TestBed,
 } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { GeoLocationRouter } from '@modules/client.common.angular2/routers/geo-location-router.service';
 import { InviteRequestRouter } from '@modules/client.common.angular2/routers/invite-request-router.service';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { UserAuthRouter } from '@modules/client.common.angular2/routers/user-auth-router.service';
 import { Store } from '../../../services/store.service';
 import { ByLocationPage } from './by-location.page';
+import { vi } from 'vitest';
+import { createSpyObj } from 'app/testing/spies';
+import { translateTesting } from 'app/testing/translate';
 
 describe('ByLocationPage', () => {
 	let component: ByLocationPage;
 	let fixture: ComponentFixture<ByLocationPage>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
+	beforeEach(async () => {
+			await TestBed.configureTestingModule({
 				declarations: [ByLocationPage],
-				imports: [TranslateModule.forRoot()],
+				imports: [...translateTesting()],
 				providers: [
 					{ provide: Store, useValue: {} },
 					{
 						provide: HttpClient,
-						useValue: jasmine.createSpyObj('HttpClient', ['get']),
+						useValue: createSpyObj('HttpClient', ['get']),
 					},
 					{
 						provide: Router,
-						useValue: jasmine.createSpyObj('Router', [
+						useValue: createSpyObj('Router', [
 							'navigate',
 							'navigateByUrl',
 						]),
 					},
 					{
 						provide: UserAuthRouter,
-						useValue: jasmine.createSpyObj('UserAuthRouter', [
+						useValue: createSpyObj('UserAuthRouter', [
 							'register',
 						]),
 					},
 					{
 						provide: InviteRouter,
-						useValue: jasmine.createSpyObj('InviteRouter', [
+						useValue: createSpyObj('InviteRouter', [
 							'create',
 						]),
 					},
 					{
 						provide: InviteRequestRouter,
-						useValue: jasmine.createSpyObj('InviteRequestRouter', [
+						useValue: createSpyObj('InviteRequestRouter', [
 							'create',
 						]),
 					},
 					{
 						provide: GeoLocationRouter,
-						useValue: jasmine.createSpyObj('GeoLocationRouter', [
+						useValue: createSpyObj('GeoLocationRouter', [
 							'getAddressByCoordinatesUsingArcGIS',
 						]),
 					},
 				],
 				schemas: [CUSTOM_ELEMENTS_SCHEMA],
 			}).compileComponents();
-		})
-	);
+	});
 
-	beforeEach(fakeAsync(() => {
+	beforeEach(async () => {
+		vi.useFakeTimers();
 		fixture = TestBed.createComponent(ByLocationPage);
 		component = fixture.componentInstance;
 		// No device location, so the spec never asks the browser for one.
-		spyOn<any>(component, 'getCoordinates').and.resolveTo(null);
+		vi.spyOn<any, any>(component, 'getCoordinates').mockResolvedValue(null);
 		fixture.detectChanges();
 		// ngOnInit looks the location up after 50 ms: finish it in this spec.
-		tick(50);
-	}));
+		await vi.advanceTimersByTimeAsync(50);
+		vi.useRealTimers();
+	});
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

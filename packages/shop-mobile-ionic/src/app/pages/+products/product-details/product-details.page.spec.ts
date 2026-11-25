@@ -1,8 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { ModalController, NavController } from '@ionic/angular/lazy';
-import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
@@ -10,16 +9,17 @@ import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehou
 import { NEVER } from 'rxjs';
 import { Store } from '../../../services/store.service';
 import { ProductDetailsPage } from './product-details.page';
+import { createSpyObj } from 'app/testing/spies';
+import { translateTesting } from 'app/testing/translate';
 
 describe('ProductDetailsPage', () => {
 	let component: ProductDetailsPage;
 	let fixture: ComponentFixture<ProductDetailsPage>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
+	beforeEach(async () => {
+			await TestBed.configureTestingModule({
 				declarations: [ProductDetailsPage],
-				imports: [TranslateModule.forRoot()],
+				imports: [...translateTesting()],
 				providers: [
 					{
 						provide: ActivatedRoute,
@@ -35,7 +35,7 @@ describe('ProductDetailsPage', () => {
 					{ provide: Store, useValue: {} },
 					{
 						provide: ProductLocalesService,
-						useValue: jasmine.createSpyObj(
+						useValue: createSpyObj(
 							'ProductLocalesService',
 							{
 								getTranslate: '',
@@ -44,37 +44,37 @@ describe('ProductDetailsPage', () => {
 					},
 					{
 						provide: Router,
-						useValue: jasmine.createSpyObj('Router', ['navigate']),
+						useValue: createSpyObj('Router', ['navigate']),
 					},
 					{
 						provide: NavController,
-						useValue: jasmine.createSpyObj('NavController', [
+						useValue: createSpyObj('NavController', [
 							'navigateRoot',
 						]),
 					},
 					{
 						provide: WarehouseOrdersRouter,
-						useValue: jasmine.createSpyObj(
+						useValue: createSpyObj(
 							'WarehouseOrdersRouter',
 							['create']
 						),
 					},
 					{
 						provide: ModalController,
-						useValue: jasmine.createSpyObj('ModalController', [
+						useValue: createSpyObj('ModalController', [
 							'create',
 						]),
 					},
 					// The warehouse never loads, so no product is shown.
 					{
 						provide: WarehouseRouter,
-						useValue: jasmine.createSpyObj('WarehouseRouter', {
+						useValue: createSpyObj('WarehouseRouter', {
 							get: NEVER,
 						}),
 					},
 					{
 						provide: WarehouseProductsRouter,
-						useValue: jasmine.createSpyObj(
+						useValue: createSpyObj(
 							'WarehouseProductsRouter',
 							['get']
 						),
@@ -82,8 +82,7 @@ describe('ProductDetailsPage', () => {
 				],
 				schemas: [CUSTOM_ELEMENTS_SCHEMA],
 			}).compileComponents();
-		})
-	);
+	});
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(ProductDetailsPage);

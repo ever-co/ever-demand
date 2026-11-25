@@ -1,4 +1,10 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	OnInit,
+	Output,
+	EventEmitter,
+} from '@angular/core';
 import { first } from 'rxjs/operators';
 
 import Warehouse from '@modules/server.common/entities/Warehouse';
@@ -20,6 +26,7 @@ import { GeoLocationProductsService } from 'app/services/geo-location/geo-locati
 import { ProductsService } from '../../../services/products.service';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'search-products',
 	templateUrl: './searchProducts.component.html',

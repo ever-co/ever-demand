@@ -1,7 +1,12 @@
 // imports from lodash have to be combined
 import * as _ from 'lodash';
 import { every, isEmpty, isNumber } from 'lodash';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	OnInit,
+	OnDestroy,
+} from '@angular/core';
 import { InviteRequestRouter } from '@modules/client.common.angular2/routers/invite-request-router.service';
 import {
 	Country,
@@ -22,6 +27,7 @@ import { Subject } from 'rxjs';
 import { environment } from 'environments/environment';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-by-location',
 	templateUrl: './by-location.page.html',

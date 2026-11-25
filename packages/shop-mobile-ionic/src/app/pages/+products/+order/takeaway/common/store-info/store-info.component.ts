@@ -1,4 +1,5 @@
 import {
+	ChangeDetectionStrategy,
 	Component,
 	OnDestroy,
 	Input,
@@ -7,11 +8,12 @@ import {
 } from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import { getCountryName } from '@modules/server.common/entities';
-import { callNumber } from 'app/services/native/phone';
+import { NativeService } from 'app/services/native/native.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { Store } from 'app/services/store.service';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-order-takeaway-info-store-info',
 	templateUrl: './store-info.component.html',
@@ -35,7 +37,10 @@ export class TakeawayStoreInfoComponent implements OnDestroy {
 	@Output()
 	openMap = new EventEmitter<boolean>();
 
-	constructor(private store: Store) {}
+	constructor(
+		private store: Store,
+		private readonly native: NativeService
+	) {}
 
 	get inStore() {
 		return this.store.inStore;
@@ -59,7 +64,7 @@ export class TakeawayStoreInfoComponent implements OnDestroy {
 
 	async attemptCall(phone) {
 		try {
-			callNumber(phone);
+			this.native.callNumber(phone);
 		} catch (err) {
 			// TODO: implement popup notification
 			console.warn('Call Was Unsuccessful!');

@@ -1,4 +1,9 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Inject,
+	OnDestroy,
+} from '@angular/core';
 import { Store } from 'app/services/store.service';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { DOCUMENT } from '@angular/common';
@@ -9,6 +14,7 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { MenuController } from '@ionic/angular/lazy';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-menu',
 	templateUrl: './menu.component.html',

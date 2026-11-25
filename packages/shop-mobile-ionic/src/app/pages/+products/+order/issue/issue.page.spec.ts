@@ -1,38 +1,38 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { ModalController, NavController, NavParams } from '@ionic/angular/lazy';
-import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { Store } from 'app/services/store.service';
 import { IssuePage } from './issue.page';
+import { createSpyObj } from 'app/testing/spies';
+import { translateTesting } from 'app/testing/translate';
 
 describe('IssuePage', () => {
 	let component: IssuePage;
 	let fixture: ComponentFixture<IssuePage>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
+	beforeEach(async () => {
+			await TestBed.configureTestingModule({
 				declarations: [IssuePage],
-				imports: [TranslateModule.forRoot()],
+				imports: [...translateTesting()],
 				providers: [
 					{
 						provide: NavParams,
-						useValue: jasmine.createSpyObj('NavParams', {
+						useValue: createSpyObj('NavParams', {
 							get: undefined,
 						}),
 					},
 					{
 						provide: OrderRouter,
-						useValue: jasmine.createSpyObj('OrderRouter', [
+						useValue: createSpyObj('OrderRouter', [
 							'refundWithStripe',
 						]),
 					},
 					{
 						provide: WarehouseOrdersRouter,
-						useValue: jasmine.createSpyObj(
+						useValue: createSpyObj(
 							'WarehouseOrdersRouter',
 							['cancel']
 						),
@@ -40,25 +40,24 @@ describe('IssuePage', () => {
 					{ provide: Store, useValue: {} },
 					{
 						provide: Router,
-						useValue: jasmine.createSpyObj('Router', ['navigate']),
+						useValue: createSpyObj('Router', ['navigate']),
 					},
 					{
 						provide: NavController,
-						useValue: jasmine.createSpyObj('NavController', [
+						useValue: createSpyObj('NavController', [
 							'navigateRoot',
 						]),
 					},
 					{
 						provide: ModalController,
-						useValue: jasmine.createSpyObj('ModalController', [
+						useValue: createSpyObj('ModalController', [
 							'dismiss',
 						]),
 					},
 				],
 				schemas: [CUSTOM_ELEMENTS_SCHEMA],
 			}).compileComponents();
-		})
-	);
+	});
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(IssuePage);

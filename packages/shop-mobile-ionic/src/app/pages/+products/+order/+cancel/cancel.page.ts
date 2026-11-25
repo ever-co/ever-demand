@@ -1,4 +1,9 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	OnInit,
+	EventEmitter,
+} from '@angular/core';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import {
@@ -15,6 +20,7 @@ import DeliveryType from '@modules/server.common/enums/DeliveryType';
 import { OrderTakeawayInfoPopup } from '../takeaway/popup/popup.component';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-cancel',
 	templateUrl: './cancel.page.html',

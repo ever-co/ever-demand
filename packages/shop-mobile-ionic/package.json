@@ -81,6 +81,7 @@
 		"socket.io-client": "^4.8.4",
 		"swiper": "^14.4.0",
 		"tslib": "^2.9.1",
+		"underscore": "^1.13.8",
 		"uuid": "^14.0.3",
 		"zone.js": "^0.16.3"
 	},

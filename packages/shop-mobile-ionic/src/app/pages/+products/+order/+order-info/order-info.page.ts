@@ -1,4 +1,5 @@
 import {
+	ChangeDetectionStrategy,
 	Component,
 	OnInit,
 	ViewChild,
@@ -24,6 +25,7 @@ import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseSta
 import { OrderInfoModalComponent } from '../common/order-info-modal/order-info-modal.component';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-order-info',
 	templateUrl: './order-info.page.html',

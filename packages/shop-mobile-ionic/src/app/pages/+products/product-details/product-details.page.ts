@@ -1,4 +1,5 @@
 import {
+	ChangeDetectionStrategy,
 	Component,
 	ElementRef,
 	OnDestroy,
@@ -31,6 +32,7 @@ import { takeUntil, first } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-product-details',
 	templateUrl: './product-details.page.html',

@@ -1,4 +1,8 @@
-import { Component, OnDestroy } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	OnDestroy,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import Order from '@modules/server.common/entities/Order';
@@ -7,6 +11,7 @@ import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { OrderDetailsQuery } from './order-details.model';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	templateUrl: 'order-details.page.html',
 	styleUrls: ['./order-details.page.scss'],

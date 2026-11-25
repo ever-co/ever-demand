@@ -1,8 +1,14 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	OnInit,
+	OnDestroy,
+} from '@angular/core';
 import { ModalController } from '@ionic/angular/lazy';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	templateUrl: './map-modal.component.html',
 	styleUrls: ['./map-modal.component.scss'],

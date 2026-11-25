@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+} from '@angular/core';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { Subscription } from 'rxjs';
 import { Platform } from '@ionic/angular/lazy';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'e-cu-privacy',
 	templateUrl: './privacy.page.html',
