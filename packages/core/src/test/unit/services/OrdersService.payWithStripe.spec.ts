@@ -707,6 +707,247 @@ describe('OrdersService.payWithStripe', () => {
 		});
 	});
 
+	describe('when the charge or the paid write fails while the order is cancelled', () => {
+		// Stripe made the charge, but the connection dropped before its answer
+		const connectionError = Object.assign(
+			new Error('An error occurred with our connection to Stripe.'),
+			{ type: 'StripeConnectionError' }
+		);
+
+		beforeEach(() => {
+			// The lookup before the charge finds no earlier charge
+			mockChargesList.mockResolvedValueOnce(chargeList([]));
+		});
+
+		it('refunds the lost charge once and stores its id when the charge answer is lost', async () => {
+			// The customer on another device, or an admin, cancels the order
+			// while Stripe is charging: that cancel finds no charge yet.
+			mockChargesCreate.mockImplementation(async () => {
+				stored.isCancelled = true;
+				mockChargesList.mockResolvedValue(
+					chargeList([
+						listedCharge({ id: 'ch_lost', orderId: ORDER_ID }),
+					])
+				);
+
+				throw connectionError;
+			});
+
+			// The caller sees the same error as without the refund
+			await expect(
+				service.payWithStripe(ORDER_ID, 'card_1')
+			).rejects.toBe(connectionError);
+
+			expect(mockChargesCreate).toHaveBeenCalledTimes(1);
+			expect(mockChargesList).toHaveBeenCalledTimes(2);
+			expect(stored.isCancelled).toBe(true);
+			expect(stored.isPaid).toBe(false);
+			expect(stored.stripeChargeId).toBe('ch_lost');
+			expect(mockRefundsCreate).toHaveBeenCalledTimes(1);
+			expect(mockRefundsCreate).toHaveBeenCalledWith(
+				{ charge: 'ch_lost' },
+				{ idempotencyKey: `refund-order-${ORDER_ID}-charge-ch_lost` }
+			);
+		});
+
+		it('refunds the charge once and stores its id when the paid write throws', async () => {
+			mockChargesCreate.mockImplementation(async () => {
+				mockChargesList.mockResolvedValue(
+					chargeList([
+						listedCharge({ id: 'ch_1', orderId: ORDER_ID }),
+					])
+				);
+
+				return { id: 'ch_1' };
+			});
+
+			// The cancel lands, then the paid write fails (e.g. a timeout)
+			const writeError = new Error('Database is unavailable');
+			model.findOneAndUpdate.mockImplementationOnce(() => ({
+				lean: () => ({
+					exec: async () => {
+						stored.isCancelled = true;
+
+						throw writeError;
+					},
+				}),
+			}));
+
+			await expect(
+				service.payWithStripe(ORDER_ID, 'card_1')
+			).rejects.toBe(writeError);
+
+			expect(mockChargesCreate).toHaveBeenCalledTimes(1);
+			expect(stored.isPaid).toBe(false);
+			expect(stored.stripeChargeId).toBe('ch_1');
+			expect(mockRefundsCreate).toHaveBeenCalledTimes(1);
+			expect(mockRefundsCreate).toHaveBeenCalledWith(
+				{ charge: 'ch_1' },
+				{ idempotencyKey: `refund-order-${ORDER_ID}-charge-ch_1` }
+			);
+		});
+
+		it('looks for a lost charge after a card decline, finds none and refunds nothing', async () => {
+			const cardError = Object.assign(
+				new Error('Your card was declined.'),
+				{ type: 'StripeCardError', code: 'card_declined' }
+			);
+
+			mockChargesCreate.mockImplementation(async () => {
+				stored.isCancelled = true;
+				// Stripe lists the declined charge as failed
+				mockChargesList.mockResolvedValue(
+					chargeList([
+						listedCharge({
+							id: 'ch_declined',
+							orderId: ORDER_ID,
+							status: 'failed',
+						}),
+					])
+				);
+
+				throw cardError;
+			});
+
+			await expect(
+				service.payWithStripe(ORDER_ID, 'card_1')
+			).rejects.toBe(cardError);
+
+			// The lookup before the charge, and the one after the decline
+			expect(mockChargesList).toHaveBeenCalledTimes(2);
+			expect(mockRefundsCreate).not.toHaveBeenCalled();
+			expect(stored.isPaid).toBe(false);
+			expect(stored.stripeChargeId).toBeUndefined();
+			expect(model.findOneAndUpdate).not.toHaveBeenCalled();
+		});
+
+		it('logs a failed read of the order and still rejects with the charge error', async () => {
+			mockChargesCreate.mockImplementation(async () => {
+				stored.isCancelled = true;
+
+				throw connectionError;
+			});
+
+			const readError = new Error('Database is unavailable');
+			(service as any).getCurrent.mockRejectedValue(readError);
+
+			await expect(
+				service.payWithStripe(ORDER_ID, 'card_1')
+			).rejects.toBe(connectionError);
+
+			expect(mockLog.error).toHaveBeenCalledWith(
+				expect.objectContaining({ orderId: ORDER_ID, err: readError }),
+				expect.any(String)
+			);
+			expect(mockRefundsCreate).not.toHaveBeenCalled();
+			expect(stored.isPaid).toBe(false);
+		});
+
+		it('leaves an order that is not cancelled alone, so a retry can pay with its charge', async () => {
+			mockChargesCreate.mockImplementation(async () => {
+				mockChargesList.mockResolvedValue(
+					chargeList([
+						listedCharge({ id: 'ch_lost', orderId: ORDER_ID }),
+					])
+				);
+
+				throw connectionError;
+			});
+
+			await expect(
+				service.payWithStripe(ORDER_ID, 'card_1')
+			).rejects.toBe(connectionError);
+
+			// Only the lookup before the charge
+			expect(mockChargesList).toHaveBeenCalledTimes(1);
+			expect(mockRefundsCreate).not.toHaveBeenCalled();
+			expect(stored.isCancelled).toBe(false);
+			expect(stored.isPaid).toBe(false);
+			expect(stored.stripeChargeId).toBeUndefined();
+		});
+
+		it.each([
+			['cancelled since', true],
+			['not cancelled', false],
+		])(
+			'refunds the lost charge and keeps the paid one when another card paid the order meanwhile (%s)',
+			async (_label, isCancelled) => {
+				mockChargesCreate.mockImplementation(async () => {
+					// A call with another card paid the order while Stripe
+					// was charging this card
+					Object.assign(stored, {
+						isPaid: true,
+						stripeChargeId: 'ch_1',
+						isCancelled,
+					});
+					mockChargesList.mockResolvedValue(
+						chargeList([
+							listedCharge({ id: 'ch_lost', orderId: ORDER_ID }),
+							listedCharge({ id: 'ch_1', orderId: ORDER_ID }),
+						])
+					);
+
+					throw connectionError;
+				});
+
+				await expect(
+					service.payWithStripe(ORDER_ID, 'card_2')
+				).rejects.toBe(connectionError);
+
+				expect(mockChargesList).toHaveBeenCalledTimes(2);
+				expect(stored.isPaid).toBe(true);
+				expect(stored.stripeChargeId).toBe('ch_1');
+				expect(model.findOneAndUpdate).not.toHaveBeenCalled();
+				expect(update).not.toHaveBeenCalled();
+				expect(mockRefundsCreate).toHaveBeenCalledTimes(1);
+				expect(mockRefundsCreate).toHaveBeenCalledWith(
+					{ charge: 'ch_lost' },
+					{
+						idempotencyKey: `refund-order-${ORDER_ID}-charge-ch_lost`,
+					}
+				);
+			}
+		);
+
+		it('never refunds the charge the order is paid with when the paid write applied but threw', async () => {
+			mockChargesCreate.mockImplementation(async () => {
+				mockChargesList.mockResolvedValue(
+					chargeList([
+						listedCharge({ id: 'ch_1', orderId: ORDER_ID }),
+					])
+				);
+
+				return { id: 'ch_1' };
+			});
+
+			// The write reached the database, but its answer was lost
+			const writeError = new Error(
+				'Connection to the database was reset'
+			);
+			model.findOneAndUpdate.mockImplementationOnce(() => ({
+				lean: () => ({
+					exec: async () => {
+						Object.assign(stored, {
+							isPaid: true,
+							stripeChargeId: 'ch_1',
+						});
+
+						throw writeError;
+					},
+				}),
+			}));
+
+			await expect(
+				service.payWithStripe(ORDER_ID, 'card_1')
+			).rejects.toBe(writeError);
+
+			expect(mockChargesList).toHaveBeenCalledTimes(2);
+			expect(stored.isPaid).toBe(true);
+			expect(stored.stripeChargeId).toBe('ch_1');
+			expect(mockRefundsCreate).not.toHaveBeenCalled();
+		});
+	});
+
 	describe('when two calls pay the order at once', () => {
 		// Charges in the order the calls asked for them; each one resolves only
 		// when the test says so.
