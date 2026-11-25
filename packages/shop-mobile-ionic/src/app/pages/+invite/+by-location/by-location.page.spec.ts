@@ -1,6 +1,12 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+	fakeAsync,
+	tick,
+	waitForAsync,
+	ComponentFixture,
+	TestBed,
+} from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { GeoLocationRouter } from '@modules/client.common.angular2/routers/geo-location-router.service';
@@ -50,15 +56,11 @@ describe('ByLocationPage', () => {
 							'create',
 						]),
 					},
-					// ngOnInit looks the address up after 50 ms. The lookup never
-					// answers, so it does not run into a later spec.
 					{
 						provide: GeoLocationRouter,
-						useValue: jasmine.createSpyObj('GeoLocationRouter', {
-							getAddressByCoordinatesUsingArcGIS: new Promise(
-								() => {}
-							),
-						}),
+						useValue: jasmine.createSpyObj('GeoLocationRouter', [
+							'getAddressByCoordinatesUsingArcGIS',
+						]),
 					},
 				],
 				schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -66,13 +68,18 @@ describe('ByLocationPage', () => {
 		})
 	);
 
-	beforeEach(() => {
+	beforeEach(fakeAsync(() => {
 		fixture = TestBed.createComponent(ByLocationPage);
 		component = fixture.componentInstance;
+		// No device location, so the spec never asks the browser for one.
+		spyOn<any>(component, 'getCoordinates').and.resolveTo(null);
 		fixture.detectChanges();
-	});
+		// ngOnInit looks the location up after 50 ms: finish it in this spec.
+		tick(50);
+	}));
 
 	it('should create', () => {
 		expect(component).toBeTruthy();
+		expect(component.detectingLocation).toBe(false);
 	});
 });
