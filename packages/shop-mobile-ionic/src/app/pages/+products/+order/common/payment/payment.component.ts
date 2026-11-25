@@ -151,8 +151,15 @@ export class PaymentComponent {
 							console.error('Payment Failed!', err);
 						}
 					} catch (err) {
+						alert('Payment Failed!');
 						console.error('Payment Method creation failed!', err);
 					}
+				} catch (err) {
+					// updateEmail fails when the email typed in Checkout
+					// belongs to another customer. Tell the customer here,
+					// because a rejection would escape the Stripe callback.
+					alert('Payment Failed!');
+					console.error('Email update failed!', err);
 				} finally {
 					this.paying = false;
 					this.store.stopPaying(orderId);

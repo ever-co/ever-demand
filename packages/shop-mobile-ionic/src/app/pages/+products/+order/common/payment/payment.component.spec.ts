@@ -213,10 +213,29 @@ describe('PaymentComponent new-card payment', () => {
 		expect(component.paying).toBe(true);
 
 		emailUpdate.reject(new Error('network down'));
-		await done.catch(() => undefined);
+		await done;
 
 		expect(userRouter.addPaymentMethod).not.toHaveBeenCalled();
 		expect(component.paying).toBe(false);
+	});
+
+	it('tells the customer and clears the guard when the email update fails', async () => {
+		// The email typed in Checkout belongs to another customer, so
+		// updateEmail fails on the unique email index.
+		const error = new Error('E11000 duplicate key error: email');
+		userRouter.updateEmail.and.rejectWith(error);
+
+		await component.toPaymentStage();
+		await expectAsync(
+			tokenHandlers[0](cardToken('tok_first'))
+		).toBeResolved();
+
+		expect(window.alert).toHaveBeenCalledOnceWith('Payment Failed!');
+		expect(console.error).toHaveBeenCalledWith(jasmine.any(String), error);
+		expect(userRouter.addPaymentMethod).not.toHaveBeenCalled();
+		expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
+		expect(component.paying).toBe(false);
+		expect(TestBed.inject(Store).isPaying('order-1')).toBe(false);
 	});
 
 	it('keeps paying set until payWithStripe and confirm finish, then resets it', async () => {
@@ -279,6 +298,22 @@ describe('PaymentComponent new-card payment', () => {
 
 		expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
 		expect(component.paying).toBe(false);
+	});
+
+	it('tells the customer when saving the new card fails', async () => {
+		const error = new Error('card_declined');
+		userRouter.addPaymentMethod.and.rejectWith(error);
+
+		await component.toPaymentStage();
+		await expectAsync(
+			tokenHandlers[0](cardToken('tok_first'))
+		).toBeResolved();
+
+		expect(window.alert).toHaveBeenCalledOnceWith('Payment Failed!');
+		expect(console.error).toHaveBeenCalledWith(jasmine.any(String), error);
+		expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
+		expect(component.paying).toBe(false);
+		expect(TestBed.inject(Store).isPaying('order-1')).toBe(false);
 	});
 
 	it('disables the Pay now button while a payment is in flight', () => {
@@ -424,7 +459,7 @@ describe('PaymentComponent new-card payment', () => {
 			expect(configure).toHaveBeenCalledTimes(1);
 
 			emailUpdate.reject(new Error('network down'));
-			await first.catch(() => undefined);
+			await first;
 
 			expect(second.paying).toBe(false);
 
