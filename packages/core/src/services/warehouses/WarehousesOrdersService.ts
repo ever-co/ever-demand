@@ -1,7 +1,6 @@
 import Logger from 'bunyan';
-import { inject, injectable, LazyServiceIdentifer } from 'inversify';
-import moment from 'moment';
-import Bluebird from 'bluebird';
+import { inject, injectable, LazyServiceIdentifier } from 'inversify';
+import { startOfDay } from 'date-fns';
 import { createEverLogger } from '../../helpers/Log';
 import OrderProduct from '@modules/server.common/entities/OrderProduct';
 import Order from '@modules/server.common/entities/Order';
@@ -57,15 +56,15 @@ export class WarehousesOrdersService
 	});
 
 	constructor(
-		@inject(new LazyServiceIdentifer(() => WarehousesService))
+		@inject(new LazyServiceIdentifier(() => WarehousesService))
 		protected warehousesService: WarehousesService,
-		@inject(new LazyServiceIdentifer(() => ProductsService))
+		@inject(new LazyServiceIdentifier(() => ProductsService))
 		protected productsService: ProductsService,
-		@inject(new LazyServiceIdentifer(() => WarehousesProductsService))
+		@inject(new LazyServiceIdentifier(() => WarehousesProductsService))
 		protected warehousesProductsService: WarehousesProductsService,
-		@inject(new LazyServiceIdentifer(() => OrdersService))
+		@inject(new LazyServiceIdentifier(() => OrdersService))
 		protected ordersService: OrdersService,
-		@inject(new LazyServiceIdentifer(() => UsersService))
+		@inject(new LazyServiceIdentifier(() => UsersService))
 		protected usersService: UsersService
 	) {}
 
@@ -162,7 +161,7 @@ export class WarehousesOrdersService
 			warehouse: warehouseId,
 			isDeleted: { $eq: false },
 			_createdAt: {
-				$gte: (<any>moment)().startOf('day').toDate(),
+				$gte: startOfDay(new Date()),
 			},
 		})
 			.select('orderNumber')
@@ -438,9 +437,7 @@ export class WarehousesOrdersService
 		);
 
 		// revert order sold count
-		await (<any>Bluebird).map(
-			order.products,
-			async (orderProduct: OrderProduct) => {
+		await Promise.all(order.products.map(async (orderProduct: OrderProduct) => {
 				const productId = orderProduct.product.id;
 
 				await this.warehousesProductsService.decreaseSoldCount(
@@ -449,7 +446,7 @@ export class WarehousesOrdersService
 					orderProduct.count
 				);
 			}
-		);
+		));
 
 		this.log.info(
 			{
@@ -649,9 +646,7 @@ export class WarehousesOrdersService
 	}
 
 	private async _updateProductCount(order, warehouseId) {
-		await (<any>Bluebird).map(
-			order.products,
-			async (orderProduct: OrderProduct) => {
+		await Promise.all(order.products.map(async (orderProduct: OrderProduct) => {
 				const productId = orderProduct.product.id;
 
 				this.log.info(
@@ -684,7 +679,7 @@ export class WarehousesOrdersService
 					'Order create remove products call succeed'
 				);
 			}
-		);
+		));
 	}
 }
 

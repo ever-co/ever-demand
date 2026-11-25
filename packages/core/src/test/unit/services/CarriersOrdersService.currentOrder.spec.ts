@@ -21,7 +21,7 @@ jest.mock('../../../env', () => ({
 jest.mock('../../../helpers/Log', () => ({
 	createEverLogger: () => ({ info: jest.fn(), error: jest.fn() }),
 }));
-jest.mock('stripe', () => ({ Stripe: jest.fn() }));
+jest.mock('stripe', () => ({ __esModule: true, default: jest.fn() }));
 jest.mock('../../../services/warehouses', () => ({
 	WarehousesService: class {},
 	WarehousesProductsService: class {},

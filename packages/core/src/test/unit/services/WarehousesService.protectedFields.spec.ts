@@ -141,4 +141,29 @@ describe('WarehousesService.save protected fields', () => {
 		expect(updateObject.isActive).toBe(true);
 		expect(updateObject.contactEmail).toBe('store@example.com');
 	});
+
+	it('writes the products as refs (product ids), also when they were read populated', async () => {
+		const productId = '5c4f1b3e2d4a1b0012345699';
+		const populated = serialized({
+			name: 'Store',
+			products: [
+				{
+					_id: '5c4f1b3e2d4a1b00123456aa',
+					price: 10,
+					initialPrice: 12,
+					count: 3,
+					product: { _id: productId, title: [], images: [] },
+				},
+			],
+		});
+
+		await service.save(populated, storeToken);
+
+		const written = sentToUpdate().products;
+		expect(written).toHaveLength(1);
+		expect(written[0].product).toBe(productId);
+		expect(written[0].count).toBe(3);
+		// the caller's entity keeps its populated product
+		expect(typeof populated.products[0].product).toBe('object');
+	});
 });

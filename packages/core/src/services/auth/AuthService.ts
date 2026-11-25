@@ -3,7 +3,7 @@ import { DBCreateObject, DBObject, DBRawObject, PyroObjectId } from '@pyro/db';
 import { env } from '../../env';
 import { WrongPasswordError } from '@modules/server.common/errors/WrongPasswordError';
 import bcrypt from 'bcrypt';
-import { injectable, interfaces } from 'inversify';
+import { injectable, ResolutionContext } from 'inversify';
 import { RawObject } from '@pyro/db/db-raw-object';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 
@@ -181,10 +181,10 @@ export type AuthServiceFactory = <T extends IAuthable>(
 ) => AuthService<T>;
 
 export const authServiceFactory = (
-	context: interfaces.Context
+	context: ResolutionContext
 ): AuthServiceFactory => {
 	return <T extends IAuthable>(config: AuthServiceConfig<T>) => {
-		const authService = context.container.get<AuthService<T>>(AuthService);
+		const authService = context.get<AuthService<T>>(AuthService);
 		authService.setConfig(config);
 		return authService;
 	};

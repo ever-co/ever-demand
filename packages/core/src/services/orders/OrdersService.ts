@@ -1,6 +1,5 @@
 import Logger from 'bunyan';
-import Bluebird from 'bluebird';
-import { inject, injectable, LazyServiceIdentifer } from 'inversify';
+import { inject, injectable, LazyServiceIdentifier } from 'inversify';
 import { env } from '../../env';
 import { WarehousesService, WarehousesProductsService } from '../warehouses';
 import { assertValidOrderProductCounts } from '../warehouses/orderProductCount';
@@ -38,7 +37,8 @@ import OrderStatus from '@modules/server.common/enums/OrderStatus';
 import User from '@modules/server.common/entities/User';
 import { ProductsService } from '../../services/products';
 import { Observable } from 'rxjs';
-import { Stripe } from 'stripe'
+import Stripe from 'stripe';
+import { createStripeClient } from '../../helpers/stripe';
 import {
 	assertCarrierStatusTransition,
 	assertOrderCanBeCancelled,
@@ -78,9 +78,14 @@ export class OrdersService extends DBService<Order>
 	public readonly DBObject: any = Order;
 
 	// TODO: this and other Stripe related things should be inside separate Payments Service
-	private stripe: Stripe = new Stripe(env.STRIPE_SECRET_KEY, {
-		apiVersion: "2020-08-27"
-	});
+	private _stripe?: Stripe;
+
+	// Created on first use: Stripe refuses an empty key, and the API must
+	// still start without STRIPE_SECRET_KEY (card payments then fail).
+	private get stripe(): Stripe {
+		this._stripe ??= createStripeClient(env.STRIPE_SECRET_KEY);
+		return this._stripe;
+	}
 
 	protected readonly log: Logger = createEverLogger({
 		name: 'ordersService',
@@ -89,17 +94,17 @@ export class OrdersService extends DBService<Order>
 	static readonly FindObjects = orderCompletionFilters;
 
 	constructor(
-		@inject(new LazyServiceIdentifer(() => WarehousesService))
+		@inject(new LazyServiceIdentifier(() => WarehousesService))
 		protected warehousesService: WarehousesService,
-		@inject(new LazyServiceIdentifer(() => UsersService))
+		@inject(new LazyServiceIdentifier(() => UsersService))
 		protected usersService: UsersService,
-		@inject(new LazyServiceIdentifer(() => CarriersService))
+		@inject(new LazyServiceIdentifier(() => CarriersService))
 		protected carriersService: CarriersService,
-		@inject(new LazyServiceIdentifer(() => WarehousesProductsService))
+		@inject(new LazyServiceIdentifier(() => WarehousesProductsService))
 		protected warehousesProductsService: WarehousesProductsService,
-		@inject(new LazyServiceIdentifer(() => WarehousesService))
+		@inject(new LazyServiceIdentifier(() => WarehousesService))
 		protected _storesService: WarehousesService,
-		@inject(new LazyServiceIdentifer(() => ProductsService))
+		@inject(new LazyServiceIdentifier(() => ProductsService))
 		protected _productsService: ProductsService
 	) {
 		super();
@@ -1087,7 +1092,7 @@ export class OrdersService extends DBService<Order>
 		);
 
 		// revert order sold count
-		await (<any>Bluebird).map(removedProducts, async (orderProduct) => {
+		await Promise.all(removedProducts.map(async (orderProduct) => {
 			const productId = orderProduct.product.id;
 
 			await this.warehousesProductsService.decreaseSoldCount(
@@ -1101,7 +1106,7 @@ export class OrdersService extends DBService<Order>
 				productId,
 				orderProduct.count
 			);
-		});
+		}));
 
 		return this.update(orderId, {
 			products: newProducts,

@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { routerName } from '@pyro/io';
 import { DBService } from '@pyro/db-server';
-import IService from 'services/IService';
+import IService from '../IService';
 import Promotion from '@modules/server.common/entities/Promotion';
 import { createEverLogger } from '../../helpers/Log';
 import Logger from 'bunyan';

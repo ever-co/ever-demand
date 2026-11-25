@@ -1,7 +1,7 @@
 import { ExtractJwt } from 'passport-jwt';
 import jwt from 'jsonwebtoken';
 import { first } from 'rxjs/operators';
-import { inject, injectable, LazyServiceIdentifer } from 'inversify';
+import { inject, injectable, LazyServiceIdentifier } from 'inversify';
 import { routerName } from '@pyro/io';
 import { WarehousesService } from '../warehouses';
 import { CarriersService } from '../carriers';
@@ -39,9 +39,9 @@ export function createToken(id: string, appName: string) {
 @routerName('auth')
 export class AuthenticationService {
 	constructor(
-		@inject(new LazyServiceIdentifer(() => WarehousesService))
+		@inject(new LazyServiceIdentifier(() => WarehousesService))
 		protected warehousesService: WarehousesService,
-		@inject(new LazyServiceIdentifer(() => CarriersService))
+		@inject(new LazyServiceIdentifier(() => CarriersService))
 		protected carriersService: CarriersService
 	) {}
 

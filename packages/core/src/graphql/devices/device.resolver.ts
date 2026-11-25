@@ -83,10 +83,10 @@ export class DeviceResolver {
 		return this._devicesService.removeMultipleByIds(devicesIds);
 	}
 
+	// Published by updateDevice. Nest uses the returned async iterator as the
+	// event stream of the subscription.
 	@Subscription() // TODO rename to deviceUpdated
 	deviceCreated() {
-		return {
-			subscribe: () => pubSub.asyncIterator('deviceCreated'),
-		};
+		return pubSub.asyncIterableIterator('deviceCreated');
 	}
 }

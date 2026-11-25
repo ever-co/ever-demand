@@ -24,7 +24,7 @@ import {
 	IProductDetails,
 } from '@modules/server.common/interfaces/IProduct';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
-import { IGetGeoLocationProductsOptions } from 'graphql/geo-locations/geo-location.resolver';
+import type { IGetGeoLocationProductsOptions } from '../../graphql/geo-locations/geo-location.resolver';
 import IWarehouseProduct from '@modules/server.common/interfaces/IWarehouseProduct';
 
 @injectable()
@@ -171,7 +171,6 @@ export class GeoLocationsProductsService
 			.groupBy((productInfo) => productInfo.warehouseProduct.productId)
 			.filter((productInfo) => !_.isUndefined(productInfo))
 			.map((productInfos: ProductInfo[]) => sortBy(productInfos, 'distance'))
-			.map((productInfo) => productInfo as ProductInfo)
 			.flatten()
 			.value();
 	}

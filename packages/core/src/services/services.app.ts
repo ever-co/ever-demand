@@ -4,16 +4,15 @@ import https from 'https';
 import http from 'http';
 import path from 'path';
 import pem from 'pem';
-import bodyParser from 'body-parser';
 import cors from 'cors';
 import passport from 'passport';
 import methodOverride from 'method-override';
 import errorhandler from 'errorhandler';
-import socketIO from 'socket.io';
+import { Server as SocketIOServer } from 'socket.io';
 import express from 'express';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
-import exphbs from 'express-handlebars';
+import { create as createHandlebars } from 'express-handlebars';
 import { createEverLogger } from '../helpers/Log';
 import IService, { ServiceSymbol } from './IService';
 import { IRoutersManager } from '@pyro/io';
@@ -21,27 +20,20 @@ import { WarehousesService } from './warehouses';
 import { SocialStrategiesService } from './users';
 import { env } from '../env';
 import { getModel } from '@pyro/db-server';
-import Bluebird from 'bluebird';
 import { AdminsService } from './admins';
 import ipstack = require('ipstack');
 import requestIp = require('request-ip');
-import { ConnectionOptions, createConnection } from 'typeorm';
 import { IWarehouseCreateObject } from '@modules/server.common/interfaces/IWarehouse';
 import { getDummyImage } from '@modules/server.common/utils';
-import Admin from '@modules/server.common/entities/Admin';
-import Device from '@modules/server.common/entities/Device';
-import Carrier from '@modules/server.common/entities/Carrier';
-import Invite from '@modules/server.common/entities/Invite';
-import InviteRequest from '@modules/server.common/entities/InviteRequest';
-import Order from '@modules/server.common/entities/Order';
-import Product from '@modules/server.common/entities/Product';
-import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
-import User from '@modules/server.common/entities/User';
-import Warehouse from '@modules/server.common/entities/Warehouse';
-import Promotion from '@modules/server.common/entities/Promotion';
 import { ConfigService } from '../config/config.service';
+import {
+	getTypeORMEntities,
+	initTypeORMDataSource,
+	isDbSsl,
+	writeDbCaCert,
+} from '../helpers/typeorm';
 
-const conf = require('dotenv').config();
+require('dotenv').config({ quiet: true });
 
 // local IPs
 const INTERNAL_IPS = ['127.0.0.1', '::1'];
@@ -98,124 +90,62 @@ export class ServicesApp {
 	}
 
 	static getEntities() {
-		const entities = [
-			Admin,
-			Carrier,
-			Device,
-			Invite,
-			InviteRequest,
-			Order,
-			Product,
-			ProductsCategory,
-			User,
-			Warehouse,
-			Promotion,
-		];
-		return entities;
+		return getTypeORMEntities();
 	}
 
+	/**
+	 * Creates the TypeORM connection our repositories use (see
+	 * helpers/typeorm.ts). NestJS creates its own one in app.module.ts.
+	 */
 	static async CreateTypeORMConnection() {
-
 		console.log('Creating TypeORM Connection...');
 
 		const typeORMLog = createEverLogger({ name: 'TypeORM' });
 
-		// list of entities for which Repositories will be created in TypeORM
-		const entities = ServicesApp.getEntities();
-
-		const isSSL = process.env.DB_SSL_MODE && process.env.DB_SSL_MODE !== 'false';
-
-		// let's temporary save Cert in ./tmp/logs folder because we have write access to it
-		let sslCertPath = `${env.LOGS_PATH}/ca-certificate.crt`;
-
-		console.log(`Using temp SSL Cert Path: ${sslCertPath}`);
-
-        if (isSSL) {
-			const base64data = process.env.DB_CA_CERT;
-			const buff = Buffer.from(base64data, 'base64');
-			const sslCert = buff.toString('ascii');
-			fs.writeFileSync(sslCertPath, sslCert);
-		}
-
-		// This is special connection we create during "bootstrap" of the system that is needed for our Repositories to use
-		// We also using another "default" connection defined in app.module.ts
-		// using `TypeOrmModule.forRoot(connectionSettings)` which will be used in other places.
-		const connectionSettings: ConnectionOptions =
-			{
-				// Note: do not change this connection name
-				name: 'typeorm',
-				// TODO: put this into settings (it's mongo only during testing of TypeORM integration!)
-				type: 'mongodb',
-				url: env.DB_URI,
-				ssl: isSSL,
-				sslCA: isSSL ? [sslCertPath] : undefined,
-				host: process.env.DB_HOST || 'localhost',
-				username: process.env.DB_USER,
-          		password: process.env.DB_PASS,
-          		database: process.env.DB_NAME || 'ever_development',
-				port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 27017,
-				entities,
-				synchronize: true,
-				useNewUrlParser: true,
-				// autoReconnect: true,
-				// reconnectTries: Number.MAX_VALUE,
-				// poolSize: ServicesApp._poolSize,
-				connectTimeoutMS: ServicesApp._connectTimeoutMS,
-				logging: true,
-				logger: 'file', // Removes console logging, instead logs all queries in a file ormlogs.log
-				useUnifiedTopology: true,
-			};
-
-		const conn = await createConnection(connectionSettings);
+		const dataSource = await initTypeORMDataSource();
 
 		console.log(
-			`TypeORM DB connection created. DB connected: ${conn.isConnected}`
+			`TypeORM DB connection created. DB connected: ${dataSource.isInitialized}`
 		);
 
 		typeORMLog.info(
-			`TypeORM DB connection created. DB connected: ${conn.isConnected}`
+			`TypeORM DB connection created. DB connected: ${dataSource.isInitialized}`
 		);
 
-		return conn;
+		return dataSource;
 	}
 
-	private _gracefulExit() {
+	private _gracefulExit = async () => {
 		try {
 			if (this.db != null) {
-				this.db.close(() => {
-					this.log.info(
-						'Mongoose default connection with DB :' +
-							this.db_server +
-							' is disconnected through app termination'
-					);
-					process.exit(0);
-				});
+				await this.db.close();
+				this.log.info(
+					'Mongoose default connection with DB :' +
+						this.db_server +
+						' is disconnected through app termination'
+				);
 			}
 		} catch (err) {
-			process.exit(0);
+			// exit anyway
 		}
-	}
+		process.exit(0);
+	};
 
 	private async _connectDB() {
 		try {
 
-			const isSSL = process.env.DB_SSL_MODE && process.env.DB_SSL_MODE !== 'false';
+			const isSSL = isDbSsl();
 
-			// let's temporary save Cert in ./tmp/logs folder because we have write access to it
-			let sslCertPath = `${env.LOGS_PATH}/ca-certificate.crt`;
+			// the CA Cert is saved temporary in the logs folder because we have write access to it
+			const sslCertPath = isSSL ? writeDbCaCert() : undefined;
 
-			console.log(`Using temp SSL Cert Path: ${sslCertPath}`);
-
-        	if (isSSL) {
-				const base64data = process.env.DB_CA_CERT;
-				const buff = Buffer.from(base64data, 'base64');
-				const sslCert = buff.toString('ascii');
-				fs.writeFileSync(sslCertPath, sslCert);
+			if (sslCertPath) {
+				console.log(`Using temp SSL Cert Path: ${sslCertPath}`);
 			}
 
 			const connectionOptions: mongoose.ConnectOptions = {
-				ssl: isSSL,
-				sslCA: isSSL ? sslCertPath : undefined,
+				tls: isSSL,
+				tlsCAFile: sslCertPath,
 				user: process.env.DB_USER,
           		pass: process.env.DB_PASS,
           		dbName: process.env.DB_NAME || 'ever_development',
@@ -343,7 +273,7 @@ export class ServicesApp {
 	}
 
 	private async _registerModels() {
-		await (<any>Bluebird).map(this.services, async (service) => {
+		await Promise.all(this.services.map(async (service) => {
 			const obj = (service as any).DBObject;
 
 			if (obj != null) {
@@ -356,13 +286,13 @@ export class ServicesApp {
 					await model.createIndexes();
 				}
 			}
-		});
+		}));
 	}
 
 	private async _startExpress() {
 		this.expressApp = (<any>express)();
 
-		const hbs = exphbs.create({
+		const hbs = createHandlebars({
 			extname: '.hbs',
 			defaultLayout: 'main',
 			layoutsDir: path.join('res', 'views', 'layouts'),
@@ -431,11 +361,9 @@ export class ServicesApp {
 			})
 		);
 
-		this.expressApp.use(bodyParser.urlencoded({ extended: false }));
-		this.expressApp.use(bodyParser.json());
-		this.expressApp.use(
-			bodyParser.json({ type: 'application/vnd.api+json' })
-		);
+		this.expressApp.use(express.urlencoded({ extended: false }));
+		this.expressApp.use(express.json());
+		this.expressApp.use(express.json({ type: 'application/vnd.api+json' }));
 
 		const mo: any = methodOverride;
 
@@ -508,8 +436,6 @@ export class ServicesApp {
 				httpsPort,
 				httpPort,
 				environment,
-				'process.env': process.env,
-				dotenv: conf,
 			},
 			'Express server prepare to listen'
 		);
@@ -614,11 +540,17 @@ export class ServicesApp {
 	}
 
 	private async _startSocketIO() {
-		const so: any = socketIO;
-		const ioHttps = so(this.httpsServer);
-		const ioHttp = so(this.httpServer);
+		// Same CORS policy as the express routes above: the apps run on other
+		// origins and socket.io (v3+) refuses cross-origin requests unless
+		// it is told otherwise.
+		const options = { cors: { origin: true, credentials: true } };
 
-		await this.routersManager.startListening(ioHttps);
+		if (this.httpsServer) {
+			const ioHttps = new SocketIOServer(this.httpsServer, options);
+			await this.routersManager.startListening(ioHttps);
+		}
+
+		const ioHttp = new SocketIOServer(this.httpServer, options);
 		await this.routersManager.startListening(ioHttp);
 	}
 
