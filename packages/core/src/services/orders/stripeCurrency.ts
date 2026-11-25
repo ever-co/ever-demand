@@ -1,7 +1,10 @@
 /**
- * Currency used for charges when the operator did not configure one.
- * Kept equal to the value that used to be hard-coded, so existing
- * installations charge exactly as before.
+ * Currency used for charges when the operator did not configure one: the
+ * value `OrdersService.payWithStripe` still uses.
+ *
+ * NOT wired into the charge yet. Before it is, the shop's card popup must
+ * show the same currency, and a retried charge (same idempotency key) must
+ * keep the currency of the first attempt.
  */
 export const DEFAULT_STRIPE_CURRENCY = 'ils';
 
@@ -18,6 +21,8 @@ const NON_TWO_DECIMAL_CURRENCIES: ReadonlySet<string> = new Set([
 	'clp',
 	'djf',
 	'gnf',
+	// charged in whole units: amounts must be divisible by 100
+	'isk',
 	'jpy',
 	'kmf',
 	'krw',

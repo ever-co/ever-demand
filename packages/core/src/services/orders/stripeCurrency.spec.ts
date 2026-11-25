@@ -28,7 +28,7 @@ describe('resolveStripeCurrency', () => {
 	});
 
 	it('rejects currencies the cents conversion would bill wrongly', () => {
-		for (const value of ['jpy', 'JPY', 'krw', 'vnd', 'kwd', 'bhd']) {
+		for (const value of ['jpy', 'JPY', 'krw', 'vnd', 'kwd', 'bhd', 'isk']) {
 			expect(() => resolveStripeCurrency(value)).toThrow(/not supported/);
 		}
 	});

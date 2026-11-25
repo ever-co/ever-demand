@@ -41,7 +41,6 @@ jest.mock('stripe', () => ({
 	})),
 }));
 
-import { env } from '../../../env';
 import { OrdersService } from '../../../services/orders/OrdersService';
 
 const ORDER_ID = '5f1a2b3c4d5e6f7a8b9c0d1e';
@@ -179,41 +178,6 @@ describe('OrdersService.payWithStripe', () => {
 			expect.objectContaining({ customer: 'cus_1', source: 'card_1' }),
 			{ idempotencyKey: `order-${ORDER_ID}-card-card_1` }
 		);
-	});
-
-	describe('charge currency', () => {
-		const mockedEnv = env as { STRIPE_CURRENCY?: string };
-
-		afterEach(() => {
-			delete mockedEnv.STRIPE_CURRENCY;
-		});
-
-		it('charges in ils when no currency is configured', async () => {
-			await service.payWithStripe(ORDER_ID, 'card_1');
-
-			expect(mockChargesCreate.mock.calls[0][0].currency).toBe('ils');
-		});
-
-		it('charges in the configured currency', async () => {
-			mockedEnv.STRIPE_CURRENCY = 'USD';
-
-			await service.payWithStripe(ORDER_ID, 'card_1');
-
-			expect(mockChargesCreate.mock.calls[0][0]).toEqual(
-				expect.objectContaining({ amount: 1999, currency: 'usd' })
-			);
-		});
-
-		it('rejects an unsupported currency before the card is charged', async () => {
-			mockedEnv.STRIPE_CURRENCY = 'jpy';
-
-			await expect(
-				service.payWithStripe(ORDER_ID, 'card_1')
-			).rejects.toThrow(/not supported/);
-
-			expect(mockChargesCreate).not.toHaveBeenCalled();
-			expect(stored.isPaid).toBe(false);
-		});
 	});
 
 	it('charges an unpaid order once and marks it paid only while it is not cancelled', async () => {
