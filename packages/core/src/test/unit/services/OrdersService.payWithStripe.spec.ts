@@ -31,12 +31,13 @@ jest.mock('../../../services/carriers/CarriersService', () => ({
 }));
 jest.mock('../../../services/products', () => ({ ProductsService: class {} }));
 
-// Fake payment provider: every `new Stripe()` shares these two calls.
+// Fake payment provider: every `new Stripe()` shares these calls.
 const mockChargesCreate = jest.fn();
+const mockChargesList = jest.fn();
 const mockRefundsCreate = jest.fn();
 jest.mock('stripe', () => ({
 	Stripe: jest.fn().mockImplementation(() => ({
-		charges: { create: mockChargesCreate },
+		charges: { create: mockChargesCreate, list: mockChargesList },
 		refunds: { create: mockRefundsCreate },
 	})),
 }));
@@ -87,6 +88,38 @@ function fakeOrdersModel(stored: Record<string, any>) {
 	};
 }
 
+/**
+ * A charge as Stripe lists it, with the fields the earlier-charge lookup reads
+ */
+function listedCharge(fields: {
+	id: string;
+	orderId: string;
+	status?: string;
+	refunded?: boolean;
+}) {
+	return {
+		id: fields.id,
+		object: 'charge',
+		customer: 'cus_1',
+		status: fields.status || 'succeeded',
+		paid: (fields.status || 'succeeded') === 'succeeded',
+		refunded: fields.refunded === true,
+		metadata: { orderId: fields.orderId },
+	};
+}
+
+/**
+ * One page of charges.list, newest charge first
+ */
+function chargeList(data: ReturnType<typeof listedCharge>[]) {
+	return {
+		object: 'list',
+		url: '/v1/charges',
+		has_more: false,
+		data,
+	};
+}
+
 describe('OrdersService.payWithStripe', () => {
 	let service: OrdersService;
 	let stored: Record<string, any>;
@@ -104,6 +137,9 @@ describe('OrdersService.payWithStripe', () => {
 	beforeEach(() => {
 		mockChargesCreate.mockReset();
 		mockChargesCreate.mockResolvedValue({ id: 'ch_1' });
+		// The customer has no earlier charges unless a test says otherwise
+		mockChargesList.mockReset();
+		mockChargesList.mockResolvedValue(chargeList([]));
 		mockRefundsCreate.mockReset();
 		mockRefundsCreate.mockResolvedValue({ id: 're_1' });
 		mockLog.info.mockReset();
@@ -329,6 +365,132 @@ describe('OrdersService.payWithStripe', () => {
 		expect(stored.isPaid).toBe(true);
 		expect(stored.stripeChargeId).toBe('ch_1');
 		expect(paid.isPaid).toBe(true);
+	});
+
+	describe('when an earlier charge of the order may have lost its answer', () => {
+		it('pays the order with the earlier charge of another card and does not charge again', async () => {
+			// Stripe creates ch_lost, but the answer never arrives (a timeout
+			// or a network drop), so the order stays unpaid.
+			mockChargesCreate.mockRejectedValueOnce(
+				new Error('socket hang up')
+			);
+
+			await expect(
+				service.payWithStripe(ORDER_ID, 'card_1')
+			).rejects.toThrow('socket hang up');
+
+			expect(stored.isPaid).toBe(false);
+
+			// The customer retries with a card typed in again, which has a
+			// new card id and so a new idempotency key.
+			mockChargesList.mockResolvedValue(
+				chargeList([
+					listedCharge({
+						id: 'ch_declined',
+						orderId: ORDER_ID,
+						status: 'failed',
+					}),
+					listedCharge({ id: 'ch_other', orderId: 'other-order' }),
+					listedCharge({ id: 'ch_lost', orderId: ORDER_ID }),
+				])
+			);
+
+			const paid = await service.payWithStripe(ORDER_ID, 'card_2');
+
+			// Only the first attempt charged a card
+			expect(mockChargesCreate).toHaveBeenCalledTimes(1);
+			expect(stored.stripeChargeId).toBe('ch_lost');
+			expect(mockChargesList).toHaveBeenLastCalledWith(
+				expect.objectContaining({ customer: 'cus_1' })
+			);
+			expect(model.findOneAndUpdate).toHaveBeenCalledTimes(1);
+			expect(model.findOneAndUpdate).toHaveBeenCalledWith(
+				{
+					_id: ORDER_ID,
+					isCancelled: { $ne: true },
+					$or: [
+						{ isPaid: { $ne: true } },
+						{ stripeChargeId: 'ch_lost' },
+					],
+				},
+				{ stripeChargeId: 'ch_lost', isPaid: true },
+				{ new: true }
+			);
+			expect(paid.isPaid).toBe(true);
+			expect(stored.isPaid).toBe(true);
+			expect(mockRefundsCreate).not.toHaveBeenCalled();
+		});
+
+		it('charges again when the earlier charge of the order was refunded', async () => {
+			mockChargesList.mockResolvedValue(
+				chargeList([
+					listedCharge({
+						id: 'ch_refunded',
+						orderId: ORDER_ID,
+						refunded: true,
+					}),
+				])
+			);
+
+			const paid = await service.payWithStripe(ORDER_ID, 'card_2');
+
+			expect(mockChargesList).toHaveBeenCalledTimes(1);
+			expect(mockChargesList).toHaveBeenCalledWith(
+				expect.objectContaining({ customer: 'cus_1' })
+			);
+			expect(mockChargesCreate).toHaveBeenCalledTimes(1);
+			// The lookup comes before the charge
+			expect(mockChargesList.mock.invocationCallOrder[0]).toBeLessThan(
+				mockChargesCreate.mock.invocationCallOrder[0]
+			);
+			expect(mockChargesCreate.mock.calls[0][0]).toEqual(
+				expect.objectContaining({ source: 'card_2' })
+			);
+			expect(paid.isPaid).toBe(true);
+			expect(stored.stripeChargeId).toBe('ch_1');
+			expect(mockRefundsCreate).not.toHaveBeenCalled();
+		});
+
+		it('refuses the payment and does not charge when the earlier charges can not be listed', async () => {
+			const listError = new Error('Stripe is unavailable');
+			mockChargesList.mockRejectedValue(listError);
+
+			await expect(
+				service.payWithStripe(ORDER_ID, 'card_2')
+			).rejects.toThrow(/not charged/);
+
+			expect(mockChargesCreate).not.toHaveBeenCalled();
+			expect(model.findOneAndUpdate).not.toHaveBeenCalled();
+			expect(stored.isPaid).toBe(false);
+			expect(mockLog.error).toHaveBeenCalledWith(
+				expect.objectContaining({ orderId: ORDER_ID, err: listError }),
+				expect.any(String)
+			);
+		});
+
+		it('refunds the earlier charge when the order is cancelled during the lookup', async () => {
+			mockChargesList.mockImplementation(async () => {
+				stored.isCancelled = true;
+
+				return chargeList([
+					listedCharge({ id: 'ch_lost', orderId: ORDER_ID }),
+				]);
+			});
+
+			await expect(
+				service.payWithStripe(ORDER_ID, 'card_2')
+			).rejects.toThrow(/cancelled/);
+
+			expect(mockChargesCreate).not.toHaveBeenCalled();
+			expect(stored.isPaid).toBe(false);
+			// Kept, so refundWithStripe can retry when the refund fails
+			expect(stored.stripeChargeId).toBe('ch_lost');
+			expect(mockRefundsCreate).toHaveBeenCalledTimes(1);
+			expect(mockRefundsCreate).toHaveBeenCalledWith(
+				{ charge: 'ch_lost' },
+				{ idempotencyKey: `refund-order-${ORDER_ID}-charge-ch_lost` }
+			);
+		});
 	});
 
 	describe('when the order is cancelled while Stripe is charging', () => {

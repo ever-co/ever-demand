@@ -322,7 +322,9 @@ export class OrdersService extends DBService<Order>
 
 	/**
 	 * Pay with Stripe for given order with given CC, in the currency set
-	 * by STRIPE_CURRENCY (`ils` when unset)
+	 * by STRIPE_CURRENCY (`ils` when unset). When the customer already has a
+	 * charge for the order that succeeded and was not refunded, e.g. one
+	 * whose answer was lost, the order is paid with it and no card is charged.
 	 * TODO: move to separate Payments Service
 	 *
 	 * @param {Order['id']} orderId
@@ -374,29 +376,56 @@ export class OrdersService extends DBService<Order>
 				if (user != null) {
 					const currency = this._stripeChargeCurrency(shownCurrency);
 
-					const charge: Stripe.Charge = await this.stripe.charges.create(
-						{
-							amount: toStripeAmountInCents(order.totalPrice), // whole cents
-							customer: user.stripeCustomerId,
-							source: cardId,
-							currency,
-							description: 'Order id: ' + orderId,
-							metadata: {
-								orderId,
-							},
-						},
-						{
-							// Two concurrent calls for one order and card
-							// create a single charge. The key holds the
-							// currency, so a retry after the setting changed
-							// is not refused as a reused key.
-							idempotencyKey: stripeChargeIdempotencyKey(
+					// Stripe may have charged an earlier call whose answer was
+					// lost (a timeout or a network drop), so the order stayed
+					// unpaid. A retry with another card or currency, or after
+					// the key expired, has another idempotency key, and Stripe
+					// would charge the customer again: pay with that charge.
+					const earlierCharge = await this._findStripeChargeOfOrder(
+						orderId,
+						user.stripeCustomerId,
+						callId
+					);
+
+					let charge: Stripe.Charge;
+
+					if (earlierCharge != null) {
+						this.log.warn(
+							{
+								callId,
 								orderId,
 								cardId,
-								currency
-							),
-						}
-					);
+								chargeId: earlierCharge.id,
+							},
+							'.payWithStripe(orderId, cardId) found an earlier charge of the order, paying with it instead of charging again'
+						);
+
+						charge = earlierCharge;
+					} else {
+						charge = await this.stripe.charges.create(
+							{
+								amount: toStripeAmountInCents(order.totalPrice), // whole cents
+								customer: user.stripeCustomerId,
+								source: cardId,
+								currency,
+								description: 'Order id: ' + orderId,
+								metadata: {
+									orderId,
+								},
+							},
+							{
+								// Two concurrent calls for one order and card
+								// create a single charge. The key holds the
+								// currency, so a retry after the setting changed
+								// is not refused as a reused key.
+								idempotencyKey: stripeChargeIdempotencyKey(
+									orderId,
+									cardId,
+									currency
+								),
+							}
+						);
+					}
 
 					// Matches nothing when a cancel landed while Stripe was
 					// charging: a cancelled order must not become paid.
@@ -573,6 +602,55 @@ export class OrdersService extends DBService<Order>
 		);
 
 		return order;
+	}
+
+	/**
+	 * The newest charge of the customer that paid for the order and was not
+	 * refunded, e.g. one Stripe made while its answer to payWithStripe was lost
+	 *
+	 * @param {Order['id']} orderId order the charge was made for, as in its
+	 * `metadata.orderId`
+	 * @param {string} [customerId] Stripe customer the order was charged to
+	 * @param {string} callId payWithStripe call, for the log
+	 * @returns {Promise<Stripe.Charge | null>} null when the newest 100
+	 * charges of the customer hold none for the order
+	 * @throws {Error} when Stripe can not list the charges: the caller then
+	 * refuses the payment instead of charging a card that may be charged already
+	 */
+	private async _findStripeChargeOfOrder(
+		orderId: Order['id'],
+		customerId: string | undefined,
+		callId: string
+	): Promise<Stripe.Charge | null> {
+		let charges: Stripe.ApiList<Stripe.Charge>;
+
+		try {
+			// Newest first: the page holds the charge of a lost answer
+			// unless the customer was charged 100 times since.
+			charges = await this.stripe.charges.list({
+				customer: customerId,
+				limit: 100,
+			});
+		} catch (err) {
+			this.log.error(
+				{ callId, orderId, err },
+				'.payWithStripe(orderId, cardId) could not list the earlier charges of the customer'
+			);
+
+			throw new Error(
+				`Could not check whether order ${orderId} was charged already, so it was not charged`
+			);
+		}
+
+		const charge = charges.data.find(
+			(c) =>
+				c.status === 'succeeded' &&
+				!c.refunded &&
+				c.metadata != null &&
+				c.metadata.orderId === String(orderId)
+		);
+
+		return charge != null ? charge : null;
 	}
 
 	/**
