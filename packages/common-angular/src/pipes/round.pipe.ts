@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'ngxRound' })
+@Pipe({ standalone: false, name: 'ngxRound' })
 export class RoundPipe implements PipeTransform {
 	transform(input: number): number {
 		return Math.round(input);

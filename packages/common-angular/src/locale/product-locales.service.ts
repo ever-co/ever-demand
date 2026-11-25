@@ -44,7 +44,7 @@ export class ProductLocalesService {
 		const productMember: ILocaleMember =
 			member.find((x) =>
 				x.locale.startsWith(
-					langChoice || this._translateService.currentLang
+					langChoice || this._translateService.getCurrentLang()
 				)
 			) ||
 			// Use default lang

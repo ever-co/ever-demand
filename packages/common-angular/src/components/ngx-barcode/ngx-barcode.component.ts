@@ -13,6 +13,7 @@ declare var require: any;
 const jsbarcode = require('jsbarcode');
 
 @Component({
+	standalone: false,
 	selector: 'ngx-barcode',
 	template: ` <div #bcElement [class]="cssClass"></div> `,
 	styles: [],

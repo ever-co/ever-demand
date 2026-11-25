@@ -2,7 +2,7 @@
 	"name": "@ever-platform/common-angular",
 	"description": "Ever Platform Shared Angular Core",
 	"license": "AGPL-3.0",
-	"version": "0.4.3",
+	"version": "0.5.0",
 	"homepage": "https://ever.co",
 	"repository": {
 		"type": "git",
@@ -18,41 +18,41 @@
 		"url": "https://ever.co"
 	},
 	"scripts": {
-		"watch": "tsc -p ./tsconfig.build.json -w",
-		"build": "rimraf build && tsc -p ./tsconfig.build.json",
-		"lint": "tslint --fix --project ./",
-		"test": "jest --config ./jest.config.js"
+		"typecheck": "tsc -p ./tsconfig.json --noEmit",
+		"build": "tsc -p ./tsconfig.json --noEmit",
+		"clean": "rimraf build"
 	},
 	"publishConfig": {
 		"access": "public"
 	},
 	"dependencies": {
-		"@angular/animations": "^13.1.0",
-		"@angular/cdk": "^13.1.0",
-		"@angular/common": "^13.1.0",
-		"@angular/compiler": "^13.1.0",
-		"@angular/core": "^13.1.0",
-		"@angular/forms": "^13.1.0",
-		"@angular/language-service": "^13.1.0",
-		"@angular/localize": "^13.1.0",
-		"@angular/platform-browser": "^13.1.0",
-		"@angular/platform-browser-dynamic": "^13.1.0",
-		"@angular/router": "^13.1.0",
-		"@angular/service-worker": "^13.1.0",
-		"@ever-platform/common": "^0.4.3",
-		"@ngx-translate/core": "^13.0.0",
-		"@ngx-translate/http-loader": "^6.0.0",
-		"tslib": "^2.3.1",
-		"underscore": "^1.13.1",
-		"underscore.string": "^3.3.5",
-		"zone.js": "~0.11.4"
+		"@ever-platform/common": "workspace:*",
+		"jsbarcode": "^3.12.3",
+		"socket.io-client": "^4.8.4",
+		"tslib": "^2.9.1",
+		"underscore": "^1.13.8",
+		"uuid": "^14.0.3"
 	},
 	"devDependencies": {
-		"@types/node": "16.11.0",
-		"lint": "^0.7.0",
-		"rimraf": "^3.0.2",
-		"ts-node": "~10.3.0",
-		"typescript": "~4.5.3"
+		"@angular/common": "^22.3.0",
+		"@angular/core": "^22.3.0",
+		"@angular/platform-browser": "^22.3.0",
+		"@angular/router": "^22.3.0",
+		"@ngx-translate/core": "^18.1.0",
+		"@types/node": "^26.6.10",
+		"@types/underscore": "^1.13.0",
+		"rimraf": "^6.1.4",
+		"rxjs": "^7.8.2",
+		"stripe": "^23.2.0",
+		"typescript": "~6.0.3"
 	},
-	"snyk": false
+	"peerDependencies": {
+		"@angular/common": "^22.3.0",
+		"@angular/core": "^22.3.0",
+		"@ngx-translate/core": "^18.1.0",
+		"rxjs": "^7.8.2"
+	},
+	"engines": {
+		"node": ">=26.13.1"
+	}
 }

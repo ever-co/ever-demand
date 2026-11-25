@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import User from '../entities/User';
 import GeoLocation from '../entities/GeoLocation';
 import { IUserCreateObject } from '../interfaces/IUser';
-import { Stripe } from 'stripe';
+import type Stripe from 'stripe';
 import Device from '../entities/Device';
 
 interface IUserRouter {

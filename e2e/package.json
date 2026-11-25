@@ -1,0 +1,22 @@
+{
+	"name": "@ever-platform/e2e",
+	"version": "0.5.0",
+	"private": true,
+	"description": "End-to-end tests for the Ever Demand API and web apps (Playwright)",
+	"license": "AGPL-3.0",
+	"scripts": {
+		"test": "playwright test",
+		"test:api": "playwright test --project=api",
+		"report": "playwright show-report"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.65.1",
+		"@types/node": "^26.6.10",
+		"graphql-ws": "^6.4.3",
+		"socket.io-client": "^4.8.4",
+		"typescript": "~6.0.3"
+	},
+	"engines": {
+		"node": ">=26.13.1"
+	}
+}

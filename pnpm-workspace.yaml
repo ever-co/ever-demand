@@ -1,0 +1,33 @@
+packages:
+  - packages/common
+  - packages/common-angular
+  # - packages/core (joins with the backend upgrade)
+  - e2e
+  # Each app joins the workspace once its own package.json is on the latest stack:
+  # - packages/admin-web-angular
+  # - packages/carrier-mobile-ionic
+  # - packages/merchant-tablet-ionic
+  # - packages/shop-mobile-expo
+  # - packages/shop-mobile-ionic
+  # - packages/shop-web-angular
+  # - packages/shop-web-gatsby
+
+# Packages whose install (build) scripts may run: native addons and downloaded binaries.
+allowBuilds:
+  '@nestjs/core': true
+  '@parcel/watcher': true
+  '@swc/core': true
+  bcrypt: true
+  core-js: false
+  esbuild: true
+  lmdb: true
+  mongodb-memory-server: true
+  msgpackr-extract: true
+  nx: true
+  protobufjs: true
+  sharp: true
+  unrs-resolver: true
+
+minimumReleaseAgeExclude:
+  - '@types/node@26.6.10'
+  - mongoose@9.13.1

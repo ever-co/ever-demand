@@ -1,18 +1,11 @@
 import { NgModule } from '@angular/core';
 import { ProductLocalesService } from './product-locales.service';
-import {
-	TranslateService,
-	TranslateModule,
-	TranslateLoader,
-	TranslateFakeLoader,
-} from '@ngx-translate/core';
 
+/**
+ * Provides `ProductLocalesService`. The root `TranslateService` comes from the app's own
+ * `TranslateModule.forRoot(...)` (see `./translate.module`), so there is exactly one.
+ */
 @NgModule({
-	imports: [
-		TranslateModule.forRoot({
-			loader: { provide: TranslateLoader, useClass: TranslateFakeLoader },
-		}),
-	],
-	providers: [ProductLocalesService, TranslateService],
+	providers: [ProductLocalesService],
 })
 export class LocaleModule {}
