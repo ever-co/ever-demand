@@ -1,9 +1,10 @@
 import { Component, OnDestroy, Input, OnInit } from '@angular/core';
+import { bindViewCell } from '../../../components/table-components/smart-table';
 import User from '@modules/server.common/entities/User';
 import Order from '@modules/server.common/entities/Order';
 import { UserOrdersRouter } from '@modules/client.common.angular2/routers/user-orders-router.service';
 import Carrier from '@modules/server.common/entities/Carrier';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource, Settings } from 'angular2-smart-table';
 import { Subject, Observable, forkJoin } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
@@ -12,9 +13,10 @@ import { DeliveryComponent } from '../../../components/customer-deliveries-table
 import { AddressComponent } from '../../../components/customer-deliveries-table/address';
 import { StatusComponent } from '../../../components/customer-deliveries-table/status';
 import { getIdFromTheDate } from '@modules/server.common/utils';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 
 @Component({
+	standalone: false,
 	selector: 'customer-deliveries-popup',
 	templateUrl: 'customer-deliveries-popup.html',
 	styleUrls: ['./customer-deliveries-popup.scss'],
@@ -30,7 +32,7 @@ export class CustomerDeliveriesPopupPage implements OnInit, OnDestroy {
 	carrier: Carrier;
 	totalOrdersSum: number = 0;
 
-	settingsSmartTable: object;
+	settingsSmartTable: Settings;
 	sourceSmartTable = new LocalDataSource();
 
 	private _ngDestroy$ = new Subject<void>();
@@ -157,28 +159,31 @@ export class CustomerDeliveriesPopupPage implements OnInit, OnDestroy {
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe(([orderId, delivery, address, status]) => {
 				this.settingsSmartTable = {
-					actions: true,
 					columns: {
 						orderId: {
 							title: orderId,
 							class: 'text-align-left',
 							type: 'custom',
 							renderComponent: OrderIdComponent,
+							componentInitFunction: bindViewCell(),
 						},
 						delivery: {
 							title: delivery,
 							type: 'custom',
 							renderComponent: DeliveryComponent,
+							componentInitFunction: bindViewCell(),
 						},
 						address: {
 							title: address,
 							type: 'custom',
 							renderComponent: AddressComponent,
+							componentInitFunction: bindViewCell(),
 						},
 						status: {
 							title: status,
 							type: 'custom',
 							renderComponent: StatusComponent,
+							componentInitFunction: bindViewCell(),
 						},
 					},
 					pager: {

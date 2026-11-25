@@ -18,6 +18,7 @@ import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaym
 import PaymentGateways from '@modules/server.common/enums/PaymentGateways';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-paypal-gateway',
 	templateUrl: './payPal.html',
 	styleUrls: ['payPal.scss', '../mutation/mutation.scss'],

@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
+	standalone: false,
 	selector: 'no-orders-info',
 	templateUrl: 'no-orders-info.component.html',
 	styleUrls: ['./no-orders-info.component.scss'],

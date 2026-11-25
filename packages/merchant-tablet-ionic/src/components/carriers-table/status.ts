@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from '../table-components/smart-table';
 import Carrier from '@modules/server.common/entities/Carrier';
 
 @Component({
+	standalone: false,
 	styles: [``],
 	template: `
 		<div class="text-center" [ngSwitch]="carrier.status">

@@ -6,7 +6,8 @@ import {
 	OnInit,
 	OnDestroy,
 } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource, Settings } from 'angular2-smart-table';
+import { bindViewCell } from '../../table-components/smart-table';
 import { Subject, Observable, forkJoin } from 'rxjs';
 import { MakeOrderInputComponent } from './make-order-input.component';
 import { IOrderCreateInputProduct } from '@modules/server.common/routers/IWarehouseOrdersRouter';
@@ -17,11 +18,12 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { WarehouseOrdersService } from '../../../services/warehouse-orders.service';
 import { TranslateService } from '@ngx-translate/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular/lazy';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 import { MakeOrderCommentComponent } from './make-order-comment.component';
 
 @Component({
+	standalone: false,
 	selector: 'make-order',
 	templateUrl: './make-order.component.html',
 	styleUrls: ['./make-order.component.scss'],
@@ -41,7 +43,7 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 	@Output()
 	isOrderAllowedEmitter = new EventEmitter<boolean>();
 
-	settingsSmartTable: any;
+	settingsSmartTable: Settings;
 	sourceSmartTable = new LocalDataSource();
 	errorMsg: string = 'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.ERROR_MSG';
 
@@ -190,7 +192,7 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 						columns: {
 							img: {
 								title: image,
-								filter: false,
+								isFilterable: false,
 								type: 'html',
 								width: '50px',
 							},
@@ -200,7 +202,7 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 							},
 							price: {
 								title: price,
-								filter: false,
+								isFilterable: false,
 								type: 'html',
 								compareFunction: (_, first, second) => {
 									const matchFirst = +first.replace('$', '');
@@ -216,16 +218,16 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 							available: {
 								title: available,
 								type: 'html',
-								filter: false,
+								isFilterable: false,
 								compareFunction: this
 									._compareByAvailableProducts,
 							},
 							amount: {
 								title: amount,
-								filter: false,
+								isFilterable: false,
 								type: 'custom',
 								renderComponent: MakeOrderInputComponent,
-								onComponentInitFunction: (
+								componentInitFunction: bindViewCell((
 									childInstance: MakeOrderInputComponent
 								) => {
 									childInstance.amount
@@ -241,14 +243,14 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 												this.canOrder
 											);
 										});
-								},
+								}),
 							},
 							comment: {
 								title: comment,
-								filter: false,
+								isFilterable: false,
 								type: 'custom',
 								renderComponent: MakeOrderCommentComponent,
-								onComponentInitFunction: (
+								componentInitFunction: bindViewCell((
 									childInstance: MakeOrderCommentComponent
 								) => {
 									childInstance.comment
@@ -262,7 +264,7 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 
 											wProduct.comment = comment;
 										});
-								},
+								}),
 							},
 						},
 					};

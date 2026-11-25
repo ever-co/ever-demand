@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
 
 @Component({
+	standalone: false,
 	styleUrls: ['./server-down.page.scss'],
 	templateUrl: 'server-down.page.html',
 })

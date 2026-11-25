@@ -6,6 +6,7 @@ import ILanguage from '@modules/server.common/interfaces/ILanguage';
 import { DOCUMENT } from '@angular/common';
 
 @Component({
+	standalone: false,
 	selector: 'page-language',
 	templateUrl: 'language.html',
 	styleUrls: ['./language.scss'],

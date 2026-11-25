@@ -4,6 +4,7 @@ import Order from '@modules/server.common/entities/Order';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 
 @Component({
+	standalone: false,
 	selector: 'order-without-carrier',
 	templateUrl: 'order-without-carrier.html',
 	styleUrls: ['./order-without-carrier.scss'],

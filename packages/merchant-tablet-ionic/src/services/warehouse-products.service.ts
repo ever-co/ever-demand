@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Apollo, gql } from 'apollo-angular';
+import { Apollo, gql, onlyCompleteData } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
@@ -71,6 +71,8 @@ export class WarehouseProductsService {
 				variables: { id, pagingOptions },
 			})
 			.valueChanges.pipe(
+				// Apollo Client 4 also emits loading/partial results
+				onlyCompleteData(),
 				map((res) => res.data['getProductsWithPagination'])
 			);
 	}

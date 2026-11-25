@@ -3,6 +3,7 @@ import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'google-map',
 	styles: [
 		`

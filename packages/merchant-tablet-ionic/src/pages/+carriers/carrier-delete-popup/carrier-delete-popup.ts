@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { first } from 'rxjs/operators';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 import { Store } from '../../../services/store.service';
 
 @Component({
+	standalone: false,
 	selector: 'carrier-delete-popup',
 	templateUrl: 'carrier-delete-popup.html',
 	styleUrls: ['./carrier-delete-popup.scss'],

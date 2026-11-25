@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 
 @Component({
+	standalone: false,
 	selector: 'order-type',
 	templateUrl: './order-type.component.html',
 	styleUrls: ['./order-type.component.scss'],

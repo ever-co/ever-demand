@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 
 @Component({
+	standalone: false,
 	selector: 'order-info',
 	styleUrls: ['./order-info.scss'],
 	templateUrl: 'order-info.html',

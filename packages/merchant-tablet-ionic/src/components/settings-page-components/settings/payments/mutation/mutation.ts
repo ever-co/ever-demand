@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 import PaymentGateways, {
 	paymentGatewaysToString,
 } from '@modules/server.common/enums/PaymentGateways';
 import { first } from 'rxjs/operators';
-import { CurrenciesService } from 'services/currencies.service';
+import { CurrenciesService } from '../../../../../services/currencies.service';
 import { Subject } from 'rxjs';
 import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaymentGateway';
 
 @Component({
+	standalone: false,
 	selector: 'merchant-payments-mutation',
 	templateUrl: 'mutation.html',
 	styleUrls: ['mutation.scss'],

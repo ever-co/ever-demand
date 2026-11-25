@@ -5,6 +5,7 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 
 @Component({
+	standalone: false,
 	selector: 'order-with-carrier',
 	templateUrl: 'order-with-carrier.html',
 	styleUrls: ['./order-with-carrier.scss'],

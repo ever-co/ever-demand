@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Apollo, gql } from 'apollo-angular';
+import { Apollo, gql, onlyCompleteData } from 'apollo-angular';
 import { map, share } from 'rxjs/operators';
 import Order from '@modules/server.common/entities/Order';
 import { Observable } from 'rxjs';
@@ -43,6 +43,8 @@ export class OrdersService {
 				pollInterval: 1000,
 			})
 			.valueChanges.pipe(
+				// Apollo Client 4 also emits loading/partial results
+				onlyCompleteData(),
 				map((res) => res.data['getOrderedUsersInfo']),
 				share()
 			);
@@ -61,6 +63,8 @@ export class OrdersService {
 				pollInterval: 4000,
 			})
 			.valueChanges.pipe(
+				// Apollo Client 4 also emits loading/partial results
+				onlyCompleteData(),
 				map((res) => res.data.orders),
 				share()
 			);

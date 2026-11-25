@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from '../table-components/smart-table';
 import User from '@modules/server.common/entities/User';
 import Order from '@modules/server.common/entities/Order';
 
 @Component({
+	standalone: false,
 	template: `
 		<div class="text-center" *ngIf="rowData?.total !== 0">
 			<span>{{ '$' + rowData?.total }}</span>

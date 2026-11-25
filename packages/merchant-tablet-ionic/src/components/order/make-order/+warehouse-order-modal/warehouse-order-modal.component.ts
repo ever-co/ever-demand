@@ -6,7 +6,8 @@ import {
 	OnInit,
 	Output,
 } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource, Settings } from 'angular2-smart-table';
+import { bindViewCell } from '../../../table-components/smart-table';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -19,6 +20,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-order-modal',
 	styleUrls: ['./warehouse-order-modal.component.scss'],
 	templateUrl: './warehouse-order-modal.component.html',
@@ -36,7 +38,7 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 	@Output()
 	isOrderAllowedEmitter = new EventEmitter<boolean>();
 
-	settingsSmartTable: object;
+	settingsSmartTable: Settings;
 	sourceSmartTable = new LocalDataSource();
 
 	private _warehouseProducts: WarehouseProduct[] = [];
@@ -210,7 +212,7 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 			columns: {
 				img: {
 					title: img,
-					filter: false,
+					isFilterable: false,
 					type: 'html',
 					width: '50px',
 				},
@@ -220,7 +222,7 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 				},
 				price: {
 					title: price,
-					filter: false,
+					isFilterable: false,
 					compareFunction: (_, first, second) => {
 						const matchFirst = +first.replace('$', '');
 						const matchSecond = +second.replace('$', '');
@@ -232,15 +234,15 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 				available: {
 					title: available,
 					type: 'html',
-					filter: false,
+					isFilterable: false,
 					compareFunction: this._compareByAvailableProducts,
 				},
 				amount: {
 					title: amount,
-					filter: false,
+					isFilterable: false,
 					type: 'custom',
 					renderComponent: WarehouseOrderInputComponent,
-					onComponentInitFunction: (
+					componentInitFunction: bindViewCell((
 						childInstance: WarehouseOrderInputComponent
 					) => {
 						childInstance.amount
@@ -258,7 +260,7 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 									);
 								}
 							});
-					},
+					}),
 				},
 			},
 		};

@@ -1,10 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from '../table-components/smart-table';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { Store } from '../../services/store.service';
-import { CallNumber } from '@ionic-native/call-number/ngx';
+import { ExternalAppsService } from '../../services/native/external-apps.service';
 
 @Component({
+	standalone: false,
 	selector: 'carrier-phone',
 	template: `
 		<ion-icon
@@ -25,7 +26,7 @@ export class PhoneComponent implements ViewCell, OnInit {
 	@Input()
 	carrier: Carrier;
 
-	constructor(private store: Store, public callNumber: CallNumber) {}
+	constructor(private store: Store, public externalApps: ExternalAppsService) {}
 
 	ngOnInit(): void {
 		if (this.rowData) {
@@ -45,8 +46,8 @@ export class PhoneComponent implements ViewCell, OnInit {
 
 	attemptCall(phone) {
 		if (this.canCall) {
-			this.callNumber
-				.callNumber(phone, true)
+			this.externalApps
+				.call(phone)
 				.then((res) => console.warn('Called number!', res))
 				.catch((err) => console.log('Error calling number!', err));
 		}

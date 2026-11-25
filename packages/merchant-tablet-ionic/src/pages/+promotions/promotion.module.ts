@@ -1,10 +1,10 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { TranslateModule } from '@ngx-translate/core';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { IonicModule } from '@ionic/angular/lazy';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
+import { Angular2SmartTableModule } from 'angular2-smart-table';
 import { CommonModule } from '@angular/common';
-import { PromotionService } from 'services/promotion.service';
+import { PromotionService } from '../../services/promotion.service';
 import { PromotionMutationModule } from './promotion-mutation-popup/promotion-mutation.module';
 
 const routes: Routes = [
@@ -28,7 +28,7 @@ const routes: Routes = [
 		RouterModule.forChild(routes),
 		IonicModule,
 		TranslateModule.forChild(),
-		Ng2SmartTableModule,
+		Angular2SmartTableModule,
 		PromotionMutationModule,
 	],
 	exports: [RouterModule],

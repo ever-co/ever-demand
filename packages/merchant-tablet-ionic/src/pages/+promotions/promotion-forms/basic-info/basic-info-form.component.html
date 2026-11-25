@@ -74,12 +74,19 @@
 					<ion-label class="labels" position="floating">{{
 						'CARRIERS_VIEW.PROMOTIONS.ACTIVE_FROM' | translate
 					}}</ion-label>
-					<ion-datetime
-						[placeholder]="
-							'CARRIERS_VIEW.PROMOTIONS.SELECT_DATE' | translate
-						"
-						formControlName="activeFrom"
-					></ion-datetime>
+					<ion-datetime-button
+						datetime="promotion-activeFrom"
+					></ion-datetime-button>
+					<ion-modal [keepContentsMounted]="true">
+						<ng-template>
+							<ion-datetime
+								id="promotion-activeFrom"
+								presentation="date"
+								[showDefaultButtons]="true"
+								formControlName="activeFrom"
+							></ion-datetime>
+						</ng-template>
+					</ion-modal>
 				</ion-item>
 			</ion-col>
 			<ion-col text-center>
@@ -87,12 +94,19 @@
 					<ion-label class="labels" position="floating">{{
 						'CARRIERS_VIEW.PROMOTIONS.ACTIVE_TO' | translate
 					}}</ion-label>
-					<ion-datetime
-						[placeholder]="
-							'CARRIERS_VIEW.PROMOTIONS.SELECT_DATE' | translate
-						"
-						formControlName="activeTo"
-					></ion-datetime>
+					<ion-datetime-button
+						datetime="promotion-activeTo"
+					></ion-datetime-button>
+					<ion-modal [keepContentsMounted]="true">
+						<ng-template>
+							<ion-datetime
+								id="promotion-activeTo"
+								presentation="date"
+								[showDefaultButtons]="true"
+								formControlName="activeTo"
+							></ion-datetime>
+						</ng-template>
+					</ion-modal>
 				</ion-item>
 			</ion-col>
 		</ion-row>

@@ -2,58 +2,23 @@
 	"extends": "../../tsconfig.base.json",
 	"compileOnSave": false,
 	"compilerOptions": {
-		"outDir": "./www/out-tsc",
-		"baseUrl": "./src",
-		"target": "es5",
-		"sourceMap": true,
-		"declaration": false,
-		"moduleResolution": "node",
-		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true,
-		"importHelpers": true,
+		"outDir": "./out-tsc",
+		"rootDir": "..",
 		"noImplicitAny": false,
-		"preserveConstEnums": true,
-		"allowSyntheticDefaultImports": true,
+		"types": ["node", "google.maps"],
 		"paths": {
-			"@angular/*": ["../node_modules/@angular/*"],
-			"@modules/server.common/*": ["../../common/src/*"],
-			"@modules/client.common.angular2/*": ["../../common-angular/src/*"],
-			"@modules/*": ["./modules/*"],
-			"@pyro/*": ["../../common/src/@pyro/*"],
-			"mongoose": ["../../common-angular/src/mongoose-placeholder"],
-			"typeorm": ["../../common-angular/src/typeorm-placeholder"],
-			"environment": ["./environments/environment"],
-			"core-js/es7/reflect": [
-				"../../../node_modules/core-js/proposals/reflect-metadata"
-			]
-		},
-		"lib": ["es2017", "dom", "esnext"],
-		"noUnusedLocals": false,
-		"types": ["node", "reflect-metadata", "googlemaps", "jasmine"]
-	},
-	"files": [
-        "src/main.ts",
-        "src/polyfills.ts"
-    ],
-	"include": [
-		"src/**/*d.ts",
-		"./*.ts",
-		"../common/**/*d.ts",
-		"../common-angular/**/*d.ts"
-	],
-	"exclude": [
-		"node_modules",
-		"src/**/*.spec.ts",
-		"src/**/__tests__/*.ts"
-	],
-	"atom": {
-		"rewriteTsconfig": false
+			"@modules/server.common/*": ["../common/src/*"],
+			"@modules/client.common.angular2/*": ["../common-angular/src/*"],
+			"@pyro/*": ["../common/src/@pyro/*"],
+			"mongoose": ["../common-angular/src/mongoose-placeholder"],
+			"typeorm": ["../common-angular/src/typeorm-placeholder"]
+		}
 	},
 	"angularCompilerOptions": {
-		"preserveWhitespaces": false,
 		"strictInjectionParameters": true,
-		"fullTemplateTypeCheck": true,
 		"strictTemplates": true,
-		"strictMetadataEmit": false
+		"extendedDiagnostics": {
+			"defaultCategory": "suppress"
+		}
 	}
 }

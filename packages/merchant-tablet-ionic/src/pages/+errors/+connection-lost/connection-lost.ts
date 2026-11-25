@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { environment } from '../../../environments/environment';
 
 @Component({
+	standalone: false,
 	selector: 'page-connection-lost',
 	templateUrl: 'connection-lost.html',
 	styleUrls: ['./connection-lost.scss'],

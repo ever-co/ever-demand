@@ -1,8 +1,9 @@
 import { Component, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 
 @Component({
+	standalone: false,
 	selector: 'carrier-addr-popup',
 	templateUrl: 'carrier-addr-popup.html',
 	styleUrls: ['./carrier-addr-popup.scss'],

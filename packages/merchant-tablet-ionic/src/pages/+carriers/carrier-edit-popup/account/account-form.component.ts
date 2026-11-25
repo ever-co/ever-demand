@@ -8,6 +8,7 @@ import {
 import Carrier from '@modules/server.common/entities/Carrier';
 
 @Component({
+	standalone: false,
 	selector: 'account-form',
 	styleUrls: ['./account-form.component.scss'],
 	templateUrl: 'account-form.component.html',

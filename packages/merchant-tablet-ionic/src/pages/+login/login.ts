@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 
 @Component({
+	standalone: false,
 	selector: 'page-login',
 	templateUrl: 'login.html',
 	styleUrls: ['./login.scss'],

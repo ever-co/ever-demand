@@ -14,6 +14,7 @@ import { OrderState } from '../warehouse';
 import { Subscription } from 'rxjs';
 
 @Component({
+	standalone: false,
 	selector: 'merchant-all-orders',
 	templateUrl: 'all-orders.component.html',
 	styleUrls: ['./all-orders.component.scss'],

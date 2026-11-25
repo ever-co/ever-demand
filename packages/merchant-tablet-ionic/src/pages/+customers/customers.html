@@ -23,7 +23,7 @@
 	</div>
 
 	<div id="contentWrapper">
-		<ng2-smart-table
+		<angular2-smart-table
 			*ngIf="!showNoDeliveryIcon"
 			class="smart-table"
 			[settings]="settingsSmartTable"
@@ -33,7 +33,7 @@
 			(delete)="deleteCustomer($event)"
 			(custom)="showAddress($event)"
 		>
-		</ng2-smart-table>
+		</angular2-smart-table>
 		<div *ngIf="showNoDeliveryIcon">
 			<div class="no-customers-message">
 				<i class="fa fa-user-times"></i>

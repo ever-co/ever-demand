@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from '../table-components/smart-table';
 import Carrier from '@modules/server.common/entities/Carrier';
-import { ModalController } from '@ionic/angular';
-import { CarrierDeliveriesPopupPage } from 'pages/+carriers/carrier-deliveries-popup/carrier-deliveries-popup';
+import { ModalController } from '@ionic/angular/lazy';
+import { CarrierDeliveriesPopupPage } from '../../pages/+carriers/carrier-deliveries-popup/carrier-deliveries-popup';
 
 @Component({
+	standalone: false,
 	styles: [``],
 	template: `
 		<div class="text-center">

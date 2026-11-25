@@ -6,7 +6,7 @@ packages:
   # Each app joins the workspace once its own package.json is on the latest stack:
   # - packages/admin-web-angular
   - packages/carrier-mobile-ionic
-  # - packages/merchant-tablet-ionic
+  - packages/merchant-tablet-ionic
   # - packages/shop-mobile-expo
   # - packages/shop-mobile-ionic
   # - packages/shop-web-angular

@@ -1,10 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from '../table-components/smart-table';
 import { Store } from '../../services/store.service';
-import { CallNumber } from '@ionic-native/call-number/ngx';
+import { ExternalAppsService } from '../../services/native/external-apps.service';
 import UserOrder from '@modules/server.common/entities/UserOrder';
 
 @Component({
+	standalone: false,
 	selector: 'user-phone',
 	template: `
 		<ion-icon
@@ -26,7 +27,7 @@ export class UserPhoneComponent implements ViewCell, OnInit {
 	@Input()
 	user: UserOrder;
 
-	constructor(private store: Store, public callNumber: CallNumber) {}
+	constructor(private store: Store, public externalApps: ExternalAppsService) {}
 
 	ngOnInit(): void {
 		if (this.rowData) {
@@ -46,8 +47,8 @@ export class UserPhoneComponent implements ViewCell, OnInit {
 
 	attemptCall(phone: string) {
 		if (this.canCall) {
-			this.callNumber
-				.callNumber(phone, true)
+			this.externalApps
+				.call(phone)
 				.then((res) => console.warn('Called number!', res))
 				.catch((err) => console.log('Error calling number!', err));
 		}

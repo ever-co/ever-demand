@@ -1,6 +1,7 @@
 import { Component, EventEmitter } from '@angular/core';
 
 @Component({
+	standalone: false,
 	selector: 'add-choice',
 	templateUrl: 'add-choice.html',
 	styleUrls: ['./add-choice.scss'],

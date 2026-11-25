@@ -4,6 +4,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import { Store } from '../../../src/services/store.service';
 
 @Component({
+	standalone: false,
 	selector: 'page-settings',
 	templateUrl: 'settings.html',
 	styleUrls: ['./settings.scss'],

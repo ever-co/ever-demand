@@ -18,6 +18,7 @@ import { IPaymentGatewayCreateObject } from '@modules/server.common/interfaces/I
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-stripe-gateway',
 	templateUrl: './stripe.html',
 	styleUrls: ['stripe.scss', '../mutation/mutation.scss'],

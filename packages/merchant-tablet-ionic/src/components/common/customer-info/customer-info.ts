@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import UserOrder from '@modules/server.common/entities/UserOrder';
 
 @Component({
+	standalone: false,
 	selector: 'customer-info',
 	styleUrls: ['./customer-info.scss'],
 	templateUrl: 'customer-info.html',

@@ -16,6 +16,7 @@ import {
 } from '@modules/server.common/interfaces/ILanguage';
 
 @Component({
+	standalone: false,
 	selector: 'basic-info-form',
 	styleUrls: ['./basic-info-form.component.scss'],
 	templateUrl: 'basic-info-form.component.html',
@@ -128,8 +129,9 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 				this.promotion.description,
 				this.languageCode
 			),
-			activeFrom: this.promotion.activeFrom || new Date(),
-			activeTo: this.promotion.activeTo || null,
+			// ion-datetime (Ionic 6+) works with ISO strings
+			activeFrom: toIsoDate(this.promotion.activeFrom || new Date()),
+			activeTo: toIsoDate(this.promotion.activeTo),
 			product: this.promotion.productId || null,
 		};
 
@@ -259,4 +261,13 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 
 		return resultLocale ? resultLocale : false;
 	}
+}
+
+/** An ISO 8601 string for ion-datetime, or null. */
+export function toIsoDate(value: Date | string | null | undefined): string | null {
+	if (!value) {
+		return null;
+	}
+	const date = new Date(value);
+	return Number.isNaN(date.getTime()) ? null : date.toISOString();
 }

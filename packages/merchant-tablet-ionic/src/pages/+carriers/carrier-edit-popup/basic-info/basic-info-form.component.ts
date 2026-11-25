@@ -16,6 +16,7 @@ export type CarrierBasicInfo = Pick<
 >;
 
 @Component({
+	standalone: false,
 	selector: 'basic-info-form',
 	styleUrls: ['./basic-info-form.component.scss'],
 	templateUrl: 'basic-info-form.component.html',

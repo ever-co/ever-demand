@@ -10,9 +10,10 @@ import { CarriersCatalogComponent } from './carriers-catalog/carriers-catalog';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { takeUntil, first } from 'rxjs/operators';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 
 @Component({
+	standalone: false,
 	selector: 'page-add-carriers-popup',
 	templateUrl: 'add-carriers-popup.html',
 	styleUrls: ['./add-carriers-popup.scss'],

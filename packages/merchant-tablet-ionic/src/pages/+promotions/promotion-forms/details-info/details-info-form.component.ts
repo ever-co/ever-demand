@@ -6,6 +6,7 @@ import {
 } from '@modules/server.common/interfaces/IPromotion';
 
 @Component({
+	standalone: false,
 	selector: 'details-info-form',
 	styleUrls: ['./details-info-form.component.scss'],
 	templateUrl: 'details-info-form.component.html',

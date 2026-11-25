@@ -24,10 +24,11 @@ import {
 } from '@modules/server.common/entities/GeoLocation';
 import { isEmpty } from 'lodash';
 import { TranslateService } from '@ngx-translate/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular/lazy';
 import { Store } from '../../../services/store.service';
 
 @Component({
+	standalone: false,
 	selector: 'merchant-location',
 	templateUrl: 'location.html',
 })

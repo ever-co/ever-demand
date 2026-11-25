@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from '../table-components/smart-table';
 import Order from '@modules/server.common/entities/Order';
 
 @Component({
+	standalone: false,
 	template: `
 		<div class="space">
 			{{ 'CUSTOMERS_VIEW.ORDERS_POP_UP.COMPLATED' | translate }}

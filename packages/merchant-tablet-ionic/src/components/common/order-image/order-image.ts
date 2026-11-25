@@ -3,6 +3,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import Order from '@modules/server.common/entities/Order';
 
 @Component({
+	standalone: false,
 	selector: 'order-image',
 	templateUrl: './order-image.html',
 	styleUrls: ['./order-image.scss']

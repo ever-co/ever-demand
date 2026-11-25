@@ -34,7 +34,7 @@
 	</div>
 
 	<div id="contentWrapper" scroll="false">
-		<ng2-smart-table
+		<angular2-smart-table
 			*ngIf="!showNoDeliveryIcon"
 			class="smart-table"
 			[settings]="settingsSmartTable"
@@ -44,7 +44,7 @@
 			(delete)="deleteCarrier($event)"
 			(custom)="trackCarrier($event)"
 		>
-		</ng2-smart-table>
+		</angular2-smart-table>
 
 		<div *ngIf="showNoDeliveryIcon">
 			<div class="no-orders-message">

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from '../table-components/smart-table';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { Store } from '../../services/store.service';
 
 @Component({
+	standalone: false,
 	selector: 'carrier-image-view',
 	styleUrls: ['./image.scss'],
 	template: `

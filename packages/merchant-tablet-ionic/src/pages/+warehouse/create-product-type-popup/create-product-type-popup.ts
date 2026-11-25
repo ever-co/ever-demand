@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { FileUploader, FileUploaderOptions, FileItem } from 'ng2-file-upload';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { PhotoService, PhotoSource } from '../../../services/native/photo.service';
 import {
 	IProductCreateObject,
 	IProductImage,
@@ -17,10 +17,11 @@ import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
-import { ModalController, ActionSheetController } from '@ionic/angular';
+import { ModalController, ActionSheetController } from '@ionic/angular/lazy';
 import { ProductImagesPopup } from '../product-pictures-popup/product-images-popup.component';
 
 @Component({
+	standalone: false,
 	selector: 'page-create-product-type-popup',
 	templateUrl: 'create-product-type-popup.html',
 	styleUrls: ['./create-product-type-popup.scss'],
@@ -69,14 +70,14 @@ export class CreateProductTypePopupPage implements OnInit {
 		private warehouseProductsRouter: WarehouseProductsRouter,
 		private warehouseRouter: WarehouseRouter,
 		public modalCtrl: ModalController,
-		private camera: Camera,
+		private photos: PhotoService,
 		public actionSheetCtrl: ActionSheetController,
 		private translate: TranslateService,
 		private readonly _productsCategorySrvice: ProductsCategoryService
 	) {
 		this.loadMerchantSettings();
 
-		this.translLang = this.translate.currentLang;
+		this.translLang = this.translate.getCurrentLang();
 		this.currentLocale =
 			this.localeTranslateService.takeSelectedLang(this.translLang) ||
 			'en-US';
@@ -318,29 +319,14 @@ export class CreateProductTypePopupPage implements OnInit {
 		this.cancelModal();
 	}
 
-	takePicture(sourceType: number) {
-		const options: CameraOptions = {
-			quality: 50,
-			destinationType: this.camera.DestinationType.DATA_URL,
-			encodingType: this.camera.EncodingType.JPEG,
-			mediaType: this.camera.MediaType.PICTURE,
-			correctOrientation: true,
-			sourceType,
-		};
-
-		this.camera.getPicture(options).then(
-			async (imageData) => {
-				const base64Image = 'data:image/jpeg;base64,' + imageData;
-				const file = await this.urltoFile(
-					base64Image,
-					this.createFileName(),
-					'image/jpeg'
-				);
-				const fileItem = new FileItem(this.uploader, file, {});
-				this.uploader.queue.push(fileItem);
-			},
-			(err) => {}
-		);
+	takePicture(sourceType: PhotoSource) {
+		this.photos.pick(sourceType).then((file) => {
+			if (!file) {
+				return;
+			}
+			const fileItem = new FileItem(this.uploader, file, this.uploader.options);
+			this.uploader.queue.push(fileItem);
+		});
 	}
 
 	urltoFile(url, filename, mimeType) {
@@ -361,14 +347,14 @@ export class CreateProductTypePopupPage implements OnInit {
 					text: 'Load from Library',
 					handler: () => {
 						this.takePicture(
-							this.camera.PictureSourceType.PHOTOLIBRARY
+							'library'
 						);
 					},
 				},
 				{
 					text: 'Use Camera',
 					handler: () => {
-						this.takePicture(this.camera.PictureSourceType.CAMERA);
+						this.takePicture('camera');
 					},
 				},
 				{ text: 'Cancel', role: 'cancel' },

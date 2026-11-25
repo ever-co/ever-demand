@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Mixpanel } from '@ionic-native/mixpanel/ngx';
+import { AnalyticsService } from '../../services/native/analytics.service';
 import Order from '@modules/server.common/entities/Order';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
@@ -11,12 +11,12 @@ import { OrdersFilterModes } from '../../filters/orders-filters';
 import * as _ from 'lodash';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { Store } from '../../../src/services/store.service';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { BarcodeScanService } from '../../services/native/barcode-scan.service';
 import Product from '@modules/server.common/entities/Product';
-import { PopoverController, ModalController } from '@ionic/angular';
+import { PopoverController, ModalController } from '@ionic/angular/lazy';
 import { CreateProductTypePopupPage } from './create-product-type-popup/create-product-type-popup';
 import { EditProductTypePopupPage } from './edit-product-type-popup/edit-product-type-popup';
-import { WarehousesService } from 'services/warehouses.service';
+import { WarehousesService } from '../../services/warehouses.service';
 
 export enum OrderState {
 	WarehousePreparation,
@@ -38,6 +38,7 @@ export enum OrderStatus {
 }
 
 @Component({
+	standalone: false,
 	selector: 'page-warehouse',
 	templateUrl: './warehouse.html',
 	styleUrls: ['./warehouse.scss'],
@@ -67,10 +68,10 @@ export class WarehousePage implements OnInit {
 		public modalCtrl: ModalController,
 		private orderRouter: OrderRouter,
 		private warehouseProductsRouter: WarehouseProductsRouter,
-		private mixpanel: Mixpanel,
+		private mixpanel: AnalyticsService,
 		private translateProductLocales: ProductLocalesService,
 		private store: Store,
-		private barcodeScanner: BarcodeScanner,
+		private barcodeScanner: BarcodeScanService,
 		private warehouseService: WarehousesService
 	) {}
 

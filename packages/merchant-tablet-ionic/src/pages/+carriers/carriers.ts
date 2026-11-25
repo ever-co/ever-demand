@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { bindViewCell } from '../../components/table-components/smart-table';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { takeUntil, first } from 'rxjs/operators';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource, Settings } from 'angular2-smart-table';
 import { Observable, Subject, forkJoin } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { PhoneComponent } from '../../components/carriers-table/phone';
@@ -11,21 +12,22 @@ import { DeliveriesComponent } from '../../components/carriers-table/deliveries'
 import { ImageComponent } from '../../components/carriers-table/image';
 import { WarehouseCarriersRouter } from '@modules/client.common.angular2/routers/warehouse-carriers-router.service';
 import { Store } from '../../../src/services/store.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 import { AddCarriersPopupPage } from './add-carriers-popup/add-carriers-popup';
 import { CarrierEditPopupPage } from './carrier-edit-popup/carrier-edit-popup';
 import { CarrierTrackPopup } from './carrier-track-popup/carrier-track-popup';
 import { Router } from '@angular/router';
-import { ConfirmDeletePopupPage } from 'components/confirm-delete-popup/confirm-delete-popup';
+import { ConfirmDeletePopupPage } from '../../components/confirm-delete-popup/confirm-delete-popup';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 
 @Component({
+	standalone: false,
 	selector: 'page-carriers',
 	templateUrl: 'carriers.html',
 	styleUrls: ['./carriers.scss'],
 })
 export class CarriersPage implements OnInit, OnDestroy {
-	settingsSmartTable: object;
+	settingsSmartTable: Settings;
 	sourceSmartTable = new LocalDataSource();
 	carriers: Carrier[];
 	showNoDeliveryIcon: boolean;
@@ -170,7 +172,6 @@ export class CarriersPage implements OnInit, OnDestroy {
 						mode: 'external',
 						edit: {
 							editButtonContent: '<i class="fa fa-edit"></i>',
-							confirmEdit: true,
 						},
 						delete: {
 							deleteButtonContent: '<i class="fa fa-trash"></i>',
@@ -180,7 +181,7 @@ export class CarriersPage implements OnInit, OnDestroy {
 							custom: [
 								{
 									name: 'track',
-									title: '<i class="fa fa-map-marker"></i>',
+									customButtonContent: '<i class="fa fa-map-marker"></i>',
 								},
 							],
 						},
@@ -189,31 +190,36 @@ export class CarriersPage implements OnInit, OnDestroy {
 								title: image,
 								type: 'custom',
 								renderComponent: ImageComponent,
-								filter: false,
+								componentInitFunction: bindViewCell(),
+								isFilterable: false,
 							},
 							name: { title: name },
 							phone: {
 								title: phone,
 								type: 'custom',
 								renderComponent: PhoneComponent,
+								componentInitFunction: bindViewCell(),
 							},
 							addresses: {
 								title: addresses,
 								type: 'custom',
 								renderComponent: AddressesComponent,
+								componentInitFunction: bindViewCell(),
 							},
 							status: {
 								title: status,
 								class: 'text-center',
 								type: 'custom',
 								renderComponent: StatusComponent,
+								componentInitFunction: bindViewCell(),
 							},
 							deliveries: {
 								title: deliveries,
 								class: 'text-center',
-								filter: false,
+								isFilterable: false,
 								type: 'custom',
 								renderComponent: DeliveriesComponent,
+								componentInitFunction: bindViewCell(),
 							},
 						},
 						pager: {

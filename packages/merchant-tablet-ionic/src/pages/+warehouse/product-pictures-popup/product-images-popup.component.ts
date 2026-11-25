@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 import { IProductImage } from '@modules/server.common/interfaces/IProduct';
 
 @Component({
+	standalone: false,
 	selector: 'product-images-popup',
 	templateUrl: 'product-images-popup.component.html',
 	styleUrls: ['./product-images-popu.component.scss'],

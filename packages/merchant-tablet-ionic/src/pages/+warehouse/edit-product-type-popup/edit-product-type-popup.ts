@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { FileUploader, FileUploaderOptions, FileItem } from 'ng2-file-upload';
 
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { PhotoService, PhotoSource } from '../../../services/native/photo.service';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import {
 	IProductDescription,
@@ -26,10 +26,11 @@ import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import { first } from 'rxjs/operators';
 import { ProductsCategoryService } from '../../../services/products-category.service';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
-import { ModalController, ActionSheetController } from '@ionic/angular';
+import { ModalController, ActionSheetController } from '@ionic/angular/lazy';
 import { ProductImagesPopup } from '../product-pictures-popup/product-images-popup.component';
 
 @Component({
+	standalone: false,
 	selector: 'page-edit-product-type-popup',
 	templateUrl: 'edit-product-type-popup.html',
 	styleUrls: ['./edit-product-type-popup.scss'],
@@ -70,7 +71,7 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 		private warehouseProductsRouter: WarehouseProductsRouter,
 		private readonly _productsCategorySrvice: ProductsCategoryService,
 		public modalController: ModalController,
-		private camera: Camera,
+		private photos: PhotoService,
 		public actionSheetCtrl: ActionSheetController,
 		public readonly localeTranslateService: ProductLocalesService,
 		private translate: TranslateService
@@ -201,7 +202,7 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 		this.lastProductPrice = this.warehouseProduct.price;
 		this.lastProductDescription = this.product.description;
 		this.lastProductTitle = this.product.title;
-		this.translLang = this.translate.currentLang;
+		this.translLang = this.translate.getCurrentLang();
 		this.takaProductDelivery = this.warehouseProduct.isDeliveryRequired;
 		this.takaProductTakeaway = this.warehouseProduct.isTakeaway;
 
@@ -277,24 +278,12 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 		}
 	}
 
-	takePicture(sourceType: number) {
-		const options: CameraOptions = {
-			quality: 50,
-			destinationType: this.camera.DestinationType.DATA_URL,
-			encodingType: this.camera.EncodingType.JPEG,
-			mediaType: this.camera.MediaType.PICTURE,
-			correctOrientation: true,
-			sourceType,
-		};
-
-		this.camera.getPicture(options).then(async (imageData) => {
-			const base64Image = 'data:image/jpeg;base64,' + imageData;
-			const file = await this.urltoFile(
-				base64Image,
-				this.createFileName(),
-				'image/jpeg'
-			);
-			const fileItem = new FileItem(this.uploader, file, {});
+	takePicture(sourceType: PhotoSource) {
+		this.photos.pick(sourceType).then((file) => {
+			if (!file) {
+				return;
+			}
+			const fileItem = new FileItem(this.uploader, file, this.uploader.options);
 			this.uploader.queue.push(fileItem);
 		});
 	}
@@ -317,14 +306,14 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 					text: 'Load from Library',
 					handler: () => {
 						this.takePicture(
-							this.camera.PictureSourceType.PHOTOLIBRARY
+							'library'
 						);
 					},
 				},
 				{
 					text: 'Use Camera',
 					handler: () => {
-						this.takePicture(this.camera.PictureSourceType.CAMERA);
+						this.takePicture('camera');
 					},
 				},
 				{ text: 'Cancel', role: 'cancel' },

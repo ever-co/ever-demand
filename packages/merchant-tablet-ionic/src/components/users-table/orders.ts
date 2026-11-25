@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from '../table-components/smart-table';
 import User from '@modules/server.common/entities/User';
 import Order from '@modules/server.common/entities/Order';
-import { ModalController } from '@ionic/angular';
-import { CustomerDeliveriesPopupPage } from 'pages/+customers/customer-deliveries-popup/customer-deliveries-popup';
+import { ModalController } from '@ionic/angular/lazy';
+import { CustomerDeliveriesPopupPage } from '../../pages/+customers/customer-deliveries-popup/customer-deliveries-popup';
 
 @Component({
+	standalone: false,
 	template: `
 		<div class="text-center">
 			<span class="ordersCount" (click)="showDeliveriesInfo(user)">{{

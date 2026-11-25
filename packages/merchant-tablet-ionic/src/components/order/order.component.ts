@@ -4,6 +4,7 @@ import DeliveryType from '@modules/server.common/enums/DeliveryType';
 type SegmentSection = 'options' | 'select/add' | 'type' | 'order';
 
 @Component({
+	standalone: false,
 	selector: 'order',
 	styleUrls: ['./order.component.scss'],
 	templateUrl: './order.component.html',

@@ -5,11 +5,12 @@ import OrderBarcodeTypes, {
 } from '@modules/server.common/enums/OrderBarcodeTypes';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import QRCode from 'qrcode';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
-import { AlertController } from '@ionic/angular';
+import { BarcodeScanService } from '../../../services/native/barcode-scan.service';
+import { AlertController } from '@ionic/angular/lazy';
 import { Store } from '../../../services/store.service';
 
 @Component({
+	standalone: false,
 	selector: 'merchant-settings',
 	templateUrl: 'settings.html',
 	styleUrls: ['settings.scss'],
@@ -36,7 +37,7 @@ export class SettingsComponent implements AfterViewInit {
 	constructor(
 		private warehouseRouter: WarehouseRouter,
 		public alertController: AlertController,
-		private barcodeScanner: BarcodeScanner,
+		private barcodeScanner: BarcodeScanService,
 		private store: Store
 	) {}
 

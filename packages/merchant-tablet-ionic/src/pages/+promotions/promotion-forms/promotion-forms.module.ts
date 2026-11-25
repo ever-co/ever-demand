@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BasicInfoFormComponent } from './basic-info/basic-info-form.component';
 import { DetailsInfoFormComponent } from './details-info/details-info-form.component';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular/lazy';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
-import { FileUploaderModule } from 'components/file-uploader/file-uploader.module';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
+import { FileUploaderModule } from '../../../components/file-uploader/file-uploader.module';
 import { CommonModule } from '@angular/common';
 
 const COMPONENTS = [BasicInfoFormComponent, DetailsInfoFormComponent];

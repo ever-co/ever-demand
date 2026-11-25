@@ -16,6 +16,7 @@ import { takeUntil } from 'rxjs/operators';
 
 const showOrdersNumber: number = 10;
 @Component({
+	standalone: false,
 	selector: 'merchant-relevant-orders',
 	templateUrl: 'relevant-orders.component.html',
 	styleUrls: ['./relevant-orders.component.scss'],

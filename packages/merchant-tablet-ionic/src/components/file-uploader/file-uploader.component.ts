@@ -7,15 +7,16 @@ import {
 	OnInit,
 } from '@angular/core';
 import { FileUploader, FileUploaderOptions, FileItem } from 'ng2-file-upload';
-import { environment } from 'environments/environment';
+import { environment } from '../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
-import { ActionSheetController } from '@ionic/angular';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { ActionSheetController } from '@ionic/angular/lazy';
+import { PhotoService, PhotoSource } from '../../services/native/photo.service';
 import { IProductImage } from '@modules/server.common/interfaces/IProduct';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { NgModel } from '@angular/forms';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-file-uploader',
 	templateUrl: './file-uploader.component.html',
 	styleUrls: ['./file-uploader.component.scss'],
@@ -53,7 +54,7 @@ export class FileUploaderComponent implements OnInit {
 	constructor(
 		private translateService: TranslateService,
 		private actionSheetCtrl: ActionSheetController,
-		private camera: Camera,
+		private photos: PhotoService,
 		public readonly localeTranslateService: ProductLocalesService
 	) {}
 
@@ -118,14 +119,14 @@ export class FileUploaderComponent implements OnInit {
 					text: 'Load from Library',
 					handler: () => {
 						this._takePicture(
-							this.camera.PictureSourceType.PHOTOLIBRARY
+							'library'
 						);
 					},
 				},
 				{
 					text: 'Use Camera',
 					handler: () => {
-						this._takePicture(this.camera.PictureSourceType.CAMERA);
+						this._takePicture('camera');
 					},
 				},
 				{ text: 'Cancel', role: 'cancel' },
@@ -178,30 +179,15 @@ export class FileUploaderComponent implements OnInit {
 		return translationResult;
 	}
 
-	private _takePicture(sourceType: number) {
-		const options: CameraOptions = {
-			quality: 50,
-			destinationType: this.camera.DestinationType.DATA_URL,
-			encodingType: this.camera.EncodingType.JPEG,
-			mediaType: this.camera.MediaType.PICTURE,
-			correctOrientation: true,
-			sourceType,
-		};
-
-		this.camera.getPicture(options).then(
-			async (imageData) => {
-				const base64Image = 'data:image/jpeg;base64,' + imageData;
-				const file = await this._urltoFile(
-					base64Image,
-					this._createFileName(),
-					'image/jpeg'
-				);
-				const fileItem = new FileItem(this.uploader, file, {});
-				this.uploader.queue.push(fileItem);
-				this.imageUrlChanged();
-			},
-			(err) => {}
-		);
+	private _takePicture(sourceType: PhotoSource) {
+		this.photos.pick(sourceType).then((file) => {
+			if (!file) {
+				return;
+			}
+			const fileItem = new FileItem(this.uploader, file, this.uploader.options);
+			this.uploader.queue.push(fileItem);
+			this.imageUrlChanged();
+		});
 	}
 
 	private _urltoFile(url, filename, mimeType) {

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnDestroy } from '@angular/core';
+import { bindViewCell } from '../../../../components/table-components/smart-table';
 import { DomSanitizer } from '@angular/platform-browser';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
@@ -7,15 +8,16 @@ import { AddressComponent } from './address.component';
 import { Store } from '../../../../services/store.service';
 import { first, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource, Settings } from 'angular2-smart-table';
 import { forkJoin, Subject, Observable } from 'rxjs';
 
 @Component({
+	standalone: false,
 	selector: 'carriers-catalog',
 	templateUrl: 'carriers-catalog.html',
 })
 export class CarriersCatalogComponent implements OnDestroy {
-	settingsSmartTable: object;
+	settingsSmartTable: Settings;
 	sourceSmartTable = new LocalDataSource();
 	selecteCarriers: Carrier[];
 	hasChanges: EventEmitter<boolean> = new EventEmitter();
@@ -61,18 +63,20 @@ export class CarriersCatalogComponent implements OnDestroy {
 							title: address,
 							type: 'custom',
 							renderComponent: AddressComponent,
+							componentInitFunction: bindViewCell(),
 						},
 						logo: {
 							title: logo,
 							type: 'html',
-							valuePrepareFunction: (_, carrier: Carrier) => {
+							valuePrepareFunction: (_, cell) => {
+								const carrier = cell.getRow().getData() as Carrier;
 								return this._sanitizer.bypassSecurityTrustHtml(
 									`<div class='text-center'>
 								<img src="${carrier.logo}" alt="Product Image" class='logo'">
 							<div>`
-								);
+								) as unknown as string;
 							},
-							filter: false,
+							isFilterable: false,
 						},
 					},
 					pager: {

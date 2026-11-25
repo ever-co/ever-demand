@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { getIdFromTheDate } from '@modules/server.common/utils';
 
 @Component({
+	standalone: false,
 	selector: 'order-title',
 	styleUrls: ['./order-title.scss'],
 	templateUrl: 'order-title.html',

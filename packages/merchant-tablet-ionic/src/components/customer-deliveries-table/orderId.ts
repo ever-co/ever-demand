@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from '../table-components/smart-table';
 
 @Component({
+	standalone: false,
 	template: ` <strong *ngIf="orderId">{{ orderId }}</strong> `,
 })
 export class OrderIdComponent implements ViewCell, OnInit {

@@ -27,6 +27,7 @@ import { isEmpty } from 'lodash';
 import Carrier from '@modules/server.common/entities/Carrier';
 
 @Component({
+	standalone: false,
 	selector: 'carrier-location-form',
 	styleUrls: ['./location-form.component.scss'],
 	templateUrl: 'location-form.component.html',

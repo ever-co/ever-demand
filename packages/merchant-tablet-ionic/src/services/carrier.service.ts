@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Apollo, gql } from 'apollo-angular';
+import { Apollo, gql, onlyCompleteData } from 'apollo-angular';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { Observable } from 'rxjs';
 import { map, share } from 'rxjs/operators';
@@ -38,6 +38,8 @@ export class CarrierService {
 			pollInterval: 1000,
 		})
 		.valueChanges.pipe(
+			// Apollo Client 4 also emits loading/partial results
+			onlyCompleteData(),
 			map((res) => res.data.getCarriers),
 			map((carriers) => carriers.map((c) => this._carrierFactory(c))),
 			share()

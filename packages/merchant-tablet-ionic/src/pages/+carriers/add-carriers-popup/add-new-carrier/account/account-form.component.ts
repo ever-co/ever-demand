@@ -11,6 +11,7 @@ import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
+	standalone: false,
 	selector: 'account-form',
 	styleUrls: ['./account-form.component.scss'],
 	templateUrl: 'account-form.component.html',

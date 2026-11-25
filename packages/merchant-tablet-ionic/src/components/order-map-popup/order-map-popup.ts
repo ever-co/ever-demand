@@ -9,11 +9,12 @@ import {
 	LoadingController,
 	ActionSheetController,
 	ModalController,
-} from '@ionic/angular';
+} from '@ionic/angular/lazy';
 
 declare var google: any;
 
 @Component({
+	standalone: false,
 	selector: 'order-map-popup',
 	templateUrl: 'order-map-popup.html',
 	styleUrls: ['./order-map-popup.scss'],

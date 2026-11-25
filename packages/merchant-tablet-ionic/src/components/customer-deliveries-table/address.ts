@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from '../table-components/smart-table';
 import Order from '@modules/server.common/entities/Order';
 import User from '@modules/server.common/entities/User';
 
 @Component({
+	standalone: false,
 	template: `
 		<span class="nameAddress">
 			<span *ngIf="order.isCompleted" class="address">{{

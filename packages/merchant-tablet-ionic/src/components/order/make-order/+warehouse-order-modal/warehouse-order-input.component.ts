@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from '../../../table-components/smart-table';
 
 @Component({
+	standalone: false,
 	styles: ['.order-input-wrapper { text-align: center; }'],
 	template: `
 		<div class="order-input-wrapper">

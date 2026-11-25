@@ -11,12 +11,13 @@ import { CarrierService } from '../../../src/services/carrier.service';
 import { Subject, Subscription } from 'rxjs';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { ActivatedRoute, Router } from '@angular/router';
-import { WarehousesService } from 'services/warehouses.service';
+import { WarehousesService } from '../../services/warehouses.service';
 import { WarehouseOrdersService } from '../../services/warehouse-orders.service';
 
 declare var google: any;
 
 @Component({
+	standalone: false,
 	selector: 'page-track',
 	templateUrl: 'track.html',
 	styleUrls: ['./track.scss'],

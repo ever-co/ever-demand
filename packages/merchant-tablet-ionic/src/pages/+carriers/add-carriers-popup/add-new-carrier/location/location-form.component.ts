@@ -26,11 +26,12 @@ import {
 } from '@modules/server.common/entities/GeoLocation';
 
 import { isEmpty } from 'lodash';
-import { Store } from 'services/store.service';
+import { Store } from '../../../../../services/store.service';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { first } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'carrier-location-form',
 	styleUrls: ['./location-form.component.scss'],
 	templateUrl: 'location-form.component.html',

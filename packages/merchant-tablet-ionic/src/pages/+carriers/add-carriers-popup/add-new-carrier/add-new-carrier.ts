@@ -17,6 +17,7 @@ import { Subject } from 'rxjs';
 import { LocationFormComponent } from './location/location-form.component';
 
 @Component({
+	standalone: false,
 	selector: 'add-new-carrier',
 	templateUrl: './add-new-carrier.html',
 	styleUrls: ['./add-new-carrier.scss'],

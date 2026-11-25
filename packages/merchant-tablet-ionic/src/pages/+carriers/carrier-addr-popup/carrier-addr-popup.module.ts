@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CarrierAddrPopupPage } from './carrier-addr-popup';
-import { TranslateModule } from '@ngx-translate/core';
-import { IonicModule } from '@ionic/angular';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
+import { IonicModule } from '@ionic/angular/lazy';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 

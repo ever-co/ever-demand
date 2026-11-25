@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 import IOrder from '@modules/server.common/interfaces/IOrder';
-import { ModalController } from '@ionic/angular';
-import { OrderMapPopupPage } from 'components/order-map-popup/order-map-popup';
+import { ModalController } from '@ionic/angular/lazy';
+import { OrderMapPopupPage } from '../../order-map-popup/order-map-popup';
 
 @Component({
+	standalone: false,
 	selector: 'carrier-info',
 	styleUrls: ['./carrier-info.scss'],
 	templateUrl: 'carrier-info.html',

@@ -4,14 +4,15 @@ import PaymentGateways, {
 	paymentGatewaysToString,
 	paymentGatewaysLogo,
 } from '@modules/server.common/enums/PaymentGateways';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 import { PaymentMutationComponent } from './mutation/mutation';
-import { ConfirmDeletePopupPage } from 'components/confirm-delete-popup/confirm-delete-popup';
+import { ConfirmDeletePopupPage } from '../../../confirm-delete-popup/confirm-delete-popup';
 import { countriesDefaultCurrencies } from '@modules/server.common/entities/Currency';
 import { Country } from '@modules/server.common/entities';
 import { first } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'merchant-payments-settings',
 	templateUrl: 'payments.html',
 	styleUrls: ['payments.scss'],

@@ -10,12 +10,13 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { UserAuthRouter } from '@modules/client.common.angular2/routers/user-auth-router.service';
 import { BasicInfoFormComponent } from '../forms/basic-info/basic-info-form.component';
 import { LocationFormComponent } from '../forms/location/location-form.component';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular/lazy';
 import User from '@modules/server.common/entities/User';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { getDummyImage } from '@modules/server.common/utils';
 
 @Component({
+	standalone: false,
 	selector: 'user-mutation',
 	templateUrl: './user-mutation.component.html',
 	styleUrls: ['./user-mutation.component.scss'],

@@ -7,10 +7,11 @@ import {
 } from '@angular/forms';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
-import { AlertController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular/lazy';
 import { Store } from '../../../services/store.service';
 
 @Component({
+	standalone: false,
 	selector: 'merchant-common',
 	templateUrl: 'common.html',
 })

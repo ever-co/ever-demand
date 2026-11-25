@@ -4,6 +4,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 
 @Component({
+	standalone: false,
 	selector: 'order-canceled',
 	templateUrl: 'order-canceled.html',
 })

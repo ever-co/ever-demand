@@ -93,13 +93,13 @@
 		background: rgb(255, 202, 105) !important;
 	}
 
-	.ng2-smart-pagination-nav {
+	.angular2-smart-pagination-nav {
 		li {
 			width: 50% !important;
 		}
 	}
 
-	.ng2-smart-titles {
+	.angular2-smart-titles {
 		height: 55px !important;
 	}
 
@@ -130,21 +130,21 @@
 	color: white;
 }
 
-.ng2-smart-th.status input,
-.ng2-smart-th.deliveries input {
+.angular2-smart-th.status input,
+.angular2-smart-th.deliveries input {
 	text-align: center;
 }
 
-.ng2-smart-actions-title a {
+.angular2-smart-actions-title a {
 	padding: 0 !important;
 }
 
-.ng2-smart-actions {
+.angular2-smart-actions {
 	display: flex;
 	align-items: center;
 }
 
-.ng2-smart-actions {
+.angular2-smart-actions {
 	display: flex;
 	justify-content: space-between;
 	height: 83px;
@@ -163,13 +163,13 @@
 		align-items: center;
 		justify-content: center;
 	}
-	ng2-st-tbody-custom {
+	angular2-st-tbody-custom {
 		width: calc(33% + 0.5%);
 		display: flex !important;
 		align-items: center !important;
 		justify-content: center !important;
 	}
-	ng2-st-tbody-edit-delete {
+	angular2-st-tbody-edit-delete {
 		width: calc(66% + 0.5%);
 		display: flex;
 		justify-content: space-around;

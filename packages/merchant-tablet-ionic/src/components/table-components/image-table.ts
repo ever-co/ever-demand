@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from './smart-table';
 
 @Component({
+	standalone: false,
 	selector: 'image-table',
 	styles: ['img { width: 64px; height: 64px}'],
 	template: `

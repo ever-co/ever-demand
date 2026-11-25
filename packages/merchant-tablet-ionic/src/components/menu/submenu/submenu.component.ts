@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-submenu',
 	templateUrl: './submenu.component.html',
 	styleUrls: ['./submenu.component.scss'],

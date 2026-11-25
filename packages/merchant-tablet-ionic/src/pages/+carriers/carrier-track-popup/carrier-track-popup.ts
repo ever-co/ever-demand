@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
 
 import Carrier from '@modules/server.common/entities/Carrier';
 import { CarrierService } from '../../../../src/services/carrier.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 import { WarehousesService } from '../../../../src/services/warehouses.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import User from '@modules/server.common/entities/User';
@@ -13,6 +13,7 @@ const directionsDisplay = new google.maps.DirectionsRenderer();
 const directionsService = new google.maps.DirectionsService();
 
 @Component({
+	standalone: false,
 	selector: 'carrier-track-popup',
 	templateUrl: 'carrier-track-popup.html',
 	styleUrls: ['./carrier-track-popup.scss'],

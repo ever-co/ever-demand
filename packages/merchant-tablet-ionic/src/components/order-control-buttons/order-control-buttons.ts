@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
-import { Store } from 'services/store.service';
-import { WarehousesService } from 'services/warehouses.service';
+import { Store } from '../../services/store.service';
+import { WarehousesService } from '../../services/warehouses.service';
 import { map } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'order-control-buttons',
 	templateUrl: 'order-control-buttons.html',
 	styleUrls: ['./order-control-buttons.scss'],

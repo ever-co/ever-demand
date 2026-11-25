@@ -3,10 +3,11 @@ import { Subscription } from 'rxjs';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 import Product from '@modules/server.common/entities/Product';
 
 @Component({
+	standalone: false,
 	selector: 'merchant-top-products',
 	templateUrl: 'top-products.component.html',
 	styleUrls: ['../common/no-orders-info/no-orders-info.component.scss'],

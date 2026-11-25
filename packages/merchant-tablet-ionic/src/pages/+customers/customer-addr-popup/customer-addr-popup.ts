@@ -1,8 +1,9 @@
 import { Component, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 import User from '@modules/server.common/entities/User';
 
 @Component({
+	standalone: false,
 	selector: 'customer-addr-popup',
 	templateUrl: 'customer-addr-popup.html',
 	styleUrls: ['./customer-addr-popup.scss'],

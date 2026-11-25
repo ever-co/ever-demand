@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 
 export interface IConfirmDeleteData {
 	image: string;
@@ -10,6 +10,7 @@ export interface IConfirmDeleteData {
 }
 
 @Component({
+	standalone: false,
 	selector: 'confirm-delete-popup',
 	templateUrl: 'confirm-delete-popup.html',
 	styleUrls: ['./confirm-delete-popup.scss'],

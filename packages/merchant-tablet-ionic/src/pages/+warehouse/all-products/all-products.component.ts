@@ -5,10 +5,11 @@ import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 import { NgxMasonryOptions } from 'ngx-masonry';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 import IWarehouseProduct from '@modules/server.common/interfaces/IWarehouseProduct';
 
 @Component({
+	standalone: false,
 	selector: 'merchant-all-products',
 	templateUrl: 'all-products.component.html',
 	styleUrls: ['all-products.component.scss'],
