@@ -55,7 +55,8 @@ export class PaymentComponent {
 		private readonly _translateProductLocales: ProductLocalesService
 	) {
 		this.getUserCard();
-		this.getStripeCurrency();
+		// Never rejects: a failed load is logged and keeps Pay now disabled
+		void this.getStripeCurrency();
 	}
 
 	async payWithUserCard() {

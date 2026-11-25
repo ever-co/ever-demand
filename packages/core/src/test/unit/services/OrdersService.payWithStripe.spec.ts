@@ -223,6 +223,12 @@ describe('OrdersService.payWithStripe', () => {
 			mockedEnv.STRIPE_CURRENCY = 'usd';
 
 			await expect(service.getStripeCurrency()).resolves.toBe('usd');
+
+			mockedEnv.STRIPE_CURRENCY = 'jpy';
+
+			await expect(service.getStripeCurrency()).rejects.toThrow(
+				/not supported/
+			);
 		});
 
 		it('retries with a new idempotency key after a currency change, and never charges a paid order', async () => {

@@ -311,8 +311,11 @@ export class OrdersService extends DBService<Order>
 	 * @memberof OrdersService
 	 */
 	@asyncListener()
-	async getStripeCurrency(): Promise<string> {
-		return resolveStripeCurrency(env.STRIPE_CURRENCY);
+	getStripeCurrency(): Promise<string> {
+		// A throw in the executor rejects the promise
+		return new Promise<string>((resolve) =>
+			resolve(resolveStripeCurrency(env.STRIPE_CURRENCY))
+		);
 	}
 
 	/**
