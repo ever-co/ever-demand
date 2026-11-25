@@ -17,6 +17,13 @@ import { UserRouter } from '@modules/client.common.angular2/routers/user-router.
 	providedIn: 'root',
 })
 export class Store {
+	// Ids of the orders with a card payment in flight. A page can create a
+	// new PaymentComponent while a payment still runs (takeaway I'm here,
+	// the order popup), so the guard lives here, where every instance
+	// shares it. Kept in memory, not in localStorage, so it never
+	// outlives the app.
+	private readonly _payingOrderIds = new Set<Order['id']>();
+
 	constructor(
 		private readonly _translateService: TranslateService,
 		private readonly platform: Platform,
@@ -223,6 +230,18 @@ export class Store {
 
 	clearMaintenanceMode() {
 		localStorage.removeItem('maintenanceMode');
+	}
+
+	isPaying(orderId: Order['id']): boolean {
+		return this._payingOrderIds.has(orderId);
+	}
+
+	startPaying(orderId: Order['id']): void {
+		this._payingOrderIds.add(orderId);
+	}
+
+	stopPaying(orderId: Order['id']): void {
+		this._payingOrderIds.delete(orderId);
 	}
 
 	clear() {
