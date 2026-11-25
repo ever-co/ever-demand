@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ViewCell } from '../table-components/smart-table';
 import Order from '@modules/server.common/entities/Order';
 
 @Component({
 	standalone: false,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<span>
 			<div class="space">

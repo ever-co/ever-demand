@@ -1,4 +1,10 @@
-import { Component, OnDestroy, Input, OnInit } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { bindViewCell } from '../../../components/table-components/smart-table';
 import User from '@modules/server.common/entities/User';
 import Order from '@modules/server.common/entities/Order';
@@ -19,6 +25,7 @@ import { ModalController } from '@ionic/angular/lazy';
 	standalone: false,
 	selector: 'customer-deliveries-popup',
 	templateUrl: 'customer-deliveries-popup.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./customer-deliveries-popup.scss'],
 })
 export class CustomerDeliveriesPopupPage implements OnInit, OnDestroy {
@@ -41,7 +48,7 @@ export class CustomerDeliveriesPopupPage implements OnInit, OnDestroy {
 	constructor(
 		public modalController: ModalController,
 		private readonly userOrdersRouter: UserOrdersRouter,
-		private readonly translateService: TranslateService
+		private readonly translateService: TranslateService,
 	) {
 		this._loadSettingsSmartTable();
 	}
@@ -131,7 +138,7 @@ export class CustomerDeliveriesPopupPage implements OnInit, OnDestroy {
 		};
 
 		this.ordersCurrentWarehouse = this.orders.filter(
-			(o: Order) => o.warehouse === this.warehouseId
+			(o: Order) => o.warehouse === this.warehouseId,
 		);
 		this.ordersCurrentWarehouse.forEach((o) => {
 			this.totalOrdersSum += o.totalPrice;
@@ -154,7 +161,7 @@ export class CustomerDeliveriesPopupPage implements OnInit, OnDestroy {
 			getTranslate('ORDER_ID'),
 			getTranslate('DELIVERY'),
 			getTranslate('ADDRESS'),
-			getTranslate('STATUS')
+			getTranslate('STATUS'),
 		)
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe(([orderId, delivery, address, status]) => {

@@ -6,6 +6,7 @@ import {
 	OnChanges,
 	Output,
 	EventEmitter,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { WarehouseOrdersService } from '../../../services/warehouse-orders.service';
 import { Store } from '../../../services/store.service';
@@ -17,6 +18,7 @@ import { Subscription } from 'rxjs';
 	standalone: false,
 	selector: 'merchant-all-orders',
 	templateUrl: 'all-orders.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./all-orders.component.scss'],
 })
 export class AllOrdersComponent implements OnInit, OnDestroy, OnChanges {
@@ -48,7 +50,7 @@ export class AllOrdersComponent implements OnInit, OnDestroy, OnChanges {
 
 	constructor(
 		private warehouseOrdersService: WarehouseOrdersService,
-		private store: Store
+		private store: Store,
 	) {}
 
 	ngOnInit() {
@@ -81,7 +83,7 @@ export class AllOrdersComponent implements OnInit, OnDestroy, OnChanges {
 					skip: (page - 1) * 10,
 					limit: 10,
 				},
-				'all'
+				'all',
 			)
 			.subscribe(async (res) => {
 				const orders = res['orders'];
@@ -107,9 +109,10 @@ export class AllOrdersComponent implements OnInit, OnDestroy, OnChanges {
 	}
 
 	private async loadOrdersCount() {
-		this.ordersCount = await this.warehouseOrdersService.getCountOfStoreOrders(
-			this.store.warehouseId,
-			'all'
-		);
+		this.ordersCount =
+			await this.warehouseOrdersService.getCountOfStoreOrders(
+				this.store.warehouseId,
+				'all',
+			);
 	}
 }

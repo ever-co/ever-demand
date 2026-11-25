@@ -144,7 +144,7 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 						<img src="${this._getTranslate(wp.product['images'])}" height="68px"/>
 					`,
 					product: `
-						<span class="float-left">${this._getTranslate(wp.product['title'])}</span>
+						<span class="float-start">${this._getTranslate(wp.product['title'])}</span>
 					`,
 					price: `${wp.price}$`,
 					available: `

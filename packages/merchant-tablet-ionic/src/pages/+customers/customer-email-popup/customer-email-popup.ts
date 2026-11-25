@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ExternalAppsService } from '../../../services/native/external-apps.service';
 import { LoadingController, ModalController } from '@ionic/angular/lazy';
 
@@ -6,6 +11,7 @@ import { LoadingController, ModalController } from '@ionic/angular/lazy';
 	standalone: false,
 	selector: 'customer-email-popup',
 	templateUrl: 'customer-email-popup.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./customer-email-popup.scss'],
 })
 export class CustomerEmailPopupPage implements OnInit {
@@ -17,7 +23,7 @@ export class CustomerEmailPopupPage implements OnInit {
 	constructor(
 		public loadingCtrl: LoadingController,
 		private externalApps: ExternalAppsService,
-		public modalController: ModalController
+		public modalController: ModalController,
 	) {}
 
 	attemptSendMail() {

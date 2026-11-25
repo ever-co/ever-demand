@@ -1,9 +1,14 @@
-import { Component, EventEmitter } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 
 @Component({
 	standalone: false,
 	selector: 'add-choice',
 	templateUrl: 'add-choice.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./add-choice.scss'],
 })
 export class AddChoiceComponent {

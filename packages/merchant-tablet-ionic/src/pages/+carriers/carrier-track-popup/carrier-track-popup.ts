@@ -1,4 +1,11 @@
-import { Component, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	ElementRef,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 
 import Carrier from '@modules/server.common/entities/Carrier';
 import { CarrierService } from '../../../../src/services/carrier.service';
@@ -16,6 +23,7 @@ const directionsService = new google.maps.DirectionsService();
 	standalone: false,
 	selector: 'carrier-track-popup',
 	templateUrl: 'carrier-track-popup.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./carrier-track-popup.scss'],
 })
 export class CarrierTrackPopup implements OnInit {
@@ -39,7 +47,7 @@ export class CarrierTrackPopup implements OnInit {
 	constructor(
 		public modalCtrl: ModalController,
 		private carriersService: CarrierService,
-		private warehouseService: WarehousesService
+		private warehouseService: WarehousesService,
 	) {}
 
 	ngOnInit(): void {
@@ -88,7 +96,7 @@ export class CarrierTrackPopup implements OnInit {
 			const carrierMarker = this.addMarker(
 				this.myLatLng,
 				this.map,
-				this.carrierIcon
+				this.carrierIcon,
 			);
 
 			const carrierInfoWindow = new google.maps.InfoWindow({
@@ -127,7 +135,7 @@ export class CarrierTrackPopup implements OnInit {
 					lng: this.warehouse.geoLocation.loc.coordinates[0],
 				},
 				this.map,
-				this.storeIcon
+				this.storeIcon,
 			);
 
 			warehouseMarker.addListener('click', () => {
@@ -135,13 +143,13 @@ export class CarrierTrackPopup implements OnInit {
 			});
 		} else if (this.carrier.status === 0) {
 			const order = await this.carriersService.getCarrierCurrentOrder(
-				this.carrier.id
+				this.carrier.id,
 			);
 
 			const carrierMarker = this.addMarker(
 				this.myLatLng,
 				this.map,
-				this.carrierIcon
+				this.carrierIcon,
 			);
 
 			const carrierInfoWindow = new google.maps.InfoWindow({
@@ -157,7 +165,7 @@ export class CarrierTrackPopup implements OnInit {
 					lng: this.warehouse.geoLocation.loc.coordinates[0],
 				},
 				this.map,
-				this.storeIcon
+				this.storeIcon,
 			);
 
 			const warehouseInfoContent = `
@@ -198,7 +206,7 @@ export class CarrierTrackPopup implements OnInit {
 						lng: this.user.geoLocation.loc.coordinates[0],
 					},
 					this.map,
-					this.userIcon
+					this.userIcon,
 				);
 				const userInfoContent = `
                                 <div class="carrier-info">
@@ -226,12 +234,12 @@ export class CarrierTrackPopup implements OnInit {
 				});
 				const start = new google.maps.LatLng(
 					this.user.geoLocation.loc.coordinates[1],
-					this.user.geoLocation.loc.coordinates[0]
+					this.user.geoLocation.loc.coordinates[0],
 				);
 
 				const end = new google.maps.LatLng(
 					this.warehouse.geoLocation.loc.coordinates[1],
-					this.warehouse.geoLocation.loc.coordinates[0]
+					this.warehouse.geoLocation.loc.coordinates[0],
 				);
 
 				const request = {

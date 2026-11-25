@@ -4,15 +4,11 @@
 		<ion-row class="paypal-selects">
 			<ion-col>
 				<ion-item>
-					<ion-label class="labels" position="floating"
-						>Mode</ion-label
-					>
-					<ion-select
+					<ion-select labelPlacement="floating"
 						formControlName="mode"
 						[cancelText]="'Cancel'"
 						[okText]="'OK'"
-						[placeholder]="'Choose PayPal mode'"
-					>
+						[placeholder]="'Choose PayPal mode'"><div slot="label" class="labels">Mode</div>
 						<ion-select-option
 							*ngFor="let type of payPalTypes"
 							value="{{ type }}"
@@ -23,14 +19,10 @@
 			</ion-col>
 			<ion-col>
 				<ion-item>
-					<ion-label class="labels" position="floating"
-						>Currency</ion-label
-					>
-					<ion-select
+					<ion-select labelPlacement="floating"
 						formControlName="currency"
 						[cancelText]="'Cancel'"
-						[okText]="'OK'"
-					>
+						[okText]="'OK'"><div slot="label" class="labels">Currency</div>
 						<ion-select-option
 							*ngFor="let code of currenciesCodes"
 							value="{{ code }}"
@@ -43,13 +35,9 @@
 		<ion-row>
 			<ion-col>
 				<ion-item>
-					<ion-label class="labels" position="floating"
-						>Publishable key</ion-label
-					>
-					<ion-input
+					<ion-input labelPlacement="floating"
 						type="text"
-						formControlName="publishableKey"
-					></ion-input>
+						formControlName="publishableKey"><div slot="label" class="labels">Publishable key</div></ion-input>
 				</ion-item>
 				<div
 					*ngIf="
@@ -67,13 +55,9 @@
 		<ion-row>
 			<ion-col>
 				<ion-item>
-					<ion-label class="labels" position="floating"
-						>Secret key</ion-label
-					>
-					<ion-input
+					<ion-input labelPlacement="floating"
 						type="text"
-						formControlName="secretKey"
-					></ion-input>
+						formControlName="secretKey"><div slot="label" class="labels">Secret key</div></ion-input>
 				</ion-item>
 				<div
 					*ngIf="
@@ -91,13 +75,9 @@
 		<ion-row>
 			<ion-col>
 				<ion-item>
-					<ion-label class="labels" position="floating"
-						>Payment description</ion-label
-					>
-					<ion-input
+					<ion-input labelPlacement="floating"
 						type="text"
-						formControlName="description"
-					></ion-input>
+						formControlName="description"><div slot="label" class="labels">Payment description</div></ion-input>
 				</ion-item>
 				<div
 					*ngIf="

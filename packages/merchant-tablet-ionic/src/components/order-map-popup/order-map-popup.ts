@@ -1,4 +1,11 @@
-import { Component, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	ElementRef,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 
 import Order from '@modules/server.common/entities/Order';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
@@ -17,6 +24,7 @@ declare var google: any;
 	standalone: false,
 	selector: 'order-map-popup',
 	templateUrl: 'order-map-popup.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./order-map-popup.scss'],
 })
 export class OrderMapPopupPage implements OnInit {
@@ -43,7 +51,7 @@ export class OrderMapPopupPage implements OnInit {
 		public loadingCtrl: LoadingController,
 		public actionSheetCtrl: ActionSheetController,
 		public warehouseRouter: WarehouseRouter,
-		public modalController: ModalController
+		public modalController: ModalController,
 	) {}
 
 	ngOnInit(): void {
@@ -67,21 +75,21 @@ export class OrderMapPopupPage implements OnInit {
 			this.marker = this.addMarker(
 				new google.maps.LatLng(cLat, cLng),
 				this.map,
-				carierIcon
+				carierIcon,
 			);
 
 			const [uLng, uLat] = user.geoLocation.loc.coordinates;
 			this.userMarker = this.addMarker(
 				new google.maps.LatLng(uLat, uLng),
 				this.map,
-				userIcon
+				userIcon,
 			);
 
 			const [wLng, wLat] = warehouse['geoLocation'].loc.coordinates;
 			this.warehouseMarker = this.addMarker(
 				new google.maps.LatLng(wLat, wLng),
 				this.map,
-				warehouseIcon
+				warehouseIcon,
 			);
 
 			const bounds = new google.maps.LatLngBounds();

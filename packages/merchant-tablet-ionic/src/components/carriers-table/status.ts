@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ViewCell } from '../table-components/smart-table';
 import Carrier from '@modules/server.common/entities/Carrier';
 
 @Component({
 	standalone: false,
 	styles: [``],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<div class="text-center" [ngSwitch]="carrier.status">
 			<span class="work" *ngSwitchCase="0">{{

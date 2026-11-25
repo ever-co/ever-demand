@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import Order from '@modules/server.common/entities/Order';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
@@ -7,6 +7,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 	standalone: false,
 	selector: 'order-without-carrier',
 	templateUrl: 'order-without-carrier.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./order-without-carrier.scss'],
 })
 export class OrderWithoutCarrierComponent {

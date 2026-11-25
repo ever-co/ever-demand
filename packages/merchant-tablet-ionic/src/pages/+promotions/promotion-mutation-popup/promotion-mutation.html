@@ -28,7 +28,7 @@
 		<ion-col class="text-center mb-3">
 			<ion-button
 				color="light"
-				class="mr-2"
+				class="me-2"
 				*ngIf="!isNextStepAvailable"
 				(click)="isNextStepAvailable = true"
 			>
@@ -36,7 +36,7 @@
 			</ion-button>
 			<ion-button
 				color="light"
-				class="mr-2"
+				class="me-2"
 				*ngIf="isNextStepAvailable"
 				(click)="isNextStepAvailable = false"
 				[disabled]="basicInfo.invalid"

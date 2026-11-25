@@ -5,6 +5,7 @@ import {
 	OnDestroy,
 	Output,
 	EventEmitter,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import {
 	FormGroup,
@@ -21,6 +22,7 @@ import { takeUntil } from 'rxjs/operators';
 	standalone: false,
 	selector: 'e-cu-stripe-gateway',
 	templateUrl: './stripe.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['stripe.scss', '../mutation/mutation.scss'],
 })
 export class StripeGatewayComponent implements OnInit, OnDestroy {

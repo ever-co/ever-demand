@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ModalController } from '@ionic/angular/lazy';
 import PaymentGateways, {
 	paymentGatewaysToString,
@@ -12,6 +12,7 @@ import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaym
 	standalone: false,
 	selector: 'merchant-payments-mutation',
 	templateUrl: 'mutation.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['mutation.scss'],
 })
 export class PaymentMutationComponent {
@@ -26,7 +27,7 @@ export class PaymentMutationComponent {
 
 	constructor(
 		public modalController: ModalController,
-		private currenciesService: CurrenciesService
+		private currenciesService: CurrenciesService,
 	) {
 		this.loadCurrenciesCodes();
 	}

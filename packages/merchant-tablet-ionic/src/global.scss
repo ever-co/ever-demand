@@ -20,7 +20,6 @@
 @import '@ionic/angular/css/text-transformation.css';
 @import '@ionic/angular/css/flex-utils.css';
 
-$fa-font-path: './assets/fonts' !default;
 
 @import '@ever-platform/common-angular/src/scss/everbie.common';
 
@@ -1233,4 +1232,19 @@ tbody {
 	.map-wrapper .g-map {
 		height: 190px !important;
 	}
+}
+
+// Bootstrap 4 classes that Bootstrap 5 dropped and the app still renders (the order tables
+// build their badge HTML as strings and parse it back).
+.badge-pill {
+	border-radius: 10rem;
+}
+
+.badge-secondary {
+	color: #fff;
+	background-color: #6c757d;
+}
+
+.form-group {
+	margin-bottom: 1rem;
 }

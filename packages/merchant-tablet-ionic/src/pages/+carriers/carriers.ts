@@ -1,4 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { bindViewCell } from '../../components/table-components/smart-table';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { takeUntil, first } from 'rxjs/operators';
@@ -24,6 +29,7 @@ import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehou
 	standalone: false,
 	selector: 'page-carriers',
 	templateUrl: 'carriers.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./carriers.scss'],
 })
 export class CarriersPage implements OnInit, OnDestroy {
@@ -40,7 +46,7 @@ export class CarriersPage implements OnInit, OnDestroy {
 		private readonly warehouseCarriersRouter: WarehouseCarriersRouter,
 		private readonly _translateService: TranslateService,
 		private readonly store: Store,
-		private warehouseRouter: WarehouseRouter
+		private warehouseRouter: WarehouseRouter,
 	) {}
 
 	get deviceId() {
@@ -97,7 +103,7 @@ export class CarriersPage implements OnInit, OnDestroy {
 				.toPromise();
 
 			merchant.usedCarriersIds = merchant.usedCarriersIds.filter(
-				(x) => x !== carrierId
+				(x) => x !== carrierId,
 			);
 
 			await this.warehouseRouter.save(merchant, this.store.token);
@@ -163,7 +169,7 @@ export class CarriersPage implements OnInit, OnDestroy {
 			getTranslate('PHONE_NUMBER'),
 			getTranslate('ADDRESSES'),
 			getTranslate('STATUS'),
-			getTranslate('DELIVERIES')
+			getTranslate('DELIVERIES'),
 		)
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe(
@@ -181,7 +187,8 @@ export class CarriersPage implements OnInit, OnDestroy {
 							custom: [
 								{
 									name: 'track',
-									customButtonContent: '<i class="fa fa-map-marker"></i>',
+									customButtonContent:
+										'<i class="fa fa-map-marker"></i>',
 								},
 							],
 						},
@@ -227,7 +234,7 @@ export class CarriersPage implements OnInit, OnDestroy {
 							perPage: 14,
 						},
 					};
-				}
+				},
 			);
 	}
 }

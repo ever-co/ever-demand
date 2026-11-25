@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
 	IPromotion,
@@ -9,6 +14,7 @@ import {
 	standalone: false,
 	selector: 'details-info-form',
 	styleUrls: ['./details-info-form.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'details-info-form.component.html',
 })
 export class DetailsInfoFormComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { bindViewCell } from '../../components/table-components/smart-table';
 import User from '@modules/server.common/entities/User';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
@@ -26,6 +26,7 @@ import { takeUntil } from 'rxjs/operators';
 	standalone: false,
 	selector: 'page-customers',
 	templateUrl: 'customers.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./customers.scss'],
 })
 export class CustomersPage implements OnDestroy {
@@ -44,7 +45,7 @@ export class CustomersPage implements OnDestroy {
 		private readonly _translateService: TranslateService,
 		private readonly ordersService: OrdersService,
 		private readonly warehouseOrdersService: WarehouseOrdersService,
-		private readonly store: Store
+		private readonly store: Store,
 	) {
 		this.loadUsers();
 		this._loadSettingsSmartTable();
@@ -209,7 +210,7 @@ export class CustomersPage implements OnDestroy {
 						orders: userInfo.ordersCount,
 						total: userInfo.totalPrice,
 					};
-				}
+				},
 			);
 
 			this.sourceSmartTable.load(usersVM);
@@ -224,14 +225,14 @@ export class CustomersPage implements OnDestroy {
 						user: User;
 						ordersCount: number;
 						totalPrice: number;
-					}>
+					}>,
 				) => {
 					userInfo.length === 0
 						? (this.showNoDeliveryIcon = true)
 						: (this.showNoDeliveryIcon = false);
 
 					loadData(userInfo);
-				}
+				},
 			);
 	}
 
@@ -247,7 +248,7 @@ export class CustomersPage implements OnDestroy {
 			getTranslate('ADDRESSES'),
 			getTranslate('ORDERS'),
 			getTranslate('TOTAL'),
-			getTranslate('E_MAIL')
+			getTranslate('E_MAIL'),
 		)
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe(
@@ -265,7 +266,8 @@ export class CustomersPage implements OnDestroy {
 							custom: [
 								{
 									name: 'track',
-									customButtonContent: '<i class="fa fa-map-marker"></i>',
+									customButtonContent:
+										'<i class="fa fa-map-marker"></i>',
 								},
 							],
 						},
@@ -318,7 +320,7 @@ export class CustomersPage implements OnDestroy {
 							perPage: 14,
 						},
 					};
-				}
+				},
 			);
 	}
 

@@ -1,4 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	Input,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ModalController } from '@ionic/angular/lazy';
 import { IProductImage } from '@modules/server.common/interfaces/IProduct';
 
@@ -6,6 +11,7 @@ import { IProductImage } from '@modules/server.common/interfaces/IProduct';
 	standalone: false,
 	selector: 'product-images-popup',
 	templateUrl: 'product-images-popup.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./product-images-popu.component.scss'],
 })
 export class ProductImagesPopup {

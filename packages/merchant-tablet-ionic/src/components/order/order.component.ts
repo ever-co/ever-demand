@@ -1,4 +1,10 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	EventEmitter,
+	Output,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 
 type SegmentSection = 'options' | 'select/add' | 'type' | 'order';
@@ -7,6 +13,7 @@ type SegmentSection = 'options' | 'select/add' | 'type' | 'order';
 	standalone: false,
 	selector: 'order',
 	styleUrls: ['./order.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './order.component.html',
 })
 export class OrderComponent implements OnInit {

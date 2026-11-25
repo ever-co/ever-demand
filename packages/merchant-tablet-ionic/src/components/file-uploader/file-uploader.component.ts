@@ -5,6 +5,7 @@ import {
 	EventEmitter,
 	ViewChild,
 	OnInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { FileUploader, FileUploaderOptions, FileItem } from 'ng2-file-upload';
 import { environment } from '../../environments/environment';
@@ -19,6 +20,7 @@ import { NgModel } from '@angular/forms';
 	standalone: false,
 	selector: 'e-cu-file-uploader',
 	templateUrl: './file-uploader.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./file-uploader.component.scss'],
 })
 export class FileUploaderComponent implements OnInit {
@@ -41,9 +43,8 @@ export class FileUploaderComponent implements OnInit {
 	@Output()
 	uploadedImgUrl: EventEmitter<string> = new EventEmitter<string>();
 	@Output()
-	uploadedImgObj: EventEmitter<IProductImage> = new EventEmitter<
-		IProductImage
-	>();
+	uploadedImgObj: EventEmitter<IProductImage> =
+		new EventEmitter<IProductImage>();
 
 	uploader: FileUploader;
 
@@ -55,7 +56,7 @@ export class FileUploaderComponent implements OnInit {
 		private translateService: TranslateService,
 		private actionSheetCtrl: ActionSheetController,
 		private photos: PhotoService,
-		public readonly localeTranslateService: ProductLocalesService
+		public readonly localeTranslateService: ProductLocalesService,
 	) {}
 
 	get isBrowser() {
@@ -88,7 +89,7 @@ export class FileUploaderComponent implements OnInit {
 		this.uploader.onSuccessItem = (
 			item: any,
 			response: string,
-			status: number
+			status: number,
 		) => {
 			const data = JSON.parse(response);
 			this.fileUrl = data.url;
@@ -118,9 +119,7 @@ export class FileUploaderComponent implements OnInit {
 				{
 					text: 'Load from Library',
 					handler: () => {
-						this._takePicture(
-							'library'
-						);
+						this._takePicture('library');
 					},
 				},
 				{
@@ -152,7 +151,7 @@ export class FileUploaderComponent implements OnInit {
 
 		this.uploader.onBuildItemForm = (
 			fileItem: any,
-			form: FormData
+			form: FormData,
 		): any => {
 			form.append('upload_preset', 'everbie-products-images');
 			let tags = 'myphotoalbum';
@@ -184,7 +183,11 @@ export class FileUploaderComponent implements OnInit {
 			if (!file) {
 				return;
 			}
-			const fileItem = new FileItem(this.uploader, file, this.uploader.options);
+			const fileItem = new FileItem(
+				this.uploader,
+				file,
+				this.uploader.options,
+			);
 			this.uploader.queue.push(fileItem);
 			this.imageUrlChanged();
 		});

@@ -1,4 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	Input,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ViewCell } from '../table-components/smart-table';
 import Order from '@modules/server.common/entities/Order';
 import User from '@modules/server.common/entities/User';
@@ -6,6 +11,7 @@ import UserOrder from '@modules/server.common/entities/UserOrder';
 
 @Component({
 	standalone: false,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<span class="nameAddress">
 			<strong *ngIf="getUserName(order)">{{ getUserName(order) }}</strong>

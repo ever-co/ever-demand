@@ -6,6 +6,7 @@ import {
 	EventEmitter,
 	Output,
 	OnInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { IPromotion } from '@modules/server.common/interfaces/IPromotion';
@@ -20,6 +21,7 @@ import { Subject } from 'rxjs';
 	standalone: false,
 	selector: 'promotion-mutation',
 	templateUrl: 'promotion-mutation.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./promotion-mutation.scss'],
 })
 export class PromotionMutation implements OnDestroy {
@@ -54,7 +56,7 @@ export class PromotionMutation implements OnDestroy {
 		private readonly _formBuilder: FormBuilder,
 		private readonly toastrController: ToastController,
 		private readonly modalController: ModalController,
-		private readonly promotionService: PromotionService
+		private readonly promotionService: PromotionService,
 	) {}
 
 	ngOnDestroy(): void {
@@ -83,13 +85,13 @@ export class PromotionMutation implements OnDestroy {
 					},
 					(err) => {
 						this.presentToast(
-							err.message || 'Something went wrong!'
+							err.message || 'Something went wrong!',
 						);
 					},
 					() => {
 						this.updateVisible.emit(true);
 						this.cancelModal();
-					}
+					},
 				);
 		} else {
 			this.promotionService
@@ -101,13 +103,13 @@ export class PromotionMutation implements OnDestroy {
 					},
 					(err) => {
 						this.presentToast(
-							err.message || 'Something went wrong!'
+							err.message || 'Something went wrong!',
 						);
 					},
 					() => {
 						this.updateVisible.emit(true);
 						this.cancelModal();
-					}
+					},
 				);
 		}
 	}

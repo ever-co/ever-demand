@@ -30,7 +30,7 @@
 						: {
 								itemsPerPage: 10,
 								currentPage: page,
-								totalItems: productsCount
+								totalItems: productsCount,
 						  }
 			"
 		>
@@ -43,7 +43,9 @@
 							(click)="addProduct(warehouseProduct.product.id)"
 							src="{{
 								localeTranslate(
-									warehouseProduct?.product?.images
+									$safeNavigationMigration(
+										warehouseProduct?.product?.images
+									)
 								)
 							}}"
 						/>

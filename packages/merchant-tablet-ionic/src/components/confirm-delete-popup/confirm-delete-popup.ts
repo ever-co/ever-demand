@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ModalController } from '@ionic/angular/lazy';
 
 export interface IConfirmDeleteData {
@@ -13,6 +13,7 @@ export interface IConfirmDeleteData {
 	standalone: false,
 	selector: 'confirm-delete-popup',
 	templateUrl: 'confirm-delete-popup.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./confirm-delete-popup.scss'],
 })
 export class ConfirmDeletePopupPage {

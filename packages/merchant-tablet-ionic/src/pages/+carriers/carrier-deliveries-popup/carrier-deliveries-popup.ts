@@ -1,4 +1,10 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { bindViewCell } from '../../../components/table-components/smart-table';
 import Carrier from '@modules/server.common/entities/Carrier';
 import Order from '@modules/server.common/entities/Order';
@@ -19,6 +25,7 @@ import UserOrder from '@modules/server.common/entities/UserOrder';
 	standalone: false,
 	selector: 'carrier-deliveries-popup',
 	templateUrl: 'carrier-deliveries-popup.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./carrier-deliveries-popup.scss'],
 })
 export class CarrierDeliveriesPopupPage implements OnInit, OnDestroy {
@@ -39,7 +46,7 @@ export class CarrierDeliveriesPopupPage implements OnInit, OnDestroy {
 	constructor(
 		private modalCtrl: ModalController,
 		private readonly carrierOrdersRouter: CarrierOrdersRouter,
-		private readonly translateService: TranslateService
+		private readonly translateService: TranslateService,
 	) {
 		this._loadSettingsSmartTable();
 	}
@@ -143,7 +150,7 @@ export class CarrierDeliveriesPopupPage implements OnInit, OnDestroy {
 			getTranslate('CUSTOMER'),
 			getTranslate('WAREHOUSE'),
 			getTranslate('STATUS'),
-			getTranslate('DELIVERY')
+			getTranslate('DELIVERY'),
 		)
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe(([customer, warehouse, status, delivery]) => {

@@ -1,6 +1,15 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	ElementRef,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { FileUploader, FileUploaderOptions, FileItem } from 'ng2-file-upload';
-import { PhotoService, PhotoSource } from '../../../services/native/photo.service';
+import {
+	PhotoService,
+	PhotoSource,
+} from '../../../services/native/photo.service';
 import {
 	IProductCreateObject,
 	IProductImage,
@@ -24,6 +33,7 @@ import { ProductImagesPopup } from '../product-pictures-popup/product-images-pop
 	standalone: false,
 	selector: 'page-create-product-type-popup',
 	templateUrl: 'create-product-type-popup.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./create-product-type-popup.scss'],
 })
 export class CreateProductTypePopupPage implements OnInit {
@@ -73,7 +83,7 @@ export class CreateProductTypePopupPage implements OnInit {
 		private photos: PhotoService,
 		public actionSheetCtrl: ActionSheetController,
 		private translate: TranslateService,
-		private readonly _productsCategorySrvice: ProductsCategoryService
+		private readonly _productsCategorySrvice: ProductsCategoryService,
 	) {
 		this.loadMerchantSettings();
 
@@ -102,7 +112,7 @@ export class CreateProductTypePopupPage implements OnInit {
 
 		this.uploader.onBuildItemForm = (
 			fileItem: any,
-			form: FormData
+			form: FormData,
 		): any => {
 			// Add Cloudinary's unsigned upload preset to the upload form
 			form.append('upload_preset', 'everbie-products-images');
@@ -111,7 +121,7 @@ export class CreateProductTypePopupPage implements OnInit {
 			if (this.productCreateObject.title) {
 				form.append(
 					'context',
-					`photo=${this.productCreateObject.title}`
+					`photo=${this.productCreateObject.title}`,
 				);
 				tags = `myphotoalbum,${this.productCreateObject.title}`;
 			}
@@ -191,7 +201,7 @@ export class CreateProductTypePopupPage implements OnInit {
 
 	get productTitle() {
 		return this.localeTranslateService.getMemberValue(
-			this.productCreateObject.title
+			this.productCreateObject.title,
 		);
 	}
 	set productTitle(title: string) {
@@ -200,7 +210,7 @@ export class CreateProductTypePopupPage implements OnInit {
 
 	get productDescription() {
 		return this.localeTranslateService.getMemberValue(
-			this.productCreateObject.description
+			this.productCreateObject.description,
 		);
 	}
 
@@ -274,11 +284,11 @@ export class CreateProductTypePopupPage implements OnInit {
 
 		this.localeTranslateService.assignPropertyValue(
 			this.productCreateObject.title,
-			'title'
+			'title',
 		);
 		this.localeTranslateService.assignPropertyValue(
 			this.productCreateObject.description,
-			'description'
+			'description',
 		);
 
 		this.productCreateObject.categories = this.productsCategories
@@ -286,8 +296,8 @@ export class CreateProductTypePopupPage implements OnInit {
 				(category) =>
 					this.selectedProductCategories &&
 					this.selectedProductCategories.some(
-						(categoryId) => categoryId === category.id
-					)
+						(categoryId) => categoryId === category.id,
+					),
 			)
 			.map((category) => {
 				return {
@@ -299,7 +309,7 @@ export class CreateProductTypePopupPage implements OnInit {
 			});
 
 		const product = await this.productRouter.create(
-			this.productCreateObject
+			this.productCreateObject,
 		);
 
 		this.warehouseProductCreateObject.product = product.id;
@@ -309,7 +319,8 @@ export class CreateProductTypePopupPage implements OnInit {
 		this.warehouseProductCreateObject.count =
 			this.warehouseProductCreateObject.count || 0;
 
-		this.warehouseProductCreateObject.isDeliveryRequired = this.takaProductDelivery;
+		this.warehouseProductCreateObject.isDeliveryRequired =
+			this.takaProductDelivery;
 		this.warehouseProductCreateObject.isTakeaway = this.takaProductTakeaway;
 
 		await this.warehouseProductsRouter.add(this.warehouseId, [
@@ -324,7 +335,11 @@ export class CreateProductTypePopupPage implements OnInit {
 			if (!file) {
 				return;
 			}
-			const fileItem = new FileItem(this.uploader, file, this.uploader.options);
+			const fileItem = new FileItem(
+				this.uploader,
+				file,
+				this.uploader.options,
+			);
 			this.uploader.queue.push(fileItem);
 		});
 	}
@@ -346,9 +361,7 @@ export class CreateProductTypePopupPage implements OnInit {
 				{
 					text: 'Load from Library',
 					handler: () => {
-						this.takePicture(
-							'library'
-						);
+						this.takePicture('library');
 					},
 				},
 				{
@@ -423,7 +436,7 @@ export class CreateProductTypePopupPage implements OnInit {
 			this.uploader.onSuccessItem = (
 				item: any,
 				response: string,
-				status: number
+				status: number,
 			) => {
 				const data = JSON.parse(response);
 				const locale = this.currentLocale;

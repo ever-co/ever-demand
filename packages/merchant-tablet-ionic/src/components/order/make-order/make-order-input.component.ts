@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	Output,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ViewCell } from '../../table-components/smart-table';
 
 @Component({
@@ -13,6 +19,7 @@ import { ViewCell } from '../../table-components/smart-table';
 			}
 		`,
 	],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<div class="order-input-wrapper">
 			<button

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AnalyticsService } from '../../services/native/analytics.service';
 import Order from '@modules/server.common/entities/Order';
 import Warehouse from '@modules/server.common/entities/Warehouse';
@@ -28,19 +28,20 @@ export enum OrderState {
 }
 
 export enum OrderStatus {
-	'all' = 'ALL',
-	'confirmed' = 'CONFIRMED',
-	'processing' = 'PROCESSING',
-	'alocation_started' = 'ALLOCATION_STARTED',
-	'packaging' = 'PACKAGING_STARTED',
-	'packaged' = 'PACKAGED',
-	'in_delivery' = 'GIVEN_TO_CARRIER',
+	all = 'ALL',
+	confirmed = 'CONFIRMED',
+	processing = 'PROCESSING',
+	alocation_started = 'ALLOCATION_STARTED',
+	packaging = 'PACKAGING_STARTED',
+	packaged = 'PACKAGED',
+	in_delivery = 'GIVEN_TO_CARRIER',
 }
 
 @Component({
 	standalone: false,
 	selector: 'page-warehouse',
 	templateUrl: './warehouse.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./warehouse.scss'],
 })
 export class WarehousePage implements OnInit {
@@ -72,7 +73,7 @@ export class WarehousePage implements OnInit {
 		private translateProductLocales: ProductLocalesService,
 		private store: Store,
 		private barcodeScanner: BarcodeScanService,
-		private warehouseService: WarehousesService
+		private warehouseService: WarehousesService,
 	) {}
 
 	// ionViewDidLoad() {
@@ -153,7 +154,7 @@ export class WarehousePage implements OnInit {
 	getWarehouseProductImageUrl(p: Product): string | void {
 		if (p instanceof Product) {
 			const productImg = p.images.filter((i) =>
-				i.locale.includes(this.language)
+				i.locale.includes(this.language),
 			)[0];
 			if (productImg) {
 				return productImg.url;
@@ -215,7 +216,7 @@ export class WarehousePage implements OnInit {
 		return this.warehouseProductsRouter.increaseCount(
 			this.warehouseId,
 			productId,
-			1
+			1,
 		);
 	}
 
@@ -250,7 +251,9 @@ export class WarehousePage implements OnInit {
 		return this.orderStatus;
 	}
 
-	getWarehouseStatus(orderWarehouseStatusNumber: OrderWarehouseStatus): string {
+	getWarehouseStatus(
+		orderWarehouseStatusNumber: OrderWarehouseStatus,
+	): string {
 		const basePath = 'WAREHOUSE_VIEW.ORDER_WAREHOUSE_STATUSES.';
 		switch (orderWarehouseStatusNumber) {
 			case OrderWarehouseStatus.NoStatus:

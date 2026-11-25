@@ -7,6 +7,7 @@ import {
 	ElementRef,
 	AfterViewInit,
 	OnInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 
 import {
@@ -35,6 +36,7 @@ import User from '@modules/server.common/entities/User';
 	standalone: false,
 	selector: 'location-form',
 	styleUrls: ['./location-form.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './location-form.component.html',
 })
 export class LocationFormComponent implements OnInit, AfterViewInit {
@@ -74,7 +76,7 @@ export class LocationFormComponent implements OnInit, AfterViewInit {
 	constructor(
 		private readonly _alertController: AlertController,
 		private translate: TranslateService,
-		public readonly localeTranslateService: ProductLocalesService
+		public readonly localeTranslateService: ProductLocalesService,
 	) {}
 
 	get buttonOK() {
@@ -272,7 +274,7 @@ export class LocationFormComponent implements OnInit, AfterViewInit {
 						this._applyNewPlaceOnTheMap(place);
 						this._applyFormattedAddress(formattedAddress);
 					}
-				}
+				},
 			);
 		}
 	}
@@ -299,20 +301,19 @@ export class LocationFormComponent implements OnInit, AfterViewInit {
 					this._applyNewPlaceOnTheMap(place, useGeometryLatLng);
 					this._applyFormattedAddress(formattedAddress);
 				}
-			}
+			},
 		);
 	}
 
 	private _emitCoordinates(
-		location: google.maps.LatLng | google.maps.LatLngLiteral
+		location: google.maps.LatLng | google.maps.LatLngLiteral,
 	) {
 		this.mapCoordinatesEmitter.emit(location);
 	}
 
 	private _emitGeometry(
 		geometry:
-			| google.maps.places.PlaceGeometry
-			| google.maps.GeocoderGeometry
+			google.maps.places.PlaceGeometry | google.maps.GeocoderGeometry,
 	) {
 		this.mapGeometryEmitter.emit(geometry);
 	}
@@ -327,14 +328,14 @@ export class LocationFormComponent implements OnInit, AfterViewInit {
 	}
 
 	private _setupGoogleAutocompleteOptions(
-		autocomplete: google.maps.places.Autocomplete
+		autocomplete: google.maps.places.Autocomplete,
 	) {
 		autocomplete['setFields'](['address_components', 'geometry']);
 	}
 
 	private _applyNewPlaceOnTheMap(
 		place: google.maps.places.PlaceResult | google.maps.GeocoderResult,
-		useGeometryLatLng: boolean = true
+		useGeometryLatLng: boolean = true,
 	) {
 		if (place.geometry === undefined || place.geometry === null) {
 			this._popInvalidAddressMessage();
@@ -356,18 +357,18 @@ export class LocationFormComponent implements OnInit, AfterViewInit {
 	}
 
 	private _listenForGoogleAutocompleteAddressChanges(
-		autocomplete: google.maps.places.Autocomplete
+		autocomplete: google.maps.places.Autocomplete,
 	) {
 		autocomplete.addListener('place_changed', (_) => {
-			const place: google.maps.places.PlaceResult = autocomplete.getPlace();
+			const place: google.maps.places.PlaceResult =
+				autocomplete.getPlace();
 			this._applyNewPlaceOnTheMap(place);
 		});
 	}
 
 	private _gatherAddressInformation(
 		locationResult:
-			| google.maps.GeocoderResult
-			| google.maps.places.PlaceResult
+			google.maps.GeocoderResult | google.maps.places.PlaceResult,
 	) {
 		const longName = 'long_name';
 		const shortName = 'short_name';
@@ -434,7 +435,7 @@ export class LocationFormComponent implements OnInit, AfterViewInit {
 			city,
 			streetName,
 			streetNumber,
-			postcode
+			postcode,
 		);
 	}
 
@@ -443,7 +444,7 @@ export class LocationFormComponent implements OnInit, AfterViewInit {
 			const inputElement = await this.searchElement['getInputElement']();
 
 			const autocomplete = new google.maps.places.Autocomplete(
-				inputElement
+				inputElement,
 			);
 
 			this._setupGoogleAutocompleteOptions(autocomplete);
@@ -457,7 +458,7 @@ export class LocationFormComponent implements OnInit, AfterViewInit {
 		city,
 		streetName,
 		streetNumber,
-		postcode
+		postcode,
 	) {
 		if (!isEmpty(countryId)) {
 			this.countryId.setValue(Country[countryId].toString());
@@ -481,7 +482,7 @@ export class LocationFormComponent implements OnInit, AfterViewInit {
 	private loadData() {
 		if (this.userData) {
 			const userGeoLocation: GeoLocation = new GeoLocation(
-				this.userData.geoLocation
+				this.userData.geoLocation,
 			);
 
 			this.city.setValue(userGeoLocation.city);

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Store } from '../../services/store.service';
 import { Location } from '@angular/common';
@@ -7,6 +7,7 @@ import { ServerConnectionService } from '@modules/client.common.angular2/service
 @Component({
 	standalone: false,
 	styleUrls: ['./server-down.page.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'server-down.page.html',
 })
 export class ServerDownPage implements OnDestroy {
@@ -16,7 +17,7 @@ export class ServerDownPage implements OnDestroy {
 	constructor(
 		private store: Store,
 		private location: Location,
-		private serverConnectionService: ServerConnectionService
+		private serverConnectionService: ServerConnectionService,
 	) {
 		this.noInternetLogo = environment.NO_INTERNET_LOGO;
 		this.testConnection();
@@ -26,7 +27,7 @@ export class ServerDownPage implements OnDestroy {
 		this.interval = setInterval(async () => {
 			await this.serverConnectionService.checkServerConnection(
 				environment.SERVICES_ENDPOINT,
-				this.store
+				this.store,
 			);
 
 			if (Number(this.store.serverConnection) !== 0) {

@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 import { Store } from '../../services/store.service';
@@ -9,6 +14,7 @@ import { map } from 'rxjs/operators';
 	standalone: false,
 	selector: 'order-control-buttons',
 	templateUrl: 'order-control-buttons.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./order-control-buttons.scss'],
 })
 export class OrderControlButtonsComponent implements OnInit {
@@ -35,7 +41,7 @@ export class OrderControlButtonsComponent implements OnInit {
 	constructor(
 		private orderRouter: OrderRouter,
 		private store: Store,
-		private warehousesService: WarehousesService
+		private warehousesService: WarehousesService,
 	) {}
 
 	ngOnInit() {

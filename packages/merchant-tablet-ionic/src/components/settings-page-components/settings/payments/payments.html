@@ -2,15 +2,9 @@
 	<ion-row style="padding: 0; margin: 0;">
 		<ion-col class="col-12" style="padding: 0; margin: 0;">
 			<ion-item mode="ios">
-				<ion-label>
-					{{ 'SETTINGS_VIEW.ALLOW_ONLINE_PAYMENTS' | translate }}?
-				</ion-label>
-				<ion-checkbox
-					slot="start"
+				<ion-checkbox labelPlacement="end" justify="start"
 					(click)="hasChanged = true"
-					[(ngModel)]="currWarehouse.isPaymentEnabled"
-				>
-				</ion-checkbox>
+					[(ngModel)]="currWarehouse.isPaymentEnabled">{{ 'SETTINGS_VIEW.ALLOW_ONLINE_PAYMENTS' | translate }}?</ion-checkbox>
 			</ion-item>
 		</ion-col>
 	</ion-row>
@@ -33,7 +27,7 @@
 						*ngIf="getPaymentLogo(item)"
 						height="15"
 						width="15"
-						class="mr-2"
+						class="me-2"
 						[src]="getPaymentLogo(item)"
 					/>
 					{{ getPaymentName(item) }}
@@ -45,7 +39,7 @@
 							*ngIf="getPaymentLogo(item)"
 							height="35"
 							width="35"
-							class="mr-1"
+							class="me-1"
 							[src]="getPaymentLogo(item)"
 						/>
 						{{ getPaymentName(item) }}
@@ -74,12 +68,12 @@
 					<ion-label
 						>{{ getPaymentName(pg) }}
 						<ion-button
-							class="mr-1 ml-2"
+							class="me-1 ms-2"
 							color="danger"
 							size="small"
 							(click)="confirmRemovePaymentGateway(pg)"
 						>
-							<i class="fa fa-trash mr-1"></i>
+							<i class="fa fa-trash me-1"></i>
 							Remove
 						</ion-button>
 						<ion-button
@@ -87,7 +81,7 @@
 							color="success"
 							size="small"
 						>
-							<i class="fa fa-edit mr-1"></i>
+							<i class="fa fa-edit me-1"></i>
 							Edit
 						</ion-button>
 					</ion-label>

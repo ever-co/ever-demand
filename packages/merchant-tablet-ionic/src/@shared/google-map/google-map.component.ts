@@ -1,4 +1,12 @@
-import { ViewChild, Component, Input, OnInit, OnDestroy, EventEmitter } from '@angular/core';
+import {
+	ViewChild,
+	Component,
+	Input,
+	OnInit,
+	OnDestroy,
+	EventEmitter,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -13,6 +21,7 @@ import { takeUntil } from 'rxjs/operators';
 			}
 		`,
 	],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: ` <div #gmap class="g-map"></div> `,
 })
 export class GoogleMapComponent implements OnInit, OnDestroy {
@@ -88,7 +97,7 @@ export class GoogleMapComponent implements OnInit, OnDestroy {
 
 		this.map = new google.maps.Map(
 			this.mapElement.nativeElement,
-			optionsMap
+			optionsMap,
 		);
 	}
 

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import { TranslateService } from '@ngx-translate/core';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
@@ -7,6 +7,7 @@ import DeliveryType from '@modules/server.common/enums/DeliveryType';
 	standalone: false,
 	selector: 'order-info',
 	styleUrls: ['./order-info.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'order-info.html',
 })
 export class OrderInfoComponent {

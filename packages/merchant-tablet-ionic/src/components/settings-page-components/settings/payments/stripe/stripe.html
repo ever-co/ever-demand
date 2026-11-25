@@ -4,13 +4,14 @@
 		<ion-row>
 			<ion-col text-center>
 				<ion-item>
-					<ion-label class="labels" position="floating"
-						>Pay Button text</ion-label
-					>
 					<ion-input
+						labelPlacement="floating"
 						type="text"
 						formControlName="payButtontext"
-					></ion-input>
+						><div slot="label" class="labels">
+							Pay Button text
+						</div></ion-input
+					>
 				</ion-item>
 				<div
 					*ngIf="
@@ -26,13 +27,14 @@
 			</ion-col>
 			<ion-col>
 				<ion-item>
-					<ion-label class="labels" position="floating"
-						>Publishable key</ion-label
-					>
 					<ion-input
+						labelPlacement="floating"
 						type="text"
 						formControlName="publishableKey"
-					></ion-input>
+						><div slot="label" class="labels">
+							Publishable key
+						</div></ion-input
+					>
 				</ion-item>
 				<div
 					*ngIf="
@@ -51,14 +53,12 @@
 		<ion-row>
 			<ion-col>
 				<ion-item>
-					<ion-label class="labels" position="floating"
-						>Currency</ion-label
-					>
 					<ion-select
+						labelPlacement="floating"
 						formControlName="currency"
 						[cancelText]="'Cancel'"
 						[okText]="'OK'"
-					>
+						><div slot="label" class="labels">Currency</div>
 						<ion-select-option
 							*ngFor="let code of currenciesCodes"
 							value="{{ code }}"
@@ -69,14 +69,12 @@
 			</ion-col>
 			<ion-col class="allow-remember-me">
 				<ion-item mode="ios">
-					<ion-label>
-						Allow remember me?
-					</ion-label>
 					<ion-checkbox
-						slot="start"
+						labelPlacement="end"
+						justify="start"
 						formControlName="allowRememberMe"
+						>Allow remember me?</ion-checkbox
 					>
-					</ion-checkbox>
 				</ion-item>
 			</ion-col>
 		</ion-row>
@@ -85,8 +83,8 @@
 			<ion-col id="common">
 				<e-cu-file-uploader
 					#fileUploader
-					[name]="payButtontext?.value"
-					[fileUrl]="companyBrandLogo?.value"
+					[name]="$safeNavigationMigration(payButtontext?.value)"
+					[fileUrl]="$safeNavigationMigration(companyBrandLogo?.value)"
 					(uploadedImgUrl)="companyBrandLogo.setValue($event)"
 				></e-cu-file-uploader>
 

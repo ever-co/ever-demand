@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { first } from 'rxjs/operators';
 import { Store } from '../../services/store.service';
@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 	standalone: false,
 	selector: 'page-login',
 	templateUrl: 'login.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./login.scss'],
 })
 export class LoginPage {
@@ -19,7 +20,7 @@ export class LoginPage {
 	constructor(
 		private authService: AuthService,
 		private store: Store,
-		private router: Router
+		private router: Router,
 	) {
 		localStorage.removeItem('_warehouseId');
 		localStorage.removeItem('_language');

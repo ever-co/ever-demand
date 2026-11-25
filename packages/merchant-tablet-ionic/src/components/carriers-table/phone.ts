@@ -1,4 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	Input,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ViewCell } from '../table-components/smart-table';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { Store } from '../../services/store.service';
@@ -7,12 +12,13 @@ import { ExternalAppsService } from '../../services/native/external-apps.service
 @Component({
 	standalone: false,
 	selector: 'carrier-phone',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<ion-icon
 			*ngIf="carrier?.phone"
 			name="call"
 			class="call-icon icon icon-md ion-md-call"
-			(click)="attemptCall(carrier?.phone)"
+			(click)="attemptCall($safeNavigationMigration(carrier?.phone))"
 			[ngClass]="canCall ? 'can-call' : 'can-not-call'"
 		>
 		</ion-icon>
@@ -26,7 +32,10 @@ export class PhoneComponent implements ViewCell, OnInit {
 	@Input()
 	carrier: Carrier;
 
-	constructor(private store: Store, public externalApps: ExternalAppsService) {}
+	constructor(
+		private store: Store,
+		public externalApps: ExternalAppsService,
+	) {}
 
 	ngOnInit(): void {
 		if (this.rowData) {

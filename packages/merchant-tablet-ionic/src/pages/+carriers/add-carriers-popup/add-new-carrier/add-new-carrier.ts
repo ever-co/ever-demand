@@ -7,6 +7,7 @@ import {
 	Input,
 	ViewChild,
 	OnChanges,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { ICarrierCreateObject } from '@modules/server.common/interfaces/ICarrier';
 import { getDummyImage } from '@modules/server.common/utils';
@@ -20,6 +21,7 @@ import { LocationFormComponent } from './location/location-form.component';
 	standalone: false,
 	selector: 'add-new-carrier',
 	templateUrl: './add-new-carrier.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./add-new-carrier.scss'],
 })
 export class AddNewCarrierComponent implements OnInit, OnDestroy, OnChanges {

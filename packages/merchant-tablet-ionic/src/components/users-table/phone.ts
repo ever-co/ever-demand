@@ -1,4 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	Input,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ViewCell } from '../table-components/smart-table';
 import { Store } from '../../services/store.service';
 import { ExternalAppsService } from '../../services/native/external-apps.service';
@@ -7,6 +12,7 @@ import UserOrder from '@modules/server.common/entities/UserOrder';
 @Component({
 	standalone: false,
 	selector: 'user-phone',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<ion-icon
 			*ngIf="user.phone"
@@ -27,7 +33,10 @@ export class UserPhoneComponent implements ViewCell, OnInit {
 	@Input()
 	user: UserOrder;
 
-	constructor(private store: Store, public externalApps: ExternalAppsService) {}
+	constructor(
+		private store: Store,
+		public externalApps: ExternalAppsService,
+	) {}
 
 	ngOnInit(): void {
 		if (this.rowData) {

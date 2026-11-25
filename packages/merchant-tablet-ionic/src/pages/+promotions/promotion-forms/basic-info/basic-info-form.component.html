@@ -10,8 +10,7 @@
 		<ion-row>
 			<ion-col>
 				<ion-item>
-					<ion-label>Language</ion-label>
-					<ion-select formControlName="locale" okText="Okay">
+					<ion-select labelPlacement="start" formControlName="locale" okText="Okay"><div slot="label">Language</div>
 						<ion-select-option
 							*ngFor="let lang of languages"
 							[value]="getLanguageCode(lang)"
@@ -24,11 +23,9 @@
 		<ion-row>
 			<ion-col>
 				<ion-item>
-					<ion-label>Select Product</ion-label>
-					<ion-select
+					<ion-select labelPlacement="start"
 						placeholder="Select One"
-						formControlName="product"
-					>
+						formControlName="product"><div slot="label">Select Product</div>
 						<ion-select-option
 							[value]="product.id"
 							*ngFor="let product of displayProducts"
@@ -46,32 +43,29 @@
 		<ion-row>
 			<ion-col text-center>
 				<ion-item>
-					<ion-label class="labels" position="floating">{{
-						'CARRIERS_VIEW.PROMOTIONS.TITLE' | translate
-					}}</ion-label>
-					<ion-input
+					<ion-input labelPlacement="floating"
 						[placeholder]="
 							'CARRIERS_VIEW.PROMOTIONS.TITLE' | translate
 						"
-						formControlName="title"
-					></ion-input>
+						formControlName="title"><div slot="label" class="labels">{{
+						'CARRIERS_VIEW.PROMOTIONS.TITLE' | translate
+					}}</div></ion-input>
 				</ion-item>
 			</ion-col>
 		</ion-row>
 		<ion-row>
 			<ion-col text-center>
 				<ion-item>
-					<ion-label position="floating">{{
+					<ion-textarea labelPlacement="floating" formControlName="description"><div slot="label">{{
 						'CARRIERS_VIEW.PROMOTIONS.DESCRIPTION' | translate
-					}}</ion-label>
-					<ion-textarea formControlName="description"> </ion-textarea>
+					}}</div> </ion-textarea>
 				</ion-item>
 			</ion-col>
 		</ion-row>
 		<ion-row>
 			<ion-col text-center>
 				<ion-item>
-					<ion-label class="labels" position="floating">{{
+					<ion-label class="labels">{{
 						'CARRIERS_VIEW.PROMOTIONS.ACTIVE_FROM' | translate
 					}}</ion-label>
 					<ion-datetime-button
@@ -91,7 +85,7 @@
 			</ion-col>
 			<ion-col text-center>
 				<ion-item>
-					<ion-label class="labels" position="floating">{{
+					<ion-label class="labels">{{
 						'CARRIERS_VIEW.PROMOTIONS.ACTIVE_TO' | translate
 					}}</ion-label>
 					<ion-datetime-button

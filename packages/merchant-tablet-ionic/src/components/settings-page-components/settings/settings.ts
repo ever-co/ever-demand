@@ -1,4 +1,9 @@
-import { Component, Input, AfterViewInit } from '@angular/core';
+import {
+	Component,
+	Input,
+	AfterViewInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import OrderBarcodeTypes, {
 	orderBarcodeTypesToString,
@@ -13,6 +18,7 @@ import { Store } from '../../../services/store.service';
 	standalone: false,
 	selector: 'merchant-settings',
 	templateUrl: 'settings.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['settings.scss'],
 })
 export class SettingsComponent implements AfterViewInit {
@@ -38,7 +44,7 @@ export class SettingsComponent implements AfterViewInit {
 		private warehouseRouter: WarehouseRouter,
 		public alertController: AlertController,
 		private barcodeScanner: BarcodeScanService,
-		private store: Store
+		private store: Store,
 	) {}
 
 	ngAfterViewInit(): void {
@@ -61,7 +67,7 @@ export class SettingsComponent implements AfterViewInit {
 		try {
 			await this.warehouseRouter.save(
 				this.currWarehouse,
-				this.store.token
+				this.store.token,
 			);
 			const alert = await this.alertController.create({
 				cssClass: 'success-info',
@@ -103,7 +109,7 @@ export class SettingsComponent implements AfterViewInit {
 	private async generateQRCode() {
 		if (this.currWarehouse) {
 			this.barcodetDataUrl = await QRCode.toDataURL(
-				this.currWarehouse.barcodeData
+				this.currWarehouse.barcodeData,
 			);
 		}
 

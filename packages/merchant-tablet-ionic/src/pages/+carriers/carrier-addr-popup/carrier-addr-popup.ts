@@ -1,4 +1,11 @@
-import { Component, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	ElementRef,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { ModalController } from '@ionic/angular/lazy';
 
@@ -6,6 +13,7 @@ import { ModalController } from '@ionic/angular/lazy';
 	standalone: false,
 	selector: 'carrier-addr-popup',
 	templateUrl: 'carrier-addr-popup.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./carrier-addr-popup.scss'],
 })
 export class CarrierAddrPopupPage implements OnInit {

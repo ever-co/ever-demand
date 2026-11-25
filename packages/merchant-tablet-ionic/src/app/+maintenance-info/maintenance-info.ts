@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { environment } from '../../../src/environments/environment';
 import { MaintenanceService } from '@modules/client.common.angular2/services/maintenance.service';
 import { Store } from '../../../src/services/store.service';
@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 @Component({
 	standalone: false,
 	selector: 'page-maintenance-info',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'maintenance-info.html',
 })
 export class MaintenanceInfoPage {
@@ -15,7 +16,7 @@ export class MaintenanceInfoPage {
 	constructor(
 		private maintenanceService: MaintenanceService,
 		private store: Store,
-		private router: Router
+		private router: Router,
 	) {
 		this.getMessage();
 		this.getStatus();
@@ -28,7 +29,7 @@ export class MaintenanceInfoPage {
 	async getMessage() {
 		this.message = await this.maintenanceService.getMessage(
 			this.maintenanceMode,
-			environment['SETTINGS_MAINTENANCE_API_URL']
+			environment['SETTINGS_MAINTENANCE_API_URL'],
 		);
 	}
 
@@ -36,10 +37,10 @@ export class MaintenanceInfoPage {
 		this.interval = setInterval(async () => {
 			const status = await this.maintenanceService.getStatus(
 				environment['SETTINGS_APP_TYPE'],
-				environment['SETTINGS_MAINTENANCE_API_URL']
+				environment['SETTINGS_MAINTENANCE_API_URL'],
 			);
 			console.warn(
-				`Maintenance on '${this.store.maintenanceMode}': ${status}`
+				`Maintenance on '${this.store.maintenanceMode}': ${status}`,
 			);
 
 			if (!status) {

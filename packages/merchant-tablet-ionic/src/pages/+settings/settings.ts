@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { Store } from '../../../src/services/store.service';
@@ -7,6 +7,7 @@ import { Store } from '../../../src/services/store.service';
 	standalone: false,
 	selector: 'page-settings',
 	templateUrl: 'settings.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./settings.scss'],
 })
 export class SettingsPage {
@@ -16,7 +17,7 @@ export class SettingsPage {
 
 	constructor(
 		private warehouseRouter: WarehouseRouter,
-		private store: Store
+		private store: Store,
 	) {
 		this.getLocalWarehouse();
 	}

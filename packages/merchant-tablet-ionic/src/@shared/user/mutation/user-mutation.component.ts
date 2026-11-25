@@ -4,6 +4,7 @@ import {
 	EventEmitter,
 	Output,
 	Input,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
@@ -19,6 +20,7 @@ import { getDummyImage } from '@modules/server.common/utils';
 	standalone: false,
 	selector: 'user-mutation',
 	templateUrl: './user-mutation.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./user-mutation.component.scss'],
 })
 export class UserMutationComponent {
@@ -65,19 +67,18 @@ export class UserMutationComponent {
 		private readonly _formBuilder: FormBuilder,
 		private readonly modalController: ModalController,
 		private readonly userRouter: UserRouter,
-		private readonly toastController: ToastController
+		private readonly toastController: ToastController,
 	) {}
 
 	onCoordinatesChanges(
-		coords: google.maps.LatLng | google.maps.LatLngLiteral
+		coords: google.maps.LatLng | google.maps.LatLngLiteral,
 	) {
 		this.mapCoordinatesEmitter.emit(coords);
 	}
 
 	onGeometrySend(
 		geometry:
-			| google.maps.places.PlaceGeometry
-			| google.maps.GeocoderGeometry
+			google.maps.places.PlaceGeometry | google.maps.GeocoderGeometry,
 	) {
 		this.mapGeometryEmitter.emit(geometry);
 	}
@@ -113,7 +114,7 @@ export class UserMutationComponent {
 			userRegistrationInput.user.geoLocation.loc.coordinates.reverse();
 
 			const user = await this._userAuthRouter.register(
-				userRegistrationInput
+				userRegistrationInput,
 			);
 
 			userId = user.id;
@@ -179,7 +180,7 @@ export class UserMutationComponent {
 				user.image = getDummyImage(
 					300,
 					300,
-					firstNameLetter + lastNameLetter
+					firstNameLetter + lastNameLetter,
 				);
 			} else {
 				const firstCityLetter = user.geoLocation.city

@@ -1,4 +1,9 @@
-import { OnInit, OnDestroy, Component } from '@angular/core';
+import {
+	OnInit,
+	OnDestroy,
+	Component,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { bindViewCell } from '../../../components/table-components/smart-table';
 import { LocalDataSource, Settings } from 'angular2-smart-table';
 import { IPromotion } from '@modules/server.common/interfaces/IPromotion';
@@ -17,6 +22,7 @@ import { DatePipe } from '@angular/common';
 	standalone: false,
 	selector: 'promotion-table',
 	templateUrl: 'promotion-table.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./promotion-table.scss'],
 })
 export class PromotionTable implements OnInit, OnDestroy {
@@ -35,7 +41,7 @@ export class PromotionTable implements OnInit, OnDestroy {
 		private readonly productLocaleService: ProductLocalesService,
 		private readonly translateService: TranslateService,
 		private readonly toastrController: ToastController,
-		public modalCtrl: ModalController
+		public modalCtrl: ModalController,
 	) {}
 
 	ngOnInit(): void {
@@ -187,7 +193,7 @@ export class PromotionTable implements OnInit, OnDestroy {
 			this.promotionsService.removeByIds([promotionId]).subscribe(
 				(data) => {
 					this.promotions = this.promotions.filter(
-						(p) => ![promotionId].includes(p._id)
+						(p) => ![promotionId].includes(p._id),
 					);
 
 					this._loadDataSmartTable();
@@ -195,7 +201,7 @@ export class PromotionTable implements OnInit, OnDestroy {
 				},
 				(err) => {
 					this.presentToast(err.message || 'Something went wrong!');
-				}
+				},
 			);
 		}
 	}

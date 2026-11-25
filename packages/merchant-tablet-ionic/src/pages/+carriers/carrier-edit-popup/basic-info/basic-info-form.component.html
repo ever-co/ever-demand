@@ -13,13 +13,17 @@
 		<ion-row>
 			<ion-col text-center>
 				<ion-item>
-					<ion-label class="labels" position="floating">{{
-						'CARRIERS_VIEW.ADD_CARRIER.FIRST_NAME' | translate
-					}}</ion-label>
 					<ion-input
+						labelPlacement="floating"
 						type="text"
 						formControlName="firstName"
-					></ion-input>
+						><div slot="label" class="labels">
+							{{
+								'CARRIERS_VIEW.ADD_CARRIER.FIRST_NAME'
+									| translate
+							}}
+						</div></ion-input
+					>
 				</ion-item>
 				<div *ngIf="isFirstNameValid" class="validation-errors">
 					<span *ngIf="firstName.errors.required">{{
@@ -34,13 +38,17 @@
 			</ion-col>
 			<ion-col>
 				<ion-item>
-					<ion-label class="labels" position="floating">{{
-						'CARRIERS_VIEW.ADD_CARRIER.LAST_NAME' | translate
-					}}</ion-label>
 					<ion-input
+						labelPlacement="floating"
 						type="text"
 						formControlName="lastName"
-					></ion-input>
+						><div slot="label" class="labels">
+							{{
+								'CARRIERS_VIEW.ADD_CARRIER.LAST_NAME'
+									| translate
+							}}
+						</div></ion-input
+					>
 				</ion-item>
 				<div *ngIf="isLastNameValid" class="validation-errors">
 					<span *ngIf="lastName.errors.required">
@@ -60,10 +68,14 @@
 		<ion-row>
 			<ion-col>
 				<ion-item>
-					<ion-label class="labels" position="floating">{{
-						'CARRIERS_VIEW.ADD_CARRIER.PHONE' | translate
-					}}</ion-label>
-					<ion-input type="text" formControlName="phone"></ion-input>
+					<ion-input
+						labelPlacement="floating"
+						type="text"
+						formControlName="phone"
+						><div slot="label" class="labels">
+							{{ 'CARRIERS_VIEW.ADD_CARRIER.PHONE' | translate }}
+						</div></ion-input
+					>
 				</ion-item>
 				<div *ngIf="isPhoneValid" class="validation-errors">
 					<span [hidden]="!phone.hasError('required')">
@@ -82,10 +94,14 @@
 			</ion-col>
 			<ion-col>
 				<ion-item>
-					<ion-label class="labels" position="floating">
-						{{ 'CARRIERS_VIEW.ADD_CARRIER.EMAIL' | translate }}
-					</ion-label>
-					<ion-input type="text" formControlName="email"></ion-input>
+					<ion-input
+						labelPlacement="floating"
+						type="text"
+						formControlName="email"
+						><div slot="label" class="labels">
+							{{ 'CARRIERS_VIEW.ADD_CARRIER.EMAIL' | translate }}
+						</div></ion-input
+					>
 				</ion-item>
 				<div *ngIf="isEmailValid" class="validation-errors">
 					<span *ngIf="email.errors != null">{{
@@ -101,8 +117,8 @@
 				<e-cu-file-uploader
 					[inputCustomStyle]="true"
 					[buttonFullSpace]="true"
-					[name]="firstName?.value"
-					[fileUrl]="logo?.value"
+					[name]="$safeNavigationMigration(firstName?.value)"
+					[fileUrl]="$safeNavigationMigration(logo?.value)"
 					(uploadedImgUrl)="logo.setValue($event)"
 				></e-cu-file-uploader>
 

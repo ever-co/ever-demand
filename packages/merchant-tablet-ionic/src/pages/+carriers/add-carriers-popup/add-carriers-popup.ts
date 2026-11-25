@@ -1,4 +1,10 @@
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	OnInit,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 
 import { AddChoiceComponent } from './add-choice/add-choice';
 import { AddNewCarrierComponent } from './add-new-carrier/add-new-carrier';
@@ -16,6 +22,7 @@ import { ModalController } from '@ionic/angular/lazy';
 	standalone: false,
 	selector: 'page-add-carriers-popup',
 	templateUrl: 'add-carriers-popup.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./add-carriers-popup.scss'],
 })
 export class AddCarriersPopupPage implements OnInit, OnDestroy {
@@ -50,7 +57,7 @@ export class AddCarriersPopupPage implements OnInit, OnDestroy {
 		public carrierRouter: CarrierRouter,
 		public warehouseRouter: WarehouseRouter,
 		public store: Store,
-		private readonly _translateService: TranslateService
+		private readonly _translateService: TranslateService,
 	) {}
 
 	ngOnInit() {
@@ -149,7 +156,7 @@ export class AddCarriersPopupPage implements OnInit, OnDestroy {
 		} else if (this.choiced === 'existing') {
 			warehouse.hasRestrictedCarriers = true;
 			warehouse.usedCarriersIds.push(
-				...this.carriersCatalog.selecteCarriers.map((c) => c.id)
+				...this.carriersCatalog.selecteCarriers.map((c) => c.id),
 			);
 		}
 

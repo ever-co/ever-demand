@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	OnDestroy,
+	Input,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
@@ -10,6 +16,7 @@ import Product from '@modules/server.common/entities/Product';
 	standalone: false,
 	selector: 'merchant-top-products',
 	templateUrl: 'top-products.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['../common/no-orders-info/no-orders-info.component.scss'],
 })
 export class TopProductsComponent implements OnInit, OnDestroy {
@@ -42,7 +49,7 @@ export class TopProductsComponent implements OnInit, OnDestroy {
 	constructor(
 		private warehouseProductsRouter: WarehouseProductsRouter,
 		private modalCtrl: ModalController,
-		private translateProductLocales: ProductLocalesService
+		private translateProductLocales: ProductLocalesService,
 	) {}
 
 	ngOnInit() {

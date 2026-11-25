@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, OnChanges, OnDestroy } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	OnChanges,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import {
 	FormGroup,
 	FormBuilder,
@@ -13,6 +20,7 @@ import { Store } from '../../../services/store.service';
 @Component({
 	standalone: false,
 	selector: 'merchant-account',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'account.html',
 })
 export class AccountComponent implements OnInit, OnChanges, OnDestroy {
@@ -30,7 +38,7 @@ export class AccountComponent implements OnInit, OnChanges, OnDestroy {
 		private formBuilder: FormBuilder,
 		private warehouseRouter: WarehouseRouter,
 		public alertController: AlertController,
-		private store: Store
+		private store: Store,
 	) {
 		this.buildForm();
 		this.bindFormControls();
@@ -46,7 +54,7 @@ export class AccountComponent implements OnInit, OnChanges, OnDestroy {
 					{
 						current: this.oldPassword.value,
 						new: this.password.value,
-					}
+					},
 				);
 			} catch (error) {
 				const alertError = await this.alertController.create({

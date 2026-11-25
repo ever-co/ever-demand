@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { ModalController } from '@ionic/angular/lazy';
 import { OrderMapPopupPage } from '../../order-map-popup/order-map-popup';
@@ -7,6 +7,7 @@ import { OrderMapPopupPage } from '../../order-map-popup/order-map-popup';
 	standalone: false,
 	selector: 'carrier-info',
 	styleUrls: ['./carrier-info.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'carrier-info.html',
 })
 export class CarrierInfoComponent {

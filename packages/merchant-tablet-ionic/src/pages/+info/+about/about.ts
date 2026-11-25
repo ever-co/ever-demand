@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { Subscription } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 @Component({
 	standalone: false,
 	selector: 'page-about',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'about.html',
 })
 export class AboutPage implements OnDestroy {

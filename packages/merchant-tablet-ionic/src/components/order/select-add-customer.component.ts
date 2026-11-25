@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	Output,
+	EventEmitter,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { bindViewCell } from '../table-components/smart-table';
 import { LocalDataSource, Settings } from 'angular2-smart-table';
 import { takeUntil } from 'rxjs/operators';
@@ -12,6 +19,7 @@ import { TranslateService } from '@ngx-translate/core';
 	standalone: false,
 	selector: 'select-add-customer',
 	styleUrls: ['./select-add-customer.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<span class="select-add-customer-component">
 			<div class="customers-table" *ngIf="isSelectedFromExisting">
@@ -53,7 +61,7 @@ export class SelectAddCustomerComponent implements OnInit {
 
 	constructor(
 		private readonly _usersService: UsersService,
-		private readonly _translateService: TranslateService
+		private readonly _translateService: TranslateService,
 	) {}
 
 	get isSelectedFromExisting() {
@@ -87,7 +95,7 @@ export class SelectAddCustomerComponent implements OnInit {
 			getTranslate('FULL_NAME'),
 			getTranslate('EMAIL'),
 			getTranslate('PHONE'),
-			getTranslate('ADDRESS')
+			getTranslate('ADDRESS'),
 		)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(([id, fullName, email, phone, address]) => {

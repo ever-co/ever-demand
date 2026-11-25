@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ViewCell } from '../table-components/smart-table';
 import User from '@modules/server.common/entities/User';
 
@@ -16,6 +16,7 @@ import User from '@modules/server.common/entities/User';
 			}
 		`,
 	],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<strong
 			>{{ user?.geoLocation.city }}

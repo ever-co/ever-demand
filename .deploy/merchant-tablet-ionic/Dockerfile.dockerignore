@@ -1,0 +1,22 @@
+# Build context filter for .deploy/merchant-tablet-ionic/Dockerfile (BuildKit reads <Dockerfile>.dockerignore)
+**/node_modules
+**/.angular
+**/www
+**/dist
+**/coverage
+**/.env
+**/graphify-out
+.git
+packages/core
+packages/admin-web-angular
+packages/carrier-mobile-ionic
+packages/shop-mobile-expo
+packages/shop-mobile-flutter
+packages/shop-mobile-ionic
+packages/shop-web-angular
+packages/shop-web-gatsby
+packages/merchant-tablet-ionic/src/environments/environment.ts
+packages/merchant-tablet-ionic/src/environments/environment.prod.ts
+packages/merchant-tablet-ionic/android
+packages/merchant-tablet-ionic/ios
+e2e
