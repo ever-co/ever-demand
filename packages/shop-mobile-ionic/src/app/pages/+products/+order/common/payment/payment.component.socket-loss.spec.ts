@@ -130,6 +130,8 @@ describe('PaymentComponent when the socket drops during a payment', () => {
 			'getStripeCurrency',
 			'payWithStripe',
 		]);
+		// No popup, so no shown currency is sent
+		expect(socket.sent[1].args).toEqual(['order-1', 'card-saved']);
 		expect(component.paying).toBe(true);
 		expect(store.isPaying('order-1')).toBe(true);
 		expect(payButton().disabled).toBe(true);
@@ -159,6 +161,8 @@ describe('PaymentComponent when the socket drops during a payment', () => {
 			'getStripeCurrency',
 			'payWithStripe',
 		]);
+		// The currency shown in the popup goes with the charge
+		expect(socket.sent[1].args).toEqual(['order-1', 'card-1', 'ILS']);
 		expect(store.isPaying('order-1')).toBe(true);
 		expect(payButton().disabled).toBe(true);
 

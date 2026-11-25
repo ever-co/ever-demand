@@ -26,9 +26,17 @@ export class PaymentComponent {
 	userCard: Stripe.Card | null = null;
 
 	// Currency the server charges cards in (e.g. 'USD'), shown in the card
-	// popup. Null until the server answered: Pay now stays disabled, so
-	// the popup never shows another currency than the one charged.
+	// popup. Null until the server answered, so the popup never shows
+	// another currency than the one charged.
 	stripeCurrency: string | null = null;
+
+	loadingStripeCurrency: boolean = false;
+
+	// Pay now waits for the first currency load. After a failed load it is
+	// enabled again, so a tap can tell the customer and load it again.
+	get waitingForStripeCurrency(): boolean {
+		return this.stripeCurrency == null && this.loadingStripeCurrency;
+	}
 
 	// True while a card payment request is in flight, so a double tap
 	// does not send a second payment for the same order. It also covers
@@ -55,7 +63,7 @@ export class PaymentComponent {
 		private readonly _translateProductLocales: ProductLocalesService
 	) {
 		this.getUserCard();
-		// Never rejects: a failed load is logged and keeps Pay now disabled
+		// Never rejects: a failed load is logged, and Pay now loads it again
 		void this.getStripeCurrency();
 	}
 
@@ -104,6 +112,10 @@ export class PaymentComponent {
 		const currency = this.stripeCurrency;
 
 		if (currency == null) {
+			if (!this.loadingStripeCurrency) {
+				alert('Payment Failed!');
+				void this.getStripeCurrency();
+			}
 			return;
 		}
 
@@ -157,9 +169,12 @@ export class PaymentComponent {
 						);
 
 						try {
+							// The server refuses the charge when its currency
+							// is no longer the one shown in this popup.
 							let order = await this.orderRouter.payWithStripe(
 								orderId,
-								cardId
+								cardId,
+								currency
 							);
 							console.log('Payment Done!');
 							try {
@@ -171,6 +186,9 @@ export class PaymentComponent {
 						} catch (err) {
 							alert('Payment Failed!');
 							console.error('Payment Failed!', err);
+							// The charge currency may have changed since it
+							// was loaded: show the current one next time.
+							void this.getStripeCurrency();
 						}
 					} catch (err) {
 						alert('Payment Failed!');
@@ -209,12 +227,16 @@ export class PaymentComponent {
 	}
 
 	private async getStripeCurrency() {
+		this.loadingStripeCurrency = true;
+
 		try {
 			const currency = await this.orderRouter.getStripeCurrency();
 
 			this.stripeCurrency = currency.toUpperCase();
 		} catch (err) {
 			console.error('Could not load the card charge currency!', err);
+		} finally {
+			this.loadingStripeCurrency = false;
 		}
 	}
 

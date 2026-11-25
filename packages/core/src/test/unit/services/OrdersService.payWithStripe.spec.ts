@@ -217,6 +217,31 @@ describe('OrdersService.payWithStripe', () => {
 			expect(stored.isPaid).toBe(false);
 		});
 
+		it('charges when the shop showed the charge currency', async () => {
+			mockedEnv.STRIPE_CURRENCY = 'usd';
+
+			await service.payWithStripe(ORDER_ID, 'card_1', 'USD');
+
+			expect(mockChargesCreate).toHaveBeenCalledTimes(1);
+			expect(mockChargesCreate.mock.calls[0][0].currency).toBe('usd');
+			expect(stored.isPaid).toBe(true);
+		});
+
+		it('refuses a charge in another currency than the shop showed, before the card is charged', async () => {
+			// The server restarted with another currency while the shop
+			// page stayed open.
+			mockedEnv.STRIPE_CURRENCY = 'usd';
+
+			await expect(
+				service.payWithStripe(ORDER_ID, 'card_1', 'ILS')
+			).rejects.toThrow(
+				'Charge currency is usd, but the customer was shown ILS'
+			);
+
+			expect(mockChargesCreate).not.toHaveBeenCalled();
+			expect(stored.isPaid).toBe(false);
+		});
+
 		it('serves the charge currency to the shop', async () => {
 			await expect(service.getStripeCurrency()).resolves.toBe('ils');
 

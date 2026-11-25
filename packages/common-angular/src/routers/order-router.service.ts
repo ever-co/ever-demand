@@ -59,12 +59,17 @@ export class OrderRouter implements IOrderRouter {
 		return this._orderFactory(order);
 	}
 
-	async payWithStripe(orderId: string, cardId: string): Promise<Order> {
-		const order = await this.router.run<IOrder>(
-			'payWithStripe',
-			orderId,
-			cardId
-		);
+	async payWithStripe(
+		orderId: string,
+		cardId: string,
+		shownCurrency?: string
+	): Promise<Order> {
+		// Sent only when given, so a call without it stays as before
+		const args =
+			shownCurrency == null
+				? [orderId, cardId]
+				: [orderId, cardId, shownCurrency];
+		const order = await this.router.run<IOrder>('payWithStripe', ...args);
 		return this._orderFactory(order);
 	}
 

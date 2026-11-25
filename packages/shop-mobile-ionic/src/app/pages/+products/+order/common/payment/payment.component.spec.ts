@@ -354,6 +354,7 @@ describe('PaymentComponent new-card payment', () => {
 			await payment.componentInstance.toPaymentStage();
 
 			expect(configure).not.toHaveBeenCalled();
+			expect(window.alert).not.toHaveBeenCalled();
 
 			currency.resolve('eur');
 			await settle();
@@ -367,20 +368,84 @@ describe('PaymentComponent new-card payment', () => {
 			);
 		});
 
-		it('keeps Pay now disabled when the currency can not be loaded', async () => {
+		it('tells the customer and loads the currency again when it could not be loaded', async () => {
 			const error = new Error('network down');
-			orderRouter.getStripeCurrency.and.rejectWith(error);
+			orderRouter.getStripeCurrency.calls.reset();
+			orderRouter.getStripeCurrency.and.returnValues(
+				Promise.reject(error),
+				Promise.resolve('usd')
+			);
 			const payment = await createPayment();
 
-			expect(payNowButton(payment).disabled).toBe(true);
 			expect(console.error).toHaveBeenCalledWith(
 				jasmine.any(String),
 				error
 			);
+			// Enabled, so the tap can say what went wrong
+			expect(payNowButton(payment).disabled).toBe(false);
 
 			await payment.componentInstance.toPaymentStage();
 
 			expect(configure).not.toHaveBeenCalled();
+			expect(window.alert).toHaveBeenCalledOnceWith('Payment Failed!');
+			expect(orderRouter.getStripeCurrency).toHaveBeenCalledTimes(2);
+
+			await settle();
+			await payment.componentInstance.toPaymentStage();
+
+			expect(configure).toHaveBeenCalledOnceWith(
+				jasmine.objectContaining({ currency: 'USD' })
+			);
+		});
+
+		it('sends the currency shown in the popup with the charge', async () => {
+			orderRouter.getStripeCurrency.and.returnValue(
+				Promise.resolve('usd')
+			);
+			orderRouter.payWithStripe.and.returnValue(
+				Promise.resolve(paidOrder())
+			);
+			const payment = (await createPayment()).componentInstance;
+
+			await payment.toPaymentStage();
+			await tokenHandlers[tokenHandlers.length - 1](
+				cardToken('tok_first')
+			);
+
+			expect(orderRouter.payWithStripe).toHaveBeenCalledOnceWith(
+				'order-1',
+				'card-1',
+				'USD'
+			);
+		});
+
+		it('loads the currency again after a refused charge, so the next popup shows the new one', async () => {
+			// The server restarted with another currency while the page
+			// stayed open, so it refuses the charge in the shown one.
+			orderRouter.getStripeCurrency.calls.reset();
+			orderRouter.getStripeCurrency.and.returnValues(
+				Promise.resolve('ils'),
+				Promise.resolve('usd')
+			);
+			orderRouter.payWithStripe.and.rejectWith(
+				new Error(
+					'Charge currency is usd, but the customer was shown ILS'
+				)
+			);
+			const payment = (await createPayment()).componentInstance;
+
+			await payment.toPaymentStage();
+			await tokenHandlers[tokenHandlers.length - 1](
+				cardToken('tok_first')
+			);
+			await settle();
+
+			expect(window.alert).toHaveBeenCalledOnceWith('Payment Failed!');
+			expect(orderRouter.getStripeCurrency).toHaveBeenCalledTimes(2);
+
+			await payment.toPaymentStage();
+
+			expect(configure.calls.mostRecent().args[0].currency).toBe('USD');
 		});
 	});
 
@@ -431,7 +496,8 @@ describe('PaymentComponent new-card payment', () => {
 			expect(orderRouter.payWithStripe).toHaveBeenCalledTimes(1);
 			expect(orderRouter.payWithStripe).toHaveBeenCalledWith(
 				'order-1',
-				'card-1'
+				'card-1',
+				'ILS'
 			);
 		});
 
@@ -594,8 +660,8 @@ describe('PaymentComponent new-card payment', () => {
 			expect(userRouter.addPaymentMethod).toHaveBeenCalledTimes(2);
 			expect(orderRouter.payWithStripe.calls.allArgs()).toEqual(
 				jasmine.arrayWithExactContents([
-					['order-1', 'card-1'],
-					['order-2', 'card-1'],
+					['order-1', 'card-1', 'ILS'],
+					['order-2', 'card-1', 'ILS'],
 				])
 			);
 		});

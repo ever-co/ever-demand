@@ -35,7 +35,15 @@ interface IOrderRouter {
 
 	removeProducts(orderId: Order['id'], productsIds: string[]): Promise<Order>;
 
-	payWithStripe(orderId: Order['id'], cardId: string): Promise<Order>;
+	/**
+	 * @param shownCurrency currency the customer was shown, if any. The
+	 * server refuses the charge when it is not the charge currency.
+	 */
+	payWithStripe(
+		orderId: Order['id'],
+		cardId: string,
+		shownCurrency?: string
+	): Promise<Order>;
 
 	/**
 	 * Currency payWithStripe charges in: a lower-case code, e.g. `usd`

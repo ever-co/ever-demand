@@ -312,9 +312,9 @@ export class OrdersService extends DBService<Order>
 	 */
 	@asyncListener()
 	getStripeCurrency(): Promise<string> {
-		// A throw in the executor rejects the promise
-		return new Promise<string>((resolve) =>
-			resolve(resolveStripeCurrency(env.STRIPE_CURRENCY))
+		// A throw in then() rejects the promise instead of escaping
+		return Promise.resolve().then(() =>
+			resolveStripeCurrency(env.STRIPE_CURRENCY)
 		);
 	}
 
@@ -325,11 +325,18 @@ export class OrdersService extends DBService<Order>
 	 *
 	 * @param {Order['id']} orderId
 	 * @param {string} cardId CC Id which will be used to pay
+	 * @param {string} [shownCurrency] currency the shop showed the customer,
+	 * e.g. in its card popup. The charge is refused when it differs from the
+	 * configured one.
 	 * @returns {Promise<Order>}
 	 * @memberof OrdersService
 	 */
 	@asyncListener()
-	async payWithStripe(orderId: Order['id'], cardId: string): Promise<Order> {
+	async payWithStripe(
+		orderId: Order['id'],
+		cardId: string,
+		shownCurrency?: string
+	): Promise<Order> {
 		await this._throwIfNotExists(orderId);
 
 		const callId = uuid();
@@ -367,6 +374,18 @@ export class OrdersService extends DBService<Order>
 					// check also keeps a currency that is not split into
 					// 100 minor units away from the cents amount below.
 					const currency = resolveStripeCurrency(env.STRIPE_CURRENCY);
+
+					// The setting changed after the shop loaded it, e.g. with
+					// a restart while the page stayed open: never charge in a
+					// currency the customer was not shown.
+					if (
+						shownCurrency != null &&
+						String(shownCurrency).trim().toLowerCase() !== currency
+					) {
+						throw new Error(
+							`Charge currency is ${currency}, but the customer was shown ${shownCurrency}`
+						);
+					}
 
 					const charge: Stripe.Charge = await this.stripe.charges.create(
 						{
