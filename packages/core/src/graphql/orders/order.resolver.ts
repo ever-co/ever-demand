@@ -15,7 +15,7 @@ import IProduct from '@modules/server.common/interfaces/IProduct';
 import { ProductsService } from '../../services/products';
 import Product from '@modules/server.common/entities/Product';
 import * as _ from 'lodash';
-import { ObjectId } from 'bson';
+import { ObjectId } from 'mongodb';
 import { FakeOrdersService } from '../../services/fake-data/FakeOrdersService';
 import { firstValueFrom } from 'rxjs';
 import { UseGuards } from '@nestjs/common';

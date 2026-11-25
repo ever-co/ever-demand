@@ -1,5 +1,4 @@
-@import '../../../styles/variables';
-@import '@angular/material/theming';
+@use 'variables' as *;
 
 .location-modal-card {
 	i.material-icons {

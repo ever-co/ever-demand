@@ -9,8 +9,6 @@ import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
 import Invite from '@modules/server.common/entities/Invite';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';
-import requestPromise from 'request-promise';
-import Bluebird from 'bluebird';
 import { DevicesService } from '../devices';
 import Device from '@modules/server.common/entities/Device';
 import { launched } from '@modules/server.common/notifications';
@@ -22,7 +20,7 @@ import { filter, first, map, switchMap } from 'rxjs/operators';
 import { IGeoLocationCreateObject } from '@modules/server.common/interfaces/IGeoLocation';
 import { Country } from '@modules/server.common/entities/GeoLocation';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
-import * as faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 @injectable()
 @routerName('invite-request')
@@ -101,7 +99,7 @@ export class InvitesRequestsService
 		);
 		const languages = _.keys(devicesByLanguages) as ILanguage[];
 
-		await (<any>Bluebird).map(languages, async (language: ILanguage) => {
+		await Promise.all(languages.map(async (language: ILanguage) => {
 			const devicesByLanguage: Device[] = devicesByLanguages[language];
 
 			const request = {
@@ -111,26 +109,33 @@ export class InvitesRequestsService
 			};
 
 			try {
-				const rp: any = requestPromise;
+				const auth = Buffer.from(
+					`${env.URBAN_AIRSHIP_KEY}:${env.URBAN_AIRSHIP_SECRET}`
+				).toString('base64');
 
-				await rp({
-					method: 'POST',
-					uri: 'https://go.urbanairship.com/api/push',
-					body: request,
-					headers: {
-						Accept: 'application/vnd.urbanairship+json; version=3;',
-					},
-					auth: {
-						user: env.URBAN_AIRSHIP_KEY,
-						pass: env.URBAN_AIRSHIP_SECRET,
-					},
-					json: true,
-				});
+				const response = await fetch(
+					'https://go.urbanairship.com/api/push',
+					{
+						method: 'POST',
+						headers: {
+							Accept: 'application/vnd.urbanairship+json; version=3;',
+							'Content-Type': 'application/json',
+							Authorization: `Basic ${auth}`,
+						},
+						body: JSON.stringify(request),
+					}
+				);
+
+				if (!response.ok) {
+					throw new Error(
+						`Urban Airship answered ${response.status} ${response.statusText}`
+					);
+				}
 			} catch (e) {
 				console.error(`.notifyAboutLaunch(...) error: ${e.message}`);
 				throw e;
 			}
-		});
+		}));
 	}
 
 	@asyncListener()
@@ -414,14 +419,14 @@ export class InvitesRequestsService
 		defaultLat: number
 	): IGeoLocationCreateObject {
 		const GeoLocation: IGeoLocationCreateObject = {
-			countryId: faker.datatype.number(Country.ZW) as Country,
-			city: faker.address.city(),
+			countryId: faker.number.int({ min: 0, max: Country.ZW }) as Country,
+			city: faker.location.city(),
 			house: houseNumber,
 			loc: {
 				type: 'Point',
 				coordinates: [defaultLng, defaultLat],
 			},
-			streetAddress: faker.address.streetAddress(),
+			streetAddress: faker.location.streetAddress(),
 		};
 		return GeoLocation;
 	}

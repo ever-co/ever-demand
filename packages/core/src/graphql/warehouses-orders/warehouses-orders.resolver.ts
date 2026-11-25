@@ -10,7 +10,7 @@ import { OrdersService } from '../../services/orders';
 import OrderStatus from '@modules/server.common/enums/OrderStatus';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
-import { ObjectId } from 'bson';
+import { ObjectId } from 'mongodb';
 
 export type OrdersFilterModes =
 	| 'ready'
@@ -98,19 +98,18 @@ export class WarehouseOrdersResolver {
 		_,
 		{ storeId, userId }: { storeId: string; userId: string }
 	) {
-		const res = await this._ordersService.Model.update(
+		const res = await this._ordersService.Model.updateMany(
 			{
 				'user._id': new ObjectId(userId),
 				warehouse: storeId,
 				isDeleted: false,
 			},
-			{ isDeleted: true },
-			{ multi: true }
+			{ isDeleted: true }
 		).exec();
 
 		return {
-			number: res.n,
-			modified: res.nModified,
+			number: res.matchedCount,
+			modified: res.modifiedCount,
 		};
 	}
 

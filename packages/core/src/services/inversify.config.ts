@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { Container, interfaces, ContainerModule } from 'inversify';
+import { Container, ContainerModule, ContainerModuleLoadOptions } from 'inversify';
 import * as _ from 'lodash';
 import { IRoutersManager, RoutersManager, RouterSymbol } from '@pyro/io';
 import { CarriersOrdersService, CarriersService } from './carriers';
@@ -31,10 +31,16 @@ import { DevicesService } from './devices';
 import { ServiceSymbol } from './IService';
 import { ConfigService } from '../config/config.service';
 import { ServicesApp } from './services.app';
-import { AuthenticationService, AuthService, authServiceFactory } from './auth';
+import {
+	AuthenticationService,
+	AuthService,
+	authServiceFactory,
+	AuthServiceFactory,
+} from './auth';
 import { UsersAuthService } from './users/UsersAuthService';
 import { AdminsService } from './admins';
-import { getConnection, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
+import { getTypeORMDataSource } from '../helpers/typeorm';
 import Admin from '@modules/server.common/entities/Admin';
 import Device from '@modules/server.common/entities/Device';
 import { FakeOrdersService } from './fake-data/FakeOrdersService';
@@ -43,11 +49,10 @@ import { PromotionService } from './products/PromotionService';
 import { AppsSettingsService } from './apps-settings';
 
 function getRepository(t: any): any {
-	const conn = getConnection('typeorm');
-	return conn.getRepository(t);
+	return getTypeORMDataSource().getRepository(t);
 }
 
-const bindings = new ContainerModule((bind: interfaces.Bind) => {
+const bindings = new ContainerModule(({ bind }: ContainerModuleLoadOptions) => {
 	bind<Repository<Admin>>('AdminRepository')
 		.toDynamicValue(() => {
 			return getRepository(Admin);
@@ -97,19 +102,22 @@ const bindings = new ContainerModule((bind: interfaces.Bind) => {
 		(Service: any) => {
 			bind(Service).to(Service).inSingletonScope();
 
-			bind<any>(ServiceSymbol).toFactory<any>((context) => {
-				return context.container.get<any>(Service);
+			// Every service is also reachable through the multi-bindings below
+			// (ServicesApp, the NestJS ServicesModule and the socket.io routers
+			// get all of them), resolving to the same singleton.
+			bind<any>(ServiceSymbol).toDynamicValue((context) => {
+				return context.get<any>(Service);
 			});
 
-			bind<any>(RouterSymbol).toFactory<any>((context) => {
-				return context.container.get<any>(Service);
+			bind<any>(RouterSymbol).toDynamicValue((context) => {
+				return context.get<any>(Service);
 			});
 		}
 	);
 
 	bind(AuthService).toSelf();
 
-	bind('Factory<AuthService>').toFactory(authServiceFactory);
+	bind<AuthServiceFactory>('Factory<AuthService>').toFactory(authServiceFactory);
 
 	bind<IRoutersManager>('RoutersManager')
 		.to(RoutersManager)

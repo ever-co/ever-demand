@@ -1,10 +1,21 @@
-import { Component, OnDestroy, OnInit, Inject } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	OnInit,
+	Inject,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'environments/environment';
 import { DOCUMENT } from '@angular/common';
-import { getBrowserLanguage } from '../services/browser-language';
+import {
+	getBrowserLanguage,
+	SUPPORTED_LANGUAGES,
+} from '../services/browser-language';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'settings',
 	styleUrls: ['./settings.component.scss'],
 	templateUrl: './settings.component.html',
@@ -20,22 +31,16 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	) {
 		this.defaultLanguage = environment['DEFAULT_LANGUAGE'];
 
-		if (translateService.currentLang) {
-			const current = translateService.currentLang;
+		const current = translateService.getCurrentLang();
+
+		if (current) {
 			this.selectedLang = current;
-			translateService.setDefaultLang(current);
+			translateService.setFallbackLang(current);
 		} else {
 			// TODO: load list of supported languages from config service
-			translateService.addLangs([
-				'en-US',
-				'es-ES',
-				'bg-BG',
-				'he-IL',
-				'ru-RU',
-				'fr-FR',
-			]);
+			translateService.addLangs(SUPPORTED_LANGUAGES);
 
-			translateService.setDefaultLang('en-US');
+			translateService.setFallbackLang('en-US');
 
 			if (this.defaultLanguage) {
 				translateService.use(this.defaultLanguage);
@@ -43,7 +48,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 				translateService.use(getBrowserLanguage(translateService));
 			}
 
-			this.selectedLang = this.translateService.currentLang;
+			this.selectedLang = this.translateService.getCurrentLang();
 		}
 	}
 
@@ -52,7 +57,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	switchLanguage(language: string) {
 		this.translateService.use(language);
 
-		const langAbbreviation = language.substr(0, 2);
+		const langAbbreviation = language.substring(0, 2);
 
 		if (language === 'he-IL') {
 			this.dir = 'rtl';

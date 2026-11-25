@@ -1,41 +1,42 @@
-import React, { useContext } from 'react';
-import { useQuery } from 'react-apollo-hooks';
-import { getOrders } from '../apollo/order';
-import { Button, Container, Grid, Typography } from '@material-ui/core';
-import { AppContext } from '../Context';
-import Layout from '../components/layout';
-import OrdersList from '../components/OrdersList/OrdersList';
+import React from 'react';
+import { Button, Container, Grid, Typography } from '@mui/material';
+import { useQuery } from '@apollo/client/react';
 
-const Orders = (props) => {
-	const context = useContext(AppContext);
-	// @ts-ignore
-	const { data, error, loading } = useQuery(getOrders, {
-		variables: { id: context.getUser().id },
+import Layout from '../components/layout';
+import Seo from '../components/seo';
+import OrdersList, { ordersTotal } from '../components/OrdersList/OrdersList';
+import { useAppContext } from '../Context';
+import { GetOrders } from '../apollo/order';
+import { useHydrated } from '../utilities/hydrated';
+
+/** The customer's orders and their total. */
+const Orders = () => {
+	const context = useAppContext();
+	const hydrated = useHydrated();
+	const userId = hydrated ? context.getUser().id : undefined;
+
+	const { data, error, loading } = useQuery(GetOrders, {
+		variables: { id: userId ?? '' },
+		skip: !userId,
+		fetchPolicy: 'network-only',
 	});
 
-	if (context.orders === []) {
-		if (loading) {
-			return <div>Loading...</div>;
-		}
-		if (error) {
-			// @ts-ignore
-			return <div>Error! {error.message}</div>;
-		}
-		context.setOrders(data.getOrders);
+	if (!hydrated || (loading && !data)) {
+		return <Layout>Loading...</Layout>;
 	}
-	console.log(context.orders);
-	const orders = context.orders || [];
-	const sum = (_total, order) => {
-		return _total + order;
-	};
-	const totals = orders.map((order) => order.totalPrice);
-	const total = totals.reduce(sum, 0);
-	console.log(total);
+	if (error) {
+		return <Layout>Error! {error.message}</Layout>;
+	}
+
+	// The API list, else the orders placed in this visit (e.g. while the list loads)
+	const orders = data?.getOrders ?? context.orders;
+	const total = ordersTotal(orders);
+
 	return (
 		<Layout>
 			<Container maxWidth={'xl'}>
-				<Grid container justify={'center'} spacing={4}>
-					<Grid item xs={12} lg={'auto'}>
+				<Grid sx={{ justifyContent: 'center' }} container spacing={4}>
+					<Grid size={{ xs: 12, lg: 'auto' }}>
 						<Button variant={'contained'} color={'secondary'}>
 							Pay Now: ${total}
 						</Button>
@@ -43,7 +44,7 @@ const Orders = (props) => {
 						<Typography variant={'body1'}> Or pay with cash </Typography>
 					</Grid>
 
-					<Grid item xs={12} lg={8} xl={10}>
+					<Grid size={{ xs: 12, lg: 8, xl: 10 }}>
 						<OrdersList orders={orders} />
 					</Grid>
 				</Grid>
@@ -52,12 +53,6 @@ const Orders = (props) => {
 	);
 };
 
-Orders.propTypes = {
-	// bla: PropTypes.string,
-};
-
-Orders.defaultProps = {
-	// bla: 'test',
-};
+export const Head = () => <Seo title="Orders" />;
 
 export default Orders;

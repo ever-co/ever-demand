@@ -1,36 +1,53 @@
 import React from 'react';
 import {
-	GoogleMap,
+	APIProvider,
+	Map as GoogleMap,
 	Marker,
-	withGoogleMap,
-	withScriptjs,
-} from 'react-google-maps';
+} from '@vis.gl/react-google-maps';
+import { config } from '../../config';
 
-const defaultCoordinates = [
-	process.env.DEFAULT_LONGITUDE,
-	process.env.DEFAULT_LATITUDE,
-].map((x) => parseFloat(x));
+interface MapProps {
+	/** [latitude, longitude] of the marker; the fallback location without one. */
+	coords?: [number, number] | null;
+	className?: string;
+	apiKey?: string;
+}
 
-const Map = withScriptjs(
-	withGoogleMap(({ coordinates }) => {
-		const coords = coordinates || defaultCoordinates;
+/**
+ * The visitor's location on a Google map (@vis.gl/react-google-maps, which replaced the
+ * dead react-google-maps). Without GATSBY_GOOGLE_MAPS_API_KEY it shows the coordinates
+ * instead of loading the Maps API with no key.
+ */
+const Map = ({
+	coords,
+	className,
+	apiKey = config.googleMapsApiKey,
+}: MapProps) => {
+	const [lat, lng] = coords ?? [
+		config.fallbackLatitude,
+		config.fallbackLongitude,
+	];
+
+	if (!apiKey) {
 		return (
-			<GoogleMap
-				defaultZoom={8}
-				defaultCenter={{ lat: coords[0], lng: coords[1] }}
-			>
-				<Marker position={{ lat: coords[0], lng: coords[1] }} />
-			</GoogleMap>
+			<div className={className} data-testid="map-placeholder">
+				{lat.toFixed(5)}, {lng.toFixed(5)}
+			</div>
 		);
-	}),
-);
+	}
 
-Map.propTypes = {
-	// bla: PropTypes.string,
-};
-
-Map.defaultProps = {
-	// bla: 'test',
+	return (
+		<APIProvider apiKey={apiKey}>
+			<GoogleMap
+				className={className}
+				defaultZoom={8}
+				defaultCenter={{ lat, lng }}
+				style={{ minHeight: 300 }}
+			>
+				<Marker position={{ lat, lng }} />
+			</GoogleMap>
+		</APIProvider>
+	);
 };
 
 export default Map;

@@ -1,4 +1,10 @@
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import {
+	Component,
+	HostBinding,
+	OnDestroy,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -27,6 +33,8 @@ interface RouteParams {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'product-details',
 	styleUrls: ['./product-details.component.scss'],
 	animations: [
@@ -175,7 +183,17 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	protected localeTranslate(member: ILocaleMember[]): string {
+	/**
+	 * Scrolls the thumbnail strip one image to the left (-1) or right (1), like the
+	 * ngx-drag-scroll moveLeft/moveRight buttons did.
+	 */
+	scrollImages(slide: HTMLElement, direction: -1 | 1): void {
+		const image = slide.querySelector<HTMLElement>('.scroll-image');
+		const step = image ? image.offsetWidth : slide.clientWidth;
+		slide.scrollBy({ left: direction * step, behavior: 'smooth' });
+	}
+
+	localeTranslate(member: ILocaleMember[]): string {
 		return this._productLocalesService.getTranslate(member);
 	}
 

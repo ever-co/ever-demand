@@ -3,7 +3,7 @@ import { CarriersOrdersService } from '../../services/carriers';
 import { ICarrierOrdersRouterGetOptions } from '@modules/server.common/routers/ICarrierOrdersRouter';
 import Order from '@modules/server.common/entities/Order';
 import IOrder from '@modules/server.common/interfaces/IOrder';
-import { GeoLocationOrdersOptions } from 'services/geo-locations';
+import { GeoLocationOrdersOptions } from '../../services/geo-locations';
 
 @Resolver('CarriersOrders')
 export class CarriersOrdersResolver {

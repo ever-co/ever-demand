@@ -1,5 +1,5 @@
 import Logger from 'bunyan';
-import { inject, injectable, LazyServiceIdentifer } from 'inversify';
+import { inject, injectable, LazyServiceIdentifier } from 'inversify';
 import { createEverLogger } from '../../helpers/Log';
 import { observableListener, routerName, asyncListener } from '@pyro/io';
 import IService from '../IService';
@@ -28,11 +28,11 @@ export class WarehousesUsersService implements IService, IWarehouseUsersRouter {
 	});
 
 	constructor(
-		@inject(new LazyServiceIdentifer(() => WarehousesOrdersService))
+		@inject(new LazyServiceIdentifier(() => WarehousesOrdersService))
 		private readonly warehousesOrdersService: WarehousesOrdersService,
-		@inject(new LazyServiceIdentifer(() => OrdersService))
+		@inject(new LazyServiceIdentifier(() => OrdersService))
 		private readonly ordersService: OrdersService,
-		@inject(new LazyServiceIdentifer(() => WarehousesService))
+		@inject(new LazyServiceIdentifier(() => WarehousesService))
 		private readonly _warehousesService: WarehousesService
 	) {}
 

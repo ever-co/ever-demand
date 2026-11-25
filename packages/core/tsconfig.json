@@ -1,23 +1,20 @@
 {
 	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
-		"baseUrl": "./src",
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
+		"rootDir": "..",
 		"outDir": "./build",
-		"rootDir": "./src",
-		"types": ["node", "reflect-metadata", "jest"],
-		"esModuleInterop": true,
-		"incremental": false,
-		"experimentalDecorators": true,
+		"noEmit": true,
+		"types": ["node", "jest"],
 		"paths": {
-			"@pyro/*": [
-				"@pyro/*",
-				"../../../node_modules/@ever-platform/common/src/@pyro/*"
-			],
-			"@modules/server.common/*": [
-				"@modules/server.common/*",
-				"../../../node_modules/@ever-platform/common/src/*"
-			]
+			"@pyro/db-server": ["./src/@pyro/db-server"],
+			"@pyro/db-server/*": ["./src/@pyro/db-server/*"],
+			"@pyro/io": ["./src/@pyro/io"],
+			"@pyro/io/*": ["./src/@pyro/io/*"],
+			"@pyro/*": ["../common/src/@pyro/*"],
+			"@modules/server.common/*": ["../common/src/*"]
 		}
 	},
-	"include": ["./src/**/*.ts", "../../common/**/*.ts"]
+	"include": ["./src/**/*.ts", "./test/**/*.ts"]
 }

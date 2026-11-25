@@ -5,9 +5,9 @@ import {
 	ICommandHandler,
 } from '@nestjs/cqrs';
 import { routerName } from '@pyro/io';
-import { injectable, optional } from 'inversify';
+import { inject, injectable, optional } from 'inversify';
 import { UsersService } from './UsersService';
-import IService from 'services/IService';
+import IService from '../IService';
 
 /**
  * AboutUs Command
@@ -37,6 +37,8 @@ export class GetAboutUsCommand implements ICommand {
 @routerName('userCommandService')
 export class UserCommandService implements IService {
 	constructor(
+		// not bound in inversify: stays undefined (NestJS owns the CommandBus)
+		@inject(CommandBus)
 		@optional()
 		private readonly _commandBus: CommandBus
 	) {}

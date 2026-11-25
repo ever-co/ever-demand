@@ -64,91 +64,85 @@ ARG UNLEASH_INSTANCE_ID
 ARG UNLEASH_REFRESH_INTERVAL
 ARG UNLEASH_METRICS_INTERVAL
 
-FROM node:16-alpine3.14 AS dependencies
+# ---- build: install core + common with pnpm, compile both with tsc ----
+FROM node:26-alpine AS build
 
 LABEL maintainer="ever@ever.co"
-LABEL org.opencontainers.image.source https://github.com/ever-co/ever-demand
+LABEL org.opencontainers.image.source=https://github.com/ever-co/ever-demand
 
 ENV CI=true
 
-RUN apk --update add bash \
-	&& apk add libexecinfo libexecinfo-dev \
-	&& npm i -g npm@8.19.4 \
-	&& apk add --no-cache --virtual build-dependencies build-base \
-	snappy dos2unix g++ snappy-dev gcc libgcc libstdc++ linux-headers autoconf automake make nasm python2 py2-setuptools vips-dev git \
-	&& npm install --quiet node-gyp@9.4.0 -g \
-	&& npm config set python /usr/bin/python \
-	&& npm install yarn@1.22.22 -g --force \
-	&& mkdir /srv/ever && echo "network-timeout 600000" > /srv/ever/.yarnrc && chown -R node:node /srv/ever
-
-COPY wait .deploy/api/entrypoint.compose.sh .deploy/api/entrypoint.prod.sh /
-RUN chmod +x /wait /entrypoint.compose.sh /entrypoint.prod.sh && dos2unix /entrypoint.compose.sh && dos2unix /entrypoint.prod.sh
-
-USER node:node
+# Node 25+ no longer bundles corepack
+RUN npm i -g pnpm@12.23.0
 
 WORKDIR /srv/ever
 
-COPY --chown=node:node package.json yarn.lock lerna.json package.workspaces.json tsconfig.base.json ./
-COPY --chown=node:node packages/core/package.json ./packages/core/package.json
-COPY --chown=node:node packages/common/package.json ./packages/common/package.json
-COPY --chown=node:node .snyk ./.snyk
-COPY --chown=node:node packages/core/.snyk ./packages/core/.snyk
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc tsconfig.base.json ./
+COPY packages/common/package.json ./packages/common/package.json
+COPY packages/core/package.json ./packages/core/package.json
 
 # Prefer the internal Verdaccio cache when VERDACCIO_REGISTRY is set (anonymous, backward-compatible);
-# empty (e.g. a fork) falls back to public npm. Writes the registry to .npmrc + .yarnrc and best-effort
-# (non-fatal) rewrites yarn.lock resolved URLs so the frozen-lockfile install below stays consistent.
+# empty (e.g. a fork) falls back to public npm.
 ARG VERDACCIO_REGISTRY=""
 RUN if [ -n "$VERDACCIO_REGISTRY" ]; then \
-		echo "registry=${VERDACCIO_REGISTRY}" >> /srv/ever/.npmrc && \
-		echo "registry \"${VERDACCIO_REGISTRY}\"" >> /srv/ever/.yarnrc && \
-		{ sed -i "s|https://registry.yarnpkg.com|${VERDACCIO_REGISTRY%/}|g; s|https://registry.npmjs.org|${VERDACCIO_REGISTRY%/}|g" /srv/ever/yarn.lock 2>/dev/null || true; }; \
+		echo "registry=${VERDACCIO_REGISTRY}" >> /srv/ever/.npmrc; \
 	fi
 
-RUN yarn bootstrap && yarn cache clean
+# --ignore-scripts: the only native addon, bcrypt, ships prebuilt binaries
+# (musl included), and the root `prepare` script (husky) has no use here
+RUN pnpm install --frozen-lockfile --ignore-scripts --filter "@ever-platform/core..."
 
-FROM node:16-alpine3.14 AS development
+COPY packages/common ./packages/common
+COPY packages/core ./packages/core
 
-USER node:node
+ENV NODE_OPTIONS=--max-old-space-size=2048
 
-WORKDIR /srv/ever
+RUN pnpm --filter @ever-platform/common build \
+	&& pnpm --filter @ever-platform/core build
 
-COPY --chown=node:node --from=dependencies /wait /entrypoint.compose.sh /entrypoint.prod.sh /
-COPY --chown=node:node --from=dependencies /srv/ever .
-COPY . .
+# ---- prod-deps: production dependencies only ----
+FROM node:26-alpine AS prod-deps
 
-FROM node:16-alpine3.14 AS build
+ENV CI=true
 
-WORKDIR /srv/ever
-
-RUN mkdir dist
-
-COPY --chown=node:node --from=development /srv/ever .
-
-ENV NODE_OPTIONS=${NODE_OPTIONS:-"--max-old-space-size=2048"}
-ENV NODE_ENV=${NODE_ENV:-production}
-ENV DEMO=${DEMO:-false}
-
-ENV IS_DOCKER=true
-
-RUN yarn build:server
-
-FROM node:16-alpine3.14 AS production
+RUN npm i -g pnpm@12.23.0
 
 WORKDIR /srv/ever
 
-COPY --chown=node:node --from=dependencies /wait /entrypoint.prod.sh /entrypoint.compose.sh ./
-COPY --chown=node:node --from=dependencies /srv/ever/node_modules ./node_modules
-COPY --chown=node:node --from=build /srv/ever/packages/common/ ./packages/common/
-COPY --chown=node:node --from=build /srv/ever/packages/core/ ./packages/core/
+COPY --from=build /srv/ever/package.json /srv/ever/pnpm-lock.yaml /srv/ever/pnpm-workspace.yaml /srv/ever/.npmrc ./
+COPY --from=build /srv/ever/packages/common/package.json ./packages/common/package.json
+COPY --from=build /srv/ever/packages/core/package.json ./packages/core/package.json
 
-RUN chmod +x wait entrypoint.compose.sh entrypoint.prod.sh
+RUN pnpm install --frozen-lockfile --prod --ignore-scripts --filter "@ever-platform/core..."
 
-RUN npm install cross-env -g \
-	&& npm install pm2 -g --unsafe-perm \
-	&& touch ormlogs.log && chown node:node ormlogs.log \
-	&& chown node:node wait && chmod +x wait
+# ---- production ----
+FROM node:26-alpine AS production
 
-RUN mkdir tmp && cd tmp && mkdir logs && cd /srv/ever && chown -R node:node tmp/logs
+# openssl: the API generates a self-signed certificate for HTTPS (HTTPSPORT)
+# when none is mounted at HTTPS_CERT_PATH / HTTPS_KEY_PATH
+RUN apk add --no-cache openssl dos2unix
+
+COPY wait .deploy/api/entrypoint.compose.sh .deploy/api/entrypoint.prod.sh /
+RUN chmod +x /wait /entrypoint.compose.sh /entrypoint.prod.sh \
+	&& dos2unix /entrypoint.compose.sh /entrypoint.prod.sh
+
+WORKDIR /srv/ever
+
+COPY --chown=node:node --from=prod-deps /srv/ever ./
+COPY --chown=node:node --from=build /srv/ever/packages/common/build ./packages/common/build
+COPY --chown=node:node --from=build /srv/ever/packages/core/build ./packages/core/build
+# schema-first GraphQL (src/**/*.graphql) and the express views/templates (res)
+COPY --chown=node:node --from=build /srv/ever/packages/core/src ./packages/core/src
+COPY --chown=node:node --from=build /srv/ever/packages/core/res ./packages/core/res
+
+# The API runs from packages/core: the GraphQL typePaths, res/views and the
+# logs (LOGS_PATH ./tmp/logs) are relative to it
+WORKDIR /srv/ever/packages/core
+
+RUN mkdir -p tmp/logs certificates \
+	&& touch ormlogs.log \
+	&& chown -R node:node tmp certificates ormlogs.log \
+	&& node -e "require('bcrypt').hashSync('check', 4)"
 
 USER node:node
 
@@ -230,7 +224,6 @@ EXPOSE ${HTTPPORT} ${HTTPSPORT} ${GQLPORT} ${GQLPORT_SUBSCRIPTIONS}
 HEALTHCHECK --interval=30s --timeout=5s --start-period=90s --retries=3 \
 	CMD node -e "require('http').get({host:process.env.API_HOST||'127.0.0.1',port:process.env.GQLPORT||8443,path:'/api/health',timeout:4000},r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1)).on('timeout',function(){this.destroy();process.exit(1)})"
 
-ENTRYPOINT [ "./entrypoint.prod.sh" ]
+ENTRYPOINT [ "/entrypoint.prod.sh" ]
 
-CMD [ "pm2-runtime", "packages/core/build/main.js" ]
-# CMD [ "node", "packages/core/build/main.js" ]
+CMD [ "node", "build/main.js" ]

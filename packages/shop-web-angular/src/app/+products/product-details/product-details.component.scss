@@ -1,4 +1,4 @@
-@import '~@ever-platform/common-angular/src/scss/everbie.common';
+@use 'variables' as *;
 
 /*:host {
 			display: flex;
@@ -59,9 +59,18 @@
 
 			.image-slide {
 				height: 100%;
+				display: flex;
+				overflow-x: hidden;
+				overflow-y: hidden;
+				white-space: nowrap;
+				scroll-snap-type: x mandatory;
 
 				.scroll-image {
 					cursor: pointer;
+					flex: 0 0 auto;
+					height: 100%;
+					max-width: none;
+					scroll-snap-align: start;
 				}
 			}
 

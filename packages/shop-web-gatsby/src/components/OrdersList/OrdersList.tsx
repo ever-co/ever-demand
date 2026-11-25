@@ -1,25 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Order from '../Order/Order';
-import { Container, Grid } from '@material-ui/core';
-//import { Test } from './OrdersList.styles';
+import { Container, Stack } from '@mui/material';
+import Order, { type ShopOrder } from '../Order/Order';
 
-const OrdersList = ({ orders }) => (
+/** The customer's orders, newest last (as the API returns them). */
+const OrdersList = ({ orders }: { orders: readonly ShopOrder[] }) => (
 	<Container>
-		<Grid justify={'center'} spacing={4}>
+		<Stack spacing={4}>
 			{orders.map((order) => (
-				<Order order={order} />
+				<Order key={order.id} order={order} />
 			))}
-		</Grid>
+		</Stack>
 	</Container>
 );
 
-OrdersList.propTypes = {
-	// bla: PropTypes.string,
-};
-
-OrdersList.defaultProps = {
-	// bla: 'test',
-};
+/** Total price of the orders, for the "Pay now" button. */
+export const ordersTotal = (orders: readonly { totalPrice: number }[]) =>
+	orders.reduce((total, order) => total + order.totalPrice, 0);
 
 export default OrdersList;

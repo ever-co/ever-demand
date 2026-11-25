@@ -21,8 +21,7 @@ jest.mock('../../../env', () => ({
 jest.mock('../../../helpers/Log', () => ({
 	createEverLogger: () => ({ info: jest.fn(), error: jest.fn() }),
 }));
-jest.mock('request-promise', () => jest.fn());
-jest.mock('faker', () => ({}));
+jest.mock('@faker-js/faker', () => ({ faker: {} }));
 jest.mock('../../../services/invites/InvitesService', () => ({
 	InvitesService: class {},
 }));

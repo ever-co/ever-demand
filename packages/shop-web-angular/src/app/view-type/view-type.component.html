@@ -16,7 +16,7 @@
 
 	<span *ngIf="!showTuneButton" class="settings-buttons">
 		<mat-button-toggle-group
-			class="mr-1"
+			class="me-1"
 			(change)="viewTypeChange()"
 			[(ngModel)]="viewType"
 		>
@@ -44,7 +44,7 @@
 		</mat-button-toggle-group>
 
 		<mat-button-toggle-group
-			class="mr-1"
+			class="me-1"
 			(change)="listViewTypeChange()"
 			[(ngModel)]="listViewType"
 		>
@@ -64,7 +64,7 @@
 				[disabled]="!isListView"
 				value="grid"
 			>
-				<fa-icon [icon]="['fas', 'th-large']"></fa-icon>
+				<fa-icon [icon]="['fas', 'table-cells-large']"></fa-icon>
 			</mat-button-toggle>
 		</mat-button-toggle-group>
 
