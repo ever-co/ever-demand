@@ -1,0 +1,15 @@
+@use 'sass:math';
+
+// The templates use Bootstrap 4 column classes (col-2, col-8, ...) on ion-col and divs.
+// Bootstrap 4 sized them with flex-basis + max-width and gave them 15px side padding.
+// Bootstrap 5 sizes them with `width` only, which `.box { width: 100% }` (theme/box.scss)
+// overrides, so a col-8 + col-4 pair wrapped onto two lines. Keep the Bootstrap 4 sizing.
+@for $i from 1 through 12 {
+	.col-#{$i} {
+		position: relative;
+		flex: 0 0 math.percentage(math.div($i, 12));
+		max-width: math.percentage(math.div($i, 12));
+		padding-right: 15px;
+		padding-left: 15px;
+	}
+}

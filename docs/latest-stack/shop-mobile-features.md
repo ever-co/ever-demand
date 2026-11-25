@@ -434,6 +434,11 @@ ships to the browser).
 4. **Server settings** (`ServerSettings.load`), only when not in maintenance and
    `serverConnection != 0`: `invite.getInvitesSettings()` → `_inviteSystem = 'enabled'|'disabled'`;
    `user-auth.getRegistrationsSettings()` → `_registrationSystem = 'enabled'|'disabled'`.
+   **(quirk)** the four steps start side by side, and this one reads `serverConnection` before
+   step 1 has written it. On the very first start of a fresh install the key is missing, so the
+   settings are skipped: `_registrationSystem` and `_inviteSystem` stay unset and the customer
+   lands on the invite pages (by location) whatever the server says. From the next start on the
+   settings apply.
 
 Then `AppComponent`:
 
@@ -606,7 +611,9 @@ order info.
   `initialPrice` or equal prices).
 - **Delivery info badge**: icon `fa-bolt` (takeaway) or `fa-motorcycle` (delivery). Delivery:
   "`min`-`max` `PRODUCTS_VIEW.MINUTES`" (product times, else `DELIVERY_TIME_MIN/MAX`). Takeaway:
-  `deliveryTimeMax` null or ≤ 15 is "instant", otherwise `PRODUCTS_VIEW.READYFOR` + time.
+  `deliveryTimeMax` null or ≤ 15 is "instant" and shows `PRODUCTS_VIEW.READYFOR` ("Ready for");
+  otherwise "`min`-`max` `PRODUCTS_VIEW.MINUTES`". The second line is `PRODUCTS_VIEW.DELIVERY`
+  or `PRODUCTS_VIEW.TAKEAWAY`.
 - **Details button**: `GetWarehouseProduct(warehouseId, warehouseProduct.id)`; found → product
   details with `backUrl=/products&warehouseId=…`; not found → mark the row sold out.
 - **Search** (search icon, replaces the feed): text input (`SEARCH_VIEW.SEARCH_PLACEHOLDER`), on

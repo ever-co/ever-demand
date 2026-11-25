@@ -85,7 +85,11 @@ export class ProductsSlidesViewComponent
 		private store: Store
 	) {
 		this.swiperOptions = {
-			autoHeight: true,
+			// ion-slides used autoHeight. The Swiper element keeps its wrapper in
+			// a shadow root, and with autoHeight the wrapper takes the height of
+			// the slides, which are 100% of the wrapper (.max-height): it ends
+			// at 0. The cards fill the screen anyway, so the height is fixed.
+			autoHeight: false,
 			resistance: true,
 			watchSlidesProgress: true,
 			longSwipes: false,

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular/lazy';
 import { OrderPage } from './order.page';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
@@ -10,19 +9,13 @@ import { ElapsedTimeModule } from '../../../components/elapsed-time/elapsed-time
 import { StripeLoader } from 'app/services/stripeLoader';
 import { OrderInfoCommonModule } from './common/order-info-common.module';
 
-const routes: Routes = [
-	{
-		path: '/test',
-		component: OrderPopupComponent,
-	},
-];
-
+// Shown as a modal only. Its old route ("/test") could never match: a path
+// cannot start with a slash, which the Angular 22 router rejects in dev mode.
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        RouterModule.forChild(routes),
         TranslateModule.forChild(),
         ElapsedTimeModule,
         OrderInfoCommonModule,
