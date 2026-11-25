@@ -156,12 +156,16 @@ class _InviteByLocationScreenState
             DropdownButtonFormField<int>(
               key: const Key('address-country'),
               initialValue: _countryId,
+              isExpanded: true,
               dropdownColor: EverColors.brandLight,
               style: white,
               decoration: _decoration(l10n.country),
               items: <DropdownMenuItem<int>>[
                 for (final int id in _countries)
-                  DropdownMenuItem<int>(value: id, child: Text(countryName(id)!)),
+                  DropdownMenuItem<int>(
+                    value: id,
+                    child: Text(countryName(id)!, overflow: TextOverflow.ellipsis),
+                  ),
               ],
               onChanged: (int? v) => setState(() => _countryId = v ?? _countryId),
             ),

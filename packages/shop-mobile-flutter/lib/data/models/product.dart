@@ -124,11 +124,13 @@ class WarehouseProduct {
   final int? deliveryTimeMin;
   final int? deliveryTimeMax;
 
-  /// Discount badge: `floor((1 - price / initialPrice) * 100)`, 0 when none.
+  /// Discount badge: the Ionic `floor((1 - price / initialPrice) * 100)`,
+  /// 0 when none. Computed as `(initial - price) * 100 / initial`, so 8 of 10
+  /// is 20 % (the Ionic float form floors 19.999… to 19).
   int get discountPercent {
     final double? initial = initialPrice;
     if (initial == null || initial <= 0 || initial == price) return 0;
-    final int value = ((1 - price / initial) * 100).floor();
+    final int value = ((initial - price) * 100 / initial).floor();
     return value > 0 ? value : 0;
   }
 }

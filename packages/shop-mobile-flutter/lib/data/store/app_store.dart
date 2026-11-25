@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -6,12 +7,15 @@ import '../models/enums.dart';
 import 'key_value_store.dart';
 
 /// The app state the Ionic `Store` keeps in `localStorage`, under the same
-/// keys (see docs/latest-stack/shop-mobile-features.md §5). It notifies
-/// listeners on every write, so the router re-runs its guards.
+/// keys (see docs/latest-stack/shop-mobile-features.md §5). Reads and writes
+/// are synchronous; listeners are notified once per microtask after writes,
+/// so a write from `initState` never rebuilds widgets during a build.
 class AppStore extends ChangeNotifier {
   AppStore(this._kv);
 
   final KeyValueStore _kv;
+  bool _notifyScheduled = false;
+  bool _disposed = false;
 
   // Orders with a card payment in flight. Memory only, so it never outlives
   // the app; shared by every payment widget (fleet fixes #1645/#1646).
@@ -49,7 +53,22 @@ class AppStore extends ChangeNotifier {
     } else {
       _kv.setString(key, value);
     }
-    notifyListeners();
+    _changed();
+  }
+
+  void _changed() {
+    if (_notifyScheduled || _disposed) return;
+    _notifyScheduled = true;
+    scheduleMicrotask(() {
+      _notifyScheduled = false;
+      if (!_disposed) notifyListeners();
+    });
+  }
+
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
   }
 
   String? get token => _get(kToken);
@@ -167,7 +186,7 @@ class AppStore extends ChangeNotifier {
   void clearOrderTimes() {
     _kv.remove(kStartDate);
     _kv.remove(kEndTime);
-    notifyListeners();
+    _changed();
   }
 
   bool isPaying(String? orderId) =>
@@ -175,16 +194,16 @@ class AppStore extends ChangeNotifier {
 
   void startPaying(String orderId) {
     _payingOrderIds.add(orderId);
-    notifyListeners();
+    _changed();
   }
 
   void stopPaying(String orderId) {
     _payingOrderIds.remove(orderId);
-    notifyListeners();
+    _changed();
   }
 
   Future<void> clear() async {
     await _kv.clear();
-    notifyListeners();
+    _changed();
   }
 }

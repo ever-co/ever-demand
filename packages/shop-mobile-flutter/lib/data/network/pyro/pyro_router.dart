@@ -136,8 +136,12 @@ class PyroRouter {
         });
         if (socket.connected) subscribe();
       },
-      onCancel: () async {
-        await statusSub?.cancel();
+      // Synchronous on purpose: `Stream.first` waits for a returned cancel
+      // future, and the broadcast status subscription's cancel future
+      // belongs to the root zone (it never completes under fake time).
+      onCancel: () {
+        unawaited(statusSub?.cancel());
+        statusSub = null;
         final String? sid = subscriptionId;
         if (sid != null && socket.connected) {
           socket.emit('${sid}_unsubscribe', const <Object?>[]);
