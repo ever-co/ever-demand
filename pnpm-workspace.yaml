@@ -7,7 +7,7 @@ packages:
   # - packages/admin-web-angular
   # - packages/carrier-mobile-ionic
   # - packages/merchant-tablet-ionic
-  # - packages/shop-mobile-expo
+  - packages/shop-mobile-expo
   # - packages/shop-mobile-ionic
   # - packages/shop-web-angular
   # - packages/shop-web-gatsby
@@ -31,3 +31,6 @@ allowBuilds:
 minimumReleaseAgeExclude:
   - '@types/node@26.6.10'
   - mongoose@9.13.1
+  - '@types/react@19.3.3'
+  - i18next@27.2.9
+  - react-native-qrcode-svg@6.3.55
