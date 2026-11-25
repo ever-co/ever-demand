@@ -153,6 +153,51 @@ describe('PaymentComponent new-card payment', () => {
 		expect(window.alert).not.toHaveBeenCalled();
 	});
 
+	it('blocks a second card submission while the email update is still pending', async () => {
+		const emailUpdate = deferred<any>();
+		userRouter.updateEmail.and.returnValue(emailUpdate.promise);
+		orderRouter.payWithStripe.and.returnValue(Promise.resolve(paidOrder()));
+
+		await component.toPaymentStage();
+		const first = tokenHandlers[0](cardToken('tok_first'));
+
+		// paying must be set before the first await, not after updateEmail.
+		expect(component.paying).toBe(true);
+
+		await component.toPaymentStage();
+		const second = tokenHandlers[tokenHandlers.length - 1](
+			cardToken('tok_second')
+		);
+		await settle();
+
+		expect(configure).toHaveBeenCalledTimes(1);
+		expect(userRouter.updateEmail).toHaveBeenCalledTimes(1);
+		expect(userRouter.addPaymentMethod).not.toHaveBeenCalled();
+
+		emailUpdate.resolve({ id: 'user-1' });
+		await Promise.all([first, second]);
+
+		expect(userRouter.addPaymentMethod).toHaveBeenCalledTimes(1);
+		expect(orderRouter.payWithStripe).toHaveBeenCalledTimes(1);
+		expect(component.paying).toBe(false);
+	});
+
+	it('resets paying when the email update fails', async () => {
+		const emailUpdate = deferred<any>();
+		userRouter.updateEmail.and.returnValue(emailUpdate.promise);
+
+		await component.toPaymentStage();
+		const done = tokenHandlers[0](cardToken('tok_first'));
+
+		expect(component.paying).toBe(true);
+
+		emailUpdate.reject(new Error('network down'));
+		await done.catch(() => undefined);
+
+		expect(userRouter.addPaymentMethod).not.toHaveBeenCalled();
+		expect(component.paying).toBe(false);
+	});
+
 	it('keeps paying set until payWithStripe and confirm finish, then resets it', async () => {
 		const payment = deferred<any>();
 		const confirmation = deferred<any>();
