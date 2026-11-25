@@ -1,9 +1,10 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
+import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { Store } from 'app/services/store.service';
 import { PaymentComponent } from './payment.component';
@@ -37,6 +38,7 @@ describe('PaymentComponent new-card payment', () => {
 	let configure: jasmine.Spy;
 	let tokenHandlers: Array<(token: any) => Promise<void>>;
 	let originalStripeCheckout: any;
+	let orderId: jasmine.Spy;
 
 	const cardToken = (id: string) => ({
 		id,
@@ -44,6 +46,29 @@ describe('PaymentComponent new-card payment', () => {
 	});
 
 	const paidOrder = () => ({ id: 'order-1', isPaid: true } as any);
+
+	const savedCard = () => ({ id: 'card-saved', last4: '4242' } as any);
+
+	// Creates a PaymentComponent the way a page does: every instance gets
+	// the one root Store.
+	const createPayment = async (): Promise<
+		ComponentFixture<PaymentComponent>
+	> => {
+		const created = TestBed.createComponent(PaymentComponent);
+		created.componentInstance.order = {
+			isPaid: false,
+			products: [{ price: 10, product: { title: [], description: [] } }],
+		} as any;
+		// env.ts leaves the key empty, and toPaymentStage refuses to run
+		// without one.
+		(created.componentInstance as any).stripePublishableKey =
+			'pk_test_payment_spec';
+
+		// getUserCard finds no saved card, so the Pay now button shows.
+		await settle();
+		created.detectChanges();
+		return created;
+	};
 
 	beforeEach(async () => {
 		tokenHandlers = [];
@@ -87,10 +112,10 @@ describe('PaymentComponent new-card payment', () => {
 			providers: [
 				{ provide: UserRouter, useValue: userRouter },
 				{ provide: OrderRouter, useValue: orderRouter },
-				{
-					provide: Store,
-					useValue: { userId: 'user-1', orderId: 'order-1' },
-				},
+				// The real root Store, so every PaymentComponent in a spec
+				// shares it as in the app.
+				{ provide: Platform, useValue: { is: () => false } },
+				{ provide: InviteRouter, useValue: {} },
 				{ provide: ModalController, useValue: modalController },
 				{
 					provide: ProductLocalesService,
@@ -100,23 +125,19 @@ describe('PaymentComponent new-card payment', () => {
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 
+		// Store keeps the ids in localStorage; read them from spies instead.
+		const store = TestBed.inject(Store);
+		spyOnProperty(store, 'userId', 'get').and.returnValue('user-1');
+		orderId = spyOnProperty(store, 'orderId', 'get').and.returnValue(
+			'order-1'
+		);
+
 		spyOn(window, 'alert');
 		spyOn(console, 'log');
 		spyOn(console, 'error');
 
-		fixture = TestBed.createComponent(PaymentComponent);
+		fixture = await createPayment();
 		component = fixture.componentInstance;
-		component.order = {
-			isPaid: false,
-			products: [{ price: 10, product: { title: [], description: [] } }],
-		} as any;
-		// env.ts leaves the key empty, and toPaymentStage refuses to run
-		// without one.
-		(component as any).stripePublishableKey = 'pk_test_payment_spec';
-
-		// getUserCard finds no saved card, so the Pay now button shows.
-		await settle();
-		fixture.detectChanges();
 	});
 
 	afterEach(() => {
@@ -271,5 +292,209 @@ describe('PaymentComponent new-card payment', () => {
 		fixture.detectChanges();
 
 		expect(button.disabled).toBe(true);
+	});
+
+	// On a takeaway order, I'm here swaps store-info for products-info, and
+	// in popup mode the order modal is built again. Both create a new
+	// PaymentComponent while the first payment may still run.
+	describe('when a page creates the payment component again during a payment', () => {
+		it('blocks Pay now and Pay with card on the new component while updateEmail is still pending', async () => {
+			const emailUpdate = deferred<any>();
+			userRouter.updateEmail.and.returnValue(emailUpdate.promise);
+			orderRouter.payWithStripe.and.returnValue(
+				Promise.resolve(paidOrder())
+			);
+
+			await component.toPaymentStage();
+			const first = tokenHandlers[0](cardToken('tok_first'));
+
+			const second = (await createPayment()).componentInstance;
+			second.userCard = savedCard();
+
+			await second.toPaymentStage();
+			const savedCardPayment = second.payWithUserCard();
+			await settle();
+
+			expect(configure).toHaveBeenCalledTimes(1);
+			expect(userRouter.updateEmail).toHaveBeenCalledTimes(1);
+			expect(userRouter.addPaymentMethod).not.toHaveBeenCalled();
+			expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
+
+			emailUpdate.resolve({ id: 'user-1' });
+			await Promise.all([first, savedCardPayment]);
+
+			expect(userRouter.updateEmail).toHaveBeenCalledTimes(1);
+			expect(userRouter.addPaymentMethod).toHaveBeenCalledTimes(1);
+			expect(orderRouter.payWithStripe).toHaveBeenCalledTimes(1);
+			expect(orderRouter.payWithStripe).toHaveBeenCalledWith(
+				'order-1',
+				'card-1'
+			);
+		});
+
+		it('ignores a card token from another component while updateEmail is still pending', async () => {
+			const emailUpdate = deferred<any>();
+			userRouter.updateEmail.and.returnValue(emailUpdate.promise);
+			orderRouter.payWithStripe.and.returnValue(
+				Promise.resolve(paidOrder())
+			);
+
+			// Both components opened the card popup before either
+			// payment started.
+			const second = (await createPayment()).componentInstance;
+			await component.toPaymentStage();
+			await second.toPaymentStage();
+
+			expect(configure).toHaveBeenCalledTimes(2);
+
+			const first = tokenHandlers[0](cardToken('tok_first'));
+			const secondToken = tokenHandlers[1](cardToken('tok_second'));
+			await settle();
+
+			expect(userRouter.updateEmail).toHaveBeenCalledTimes(1);
+
+			emailUpdate.resolve({ id: 'user-1' });
+			await Promise.all([first, secondToken]);
+
+			expect(userRouter.updateEmail).toHaveBeenCalledTimes(1);
+			expect(userRouter.addPaymentMethod).toHaveBeenCalledTimes(1);
+			expect(userRouter.addPaymentMethod).toHaveBeenCalledWith(
+				'user-1',
+				'tok_first'
+			);
+			expect(orderRouter.payWithStripe).toHaveBeenCalledTimes(1);
+			expect(window.alert).not.toHaveBeenCalled();
+		});
+
+		it('disables Pay now on the new component until the first payment finishes', async () => {
+			const payment = deferred<any>();
+			orderRouter.payWithStripe.and.returnValue(payment.promise);
+
+			await component.toPaymentStage();
+			const first = tokenHandlers[0](cardToken('tok_first'));
+			await settle();
+
+			const secondFixture = await createPayment();
+			const button: HTMLButtonElement =
+				secondFixture.nativeElement.querySelector('button');
+
+			expect(button.textContent).toContain('BUY_POPUP.BUTTONS.PAY_NOW');
+			expect(button.disabled).toBe(true);
+
+			payment.resolve(paidOrder());
+			await first;
+			secondFixture.detectChanges();
+
+			expect(button.disabled).toBe(false);
+		});
+
+		it('clears the guard after the payment succeeds', async () => {
+			const payment = deferred<any>();
+			orderRouter.payWithStripe.and.returnValue(payment.promise);
+
+			await component.toPaymentStage();
+			const first = tokenHandlers[0](cardToken('tok_first'));
+			await settle();
+
+			const second = (await createPayment()).componentInstance;
+			await second.toPaymentStage();
+
+			expect(configure).toHaveBeenCalledTimes(1);
+
+			payment.resolve(paidOrder());
+			await first;
+
+			expect(second.paying).toBe(false);
+
+			await second.toPaymentStage();
+
+			expect(configure).toHaveBeenCalledTimes(2);
+		});
+
+		it('clears the guard after the email update fails', async () => {
+			const emailUpdate = deferred<any>();
+			userRouter.updateEmail.and.returnValue(emailUpdate.promise);
+
+			await component.toPaymentStage();
+			const first = tokenHandlers[0](cardToken('tok_first'));
+
+			const second = (await createPayment()).componentInstance;
+			await second.toPaymentStage();
+
+			expect(configure).toHaveBeenCalledTimes(1);
+
+			emailUpdate.reject(new Error('network down'));
+			await first.catch(() => undefined);
+
+			expect(second.paying).toBe(false);
+
+			await second.toPaymentStage();
+
+			expect(configure).toHaveBeenCalledTimes(2);
+		});
+
+		it('clears the guard after a saved-card payment is rejected', async () => {
+			const payment = deferred<any>();
+			orderRouter.payWithStripe.and.returnValue(payment.promise);
+
+			component.userCard = savedCard();
+			const first = component.payWithUserCard().catch((err) => err);
+
+			const second = (await createPayment()).componentInstance;
+			second.userCard = savedCard();
+			const blocked = second.payWithUserCard().catch((err) => err);
+			await settle();
+
+			expect(orderRouter.payWithStripe).toHaveBeenCalledTimes(1);
+
+			payment.reject(new Error('Your card was declined.'));
+
+			expect((await first).message).toBe('Your card was declined.');
+			await blocked;
+
+			orderRouter.payWithStripe.and.returnValue(
+				Promise.resolve(paidOrder())
+			);
+			await second.payWithUserCard();
+
+			expect(orderRouter.payWithStripe).toHaveBeenCalledTimes(2);
+		});
+
+		it('does not block a payment for a different order', async () => {
+			const emailUpdate = deferred<any>();
+			userRouter.updateEmail.and.returnValue(emailUpdate.promise);
+			orderRouter.payWithStripe.and.returnValue(
+				Promise.resolve(paidOrder())
+			);
+
+			await component.toPaymentStage();
+			const first = tokenHandlers[0](cardToken('tok_first'));
+
+			const second = (await createPayment()).componentInstance;
+			await second.toPaymentStage();
+
+			expect(configure).toHaveBeenCalledTimes(1);
+
+			// The customer starts another order while the first payment
+			// still runs.
+			orderId.and.returnValue('order-2');
+
+			await second.toPaymentStage();
+
+			expect(configure).toHaveBeenCalledTimes(2);
+
+			const other = tokenHandlers[1](cardToken('tok_other'));
+
+			emailUpdate.resolve({ id: 'user-1' });
+			await Promise.all([first, other]);
+
+			expect(userRouter.addPaymentMethod).toHaveBeenCalledTimes(2);
+			expect(orderRouter.payWithStripe.calls.allArgs()).toEqual(
+				jasmine.arrayWithExactContents([
+					['order-1', 'card-1'],
+					['order-2', 'card-1'],
+				])
+			);
+		});
 	});
 });

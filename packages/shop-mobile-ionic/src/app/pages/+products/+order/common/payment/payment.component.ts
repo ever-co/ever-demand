@@ -26,8 +26,19 @@ export class PaymentComponent {
 	userCard: Stripe.Card | null = null;
 
 	// True while a card payment request is in flight, so a double tap
-	// does not send a second payment for the same order.
-	paying: boolean = false;
+	// does not send a second payment for the same order. It also covers
+	// a payment that another PaymentComponent started for the current
+	// order (see Store.isPaying), so a component created again while the
+	// payment runs keeps its buttons disabled.
+	get paying(): boolean {
+		return this._paying || this.store.isPaying(this.store.orderId);
+	}
+
+	set paying(value: boolean) {
+		this._paying = value;
+	}
+
+	private _paying: boolean = false;
 
 	private stripePublishableKey: string = environment.STRIPE_PUBLISHABLE_KEY;
 
@@ -42,7 +53,9 @@ export class PaymentComponent {
 	}
 
 	async payWithUserCard() {
-		if (this.paying) {
+		const orderId = this.store.orderId;
+
+		if (this._paying || this.store.isPaying(orderId)) {
 			return;
 		}
 
@@ -55,21 +68,23 @@ export class PaymentComponent {
 		}
 
 		this.paying = true;
+		this.store.startPaying(orderId);
 
 		try {
 			return await this.orderRouter.payWithStripe(
-				this.store.orderId,
+				orderId,
 				this.userCard.id
 			);
 		} finally {
 			this.paying = false;
+			this.store.stopPaying(orderId);
 		}
 	}
 
 	async toPaymentStage() {
 		// A second card popup while the first new-card payment runs would
 		// save another card and charge the order again under its id.
-		if (this.paying) {
+		if (this._paying || this.store.isPaying(this.store.orderId)) {
 			return;
 		}
 
@@ -96,13 +111,16 @@ export class PaymentComponent {
 			currency: 'ILS', // TODO: load currency from server!
 			allowRememberMe: false,
 			token: async (token) => {
-				if (this.paying) {
+				const orderId = this.store.orderId;
+
+				if (this._paying || this.store.isPaying(orderId)) {
 					return;
 				}
 
 				// Set before the first await so the Pay now button is
 				// disabled for the whole card save, charge and confirm.
 				this.paying = true;
+				this.store.startPaying(orderId);
 
 				try {
 					const user = await this.userRouter.updateEmail(
@@ -118,14 +136,12 @@ export class PaymentComponent {
 
 						try {
 							let order = await this.orderRouter.payWithStripe(
-								this.store.orderId,
+								orderId,
 								cardId
 							);
 							console.log('Payment Done!');
 							try {
-								order = await this.orderRouter.confirm(
-									this.store.orderId
-								);
+								order = await this.orderRouter.confirm(orderId);
 								console.log('Order Confirmed!');
 							} catch (err) {
 								console.error('Could not confirm the order!');
@@ -139,6 +155,7 @@ export class PaymentComponent {
 					}
 				} finally {
 					this.paying = false;
+					this.store.stopPaying(orderId);
 				}
 				close();
 			},
