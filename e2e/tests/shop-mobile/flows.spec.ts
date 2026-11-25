@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Locator, type Page } from '@playwright/test';
 import {
 	apiIsUp,
 	expectAppShell,
@@ -39,7 +39,7 @@ test.describe('shop-mobile flows (needs the API)', () => {
 		return String(userId);
 	};
 
-	const buyButtons = (page: Page) =>
+	const buyButtons = (page: Page | Locator) =>
 		page.getByRole('button', { name: /Buy for/ });
 
 	test('a new customer starts on the invite pages, then follows the server settings', async ({
@@ -101,10 +101,12 @@ test.describe('shop-mobile flows (needs the API)', () => {
 		await expect(page).toHaveURL(
 			/\/products\/product-details\/[^/?]+\?backUrl=%2Fproducts&warehouseId=/,
 		);
-		await expect(page.getByText('Includes')).toBeVisible();
-		await expect(buyButtons(page)).toBeVisible();
+		// Ionic keeps the feed in the DOM under the details page.
+		const details = page.locator('e-cu-product-details');
+		await expect(details.getByText('Includes')).toBeVisible();
+		await expect(buyButtons(details)).toBeVisible();
 
-		await page.getByRole('button', { name: /Back/ }).click();
+		await details.getByRole('button', { name: /Back/ }).click();
 		await expect(page).toHaveURL(/\/products$/);
 	});
 

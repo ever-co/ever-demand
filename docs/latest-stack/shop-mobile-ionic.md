@@ -78,7 +78,8 @@ locate you"), camera for the barcode scanner. Icons and splash: `resources/icon.
   (`justify="space-between"`), the toggle / checkbox / textarea got `aria-label`s. `ion-searchbar`
   now searches on `ionInput` (Ionic 7 made `ionChange` fire only on blur/Enter). Icons load from
   `/svg` (copied from `node_modules/ionicons`).
-- **ion-slides → Swiper element.** `swiper/element/bundle` is registered in `main.ts`; the slides
+- **ion-slides → Swiper element.** `swiper/element/bundle` is registered in `main.ts` (it brings
+  its own styles into the shadow root, so no global swiper CSS); the slides
   view and the product images use `<swiper-container init="false">` with the same options plus
   `observer`. The feed drops `autoHeight` (with the wrapper in a shadow root and the slides at
   100% of it, autoHeight collapses the cards to 0 px); the cards fill the screen as before.
@@ -172,6 +173,15 @@ locate you"), camera for the barcode scanner. Icons and splash: `resources/icon.
     Undo → cancel, and "browse first" Buy → register by address → order.
   - Payments are not run end to end: the API has no Stripe key, and real keys must never be used.
     The unit specs cover every payment branch.
+
+## Docker
+
+`.deploy/shop-mobile-ionic/Dockerfile` (+ `Dockerfile.dockerignore`, read by BuildKit): `node:26-alpine`,
+`npm i -g pnpm@12.23.0`, `pnpm install --frozen-lockfile --filter "@ever-platform/shop-mobile-ionic..."`,
+`build:prod` with the env settings as build args, then `nginx:alpine` serving `www/` on 4201 with
+the old entrypoints. Built and smoke-tested here (`--build-arg
+VERDACCIO_REGISTRY=http://host.docker.internal:4873/`): 117 MB image; `/`, a deep link, the
+translations and the icons answer 200.
 
 ## Held back / known gaps
 

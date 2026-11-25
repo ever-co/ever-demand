@@ -835,6 +835,8 @@ store).
 Each shows server HTML (initially `<h1>Loading...</h1>`) from `user.getAboutUs` / `getHelp` /
 `getPrivacy` / `getTermsOfUse(_userId, _deviceId, _language || 'en-US')`. Titles
 `ABOUT_VIEW.TITLE`, `HELP_VIEW.TITLE`, `PRIVACY_VIEW.TITLE`, `TERMS_OF_USE_VIEW.TITLE`.
+**(quirk)** opened before the device is registered (first start), `_deviceId` is still empty and
+the server answers "Device with id 'null' does not exists!": the page keeps showing Loading.
 
 ---
 
@@ -901,7 +903,10 @@ In memory only: the set of order ids with a card payment in flight (`Store.isPay
 
 ## 7. Native features (Cordova today) and what they do
 
-| Feature | Cordova / ionic-native today | Used for |
+After the latest-stack upgrade the Ionic app uses Capacitor 8 plugins for these (mapping in
+`docs/latest-stack/shop-mobile-ionic.md`); the behaviour below is unchanged.
+
+| Feature | Cordova / ionic-native (before the upgrade) | Used for |
 | --- | --- | --- |
 | Geolocation | `@ionic-native/geolocation` | feed, invite, merchants (skipped when the default lat/lng are set) |
 | Device | `@ionic-native/device` | `platform`, `uuid` for `device.create` |

@@ -1,0 +1,17 @@
+# Build context of .deploy/shop-mobile-ionic/Dockerfile (BuildKit reads <Dockerfile>.dockerignore)
+**/node_modules
+**/.angular
+**/www
+**/dist
+**/build
+**/coverage
+**/out-tsc
+**/.env
+**/.env.*
+**/src/environments/environment.ts
+**/src/environments/environment.prod.ts
+packages/shop-mobile-ionic/android
+packages/shop-mobile-ionic/ios
+.git
+e2e/test-results
+e2e/playwright-report
