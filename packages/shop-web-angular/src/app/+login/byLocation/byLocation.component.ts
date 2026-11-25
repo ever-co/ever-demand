@@ -37,7 +37,9 @@ export class LoginByLocationComponent implements OnInit {
 	public userId: string;
 	public email: string;
 
-	public mapCoordEmitter = new EventEmitter<number[]>();
+	public mapCoordEmitter = new EventEmitter<
+		google.maps.LatLng | google.maps.LatLngLiteral
+	>();
 	public mapGeometryEmitter = new EventEmitter<any>();
 
 	public readonly toolbarDisabled = true;
@@ -114,7 +116,9 @@ export class LoginByLocationComponent implements OnInit {
 		}
 	}
 
-	onCoordinatesChanges(coords: number[]) {
+	onCoordinatesChanges(
+		coords: google.maps.LatLng | google.maps.LatLngLiteral
+	) {
 		this.mapCoordEmitter.emit(coords);
 	}
 

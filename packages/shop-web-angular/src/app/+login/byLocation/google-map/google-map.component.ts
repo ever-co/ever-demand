@@ -71,7 +71,7 @@ export class GoogleMapComponent implements OnInit, OnDestroy {
 		lng: 0,
 	};
 	public zoom = 14;
-	public mapTypeId: string = 'roadmap';
+	public mapTypeId = 'roadmap' as google.maps.MapTypeId;
 	public markerPosition:
 		| google.maps.LatLng
 		| google.maps.LatLngLiteral
@@ -115,7 +115,9 @@ export class GoogleMapComponent implements OnInit, OnDestroy {
 			this.mapTypeEvent
 				.pipe(takeUntil(this._ngDestroy$))
 				.subscribe((mapType: string) =>
-					this.ngZone.run(() => (this.mapTypeId = mapType))
+					this.ngZone.run(
+						() => (this.mapTypeId = mapType as google.maps.MapTypeId)
+					)
 				);
 		}
 	}

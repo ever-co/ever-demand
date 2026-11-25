@@ -10,6 +10,7 @@ import { PreloadAllModules, RouterModule } from '@angular/router';
 import {
 	provideHttpClient,
 	withInterceptorsFromDi,
+	withXhr,
 } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -72,12 +73,12 @@ const APP_PROVIDERS = [
 	provideAppInitializer(() =>
 		inject(MaintenanceService).load(
 			environment['SETTINGS_APP_TYPE'],
-			environment['SETTINGS_MAINTENANCE_API_URL']
-		)
+			environment['SETTINGS_MAINTENANCE_API_URL'],
+		),
 	),
 	GoogleMapsLoader,
 	provideAppInitializer(() =>
-		inject(GoogleMapsLoader).load(environment.GOOGLE_MAPS_API_KEY)
+		inject(GoogleMapsLoader).load(environment.GOOGLE_MAPS_API_KEY),
 	),
 	AppState,
 	SidenavService,
@@ -125,7 +126,7 @@ const APP_PROVIDERS = [
 	],
 	providers: [
 		provideZoneChangeDetection(),
-		provideHttpClient(withInterceptorsFromDi()),
+		provideHttpClient(withXhr(), withInterceptorsFromDi()),
 		provideAnimations(),
 		provideApollo(createApolloOptions),
 		{

@@ -31,7 +31,9 @@ export class LocationPopupComponent implements OnInit, AfterViewInit {
 	place: google.maps.places.PlaceResult;
 	coordinates: ILocation;
 
-	mapCoordEmitter = new EventEmitter<number[]>();
+	mapCoordEmitter = new EventEmitter<
+		google.maps.LatLng | google.maps.LatLngLiteral
+	>();
 	mapGeometryEmitter = new EventEmitter<any>();
 
 	constructor(

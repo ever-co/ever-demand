@@ -22,7 +22,7 @@
 				<div class="product-details-content">
 					<div class="warehouse">
 						<warehouse-logo
-							[logo]="warehouse?.logo"
+							[logo]="$safeNavigationMigration(warehouse?.logo)"
 							[border]="true"
 							[light]="true"
 						></warehouse-logo>
@@ -33,7 +33,9 @@
 						<h1 class="title">
 							{{
 								localeTranslate(
-									warehouseProduct?.product?.title
+									$safeNavigationMigration(
+										warehouseProduct?.product?.title
+									)
 								)
 							}}
 						</h1>
@@ -41,7 +43,9 @@
 						<h2 class="description">
 							{{
 								localeTranslate(
-									warehouseProduct?.product?.description
+									$safeNavigationMigration(
+										warehouseProduct?.product?.description
+									)
 								)
 							}}
 						</h2>
@@ -49,7 +53,9 @@
 						<h3 class="details">
 							{{
 								localeTranslate(
-									warehouseProduct?.product?.details
+									$safeNavigationMigration(
+										warehouseProduct?.product?.details
+									)
 								)
 							}}
 						</h3>
