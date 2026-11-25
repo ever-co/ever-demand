@@ -206,5 +206,8 @@ translations and the icons answer 200.
 
 ## Shared code touched
 
-- Cherry-picked the lead's `0b2e53d5` (common-angular ngx-barcode: `import jsbarcode`, Eager) so
-  the dev server can load the takeaway pages; no other change outside the lane scope.
+- None edited by this lane. The branch cherry-picked the lead's `0b2e53d5` (ngx-barcode) early,
+  then merged `origin/feat/latest-stack` twice on the lead's request (common-angular subscription
+  completion `8cfe8543`, common `assignRaw` `744add97`, core, expo). `pnpm-workspace.yaml` lists
+  both `shop-mobile-expo` and `shop-mobile-ionic`; `pnpm-lock.yaml` was regenerated after the merge.
+  Unit tests, the production build and the e2e suite were run again after that merge.
