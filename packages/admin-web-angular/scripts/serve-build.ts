@@ -1,7 +1,7 @@
-// Serves the production build (`build/`) as static files, for smoke and e2e runs without the
+// Serves the production build (`dist/`) as static files, for smoke and e2e runs without the
 // dev server. Replaces the old connect / pm2 static server.
 //
-// Usage: node scripts/serve-build.ts [--port=4200] [--dir=build]
+// Usage: node scripts/serve-build.ts [--port=4200] [--dir=dist]
 
 import { createReadStream, existsSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
@@ -11,7 +11,7 @@ import { parseArgs } from 'node:util';
 const { values } = parseArgs({
 	options: {
 		port: { type: 'string', default: process.env.PORT ?? '4200' },
-		dir: { type: 'string', default: 'build' },
+		dir: { type: 'string', default: 'dist' },
 	},
 	strict: false,
 });

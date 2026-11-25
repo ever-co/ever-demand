@@ -30,7 +30,7 @@
 		"test": "pnpm run config:dev && ng test && node --test scripts/",
 		"test:scripts": "node --test scripts/",
 		"e2e": "pnpm --filter @ever-platform/e2e exec playwright test --project=admin",
-		"clean": "rimraf build .angular"
+		"clean": "rimraf dist .angular"
 	},
 	"dependencies": {
 		"@angular/animations": "^22.3.0",

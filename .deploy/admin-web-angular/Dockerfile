@@ -52,7 +52,7 @@ WORKDIR /srv/ever
 COPY --chown=nginx:nginx wait .deploy/admin-web-angular/entrypoint.compose.sh .deploy/admin-web-angular/entrypoint.prod.sh ./
 COPY --chown=nginx:nginx .deploy/admin-web-angular/nginx.compose.conf /etc/nginx/conf.d/compose.conf.template
 COPY --chown=nginx:nginx .deploy/admin-web-angular/nginx.prod.conf /etc/nginx/conf.d/prod.conf.template
-COPY --chown=nginx:nginx --from=build /srv/ever/packages/admin-web-angular/build .
+COPY --chown=nginx:nginx --from=build /srv/ever/packages/admin-web-angular/dist .
 
 RUN apk add --no-cache dos2unix \
 	&& dos2unix entrypoint.compose.sh entrypoint.prod.sh \

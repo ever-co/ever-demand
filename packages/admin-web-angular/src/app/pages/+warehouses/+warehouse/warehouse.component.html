@@ -47,13 +47,13 @@
 							>
 								<label
 						class="btn-outline-secondary btn-tn"
-						[class.active]="filterMode === 'all'"
+						[class.active]="$any(filterMode) === 'all'"
 					>
 									<input
 							type="radio"
 							class="btn-check"
 							value="all"
-							[checked]="filterMode === 'all'"
+							[checked]="$any(filterMode) === 'all'"
 							(click)="filterOrders('all')"
 						/>
 									{{ 'All' | translate }}
@@ -61,13 +61,13 @@
 
 								<label
 						class="btn btn-outline-secondary btn-tn"
-						[class.active]="filterMode === 'not_confirmed'"
+						[class.active]="$any(filterMode) === 'not_confirmed'"
 					>
 									<input
 							type="radio"
 							class="btn-check"
 							value="not_confirmed"
-							[checked]="filterMode === 'not_confirmed'"
+							[checked]="$any(filterMode) === 'not_confirmed'"
 							(click)="filterOrders('not_confirmed')"
 						/>
 									{{ 'Not Confirmed' | translate }}
@@ -75,13 +75,13 @@
 
 								<label
 						class="btn btn-outline-secondary btn-tn"
-						[class.active]="filterMode === 'confirmed'"
+						[class.active]="$any(filterMode) === 'confirmed'"
 					>
 									<input
 							type="radio"
 							class="btn-check"
 							value="confirmed"
-							[checked]="filterMode === 'confirmed'"
+							[checked]="$any(filterMode) === 'confirmed'"
 							(click)="filterOrders('confirmed')"
 						/>
 									{{ 'Confirmed' | translate }}
@@ -89,13 +89,13 @@
 
 								<label
 						class="btn btn-outline-secondary btn-tn"
-						[class.active]="filterMode === 'not_paid'"
+						[class.active]="$any(filterMode) === 'not_paid'"
 					>
 									<input
 							type="radio"
 							class="btn-check"
 							value="not_paid"
-							[checked]="filterMode === 'not_paid'"
+							[checked]="$any(filterMode) === 'not_paid'"
 							(click)="filterOrders('not_paid')"
 						/>
 									{{ 'Not paid' | translate }}
@@ -103,13 +103,13 @@
 
 								<label
 						class="btn btn-outline-secondary btn-tn"
-						[class.active]="filterMode === 'cancelled'"
+						[class.active]="$any(filterMode) === 'cancelled'"
 					>
 									<input
 							type="radio"
 							class="btn-check"
 							value="cancelled"
-							[checked]="filterMode === 'cancelled'"
+							[checked]="$any(filterMode) === 'cancelled'"
 							(click)="filterOrders('cancelled')"
 						/>
 									{{ 'Cancelled' | translate }}
@@ -117,13 +117,13 @@
 
 								<label
 						class="btn btn-outline-secondary btn-tn"
-						[class.active]="filterMode === 'in_delivery'"
+						[class.active]="$any(filterMode) === 'in_delivery'"
 					>
 									<input
 							type="radio"
 							class="btn-check"
 							value="in_delivery"
-							[checked]="filterMode === 'in_delivery'"
+							[checked]="$any(filterMode) === 'in_delivery'"
 							(click)="filterOrders('in_delivery')"
 						/>
 									{{ 'In Delivery' | translate }}
