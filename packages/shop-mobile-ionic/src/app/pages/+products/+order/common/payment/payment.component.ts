@@ -98,8 +98,15 @@ export class PaymentComponent {
 
 		const pay_text = 'Pay {{amount}}';
 
+		// Checkout calls closed whenever its popup closes, also after a
+		// successful token, and browsers differ in which callback runs
+		// first. Whichever comes first opens the order info modal; the
+		// other does nothing, so this Checkout session opens it once.
+		let orderInfoShown = false;
+
 		const close = () => {
-			if (environment.ORDER_INFO_TYPE === 'popup') {
+			if (environment.ORDER_INFO_TYPE === 'popup' && !orderInfoShown) {
+				orderInfoShown = true;
 				this.showOrderInfoModal();
 			}
 		};
