@@ -12,26 +12,17 @@ import { MatSearchModule } from '../../modules/material-extensions/search';
 import { routes } from './login.routes';
 import { LoginComponent } from './login.component';
 import { LoginByLocationModule } from './byLocation';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
+import {
+	FaIconLibrary,
+	FontAwesomeModule,
+} from '@fortawesome/angular-fontawesome';
 import { faGoogle, faFacebook } from '@fortawesome/free-brands-svg-icons';
-import { far } from '@fortawesome/free-regular-svg-icons';
 import { ByCodeModuleGuard } from './by-code.module.guard';
 import { SocieModuleGuard } from './socie.module.guard';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { MessagePopUpModalModule } from 'app/shared/message-pop-up/message-pop-up.module';
 
-library.add(far);
-library.add(faFacebook);
-library.add(faGoogle);
 
-console.log('`Login` bundle loaded asynchronously');
-
-export function HttpLoaderFactory(http: HttpClient) {
-	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
 
 @NgModule({
 	declarations: [LoginComponent],
@@ -41,13 +32,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		FormsModule,
 		ReactiveFormsModule,
 		RouterModule.forChild(routes),
-		TranslateModule.forChild({
-			loader: {
-				provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
-				deps: [HttpClient],
-			},
-		}),
+		TranslateModule,
 		MessagePopUpModalModule,
 
 		MatFormFieldModule,
@@ -65,4 +50,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 })
 export class LoginModule {
 	public static routes = routes;
+
+	constructor(library: FaIconLibrary) {
+		library.addIcons(faFacebook, faGoogle);
+	}
 }

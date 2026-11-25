@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { IconsService } from './icons.service';
 
 @Component({
+	standalone: false,
 	selector: 'ever-icon',
 	styles: [
 		`

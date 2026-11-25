@@ -6,10 +6,10 @@ import {
 	OnDestroy,
 } from '@angular/core';
 import {
-	FormControl,
+	AbstractControl,
 	FormGroupDirective,
 	NgForm,
-	FormBuilder,
+	UntypedFormBuilder,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -29,7 +29,7 @@ import { Store } from 'app/services/store';
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
 	isErrorState(
-		control: FormControl | null,
+		control: AbstractControl | null,
 		form: FormGroupDirective | NgForm | null
 	): boolean {
 		const isSubmitted = form && form.submitted;
@@ -43,6 +43,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
 // tslint:disable-next-line:max-classes-per-file
 @Component({
+	standalone: false,
 	selector: 'login',
 	styleUrls: ['./login.component.scss'],
 	templateUrl: './login.component.html',
@@ -80,7 +81,7 @@ export class LoginComponent implements ToolbarController, OnInit, OnDestroy {
 	constructor(
 		private readonly router: Router,
 		private readonly inviteRequestRouter: InviteRequestRouter,
-		private readonly fb: FormBuilder,
+		private readonly fb: UntypedFormBuilder,
 		protected inviteRouter: InviteRouter,
 		protected userRouter: UserRouter,
 		private translateService: TranslateService,

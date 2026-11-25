@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
+	standalone: false,
 	selector: 'no-content',
 	template: `
 		<div>

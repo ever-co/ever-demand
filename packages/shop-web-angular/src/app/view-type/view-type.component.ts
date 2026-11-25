@@ -3,6 +3,7 @@ import { Store } from 'app/services/store';
 import { Router } from '@angular/router';
 
 @Component({
+	standalone: false,
 	selector: 'view-type',
 	styleUrls: ['./view-type.component.scss'],
 	templateUrl: './view-type.component.html',

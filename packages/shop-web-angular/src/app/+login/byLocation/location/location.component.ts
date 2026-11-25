@@ -10,7 +10,7 @@ import {
 	AfterViewInit,
 	OnDestroy,
 } from '@angular/core';
-import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { IUserCreateObject } from '@modules/server.common/interfaces/IUser';
 import User from '@modules/server.common/entities/User';
 import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
@@ -25,15 +25,29 @@ import InviteRequest from '@modules/server.common/entities/InviteRequest';
 import { InviteRequestRouter } from '@modules/client.common.angular2/routers/invite-request-router.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { isEmpty } from 'lodash';
 
 import { countries } from '@modules/server.common/data/abbreviation-to-country';
 import { environment } from 'environments/environment';
+
+/**
+ * lodash `isEmpty` semantics for the values this form sees: null, undefined, '' and
+ * numbers (lodash counts a number as empty) are empty; a non-blank string is not.
+ */
+export const isEmpty = (value: unknown): boolean => {
+	if (value == null) {
+		return true;
+	}
+	if (typeof value === 'string' || Array.isArray(value)) {
+		return value.length === 0;
+	}
+	return typeof value !== 'object' || Object.keys(value).length === 0;
+};
 
 const defaultLng = environment.DEFAULT_LONGITUDE || 0;
 const defaultLat = environment.DEFAULT_LATITUDE || 0;
 
 @Component({
+	standalone: false,
 	selector: 'es-location-form',
 	styleUrls: ['./location.component.scss'],
 	templateUrl: './location.component.html',
@@ -92,7 +106,7 @@ export class LocationFormComponent
 	private lastUsedAddressText: string;
 
 	constructor(
-		private readonly fb: FormBuilder,
+		private readonly fb: UntypedFormBuilder,
 		private geoLocationRouter: GeoLocationRouter,
 		private inviteRequestRouter: InviteRequestRouter
 	) {}

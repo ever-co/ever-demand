@@ -1,12 +1,32 @@
-import { ViewChild, Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import {
+	Component,
+	Input,
+	NgZone,
+	OnDestroy,
+	OnInit,
+	ViewChild,
+} from '@angular/core';
+import { GoogleMap } from '@angular/google-maps';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+/**
+ * The address map of the location forms (login by address, change address popup):
+ * follows the coordinates and geometry the form emits and marks the chosen place.
+ * Built on `@angular/google-maps` (the Maps JS API itself is loaded by `GoogleMapsLoader`).
+ */
 @Component({
+	standalone: false,
 	selector: 'ngx-google-map',
 	styles: [
 		`
+			:host {
+				display: block;
+				height: 100%;
+			}
+
 			.g-map {
+				display: block;
 				height: 100%;
 				min-height: 250px;
 				min-width: 300px !important;
@@ -14,11 +34,24 @@ import { takeUntil } from 'rxjs/operators';
 			}
 		`,
 	],
-	template: ` <div #gmap class="g-map"></div> `,
+	template: `
+		<google-map
+			class="g-map"
+			width="100%"
+			height="100%"
+			[center]="center"
+			[zoom]="zoom"
+			[mapTypeId]="mapTypeId"
+		>
+			@if (markerPosition) {
+				<map-marker [position]="markerPosition"></map-marker>
+			}
+		</google-map>
+	`,
 })
 export class GoogleMapComponent implements OnInit, OnDestroy {
-	@ViewChild('gmap', { static: true })
-	public mapElement: any;
+	@ViewChild(GoogleMap, { static: true })
+	public map: GoogleMap;
 
 	@Input()
 	public mapTypeEvent: Observable<string>;
@@ -31,14 +64,22 @@ export class GoogleMapComponent implements OnInit, OnDestroy {
 		google.maps.places.PlaceGeometry | google.maps.GeocoderGeometry
 	>;
 
-	public map: google.maps.Map;
-
-	private _mapMarker: google.maps.Marker;
+	public center: google.maps.LatLng | google.maps.LatLngLiteral = {
+		lat: 0,
+		lng: 0,
+	};
+	public zoom = 14;
+	public mapTypeId: string = 'roadmap';
+	public markerPosition:
+		| google.maps.LatLng
+		| google.maps.LatLngLiteral
+		| null = null;
 
 	private _ngDestroy$ = new Subject<void>();
 
+	constructor(private readonly ngZone: NgZone) {}
+
 	ngOnInit() {
-		this._setupGoogleMap();
 		this._listenForMapType();
 		this._listenForMapCoordinates();
 		this._listenForMapGeometry();
@@ -49,24 +90,21 @@ export class GoogleMapComponent implements OnInit, OnDestroy {
 		this._ngDestroy$.complete();
 	}
 
-	private _navigateTo(
-		location: google.maps.LatLng | google.maps.LatLngLiteral
-	) {
-		this.map.setCenter(location);
-	}
-
 	private _listenForMapGeometry() {
 		if (this.mapGeometryEvent) {
 			this.mapGeometryEvent
 				.pipe(takeUntil(this._ngDestroy$))
-				.subscribe((geometry) => {
-					if (geometry.viewport) {
-						this.map.fitBounds(geometry.viewport);
-					} else {
-						this.map.setCenter(geometry.location);
-						this.map.setZoom(17);
-					}
-				});
+				.subscribe((geometry) =>
+					// Geocoder and autocomplete callbacks may run outside the Angular zone
+					this.ngZone.run(() => {
+						if (geometry.viewport) {
+							this.map.fitBounds(geometry.viewport);
+						} else {
+							this.center = geometry.location;
+							this.zoom = 17;
+						}
+					})
+				);
 		}
 	}
 
@@ -74,9 +112,9 @@ export class GoogleMapComponent implements OnInit, OnDestroy {
 		if (this.mapTypeEvent) {
 			this.mapTypeEvent
 				.pipe(takeUntil(this._ngDestroy$))
-				.subscribe((mapType: string) => {
-					this.map.setMapTypeId(mapType);
-				});
+				.subscribe((mapType: string) =>
+					this.ngZone.run(() => (this.mapTypeId = mapType))
+				);
 		}
 	}
 
@@ -84,41 +122,12 @@ export class GoogleMapComponent implements OnInit, OnDestroy {
 		if (this.mapCoordEvent) {
 			this.mapCoordEvent
 				.pipe(takeUntil(this._ngDestroy$))
-				.subscribe((location) => {
-					this._navigateTo(location);
-					this._addMapMarker(location);
-				});
-		}
-	}
-
-	private _setupGoogleMap() {
-		const optionsMap = {
-			center: new google.maps.LatLng(0, 0),
-			zoom: 14,
-			mapTypeId: google.maps.MapTypeId.ROADMAP,
-		};
-
-		this.map = new google.maps.Map(
-			this.mapElement.nativeElement,
-			optionsMap
-		);
-	}
-
-	private _addMapMarker(
-		location: google.maps.LatLng | google.maps.LatLngLiteral
-	) {
-		this._clearMarker();
-
-		this._mapMarker = new google.maps.Marker({
-			map: this.map,
-			position: location,
-			// icon: 'assets/images/google-map-customer-marker.png'
-		});
-	}
-
-	private _clearMarker() {
-		if (this._mapMarker) {
-			this._mapMarker.setMap(null);
+				.subscribe((location) =>
+					this.ngZone.run(() => {
+						this.center = location;
+						this.markerPosition = location;
+					})
+				);
 		}
 	}
 }

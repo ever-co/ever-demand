@@ -11,6 +11,7 @@ import { MatButton } from '@angular/material/button';
 import { MatRipple } from '@angular/material/core';
 
 @Component({
+	standalone: false,
 	selector: 'mat-search',
 	styleUrls: ['./mat-search.component.scss'],
 	templateUrl: './mat-search.component.html',

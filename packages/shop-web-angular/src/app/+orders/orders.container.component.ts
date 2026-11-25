@@ -4,6 +4,7 @@ import Order from '@modules/server.common/entities/Order';
 import { Store } from 'app/services/store';
 
 @Component({
+	standalone: false,
 	selector: 'orders-container',
 	template: `
 		<orders *ngIf="orders" [orders]="orders"></orders>

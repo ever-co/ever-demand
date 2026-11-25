@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { CarouselViewComponent } from './carousel-view.component';
 import { MatCardModule } from '@angular/material/card';
-import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 import { FormsModule } from '@angular/forms';
 import { GeoLocationProductsService } from 'app/services/geo-location-products';
 import { GeoLocationService } from 'app/services/geo-location';
@@ -13,10 +12,9 @@ import { ViewTypeModule } from 'app/view-type/view-type.modeule';
 @NgModule({
 	imports: [
 		CommonModule,
-		TranslateModule.forChild(),
+		TranslateModule,
 		FormsModule,
 		MatCardModule,
-		NgxHmCarouselModule,
 		ProductModule,
 		ViewTypeModule,
 	],

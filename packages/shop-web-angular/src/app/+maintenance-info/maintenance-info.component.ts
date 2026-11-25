@@ -6,6 +6,7 @@ import { Store } from 'app/services/store';
 import { Router } from '@angular/router';
 
 @Component({
+	standalone: false,
 	template: `
 		<div
 			*ngIf="message"

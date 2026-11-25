@@ -12,6 +12,7 @@ import { MatRipple } from '@angular/material/core';
 import { InputComponent } from './input-component';
 
 @Component({
+	standalone: false,
 	selector: 'mat-bold-input',
 	styleUrls: ['./mat-bold-input.component.scss'],
 	templateUrl: 'mat-bold-input.component.html',

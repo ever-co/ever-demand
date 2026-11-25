@@ -17,6 +17,7 @@ import { GeoLocationService } from 'app/services/geo-location';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
+	standalone: false,
 	selector: 'es-login-by-location',
 	styleUrls: ['./byLocation.component.scss'],
 	templateUrl: './byLocation.component.html',

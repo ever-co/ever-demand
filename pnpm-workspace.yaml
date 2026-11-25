@@ -9,11 +9,12 @@ packages:
   # - packages/merchant-tablet-ionic
   # - packages/shop-mobile-expo
   # - packages/shop-mobile-ionic
-  # - packages/shop-web-angular
+  - packages/shop-web-angular
   # - packages/shop-web-gatsby
 
 # Packages whose install (build) scripts may run: native addons and downloaded binaries.
 allowBuilds:
+  '@apollo/client': false
   '@nestjs/core': true
   '@parcel/watcher': true
   '@swc/core': true
@@ -31,3 +32,6 @@ allowBuilds:
 minimumReleaseAgeExclude:
   - '@types/node@26.6.10'
   - mongoose@9.13.1
+  - '@vitest/mocker@5.1.2'
+  - '@vitest/spy@5.1.2'
+  - vitest@5.1.2

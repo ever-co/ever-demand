@@ -1,1 +1,55 @@
-<div #gmap class="googleMap"></div>
+<google-map
+	class="googleMap"
+	width="100%"
+	height="600px"
+	[center]="carrierPosition || defaultCenter"
+	[zoom]="15"
+	mapTypeId="roadmap"
+>
+	@if (directions) {
+		<map-directions-renderer
+			[directions]="directions"
+			[options]="{ suppressMarkers: true }"
+		></map-directions-renderer>
+	}
+
+	@if (userPosition) {
+		<map-marker [position]="userPosition" [icon]="userIcon"></map-marker>
+	}
+
+	@if (warehousePosition) {
+		<map-marker
+			#warehouseMarker="mapMarker"
+			[position]="warehousePosition"
+			[icon]="warehouseIcon"
+			(mapClick)="warehouseInfo.open(warehouseMarker)"
+		></map-marker>
+	}
+
+	@if (carrierPosition) {
+		<map-marker
+			#carrierMarker="mapMarker"
+			[position]="carrierPosition"
+			[icon]="carrierIcon"
+			(mapClick)="carrierInfo.open(carrierMarker)"
+		></map-marker>
+	}
+
+	<map-info-window #warehouseInfo="mapInfoWindow">
+		<h3>{{ storeLoc?.name }}</h3>
+		<ul>
+			<li>{{ storeLoc?.contactEmail }}</li>
+			<li>{{ storeLoc?.contactPhone }}</li>
+			<li>{{ storeLoc?.geoLocation?.streetAddress }}</li>
+		</ul>
+	</map-info-window>
+
+	<map-info-window #carrierInfo="mapInfoWindow">
+		<h3>{{ carrierLoc?.fullName }}</h3>
+		<ul>
+			<li>{{ carrierLoc?.username }}</li>
+			<li>{{ carrierLoc?.phone }}</li>
+			<li>{{ carrierLoc?.geoLocation?.streetAddress }}</li>
+		</ul>
+	</map-info-window>
+</google-map>

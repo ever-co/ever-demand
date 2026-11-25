@@ -1,10 +1,12 @@
+@use 'sass:color';
+
 $brand: #2a2c39;
 $brand-lighted: #353748;
-$brand-darken: darken($brand, 5%); // #1f212a
+$brand-darken: color.adjust($brand, $lightness: -5%); // #1f212a
 
 $assertive: #bd4742;
 $assertive-lighted: #ce4843;
-$assertive-darken: darken($assertive, 5%); // #aa403b
+$assertive-darken: color.adjust($assertive, $lightness: -5%); // #aa403b
 
 $ever-md-primary: (
 	50: #e5e6e7,

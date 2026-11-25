@@ -15,7 +15,6 @@ import {
 	trigger,
 } from '@angular/animations';
 import { Observable } from 'rxjs';
-import { ElementQueries } from 'css-element-queries/src/ElementQueries';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
@@ -27,6 +26,7 @@ import { IProductImage } from '@modules/server.common/interfaces/IProduct';
 import { DOCUMENT } from '@angular/common';
 
 @Component({
+	standalone: false,
 	selector: 'product',
 	animations: [
 		trigger('show', [
@@ -79,10 +79,6 @@ export class ProductComponent implements OnChanges {
 	}
 
 	onImageLoad(): void {
-		if (ElementQueries) {
-			ElementQueries.init();
-		}
-
 		this.load.emit();
 		this.showTitle = 'shown';
 	}

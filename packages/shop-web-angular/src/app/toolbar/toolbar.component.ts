@@ -15,6 +15,7 @@ import { LocationPopupComponent } from 'app/shared/location-popup/location-popup
 import { environment } from 'environments/environment';
 
 @Component({
+	standalone: false,
 	selector: 'toolbar',
 	styleUrls: ['./toolbar.component.scss'],
 	templateUrl: './toolbar.component.html',

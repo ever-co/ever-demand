@@ -30,6 +30,7 @@ import { environment } from 'environments/environment';
 const initializeProductsNumber: number = 10;
 
 @Component({
+	standalone: false,
 	selector: 'products',
 	styleUrls: ['./products.component.scss'],
 	templateUrl: './products.component.html',

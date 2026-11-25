@@ -1,41 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<meta http-equiv="x-ua-compatible" content="ie=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>Ever</title>
 		<meta name="description" content="Ever Web Shop" />
-		<base href="/">
-
-		<!-- Async Google Tag Manager: change gtmKey value inside config.prod.conf to your to be your site's ID-->
-		<!-- Google Tag Manager -->
-		<script>
-			(function (w, d, s, l, i) {
-				w[l] = w[l] || [];
-				w[l].push({
-					'gtm.start': new Date().getTime(),
-					event: 'gtm.js',
-				});
-				var f = d.getElementsByTagName(s)[0],
-					j = d.createElement(s),
-					dl = l != 'dataLayer' ? '&l=' + l : '';
-				j.async = true;
-				j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-				f.parentNode.insertBefore(j, f);
-			})(
-				window,
-				document,
-				'script',
-				'dataLayer',
-				'GTM-XXXXXXX'
-			);
-		</script>
-		<!-- End Google Tag Manager -->
-		<!-- End Google Analytics -->
-
-		<!-- CSS will be injected here -->
-		<!-- Preload link tags will be injected by webpack here -->
+		<base href="/" />
+		<link rel="icon" type="image/x-icon" href="favicon.ico" />
 
 		<style type="text/css">
 			body,
@@ -79,17 +50,6 @@
 	</head>
 
 	<body>
-		<!-- Google Tag Manager (noscript) -->
-		<noscript
-			><iframe
-				src="https://www.googletagmanager.com/ns.html?id=<%= htmlWebpackPlugin.options.gtmKey %>"
-				height="0"
-				width="0"
-				style="display: none; visibility: hidden;"
-			></iframe
-		></noscript>
-		<!-- End Google Tag Manager (noscript) -->
-
 		<app>
 			<!-- loading layout replaced by app after startup -->
 			<div class="app-loading">
@@ -99,7 +59,5 @@
 				</svg> -->
 			</div>
 		</app>
-
-		<!-- Scripts will be injected by webpack here -->
 	</body>
 </html>

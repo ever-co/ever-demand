@@ -1,6 +1,6 @@
 {
 	"hosting": {
-		"public": "dist",
+		"public": "build/browser",
 		"rewrites": [
 			{
 				"source": "**",

@@ -5,10 +5,15 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { far } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {
+	faCompress,
+	faExpand,
+	faTableCellsLarge,
+} from '@fortawesome/free-solid-svg-icons';
+import {
+	FaIconLibrary,
+	FontAwesomeModule,
+} from '@fortawesome/angular-fontawesome';
 
 @NgModule({
 	imports: [
@@ -23,7 +28,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 	declarations: [ViewTypeComponent],
 })
 export class ViewTypeModule {
-	constructor() {
-		library.add(fas, far);
+	constructor(library: FaIconLibrary) {
+		library.addIcons(faTableCellsLarge, faCompress, faExpand);
 	}
 }

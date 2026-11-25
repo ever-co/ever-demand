@@ -8,6 +8,7 @@ import { getBrowserLanguage } from 'app/services/browser-language';
 import { environment } from 'environments/environment';
 
 @Component({
+	standalone: false,
 	styleUrls: ['./server-down.page.scss'],
 	templateUrl: 'server-down.page.html',
 })
@@ -22,7 +23,9 @@ export class ServerDownPage implements OnDestroy {
 		private translate: TranslateService,
 		private serverConnectionService: ServerConnectionService
 	) {
-		translate.use(translate.currentLang || getBrowserLanguage(translate));
+		translate.use(
+			translate.getCurrentLang() || getBrowserLanguage(translate)
+		);
 
 		this.noInternetLogo = environment['NO_INTERNET_LOGO'];
 		this.testConnection();

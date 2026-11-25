@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,7 +13,7 @@ import { MasonryModule } from '@modules/masonry';
 @NgModule({
 	imports: [
 		CommonModule,
-		TranslateModule.forChild(),
+		TranslateModule,
 		FormsModule,
 		MatCardModule,
 		ProductModule,

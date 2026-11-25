@@ -15,6 +15,7 @@ import { ProductComponent } from 'app/+products/product';
 import { Subject } from 'rxjs';
 
 @Component({
+	standalone: false,
 	selector: 'list-view',
 	styleUrls: ['./list-view.component.scss'],
 	templateUrl: './list-view.component.html',

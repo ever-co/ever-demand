@@ -18,6 +18,7 @@ import GeoLocation, {
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 
 @Component({
+	standalone: false,
 	styleUrls: ['./location-popup.component.scss'],
 	templateUrl: './location-popup.component.html',
 })

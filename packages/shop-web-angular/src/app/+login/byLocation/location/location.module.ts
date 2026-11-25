@@ -12,7 +12,7 @@ import {
 	MatBoldInputModule,
 } from '@modules/material-extensions';
 import { LocationFormComponent } from './location.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 
 @NgModule({
 	declarations: [LocationFormComponent],
@@ -31,7 +31,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 		MatSearchModule,
 		MatBoldInputModule,
-		TranslateModule.forChild(),
+		TranslateModule,
 	],
 })
 export class LocationFormModule {}

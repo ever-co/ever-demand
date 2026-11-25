@@ -21,6 +21,7 @@ import { CarrierLocationComponent } from '../location/carrier-location.component
 import { DOCUMENT } from '@angular/common';
 
 @Component({
+	standalone: false,
 	selector: 'order',
 	animations: [
 		trigger('show', [
