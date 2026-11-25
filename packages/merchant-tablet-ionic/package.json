@@ -64,7 +64,7 @@
 		"angular2-smart-table": "^4.2.0",
 		"apollo-angular": "^14.2.0",
 		"bootstrap": "^5.3.9",
-		"graphql": "^17.1.0",
+		"graphql": "^16.15.0",
 		"graphql-ws": "^6.4.3",
 		"ionic-selectable": "^8.0.0",
 		"ionicons": "^8.1.1",

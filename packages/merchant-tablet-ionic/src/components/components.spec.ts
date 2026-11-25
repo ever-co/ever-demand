@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import OrderStatus from '@modules/server.common/enums/OrderStatus';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
@@ -85,6 +85,7 @@ describe('skipStatus pipe', () => {
 		</form-wizard>
 	`,
 	imports: [FormWizardModule],
+	changeDetection: ChangeDetectionStrategy.Eager,
 })
 class WizardHostComponent {
 	@ViewChild('wizard', { static: true }) wizard: FormWizardComponent;

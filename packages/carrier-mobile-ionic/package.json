@@ -55,7 +55,7 @@
 		"@ngx-translate/core": "^18.1.0",
 		"@ngx-translate/http-loader": "^18.1.0",
 		"apollo-angular": "^14.2.0",
-		"graphql": "^17.1.0",
+		"graphql": "^16.15.0",
 		"graphql-ws": "^6.4.3",
 		"ionicons": "^8.1.1",
 		"lodash": "^4.18.1",
