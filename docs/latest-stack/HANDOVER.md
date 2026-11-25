@@ -1,0 +1,106 @@
+# Ever Demand latest-stack upgrade: handover
+
+Last updated: 2026-11-26 ~01:30 CET by the lead session ("Ever Demand platform modernization").
+Keep this file current. Update it after every merge or milestone, then commit and push.
+
+## Goal (owner)
+
+Move every package to the newest versions (Node, Nest, GraphQL, Ionic, Angular, ...). The platform must
+behave approximately as before. The Flutter and React Native apps must match the Ionic shop app's
+features. Write plenty of unit and e2e tests and make everything work. Then bring the open PRs on
+ever-co/ever-demand down to zero by merging or closing each one.
+
+Owner rules from this session:
+- **No PM2** anywhere (license). Run Node the way Ever Gauzy's Docker images do: an `entrypoint.prod.sh`
+  that does `exec "$@"`, then `CMD ["node", "..."]`, or nginx for the web apps.
+- **No secrets in the repo or the images.** They come from env vars (GitHub secrets, OpenBao, k8s Secret).
+- Commit, push and merge often, and keep this handover updated.
+
+## Branches and worktrees
+
+| Branch | Worktree (`C:\Coding\Worktrees\...`) | State |
+| --- | --- | --- |
+| `feat/latest-stack` (integration) | `ever-demand-latest-stack` | foundation + merged lanes, pushed |
+| `feat/latest-stack-core` | `ever-demand-core` | **squash-merged** (`7d4a189b`); remote branch deleted |
+| `feat/latest-stack-expo` | `ever-demand-expo` | merged |
+| `feat/latest-stack-shop-web` | `ever-demand-shop-web` | merged (Angular shop + Gatsby) |
+| `feat/latest-stack-shop-mobile` | `ever-demand-shop-mobile` | merged |
+| `feat/latest-stack-admin` | `ever-demand-admin` | merged |
+| `feat/latest-stack-carrier-merchant` | `ever-demand-carrier-merchant` | **lane agent still running** |
+| `feat/latest-stack-flutter` | `ever-demand-flutter` | **lane agent still running** |
+
+The main clone is `C:\Coding\ever-demand`. The lane contract is in `docs/latest-stack/CONTRACT.md`; each
+lane's notes are in `docs/latest-stack/<lane>.md`.
+
+To merge a lane: `git merge --no-ff origin/feat/latest-stack-<lane>`.
+- Resolve `pnpm-workspace.yaml` as the union of both sides, then remove the `# - packages/x` comment lines
+  for packages that are now listed.
+- For `pnpm-lock.yaml`, take theirs, then run `pnpm install --no-frozen-lockfile` to regenerate it.
+- Before merging, check the lane's commits for key files:
+  `git log --name-only --format= e3e00b80..origin/<branch> | grep -E '\.(pem|key|...)$'`.
+
+## Toolchain
+
+- Node 26.13.1 is at `C:\nvm\v26.13.1`; put it first on PATH: `export PATH="/c/nvm/v26.13.1:$PATH"`. pnpm is 12.23.0.
+- TypeScript is 6.0.3. TypeScript 7 is held back because Angular 22 needs `<6.1` and ts-jest needs `<7`.
+- graphql is 16.15 everywhere; `@apollo/server` 5 rejects 17.
+- Flutter builds run in Docker (`ghcr.io/cirruslabs/flutter`). Flutter is not installed on the PC.
+
+## Done and verified (on `feat/latest-stack` or on the lane before merge)
+
+| Package | Stack now | Evidence |
+| --- | --- | --- |
+| common | mongoose 9, typeorm 1, TS 6 | builds; 4 specs (assignRaw) |
+| common-angular | Angular 22, ngx-translate 18 shim | typechecks; eager CD; `_<id>_complete` fix; assignRaw (strict-mode getter fix) |
+| core API | Nest 12, @nestjs/graphql 14 + Apollo Server 5, graphql-ws, Mongoose 9, Stripe 23 (API version pinned 2020-08-27) | 590 unit specs and build on the merged branch; lane: 49 Jest API e2e, 19 Playwright API specs, Docker image healthy |
+| shop-mobile-expo | Expo 58, RN 0.88, React 19.3, Apollo 4 | 161 Jest specs and tsc on the merged branch; lane: web and android export, 11 Playwright e2e |
+| shop-web-angular | Angular 22, Material 22 | lane: 112 Vitest specs, prod build, 15/15 Playwright e2e against the API |
+| shop-web-gatsby | Gatsby 5.16, React 19.3, MUI 9 | lane: 44 Vitest specs, `gatsby build` |
+| shop-mobile-ionic | Angular 22, Ionic 9, Capacitor 8 | lane: 201 Vitest specs (all 84 old Karma specs ported), prod build, 14 Playwright e2e passed + 1 skipped, Docker image serves |
+| admin-web-angular | Angular 22, Nebular 17 (pnpm patch for CDK 22), ng-bootstrap 21 | lane: 82 Vitest specs, prod build, 27/28 Playwright e2e (1 needs a Google Maps key) |
+
+Security work (owner request, `76b4ca83`):
+- No committed keys exist in the develop history or in any lane branch. The one exception was a
+  throwaway localhost cert in the deleted core-lane branch.
+- Production now refuses to start with a missing or well-known `JWT_SECRET` or `EXPRESS_SESSION_SECRET`.
+- GraphQL debug was always on in production (`env.isProd` was read from a literal env var). Fixed.
+- The first admin is configurable through `ADMIN_EMAIL` and `ADMIN_PASSWORD`.
+- The API Dockerfile no longer bakes secrets in as build ARG/ENV.
+
+## Still to do (in order)
+
+1. **Lanes still running:** carrier + merchant (Ionic 9 / Capacitor 8; no PM2) and Flutter (Docker
+   builds). Merge each one when it reports.
+2. **Merge `origin/develop`** into `feat/latest-stack` and port the fleet fixes merged after the base
+   `abd39940`:
+   - #1655 (core: refund a lost charge when the unpaid order is cancelled);
+   - T-2805 (shop start language);
+   - T-2806 (Pay buttons with no Stripe key);
+   - T-2807 ("already paid" message: core OrdersService, common IOrderRouter, payment.component.ts);
+   - any later ones.
+   The fleet merge-lane session ("Ever Works") agreed to send code-only PRs meanwhile.
+3. **Integration:** `pnpm install --frozen-lockfile`, `pnpm -r typecheck/test/build`. Boot the API (the
+   core worktree's API is still running on 5500/8443/2086, PID in `docs/latest-stack/core.md`) and run
+   every Playwright project. Playwright 1.65 needs `npx playwright install chromium` (the PC has an
+   older build).
+4. **CI:**
+   - Finalise `.github/workflows/ci.yml` (script names, Flutter job per the Flutter lane).
+   - Update `docker-build-publish.yml` if any image path changed.
+   - Check every `.deploy/*/Dockerfile`: no PM2, no secret ARGs.
+5. **Docs:** README (pnpm, Node 26, how to run each app, no PM2 mention), a summary of the lane notes.
+6. **PR:** `feat/latest-stack` into `develop`. Handle every AI-bot thread (AI-review rule).
+7. **Open PRs on ever-co/ever-demand:** take them to 0. The old dependabot bumps (yarn era), the Crowdin
+   PR and the 2019–2020 feature drafts are largely superseded by this upgrade. Review each one: merge it
+   if it still applies, otherwise close it with a reason.
+
+## Known follow-ups and caveats
+
+- The common-angular Google Maps loader never resolves without network access to Google. Admin added
+  its own server-down fallback; the other apps should get one too.
+- Admin: ionicons stays on 4.6.3, because the templates use `ion-md-*` classes. Google's Drawing library
+  is deprecated, and the delivery-zone editor still uses it.
+- shop-mobile-ionic: still uses `IonicModule` (deprecated in Ionic 9) and Stripe's legacy `checkout.js`.
+- Expo: native modules stay on the versions Expo SDK 58 pins. The web build has no map (react-native-maps
+  has no web support).
+- The shared PC has little free RAM. A RAM monitor drops the Docker VM page cache when free memory falls
+  under 1 GB.
