@@ -58,11 +58,15 @@
 		"graphql": "^17.1.0",
 		"graphql-ws": "^6.4.3",
 		"ionicons": "^8.1.1",
+		"lodash": "^4.18.1",
 		"mixpanel-browser": "^2.86.0",
+		"reflect-metadata": "^0.2.2",
 		"rxjs": "^7.8.2",
 		"socket.io-client": "^4.8.4",
 		"swiper": "^14.4.0",
 		"tslib": "^2.9.1",
+		"underscore": "^1.13.8",
+		"uuid": "^14.0.3",
 		"zone.js": "^0.16.3"
 	},
 	"devDependencies": {

@@ -63,7 +63,8 @@
 							"underscore.string",
 							"moment",
 							"lodash",
-							"mixpanel-browser"
+							"mixpanel-browser",
+							"reflect-metadata"
 						]
 					},
 					"configurations": {
@@ -99,8 +100,7 @@
 				"serve": {
 					"builder": "@angular/build:dev-server",
 					"options": {
-						"port": 4203,
-						"prebundle": false
+						"port": 4203
 					},
 					"configurations": {
 						"production": {
