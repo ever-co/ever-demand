@@ -7,7 +7,7 @@ import {
 	EventEmitter,
 	Output,
 } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { TranslateService } from '@ngx-translate/core';
 import { CarrierImageComponent } from '@app/@shared/render-component/carriers-table/carrier-image/carrier-image.component';
 import { RedirectNameComponent } from '@app/@shared/render-component/name-redirect/name-redirect.component';

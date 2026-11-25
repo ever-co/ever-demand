@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { ToasterModule } from 'angular2-toaster';
+import { Ng2SmartTableModule } from '@app/@shared/smart-table';
+import { ToasterModule } from '@app/@core/toaster';
 import { ThemeModule } from '../../../@theme';
 import { WarehouseComponent } from './warehouse.component';
 import { WarehouseProductCreateModule } from '../../../@shared/warehouse-product/warehouse-product-create';

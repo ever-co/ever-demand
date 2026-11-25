@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, Input, OnChanges } from '@angular/core';
 import { UserOrdersRouter } from '@modules/client.common.angular2/routers/user-orders-router.service';
 import { ActivatedRoute } from '@angular/router';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import Order from '@modules/server.common/entities/Order';
 import { DatePipe } from '@angular/common';
 import { takeUntil } from 'rxjs/operators';

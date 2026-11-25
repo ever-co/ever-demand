@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from '@app/@shared/smart-table';
 
 @Component({
 	standalone: false,

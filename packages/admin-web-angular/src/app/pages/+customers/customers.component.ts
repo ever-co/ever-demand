@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { UsersService } from '../../@core/data/users.service';
 import { OrdersService } from '../../@core/data/orders.service';
 import User from '@modules/server.common/entities/User';

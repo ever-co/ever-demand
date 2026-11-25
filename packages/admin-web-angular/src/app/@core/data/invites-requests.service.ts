@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import InviteRequest from '@modules/server.common/entities/InviteRequest';
 import { Apollo, gql } from 'apollo-angular';
+import { completeData } from '@app/graphql/complete-data';
 import { map, share } from 'rxjs/operators';
 import {
 	IInviteRequestCreateObject,
@@ -46,7 +47,7 @@ export class InvitesRequestsService {
 			`,
 			pollInterval: 2000,
 		})
-		.valueChanges.pipe(
+		.valueChanges.pipe(completeData(), 
 			map((res) => res.data.invitesRequests),
 			share()
 		);
@@ -90,7 +91,7 @@ export class InvitesRequestsService {
 				variables: { pagingOptions, invited },
 				pollInterval: 2000,
 			})
-			.valueChanges.pipe(
+			.valueChanges.pipe(completeData(), 
 				map((res) => res.data.invitesRequests),
 				share()
 			);

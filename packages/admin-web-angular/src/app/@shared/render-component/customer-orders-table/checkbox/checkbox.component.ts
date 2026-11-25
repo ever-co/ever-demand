@@ -1,5 +1,5 @@
 import { Component, Input, EventEmitter, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from '@app/@shared/smart-table';
 
 @Component({
 	standalone: false,

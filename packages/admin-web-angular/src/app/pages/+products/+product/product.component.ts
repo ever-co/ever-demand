@@ -122,6 +122,6 @@ export class ProductComponent implements OnInit, OnDestroy {
 	}
 
 	private _setProductLanguage() {
-		this.productLangToShow = this.translateService.currentLang;
+		this.productLangToShow = this.translateService.getCurrentLang();
 	}
 }

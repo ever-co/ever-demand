@@ -12,7 +12,7 @@ import { WarehouseMutationComponent } from '../../../../@shared/warehouse/wareho
 import User from '@modules/server.common/entities/User';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import Warehouse from '@modules/server.common/entities/Warehouse';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatest, Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';

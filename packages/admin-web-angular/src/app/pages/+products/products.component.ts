@@ -1,6 +1,6 @@
 import { Component, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { takeUntil, first } from 'rxjs/operators';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { ProductsService } from '../../@core/data/products.service';
 import Product from '@modules/server.common/entities/Product';
 import { firstValueFrom, Subject } from 'rxjs';

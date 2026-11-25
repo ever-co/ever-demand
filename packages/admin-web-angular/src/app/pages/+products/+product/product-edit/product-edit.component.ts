@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../../../../@core/data/products.service';
 import { takeUntil, first, switchMap } from 'rxjs/operators';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { ProductsCategoryService } from '../../../../@core/data/productsCategory.service';
 import { Location } from '@angular/common';
 

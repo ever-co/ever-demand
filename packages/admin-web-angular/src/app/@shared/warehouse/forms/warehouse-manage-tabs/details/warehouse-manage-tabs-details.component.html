@@ -218,13 +218,17 @@
 				</div>
 
 				<div *ngIf="hasRestrictedCarriers.value">
-					<ss-multiselect-dropdown
-						[options]="carriersOptions"
-						[settings]="{ displayAllSelectedText: true }"
-						formControlName="carriersIds"
-						class="carriers-dropdown"
-					>
-					</ss-multiselect-dropdown>
+					<ng-select
+					[items]="carriersOptions"
+					bindLabel="name"
+					bindValue="id"
+					[multiple]="true"
+					[closeOnSelect]="false"
+					[searchable]="true"
+					formControlName="carriersIds"
+					class="carriers-dropdown"
+				>
+				</ng-select>
 				</div>
 			</div>
 		</div>

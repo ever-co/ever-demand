@@ -6,7 +6,7 @@ import {
 	EventEmitter,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import Product from '@modules/server.common/entities/Product';
 import { ProductsService } from '../../../../@core/data/products.service';
 import { Router } from '@angular/router';

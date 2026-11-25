@@ -1,6 +1,6 @@
 import { OnInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from '@app/@shared/smart-table';
 
 @Component({
 	standalone: false,

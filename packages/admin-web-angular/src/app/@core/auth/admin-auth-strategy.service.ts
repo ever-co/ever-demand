@@ -6,7 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Store } from '../data/store.service';
 import Admin from '@modules/server.common/entities/Admin';
-import { NbAuthStrategyClass } from '@nebular/auth/auth.options';
+import { NbAuthStrategyClass } from '@nebular/auth';
 import { IAdminLoginResponse } from '@modules/server.common/routers/IAdminRouter';
 import { getDummyImage } from '@modules/server.common/utils';
 
@@ -296,7 +296,7 @@ export class AdminAuthStrategy extends NbAuthStrategy {
 
 		this.store.serverConnection = '200';
 
-		await this.apollo.getClient().resetStore();
+		await this.apollo.client.resetStore();
 
 		return new NbAuthResult(
 			true,

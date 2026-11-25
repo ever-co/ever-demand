@@ -5,7 +5,7 @@ import {
 	AfterViewInit,
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';

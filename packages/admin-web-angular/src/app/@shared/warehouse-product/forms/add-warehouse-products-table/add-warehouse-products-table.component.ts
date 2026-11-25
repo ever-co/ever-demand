@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import Product from '@modules/server.common/entities/Product';
 import { first, takeUntil } from 'rxjs/operators';
 import { Subject, Observable, forkJoin } from 'rxjs';

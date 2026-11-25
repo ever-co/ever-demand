@@ -52,3 +52,6 @@ minimumReleaseAgeExclude:
   - '@vitest/mocker@5.1.2'
   - '@vitest/spy@5.1.2'
   - vitest@5.1.2
+
+patchedDependencies:
+  '@nebular/theme@17.0.0': patches/@nebular__theme@17.0.0.patch

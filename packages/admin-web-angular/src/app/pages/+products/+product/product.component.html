@@ -17,7 +17,7 @@
 
 <div class="media w-75">
 	<img
-		class="align-self-center img-thumbnail mr-3 w-25"
+		class="align-self-center img-thumbnail me-3 w-25"
 		src="{{ getTranslatedValue(product?.images) }}"
 		alt="{{ getTranslatedValue(product?.title) }}"
 	/>
@@ -57,7 +57,7 @@
 				</label>
 			</div>
 			<select
-				class="custom-select form-control"
+				class="form-select form-control"
 				id="inputGroupSelect01"
 				#langSelect
 				(change)="onProductLangChange(langSelect.value)"

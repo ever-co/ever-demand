@@ -22,10 +22,14 @@ import {
 import Product from '@modules/server.common/entities/Product';
 import { Subject } from 'rxjs';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
-import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
+/** An option of the multi-select (ng-select with bindValue="id", bindLabel="name"). */
+interface IMultiSelectOption {
+	id: string;
+	name: string;
+}
 import { FormHelpers } from '../../../forms/helpers';
 import { pick } from 'underscore';
-import * as isUrl from 'is-url';
+import isUrl from 'is-url';
 import { takeUntil, first } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -352,7 +356,7 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit {
 	}
 
 	private _setDefaultLocaleValue() {
-		this.locale.setValue(this._translateService.currentLang || 'en-US');
+		this.locale.setValue(this._translateService.getCurrentLang() || 'en-US');
 	}
 
 	private _bindFormControls() {

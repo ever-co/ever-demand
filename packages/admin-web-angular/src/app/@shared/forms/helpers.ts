@@ -1,5 +1,6 @@
 import { FormArray, FormGroup } from '@angular/forms';
-import * as _ from 'underscore.string';
+
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 export class FormHelpers {
 	/**
@@ -19,7 +20,7 @@ export class FormHelpers {
 			if (c instanceof FormGroup || c instanceof FormArray) {
 				FormHelpers.deepMark(c, markAs, opts);
 			} else {
-				c[`markAs${_.capitalize(markAs)}`](opts);
+				c[`markAs${capitalize(markAs)}`](opts);
 			}
 		});
 	}

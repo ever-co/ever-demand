@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from '@app/@shared/smart-table';
 import { Router } from '@angular/router';
 import { WarehousesService } from '../../../../@core/data/warehouses.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';

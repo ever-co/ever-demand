@@ -1,8 +1,8 @@
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../../@theme';
-import { ToasterModule } from 'angular2-toaster';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { ToasterModule } from '@app/@core/toaster';
+import { Ng2SmartTableModule } from '@app/@shared/smart-table';
 import { CustomerWarehousesTableComponent } from './customer-warehouses-table.component';
 import { WarehouseOrderComponent } from '../../../pages/+warehouses/+warehouse-order/warehouse-order.component';
 import { SelectWarehouseComponent } from '../select-warehouse.component/select-warehouse.component';

@@ -12,7 +12,7 @@ import {
 	AbstractControl,
 	FormBuilder,
 } from '@angular/forms';
-import * as isUrl from 'is-url';
+import isUrl from 'is-url';
 import * as _ from 'underscore';
 import { TranslateService } from '@ngx-translate/core';
 import { IProductsCategoryCreateObject } from '@modules/server.common/interfaces/IProductsCategory';
@@ -69,7 +69,7 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 	}
 
 	get usedLanguage() {
-		const usedLanguage = this._langTranslateService.currentLang;
+		const usedLanguage = this._langTranslateService.getCurrentLang();
 		switch (usedLanguage) {
 			case 'en-US':
 				return 'en-US';

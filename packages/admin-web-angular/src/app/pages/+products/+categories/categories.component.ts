@@ -1,6 +1,6 @@
 import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { ProductsCategoryService } from '../../../@core/data/productsCategory.service';
 import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import { CategoryCreateComponent } from '../../../@shared/product/categories/category-create/category-create.component';

@@ -1,7 +1,7 @@
 import { Component, ViewChild, EventEmitter } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { BasicInfoFormComponent } from '../forms/basic-info';
 import { LocationFormComponent } from '../../forms/location';
 import { UserAuthRouter } from '@modules/client.common.angular2/routers/user-auth-router.service';

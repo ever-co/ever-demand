@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ThemeModule } from '@app/@theme';
 import { FormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { SetupMerchantPaymentsComponent } from './payments.component';
 import { NgModule } from '@angular/core';
 import { PaymentGatewaysModule } from '@app/@shared/payment-gateways/payment-gateways.module';

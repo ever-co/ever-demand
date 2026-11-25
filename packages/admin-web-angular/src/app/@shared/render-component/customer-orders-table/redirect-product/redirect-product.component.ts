@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from '@app/@shared/smart-table';
 import { Router } from '@angular/router';
 import OrderProduct from '@modules/server.common/entities/OrderProduct';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';

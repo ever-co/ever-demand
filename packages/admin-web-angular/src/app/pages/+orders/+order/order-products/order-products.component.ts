@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnChanges, OnDestroy } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { Subject, forkJoin, Observable } from 'rxjs';
 import Order from '@modules/server.common/entities/Order';
 import OrderProduct from '@modules/server.common/entities/OrderProduct';
@@ -13,7 +13,7 @@ import { first, takeUntil } from 'rxjs/operators';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { ConfirmationModalComponent } from '../../../../@shared/confirmation-modal/confirmation-modal.component';
 import { StoreOrderProductAmountComponent } from '../../../../@shared/render-component/store-products-table/store-order-product-amount/store-order-product-amount.component';
 import { ProductTitleRedirectComponent } from '../../../../@shared/render-component/product-title-redirect/product-title-redirect.component';

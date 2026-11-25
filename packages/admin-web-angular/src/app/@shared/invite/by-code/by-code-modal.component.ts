@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { UserAuthRouter } from '@modules/client.common.angular2/routers/user-auth-router.service';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { first } from 'rxjs/operators';
 

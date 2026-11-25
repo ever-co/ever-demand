@@ -57,7 +57,6 @@
 							"node_modules/ionicons/dist/css/ionicons.css",
 							"node_modules/@ng-select/ng-select/themes/default.theme.css",
 							"node_modules/highlight.js/styles/github.css",
-							"node_modules/swiper/swiper-bundle.css",
 							"src/app/@theme/styles/styles.scss"
 						],
 						"stylePreprocessorOptions": {
@@ -67,7 +66,6 @@
 									"color-functions",
 									"global-builtin",
 									"import",
-									"mixed-decls",
 									"slash-div",
 									"if-function"
 								]

@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ToasterModule } from 'angular2-toaster';
-import { TranslateModule } from '@ngx-translate/core';
+import { ToasterModule } from '@app/@core/toaster';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { CarriersComponent } from './carriers.component';
 import { ThemeModule } from '../../@theme';
-import { FormWizardModule } from '@ever-co/angular2-wizard';
+import { FormWizardModule } from '@app/@shared/wizard';
 import { CarriersRoutingModule } from './carriers-routing.module';
 import { RenderComponentsModule } from '../../@shared/render-component/render-components.module';
 import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';

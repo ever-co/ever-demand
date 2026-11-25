@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IProductCreateObject } from '@modules/server.common/interfaces/IProduct';
-import * as faker from 'faker';
+import { faker } from '@faker-js/faker';
 import { random } from 'underscore';
 import { IProductsCategory } from '@modules/server.common/interfaces/IProductsCategory';
 import { images } from '@modules/server.common/data/image-urls';
@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 export default class FakeDataProducts {
 	private locales = [];
 	constructor(private translateService: TranslateService) {
-		this.locales = this.translateService.getLangs();
+		this.locales = [...this.translateService.getLangs()];
 	}
 
 	async getRandomProduct(

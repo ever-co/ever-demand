@@ -24,7 +24,7 @@ import FakeDataUsers from '../../@core/data/fakeDataServices/users';
 import { UserAuthRouter } from '@modules/client.common.angular2/routers/user-auth-router.service';
 import { CarriersService } from '../../@core/data/carriers.service';
 import { Subject } from 'rxjs';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { first, takeUntil } from 'rxjs/operators';
 import { WarehousesService } from '../../@core/data/warehouses.service';
 import { DataService } from '../../@core/data/data.service';

@@ -6,7 +6,7 @@ import {
 	OnInit,
 	OnDestroy,
 } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { WarehouseViewModel } from '../../../models/WarehouseViewModel';
 import { WarehouseOrderComponent } from '../../../pages/+warehouses/+warehouse-order/warehouse-order.component';
 import { Subject, forkJoin, Observable } from 'rxjs';
@@ -116,7 +116,7 @@ export class CustomerWarehousesTableComponent
 								type: 'html',
 								filter: false,
 								valuePrepareFunction: (_, vm) =>
-									`<span class="badge badge-secondary">${vm.ordersQty}</span>`,
+									`<span class="badge text-bg-secondary">${vm.ordersQty}</span>`,
 							},
 							actions: {
 								title: actions,

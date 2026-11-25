@@ -3,7 +3,7 @@ import { DeviceService } from '../../@core/data/device.service';
 import Device from '@modules/server.common/entities/Device';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DeviceMutationComponent } from './device-mutation/device-mutation.component';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, forkJoin, Subject } from 'rxjs';
 import { takeUntil, first } from 'rxjs/operators';

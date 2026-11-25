@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
+import { completeData } from '@app/graphql/complete-data';
 import { Observable } from 'rxjs';
 import Currency from '@modules/server.common/entities/Currency';
 import { map, share } from 'rxjs/operators';
@@ -25,7 +26,7 @@ export class CurrenciesService {
 			`,
 			pollInterval: 2000,
 		})
-		.valueChanges.pipe(
+		.valueChanges.pipe(completeData(), 
 			map((result) => result.data.currencies),
 			share()
 		);

@@ -11,7 +11,7 @@ import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/car
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import { map } from 'underscore';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 
 @Component({
 	standalone: false,

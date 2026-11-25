@@ -7,7 +7,7 @@ import Order from '@modules/server.common/entities/Order';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { first } from 'rxjs/operators';
 import { CarriersService } from '../../../@core/data/carriers.service';
 import CarrierStatus from '@modules/server.common/enums/CarrierStatus';

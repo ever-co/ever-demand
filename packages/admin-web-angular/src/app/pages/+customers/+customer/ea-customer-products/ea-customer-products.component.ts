@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { takeUntil } from 'rxjs/operators';

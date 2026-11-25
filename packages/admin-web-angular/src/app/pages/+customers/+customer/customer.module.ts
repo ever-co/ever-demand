@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ToasterModule } from 'angular2-toaster';
-import { TranslateModule } from '@ngx-translate/core';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { ToasterModule } from '@app/@core/toaster';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
+import { Ng2SmartTableModule } from '@app/@shared/smart-table';
 import { HighlightModule } from 'ngx-highlightjs';
 import { ThemeModule } from '../../../@theme';
 import { CustomerComponent } from './customer.component';

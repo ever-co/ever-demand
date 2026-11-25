@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { FormWizardModule } from '@ever-co/angular2-wizard';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
+import { FormWizardModule } from '@app/@shared/wizard';
 import { ThemeModule } from '../../../@theme/theme.module';
 import { BasicInfoFormComponent } from './basic-info';
 import { ContactInfoFormComponent } from './contact-info';
-import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { WarehouseManageTabsComponent } from './warehouse-manage-tabs/warehouse-manage-tabs.component';
 import { GoogleMapModule } from '../../forms/google-map/google-map.module';
 import { LocationFormModule } from '../../forms/location';
@@ -21,7 +21,7 @@ import { PaymentGatewaysModule } from '@app/@shared/payment-gateways/payment-gat
 		ThemeModule,
 		FormWizardModule,
 		TranslateModule.forChild(),
-		MultiselectDropdownModule,
+		NgSelectModule,
 		FileUploaderModule,
 		GoogleMapModule,
 		LocationFormModule,

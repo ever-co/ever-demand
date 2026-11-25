@@ -11,7 +11,7 @@ import { Subject } from 'rxjs';
 import { IAdminUpdateObject } from '@modules/server.common/interfaces/IAdmin';
 import { AdminsService } from '../../../../@core/data/admins.service';
 import { getDummyImage } from '@modules/server.common/utils';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({

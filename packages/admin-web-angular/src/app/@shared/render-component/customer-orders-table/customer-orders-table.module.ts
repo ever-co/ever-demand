@@ -5,7 +5,7 @@ import { RedirectStoreComponent } from './redirect-store/redirect-store.componen
 import { RedirectCarrierComponent } from './redirect-carrier/redirect-carrier.component';
 import { RedirectOrderComponent } from './redirect-order.component';
 import { RedirectProductComponent } from './redirect-product/redirect-product.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { CustomerOrderActionsComponent } from './customer-order-actions/customer-order-actions.component';
 import { NbButtonModule } from '@nebular/theme';
 

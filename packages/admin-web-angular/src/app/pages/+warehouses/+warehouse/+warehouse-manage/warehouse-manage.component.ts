@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { first, map, switchMap } from 'rxjs/operators';
 import { ContactInfoFormComponent } from '../../../../@shared/warehouse/forms';
 import { LocationFormComponent } from '../../../../@shared/forms/location';

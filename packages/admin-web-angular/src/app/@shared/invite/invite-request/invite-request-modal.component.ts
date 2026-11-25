@@ -1,7 +1,7 @@
 import { Component, ViewChild, EventEmitter } from '@angular/core';
 import { LocationFormComponent } from '@app/@shared/forms/location';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { IInviteRequestCreateObject } from '@modules/server.common/interfaces/IInviteRequest';
 import { InviteRequestRouter } from '@modules/client.common.angular2/routers/invite-request-router.service';

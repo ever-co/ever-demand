@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { UserMutationComponent } from './user-mutation.component';
-import { TranslateModule } from '@ngx-translate/core';
-import { FormWizardModule } from '@ever-co/angular2-wizard';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
+import { FormWizardModule } from '@app/@shared/wizard';
 import { ThemeModule } from '../../../@theme/theme.module';
 import { UserFormsModule } from '../forms';
 import { LocationFormModule } from '../../forms/location';

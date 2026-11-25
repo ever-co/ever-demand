@@ -14,7 +14,7 @@ import { LocationFormComponent } from '../../../../../@shared/forms/location';
 import { UsersService } from '../../../../../@core/data/users.service';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 
 @Component({
 	standalone: false,

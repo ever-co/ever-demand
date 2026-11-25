@@ -1,8 +1,6 @@
 <div class="modal-header">
 	<h4 class="title">{{ 'WAREHOUSES_VIEW.INFO.STORE_INFO' | translate }}</h4>
-	<button class="close" aria-label="Close" (click)="cancel()">
-		<span aria-hidden="true">&times;</span>
-	</button>
+	<button class="btn-close" aria-label="Close" (click)="cancel()"></button>
 </div>
 <div class="modal-body">
 	<h6>
@@ -27,6 +25,6 @@
 </div>
 <div>
 	<div>
-		<pre><code [highlight]="warehouse | json" [languages]="['json']" class="iconInfo"></code></pre>
+		<pre><code [highlight]="warehouse | json" language="json" class="iconInfo"></code></pre>
 	</div>
 </div>

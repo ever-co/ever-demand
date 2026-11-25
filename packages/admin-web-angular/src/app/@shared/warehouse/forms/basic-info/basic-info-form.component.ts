@@ -9,7 +9,11 @@ import {
 import { IWarehouseCreateObject } from '@modules/server.common/interfaces/IWarehouse';
 import { first } from 'rxjs/operators';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
-import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
+/** An option of the multi-select (ng-select with bindValue="id", bindLabel="name"). */
+interface IMultiSelectOption {
+	id: string;
+	name: string;
+}
 import { pick } from 'underscore';
 import { FormHelpers } from '../../../forms/helpers';
 import { getDummyImage } from '@modules/server.common/utils';

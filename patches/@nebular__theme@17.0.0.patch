@@ -1,0 +1,15 @@
+diff --git a/fesm2022/nebular-theme.mjs b/fesm2022/nebular-theme.mjs
+index 33bcbc29a1f17ba53d7b1400ac6fe83f4340cd33..411b744ead270609be28bee4b16b48776f300ba8 100644
+--- a/fesm2022/nebular-theme.mjs
++++ b/fesm2022/nebular-theme.mjs
+@@ -19,7 +19,9 @@ import { trigger, state, transition, style, animate } from '@angular/animations'
+ import { Directionality, BidiModule } from '@angular/cdk/bidi';
+ import { CdkCellDef, CdkHeaderCellDef, CdkFooterCellDef, CdkColumnDef, CdkHeaderCell, CdkFooterCell, CdkCell, DataSource, DataRowOutlet, HeaderRowOutlet, FooterRowOutlet, NoDataRowOutlet, CdkCellOutlet, CdkHeaderRowDef, CdkFooterRowDef, CdkRowDef, CdkHeaderRow, CdkFooterRow, CdkRow, STICKY_POSITIONING_LISTENER, CdkTable, CdkTableModule, CDK_TABLE } from '@angular/cdk/table';
+ import { coerceBooleanProperty } from '@angular/cdk/coercion';
+-import { _VIEW_REPEATER_STRATEGY, _DisposeViewRepeaterStrategy } from '@angular/cdk/collections';
++import { _DisposeViewRepeaterStrategy } from '@angular/cdk/collections';
++// ever-demand patch: @angular/cdk 22 no longer exports _VIEW_REPEATER_STRATEGY (NbTable / NbTreeGrid only).
++const _VIEW_REPEATER_STRATEGY = new InjectionToken('_ViewRepeater');
+ import { ESCAPE, ENTER, SPACE, BACKSPACE, DELETE } from '@angular/cdk/keycodes';
+ 
+ /**

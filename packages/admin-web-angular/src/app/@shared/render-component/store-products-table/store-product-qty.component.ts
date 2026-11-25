@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from '@app/@shared/smart-table';
 
 @Component({
 	standalone: false,
 	template: `
 		<div class="text-center">
-			<span class="badge-dark">{{ value }}</span>
+			<span class="text-bg-dark">{{ value }}</span>
 		</div>
 	`,
 })

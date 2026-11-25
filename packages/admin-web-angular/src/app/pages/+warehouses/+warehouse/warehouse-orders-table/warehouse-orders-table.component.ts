@@ -5,7 +5,7 @@ import {
 	OnChanges,
 	AfterViewInit,
 } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { Subject, Observable, forkJoin } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -156,13 +156,13 @@ export class WarehouseOrdersTableComponent
 								)}" />
 								<h6 class="d-inline-block">
 									${this.localeTranslate(order.products[0].product.title)}
-									<span class="badge badge-pill badge-secondary">${order.products[0].count}</span>
+									<span class="badge rounded-pill text-bg-secondary">${order.products[0].count}</span>
 								</h6>
 							</div>
 						`
 								: '',
 							status: warehouseStatusText,
-							carrierStatusHtml: `<div class="badge badge-secondary">${carrierStatusText}</div>`,
+							carrierStatusHtml: `<div class="badge text-bg-secondary">${carrierStatusText}</div>`,
 							created: formatted,
 						});
 					}

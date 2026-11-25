@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, Input } from '@angular/core';
-import { DefaultEditor, Cell } from 'ng2-smart-table';
+import { DefaultEditor, Cell } from '@app/@shared/smart-table';
 
 import {
 	Country,
@@ -28,5 +28,8 @@ export class CountryRenderComponent extends DefaultEditor
 
 	ngAfterViewInit() {}
 
-	onChanged(e) {}
+	onChanged(value: string) {
+		// angular2-smart-table keeps the edited value private: write it through the cell.
+		this.cell.setValue(value);
+	}
 }

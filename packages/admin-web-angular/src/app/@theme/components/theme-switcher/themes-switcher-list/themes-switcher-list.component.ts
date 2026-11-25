@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NbPopoverDirective, NbThemeService } from '@nebular/theme';
 import { AnalyticsService } from '../../../../@core/utils/analytics.service';
-import { NbJSThemeOptions } from '@nebular/theme/services/js-themes/theme.options';
+import { NbJSThemeOptions } from '@nebular/theme';
 
 @Component({
 	standalone: false,

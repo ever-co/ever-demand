@@ -7,6 +7,8 @@ import {
 	OnDestroy,
 } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
+// The gradients only need echarts' graphic helpers; ngx-echarts lazy-loads the full library.
+import * as echarts from 'echarts/core';
 import { OrdersChart } from '@app/@core/services/dashboard/orders-chart.service';
 import { LayoutService } from '@app/@core/services/dashboard/layout.service';
 import { takeWhile, delay } from 'rxjs/operators';

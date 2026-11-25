@@ -44,7 +44,6 @@
 		"@ever-platform/common": "workspace:*",
 		"@ever-platform/common-angular": "workspace:*",
 		"@faker-js/faker": "^10.6.0",
-		"@fingerprintjs/fingerprintjs": "^5.3.0",
 		"@fortawesome/fontawesome-free": "^7.3.1",
 		"@nebular/auth": "^17.0.0",
 		"@nebular/eva-icons": "^17.0.0",

@@ -16,7 +16,7 @@ import {
 import { ICarrierCreateObject } from '@modules/server.common/interfaces/ICarrier';
 import { isEmpty, pick } from 'underscore';
 import { FormHelpers } from '../../../forms/helpers';
-import * as isUrl from 'is-url';
+import isUrl from 'is-url';
 import { TranslateService } from '@ngx-translate/core';
 import { first } from 'rxjs/operators';
 

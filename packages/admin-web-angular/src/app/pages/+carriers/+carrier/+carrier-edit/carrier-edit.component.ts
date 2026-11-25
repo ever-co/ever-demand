@@ -6,7 +6,7 @@ import { LocationFormComponent } from '../../../../@shared/forms/location';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import Carrier from '@modules/server.common/entities/Carrier';
 import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { map, first } from 'rxjs/operators';
 
 @Component({

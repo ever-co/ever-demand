@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
+import { completeData } from '@app/graphql/complete-data';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { map, share } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -41,7 +42,7 @@ export class WarehousesService {
 					}
 				`,
 			})
-			.valueChanges.pipe(
+			.valueChanges.pipe(completeData(), 
 				map((res) => res.data.getCountExistingCustomers)
 			);
 	}
@@ -63,7 +64,7 @@ export class WarehousesService {
 					}
 				`,
 			})
-			.valueChanges.pipe(
+			.valueChanges.pipe(completeData(), 
 				map((res) => res.data.getCountExistingCustomersToday)
 			);
 	}
@@ -110,7 +111,7 @@ export class WarehousesService {
 				`,
 				pollInterval: 5000,
 			})
-			.valueChanges.pipe(map((res) => res.data.getAllStores));
+			.valueChanges.pipe(completeData(), map((res) => res.data.getAllStores));
 	}
 
 	getStores(pagingOptions?: IPagingOptions): Observable<Warehouse[]> {
@@ -139,7 +140,7 @@ export class WarehousesService {
 				variables: { pagingOptions },
 				pollInterval: 5000,
 			})
-			.valueChanges.pipe(
+			.valueChanges.pipe(completeData(), 
 				map((res) => res.data.warehouses),
 				map((ws) => ws.map((w) => this._warehouseFactory(w))),
 				share()
@@ -168,7 +169,7 @@ export class WarehousesService {
 				pollInterval: 5000,
 				variables: { geoLocation },
 			})
-			.valueChanges.pipe(
+			.valueChanges.pipe(completeData(), 
 				map((res) => res.data.nearbyStores),
 				map((ws) => ws.map((w) => this._warehouseFactory(w))),
 				share()

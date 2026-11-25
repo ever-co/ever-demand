@@ -6,7 +6,7 @@ import {
 	ElementRef,
 	ViewChild,
 } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from '@app/@shared/smart-table';
 import { timer, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { getDifferenceFromTimes } from '../../../../@core/utils/getDifferenceFromTimes ';

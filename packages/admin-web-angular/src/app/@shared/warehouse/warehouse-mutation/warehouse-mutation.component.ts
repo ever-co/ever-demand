@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BasicInfoFormComponent, ContactInfoFormComponent } from '../forms';
 import { LocationFormComponent } from '../../forms/location';

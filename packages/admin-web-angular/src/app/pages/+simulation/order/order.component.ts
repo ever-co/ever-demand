@@ -6,7 +6,6 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import { takeUntil } from 'rxjs/operators';
 import { ElapsedTimeComponent } from '@app/@shared/elapsed-time/elapsed-time.component';
-import { IImage } from 'ng-simple-slideshow';
 import Product from '@modules/server.common/entities/Product';
 
 export enum DeliveryStatus {

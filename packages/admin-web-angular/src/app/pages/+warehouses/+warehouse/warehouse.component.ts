@@ -8,8 +8,8 @@ import {
 import { DatePipe } from '@angular/common';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToasterService } from 'angular2-toaster';
-import { LocalDataSource } from 'ng2-smart-table';
+import { ToasterService } from '@app/@core/toaster';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { TranslateService } from '@ngx-translate/core';
 import Order from '@modules/server.common/entities/Order';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
@@ -361,13 +361,13 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 								)}" />
 								<p class="d-inline-block">
 									${this.localeTranslate(order.products[0].product.title)}
-									<span class="badge badge-pill badge-secondary">${order.products[0].count}</span>
+									<span class="badge rounded-pill text-bg-secondary">${order.products[0].count}</span>
 								</p>
 							</div>
 						`
 								: '',
-							status: `<div class="badge badge-secondary">${warehouseStatusText}</div>`,
-							carrierStatusHtml: `<div class="badge badge-secondary">${carrierStatusText}</div>`,
+							status: `<div class="badge text-bg-secondary">${warehouseStatusText}</div>`,
+							carrierStatusHtml: `<div class="badge text-bg-secondary">${carrierStatusText}</div>`,
 							created: formatted,
 							orderType: order.orderType,
 							order,

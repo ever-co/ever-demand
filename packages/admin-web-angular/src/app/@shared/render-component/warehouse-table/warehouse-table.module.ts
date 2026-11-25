@@ -4,7 +4,7 @@ import { ThemeModule } from '../../../@theme';
 import { ElapsedComponent } from './elapsed/elapsed.component';
 import { WarehouseActionsComponent } from './warehouse-actions/warehouse-actions.component';
 import { HighlightModule } from 'ngx-highlightjs';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { WarehouseTableInfoComponent } from '../../../pages/+warehouses/+warehouse/warehouse-info/warehouse-info.component';
 import { WarehouseImageComponent } from './warehouse-image/warehouse-image.component';
 import { RouterModule } from '@angular/router';

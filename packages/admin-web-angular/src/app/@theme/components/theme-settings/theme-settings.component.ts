@@ -79,7 +79,7 @@ export class ThemeSettingsComponent {
 		this.defaultLanguage = environment['DEFAULT_LANGUAGE'];
 
 		translate.addLangs(['en-US', 'bg-BG', 'he-IL', 'ru-RU', 'es-ES', 'fr-FR']);
-		translate.setDefaultLang('en-US');
+		translate.setFallbackLang('en-US');
 
 		const browserLang = translate.getBrowserLang();
 		if (this.defaultLanguage) {

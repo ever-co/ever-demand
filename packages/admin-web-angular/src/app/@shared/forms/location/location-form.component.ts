@@ -25,7 +25,7 @@ import {
 import { FormHelpers } from '../helpers';
 
 import { pick, isEmpty } from 'underscore';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 
 import { countries } from '@modules/server.common/data/abbreviation-to-country';
 import { environment } from 'environments/environment';

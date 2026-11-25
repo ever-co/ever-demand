@@ -13,7 +13,7 @@ import { ICarrierOrdersRouterGetOptions } from '@modules/server.common/routers/I
 import Carrier from '@modules/server.common/entities/Carrier';
 import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/carrier-orders-router.service';
 import { forkJoin, Observable, Subscription } from 'rxjs';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { CreatedComponent } from '../../../../@shared/render-component/created/created.component';

@@ -8,11 +8,11 @@ import {
 } from '@angular/core';
 
 import { Subject, Observable, forkJoin } from 'rxjs';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { InvitesService } from '../../../@core/data/invites.service';
 import Invite from '@modules/server.common/entities/Invite';
 import { takeUntil, first } from 'rxjs/operators';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { IInviteUpdateObject } from '@modules/server.common/interfaces/IInvite';
 import { IGeolocationUpdateObject } from '@modules/server.common/interfaces/IGeoLocation';
 import {

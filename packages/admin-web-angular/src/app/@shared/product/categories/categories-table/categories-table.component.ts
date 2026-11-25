@@ -6,7 +6,7 @@ import {
 	Output,
 	EventEmitter,
 } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import { ProductsCategoryService } from '@app/@core/data/productsCategory.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';

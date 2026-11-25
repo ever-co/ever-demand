@@ -12,7 +12,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import User from '@modules/server.common/entities/User';
 import { WarehousesService } from '../../../../../@core/data/warehouses.service';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { Subject } from 'rxjs';
 import { getIdFromTheDate } from '@modules/server.common/utils';

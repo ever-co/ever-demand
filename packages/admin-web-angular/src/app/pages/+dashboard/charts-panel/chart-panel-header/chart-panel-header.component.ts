@@ -15,7 +15,7 @@ import {
 } from '@nebular/theme';
 import { takeWhile } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { ChartsPanelComponent } from '../charts-panel.component';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

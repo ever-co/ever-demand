@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 
 import { Subject, forkJoin, Observable } from 'rxjs';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import InviteRequest from '@modules/server.common/entities/InviteRequest';
 import { InvitesRequestsService } from '../../../../@core/data/invites-requests.service';
 import { getCountryName } from '@modules/server.common/entities/GeoLocation';
@@ -25,7 +25,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationModalComponent } from '../../../../@shared/confirmation-modal/confirmation-modal.component';
 import { InviteViewModel } from '../invites.component';
 
-// import { ToasterService } from 'angular2-toaster';
+// import { ToasterService } from '@app/@core/toaster';
 // import fingerprint2 from 'fingerprintjs2';
 
 export interface InviteRequestViewModel {

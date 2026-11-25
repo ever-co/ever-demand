@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from '@app/@shared/smart-table';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { TranslateService } from '@ngx-translate/core';
 

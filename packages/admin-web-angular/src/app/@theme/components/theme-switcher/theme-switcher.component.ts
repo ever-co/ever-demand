@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { NbPopoverDirective, NbThemeService } from '@nebular/theme';
-import { NbJSThemeOptions } from '@nebular/theme/services/js-themes/theme.options';
+import { NbJSThemeOptions } from '@nebular/theme';
 import { ThemeSwitcherListComponent } from './themes-switcher-list/themes-switcher-list.component';
 import { AnalyticsService } from '@app/@core/utils/analytics.service';
 

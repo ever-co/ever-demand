@@ -10,7 +10,7 @@ import { SetupMerchantOrdersSettingsComponent } from './components/settings/orde
 import { IWarehouseCreateObject } from '@modules/server.common/interfaces/IWarehouse';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { NbStepperComponent } from '@nebular/theme';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 

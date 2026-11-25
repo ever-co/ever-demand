@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../../../@theme/theme.module';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { RouterModule, Routes } from '@angular/router';
-import { ToasterModule } from 'angular2-toaster';
+import { ToasterModule } from '@app/@core/toaster';
 import { ProductEditComponent } from './product-edit.component';
 import { ProductFormsModule } from '../../../../@shared/product/forms';
-import { FormWizardModule } from '@ever-co/angular2-wizard';
+import { FormWizardModule } from '@app/@shared/wizard';
 import { ProductsCategoryService } from '../../../../@core/data/productsCategory.service';
 import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 

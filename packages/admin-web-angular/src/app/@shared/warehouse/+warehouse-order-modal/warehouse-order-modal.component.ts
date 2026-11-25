@@ -6,7 +6,7 @@ import {
 	OnInit,
 	Output,
 } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { Subject } from 'rxjs';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
@@ -115,7 +115,7 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 					field: 'available',
 					search: '0',
 					filter: (element, valueToCompare) => {
-						const regex = /<div class="badge badge-pill badge-secondary">([0-9]+)<\/div>/gm;
+						const regex = /<div class="badge rounded-pill text-bg-secondary">([0-9]+)<\/div>/gm;
 						const productCount = +regex.exec(element)[1];
 
 						return productCount > +valueToCompare;
@@ -156,11 +156,11 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 						<img src="${this._getTranslate(wp.product['images'])}" height="50px"/>
 					`,
 					product: `
-						<span class="float-left">${this._getTranslate(wp.product['title'])}</span>
+						<span class="float-start">${this._getTranslate(wp.product['title'])}</span>
 					`,
 					price: `${wp.price}$`,
 					available: `
-						<div class="badge badge-pill badge-secondary">${wp.count}</div>
+						<div class="badge rounded-pill text-bg-secondary">${wp.count}</div>
 					`,
 					amount: { productId: wp.productId, available: wp.count },
 					comment: { productId: wp.productId },
@@ -183,7 +183,7 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 	}
 
 	private _compareByAvailableProducts(_, first, second) {
-		const regex = /<div class="badge badge-pill badge-secondary">([0-9]+)<\/div>/gm;
+		const regex = /<div class="badge rounded-pill text-bg-secondary">([0-9]+)<\/div>/gm;
 
 		const matchFirst = +regex.exec(first)[1];
 		regex.lastIndex = 0; // to reset the regex

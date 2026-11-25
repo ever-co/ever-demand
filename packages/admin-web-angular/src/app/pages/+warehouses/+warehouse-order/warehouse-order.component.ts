@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
-import { ToasterService } from 'angular2-toaster';
+import { ViewCell } from '@app/@shared/smart-table';
+import { ToasterService } from '@app/@core/toaster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { WarehouseOrdersService } from '../../../@core/data/warehouseOrders.service';
 import { WarehouseOrderModalComponent } from '../../../@shared/warehouse/+warehouse-order-modal/warehouse-order-modal.component';

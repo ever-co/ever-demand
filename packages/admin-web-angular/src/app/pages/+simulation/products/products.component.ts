@@ -1,5 +1,5 @@
 import { Component, OnDestroy, EventEmitter } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { ProductImageRedirectComponent } from '@app/@shared/render-component/product-image-redirect/product-image-redirect.component';
 import { forkJoin, Observable, Subject } from 'rxjs';
 import { ProductTitleRedirectComponent } from '@app/@shared/render-component/product-title-redirect/product-title-redirect.component';

@@ -35,7 +35,8 @@ export class WarehouseManageTabsDeliveryAreasComponent
 	private _zoneNumber = 0;
 
 	private _map: google.maps.Map;
-	private _drawingManager: google.maps.drawing.DrawingManager;
+	// google.maps.drawing is deprecated by Google (removed from @types/google.maps), so it is untyped here.
+	private _drawingManager: any;
 	private _polyOptions: any = {
 		strokeWeight: 0.5,
 		fillOpacity: 0.45,
@@ -259,7 +260,7 @@ export class WarehouseManageTabsDeliveryAreasComponent
 	startDrawing() {
 		this._clearSelection();
 
-		this._drawingManager = new google.maps.drawing.DrawingManager({
+		this._drawingManager = new (google.maps as any).drawing.DrawingManager({
 			drawingMode: this._getShape(),
 			drawingControl: false,
 			circleOptions: this._polyOptions,

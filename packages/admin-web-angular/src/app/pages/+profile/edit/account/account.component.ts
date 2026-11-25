@@ -8,7 +8,7 @@ import {
 import Admin from '@modules/server.common/entities/Admin';
 import { AdminsService } from '../../../../@core/data/admins.service';
 import { first, takeUntil, debounceTime } from 'rxjs/operators';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';

@@ -8,9 +8,9 @@ import {
 	OnChanges,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToasterService } from 'angular2-toaster';
-import { WizardComponent } from '@ever-co/angular2-wizard';
-import { LocalDataSource } from 'ng2-smart-table';
+import { ToasterService } from '@app/@core/toaster';
+import { WizardComponent } from '@app/@shared/wizard';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';

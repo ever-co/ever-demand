@@ -2,7 +2,7 @@ import { Component, ViewChild, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { BasicInfoFormComponent } from '../../../../@shared/user/forms';
 import { LocationFormComponent } from '../../../../@shared/forms/location';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';

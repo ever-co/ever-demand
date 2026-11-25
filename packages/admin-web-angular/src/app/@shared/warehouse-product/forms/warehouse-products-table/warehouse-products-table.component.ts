@@ -6,7 +6,7 @@ import {
 	EventEmitter,
 	Input,
 } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { StoreProductPriceComponent } from '@app/@shared/render-component/store-products-table/store-product-price.component';
 import { StoreProductAmountComponent } from '@app/@shared/render-component/store-products-table/store-product-amount/store-product-amount.component';
 import { ProductCategoriesComponent } from '@app/@shared/render-component/product-categories/product-categories';

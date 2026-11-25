@@ -20,7 +20,7 @@ import { InviteRequestModalComponent } from '@app/@shared/invite/invite-request/
 import InviteRequest from '@modules/server.common/entities/InviteRequest';
 import { IInviteCreateObject } from '@modules/server.common/interfaces/IInvite';
 import Invite from '@modules/server.common/entities/Invite';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { ByCodeModalComponent } from '@app/@shared/invite/by-code/by-code-modal.component';
 import {
 	SimulationInstructionsComponent,

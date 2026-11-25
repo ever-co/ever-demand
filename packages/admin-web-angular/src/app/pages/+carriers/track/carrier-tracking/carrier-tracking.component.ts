@@ -43,7 +43,7 @@ export class CarrierTrackingComponent implements OnInit, OnDestroy {
 	marker: any;
 	userMarker: any;
 	warehouseMarkers = [];
-	interval: NodeJS.Timer;
+	interval: ReturnType<typeof setInterval>;
 	isReverted: boolean = true;
 	params$: Subscription;
 	selectedCarrier: Carrier;

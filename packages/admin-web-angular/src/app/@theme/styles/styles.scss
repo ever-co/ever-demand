@@ -2,15 +2,11 @@
 @import 'themes';
 
 // framework component themes (styles tied to theme variables)
-@import '~@nebular/theme/styles/globals';
-@import '~@nebular/auth/styles/globals';
+@import '@nebular/theme/styles/globals';
+@import '@nebular/auth/styles/globals';
 
-@import '~@nebular/bootstrap/styles/globals';
 
-@import '~angular2-toaster/toaster';
 
-// toaster styles copied from 'angular2-toaster' package
-// @import './toaster';
 
 // custom global ng-bootstrap modal
 @import './ng-bootstrap.modal';
@@ -25,16 +21,14 @@
 // Angular2 wizard custom globals.
 @import './angular2-wizard';
 @import './google-map';
+// Bootstrap 4 classes the templates still use (Bootstrap 5 dropped them)
+@import './bootstrap4-compat';
 
-@import '~@ng-select/ng-select/themes/default.theme.css';
 
-// In this versions of ngx-highlight we need to import theme globally
-@import '~highlight.js/styles/github.css';
 
 // install the framework and custom global styles
 @include nb-install() {
 	// framework global styles
-	@include nb-bootstrap-global();
 	@include nb-auth-global();
 	@include nb-theme-global();
 
@@ -141,7 +135,8 @@ nb-card.no-margin {
 	cursor: pointer;
 }
 
-.badge-dark {
+.badge-dark,
+.badge.text-bg-dark {
 	background: black;
 	color: white;
 	padding: 5px 8px;

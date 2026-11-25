@@ -15,7 +15,7 @@ import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/car
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 import { some } from 'underscore';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin, Observable, Subject, Subscription } from 'rxjs';
 import { CreatedComponent } from '../../../../@shared/render-component/created/created.component';
