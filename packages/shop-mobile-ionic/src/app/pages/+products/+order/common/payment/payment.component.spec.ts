@@ -378,6 +378,88 @@ describe('PaymentComponent new-card payment', () => {
 		});
 	});
 
+	// scripts/env.ts defaults STRIPE_PUBLISHABLE_KEY to '', so a build
+	// without the key still shows the Pay buttons at a store with
+	// payments on. The tap drops the promise the method returns, so it
+	// has to tell the customer and resolve, never reject.
+	describe('without a Stripe publishable key', () => {
+		// Clears the calls the component made when it was created, so a
+		// spec sees only what the tap called.
+		const resetRouterCalls = () => {
+			userRouter.getCards.calls.reset();
+			orderRouter.getStripeCurrency.calls.reset();
+		};
+
+		const expectNoRouterCall = () => {
+			expect(userRouter.getCards).not.toHaveBeenCalled();
+			expect(userRouter.updateEmail).not.toHaveBeenCalled();
+			expect(userRouter.addPaymentMethod).not.toHaveBeenCalled();
+			expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
+			expect(orderRouter.confirm).not.toHaveBeenCalled();
+			expect(orderRouter.getStripeCurrency).not.toHaveBeenCalled();
+		};
+
+		beforeEach(() => {
+			(component as any).stripePublishableKey = '';
+			resetRouterCalls();
+		});
+
+		it('tells the customer card payment is not available when Pay now is tapped', async () => {
+			await expectAsync(component.toPaymentStage()).toBeResolved();
+
+			expect(window.alert).toHaveBeenCalledOnceWith(
+				'BUY_POPUP.CARD_PAYMENT_UNAVAILABLE'
+			);
+			expect(configure).not.toHaveBeenCalled();
+			expect(modalController.dismiss).not.toHaveBeenCalled();
+			expectNoRouterCall();
+			expect(component.paying).toBe(false);
+			expect(TestBed.inject(Store).isPaying('order-1')).toBe(false);
+		});
+
+		it('tells the customer card payment is not available when Pay with card is tapped', async () => {
+			component.userCard = savedCard();
+
+			await expectAsync(component.payWithUserCard()).toBeResolved();
+
+			expect(window.alert).toHaveBeenCalledOnceWith(
+				'BUY_POPUP.CARD_PAYMENT_UNAVAILABLE'
+			);
+			expectNoRouterCall();
+			expect(component.paying).toBe(false);
+			expect(TestBed.inject(Store).isPaying('order-1')).toBe(false);
+		});
+
+		it('shows the message on a tap of the Pay now button', async () => {
+			const button: HTMLButtonElement =
+				fixture.nativeElement.querySelector('button');
+
+			expect(button.textContent).toContain('BUY_POPUP.BUTTONS.PAY_NOW');
+
+			// The click binding drops the promise toPaymentStage returns
+			button.click();
+			await settle();
+
+			expect(window.alert).toHaveBeenCalledOnceWith(
+				'BUY_POPUP.CARD_PAYMENT_UNAVAILABLE'
+			);
+			expectNoRouterCall();
+		});
+	});
+
+	it('tells the customer, and charges nothing, when Pay with card runs without a saved card', async () => {
+		component.userCard = null;
+
+		await expectAsync(component.payWithUserCard()).toBeResolved();
+
+		expect(window.alert).toHaveBeenCalledOnceWith(
+			'BUY_POPUP.PAYMENT_FAILED'
+		);
+		expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
+		expect(component.paying).toBe(false);
+		expect(TestBed.inject(Store).isPaying('order-1')).toBe(false);
+	});
+
 	describe('card popup currency', () => {
 		const payNowButton = (
 			payment: ComponentFixture<PaymentComponent>

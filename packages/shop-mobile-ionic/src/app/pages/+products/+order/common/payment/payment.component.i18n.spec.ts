@@ -46,6 +46,18 @@ describe('PaymentComponent failure messages', () => {
 					messages.PAYMENT_FAILED
 				);
 			});
+
+			it(`${locale} has a card payment not available message`, () => {
+				const messages = messagesIn(locale);
+
+				expect(messages.CARD_PAYMENT_UNAVAILABLE).toEqual(
+					jasmine.any(String)
+				);
+				expect(messages.CARD_PAYMENT_UNAVAILABLE.trim()).not.toBe('');
+				expect(messages.CARD_PAYMENT_UNAVAILABLE).not.toBe(
+					messages.PAYMENT_FAILED
+				);
+			});
 		});
 
 		it('does not say the email is already used by another account', () => {
@@ -246,6 +258,39 @@ describe('PaymentComponent failure messages', () => {
 			expect(window.alert).toHaveBeenCalledOnceWith(
 				messagesIn('he-IL').PAYMENT_FAILED
 			);
+		});
+
+		describe('when the build has no Stripe publishable key', () => {
+			const withoutKey = async (): Promise<PaymentComponent> => {
+				const payment = await createPayment();
+				(payment as any).stripePublishableKey = '';
+				return payment;
+			};
+
+			it('says card payment is not available on Pay now', async () => {
+				useLocale('ru-RU');
+				const payment = await withoutKey();
+
+				await expectAsync(payment.toPaymentStage()).toBeResolved();
+
+				expect(window.alert).toHaveBeenCalledOnceWith(
+					messagesIn('ru-RU').CARD_PAYMENT_UNAVAILABLE
+				);
+				expect(tokenHandlers.length).toBe(0);
+			});
+
+			it('says card payment is not available on Pay with card', async () => {
+				useLocale('bg-BG');
+				const payment = await withoutKey();
+				payment.userCard = { id: 'card-saved', last4: '4242' } as any;
+
+				await expectAsync(payment.payWithUserCard()).toBeResolved();
+
+				expect(window.alert).toHaveBeenCalledOnceWith(
+					messagesIn('bg-BG').CARD_PAYMENT_UNAVAILABLE
+				);
+				expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
+			});
 		});
 	});
 });
