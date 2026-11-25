@@ -6,7 +6,7 @@
 	"editor.detectIndentation": false,
 	"files.trimTrailingWhitespace": true,
 	"typescript.tsdk": "./node_modules/typescript/lib",
-	"tslint.enable": true,
+	"eslint.enable": true,
 	"typescript.preferences.quoteStyle": "single",
 	"files.exclude": {
 		"**/.vscode": true,
@@ -25,7 +25,7 @@
 		"**/.build": true,
 		"**/.sourcemaps": true,
 		"**/www": true,
-		"**/yarn.lock": true
+		"**/pnpm-lock.yaml": true
 	},
 	"search.exclude": {
 		"**/.vscode": true,
@@ -46,10 +46,10 @@
 		"test/smoke/out/**": true,
 		"**/.sourcemaps": true,
 		"**/www": true,
-		"**/yarn.lock": true
+		"**/pnpm-lock.yaml": true
 	},
 	"recommendations": [
-		"eg2.tslint",
+		"dbaeumer.vscode-eslint",
 		"mikael.angular-beastcode",
 		"aaron-bond.better-comments",
 		"mikestead.dotenv",
