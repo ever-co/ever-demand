@@ -53,15 +53,18 @@ describe('Store', () => {
 			['orderId', '_orderId', 'order-1'],
 			['inviteRequestId', '_inviteRequestId', 'request-1'],
 			['orderWarehouseId', '_currOrderWarehouseId', 'warehouse-1'],
-		] as const)('keeps %s in "%s" and removes it when set to null', (property, key, value) => {
-			(store as any)[property] = value;
-			expect(localStorage.getItem(key)).toBe(value);
-			expect((store as any)[property]).toBe(value);
+		] as const)(
+			'keeps %s in "%s" and removes it when set to null',
+			(property, key, value) => {
+				(store as any)[property] = value;
+				expect(localStorage.getItem(key)).toBe(value);
+				expect((store as any)[property]).toBe(value);
 
-			(store as any)[property] = null;
-			expect(localStorage.getItem(key)).toBeNull();
-			expect((store as any)[property]).toBeNull();
-		});
+				(store as any)[property] = null;
+				expect(localStorage.getItem(key)).toBeNull();
+				expect((store as any)[property]).toBeNull();
+			},
+		);
 
 		it.each([
 			['registrationSystem', '_registrationSystem', 'once'],
@@ -160,7 +163,7 @@ describe('Store', () => {
 		it('forgets the user id when the server does not know it', async () => {
 			store.userId = 'user-1';
 			userRouter.get.mockReturnValue(
-				throwError(() => new Error('not found'))
+				throwError(() => new Error('not found')),
 			);
 
 			expect(await store.isLogged()).toBe(false);

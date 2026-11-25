@@ -12,20 +12,20 @@ describe('TermsOfUsePage', () => {
 	let fixture: ComponentFixture<TermsOfUsePage>;
 
 	beforeEach(async () => {
-			await TestBed.configureTestingModule({
-				declarations: [TermsOfUsePage],
-				imports: [...translateTesting()],
-				providers: [
-					{
-						provide: UserRouter,
-						useValue: createSpyObj('UserRouter', {
-							getTermsOfUse: of(''),
-						}),
-					},
-					{ provide: Platform, useValue: { isRTL: false } },
-				],
-				schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			}).compileComponents();
+		await TestBed.configureTestingModule({
+			declarations: [TermsOfUsePage],
+			imports: [...translateTesting()],
+			providers: [
+				{
+					provide: UserRouter,
+					useValue: createSpyObj('UserRouter', {
+						getTermsOfUse: of(''),
+					}),
+				},
+				{ provide: Platform, useValue: { isRTL: false } },
+			],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

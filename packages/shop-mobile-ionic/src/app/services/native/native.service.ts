@@ -41,7 +41,7 @@ export class NativeService {
 	}
 
 	onNetworkStatusChange(
-		listener: (status: ConnectionStatus) => void
+		listener: (status: ConnectionStatus) => void,
 	): Promise<PluginListenerHandle> {
 		return Network.addListener('networkStatusChange', listener);
 	}

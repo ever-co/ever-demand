@@ -17,7 +17,7 @@ export type SpyObj<T> = T & {
 export function createSpyObj<T = any>(
 	_baseName: string,
 	methods: readonly string[] | Record<string, unknown>,
-	properties: Record<string, unknown> = {}
+	properties: Record<string, unknown> = {},
 ): SpyObj<T> {
 	const spy: Record<string, unknown> = { ...properties };
 

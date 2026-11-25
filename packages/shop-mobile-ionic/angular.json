@@ -111,7 +111,6 @@
 						"runner": "vitest",
 						"runnerConfig": "vitest.config.ts",
 						"setupFiles": ["src/test-setup.ts"],
-						"providersFile": "src/test-providers.ts",
 						"include": ["src/**/*.spec.ts"]
 					}
 				}

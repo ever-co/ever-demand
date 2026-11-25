@@ -13,21 +13,21 @@ describe('OrdersHistoryPage', () => {
 	let fixture: ComponentFixture<OrdersHistoryPage>;
 
 	beforeEach(async () => {
-			await TestBed.configureTestingModule({
-				declarations: [OrdersHistoryPage],
-				imports: [...translateTesting()],
-				providers: [
-					{ provide: Store, useValue: { userId: 'user-1' } },
-					{
-						provide: Apollo,
-						useValue: createSpyObj('Apollo', {
-							watchQuery: { valueChanges: NEVER },
-						}),
-					},
-					{ provide: Platform, useValue: { isRTL: false } },
-				],
-				schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			}).compileComponents();
+		await TestBed.configureTestingModule({
+			declarations: [OrdersHistoryPage],
+			imports: [...translateTesting()],
+			providers: [
+				{ provide: Store, useValue: { userId: 'user-1' } },
+				{
+					provide: Apollo,
+					useValue: createSpyObj('Apollo', {
+						watchQuery: { valueChanges: NEVER },
+					}),
+				},
+				{ provide: Platform, useValue: { isRTL: false } },
+			],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

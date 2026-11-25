@@ -8,11 +8,11 @@ describe('ConnectionLostPage', () => {
 	let fixture: ComponentFixture<ConnectionLostPage>;
 
 	beforeEach(async () => {
-			await TestBed.configureTestingModule({
-				declarations: [ConnectionLostPage],
-				imports: [...translateTesting()],
-				schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			}).compileComponents();
+		await TestBed.configureTestingModule({
+			declarations: [ConnectionLostPage],
+			imports: [...translateTesting()],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

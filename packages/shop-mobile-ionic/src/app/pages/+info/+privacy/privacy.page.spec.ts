@@ -12,20 +12,20 @@ describe('PrivacyPage', () => {
 	let fixture: ComponentFixture<PrivacyPage>;
 
 	beforeEach(async () => {
-			await TestBed.configureTestingModule({
-				declarations: [PrivacyPage],
-				imports: [...translateTesting()],
-				providers: [
-					{
-						provide: UserRouter,
-						useValue: createSpyObj('UserRouter', {
-							getPrivacy: of(''),
-						}),
-					},
-					{ provide: Platform, useValue: { isRTL: false } },
-				],
-				schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			}).compileComponents();
+		await TestBed.configureTestingModule({
+			declarations: [PrivacyPage],
+			imports: [...translateTesting()],
+			providers: [
+				{
+					provide: UserRouter,
+					useValue: createSpyObj('UserRouter', {
+						getPrivacy: of(''),
+					}),
+				},
+				{ provide: Platform, useValue: { isRTL: false } },
+			],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

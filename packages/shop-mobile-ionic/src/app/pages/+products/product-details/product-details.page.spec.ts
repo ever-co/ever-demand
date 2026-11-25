@@ -17,71 +17,58 @@ describe('ProductDetailsPage', () => {
 	let fixture: ComponentFixture<ProductDetailsPage>;
 
 	beforeEach(async () => {
-			await TestBed.configureTestingModule({
-				declarations: [ProductDetailsPage],
-				imports: [...translateTesting()],
-				providers: [
-					{
-						provide: ActivatedRoute,
-						useValue: {
-							snapshot: {
-								queryParams: {},
-								paramMap: convertToParamMap({
-									id: 'product-1',
-								}),
-							},
+		await TestBed.configureTestingModule({
+			declarations: [ProductDetailsPage],
+			imports: [...translateTesting()],
+			providers: [
+				{
+					provide: ActivatedRoute,
+					useValue: {
+						snapshot: {
+							queryParams: {},
+							paramMap: convertToParamMap({
+								id: 'product-1',
+							}),
 						},
 					},
-					{ provide: Store, useValue: {} },
-					{
-						provide: ProductLocalesService,
-						useValue: createSpyObj(
-							'ProductLocalesService',
-							{
-								getTranslate: '',
-							}
-						),
-					},
-					{
-						provide: Router,
-						useValue: createSpyObj('Router', ['navigate']),
-					},
-					{
-						provide: NavController,
-						useValue: createSpyObj('NavController', [
-							'navigateRoot',
-						]),
-					},
-					{
-						provide: WarehouseOrdersRouter,
-						useValue: createSpyObj(
-							'WarehouseOrdersRouter',
-							['create']
-						),
-					},
-					{
-						provide: ModalController,
-						useValue: createSpyObj('ModalController', [
-							'create',
-						]),
-					},
-					// The warehouse never loads, so no product is shown.
-					{
-						provide: WarehouseRouter,
-						useValue: createSpyObj('WarehouseRouter', {
-							get: NEVER,
-						}),
-					},
-					{
-						provide: WarehouseProductsRouter,
-						useValue: createSpyObj(
-							'WarehouseProductsRouter',
-							['get']
-						),
-					},
-				],
-				schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			}).compileComponents();
+				},
+				{ provide: Store, useValue: {} },
+				{
+					provide: ProductLocalesService,
+					useValue: createSpyObj('ProductLocalesService', {
+						getTranslate: '',
+					}),
+				},
+				{
+					provide: Router,
+					useValue: createSpyObj('Router', ['navigate']),
+				},
+				{
+					provide: NavController,
+					useValue: createSpyObj('NavController', ['navigateRoot']),
+				},
+				{
+					provide: WarehouseOrdersRouter,
+					useValue: createSpyObj('WarehouseOrdersRouter', ['create']),
+				},
+				{
+					provide: ModalController,
+					useValue: createSpyObj('ModalController', ['create']),
+				},
+				// The warehouse never loads, so no product is shown.
+				{
+					provide: WarehouseRouter,
+					useValue: createSpyObj('WarehouseRouter', {
+						get: NEVER,
+					}),
+				},
+				{
+					provide: WarehouseProductsRouter,
+					useValue: createSpyObj('WarehouseProductsRouter', ['get']),
+				},
+			],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

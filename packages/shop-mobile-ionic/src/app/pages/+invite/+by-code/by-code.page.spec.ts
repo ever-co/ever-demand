@@ -15,46 +15,42 @@ describe('ByCodePage', () => {
 	let fixture: ComponentFixture<ByCodePage>;
 
 	beforeEach(async () => {
-			await TestBed.configureTestingModule({
-				declarations: [ByCodePage],
-				// The invite code input uses ngModel.
-				imports: [...translateTesting(), FormsModule],
-				providers: [
-					{
-						provide: Store,
-						useValue: {
-							inviteRequestId: null,
-							inviteAddress: null,
-						},
+		await TestBed.configureTestingModule({
+			declarations: [ByCodePage],
+			// The invite code input uses ngModel.
+			imports: [...translateTesting(), FormsModule],
+			providers: [
+				{
+					provide: Store,
+					useValue: {
+						inviteRequestId: null,
+						inviteAddress: null,
 					},
-					{
-						provide: InviteRouter,
-						useValue: createSpyObj('InviteRouter', [
-							'getByCode',
-						]),
-					},
-					{
-						provide: UserAuthRouter,
-						useValue: createSpyObj('UserAuthRouter', [
-							'register',
-						]),
-					},
-					{
-						provide: Router,
-						useValue: createSpyObj('Router', [
-							'navigate',
-							'navigateByUrl',
-						]),
-					},
-					{
-						provide: OrdersService,
-						useValue: createSpyObj('OrdersService', [
-							'generateOrdersByCustomerId',
-						]),
-					},
-				],
-				schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			}).compileComponents();
+				},
+				{
+					provide: InviteRouter,
+					useValue: createSpyObj('InviteRouter', ['getByCode']),
+				},
+				{
+					provide: UserAuthRouter,
+					useValue: createSpyObj('UserAuthRouter', ['register']),
+				},
+				{
+					provide: Router,
+					useValue: createSpyObj('Router', [
+						'navigate',
+						'navigateByUrl',
+					]),
+				},
+				{
+					provide: OrdersService,
+					useValue: createSpyObj('OrdersService', [
+						'generateOrdersByCustomerId',
+					]),
+				},
+			],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

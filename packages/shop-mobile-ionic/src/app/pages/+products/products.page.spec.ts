@@ -21,91 +21,76 @@ describe('ProductsPage', () => {
 	let fixture: ComponentFixture<ProductsPage>;
 
 	beforeEach(async () => {
-			await TestBed.configureTestingModule({
-				declarations: [ProductsPage],
-				imports: [...translateTesting()],
-				providers: [
-					// No user, no store mode, no pending order and nothing to buy.
-					{ provide: Store, useValue: { language: 'en-US' } },
-					{
-						provide: UserRouter,
-						useValue: createSpyObj('UserRouter', ['get']),
-					},
-					{
-						provide: GeoLocationProductsService,
-						useValue: createSpyObj(
-							'GeoLocationProductsService',
-							[
-								'geoLocationProductsByPaging',
-								'getCountOfGeoLocationProducts',
-							]
-						),
-					},
-					{
-						provide: WarehouseOrdersRouter,
-						useValue: createSpyObj(
-							'WarehouseOrdersRouter',
-							['create']
-						),
-					},
-					{
-						provide: UserProductsRouter,
-						useValue: createSpyObj('UserProductsRouter', [
-							'getPlaceholder',
-						]),
-					},
-					{
-						provide: Router,
-						useValue: createSpyObj('Router', [
-							'navigate',
-							'navigateByUrl',
-						]),
-					},
-					{
-						provide: ModalController,
-						useValue: createSpyObj('ModalController', [
-							'create',
-						]),
-					},
-					// The location never resolves, so no products load.
-					{
-						provide: GeoLocationService,
-						useValue: createSpyObj('GeoLocationService', {
-							getCurrentGeoLocation: new Promise(() => {}),
-						}),
-					},
-					{
-						provide: WarehouseRouter,
-						useValue: createSpyObj('WarehouseRouter', [
-							'get',
-						]),
-					},
-					{
-						provide: OrderRouter,
-						useValue: createSpyObj('OrderRouter', ['get']),
-					},
-					{
-						provide: NavController,
-						useValue: createSpyObj('NavController', [
-							'navigateRoot',
-						]),
-					},
-					{
-						provide: WarehouseProductsService,
-						useValue: createSpyObj(
-							'WarehouseProductsService',
-							['getWarehouseProduct']
-						),
-					},
-					{
-						provide: OrdersService,
-						useValue: createSpyObj('OrdersService', [
-							'getOrder',
-						]),
-					},
-				],
-				schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			}).compileComponents();
+		await TestBed.configureTestingModule({
+			declarations: [ProductsPage],
+			imports: [...translateTesting()],
+			providers: [
+				// No user, no store mode, no pending order and nothing to buy.
+				{ provide: Store, useValue: { language: 'en-US' } },
+				{
+					provide: UserRouter,
+					useValue: createSpyObj('UserRouter', ['get']),
+				},
+				{
+					provide: GeoLocationProductsService,
+					useValue: createSpyObj('GeoLocationProductsService', [
+						'geoLocationProductsByPaging',
+						'getCountOfGeoLocationProducts',
+					]),
+				},
+				{
+					provide: WarehouseOrdersRouter,
+					useValue: createSpyObj('WarehouseOrdersRouter', ['create']),
+				},
+				{
+					provide: UserProductsRouter,
+					useValue: createSpyObj('UserProductsRouter', [
+						'getPlaceholder',
+					]),
+				},
+				{
+					provide: Router,
+					useValue: createSpyObj('Router', [
+						'navigate',
+						'navigateByUrl',
+					]),
+				},
+				{
+					provide: ModalController,
+					useValue: createSpyObj('ModalController', ['create']),
+				},
+				// The location never resolves, so no products load.
+				{
+					provide: GeoLocationService,
+					useValue: createSpyObj('GeoLocationService', {
+						getCurrentGeoLocation: new Promise(() => {}),
+					}),
+				},
+				{
+					provide: WarehouseRouter,
+					useValue: createSpyObj('WarehouseRouter', ['get']),
+				},
+				{
+					provide: OrderRouter,
+					useValue: createSpyObj('OrderRouter', ['get']),
+				},
+				{
+					provide: NavController,
+					useValue: createSpyObj('NavController', ['navigateRoot']),
+				},
+				{
+					provide: WarehouseProductsService,
+					useValue: createSpyObj('WarehouseProductsService', [
+						'getWarehouseProduct',
+					]),
+				},
+				{
+					provide: OrdersService,
+					useValue: createSpyObj('OrdersService', ['getOrder']),
+				},
+			],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

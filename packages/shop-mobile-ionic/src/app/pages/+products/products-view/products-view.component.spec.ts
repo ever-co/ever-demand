@@ -11,29 +11,28 @@ describe('ProductsViewComponent', () => {
 	let fixture: ComponentFixture<ProductsViewComponent>;
 
 	beforeEach(async () => {
-			await TestBed.configureTestingModule({
-				declarations: [ProductsViewComponent],
-				providers: [
-					{ provide: Store, useValue: {} },
-					{
-						provide: Router,
-						useValue: createSpyObj('Router', ['navigate']),
-					},
-					{
-						provide: WarehouseProductsService,
-						useValue: createSpyObj(
-							'WarehouseProductsService',
-							['getWarehouseProduct']
-						),
-					},
-					{
-						provide: ProductsService,
-						useValue: createSpyObj('ProductsService', [
-							'goToDetailsPage',
-						]),
-					},
-				],
-			}).compileComponents();
+		await TestBed.configureTestingModule({
+			declarations: [ProductsViewComponent],
+			providers: [
+				{ provide: Store, useValue: {} },
+				{
+					provide: Router,
+					useValue: createSpyObj('Router', ['navigate']),
+				},
+				{
+					provide: WarehouseProductsService,
+					useValue: createSpyObj('WarehouseProductsService', [
+						'getWarehouseProduct',
+					]),
+				},
+				{
+					provide: ProductsService,
+					useValue: createSpyObj('ProductsService', [
+						'goToDetailsPage',
+					]),
+				},
+			],
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

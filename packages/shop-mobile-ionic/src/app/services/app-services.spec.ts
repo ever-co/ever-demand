@@ -38,7 +38,7 @@ describe('ProductLocalesService', () => {
 		translate.use('fr-FR');
 		expect(service.getTranslate(title)).toBe('Pizza');
 		expect(service.getTranslate([{ locale: 'he-IL', value: 'פיצה' }])).toBe(
-			'פיצה'
+			'פיצה',
 		);
 	});
 
@@ -81,7 +81,10 @@ describe('ProductsService', () => {
 		TestBed.configureTestingModule({
 			providers: [
 				ProductsService,
-				{ provide: WarehouseProductsService, useValue: warehouseProducts },
+				{
+					provide: WarehouseProductsService,
+					useValue: warehouseProducts,
+				},
 				{ provide: Router, useValue: router },
 			],
 		});
@@ -95,7 +98,7 @@ describe('ProductsService', () => {
 
 		expect(warehouseProducts.getWarehouseProduct).toHaveBeenCalledWith(
 			'warehouse-1',
-			'wp-1'
+			'wp-1',
 		);
 		expect(router.navigate).toHaveBeenCalledWith(
 			['/products/product-details/product-1'],
@@ -104,7 +107,7 @@ describe('ProductsService', () => {
 					backUrl: '/products',
 					warehouseId: 'warehouse-1',
 				},
-			}
+			},
 		);
 	});
 

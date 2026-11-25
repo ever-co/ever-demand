@@ -12,20 +12,20 @@ describe('AboutPage', () => {
 	let fixture: ComponentFixture<AboutPage>;
 
 	beforeEach(async () => {
-			await TestBed.configureTestingModule({
-				declarations: [AboutPage],
-				imports: [...translateTesting()],
-				providers: [
-					{
-						provide: UserRouter,
-						useValue: createSpyObj('UserRouter', {
-							getAboutUs: of(''),
-						}),
-					},
-					{ provide: Platform, useValue: { isRTL: false } },
-				],
-				schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			}).compileComponents();
+		await TestBed.configureTestingModule({
+			declarations: [AboutPage],
+			imports: [...translateTesting()],
+			providers: [
+				{
+					provide: UserRouter,
+					useValue: createSpyObj('UserRouter', {
+						getAboutUs: of(''),
+					}),
+				},
+				{ provide: Platform, useValue: { isRTL: false } },
+			],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

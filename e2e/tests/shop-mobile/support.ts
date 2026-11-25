@@ -13,7 +13,10 @@ export const SOFIA = { lat: 42.6459136, lng: 23.3332736 };
 export async function apiIsUp(): Promise<boolean> {
 	try {
 		await fetch(SERVICES_URL, { signal: AbortSignal.timeout(3000) });
-		await fetch(GQL_URL, { method: 'GET', signal: AbortSignal.timeout(3000) });
+		await fetch(GQL_URL, {
+			method: 'GET',
+			signal: AbortSignal.timeout(3000),
+		});
 		return true;
 	} catch {
 		return false;
@@ -24,18 +27,33 @@ export async function apiIsUp(): Promise<boolean> {
  * One pyro RPC call: the namespace is the router name, the reply comes through the
  * socket.io ack `(err, result)` (see docs/latest-stack/shop-mobile-features.md 1.2).
  */
-export async function pyro<T = any>(router: string, method: string, ...args: unknown[]): Promise<T> {
-	const socket = io(`${SERVICES_URL}/${router}`, { transports: ['websocket'], reconnection: false });
+export async function pyro<T = any>(
+	router: string,
+	method: string,
+	...args: unknown[]
+): Promise<T> {
+	const socket = io(`${SERVICES_URL}/${router}`, {
+		transports: ['websocket'],
+		reconnection: false,
+	});
 	try {
 		return await new Promise<T>((resolve, reject) => {
-			const timer = setTimeout(() => reject(new Error(`${router}.${method} timed out`)), 20_000);
+			const timer = setTimeout(
+				() => reject(new Error(`${router}.${method} timed out`)),
+				20_000,
+			);
 			socket.on('connect_error', (err) => {
 				clearTimeout(timer);
 				reject(err);
 			});
 			socket.emit(method, ...args, (err: any, res: T) => {
 				clearTimeout(timer);
-				if (err != null) reject(Object.assign(new Error(err.message || String(err)), { name: err.name }));
+				if (err != null)
+					reject(
+						Object.assign(new Error(err.message || String(err)), {
+							name: err.name,
+						}),
+					);
 				else resolve(res);
 			});
 		});
@@ -45,7 +63,10 @@ export async function pyro<T = any>(router: string, method: string, ...args: unk
 }
 
 /** Registers a customer at the default location, like "invite by location" does. */
-export async function registerCustomer(): Promise<{ _id: string; id?: string }> {
+export async function registerCustomer(): Promise<{
+	_id: string;
+	id?: string;
+}> {
 	return pyro('user-auth', 'register', {
 		user: {
 			apartment: '3',
@@ -71,22 +92,35 @@ export async function productsNearSofia(takeaway = false): Promise<any[]> {
 			}
 		}`,
 		{
-			geoLocation: { loc: { type: 'Point', coordinates: [SOFIA.lng, SOFIA.lat] } },
-			options: { isDeliveryRequired: !takeaway, isTakeaway: takeaway, withoutCount: true },
+			geoLocation: {
+				loc: { type: 'Point', coordinates: [SOFIA.lng, SOFIA.lat] },
+			},
+			options: {
+				isDeliveryRequired: !takeaway,
+				isTakeaway: takeaway,
+				withoutCount: true,
+			},
 			pagingOptions: { skip: 0, limit: 10 },
-		}
+		},
 	);
 	return (res.data?.geoLocationProductsByPaging ?? []).filter(
-		(p: any) => p && p.warehouseProduct?.isProductAvailable && p.warehouseProduct.count !== 0
+		(p: any) =>
+			p &&
+			p.warehouseProduct?.isProductAvailable &&
+			p.warehouseProduct.count !== 0,
 	);
 }
 
 /** Seeds the app's localStorage before any page script runs. */
-export async function seedStorage(page: Page, values: Record<string, string>): Promise<void> {
+export async function seedStorage(
+	page: Page,
+	values: Record<string, string>,
+): Promise<void> {
 	await page.addInitScript((entries) => {
 		// Only on the first load of the test: later reloads keep what the app wrote.
 		if (sessionStorage.getItem('__e2e_seeded')) return;
-		for (const [key, value] of Object.entries(entries)) localStorage.setItem(key, value);
+		for (const [key, value] of Object.entries(entries))
+			localStorage.setItem(key, value);
 		sessionStorage.setItem('__e2e_seeded', '1');
 	}, values);
 }
@@ -123,5 +157,7 @@ export function watchConsole(page: Page): () => string[] {
 /** Waits until Ionic has rendered the app shell. */
 export async function expectAppShell(page: Page): Promise<void> {
 	await expect(page.locator('ion-app')).toBeAttached();
-	await expect(page.locator('ion-app.hydrated, ion-app[class*="hydrated"]')).toBeAttached({ timeout: 30_000 });
+	await expect(
+		page.locator('ion-app.hydrated, ion-app[class*="hydrated"]'),
+	).toBeAttached({ timeout: 30_000 });
 }

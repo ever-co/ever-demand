@@ -7,11 +7,11 @@ describe('LoadedInformationComponent', () => {
 	let fixture: ComponentFixture<LoadedInformationComponent>;
 
 	beforeEach(async () => {
-			await TestBed.configureTestingModule({
-				declarations: [LoadedInformationComponent],
-				// ion-* elements (Ionic web components)
-				schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			}).compileComponents();
+		await TestBed.configureTestingModule({
+			declarations: [LoadedInformationComponent],
+			// ion-* elements (Ionic web components)
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

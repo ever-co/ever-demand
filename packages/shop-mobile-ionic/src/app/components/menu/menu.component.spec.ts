@@ -12,27 +12,23 @@ describe('MenuComponent', () => {
 	let fixture: ComponentFixture<MenuComponent>;
 
 	beforeEach(async () => {
-			await TestBed.configureTestingModule({
-				declarations: [MenuComponent],
-				imports: [...translateTesting()],
-				// ion-menu and friends, and e-cu-submenu
-				schemas: [CUSTOM_ELEMENTS_SCHEMA],
-				providers: [
-					{ provide: Store, useValue: { maintenanceMode: null } },
-					{
-						provide: WarehouseRouter,
-						useValue: createSpyObj('WarehouseRouter', [
-							'get',
-						]),
-					},
-					{
-						provide: MenuController,
-						useValue: createSpyObj('MenuController', [
-							'enable',
-						]),
-					},
-				],
-			}).compileComponents();
+		await TestBed.configureTestingModule({
+			declarations: [MenuComponent],
+			imports: [...translateTesting()],
+			// ion-menu and friends, and e-cu-submenu
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+			providers: [
+				{ provide: Store, useValue: { maintenanceMode: null } },
+				{
+					provide: WarehouseRouter,
+					useValue: createSpyObj('WarehouseRouter', ['get']),
+				},
+				{
+					provide: MenuController,
+					useValue: createSpyObj('MenuController', ['enable']),
+				},
+			],
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

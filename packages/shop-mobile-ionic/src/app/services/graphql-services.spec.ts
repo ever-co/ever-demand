@@ -80,13 +80,13 @@ describe('GraphQL services', () => {
 	describe('OrdersService', () => {
 		it('asks getOrder for the given fields only', async () => {
 			const order$ = firstValueFrom(
-				TestBed.inject(OrdersService).getOrder('order-1', '{status}')
+				TestBed.inject(OrdersService).getOrder('order-1', '{status}'),
 			);
 
 			const op = controller.expectOne('GetOrder');
 			expect(op.operation.variables).toEqual({ id: 'order-1' });
 			expect(op.operation.query.loc?.source.body).toContain(
-				'getOrder(id: $id) {status}'
+				'getOrder(id: $id) {status}',
 			);
 			op.flush({ data: { getOrder: { status: 2 } } });
 
@@ -97,8 +97,8 @@ describe('GraphQL services', () => {
 			const done = firstValueFrom(
 				TestBed.inject(OrdersService).generateOrdersByCustomerId(
 					40,
-					'user-1'
-				)
+					'user-1',
+				),
 			);
 
 			const op = controller.expectOne('GenerateOrdersByCustomerId');
@@ -114,7 +114,7 @@ describe('GraphQL services', () => {
 	describe('UsersService', () => {
 		it('loads the address of a user', async () => {
 			const user$ = firstValueFrom(
-				TestBed.inject(UsersService).getUser('user-1')
+				TestBed.inject(UsersService).getUser('user-1'),
 			);
 
 			const op = controller.expectOne('GetUser');
@@ -141,7 +141,7 @@ describe('GraphQL services', () => {
 	describe('MerchantsService', () => {
 		it('searches merchants by name near the customer', async () => {
 			const merchants = TestBed.inject(
-				MerchantsService
+				MerchantsService,
 			).getMerchantsBuyName('pizza', sofia);
 
 			const op = controller.expectOne('GetMerchantsBuyName');
@@ -163,9 +163,7 @@ describe('GraphQL services', () => {
 				},
 			});
 
-			expect((await merchants).map((m) => m.name)).toEqual([
-				'Pizza Hut',
-			]);
+			expect((await merchants).map((m) => m.name)).toEqual(['Pizza Hut']);
 		});
 	});
 
@@ -173,8 +171,8 @@ describe('GraphQL services', () => {
 		it('lists the merchants close to the customer', async () => {
 			const merchants$ = firstValueFrom(
 				TestBed.inject(GeoLocationsMerchantsService).getCloseMerchants(
-					sofia
-				)
+					sofia,
+				),
 			);
 
 			const op = controller.expectOne('getCloseMerchants');
@@ -199,7 +197,7 @@ describe('GraphQL services', () => {
 	describe('WarehouseProductsService', () => {
 		it('loads one product of a merchant', async () => {
 			const product = TestBed.inject(
-				WarehouseProductsService
+				WarehouseProductsService,
 			).getWarehouseProduct('warehouse-1', 'wp-1');
 
 			const op = controller.expectOne('GetWarehouseProduct');
@@ -218,7 +216,7 @@ describe('GraphQL services', () => {
 
 		it('resolves null for a product that is gone', async () => {
 			const product = TestBed.inject(
-				WarehouseProductsService
+				WarehouseProductsService,
 			).getWarehouseProduct('warehouse-1', 'wp-gone');
 
 			controller
@@ -245,9 +243,9 @@ describe('GraphQL services', () => {
 					.geoLocationProductsByPaging(
 						sofia,
 						{ skip: 0, limit: 10 },
-						options
+						options,
 					)
-					.pipe(take(1))
+					.pipe(take(1)),
 			);
 
 			const op = controller.expectOne('GeoLocationProductsByPaging');
@@ -279,9 +277,9 @@ describe('GraphQL services', () => {
 						sofia,
 						{ skip: 10, limit: 10 },
 						{ isDeliveryRequired: false, isTakeaway: true },
-						'pizza'
+						'pizza',
 					)
-					.pipe(take(1), toArray())
+					.pipe(take(1), toArray()),
 			);
 
 			const op = controller.expectOne('GeoLocationProductsByPaging');
@@ -297,7 +295,7 @@ describe('GraphQL services', () => {
 
 		it('counts the products near the customer', async () => {
 			const count = TestBed.inject(
-				GeoLocationProductsService
+				GeoLocationProductsService,
 			).getCountOfGeoLocationProducts(sofia, options);
 
 			const op = controller.expectOne('GetCountOfGeoLocationProducts');

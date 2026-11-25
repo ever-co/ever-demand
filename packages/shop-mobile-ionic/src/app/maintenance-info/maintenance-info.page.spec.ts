@@ -14,33 +14,31 @@ describe('MaintenanceInfoPage', () => {
 	let fixture: ComponentFixture<MaintenanceInfoPage>;
 
 	beforeEach(async () => {
-			await TestBed.configureTestingModule({
-				declarations: [MaintenanceInfoPage],
-				imports: [PipesModule],
-				providers: [
-					// The status poll reports the maintenance as over, so it stops.
-					{
-						provide: MaintenanceService,
-						useValue: createSpyObj('MaintenanceService', {
-							getMessage: Promise.resolve(''),
-							getStatus: Promise.resolve(false),
-						}),
-					},
-					{
-						provide: Store,
-						useValue: createSpyObj(
-							'Store',
-							['clearMaintenanceMode'],
-							{ maintenanceMode: 'maintenance' }
-						),
-					},
-					{
-						provide: Router,
-						useValue: createSpyObj('Router', ['navigate']),
-					},
-				],
-				schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			}).compileComponents();
+		await TestBed.configureTestingModule({
+			declarations: [MaintenanceInfoPage],
+			imports: [PipesModule],
+			providers: [
+				// The status poll reports the maintenance as over, so it stops.
+				{
+					provide: MaintenanceService,
+					useValue: createSpyObj('MaintenanceService', {
+						getMessage: Promise.resolve(''),
+						getStatus: Promise.resolve(false),
+					}),
+				},
+				{
+					provide: Store,
+					useValue: createSpyObj('Store', ['clearMaintenanceMode'], {
+						maintenanceMode: 'maintenance',
+					}),
+				},
+				{
+					provide: Router,
+					useValue: createSpyObj('Router', ['navigate']),
+				},
+			],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 	});
 
 	beforeEach(async () => {

@@ -15,48 +15,42 @@ describe('OrderInfoPage', () => {
 	let fixture: ComponentFixture<OrderInfoPage>;
 
 	beforeEach(async () => {
-			await TestBed.configureTestingModule({
-				declarations: [OrderInfoPage],
-				imports: [...translateTesting()],
-				providers: [
-					// The order and the warehouse never load, so no modal opens.
-					{
-						provide: OrderRouter,
-						useValue: createSpyObj('OrderRouter', {
-							get: NEVER,
-						}),
-					},
-					{
-						provide: WarehouseRouter,
-						useValue: createSpyObj('WarehouseRouter', {
-							get: NEVER,
-						}),
-					},
-					{
-						provide: Store,
-						useValue: { startOrderDate: '"2026-01-01T00:00:00Z"' },
-					},
-					{
-						provide: ModalController,
-						useValue: createSpyObj('ModalController', [
-							'create',
-						]),
-					},
-					{
-						provide: NavController,
-						useValue: createSpyObj('NavController', [
-							'navigateRoot',
-						]),
-					},
-					{
-						provide: Router,
-						useValue: createSpyObj('Router', [
-							'navigateByUrl',
-						]),
-					},
-				],
-				schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			}).compileComponents();
+		await TestBed.configureTestingModule({
+			declarations: [OrderInfoPage],
+			imports: [...translateTesting()],
+			providers: [
+				// The order and the warehouse never load, so no modal opens.
+				{
+					provide: OrderRouter,
+					useValue: createSpyObj('OrderRouter', {
+						get: NEVER,
+					}),
+				},
+				{
+					provide: WarehouseRouter,
+					useValue: createSpyObj('WarehouseRouter', {
+						get: NEVER,
+					}),
+				},
+				{
+					provide: Store,
+					useValue: { startOrderDate: '"2026-01-01T00:00:00Z"' },
+				},
+				{
+					provide: ModalController,
+					useValue: createSpyObj('ModalController', ['create']),
+				},
+				{
+					provide: NavController,
+					useValue: createSpyObj('NavController', ['navigateRoot']),
+				},
+				{
+					provide: Router,
+					useValue: createSpyObj('Router', ['navigateByUrl']),
+				},
+			],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

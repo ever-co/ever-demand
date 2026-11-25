@@ -22,7 +22,10 @@ describe('AppComponent', () => {
 	let deviceRouter;
 	let router;
 	let location;
-	let networkListener: (status: { connected: boolean; connectionType: string }) => Promise<void>;
+	let networkListener: (status: {
+		connected: boolean;
+		connectionType: string;
+	}) => Promise<void>;
 
 	const createNative = (isNative: boolean) => {
 		native = createSpyObj('NativeService', {
@@ -132,7 +135,7 @@ describe('AppComponent', () => {
 		await settle();
 
 		expect(deviceRouter.create).toHaveBeenCalledWith(
-			expect.objectContaining({ type: 'android', uuid: 'device-uuid' })
+			expect.objectContaining({ type: 'android', uuid: 'device-uuid' }),
 		);
 	});
 

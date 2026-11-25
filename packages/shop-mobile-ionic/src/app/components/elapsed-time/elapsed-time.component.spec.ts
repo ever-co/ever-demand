@@ -8,21 +8,21 @@ describe('ElapsedTimeComponent', () => {
 	let fixture: ComponentFixture<ElapsedTimeComponent>;
 
 	beforeEach(async () => {
-			await TestBed.configureTestingModule({
-				declarations: [ElapsedTimeComponent],
-				imports: [...translateTesting()],
-				providers: [
-					// A finished order, so the component starts no timer.
-					{
-						provide: Store,
-						useValue: {
-							endOrderTime: JSON.stringify({
-								timePassed: '05 : 00',
-							}),
-						},
+		await TestBed.configureTestingModule({
+			declarations: [ElapsedTimeComponent],
+			imports: [...translateTesting()],
+			providers: [
+				// A finished order, so the component starts no timer.
+				{
+					provide: Store,
+					useValue: {
+						endOrderTime: JSON.stringify({
+							timePassed: '05 : 00',
+						}),
 					},
-				],
-			}).compileComponents();
+				},
+			],
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

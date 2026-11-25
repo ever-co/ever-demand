@@ -19,14 +19,14 @@ describe('GeoLocationService', () => {
 	};
 	const originalGeolocation = Object.getOwnPropertyDescriptor(
 		navigator,
-		'geolocation'
+		'geolocation',
 	);
 
 	// The browser's geolocation, which the Capacitor plugin uses on the web.
 	const stubBrowserLocation = (
 		result:
 			| { coords: { latitude: number; longitude: number } }
-			| { error: string }
+			| { error: string },
 	) => {
 		Object.defineProperty(navigator, 'geolocation', {
 			configurable: true,
@@ -57,7 +57,11 @@ describe('GeoLocationService', () => {
 		environment.DEFAULT_LATITUDE = defaults.lat;
 		environment.DEFAULT_LONGITUDE = defaults.lng;
 		if (originalGeolocation) {
-			Object.defineProperty(navigator, 'geolocation', originalGeolocation);
+			Object.defineProperty(
+				navigator,
+				'geolocation',
+				originalGeolocation,
+			);
 		} else {
 			delete (navigator as any).geolocation;
 		}
@@ -97,7 +101,7 @@ describe('GeoLocationService', () => {
 			const coords = service.getCurrentCoords();
 			await settle();
 			const request = http.expectOne(
-				`${environment.SERVICES_ENDPOINT}/getLocationByIP`
+				`${environment.SERVICES_ENDPOINT}/getLocationByIP`,
 			);
 			expect(request.request.method).toBe('GET');
 			request.flush({ latitude: 3, longitude: 4 });
@@ -111,7 +115,7 @@ describe('GeoLocationService', () => {
 			const coords = service.getCurrentCoords();
 			await settle();
 			http.expectOne(
-				`${environment.SERVICES_ENDPOINT}/getLocationByIP`
+				`${environment.SERVICES_ENDPOINT}/getLocationByIP`,
 			).flush(null);
 
 			await expect(coords).rejects.toBe('User denied Geolocation');

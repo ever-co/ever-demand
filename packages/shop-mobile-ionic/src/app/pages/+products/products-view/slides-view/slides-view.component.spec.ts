@@ -13,29 +13,26 @@ describe('SlidesViewComponent', () => {
 	let fixture: ComponentFixture<ProductsSlidesViewComponent>;
 
 	beforeEach(async () => {
-			await TestBed.configureTestingModule({
-				declarations: [ProductsSlidesViewComponent],
-				// <swiper-container> is a custom element (Swiper element), and
-				// ng-progress a standalone component the page module imports.
-				imports: [...translateTesting(), PipesModule],
-				schemas: [CUSTOM_ELEMENTS_SCHEMA],
-				providers: [
-					{
-						provide: ProductLocalesService,
-						useValue: createSpyObj(
-							'ProductLocalesService',
-							{
-								getTranslate: '',
-							}
-						),
-					},
-					{
-						provide: Router,
-						useValue: createSpyObj('Router', ['navigate']),
-					},
-					{ provide: Store, useValue: {} },
-				],
-			}).compileComponents();
+		await TestBed.configureTestingModule({
+			declarations: [ProductsSlidesViewComponent],
+			// <swiper-container> is a custom element (Swiper element), and
+			// ng-progress a standalone component the page module imports.
+			imports: [...translateTesting(), PipesModule],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+			providers: [
+				{
+					provide: ProductLocalesService,
+					useValue: createSpyObj('ProductLocalesService', {
+						getTranslate: '',
+					}),
+				},
+				{
+					provide: Router,
+					useValue: createSpyObj('Router', ['navigate']),
+				},
+				{ provide: Store, useValue: {} },
+			],
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

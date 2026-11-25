@@ -11,22 +11,19 @@ describe('ListViewPage', () => {
 	let fixture: ComponentFixture<ProductsListViewComponent>;
 
 	beforeEach(async () => {
-			await TestBed.configureTestingModule({
-				declarations: [ProductsListViewComponent],
-				imports: [...translateTesting(), PipesModule],
-				providers: [
-					{
-						provide: ProductLocalesService,
-						useValue: createSpyObj(
-							'ProductLocalesService',
-							{
-								getTranslate: '',
-							}
-						),
-					},
-				],
-				schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			}).compileComponents();
+		await TestBed.configureTestingModule({
+			declarations: [ProductsListViewComponent],
+			imports: [...translateTesting(), PipesModule],
+			providers: [
+				{
+					provide: ProductLocalesService,
+					useValue: createSpyObj('ProductLocalesService', {
+						getTranslate: '',
+					}),
+				},
+			],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

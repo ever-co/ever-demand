@@ -12,19 +12,19 @@ describe('LanguagePage', () => {
 	let fixture: ComponentFixture<LanguagePage>;
 
 	beforeEach(async () => {
-			await TestBed.configureTestingModule({
-				declarations: [LanguagePage],
-				imports: [...translateTesting()],
-				providers: [
-					{ provide: Store, useValue: { language: 'en-US' } },
-					{
-						provide: Location,
-						useValue: createSpyObj('Location', ['back']),
-					},
-					{ provide: Platform, useValue: { isRTL: false } },
-				],
-				schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			}).compileComponents();
+		await TestBed.configureTestingModule({
+			declarations: [LanguagePage],
+			imports: [...translateTesting()],
+			providers: [
+				{ provide: Store, useValue: { language: 'en-US' } },
+				{
+					provide: Location,
+					useValue: createSpyObj('Location', ['back']),
+				},
+				{ provide: Platform, useValue: { isRTL: false } },
+			],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

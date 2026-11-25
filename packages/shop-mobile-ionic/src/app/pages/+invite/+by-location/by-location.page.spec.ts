@@ -1,9 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {
-	ComponentFixture,
-	TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { GeoLocationRouter } from '@modules/client.common.angular2/routers/geo-location-router.service';
 import { InviteRequestRouter } from '@modules/client.common.angular2/routers/invite-request-router.service';
@@ -20,49 +17,43 @@ describe('ByLocationPage', () => {
 	let fixture: ComponentFixture<ByLocationPage>;
 
 	beforeEach(async () => {
-			await TestBed.configureTestingModule({
-				declarations: [ByLocationPage],
-				imports: [...translateTesting()],
-				providers: [
-					{ provide: Store, useValue: {} },
-					{
-						provide: HttpClient,
-						useValue: createSpyObj('HttpClient', ['get']),
-					},
-					{
-						provide: Router,
-						useValue: createSpyObj('Router', [
-							'navigate',
-							'navigateByUrl',
-						]),
-					},
-					{
-						provide: UserAuthRouter,
-						useValue: createSpyObj('UserAuthRouter', [
-							'register',
-						]),
-					},
-					{
-						provide: InviteRouter,
-						useValue: createSpyObj('InviteRouter', [
-							'create',
-						]),
-					},
-					{
-						provide: InviteRequestRouter,
-						useValue: createSpyObj('InviteRequestRouter', [
-							'create',
-						]),
-					},
-					{
-						provide: GeoLocationRouter,
-						useValue: createSpyObj('GeoLocationRouter', [
-							'getAddressByCoordinatesUsingArcGIS',
-						]),
-					},
-				],
-				schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			}).compileComponents();
+		await TestBed.configureTestingModule({
+			declarations: [ByLocationPage],
+			imports: [...translateTesting()],
+			providers: [
+				{ provide: Store, useValue: {} },
+				{
+					provide: HttpClient,
+					useValue: createSpyObj('HttpClient', ['get']),
+				},
+				{
+					provide: Router,
+					useValue: createSpyObj('Router', [
+						'navigate',
+						'navigateByUrl',
+					]),
+				},
+				{
+					provide: UserAuthRouter,
+					useValue: createSpyObj('UserAuthRouter', ['register']),
+				},
+				{
+					provide: InviteRouter,
+					useValue: createSpyObj('InviteRouter', ['create']),
+				},
+				{
+					provide: InviteRequestRouter,
+					useValue: createSpyObj('InviteRequestRouter', ['create']),
+				},
+				{
+					provide: GeoLocationRouter,
+					useValue: createSpyObj('GeoLocationRouter', [
+						'getAddressByCoordinatesUsingArcGIS',
+					]),
+				},
+			],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 	});
 
 	beforeEach(async () => {

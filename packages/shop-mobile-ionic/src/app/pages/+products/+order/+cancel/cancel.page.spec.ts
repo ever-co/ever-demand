@@ -19,56 +19,47 @@ describe('CancelPage', () => {
 	let fixture: ComponentFixture<CancelPage>;
 
 	beforeEach(async () => {
-			await TestBed.configureTestingModule({
-				declarations: [CancelPage],
-				imports: [...translateTesting()],
-				providers: [
-					{
-						provide: PopoverController,
-						useValue: createSpyObj('PopoverController', [
-							'dismiss',
-						]),
-					},
-					{
-						provide: WarehouseOrdersRouter,
-						useValue: createSpyObj(
-							'WarehouseOrdersRouter',
-							['cancel']
-						),
-					},
-					{
-						provide: OrderRouter,
-						useValue: createSpyObj('OrderRouter', [
-							'refundWithStripe',
-						]),
-					},
-					{ provide: Store, useValue: { orderId: 'order-1' } },
-					{
-						provide: ModalController,
-						useValue: createSpyObj('ModalController', [
-							'create',
-							'dismiss',
-						]),
-					},
-					{
-						provide: NavController,
-						useValue: createSpyObj('NavController', [
-							'navigateRoot',
-						]),
-					},
-					{
-						provide: Router,
-						useValue: createSpyObj('Router', ['navigate']),
-					},
-					{
-						provide: NavParams,
-						useValue: createSpyObj('NavParams', {
-							get: undefined,
-						}),
-					},
-				],
-				schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			}).compileComponents();
+		await TestBed.configureTestingModule({
+			declarations: [CancelPage],
+			imports: [...translateTesting()],
+			providers: [
+				{
+					provide: PopoverController,
+					useValue: createSpyObj('PopoverController', ['dismiss']),
+				},
+				{
+					provide: WarehouseOrdersRouter,
+					useValue: createSpyObj('WarehouseOrdersRouter', ['cancel']),
+				},
+				{
+					provide: OrderRouter,
+					useValue: createSpyObj('OrderRouter', ['refundWithStripe']),
+				},
+				{ provide: Store, useValue: { orderId: 'order-1' } },
+				{
+					provide: ModalController,
+					useValue: createSpyObj('ModalController', [
+						'create',
+						'dismiss',
+					]),
+				},
+				{
+					provide: NavController,
+					useValue: createSpyObj('NavController', ['navigateRoot']),
+				},
+				{
+					provide: Router,
+					useValue: createSpyObj('Router', ['navigate']),
+				},
+				{
+					provide: NavParams,
+					useValue: createSpyObj('NavParams', {
+						get: undefined,
+					}),
+				},
+			],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

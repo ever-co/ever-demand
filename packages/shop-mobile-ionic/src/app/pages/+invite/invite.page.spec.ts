@@ -7,10 +7,10 @@ describe('InvitePage', () => {
 	let fixture: ComponentFixture<InvitePage>;
 
 	beforeEach(async () => {
-			await TestBed.configureTestingModule({
-				declarations: [InvitePage],
-				schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			}).compileComponents();
+		await TestBed.configureTestingModule({
+			declarations: [InvitePage],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

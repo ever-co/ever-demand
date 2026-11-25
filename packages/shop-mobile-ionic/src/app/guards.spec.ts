@@ -73,7 +73,9 @@ describe('route guards', () => {
 
 	describe('InviteModuleGuard', () => {
 		it('shows the invite pages to a new customer', () => {
-			expect(new InviteModuleGuard(store, router).canLoad(null)).toBe(true);
+			expect(new InviteModuleGuard(store, router).canLoad(null)).toBe(
+				true,
+			);
 		});
 
 		it.each([
@@ -84,26 +86,38 @@ describe('route guards', () => {
 			],
 		])('sends %s to the products', (_, change) => {
 			Object.assign(store, change);
-			expect(new InviteModuleGuard(store, router).canLoad(null)).toBe(false);
+			expect(new InviteModuleGuard(store, router).canLoad(null)).toBe(
+				false,
+			);
 			expect(router.navigate).toHaveBeenCalledWith(['products']);
 		});
 	});
 
 	describe('ByCodeModuleGuard / ByLocationModuleGuard', () => {
 		it('starts with the invite code when invites are on', async () => {
-			expect(await new ByCodeModuleGuard(store, router).canLoad(null)).toBe(true);
-			expect(await new ByLocationModuleGuard(store, router).canLoad(null)).toBe(true);
+			expect(
+				await new ByCodeModuleGuard(store, router).canLoad(null),
+			).toBe(true);
+			expect(
+				await new ByLocationModuleGuard(store, router).canLoad(null),
+			).toBe(true);
 		});
 
 		it('asks for the address when invites are off', async () => {
 			store.inviteSystem = false;
-			expect(await new ByCodeModuleGuard(store, router).canLoad(null)).toBe(false);
-			expect(router.navigate).toHaveBeenCalledWith(['invite/by-location']);
+			expect(
+				await new ByCodeModuleGuard(store, router).canLoad(null),
+			).toBe(false);
+			expect(router.navigate).toHaveBeenCalledWith([
+				'invite/by-location',
+			]);
 		});
 
 		it('waits for the code once an invite was requested', async () => {
 			store.inviteRequestId = 'request-1';
-			expect(await new ByLocationModuleGuard(store, router).canLoad(null)).toBe(false);
+			expect(
+				await new ByLocationModuleGuard(store, router).canLoad(null),
+			).toBe(false);
 			expect(router.navigate).toHaveBeenCalledWith(['invite/by-code']);
 		});
 	});
@@ -132,11 +146,15 @@ describe('route guards', () => {
 	describe('OrdersHistoryModuleGuard', () => {
 		it('needs a registered customer, whatever the registration setting', async () => {
 			store.registrationSystem = RegistrationSystem.Disabled;
-			expect(await new OrdersHistoryModuleGuard(store, router).canLoad(null)).toBe(false);
+			expect(
+				await new OrdersHistoryModuleGuard(store, router).canLoad(null),
+			).toBe(false);
 			expect(router.navigate).toHaveBeenCalledWith(['invite']);
 
 			store.isLogged = () => Promise.resolve(true);
-			expect(await new OrdersHistoryModuleGuard(store, router).canLoad(null)).toBe(true);
+			expect(
+				await new OrdersHistoryModuleGuard(store, router).canLoad(null),
+			).toBe(true);
 		});
 	});
 
@@ -147,24 +165,40 @@ describe('route guards', () => {
 
 		it('sends a takeaway order from the delivery page to the takeaway page', async () => {
 			store.deliveryType = DeliveryType.Takeaway;
-			expect(await new OrderInfoPageModuleGuard(store, router).canLoad(null)).toBe(false);
-			expect(router.navigate).toHaveBeenCalledWith(['order-info-takeaway']);
+			expect(
+				await new OrderInfoPageModuleGuard(store, router).canLoad(null),
+			).toBe(false);
+			expect(router.navigate).toHaveBeenCalledWith([
+				'order-info-takeaway',
+			]);
 		});
 
 		it('sends a delivery order from the takeaway page to the delivery page', async () => {
-			expect(await new OrderTakeawayInfoModuleGuard(store, router).canLoad(null)).toBe(false);
+			expect(
+				await new OrderTakeawayInfoModuleGuard(store, router).canLoad(
+					null,
+				),
+			).toBe(false);
 			expect(router.navigate).toHaveBeenCalledWith(['order-info']);
 		});
 
 		it('shows each page for its own delivery type', async () => {
-			expect(await new OrderInfoPageModuleGuard(store, router).canLoad(null)).toBe(true);
+			expect(
+				await new OrderInfoPageModuleGuard(store, router).canLoad(null),
+			).toBe(true);
 			store.deliveryType = DeliveryType.Takeaway;
-			expect(await new OrderTakeawayInfoModuleGuard(store, router).canLoad(null)).toBe(true);
+			expect(
+				await new OrderTakeawayInfoModuleGuard(store, router).canLoad(
+					null,
+				),
+			).toBe(true);
 		});
 
 		it('sends a customer who is not registered to the invite', async () => {
 			store.isLogged = () => Promise.resolve(false);
-			expect(await new OrderInfoPageModuleGuard(store, router).canLoad(null)).toBe(false);
+			expect(
+				await new OrderInfoPageModuleGuard(store, router).canLoad(null),
+			).toBe(false);
 			expect(router.navigate).toHaveBeenCalledWith(['invite']);
 		});
 	});
@@ -174,7 +208,9 @@ describe('route guards', () => {
 			store.orderId = 'order-1';
 			const guard = new ProductsPageGuard(store, router);
 
-			expect(guard.canActivate(null, { url: '/products' } as any)).toBe(true);
+			expect(guard.canActivate(null, { url: '/products' } as any)).toBe(
+				true,
+			);
 			expect(router.navigate).toHaveBeenCalledWith(['products', 'order']);
 		});
 

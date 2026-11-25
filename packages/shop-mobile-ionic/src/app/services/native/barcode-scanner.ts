@@ -32,5 +32,5 @@ export async function scanBarcode(): Promise<string | null> {
 
 	const { barcodes } = await BarcodeScanner.scan();
 
-	return barcodes.length > 0 ? barcodes[0].rawValue ?? null : null;
+	return barcodes.length > 0 ? (barcodes[0].rawValue ?? null) : null;
 }
