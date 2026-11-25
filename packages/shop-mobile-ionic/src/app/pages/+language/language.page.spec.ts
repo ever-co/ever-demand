@@ -1,18 +1,32 @@
-import 'jasmine';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Location } from '@angular/common';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Platform } from '@ionic/angular';
+import { TranslateModule } from '@ngx-translate/core';
+import { Store } from '../../services/store.service';
 import { LanguagePage } from './language.page';
 
 describe('LanguagePage', () => {
 	let component: LanguagePage;
 	let fixture: ComponentFixture<LanguagePage>;
 
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
-			declarations: [LanguagePage],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
-	}));
+	beforeEach(
+		waitForAsync(() => {
+			TestBed.configureTestingModule({
+				declarations: [LanguagePage],
+				imports: [TranslateModule.forRoot()],
+				providers: [
+					{ provide: Store, useValue: { language: 'en-US' } },
+					{
+						provide: Location,
+						useValue: jasmine.createSpyObj('Location', ['back']),
+					},
+					{ provide: Platform, useValue: { isRTL: false } },
+				],
+				schemas: [CUSTOM_ELEMENTS_SCHEMA],
+			}).compileComponents();
+		})
+	);
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(LanguagePage);

@@ -1,18 +1,33 @@
-import 'jasmine';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Platform } from '@ionic/angular';
+import { TranslateModule } from '@ngx-translate/core';
+import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
+import { of } from 'rxjs';
 import { TermsOfUsePage } from './terms-of-use.page';
 
 describe('TermsOfUsePage', () => {
 	let component: TermsOfUsePage;
 	let fixture: ComponentFixture<TermsOfUsePage>;
 
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
-			declarations: [TermsOfUsePage],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
-	}));
+	beforeEach(
+		waitForAsync(() => {
+			TestBed.configureTestingModule({
+				declarations: [TermsOfUsePage],
+				imports: [TranslateModule.forRoot()],
+				providers: [
+					{
+						provide: UserRouter,
+						useValue: jasmine.createSpyObj('UserRouter', {
+							getTermsOfUse: of(''),
+						}),
+					},
+					{ provide: Platform, useValue: { isRTL: false } },
+				],
+				schemas: [CUSTOM_ELEMENTS_SCHEMA],
+			}).compileComponents();
+		})
+	);
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(TermsOfUsePage);

@@ -20,7 +20,7 @@
 		"class-name": true,
 		"comment-format": [true, "check-space"],
 		"forin": true,
-		"import-blacklist": [true],
+		"import-blacklist": [true, "jasmine"],
 		"ordered-imports": false,
 		"interface-over-type-literal": true,
 		"label-position": true,

@@ -1,18 +1,33 @@
-import 'jasmine';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Platform } from '@ionic/angular';
+import { TranslateModule } from '@ngx-translate/core';
+import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
+import { of } from 'rxjs';
 import { AboutPage } from './about.page';
 
 describe('AboutPage', () => {
 	let component: AboutPage;
 	let fixture: ComponentFixture<AboutPage>;
 
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
-			declarations: [AboutPage],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
-	}));
+	beforeEach(
+		waitForAsync(() => {
+			TestBed.configureTestingModule({
+				declarations: [AboutPage],
+				imports: [TranslateModule.forRoot()],
+				providers: [
+					{
+						provide: UserRouter,
+						useValue: jasmine.createSpyObj('UserRouter', {
+							getAboutUs: of(''),
+						}),
+					},
+					{ provide: Platform, useValue: { isRTL: false } },
+				],
+				schemas: [CUSTOM_ELEMENTS_SCHEMA],
+			}).compileComponents();
+		})
+	);
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(AboutPage);
