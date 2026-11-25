@@ -83,9 +83,9 @@ test.describe('stores', () => {
 			.first()
 			.click();
 		await expect(page).toHaveURL(/#\/stores\/[0-9a-f]{24}/, { timeout: 30_000 });
-		const storeUrl = page.url();
 
-		await page.goto(`${storeUrl.replace(/\/$/, '')}/manage`);
+		await page.getByRole('button', { name: /manage store/i }).click();
+		await expect(page).toHaveURL(/#\/stores\/[0-9a-f]{24}\/manage/, { timeout: 30_000 });
 		const name = page.locator('input[formcontrolname="name"]').first();
 		await expect(name).toHaveValue(storeName, { timeout: 30_000 });
 		await name.fill(renamed);

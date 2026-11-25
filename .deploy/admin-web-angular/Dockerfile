@@ -29,15 +29,10 @@ RUN npm i -g pnpm@${PNPM_VERSION} \
 
 WORKDIR /srv/ever
 
-# 1. download every locked package (cached layer: only the lockfile and the workspace settings)
-COPY package.json pnpm-workspace.yaml pnpm-lock.yaml .npmrc ./
-COPY patches ./patches
-RUN pnpm fetch
-
-# 2. sources (filtered by Dockerfile.dockerignore) and an offline install of the admin and the
-#    workspace packages it compiles from source (common, common-angular)
+# Sources (filtered by Dockerfile.dockerignore), then an install of only the admin and the
+# workspace packages it compiles from source (common, common-angular).
 COPY . .
-RUN pnpm install --offline --frozen-lockfile --filter "@ever-platform/admin-web-angular..."
+RUN pnpm install --frozen-lockfile --filter "@ever-platform/admin-web-angular..."
 
 ENV NODE_ENV=production
 ENV NODE_OPTIONS=--max-old-space-size=4096

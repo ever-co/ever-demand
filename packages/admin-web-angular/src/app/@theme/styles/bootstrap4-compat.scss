@@ -7,6 +7,16 @@
 	margin-bottom: 1rem;
 }
 
+// Bootstrap 5 gives every direct child of .row the full row width; Bootstrap 4 only sized the
+// .col* children. The templates were laid out for Bootstrap 4 (button groups and labels placed
+// straight inside a .row), so non-column children keep their natural width. (Padding is left
+// alone: component classes such as .btn and .form-control still set their own.)
+.row > :not([class*='col']):not(.form-control):not(.form-select):not(.w-100) {
+	flex-shrink: 1;
+	width: auto;
+	max-width: none;
+}
+
 .form-row {
 	display: flex;
 	flex-wrap: wrap;
