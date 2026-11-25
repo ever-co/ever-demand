@@ -1,19 +1,16 @@
 {
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
-		"outDir": "./out-tsc/spec",
-		"types": [
-			"jasmine",
-			"googlemaps"
-		]
+		"outDir": "./dist/out-tsc/spec",
+		"types": ["vitest/globals", "google.maps", "node"]
 	},
-	"files": [
-		"src/test.ts",
-		"src/polyfills.ts"
-	],
-	"include": [
-		"src/**/*.spec.ts",
-		"src/**/*.d.ts"
-	],
-	"exclude": ["node_modules"]
+	"include": ["src/**/*.ts"],
+	"angularCompilerOptions": {
+		"extendedDiagnostics": {
+			"checks": {
+				"nullishCoalescingNotNullable": "suppress",
+				"optionalChainNotNullable": "suppress"
+			}
+		}
+	}
 }

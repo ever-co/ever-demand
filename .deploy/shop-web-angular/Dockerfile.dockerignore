@@ -1,0 +1,13 @@
+# Build context of .deploy/shop-web-angular/Dockerfile (BuildKit reads <Dockerfile>.dockerignore)
+**/node_modules
+**/.angular
+**/build
+**/dist
+**/coverage
+**/.env
+**/.env.*
+**/src/environments/environment.ts
+**/src/environments/environment.prod.ts
+.git
+e2e/test-results
+e2e/playwright-report

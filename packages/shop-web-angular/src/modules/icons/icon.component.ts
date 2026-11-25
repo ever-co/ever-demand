@@ -1,7 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { IconsService } from './icons.service';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'ever-icon',
 	styles: [
 		`

@@ -1,4 +1,4 @@
-@import '~@ever-platform/common-angular/src/scss/everbie.common';
+@use 'variables' as *;
 
 .delivery-info {
 	background: $brand-lighted;

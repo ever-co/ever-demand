@@ -1,4 +1,4 @@
-@import '~@ever-platform/common-angular/src/scss/everbie.common';
+@use 'variables' as *;
 $transition_time: 0.1s;
 
 .carousel-view {
@@ -10,10 +10,19 @@ $transition_time: 0.1s;
 	margin: 0;
 	.carousel {
 		color: white;
+		height: 100%;
+
+		.viewport {
+			flex: 1 1 auto;
+			height: 100%;
+			overflow: hidden;
+		}
+
 		.content {
 			display: flex;
+			transition: transform 0.3s ease;
 			.item {
-				display: block;
+				flex: 0 0 25%;
 				opacity: 0.3;
 				display: flex;
 				align-content: center;
@@ -55,6 +64,8 @@ $transition_time: 0.1s;
 		}
 
 		.click-area {
+			flex: 0 0 60px;
+			cursor: pointer;
 			width: 60px;
 			text-align: center;
 			display: flex;
@@ -73,6 +84,10 @@ $transition_time: 0.1s;
 
 		.click-area:active {
 			opacity: 1;
+		}
+
+		.click-area.disabled {
+			cursor: default;
 		}
 
 		.click-area.disabled,

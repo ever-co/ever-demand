@@ -1,5 +1,4 @@
-@import '../../styles/styles';
-@import '@angular/material/theming';
+@use 'variables' as *;
 
 .toolbar {
 	min-height: 54px !important;

@@ -1,4 +1,5 @@
-@import 'bulma/bulma.sass';
+// Bulma's base (reset and generic element styles); the shop uses no Bulma components.
+@use 'bulma/sass/base';
 
 header {
 	display: flex;

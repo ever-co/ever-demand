@@ -9,12 +9,13 @@ packages:
   # - packages/merchant-tablet-ionic
   - packages/shop-mobile-expo
   # - packages/shop-mobile-ionic
-  # - packages/shop-web-angular
-  # - packages/shop-web-gatsby
+  - packages/shop-web-angular
+  - packages/shop-web-gatsby
 
 # Packages whose install (build) scripts may run: native addons and downloaded binaries.
 allowBuilds:
   '@apollo/protobufjs': false
+  '@apollo/client': false
   '@nestjs/core': true
   '@scarf/scarf': false
   '@parcel/watcher': true
@@ -22,7 +23,11 @@ allowBuilds:
   bcrypt: true
   core-js: false
   dtrace-provider: false
+  core-js-pure: false
+  es5-ext: false
   esbuild: true
+  gatsby: false
+  gatsby-cli: false
   lmdb: true
   mongodb-memory-server: true
   msgpackr-extract: true
@@ -46,3 +51,6 @@ minimumReleaseAgeExclude:
   - '@graphql-tools/merge@10.0.10'
   - '@graphql-tools/utils@13.2.3'
   - '@graphql-tools/schema@11.0.10'
+  - '@vitest/mocker@5.1.2'
+  - '@vitest/spy@5.1.2'
+  - vitest@5.1.2

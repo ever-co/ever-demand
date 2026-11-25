@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { MessagePopUpComponent } from './message-pop-up.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -14,7 +14,7 @@ const COMPONENTS = [MessagePopUpComponent];
         MatDialogModule,
         MatButtonModule,
         MatCardModule,
-        TranslateModule.forChild(),
+        TranslateModule,
     ],
     declarations: COMPONENTS,
     exports: COMPONENTS

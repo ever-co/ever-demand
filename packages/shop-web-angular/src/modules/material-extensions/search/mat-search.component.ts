@@ -6,11 +6,14 @@ import {
 	ViewChild,
 	Output,
 	EventEmitter,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatRipple } from '@angular/material/core';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'mat-search',
 	styleUrls: ['./mat-search.component.scss'],
 	templateUrl: './mat-search.component.html',

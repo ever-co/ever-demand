@@ -1,7 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'orders',
 	styleUrls: ['./orders.component.scss'],
 	templateUrl: './orders.component.html',

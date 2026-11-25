@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
@@ -8,6 +8,8 @@ import { getBrowserLanguage } from 'app/services/browser-language';
 import { environment } from 'environments/environment';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	styleUrls: ['./server-down.page.scss'],
 	templateUrl: 'server-down.page.html',
 })
@@ -22,7 +24,9 @@ export class ServerDownPage implements OnDestroy {
 		private translate: TranslateService,
 		private serverConnectionService: ServerConnectionService
 	) {
-		translate.use(translate.currentLang || getBrowserLanguage(translate));
+		translate.use(
+			translate.getCurrentLang() || getBrowserLanguage(translate)
+		);
 
 		this.noInternetLogo = environment['NO_INTERNET_LOGO'];
 		this.testConnection();

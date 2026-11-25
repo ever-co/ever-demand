@@ -22,7 +22,7 @@
 				<div class="product-details-content">
 					<div class="warehouse">
 						<warehouse-logo
-							[logo]="warehouse?.logo"
+							[logo]="$safeNavigationMigration(warehouse?.logo)"
 							[border]="true"
 							[light]="true"
 						></warehouse-logo>
@@ -33,7 +33,9 @@
 						<h1 class="title">
 							{{
 								localeTranslate(
-									warehouseProduct?.product?.title
+									$safeNavigationMigration(
+										warehouseProduct?.product?.title
+									)
 								)
 							}}
 						</h1>
@@ -41,7 +43,9 @@
 						<h2 class="description">
 							{{
 								localeTranslate(
-									warehouseProduct?.product?.description
+									$safeNavigationMigration(
+										warehouseProduct?.product?.description
+									)
 								)
 							}}
 						</h2>
@@ -49,7 +53,9 @@
 						<h3 class="details">
 							{{
 								localeTranslate(
-									warehouseProduct?.product?.details
+									$safeNavigationMigration(
+										warehouseProduct?.product?.details
+									)
 								)
 							}}
 						</h3>
@@ -97,22 +103,18 @@
 					<img #topImage [src]="images[0].url" />
 				</div>
 				<div *ngIf="images.length > 1" class="bottom-images">
-					<drag-scroll
-						#dragScroll
-						[drag-scroll-disabled]="true"
-						class="image-slide"
-					>
+					<div #imageSlide class="image-slide">
 						<img
 							*ngFor="let image of images"
-							drag-scroll-item
 							class="scroll-image"
+							loading="lazy"
 							(click)="topImage.src = image.url"
 							src="{{ image.url }}"
 						/>
-					</drag-scroll>
+					</div>
 					<button
 						class="drag-button left"
-						(click)="dragScroll.moveLeft()"
+						(click)="scrollImages(imageSlide, -1)"
 						[attr.aria-label]="
 							'PRODUCTS_VIEW.PRODUCT_DETAILS_VIEW.PREVIOUS_IMAGE'
 								| translate
@@ -124,7 +126,7 @@
 					</button>
 					<button
 						class="drag-button right"
-						(click)="dragScroll.moveRight()"
+						(click)="scrollImages(imageSlide, 1)"
 						[attr.aria-label]="
 							'PRODUCTS_VIEW.PRODUCT_DETAILS_VIEW.NEXT_IMAGE'
 								| translate

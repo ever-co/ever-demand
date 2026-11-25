@@ -10,7 +10,7 @@ import { LoginByLocationComponent } from './byLocation.component';
 import { GoogleMapModule } from './google-map/google-map.module';
 import { LocationFormModule } from './location/location.module';
 import { GeoLocationService } from 'app/services/geo-location';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 
 @NgModule({
 	declarations: [LoginByLocationComponent],
@@ -28,7 +28,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 		GoogleMapModule,
 		LocationFormModule,
-		TranslateModule.forChild(),
+		TranslateModule,
 	],
 	providers: [GeoLocationService],
 })

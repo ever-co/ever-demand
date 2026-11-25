@@ -9,16 +9,16 @@
 		<product-delivery-info
 			[currentProduct]="info.warehouseProduct"
 			[overImage]="true"
-			[hasDiscount]="discount?.getDiscount()"
+			[hasDiscount]="!!discount?.getDiscount()"
 		></product-delivery-info>
 
 		<img
 			mat-card-image
 			class="image"
 			[ngClass]="{
-				'border-bottom-radius': productImage?.orientation === 1
+				'border-bottom-radius': productImage?.orientation === 1,
 			}"
-			[src]="productImage?.url"
+			[src]="$safeNavigationMigration(productImage?.url)"
 			(load)="onImageLoad()"
 		/>
 	</div>
@@ -49,7 +49,7 @@
 				mat-raised-button
 				(click)="createOrder()"
 				color="accent"
-				class="purchase-button mr-2 d-inline mb-2"
+				class="purchase-button me-2 d-inline mb-2"
 			>
 				{{ 'PRODUCTS_VIEW.BUY_FOR' | translate }} ${{
 					info.warehouseProduct.price
@@ -62,7 +62,9 @@
 					'details/' +
 					info.warehouseId +
 					'/' +
-					info?.warehouseProduct?.product?.id
+					$safeNavigationMigration(
+						info?.warehouseProduct?.product?.id
+					)
 				"
 				class="details-button d-inline mb-2"
 			>
