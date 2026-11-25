@@ -38,7 +38,7 @@ describe('PaymentComponent new-card payment', () => {
 	let orderRouter: jasmine.SpyObj<OrderRouter>;
 	let configure: jasmine.Spy;
 	let tokenHandlers: Array<(token: any) => Promise<void>>;
-	let closedHandlers: (() => void)[];
+	let closedHandlers: Array<() => void>;
 	let modalController: jasmine.SpyObj<ModalController>;
 	let originalStripeCheckout: any;
 	let orderId: jasmine.Spy;
