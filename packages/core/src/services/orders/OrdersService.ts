@@ -629,22 +629,13 @@ export class OrdersService extends DBService<Order>
 		currency: string,
 		callId: string
 	): Promise<Stripe.Charge | null> {
-		// Without a customer, the list would hold the charges of every
-		// customer. A card is charged only through its customer, so there
-		// is no earlier charge to find.
-		if (customerId == null || customerId === '') {
-			return null;
-		}
-
-		let charges: Stripe.ApiList<Stripe.Charge>;
+		let chargesOfOrder: Stripe.Charge[];
 
 		try {
-			// Newest first: the page holds the charge of a lost answer
-			// unless the customer was charged 100 times since.
-			charges = await this.stripe.charges.list({
-				customer: customerId,
-				limit: 100,
-			});
+			chargesOfOrder = await this._unrefundedStripeChargesOfOrder(
+				orderId,
+				customerId
+			);
 		} catch (err) {
 			this.log.error(
 				{ callId, orderId, err },
@@ -655,14 +646,6 @@ export class OrdersService extends DBService<Order>
 				`Could not check whether order ${orderId} was charged already, so it was not charged`
 			);
 		}
-
-		const chargesOfOrder = charges.data.filter(
-			(c) =>
-				c.status === 'succeeded' &&
-				!c.refunded &&
-				c.metadata != null &&
-				c.metadata.orderId === String(orderId)
-		);
 
 		// A partly refunded or disputed charge no longer holds the whole
 		// payment, and a charge of another amount or currency is not the
@@ -697,6 +680,45 @@ export class OrdersService extends DBService<Order>
 		}
 
 		return null;
+	}
+
+	/**
+	 * The succeeded charges of the customer for the order that are not fully
+	 * refunded, newest first. A partly refunded or disputed charge, or one of
+	 * another amount, is in the list too.
+	 *
+	 * @param {Order['id']} orderId order the charges were made for, as in
+	 * their `metadata.orderId`
+	 * @param {string} [customerId] Stripe customer the order was charged to
+	 * @returns {Promise<Stripe.Charge[]>} empty, without a Stripe call, when
+	 * there is no customer; else from the newest 100 charges of the customer
+	 * @throws {Error} the Stripe error when it can not list the charges
+	 */
+	private async _unrefundedStripeChargesOfOrder(
+		orderId: Order['id'],
+		customerId: string | undefined
+	): Promise<Stripe.Charge[]> {
+		// Without a customer, the list would hold the charges of every
+		// customer. A card is charged only through its customer, so there
+		// is no charge of the order to find.
+		if (customerId == null || customerId === '') {
+			return [];
+		}
+
+		// Newest first: the page holds the charge of a lost answer
+		// unless the customer was charged 100 times since.
+		const charges = await this.stripe.charges.list({
+			customer: customerId,
+			limit: 100,
+		});
+
+		return charges.data.filter(
+			(c) =>
+				c.status === 'succeeded' &&
+				!c.refunded &&
+				c.metadata != null &&
+				c.metadata.orderId === String(orderId)
+		);
 	}
 
 	/**
@@ -818,6 +840,110 @@ export class OrdersService extends DBService<Order>
 				'.refundWithStripe(orderId) thrown error!'
 			);
 			throw err;
+		}
+	}
+
+	/**
+	 * Refunds the charges Stripe made for a cancelled order that stayed
+	 * unpaid, e.g. when the answer to payWithStripe was lost (a timeout or a
+	 * network drop) or its paid write failed. The shop asks refundWithStripe
+	 * to refund only a paid order, so the customer would else have paid for
+	 * a cancelled order. Each charge is refunded with the key payWithStripe
+	 * refunds it with, so the two never refund it twice, and its id is
+	 * stored on the order.
+	 * Never rejects: a Stripe or database error is logged, and the cancel
+	 * stays done.
+	 * Not a listener: only the server calls it, after a cancel it wrote.
+	 *
+	 * @param {Order} order the order as the cancel wrote it
+	 * @returns {Promise<void>}
+	 * @memberof OrdersService
+	 */
+	async refundLostStripeCharges(order: Order): Promise<void> {
+		// refundWithStripe refunds a paid order. An order that is not
+		// cancelled may still be paid with its earlier charge by a retry.
+		if (order == null || !order.isCancelled || order.isPaid) {
+			return;
+		}
+
+		const orderId = order.id;
+		const callId = uuid();
+
+		let charges: Stripe.Charge[];
+
+		try {
+			const user = await this.usersService
+				.get(order.user.id)
+				.pipe(first())
+				.toPromise();
+
+			// No Stripe call without a customer, e.g. for a cash order
+			charges = await this._unrefundedStripeChargesOfOrder(
+				orderId,
+				user != null ? user.stripeCustomerId : undefined
+			);
+		} catch (err) {
+			this.log.error(
+				{ callId, orderId, err },
+				'.refundLostStripeCharges(order) could not look for charges of the unpaid cancelled order'
+			);
+			return;
+		}
+
+		for (const charge of charges) {
+			await this._refundLostStripeCharge(orderId, charge.id, callId);
+		}
+	}
+
+	/**
+	 * Stores the charge on the unpaid cancelled order and refunds it.
+	 * Never rejects: errors are logged.
+	 */
+	private async _refundLostStripeCharge(
+		orderId: Order['id'],
+		chargeId: string,
+		callId: string
+	): Promise<void> {
+		// Keep the charge traceable, also when the refund below fails.
+		// Only on an unpaid order, so the charge of a paid one stays.
+		try {
+			await this._updateIfMatches(
+				orderId,
+				{ isPaid: { $ne: true } },
+				{ stripeChargeId: chargeId }
+			);
+		} catch (err) {
+			this.log.error(
+				{ callId, orderId, chargeId, err },
+				'.refundLostStripeCharges(order) could not store the charge of the unpaid cancelled order'
+			);
+		}
+
+		try {
+			const refund = await this.stripe.refunds.create(
+				{ charge: chargeId },
+				{
+					idempotencyKey: `refund-order-${orderId}-charge-${chargeId}`,
+				}
+			);
+
+			this.log.info(
+				{ callId, orderId, chargeId, refundId: refund.id },
+				'.refundLostStripeCharges(order) refunded a charge of the unpaid cancelled order'
+			);
+		} catch (err) {
+			// payWithStripe may have refunded this charge first
+			if (err != null && err.code === 'charge_already_refunded') {
+				this.log.info(
+					{ callId, orderId, chargeId, err },
+					'.refundLostStripeCharges(order) the charge of the unpaid cancelled order was already refunded'
+				);
+			} else {
+				this.log.error(
+					{ callId, orderId, chargeId, err },
+					'.refundLostStripeCharges(order) could not refund a charge of the unpaid cancelled order'
+				);
+			}
 		}
 	}
 
