@@ -86,6 +86,8 @@
 	},
 	"BUY_POPUP": {
 		"ORDER_PAID": "El pedido cuesta $",
+		"PAYMENT_FAILED": "El pago ha fallado. Por favor, inténtelo de nuevo.",
+		"EMAIL_NOT_SAVED": "No pudimos guardar su correo electrónico, así que no se ha cobrado nada en su tarjeta. Compruebe el correo electrónico o use otro y vuelva a intentarlo.",
 		"CANCEL": {
 			"STATUSES": [
 				{

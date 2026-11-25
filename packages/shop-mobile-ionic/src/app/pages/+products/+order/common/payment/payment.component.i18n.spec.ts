@@ -1,0 +1,251 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { ModalController, Platform } from '@ionic/angular';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
+import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
+import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
+import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
+import { Store } from 'app/services/store.service';
+import { settle } from 'app/testing/fake-socket';
+import bgBG from 'assets/i18n/bg-BG.json';
+import enUS from 'assets/i18n/en-US.json';
+import esES from 'assets/i18n/es-ES.json';
+import frFR from 'assets/i18n/fr-FR.json';
+import heIL from 'assets/i18n/he-IL.json';
+import ruRU from 'assets/i18n/ru-RU.json';
+import { PaymentComponent } from './payment.component';
+
+// Every locale the shop ships (see Store._initLanguage).
+const locales: { [locale: string]: any } = {
+	'bg-BG': bgBG,
+	'en-US': enUS,
+	'es-ES': esES,
+	'fr-FR': frFR,
+	'he-IL': heIL,
+	'ru-RU': ruRU,
+};
+
+// The BUY_POPUP messages of one locale file, untyped so a missing key
+// fails the spec instead of the build.
+const messagesIn = (locale: string): any => locales[locale].BUY_POPUP;
+
+// These specs load the real locale files, so they check the text the
+// customer reads, in the language the app is set to.
+describe('PaymentComponent failure messages', () => {
+	describe('locale files', () => {
+		Object.keys(locales).forEach((locale) => {
+			it(`${locale} has a payment failed and an email not saved message`, () => {
+				const messages = messagesIn(locale);
+
+				expect(messages.PAYMENT_FAILED).toEqual(jasmine.any(String));
+				expect(messages.PAYMENT_FAILED.trim()).not.toBe('');
+				expect(messages.EMAIL_NOT_SAVED).toEqual(jasmine.any(String));
+				expect(messages.EMAIL_NOT_SAVED.trim()).not.toBe('');
+				expect(messages.EMAIL_NOT_SAVED).not.toBe(
+					messages.PAYMENT_FAILED
+				);
+			});
+		});
+
+		it('does not say the email is already used by another account', () => {
+			// Saying so would tell anyone who types an email whether it
+			// has an account in the shop.
+			expect(messagesIn('en-US').EMAIL_NOT_SAVED).toEqual(
+				jasmine.any(String)
+			);
+			expect(messagesIn('en-US').EMAIL_NOT_SAVED).not.toMatch(
+				/exist|already|another account|taken|belongs/i
+			);
+		});
+	});
+
+	describe('shown to the customer', () => {
+		let userRouter: jasmine.SpyObj<UserRouter>;
+		let orderRouter: jasmine.SpyObj<OrderRouter>;
+		let translate: TranslateService;
+		let tokenHandlers: ((token: any) => Promise<void>)[];
+		let originalStripeCheckout: any;
+
+		const cardToken = () => ({
+			id: 'tok_first',
+			email: 'customer@example.com',
+		});
+
+		const createPayment = async (): Promise<PaymentComponent> => {
+			const fixture = TestBed.createComponent(PaymentComponent);
+			fixture.componentInstance.order = {
+				isPaid: false,
+				products: [
+					{ price: 10, product: { title: [], description: [] } },
+				],
+			} as any;
+			// env.ts leaves the key empty, and the payment methods refuse to
+			// run without one.
+			(fixture.componentInstance as any).stripePublishableKey =
+				'pk_test_payment_spec';
+			// Lets getUserCard and the currency load finish.
+			await settle();
+			return fixture.componentInstance;
+		};
+
+		const useLocale = (locale: string) => {
+			translate.setTranslation(locale, locales[locale]);
+			translate.use(locale);
+		};
+
+		beforeEach(async () => {
+			tokenHandlers = [];
+			originalStripeCheckout = (window as any).StripeCheckout;
+			(window as any).StripeCheckout = {
+				configure: (options) => {
+					tokenHandlers.push(options.token);
+					return { open: () => undefined };
+				},
+			};
+
+			userRouter = jasmine.createSpyObj('UserRouter', [
+				'getCards',
+				'updateEmail',
+				'addPaymentMethod',
+			]);
+			userRouter.getCards.and.returnValue(Promise.resolve([]));
+			userRouter.updateEmail.and.returnValue(
+				Promise.resolve({ id: 'user-1' } as any)
+			);
+			userRouter.addPaymentMethod.and.returnValue(
+				Promise.resolve('card-1')
+			);
+
+			orderRouter = jasmine.createSpyObj('OrderRouter', [
+				'payWithStripe',
+				'confirm',
+				'getStripeCurrency',
+			]);
+			orderRouter.getStripeCurrency.and.returnValue(
+				Promise.resolve('usd')
+			);
+
+			const modalController = jasmine.createSpyObj('ModalController', [
+				'dismiss',
+				'create',
+			]);
+
+			await TestBed.configureTestingModule({
+				declarations: [PaymentComponent],
+				imports: [TranslateModule.forRoot()],
+				providers: [
+					{ provide: UserRouter, useValue: userRouter },
+					{ provide: OrderRouter, useValue: orderRouter },
+					{ provide: Platform, useValue: { is: () => false } },
+					{ provide: InviteRouter, useValue: {} },
+					{ provide: ModalController, useValue: modalController },
+					{
+						provide: ProductLocalesService,
+						useValue: { getTranslate: () => 'Product' },
+					},
+				],
+				schemas: [CUSTOM_ELEMENTS_SCHEMA],
+			}).compileComponents();
+
+			// Store sets the app language when created, so create it before
+			// a spec picks the locale.
+			const store = TestBed.inject(Store);
+			spyOnProperty(store, 'userId', 'get').and.returnValue('user-1');
+			spyOnProperty(store, 'orderId', 'get').and.returnValue('order-1');
+			translate = TestBed.inject(TranslateService);
+
+			spyOn(window, 'alert');
+			spyOn(console, 'log');
+			spyOn(console, 'error');
+		});
+
+		afterEach(() => {
+			(window as any).StripeCheckout = originalStripeCheckout;
+		});
+
+		Object.keys(locales).forEach((locale) => {
+			it(`asks to check the email in ${locale}, without the server error, when the email update fails`, async () => {
+				useLocale(locale);
+				const error = new Error('E11000 duplicate key error: email');
+				userRouter.updateEmail.and.rejectWith(error);
+				const payment = await createPayment();
+
+				await payment.toPaymentStage();
+				await tokenHandlers[0](cardToken());
+
+				const messages = messagesIn(locale);
+
+				expect(window.alert).toHaveBeenCalledOnceWith(
+					messages.EMAIL_NOT_SAVED
+				);
+				expect(window.alert).not.toHaveBeenCalledWith(
+					messages.PAYMENT_FAILED
+				);
+				expect(messages.EMAIL_NOT_SAVED).not.toContain(error.message);
+				expect(userRouter.addPaymentMethod).not.toHaveBeenCalled();
+				expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
+			});
+
+			it(`shows the ${locale} payment failed message when the new card is declined`, async () => {
+				useLocale(locale);
+				orderRouter.payWithStripe.and.rejectWith(
+					new Error('Your card was declined.')
+				);
+				const payment = await createPayment();
+
+				await payment.toPaymentStage();
+				await tokenHandlers[0](cardToken());
+
+				expect(window.alert).toHaveBeenCalledOnceWith(
+					messagesIn(locale).PAYMENT_FAILED
+				);
+			});
+		});
+
+		it('shows the payment failed message when saving the new card fails', async () => {
+			useLocale('en-US');
+			userRouter.addPaymentMethod.and.rejectWith(
+				new Error('card_declined')
+			);
+			const payment = await createPayment();
+
+			await payment.toPaymentStage();
+			await tokenHandlers[0](cardToken());
+
+			expect(window.alert).toHaveBeenCalledOnceWith(
+				messagesIn('en-US').PAYMENT_FAILED
+			);
+			expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
+		});
+
+		it('shows the payment failed message when the saved card is declined', async () => {
+			useLocale('fr-FR');
+			orderRouter.payWithStripe.and.rejectWith(
+				new Error('Your card was declined.')
+			);
+			const payment = await createPayment();
+			payment.userCard = { id: 'card-saved', last4: '4242' } as any;
+
+			await payment.payWithUserCard();
+
+			expect(window.alert).toHaveBeenCalledOnceWith(
+				messagesIn('fr-FR').PAYMENT_FAILED
+			);
+		});
+
+		it('shows the payment failed message when the charge currency could not be loaded', async () => {
+			useLocale('he-IL');
+			orderRouter.getStripeCurrency.and.rejectWith(
+				new Error('network down')
+			);
+			const payment = await createPayment();
+
+			await payment.toPaymentStage();
+
+			expect(window.alert).toHaveBeenCalledOnceWith(
+				messagesIn('he-IL').PAYMENT_FAILED
+			);
+		});
+	});
+});
