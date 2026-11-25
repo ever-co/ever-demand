@@ -188,10 +188,7 @@ export class PaymentComponent {
 							alert('Payment Failed!');
 							console.error('Payment Failed!', err);
 
-							if (
-								err != null &&
-								err.name === STRIPE_CURRENCY_CHANGED_ERROR
-							) {
+							if (err?.name === STRIPE_CURRENCY_CHANGED_ERROR) {
 								// The setting changed since the currency was
 								// loaded: Pay now waits for the new one, so
 								// no popup shows the refused one again.
