@@ -1,0 +1,120 @@
+name: CI
+
+# Typecheck, unit tests, builds and e2e for every package on the latest stack.
+# Runs on pull requests and on demand; image publishing stays in docker-build-publish.yml.
+on:
+    pull_request:
+    workflow_dispatch:
+
+concurrency:
+    group: ci-${{ github.ref }}
+    cancel-in-progress: true
+
+env:
+    NODE_VERSION: '26.13.1'
+    PNPM_VERSION: '12.23.0'
+    NODE_OPTIONS: '--max-old-space-size=4096'
+
+jobs:
+    node:
+        name: Node packages (typecheck, unit tests, builds)
+        runs-on: ${{ vars.RUNNER_LINUX_X64_4 || 'ubuntu-latest' }}
+        timeout-minutes: 90
+        steps:
+            - uses: actions/checkout@v7
+            - uses: pnpm/action-setup@v6
+              with:
+                  version: ${{ env.PNPM_VERSION }}
+            - uses: actions/setup-node@v7
+              with:
+                  node-version: ${{ env.NODE_VERSION }}
+                  cache: pnpm
+            - run: pnpm install --frozen-lockfile
+            - run: pnpm run build:common
+            - run: pnpm run typecheck
+            - run: pnpm run test
+            - run: pnpm run build
+
+    e2e:
+        name: e2e (API + web apps, Playwright)
+        runs-on: ${{ vars.RUNNER_LINUX_X64_4 || 'ubuntu-latest' }}
+        timeout-minutes: 90
+        services:
+            mongo:
+                image: mongo:8
+                ports:
+                    - 27017:27017
+        env:
+            DB_URI: mongodb://localhost:27017/ever_e2e
+            DB_NAME: ever_e2e
+            FAKE_DATA_GENERATOR: 'true'
+        steps:
+            - uses: actions/checkout@v7
+            - uses: pnpm/action-setup@v6
+              with:
+                  version: ${{ env.PNPM_VERSION }}
+            - uses: actions/setup-node@v7
+              with:
+                  node-version: ${{ env.NODE_VERSION }}
+                  cache: pnpm
+            - run: pnpm install --frozen-lockfile
+            - run: pnpm --filter @ever-platform/e2e exec playwright install --with-deps chromium
+            - run: pnpm run build:server
+            - name: Start the API
+              run: |
+                  pnpm --filter @ever-platform/core start:built > api.log 2>&1 &
+                  npx --yes wait-on@9 -t 240000 http-get://localhost:8443/api/health
+            - run: pnpm --filter @ever-platform/e2e exec playwright test --project=api
+            - name: Build and serve the web apps
+              run: |
+                  pnpm run build:admin && pnpm run build:shopweb && pnpm run build:shopmobile && pnpm run build:carrier && pnpm run build:merchant
+                  node e2e/serve-apps.mjs > apps.log 2>&1 &
+                  npx --yes wait-on@9 -t 120000 http-get://localhost:4200 http-get://localhost:3000 http-get://localhost:4201 http-get://localhost:4202 http-get://localhost:4203
+            - run: pnpm --filter @ever-platform/e2e exec playwright test --project=admin --project=shop-web --project=shop-mobile --project=merchant --project=carrier
+            - if: failure()
+              run: tail -n 200 api.log apps.log || true
+            - if: always()
+              uses: actions/upload-artifact@v7
+              with:
+                  name: playwright-report
+                  path: e2e/playwright-report
+                  retention-days: 7
+
+    expo:
+        name: Expo app (tests, web + Android bundles)
+        runs-on: ${{ vars.RUNNER_LINUX_X64_4 || 'ubuntu-latest' }}
+        timeout-minutes: 45
+        steps:
+            - uses: actions/checkout@v7
+            - uses: pnpm/action-setup@v6
+              with:
+                  version: ${{ env.PNPM_VERSION }}
+            - uses: actions/setup-node@v7
+              with:
+                  node-version: ${{ env.NODE_VERSION }}
+                  cache: pnpm
+            - run: pnpm install --frozen-lockfile
+            - run: pnpm --filter @ever-platform/shop-mobile-expo run typecheck
+            - run: pnpm --filter @ever-platform/shop-mobile-expo run test
+            - run: pnpm --filter @ever-platform/shop-mobile-expo exec expo export --platform web
+            - run: pnpm --filter @ever-platform/shop-mobile-expo exec expo export --platform android
+
+    flutter:
+        name: Flutter app (analyze, tests, web + APK builds)
+        runs-on: ${{ vars.RUNNER_LINUX_X64_4 || 'ubuntu-latest' }}
+        timeout-minutes: 45
+        defaults:
+            run:
+                working-directory: packages/shop-mobile-flutter
+        steps:
+            - uses: actions/checkout@v7
+            - uses: subosito/flutter-action@v2.23.0
+              with:
+                  channel: stable
+                  cache: true
+            - run: flutter pub get
+            - run: flutter gen-l10n
+            - run: flutter analyze
+            - run: flutter test
+            - run: flutter build web --release
+            - run: flutter build apk --debug

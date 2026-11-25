@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { exhaustMap, merge, share, takeUntil } from 'rxjs/operators';
 import { Socket } from '../socket.service';
-import { Observable, throwError } from 'rxjs';
+import { merge as mergeEvents, Observable, throwError } from 'rxjs';
 
 export class ObservableResponseSubscriber<T> {
 	private readonly response: Observable<T>;
@@ -45,8 +45,16 @@ export class ObservableResponseSubscriber<T> {
 			);
 	}
 
+	/**
+	 * The server emits `_<id>_complete` (see core `@pyro/io/listener/handler/observable.ts`), while this
+	 * client used to listen to `<id>_complete` only, so completed server streams never completed here.
+	 * Listen to both names so it works with old and new servers.
+	 */
 	private completes() {
-		return this.socket.fromEvent(`${this.subscriptionId}_complete`);
+		return mergeEvents(
+			this.socket.fromEvent(`_${this.subscriptionId}_complete`),
+			this.socket.fromEvent(`${this.subscriptionId}_complete`)
+		);
 	}
 
 	private deserializeError(error) {
