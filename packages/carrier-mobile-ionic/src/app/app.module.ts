@@ -59,16 +59,21 @@ export function serverConnectionInitializer() {
 }
 
 /**
- * Loads the Google Maps JavaScript API used by the carrier map. Without an API key the
- * app boots without a map instead of waiting for a script that cannot work.
+ * Loads the Google Maps JavaScript API, as before (without a key Google serves it in its
+ * "development purposes only" mode). It no longer blocks the app forever: when the script
+ * cannot load (offline), the app boots after MAPS_LOAD_TIMEOUT_MS without maps.
  */
+export const MAPS_LOAD_TIMEOUT_MS = 10_000;
+
 export function googleMapsInitializer() {
 	const loader = inject(GoogleMapsLoader);
 	if (!environment.GOOGLE_MAPS_API_KEY) {
-		console.warn('GOOGLE_MAPS_API_KEY is empty: the map is disabled.');
-		return Promise.resolve();
+		console.warn('GOOGLE_MAPS_API_KEY is empty: Google Maps runs without a key.');
 	}
-	return loader.load(environment.GOOGLE_MAPS_API_KEY);
+	return Promise.race([
+		loader.load(environment.GOOGLE_MAPS_API_KEY),
+		new Promise((resolve) => setTimeout(resolve, MAPS_LOAD_TIMEOUT_MS)),
+	]);
 }
 
 export function maintenanceInitializer() {

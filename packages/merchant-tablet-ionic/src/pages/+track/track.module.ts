@@ -10,6 +10,8 @@ import { IonicModule } from '@ionic/angular/lazy';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicSelectableComponent } from 'ionic-selectable';
+// ionic-selectable 8 opens its modal through the standalone ModalController of Ionic 9
+import { ModalController as StandaloneModalController } from '@ionic/angular';
 import { WarehouseOrdersService } from '../../services/warehouse-orders.service';
 
 const routes: Routes = [
@@ -31,6 +33,11 @@ const routes: Routes = [
 		FormsModule,
 		RouterModule.forChild(routes),
 	],
-	providers: [CarrierService, WarehousesService, WarehouseOrdersService],
+	providers: [
+		CarrierService,
+		WarehousesService,
+		WarehouseOrdersService,
+		StandaloneModalController,
+	],
 })
 export class TrackPageModule {}

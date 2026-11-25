@@ -1,6 +1,7 @@
 import { expect, Page, test } from '@playwright/test';
 import {
 	addProductToStore,
+	createCarrier,
 	createCustomer,
 	createOrder,
 	createProduct,
@@ -82,9 +83,27 @@ test('carriers, customers and settings pages open', async ({ page }) => {
 	await expect(page.locator('.page-carriers .title')).toHaveText(/Carriers/);
 
 	await page.goto('/customers');
-	await expect(page.locator('h1.title').first()).toBeVisible();
+	await expect(page.locator('.customers-page .title')).toHaveText(/Customers/);
 
 	await page.goto('/settings');
 	await expect(page.locator('.page-settings .title')).toHaveText(/Settings/);
 	await expect(page.locator('ion-segment-button')).toHaveCount(4);
+});
+
+test('the store carriers are listed in the carriers table', async ({ page }) => {
+	const carrier = await createCarrier();
+	const withCarrier = await createStore({
+		hasRestrictedCarriers: true,
+		carriersIds: [carrier.id],
+		usedCarriersIds: [carrier.id],
+	});
+
+	await login(page, withCarrier);
+	await page.goto('/carriers');
+
+	const table = page.locator('angular2-smart-table');
+	await expect(table).toBeVisible({ timeout: 30_000 });
+	await expect(table.getByText(carrier.firstName).first()).toBeVisible();
+	// custom cells (phone, status, ...) get their data through componentInitFunction
+	await expect(table.locator('carrier-phone').first()).toContainText('+359888222222');
 });

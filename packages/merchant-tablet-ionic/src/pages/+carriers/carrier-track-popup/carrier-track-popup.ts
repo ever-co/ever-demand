@@ -16,8 +16,9 @@ import User from '@modules/server.common/entities/User';
 
 declare var google: any;
 
-const directionsDisplay = new google.maps.DirectionsRenderer();
-const directionsService = new google.maps.DirectionsService();
+// Created on first use: the Maps API may not be loaded when this chunk is evaluated.
+let directionsDisplay: google.maps.DirectionsRenderer;
+let directionsService: google.maps.DirectionsService;
 
 @Component({
 	standalone: false,
@@ -242,12 +243,14 @@ export class CarrierTrackPopup implements OnInit {
 					this.warehouse.geoLocation.loc.coordinates[0],
 				);
 
-				const request = {
+				const request: google.maps.DirectionsRequest = {
 					origin: start,
 					destination: end,
-					travelMode: 'DRIVING',
+					travelMode: google.maps.TravelMode.DRIVING,
 				};
 
+				directionsDisplay ??= new google.maps.DirectionsRenderer();
+				directionsService ??= new google.maps.DirectionsService();
 				directionsService.route(request, function (res, stat) {
 					if (stat === 'OK') {
 						directionsDisplay.setDirections(res);

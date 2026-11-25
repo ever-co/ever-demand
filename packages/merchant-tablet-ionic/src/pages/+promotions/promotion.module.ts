@@ -10,6 +10,7 @@ import { PromotionMutationModule } from './promotion-mutation-popup/promotion-mu
 const routes: Routes = [
 	{
 		path: '',
+		pathMatch: 'full',
 		redirectTo: 'all',
 	},
 	{
