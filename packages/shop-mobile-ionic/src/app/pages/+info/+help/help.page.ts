@@ -1,9 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	OnInit,
+	OnDestroy,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
-import { Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular/lazy';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'e-cu-help',
 	templateUrl: './help.page.html',
 	styleUrls: ['./help.page.scss'],

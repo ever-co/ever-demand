@@ -1,6 +1,12 @@
-import { Component, Input } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Input,
+} from '@angular/core';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'e-cu-loading',
 	styleUrls: ['./loading.component.scss'],
 	templateUrl: 'loading.component.html',

@@ -1,26 +1,27 @@
+<!-- ngx-progressbar 14: no meteor (flat), the default colour and thickness -->
 <ng-progress
 	#progressBar
 	[min]="0"
 	[max]="100"
-	ease="linear"
-	[trickleSpeed]="null"
 	[speed]="200"
 	[spinner]="false"
-	[meteor]="false"
-	[thick]="false"
-	[color]="null"
-	positionUsing="translate3d"
+	[flat]="true"
 	[direction]="('CURRENT_DIRECTION' | translate) + '+'"
->
-</ng-progress>
+></ng-progress>
 
 <div class="brand-dark products-view">
 	<!-- This menu-button is used when on the page no have title bar -->
 	<!-- <ion-menu-button color="light" autoHide="false"></ion-menu-button> -->
 
 	<!-- TODO dir="{{ 'CURRENT_DIRECTION' | translate }}" -->
-	<ion-slides *ngIf="products" [options]="swiperOptions" class="max-height">
-		<ion-slide
+	<swiper-container
+		#slides
+		*ngIf="products"
+		init="false"
+		class="max-height"
+		(swiperslidechangetransitionstart)="onSlideWillChange()"
+	>
+		<swiper-slide
 			class="product-card max-height"
 			*ngFor="let productInfo of showProducts"
 		>
@@ -122,8 +123,8 @@
 					</div>
 				</div>
 			</div>
-		</ion-slide>
-	</ion-slides>
+		</swiper-slide>
+	</swiper-container>
 
 	<div
 		*ngIf="products.length === 0 && placeholder && areProductsLoaded"

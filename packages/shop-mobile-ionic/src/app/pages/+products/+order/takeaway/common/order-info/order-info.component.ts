@@ -1,4 +1,10 @@
-import { OnDestroy, Component, Input, OnInit } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	OnDestroy,
+	Component,
+	Input,
+	OnInit,
+} from '@angular/core';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { Subject } from 'rxjs';
@@ -10,6 +16,8 @@ import OrderBarcodeTypes, {
 } from '@modules/server.common/enums/OrderBarcodeTypes';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'e-cu-order-takeaway-info-order-info',
 	templateUrl: './order-info.component.html',
 	styleUrls: ['./order-info.component.scss'],

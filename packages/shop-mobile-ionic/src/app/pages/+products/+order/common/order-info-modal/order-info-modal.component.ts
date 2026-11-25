@@ -1,8 +1,14 @@
-import { Component, OnDestroy } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	OnDestroy,
+} from '@angular/core';
+import { ModalController } from '@ionic/angular/lazy';
 import Order from '@modules/server.common/entities/Order';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	templateUrl: './order-info-modal.component.html',
 	styleUrls: ['./order-info-modal.component.scss'],
 })

@@ -5,11 +5,11 @@ import Device from '@modules/server.common/entities/Device';
 import User from '@modules/server.common/entities/User';
 import InviteRequest from '@modules/server.common/entities/InviteRequest';
 import { TranslateService } from '@ngx-translate/core';
-import { Globalization } from '@ionic-native/globalization';
-import { Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular/lazy';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { first } from 'rxjs/operators';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
+import { NativeService } from './native/native.service';
 
 // TODO use https://beta.ionicframework.com/docs/building/storage
 
@@ -28,7 +28,8 @@ export class Store {
 		private readonly _translateService: TranslateService,
 		private readonly platform: Platform,
 		private readonly inviteRouter: InviteRouter,
-		private readonly userRouter: UserRouter
+		private readonly userRouter: UserRouter,
+		private readonly native: NativeService
 	) {
 		this._initLanguage();
 	}
@@ -94,7 +95,7 @@ export class Store {
 	}
 
 	get language(): ILanguage {
-		return this._translateService.currentLang as ILanguage;
+		return this._translateService.getCurrentLang() as ILanguage;
 	}
 
 	set language(l: ILanguage) {
@@ -287,8 +288,10 @@ export class Store {
 		if (lang) {
 			this._translateService.use(lang);
 		} else {
-			const browserLang = this.platform.is('cordova')
-				? (await Globalization.getPreferredLanguage()).value
+			// Two-letter code on both: the device language on a phone (was
+			// Cordova Globalization), else the browser language.
+			const browserLang = this.native.isNative()
+				? await this.native.languageCode()
 				: this._translateService.getBrowserLang();
 			if (langs[browserLang]) {
 				this._translateService.use(langs[browserLang]);

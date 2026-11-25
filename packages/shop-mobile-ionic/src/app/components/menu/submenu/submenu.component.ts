@@ -1,11 +1,17 @@
-import { Component, EventEmitter } from '@angular/core';
-import { CallNumber } from '@ionic-native/call-number';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	EventEmitter,
+} from '@angular/core';
+import { NativeService } from 'app/services/native/native.service';
 import { environment } from 'environments/environment';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 import { CallPage } from 'app/pages/+products/+order/+call/call.page';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'e-cu-submenu',
 	templateUrl: './submenu.component.html',
 	styleUrls: ['./submenu.component.scss'],
@@ -17,7 +23,10 @@ export class SubMenuComponent {
 
 	public modalChange: EventEmitter<boolean>;
 
-	constructor(public modalController: ModalController) {}
+	constructor(
+		public modalController: ModalController,
+		private readonly native: NativeService
+	) {}
 
 	hasPhoneNumber() {
 		return this._ourSupportNumber !== '' ? true : false;
@@ -25,7 +34,7 @@ export class SubMenuComponent {
 
 	async callUs() {
 		try {
-			await CallNumber.callNumber(this._ourSupportNumber, true);
+			this.native.callNumber(this._ourSupportNumber);
 		} catch (err) {
 			// TODO: implement popup notification
 			if (err) {

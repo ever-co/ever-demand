@@ -8,6 +8,7 @@ import { OrderTakeawayInfoModuleGuard } from './+products/+order/takeaway/+page/
 import { OrderInfoPageModuleGuard } from './+products/+order/+order-info/order-info.module.guard';
 import { OrdersHistoryModuleGuard } from './+orders-history/orders-history.module.guard';
 import { MerchantsPageModuleGuard } from './+merchants/merchants.module.guard';
+import { ErrorsModule } from './+errors/errors.module';
 
 const routes: Routes = [
 	{
@@ -61,9 +62,11 @@ const routes: Routes = [
 			),
 	},
 	{
+		// Bundled with the pages, not lazy: the connection lost page has to
+		// open when the network is already gone, and a browser cannot fetch
+		// a lazy chunk then (Cordova served the chunks from the device).
 		path: 'errors',
-		loadChildren: () =>
-			import('./+errors/errors.module').then((m) => m.ErrorsModule),
+		loadChildren: () => ErrorsModule,
 	},
 	{
 		path: 'order-info',

@@ -1,13 +1,19 @@
-import { Component, OnDestroy } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	OnDestroy,
+} from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import { Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { Store } from '../../services/store.service';
 import { Apollo } from 'apollo-angular';
 import { OrdersHistoryQuery } from './orders-history.model';
-import { Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular/lazy';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'e-cu-orders-history',
 	templateUrl: './orders-history.page.html',
 	styleUrls: ['./orders-history.page.scss'],
@@ -21,7 +27,9 @@ export class OrdersHistoryPage implements OnDestroy {
 			variables: { userId: this._store.userId },
 		})
 		.valueChanges.pipe(
-			map((res) => res.data.getOrders),
+			// Apollo Client 4 can emit a loading result without data first.
+			filter((res) => !!res.data?.getOrders),
+			map((res) => res.data.getOrders as Order[]),
 			takeUntil(this._ngDestroy$)
 		);
 

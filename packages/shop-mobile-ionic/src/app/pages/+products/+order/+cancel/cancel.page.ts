@@ -1,4 +1,9 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	OnInit,
+	EventEmitter,
+} from '@angular/core';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import {
@@ -6,7 +11,7 @@ import {
 	ModalController,
 	NavParams,
 	NavController,
-} from '@ionic/angular';
+} from '@ionic/angular/lazy';
 import { Store } from '../../../../services/store.service';
 import { OrderPage } from '../order.page';
 import { Router } from '@angular/router';
@@ -15,6 +20,8 @@ import DeliveryType from '@modules/server.common/enums/DeliveryType';
 import { OrderTakeawayInfoPopup } from '../takeaway/popup/popup.component';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'e-cu-cancel',
 	templateUrl: './cancel.page.html',
 	styleUrls: ['./cancel.page.scss'],

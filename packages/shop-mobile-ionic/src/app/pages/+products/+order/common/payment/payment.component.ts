@@ -1,4 +1,9 @@
-import { Component, Input, EventEmitter } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Input,
+	EventEmitter,
+} from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { Store } from 'app/services/store.service';
@@ -6,13 +11,15 @@ import { Stripe } from 'stripe';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { STRIPE_CURRENCY_CHANGED_ERROR } from '@modules/server.common/routers/IOrderRouter';
 import { environment } from 'environments/environment';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 import { TranslateService } from '@ngx-translate/core';
 import { OrderPage } from '../../order.page';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'e-cu-payment',
 	templateUrl: './payment.component.html',
 	styleUrls: ['./payment.component.scss'],

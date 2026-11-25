@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ModalController, Platform } from '@ionic/angular';
-import { TranslateModule } from '@ngx-translate/core';
+import { ModalController, Platform } from '@ionic/angular/lazy';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
@@ -10,6 +10,9 @@ import { STRIPE_CURRENCY_CHANGED_ERROR } from '@modules/server.common/routers/IO
 import { Store } from 'app/services/store.service';
 import { environment } from 'environments/environment';
 import { PaymentComponent } from './payment.component';
+import { vi, type Mock } from 'vitest';
+import { createSpyObj, type SpyObj } from 'app/testing/spies';
+import { translateTesting } from 'app/testing/translate';
 
 interface Deferred<T> {
 	promise: Promise<T>;
@@ -35,14 +38,14 @@ function settle(): Promise<void> {
 describe('PaymentComponent new-card payment', () => {
 	let fixture: ComponentFixture<PaymentComponent>;
 	let component: PaymentComponent;
-	let userRouter: jasmine.SpyObj<UserRouter>;
-	let orderRouter: jasmine.SpyObj<OrderRouter>;
-	let configure: jasmine.Spy;
+	let userRouter: SpyObj<UserRouter>;
+	let orderRouter: SpyObj<OrderRouter>;
+	let configure: Mock;
 	let tokenHandlers: Array<(token: any) => Promise<void>>;
 	let closedHandlers: Array<() => void>;
-	let modalController: jasmine.SpyObj<ModalController>;
+	let modalController: SpyObj<ModalController>;
 	let originalStripeCheckout: any;
-	let orderId: jasmine.Spy;
+	let orderId: Mock;
 
 	const cardToken = (id: string) => ({
 		id,
@@ -77,46 +80,44 @@ describe('PaymentComponent new-card payment', () => {
 	beforeEach(async () => {
 		tokenHandlers = [];
 		closedHandlers = [];
-		configure = jasmine
-			.createSpy('StripeCheckout.configure')
-			.and.callFake((options) => {
+		configure = vi.fn().mockImplementation((options) => {
 				tokenHandlers.push(options.token);
 				closedHandlers.push(options.closed);
-				return { open: jasmine.createSpy('open') };
+				return { open: vi.fn() };
 			});
 		originalStripeCheckout = (window as any).StripeCheckout;
 		(window as any).StripeCheckout = { configure };
 
-		userRouter = jasmine.createSpyObj('UserRouter', [
+		userRouter = createSpyObj('UserRouter', [
 			'getCards',
 			'updateEmail',
 			'addPaymentMethod',
 		]);
-		userRouter.getCards.and.returnValue(Promise.resolve([]));
-		userRouter.updateEmail.and.returnValue(
+		userRouter.getCards.mockReturnValue(Promise.resolve([]));
+		userRouter.updateEmail.mockReturnValue(
 			Promise.resolve({ id: 'user-1' } as any)
 		);
-		userRouter.addPaymentMethod.and.returnValue(Promise.resolve('card-1'));
+		userRouter.addPaymentMethod.mockReturnValue(Promise.resolve('card-1'));
 
-		orderRouter = jasmine.createSpyObj('OrderRouter', [
+		orderRouter = createSpyObj('OrderRouter', [
 			'payWithStripe',
 			'confirm',
 			'getStripeCurrency',
 		]);
-		orderRouter.confirm.and.returnValue(Promise.resolve(paidOrder()));
-		orderRouter.getStripeCurrency.and.returnValue(Promise.resolve('ils'));
+		orderRouter.confirm.mockReturnValue(Promise.resolve(paidOrder()));
+		orderRouter.getStripeCurrency.mockReturnValue(Promise.resolve('ils'));
 
-		modalController = jasmine.createSpyObj('ModalController', [
+		modalController = createSpyObj('ModalController', [
 			'dismiss',
 			'create',
 		]);
-		modalController.create.and.returnValue(
+		modalController.create.mockReturnValue(
 			Promise.resolve({ present: () => Promise.resolve() } as any)
 		);
 
 		await TestBed.configureTestingModule({
 			declarations: [PaymentComponent],
-			imports: [TranslateModule.forRoot()],
+			imports: [...translateTesting()],
 			providers: [
 				{ provide: UserRouter, useValue: userRouter },
 				{ provide: OrderRouter, useValue: orderRouter },
@@ -135,14 +136,14 @@ describe('PaymentComponent new-card payment', () => {
 
 		// Store keeps the ids in localStorage; read them from spies instead.
 		const store = TestBed.inject(Store);
-		spyOnProperty(store, 'userId', 'get').and.returnValue('user-1');
-		orderId = spyOnProperty(store, 'orderId', 'get').and.returnValue(
+		vi.spyOn(store, 'userId', 'get').mockReturnValue('user-1');
+		orderId = vi.spyOn(store, 'orderId', 'get').mockReturnValue(
 			'order-1'
 		);
 
-		spyOn(window, 'alert');
-		spyOn(console, 'log');
-		spyOn(console, 'error');
+		vi.spyOn(window, 'alert').mockImplementation(() => undefined);
+		vi.spyOn(console, 'log').mockImplementation(() => undefined);
+		vi.spyOn(console, 'error').mockImplementation(() => undefined);
 
 		fixture = await createPayment();
 		component = fixture.componentInstance;
@@ -154,7 +155,7 @@ describe('PaymentComponent new-card payment', () => {
 
 	it('does not save a second card or charge again while the first new-card payment is in flight', async () => {
 		const payment = deferred<any>();
-		orderRouter.payWithStripe.and.returnValue(payment.promise);
+		orderRouter.payWithStripe.mockReturnValue(payment.promise);
 
 		await component.toPaymentStage();
 		const first = tokenHandlers[0](cardToken('tok_first'));
@@ -184,8 +185,8 @@ describe('PaymentComponent new-card payment', () => {
 
 	it('blocks a second card submission while the email update is still pending', async () => {
 		const emailUpdate = deferred<any>();
-		userRouter.updateEmail.and.returnValue(emailUpdate.promise);
-		orderRouter.payWithStripe.and.returnValue(Promise.resolve(paidOrder()));
+		userRouter.updateEmail.mockReturnValue(emailUpdate.promise);
+		orderRouter.payWithStripe.mockReturnValue(Promise.resolve(paidOrder()));
 
 		await component.toPaymentStage();
 		const first = tokenHandlers[0](cardToken('tok_first'));
@@ -213,7 +214,7 @@ describe('PaymentComponent new-card payment', () => {
 
 	it('resets paying when the email update fails', async () => {
 		const emailUpdate = deferred<any>();
-		userRouter.updateEmail.and.returnValue(emailUpdate.promise);
+		userRouter.updateEmail.mockReturnValue(emailUpdate.promise);
 
 		await component.toPaymentStage();
 		const done = tokenHandlers[0](cardToken('tok_first'));
@@ -231,23 +232,23 @@ describe('PaymentComponent new-card payment', () => {
 		// The email typed in Checkout belongs to another customer, so
 		// updateEmail fails on the unique email index.
 		const error = new Error('E11000 duplicate key error: email');
-		userRouter.updateEmail.and.rejectWith(error);
+		userRouter.updateEmail.mockRejectedValue(error);
 
 		await component.toPaymentStage();
-		await expectAsync(
+		await expect(
 			tokenHandlers[0](cardToken('tok_first'))
-		).toBeResolved();
+		).resolves.toBeUndefined();
 
 		// TranslateModule.forRoot() has no translations, so instant
 		// returns the key. The email step has its own message, not the
 		// generic one, and never the server error.
-		expect(window.alert).toHaveBeenCalledOnceWith(
+		expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 			'BUY_POPUP.EMAIL_NOT_SAVED'
 		);
 		expect(window.alert).not.toHaveBeenCalledWith(
 			'BUY_POPUP.PAYMENT_FAILED'
 		);
-		expect(console.error).toHaveBeenCalledWith(jasmine.any(String), error);
+		expect(console.error).toHaveBeenCalledWith(expect.any(String), error);
 		expect(userRouter.addPaymentMethod).not.toHaveBeenCalled();
 		expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
 		expect(component.paying).toBe(false);
@@ -257,8 +258,8 @@ describe('PaymentComponent new-card payment', () => {
 	it('keeps paying set until payWithStripe and confirm finish, then resets it', async () => {
 		const payment = deferred<any>();
 		const confirmation = deferred<any>();
-		orderRouter.payWithStripe.and.returnValue(payment.promise);
-		orderRouter.confirm.and.returnValue(confirmation.promise);
+		orderRouter.payWithStripe.mockReturnValue(payment.promise);
+		orderRouter.confirm.mockReturnValue(confirmation.promise);
 
 		await component.toPaymentStage();
 		const done = tokenHandlers[0](cardToken('tok_first'));
@@ -280,7 +281,7 @@ describe('PaymentComponent new-card payment', () => {
 
 	it('resets paying after a failed payment so the customer can try again', async () => {
 		const payment = deferred<any>();
-		orderRouter.payWithStripe.and.returnValue(payment.promise);
+		orderRouter.payWithStripe.mockReturnValue(payment.promise);
 
 		await component.toPaymentStage();
 		const done = tokenHandlers[0](cardToken('tok_first'));
@@ -301,7 +302,7 @@ describe('PaymentComponent new-card payment', () => {
 
 	it('resets paying when saving the new card fails', async () => {
 		const cardSave = deferred<string>();
-		userRouter.addPaymentMethod.and.returnValue(cardSave.promise);
+		userRouter.addPaymentMethod.mockReturnValue(cardSave.promise);
 
 		await component.toPaymentStage();
 		const done = tokenHandlers[0](cardToken('tok_first'));
@@ -318,17 +319,17 @@ describe('PaymentComponent new-card payment', () => {
 
 	it('tells the customer when saving the new card fails', async () => {
 		const error = new Error('card_declined');
-		userRouter.addPaymentMethod.and.rejectWith(error);
+		userRouter.addPaymentMethod.mockRejectedValue(error);
 
 		await component.toPaymentStage();
-		await expectAsync(
+		await expect(
 			tokenHandlers[0](cardToken('tok_first'))
-		).toBeResolved();
+		).resolves.toBeUndefined();
 
-		expect(window.alert).toHaveBeenCalledOnceWith(
+		expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 			'BUY_POPUP.PAYMENT_FAILED'
 		);
-		expect(console.error).toHaveBeenCalledWith(jasmine.any(String), error);
+		expect(console.error).toHaveBeenCalledWith(expect.any(String), error);
 		expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
 		expect(component.paying).toBe(false);
 		expect(TestBed.inject(Store).isPaying('order-1')).toBe(false);
@@ -342,7 +343,7 @@ describe('PaymentComponent new-card payment', () => {
 
 		it('tells the customer once and frees Pay with card when the saved card is declined', async () => {
 			const payment = deferred<any>();
-			orderRouter.payWithStripe.and.returnValue(payment.promise);
+			orderRouter.payWithStripe.mockReturnValue(payment.promise);
 			const declined = new Error('Your card was declined.');
 			component.userCard = savedCard();
 
@@ -350,7 +351,7 @@ describe('PaymentComponent new-card payment', () => {
 			payWithCardButton().click();
 			await settle();
 
-			expect(orderRouter.payWithStripe).toHaveBeenCalledOnceWith(
+			expect(orderRouter.payWithStripe).toHaveBeenCalledExactlyOnceWith(
 				'order-1',
 				'card-saved'
 			);
@@ -359,11 +360,11 @@ describe('PaymentComponent new-card payment', () => {
 			payment.reject(declined);
 			await settle();
 
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.PAYMENT_FAILED'
 			);
 			expect(console.error).toHaveBeenCalledWith(
-				jasmine.any(String),
+				expect.any(String),
 				declined
 			);
 			expect(component.paying).toBe(false);
@@ -387,21 +388,21 @@ describe('PaymentComponent new-card payment', () => {
 		};
 
 		it('shows the currency the server charges the card in', async () => {
-			orderRouter.getStripeCurrency.and.returnValue(
+			orderRouter.getStripeCurrency.mockReturnValue(
 				Promise.resolve('usd')
 			);
 			const payment = (await createPayment()).componentInstance;
 
 			await payment.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledOnceWith(
-				jasmine.objectContaining({ currency: 'USD' })
+			expect(configure).toHaveBeenCalledExactlyOnceWith(
+				expect.objectContaining({ currency: 'USD' })
 			);
 		});
 
 		it('keeps Pay now disabled and opens no popup until the server sent the currency', async () => {
 			const currency = deferred<string>();
-			orderRouter.getStripeCurrency.and.returnValue(currency.promise);
+			orderRouter.getStripeCurrency.mockReturnValue(currency.promise);
 			const payment = await createPayment();
 
 			expect(payNowButton(payment).disabled).toBe(true);
@@ -418,22 +419,21 @@ describe('PaymentComponent new-card payment', () => {
 
 			await payment.componentInstance.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledOnceWith(
-				jasmine.objectContaining({ currency: 'EUR' })
+			expect(configure).toHaveBeenCalledExactlyOnceWith(
+				expect.objectContaining({ currency: 'EUR' })
 			);
 		});
 
 		it('tells the customer and loads the currency again when it could not be loaded', async () => {
 			const error = new Error('network down');
-			orderRouter.getStripeCurrency.calls.reset();
-			orderRouter.getStripeCurrency.and.returnValues(
-				Promise.reject(error),
-				Promise.resolve('usd')
-			);
+			orderRouter.getStripeCurrency.mockClear();
+			orderRouter.getStripeCurrency
+				.mockReturnValueOnce(Promise.reject(error))
+				.mockReturnValueOnce(Promise.resolve('usd'));
 			const payment = await createPayment();
 
 			expect(console.error).toHaveBeenCalledWith(
-				jasmine.any(String),
+				expect.any(String),
 				error
 			);
 			// Enabled, so the tap can say what went wrong
@@ -442,7 +442,7 @@ describe('PaymentComponent new-card payment', () => {
 			await payment.componentInstance.toPaymentStage();
 
 			expect(configure).not.toHaveBeenCalled();
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.PAYMENT_FAILED'
 			);
 			expect(orderRouter.getStripeCurrency).toHaveBeenCalledTimes(2);
@@ -450,16 +450,16 @@ describe('PaymentComponent new-card payment', () => {
 			await settle();
 			await payment.componentInstance.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledOnceWith(
-				jasmine.objectContaining({ currency: 'USD' })
+			expect(configure).toHaveBeenCalledExactlyOnceWith(
+				expect.objectContaining({ currency: 'USD' })
 			);
 		});
 
 		it('sends the currency shown in the popup with the charge', async () => {
-			orderRouter.getStripeCurrency.and.returnValue(
+			orderRouter.getStripeCurrency.mockReturnValue(
 				Promise.resolve('usd')
 			);
-			orderRouter.payWithStripe.and.returnValue(
+			orderRouter.payWithStripe.mockReturnValue(
 				Promise.resolve(paidOrder())
 			);
 			const payment = (await createPayment()).componentInstance;
@@ -469,7 +469,7 @@ describe('PaymentComponent new-card payment', () => {
 				cardToken('tok_first')
 			);
 
-			expect(orderRouter.payWithStripe).toHaveBeenCalledOnceWith(
+			expect(orderRouter.payWithStripe).toHaveBeenCalledExactlyOnceWith(
 				'order-1',
 				'card-1',
 				'USD'
@@ -480,16 +480,15 @@ describe('PaymentComponent new-card payment', () => {
 			// The server restarted with another currency while the page
 			// stayed open, so it refuses the charge in the shown one.
 			const reloaded = deferred<string>();
-			orderRouter.getStripeCurrency.calls.reset();
-			orderRouter.getStripeCurrency.and.returnValues(
-				Promise.resolve('ils'),
-				reloaded.promise
-			);
+			orderRouter.getStripeCurrency.mockClear();
+			orderRouter.getStripeCurrency
+				.mockReturnValueOnce(Promise.resolve('ils'))
+				.mockReturnValueOnce(reloaded.promise);
 			const refused = new Error(
 				'Charge currency is usd, but the customer was shown ILS'
 			);
 			refused.name = STRIPE_CURRENCY_CHANGED_ERROR;
-			orderRouter.payWithStripe.and.rejectWith(refused);
+			orderRouter.payWithStripe.mockRejectedValue(refused);
 			const fixtureWithRefusal = await createPayment();
 			const payment = fixtureWithRefusal.componentInstance;
 
@@ -499,7 +498,7 @@ describe('PaymentComponent new-card payment', () => {
 			);
 			await settle();
 
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.PAYMENT_FAILED'
 			);
 			expect(orderRouter.getStripeCurrency).toHaveBeenCalledTimes(2);
@@ -518,12 +517,12 @@ describe('PaymentComponent new-card payment', () => {
 			await payment.toPaymentStage();
 
 			expect(configure).toHaveBeenCalledTimes(2);
-			expect(configure.calls.mostRecent().args[0].currency).toBe('USD');
+			expect(configure.mock.lastCall[0].currency).toBe('USD');
 		});
 
 		it('keeps the currency after a declined card', async () => {
-			orderRouter.getStripeCurrency.calls.reset();
-			orderRouter.payWithStripe.and.rejectWith(
+			orderRouter.getStripeCurrency.mockClear();
+			orderRouter.payWithStripe.mockRejectedValue(
 				new Error('Your card was declined.')
 			);
 			const payment = (await createPayment()).componentInstance;
@@ -534,7 +533,7 @@ describe('PaymentComponent new-card payment', () => {
 			);
 			await settle();
 
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.PAYMENT_FAILED'
 			);
 			expect(orderRouter.getStripeCurrency).toHaveBeenCalledTimes(1);
@@ -542,7 +541,7 @@ describe('PaymentComponent new-card payment', () => {
 			await payment.toPaymentStage();
 
 			expect(configure).toHaveBeenCalledTimes(2);
-			expect(configure.calls.mostRecent().args[0].currency).toBe('ILS');
+			expect(configure.mock.lastCall[0].currency).toBe('ILS');
 		});
 	});
 
@@ -565,8 +564,8 @@ describe('PaymentComponent new-card payment', () => {
 	describe('when a page creates the payment component again during a payment', () => {
 		it('blocks Pay now and Pay with card on the new component while updateEmail is still pending', async () => {
 			const emailUpdate = deferred<any>();
-			userRouter.updateEmail.and.returnValue(emailUpdate.promise);
-			orderRouter.payWithStripe.and.returnValue(
+			userRouter.updateEmail.mockReturnValue(emailUpdate.promise);
+			orderRouter.payWithStripe.mockReturnValue(
 				Promise.resolve(paidOrder())
 			);
 
@@ -600,8 +599,8 @@ describe('PaymentComponent new-card payment', () => {
 
 		it('ignores a card token from another component while updateEmail is still pending', async () => {
 			const emailUpdate = deferred<any>();
-			userRouter.updateEmail.and.returnValue(emailUpdate.promise);
-			orderRouter.payWithStripe.and.returnValue(
+			userRouter.updateEmail.mockReturnValue(emailUpdate.promise);
+			orderRouter.payWithStripe.mockReturnValue(
 				Promise.resolve(paidOrder())
 			);
 
@@ -634,7 +633,7 @@ describe('PaymentComponent new-card payment', () => {
 
 		it('disables Pay now on the new component until the first payment finishes', async () => {
 			const payment = deferred<any>();
-			orderRouter.payWithStripe.and.returnValue(payment.promise);
+			orderRouter.payWithStripe.mockReturnValue(payment.promise);
 
 			await component.toPaymentStage();
 			const first = tokenHandlers[0](cardToken('tok_first'));
@@ -656,7 +655,7 @@ describe('PaymentComponent new-card payment', () => {
 
 		it('clears the guard after the payment succeeds', async () => {
 			const payment = deferred<any>();
-			orderRouter.payWithStripe.and.returnValue(payment.promise);
+			orderRouter.payWithStripe.mockReturnValue(payment.promise);
 
 			await component.toPaymentStage();
 			const first = tokenHandlers[0](cardToken('tok_first'));
@@ -679,7 +678,7 @@ describe('PaymentComponent new-card payment', () => {
 
 		it('clears the guard after the email update fails', async () => {
 			const emailUpdate = deferred<any>();
-			userRouter.updateEmail.and.returnValue(emailUpdate.promise);
+			userRouter.updateEmail.mockReturnValue(emailUpdate.promise);
 
 			await component.toPaymentStage();
 			const first = tokenHandlers[0](cardToken('tok_first'));
@@ -701,7 +700,7 @@ describe('PaymentComponent new-card payment', () => {
 
 		it('clears the guard and tells the customer once after a saved-card payment is rejected', async () => {
 			const payment = deferred<any>();
-			orderRouter.payWithStripe.and.returnValue(payment.promise);
+			orderRouter.payWithStripe.mockReturnValue(payment.promise);
 
 			component.userCard = savedCard();
 			const first = component.payWithUserCard();
@@ -716,14 +715,14 @@ describe('PaymentComponent new-card payment', () => {
 			payment.reject(new Error('Your card was declined.'));
 
 			// Settles, so nothing escapes the click handler
-			await expectAsync(first).toBeResolvedTo(undefined);
-			await expectAsync(blocked).toBeResolvedTo(undefined);
+			await expect(first).resolves.toBeUndefined();
+			await expect(blocked).resolves.toBeUndefined();
 			// Only the charge that ran tells the customer
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.PAYMENT_FAILED'
 			);
 
-			orderRouter.payWithStripe.and.returnValue(
+			orderRouter.payWithStripe.mockReturnValue(
 				Promise.resolve(paidOrder())
 			);
 			await second.payWithUserCard();
@@ -734,8 +733,8 @@ describe('PaymentComponent new-card payment', () => {
 
 		it('does not block a payment for a different order', async () => {
 			const emailUpdate = deferred<any>();
-			userRouter.updateEmail.and.returnValue(emailUpdate.promise);
-			orderRouter.payWithStripe.and.returnValue(
+			userRouter.updateEmail.mockReturnValue(emailUpdate.promise);
+			orderRouter.payWithStripe.mockReturnValue(
 				Promise.resolve(paidOrder())
 			);
 
@@ -749,7 +748,7 @@ describe('PaymentComponent new-card payment', () => {
 
 			// The customer starts another order while the first payment
 			// still runs.
-			orderId.and.returnValue('order-2');
+			orderId.mockReturnValue('order-2');
 
 			await second.toPaymentStage();
 
@@ -761,8 +760,10 @@ describe('PaymentComponent new-card payment', () => {
 			await Promise.all([first, other]);
 
 			expect(userRouter.addPaymentMethod).toHaveBeenCalledTimes(2);
-			expect(orderRouter.payWithStripe.calls.allArgs()).toEqual(
-				jasmine.arrayWithExactContents([
+			// In any order, and nothing else.
+			expect(orderRouter.payWithStripe.mock.calls).toHaveLength(2);
+			expect(orderRouter.payWithStripe.mock.calls).toEqual(
+				expect.arrayContaining([
 					['order-1', 'card-1', 'ILS'],
 					['order-2', 'card-1', 'ILS'],
 				])
@@ -783,10 +784,10 @@ describe('PaymentComponent new-card payment', () => {
 			environment.ORDER_INFO_TYPE = 'popup';
 
 			modalChange = new EventEmitter<boolean>();
-			spyOn(modalChange, 'emit');
+			vi.spyOn(modalChange, 'emit').mockImplementation(() => undefined);
 			component.modalChange = modalChange;
 
-			orderRouter.payWithStripe.and.returnValue(
+			orderRouter.payWithStripe.mockReturnValue(
 				Promise.resolve(paidOrder())
 			);
 		});

@@ -1,11 +1,17 @@
-import { Component, Inject } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Inject,
+} from '@angular/core';
 import { Location, DOCUMENT } from '@angular/common';
 import { Store } from '../../services/store.service';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';
 import { TranslateService } from '@ngx-translate/core';
-import { Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular/lazy';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'e-cu-language',
 	templateUrl: './language.page.html',
 	styleUrls: ['./language.page.scss'],

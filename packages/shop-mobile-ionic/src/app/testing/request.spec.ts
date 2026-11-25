@@ -52,9 +52,9 @@ describe('Request', () => {
 		expect(outcome.settled).toBe(true);
 		expect(outcome.error instanceof Error).toBe(true);
 		expect(outcome.error).toEqual(
-			jasmine.objectContaining({
+			expect.objectContaining({
 				name: 'SocketDisconnectedError',
-				message: jasmine.stringContaining('"payWithStripe"'),
+				message: expect.stringContaining('"payWithStripe"'),
 			})
 		);
 	});
@@ -94,7 +94,7 @@ describe('Request', () => {
 
 		expect(outcome.settled).toBe(true);
 		expect(outcome.error).toEqual(
-			jasmine.objectContaining({ name: 'SocketDisconnectedError' })
+			expect.objectContaining({ name: 'SocketDisconnectedError' })
 		);
 	});
 

@@ -1,6 +1,14 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	HostBinding,
+	Input,
+	OnInit,
+} from '@angular/core';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'e-cu-warehouse-logo',
 	styles: [
 		`

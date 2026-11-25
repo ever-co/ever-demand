@@ -1,33 +1,32 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Platform } from '@ionic/angular';
-import { TranslateModule } from '@ngx-translate/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Platform } from '@ionic/angular/lazy';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { of } from 'rxjs';
 import { PrivacyPage } from './privacy.page';
+import { createSpyObj } from 'app/testing/spies';
+import { translateTesting } from 'app/testing/translate';
 
 describe('PrivacyPage', () => {
 	let component: PrivacyPage;
 	let fixture: ComponentFixture<PrivacyPage>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
-				declarations: [PrivacyPage],
-				imports: [TranslateModule.forRoot()],
-				providers: [
-					{
-						provide: UserRouter,
-						useValue: jasmine.createSpyObj('UserRouter', {
-							getPrivacy: of(''),
-						}),
-					},
-					{ provide: Platform, useValue: { isRTL: false } },
-				],
-				schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			}).compileComponents();
-		})
-	);
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
+			declarations: [PrivacyPage],
+			imports: [...translateTesting()],
+			providers: [
+				{
+					provide: UserRouter,
+					useValue: createSpyObj('UserRouter', {
+						getPrivacy: of(''),
+					}),
+				},
+				{ provide: Platform, useValue: { isRTL: false } },
+			],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
+	});
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(PrivacyPage);

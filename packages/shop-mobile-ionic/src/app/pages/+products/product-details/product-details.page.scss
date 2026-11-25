@@ -23,7 +23,7 @@
 	font-size: 60%;
 }
 
-ion-slide {
+swiper-slide {
 	display: block;
 	height: 100vh;
 }
@@ -53,13 +53,15 @@ ion-slide {
 	max-height: 180px;
 }
 
-ion-slide.swiper-slide {
+swiper-slide {
+	text-align: center;
 	display: flex !important;
 	align-content: center !important;
 	align-items: center !important;
 }
 
-ion-slides.hydrated {
+swiper-container {
+	display: block;
 	min-width: 100%;
 }
 

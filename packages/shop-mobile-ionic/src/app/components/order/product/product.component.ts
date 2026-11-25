@@ -13,6 +13,7 @@ import { DOCUMENT } from '@angular/common';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-order-product',
 	styleUrls: ['./product.component.scss'],
 	templateUrl: './product.component.html',

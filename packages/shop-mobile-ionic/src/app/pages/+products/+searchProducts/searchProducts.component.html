@@ -6,7 +6,7 @@
 		[placeholder]="'SEARCH_VIEW.SEARCH_PLACEHOLDER' | translate"
 		animated
 		debounce="500"
-		(ionChange)="onSearchChange()"
+		(ionInput)="onSearchChange()"
 	></ion-searchbar>
 
 	<e-cu-loading color="light" *ngIf="isLoading"></e-cu-loading>

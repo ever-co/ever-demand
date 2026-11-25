@@ -1,4 +1,5 @@
 import {
+	ChangeDetectionStrategy,
 	Component,
 	OnInit,
 	ViewChild,
@@ -9,7 +10,7 @@ import {
 } from '@angular/core';
 import { ElapsedTimeComponent } from 'app/components/elapsed-time/elapsed-time.component';
 import Order from '@modules/server.common/entities/Order';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 import { DeliveryStatus } from '../../../order.page';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import { Subject } from 'rxjs';
@@ -18,6 +19,8 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import { Router } from '@angular/router';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'e-cu-order-store-info',
 	templateUrl: './store-info.component.html',
 	styleUrls: ['./store-info.component.scss'],

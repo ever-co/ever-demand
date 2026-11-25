@@ -36,7 +36,9 @@
 			<ion-row no-padding align-items-center>
 				<ion-col class="col-2">
 					<e-cu-warehouse-logo
-						[logo]="productInfo?.warehouseLogo"
+						[logo]="
+							$safeNavigationMigration(productInfo?.warehouseLogo)
+						"
 						class="icon"
 					></e-cu-warehouse-logo>
 				</ion-col>
@@ -94,9 +96,9 @@
 							>{{
 								!productInfo.soldOut
 									? ('PRODUCTS_VIEW.BUY_BUTTON.PRE'
-									  | translate)
+										| translate)
 									: ('PRODUCTS_VIEW.NOT_AVAILABLE'
-									  | translate)
+										| translate)
 							}}
 							<span class="price">
 								{{
@@ -109,7 +111,7 @@
 							{{
 								!productInfo.soldOut
 									? ('PRODUCTS_VIEW.BUY_BUTTON.SUF'
-									  | translate)
+										| translate)
 									: ''
 							}}
 						</span>
@@ -131,7 +133,7 @@
 	</ion-card>
 
 	<ion-infinite-scroll
-		[disabled]="productsCount <= products?.length"
+		[disabled]="productsCount <= $safeNavigationMigration(products?.length)"
 		threshold="100px"
 		(ionInfinite)="loadData($event)"
 		position="bottom"

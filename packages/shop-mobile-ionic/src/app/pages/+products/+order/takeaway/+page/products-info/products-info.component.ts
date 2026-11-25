@@ -1,4 +1,5 @@
 import {
+	ChangeDetectionStrategy,
 	Component,
 	OnInit,
 	Input,
@@ -14,6 +15,8 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'e-cu-order-produts-info',
 	templateUrl: './products-info.component.html',
 	styleUrls: ['./products-info.component.scss'],

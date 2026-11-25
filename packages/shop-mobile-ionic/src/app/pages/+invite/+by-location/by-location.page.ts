@@ -1,7 +1,12 @@
 // imports from lodash have to be combined
 import * as _ from 'lodash';
 import { every, isEmpty, isNumber } from 'lodash';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	OnInit,
+	OnDestroy,
+} from '@angular/core';
 import { InviteRequestRouter } from '@modules/client.common.angular2/routers/invite-request-router.service';
 import {
 	Country,
@@ -11,7 +16,7 @@ import { first } from 'rxjs/operators';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import InviteRequest from '@modules/server.common/entities/InviteRequest';
-import { Geolocation, GeolocationOptions } from '@ionic-native/geolocation';
+import { Geolocation, PositionOptions } from '@capacitor/geolocation';
 import { Router } from '@angular/router';
 import Invite from '@modules/server.common/entities/Invite';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
@@ -22,6 +27,8 @@ import { Subject } from 'rxjs';
 import { environment } from 'environments/environment';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'e-cu-by-location',
 	templateUrl: './by-location.page.html',
 	styleUrls: ['./by-location.page.scss'],
@@ -76,7 +83,7 @@ export class ByLocationPage implements OnInit, OnDestroy {
 		lat: number;
 	} | null> {
 		try {
-			const options: GeolocationOptions = {
+			const options: PositionOptions = {
 				timeout: 30000, // we don't want user to wait more than 30 sec in any case
 				enableHighAccuracy: true, // will try to use GPS (if enabled) on mobile
 			};
@@ -103,13 +110,13 @@ export class ByLocationPage implements OnInit, OnDestroy {
 				!response.coords.longitude
 			) {
 				console.log(
-					'Device location using @ionic-native/geolocation services recieved empty'
+					'Device location using @capacitor/geolocation recieved empty'
 				);
 				return null;
 			}
 
 			console.log(
-				`Device location using @ionic-native/geolocation services recieved: ${coords.latitude}, ${coords.longitude}`
+				`Device location using @capacitor/geolocation recieved: ${coords.latitude}, ${coords.longitude}`
 			);
 
 			return { lng: coords.longitude, lat: coords.latitude };
@@ -314,7 +321,7 @@ export class ByLocationPage implements OnInit, OnDestroy {
 	private async updateCurrentAddressByCoordinates(): Promise<boolean> {
 		try {
 			console.log(
-				'Attempt to detect device location using @ionic-native/geolocation services'
+				'Attempt to detect device location using @capacitor/geolocation'
 			);
 
 			const coordinatesObj = await this.getCoordinates();

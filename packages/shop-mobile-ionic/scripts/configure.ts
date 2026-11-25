@@ -2,11 +2,16 @@
 // We are using dotenv (.env) for consistency with other Platform projects
 // This is Angular app and all settings will be loaded into the client browser!
 
-import { env } from './env';
-import { writeFile, unlinkSync } from 'fs';
-import { argv } from 'yargs';
+import { env } from './env.ts';
+import { writeFile, unlinkSync } from 'node:fs';
+import { parseArgs } from 'node:util';
 
-const environment = argv["environment"];
+const { values: argv } = parseArgs({
+	options: { environment: { type: 'string', default: 'dev' } },
+	strict: false,
+});
+
+const environment = argv['environment'];
 const isProd = environment === 'prod';
 
 if (!env.GOOGLE_MAPS_API_KEY) {
@@ -27,7 +32,7 @@ const envFileContent = `// NOTE: Auto-generated file
 // 'ng build --env=prod' then 'environment.prod.ts' will be used instead.
 // The list of which env maps to which file can be found in '.angular-cli.json'.
 
-import { Environment } from './model';
+import type { Environment } from './model';
 
 export const environment: Environment = {
   production: ${isProd},

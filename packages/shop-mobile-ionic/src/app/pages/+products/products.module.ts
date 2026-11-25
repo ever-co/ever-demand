@@ -1,17 +1,17 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular/lazy';
 import { ProductsPage } from './products.page';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { ProductsSlidesViewComponent } from './products-view/slides-view/slides-view.component';
 import { ProductsListViewComponent } from './products-view/list-view/list-view.component';
 import { ProductsPageGuard } from './products.page.guard';
 import { OrderModuleGuard } from './+order/order.module.guard';
 import { WarehouseLogoModule } from '../../components/warehouse-logo/warehouse-logo.module';
 import { ProductsViewComponent } from './products-view/products-view.component';
-import { NgProgressModule } from 'ngx-progressbar';
+import { NgProgressbar } from 'ngx-progressbar';
 import { OrderPageModule } from './+order/order.module';
 import { CancelPageModule } from './+order/+cancel/cancel.module';
 import { GeoLocationService } from '../../services/geo-location';
@@ -51,7 +51,7 @@ const routes: Routes = [
 		RouterModule.forChild(routes),
 		TranslateModule.forChild(),
 		ProductsModule,
-		NgProgressModule.withConfig({}),
+		NgProgressbar,
 		PipesModule,
 		WarehouseLogoModule,
 		OrderPageModule,
@@ -69,6 +69,8 @@ const routes: Routes = [
 		ProductsService,
 		OrdersService,
 	],
+	// <swiper-container> / <swiper-slide> (Swiper element) in the slides view
+	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	declarations: [
 		ProductsPage,
 		ProductsSlidesViewComponent,
