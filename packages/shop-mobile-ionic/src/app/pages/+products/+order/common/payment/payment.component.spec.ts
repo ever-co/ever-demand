@@ -95,8 +95,10 @@ describe('PaymentComponent new-card payment', () => {
 		orderRouter = jasmine.createSpyObj('OrderRouter', [
 			'payWithStripe',
 			'confirm',
+			'getStripeCurrency',
 		]);
 		orderRouter.confirm.and.returnValue(Promise.resolve(paidOrder()));
+		orderRouter.getStripeCurrency.and.returnValue(Promise.resolve('ils'));
 
 		const modalController = jasmine.createSpyObj('ModalController', [
 			'dismiss',
@@ -314,6 +316,67 @@ describe('PaymentComponent new-card payment', () => {
 		expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
 		expect(component.paying).toBe(false);
 		expect(TestBed.inject(Store).isPaying('order-1')).toBe(false);
+	});
+
+	describe('card popup currency', () => {
+		const payNowButton = (
+			payment: ComponentFixture<PaymentComponent>
+		): HTMLButtonElement => {
+			payment.detectChanges();
+			return payment.nativeElement.querySelector('button');
+		};
+
+		it('shows the currency the server charges the card in', async () => {
+			orderRouter.getStripeCurrency.and.returnValue(
+				Promise.resolve('usd')
+			);
+			const payment = (await createPayment()).componentInstance;
+
+			await payment.toPaymentStage();
+
+			expect(configure).toHaveBeenCalledOnceWith(
+				jasmine.objectContaining({ currency: 'USD' })
+			);
+		});
+
+		it('keeps Pay now disabled and opens no popup until the server sent the currency', async () => {
+			const currency = deferred<string>();
+			orderRouter.getStripeCurrency.and.returnValue(currency.promise);
+			const payment = await createPayment();
+
+			expect(payNowButton(payment).disabled).toBe(true);
+
+			await payment.componentInstance.toPaymentStage();
+
+			expect(configure).not.toHaveBeenCalled();
+
+			currency.resolve('eur');
+			await settle();
+
+			expect(payNowButton(payment).disabled).toBe(false);
+
+			await payment.componentInstance.toPaymentStage();
+
+			expect(configure).toHaveBeenCalledOnceWith(
+				jasmine.objectContaining({ currency: 'EUR' })
+			);
+		});
+
+		it('keeps Pay now disabled when the currency can not be loaded', async () => {
+			const error = new Error('network down');
+			orderRouter.getStripeCurrency.and.rejectWith(error);
+			const payment = await createPayment();
+
+			expect(payNowButton(payment).disabled).toBe(true);
+			expect(console.error).toHaveBeenCalledWith(
+				jasmine.any(String),
+				error
+			);
+
+			await payment.componentInstance.toPaymentStage();
+
+			expect(configure).not.toHaveBeenCalled();
+		});
 	});
 
 	it('disables the Pay now button while a payment is in flight', () => {

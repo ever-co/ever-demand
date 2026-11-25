@@ -5,6 +5,10 @@ import { env } from '../../env';
 import { WarehousesService, WarehousesProductsService } from '../warehouses';
 import { assertValidOrderProductCounts } from '../warehouses/orderProductCount';
 import { toStripeAmountInCents } from './stripeAmount';
+import {
+	resolveStripeCurrency,
+	stripeChargeIdempotencyKey,
+} from './stripeCurrency';
 import { createEverLogger } from '../../helpers/Log';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
@@ -299,7 +303,21 @@ export class OrdersService extends DBService<Order>
 	}
 
 	/**
-	 * Pay with Stripe for given order with given CC
+	 * Currency of card charges, so a shop shows the same currency in its
+	 * card popup as the one the card is charged in
+	 *
+	 * @returns {Promise<string>} lower-case code, e.g. `usd` (`ils` when
+	 * STRIPE_CURRENCY is unset)
+	 * @memberof OrdersService
+	 */
+	@asyncListener()
+	async getStripeCurrency(): Promise<string> {
+		return resolveStripeCurrency(env.STRIPE_CURRENCY);
+	}
+
+	/**
+	 * Pay with Stripe for given order with given CC, in the currency set
+	 * by STRIPE_CURRENCY (`ils` when unset)
 	 * TODO: move to separate Payments Service
 	 *
 	 * @param {Order['id']} orderId
@@ -342,12 +360,17 @@ export class OrdersService extends DBService<Order>
 					.toPromise();
 
 				if (user != null) {
+					// env.ts refuses a bad STRIPE_CURRENCY at boot; this
+					// check also keeps a currency that is not split into
+					// 100 minor units away from the cents amount below.
+					const currency = resolveStripeCurrency(env.STRIPE_CURRENCY);
+
 					const charge: Stripe.Charge = await this.stripe.charges.create(
 						{
 							amount: toStripeAmountInCents(order.totalPrice), // whole cents
 							customer: user.stripeCustomerId,
 							source: cardId,
-							currency: 'ils',
+							currency,
 							description: 'Order id: ' + orderId,
 							metadata: {
 								orderId,
@@ -355,8 +378,14 @@ export class OrdersService extends DBService<Order>
 						},
 						{
 							// Two concurrent calls for one order and card
-							// create a single charge.
-							idempotencyKey: `order-${orderId}-card-${cardId}`,
+							// create a single charge. The key holds the
+							// currency, so a retry after the setting changed
+							// is not refused as a reused key.
+							idempotencyKey: stripeChargeIdempotencyKey(
+								orderId,
+								cardId,
+								currency
+							),
 						}
 					);
 

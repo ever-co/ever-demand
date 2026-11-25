@@ -25,6 +25,11 @@ export class PaymentComponent {
 
 	userCard: Stripe.Card | null = null;
 
+	// Currency the server charges cards in (e.g. 'USD'), shown in the card
+	// popup. Null until the server answered: Pay now stays disabled, so
+	// the popup never shows another currency than the one charged.
+	stripeCurrency: string | null = null;
+
 	// True while a card payment request is in flight, so a double tap
 	// does not send a second payment for the same order. It also covers
 	// a payment that another PaymentComponent started for the current
@@ -50,6 +55,7 @@ export class PaymentComponent {
 		private readonly _translateProductLocales: ProductLocalesService
 	) {
 		this.getUserCard();
+		this.getStripeCurrency();
 	}
 
 	async payWithUserCard() {
@@ -92,6 +98,14 @@ export class PaymentComponent {
 			throw Error("Can't pay in app");
 		}
 
+		// Loaded with the component, not here: the popup has to open
+		// straight from the tap, without waiting on the network.
+		const currency = this.stripeCurrency;
+
+		if (currency == null) {
+			return;
+		}
+
 		if (environment.ORDER_INFO_TYPE === 'popup') {
 			this.modalController.dismiss();
 		}
@@ -108,7 +122,7 @@ export class PaymentComponent {
 			panelLabel: pay_text,
 			key: this.stripePublishableKey,
 			image: environment.STRIPE_POP_UP_LOGO,
-			currency: 'ILS', // TODO: load currency from server!
+			currency,
 			allowRememberMe: false,
 			token: async (token) => {
 				const orderId = this.store.orderId;
@@ -184,6 +198,16 @@ export class PaymentComponent {
 		const cards = await this.userRouter.getCards(this.store.userId);
 
 		this.userCard = cards[0];
+	}
+
+	private async getStripeCurrency() {
+		try {
+			const currency = await this.orderRouter.getStripeCurrency();
+
+			this.stripeCurrency = currency.toUpperCase();
+		} catch (err) {
+			console.error('Could not load the card charge currency!', err);
+		}
 	}
 
 	private async showOrderInfoModal(): Promise<void> {

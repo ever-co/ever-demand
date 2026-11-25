@@ -68,6 +68,10 @@ export class OrderRouter implements IOrderRouter {
 		return this._orderFactory(order);
 	}
 
+	getStripeCurrency(): Promise<string> {
+		return this.router.run<string>('getStripeCurrency');
+	}
+
 	async refundWithStripe(orderId: string): Promise<Order> {
 		const order = await this.router.run<IOrder>(
 			'refundWithStripe',

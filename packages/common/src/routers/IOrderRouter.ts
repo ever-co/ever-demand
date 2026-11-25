@@ -37,6 +37,11 @@ interface IOrderRouter {
 
 	payWithStripe(orderId: Order['id'], cardId: string): Promise<Order>;
 
+	/**
+	 * Currency payWithStripe charges in: a lower-case code, e.g. `usd`
+	 */
+	getStripeCurrency(): Promise<string>;
+
 	refundWithStripe(orderId: Order['id']): Promise<Order>;
 }
 

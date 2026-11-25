@@ -1,19 +1,15 @@
 /**
- * Currency used for charges when the operator did not configure one: the
- * value `OrdersService.payWithStripe` still uses.
- *
- * NOT wired into the charge yet. Before it is, the shop's card popup must
- * show the same currency, and a retried charge (same idempotency key) must
- * keep the currency of the first attempt.
+ * Currency of card charges when `STRIPE_CURRENCY` is unset or blank: the
+ * currency every charge used before the setting existed.
  */
 export const DEFAULT_STRIPE_CURRENCY = 'ils';
 
 /**
- * Currencies whose smallest unit is not 1/100 of the major unit. Order
- * totals are converted to minor units with a factor of 100
+ * Currencies whose amounts can not be sent as the order total times 100.
+ * Order totals are converted to minor units with a factor of 100
  * (see `toStripeAmountInCents`), so charging in one of these would bill
- * the customer the wrong amount. They are rejected until the conversion
- * knows about them.
+ * the customer the wrong amount, or Stripe would refuse the amount.
+ * They are rejected until the conversion knows about them.
  */
 const NON_TWO_DECIMAL_CURRENCIES: ReadonlySet<string> = new Set([
 	// zero-decimal
@@ -21,20 +17,20 @@ const NON_TWO_DECIMAL_CURRENCIES: ReadonlySet<string> = new Set([
 	'clp',
 	'djf',
 	'gnf',
-	// charged in whole units: amounts must be divisible by 100
-	'isk',
 	'jpy',
 	'kmf',
 	'krw',
 	'mga',
 	'pyg',
 	'rwf',
-	'ugx',
 	'vnd',
 	'vuv',
 	'xaf',
 	'xof',
 	'xpf',
+	// charged in whole units: amounts must be divisible by 100
+	'isk',
+	'ugx',
 	// three-decimal
 	'bhd',
 	'iqd',
@@ -53,6 +49,7 @@ const NON_TWO_DECIMAL_CURRENCIES: ReadonlySet<string> = new Set([
  *
  * @param {unknown} value raw value of the currency setting
  * @returns {string} three lower-case letters, e.g. `usd`
+ * @throws {TypeError} when the value is not a string
  * @throws {Error} when the value is not a three-letter code, or the currency
  * is not split into 100 minor units
  */
@@ -62,8 +59,8 @@ export function resolveStripeCurrency(value: unknown): string {
 	}
 
 	if (typeof value !== 'string') {
-		throw new Error(
-			`Invalid charge currency ${String(value)}: it must be a three-letter currency code!`
+		throw new TypeError(
+			`Invalid charge currency of type ${typeof value}: it must be a three-letter currency code!`
 		);
 	}
 
@@ -86,4 +83,28 @@ export function resolveStripeCurrency(value: unknown): string {
 	}
 
 	return currency;
+}
+
+/**
+ * Idempotency key of the card charge of one order with one card.
+ *
+ * Stripe refuses a key sent again with other parameters, so the key holds
+ * the currency: a retry after the currency setting changed gets a new key
+ * instead of an error, and the `isPaid` check still refuses a paid order.
+ * The default currency keeps the key used before the setting existed, so
+ * a retry across the upgrade still gets the charge of its first attempt.
+ *
+ * @param {string} orderId order to charge
+ * @param {string} cardId card to charge
+ * @param {string} currency resolved charge currency, e.g. `usd`
+ * @returns {string} the idempotency key
+ */
+export function stripeChargeIdempotencyKey(
+	orderId: string,
+	cardId: string,
+	currency: string
+): string {
+	const key = `order-${orderId}-card-${cardId}`;
+
+	return currency === DEFAULT_STRIPE_CURRENCY ? key : `${key}-${currency}`;
 }

@@ -41,6 +41,7 @@ jest.mock('stripe', () => ({
 	})),
 }));
 
+import { env } from '../../../env';
 import { OrdersService } from '../../../services/orders/OrdersService';
 
 const ORDER_ID = '5f1a2b3c4d5e6f7a8b9c0d1e';
@@ -178,6 +179,92 @@ describe('OrdersService.payWithStripe', () => {
 			expect.objectContaining({ customer: 'cus_1', source: 'card_1' }),
 			{ idempotencyKey: `order-${ORDER_ID}-card-card_1` }
 		);
+	});
+
+	describe('charge currency', () => {
+		const mockedEnv = env as { STRIPE_CURRENCY?: string };
+
+		afterEach(() => {
+			delete mockedEnv.STRIPE_CURRENCY;
+		});
+
+		it('charges in ils when no currency is configured', async () => {
+			await service.payWithStripe(ORDER_ID, 'card_1');
+
+			expect(mockChargesCreate.mock.calls[0][0].currency).toBe('ils');
+		});
+
+		it('charges in the configured currency, with the amount still in its smallest unit', async () => {
+			mockedEnv.STRIPE_CURRENCY = 'usd';
+
+			await service.payWithStripe(ORDER_ID, 'card_1');
+
+			expect(mockChargesCreate).toHaveBeenCalledTimes(1);
+			expect(mockChargesCreate.mock.calls[0][0]).toEqual(
+				expect.objectContaining({ amount: 1999, currency: 'usd' })
+			);
+			expect(stored.isPaid).toBe(true);
+		});
+
+		it('rejects a currency that is not split into 100 minor units before the card is charged', async () => {
+			mockedEnv.STRIPE_CURRENCY = 'jpy';
+
+			await expect(
+				service.payWithStripe(ORDER_ID, 'card_1')
+			).rejects.toThrow(/not supported/);
+
+			expect(mockChargesCreate).not.toHaveBeenCalled();
+			expect(stored.isPaid).toBe(false);
+		});
+
+		it('serves the charge currency to the shop', async () => {
+			await expect(service.getStripeCurrency()).resolves.toBe('ils');
+
+			mockedEnv.STRIPE_CURRENCY = 'usd';
+
+			await expect(service.getStripeCurrency()).resolves.toBe('usd');
+		});
+
+		it('retries with a new idempotency key after a currency change, and never charges a paid order', async () => {
+			// The first attempt gets no answer, so the order stays unpaid.
+			mockChargesCreate.mockRejectedValueOnce(
+				new Error('socket hang up')
+			);
+
+			await expect(
+				service.payWithStripe(ORDER_ID, 'card_1')
+			).rejects.toThrow('socket hang up');
+
+			expect(stored.isPaid).toBe(false);
+
+			// The setting changes before the customer retries with the
+			// same card. Reusing the first key with another currency would
+			// make Stripe refuse the retry.
+			mockedEnv.STRIPE_CURRENCY = 'usd';
+
+			await service.payWithStripe(ORDER_ID, 'card_1');
+
+			expect(mockChargesCreate).toHaveBeenCalledTimes(2);
+			expect(mockChargesCreate.mock.calls[0][0].currency).toBe('ils');
+			expect(mockChargesCreate.mock.calls[0][1]).toEqual({
+				idempotencyKey: `order-${ORDER_ID}-card-card_1`,
+			});
+			expect(mockChargesCreate.mock.calls[1][0].currency).toBe('usd');
+			expect(mockChargesCreate.mock.calls[1][1]).toEqual({
+				idempotencyKey: `order-${ORDER_ID}-card-card_1-usd`,
+			});
+			expect(stored.isPaid).toBe(true);
+
+			// Another change and another tap: the paid order is refused
+			// before Stripe is called, whatever the key would be.
+			mockedEnv.STRIPE_CURRENCY = 'eur';
+
+			await expect(
+				service.payWithStripe(ORDER_ID, 'card_1')
+			).rejects.toThrow('Order is already paid');
+
+			expect(mockChargesCreate).toHaveBeenCalledTimes(2);
+		});
 	});
 
 	it('charges an unpaid order once and marks it paid only while it is not cancelled', async () => {

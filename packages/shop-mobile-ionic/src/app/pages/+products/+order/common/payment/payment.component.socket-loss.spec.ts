@@ -111,6 +111,10 @@ describe('PaymentComponent when the socket drops during a payment', () => {
 		// run without one.
 		(component as any).stripePublishableKey = 'pk_test_payment_spec';
 		await settle();
+
+		// The component asks for the card charge currency when created.
+		socket.answer('getStripeCurrency', null, 'ils');
+		await settle();
 	});
 
 	afterEach(() => {
@@ -123,6 +127,7 @@ describe('PaymentComponent when the socket drops during a payment', () => {
 		await settle();
 
 		expect(socket.sent.map((sent) => sent.event)).toEqual([
+			'getStripeCurrency',
 			'payWithStripe',
 		]);
 		expect(component.paying).toBe(true);
@@ -151,6 +156,7 @@ describe('PaymentComponent when the socket drops during a payment', () => {
 		await settle();
 
 		expect(socket.sent.map((sent) => sent.event)).toEqual([
+			'getStripeCurrency',
 			'payWithStripe',
 		]);
 		expect(store.isPaying('order-1')).toBe(true);
