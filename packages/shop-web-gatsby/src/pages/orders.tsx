@@ -7,11 +7,13 @@ import Seo from '../components/seo';
 import OrdersList, { ordersTotal } from '../components/OrdersList/OrdersList';
 import { useAppContext } from '../Context';
 import { GetOrders } from '../apollo/order';
+import { useHydrated } from '../utilities/hydrated';
 
 /** The customer's orders and their total. */
 const Orders = () => {
 	const context = useAppContext();
-	const userId = context.getUser().id;
+	const hydrated = useHydrated();
+	const userId = hydrated ? context.getUser().id : undefined;
 
 	const { data, error, loading } = useQuery(GetOrders, {
 		variables: { id: userId ?? '' },
@@ -19,7 +21,7 @@ const Orders = () => {
 		fetchPolicy: 'network-only',
 	});
 
-	if (loading && !data) {
+	if (!hydrated || (loading && !data)) {
 		return <Layout>Loading...</Layout>;
 	}
 	if (error) {

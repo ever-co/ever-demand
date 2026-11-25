@@ -6,6 +6,7 @@ import Layout from '../../components/layout';
 import Seo from '../../components/seo';
 import ProductDetails from '../../components/ProductDetails/ProductDetails';
 import { ProductQuery } from '../../apollo/product';
+import { useHydrated } from '../../utilities/hydrated';
 
 /**
  * Product details, a client-only route (/products/:id). It used to be built per product
@@ -13,12 +14,13 @@ import { ProductQuery } from '../../apollo/product';
  * so `gatsby build` needs no running API.
  */
 const ProductPage = ({ params }: PageProps) => {
+	const hydrated = useHydrated();
 	const { data, error, loading } = useQuery(ProductQuery, {
 		variables: { id: params.id },
-		skip: !params.id,
+		skip: !hydrated || !params.id,
 	});
 
-	if (loading && !data) {
+	if (!hydrated || (loading && !data)) {
 		return <Layout>Loading...</Layout>;
 	}
 	if (error) {

@@ -125,3 +125,76 @@ dependencies only, production build (endpoints as `--build-arg`), then `nginx:al
 `Dockerfile.dockerignore` keeps host `node_modules`/`.angular`/`build` out of the context.
 Verified: `docker build -f .deploy/shop-web-angular/Dockerfile .` succeeds and the container serves
 `/` and deep links.
+
+## packages/shop-web-gatsby
+
+The Gatsby shop was a work in progress before the upgrade: `build` ran `gatsby info`, several
+imports (`apollo-boost`, `apollo-link-error`, `isomorphic-fetch`) were not even dependencies, and
+the browser code read env vars Gatsby never exposes. It now installs, typechecks, builds and has
+tests; the screens and their behaviour are the same (products grid, sign-up by address, orders,
+settings, product details).
+
+### Versions
+
+| Package | Before | Now |
+| --- | --- | --- |
+| gatsby | 4 | 5.16.1 |
+| react / react-dom | 17 | 19.3.1 (newest React that Gatsby 5 accepts: `^18 \|\| ^19`) |
+| UI | @material-ui/core 4 + gatsby-plugin-material-ui | @mui/material 9.6 + @emotion 11 + gatsby-plugin-emotion 8.16 |
+| Data | react-apollo-hooks + apollo-boost, gatsby-source-graphql | @apollo/client 4.3.8 (`@apollo/client/react`), graphql 17.1 |
+| Codegen | @graphql-codegen 2 (typescript + operations, live API) | @graphql-codegen/cli 8 + client-preset 7, schema from `packages/core/src/graphql/**/*.graphql` |
+| styled-components | 5 | 6.7 (+ gatsby-plugin-styled-components 6.16) |
+| nuka-carousel | 4 | 8.2 |
+| maps | react-google-maps 9 (dead) | @vis.gl/react-google-maps 1.10 |
+| head tags | react-helmet + gatsby-plugin-react-helmet | Gatsby Head API (`export const Head`) |
+| bulma | 0.9 | 1.0.4 (base styles only) |
+| sass / gatsby-plugin-sass | - / 5 | 1.108 / 6.16 |
+| TypeScript | 4.5 | 6.0.3 |
+| Tests | none | Vitest 5.1 + jsdom 31 + Testing Library 16 (42 specs) |
+
+Removed as unused: `formik`, `@fortawesome/*`, `gatsby-image` (there was no image query, so no
+`gatsby-plugin-image` either), `gatsby-plugin-sharp`, `gatsby-transformer-sharp`,
+`gatsby-source-filesystem`, `gatsby-plugin-offline` (was commented out), `gatsby-plugin-typescript`
+(built into Gatsby 5), `prop-types`, `tslint`, the generated `ever-types.ts`/`gatsby-types.ts`.
+
+### Decisions
+
+- **No API at build time.** Product details were pages created per product from the API by
+  `gatsby-node` + `gatsby-source-graphql`. They are now a client-only route,
+  `src/pages/products/[id].tsx` (`/products/:id`, was `/:id`), that queries the product in the
+  browser. Every other page already loaded its data in the browser. Gatsby's own GraphQL is
+  not used any more (site metadata is `src/site.ts`).
+- **Settings** are `GATSBY_*` env vars (Gatsby only inlines those): `GATSBY_GQL_ENDPOINT`
+  (default `http://localhost:8443/graphql`), `GATSBY_DEFAULT_LATITUDE`/`LONGITUDE` (empty = ask the
+  browser, fallback Sofia), `GATSBY_GOOGLE_MAPS_API_KEY` (empty = no map, coordinates shown).
+  See `.env.template`.
+- Pages are only the files directly in `src/pages`; `login/Header.tsx` and
+  `settings/Settings.tsx` became pages of their own before, they moved to `src/components`.
+- MUI 9: Grid v2 (`size`), `sx` instead of system props, `slotProps`, `createTheme`.
+- CSS modules are named exports in Gatsby 5 (`import * as styles`). Sass uses `@use` and
+  `sass:color`; Bulma 1 is limited to its base (reset + generic) since no Bulma component is used.
+- Bugs fixed on the way: products were queried with `[lat, lng]` (GeoJSON needs `[lng, lat]`), the
+  orders page never showed the API list (`orders === []` is always false), the settings Save
+  button saved during render, `matchLocale` always returned the first value, the delivery-only
+  switch filtered on a field that does not exist.
+
+### Node 26
+
+Gatsby 5.16 declares `engines.node: ">=18 <26"`. On this PC it installs and builds on
+Node 26.13.1 (engine-strict is off): lmdb 2.5, msgpackr-extract, sharp 0.32 and @parcel/watcher
+load. pnpm needs `allowBuilds` for lmdb, msgpackr-extract and sharp (already listed); `gatsby`,
+`gatsby-cli`, `core-js-pure` and `es5-ext` are set to `false` (their install scripts only fetch
+optional metadata or print banners). Nothing is held back because of Node 26.
+
+### How to run
+
+```bash
+export PATH="/c/nvm/v26.13.1:$PATH"
+cd packages/shop-web-gatsby
+pnpm develop          # http://localhost:8000
+pnpm build            # public/ (no API needed)
+pnpm serve            # serves public/ on http://localhost:9000
+pnpm test             # Vitest, --maxWorkers=2
+pnpm typecheck
+pnpm codegen          # after changing a query (reads packages/core/src/graphql)
+```
