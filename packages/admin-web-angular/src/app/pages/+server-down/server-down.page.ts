@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { Store } from '@app/@core/data/store.service';
@@ -7,7 +7,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
 
 @Component({
+	standalone: false,
 	styleUrls: ['./server-down.page.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'server-down.page.html',
 })
 export class ServerDownPage implements OnDestroy {
@@ -19,7 +21,7 @@ export class ServerDownPage implements OnDestroy {
 		private readonly http: HttpClient,
 		private location: Location,
 		private translate: TranslateService,
-		private serverConnectionService: ServerConnectionService
+		private serverConnectionService: ServerConnectionService,
 	) {
 		const browserLang = translate.getBrowserLang();
 		translate.use(browserLang.match(/en|bg|he|ru/) ? browserLang : 'en-US');
@@ -32,7 +34,7 @@ export class ServerDownPage implements OnDestroy {
 		this.interval = setInterval(async () => {
 			await this.serverConnectionService.checkServerConnection(
 				environment.SERVICES_ENDPOINT,
-				this.store
+				this.store,
 			);
 
 			if (Number(this.store.serverConnection) !== 0) {

@@ -1,7 +1,14 @@
-import { Component, OnDestroy, OnInit, Input, OnChanges } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	OnInit,
+	Input,
+	OnChanges,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { UserOrdersRouter } from '@modules/client.common.angular2/routers/user-orders-router.service';
 import { ActivatedRoute } from '@angular/router';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import Order from '@modules/server.common/entities/Order';
 import { DatePipe } from '@angular/common';
 import { takeUntil } from 'rxjs/operators';
@@ -14,8 +21,10 @@ import { forkJoin, Subject, Observable } from 'rxjs';
 import { CustomerOrderActionsComponent } from '@app/@shared/render-component/customer-orders-table/customer-order-actions/customer-order-actions.component';
 
 @Component({
+	standalone: false,
 	selector: 'ea-customer-orders',
 	styleUrls: ['./ea-customer-orders.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './ea-customer-orders.component.html',
 })
 export class CustomerOrdersComponent implements OnDestroy, OnInit, OnChanges {
@@ -33,7 +42,7 @@ export class CustomerOrdersComponent implements OnDestroy, OnInit, OnChanges {
 	constructor(
 		private userOrdersRouter: UserOrdersRouter,
 		private readonly _router: ActivatedRoute,
-		private _translateService: TranslateService
+		private _translateService: TranslateService,
 	) {
 		this.params$ = this._router.params.subscribe(async (res) => {
 			const userId = res.id;
@@ -85,7 +94,7 @@ export class CustomerOrdersComponent implements OnDestroy, OnInit, OnChanges {
 			getTranslate('PAID'),
 			getTranslate('COMPLETED'),
 			getTranslate('CANCELLED'),
-			getTranslate('NOT_DELIVERED')
+			getTranslate('NOT_DELIVERED'),
 		)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(
@@ -138,8 +147,8 @@ export class CustomerOrdersComponent implements OnDestroy, OnInit, OnChanges {
 									} else {
 										return `
 									<span > <span class=' space'>${completed}</span>${
-											order.isCompleted ? '✔' : '✘'
-										}</span>
+										order.isCompleted ? '✔' : '✘'
+									}</span>
 									<span> <span class='space'>${paid}</span>${order.isPaid ? '✔' : '✘'}</span>
 									`;
 									}
@@ -150,13 +159,13 @@ export class CustomerOrdersComponent implements OnDestroy, OnInit, OnChanges {
 								type: 'html',
 								valuePrepareFunction: (_, order: Order) => {
 									const raw: Date = new Date(
-										order.deliveryTime
+										order.deliveryTime,
 									);
 									const formatted: string = order.deliveryTime
 										? new DatePipe('en-EN').transform(
 												raw,
-												'short'
-										  )
+												'short',
+											)
 										: `${notDelivered}`;
 									return `<p>${formatted}</p>`;
 								},
@@ -166,10 +175,10 @@ export class CustomerOrdersComponent implements OnDestroy, OnInit, OnChanges {
 								type: 'html',
 								valuePrepareFunction: (_, order: Order) => {
 									const raw: Date = new Date(
-										order._createdAt.toString()
+										order._createdAt.toString(),
 									);
 									const formatted: string = new DatePipe(
-										'en-EN'
+										'en-EN',
 									).transform(raw, 'short');
 									return `<p>${formatted}</p>`;
 								},
@@ -185,7 +194,7 @@ export class CustomerOrdersComponent implements OnDestroy, OnInit, OnChanges {
 							perPage: 3,
 						},
 					};
-				}
+				},
 			);
 	}
 

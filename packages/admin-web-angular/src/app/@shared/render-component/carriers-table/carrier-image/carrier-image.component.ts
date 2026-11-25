@@ -1,9 +1,11 @@
-import { OnInit, Component } from '@angular/core';
+import { OnInit, Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from '@app/@shared/smart-table';
 
 @Component({
+	standalone: false,
 	styleUrls: ['carrier-image.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'carrier-image.component.html',
 })
 export class CarrierImageComponent implements ViewCell, OnInit {

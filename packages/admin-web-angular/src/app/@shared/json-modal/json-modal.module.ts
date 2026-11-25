@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeModule } from '../../@theme';
 import { JsonModalComponent } from './json-modal.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { HighlightModule } from 'ngx-highlightjs';
 
 const COMPONENTS = [JsonModalComponent];

@@ -1,6 +1,12 @@
-import { Component, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	AfterViewInit,
+	ViewChild,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { takeUntil, first } from 'rxjs/operators';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { ProductsService } from '../../@core/data/products.service';
 import Product from '@modules/server.common/entities/Product';
 import { firstValueFrom, Subject } from 'rxjs';
@@ -13,8 +19,10 @@ import { NotifyService } from '@app/@core/services/notify/notify.service';
 const perPage = 5;
 
 @Component({
+	standalone: false,
 	selector: 'ea-products',
 	templateUrl: './products.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnDestroy, AfterViewInit {
@@ -36,7 +44,7 @@ export class ProductsComponent implements OnDestroy, AfterViewInit {
 		private readonly _productsService: ProductsService,
 		private readonly modalService: NgbModal,
 		private readonly productsCategoryService: ProductsCategoryService,
-		private readonly _notifyService: NotifyService
+		private readonly _notifyService: NotifyService,
 	) {
 		this.perPage = perPage;
 		this.getCategories();
@@ -68,13 +76,13 @@ export class ProductsComponent implements OnDestroy, AfterViewInit {
 
 	async deleteSelectedRows() {
 		const idsForDelete: string[] = this.productsTable.selectedProducts.map(
-			(c) => c.id
+			(c) => c.id,
 		);
 
 		try {
 			this.loading = true;
 			await firstValueFrom(
-				this._productsService.removeByIds(idsForDelete)
+				this._productsService.removeByIds(idsForDelete),
 			);
 
 			this.loading = false;
@@ -98,7 +106,7 @@ export class ProductsComponent implements OnDestroy, AfterViewInit {
 
 	private async getCategories() {
 		this.productsCategories = await firstValueFrom(
-			this.productsCategoryService.getCategories()
+			this.productsCategoryService.getCategories(),
 		);
 	}
 
@@ -121,7 +129,7 @@ export class ProductsComponent implements OnDestroy, AfterViewInit {
 				this.productsTable.loadDataSmartTable(
 					products || [],
 					dataCount,
-					page
+					page,
 				);
 			});
 	}

@@ -1,4 +1,10 @@
-import { Component, Input, ViewChild, OnInit } from '@angular/core';
+import {
+	Component,
+	Input,
+	ViewChild,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import {
 	AbstractControl,
 	FormBuilder,
@@ -9,7 +15,11 @@ import {
 import { IWarehouseCreateObject } from '@modules/server.common/interfaces/IWarehouse';
 import { first } from 'rxjs/operators';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
-import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
+/** An option of the multi-select (ng-select with bindValue="id", bindLabel="name"). */
+interface IMultiSelectOption {
+	id: string;
+	name: string;
+}
 import { pick } from 'underscore';
 import { FormHelpers } from '../../../forms/helpers';
 import { getDummyImage } from '@modules/server.common/utils';
@@ -30,8 +40,10 @@ export type WarehouseBasicInfo = Pick<
 >;
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-basic-info-form',
 	styleUrls: ['basic-info-form.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'basic-info-form.component.html',
 })
 export class BasicInfoFormComponent implements OnInit {
@@ -69,7 +81,7 @@ export class BasicInfoFormComponent implements OnInit {
 							if (
 								!control.value.startsWith('http') ||
 								control.value.match(
-									/s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))/
+									/s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))/,
 								) === null
 							) {
 								return { validUrl: true };
@@ -122,7 +134,7 @@ export class BasicInfoFormComponent implements OnInit {
 				? {
 						hasRestrictedCarriers: basicInfo.hasRestrictedCarriers,
 						carriersIds: basicInfo.carriersIds,
-				  }
+					}
 				: {}),
 			...(basicInfo.hasRestrictedCarriers &&
 			basicInfo.carriersIds &&
@@ -132,11 +144,11 @@ export class BasicInfoFormComponent implements OnInit {
 							basicInfo.useOnlyRestrictedCarriersForDelivery,
 						preferRestrictedCarriersForDelivery:
 							basicInfo.preferRestrictedCarriersForDelivery,
-				  }
+					}
 				: {
 						useOnlyRestrictedCarriersForDelivery: false,
 						preferRestrictedCarriersForDelivery: false,
-				  }),
+					}),
 			ordersShortProcess: basicInfo.ordersShortProcess,
 			orderCancelation: { enabled: false, onState: 0 },
 		};
@@ -151,7 +163,7 @@ export class BasicInfoFormComponent implements OnInit {
 				preferRestrictedCarriersForDelivery: false,
 				ordersShortProcess: false,
 			},
-			basicInfo
+			basicInfo,
 		);
 
 		this.form.setValue(
@@ -161,7 +173,7 @@ export class BasicInfoFormComponent implements OnInit {
 				'carriersIds',
 				'useOnlyRestrictedCarriersForDelivery',
 				'preferRestrictedCarriersForDelivery',
-			])
+			]),
 		);
 
 		const onlyStore = basicInfo.useOnlyRestrictedCarriersForDelivery;
@@ -190,7 +202,7 @@ export class BasicInfoFormComponent implements OnInit {
 
 	constructor(
 		private readonly carrierRouter: CarrierRouter,
-		private readonly translateService: TranslateService
+		private readonly translateService: TranslateService,
 	) {}
 
 	get name() {

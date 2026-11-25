@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
+import { completeData } from '@app/graphql/complete-data';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { map, share } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -38,7 +39,7 @@ export class CarriersService {
 			`,
 			pollInterval: 1000,
 		})
-		.valueChanges.pipe(
+		.valueChanges.pipe(completeData(), 
 			map((res) => res.data.getCarriers),
 			map((carriers) => carriers.map((c) => this._carrierFactory(c))),
 			share()
@@ -90,7 +91,7 @@ export class CarriersService {
 				variables: { pagingOptions, carriersFindInput },
 				pollInterval: 2000,
 			})
-			.valueChanges.pipe(
+			.valueChanges.pipe(completeData(), 
 				map((res) => res.data.getCarriers),
 				map((carriers) => carriers.map((c) => this._carrierFactory(c))),
 				share()

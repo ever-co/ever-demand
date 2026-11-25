@@ -41,16 +41,24 @@
 				*ngIf="order?.warehouse"
 				[redirectUrl]="'stores/' + order.warehouse.id"
 				[title]="titleWarehouse"
-				[imageUrl]="order?.warehouse?.logo"
-				[contactDetails]="getWarehouseContactDetails(order?.warehouse)"
+				[imageUrl]="$safeNavigationMigration(order?.warehouse?.logo)"
+				[contactDetails]="
+					getWarehouseContactDetails(
+						$safeNavigationMigration(order?.warehouse)
+					)
+				"
 			></ea-order-sidebar-info-box>
 
 			<ea-order-sidebar-info-box
 				*ngIf="order?.user"
 				[redirectUrl]="'customers/list/' + order.user.id"
 				[title]="titleCustomer"
-				[imageUrl]="order?.user?.image"
-				[contactDetails]="getCustomerContactDetails(order?.user)"
+				[imageUrl]="$safeNavigationMigration(order?.user?.image)"
+				[contactDetails]="
+					getCustomerContactDetails(
+						$safeNavigationMigration(order?.user)
+					)
+				"
 			></ea-order-sidebar-info-box>
 
 			<ea-order-sidebar-info-box
@@ -58,8 +66,12 @@
 				*ngIf="order?.carrier"
 				[redirectUrl]="'carriers/' + order.carrier.id"
 				[title]="titleCarrier"
-				[imageUrl]="order?.carrier?.logo"
-				[contactDetails]="getCarrierContactDetails(order?.carrier)"
+				[imageUrl]="$safeNavigationMigration(order?.carrier?.logo)"
+				[contactDetails]="
+					getCarrierContactDetails(
+						$safeNavigationMigration(order?.carrier)
+					)
+				"
 			></ea-order-sidebar-info-box>
 
 			<nb-card class="m-0 mt-3">
@@ -76,8 +88,12 @@
 							}}
 							{{
 								getDistance(
-									order?.user?.geoLocation,
-									order?.warehouse?.geoLocation
+									$safeNavigationMigration(
+										order?.user?.geoLocation
+									),
+									$safeNavigationMigration(
+										order?.warehouse?.geoLocation
+									)
 								)
 							}}
 						</h6>

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
+import { completeData } from '@app/graphql/complete-data';
 import Admin from '@modules/server.common/entities/Admin';
 import { map, share } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -27,7 +28,7 @@ export class AdminsService {
 				variables: { id },
 				pollInterval: 2000,
 			})
-			.valueChanges.pipe(
+			.valueChanges.pipe(completeData(), 
 				map((res) => res.data['admin']),
 				share()
 			);

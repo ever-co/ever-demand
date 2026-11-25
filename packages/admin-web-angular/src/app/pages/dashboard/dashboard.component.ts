@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { takeWhile } from 'rxjs/operators';
 
@@ -9,8 +9,10 @@ interface CardSettings {
 }
 
 @Component({
+	standalone: false,
 	selector: 'ngx-dashboard',
 	styleUrls: ['./dashboard.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnDestroy {

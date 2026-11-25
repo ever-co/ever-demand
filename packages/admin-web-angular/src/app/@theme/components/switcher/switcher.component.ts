@@ -1,8 +1,16 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	Output,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 
 @Component({
+	standalone: false,
 	selector: 'ngx-switcher',
 	styleUrls: ['./switcher.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './switcher.component.html',
 })
 export class SwitcherComponent {

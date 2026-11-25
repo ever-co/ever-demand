@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
@@ -10,8 +10,10 @@ import { first } from 'rxjs/operators';
 import { ProductsCategoryService } from '@app/@core/data/productsCategory.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-category-create',
 	templateUrl: './category-create.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./category-create.component.scss'],
 })
 export class CategoryCreateComponent implements OnDestroy {
@@ -27,7 +29,7 @@ export class CategoryCreateComponent implements OnDestroy {
 		private readonly _productLocalesService: ProductLocalesService,
 		private readonly _translateService: TranslateService,
 		private readonly _notifyService: NotifyService,
-		private readonly _productsCategoryService: ProductsCategoryService
+		private readonly _productsCategoryService: ProductsCategoryService,
 	) {}
 
 	ngOnDestroy() {
@@ -44,7 +46,7 @@ export class CategoryCreateComponent implements OnDestroy {
 			this._notifyService.success(
 				'Category ' +
 					this.localeTranslate(createObject.name) +
-					' is added'
+					' is added',
 			);
 			return true;
 		}
@@ -56,7 +58,7 @@ export class CategoryCreateComponent implements OnDestroy {
 				.toPromise();
 			this.loading = false;
 			const message = `Category ${this.localeTranslate(
-				createObject.name
+				createObject.name,
 			)} is added!`;
 			this._notifyService.success(message);
 			this.cancel();

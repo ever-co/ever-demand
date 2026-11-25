@@ -1,11 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import {
+	Component,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
+import { ViewCell } from '@app/@shared/smart-table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { JsonModalComponent } from '../../json-modal/json-modal.component';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 
 @Component({
+	standalone: false,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './sumulation-json.component.html',
 })
 export class SimulationJsonComponent implements ViewCell, OnInit {
@@ -19,7 +26,7 @@ export class SimulationJsonComponent implements ViewCell, OnInit {
 
 	constructor(
 		private readonly modalService: NgbModal,
-		private _productLocalesService: ProductLocalesService
+		private _productLocalesService: ProductLocalesService,
 	) {}
 
 	ngOnInit() {}
@@ -36,7 +43,7 @@ export class SimulationJsonComponent implements ViewCell, OnInit {
 		modalComponent.obj = this.rowData;
 		modalComponent.title = 'Product';
 		modalComponent.subTitle = this.localeTranslate(
-			this.rowData.product['title']
+			this.rowData.product['title'],
 		);
 	}
 

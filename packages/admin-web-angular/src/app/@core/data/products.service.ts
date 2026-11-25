@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
+import { completeData } from '@app/graphql/complete-data';
 import Product from '@modules/server.common/entities/Product';
 import { IProductCreateObject } from '@modules/server.common/interfaces/IProduct';
 import { Observable } from 'rxjs';
@@ -57,7 +58,7 @@ export class ProductsService {
 				variables: { pagingOptions, existedProductsIds },
 				pollInterval: 2000,
 			})
-			.valueChanges.pipe(
+			.valueChanges.pipe(completeData(), 
 				map((res) => res.data.products),
 				share()
 			);

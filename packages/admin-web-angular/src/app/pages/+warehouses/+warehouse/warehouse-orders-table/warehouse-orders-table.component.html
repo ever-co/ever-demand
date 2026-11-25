@@ -9,7 +9,7 @@
 					status="success"
 					(click)="openWarehouseOrderCreateModal()"
 				>
-					<i class="ion-md-add button-icon mr-1"></i>
+					<i class="ion-md-add button-icon me-1"></i>
 					{{ 'WAREHOUSE_VIEW.CREATE_ORDER' | translate }}
 				</button>
 			</div>
@@ -20,66 +20,74 @@
 		<div class="row">
 			<div class="col-md-4">
 				<div
-					ngbRadioGroup
+					role="group"
 					class="btn-group btn-group-toggle btn-outline-toggle-group btn-group-full-width btn-toggle-radio-group"
 				>
 					<label
-						ngbButtonLabel
 						class="btn btn-outline-secondary btn-tn"
+						[class.active]="$any(filterMode) === 'ready'"
 					>
 						<input
-							ngbButton
 							type="radio"
+							class="btn-check"
 							value="ready"
+							[checked]="$any(filterMode) === 'ready'"
 							(click)="filterOrders('ready')"
 						/>
 						{{ 'Confirmed' | translate }}
 					</label>
 
 					<label
-						ngbButtonLabel
 						class="btn btn-outline-secondary btn-tn"
+						[class.active]="$any(filterMode) === 'in_delivery'"
 					>
 						<input
-							ngbButton
 							type="radio"
+							class="btn-check"
 							value="in_delivery"
+							[checked]="$any(filterMode) === 'in_delivery'"
 							(click)="filterOrders('in_delivery')"
 						/>
 						{{ 'In Delivery' | translate }}
 					</label>
 
 					<label
-						ngbButtonLabel
 						class="btn btn-outline-secondary btn-tn"
+						[class.active]="$any(filterMode) === 'not_confirmed'"
 					>
 						<input
-							ngbButton
 							type="radio"
+							class="btn-check"
 							value="not_confirmed"
+							[checked]="$any(filterMode) === 'not_confirmed'"
 							(click)="filterOrders('not_confirmed')"
 						/>
 						{{ 'Not Confirmed' | translate }}
 					</label>
 
 					<label
-						ngbButtonLabel
 						class="btn btn-outline-secondary btn-tn"
+						[class.active]="$any(filterMode) === 'cancelled'"
 					>
 						<input
-							ngbButton
 							type="radio"
+							class="btn-check"
 							value="cancelled"
+							[checked]="$any(filterMode) === 'cancelled'"
 							(click)="filterOrders('cancelled')"
 						/>
 						{{ 'Cancelled' | translate }}
 					</label>
 
-					<label ngbButtonLabel class="btn-outline-secondary btn-tn">
+					<label
+						class="btn btn-outline-secondary btn-tn"
+						[class.active]="$any(filterMode) === 'all'"
+					>
 						<input
-							ngbButton
 							type="radio"
+							class="btn-check"
 							value="all"
+							[checked]="$any(filterMode) === 'all'"
 							(click)="filterOrders('all')"
 						/>
 						{{ 'All' | translate }}

@@ -1,10 +1,18 @@
-import { Component, EventEmitter, ViewChild, Output } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	ViewChild,
+	Output,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { LocationFormComponent } from '@app/@shared/forms/location';
 import { FormBuilder } from '@angular/forms';
 
 @Component({
+	standalone: false,
 	selector: 'ea-merchants-setup-location',
 	templateUrl: './location.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./location.component.scss'],
 })
 export class SetupMerchantLocationComponent {

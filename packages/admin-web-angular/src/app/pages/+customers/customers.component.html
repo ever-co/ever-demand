@@ -5,10 +5,10 @@
 		<button
 			nbButton
 			status="success"
-			class="mr-2 d-inline-block"
+			class="me-2 d-inline-block"
 			(click)="showCreateUserModal()"
 		>
-			<i class="ion-md-add button-icon mr-1"></i>
+			<i class="ion-md-add button-icon me-1"></i>
 
 			<small>{{
 				'CUSTOMERS_VIEW.CREATE' | translate
@@ -18,11 +18,11 @@
 		<button
 			nbButton
 			status="danger"
-			class="mr-2 d-inline-block"
+			class="me-2 d-inline-block"
 			[disabled]="!hasSelectedCustomers"
 			(click)="deleteSelectedRows()"
 		>
-			<i class="ion-md-trash button-icon mr-1"></i>
+			<i class="ion-md-trash button-icon me-1"></i>
 
 			<small>{{
 				'CUSTOMERS_VIEW.DELETE' | translate
@@ -32,7 +32,7 @@
 		<button
 			nbButton
 			status="info"
-			class="mr-2 d-inline-block"
+			class="me-2 d-inline-block"
 			[routerLink]="['/devices']"
 		>
 			<i class="ion-md-phone-portrait"></i>&nbsp;&nbsp;
@@ -42,12 +42,12 @@
 		<button
 			nbButton
 			status="danger"
-			class="mr-2 d-inline-block"
+			class="me-2 d-inline-block"
 			[disabled]="!isOnlyOneCustomerSelected || showBanLoading"
 			[nbSpinner]="showBanLoading"
 			(click)="banSelectedRows()"
 		>
-			<i class="ion-md-close-circle button-icon mr-1"></i>
+			<i class="ion-md-close-circle button-icon me-1"></i>
 
 			<small *ngIf="isUserBanned">{{
 				'CUSTOMERS_VIEW.UNBAN' | translate

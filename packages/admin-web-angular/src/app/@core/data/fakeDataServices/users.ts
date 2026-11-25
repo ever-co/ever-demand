@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import Invite from '@modules/server.common/entities/Invite';
 import IEnterByCode from '@modules/server.common/interfaces/IEnterByCode';
 import { Country } from '@modules/server.common/entities/GeoLocation';
-import * as faker from 'faker';
+import { faker } from '@faker-js/faker';
 import { IUserRegistrationInput } from '@modules/server.common/routers/IUserAuthRouter';
 import { environment } from '../../../../environments/environment';
 
@@ -11,19 +11,19 @@ export default class FakeDataUsers {
 	getUserRegistrationInput(): IUserRegistrationInput {
 		return {
 			user: {
-				firstName: faker.name.firstName(),
-				lastName: faker.name.lastName(),
+				firstName: faker.person.firstName(),
+				lastName: faker.person.lastName(),
 				email: faker.internet.email(),
-				phone: faker.phone.phoneNumber(),
+				phone: faker.phone.number(),
 				image: faker.image.avatar(),
-				apartment: faker.datatype.number(199).toString(),
+				apartment: faker.number.int(199).toString(),
 				geoLocation: {
-					countryId: faker.datatype.number(200) as Country,
-					city: faker.address.city(),
-					postcode: faker.address.zipCode(),
-					notes: faker.lorem.text(1),
-					streetAddress: faker.address.streetAddress(),
-					house: faker.datatype.number(199).toString(),
+					countryId: faker.number.int(200) as Country,
+					city: faker.location.city(),
+					postcode: faker.location.zipCode(),
+					notes: faker.lorem.text(),
+					streetAddress: faker.location.streetAddress(),
+					house: faker.number.int(199).toString(),
 					loc: {
 						type: 'Point',
 						coordinates: [
@@ -42,8 +42,8 @@ export default class FakeDataUsers {
 		return {
 			location: invite.geoLocation.loc,
 			inviteCode: invite.code,
-			firstName: faker.name.firstName(),
-			lastName: faker.name.lastName(),
+			firstName: faker.person.firstName(),
+			lastName: faker.person.lastName(),
 		};
 	}
 }

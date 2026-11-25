@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CarrierEditComponent } from './carrier-edit.component';
 import { ThemeModule } from '../../../../@theme/theme.module';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { LocationFormModule } from '../../../../@shared/forms/location';
 import { CarrierFormsModule } from '../../../../@shared/carrier/forms';
 import { GoogleMapModule } from '../../../../@shared/forms/google-map/google-map.module';
 import { RouterModule } from '@angular/router';
 import { routes } from './carrier-edit.routes';
-import { ToasterModule } from 'angular2-toaster';
+import { ToasterModule } from '@app/@core/toaster';
 import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 
 @NgModule({

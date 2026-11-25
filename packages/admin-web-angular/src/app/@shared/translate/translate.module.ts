@@ -1,26 +1,13 @@
 import { NgModule } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import {
-	TranslateLoader,
-	TranslateModule as NgxTranslateModule
-} from '@ngx-translate/core';
+import { TranslateModule as NgxTranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 
-export function HttpLoaderFactory(http: HttpClient) {
-	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
-
+/**
+ * The `translate` pipe and directive for feature modules. The root `TranslateService` (and its
+ * HTTP loader for `./assets/i18n/*.json`) comes from `TranslateModule.forRoot(...)` in AppModule,
+ * so every screen shares the selected language.
+ */
 @NgModule({
-	declarations: [],
+	imports: [NgxTranslateModule],
 	exports: [NgxTranslateModule],
-	imports: [
-		NgxTranslateModule.forChild({
-			loader: {
-				provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
-				deps: [HttpClient]
-			}
-		})
-	]
 })
 export class TranslateModule {}

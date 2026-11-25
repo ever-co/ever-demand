@@ -1,4 +1,10 @@
-import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	Output,
+	EventEmitter,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { first } from 'rxjs/operators';
 import { ProductsCategoryService } from '@app/@core/data/productsCategory.service';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
@@ -9,8 +15,10 @@ import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import { CategoriesTableComponent } from '@app/@shared/product/categories/categories-table';
 
 @Component({
+	standalone: false,
 	selector: 'ea-merchants-setup-product-categories',
 	templateUrl: './product-categories.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./product-categories.component.scss'],
 })
 export class SetupMerchantProductCategoriesComponent {
@@ -35,7 +43,7 @@ export class SetupMerchantProductCategoriesComponent {
 	constructor(
 		private productsCategoryService: ProductsCategoryService,
 		private readonly notifyService: NotifyService,
-		private readonly productLocalesService: ProductLocalesService
+		private readonly productLocalesService: ProductLocalesService,
 	) {}
 
 	get isValidForm() {
@@ -78,7 +86,7 @@ export class SetupMerchantProductCategoriesComponent {
 			this.productCategories.unshift(category);
 
 			const message = `Category ${this.localeTranslate(
-				this.basicInfo.createObject.name
+				this.basicInfo.createObject.name,
 			)} is added!`;
 			this.notifyService.success(message);
 
@@ -100,12 +108,12 @@ export class SetupMerchantProductCategoriesComponent {
 				.pipe(first())
 				.toPromise();
 			this.productCategories = this.productCategories.filter(
-				(c) => c.id !== category.id
+				(c) => c.id !== category.id,
 			);
 			this.productCategories.unshift(category);
 
 			const message = `Category ${this.localeTranslate(
-				this.basicInfo.createObject.name
+				this.basicInfo.createObject.name,
 			)} is edited`;
 			this.notifyService.success(message);
 
@@ -127,7 +135,7 @@ export class SetupMerchantProductCategoriesComponent {
 
 	removeCategory(category) {
 		this.productCategories = this.productCategories.filter(
-			(c) => c.id !== category.id
+			(c) => c.id !== category.id,
 		);
 
 		this.loadCategories();

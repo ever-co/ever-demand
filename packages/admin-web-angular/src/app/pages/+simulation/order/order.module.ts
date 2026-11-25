@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeModule } from '@app/@theme';
-import { ToasterModule } from 'angular2-toaster';
-import { TranslateModule } from '@ngx-translate/core';
+import { ToasterModule } from '@app/@core/toaster';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { SimulationOrderComponent } from './order.component';
 import { ElapsedTimeModule } from '@app/@shared/elapsed-time/elapsed-time.module';
 import { ImageSliderModule } from '../../../@shared/render-component/image-slider/image-slider.module';

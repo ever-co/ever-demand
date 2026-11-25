@@ -1,5 +1,11 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import {
+	Component,
+	OnInit,
+	OnDestroy,
+	Input,
+	ChangeDetectionStrategy,
+} from '@angular/core';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import Product from '@modules/server.common/entities/Product';
 import { first, takeUntil } from 'rxjs/operators';
 import { Subject, Observable, forkJoin } from 'rxjs';
@@ -10,7 +16,9 @@ import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehou
 import { CheckboxComponent } from '@app/@shared/render-component/customer-orders-table/checkbox/checkbox.component';
 
 @Component({
+	standalone: false,
 	selector: 'ea-add-warehouse-products-table',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './add-warehouse-products-table.component.html',
 })
 export class AddWarehouseProductsComponent implements OnInit, OnDestroy {
@@ -28,7 +36,7 @@ export class AddWarehouseProductsComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private _translateService: TranslateService,
-		private warehouseRouter: WarehouseRouter
+		private warehouseRouter: WarehouseRouter,
 	) {}
 
 	ngOnInit(): void {
@@ -45,7 +53,7 @@ export class AddWarehouseProductsComponent implements OnInit, OnDestroy {
 				(p) =>
 					!p.count ||
 					!p.price ||
-					(!p['isTakeaway'] && !p['isDeliveryRequired'])
+					(!p['isTakeaway'] && !p['isDeliveryRequired']),
 			)[0];
 
 			return notRedy ? false : true;
@@ -102,7 +110,7 @@ export class AddWarehouseProductsComponent implements OnInit, OnDestroy {
 			getTranslate('PRICE'),
 			getTranslate('COUNT'),
 			getTranslate('DELIVERY'),
-			getTranslate('TAKEAWAY')
+			getTranslate('TAKEAWAY'),
 		)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(([name, price, count, delivery, takeaway]) => {
@@ -126,9 +134,10 @@ export class AddWarehouseProductsComponent implements OnInit, OnDestroy {
 								const id = await instance.id
 									.pipe(first())
 									.toPromise();
-								const warehouseProd = this.warehouseProducts.filter(
-									(p) => p.product === id
-								)[0];
+								const warehouseProd =
+									this.warehouseProducts.filter(
+										(p) => p.product === id,
+									)[0];
 
 								instance.newValue
 									.pipe(takeUntil(this.ngDestroy$))
@@ -148,9 +157,10 @@ export class AddWarehouseProductsComponent implements OnInit, OnDestroy {
 								const id = await instance.id
 									.pipe(first())
 									.toPromise();
-								const warehouseProd = this.warehouseProducts.filter(
-									(p) => p.product === id
-								)[0];
+								const warehouseProd =
+									this.warehouseProducts.filter(
+										(p) => p.product === id,
+									)[0];
 								warehouseProd['count'] = 1;
 								instance.newValue
 									.pipe(takeUntil(this.ngDestroy$))
@@ -169,9 +179,10 @@ export class AddWarehouseProductsComponent implements OnInit, OnDestroy {
 								const id = await instance.id
 									.pipe(first())
 									.toPromise();
-								const warehouseProd = this.warehouseProducts.filter(
-									(p) => p.product === id
-								)[0];
+								const warehouseProd =
+									this.warehouseProducts.filter(
+										(p) => p.product === id,
+									)[0];
 								instance.newValue
 									.pipe(takeUntil(this.ngDestroy$))
 									.subscribe((res) => {
@@ -189,15 +200,16 @@ export class AddWarehouseProductsComponent implements OnInit, OnDestroy {
 							filter: false,
 							renderComponent: CheckboxComponent,
 							onComponentInitFunction: async (
-								instance: CheckboxComponent
+								instance: CheckboxComponent,
 							) => {
 								instance.type = 'takeaway';
 								const id = await instance.id
 									.pipe(first())
 									.toPromise();
-								const warehouseProd = this.warehouseProducts.filter(
-									(p) => p.product === id
-								)[0];
+								const warehouseProd =
+									this.warehouseProducts.filter(
+										(p) => p.product === id,
+									)[0];
 								instance.newValue
 									.pipe(takeUntil(this.ngDestroy$))
 									.subscribe((res) => {

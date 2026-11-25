@@ -1,10 +1,10 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule, JsonPipe } from '@angular/common';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { Ng2SmartTableModule } from '@app/@shared/smart-table';
 import { ThemeModule } from '../../@theme';
-import { ToasterModule } from 'angular2-toaster';
-import { TranslateModule } from '@ngx-translate/core';
+import { ToasterModule } from '@app/@core/toaster';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { HighlightModule } from 'ngx-highlightjs';
 import { OrdersComponent } from './orders.component';
 import { OrderComponent } from './+order/order.component';

@@ -1,193 +1,167 @@
 {
-	"$schema": "../../node_modules/@angular/cli/lib/config/schema.json",
+	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
 	"version": 1,
 	"newProjectRoot": "projects",
+	"cli": {
+		"packageManager": "pnpm",
+		"analytics": false
+	},
 	"projects": {
 		"ever-admin": {
 			"root": "",
 			"sourceRoot": "src",
 			"projectType": "application",
-			"prefix": "app",
+			"prefix": "ea",
+			"schematics": {
+				"@schematics/angular:component": {
+					"prefix": "ea",
+					"style": "scss",
+					"standalone": false
+				},
+				"@schematics/angular:directive": {
+					"prefix": "ea",
+					"standalone": false
+				},
+				"@schematics/angular:pipe": {
+					"standalone": false
+				}
+			},
 			"architect": {
 				"build": {
-					"builder": "@angular-devkit/build-angular:browser",
+					"builder": "@angular/build:application",
 					"options": {
-						"preserveSymlinks": true,
-						"outputPath": "build",
+						"outputPath": {
+							"base": "dist",
+							"browser": ""
+						},
 						"index": "src/index.html",
-						"main": "src/main.ts",
-						"tsConfig": "tsconfig.json",
-						"polyfills": "src/polyfills.ts",
+						"browser": "src/main.ts",
+						"polyfills": [
+							"src/polyfills.ts"
+						],
+						"tsConfig": "tsconfig.app.json",
+						"inlineStyleLanguage": "scss",
 						"assets": [
 							"src/favicon.ico",
 							"src/favicon.png",
 							{
 								"glob": "**/*",
 								"input": "src/assets/",
-								"ignore": ["**/*.css"],
+								"ignore": [
+									"**/*.css"
+								],
 								"output": "/assets/"
-							},
-							{
-								"glob": "**/*",
-								"input": "../../node_modules/leaflet/dist/images",
-								"output": "/assets/img/markers"
-							},
-							{
-								"glob": "**/*.svg",
-								"input": "../../node_modules/ionicons/dist/ionicons/svg",
-								"output": "/assets/svg"
 							}
 						],
-						"allowedCommonJsDependencies": [
-							"highlight.js"
-						],
 						"styles": [
-							"../../node_modules/bootstrap/dist/css/bootstrap.css",
-							"../../node_modules/typeface-exo/index.css",
-							"../../node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
-							"../../node_modules/@fortawesome/fontawesome-free/css/all.css",
-							"../../node_modules/socicon/css/socicon.css",
-							"../../node_modules/angular-tree-component/dist/angular-tree-component.css",
-							"../../node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
-							"../../node_modules/leaflet/dist/leaflet.css",
-							"src/app/@theme/styles/styles.scss",
-							"../../node_modules/swiper/swiper-bundle.css",
-							"../../node_modules/highlight.js/styles/github.css"
+							"node_modules/bootstrap/dist/css/bootstrap.css",
+							"node_modules/typeface-exo/index.css",
+							"node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+							"node_modules/@fortawesome/fontawesome-free/css/all.css",
+							"node_modules/ionicons/dist/css/ionicons.css",
+							"node_modules/@ng-select/ng-select/themes/default.theme.css",
+							"node_modules/highlight.js/styles/github.css",
+							"src/app/@theme/styles/styles.scss"
 						],
 						"stylePreprocessorOptions": {
-							"includePaths": ["src/app", "src/assets"]
+							"includePaths": [
+								"src/app",
+								"src/assets"
+							],
+							"sass": {
+								"silenceDeprecations": [
+									"color-functions",
+									"global-builtin",
+									"import",
+									"slash-div",
+									"if-function"
+								]
+							}
 						},
 						"scripts": [
-							"../../node_modules/pace-js/pace.min.js",
-							"../../node_modules/tinymce/tinymce.min.js",
-							"../../node_modules/tinymce/themes/mobile/theme.min.js",
-							"../../node_modules/tinymce/themes/silver/theme.min.js",
-							"../../node_modules/tinymce/plugins/link/plugin.min.js",
-							"../../node_modules/tinymce/plugins/paste/plugin.min.js",
-							"../../node_modules/tinymce/plugins/table/plugin.min.js",
-							"../../node_modules/echarts/dist/echarts.min.js",
-							"../../node_modules/echarts/dist/extension/bmap.min.js",
-							"../../node_modules/chart.js/dist/chart.min.js"
+							"node_modules/pace-js/pace.min.js"
+						],
+						"allowedCommonJsDependencies": [
+							"eva-icons",
+							"lodash",
+							"reflect-metadata",
+							"highlight.js",
+							"qrcode",
+							"is-url",
+							"jsbarcode",
+							"underscore",
+							"echarts",
+							"zrender"
 						]
 					},
 					"configurations": {
 						"production": {
 							"budgets": [
 								{
+									"type": "initial",
+									"maximumWarning": "6mb",
+									"maximumError": "10mb"
+								},
+								{
 									"type": "anyComponentStyle",
-									"maximumWarning": "6kb"
+									"maximumWarning": "10kb",
+									"maximumError": "60kb"
 								}
 							],
 							"optimization": true,
 							"outputHashing": "all",
 							"sourceMap": false,
 							"namedChunks": false,
-							"aot": true,
 							"extractLicenses": true,
-							"vendorChunk": false,
-							"buildOptimizer": true,
 							"fileReplacements": [
 								{
 									"replace": "src/environments/environment.ts",
 									"with": "src/environments/environment.prod.ts"
 								}
 							]
+						},
+						"development": {
+							"optimization": false,
+							"extractLicenses": false,
+							"sourceMap": true,
+							"namedChunks": true
+						},
+						"test": {
+							"optimization": false,
+							"extractLicenses": false,
+							"sourceMap": true,
+							"namedChunks": true,
+							"aot": false
 						}
-					}
+					},
+					"defaultConfiguration": "production"
 				},
 				"serve": {
-					"builder": "@angular-devkit/build-angular:dev-server",
+					"builder": "@angular/build:dev-server",
 					"options": {
-						"browserTarget": "ever-admin:build"
+						"port": 4200
 					},
 					"configurations": {
 						"production": {
-							"browserTarget": "ever-admin:build:production"
+							"buildTarget": "ever-admin:build:production"
+						},
+						"development": {
+							"buildTarget": "ever-admin:build:development"
 						}
-					}
-				},
-				"extract-i18n": {
-					"builder": "@angular-devkit/build-angular:extract-i18n",
-					"options": {
-						"browserTarget": "ever-admin:build"
-					}
+					},
+					"defaultConfiguration": "development"
 				},
 				"test": {
-					"builder": "@angular-devkit/build-angular:karma",
+					"builder": "@angular/build:unit-test",
 					"options": {
-						"main": "src/test.ts",
-						"karmaConfig": "./karma.conf.js",
-						"polyfills": "src/polyfills.ts",
+						"buildTarget": "ever-admin:build:test",
 						"tsConfig": "tsconfig.spec.json",
-						"scripts": [
-							"../../node_modules/pace-js/pace.min.js",
-							"../../node_modules/tinymce/tinymce.min.js",
-							"../../node_modules/tinymce/themes/mobile/theme.min.js",
-							"../../node_modules/tinymce/themes/silver/theme.min.js",
-							"../../node_modules/tinymce/plugins/link/plugin.min.js",
-							"../../node_modules/tinymce/plugins/paste/plugin.min.js",
-							"../../node_modules/tinymce/plugins/table/plugin.min.js",
-							"../../node_modules/echarts/dist/echarts.min.js",
-							"../../node_modules/echarts/dist/extension/bmap.min.js",
-							"../../node_modules/chart.js/dist/chart.min.js"
-						],
-						"styles": [
-							"../../node_modules/bootstrap/dist/css/bootstrap.css",
-							"../../node_modules/typeface-exo/index.css",
-							"../../node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
-							"../../node_modules/@fortawesome/fontawesome-free/css/all.css",
-							"../../node_modules/socicon/css/socicon.css",
-							"../../node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
-							"../../node_modules/leaflet/dist/leaflet.css",
-							"src/app/@theme/styles/styles.scss"
-						],
-						"assets": [
-							"src/favicon.ico",
-							"src/favicon.png",
-							{
-								"glob": "**/*",
-								"input": "src/assets/",
-								"ignore": ["**/*.css"],
-								"output": "/assets/"
-							},
-							{
-								"glob": "**/*",
-								"input": "../../node_modules/leaflet/dist/images",
-								"output": "/assets/img/markers"
-							},
-							{
-								"glob": "**/*.svg",
-								"input": "../../node_modules/ionicons/dist/ionicons/svg",
-								"output": "/assets/svg"
-							}
-						]
+						"runner": "vitest",
+						"runnerConfig": "vitest-base.config.ts",
+						"watch": false
 					}
 				}
 			}
-		},
-		"ever-admin-e2e": {
-			"root": "",
-			"sourceRoot": "",
-			"projectType": "application",
-			"architect": {
-				"e2e": {
-					"builder": "@angular-devkit/build-angular:protractor",
-					"options": {
-						"protractorConfig": "./protractor.conf.js",
-						"devServerTarget": "ever-admin:serve"
-					}
-				}
-			}
-		}
-	},
-	"defaultProject": "ever-admin",
-	"schematics": {
-		"@schematics/angular:component": {
-			"prefix": "ea",
-			"style": "scss"
-		},
-		"@schematics/angular:directive": {
-			"prefix": "ea"
 		}
 	}
 }

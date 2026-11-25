@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
+	standalone: false,
 	selector: 'ea-elapsed-time',
 	templateUrl: './elapsed-time.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./elapsed-time.component.scss'],
 })
 export class ElapsedTimeComponent implements OnInit {
@@ -23,7 +25,7 @@ export class ElapsedTimeComponent implements OnInit {
 		const currDate = new Date();
 
 		const startDate = new Date(
-			JSON.parse(localStorage.getItem('simulationStartDate'))
+			JSON.parse(localStorage.getItem('simulationStartDate')),
 		);
 
 		if (startDate) {
@@ -36,7 +38,7 @@ export class ElapsedTimeComponent implements OnInit {
 			const minutesPassed = Math.floor(diff / 60);
 
 			const secondsPassed = Number(
-				(diff - minutesPassed * 60).toFixed(0)
+				(diff - minutesPassed * 60).toFixed(0),
 			);
 
 			let minutesPassedStr = '';

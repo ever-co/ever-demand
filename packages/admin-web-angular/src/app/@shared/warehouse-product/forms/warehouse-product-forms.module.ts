@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { FormWizardModule } from '@ever-co/angular2-wizard';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
+import { FormWizardModule } from '@app/@shared/wizard';
 import { ThemeModule } from '../../../@theme';
 import { WarehouseAddChoiceComponent } from './warehouse-add-choice';
 import { AddWarehouseProductsComponent } from './add-warehouse-products-table';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { Ng2SmartTableModule } from '@app/@shared/smart-table';
 import { RenderComponentsModule } from '../../render-component/render-components.module';
 import { WarehouseProductsComponent } from './warehouse-products-table';
 import { StoreProductsTableModule } from '@app/@shared/render-component/store-products-table/store-products-table.module';

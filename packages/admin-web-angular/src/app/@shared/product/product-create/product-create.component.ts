@@ -1,4 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	ViewChild,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BasicInfoFormComponent } from '../forms';
@@ -10,8 +15,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { NotifyService } from '@app/@core/services/notify/notify.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-product-create',
 	templateUrl: './product-create.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./product-create.component.scss'],
 })
 export class ProductCreateComponent implements OnInit {
@@ -32,7 +39,7 @@ export class ProductCreateComponent implements OnInit {
 		private readonly _formBuilder: FormBuilder,
 		private readonly _productsService: ProductsService,
 		private readonly _translateService: TranslateService,
-		private readonly _notifyService: NotifyService
+		private readonly _notifyService: NotifyService,
 	) {}
 
 	ngOnInit() {
@@ -41,14 +48,17 @@ export class ProductCreateComponent implements OnInit {
 
 	async createProduct() {
 		if (this.basicInfo.valid) {
-			const productCreateObject: IProductCreateObject = await this.basicInfoForm.setupProductCreateObject();
+			const productCreateObject: IProductCreateObject =
+				await this.basicInfoForm.setupProductCreateObject();
 			try {
 				this.loading = true;
 				await firstValueFrom(
-					this._productsService.create(productCreateObject).pipe(first())
+					this._productsService
+						.create(productCreateObject)
+						.pipe(first()),
 				).finally(() => {
 					this.loading = false;
-				})
+				});
 
 				const message = `Product ${productCreateObject.title[0].value} is created`;
 				this._notifyService.success(message);

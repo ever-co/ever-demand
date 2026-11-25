@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { WarehousesService } from '@app/@core/data/warehouses.service';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: ` <h1>Please wait a second...</h1> `,
 })
 export class SignInRedirectComponent {
 	constructor(
 		private readonly _storesService: WarehousesService,
-		private readonly _router: Router
+		private readonly _router: Router,
 	) {
 		this._redirectToProperPage();
 	}

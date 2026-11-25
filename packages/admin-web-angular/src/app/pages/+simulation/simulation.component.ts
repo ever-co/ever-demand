@@ -1,4 +1,10 @@
-import { Component, OnDestroy, ViewChild, OnInit } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	ViewChild,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
@@ -20,7 +26,7 @@ import { InviteRequestModalComponent } from '@app/@shared/invite/invite-request/
 import InviteRequest from '@modules/server.common/entities/InviteRequest';
 import { IInviteCreateObject } from '@modules/server.common/interfaces/IInvite';
 import Invite from '@modules/server.common/entities/Invite';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { ByCodeModalComponent } from '@app/@shared/invite/by-code/by-code-modal.component';
 import {
 	SimulationInstructionsComponent,
@@ -31,8 +37,10 @@ import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehou
 import { IOrderCreateInput } from '@modules/server.common/routers/IWarehouseOrdersRouter';
 
 @Component({
+	standalone: false,
 	selector: 'ea-simulation',
 	templateUrl: './simulation.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['/simulation.component.scss'],
 })
 export class SimulationComponent implements OnDestroy, OnInit {
@@ -68,7 +76,7 @@ export class SimulationComponent implements OnDestroy, OnInit {
 		private readonly orderRouter: OrderRouter,
 		private readonly inviteRouter: InviteRouter,
 		private readonly toasterService: ToasterService,
-		private readonly warehouseRouter: WarehouseRouter
+		private readonly warehouseRouter: WarehouseRouter,
 	) {
 		this.loadPage();
 	}
@@ -99,7 +107,7 @@ export class SimulationComponent implements OnDestroy, OnInit {
 					size: 'lg',
 					container: 'nb-layout',
 					backdrop: 'static',
-				}
+				},
 			).result;
 		} catch (error) {
 			this.inviteRequest = null;
@@ -114,9 +122,8 @@ export class SimulationComponent implements OnDestroy, OnInit {
 
 				if (this.productsCount > 0) {
 					// We are sure that all products use same warehouse for that user [0]
-					const warehouseId = this.productsTable.selectedProducts[0][
-						'warehouseId'
-					];
+					const warehouseId =
+						this.productsTable.selectedProducts[0]['warehouseId'];
 
 					if (
 						!this.warehouse ||
@@ -161,9 +168,8 @@ export class SimulationComponent implements OnDestroy, OnInit {
 				products: orderProducts,
 			};
 
-			const order: Order = await this.warehouseOrdersRouter.create(
-				orderCreateInput
-			);
+			const order: Order =
+				await this.warehouseOrdersRouter.create(orderCreateInput);
 
 			this.orderRouter
 				.get(order.id, orderRouterOptions)
@@ -189,7 +195,7 @@ export class SimulationComponent implements OnDestroy, OnInit {
 	async inviteUser(): Promise<void> {
 		try {
 			this.invite = await this.inviteRouter.create(
-				this.getInviteCreateObj()
+				this.getInviteCreateObj(),
 			);
 
 			this.inviteRequest = null;
@@ -198,12 +204,12 @@ export class SimulationComponent implements OnDestroy, OnInit {
 
 			this.toasterService.pop(
 				'success',
-				`Successful invited user, your code is ${this.invite.code}`
+				`Successful invited user, your code is ${this.invite.code}`,
 			);
 		} catch (err) {
 			this.toasterService.pop(
 				'error',
-				`Error in invite user: "${err.message}"`
+				`Error in invite user: "${err.message}"`,
 			);
 		}
 	}
@@ -282,11 +288,10 @@ export class SimulationComponent implements OnDestroy, OnInit {
 				.pipe(first())
 				.toPromise();
 
-			const productsInfo: Observable<
-				ProductInfo[]
-			> = this.geoLocationService.getGeoLocationProducts(
-				this.user.geoLocation
-			);
+			const productsInfo: Observable<ProductInfo[]> =
+				this.geoLocationService.getGeoLocationProducts(
+					this.user.geoLocation,
+				);
 
 			productsInfo
 				.pipe(takeUntil(this._ngDestroy$))
@@ -307,7 +312,7 @@ export class SimulationComponent implements OnDestroy, OnInit {
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe(() => {
 				this.productsTable.setupDataForSmartTable(
-					this._productsInfoData
+					this._productsInfoData,
 				);
 			});
 	}

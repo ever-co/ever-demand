@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnChanges,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import {
 	FormGroup,
 	AbstractControl,
@@ -11,12 +17,14 @@ import { Subject } from 'rxjs';
 import { IAdminUpdateObject } from '@modules/server.common/interfaces/IAdmin';
 import { AdminsService } from '../../../../@core/data/admins.service';
 import { getDummyImage } from '@modules/server.common/utils';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
+	standalone: false,
 	selector: 'ea-basic-info',
 	styleUrls: ['/basic-info.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './basic-info.component.html',
 })
 export class BasicInfoComponent implements OnChanges, OnDestroy {
@@ -47,7 +55,7 @@ export class BasicInfoComponent implements OnChanges, OnDestroy {
 		private formBuilder: FormBuilder,
 		private adminsService: AdminsService,
 		private toasterService: ToasterService,
-		private _translateService: TranslateService
+		private _translateService: TranslateService,
 	) {
 		this.getUploaderPlaceholderText();
 		this.buildForm();
@@ -89,7 +97,7 @@ export class BasicInfoComponent implements OnChanges, OnDestroy {
 
 	nameMustContainOnlyLetters() {
 		return this._translate(
-			this.PREFIX + this.NAME_MUST_CONTAIN_ONLY_LETTERS
+			this.PREFIX + this.NAME_MUST_CONTAIN_ONLY_LETTERS,
 		);
 	}
 
@@ -111,7 +119,7 @@ export class BasicInfoComponent implements OnChanges, OnDestroy {
 
 	buildForm() {
 		const imgUrlRegex: RegExp = new RegExp(
-			`(http(s?):)s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))`
+			`(http(s?):)s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))`,
 		);
 		const nameRegex: RegExp = new RegExp(`^[a-z ,.'-]+$`, 'i');
 

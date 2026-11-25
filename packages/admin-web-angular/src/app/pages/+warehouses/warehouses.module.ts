@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, JsonPipe } from '@angular/common';
-import { FormWizardModule } from '@ever-co/angular2-wizard';
-import { ToasterModule } from 'angular2-toaster';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { FormWizardModule } from '@app/@shared/wizard';
+import { ToasterModule } from '@app/@core/toaster';
+import { Ng2SmartTableModule } from '@app/@shared/smart-table';
 import { ThemeModule } from '../../@theme';
 import { WarehousesComponent } from './warehouses.component';
 import { WarehousesRoutingModule } from './warehouses-routing.module';

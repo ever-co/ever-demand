@@ -4,6 +4,7 @@ import {
 	Output,
 	ViewChild,
 	Input,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { BasicInfoFormComponent } from '@app/@shared/product/forms/basic-info/basic-info-form.component';
@@ -17,7 +18,9 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import Product from '@modules/server.common/entities/Product';
 
 @Component({
+	standalone: false,
 	selector: 'ea-merchants-setup-product-mutation',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './product-mutation.component.html',
 })
 export class SetupMerchantProductMutationComponent {
@@ -45,7 +48,7 @@ export class SetupMerchantProductMutationComponent {
 		private readonly _formBuilder: FormBuilder,
 		private readonly _productsService: ProductsService,
 		private readonly _productLocalesService: ProductLocalesService,
-		private readonly _productsCategoryService: ProductsCategoryService
+		private readonly _productsCategoryService: ProductsCategoryService,
 	) {
 		this.loadProductCategories();
 	}
@@ -58,7 +61,7 @@ export class SetupMerchantProductMutationComponent {
 				.toPromise();
 		} catch (error) {
 			console.warn(
-				`Error during load product categories. message: ${error.message}`
+				`Error during load product categories. message: ${error.message}`,
 			);
 		}
 
@@ -66,7 +69,8 @@ export class SetupMerchantProductMutationComponent {
 	}
 
 	async create() {
-		const productCreateObject: IProductCreateObject = await this.basicInfoForm.setupProductCreateObject();
+		const productCreateObject: IProductCreateObject =
+			await this.basicInfoForm.setupProductCreateObject();
 		try {
 			const product = await this._productsService
 				.create(productCreateObject)
@@ -76,10 +80,10 @@ export class SetupMerchantProductMutationComponent {
 			this.onCreate.emit({
 				id: product.id,
 				title: this._productLocalesService.getMemberValue(
-					product.title
+					product.title,
 				),
 				image: this._productLocalesService.getMemberValue(
-					product.images
+					product.images,
 				),
 			});
 		} catch (error) {

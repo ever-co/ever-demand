@@ -1,11 +1,13 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { takeWhile } from 'rxjs/operators';
 
 // TODO: move layouts into the framework
 @Component({
+	standalone: false,
 	selector: 'ngx-two-columns-layout',
 	styleUrls: ['./two-columns.layout.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './two-columns.layout.html',
 })
 export class TwoColumnsLayoutComponent implements OnDestroy {

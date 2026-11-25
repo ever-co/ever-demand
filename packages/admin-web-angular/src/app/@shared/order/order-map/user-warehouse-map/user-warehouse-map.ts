@@ -6,6 +6,7 @@ import {
 	OnDestroy,
 	OnChanges,
 	AfterViewInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
@@ -15,11 +16,14 @@ const warehouseIcon = environment.MAP_MERCHANT_ICON_LINK;
 const userIcon = environment.MAP_USER_ICON_LINK;
 
 @Component({
+	standalone: false,
 	selector: 'ea-user-warehouse-location',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: ` <div style="height:100%" #gmap></div> `,
 })
 export class UserWarehouseLocationComponent
-	implements AfterViewInit, OnDestroy, OnChanges {
+	implements AfterViewInit, OnDestroy, OnChanges
+{
 	@ViewChild('gmap', { static: true })
 	gmapElement: ElementRef;
 
@@ -46,7 +50,7 @@ export class UserWarehouseLocationComponent
 		const mapProp = {
 			center: new google.maps.LatLng(
 				environment.DEFAULT_LATITUDE,
-				environment.DEFAULT_LONGITUDE
+				environment.DEFAULT_LONGITUDE,
 			),
 			zoom: 15,
 			mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -66,13 +70,13 @@ export class UserWarehouseLocationComponent
 			this.userMarker = this.addMarker(
 				user['geoLocation'],
 				this.map,
-				userIcon
+				userIcon,
 			);
 
 			this.warehouseMarker = this.addMarker(
 				warehouse['geoLocation'],
 				this.map,
-				warehouseIcon
+				warehouseIcon,
 			);
 
 			const bounds = new google.maps.LatLngBounds();

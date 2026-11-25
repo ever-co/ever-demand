@@ -11,26 +11,34 @@
 			/>
 		</svg>
 
-		<h1>{{ getTranslatedValue(product?.title) }}</h1>
+		<h1>
+			{{ getTranslatedValue($safeNavigationMigration(product?.title)) }}
+		</h1>
 	</nb-card-header>
 </nb-card>
 
 <div class="media w-75">
 	<img
-		class="align-self-center img-thumbnail mr-3 w-25"
-		src="{{ getTranslatedValue(product?.images) }}"
-		alt="{{ getTranslatedValue(product?.title) }}"
+		class="align-self-center img-thumbnail me-3 w-25"
+		src="{{
+			getTranslatedValue($safeNavigationMigration(product?.images))
+		}}"
+		alt="{{ getTranslatedValue($safeNavigationMigration(product?.title)) }}"
 	/>
 
 	<div class="media-body">
 		<p class="mt-2">
 			<strong>{{ 'CUSTOMERS_VIEW.DESCRIPTION' | translate }}:</strong>
-			{{ getTranslatedValue(product?.description) }}
+			{{
+				getTranslatedValue(
+					$safeNavigationMigration(product?.description)
+				)
+			}}
 		</p>
 
 		<p>
 			<strong>{{ 'CUSTOMERS_VIEW.DETAILS' | translate }}:</strong>
-			{{ getTranslatedValue(product?.details) }}
+			{{ getTranslatedValue($safeNavigationMigration(product?.details)) }}
 		</p>
 
 		<div>
@@ -57,7 +65,7 @@
 				</label>
 			</div>
 			<select
-				class="custom-select form-control"
+				class="form-select form-control"
 				id="inputGroupSelect01"
 				#langSelect
 				(change)="onProductLangChange(langSelect.value)"

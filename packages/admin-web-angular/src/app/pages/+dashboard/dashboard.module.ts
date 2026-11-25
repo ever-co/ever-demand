@@ -2,15 +2,11 @@ import { NgModule } from '@angular/core';
 import { DashboardComponent } from './dashboard.component';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { ThemeModule } from '../../@theme';
 import { ChartsPanelComponent } from './charts-panel/charts-panel.component';
 import { OrdersChartComponent } from './charts-panel/charts/orders-chart/orders-chart.component';
-// duplicate OrdersChartComponent
-import { OrdersChartComponent as RootOrdersChartComponent } from './charts-panel/charts/orders-chart.component';
 import { ProfitChartComponent } from './charts-panel/charts/profit-chart/profit-chart.component';
-// duplicate ProfitChartComponent
-import { ProfitChartComponent as RootProfitChartComponent } from './charts-panel/charts/profit-chart.component';
 import { ChartPanelHeaderComponent } from './charts-panel/chart-panel-header/chart-panel-header.component';
 import { ChartPanelSummaryComponent } from './charts-panel/chart-panel-summary/chart-panel-summary.component';
 import { NgxEchartsModule } from 'ngx-echarts';
@@ -21,7 +17,7 @@ import { OrdersProfitChartService } from '@app/@core/services/dashboard/orders-p
 import { OrdersChartService } from '@app/@core/services/dashboard/orders-chart.service';
 import { PeriodsService } from '@app/@core/services/dashboard/periods.service';
 import { ProfitChartService } from '@app/@core/services/dashboard/profit-chart.service';
-import { ToasterModule } from 'angular2-toaster';
+import { ToasterModule } from '@app/@core/toaster';
 import { NbSpinnerModule } from '@nebular/theme';
 import { PipesModule } from '@modules/client.common.angular2/pipes/pipes.module';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -38,9 +34,7 @@ export const routes: Routes = [
     imports: [
         CommonModule,
         ThemeModule,
-        NgxEchartsModule.forRoot({
-            echarts: () => import('echarts')
-        }),
+        NgxEchartsModule,
         ToasterModule,
         TranslateModule.forChild(),
         RouterModule.forChild(routes),
@@ -55,9 +49,7 @@ export const routes: Routes = [
         ChartPanelHeaderComponent,
         ChartPanelSummaryComponent,
         OrdersChartComponent,
-        RootOrdersChartComponent,
         ProfitChartComponent,
-        RootProfitChartComponent,
         LegendChartComponent,
         DashboardSelectStoreComponent,
     ],

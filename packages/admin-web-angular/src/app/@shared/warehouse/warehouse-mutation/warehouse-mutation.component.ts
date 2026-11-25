@@ -3,18 +3,21 @@ import {
 	ViewChild,
 	EventEmitter,
 	AfterViewInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BasicInfoFormComponent, ContactInfoFormComponent } from '../forms';
 import { LocationFormComponent } from '../../forms/location';
 import { PaymentsSettingsFormComponent } from '../forms/payments-settings/payments-settings-form.component';
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-mutation',
 	templateUrl: './warehouse-mutation.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./warehouse-mutation.component.scss'],
 })
 export class WarehouseMutationComponent implements AfterViewInit {
@@ -51,7 +54,7 @@ export class WarehouseMutationComponent implements AfterViewInit {
 		private readonly activeModal: NgbActiveModal,
 		private readonly formBuilder: FormBuilder,
 		private readonly toasterService: ToasterService,
-		private readonly warehouseRouter: WarehouseRouter
+		private readonly warehouseRouter: WarehouseRouter,
 	) {}
 
 	get isValidContactInfo() {
@@ -65,7 +68,7 @@ export class WarehouseMutationComponent implements AfterViewInit {
 		// collide and autocomplete field just doesn't show without larger z-index.
 		setTimeout(() => {
 			const elementRef = document.querySelector(
-				'body > div.pac-container.pac-logo'
+				'body > div.pac-container.pac-logo',
 			);
 
 			if (elementRef) {
@@ -99,18 +102,18 @@ export class WarehouseMutationComponent implements AfterViewInit {
 					...this.basicInfoForm.getValue(),
 					...this.contactInfoForm.getValue(),
 					geoLocation: geoLocationInput,
-					isPaymentEnabled: this.paymentsSettingsForm
-						.isPaymentEnabled,
+					isPaymentEnabled:
+						this.paymentsSettingsForm.isPaymentEnabled,
 					paymentGateways: this.paymentsSettingsForm.paymentsGateways,
-					isCashPaymentEnabled: this.paymentsSettingsForm
-						.isCashPaymentEnabled,
+					isCashPaymentEnabled:
+						this.paymentsSettingsForm.isCashPaymentEnabled,
 				},
 				password: this.basicInfoForm.getPassword(),
 			});
 			this.loading = false;
 			this.toasterService.pop(
 				'success',
-				`Warehouse ${w.name} was created!`
+				`Warehouse ${w.name} was created!`,
 			);
 
 			this.activeModal.close();
@@ -118,7 +121,7 @@ export class WarehouseMutationComponent implements AfterViewInit {
 			this.loading = false;
 			this.toasterService.pop(
 				'error',
-				`Error in creating warehouse: "${err.message}"`
+				`Error in creating warehouse: "${err.message}"`,
 			);
 		}
 	}

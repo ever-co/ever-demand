@@ -1,0 +1,60 @@
+// Bootstrap 5 dropped a few Bootstrap 4 layout helpers that the admin templates still use.
+// The codemod renamed the 1:1 ones (ml-* -> ms-*, float-left -> float-start, badge-* -> text-bg-*,
+// .close -> .btn-close, ...); the ones below have no Bootstrap 5 class, so they keep their
+// Bootstrap 4 look here.
+
+.form-group {
+	margin-bottom: 1rem;
+}
+
+// Bootstrap 5 gives every direct child of .row the full row width; Bootstrap 4 only sized the
+// .col* children. The templates were laid out for Bootstrap 4 (button groups and labels placed
+// straight inside a .row), so non-column children keep their natural width. (Padding is left
+// alone: component classes such as .btn and .form-control still set their own.)
+.row > :not([class*='col']):not(.form-control):not(.form-select):not(.w-100) {
+	flex-shrink: 1;
+	width: auto;
+	max-width: none;
+}
+
+.form-row {
+	display: flex;
+	flex-wrap: wrap;
+	margin-right: -5px;
+	margin-left: -5px;
+
+	> .col,
+	> [class*='col-'] {
+		padding-right: 5px;
+		padding-left: 5px;
+	}
+}
+
+.form-inline {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+}
+
+.input-group-prepend,
+.input-group-append {
+	display: flex;
+}
+
+.media {
+	display: flex;
+	align-items: flex-start;
+}
+
+.media-body {
+	flex: 1;
+}
+
+// `label` lost its default bottom margin in Bootstrap 5
+label {
+	margin-bottom: 0.5rem;
+}
+
+.pull-left {
+	float: left !important;
+}

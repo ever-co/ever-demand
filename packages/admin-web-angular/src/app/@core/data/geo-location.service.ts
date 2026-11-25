@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { Apollo, gql } from 'apollo-angular';
+import { completeData } from '@app/graphql/complete-data';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
 import { Observable } from 'rxjs';
 import { map, share } from 'rxjs/operators';
@@ -70,7 +71,7 @@ export class GeoLocationService {
 				},
 				pollInterval: 2000,
 			})
-			.valueChanges.pipe(
+			.valueChanges.pipe(completeData(), 
 				map((res) =>
 					res.data.geoLocationProducts.filter(Boolean).filter(
 						(p) => p.warehouseProduct.isProductAvailable === true

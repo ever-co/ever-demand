@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IInviteCreateObject } from '@modules/server.common/interfaces/IInvite';
 import { Country } from '@modules/server.common/entities/GeoLocation';
-import * as faker from 'faker';
+import { faker } from '@faker-js/faker';
 import { environment } from 'environments/environment';
 
 const NEED_DEFAULT_SETTINGS_MESSAGE =
@@ -84,18 +84,18 @@ export default class FakeDataInvites {
 		if (lng && lat) {
 			return {
 				geoLocation: {
-					city: faker.address.city(),
-					postcode: faker.address.zipCode(),
-					notes: faker.lorem.text(1),
-					streetAddress: faker.address.streetAddress(),
-					house: faker.datatype.number(199).toString(),
-					countryId: faker.datatype.number(1) as Country,
+					city: faker.location.city(),
+					postcode: faker.location.zipCode(),
+					notes: faker.lorem.text(),
+					streetAddress: faker.location.streetAddress(),
+					house: faker.number.int(199).toString(),
+					countryId: faker.number.int(1) as Country,
 					loc: {
 						type: 'Point',
 						coordinates: [lng, lat],
 					},
 				},
-				apartment: faker.datatype.number(199).toString(),
+				apartment: faker.number.int(199).toString(),
 			};
 		} else {
 			console.warn(NEED_DEFAULT_SETTINGS_MESSAGE);

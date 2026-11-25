@@ -1,8 +1,16 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	Output,
+	ChangeDetectionStrategy,
+} from '@angular/core';
+import { ViewCell } from '@app/@shared/smart-table';
 
 @Component({
+	standalone: false,
 	styles: ['.order-input-wrapper { text-align: center; }'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './warehouse-order-input.component.html',
 })
 export class WarehouseOrderInputComponent implements ViewCell {

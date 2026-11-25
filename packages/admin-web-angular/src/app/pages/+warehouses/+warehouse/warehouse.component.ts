@@ -4,12 +4,13 @@ import {
 	AfterViewInit,
 	ViewChild,
 	OnChanges,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToasterService } from 'angular2-toaster';
-import { LocalDataSource } from 'ng2-smart-table';
+import { ToasterService } from '@app/@core/toaster';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { TranslateService } from '@ngx-translate/core';
 import Order from '@modules/server.common/entities/Order';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
@@ -35,8 +36,10 @@ import { takeUntil, first } from 'rxjs/operators';
 const perPage = 3;
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse',
 	templateUrl: './warehouse.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./warehouse.component.scss'],
 })
 export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
@@ -78,7 +81,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 		private _productLocalesService: ProductLocalesService,
 		private readonly _router: Router,
 		private _translateService: TranslateService,
-		private warehouseOrdersService: WarehouseOrdersService
+		private warehouseOrdersService: WarehouseOrdersService,
 	) {
 		this._loadTableSettings();
 		this._loadWarehouses();
@@ -100,10 +103,12 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 				container: 'nb-layout',
 				windowClass: 'ng-custom',
 				backdrop: 'static',
-			}
+			},
 		);
 
-		(modalRef.componentInstance as WarehouseOrderComponent).orderFinishedEmitter
+		(
+			modalRef.componentInstance as WarehouseOrderComponent
+		).orderFinishedEmitter
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(() => {
 				modalRef.close();
@@ -164,7 +169,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 				container: 'nb-layout',
 				backdrop: 'static',
 				windowClass: 'ng-custom',
-			}
+			},
 		);
 		const modalComponent: WarehouseProductCreateComponent =
 			activeModal.componentInstance;
@@ -185,7 +190,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 	private async _getWarehouseOrders(
 		id: string,
 		page = 1,
-		status = this.filterMode
+		status = this.filterMode,
 	) {
 		if (this.$storeOrders) {
 			await this.$storeOrders.unsubscribe();
@@ -197,7 +202,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 					skip: perPage * (page - 1),
 					limit: perPage,
 				},
-				status
+				status,
 			)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(async (res) => {
@@ -228,7 +233,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 			getTranslate('PAID'),
 			getTranslate('CANCELLED'),
 			getTranslate('CREATED'),
-			getTranslate('ELAPSED')
+			getTranslate('ELAPSED'),
 		)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(
@@ -268,7 +273,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 								type: 'custom',
 								renderComponent: StatusComponent,
 								onComponentInitFunction: async (
-									instance: StatusComponent
+									instance: StatusComponent,
 								) => {
 									instance.text = paid;
 									instance.checkOrderField = 'isPaid';
@@ -280,7 +285,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 								type: 'custom',
 								renderComponent: StatusComponent,
 								onComponentInitFunction: async (
-									instance: StatusComponent
+									instance: StatusComponent,
 								) => {
 									instance.text = cancelled;
 									instance.checkOrderField = 'isCancelled';
@@ -300,7 +305,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 							perPage,
 						},
 					};
-				}
+				},
 			);
 	}
 
@@ -311,7 +316,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 			const raw: Date = new Date(<any>order._createdAt);
 			const formatted: string = new DatePipe('en-EN').transform(
 				raw,
-				'dd-MMM-yyyy hh:mm:ss'
+				'dd-MMM-yyyy hh:mm:ss',
 			);
 
 			const columnTitlePrefix = 'STATUS_TEXT.';
@@ -326,7 +331,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 				getTranslate('PAID'),
 				getTranslate('CANCELLED'),
 				getTranslate('CREATED'),
-				getTranslate('ELAPSED')
+				getTranslate('ELAPSED'),
 			)
 				.pipe(takeUntil(this.ngDestroy$))
 				.subscribe(
@@ -356,22 +361,22 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 								? `
 							<div>
 								<img width="32" height="32" src="${this.localeTranslate(
-									order.products[0].product.images
+									order.products[0].product.images,
 								)}" />
 								<p class="d-inline-block">
 									${this.localeTranslate(order.products[0].product.title)}
-									<span class="badge badge-pill badge-secondary">${order.products[0].count}</span>
+									<span class="badge rounded-pill text-bg-secondary">${order.products[0].count}</span>
 								</p>
 							</div>
 						`
 								: '',
-							status: `<div class="badge badge-secondary">${warehouseStatusText}</div>`,
-							carrierStatusHtml: `<div class="badge badge-secondary">${carrierStatusText}</div>`,
+							status: `<div class="badge text-bg-secondary">${warehouseStatusText}</div>`,
+							carrierStatusHtml: `<div class="badge text-bg-secondary">${carrierStatusText}</div>`,
 							created: formatted,
 							orderType: order.orderType,
 							order,
 						});
-					}
+					},
 				);
 		});
 
@@ -399,7 +404,7 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 			} else {
 				this._toasterService.pop(
 					`warning`,
-					`Warehouse with id '${warehouseId}' is not active now!`
+					`Warehouse with id '${warehouseId}' is not active now!`,
 				);
 			}
 		}
@@ -416,17 +421,15 @@ export class WarehouseComponent implements OnDestroy, AfterViewInit, OnChanges {
 					this._getWarehouseOrders(
 						this.warehouseID,
 						page,
-						(status = this.filterMode)
+						(status = this.filterMode),
 					);
 				}
 			});
 	}
 
 	private async loadDataCount(id, status) {
-		this.dataCount = await this.warehouseOrdersService.getCountOfStoreOrders(
-			id,
-			status
-		);
+		this.dataCount =
+			await this.warehouseOrdersService.getCountOfStoreOrders(id, status);
 	}
 
 	ngOnDestroy() {

@@ -2,9 +2,7 @@
 	<span class="modal-title">
 		{{ 'CUSTOMERS_VIEW.DEVICE.UPDATE_DEVICE' | translate }}
 	</span>
-	<button class="close" aria-label="Close" (click)="cancel()">
-		<span aria-hidden="true">&times;</span>
-	</button>
+	<button class="btn-close" aria-label="Close" (click)="cancel()"></button>
 </div>
 <div class="modal-body" [nbSpinner]="loading">
 	<form [formGroup]="form">
@@ -65,7 +63,7 @@
 		<button (click)="update()" type="submit" class="btn btn-success">
 			{{ 'CUSTOMERS_VIEW.DEVICE.UPDATE' | translate }}
 		</button>
-		<button (click)="cancel()" class="btn btn-default float-right">
+		<button (click)="cancel()" class="btn btn-default float-end">
 			{{ 'CANCEL' | translate }}
 		</button>
 	</form>

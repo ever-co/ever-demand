@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ThemeModule } from '../../../@theme';
 import { SimulationJsonComponent } from './sumulation-json.component';
 import { JsonModalModule } from '../../json-modal/json-modal.module';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 
 const COMPONENTS = [SimulationJsonComponent];
 

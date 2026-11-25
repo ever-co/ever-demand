@@ -1,11 +1,13 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import User from '@modules/server.common/entities/User';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UsersService } from '@app/@core/data/users.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-customer-metrics',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './ea-customer-metrics.component.html',
 })
 export class CustomerMetricsComponent implements OnDestroy {
@@ -16,7 +18,7 @@ export class CustomerMetricsComponent implements OnDestroy {
 
 	constructor(
 		private readonly _router: ActivatedRoute,
-		private userService: UsersService
+		private userService: UsersService,
 	) {
 		this.params$ = this._router.params.subscribe(async (r) => {
 			this.userMetrics = await this.userService.getCustomerMetrics(r.id);

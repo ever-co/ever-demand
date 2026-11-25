@@ -7,6 +7,7 @@ import {
 	OnDestroy,
 	Output,
 	AfterViewInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 
 import { BasicInfoFormComponent } from '../../../../../@shared/user/forms';
@@ -14,15 +15,18 @@ import { LocationFormComponent } from '../../../../../@shared/forms/location';
 import { UsersService } from '../../../../../@core/data/users.service';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-order-create-user',
 	styleUrls: ['./warehouse-order-create-user.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './warehouse-order-create-user.component.html',
 })
 export class WarehouseOrderCreateUserComponent
-	implements OnDestroy, AfterViewInit {
+	implements OnDestroy, AfterViewInit
+{
 	readonly form: FormGroup = this._formBuilder.group({
 		basicInfo: BasicInfoFormComponent.buildForm(this._formBuilder),
 		apartment: LocationFormComponent.buildApartmentForm(this._formBuilder),
@@ -52,7 +56,7 @@ export class WarehouseOrderCreateUserComponent
 	constructor(
 		private readonly _formBuilder: FormBuilder,
 		private readonly _usersService: UsersService,
-		private readonly _toasterService: ToasterService
+		private readonly _toasterService: ToasterService,
 	) {}
 
 	ngAfterViewInit() {
@@ -60,15 +64,14 @@ export class WarehouseOrderCreateUserComponent
 	}
 
 	onCoordinatesChanges(
-		location: google.maps.LatLng | google.maps.LatLngLiteral
+		location: google.maps.LatLng | google.maps.LatLngLiteral,
 	) {
 		this.mapCoordEmitter.emit(location);
 	}
 
 	onGeometrySend(
 		geometry:
-			| google.maps.places.PlaceGeometry
-			| google.maps.GeocoderGeometry
+			google.maps.places.PlaceGeometry | google.maps.GeocoderGeometry,
 	) {
 		this.mapGeometryEmitter.emit(geometry);
 	}
@@ -101,12 +104,12 @@ export class WarehouseOrderCreateUserComponent
 			this.form.reset();
 			this._toasterService.pop(
 				'success',
-				`User "${userFirstname}" was added successfully`
+				`User "${userFirstname}" was added successfully`,
 			);
 		} catch (error) {
 			this._toasterService.pop(
 				'error',
-				`Error in creating customer: "${error.message}"`
+				`Error in creating customer: "${error.message}"`,
 			);
 		}
 	}

@@ -1,11 +1,15 @@
-<swiper [config]="config" style="height: 400px;">
-	<div class="swiper-wrapper">
-		<div class="swiper-slide" *ngFor="let image of slideImages">
-			<img [src]="image.url" [ngStyle]="image.style" />
-			<div class="slide-title">{{ image.title }}</div>
-		</div>
-	</div>
-	<div class="swiper-pagination"></div>
-	<div class="swiper-button-next"></div>
-	<div class="swiper-button-prev"></div>
-</swiper>
+<swiper-container
+	class="image-slider"
+	pagination="true"
+	pagination-clickable="true"
+	navigation="true"
+	loop="true"
+	[attr.speed]="speed"
+	[attr.autoplay-delay]="autoplayDelay"
+	style="height: 400px"
+>
+	<swiper-slide *ngFor="let image of slideImages">
+		<img [src]="image.url" [ngStyle]="image.style" />
+		<div class="slide-title">{{ image.title }}</div>
+	</swiper-slide>
+</swiper-container>

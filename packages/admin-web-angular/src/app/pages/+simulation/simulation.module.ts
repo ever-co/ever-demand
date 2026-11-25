@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormWizardModule } from '@ever-co/angular2-wizard';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { ToasterModule } from 'angular2-toaster';
-import { TranslateModule } from '@ngx-translate/core';
+import { FormWizardModule } from '@app/@shared/wizard';
+import { Ng2SmartTableModule } from '@app/@shared/smart-table';
+import { ToasterModule } from '@app/@core/toaster';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { ThemeModule } from '../../@theme';
 import { AdminStorageService } from '../../@core/data/fakeDataServices/storageService';
 import { UserMutationModule } from '../../@shared/user/user-mutation';

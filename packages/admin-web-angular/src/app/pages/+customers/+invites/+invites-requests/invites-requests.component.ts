@@ -4,10 +4,11 @@ import {
 	Renderer2,
 	ElementRef,
 	AfterViewChecked,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 
 import { Subject, forkJoin, Observable } from 'rxjs';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import InviteRequest from '@modules/server.common/entities/InviteRequest';
 import { InvitesRequestsService } from '../../../../@core/data/invites-requests.service';
 import { getCountryName } from '@modules/server.common/entities/GeoLocation';
@@ -25,7 +26,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationModalComponent } from '../../../../@shared/confirmation-modal/confirmation-modal.component';
 import { InviteViewModel } from '../invites.component';
 
-// import { ToasterService } from 'angular2-toaster';
+// import { ToasterService } from '@app/@core/toaster';
 // import fingerprint2 from 'fingerprintjs2';
 
 export interface InviteRequestViewModel {
@@ -40,8 +41,10 @@ export interface InviteRequestViewModel {
 const perPage = 10;
 
 @Component({
+	standalone: false,
 	selector: 'ea-invites-requests',
 	styleUrls: ['invites-requests.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'invites-requests.component.html',
 })
 export class InvitesRequestsComponent implements OnDestroy, AfterViewChecked {
@@ -66,7 +69,7 @@ export class InvitesRequestsComponent implements OnDestroy, AfterViewChecked {
 		private readonly _renderer: Renderer2,
 		private readonly _translateService: TranslateService,
 		private readonly _notifyService: NotifyService,
-		private readonly modalService: NgbModal
+		private readonly modalService: NgbModal,
 	) {
 		this._loadSettingsSmartTable();
 		this._loadDataSmartTable();
@@ -75,30 +78,8 @@ export class InvitesRequestsComponent implements OnDestroy, AfterViewChecked {
 
 	ngAfterViewChecked(): void {
 		this.loadSmartTableTranslates();
-
-		if (
-			this._elRef.nativeElement.querySelector(
-				'.ng2-smart-action-add-create'
-			)
-		) {
-			const firstRow = 2;
-			const columnOffset = 0;
-
-			const td = this._renderer.createElement('td');
-
-			const tr = this._elRef.nativeElement.getElementsByTagName('tr')[
-				firstRow
-			];
-
-			const refChild = tr.childNodes[columnOffset];
-
-			if (!this.addClick) {
-				this._renderer.insertBefore(tr, td, refChild);
-				this.addClick = true;
-			}
-		} else {
-			this.addClick = false;
-		}
+		// (the old DOM hack that added the multi-select cell to the inline create row is gone:
+		// angular2-smart-table renders that cell itself)
 	}
 
 	get hasSelectedInvitesRequests(): boolean {
@@ -108,7 +89,7 @@ export class InvitesRequestsComponent implements OnDestroy, AfterViewChecked {
 	get hasSelectedInvitesRequestsForInvite(): boolean {
 		return (
 			this.selectedInvitesRequests.filter(
-				(i: InviteRequest) => !i.isInvited
+				(i: InviteRequest) => !i.isInvited,
 			).length > 0
 		);
 	}
@@ -135,9 +116,10 @@ export class InvitesRequestsComponent implements OnDestroy, AfterViewChecked {
 
 			const createDataObject = this.inviteRequestCreateObject(e.newData);
 
-			const createInput = await this._invitesRequestsService.getCreateInviteRequestObject(
-				createDataObject
-			);
+			const createInput =
+				await this._invitesRequestsService.getCreateInviteRequestObject(
+					createDataObject,
+				);
 
 			await this._invitesRequestsService
 				.createInviteRequest(createInput)
@@ -220,12 +202,12 @@ export class InvitesRequestsComponent implements OnDestroy, AfterViewChecked {
 	async editConfirm(e): Promise<void> {
 		try {
 			this.loading = true;
-			const createDataObject: InviteViewModel = this.inviteRequestCreateObject(
-				e.newData
-			);
-			const updateInput = await this._invitesService.getCreateInviteObject(
-				createDataObject
-			);
+			const createDataObject: InviteViewModel =
+				this.inviteRequestCreateObject(e.newData);
+			const updateInput =
+				await this._invitesService.getCreateInviteObject(
+					createDataObject,
+				);
 
 			const res = await this._invitesRequestsService
 				.updateInviteRequest(e.data.id, updateInput)
@@ -246,7 +228,7 @@ export class InvitesRequestsComponent implements OnDestroy, AfterViewChecked {
 	async inviteSelectedRows(): Promise<void> {
 		let succesInvite = 0;
 		const invitesRequests = this.selectedInvitesRequests.filter(
-			(i: InviteRequest) => !i.isInvited
+			(i: InviteRequest) => !i.isInvited,
 		);
 		for (const inviteRequest of invitesRequests) {
 			try {
@@ -288,7 +270,7 @@ export class InvitesRequestsComponent implements OnDestroy, AfterViewChecked {
 
 	async deleteSelectedRows(): Promise<void> {
 		const idsForDelete: string[] = this.selectedInvitesRequests.map(
-			(c) => c.id
+			(c) => c.id,
 		);
 
 		try {
@@ -327,7 +309,7 @@ export class InvitesRequestsComponent implements OnDestroy, AfterViewChecked {
 			getTranslate('APARTMENT'),
 			getTranslate('INVITE_CODE'),
 			getTranslate('INVITED_DATE'),
-			getTranslate('STATUS')
+			getTranslate('STATUS'),
 		)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(
@@ -395,7 +377,7 @@ export class InvitesRequestsComponent implements OnDestroy, AfterViewChecked {
 							perPage,
 						},
 					};
-				}
+				},
 			);
 	}
 
@@ -424,11 +406,11 @@ export class InvitesRequestsComponent implements OnDestroy, AfterViewChecked {
 					invitedDate:
 						inviteRequest.invitedDate &&
 						new Date(
-							inviteRequest.invitedDate
+							inviteRequest.invitedDate,
 						).toLocaleDateString() +
 							'\n' +
 							new Date(
-								inviteRequest.invitedDate
+								inviteRequest.invitedDate,
 							).toLocaleTimeString(),
 					isInvited: inviteRequest.isInvited,
 					inviteRequest,
@@ -442,7 +424,7 @@ export class InvitesRequestsComponent implements OnDestroy, AfterViewChecked {
 			invitesRequestsData.splice(
 				perPage * (page - 1),
 				perPage,
-				...invitesRequestsVM
+				...invitesRequestsVM,
 			);
 
 			await this.sourceSmartTable.load(invitesRequestsData);
@@ -458,7 +440,7 @@ export class InvitesRequestsComponent implements OnDestroy, AfterViewChecked {
 					skip: perPage * (page - 1),
 					limit: perPage,
 				},
-				!this.notInvitedOnly
+				!this.notInvitedOnly,
 			)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(async (i: InviteRequest[]) => {
@@ -517,9 +499,10 @@ export class InvitesRequestsComponent implements OnDestroy, AfterViewChecked {
 	}
 
 	private async loadDataCount() {
-		this.dataCount = await this._invitesRequestsService.getCountOfInvitesRequests(
-			!this.notInvitedOnly
-		);
+		this.dataCount =
+			await this._invitesRequestsService.getCountOfInvitesRequests(
+				!this.notInvitedOnly,
+			);
 	}
 
 	ngOnDestroy(): void {

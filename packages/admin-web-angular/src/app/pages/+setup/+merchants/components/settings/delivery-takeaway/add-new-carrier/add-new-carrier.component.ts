@@ -4,6 +4,7 @@ import {
 	Input,
 	AfterViewInit,
 	OnInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { BasicInfoFormComponent } from '@app/@shared/carrier/forms/basic-info/basic-info-form.component';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
@@ -11,11 +12,14 @@ import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-r
 import { first } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'ea-merchants-setup-add-new-carrier',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './add-new-carrier.component.html',
 })
 export class SetupMerchantAddNewCarrierComponent
-	implements AfterViewInit, OnInit {
+	implements AfterViewInit, OnInit
+{
 	@ViewChild('basicInfoForm', { static: true })
 	basicInfoForm: BasicInfoFormComponent;
 
@@ -32,7 +36,7 @@ export class SetupMerchantAddNewCarrierComponent
 
 	constructor(
 		private readonly formBuilder: FormBuilder,
-		private carrierRouter: CarrierRouter
+		private carrierRouter: CarrierRouter,
 	) {}
 
 	ngOnInit(): void {

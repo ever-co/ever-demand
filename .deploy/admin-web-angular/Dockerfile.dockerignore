@@ -1,0 +1,19 @@
+# Build context filter for .deploy/admin-web-angular/Dockerfile (BuildKit reads
+# <Dockerfile>.dockerignore next to the Dockerfile).
+.git
+**/node_modules
+**/.angular
+**/.nx
+**/build
+**/dist
+**/www
+**/coverage
+**/.expo
+**/android
+**/ios
+**/.dart_tool
+**/.env
+e2e/test-results
+e2e/playwright-report
+packages/admin-web-angular/src/environments/environment*.ts
+!packages/admin-web-angular/src/environments/model.ts

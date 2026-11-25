@@ -1,8 +1,13 @@
-import { AfterViewInit, Component, OnDestroy } from '@angular/core';
+import {
+	AfterViewInit,
+	Component,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { TranslateService } from '@ngx-translate/core';
 import { WarehousesService } from '../../@core/data/warehouses.service';
 import { OrdersService } from '../../@core/data/orders.service';
@@ -23,8 +28,10 @@ import { WarehousePhoneComponent } from '../../@shared/render-component/warehous
 const perPage = 5;
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouses',
 	templateUrl: './warehouses.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./warehouses.component.scss'],
 })
 export class WarehousesComponent implements AfterViewInit, OnDestroy {
@@ -50,7 +57,7 @@ export class WarehousesComponent implements AfterViewInit, OnDestroy {
 		private readonly _ordersService: OrdersService,
 		private readonly _toasterService: ToasterService,
 		private readonly _sanitizer: DomSanitizer,
-		private readonly modalService: NgbModal
+		private readonly modalService: NgbModal,
 	) {
 		this._loadSettingsSmartTable();
 	}
@@ -91,7 +98,7 @@ export class WarehousesComponent implements AfterViewInit, OnDestroy {
 			.pipe(takeUntil(modalComponent.ngDestroy$))
 			.subscribe((dataEvent) => {
 				const idsForDelete: string[] = this._selectedWarehouses.map(
-					(w) => w.id
+					(w) => w.id,
 				);
 
 				try {
@@ -102,7 +109,7 @@ export class WarehousesComponent implements AfterViewInit, OnDestroy {
 							this.loading = false;
 							this._toasterService.pop(
 								`success`,
-								`Selected warehouse are deleted!`
+								`Selected warehouse are deleted!`,
 							);
 							this._selectedWarehouses = [];
 						});
@@ -111,7 +118,7 @@ export class WarehousesComponent implements AfterViewInit, OnDestroy {
 
 					this._toasterService.pop(
 						'error',
-						`Error: "${error.message}"`
+						`Error: "${error.message}"`,
 					);
 				}
 
@@ -121,9 +128,13 @@ export class WarehousesComponent implements AfterViewInit, OnDestroy {
 
 	// This is just workaround to show some search icon on smart table, in the future maybe we must find better solution.
 	private _addCustomHTMLElements(): any {
-		document.querySelector(
-			'tr.ng2-smart-filters > th:nth-child(1)'
-		).innerHTML = '<i class="fa fa-search" style="font-size: 1.3em"/>';
+		const target = document.querySelector(
+			'tr.angular2-smart-filters > th:nth-child(1)',
+		);
+		if (target) {
+			target.innerHTML =
+				'<i class="fa fa-search" style="font-size: 1.3em"></i>';
+		}
 	}
 
 	private _selectWarehouse(warehouseId: string) {
@@ -157,13 +168,14 @@ export class WarehousesComponent implements AfterViewInit, OnDestroy {
 			});
 
 		const loadData = async () => {
-			const merchantsOrders = await this._ordersService.getMerchantsOrdersCountInfo(
-				warehouses.map((w) => w.id)
-			);
+			const merchantsOrders =
+				await this._ordersService.getMerchantsOrdersCountInfo(
+					warehouses.map((w) => w.id),
+				);
 
 			const warehousesVM = warehouses.map((warehouse) => {
 				const merchantOrders = merchantsOrders.find(
-					(res) => res['id'] === warehouse.id
+					(res) => res['id'] === warehouse.id,
 				);
 
 				return {
@@ -198,7 +210,7 @@ export class WarehousesComponent implements AfterViewInit, OnDestroy {
 			merchantsData.splice(
 				perPage * (page - 1),
 				perPage,
-				...warehousesVM
+				...warehousesVM,
 			);
 
 			await this.sourceSmartTable.load(merchantsData);
@@ -218,7 +230,7 @@ export class WarehousesComponent implements AfterViewInit, OnDestroy {
 			getTranslate('PHONE'),
 			getTranslate('CITY'),
 			getTranslate('ADDRESS'),
-			getTranslate('ORDERS')
+			getTranslate('ORDERS'),
 		)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(
@@ -289,7 +301,7 @@ export class WarehousesComponent implements AfterViewInit, OnDestroy {
 							perPage,
 						},
 					};
-				}
+				},
 			);
 	}
 

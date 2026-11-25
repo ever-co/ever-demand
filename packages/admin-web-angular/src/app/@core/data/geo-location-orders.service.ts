@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
+import { completeData } from '@app/graphql/complete-data';
 import Order from '@modules/server.common/entities/Order';
 import { map, share } from 'rxjs/operators';
 import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
@@ -67,7 +68,7 @@ export class GeoLocationOrdersService {
 				variables: { geoLocation, skippedOrderIds, options, searchObj },
 				pollInterval: 1000,
 			})
-			.valueChanges.pipe(
+			.valueChanges.pipe(completeData(), 
 				map((res) => res.data.getOrdersForWork),
 				share()
 			);

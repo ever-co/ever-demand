@@ -4,6 +4,7 @@ import {
 	OnDestroy,
 	AfterViewInit,
 	Input,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { CarriersSmartTableComponent } from '@app/@shared/carrier/carriers-table/carriers-table.component';
@@ -16,11 +17,14 @@ import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 const perPage = 5;
 
 @Component({
+	standalone: false,
 	selector: 'ea-merchants-setup-shared-carriers',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './shared-carriers.component.html',
 })
 export class SetupMerchantSharedCarriersComponent
-	implements OnDestroy, AfterViewInit {
+	implements OnDestroy, AfterViewInit
+{
 	@ViewChild('carriersTable', { static: true })
 	carriersTable: CarriersSmartTableComponent;
 
@@ -35,7 +39,7 @@ export class SetupMerchantSharedCarriersComponent
 
 	constructor(
 		private readonly _translateService: TranslateService,
-		private readonly _carriersService: CarriersService
+		private readonly _carriersService: CarriersService,
 	) {
 		this._applyTranslationOnSmartTable();
 	}
@@ -66,12 +70,12 @@ export class SetupMerchantSharedCarriersComponent
 					_id: {
 						$nin: this.existedCarriersIds,
 					},
-				}
+				},
 			)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(async (data: Carrier[]) => {
 				const carriersVm = data.map(
-					CarriersSmartTableComponent.getCarrierSmartTableObject
+					CarriersSmartTableComponent.getCarrierSmartTableObject,
 				);
 
 				await this.loadDataCount();
@@ -81,7 +85,7 @@ export class SetupMerchantSharedCarriersComponent
 				carriersData.splice(
 					perPage * (page - 1),
 					perPage,
-					...carriersVm
+					...carriersVm,
 				);
 
 				await this.carriersTable.loadData(carriersData);

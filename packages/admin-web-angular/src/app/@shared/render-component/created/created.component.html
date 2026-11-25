@@ -1,6 +1,8 @@
 <span class="d-block mb-2"
 	><strong>Created:</strong>
-	{{ rowData?.createdAt | amLocal | amDateFormat: 'DD.MM.YYYY HH:mm' }}
+	{{
+		$safeNavigationMigration(rowData?.createdAt) | date: 'dd.MM.yyyy HH:mm'
+	}}
 </span>
 <strong *ngIf="this.rowData.startDeliveryTime">Elapsed: </strong>
 <span #createdTimer></span>

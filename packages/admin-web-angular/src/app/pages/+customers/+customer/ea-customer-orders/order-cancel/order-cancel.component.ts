@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import { OrdersService } from '../../../../../@core/data/orders.service';
 import { Observable } from 'rxjs';
@@ -6,7 +6,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 
 @Component({
+	standalone: false,
 	styleUrls: ['./order-cancel.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './order-cancel.component.html',
 })
 export class OrderCancelComponent implements OnInit {
@@ -16,7 +18,7 @@ export class OrderCancelComponent implements OnInit {
 	constructor(
 		private readonly _orderService: OrdersService,
 		private readonly activeModal: NgbActiveModal,
-		private warehouseOrderdersRouter: WarehouseOrdersRouter
+		private warehouseOrderdersRouter: WarehouseOrdersRouter,
 	) {}
 
 	cancel() {

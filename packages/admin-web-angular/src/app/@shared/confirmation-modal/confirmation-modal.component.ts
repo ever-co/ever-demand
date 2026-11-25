@@ -4,13 +4,16 @@ import {
 	Output,
 	EventEmitter,
 	OnDestroy,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
+	standalone: false,
 	styleUrls: ['./confirmation-modal.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './confirmation-modal.component.html',
 })
 export class ConfirmationModalComponent implements OnInit, OnDestroy {
@@ -26,7 +29,7 @@ export class ConfirmationModalComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private readonly activeModal: NgbActiveModal,
-		private translateService: TranslateService
+		private translateService: TranslateService,
 	) {
 		if (!this.mainText) {
 			this.mainText = 'ARE_YOU_SURE';

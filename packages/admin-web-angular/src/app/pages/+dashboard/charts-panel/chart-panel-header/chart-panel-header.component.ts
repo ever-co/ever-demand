@@ -7,6 +7,7 @@ import {
 	ViewChild,
 	ElementRef,
 	OnInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import {
 	NbMediaBreakpoint,
@@ -15,14 +16,16 @@ import {
 } from '@nebular/theme';
 import { takeWhile } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { ChartsPanelComponent } from '../charts-panel.component';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'ea-chart-panel-header',
 	styleUrls: ['./chart-panel-header.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './chart-panel-header.component.html',
 })
 export class ChartPanelHeaderComponent implements OnInit, OnDestroy {
@@ -69,7 +72,7 @@ export class ChartPanelHeaderComponent implements OnInit, OnDestroy {
 		private readonly _themeService: NbThemeService,
 		private readonly _breakpointService: NbMediaBreakpointsService,
 		private readonly _translateService: TranslateService,
-		private readonly _toasterService: ToasterService
+		private readonly _toasterService: ToasterService,
 	) {
 		this._themeService
 			.getJsTheme()
@@ -259,7 +262,7 @@ export class ChartPanelHeaderComponent implements OnInit, OnDestroy {
 			this._toasterService.pop(
 				'error',
 				'Invalid date format',
-				'Date should be in format "mm/dd/yyyy"'
+				'Date should be in format "mm/dd/yyyy"',
 			);
 
 			isDateRangeValid = false;
@@ -267,7 +270,7 @@ export class ChartPanelHeaderComponent implements OnInit, OnDestroy {
 			this._toasterService.pop(
 				'error',
 				'Wrong date ranges',
-				'"From date" must be before or equal to "to date"!'
+				'"From date" must be before or equal to "to date"!',
 			);
 
 			isDateRangeValid = false;

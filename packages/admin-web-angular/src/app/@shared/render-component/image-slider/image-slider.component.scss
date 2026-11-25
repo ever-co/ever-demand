@@ -1,3 +1,12 @@
+:host {
+	display: block;
+}
+
+swiper-slide {
+	position: relative;
+	text-align: center;
+}
+
 .slide-title {
 	background-color: rgba(0, 0, 0, 0.5);
 	color: rgba(255, 255, 255, 0.8);
@@ -5,7 +14,4 @@
 	bottom: 0;
 	width: 100%;
 	padding: 1rem 0;
-}
-.swiper-pagination {
-	top: 0;
 }

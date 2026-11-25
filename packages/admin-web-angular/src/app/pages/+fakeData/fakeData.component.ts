@@ -1,4 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import Invite from '@modules/server.common/entities/Invite';
 import { IWarehouseProductCreateObject } from '@modules/server.common/interfaces/IWarehouseProduct';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
@@ -24,7 +29,7 @@ import FakeDataUsers from '../../@core/data/fakeDataServices/users';
 import { UserAuthRouter } from '@modules/client.common.angular2/routers/user-auth-router.service';
 import { CarriersService } from '../../@core/data/carriers.service';
 import { Subject } from 'rxjs';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { first, takeUntil } from 'rxjs/operators';
 import { WarehousesService } from '../../@core/data/warehouses.service';
 import { DataService } from '../../@core/data/data.service';
@@ -42,7 +47,7 @@ import { InvitesService } from '@app/@core/data/invites.service';
 import { InvitesRequestsService } from '@app/@core/data/invites-requests.service';
 import { UsersService } from '@app/@core/data/users.service';
 import { environment } from 'environments/environment';
-import { random }from 'underscore';
+import { random } from 'underscore';
 import { CurrenciesService } from '@app/@core/data/currencies.service';
 import { Store } from '@app/@core/data/store.service';
 
@@ -52,8 +57,10 @@ const lng = environment['DEFAULT_LONGITUDE'];
 const lat = environment['DEFAULT_LATITUDE'];
 
 @Component({
+	standalone: false,
 	selector: 'ea-fake-data',
 	templateUrl: './fakeData.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./fakeData.component.scss'],
 })
 export class FakeDataComponent implements OnInit, OnDestroy {
@@ -106,7 +113,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		private readonly _notifyService: NotifyService,
 		private readonly _usersService: UsersService,
 		private readonly _currenciesService: CurrenciesService,
-		private readonly store: Store
+		private readonly store: Store,
 	) {
 		this._setupButtonStatuses();
 		this._setupButtonLoading();
@@ -145,7 +152,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 				showMessage(`Warehouse with id "${id}" created successfully`),
 			warehouseAddProducts: (id) =>
 				showMessage(
-					`Warehouse with id "${id}" added products successfully`
+					`Warehouse with id "${id}" added products successfully`,
 				),
 			geoLocation: (id) =>
 				showMessage(`Warehouse with id "${id}" update geo location`),
@@ -156,7 +163,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 			clearAll: () => showMessage('All data was removed from database'),
 			generateRandomOrdersPerStore: (storeId, ordersCount) =>
 				showMessage(
-					`Store with id "${storeId}" has new ${ordersCount} orders.`
+					`Store with id "${storeId}" has new ${ordersCount} orders.`,
 				),
 			errorGenerate: (msg) => errror(msg),
 		};
@@ -285,10 +292,10 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		let userNumber = 1;
 
 		const create = async () => {
-			const userRegisterInput = this.fakeDataUsers.getUserRegistrationInput();
-			const user: User = await this.userAuthRouter.register(
-				userRegisterInput
-			);
+			const userRegisterInput =
+				this.fakeDataUsers.getUserRegistrationInput();
+			const user: User =
+				await this.userAuthRouter.register(userRegisterInput);
 			this._notify.user(user.id);
 
 			if (userNumber <= 100) {
@@ -371,18 +378,18 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 	}> = [];
 
 	async createPeperoniAndMushroomPizzaProduct(
-		categories?: IProductsCategory[]
+		categories?: IProductsCategory[],
 	) {
 		this.isBtnDisabled.product1 = true;
 		this.loading.product1 = true;
 
-		const productCreateObject = await this.fakeDataProducts.getPeperoniAndMushroomPizzaCreateObject(
-			categories
-		);
+		const productCreateObject =
+			await this.fakeDataProducts.getPeperoniAndMushroomPizzaCreateObject(
+				categories,
+			);
 
-		this.peperoniAndMushroomPizzaProduct = await this.productRouter.create(
-			productCreateObject
-		);
+		this.peperoniAndMushroomPizzaProduct =
+			await this.productRouter.create(productCreateObject);
 
 		this.isBtnDisabled.product1 = false;
 		this.loading.product1 = false;
@@ -394,12 +401,12 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		this.isBtnDisabled.product2 = true;
 		this.loading.product2 = true;
 
-		const productCreateObject = await this.fakeDataProducts.getSushiAndCaviarMixCreateObject(
-			categories
-		);
-		this.sushiAndCaviarMixProduct = await this.productRouter.create(
-			productCreateObject
-		);
+		const productCreateObject =
+			await this.fakeDataProducts.getSushiAndCaviarMixCreateObject(
+				categories,
+			);
+		this.sushiAndCaviarMixProduct =
+			await this.productRouter.create(productCreateObject);
 
 		this.isBtnDisabled.product2 = false;
 		this.loading.product2 = false;
@@ -410,12 +417,10 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		this.isBtnDisabled.product3 = true;
 		this.loading.product3 = true;
 
-		const productCreateObject = await this.fakeDataProducts.getSushiMixCreateObject(
-			categories
-		);
-		this.sushiMixProduct = await this.productRouter.create(
-			productCreateObject
-		);
+		const productCreateObject =
+			await this.fakeDataProducts.getSushiMixCreateObject(categories);
+		this.sushiMixProduct =
+			await this.productRouter.create(productCreateObject);
 
 		this.isBtnDisabled.product3 = false;
 		this.loading.product3 = false;
@@ -426,12 +431,10 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		this.isBtnDisabled.product4 = true;
 		this.loading.product4 = true;
 
-		const productCreateObject = await this.fakeDataProducts.getPastaCreateObject(
-			categories
-		);
-		this.pastaProduct = await this.productRouter.create(
-			productCreateObject
-		);
+		const productCreateObject =
+			await this.fakeDataProducts.getPastaCreateObject(categories);
+		this.pastaProduct =
+			await this.productRouter.create(productCreateObject);
 
 		this.isBtnDisabled.product4 = false;
 		this.loading.product4 = false;
@@ -442,28 +445,28 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		this.isBtnDisabled.product5 = true;
 		this.loading.product5 = true;
 
-		const productCreateObject = await this.fakeDataProducts.getSushiBoxCreateObject(
-			categories
-		);
-		this.sushiBoxProduct = await this.productRouter.create(
-			productCreateObject
-		);
+		const productCreateObject =
+			await this.fakeDataProducts.getSushiBoxCreateObject(categories);
+		this.sushiBoxProduct =
+			await this.productRouter.create(productCreateObject);
 
 		this.isBtnDisabled.product5 = false;
 		this.loading.product5 = false;
 		this._notify.product(this.sushiBoxProduct.id);
 	}
 
-	async createPeperoniAndTomatoPizzaProduct(categories?: IProductsCategory[]) {
+	async createPeperoniAndTomatoPizzaProduct(
+		categories?: IProductsCategory[],
+	) {
 		this.isBtnDisabled.product6 = true;
 		this.loading.product6 = true;
 
-		const productCreateObject = await this.fakeDataProducts.getPeperoniAndTomatoPizzaCreateObject(
-			categories
-		);
-		this.peperoniAndTomatoPizzaProduct = await this.productRouter.create(
-			productCreateObject
-		);
+		const productCreateObject =
+			await this.fakeDataProducts.getPeperoniAndTomatoPizzaCreateObject(
+				categories,
+			);
+		this.peperoniAndTomatoPizzaProduct =
+			await this.productRouter.create(productCreateObject);
 
 		this.isBtnDisabled.product6 = false;
 		this.loading.product6 = false;
@@ -477,9 +480,10 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		let warehouseCount = 0;
 
 		const create = async () => {
-			const warehouseRegisterInput = this.fakeDataWarehouses.registrationInputs.generate();
+			const warehouseRegisterInput =
+				this.fakeDataWarehouses.registrationInputs.generate();
 			const warehouse: Warehouse = await this.warehouseRouter.register(
-				warehouseRegisterInput
+				warehouseRegisterInput,
 			);
 
 			this._notify.warehouse(warehouse.id);
@@ -535,7 +539,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		];
 		await this._createWarehouseProducts(
 			this.warehouse1.id,
-			products.map((p) => p.id)
+			products.map((p) => p.id),
 		);
 
 		this.isBtnDisabled.warehouseProduct1 = false;
@@ -553,7 +557,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		];
 		await this._createWarehouseProducts(
 			this.warehouse2.id,
-			products.map((p) => p.id)
+			products.map((p) => p.id),
 		);
 
 		this.isBtnDisabled.warehouseProduct2 = false;
@@ -580,7 +584,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		await this.warehouseRouter.updateGeoLocation(
 			this.warehouse1.id,
 			newGeoLocation,
-			this.store.token
+			this.store.token,
 		);
 
 		this.isBtnDisabled.warehouseGeoLocation = false;
@@ -595,7 +599,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		this.order1 = await this._createOrder(
 			this.user.id,
 			this.warehouse1.id,
-			this.peperoniAndMushroomPizzaProduct.id
+			this.peperoniAndMushroomPizzaProduct.id,
 		);
 
 		this.isBtnDisabled.createOrder1 = false;
@@ -620,7 +624,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		this.order2 = await this._createOrder(
 			this.user.id,
 			this.warehouse1.id,
-			this.sushiBoxProduct.id
+			this.sushiBoxProduct.id,
 		);
 
 		this.isBtnDisabled.createOrder2 = false;
@@ -654,7 +658,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 				.generateRandomOrdersCurrentStore(
 					storeId,
 					storeCreatedAt,
-					ordersLimit
+					ordersLimit,
 				)
 				.toPromise();
 
@@ -672,13 +676,14 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 	private async _createOrder(
 		userId: string,
 		warehouseId: string,
-		productId: string
+		productId: string,
 	): Promise<Order> {
-		const order: Order = await this.warehouseOrdersRouter.createByProductType(
-			userId,
-			warehouseId,
-			productId
-		);
+		const order: Order =
+			await this.warehouseOrdersRouter.createByProductType(
+				userId,
+				warehouseId,
+				productId,
+			);
 
 		this._notify.order(order.id);
 
@@ -750,9 +755,8 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 
 	private async _createHardcodedInvites() {
 		for (const objKey of ['a', 'b', 'c', 'd']) {
-			const objToCreate = this.fakeDataInvites.getHardcodedCreateObject[
-				objKey
-			];
+			const objToCreate =
+				this.fakeDataInvites.getHardcodedCreateObject[objKey];
 
 			const createdObject = await this.inviteRouter.create(objToCreate);
 
@@ -774,21 +778,19 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 
 	private async _createHardcodedCarriers() {
 		for (const objKey of ['josh', 'tom', 'mike']) {
-			const objToRegister = this.fakeDataCarriers.registrationInputs[
-				objKey
-			];
+			const objToRegister =
+				this.fakeDataCarriers.registrationInputs[objKey];
 
 			if (
 				await this._isCarrierUsernameExists(
-					objToRegister.carrier.username
+					objToRegister.carrier.username,
 				)
 			) {
 				return;
 			}
 
-			const createdObject = await this.carrierRouter.register(
-				objToRegister
-			);
+			const createdObject =
+				await this.carrierRouter.register(objToRegister);
 
 			const carrierId = createdObject.id;
 
@@ -816,20 +818,20 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 	}
 
 	private async _createCarrier(): Promise<Carrier> {
-		const carrierRegisterInput = this.fakeDataCarriers.registrationInputs.generate();
+		const carrierRegisterInput =
+			this.fakeDataCarriers.registrationInputs.generate();
 
 		// If our fake library generate twice the same username we try again
 		if (
 			await this._isCarrierUsernameExists(
-				carrierRegisterInput.carrier.username
+				carrierRegisterInput.carrier.username,
 			)
 		) {
 			return this._createCarrier();
 		}
 
-		const carrier: Carrier = await this.carrierRouter.register(
-			carrierRegisterInput
-		);
+		const carrier: Carrier =
+			await this.carrierRouter.register(carrierRegisterInput);
 
 		this._notify.carrier(carrier.id);
 		return carrier;
@@ -840,7 +842,8 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 		const carriersUsernames = [];
 
 		for (let i = 1; i <= 100; i += 1) {
-			const carrierRegisterInput = this.fakeDataCarriers.registrationInputs.generate();
+			const carrierRegisterInput =
+				this.fakeDataCarriers.registrationInputs.generate();
 			const carrierUsername = carrierRegisterInput.carrier.username;
 
 			if (!carriersUsernames.includes(carrierUsername)) {
@@ -893,15 +896,14 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 			'pizzaTroya',
 			'dominexPizza',
 		]) {
-			const objToRegister = this.fakeDataWarehouses.registrationInputs[
-				objKey
-			];
+			const objToRegister =
+				this.fakeDataWarehouses.registrationInputs[objKey];
 
 			// We don't want warehouses with the same usernames.
 			if (
 				this._existingWarehouses.some(
 					(w: Warehouse) =>
-						w.username === objToRegister.warehouse.username
+						w.username === objToRegister.warehouse.username,
 				)
 			) {
 				return;
@@ -911,9 +913,8 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 				objToRegister.warehouse.usedCarriersIds.push(carrierId);
 			});
 
-			const createdObject = await this.warehouseRouter.register(
-				objToRegister
-			);
+			const createdObject =
+				await this.warehouseRouter.register(objToRegister);
 
 			this._hardcodedWarehouses.push(createdObject);
 
@@ -922,13 +923,14 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 	}
 
 	private async _createWarehouseWithCarrier(): Promise<Warehouse> {
-		const warehouseRegisterInput = this.fakeDataWarehouses.registrationInputs.generate();
+		const warehouseRegisterInput =
+			this.fakeDataWarehouses.registrationInputs.generate();
 
 		const carrier: Carrier = await this._createCarrier();
 		warehouseRegisterInput.warehouse.usedCarriersIds.push(carrier.id);
 
 		const warehouse: Warehouse = await this.warehouseRouter.register(
-			warehouseRegisterInput
+			warehouseRegisterInput,
 		);
 
 		this._notify.warehouse(warehouse.id);
@@ -938,15 +940,14 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 	private async _createRandomUser() {
 		const userRegisterInput = this.fakeDataUsers.getUserRegistrationInput();
 		const isUserEmailExists = await this._isUserEmailExists(
-			userRegisterInput.user.email
+			userRegisterInput.user.email,
 		);
 
 		if (isUserEmailExists) {
 			return this._createRandomUser();
 		} else {
-			const user: User = await this.userAuthRouter.register(
-				userRegisterInput
-			);
+			const user: User =
+				await this.userAuthRouter.register(userRegisterInput);
 			return user;
 		}
 	}
@@ -985,7 +986,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 						_createdAt: c._createdAt,
 						_updatedAt: c._updatedAt,
 					};
-				}
+				},
 			);
 		}
 	}
@@ -998,13 +999,11 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 				random(this._productCategories.length - 1)
 			];
 		};
-		const productCreateObject = await this.fakeDataProducts.getRandomProduct(
-			[getRandomCategory()]
-		);
+		const productCreateObject =
+			await this.fakeDataProducts.getRandomProduct([getRandomCategory()]);
 
-		const product: Product = await this.productRouter.create(
-			productCreateObject
-		);
+		const product: Product =
+			await this.productRouter.create(productCreateObject);
 
 		this._notify.product(product.id);
 
@@ -1016,18 +1015,18 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 
 		const filter = (predicate: (val: IProductsCategoryName) => boolean) => {
 			return this._productCategories.filter((c) =>
-				c.name.some(predicate)
+				c.name.some(predicate),
 			);
 		};
 
 		const categoriesPizza = filter(
-			(cName) => cName.value.toLowerCase() === 'pizza'
+			(cName) => cName.value.toLowerCase() === 'pizza',
 		);
 		const categoriesSushi = filter(
-			(cName) => cName.value.toLowerCase() === 'sushi'
+			(cName) => cName.value.toLowerCase() === 'sushi',
 		);
 		const categoriesPasta = filter(
-			(cName) => cName.value.toLowerCase() === 'pasta'
+			(cName) => cName.value.toLowerCase() === 'pasta',
 		);
 
 		await this.createPeperoniAndMushroomPizzaProduct(categoriesPizza);
@@ -1040,7 +1039,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 
 	private async generateCategories(): Promise<ProductsCategory[]> {
 		const create: (inputObject: any) => Promise<ProductsCategory> = async (
-			inputObject
+			inputObject,
 		) => {
 			return this._productsCategoriesService
 				.create(inputObject)
@@ -1053,7 +1052,8 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 			.toPromise();
 
 		if (resultCategories.length === 0) {
-			const rawCategories = this._fakeDataProductsCategories.getDifferentKindsOfCategories();
+			const rawCategories =
+				this._fakeDataProductsCategories.getDifferentKindsOfCategories();
 
 			const categoryPizza = await create(rawCategories.pizza);
 
@@ -1109,10 +1109,10 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 
 	private async _createWarehouseProducts(
 		warehouseId: string,
-		productIds: string[]
+		productIds: string[],
 	) {
 		const createObjects: IWarehouseProductCreateObject[] = productIds.map(
-			(id: string) => this.fakeDataWarehousesProducts.getCreateObject(id)
+			(id: string) => this.fakeDataWarehousesProducts.getCreateObject(id),
 		);
 
 		await this.warehouseProductsRouter.add(warehouseId, createObjects);
@@ -1121,38 +1121,38 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 	}
 
 	private async _createWarehouseProductsForHardcodedWarehouses() {
-		const warehouseProductCreateObjects: IWarehouseProductCreateObject[] = this.fakeDataWarehousesProducts.getHardcodedCreateObject(
-			[
+		const warehouseProductCreateObjects: IWarehouseProductCreateObject[] =
+			this.fakeDataWarehousesProducts.getHardcodedCreateObject([
 				this.peperoniAndMushroomPizzaProduct.id,
 				this.peperoniAndTomatoPizzaProduct.id,
 				this.sushiAndCaviarMixProduct.id,
 				this.sushiMixProduct.id,
 				this.pastaProduct.id,
 				this.sushiBoxProduct.id,
-			]
-		);
+			]);
 
-		const moreWarehouseProducts = await this._generateProductsForWarehouseProducts();
+		const moreWarehouseProducts =
+			await this._generateProductsForWarehouseProducts();
 
 		for (const w of this._hardcodedWarehouses) {
 			await this.warehouseProductsRouter.add(
 				w.id,
-				warehouseProductCreateObjects.concat(moreWarehouseProducts)
+				warehouseProductCreateObjects.concat(moreWarehouseProducts),
 			);
 		}
 	}
 
 	private async _generateProductsForWarehouseProducts(
-		productsLimit = 150
+		productsLimit = 150,
 	): Promise<IWarehouseProductCreateObject[]> {
-		const warehouseProductCreateObjects: IWarehouseProductCreateObject[] = [];
+		const warehouseProductCreateObjects: IWarehouseProductCreateObject[] =
+			[];
 
 		for (let i = 1; i <= productsLimit; i += 1) {
 			const product = await this._createProduct();
 
-			const warehouseProductCreateObject = this.fakeDataWarehousesProducts.getCreateObject(
-				product.id
-			);
+			const warehouseProductCreateObject =
+				this.fakeDataWarehousesProducts.getCreateObject(product.id);
 
 			warehouseProductCreateObjects.push(warehouseProductCreateObject);
 		}
@@ -1171,7 +1171,7 @@ export class FakeDataComponent implements OnInit, OnDestroy {
 
 			this.toasterService.pop(
 				res.success ? 'success' : 'warning',
-				res.message
+				res.message,
 			);
 		}
 	}

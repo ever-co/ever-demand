@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { SetupMerchantAccountComponent } from './components/account/account.component';
 import { SetupMerchantBasicInfoComponent } from './components/basic-info/basic-info.component';
 import { SetupMerchantContactInfoComponent } from './components/contact-info/contact-info.component';
@@ -10,12 +10,14 @@ import { SetupMerchantOrdersSettingsComponent } from './components/settings/orde
 import { IWarehouseCreateObject } from '@modules/server.common/interfaces/IWarehouse';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { NbStepperComponent } from '@nebular/theme';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 
 @Component({
+	standalone: false,
 	styleUrls: ['./merchants.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './merchants.component.html',
 })
 export class SetupMerchantsComponent {
@@ -52,18 +54,18 @@ export class SetupMerchantsComponent {
 
 	constructor(
 		private warehouseRouter: WarehouseRouter,
-		private readonly toasterService: ToasterService
+		private readonly toasterService: ToasterService,
 	) {}
 
 	async createMerchant() {
 		try {
 			this.currentStore = await this.warehouseRouter.register(
-				this.getMerchantCreateObj()
+				this.getMerchantCreateObj(),
 			);
 
 			this.toasterService.pop(
 				'success',
-				`Warehouse ${this.currentStore.name} was created!`
+				`Warehouse ${this.currentStore.name} was created!`,
 			);
 
 			this.nbStepper.next();
@@ -97,8 +99,8 @@ export class SetupMerchantsComponent {
 				geoLocation: geoLocationInput as GeoLocation,
 				isPaymentEnabled: this.stepPayments.isPaymentEnabled,
 				isManufacturing: this.stepManufacturing.isManufacturing,
-				isCarrierRequired: this.stepDeliveryAndTakeaway
-					.isCarrierRequired,
+				isCarrierRequired:
+					this.stepDeliveryAndTakeaway.isCarrierRequired,
 				productsDelivery: this.stepDeliveryAndTakeaway.productsDelivery,
 				productsTakeaway: this.stepDeliveryAndTakeaway.productsTakeaway,
 				hasRestrictedCarriers:

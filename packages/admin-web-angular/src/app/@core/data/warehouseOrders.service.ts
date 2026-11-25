@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
+import { completeData } from '@app/graphql/complete-data';
 import { Observable } from 'rxjs';
 import { IOrderCreateInput } from '@modules/server.common/routers/IWarehouseOrdersRouter';
 import Order from '@modules/server.common/entities/Order';
@@ -52,7 +53,7 @@ export class WarehouseOrdersService {
 				`,
 				variables: { storeId },
 			})
-			.valueChanges.pipe(
+			.valueChanges.pipe(completeData(), 
 				map((res) => res.data.getDashboardOrdersChartOrders)
 			);
 	}
@@ -75,7 +76,7 @@ export class WarehouseOrdersService {
 				pollInterval: 5000,
 				variables: { storeId },
 			})
-			.valueChanges.pipe(map((res) => res.data.getStoreOrders));
+			.valueChanges.pipe(completeData(), map((res) => res.data.getStoreOrders));
 	}
 
 	getStoreOrdersTableData(
@@ -168,7 +169,7 @@ export class WarehouseOrdersService {
 				pollInterval: 5000,
 				variables: { storeId, pagingOptions, status },
 			})
-			.valueChanges.pipe(
+			.valueChanges.pipe(completeData(), 
 				map((res) => res.data['getStoreOrdersTableData'])
 			);
 	}

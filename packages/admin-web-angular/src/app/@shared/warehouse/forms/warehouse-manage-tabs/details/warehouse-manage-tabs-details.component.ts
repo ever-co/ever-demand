@@ -5,6 +5,7 @@ import {
 	ElementRef,
 	AfterViewInit,
 	OnInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import {
 	AbstractControl,
@@ -15,10 +16,14 @@ import {
 import { IWarehouseCreateObject } from '@modules/server.common/interfaces/IWarehouse';
 import { first } from 'rxjs/operators';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
-import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
+/** An option of the multi-select (ng-select with bindValue="id", bindLabel="name"). */
+interface IMultiSelectOption {
+	id: string;
+	name: string;
+}
 import { FormHelpers } from '../../../../forms/helpers';
-import * as _ from 'lodash';
-import * as isUrl from 'is-url';
+import { isEmpty, pick, remove } from 'lodash-es';
+import isUrl from 'is-url';
 import { TranslateService } from '@ngx-translate/core';
 
 export type WarehouseManageTabsDetails = Pick<
@@ -39,12 +44,15 @@ export type WarehouseManageTabsDetails = Pick<
 >;
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-manage-tabs-details',
 	styleUrls: ['./warehouse-manage-tabs-details.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './warehouse-manage-tabs-details.component.html',
 })
 export class WarehouseManageTabsDetailsComponent
-	implements OnInit, AfterViewInit {
+	implements OnInit, AfterViewInit
+{
 	@ViewChild('fileInput')
 	fileInput: ElementRef;
 
@@ -76,7 +84,7 @@ export class WarehouseManageTabsDetailsComponent
 
 	constructor(
 		private readonly _carrierRouter: CarrierRouter,
-		private readonly _translateService: TranslateService
+		private readonly _translateService: TranslateService,
 	) {}
 
 	get inStoreMode() {
@@ -166,7 +174,7 @@ export class WarehouseManageTabsDetailsComponent
 					(control: AbstractControl) => {
 						const imageUrl = control.value;
 
-						if (!isUrl(imageUrl) && !_.isEmpty(imageUrl)) {
+						if (!isUrl(imageUrl) && !isEmpty(imageUrl)) {
 							return { invalidUrl: true };
 						}
 
@@ -229,11 +237,11 @@ export class WarehouseManageTabsDetailsComponent
 				? {
 						hasRestrictedCarriers: basicInfo.hasRestrictedCarriers,
 						carriersIds: basicInfo.carriersIds,
-				  }
+					}
 				: {
 						hasRestrictedCarriers: false,
 						carriersIds: basicInfo.carriersIds,
-				  }),
+					}),
 			...(basicInfo.hasRestrictedCarriers &&
 			basicInfo.carriersIds &&
 			basicInfo.carriersIds.length
@@ -242,11 +250,11 @@ export class WarehouseManageTabsDetailsComponent
 							basicInfo.useOnlyRestrictedCarriersForDelivery,
 						preferRestrictedCarriersForDelivery:
 							basicInfo.preferRestrictedCarriersForDelivery,
-				  }
+					}
 				: {
 						useOnlyRestrictedCarriersForDelivery: false,
 						preferRestrictedCarriersForDelivery: false,
-				  }),
+					}),
 			orderCancelation: {
 				enabled: basicInfo.enabledOrderCancelation,
 				onState: Number(basicInfo.stateOrderCancelation),
@@ -271,16 +279,16 @@ export class WarehouseManageTabsDetailsComponent
 					? basicInfo.orderCancelation.onState
 					: 0,
 			},
-			basicInfo
+			basicInfo,
 		);
 
 		//Remove orderCancelation from the list becouse its  not actually form control
 		//can be improved
 		const filteredValues = Object.keys(this.getValue());
-		_.remove(filteredValues, (e) => e === 'orderCancelation');
+		remove(filteredValues, (e) => e === 'orderCancelation');
 
 		this.form.setValue(
-			_.pick(basicInfo, [
+			pick(basicInfo, [
 				...filteredValues,
 				'hasRestrictedCarriers',
 				'carriersIds',
@@ -288,7 +296,7 @@ export class WarehouseManageTabsDetailsComponent
 				'preferRestrictedCarriersForDelivery',
 				'enabledOrderCancelation',
 				'stateOrderCancelation',
-			])
+			]),
 		);
 
 		const onlyStore = basicInfo.useOnlyRestrictedCarriersForDelivery;

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
+import { completeData } from '@app/graphql/complete-data';
 import Order from '@modules/server.common/entities/Order';
 import { map, share } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -97,7 +98,7 @@ export class OrdersService {
 					}
 				`,
 			})
-			.valueChanges.pipe(
+			.valueChanges.pipe(completeData(), 
 				map((res) => res.data.getOrdersChartTotalOrders),
 				share()
 			);
@@ -135,7 +136,7 @@ export class OrdersService {
 					}
 				`,
 			})
-			.valueChanges.pipe(
+			.valueChanges.pipe(completeData(), 
 				map((res) => res.data.getDashboardCompletedOrders),
 				share()
 			);
@@ -175,7 +176,7 @@ export class OrdersService {
 					}
 				`,
 			})
-			.valueChanges.pipe(
+			.valueChanges.pipe(completeData(), 
 				map((res) => res.data.getDashboardCompletedOrdersToday),
 				share()
 			);
@@ -198,7 +199,7 @@ export class OrdersService {
 				`,
 				pollInterval: 4000,
 			})
-			.valueChanges.pipe(
+			.valueChanges.pipe(completeData(), 
 				map((res) => res.data.orders),
 				share()
 			);
@@ -221,7 +222,7 @@ export class OrdersService {
 				pollInterval: 4000,
 				variables: { id },
 			})
-			.valueChanges.pipe(
+			.valueChanges.pipe(completeData(), 
 				map((res) => res.data['getOrder']),
 				share()
 			);

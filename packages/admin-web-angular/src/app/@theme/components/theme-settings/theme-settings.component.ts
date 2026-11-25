@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { StateService } from '../../../@core/data/state.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NbThemeService } from '@nebular/theme';
 import { environment } from 'environments/environment';
 
 @Component({
+	standalone: false,
 	selector: 'ngx-theme-settings',
 	styleUrls: ['./theme-settings.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './theme-settings.component.html',
 })
 export class ThemeSettingsComponent {
@@ -36,8 +38,8 @@ export class ThemeSettingsComponent {
 		},
 		{
 			value: 'fr-FR',
-			name: 'French'
-		}
+			name: 'French',
+		},
 	];
 
 	themes = [
@@ -73,12 +75,19 @@ export class ThemeSettingsComponent {
 	constructor(
 		protected stateService: StateService,
 		public translate: TranslateService,
-		private themeService: NbThemeService
+		private themeService: NbThemeService,
 	) {
 		this.defaultLanguage = environment['DEFAULT_LANGUAGE'];
 
-		translate.addLangs(['en-US', 'bg-BG', 'he-IL', 'ru-RU', 'es-ES', 'fr-FR']);
-		translate.setDefaultLang('en-US');
+		translate.addLangs([
+			'en-US',
+			'bg-BG',
+			'he-IL',
+			'ru-RU',
+			'es-ES',
+			'fr-FR',
+		]);
+		translate.setFallbackLang('en-US');
 
 		const browserLang = translate.getBrowserLang();
 		if (this.defaultLanguage) {
@@ -87,7 +96,7 @@ export class ThemeSettingsComponent {
 			translate.use(
 				browserLang.match(/en-US|bg-BG|he-IL|ru-RU|es-ES|fr-FR/)
 					? browserLang
-					: 'en-US'
+					: 'en-US',
 			);
 		}
 
