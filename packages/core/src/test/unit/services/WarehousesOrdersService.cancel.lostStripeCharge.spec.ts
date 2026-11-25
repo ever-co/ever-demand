@@ -412,6 +412,53 @@ describe('WarehousesOrdersService.cancel of an unpaid order with a lost Stripe c
 		expectRestocked();
 	});
 
+	it.each([
+		['the first', 'ch_lost_1'],
+		['the second', 'ch_lost_2'],
+	])(
+		'keeps the charge on the order when the refund of %s of two lost charges fails',
+		async (_which: string, failingChargeId: string) => {
+			mockChargesList.mockResolvedValue(
+				chargeList([
+					listedCharge({ id: 'ch_lost_1', orderId: ORDER_ID }),
+					listedCharge({ id: 'ch_lost_2', orderId: ORDER_ID }),
+				])
+			);
+			const err = Object.assign(new Error('Stripe refused the refund'), {
+				code: 'api_error',
+			});
+			mockRefundsCreate.mockImplementation(
+				async ({ charge }: { charge: string }) => {
+					if (charge === failingChargeId) {
+						throw err;
+					}
+
+					return { id: `re_${charge}`, charge };
+				}
+			);
+
+			const result = await service.cancel(ORDER_ID);
+
+			expect(result.isCancelled).toBe(true);
+			expect(mockRefundsCreate).toHaveBeenCalledTimes(2);
+			expect(mockRefundsCreate).toHaveBeenCalledWith(
+				{ charge: 'ch_lost_1' },
+				{ idempotencyKey: refundKey('ch_lost_1') }
+			);
+			expect(mockRefundsCreate).toHaveBeenCalledWith(
+				{ charge: 'ch_lost_2' },
+				{ idempotencyKey: refundKey('ch_lost_2') }
+			);
+			// The charge still to refund, not the refunded one
+			expect(stored.stripeChargeId).toBe(failingChargeId);
+			expect(mockLog.error).toHaveBeenCalledWith(
+				expect.objectContaining({ chargeId: failingChargeId, err }),
+				expect.any(String)
+			);
+			expectRestocked();
+		}
+	);
+
 	it('leaves a paid order to refundWithStripe and makes no Stripe call', async () => {
 		// The shop asks refundWithStripe to refund a paid order after its cancel
 		stored.isPaid = true;

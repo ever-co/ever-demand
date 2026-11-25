@@ -890,33 +890,54 @@ export class OrdersService extends DBService<Order>
 			return;
 		}
 
+		// The order holds one charge id: once a refund failed, that charge
+		// stays on the order, so a later refunded charge does not hide it.
+		let aRefundFailed = false;
+
 		for (const charge of charges) {
-			await this._refundLostStripeCharge(orderId, charge.id, callId);
+			const refunded = await this._refundLostStripeCharge(
+				orderId,
+				charge.id,
+				callId,
+				!aRefundFailed
+			);
+
+			if (!refunded) {
+				aRefundFailed = true;
+			}
 		}
 	}
 
 	/**
 	 * Stores the charge on the unpaid cancelled order and refunds it.
 	 * Never rejects: errors are logged.
+	 *
+	 * @param {boolean} storeChargeId false to keep the charge id the order
+	 * holds, e.g. one whose refund failed
+	 * @returns {Promise<boolean>} true when the charge is refunded, also by an
+	 * earlier call
 	 */
 	private async _refundLostStripeCharge(
 		orderId: Order['id'],
 		chargeId: string,
-		callId: string
-	): Promise<void> {
+		callId: string,
+		storeChargeId: boolean
+	): Promise<boolean> {
 		// Keep the charge traceable, also when the refund below fails.
 		// Only on an unpaid order, so the charge of a paid one stays.
-		try {
-			await this._updateIfMatches(
-				orderId,
-				{ isPaid: { $ne: true } },
-				{ stripeChargeId: chargeId }
-			);
-		} catch (err) {
-			this.log.error(
-				{ callId, orderId, chargeId, err },
-				'.refundLostStripeCharges(order) could not store the charge of the unpaid cancelled order'
-			);
+		if (storeChargeId) {
+			try {
+				await this._updateIfMatches(
+					orderId,
+					{ isPaid: { $ne: true } },
+					{ stripeChargeId: chargeId }
+				);
+			} catch (err) {
+				this.log.error(
+					{ callId, orderId, chargeId, err },
+					'.refundLostStripeCharges(order) could not store the charge of the unpaid cancelled order'
+				);
+			}
 		}
 
 		try {
@@ -931,6 +952,8 @@ export class OrdersService extends DBService<Order>
 				{ callId, orderId, chargeId, refundId: refund.id },
 				'.refundLostStripeCharges(order) refunded a charge of the unpaid cancelled order'
 			);
+
+			return true;
 		} catch (err) {
 			// payWithStripe may have refunded this charge first
 			if (err != null && err.code === 'charge_already_refunded') {
@@ -938,12 +961,16 @@ export class OrdersService extends DBService<Order>
 					{ callId, orderId, chargeId, err },
 					'.refundLostStripeCharges(order) the charge of the unpaid cancelled order was already refunded'
 				);
-			} else {
-				this.log.error(
-					{ callId, orderId, chargeId, err },
-					'.refundLostStripeCharges(order) could not refund a charge of the unpaid cancelled order'
-				);
+
+				return true;
 			}
+
+			this.log.error(
+				{ callId, orderId, chargeId, err },
+				'.refundLostStripeCharges(order) could not refund a charge of the unpaid cancelled order'
+			);
+
+			return false;
 		}
 	}
 
