@@ -1,85 +1,69 @@
 name: shop_flutter_mobile
-description: Shop Ever Demand
+description: Ever Demand customer shop app (Flutter). Feature parity with packages/shop-mobile-ionic.
+publish_to: 'none'
 
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.17.1 <3.0.0"
+  sdk: ^3.14.0
+  flutter: '>=3.50.0'
 
-# Dependencies specify other packages that your package needs in order to work.
-# To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively,
-# dependencies can be manually updated by changing the version numbers below to
-# the latest version available on pub.dev. To see which dependencies have newer
-# versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
     sdk: flutter
-
-  flutter_localizations: # Add this line
+  flutter_localizations:
     sdk: flutter
 
-  intl: ^0.17.0 # added this so that we can manage localization in this app
+  # State, navigation
+  flutter_riverpod: ^3.5.0
+  go_router: ^18.1.4
 
-  font_awesome_flutter: ^10.1.0
-  flutter_launcher_icons: ^0.9.2
-  flutter_icons: ^1.1.0
-  screen_loader: ^4.0.1
-  # geolocator: ^8.0.5
+  # Backend: GraphQL (HTTP + graphql-ws) and the socket.io "pyro" RPC
+  graphql: ^5.2.4
+  socket_io_client: ^3.1.6
+  http: ^1.6.0
+  uuid: ^4.6.0
 
-  # Service Locator
-  get_it: ^7.2.0
+  # Platform
+  shared_preferences: ^2.5.6
+  geolocator: ^14.1.2
+  # 7.3.2 needs dbus ^0.8 (nm 0.6); geolocator_linux 0.2.6 still pins dbus ^0.7.3.
+  connectivity_plus: ^7.3.1
+  url_launcher: ^6.3.3
+  mobile_scanner: ^7.5.0
 
-  # Remote API
-  http: ^0.13.4
-  connectivity_plus: ^2.3.1
+  # Payments (card entry for a new card; saved cards go through the API only)
+  flutter_stripe: ^15.0.0
+  flutter_stripe_web: ^9.0.0
 
-  # Local cache
-  shared_preferences: ^2.0.15
-  path_provider: ^2.0.10
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  # UI
+  intl: ^0.20.2
+  cupertino_icons: ^2.0.0
+  font_awesome_flutter: ^11.0.0
+  flutter_svg: ^2.5.0
+  flutter_widget_from_html_core: ^0.17.4
+  flutter_map: ^8.3.2
+  latlong2: ^0.10.1
+  barcode_widget: ^2.0.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
-  flutter_lints: ^2.0.1
+  integration_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  mocktail: ^1.0.5
 
 flutter:
   generate: true
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
   assets:
     - assets/imgs/
 
   fonts:
     - family: PlutoHeavyItalic
       fonts:
-      - asset: assets/fonts/PlutoHeavyItalic.ttf
-        style: italic
-        weight: 700
+        - asset: assets/fonts/PlutoHeavyItalic.ttf
+          style: italic
+          weight: 700

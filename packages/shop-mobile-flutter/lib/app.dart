@@ -1,51 +1,91 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:shop_flutter_mobile/constants/colors.dart';
-import 'package:shop_flutter_mobile/utils/navigations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-const customColor = AppColors();
+import 'core/l10n.dart';
+import 'core/languages.dart';
+import 'core/theme.dart';
+import 'providers.dart';
+import 'routing/app_router.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+/// Set once the start-up sequence finished; the router lets nothing but the
+/// start-up page through before that.
+final Provider<ValueNotifier<bool>> startupCompletedProvider =
+    Provider<ValueNotifier<bool>>((Ref ref) {
+  final ValueNotifier<bool> done = ValueNotifier<bool>(false);
+  ref.onDispose(done.dispose);
+  return done;
+});
 
-  // This widget is the root of your application.
+class ShopApp extends ConsumerStatefulWidget {
+  const ShopApp({super.key, this.initialLocation = Routes.startup});
+
+  final String initialLocation;
+
+  @override
+  ConsumerState<ShopApp> createState() => _ShopAppState();
+}
+
+class _ShopAppState extends ConsumerState<ShopApp> {
+  late final GoRouter _router;
+  StreamSubscription<bool>? _connectivity;
+  bool _showingConnectionLost = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final ValueNotifier<bool> done = ref.read(startupCompletedProvider);
+    _router = buildRouter(
+      initialLocation: widget.initialLocation,
+      guards: AppGuards(
+        store: ref.read(appStoreProvider),
+        session: ref.read(sessionServiceProvider),
+        startupDone: () => done.value,
+      ),
+    );
+    _connectivity = ref
+        .read(connectivityWatcherProvider)
+        .onlineChanges()
+        .listen(_onOnlineChanged, onError: (Object _) {});
+  }
+
+  /// Network lost → connection-lost page; back online → previous page.
+  void _onOnlineChanged(bool online) {
+    if (!online && !_showingConnectionLost) {
+      _showingConnectionLost = true;
+      unawaited(_router.push<void>(Routes.connectionLost));
+    } else if (online && _showingConnectionLost) {
+      _showingConnectionLost = false;
+      if (_router.canPop()) _router.pop();
+    }
+  }
+
+  @override
+  void dispose() {
+    unawaited(_connectivity?.cancel());
+    _router.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final String language = ref.watch(languageProvider);
+    return MaterialApp.router(
       title: 'Ever',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: customColor.primaryColor,
-        scaffoldBackgroundColor: customColor.scaffoldBackgroundColor,
-        appBarTheme: AppBarTheme(
-          backgroundColor: customColor.appBarColor,
-          elevation: 0,
-          centerTitle: true,
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: customColor.appBarColor,
-          ),
-        ),
-      ),
-      localizationsDelegates: const [
+      theme: buildTheme(),
+      locale: localeOf(language),
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: const <LocalizationsDelegate<Object>>[
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('en', ''), // English, no country code
-        Locale('es', ''), // Spanish, no country code
-        Locale('fr', ''), // French, no country code
-        Locale('bg', ''), // Bulgarian, no country code
-        Locale('ru', ''), // Russian, no country code
-        Locale('he', ''), // Hebrew, no country code
-      ],
-      initialRoute: "/login",
-      routes: routeNavigations,
-      //   home:
-      //       const MenuBar(), // calling the login Page as the first screen, no splashscreen
+      routerConfig: _router,
     );
   }
 }

@@ -1,6 +1,6 @@
 package com.example.shop_flutter_mobile
 
-import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.android.FlutterFragmentActivity
 
-class MainActivity: FlutterActivity() {
-}
+// FlutterFragmentActivity: flutter_stripe's card field needs a FragmentActivity.
+class MainActivity : FlutterFragmentActivity()
