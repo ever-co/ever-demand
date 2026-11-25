@@ -2,6 +2,7 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 
 @Component({
+	standalone: false,
 	selector: 'ea-dashboard-select-store',
 	templateUrl: './dashboard-select-store.component.html',
 	styleUrls: ['./dashboard-select-store.component.scss'],

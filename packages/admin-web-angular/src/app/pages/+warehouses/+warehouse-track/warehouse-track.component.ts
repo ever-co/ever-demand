@@ -9,6 +9,7 @@ import {
 } from '@modules/server.common/entities/GeoLocation';
 import { Location } from '@angular/common';
 @Component({
+	standalone: false,
 	templateUrl: './warehouse-track.component.html',
 	styleUrls: ['./warehouse-track.component.scss'],
 })

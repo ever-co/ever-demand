@@ -1,6 +1,7 @@
 import { Component, EventEmitter } from '@angular/core';
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-add-choice',
 	styleUrls: ['./warehouse-add-choice.component.scss'],
 	templateUrl: './warehouse-add-choice.component.html',

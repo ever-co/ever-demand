@@ -6,6 +6,7 @@ import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Component({
+	standalone: false,
 	templateUrl: './carrier-info.component.html',
 	styles: ['.carrier-redirect { cursor: pointer; margin-left: 5px}'],
 })

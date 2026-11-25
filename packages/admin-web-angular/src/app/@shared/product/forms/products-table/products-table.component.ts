@@ -34,6 +34,7 @@ interface ProductViewModel {
 }
 
 @Component({
+	standalone: false,
 	selector: 'ea-products-table',
 	styleUrls: ['./products-table.component.scss'],
 	templateUrl: 'products-table.component.html',

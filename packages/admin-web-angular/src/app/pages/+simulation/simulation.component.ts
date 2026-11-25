@@ -31,6 +31,7 @@ import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehou
 import { IOrderCreateInput } from '@modules/server.common/routers/IWarehouseOrdersRouter';
 
 @Component({
+	standalone: false,
 	selector: 'ea-simulation',
 	templateUrl: './simulation.component.html',
 	styleUrls: ['/simulation.component.scss'],

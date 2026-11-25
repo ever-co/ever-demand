@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-manage-tabs-account',
 	styleUrls: ['./warehouse-manage-tabs-account.component.scss'],
 	templateUrl: './warehouse-manage-tabs-account.component.html',

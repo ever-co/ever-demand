@@ -23,6 +23,7 @@ import { WarehousePhoneComponent } from '../../@shared/render-component/warehous
 const perPage = 5;
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouses',
 	templateUrl: './warehouses.component.html',
 	styleUrls: ['./warehouses.component.scss'],

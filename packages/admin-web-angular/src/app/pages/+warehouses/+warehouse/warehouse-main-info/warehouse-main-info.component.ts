@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-main-info',
 	styleUrls: ['./warehouse-main-info.component.scss'],
 	templateUrl: './warehouse-main-info.component.html',

@@ -3,6 +3,7 @@ import { ViewCell } from 'ng2-smart-table';
 import { Router } from '@angular/router';
 
 @Component({
+	standalone: false,
 	templateUrl: './store-order.component.html',
 	styles: [
 		`

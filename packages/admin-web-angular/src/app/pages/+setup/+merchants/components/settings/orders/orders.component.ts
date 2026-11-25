@@ -5,6 +5,7 @@ import OrderBarcodeTypes, {
 import * as QRCode from 'qrcode';
 
 @Component({
+	standalone: false,
 	selector: 'ea-merchants-setup-orders-settings',
 	templateUrl: './orders.component.html',
 	styleUrls: ['./orders.component.scss'],

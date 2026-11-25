@@ -34,6 +34,7 @@ import {
 } from '@modules/server.common/interfaces/ILanguage';
 
 @Component({
+	standalone: false,
 	selector: 'ea-product-basic-info-form',
 	styleUrls: ['./basic-info-form.component.scss'],
 	templateUrl: 'basic-info-form.component.html',

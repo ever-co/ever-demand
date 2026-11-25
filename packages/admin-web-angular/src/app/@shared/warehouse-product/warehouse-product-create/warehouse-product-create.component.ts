@@ -23,6 +23,7 @@ import { NotifyService } from '@app/@core/services/notify/notify.service';
 const perPage = 3;
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-product-create',
 	templateUrl: './warehouse-product-create.component.html',
 	styleUrls: ['./warehouse-product-create.component.scss'],

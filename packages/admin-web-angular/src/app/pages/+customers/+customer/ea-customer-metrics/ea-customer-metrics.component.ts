@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { UsersService } from '@app/@core/data/users.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-customer-metrics',
 	templateUrl: './ea-customer-metrics.component.html',
 })

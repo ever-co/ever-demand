@@ -13,6 +13,7 @@ import Order from '@modules/server.common/entities/Order';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
+	standalone: false,
 	selector: 'ea-order-header-info',
 	styleUrls: ['./order-header-info.component.scss'],
 	templateUrl: './order-header-info.component.html',

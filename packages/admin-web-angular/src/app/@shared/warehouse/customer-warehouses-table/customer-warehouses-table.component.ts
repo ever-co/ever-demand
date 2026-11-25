@@ -15,6 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'ea-customer-warehouses-table',
 	styleUrls: ['./customer-warehouses-table.component.scss'],
 	templateUrl: './customer-warehouses-table.component.html',

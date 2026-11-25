@@ -6,6 +6,7 @@ import { Observable, Subject } from 'rxjs';
 import { first, takeUntil, switchMap } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'ea-customer',
 	templateUrl: './customer.component.html',
 	styleUrls: ['./customer.component.scss'],

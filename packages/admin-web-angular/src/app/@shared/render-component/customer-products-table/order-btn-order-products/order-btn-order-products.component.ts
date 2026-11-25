@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Product from '@modules/server.common/entities/Product';
 
 @Component({
+	standalone: false,
 	templateUrl: './order-btn-order-products.component.html',
 })
 export class OrderBtnOrderProductsComponent implements ViewCell, OnInit {

@@ -5,6 +5,7 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 
 @Component({
+	standalone: false,
 	template: `
 		<div class="product">
 			<p class="text-center">

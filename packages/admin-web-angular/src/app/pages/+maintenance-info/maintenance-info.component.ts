@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Store } from '@app/@core/data/store.service';
 
 @Component({
+	standalone: false,
 	templateUrl: './maintenance-info.component.html',
 })
 export class MaintenanceInfoComponent {

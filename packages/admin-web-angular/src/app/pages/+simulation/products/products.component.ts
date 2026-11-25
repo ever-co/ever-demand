@@ -16,6 +16,7 @@ export interface ProductViewModel {
 }
 
 @Component({
+	standalone: false,
 	selector: 'ea-simulation-products',
 	templateUrl: './products.component.html',
 })

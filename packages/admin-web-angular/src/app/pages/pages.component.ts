@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { NbMenuItem } from '@nebular/theme';
 
 @Component({
+	standalone: false,
 	selector: 'ea-pages',
 	templateUrl: './pages.component.html',
 })

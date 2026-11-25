@@ -15,6 +15,7 @@ import { NbStepperComponent } from '@nebular/theme';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 
 @Component({
+	standalone: false,
 	styleUrls: ['./merchants.component.scss'],
 	templateUrl: './merchants.component.html',
 })

@@ -11,6 +11,7 @@ import { NotifyService } from '../../@core/services/notify/notify.service';
 import { ConfirmationModalComponent } from '../../@shared/confirmation-modal/confirmation-modal.component';
 
 @Component({
+	standalone: false,
 	selector: 'ea-device',
 	styleUrls: ['./device.component.scss'],
 	templateUrl: './device.component.html',

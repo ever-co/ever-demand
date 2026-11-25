@@ -26,6 +26,7 @@ import { Store } from '@app/@core/data/store.service';
 const SHOW_TOP_PRODUCTS_QUANTITY: number = 10;
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-products-view',
 	styleUrls: ['./warehouse-products-view.component.scss'],
 	templateUrl: './warehouse-products-view.component.html',

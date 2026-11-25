@@ -2,6 +2,7 @@ import { Component, ViewChild, Output, EventEmitter, Input } from '@angular/core
 import { NgForm } from '@angular/forms';
 
 @Component({
+	standalone: false,
 	selector: 'ea-merchants-setup-account',
 	templateUrl: './account.component.html',
 	styleUrls: ['./account.component.scss'],

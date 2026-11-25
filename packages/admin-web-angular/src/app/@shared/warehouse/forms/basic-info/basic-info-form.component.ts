@@ -30,6 +30,7 @@ export type WarehouseBasicInfo = Pick<
 >;
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-basic-info-form',
 	styleUrls: ['basic-info-form.component.scss'],
 	templateUrl: 'basic-info-form.component.html',

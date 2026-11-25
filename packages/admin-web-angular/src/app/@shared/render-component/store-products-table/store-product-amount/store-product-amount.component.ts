@@ -6,6 +6,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 
 @Component({
+	standalone: false,
 	styleUrls: ['store-product-amount.component.scss'],
 	templateUrl: 'store-product-amount.component.html',
 })

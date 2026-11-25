@@ -7,6 +7,7 @@ import { WarehouseOrderModalComponent } from '../../../@shared/warehouse/+wareho
 import { WarehouseInfoComponent } from './warehouse-info/warehouse-info.component';
 
 @Component({
+	standalone: false,
 	styleUrls: ['./warehouse-order.component.scss'],
 	templateUrl: './warehouse-order.component.html',
 })

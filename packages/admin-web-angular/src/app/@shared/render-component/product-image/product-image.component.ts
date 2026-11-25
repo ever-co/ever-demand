@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
+	standalone: false,
 	styleUrls: ['./product-image.component.scss'],
 	templateUrl: './product-image.component.html',
 })

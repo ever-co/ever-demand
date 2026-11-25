@@ -3,6 +3,7 @@ import { NbLayoutDirection, NbLayoutDirectionService } from '@nebular/theme';
 import { takeWhile } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'ngx-layout-direction-switcher',
 	templateUrl: './layout-direction-switcher.component.html',
 })

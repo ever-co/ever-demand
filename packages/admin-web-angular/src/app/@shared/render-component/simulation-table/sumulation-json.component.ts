@@ -6,6 +6,7 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 
 @Component({
+	standalone: false,
 	templateUrl: './sumulation-json.component.html',
 })
 export class SimulationJsonComponent implements ViewCell, OnInit {

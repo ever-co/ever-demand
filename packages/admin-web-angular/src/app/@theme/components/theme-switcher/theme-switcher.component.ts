@@ -5,6 +5,7 @@ import { ThemeSwitcherListComponent } from './themes-switcher-list/themes-switch
 import { AnalyticsService } from '@app/@core/utils/analytics.service';
 
 @Component({
+	standalone: false,
 	selector: 'ngx-theme-switcher',
 	templateUrl: './theme-switcher.component.html',
 	styleUrls: ['./theme-switcher.component.scss'],

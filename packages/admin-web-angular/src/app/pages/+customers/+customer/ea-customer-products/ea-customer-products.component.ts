@@ -15,6 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { firstValueFrom, forkJoin, Observable, Subject } from 'rxjs';
 
 @Component({
+	standalone: false,
 	selector: 'ea-customer-products',
 	templateUrl: './ea-customer-products.component.html',
 	styleUrls: ['./ea-customer-products.scss']

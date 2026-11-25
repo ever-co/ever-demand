@@ -26,6 +26,7 @@ interface IOrdersChartModel {
 }
 
 @Component({
+	standalone: false,
 	selector: 'ea-ecommerce-charts',
 	styleUrls: ['./charts-panel.component.scss'],
 	templateUrl: './charts-panel.component.html',

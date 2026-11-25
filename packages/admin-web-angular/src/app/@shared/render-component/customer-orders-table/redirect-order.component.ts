@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { getIdFromTheDate } from '@modules/server.common/utils';
 
 @Component({
+	standalone: false,
 	template: `
 		<button class="btn btn-sm btn-outline-secondary" (click)="redirect()">
 			{{ orderId }}

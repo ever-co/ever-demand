@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { WarehouseTableInfoComponent } from '../../../../pages/+warehouses/+warehouse/warehouse-info/warehouse-info.component';
 
 @Component({
+	standalone: false,
 	styleUrls: ['warehouse-actions.component.scss'],
 	templateUrl: './warehouse-actions.component.html',
 })

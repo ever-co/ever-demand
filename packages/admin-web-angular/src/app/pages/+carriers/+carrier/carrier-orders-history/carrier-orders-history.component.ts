@@ -25,6 +25,7 @@ import { takeUntil } from 'rxjs/operators';
 const perPage = 3;
 
 @Component({
+	standalone: false,
 	selector: 'ea-carrier-orders-history',
 	templateUrl: './carrier-orders-history.component.html',
 	styleUrls: ['./carrier-orders-history.component.scss'],

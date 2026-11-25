@@ -29,6 +29,7 @@ export interface CarrierSmartTableObject {
 }
 
 @Component({
+	standalone: false,
 	selector: 'ea-carriers-smart-table',
 	templateUrl: 'carriers-table.component.html',
 	styleUrls: ['carriers-table.component.scss'],

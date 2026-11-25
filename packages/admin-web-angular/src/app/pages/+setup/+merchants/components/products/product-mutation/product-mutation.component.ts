@@ -17,6 +17,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import Product from '@modules/server.common/entities/Product';
 
 @Component({
+	standalone: false,
 	selector: 'ea-merchants-setup-product-mutation',
 	templateUrl: './product-mutation.component.html',
 })

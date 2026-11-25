@@ -13,6 +13,7 @@ import { first } from 'rxjs/operators';
 import { NotifyService } from '@app/@core/services/notify/notify.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-merchants-setup-add-products',
 	templateUrl: './add-products.component.html',
 })

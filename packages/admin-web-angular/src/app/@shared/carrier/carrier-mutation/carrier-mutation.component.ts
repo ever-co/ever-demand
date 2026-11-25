@@ -16,6 +16,7 @@ import { LocationFormComponent } from '../../forms/location';
 import { getDummyImage } from '@modules/server.common/utils';
 
 @Component({
+	standalone: false,
 	selector: 'ea-carrier-mutation',
 	templateUrl: './carrier-mutation.component.html',
 	styleUrls: ['./carrier-mutation.component.scss'],

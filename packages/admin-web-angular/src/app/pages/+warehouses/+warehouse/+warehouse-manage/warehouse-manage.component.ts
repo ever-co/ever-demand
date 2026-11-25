@@ -11,6 +11,7 @@ import { WarehouseManageTabsComponent } from '../../../../@shared/warehouse/form
 import { Store } from '@app/@core/data/store.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-manage',
 	templateUrl: './warehouse-manage.component.html',
 	styleUrls: ['./warehouse-manage.component.scss'],

@@ -14,6 +14,7 @@ import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 import { CarrierOrdersComponent } from './carrier-orders/carrier-orders.component';
 
 @Component({
+	standalone: false,
 	selector: 'ea-carrier',
 	templateUrl: './carrier.component.html',
 	styleUrls: ['./carrier.component.scss'],

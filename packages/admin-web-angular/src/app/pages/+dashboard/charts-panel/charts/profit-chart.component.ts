@@ -11,6 +11,7 @@ import { ProfitChart } from '@app/@core/services/dashboard/profit-chart.service'
 import { LayoutService } from '@app/@core/services/dashboard/layout.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-profit-chart',
 	styleUrls: ['./charts-common.component.scss'],
 	template: `

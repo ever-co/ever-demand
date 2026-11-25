@@ -24,6 +24,7 @@ import { WarehouseOrderComponent } from '../+warehouse-order/warehouse-order.com
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-orders-table',
 	styleUrls: ['./warehouse-orders-table.component.scss'],
 	templateUrl: './warehouse-orders-table.component.html',

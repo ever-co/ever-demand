@@ -35,6 +35,7 @@ import { takeUntil, first } from 'rxjs/operators';
 const perPage = 3;
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse',
 	templateUrl: './warehouse.component.html',
 	styleUrls: ['./warehouse.component.scss'],

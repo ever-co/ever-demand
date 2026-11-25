@@ -10,6 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { NotifyService } from '@app/@core/services/notify/notify.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-product-create',
 	templateUrl: './product-create.component.html',
 	styleUrls: ['./product-create.component.scss'],

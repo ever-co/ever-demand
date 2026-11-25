@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	template: ` <h1>Please wait a second...</h1> `,
 })
 export class SignInRedirectComponent {

@@ -4,6 +4,7 @@ import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-carrier-info',
 	styleUrls: ['carrier-info.component.scss'],
 	templateUrl: 'carrier-info.component.html',

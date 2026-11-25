@@ -31,6 +31,7 @@ import { countries } from '@modules/server.common/data/abbreviation-to-country';
 import { environment } from 'environments/environment';
 
 @Component({
+	standalone: false,
 	selector: 'ea-location-form',
 	styleUrls: ['./location-form.component.scss'],
 	templateUrl: 'location-form.component.html',

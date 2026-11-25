@@ -7,6 +7,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { first } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	templateUrl: './by-code-modal.component.html',
 })
 export class ByCodeModalComponent {

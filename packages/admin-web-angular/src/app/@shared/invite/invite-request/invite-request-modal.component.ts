@@ -7,6 +7,7 @@ import { IInviteRequestCreateObject } from '@modules/server.common/interfaces/II
 import { InviteRequestRouter } from '@modules/client.common.angular2/routers/invite-request-router.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-invite-request-modal',
 	templateUrl: './invite-request-modal.component.html',
 	styleUrls: ['/invite-request-modal.component.scss'],

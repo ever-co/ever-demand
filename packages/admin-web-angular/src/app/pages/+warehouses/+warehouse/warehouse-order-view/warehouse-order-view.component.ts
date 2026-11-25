@@ -20,6 +20,7 @@ import { takeUntil } from 'rxjs/operators';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-order-view',
 	styleUrls: ['./warehouse-order-view.component.scss'],
 	templateUrl: './warehouse-order-view.component.html',

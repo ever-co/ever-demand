@@ -9,6 +9,7 @@ import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import { CategoriesTableComponent } from '@app/@shared/product/categories/categories-table';
 
 @Component({
+	standalone: false,
 	selector: 'ea-merchants-setup-product-categories',
 	templateUrl: './product-categories.component.html',
 	styleUrls: ['./product-categories.component.scss'],

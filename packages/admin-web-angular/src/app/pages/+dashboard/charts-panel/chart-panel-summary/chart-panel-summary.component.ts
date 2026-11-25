@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
+	standalone: false,
 	selector: 'ea-chart-panel-summary',
 	styleUrls: ['./chart-panel-summary.component.scss'],
 	templateUrl: './chart-panel-summary.component.html',

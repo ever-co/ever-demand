@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
+	standalone: false,
 	selector: 'ea-merchants-setup-manufacturing',
 	templateUrl: './manufacturing.component.html',
 	styleUrls: ['./manufacturing.component.scss'],

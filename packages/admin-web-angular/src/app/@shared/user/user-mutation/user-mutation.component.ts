@@ -7,6 +7,7 @@ import { LocationFormComponent } from '../../forms/location';
 import { UserAuthRouter } from '@modules/client.common.angular2/routers/user-auth-router.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-user-mutation',
 	templateUrl: './user-mutation.component.html',
 	styleUrls: ['./user-mutation.component.scss'],

@@ -13,6 +13,7 @@ import { NotifyService } from '@app/@core/services/notify/notify.service';
 const perPage = 5;
 
 @Component({
+	standalone: false,
 	selector: 'ea-products',
 	templateUrl: './products.component.html',
 	styleUrls: ['./products.component.scss'],

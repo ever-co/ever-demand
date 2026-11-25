@@ -15,6 +15,7 @@ import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
+	standalone: false,
 	selector: 'ea-basic-info',
 	styleUrls: ['/basic-info.component.scss'],
 	templateUrl: './basic-info.component.html',

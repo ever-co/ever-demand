@@ -16,6 +16,7 @@ import { getIdFromTheDate } from '@modules/server.common/utils';
 const service = new google.maps.DistanceMatrixService();
 
 @Component({
+	standalone: false,
 	selector: 'ea-order',
 	templateUrl: './order.component.html',
 	styleUrls: ['./order.component.scss'],

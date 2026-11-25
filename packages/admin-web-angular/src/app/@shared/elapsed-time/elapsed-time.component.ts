@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+	standalone: false,
 	selector: 'ea-elapsed-time',
 	templateUrl: './elapsed-time.component.html',
 	styleUrls: ['./elapsed-time.component.scss'],

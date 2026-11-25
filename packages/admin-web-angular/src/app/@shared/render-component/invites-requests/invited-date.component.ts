@@ -3,6 +3,7 @@ import { ViewCell } from 'ng2-smart-table';
 import InviteRequest from '@modules/server.common/entities/InviteRequest';
 
 @Component({
+	standalone: false,
 	styles: [
 		'.invited-icon { color: green; margin-right: 3px;} .actions-invites-requests{width: 5rem;}',
 	],

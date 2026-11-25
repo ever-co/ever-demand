@@ -3,6 +3,7 @@ import { ViewCell } from 'ng2-smart-table';
 import { environment } from 'environments/environment';
 
 @Component({
+	standalone: false,
 	template: ` <span>{{ currencySymbol }}{{ value }}</span> `,
 })
 export class StoreProductPriceComponent implements ViewCell {

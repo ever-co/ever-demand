@@ -23,6 +23,7 @@ import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehou
 import Order from '@modules/server.common/entities/Order';
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-select-view',
 	styleUrls: ['./warehouse-select-view.component.scss'],
 	templateUrl: './warehouse-select-view.component.html',

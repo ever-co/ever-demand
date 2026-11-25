@@ -28,6 +28,7 @@ export type CustomerBasicInfo = Pick<
 >;
 
 @Component({
+	standalone: false,
 	selector: 'ea-user-basic-info-form',
 	styleUrls: ['./basic-info-form.component.scss'],
 	templateUrl: 'basic-info-form.component.html',

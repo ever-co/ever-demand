@@ -12,6 +12,7 @@ import { ProductsCategoryService } from '../../../@core/data/productsCategory.se
 import { Location } from '@angular/common';
 
 @Component({
+	standalone: false,
 	selector: 'ea-product',
 	templateUrl: './product.component.html',
 	styleUrls: ['./product.component.scss'],

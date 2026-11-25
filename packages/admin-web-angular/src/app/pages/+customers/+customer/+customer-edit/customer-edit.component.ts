@@ -10,6 +10,7 @@ import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 import User from '@modules/server.common/entities/User';
 
 @Component({
+	standalone: false,
 	templateUrl: './customer-edit.component.html',
 	styleUrls: ['./customer-edit.component.scss'],
 })

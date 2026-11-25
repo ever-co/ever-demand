@@ -20,6 +20,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-customer-stores',
 	styleUrls: ['./ea-customer-stores.component.scss'],
 	templateUrl: './ea-customer-stores.component.html',

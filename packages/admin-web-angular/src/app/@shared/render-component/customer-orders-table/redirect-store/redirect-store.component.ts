@@ -6,6 +6,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import { Observable } from 'rxjs';
 
 @Component({
+	standalone: false,
 	styleUrls: ['redirect-store.component.scss'],
 	templateUrl: './redirect-store.component.html',
 })

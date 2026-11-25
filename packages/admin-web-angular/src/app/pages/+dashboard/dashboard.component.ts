@@ -12,6 +12,7 @@ import { IExistingCustomersViewModel } from '@app/models/IExistingCustomersViewM
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'ea-dashboard',
 	styleUrls: ['./dashboard.component.scss'],
 	templateUrl: './dashboard.component.html',

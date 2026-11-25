@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { SwiperOptions } from 'swiper';
 
 @Component({
+	standalone: false,
 	selector: 'image-slider',
 	styleUrls: ['./image-slider.component.scss'],
 	templateUrl: './image-slider.component.html',

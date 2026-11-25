@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ViewCell } from 'ng2-smart-table';
 
 @Component({
+	standalone: false,
 	styleUrls: ['carrier-image.component.scss'],
 	templateUrl: 'carrier-image.component.html',
 })

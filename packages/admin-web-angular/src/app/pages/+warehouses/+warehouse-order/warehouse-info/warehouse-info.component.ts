@@ -3,6 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 
 @Component({
+	standalone: false,
 	styleUrls: ['warehouse-info.component.scss'],
 	templateUrl: 'warehouse-info.component.html',
 })

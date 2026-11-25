@@ -40,6 +40,7 @@ export interface InviteRequestViewModel {
 const perPage = 10;
 
 @Component({
+	standalone: false,
 	selector: 'ea-invites-requests',
 	styleUrls: ['invites-requests.component.scss'],
 	templateUrl: 'invites-requests.component.html',

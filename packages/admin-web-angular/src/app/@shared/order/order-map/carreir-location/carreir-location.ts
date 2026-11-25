@@ -10,6 +10,7 @@ import Order from '@modules/server.common/entities/Order';
 import { environment } from 'environments/environment';
 
 @Component({
+	standalone: false,
 	selector: 'ea-carrier-location',
 	template: ` <div style="height:100%" #gmap></div> `,
 })

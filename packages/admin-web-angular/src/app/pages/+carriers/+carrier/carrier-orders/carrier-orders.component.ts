@@ -30,6 +30,7 @@ let searchCustomer: boolean;
 let oldSearch = '';
 
 @Component({
+	standalone: false,
 	selector: 'ea-carrier-orders',
 	templateUrl: './carrier-orders.component.html',
 	styleUrls: ['./carrier-orders.component.scss'],

@@ -14,6 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 const perPage = 5;
 
 @Component({
+	standalone: false,
 	selector: 'ea-carriers',
 	templateUrl: 'carriers.component.html',
 	styleUrls: ['carriers.component.scss'],

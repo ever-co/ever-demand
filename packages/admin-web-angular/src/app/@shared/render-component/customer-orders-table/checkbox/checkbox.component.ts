@@ -2,6 +2,7 @@ import { Component, Input, EventEmitter, OnInit } from '@angular/core';
 import { ViewCell } from 'ng2-smart-table';
 
 @Component({
+	standalone: false,
 	templateUrl: './checkbox.component.html',
 })
 export class CheckboxComponent implements ViewCell, OnInit {

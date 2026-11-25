@@ -15,6 +15,7 @@ const directionsDisplay = new google.maps.DirectionsRenderer();
 const directionsService = new google.maps.DirectionsService();
 
 @Component({
+	standalone: false,
 	selector: 'ea-carrier-location',
 	styleUrls: ['./carrier-location.component.scss'],
 	templateUrl: './carrier-location.component.html',

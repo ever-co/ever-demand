@@ -11,6 +11,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
+	standalone: false,
 	selector: 'ea-stripe-gateway',
 	templateUrl: './stripe-gateway.component.html',
 })

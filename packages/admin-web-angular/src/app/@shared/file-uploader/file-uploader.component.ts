@@ -12,6 +12,7 @@ import { IProductImage } from '@modules/server.common/interfaces/IProduct';
 import { NgModel } from '@angular/forms';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-file-uploader',
 	templateUrl: './file-uploader.component.html',
 	styleUrls: ['./file-uploader.component.scss'],

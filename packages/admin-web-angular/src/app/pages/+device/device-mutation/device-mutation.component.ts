@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 import { NotifyService } from '../../../@core/services/notify/notify.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-device-mutation',
 	templateUrl: './device-mutation.component.html',
 })

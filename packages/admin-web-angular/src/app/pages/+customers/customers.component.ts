@@ -37,6 +37,7 @@ export interface CustomerViewModel {
 const perPage = 7;
 
 @Component({
+	standalone: false,
 	selector: 'ea-customers',
 	templateUrl: './customers.component.html',
 	styleUrls: ['./customers.component.scss'],

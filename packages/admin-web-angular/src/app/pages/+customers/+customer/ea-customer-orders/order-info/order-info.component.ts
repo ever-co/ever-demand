@@ -6,6 +6,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 
 @Component({
+	standalone: false,
 	styleUrls: ['./order-info.component.scss'],
 	templateUrl: './order-info.component.html',
 })

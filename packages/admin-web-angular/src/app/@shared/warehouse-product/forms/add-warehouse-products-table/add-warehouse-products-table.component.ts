@@ -10,6 +10,7 @@ import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehou
 import { CheckboxComponent } from '@app/@shared/render-component/customer-orders-table/checkbox/checkbox.component';
 
 @Component({
+	standalone: false,
 	selector: 'ea-add-warehouse-products-table',
 	templateUrl: './add-warehouse-products-table.component.html',
 })

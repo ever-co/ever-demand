@@ -14,6 +14,7 @@ import { Subject } from 'rxjs';
 import { getDummyImage } from '@modules/server.common/utils';
 
 @Component({
+	standalone: false,
 	selector: 'ea-merchants-setup-basic-info',
 	templateUrl: './basic-info.component.html',
 	styleUrls: ['./basic-info.component.scss'],

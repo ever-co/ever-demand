@@ -5,6 +5,7 @@ import { CarrierLocationComponent } from '@app/pages/+carriers/+carrier/location
 import { CarrierTableInfoComponent } from '@app/pages/+carriers/+carrier/carrier-info.component';
 
 @Component({
+	standalone: false,
 	templateUrl: './carrier-actions.component.html',
 	styles: [' .iconsCont {cursor: pointer}'],
 })

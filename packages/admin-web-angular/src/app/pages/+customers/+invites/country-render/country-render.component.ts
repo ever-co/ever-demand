@@ -8,6 +8,7 @@ import {
 } from '@modules/server.common/entities/GeoLocation';
 
 @Component({
+	standalone: false,
 	templateUrl: './country-render.component.html',
 })
 export class CountryRenderComponent extends DefaultEditor

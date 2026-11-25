@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'ea-customer-info',
 	styleUrls: ['ea-customer-info.component.scss'],
 	templateUrl: './ea-customer-info.component.html',

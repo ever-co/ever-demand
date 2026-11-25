@@ -52,6 +52,7 @@ const lng = environment['DEFAULT_LONGITUDE'];
 const lat = environment['DEFAULT_LATITUDE'];
 
 @Component({
+	standalone: false,
 	selector: 'ea-fake-data',
 	templateUrl: './fakeData.component.html',
 	styleUrls: ['./fakeData.component.scss'],

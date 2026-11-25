@@ -13,6 +13,7 @@ import { getDifferenceFromTimes } from '../../../@core/utils/getDifferenceFromTi
 import OrderStatus from '@modules/server.common/enums/OrderStatus';
 
 @Component({
+	standalone: false,
 	templateUrl: './created.component.html',
 })
 export class CreatedComponent implements ViewCell, OnInit, OnDestroy {

@@ -3,6 +3,7 @@ import { ViewCell } from 'ng2-smart-table';
 import { Router } from '@angular/router';
 
 @Component({
+	standalone: false,
 	styleUrls: ['name-redirect.component.scss'],
 	templateUrl: './name-redirect.component.html',
 })

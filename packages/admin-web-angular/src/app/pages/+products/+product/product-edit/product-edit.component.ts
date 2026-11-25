@@ -11,6 +11,7 @@ import { ProductsCategoryService } from '../../../../@core/data/productsCategory
 import { Location } from '@angular/common';
 
 @Component({
+	standalone: false,
 	styleUrls: ['./product-edit.component.scss'],
 	templateUrl: './product-edit.component.html',
 })

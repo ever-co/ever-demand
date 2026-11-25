@@ -29,6 +29,7 @@ interface OrderProductsViewModel {
 }
 
 @Component({
+	standalone: false,
 	selector: 'ea-order-products',
 	templateUrl: './order-products.component.html',
 	styleUrls: ['./order-products.component.scss'],

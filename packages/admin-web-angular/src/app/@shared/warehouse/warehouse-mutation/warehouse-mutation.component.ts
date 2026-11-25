@@ -13,6 +13,7 @@ import { LocationFormComponent } from '../../forms/location';
 import { PaymentsSettingsFormComponent } from '../forms/payments-settings/payments-settings-form.component';
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-mutation',
 	templateUrl: './warehouse-mutation.component.html',
 	styleUrls: ['./warehouse-mutation.component.scss'],

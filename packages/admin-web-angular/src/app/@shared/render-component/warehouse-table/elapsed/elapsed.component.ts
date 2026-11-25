@@ -15,6 +15,7 @@ import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus'
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
 
 @Component({
+	standalone: false,
 	template: ` <span #elapsedTime></span> `,
 })
 export class ElapsedComponent implements ViewCell, OnInit, OnDestroy {

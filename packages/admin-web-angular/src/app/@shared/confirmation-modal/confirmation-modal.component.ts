@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
+	standalone: false,
 	styleUrls: ['./confirmation-modal.component.scss'],
 	templateUrl: './confirmation-modal.component.html',
 })

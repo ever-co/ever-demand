@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Product from '@modules/server.common/entities/Product';
 
 @Component({
+	standalone: false,
 	template: `
 		<div class="product">
 			<div (click)="openModal()" class="btn btn-custom">

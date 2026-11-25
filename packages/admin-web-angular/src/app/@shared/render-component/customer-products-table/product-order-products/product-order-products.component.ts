@@ -5,6 +5,7 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 
 @Component({
+	standalone: false,
 	templateUrl: './product-order-products.component.html',
 })
 export class ProductOrderProductsComponent implements ViewCell, OnInit {

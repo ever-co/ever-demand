@@ -8,6 +8,7 @@ export enum Step {
 }
 
 @Component({
+	standalone: false,
 	selector: 'ea-simulation-instructions',
 	templateUrl: './instructions.component.html',
 	styleUrls: ['./instructions.component.scss'],

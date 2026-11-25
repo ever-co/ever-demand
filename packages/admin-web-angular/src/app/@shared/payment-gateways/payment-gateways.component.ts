@@ -10,6 +10,7 @@ import PaymentGateways from '@modules/server.common/enums/PaymentGateways';
 import { countriesDefaultCurrencies } from '@modules/server.common/entities/Currency';
 
 @Component({
+	standalone: false,
 	selector: 'ea-payment-gateways',
 	templateUrl: './payment-gateways.component.html',
 })

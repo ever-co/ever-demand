@@ -14,6 +14,7 @@ import { forkJoin, Subject, Observable } from 'rxjs';
 import { CustomerOrderActionsComponent } from '@app/@shared/render-component/customer-orders-table/customer-order-actions/customer-order-actions.component';
 
 @Component({
+	standalone: false,
 	selector: 'ea-customer-orders',
 	styleUrls: ['./ea-customer-orders.component.scss'],
 	templateUrl: './ea-customer-orders.component.html',

@@ -3,8 +3,8 @@ packages:
   - packages/common-angular
   # - packages/core (joins with the backend upgrade)
   - e2e
+  - packages/admin-web-angular
   # Each app joins the workspace once its own package.json is on the latest stack:
-  # - packages/admin-web-angular
   # - packages/carrier-mobile-ionic
   # - packages/merchant-tablet-ionic
   # - packages/shop-mobile-expo
@@ -28,6 +28,27 @@ allowBuilds:
   sharp: true
   unrs-resolver: true
 
+# Peer ranges that lag the Angular release train. Each entry is a library whose build links
+# fine on the newer Angular (Ivy partial compilation); see docs/latest-stack/<lane>.md.
+peerDependencyRules:
+  allowedVersions:
+    # admin-web-angular: Nebular 17 declares Angular ^21 (there is no Angular 22 release yet).
+    '@nebular/theme>@angular/animations': '22'
+    '@nebular/theme>@angular/cdk': '22'
+    '@nebular/theme>@angular/common': '22'
+    '@nebular/theme>@angular/core': '22'
+    '@nebular/theme>@angular/router': '22'
+    '@nebular/auth>@angular/common': '22'
+    '@nebular/auth>@angular/core': '22'
+    '@nebular/auth>@angular/forms': '22'
+    '@nebular/auth>@angular/router': '22'
+    '@nebular/security>@angular/common': '22'
+    '@nebular/security>@angular/core': '22'
+    '@nebular/security>@angular/router': '22'
+
 minimumReleaseAgeExclude:
   - '@types/node@26.6.10'
   - mongoose@9.13.1
+  - '@vitest/mocker@5.1.2'
+  - '@vitest/spy@5.1.2'
+  - vitest@5.1.2

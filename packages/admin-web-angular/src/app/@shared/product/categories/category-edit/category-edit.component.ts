@@ -9,6 +9,7 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { NotifyService } from '@app/@core/services/notify/notify.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-category-edit',
 	templateUrl: './category-edit.component.html',
 	styleUrls: ['./category-edit.component.scss'],

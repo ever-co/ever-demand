@@ -17,6 +17,7 @@ export enum DeliveryStatus {
 }
 
 @Component({
+	standalone: false,
 	selector: 'ea-simulation-order',
 	templateUrl: './order.component.html',
 	styleUrls: ['./order.component.scss'],

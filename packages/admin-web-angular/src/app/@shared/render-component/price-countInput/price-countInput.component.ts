@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { ViewCell } from 'ng2-smart-table';
 
 @Component({
+	standalone: false,
 	templateUrl: './price-countInput.component.html',
 })
 export class PriceCountInputComponent implements ViewCell, OnInit {

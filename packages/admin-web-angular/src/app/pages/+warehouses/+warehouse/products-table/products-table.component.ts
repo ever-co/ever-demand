@@ -25,6 +25,7 @@ import {
 import { Store } from '@app/@core/data/store.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-store-products-table',
 	templateUrl: './products-table.component.html',
 	styleUrls: ['./products-table.component.scss'],

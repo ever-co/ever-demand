@@ -3,6 +3,7 @@ import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 
 @Component({
+	standalone: false,
 	styles: [
 		`
 			div {

@@ -10,6 +10,7 @@ import { first } from 'rxjs/operators';
 import { ProductsCategoryService } from '@app/@core/data/productsCategory.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-category-create',
 	templateUrl: './category-create.component.html',
 	styleUrls: ['./category-create.component.scss'],

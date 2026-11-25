@@ -4,6 +4,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import { Router } from '@angular/router';
 
 @Component({
+	standalone: false,
 	templateUrl: 'warehouse-info.component.html',
 	styleUrls: ['warehouse-info.component.scss'],
 })

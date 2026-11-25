@@ -10,6 +10,7 @@ import { CategoriesTableComponent } from '../../../@shared/product/categories/ca
 import { NotifyService } from '@app/@core/services/notify/notify.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-categories',
 	templateUrl: './categories.component.html',
 	styleUrls: ['./categories.component.scss'],

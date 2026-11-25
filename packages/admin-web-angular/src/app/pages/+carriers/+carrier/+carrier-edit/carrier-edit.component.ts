@@ -10,6 +10,7 @@ import { ToasterService } from 'angular2-toaster';
 import { map, first } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'ea-carrier-edit',
 	templateUrl: './carrier-edit.component.html',
 	styleUrls: ['./carrier-edit.component.scss'],

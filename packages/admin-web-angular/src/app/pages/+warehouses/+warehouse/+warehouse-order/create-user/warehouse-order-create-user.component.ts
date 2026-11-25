@@ -17,6 +17,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ToasterService } from 'angular2-toaster';
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-order-create-user',
 	styleUrls: ['./warehouse-order-create-user.component.scss'],
 	templateUrl: './warehouse-order-create-user.component.html',

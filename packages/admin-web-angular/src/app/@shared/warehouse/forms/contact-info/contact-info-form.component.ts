@@ -16,6 +16,7 @@ export type WarehouseContactInfo = Pick<
 const phoneNumberRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9x]*$/;
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-contact-info-form',
 	templateUrl: 'contact-info-form.component.html',
 })

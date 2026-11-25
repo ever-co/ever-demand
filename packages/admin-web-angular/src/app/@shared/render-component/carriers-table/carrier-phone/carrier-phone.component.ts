@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
+	standalone: false,
 	styleUrls: ['./carrier-phone.component.scss'],
 	templateUrl: './carrier-phone.component.html',
 })

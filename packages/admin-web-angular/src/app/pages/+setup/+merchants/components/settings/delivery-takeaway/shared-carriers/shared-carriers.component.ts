@@ -16,6 +16,7 @@ import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 const perPage = 5;
 
 @Component({
+	standalone: false,
 	selector: 'ea-merchants-setup-shared-carriers',
 	templateUrl: './shared-carriers.component.html',
 })

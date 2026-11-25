@@ -20,6 +20,7 @@ import { takeUntil } from 'rxjs/operators';
 import { MakeOrderCommentComponent } from './make-order-comment.component';
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-order-modal',
 	styleUrls: ['./warehouse-order-modal.component.scss'],
 	templateUrl: './warehouse-order-modal.component.html',

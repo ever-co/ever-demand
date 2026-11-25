@@ -13,6 +13,7 @@ import { StateService } from '../../../@core/data/state.service';
 
 // TODO: move layouts into the framework
 @Component({
+	standalone: false,
 	selector: 'ngx-sample-layout',
 	styleUrls: ['./sample.layout.scss'],
 	templateUrl: 'sample.layout.html',

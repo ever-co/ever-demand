@@ -3,6 +3,7 @@ import { ViewCell } from 'ng2-smart-table';
 import { Router } from '@angular/router';
 
 @Component({
+	standalone: false,
 	template: `
 		<button class="btn btn-sm btn-outline-secondary" (click)="redirect()">
 			{{ rowData.id }}

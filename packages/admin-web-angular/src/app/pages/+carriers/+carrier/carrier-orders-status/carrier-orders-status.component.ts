@@ -14,6 +14,7 @@ import { OrderRouter } from '@modules/client.common.angular2/routers/order-route
 import { ToasterService } from 'angular2-toaster';
 
 @Component({
+	standalone: false,
 	selector: 'ea-carrier-orders-status',
 	styleUrls: ['./carrier-orders-status.component.scss'],
 	templateUrl: 'carrier-orders-status.component.html',

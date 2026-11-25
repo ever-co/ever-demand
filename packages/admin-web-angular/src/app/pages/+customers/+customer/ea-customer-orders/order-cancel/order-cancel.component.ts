@@ -6,6 +6,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 
 @Component({
+	standalone: false,
 	styleUrls: ['./order-cancel.component.scss'],
 	templateUrl: './order-cancel.component.html',
 })

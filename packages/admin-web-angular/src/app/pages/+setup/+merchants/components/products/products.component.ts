@@ -22,6 +22,7 @@ import { Router } from '@angular/router';
 import { Store } from '@app/@core/data/store.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-merchants-setup-products',
 	templateUrl: './products.component.html',
 	styleUrls: ['./products.component.scss'],

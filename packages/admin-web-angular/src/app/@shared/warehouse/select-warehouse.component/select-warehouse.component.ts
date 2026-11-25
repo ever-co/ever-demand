@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ViewCell } from 'ng2-smart-table';
 
 @Component({
+	standalone: false,
 	template: `
 		<button
 			class="btn btn-sm btn-outline-secondary"

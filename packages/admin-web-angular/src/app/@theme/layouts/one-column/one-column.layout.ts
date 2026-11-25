@@ -4,6 +4,7 @@ import { takeWhile } from 'rxjs/operators';
 
 // TODO: move layouts into the framework
 @Component({
+	standalone: false,
 	selector: 'ngx-one-column-layout',
 	styleUrls: ['./one-column.layout.scss'],
 	templateUrl: './one-column.layout.html',

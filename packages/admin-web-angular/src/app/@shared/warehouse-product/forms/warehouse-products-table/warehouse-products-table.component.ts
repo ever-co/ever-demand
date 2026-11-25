@@ -39,6 +39,7 @@ export interface WarehouseProductViewModel {
 }
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-products-table',
 	templateUrl: './warehouse-products-table.component.html',
 })

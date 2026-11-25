@@ -24,6 +24,7 @@ export type WarehouseManageTabs = Pick<
 >;
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-manage-tabs',
 	styleUrls: ['./warehouse-manage-tabs.component.scss'],
 	templateUrl: './warehouse-manage-tabs.component.html',

@@ -11,6 +11,7 @@ import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaym
 import { PaymentGatewaysComponent } from '@app/@shared/payment-gateways/payment-gateways.component';
 
 @Component({
+	standalone: false,
 	selector: 'ea-merchants-setup-payments',
 	templateUrl: './payments.component.html',
 	styleUrls: ['./payments.component.scss'],

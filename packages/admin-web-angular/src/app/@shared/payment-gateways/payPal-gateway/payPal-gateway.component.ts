@@ -8,6 +8,7 @@ import { NgForm } from '@angular/forms';
 import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaymentGateway';
 
 @Component({
+	standalone: false,
 	selector: 'ea-payPal-gateway',
 	templateUrl: './payPal-gateway.component.html',
 })

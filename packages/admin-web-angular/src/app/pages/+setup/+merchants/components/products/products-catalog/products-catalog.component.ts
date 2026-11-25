@@ -5,6 +5,7 @@ import { ProductsService } from '@app/@core/data/products.service';
 import { Subject } from 'rxjs';
 
 @Component({
+	standalone: false,
 	selector: 'ea-merchants-setup-products-catalog',
 	templateUrl: './products-catalog.component.html',
 })

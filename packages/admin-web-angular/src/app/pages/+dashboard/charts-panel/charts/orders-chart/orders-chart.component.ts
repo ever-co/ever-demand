@@ -12,6 +12,7 @@ import { LayoutService } from '@app/@core/services/dashboard/layout.service';
 import { takeWhile, delay } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'ea-orders-chart',
 	styleUrls: ['./orders-chart.component.scss'],
 	templateUrl: './orders-chart.component.html',

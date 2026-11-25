@@ -18,6 +18,7 @@ import { getDummyImage } from '@modules/server.common/utils';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-merchants-setup-delivery-takeaway',
 	templateUrl: './delivery-takeaway.component.html',
 	styleUrls: ['./delivery-takeaway.component.scss'],

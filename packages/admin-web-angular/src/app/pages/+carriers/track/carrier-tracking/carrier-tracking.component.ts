@@ -27,6 +27,7 @@ const directionsDisplay = new google.maps.DirectionsRenderer();
 const directionsService = new google.maps.DirectionsService();
 
 @Component({
+	standalone: false,
 	selector: 'ea-carrier-tracking',
 	styleUrls: ['carrier-tracking.component.scss'],
 	templateUrl: 'carrier-tracking.component.html',

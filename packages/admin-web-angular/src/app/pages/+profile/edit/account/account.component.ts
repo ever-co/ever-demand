@@ -14,6 +14,7 @@ import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
+	standalone: false,
 	selector: 'ea-account',
 	styleUrls: ['/account.component.scss'],
 	templateUrl: './account.component.html',

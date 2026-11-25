@@ -15,6 +15,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
+	standalone: false,
 	styleUrls: ['store-order-product-amount.component.scss'],
 	templateUrl: 'store-order-product-amount.component.html',
 })

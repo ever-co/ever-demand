@@ -5,6 +5,7 @@ import { NbThemeService } from '@nebular/theme';
 import { environment } from 'environments/environment';
 
 @Component({
+	standalone: false,
 	selector: 'ngx-theme-settings',
 	styleUrls: ['./theme-settings.component.scss'],
 	templateUrl: './theme-settings.component.html',

@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 
 declare var google: any;
 @Component({
+	standalone: false,
 	selector: 'ea-customer-location',
 	styleUrls: ['./ea-customer-location.component.scss'],
 	templateUrl: './ea-customer-location.component.html',

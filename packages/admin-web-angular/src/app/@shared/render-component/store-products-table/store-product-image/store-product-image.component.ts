@@ -3,6 +3,7 @@ import { ViewCell } from 'ng2-smart-table';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 
 @Component({
+	standalone: false,
 	templateUrl: './store-product-image.component.html',
 })
 export class StoreProductImageComponent implements ViewCell {

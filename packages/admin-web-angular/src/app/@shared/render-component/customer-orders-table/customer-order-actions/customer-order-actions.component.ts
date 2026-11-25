@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OrderCancelComponent } from '../../../../pages/+customers/+customer/ea-customer-orders/order-cancel/order-cancel.component';
 
 @Component({
+	standalone: false,
 	templateUrl: './customer-order-actions.component.html',
 })
 export class CustomerOrderActionsComponent implements ViewCell, OnInit {

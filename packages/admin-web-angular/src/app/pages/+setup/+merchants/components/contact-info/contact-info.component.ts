@@ -2,6 +2,7 @@ import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
+	standalone: false,
 	selector: 'ea-merchants-setup-contact-info',
 	templateUrl: './contact-info.component.html',
 	styleUrls: ['./contact-info.component.scss'],

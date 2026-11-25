@@ -7,6 +7,7 @@ import { CarriersService } from '../../../../@core/data/carriers.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
+	standalone: false,
 	styleUrls: ['./redirect-carrier.component.scss'],
 	templateUrl: './redirect-carrier.component.html',
 })

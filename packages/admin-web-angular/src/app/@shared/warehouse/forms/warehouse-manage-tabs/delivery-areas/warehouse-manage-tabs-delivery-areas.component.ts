@@ -4,6 +4,7 @@ import { takeUntil, first } from 'rxjs/operators';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-manage-tabs-delivery-areas',
 	styleUrls: ['./warehouse-manage-tabs-delivery-areas.component.scss'],
 	templateUrl: './warehouse-manage-tabs-delivery-areas.component.html',

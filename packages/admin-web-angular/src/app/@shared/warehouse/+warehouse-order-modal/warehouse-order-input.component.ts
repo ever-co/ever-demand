@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ViewCell } from 'ng2-smart-table';
 
 @Component({
+	standalone: false,
 	styles: ['.order-input-wrapper { text-align: center; }'],
 	templateUrl: './warehouse-order-input.component.html',
 })

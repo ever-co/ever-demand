@@ -20,6 +20,7 @@ import Order from '@modules/server.common/entities/Order';
 import { IOrderCreateInput } from '@modules/server.common/routers/IWarehouseOrdersRouter';
 
 @Component({
+	standalone: false,
 	selector: 'ea-custom-order',
 	templateUrl: './custom-order.component.html',
 	styleUrls: ['./custom-order.component.scss'],

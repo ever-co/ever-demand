@@ -24,6 +24,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 const perPage = 5;
 
 @Component({
+	standalone: false,
 	styleUrls: ['./warehouse-order.component.scss'],
 	templateUrl: './warehouse-order.component.html',
 })

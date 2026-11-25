@@ -7,6 +7,7 @@ import Admin from '@modules/server.common/entities/Admin';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
+	standalone: false,
 	selector: 'ngx-header',
 	styleUrls: ['./header.component.scss'],
 	templateUrl: './header.component.html',

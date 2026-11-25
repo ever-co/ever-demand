@@ -29,6 +29,7 @@ interface ProductViewModel {
 }
 
 @Component({
+	standalone: false,
 	selector: 'ea-categories-table',
 	styleUrls: ['./categories-table.component.scss'],
 	templateUrl: './categories-table.component.html',

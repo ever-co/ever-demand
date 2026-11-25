@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import { NgxLegendItemColor } from './enum.legend-item-color';
 
 @Component({
+	standalone: false,
 	selector: 'ea-legend-chart',
 	styleUrls: ['./legend-chart.component.scss'],
 	templateUrl: './legend-chart.component.html',

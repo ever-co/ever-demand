@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ViewCell } from 'ng2-smart-table';
 
 @Component({
+	standalone: false,
 	styles: [
 		'.invited-icon { color: green; margin-right: 3px;} .actions-invites-requests{width: 5rem;}',
 	],

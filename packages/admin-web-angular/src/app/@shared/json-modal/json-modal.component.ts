@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
+	standalone: false,
 	styleUrls: ['./json-modal.component.scss'],
 	templateUrl: './json-modal.component.html',
 })

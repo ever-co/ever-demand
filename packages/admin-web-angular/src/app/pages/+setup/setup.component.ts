@@ -4,6 +4,7 @@ import { environment } from 'environments/environment';
 import { Store } from '@app/@core/data/store.service';
 
 @Component({
+	standalone: false,
 	styleUrls: ['./setup.component.scss'],
 	templateUrl: './setup.component.html',
 })

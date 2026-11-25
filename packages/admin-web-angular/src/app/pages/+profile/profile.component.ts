@@ -5,6 +5,7 @@ import { Store } from '@app/@core/data/store.service';
 import { Observable } from 'rxjs';
 
 @Component({
+	standalone: false,
 	selector: 'ea-profile',
 	styleUrls: ['./profile.component.scss'],
 	templateUrl: './profile.component.html',

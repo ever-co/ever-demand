@@ -4,6 +4,7 @@ import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaym
 import Warehouse from '@modules/server.common/entities/Warehouse';
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-payments-settings-form',
 	templateUrl: './payments-settings-form.component.html',
 })

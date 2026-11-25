@@ -6,6 +6,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import { WarehousesService } from '../../../@core/data/warehouses.service';
 
 @Component({
+	standalone: false,
 	template: `
 		<div class="product">
 			<h6 *ngIf="store$ | async as store" class="text-center">

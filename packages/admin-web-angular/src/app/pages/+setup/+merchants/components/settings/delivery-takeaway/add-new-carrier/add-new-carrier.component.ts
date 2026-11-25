@@ -11,6 +11,7 @@ import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-r
 import { first } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'ea-merchants-setup-add-new-carrier',
 	templateUrl: './add-new-carrier.component.html',
 })

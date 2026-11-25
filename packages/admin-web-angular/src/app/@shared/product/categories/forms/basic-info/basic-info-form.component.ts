@@ -18,6 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { IProductsCategoryCreateObject } from '@modules/server.common/interfaces/IProductsCategory';
 
 @Component({
+	standalone: false,
 	selector: 'ea-product-category-basic-info-form',
 	templateUrl: 'basic-info-form.component.html',
 	styleUrls: ['basic-info-form.component.scss'],

@@ -5,6 +5,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
+	standalone: false,
 	styles: ['a { float: left; }', 'a:hover { color: #4caf508f !important; }'],
 	template: ` <a (click)="redirect()">{{ title }}</a> `,
 })

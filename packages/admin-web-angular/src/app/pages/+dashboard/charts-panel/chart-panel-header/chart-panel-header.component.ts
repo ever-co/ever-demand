@@ -21,6 +21,7 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'ea-chart-panel-header',
 	styleUrls: ['./chart-panel-header.component.scss'],
 	templateUrl: './chart-panel-header.component.html',
