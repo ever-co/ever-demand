@@ -223,7 +223,7 @@ importers:
         version: 26.6.10
       graphql-ws:
         specifier: ^6.4.3
-        version: 6.4.3(graphql@17.1.0)(ws@8.21.3)
+        version: 6.4.3(graphql@16.15.0)(ws@8.21.3)
       socket.io-client:
         specifier: ^4.8.4
         version: 4.8.4(supports-color@8.1.1)
@@ -366,7 +366,7 @@ importers:
         version: 22.3.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2)(zone.js@0.16.3))(rxjs@7.8.2)
       '@apollo/client':
         specifier: ^4.3.8
-        version: 4.3.8(graphql-ws@6.4.3(graphql@17.1.0)(ws@8.21.3))(graphql@17.1.0)(rxjs@7.8.2)
+        version: 4.3.8(graphql-ws@6.4.3(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2)
       '@capacitor-mlkit/barcode-scanning':
         specifier: ^8.2.2
         version: 8.2.2(@capacitor/core@8.6.3)
@@ -438,16 +438,16 @@ importers:
         version: 18.1.0(@angular/common@22.3.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2)(zone.js@0.16.3))(rxjs@7.8.2))(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2)(zone.js@0.16.3))(@ngx-translate/core@18.1.0(@angular/common@22.3.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2)(zone.js@0.16.3))(rxjs@7.8.2))(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2)(zone.js@0.16.3))(rxjs@7.8.2))
       apollo-angular:
         specifier: ^14.2.0
-        version: 14.2.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2)(zone.js@0.16.3))(@apollo/client@4.3.8(graphql-ws@6.4.3(graphql@17.1.0)(ws@8.21.3))(graphql@17.1.0)(rxjs@7.8.2))(graphql@17.1.0)(rxjs@7.8.2)
+        version: 14.2.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2)(zone.js@0.16.3))(@apollo/client@4.3.8(graphql-ws@6.4.3(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2))(graphql@16.15.0)(rxjs@7.8.2)
       bootstrap:
         specifier: ^5.3.9
         version: 5.3.9(@popperjs/core@2.11.8)
       graphql:
-        specifier: ^17.1.0
-        version: 17.1.0
+        specifier: ^16.15.0
+        version: 16.15.0
       graphql-ws:
         specifier: ^6.4.3
-        version: 6.4.3(graphql@17.1.0)(ws@8.21.3)
+        version: 6.4.3(graphql@16.15.0)(ws@8.21.3)
       ionicons:
         specifier: ^8.1.1
         version: 8.1.1
@@ -3735,9 +3735,9 @@ packages:
       ws:
         optional: true
 
-  graphql@17.1.0:
-    resolution: {integrity: sha512-JKCOa7rSQNrket/JFhuua86hljUO+IIpyUHfKxlKD6FEfbrLX8jc1FDrA0KPKI+s8OspBCF/5npYccAICHXPpQ==}
-    engines: {node: ^22.0.0 || ^24.0.0 || >=26.0.0}
+  graphql@16.15.0:
+    resolution: {integrity: sha512-32kz9FecohDiC/tgcViwnRXM7HFBVTPiW7pHO+DikKOI5KjhU/jNULOReXsrFqt2WAYbE9xFXsTffJw6iTO8qw==}
+    engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
 
   handlebars@4.7.10:
     resolution: {integrity: sha512-P5VJMVM7qgBn6vjXMw8WG9uVI+ncf2pi72j4de4yz5ZULLj2RGqLYaKOYGsgyrViQ0tePOVlN1tDCCXXtFqXKg==}
@@ -6021,19 +6021,19 @@ snapshots:
       rxjs: 7.8.2
       tslib: 2.9.1
 
-  '@apollo/client@4.3.8(graphql-ws@6.4.3(graphql@17.1.0)(ws@8.21.3))(graphql@17.1.0)(rxjs@7.8.2)':
+  '@apollo/client@4.3.8(graphql-ws@6.4.3(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2)':
     dependencies:
-      '@graphql-typed-document-node/core': 3.2.0(graphql@17.1.0)
+      '@graphql-typed-document-node/core': 3.2.0(graphql@16.15.0)
       '@wry/caches': 1.0.1
       '@wry/equality': 0.5.7
       '@wry/trie': 0.5.0
-      graphql: 17.1.0
-      graphql-tag: 2.12.7(graphql@17.1.0)
+      graphql: 16.15.0
+      graphql-tag: 2.12.7(graphql@16.15.0)
       optimism: 0.18.1
       rxjs: 7.8.2
       tslib: 2.9.1
     optionalDependencies:
-      graphql-ws: 6.4.3(graphql@17.1.0)(ws@8.21.3)
+      graphql-ws: 6.4.3(graphql@16.15.0)(ws@8.21.3)
 
   '@babel/code-frame@7.29.7':
     dependencies:
@@ -6653,9 +6653,9 @@ snapshots:
 
   '@gar/promise-retry@1.0.3': {}
 
-  '@graphql-typed-document-node/core@3.2.0(graphql@17.1.0)':
+  '@graphql-typed-document-node/core@3.2.0(graphql@16.15.0)':
     dependencies:
-      graphql: 17.1.0
+      graphql: 16.15.0
 
   '@harperfast/extended-iterable@1.0.5':
     optional: true
@@ -8168,11 +8168,11 @@ snapshots:
       normalize-path: 3.0.0
       picomatch: 2.3.2
 
-  apollo-angular@14.2.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2)(zone.js@0.16.3))(@apollo/client@4.3.8(graphql-ws@6.4.3(graphql@17.1.0)(ws@8.21.3))(graphql@17.1.0)(rxjs@7.8.2))(graphql@17.1.0)(rxjs@7.8.2):
+  apollo-angular@14.2.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2)(zone.js@0.16.3))(@apollo/client@4.3.8(graphql-ws@6.4.3(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2))(graphql@16.15.0)(rxjs@7.8.2):
     dependencies:
       '@angular/core': 22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2)(zone.js@0.16.3)
-      '@apollo/client': 4.3.8(graphql-ws@6.4.3(graphql@17.1.0)(ws@8.21.3))(graphql@17.1.0)(rxjs@7.8.2)
-      graphql: 17.1.0
+      '@apollo/client': 4.3.8(graphql-ws@6.4.3(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2)
+      graphql: 16.15.0
       rxjs: 7.8.2
       tslib: 2.9.1
 
@@ -8885,18 +8885,18 @@ snapshots:
 
   graceful-fs@4.2.12: {}
 
-  graphql-tag@2.12.7(graphql@17.1.0):
+  graphql-tag@2.12.7(graphql@16.15.0):
     dependencies:
-      graphql: 17.1.0
+      graphql: 16.15.0
       tslib: 2.9.1
 
-  graphql-ws@6.4.3(graphql@17.1.0)(ws@8.21.3):
+  graphql-ws@6.4.3(graphql@16.15.0)(ws@8.21.3):
     dependencies:
-      graphql: 17.1.0
+      graphql: 16.15.0
     optionalDependencies:
       ws: 8.21.3
 
-  graphql@17.1.0: {}
+  graphql@16.15.0: {}
 
   handlebars@4.7.10:
     dependencies:

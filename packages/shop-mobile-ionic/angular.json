@@ -28,6 +28,13 @@
 						"polyfills": ["zone.js", "src/polyfills.ts"],
 						"tsConfig": "tsconfig.app.json",
 						"inlineStyleLanguage": "scss",
+						"allowedCommonJsDependencies": [
+							"jsbarcode",
+							"localforage",
+							"lodash",
+							"qrcode",
+							"reflect-metadata"
+						],
 						"assets": [
 							{
 								"glob": "**/*",

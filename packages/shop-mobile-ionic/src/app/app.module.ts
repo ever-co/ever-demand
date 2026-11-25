@@ -129,6 +129,12 @@ export function apolloOptionsFactory(): ApolloClient.Options {
 	const ws = new GraphQLWsLink(
 		createClient({
 			url: environment.GQL_SUBSCRIPTIONS_ENDPOINT,
+			// The API reads the token from the connection params (graphql-ws
+			// has no HTTP headers); read when the socket (re)connects.
+			connectionParams: () => {
+				const token = store.token;
+				return token ? { authorization: `Bearer ${token}` } : {};
+			},
 			lazy: true,
 			retryAttempts: Infinity,
 			shouldRetry: () => true,

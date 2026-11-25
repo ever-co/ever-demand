@@ -12,14 +12,14 @@ Expo and Flutter lanes. Its feature inventory is `docs/latest-stack/shop-mobile-
 | Ionic | `@ionic/angular` 5.8 | 9.0.14, NgModule build from `@ionic/angular/lazy` |
 | Native shell | Cordova (android 10) + 22 cordova plugins + `@ionic-native/*` 5 | Capacitor 8.6 (`@capacitor/core`, `cli`, `android`, `ios`) |
 | Capacitor plugins | | app 8.1, browser 8.0, camera 8.2, device 8.0, dialog 8.0, geolocation 8.2, haptics 8.0, local-notifications 8.3, network 8.0, preferences 8.0, splash-screen 8.0, status-bar 8.0, `@capacitor-mlkit/barcode-scanning` 8.2 |
-| GraphQL client | apollo-angular 2.6, @apollo/client 3.5, subscriptions-transport-ws, graphql 15 | apollo-angular 14.2, @apollo/client 4.3, graphql-ws 6.4 (`GraphQLWsLink`), graphql 17.1 |
+| GraphQL client | apollo-angular 2.6, @apollo/client 3.5, subscriptions-transport-ws, graphql 15 | apollo-angular 14.2, @apollo/client 4.3, graphql-ws 6.4 (`GraphQLWsLink`, token in `connectionParams`), graphql 16.15 (the core lane's pick: Apollo Server 5 rejects 17) |
 | i18n | @ngx-translate/core 13, http-loader 6 | 18.1 / 18.1 through the common-angular `TranslateModule` shim |
 | Storage | @ionic/storage-angular 3 | 4.0 (set up as before; the app keeps using `localStorage`) |
 | Carousel | `ion-slides` (Swiper 5 inside Ionic) | Swiper element 14.4 (`<swiper-container>`) |
 | Progress bar | ngx-progressbar 6 | 14.0 (standalone `NgProgressbar`, needs `@angular/cdk` 22) |
 | CSS | bootstrap 4.6, font-awesome 4.7 | bootstrap 5.3.9, @fortawesome/fontawesome-free 7.3.1 (+ v4 shims) |
 | Other | qrcode 1.4, jsbarcode 3.11, socket.io-client 4.3, uuid 8, rxjs 7.4, zone.js 0.11, ionicons 5 | qrcode 1.5.4, jsbarcode 3.12.3, socket.io-client 4.8.4, uuid 14, rxjs 7.8.2, zone.js 0.16.3, ionicons 8.1 |
-| Tests | Karma + Jasmine (84 specs), Protractor | Vitest 5.1 + jsdom 31 via `ng test` (199 specs), Playwright (`e2e/tests/shop-mobile`) |
+| Tests | Karma + Jasmine (84 specs), Protractor | Vitest 5.1 + jsdom 31 via `ng test` (201 specs), Playwright (`e2e/tests/shop-mobile`) |
 | Env script | ts-node + yargs + envalid 7 | Node 26 type stripping (`node scripts/configure.ts`) + envalid 9 + dotenv 18 |
 | Node / TS | 16 / 4.5 | 26.13.1 / 6.0.3 |
 
@@ -123,6 +123,14 @@ locate you"), camera for the barcode scanner. Icons and splash: `resources/icon.
   (the pages are modals). The `errors` routes are bundled with the pages instead of lazy-loaded,
   so the connection lost page opens when the network is already gone (a browser cannot fetch a
   lazy chunk offline; Cordova served the chunks from the device).
+- **Popups.** Ionic 6+ moved the modal wrapper and backdrop into the shadow root, so the old
+  `.order-info-modal .modal-wrapper` / `ion-backdrop` rules no longer reached them; the popups use
+  `--background: transparent`, `--box-shadow: none`, `--backdrop-opacity: 0` instead. The old
+  `display: block` on the modal broke the stacking of the shadow parts (the backdrop covered the
+  popup and took its taps), so it is gone.
+- **Resume Buy after registering.** A customer who taps Buy before registering goes through the
+  invite pages and back to the products. Ionic keeps the products page alive in its stack, so the
+  pending Buy is resumed in `ionViewWillEnter` (was `ngOnInit`, which does not run again).
 - **Menu.** The menu now also enables the ltr/rtl side for the start language (before, the start
   language changed before the menu subscribed, both sides stayed enabled and the menu button
   could open the right-hand menu in English).
@@ -135,7 +143,7 @@ locate you"), camera for the barcode scanner. Icons and splash: `resources/icon.
 
 ## Tests
 
-- `ng test --watch=false` (Vitest, jsdom, `maxWorkers: 2`): **35 files, 199 tests, all green.**
+- `ng test --watch=false` (Vitest, jsdom, `maxWorkers: 2`): **36 files, 201 tests, all green.**
   - All **84** Karma specs from `develop` @ `abd39940` are ported (Jasmine spies → `vi` through
     `src/app/testing/spies.ts`, `waitForAsync`/`fakeAsync` → async/await + `vi` fake timers). The
     payment-flow fixes they guard (#1645/#1646 paying guard in the root Store, #1648 server
@@ -152,7 +160,9 @@ locate you"), camera for the barcode scanner. Icons and splash: `resources/icon.
   - TestBed note: the unit-test build has no JIT scope data, so a spec that renders the
     `translate` pipe imports `translateTesting()` (`src/app/testing/translate.ts`), not only the
     shim NgModule.
-- Playwright (`e2e/tests/shop-mobile`, Pixel 7, baseURL `http://localhost:4201`):
+- Playwright (`e2e/tests/shop-mobile`, Pixel 7, baseURL `http://localhost:4201`): **14 passed,
+  1 skipped** (the server-down test skips while an API runs) against the production build served
+  by `node e2e/serve-apps.mjs shop-mobile` and the core lane's API (graphql 16, Mongoose 9 fix in).
   - `app-shell.spec.ts` (no API needed): boots with no unexpected console errors, server-down page
     while the API is unreachable, manifest + 6 translation files + ionicons served.
   - `offline-ui.spec.ts` (no data needed; fakes the API root when no API runs): Hebrew switches
@@ -169,7 +179,7 @@ locate you"), camera for the barcode scanner. Icons and splash: `resources/icon.
 | --- | --- |
 | `IonicModule` (lazy NgModule build) | Ionic 9 deprecates it for `provideIonicAngular()` + standalone `Ion*` imports, but it still works. Moving 35 NgModules to standalone Ionic components (plus `addIcons` for every icon) is a larger change than this lane; the contract keeps NgModules. Logs one deprecation warning at start. |
 | TypeScript 7 | Angular 22 needs `>=6.0 <6.1` (contract). |
-| `graphql` 17 | Chosen as the latest that apollo-angular 14 / Apollo Client 4 accept (`^16 || ^17`). If the core lane settles on 16, switch here too; the client code is the same. |
+| `graphql` 16.15 (17 exists) | Aligned with the core lane: `@apollo/server` 5 only accepts `^16.11`. apollo-angular 14 / Apollo Client 4 accept both. |
 | Stripe Checkout (`checkout.js`) | Stripe's legacy popup is still what the payment flow and its fleet specs use. Moving to Stripe Elements / Payment Element is a product change, not an upgrade. |
 | Google Maps loader | `common-angular`'s loader waits for the Maps callback; without network to Google the app never starts (unchanged behaviour, outside this lane). |
 | Playwright browser | The PC's cache has Chromium 1243, `@playwright/test` 1.65 wants 1255. I ran the suite with the cached build (`launchOptions.executablePath`); `npx playwright install chromium` is needed for a plain run. |

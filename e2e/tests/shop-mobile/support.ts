@@ -138,6 +138,8 @@ const EXPECTED_ERRORS = [
 	/Http failure response/i,
 	/Google Maps JavaScript API/i,
 	/maps\.googleapis\.com/i,
+	// Google's Geocoder without an API key (invite by location falls back to it)
+	/Geocoding Service|maps-no-account/i,
 	/Network was disconnected/i,
 ];
 

@@ -28,7 +28,7 @@ test.describe('shop-mobile pages without data', () => {
 	}) => {
 		const unexpectedErrors = watchConsole(page);
 
-		await page.goto('/info/help');
+		await page.goto('/products');
 		await expectAppShell(page);
 		await openFromMenu(page, 'Language');
 		await expect(page).toHaveURL(/\/language$/);
@@ -37,7 +37,7 @@ test.describe('shop-mobile pages without data', () => {
 		await page.locator('ion-radio[value="he-IL"]').click();
 
 		// The page goes back to where the customer came from.
-		await expect(page).toHaveURL(/\/info\/help$/);
+		await expect(page).toHaveURL(/\/products$/);
 		await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
 		await expect(page.locator('html')).toHaveAttribute('lang', 'he');
 		expect(
@@ -58,7 +58,7 @@ test.describe('shop-mobile pages without data', () => {
 	});
 
 	test('the side menu lists the app pages', async ({ page }) => {
-		await page.goto('/info/help');
+		await page.goto('/products');
 		await expectAppShell(page);
 
 		await page.locator('ion-menu-button').first().click();
@@ -83,7 +83,7 @@ test.describe('shop-mobile pages without data', () => {
 		page,
 		context,
 	}) => {
-		await page.goto('/info/help');
+		await page.goto('/products');
 		await expectAppShell(page);
 		await openFromMenu(page, 'Language');
 		await expect(page.getByText('Select Language')).toBeVisible();

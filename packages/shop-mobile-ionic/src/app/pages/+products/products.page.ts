@@ -114,7 +114,13 @@ export class ProductsPage implements OnInit, OnDestroy {
 		return (!merchantIds || merchantIds.length < 1) && !this.inStore;
 	}
 
-	ngOnInit(): void {
+	ngOnInit(): void {}
+
+	// A customer who tapped Buy before registering comes back to this page
+	// after the invite pages. Ionic keeps the page alive in its stack, so
+	// ngOnInit does not run again: resume the pending Buy whenever the page
+	// shows (the first time included).
+	ionViewWillEnter(): void {
 		this.continueOrder();
 	}
 
