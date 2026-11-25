@@ -234,7 +234,7 @@ class AppLocalizationsBg extends AppLocalizations {
   String get buyPopupStatuses3Details => 'Благодарим Ви, че използвате Ever';
 
   @override
-  String buyPopupStatuses3NotPaidNote(Object amount) {
+  String buyPopupStatuses3NotPaidNote(String amount) {
     return '';
   }
 

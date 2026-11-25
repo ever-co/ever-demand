@@ -230,7 +230,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get buyPopupStatuses3Details => 'תודה על השימוש ב-Ever';
 
   @override
-  String buyPopupStatuses3NotPaidNote(Object amount) {
+  String buyPopupStatuses3NotPaidNote(String amount) {
     return 'תכין/י את הארנק ($amount במזומן).';
   }
 

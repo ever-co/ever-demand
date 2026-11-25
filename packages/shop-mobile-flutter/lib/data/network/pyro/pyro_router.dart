@@ -40,7 +40,7 @@ class PyroError implements Exception {
 /// Mirrors packages/common-angular/src/lib/router: [run] is `router.run`,
 /// [observe] is `router.runAndObserve`.
 class PyroRouter {
-  PyroRouter(this.name, this.socket, {Uuid uuid = const Uuid()}) : _uuid = uuid;
+  PyroRouter(this.name, this.socket, {this._uuid = const Uuid()});
 
   final String name;
   final PyroSocket socket;

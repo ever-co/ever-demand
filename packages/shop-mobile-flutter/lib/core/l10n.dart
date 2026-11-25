@@ -49,7 +49,7 @@ extension L10nContext on BuildContext {
     DeliveryStep.completed => (
         title: l10n.buyPopupStatuses3Title,
         details: l10n.buyPopupStatuses3Details,
-        notPaidNote: l10n.buyPopupStatuses3NotPaidNote,
+        notPaidNote: l10n.buyPopupStatuses3NotPaidNote(amount),
       ),
   };
 }

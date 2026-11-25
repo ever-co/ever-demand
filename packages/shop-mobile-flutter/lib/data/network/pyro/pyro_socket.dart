@@ -35,9 +35,10 @@ abstract interface class PyroSocket {
 /// [PyroSocket] on `socket_io_client`, one per namespace, with the Ionic
 /// client's manual reconnect: 1 s after a disconnect or a connect error.
 class SocketIoPyroSocket implements PyroSocket {
-  SocketIoPyroSocket(String url, {Duration reconnectDelay = const Duration(seconds: 1)})
-      : _reconnectDelay = reconnectDelay,
-        _socket = io.io(
+  SocketIoPyroSocket(
+    String url, {
+    this._reconnectDelay = const Duration(seconds: 1),
+  }) : _socket = io.io(
           url,
           io.OptionBuilder()
               .setTransports(<String>['websocket'])

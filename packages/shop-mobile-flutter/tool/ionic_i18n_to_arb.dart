@@ -28,7 +28,7 @@ const Map<String, String> _extraEnglish = <String, String>{
   'wrongCode': 'Wrong code!',
   'cardEmailLabel': 'Email',
   'cardEmailInvalid': 'Enter a valid email',
-  'cardNoKey': "Card payments are not set up in this app.",
+  'cardNoKey': 'Card payments are not set up in this app.',
   'country': 'Country',
   'noApartment': 'No apartment',
   'retry': 'Retry',
@@ -63,11 +63,15 @@ void main(List<String> args) {
       final String message = _convert(entry.value[key]!);
       arb[key] = message;
       if (locale == 'en') {
-        final List<String> placeholders = RegExp(r'\{(\w+)\}')
-            .allMatches(message)
-            .map((Match m) => m.group(1)!)
-            .toSet()
-            .toList();
+        // Placeholders of the key in any language (a translation may use
+        // `%s` where the English text has none).
+        final List<String> placeholders = <String>{
+          for (final Map<String, String> l in byLocale.values)
+            if (l[key] != null)
+              ...RegExp(r'\{(\w+)\}')
+                  .allMatches(_convert(l[key]!))
+                  .map((Match m) => m.group(1)!),
+        }.toList();
         arb['@$key'] = <String, Object>{
           'description': 'Ionic key ${_ionicKeyOf[key]}',
           if (placeholders.isNotEmpty)

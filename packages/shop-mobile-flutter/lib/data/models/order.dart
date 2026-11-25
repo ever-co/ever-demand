@@ -103,8 +103,8 @@ class Order {
     this.orderType,
     this.createdAt,
     this.deliveryTime,
-    int? status,
-  }) : _status = status;
+    this._status,
+  });
 
   factory Order.fromJson(Json json) {
     final Object? rawWarehouse = json['warehouse'];

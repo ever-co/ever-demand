@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../data/models/enums.dart';
 import '../data/store/app_store.dart';
@@ -231,6 +231,27 @@ GoRouter buildRouter({
         builder: (_, _) => const MaintenanceScreen(),
       ),
     ],
-    errorBuilder: (_, _) => const ProductsScreen(),
+    // `**` → `` in the Ionic routes.
+    errorBuilder: (_, _) => const _GoHome(),
   );
+}
+
+class _GoHome extends StatefulWidget {
+  const _GoHome();
+
+  @override
+  State<_GoHome> createState() => _GoHomeState();
+}
+
+class _GoHomeState extends State<_GoHome> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) context.go('/');
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) => const SizedBox.shrink();
 }

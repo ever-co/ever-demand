@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Ionic colours of the shop app (docs/latest-stack/shop-mobile-features.md §8).
 abstract final class EverColors {

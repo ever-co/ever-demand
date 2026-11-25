@@ -299,7 +299,12 @@
   },
   "buyPopupStatuses3NotPaidNote": "",
   "@buyPopupStatuses3NotPaidNote": {
-    "description": "Ionic key BUY_POPUP.STATUSES.3.NOT_PAID_NOTE"
+    "description": "Ionic key BUY_POPUP.STATUSES.3.NOT_PAID_NOTE",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "buyPopupStatusesTakeawayTitle": "We're preparing the order!",
   "@buyPopupStatusesTakeawayTitle": {

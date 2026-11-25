@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'app.dart';
 import 'config/app_config.dart';
@@ -19,7 +19,7 @@ Future<void> main() async {
   }
   runApp(
     ProviderScope(
-      overrides: <Override>[
+      overrides: [
         appConfigProvider.overrideWithValue(config),
         appStoreProvider.overrideWithValue(AppStore(kv)),
       ],

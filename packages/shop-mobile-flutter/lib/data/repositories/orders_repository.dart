@@ -49,6 +49,16 @@ class OrdersRepository {
     return asJson(data['getOrder'])['waitForCompletion'] == true;
   }
 
+  /// `GetOrder { totalPrice }` (the feed header's order sign).
+  Future<double> orderTotalPrice(String id) async {
+    final Json data = await _gql.query(
+      getOrderQuery('{totalPrice}'),
+      variables: <String, dynamic>{'id': id},
+    );
+    final Object? total = asJson(data['getOrder'])['totalPrice'];
+    return total is num ? total.toDouble() : 0;
+  }
+
   /// `GenerateOrdersByCustomerId` (seeds demo orders for the fake invite).
   Future<void> generateOrdersByCustomerId(
     int numberOfOrders,

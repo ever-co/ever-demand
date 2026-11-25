@@ -518,7 +518,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **''**
-  String buyPopupStatuses3NotPaidNote(Object amount);
+  String buyPopupStatuses3NotPaidNote(String amount);
 
   /// Ionic key BUY_POPUP.STATUSES_TAKEAWAY.TITLE
   ///

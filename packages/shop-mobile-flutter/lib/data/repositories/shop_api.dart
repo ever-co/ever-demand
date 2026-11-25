@@ -4,9 +4,9 @@ import '../models/geo.dart';
 import '../models/invite.dart';
 import '../models/json.dart';
 import '../models/order.dart';
+import '../models/product.dart';
 import '../models/user.dart';
 import '../models/warehouse.dart';
-import '../models/product.dart';
 import '../network/pyro/pyro_router.dart';
 
 /// Typed wrappers over the pyro routers the shop app uses, one class per
