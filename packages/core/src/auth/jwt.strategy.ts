@@ -13,13 +13,14 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 		super(createJwtData);
 	}
 
-	async validate(payload: JwtPayload, done: any) {
+	// PassportStrategy hands the result to passport: the user, or the error
+	async validate(payload: JwtPayload) {
 		const user = await this.authService.validateUser(payload);
 
 		if (!user) {
-			return done(new UnauthorizedException(), false);
+			throw new UnauthorizedException();
 		}
 
-		done(null, user);
+		return user;
 	}
 }

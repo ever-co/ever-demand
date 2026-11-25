@@ -25,7 +25,7 @@ jest.mock('../../../services/devices', () => ({ DevicesService: class {} }));
 jest.mock('../../../services/warehouses', () => ({
 	WarehousesService: class {},
 }));
-jest.mock('stripe', () => ({ Stripe: jest.fn() }));
+jest.mock('stripe', () => ({ __esModule: true, default: jest.fn() }));
 
 import { UsersService } from '../../../services/users/UsersService';
 

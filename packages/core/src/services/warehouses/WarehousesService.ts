@@ -331,9 +331,16 @@ export class WarehousesService extends DBService<Warehouse>
 
 		warehouse = _.clone(warehouse);
 
-		_.each(warehouse.products, (warehouseProduct) => {
-			warehouseProduct.product = warehouseProduct.product;
-		});
+		// Products are stored as refs (ids): write the id of a populated
+		// product, as the original code did (Mongoose refuses the object).
+		// (a save without products must not write an empty list)
+		if (Array.isArray(warehouse.products)) {
+			warehouse.products = warehouse.products.map((warehouseProduct) => {
+				const stored = _.clone(warehouseProduct);
+				stored.product = warehouseProduct.productId as any;
+				return stored;
+			});
+		}
 
 		return this.update(warehouse.id, stripProtectedFields(warehouse));
 	}

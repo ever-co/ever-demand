@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ quiet: true });
 
 import {
 	cleanEnv,
@@ -7,7 +7,6 @@ import {
 	str,
 	ValidatorSpec,
 	bool,
-	CleanOptions,
 	makeValidator,
 } from 'envalid';
 import {
@@ -90,9 +89,6 @@ export type Env = Readonly<{
 
 	MAX_SOCKETS?: number;
 }>;
-
-const opt: CleanOptions<Env> = {
-};
 
 export const env: Env = cleanEnv(
 	process.env,
@@ -199,6 +195,5 @@ export const env: Env = cleanEnv(
 		}),
 
 		MAX_SOCKETS: num({ default: Infinity }),
-	},
-	opt
+	}
 );

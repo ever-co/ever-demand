@@ -1,10 +1,10 @@
-import GoogleStrategy from 'passport-google-oauth20';
-import FacebookStrategy from 'passport-facebook';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { inject, injectable } from 'inversify';
 import { SocialRegisterService } from './SocialRegisterService';
 import { routerName } from '@pyro/io';
 import { env } from '../../env';
-import IService from 'services/IService';
+import IService from '../IService';
 
 @routerName('social-strategies-service')
 @injectable()

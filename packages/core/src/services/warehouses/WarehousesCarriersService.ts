@@ -1,4 +1,4 @@
-import { inject, injectable, LazyServiceIdentifer } from 'inversify';
+import { inject, injectable, LazyServiceIdentifier } from 'inversify';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { of, Observable } from 'rxjs';
 import { CarriersService } from '../carriers';
@@ -36,9 +36,9 @@ export class WarehousesCarriersService implements IWarehouseCarriersRouter {
 	private readonly authService: AuthService<Carrier>;
 
 	constructor(
-		@inject(new LazyServiceIdentifer(() => CarriersService))
+		@inject(new LazyServiceIdentifier(() => CarriersService))
 		private readonly carriersService: CarriersService,
-		@inject(new LazyServiceIdentifer(() => WarehousesService))
+		@inject(new LazyServiceIdentifier(() => WarehousesService))
 		private readonly warehousesService: WarehousesService,
 		@inject('Factory<AuthService>')
 		private readonly authServiceFactory: AuthServiceFactory

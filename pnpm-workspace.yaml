@@ -1,7 +1,7 @@
 packages:
   - packages/common
   - packages/common-angular
-  # - packages/core (joins with the backend upgrade)
+  - packages/core
   - e2e
   # Each app joins the workspace once its own package.json is on the latest stack:
   # - packages/admin-web-angular
@@ -14,11 +14,14 @@ packages:
 
 # Packages whose install (build) scripts may run: native addons and downloaded binaries.
 allowBuilds:
+  '@apollo/protobufjs': false
   '@nestjs/core': true
+  '@scarf/scarf': false
   '@parcel/watcher': true
   '@swc/core': true
   bcrypt: true
   core-js: false
+  dtrace-provider: false
   esbuild: true
   lmdb: true
   mongodb-memory-server: true
@@ -34,3 +37,12 @@ minimumReleaseAgeExclude:
   - '@types/react@19.3.3'
   - i18next@27.2.9
   - react-native-qrcode-svg@6.3.55
+  - '@aws-sdk/client-cloudwatch-logs@3.1178.0'
+  - '@nestjs/common@12.6.2'
+  - '@nestjs/core@12.6.2'
+  - '@nestjs/platform-express@12.6.2'
+  - '@nestjs/testing@12.6.2'
+  - '@graphql-tools/load-files@8.0.10'
+  - '@graphql-tools/merge@10.0.10'
+  - '@graphql-tools/utils@13.2.3'
+  - '@graphql-tools/schema@11.0.10'

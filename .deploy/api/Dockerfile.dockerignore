@@ -1,0 +1,17 @@
+# Build context of .deploy/api/Dockerfile (repository root): only what the API image needs.
+# The last matching line wins, so the re-included packages come first and the
+# generated folders after them (a host node_modules would replace the image's).
+.git
+e2e
+tools
+packages/*
+!packages/common
+!packages/core
+**/node_modules
+**/build
+**/dist
+**/tmp
+**/coverage
+**/.common-types
+**/.env
+**/*.log

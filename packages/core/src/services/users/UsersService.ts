@@ -1,5 +1,5 @@
 import Logger from 'bunyan';
-import { inject, injectable, LazyServiceIdentifer } from 'inversify';
+import { inject, injectable, LazyServiceIdentifier } from 'inversify';
 import { env } from '../../env';
 import User from '@modules/server.common/entities/User';
 import { createEverLogger } from '../../helpers/Log';
@@ -41,10 +41,11 @@ import {
 import { of } from 'rxjs';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';
 import _ = require('lodash');
-import * as faker from 'faker';
+import { faker } from '@faker-js/faker';
 import { WarehousesService } from '../../services/warehouses';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
-import { Stripe } from 'stripe';
+import Stripe from 'stripe';
+import { createStripeClient } from '../../helpers/stripe';
 import * as path from 'path';
 
 interface IWatchedFiles {
@@ -83,9 +84,14 @@ export class UsersService
 	public readonly DBObject: any = User;
 
 	// TODO: this and other Stripe related things should be inside separate Payments Service
-	private stripe = new Stripe(env.STRIPE_SECRET_KEY, {
-		apiVersion: '2020-08-27',
-	});
+	private _stripe?: Stripe;
+
+	// Created on first use: Stripe refuses an empty key, and the API must
+	// still start without STRIPE_SECRET_KEY (card payments then fail).
+	private get stripe(): Stripe {
+		this._stripe ??= createStripeClient(env.STRIPE_SECRET_KEY);
+		return this._stripe;
+	}
 
 	protected readonly log: Logger = createEverLogger({
 		name: 'usersService',
@@ -94,11 +100,11 @@ export class UsersService
 	public watchedFiles: IWatchedFiles;
 
 	constructor(
-		@inject(new LazyServiceIdentifer(() => InvitesService))
+		@inject(new LazyServiceIdentifier(() => InvitesService))
 		protected invitesService: InvitesService,
-		@inject(new LazyServiceIdentifer(() => DevicesService))
+		@inject(new LazyServiceIdentifier(() => DevicesService))
 		protected devicesService: DevicesService,
-		@inject(new LazyServiceIdentifer(() => WarehousesService))
+		@inject(new LazyServiceIdentifier(() => WarehousesService))
 		protected _storesService: WarehousesService
 	) {
 		super();
@@ -512,38 +518,38 @@ export class UsersService
 		let customerCount = 1;
 
 		while (customerCount <= 1000) {
-			const firstName = faker.name.firstName();
-			const lastName = faker.name.lastName();
-			const email = faker.internet.email(firstName, lastName);
+			const firstName = faker.person.firstName();
+			const lastName = faker.person.lastName();
+			const email = faker.internet.email({ firstName, lastName });
 			const isBanned = Math.random() < 0.02;
 
 			const geoLocation: IGeoLocationCreateObject = {
-				countryId: faker.datatype.number(Country.ZW) as Country,
-				city: faker.address.city(),
+				countryId: faker.number.int({ min: 0, max: Country.ZW }) as Country,
+				city: faker.location.city(),
 				house: `${customerCount}`,
 				loc: {
 					type: 'Point',
 					coordinates: [defaultLng, defaultLat],
 				},
-				streetAddress: faker.address.streetAddress(),
+				streetAddress: faker.location.streetAddress(),
 			};
 
 			if (!existingEmails.includes(email)) {
 				existingEmails.push(email);
 
 				customersToCreate.push({
-					firstName: faker.name.firstName(),
-					lastName: faker.name.lastName(),
+					firstName: faker.person.firstName(),
+					lastName: faker.person.lastName(),
 					geoLocation,
 					apartment: `${customerCount}`,
 					email,
 					isBanned,
 					image: faker.image.avatar(),
-					phone: faker.phone.phoneNumber(),
-					_createdAt: faker.date.between(
-						customerCreatedFrom,
-						customerCreatedTo
-					),
+					phone: faker.phone.number(),
+					_createdAt: faker.date.between({
+						from: customerCreatedFrom,
+						to: customerCreatedTo,
+					}),
 				} as any);
 
 				customerCount += 1;

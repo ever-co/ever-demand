@@ -25,7 +25,7 @@ import _ = require('lodash');
 import { env } from '../../env';
 import { IGeoLocationCreateObject } from '@modules/server.common/interfaces/IGeoLocation';
 import { IInviteRequestCreateObject } from '@modules/server.common/interfaces/IInviteRequest';
-import * as faker from 'faker';
+import { faker } from '@faker-js/faker';
 import { Country } from '@modules/server.common/entities/GeoLocation';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 
@@ -269,14 +269,14 @@ export class InvitesService extends DBService<Invite>
 		// TODO: make TSlint happy
 		// tslint:disable-next-line:no-object-literal-type-assertion
 		return {
-			countryId: faker.datatype.number(Country.ZW) as Country,
-			city: faker.address.city(),
+			countryId: faker.number.int({ min: 0, max: Country.ZW }) as Country,
+			city: faker.location.city(),
 			house: houseNumber,
 			loc: {
 				type: 'Point',
 				coordinates: [defaultLng, defaultLat],
 			},
-			streetAddress: faker.address.streetAddress(),
+			streetAddress: faker.location.streetAddress(),
 		} as IGeoLocationCreateObject;
 	}
 
