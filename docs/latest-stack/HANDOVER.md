@@ -1,6 +1,6 @@
 # Ever Demand latest-stack upgrade: handover
 
-Last updated: 2026-11-26 ~03:00 CET by the lead session ("Ever Demand platform modernization").
+Last updated: 2026-11-26 ~10:45 CET by the lead session ("Ever Demand platform modernization").
 Keep this file current. Update it after every merge or milestone, then commit and push.
 
 ## Goal (owner)
@@ -131,7 +131,14 @@ Security work (owner request, `76b4ca83`):
        `co.ever.customer.reactnative`. The Ionic app keeps `co.ever.customer`; carrier and merchant are
        unchanged.
 
-     Merge both into `feat/latest-stack` when done.
+     **Both merged** (`857cc25c`, `9a3588cb`). CI changes:
+     - the report artifact is uploaded only on failure;
+     - the Node job skips the Expo suite, which the Expo job runs;
+     - Expo testTimeout is 30 s and the waitFor limit 10 s;
+     - the Flutter job has a 90 min limit and a Gradle cache.
+
+     The CI re-run on `9a3588cb` is the first run of these changes. The Android SDK/NDK download
+     (about 7 min) is not cached yet.
    - **Auto-fix for the PR:** the app could not match the repo to this session's folder. The owner can
      link it from the PR bar ("Linked by Claude").
 
@@ -161,6 +168,10 @@ Security work (owner request, `76b4ca83`):
    the upgrade PR itself.
 
 ## Known follow-ups and caveats
+
+- Lane worktrees under `C:\Coding\Worktrees\ever-demand-*` (except `-latest-stack`) are merged.
+  Remove them with `cmd //c rd /s /q <dir>` plus `git worktree prune`. Do not use `git worktree remove`:
+  it follows node_modules junctions.
 
 - ~~Choose the store application ids of the Flutter and React Native shop apps~~ done
   (`feat/latest-stack-app-ids`): the three shop apps can be published side by side.
