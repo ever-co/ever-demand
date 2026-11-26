@@ -89,6 +89,7 @@
 		"EMAIL_NOT_SAVED": "We could not save your email, so your card was not charged. Please check the email or use a different one, then try again.",
 		"CARD_PAYMENT_UNAVAILABLE": "Card payment is not available in this app.",
 		"ORDER_ALREADY_PAID": "This order is already paid. You do not need to pay again.",
+		"CARD_FORM_NOT_LOADED": "The card form could not load. Check your connection and try again.",
 		"CANCEL": {
 			"STATUSES": [
 				{
