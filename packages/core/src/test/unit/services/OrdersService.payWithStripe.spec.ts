@@ -42,7 +42,10 @@ jest.mock('stripe', () => ({
 	})),
 }));
 
-import { STRIPE_CURRENCY_CHANGED_ERROR } from '@modules/server.common/routers/IOrderRouter';
+import {
+	ORDER_ALREADY_PAID_ERROR,
+	STRIPE_CURRENCY_CHANGED_ERROR,
+} from '@modules/server.common/routers/IOrderRouter';
 import { env } from '../../../env';
 import { OrdersService } from '../../../services/orders/OrdersService';
 
@@ -197,9 +200,14 @@ describe('OrdersService.payWithStripe', () => {
 	it('rejects an order that is already paid and never charges the card', async () => {
 		stored.isPaid = true;
 
-		await expect(service.payWithStripe(ORDER_ID, 'card_1')).rejects.toThrow(
-			'Order is already paid'
-		);
+		// The shop says the order is paid on this error name, not that the
+		// payment failed
+		await expect(
+			service.payWithStripe(ORDER_ID, 'card_1')
+		).rejects.toMatchObject({
+			name: ORDER_ALREADY_PAID_ERROR,
+			message: 'Order is already paid',
+		});
 
 		expect(mockChargesCreate).not.toHaveBeenCalled();
 		expect(update).not.toHaveBeenCalled();
@@ -209,9 +217,13 @@ describe('OrdersService.payWithStripe', () => {
 	it('rejects a cancelled order and never charges the card', async () => {
 		stored.isCancelled = true;
 
-		await expect(service.payWithStripe(ORDER_ID, 'card_1')).rejects.toThrow(
-			/cancelled/
-		);
+		const paying = service.payWithStripe(ORDER_ID, 'card_1');
+
+		await expect(paying).rejects.toThrow(/cancelled/);
+		// The shop must not say a cancelled order is paid
+		await expect(paying).rejects.not.toMatchObject({
+			name: ORDER_ALREADY_PAID_ERROR,
+		});
 
 		expect(mockChargesCreate).not.toHaveBeenCalled();
 		expect(update).not.toHaveBeenCalled();
@@ -998,7 +1010,11 @@ describe('OrdersService.payWithStripe', () => {
 			const paid = await first;
 
 			pendingCharge('card_2').resolve({ id: 'ch_2' });
-			await expect(second).rejects.toThrow('Order is already paid');
+			// The shop says the order is paid on this error name
+			await expect(second).rejects.toMatchObject({
+				name: ORDER_ALREADY_PAID_ERROR,
+				message: 'Order is already paid',
+			});
 
 			expect(mockChargesCreate).toHaveBeenCalledTimes(2);
 			expect(paid.isPaid).toBe(true);
@@ -1059,7 +1075,10 @@ describe('OrdersService.payWithStripe', () => {
 			await first;
 
 			pendingCharge('card_2').resolve({ id: 'ch_2' });
-			await expect(second).rejects.toThrow('Order is already paid');
+			await expect(second).rejects.toMatchObject({
+				name: ORDER_ALREADY_PAID_ERROR,
+				message: 'Order is already paid',
+			});
 
 			expect(stored.stripeChargeId).toBe('ch_1');
 			expect(mockRefundsCreate).toHaveBeenCalledTimes(1);
@@ -1122,7 +1141,10 @@ describe('OrdersService.payWithStripe', () => {
 			stored.isCancelled = true;
 
 			pendingCharge('card_2').resolve({ id: 'ch_2' });
-			await expect(second).rejects.toThrow('Order is already paid');
+			await expect(second).rejects.toMatchObject({
+				name: ORDER_ALREADY_PAID_ERROR,
+				message: 'Order is already paid',
+			});
 
 			expect(stored.stripeChargeId).toBe('ch_1');
 			expect(update).not.toHaveBeenCalled();
