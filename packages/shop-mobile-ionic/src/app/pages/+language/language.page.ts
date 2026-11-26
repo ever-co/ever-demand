@@ -33,10 +33,10 @@ export class LanguagePage {
 		this.store.language = lang;
 		void this._saveDeviceLanguage(lang);
 
-		const currentLang = this.store.language;
-
-		const langAbbreviation = currentLang.slice(0, 2);
-		if (currentLang === 'he-IL') {
+		// The picked language, not store.language: with ngx-translate 18 the current
+		// language only changes once its file has loaded.
+		const langAbbreviation = lang.slice(0, 2);
+		if (lang === 'he-IL') {
 			this.dir = 'rtl';
 		} else {
 			this.dir = 'ltr';

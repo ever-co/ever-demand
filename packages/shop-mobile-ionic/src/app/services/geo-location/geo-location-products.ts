@@ -131,6 +131,7 @@ export class GeoLocationProductsService {
 			})
 			.toPromise();
 
-		return res.data['getCountOfGeoLocationProducts'];
+		// Apollo 4 resolves with data undefined when the request fails (e.g. the API is down).
+		return res.data?.['getCountOfGeoLocationProducts'] ?? 0;
 	}
 }

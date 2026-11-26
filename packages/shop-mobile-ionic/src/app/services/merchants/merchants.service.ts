@@ -33,6 +33,6 @@ export class MerchantsService {
 			})
 			.toPromise();
 
-		return res.data['getMerchantsBuyName'];
+		return res.data?.['getMerchantsBuyName'] ?? [];
 	}
 }
