@@ -1,7 +1,9 @@
 # Ever Demand multi-tenant SaaS: design
 
-Status: **draft for owner review** (2026-11-26). Nothing below is built yet. Branch `feat/multi-tenant`, based on
-`feat/latest-stack` (PR #1660, still open). The open questions are in §10; the MVP starts once they are answered.
+Status: **agreed on the three core questions** (owner, 2026-11-26, relayed by the lead session): customers per
+tenant, a separate storefront per tenant, and every tenant-resolution variant supported (subdomain, header and
+white-label build). The other questions in §10 use the recommended answer until the owner says otherwise. Branch
+`feat/multi-tenant`, based on `feat/latest-stack` (PR #1660, still open).
 
 ## 1. Goal
 
@@ -33,7 +35,7 @@ its 2026-11-01 amendments, with Stripe lookup keys `ever_demand_cloud_{starter,s
 
 ## 3. Decisions (recommended answers; the owner confirms in §10)
 
-### 3.1 Customers are per tenant
+### 3.1 Customers are per tenant (owner: "keep per tenant")
 
 A customer (`User`) belongs to exactly one tenant, and `email` is unique per tenant. The same person shopping at two
 Demand businesses has two accounts, as with two Shopify shops.
@@ -44,7 +46,7 @@ Demand businesses has two accounts, as with two Shopify shops.
 - **Rejected:** one global customer identity linked to many tenants. It needs a consent model and makes every customer
   query a join. It can be added later as "Sign in with Ever" (Ever Platform identity) without moving data.
 
-### 3.2 Per-tenant storefront; the marketplace comes later as opt-in
+### 3.2 Per-tenant storefront (owner: "separate per tenant"); a marketplace could come later as opt-in
 
 A shop app shows **one tenant's** stores and products. The "nearby stores" query only sees stores of the resolved
 tenant. A tenant with many stores (a franchise, or a local marketplace operator) still gets the nearby-stores
@@ -53,13 +55,16 @@ experience inside its own tenant, which is what the product does today.
 - **Later (not MVP):** a public `everdemand.co` marketplace where tenants opt in (`settings.marketplaceListed`). It
   would be a separate read-only index. It is not a reason to weaken isolation.
 
-### 3.3 How each app resolves its tenant
+### 3.3 How each app resolves its tenant (owner: "we need to support all variants")
 
-The server decides the tenant for each request, in this order:
+Every variant works for every app: a subdomain, a `Tenant-Id` header (or socket handshake field) and a white-label
+build-time id. A client sends whatever it knows, and the server applies one precedence. The server decides the
+tenant for each request, in this order:
 
 1. **JWT claim `tenantId`** (every login token carries it). It always wins.
 2. **`Tenant-Id` header** (HTTP and GraphQL), or **`auth.tenant`** in the socket.io handshake. It holds a tenant slug or id.
-3. **Host subdomain:** `<slug>.everdemand.co`, and later custom domains mapped in `Tenant.domains`.
+3. **Subdomain:** `<slug>.everdemand.co` of the request's `Host` (API served on the tenant's host), else of its
+   `Origin` (a page on `<slug>.everdemand.co` calling `api.everdemand.co`). Custom domains in `Tenant.domains` later.
 4. Nothing resolved: **reject** in multi-tenant mode. In single-tenant mode (self-hosted), use the default tenant.
 
 Rules:
@@ -71,8 +76,12 @@ Rules:
 | --- | --- |
 | admin-web-angular (`app.everdemand.co`) | From the login token. Super-admin: tenant switcher, sends `Tenant-Id`. |
 | shop-web-angular, shop-web-gatsby | Subdomain `<slug>.everdemand.co`, read at runtime. Dev: `?tenant=` or env `TENANT`. Sent as `Tenant-Id` + socket `auth.tenant`. |
-| shop-mobile-ionic, shop-mobile-expo, shop-mobile-flutter | **White-label build-time `TENANT`** (app config / env). A tenant ships its own branded app. If the build has none, a "store code" screen asks once and saves it. |
-| merchant-tablet-ionic, carrier-mobile-ionic | From the login token (see 3.5). The login screen has an optional "business code" field, prefilled from build-time `TENANT`. |
+| shop-mobile-ionic, shop-mobile-expo, shop-mobile-flutter | **White-label build-time `TENANT`** (app config / env), sent as `Tenant-Id` + socket `auth.tenant`. A tenant ships its own branded app. The Ionic shop also runs as a web build, where the subdomain applies. |
+| merchant-tablet-ionic, carrier-mobile-ionic | From the login token (see 3.5). Before login they send build-time `TENANT` or the subdomain when set. |
+
+Client order, the same in every app: a build-time `TENANT` wins, then the `<slug>` of a `<slug>.<TENANT_BASE_DOMAIN>`
+page host, then a `?tenant=` query (dev), else nothing (the server then applies its own fallback). The server
+resolves a slug or an id in the header the same way.
 
 ### 3.4 Roles
 
@@ -315,13 +324,11 @@ in several tenants, per-tenant push and email branding, data export, tenant dele
 
 ## 10. Open questions for the owner
 
-Each question has a recommended answer; "go with the recommendations" answers all of them.
+Each question has a recommended answer. Questions 4-10 are built with the recommended answer until the owner says otherwise.
 
-1. **Customers:** per tenant (recommended) or shared across tenants?
-2. **Storefront:** one tenant per shop app (recommended), with an opt-in public marketplace later? Or a shared
-   marketplace from day one?
-3. **Mobile shop apps:** a white-label build per tenant (build-time `TENANT`, recommended), plus a "store code"
-   screen in the generic store build? Or one generic app where the customer picks a business?
+1. ~~**Customers:**~~ **answered: per tenant.**
+2. ~~**Storefront:**~~ **answered: a separate storefront per tenant.**
+3. ~~**Tenant resolution:**~~ **answered: support all variants** (subdomain, header, white-label build), §3.3.
 4. **Staff logins:** keep admin email and store / carrier usernames globally unique, with no tenant field at login
    (recommended)? Or make them unique per tenant and add a business code to every login?
 5. **Customer card payments:** Stripe Connect as a follow-up PR, with cash / pay on delivery for new tenants until
