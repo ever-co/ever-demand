@@ -9,6 +9,8 @@ import {
 	ModelName,
 	Types,
 	getSchema,
+	TenantId,
+	CompoundIndex,
 } from '../@pyro/db';
 import { map } from 'underscore';
 import { sum } from 'lodash';
@@ -36,8 +38,20 @@ import DeliveryType from '../enums/DeliveryType';
  * @implements {IOrder}
  */
 @ModelName('Order')
+@CompoundIndex({ tenantId: 1, warehouse: 1, orderNumber: 1 })
+@CompoundIndex({ tenantId: 1, _createdAt: -1 })
 @Entity({ name: 'orders' })
 class Order extends DBObject<IOrder, IOrderCreateObject> implements IOrder {
+	/**
+	 * The tenant (business) that owns this record. Set by the API from the
+	 * tenant context; never taken from a client.
+	 *
+	 * @type {string}
+	 * @memberof Order
+	 */
+	@TenantId()
+	tenantId: string;
+
 	constructor(order: IOrder) {
 		super(order);
 

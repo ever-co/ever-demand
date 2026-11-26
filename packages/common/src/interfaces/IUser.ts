@@ -1,7 +1,8 @@
+import { ITenantScoped } from './ITenant';
 import IGeoLocation, { IGeoLocationCreateObject } from './IGeoLocation';
 import { DBCreateObject, DBRawObject, PyroObjectId } from '../@pyro/db';
 
-export interface IUserInitializeObject extends DBCreateObject {
+export interface IUserInitializeObject extends DBCreateObject, ITenantScoped {
 	firstName?: string;
 	lastName?: string;
 	email?: string;

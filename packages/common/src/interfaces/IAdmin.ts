@@ -1,6 +1,7 @@
+import { ITenantScoped, TenantRole } from './ITenant';
 import { DBCreateObject, DBRawObject, PyroObjectId } from '@pyro/db';
 
-export interface IAdminCreateObject extends DBCreateObject {
+export interface IAdminCreateObject extends DBCreateObject, ITenantScoped {
 	/**
 	 * Full name (First Name plus Last Name)
 	 *
@@ -22,6 +23,8 @@ export interface IAdminCreateObject extends DBCreateObject {
 	pictureUrl: string;
 	firstName?: string;
 	lastName?: string;
+	role?: TenantRole;
+	isSuperAdmin?: boolean;
 }
 
 export interface IAdminUpdateObject extends DBCreateObject {

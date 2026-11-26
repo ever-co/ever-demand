@@ -1,5 +1,5 @@
 import { map } from 'underscore';
-import { DBObject, getSchema, ModelName, Schema, Types } from '../@pyro/db';
+import { DBObject, getSchema, ModelName, Schema, Types, TenantId, CompoundIndex } from '../@pyro/db';
 import GeoLocation from './GeoLocation';
 import WarehouseProduct, { WithPopulatedProduct } from './WarehouseProduct';
 import IWarehouse, { IWarehouseCreateObject } from '../interfaces/IWarehouse';
@@ -21,9 +21,27 @@ import PaymentGateway from './PaymentGateway';
  * @implements {IWarehouse}
  */
 @ModelName('Warehouse')
+@CompoundIndex(
+	{ tenantId: 1, barcodeData: 1 },
+	{
+		unique: true,
+		partialFilterExpression: { barcodeData: { $type: 'string' } },
+	}
+)
+@CompoundIndex({ tenantId: 1, 'geoLocation.loc': '2dsphere' })
 @Entity({ name: 'warehouses' })
 class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	implements IWarehouse {
+	/**
+	 * The tenant (business) that owns this record. Set by the API from the
+	 * tenant context; never taken from a client.
+	 *
+	 * @type {string}
+	 * @memberof Warehouse
+	 */
+	@TenantId()
+	tenantId: string;
+
 	constructor(warehouse: IWarehouse) {
 		super(warehouse);
 
@@ -311,7 +329,7 @@ class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	 * @type {string}
 	 * @memberof Warehouse
 	 */
-	@Schema({ type: String, unique: true, sparse: true })
+	@Schema({ type: String, required: false })
 	@Column()
 	barcodeData: string;
 

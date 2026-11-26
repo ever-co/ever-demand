@@ -1,4 +1,4 @@
-import { DBObject, Schema, ModelName, Types, getSchema } from '../@pyro/db';
+import { DBObject, Schema, ModelName, Types, getSchema, TenantId } from '../@pyro/db';
 import {
 	IInviteRequestCreateObject,
 	IInviteRequestRawObject,
@@ -21,6 +21,16 @@ import { Entity, Column } from 'typeorm';
 class InviteRequest
 	extends DBObject<IInviteRequestRawObject, IInviteRequestCreateObject>
 	implements IInviteRequestRawObject {
+	/**
+	 * The tenant (business) that owns this record. Set by the API from the
+	 * tenant context; never taken from a client.
+	 *
+	 * @type {string}
+	 * @memberof InviteRequest
+	 */
+	@TenantId()
+	tenantId: string;
+
 	constructor(inviteRequest: IInviteRequestRawObject) {
 		super(inviteRequest);
 

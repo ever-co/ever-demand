@@ -1,3 +1,4 @@
+import { ITenantScoped } from './ITenant';
 import IWarehouseProduct, {
 	IWarehouseProductCreateObject,
 } from './IWarehouseProduct';
@@ -9,7 +10,7 @@ import IPaymentGatewayCreateObject, {
 	IPaymentGateway,
 } from './IPaymentGateway';
 
-export interface IWarehouseCreateObject extends DBCreateObject {
+export interface IWarehouseCreateObject extends DBCreateObject, ITenantScoped {
 	/**
 	 * Is Warehouse working now
 	 *
