@@ -53,6 +53,9 @@ test.describe('shop web: settings', () => {
 		await page.getByRole('option', { name: 'he-IL' }).click();
 		await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
 		await expect(page.locator('body')).toContainText(HEBREW);
+		// the first panel closes with an animation: a click on the select before it is gone does
+		// not open a new one, and the option found is the closing panel's (detached right after)
+		await expect(page.getByRole('listbox')).toBeHidden();
 
 		await page.locator('mat-select').click();
 		await page.getByRole('option', { name: 'en-US' }).click();
