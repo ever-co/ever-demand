@@ -1,0 +1,48 @@
+<form class="card-form" (ngSubmit)="pay()" novalidate>
+	<header class="card-form-header">
+		@if (image) {
+			<img class="card-form-logo" [src]="image" alt="" />
+		}
+		<h2 class="card-form-name">{{ name }}</h2>
+		@if (description) {
+			<p class="card-form-description">{{ description }}</p>
+		}
+	</header>
+
+	<label class="card-form-label" for="stripe-card-email">{{
+		'BUY_POPUP.CARD_FORM.EMAIL' | translate
+	}}</label>
+	<input
+		id="stripe-card-email"
+		class="card-form-input"
+		type="email"
+		name="email"
+		autocomplete="email"
+		inputmode="email"
+		[(ngModel)]="email"
+		[disabled]="creatingToken"
+	/>
+	@if (emailError) {
+		<p class="card-form-error card-form-email-error" role="alert">
+			{{ emailError }}
+		</p>
+	}
+
+	<label class="card-form-label" (click)="focusCard()">{{
+		'BUY_POPUP.CARD_FORM.CARD' | translate
+	}}</label>
+	<!-- Stripe's Card Element (an iframe) is mounted here -->
+	<div #card class="card-form-card"></div>
+	@if (cardError) {
+		<p class="card-form-error card-form-card-error" role="alert">
+			{{ cardError }}
+		</p>
+	}
+
+	<button type="submit" class="card-form-pay" [disabled]="creatingToken">
+		{{ 'BUY_POPUP.CARD_FORM.PAY' | translate: { amount: amountText } }}
+	</button>
+	<button type="button" class="card-form-cancel" (click)="cancel()">
+		{{ 'BUY_POPUP.BUTTONS.CANCEL' | translate }}
+	</button>
+</form>
