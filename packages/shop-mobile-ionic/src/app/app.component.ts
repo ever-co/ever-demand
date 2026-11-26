@@ -112,8 +112,6 @@ export class AppComponent {
 		if (!this.store.deviceId) {
 			await this._registerDeviceDevMode();
 		}
-
-		// await this._watchDeviceUpdates();
 	}
 
 	private async _registerDeviceDevMode() {
@@ -131,10 +129,4 @@ export class AppComponent {
 
 		this.store.deviceId = device.id;
 	}
-
-	// private async _watchDeviceUpdates() {
-	// 	this._translateService.onLangChange.subscribe(async ({ lang }) => {
-	// 		await this.deviceRouter.updateLanguage(this.store.deviceId, lang);
-	// 	});
-	// }
 }
