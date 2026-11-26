@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';
 import Order from '@modules/server.common/entities/Order';
 import Device from '@modules/server.common/entities/Device';
@@ -10,8 +11,41 @@ import { InviteRouter } from '@modules/client.common.angular2/routers/invite-rou
 import { first } from 'rxjs/operators';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { NativeService } from './native/native.service';
+import { environment } from 'environments/environment';
 
 // TODO use https://beta.ionicframework.com/docs/building/storage
+
+// The languages the shop ships in src/assets/i18n.
+const shopLanguages: ILanguage[] = [
+	'en-US',
+	'bg-BG',
+	'he-IL',
+	'ru-RU',
+	'es-ES',
+	'fr-FR',
+];
+
+// The language, when the shop ships it.
+function shippedLanguage(
+	language: string | null | undefined
+): ILanguage | null {
+	return (
+		shopLanguages.find((shopLanguage) => shopLanguage === language) || null
+	);
+}
+
+// The shipped language for a device language such as 'he', 'he-IL' or
+// 'fr_CA'.
+function shippedDeviceLanguage(
+	language: string | null | undefined
+): ILanguage | null {
+	const code = (language || '').split(/[-_]/)[0].toLowerCase();
+	return (
+		shopLanguages.find(
+			(shopLanguage) => shopLanguage.split('-')[0] === code
+		) || null
+	);
+}
 
 @Injectable({
 	providedIn: 'root',
@@ -24,14 +58,19 @@ export class Store {
 	// outlives the app.
 	private readonly _payingOrderIds = new Set<Order['id']>();
 
+	// The language the app starts in, once Store has picked it. On a phone
+	// with no saved language that waits for the phone language.
+	readonly startLanguage: Promise<ILanguage>;
+
 	constructor(
 		private readonly _translateService: TranslateService,
 		private readonly platform: Platform,
 		private readonly inviteRouter: InviteRouter,
 		private readonly userRouter: UserRouter,
-		private readonly native: NativeService
+		private readonly native: NativeService,
+		@Inject(DOCUMENT) private readonly document: Document
 	) {
-		this._initLanguage();
+		this.startLanguage = this._initLanguage();
 	}
 
 	get token(): string | null {
@@ -265,39 +304,48 @@ export class Store {
 		return false;
 	}
 
-	private async _initLanguage() {
-		const lang = (localStorage.getItem('_language') as ILanguage) || null;
-		const langs = {
-			he: 'he-IL',
-			ru: 'ru-RU',
-			bg: 'bg-BG',
-			en: 'en-US',
-			es: 'es-ES',
-			fr: 'fr-FR',
-		};
-		// This 6 lines is here because of bug => without this lines, lang translation doesn't work.
-		// (The bug is unknown)
-		this._translateService.use(langs.he);
-		this._translateService.use(langs.ru);
-		this._translateService.use(langs.bg);
-		this._translateService.use(langs.en);
-		this._translateService.use(langs.es);
-		this._translateService.use(langs.fr);
-		this._translateService.resetLang(langs.en);
-
-		if (lang) {
-			this._translateService.use(lang);
-		} else {
-			// Two-letter code on both: the device language on a phone (was
-			// Cordova Globalization), else the browser language.
-			const browserLang = this.native.isNative()
-				? await this.native.languageCode()
-				: this._translateService.getBrowserLang();
-			if (langs[browserLang]) {
-				this._translateService.use(langs[browserLang]);
-			} else {
-				this._translateService.use(langs.en);
-			}
+	// Picks the language the app starts in, once: the saved language,
+	// else the device language, else DEFAULT_LANGUAGE, else en-US.
+	// use() switches to a language when its file arrives, so a second
+	// use() at startup lets whichever file loads last win.
+	private async _initLanguage(): Promise<ILanguage> {
+		const savedLanguage = shippedLanguage(
+			localStorage.getItem('_language')
+		);
+		if (savedLanguage) {
+			this._startIn(savedLanguage);
+			return savedLanguage;
 		}
+
+		const deviceLanguage = this.native.isNative()
+			? await this._phoneLanguage()
+			: this._translateService.getBrowserLang();
+
+		const language =
+			shippedDeviceLanguage(deviceLanguage) ||
+			shippedLanguage(environment.DEFAULT_LANGUAGE) ||
+			'en-US';
+		this._startIn(language);
+		return language;
+	}
+
+	// The phone language, such as 'he' or 'he-IL', or null when it cannot be read.
+	private async _phoneLanguage(): Promise<string | null> {
+		try {
+			// Capacitor Device (was Cordova Globalization).
+			return await this.native.languageCode();
+		} catch (error) {
+			console.warn('Could not read the phone language', error);
+			return null;
+		}
+	}
+
+	private _startIn(language: ILanguage) {
+		this._translateService.use(language);
+
+		// As the language page does when the customer picks a language.
+		const page = this.document.documentElement;
+		page.dir = language === 'he-IL' ? 'rtl' : 'ltr';
+		page.lang = language.slice(0, 2);
 	}
 }

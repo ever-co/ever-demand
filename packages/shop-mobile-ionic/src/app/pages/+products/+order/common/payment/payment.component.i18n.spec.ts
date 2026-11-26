@@ -6,7 +6,9 @@ import { UserRouter } from '@modules/client.common.angular2/routers/user-router.
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
+import { ORDER_ALREADY_PAID_ERROR } from '@modules/server.common/routers/IOrderRouter';
 import { Store } from 'app/services/store.service';
+import { StripeLoader } from 'app/services/stripeLoader';
 import { settle } from 'app/testing/fake-socket';
 import bgBG from 'assets/i18n/bg-BG.json';
 import enUS from 'assets/i18n/en-US.json';
@@ -61,6 +63,34 @@ describe('PaymentComponent failure messages', () => {
 					messages.PAYMENT_FAILED
 				);
 			});
+
+			it(`${locale} has an order already paid message`, () => {
+				const messages = messagesIn(locale);
+
+				expect(messages.ORDER_ALREADY_PAID).toEqual(
+					expect.any(String)
+				);
+				expect(messages.ORDER_ALREADY_PAID.trim()).not.toBe('');
+				expect(messages.ORDER_ALREADY_PAID).not.toBe(
+					messages.PAYMENT_FAILED
+				);
+			});
+
+			it(`${locale} has a card form not loaded message`, () => {
+				const messages = messagesIn(locale);
+
+				expect(messages.CARD_FORM_NOT_LOADED).toEqual(
+					expect.any(String)
+				);
+				expect(messages.CARD_FORM_NOT_LOADED.trim()).not.toBe('');
+				expect(messages.CARD_FORM_NOT_LOADED).not.toBe(
+					messages.PAYMENT_FAILED
+				);
+				// Card payment works in this app; only the form failed to load
+				expect(messages.CARD_FORM_NOT_LOADED).not.toBe(
+					messages.CARD_PAYMENT_UNAVAILABLE
+				);
+			});
 		});
 
 		it('does not say the email is already used by another account', () => {
@@ -107,6 +137,13 @@ describe('PaymentComponent failure messages', () => {
 		const useLocale = (locale: string) => {
 			translate.setTranslation(locale, locales[locale]);
 			translate.use(locale);
+		};
+
+		// What the server answers when the order was paid first
+		const alreadyPaidError = (): Error => {
+			const error = new Error('Order is already paid');
+			error.name = ORDER_ALREADY_PAID_ERROR;
+			return error;
 		};
 
 		beforeEach(async () => {
@@ -158,6 +195,14 @@ describe('PaymentComponent failure messages', () => {
 					{
 						provide: ProductLocalesService,
 						useValue: { getTranslate: () => 'Product' },
+					},
+					// A stub, so no spec adds the real Checkout script to the
+					// page
+					{
+						provide: StripeLoader,
+						useValue: createSpyObj('StripeLoader', [
+							'ensureLoaded',
+						]),
 					},
 				],
 				schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -216,6 +261,44 @@ describe('PaymentComponent failure messages', () => {
 					messagesIn(locale).PAYMENT_FAILED
 				);
 			});
+
+			it(`says the order is already paid in ${locale}, not the server error, when the new card pays`, async () => {
+				useLocale(locale);
+				const error = alreadyPaidError();
+				orderRouter.payWithStripe.mockRejectedValue(error);
+				const payment = await createPayment();
+
+				await payment.toPaymentStage();
+				await tokenHandlers[0](cardToken());
+
+				const messages = messagesIn(locale);
+
+				expect(window.alert).toHaveBeenCalledExactlyOnceWith(
+					messages.ORDER_ALREADY_PAID
+				);
+				expect(window.alert).not.toHaveBeenCalledWith(
+					messages.PAYMENT_FAILED
+				);
+				expect(window.alert).not.toHaveBeenCalledWith(error.message);
+			});
+
+			it(`says the order is already paid in ${locale} when the saved card pays`, async () => {
+				useLocale(locale);
+				orderRouter.payWithStripe.mockRejectedValue(alreadyPaidError());
+				const payment = await createPayment();
+				payment.userCard = { id: 'card-saved', last4: '4242' } as any;
+
+				await payment.payWithUserCard();
+
+				const messages = messagesIn(locale);
+
+				expect(window.alert).toHaveBeenCalledExactlyOnceWith(
+					messages.ORDER_ALREADY_PAID
+				);
+				expect(window.alert).not.toHaveBeenCalledWith(
+					messages.PAYMENT_FAILED
+				);
+			});
 		});
 
 		it('shows the payment failed message when saving the new card fails', async () => {
@@ -261,6 +344,25 @@ describe('PaymentComponent failure messages', () => {
 			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				messagesIn('he-IL').PAYMENT_FAILED
 			);
+		});
+
+		it('says the card form did not load on Pay now when the Checkout script is missing', async () => {
+			useLocale('es-ES');
+			const payment = await createPayment();
+			// A content blocker or no network kept checkout.js from loading
+			delete (window as any).StripeCheckout;
+
+			await payment.toPaymentStage();
+
+			const messages = messagesIn('es-ES');
+
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
+				messages.CARD_FORM_NOT_LOADED
+			);
+			expect(window.alert).not.toHaveBeenCalledWith(
+				messages.PAYMENT_FAILED
+			);
+			expect(tokenHandlers.length).toBe(0);
 		});
 
 		describe('when the build has no Stripe publishable key', () => {

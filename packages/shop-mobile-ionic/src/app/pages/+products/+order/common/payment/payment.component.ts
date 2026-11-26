@@ -9,13 +9,17 @@ import { UserRouter } from '@modules/client.common.angular2/routers/user-router.
 import { Store } from 'app/services/store.service';
 import { Stripe } from 'stripe';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
-import { STRIPE_CURRENCY_CHANGED_ERROR } from '@modules/server.common/routers/IOrderRouter';
+import {
+	ORDER_ALREADY_PAID_ERROR,
+	STRIPE_CURRENCY_CHANGED_ERROR,
+} from '@modules/server.common/routers/IOrderRouter';
 import { environment } from 'environments/environment';
 import { ModalController } from '@ionic/angular/lazy';
 import { TranslateService } from '@ngx-translate/core';
 import { OrderPage } from '../../order.page';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
+import { StripeLoader } from 'app/services/stripeLoader';
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.Eager,
@@ -70,7 +74,8 @@ export class PaymentComponent {
 		private store: Store,
 		public modalController: ModalController,
 		private readonly _translateProductLocales: ProductLocalesService,
-		private readonly _translateService: TranslateService
+		private readonly _translateService: TranslateService,
+		private readonly _stripeLoader: StripeLoader
 	) {
 		this.getUserCard();
 		// Never rejects: a failed load is logged, and Pay now loads it again
@@ -114,7 +119,7 @@ export class PaymentComponent {
 			// paid or cancelled) or the socket dropped. The click handler
 			// drops the returned promise, so tell the customer here and
 			// resolve: a rejection would escape it unseen.
-			this.tellCustomer('BUY_POPUP.PAYMENT_FAILED');
+			this.tellCustomer(this.payWithStripeFailedMessage(err));
 			console.error('Payment Failed!', err);
 		} finally {
 			this.paying = false;
@@ -146,6 +151,23 @@ export class PaymentComponent {
 				this.tellCustomer('BUY_POPUP.PAYMENT_FAILED');
 				void this.getStripeCurrency();
 			}
+			return;
+		}
+
+		// StripeLoader adds the Checkout script at runtime and nothing
+		// waits for it: a content blocker, a firewall or no network keeps
+		// it from loading, or it is still loading. Checked before the
+		// popup dismiss, so the customer keeps the order screen.
+		if (typeof (<any>window).StripeCheckout?.configure !== 'function') {
+			// The message asks to try again: add the script again if it
+			// failed, e.g. while the network was down, so a later tap opens
+			// the card form. Started before the alert, which blocks until
+			// the customer closes it, so the download can run meanwhile.
+			this._stripeLoader.ensureLoaded();
+			this.tellCustomer('BUY_POPUP.CARD_FORM_NOT_LOADED');
+			console.error(
+				"Can't open the card form: the Stripe Checkout script did not load."
+			);
 			return;
 		}
 
@@ -214,7 +236,9 @@ export class PaymentComponent {
 								console.error('Could not confirm the order!');
 							}
 						} catch (err) {
-							this.tellCustomer('BUY_POPUP.PAYMENT_FAILED');
+							this.tellCustomer(
+								this.payWithStripeFailedMessage(err)
+							);
 							console.error('Payment Failed!', err);
 
 							if (err?.name === STRIPE_CURRENCY_CHANGED_ERROR) {
@@ -295,6 +319,16 @@ export class PaymentComponent {
 
 	private localeTranslate(member: ILocaleMember[]): string {
 		return this._translateProductLocales.getTranslate(member);
+	}
+
+	// The BUY_POPUP message for a payWithStripe call that rejected. The
+	// order may be paid already, e.g. by an earlier tap whose answer the
+	// dropped socket lost, or from another device: that is not a failed
+	// payment.
+	private payWithStripeFailedMessage(err: any): string {
+		return err?.name === ORDER_ALREADY_PAID_ERROR
+			? 'BUY_POPUP.ORDER_ALREADY_PAID'
+			: 'BUY_POPUP.PAYMENT_FAILED';
 	}
 
 	// Shows a BUY_POPUP message in the app language, never server error

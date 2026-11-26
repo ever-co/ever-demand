@@ -89,6 +89,8 @@
 		"PAYMENT_FAILED": "El pago ha fallado. Por favor, inténtelo de nuevo.",
 		"EMAIL_NOT_SAVED": "No pudimos guardar su correo electrónico, así que no se ha cobrado nada en su tarjeta. Compruebe el correo electrónico o use otro y vuelva a intentarlo.",
 		"CARD_PAYMENT_UNAVAILABLE": "El pago con tarjeta no está disponible en esta aplicación.",
+		"ORDER_ALREADY_PAID": "Este pedido ya está pagado. No necesita volver a pagarlo.",
+		"CARD_FORM_NOT_LOADED": "No se pudo cargar el formulario de la tarjeta. Compruebe su conexión y vuelva a intentarlo.",
 		"CANCEL": {
 			"STATUSES": [
 				{

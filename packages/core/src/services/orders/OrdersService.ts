@@ -20,6 +20,7 @@ import {
 } from '@modules/server.common/interfaces/IOrder';
 import CarriersService from '../carriers/CarriersService';
 import IOrderRouter, {
+	ORDER_ALREADY_PAID_ERROR,
 	STRIPE_CURRENCY_CHANGED_ERROR,
 } from '@modules/server.common/routers/IOrderRouter';
 import { asyncListener, observableListener, routerName } from '@pyro/io';
@@ -58,6 +59,16 @@ function orderIsCancelledError(orderId: string): Error {
 	return new Error(
 		`Order ${orderId} is cancelled, so its status can not change!`
 	);
+}
+
+/**
+ * Named ORDER_ALREADY_PAID_ERROR, so the shop says the order is paid
+ * instead of that the payment failed.
+ */
+function orderIsAlreadyPaidError(): Error {
+	const error = new Error('Order is already paid');
+	error.name = ORDER_ALREADY_PAID_ERROR;
+	return error;
 }
 
 /**
@@ -368,7 +379,7 @@ export class OrdersService extends DBService<Order>
 				// A double tap or a retry must not charge the customer again,
 				// and a cancelled order must not be charged at all.
 				if (order.isPaid) {
-					throw new Error('Order is already paid');
+					throw orderIsAlreadyPaidError();
 				}
 
 				if (order.isCancelled) {
@@ -522,7 +533,7 @@ export class OrdersService extends DBService<Order>
 								);
 							}
 
-							throw new Error('Order is already paid');
+							throw orderIsAlreadyPaidError();
 						}
 
 						// The read failed, so the order may be paid with another

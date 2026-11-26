@@ -20,8 +20,6 @@ import { environment } from 'environments/environment';
 	templateUrl: 'app.component.html',
 })
 export class AppComponent {
-	defaultLanguage = '';
-
 	constructor(
 		public readonly platform: Platform,
 		private readonly store: Store,
@@ -33,8 +31,6 @@ export class AppComponent {
 	) {
 		this._initializeApp();
 
-		this.defaultLanguage = environment['DEFAULT_LANGUAGE'];
-
 		_translateService.addLangs([
 			'en-US',
 			'bg-BG',
@@ -44,19 +40,9 @@ export class AppComponent {
 			'fr-FR',
 		]);
 
+		// The texts for keys a language file lacks. Store picks the
+		// language the app starts in (Store._initLanguage).
 		_translateService.setFallbackLang('en-US');
-
-		const browserLang = _translateService.getBrowserLang();
-
-		if (this.defaultLanguage) {
-			_translateService.use(this.defaultLanguage);
-		} else {
-			_translateService.use(
-				browserLang.match(/en-US|bg-BG|he-HE|ru-RU|es-ES|fr-FR/)
-					? browserLang
-					: 'en-US'
-			);
-		}
 	}
 
 	async getChannelId(): Promise<string | null> {
@@ -139,11 +125,14 @@ export class AppComponent {
 		if (!this.store.deviceId) {
 			await this._registerDeviceDevMode();
 		}
-
-		// await this._watchDeviceUpdates();
 	}
 
 	private async _registerDeviceDevMode() {
+		// On a phone with no saved language, Store reads the phone language
+		// after the device is ready. Wait for it, so the device is not saved
+		// with no language.
+		await this.store.startLanguage;
+
 		const device = await this.deviceRouter.create({
 			channelId: await this.getChannelId(),
 			language: this.getLanguage(),
@@ -153,10 +142,4 @@ export class AppComponent {
 
 		this.store.deviceId = device.id;
 	}
-
-	// private async _watchDeviceUpdates() {
-	// 	this._translateService.onLangChange.subscribe(async ({ lang }) => {
-	// 		await this.deviceRouter.updateLanguage(this.store.deviceId, lang);
-	// 	});
-	// }
 }
