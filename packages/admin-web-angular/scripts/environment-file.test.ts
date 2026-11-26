@@ -30,6 +30,7 @@ const env = {
 	SETTINGS_APP_TYPE: 'admin',
 	SETTINGS_MAINTENANCE_API_URL: '',
 	DEFAULT_LANGUAGE: 'en-US',
+	TENANT_BASE_DOMAIN: 'everdemand.co',
 	PORT: 4200,
 } satisfies Env;
 
@@ -45,6 +46,8 @@ test('writes the real values outside Docker', () => {
 	// quotes in values are escaped, so the generated module stays valid
 	assert.match(out, /COMPANY_NAME: "Ever Co. 'LTD'",/);
 	assert.match(out, /import \{ Environment \} from '\.\/model';/);
+	// multi-tenant cloud: shown as the shop address <slug>.<TENANT_BASE_DOMAIN>
+	assert.match(out, /TENANT_BASE_DOMAIN: "everdemand.co",/);
 });
 
 test('writes DOCKER_ placeholders for the entrypoint sed in Docker', () => {
@@ -54,6 +57,7 @@ test('writes DOCKER_ placeholders for the entrypoint sed in Docker', () => {
 		'GQL_ENDPOINT',
 		'GOOGLE_MAPS_API_KEY',
 		'SETTINGS_MAINTENANCE_API_URL',
+		'TENANT_BASE_DOMAIN',
 	]) {
 		assert.match(out, new RegExp(`${key}: "DOCKER_${key}",`));
 	}

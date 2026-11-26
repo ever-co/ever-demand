@@ -12,6 +12,7 @@ import { WarehousesService } from './warehouses.service';
 import { WarehouseOrdersService } from './warehouseOrders.service';
 import { Store } from './store.service';
 import { DataService } from './data.service';
+import { TenantsService } from './tenants.service';
 
 const SERVICES = [
 	DataService,
@@ -26,6 +27,7 @@ const SERVICES = [
 	Store,
 	StateService,
 	SmartTableService,
+	TenantsService,
 ];
 
 @NgModule({

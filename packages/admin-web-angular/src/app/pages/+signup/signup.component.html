@@ -1,0 +1,258 @@
+<h1 id="title" class="title">{{ 'TENANT_VIEW.SIGNUP.TITLE' | translate }}</h1>
+<p class="sub-title">{{ 'TENANT_VIEW.SIGNUP.SUBTITLE' | translate }}</p>
+
+<nb-alert *ngIf="error" outline="danger" role="alert" class="signup-error">
+	<p class="alert-message">{{ error }}</p>
+</nb-alert>
+
+<form [formGroup]="form" (ngSubmit)="submit()" aria-labelledby="title" novalidate>
+	<div class="form-control-group">
+		<label class="label" for="input-business">{{
+			'TENANT_VIEW.SIGNUP.BUSINESS_NAME' | translate
+		}}</label>
+		<input
+			nbInput
+			fullWidth
+			id="input-business"
+			name="businessName"
+			formControlName="businessName"
+			autocomplete="organization"
+			[placeholder]="'TENANT_VIEW.SIGNUP.BUSINESS_NAME_PLACEHOLDER' | translate"
+			[status]="errorOf('businessName') ? 'danger' : 'basic'"
+		/>
+		<p class="caption status-danger" *ngIf="errorOf('businessName') as e">
+			{{ 'TENANT_VIEW.SIGNUP.ERRORS.' + e | translate }}
+		</p>
+	</div>
+
+	<div class="form-control-group">
+		<label class="label" for="input-slug">{{
+			'TENANT_VIEW.SIGNUP.ADDRESS' | translate
+		}}</label>
+		<input
+			nbInput
+			fullWidth
+			id="input-slug"
+			name="slug"
+			formControlName="slug"
+			autocomplete="off"
+			autocapitalize="none"
+			spellcheck="false"
+			maxlength="40"
+			(input)="onSlugInput()"
+			[status]="
+				errorOf('slug') || slugStatus === 'taken'
+					? 'danger'
+					: slugStatus === 'available'
+					? 'success'
+					: 'basic'
+			"
+		/>
+		<p class="caption status-danger" *ngIf="errorOf('slug') as e">
+			{{ 'TENANT_VIEW.SIGNUP.ERRORS.' + e | translate }}
+		</p>
+		<p
+			class="caption slug-status"
+			*ngIf="!errorOf('slug')"
+			[class.status-success]="slugStatus === 'available'"
+			[class.status-danger]="slugStatus === 'taken'"
+			data-test="slug-status"
+		>
+			<ng-container [ngSwitch]="slugStatus">
+				<span *ngSwitchCase="'checking'">{{
+					'TENANT_VIEW.SIGNUP.ADDRESS_CHECKING' | translate
+				}}</span>
+				<span *ngSwitchCase="'available'">{{
+					'TENANT_VIEW.SIGNUP.ADDRESS_AVAILABLE' | translate
+				}}</span>
+				<span *ngSwitchCase="'taken'">{{
+					'TENANT_VIEW.SIGNUP.ADDRESS_TAKEN' | translate
+				}}</span>
+				<span *ngSwitchDefault>{{
+					'TENANT_VIEW.SIGNUP.ADDRESS_HINT' | translate
+				}}</span>
+			</ng-container>
+		</p>
+		<p class="caption" *ngIf="shopAddress">
+			{{ 'TENANT_VIEW.SIGNUP.YOUR_SHOP' | translate }}
+			<strong data-test="shop-address">{{ shopAddress }}</strong>
+		</p>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-6 form-control-group">
+			<label class="label" for="input-first-name">{{
+				'TENANT_VIEW.SIGNUP.FIRST_NAME' | translate
+			}}</label>
+			<input
+				nbInput
+				fullWidth
+				id="input-first-name"
+				name="firstName"
+				formControlName="firstName"
+				autocomplete="given-name"
+			/>
+		</div>
+		<div class="col-sm-6 form-control-group">
+			<label class="label" for="input-last-name">{{
+				'TENANT_VIEW.SIGNUP.LAST_NAME' | translate
+			}}</label>
+			<input
+				nbInput
+				fullWidth
+				id="input-last-name"
+				name="lastName"
+				formControlName="lastName"
+				autocomplete="family-name"
+			/>
+		</div>
+	</div>
+
+	<div class="form-control-group">
+		<label class="label" for="input-email">{{
+			'TENANT_VIEW.SIGNUP.EMAIL' | translate
+		}}</label>
+		<input
+			nbInput
+			fullWidth
+			id="input-email"
+			name="email"
+			type="email"
+			formControlName="email"
+			autocomplete="email"
+			[status]="errorOf('email') ? 'danger' : 'basic'"
+		/>
+		<p class="caption status-danger" *ngIf="errorOf('email') as e">
+			{{ 'TENANT_VIEW.SIGNUP.ERRORS.' + e | translate }}
+		</p>
+	</div>
+
+	<div class="form-control-group">
+		<label class="label" for="input-password">{{
+			'TENANT_VIEW.SIGNUP.PASSWORD' | translate
+		}}</label>
+		<input
+			nbInput
+			fullWidth
+			id="input-password"
+			name="password"
+			type="password"
+			formControlName="password"
+			autocomplete="new-password"
+			[placeholder]="'TENANT_VIEW.SIGNUP.PASSWORD_HINT' | translate"
+			[status]="errorOf('password') ? 'danger' : 'basic'"
+		/>
+		<p class="caption status-danger" *ngIf="errorOf('password') as e">
+			{{ 'TENANT_VIEW.SIGNUP.ERRORS.' + e | translate }}
+		</p>
+	</div>
+
+	<fieldset class="form-control-group plans">
+		<legend class="label">{{ 'TENANT_VIEW.SIGNUP.PLAN' | translate }}</legend>
+		<p class="caption status-danger" *ngIf="plansError">
+			{{ 'TENANT_VIEW.SIGNUP.ERRORS.PLANS' | translate: { error: plansError } }}
+		</p>
+		<label
+			class="plan-option"
+			*ngFor="let p of plans"
+			[class.selected]="form.get('plan').value === p.plan"
+			[attr.for]="'plan-' + p.plan"
+		>
+			<input
+				type="radio"
+				name="plan"
+				formControlName="plan"
+				[id]="'plan-' + p.plan"
+				[value]="p.plan"
+			/>
+			<span class="plan-body">
+				<span class="plan-name">{{ p.label }}</span>
+				<span class="plan-price" *ngIf="!p.paid">{{
+					'TENANT_VIEW.SIGNUP.FREE' | translate
+				}}</span>
+				<span class="plan-price" *ngIf="p.paid">
+					<ng-container
+						*ngIf="form.get('interval').value === 'annual'; else monthly"
+					>
+						${{ p.annualMonthlyPrice }}
+						{{ 'TENANT_VIEW.SIGNUP.BILLED_ANNUALLY' | translate }}
+					</ng-container>
+					<ng-template #monthly>
+						${{ p.monthlyPrice }}
+						{{ 'TENANT_VIEW.SIGNUP.PER_MONTH' | translate }}
+					</ng-template>
+				</span>
+				<span class="plan-detail">
+					<ng-container *ngIf="p.includedMembers != null; else unlimitedMembers">{{
+						'TENANT_VIEW.SIGNUP.MEMBERS_INCLUDED'
+							| translate: { count: p.includedMembers }
+					}}</ng-container>
+					<ng-template #unlimitedMembers>{{
+						'TENANT_VIEW.SIGNUP.UNLIMITED_MEMBERS' | translate
+					}}</ng-template>
+					&middot;
+					<ng-container *ngIf="p.maxStores != null; else unlimitedStores">{{
+						'TENANT_VIEW.SIGNUP.STORES' | translate: { count: p.maxStores }
+					}}</ng-container>
+					<ng-template #unlimitedStores>{{
+						'TENANT_VIEW.SIGNUP.UNLIMITED_STORES' | translate
+					}}</ng-template>
+					<ng-container *ngIf="p.extraMembers && p.extraMemberPrice">
+						&middot;
+						{{
+							'TENANT_VIEW.SIGNUP.EXTRA_MEMBER'
+								| translate: { price: p.extraMemberPrice }
+						}}
+					</ng-container>
+				</span>
+			</span>
+		</label>
+
+		<div class="intervals" *ngIf="selectedPlan.paid">
+			<label for="interval-monthly">
+				<input
+					type="radio"
+					id="interval-monthly"
+					name="interval"
+					formControlName="interval"
+					value="monthly"
+				/>
+				{{ 'TENANT_VIEW.SIGNUP.MONTHLY' | translate }}
+			</label>
+			<label for="interval-annual">
+				<input
+					type="radio"
+					id="interval-annual"
+					name="interval"
+					formControlName="interval"
+					value="annual"
+				/>
+				{{ 'TENANT_VIEW.SIGNUP.ANNUAL' | translate }}
+			</label>
+			<p class="caption">{{ 'TENANT_VIEW.SIGNUP.PAID_NOTE' | translate }}</p>
+		</div>
+	</fieldset>
+
+	<button
+		nbButton
+		fullWidth
+		status="primary"
+		size="large"
+		type="submit"
+		id="signup-submit"
+		[disabled]="!canSubmit"
+		[nbSpinner]="submitting"
+	>
+		{{
+			(submitting ? 'TENANT_VIEW.SIGNUP.SUBMITTING' : 'TENANT_VIEW.SIGNUP.SUBMIT')
+				| translate
+		}}
+	</button>
+</form>
+
+<section class="another-action" aria-label="Log in">
+	{{ 'TENANT_VIEW.SIGNUP.HAVE_ACCOUNT' | translate }}
+	<a class="text-link" routerLink="../login">{{
+		'TENANT_VIEW.SIGNUP.LOG_IN' | translate
+	}}</a>
+</section>

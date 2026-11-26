@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { completeData } from '@app/graphql/complete-data';
 import { Observable } from 'rxjs';
-import { map, share } from 'rxjs/operators';
+import { filter, map, share } from 'rxjs/operators';
 import { IProductsCategoryCreateObject } from '@modules/server.common/interfaces/IProductsCategory';
 import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import { getDummyImage } from '@modules/server.common/utils';
@@ -32,7 +32,10 @@ export class ProductsCategoryService {
 				`,
 				pollInterval: 1000,
 			})
-			.valueChanges.pipe(completeData(), 
+			.valueChanges.pipe(completeData(),
+				// a refused poll (errorPolicy 'ignore') has no data: keep the last categories
+				// (multi-tenant: a request without a login has no tenant)
+				filter((res) => !!res.data?.productsCategories),
 				map((res) => res.data.productsCategories),
 				share()
 			);

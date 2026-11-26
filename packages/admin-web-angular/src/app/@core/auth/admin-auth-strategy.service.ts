@@ -10,6 +10,8 @@ import { NbAuthStrategyClass } from '@nebular/auth';
 import { IAdminLoginResponse } from '@modules/server.common/routers/IAdminRouter';
 import { getDummyImage } from '@modules/server.common/utils';
 import { resultErrors } from '@app/graphql/result-errors';
+import { AdminSessionService } from '../tenant/admin-session.service';
+import { SESSION_ADMIN_FIELDS } from '../data/tenants.service';
 
 @Injectable()
 export class AdminAuthStrategy extends NbAuthStrategy {
@@ -64,7 +66,8 @@ export class AdminAuthStrategy extends NbAuthStrategy {
 	constructor(
 		private apollo: Apollo,
 		private route: ActivatedRoute,
-		private store: Store
+		private store: Store,
+		private session: AdminSessionService
 	) {
 		super();
 	}
@@ -103,11 +106,7 @@ export class AdminAuthStrategy extends NbAuthStrategy {
 				adminLogin(email: $email, password: $password) {
 					token
 					admin {
-						_id
-						id
-						email
-						name
-						pictureUrl
+						${SESSION_ADMIN_FIELDS}
 					}
 				}
 			}
@@ -154,8 +153,11 @@ export class AdminAuthStrategy extends NbAuthStrategy {
 							);
 						}
 
-						this.store.adminId = data.adminLogin.admin.id;
-						this.store.token = data.adminLogin.token;
+						// token, admin, tenant role; reconnects the sockets
+						this.session.start(
+							data.adminLogin.token,
+							data.adminLogin.admin
+						);
 
 						return new NbAuthResult(
 							isSuccessful,
@@ -300,6 +302,9 @@ export class AdminAuthStrategy extends NbAuthStrategy {
 		this.store.serverConnection = '200';
 
 		await this.apollo.client.resetStore();
+
+		// sockets drop the token (and a super-admin's tenant switch)
+		this.session.ended();
 
 		return new NbAuthResult(
 			true,

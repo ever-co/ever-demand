@@ -11,6 +11,10 @@ import { defineConfig, devices } from '@playwright/test';
  *   merchant:  E2E_MERCHANT_URL (http://localhost:4202)
  *   carrier:   E2E_CARRIER_URL  (http://localhost:4203)
  *   expo web:  E2E_SHOP_EXPO_URL (http://localhost:8081)
+ *
+ * multi-tenant: the admin app (E2E_MT_ADMIN_URL, http://localhost:4200) against an API started
+ *   with MULTI_TENANT=true and TENANT_BASE_DOMAIN=everdemand.test (E2E_MT_GQL_URL, default
+ *   http://localhost:8443/graphql); the specs skip when that API is not in multi-tenant mode.
  */
 const env = (name: string, fallback: string) => process.env[name] || fallback;
 
@@ -35,5 +39,6 @@ export default defineConfig({
 		{ name: 'merchant', testDir: './tests/merchant', use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 800 }, baseURL: env('E2E_MERCHANT_URL', 'http://localhost:4202') } },
 		{ name: 'carrier', testDir: './tests/carrier', use: { ...devices['Pixel 7'], baseURL: env('E2E_CARRIER_URL', 'http://localhost:4203') } },
 		{ name: 'shop-expo', testDir: './tests/shop-expo', use: { ...devices['Pixel 7'], baseURL: env('E2E_SHOP_EXPO_URL', 'http://localhost:8081') } },
+		{ name: 'multi-tenant', testDir: './tests/multi-tenant', use: { ...devices['Desktop Chrome'], baseURL: env('E2E_MT_ADMIN_URL', 'http://localhost:4200') } },
 	],
 });

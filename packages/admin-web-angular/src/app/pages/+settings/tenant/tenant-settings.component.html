@@ -1,0 +1,127 @@
+<div class="settings-pane" [nbSpinner]="loading || saving">
+	<nb-alert *ngIf="error" outline="danger" role="alert">
+		{{ 'TENANT_VIEW.LOAD_ERROR' | translate: { error: error } }}
+	</nb-alert>
+
+	<ng-container *ngIf="tenant">
+		<dl class="row tenant-facts">
+			<dt class="col-sm-3">{{ 'TENANT_VIEW.SETTINGS.SLUG' | translate }}</dt>
+			<dd class="col-sm-9" data-test="tenant-slug">{{ tenant.slug }}</dd>
+
+			<dt class="col-sm-3">{{ 'TENANT_VIEW.SETTINGS.SHOP_ADDRESS' | translate }}</dt>
+			<dd class="col-sm-9" data-test="shop-address">
+				<a
+					*ngIf="shopAddress; else noDomain"
+					[href]="'https://' + shopAddress"
+					target="_blank"
+					rel="noopener"
+					>{{ shopAddress }}</a
+				>
+				<ng-template #noDomain>
+					<span class="text-hint">{{
+						'TENANT_VIEW.SETTINGS.SHOP_ADDRESS_NONE' | translate
+					}}</span>
+				</ng-template>
+			</dd>
+
+			<ng-container *ngIf="tenant.settings?.domains?.length">
+				<dt class="col-sm-3">{{ 'TENANT_VIEW.SETTINGS.DOMAINS' | translate }}</dt>
+				<dd class="col-sm-9">{{ tenant.settings.domains.join(', ') }}</dd>
+			</ng-container>
+
+			<dt class="col-sm-3">{{ 'TENANT_VIEW.SETTINGS.STATUS' | translate }}</dt>
+			<dd class="col-sm-9">
+				{{ tenant.status }}
+				<span *ngIf="tenant.isPlatform" class="text-hint">
+					&middot; {{ 'TENANT_VIEW.SETTINGS.PLATFORM' | translate }}</span
+				>
+			</dd>
+		</dl>
+
+		<nb-alert *ngIf="!permissions.canEditTenant" outline="info">
+			{{ 'TENANT_VIEW.SETTINGS.READ_ONLY' | translate }}
+		</nb-alert>
+
+		<form [formGroup]="form" (ngSubmit)="save()">
+			<div class="mb-3">
+				<label class="form-label" for="tenant-name">{{
+					'TENANT_VIEW.SETTINGS.NAME' | translate
+				}}</label>
+				<input
+					id="tenant-name"
+					class="form-control"
+					formControlName="name"
+					[ngClass]="{
+						'form-control-danger':
+							form.get('name').invalid && form.get('name').dirty
+					}"
+				/>
+			</div>
+
+			<div class="mb-3">
+				<label class="form-label" for="tenant-logo">{{
+					'TENANT_VIEW.SETTINGS.LOGO_URL' | translate
+				}}</label>
+				<input
+					id="tenant-logo"
+					class="form-control"
+					type="url"
+					formControlName="logoUrl"
+					placeholder="https://"
+				/>
+				<img
+					*ngIf="form.get('logoUrl').value"
+					class="tenant-logo mt-2"
+					[src]="form.get('logoUrl').value"
+					alt=""
+				/>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6 mb-3">
+					<label class="form-label" for="tenant-currency">{{
+						'TENANT_VIEW.SETTINGS.CURRENCY' | translate
+					}}</label>
+					<select id="tenant-currency" class="form-select" formControlName="currency">
+						<option value="">{{ 'TENANT_VIEW.SETTINGS.DEFAULT' | translate }}</option>
+						<option
+							*ngIf="
+								form.get('currency').value &&
+								!currencies.includes(form.get('currency').value)
+							"
+							[value]="form.get('currency').value"
+						>
+							{{ form.get('currency').value }}
+						</option>
+						<option *ngFor="let code of currencies" [value]="code">
+							{{ code }}
+						</option>
+					</select>
+				</div>
+
+				<div class="col-md-6 mb-3">
+					<label class="form-label" for="tenant-language">{{
+						'TENANT_VIEW.SETTINGS.LANGUAGE' | translate
+					}}</label>
+					<select id="tenant-language" class="form-select" formControlName="language">
+						<option value="">{{ 'TENANT_VIEW.SETTINGS.DEFAULT' | translate }}</option>
+						<option *ngFor="let l of languages" [value]="l.code">
+							{{ l.name }}
+						</option>
+					</select>
+				</div>
+			</div>
+
+			<button
+				*ngIf="permissions.canEditTenant"
+				nbButton
+				status="success"
+				type="submit"
+				id="tenant-save"
+				[disabled]="form.invalid || saving || form.pristine"
+			>
+				{{ 'TENANT_VIEW.SETTINGS.SAVE' | translate }}
+			</button>
+		</form>
+	</ng-container>
+</div>

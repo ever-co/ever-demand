@@ -27,6 +27,8 @@ const STRING_KEYS = [
 	// For maintenance micro service. Ever maintenance API URL: https://maintenance.ever.co/status
 	'SETTINGS_APP_TYPE',
 	'SETTINGS_MAINTENANCE_API_URL',
+	// Multi-tenant cloud: parent domain of the tenant shops ('' = not used)
+	'TENANT_BASE_DOMAIN',
 ] as const;
 
 const NUMBER_KEYS = ['DEFAULT_LATITUDE', 'DEFAULT_LONGITUDE'] as const;

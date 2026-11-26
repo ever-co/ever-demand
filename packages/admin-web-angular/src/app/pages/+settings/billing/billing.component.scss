@@ -1,0 +1,31 @@
+@import '../../../@theme/styles/themes';
+
+@include nb-install-component() {
+	display: block;
+
+	.billing-tile {
+		height: 100%;
+		padding: 1rem;
+		border: 1px solid nb-theme(border-basic-color-4);
+		border-radius: nb-theme(border-radius);
+	}
+
+	.tile-label {
+		font-size: 0.875rem;
+		color: nb-theme(text-hint-color);
+	}
+
+	.tile-value {
+		font-size: 1.5rem;
+		font-weight: 600;
+	}
+
+	.tile-note {
+		font-size: 0.875rem;
+	}
+
+	.upgrade,
+	.manage {
+		margin-top: 1.5rem;
+	}
+}

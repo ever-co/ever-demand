@@ -1,11 +1,12 @@
-import { inject, Provider } from '@angular/core';
+import { inject, Injectable, Provider } from '@angular/core';
 import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
 import { SetContextLink } from '@apollo/client/link/context';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { getOperationAST, type DocumentNode } from 'graphql';
-import { createClient } from 'graphql-ws';
+import { createClient, type Client } from 'graphql-ws';
+import { TENANT_HEADER } from '@modules/client.common.angular2/lib/tenant';
 import { environment } from 'environments/environment';
 import { Store } from '../@core/data/store.service';
 
@@ -51,6 +52,72 @@ export function createAuthLink(
 	});
 }
 
+/**
+ * Operation context flag: the operation is about the logged-in admin itself
+ * (its own record, profile, password), so it goes to the admin's own tenant
+ * even while a super-admin acts in another one.
+ */
+export const OWN_TENANT_CONTEXT = { ownTenant: true } as const;
+
+/**
+ * Adds `Tenant-Id: <slug>` to every operation while a platform super-admin
+ * has switched tenant (`getTenant` returns the slug). Otherwise nothing is
+ * added: the API takes the tenant from the login token, and answers 403 to
+ * a normal admin naming another tenant.
+ */
+export function createTenantLink(
+	getTenant: () => string | null | undefined,
+): ApolloLink {
+	return new SetContextLink((prevContext) => {
+		const tenant = prevContext.ownTenant ? null : getTenant();
+
+		if (!tenant) {
+			return {};
+		}
+
+		return {
+			headers: {
+				...prevContext.headers,
+				[TENANT_HEADER]: tenant,
+			},
+		};
+	});
+}
+
+/** The graphql-ws payload of `connection_init`: login token and switched tenant. */
+export function wsConnectionParams(
+	getToken: () => string | null | undefined,
+	getTenant: () => string | null | undefined,
+): Record<string, string> {
+	const params: Record<string, string> = {};
+	const token = getToken();
+	const tenant = getTenant();
+
+	if (token) {
+		params.authorization = `Bearer ${token}`;
+	}
+
+	if (tenant) {
+		params.tenant = tenant;
+	}
+
+	return params;
+}
+
+/**
+ * The graphql-ws client of the app. A WebSocket names its tenant once, when it
+ * connects: `restart()` reconnects it (and its live subscriptions) after a
+ * login, a logout or a tenant switch.
+ */
+@Injectable({ providedIn: 'root' })
+export class GraphQLWsClientRef {
+	client?: Client;
+
+	restart() {
+		this.client?.terminate();
+	}
+}
+
 /** Same defaults as the Apollo 2 / 3 setup the screens were written for. */
 export const DEFAULT_OPTIONS: NonNullable<
 	ApolloClient.Options['defaultOptions']
@@ -74,27 +141,31 @@ export const DEFAULT_OPTIONS: NonNullable<
 export function createApolloOptions(
 	httpLink: HttpLink,
 	getToken: () => string | null | undefined,
+	getTenant: () => string | null | undefined = () => null,
+	wsRef?: GraphQLWsClientRef,
 ): ApolloClient.Options {
 	const http = httpLink.create({ uri: environment.GQL_ENDPOINT });
 
 	// graphql-ws replaces the dead subscriptions-transport-ws (`WebSocketLink`).
 	// Lazy: the socket opens with the first subscription, so screens without one never connect.
-	const ws = new GraphQLWsLink(
-		createClient({
-			url: environment.GQL_SUBSCRIPTIONS_ENDPOINT,
-			lazy: true,
-			retryAttempts: Infinity,
-			shouldRetry: () => true,
-			connectionParams: () => {
-				const token = getToken();
-				return token ? { authorization: `Bearer ${token}` } : {};
-			},
-		}),
-	);
+	const wsClient = createClient({
+		url: environment.GQL_SUBSCRIPTIONS_ENDPOINT,
+		lazy: true,
+		retryAttempts: Infinity,
+		shouldRetry: () => true,
+		connectionParams: () => wsConnectionParams(getToken, getTenant),
+	});
+
+	if (wsRef) {
+		wsRef.client = wsClient;
+	}
+
+	const ws = new GraphQLWsLink(wsClient);
 
 	return {
 		link: ApolloLink.from([
 			createAuthLink(getToken),
+			createTenantLink(getTenant),
 			ApolloLink.split(
 				({ query, operationName }) =>
 					isSubscription(query, operationName),
@@ -110,6 +181,12 @@ export function createApolloOptions(
 export function provideGraphQL(): Provider {
 	return provideApollo(() => {
 		const store = inject(Store);
-		return createApolloOptions(inject(HttpLink), () => store.token);
+		return createApolloOptions(
+			inject(HttpLink),
+			() => store.token,
+			// only a super-admin's switch names a tenant (Store.switchedTenant)
+			() => store.switchedTenant,
+			inject(GraphQLWsClientRef),
+		);
 	});
 }

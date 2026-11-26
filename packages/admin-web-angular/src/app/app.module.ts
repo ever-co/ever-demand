@@ -36,6 +36,7 @@ import { MaintenanceModuleGuard } from './pages/+maintenance-info/maintenance-in
 import { ServerSettingsService } from './@core/services/server-settings.service';
 import { provideGraphQL } from './graphql/graphql.providers';
 import { loadGoogleMaps } from './@core/utils/google-maps-loader';
+import { ADMIN_SOCKET_AUTH } from './@core/tenant/admin-tenant';
 
 // It's more 'standard' way to use Font-Awesome module and special package,
 // but for some reason ngx-admin works without it. So we leave next line commented for now.
@@ -53,8 +54,15 @@ import { loadGoogleMaps } from './@core/utils/google-maps-loader';
 				prefix: './assets/i18n/',
 				suffix: '.json',
 			}),
+			// pages outside the layout (login, signup) are shown before a language is picked
+			fallbackLang: 'en-US',
 		}),
-		CommonModule.forRoot({ apiUrl: environment.SERVICES_ENDPOINT }),
+		// socket handshakes send the login token and, for a super-admin, the switched tenant
+		CommonModule.forRoot({
+			apiUrl: environment.SERVICES_ENDPOINT,
+			// token key 'token' (Store.token); the tenant only for a super-admin's switch
+			...ADMIN_SOCKET_AUTH,
+		}),
 		NgbModule,
 		NbEvaIconsModule,
 		ThemeModule.forRoot(),

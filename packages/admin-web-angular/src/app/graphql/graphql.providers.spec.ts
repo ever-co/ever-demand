@@ -1,10 +1,14 @@
 import { ApolloLink } from '@apollo/client';
 import { gql } from 'apollo-angular';
 import { firstValueFrom, Observable } from 'rxjs';
+import { Store } from '../@core/data/store.service';
 import {
 	createAuthLink,
+	createTenantLink,
 	DEFAULT_OPTIONS,
 	isSubscription,
+	OWN_TENANT_CONTEXT,
+	wsConnectionParams,
 } from './graphql.providers';
 
 describe('GraphQL client setup', () => {
@@ -49,6 +53,7 @@ describe('GraphQL client setup', () => {
 
 	async function headersSeenBy(
 		link: ApolloLink,
+		context: Record<string, unknown> = {},
 	): Promise<Record<string, string>> {
 		let seen: Record<string, string> = {};
 		const terminating = new ApolloLink(
@@ -73,7 +78,7 @@ describe('GraphQL client setup', () => {
 							ok
 						}
 					`,
-					context: { headers: { 'x-app': 'admin' } },
+					context: { headers: { 'x-app': 'admin' }, ...context },
 				},
 				{ client },
 			) as any,
@@ -92,6 +97,80 @@ describe('GraphQL client setup', () => {
 	it('sends an empty authorization header when signed out', async () => {
 		const headers = await headersSeenBy(createAuthLink(() => null));
 		expect(headers.authorization).toBe('');
+	});
+
+	describe('Tenant-Id (multi-tenant, DESIGN.md §3.3)', () => {
+		let store: Store;
+		const chain = () =>
+			ApolloLink.from([
+				createAuthLink(() => store.token),
+				// what provideGraphQL wires: only a super-admin's switch names a tenant
+				createTenantLink(() => store.switchedTenant),
+			]);
+
+		beforeEach(() => {
+			localStorage.clear();
+			store = new Store();
+			store.token = 'jwt';
+		});
+
+		afterEach(() => localStorage.clear());
+
+		it('a normal admin never sends Tenant-Id (the token carries the tenant)', async () => {
+			const headers = await headersSeenBy(chain());
+			expect(headers).toEqual({
+				'x-app': 'admin',
+				authorization: 'Bearer jwt',
+			});
+			expect('Tenant-Id' in headers).toBe(false);
+		});
+
+		it('not even with a switch left from a super-admin session in the storage', async () => {
+			store.isSuperAdmin = true;
+			store.switchedTenant = 'tenant-b';
+			store.isSuperAdmin = false;
+
+			const headers = await headersSeenBy(chain());
+			expect('Tenant-Id' in headers).toBe(false);
+		});
+
+		it('a super-admin on the platform tenant sends none', async () => {
+			store.isSuperAdmin = true;
+			const headers = await headersSeenBy(chain());
+			expect('Tenant-Id' in headers).toBe(false);
+		});
+
+		it('a super-admin who switched sends Tenant-Id: <slug> on every operation', async () => {
+			store.isSuperAdmin = true;
+			store.switchedTenant = 'tenant-a';
+
+			const headers = await headersSeenBy(chain());
+			expect(headers).toEqual({
+				'x-app': 'admin',
+				authorization: 'Bearer jwt',
+				'Tenant-Id': 'tenant-a',
+			});
+		});
+
+		it("the admin's own record goes to its own tenant (OWN_TENANT_CONTEXT)", async () => {
+			store.isSuperAdmin = true;
+			store.switchedTenant = 'tenant-a';
+
+			const headers = await headersSeenBy(chain(), OWN_TENANT_CONTEXT);
+			expect('Tenant-Id' in headers).toBe(false);
+			expect(headers.authorization).toBe('Bearer jwt');
+		});
+
+		it('graphql-ws connects with the token and the switched tenant', () => {
+			expect(wsConnectionParams(() => null, () => null)).toEqual({});
+			expect(wsConnectionParams(() => 'jwt', () => null)).toEqual({
+				authorization: 'Bearer jwt',
+			});
+			expect(wsConnectionParams(() => 'jwt', () => 'tenant-a')).toEqual({
+				authorization: 'Bearer jwt',
+				tenant: 'tenant-a',
+			});
+		});
 	});
 
 	it('keeps the defaults the screens were written for', () => {

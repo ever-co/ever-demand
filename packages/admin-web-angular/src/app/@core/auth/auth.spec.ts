@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApolloTestingController } from 'apollo-angular/testing';
 import { firstValueFrom } from 'rxjs';
+import { RoutersService } from '@modules/client.common.angular2/lib/router/routers.service';
 import {
 	expectOperation,
 	setupApolloTesting,
@@ -10,15 +11,19 @@ import { Store } from '../data/store.service';
 import { AppModuleGuard } from '../../app.module.guard';
 import { AdminAuthGuard } from './admin-auth.guard';
 import { AdminAuthStrategy } from './admin-auth-strategy.service';
+import { ServerSettingsService } from '../services/server-settings.service';
 
 describe('admin authentication', () => {
 	let controller: ApolloTestingController;
 	let store: Store;
 	let router: { navigate: ReturnType<typeof vi.fn> };
+	let routers: { reconnectAll: ReturnType<typeof vi.fn> };
+	let settings: { load: ReturnType<typeof vi.fn> };
 
 	beforeEach(() => {
 		localStorage.clear();
 		router = { navigate: vi.fn() };
+		routersInit();
 		({ controller } = setupApolloTesting([
 			AdminAuthStrategy,
 			AdminAuthGuard,
@@ -26,11 +31,19 @@ describe('admin authentication', () => {
 			Store,
 			{ provide: Router, useValue: router },
 			{ provide: ActivatedRoute, useValue: {} },
+			// socket routers and the admin-only app settings of the session
+			{ provide: RoutersService, useValue: routers },
+			{ provide: ServerSettingsService, useValue: settings },
 		]));
 		store = TestBed.inject(Store);
 	});
 
 	afterEach(() => controller.verify());
+
+	function routersInit() {
+		routers = { reconnectAll: vi.fn() };
+		settings = { load: vi.fn().mockResolvedValue(true) };
+	}
 
 	describe('AdminAuthStrategy.authenticate', () => {
 		it('stores the token and admin id on success', async () => {
@@ -56,6 +69,9 @@ describe('admin authentication', () => {
 							email: 'admin@ever.co',
 							name: 'Admin',
 							pictureUrl: '',
+							role: 'owner',
+							isSuperAdmin: true,
+							tenantId: 't0',
 						},
 					},
 				},
@@ -66,6 +82,12 @@ describe('admin authentication', () => {
 			expect(auth.getRedirect()).toBe('/');
 			expect(store.token).toBe('jwt');
 			expect(store.adminId).toBe('a1');
+			// multi-tenant: the role and the super-admin flag, then the sockets reconnect
+			expect(store.adminRole).toBe('owner');
+			expect(store.isSuperAdmin).toBe(true);
+			expect(store.adminTenantId).toBe('t0');
+			expect(routers.reconnectAll).toHaveBeenCalledTimes(1);
+			expect(settings.load).toHaveBeenCalled();
 		});
 
 		it('fails with the default message when the API returns no login', async () => {
@@ -84,6 +106,7 @@ describe('admin authentication', () => {
 			expect(auth.isFailure()).toBe(true);
 			expect(auth.getErrors()[0]).toMatch(/not correct/);
 			expect(store.token).toBeNull();
+			expect(routers.reconnectAll).not.toHaveBeenCalled();
 		});
 
 		it('fails with the GraphQL errors (Apollo 4 `error`) instead of throwing', async () => {

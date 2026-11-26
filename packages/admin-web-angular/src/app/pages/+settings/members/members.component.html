@@ -1,0 +1,121 @@
+<div class="settings-pane" [nbSpinner]="loading || busy">
+	<nb-alert *ngIf="error" outline="danger" role="alert">
+		{{ 'TENANT_VIEW.LOAD_ERROR' | translate: { error: error } }}
+	</nb-alert>
+
+	<p class="text-hint">{{ 'TENANT_VIEW.MEMBERS.ROLE_HELP' | translate }}</p>
+
+	<nb-alert *ngIf="!permissions.canManageMembers" outline="info">
+		{{ 'TENANT_VIEW.MEMBERS.READ_ONLY' | translate }}
+	</nb-alert>
+
+	<div class="table-responsive">
+		<table class="table members-table" data-test="members-table">
+			<thead>
+				<tr>
+					<th scope="col">{{ 'TENANT_VIEW.MEMBERS.NAME' | translate }}</th>
+					<th scope="col">{{ 'TENANT_VIEW.MEMBERS.EMAIL' | translate }}</th>
+					<th scope="col">{{ 'TENANT_VIEW.MEMBERS.ROLE' | translate }}</th>
+					<th scope="col" *ngIf="permissions.canManageMembers">
+						{{ 'TENANT_VIEW.MEMBERS.ACTIONS' | translate }}
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let m of members; trackBy: trackById" [attr.data-member]="m.email">
+					<td>
+						{{ m.name }}
+						<span *ngIf="m.isMe" class="text-hint">({{ 'TENANT_VIEW.MEMBERS.YOU' | translate }})</span>
+						<span *ngIf="m.isSuperAdmin" class="badge bg-info ms-1">{{
+							'TENANT_VIEW.MEMBERS.SUPER_ADMIN' | translate
+						}}</span>
+					</td>
+					<td>{{ m.email }}</td>
+					<td>
+						<select
+							*ngIf="m.actions.roles.length; else fixedRole"
+							class="form-select form-select-sm role-select"
+							[attr.aria-label]="'TENANT_VIEW.MEMBERS.ROLE' | translate"
+							[value]="m.role"
+							[disabled]="busy"
+							(change)="changeRole(m, $any($event.target).value)"
+						>
+							<option *ngFor="let r of m.actions.roles" [value]="r" [selected]="r === m.role">
+								{{ 'TENANT_VIEW.MEMBERS.ROLES.' + r | translate }}
+							</option>
+						</select>
+						<ng-template #fixedRole>
+							<span data-test="member-role">{{
+								'TENANT_VIEW.MEMBERS.ROLES.' + m.role | translate
+							}}</span>
+						</ng-template>
+					</td>
+					<td *ngIf="permissions.canManageMembers">
+						<button
+							*ngIf="m.actions.canRemove"
+							nbButton
+							size="small"
+							status="danger"
+							outline
+							[disabled]="busy"
+							(click)="remove(m)"
+						>
+							{{ 'TENANT_VIEW.MEMBERS.REMOVE' | translate }}
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<form
+		*ngIf="permissions.canManageMembers"
+		class="invite"
+		[formGroup]="form"
+		(ngSubmit)="invite()"
+		aria-labelledby="invite-title"
+	>
+		<h6 id="invite-title">{{ 'TENANT_VIEW.MEMBERS.ADD' | translate }}</h6>
+		<p class="text-hint">{{ 'TENANT_VIEW.MEMBERS.ADD_HINT' | translate }}</p>
+		<div class="row">
+			<div class="col-md-3 mb-3">
+				<label class="form-label" for="member-name">{{ 'TENANT_VIEW.MEMBERS.NAME' | translate }}</label>
+				<input id="member-name" class="form-control" formControlName="name" autocomplete="off" />
+			</div>
+			<div class="col-md-3 mb-3">
+				<label class="form-label" for="member-email">{{ 'TENANT_VIEW.MEMBERS.EMAIL' | translate }}</label>
+				<input
+					id="member-email"
+					class="form-control"
+					type="email"
+					formControlName="email"
+					autocomplete="off"
+				/>
+			</div>
+			<div class="col-md-3 mb-3">
+				<label class="form-label" for="member-password">{{
+					'TENANT_VIEW.MEMBERS.PASSWORD' | translate
+				}}</label>
+				<input
+					id="member-password"
+					class="form-control"
+					type="password"
+					formControlName="password"
+					autocomplete="new-password"
+					[placeholder]="'TENANT_VIEW.SIGNUP.PASSWORD_HINT' | translate"
+				/>
+			</div>
+			<div class="col-md-3 mb-3">
+				<label class="form-label" for="member-role">{{ 'TENANT_VIEW.MEMBERS.ROLE' | translate }}</label>
+				<select id="member-role" class="form-select" formControlName="role">
+					<option *ngFor="let r of inviteRoles" [value]="r">
+						{{ 'TENANT_VIEW.MEMBERS.ROLES.' + r | translate }}
+					</option>
+				</select>
+			</div>
+		</div>
+		<button nbButton status="success" type="submit" id="member-add" [disabled]="form.invalid || busy">
+			{{ 'TENANT_VIEW.MEMBERS.ADD_SUBMIT' | translate }}
+		</button>
+	</form>
+</div>

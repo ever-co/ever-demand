@@ -1,0 +1,152 @@
+<div class="settings-pane" [nbSpinner]="loading || busy">
+	<ng-container [ngSwitch]="notice">
+		<nb-alert *ngSwitchCase="'success'" outline="success" data-test="checkout-notice">
+			{{ 'TENANT_VIEW.BILLING.CHECKOUT_SUCCESS' | translate }}
+		</nb-alert>
+		<nb-alert *ngSwitchCase="'cancelled'" outline="warning" data-test="checkout-notice">
+			{{ 'TENANT_VIEW.BILLING.CHECKOUT_CANCELLED' | translate }}
+		</nb-alert>
+		<nb-alert *ngSwitchCase="'failed'" outline="danger" data-test="checkout-notice">
+			{{ 'TENANT_VIEW.BILLING.CHECKOUT_FAILED' | translate }}
+		</nb-alert>
+	</ng-container>
+
+	<nb-alert *ngIf="error" outline="danger" role="alert">
+		{{ 'TENANT_VIEW.LOAD_ERROR' | translate: { error: error } }}
+	</nb-alert>
+
+	<ng-container *ngIf="tenant && usage">
+		<div class="row billing-summary">
+			<div class="col-md-4 mb-3">
+				<div class="billing-tile">
+					<div class="tile-label">{{ 'TENANT_VIEW.BILLING.CURRENT_PLAN' | translate }}</div>
+					<div class="tile-value" data-test="current-plan">{{ planLabel(tenant.plan) }}</div>
+					<div class="tile-note" *ngIf="usage.effectivePlan !== usage.plan">
+						{{
+							'TENANT_VIEW.BILLING.LIMITS_OF'
+								| translate: { plan: planLabel(usage.effectivePlan) }
+						}}
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 mb-3">
+				<div class="billing-tile">
+					<div class="tile-label">{{ 'TENANT_VIEW.BILLING.MEMBERS' | translate }}</div>
+					<div class="tile-value" data-test="members-usage">
+						{{
+							usedOf(usage.members, usage.memberLimit).key
+								| translate: usedOf(usage.members, usage.memberLimit).params
+						}}
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 mb-3">
+				<div class="billing-tile">
+					<div class="tile-label">{{ 'TENANT_VIEW.BILLING.STORES' | translate }}</div>
+					<div class="tile-value" data-test="stores-usage">
+						{{
+							usedOf(usage.stores, usage.storeLimit).key
+								| translate: usedOf(usage.stores, usage.storeLimit).params
+						}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<p class="text-hint">
+			{{ 'TENANT_VIEW.BILLING.MEMBERS_NOTE' | translate }}
+			<ng-container *ngIf="!usage.enforced">
+				{{ 'TENANT_VIEW.BILLING.NOT_ENFORCED' | translate }}
+			</ng-container>
+		</p>
+
+		<dl class="row">
+			<dt class="col-sm-4">{{ 'TENANT_VIEW.BILLING.SUBSCRIPTION' | translate }}</dt>
+			<dd class="col-sm-8" data-test="subscription-status">
+				{{
+					tenant.billing.hasSubscription
+						? tenant.billing.status
+						: ('TENANT_VIEW.BILLING.NO_SUBSCRIPTION' | translate)
+				}}
+			</dd>
+			<ng-container *ngIf="tenant.billing.interval">
+				<dt class="col-sm-4">{{ 'TENANT_VIEW.BILLING.INTERVAL' | translate }}</dt>
+				<dd class="col-sm-8">
+					{{
+						(tenant.billing.interval === 'annual'
+							? 'TENANT_VIEW.SIGNUP.ANNUAL'
+							: 'TENANT_VIEW.SIGNUP.MONTHLY'
+						) | translate
+					}}
+				</dd>
+			</ng-container>
+			<ng-container *ngIf="tenant.billing.trialEndsAt">
+				<dt class="col-sm-4">{{ 'TENANT_VIEW.BILLING.TRIAL_ENDS' | translate }}</dt>
+				<dd class="col-sm-8">{{ tenant.billing.trialEndsAt | date: 'mediumDate' }}</dd>
+			</ng-container>
+			<ng-container *ngIf="tenant.billing.currentPeriodEnd">
+				<dt class="col-sm-4">{{ 'TENANT_VIEW.BILLING.PERIOD_ENDS' | translate }}</dt>
+				<dd class="col-sm-8">
+					{{ tenant.billing.currentPeriodEnd | date: 'mediumDate' }}
+				</dd>
+			</ng-container>
+		</dl>
+
+		<nb-alert *ngIf="!permissions.canManageBilling" outline="info">
+			{{ 'TENANT_VIEW.BILLING.OWNER_ONLY' | translate }}
+		</nb-alert>
+
+		<section *ngIf="canCheckout && paidPlans.length" class="upgrade" aria-labelledby="upgrade-title">
+			<h6 id="upgrade-title">{{ 'TENANT_VIEW.BILLING.CHOOSE_PLAN' | translate }}</h6>
+			<div class="row">
+				<div class="col-md-4 mb-3">
+					<select id="billing-plan" class="form-select" [(ngModel)]="chosenPlan">
+						<option *ngFor="let p of paidPlans" [value]="p.plan">
+							{{ p.label }} &middot; ${{
+								interval === 'annual' ? p.annualMonthlyPrice : p.monthlyPrice
+							}}
+							{{
+								(interval === 'annual'
+									? 'TENANT_VIEW.SIGNUP.BILLED_ANNUALLY'
+									: 'TENANT_VIEW.SIGNUP.PER_MONTH'
+								) | translate
+							}}
+						</option>
+					</select>
+				</div>
+				<div class="col-md-4 mb-3">
+					<select id="billing-interval" class="form-select" [(ngModel)]="interval">
+						<option value="monthly">{{ 'TENANT_VIEW.SIGNUP.MONTHLY' | translate }}</option>
+						<option value="annual">{{ 'TENANT_VIEW.SIGNUP.ANNUAL' | translate }}</option>
+					</select>
+				</div>
+				<div class="col-md-4 mb-3" *ngIf="selected?.extraMembers">
+					<div class="input-group">
+						<label class="input-group-text" for="billing-extra">{{
+							'TENANT_VIEW.BILLING.EXTRA_MEMBERS' | translate
+						}}</label>
+						<input
+							id="billing-extra"
+							class="form-control"
+							type="number"
+							min="0"
+							max="10000"
+							step="1"
+							[(ngModel)]="extraMembers"
+						/>
+					</div>
+				</div>
+			</div>
+			<button nbButton status="primary" id="billing-upgrade" [disabled]="busy" (click)="checkout()">
+				{{ 'TENANT_VIEW.BILLING.CHECKOUT' | translate }}
+			</button>
+		</section>
+
+		<section *ngIf="canManage" class="manage">
+			<button nbButton status="basic" id="billing-manage" [disabled]="busy" (click)="manage()">
+				{{ 'TENANT_VIEW.BILLING.MANAGE' | translate }}
+			</button>
+			<span class="text-hint ms-2">{{ 'TENANT_VIEW.BILLING.MANAGE_HINT' | translate }}</span>
+		</section>
+	</ng-container>
+</div>

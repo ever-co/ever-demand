@@ -55,6 +55,10 @@ export type Env = Readonly<{
 
 	DEFAULT_LANGUAGE: string;
 
+	// Multi-tenant cloud: parent domain of the tenant shops (<slug>.<TENANT_BASE_DOMAIN>),
+	// shown in Settings; '' on single-tenant installs
+	TENANT_BASE_DOMAIN: string;
+
 	PORT: number;
 }>;
 
@@ -118,6 +122,8 @@ export const env: Env = cleanEnv(process.env, {
 	}),
 
 	DEFAULT_LANGUAGE: str({ default: 'en-US' }),
+
+	TENANT_BASE_DOMAIN: str({ default: '' }),
 
 	PORT: num({ default: 4200 }),
 });

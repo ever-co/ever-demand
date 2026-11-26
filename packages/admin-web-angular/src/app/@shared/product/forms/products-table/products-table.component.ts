@@ -136,6 +136,8 @@ export class ProductsTableComponent implements OnInit, OnDestroy {
 	getCategories() {
 		this._productsCategoryService
 			.getCategories()
+			// the query polls: stop with the table (it kept polling after a logout)
+			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe((categories) => {
 				this.categoriesInfo = categories;
 				this.loadDataSmartTable(

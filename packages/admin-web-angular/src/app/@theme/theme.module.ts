@@ -35,6 +35,7 @@ import {
 	ThemeSettingsComponent,
 	ThemeSwitcherComponent,
 	ThemeSwitcherListComponent,
+	TenantSwitcherComponent,
 } from './components';
 
 import {
@@ -92,6 +93,7 @@ const COMPONENTS = [
 	SampleLayoutComponent,
 	ThreeColumnsLayoutComponent,
 	TwoColumnsLayoutComponent,
+	TenantSwitcherComponent,
 ];
 
 const ENTRY_COMPONENTS = [ThemeSwitcherListComponent];
