@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Ever Carrier</string>
+    <string name="title_activity_main">Ever Carrier</string>
+    <string name="package_name">co.ever.carrier</string>
+    <string name="custom_url_scheme">co.ever.carrier</string>
+</resources>
