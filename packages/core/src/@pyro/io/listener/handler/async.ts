@@ -30,7 +30,7 @@ export class AsyncListenerHandler<T> extends BaseListenerHandler<T>
 		const denied = this.accessError();
 
 		if (denied) {
-			this.log.warn(
+			this.log.info(
 				{ ...this.baseLogDetails, callId, reason: denied.message },
 				`Listener call refused`
 			);

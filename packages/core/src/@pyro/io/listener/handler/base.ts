@@ -137,7 +137,7 @@ export abstract class BaseListenerHandler<T> implements IListenerHandler<T> {
 	protected accessError(): Error | null {
 		const key = socketAccessKey(this.routerName, this._listener.name);
 		const access = SOCKET_ACCESS[key];
-		const ctx = TenantContext.current();
+		const ctx = TenantContext.capture();
 
 		if (isAllowed(access, ctx)) {
 			return null;
