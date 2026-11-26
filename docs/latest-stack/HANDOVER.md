@@ -1,6 +1,6 @@
 # Ever Demand latest-stack upgrade: handover
 
-Last updated: 2026-11-26 ~01:30 CET by the lead session ("Ever Demand platform modernization").
+Last updated: 2026-11-26 ~02:00 CET by the lead session ("Ever Demand platform modernization").
 Keep this file current. Update it after every merge or milestone, then commit and push.
 
 ## Goal (owner)
