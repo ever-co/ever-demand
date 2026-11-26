@@ -464,6 +464,14 @@ export class ServicesApp {
 
 		// TODO: why is this here? It should be in some Nest Controller
 		this.expressApp.post('/warehouse/create', async (req, res) => {
+			// creates a store in the tenant of the request: its admins only
+			const actor = TenantContext.actor();
+
+			if (actor?.role !== 'admin') {
+				res.status(401).json({ message: 'Log in as an admin' });
+				return;
+			}
+
 			const warehouseCreateObject: IWarehouseCreateObject = JSON.parse(
 				req.body.warehouse
 			);

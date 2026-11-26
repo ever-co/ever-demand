@@ -52,6 +52,7 @@ export type Env = Readonly<{
 	MULTI_TENANT: boolean;
 	TENANT_BASE_DOMAIN: string;
 	TENANT_SIGNUP_ENABLED: boolean;
+	TENANT_SIGNUPS_PER_HOUR: number;
 	ADMIN_APP_URL: string;
 	STRIPE_BILLING_SECRET_KEY: string;
 	STRIPE_BILLING_WEBHOOK_SECRET: string;
@@ -144,6 +145,10 @@ const cleaned = cleanEnv(
 		TENANT_SIGNUP_ENABLED: bool({
 			desc: 'Allow anyone to sign up a new tenant (default: on when MULTI_TENANT is on)',
 			default: undefined as any,
+		}),
+		TENANT_SIGNUPS_PER_HOUR: num({
+			desc: 'Tenant signups allowed per client address and hour (per API instance)',
+			default: 10,
 		}),
 		ADMIN_APP_URL: str({
 			desc: 'Public URL of the admin app (Stripe Checkout and portal return there), e.g. https://app.everdemand.co',

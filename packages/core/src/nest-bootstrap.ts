@@ -25,7 +25,17 @@ export async function bootstrapNest(): Promise<INestApplication> {
 	// app.useGlobalGuards(new AuthGuard(app.get(Reflector)));
 
 	// app.useLogger(app.get(SentryService));
-	app.use(json({ limit: '50mb' }));
+	app.use(
+		json({
+			limit: '50mb',
+			// the Stripe billing webhook verifies its signature on the raw body
+			verify: (req: any, _res, buf) => {
+				if (req.originalUrl?.startsWith('/api/billing/webhook')) {
+					req.rawBody = buf;
+				}
+			},
+		})
+	);
 	app.use(urlencoded({ extended: true, limit: '50mb' }));
 
 	app.enableCors({

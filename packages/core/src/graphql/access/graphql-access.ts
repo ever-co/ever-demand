@@ -41,6 +41,7 @@ export const GRAPHQL_ACCESS: Readonly<Record<string, GraphQLAccess>> = {
 	// tenants, signup and billing (tenant.types.graphql)
 	signupTenant: 'platform',
 	isTenantSlugAvailable: 'platform',
+	tenantPlans: 'platform',
 	tenantBySlug: 'platform',
 	currentTenant: 'public',
 	updateTenant: manager,

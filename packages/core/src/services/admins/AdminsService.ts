@@ -1,4 +1,5 @@
 import { DBService } from '@pyro/db-server';
+import { assertCanAdd } from '../../tenant/plan-limits';
 import Admin from '@modules/server.common/entities/Admin';
 import { createEverLogger } from '../../helpers/Log';
 import { AuthService, AuthServiceFactory } from '../auth';
@@ -25,6 +26,11 @@ import type { TenantRole } from '@modules/server.common/interfaces/ITenant';
 @injectable()
 export class AdminsService extends DBService<Admin> implements IAdminRouter {
 	readonly DBObject: any = Admin;
+
+	/** New admins count against the tenant's plan (members, tenant/plan-limits.ts). */
+	protected async beforeCreate(): Promise<void> {
+		await assertCanAdd('member');
+	}
 
 	protected readonly log: Logger = createEverLogger({ name: 'adminService' });
 

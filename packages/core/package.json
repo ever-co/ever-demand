@@ -25,6 +25,7 @@
 		"start:prod": "cross-env NODE_ENV=production node build/main.js",
 		"test": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --disable-warning=ExperimentalWarning --max-old-space-size=3072\" jest --maxWorkers=1",
 		"test:e2e": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --disable-warning=ExperimentalWarning --max-old-space-size=3072\" jest --config jest.e2e.config.js --runInBand",
+		"test:e2e:mt": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --disable-warning=ExperimentalWarning --max-old-space-size=3072\" jest --config jest.e2e-mt.config.js --runInBand",
 		"db:test:up": "node scripts/test-mongo.mjs up",
 		"db:test:down": "node scripts/test-mongo.mjs down",
 		"clean": "rimraf build coverage .common-types",

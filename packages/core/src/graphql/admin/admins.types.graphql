@@ -6,6 +6,12 @@ type Admin {
 	pictureUrl: String!
 	firstName: String
 	lastName: String
+	"Tenant of the admin"
+	tenantId: String
+	"owner, admin or staff"
+	role: String
+	"Platform super-admin (may act in every tenant)"
+	isSuperAdmin: Boolean
 }
 
 input AdminCreateInput {
@@ -14,6 +20,8 @@ input AdminCreateInput {
 	pictureUrl: String!
 	firstName: String
 	lastName: String
+	"admin (default) or staff; owners are made with setAdminRole"
+	role: String
 }
 
 input AdminUpdateInput {

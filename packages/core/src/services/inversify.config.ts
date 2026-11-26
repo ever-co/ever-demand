@@ -48,6 +48,8 @@ import { FakeOrdersService } from './fake-data/FakeOrdersService';
 import { CurrenciesService } from './currency/CurrencyService';
 import { PromotionService } from './products/PromotionService';
 import { AppsSettingsService } from './apps-settings';
+import { TenantsService } from './tenants/TenantsService';
+import { BillingService } from './billing/BillingService';
 
 function getRepository(t: any): any {
 	return getTypeORMDataSource().getRepository(t);
@@ -103,7 +105,9 @@ const bindings = new ContainerModule(({ bind }: ContainerModuleLoadOptions) => {
 			FakeOrdersService,
 			CurrenciesService,
 			PromotionService,
-			AppsSettingsService
+			AppsSettingsService,
+			TenantsService,
+			BillingService,
 		],
 		(Service: any) => {
 			bind(Service).to(Service).inSingletonScope();

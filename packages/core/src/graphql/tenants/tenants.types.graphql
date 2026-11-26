@@ -1,0 +1,133 @@
+type TenantBilling {
+	status: String
+	interval: String
+	extraMembers: Int
+	trialEndsAt: Date
+	currentPeriodEnd: Date
+	hasCustomer: Boolean!
+	hasSubscription: Boolean!
+}
+
+type TenantSettings {
+	currency: String
+	language: String
+	logoUrl: String
+	domains: [String!]
+}
+
+type Tenant {
+	id: String!
+	name: String!
+	slug: String!
+	status: String!
+	plan: String!
+	ownerId: String
+	isPlatform: Boolean!
+	billing: TenantBilling!
+	settings: TenantSettings!
+	createdAt: Date
+}
+
+"What a shop or login page may show about a tenant before anyone logs in"
+type TenantPublicInfo {
+	id: String!
+	name: String!
+	slug: String!
+	logoUrl: String
+}
+
+type TenantUsage {
+	plan: String!
+	effectivePlan: String!
+	members: Int!
+	admins: Int!
+	carriers: Int!
+	stores: Int!
+	includedMembers: Int
+	extraMembers: Int!
+	memberLimit: Int
+	storeLimit: Int
+	enforced: Boolean!
+}
+
+type TenantPlanInfo {
+	plan: String!
+	label: String!
+	includedMembers: Int
+	extraMembers: Boolean!
+	maxStores: Int
+	monthlyPrice: Int!
+	annualMonthlyPrice: Int!
+	extraMemberPrice: Int
+	paid: Boolean!
+}
+
+type TenantMember {
+	id: String!
+	name: String!
+	email: String!
+	role: String!
+	isSuperAdmin: Boolean!
+}
+
+type TenantSignupResult {
+	tenant: Tenant!
+	admin: Admin!
+	token: String!
+}
+
+type BillingSession {
+	url: String!
+}
+
+type TenantListItem {
+	tenant: Tenant!
+	members: Int!
+	stores: Int!
+}
+
+input TenantSignupInput {
+	businessName: String!
+	slug: String!
+	email: String!
+	password: String!
+	firstName: String
+	lastName: String
+}
+
+input TenantSettingsInput {
+	currency: String
+	language: String
+	logoUrl: String
+}
+
+input TenantUpdateInput {
+	name: String
+	settings: TenantSettingsInput
+}
+
+input BillingCheckoutInput {
+	plan: String!
+	interval: String!
+	extraMembers: Int
+}
+
+type Query {
+	currentTenant: Tenant
+	tenantBySlug(slug: String!): TenantPublicInfo
+	isTenantSlugAvailable(slug: String!): Boolean!
+	tenantPlans: [TenantPlanInfo!]!
+	tenantUsage: TenantUsage!
+	tenantMembers: [TenantMember!]!
+	tenants: [TenantListItem!]!
+}
+
+type Mutation {
+	signupTenant(input: TenantSignupInput!): TenantSignupResult!
+	updateTenant(input: TenantUpdateInput!): Tenant!
+	setAdminRole(adminId: String!, role: String!): TenantMember!
+	removeAdmin(adminId: String!): Boolean!
+	createBillingCheckout(input: BillingCheckoutInput!): BillingSession!
+	createBillingPortal: BillingSession!
+	setTenantStatus(tenantId: String!, status: String!): Tenant!
+}

@@ -181,7 +181,12 @@ export class PyroClient {
 		const subscriptionId = randomUUID();
 
 		const values: T[] = [];
+		const errors: any[] = [];
 		let waiting: { predicate: (v: T) => boolean; resolve: (v: T) => void } | undefined;
+
+		socket.on(`${subscriptionId}_error`, (err: any) => {
+			errors.push(err);
+		});
 
 		socket.on(`${subscriptionId}_next`, (value: T) => {
 			values.push(value);
@@ -197,6 +202,7 @@ export class PyroClient {
 
 		return {
 			values,
+			errors,
 			next(predicate: (v: T) => boolean = () => true, timeoutMs = 15000): Promise<T> {
 				const found = values.find(predicate);
 				if (found !== undefined) {
@@ -219,8 +225,14 @@ export class PyroClient {
 			unsubscribe() {
 				socket.emit(`${subscriptionId}_unsubscribe`);
 				socket.off(`${subscriptionId}_next`);
+				socket.off(`${subscriptionId}_error`);
 			},
 		};
+	}
+
+	/** Connects to a router namespace; rejects with the server's connect_error. */
+	async connect(router: string): Promise<void> {
+		await this.socket(router);
 	}
 
 	close() {
@@ -251,7 +263,8 @@ export async function adminToken(): Promise<string> {
 
 export async function createWarehouse(
 	name = `Store ${unique()}`,
-	overrides: Record<string, unknown> = {}
+	overrides: Record<string, unknown> = {},
+	token?: string | null
 ) {
 	const id = unique();
 	const data = await gqlData<{ registerWarehouse: { id: string; name: string; username: string } }>(
@@ -277,13 +290,14 @@ export async function createWarehouse(
 					...overrides,
 				},
 			},
-		}
+		},
+		token
 	);
 
 	return data.registerWarehouse;
 }
 
-export async function createProduct(title = `Pizza ${unique()}`) {
+export async function createProduct(title = `Pizza ${unique()}`, token?: string | null) {
 	const data = await gqlData<{ createProduct: { id: string; title: { locale: string; value: string }[] } }>(
 		`mutation Create($product: ProductCreateInput!) {
 			createProduct(product: $product) { id title { locale value } }
@@ -303,13 +317,14 @@ export async function createProduct(title = `Pizza ${unique()}`) {
 					},
 				],
 			},
-		}
+		},
+		token
 	);
 
 	return data.createProduct;
 }
 
-export async function createCarrier(username = `carrier_${unique()}`) {
+export async function createCarrier(username = `carrier_${unique()}`, token?: string | null) {
 	const data = await gqlData<{ registerCarrier: { id: string; username: string } }>(
 		`mutation Register($registerInput: CarrierRegisterInput!) {
 			registerCarrier(registerInput: $registerInput) { id username }
@@ -327,7 +342,8 @@ export async function createCarrier(username = `carrier_${unique()}`) {
 					geoLocation: geoLocation(),
 				},
 			},
-		}
+		},
+		token
 	);
 
 	return data.registerCarrier;
@@ -337,7 +353,8 @@ export async function addProductToWarehouse(
 	warehouseId: string,
 	productId: string,
 	count = 10,
-	price = 1200
+	price = 1200,
+	token?: string | null
 ) {
 	const data = await gqlData<{
 		addWarehouseProducts: { id: string; count: number; price: number; product: { id: string } }[];
@@ -361,7 +378,8 @@ export async function addProductToWarehouse(
 					isProductAvailable: true,
 				},
 			],
-		}
+		},
+		token
 	);
 
 	return data.addWarehouseProducts;

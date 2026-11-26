@@ -227,6 +227,8 @@ export abstract class DBService<T extends DBObject<any, any>>
 		let object;
 
 		try {
+			await this.beforeCreate(createObject);
+
 			const document = await this.Model.create(
 				this.withTenant(createObject)
 			);
@@ -256,6 +258,12 @@ export abstract class DBService<T extends DBObject<any, any>>
 
 		return object;
 	}
+
+	/**
+	 * Runs before every `create` (also `super.create` of a subclass); throw to
+	 * refuse it. Services override it, e.g. for plan limits.
+	 */
+	protected async beforeCreate(_createObject: CreateObject<T>): Promise<void> {}
 
 	/**
 	 * Returns a copy of `obj` without the fields the schema marks

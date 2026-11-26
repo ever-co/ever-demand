@@ -39,6 +39,8 @@ import { AppsSettingsModule } from './graphql/apps-settings/apps-settings.module
 import { getTypeORMEntities, getTypeORMOptions } from './helpers/typeorm';
 import { createGraphQLContext } from './graphql/graphql-context';
 import { APP_GUARD } from '@nestjs/core';
+import { TenantsModule } from './graphql/tenants/tenants.module';
+import { BillingController } from './controllers/billing/billing.controller';
 import { GraphQLAccessGuard } from './graphql/access/graphql-access.guard';
 
 const port = env.GQLPORT;
@@ -57,7 +59,7 @@ export const EventHandlers = [];
 const entities = getTypeORMEntities();
 
 @Module({
-	controllers: [TestController, HealthController],
+	controllers: [TestController, HealthController, BillingController],
 	providers: [
 		...CommandHandlers,
 		...EventHandlers,
@@ -108,6 +110,7 @@ const entities = getTypeORMEntities();
 		GeoLocationMerchantsModule,
 		CurrencyModule,
 		PromotionModule,
+		TenantsModule,
 	],
 })
 export class ApplicationModule implements NestModule {
