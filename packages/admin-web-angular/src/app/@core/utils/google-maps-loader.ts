@@ -15,7 +15,7 @@ export function loadGoogleMaps(
 	if ((globalThis as any).google?.maps) {
 		return Promise.resolve(true);
 	}
-	if (loading) {
+	if (loading !== undefined) {
 		return loading;
 	}
 

@@ -32,6 +32,7 @@ RUN if [ -n "$VERDACCIO_REGISTRY" ]; then \
 
 # Manifests first, so the install layer is cached while only sources change
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.base.json ./
+COPY patches ./patches
 COPY packages/common/package.json packages/common/
 COPY packages/common-angular/package.json packages/common-angular/
 COPY packages/shop-web-angular/package.json packages/shop-web-angular/
@@ -84,7 +85,7 @@ COPY --chown=nginx:nginx --from=build /srv/ever/packages/shop-web-angular/dist/b
 
 RUN dos2unix entrypoint.prod.sh entrypoint.compose.sh && \
 	chmod +x wait entrypoint.compose.sh entrypoint.prod.sh && \
-	chmod a+rw /etc/nginx/conf.d/compose.conf.template /etc/nginx/conf.d/prod.conf.template
+	chmod 644 /etc/nginx/conf.d/compose.conf.template /etc/nginx/conf.d/prod.conf.template
 
 ENV API_HOST=api
 ENV API_PORT=3000

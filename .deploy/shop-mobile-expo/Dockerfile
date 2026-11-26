@@ -25,6 +25,7 @@ ARG VERDACCIO_REGISTRY=""
 RUN if [ -n "$VERDACCIO_REGISTRY" ]; then echo "registry=${VERDACCIO_REGISTRY}" >> /srv/ever/.npmrc; fi
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc tsconfig.base.json ./
+COPY patches ./patches
 COPY packages/shop-mobile-expo/package.json ./packages/shop-mobile-expo/package.json
 
 RUN pnpm install --frozen-lockfile --filter @ever-platform/shop-mobile-expo...

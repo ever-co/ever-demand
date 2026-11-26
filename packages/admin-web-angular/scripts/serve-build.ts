@@ -5,7 +5,7 @@
 
 import { createReadStream, existsSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
-import { extname, join, normalize, resolve, sep } from 'node:path';
+import { extname, isAbsolute, join, relative, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 
 const { values } = parseArgs({
@@ -44,9 +44,17 @@ if (!existsSync(join(root, 'index.html'))) {
 }
 
 createServer((req, res) => {
-	const url = new URL(req.url ?? '/', 'http://localhost');
-	let file = normalize(join(root, decodeURIComponent(url.pathname)));
-	if (!file.startsWith(root + sep) && file !== root) {
+	let pathname: string;
+	try {
+		pathname = decodeURIComponent(new URL(req.url ?? '/', 'http://localhost').pathname);
+	} catch {
+		res.writeHead(400).end();
+		return;
+	}
+	// Only files inside the build folder: reject anything that resolves outside it (../, absolute).
+	let file = resolve(root, '.' + pathname);
+	const rel = relative(root, file);
+	if (rel.startsWith('..') || isAbsolute(rel)) {
 		res.writeHead(403).end();
 		return;
 	}
@@ -58,6 +66,6 @@ createServer((req, res) => {
 		'content-type': TYPES[extname(file)] ?? 'application/octet-stream',
 	});
 	createReadStream(file).pipe(res);
-}).listen(port, () => {
+}).listen(port, '127.0.0.1', () => {
 	console.log(`Serving ${root} on http://localhost:${port}`);
 });

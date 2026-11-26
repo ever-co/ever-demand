@@ -91,7 +91,7 @@ export class CloudWatchStream extends Writable {
 			this.timer = undefined;
 		}
 
-		while (this.flushing) {
+		while (this.flushing !== undefined) {
 			await this.flushing;
 		}
 

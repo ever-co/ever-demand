@@ -48,6 +48,7 @@ WORKDIR /srv/ever
 
 # Workspace manifests first, so the install layer is cached until a manifest changes.
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc tsconfig.base.json ./
+COPY patches ./patches
 COPY packages/common/package.json packages/common/package.json
 COPY packages/common-angular/package.json packages/common-angular/package.json
 COPY packages/shop-mobile-ionic/package.json packages/shop-mobile-ionic/package.json
@@ -96,7 +97,7 @@ COPY --chown=nginx:nginx --from=build /srv/ever/packages/shop-mobile-ionic/www .
 RUN apk add --no-cache dos2unix \
 	&& dos2unix entrypoint.compose.sh entrypoint.prod.sh \
 	&& chmod +x wait entrypoint.compose.sh entrypoint.prod.sh \
-	&& chmod a+rw /etc/nginx/conf.d/compose.conf.template /etc/nginx/conf.d/prod.conf.template
+	&& chmod 644 /etc/nginx/conf.d/compose.conf.template /etc/nginx/conf.d/prod.conf.template
 
 ENV API_HOST=api
 ENV API_PORT=3000

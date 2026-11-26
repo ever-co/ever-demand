@@ -25,6 +25,7 @@ RUN if [ -n "$VERDACCIO_REGISTRY" ]; then echo "registry=${VERDACCIO_REGISTRY}" 
 
 # Install only what the carrier app and the shared packages it compiles from source need.
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.base.json .npmrc ./
+COPY patches ./patches
 COPY packages/common/package.json packages/common/
 COPY packages/common-angular/package.json packages/common-angular/
 COPY packages/carrier-mobile-ionic/package.json packages/carrier-mobile-ionic/
@@ -74,7 +75,7 @@ COPY --chown=nginx:nginx --from=build /srv/ever/packages/carrier-mobile-ionic/ww
 RUN apk add --no-cache dos2unix \
 	&& dos2unix entrypoint.compose.sh entrypoint.prod.sh \
 	&& chmod +x wait entrypoint.compose.sh entrypoint.prod.sh \
-	&& chmod a+rw /etc/nginx/conf.d/compose.conf.template /etc/nginx/conf.d/prod.conf.template
+	&& chmod 644 /etc/nginx/conf.d/compose.conf.template /etc/nginx/conf.d/prod.conf.template
 
 ENV API_HOST=api
 ENV API_PORT=3000

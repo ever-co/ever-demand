@@ -35,7 +35,9 @@ COPY . .
 RUN pnpm install --frozen-lockfile --filter "@ever-platform/admin-web-angular..."
 
 ENV NODE_ENV=production
-ENV NODE_OPTIONS=--max-old-space-size=4096
+# Build heap; override with --build-arg NODE_OPTIONS=... on smaller builders.
+ARG NODE_OPTIONS=--max-old-space-size=4096
+ENV NODE_OPTIONS=${NODE_OPTIONS}
 ENV IS_DOCKER=true
 
 RUN pnpm --filter @ever-platform/admin-web-angular build
@@ -52,7 +54,7 @@ COPY --chown=nginx:nginx --from=build /srv/ever/packages/admin-web-angular/dist 
 RUN apk add --no-cache dos2unix \
 	&& dos2unix entrypoint.compose.sh entrypoint.prod.sh \
 	&& chmod +x wait entrypoint.compose.sh entrypoint.prod.sh \
-	&& chmod a+rw /etc/nginx/conf.d/compose.conf.template /etc/nginx/conf.d/prod.conf.template
+	&& chmod 644 /etc/nginx/conf.d/compose.conf.template /etc/nginx/conf.d/prod.conf.template
 
 ENV API_HOST=api
 ENV API_PORT=3000

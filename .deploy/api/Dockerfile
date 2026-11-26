@@ -57,6 +57,7 @@ RUN npm i -g pnpm@12.23.0
 WORKDIR /srv/ever
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc tsconfig.base.json ./
+COPY patches ./patches
 COPY packages/common/package.json ./packages/common/package.json
 COPY packages/core/package.json ./packages/core/package.json
 
@@ -89,6 +90,7 @@ RUN npm i -g pnpm@12.23.0
 WORKDIR /srv/ever
 
 COPY --from=build /srv/ever/package.json /srv/ever/pnpm-lock.yaml /srv/ever/pnpm-workspace.yaml /srv/ever/.npmrc ./
+COPY --from=build /srv/ever/patches ./patches
 COPY --from=build /srv/ever/packages/common/package.json ./packages/common/package.json
 COPY --from=build /srv/ever/packages/core/package.json ./packages/core/package.json
 

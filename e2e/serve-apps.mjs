@@ -57,9 +57,17 @@ function serve(name, port, webRoot) {
 	const index = path.join(webRoot, 'index.html');
 	http
 		.createServer((req, res) => {
-			const url = decodeURIComponent((req.url || '/').split('?')[0]);
-			let file = path.join(webRoot, path.normalize(url).replace(/^([/\\])+/, ''));
-			if (!file.startsWith(webRoot)) {
+			let url;
+			try {
+				url = decodeURIComponent((req.url || '/').split('?')[0]);
+			} catch {
+				res.writeHead(400).end();
+				return;
+			}
+			// Only files inside the build folder: reject anything that resolves outside it.
+			let file = path.resolve(webRoot, '.' + url);
+			const rel = path.relative(webRoot, file);
+			if (rel.startsWith('..') || path.isAbsolute(rel)) {
 				res.writeHead(403).end();
 				return;
 			}
@@ -70,7 +78,7 @@ function serve(name, port, webRoot) {
 			});
 			fs.createReadStream(file).pipe(res);
 		})
-		.listen(port, () => console.log(`${name}: http://localhost:${port} -> ${path.relative(root, webRoot)}`));
+		.listen(port, '127.0.0.1', () => console.log(`${name}: http://localhost:${port} -> ${path.relative(root, webRoot)}`));
 }
 
 const wanted = process.argv.slice(2);
