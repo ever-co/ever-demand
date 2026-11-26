@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "co.ever.customer.flutter"
+    namespace = "co.ever.customer.fl"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -16,9 +16,9 @@ android {
 
     defaultConfig {
         // Store id, derived from the Ionic shop's co.ever.customer so both apps can be published
-        // side by side (React Native: co.ever.customer.reactnative). Keep namespace, the MainActivity
+        // side by side (React Native: co.ever.customer.rn). Keep namespace, the MainActivity
         // package and the iOS PRODUCT_BUNDLE_IDENTIFIER in step.
-        applicationId = "co.ever.customer.flutter"
+        applicationId = "co.ever.customer.fl"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion

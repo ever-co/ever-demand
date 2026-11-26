@@ -185,7 +185,7 @@ class OrderMap extends ConsumerWidget {
         children: <Widget>[
           TileLayer(
             urlTemplate: config.mapTileUrl,
-            userAgentPackageName: 'co.ever.customer.flutter',
+            userAgentPackageName: 'co.ever.customer.fl',
           ),
           if (carrier != null && user != null)
             PolylineLayer(

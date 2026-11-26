@@ -190,8 +190,8 @@ from the Ionic one (owner decision, 2026-11-26).
 | App | Id (Android `package` / iOS `bundleIdentifier`) |
 | --- | --- |
 | Ionic shop (`shop-mobile-ionic`) | `co.ever.customer` (unchanged; the Cordova widget id) |
-| Flutter shop (`shop-mobile-flutter`) | `co.ever.customer.flutter` |
-| React Native / Expo shop (`shop-mobile-expo`) | `co.ever.customer.reactnative` |
+| Flutter shop (`shop-mobile-flutter`) | `co.ever.customer.fl` |
+| React Native / Expo shop (`shop-mobile-expo`) | `co.ever.customer.rn` |
 | Carrier / merchant | `co.ever.carrier` / `co.ever.merchant` (unchanged) |
 
 This app sets it in `app.config.ts` (`ios.bundleIdentifier` and `android.package`; it was

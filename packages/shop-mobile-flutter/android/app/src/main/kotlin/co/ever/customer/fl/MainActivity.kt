@@ -1,4 +1,4 @@
-package co.ever.customer.flutter
+package co.ever.customer.fl
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 

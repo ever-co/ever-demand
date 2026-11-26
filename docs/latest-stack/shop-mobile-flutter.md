@@ -216,7 +216,7 @@ in-memory pyro server that speaks the wire protocol, `fake_graphql.dart` answers
 - Android: `MainActivity` is a `FlutterFragmentActivity` and the launch / normal themes use
   `Theme.MaterialComponents` (flutter_stripe needs both); INTERNET, network state, location and camera
   permissions; `<queries>` for `tel:` and `https`. iOS: location and camera usage descriptions,
-  `LSApplicationQueriesSchemes`. The store application id is `co.ever.customer.flutter` (see below).
+  `LSApplicationQueriesSchemes`. The store application id is `co.ever.customer.fl` (see below).
 
 ## Store application ids
 
@@ -226,14 +226,14 @@ from the Ionic one (owner decision, 2026-11-26).
 | App | Id (Android `applicationId` / iOS bundle id) |
 | --- | --- |
 | Ionic shop (`shop-mobile-ionic`) | `co.ever.customer` (unchanged; the Cordova widget id) |
-| Flutter shop (`shop-mobile-flutter`) | `co.ever.customer.flutter` |
-| React Native / Expo shop (`shop-mobile-expo`) | `co.ever.customer.reactnative` |
+| Flutter shop (`shop-mobile-flutter`) | `co.ever.customer.fl` |
+| React Native / Expo shop (`shop-mobile-expo`) | `co.ever.customer.rn` |
 | Carrier / merchant | `co.ever.carrier` / `co.ever.merchant` (unchanged) |
 
 In this package the id is set in `android/app/build.gradle.kts` (`namespace` and `applicationId`),
-the Kotlin package of `android/app/src/main/kotlin/co/ever/customer/flutter/MainActivity.kt`, and
+the Kotlin package of `android/app/src/main/kotlin/co/ever/customer/fl/MainActivity.kt`, and
 `PRODUCT_BUNDLE_IDENTIFIER` in `ios/Runner.xcodeproj/project.pbxproj` (`RunnerTests`:
-`co.ever.customer.flutter.RunnerTests`). The flutter_map tile `userAgentPackageName` uses it too.
+`co.ever.customer.fl.RunnerTests`). The flutter_map tile `userAgentPackageName` uses it too.
 The Dart package name (`shop_flutter_mobile` in `pubspec.yaml`) is not an app id and is unchanged.
 It replaced the Flutter template id `com.example.shop_flutter_mobile`.
 

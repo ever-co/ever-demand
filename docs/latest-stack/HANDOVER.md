@@ -127,8 +127,8 @@ Security work (owner request, `76b4ca83`):
    - **Parallel work (2026-11-26, owner asked to go faster):**
      - `feat/latest-stack-ci-fix`: upload the CI artifact only on failure (the org artifact quota was
        hit); make the Expo tests robust on slow runners; give the Flutter job more time and a Gradle cache.
-     - `feat/latest-stack-app-ids`: Flutter app id `co.ever.customer.flutter`, Expo
-       `co.ever.customer.reactnative`. The Ionic app keeps `co.ever.customer`; carrier and merchant are
+     - `feat/latest-stack-app-ids`: Flutter app id `co.ever.customer.fl`, Expo
+       `co.ever.customer.rn`. The Ionic app keeps `co.ever.customer`; carrier and merchant are
        unchanged.
 
      **Both merged** (`857cc25c`, `9a3588cb`). CI changes:
@@ -179,8 +179,8 @@ Security work (owner request, `76b4ca83`):
   | App | Store id |
   | --- | --- |
   | Ionic shop | `co.ever.customer` (unchanged) |
-  | Flutter shop | `co.ever.customer.flutter` (was the template `com.example.shop_flutter_mobile`) |
-  | React Native / Expo shop | `co.ever.customer.reactnative` (was `co.ever.shop.expo`) |
+  | Flutter shop | `co.ever.customer.fl` (was the template `com.example.shop_flutter_mobile`) |
+  | React Native / Expo shop | `co.ever.customer.rn` (was `co.ever.shop.expo`) |
   | Carrier / merchant | `co.ever.carrier` / `co.ever.merchant` (unchanged) |
 
   Details: `shop-mobile-flutter.md` and `shop-mobile-expo.md`, section "Store application ids".
