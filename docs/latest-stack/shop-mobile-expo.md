@@ -182,6 +182,21 @@ directions (straight line).
 - `GOOGLE_MAPS_API_KEY` (native builds) and `STRIPE_MERCHANT_IDENTIFIER` are build-time settings in
   `app.config.ts`.
 
+## Store application ids
+
+The three shop apps can be published side by side; the Flutter and React Native ids are derived
+from the Ionic one (owner decision, 2026-11-26).
+
+| App | Id (Android `package` / iOS `bundleIdentifier`) |
+| --- | --- |
+| Ionic shop (`shop-mobile-ionic`) | `co.ever.customer` (unchanged; the Cordova widget id) |
+| Flutter shop (`shop-mobile-flutter`) | `co.ever.customer.flutter` |
+| React Native / Expo shop (`shop-mobile-expo`) | `co.ever.customer.reactnative` |
+| Carrier / merchant | `co.ever.carrier` / `co.ever.merchant` (unchanged) |
+
+This app sets it in `app.config.ts` (`ios.bundleIdentifier` and `android.package`; it was
+`co.ever.shop.expo`). The deep-link `scheme` stays `evershop` (no other app registers it).
+
 ## How to run
 
 See `packages/shop-mobile-expo/README.md`. Short version, from the repo root:

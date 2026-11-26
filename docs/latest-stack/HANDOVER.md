@@ -147,6 +147,17 @@ Security work (owner request, `76b4ca83`):
 
 ## Known follow-ups and caveats
 
+- ~~Choose the store application ids of the Flutter and React Native shop apps~~ done
+  (`feat/latest-stack-app-ids`): the three shop apps can be published side by side.
+
+  | App | Store id |
+  | --- | --- |
+  | Ionic shop | `co.ever.customer` (unchanged) |
+  | Flutter shop | `co.ever.customer.flutter` (was the template `com.example.shop_flutter_mobile`) |
+  | React Native / Expo shop | `co.ever.customer.reactnative` (was `co.ever.shop.expo`) |
+  | Carrier / merchant | `co.ever.carrier` / `co.ever.merchant` (unchanged) |
+
+  Details: `shop-mobile-flutter.md` and `shop-mobile-expo.md`, section "Store application ids".
 - The common-angular Google Maps loader never resolves without network access to Google. Admin added
   its own server-down fallback; the other apps should get one too.
 - Admin: ionicons stays on 4.6.3, because the templates use `ion-md-*` classes. Google's Drawing library
