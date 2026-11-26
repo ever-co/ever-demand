@@ -1,17 +1,24 @@
-import { Component, Input, AfterViewInit } from '@angular/core';
+import {
+	Component,
+	Input,
+	AfterViewInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import OrderBarcodeTypes, {
 	orderBarcodeTypesToString,
 } from '@modules/server.common/enums/OrderBarcodeTypes';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import QRCode from 'qrcode';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
-import { AlertController } from '@ionic/angular';
+import { BarcodeScanService } from '../../../services/native/barcode-scan.service';
+import { AlertController } from '@ionic/angular/lazy';
 import { Store } from '../../../services/store.service';
 
 @Component({
+	standalone: false,
 	selector: 'merchant-settings',
 	templateUrl: 'settings.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['settings.scss'],
 })
 export class SettingsComponent implements AfterViewInit {
@@ -36,8 +43,8 @@ export class SettingsComponent implements AfterViewInit {
 	constructor(
 		private warehouseRouter: WarehouseRouter,
 		public alertController: AlertController,
-		private barcodeScanner: BarcodeScanner,
-		private store: Store
+		private barcodeScanner: BarcodeScanService,
+		private store: Store,
 	) {}
 
 	ngAfterViewInit(): void {
@@ -60,7 +67,7 @@ export class SettingsComponent implements AfterViewInit {
 		try {
 			await this.warehouseRouter.save(
 				this.currWarehouse,
-				this.store.token
+				this.store.token,
 			);
 			const alert = await this.alertController.create({
 				cssClass: 'success-info',
@@ -102,7 +109,7 @@ export class SettingsComponent implements AfterViewInit {
 	private async generateQRCode() {
 		if (this.currWarehouse) {
 			this.barcodetDataUrl = await QRCode.toDataURL(
-				this.currWarehouse.barcodeData
+				this.currWarehouse.barcodeData,
 			);
 		}
 

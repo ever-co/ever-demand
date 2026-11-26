@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ViewCell } from '../table-components/smart-table';
 import User from '@modules/server.common/entities/User';
 
 @Component({
+	standalone: false,
 	selector: 'customer-image-view',
 	styleUrls: ['./image.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<span class="image-component">
 			<img *ngIf="user?.image" src="{{ user.image }}" />

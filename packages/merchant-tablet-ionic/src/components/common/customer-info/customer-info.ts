@@ -1,9 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import UserOrder from '@modules/server.common/entities/UserOrder';
 
 @Component({
+	standalone: false,
 	selector: 'customer-info',
 	styleUrls: ['./customer-info.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'customer-info.html',
 })
 export class CustomerInfoComponent {

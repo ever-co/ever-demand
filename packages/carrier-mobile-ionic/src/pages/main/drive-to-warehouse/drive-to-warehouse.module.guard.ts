@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanLoad, Route, Router } from '@angular/router';
-import { Store } from 'services/store.service';
+import { Store } from '../../../services/store.service';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { first } from 'rxjs/operators';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';

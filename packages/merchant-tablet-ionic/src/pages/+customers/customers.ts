@@ -1,11 +1,12 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { bindViewCell } from '../../components/table-components/smart-table';
 import User from '@modules/server.common/entities/User';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { IOrderCreateInput } from '@modules/server.common/routers/IWarehouseOrdersRouter';
 import Order from '@modules/server.common/entities/Order';
 import { Observable, forkJoin, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource, Settings } from 'angular2-smart-table';
 import { UserPhoneComponent } from '../../components/users-table/phone';
 import { AddressComponent } from '../../components/users-table/address';
 import { OrdersComponent } from '../../components/users-table/orders';
@@ -15,22 +16,24 @@ import { UserMutationComponent } from '../../@shared/user/mutation/user-mutation
 import { ImageUserComponent } from '../../components/users-table/image';
 import { OrdersService } from '../../../src/services/orders.service';
 import { Store } from '../../../src/services/store.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 import { CustomerAddrPopupPage } from './customer-addr-popup/customer-addr-popup';
-import { ConfirmDeletePopupPage } from 'components/confirm-delete-popup/confirm-delete-popup';
-import { WarehouseOrdersService } from 'services/warehouse-orders.service';
+import { ConfirmDeletePopupPage } from '../../components/confirm-delete-popup/confirm-delete-popup';
+import { WarehouseOrdersService } from '../../services/warehouse-orders.service';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'page-customers',
 	templateUrl: 'customers.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./customers.scss'],
 })
 export class CustomersPage implements OnDestroy {
 	orders: Order[];
 	users: User[];
 	showNoDeliveryIcon: boolean;
-	settingsSmartTable: object;
+	settingsSmartTable: Settings;
 	sourceSmartTable = new LocalDataSource();
 
 	private _ngDestroy$ = new Subject<void>();
@@ -42,7 +45,7 @@ export class CustomersPage implements OnDestroy {
 		private readonly _translateService: TranslateService,
 		private readonly ordersService: OrdersService,
 		private readonly warehouseOrdersService: WarehouseOrdersService,
-		private readonly store: Store
+		private readonly store: Store,
 	) {
 		this.loadUsers();
 		this._loadSettingsSmartTable();
@@ -207,7 +210,7 @@ export class CustomersPage implements OnDestroy {
 						orders: userInfo.ordersCount,
 						total: userInfo.totalPrice,
 					};
-				}
+				},
 			);
 
 			this.sourceSmartTable.load(usersVM);
@@ -222,14 +225,14 @@ export class CustomersPage implements OnDestroy {
 						user: User;
 						ordersCount: number;
 						totalPrice: number;
-					}>
+					}>,
 				) => {
 					userInfo.length === 0
 						? (this.showNoDeliveryIcon = true)
 						: (this.showNoDeliveryIcon = false);
 
 					loadData(userInfo);
-				}
+				},
 			);
 	}
 
@@ -245,7 +248,7 @@ export class CustomersPage implements OnDestroy {
 			getTranslate('ADDRESSES'),
 			getTranslate('ORDERS'),
 			getTranslate('TOTAL'),
-			getTranslate('E_MAIL')
+			getTranslate('E_MAIL'),
 		)
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe(
@@ -254,7 +257,6 @@ export class CustomersPage implements OnDestroy {
 						mode: 'external',
 						edit: {
 							editButtonContent: '<i class="fa fa-edit"></i>',
-							confirmEdit: true,
 						},
 						delete: {
 							deleteButtonContent: '<i class="fa fa-trash"></i>',
@@ -264,7 +266,8 @@ export class CustomersPage implements OnDestroy {
 							custom: [
 								{
 									name: 'track',
-									title: '<i class="fa fa-map-marker"></i>',
+									customButtonContent:
+										'<i class="fa fa-map-marker"></i>',
 								},
 							],
 						},
@@ -273,37 +276,43 @@ export class CustomersPage implements OnDestroy {
 								title: image,
 								type: 'custom',
 								renderComponent: ImageUserComponent,
-								filter: false,
+								componentInitFunction: bindViewCell(),
+								isFilterable: false,
 							},
 							name: { title: name },
 							phone: {
 								title: phone,
 								type: 'custom',
 								renderComponent: UserPhoneComponent,
+								componentInitFunction: bindViewCell(),
 							},
 							addresses: {
 								title: addresses,
 								type: 'custom',
 								renderComponent: AddressComponent,
+								componentInitFunction: bindViewCell(),
 							},
 							orders: {
 								title: orders,
 								class: 'text-center',
 								type: 'custom',
 								renderComponent: OrdersComponent,
+								componentInitFunction: bindViewCell(),
 							},
 							total: {
 								title: total,
 								class: 'text-center',
 								type: 'custom',
 								renderComponent: TotalComponent,
+								componentInitFunction: bindViewCell(),
 							},
 							email: {
 								title: email,
 								class: 'text-center',
-								filter: false,
+								isFilterable: false,
 								type: 'custom',
 								renderComponent: EmailComponent,
+								componentInitFunction: bindViewCell(),
 							},
 						},
 						pager: {
@@ -311,7 +320,7 @@ export class CustomersPage implements OnDestroy {
 							perPage: 14,
 						},
 					};
-				}
+				},
 			);
 	}
 

@@ -7,6 +7,7 @@ import {
 	ViewChild,
 	ElementRef,
 	EventEmitter,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
@@ -24,11 +25,13 @@ import {
 } from '@modules/server.common/entities/GeoLocation';
 import { isEmpty } from 'lodash';
 import { TranslateService } from '@ngx-translate/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular/lazy';
 import { Store } from '../../../services/store.service';
 
 @Component({
+	standalone: false,
 	selector: 'merchant-location',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'location.html',
 })
 export class LocationComponent implements OnInit, OnChanges, OnDestroy {
@@ -67,7 +70,7 @@ export class LocationComponent implements OnInit, OnChanges, OnDestroy {
 		private warehouseRouter: WarehouseRouter,
 		public alertController: AlertController,
 		private translate: TranslateService,
-		private store: Store
+		private store: Store,
 	) {
 		this.buildForm();
 		this.bindFormControls();
@@ -80,7 +83,7 @@ export class LocationComponent implements OnInit, OnChanges, OnDestroy {
 	ngOnChanges(): void {
 		if (this.currWarehouse) {
 			this.country.setValue(
-				this.currWarehouse.geoLocation.countryId.toString()
+				this.currWarehouse.geoLocation.countryId.toString(),
 			);
 			this.city.setValue(this.currWarehouse.geoLocation.city);
 			this.postcode.setValue(this.currWarehouse.geoLocation.postcode);
@@ -90,10 +93,10 @@ export class LocationComponent implements OnInit, OnChanges, OnDestroy {
 			// here is used hardcode value in coordinates because from interface in Geolocation we are sure
 			// that in array coordinated on first position is lat and on second is long
 			this.latitude.setValue(
-				this.currWarehouse.geoLocation.coordinates.lat
+				this.currWarehouse.geoLocation.coordinates.lat,
 			);
 			this.longitude.setValue(
-				this.currWarehouse.geoLocation.coordinates.lng
+				this.currWarehouse.geoLocation.coordinates.lng,
 			);
 		}
 	}
@@ -115,7 +118,7 @@ export class LocationComponent implements OnInit, OnChanges, OnDestroy {
 		this.prepareUpdate();
 		const warehouse = await this.warehouseRouter.save(
 			this.currWarehouse,
-			this.store.token
+			this.store.token,
 		);
 		const alert = await this.alertController.create({
 			cssClass: 'success-info',
@@ -147,7 +150,7 @@ export class LocationComponent implements OnInit, OnChanges, OnDestroy {
 		this.house = this.locationForm.get('house');
 		this.apartment = this.locationForm.get('apartment');
 		this.autodetectCoordinates = this.locationForm.get(
-			'autodetectCoordinates'
+			'autodetectCoordinates',
 		);
 		this.latitude = this.locationForm.get('latitude');
 		this.longitude = this.locationForm.get('longitude');
@@ -182,7 +185,7 @@ export class LocationComponent implements OnInit, OnChanges, OnDestroy {
 			{
 				location: new google.maps.LatLng(
 					this.latitude.value,
-					this.longitude.value
+					this.longitude.value,
 				),
 			},
 			(res, status) => {
@@ -193,14 +196,13 @@ export class LocationComponent implements OnInit, OnChanges, OnDestroy {
 					const place = res[0];
 					this._applyNewPlaceOnTheMap(place);
 				}
-			}
+			},
 		);
 	}
 
 	private _applyNewPlaceOnTheMap(
 		locationResult:
-			| google.maps.GeocoderResult
-			| google.maps.places.PlaceResult
+			google.maps.GeocoderResult | google.maps.places.PlaceResult,
 	) {
 		if (
 			locationResult.geometry === undefined ||
@@ -231,8 +233,7 @@ export class LocationComponent implements OnInit, OnChanges, OnDestroy {
 
 	private _gatherAddressInformation(
 		locationResult:
-			| google.maps.GeocoderResult
-			| google.maps.places.PlaceResult
+			google.maps.GeocoderResult | google.maps.places.PlaceResult,
 	) {
 		const longName = 'long_name';
 		const shortName = 'short_name';
@@ -299,7 +300,7 @@ export class LocationComponent implements OnInit, OnChanges, OnDestroy {
 			city,
 			streetName,
 			streetNumber,
-			postcode
+			postcode,
 		);
 	}
 
@@ -308,7 +309,7 @@ export class LocationComponent implements OnInit, OnChanges, OnDestroy {
 		city,
 		streetName,
 		streetNumber,
-		postcode
+		postcode,
 	) {
 		if (!isEmpty(country)) {
 			this.country.setValue(Country[country].toString());
@@ -332,7 +333,7 @@ export class LocationComponent implements OnInit, OnChanges, OnDestroy {
 			const inputElement = await this.searchElement['getInputElement']();
 
 			const autocomplete = new google.maps.places.Autocomplete(
-				inputElement
+				inputElement,
 			);
 
 			this._setupGoogleAutocompleteOptions(autocomplete);
@@ -341,17 +342,18 @@ export class LocationComponent implements OnInit, OnChanges, OnDestroy {
 	}
 
 	private _setupGoogleAutocompleteOptions(
-		autocomplete: google.maps.places.Autocomplete
+		autocomplete: google.maps.places.Autocomplete,
 	) {
 		autocomplete.setComponentRestrictions({ country: ['us', 'bg', 'il'] });
 		autocomplete['setFields'](['address_components', 'geometry']);
 	}
 
 	private _listenForGoogleAutocompleteAddressChanges(
-		autocomplete: google.maps.places.Autocomplete
+		autocomplete: google.maps.places.Autocomplete,
 	) {
 		autocomplete.addListener('place_changed', (_) => {
-			const place: google.maps.places.PlaceResult = autocomplete.getPlace();
+			const place: google.maps.places.PlaceResult =
+				autocomplete.getPlace();
 			this._applyNewPlaceOnTheMap(place);
 		});
 	}
@@ -391,7 +393,7 @@ export class LocationComponent implements OnInit, OnChanges, OnDestroy {
 						this._applyNewPlaceOnTheMap(place);
 						this._applyFormattedAddress(formattedAddress);
 					}
-				}
+				},
 			);
 		}
 	}

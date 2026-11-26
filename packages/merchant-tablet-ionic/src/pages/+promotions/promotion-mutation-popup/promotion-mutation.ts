@@ -6,19 +6,22 @@ import {
 	EventEmitter,
 	Output,
 	OnInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { IPromotion } from '@modules/server.common/interfaces/IPromotion';
 import { BasicInfoFormComponent } from '../promotion-forms/basic-info/basic-info-form.component';
-import { ToastController, ModalController } from '@ionic/angular';
+import { ToastController, ModalController } from '@ionic/angular/lazy';
 import { DetailsInfoFormComponent } from '../promotion-forms/details-info/details-info-form.component';
-import { PromotionService } from 'services/promotion.service';
+import { PromotionService } from '../../../services/promotion.service';
 import { first } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
+	standalone: false,
 	selector: 'promotion-mutation',
 	templateUrl: 'promotion-mutation.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./promotion-mutation.scss'],
 })
 export class PromotionMutation implements OnDestroy {
@@ -53,7 +56,7 @@ export class PromotionMutation implements OnDestroy {
 		private readonly _formBuilder: FormBuilder,
 		private readonly toastrController: ToastController,
 		private readonly modalController: ModalController,
-		private readonly promotionService: PromotionService
+		private readonly promotionService: PromotionService,
 	) {}
 
 	ngOnDestroy(): void {
@@ -82,13 +85,13 @@ export class PromotionMutation implements OnDestroy {
 					},
 					(err) => {
 						this.presentToast(
-							err.message || 'Something went wrong!'
+							err.message || 'Something went wrong!',
 						);
 					},
 					() => {
 						this.updateVisible.emit(true);
 						this.cancelModal();
-					}
+					},
 				);
 		} else {
 			this.promotionService
@@ -100,13 +103,13 @@ export class PromotionMutation implements OnDestroy {
 					},
 					(err) => {
 						this.presentToast(
-							err.message || 'Something went wrong!'
+							err.message || 'Something went wrong!',
 						);
 					},
 					() => {
 						this.updateVisible.emit(true);
 						this.cancelModal();
-					}
+					},
 				);
 		}
 	}

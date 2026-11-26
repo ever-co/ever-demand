@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { FormWizardModule } from '@ever-co/angular2-wizard';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { TranslateModule } from '@ngx-translate/core';
+import { FormWizardModule } from '../../../components/form-wizard/form-wizard.module';
+import { Angular2SmartTableModule } from 'angular2-smart-table';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileUploadModule } from 'ng2-file-upload';
 import { CarrierBasicFormsModule } from './basic-info/basic-info-form.module';
@@ -10,14 +10,14 @@ import { CarrierLocationFormsModule } from './location/location-form.module';
 import { GoogleMapModule } from '../../../@shared/google-map/google-map.module';
 import { CarrierEditPopupPage } from './carrier-edit-popup';
 import { CarrierService } from '../../../services/carrier.service';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular/lazy';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
     declarations: [CarrierEditPopupPage],
     imports: [
         FormWizardModule,
-        Ng2SmartTableModule,
+        Angular2SmartTableModule,
         FileUploadModule,
         FormsModule,
         ReactiveFormsModule,

@@ -1,4 +1,9 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnChanges,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import {
 	FormBuilder,
 	FormGroup,
@@ -7,11 +12,13 @@ import {
 } from '@angular/forms';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
-import { AlertController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular/lazy';
 import { Store } from '../../../services/store.service';
 
 @Component({
+	standalone: false,
 	selector: 'merchant-common',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'common.html',
 })
 export class CommonComponent implements OnChanges {
@@ -28,7 +35,7 @@ export class CommonComponent implements OnChanges {
 		private formBuilder: FormBuilder,
 		private warehouseRouter: WarehouseRouter,
 		public alertController: AlertController,
-		private store: Store
+		private store: Store,
 	) {
 		this.buildForm();
 		this.bindFormControls();

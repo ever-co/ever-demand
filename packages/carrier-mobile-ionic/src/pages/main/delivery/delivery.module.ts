@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { DeliveryPage } from './delivery';
-import { TranslateModule } from '@ngx-translate/core';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { GeoLocationService } from '../../../services/geo-location.service';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -23,6 +22,6 @@ const routes: Routes = [
 		RouterModule.forChild(routes),
 		MapModule,
 	],
-	providers: [Geolocation, GeoLocationService],
+	providers: [GeoLocationService],
 })
 export class DeliveryPageModule {}

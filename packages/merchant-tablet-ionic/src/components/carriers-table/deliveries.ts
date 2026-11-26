@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ViewCell } from '../table-components/smart-table';
 import Carrier from '@modules/server.common/entities/Carrier';
-import { ModalController } from '@ionic/angular';
-import { CarrierDeliveriesPopupPage } from 'pages/+carriers/carrier-deliveries-popup/carrier-deliveries-popup';
+import { ModalController } from '@ionic/angular/lazy';
+import { CarrierDeliveriesPopupPage } from '../../pages/+carriers/carrier-deliveries-popup/carrier-deliveries-popup';
 
 @Component({
+	standalone: false,
 	styles: [``],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<div class="text-center">
-			<ion-icon
-				ios="ios-information-circle"
-				md="md-information-circle"
+			<ion-icon name="information-circle"
 			></ion-icon>
 		</div>
 		<div class="text-center">

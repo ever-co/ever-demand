@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import Order from '@modules/server.common/entities/Order';
-import { map, share } from 'rxjs/operators';
+import { filter, map, share } from 'rxjs/operators';
 import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 
 @Injectable()
@@ -40,7 +40,9 @@ export class GeoLocationOrdersService {
 				pollInterval: 2000,
 			})
 			.valueChanges.pipe(
-				map((res) => res.data.getOrderForWork),
+				// Apollo Client 4 also emits loading states without data
+				filter((res) => !!res.data),
+				map((res) => res.data.getOrderForWork as Order),
 				share()
 			);
 	}

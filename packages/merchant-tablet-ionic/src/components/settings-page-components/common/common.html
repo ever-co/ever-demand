@@ -5,23 +5,27 @@
 		</h1>
 
 		<ion-item mode="ios">
-			<ion-label class="labels" position="floating">
-				{{ 'SETTINGS_VIEW.NAME' | translate }}</ion-label
+			<ion-input
+				labelPlacement="floating"
+				type="text"
+				formControlName="name"
+				><div slot="label" class="labels">
+					{{ 'SETTINGS_VIEW.NAME' | translate }}
+				</div></ion-input
 			>
-			<ion-input type="text" formControlName="name"></ion-input>
 		</ion-item>
 
 		<span *ngIf="name.invalid && (name.dirty || name.touched)">
 			<span [hidden]="!name.errors.required">
-				<small style="color: red; margin-left: 16px;">
+				<small style="color: red; margin-left: 16px">
 					{{ 'SETTINGS_VIEW.NAME_IS_REQUIRED' | translate }}.
 				</small>
 			</span>
 		</span>
 
 		<e-cu-file-uploader
-			[name]="name?.value"
-			[fileUrl]="logo?.value"
+			[name]="$safeNavigationMigration(name?.value)"
+			[fileUrl]="$safeNavigationMigration(logo?.value)"
 			(uploadedImgUrl)="logo.setValue($event)"
 			itemMode="ios"
 		></e-cu-file-uploader>
@@ -38,10 +42,8 @@
 					</div>
 
 					<div class="removeIcon" (click)="deleteImg()">
-						<ion-icon
-							ios="ios-remove-circle"
+						<ion-icon name="remove-circle"
 							id="remove-circle"
-							md="md-remove-circle"
 						></ion-icon>
 					</div>
 				</div>
@@ -54,26 +56,28 @@
 			{{ 'SETTINGS_VIEW.CONTACT_INFO' | translate }}
 		</h1>
 		<ion-item mode="ios">
-			<ion-label class="labels" position="floating">
-				{{ 'SETTINGS_VIEW.E_MAIL' | translate }}</ion-label
-			>
 			<ion-input
+				labelPlacement="floating"
 				type="text"
 				#warehouseEmailInput
 				id="warehouseEmailInput"
 				formControlName="email"
-			></ion-input>
+				><div slot="label" class="labels">
+					{{ 'SETTINGS_VIEW.E_MAIL' | translate }}
+				</div></ion-input
+			>
 		</ion-item>
 		<ion-item mode="ios">
-			<ion-label class="labels" position="floating">
-				{{ 'SETTINGS_VIEW.PHON_NUMBER' | translate }}</ion-label
-			>
 			<ion-input
+				labelPlacement="floating"
 				type="text"
 				#warehousePhoneInput
 				id="warehousePhoneInput"
 				formControlName="phone"
-			></ion-input>
+				><div slot="label" class="labels">
+					{{ 'SETTINGS_VIEW.PHON_NUMBER' | translate }}
+				</div></ion-input
+			>
 		</ion-item>
 	</div>
 

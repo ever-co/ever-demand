@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ViewCell } from '../table-components/smart-table';
 import User from '@modules/server.common/entities/User';
 
 @Component({
+	standalone: false,
 	styles: [
 		`
 			h1 {
-				font-weight: normal !importnat;
+				font-weight: normal !important;
 			}
 			.address {
 				font-style: italic !important;
@@ -15,6 +16,7 @@ import User from '@modules/server.common/entities/User';
 			}
 		`,
 	],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<strong
 			>{{ user?.geoLocation.city }}

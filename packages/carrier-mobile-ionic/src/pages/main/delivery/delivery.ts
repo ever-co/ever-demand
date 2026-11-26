@@ -1,23 +1,29 @@
-import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	AfterViewInit,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
-import { Mixpanel } from '@ionic-native/mixpanel/ngx';
+import { AnalyticsService } from '../../../services/native/analytics.service';
 import Utils from '@modules/server.common/utils';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { CurrentPositionService } from '../../../services/native/current-position.service';
 import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { GeoLocationService } from '../../../services/geo-location.service';
 import { MapComponent } from '../common/map/map.component';
 import { Router } from '@angular/router';
-import { Store } from 'services/store.service';
+import { Store } from '../../../services/store.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
-declare var google: any;
-
 @Component({
+	standalone: false,
 	selector: 'page-delivery',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'delivery.html',
 })
 export class DeliveryPage implements AfterViewInit, OnDestroy {
@@ -36,11 +42,11 @@ export class DeliveryPage implements AfterViewInit, OnDestroy {
 
 	constructor(
 		private orderRouter: OrderRouter,
-		private mixpanel: Mixpanel,
+		private analytics: AnalyticsService,
 		private geoLocationService: GeoLocationService,
-		private geolocation: Geolocation,
+		private geolocation: CurrentPositionService,
 		private router: Router,
-		private store: Store
+		private store: Store,
 	) {}
 
 	async delivered() {
@@ -54,10 +60,10 @@ export class DeliveryPage implements AfterViewInit, OnDestroy {
 
 			await this.orderRouter.updateCarrierStatus(
 				this.selectedOrder['id'],
-				OrderCarrierStatus.DeliveryCompleted
+				OrderCarrierStatus.DeliveryCompleted,
 			);
 
-			this.mixpanel.track('Order Delivered');
+			this.analytics.track('Order Delivered');
 		} else {
 			alert('Try again!');
 		}
@@ -112,21 +118,21 @@ export class DeliveryPage implements AfterViewInit, OnDestroy {
 					},
 				} as IGeoLocation;
 
-				const origin = new google.maps.LatLng(
-					position.coords.latitude,
-					position.coords.longitude
-				);
+				const origin = {
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				};
 				const userGeo = order.user['geoLocation'];
 
 				this.carrierUserDistance = Utils.getDistance(
 					userGeo,
-					dbGeoInput as GeoLocation
+					dbGeoInput as GeoLocation,
 				).toFixed(2);
 
-				const destination = new google.maps.LatLng(
-					userGeo.loc.coordinates[1],
-					userGeo.loc.coordinates[0]
-				);
+				const destination = {
+					lat: userGeo.loc.coordinates[1],
+					lng: userGeo.loc.coordinates[0],
+				};
 
 				this.carrierMap.setCenter(origin);
 				this.carrierMap.drawRoute(origin, destination);

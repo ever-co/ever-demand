@@ -1,7 +1,14 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	Output,
+	ChangeDetectionStrategy,
+} from '@angular/core';
+import { ViewCell } from '../../table-components/smart-table';
 
 @Component({
+	standalone: false,
 	styles: [
 		`
 			.order-comment-wrapper textarea {
@@ -9,6 +16,7 @@ import { ViewCell } from 'ng2-smart-table';
 			}
 		`,
 	],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<div class="order-comment-wrapper">
 			<textarea (blur)="setComment($event)"></textarea>

@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { WarehousePage } from './warehouse';
 import { ComponentsModule } from '../../components/components.module';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { OrderModule } from '../../components/order/order.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AllOrdersComponent } from './all-oders/all-orders.component';
@@ -17,15 +15,12 @@ import { TopProductsComponent } from './top-products/top-products.component';
 import { WarehouseProductsService } from '../../services/warehouse-products.service';
 import { NgxMasonryModule } from 'ngx-masonry';
 import { Routes, RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular/lazy';
 import { CreateProductTypePopupPageModule } from './create-product-type-popup/create-product-type-popup.module';
 import { EditProductTypePopupPageModule } from './edit-product-type-popup/edit-product-type-popup.module';
-import { WarehousesService } from 'services/warehouses.service';
+import { WarehousesService } from '../../services/warehouses.service';
 import { OrderStatusFilterPipe } from './warehouse.pipe';
 
-export function HttpLoaderFactory(http: HttpClient) {
-	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
 
 const routes: Routes = [
 	{
@@ -49,13 +44,7 @@ const routes: Routes = [
 		CommonModule,
 		IonicModule,
 		RouterModule.forChild(routes),
-		TranslateModule.forChild({
-			loader: {
-				provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
-				deps: [HttpClient],
-			},
-		}),
+		TranslateModule.forChild(),
 		NgxPaginationModule,
 		WarehouseCommonModule,
 		NgxMasonryModule,

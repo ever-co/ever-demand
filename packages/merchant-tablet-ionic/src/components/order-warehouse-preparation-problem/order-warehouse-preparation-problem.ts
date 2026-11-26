@@ -1,10 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 
 @Component({
+	standalone: false,
 	selector: 'order-warehouse-preparation-problem',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'order-warehouse-preparation-problem.html',
 })
 export class OrderWarehousePreparationProblemComponent {

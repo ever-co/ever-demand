@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { LanguagePage } from './language';
-import { TranslateModule } from '@ngx-translate/core';
-import { IonicModule } from '@ionic/angular';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
+import { IonicModule } from '@ionic/angular/lazy';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';

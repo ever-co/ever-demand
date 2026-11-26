@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, ExtraOptions } from '@angular/router';
-import { PagesModuleGuard } from 'pages/pages.module.guard';
+import { PagesModuleGuard } from '../pages/pages.module.guard';
 import { InfoModuleGuard } from './info/info.module.guard';
 
 const routes: Routes = [

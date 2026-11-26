@@ -7,6 +7,7 @@ import {
 	Output,
 	OnInit,
 	OnChanges,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import {
 	FormBuilder,
@@ -26,13 +27,15 @@ import {
 } from '@modules/server.common/entities/GeoLocation';
 
 import { isEmpty } from 'lodash';
-import { Store } from 'services/store.service';
+import { Store } from '../../../../../services/store.service';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { first } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'carrier-location-form',
 	styleUrls: ['./location-form.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'location-form.component.html',
 })
 export class LocationFormComponent implements OnDestroy, OnInit, OnChanges {
@@ -74,7 +77,7 @@ export class LocationFormComponent implements OnDestroy, OnInit, OnChanges {
 		private formBuilder: FormBuilder,
 		private translate: TranslateService,
 		private store: Store,
-		private warehouseRouter: WarehouseRouter
+		private warehouseRouter: WarehouseRouter,
 	) {}
 
 	get buttonOK() {
@@ -163,7 +166,7 @@ export class LocationFormComponent implements OnDestroy, OnInit, OnChanges {
 			{
 				location: new google.maps.LatLng(
 					this.lat.value,
-					this.lng.value
+					this.lng.value,
 				),
 			},
 			(res, status) => {
@@ -174,14 +177,13 @@ export class LocationFormComponent implements OnDestroy, OnInit, OnChanges {
 					const place = res[0];
 					this._applyNewPlaceOnTheMap(place);
 				}
-			}
+			},
 		);
 	}
 
 	private _applyNewPlaceOnTheMap(
 		locationResult:
-			| google.maps.GeocoderResult
-			| google.maps.places.PlaceResult
+			google.maps.GeocoderResult | google.maps.places.PlaceResult,
 	) {
 		if (
 			locationResult.geometry === undefined ||
@@ -202,8 +204,7 @@ export class LocationFormComponent implements OnDestroy, OnInit, OnChanges {
 
 	private _gatherAddressInformation(
 		locationResult:
-			| google.maps.GeocoderResult
-			| google.maps.places.PlaceResult
+			google.maps.GeocoderResult | google.maps.places.PlaceResult,
 	) {
 		const longName = 'long_name';
 		const shortName = 'short_name';
@@ -270,7 +271,7 @@ export class LocationFormComponent implements OnDestroy, OnInit, OnChanges {
 			city,
 			streetName,
 			streetNumber,
-			postcode
+			postcode,
 		);
 	}
 
@@ -289,7 +290,7 @@ export class LocationFormComponent implements OnDestroy, OnInit, OnChanges {
 		city,
 		streetName,
 		streetNumber,
-		postcode
+		postcode,
 	) {
 		if (!isEmpty(country)) {
 			this.country.setValue(Country[country].toString());
@@ -313,7 +314,7 @@ export class LocationFormComponent implements OnDestroy, OnInit, OnChanges {
 			const inputElement = await this.searchElement['getInputElement']();
 
 			const autocomplete = new google.maps.places.Autocomplete(
-				inputElement
+				inputElement,
 			);
 
 			this._setupGoogleAutocompleteOptions(autocomplete);
@@ -322,17 +323,18 @@ export class LocationFormComponent implements OnDestroy, OnInit, OnChanges {
 	}
 
 	private _setupGoogleAutocompleteOptions(
-		autocomplete: google.maps.places.Autocomplete
+		autocomplete: google.maps.places.Autocomplete,
 	) {
 		autocomplete.setComponentRestrictions({ country: ['us', 'bg', 'il'] });
 		autocomplete['setFields'](['address_components', 'geometry']);
 	}
 
 	private _listenForGoogleAutocompleteAddressChanges(
-		autocomplete: google.maps.places.Autocomplete
+		autocomplete: google.maps.places.Autocomplete,
 	) {
 		autocomplete.addListener('place_changed', (_) => {
-			const place: google.maps.places.PlaceResult = autocomplete.getPlace();
+			const place: google.maps.places.PlaceResult =
+				autocomplete.getPlace();
 			this._applyNewPlaceOnTheMap(place);
 		});
 	}
@@ -372,7 +374,7 @@ export class LocationFormComponent implements OnDestroy, OnInit, OnChanges {
 						this._applyNewPlaceOnTheMap(place);
 						this._applyFormattedAddress(formattedAddress);
 					}
-				}
+				},
 			);
 		}
 	}

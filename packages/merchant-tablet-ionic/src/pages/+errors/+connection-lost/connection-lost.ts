@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { environment } from '../../../environments/environment';
 
 @Component({
+	standalone: false,
 	selector: 'page-connection-lost',
 	templateUrl: 'connection-lost.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./connection-lost.scss'],
 })
 export class ConnectionLostPage {

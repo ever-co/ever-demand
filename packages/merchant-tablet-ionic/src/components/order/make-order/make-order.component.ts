@@ -5,8 +5,10 @@ import {
 	EventEmitter,
 	OnInit,
 	OnDestroy,
+	ChangeDetectionStrategy,
 } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource, Settings } from 'angular2-smart-table';
+import { bindViewCell } from '../../table-components/smart-table';
 import { Subject, Observable, forkJoin } from 'rxjs';
 import { MakeOrderInputComponent } from './make-order-input.component';
 import { IOrderCreateInputProduct } from '@modules/server.common/routers/IWarehouseOrdersRouter';
@@ -17,13 +19,15 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { WarehouseOrdersService } from '../../../services/warehouse-orders.service';
 import { TranslateService } from '@ngx-translate/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular/lazy';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 import { MakeOrderCommentComponent } from './make-order-comment.component';
 
 @Component({
+	standalone: false,
 	selector: 'make-order',
 	templateUrl: './make-order.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./make-order.component.scss'],
 })
 export class MakeOrderComponent implements OnInit, OnDestroy {
@@ -41,7 +45,7 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 	@Output()
 	isOrderAllowedEmitter = new EventEmitter<boolean>();
 
-	settingsSmartTable: any;
+	settingsSmartTable: Settings;
 	sourceSmartTable = new LocalDataSource();
 	errorMsg: string = 'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.ERROR_MSG';
 
@@ -56,7 +60,7 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 		private readonly _productLocaleService: ProductLocalesService,
 		private readonly _warehouseOrdersService: WarehouseOrdersService,
 		private readonly _alertController: AlertController,
-		private readonly _translateService: TranslateService
+		private readonly _translateService: TranslateService,
 	) {}
 
 	get canOrder(): boolean {
@@ -74,7 +78,7 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 
 	makeOrder() {
 		const orderProducts = this._orderProducts.filter(
-			({ count }) => count > 0
+			({ count }) => count > 0,
 		);
 
 		this._warehouseOrdersService
@@ -91,12 +95,13 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 				},
 				() => {
 					this._showNotification(this.errorMsg);
-				}
+				},
 			);
 	}
 
 	private _compareByAvailableProducts(_, first, second) {
-		const regex = /<div class="text-center"><div class="badge badge-pill badge-secondary text-center">([0-9]+)<\/div><\/div>/gm;
+		const regex =
+			/<div class="text-center"><div class="badge badge-pill badge-secondary text-center">([0-9]+)<\/div><\/div>/gm;
 
 		const matchFirst = +regex.exec(first)[1];
 		regex.lastIndex = 0; // to reset the regex
@@ -131,7 +136,7 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 					count: 0,
 					comment: '',
 				};
-			}
+			},
 		);
 
 		const productsData = this._warehouseProducts.map(
@@ -141,7 +146,7 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 						<img src="${this._getTranslate(wp.product['images'])}" height="68px"/>
 					`,
 					product: `
-						<span class="float-left">${this._getTranslate(wp.product['title'])}</span>
+						<span class="float-start">${this._getTranslate(wp.product['title'])}</span>
 					`,
 					price: `<div class="text-center">$${wp.price}</div>`,
 					available: `
@@ -150,7 +155,7 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 					amount: { productId: wp.productId, available: wp.count },
 					comment: { productId: wp.productId },
 				};
-			}
+			},
 		);
 
 		this.sourceSmartTable.setSort([
@@ -179,7 +184,7 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 			getTranslate('PRICE'),
 			getTranslate('AVAILABLE'),
 			getTranslate('AMOUNT'),
-			getTranslate('COMMENT')
+			getTranslate('COMMENT'),
 		)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(
@@ -190,7 +195,7 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 						columns: {
 							img: {
 								title: image,
-								filter: false,
+								isFilterable: false,
 								type: 'html',
 								width: '50px',
 							},
@@ -200,13 +205,13 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 							},
 							price: {
 								title: price,
-								filter: false,
+								isFilterable: false,
 								type: 'html',
 								compareFunction: (_, first, second) => {
 									const matchFirst = +first.replace('$', '');
 									const matchSecond = +second.replace(
 										'$',
-										''
+										'',
 									);
 									return _ > 0
 										? matchFirst - matchSecond
@@ -216,57 +221,63 @@ export class MakeOrderComponent implements OnInit, OnDestroy {
 							available: {
 								title: available,
 								type: 'html',
-								filter: false,
-								compareFunction: this
-									._compareByAvailableProducts,
+								isFilterable: false,
+								compareFunction:
+									this._compareByAvailableProducts,
 							},
 							amount: {
 								title: amount,
-								filter: false,
+								isFilterable: false,
 								type: 'custom',
 								renderComponent: MakeOrderInputComponent,
-								onComponentInitFunction: (
-									childInstance: MakeOrderInputComponent
-								) => {
-									childInstance.amount
-										.pipe(takeUntil(this._ngDestroy$))
-										.subscribe((count) => {
-											const wProduct = this._orderProducts.find(
-												({ productId }) =>
-													productId ===
-													childInstance.productId
-											);
-											wProduct.count = count;
-											this.isOrderAllowedEmitter.emit(
-												this.canOrder
-											);
-										});
-								},
+								componentInitFunction: bindViewCell(
+									(
+										childInstance: MakeOrderInputComponent,
+									) => {
+										childInstance.amount
+											.pipe(takeUntil(this._ngDestroy$))
+											.subscribe((count) => {
+												const wProduct =
+													this._orderProducts.find(
+														({ productId }) =>
+															productId ===
+															childInstance.productId,
+													);
+												wProduct.count = count;
+												this.isOrderAllowedEmitter.emit(
+													this.canOrder,
+												);
+											});
+									},
+								),
 							},
 							comment: {
 								title: comment,
-								filter: false,
+								isFilterable: false,
 								type: 'custom',
 								renderComponent: MakeOrderCommentComponent,
-								onComponentInitFunction: (
-									childInstance: MakeOrderCommentComponent
-								) => {
-									childInstance.comment
-										.pipe(takeUntil(this._ngDestroy$))
-										.subscribe((comment) => {
-											const wProduct = this._orderProducts.find(
-												({ productId }) =>
-													productId ===
-													childInstance.productId
-											);
+								componentInitFunction: bindViewCell(
+									(
+										childInstance: MakeOrderCommentComponent,
+									) => {
+										childInstance.comment
+											.pipe(takeUntil(this._ngDestroy$))
+											.subscribe((comment) => {
+												const wProduct =
+													this._orderProducts.find(
+														({ productId }) =>
+															productId ===
+															childInstance.productId,
+													);
 
-											wProduct.comment = comment;
-										});
-								},
+												wProduct.comment = comment;
+											});
+									},
+								),
 							},
 						},
 					};
-				}
+				},
 			);
 	}
 

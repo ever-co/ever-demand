@@ -7,7 +7,9 @@
 
 			<div class="order-main">
 				<div class="delivery-details">
-					<customer-info [user]="order?.user"></customer-info>
+					<customer-info
+						[user]="$safeNavigationMigration(order?.user)"
+					></customer-info>
 					<order-info [order]="order"></order-info>
 					<carrier-info
 						*ngIf="order.carrier"
@@ -41,7 +43,7 @@
 						>{{ order.createdAt | date: 'HH:mm' }}</span
 					>
 					<br />
-					<span style="font-weight: 500;"
+					<span style="font-weight: 500"
 						>(<span>{{ order.createdAt | amTimeAgo }}</span>)</span
 					>
 				</div>

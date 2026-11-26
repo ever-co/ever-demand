@@ -4,7 +4,7 @@
 		<span class="left-buttons">
 			<div class="waves-effect waves-classic">
 				<ion-menu-toggle class="button-icon" menuToggle>
-					<ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+					<ion-icon name="menu"></ion-icon>
 				</ion-menu-toggle>
 			</div>
 		</span>
@@ -14,16 +14,12 @@
 <ion-content class="language-content" scroll="false" padding>
 	<ion-list>
 		<ion-item>
-			<ion-label
-				>{{ 'SIDE_MENU.GROUPS.SETTINGS.ITEMS.LANGUAGE' | translate
-				}}</ion-label
-			>
-			<ion-select
+			<ion-select labelPlacement="start"
 				[(ngModel)]="selected"
 				(ionChange)="switchLanguage(selected)"
 				[cancelText]="buttonCancel"
-				[okText]="buttonOK"
-			>
+				[okText]="buttonOK"><div slot="label">{{ 'SIDE_MENU.GROUPS.SETTINGS.ITEMS.LANGUAGE' | translate
+				}}</div>
 				<ion-select-option
 					*ngFor="let lang of translate?.getLangs()"
 					value="{{lang}}"

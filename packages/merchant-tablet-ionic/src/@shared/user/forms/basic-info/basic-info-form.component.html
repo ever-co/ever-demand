@@ -11,36 +11,49 @@
 		<ion-row>
 			<ion-col>
 				<ion-item>
-					<ion-label class="labels" position="floating"
-						>{{
-							'WAREHOUSE_VIEW.NEW_ORDER_VIEW.FIRST_NAME'
-								| translate
-						}}
-					</ion-label>
-					<ion-input type="text" formControlName="firstName">
+					<ion-input
+						labelPlacement="floating"
+						type="text"
+						formControlName="firstName"
+						><div slot="label" class="labels">
+							{{
+								'WAREHOUSE_VIEW.NEW_ORDER_VIEW.FIRST_NAME'
+									| translate
+							}}
+						</div>
 					</ion-input>
 				</ion-item>
 			</ion-col>
 
 			<ion-col>
 				<ion-item>
-					<ion-label class="labels" position="floating">
-						{{
-							'WAREHOUSE_VIEW.NEW_ORDER_VIEW.LAST_NAME'
-								| translate
-						}}
-					</ion-label>
-					<ion-input type="text" formControlName="lastName">
+					<ion-input
+						labelPlacement="floating"
+						type="text"
+						formControlName="lastName"
+						><div slot="label" class="labels">
+							{{
+								'WAREHOUSE_VIEW.NEW_ORDER_VIEW.LAST_NAME'
+									| translate
+							}}
+						</div>
 					</ion-input>
 				</ion-item>
 			</ion-col>
 
 			<ion-col>
 				<ion-item>
-					<ion-label class="labels" position="floating">
-						{{ 'WAREHOUSE_VIEW.NEW_ORDER_VIEW.EMAIL' | translate }}
-					</ion-label>
-					<ion-input type="text" formControlName="email"> </ion-input>
+					<ion-input
+						labelPlacement="floating"
+						type="text"
+						formControlName="email"
+						><div slot="label" class="labels">
+							{{
+								'WAREHOUSE_VIEW.NEW_ORDER_VIEW.EMAIL'
+									| translate
+							}}
+						</div>
+					</ion-input>
 				</ion-item>
 
 				<div
@@ -68,8 +81,8 @@
 			<ion-col id="common">
 				<e-cu-file-uploader
 					[buttonFullSpace]="true"
-					[name]="firstName?.value"
-					[fileUrl]="image?.value"
+					[name]="$safeNavigationMigration(firstName?.value)"
+					[fileUrl]="$safeNavigationMigration(image?.value)"
 					(uploadedImgUrl)="image.setValue($event)"
 				></e-cu-file-uploader>
 				<ion-row class="form-group" *ngIf="image.value">
@@ -84,10 +97,8 @@
 							</div>
 
 							<div class="removeIcon" (click)="deleteImg()">
-								<ion-icon
-									ios="ios-remove-circle"
+								<ion-icon name="remove-circle"
 									id="remove-circle"
-									md="md-remove-circle"
 								></ion-icon>
 							</div>
 						</div>

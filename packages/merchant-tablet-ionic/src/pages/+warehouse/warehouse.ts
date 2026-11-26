@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Mixpanel } from '@ionic-native/mixpanel/ngx';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { AnalyticsService } from '../../services/native/analytics.service';
 import Order from '@modules/server.common/entities/Order';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
@@ -11,12 +11,12 @@ import { OrdersFilterModes } from '../../filters/orders-filters';
 import * as _ from 'lodash';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { Store } from '../../../src/services/store.service';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { BarcodeScanService } from '../../services/native/barcode-scan.service';
 import Product from '@modules/server.common/entities/Product';
-import { PopoverController, ModalController } from '@ionic/angular';
+import { PopoverController, ModalController } from '@ionic/angular/lazy';
 import { CreateProductTypePopupPage } from './create-product-type-popup/create-product-type-popup';
 import { EditProductTypePopupPage } from './edit-product-type-popup/edit-product-type-popup';
-import { WarehousesService } from 'services/warehouses.service';
+import { WarehousesService } from '../../services/warehouses.service';
 
 export enum OrderState {
 	WarehousePreparation,
@@ -28,18 +28,20 @@ export enum OrderState {
 }
 
 export enum OrderStatus {
-	'all' = 'ALL',
-	'confirmed' = 'CONFIRMED',
-	'processing' = 'PROCESSING',
-	'alocation_started' = 'ALLOCATION_STARTED',
-	'packaging' = 'PACKAGING_STARTED',
-	'packaged' = 'PACKAGED',
-	'in_delivery' = 'GIVEN_TO_CARRIER',
+	all = 'ALL',
+	confirmed = 'CONFIRMED',
+	processing = 'PROCESSING',
+	alocation_started = 'ALLOCATION_STARTED',
+	packaging = 'PACKAGING_STARTED',
+	packaged = 'PACKAGED',
+	in_delivery = 'GIVEN_TO_CARRIER',
 }
 
 @Component({
+	standalone: false,
 	selector: 'page-warehouse',
 	templateUrl: './warehouse.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./warehouse.scss'],
 })
 export class WarehousePage implements OnInit {
@@ -67,11 +69,11 @@ export class WarehousePage implements OnInit {
 		public modalCtrl: ModalController,
 		private orderRouter: OrderRouter,
 		private warehouseProductsRouter: WarehouseProductsRouter,
-		private mixpanel: Mixpanel,
+		private mixpanel: AnalyticsService,
 		private translateProductLocales: ProductLocalesService,
 		private store: Store,
-		private barcodeScanner: BarcodeScanner,
-		private warehouseService: WarehousesService
+		private barcodeScanner: BarcodeScanService,
+		private warehouseService: WarehousesService,
 	) {}
 
 	// ionViewDidLoad() {
@@ -152,7 +154,7 @@ export class WarehousePage implements OnInit {
 	getWarehouseProductImageUrl(p: Product): string | void {
 		if (p instanceof Product) {
 			const productImg = p.images.filter((i) =>
-				i.locale.includes(this.language)
+				i.locale.includes(this.language),
 			)[0];
 			if (productImg) {
 				return productImg.url;
@@ -214,7 +216,7 @@ export class WarehousePage implements OnInit {
 		return this.warehouseProductsRouter.increaseCount(
 			this.warehouseId,
 			productId,
-			1
+			1,
 		);
 	}
 
@@ -249,7 +251,9 @@ export class WarehousePage implements OnInit {
 		return this.orderStatus;
 	}
 
-	getWarehouseStatus(orderWarehouseStatusNumber: OrderWarehouseStatus): string {
+	getWarehouseStatus(
+		orderWarehouseStatusNumber: OrderWarehouseStatus,
+	): string {
 		const basePath = 'WAREHOUSE_VIEW.ORDER_WAREHOUSE_STATUSES.';
 		switch (orderWarehouseStatusNumber) {
 			case OrderWarehouseStatus.NoStatus:

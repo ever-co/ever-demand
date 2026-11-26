@@ -14,16 +14,12 @@
 					bad: !(data?.status === 'working')
 				}"
 			>
-				{{ data?.status | titlecase }}
+				{{ $safeNavigationMigration(data?.status) | titlecase }}
 			</div>
-			<div style="width: 100%; text-align: center;">
-				{{ data?.phone }}
-			</div>
+			<div style="width: 100%; text-align: center">{{ data?.phone }}</div>
 			<div>{{ data?.addresses }}</div>
 		</div>
-		<div *ngIf="customText" class="text custom-text">
-			{{ customText }}
-		</div>
+		<div *ngIf="customText" class="text custom-text">{{ customText }}</div>
 	</div>
 	<div class="control">
 		<ion-button (click)="confirmDelete()" color="danger">

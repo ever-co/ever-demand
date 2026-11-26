@@ -44,7 +44,7 @@
 			</div>
 
 			<ion-row>
-				<div class="col no-padding-left pl-0 pr-0">
+				<div class="col no-padding-left ps-0 pe-0">
 					<div class="popup-input-container">
 						<label>
 							<span class="popup-input-description">{{ 'EDIT_PRODUCT_POP_UP.PRICE' | translate
@@ -66,7 +66,7 @@
 					</div>
 				</div>
 
-				<div class="col no-padding-right pr-0">
+				<div class="col no-padding-right pe-0">
 					<div class="popup-input-container">
 						<label>
 							<span class="popup-input-description">{{ 'EDIT_PRODUCT_POP_UP.LANGUAGE' | translate
@@ -91,25 +91,21 @@
 			</ion-row>
 			<ion-row class="row">
 				<ion-col class="col">
-					<ion-checkbox class="mr-3" [(ngModel)]="isAvailable" (ionChange)="clickHandler()">
-					</ion-checkbox>
-					<ion-label>{{'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.PRODUCT_AVAILABILITY'|translate}}</ion-label>
+					<ion-checkbox labelPlacement="start" justify="space-between" class="me-3" [(ngModel)]="isAvailable" (ionChange)="clickHandler()">{{'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.PRODUCT_AVAILABILITY'|translate}}</ion-checkbox>
 				</ion-col>
 			</ion-row>
 
 			<ion-row class="row getProductType">
-				<ion-col class="pl-0 col-6">
+				<ion-col class="ps-0 col-6">
 					<ion-item class="coord-box">
-						<ion-checkbox class="mr-3" [(ngModel)]="takaProductDelivery"
-							(ionChange)="getProductTypeChange('Delivery')"></ion-checkbox>
-						<ion-label>{{'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.DELIVERY'|translate}}</ion-label>
+						<ion-checkbox labelPlacement="start" justify="space-between" class="me-3" [(ngModel)]="takaProductDelivery"
+							(ionChange)="getProductTypeChange('Delivery')">{{'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.DELIVERY'|translate}}</ion-checkbox>
 					</ion-item>
 				</ion-col>
-				<ion-col class="pl-0 col-6">
+				<ion-col class="ps-0 col-6">
 					<ion-item class="coord-box">
-						<ion-checkbox class="mr-3" [(ngModel)]="takaProductTakeaway"
-							(ionChange)="getProductTypeChange('Takeaway')"></ion-checkbox>
-						<ion-label>{{'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.TAKEAWAY'|translate}}</ion-label>
+						<ion-checkbox labelPlacement="start" justify="space-between" class="me-3" [(ngModel)]="takaProductTakeaway"
+							(ionChange)="getProductTypeChange('Takeaway')">{{'WAREHOUSE_VIEW.CREATE_PRODUCTS_POPUP.TAKEAWAY'|translate}}</ion-checkbox>
 					</ion-item>
 				</ion-col>
 			</ion-row>

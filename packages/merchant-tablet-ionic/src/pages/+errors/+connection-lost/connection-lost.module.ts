@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { ConnectionLostPage } from './connection-lost';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular/lazy';
 
 const routes: Routes = [
 	{

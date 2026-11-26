@@ -1,16 +1,18 @@
-import { Component } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { ModalController } from '@ionic/angular/lazy';
 import PaymentGateways, {
 	paymentGatewaysToString,
 } from '@modules/server.common/enums/PaymentGateways';
 import { first } from 'rxjs/operators';
-import { CurrenciesService } from 'services/currencies.service';
+import { CurrenciesService } from '../../../../../services/currencies.service';
 import { Subject } from 'rxjs';
 import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaymentGateway';
 
 @Component({
+	standalone: false,
 	selector: 'merchant-payments-mutation',
 	templateUrl: 'mutation.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['mutation.scss'],
 })
 export class PaymentMutationComponent {
@@ -25,7 +27,7 @@ export class PaymentMutationComponent {
 
 	constructor(
 		public modalController: ModalController,
-		private currenciesService: CurrenciesService
+		private currenciesService: CurrenciesService,
 	) {
 		this.loadCurrenciesCodes();
 	}

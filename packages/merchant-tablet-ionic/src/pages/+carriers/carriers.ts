@@ -1,31 +1,60 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
+import { bindViewCell } from '../../components/table-components/smart-table';
 import Carrier from '@modules/server.common/entities/Carrier';
-import { takeUntil, first } from 'rxjs/operators';
-import { LocalDataSource } from 'ng2-smart-table';
-import { Observable, Subject, forkJoin } from 'rxjs';
+import {
+	takeUntil,
+	first,
+	map,
+	distinctUntilChanged,
+	switchMap,
+} from 'rxjs/operators';
+import { LocalDataSource, Settings } from 'angular2-smart-table';
+import { Observable, Subject, forkJoin, combineLatest, of } from 'rxjs';
+import Warehouse from '@modules/server.common/entities/Warehouse';
+import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { TranslateService } from '@ngx-translate/core';
 import { PhoneComponent } from '../../components/carriers-table/phone';
 import { AddressesComponent } from '../../components/carriers-table/addresses';
 import { StatusComponent } from '../../components/carriers-table/status';
 import { DeliveriesComponent } from '../../components/carriers-table/deliveries';
 import { ImageComponent } from '../../components/carriers-table/image';
-import { WarehouseCarriersRouter } from '@modules/client.common.angular2/routers/warehouse-carriers-router.service';
 import { Store } from '../../../src/services/store.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 import { AddCarriersPopupPage } from './add-carriers-popup/add-carriers-popup';
 import { CarrierEditPopupPage } from './carrier-edit-popup/carrier-edit-popup';
 import { CarrierTrackPopup } from './carrier-track-popup/carrier-track-popup';
 import { Router } from '@angular/router';
-import { ConfirmDeletePopupPage } from 'components/confirm-delete-popup/confirm-delete-popup';
+import { ConfirmDeletePopupPage } from '../../components/confirm-delete-popup/confirm-delete-popup';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 
+/**
+ * The carriers a store works with: its own carriers assigned by an admin (`carriersIds`) and the
+ * ones the store added itself (`usedCarriersIds`). Only stores with restricted carriers have any.
+ * (The page used to list `usedCarriersIds` only, so admin-assigned carriers never showed up.)
+ */
+export function storeCarrierIds(store: Pick<Warehouse, 'hasRestrictedCarriers' | 'carriersIds' | 'usedCarriersIds'> | null): string[] {
+	if (!store?.hasRestrictedCarriers) {
+		return [];
+	}
+	return Array.from(
+		new Set([...(store.carriersIds ?? []), ...(store.usedCarriersIds ?? [])])
+	);
+}
+
 @Component({
+	standalone: false,
 	selector: 'page-carriers',
 	templateUrl: 'carriers.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./carriers.scss'],
 })
 export class CarriersPage implements OnInit, OnDestroy {
-	settingsSmartTable: object;
+	settingsSmartTable: Settings;
 	sourceSmartTable = new LocalDataSource();
 	carriers: Carrier[];
 	showNoDeliveryIcon: boolean;
@@ -35,10 +64,10 @@ export class CarriersPage implements OnInit, OnDestroy {
 	constructor(
 		private readonly router: Router,
 		public modalCtrl: ModalController,
-		private readonly warehouseCarriersRouter: WarehouseCarriersRouter,
+		private readonly carrierRouter: CarrierRouter,
 		private readonly _translateService: TranslateService,
 		private readonly store: Store,
-		private warehouseRouter: WarehouseRouter
+		private warehouseRouter: WarehouseRouter,
 	) {}
 
 	get deviceId() {
@@ -95,7 +124,10 @@ export class CarriersPage implements OnInit, OnDestroy {
 				.toPromise();
 
 			merchant.usedCarriersIds = merchant.usedCarriersIds.filter(
-				(x) => x !== carrierId
+				(x) => x !== carrierId,
+			);
+			merchant.carriersIds = (merchant.carriersIds ?? []).filter(
+				(x) => x !== carrierId,
 			);
 
 			await this.warehouseRouter.save(merchant, this.store.token);
@@ -127,8 +159,7 @@ export class CarriersPage implements OnInit, OnDestroy {
 			this.sourceSmartTable.load(carriersVM);
 		};
 
-		this.warehouseCarriersRouter
-			.get(this.warehouseId)
+		this.storeCarriers$()
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe((carriers) => {
 				this.carriers = carriers;
@@ -139,6 +170,22 @@ export class CarriersPage implements OnInit, OnDestroy {
 					? (this.showNoDeliveryIcon = true)
 					: (this.showNoDeliveryIcon = false);
 			});
+	}
+
+	/** Live list of the store carriers (see `storeCarrierIds`). */
+	storeCarriers$(): Observable<Carrier[]> {
+		return this.warehouseRouter.get(this.warehouseId, false).pipe(
+			map((store) => storeCarrierIds(store)),
+			distinctUntilChanged(
+				(a, b) => a.length === b.length && a.every((id, i) => id === b[i])
+			),
+			switchMap((ids) =>
+				ids.length
+					? combineLatest(ids.map((id) => this.carrierRouter.get(id)))
+					: of([] as Carrier[])
+			),
+			map((carriers) => carriers.filter((c) => c != null && !c.isDeleted))
+		);
 	}
 
 	goToTrackPage() {
@@ -161,7 +208,7 @@ export class CarriersPage implements OnInit, OnDestroy {
 			getTranslate('PHONE_NUMBER'),
 			getTranslate('ADDRESSES'),
 			getTranslate('STATUS'),
-			getTranslate('DELIVERIES')
+			getTranslate('DELIVERIES'),
 		)
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe(
@@ -170,7 +217,6 @@ export class CarriersPage implements OnInit, OnDestroy {
 						mode: 'external',
 						edit: {
 							editButtonContent: '<i class="fa fa-edit"></i>',
-							confirmEdit: true,
 						},
 						delete: {
 							deleteButtonContent: '<i class="fa fa-trash"></i>',
@@ -180,7 +226,8 @@ export class CarriersPage implements OnInit, OnDestroy {
 							custom: [
 								{
 									name: 'track',
-									title: '<i class="fa fa-map-marker"></i>',
+									customButtonContent:
+										'<i class="fa fa-map-marker"></i>',
 								},
 							],
 						},
@@ -189,31 +236,36 @@ export class CarriersPage implements OnInit, OnDestroy {
 								title: image,
 								type: 'custom',
 								renderComponent: ImageComponent,
-								filter: false,
+								componentInitFunction: bindViewCell(),
+								isFilterable: false,
 							},
 							name: { title: name },
 							phone: {
 								title: phone,
 								type: 'custom',
 								renderComponent: PhoneComponent,
+								componentInitFunction: bindViewCell(),
 							},
 							addresses: {
 								title: addresses,
 								type: 'custom',
 								renderComponent: AddressesComponent,
+								componentInitFunction: bindViewCell(),
 							},
 							status: {
 								title: status,
 								class: 'text-center',
 								type: 'custom',
 								renderComponent: StatusComponent,
+								componentInitFunction: bindViewCell(),
 							},
 							deliveries: {
 								title: deliveries,
 								class: 'text-center',
-								filter: false,
+								isFilterable: false,
 								type: 'custom',
 								renderComponent: DeliveriesComponent,
+								componentInitFunction: bindViewCell(),
 							},
 						},
 						pager: {
@@ -221,7 +273,7 @@ export class CarriersPage implements OnInit, OnDestroy {
 							perPage: 14,
 						},
 					};
-				}
+				},
 			);
 	}
 }

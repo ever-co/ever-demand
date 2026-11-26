@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
-import { HttpLoaderFactory } from '../../../../src/app/app.module';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { NoOrdersInfoComponent } from './no-orders-info/no-orders-info.component';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular/lazy';
 
 const COMPONENTS = [NoOrdersInfoComponent];
 
@@ -15,13 +13,7 @@ const COMPONENTS = [NoOrdersInfoComponent];
 	imports: [
 		CommonModule,
 		IonicModule,
-		TranslateModule.forChild({
-			loader: {
-				provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
-				deps: [HttpClient],
-			},
-		}),
+		TranslateModule.forChild(),
 	],
 })
 export class WarehouseCommonModule {}

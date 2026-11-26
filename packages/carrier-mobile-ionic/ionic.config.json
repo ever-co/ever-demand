@@ -1,8 +1,7 @@
 {
 	"name": "ever-carrier",
 	"integrations": {
-		"cordova": {}
+		"capacitor": {}
 	},
-	"type": "angular",
-	"id": "16ee2ab7"
+	"type": "angular-standalone"
 }

@@ -1,14 +1,14 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { PromotionTable } from './promotion-table';
-import { TranslateModule } from '@ngx-translate/core';
-import { IonicModule } from '@ionic/angular';
-import { PromotionService } from 'services/promotion.service';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
+import { IonicModule } from '@ionic/angular/lazy';
+import { PromotionService } from '../../../services/promotion.service';
+import { Angular2SmartTableModule } from 'angular2-smart-table';
 import { CommonModule } from '@angular/common';
-import { ConfirmDeletePopupModule } from 'components/confirm-delete-popup/confirm-delete-popup.module';
-import { ComponentsModule } from 'components/components.module';
-import { ImageTableComponent } from 'components/table-components/image-table';
+import { ConfirmDeletePopupModule } from '../../../components/confirm-delete-popup/confirm-delete-popup.module';
+import { ComponentsModule } from '../../../components/components.module';
+import { ImageTableComponent } from '../../../components/table-components/image-table';
 
 const routes: Routes = [
 	{
@@ -24,7 +24,7 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         TranslateModule.forChild(),
         IonicModule,
-        Ng2SmartTableModule,
+        Angular2SmartTableModule,
         ConfirmDeletePopupModule,
         ComponentsModule,
     ],

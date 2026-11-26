@@ -1,4 +1,11 @@
-import { Component, Input, OnDestroy, OnInit, OnChanges } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnDestroy,
+	OnInit,
+	OnChanges,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import {
 	FormBuilder,
 	FormGroup,
@@ -11,8 +18,10 @@ import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
+	standalone: false,
 	selector: 'account-form',
 	styleUrls: ['./account-form.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'account-form.component.html',
 })
 export class AccountFormComponent implements OnDestroy, OnInit, OnChanges {
@@ -30,7 +39,7 @@ export class AccountFormComponent implements OnDestroy, OnInit, OnChanges {
 
 	constructor(
 		private formBuilder: FormBuilder,
-		private translate: TranslateService
+		private translate: TranslateService,
 	) {}
 
 	ngOnInit() {

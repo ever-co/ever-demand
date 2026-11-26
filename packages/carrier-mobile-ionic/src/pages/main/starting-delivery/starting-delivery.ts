@@ -1,21 +1,29 @@
-import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	AfterViewInit,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { MapComponent } from '../common/map/map.component';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { Router } from '@angular/router';
 import { first, takeUntil } from 'rxjs/operators';
-import { GeoLocationService } from 'services/geo-location.service';
+import { GeoLocationService } from '../../../services/geo-location.service';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { CurrentPositionService } from '../../../services/native/current-position.service';
 import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 import Utils from '@modules/server.common/utils';
 import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/carrier-orders-router.service';
-import { Store } from 'services/store.service';
+import { Store } from '../../../services/store.service';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import { Subject } from 'rxjs';
 
 @Component({
+	standalone: false,
 	selector: 'page-starting-delivery',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'starting-delivery.html',
 })
 export class StartingDeliveryPage implements AfterViewInit, OnDestroy {
@@ -32,9 +40,9 @@ export class StartingDeliveryPage implements AfterViewInit, OnDestroy {
 		private orderRouter: OrderRouter,
 		private carrierOrdersRouter: CarrierOrdersRouter,
 		private geoLocationService: GeoLocationService,
-		private geolocation: Geolocation,
+		private geolocation: CurrentPositionService,
 		private router: Router,
-		private store: Store
+		private store: Store,
 	) {}
 
 	ngAfterViewInit(): void {
@@ -49,7 +57,7 @@ export class StartingDeliveryPage implements AfterViewInit, OnDestroy {
 		this.disabledButtons = true;
 		await this.carrierOrdersRouter.updateStatus(
 			this.store.carrierId,
-			OrderCarrierStatus.CarrierStartDelivery
+			OrderCarrierStatus.CarrierStartDelivery,
 		);
 
 		this.router.navigateByUrl('/main/delivery', {
@@ -91,22 +99,22 @@ export class StartingDeliveryPage implements AfterViewInit, OnDestroy {
 					},
 				} as IGeoLocation;
 
-				const origin = new google.maps.LatLng(
-					position.coords.latitude,
-					position.coords.longitude
-				);
+				const origin = {
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				};
 
 				const userGeo = this.selectedOrder.user['geoLocation'];
 
 				this.carrierUserDistance = Utils.getDistance(
 					userGeo as GeoLocation,
-					dbGeoInput as GeoLocation
+					dbGeoInput as GeoLocation,
 				).toFixed(2);
 
-				const destination = new google.maps.LatLng(
-					userGeo.loc.coordinates[1],
-					userGeo.loc.coordinates[0]
-				);
+				const destination = {
+					lat: userGeo.loc.coordinates[1],
+					lng: userGeo.loc.coordinates[0],
+				};
 
 				this.carrierMap.setCenter(origin);
 				this.carrierMap.drawRoute(origin, destination);

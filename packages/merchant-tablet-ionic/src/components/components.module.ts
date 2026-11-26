@@ -7,7 +7,7 @@ import { OrderWithCarrierComponent } from './order-with-carrier/order-with-carri
 import { OrderDeliveredComponent } from './order-delivered/order-delivered';
 import { OrderCanceledComponent } from './order-canceled/order-canceled';
 import { OrderDeliveryProblemComponent } from './order-delivery-problem/order-delivery-problem';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { OrderImageComponent } from './common/order-image/order-image';
 import { CommonComponent } from './settings-page-components/common/common';
 import { AccountComponent } from './settings-page-components/account/account';
@@ -18,14 +18,14 @@ import { CustomerInfoComponent } from './common/customer-info/customer-info';
 import { CarrierInfoComponent } from './common/carrier-info/carrier-info';
 import { PhoneComponent } from './carriers-table/phone';
 import { UserPhoneComponent } from './users-table/phone';
-import { MomentModule } from 'ngx-moment';
+import { TimeAgoPipe } from './time-ago.pipe';
 import { OrderWarehousePreparationProblemComponent } from './order-warehouse-preparation-problem/order-warehouse-preparation-problem';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular/lazy';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { OrderMapPopupPageModule } from './order-map-popup/order-map-popup.module';
-import { CustomerEmailPopupPageModule } from 'pages/+customers/customer-email-popup/customer-email-popup.module';
-import { CustomerDeliveriesPopupPageModule } from 'pages/+customers/customer-deliveries-popup/customer-deliveries-popup.module';
-import { CustomerAddrPopupPageModule } from 'pages/+customers/customer-addr-popup/customer-addr-popup.module';
+import { CustomerEmailPopupPageModule } from '../pages/+customers/customer-email-popup/customer-email-popup.module';
+import { CustomerDeliveriesPopupPageModule } from '../pages/+customers/customer-deliveries-popup/customer-deliveries-popup.module';
+import { CustomerAddrPopupPageModule } from '../pages/+customers/customer-addr-popup/customer-addr-popup.module';
 import { FileUploaderModule } from './file-uploader/file-uploader.module';
 import { OrderInfoComponent } from './common/order-info/order-info';
 import { ImageTableComponent } from './table-components/image-table';
@@ -52,6 +52,7 @@ import { ImageTableComponent } from './table-components/image-table';
 		PhoneComponent,
 		UserPhoneComponent,
 		ImageTableComponent,
+		TimeAgoPipe,
 	],
 	imports: [
 		CommonModule,
@@ -60,7 +61,6 @@ import { ImageTableComponent } from './table-components/image-table';
 		FormsModule,
 		ReactiveFormsModule,
 		GoogleMapModule,
-		MomentModule,
 		OrderMapPopupPageModule,
 		CustomerEmailPopupPageModule,
 		CustomerDeliveriesPopupPageModule,
@@ -83,6 +83,7 @@ import { ImageTableComponent } from './table-components/image-table';
 		LocationComponent,
 		PhoneComponent,
 		ImageTableComponent,
+		TimeAgoPipe,
 	],
 })
 export class ComponentsModule {}

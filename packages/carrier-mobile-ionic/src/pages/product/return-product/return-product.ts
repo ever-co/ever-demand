@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import ICarrier from '@modules/server.common/interfaces/ICarrier';
@@ -6,13 +6,15 @@ import IOrder from '@modules/server.common/interfaces/IOrder';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { first, takeUntil } from 'rxjs/operators';
-import { Store } from 'services/store.service';
+import { Store } from '../../../services/store.service';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import { Subject } from 'rxjs';
-import { NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular/lazy';
 
 @Component({
+	standalone: false,
 	selector: 'page-return-product',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'return-product.html',
 })
 export class ReturnProductPage implements OnDestroy {
@@ -26,7 +28,7 @@ export class ReturnProductPage implements OnDestroy {
 		private carrierRouter: CarrierRouter,
 		private orderRouter: OrderRouter,
 		private store: Store,
-		private navCtrl: NavController
+		private navCtrl: NavController,
 	) {}
 
 	get allowCancel() {
@@ -58,7 +60,7 @@ export class ReturnProductPage implements OnDestroy {
 		if (!this.selectedOrder.isCancelled) {
 			await this.orderRouter.updateCarrierStatus(
 				this.store.orderId,
-				OrderCarrierStatus.IssuesDuringDelivery
+				OrderCarrierStatus.IssuesDuringDelivery,
 			);
 
 			this.unselectOrder();

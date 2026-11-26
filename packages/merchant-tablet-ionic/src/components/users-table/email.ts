@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ViewCell } from '../table-components/smart-table';
 import User from '@modules/server.common/entities/User';
-import { ModalController } from '@ionic/angular';
-import { CustomerEmailPopupPage } from 'pages/+customers/customer-email-popup/customer-email-popup';
+import { ModalController } from '@ionic/angular/lazy';
+import { CustomerEmailPopupPage } from '../../pages/+customers/customer-email-popup/customer-email-popup';
 
 @Component({
+	standalone: false,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<div class="text-center">
 			<ion-icon

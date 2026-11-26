@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { PromotionMutation } from './promotion-mutation';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
-import { IonicModule } from '@ionic/angular';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { PromotionService } from 'services/promotion.service';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
+import { IonicModule } from '@ionic/angular/lazy';
+import { Angular2SmartTableModule } from 'angular2-smart-table';
+import { PromotionService } from '../../../services/promotion.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PromotionFormsModule } from '../promotion-forms/promotion-forms.module';
 
@@ -17,7 +17,7 @@ const COMPONENTS = [PromotionMutation];
         CommonModule,
         TranslateModule.forChild(),
         IonicModule,
-        Ng2SmartTableModule,
+        Angular2SmartTableModule,
         FormsModule,
         ReactiveFormsModule,
         PromotionFormsModule,

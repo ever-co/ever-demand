@@ -5,6 +5,7 @@ import {
 	Input,
 	Output,
 	EventEmitter,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import {
@@ -18,8 +19,10 @@ import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaym
 import PaymentGateways from '@modules/server.common/enums/PaymentGateways';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-paypal-gateway',
 	templateUrl: './payPal.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['payPal.scss', '../mutation/mutation.scss'],
 })
 export class PayPalGatewayComponent implements OnInit, OnDestroy {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Apollo, gql } from 'apollo-angular';
+import { Apollo, gql, onlyCompleteData } from 'apollo-angular';
 import { map, share } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import IUser from '@modules/server.common/interfaces/IUser';
@@ -37,6 +37,8 @@ export class UsersService {
 				pollInterval: 5000,
 			})
 			.valueChanges.pipe(
+				// Apollo Client 4 also emits loading/partial results
+				onlyCompleteData(),
 				map((res) => res.data.users),
 				map((users) => users.map((user) => this._userFactory(user))),
 				share()

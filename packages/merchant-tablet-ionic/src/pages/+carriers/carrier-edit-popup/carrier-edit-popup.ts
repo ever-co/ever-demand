@@ -7,6 +7,7 @@ import {
 	Input,
 	ViewChild,
 	OnChanges,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
@@ -15,14 +16,16 @@ import { AccountFormComponent } from './account/account-form.component';
 import { Subject } from 'rxjs';
 import { LocationFormComponent } from './location/location-form.component';
 import { CarrierService } from '../../../services/carrier.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { WarehouseCarriersRouter } from '@modules/client.common.angular2/routers/warehouse-carriers-router.service';
 import { Store } from '../../../services/store.service';
 
 @Component({
+	standalone: false,
 	selector: 'carrier-edit-popup',
 	templateUrl: 'carrier-edit-popup.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./carrier-edit-popup.scss'],
 })
 export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
@@ -63,7 +66,7 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 		public modalCtrl: ModalController,
 		private _carrierService: CarrierService,
 		private warehouseCarriersRouter: WarehouseCarriersRouter,
-		private store: Store
+		private store: Store,
 	) {}
 
 	ngOnInit(): void {}
@@ -122,7 +125,7 @@ export class CarrierEditPopupPage implements OnInit, OnDestroy, OnChanges {
 			await this.warehouseCarriersRouter.updatePassword(
 				carrier.id,
 				account.password,
-				this.store.token
+				this.store.token,
 			);
 		}
 

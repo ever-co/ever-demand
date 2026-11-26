@@ -5,10 +5,14 @@ import {
 	OnInit,
 	Input,
 	AfterViewInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { FileUploader, FileUploaderOptions, FileItem } from 'ng2-file-upload';
 
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import {
+	PhotoService,
+	PhotoSource,
+} from '../../../services/native/photo.service';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import {
 	IProductDescription,
@@ -26,12 +30,14 @@ import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import { first } from 'rxjs/operators';
 import { ProductsCategoryService } from '../../../services/products-category.service';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
-import { ModalController, ActionSheetController } from '@ionic/angular';
+import { ModalController, ActionSheetController } from '@ionic/angular/lazy';
 import { ProductImagesPopup } from '../product-pictures-popup/product-images-popup.component';
 
 @Component({
+	standalone: false,
 	selector: 'page-edit-product-type-popup',
 	templateUrl: 'edit-product-type-popup.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./edit-product-type-popup.scss'],
 })
 export class EditProductTypePopupPage implements OnInit, AfterViewInit {
@@ -70,10 +76,10 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 		private warehouseProductsRouter: WarehouseProductsRouter,
 		private readonly _productsCategorySrvice: ProductsCategoryService,
 		public modalController: ModalController,
-		private camera: Camera,
+		private photos: PhotoService,
 		public actionSheetCtrl: ActionSheetController,
 		public readonly localeTranslateService: ProductLocalesService,
-		private translate: TranslateService
+		private translate: TranslateService,
 	) {
 		const uploaderOptions: FileUploaderOptions = {
 			url: environment.API_FILE_UPLOAD_URL,
@@ -94,7 +100,7 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 
 		this.uploader.onBuildItemForm = (
 			fileItem: any,
-			form: FormData
+			form: FormData,
 		): any => {
 			// Add Cloudinary's unsigned upload preset to the upload form
 			form.append('upload_preset', 'everbie-products-images');
@@ -186,7 +192,7 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 
 	get productDescription() {
 		return this.localeTranslateService.getMemberValue(
-			this.product.description
+			this.product.description,
 		);
 	}
 
@@ -201,7 +207,7 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 		this.lastProductPrice = this.warehouseProduct.price;
 		this.lastProductDescription = this.product.description;
 		this.lastProductTitle = this.product.title;
-		this.translLang = this.translate.currentLang;
+		this.translLang = this.translate.getCurrentLang();
 		this.takaProductDelivery = this.warehouseProduct.isDeliveryRequired;
 		this.takaProductTakeaway = this.warehouseProduct.isTakeaway;
 
@@ -217,7 +223,7 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 
 	ngAfterViewInit(): void {
 		const currentProductImage = this.localeTranslateService.getTranslate(
-			this.product.images
+			this.product.images,
 		);
 
 		if (currentProductImage) {
@@ -247,7 +253,7 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 
 	async showPicturesPopup() {
 		let images = this.product.images.filter(
-			(i) => i.locale === this.currentLocale
+			(i) => i.locale === this.currentLocale,
 		);
 
 		if (this.imagesData) {
@@ -277,24 +283,16 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 		}
 	}
 
-	takePicture(sourceType: number) {
-		const options: CameraOptions = {
-			quality: 50,
-			destinationType: this.camera.DestinationType.DATA_URL,
-			encodingType: this.camera.EncodingType.JPEG,
-			mediaType: this.camera.MediaType.PICTURE,
-			correctOrientation: true,
-			sourceType,
-		};
-
-		this.camera.getPicture(options).then(async (imageData) => {
-			const base64Image = 'data:image/jpeg;base64,' + imageData;
-			const file = await this.urltoFile(
-				base64Image,
-				this.createFileName(),
-				'image/jpeg'
+	takePicture(sourceType: PhotoSource) {
+		this.photos.pick(sourceType).then((file) => {
+			if (!file) {
+				return;
+			}
+			const fileItem = new FileItem(
+				this.uploader,
+				file,
+				this.uploader.options,
 			);
-			const fileItem = new FileItem(this.uploader, file, {});
 			this.uploader.queue.push(fileItem);
 		});
 	}
@@ -316,15 +314,13 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 				{
 					text: 'Load from Library',
 					handler: () => {
-						this.takePicture(
-							this.camera.PictureSourceType.PHOTOLIBRARY
-						);
+						this.takePicture('library');
 					},
 				},
 				{
 					text: 'Use Camera',
 					handler: () => {
-						this.takePicture(this.camera.PictureSourceType.CAMERA);
+						this.takePicture('camera');
 					},
 				},
 				{ text: 'Cancel', role: 'cancel' },
@@ -386,7 +382,7 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 			const imgLocale = this.imagesData[0].locale;
 			if (imgLocale === this.currentLocale) {
 				this.product.images = this.product.images.filter(
-					(i) => i.locale !== imgLocale
+					(i) => i.locale !== imgLocale,
 				);
 
 				this.product.images.push(...this.imagesData);
@@ -395,11 +391,11 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 
 		this.localeTranslateService.assignPropertyValue(
 			this.product.title,
-			'title'
+			'title',
 		);
 		this.localeTranslateService.assignPropertyValue(
 			this.product.description,
-			'description'
+			'description',
 		);
 
 		this.product.categories = this.productsCategories
@@ -407,8 +403,8 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 				(category) =>
 					this.selectedProductCategories &&
 					this.selectedProductCategories.some(
-						(categoryId) => categoryId === category.id
-					)
+						(categoryId) => categoryId === category.id,
+					),
 			)
 			.map((category) => {
 				return {
@@ -461,7 +457,7 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 		this.localeTranslateService.setMemberValue('title', this.productTitle);
 		this.localeTranslateService.setMemberValue(
 			'description',
-			this.productDescription
+			this.productDescription,
 		);
 	}
 
@@ -482,7 +478,7 @@ export class EditProductTypePopupPage implements OnInit, AfterViewInit {
 		await this.warehouseProductRouter.changeProductAvailability(
 			this.warehouseId,
 			this.warehouseProduct.productId,
-			this.isAvailable
+			this.isAvailable,
 		);
 	}
 }

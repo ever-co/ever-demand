@@ -3,15 +3,11 @@
 		<ion-row>
 			<ion-col class="col-4">
 				<ion-item mode="ios">
-					<ion-label class="labels" position="floating"
-						>{{ 'SETTINGS_VIEW.COUNTRY' | translate }}</ion-label
-					>
-					<ion-select
+					<ion-select labelPlacement="floating"
 						formControlName="country"
 						(ionChange)="textInputChange(country, 'country')"
 						[cancelText]="buttonCancel"
-						[okText]="buttonOK"
-					>
+						[okText]="buttonOK"><div slot="label" class="labels">{{ 'SETTINGS_VIEW.COUNTRY' | translate }}</div>
 						<ion-select-option
 							*ngFor="let country of countries"
 							value="{{ country.id }}"
@@ -23,14 +19,10 @@
 			</ion-col>
 			<ion-col class="col-4">
 				<ion-item mode="ios">
-					<ion-label class="labels" position="floating">
-						{{ 'SETTINGS_VIEW.CITY' | translate }}
-					</ion-label>
-					<ion-input
+					<ion-input labelPlacement="floating"
 						type="text"
 						formControlName="city"
-						(change)="textInputChange(city, 'city')"
-					></ion-input>
+						(change)="textInputChange(city, 'city')"><div slot="label" class="labels">{{ 'SETTINGS_VIEW.CITY' | translate }}</div></ion-input>
 				</ion-item>
 				<span *ngIf="city.invalid && (city.dirty || city.touched)">
 					<span [hidden]="!city.errors.required">
@@ -42,15 +34,11 @@
 			</ion-col>
 			<ion-col class="col-4">
 				<ion-item mode="ios">
-					<ion-label class="labels" position="floating">
-						{{ 'SETTINGS_VIEW.POSTCODE_optional' | translate
-						}}</ion-label
-					>
-					<ion-input
+					<ion-input labelPlacement="floating"
 						type="text"
 						formControlName="postcode"
-						(change)="textInputChange(postcode, 'postcode')"
-					></ion-input>
+						(change)="textInputChange(postcode, 'postcode')"><div slot="label" class="labels">{{ 'SETTINGS_VIEW.POSTCODE_optional' | translate
+						}}</div></ion-input>
 				</ion-item>
 			</ion-col>
 		</ion-row>
@@ -58,14 +46,10 @@
 		<ion-row>
 			<ion-col class="col-4">
 				<ion-item mode="ios">
-					<ion-label class="labels" position="floating">
-						{{ 'SETTINGS_VIEW.STREET' | translate }}</ion-label
-					>
-					<ion-input
+					<ion-input labelPlacement="floating"
 						type="text"
 						formControlName="street"
-						(change)="textInputChange(street, 'street')"
-					></ion-input>
+						(change)="textInputChange(street, 'street')"><div slot="label" class="labels">{{ 'SETTINGS_VIEW.STREET' | translate }}</div></ion-input>
 				</ion-item>
 				<span
 					*ngIf="street.invalid && (street.dirty || street.touched)"
@@ -80,14 +64,10 @@
 			</ion-col>
 			<ion-col class="col-4">
 				<ion-item mode="ios">
-					<ion-label class="labels" position="floating">
-						{{ 'SETTINGS_VIEW.HOUSE' | translate }}</ion-label
-					>
-					<ion-input
+					<ion-input labelPlacement="floating"
 						type="number"
 						formControlName="house"
-						(change)="textInputChange(house, 'house')"
-					></ion-input>
+						(change)="textInputChange(house, 'house')"><div slot="label" class="labels">{{ 'SETTINGS_VIEW.HOUSE' | translate }}</div></ion-input>
 				</ion-item>
 				<span *ngIf="house.invalid && (house.dirty || house.touched)">
 					<span [hidden]="!house.errors.required">
@@ -99,14 +79,10 @@
 			</ion-col>
 			<ion-col class="col-4">
 				<ion-item mode="ios">
-					<ion-label class="labels" position="floating">
-						{{ 'SETTINGS_VIEW.APARTMENT_optional' | translate
-						}}</ion-label
-					>
-					<ion-input
+					<ion-input labelPlacement="floating"
 						type="number"
-						formControlName="apartment"
-					></ion-input>
+						formControlName="apartment"><div slot="label" class="labels">{{ 'SETTINGS_VIEW.APARTMENT_optional' | translate
+						}}</div></ion-input>
 				</ion-item>
 			</ion-col>
 		</ion-row>
@@ -123,14 +99,10 @@
 
 			<ion-col *ngIf="!autodetectCoordinates.value" class="col-4">
 				<ion-item mode="ios">
-					<ion-label class="labels" position="floating">
-						{{ 'SETTINGS_VIEW.LATITUDE' | translate }}
-					</ion-label>
-					<ion-input
+					<ion-input labelPlacement="floating"
 						type="number"
 						formControlName="latitude"
-						(change)="textInputChange(latitude, 'latitude')"
-					></ion-input>
+						(change)="textInputChange(latitude, 'latitude')"><div slot="label" class="labels">{{ 'SETTINGS_VIEW.LATITUDE' | translate }}</div></ion-input>
 				</ion-item>
 				<span
 					*ngIf="
@@ -148,14 +120,10 @@
 
 			<ion-col *ngIf="!autodetectCoordinates.value" class="col-4">
 				<ion-item mode="ios">
-					<ion-label class="labels" position="floating">
-						{{ 'SETTINGS_VIEW.LONGITUDE' | translate }}
-					</ion-label>
-					<ion-input
+					<ion-input labelPlacement="floating"
 						type="number"
 						formControlName="longitude"
-						(change)="textInputChange(longitude, 'longitude')"
-					></ion-input>
+						(change)="textInputChange(longitude, 'longitude')"><div slot="label" class="labels">{{ 'SETTINGS_VIEW.LONGITUDE' | translate }}</div></ion-input>
 				</ion-item>
 				<span
 					*ngIf="
