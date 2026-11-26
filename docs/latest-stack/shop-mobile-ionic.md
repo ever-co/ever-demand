@@ -22,6 +22,7 @@ Expo and Flutter lanes. Its feature inventory is `docs/latest-stack/shop-mobile-
 | Tests | Karma + Jasmine (84 specs), Protractor | Vitest 5.1 + jsdom 31 via `ng test` (201 specs), Playwright (`e2e/tests/shop-mobile`) |
 | Env script | ts-node + yargs + envalid 7 | Node 26 type stripping (`node scripts/configure.ts`) + envalid 9 + dotenv 18 |
 | Node / TS | 16 / 4.5 | 26.13.1 / 6.0.3 |
+| Card payments | Stripe Checkout (legacy `checkout.js` popup, deprecated by Stripe) | Stripe.js through `@stripe/stripe-js` 10.4 (Card Element + `stripe.createToken`) in an Ionic modal |
 
 ## How to run
 
@@ -41,25 +42,70 @@ pnpm --filter @ever-platform/e2e exec playwright test --project=shop-mobile   # 
 from `.env` (both git-ignored); every `start`/`build`/`test` script runs it first. The settings
 and their defaults are listed in the feature inventory, section 2.
 
-### Native apps (Capacitor)
+Native apps: see [Native builds](#native-builds).
 
-The `android/` and `ios/` projects are generated and not committed:
+## Native builds
+
+`android/` and `ios/` are Capacitor 8.6 projects, generated with `cap add` and committed. Capacitor's
+own `android/.gitignore` and `ios/.gitignore` keep the build output and everything `cap sync` copies
+out of git: `app/src/main/assets/public` and `ios/App/App/public` (the web build),
+`capacitor.config.json`, `config.xml`, `capacitor-cordova-*-plugins`, `build/`, `.gradle/`,
+`local.properties`, `Pods/`, `DerivedData`.
+
+| | Android | iOS |
+| --- | --- | --- |
+| Id | `namespace` and `applicationId` `co.ever.customer` (the Cordova widget id, so store updates keep working) | bundle id `co.ever.customer` |
+| Name | Ever Shop | Ever Shop |
+| Version | `versionName` 0.5.0, `versionCode` 500 (Cordova's major×10000 + minor×100 + patch; the Cordova 0.2.0 build was 200) | `MARKETING_VERSION` 0.5.0, build 1 |
+| Toolchain | Capacitor's template: AGP 8.13.0, Gradle 8.14.3, JDK 21, compile and target SDK 36, min SDK 24 | Xcode, iOS 15.5 or later, CocoaPods |
+| Permissions | `INTERNET`, `ACCESS_NETWORK_STATE`, `ACCESS_COARSE_LOCATION` + `ACCESS_FINE_LOCATION` (GPS feature optional), `CAMERA` (camera feature optional), `VIBRATE`, `POST_NOTIFICATIONS`; ML Kit `barcode_ui` meta-data | `NSLocationWhenInUseUsageDescription`, `NSLocationAlwaysAndWhenInUseUsageDescription` (the geolocation plugin requires both), `NSCameraUsageDescription`, `NSPhotoLibraryUsageDescription`, `NSPhotoLibraryAddUsageDescription` |
+
+`capacitor.config.ts`: `appId: 'co.ever.customer'`, `appName: 'Ever Shop'`, `webDir: 'www'`,
+`androidScheme: 'http'` + `cleartext: true` because the dev API is plain HTTP/WS, splash screen
+3000 ms + 300 ms fade like the old `config.xml`.
+
+**iOS uses CocoaPods, not Swift Package Manager.** SPM is Capacitor 8's default, but
+`@capacitor-mlkit/barcode-scanning` only supports CocoaPods (Google ML Kit has no Swift package), so
+the project was created with `npx cap add ios --packagemanager CocoaPods`, and the Podfile sets
+`platform :ios, '15.5'` as the plugin requires. `pod install` cannot run on Windows: on a Mac, the
+first `npx cap sync ios` runs it and creates `ios/App/Podfile.lock` and
+`ios/App/App.xcworkspace/contents.xcworkspacedata`. Commit both.
+
+### Build and run
 
 ```bash
 cd packages/shop-mobile-ionic
-pnpm run build:prod                 # fills www/
-npx cap add android                 # once per checkout (needs Android Studio / JDK 21)
-npx cap add ios                     # once, on macOS with Xcode
-npx cap sync                        # after every web build or plugin change
-npx cap open android                # or: pnpm run cap:android / cap:ios
+pnpm run build                # dev build into www/ (build:prod for a store build)
+npx cap sync                  # after every web build, plugin change or pnpm install
+
+# Android: JDK 21 and the Android SDK (platform 36)
+npx cap open android          # Android Studio: Run on a device or an emulator
+cd android && ./gradlew assembleDebug    # app/build/outputs/apk/debug/app-debug.apk
+npx cap run android           # build, install and start on a device connected over adb
+
+# iOS: macOS with Xcode and CocoaPods
+npx cap sync ios              # runs pod install
+npx cap open ios              # opens App.xcworkspace; set a team under Signing & Capabilities
+npx cap run ios
 ```
 
-`capacitor.config.ts`: `appId: 'co.ever.customer'` (the Cordova widget id, so store updates keep
-working), `webDir: 'www'`, `androidScheme: 'http'` + `cleartext: true` because the dev API is
-plain HTTP/WS, splash screen 3000 ms + 300 ms fade like `config.xml`. Native permissions to add
-after `cap add`: location (`ACCESS_FINE_LOCATION` / `NSLocationWhenInUseUsageDescription` "To
-locate you"), camera for the barcode scanner. Icons and splash: `resources/icon.png` and
-`resources/splash.png` (`npx @capacitor/assets generate --assetPath resources`).
+- A phone cannot reach `localhost`: set `SERVICES_ENDPOINT`, `GQL_ENDPOINT` and
+  `GQL_SUBSCRIPTIONS_ENDPOINT` in `.env` to an address the device can reach (the PC's LAN IP, or
+  `10.0.2.2` from the Android emulator) before `pnpm run build`.
+- `android/capacitor.settings.gradle`, `android/app/capacitor.build.gradle` and `ios/App/Podfile` point
+  into pnpm's `node_modules/.pnpm/<package>@<version>_<peers>/` folders. `cap sync` rewrites them, so
+  commit the change after upgrading any Capacitor package.
+- Release builds need signing: an Android keystore (not in the repo) and an Apple team.
+- CI: the `android` job in `.github/workflows/ci.yml` builds the debug APK on every pull request.
+
+### Icons and splash
+
+Generated with `@capacitor/assets` 4.0.0 from the Cordova resources: `resources/ios/icon/icon-1024.png`
+as the icon (also the adaptive-icon foreground, on a white background) and `resources/splash.png` on
+`#2a2c39`. The icon is still Ionic's placeholder artwork, as it was in the Cordova app. To use new art,
+put `icon-only.png`, `icon-foreground.png`, `icon-background.png` (1024×1024) and `splash.png`
+(2732×2732) in a temporary `assets/` folder, then run
+`pnpm dlx @capacitor/assets@4.0.0 generate --assetPath assets --splashBackgroundColor '#2a2c39' --android --ios`.
 
 ## Decisions and replaced libraries
 
@@ -136,6 +182,37 @@ locate you"), camera for the barcode scanner. Icons and splash: `resources/icon.
   language changed before the menu subscribed, both sides stayed enabled and the menu button
   could open the right-hand menu in English).
 - **Service worker** is registered only in the production web build (not inside the Capacitor app).
+- **Stripe Checkout → Stripe.js Card Element** (branch `feat/latest-stack-stripe-elements`). The
+  server API is unchanged: the new-card form still produces a card token (`tok_...`) and the
+  customer's email, and the payment still calls `user.updateEmail`, `user.addPaymentMethod`
+  (`customers.createSource`), `order.payWithStripe(orderId, cardId, currency)` and `order.confirm`.
+  - `StripeLoader` (`src/app/services/stripeLoader.ts`, same class and file, so the two order
+    modules that inject it early are untouched) loads Stripe.js with `loadStripe` from
+    `@stripe/stripe-js/pure` (the main entry would add the script on import). It loads nothing in
+    a build without `STRIPE_PUBLISHABLE_KEY`. `stripe` is the instance, or null while loading /
+    after a failure; `ensureLoaded()` loads again after a failure (#1663). `loadStripe` itself
+    retries a failed script once and keeps one script tag. `@stripe/stripe-js` 10 loads the
+    versioned Stripe.js URL `https://js.stripe.com/endive/stripe.js` (the successor of `/v3/`,
+    same API).
+  - `payment/card-form/StripeCardForm` is the `StripeCheckout.configure(...).open()` replacement
+    with the same `token` / `closed` callbacks: it opens `StripeCardModalComponent` (a standalone
+    component, so no NgModule declares it) with the ModalController. On a token it calls `token`
+    when the modal starts to close (the payment is marked as running first), then `closed` once it
+    is gone, so the popup-mode order modal still opens once (#1651). A double tap opens one form.
+  - The modal mirrors the Checkout popup: logo (`STRIPE_POP_UP_LOGO`, hidden when it fails to
+    load), product title and description, Email, Card (Card Element with `hidePostalCode` and
+    `disableLink`, like Checkout's no zip / no "remember me"), "Pay $12.50" in the server currency
+    (first product's price in cents, as Checkout got it), Cancel. Fields and Stripe's messages
+    follow the app language (`elements({ locale })`). `createToken(card, { name: email })` (Checkout
+    named the card after the email). Stripe's `validation_error` / `card_error` messages show in
+    the form, which stays open; any other error shows the app's `BUY_POPUP.PAYMENT_FAILED`. An
+    invalid email shows `BUY_POPUP.CARD_FORM.EMAIL_INVALID`. New keys `BUY_POPUP.CARD_FORM.{EMAIL,
+    CARD, PAY, EMAIL_INVALID}` in the 6 locales (`PAY` because bg-BG's existing
+    `BUTTONS.PAY_X` translated the `{{amount}}` parameter name, so it never interpolates).
+  - Every payment rule is kept: second-payment guard in the root Store, currency from the server,
+    email / card-save / saved-card alerts, already paid (T-2807), no key (T-2806), card form not
+    loaded + load again (#1663); a card form that cannot open tells the customer
+    (`CARD_FORM_NOT_LOADED`) and shows the order again in popup mode.
 - **tsconfig** has no `baseUrl`; `paths` map `app/*` and `environments/*` plus the shared aliases
   from the contract. `rootDir: ".."` because `packages/common` and `common-angular` compile from
   source.
@@ -172,6 +249,21 @@ locate you"), camera for the barcode scanner. Icons and splash: `resources/icon.
     back, search, empty order history, info pages, merchants page, Buy → delivery order page →
     Undo → cancel, and "browse first" Buy → register by address → order.
   - Payments are not run end to end: the API has no Stripe key, and real keys must never be used.
+    The new-card form had a headless smoke instead (Pixel 7, Chromium 1255, not committed): a
+    production build with a fake `pk_test_` key and `SERVICES_ENDPOINT` pointing at a fake pyro
+    socket.io API (user / order / warehouse data, payment calls logged), `js.stripe.com` and Google
+    Maps stubbed with `page.route` and every other external request aborted. 14/14 checks: the
+    order page shows Pay with Card; `@stripe/stripe-js` requests `js.stripe.com/endive/stripe.js`
+    once; the form shows the product and "Pay $12.50"; email error; Stripe card error keeps the
+    form open; a token pays through `updateEmail("u1", email)`, `addPaymentMethod("u1",
+    "tok_...")`, `payWithStripe("o1", "card_smoke", "USD")`, `confirm("o1")`; Cancel pays
+    nothing; with the first two Stripe.js loads aborted the tap says the card form did not load,
+    loads it again, and the next tap opens the form; no unexpected console errors.
+  - Card form specs (`payment/card-form/*.spec.ts`, `services/stripeLoader.spec.ts`, ported
+    payment specs): **40 files, 301 tests, all green** with the card form. The loader spec runs the
+    real `@stripe/stripe-js/pure` loader against script tags whose load/error events it fires
+    itself (jsdom fetches nothing): one tag, the built-in retry, a proxy page that defines no
+    Stripe, loading again on the next tap.
     The unit specs cover every payment branch.
 
 ## Docker
@@ -190,10 +282,12 @@ translations and the icons answer 200.
 | `IonicModule` (lazy NgModule build) | Ionic 9 deprecates it for `provideIonicAngular()` + standalone `Ion*` imports, but it still works. Moving 35 NgModules to standalone Ionic components (plus `addIcons` for every icon) is a larger change than this lane; the contract keeps NgModules. Logs one deprecation warning at start. |
 | TypeScript 7 | Angular 22 needs `>=6.0 <6.1` (contract). |
 | `graphql` 16.15 (17 exists) | Aligned with the core lane: `@apollo/server` 5 only accepts `^16.11`. apollo-angular 14 / Apollo Client 4 accept both. |
-| Stripe Checkout (`checkout.js`) | Stripe's legacy popup is still what the payment flow and its fleet specs use. Moving to Stripe Elements / Payment Element is a product change, not an upgrade. |
+| ~~Stripe Checkout (`checkout.js`)~~ | **Done**: replaced by Stripe.js (`@stripe/stripe-js` 10.4) with a Card Element in an Ionic modal; same card token and server calls (see Decisions). |
 | Google Maps loader | `common-angular`'s loader waits for the Maps callback; without network to Google the app never starts (unchanged behaviour, outside this lane). |
 | Playwright browser | The PC's cache has Chromium 1243, `@playwright/test` 1.65 wants 1255. I ran the suite with the cached build (`launchOptions.executablePath`); `npx playwright install chromium` is needed for a plain run. |
 | `localStorage` on iOS | Kept (the specs and the other apps' docs rely on the keys). WKWebView can evict it under storage pressure; `@capacitor/preferences` is installed for a later move. |
+| Android Gradle Plugin 8.13.0, Gradle 8.14.3 | The versions Capacitor 8.6's Android template and its plugins are built with; upgrade them together with Capacitor (`npx cap migrate`). |
+| Swift Package Manager on iOS | `@capacitor-mlkit/barcode-scanning` (Google ML Kit) supports only CocoaPods, so the iOS project uses CocoaPods. |
 
 ## Quirks kept on purpose (see the feature inventory)
 
@@ -202,7 +296,10 @@ translations and the icons answer 200.
   loaded yet (the start-up checks run side by side), so a new customer always sees the invite page
   first.
 - `DEFAULT_LANGUAGE` wins over the saved language at start (fleet task T-2805 changes this).
-- Pay buttons throw "Can't pay in app" without `STRIPE_PUBLISHABLE_KEY` (fleet task T-2806).
+- Without `STRIPE_PUBLISHABLE_KEY` the Pay buttons still show; a tap says card payment is not
+  available (`BUY_POPUP.CARD_PAYMENT_UNAVAILABLE`, fleet task T-2806), and Stripe.js is not loaded.
+- The card form shows the first product's price, while the server charges the order total (kept
+  from Checkout; differs only for orders with several products).
 
 ## Shared code touched
 

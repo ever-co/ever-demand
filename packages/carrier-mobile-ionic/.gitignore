@@ -45,7 +45,4 @@ docs/
 /src/environments/environment.ts
 /src/environments/environment.prod.ts
 
-# Capacitor native projects: generate with `npx cap add android` / `npx cap add ios`
-/android/
-/ios/
 /out-tsc/
