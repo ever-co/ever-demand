@@ -1,11 +1,11 @@
 # Ever Demand multi-tenant: handover
 
-Last updated: 2026-11-26 ~17:00 CET by the multi-tenant session. Update this after every milestone, then commit and push.
+Last updated: 2026-11-26 ~21:30 CET by the multi-tenant session. Update this after every milestone, then commit and push.
 
 ## State
 
-- Branch `feat/multi-tenant` (worktree `C:\Coding\Worktrees\ever-demand-multi-tenant`), based on `feat/latest-stack`
-  (PR #1660, open). Merge `develop` in once #1660 merges.
+- Branch `feat/multi-tenant` (worktree `C:\Coding\Worktrees\ever-demand-multi-tenant`). `develop` (5c2a3835, #1660
+  merged) is merged in (43ae566b); the PR goes against `develop`.
 - Owner answers (2026-11-26, relayed by the lead session): customers **per tenant**, a **separate storefront per
   tenant**, **every tenant-resolution variant** (subdomain, `Tenant-Id` header, white-label build). DESIGN.md §10
   questions 4-10 are built with the recommended answers until the owner says otherwise.
@@ -26,17 +26,31 @@ Last updated: 2026-11-26 ~17:00 CET by the multi-tenant session. Update this aft
 | Signup, tenant settings, members + roles, super-admin list / status | `services/tenants/TenantsService.ts`, `graphql/tenants/` | e2e |
 | Plans + limits (members, stores) | `tenant/plans.ts`, `tenant/plan-limits.ts` | e2e |
 | Stripe Billing: Checkout, portal, signed idempotent webhook `POST /api/billing/webhook` | `services/billing/BillingService.ts`, `controllers/billing` | e2e (signed locally, no network) |
-| Client tenant resolution + socket handshake `auth` | `packages/common-angular/src/lib/tenant.ts`, `socket.service.ts` | typecheck |
+| Client tenant resolution + socket handshake `auth` | `packages/common-angular/src/lib/tenant.ts`, `socket.service.ts` | app specs |
+| Default-deny socket.io access (every listener) and REST controllers | `@pyro/io/access/socket-access.ts`, `graphql-access.guard.ts` | unit spec keeps the table complete; e2e |
+| Admin app: signup, settings (tenant, billing, members), super-admin switcher | `packages/admin-web-angular/src/app/pages/+signup`, `+settings`, `@core/tenant` | 134 Vitest, Playwright multi-tenant |
+| Shops, merchant, carrier send their tenant | each app's env + Apollo link + `CommonModule.forRoot` / socket auth | each app's tests |
 
-Tests: core unit **658/658**, single-tenant API e2e **49/49** (`test:e2e`), multi-tenant isolation e2e **34/34**
-(`test:e2e:mt`). Mutation check: with read filtering disabled, 12 of the 34 fail.
+Tests (2026-11-26, after the develop merge): core unit **706/706**, single-tenant API e2e **50/50** (`test:e2e`),
+multi-tenant isolation e2e **41/41** (`test:e2e:mt`); admin 134, shop-web 118, shop-mobile-ionic 318, merchant 54,
+carrier 69 (Vitest); Expo 195 (Jest), Gatsby 75, Flutter 216 (before the merge, untouched by it). Mutation check:
+with read filtering disabled, 12 of the 34 isolation specs of that time failed.
+
+### Security review (independent reader, 2026-11-26)
+
+Fixed: socket.io listeners were open to anyone naming a tenant (now default deny); `stripeCustomerId` was
+client-writable (now server-only); REST product create was open; staff could manage members; an admin could edit the
+owner's login email; anyone could remove a super-admin; signup rate limit behind a proxy (`TRUST_PROXY`);
+`currentTenant` showed billing to shops. Still open (follow-ups): customer flows have no ownership checks inside a
+tenant (any caller can act on a customer by id, as before); tokens never expire (a removed admin's token still passes
+token-argument checks); plan limits can be exceeded by parallel creates; admin / tenant caches are 30 s per process.
 
 ### Still to do
 
-1. Admin app: signup page, tenant settings, billing, members, super-admin tenant switcher (Playwright).
-2. Client apps: tenant config + `Tenant-Id` / socket `auth` in shop-web-angular, shop-mobile-ionic, merchant,
-   carrier, shop-web-gatsby, shop-mobile-expo, shop-mobile-flutter.
-3. Full verification (every package's tests and builds, Playwright incl. a multi-tenant project), then the PR.
+1. Full Playwright run on the final branch (all projects, single- and multi-tenant API), then the PR to `develop`.
+2. Follow-ups: Stripe Connect (tenants' own card payments), customer ownership checks, token expiry, email
+   verification, custom domains, social login in multi-tenant mode (tenant in the OAuth state), docs of the app env
+   (`docs/latest-stack/*.md` still list the env without `TENANT*`).
 
 ## How to run
 
@@ -65,3 +79,9 @@ No secret is in the repo; the e2e uses fixed test-only values.
 - `createPromotion` returns `{ success, message, data }` in a `Promotion` shape and swallows validation errors
   (an old quirk, unchanged); `promotions` without `findInput.warehouse` returns nothing.
 - Long heredocs in the Bash tool fail with "unexpected EOF": write scripts to the scratchpad and run them.
+- `RoutersService.reconnectAll` must close each engine.io connection once: a namespace DISCONNECT + CONNECT back to
+  back makes the socket.io server drop the whole client ("invalid state").
+- With a login token the socket handshake sends only the token (a kept `?tenant=` of another tenant would be refused);
+  the admin app's super-admin switch sets `tenantWithToken` and `buildOnly`.
+- Deploy: the admin image replaces `DOCKER_TENANT_BASE_DOMAIN`; the shop / merchant / carrier images take `TENANT` and
+  `TENANT_BASE_DOMAIN` build args (white-label builds).
