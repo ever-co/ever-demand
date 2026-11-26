@@ -2,7 +2,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { PromotionTable } from './promotion-table';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonIcon } from '@ionic/angular/ion-icon';
+import { IonMenuToggle } from '@ionic/angular/ion-menu-toggle';
+import { ModalController } from '@ionic/angular/modal-controller';
 import { PromotionService } from '../../../services/promotion.service';
 import { Angular2SmartTableModule } from 'angular2-smart-table';
 import { CommonModule } from '@angular/common';
@@ -23,12 +25,13 @@ const routes: Routes = [
         CommonModule,
         RouterModule.forChild(routes),
         TranslateModule.forChild(),
-        IonicModule,
         Angular2SmartTableModule,
         ConfirmDeletePopupModule,
         ComponentsModule,
+        IonIcon,
+        IonMenuToggle,
     ],
-    providers: [PromotionService],
+    providers: [PromotionService, ModalController],
     exports: [RouterModule]
 })
 export class PromotionTableModule {}

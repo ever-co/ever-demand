@@ -7,7 +7,10 @@ import { Angular2SmartTableModule } from 'angular2-smart-table';
 import { AddressComponent } from './carriers-catalog/address.component';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { AddNewCarriersPopupPageModule } from './add-new-carrier/add-new-carrier.module';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonCol } from '@ionic/angular/ion-col';
+import { IonGrid } from '@ionic/angular/ion-grid';
+import { IonRow } from '@ionic/angular/ion-row';
+import { ModalController } from '@ionic/angular/modal-controller';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -22,13 +25,16 @@ const COMPONENTS = [
     declarations: COMPONENTS,
     exports: COMPONENTS,
     imports: [
-        IonicModule,
         CommonModule,
         FormsModule,
         FormWizardModule,
         Angular2SmartTableModule,
         AddNewCarriersPopupPageModule,
         TranslateModule.forChild(),
-    ]
+        IonCol,
+        IonGrid,
+        IonRow,
+    ],
+    providers: [ModalController]
 })
 export class AddCarriersPopupPageModule {}

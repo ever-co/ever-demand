@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ViewCell } from '../table-components/smart-table';
 import Carrier from '@modules/server.common/entities/Carrier';
-import { ModalController } from '@ionic/angular/lazy';
+import { ModalController } from '@ionic/angular/modal-controller';
 import { CarrierDeliveriesPopupPage } from '../../pages/+carriers/carrier-deliveries-popup/carrier-deliveries-popup';
 
 @Component({

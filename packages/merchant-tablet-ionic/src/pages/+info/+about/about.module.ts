@@ -6,7 +6,9 @@ import { ComponentsModule } from '../../../components/components.module';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonContent } from '@ionic/angular/ion-content';
+import { IonIcon } from '@ionic/angular/ion-icon';
+import { IonMenuToggle } from '@ionic/angular/ion-menu-toggle';
 
 const routes: Routes = [
 	{
@@ -24,7 +26,9 @@ const routes: Routes = [
 		TranslateModule.forChild(),
 		CommonModule,
 		FormsModule,
-		IonicModule,
+		IonContent,
+		IonIcon,
+		IonMenuToggle,
 	],
 })
 export class AboutPageModule {}

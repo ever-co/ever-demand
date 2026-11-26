@@ -1,6 +1,5 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { IonicModule } from '@ionic/angular/lazy';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { Angular2SmartTableModule } from 'angular2-smart-table';
 import { CommonModule } from '@angular/common';
@@ -27,7 +26,6 @@ const routes: Routes = [
 	imports: [
 		CommonModule,
 		RouterModule.forChild(routes),
-		IonicModule,
 		TranslateModule.forChild(),
 		Angular2SmartTableModule,
 		PromotionMutationModule,

@@ -10,7 +10,9 @@ import { AddressComponent } from './address.component';
 import { MakeOrderInputComponent } from './make-order/make-order-input.component';
 import { WarehouseOrdersService } from '../../services/warehouse-orders.service';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonIcon } from '@ionic/angular/ion-icon';
+import { IonSegment } from '@ionic/angular/ion-segment';
+import { IonSegmentButton } from '@ionic/angular/ion-segment-button';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OrderTypeComponent } from './order-type/order-type.component';
@@ -19,11 +21,13 @@ import { MakeOrderCommentComponent } from './make-order/make-order-comment.compo
 @NgModule({
     imports: [
         Angular2SmartTableModule,
-        IonicModule,
         CommonModule,
         FormsModule,
         UserMutationModule,
         TranslateModule.forChild(),
+        IonIcon,
+        IonSegment,
+        IonSegmentButton,
     ],
     declarations: [
         OrderComponent,

@@ -12,7 +12,7 @@ import {
 } from '@angular/forms';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
-import { AlertController } from '@ionic/angular/lazy';
+import { AlertController } from '@ionic/angular/alert-controller';
 import { Store } from '../../../services/store.service';
 
 @Component({

@@ -20,7 +20,19 @@ import { PhoneComponent } from './carriers-table/phone';
 import { UserPhoneComponent } from './users-table/phone';
 import { TimeAgoPipe } from './time-ago.pipe';
 import { OrderWarehousePreparationProblemComponent } from './order-warehouse-preparation-problem/order-warehouse-preparation-problem';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonButton } from '@ionic/angular/ion-button';
+import { IonCheckbox } from '@ionic/angular/ion-checkbox';
+import { IonCol } from '@ionic/angular/ion-col';
+import { IonGrid } from '@ionic/angular/ion-grid';
+import { IonIcon } from '@ionic/angular/ion-icon';
+import { IonInput } from '@ionic/angular/ion-input';
+import { IonItem } from '@ionic/angular/ion-item';
+import { IonRow } from '@ionic/angular/ion-row';
+import { IonSearchbar } from '@ionic/angular/ion-searchbar';
+import { IonSelect } from '@ionic/angular/ion-select';
+import { IonSelectOption } from '@ionic/angular/ion-select-option';
+import { IonSpinner } from '@ionic/angular/ion-spinner';
+import { ModalController } from '@ionic/angular/modal-controller';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { OrderMapPopupPageModule } from './order-map-popup/order-map-popup.module';
 import { CustomerEmailPopupPageModule } from '../pages/+customers/customer-email-popup/customer-email-popup.module';
@@ -57,7 +69,6 @@ import { ImageTableComponent } from './table-components/image-table';
 	imports: [
 		CommonModule,
 		TranslateModule.forChild(),
-		IonicModule,
 		FormsModule,
 		ReactiveFormsModule,
 		GoogleMapModule,
@@ -66,7 +77,20 @@ import { ImageTableComponent } from './table-components/image-table';
 		CustomerDeliveriesPopupPageModule,
 		CustomerAddrPopupPageModule,
 		FileUploaderModule,
+		IonButton,
+		IonCheckbox,
+		IonCol,
+		IonGrid,
+		IonIcon,
+		IonInput,
+		IonItem,
+		IonRow,
+		IonSearchbar,
+		IonSelect,
+		IonSelectOption,
+		IonSpinner,
 	],
+	providers: [ModalController],
 	exports: [
 		LoadingComponent,
 		OrderImageComponent,

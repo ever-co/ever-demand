@@ -1,7 +1,10 @@
 import { inject, NgModule, provideAppInitializer } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular/lazy';
+import { IonApp } from '@ionic/angular/ion-app';
+import { IonRouterOutlet } from '@ionic/angular/ion-router-outlet';
+import { IonicRouteStrategy } from '@ionic/angular/ionic-route-strategy';
+import { provideIonicAngular } from '@ionic/angular/provide';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CommonModule } from '@modules/client.common.angular2/common.module';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
@@ -30,14 +33,17 @@ import { AppComponent } from './app.component';
 				suffix: '.json',
 			}),
 		}),
-		IonicModule.forRoot(),
 		CommonModule.forRoot({
 			apiUrl: environment.SERVICES_ENDPOINT,
 		}),
 		PipesModule,
+		IonApp,
+		IonRouterOutlet,
 	],
 	bootstrap: [AppComponent],
 	providers: [
+		// Ionic's default config, as before (the app never customised it).
+		provideIonicAngular(),
 		ServerConnectionService,
 		GoogleMapsLoader,
 		MaintenanceService,

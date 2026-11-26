@@ -11,7 +11,8 @@ import {
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { IPromotion } from '@modules/server.common/interfaces/IPromotion';
 import { BasicInfoFormComponent } from '../promotion-forms/basic-info/basic-info-form.component';
-import { ToastController, ModalController } from '@ionic/angular/lazy';
+import { ModalController } from '@ionic/angular/modal-controller';
+import { ToastController } from '@ionic/angular/toast-controller';
 import { DetailsInfoFormComponent } from '../promotion-forms/details-info/details-info-form.component';
 import { PromotionService } from '../../../services/promotion.service';
 import { first } from 'rxjs/operators';

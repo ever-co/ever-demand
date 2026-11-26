@@ -11,7 +11,7 @@ import OrderBarcodeTypes, {
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import QRCode from 'qrcode';
 import { BarcodeScanService } from '../../../services/native/barcode-scan.service';
-import { AlertController } from '@ionic/angular/lazy';
+import { AlertController } from '@ionic/angular/alert-controller';
 import { Store } from '../../../services/store.service';
 
 @Component({

@@ -3,10 +3,9 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { ProductComponent } from './product.component';
 import { Store } from '../../../../services/store.service';
-import { IonicModule } from '@ionic/angular/lazy';
 
 @NgModule({
-	imports: [IonicModule, CommonModule, TranslateModule.forChild()],
+	imports: [CommonModule, TranslateModule.forChild()],
 	providers: [Store],
 	exports: [ProductComponent],
 	declarations: [ProductComponent],

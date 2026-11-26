@@ -5,7 +5,9 @@ import { ComponentsModule } from '../../../components/components.module';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonContent } from '@ionic/angular/ion-content';
+import { IonIcon } from '@ionic/angular/ion-icon';
+import { IonMenuToggle } from '@ionic/angular/ion-menu-toggle';
 import { TermsOfUsePage } from './terms-of-use';
 
 const routes: Routes = [
@@ -23,8 +25,10 @@ const routes: Routes = [
 		ComponentsModule,
 		CommonModule,
 		FormsModule,
-		IonicModule,
 		RouterModule.forChild(routes),
+		IonContent,
+		IonIcon,
+		IonMenuToggle,
 	],
 })
 export class TermsOfUsePageModule {}

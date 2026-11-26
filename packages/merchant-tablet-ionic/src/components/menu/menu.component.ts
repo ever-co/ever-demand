@@ -3,7 +3,7 @@ import { Store } from '../../services/store.service';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { MenuController } from '@ionic/angular/lazy';
+import { MenuController } from '@ionic/angular/menu-controller';
 
 @Component({
 	standalone: false,

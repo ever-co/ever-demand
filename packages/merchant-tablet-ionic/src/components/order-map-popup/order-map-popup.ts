@@ -12,11 +12,9 @@ import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehou
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { first } from 'rxjs/operators';
 import { environment } from '../../../src/environments/environment';
-import {
-	LoadingController,
-	ActionSheetController,
-	ModalController,
-} from '@ionic/angular/lazy';
+import { ActionSheetController } from '@ionic/angular/action-sheet-controller';
+import { LoadingController } from '@ionic/angular/loading-controller';
+import { ModalController } from '@ionic/angular/modal-controller';
 
 declare var google: any;
 

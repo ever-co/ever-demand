@@ -8,7 +8,10 @@ import { StatusComponent } from '../../../components/customer-deliveries-table/s
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonCol } from '@ionic/angular/ion-col';
+import { IonGrid } from '@ionic/angular/ion-grid';
+import { IonRow } from '@ionic/angular/ion-row';
+import { ModalController } from '@ionic/angular/modal-controller';
 
 @NgModule({
     declarations: [
@@ -21,9 +24,12 @@ import { IonicModule } from '@ionic/angular/lazy';
     imports: [
         TranslateModule.forChild(),
         Angular2SmartTableModule,
-        IonicModule,
         CommonModule,
         FormsModule,
-    ]
+        IonCol,
+        IonGrid,
+        IonRow,
+    ],
+    providers: [ModalController]
 })
 export class CustomerDeliveriesPopupPageModule {}

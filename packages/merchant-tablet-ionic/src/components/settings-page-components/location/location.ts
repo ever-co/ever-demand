@@ -25,7 +25,7 @@ import {
 } from '@modules/server.common/entities/GeoLocation';
 import { isEmpty } from 'lodash';
 import { TranslateService } from '@ngx-translate/core';
-import { AlertController } from '@ionic/angular/lazy';
+import { AlertController } from '@ionic/angular/alert-controller';
 import { Store } from '../../../services/store.service';
 
 @Component({

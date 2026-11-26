@@ -10,7 +10,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import { Store } from '../../../services/store.service';
 import { first, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { NavController } from '@ionic/angular/lazy';
+import { NavController } from '@ionic/angular/nav-controller';
 import { environment } from '../../../environments/environment';
 
 @Component({
