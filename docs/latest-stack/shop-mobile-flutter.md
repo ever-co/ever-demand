@@ -247,7 +247,17 @@ package's `HttpLink` posts JSON).
 | `integration` (integration_test/*.dart on the flutter tester) | `app_test.dart` passed; `live_api_test.dart` skipped (needs `LIVE_API=true`) |
 | `live` (live_api_test.dart against the upgraded core API on this PC, via host.docker.internal) | passed: start-up + settings + `device.create`, browse-first buy → invite by location (invite system off: invite request → invite → `user-auth.register`) → resumed buy → `warehouse-orders.create` → live `order.get` tracking page with "Pay with card" → Undo → `warehouse-orders.cancel` |
 | `flutter build web --release` | built (`build/web`, 14 MB tar.gz). Wasm dry run: `socket_io_common` 3.1.1 is not Wasm-ready (JS interop type check); the JS build is unaffected |
-| `flutter build apk --debug` | see below |
+| `flutter build apk --debug` | not finished on this PC, see below |
+
+**APK**: `tool/docker-test.sh build-apk` (= `flutter build apk --debug` in the container, Gradle
+capped at 2.5 GB heap, caches in the `ever-flutter-gradle` and `ever-flutter-android-sdk` volumes) got
+through Gradle 9.5 / AGP 9.3.1 / Kotlin 2.4.20 resolution and started installing the NDK that Flutter
+3.50.1 pins (`28.2.13676358`, `android-ndk-r28c`); the NDK download crawled to 27 % in ~35 min and
+then the Docker Desktop engine stopped answering (API 500, `docker info` hung) on the shared PC, so
+the build did not finish here. Nothing Android-specific failed. To finish it elsewhere:
+`tool/docker-test.sh build-apk` (first run downloads the NDK, ~700 MB, into the volume), or locally
+`flutter build apk --debug`. Watch for: `Theme.MaterialComponents` parents in `styles.xml` need
+`com.google.android.material` on the classpath (flutter_stripe brings it).
 
 `flutter test integration_test` itself needs a device; the image has no emulator (no KVM in Docker
 Desktop) and no Linux desktop toolchain, so the integration files run through wrappers on the
