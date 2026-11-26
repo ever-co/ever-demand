@@ -105,6 +105,8 @@ export class StripeCardModalComponent
 	// True while Stripe makes the card token
 	creatingToken: boolean = false;
 	amountText: string = '';
+	// The logo is an external image: hidden when it does not load
+	logoFailed: boolean = false;
 
 	private card: StripeCardElement | null = null;
 
@@ -182,7 +184,11 @@ export class StripeCardModalComponent
 			}
 
 			this.cardError = this.cardErrorMessage(result.error);
-			console.error('Could not create the card token!', result.error);
+
+			// A card the customer typed wrong is not an app error
+			if (!this.isCustomerFacing(result.error)) {
+				console.error('Could not create the card token!', result.error);
+			}
 		} catch (err) {
 			this.cardError = this._translateService.instant(
 				'BUY_POPUP.PAYMENT_FAILED'
@@ -202,9 +208,15 @@ export class StripeCardModalComponent
 	}
 
 	private cardErrorMessage(error: StripeError | undefined): string {
-		return error?.message && CUSTOMER_FACING_ERRORS.includes(error.type)
+		return this.isCustomerFacing(error)
 			? error.message
 			: this._translateService.instant('BUY_POPUP.PAYMENT_FAILED');
+	}
+
+	private isCustomerFacing(
+		error: StripeError | undefined
+	): error is StripeError {
+		return !!error?.message && CUSTOMER_FACING_ERRORS.includes(error.type);
 	}
 
 	private language(): string {

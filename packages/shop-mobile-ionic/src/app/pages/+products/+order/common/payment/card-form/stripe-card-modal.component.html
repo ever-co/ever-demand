@@ -1,7 +1,12 @@
 <form class="card-form" (ngSubmit)="pay()" novalidate>
 	<header class="card-form-header">
-		@if (image) {
-			<img class="card-form-logo" [src]="image" alt="" />
+		@if (image && !logoFailed) {
+			<img
+				class="card-form-logo"
+				[src]="image"
+				alt=""
+				(error)="logoFailed = true"
+			/>
 		}
 		<h2 class="card-form-name">{{ name }}</h2>
 		@if (description) {

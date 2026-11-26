@@ -144,6 +144,13 @@ describe('StripeCardModalComponent', () => {
 		expect(element('.card-form-cancel').textContent.trim()).toBe('Cancel');
 	});
 
+	it('hides the logo when it does not load, e.g. offline', () => {
+		element('.card-form-logo').dispatchEvent(new Event('error'));
+
+		expect(element('.card-form-logo')).toBeNull();
+		expect(element('.card-form-name').textContent).toContain('Margherita');
+	});
+
 	it('makes a card token named after the email and closes the form with the token and the email', async () => {
 		stripe.stripe.createToken.mockResolvedValue({
 			token: { id: 'tok_visa' },
@@ -181,6 +188,8 @@ describe('StripeCardModalComponent', () => {
 			'Your card number is incomplete.'
 		);
 		expect(dismiss).not.toHaveBeenCalled();
+		// A card typed wrong is not an app error
+		expect(console.error).not.toHaveBeenCalled();
 		// The customer fixes the card and pays again
 		expect(payButton().disabled).toBe(false);
 
