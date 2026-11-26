@@ -870,9 +870,6 @@ importers:
       ionicons:
         specifier: ^8.1.1
         version: 8.1.1
-      jsbarcode:
-        specifier: ^3.12.3
-        version: 3.12.3
       lodash:
         specifier: ^4.18.1
         version: 4.18.1

@@ -12,7 +12,7 @@ Packages: `packages/carrier-mobile-ionic` (courier app) and `packages/merchant-t
 | Ionic | `@ionic/angular` 5.8 | 9.0.14, NgModule `IonicModule` from `@ionic/angular/lazy` |
 | Native runtime | Cordova 10 + `@ionic-native/*` 5.36 | Capacitor 8.6.3 (`@capacitor/core`, `cli`, `android`, `ios`) |
 | ionicons | 5.5 | 8.1.1 |
-| GraphQL client | `@apollo/client` 3.5, `apollo-angular` 2.6, `graphql` 15.7 | `@apollo/client` 4.3.8, `apollo-angular` 14.2.0, `graphql` 17.1.0, `graphql-ws` 6.4.3 |
+| GraphQL client | `@apollo/client` 3.5, `apollo-angular` 2.6, `graphql` 15.7 | `@apollo/client` 4.3.8, `apollo-angular` 14.2.0, `graphql` ^16.15.0, `graphql-ws` 6.4.3 |
 | i18n | `@ngx-translate/core` 13 | 18.1.0 through the common-angular `TranslateModule` shim, `provideTranslateHttpLoader` |
 | socket.io client | 4.3 | 4.8.4 |
 | RxJS / zone.js | 7.4 + `rxjs-compat` / 0.11 | 7.8.2 / 0.16.3 |
@@ -21,8 +21,10 @@ Packages: `packages/carrier-mobile-ionic` (courier app) and `packages/merchant-t
 | Env generation | `ts-node` + `dotenv` + `yargs` + envalid 7 | `node scripts/configure.ts` (Node 26 type stripping), `process.loadEnvFile`, `util.parseArgs`, envalid 9.0.0 |
 | Docker | `node:16-alpine3.14`, yarn 1 | `node:26-alpine`, pnpm 12.23.0, nginx |
 
-`graphql` 17.1.0 is the newest; the core lane had not picked a version yet when this lane started.
-apollo-angular 14 and Apollo Client 4 accept `^16 || ^17`, so the lead can align it at merge.
+`graphql` follows the core lane: `^16.15.0` (17.1.0 is out, but `@apollo/server` 5 rejects it).
+Watch queries go through `onlyCompleteData()` (or a `data` filter) because Apollo Client 4 also
+emits loading/partial results; the default error policies are declared through
+`ApolloClient.DeclareDefaultOptions`.
 
 ## Angular 22 specifics
 
@@ -37,9 +39,10 @@ apollo-angular 14 and Apollo Client 4 accept `^16 || ^17`, so the lead can align
 - Imports that relied on `baseUrl: src` (`services/...`, `components/...`, `environments/...`) are
   now relative; tsconfig has no `baseUrl` and the contract paths only.
 - Route guards stay class-based `canLoad` (still supported, deprecated in favour of `canMatch`).
+- Every route redirect has `pathMatch` (Angular 22 rejects the old implicit prefix redirect).
 - The dev server and Vitest resolve external packages from the app folder, so the shared code's
-  runtime packages (`lodash`, `underscore`, `uuid`, `reflect-metadata`, and `jsbarcode` for
-  merchant) are listed as app dependencies.
+  runtime packages (`lodash`, `underscore`, `uuid`, `reflect-metadata`) are listed as app
+  dependencies.
 - `theme/variables.scss` now loads after `global.scss`: Ionic 7+ ships its default palette in
   `core.css`, which otherwise overrides the brand colours (the login page turned Ionic blue).
 
@@ -77,9 +80,10 @@ ids), `webDir: 'www'`. `android/` and `ios/` are git-ignored; create them with
 
 Analytics stay native-only, as before: the Cordova plugins did nothing in the browser.
 
-Without `GOOGLE_MAPS_API_KEY` the apps now boot without maps instead of waiting forever for the
-Maps script; the carrier map component and the pages are no-ops then, so the delivery flow and the
-e2e suite work without a key.
+The Google Maps JS API loads at startup as before (also without a key, in Google's development
+mode), but the initializer now gives up after 10 s so the apps still boot offline. The carrier map
+component is a no-op while the API is missing; the merchant track popup creates its directions
+objects lazily instead of at module load.
 
 ## Library replacements (merchant)
 
@@ -88,7 +92,7 @@ e2e suite work without a key.
 | `ng2-smart-table` 1.7 (dead, View Engine) | `angular2-smart-table` 4.2.0 (maintained fork, Angular 18-22) | `<angular2-smart-table>`, `Angular2SmartTableModule`, `Settings` typing. Custom renderers need `componentInitFunction` since v3: `bindViewCell()` (`components/table-components/smart-table.ts`) sets `value`/`rowData` like before. `filter: false` -> `isFilterable: false`, `valuePrepareFunction(value, cell)`, custom action HTML in `customButtonContent`, CSS classes `ng2-smart-*` -> `angular2-smart-*`. |
 | `@ever-co/angular2-wizard` 0.6 | in-house `FormWizardModule` (`components/form-wizard/`) | Same selectors (`form-wizard`, `wizard-step`), inputs, outputs and Bootstrap card markup, so templates and styles are unchanged. Fixed the `#wizzardFrom` template ref typo that broke "add carrier". |
 | `ngx-moment` 5 + `moment` | `amTimeAgo` pipe on `Intl.RelativeTimeFormat` (`components/time-ago.pipe.ts`) | Only `amTimeAgo` was used. |
-| `ionic-selectable` 4.9 | 8.0.0 (Ionic 9 / Angular 21-22) | Standalone component imported into `TrackPageModule`. |
+| `ionic-selectable` 4.9 | 8.0.0 (Ionic 9 / Angular 21-22) | Standalone component imported into `TrackPageModule`, which also provides Ionic's standalone `ModalController` (the lazy `IonicModule` one is a different class). |
 | `ng2-completer` 9 | removed | Never used. |
 | `ng2-file-upload` 1.4 | 12.0.0 | `FileItem` needs the uploader options as third argument. |
 | `ngx-masonry` 12 | 14.0.1 | Needs `@angular/animations` (kept, see held back). |
@@ -114,6 +118,39 @@ Removed stray server/build packages from both frontends after checking they were
 `uglify-js`, `fstream`, `cryptiles`, `neo-async`, `lodash.mergewith`, `core-js`, `@ionic/pro`,
 `@ionic/lab`, `tslint`, `codelyzer`, Karma/Jasmine/Protractor, `ngx-progressbar` (carrier, unused),
 `graphql-tag`, `symbol-observable`, `sass-loader`.
+
+## Shared change (packages/common)
+
+`DBObject` and `ProductInfo` copied raw data with `_.assign(this, raw)`. GraphQL payloads carry
+`id`, `createdAt` and other fields that the entities only expose as getters; the esbuild/Vite
+output is ES modules (strict mode), so that assignment now throws ("Cannot set property id ...
+which has only a getter") and broke the merchant product pages. `assignRaw()` skips getter-only
+accessors. Committed as `fix(common): ... (shared)` (6bdea531); the lead landed the same change on
+`feat/latest-stack` (744add97) and the merge kept one copy.
+
+## Removed hosting leftovers
+
+No PM2: the `connect` static servers (`app.ts`), `pm2bootstrap.ts`, the `start:server*` scripts and
+the `PM2_*`, `KEYMETRICS_*`, `WEB_CONCURRENCY`, `WEB_MEMORY`, `PORT`, `LOGS_PATH` settings are gone
+from both apps, and so is merchant's Elastic Beanstalk config that started that server. The Docker
+images build the static bundle and serve it with nginx (`ENTRYPOINT ["./entrypoint.prod.sh"]`,
+`CMD ["nginx", "-g", "daemon off;"]`). `DEFAULT_LOGIN_PASSWORD` defaults to empty (demo builds can
+still prefill the login form through the environment); API keys default to empty.
+
+## Verification
+
+| Check | Carrier | Merchant |
+| --- | --- | --- |
+| `tsc -p tsconfig.app.json --noEmit` | clean | clean |
+| Vitest (`pnpm test`) | 9 files, 61 tests pass | 6 files, 33 tests pass |
+| Production build (`pnpm run build`) | passes, initial 1.34 MB (327 kB transfer) | passes, initial 1.74 MB (376 kB transfer) |
+| Dev server boot + headless load | `/login`, no console errors except the unreachable API | `/login` and warehouse, carriers, customers, settings, promotions, track pages with a store logged in: no errors (Google "NoApiKeys" warnings only) |
+| Playwright, no API needed | 3/3 (dev server and production build) | 2/2 (dev server and production build) |
+| Playwright against the core lane's API | 8/8 incl. a full delivery (take, pick up, start, delivered; statuses checked through GraphQL) | 8/8: login, products, order workflow button, carriers table with custom cells, customers, settings |
+| Docker image | builds (`node:26-alpine` + pnpm 12.23 -> nginx) | not verified yet: Docker Desktop answered 500 on every call during the run (same Dockerfile shape as carrier) |
+
+The API-backed runs were green on the dev servers; a later run against the production builds hit
+a hung test Mongo (`127.0.0.1:27018` timeouts in the API), so only the no-API specs ran there.
 
 ## Held back
 

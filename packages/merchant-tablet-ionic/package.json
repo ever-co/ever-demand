@@ -68,7 +68,6 @@
 		"graphql-ws": "^6.4.3",
 		"ionic-selectable": "^8.0.0",
 		"ionicons": "^8.1.1",
-		"jsbarcode": "^3.12.3",
 		"lodash": "^4.18.1",
 		"lodash-es": "^4.18.1",
 		"masonry-layout": "^4.2.2",
