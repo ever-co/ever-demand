@@ -1,0 +1,2 @@
+# Scripts run inside the Linux Docker image: keep LF on Windows checkouts too.
+*.sh text eol=lf
