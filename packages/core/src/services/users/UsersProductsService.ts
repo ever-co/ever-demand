@@ -62,7 +62,7 @@ export class UsersProductsService implements IUserProductsRouter, IService {
 			}),
 			distinctUntilChanged(
 				(oldDevice, newDevice) =>
-					oldDevice.language !== newDevice.language
+					oldDevice.language === newDevice.language
 			),
 			switchMap((device) =>
 				combineLatest(
