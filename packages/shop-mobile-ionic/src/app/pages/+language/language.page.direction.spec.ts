@@ -110,35 +110,36 @@ describe('LanguagePage direction while the picked language file loads', () => {
 		document.documentElement.lang = savedLang;
 	});
 
-	it('sets the page right to left in he when he-IL is picked before its file loads', async () => {
-		await startIn('en-US');
-		expect(document.documentElement.dir).toBe('ltr');
-		expect(document.documentElement.lang).toBe('en');
+	// A language with the page direction and language it must give.
+	interface Page {
+		language: ILanguage;
+		dir: 'ltr' | 'rtl';
+		lang: string;
+	}
 
-		pick('he-IL');
+	const english: Page = { language: 'en-US', dir: 'ltr', lang: 'en' };
+	const hebrew: Page = { language: 'he-IL', dir: 'rtl', lang: 'he' };
+	const french: Page = { language: 'fr-FR', dir: 'ltr', lang: 'fr' };
 
-		expect(document.documentElement.dir).toBe('rtl');
-		expect(document.documentElement.lang).toBe('he');
+	const expectPageIn = (page: Page) => {
+		expect(document.documentElement.dir).toBe(page.dir);
+		expect(document.documentElement.lang).toBe(page.lang);
+	};
 
-		await loadPickedFile('he-IL');
+	[
+		{ start: english, picked: hebrew },
+		{ start: hebrew, picked: french },
+		{ start: english, picked: french },
+	].forEach(({ start, picked }) => {
+		it(`sets the page ${picked.dir} in ${picked.lang} when ${picked.language} is picked after ${start.language}, before its file loads`, async () => {
+			await startIn(start.language);
+			expectPageIn(start);
 
-		expect(document.documentElement.dir).toBe('rtl');
-		expect(document.documentElement.lang).toBe('he');
-	});
+			pick(picked.language);
+			expectPageIn(picked);
 
-	it('sets the page left to right in fr when fr-FR is picked after he-IL, before its file loads', async () => {
-		await startIn('he-IL');
-		expect(document.documentElement.dir).toBe('rtl');
-		expect(document.documentElement.lang).toBe('he');
-
-		pick('fr-FR');
-
-		expect(document.documentElement.dir).toBe('ltr');
-		expect(document.documentElement.lang).toBe('fr');
-
-		await loadPickedFile('fr-FR');
-
-		expect(document.documentElement.dir).toBe('ltr');
-		expect(document.documentElement.lang).toBe('fr');
+			await loadPickedFile(picked.language);
+			expectPageIn(picked);
+		});
 	});
 });
