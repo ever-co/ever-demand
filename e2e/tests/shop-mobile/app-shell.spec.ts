@@ -7,6 +7,13 @@ test.describe('shop-mobile app shell', () => {
 		page,
 	}) => {
 		const unexpectedErrors = watchConsole(page);
+		// "[Ionic Warning]" (e.g. a deprecated IonicModule) and "[Ionicons Warning]"
+		// (an icon name that is not registered with addIcons).
+		const ionicWarnings: string[] = [];
+		page.on('console', (msg) => {
+			if (/\[Ionic(ons)? Warning\]/.test(msg.text()))
+				ionicWarnings.push(msg.text());
+		});
 
 		await page.goto('/');
 		await expectAppShell(page);
@@ -17,6 +24,10 @@ test.describe('shop-mobile app shell', () => {
 			'Ever',
 			{ timeout: 30_000 },
 		);
+		// Its icons render (registered with addIcons, drawn in the shadow root).
+		await expect(
+			page.locator('ion-menu ion-icon[name="basket"] svg').first(),
+		).toBeAttached({ timeout: 30_000 });
 
 		// One of the start pages is shown: invite, products, server down or maintenance.
 		await expect(page).toHaveURL(
@@ -25,6 +36,7 @@ test.describe('shop-mobile app shell', () => {
 		);
 
 		expect(unexpectedErrors()).toEqual([]);
+		expect(ionicWarnings).toEqual([]);
 	});
 
 	test('shows the server-down page while the API is unreachable', async ({
@@ -41,7 +53,7 @@ test.describe('shop-mobile app shell', () => {
 		expect(unexpectedErrors()).toEqual([]);
 	});
 
-	test('serves the PWA manifest, the translations and the Ionic icons', async ({
+	test('serves the PWA manifest and the translations', async ({
 		request,
 	}) => {
 		const manifest = await request.get('/manifest.json');
@@ -61,9 +73,6 @@ test.describe('shop-mobile app shell', () => {
 			expect(json.BUY_POPUP.PAYMENT_FAILED, lang).toBeTruthy();
 			expect(json.BUY_POPUP.EMAIL_NOT_SAVED, lang).toBeTruthy();
 		}
-
-		// IonicModule loads icons from /svg at runtime.
-		const icon = await request.get('/svg/search.svg');
-		expect(icon.ok()).toBeTruthy();
+		// No /svg icon folder any more: the icons are bundled (src/app/icons.ts).
 	});
 });

@@ -6,7 +6,7 @@ import Device from '@modules/server.common/entities/Device';
 import User from '@modules/server.common/entities/User';
 import InviteRequest from '@modules/server.common/entities/InviteRequest';
 import { TranslateService } from '@ngx-translate/core';
-import { Platform } from '@ionic/angular/lazy';
+import { Platform } from '@ionic/angular';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { first } from 'rxjs/operators';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';

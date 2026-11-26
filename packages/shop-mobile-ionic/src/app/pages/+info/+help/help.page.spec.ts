@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Platform } from '@ionic/angular/lazy';
+import { Platform } from '@ionic/angular';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { of } from 'rxjs';
 import { HelpPage } from './help.page';

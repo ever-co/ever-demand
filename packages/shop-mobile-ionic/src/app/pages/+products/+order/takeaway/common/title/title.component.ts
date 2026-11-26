@@ -9,7 +9,7 @@ import {
 import { Subscription, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import Order from '@modules/server.common/entities/Order';
-import { ModalController } from '@ionic/angular/lazy';
+import { ModalController } from '@ionic/angular';
 import { OrderInfoModalComponent } from '../../../common/order-info-modal/order-info-modal.component';
 
 @Component({

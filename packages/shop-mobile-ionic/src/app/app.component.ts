@@ -3,7 +3,7 @@ import {
 	Component,
 } from '@angular/core';
 import { Location } from '@angular/common';
-import { Platform } from '@ionic/angular/lazy';
+import { Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DeviceRouter } from '@modules/client.common.angular2/routers/device-router.service';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';

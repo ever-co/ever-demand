@@ -6,7 +6,7 @@ import {
 	EventEmitter,
 	ViewChild,
 } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular/lazy';
+import { ModalController, NavParams } from '@ionic/angular';
 import { Store } from 'app/services/store.service';
 import { CancelPage } from '../../+cancel/cancel.page';
 import { Subscription } from 'rxjs';

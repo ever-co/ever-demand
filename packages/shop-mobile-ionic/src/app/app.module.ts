@@ -12,7 +12,12 @@ import {
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular/lazy';
+import {
+	IonApp,
+	IonicRouteStrategy,
+	IonRouterOutlet,
+	provideIonicAngular,
+} from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { Capacitor } from '@capacitor/core';
@@ -60,7 +65,8 @@ declare module '@apollo/client' {
 		AppRoutingModule,
 		MenuModule,
 		CallPageModule,
-		IonicModule.forRoot(),
+		IonApp,
+		IonRouterOutlet,
 		IonicStorageModule.forRoot(),
 		TranslateModule.forRoot({
 			loader: provideTranslateHttpLoader({
@@ -74,6 +80,8 @@ declare module '@apollo/client' {
 		}),
 	],
 	providers: [
+		// Standalone Ionic (IonicModule.forRoot() is deprecated): same, empty config.
+		provideIonicAngular(),
 		// The app relies on zone.js change detection (mutated fields,
 		// getters, setInterval timers), so keep it explicitly: Angular 21+
 		// defaults to zoneless.

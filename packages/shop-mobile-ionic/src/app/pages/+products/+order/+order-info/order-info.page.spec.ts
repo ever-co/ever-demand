@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { ModalController, NavController } from '@ionic/angular/lazy';
+import { ModalController, NavController } from '@ionic/angular';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { NEVER } from 'rxjs';

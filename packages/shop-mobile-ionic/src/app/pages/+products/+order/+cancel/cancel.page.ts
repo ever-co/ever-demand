@@ -11,7 +11,7 @@ import {
 	ModalController,
 	NavParams,
 	NavController,
-} from '@ionic/angular/lazy';
+} from '@ionic/angular';
 import { Store } from '../../../../services/store.service';
 import { OrderPage } from '../order.page';
 import { Router } from '@angular/router';

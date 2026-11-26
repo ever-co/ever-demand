@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MenuController } from '@ionic/angular/lazy';
+import { MenuController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { Store } from 'app/services/store.service';

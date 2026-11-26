@@ -11,7 +11,7 @@ import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus'
 import Order from '@modules/server.common/entities/Order';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
-import { ModalController } from '@ionic/angular/lazy';
+import { ModalController } from '@ionic/angular';
 import { Store } from 'app/services/store.service';
 import { IssuePage } from '../../issue/issue.page';
 import { Router } from '@angular/router';

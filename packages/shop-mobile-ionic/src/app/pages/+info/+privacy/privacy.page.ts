@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { Subscription } from 'rxjs';
-import { Platform } from '@ionic/angular/lazy';
+import { Platform } from '@ionic/angular';
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.Eager,

@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import Order from '@modules/server.common/entities/Order';
 import { Subscription } from 'rxjs';
-import { PopoverController, NavParams, ModalController } from '@ionic/angular/lazy';
+import { PopoverController, NavParams, ModalController } from '@ionic/angular';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import { Store } from '../../../services/store.service';
 import { CancelPage } from './+cancel/cancel.page';

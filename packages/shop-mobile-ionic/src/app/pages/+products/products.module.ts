@@ -2,7 +2,25 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { IonicModule } from '@ionic/angular/lazy';
+import {
+	IonButtons,
+	IonCard,
+	IonCol,
+	IonContent,
+	IonGrid,
+	IonHeader,
+	IonIcon,
+	IonInfiniteScroll,
+	IonInfiniteScrollContent,
+	IonLabel,
+	IonList,
+	IonMenuButton,
+	IonRouterLink,
+	IonRow,
+	IonSpinner,
+	IonToggle,
+	IonToolbar,
+} from '@ionic/angular';
 import { ProductsPage } from './products.page';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { ProductsSlidesViewComponent } from './products-view/slides-view/slides-view.component';
@@ -47,7 +65,23 @@ const routes: Routes = [
 	imports: [
 		CommonModule,
 		FormsModule,
-		IonicModule,
+		IonButtons,
+		IonCard,
+		IonCol,
+		IonContent,
+		IonGrid,
+		IonHeader,
+		IonIcon,
+		IonInfiniteScroll,
+		IonInfiniteScrollContent,
+		IonLabel,
+		IonList,
+		IonMenuButton,
+		IonRouterLink,
+		IonRow,
+		IonSpinner,
+		IonToggle,
+		IonToolbar,
 		RouterModule.forChild(routes),
 		TranslateModule.forChild(),
 		ProductsModule,

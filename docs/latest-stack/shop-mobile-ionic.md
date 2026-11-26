@@ -9,7 +9,7 @@ Expo and Flutter lanes. Its feature inventory is `docs/latest-stack/shop-mobile-
 | Area | Before | Now |
 | --- | --- | --- |
 | Angular | 13.1 (`@angular-devkit/build-angular` + custom webpack) | 22.3 (`@angular/build:application` / `dev-server` / `unit-test`) |
-| Ionic | `@ionic/angular` 5.8 | 9.0.14, NgModule build from `@ionic/angular/lazy` |
+| Ionic | `@ionic/angular` 5.8 | 9.0.14, standalone build (`provideIonicAngular()` + `Ion*` components in each NgModule's `imports`) |
 | Native shell | Cordova (android 10) + 22 cordova plugins + `@ionic-native/*` 5 | Capacitor 8.6 (`@capacitor/core`, `cli`, `android`, `ios`) |
 | Capacitor plugins | | app 8.1, browser 8.0, camera 8.2, device 8.0, dialog 8.0, geolocation 8.2, haptics 8.0, local-notifications 8.3, network 8.0, preferences 8.0, splash-screen 8.0, status-bar 8.0, `@capacitor-mlkit/barcode-scanning` 8.2 |
 | GraphQL client | apollo-angular 2.6, @apollo/client 3.5, subscriptions-transport-ws, graphql 15 | apollo-angular 14.2, @apollo/client 4.3, graphql-ws 6.4 (`GraphQLWsLink`, token in `connectionParams`), graphql 16.15 (the core lane's pick: Apollo Server 5 rejects 17) |
@@ -71,13 +71,38 @@ locate you"), camera for the barcode scanner. Icons and splash: `resources/icon.
   `$safeNavigationMigration()` keeps the old `?.` null semantics in 6 templates,
   `strictTemplates: false` is explicit. `standalone: false` on all NgModule declarations
   (`tools/ng-standalone-false.mjs`).
-- **Ionic 9.** The `@ionic/angular` entry point is the standalone build; the NgModule build moved
-  to `@ionic/angular/lazy`, so every import comes from there. Ionic 7+ puts its default palette
+- **Ionic 9.** Ionic 7+ puts its default palette
   in `core.css`, so `theme/variables.scss` now loads after `global.scss` (otherwise toolbars turn
   Ionic blue). Legacy form syntax is gone: the language radios carry their label as content
   (`justify="space-between"`), the toggle / checkbox / textarea got `aria-label`s. `ion-searchbar`
-  now searches on `ionInput` (Ionic 7 made `ionChange` fire only on blur/Enter). Icons load from
-  `/svg` (copied from `node_modules/ionicons`).
+  now searches on `ionInput` (Ionic 7 made `ionChange` fire only on blur/Enter).
+- **Standalone Ionic, NgModules kept.** In Ionic 9 the `@ionic/angular` root entry *is* the
+  standalone build (what `@ionic/angular/standalone` was in Ionic 7/8; there is no `/standalone`
+  export any more), and the deprecated `IonicModule` lives in `@ionic/angular/lazy`. The app no
+  longer imports `/lazy` anywhere:
+  - `AppModule` provides `provideIonicAngular()` (same empty config as the old
+    `IonicModule.forRoot()`) and imports `IonApp` + `IonRouterOutlet`; `IonicRouteStrategy` is
+    unchanged.
+  - Every NgModule imports exactly the standalone `Ion*` components its declared components'
+    templates use (25 modules; 6 more only dropped an unused `IonicModule`), plus
+    `IonRouterLink` / `IonRouterLinkWithHref` where a template has `routerLink` (menu, orders
+    history, products, order card), so `routerDirection` keeps
+    working as with `IonicModule`'s router-link delegates. The standalone form components
+    (`IonCheckbox`, `IonRadioGroup`, `IonSearchbar`, `IonTextarea`, `IonToggle`) bring their own
+    `ngModel` value accessors.
+  - Controllers (`ModalController`, `PopoverController`, `NavController`, `MenuController`,
+    `NavParams`, `Platform`) come from `@ionic/angular`; the specs provide their mocks under the
+    same tokens.
+  - `CUSTOM_ELEMENTS_SCHEMA` stays only in the products and product-details modules, for
+    `<swiper-container>` / `<swiper-slide>`. A build with the schema removed and
+    `strictTemplates: true` reports NG8001 only for those two swiper elements, so no `ion-*`
+    element is left unimported.
+  - **Icons:** the standalone `ion-icon` renders only icons registered with `addIcons`
+    (`src/app/icons.ts`, called from `main.ts`; `icons.spec.ts` lists the template names). The
+    `/svg` copy of `node_modules/ionicons` is gone from the build (1357 files). The order card's
+    `ios-arrow-down` (removed in ionicons 5, so it rendered empty) is `chevron-down` now, the
+    ionicons 5+ name for the same arrow. Ionic's own components (menu button, searchbar, ...)
+    bundle their icons.
 - **ion-slides → Swiper element.** `swiper/element/bundle` is registered in `main.ts` (it brings
   its own styles into the shadow root, so no global swiper CSS); the slides
   view and the product images use `<swiper-container init="false">` with the same options plus
@@ -144,7 +169,10 @@ locate you"), camera for the barcode scanner. Icons and splash: `resources/icon.
 
 ## Tests
 
-- `ng test --watch=false` (Vitest, jsdom, `maxWorkers: 2`): **36 files, 201 tests, all green.**
+- `ng test --watch=false` (Vitest, jsdom, `maxWorkers: 2`): **39 files, 271 tests, all green**
+  (after the standalone Ionic move; `icons.spec.ts` is new). The specs keep declaring the
+  components with `CUSTOM_ELEMENTS_SCHEMA`, so the `ion-*` elements stay inert there; only the
+  controller tokens moved from `@ionic/angular/lazy` to `@ionic/angular`.
   - All **84** Karma specs from `develop` @ `abd39940` are ported (Jasmine spies → `vi` through
     `src/app/testing/spies.ts`, `waitForAsync`/`fakeAsync` → async/await + `vi` fake timers). The
     payment-flow fixes they guard (#1645/#1646 paying guard in the root Store, #1648 server
@@ -164,8 +192,15 @@ locate you"), camera for the barcode scanner. Icons and splash: `resources/icon.
 - Playwright (`e2e/tests/shop-mobile`, Pixel 7, baseURL `http://localhost:4201`): **14 passed,
   1 skipped** (the server-down test skips while an API runs) against the production build served
   by `node e2e/serve-apps.mjs shop-mobile` and the core lane's API (graphql 16, Mongoose 9 fix in).
-  - `app-shell.spec.ts` (no API needed): boots with no unexpected console errors, server-down page
-    while the API is unreachable, manifest + 6 translation files + ionicons served.
+  - `app-shell.spec.ts` (no API needed): boots with no unexpected console errors, no
+    `[Ionic Warning]` / `[Ionicons Warning]` and the menu icons drawn (`ion-icon ... svg`),
+    server-down page while the API is unreachable, manifest + 6 translation files.
+  - Standalone Ionic run (no API, production build): 5 passed, 9 skipped (need the API), 1 failed:
+    "the language page switches the app to Hebrew" sees `dir="ltr"`. It fails the same way on the
+    `feat/latest-stack` @ `b8f5309a` build, so it is not from the Ionic move: the language page
+    reads `store.language` (`getCurrentLang()`) right after `use('he-IL')`, before ngx-translate
+    18 has loaded `he-IL.json`, so it computes `ltr` / `en`. The new no-warning check fails on
+    that baseline build (IonicModule deprecation warning) and passes now.
   - `offline-ui.spec.ts` (no data needed; fakes the API root when no API runs): Hebrew switches
     the app to rtl and the right-hand menu, side menu items, offline → connection lost → back.
   - `flows.spec.ts` (needs the API, skipped without it): first start, product feed, details and
@@ -181,13 +216,13 @@ locate you"), camera for the barcode scanner. Icons and splash: `resources/icon.
 `build:prod` with the env settings as build args, then `nginx:alpine` serving `www/` on 4201 with
 the old entrypoints. Built and smoke-tested here (`--build-arg
 VERDACCIO_REGISTRY=http://host.docker.internal:4873/`): 117 MB image; `/`, a deep link, the
-translations and the icons answer 200.
+translations and the icons answer 200. (Since the standalone Ionic move there is no `/svg` icon
+folder: the icons are in the bundle.)
 
 ## Held back / known gaps
 
 | Item | Why |
 | --- | --- |
-| `IonicModule` (lazy NgModule build) | Ionic 9 deprecates it for `provideIonicAngular()` + standalone `Ion*` imports, but it still works. Moving 35 NgModules to standalone Ionic components (plus `addIcons` for every icon) is a larger change than this lane; the contract keeps NgModules. Logs one deprecation warning at start. |
 | TypeScript 7 | Angular 22 needs `>=6.0 <6.1` (contract). |
 | `graphql` 16.15 (17 exists) | Aligned with the core lane: `@apollo/server` 5 only accepts `^16.11`. apollo-angular 14 / Apollo Client 4 accept both. |
 | Stripe Checkout (`checkout.js`) | Stripe's legacy popup is still what the payment flow and its fleet specs use. Moving to Stripe Elements / Payment Element is a product change, not an upgrade. |

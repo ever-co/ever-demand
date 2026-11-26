@@ -4,7 +4,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Location } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { Platform } from '@ionic/angular/lazy';
+import { Platform } from '@ionic/angular';
 import {
 	TranslateDirective,
 	TranslateLoader,

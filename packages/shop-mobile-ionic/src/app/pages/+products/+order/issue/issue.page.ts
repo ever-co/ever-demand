@@ -5,7 +5,7 @@ import {
 	EventEmitter,
 	OnDestroy,
 } from '@angular/core';
-import { NavParams, ModalController, NavController } from '@ionic/angular/lazy';
+import { NavParams, ModalController, NavController } from '@ionic/angular';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import Order from '@modules/server.common/entities/Order';

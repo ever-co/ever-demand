@@ -7,7 +7,7 @@ import {
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { Subscription } from 'rxjs';
 import { DeviceRouter } from '@modules/client.common.angular2/routers/device-router.service';
-import { Platform } from '@ionic/angular/lazy';
+import { Platform } from '@ionic/angular';
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.Eager,
