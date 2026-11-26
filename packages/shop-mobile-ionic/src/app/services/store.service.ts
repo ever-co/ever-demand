@@ -146,6 +146,13 @@ export class Store {
 		this._translateService.use(l);
 	}
 
+	// The language saved on the customer's last pick. Unlike language, it
+	// changes at once, before the new language file loads. Null when none
+	// is saved or the shop does not ship it.
+	get savedLanguage(): ILanguage | null {
+		return shippedLanguage(localStorage.getItem('_language'));
+	}
+
 	get orderWarehouseId(): Order['warehouseId'] | null {
 		return localStorage.getItem('_currOrderWarehouseId') || null;
 	}
