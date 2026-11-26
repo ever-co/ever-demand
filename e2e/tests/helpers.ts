@@ -21,3 +21,28 @@ export async function gql<T = any>(
 	});
 	return res.json();
 }
+
+let cachedAdminToken: Promise<string> | undefined;
+
+/**
+ * Login token of the default admin. The API refuses admin operations
+ * without a login (graphql/access, socket access), so fixtures use it.
+ */
+export function adminToken(): Promise<string> {
+	cachedAdminToken ??= (async () => {
+		const res = await gql<{ adminLogin: { token: string } | null }>(
+			`mutation L($email: String!, $password: String!) { adminLogin(email: $email, password: $password) { token } }`,
+			ADMIN
+		);
+		const token = res.data?.adminLogin?.token;
+
+		if (!token) {
+			cachedAdminToken = undefined;
+			throw new Error(`default admin could not log in: ${JSON.stringify(res.errors)}`);
+		}
+
+		return token;
+	})();
+
+	return cachedAdminToken;
+}

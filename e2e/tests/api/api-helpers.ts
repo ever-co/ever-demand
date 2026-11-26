@@ -7,7 +7,8 @@ import { io, Socket } from 'socket.io-client';
 import { gql, SERVICES_URL } from '../helpers';
 
 /** The NestJS app (REST under /api, GraphQL at /graphql): the origin of GQL_URL. */
-export { GQL_URL, SERVICES_URL, SUBSCRIPTIONS_URL, ADMIN, gql } from '../helpers';
+export { GQL_URL, SERVICES_URL, SUBSCRIPTIONS_URL, ADMIN, gql, adminToken } from '../helpers';
+import { adminToken as defaultAdminToken, gql as rawGql } from '../helpers';
 
 export const unique = () => randomUUID().slice(0, 8);
 
@@ -23,13 +24,17 @@ export function geoLocation(coordinates: [number, number] = SOFIA) {
 	};
 }
 
-/** gql() that throws on GraphQL errors and returns `data`. */
+/**
+ * gql() that throws on GraphQL errors and returns `data`. `token`: undefined =
+ * the default admin (setup operations are admin-only), null = no login.
+ */
 export async function gqlData<T = any>(
 	query: string,
 	variables: Record<string, unknown> = {},
-	token?: string
+	token?: string | null
 ): Promise<T> {
-	const res = await gql<T>(query, variables, token);
+	const bearer = token === undefined ? await defaultAdminToken() : token ?? undefined;
+	const res = await rawGql<T>(query, variables, bearer);
 	if (res.errors?.length || res.data == null) {
 		throw new Error(`GraphQL failed: ${JSON.stringify(res.errors)}`);
 	}
@@ -40,10 +45,13 @@ export async function gqlData<T = any>(
 export class PyroClient {
 	private readonly sockets = new Map<string, Socket>();
 
+	/** `auth`: the handshake auth, e.g. `{ token }` for the merchant / carrier actions. */
+	constructor(private readonly auth: Record<string, string> = {}) {}
+
 	private async socket(router: string): Promise<Socket> {
 		let socket = this.sockets.get(router);
 		if (!socket) {
-			socket = io(`${SERVICES_URL}/${router}`, { reconnection: false, forceNew: true });
+			socket = io(`${SERVICES_URL}/${router}`, { reconnection: false, forceNew: true, auth: this.auth });
 			this.sockets.set(router, socket);
 		}
 		if (!socket.connected) {

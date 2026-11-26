@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { createClient } from 'graphql-ws';
-import { ADMIN, gqlData, PyroClient, SUBSCRIPTIONS_URL, unique } from './api-helpers';
+import { ADMIN, gqlData, PyroClient, SUBSCRIPTIONS_URL, unique, adminToken } from './api-helpers';
 
 /**
  * graphql-ws at ws://<host>:2086/subscriptions: what GraphQLWsLink +
@@ -36,7 +36,8 @@ test.describe('GraphQL subscriptions (graphql-ws)', () => {
 
 	test('deviceCreated pushes the update of a device', async () => {
 		const pyro = new PyroClient();
-		const client = connect();
+		// deviceCreated is admin-only and limited to the admin's tenant
+		const client = connect({ authorization: `Bearer ${await adminToken()}` });
 
 		try {
 			const device = await pyro.call('device', 'create', {

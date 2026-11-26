@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { createStoreWithProduct, geoLocation, PyroClient, unique } from './api-helpers';
+import { createStoreWithProduct, geoLocation, PyroClient, unique, adminToken } from './api-helpers';
 
 test.describe.configure({ mode: 'serial' });
 
@@ -54,7 +54,13 @@ test.describe('socket.io pyro routers', () => {
 		await subscription.next((o) => o?._id === orderId);
 
 		await pyro.call('order', 'confirm', orderId);
-		await pyro.call('order', 'updateWarehouseStatus', orderId, 6);
+		// a merchant action: the store (here the admin) logs in through the handshake
+		const staff = new PyroClient({ token: await adminToken() });
+		try {
+			await staff.call('order', 'updateWarehouseStatus', orderId, 6);
+		} finally {
+			staff.close();
+		}
 
 		const pushed = await subscription.next((o) => o.warehouseStatus === 6);
 		subscription.unsubscribe();

@@ -22,7 +22,7 @@ test.describe('GraphQL API (queries the apps use)', () => {
 
 	test('adminAuthenticated reads the Bearer token', async () => {
 		expect((await gqlData(`{ adminAuthenticated }`, {}, token)).adminAuthenticated).toBe(true);
-		expect((await gqlData(`{ adminAuthenticated }`)).adminAuthenticated).toBe(false);
+		expect((await gqlData(`{ adminAuthenticated }`, {}, null)).adminAuthenticated).toBe(false);
 	});
 
 	test('app settings and currencies', async () => {
