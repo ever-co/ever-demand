@@ -21,9 +21,11 @@ type Tenant {
 	slug: String!
 	status: String!
 	plan: String!
+	"Only for the tenant's admins"
 	ownerId: String
 	isPlatform: Boolean!
-	billing: TenantBilling!
+	"Only for the tenant's admins"
+	billing: TenantBilling
 	settings: TenantSettings!
 	createdAt: Date
 }

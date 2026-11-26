@@ -74,6 +74,11 @@ export async function bootstrapNest(): Promise<INestApplication> {
 			next
 		)
 	);
+	if (env.TRUST_PROXY) {
+		const trust = /^\d+$/.test(env.TRUST_PROXY) ? Number(env.TRUST_PROXY) : env.TRUST_PROXY;
+		app.getHttpAdapter().getInstance().set('trust proxy', trust);
+	}
+
 	// Every request runs in the context of its tenant (login token, Tenant-Id
 	// header or tenant host). Mounted after the body parsers above, before
 	// GraphQL and the controllers.

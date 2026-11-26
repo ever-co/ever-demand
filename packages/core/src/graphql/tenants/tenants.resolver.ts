@@ -6,6 +6,7 @@ import { BillingService, CheckoutInput } from '../../services/billing/BillingSer
 import { PLANS } from '../../tenant/plans';
 import { tenantDirectory } from '../../tenant/tenant-directory';
 import type { GraphQLContext } from '../graphql-context';
+import { TenantContext } from '../../tenant/tenant-context';
 
 /** The GraphQL shape of a tenant: Stripe ids stay on the server. */
 export function toTenantView(tenant: Tenant | null) {
@@ -57,7 +58,15 @@ export class TenantsResolver {
 
 	@Query()
 	async currentTenant() {
-		return toTenantView(await this._tenantsService.current());
+		const view = toTenantView(await this._tenantsService.current());
+		const actor = TenantContext.actor();
+
+		if (view && actor?.role !== 'admin') {
+			// shops and other logins see the name, slug and settings only
+			return { ...view, ownerId: null, billing: null };
+		}
+
+		return view;
 	}
 
 	@Query()

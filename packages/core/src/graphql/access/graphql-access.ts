@@ -1,5 +1,5 @@
 import type { TenantRole } from '@modules/server.common/interfaces/ITenant';
-import type { ActorRole } from '../../tenant/tenant-context';
+import type { ActorRole, TenantCtx } from '../../tenant/tenant-context';
 
 /**
  * Who may call a GraphQL operation (a field of Query, Mutation or
@@ -34,6 +34,11 @@ const owner = {
 	adminRoles: ['owner'] as TenantRole[],
 };
 const store = { roles: ['admin', 'warehouse'] as ActorRole[] };
+/** creates or removes logins (members) and customers: not staff */
+const storeManager = {
+	roles: ['admin', 'warehouse'] as ActorRole[],
+	adminRoles: ['owner', 'admin'] as TenantRole[],
+};
 const carrier = { roles: ['admin', 'carrier'] as ActorRole[] };
 const staffApps = { roles: ['admin', 'warehouse', 'carrier'] as ActorRole[] };
 
@@ -71,9 +76,9 @@ export const GRAPHQL_ACCESS: Readonly<Record<string, GraphQLAccess>> = {
 	getCarrierByUsername: store,
 	getCarriers: store,
 	getCountOfCarriers: store,
-	registerCarrier: store,
-	removeCarrier: store,
-	removeCarriersByIds: store,
+	registerCarrier: storeManager,
+	removeCarrier: storeManager,
+	removeCarriersByIds: storeManager,
 	updateCarrier: staffApps,
 	updateCarrierEmail: carrier,
 	updateCarrierPassword: carrier,
@@ -184,9 +189,9 @@ export const GRAPHQL_ACCESS: Readonly<Record<string, GraphQLAccess>> = {
 	users: store,
 	getCountOfUsers: admin,
 	getCustomerMetrics: admin,
-	banUser: admin,
-	unbanUser: admin,
-	removeUsersByIds: admin,
+	banUser: manager,
+	unbanUser: manager,
+	removeUsersByIds: manager,
 
 	// stores
 	warehouse: 'public',
@@ -204,8 +209,8 @@ export const GRAPHQL_ACCESS: Readonly<Record<string, GraphQLAccess>> = {
 	getCountOfMerchants: store,
 	hasExistingStores: store,
 	nearbyStores: store,
-	registerWarehouse: admin,
-	removeWarehousesByIds: store,
+	registerWarehouse: manager,
+	removeWarehousesByIds: manager,
 	updateStoreGeoLocation: store,
 	updateWarehousePassword: store,
 	getStoreCarriers: store,
@@ -226,3 +231,46 @@ export const GRAPHQL_ACCESS: Readonly<Record<string, GraphQLAccess>> = {
 	removeWarehouseProducts: store,
 	updateWarehouseProduct: store,
 };
+
+/** Whether `ctx` may run an operation with `access` (see GRAPHQL_ACCESS). */
+export function isAllowed(
+	access: GraphQLAccess | undefined,
+	ctx: TenantCtx | undefined
+): boolean {
+	if (access === undefined) {
+		return false;
+	}
+
+	if (access === 'platform') {
+		return true;
+	}
+
+	if (ctx?.tenantId == null) {
+		return false;
+	}
+
+	if (access === 'public') {
+		return true;
+	}
+
+	const actor = ctx.actor;
+
+	if (actor == null) {
+		return false;
+	}
+
+	if (access === 'superAdmin') {
+		return actor.role === 'admin' && actor.isSuperAdmin === true;
+	}
+
+	if (!access.roles.includes(actor.role)) {
+		return false;
+	}
+
+	if (actor.role === 'admin' && access.adminRoles && !actor.isSuperAdmin) {
+		return access.adminRoles.includes(actor.tenantRole ?? 'admin');
+	}
+
+	return true;
+}
+

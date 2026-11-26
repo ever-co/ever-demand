@@ -12,17 +12,31 @@ import { ForbiddenException } from '@nestjs/common';
 import { TenantContext } from '../../tenant/tenant-context';
 
 /**
- * An admin edits their own profile; editing another admin of the tenant
- * (name, email = login) is for owners, admins and super-admins.
+ * An admin edits their own profile. Editing another admin of the tenant
+ * (name, email = login) is for owners and admins, and an owner or a
+ * super-admin is edited only by an owner or a super-admin.
  */
-function assertMayEditAdmin(adminId: string, self = false) {
+function assertMayEditAdmin(
+	target: { id: string; role?: string; isSuperAdmin?: boolean } | null,
+	self = false
+) {
 	const actor = TenantContext.actor();
 
-	if (actor?.id === adminId) {
+	if (target == null || actor?.id === target.id) {
 		return;
 	}
 
-	if (!self && (actor?.isSuperAdmin || actor?.tenantRole === 'owner' || actor?.tenantRole === 'admin')) {
+	if (self || !actor) {
+		throw new ForbiddenException('You can only change your own account');
+	}
+
+	if (actor.isSuperAdmin) {
+		return;
+	}
+
+	const protectedTarget = target.role === 'owner' || target.isSuperAdmin === true;
+
+	if (actor.tenantRole === 'owner' || (actor.tenantRole === 'admin' && !protectedTarget)) {
 		return;
 	}
 
@@ -56,9 +70,16 @@ export class AdminResolver {
 		_,
 		{ id, updateInput }: { id: string; updateInput }
 	): Promise<Admin> {
-		assertMayEditAdmin(id);
+		assertMayEditAdmin(await this._adminsService.getCurrent(id));
 		await this._adminsService.throwIfNotExists(id);
-		return this._adminsService.update(id, updateInput);
+
+		const input: any = { ...(updateInput ?? {}) };
+
+		if (typeof input.email === 'string') {
+			input.email = input.email.trim().toLowerCase();
+		}
+
+		return this._adminsService.update(id, input);
 	}
 
 	@Mutation()
@@ -88,7 +109,7 @@ export class AdminResolver {
 			throw new Error('Admin password cannot be changed');
 		}
 
-		assertMayEditAdmin(id, true);
+		assertMayEditAdmin(await this._adminsService.getCurrent(id), true);
 
 		return this._adminsService.updatePassword(id, password);
 	}

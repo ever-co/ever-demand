@@ -3,6 +3,7 @@ import {
 	createCarrier,
 	createProduct,
 	createWarehouse,
+	defaultAdminToken,
 	geoLocation,
 	PyroClient,
 	unique,
@@ -14,7 +15,10 @@ import {
  * the way the shop, merchant and carrier apps drive it.
  */
 describe('socket.io pyro routers: registration and order flow', () => {
+	// the shop: no login
 	const pyro = new PyroClient();
+	// the merchant and carrier apps: their login token in the socket handshake
+	let staff: PyroClient;
 
 	let warehouseId: string;
 	let productId: string;
@@ -24,13 +28,17 @@ describe('socket.io pyro routers: registration and order flow', () => {
 	let carrierId: string;
 
 	beforeAll(async () => {
+		staff = new PyroClient({ token: await defaultAdminToken() });
 		carrierId = (await createCarrier()).id;
 		warehouseId = (await createWarehouse()).id;
 		productId = (await createProduct()).id;
 		await addProductToWarehouse(warehouseId, productId, 5, 900);
 	});
 
-	afterAll(() => pyro.close());
+	afterAll(() => {
+		pyro.close();
+		staff.close();
+	});
 
 	it('registers a customer (user-auth.register)', async () => {
 		const email = `pyro_${unique()}@example.com`;
@@ -119,19 +127,19 @@ describe('socket.io pyro routers: registration and order flow', () => {
 		expect(confirmed.isConfirmed).toBe(true);
 
 		// ReadyForProcessing (1) -> PackagingFinished (6), skipping steps is allowed
-		await pyro.call('order', 'updateWarehouseStatus', orderId, 1);
-		const packaged = await pyro.call('order', 'updateWarehouseStatus', orderId, 6);
+		await staff.call('order', 'updateWarehouseStatus', orderId, 1);
+		const packaged = await staff.call('order', 'updateWarehouseStatus', orderId, 6);
 		expect(packaged.warehouseStatus).toBe(6);
 
 		const pushed = await subscription.next((o) => o.warehouseStatus === 6);
 		expect(pushed).toMatchObject({ _id: orderId, isConfirmed: true, warehouseStatus: 6 });
 
 		// the carrier app selects the order (CarrierSelectedOrder, 1), then picks it up (2)
-		const carrier = await pyro.call('carrier-orders', 'selectedForDelivery', carrierId, [orderId]);
+		const carrier = await staff.call('carrier-orders', 'selectedForDelivery', carrierId, [orderId]);
 		expect(carrier._id).toBe(carrierId);
 		await subscription.next((o) => o.carrierStatus === 1);
 
-		const pickedUp = await pyro.call('order', 'updateCarrierStatus', orderId, 2);
+		const pickedUp = await staff.call('order', 'updateCarrierStatus', orderId, 2);
 		expect(pickedUp.carrierStatus).toBe(2);
 		await subscription.next((o) => o.carrierStatus === 2);
 
@@ -139,7 +147,7 @@ describe('socket.io pyro routers: registration and order flow', () => {
 	});
 
 	it('refuses a status that goes back', async () => {
-		await expect(pyro.call('order', 'updateWarehouseStatus', orderId, 1)).rejects.toThrow();
+		await expect(staff.call('order', 'updateWarehouseStatus', orderId, 1)).rejects.toThrow();
 	});
 
 	it('lists the order of the customer (user-orders.get)', async () => {
@@ -168,7 +176,17 @@ describe('socket.io pyro routers: registration and order flow', () => {
 		expect(stock.count).toBe(3);
 
 		// a cancelled order takes no more status changes
-		await expect(pyro.call('order', 'updateWarehouseStatus', order._id, 6)).rejects.toThrow();
+		await expect(staff.call('order', 'updateWarehouseStatus', order._id, 6)).rejects.toThrow();
+	});
+
+	it('refuses store and carrier actions on a socket without a login', async () => {
+		await expect(pyro.call('order', 'paid', orderId)).rejects.toThrow(/Log in to use order.paid/);
+		await expect(
+			pyro.call('warehouse-products', 'changePrice', warehouseId, productId, 1)
+		).rejects.toThrow(/Log in/);
+		await expect(
+			pyro.call('warehouse', 'register', { warehouse: { name: 'x' }, password: 'y' })
+		).rejects.toThrow(/Log in/);
 	});
 
 	it('answers an error, not a crash, for an unknown order', async () => {

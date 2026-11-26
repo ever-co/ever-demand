@@ -342,7 +342,7 @@ describe('GraphQL API', () => {
 
 		it('moves the order through the warehouse and carrier statuses', async () => {
 			// a carrier status needs a carrier: the carrier app selects the order
-			const pyro = new PyroClient();
+			const pyro = new PyroClient({ token: await adminToken() });
 			try {
 				await pyro.call('carrier-orders', 'selectedForDelivery', carrierId, [orderId]);
 			} finally {

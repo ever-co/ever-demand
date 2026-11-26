@@ -637,6 +637,17 @@ describe('multi-tenant isolation', () => {
 			}
 		});
 
+		it('keeps staff from adding stores, carriers or removing customers', async () => {
+			for (const op of [
+				`mutation { removeUsersByIds(ids: ["${A.userId}"]) }`,
+				`mutation { removeWarehousesByIds(ids: ["${A.storeId}"]) }`,
+				`mutation { banUser(id: "${A.userId}") { id } }`,
+			]) {
+				const res = await gql(op, {}, staffToken);
+				expect(res.errors?.[0].extensions?.code).toBe('FORBIDDEN');
+			}
+		});
+
 		it('never lets an owner or admin grant super-admin or move a record to another tenant', async () => {
 			const email = `sneaky_${unique()}@example.com`;
 			const res = await gqlData(
@@ -655,6 +666,14 @@ describe('multi-tenant isolation', () => {
 	});
 
 	describe('platform super-admin', () => {
+		it('shows billing and the owner of a tenant to its admins only', async () => {
+			const asShop = await gqlData(`{ currentTenant { id ownerId billing { status } } }`, {}, ANONYMOUS, tenantHeader(A.slug));
+			const asOwner = await gqlData(`{ currentTenant { id ownerId billing { hasSubscription } } }`, {}, A.token);
+
+			expect(asShop.currentTenant).toEqual({ id: A.tenantId, ownerId: null, billing: null });
+			expect(asOwner.currentTenant).toEqual({ id: A.tenantId, ownerId: A.ownerId, billing: { hasSubscription: false } });
+		});
+
 		it('lists every tenant and switches into one with the Tenant-Id header', async () => {
 			const superToken = await defaultAdminToken();
 
@@ -665,6 +684,16 @@ describe('multi-tenant isolation', () => {
 			const inB = await gqlData(`{ warehouses { id } currentTenant { id } }`, {}, superToken, tenantHeader(B.slug));
 			expect(inB.currentTenant.id).toBe(B.tenantId);
 			expect(inB.warehouses.map((w) => w.id)).toEqual([B.storeId]);
+		});
+
+		it('keeps REST controllers closed to anonymous callers', async () => {
+			const res = await fetch(`${API_URL}/api/product/x`, {
+				method: 'POST',
+				headers: { 'content-type': 'application/json', 'Tenant-Id': B.slug },
+				body: JSON.stringify({ title: [{ locale: 'en-US', value: 'Spam' }] }),
+			});
+
+			expect(res.status).toBe(401);
 		});
 
 		it('keeps the tenant list from tenant owners', async () => {
@@ -911,6 +940,91 @@ describe('multi-tenant isolation', () => {
 			} finally {
 				pyro.close();
 			}
+		});
+
+		it("keeps an anonymous socket from B's store and order actions", async () => {
+			const anonymousB = new PyroClient({ tenant: B.slug });
+
+			try {
+				await expect(
+					anonymousB.call('warehouse', 'register', {
+						warehouse: { name: 'Mallory', username: `mallory_${unique()}`, geoLocation: geoLocation() },
+						password: 'mallory-password',
+					})
+				).rejects.toThrow(/Log in to use warehouse.register/);
+				await expect(anonymousB.call('order', 'paid', B.orderId)).rejects.toThrow(/Log in/);
+				await expect(
+					anonymousB.call('warehouse-products', 'changePrice', B.storeId, B.productId, 0)
+				).rejects.toThrow(/Log in/);
+				await expect(
+					anonymousB.call('carrier', 'updateById', B.carrierId, { firstName: 'Mallory' })
+				).rejects.toThrow(/Log in/);
+			} finally {
+				anonymousB.close();
+			}
+
+			const data = await gqlData(
+				`query R($c: String!) { warehouses { id } getCarrier(id: $c) { firstName } getOrder(id: "${B.orderId}") { isPaid } }`,
+				{ c: B.carrierId },
+				B.token
+			);
+			expect(data.warehouses.map((w) => w.id)).toEqual([B.storeId]);
+			expect(data.getCarrier.firstName).toBe('Carl');
+			expect(data.getOrder.isPaid).toBe(false);
+		});
+
+		it("lets a logged-in store socket do store actions in its own tenant only", async () => {
+			const login = await gqlData(
+				`mutation L($u: String!) { warehouseLogin(username: $u, password: "store-password") { token } }`,
+				{ u: A.storeUsername },
+				ANONYMOUS
+			);
+			const storeA = new PyroClient({ token: login.warehouseLogin.token });
+
+			try {
+				await storeA.call('warehouse-products', 'changePrice', A.storeId, A.productId, 1100);
+				// B's store is not found in A's tenant
+				await expect(
+					storeA.call('warehouse-products', 'changePrice', B.storeId, B.productId, 1)
+				).rejects.toThrow();
+			} finally {
+				storeA.close();
+			}
+
+			const prices = await gqlData(
+				`query P($a: String!) { getStoreProducts(storeId: $a, fullProducts: false) { price } }`,
+				{ a: A.storeId },
+				A.token
+			);
+			expect(prices.getStoreProducts[0].price).toBe(1100);
+
+			const priceB = await gqlData(
+				`query P($b: String!) { getStoreProducts(storeId: $b, fullProducts: false) { price } }`,
+				{ b: B.storeId },
+				B.token
+			);
+			expect(priceB.getStoreProducts[0].price).toBe(1000);
+		});
+
+		it('never lets a client set the Stripe customer of a customer', async () => {
+			await pyroA.call('user', 'updateUser', A.userId, { stripeCustomerId: 'cus_someone_else' });
+			await gql(
+				`mutation U($id: String!) { updateUser(id: $id, updateObject: { stripeCustomerId: "cus_someone_else", geoLocation: { countryId: 33, city: "Sofia", streetAddress: "Vitosha Blvd", house: "1", loc: { type: "Point", coordinates: [23.3219, 42.6977] } } }) { id } }`,
+				{ id: A.userId },
+				ANONYMOUS,
+				tenantHeader(A.slug)
+			);
+
+			const user = await new Promise<any>((resolve, reject) => {
+				pyroA.observe('user', 'get', A.userId).then((stream) =>
+					stream.next((v) => v?._id === A.userId).then((v) => {
+						stream.unsubscribe();
+						resolve(v);
+					}, reject)
+				, reject);
+			});
+
+			expect(user.stripeCustomerId ?? null).toBeNull();
 		});
 
 		it('refuses tenant data on a socket without a tenant', async () => {

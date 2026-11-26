@@ -19,6 +19,9 @@ const PROTECTED_FIELDS: ReadonlyArray<string> = [
 	'tenantId',
 	'role',
 	'isSuperAdmin',
+	// the Stripe customer holds the saved cards: written by addPaymentMethod only
+	// (a client that set another customer's id could list and charge their cards)
+	'stripeCustomerId',
 ];
 
 function isProtectedKey(key: string): boolean {

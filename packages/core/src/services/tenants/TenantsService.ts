@@ -57,6 +57,14 @@ function checkSignupRate(address: string | undefined) {
 
 	recent.push(now);
 	signupsByAddress.set(key, recent);
+
+	if (signupsByAddress.size > 10_000) {
+		for (const [k, times] of signupsByAddress) {
+			if (times.every((t) => now - t >= 3600_000)) {
+				signupsByAddress.delete(k);
+			}
+		}
+	}
 }
 
 /**
@@ -317,6 +325,10 @@ export class TenantsService extends DBService<Tenant> {
 
 		if (actor?.id === adminId) {
 			throw new Error('You cannot remove yourself');
+		}
+
+		if (target.isSuperAdmin && !actor?.isSuperAdmin) {
+			throw new Error('Only a super-admin can remove a super-admin');
 		}
 
 		await this.adminsService.Model.updateOne(

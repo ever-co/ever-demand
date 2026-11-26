@@ -7,8 +7,18 @@ import { getListenerSerializer } from '../serialization';
 import * as _ from 'lodash';
 import getArgsNames from '@captemulation/get-parameter-names';
 import { Socket } from 'socket.io';
-import { TenantContext } from '../../../../tenant/tenant-context';
+import {
+	TenantContext,
+	TenantContextMissingError,
+} from '../../../../tenant/tenant-context';
 import { socketTenantCtx } from '../../../../tenant/tenant-socket';
+import { isAllowed } from '../../../../graphql/access/graphql-access';
+import { SOCKET_ACCESS, socketAccessKey } from '../../access/socket-access';
+
+/** A socket may not call this listener (SOCKET_ACCESS). */
+export class SocketAccessError extends Error {
+	readonly name = 'SocketAccessError';
+}
 
 const MASKED_VALUE = '***';
 
@@ -119,6 +129,30 @@ export abstract class BaseListenerHandler<T> implements IListenerHandler<T> {
 	}
 
 	abstract handleRequest(args: any[]): void;
+
+	/**
+	 * Why the socket (its tenant and handshake login) may not call this
+	 * listener, or null when it may. Default deny: see SOCKET_ACCESS.
+	 */
+	protected accessError(): Error | null {
+		const key = socketAccessKey(this.routerName, this._listener.name);
+		const access = SOCKET_ACCESS[key];
+		const ctx = TenantContext.current();
+
+		if (isAllowed(access, ctx)) {
+			return null;
+		}
+
+		if (access !== undefined && access !== 'platform' && ctx?.tenantId == null) {
+			return new TenantContextMissingError(key);
+		}
+
+		if (access !== undefined && access !== 'public' && ctx?.actor == null) {
+			return new SocketAccessError(`Log in to use ${key}`);
+		}
+
+		return new SocketAccessError(`Not allowed: ${key}`);
+	}
 
 	protected baseLogDetails = {
 		socketId: this._socket.id,

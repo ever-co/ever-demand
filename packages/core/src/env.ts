@@ -53,6 +53,7 @@ export type Env = Readonly<{
 	TENANT_BASE_DOMAIN: string;
 	TENANT_SIGNUP_ENABLED: boolean;
 	TENANT_SIGNUPS_PER_HOUR: number;
+	TRUST_PROXY: string;
 	ADMIN_APP_URL: string;
 	STRIPE_BILLING_SECRET_KEY: string;
 	STRIPE_BILLING_WEBHOOK_SECRET: string;
@@ -145,6 +146,10 @@ const cleaned = cleanEnv(
 		TENANT_SIGNUP_ENABLED: bool({
 			desc: 'Allow anyone to sign up a new tenant (default: on when MULTI_TENANT is on)',
 			default: undefined as any,
+		}),
+		TRUST_PROXY: str({
+			desc: "Express 'trust proxy' setting, so client addresses come from X-Forwarded-For behind an ingress: e.g. 1 (one proxy hop), 'loopback, uniquelocal', or empty (off)",
+			default: '',
 		}),
 		TENANT_SIGNUPS_PER_HOUR: num({
 			desc: 'Tenant signups allowed per client address and hour (per API instance)',

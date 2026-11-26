@@ -6,6 +6,7 @@ import { BaseListenerHandler } from './base';
 import { ObservableListener } from '../observable';
 import { Socket } from 'socket.io';
 import { TenantContext } from '../../../../tenant/tenant-context';
+import { throwError } from 'rxjs';
 
 export class ObservableListenerHandler<T> extends BaseListenerHandler<T>
 	implements IListenerHandler<T> {
@@ -25,7 +26,18 @@ export class ObservableListenerHandler<T> extends BaseListenerHandler<T>
 
 		this.logCall(callId, args);
 
-		const observable = Reflect.apply(this.listener, this.router, args);
+		const denied = this.accessError();
+
+		if (denied) {
+			this.log.warn(
+				{ ...this.baseLogDetails, callId, reason: denied.message },
+				`Listener call refused`
+			);
+		}
+
+		const observable = denied
+			? throwError(() => denied)
+			: Reflect.apply(this.listener, this.router, args);
 
 		// The client subscribes in a later socket event, outside the tenant
 		// context of this call: subscribe in the context of the call.

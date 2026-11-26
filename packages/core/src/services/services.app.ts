@@ -472,6 +472,11 @@ export class ServicesApp {
 				return;
 			}
 
+			if (!actor.isSuperAdmin && actor.tenantRole === 'staff') {
+				res.status(403).json({ message: 'Staff cannot add stores' });
+				return;
+			}
+
 			const warehouseCreateObject: IWarehouseCreateObject = JSON.parse(
 				req.body.warehouse
 			);
