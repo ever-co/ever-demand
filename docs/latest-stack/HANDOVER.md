@@ -78,7 +78,17 @@ Security work (owner request, `76b4ca83`):
    - T-2807 ("already paid" message: core OrdersService, common IOrderRouter, payment.component.ts);
    - any later ones.
    The fleet merge-lane session ("Ever Works") agreed to send code-only PRs meanwhile.
-3. **Integration:** `pnpm install --frozen-lockfile`, `pnpm -r typecheck/test/build`. Boot the API (the
+3. **Integration (in progress, 2026-11-26 ~03:30 CET).** All lanes and develop are merged (`16d1fa4d`).
+   The first full sweep found three cross-lane breaks; all are fixed in `16d1fa4d`:
+   - `@angular/localize` had to be added as a dev dependency of every Angular app;
+   - `packageExtensions` makes ionic-selectable use the app's ionicons;
+   - develop's Jasmine payment specs are ported to Vitest.
+
+   The second sweep is running (scratchpad `verify-all.sh`). Next: swap in the merged-branch API, serve
+   the builds with `node e2e/serve-apps.mjs`, run every Playwright project, then build the admin and
+   merchant Docker images.
+
+   Earlier plan for this step: `pnpm install --frozen-lockfile`, `pnpm -r typecheck/test/build`. Boot the API (the
    core worktree's API is still running on 5500/8443/2086, PID in `docs/latest-stack/core.md`) and run
    every Playwright project. Playwright 1.65 needs `npx playwright install chromium` (the PC has an
    older build).
