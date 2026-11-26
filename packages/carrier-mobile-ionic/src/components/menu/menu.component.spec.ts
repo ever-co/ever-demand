@@ -1,7 +1,6 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { MenuController } from '@ionic/angular/lazy';
+import { MenuController } from '@ionic/angular/menu-controller';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { Store } from '../../services/store.service';
@@ -24,7 +23,6 @@ describe('MenuComponent', () => {
 				{ provide: Store, useValue: store },
 				{ provide: MenuController, useValue: menuCtrl },
 			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 
 		const translate = TestBed.inject(TranslateService);

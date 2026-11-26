@@ -3,7 +3,7 @@ import {
 	Component,
 } from '@angular/core';
 import { Location } from '@angular/common';
-import { Platform } from '@ionic/angular/lazy';
+import { Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DeviceRouter } from '@modules/client.common.angular2/routers/device-router.service';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';
@@ -133,13 +133,32 @@ export class AppComponent {
 		// with no language.
 		await this.store.startLanguage;
 
-		const device = await this.deviceRouter.create({
+		const newDevice = {
 			channelId: await this.getChannelId(),
 			language: this.getLanguage(),
 			type: this.getPlatform(),
 			uuid: await this.getUUID(),
-		});
+		};
+		const device = await this.deviceRouter.create(newDevice);
 
 		this.store.deviceId = device.id;
+
+		// The customer can pick a language while create is pending, or
+		// just before, while its file still loads. The language page
+		// saves a pick only on a device with an id, so save it here.
+		const savedLanguage = this.store.savedLanguage;
+		if (savedLanguage && savedLanguage !== newDevice.language) {
+			try {
+				await this.deviceRouter.updateLanguage(
+					device.id,
+					savedLanguage
+				);
+			} catch (error) {
+				console.error(
+					'Could not save the language on the device',
+					error
+				);
+			}
+		}
 	}
 }

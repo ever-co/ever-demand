@@ -6,7 +6,7 @@ import { Store } from '../../services/store.service';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonContent } from '@ionic/angular/ion-content';
 
 const routes: Routes = [
 	{
@@ -19,11 +19,11 @@ const routes: Routes = [
 	declarations: [LoginPage],
 	providers: [AuthService, Store],
 	imports: [
-		IonicModule,
 		RouterModule.forChild(routes),
 		CommonModule,
 		FormsModule,
 		TranslateModule.forChild(),
+		IonContent,
 	],
 })
 export class LoginPageModule {}

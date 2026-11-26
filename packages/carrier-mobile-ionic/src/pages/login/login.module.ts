@@ -4,7 +4,7 @@ import { TranslateModule } from '@modules/client.common.angular2/locale/translat
 import { AuthService } from '../../services/auth.service';
 import { Store } from '../../services/store.service';
 import { Routes, RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonContent } from '@ionic/angular/ion-content';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -18,11 +18,11 @@ const routes: Routes = [
 @NgModule({
 	declarations: [LoginPage],
 	imports: [
-		IonicModule,
 		FormsModule,
 		CommonModule,
 		TranslateModule.forChild(),
 		RouterModule.forChild(routes),
+		IonContent,
 	],
 	providers: [AuthService, Store],
 })

@@ -90,6 +90,12 @@
 		"CARD_PAYMENT_UNAVAILABLE": "Card payment is not available in this app.",
 		"ORDER_ALREADY_PAID": "This order is already paid. You do not need to pay again.",
 		"CARD_FORM_NOT_LOADED": "The card form could not load. Check your connection and try again.",
+		"CARD_FORM": {
+			"EMAIL": "Email",
+			"CARD": "Card",
+			"PAY": "Pay {{amount}}",
+			"EMAIL_INVALID": "Enter a valid email address."
+		},
 		"CANCEL": {
 			"STATUSES": [
 				{

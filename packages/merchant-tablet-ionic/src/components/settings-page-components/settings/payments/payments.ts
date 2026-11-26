@@ -11,7 +11,7 @@ import PaymentGateways, {
 	paymentGatewaysToString,
 	paymentGatewaysLogo,
 } from '@modules/server.common/enums/PaymentGateways';
-import { ModalController } from '@ionic/angular/lazy';
+import { ModalController } from '@ionic/angular/modal-controller';
 import { PaymentMutationComponent } from './mutation/mutation';
 import { ConfirmDeletePopupPage } from '../../../confirm-delete-popup/confirm-delete-popup';
 import { countriesDefaultCurrencies } from '@modules/server.common/entities/Currency';

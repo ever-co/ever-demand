@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { TranslateService } from '@ngx-translate/core';
-import { Platform } from '@ionic/angular/lazy';
+import { Platform } from '@ionic/angular';
 import { of, throwError } from 'rxjs';
 import { vi } from 'vitest';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonImg } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { WarehouseLogoModule } from '../warehouse-logo/warehouse-logo.module';
@@ -8,7 +8,7 @@ import { OrderComponent } from './order.component';
 
 @NgModule({
 	imports: [
-		IonicModule,
+		IonImg,
 		CommonModule,
 		WarehouseLogoModule,
 		TranslateModule.forChild(),

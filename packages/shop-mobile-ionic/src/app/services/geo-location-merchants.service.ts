@@ -25,7 +25,8 @@ export class GeoLocationsMerchantsService {
 				variables: { geoLocation },
 			})
 			.pipe(
-				map((res) => res.data['getCloseMerchants']),
+				// data is undefined when the request fails (Apollo 4): no merchants then.
+				map((res) => res.data?.['getCloseMerchants'] ?? []),
 				share()
 			);
 	}

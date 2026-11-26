@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonRow } from '@ionic/angular';
 import { CancelPage } from './cancel.page';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 
@@ -11,7 +11,7 @@ import { TranslateModule } from '@modules/client.common.angular2/locale/translat
     imports: [
         CommonModule,
         FormsModule,
-        IonicModule,
+        IonRow,
         TranslateModule.forChild(),
     ],
     declarations: [CancelPage]

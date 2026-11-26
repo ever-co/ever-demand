@@ -4,7 +4,6 @@ import { TranslateModule } from '@modules/client.common.angular2/locale/translat
 import { GeoLocationOrdersService } from '../../../services/geo-location-order.service';
 import { GeoLocationService } from '../../../services/geo-location.service';
 import { Routes, RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular/lazy';
 import { CommonModule } from '@angular/common';
 import { MapModule } from '../common/map/map.module';
 
@@ -18,7 +17,6 @@ const routes: Routes = [
 @NgModule({
 	declarations: [HomePage],
 	imports: [
-		IonicModule,
 		CommonModule,
 		RouterModule.forChild(routes),
 		TranslateModule.forChild(),

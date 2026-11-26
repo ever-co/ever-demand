@@ -4,7 +4,11 @@ import { TranslateModule } from '@modules/client.common.angular2/locale/translat
 import { UserFormsModule } from '../forms/user-forms.module';
 import { GoogleMapModule } from '../../google-map/google-map.module';
 import { UsersService } from '../../../services/users.service';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonButton } from '@ionic/angular/ion-button';
+import { IonCol } from '@ionic/angular/ion-col';
+import { IonGrid } from '@ionic/angular/ion-grid';
+import { IonRow } from '@ionic/angular/ion-row';
+import { ModalController } from '@ionic/angular/modal-controller';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -13,11 +17,14 @@ import { FormsModule } from '@angular/forms';
         TranslateModule.forChild(),
         UserFormsModule,
         GoogleMapModule,
-        IonicModule,
         CommonModule,
         FormsModule,
+        IonButton,
+        IonCol,
+        IonGrid,
+        IonRow,
     ],
-    providers: [UsersService],
+    providers: [UsersService, ModalController],
     exports: [UserMutationComponent],
     declarations: [UserMutationComponent]
 })

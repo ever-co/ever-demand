@@ -2,7 +2,7 @@ import { vi } from 'vitest';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Location } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Platform } from '@ionic/angular/lazy';
+import { Platform } from '@ionic/angular';
 import { translateTesting } from 'app/testing/translate';
 import { DeviceRouter } from '@modules/client.common.angular2/routers/device-router.service';
 import { Store } from '../../services/store.service';

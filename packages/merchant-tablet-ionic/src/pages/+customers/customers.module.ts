@@ -13,7 +13,9 @@ import { EmailComponent } from '../../components/users-table/email';
 import { ImageUserComponent } from '../../components/users-table/image';
 import { OrdersService } from '../../../src/services/orders.service';
 import { Routes, RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonIcon } from '@ionic/angular/ion-icon';
+import { IonMenuToggle } from '@ionic/angular/ion-menu-toggle';
+import { ModalController } from '@ionic/angular/modal-controller';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ConfirmDeletePopupModule } from '../../components/confirm-delete-popup/confirm-delete-popup.module';
@@ -38,14 +40,15 @@ const routes: Routes = [
     imports: [
         PipesModule,
         ComponentsModule,
-        IonicModule,
         RouterModule.forChild(routes),
         CommonModule,
         FormsModule,
         TranslateModule.forChild(),
         Angular2SmartTableModule,
         ConfirmDeletePopupModule,
+        IonIcon,
+        IonMenuToggle,
     ],
-    providers: [WarehouseUsersService, OrdersService, WarehouseOrdersService]
+    providers: [WarehouseUsersService, OrdersService, WarehouseOrdersService, ModalController]
 })
 export class CustomersPageModule {}

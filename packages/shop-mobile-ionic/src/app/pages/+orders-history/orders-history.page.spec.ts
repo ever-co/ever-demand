@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Platform } from '@ionic/angular/lazy';
+import { Platform } from '@ionic/angular';
 import { Apollo } from 'apollo-angular';
 import { NEVER } from 'rxjs';
 import { Store } from '../../services/store.service';

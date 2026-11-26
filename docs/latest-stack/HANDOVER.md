@@ -1,6 +1,6 @@
 # Ever Demand latest-stack upgrade: handover
 
-Last updated: 2026-11-26 ~10:45 CET by the lead session ("Ever Demand platform modernization").
+Last updated: 2026-11-26 ~16:20 CET by the lead session ("Ever Demand platform modernization").
 Keep this file current. Update it after every merge or milestone, then commit and push.
 
 ## Goal (owner)
@@ -166,6 +166,37 @@ Security work (owner request, `76b4ca83`):
    Two are left: **#1218** (carrier orders list) and **#1253** (carriers not showing in merchant). The
    carrier + merchant lane is checking whether to port them. Close each with its verdict, then deal with
    the upgrade PR itself.
+
+
+## 2026-11-26 afternoon: owner follow-ups merged into #1660
+
+- **App ids:**
+  - Ionic shop: `co.ever.customer`
+  - Flutter: `co.ever.customer.fl`
+  - Expo: `co.ever.customer.rn`
+
+  Carrier (`co.ever.carrier`) and merchant (`co.ever.merchant`) are unchanged.
+- **Standalone Ionic** in the shop, carrier and merchant apps:
+  - no `IonicModule`, no `@ionic/angular/lazy`;
+  - `provideIonicAngular()`, and every icon registered with `addIcons`;
+  - merchant page modules provide their own `ModalController` and `PopoverController`.
+- **Stripe:** the shop pays new cards with a Stripe.js Card Element instead of the legacy `checkout.js`. It makes the same card token, so the server is unchanged.
+- **Native Capacitor projects** (android/ and ios/) are committed for all three Ionic apps.
+  - A CI `android` job builds their debug APKs.
+  - Needs a Mac: shop and merchant need `npx cap sync ios` once to create the Podfile.lock; carrier needs its Package.resolved committed from Xcode.
+- **develop merged twice more** (fleet language fixes). Their Jasmine specs are ported to Vitest. My codemod was `scratchpad/jasmine-to-vitest.mjs`, and it is not committed.
+- **Fixes found on the way:**
+  - Hebrew page direction (ngx-translate 18 changes the current language only after its file loads);
+  - four GraphQL reads crashed when the API was down (Apollo 4 resolves with data undefined).
+- **Verification on 8a258627:**
+  - Playwright, every project against the merged API: api 19, admin 27 (+1 skipped), shop-web 15, shop-mobile 14 (+1 skipped), merchant 8, carrier 8, expo 11.
+  - core unit tests: 613/613.
+  - The full package sweep was re-run before merging.
+- **GitHub Actions:** the `CI` workflow (with CodeQL, Docker publish and the DO deploy) is **disabled manually** on GitHub. That is the owner policy: public repos keep workflow files but run nothing on GitHub. So #1660 has no CI run after 8ce3403a, and the local sweep and e2e are the evidence.
+- **Merging #1660:**
+  - develop requires 1 approving review, and the PR author is the owner account. The owner asked for the merge, so it is merged with `gh pr merge --admin` (enforce_admins is off), as a merge commit.
+  - The internal ci-builds (Argo) then builds the develop images.
+- **Multi-tenant SaaS:** a separate session is working on it (owner: customers per tenant, a storefront per tenant, tenant resolution by subdomain, header *and* white-label build).
 
 ## Known follow-ups and caveats
 

@@ -24,7 +24,7 @@ import { StatusComponent } from '../../components/carriers-table/status';
 import { DeliveriesComponent } from '../../components/carriers-table/deliveries';
 import { ImageComponent } from '../../components/carriers-table/image';
 import { Store } from '../../../src/services/store.service';
-import { ModalController } from '@ionic/angular/lazy';
+import { ModalController } from '@ionic/angular/modal-controller';
 import { AddCarriersPopupPage } from './add-carriers-popup/add-carriers-popup';
 import { CarrierEditPopupPage } from './carrier-edit-popup/carrier-edit-popup';
 import { CarrierTrackPopup } from './carrier-track-popup/carrier-track-popup';

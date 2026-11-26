@@ -25,7 +25,7 @@
 		"clean": "pnpm -r run clean",
 		"test": "pnpm -r --filter \"!@ever-platform/e2e\" --workspace-concurrency=1 run test",
 		"typecheck": "pnpm -r run typecheck",
-		"format": "prettier --write \"packages/**/*.{ts,tsx,js,json,scss,html}\"",
+		"format": "prettier --write \"packages/**/*.{ts,tsx,js,jsx,json,css,scss,html,md}\"",
 		"start:api": "pnpm run build:server && pnpm --filter @ever-platform/core start",
 		"run:server": "pnpm run start:api",
 		"run:server:dev": "pnpm --filter @ever-platform/core start:dev",

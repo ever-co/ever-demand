@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ViewCell } from '../table-components/smart-table';
 import User from '@modules/server.common/entities/User';
 import Order from '@modules/server.common/entities/Order';
-import { ModalController } from '@ionic/angular/lazy';
+import { ModalController } from '@ionic/angular/modal-controller';
 import { CustomerDeliveriesPopupPage } from '../../pages/+customers/customer-deliveries-popup/customer-deliveries-popup';
 
 @Component({

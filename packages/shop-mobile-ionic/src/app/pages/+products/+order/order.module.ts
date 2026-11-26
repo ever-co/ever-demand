@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonRow } from '@ionic/angular';
 import { OrderPage } from './order.page';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { OrderPopupComponent } from './order-popup.component';
@@ -15,7 +15,7 @@ import { OrderInfoCommonModule } from './common/order-info-common.module';
 	imports: [
 		CommonModule,
 		FormsModule,
-		IonicModule,
+		IonRow,
 		TranslateModule.forChild(),
 		ElapsedTimeModule,
 		OrderInfoCommonModule,

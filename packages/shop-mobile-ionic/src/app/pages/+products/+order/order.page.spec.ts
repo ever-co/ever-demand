@@ -4,7 +4,7 @@ import {
 	ModalController,
 	NavParams,
 	PopoverController,
-} from '@ionic/angular/lazy';
+} from '@ionic/angular';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';

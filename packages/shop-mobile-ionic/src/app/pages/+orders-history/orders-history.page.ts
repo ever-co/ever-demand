@@ -9,7 +9,7 @@ import { filter, map, takeUntil } from 'rxjs/operators';
 import { Store } from '../../services/store.service';
 import { Apollo } from 'apollo-angular';
 import { OrdersHistoryQuery } from './orders-history.model';
-import { Platform } from '@ionic/angular/lazy';
+import { Platform } from '@ionic/angular';
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.Eager,

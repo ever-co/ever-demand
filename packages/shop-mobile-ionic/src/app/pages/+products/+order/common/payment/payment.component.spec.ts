@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ModalController, Platform } from '@ionic/angular/lazy';
+import { ModalController, Platform } from '@ionic/angular';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
@@ -12,6 +12,7 @@ import {
 } from '@modules/server.common/routers/IOrderRouter';
 import { Store } from 'app/services/store.service';
 import { StripeLoader } from 'app/services/stripeLoader';
+import { StripeCardForm } from './card-form/stripe-card-form.service';
 import { environment } from 'environments/environment';
 import { PaymentComponent } from './payment.component';
 import { vi, type Mock } from 'vitest';
@@ -52,13 +53,21 @@ describe('PaymentComponent new-card payment', () => {
 	let component: PaymentComponent;
 	let userRouter: SpyObj<UserRouter>;
 	let orderRouter: SpyObj<OrderRouter>;
-	let configure: Mock;
+	let openCardForm: Mock;
 	let tokenHandlers: Array<(token: any) => Promise<void>>;
 	let closedHandlers: Array<() => void>;
 	let modalController: SpyObj<ModalController>;
 	let stripeLoader: SpyObj<StripeLoader>;
-	let originalStripeCheckout: any;
 	let orderId: Mock;
+
+	// Stripe.js as StripeLoader hands it out once the script loaded
+	const stripeJs = { elements: vi.fn(), createToken: vi.fn() } as any;
+
+	// What StripeLoader.stripe gives: null while Stripe.js loads or after
+	// it failed to load.
+	const setLoadedStripe = (stripe: any) => {
+		(stripeLoader as any).stripe = stripe;
+	};
 
 	const cardToken = (id: string) => ({
 		id,
@@ -109,13 +118,12 @@ describe('PaymentComponent new-card payment', () => {
 	beforeEach(async () => {
 		tokenHandlers = [];
 		closedHandlers = [];
-		configure = vi.fn().mockImplementation((options) => {
-				tokenHandlers.push(options.token);
-				closedHandlers.push(options.closed);
-				return { open: vi.fn() };
-			});
-		originalStripeCheckout = (window as any).StripeCheckout;
-		(window as any).StripeCheckout = { configure };
+		// The card form (StripeCardForm) hands the card token and the close
+		// of the form to these callbacks, as Stripe Checkout did.
+		openCardForm = vi.fn().mockImplementation(async (options) => {
+			tokenHandlers.push(options.token);
+			closedHandlers.push(options.closed);
+		});
 
 		userRouter = createSpyObj('UserRouter', [
 			'getCards',
@@ -144,9 +152,11 @@ describe('PaymentComponent new-card payment', () => {
 			Promise.resolve({ present: () => Promise.resolve() } as any)
 		);
 
-		stripeLoader = createSpyObj<StripeLoader>('StripeLoader', [
-			'ensureLoaded',
-		]);
+		stripeLoader = createSpyObj<StripeLoader>(
+			'StripeLoader',
+			['ensureLoaded'],
+			{ stripe: stripeJs }
+		);
 
 		await TestBed.configureTestingModule({
 			declarations: [PaymentComponent],
@@ -163,8 +173,9 @@ describe('PaymentComponent new-card payment', () => {
 					provide: ProductLocalesService,
 					useValue: { getTranslate: () => 'Product' },
 				},
-				// A stub, so no spec adds the real Checkout script to the page
+				// A stub, so no spec loads the real Stripe.js
 				{ provide: StripeLoader, useValue: stripeLoader },
+				{ provide: StripeCardForm, useValue: { open: openCardForm } },
 			],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
@@ -182,10 +193,6 @@ describe('PaymentComponent new-card payment', () => {
 
 		fixture = await createPayment();
 		component = fixture.componentInstance;
-	});
-
-	afterEach(() => {
-		(window as any).StripeCheckout = originalStripeCheckout;
 	});
 
 	it('does not save a second card or charge again while the first new-card payment is in flight', async () => {
@@ -207,7 +214,7 @@ describe('PaymentComponent new-card payment', () => {
 		);
 		await settle();
 
-		expect(configure).toHaveBeenCalledTimes(1);
+		expect(openCardForm).toHaveBeenCalledTimes(1);
 		expect(userRouter.addPaymentMethod).toHaveBeenCalledTimes(1);
 		expect(orderRouter.payWithStripe).toHaveBeenCalledTimes(1);
 
@@ -235,7 +242,7 @@ describe('PaymentComponent new-card payment', () => {
 		);
 		await settle();
 
-		expect(configure).toHaveBeenCalledTimes(1);
+		expect(openCardForm).toHaveBeenCalledTimes(1);
 		expect(userRouter.updateEmail).toHaveBeenCalledTimes(1);
 		expect(userRouter.addPaymentMethod).not.toHaveBeenCalled();
 
@@ -264,7 +271,7 @@ describe('PaymentComponent new-card payment', () => {
 	});
 
 	it('asks the customer to check the email, and clears the guard, when the email update fails', async () => {
-		// The email typed in Checkout belongs to another customer, so
+		// The email typed in the card form belongs to another customer, so
 		// updateEmail fails on the unique email index.
 		const error = new Error('E11000 duplicate key error: email');
 		userRouter.updateEmail.mockRejectedValue(error);
@@ -332,7 +339,7 @@ describe('PaymentComponent new-card payment', () => {
 
 		await component.toPaymentStage();
 
-		expect(configure).toHaveBeenCalledTimes(2);
+		expect(openCardForm).toHaveBeenCalledTimes(2);
 	});
 
 	it('resets paying when saving the new card fails', async () => {
@@ -489,7 +496,8 @@ describe('PaymentComponent new-card payment', () => {
 			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.CARD_PAYMENT_UNAVAILABLE'
 			);
-			expect(configure).not.toHaveBeenCalled();
+			expect(openCardForm).not.toHaveBeenCalled();
+			expect(stripeLoader.ensureLoaded).not.toHaveBeenCalled();
 			expect(modalController.dismiss).not.toHaveBeenCalled();
 			expectNoRouterCall();
 			expect(component.paying).toBe(false);
@@ -526,17 +534,17 @@ describe('PaymentComponent new-card payment', () => {
 		});
 	});
 
-	// StripeLoader adds the Checkout script at runtime and nothing waits
-	// for it: a content blocker, a firewall or no network keeps it from
-	// loading, or it is still loading when the customer taps Pay now. The
-	// tap drops the promise toPaymentStage returns, so it has to tell the
-	// customer and resolve, never reject.
+	// StripeLoader loads Stripe.js at runtime and nothing waits for it: a
+	// content blocker, a firewall or no network keeps it from loading, or
+	// it is still loading when the customer taps Pay now. The tap drops the
+	// promise toPaymentStage returns, so it has to tell the customer and
+	// resolve, never reject.
 	describe('when the card form script did not load', () => {
 		let originalOrderInfoType: string;
 
 		beforeEach(() => {
 			originalOrderInfoType = environment.ORDER_INFO_TYPE;
-			delete (window as any).StripeCheckout;
+			setLoadedStripe(null);
 			resetRouterCalls();
 		});
 
@@ -553,7 +561,7 @@ describe('PaymentComponent new-card payment', () => {
 				'BUY_POPUP.CARD_FORM_NOT_LOADED'
 			);
 			expect(console.error).toHaveBeenCalledExactlyOnceWith(expect.any(String));
-			expect(configure).not.toHaveBeenCalled();
+			expect(openCardForm).not.toHaveBeenCalled();
 			expectNoRouterCall();
 			expect(component.paying).toBe(false);
 			expect(TestBed.inject(Store).isPaying('order-1')).toBe(false);
@@ -574,15 +582,23 @@ describe('PaymentComponent new-card payment', () => {
 			expect(TestBed.inject(Store).isPaying('order-1')).toBe(false);
 		});
 
-		it('tells the customer when StripeCheckout has no configure function', async () => {
-			(window as any).StripeCheckout = {};
+		it('tells the customer, and shows the order again in popup mode, when the card form cannot open', async () => {
+			environment.ORDER_INFO_TYPE = 'popup';
+			setLoadedStripe(stripeJs);
+			const error = new Error('ion-modal is not defined');
+			openCardForm.mockRejectedValue(error);
 
-			await component.toPaymentStage();
+			await expect(component.toPaymentStage()).resolves.toBeUndefined();
 
 			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.CARD_FORM_NOT_LOADED'
 			);
+			expect(console.error).toHaveBeenCalledWith(expect.any(String), error);
+			// Dismissed for the card form, then opened again
+			expect(modalController.dismiss).toHaveBeenCalledTimes(1);
+			expect(modalController.create).toHaveBeenCalledTimes(1);
 			expectNoRouterCall();
+			expect(component.paying).toBe(false);
 		});
 
 		it('shows the message on a tap of the Pay now button', async () => {
@@ -606,10 +622,10 @@ describe('PaymentComponent new-card payment', () => {
 		it('opens the card form on the next tap once the script has loaded', async () => {
 			await component.toPaymentStage();
 
-			(window as any).StripeCheckout = { configure };
+			setLoadedStripe(stripeJs);
 			await component.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledExactlyOnceWith(
+			expect(openCardForm).toHaveBeenCalledExactlyOnceWith(
 				expect.objectContaining({ currency: 'ILS' })
 			);
 			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
@@ -617,10 +633,10 @@ describe('PaymentComponent new-card payment', () => {
 			);
 		});
 
-		// The shop started without network, so checkout.js failed and
-		// nothing added it again: every tap showed the message until the
-		// app restarted.
-		it('asks the loader to add the script again and still tells the customer', async () => {
+		// The shop started without network, so the card form script failed
+		// and nothing added it again: every tap showed the message until
+		// the app restarted (#1663).
+		it('asks the loader to load Stripe.js again and still tells the customer', async () => {
 			await component.toPaymentStage();
 
 			expect(stripeLoader.ensureLoaded).toHaveBeenCalledTimes(1);
@@ -632,14 +648,14 @@ describe('PaymentComponent new-card payment', () => {
 			expect(stripeLoader.ensureLoaded).toHaveBeenCalledBefore(
 				window.alert as Mock
 			);
-			expect(configure).not.toHaveBeenCalled();
+			expect(openCardForm).not.toHaveBeenCalled();
 			expectNoRouterCall();
 		});
 
-		it('opens the card form on a later tap once the loader added the script again', async () => {
-			// The script the loader adds again defines StripeCheckout
+		it('opens the card form on a later tap once the loader loaded Stripe.js again', async () => {
+			// Stripe.js loads this time
 			stripeLoader.ensureLoaded.mockImplementation(() => {
-				(window as any).StripeCheckout = { configure };
+				setLoadedStripe(stripeJs);
 			});
 
 			await component.toPaymentStage();
@@ -648,12 +664,53 @@ describe('PaymentComponent new-card payment', () => {
 			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.CARD_FORM_NOT_LOADED'
 			);
-			expect(configure).toHaveBeenCalledExactlyOnceWith(
+			expect(openCardForm).toHaveBeenCalledExactlyOnceWith(
 				expect.objectContaining({ currency: 'ILS' })
 			);
 			// The second tap found the card form and did not ask again
 			expect(stripeLoader.ensureLoaded).toHaveBeenCalledTimes(1);
 		});
+	});
+
+	it('opens the card form with Stripe.js, the first product, its price in cents and the logo', async () => {
+		await component.toPaymentStage();
+
+		expect(openCardForm).toHaveBeenCalledExactlyOnceWith(
+			expect.objectContaining({
+				stripe: stripeJs,
+				image: environment.STRIPE_POP_UP_LOGO,
+				name: 'Product',
+				description: 'Product',
+				amount: 1000,
+				currency: 'ILS',
+			})
+		);
+		expect(stripeLoader.ensureLoaded).not.toHaveBeenCalled();
+		expect(window.alert).not.toHaveBeenCalled();
+	});
+
+	it('saves the email and the card token from the card form, then charges and confirms the order', async () => {
+		orderRouter.payWithStripe.mockReturnValue(Promise.resolve(paidOrder()));
+
+		await component.toPaymentStage();
+		await tokenHandlers[0](cardToken('tok_first'));
+
+		expect(userRouter.updateEmail).toHaveBeenCalledExactlyOnceWith(
+			'user-1',
+			'customer@example.com'
+		);
+		expect(userRouter.addPaymentMethod).toHaveBeenCalledExactlyOnceWith(
+			'user-1',
+			'tok_first'
+		);
+		expect(orderRouter.payWithStripe).toHaveBeenCalledExactlyOnceWith(
+			'order-1',
+			'card-1',
+			'ILS'
+		);
+		expect(orderRouter.confirm).toHaveBeenCalledExactlyOnceWith('order-1');
+		expect(window.alert).not.toHaveBeenCalled();
+		expect(component.paying).toBe(false);
 	});
 
 	it('tells the customer, and charges nothing, when Pay with card runs without a saved card', async () => {
@@ -685,7 +742,7 @@ describe('PaymentComponent new-card payment', () => {
 
 			await payment.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledExactlyOnceWith(
+			expect(openCardForm).toHaveBeenCalledExactlyOnceWith(
 				expect.objectContaining({ currency: 'USD' })
 			);
 		});
@@ -699,7 +756,7 @@ describe('PaymentComponent new-card payment', () => {
 
 			await payment.componentInstance.toPaymentStage();
 
-			expect(configure).not.toHaveBeenCalled();
+			expect(openCardForm).not.toHaveBeenCalled();
 			expect(window.alert).not.toHaveBeenCalled();
 
 			currency.resolve('eur');
@@ -709,7 +766,7 @@ describe('PaymentComponent new-card payment', () => {
 
 			await payment.componentInstance.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledExactlyOnceWith(
+			expect(openCardForm).toHaveBeenCalledExactlyOnceWith(
 				expect.objectContaining({ currency: 'EUR' })
 			);
 		});
@@ -731,7 +788,7 @@ describe('PaymentComponent new-card payment', () => {
 
 			await payment.componentInstance.toPaymentStage();
 
-			expect(configure).not.toHaveBeenCalled();
+			expect(openCardForm).not.toHaveBeenCalled();
 			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.PAYMENT_FAILED'
 			);
@@ -740,7 +797,7 @@ describe('PaymentComponent new-card payment', () => {
 			await settle();
 			await payment.componentInstance.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledExactlyOnceWith(
+			expect(openCardForm).toHaveBeenCalledExactlyOnceWith(
 				expect.objectContaining({ currency: 'USD' })
 			);
 		});
@@ -797,7 +854,7 @@ describe('PaymentComponent new-card payment', () => {
 
 			await payment.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledTimes(1);
+			expect(openCardForm).toHaveBeenCalledTimes(1);
 
 			reloaded.resolve('usd');
 			await settle();
@@ -806,8 +863,8 @@ describe('PaymentComponent new-card payment', () => {
 
 			await payment.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledTimes(2);
-			expect(configure.mock.lastCall[0].currency).toBe('USD');
+			expect(openCardForm).toHaveBeenCalledTimes(2);
+			expect(openCardForm.mock.lastCall[0].currency).toBe('USD');
 		});
 
 		it('keeps the currency after a declined card', async () => {
@@ -830,8 +887,8 @@ describe('PaymentComponent new-card payment', () => {
 
 			await payment.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledTimes(2);
-			expect(configure.mock.lastCall[0].currency).toBe('ILS');
+			expect(openCardForm).toHaveBeenCalledTimes(2);
+			expect(openCardForm.mock.lastCall[0].currency).toBe('ILS');
 		});
 	});
 
@@ -869,7 +926,7 @@ describe('PaymentComponent new-card payment', () => {
 			const savedCardPayment = second.payWithUserCard();
 			await settle();
 
-			expect(configure).toHaveBeenCalledTimes(1);
+			expect(openCardForm).toHaveBeenCalledTimes(1);
 			expect(userRouter.updateEmail).toHaveBeenCalledTimes(1);
 			expect(userRouter.addPaymentMethod).not.toHaveBeenCalled();
 			expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
@@ -900,7 +957,7 @@ describe('PaymentComponent new-card payment', () => {
 			await component.toPaymentStage();
 			await second.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledTimes(2);
+			expect(openCardForm).toHaveBeenCalledTimes(2);
 
 			const first = tokenHandlers[0](cardToken('tok_first'));
 			const secondToken = tokenHandlers[1](cardToken('tok_second'));
@@ -954,7 +1011,7 @@ describe('PaymentComponent new-card payment', () => {
 			const second = (await createPayment()).componentInstance;
 			await second.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledTimes(1);
+			expect(openCardForm).toHaveBeenCalledTimes(1);
 
 			payment.resolve(paidOrder());
 			await first;
@@ -963,7 +1020,7 @@ describe('PaymentComponent new-card payment', () => {
 
 			await second.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledTimes(2);
+			expect(openCardForm).toHaveBeenCalledTimes(2);
 		});
 
 		it('clears the guard after the email update fails', async () => {
@@ -976,7 +1033,7 @@ describe('PaymentComponent new-card payment', () => {
 			const second = (await createPayment()).componentInstance;
 			await second.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledTimes(1);
+			expect(openCardForm).toHaveBeenCalledTimes(1);
 
 			emailUpdate.reject(new Error('network down'));
 			await first;
@@ -985,7 +1042,7 @@ describe('PaymentComponent new-card payment', () => {
 
 			await second.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledTimes(2);
+			expect(openCardForm).toHaveBeenCalledTimes(2);
 		});
 
 		it('clears the guard and tells the customer once after a saved-card payment is rejected', async () => {
@@ -1034,7 +1091,7 @@ describe('PaymentComponent new-card payment', () => {
 			const second = (await createPayment()).componentInstance;
 			await second.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledTimes(1);
+			expect(openCardForm).toHaveBeenCalledTimes(1);
 
 			// The customer starts another order while the first payment
 			// still runs.
@@ -1042,7 +1099,7 @@ describe('PaymentComponent new-card payment', () => {
 
 			await second.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledTimes(2);
+			expect(openCardForm).toHaveBeenCalledTimes(2);
 
 			const other = tokenHandlers[1](cardToken('tok_other'));
 
@@ -1062,10 +1119,11 @@ describe('PaymentComponent new-card payment', () => {
 	});
 
 	// In popup mode toPaymentStage dismisses the order info modal and
-	// opens it again when Checkout is done. Checkout calls closed whenever
-	// its popup closes, also after a successful token, and browsers differ
-	// in which of the two callbacks runs first.
-	describe('opening the order info modal after Checkout', () => {
+	// opens it again when the card form is done. The card form calls
+	// closed whenever it closes, also after a successful token (Checkout
+	// did too, and browsers differed in which callback ran first), and the
+	// token handler closes when the payment is done.
+	describe('opening the order info modal after the card form', () => {
 		let originalOrderInfoType: string;
 		let modalChange: EventEmitter<boolean>;
 
@@ -1110,7 +1168,7 @@ describe('PaymentComponent new-card payment', () => {
 			expect(modalChange.emit).toHaveBeenCalledTimes(1);
 		});
 
-		it('still opens the order info modal when the customer closes Checkout without paying', async () => {
+		it('still opens the order info modal when the customer closes the card form without paying', async () => {
 			await component.toPaymentStage();
 
 			closedHandlers[0]();
@@ -1121,7 +1179,7 @@ describe('PaymentComponent new-card payment', () => {
 			expect(modalChange.emit).toHaveBeenCalledTimes(1);
 		});
 
-		it('opens the order info modal again for the next Checkout session', async () => {
+		it('opens the order info modal again for the next card form session', async () => {
 			await component.toPaymentStage();
 			closedHandlers[0]();
 			await settle();
@@ -1130,7 +1188,7 @@ describe('PaymentComponent new-card payment', () => {
 			closedHandlers[1]();
 			await settle();
 
-			expect(configure).toHaveBeenCalledTimes(2);
+			expect(openCardForm).toHaveBeenCalledTimes(2);
 			expect(modalController.create).toHaveBeenCalledTimes(2);
 		});
 

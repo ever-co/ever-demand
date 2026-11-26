@@ -19,7 +19,8 @@ import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 import { GeoLocationService } from '../../../services/geo-location.service';
 import { MapComponent } from '../common/map/map.component';
 import { Router } from '@angular/router';
-import { NavController, Platform } from '@ionic/angular/lazy';
+import { NavController } from '@ionic/angular/nav-controller';
+import { Platform } from '@ionic/angular/platform';
 import { getIdFromTheDate } from '@modules/server.common/utils';
 
 @Component({

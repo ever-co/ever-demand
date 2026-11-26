@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ModalController, Platform } from '@ionic/angular/lazy';
+import { ModalController, Platform } from '@ionic/angular';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
@@ -12,6 +12,7 @@ import {
 } from '@modules/client.common.angular2/lib/router';
 import { Store } from 'app/services/store.service';
 import { StripeLoader } from 'app/services/stripeLoader';
+import { StripeCardForm } from './card-form/stripe-card-form.service';
 import { FakeSocket, settle, track } from 'app/testing/fake-socket';
 import { PaymentComponent } from './payment.component';
 import { vi } from 'vitest';
@@ -27,7 +28,6 @@ describe('PaymentComponent when the socket drops during a payment', () => {
 	let store: Store;
 	let socket: FakeSocket;
 	let tokenHandlers: ((token: any) => Promise<void>)[];
-	let originalStripeCheckout: any;
 
 	const savedCard = () => ({ id: 'card-saved', last4: '4242' } as any);
 
@@ -40,13 +40,6 @@ describe('PaymentComponent when the socket drops during a payment', () => {
 		socket = new FakeSocket();
 
 		tokenHandlers = [];
-		originalStripeCheckout = (window as any).StripeCheckout;
-		(window as any).StripeCheckout = {
-			configure: (options) => {
-				tokenHandlers.push(options.token);
-				return { open: () => undefined };
-			},
-		};
 
 		const userRouter = createSpyObj('UserRouter', [
 			'getCards',
@@ -92,12 +85,21 @@ describe('PaymentComponent when the socket drops during a payment', () => {
 					provide: ProductLocalesService,
 					useValue: { getTranslate: () => 'Product' },
 				},
-				// A stub, so no spec adds the real Checkout script to the page
+				// Stubs, so no spec loads the real Stripe.js: the card form
+				// hands its card token to the payment, as Checkout did.
 				{
 					provide: StripeLoader,
-					useValue: createSpyObj('StripeLoader', [
-						'ensureLoaded',
-					]),
+					useValue: createSpyObj('StripeLoader', ['ensureLoaded'], {
+						stripe: { elements: () => undefined },
+					}),
+				},
+				{
+					provide: StripeCardForm,
+					useValue: {
+						open: async (options) => {
+							tokenHandlers.push(options.token);
+						},
+					},
 				},
 			],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -125,10 +127,6 @@ describe('PaymentComponent when the socket drops during a payment', () => {
 		// The component asks for the card charge currency when created.
 		socket.answer('getStripeCurrency', null, 'ils');
 		await settle();
-	});
-
-	afterEach(() => {
-		(window as any).StripeCheckout = originalStripeCheckout;
 	});
 
 	it('shows Payment Failed and frees Pay with card when the socket drops during the saved-card charge', async () => {

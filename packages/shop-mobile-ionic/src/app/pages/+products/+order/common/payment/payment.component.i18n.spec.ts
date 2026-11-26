@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { ModalController, Platform } from '@ionic/angular/lazy';
+import { ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
@@ -9,6 +9,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 import { ORDER_ALREADY_PAID_ERROR } from '@modules/server.common/routers/IOrderRouter';
 import { Store } from 'app/services/store.service';
 import { StripeLoader } from 'app/services/stripeLoader';
+import { StripeCardForm } from './card-form/stripe-card-form.service';
 import { settle } from 'app/testing/fake-socket';
 import bgBG from 'assets/i18n/bg-BG.json';
 import enUS from 'assets/i18n/en-US.json';
@@ -76,6 +77,20 @@ describe('PaymentComponent failure messages', () => {
 				);
 			});
 
+			it(`${locale} has the card form texts`, () => {
+				const form = messagesIn(locale).CARD_FORM;
+
+				for (const key of ['EMAIL', 'CARD', 'PAY', 'EMAIL_INVALID']) {
+					expect(form?.[key]).toEqual(expect.any(String));
+					expect(form[key].trim()).not.toBe('');
+				}
+				// The amount goes into the Pay button under this name
+				expect(form.PAY).toContain('{{amount}}');
+				expect(messagesIn(locale).BUTTONS.CANCEL).toEqual(
+					expect.any(String)
+				);
+			});
+
 			it(`${locale} has a card form not loaded message`, () => {
 				const messages = messagesIn(locale);
 
@@ -110,7 +125,7 @@ describe('PaymentComponent failure messages', () => {
 		let orderRouter: SpyObj<OrderRouter>;
 		let translate: TranslateService;
 		let tokenHandlers: ((token: any) => Promise<void>)[];
-		let originalStripeCheckout: any;
+		let stripeLoader: any;
 
 		const cardToken = () => ({
 			id: 'tok_first',
@@ -148,13 +163,9 @@ describe('PaymentComponent failure messages', () => {
 
 		beforeEach(async () => {
 			tokenHandlers = [];
-			originalStripeCheckout = (window as any).StripeCheckout;
-			(window as any).StripeCheckout = {
-				configure: (options) => {
-					tokenHandlers.push(options.token);
-					return { open: () => undefined };
-				},
-			};
+			stripeLoader = createSpyObj('StripeLoader', ['ensureLoaded'], {
+				stripe: { elements: () => undefined },
+			});
 
 			userRouter = createSpyObj('UserRouter', [
 				'getCards',
@@ -196,13 +207,16 @@ describe('PaymentComponent failure messages', () => {
 						provide: ProductLocalesService,
 						useValue: { getTranslate: () => 'Product' },
 					},
-					// A stub, so no spec adds the real Checkout script to the
-					// page
+					// Stubs, so no spec loads the real Stripe.js: the card form
+					// hands its card token to the payment, as Checkout did.
+					{ provide: StripeLoader, useValue: stripeLoader },
 					{
-						provide: StripeLoader,
-						useValue: createSpyObj('StripeLoader', [
-							'ensureLoaded',
-						]),
+						provide: StripeCardForm,
+						useValue: {
+							open: async (options) => {
+								tokenHandlers.push(options.token);
+							},
+						},
 					},
 				],
 				schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -218,10 +232,6 @@ describe('PaymentComponent failure messages', () => {
 			vi.spyOn(window, 'alert').mockImplementation(() => undefined);
 			vi.spyOn(console, 'log').mockImplementation(() => undefined);
 			vi.spyOn(console, 'error').mockImplementation(() => undefined);
-		});
-
-		afterEach(() => {
-			(window as any).StripeCheckout = originalStripeCheckout;
 		});
 
 		Object.keys(locales).forEach((locale) => {
@@ -346,11 +356,11 @@ describe('PaymentComponent failure messages', () => {
 			);
 		});
 
-		it('says the card form did not load on Pay now when the Checkout script is missing', async () => {
+		it('says the card form did not load on Pay now when Stripe.js is missing', async () => {
 			useLocale('es-ES');
 			const payment = await createPayment();
-			// A content blocker or no network kept checkout.js from loading
-			delete (window as any).StripeCheckout;
+			// A content blocker or no network kept Stripe.js from loading
+			stripeLoader.stripe = null;
 
 			await payment.toPaymentStage();
 

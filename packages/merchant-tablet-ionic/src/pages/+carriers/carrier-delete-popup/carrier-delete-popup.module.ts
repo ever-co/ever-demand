@@ -5,7 +5,8 @@ import { TranslateModule } from '@modules/client.common.angular2/locale/translat
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileUploadModule } from 'ng2-file-upload';
 import { CarrierDeletePopupPage } from './carrier-delete-popup';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonButton } from '@ionic/angular/ion-button';
+import { ModalController } from '@ionic/angular/modal-controller';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
@@ -18,9 +19,10 @@ import { CommonModule } from '@angular/common';
 		FormsModule,
 		ReactiveFormsModule,
 		TranslateModule.forChild(),
-		IonicModule,
 		CommonModule,
 		FormsModule,
+		IonButton,
 	],
+	providers: [ModalController],
 })
 export class CarrierDeletePopupModule {}

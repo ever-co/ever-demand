@@ -13,7 +13,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import * as _ from 'lodash';
 import { DOCUMENT } from '@angular/common';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
-import { NavController } from '@ionic/angular/lazy';
+import { NavController } from '@ionic/angular';
 import { environment } from 'environments/environment';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 

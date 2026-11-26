@@ -1,4 +1,3 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
@@ -29,7 +28,6 @@ describe('LoginPage', () => {
 				{ provide: Router, useValue: router },
 				{ provide: RoutersService, useValue: routers },
 			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	});
 

@@ -2,7 +2,20 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular/lazy';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCol,
+	IonContent,
+	IonGrid,
+	IonHeader,
+	IonImg,
+	IonMenuButton,
+	IonRow,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular';
 import { ProductDetailsPage } from './product-details.page';
 import { WarehouseLogoModule } from '../../../components/warehouse-logo/warehouse-logo.module';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
@@ -23,7 +36,18 @@ const routes: Routes = [
 	imports: [
 		CommonModule,
 		FormsModule,
-		IonicModule,
+		IonButton,
+		IonButtons,
+		IonCard,
+		IonCol,
+		IonContent,
+		IonGrid,
+		IonHeader,
+		IonImg,
+		IonMenuButton,
+		IonRow,
+		IonTitle,
+		IonToolbar,
 		WarehouseLogoModule,
 		TranslateModule.forChild(),
 		RouterModule.forChild(routes),

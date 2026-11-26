@@ -3,7 +3,7 @@ import {
 	Component,
 	OnDestroy,
 } from '@angular/core';
-import { ModalController } from '@ionic/angular/lazy';
+import { ModalController } from '@ionic/angular';
 import Order from '@modules/server.common/entities/Order';
 
 @Component({
