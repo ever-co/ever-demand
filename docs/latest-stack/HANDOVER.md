@@ -89,9 +89,15 @@ Security work (owner request, `76b4ca83`):
    - Check every `.deploy/*/Dockerfile`: no PM2, no secret ARGs.
 5. **Docs:** README (pnpm, Node 26, how to run each app, no PM2 mention), a summary of the lane notes.
 6. **PR:** `feat/latest-stack` into `develop`. Handle every AI-bot thread (AI-review rule).
-7. **Open PRs on ever-co/ever-demand:** take them to 0. The old dependabot bumps (yarn era), the Crowdin
-   PR and the 2019–2020 feature drafts are largely superseded by this upgrade. Review each one: merge it
-   if it still applies, otherwise close it with a reason.
+7. **Open PRs on ever-co/ever-demand:** take them to 0. On 2026-11-26 I closed 17, each with a reason:
+   - the 10 yarn-era dependabot bumps, which the new lockfile versions supersede;
+   - Crowdin #1513, already applied;
+   - the fork release branches #1291 and #1262;
+   - the stale drafts #1130, #1081, #705 and #639.
+
+   Two are left: **#1218** (carrier orders list) and **#1253** (carriers not showing in merchant). The
+   carrier + merchant lane is checking whether to port them. Close each with its verdict, then deal with
+   the upgrade PR itself.
 
 ## Known follow-ups and caveats
 
