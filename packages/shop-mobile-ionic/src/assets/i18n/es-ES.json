@@ -91,6 +91,12 @@
 		"CARD_PAYMENT_UNAVAILABLE": "El pago con tarjeta no está disponible en esta aplicación.",
 		"ORDER_ALREADY_PAID": "Este pedido ya está pagado. No necesita volver a pagarlo.",
 		"CARD_FORM_NOT_LOADED": "No se pudo cargar el formulario de la tarjeta. Compruebe su conexión y vuelva a intentarlo.",
+		"CARD_FORM": {
+			"EMAIL": "Correo electrónico",
+			"CARD": "Tarjeta",
+			"PAY": "Pagar {{amount}}",
+			"EMAIL_INVALID": "Introduzca una dirección de correo electrónico válida."
+		},
 		"CANCEL": {
 			"STATUSES": [
 				{

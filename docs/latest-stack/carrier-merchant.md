@@ -73,10 +73,9 @@ behind an `InjectionToken` (`plugins.ts`), so the unit tests use fakes.
 | `@ionic-native/google-maps` | both (provided, never called) | removed; the maps use the Google Maps JS API through `GoogleMapsLoader` |
 
 `capacitor.config.ts` per app: `co.ever.carrier` / `co.ever.merchant` (the old `config.xml` widget
-ids), `webDir: 'www'`. `android/` and `ios/` are git-ignored; create them with
-`pnpm run build && npx cap add android` (or `ios`), then `npx cap sync`. `resources/icon.png` and
-`resources/splash.png` feed `npx @capacitor/assets generate --assetPath resources`. `config.xml`,
-`ionic.project`, `.io-config.json` (Ionic Pro) and the custom webpack configs are gone.
+ids), `webDir: 'www'`. The `android/` and `ios/` projects are committed, see
+[Native builds](#native-builds). `config.xml`, `ionic.project`, `.io-config.json` (Ionic Pro) and the
+custom webpack configs are gone.
 
 Analytics stay native-only, as before: the Cordova plugins did nothing in the browser.
 
@@ -176,6 +175,8 @@ carrier is sent straight to them.
 | `IonicModule` (deprecated in Ionic 9) | Moving 100+ NgModule-declared templates to standalone Ionic components + `provideIonicAngular()` is a separate refactor; Ionic 9 still ships `IonicModule` under `@ionic/angular/lazy`. |
 | TypeScript 7 | Contract: Angular 22 needs `>=6.0 <6.1`. |
 | Playwright browser build | e2e runs locally used the installed `chromium_headless_shell-1243` through a scratch config; CI should run `npx playwright install chromium` for 1.65's build. |
+| Android Gradle Plugin 8.13.0, Gradle 8.14.3 | The versions Capacitor 8.6's Android template and its plugins are built with; upgrade them together with Capacitor (`npx cap migrate`). |
+| Swift Package Manager in the merchant iOS app | `@capacitor-mlkit/barcode-scanning` (Google ML Kit) supports only CocoaPods. |
 
 ## How to run
 
@@ -195,3 +196,75 @@ docker build -f .deploy/merchant-tablet-ionic/Dockerfile -t ever-merchant-tablet
 ```
 
 Both Dockerfiles take `--build-arg VERDACCIO_REGISTRY=http://host.docker.internal:4873/` on this PC.
+
+## Native builds
+
+`android/` and `ios/` in both apps are Capacitor 8.6 projects, generated with `cap add` and committed.
+Capacitor's own `android/.gitignore` and `ios/.gitignore` keep the build output and everything
+`cap sync` copies out of git: `app/src/main/assets/public` and `ios/App/App/public` (the web build),
+`capacitor.config.json`, `config.xml`, `capacitor-cordova-*-plugins`, `build/`, `.gradle/`,
+`local.properties`, `Pods/`, `DerivedData`. The apps' `.gitignore` files no longer ignore `/android/`
+and `/ios/`.
+
+| | Carrier | Merchant |
+| --- | --- | --- |
+| Android `namespace` / `applicationId`, iOS bundle id | `co.ever.carrier` | `co.ever.merchant` |
+| Name | Ever Carrier | Ever Merchant |
+| Version | `versionName` 0.5.0, `versionCode` 500 (Cordova's major×10000 + minor×100 + patch; the Cordova 0.2.0 build was 200); iOS `MARKETING_VERSION` 0.5.0, build 1 | same |
+| Android permissions | `INTERNET`, `ACCESS_NETWORK_STATE`, `ACCESS_COARSE_LOCATION` + `ACCESS_FINE_LOCATION` (GPS feature required: it is the courier app), `POST_NOTIFICATIONS` | `INTERNET`, `ACCESS_NETWORK_STATE`, `CAMERA` (camera feature optional); ML Kit `barcode_ui` meta-data and the camera plugin's backported photo picker service |
+| iOS `Info.plist` | `NSLocationWhenInUseUsageDescription`, `NSLocationAlwaysAndWhenInUseUsageDescription` (the geolocation plugin requires both) | `NSCameraUsageDescription`, `NSPhotoLibraryUsageDescription`, `NSPhotoLibraryAddUsageDescription`, `UIRequiresFullScreen` (an iPad only honours the landscape lock in full screen) |
+| iOS dependencies | Swift Package Manager (Capacitor 8's default; `ios/App/CapApp-SPM`) | CocoaPods (`ios/App/Podfile`, iOS 15.5) |
+
+Both: Capacitor's Android template (AGP 8.13.0, Gradle 8.14.3, JDK 21, compile and target SDK 36,
+min SDK 24) and iOS 15 or later. `capacitor.config.ts` now sets `androidScheme: 'http'` +
+`cleartext: true` like the shop app: with the default `https` WebView origin, Android blocks calls to
+the plain-HTTP dev API as mixed content.
+
+- **Merchant uses CocoaPods.** `@capacitor-mlkit/barcode-scanning` supports only CocoaPods (Google
+  ML Kit has no Swift package), so the project was created with
+  `npx cap add ios --packagemanager CocoaPods` and the Podfile sets `platform :ios, '15.5'`, as the
+  plugin requires. `pod install` cannot run on Windows: on a Mac, the first `npx cap sync ios` runs it
+  and creates `ios/App/Podfile.lock` and `ios/App/App.xcworkspace/contents.xcworkspacedata`. Commit
+  both. `AppDelegate.swift` has the screen-orientation plugin's `supportedInterfaceOrientationsFor`
+  hook, so views presented over the app keep the landscape lock.
+- **Carrier uses Swift Package Manager.** Every plugin it uses ships a `Package.swift`. Xcode resolves
+  the packages (`capacitor-swift-pm` from GitHub, the plugins from `node_modules`) when the project
+  opens; commit the `Package.resolved` it writes under `App.xcodeproj/project.xcworkspace/`.
+
+### Build and run
+
+```bash
+cd packages/carrier-mobile-ionic        # or packages/merchant-tablet-ionic
+pnpm run build                          # production build into www/ (build:dev for a dev build)
+npx cap sync                            # after every web build, plugin change or pnpm install
+
+# Android: JDK 21 and the Android SDK (platform 36)
+npx cap open android                    # Android Studio: Run on a device or an emulator
+cd android && ./gradlew assembleDebug   # app/build/outputs/apk/debug/app-debug.apk
+npx cap run android                     # build, install and start on a device connected over adb
+
+# iOS: macOS with Xcode (and CocoaPods for the merchant app)
+npx cap sync ios                        # merchant: runs pod install
+npx cap open ios                        # carrier: App.xcodeproj, merchant: App.xcworkspace
+npx cap run ios                         # set a team under Signing & Capabilities first
+```
+
+- A device cannot reach `localhost`: set `SERVICES_ENDPOINT`, `GQL_ENDPOINT` and
+  `GQL_SUBSCRIPTIONS_ENDPOINT` in the app's `.env` to an address the device can reach (the PC's LAN IP,
+  or `10.0.2.2` from the Android emulator) before `pnpm run build`.
+- `android/capacitor.settings.gradle`, `android/app/capacitor.build.gradle`,
+  `ios/App/CapApp-SPM/Package.swift` (carrier) and `ios/App/Podfile` (merchant) point into pnpm's
+  `node_modules/.pnpm/<package>@<version>_<peers>/` folders. `cap sync` rewrites them, so commit the
+  change after upgrading any Capacitor package.
+- Release builds need signing: an Android keystore (not in the repo) and an Apple team.
+- CI: the `android` job in `.github/workflows/ci.yml` builds both debug APKs (and the shop's) on
+  every pull request.
+
+### Icons and splash
+
+Generated with `@capacitor/assets` 4.0.0 from the Cordova resources: `resources/ios/icon/icon-1024.png`
+as the icon (also the adaptive-icon foreground, on a white background) and `resources/splash.png` on
+`#2a2c39`. The icon is still Ionic's placeholder artwork, as it was in the Cordova apps. To use new art,
+put `icon-only.png`, `icon-foreground.png`, `icon-background.png` (1024×1024) and `splash.png`
+(2732×2732) in a temporary `assets/` folder, then run
+`pnpm dlx @capacitor/assets@4.0.0 generate --assetPath assets --splashBackgroundColor '#2a2c39' --android --ios`.

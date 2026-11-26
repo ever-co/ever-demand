@@ -1,0 +1,36 @@
+require_relative '../../../../node_modules/.pnpm/@capacitor+ios@8.6.3_@capacitor+core@8.6.3/node_modules/@capacitor/ios/scripts/pods_helpers'
+
+platform :ios, '15.5'
+use_frameworks!
+
+# workaround to avoid Xcode caching of Pods that requires
+# Product -> Clean Build Folder after new Cordova plugins installed
+# Requires CocoaPods 1.6 or newer
+install! 'cocoapods', :disable_input_output_paths => true
+
+def capacitor_pods
+  pod 'Capacitor', :path => '../../../../node_modules/.pnpm/@capacitor+ios@8.6.3_@capacitor+core@8.6.3/node_modules/@capacitor/ios'
+  pod 'CapacitorCordova', :path => '../../../../node_modules/.pnpm/@capacitor+ios@8.6.3_@capacitor+core@8.6.3/node_modules/@capacitor/ios'
+  pod 'CapacitorMlkitBarcodeScanning', :path => '../../../../node_modules/.pnpm/@capacitor-mlkit+barcode-sc_198ef4948a4c0b112395714d82dc8120/node_modules/@capacitor-mlkit/barcode-scanning'
+  pod 'CapacitorApp', :path => '../../../../node_modules/.pnpm/@capacitor+app@8.1.2_@capacitor+core@8.6.3/node_modules/@capacitor/app'
+  pod 'CapacitorBrowser', :path => '../../../../node_modules/.pnpm/@capacitor+browser@8.0.5_@capacitor+core@8.6.3/node_modules/@capacitor/browser'
+  pod 'CapacitorCamera', :path => '../../../../node_modules/.pnpm/@capacitor+camera@8.2.6_@capacitor+core@8.6.3/node_modules/@capacitor/camera'
+  pod 'CapacitorDevice', :path => '../../../../node_modules/.pnpm/@capacitor+device@8.0.3_@capacitor+core@8.6.3/node_modules/@capacitor/device'
+  pod 'CapacitorDialog', :path => '../../../../node_modules/.pnpm/@capacitor+dialog@8.0.1_@capacitor+core@8.6.3/node_modules/@capacitor/dialog'
+  pod 'CapacitorGeolocation', :path => '../../../../node_modules/.pnpm/@capacitor+geolocation@8.2.5_@capacitor+core@8.6.3/node_modules/@capacitor/geolocation'
+  pod 'CapacitorHaptics', :path => '../../../../node_modules/.pnpm/@capacitor+haptics@8.0.2_@capacitor+core@8.6.3/node_modules/@capacitor/haptics'
+  pod 'CapacitorLocalNotifications', :path => '../../../../node_modules/.pnpm/@capacitor+local-notifications@8.3.1_@capacitor+core@8.6.3/node_modules/@capacitor/local-notifications'
+  pod 'CapacitorNetwork', :path => '../../../../node_modules/.pnpm/@capacitor+network@8.0.1_@capacitor+core@8.6.3/node_modules/@capacitor/network'
+  pod 'CapacitorPreferences', :path => '../../../../node_modules/.pnpm/@capacitor+preferences@8.0.1_@capacitor+core@8.6.3/node_modules/@capacitor/preferences'
+  pod 'CapacitorSplashScreen', :path => '../../../../node_modules/.pnpm/@capacitor+splash-screen@8.0.2_@capacitor+core@8.6.3/node_modules/@capacitor/splash-screen'
+  pod 'CapacitorStatusBar', :path => '../../../../node_modules/.pnpm/@capacitor+status-bar@8.0.4_@capacitor+core@8.6.3/node_modules/@capacitor/status-bar'
+end
+
+target 'App' do
+  capacitor_pods
+  # Add your Pods here
+end
+
+post_install do |installer|
+  assertDeploymentTarget(installer)
+end

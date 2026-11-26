@@ -15,14 +15,14 @@ Settings come from `.env` (see `.env.template`); `scripts/configure.ts` writes
 
 ## Native apps (Capacitor)
 
-The `android/` and `ios/` projects are not committed. Create them once, then sync after each build:
+The `android/` and `ios/` projects are committed. Sync them after every web build:
 
 ```sh
 pnpm run build
-npx cap add android        # or: npx cap add ios (macOS)
 npx cap sync
-npx cap open android
+npx cap open android       # or: cd android && ./gradlew assembleDebug
+npx cap open ios           # macOS + Xcode + CocoaPods (cap sync ios runs pod install)
 ```
 
-`resources/icon.png` and `resources/splash.png` can be turned into native icons and splash screens
-with `npx @capacitor/assets generate --assetPath resources`.
+Permissions, icons and how to run on a device: "Native builds" in
+[docs/latest-stack/carrier-merchant.md](../../docs/latest-stack/carrier-merchant.md#native-builds).

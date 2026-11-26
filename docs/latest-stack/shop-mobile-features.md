@@ -24,7 +24,7 @@ The app talks to the backend in three ways.
 | Plain HTTP GET | `${SERVICES_ENDPOINT}/getLocationByIP` | | IP geolocation fallback, returns `{ latitude, longitude }` or null |
 | Plain HTTP GET | `SETTINGS_MAINTENANCE_API_URL` | | maintenance status JSON (only when the URL is set) |
 | Google Maps JS | `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places,drawing&callback=__onGoogleLoaded` | `GOOGLE_MAPS_API_KEY` | maps on the order pages, Geocoder in invite by location |
-| Stripe Checkout (legacy `checkout.js`) | `https://checkout.stripe.com/checkout.js` | `STRIPE_PUBLISHABLE_KEY` | the "new card" popup that returns a card token |
+| Stripe.js (`@stripe/stripe-js` 10; replaced the legacy Checkout `checkout.js`) | `https://js.stripe.com/endive/stripe.js` | `STRIPE_PUBLISHABLE_KEY` | the new-card form (Card Element) that makes a card token |
 
 ### 1.1 GraphQL client setup
 
@@ -398,8 +398,8 @@ ships to the browser).
 | `DEFAULT_LOCALE` | `en-US` | product feed `locale` when no language yet |
 | `DELIVERY_TIME_MIN` / `DELIVERY_TIME_MAX` | `30` / `60` | default "30-60 min" label |
 | `SUPPORT_NUMBER` | `0888888888` | side menu "Call us"; the item hides when empty |
-| `STRIPE_PUBLISHABLE_KEY` | `''` | card payments; empty = payment buttons throw "Can't pay in app" |
-| `STRIPE_POP_UP_LOGO` | Ever avatar PNG URL | Checkout popup image |
+| `STRIPE_PUBLISHABLE_KEY` | `''` | card payments; empty = Pay says card payment is not available and Stripe.js is not loaded |
+| `STRIPE_POP_UP_LOGO` | Ever avatar PNG URL | logo of the new-card form (was the Checkout popup image) |
 | `MAP_MERCHANT_ICON_LINK` / `MAP_USER_ICON_LINK` / `MAP_CARRIER_ICON_LINK` | Google kml icon URLs | map markers |
 | `DEFAULT_LATITUDE` / `DEFAULT_LONGITUDE` | `42.6459136` / `23.3332736` (Sofia) | **when both are set, the app never asks the device for its location** and uses these |
 | `GQL_ENDPOINT` | `http://localhost:8443/graphql` | |
@@ -754,7 +754,11 @@ Finally clear both paying flags. (#1652)
    reload the currency; return either way (the popup must open straight from the tap, so it never
    waits on the network). (#1648)
 3. Popup mode: dismiss the current modal first.
-4. Open Stripe Checkout: `StripeCheckout.configure({ panelLabel: 'Pay {{amount}}', key, image:
+4. (Ionic since `feat/latest-stack-stripe-elements`: Stripe.js not loaded yet → alert
+   `BUY_POPUP.CARD_FORM_NOT_LOADED` and load it again (#1663); otherwise the new-card modal with the
+   same options and callbacks: logo, product, email, Stripe Card Element, "Pay {{amount}}", Cancel;
+   `stripe.createToken(card, { name: email })` gives the token `{ id, email }`.) Before, the legacy
+   Stripe Checkout: `StripeCheckout.configure({ panelLabel: 'Pay {{amount}}', key, image:
    STRIPE_POP_UP_LOGO, currency, allowRememberMe: false, token, closed })` and
    `handler.open({ name: <product title>, description: <product description>, amount:
    order.products[0].price * 100 })` (first product only).
