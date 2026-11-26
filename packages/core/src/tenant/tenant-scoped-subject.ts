@@ -31,7 +31,7 @@ export class TenantScopedSubject<T> extends Subject<T> {
 				? { next: observerOrNext }
 				: observerOrNext ?? {};
 
-		return super.subscribe({
+		const subscription = super.subscribe({
 			next: (value) => {
 				const tenantId = this.tenantOf(value);
 
@@ -44,6 +44,15 @@ export class TenantScopedSubject<T> extends Subject<T> {
 			error: (err) => TenantContext.run(ctx, () => observer.error?.(err)),
 			complete: () => TenantContext.run(ctx, () => observer.complete?.()),
 		});
+
+		// RxJS operators subscribe with a Subscriber and later unsubscribe that
+		// Subscriber, not what subscribe() returned: tie the two together, or
+		// every finished stream would stay on the subject.
+		if (observerOrNext instanceof Subscription) {
+			observerOrNext.add(subscription);
+		}
+
+		return subscription;
 	}
 }
 

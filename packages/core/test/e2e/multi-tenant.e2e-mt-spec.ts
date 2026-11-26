@@ -613,6 +613,16 @@ describe('multi-tenant isolation', () => {
 			staffToken = login.adminLogin.token;
 		});
 
+		it("keeps staff from editing another admin's account", async () => {
+			const res = await gql(
+				`mutation U($id: String!) { updateAdmin(id: $id, updateInput: { email: "taken_${unique()}@example.com" }) { id } }`,
+				{ id: A.ownerId },
+				staffToken
+			);
+
+			expect(res.errors?.[0].extensions?.code).toBe('FORBIDDEN');
+		});
+
 		it('lets staff work but not manage members, settings or billing', async () => {
 			const usage = await gqlData(`{ tenantUsage { members } }`, {}, staffToken);
 			expect(usage.tenantUsage.members).toBeGreaterThanOrEqual(3);

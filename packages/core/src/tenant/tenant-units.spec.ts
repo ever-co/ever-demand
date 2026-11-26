@@ -1,4 +1,5 @@
 import { Subject } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { TenantContext } from './tenant-context';
 import { hostName, isAvailableSlug, isValidSlug, slugFromHost } from './tenant-directory';
 import { TenantScopedSubject, existenceEventTenantId } from './tenant-scoped-subject';
@@ -151,6 +152,20 @@ describe('TenantScopedSubject', () => {
 		subject.next(event(A, 'a1'));
 
 		expect(seen).toEqual([]);
+	});
+
+	it('lets go of the subject when an operator chain unsubscribes', () => {
+		const subject = new TenantScopedSubject<any>(existenceEventTenantId);
+
+		TenantContext.runInTenant(A, () => {
+			subject.pipe(take(1)).subscribe(() => undefined);
+			const direct = subject.subscribe(() => undefined);
+			direct.unsubscribe();
+		});
+
+		expect(subject.observed).toBe(true);
+		subject.next(event(A, 'a1'));
+		expect(subject.observed).toBe(false);
 	});
 
 	it('keeps filtering through piped operators', () => {
