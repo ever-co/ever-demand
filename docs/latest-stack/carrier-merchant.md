@@ -9,7 +9,7 @@ Packages: `packages/carrier-mobile-ionic` (courier app) and `packages/merchant-t
 | Area | Before | Now |
 | --- | --- | --- |
 | Angular | 13.1 (webpack, `@angular-builders/custom-webpack`) | 22.3.0, `@angular/build` (esbuild + Vite dev server + Vitest) |
-| Ionic | `@ionic/angular` 5.8 | 9.0.14, NgModule `IonicModule` from `@ionic/angular/lazy` |
+| Ionic | `@ionic/angular` 5.8 | 9.0.14, standalone components (`provideIonicAngular`, per-component entry points), see [Standalone Ionic](#standalone-ionic) |
 | Native runtime | Cordova 10 + `@ionic-native/*` 5.36 | Capacitor 8.6.3 (`@capacitor/core`, `cli`, `android`, `ios`) |
 | ionicons | 5.5 | 8.1.1 |
 | GraphQL client | `@apollo/client` 3.5, `apollo-angular` 2.6, `graphql` 15.7 | `@apollo/client` 4.3.8, `apollo-angular` 14.2.0, `graphql` ^16.15.0, `graphql-ws` 6.4.3 |
@@ -91,7 +91,7 @@ objects lazily instead of at module load.
 | `ng2-smart-table` 1.7 (dead, View Engine) | `angular2-smart-table` 4.2.0 (maintained fork, Angular 18-22) | `<angular2-smart-table>`, `Angular2SmartTableModule`, `Settings` typing. Custom renderers need `componentInitFunction` since v3: `bindViewCell()` (`components/table-components/smart-table.ts`) sets `value`/`rowData` like before. `filter: false` -> `isFilterable: false`, `valuePrepareFunction(value, cell)`, custom action HTML in `customButtonContent`, CSS classes `ng2-smart-*` -> `angular2-smart-*`. |
 | `@ever-co/angular2-wizard` 0.6 | in-house `FormWizardModule` (`components/form-wizard/`) | Same selectors (`form-wizard`, `wizard-step`), inputs, outputs and Bootstrap card markup, so templates and styles are unchanged. Fixed the `#wizzardFrom` template ref typo that broke "add carrier". |
 | `ngx-moment` 5 + `moment` | `amTimeAgo` pipe on `Intl.RelativeTimeFormat` (`components/time-ago.pipe.ts`) | Only `amTimeAgo` was used. |
-| `ionic-selectable` 4.9 | 8.0.0 (Ionic 9 / Angular 21-22) | Standalone component imported into `TrackPageModule`, which also provides Ionic's standalone `ModalController` (the lazy `IonicModule` one is a different class). |
+| `ionic-selectable` 4.9 | 8.0.0 (Ionic 9 / Angular 21-22) | Standalone component imported into `TrackPageModule`, which provides a page-level `ModalController` (see [Standalone Ionic](#standalone-ionic)). |
 | `ng2-completer` 9 | removed | Never used. |
 | `ng2-file-upload` 1.4 | 12.0.0 | `FileItem` needs the uploader options as third argument. |
 | `ngx-masonry` 12 | 14.0.1 | Needs `@angular/animations` (kept, see held back). |
@@ -110,6 +110,49 @@ take their label as content); `ion-slides` -> Swiper 14 element (`<swiper-contai
 Ionic-5-style `ion-datetime` inputs in promotions -> `ion-datetime-button` + modal (ISO strings);
 ionicons v4 names (`ios="ios-menu" md="md-menu"`) -> `name="menu"`; a nested `<ion-app>` in the
 carrier get-product page became a plain flex container.
+
+## Standalone Ionic
+
+Both apps are off `IonicModule` (the NgModule build under `@ionic/angular/lazy`, deprecated in
+Ionic 9). In Ionic 9 the standalone build is the root `@ionic/angular` entry point (there is no
+`@ionic/angular/standalone` subpath any more), and every component, controller and provider also
+has its own entry point (`@ionic/angular/ion-button`, `@ionic/angular/modal-controller`,
+`@ionic/angular/provide`, `@ionic/angular/platform`, ...).
+
+- `AppModule` provides `provideIonicAngular()`, with the same (default) config
+  `IonicModule.forRoot()` had, and imports `IonApp` and `IonRouterOutlet` for the root template.
+- The NgModules stay. Each one imports the `Ion*` components its declarations use, plus
+  `IonRouterLink` in the menus (the `ion-item`s with `routerLink` + `routerDirection`). With
+  `strictTemplates` a missing import fails the build (`'ion-x' is not a known element`). Only the
+  carrier get-product page keeps `CUSTOM_ELEMENTS_SCHEMA`, for Swiper's `<swiper-container>`; the
+  specs no longer need it.
+- Imports use the per-component entry points, never the `@ionic/angular` barrel: one barrel import
+  in eagerly loaded code makes every Ionic component the app uses reachable from `main.ts`, so
+  esbuild put all of them (ion-datetime, ion-textarea, infinite scroll, ...) into the main bundle
+  (merchant main 1852 KiB, 1628 KiB with per-component imports). `src/app/ionic-standalone.spec.ts`
+  fails on a barrel or `@ionic/angular/lazy` import. ionic-selectable imports the barrel itself, but
+  only inside the lazy track chunk.
+- Modals: `IonicModule` provided a `ModalController` and a `PopoverController` in every NgModule
+  that imported it, so a popup opened from a lazy page was created in that page module's injector
+  and could use its services (`CarrierService`, `PromotionService`, `ProductsCategoryService`,
+  `WarehouseOrdersService`, ... are not `providedIn: 'root'`). The merchant NgModules whose
+  components open or dismiss modals now provide the standalone `ModalController` themselves (the
+  warehouse page also `PopoverController`); `provideIonicAngular()` supplies the root ones.
+  `src/pages/modal-injectors.spec.ts` checks the carriers, customers, warehouse and promotions
+  pages. `AlertController`, `ToastController`, `LoadingController`, `ActionSheetController`,
+  `MenuController`, `Platform` and `NavController` are `providedIn: 'root'`, as before.
+- ionicons: the standalone `<ion-icon>` renders only icons registered with `addIcons()`; it no
+  longer fetches `svg/<name>.svg`, so the ionicons svg copy left `angular.json`. `src/app/icons.ts`
+  registers every icon the templates use before bootstrap (carrier 8; merchant 20, including the
+  `hasImage ? 'images' : 'cloud-upload'` binding of the product type popups), and
+  `ionic-standalone.spec.ts` fails when a template uses an unregistered name. The `fa fa-*` Font
+  Awesome icons are CSS and unaffected; ionic-selectable registers its own icons.
+- Bundle size: the lazy build's Stencil loader fetched each component's code on first use; now the
+  components of eagerly loaded modules ship in the initial bundle. Carrier 1.34 MB (327 kB
+  transferred) -> 1.42 MB (348 kB); merchant 1.74 MB (376 kB) -> 2.14 MB (430 kB), mostly the user
+  form's ion-input, ion-select and ion-searchbar, because `AppModule` imports `UserMutationModule`
+  (only the customers page and `OrderModule` use it). Moving that import there would cut merchant's
+  initial bundle further; it was left alone to keep this change behaviour-neutral.
 
 Removed stray server/build packages from both frontends after checking they were unused:
 `mongoose`, `kareem`, `mpath`, `mquery`, `hooks-fixed`, `connect`, `waves`, `sw-toolbox`, `save`,
@@ -141,10 +184,11 @@ still prefill the login form through the environment); API keys default to empty
 | Check | Carrier | Merchant |
 | --- | --- | --- |
 | `tsc -p tsconfig.app.json --noEmit` | clean | clean |
-| Vitest (`pnpm test`) | 9 files, 61 tests pass | 7 files, 40 tests pass |
-| Production build (`pnpm run build`) | passes, initial 1.34 MB (327 kB transfer) | passes, initial 1.74 MB (376 kB transfer) |
+| Vitest (`pnpm test`) | 10 files, 63 tests pass | 9 files, 46 tests pass |
+| Production build (`pnpm run build`) | passes, initial 1.42 MB (348 kB transfer) | passes, initial 2.14 MB (430 kB transfer) |
 | Dev server boot + headless load | `/login`, no console errors except the unreachable API | `/login` and warehouse, carriers, customers, settings, promotions, track pages with a store logged in: no errors (Google "NoApiKeys" warnings only) |
 | Playwright, no API needed | 3/3 (dev server and production build) | 2/2 (dev server and production build) |
+| Standalone Ionic (production build, no API) | `/login` + `/info/server-down`: no page errors, no `svg/*.svg` requests, every `ion-*` element defined, all 5 menu icons render | `/login` with the menu open: same, all 8 menu icons render. The logged-in pages (warehouse, carriers, customers, promotions, track) and their popups were not re-run in a browser after this change: no API was running |
 | Playwright against the core lane's API (production builds served by `e2e/serve-apps.mjs`) | 8/8 incl. a full delivery (take, pick up, start, delivered; statuses checked through GraphQL) | 8/8: login, products, order workflow button, carriers table (admin-assigned + store-added carriers, custom cells), customers, settings |
 | Docker image | builds (`node:26-alpine` + pnpm 12.23 -> nginx) | not verified yet: Docker Desktop answered 500 on every call during the run (same Dockerfile shape as carrier) |
 
@@ -172,7 +216,6 @@ carrier is sent straight to them.
 | Item | Why |
 | --- | --- |
 | `@angular/animations` 22.3.0 (deprecated) in merchant | `ngx-masonry` 14.0.1 (latest) injects `AnimationBuilder`; `provideAnimationsAsync()` keeps it working. Replace the masonry grid with CSS columns before Angular 23 removes the package. |
-| `IonicModule` (deprecated in Ionic 9) | Moving 100+ NgModule-declared templates to standalone Ionic components + `provideIonicAngular()` is a separate refactor; Ionic 9 still ships `IonicModule` under `@ionic/angular/lazy`. |
 | TypeScript 7 | Contract: Angular 22 needs `>=6.0 <6.1`. |
 | Playwright browser build | e2e runs locally used the installed `chromium_headless_shell-1243` through a scratch config; CI should run `npx playwright install chromium` for 1.65's build. |
 | Android Gradle Plugin 8.13.0, Gradle 8.14.3 | The versions Capacitor 8.6's Android template and its plugins are built with; upgrade them together with Capacitor (`npx cap migrate`). |
