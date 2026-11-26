@@ -254,7 +254,12 @@ capped at 2.5 GB heap, caches in the `ever-flutter-gradle` and `ever-flutter-and
 through Gradle 9.5 / AGP 9.3.1 / Kotlin 2.4.20 resolution and started installing the NDK that Flutter
 3.50.1 pins (`28.2.13676358`, `android-ndk-r28c`); the NDK download crawled to 27 % in ~35 min and
 then the Docker Desktop engine stopped answering (API 500, `docker info` hung) on the shared PC, so
-the build did not finish here. Nothing Android-specific failed. To finish it elsewhere:
+the build did not finish here. After the lead restarted Docker Desktop, one retry
+(`DOCKER_MEMORY=5g tool/docker-test.sh build-apk`, host free RAM 6 GB at start) was back in
+`assembleDebug` when the Docker VM (`vmmem`) grew to 8.4 GB and host free RAM fell to ~0.5 GB within
+6 minutes; I stopped my container (`docker stop <id>`) to protect the shared PC and skipped the APK,
+as agreed with the lead. Nothing Android-specific failed (no Gradle, AGP, Kotlin or manifest error
+was reported). To finish it on a machine with more RAM:
 `tool/docker-test.sh build-apk` (first run downloads the NDK, ~700 MB, into the volume), or locally
 `flutter build apk --debug`. Watch for: `Theme.MaterialComponents` parents in `styles.xml` need
 `com.google.android.material` on the classpath (flutter_stripe brings it).
