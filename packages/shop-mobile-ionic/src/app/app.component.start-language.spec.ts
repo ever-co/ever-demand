@@ -67,6 +67,7 @@ describe('AppComponent start language', () => {
 	let savedDir: string;
 	let savedLang: string;
 	let savedDefaultLanguage: string;
+	let deviceId: jasmine.Spy;
 
 	// Starts the app as main.ts does: AppComponent and the Store it
 	// injects, with nothing loaded yet.
@@ -106,7 +107,9 @@ describe('AppComponent start language', () => {
 				},
 				{
 					provide: DeviceRouter,
-					useValue: jasmine.createSpyObj('DeviceRouter', ['create']),
+					useValue: jasmine.createSpyObj('DeviceRouter', {
+						create: Promise.resolve({ id: 'device-2' }),
+					}),
 				},
 				{
 					provide: Location,
@@ -119,7 +122,10 @@ describe('AppComponent start language', () => {
 						onConnect: NEVER,
 					}),
 				},
-				{ provide: Device, useValue: {} },
+				{
+					provide: Device,
+					useValue: { platform: 'Android', uuid: 'uuid-1' },
+				},
 				{ provide: InviteRouter, useValue: {} },
 				{ provide: UserRouter, useValue: {} },
 			],
@@ -196,9 +202,11 @@ describe('AppComponent start language', () => {
 		environment.DEFAULT_LANGUAGE = 'en-US';
 
 		// A known device id, so the app does not register a new device.
-		spyOnProperty(Store.prototype, 'deviceId', 'get').and.returnValue(
-			'device-1'
-		);
+		deviceId = spyOnProperty(
+			Store.prototype,
+			'deviceId',
+			'get'
+		).and.returnValue('device-1');
 		spyOn(console, 'warn');
 	});
 
@@ -293,6 +301,29 @@ describe('AppComponent start language', () => {
 			});
 
 			await expectEveryLoadOrderToEndIn('bg-BG');
+		});
+
+		it('saves a new device with the phone language once it is read', async () => {
+			deviceId.and.returnValue(null);
+			spyOnProperty(Store.prototype, 'deviceId', 'set');
+			// No push plugin in the test.
+			spyOn(console, 'error');
+			let answer = (language: { value: string }) => {};
+			spyOn(Globalization, 'getPreferredLanguage').and.returnValue(
+				new Promise((resolve) => (answer = resolve))
+			);
+
+			await startApp();
+			const deviceRouter = TestBed.inject(DeviceRouter);
+
+			expect(deviceRouter.create).not.toHaveBeenCalled();
+
+			answer({ value: 'he-IL' });
+			await settle();
+
+			expect(deviceRouter.create).toHaveBeenCalledOnceWith(
+				jasmine.objectContaining({ language: 'he-IL' })
+			);
 		});
 	});
 });

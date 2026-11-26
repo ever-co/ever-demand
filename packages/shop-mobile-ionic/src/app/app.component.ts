@@ -117,6 +117,11 @@ export class AppComponent {
 	}
 
 	private async _registerDeviceDevMode() {
+		// On a phone with no saved language, Store reads the phone language
+		// after the device is ready. Wait for it, so the device is not saved
+		// with no language.
+		await this.store.startLanguage;
+
 		const device = await this.deviceRouter.create({
 			channelId: await this.getChannelId(),
 			language: this.getLanguage(),

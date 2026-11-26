@@ -58,6 +58,10 @@ export class Store {
 	// outlives the app.
 	private readonly _payingOrderIds = new Set<Order['id']>();
 
+	// The language the app starts in, once Store has picked it. On a phone
+	// with no saved language that waits for the phone language.
+	readonly startLanguage: Promise<ILanguage>;
+
 	constructor(
 		private readonly _translateService: TranslateService,
 		private readonly platform: Platform,
@@ -65,7 +69,7 @@ export class Store {
 		private readonly userRouter: UserRouter,
 		@Inject(DOCUMENT) private readonly document: Document
 	) {
-		this._initLanguage();
+		this.startLanguage = this._initLanguage();
 	}
 
 	get token(): string | null {
@@ -303,24 +307,25 @@ export class Store {
 	// else the device language, else DEFAULT_LANGUAGE, else en-US.
 	// use() switches to a language when its file arrives, so a second
 	// use() at startup lets whichever file loads last win.
-	private async _initLanguage() {
+	private async _initLanguage(): Promise<ILanguage> {
 		const savedLanguage = shippedLanguage(
 			localStorage.getItem('_language')
 		);
 		if (savedLanguage) {
 			this._startIn(savedLanguage);
-			return;
+			return savedLanguage;
 		}
 
 		const deviceLanguage = this.platform.is('cordova')
 			? await this._phoneLanguage()
 			: this._translateService.getBrowserLang();
 
-		this._startIn(
+		const language =
 			shippedDeviceLanguage(deviceLanguage) ||
-				shippedLanguage(environment.DEFAULT_LANGUAGE) ||
-				'en-US'
-		);
+			shippedLanguage(environment.DEFAULT_LANGUAGE) ||
+			'en-US';
+		this._startIn(language);
+		return language;
 	}
 
 	// The phone language, such as 'he-IL', or null when it cannot be read.
@@ -341,6 +346,6 @@ export class Store {
 		// As the language page does when the customer picks a language.
 		const page = this.document.documentElement;
 		page.dir = language === 'he-IL' ? 'rtl' : 'ltr';
-		page.lang = language.substr(0, 2);
+		page.lang = language.slice(0, 2);
 	}
 }
