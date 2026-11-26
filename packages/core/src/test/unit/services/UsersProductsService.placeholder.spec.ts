@@ -16,6 +16,20 @@ jest.mock('@pyro/db-server', () => ({ DBService: class {} }));
 jest.mock('../../../services/devices/DevicesService', () => ({
 	DevicesService: class {},
 }));
+// The real observeFile reads the file with fs.readFile, so a value would
+// arrive at a time the spec cannot know, and a slow disk could fail it. This
+// one reads the same real file at once, so every placeholder arrives while
+// device$.next() runs and the spec needs no timers.
+jest.mock('../../../utils', () => {
+	const { readFileSync } = jest.requireActual('fs');
+	const { Observable } = jest.requireActual('rxjs');
+	return {
+		observeFile: (fileName: string) =>
+			new Observable((observer: { next: (value: string) => void }) => {
+				observer.next(readFileSync(fileName, 'utf-8'));
+			}),
+	};
+});
 
 import { UsersProductsService } from '../../../services/users/UsersProductsService';
 
@@ -33,26 +47,6 @@ const texts: { [language: string]: string } = {
 	'en-US': translations['en-US'].no_products_text,
 	'he-IL': translations['he-IL'].no_products_text,
 };
-
-// The placeholder templates are read from disk, so values arrive a few
-// milliseconds after the device does.
-function waitFor(condition: () => boolean, timeoutMs = 1000): Promise<void> {
-	return new Promise((resolve) => {
-		const startedAt = Date.now();
-		const check = () => {
-			if (condition() || Date.now() - startedAt > timeoutMs) {
-				resolve();
-			} else {
-				setTimeout(check, 10);
-			}
-		};
-		check();
-	});
-}
-
-function wait(ms: number): Promise<void> {
-	return new Promise((resolve) => setTimeout(resolve, ms));
-}
 
 describe('UsersProductsService placeholder', () => {
 	let device$: Subject<{ id: string; language: string }>;
@@ -87,23 +81,19 @@ describe('UsersProductsService placeholder', () => {
 		subscription = undefined;
 	});
 
-	it("switches to the device's new language and skips a repeat of the same language", async () => {
+	it("switches to the device's new language and skips a repeat of the same language", () => {
 		subscription = service
 			.getPlaceholder('u1', 'd1')
 			.subscribe((placeholder) => placeholders.push(placeholder));
 
 		device$.next({ id: 'd1', language: 'en-US' });
-		await waitFor(() => placeholders.length > 0);
 		expect(languagesShown()).toEqual(['en-US']);
 
 		device$.next({ id: 'd1', language: 'he-IL' });
-		await waitFor(() => languagesShown().length > 1);
-		await wait(200);
 		expect(languagesShown()).toEqual(['en-US', 'he-IL']);
 
 		const countBeforeRepeat = placeholders.length;
 		device$.next({ id: 'd1', language: 'he-IL' });
-		await wait(200);
 		expect(placeholders).toHaveLength(countBeforeRepeat);
 		expect(languagesShown()).toEqual(['en-US', 'he-IL']);
 	});
