@@ -1,6 +1,6 @@
 # Ever Demand multi-tenant: handover
 
-Last updated: 2026-11-26 ~21:30 CET by the multi-tenant session. Update this after every milestone, then commit and push.
+Last updated: 2026-11-26 ~23:00 CET by the multi-tenant session. Update this after every milestone, then commit and push.
 
 ## State
 
@@ -31,10 +31,18 @@ Last updated: 2026-11-26 ~21:30 CET by the multi-tenant session. Update this aft
 | Admin app: signup, settings (tenant, billing, members), super-admin switcher | `packages/admin-web-angular/src/app/pages/+signup`, `+settings`, `@core/tenant` | 134 Vitest, Playwright multi-tenant |
 | Shops, merchant, carrier send their tenant | each app's env + Apollo link + `CommonModule.forRoot` / socket auth | each app's tests |
 
-Tests (2026-11-26, after the develop merge): core unit **706/706**, single-tenant API e2e **50/50** (`test:e2e`),
-multi-tenant isolation e2e **41/41** (`test:e2e:mt`); admin 134, shop-web 118, shop-mobile-ionic 318, merchant 54,
+Tests (2026-11-26, after the develop merge): core unit **708/708**, single-tenant API e2e **51/51** (`test:e2e`),
+multi-tenant isolation e2e **42/42** (`test:e2e:mt`); admin 134, shop-web 118, shop-mobile-ionic 318, merchant 54,
 carrier 69 (Vitest); Expo 195 (Jest), Gatsby 75, Flutter 216 (before the merge, untouched by it). Mutation check:
 with read filtering disabled, 12 of the 34 isolation specs of that time failed.
+
+Playwright (all projects, built apps on a single-tenant API, plus the `multi-tenant` project on a multi-tenant API):
+multi-tenant 4/4; api 19, merchant 8, carrier 8 all green. The first run found one branch regression: the shops'
+sign-up by address calls `invite.create` without a login, and the socket table had made it admin-only (4 shop
+failures). Fixed in dbcccb43 (public while invites are off, admin-only for invite-only shops); the 4 tests and the
+shop-web language test (flake fixed in c81953a3) pass on the re-run. Not caused by this branch, same on develop:
+admin `people.spec.ts:12` crashes when the first customer has a store nearby (angular2-smart-table 4 stringifies
+the `actions` cell, so `WarehouseOrderComponent.renderValue` reads `.actionName` of a string).
 
 ### Security review (independent reader, 2026-11-26)
 
@@ -47,8 +55,8 @@ token-argument checks); plan limits can be exceeded by parallel creates; admin /
 
 ### Still to do
 
-1. Full Playwright run on the final branch (all projects, single- and multi-tenant API), then the PR to `develop`.
-2. Follow-ups: Stripe Connect (tenants' own card payments), customer ownership checks, token expiry, email
+1. PR to `develop`: [ever-co/ever-demand#1668](https://github.com/ever-co/ever-demand/pull/1668). Owner review; CI on GitHub is off (builds run in-cluster).
+2. Follow-ups: the admin customer page crash above (develop bug), Stripe Connect (tenants' own card payments), customer ownership checks, token expiry, email
    verification, custom domains, social login in multi-tenant mode (tenant in the OAuth state), docs of the app env
    (`docs/latest-stack/*.md` still list the env without `TENANT*`).
 
@@ -78,6 +86,10 @@ No secret is in the repo; the e2e uses fixed test-only values.
   override.
 - `createPromotion` returns `{ success, message, data }` in a `Promotion` shape and swallows validation errors
   (an old quirk, unchanged); `promotions` without `findInput.warehouse` returns nothing.
+- `packages/core/.gitignore` ignores `**/*.js`: every new JS config needs its own `!` line
+  (`jest.e2e-mt.config.js` was missing).
+- Windows reserves port ranges (e.g. 51988-52187, see `netsh int ipv4 show excludedportrange protocol=tcp`): an API
+  port there fails with `listen EACCES`.
 - Long heredocs in the Bash tool fail with "unexpected EOF": write scripts to the scratchpad and run them.
 - `RoutersService.reconnectAll` must close each engine.io connection once: a namespace DISCONNECT + CONNECT back to
   back makes the socket.io server drop the whole client ("invalid state").
