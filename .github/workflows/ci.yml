@@ -47,7 +47,9 @@ jobs:
         env:
             DB_URI: mongodb://localhost:27017/ever_e2e
             DB_NAME: ever_e2e
+            CORE_E2E_MONGO_URL: mongodb://localhost:27017
             FAKE_DATA_GENERATOR: 'true'
+            FAKE_INVITE_CODE: '8321'
         steps:
             - uses: actions/checkout@v7
             - uses: pnpm/action-setup@v6
@@ -60,9 +62,11 @@ jobs:
             - run: pnpm install --frozen-lockfile
             - run: pnpm --filter @ever-platform/e2e exec playwright install --with-deps chromium
             - run: pnpm run build:server
+            - name: API e2e (Jest, real MongoDB)
+              run: pnpm --filter @ever-platform/core run test:e2e
             - name: Start the API
               run: |
-                  pnpm --filter @ever-platform/core start:built > api.log 2>&1 &
+                  pnpm --filter @ever-platform/core start > api.log 2>&1 &
                   npx --yes wait-on@9 -t 240000 http-get://localhost:8443/api/health
             - run: pnpm --filter @ever-platform/e2e exec playwright test --project=api
             - name: Build and serve the web apps
@@ -96,8 +100,8 @@ jobs:
             - run: pnpm install --frozen-lockfile
             - run: pnpm --filter @ever-platform/shop-mobile-expo run typecheck
             - run: pnpm --filter @ever-platform/shop-mobile-expo run test
-            - run: pnpm --filter @ever-platform/shop-mobile-expo exec expo export --platform web
-            - run: pnpm --filter @ever-platform/shop-mobile-expo exec expo export --platform android
+            - run: pnpm --filter @ever-platform/shop-mobile-expo run export:web
+            - run: pnpm --filter @ever-platform/shop-mobile-expo run export:android
 
     flutter:
         name: Flutter app (analyze, tests, web + APK builds)
@@ -111,10 +115,10 @@ jobs:
             - uses: subosito/flutter-action@v2.23.0
               with:
                   channel: stable
+                  flutter-version: 3.50.1
                   cache: true
             - run: flutter pub get
-            - run: flutter gen-l10n
             - run: flutter analyze
-            - run: flutter test
+            - run: flutter test test
             - run: flutter build web --release
             - run: flutter build apk --debug

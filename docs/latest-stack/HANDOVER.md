@@ -1,6 +1,6 @@
 # Ever Demand latest-stack upgrade: handover
 
-Last updated: 2026-11-26 ~02:00 CET by the lead session ("Ever Demand platform modernization").
+Last updated: 2026-11-26 ~03:00 CET by the lead session ("Ever Demand platform modernization").
 Keep this file current. Update it after every merge or milestone, then commit and push.
 
 ## Goal (owner)
@@ -26,8 +26,8 @@ Owner rules from this session:
 | `feat/latest-stack-shop-web` | `ever-demand-shop-web` | merged (Angular shop + Gatsby) |
 | `feat/latest-stack-shop-mobile` | `ever-demand-shop-mobile` | merged |
 | `feat/latest-stack-admin` | `ever-demand-admin` | merged |
-| `feat/latest-stack-carrier-merchant` | `ever-demand-carrier-merchant` | **lane agent still running** |
-| `feat/latest-stack-flutter` | `ever-demand-flutter` | **lane agent still running** |
+| `feat/latest-stack-carrier-merchant` | `ever-demand-carrier-merchant` | merged |
+| `feat/latest-stack-flutter` | `ever-demand-flutter` | merged (APK build not finished on this PC: RAM) |
 
 The main clone is `C:\Coding\ever-demand`. The lane contract is in `docs/latest-stack/CONTRACT.md`; each
 lane's notes are in `docs/latest-stack/<lane>.md`.
@@ -69,9 +69,8 @@ Security work (owner request, `76b4ca83`):
 
 ## Still to do (in order)
 
-1. **Lanes still running:** carrier + merchant (Ionic 9 / Capacitor 8; no PM2) and Flutter (Docker
-   builds). Merge each one when it reports.
-2. **Merge `origin/develop`** into `feat/latest-stack` and port the fleet fixes merged after the base
+1. ~~Lanes~~ all 7 merged (2026-11-26). Flutter: analyze clean, 191 tests, integration + live API e2e, web build; `flutter build apk --debug` still to run on a machine with more RAM (`packages/shop-mobile-flutter/tool/docker-test.sh build-apk`). Carrier 61 + merchant 40 Vitest, 8/8 e2e each.
+2. ~~Merge develop~~ done up to 3f32202a (#1655 + T-2806); keep merging new fleet PRs before the upgrade PR merges. **Merge `origin/develop`** into `feat/latest-stack` and port the fleet fixes merged after the base
    `abd39940`:
    - #1655 (core: refund a lost charge when the unpaid order is cancelled);
    - T-2805 (shop start language);
