@@ -11,6 +11,7 @@ import {
 	STRIPE_CURRENCY_CHANGED_ERROR,
 } from '@modules/server.common/routers/IOrderRouter';
 import { Store } from 'app/services/store.service';
+import { StripeLoader } from 'app/services/stripeLoader';
 import { environment } from 'environments/environment';
 import { PaymentComponent } from './payment.component';
 
@@ -52,6 +53,7 @@ describe('PaymentComponent new-card payment', () => {
 	let tokenHandlers: Array<(token: any) => Promise<void>>;
 	let closedHandlers: Array<() => void>;
 	let modalController: jasmine.SpyObj<ModalController>;
+	let stripeLoader: jasmine.SpyObj<StripeLoader>;
 	let originalStripeCheckout: any;
 	let orderId: jasmine.Spy;
 
@@ -141,6 +143,10 @@ describe('PaymentComponent new-card payment', () => {
 			Promise.resolve({ present: () => Promise.resolve() } as any)
 		);
 
+		stripeLoader = jasmine.createSpyObj<StripeLoader>('StripeLoader', [
+			'ensureLoaded',
+		]);
+
 		await TestBed.configureTestingModule({
 			declarations: [PaymentComponent],
 			imports: [TranslateModule.forRoot()],
@@ -156,6 +162,8 @@ describe('PaymentComponent new-card payment', () => {
 					provide: ProductLocalesService,
 					useValue: { getTranslate: () => 'Product' },
 				},
+				// A stub, so no spec adds the real Checkout script to the page
+				{ provide: StripeLoader, useValue: stripeLoader },
 			],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
@@ -590,6 +598,44 @@ describe('PaymentComponent new-card payment', () => {
 			expect(window.alert).toHaveBeenCalledOnceWith(
 				'BUY_POPUP.CARD_FORM_NOT_LOADED'
 			);
+		});
+
+		// The shop started without network, so checkout.js failed and
+		// nothing added it again: every tap showed the message until the
+		// app restarted.
+		it('asks the loader to add the script again and still tells the customer', async () => {
+			await expectAsync(component.toPaymentStage()).toBeResolved();
+
+			expect(stripeLoader.ensureLoaded).toHaveBeenCalledTimes(1);
+			expect(window.alert).toHaveBeenCalledOnceWith(
+				'BUY_POPUP.CARD_FORM_NOT_LOADED'
+			);
+			// The alert blocks until the customer closes it: the download
+			// can run meanwhile.
+			expect(stripeLoader.ensureLoaded).toHaveBeenCalledBefore(
+				window.alert as jasmine.Spy
+			);
+			expect(configure).not.toHaveBeenCalled();
+			expectNoRouterCall();
+		});
+
+		it('opens the card form on a later tap once the loader added the script again', async () => {
+			// The script the loader adds again defines StripeCheckout
+			stripeLoader.ensureLoaded.and.callFake(() => {
+				(window as any).StripeCheckout = { configure };
+			});
+
+			await component.toPaymentStage();
+			await component.toPaymentStage();
+
+			expect(window.alert).toHaveBeenCalledOnceWith(
+				'BUY_POPUP.CARD_FORM_NOT_LOADED'
+			);
+			expect(configure).toHaveBeenCalledOnceWith(
+				jasmine.objectContaining({ currency: 'ILS' })
+			);
+			// The second tap found the card form and did not ask again
+			expect(stripeLoader.ensureLoaded).toHaveBeenCalledTimes(1);
 		});
 	});
 

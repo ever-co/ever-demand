@@ -14,6 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { OrderPage } from '../../order.page';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
+import { StripeLoader } from 'app/services/stripeLoader';
 
 @Component({
 	selector: 'e-cu-payment',
@@ -66,7 +67,8 @@ export class PaymentComponent {
 		private store: Store,
 		public modalController: ModalController,
 		private readonly _translateProductLocales: ProductLocalesService,
-		private readonly _translateService: TranslateService
+		private readonly _translateService: TranslateService,
+		private readonly _stripeLoader: StripeLoader
 	) {
 		this.getUserCard();
 		// Never rejects: a failed load is logged, and Pay now loads it again
@@ -150,6 +152,11 @@ export class PaymentComponent {
 		// it from loading, or it is still loading. Checked before the
 		// popup dismiss, so the customer keeps the order screen.
 		if (typeof (<any>window).StripeCheckout?.configure !== 'function') {
+			// The message asks to try again: add the script again if it
+			// failed, e.g. while the network was down, so a later tap opens
+			// the card form. Started before the alert, which blocks until
+			// the customer closes it, so the download can run meanwhile.
+			this._stripeLoader.ensureLoaded();
 			this.tellCustomer('BUY_POPUP.CARD_FORM_NOT_LOADED');
 			console.error(
 				"Can't open the card form: the Stripe Checkout script did not load."

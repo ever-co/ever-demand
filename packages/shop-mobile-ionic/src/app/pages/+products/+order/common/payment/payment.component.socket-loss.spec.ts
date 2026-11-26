@@ -12,6 +12,7 @@ import {
 	RoutersService,
 } from '@modules/client.common.angular2/lib/router';
 import { Store } from 'app/services/store.service';
+import { StripeLoader } from 'app/services/stripeLoader';
 import { FakeSocket, settle, track } from 'app/testing/fake-socket';
 import { PaymentComponent } from './payment.component';
 
@@ -88,6 +89,13 @@ describe('PaymentComponent when the socket drops during a payment', () => {
 				{
 					provide: ProductLocalesService,
 					useValue: { getTranslate: () => 'Product' },
+				},
+				// A stub, so no spec adds the real Checkout script to the page
+				{
+					provide: StripeLoader,
+					useValue: jasmine.createSpyObj('StripeLoader', [
+						'ensureLoaded',
+					]),
 				},
 			],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
