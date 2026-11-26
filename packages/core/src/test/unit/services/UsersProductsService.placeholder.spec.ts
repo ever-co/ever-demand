@@ -46,13 +46,34 @@ const translations = JSON.parse(
 const texts: { [language: string]: string } = {
 	'en-US': translations['en-US'].no_products_text,
 	'he-IL': translations['he-IL'].no_products_text,
+	// Written out here, so the spec checks the translations themselves.
+	'es-ES': 'No hay nada que comprar por ahora.',
+	'fr-FR': 'Rien à acheter pour le moment.',
 };
 
+// The text a customer reads in a placeholder: the HTML without its style
+// block and tags.
+function textShown(html: string): string {
+	return html
+		.replace(/<style[\s\S]*?<\/style>/g, '')
+		.replace(/<[^>]*>/g, '')
+		.trim();
+}
+
 describe('UsersProductsService placeholder', () => {
-	let device$: Subject<{ id: string; language: string }>;
+	let device$: Subject<{ id: string; language?: string }>;
 	let service: UsersProductsService;
 	let placeholders: string[];
+	let errors: unknown[];
 	let subscription: Subscription | undefined;
+
+	// Subscribes as the shop does, keeping every placeholder and error.
+	function watchPlaceholder(): void {
+		subscription = service.getPlaceholder('u1', 'd1').subscribe({
+			next: (placeholder) => placeholders.push(placeholder),
+			error: (error) => errors.push(error),
+		});
+	}
 
 	// The language of each placeholder, with repeats of the same placeholder
 	// in a row counted once: a language switch subscribes to the template
@@ -74,6 +95,7 @@ describe('UsersProductsService placeholder', () => {
 		const devicesService = { get: jest.fn(() => device$) };
 		service = new UsersProductsService(devicesService as any);
 		placeholders = [];
+		errors = [];
 	});
 
 	afterEach(() => {
@@ -96,5 +118,44 @@ describe('UsersProductsService placeholder', () => {
 		device$.next({ id: 'd1', language: 'he-IL' });
 		expect(placeholders).toHaveLength(countBeforeRepeat);
 		expect(languagesShown()).toEqual(['en-US', 'he-IL']);
+	});
+
+	it.each(['es-ES', 'fr-FR'])(
+		'shows the %s text to a device in that language',
+		(language) => {
+			watchPlaceholder();
+
+			device$.next({ id: 'd1', language });
+
+			expect(errors).toEqual([]);
+			expect(placeholders.length).toBeGreaterThan(0);
+			expect(placeholders.map(textShown)).toEqual(
+				placeholders.map(() => texts[language])
+			);
+		}
+	);
+
+	it('shows the English text, not an empty div, to a device in a language with no text', () => {
+		watchPlaceholder();
+
+		device$.next({ id: 'd1', language: 'de-DE' });
+
+		expect(errors).toEqual([]);
+		expect(placeholders.length).toBeGreaterThan(0);
+		expect(placeholders.map(textShown)).toEqual(
+			placeholders.map(() => texts['en-US'])
+		);
+	});
+
+	it('shows the English text to a device with no language', () => {
+		watchPlaceholder();
+
+		device$.next({ id: 'd1' });
+
+		expect(errors).toEqual([]);
+		expect(placeholders.length).toBeGreaterThan(0);
+		expect(placeholders.map(textShown)).toEqual(
+			placeholders.map(() => texts['en-US'])
+		);
 	});
 });
