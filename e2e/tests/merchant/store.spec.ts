@@ -91,19 +91,21 @@ test('carriers, customers and settings pages open', async ({ page }) => {
 });
 
 test('the store carriers are listed in the carriers table', async ({ page }) => {
-	const carrier = await createCarrier();
-	const withCarrier = await createStore({
+	// one carrier assigned by an admin (carriersIds), one added by the store (usedCarriersIds)
+	const own = await createCarrier();
+	const added = await createCarrier();
+	const withCarriers = await createStore({
 		hasRestrictedCarriers: true,
-		carriersIds: [carrier.id],
-		usedCarriersIds: [carrier.id],
+		carriersIds: [own.id],
+		usedCarriersIds: [added.id],
 	});
 
-	await login(page, withCarrier);
+	await login(page, withCarriers);
 	await page.goto('/carriers');
 
 	const table = page.locator('angular2-smart-table');
 	await expect(table).toBeVisible({ timeout: 30_000 });
-	await expect(table.getByText(carrier.firstName).first()).toBeVisible();
+	await expect(table.locator('tbody tr')).toHaveCount(2);
 	// custom cells (phone, status, ...) get their data through componentInitFunction
 	await expect(table.locator('carrier-phone').first()).toContainText('+359888222222');
 });

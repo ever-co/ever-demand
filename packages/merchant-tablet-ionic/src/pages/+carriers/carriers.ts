@@ -6,16 +6,23 @@ import {
 } from '@angular/core';
 import { bindViewCell } from '../../components/table-components/smart-table';
 import Carrier from '@modules/server.common/entities/Carrier';
-import { takeUntil, first } from 'rxjs/operators';
+import {
+	takeUntil,
+	first,
+	map,
+	distinctUntilChanged,
+	switchMap,
+} from 'rxjs/operators';
 import { LocalDataSource, Settings } from 'angular2-smart-table';
-import { Observable, Subject, forkJoin } from 'rxjs';
+import { Observable, Subject, forkJoin, combineLatest, of } from 'rxjs';
+import Warehouse from '@modules/server.common/entities/Warehouse';
+import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { TranslateService } from '@ngx-translate/core';
 import { PhoneComponent } from '../../components/carriers-table/phone';
 import { AddressesComponent } from '../../components/carriers-table/addresses';
 import { StatusComponent } from '../../components/carriers-table/status';
 import { DeliveriesComponent } from '../../components/carriers-table/deliveries';
 import { ImageComponent } from '../../components/carriers-table/image';
-import { WarehouseCarriersRouter } from '@modules/client.common.angular2/routers/warehouse-carriers-router.service';
 import { Store } from '../../../src/services/store.service';
 import { ModalController } from '@ionic/angular/lazy';
 import { AddCarriersPopupPage } from './add-carriers-popup/add-carriers-popup';
@@ -24,6 +31,20 @@ import { CarrierTrackPopup } from './carrier-track-popup/carrier-track-popup';
 import { Router } from '@angular/router';
 import { ConfirmDeletePopupPage } from '../../components/confirm-delete-popup/confirm-delete-popup';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
+
+/**
+ * The carriers a store works with: its own carriers assigned by an admin (`carriersIds`) and the
+ * ones the store added itself (`usedCarriersIds`). Only stores with restricted carriers have any.
+ * (The page used to list `usedCarriersIds` only, so admin-assigned carriers never showed up.)
+ */
+export function storeCarrierIds(store: Pick<Warehouse, 'hasRestrictedCarriers' | 'carriersIds' | 'usedCarriersIds'> | null): string[] {
+	if (!store?.hasRestrictedCarriers) {
+		return [];
+	}
+	return Array.from(
+		new Set([...(store.carriersIds ?? []), ...(store.usedCarriersIds ?? [])])
+	);
+}
 
 @Component({
 	standalone: false,
@@ -43,7 +64,7 @@ export class CarriersPage implements OnInit, OnDestroy {
 	constructor(
 		private readonly router: Router,
 		public modalCtrl: ModalController,
-		private readonly warehouseCarriersRouter: WarehouseCarriersRouter,
+		private readonly carrierRouter: CarrierRouter,
 		private readonly _translateService: TranslateService,
 		private readonly store: Store,
 		private warehouseRouter: WarehouseRouter,
@@ -105,6 +126,9 @@ export class CarriersPage implements OnInit, OnDestroy {
 			merchant.usedCarriersIds = merchant.usedCarriersIds.filter(
 				(x) => x !== carrierId,
 			);
+			merchant.carriersIds = (merchant.carriersIds ?? []).filter(
+				(x) => x !== carrierId,
+			);
 
 			await this.warehouseRouter.save(merchant, this.store.token);
 		}
@@ -135,8 +159,7 @@ export class CarriersPage implements OnInit, OnDestroy {
 			this.sourceSmartTable.load(carriersVM);
 		};
 
-		this.warehouseCarriersRouter
-			.get(this.warehouseId)
+		this.storeCarriers$()
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe((carriers) => {
 				this.carriers = carriers;
@@ -147,6 +170,22 @@ export class CarriersPage implements OnInit, OnDestroy {
 					? (this.showNoDeliveryIcon = true)
 					: (this.showNoDeliveryIcon = false);
 			});
+	}
+
+	/** Live list of the store carriers (see `storeCarrierIds`). */
+	storeCarriers$(): Observable<Carrier[]> {
+		return this.warehouseRouter.get(this.warehouseId, false).pipe(
+			map((store) => storeCarrierIds(store)),
+			distinctUntilChanged(
+				(a, b) => a.length === b.length && a.every((id, i) => id === b[i])
+			),
+			switchMap((ids) =>
+				ids.length
+					? combineLatest(ids.map((id) => this.carrierRouter.get(id)))
+					: of([] as Carrier[])
+			),
+			map((carriers) => carriers.filter((c) => c != null && !c.isDeleted))
+		);
 	}
 
 	goToTrackPage() {

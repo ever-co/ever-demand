@@ -4,9 +4,12 @@ import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseSta
 import { environment } from '../environments/environment';
 import { LoginPage } from './+login/login';
 import { OrderState, WarehousePage } from './+warehouse/warehouse';
+import { CarriersPage, storeCarrierIds } from './+carriers/carriers';
+import { firstValueFrom } from 'rxjs';
 // The page NgModules give the AOT test build the template scope of the pages.
 import './+login/login.module';
 import './+warehouse/warehouse.module';
+import './+carriers/carriers.module';
 
 describe('Merchant pages', () => {
 	afterEach(() => localStorage.clear());
@@ -128,6 +131,51 @@ describe('Merchant pages', () => {
 			const p = page();
 			expect(p.truncateTitle('Pizza  Margherita')).toBe('Pizza Marghe...');
 			expect(p.truncateTitle('Cola')).toBe('Cola');
+		});
+	});
+
+	describe('CarriersPage (carriers of the store)', () => {
+		it('lists admin-assigned and store-added carriers once, only for restricted stores', () => {
+			expect(
+				storeCarrierIds({
+					hasRestrictedCarriers: true,
+					carriersIds: ['a', 'b'],
+					usedCarriersIds: ['b', 'c'],
+				})
+			).toEqual(['a', 'b', 'c']);
+			expect(
+				storeCarrierIds({
+					hasRestrictedCarriers: false,
+					carriersIds: ['a'],
+					usedCarriersIds: ['b'],
+				})
+			).toEqual([]);
+			expect(storeCarrierIds(null)).toEqual([]);
+		});
+
+		it('loads the carrier entities and drops deleted ones', async () => {
+			localStorage.setItem('_warehouseId', 'w1');
+			const warehouseRouter = {
+				get: vi.fn(() =>
+					of({ hasRestrictedCarriers: true, carriersIds: ['a', 'x'], usedCarriersIds: ['b'] })
+				),
+			};
+			const carrierRouter = {
+				get: vi.fn((id: string) => of({ id, isDeleted: id === 'x' })),
+			};
+			const page = new CarriersPage(
+				{} as any,
+				{} as any,
+				carrierRouter as any,
+				{} as any,
+				{} as any,
+				warehouseRouter as any
+			);
+
+			const carriers = await firstValueFrom(page.storeCarriers$());
+
+			expect(warehouseRouter.get).toHaveBeenCalledWith('w1', false);
+			expect(carriers.map((c) => c.id)).toEqual(['a', 'b']);
 		});
 	});
 });
