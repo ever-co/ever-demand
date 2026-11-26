@@ -1,0 +1,5 @@
+package co.ever.carrier;
+
+import com.getcapacitor.BridgeActivity;
+
+public class MainActivity extends BridgeActivity {}

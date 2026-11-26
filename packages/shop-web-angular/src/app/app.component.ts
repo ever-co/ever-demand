@@ -1,10 +1,10 @@
 import {
 	Component,
 	Inject,
-	OnDestroy,
 	OnInit,
 	ViewChild,
 	ViewEncapsulation,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
@@ -27,6 +27,8 @@ export const ROOT_SELECTOR = 'app';
  * Top Level Component
  */
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'app',
 	encapsulation: ViewEncapsulation.None,
 	styles: [
@@ -75,14 +77,15 @@ export class AppComponent implements OnInit {
 	) {
 		// Here we initialize translates for the all app, when loads for the first time. Do not remove it
 
-		if (translateService.currentLang) {
-			const current = translateService.currentLang;
-			translateService.setDefaultLang(current);
+		const current = translateService.getCurrentLang();
+
+		if (current) {
+			translateService.setFallbackLang(current);
 		} else {
 			// TODO: load list of supported languages from config service
 			translateService.addLangs(SUPPORTED_LANGUAGES);
 
-			translateService.setDefaultLang('en-US');
+			translateService.setFallbackLang('en-US');
 
 			const language = getBrowserLanguage(translateService);
 			translateService.use(language);

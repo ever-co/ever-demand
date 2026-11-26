@@ -6,8 +6,17 @@ import { MerchantsService } from 'app/services/merchants/merchants.service';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { TranslateModule } from '@ngx-translate/core';
+import {
+	IonAvatar,
+	IonBadge,
+	IonButton,
+	IonCard,
+	IonCol,
+	IonList,
+	IonRow,
+	IonSearchbar,
+} from '@ionic/angular';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 
 import { WarehouseLogoModule } from '../../../components/warehouse-logo/warehouse-logo.module';
 import { ProductsModule } from '../../../components/products/products.module';
@@ -17,7 +26,14 @@ import { LoadingModule } from '../../../components/loading/loading.module';
 	imports: [
 		CommonModule,
 		FormsModule,
-		IonicModule,
+		IonAvatar,
+		IonBadge,
+		IonButton,
+		IonCard,
+		IonCol,
+		IonList,
+		IonRow,
+		IonSearchbar,
 		WarehouseLogoModule,
 		ProductsModule,
 		TranslateModule.forChild(),

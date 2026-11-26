@@ -6,7 +6,7 @@ import { StoreOrderProductsComponent } from './store-order-products/store-order-
 import { OrderBtnOrderProductsComponent } from './order-btn-order-products/order-btn-order-products.component';
 // duplicate OrderBtnOrderProductsComponent
 import { OrderBtnOrderProductsComponent as RootrderBtnOrderProductsComponent } from './order-btn-order-products.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 
 const COMPONENTS = [
 	ProductOrderProductsComponent,

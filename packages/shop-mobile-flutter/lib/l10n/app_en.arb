@@ -1,153 +1,748 @@
 {
-	"language": "en",
-    "@language": {
-        "id": "en-US",
-        "name": "English",
-		"description": "English"
-	},
-    "currentDirection": "ltr",
-    "sidebarSide": "left",
-    "welcomeTo": "Welcome to",
-    "ever": "ever",
-    "infoMissing": "Some of the information missing!",
-    "yourInviteCode": "Your invite code",
-    "invitedTextTitle":"Thank you for sign up!",
-    "invitedTextDetails": "We will send you a notification with an invite code when we launch at:",
-	"notInvitedByCodeTitle":"Wrong code!",
-    "notInvitedByCodeDetails": "Please make sure you at the place that came with your code.",
-    "cantAccessLocation": "Can't access your location.",
-    "cantAccessLocationGetInByAdress": "Can't access your location, please try to get in by address.",
-    "getInByAddress": "Sign up by Address",
-    "getInside": "Get inside!",
-    "yourAddress": "Let us know your Address",
-    "launchNotification": "We promise to show only relevant products according to your address",
-    "signUpByCode": "Sign up by code",
-	"signUpByInvite": "sign up by Invite",
-    "signinByInvite": "Sign in with Invite Code",
-	"logoMotto":"Food Delivery & Takeout",
-	"@logoMotto": {
-        "details": "Food Delivery & Takeout"
-    },
-    "inviteCode": "Invite Code",
-	"inviteCodePlaceholder": "Enter your invite code",
-    "detectingLocation": "Please wait, we attempting to detect your current address...",
-    "productsViewTitle":"Products",
-    "productsbuyButtonpre":"Buy for ",
-    "productsNotAvailable": "Product not available",
-    "min": "min",
-    "delivery": "Delivery",
-    "takeAway": "Takeout",
-    "readyFor": "Ready for",
-	"details": "Details",
-    "includes": "Includes",
-    "buyFor": "Buy for",
-    "help": "Help",
-    "lastPurchases":"Last Purchases",
-    "nothingOrdered": "No orders yet",
-    "toProducts": "To Products",
-    "aboutus":  "About Us",
-    "termsOfUse": "Terms of Use",
-    "privacyView": "Privacy",
-    "languageView":"Select Language",
-    "viewMore":"View More",
-    "noProductsOrMerchants": "No Products Or Merchants Found ... ",
-    "searchPlaceHolder": "Product Or Restorant Name",
-    "open": "Open",
-    "closed": "Closed",
-    "buyPopUpOrderPaid": "The order is paid $",
-	"buyPopUpCancelstatuses":"The order was cancel while Warehouse Preparation!",
-	"buyPopUpCancelstatusesDelivery":"The order was cancel while Delivery!",
-    "viewOrderProducts": "View Order Products",
-    "viewOrderProductsStatuses": "We're preparing the order!",
-    "youWillGetItInMinutes": "You will get it in %t minutes.",
-    "prepareYourWallet": "Prepare your wallet (%s in cash).",
-	"carrierOnTheWay": "Carrier on the way!",
-	"checkYourDoor": "Check your door!",
-    "youWillGetItInSeconds": "You will get the order in seconds.",
-	"orderCompleted": "Order Completed!",
-    "thanksForUsingEver": "Thanks for using Ever",
-    "weRePreparingTheOrder": "We're preparing the order!",
-    "we": "We",
-    "carrier": "Carrier",
-    "you": "You",
-    "deliveryWentWrong": "The Delivery Went Wrong!",
-    "processingWentWrong": "Processing Went Wrong!",
-    "pleaseTryAgain": "Please try again.",
-    "callForDetails": "Call for details",
-	"elapsedTime":"Elapsed time",
-    "undo": "Undo",
-    "payWithCard": "Pay with Card",
-    "payX": "Pay {{amount}}",
-    "payWith": "Pay with",
-    "paid": "Paid",
-    "bonAppetit": "Bon appetit!",
-    "cancel": "Cancel",
-    "gotIt": "Got It!",
-    "imHere": "I'm here",
-    "showQrCode": "Show QR Code",
-    "showProducts": "Show Products",
-    "areYouSure": "Are you sure?",
-    "undoWillReturnMoney":"Undo will return you the money, but you will lose the order.",
-    "sideMenuTitle": "Ever",
-	"sideMenuProducts": "Products",
-    "callUs": "Call Us",
-    "orderHistory": "Order history",
-    "store": "Store",
-    "callWaiter": "Call Waiter",
-    "about": "About",
-    "settings": "Settings",
-	"information": "Information",
-    "faq": "Help",
-	"aboutUs": "About Us",
-    "privacy": "Privacy",
-	"weApologise": "We Apologise!",
-    "callUnsuccessfull": "Call Was Unsuccessful!",
-	"legal": "LEGAL",
-    "minutes": "Minutes",
-    "seconds": "Seconds",
-	"noConnectionToEver": "No connection to Ever",
-    "@noConnectionToEver":
-	{
-		"description":
-            "Please make sure you are connected to the internet and try Ever App Later."
-    },
-    "merchantsViewCloseToYou": "Merchants close to you",
-    "merchantsViewname": "Merchant name",
-    "merchantsViewwithName": "Merchants with name",
-    "noServerView":"Server connection is lost",
-    "or": "Or",
-    "orLowercase": "or",
-    "yes": "Yes",
-    "no": "No",
-    "ok": "Ok",
-    "city": "City",
-    "street": "Street",
-    "house": "House",
-    "appartement": "Apartment",
-    "back": "Back",
-    "more": "more",
-    "to": "To",
-    "storeInfo": "Store Info",
-    "map": "Map",
-    "orderInfo": "Order Info",
-    "close": "Close",
-    "scan": "Scan",
-    "merchants": "Merchants",
-    "notFoundNOT_FOUND": "Not Found!",
-    "inStore": "In Store",
-    "exitStore": "Exit Store",
-    "failed": "Failed",
-    "canceled": "Canceled",
-    "inDelivery": "In Delivery",
-    "pending": "Pending",
-    "completed": "Completed",
-    "browse": "Browse",
-    "english": "English",
-    "hebrew": "Hebrew",
-    "russian": "Russian",
-    "bulgarian": "Bulgarian",
-    "spanish": "Spanish",
-    "select": "Select",
-    "locationNotes": "Location Notes",
-    "enterNotesHere": "Enter notes here"
+  "@@locale": "en",
+  "languageId": "en-US",
+  "@languageId": {
+    "description": "Ionic key LANGUAGE.ID"
+  },
+  "languageName": "English",
+  "@languageName": {
+    "description": "Ionic key LANGUAGE.NAME"
+  },
+  "currentDirection": "ltr",
+  "@currentDirection": {
+    "description": "Ionic key CURRENT_DIRECTION"
+  },
+  "sidebarSide": "left",
+  "@sidebarSide": {
+    "description": "Ionic key SIDEBAR_SIDE"
+  },
+  "inviteViewWelcomeTo": "Welcome to",
+  "@inviteViewWelcomeTo": {
+    "description": "Ionic key INVITE_VIEW.WELCOME_TO"
+  },
+  "inviteViewEver": "Ever",
+  "@inviteViewEver": {
+    "description": "Ionic key INVITE_VIEW.EVER"
+  },
+  "inviteViewInfoMissing": "Some of the information missing!",
+  "@inviteViewInfoMissing": {
+    "description": "Ionic key INVITE_VIEW.INFO_MISSING"
+  },
+  "inviteViewYourInviteCode": "Your invite code",
+  "@inviteViewYourInviteCode": {
+    "description": "Ionic key INVITE_VIEW.YOUR_INVITE_CODE"
+  },
+  "inviteViewInvitedTextTitle": "Thank you for sign up!",
+  "@inviteViewInvitedTextTitle": {
+    "description": "Ionic key INVITE_VIEW.INVITED_TEXT.TITLE"
+  },
+  "inviteViewInvitedTextDetails": "We will send you a notification with an invite code when we launch at:",
+  "@inviteViewInvitedTextDetails": {
+    "description": "Ionic key INVITE_VIEW.INVITED_TEXT.DETAILS"
+  },
+  "inviteViewNotInvitedByCodeTitle": "Wrong code!",
+  "@inviteViewNotInvitedByCodeTitle": {
+    "description": "Ionic key INVITE_VIEW.NOT_INVITED_BY_CODE.TITLE"
+  },
+  "inviteViewNotInvitedByCodeDetails": "Please make sure you at the place that came with your code.",
+  "@inviteViewNotInvitedByCodeDetails": {
+    "description": "Ionic key INVITE_VIEW.NOT_INVITED_BY_CODE.DETAILS"
+  },
+  "inviteViewCantAccessLocation": "Can't access your location.",
+  "@inviteViewCantAccessLocation": {
+    "description": "Ionic key INVITE_VIEW.CANT_ACCESS_LOCATION"
+  },
+  "inviteViewCantAccessLocationGetInByAddress": "Can't access your location, please try to get in by address.",
+  "@inviteViewCantAccessLocationGetInByAddress": {
+    "description": "Ionic key INVITE_VIEW.CANT_ACCESS_LOCATION_GET_IN_BY_ADDRESS"
+  },
+  "inviteViewGetInByAddress": "Sign up by Address",
+  "@inviteViewGetInByAddress": {
+    "description": "Ionic key INVITE_VIEW.GET_IN_BY_ADDRESS"
+  },
+  "inviteViewGetIn": "Get inside!",
+  "@inviteViewGetIn": {
+    "description": "Ionic key INVITE_VIEW.GET_IN"
+  },
+  "inviteViewYourAddress": "Let us know your Address",
+  "@inviteViewYourAddress": {
+    "description": "Ionic key INVITE_VIEW.YOUR_ADDRESS"
+  },
+  "inviteViewLaunchNotification": "We promise to show only relevant products according to your address",
+  "@inviteViewLaunchNotification": {
+    "description": "Ionic key INVITE_VIEW.LAUNCH_NOTIFICATION"
+  },
+  "inviteViewByCodeOrWhat": "sign up by Invite",
+  "@inviteViewByCodeOrWhat": {
+    "description": "Ionic key INVITE_VIEW.BY_CODE.OR_WHAT"
+  },
+  "inviteViewByCodeInvited": "Sign in with Invite Code",
+  "@inviteViewByCodeInvited": {
+    "description": "Ionic key INVITE_VIEW.BY_CODE.INVITED"
+  },
+  "inviteViewByCodeLogoDetails": "Food Delivery & Takeout",
+  "@inviteViewByCodeLogoDetails": {
+    "description": "Ionic key INVITE_VIEW.BY_CODE.LOGO.DETAILS"
+  },
+  "inviteViewByCodeInviteCode": "Invite Code",
+  "@inviteViewByCodeInviteCode": {
+    "description": "Ionic key INVITE_VIEW.BY_CODE.INVITE_CODE"
+  },
+  "inviteViewDetectingLocation": "Please wait, we attempting to detect your current address...",
+  "@inviteViewDetectingLocation": {
+    "description": "Ionic key INVITE_VIEW.DETECTING_LOCATION"
+  },
+  "productsViewTitle": "Products",
+  "@productsViewTitle": {
+    "description": "Ionic key PRODUCTS_VIEW.TITLE"
+  },
+  "productsViewBuyButtonPre": "Buy for ",
+  "@productsViewBuyButtonPre": {
+    "description": "Ionic key PRODUCTS_VIEW.BUY_BUTTON.PRE"
+  },
+  "productsViewBuyButtonSuf": "",
+  "@productsViewBuyButtonSuf": {
+    "description": "Ionic key PRODUCTS_VIEW.BUY_BUTTON.SUF"
+  },
+  "productsViewNotAvailable": "Product not available",
+  "@productsViewNotAvailable": {
+    "description": "Ionic key PRODUCTS_VIEW.NOT_AVAILABLE"
+  },
+  "productsViewMinutes": "min",
+  "@productsViewMinutes": {
+    "description": "Ionic key PRODUCTS_VIEW.MINUTES"
+  },
+  "productsViewDelivery": "Delivery",
+  "@productsViewDelivery": {
+    "description": "Ionic key PRODUCTS_VIEW.DELIVERY"
+  },
+  "productsViewTakeaway": "Takeout",
+  "@productsViewTakeaway": {
+    "description": "Ionic key PRODUCTS_VIEW.TAKEAWAY"
+  },
+  "productsViewReadyfor": "Ready for",
+  "@productsViewReadyfor": {
+    "description": "Ionic key PRODUCTS_VIEW.READYFOR"
+  },
+  "productsViewDetailsDetails": "Details",
+  "@productsViewDetailsDetails": {
+    "description": "Ionic key PRODUCTS_VIEW.DETAILS.DETAILS"
+  },
+  "productsViewDetailsBack": "Back",
+  "@productsViewDetailsBack": {
+    "description": "Ionic key PRODUCTS_VIEW.DETAILS.BACK"
+  },
+  "productsViewDetailsIncludes": "Includes",
+  "@productsViewDetailsIncludes": {
+    "description": "Ionic key PRODUCTS_VIEW.DETAILS.INCLUDES"
+  },
+  "productsViewDetailsBuyFor": "Buy for",
+  "@productsViewDetailsBuyFor": {
+    "description": "Ionic key PRODUCTS_VIEW.DETAILS.BUY_FOR"
+  },
+  "helpViewTitle": "Help",
+  "@helpViewTitle": {
+    "description": "Ionic key HELP_VIEW.TITLE"
+  },
+  "orderHistoryViewTitle": "Order history",
+  "@orderHistoryViewTitle": {
+    "description": "Ionic key ORDER_HISTORY_VIEW.TITLE"
+  },
+  "orderHistoryViewDetails": "Details",
+  "@orderHistoryViewDetails": {
+    "description": "Ionic key ORDER_HISTORY_VIEW.DETAILS"
+  },
+  "lastPurchasesViewTitle": "Last Purchases",
+  "@lastPurchasesViewTitle": {
+    "description": "Ionic key LAST_PURCHASES_VIEW.TITLE"
+  },
+  "lastPurchasesViewNothingOrdered": "No orders yet",
+  "@lastPurchasesViewNothingOrdered": {
+    "description": "Ionic key LAST_PURCHASES_VIEW.NOTHING_ORDERED"
+  },
+  "lastPurchasesViewToProducts": "To Products",
+  "@lastPurchasesViewToProducts": {
+    "description": "Ionic key LAST_PURCHASES_VIEW.TO_PRODUCTS"
+  },
+  "aboutViewTitle": "About Us",
+  "@aboutViewTitle": {
+    "description": "Ionic key ABOUT_VIEW.TITLE"
+  },
+  "termsOfUseViewTitle": "Terms of Use",
+  "@termsOfUseViewTitle": {
+    "description": "Ionic key TERMS_OF_USE_VIEW.TITLE"
+  },
+  "privacyViewTitle": "Privacy",
+  "@privacyViewTitle": {
+    "description": "Ionic key PRIVACY_VIEW.TITLE"
+  },
+  "languageViewTitle": "Select Language",
+  "@languageViewTitle": {
+    "description": "Ionic key LANGUAGE_VIEW.TITLE"
+  },
+  "searchViewViewMore": "View More",
+  "@searchViewViewMore": {
+    "description": "Ionic key SEARCH_VIEW.VIEW_MORE"
+  },
+  "searchViewEmptyList": "No Products Or Merchants Found ... ",
+  "@searchViewEmptyList": {
+    "description": "Ionic key SEARCH_VIEW.EMPTY_LIST"
+  },
+  "searchViewSearchPlaceholder": "Product Or Restorant Name",
+  "@searchViewSearchPlaceholder": {
+    "description": "Ionic key SEARCH_VIEW.SEARCH_PLACEHOLDER"
+  },
+  "searchViewOpen": "Open",
+  "@searchViewOpen": {
+    "description": "Ionic key SEARCH_VIEW.OPEN"
+  },
+  "searchViewClosed": "Closed",
+  "@searchViewClosed": {
+    "description": "Ionic key SEARCH_VIEW.CLOSED"
+  },
+  "buyPopupOrderPaid": "The order is paid $",
+  "@buyPopupOrderPaid": {
+    "description": "Ionic key BUY_POPUP.ORDER_PAID"
+  },
+  "buyPopupPaymentFailed": "Payment failed. Please try again.",
+  "@buyPopupPaymentFailed": {
+    "description": "Ionic key BUY_POPUP.PAYMENT_FAILED"
+  },
+  "buyPopupEmailNotSaved": "We could not save your email, so your card was not charged. Please check the email or use a different one, then try again.",
+  "@buyPopupEmailNotSaved": {
+    "description": "Ionic key BUY_POPUP.EMAIL_NOT_SAVED"
+  },
+  "buyPopupCancelStatuses0Title": "The order was cancel while Warehouse Preparation!",
+  "@buyPopupCancelStatuses0Title": {
+    "description": "Ionic key BUY_POPUP.CANCEL.STATUSES.0.TITLE"
+  },
+  "buyPopupCancelStatuses0Details": "",
+  "@buyPopupCancelStatuses0Details": {
+    "description": "Ionic key BUY_POPUP.CANCEL.STATUSES.0.DETAILS"
+  },
+  "buyPopupCancelStatuses0NotPaidNote": "",
+  "@buyPopupCancelStatuses0NotPaidNote": {
+    "description": "Ionic key BUY_POPUP.CANCEL.STATUSES.0.NOT_PAID_NOTE"
+  },
+  "buyPopupViewOrderProducts": "View Order Products",
+  "@buyPopupViewOrderProducts": {
+    "description": "Ionic key BUY_POPUP.VIEW_ORDER_PRODUCTS"
+  },
+  "buyPopupStatuses0Title": "We're preparing the order!",
+  "@buyPopupStatuses0Title": {
+    "description": "Ionic key BUY_POPUP.STATUSES.0.TITLE"
+  },
+  "buyPopupStatuses0Details": "You will get it in {time} minutes.",
+  "@buyPopupStatuses0Details": {
+    "description": "Ionic key BUY_POPUP.STATUSES.0.DETAILS",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "buyPopupStatuses0NotPaidNote": "Prepare your wallet ({amount} in cash).",
+  "@buyPopupStatuses0NotPaidNote": {
+    "description": "Ionic key BUY_POPUP.STATUSES.0.NOT_PAID_NOTE",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "buyPopupStatuses1Title": "Carrier on the way!",
+  "@buyPopupStatuses1Title": {
+    "description": "Ionic key BUY_POPUP.STATUSES.1.TITLE"
+  },
+  "buyPopupStatuses1Details": "You will get the order in {time} min.",
+  "@buyPopupStatuses1Details": {
+    "description": "Ionic key BUY_POPUP.STATUSES.1.DETAILS",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "buyPopupStatuses1NotPaidNote": "Prepare your wallet ({amount} in cash).",
+  "@buyPopupStatuses1NotPaidNote": {
+    "description": "Ionic key BUY_POPUP.STATUSES.1.NOT_PAID_NOTE",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "buyPopupStatuses2Title": "Check your door!",
+  "@buyPopupStatuses2Title": {
+    "description": "Ionic key BUY_POPUP.STATUSES.2.TITLE"
+  },
+  "buyPopupStatuses2Details": "You will get the order in seconds.",
+  "@buyPopupStatuses2Details": {
+    "description": "Ionic key BUY_POPUP.STATUSES.2.DETAILS"
+  },
+  "buyPopupStatuses2NotPaidNote": "Prepare your wallet ({amount} in cash).",
+  "@buyPopupStatuses2NotPaidNote": {
+    "description": "Ionic key BUY_POPUP.STATUSES.2.NOT_PAID_NOTE",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "buyPopupStatuses3Title": "Order Completed!",
+  "@buyPopupStatuses3Title": {
+    "description": "Ionic key BUY_POPUP.STATUSES.3.TITLE"
+  },
+  "buyPopupStatuses3Details": "Thanks for using Ever",
+  "@buyPopupStatuses3Details": {
+    "description": "Ionic key BUY_POPUP.STATUSES.3.DETAILS"
+  },
+  "buyPopupStatuses3NotPaidNote": "",
+  "@buyPopupStatuses3NotPaidNote": {
+    "description": "Ionic key BUY_POPUP.STATUSES.3.NOT_PAID_NOTE",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "buyPopupStatusesTakeawayTitle": "We're preparing the order!",
+  "@buyPopupStatusesTakeawayTitle": {
+    "description": "Ionic key BUY_POPUP.STATUSES_TAKEAWAY.TITLE"
+  },
+  "buyPopupStatusesTakeawayDetails": "You can get it in {time} minutes.",
+  "@buyPopupStatusesTakeawayDetails": {
+    "description": "Ionic key BUY_POPUP.STATUSES_TAKEAWAY.DETAILS",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "buyPopupStatusesTakeawayNotPaidNote": "Prepare your wallet ({amount} in cash).",
+  "@buyPopupStatusesTakeawayNotPaidNote": {
+    "description": "Ionic key BUY_POPUP.STATUSES_TAKEAWAY.NOT_PAID_NOTE",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "buyPopupDeliveryStatusWe": "We",
+  "@buyPopupDeliveryStatusWe": {
+    "description": "Ionic key BUY_POPUP.DELIVERY_STATUS.WE"
+  },
+  "buyPopupDeliveryStatusCarrier": "Carrier",
+  "@buyPopupDeliveryStatusCarrier": {
+    "description": "Ionic key BUY_POPUP.DELIVERY_STATUS.CARRIER"
+  },
+  "buyPopupDeliveryStatusYou": "You",
+  "@buyPopupDeliveryStatusYou": {
+    "description": "Ionic key BUY_POPUP.DELIVERY_STATUS.YOU"
+  },
+  "buyPopupDeliveryWrongDeliveryWrong": "The Delivery Went Wrong!",
+  "@buyPopupDeliveryWrongDeliveryWrong": {
+    "description": "Ionic key BUY_POPUP.DELIVERY_WRONG.DELIVERY_WRONG"
+  },
+  "buyPopupDeliveryWrongProcessingWrong": "Processing Went Wrong!",
+  "@buyPopupDeliveryWrongProcessingWrong": {
+    "description": "Ionic key BUY_POPUP.DELIVERY_WRONG.PROCESSING_WRONG"
+  },
+  "buyPopupDeliveryWrongTryAgain": "Please try again.",
+  "@buyPopupDeliveryWrongTryAgain": {
+    "description": "Ionic key BUY_POPUP.DELIVERY_WRONG.TRY_AGAIN"
+  },
+  "buyPopupDeliveryWrongCallForDetails": "Call for details",
+  "@buyPopupDeliveryWrongCallForDetails": {
+    "description": "Ionic key BUY_POPUP.DELIVERY_WRONG.CALL_FOR_DETAILS"
+  },
+  "buyPopupElapsedTimeTitle": "Elapsed time",
+  "@buyPopupElapsedTimeTitle": {
+    "description": "Ionic key BUY_POPUP.ELAPSED_TIME.TITLE"
+  },
+  "buyPopupButtonsUndo": "Undo",
+  "@buyPopupButtonsUndo": {
+    "description": "Ionic key BUY_POPUP.BUTTONS.UNDO"
+  },
+  "buyPopupButtonsPayNow": "Pay with Card",
+  "@buyPopupButtonsPayNow": {
+    "description": "Ionic key BUY_POPUP.BUTTONS.PAY_NOW"
+  },
+  "buyPopupButtonsPayX": "Pay {amount}",
+  "@buyPopupButtonsPayX": {
+    "description": "Ionic key BUY_POPUP.BUTTONS.PAY_X",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "buyPopupButtonsPayWithFixedCard": "Pay with",
+  "@buyPopupButtonsPayWithFixedCard": {
+    "description": "Ionic key BUY_POPUP.BUTTONS.PAY_WITH_FIXED_CARD"
+  },
+  "buyPopupButtonsPaid": "Paid",
+  "@buyPopupButtonsPaid": {
+    "description": "Ionic key BUY_POPUP.BUTTONS.PAID"
+  },
+  "buyPopupButtonsEnd": "Bon appetit!",
+  "@buyPopupButtonsEnd": {
+    "description": "Ionic key BUY_POPUP.BUTTONS.END"
+  },
+  "buyPopupButtonsCancel": "Cancel",
+  "@buyPopupButtonsCancel": {
+    "description": "Ionic key BUY_POPUP.BUTTONS.CANCEL"
+  },
+  "buyPopupButtonsGotIt": "Got It!",
+  "@buyPopupButtonsGotIt": {
+    "description": "Ionic key BUY_POPUP.BUTTONS.GOT_IT"
+  },
+  "buyPopupButtonsImHere": "I'm here",
+  "@buyPopupButtonsImHere": {
+    "description": "Ionic key BUY_POPUP.BUTTONS.IM_HERE"
+  },
+  "buyPopupButtonsShowQrCode": "Show QR Code",
+  "@buyPopupButtonsShowQrCode": {
+    "description": "Ionic key BUY_POPUP.BUTTONS.SHOW_QR_CODE"
+  },
+  "buyPopupButtonsShowProducts": "Show Products",
+  "@buyPopupButtonsShowProducts": {
+    "description": "Ionic key BUY_POPUP.BUTTONS.SHOW_PRODUCTS"
+  },
+  "buyPopupUndoPopupTitle": "Are you sure?",
+  "@buyPopupUndoPopupTitle": {
+    "description": "Ionic key BUY_POPUP.UNDO_POPUP.TITLE"
+  },
+  "buyPopupUndoPopupDetails0": "Undo will return you the money, but you will",
+  "@buyPopupUndoPopupDetails0": {
+    "description": "Ionic key BUY_POPUP.UNDO_POPUP.DETAILS.0"
+  },
+  "buyPopupUndoPopupDetails1": "lose",
+  "@buyPopupUndoPopupDetails1": {
+    "description": "Ionic key BUY_POPUP.UNDO_POPUP.DETAILS.1"
+  },
+  "buyPopupUndoPopupDetails2": "the order!",
+  "@buyPopupUndoPopupDetails2": {
+    "description": "Ionic key BUY_POPUP.UNDO_POPUP.DETAILS.2"
+  },
+  "sideMenuTitle": "Ever",
+  "@sideMenuTitle": {
+    "description": "Ionic key SIDE_MENU.TITLE"
+  },
+  "sideMenuGroupsNoTitleDiverTitle": "",
+  "@sideMenuGroupsNoTitleDiverTitle": {
+    "description": "Ionic key SIDE_MENU.GROUPS.NO_TITLE.DIVER_TITLE"
+  },
+  "sideMenuGroupsNoTitleItemsProducts": "Products",
+  "@sideMenuGroupsNoTitleItemsProducts": {
+    "description": "Ionic key SIDE_MENU.GROUPS.NO_TITLE.ITEMS.PRODUCTS"
+  },
+  "sideMenuGroupsNoTitleItemsLastPurchases": "Last Purchases",
+  "@sideMenuGroupsNoTitleItemsLastPurchases": {
+    "description": "Ionic key SIDE_MENU.GROUPS.NO_TITLE.ITEMS.LAST_PURCHASES"
+  },
+  "sideMenuGroupsNoTitleItemsCallUs": "Call Us",
+  "@sideMenuGroupsNoTitleItemsCallUs": {
+    "description": "Ionic key SIDE_MENU.GROUPS.NO_TITLE.ITEMS.CALL_US"
+  },
+  "sideMenuGroupsNoTitleItemsOrderHistory": "Order history",
+  "@sideMenuGroupsNoTitleItemsOrderHistory": {
+    "description": "Ionic key SIDE_MENU.GROUPS.NO_TITLE.ITEMS.ORDER_HISTORY"
+  },
+  "sideMenuGroupsStoreStoreTitle": "Store",
+  "@sideMenuGroupsStoreStoreTitle": {
+    "description": "Ionic key SIDE_MENU.GROUPS.STORE.STORE_TITLE"
+  },
+  "sideMenuGroupsStoreItemsCallWaiter": "Call Waiter",
+  "@sideMenuGroupsStoreItemsCallWaiter": {
+    "description": "Ionic key SIDE_MENU.GROUPS.STORE.ITEMS.CALL_WAITER"
+  },
+  "sideMenuGroupsStoreItemsAbout": "About",
+  "@sideMenuGroupsStoreItemsAbout": {
+    "description": "Ionic key SIDE_MENU.GROUPS.STORE.ITEMS.ABOUT"
+  },
+  "sideMenuGroupsSettingsDiverTitle": "Settings",
+  "@sideMenuGroupsSettingsDiverTitle": {
+    "description": "Ionic key SIDE_MENU.GROUPS.SETTINGS.DIVER_TITLE"
+  },
+  "sideMenuGroupsSettingsItemsLanguage": "Language",
+  "@sideMenuGroupsSettingsItemsLanguage": {
+    "description": "Ionic key SIDE_MENU.GROUPS.SETTINGS.ITEMS.LANGUAGE"
+  },
+  "sideMenuGroupsInfoDiverTitle": "Information",
+  "@sideMenuGroupsInfoDiverTitle": {
+    "description": "Ionic key SIDE_MENU.GROUPS.INFO.DIVER_TITLE"
+  },
+  "sideMenuGroupsInfoItemsFaq": "Help",
+  "@sideMenuGroupsInfoItemsFaq": {
+    "description": "Ionic key SIDE_MENU.GROUPS.INFO.ITEMS.FAQ"
+  },
+  "sideMenuGroupsInfoItemsAboutUs": "About Us",
+  "@sideMenuGroupsInfoItemsAboutUs": {
+    "description": "Ionic key SIDE_MENU.GROUPS.INFO.ITEMS.ABOUT_US"
+  },
+  "sideMenuGroupsInfoItemsTermsOfUse": "Terms of Use",
+  "@sideMenuGroupsInfoItemsTermsOfUse": {
+    "description": "Ionic key SIDE_MENU.GROUPS.INFO.ITEMS.TERMS_OF_USE"
+  },
+  "sideMenuGroupsInfoItemsPrivacy": "Privacy",
+  "@sideMenuGroupsInfoItemsPrivacy": {
+    "description": "Ionic key SIDE_MENU.GROUPS.INFO.ITEMS.PRIVACY"
+  },
+  "sideMenuGroupsInfoCallWeAppologise": "We Apologise!",
+  "@sideMenuGroupsInfoCallWeAppologise": {
+    "description": "Ionic key SIDE_MENU.GROUPS.INFO.CALL.WE_APPOLOGISE"
+  },
+  "sideMenuGroupsInfoCallCallUnsuccessfull": "Call Was Unsuccessful!",
+  "@sideMenuGroupsInfoCallCallUnsuccessfull": {
+    "description": "Ionic key SIDE_MENU.GROUPS.INFO.CALL.CALL_UNSUCCESSFULL"
+  },
+  "sideMenuGroupsLegalsDiverTitle": "LEGAL",
+  "@sideMenuGroupsLegalsDiverTitle": {
+    "description": "Ionic key SIDE_MENU.GROUPS.LEGALS.DIVER_TITLE"
+  },
+  "sideMenuGroupsLegalsItemsTermsOfUse": "Terms of Use",
+  "@sideMenuGroupsLegalsItemsTermsOfUse": {
+    "description": "Ionic key SIDE_MENU.GROUPS.LEGALS.ITEMS.TERMS_OF_USE"
+  },
+  "sideMenuGroupsLegalsItemsPrivacy": "Privacy",
+  "@sideMenuGroupsLegalsItemsPrivacy": {
+    "description": "Ionic key SIDE_MENU.GROUPS.LEGALS.ITEMS.PRIVACY"
+  },
+  "timerMinutes": "Minutes",
+  "@timerMinutes": {
+    "description": "Ionic key TIMER.MINUTES"
+  },
+  "timerSeconds": "Seconds",
+  "@timerSeconds": {
+    "description": "Ionic key TIMER.SECONDS"
+  },
+  "connectionErrorViewTitle": "No connection to Ever",
+  "@connectionErrorViewTitle": {
+    "description": "Ionic key CONNECTION_ERROR_VIEW.TITLE"
+  },
+  "connectionErrorViewDescription0": "Please make sure you are",
+  "@connectionErrorViewDescription0": {
+    "description": "Ionic key CONNECTION_ERROR_VIEW.DESCRIPTION.0"
+  },
+  "connectionErrorViewDescription1": "connected to the internet",
+  "@connectionErrorViewDescription1": {
+    "description": "Ionic key CONNECTION_ERROR_VIEW.DESCRIPTION.1"
+  },
+  "connectionErrorViewDescription2": "or try Ever app later.",
+  "@connectionErrorViewDescription2": {
+    "description": "Ionic key CONNECTION_ERROR_VIEW.DESCRIPTION.2"
+  },
+  "merchantsViewCloseToYou": "Merchants close to you",
+  "@merchantsViewCloseToYou": {
+    "description": "Ionic key MERCHANTS_VIEW.CLOSE_TO_YOU"
+  },
+  "merchantsViewName": "Merchant name",
+  "@merchantsViewName": {
+    "description": "Ionic key MERCHANTS_VIEW.NAME"
+  },
+  "merchantsViewWithName": "Merchants with name",
+  "@merchantsViewWithName": {
+    "description": "Ionic key MERCHANTS_VIEW.WITH_NAME"
+  },
+  "noServerViewNoServer": "Server connection is lost",
+  "@noServerViewNoServer": {
+    "description": "Ionic key NO_SERVER_VIEW.NO_SERVER"
+  },
+  "or": "Or",
+  "@or": {
+    "description": "Ionic key OR"
+  },
+  "orLowercase": "or",
+  "@orLowercase": {
+    "description": "Ionic key OR_LOWERCASE"
+  },
+  "yes": "Yes",
+  "@yes": {
+    "description": "Ionic key YES"
+  },
+  "no": "No",
+  "@no": {
+    "description": "Ionic key NO"
+  },
+  "ok": "Ok",
+  "@ok": {
+    "description": "Ionic key OK"
+  },
+  "city": "City",
+  "@city": {
+    "description": "Ionic key CITY"
+  },
+  "street": "Street",
+  "@street": {
+    "description": "Ionic key STREET"
+  },
+  "house": "House",
+  "@house": {
+    "description": "Ionic key HOUSE"
+  },
+  "apartment": "Apartment",
+  "@apartment": {
+    "description": "Ionic key APARTMENT"
+  },
+  "back": "Back",
+  "@back": {
+    "description": "Ionic key BACK"
+  },
+  "more": "more",
+  "@more": {
+    "description": "Ionic key MORE"
+  },
+  "to": "To",
+  "@to": {
+    "description": "Ionic key TO"
+  },
+  "storeInfo": "Store Info",
+  "@storeInfo": {
+    "description": "Ionic key STORE_INFO"
+  },
+  "map": "Map",
+  "@map": {
+    "description": "Ionic key MAP"
+  },
+  "orderInfo": "Order Info",
+  "@orderInfo": {
+    "description": "Ionic key ORDER_INFO"
+  },
+  "close": "Close",
+  "@close": {
+    "description": "Ionic key CLOSE"
+  },
+  "scan": "Scan",
+  "@scan": {
+    "description": "Ionic key SCAN"
+  },
+  "merchants": "Merchants",
+  "@merchants": {
+    "description": "Ionic key MERCHANTS"
+  },
+  "notFound": "Not Found!",
+  "@notFound": {
+    "description": "Ionic key NOT_FOUND"
+  },
+  "inStore": "In Store",
+  "@inStore": {
+    "description": "Ionic key IN_STORE"
+  },
+  "exitStore": "Exit Store",
+  "@exitStore": {
+    "description": "Ionic key EXIT_STORE"
+  },
+  "failed": "Failed",
+  "@failed": {
+    "description": "Ionic key FAILED"
+  },
+  "canceled": "Canceled",
+  "@canceled": {
+    "description": "Ionic key CANCELED"
+  },
+  "inDelivery": "In Delivery",
+  "@inDelivery": {
+    "description": "Ionic key IN_DELIVERY"
+  },
+  "pending": "Pending",
+  "@pending": {
+    "description": "Ionic key PENDING"
+  },
+  "completed": "Completed",
+  "@completed": {
+    "description": "Ionic key COMPLETED"
+  },
+  "browse": "Browse",
+  "@browse": {
+    "description": "Ionic key BROWSE"
+  },
+  "english": "English",
+  "@english": {
+    "description": "Ionic key ENGLISH"
+  },
+  "hebrew": "Hebrew",
+  "@hebrew": {
+    "description": "Ionic key HEBREW"
+  },
+  "russian": "Russian",
+  "@russian": {
+    "description": "Ionic key RUSSIAN"
+  },
+  "bulgarian": "Bulgarian",
+  "@bulgarian": {
+    "description": "Ionic key BULGARIAN"
+  },
+  "spanish": "Spanish",
+  "@spanish": {
+    "description": "Ionic key SPANISH"
+  },
+  "french": "French",
+  "@french": {
+    "description": "Ionic key FRENCH"
+  },
+  "select": "Select",
+  "@select": {
+    "description": "Ionic key SELECT"
+  },
+  "locationNotes": "Location Notes",
+  "@locationNotes": {
+    "description": "Ionic key LOCATION_NOTES"
+  },
+  "enterNotesHere": "Enter notes here",
+  "@enterNotesHere": {
+    "description": "Ionic key ENTER_NOTES_HERE"
+  },
+  "orderInfoModalTitle": "Order Info",
+  "@orderInfoModalTitle": {
+    "description": "App string (not in the Ionic JSON)"
+  },
+  "orderInfoModalConfirm": "Confirm",
+  "@orderInfoModalConfirm": {
+    "description": "App string (not in the Ionic JSON)"
+  },
+  "orderInfoModalAddMore": "Add More",
+  "@orderInfoModalAddMore": {
+    "description": "App string (not in the Ionic JSON)"
+  },
+  "wrongCode": "Wrong code!",
+  "@wrongCode": {
+    "description": "App string (not in the Ionic JSON)"
+  },
+  "cardEmailLabel": "Email",
+  "@cardEmailLabel": {
+    "description": "App string (not in the Ionic JSON)"
+  },
+  "cardEmailInvalid": "Enter a valid email",
+  "@cardEmailInvalid": {
+    "description": "App string (not in the Ionic JSON)"
+  },
+  "cardNoKey": "Card payments are not set up in this app.",
+  "@cardNoKey": {
+    "description": "App string (not in the Ionic JSON)"
+  },
+  "country": "Country",
+  "@country": {
+    "description": "App string (not in the Ionic JSON)"
+  },
+  "noApartment": "No apartment",
+  "@noApartment": {
+    "description": "App string (not in the Ionic JSON)"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "App string (not in the Ionic JSON)"
+  },
+  "comment": "Comment",
+  "@comment": {
+    "description": "App string (not in the Ionic JSON)"
+  },
+  "remove": "Remove",
+  "@remove": {
+    "description": "App string (not in the Ionic JSON)"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "App string (not in the Ionic JSON)"
+  }
 }

@@ -77,17 +77,17 @@ Expect _lots_ of changes and some :bug: and please be nice! :stuck_out_tongue_wi
 
 -   Full-stack [TypeScript](https://www.typescriptlang.org) - frontends and [NodeJs](https://nodejs.org)/[Nest](https://github.com/nestjs/nest) backend.
 -   Headless Commerce framework (Backend APIs/Server) developed using [Nest](https://github.com/nestjs/nest). Supports GraphQL, REST and WS Real-Time APIs (WebSockets using [Socket.io](https://socket.io) library).
--   [Ionic](https://ionicframework.com) (version 5) for Carrier Mobile App and Merchant Tablet App.
--   Shopping Mobile App built with [Ionic](https://ionicframework.com) (version 5).
--   Shopping Mobile App built with [React Native](https://github.com/facebook/react-native) using [Expo](https://github.com/expo/expo) (WIP).
--   Shopping Mobile App built with [Flutter](https://github.com/flutter/flutter) / Dart (WIP).
--   Shopping Website developed with [Angular](https://angular.io) (version 9.1) using [Angular Starter](https://github.com/gdi2290/angular-starter).
--   Admin Website developed with [Angular](https://angular.io) (version 9.1) using [ngx-admin](https://github.com/akveo/ngx-admin).
+-   [Ionic](https://ionicframework.com) (version 9) with [Capacitor](https://capacitorjs.com) (version 8) for Carrier Mobile App and Merchant Tablet App.
+-   Shopping Mobile App built with [Ionic](https://ionicframework.com) (version 9) and [Capacitor](https://capacitorjs.com) (version 8).
+-   Shopping Mobile App built with [React Native](https://github.com/facebook/react-native) using [Expo](https://github.com/expo/expo) (SDK 58), with the same features as the Ionic shopping app.
+-   Shopping Mobile App built with [Flutter](https://github.com/flutter/flutter) / Dart 3, with the same features as the Ionic shopping app.
+-   Shopping Website developed with [Angular](https://angular.dev) (version 22) with Angular Material.
+-   Admin Website developed with [Angular](https://angular.dev) (version 22) using [ngx-admin](https://github.com/akveo/ngx-admin) / [Nebular](https://akveo.github.io/nebular) (version 17).
 -   [RxJS](http://reactivex.io/rxjs) library used heavily in every part of the Platform.
 -   [InversifyJS](http://inversify.io) used for Inversion Control / Dependency Injection in most parts of the Platform. On the Backend/API we also use DI provided by [Nest](https://github.com/nestjs/nest).
--   [MongoDB](https://www.mongodb.com) Database used with [Mongoose](https://mongoosejs.com) ORM (supported MongoDB version >= 3.2; we recommend version >=4).
+-   [MongoDB](https://www.mongodb.com) Database used with [Mongoose](https://mongoosejs.com) ORM (Mongoose 9; MongoDB 7 or newer, we test with MongoDB 8).
 -   We have an ongoing effort (WIP) to add support for other databases using [TypeORM](https://github.com/typeorm/typeorm) and [Prisma](https://github.com/prisma/prisma). The following additional DBs will be fully supported: MySQL, PostgreSQL, MariaDB, SQLite, MS SQL Server, and Oracle.
--   For production, we integrate and recommend using [PM2](https://github.com/Unitech/pm2).
+-   For production, every app ships as a Docker image (`.deploy/*/Dockerfile`): the API runs as a plain `node` process (no process manager; restarts are the orchestrator's job, e.g. Kubernetes), and the web apps are static builds served by nginx.
 
 #### See also README.md and CREDITS.md files in relevant folders for lists of libraries and software included in the Platform, information about licenses and other details.
 
@@ -118,62 +118,39 @@ git clone https://github.com/ever-co/ever-demand.git
 -   If you want to use a develop branch (unstable, but latest development) clone using `--branch develop` (our default branch).
 -   If you want to use a release branch (more stable) clone use `--branch master`.
 
-### Yarn
+### Requirements
 
-Currently, we are using `Yarn` (instead of `npm`), so make sure you have the latest Yarn version installed before running Ever Platform:
+-   [Node.js](https://nodejs.org) 26 (see `.nvmrc`)
+-   [pnpm](https://pnpm.io) 12: `npm install -g pnpm@12`
+-   [MongoDB](https://www.mongodb.com) 7 or newer (8 recommended), e.g. `docker run -d -p 27017:27017 mongo:8`
+-   For the Flutter app: the [Flutter](https://flutter.dev) stable SDK, or Docker (see `packages/shop-mobile-flutter/README.md`)
+
+### Install
+
+From the folder where you cloned the repo, install every package of the workspace (pnpm workspaces; `pnpm-workspace.yaml` lists the packages):
 
 ```
-npm install -g yarn@latest
+pnpm install
 ```
-
-### Quick installation
-
-After this GitHub repo is cloned, just run the following command to install/bootstrap all dependencies:
-
-```
-yarn bootstrap
-```
-
-The above command installs the required packages in all Platform projects using Lerna.
-
-Note: if the above command fails for any reason, you can try to install the required packages manually by running `yarn` inside every sub-folder of the `packages` folder with the 'package.json' file
 
 ### Build
 
-You can build all projects in Ever Platform using the single command below:
-
 ```
-yarn build:all
-```
-
-Note: The parallel build is available using `yarn build` command
-
-### Lerna (manual installation)
-
-We are using [Lerna](https://github.com/lerna/lerna) for mono-repo management.
-You need to run the following command from the working folder where you cloned the Ever Demand Git repo, which installs Lerna together with other packages:
-
-```
-yarn
+pnpm run build:common   # shared code; needed before the API or any app
+pnpm run build:all      # API + all Angular / Ionic apps
 ```
 
-You may instead install Lerna globally:
+Each app also has its own script, e.g. `pnpm run build:admin`, `pnpm run build:shopmobile`, `pnpm run build:shopexpo`.
+
+### Test
 
 ```
-npm install lerna@latest -g
+pnpm run typecheck
+pnpm run test           # unit tests of every package (Jest for the API, Vitest for the Angular apps, Jest for Expo)
+pnpm run e2e            # Playwright e2e (needs the API and the apps running, see e2e/playwright.config.ts)
 ```
 
-Now, after Lerna is installed (locally or globally), you need to Bootstrap all dependencies manually:
-
-```
-yarn lerna bootstrap
-```
-
-The command above installs all required packages for every sub-project of the Ever Platform.
-
-Note: if the above command fails for any reason, you can try to install the required packages manually by running `yarn` inside every sub-folder with 'package.json' file.
-
-After Lerna bootstraps everything you need to run the build for all projects as described above in the "Build" section.
+The API also has its own e2e suite against a real MongoDB: `pnpm --filter @ever-platform/core test:e2e`.
 
 ### MongoDB
 
@@ -181,31 +158,30 @@ Ever Demand platform configured to use MongoDB by default and assume you have Mo
 
 ### Platform Configuration
 
-See the relevant section in our [documentation](https://github.com/ever-co/ever-demand/wiki/Ever-Platform-Configuration).
+Every package reads its settings from environment variables; see the `.env.template` file in each package (for the API: `packages/core/.env.template`).
+In production the API requires `JWT_SECRET` and `EXPRESS_SESSION_SECRET` (long random values) and `ADMIN_PASSWORD` for the first admin; keep secrets in a secret store (OpenBao, GitHub secrets, k8s Secrets), never in the repo or the images.
+See also the relevant section in our [documentation](https://github.com/ever-co/ever-demand/wiki/Ever-Platform-Configuration).
 
 ### Run Platform Projects
 
-After you build everything (`yarn build:all`, described above), each project from Ever Platform could be started by single command from this list:
+-   Run API server `pnpm run:server` (or `pnpm run:server:dev` to rebuild on TS file changes)
+-   Run Admin Website `pnpm run:admin` and open http://localhost:4200
+-   Run Shopping Mobile App (Ionic) `pnpm run:shopmobile` and open http://localhost:4201
+-   Run Merchant Ionic Tablet App `pnpm run:merchant` and open http://localhost:4202
+-   Run Carrier Mobile app `pnpm run:carrier` and open http://localhost:4203
+-   Run Shopping Website `pnpm run:shopweb` and open http://localhost:3000
+-   Run Shopping Mobile App (React Native / Expo) `pnpm run:shopexpo`
+-   Run Shopping Website (Gatsby) `pnpm run:shopgatsby`
+-   Run Shopping Mobile App (Flutter): see `packages/shop-mobile-flutter/README.md`
 
--   Run API server `yarn run:server`
--   Run Admin Website `yarn run:admin` and open http://localhost:4200
--   Run Shopping Mobile App `yarn run:shopmobile` and open http://localhost:4201
--   Run Merchant Ionic Tablet App `yarn run:merchant` and open http://localhost:4202
--   Run Carrier Mobile app `yarn run:carrier` and open http://localhost:4203
--   Run Shopping Website `yarn run:shopweb` and open http://localhost:3000
+The Ionic apps use [Capacitor](https://capacitorjs.com) for native builds: run `npx cap add android` (or `ios`) once inside the app folder, then `npx cap sync` after each web build.
 
-Note 1: It is important to build shared / common platform modules (`yarn build:common` or `yarn build:all`) before running the Platform Core (API) or Apps
-
-Note 2: During development, you can run a server with `yarn run:server:dev` to enable watch on TS file changes
-
-Note 3: On the first run, the API Server (Backend) creates MongoDB local database `ever_development` with the following (default) Admin user
+On the first run, the API Server (Backend) creates the MongoDB database `ever_development` with the following (default) Admin user (outside production; in production set `ADMIN_EMAIL` / `ADMIN_PASSWORD`):
 
 -   email: `admin@ever.co`
 -   password: `admin`
 
 You can use the credentials above to login into Platform Admin App.
-
-Note 3: In order to be able to run every project, you need to make sure everything builds, see section "Build" above.
 
 ## Metrics
 

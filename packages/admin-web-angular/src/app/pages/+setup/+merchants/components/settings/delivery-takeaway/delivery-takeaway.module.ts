@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ThemeModule } from '@app/@theme';
 import { FormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { CarriersSmartTableModule } from '@app/@shared/carrier/carriers-table/carriers-table.module';
 import { SetupMerchantSharedCarriersComponent } from './shared-carriers/shared-carriers.component';
 import { CarrierLocationModule } from '@app/pages/+carriers/+carrier/location/carrier-location.module';

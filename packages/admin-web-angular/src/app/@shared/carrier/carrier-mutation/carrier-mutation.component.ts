@@ -3,9 +3,10 @@ import {
 	ViewChild,
 	EventEmitter,
 	AfterViewInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -16,8 +17,10 @@ import { LocationFormComponent } from '../../forms/location';
 import { getDummyImage } from '@modules/server.common/utils';
 
 @Component({
+	standalone: false,
 	selector: 'ea-carrier-mutation',
 	templateUrl: './carrier-mutation.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./carrier-mutation.component.scss'],
 })
 export class CarrierMutationComponent implements AfterViewInit {
@@ -50,7 +53,7 @@ export class CarrierMutationComponent implements AfterViewInit {
 		private toasterService: ToasterService,
 		private readonly activeModal: NgbActiveModal,
 		private readonly formBuilder: FormBuilder,
-		protected carrierRouter: CarrierRouter
+		protected carrierRouter: CarrierRouter,
 	) {}
 
 	ngAfterViewInit(): void {
@@ -61,14 +64,13 @@ export class CarrierMutationComponent implements AfterViewInit {
 
 	onGeometrySend(
 		geometry:
-			| google.maps.places.PlaceGeometry
-			| google.maps.GeocoderGeometry
+			google.maps.places.PlaceGeometry | google.maps.GeocoderGeometry,
 	) {
 		this.mapGeometryEmitter.emit(geometry);
 	}
 
 	onCoordinatesChanges(
-		location: google.maps.LatLng | google.maps.LatLngLiteral
+		location: google.maps.LatLng | google.maps.LatLngLiteral,
 	) {
 		this.mapCoordEmitter.emit(location);
 	}
@@ -100,7 +102,7 @@ export class CarrierMutationComponent implements AfterViewInit {
 			this.loading = false;
 			this.toasterService.pop(
 				'success',
-				`Carrier ${carrier.firstName} was created`
+				`Carrier ${carrier.firstName} was created`,
 			);
 			this.activeModal.close(carrier);
 		} catch (err) {
@@ -108,7 +110,7 @@ export class CarrierMutationComponent implements AfterViewInit {
 
 			this.toasterService.pop(
 				'error',
-				`Error in creating carrier: "${err.message}"`
+				`Error in creating carrier: "${err.message}"`,
 			);
 			this.activeModal.dismiss('canceled');
 		}

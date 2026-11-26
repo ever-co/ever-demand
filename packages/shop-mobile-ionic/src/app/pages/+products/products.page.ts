@@ -1,4 +1,10 @@
-import { Component, OnDestroy, EventEmitter, OnInit } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	OnDestroy,
+	EventEmitter,
+	OnInit,
+} from '@angular/core';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { UserProductsRouter } from '@modules/client.common.angular2/routers/user-products-router.service';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
@@ -30,6 +36,8 @@ import { OrderRouter } from '@modules/client.common.angular2/routers/order-route
 const initializeProductsNumber: number = 10;
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'e-cu-products',
 	templateUrl: './products.page.html',
 	styleUrls: ['./products.page.scss'],
@@ -106,7 +114,13 @@ export class ProductsPage implements OnInit, OnDestroy {
 		return (!merchantIds || merchantIds.length < 1) && !this.inStore;
 	}
 
-	ngOnInit(): void {
+	ngOnInit(): void {}
+
+	// A customer who tapped Buy before registering comes back to this page
+	// after the invite pages. Ionic keeps the page alive in its stack, so
+	// ngOnInit does not run again: resume the pending Buy whenever the page
+	// shows (the first time included).
+	ionViewWillEnter(): void {
 		this.continueOrder();
 	}
 

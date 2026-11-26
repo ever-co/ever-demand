@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'ngxPlural' })
+@Pipe({ standalone: false, name: 'ngxPlural' })
 export class PluralPipe implements PipeTransform {
 	transform(input: number, label: string, pluralLabel: string = ''): string {
 		input = input || 0;

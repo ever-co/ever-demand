@@ -1,10 +1,19 @@
-import { ViewChild, Component, Input, OnInit, OnDestroy } from '@angular/core';
+import {
+	ViewChild,
+	Component,
+	Input,
+	OnInit,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'google-map',
 	styleUrls: ['./google-map.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: ` <div #gmap class="g-map"></div> `,
 })
 export class GoogleMapComponent implements OnInit, OnDestroy {
@@ -36,7 +45,7 @@ export class GoogleMapComponent implements OnInit, OnDestroy {
 	}
 
 	private _navigateTo(
-		location: google.maps.LatLng | google.maps.LatLngLiteral
+		location: google.maps.LatLng | google.maps.LatLngLiteral,
 	) {
 		this.map.setCenter(location);
 	}
@@ -82,12 +91,12 @@ export class GoogleMapComponent implements OnInit, OnDestroy {
 
 		this.map = new google.maps.Map(
 			this.mapElement.nativeElement,
-			optionsMap
+			optionsMap,
 		);
 	}
 
 	private _addMapMarker(
-		location: google.maps.LatLng | google.maps.LatLngLiteral
+		location: google.maps.LatLng | google.maps.LatLngLiteral,
 	) {
 		this._clearMarker();
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
+import { completeData } from '@app/graphql/complete-data';
 import { Observable } from 'rxjs';
 import { map, share, first } from 'rxjs/operators';
 import Device from '@modules/server.common/entities/Device';
@@ -41,7 +42,7 @@ export class DeviceService {
 			`,
 			pollInterval: 2000,
 		})
-		.valueChanges.pipe(
+		.valueChanges.pipe(completeData(), 
 			map((result) => result.data.devices),
 			map((devices) => devices.map((d) => this._deviceFactory(d))),
 			share()

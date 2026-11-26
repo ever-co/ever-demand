@@ -1,8 +1,6 @@
 <div class="modal-header">
 	<span>{{ 'CATEGORY_VIEW.CREATE.CREATE_CATEGORY' | translate }}</span>
-	<button class="close" aria-label="Close" (click)="cancel()">
-		<span aria-hidden="true">&times;</span>
-	</button>
+	<button class="btn-close" aria-label="Close" (click)="cancel()"></button>
 </div>
 
 <div class="modal-body" [nbSpinner]="loading">

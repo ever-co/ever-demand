@@ -23,10 +23,10 @@
 					<button
 						nbButton
 						status="success"
-						class="mr-1 d-inline-block"
+						class="me-1 d-inline-block"
 						(click)="addProducts()"
 					>
-						<i class="ion-md-add button-icon mr-1"></i
+						<i class="ion-md-add button-icon me-1"></i
 						>{{
 							'ORDER_VIEW.ORDER_PRODUCT_INFO.ADD_PRODUCTS'
 								| translate
@@ -35,12 +35,12 @@
 					<button
 						nbButton
 						status="warning"
-						class="ml-1 d-inline-block"
+						class="ms-1 d-inline-block"
 						[disabled]="!selectedProducts.length"
 						(click)="removeSelectedProducts()"
 						[nbSpinner]="loading"
 					>
-						<i class="ion-md-trash button-icon mr-1"></i>
+						<i class="ion-md-trash button-icon me-1"></i>
 						{{
 							'ORDER_VIEW.ORDER_PRODUCT_INFO.REMOVE_PRODUCTS'
 								| translate
@@ -51,11 +51,11 @@
 					<button
 						nbButton
 						status="danger"
-						class="d-inline-block float-right"
+						class="d-inline-block float-end"
 						(click)="cancelOrder()"
 						[nbSpinner]="loading"
 					>
-						<i class="ion-md-close button-icon mr-1"></i>
+						<i class="ion-md-close button-icon me-1"></i>
 						{{
 							'ORDER_VIEW.ORDER_PRODUCT_INFO.CANCEL_ORDER'
 								| translate

@@ -1,22 +1,17 @@
 {
 	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
-		"baseUrl": "./src",
-		"outDir": "./build",
-		"rootDir": "./src",
+		"noEmit": true,
+		"rootDir": "..",
+		"types": ["node"],
 		"paths": {
-			"@pyro/*": [
-				"@pyro/*",
-				"../../../node_modules/@ever-platform/common/src/@pyro/*"
-			],
-			"@modules/server.common/*": [
-				"@modules/server.common/*",
-				"../../../node_modules/@ever-platform/common/src/*"
-			]
+			"@pyro/*": ["../common/src/@pyro/*"],
+			"@modules/server.common/*": ["../common/src/*"],
+			"@modules/client.common.angular2/*": ["./src/*"],
+			"mongoose": ["./src/mongoose-placeholder"],
+			"typeorm": ["./src/typeorm-placeholder"]
 		}
 	},
-	"include": [
-		"./src/**/*.d.ts",
-		"../../common/**/*d.ts"
-	]
+	"include": ["./src/**/*.ts"],
+	"exclude": ["./src/**/*.spec.ts"]
 }

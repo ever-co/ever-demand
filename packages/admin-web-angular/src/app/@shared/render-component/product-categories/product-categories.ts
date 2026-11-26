@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ViewCell } from '@app/@shared/smart-table';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 
 @Component({
+	standalone: false,
 	styles: [
 		`
 			div {
@@ -16,6 +17,7 @@ import { ProductLocalesService } from '@modules/client.common.angular2/locale/pr
 			}
 		`,
 	],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './product-categories.html',
 })
 export class ProductCategoriesComponent implements ViewCell, OnInit {
@@ -32,7 +34,7 @@ export class ProductCategoriesComponent implements ViewCell, OnInit {
 	getCategories() {
 		if (this.rowData.allCategories) {
 			this.categoriesArr = this.rowData.allCategories.filter((category) =>
-				this.rowData.categories.ids.includes(category.id)
+				this.rowData.categories.ids.includes(category.id),
 			);
 		}
 	}

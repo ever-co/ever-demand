@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -16,7 +16,7 @@ const COMPONENTS = [LocationPopupComponent];
         MatDialogModule,
         MatButtonModule,
         MatCardModule,
-        TranslateModule.forChild(),
+        TranslateModule,
         LocationFormModule,
         GoogleMapModule,
     ],

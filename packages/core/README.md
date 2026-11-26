@@ -6,7 +6,7 @@ It includes/has features of:
 
 -   **Real-time API** - The project uses [Socket.IO](https://socket.io/) and [RxJS](http://reactivex.io/rxjs/) for its reactive and real-time nature.
 -   **Database** - [MongoDB](https://www.mongodb.com/) is used as the DB and [Mongoose](http://mongoosejs.com/) as the ORM.
--   **Deployment** - The production versions could be deployed to [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/), using [PM2](http://pm2.io/) for clustering and fault tolerance.
+-   **Deployment** - The production versions could be deployed to [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/) as a Docker image (`.deploy/api/Dockerfile`) that runs `node build/main.js` directly; restarts and scaling are left to the orchestrator (e.g. Kubernetes).
 -   **Payments Accepting** - via Stripe API.
 
 #### Main stack:
@@ -25,7 +25,6 @@ It includes/has features of:
 -   [RxJS](http://reactivex.io/rxjs/) - For Reactive/Event Based Programming
 -   [InversifyJS](http://inversify.io/) - Inversion Control (Dependency Injection, used in addition to NestJS DI)
 -   [Mongoose](http://mongoosejs.com/) - ORM
--   [PM2](http://pm2.io/) - NodeJS Production process manager (optionally, used in production environments)
 
 ## Usage
 
@@ -68,13 +67,12 @@ _To be added_
 /certificates - SSL Certificates (optionally)
 /dist - WebPack build output directory
 /docker - Docker configuration (currently not in use)
-/node_modules - folder with NPM packages (created after `yarn install`)
+/node_modules - folder with NPM packages (created after `pnpm install`)
 /res - Resourses, such as pages that sent to the clients in text form or json.
 
 /src - All the code of the project
 |-->/app.ts - The main application file.
 |-->/inversify.config.ts - The Dependency Injection config.
-|-->/pm2bootstrap.ts - The file AWS runs to start the program.
 |
 |-->/main - The main application file
 |-->/modules -  contains the shared modules used in this project.

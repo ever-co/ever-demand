@@ -53,7 +53,11 @@ describe('env STRIPE_CURRENCY', () => {
 		expect(() => loadEnv('jpy')).toThrow('process.exit(1)');
 		expect(() => loadEnv('dollars')).toThrow('process.exit(1)');
 
-		const output = logged.mock.calls.map((call) => call.join(' '));
+		// envalid prints the report and then a separate "Exiting with error"
+		// line: keep the report lines.
+		const output = logged.mock.calls
+			.map((call) => call.join(' '))
+			.filter((line) => line.includes('STRIPE_CURRENCY'));
 
 		expect(output).toHaveLength(2);
 		expect(output[0]).toMatch(/STRIPE_CURRENCY.*"jpy" is not supported/);

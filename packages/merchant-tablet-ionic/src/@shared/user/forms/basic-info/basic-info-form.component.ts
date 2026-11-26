@@ -1,4 +1,11 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnDestroy,
+	OnInit,
+	ViewChild,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import {
 	FormBuilder,
 	FormGroup,
@@ -14,7 +21,7 @@ import User from '@modules/server.common/entities/User';
 import { IUserCreateObject } from '@modules/server.common/interfaces/IUser';
 import { UsersService } from '../../../../services/users.service';
 import { FormHelpers } from '../../../forms/helpers';
-import { AlertController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular/alert-controller';
 
 export type CustomerBasicInfo = Pick<
 	IUserCreateObject,
@@ -22,8 +29,10 @@ export type CustomerBasicInfo = Pick<
 >;
 
 @Component({
+	standalone: false,
 	selector: 'basic-info-form',
 	styleUrls: ['./basic-info-form.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'basic-info-form.component.html',
 })
 export class BasicInfoFormComponent implements OnInit, OnDestroy {
@@ -38,7 +47,7 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private readonly _usersService: UsersService,
-		public alertController: AlertController
+		public alertController: AlertController,
 	) {}
 
 	get firstName() {
@@ -61,7 +70,7 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 		BasicInfoFormComponent.initialize(
 			this._usersService,
 			this._ngDestroy$,
-			this.userData
+			this.userData,
 		);
 		this.loadData();
 	}
@@ -73,7 +82,7 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 	static initialize(
 		usersService: UsersService,
 		ngDestroy: Subject<void>,
-		userData?: User
+		userData?: User,
 	) {
 		usersService
 			.getUsers()
@@ -104,7 +113,7 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 						emailSearch$.pipe(debounceTime(500)).subscribe(() => {
 							//
 							const hasExistedEmail = this._users.some(
-								(u) => u.email === ctrlEmail.value
+								(u) => u.email === ctrlEmail.value,
 							);
 							if (
 								hasExistedEmail &&

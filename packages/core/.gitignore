@@ -10,11 +10,19 @@ certificates
 dist
 build
 
-# Hot module reload configuration
-!webpack.config.js
+# Declarations of @ever-platform/common, generated for the build (see package.json build:common-types)
+.common-types
+
+# TypeORM query log (logger: 'file')
+ormlogs.log
+
+# Runtime files: logs, generated HTTPS certificates, e2e server log
+tmp/
 
 # Testing
 !jest.config.js
+!jest.e2e.config.js
+!test/e2e/sequencer.js
 !src/test/setup.js
 
 # Bower

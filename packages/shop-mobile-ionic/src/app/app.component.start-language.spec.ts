@@ -1,18 +1,18 @@
+import { createSpyObj } from 'app/testing/spies';
+import { vi, type Mock } from 'vitest';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Location } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
-import { Device } from '@ionic-native/device/ngx';
-import { Globalization } from '@ionic-native/globalization';
-import { Network } from '@ionic-native/network/ngx';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {
+	TranslateDirective,
 	TranslateLoader,
-	TranslateModule,
+	TranslatePipe,
 	TranslateService,
 } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
+import { NativeService } from './services/native/native.service';
 import { DeviceRouter } from '@modules/client.common.angular2/routers/device-router.service';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
@@ -37,13 +37,22 @@ const ordersOf = (count: number): number[][] => {
 	return orders;
 };
 
+// The real Store.deviceId accessor: some specs spy its getter and its setter, and
+// restoring both spies does not reliably put the original descriptor back.
+const deviceIdDescriptor = Object.getOwnPropertyDescriptor(
+	Store.prototype,
+	'deviceId'
+)!;
+
 describe('AppComponent start language', () => {
 	let cordova: boolean;
 	let savedLanguage: string | null;
 	let savedDir: string;
 	let savedLang: string;
 	let savedDefaultLanguage: string;
-	let deviceId: jasmine.Spy;
+	let deviceId: Mock;
+	// The phone language the Capacitor Device plugin answers (a two-letter code).
+	let languageCode: Mock;
 
 	// Starts the app as main.ts does: AppComponent and the Store it
 	// injects, with nothing loaded yet.
@@ -57,6 +66,8 @@ describe('AppComponent start language', () => {
 				TranslateModule.forRoot({
 					loader: { provide: TranslateLoader, useValue: loader },
 				}),
+				TranslatePipe,
+				TranslateDirective,
 			],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 			providers: [
@@ -68,39 +79,33 @@ describe('AppComponent start language', () => {
 					},
 				},
 				{
-					provide: StatusBar,
-					useValue: jasmine.createSpyObj('StatusBar', [
-						'styleBlackOpaque',
-					]),
-				},
-				{
-					provide: SplashScreen,
-					useValue: jasmine.createSpyObj('SplashScreen', ['hide']),
+					provide: NativeService,
+					useValue: {
+						isNative: () => cordova,
+						platform: () => 'android',
+						deviceId: () => Promise.resolve('uuid-1'),
+						languageCode,
+						networkStatus: () =>
+							Promise.resolve({ connected: true, connectionType: 'wifi' }),
+						onNetworkStatusChange: () =>
+							Promise.resolve({ remove: () => Promise.resolve() }),
+						useDarkStatusBar: () => Promise.resolve(),
+						hideSplashScreen: () => Promise.resolve(),
+					},
 				},
 				{
 					provide: Router,
-					useValue: jasmine.createSpyObj('Router', ['navigate']),
+					useValue: createSpyObj('Router', ['navigate']),
 				},
 				{
 					provide: DeviceRouter,
-					useValue: jasmine.createSpyObj('DeviceRouter', {
+					useValue: createSpyObj('DeviceRouter', {
 						create: Promise.resolve({ id: 'device-2' }),
 					}),
 				},
 				{
 					provide: Location,
-					useValue: jasmine.createSpyObj('Location', ['back']),
-				},
-				{
-					provide: Network,
-					useValue: jasmine.createSpyObj('Network', {
-						onDisconnect: NEVER,
-						onConnect: NEVER,
-					}),
-				},
-				{
-					provide: Device,
-					useValue: { platform: 'Android', uuid: 'uuid-1' },
+					useValue: createSpyObj('Location', ['back']),
 				},
 				{ provide: InviteRouter, useValue: {} },
 				{ provide: UserRouter, useValue: {} },
@@ -138,7 +143,7 @@ describe('AppComponent start language', () => {
 			await settle();
 
 			const ended = {
-				language: translate.currentLang,
+				language: translate.getCurrentLang(),
 				shown: store.language,
 				text: translate.instant('LANGUAGE_NAME'),
 			};
@@ -150,7 +155,7 @@ describe('AppComponent start language', () => {
 				ended.shown === expected &&
 				ended.text === expected;
 			if (!endedInExpected) {
-				fail(
+				expect.fail(
 					`Files arriving in the order ${arrived.join(', ')}: ` +
 						`the language page showed ${shownAtStart} at start, ` +
 						`and the app ended in ${JSON.stringify(ended)}, ` +
@@ -164,12 +169,13 @@ describe('AppComponent start language', () => {
 	};
 
 	const deviceLanguageIs = (language: string) =>
-		spyOn(TranslateService.prototype, 'getBrowserLang').and.returnValue(
+		vi.spyOn(TranslateService.prototype, 'getBrowserLang').mockReturnValue(
 			language
 		);
 
 	beforeEach(() => {
 		cordova = false;
+		languageCode = vi.fn().mockResolvedValue('en');
 		savedLanguage = localStorage.getItem('_language');
 		localStorage.removeItem('_language');
 		savedDir = document.documentElement.dir;
@@ -178,15 +184,18 @@ describe('AppComponent start language', () => {
 		environment.DEFAULT_LANGUAGE = 'en-US';
 
 		// A known device id, so the app does not register a new device.
-		deviceId = spyOnProperty(
+		deviceId = vi.spyOn(
 			Store.prototype,
 			'deviceId',
 			'get'
-		).and.returnValue('device-1');
-		spyOn(console, 'warn');
+		).mockReturnValue('device-1');
+		vi.spyOn(console, 'warn');
 	});
 
 	afterEach(() => {
+		// Jasmine restored spies after each spec; Vitest does not.
+		vi.restoreAllMocks();
+		Object.defineProperty(Store.prototype, 'deviceId', deviceIdDescriptor);
 		if (savedLanguage === null) {
 			localStorage.removeItem('_language');
 		} else {
@@ -262,31 +271,27 @@ describe('AppComponent start language', () => {
 			cordova = true;
 		});
 
-		it("maps the phone language 'he-IL' to he-IL", async () => {
-			spyOn(Globalization, 'getPreferredLanguage').and.resolveTo({
-				value: 'he-IL',
-			});
+		it("maps the phone language 'he' to he-IL", async () => {
+			languageCode.mockResolvedValue('he');
 
 			await expectEveryLoadOrderToEndIn('he-IL');
 		});
 
 		it('starts in DEFAULT_LANGUAGE when the phone language cannot be read', async () => {
 			environment.DEFAULT_LANGUAGE = 'bg-BG';
-			spyOn(Globalization, 'getPreferredLanguage').and.rejectWith({
-				error: 'plugin_not_installed',
-			});
+			languageCode.mockRejectedValue(new Error('not implemented'));
 
 			await expectEveryLoadOrderToEndIn('bg-BG');
 		});
 
 		it('saves a new device with the phone language once it is read', async () => {
-			deviceId.and.returnValue(null);
-			spyOnProperty(Store.prototype, 'deviceId', 'set');
+			deviceId.mockReturnValue(null);
+			vi.spyOn(Store.prototype, 'deviceId', 'set');
 			// No push plugin in the test.
-			spyOn(console, 'error');
-			let answer = (language: { value: string }) => {};
-			spyOn(Globalization, 'getPreferredLanguage').and.returnValue(
-				new Promise((resolve) => (answer = resolve))
+			vi.spyOn(console, 'error');
+			let answer = (language: string) => {};
+			languageCode.mockReturnValue(
+				new Promise<string>((resolve) => (answer = resolve))
 			);
 
 			await startApp();
@@ -294,11 +299,11 @@ describe('AppComponent start language', () => {
 
 			expect(deviceRouter.create).not.toHaveBeenCalled();
 
-			answer({ value: 'he-IL' });
+			answer('he');
 			await settle();
 
-			expect(deviceRouter.create).toHaveBeenCalledOnceWith(
-				jasmine.objectContaining({ language: 'he-IL' })
+			expect(deviceRouter.create).toHaveBeenCalledExactlyOnceWith(
+				expect.objectContaining({ language: 'he-IL' })
 			);
 		});
 	});

@@ -1,13 +1,15 @@
 {
 	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
-		"baseUrl": "./src",
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
 		"outDir": "./build",
 		"rootDir": "./src",
-		"types": ["node", "reflect-metadata", "jest"],
+		"types": ["node"],
 		"paths": {
-			"@pyro/*": ["@pyro/*", "/@pyro/*"]
+			"@pyro/*": ["./src/@pyro/*"]
 		}
 	},
-	"include": ["./src/**/*.ts"]
+	"include": ["./src/**/*.ts"],
+	"exclude": ["./src/**/*.spec.ts"]
 }

@@ -1,5 +1,3 @@
-import { NgModuleRef } from '@angular/core';
-
 export interface Environment {
 	production: boolean;
 	ENV_PROVIDERS: any;
@@ -17,6 +15,4 @@ export interface Environment {
 	DELIVERY_TIME_MIN?: number;
 	DELIVERY_TIME_MAX?: number;
 	NO_INTERNET_LOGO: string;
-
-	decorateModuleRef(modRef: NgModuleRef<any>): NgModuleRef<any>;
 }

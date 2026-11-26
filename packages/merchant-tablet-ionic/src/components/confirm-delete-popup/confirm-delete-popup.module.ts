@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
-import { FormWizardModule } from '@ever-co/angular2-wizard';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { TranslateModule } from '@ngx-translate/core';
+import { FormWizardModule } from '../form-wizard/form-wizard.module';
+import { Angular2SmartTableModule } from 'angular2-smart-table';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileUploadModule } from 'ng2-file-upload';
-import { IonicModule } from '@ionic/angular';
+import { IonButton } from '@ionic/angular/ion-button';
+import { ModalController } from '@ionic/angular/modal-controller';
 import { CommonModule } from '@angular/common';
 import { ConfirmDeletePopupPage } from './confirm-delete-popup';
 
@@ -12,14 +13,15 @@ import { ConfirmDeletePopupPage } from './confirm-delete-popup';
     declarations: [ConfirmDeletePopupPage],
     imports: [
         FormWizardModule,
-        Ng2SmartTableModule,
+        Angular2SmartTableModule,
         FileUploadModule,
         FormsModule,
         ReactiveFormsModule,
         TranslateModule.forChild(),
-        IonicModule,
         CommonModule,
         FormsModule,
-    ]
+        IonButton,
+    ],
+    providers: [ModalController]
 })
 export class ConfirmDeletePopupModule {}

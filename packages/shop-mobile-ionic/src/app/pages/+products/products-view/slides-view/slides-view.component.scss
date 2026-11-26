@@ -1,4 +1,4 @@
-@import '~@ever-platform/common-angular/src/scss/everbie.common';
+@import '@ever-platform/common-angular/src/scss/everbie.common';
 
 :host ::ng-deep ng-progress .ng-bar-placeholder {
 	background-color: #3c4160;
@@ -16,9 +16,15 @@ ion-menu-button {
 	margin-left: 5px;
 }
 
-ion-slide {
+swiper-container {
+	display: block;
+}
+
+swiper-slide {
 	display: block;
 	height: 100vh;
+	// ion-slide centred its content
+	text-align: center;
 }
 
 .product-card {

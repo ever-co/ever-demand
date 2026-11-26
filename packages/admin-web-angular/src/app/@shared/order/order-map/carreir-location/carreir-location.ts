@@ -5,12 +5,15 @@ import {
 	ElementRef,
 	Input,
 	OnDestroy,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import { environment } from 'environments/environment';
 
 @Component({
+	standalone: false,
 	selector: 'ea-carrier-location',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: ` <div style="height:100%" #gmap></div> `,
 })
 export class CarrierLocationComponent implements OnInit, OnDestroy {
@@ -33,7 +36,7 @@ export class CarrierLocationComponent implements OnInit, OnDestroy {
 		const mapProp = {
 			center: new google.maps.LatLng(
 				environment.DEFAULT_LATITUDE,
-				environment.DEFAULT_LONGITUDE
+				environment.DEFAULT_LONGITUDE,
 			),
 			zoom: 15,
 			mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -45,12 +48,10 @@ export class CarrierLocationComponent implements OnInit, OnDestroy {
 
 	loadRoot() {
 		if (this.order) {
-			const [carrierLng, carrierLat] = this.order.carrier[
-				'geoLocation'
-			].loc.coordinates;
-			const [userLng, userLat] = this.order.user[
-				'geoLocation'
-			].loc.coordinates;
+			const [carrierLng, carrierLat] =
+				this.order.carrier['geoLocation'].loc.coordinates;
+			const [userLng, userLat] =
+				this.order.user['geoLocation'].loc.coordinates;
 			const origin = new google.maps.LatLng(carrierLat, carrierLng);
 			const destination = new google.maps.LatLng(userLat, userLng);
 

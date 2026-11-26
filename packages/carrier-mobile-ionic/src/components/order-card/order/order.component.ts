@@ -7,15 +7,15 @@ import {
 import OrderStatus from '@modules/server.common/enums/OrderStatus';
 import Order from '@modules/server.common/entities/Order';
 import Warehouse from '@modules/server.common/entities/Warehouse';
-import * as _ from 'lodash';
 import { Store } from '../../../services/store.service';
 import { environment } from '../../../environments/environment';
 import Carrier from '@modules/server.common/entities/Carrier';
 import OrderProduct from '@modules/server.common/entities/OrderProduct';
 import { getCountryName } from '@modules/server.common/entities/GeoLocation';
-import { Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular/platform';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-order',
 	templateUrl: 'order.component.html',
 	styleUrls: ['./order.component.scss'],
@@ -65,7 +65,7 @@ export class OrderComponent implements OnInit {
 		const firstName = this.order.user.firstName;
 		const lastName = this.order.user.lastName;
 
-		return _.isEmpty(firstName) || _.isEmpty(lastName)
+		return !firstName || !lastName
 			? this.order.user._id
 			: `${firstName} ${lastName}`;
 	}
@@ -95,10 +95,9 @@ export class OrderComponent implements OnInit {
 	}
 
 	get totalPrice() {
-		return _.chain(this.order.products)
+		return this.order.products
 			.map((p) => p.count * p.price)
-			.reduce((p1, p2) => p1 + p2)
-			.value();
+			.reduce((p1, p2) => p1 + p2, 0);
 	}
 
 	get createdAt() {

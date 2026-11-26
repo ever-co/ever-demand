@@ -3,6 +3,7 @@ import {
 	OnDestroy,
 	OnInit,
 	ViewChild,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
 import { Store } from 'app/services/store';
@@ -30,6 +31,8 @@ import { environment } from 'environments/environment';
 const initializeProductsNumber: number = 10;
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'products',
 	styleUrls: ['./products.component.scss'],
 	templateUrl: './products.component.html',

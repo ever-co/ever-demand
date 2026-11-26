@@ -49,7 +49,8 @@ const mockChargesCreate = jest.fn();
 const mockChargesList = jest.fn();
 const mockRefundsCreate = jest.fn();
 jest.mock('stripe', () => ({
-	Stripe: jest.fn().mockImplementation(() => ({
+	__esModule: true,
+	default: jest.fn().mockImplementation(() => ({
 		charges: { create: mockChargesCreate, list: mockChargesList },
 		refunds: { create: mockRefundsCreate },
 	})),

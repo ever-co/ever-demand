@@ -58,7 +58,7 @@
 	</div>
 
 	<ion-infinite-scroll
-		[disabled]="ordersCount <= orders?.length"
+		[disabled]="ordersCount <= $safeNavigationMigration(orders?.length)"
 		threshold="100px"
 		(ionInfinite)="loadData($event)"
 		position="bottom"

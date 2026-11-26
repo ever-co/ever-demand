@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 import { Observable } from 'rxjs';
-import { map, share } from 'rxjs/operators';
+import { filter, map, share } from 'rxjs/operators';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
 
 @Injectable()
@@ -83,10 +83,18 @@ export class GeoLocationProductsService {
 				pollInterval: 2000,
 			})
 			.valueChanges.pipe(
+				// Apollo Client 4 can emit a result without data (loading or
+				// an ignored error); the old client only emitted results.
+				filter((res) => !!res.data?.geoLocationProductsByPaging),
 				map((res) =>
-					res.data.geoLocationProductsByPaging.filter(Boolean).filter(
-						(p) => p.warehouseProduct.isProductAvailable === true
+					(
+						res.data.geoLocationProductsByPaging as ProductInfo[]
 					)
+						.filter(Boolean)
+						.filter(
+							(p) =>
+								p.warehouseProduct.isProductAvailable === true
+						)
 				),
 				share()
 			);
@@ -123,6 +131,7 @@ export class GeoLocationProductsService {
 			})
 			.toPromise();
 
-		return res.data['getCountOfGeoLocationProducts'];
+		// Apollo 4 resolves with data undefined when the request fails (e.g. the API is down).
+		return res.data?.['getCountOfGeoLocationProducts'] ?? 0;
 	}
 }

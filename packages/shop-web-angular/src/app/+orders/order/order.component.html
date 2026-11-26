@@ -31,7 +31,7 @@
 		[ngClass]="document.documentElement.dir === 'rtl' ? 'rtl' : 'ltr'"
 	>
 		<warehouse-logo
-			[logo]="warehouse?.logo"
+			[logo]="$safeNavigationMigration(warehouse?.logo)"
 			[border]="true"
 		></warehouse-logo>
 	</div>

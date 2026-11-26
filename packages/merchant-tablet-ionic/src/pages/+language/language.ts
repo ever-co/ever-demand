@@ -1,4 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	Inject,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DeviceRouter } from '@modules/client.common.angular2/routers/device-router.service';
 import { Store } from '../../services/store.service';
@@ -6,8 +11,10 @@ import ILanguage from '@modules/server.common/interfaces/ILanguage';
 import { DOCUMENT } from '@angular/common';
 
 @Component({
+	standalone: false,
 	selector: 'page-language',
 	templateUrl: 'language.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./language.scss'],
 })
 export class LanguagePage implements OnInit {
@@ -23,7 +30,7 @@ export class LanguagePage implements OnInit {
 		public translate: TranslateService,
 		private _deviceRouter: DeviceRouter,
 		private store: Store,
-		@Inject(DOCUMENT) private document: Document
+		@Inject(DOCUMENT) private document: Document,
 	) {}
 
 	ngOnInit() {
@@ -51,7 +58,7 @@ export class LanguagePage implements OnInit {
 	switchLanguage(language: string) {
 		this._deviceRouter.updateLanguage(
 			localStorage.getItem('_deviceId'),
-			this.language
+			this.language,
 		);
 		this.store.language = language;
 		this.translate.use(language);

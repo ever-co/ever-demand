@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { ToasterModule } from 'angular2-toaster';
-import { TranslateModule } from '@ngx-translate/core';
+import { ToasterModule } from '@app/@core/toaster';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { ThemeModule } from '../../@theme';
 import { ProfileComponent } from './profile.component';
 import { AdminsService } from '../../@core/data/admins.service';

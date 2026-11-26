@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Input,
+	OnInit,
+} from '@angular/core';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { first } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,6 +15,8 @@ const defaultDeliveryTimeMin = environment.DELIVERY_TIME_MIN;
 const defaultDeliveryTimeMax = environment.DELIVERY_TIME_MAX;
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'e-cu-delivery-info',
 	styleUrls: ['./delivery-info.scss'],
 	template: `

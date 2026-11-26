@@ -7,12 +7,13 @@ import {
 	Input,
 	OnChanges,
 	Output,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToasterService } from 'angular2-toaster';
-import { WizardComponent } from '@ever-co/angular2-wizard';
-import { LocalDataSource } from 'ng2-smart-table';
+import { ToasterService } from '@app/@core/toaster';
+import { WizardComponent } from '@app/@shared/wizard';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { Subject } from 'rxjs';
 import { takeUntil, first } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
@@ -23,12 +24,15 @@ import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehou
 import Order from '@modules/server.common/entities/Order';
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-select-view',
 	styleUrls: ['./warehouse-select-view.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './warehouse-select-view.component.html',
 })
 export class WarehouseSelectViewComponent
-	implements OnInit, OnDestroy, OnChanges {
+	implements OnInit, OnDestroy, OnChanges
+{
 	private _ngDestroy$ = new Subject<void>();
 
 	@Output()
@@ -47,7 +51,7 @@ export class WarehouseSelectViewComponent
 		private readonly modalService: NgbModal,
 		private warehouseRouter: WarehouseRouter,
 		private readonly _route: ActivatedRoute,
-		private readonly _toasterService: ToasterService
+		private readonly _toasterService: ToasterService,
 	) {}
 
 	ngOnChanges() {}

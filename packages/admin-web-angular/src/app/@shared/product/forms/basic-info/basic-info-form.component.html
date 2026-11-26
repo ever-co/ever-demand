@@ -84,7 +84,7 @@
 					</div>
 
 					<div
-						class="removeIcon pl-2 pr-2"
+						class="removeIcon ps-2 pe-2"
 						(click)="deleteImg(image)"
 					>
 						<div
@@ -160,19 +160,19 @@
 				'CATEGORY' | translate
 			}}</label>
 			<div class="col-sm-9">
-				<ss-multiselect-dropdown
-					[texts]="{
-						defaultTitle: 'SELECT' | translate,
-						searchEmptyResult:
-							'WAREHOUSE_VIEW.NEW_PRODUCT.NOTHING_FOUND'
-							| translate
-					}"
-					[options]="categoryOptions"
-					[settings]="{ displayAllSelectedText: true }"
+				<ng-select
+					[items]="categoryOptions"
+					bindLabel="name"
+					bindValue="id"
+					[multiple]="true"
+					[closeOnSelect]="false"
+					[searchable]="true"
+					[placeholder]="'SELECT' | translate"
+					[notFoundText]="'WAREHOUSE_VIEW.NEW_PRODUCT.NOTHING_FOUND' | translate"
 					formControlName="selectedProductCategories"
 					class="categoryOptions-dropdown"
 				>
-				</ss-multiselect-dropdown>
+				</ng-select>
 			</div>
 		</div>
 

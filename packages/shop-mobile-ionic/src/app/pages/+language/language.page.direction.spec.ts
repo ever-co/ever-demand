@@ -1,12 +1,16 @@
+import { vi } from 'vitest';
+import { createSpyObj } from 'app/testing/spies';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Location } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
 import { Platform } from '@ionic/angular';
 import {
+	TranslateDirective,
 	TranslateLoader,
-	TranslateModule,
+	TranslatePipe,
 	TranslateService,
 } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { DeviceRouter } from '@modules/client.common.angular2/routers/device-router.service';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
@@ -19,6 +23,9 @@ import { LanguagePage } from './language.page';
 // The app switches to a picked language only once its file arrives, so
 // the page direction and language must not wait for the Store language.
 describe('LanguagePage direction while the picked language file loads', () => {
+	// Jasmine restored spies after each spec; Vitest does not.
+	afterEach(() => vi.restoreAllMocks());
+
 	let savedLanguage: string | null;
 	let savedDir: string;
 	let savedLang: string;
@@ -37,6 +44,8 @@ describe('LanguagePage direction while the picked language file loads', () => {
 				TranslateModule.forRoot({
 					loader: { provide: TranslateLoader, useValue: loader },
 				}),
+				TranslatePipe,
+				TranslateDirective,
 			],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 			providers: [
@@ -50,13 +59,13 @@ describe('LanguagePage direction while the picked language file loads', () => {
 				},
 				{
 					provide: DeviceRouter,
-					useValue: jasmine.createSpyObj('DeviceRouter', {
+					useValue: createSpyObj('DeviceRouter', {
 						updateLanguage: Promise.resolve({ id: 'device-1' }),
 					}),
 				},
 				{
 					provide: Location,
-					useValue: jasmine.createSpyObj('Location', ['back']),
+					useValue: createSpyObj('Location', ['back']),
 				},
 				{ provide: InviteRouter, useValue: {} },
 				{ provide: UserRouter, useValue: {} },
@@ -69,7 +78,7 @@ describe('LanguagePage direction while the picked language file loads', () => {
 		loader.requests.forEach(load);
 		await settle();
 
-		expect(translate.currentLang).toBe(language);
+		expect(translate.getCurrentLang()).toBe(language);
 	};
 
 	// The customer picks a language whose file has not arrived yet.
@@ -77,7 +86,7 @@ describe('LanguagePage direction while the picked language file loads', () => {
 		TestBed.createComponent(LanguagePage).componentInstance.language =
 			language;
 
-		expect(translate.currentLang).not.toBe(language);
+		expect(translate.getCurrentLang()).not.toBe(language);
 	};
 
 	// The picked language file arrives.
@@ -87,7 +96,7 @@ describe('LanguagePage direction while the picked language file loads', () => {
 			.forEach(load);
 		await settle();
 
-		expect(translate.currentLang).toBe(language);
+		expect(translate.getCurrentLang()).toBe(language);
 	};
 
 	beforeEach(() => {
@@ -95,7 +104,7 @@ describe('LanguagePage direction while the picked language file loads', () => {
 		savedDir = document.documentElement.dir;
 		savedLang = document.documentElement.lang;
 
-		spyOnProperty(Store.prototype, 'deviceId', 'get').and.returnValue(
+		vi.spyOn(Store.prototype, 'deviceId', 'get').mockReturnValue(
 			'device-1'
 		);
 	});

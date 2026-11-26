@@ -1,9 +1,17 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	Output,
+	EventEmitter,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 
 @Component({
+	standalone: false,
 	selector: 'order-type',
 	templateUrl: './order-type.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./order-type.component.scss'],
 })
 export class OrderTypeComponent implements OnInit {

@@ -1,9 +1,16 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Input,
+	OnChanges,
+} from '@angular/core';
 import { OrdersService } from 'app/services/orders/orders.service';
 import { Store } from 'app/services/store.service';
 import { first } from 'rxjs/operators';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'e-cu-order-sign',
 	templateUrl: './order-sign.component.html',
 	styleUrls: ['./order-sign.component.scss'],

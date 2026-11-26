@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'ngxCapitalize' })
+@Pipe({ standalone: false, name: 'ngxCapitalize' })
 export class CapitalizePipe implements PipeTransform {
 	transform(input: string): string {
 		return input && input.length

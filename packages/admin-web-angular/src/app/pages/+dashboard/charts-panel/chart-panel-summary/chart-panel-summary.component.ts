@@ -1,8 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
+	standalone: false,
 	selector: 'ea-chart-panel-summary',
 	styleUrls: ['./chart-panel-summary.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './chart-panel-summary.component.html',
 })
 export class ChartPanelSummaryComponent {

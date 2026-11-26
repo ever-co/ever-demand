@@ -1,6 +1,15 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	ElementRef,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { FileUploader, FileUploaderOptions, FileItem } from 'ng2-file-upload';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import {
+	PhotoService,
+	PhotoSource,
+} from '../../../services/native/photo.service';
 import {
 	IProductCreateObject,
 	IProductImage,
@@ -17,12 +26,15 @@ import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
-import { ModalController, ActionSheetController } from '@ionic/angular';
+import { ActionSheetController } from '@ionic/angular/action-sheet-controller';
+import { ModalController } from '@ionic/angular/modal-controller';
 import { ProductImagesPopup } from '../product-pictures-popup/product-images-popup.component';
 
 @Component({
+	standalone: false,
 	selector: 'page-create-product-type-popup',
 	templateUrl: 'create-product-type-popup.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./create-product-type-popup.scss'],
 })
 export class CreateProductTypePopupPage implements OnInit {
@@ -69,14 +81,14 @@ export class CreateProductTypePopupPage implements OnInit {
 		private warehouseProductsRouter: WarehouseProductsRouter,
 		private warehouseRouter: WarehouseRouter,
 		public modalCtrl: ModalController,
-		private camera: Camera,
+		private photos: PhotoService,
 		public actionSheetCtrl: ActionSheetController,
 		private translate: TranslateService,
-		private readonly _productsCategorySrvice: ProductsCategoryService
+		private readonly _productsCategorySrvice: ProductsCategoryService,
 	) {
 		this.loadMerchantSettings();
 
-		this.translLang = this.translate.currentLang;
+		this.translLang = this.translate.getCurrentLang();
 		this.currentLocale =
 			this.localeTranslateService.takeSelectedLang(this.translLang) ||
 			'en-US';
@@ -101,7 +113,7 @@ export class CreateProductTypePopupPage implements OnInit {
 
 		this.uploader.onBuildItemForm = (
 			fileItem: any,
-			form: FormData
+			form: FormData,
 		): any => {
 			// Add Cloudinary's unsigned upload preset to the upload form
 			form.append('upload_preset', 'everbie-products-images');
@@ -110,7 +122,7 @@ export class CreateProductTypePopupPage implements OnInit {
 			if (this.productCreateObject.title) {
 				form.append(
 					'context',
-					`photo=${this.productCreateObject.title}`
+					`photo=${this.productCreateObject.title}`,
 				);
 				tags = `myphotoalbum,${this.productCreateObject.title}`;
 			}
@@ -190,7 +202,7 @@ export class CreateProductTypePopupPage implements OnInit {
 
 	get productTitle() {
 		return this.localeTranslateService.getMemberValue(
-			this.productCreateObject.title
+			this.productCreateObject.title,
 		);
 	}
 	set productTitle(title: string) {
@@ -199,7 +211,7 @@ export class CreateProductTypePopupPage implements OnInit {
 
 	get productDescription() {
 		return this.localeTranslateService.getMemberValue(
-			this.productCreateObject.description
+			this.productCreateObject.description,
 		);
 	}
 
@@ -273,11 +285,11 @@ export class CreateProductTypePopupPage implements OnInit {
 
 		this.localeTranslateService.assignPropertyValue(
 			this.productCreateObject.title,
-			'title'
+			'title',
 		);
 		this.localeTranslateService.assignPropertyValue(
 			this.productCreateObject.description,
-			'description'
+			'description',
 		);
 
 		this.productCreateObject.categories = this.productsCategories
@@ -285,8 +297,8 @@ export class CreateProductTypePopupPage implements OnInit {
 				(category) =>
 					this.selectedProductCategories &&
 					this.selectedProductCategories.some(
-						(categoryId) => categoryId === category.id
-					)
+						(categoryId) => categoryId === category.id,
+					),
 			)
 			.map((category) => {
 				return {
@@ -298,7 +310,7 @@ export class CreateProductTypePopupPage implements OnInit {
 			});
 
 		const product = await this.productRouter.create(
-			this.productCreateObject
+			this.productCreateObject,
 		);
 
 		this.warehouseProductCreateObject.product = product.id;
@@ -308,7 +320,8 @@ export class CreateProductTypePopupPage implements OnInit {
 		this.warehouseProductCreateObject.count =
 			this.warehouseProductCreateObject.count || 0;
 
-		this.warehouseProductCreateObject.isDeliveryRequired = this.takaProductDelivery;
+		this.warehouseProductCreateObject.isDeliveryRequired =
+			this.takaProductDelivery;
 		this.warehouseProductCreateObject.isTakeaway = this.takaProductTakeaway;
 
 		await this.warehouseProductsRouter.add(this.warehouseId, [
@@ -318,29 +331,18 @@ export class CreateProductTypePopupPage implements OnInit {
 		this.cancelModal();
 	}
 
-	takePicture(sourceType: number) {
-		const options: CameraOptions = {
-			quality: 50,
-			destinationType: this.camera.DestinationType.DATA_URL,
-			encodingType: this.camera.EncodingType.JPEG,
-			mediaType: this.camera.MediaType.PICTURE,
-			correctOrientation: true,
-			sourceType,
-		};
-
-		this.camera.getPicture(options).then(
-			async (imageData) => {
-				const base64Image = 'data:image/jpeg;base64,' + imageData;
-				const file = await this.urltoFile(
-					base64Image,
-					this.createFileName(),
-					'image/jpeg'
-				);
-				const fileItem = new FileItem(this.uploader, file, {});
-				this.uploader.queue.push(fileItem);
-			},
-			(err) => {}
-		);
+	takePicture(sourceType: PhotoSource) {
+		this.photos.pick(sourceType).then((file) => {
+			if (!file) {
+				return;
+			}
+			const fileItem = new FileItem(
+				this.uploader,
+				file,
+				this.uploader.options,
+			);
+			this.uploader.queue.push(fileItem);
+		});
 	}
 
 	urltoFile(url, filename, mimeType) {
@@ -360,15 +362,13 @@ export class CreateProductTypePopupPage implements OnInit {
 				{
 					text: 'Load from Library',
 					handler: () => {
-						this.takePicture(
-							this.camera.PictureSourceType.PHOTOLIBRARY
-						);
+						this.takePicture('library');
 					},
 				},
 				{
 					text: 'Use Camera',
 					handler: () => {
-						this.takePicture(this.camera.PictureSourceType.CAMERA);
+						this.takePicture('camera');
 					},
 				},
 				{ text: 'Cancel', role: 'cancel' },
@@ -437,7 +437,7 @@ export class CreateProductTypePopupPage implements OnInit {
 			this.uploader.onSuccessItem = (
 				item: any,
 				response: string,
-				status: number
+				status: number,
 			) => {
 				const data = JSON.parse(response);
 				const locale = this.currentLocale;

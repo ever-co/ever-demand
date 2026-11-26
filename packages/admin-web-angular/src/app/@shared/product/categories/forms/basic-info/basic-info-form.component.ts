@@ -5,6 +5,7 @@ import {
 	OnInit,
 	AfterViewInit,
 	Input,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import {
 	FormGroup,
@@ -12,14 +13,16 @@ import {
 	AbstractControl,
 	FormBuilder,
 } from '@angular/forms';
-import * as isUrl from 'is-url';
+import isUrl from 'is-url';
 import * as _ from 'underscore';
 import { TranslateService } from '@ngx-translate/core';
 import { IProductsCategoryCreateObject } from '@modules/server.common/interfaces/IProductsCategory';
 
 @Component({
+	standalone: false,
 	selector: 'ea-product-category-basic-info-form',
 	templateUrl: 'basic-info-form.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['basic-info-form.component.scss'],
 })
 export class BasicInfoFormComponent implements OnInit, AfterViewInit {
@@ -48,7 +51,7 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 
 	constructor(
 		private readonly fb: FormBuilder,
-		private readonly _langTranslateService: TranslateService
+		private readonly _langTranslateService: TranslateService,
 	) {}
 
 	get image() {
@@ -68,7 +71,7 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 	}
 
 	get usedLanguage() {
-		const usedLanguage = this._langTranslateService.currentLang;
+		const usedLanguage = this._langTranslateService.getCurrentLang();
 		switch (usedLanguage) {
 			case 'en-US':
 				return 'en-US';
@@ -111,9 +114,9 @@ export class BasicInfoFormComponent implements OnInit, AfterViewInit {
 					? {
 							locale: usedLanguage,
 							value: this.name.value,
-					  }
+						}
 					: { locale, value };
-			}
+			},
 		);
 		if (!newCategoryNames.some((c) => c.locale === usedLanguage)) {
 			newCategoryNames.push({

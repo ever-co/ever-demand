@@ -1,17 +1,18 @@
+import { createSpyObj, type SpyObj } from 'app/testing/spies';
+import { vi } from 'vitest';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Location } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
-import { Device } from '@ionic-native/device/ngx';
-import { Network } from '@ionic-native/network/ngx';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {
+	TranslateDirective,
 	TranslateLoader,
-	TranslateModule,
+	TranslatePipe,
 	TranslateService,
 } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
+import { NativeService } from './services/native/native.service';
 import { DeviceRouter } from '@modules/client.common.angular2/routers/device-router.service';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
@@ -25,13 +26,16 @@ import { ManualLoader } from './testing/manual-loader';
 // On first start the app registers a new device. The customer can open
 // the menu and pick a language before the server answers.
 describe('AppComponent device language on first start', () => {
+	// Jasmine restored spies after each spec; Vitest does not.
+	afterEach(() => vi.restoreAllMocks());
+
 	// What the specs change in the browser, put back after each spec.
 	const keys = ['_deviceId', '_language'];
 	let savedValues: (string | null)[];
 	let savedDir: string;
 	let savedLang: string;
 
-	let deviceRouter: jasmine.SpyObj<DeviceRouter>;
+	let deviceRouter: SpyObj<DeviceRouter>;
 	// Answers create, which waits until the spec calls this.
 	let answerCreate: (device: { id: string }) => void = () => {};
 
@@ -39,7 +43,7 @@ describe('AppComponent device language on first start', () => {
 	// file arrives, as on a slow network. beforeCreate runs before the
 	// app sends create.
 	const startApp = async (beforeCreate: () => void = () => {}) => {
-		deviceRouter = jasmine.createSpyObj('DeviceRouter', {
+		deviceRouter = createSpyObj('DeviceRouter', {
 			create: new Promise((resolve) => (answerCreate = resolve)),
 			updateLanguage: Promise.resolve({ id: 'device-1' }),
 		});
@@ -53,6 +57,8 @@ describe('AppComponent device language on first start', () => {
 						useValue: new ManualLoader(),
 					},
 				}),
+				TranslatePipe,
+				TranslateDirective,
 			],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 			providers: [
@@ -65,32 +71,29 @@ describe('AppComponent device language on first start', () => {
 					},
 				},
 				{
-					provide: StatusBar,
-					useValue: jasmine.createSpyObj('StatusBar', [
-						'styleBlackOpaque',
-					]),
-				},
-				{
-					provide: SplashScreen,
-					useValue: jasmine.createSpyObj('SplashScreen', ['hide']),
+					provide: NativeService,
+					useValue: {
+						isNative: () => false,
+						platform: () => 'web',
+						deviceId: () => Promise.resolve('uuid-1'),
+						languageCode: () => Promise.resolve('en'),
+						networkStatus: () =>
+							Promise.resolve({ connected: true, connectionType: 'wifi' }),
+						onNetworkStatusChange: () =>
+							Promise.resolve({ remove: () => Promise.resolve() }),
+						useDarkStatusBar: () => Promise.resolve(),
+						hideSplashScreen: () => Promise.resolve(),
+					},
 				},
 				{
 					provide: Router,
-					useValue: jasmine.createSpyObj('Router', ['navigate']),
+					useValue: createSpyObj('Router', ['navigate']),
 				},
 				{ provide: DeviceRouter, useValue: deviceRouter },
 				{
 					provide: Location,
-					useValue: jasmine.createSpyObj('Location', ['back']),
+					useValue: createSpyObj('Location', ['back']),
 				},
-				{
-					provide: Network,
-					useValue: jasmine.createSpyObj('Network', {
-						onDisconnect: NEVER,
-						onConnect: NEVER,
-					}),
-				},
-				{ provide: Device, useValue: {} },
 				{ provide: InviteRouter, useValue: {} },
 				{ provide: UserRouter, useValue: {} },
 			],
@@ -114,7 +117,7 @@ describe('AppComponent device language on first start', () => {
 		savedDir = document.documentElement.dir;
 		savedLang = document.documentElement.lang;
 
-		spyOn(TranslateService.prototype, 'getBrowserLang').and.returnValue(
+		vi.spyOn(TranslateService.prototype, 'getBrowserLang').mockReturnValue(
 			'en'
 		);
 	});
@@ -133,8 +136,8 @@ describe('AppComponent device language on first start', () => {
 
 	it('saves a language picked while create is pending on the new device', async () => {
 		await startApp();
-		expect(deviceRouter.create).toHaveBeenCalledOnceWith(
-			jasmine.objectContaining({ language: 'en-US' })
+		expect(deviceRouter.create).toHaveBeenCalledExactlyOnceWith(
+			expect.objectContaining({ language: 'en-US' })
 		);
 
 		pick('he-IL');
@@ -144,7 +147,7 @@ describe('AppComponent device language on first start', () => {
 		answerCreate({ id: 'device-1' });
 		await settle();
 
-		expect(deviceRouter.updateLanguage).toHaveBeenCalledOnceWith(
+		expect(deviceRouter.updateLanguage).toHaveBeenCalledExactlyOnceWith(
 			'device-1',
 			'he-IL'
 		);
@@ -153,14 +156,14 @@ describe('AppComponent device language on first start', () => {
 	it('saves a language picked before create, while its file still loads, on the new device', async () => {
 		await startApp(() => pick('he-IL'));
 		// The he-IL file has not arrived, so the app still shows en-US.
-		expect(deviceRouter.create).toHaveBeenCalledOnceWith(
-			jasmine.objectContaining({ language: 'en-US' })
+		expect(deviceRouter.create).toHaveBeenCalledExactlyOnceWith(
+			expect.objectContaining({ language: 'en-US' })
 		);
 
 		answerCreate({ id: 'device-1' });
 		await settle();
 
-		expect(deviceRouter.updateLanguage).toHaveBeenCalledOnceWith(
+		expect(deviceRouter.updateLanguage).toHaveBeenCalledExactlyOnceWith(
 			'device-1',
 			'he-IL'
 		);
@@ -172,8 +175,8 @@ describe('AppComponent device language on first start', () => {
 		answerCreate({ id: 'device-1' });
 		await settle();
 
-		expect(deviceRouter.create).toHaveBeenCalledOnceWith(
-			jasmine.objectContaining({ language: 'en-US' })
+		expect(deviceRouter.create).toHaveBeenCalledExactlyOnceWith(
+			expect.objectContaining({ language: 'en-US' })
 		);
 		expect(localStorage.getItem('_deviceId')).toBe('device-1');
 		expect(deviceRouter.updateLanguage).not.toHaveBeenCalled();
@@ -186,28 +189,28 @@ describe('AppComponent device language on first start', () => {
 		answerCreate({ id: 'device-1' });
 		await settle();
 
-		expect(deviceRouter.create).toHaveBeenCalledOnceWith(
-			jasmine.objectContaining({ language: 'fr-FR' })
+		expect(deviceRouter.create).toHaveBeenCalledExactlyOnceWith(
+			expect.objectContaining({ language: 'fr-FR' })
 		);
 		expect(deviceRouter.updateLanguage).not.toHaveBeenCalled();
 	});
 
 	it('keeps the new device and logs when the server rejects the language', async () => {
 		const rejection = new Error('Device does not exist');
-		spyOn(console, 'error');
+		vi.spyOn(console, 'error');
 
 		await startApp();
-		deviceRouter.updateLanguage.and.rejectWith(rejection);
+		deviceRouter.updateLanguage.mockRejectedValue(rejection);
 		pick('he-IL');
 		answerCreate({ id: 'device-1' });
 		await settle();
 
-		expect(deviceRouter.updateLanguage).toHaveBeenCalledOnceWith(
+		expect(deviceRouter.updateLanguage).toHaveBeenCalledExactlyOnceWith(
 			'device-1',
 			'he-IL'
 		);
 		expect(console.error).toHaveBeenCalledWith(
-			jasmine.any(String),
+			expect.any(String),
 			rejection
 		);
 		expect(localStorage.getItem('_deviceId')).toBe('device-1');

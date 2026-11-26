@@ -1,8 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import {
+	Component,
+	OnInit,
+	Input,
+	ChangeDetectionStrategy,
+} from '@angular/core';
+import { ViewCell } from '../../../../components/table-components/smart-table';
 import Carrier from '@modules/server.common/entities/Carrier';
 
 @Component({
+	standalone: false,
 	styles: [
 		`
 			h1 {
@@ -15,6 +21,7 @@ import Carrier from '@modules/server.common/entities/Carrier';
 			}
 		`,
 	],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<strong
 			>{{ carrier?.geoLocation.city }}

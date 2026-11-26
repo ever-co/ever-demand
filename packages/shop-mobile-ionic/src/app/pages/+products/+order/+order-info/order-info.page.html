@@ -12,11 +12,11 @@
 				<div class="box-top">
 					<h4 class="main-title mt-0">{{ byPopupStatuses.TITLE }}</h4>
 
-					<div style="font-size: 80%;">
+					<div style="font-size: 80%">
 						{{ byPopupStatuses.DETAILS }}
 					</div>
 
-					<div style="font-size: 80%;" ng-if="!order?.isPaid">
+					<div style="font-size: 80%" ng-if="!order?.isPaid">
 						{{ byPopupStatuses.NOT_PAID_NOTE }}
 					</div>
 				</div>
@@ -25,7 +25,7 @@
 					<i class="fa fa-shopping-basket"></i>
 					<span
 						(click)="showProductsModal()"
-						style="text-decoration: underline; margin-left: 5px;"
+						style="text-decoration: underline; margin-left: 5px"
 						>{{'BUY_POPUP.VIEW_ORDER_PRODUCTS' | translate}}</span
 					>
 				</div>
@@ -34,8 +34,8 @@
 		<div class="maps">
 			<!-- <div [hidden]='order?.carrier' #gmap id="mapDiv" class="map-content"></div> -->
 			<e-cu-directions-location
-				[origin]="order?.carrier?.geoLocation"
-				[destination]="order?.user?.geoLocation"
+				[origin]="$safeNavigationMigration(order?.carrier?.geoLocation)"
+				[destination]="$safeNavigationMigration(order?.user?.geoLocation)"
 				*ngIf="isCarrierCurrent"
 			></e-cu-directions-location>
 			<e-cu-user-warehouse-location

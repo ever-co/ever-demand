@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 import { Country } from '@modules/server.common/entities/GeoLocation';
-import * as faker from 'faker';
+import { faker } from '@faker-js/faker';
 import { ICarrierRegistrationInput } from '@modules/server.common/routers/ICarrierRouter';
 import { environment } from 'environments/environment';
 
@@ -19,35 +19,35 @@ export default class FakeDataCarriers {
 		lng && lat
 			? {
 					generate: () => {
-						const firstName = faker.name.firstName();
+						const firstName = faker.person.firstName();
 
 						return {
 							carrier: {
 								isDeleted: false,
 								firstName,
-								lastName: faker.name.lastName(),
-								status: faker.datatype.number({
+								lastName: faker.person.lastName(),
+								status: faker.number.int({
 									min: 0,
 									max: 2,
 								}) as CarrierStatus,
-								phone: faker.phone.phoneNumber(),
-								username: faker.internet.userName(),
+								phone: faker.phone.number(),
+								username: faker.internet.username(),
 								logo: faker.image.avatar(),
-								numberOfDeliveries: faker.datatype.number({
+								numberOfDeliveries: faker.number.int({
 									min: 200,
 									max: 20000,
 								}),
-								deliveriesCountToday: faker.datatype.number({
+								deliveriesCountToday: faker.number.int({
 									min: 0,
 									max: 60,
 								}),
 								isSharedCarrier: true,
 								geoLocation: {
-									city: faker.address.city(),
-									postcode: faker.address.zipCode(),
-									streetAddress: faker.address.streetAddress(),
-									house: faker.datatype.number(199).toString(),
-									countryId: faker.datatype.number(
+									city: faker.location.city(),
+									postcode: faker.location.zipCode(),
+									streetAddress: faker.location.streetAddress(),
+									house: faker.number.int(199).toString(),
+									countryId: faker.number.int(
 										220
 									) as Country,
 									loc: {
@@ -72,11 +72,11 @@ export default class FakeDataCarriers {
 							phone: '052-315-2346',
 							username: 'mike',
 							logo: faker.image.avatar(),
-							numberOfDeliveries: faker.datatype.number({
+							numberOfDeliveries: faker.number.int({
 								min: 200,
 								max: 20000,
 							}),
-							deliveriesCountToday: faker.datatype.number({
+							deliveriesCountToday: faker.number.int({
 								min: 0,
 								max: 60,
 							}),
@@ -108,11 +108,11 @@ export default class FakeDataCarriers {
 							phone: '052-311-5711',
 							username: 'tom',
 							logo: faker.image.avatar(),
-							numberOfDeliveries: faker.datatype.number({
+							numberOfDeliveries: faker.number.int({
 								min: 200,
 								max: 20000,
 							}),
-							deliveriesCountToday: faker.datatype.number({
+							deliveriesCountToday: faker.number.int({
 								min: 0,
 								max: 60,
 							}),
@@ -143,11 +143,11 @@ export default class FakeDataCarriers {
 							phone: '052-311-5711',
 							username: 'josh',
 							logo: faker.image.avatar(),
-							numberOfDeliveries: faker.datatype.number({
+							numberOfDeliveries: faker.number.int({
 								min: 200,
 								max: 20000,
 							}),
-							deliveriesCountToday: faker.datatype.number({
+							deliveriesCountToday: faker.number.int({
 								min: 0,
 								max: 60,
 							}),

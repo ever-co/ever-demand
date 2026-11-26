@@ -1,4 +1,10 @@
-import { Input, Component, ViewChild, EventEmitter } from '@angular/core';
+import {
+	Input,
+	Component,
+	ViewChild,
+	EventEmitter,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { IWarehouseCreateObject } from '@modules/server.common/interfaces/IWarehouse';
 import { WarehouseManageTabsDetailsComponent } from './details/warehouse-manage-tabs-details.component';
@@ -24,8 +30,10 @@ export type WarehouseManageTabs = Pick<
 >;
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-manage-tabs',
 	styleUrls: ['./warehouse-manage-tabs.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './warehouse-manage-tabs.component.html',
 })
 export class WarehouseManageTabsComponent {
@@ -35,9 +43,10 @@ export class WarehouseManageTabsComponent {
 			account: WarehouseManageTabsAccountComponent.buildForm(formBuilder),
 			contactInfo: ContactInfoFormComponent.buildForm(formBuilder),
 			location: LocationFormComponent.buildForm(formBuilder),
-			deliverAreas: WarehouseManageTabsDeliveryAreasComponent.buildForm(
-				formBuilder
-			),
+			deliverAreas:
+				WarehouseManageTabsDeliveryAreasComponent.buildForm(
+					formBuilder,
+				),
 		});
 	}
 
@@ -138,8 +147,8 @@ export class WarehouseManageTabsComponent {
 			deliveryAreas: deliveryAreasRaw,
 			isPaymentEnabled: this.paymentsSettingsForm.isPaymentEnabled,
 			paymentsGateways: this.paymentsSettingsForm.paymentsGateways,
-			isCashPaymentEnabled: this.paymentsSettingsForm
-				.isCashPaymentEnabled,
+			isCashPaymentEnabled:
+				this.paymentsSettingsForm.isCashPaymentEnabled,
 		};
 		return inputResult;
 	}

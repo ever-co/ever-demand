@@ -6,9 +6,10 @@ import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Store } from '../data/store.service';
 import Admin from '@modules/server.common/entities/Admin';
-import { NbAuthStrategyClass } from '@nebular/auth/auth.options';
+import { NbAuthStrategyClass } from '@nebular/auth';
 import { IAdminLoginResponse } from '@modules/server.common/routers/IAdminRouter';
 import { getDummyImage } from '@modules/server.common/utils';
+import { resultErrors } from '@app/graphql/result-errors';
 
 @Injectable()
 export class AdminAuthStrategy extends NbAuthStrategy {
@@ -131,8 +132,9 @@ export class AdminAuthStrategy extends NbAuthStrategy {
 					}
 					*/
 					(res: any) => {
-						const { data, errors } = res;
-						const isSuccessful = !!data.adminLogin;
+						const data = res.data;
+						const errors = resultErrors(res);
+						const isSuccessful = !!data?.adminLogin;
 
 						if (errors) {
 							return new NbAuthResult(
@@ -240,8 +242,9 @@ export class AdminAuthStrategy extends NbAuthStrategy {
 					res: { data: { registerAdmin: Admin }; errors }
 				*/
 				map((res: any) => {
-					const { data, errors } = res;
-					const admin = data.registerAdmin;
+					const data = res.data;
+					const errors = resultErrors(res);
+					const admin = data?.registerAdmin;
 
 					if (errors) {
 						return new NbAuthResult(
@@ -296,7 +299,7 @@ export class AdminAuthStrategy extends NbAuthStrategy {
 
 		this.store.serverConnection = '200';
 
-		await this.apollo.getClient().resetStore();
+		await this.apollo.client.resetStore();
 
 		return new NbAuthResult(
 			true,

@@ -1,0 +1,22 @@
+# Build context filter for .deploy/carrier-mobile-ionic/Dockerfile (BuildKit reads <Dockerfile>.dockerignore)
+**/node_modules
+**/.angular
+**/www
+**/dist
+**/coverage
+**/.env
+**/graphify-out
+.git
+packages/core
+packages/admin-web-angular
+packages/merchant-tablet-ionic
+packages/shop-mobile-expo
+packages/shop-mobile-flutter
+packages/shop-mobile-ionic
+packages/shop-web-angular
+packages/shop-web-gatsby
+packages/carrier-mobile-ionic/src/environments/environment.ts
+packages/carrier-mobile-ionic/src/environments/environment.prod.ts
+packages/carrier-mobile-ionic/android
+packages/carrier-mobile-ionic/ios
+e2e

@@ -1,33 +1,45 @@
 /* this file will be extracted to main dist folder and is imported in index.html */
 /* This file is for setting global styles  */
-@import 'variables';
-@import '@angular/material/theming';
-@import '~bootstrap/dist/css/bootstrap.min.css';
+@use '@angular/material' as mat;
+@use 'variables' as *;
 
-// Plus imports for other components in your app.
+// Bootstrap 5 CSS comes first in angular.json "styles", so Material wins where they overlap.
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat-core();
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue.
-$app-primary: mat-palette($ever-md-primary);
-$app-accent: mat-palette($ever-md-accent);
+// Define the palettes for your theme using the Material Design palettes (M2 theming API,
+// which keeps the colours of the original Material 2 look of the shop).
+$app-primary: mat.m2-define-palette($ever-md-primary);
+$app-accent: mat.m2-define-palette($ever-md-accent);
 
 // The warn palette is optional (defaults to red).
-$app-warn: mat-palette($ever-md-accent);
+$app-warn: mat.m2-define-palette($ever-md-accent);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+$app-theme: mat.m2-define-light-theme(
+	(
+		color: (
+			primary: $app-primary,
+			accent: $app-accent,
+			warn: $app-warn,
+		),
+		typography: mat.m2-define-typography-config(),
+		density: 0,
+	)
+);
+
+// Include the common styles for Angular Material. Be sure that you only ever include this once!
+@include mat.elevation-classes();
+@include mat.app-background();
 
 // Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include angular-material-theme($app-theme);
-// @import '~material-components-web/material-components-web';
+@include mat.all-component-themes($app-theme);
+
+// The shop was designed with the legacy (underline only) form field: no filled background.
+@include mat.form-field-overrides(
+	(
+		filled-container-color: transparent,
+		filled-disabled-container-color: transparent,
+	)
+);
 
 nav {
 	margin-top: 16px;
@@ -183,12 +195,9 @@ body {
 }
 
 .search-products {
-	.mat-form-field-ripple {
-		background-color: $assertive-lighted !important;
-	}
-
-	.mat-form-field-underline {
-		background-color: $assertive-lighted !important;
+	.mdc-line-ripple::before,
+	.mdc-line-ripple::after {
+		border-bottom-color: $assertive-lighted !important;
 	}
 }
 
@@ -215,13 +224,13 @@ body {
 			height: 100%;
 		}
 
-		mat-card.product-card.pt-0.mat-card.grid-view {
+		mat-card.product-card.pt-0.grid-view {
 			width: 100% !important;
 			height: 100% !important;
 		}
 	}
 }
 
-.app-dialog-container .mat-dialog-container {
+.app-dialog-container .mat-mdc-dialog-surface {
 	padding: 0;
 }

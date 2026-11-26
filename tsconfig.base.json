@@ -1,54 +1,26 @@
 {
 	"compileOnSave": false,
 	"compilerOptions": {
-		"composite": false,
-		"declaration": false,
-		"declarationMap": false,
-		"downlevelIteration": true,
+		"target": "es2022",
+		"lib": ["es2024", "dom", "dom.iterable"],
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"useDefineForClassFields": false,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"resolveJsonModule": true,
 		"forceConsistentCasingInFileNames": true,
+		"skipLibCheck": true,
 		"sourceMap": true,
 		"importHelpers": true,
-		"target": "es2016",
-		"module": "commonjs",
-		"moduleResolution": "node",
-		"baseUrl": "./",
-		"rootDir": "./",
-		"noLib": false,
-		"skipLibCheck": true,
-		"skipDefaultLibCheck": true,
-		"strictNullChecks": false,
 		"removeComments": true,
-		"lib": ["dom", "es2018", "esnext.array", "esnext.asynciterable"],
-		"plugins": [
-			{
-				"name": "tslint-language-service"
-			}
-		],
 		"preserveConstEnums": true,
-		"allowSyntheticDefaultImports": true,
-		"noUnusedLocals": false,
+		"strict": false,
 		"noImplicitAny": false,
-		"esModuleInterop": false,
-		"resolveJsonModule": true,
-		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true,
-		"typeRoots": ["node_modules/@types"]
-	},
-	"files": ["node_modules/@types/node/index.d.ts"],
-	"exclude": [
-		"coverage/**/*",
-		"tmp",
-		"node_modules",
-		"dist/**/*",
-		"build",
-		"lib",
-		"test",
-		"__tests__",
-		"**/*.test*",
-		"**/*.spec*",
-		"packages/*/node_modules",
-		"packages/*/lib",
-		"packages/*/dist",
-		"packages/*/build"
-	]
+		"strictNullChecks": false,
+		"noUnusedLocals": false,
+		"types": ["node"]
+	}
 }

@@ -1,17 +1,24 @@
+// Unit tests (src/**/*.spec.ts). The API e2e suite has its own config: jest.e2e.config.js.
+//
+// Nest 12, inversify 8, uuid, faker, envalid, ... ship only ES modules. Our code is
+// CommonJS and loads them with require(esm), which Jest supports natively when Node
+// runs with --experimental-vm-modules (set by the `test` scripts in package.json).
+
+/** @type {import('jest').Config} */
 module.exports = {
-	roots: ['<rootDir>/src'],
-	testURL: 'http://localhost',
+	rootDir: 'src',
 	testEnvironment: 'node',
+	testRegex: '\\.spec\\.ts$',
+	moduleFileExtensions: ['ts', 'js', 'mjs', 'cjs', 'json', 'node'],
 	transform: {
-		'^.+\\.tsx?$': 'ts-jest',
+		'^.+\\.ts$': ['ts-jest', { tsconfig: '<rootDir>/../tsconfig.spec.json' }],
 	},
-	testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
-	moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
 	moduleNameMapper: {
-		'^@pyro/db-server(.*)$': '<rootDir>/src/@pyro/db-server$1',
-		'^@pyro/db(.*)$': '<rootDir>/../common/src/@pyro/db$1',
-		'^@pyro/io(.*)$': '<rootDir>/src/@pyro/io$1',
-		'^@modules/server.common(.*)$': '<rootDir>/../common/src$1',
-		'^@modules(.*)$': '<rootDir>/src/modules$1',
+		'^@pyro/db-server(.*)$': '<rootDir>/@pyro/db-server$1',
+		'^@pyro/io(.*)$': '<rootDir>/@pyro/io$1',
+		'^@pyro/db(.*)$': '<rootDir>/../../common/src/@pyro/db$1',
+		'^@modules/server.common(.*)$': '<rootDir>/../../common/src$1',
 	},
+	coverageDirectory: '../coverage',
+	collectCoverageFrom: ['**/*.ts', '!**/*.spec.ts', '!test/**'],
 };

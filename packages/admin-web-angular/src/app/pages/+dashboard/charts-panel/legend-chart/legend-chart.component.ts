@@ -1,10 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { NgxLegendItemColor } from './enum.legend-item-color';
 
 @Component({
+	standalone: false,
 	selector: 'ea-legend-chart',
 	styleUrls: ['./legend-chart.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './legend-chart.component.html',
 })
 export class LegendChartComponent {

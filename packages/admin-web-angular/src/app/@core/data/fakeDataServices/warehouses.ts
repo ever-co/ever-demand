@@ -5,7 +5,7 @@ import ForwardOrdersMethod from '@modules/server.common/enums/ForwardOrdersMetho
 import { IWarehouseRegistrationInput } from '@modules/server.common/routers/IWarehouseRouter';
 import { getFakeImg } from '@modules/server.common/utils';
 import { environment } from 'environments/environment';
-import * as faker from 'faker';
+import { faker } from '@faker-js/faker';
 import { random } from 'underscore';
 // import { _appIdRandomProviderFactory } from '@angular/core/src/application_tokens';
 
@@ -26,16 +26,16 @@ export default class FakeDataWarehouses {
 		lng && lat
 			? {
 					generate: () => {
-						const warehouseName = faker.company.companyName();
+						const warehouseName = faker.company.name();
 
 						return {
 							warehouse: {
 								name: `Restaurant ${warehouseName}`,
 								isActive: true,
-								username: faker.internet.userName(),
+								username: faker.internet.username(),
 								logo: getFakeImg(200, 200, 75, warehouseName),
 								contactEmail: faker.internet.email(),
-								contactPhone: faker.phone.phoneNumber(),
+								contactPhone: faker.phone.number(),
 								ordersEmail: null,
 								ordersPhone: null,
 								forwardOrdersUsing: [
@@ -45,11 +45,11 @@ export default class FakeDataWarehouses {
 								isCarrierRequired: true,
 								usedCarriersIds: [],
 								geoLocation: {
-									city: faker.address.city(),
-									postcode: faker.address.zipCode(),
-									streetAddress: faker.address.streetAddress(),
-									house: faker.datatype.number(199).toString(),
-									countryId: faker.datatype.number(
+									city: faker.location.city(),
+									postcode: faker.location.zipCode(),
+									streetAddress: faker.location.streetAddress(),
+									house: faker.number.int(199).toString(),
+									countryId: faker.number.int(
 										1
 									) as Country,
 									loc: {
@@ -70,7 +70,7 @@ export default class FakeDataWarehouses {
 							username: 'restaurant_pizza',
 							logo: getFakeImg(200, 200, 75, 'Pizza Dan'),
 							contactEmail: faker.internet.email(),
-							contactPhone: faker.phone.phoneNumber(),
+							contactPhone: faker.phone.number(),
 							forwardOrdersUsing: [
 								ForwardOrdersMethod.Unselected,
 							],
@@ -104,7 +104,7 @@ export default class FakeDataWarehouses {
 							username: 'hut_pizza',
 							logo: getFakeImg(200, 200, 75, 'Pizza Hit'),
 							contactEmail: faker.internet.email(),
-							contactPhone: faker.phone.phoneNumber(),
+							contactPhone: faker.phone.number(),
 							forwardOrdersUsing: [
 								ForwardOrdersMethod.Unselected,
 							],
@@ -138,7 +138,7 @@ export default class FakeDataWarehouses {
 							username: 'trova_pizza',
 							logo: getFakeImg(200, 200, 75, 'Pizza Troya'),
 							contactEmail: faker.internet.email(),
-							contactPhone: faker.phone.phoneNumber(),
+							contactPhone: faker.phone.number(),
 							forwardOrdersUsing: [
 								ForwardOrdersMethod.Unselected,
 							],
@@ -172,7 +172,7 @@ export default class FakeDataWarehouses {
 							username: 'dominex_pizza',
 							logo: getFakeImg(200, 200, 75, 'Pizza Pizza'),
 							contactEmail: faker.internet.email(),
-							contactPhone: faker.phone.phoneNumber(),
+							contactPhone: faker.phone.number(),
 							forwardOrdersUsing: [
 								ForwardOrdersMethod.Unselected,
 							],
@@ -223,11 +223,11 @@ export default class FakeDataWarehouses {
 	getNewGeoLocation1(): IGeoLocationCreateObject {
 		if (lng && lat) {
 			return {
-				city: faker.address.city(),
-				postcode: faker.address.zipCode(),
-				streetAddress: faker.address.streetAddress(),
-				house: faker.datatype.number(199).toString(),
-				countryId: faker.datatype.number(1) as Country,
+				city: faker.location.city(),
+				postcode: faker.location.zipCode(),
+				streetAddress: faker.location.streetAddress(),
+				house: faker.number.int(199).toString(),
+				countryId: faker.number.int(1) as Country,
 				loc: {
 					type: 'Point',
 					coordinates: [lng + 0.05, lat - 0.08],

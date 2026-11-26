@@ -1,12 +1,14 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 
 @Component({
+	standalone: false,
 	selector: 'order-with-carrier',
 	templateUrl: 'order-with-carrier.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./order-with-carrier.scss'],
 })
 export class OrderWithCarrierComponent {

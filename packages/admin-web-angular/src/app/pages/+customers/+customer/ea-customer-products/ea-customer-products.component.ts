@@ -1,6 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { takeUntil } from 'rxjs/operators';
@@ -15,9 +20,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { firstValueFrom, forkJoin, Observable, Subject } from 'rxjs';
 
 @Component({
+	standalone: false,
 	selector: 'ea-customer-products',
 	templateUrl: './ea-customer-products.component.html',
-	styleUrls: ['./ea-customer-products.scss']
+	changeDetection: ChangeDetectionStrategy.Eager,
+	styleUrls: ['./ea-customer-products.scss'],
 })
 export class CustomerProductsComponent implements OnDestroy, OnInit {
 	private ngDestroy$ = new Subject<void>();
@@ -38,13 +45,11 @@ export class CustomerProductsComponent implements OnDestroy, OnInit {
 		private readonly _router: ActivatedRoute,
 		private readonly _sanitizer: DomSanitizer,
 		private readonly _warehousesService: WarehousesService,
-		private _translateService: TranslateService
+		private _translateService: TranslateService,
 	) {
 		this.params$ = this._router.params.subscribe(async (res) => {
 			this.userId = res.id;
-			const user = await firstValueFrom(
-				this.userRouter.get(this.userId)
-			);
+			const user = await firstValueFrom(this.userRouter.get(this.userId));
 			if (user == null) {
 				throw new Error(`User can't be found (id: ${this.userId})`);
 			}
@@ -81,7 +86,7 @@ export class CustomerProductsComponent implements OnDestroy, OnInit {
 			getTranslate('PRICE'),
 			getTranslate('STORE'),
 			getTranslate('AVAILABLE_COUNT'),
-			getTranslate('ORDER')
+			getTranslate('ORDER'),
 		)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(([id, prod, price, store, availableCount, order]) => {
@@ -98,13 +103,13 @@ export class CustomerProductsComponent implements OnDestroy, OnInit {
 							type: 'html',
 							valuePrepareFunction: (
 								val,
-								product: ProductInfo
+								product: ProductInfo,
 							) => {
 								return this._sanitizer.bypassSecurityTrustHtml(
 									`<div class="product">
 											<p>${product.warehouseProduct.price}</p>
 										</div>
-									</div>`
+									</div>`,
 								);
 							},
 						},
@@ -118,13 +123,13 @@ export class CustomerProductsComponent implements OnDestroy, OnInit {
 							type: 'html',
 							valuePrepareFunction: (
 								val,
-								product: ProductInfo
+								product: ProductInfo,
 							) => {
 								return this._sanitizer.bypassSecurityTrustHtml(
 									`<div class="product">
 											<h6>${product.warehouseProduct.count}</h6>
 										</div>
-									</div>`
+									</div>`,
 								);
 							},
 						},
@@ -134,7 +139,8 @@ export class CustomerProductsComponent implements OnDestroy, OnInit {
 							renderComponent: OrderBtnOrderProductsComponent,
 							onComponentInitFunction: async (instance) => {
 								instance.userId = this.userId;
-								instance.availableProducts = this.availableProducts;
+								instance.availableProducts =
+									this.availableProducts;
 							},
 						},
 					},
@@ -148,7 +154,7 @@ export class CustomerProductsComponent implements OnDestroy, OnInit {
 
 	private async _loadWarehouses() {
 		this.warehouses = await firstValueFrom(
-			this._warehousesService.getStores()
+			this._warehousesService.getStores(),
 		);
 	}
 

@@ -1,7 +1,7 @@
 {
 	"name": "ever-shop-mobile",
 	"integrations": {
-		"cordova": {}
+		"capacitor": {}
 	},
 	"type": "angular",
 	"id": "897e13e3"

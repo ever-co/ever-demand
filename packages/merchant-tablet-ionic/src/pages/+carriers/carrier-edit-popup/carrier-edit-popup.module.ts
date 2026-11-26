@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { FormWizardModule } from '@ever-co/angular2-wizard';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { TranslateModule } from '@ngx-translate/core';
+import { FormWizardModule } from '../../../components/form-wizard/form-wizard.module';
+import { Angular2SmartTableModule } from 'angular2-smart-table';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileUploadModule } from 'ng2-file-upload';
 import { CarrierBasicFormsModule } from './basic-info/basic-info-form.module';
@@ -10,14 +10,18 @@ import { CarrierLocationFormsModule } from './location/location-form.module';
 import { GoogleMapModule } from '../../../@shared/google-map/google-map.module';
 import { CarrierEditPopupPage } from './carrier-edit-popup';
 import { CarrierService } from '../../../services/carrier.service';
-import { IonicModule } from '@ionic/angular';
+import { IonButton } from '@ionic/angular/ion-button';
+import { IonCol } from '@ionic/angular/ion-col';
+import { IonGrid } from '@ionic/angular/ion-grid';
+import { IonRow } from '@ionic/angular/ion-row';
+import { ModalController } from '@ionic/angular/modal-controller';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
     declarations: [CarrierEditPopupPage],
     imports: [
         FormWizardModule,
-        Ng2SmartTableModule,
+        Angular2SmartTableModule,
         FileUploadModule,
         FormsModule,
         ReactiveFormsModule,
@@ -26,9 +30,12 @@ import { CommonModule } from '@angular/common';
         CarrierLocationFormsModule,
         GoogleMapModule,
         TranslateModule.forChild(),
-        IonicModule,
         CommonModule,
+        IonButton,
+        IonCol,
+        IonGrid,
+        IonRow,
     ],
-    providers: [CarrierService]
+    providers: [CarrierService, ModalController]
 })
 export class CarrierEditPopupModule {}

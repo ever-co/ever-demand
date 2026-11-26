@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonImg } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { WarehouseLogoModule } from '../warehouse-logo/warehouse-logo.module';
 import { ProductComponent } from './product/product.component';
 import { OrderComponent } from './order.component';
 
 @NgModule({
 	imports: [
-		IonicModule,
+		IonImg,
 		CommonModule,
 		WarehouseLogoModule,
 		TranslateModule.forChild(),

@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, Input } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	OnInit,
+	Input,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
 	IPromotion,
@@ -16,8 +22,10 @@ import {
 } from '@modules/server.common/interfaces/ILanguage';
 
 @Component({
+	standalone: false,
 	selector: 'basic-info-form',
 	styleUrls: ['./basic-info-form.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'basic-info-form.component.html',
 })
 export class BasicInfoFormComponent implements OnInit, OnDestroy {
@@ -62,7 +70,7 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private readonly warehouseProductService: WarehouseProductsRouter,
-		private readonly productLocalesService: ProductLocalesService
+		private readonly productLocalesService: ProductLocalesService,
 	) {}
 
 	ngOnInit(): void {
@@ -104,7 +112,7 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 					locale: localeMember.locale,
 					value: localeMember.value,
 				};
-			}
+			},
 		);
 
 		delete basicInfoValue.locale;
@@ -122,14 +130,15 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 		const promotionFormValue = {
 			title: this.productLocalesService.getTranslate(
 				this.promotion.title,
-				this.languageCode
+				this.languageCode,
 			),
 			description: this.productLocalesService.getTranslate(
 				this.promotion.description,
-				this.languageCode
+				this.languageCode,
 			),
-			activeFrom: this.promotion.activeFrom || new Date(),
-			activeTo: this.promotion.activeTo || null,
+			// ion-datetime (Ionic 6+) works with ISO strings
+			activeFrom: toIsoDate(this.promotion.activeFrom || new Date()),
+			activeTo: toIsoDate(this.promotion.activeTo),
 			product: this.promotion.productId || null,
 		};
 
@@ -149,7 +158,7 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 
 	private _saveLocaleMember(
 		translateProp: string,
-		member: ILocaleMember[]
+		member: ILocaleMember[],
 	): void {
 		const memberValue = this._getLocaleMember(member, this.languageCode);
 
@@ -157,7 +166,7 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 			let updateProperty = this.promotion[translateProp].find(
 				(localeValue) => {
 					return localeValue['locale'] === this.languageCode;
-				}
+				},
 			);
 			updateProperty.value = this[translateProp].value;
 		}
@@ -181,7 +190,7 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 		this.translateProperties.forEach((promotionTranslateProp) => {
 			this._saveLocaleMember(
 				promotionTranslateProp,
-				this.promotion[promotionTranslateProp]
+				this.promotion[promotionTranslateProp],
 			);
 		});
 	}
@@ -247,7 +256,7 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 
 	private _getLocaleMember(
 		promotionMember: ILocaleMember[],
-		languageCode: string
+		languageCode: string,
 	): ILocaleMember | boolean {
 		let resultLocale: ILocaleMember;
 
@@ -259,4 +268,15 @@ export class BasicInfoFormComponent implements OnInit, OnDestroy {
 
 		return resultLocale ? resultLocale : false;
 	}
+}
+
+/** An ISO 8601 string for ion-datetime, or null. */
+export function toIsoDate(
+	value: Date | string | null | undefined,
+): string | null {
+	if (!value) {
+		return null;
+	}
+	const date = new Date(value);
+	return Number.isNaN(date.getTime()) ? null : date.toISOString();
 }

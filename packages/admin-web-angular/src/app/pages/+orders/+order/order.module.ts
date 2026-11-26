@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeModule } from '../../../@theme';
-import { ToasterModule } from 'angular2-toaster';
-import { TranslateModule } from '@ngx-translate/core';
+import { ToasterModule } from '@app/@core/toaster';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { OrderComponent } from './order.component';
 import { SidebarInfoBoxModule } from './sidebar-info-box/sidebar-info-box.module';
 import { WarehouseOrderViewModule } from '@app/pages/+warehouses/+warehouse/warehouse-order-view/warehouse-order-view.module';

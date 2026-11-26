@@ -1,3 +1,9 @@
+# flutter gen-l10n settings. The ARB files are generated from the Ionic app's
+# translations by tool/ionic_i18n_to_arb.dart; see docs/latest-stack/shop-mobile-flutter.md.
 arb-dir: lib/l10n
 template-arb-file: app_en.arb
+output-dir: lib/l10n/gen
 output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+nullable-getter: false
+untranslated-messages-file: build/untranslated-messages.json

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeModule } from '@app/@theme';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { FormsModule } from '@angular/forms';
 import { SetupMerchantLocationComponent } from './location.component';
 import { LocationFormModule } from '@app/@shared/forms/location';

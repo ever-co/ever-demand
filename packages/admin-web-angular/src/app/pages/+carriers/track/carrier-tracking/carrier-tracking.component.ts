@@ -6,6 +6,7 @@ import {
 	ViewChild,
 	OnInit,
 	OnDestroy,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 import { Subject, Subscription } from 'rxjs';
@@ -27,8 +28,10 @@ const directionsDisplay = new google.maps.DirectionsRenderer();
 const directionsService = new google.maps.DirectionsService();
 
 @Component({
+	standalone: false,
 	selector: 'ea-carrier-tracking',
 	styleUrls: ['carrier-tracking.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'carrier-tracking.component.html',
 })
 export class CarrierTrackingComponent implements OnInit, OnDestroy {
@@ -42,7 +45,7 @@ export class CarrierTrackingComponent implements OnInit, OnDestroy {
 	marker: any;
 	userMarker: any;
 	warehouseMarkers = [];
-	interval: NodeJS.Timer;
+	interval: ReturnType<typeof setInterval>;
 	isReverted: boolean = true;
 	params$: Subscription;
 	selectedCarrier: Carrier;
@@ -56,7 +59,7 @@ export class CarrierTrackingComponent implements OnInit, OnDestroy {
 		private carrierRouter: CarrierRouter,
 		private carrierOrdersRouter: CarrierOrdersRouter,
 		private carriersService: CarriersService,
-		private readonly _storesService: WarehousesService
+		private readonly _storesService: WarehousesService,
 	) {}
 
 	ngOnInit(): void {
@@ -75,7 +78,7 @@ export class CarrierTrackingComponent implements OnInit, OnDestroy {
 					.pipe(takeUntil(this.ngDestroy$))
 					.subscribe((carriers) => {
 						this.carriers = carriers.filter(
-							(carrier) => carrier.status === 0
+							(carrier) => carrier.status === 0,
 						);
 						this.filteredCarriersList = this.carriers;
 						this.loadDataFromUrl();
@@ -112,7 +115,7 @@ export class CarrierTrackingComponent implements OnInit, OnDestroy {
 			if (!res.carrierId && res.storeId) {
 				this.selectNewStore(res.storeId);
 				this.filteredCarriersList = this.carriers.filter((x) =>
-					this.selectedStore.usedCarriersIds.includes(x.id)
+					this.selectedStore.usedCarriersIds.includes(x.id),
 				);
 				this.selectedCarrier = undefined;
 				this.revertMap();
@@ -120,7 +123,7 @@ export class CarrierTrackingComponent implements OnInit, OnDestroy {
 			} else if (res.carrierId) {
 				this.selectNewStore(res.storeId);
 				const filteredList = this.filteredCarriersList.filter(
-					(carrier) => carrier._id === res.carrierId
+					(carrier) => carrier._id === res.carrierId,
 				);
 				this.selectedCarrier = filteredList[0];
 				this.revertMap();
@@ -143,7 +146,7 @@ export class CarrierTrackingComponent implements OnInit, OnDestroy {
 					}
 					const newCoordinates = new google.maps.LatLng(
 						carrier.geoLocation.coordinates.lat,
-						carrier.geoLocation.coordinates.lng
+						carrier.geoLocation.coordinates.lng,
 					);
 					this.map.setCenter(newCoordinates);
 					const carierIcon = environment.MAP_CARRIER_ICON_LINK;
@@ -151,7 +154,7 @@ export class CarrierTrackingComponent implements OnInit, OnDestroy {
 					const marker = this.addMarker(
 						newCoordinates,
 						this.map,
-						carierIcon
+						carierIcon,
 					);
 					this.warehouseMarkers.push(marker);
 				});

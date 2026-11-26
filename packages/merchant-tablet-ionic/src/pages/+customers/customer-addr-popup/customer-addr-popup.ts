@@ -1,10 +1,19 @@
-import { Component, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import {
+	Component,
+	ViewChild,
+	ElementRef,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
+import { ModalController } from '@ionic/angular/modal-controller';
 import User from '@modules/server.common/entities/User';
 
 @Component({
+	standalone: false,
 	selector: 'customer-addr-popup',
 	templateUrl: 'customer-addr-popup.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./customer-addr-popup.scss'],
 })
 export class CustomerAddrPopupPage implements OnInit {
@@ -44,7 +53,7 @@ export class CustomerAddrPopupPage implements OnInit {
 
 		// We use reverse because MongoDB store lnt => lat
 		this.coordinates = Array.from(
-			user.geoLocation.loc.coordinates
+			user.geoLocation.loc.coordinates,
 		).reverse();
 
 		this.myLatLng.lat = this.coordinates[0];

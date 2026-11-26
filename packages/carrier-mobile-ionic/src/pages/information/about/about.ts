@@ -1,11 +1,18 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { Subscription } from 'rxjs';
-import { environment } from 'environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Component({
+	standalone: false,
 	selector: 'page-about',
 	templateUrl: 'about.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['about.scss'],
 })
 export class AboutPage implements OnInit, OnDestroy {

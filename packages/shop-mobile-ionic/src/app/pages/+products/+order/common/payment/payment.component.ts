@@ -1,4 +1,9 @@
-import { Component, Input, EventEmitter } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Input,
+	EventEmitter,
+} from '@angular/core';
 import Order from '@modules/server.common/entities/Order';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { Store } from 'app/services/store.service';
@@ -15,8 +20,11 @@ import { OrderPage } from '../../order.page';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { StripeLoader } from 'app/services/stripeLoader';
+import { StripeCardForm } from './card-form/stripe-card-form.service';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'e-cu-payment',
 	templateUrl: './payment.component.html',
 	styleUrls: ['./payment.component.scss'],
@@ -68,7 +76,8 @@ export class PaymentComponent {
 		public modalController: ModalController,
 		private readonly _translateProductLocales: ProductLocalesService,
 		private readonly _translateService: TranslateService,
-		private readonly _stripeLoader: StripeLoader
+		private readonly _stripeLoader: StripeLoader,
+		private readonly _cardForm: StripeCardForm
 	) {
 		this.getUserCard();
 		// Never rejects: a failed load is logged, and Pay now loads it again
@@ -147,20 +156,20 @@ export class PaymentComponent {
 			return;
 		}
 
-		// StripeLoader adds the Checkout script at runtime and nothing
-		// waits for it: a content blocker, a firewall or no network keeps
-		// it from loading, or it is still loading. Checked before the
-		// popup dismiss, so the customer keeps the order screen.
-		if (typeof (<any>window).StripeCheckout?.configure !== 'function') {
-			// The message asks to try again: add the script again if it
+		// StripeLoader loads Stripe.js at runtime and nothing waits for it:
+		// a content blocker, a firewall or no network keeps it from loading,
+		// or it is still loading. Checked before the popup dismiss, so the
+		// customer keeps the order screen.
+		const stripe = this._stripeLoader.stripe;
+
+		if (stripe == null) {
+			// The message asks to try again: load Stripe.js again if it
 			// failed, e.g. while the network was down, so a later tap opens
 			// the card form. Started before the alert, which blocks until
 			// the customer closes it, so the download can run meanwhile.
 			this._stripeLoader.ensureLoaded();
 			this.tellCustomer('BUY_POPUP.CARD_FORM_NOT_LOADED');
-			console.error(
-				"Can't open the card form: the Stripe Checkout script did not load."
-			);
+			console.error("Can't open the card form: Stripe.js did not load.");
 			return;
 		}
 
@@ -168,12 +177,10 @@ export class PaymentComponent {
 			this.modalController.dismiss();
 		}
 
-		const pay_text = 'Pay {{amount}}';
-
-		// Checkout calls closed whenever its popup closes, also after a
-		// successful token, and browsers differ in which callback runs
-		// first. Whichever comes first opens the order info modal; the
-		// other does nothing, so this Checkout session opens it once.
+		// The card form calls closed whenever it closes, also after a
+		// successful token, and the token handler calls close when it is
+		// done. Whichever comes first opens the order info modal; the other
+		// does nothing, so this card form session opens it once.
 		let orderInfoShown = false;
 
 		const close = () => {
@@ -183,12 +190,16 @@ export class PaymentComponent {
 			}
 		};
 
-		const handler = (<any>window).StripeCheckout.configure({
-			panelLabel: pay_text,
-			key: this.stripePublishableKey,
+		const currentOrderProduct = this.order.products[0];
+		const currentProduct = currentOrderProduct.product;
+
+		const opened = this._cardForm.open({
+			stripe,
 			image: environment.STRIPE_POP_UP_LOGO,
+			name: this.localeTranslate(currentProduct.title),
+			description: this.localeTranslate(currentProduct.description),
+			amount: currentOrderProduct.price * 100,
 			currency,
-			allowRememberMe: false,
 			token: async (token) => {
 				const orderId = this.store.orderId;
 
@@ -204,7 +215,7 @@ export class PaymentComponent {
 				try {
 					const user = await this.userRouter.updateEmail(
 						this.store.userId,
-						token['email'] as string
+						token.email
 					);
 
 					try {
@@ -247,7 +258,7 @@ export class PaymentComponent {
 						console.error('Payment Method creation failed!', err);
 					}
 				} catch (err) {
-					// updateEmail fails when the email typed in Checkout
+					// updateEmail fails when the email typed in the card form
 					// belongs to another customer. Tell the customer here,
 					// because a rejection would escape the Stripe callback.
 					// The message asks to check the email or use another
@@ -265,14 +276,16 @@ export class PaymentComponent {
 			closed: () => close(),
 		});
 
-		const currentOrderProduct = this.order.products[0];
-		const currentProduct = currentOrderProduct.product;
-
-		handler.open({
-			name: this.localeTranslate(currentProduct.title),
-			description: this.localeTranslate(currentProduct.description),
-			amount: currentOrderProduct.price * 100,
-		});
+		try {
+			await opened;
+		} catch (err) {
+			// The card form modal could not open. The click handler drops
+			// the returned promise, so tell the customer here, and show the
+			// order again in popup mode.
+			this.tellCustomer('BUY_POPUP.CARD_FORM_NOT_LOADED');
+			console.error("Can't open the card form!", err);
+			close();
+		}
 	}
 
 	private async getUserCard() {

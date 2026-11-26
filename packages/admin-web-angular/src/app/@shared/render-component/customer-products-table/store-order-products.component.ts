@@ -1,11 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import {
+	Component,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
+import { ViewCell } from '@app/@shared/smart-table';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { WarehousesService } from '../../../@core/data/warehouses.service';
 
 @Component({
+	standalone: false,
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<div class="product">
 			<h6 *ngIf="store$ | async as store" class="text-center">
@@ -25,12 +32,12 @@ export class StoreOrderProductsComponent implements ViewCell, OnInit {
 
 	constructor(
 		private readonly router: Router,
-		private readonly warehousesService: WarehousesService
+		private readonly warehousesService: WarehousesService,
 	) {}
 
 	ngOnInit(): void {
 		this.store$ = this.warehousesService.getStoreById(
-			this.rowData.warehouseId
+			this.rowData.warehouseId,
 		);
 	}
 

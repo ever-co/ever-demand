@@ -6,11 +6,11 @@ import Device from '@modules/server.common/entities/Device';
 import User from '@modules/server.common/entities/User';
 import InviteRequest from '@modules/server.common/entities/InviteRequest';
 import { TranslateService } from '@ngx-translate/core';
-import { Globalization } from '@ionic-native/globalization';
 import { Platform } from '@ionic/angular';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { first } from 'rxjs/operators';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
+import { NativeService } from './native/native.service';
 import { environment } from 'environments/environment';
 
 // TODO use https://beta.ionicframework.com/docs/building/storage
@@ -82,6 +82,7 @@ export class Store {
 		private readonly platform: Platform,
 		private readonly inviteRouter: InviteRouter,
 		private readonly userRouter: UserRouter,
+		private readonly native: NativeService,
 		@Inject(DOCUMENT) private readonly document: Document
 	) {
 		this.startLanguage = this._initLanguage();
@@ -148,7 +149,7 @@ export class Store {
 	}
 
 	get language(): ILanguage {
-		return this._translateService.currentLang as ILanguage;
+		return this._translateService.getCurrentLang() as ILanguage;
 	}
 
 	set language(l: ILanguage) {
@@ -338,7 +339,7 @@ export class Store {
 			return savedLanguage;
 		}
 
-		const deviceLanguage = this.platform.is('cordova')
+		const deviceLanguage = this.native.isNative()
 			? await this._phoneLanguage()
 			: this._translateService.getBrowserLang();
 
@@ -350,12 +351,11 @@ export class Store {
 		return language;
 	}
 
-	// The phone language, such as 'he-IL', or null when it cannot be read.
+	// The phone language, such as 'he' or 'he-IL', or null when it cannot be read.
 	private async _phoneLanguage(): Promise<string | null> {
 		try {
-			// Cordova plugins answer once the device is ready.
-			await this.platform.ready();
-			return (await Globalization.getPreferredLanguage()).value;
+			// Capacitor Device (was Cordova Globalization).
+			return await this.native.languageCode();
 		} catch (error) {
 			console.warn('Could not read the phone language', error);
 			return null;

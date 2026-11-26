@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
-import { FormWizardModule } from '@ever-co/angular2-wizard';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { TranslateModule } from '@ngx-translate/core';
+import { FormWizardModule } from '../../../components/form-wizard/form-wizard.module';
+import { Angular2SmartTableModule } from 'angular2-smart-table';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileUploadModule } from 'ng2-file-upload';
 import { CarrierDeletePopupPage } from './carrier-delete-popup';
-import { IonicModule } from '@ionic/angular';
+import { IonButton } from '@ionic/angular/ion-button';
+import { ModalController } from '@ionic/angular/modal-controller';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
@@ -13,14 +14,15 @@ import { CommonModule } from '@angular/common';
 	entryComponents: [CarrierDeletePopupPage],
 	imports: [
 		FormWizardModule,
-		Ng2SmartTableModule,
+		Angular2SmartTableModule,
 		FileUploadModule,
 		FormsModule,
 		ReactiveFormsModule,
 		TranslateModule.forChild(),
-		IonicModule,
 		CommonModule,
 		FormsModule,
+		IonButton,
 	],
+	providers: [ModalController],
 })
 export class CarrierDeletePopupModule {}

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Apollo, gql } from 'apollo-angular';
+import { Apollo, gql, onlyCompleteData } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { IOrderCreateInput } from '@modules/server.common/routers/IWarehouseOrdersRouter';
 import Order from '@modules/server.common/entities/Order';
@@ -161,6 +161,8 @@ export class WarehouseOrdersService {
 				variables: { storeId, pagingOptions, status },
 			})
 			.valueChanges.pipe(
+				// Apollo Client 4 also emits loading/partial results
+				onlyCompleteData(),
 				map((res) => res.data['getStoreOrdersTableData'])
 			);
 	}

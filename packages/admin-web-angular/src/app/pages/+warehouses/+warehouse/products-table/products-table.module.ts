@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ThemeModule } from '@app/@theme';
 import { TranslateModule } from '@app/@shared/translate/translate.module';
 import { ProductsTableComponent } from './products-table.component';
-import { ToasterModule } from 'angular2-toaster';
+import { ToasterModule } from '@app/@core/toaster';
 import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 import { ConfirmationModalModule } from '../../../../@shared/confirmation-modal/confirmation-modal.module';
 import { WarehouseProductFormsModule } from '@app/@shared/warehouse-product/forms';

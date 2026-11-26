@@ -1,14 +1,17 @@
-import { Component, OnDestroy } from '@angular/core';
-import { Store } from 'services/store.service';
-import { Platform, MenuController } from '@ionic/angular';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Store } from '../../services/store.service';
+import { MenuController } from '@ionic/angular/menu-controller';
+import { Platform } from '@ionic/angular/platform';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
-import { environment } from 'environments/environment';
+import { environment } from '../../environments/environment';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-menu',
 	templateUrl: './menu.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnDestroy {
@@ -20,7 +23,7 @@ export class MenuComponent implements OnDestroy {
 		private store: Store,
 		public platform: Platform,
 		private translateService: TranslateService,
-		private menuCtrl: MenuController
+		private menuCtrl: MenuController,
 	) {
 		this.companyName = environment.APP_NAME;
 		this.translateService.onLangChange

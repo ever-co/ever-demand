@@ -1,4 +1,11 @@
-import { Component, OnDestroy, OnInit, OnChanges, Input } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	OnInit,
+	OnChanges,
+	Input,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import {
 	FormBuilder,
 	FormGroup,
@@ -8,8 +15,10 @@ import {
 import Carrier from '@modules/server.common/entities/Carrier';
 
 @Component({
+	standalone: false,
 	selector: 'account-form',
 	styleUrls: ['./account-form.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'account-form.component.html',
 })
 export class AccountFormComponent implements OnDestroy, OnInit, OnChanges {

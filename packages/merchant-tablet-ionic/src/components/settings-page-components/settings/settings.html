@@ -6,17 +6,11 @@
 					{{"SETTINGS_VIEW.SETTINGS_SECTION.DELIVERY_SETTINGS"|translate}}
 				</h4>
 				<ion-item mode="ios">
-					<ion-label>
-						{{
-						'SETTINGS_VIEW.SETTINGS_SECTION.PRODUCTS_DELIVERY_BY_DEFAULT'
-						| translate }}
-					</ion-label>
-					<ion-checkbox
-						slot="start"
+					<ion-checkbox labelPlacement="end" justify="start"
 						#productsDelivery="ngModel"
-						[(ngModel)]="currWarehouse.productsDelivery"
-					>
-					</ion-checkbox>
+						[(ngModel)]="currWarehouse.productsDelivery">{{
+						'SETTINGS_VIEW.SETTINGS_SECTION.PRODUCTS_DELIVERY_BY_DEFAULT'
+						| translate }}</ion-checkbox>
 				</ion-item>
 			</ion-col>
 			<ion-col class="col-6">
@@ -24,17 +18,11 @@
 					{{"SETTINGS_VIEW.SETTINGS_SECTION.TAKEAWAY_SETTINGS"|translate}}
 				</h4>
 				<ion-item mode="ios">
-					<ion-label
-						>{{
-						'SETTINGS_VIEW.SETTINGS_SECTION.PRODUCTS_TAKEAWAY_BY_DEFAULT'
-						| translate }}
-					</ion-label>
-					<ion-checkbox
-						slot="start"
+					<ion-checkbox labelPlacement="end" justify="start"
 						#productsTakeaway="ngModel"
-						[(ngModel)]="currWarehouse.productsTakeaway"
-					>
-					</ion-checkbox>
+						[(ngModel)]="currWarehouse.productsTakeaway">{{
+						'SETTINGS_VIEW.SETTINGS_SECTION.PRODUCTS_TAKEAWAY_BY_DEFAULT'
+						| translate }}</ion-checkbox>
 				</ion-item>
 			</ion-col>
 		</ion-row>
@@ -57,16 +45,10 @@
 					translate }}
 				</h4>
 				<ion-item mode="ios">
-					<ion-label>
-						{{ 'SETTINGS_VIEW.SETTINGS_SECTION.IN_STORE_MODE' |
-						translate }}
-					</ion-label>
-					<ion-checkbox
-						slot="start"
+					<ion-checkbox labelPlacement="end" justify="start"
 						#productsTakeaway="ngModel"
-						[(ngModel)]="currWarehouse.inStoreMode"
-					>
-					</ion-checkbox>
+						[(ngModel)]="currWarehouse.inStoreMode">{{ 'SETTINGS_VIEW.SETTINGS_SECTION.IN_STORE_MODE' |
+						translate }}</ion-checkbox>
 				</ion-item>
 			</ion-col>
 		</ion-row>
@@ -81,14 +63,10 @@
 					mode="ios"
 					class="input-with-checkbox align-with-label-input"
 				>
-					<ion-label>
-						{{ 'SETTINGS_VIEW.SETTINGS_SECTION.ORDER_BARCODE_TYPE' |
-						translate }}</ion-label
-					>
-					<ion-select
+					<ion-select labelPlacement="start"
 						#orderBarcodeType="ngModel"
-						[(ngModel)]="currWarehouse.orderBarcodeType"
-					>
+						[(ngModel)]="currWarehouse.orderBarcodeType"><div slot="label">{{ 'SETTINGS_VIEW.SETTINGS_SECTION.ORDER_BARCODE_TYPE' |
+						translate }}</div>
 						<ion-select-option
 							*ngFor="let type of orderBarcodeTypes"
 							value="{{ type }}"
@@ -101,17 +79,13 @@
 			<ion-col class="col-6">
 				<ion-row>
 					<ion-item mode="ios" class="col-9">
-						<ion-label class="labels" position="floating">
-							{{ 'SETTINGS_VIEW.SETTINGS_SECTION.BARCODE_DATA' |
-							translate }}</ion-label
-						>
-						<ion-input
+						<ion-input labelPlacement="floating"
 							type="text"
 							#barcodeData="ngModel"
 							[(ngModel)]="currWarehouse.barcodeData"
 							debounce="1000"
-							(ionChange)="barcodeDataChange($event)"
-						></ion-input>
+							(ionChange)="barcodeDataChange($event)"><div slot="label" class="labels">{{ 'SETTINGS_VIEW.SETTINGS_SECTION.BARCODE_DATA' |
+							translate }}</div></ion-input>
 					</ion-item>
 					<label id="scanBtnOut" class="col-3">
 						<button

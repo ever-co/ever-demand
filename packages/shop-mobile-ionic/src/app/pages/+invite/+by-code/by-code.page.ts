@@ -1,6 +1,10 @@
-import { Component, OnDestroy } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	OnDestroy,
+} from '@angular/core';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
-import { Geolocation } from '@ionic-native/geolocation';
+import { Geolocation } from '@capacitor/geolocation';
 import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
 import IInvite from '@modules/server.common/interfaces/IInvite';
 import { first } from 'rxjs/operators';
@@ -13,6 +17,8 @@ import { environment } from 'environments/environment';
 import { OrdersService } from 'app/services/orders/orders.service';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'e-cu-by-code',
 	templateUrl: './by-code.page.html',
 	styleUrls: ['./by-code.page.scss'],

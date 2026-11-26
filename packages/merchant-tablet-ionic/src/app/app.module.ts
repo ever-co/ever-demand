@@ -1,136 +1,109 @@
-import { NgModule, APP_INITIALIZER } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {
+	inject,
+	isDevMode,
+	NgModule,
+	provideAppInitializer,
+} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { RouteReuseStrategy } from '@angular/router';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { IonicStorageModule } from '@ionic/storage-angular';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { provideServiceWorker } from '@angular/service-worker';
+import { IonApp } from '@ionic/angular/ion-app';
+import { IonRouterOutlet } from '@ionic/angular/ion-router-outlet';
+import { IonicRouteStrategy } from '@ionic/angular/ionic-route-strategy';
+import { provideIonicAngular } from '@ionic/angular/provide';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CommonModule } from '@modules/client.common.angular2/common.module';
-import { MenuModule } from '../components/menu/menu.module';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { environment } from 'environments/environment';
-import { FileUploadModule } from 'ng2-file-upload';
-import { CallNumber } from '@ionic-native/call-number/ngx';
-import { EmailComposer } from '@ionic-native/email-composer/ngx';
-import { Globalization } from '@ionic-native/globalization/ngx';
-import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
-import { Mixpanel } from '@ionic-native/mixpanel/ngx';
-import { Intercom } from '@ionic-native/intercom/ngx';
-import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
-import { GraphQLModule } from '../graphql/apollo.config';
-import { Camera } from '@ionic-native/camera/ngx';
-import { Store } from '../services/store.service';
-import { UserMutationModule } from '../@shared/user/mutation/user-mutation.module';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { GoogleMapsLoader } from '@modules/client.common.angular2/services/googleMapsLoader';
 import { MaintenanceService } from '@modules/client.common.angular2/services/maintenance.service';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
+import { FileUploadModule } from 'ng2-file-upload';
+import { MenuModule } from '../components/menu/menu.module';
+import { environment } from '../environments/environment';
+import { GraphQLModule } from '../graphql/apollo.config';
+import { Store } from '../services/store.service';
+import { UserMutationModule } from '../@shared/user/mutation/user-mutation.module';
 import { PagesModuleGuard } from '../pages/pages.module.guard';
 import { MaintenanceModuleGuard } from './+maintenance-info/maintenance-info.module.guard';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { Network } from '@ionic-native/network/ngx';
-import { Device } from '@ionic-native/device/ngx';
-import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
 @NgModule({
-    declarations: [AppComponent],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        MenuModule,
-        IonicModule.forRoot(),
-        IonicStorageModule.forRoot(),
-        GraphQLModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient],
-            },
-        }),
-        CommonModule.forRoot({
-            apiUrl: environment.SERVICES_ENDPOINT,
-        }),
-        FileUploadModule,
-        UserMutationModule,
-        ServiceWorkerModule.register('ngsw-worker.js', {
-            enabled: environment.production,
-        }),
-    ],
-    providers: [
-        InAppBrowser,
-        SplashScreen,
-        StatusBar,
-        Network,
-        Device,
-        GoogleMapsLoader,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: googleMapsLoaderFactory,
-            deps: [GoogleMapsLoader],
-            multi: true,
-        },
-        ServerConnectionService,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: serverConnectionFactory,
-            deps: [ServerConnectionService, Store],
-            multi: true,
-        },
-        MaintenanceService,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: maintenanceFactory,
-            deps: [MaintenanceService],
-            multi: true,
-        },
-        // { provide: ErrorHandler, useClass: IonicErrorHandler },
-        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-        PagesModuleGuard,
-        MaintenanceModuleGuard,
-        Store,
-        CallNumber,
-        EmailComposer,
-        Globalization,
-        GoogleAnalytics,
-        Intercom,
-        Mixpanel,
-        ScreenOrientation,
-        Camera,
-        BarcodeScanner,
-    ],
-    bootstrap: [AppComponent]
+	declarations: [AppComponent],
+	imports: [
+		BrowserModule,
+		AppRoutingModule,
+		MenuModule,
+		IonApp,
+		IonRouterOutlet,
+		GraphQLModule,
+		TranslateModule.forRoot({
+			loader: provideTranslateHttpLoader({
+				prefix: './assets/i18n/',
+				suffix: '.json',
+			}),
+		}),
+		CommonModule.forRoot({
+			apiUrl: environment.SERVICES_ENDPOINT,
+		}),
+		FileUploadModule,
+		UserMutationModule,
+	],
+	providers: [
+		// Ionic's default config, as before (the app never customised it). The page
+		// modules whose components open modals provide their own ModalController, as the
+		// NgModule build did per module, so a modal resolves its page module's services.
+		provideIonicAngular(),
+		// ngx-masonry (the product grid) still animates through @angular/animations
+		provideAnimationsAsync(),
+		GoogleMapsLoader,
+		ServerConnectionService,
+		MaintenanceService,
+		provideAppInitializer(googleMapsInitializer),
+		provideAppInitializer(serverConnectionInitializer),
+		provideAppInitializer(maintenanceInitializer),
+		provideServiceWorker('ngsw-worker.js', {
+			enabled: environment.production && !isDevMode(),
+			registrationStrategy: 'registerWhenStable:30000',
+		}),
+		{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+		PagesModuleGuard,
+		MaintenanceModuleGuard,
+		Store,
+	],
+	bootstrap: [AppComponent],
 })
-export class AppModule {
-	constructor() {}
+export class AppModule {}
+
+/**
+ * Loads the Google Maps JavaScript API, as before (without a key Google serves it in its
+ * "development purposes only" mode). It no longer blocks the app forever: when the script
+ * cannot load (offline), the app boots after MAPS_LOAD_TIMEOUT_MS without maps.
+ */
+export const MAPS_LOAD_TIMEOUT_MS = 10_000;
+
+export function googleMapsInitializer() {
+	const loader = inject(GoogleMapsLoader);
+	if (!environment.GOOGLE_MAPS_API_KEY) {
+		console.warn('GOOGLE_MAPS_API_KEY is empty: Google Maps runs without a key.');
+	}
+	return Promise.race([
+		loader.load(environment.GOOGLE_MAPS_API_KEY),
+		new Promise((resolve) => setTimeout(resolve, MAPS_LOAD_TIMEOUT_MS)),
+	]);
 }
 
-export function HttpLoaderFactory(http: HttpClient) {
-	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+export function serverConnectionInitializer() {
+	return inject(ServerConnectionService).load(
+		environment.SERVICES_ENDPOINT,
+		inject(Store)
+	);
 }
 
-export function googleMapsLoaderFactory(provider: GoogleMapsLoader) {
-	return () => provider.load(environment.GOOGLE_MAPS_API_KEY);
-}
-
-export function serverConnectionFactory(
-	provider: ServerConnectionService,
-	store: Store
-) {
-	return () => provider.load(environment.SERVICES_ENDPOINT, store);
-}
-
-export function maintenanceFactory(provider: MaintenanceService) {
-	return () =>
-		provider.load(
-			environment['SETTINGS_APP_TYPE'],
-			environment['SETTINGS_MAINTENANCE_API_URL']
-		);
+export function maintenanceInitializer() {
+	return inject(MaintenanceService).load(
+		environment.SETTINGS_APP_TYPE,
+		environment.SETTINGS_MAINTENANCE_API_URL
+	);
 }

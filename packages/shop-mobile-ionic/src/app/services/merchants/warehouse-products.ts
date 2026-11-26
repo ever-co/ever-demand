@@ -61,6 +61,6 @@ export class WarehouseProductsService {
 			})
 			.toPromise();
 
-		return res.data['getWarehouseProduct'];
+		return res.data?.['getWarehouseProduct'] ?? null;
 	}
 }

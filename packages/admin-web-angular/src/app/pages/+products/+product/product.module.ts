@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ThemeModule } from '../../../@theme';
 import { RouterModule } from '@angular/router';
 import { routes } from './product.routes';
-import { FormWizardModule } from '@ever-co/angular2-wizard';
-import { ToasterModule } from 'angular2-toaster';
-import { TranslateModule } from '@ngx-translate/core';
+import { FormWizardModule } from '@app/@shared/wizard';
+import { ToasterModule } from '@app/@core/toaster';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { HighlightModule } from 'ngx-highlightjs';
 import { ProductComponent } from './product.component';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { Ng2SmartTableModule } from '@app/@shared/smart-table';
 
 @NgModule({
 	imports: [

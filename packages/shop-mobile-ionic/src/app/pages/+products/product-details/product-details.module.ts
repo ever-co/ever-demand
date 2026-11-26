@@ -1,22 +1,29 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-import { NgProgressModule } from 'ngx-progressbar';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCol,
+	IonContent,
+	IonGrid,
+	IonHeader,
+	IonImg,
+	IonMenuButton,
+	IonRow,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular';
 import { ProductDetailsPage } from './product-details.page';
 import { WarehouseLogoModule } from '../../../components/warehouse-logo/warehouse-logo.module';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient } from '@angular/common/http';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { OrderPageModule } from '../+order/order.module';
 import { CancelPageModule } from '../+order/+cancel/cancel.module';
 import { ProductsModule } from '../../../components/products/products.module';
 import { OrderTakeawayInfoPopupModule } from '../+order/takeaway/popup/popup.module';
 
-export function HttpLoaderFactory(http: HttpClient) {
-	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
 
 const routes: Routes = [
 	{
@@ -29,16 +36,20 @@ const routes: Routes = [
 	imports: [
 		CommonModule,
 		FormsModule,
-		IonicModule,
+		IonButton,
+		IonButtons,
+		IonCard,
+		IonCol,
+		IonContent,
+		IonGrid,
+		IonHeader,
+		IonImg,
+		IonMenuButton,
+		IonRow,
+		IonTitle,
+		IonToolbar,
 		WarehouseLogoModule,
-		NgProgressModule.withConfig({}),
-		TranslateModule.forChild({
-			loader: {
-				provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
-				deps: [HttpClient],
-			},
-		}),
+		TranslateModule.forChild(),
 		RouterModule.forChild(routes),
 		OrderPageModule,
 		CancelPageModule,
@@ -46,6 +57,8 @@ const routes: Routes = [
 		OrderTakeawayInfoPopupModule,
 	],
 	providers: [],
+	// <swiper-container> / <swiper-slide> (Swiper element) for the images
+	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	declarations: [ProductDetailsPage],
 })
 export class ProductDetailsPageModule {}

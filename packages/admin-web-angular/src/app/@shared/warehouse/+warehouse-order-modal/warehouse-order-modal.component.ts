@@ -5,8 +5,9 @@ import {
 	OnDestroy,
 	OnInit,
 	Output,
+	ChangeDetectionStrategy,
 } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { Subject } from 'rxjs';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
@@ -20,8 +21,10 @@ import { takeUntil } from 'rxjs/operators';
 import { MakeOrderCommentComponent } from './make-order-comment.component';
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-order-modal',
 	styleUrls: ['./warehouse-order-modal.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './warehouse-order-modal.component.html',
 })
 export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
@@ -61,7 +64,7 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 		private readonly _translateService: TranslateService,
 		private readonly activeModal: NgbActiveModal,
 		private readonly _productLocaleService: ProductLocalesService,
-		private readonly _warehouseProductsRouter: WarehouseProductsRouter
+		private readonly _warehouseProductsRouter: WarehouseProductsRouter,
 	) {}
 
 	get TRANSLATE_PREFIXES() {
@@ -97,7 +100,7 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 	makeOrder() {
 		this.loading = true;
 		this.makeOrderEmitter.emit(
-			this._orderProducts.filter(({ count }) => count > 0)
+			this._orderProducts.filter(({ count }) => count > 0),
 		);
 	}
 
@@ -114,7 +117,8 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 					field: 'available',
 					search: '0',
 					filter: (element, valueToCompare) => {
-						const regex = /<div class="badge badge-pill badge-secondary">([0-9]+)<\/div>/gm;
+						const regex =
+							/<div class="badge rounded-pill text-bg-secondary">([0-9]+)<\/div>/gm;
 						const productCount = +regex.exec(element)[1];
 
 						return productCount > +valueToCompare;
@@ -123,8 +127,8 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 			]);
 		}
 
-		this._clearAvailableProductsFilter = !this
-			._clearAvailableProductsFilter;
+		this._clearAvailableProductsFilter =
+			!this._clearAvailableProductsFilter;
 	}
 
 	private _loadWarehouseProducts() {
@@ -145,7 +149,7 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 					count: 0,
 					comment: '',
 				};
-			}
+			},
 		);
 
 		const productsData = this._warehouseProducts.map(
@@ -155,16 +159,16 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 						<img src="${this._getTranslate(wp.product['images'])}" height="50px"/>
 					`,
 					product: `
-						<span class="float-left">${this._getTranslate(wp.product['title'])}</span>
+						<span class="float-start">${this._getTranslate(wp.product['title'])}</span>
 					`,
 					price: `${wp.price}$`,
 					available: `
-						<div class="badge badge-pill badge-secondary">${wp.count}</div>
+						<div class="badge rounded-pill text-bg-secondary">${wp.count}</div>
 					`,
 					amount: { productId: wp.productId, available: wp.count },
 					comment: { productId: wp.productId },
 				};
-			}
+			},
 		);
 
 		this.sourceSmartTable.setSort([
@@ -182,7 +186,8 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 	}
 
 	private _compareByAvailableProducts(_, first, second) {
-		const regex = /<div class="badge badge-pill badge-secondary">([0-9]+)<\/div>/gm;
+		const regex =
+			/<div class="badge rounded-pill text-bg-secondary">([0-9]+)<\/div>/gm;
 
 		const matchFirst = +regex.exec(first)[1];
 		regex.lastIndex = 0; // to reset the regex
@@ -203,23 +208,23 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 
 	private _loadSettingsSmartTable() {
 		const img = this._translate(
-			this.TRANSLATE_PREFIXES.SMART_TABLE.TITLES.IMG
+			this.TRANSLATE_PREFIXES.SMART_TABLE.TITLES.IMG,
 		);
 		const product = this._translate(
-			this.TRANSLATE_PREFIXES.SMART_TABLE.TITLES.PRODUCT
+			this.TRANSLATE_PREFIXES.SMART_TABLE.TITLES.PRODUCT,
 		);
 		const price = this._translate(
-			this.TRANSLATE_PREFIXES.SMART_TABLE.TITLES.PRICE
+			this.TRANSLATE_PREFIXES.SMART_TABLE.TITLES.PRICE,
 		);
 		const available = this._translate(
-			this.TRANSLATE_PREFIXES.SMART_TABLE.TITLES.AVAILABLE
+			this.TRANSLATE_PREFIXES.SMART_TABLE.TITLES.AVAILABLE,
 		);
 		const amount = this._translate(
-			this.TRANSLATE_PREFIXES.SMART_TABLE.TITLES.AMOUNT
+			this.TRANSLATE_PREFIXES.SMART_TABLE.TITLES.AMOUNT,
 		);
 
 		const comment = this._translate(
-			this.TRANSLATE_PREFIXES.SMART_TABLE.TITLES.COMMENT
+			this.TRANSLATE_PREFIXES.SMART_TABLE.TITLES.COMMENT,
 		);
 
 		this.settingsSmartTable = {
@@ -259,20 +264,20 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 					type: 'custom',
 					renderComponent: WarehouseOrderInputComponent,
 					onComponentInitFunction: (
-						childInstance: WarehouseOrderInputComponent
+						childInstance: WarehouseOrderInputComponent,
 					) => {
 						childInstance.amount
 							.pipe(takeUntil(this._ngDestroy$))
 							.subscribe((count) => {
 								const wProduct = this._orderProducts.find(
 									({ productId }) =>
-										productId === childInstance.productId
+										productId === childInstance.productId,
 								);
 								wProduct.count = count;
 
 								if (!this.showOrderAction) {
 									this.isOrderAllowedEmitter.emit(
-										this.canOrder
+										this.canOrder,
 									);
 								}
 							});
@@ -285,14 +290,14 @@ export class WarehouseOrderModalComponent implements OnInit, OnDestroy {
 					type: 'custom',
 					renderComponent: MakeOrderCommentComponent,
 					onComponentInitFunction: (
-						childInstance: MakeOrderCommentComponent
+						childInstance: MakeOrderCommentComponent,
 					) => {
 						childInstance.comment
 							.pipe(takeUntil(this._ngDestroy$))
 							.subscribe((comment) => {
 								const wProduct = this._orderProducts.find(
 									({ productId }) =>
-										productId === childInstance.productId
+										productId === childInstance.productId,
 								);
 
 								wProduct.comment = comment;

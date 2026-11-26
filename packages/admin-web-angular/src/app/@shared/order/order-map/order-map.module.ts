@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ToasterModule } from 'angular2-toaster';
-import { TranslateModule } from '@ngx-translate/core';
+import { ToasterModule } from '@app/@core/toaster';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { ThemeModule } from '@app/@theme';
 import { UserWarehouseLocationComponent } from './user-warehouse-map/user-warehouse-map';
 import { CarrierLocationComponent } from './carreir-location/carreir-location';

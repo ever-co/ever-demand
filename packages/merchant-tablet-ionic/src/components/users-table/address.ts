@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ViewCell } from '../table-components/smart-table';
 import User from '@modules/server.common/entities/User';
-import { ModalController } from '@ionic/angular';
-import { CustomerAddrPopupPage } from 'pages/+customers/customer-addr-popup/customer-addr-popup';
+import { ModalController } from '@ionic/angular/modal-controller';
+import { CustomerAddrPopupPage } from '../../pages/+customers/customer-addr-popup/customer-addr-popup';
 
 @Component({
+	standalone: false,
 	styles: [``],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<span class="underlined" (click)="showAddress(user)">
 			{{ user.geoLocation.city }}

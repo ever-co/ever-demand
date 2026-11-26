@@ -11,13 +11,6 @@ import OrderStatus from '@modules/server.common/enums/OrderStatus';
 import Order from '@modules/server.common/entities/Order';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import * as _ from 'lodash';
-import {
-	animate,
-	state,
-	style,
-	transition,
-	trigger,
-} from '@angular/animations';
 import { DOCUMENT } from '@angular/common';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 import { NavController } from '@ionic/angular';
@@ -25,6 +18,7 @@ import { environment } from 'environments/environment';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-order',
 	templateUrl: 'order.component.html',
 	styleUrls: ['./order.component.scss'],

@@ -126,7 +126,9 @@
 							}}"
 						>
 							<ea-merchants-setup-products
-								[storeId]="currentStore?.id"
+								[storeId]="
+									$safeNavigationMigration(currentStore?.id)
+								"
 								#products
 								(previousStep)="nbStepper.previous()"
 								(nextStep)="nbStepper.next()"

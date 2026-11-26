@@ -1,4 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../../@core/data/products.service';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
@@ -12,8 +17,10 @@ import { ProductsCategoryService } from '../../../@core/data/productsCategory.se
 import { Location } from '@angular/common';
 
 @Component({
+	standalone: false,
 	selector: 'ea-product',
 	templateUrl: './product.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./product.component.scss'],
 })
 export class ProductComponent implements OnInit, OnDestroy {
@@ -31,7 +38,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 		private readonly _router: ActivatedRoute,
 		private readonly _productsService: ProductsService,
 		private readonly _productLocalesService: ProductLocalesService,
-		private productsCategoryService: ProductsCategoryService
+		private productsCategoryService: ProductsCategoryService,
 	) {
 		this._router.params
 			.pipe(first())
@@ -76,7 +83,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 	getTranslatedValue(member: ILocaleMember[]): string {
 		return this._productLocalesService.getTranslate(
 			member,
-			this.productLangToShow
+			this.productLangToShow,
 		);
 	}
 
@@ -102,7 +109,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
 	getProductCategories(categoriesID) {
 		this.productCategoriesArr = this.allCategories.filter((c) =>
-			categoriesID.includes(c.id)
+			categoriesID.includes(c.id),
 		);
 	}
 
@@ -121,6 +128,6 @@ export class ProductComponent implements OnInit, OnDestroy {
 	}
 
 	private _setProductLanguage() {
-		this.productLangToShow = this.translateService.currentLang;
+		this.productLangToShow = this.translateService.getCurrentLang();
 	}
 }

@@ -10,6 +10,14 @@
 		margin: 0;
 	}
 
+	// Bootstrap 5: .form-control (width: 100%) wins over .col-10, which no longer sets a
+	// max-width; keep the Bootstrap 4 "input + button on one line" layout.
+	flex-wrap: nowrap;
+
+	input.col-10 {
+		width: 83.333333%;
+	}
+
 	input {
 		border-radius: 0px !important;
 		border-top-left-radius: 0.375rem !important;

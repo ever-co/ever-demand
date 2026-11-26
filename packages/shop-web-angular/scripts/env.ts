@@ -1,10 +1,17 @@
 // NOTE: do NOT ever put here any secure settings! (e.g. Secret Keys)
 // We are using dotenv (.env) for consistency with other Platform projects
 // This is Angular app and all settings will be loaded into the client browser!
+//
+// Runs on plain Node 26 (built-in type stripping): `node scripts/configure.ts`.
+// `.env` in the package folder is read with Node's own `process.loadEnvFile()`.
 
-require('dotenv').config();
+import { bool, cleanEnv, num, str } from 'envalid';
 
-import { cleanEnv, num, str, bool, CleanOptions } from 'envalid';
+try {
+	process.loadEnvFile();
+} catch {
+	// No .env file: use the process environment and the defaults below.
+}
 
 export type Env = Readonly<{
 	production: boolean;
@@ -34,43 +41,36 @@ export type Env = Readonly<{
 	PORT: number;
 }>;
 
-const opt: CleanOptions<Env> = {
-};
+export const env: Env = cleanEnv(process.env, {
+	production: bool({ default: false }),
 
-export const env: Env = cleanEnv(
-	process.env,
-	{
-		production: bool({ default: false }),
+	DEFAULT_LATITUDE: num({ default: 42.6459136 }),
+	DEFAULT_LONGITUDE: num({ default: 23.3332736 }),
 
-		DEFAULT_LATITUDE: num({ default: 42.6459136 }),
-		DEFAULT_LONGITUDE: num({ default: 23.3332736 }),
+	DEFAULT_LANGUAGE: str({ default: 'en-US' }),
 
-		DEFAULT_LANGUAGE: str({ default: 'en-US' }),
+	SERVICES_ENDPOINT: str({ default: 'http://localhost:5500' }),
+	HTTPS_SERVICES_ENDPOINT: str({ default: 'https://localhost:2087' }),
+	GQL_ENDPOINT: str({ default: 'http://localhost:8443/graphql' }),
+	GQL_SUBSCRIPTIONS_ENDPOINT: str({
+		default: 'ws://localhost:2086/subscriptions',
+	}),
 
-		SERVICES_ENDPOINT: str({ default: 'http://localhost:5500' }),
-		HTTPS_SERVICES_ENDPOINT: str({ default: 'https://localhost:2087' }),
-		GQL_ENDPOINT: str({ default: 'http://localhost:8443/graphql' }),
-		GQL_SUBSCRIPTIONS_ENDPOINT: str({
-			default: 'ws://localhost:2086/subscriptions',
-		}),
+	AUTH_LOGO: str({ default: 'assets/img/ever-logo.svg' }),
+	NO_INTERNET_LOGO: str({ default: 'assets/img/ever-logo.svg' }),
 
-		AUTH_LOGO: str({ default: 'assets/img/ever-logo.svg' }),
-		NO_INTERNET_LOGO: str({ default: 'assets/img/ever-logo.svg' }),
+	GOOGLE_MAPS_API_KEY: str({ default: '' }),
 
-		GOOGLE_MAPS_API_KEY: str({ default: '' }),
+	DELIVERY_TIME_MIN: num({ default: 30 }),
+	DELIVERY_TIME_MAX: num({ default: 60 }),
 
-		DELIVERY_TIME_MIN: num({ default: 30 }),
-		DELIVERY_TIME_MAX: num({ default: 60 }),
+	// For maintenance micro service. Ever maintenance API URL: https://maintenance.ever.co/status
+	SETTINGS_APP_TYPE: str({ default: 'shop-web' }),
+	SETTINGS_MAINTENANCE_API_URL: str({
+		default: '',
+	}),
 
-		// For maintenance micro service. Ever maintenance API URL: https://maintenance.ever.co/status
-		SETTINGS_APP_TYPE: str({ default: 'shop-web' }),
-		SETTINGS_MAINTENANCE_API_URL: str({
-			default: '',
-		}),
-
-		WEB_CONCURRENCY: num({ default: 1 }),
-		WEB_MEMORY: num({ default: 2048 }),
-		PORT: num({ default: 3000 }),
-	},
-	opt
-);
+	WEB_CONCURRENCY: num({ default: 1 }),
+	WEB_MEMORY: num({ default: 2048 }),
+	PORT: num({ default: 3000 }),
+});

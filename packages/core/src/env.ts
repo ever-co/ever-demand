@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ quiet: true });
 
 import {
 	cleanEnv,
@@ -7,7 +7,6 @@ import {
 	str,
 	ValidatorSpec,
 	bool,
-	CleanOptions,
 	makeValidator,
 } from 'envalid';
 import {
@@ -75,6 +74,8 @@ export type Env = Readonly<{
 
 	SETTING_INVITES_ENABLED?: boolean;
 	SETTINGS_REGISTRATIONS_REQUIRED_ON_START?: boolean;
+	ADMIN_EMAIL: string;
+	ADMIN_PASSWORD: string;
 	ADMIN_PASSWORD_RESET?: boolean;
 	FAKE_DATA_GENERATOR?: boolean;
 
@@ -91,16 +92,9 @@ export type Env = Readonly<{
 	MAX_SOCKETS?: number;
 }>;
 
-const opt: CleanOptions<Env> = {
-};
-
-export const env: Env = cleanEnv(
+const cleaned = cleanEnv(
 	process.env,
 	{
-		isDev: bool({ default: true }),
-		isTest: bool({ default: false }),
-		isProd: bool({ default: false }),
-
 		NODE_ENV: str({
 			choices: ['production', 'development', 'test'],
 			default: 'development',
@@ -145,8 +139,8 @@ export const env: Env = cleanEnv(
 		FACEBOOK_APP_ID: str({ default: '' }),
 		FACEBOOK_APP_SECRET: str({ default: '' }),
 
-		EXPRESS_SESSION_SECRET: str({ default: 'demand' }),
-		JWT_SECRET: str({ default: 'secretKey' }),
+		EXPRESS_SESSION_SECRET: str({ default: '' }),
+		JWT_SECRET: str({ default: '' }),
 
 		ADMIN_PASSWORD_BCRYPT_SALT_ROUNDS: num({
 			desc: 'Used for passwords encryption, recommended value: 12',
@@ -178,6 +172,14 @@ export const env: Env = cleanEnv(
 
 		SETTING_INVITES_ENABLED: bool({ default: false }),
 		SETTINGS_REGISTRATIONS_REQUIRED_ON_START: bool({ default: false }),
+		ADMIN_EMAIL: str({
+			desc: 'Email of the first admin, created on first boot when no admin with it exists',
+			default: 'admin@ever.co',
+		}),
+		ADMIN_PASSWORD: str({
+			desc: 'Password of the first admin. Required in production (unless DEMO=true); outside production it defaults to "admin"',
+			default: '',
+		}),
 		ADMIN_PASSWORD_RESET: bool({ default: false }),
 		FAKE_DATA_GENERATOR: bool({ default: false }),
 
@@ -199,6 +201,51 @@ export const env: Env = cleanEnv(
 		}),
 
 		MAX_SOCKETS: num({ default: Infinity }),
-	},
-	opt
+	}
 );
+
+/** Placeholder or well-known values that must never sign tokens or sessions in production. */
+export const WEAK_SECRETS: ReadonlySet<string> = new Set([
+	'',
+	'secretKey',
+	'demand',
+	'default',
+	'secret',
+	'changeme',
+]);
+
+// Development-only fallbacks: production refuses to start without real values (see assertProductionSecrets).
+const DEV_JWT_SECRET = 'ever-demand-dev-jwt-secret';
+const DEV_SESSION_SECRET = 'ever-demand-dev-session-secret';
+
+const isProd = cleaned.NODE_ENV === 'production';
+
+/**
+ * Validated environment. `isProd`, `isDev` and `isTest` derive from NODE_ENV (they used to be read
+ * from literal `isProd`/`isDev`/`isTest` env vars, so production ran with GraphQL debug on).
+ */
+export const env: Env = Object.freeze({
+	...cleaned,
+	isProd,
+	isDev: cleaned.NODE_ENV === 'development',
+	isTest: cleaned.NODE_ENV === 'test',
+	JWT_SECRET: cleaned.JWT_SECRET || (isProd ? '' : DEV_JWT_SECRET),
+	EXPRESS_SESSION_SECRET:
+		cleaned.EXPRESS_SESSION_SECRET || (isProd ? '' : DEV_SESSION_SECRET),
+}) as Env;
+
+/**
+ * Throws when production would run with a missing or well-known JWT or session secret: anyone could
+ * then forge login tokens. Called once at boot (main.ts).
+ */
+export function assertProductionSecrets(e: Env = env): void {
+	if (!e.isProd) return;
+	const weak = (['JWT_SECRET', 'EXPRESS_SESSION_SECRET'] as const).filter(
+		(name) => WEAK_SECRETS.has(e[name])
+	);
+	if (weak.length) {
+		throw new Error(
+			`Refusing to start in production: set ${weak.join(' and ')} to long random values (env vars, e.g. from OpenBao or GitHub secrets).`
+		);
+	}
+}

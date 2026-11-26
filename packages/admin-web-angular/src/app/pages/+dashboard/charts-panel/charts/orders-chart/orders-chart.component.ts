@@ -5,19 +5,25 @@ import {
 	OnChanges,
 	AfterViewInit,
 	OnDestroy,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
+// The gradients only need echarts' graphic helpers; ngx-echarts lazy-loads the full library.
+import * as echarts from 'echarts/core';
 import { OrdersChart } from '@app/@core/services/dashboard/orders-chart.service';
 import { LayoutService } from '@app/@core/services/dashboard/layout.service';
 import { takeWhile, delay } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'ea-orders-chart',
 	styleUrls: ['./orders-chart.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './orders-chart.component.html',
 })
 export class OrdersChartComponent
-	implements OnChanges, AfterViewInit, OnDestroy {
+	implements OnChanges, AfterViewInit, OnDestroy
+{
 	@Input()
 	ordersChartData: OrdersChart;
 
@@ -34,7 +40,7 @@ export class OrdersChartComponent
 
 	constructor(
 		private readonly _theme: NbThemeService,
-		private readonly _layoutService: LayoutService
+		private readonly _layoutService: LayoutService,
 	) {
 		this._layoutService
 			.onChangeLayoutSize()
@@ -47,7 +53,7 @@ export class OrdersChartComponent
 			.getJsTheme()
 			.pipe(
 				takeWhile(() => this.alive),
-				delay(1)
+				delay(1),
 			)
 			.subscribe((config) => {
 				const eTheme: any = config.variables.orders;
@@ -281,11 +287,11 @@ export class OrdersChartComponent
 
 		const series = this.getNewSeries(
 			options.series,
-			ordersChartData.linesData
+			ordersChartData.linesData,
 		);
 		const xAxis = this.getNewXAxis(
 			options.xAxis,
-			ordersChartData.chartLabel
+			ordersChartData.chartLabel,
 		);
 
 		this.option = {

@@ -1,14 +1,21 @@
-import { Component, ViewChild, EventEmitter } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	EventEmitter,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { BasicInfoFormComponent } from '../forms/basic-info';
 import { LocationFormComponent } from '../../forms/location';
 import { UserAuthRouter } from '@modules/client.common.angular2/routers/user-auth-router.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-user-mutation',
 	templateUrl: './user-mutation.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./user-mutation.component.scss'],
 })
 export class UserMutationComponent {
@@ -38,7 +45,7 @@ export class UserMutationComponent {
 		protected readonly userAuthRouter: UserAuthRouter,
 		private readonly toasterService: ToasterService,
 		private readonly activeModal: NgbActiveModal,
-		private readonly formBuilder: FormBuilder
+		private readonly formBuilder: FormBuilder,
 	) {}
 
 	onCoordinatesChanges(coords: number[]) {
@@ -71,14 +78,14 @@ export class UserMutationComponent {
 			this.loading = false;
 			this.toasterService.pop(
 				'success',
-				`Customer with '${user.id}' was added`
+				`Customer with '${user.id}' was added`,
 			);
 			this.activeModal.close(user);
 		} catch (err) {
 			this.loading = false;
 			this.toasterService.pop(
 				'error',
-				`Error in creating customer: "${err.message}"`
+				`Error in creating customer: "${err.message}"`,
 			);
 		}
 	}

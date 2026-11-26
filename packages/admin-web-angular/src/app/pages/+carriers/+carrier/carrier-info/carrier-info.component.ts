@@ -1,11 +1,19 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+	Component,
+	Input,
+	Output,
+	EventEmitter,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import Carrier from '@modules/server.common/entities/Carrier';
 import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 import { CarrierRouter } from '@modules/client.common.angular2/routers/carrier-router.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-carrier-info',
 	styleUrls: ['carrier-info.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'carrier-info.component.html',
 })
 export class CarrierInfoComponent {
@@ -24,7 +32,7 @@ export class CarrierInfoComponent {
 		const isOnline = this.carrier.status === CarrierStatus.Online;
 		const carrier = await this.carrierRouter.updateStatus(
 			this.carrier.id,
-			isOnline ? CarrierStatus.Offline : CarrierStatus.Online
+			isOnline ? CarrierStatus.Offline : CarrierStatus.Online,
 		);
 		this.getChangeCarrier.emit(carrier);
 		this.loading = false;

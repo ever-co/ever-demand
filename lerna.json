@@ -1,29 +1,16 @@
 {
-	"lerna": "3.13.0",
-	"npmClient": "yarn",
-	"version": "0.3.0",
-	"concurrency": 8,
-	"changelog": {
-		"repo": "ever-co/ever",
-		"cacheDir": ".changelog",
-		"labels": {}
-	},
+	"$schema": "node_modules/lerna/schemas/lerna-schema.json",
+	"version": "0.5.0",
+	"npmClient": "pnpm",
 	"packages": ["packages/*"],
-	"useWorkspaces": true,
 	"command": {
-		"bootstrap": {},
 		"publish": {
 			"conventionalCommits": true,
-			"ignoreChanges": ["*.md", "test/**"],
+			"ignoreChanges": ["*.md", "test/**", "**/*.spec.ts"],
 			"message": "chore(release): %s"
 		},
 		"version": {
 			"push": false
-		},
-		"clean": {
-			"yes": true
 		}
-	},
-	"npmClientArgs": ["--no-package-lock"],
-	"stream": true
+	}
 }

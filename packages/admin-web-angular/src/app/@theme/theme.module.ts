@@ -35,7 +35,6 @@ import {
 	ThemeSettingsComponent,
 	ThemeSwitcherComponent,
 	ThemeSwitcherListComponent,
-	TinyMCEComponent,
 } from './components';
 
 import {
@@ -50,17 +49,11 @@ import { CORPORATE_THEME } from './styles/theme.corporate';
 import { EVERDARK_THEME } from './styles/theme.everdark';
 import { EVERLIGHT_THEME } from './styles/theme.everlight';
 
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { AdminsService } from '../@core/data/admins.service';
 import { PipesModule } from '@modules/client.common.angular2/pipes/pipes.module';
 import { DARK_THEME } from './styles/theme.dark';
 import { SampleLayoutComponent } from './layouts/sample/sample.layout';
-
-export function HttpLoaderFactory(http: HttpClient) {
-	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
@@ -95,7 +88,6 @@ const COMPONENTS = [
 	FooterComponent,
 	SearchInputComponent,
 	ThemeSettingsComponent,
-	TinyMCEComponent,
 	OneColumnLayoutComponent,
 	SampleLayoutComponent,
 	ThreeColumnsLayoutComponent,
@@ -127,14 +119,7 @@ const NB_THEME_PROVIDERS = [
     imports: [
         ...BASE_MODULES,
         ...NB_MODULES,
-        HttpClientModule,
-        TranslateModule.forChild({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient],
-            },
-        }),
+        TranslateModule,
         PipesModule,
     ],
     exports: [...BASE_MODULES, ...NB_MODULES, ...COMPONENTS],

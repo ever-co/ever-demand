@@ -8,9 +8,9 @@ import { CarrierLocationModule } from './location/carrier-location.module';
 import { CarrierInfoComponent } from './carrier-info/carrier-info.component';
 import { CarrierOrdersStatusComponent } from './carrier-orders-status/carrier-orders-status.component';
 import { CarrierOrdersComponent } from './carrier-orders/carrier-orders.component';
-import { FormWizardModule } from '@ever-co/angular2-wizard';
-import { ToasterModule } from 'angular2-toaster';
-import { TranslateModule } from '@ngx-translate/core';
+import { FormWizardModule } from '@app/@shared/wizard';
+import { ToasterModule } from '@app/@core/toaster';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { CarrierMutationModule } from '../../../@shared/carrier/carrier-mutation';
 import { HighlightModule } from 'ngx-highlightjs';
 import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
@@ -23,7 +23,7 @@ import { CarriersOrdersService } from '../../../@core/data/carriers-orders.servi
 import { CarrierOrdersTableModule } from '../../../@shared/render-component/carrier-orders-table/carrier-orders-table.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { Ng2SmartTableModule } from '@app/@shared/smart-table';
 
 @NgModule({
     imports: [

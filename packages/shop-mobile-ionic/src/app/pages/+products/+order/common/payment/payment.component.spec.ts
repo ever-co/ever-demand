@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModalController, Platform } from '@ionic/angular';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
@@ -12,8 +12,12 @@ import {
 } from '@modules/server.common/routers/IOrderRouter';
 import { Store } from 'app/services/store.service';
 import { StripeLoader } from 'app/services/stripeLoader';
+import { StripeCardForm } from './card-form/stripe-card-form.service';
 import { environment } from 'environments/environment';
 import { PaymentComponent } from './payment.component';
+import { vi, type Mock } from 'vitest';
+import { createSpyObj, type SpyObj } from 'app/testing/spies';
+import { translateTesting } from 'app/testing/translate';
 
 interface Deferred<T> {
 	promise: Promise<T>;
@@ -47,15 +51,23 @@ function alreadyPaidError(): Error {
 describe('PaymentComponent new-card payment', () => {
 	let fixture: ComponentFixture<PaymentComponent>;
 	let component: PaymentComponent;
-	let userRouter: jasmine.SpyObj<UserRouter>;
-	let orderRouter: jasmine.SpyObj<OrderRouter>;
-	let configure: jasmine.Spy;
+	let userRouter: SpyObj<UserRouter>;
+	let orderRouter: SpyObj<OrderRouter>;
+	let openCardForm: Mock;
 	let tokenHandlers: Array<(token: any) => Promise<void>>;
 	let closedHandlers: Array<() => void>;
-	let modalController: jasmine.SpyObj<ModalController>;
-	let stripeLoader: jasmine.SpyObj<StripeLoader>;
-	let originalStripeCheckout: any;
-	let orderId: jasmine.Spy;
+	let modalController: SpyObj<ModalController>;
+	let stripeLoader: SpyObj<StripeLoader>;
+	let orderId: Mock;
+
+	// Stripe.js as StripeLoader hands it out once the script loaded
+	const stripeJs = { elements: vi.fn(), createToken: vi.fn() } as any;
+
+	// What StripeLoader.stripe gives: null while Stripe.js loads or after
+	// it failed to load.
+	const setLoadedStripe = (stripe: any) => {
+		(stripeLoader as any).stripe = stripe;
+	};
 
 	const cardToken = (id: string) => ({
 		id,
@@ -69,8 +81,8 @@ describe('PaymentComponent new-card payment', () => {
 	// Clears the calls the component made when it was created, so a spec
 	// sees only what the tap called.
 	const resetRouterCalls = () => {
-		userRouter.getCards.calls.reset();
-		orderRouter.getStripeCurrency.calls.reset();
+		userRouter.getCards.mockClear();
+		orderRouter.getStripeCurrency.mockClear();
 	};
 
 	const expectNoRouterCall = () => {
@@ -106,50 +118,49 @@ describe('PaymentComponent new-card payment', () => {
 	beforeEach(async () => {
 		tokenHandlers = [];
 		closedHandlers = [];
-		configure = jasmine
-			.createSpy('StripeCheckout.configure')
-			.and.callFake((options) => {
-				tokenHandlers.push(options.token);
-				closedHandlers.push(options.closed);
-				return { open: jasmine.createSpy('open') };
-			});
-		originalStripeCheckout = (window as any).StripeCheckout;
-		(window as any).StripeCheckout = { configure };
+		// The card form (StripeCardForm) hands the card token and the close
+		// of the form to these callbacks, as Stripe Checkout did.
+		openCardForm = vi.fn().mockImplementation(async (options) => {
+			tokenHandlers.push(options.token);
+			closedHandlers.push(options.closed);
+		});
 
-		userRouter = jasmine.createSpyObj('UserRouter', [
+		userRouter = createSpyObj('UserRouter', [
 			'getCards',
 			'updateEmail',
 			'addPaymentMethod',
 		]);
-		userRouter.getCards.and.returnValue(Promise.resolve([]));
-		userRouter.updateEmail.and.returnValue(
+		userRouter.getCards.mockReturnValue(Promise.resolve([]));
+		userRouter.updateEmail.mockReturnValue(
 			Promise.resolve({ id: 'user-1' } as any)
 		);
-		userRouter.addPaymentMethod.and.returnValue(Promise.resolve('card-1'));
+		userRouter.addPaymentMethod.mockReturnValue(Promise.resolve('card-1'));
 
-		orderRouter = jasmine.createSpyObj('OrderRouter', [
+		orderRouter = createSpyObj('OrderRouter', [
 			'payWithStripe',
 			'confirm',
 			'getStripeCurrency',
 		]);
-		orderRouter.confirm.and.returnValue(Promise.resolve(paidOrder()));
-		orderRouter.getStripeCurrency.and.returnValue(Promise.resolve('ils'));
+		orderRouter.confirm.mockReturnValue(Promise.resolve(paidOrder()));
+		orderRouter.getStripeCurrency.mockReturnValue(Promise.resolve('ils'));
 
-		modalController = jasmine.createSpyObj('ModalController', [
+		modalController = createSpyObj('ModalController', [
 			'dismiss',
 			'create',
 		]);
-		modalController.create.and.returnValue(
+		modalController.create.mockReturnValue(
 			Promise.resolve({ present: () => Promise.resolve() } as any)
 		);
 
-		stripeLoader = jasmine.createSpyObj<StripeLoader>('StripeLoader', [
-			'ensureLoaded',
-		]);
+		stripeLoader = createSpyObj<StripeLoader>(
+			'StripeLoader',
+			['ensureLoaded'],
+			{ stripe: stripeJs }
+		);
 
 		await TestBed.configureTestingModule({
 			declarations: [PaymentComponent],
-			imports: [TranslateModule.forRoot()],
+			imports: [...translateTesting()],
 			providers: [
 				{ provide: UserRouter, useValue: userRouter },
 				{ provide: OrderRouter, useValue: orderRouter },
@@ -162,34 +173,31 @@ describe('PaymentComponent new-card payment', () => {
 					provide: ProductLocalesService,
 					useValue: { getTranslate: () => 'Product' },
 				},
-				// A stub, so no spec adds the real Checkout script to the page
+				// A stub, so no spec loads the real Stripe.js
 				{ provide: StripeLoader, useValue: stripeLoader },
+				{ provide: StripeCardForm, useValue: { open: openCardForm } },
 			],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 
 		// Store keeps the ids in localStorage; read them from spies instead.
 		const store = TestBed.inject(Store);
-		spyOnProperty(store, 'userId', 'get').and.returnValue('user-1');
-		orderId = spyOnProperty(store, 'orderId', 'get').and.returnValue(
+		vi.spyOn(store, 'userId', 'get').mockReturnValue('user-1');
+		orderId = vi.spyOn(store, 'orderId', 'get').mockReturnValue(
 			'order-1'
 		);
 
-		spyOn(window, 'alert');
-		spyOn(console, 'log');
-		spyOn(console, 'error');
+		vi.spyOn(window, 'alert').mockImplementation(() => undefined);
+		vi.spyOn(console, 'log').mockImplementation(() => undefined);
+		vi.spyOn(console, 'error').mockImplementation(() => undefined);
 
 		fixture = await createPayment();
 		component = fixture.componentInstance;
 	});
 
-	afterEach(() => {
-		(window as any).StripeCheckout = originalStripeCheckout;
-	});
-
 	it('does not save a second card or charge again while the first new-card payment is in flight', async () => {
 		const payment = deferred<any>();
-		orderRouter.payWithStripe.and.returnValue(payment.promise);
+		orderRouter.payWithStripe.mockReturnValue(payment.promise);
 
 		await component.toPaymentStage();
 		const first = tokenHandlers[0](cardToken('tok_first'));
@@ -206,7 +214,7 @@ describe('PaymentComponent new-card payment', () => {
 		);
 		await settle();
 
-		expect(configure).toHaveBeenCalledTimes(1);
+		expect(openCardForm).toHaveBeenCalledTimes(1);
 		expect(userRouter.addPaymentMethod).toHaveBeenCalledTimes(1);
 		expect(orderRouter.payWithStripe).toHaveBeenCalledTimes(1);
 
@@ -219,8 +227,8 @@ describe('PaymentComponent new-card payment', () => {
 
 	it('blocks a second card submission while the email update is still pending', async () => {
 		const emailUpdate = deferred<any>();
-		userRouter.updateEmail.and.returnValue(emailUpdate.promise);
-		orderRouter.payWithStripe.and.returnValue(Promise.resolve(paidOrder()));
+		userRouter.updateEmail.mockReturnValue(emailUpdate.promise);
+		orderRouter.payWithStripe.mockReturnValue(Promise.resolve(paidOrder()));
 
 		await component.toPaymentStage();
 		const first = tokenHandlers[0](cardToken('tok_first'));
@@ -234,7 +242,7 @@ describe('PaymentComponent new-card payment', () => {
 		);
 		await settle();
 
-		expect(configure).toHaveBeenCalledTimes(1);
+		expect(openCardForm).toHaveBeenCalledTimes(1);
 		expect(userRouter.updateEmail).toHaveBeenCalledTimes(1);
 		expect(userRouter.addPaymentMethod).not.toHaveBeenCalled();
 
@@ -248,7 +256,7 @@ describe('PaymentComponent new-card payment', () => {
 
 	it('resets paying when the email update fails', async () => {
 		const emailUpdate = deferred<any>();
-		userRouter.updateEmail.and.returnValue(emailUpdate.promise);
+		userRouter.updateEmail.mockReturnValue(emailUpdate.promise);
 
 		await component.toPaymentStage();
 		const done = tokenHandlers[0](cardToken('tok_first'));
@@ -263,26 +271,26 @@ describe('PaymentComponent new-card payment', () => {
 	});
 
 	it('asks the customer to check the email, and clears the guard, when the email update fails', async () => {
-		// The email typed in Checkout belongs to another customer, so
+		// The email typed in the card form belongs to another customer, so
 		// updateEmail fails on the unique email index.
 		const error = new Error('E11000 duplicate key error: email');
-		userRouter.updateEmail.and.rejectWith(error);
+		userRouter.updateEmail.mockRejectedValue(error);
 
 		await component.toPaymentStage();
-		await expectAsync(
+		await expect(
 			tokenHandlers[0](cardToken('tok_first'))
-		).toBeResolved();
+		).resolves.toBeUndefined();
 
 		// TranslateModule.forRoot() has no translations, so instant
 		// returns the key. The email step has its own message, not the
 		// generic one, and never the server error.
-		expect(window.alert).toHaveBeenCalledOnceWith(
+		expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 			'BUY_POPUP.EMAIL_NOT_SAVED'
 		);
 		expect(window.alert).not.toHaveBeenCalledWith(
 			'BUY_POPUP.PAYMENT_FAILED'
 		);
-		expect(console.error).toHaveBeenCalledWith(jasmine.any(String), error);
+		expect(console.error).toHaveBeenCalledWith(expect.any(String), error);
 		expect(userRouter.addPaymentMethod).not.toHaveBeenCalled();
 		expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
 		expect(component.paying).toBe(false);
@@ -292,8 +300,8 @@ describe('PaymentComponent new-card payment', () => {
 	it('keeps paying set until payWithStripe and confirm finish, then resets it', async () => {
 		const payment = deferred<any>();
 		const confirmation = deferred<any>();
-		orderRouter.payWithStripe.and.returnValue(payment.promise);
-		orderRouter.confirm.and.returnValue(confirmation.promise);
+		orderRouter.payWithStripe.mockReturnValue(payment.promise);
+		orderRouter.confirm.mockReturnValue(confirmation.promise);
 
 		await component.toPaymentStage();
 		const done = tokenHandlers[0](cardToken('tok_first'));
@@ -315,7 +323,7 @@ describe('PaymentComponent new-card payment', () => {
 
 	it('resets paying after a failed payment so the customer can try again', async () => {
 		const payment = deferred<any>();
-		orderRouter.payWithStripe.and.returnValue(payment.promise);
+		orderRouter.payWithStripe.mockReturnValue(payment.promise);
 
 		await component.toPaymentStage();
 		const done = tokenHandlers[0](cardToken('tok_first'));
@@ -331,12 +339,12 @@ describe('PaymentComponent new-card payment', () => {
 
 		await component.toPaymentStage();
 
-		expect(configure).toHaveBeenCalledTimes(2);
+		expect(openCardForm).toHaveBeenCalledTimes(2);
 	});
 
 	it('resets paying when saving the new card fails', async () => {
 		const cardSave = deferred<string>();
-		userRouter.addPaymentMethod.and.returnValue(cardSave.promise);
+		userRouter.addPaymentMethod.mockReturnValue(cardSave.promise);
 
 		await component.toPaymentStage();
 		const done = tokenHandlers[0](cardToken('tok_first'));
@@ -353,17 +361,17 @@ describe('PaymentComponent new-card payment', () => {
 
 	it('tells the customer when saving the new card fails', async () => {
 		const error = new Error('card_declined');
-		userRouter.addPaymentMethod.and.rejectWith(error);
+		userRouter.addPaymentMethod.mockRejectedValue(error);
 
 		await component.toPaymentStage();
-		await expectAsync(
+		await expect(
 			tokenHandlers[0](cardToken('tok_first'))
-		).toBeResolved();
+		).resolves.toBeUndefined();
 
-		expect(window.alert).toHaveBeenCalledOnceWith(
+		expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 			'BUY_POPUP.PAYMENT_FAILED'
 		);
-		expect(console.error).toHaveBeenCalledWith(jasmine.any(String), error);
+		expect(console.error).toHaveBeenCalledWith(expect.any(String), error);
 		expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
 		expect(component.paying).toBe(false);
 		expect(TestBed.inject(Store).isPaying('order-1')).toBe(false);
@@ -371,20 +379,20 @@ describe('PaymentComponent new-card payment', () => {
 
 	it('tells the customer the order is already paid, not that the payment failed, when the server says so', async () => {
 		const error = alreadyPaidError();
-		orderRouter.payWithStripe.and.rejectWith(error);
+		orderRouter.payWithStripe.mockRejectedValue(error);
 
 		await component.toPaymentStage();
-		await expectAsync(
+		await 
 			tokenHandlers[0](cardToken('tok_first'))
-		).toBeResolved();
+		;
 
-		expect(window.alert).toHaveBeenCalledOnceWith(
+		expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 			'BUY_POPUP.ORDER_ALREADY_PAID'
 		);
 		expect(window.alert).not.toHaveBeenCalledWith(
 			'BUY_POPUP.PAYMENT_FAILED'
 		);
-		expect(console.error).toHaveBeenCalledWith(jasmine.any(String), error);
+		expect(console.error).toHaveBeenCalledWith(expect.any(String), error);
 		expect(component.paying).toBe(false);
 		expect(TestBed.inject(Store).isPaying('order-1')).toBe(false);
 	});
@@ -397,7 +405,7 @@ describe('PaymentComponent new-card payment', () => {
 
 		it('tells the customer once and frees Pay with card when the saved card is declined', async () => {
 			const payment = deferred<any>();
-			orderRouter.payWithStripe.and.returnValue(payment.promise);
+			orderRouter.payWithStripe.mockReturnValue(payment.promise);
 			const declined = new Error('Your card was declined.');
 			component.userCard = savedCard();
 
@@ -405,7 +413,7 @@ describe('PaymentComponent new-card payment', () => {
 			payWithCardButton().click();
 			await settle();
 
-			expect(orderRouter.payWithStripe).toHaveBeenCalledOnceWith(
+			expect(orderRouter.payWithStripe).toHaveBeenCalledExactlyOnceWith(
 				'order-1',
 				'card-saved'
 			);
@@ -414,11 +422,11 @@ describe('PaymentComponent new-card payment', () => {
 			payment.reject(declined);
 			await settle();
 
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.PAYMENT_FAILED'
 			);
 			expect(console.error).toHaveBeenCalledWith(
-				jasmine.any(String),
+				expect.any(String),
 				declined
 			);
 			expect(component.paying).toBe(false);
@@ -434,21 +442,21 @@ describe('PaymentComponent new-card payment', () => {
 
 		it('tells the customer the order is already paid, not that the payment failed, when the server says so', async () => {
 			const error = alreadyPaidError();
-			orderRouter.payWithStripe.and.rejectWith(error);
+			orderRouter.payWithStripe.mockRejectedValue(error);
 			component.userCard = savedCard();
 
 			// The tap drops the promise payWithUserCard returns
 			payWithCardButton().click();
 			await settle();
 
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.ORDER_ALREADY_PAID'
 			);
 			expect(window.alert).not.toHaveBeenCalledWith(
 				'BUY_POPUP.PAYMENT_FAILED'
 			);
 			expect(console.error).toHaveBeenCalledWith(
-				jasmine.any(String),
+				expect.any(String),
 				error
 			);
 			expect(component.paying).toBe(false);
@@ -461,18 +469,35 @@ describe('PaymentComponent new-card payment', () => {
 	// payments on. The tap drops the promise the method returns, so it
 	// has to tell the customer and resolve, never reject.
 	describe('without a Stripe publishable key', () => {
+		// Clears the calls the component made when it was created, so a
+		// spec sees only what the tap called.
+		const resetRouterCalls = () => {
+			userRouter.getCards.mockClear();
+			orderRouter.getStripeCurrency.mockClear();
+		};
+
+		const expectNoRouterCall = () => {
+			expect(userRouter.getCards).not.toHaveBeenCalled();
+			expect(userRouter.updateEmail).not.toHaveBeenCalled();
+			expect(userRouter.addPaymentMethod).not.toHaveBeenCalled();
+			expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
+			expect(orderRouter.confirm).not.toHaveBeenCalled();
+			expect(orderRouter.getStripeCurrency).not.toHaveBeenCalled();
+		};
+
 		beforeEach(() => {
 			(component as any).stripePublishableKey = '';
 			resetRouterCalls();
 		});
 
 		it('tells the customer card payment is not available when Pay now is tapped', async () => {
-			await expectAsync(component.toPaymentStage()).toBeResolved();
+			await component.toPaymentStage();
 
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.CARD_PAYMENT_UNAVAILABLE'
 			);
-			expect(configure).not.toHaveBeenCalled();
+			expect(openCardForm).not.toHaveBeenCalled();
+			expect(stripeLoader.ensureLoaded).not.toHaveBeenCalled();
 			expect(modalController.dismiss).not.toHaveBeenCalled();
 			expectNoRouterCall();
 			expect(component.paying).toBe(false);
@@ -482,9 +507,9 @@ describe('PaymentComponent new-card payment', () => {
 		it('tells the customer card payment is not available when Pay with card is tapped', async () => {
 			component.userCard = savedCard();
 
-			await expectAsync(component.payWithUserCard()).toBeResolved();
+			await component.payWithUserCard();
 
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.CARD_PAYMENT_UNAVAILABLE'
 			);
 			expectNoRouterCall();
@@ -502,24 +527,24 @@ describe('PaymentComponent new-card payment', () => {
 			button.click();
 			await settle();
 
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.CARD_PAYMENT_UNAVAILABLE'
 			);
 			expectNoRouterCall();
 		});
 	});
 
-	// StripeLoader adds the Checkout script at runtime and nothing waits
-	// for it: a content blocker, a firewall or no network keeps it from
-	// loading, or it is still loading when the customer taps Pay now. The
-	// tap drops the promise toPaymentStage returns, so it has to tell the
-	// customer and resolve, never reject.
+	// StripeLoader loads Stripe.js at runtime and nothing waits for it: a
+	// content blocker, a firewall or no network keeps it from loading, or
+	// it is still loading when the customer taps Pay now. The tap drops the
+	// promise toPaymentStage returns, so it has to tell the customer and
+	// resolve, never reject.
 	describe('when the card form script did not load', () => {
 		let originalOrderInfoType: string;
 
 		beforeEach(() => {
 			originalOrderInfoType = environment.ORDER_INFO_TYPE;
-			delete (window as any).StripeCheckout;
+			setLoadedStripe(null);
 			resetRouterCalls();
 		});
 
@@ -530,13 +555,13 @@ describe('PaymentComponent new-card payment', () => {
 		it('tells the customer the card form did not load when Pay now is tapped', async () => {
 			environment.ORDER_INFO_TYPE = 'page';
 
-			await expectAsync(component.toPaymentStage()).toBeResolved();
+			await component.toPaymentStage();
 
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.CARD_FORM_NOT_LOADED'
 			);
-			expect(console.error).toHaveBeenCalledOnceWith(jasmine.any(String));
-			expect(configure).not.toHaveBeenCalled();
+			expect(console.error).toHaveBeenCalledExactlyOnceWith(expect.any(String));
+			expect(openCardForm).not.toHaveBeenCalled();
 			expectNoRouterCall();
 			expect(component.paying).toBe(false);
 			expect(TestBed.inject(Store).isPaying('order-1')).toBe(false);
@@ -545,9 +570,9 @@ describe('PaymentComponent new-card payment', () => {
 		it('keeps the order info modal open in popup mode', async () => {
 			environment.ORDER_INFO_TYPE = 'popup';
 
-			await expectAsync(component.toPaymentStage()).toBeResolved();
+			await component.toPaymentStage();
 
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.CARD_FORM_NOT_LOADED'
 			);
 			expect(modalController.dismiss).not.toHaveBeenCalled();
@@ -557,15 +582,23 @@ describe('PaymentComponent new-card payment', () => {
 			expect(TestBed.inject(Store).isPaying('order-1')).toBe(false);
 		});
 
-		it('tells the customer when StripeCheckout has no configure function', async () => {
-			(window as any).StripeCheckout = {};
+		it('tells the customer, and shows the order again in popup mode, when the card form cannot open', async () => {
+			environment.ORDER_INFO_TYPE = 'popup';
+			setLoadedStripe(stripeJs);
+			const error = new Error('ion-modal is not defined');
+			openCardForm.mockRejectedValue(error);
 
-			await expectAsync(component.toPaymentStage()).toBeResolved();
+			await expect(component.toPaymentStage()).resolves.toBeUndefined();
 
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.CARD_FORM_NOT_LOADED'
 			);
+			expect(console.error).toHaveBeenCalledWith(expect.any(String), error);
+			// Dismissed for the card form, then opened again
+			expect(modalController.dismiss).toHaveBeenCalledTimes(1);
+			expect(modalController.create).toHaveBeenCalledTimes(1);
 			expectNoRouterCall();
+			expect(component.paying).toBe(false);
 		});
 
 		it('shows the message on a tap of the Pay now button', async () => {
@@ -578,7 +611,7 @@ describe('PaymentComponent new-card payment', () => {
 			button.click();
 			await settle();
 
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.CARD_FORM_NOT_LOADED'
 			);
 			expectNoRouterCall();
@@ -589,62 +622,103 @@ describe('PaymentComponent new-card payment', () => {
 		it('opens the card form on the next tap once the script has loaded', async () => {
 			await component.toPaymentStage();
 
-			(window as any).StripeCheckout = { configure };
+			setLoadedStripe(stripeJs);
 			await component.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledOnceWith(
-				jasmine.objectContaining({ currency: 'ILS' })
+			expect(openCardForm).toHaveBeenCalledExactlyOnceWith(
+				expect.objectContaining({ currency: 'ILS' })
 			);
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.CARD_FORM_NOT_LOADED'
 			);
 		});
 
-		// The shop started without network, so checkout.js failed and
-		// nothing added it again: every tap showed the message until the
-		// app restarted.
-		it('asks the loader to add the script again and still tells the customer', async () => {
-			await expectAsync(component.toPaymentStage()).toBeResolved();
+		// The shop started without network, so the card form script failed
+		// and nothing added it again: every tap showed the message until
+		// the app restarted (#1663).
+		it('asks the loader to load Stripe.js again and still tells the customer', async () => {
+			await component.toPaymentStage();
 
 			expect(stripeLoader.ensureLoaded).toHaveBeenCalledTimes(1);
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.CARD_FORM_NOT_LOADED'
 			);
 			// The alert blocks until the customer closes it: the download
 			// can run meanwhile.
 			expect(stripeLoader.ensureLoaded).toHaveBeenCalledBefore(
-				window.alert as jasmine.Spy
+				window.alert as Mock
 			);
-			expect(configure).not.toHaveBeenCalled();
+			expect(openCardForm).not.toHaveBeenCalled();
 			expectNoRouterCall();
 		});
 
-		it('opens the card form on a later tap once the loader added the script again', async () => {
-			// The script the loader adds again defines StripeCheckout
-			stripeLoader.ensureLoaded.and.callFake(() => {
-				(window as any).StripeCheckout = { configure };
+		it('opens the card form on a later tap once the loader loaded Stripe.js again', async () => {
+			// Stripe.js loads this time
+			stripeLoader.ensureLoaded.mockImplementation(() => {
+				setLoadedStripe(stripeJs);
 			});
 
 			await component.toPaymentStage();
 			await component.toPaymentStage();
 
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.CARD_FORM_NOT_LOADED'
 			);
-			expect(configure).toHaveBeenCalledOnceWith(
-				jasmine.objectContaining({ currency: 'ILS' })
+			expect(openCardForm).toHaveBeenCalledExactlyOnceWith(
+				expect.objectContaining({ currency: 'ILS' })
 			);
 			// The second tap found the card form and did not ask again
 			expect(stripeLoader.ensureLoaded).toHaveBeenCalledTimes(1);
 		});
 	});
 
+	it('opens the card form with Stripe.js, the first product, its price in cents and the logo', async () => {
+		await component.toPaymentStage();
+
+		expect(openCardForm).toHaveBeenCalledExactlyOnceWith(
+			expect.objectContaining({
+				stripe: stripeJs,
+				image: environment.STRIPE_POP_UP_LOGO,
+				name: 'Product',
+				description: 'Product',
+				amount: 1000,
+				currency: 'ILS',
+			})
+		);
+		expect(stripeLoader.ensureLoaded).not.toHaveBeenCalled();
+		expect(window.alert).not.toHaveBeenCalled();
+	});
+
+	it('saves the email and the card token from the card form, then charges and confirms the order', async () => {
+		orderRouter.payWithStripe.mockReturnValue(Promise.resolve(paidOrder()));
+
+		await component.toPaymentStage();
+		await tokenHandlers[0](cardToken('tok_first'));
+
+		expect(userRouter.updateEmail).toHaveBeenCalledExactlyOnceWith(
+			'user-1',
+			'customer@example.com'
+		);
+		expect(userRouter.addPaymentMethod).toHaveBeenCalledExactlyOnceWith(
+			'user-1',
+			'tok_first'
+		);
+		expect(orderRouter.payWithStripe).toHaveBeenCalledExactlyOnceWith(
+			'order-1',
+			'card-1',
+			'ILS'
+		);
+		expect(orderRouter.confirm).toHaveBeenCalledExactlyOnceWith('order-1');
+		expect(window.alert).not.toHaveBeenCalled();
+		expect(component.paying).toBe(false);
+	});
+
 	it('tells the customer, and charges nothing, when Pay with card runs without a saved card', async () => {
 		component.userCard = null;
 
-		await expectAsync(component.payWithUserCard()).toBeResolved();
+		await component.payWithUserCard();
 
-		expect(window.alert).toHaveBeenCalledOnceWith(
+		expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 			'BUY_POPUP.PAYMENT_FAILED'
 		);
 		expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
@@ -661,28 +735,28 @@ describe('PaymentComponent new-card payment', () => {
 		};
 
 		it('shows the currency the server charges the card in', async () => {
-			orderRouter.getStripeCurrency.and.returnValue(
+			orderRouter.getStripeCurrency.mockReturnValue(
 				Promise.resolve('usd')
 			);
 			const payment = (await createPayment()).componentInstance;
 
 			await payment.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledOnceWith(
-				jasmine.objectContaining({ currency: 'USD' })
+			expect(openCardForm).toHaveBeenCalledExactlyOnceWith(
+				expect.objectContaining({ currency: 'USD' })
 			);
 		});
 
 		it('keeps Pay now disabled and opens no popup until the server sent the currency', async () => {
 			const currency = deferred<string>();
-			orderRouter.getStripeCurrency.and.returnValue(currency.promise);
+			orderRouter.getStripeCurrency.mockReturnValue(currency.promise);
 			const payment = await createPayment();
 
 			expect(payNowButton(payment).disabled).toBe(true);
 
 			await payment.componentInstance.toPaymentStage();
 
-			expect(configure).not.toHaveBeenCalled();
+			expect(openCardForm).not.toHaveBeenCalled();
 			expect(window.alert).not.toHaveBeenCalled();
 
 			currency.resolve('eur');
@@ -692,22 +766,21 @@ describe('PaymentComponent new-card payment', () => {
 
 			await payment.componentInstance.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledOnceWith(
-				jasmine.objectContaining({ currency: 'EUR' })
+			expect(openCardForm).toHaveBeenCalledExactlyOnceWith(
+				expect.objectContaining({ currency: 'EUR' })
 			);
 		});
 
 		it('tells the customer and loads the currency again when it could not be loaded', async () => {
 			const error = new Error('network down');
-			orderRouter.getStripeCurrency.calls.reset();
-			orderRouter.getStripeCurrency.and.returnValues(
-				Promise.reject(error),
-				Promise.resolve('usd')
-			);
+			orderRouter.getStripeCurrency.mockClear();
+			orderRouter.getStripeCurrency
+				.mockReturnValueOnce(Promise.reject(error))
+				.mockReturnValueOnce(Promise.resolve('usd'));
 			const payment = await createPayment();
 
 			expect(console.error).toHaveBeenCalledWith(
-				jasmine.any(String),
+				expect.any(String),
 				error
 			);
 			// Enabled, so the tap can say what went wrong
@@ -715,8 +788,8 @@ describe('PaymentComponent new-card payment', () => {
 
 			await payment.componentInstance.toPaymentStage();
 
-			expect(configure).not.toHaveBeenCalled();
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(openCardForm).not.toHaveBeenCalled();
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.PAYMENT_FAILED'
 			);
 			expect(orderRouter.getStripeCurrency).toHaveBeenCalledTimes(2);
@@ -724,16 +797,16 @@ describe('PaymentComponent new-card payment', () => {
 			await settle();
 			await payment.componentInstance.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledOnceWith(
-				jasmine.objectContaining({ currency: 'USD' })
+			expect(openCardForm).toHaveBeenCalledExactlyOnceWith(
+				expect.objectContaining({ currency: 'USD' })
 			);
 		});
 
 		it('sends the currency shown in the popup with the charge', async () => {
-			orderRouter.getStripeCurrency.and.returnValue(
+			orderRouter.getStripeCurrency.mockReturnValue(
 				Promise.resolve('usd')
 			);
-			orderRouter.payWithStripe.and.returnValue(
+			orderRouter.payWithStripe.mockReturnValue(
 				Promise.resolve(paidOrder())
 			);
 			const payment = (await createPayment()).componentInstance;
@@ -743,7 +816,7 @@ describe('PaymentComponent new-card payment', () => {
 				cardToken('tok_first')
 			);
 
-			expect(orderRouter.payWithStripe).toHaveBeenCalledOnceWith(
+			expect(orderRouter.payWithStripe).toHaveBeenCalledExactlyOnceWith(
 				'order-1',
 				'card-1',
 				'USD'
@@ -754,16 +827,15 @@ describe('PaymentComponent new-card payment', () => {
 			// The server restarted with another currency while the page
 			// stayed open, so it refuses the charge in the shown one.
 			const reloaded = deferred<string>();
-			orderRouter.getStripeCurrency.calls.reset();
-			orderRouter.getStripeCurrency.and.returnValues(
-				Promise.resolve('ils'),
-				reloaded.promise
-			);
+			orderRouter.getStripeCurrency.mockClear();
+			orderRouter.getStripeCurrency
+				.mockReturnValueOnce(Promise.resolve('ils'))
+				.mockReturnValueOnce(reloaded.promise);
 			const refused = new Error(
 				'Charge currency is usd, but the customer was shown ILS'
 			);
 			refused.name = STRIPE_CURRENCY_CHANGED_ERROR;
-			orderRouter.payWithStripe.and.rejectWith(refused);
+			orderRouter.payWithStripe.mockRejectedValue(refused);
 			const fixtureWithRefusal = await createPayment();
 			const payment = fixtureWithRefusal.componentInstance;
 
@@ -773,7 +845,7 @@ describe('PaymentComponent new-card payment', () => {
 			);
 			await settle();
 
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.PAYMENT_FAILED'
 			);
 			expect(orderRouter.getStripeCurrency).toHaveBeenCalledTimes(2);
@@ -782,7 +854,7 @@ describe('PaymentComponent new-card payment', () => {
 
 			await payment.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledTimes(1);
+			expect(openCardForm).toHaveBeenCalledTimes(1);
 
 			reloaded.resolve('usd');
 			await settle();
@@ -791,13 +863,13 @@ describe('PaymentComponent new-card payment', () => {
 
 			await payment.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledTimes(2);
-			expect(configure.calls.mostRecent().args[0].currency).toBe('USD');
+			expect(openCardForm).toHaveBeenCalledTimes(2);
+			expect(openCardForm.mock.lastCall[0].currency).toBe('USD');
 		});
 
 		it('keeps the currency after a declined card', async () => {
-			orderRouter.getStripeCurrency.calls.reset();
-			orderRouter.payWithStripe.and.rejectWith(
+			orderRouter.getStripeCurrency.mockClear();
+			orderRouter.payWithStripe.mockRejectedValue(
 				new Error('Your card was declined.')
 			);
 			const payment = (await createPayment()).componentInstance;
@@ -808,15 +880,15 @@ describe('PaymentComponent new-card payment', () => {
 			);
 			await settle();
 
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.PAYMENT_FAILED'
 			);
 			expect(orderRouter.getStripeCurrency).toHaveBeenCalledTimes(1);
 
 			await payment.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledTimes(2);
-			expect(configure.calls.mostRecent().args[0].currency).toBe('ILS');
+			expect(openCardForm).toHaveBeenCalledTimes(2);
+			expect(openCardForm.mock.lastCall[0].currency).toBe('ILS');
 		});
 	});
 
@@ -839,8 +911,8 @@ describe('PaymentComponent new-card payment', () => {
 	describe('when a page creates the payment component again during a payment', () => {
 		it('blocks Pay now and Pay with card on the new component while updateEmail is still pending', async () => {
 			const emailUpdate = deferred<any>();
-			userRouter.updateEmail.and.returnValue(emailUpdate.promise);
-			orderRouter.payWithStripe.and.returnValue(
+			userRouter.updateEmail.mockReturnValue(emailUpdate.promise);
+			orderRouter.payWithStripe.mockReturnValue(
 				Promise.resolve(paidOrder())
 			);
 
@@ -854,7 +926,7 @@ describe('PaymentComponent new-card payment', () => {
 			const savedCardPayment = second.payWithUserCard();
 			await settle();
 
-			expect(configure).toHaveBeenCalledTimes(1);
+			expect(openCardForm).toHaveBeenCalledTimes(1);
 			expect(userRouter.updateEmail).toHaveBeenCalledTimes(1);
 			expect(userRouter.addPaymentMethod).not.toHaveBeenCalled();
 			expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
@@ -874,8 +946,8 @@ describe('PaymentComponent new-card payment', () => {
 
 		it('ignores a card token from another component while updateEmail is still pending', async () => {
 			const emailUpdate = deferred<any>();
-			userRouter.updateEmail.and.returnValue(emailUpdate.promise);
-			orderRouter.payWithStripe.and.returnValue(
+			userRouter.updateEmail.mockReturnValue(emailUpdate.promise);
+			orderRouter.payWithStripe.mockReturnValue(
 				Promise.resolve(paidOrder())
 			);
 
@@ -885,7 +957,7 @@ describe('PaymentComponent new-card payment', () => {
 			await component.toPaymentStage();
 			await second.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledTimes(2);
+			expect(openCardForm).toHaveBeenCalledTimes(2);
 
 			const first = tokenHandlers[0](cardToken('tok_first'));
 			const secondToken = tokenHandlers[1](cardToken('tok_second'));
@@ -908,7 +980,7 @@ describe('PaymentComponent new-card payment', () => {
 
 		it('disables Pay now on the new component until the first payment finishes', async () => {
 			const payment = deferred<any>();
-			orderRouter.payWithStripe.and.returnValue(payment.promise);
+			orderRouter.payWithStripe.mockReturnValue(payment.promise);
 
 			await component.toPaymentStage();
 			const first = tokenHandlers[0](cardToken('tok_first'));
@@ -930,7 +1002,7 @@ describe('PaymentComponent new-card payment', () => {
 
 		it('clears the guard after the payment succeeds', async () => {
 			const payment = deferred<any>();
-			orderRouter.payWithStripe.and.returnValue(payment.promise);
+			orderRouter.payWithStripe.mockReturnValue(payment.promise);
 
 			await component.toPaymentStage();
 			const first = tokenHandlers[0](cardToken('tok_first'));
@@ -939,7 +1011,7 @@ describe('PaymentComponent new-card payment', () => {
 			const second = (await createPayment()).componentInstance;
 			await second.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledTimes(1);
+			expect(openCardForm).toHaveBeenCalledTimes(1);
 
 			payment.resolve(paidOrder());
 			await first;
@@ -948,12 +1020,12 @@ describe('PaymentComponent new-card payment', () => {
 
 			await second.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledTimes(2);
+			expect(openCardForm).toHaveBeenCalledTimes(2);
 		});
 
 		it('clears the guard after the email update fails', async () => {
 			const emailUpdate = deferred<any>();
-			userRouter.updateEmail.and.returnValue(emailUpdate.promise);
+			userRouter.updateEmail.mockReturnValue(emailUpdate.promise);
 
 			await component.toPaymentStage();
 			const first = tokenHandlers[0](cardToken('tok_first'));
@@ -961,7 +1033,7 @@ describe('PaymentComponent new-card payment', () => {
 			const second = (await createPayment()).componentInstance;
 			await second.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledTimes(1);
+			expect(openCardForm).toHaveBeenCalledTimes(1);
 
 			emailUpdate.reject(new Error('network down'));
 			await first;
@@ -970,12 +1042,12 @@ describe('PaymentComponent new-card payment', () => {
 
 			await second.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledTimes(2);
+			expect(openCardForm).toHaveBeenCalledTimes(2);
 		});
 
 		it('clears the guard and tells the customer once after a saved-card payment is rejected', async () => {
 			const payment = deferred<any>();
-			orderRouter.payWithStripe.and.returnValue(payment.promise);
+			orderRouter.payWithStripe.mockReturnValue(payment.promise);
 
 			component.userCard = savedCard();
 			const first = component.payWithUserCard();
@@ -990,14 +1062,14 @@ describe('PaymentComponent new-card payment', () => {
 			payment.reject(new Error('Your card was declined.'));
 
 			// Settles, so nothing escapes the click handler
-			await expectAsync(first).toBeResolvedTo(undefined);
-			await expectAsync(blocked).toBeResolvedTo(undefined);
+			await expect(first).resolves.toBeUndefined();
+			await expect(blocked).resolves.toBeUndefined();
 			// Only the charge that ran tells the customer
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.PAYMENT_FAILED'
 			);
 
-			orderRouter.payWithStripe.and.returnValue(
+			orderRouter.payWithStripe.mockReturnValue(
 				Promise.resolve(paidOrder())
 			);
 			await second.payWithUserCard();
@@ -1008,8 +1080,8 @@ describe('PaymentComponent new-card payment', () => {
 
 		it('does not block a payment for a different order', async () => {
 			const emailUpdate = deferred<any>();
-			userRouter.updateEmail.and.returnValue(emailUpdate.promise);
-			orderRouter.payWithStripe.and.returnValue(
+			userRouter.updateEmail.mockReturnValue(emailUpdate.promise);
+			orderRouter.payWithStripe.mockReturnValue(
 				Promise.resolve(paidOrder())
 			);
 
@@ -1019,15 +1091,15 @@ describe('PaymentComponent new-card payment', () => {
 			const second = (await createPayment()).componentInstance;
 			await second.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledTimes(1);
+			expect(openCardForm).toHaveBeenCalledTimes(1);
 
 			// The customer starts another order while the first payment
 			// still runs.
-			orderId.and.returnValue('order-2');
+			orderId.mockReturnValue('order-2');
 
 			await second.toPaymentStage();
 
-			expect(configure).toHaveBeenCalledTimes(2);
+			expect(openCardForm).toHaveBeenCalledTimes(2);
 
 			const other = tokenHandlers[1](cardToken('tok_other'));
 
@@ -1035,8 +1107,10 @@ describe('PaymentComponent new-card payment', () => {
 			await Promise.all([first, other]);
 
 			expect(userRouter.addPaymentMethod).toHaveBeenCalledTimes(2);
-			expect(orderRouter.payWithStripe.calls.allArgs()).toEqual(
-				jasmine.arrayWithExactContents([
+			// In any order, and nothing else.
+			expect(orderRouter.payWithStripe.mock.calls).toHaveLength(2);
+			expect(orderRouter.payWithStripe.mock.calls).toEqual(
+				expect.arrayContaining([
 					['order-1', 'card-1', 'ILS'],
 					['order-2', 'card-1', 'ILS'],
 				])
@@ -1045,10 +1119,11 @@ describe('PaymentComponent new-card payment', () => {
 	});
 
 	// In popup mode toPaymentStage dismisses the order info modal and
-	// opens it again when Checkout is done. Checkout calls closed whenever
-	// its popup closes, also after a successful token, and browsers differ
-	// in which of the two callbacks runs first.
-	describe('opening the order info modal after Checkout', () => {
+	// opens it again when the card form is done. The card form calls
+	// closed whenever it closes, also after a successful token (Checkout
+	// did too, and browsers differed in which callback ran first), and the
+	// token handler closes when the payment is done.
+	describe('opening the order info modal after the card form', () => {
 		let originalOrderInfoType: string;
 		let modalChange: EventEmitter<boolean>;
 
@@ -1057,10 +1132,10 @@ describe('PaymentComponent new-card payment', () => {
 			environment.ORDER_INFO_TYPE = 'popup';
 
 			modalChange = new EventEmitter<boolean>();
-			spyOn(modalChange, 'emit');
+			vi.spyOn(modalChange, 'emit').mockImplementation(() => undefined);
 			component.modalChange = modalChange;
 
-			orderRouter.payWithStripe.and.returnValue(
+			orderRouter.payWithStripe.mockReturnValue(
 				Promise.resolve(paidOrder())
 			);
 		});
@@ -1093,7 +1168,7 @@ describe('PaymentComponent new-card payment', () => {
 			expect(modalChange.emit).toHaveBeenCalledTimes(1);
 		});
 
-		it('still opens the order info modal when the customer closes Checkout without paying', async () => {
+		it('still opens the order info modal when the customer closes the card form without paying', async () => {
 			await component.toPaymentStage();
 
 			closedHandlers[0]();
@@ -1104,7 +1179,7 @@ describe('PaymentComponent new-card payment', () => {
 			expect(modalChange.emit).toHaveBeenCalledTimes(1);
 		});
 
-		it('opens the order info modal again for the next Checkout session', async () => {
+		it('opens the order info modal again for the next card form session', async () => {
 			await component.toPaymentStage();
 			closedHandlers[0]();
 			await settle();
@@ -1113,7 +1188,7 @@ describe('PaymentComponent new-card payment', () => {
 			closedHandlers[1]();
 			await settle();
 
-			expect(configure).toHaveBeenCalledTimes(2);
+			expect(openCardForm).toHaveBeenCalledTimes(2);
 			expect(modalController.create).toHaveBeenCalledTimes(2);
 		});
 

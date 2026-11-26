@@ -1,5 +1,10 @@
-import { Component, OnDestroy, EventEmitter } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import {
+	Component,
+	OnDestroy,
+	EventEmitter,
+	ChangeDetectionStrategy,
+} from '@angular/core';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { ProductImageRedirectComponent } from '@app/@shared/render-component/product-image-redirect/product-image-redirect.component';
 import { forkJoin, Observable, Subject } from 'rxjs';
 import { ProductTitleRedirectComponent } from '@app/@shared/render-component/product-title-redirect/product-title-redirect.component';
@@ -16,7 +21,9 @@ export interface ProductViewModel {
 }
 
 @Component({
+	standalone: false,
 	selector: 'ea-simulation-products',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './products.component.html',
 })
 export class SimulationProductsComponent implements OnDestroy {
@@ -49,13 +56,12 @@ export class SimulationProductsComponent implements OnDestroy {
 			this.selectProducts$
 				.pipe(takeUntil(this._ngDestroy$))
 				.subscribe(({ current, allData }) => {
-					allData.find((d) => d.id === current['id'])[
-						'checked'
-					] = !current.checked;
+					allData.find((d) => d.id === current['id'])['checked'] =
+						!current.checked;
 					this.selectedProducts = allData.filter((r) => r.checked);
 					if (this.selectedProducts.length !== 0) {
 						const newData = data.filter(
-							(d) => d['warehouseId'] === current['warehouseId']
+							(d) => d['warehouseId'] === current['warehouseId'],
 						);
 						this.sourceSmartTable.load(newData);
 						this.selectProductsChange$.emit();
@@ -89,7 +95,7 @@ export class SimulationProductsComponent implements OnDestroy {
 		forkJoin(
 			getTranslate('ID'),
 			getTranslate('TITLE'),
-			getTranslate('IMAGE')
+			getTranslate('IMAGE'),
 		)
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe(([id, titleTr, image]) => {

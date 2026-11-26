@@ -57,7 +57,9 @@
 							(click)="addProduct(warehouseProduct)"
 							src="{{
 								localeTranslate(
-									warehouseProduct?.product?.images
+									$safeNavigationMigration(
+										warehouseProduct?.product?.images
+									)
 								)
 							}}"
 						/>
@@ -67,7 +69,9 @@
 						<div class="name">
 							{{
 								localeTranslate(
-									warehouseProduct?.product?.title
+									$safeNavigationMigration(
+										warehouseProduct?.product?.title
+									)
 								)
 							}}
 						</div>
@@ -77,7 +81,7 @@
 								'progress-bar-danger':
 									warehouseProduct.count == 0,
 								'progress-bar-warning':
-									warehouseProduct.count == 1
+									warehouseProduct.count == 1,
 							}"
 							>{{ warehouseProduct?.count }}</span
 						>

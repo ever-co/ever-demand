@@ -1,4 +1,10 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import {
 	FormGroup,
 	AbstractControl,
@@ -8,14 +14,17 @@ import {
 import Admin from '@modules/server.common/entities/Admin';
 import { AdminsService } from '../../../../@core/data/admins.service';
 import { first, takeUntil, debounceTime } from 'rxjs/operators';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { resultErrors } from '@app/graphql/result-errors';
 
 @Component({
+	standalone: false,
 	selector: 'ea-account',
 	styleUrls: ['/account.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './account.component.html',
 })
 export class AccountComponent implements OnInit, OnDestroy {
@@ -46,7 +55,7 @@ export class AccountComponent implements OnInit, OnDestroy {
 		private adminsService: AdminsService,
 		private toasterService: ToasterService,
 		private router: Router,
-		private _translateService: TranslateService
+		private _translateService: TranslateService,
 	) {
 		this.buildForm();
 		this.bindFormControls();
@@ -78,12 +87,13 @@ export class AccountComponent implements OnInit, OnDestroy {
 				})
 				.pipe(first())
 				.toPromise();
-			if (res.errors) {
-				this.toasterService.pop('error', res.errors[0].message);
+			const errors = resultErrors(res);
+			if (errors) {
+				this.toasterService.pop('error', errors[0].message);
 			} else {
 				this.toasterService.pop(
 					'success',
-					this.successfullyChangePassword()
+					this.successfullyChangePassword(),
 				);
 				this.router.navigate(['/auth/logout']);
 			}

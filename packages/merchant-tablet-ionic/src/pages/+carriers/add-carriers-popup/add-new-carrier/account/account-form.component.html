@@ -8,37 +8,30 @@
 	<ion-row>
 		<ion-col col-6 text-center>
 			<ion-item>
-				<ion-label position="floating">{{
+				<ion-input labelPlacement="floating" type="text" formControlName="userName"><div slot="label">{{
 					'CARRIERS_VIEW.ADD_CARRIER.USERNAME' | translate
-				}}</ion-label>
-				<ion-input type="text" formControlName="userName"></ion-input>
+				}}</div></ion-input>
 			</ion-item>
 		</ion-col>
 	</ion-row>
 	<ion-row class="items-end">
 		<ion-col>
 			<ion-item>
-				<ion-label position="floating">{{
-					'CARRIERS_VIEW.ADD_CARRIER.PASSWORD' | translate
-				}}</ion-label>
-				<ion-input
+				<ion-input labelPlacement="floating"
 					type="password"
-					formControlName="password"
-				></ion-input>
+					formControlName="password"><div slot="label">{{
+					'CARRIERS_VIEW.ADD_CARRIER.PASSWORD' | translate
+				}}</div></ion-input>
 			</ion-item>
 		</ion-col>
 
 		<ion-col>
 			<ion-item>
-				<ion-label position="floating">
-					{{
-						'CARRIERS_VIEW.ADD_CARRIER.REPEAT_PASSWORD' | translate
-					}}</ion-label
-				>
-				<ion-input
+				<ion-input labelPlacement="floating"
 					type="password"
-					formControlName="repeatPassword"
-				></ion-input>
+					formControlName="repeatPassword"><div slot="label">{{
+						'CARRIERS_VIEW.ADD_CARRIER.REPEAT_PASSWORD' | translate
+					}}</div></ion-input>
 			</ion-item>
 			<span *ngIf="repeatPassword.dirty || repeatPassword.touched">
 				<span [hidden]="password.value === repeatPassword.value">
@@ -56,28 +49,21 @@
 	<ion-row>
 		<ion-col>
 			<ion-item class="coord-box">
-				<ion-checkbox
-					class="mr-2"
+				<ion-checkbox labelPlacement="end" justify="start"
+					class="me-2"
 					color="success"
-					formControlName="isSharedCarrier"
-				></ion-checkbox>
-
-				<!-- TODO add translate -->
-				<ion-label>Carrier can be shared?</ion-label>
+					formControlName="isSharedCarrier">Carrier can be shared?</ion-checkbox>
 			</ion-item>
 		</ion-col>
 
 		<ion-col>
 			<ion-item class="coord-box">
-				<ion-checkbox
-					class="mr-2"
+				<ion-checkbox labelPlacement="end" justify="start"
+					class="me-2"
 					color="success"
-					formControlName="isActive"
-				></ion-checkbox>
-
-				<ion-label>{{
+					formControlName="isActive">{{
 					'CARRIERS_VIEW.ADD_CARRIER.IS_ACTIVE' | translate
-				}}</ion-label>
+				}}</ion-checkbox>
 			</ion-item>
 		</ion-col>
 	</ion-row>

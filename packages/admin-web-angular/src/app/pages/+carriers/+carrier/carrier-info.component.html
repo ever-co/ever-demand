@@ -1,8 +1,6 @@
 <div class="modal-header">
 	<h3>{{ 'CARRIERS_VIEW.CARRIER_PAGE.CARRIER_INFO' | translate }}</h3>
-	<button class="close" aria-label="Close" (click)="cancel()">
-		<span aria-hidden="true">&times;</span>
-	</button>
+	<button class="btn-close" aria-label="Close" (click)="cancel()"></button>
 </div>
 <div class="modal-body">
 	<div>
@@ -31,6 +29,6 @@
 
 <div>
 	<pre>
-		<code [highlight]="carrierData | json" [languages]="['json']"></code>
+		<code [highlight]="carrierData | json" language="json"></code>
 	</pre>
 </div>

@@ -6,6 +6,7 @@ import {
 	EventEmitter,
 	Input,
 	OnChanges,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 
 import { Subject } from 'rxjs';
@@ -13,8 +14,10 @@ import Order from '@modules/server.common/entities/Order';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
+	standalone: false,
 	selector: 'ea-order-header-info',
 	styleUrls: ['./order-header-info.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './order-header-info.component.html',
 })
 export class OrderHeaderInfoComponent implements OnInit, OnDestroy, OnChanges {

@@ -1,12 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import {
+	Component,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
+import { ViewCell } from '@app/@shared/smart-table';
 import { Router } from '@angular/router';
 import { WarehousesService } from '../../../../@core/data/warehouses.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { Observable } from 'rxjs';
 
 @Component({
+	standalone: false,
 	styleUrls: ['redirect-store.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './redirect-store.component.html',
 })
 export class RedirectStoreComponent implements ViewCell, OnInit {
@@ -20,12 +27,12 @@ export class RedirectStoreComponent implements ViewCell, OnInit {
 
 	constructor(
 		private readonly router: Router,
-		private readonly warehousesService: WarehousesService
+		private readonly warehousesService: WarehousesService,
 	) {}
 
 	ngOnInit() {
 		this.store$ = this.warehousesService.getStoreById(
-			this.rowData.warehouseId
+			this.rowData.warehouseId,
 		);
 		this.warehouseStatusText =
 			'STATUS_TEXT.' + this.rowData.warehouseStatusText;

@@ -32,11 +32,13 @@
 				<ion-col class="text-content" clsss="col-6">
 					<div>
 						<h2 class="text">
-							{{ localeTranslate(product.product?.title) }}
+							{{
+							localeTranslate($safeNavigationMigration(product.product?.title))
+							}}
 						</h2>
 						<h6 class="productDescription">
 							{{
-							shortenDescription(localeTranslate(product.product?.description))
+							shortenDescription(localeTranslate($safeNavigationMigration(product.product?.description)))
 							}}
 						</h6>
 					</div>
@@ -57,12 +59,13 @@
 						alt=""
 					/>
 				</div>
-				<ion-slides
+				<swiper-container
+					#slides
 					*ngIf="images && images.length !== 0"
-					[options]="swiperOptions"
+					init="false"
 					dir="{{ 'CURRENT_DIRECTION' | translate }}"
 				>
-					<ion-slide
+					<swiper-slide
 						*ngFor="let image of images"
 						class="slide-content"
 					>
@@ -70,8 +73,8 @@
 							src="{{ image.url }}"
 							*ngIf="product.product.images.length !== 0"
 						/>
-					</ion-slide>
-				</ion-slides>
+					</swiper-slide>
+				</swiper-container>
 			</ion-row>
 
 			<ion-row size="12" class="list-content">
@@ -80,7 +83,9 @@
 						{{ 'PRODUCTS_VIEW.DETAILS.INCLUDES' | translate }}
 					</h6>
 					<span class="description-text">
-						{{ localeTranslate(product?.product.details) }}
+						{{
+						localeTranslate($safeNavigationMigration(product?.product.details))
+						}}
 					</span>
 				</div>
 			</ion-row>

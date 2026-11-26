@@ -1,8 +1,7 @@
 {
-	"name": "ever-merchants",
+	"name": "ever-merchant",
 	"integrations": {
-		"cordova": {}
+		"capacitor": {}
 	},
-	"type": "angular",
-	"id": "4e9f4799"
+	"type": "angular-standalone"
 }

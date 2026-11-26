@@ -1,36 +1,37 @@
 import { NgModule } from '@angular/core';
-import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { FileUploadModule } from 'ng2-file-upload';
 import { EditProductTypePopupPage } from './edit-product-type-popup';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { ProductsCategoryService } from '../../../services/products-category.service';
-import { IonicModule } from '@ionic/angular';
+import { IonCheckbox } from '@ionic/angular/ion-checkbox';
+import { IonCol } from '@ionic/angular/ion-col';
+import { IonIcon } from '@ionic/angular/ion-icon';
+import { IonItem } from '@ionic/angular/ion-item';
+import { IonRow } from '@ionic/angular/ion-row';
+import { IonSelect } from '@ionic/angular/ion-select';
+import { IonSelectOption } from '@ionic/angular/ion-select-option';
+import { ModalController } from '@ionic/angular/modal-controller';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ProductImagesPopupModule } from '../product-pictures-popup/product-images-popup.module';
 
-export function HttpLoaderFactory(http: HttpClient) {
-	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
 
 @NgModule({
     declarations: [EditProductTypePopupPage],
-    providers: [FileTransfer, ProductsCategoryService],
+    providers: [ProductsCategoryService, ModalController],
     imports: [
         FileUploadModule,
-        TranslateModule.forChild({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient],
-            },
-        }),
+        TranslateModule.forChild(),
         CommonModule,
         FormsModule,
-        IonicModule,
         ProductImagesPopupModule,
+        IonCheckbox,
+        IonCol,
+        IonIcon,
+        IonItem,
+        IonRow,
+        IonSelect,
+        IonSelectOption,
     ]
 })
 export class EditProductTypePopupPageModule {}

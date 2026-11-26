@@ -24,15 +24,13 @@
 		<ion-row>
 			<ion-col class="col-4" text-center>
 				<ion-item>
-					<ion-label class="labels" position="floating">{{
-						'CARRIERS_VIEW.ADD_CARRIER.COUNTRY' | translate
-					}}</ion-label>
-					<ion-select
+					<ion-select labelPlacement="floating"
 						formControlName="country"
 						[cancelText]="buttonCancel"
 						[okText]="buttonOK"
-						(ionChange)="textInputChange(country, 'country')"
-					>
+						(ionChange)="textInputChange(country, 'country')"><div slot="label" class="labels">{{
+						'CARRIERS_VIEW.ADD_CARRIER.COUNTRY' | translate
+					}}</div>
 						<ion-select-option
 							*ngFor="let country of countries"
 							value="{{ country.id }}"
@@ -44,29 +42,23 @@
 
 			<ion-col class="col-4" text-center>
 				<ion-item>
-					<ion-label position="floating">
-						{{
-							'CARRIERS_VIEW.ADD_CARRIER.CITY' | translate
-						}}</ion-label
-					>
-					<ion-input
+					<ion-input labelPlacement="floating"
 						type="text"
 						formControlName="city"
-						(change)="textInputChange(city, 'city')"
-					></ion-input>
+						(change)="textInputChange(city, 'city')"><div slot="label">{{
+							'CARRIERS_VIEW.ADD_CARRIER.CITY' | translate
+						}}</div></ion-input>
 				</ion-item>
 			</ion-col>
 
 			<ion-col class="col-4">
 				<ion-item>
-					<ion-label position="floating">{{
-						'CARRIERS_VIEW.ADD_CARRIER.HOUSE' | translate
-					}}</ion-label>
-					<ion-input
+					<ion-input labelPlacement="floating"
 						type="number"
 						formControlName="house"
-						(change)="textInputChange(house, 'house')"
-					></ion-input>
+						(change)="textInputChange(house, 'house')"><div slot="label">{{
+						'CARRIERS_VIEW.ADD_CARRIER.HOUSE' | translate
+					}}</div></ion-input>
 				</ion-item>
 			</ion-col>
 		</ion-row>
@@ -74,27 +66,23 @@
 		<ion-row>
 			<ion-col class="col-8">
 				<ion-item>
-					<ion-label position="floating">{{
-						'CARRIERS_VIEW.ADD_CARRIER.STREET' | translate
-					}}</ion-label>
-					<ion-input
+					<ion-input labelPlacement="floating"
 						type="text"
 						formControlName="street"
-						(change)="textInputChange(street, 'street')"
-					></ion-input>
+						(change)="textInputChange(street, 'street')"><div slot="label">{{
+						'CARRIERS_VIEW.ADD_CARRIER.STREET' | translate
+					}}</div></ion-input>
 				</ion-item>
 			</ion-col>
 
 			<ion-col class="col-4">
 				<ion-item>
-					<ion-label class="labels" position="floating">{{
-						'CARRIERS_VIEW.ADD_CARRIER.ZIP' | translate
-					}}</ion-label>
-					<ion-input
+					<ion-input labelPlacement="floating"
 						type="text"
 						formControlName="postcode"
-						(change)="textInputChange(postcode, 'postcode')"
-					></ion-input>
+						(change)="textInputChange(postcode, 'postcode')"><div slot="label" class="labels">{{
+						'CARRIERS_VIEW.ADD_CARRIER.ZIP' | translate
+					}}</div></ion-input>
 				</ion-item>
 			</ion-col>
 		</ion-row>
@@ -102,41 +90,33 @@
 		<ion-row class="items-end">
 			<ion-col class="col-6">
 				<ion-item class="coord-box">
-					<ion-label>
-						{{
+					<ion-checkbox labelPlacement="start" justify="space-between"
+						color="secondary"
+						(ionChange)="toggleCoordinates()">{{
 							'WAREHOUSE_VIEW.NEW_ORDER_VIEW.SHOW_COORDINATES'
 								| translate
-						}}
-					</ion-label>
-					<ion-checkbox
-						color="secondary"
-						(ionChange)="toggleCoordinates()"
-					></ion-checkbox>
+						}}</ion-checkbox>
 				</ion-item>
 			</ion-col>
 
 			<ion-col class="col-3" [hidden]="!showCoordinates">
 				<ion-item>
-					<ion-label position="floating">{{
-						'CARRIERS_VIEW.ADD_CARRIER.LATITUDE' | translate
-					}}</ion-label>
-					<ion-input
+					<ion-input labelPlacement="floating"
 						type="number"
 						formControlName="lat"
-						(change)="textInputChange(lat, 'lat')"
-					></ion-input>
+						(change)="textInputChange(lat, 'lat')"><div slot="label">{{
+						'CARRIERS_VIEW.ADD_CARRIER.LATITUDE' | translate
+					}}</div></ion-input>
 				</ion-item>
 			</ion-col>
 			<ion-col class="col-3" [hidden]="!showCoordinates">
 				<ion-item>
-					<ion-label position="floating">{{
-						'CARRIERS_VIEW.ADD_CARRIER.LONGITUDE' | translate
-					}}</ion-label>
-					<ion-input
+					<ion-input labelPlacement="floating"
 						type="text"
 						formControlName="lng"
-						(change)="textInputChange(lng, 'lng')"
-					></ion-input>
+						(change)="textInputChange(lng, 'lng')"><div slot="label">{{
+						'CARRIERS_VIEW.ADD_CARRIER.LONGITUDE' | translate
+					}}</div></ion-input>
 				</ion-item>
 			</ion-col>
 		</ion-row>
@@ -144,7 +124,7 @@
 	<ion-grid class="buttons-back-done">
 		<ion-row>
 			<ion-col text-center>
-				<ion-button color="light" class="mr-2" (click)="toStep2()">
+				<ion-button color="light" class="me-2" (click)="toStep2()">
 					{{ 'CARRIERS_VIEW.ADD_CARRIER.BACK' | translate }}
 				</ion-button>
 

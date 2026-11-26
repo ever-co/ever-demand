@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
+	standalone: false,
 	templateUrl: './track.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./track.component.scss'],
 })
 export class TrackComponent implements OnInit {

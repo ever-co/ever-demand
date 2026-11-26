@@ -1,4 +1,5 @@
 import {
+	ChangeDetectionStrategy,
 	Component,
 	OnDestroy,
 	Input,
@@ -12,6 +13,8 @@ import { ModalController } from '@ionic/angular';
 import { OrderInfoModalComponent } from '../../../common/order-info-modal/order-info-modal.component';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'e-cu-order-takeaway-info-title',
 	templateUrl: './title.component.html',
 	styleUrls: ['./title.component.scss'],

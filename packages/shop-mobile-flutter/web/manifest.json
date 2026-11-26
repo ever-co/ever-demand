@@ -1,11 +1,11 @@
 {
-    "name": "shop_flutter_mobile",
-    "short_name": "shop_flutter_mobile",
+    "name": "Ever Mobile Shop App",
+    "short_name": "Ever",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#2a2c39",
+    "theme_color": "#2a2c39",
+    "description": "Ever Demand shop app",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

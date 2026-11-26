@@ -1,4 +1,10 @@
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	OnInit,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { WarehouseAddChoiceComponent } from '../forms';
 import { takeUntil, first } from 'rxjs/operators';
@@ -11,7 +17,7 @@ import { IProductCreateObject } from '@modules/server.common/interfaces/IProduct
 import { AddWarehouseProductsComponent } from '../forms/add-warehouse-products-table';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { WarehousesService } from '../../../@core/data/warehouses.service';
-import { WizardComponent } from '@ever-co/angular2-wizard';
+import { WizardComponent } from '@app/@shared/wizard';
 import { TranslateService } from '@ngx-translate/core';
 import { NbThemeService } from '@nebular/theme';
 import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
@@ -23,8 +29,10 @@ import { NotifyService } from '@app/@core/services/notify/notify.service';
 const perPage = 3;
 
 @Component({
+	standalone: false,
 	selector: 'ea-warehouse-product-create',
 	templateUrl: './warehouse-product-create.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./warehouse-product-create.component.scss'],
 })
 export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
@@ -79,7 +87,7 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 		private readonly _translateService: TranslateService,
 		private readonly _themeService: NbThemeService,
 		private readonly _productsCategoryService: ProductsCategoryService,
-		private readonly _notifyService: NotifyService
+		private readonly _notifyService: NotifyService,
 	) {
 		this.perPage = perPage;
 		this.loadProductCategories();
@@ -116,8 +124,8 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 	async addProducts() {
 		this.loading = true;
 		try {
-			const productsForAdd = this.addWarehouseProductsTable
-				.allWarehouseProducts;
+			const productsForAdd =
+				this.addWarehouseProductsTable.allWarehouseProducts;
 			const res = await this._warehousesService
 				.addProducts(this.warehouseId, productsForAdd)
 				.pipe(first())
@@ -152,7 +160,7 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 
 			const loadDataSmartTable = async (page = 1) => {
 				let existedProductsIds = this.selectedWarehouse.products.map(
-					(product: WarehouseProduct) => product.productId
+					(product: WarehouseProduct) => product.productId,
 				);
 
 				if (this.createdProducts) {
@@ -167,7 +175,7 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 							skip: perPage * (page - 1),
 							limit: perPage,
 						},
-						existedProductsIds
+						existedProductsIds,
 					)
 					.pipe(first())
 					.toPromise();
@@ -177,16 +185,17 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 				this.productsTable.loadDataSmartTable(
 					products,
 					dataCount,
-					page
+					page,
 				);
 			};
 
 			if (this.productsTable) {
-				this.$productsTablePagesChanges = this.productsTable.pagesChanges$
-					.pipe(takeUntil(this.ngDestroy$))
-					.subscribe((page: number) => {
-						loadDataSmartTable(page);
-					});
+				this.$productsTablePagesChanges =
+					this.productsTable.pagesChanges$
+						.pipe(takeUntil(this.ngDestroy$))
+						.subscribe((page: number) => {
+							loadDataSmartTable(page);
+						});
 			}
 
 			await loadDataSmartTable();
@@ -204,7 +213,8 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 		this.isSetp2 = false;
 		if (this.choiced === 'new') {
 			if (this.basicInfo.valid) {
-				const productCreateObject: IProductCreateObject = await this.basicInfoForm.setupProductCreateObject();
+				const productCreateObject: IProductCreateObject =
+					await this.basicInfoForm.setupProductCreateObject();
 				const product = await this._productsService
 					.create(productCreateObject)
 					.pipe(first())
@@ -225,7 +235,7 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 		});
 		this.addWarehouseProductsTable.loadDataSmartTable(
 			[...newCreatedProducts, ...this.selectedProducts],
-			this.warehouseId
+			this.warehouseId,
 		);
 
 		this.validAllProducts = () =>
@@ -246,7 +256,7 @@ export class WarehouseProductCreateComponent implements OnInit, OnDestroy {
 
 	async loadProductCategories() {
 		this.productsCategories = await firstValueFrom(
-			this._productsCategoryService.getCategories()
+			this._productsCategoryService.getCategories(),
 		);
 	}
 

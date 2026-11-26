@@ -6,6 +6,7 @@ import {
 	OnChanges,
 	Output,
 	EventEmitter,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { WarehouseOrdersService } from '../../../services/warehouse-orders.service';
 import { Store } from '../../../services/store.service';
@@ -16,12 +17,15 @@ import { takeUntil } from 'rxjs/operators';
 
 const showOrdersNumber: number = 10;
 @Component({
+	standalone: false,
 	selector: 'merchant-relevant-orders',
 	templateUrl: 'relevant-orders.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./relevant-orders.component.scss'],
 })
 export class RelevantOrdersComponent
-	implements AfterViewInit, OnDestroy, OnChanges, OnDestroy {
+	implements AfterViewInit, OnDestroy, OnChanges, OnDestroy
+{
 	@Input()
 	getWarehouseStatus: (status: any) => void;
 
@@ -55,7 +59,7 @@ export class RelevantOrdersComponent
 
 	constructor(
 		private warehouseOrdersService: WarehouseOrdersService,
-		private store: Store
+		private store: Store,
 	) {}
 
 	ngOnChanges() {
@@ -80,7 +84,7 @@ export class RelevantOrdersComponent
 					skip: (this.page - 1) * showOrdersNumber,
 					limit: showOrdersNumber,
 				},
-				status
+				status,
 			)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe((res) => {
@@ -126,10 +130,11 @@ export class RelevantOrdersComponent
 	}
 
 	private async loadOrdersCount(status = 'relevant') {
-		this.ordersCount = await this.warehouseOrdersService.getCountOfStoreOrders(
-			this.store.warehouseId,
-			status
-		);
+		this.ordersCount =
+			await this.warehouseOrdersService.getCountOfStoreOrders(
+				this.store.warehouseId,
+				status,
+			);
 	}
 
 	ngOnDestroy() {

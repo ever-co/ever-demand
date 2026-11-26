@@ -1,8 +1,6 @@
 <div class="modal-header">
 	<h3>{{ 'CUSTOMERS_VIEW.ORDER_INFO' | translate }}</h3>
-	<button class="close" aria-label="Close" (click)="cancel()">
-		<span aria-hidden="true">&times;</span>
-	</button>
+	<button class="btn-close" aria-label="Close" (click)="cancel()"></button>
 </div>
 <div *ngIf="order$ | async as order" class="modal-body info-content">
 	<h6>
@@ -42,7 +40,7 @@
 
 		<div class="json-info" *ngIf="showCode">
 			<div>
-				<pre><code style="height:300px" [highlight]="selectedOrder | json" [languages]="['json']" class="iconInfo"></code></pre>
+				<pre><code style="height:300px" [highlight]="selectedOrder | json" language="json" class="iconInfo"></code></pre>
 			</div>
 		</div>
 	</div>

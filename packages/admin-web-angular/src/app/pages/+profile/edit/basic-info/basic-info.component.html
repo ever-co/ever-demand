@@ -117,8 +117,8 @@
 				<div class="col-12">
 					<e-cu-file-uploader
 						[placeholder]="uploaderPlaceholder"
-						[name]="username?.value"
-						[fileUrl]="picture?.value"
+						[name]="$safeNavigationMigration(username?.value)"
+						[fileUrl]="$safeNavigationMigration(picture?.value)"
 						[customClass]="
 							picture.invalid
 								? picture.errors
@@ -150,7 +150,7 @@
 					/>
 					<div class="remove-icon" (click)="deleteImg()">
 						<span
-							class="ion-md-remove-circle text-danger pl-2 pr-2"
+							class="ion-md-remove-circle text-danger ps-2 pe-2"
 							title="{{ 'PROFILE_VIEW.REMOVE' | translate }}"
 						></span>
 					</div>
@@ -162,11 +162,11 @@
 				status="success"
 				outline
 				size="large"
-				class="float-right save-button-profile"
+				class="float-end save-button-profile"
 				[disabled]="!basicInfoForm.valid || !basicInfoForm.dirty"
 				(click)="saveChanges()"
 			>
-				<i class="ion-md-checkmark mr-1"></i>
+				<i class="ion-md-checkmark me-1"></i>
 				<span> {{ 'PROFILE_VIEW.SAVE' | translate }} </span>
 			</button>
 		</form>

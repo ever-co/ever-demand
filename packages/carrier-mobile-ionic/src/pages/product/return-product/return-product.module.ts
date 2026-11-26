@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 
 import { ReturnProductPage } from './return-product';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { Routes, RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
@@ -16,7 +15,6 @@ const routes: Routes = [
 @NgModule({
 	declarations: [ReturnProductPage],
 	imports: [
-		IonicModule,
 		CommonModule,
 		RouterModule.forChild(routes),
 		TranslateModule.forChild(),

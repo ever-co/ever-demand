@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Apollo, gql } from 'apollo-angular';
+import { Apollo, gql, onlyCompleteData } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import Currency from '@modules/server.common/entities/Currency';
 import { map, share } from 'rxjs/operators';
@@ -26,6 +26,8 @@ export class CurrenciesService {
 			pollInterval: 2000,
 		})
 		.valueChanges.pipe(
+			// Apollo Client 4 also emits loading/partial results
+			onlyCompleteData(),
 			map((result) => result.data.currencies),
 			share()
 		);

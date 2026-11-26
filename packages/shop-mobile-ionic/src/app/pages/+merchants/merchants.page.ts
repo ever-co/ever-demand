@@ -1,4 +1,8 @@
-import { Component, OnDestroy } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	OnDestroy,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { GeoLocationsMerchantsService } from 'app/services/geo-location-merchants.service';
 import { Store } from 'app/services/store.service';
@@ -8,12 +12,14 @@ import { GeoLocationService } from 'app/services/geo-location';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { MerchantsService } from 'app/services/merchants/merchants.service';
 import { ILocation } from '@modules/server.common/interfaces/IGeoLocation';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { NativeService } from 'app/services/native/native.service';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import { environment } from 'environments/environment';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	templateUrl: './merchants.page.html',
 	styleUrls: ['./merchants.page.scss'],
 })
@@ -28,7 +34,8 @@ export class MerchantsPage implements OnDestroy {
 		private userRouter: UserRouter,
 		private geoLocationService: GeoLocationService,
 		private merchantsService: MerchantsService,
-		private warehouseRouter: WarehouseRouter
+		private warehouseRouter: WarehouseRouter,
+		private readonly native: NativeService
 	) {
 		this.loadCloseMerchants();
 	}
@@ -52,8 +59,10 @@ export class MerchantsPage implements OnDestroy {
 
 	async scanQR() {
 		try {
-			const data = await BarcodeScanner.scan();
-			this.loadScanedMerchant(data.text);
+			const text = await this.native.scanBarcode();
+			if (text) {
+				this.loadScanedMerchant(text);
+			}
 		} catch (error) {
 			alert(error);
 			console.log('Error', error);

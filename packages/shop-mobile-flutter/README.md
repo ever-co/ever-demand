@@ -1,43 +1,37 @@
-# Ever Shop Mobile App (Flutter version)
+# Ever Shop Mobile App (Flutter)
 
-## Setting up Your Development Environment
+The Ever Demand customer shop app in Flutter, with the feature set of `packages/shop-mobile-ionic`:
+invite by code / address, product feed (slides or list), product details, delivery and takeaway
+orders with live tracking, card payments (saved card or a new card through Stripe), orders history,
+merchants with QR scan, six languages (Hebrew right to left), info pages, connection / server /
+maintenance pages.
 
-Find instructions for setting up your development machine with the Flutter framework on Flutter’s Get started page. The specific steps vary by platform, but they follow this basic format:
+- Flutter 3.50.1, Dart 3.14, Material 3 (`material_ui`), Riverpod 3, go_router 18.
+- Backend: the Ever Demand API. socket.io "pyro" RPC at `SERVICES_ENDPOINT` (default
+  `http://localhost:5500`), GraphQL at `GQL_ENDPOINT` (`http://localhost:8443/graphql`), subscriptions
+  over graphql-ws at `GQL_SUBSCRIPTIONS_ENDPOINT` (`ws://localhost:2086/subscriptions`). On the Android
+  emulator `localhost` becomes `10.0.2.2`.
 
-    1. Download the installation bundle for your development machine’s operating system to get the latest stable release of the Flutter SDK.
-    2. Extract the installation bundle in the desired location.
-    3. Add the flutter tool to your path.
-    4. Run the flutter doctor command, which alerts you to any problems with the Flutter installation.
-    5. Install missing dependencies.
-    6. Set up your IDE with a Flutter plugin/extension.
-    7. Test drive an app.
+## Run
 
-The instructions provided on the Flutter website are very well done and allow you to easily set up a development environment on your platform of choice. The remainder of this tutorial assumes you’ve set up VS Code for Flutter development and that you’ve addressed any issues flutter doctor found. You can also use Android Studio to follow along.
+```sh
+flutter pub get
+flutter run --dart-define=STRIPE_PUBLISHABLE_KEY=pk_test_...
+```
 
-To run your project as a mobile app, you’ll need to use one of the following options:
+All settings are `--dart-define` values with the names of the Ionic app's `.env`; see
+`docs/latest-stack/shop-mobile-flutter.md` (configuration, architecture, parity checklist).
 
-    - Run either iOS Simulator or an Android emulator.
-    - Have an iOS or Android device set up for development.
-    - Run your code as a web app.
-    - Finally, you can run your code as a desktop app.
+## Test and build without a local Flutter (Docker)
 
-Even if your final target is mobile, using a web or desktop app during development gives you the advantage of being able to resize the app and observe how it would look with various screen sizes. If you have an older computer, the web or desktop version will also load faster than the Android emulator or iOS Simulator.
+```sh
+tool/docker-test.sh                      # analyze, test, integration, web release, debug APK
+tool/docker-test.sh analyze test         # only some steps
+```
 
-NOTE: TO BUILD AND TEST ON IOS SIMULATOR OR AN IOS DEVICE, YOU’LL NEED TO USE MACOS WITH XCODE. ALSO, EVEN IF YOU’RE PLANNING TO USE VS CODE AS YOUR MAIN IDE, THE EASIEST WAY TO GET THE ANDROID SDK AND ANDROID EMULATOR IS TO INSTALL ANDROID STUDIO AS WELL.
+Logs and artifacts go to `tool/out/`.
 
-Clone or download the latest version of the project on https://github.com/ever-co/ever-demand
-Open the project in either VS Code or Android Studio.
+## Translations
 
-Open it in VS Code by opening the root folder. You’ll need to fetch packages before running the project. 
-Do so by pressing Command-Shift-P on MacOS or Control-Shift-P on Windows or Linux to open the command palette and running the Flutter: Get Packages command.
-
-To open the project in Android Studio, choose Open an existing project from the Welcome to Android Studio screen and navigate to choose the root folder of the final project. Then choose Get dependencies on the 'Pub get' has not been run line in Android Studio.
-
-## Project Structure
-
-    -> assets : here we have fonts, i18n, colors and images
-    -> lib : here are all the codes
-        -> models
-        -> screens
-        -> middlewares,...
-    -> test: will contain all our tests
+`lib/l10n/*.arb` are generated from `packages/shop-mobile-ionic/src/assets/i18n/*.json`:
+`dart tool/ionic_i18n_to_arb.dart`.

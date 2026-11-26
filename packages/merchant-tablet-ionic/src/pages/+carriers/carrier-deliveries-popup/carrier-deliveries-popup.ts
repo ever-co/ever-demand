@@ -1,9 +1,16 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
+import { bindViewCell } from '../../../components/table-components/smart-table';
 import Carrier from '@modules/server.common/entities/Carrier';
 import Order from '@modules/server.common/entities/Order';
 import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/carrier-orders-router.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource, Settings } from 'angular2-smart-table';
 import { Subject, Observable, forkJoin } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
@@ -11,12 +18,14 @@ import { CustomerComponent } from '../../../components/carrier-deliveries-table/
 import { DeliveryComponent } from '../../../components/carrier-deliveries-table/delivery';
 import { StatusComponent } from '../../../components/carrier-deliveries-table/status';
 import { WarehouseComponent } from '../../../components/carrier-deliveries-table/warehouse';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/modal-controller';
 import UserOrder from '@modules/server.common/entities/UserOrder';
 
 @Component({
+	standalone: false,
 	selector: 'carrier-deliveries-popup',
 	templateUrl: 'carrier-deliveries-popup.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./carrier-deliveries-popup.scss'],
 })
 export class CarrierDeliveriesPopupPage implements OnInit, OnDestroy {
@@ -27,7 +36,7 @@ export class CarrierDeliveriesPopupPage implements OnInit, OnDestroy {
 
 	showNoDeliveryIcon: boolean;
 
-	settingsSmartTable: object;
+	settingsSmartTable: Settings;
 
 	sourceSmartTable = new LocalDataSource();
 
@@ -37,7 +46,7 @@ export class CarrierDeliveriesPopupPage implements OnInit, OnDestroy {
 	constructor(
 		private modalCtrl: ModalController,
 		private readonly carrierOrdersRouter: CarrierOrdersRouter,
-		private readonly translateService: TranslateService
+		private readonly translateService: TranslateService,
 	) {
 		this._loadSettingsSmartTable();
 	}
@@ -141,32 +150,35 @@ export class CarrierDeliveriesPopupPage implements OnInit, OnDestroy {
 			getTranslate('CUSTOMER'),
 			getTranslate('WAREHOUSE'),
 			getTranslate('STATUS'),
-			getTranslate('DELIVERY')
+			getTranslate('DELIVERY'),
 		)
 			.pipe(takeUntil(this._ngDestroy$))
 			.subscribe(([customer, warehouse, status, delivery]) => {
 				this.settingsSmartTable = {
-					actions: true,
 					columns: {
 						customer: {
 							title: customer,
 							type: 'custom',
 							renderComponent: CustomerComponent,
+							componentInitFunction: bindViewCell(),
 						},
 						warehouse: {
 							title: warehouse,
 							type: 'custom',
 							renderComponent: WarehouseComponent,
+							componentInitFunction: bindViewCell(),
 						},
 						status: {
 							title: status,
 							type: 'custom',
 							renderComponent: StatusComponent,
+							componentInitFunction: bindViewCell(),
 						},
 						delivery: {
 							title: delivery,
 							type: 'custom',
 							renderComponent: DeliveryComponent,
+							componentInitFunction: bindViewCell(),
 						},
 					},
 					pager: {

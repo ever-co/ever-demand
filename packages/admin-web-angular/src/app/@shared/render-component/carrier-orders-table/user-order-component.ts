@@ -1,9 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import {
+	Component,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
+import { ViewCell } from '@app/@shared/smart-table';
 import { Router } from '@angular/router';
 
 @Component({
+	standalone: false,
 	templateUrl: './user-order-component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styles: [
 		`
 			.user-image {

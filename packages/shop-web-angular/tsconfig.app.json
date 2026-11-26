@@ -1,24 +1,17 @@
 {
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
-		"target": "es5",
-		"module": "esnext",
-		"paths": {
-			"@angular/*": ["../node_modules/@angular/*"],
-			"@modules/server.common/*": ["../../common/src/*"],
-			"@modules/client.common.angular2/*": ["../../common-angular/src/*"],
-			"@modules/*": ["./modules/*"],
-			"@pyro/*": ["../../common/src/@pyro/*"],
-			"mongoose": ["../../common-angular/src/mongoose-placeholder"],
-			"typeorm": ["../../common-angular/src/typeorm-placeholder"],
-			"environments/*": ["./environments/*"]
-		}
+		"outDir": "./dist/out-tsc/app"
 	},
-	"files": [
-		"src/main.ts",
-		"src/polyfills.ts"
-	],
-	"include": [
-		"src/**/*.d.ts"
-	]
+	"files": ["src/main.ts"],
+	"include": ["src/**/*.d.ts"],
+	"exclude": ["src/**/*.spec.ts"],
+	"angularCompilerOptions": {
+		"extendedDiagnostics": {
+			"checks": {
+				"nullishCoalescingNotNullable": "suppress",
+				"optionalChainNotNullable": "suppress"
+			}
+		}
+	}
 }

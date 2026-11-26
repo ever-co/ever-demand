@@ -5,7 +5,7 @@
 	<button class="close" (click)="cancelModal()">
 		<i class="fa fa-close"></i>
 	</button>
-	<form-wizard #wizzardFrom [ngClass]="{ 'second-step': choicedNew }">
+	<form-wizard #wizardFrom [ngClass]="{ 'second-step': choicedNew }">
 		<wizard-step
 			#wizardFromStep1
 			[isValid]="choicedNew"

@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { LoadingComponent } from './loading/loading';
-import { IonicModule } from '@ionic/angular';
+import { IonSpinner } from '@ionic/angular/ion-spinner';
 
 @NgModule({
 	declarations: [LoadingComponent],
-	imports: [IonicModule],
+	imports: [IonSpinner],
 	exports: [LoadingComponent],
 })
 export class ComponentsModule {}

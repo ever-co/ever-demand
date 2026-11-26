@@ -5,6 +5,7 @@ import {
 	EventEmitter,
 	Input,
 	ViewChild,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -25,8 +26,10 @@ import {
 import { Store } from '@app/@core/data/store.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-store-products-table',
 	templateUrl: './products-table.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./products-table.component.scss'],
 })
 export class ProductsTableComponent implements OnDestroy {
@@ -51,7 +54,7 @@ export class ProductsTableComponent implements OnDestroy {
 		private readonly _router: Router,
 		private readonly _notifyService: NotifyService,
 		private readonly modalService: NgbModal,
-		private readonly store: Store
+		private readonly store: Store,
 	) {}
 
 	editProduct(ev) {
@@ -104,7 +107,7 @@ export class ProductsTableComponent implements OnDestroy {
 				(p: WarehouseProduct) =>
 					!warehouseProducts
 						.map((product) => product.id)
-						.includes(p.productId)
+						.includes(p.productId),
 			);
 			this.warehouseRouter.save(this.warehouse, this.store.token);
 			this.loading = false;

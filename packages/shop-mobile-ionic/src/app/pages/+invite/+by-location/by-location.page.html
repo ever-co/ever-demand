@@ -64,6 +64,7 @@
 									{{ 'LOCATION_NOTES' | translate }}
 								</span>
 								<ion-textarea
+									aria-label="{{ 'LOCATION_NOTES' | translate }}"
 									[(ngModel)]="notes"
 									*ngIf="showTextarea"
 									autofocus
@@ -97,6 +98,7 @@
 									</span>
 									<label class="toggle toggle-assertive">
 										<ion-checkbox
+											aria-label="{{ 'APARTMENT' | translate }}"
 											[(ngModel)]="isApartment"
 										></ion-checkbox>
 										<div class="track">

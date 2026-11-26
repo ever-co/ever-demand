@@ -5,14 +5,15 @@ import {
 	Renderer2,
 	AfterViewChecked,
 	OnInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 
 import { Subject, Observable, forkJoin } from 'rxjs';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { InvitesService } from '../../../@core/data/invites.service';
 import Invite from '@modules/server.common/entities/Invite';
 import { takeUntil, first } from 'rxjs/operators';
-import { ToasterService } from 'angular2-toaster';
+import { ToasterService } from '@app/@core/toaster';
 import { IInviteUpdateObject } from '@modules/server.common/interfaces/IInvite';
 import { IGeolocationUpdateObject } from '@modules/server.common/interfaces/IGeoLocation';
 import {
@@ -38,8 +39,10 @@ export interface InviteViewModel {
 const perPage = 10;
 
 @Component({
+	standalone: false,
 	selector: 'ea-invites',
 	templateUrl: './invites.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['/invites.component.scss'],
 })
 export class InvitesComponent implements OnInit, OnDestroy, AfterViewChecked {
@@ -63,7 +66,7 @@ export class InvitesComponent implements OnInit, OnDestroy, AfterViewChecked {
 		private readonly _renderer: Renderer2,
 		private readonly _translateService: TranslateService,
 		private readonly _notifyService: NotifyService,
-		private readonly modalService: NgbModal
+		private readonly modalService: NgbModal,
 	) {}
 
 	ngOnInit() {
@@ -73,28 +76,9 @@ export class InvitesComponent implements OnInit, OnDestroy, AfterViewChecked {
 		this.smartTableChange();
 	}
 
-	ngAfterViewChecked(): void {
-		if (
-			this._elRef.nativeElement.querySelector(
-				'.ng2-smart-action-add-create'
-			)
-		) {
-			const firstRow = 2;
-			const columnOffset = 0;
-
-			const td = this._renderer.createElement('td');
-			const tr = this._elRef.nativeElement.getElementsByTagName('tr')[
-				firstRow
-			];
-			const refChild = tr.childNodes[columnOffset];
-			if (!this.addClick2 && tr.className !== 'ng-star-inserted') {
-				this._renderer.insertBefore(tr, td, refChild);
-				this.addClick2 = true;
-			}
-		} else {
-			this.addClick2 = false;
-		}
-	}
+	// ng2-smart-table left the multi-select column out of the inline create row and a
+	// DOM hack added the missing cell here; angular2-smart-table renders that cell itself.
+	ngAfterViewChecked(): void {}
 
 	get hasSelectedInvites(): boolean {
 		return this.selectedInvites.length > 0;
@@ -108,9 +92,10 @@ export class InvitesComponent implements OnInit, OnDestroy, AfterViewChecked {
 		try {
 			this.loading = true;
 			const createDataObject = this.inviteCreateObject(e.newData);
-			const createInput = await this._invitesService.getCreateInviteObject(
-				createDataObject
-			);
+			const createInput =
+				await this._invitesService.getCreateInviteObject(
+					createDataObject,
+				);
 			await this._invitesService
 				.createInvite(createInput)
 				.pipe(first())
@@ -166,9 +151,10 @@ export class InvitesComponent implements OnInit, OnDestroy, AfterViewChecked {
 		try {
 			this.loading = true;
 			const createDataObject = this.inviteCreateObject(e.newData);
-			const createInput = await this._invitesService.getCreateInviteObject(
-				createDataObject
-			);
+			const createInput =
+				await this._invitesService.getCreateInviteObject(
+					createDataObject,
+				);
 
 			const res = await this._invitesService
 				.updateInvite(e.data.id, createInput)
@@ -226,7 +212,7 @@ export class InvitesComponent implements OnInit, OnDestroy, AfterViewChecked {
 			getTranslate('STREET_ADDRESS'),
 			getTranslate('HOUSE'),
 			getTranslate('APARTMENT'),
-			getTranslate('INVITE_CODE')
+			getTranslate('INVITE_CODE'),
 		)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(
@@ -278,7 +264,7 @@ export class InvitesComponent implements OnInit, OnDestroy, AfterViewChecked {
 							perPage,
 						},
 					};
-				}
+				},
 			);
 	}
 

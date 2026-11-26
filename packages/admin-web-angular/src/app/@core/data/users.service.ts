@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
+import { completeData } from '@app/graphql/complete-data';
 import User from '@modules/server.common/entities/User';
 import { map, share } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -74,7 +75,7 @@ export class UsersService {
 				variables: { pagingOptions },
 				pollInterval: 5000,
 			})
-			.valueChanges.pipe(
+			.valueChanges.pipe(completeData(), 
 				map((res) => res.data.users),
 				map((users) => users.map((user) => this._userFactory(user))),
 				share()

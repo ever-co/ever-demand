@@ -1,6 +1,13 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import {
+	Component,
+	HostBinding,
+	Input,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 
 @Component({
+	standalone: false,
 	selector: 'e-cu-warehouse-logo',
 	styles: [
 		`
@@ -36,6 +43,7 @@ import { Component, HostBinding, Input, OnInit } from '@angular/core';
 			}
 		`,
 	],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<img [src]="logo" [ngClass]="{ bordered: border, lighted: light }" />
 	`,

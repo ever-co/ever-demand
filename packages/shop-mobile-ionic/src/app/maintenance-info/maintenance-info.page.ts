@@ -1,10 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	OnInit,
+} from '@angular/core';
 import { MaintenanceService } from '@modules/client.common.angular2/services/maintenance.service';
 import { environment } from 'environments/environment';
 import { Store } from 'app/services/store.service';
 import { Router } from '@angular/router';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'e-cu-maintenance-info',
 	templateUrl: './maintenance-info.page.html',
 	styleUrls: ['./maintenance-info.page.scss'],

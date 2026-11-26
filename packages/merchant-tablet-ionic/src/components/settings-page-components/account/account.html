@@ -1,10 +1,7 @@
 <form [formGroup]="accountForm">
 	<div class="basicInfo">
 		<ion-item mode="ios">
-			<ion-label class="labels" position="floating">
-				{{ 'SETTINGS_VIEW.NEW_USERNAME' | translate }}</ion-label
-			>
-			<ion-input type="text" formControlName="username"> </ion-input>
+			<ion-input labelPlacement="floating" type="text" formControlName="username"><div slot="label" class="labels">{{ 'SETTINGS_VIEW.NEW_USERNAME' | translate }}</div> </ion-input>
 		</ion-item>
 		<span *ngIf="username.invalid && (username.dirty || username.touched)">
 			<span [hidden]="!username.errors.minlength">
@@ -17,28 +14,17 @@
 	</div>
 	<div class="contactInfo">
 		<ion-item mode="ios">
-			<ion-label class="labels" position="floating">
-				{{ 'SETTINGS_VIEW.OLD_PASSWORD' | translate }}</ion-label
-			>
-			<ion-input
+			<ion-input labelPlacement="floating"
 				type="password"
-				formControlName="oldPassword"
-			></ion-input>
+				formControlName="oldPassword"><div slot="label" class="labels">{{ 'SETTINGS_VIEW.OLD_PASSWORD' | translate }}</div></ion-input>
 		</ion-item>
 		<ion-item mode="ios">
-			<ion-label class="labels" position="floating">
-				{{ 'SETTINGS_VIEW.NEW_PASSWORD' | translate }}</ion-label
-			>
-			<ion-input type="password" formControlName="password"></ion-input>
+			<ion-input labelPlacement="floating" type="password" formControlName="password"><div slot="label" class="labels">{{ 'SETTINGS_VIEW.NEW_PASSWORD' | translate }}</div></ion-input>
 		</ion-item>
 		<ion-item mode="ios">
-			<ion-label class="labels" position="floating">
-				{{ 'SETTINGS_VIEW.REPEAT_NEW_PASSWORD' | translate }}</ion-label
-			>
-			<ion-input
+			<ion-input labelPlacement="floating"
 				type="password"
-				formControlName="repeatPassword"
-			></ion-input>
+				formControlName="repeatPassword"><div slot="label" class="labels">{{ 'SETTINGS_VIEW.REPEAT_NEW_PASSWORD' | translate }}</div></ion-input>
 		</ion-item>
 		<span *ngIf="repeatPassword.dirty || repeatPassword.touched">
 			<span [hidden]="password.value === repeatPassword.value">

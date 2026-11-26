@@ -1,16 +1,24 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	OnDestroy,
+	Input,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { WarehouseProductsService } from '../../../services/warehouse-products.service';
 import { Subscription } from 'rxjs';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 import { NgxMasonryOptions } from 'ngx-masonry';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/modal-controller';
 import IWarehouseProduct from '@modules/server.common/interfaces/IWarehouseProduct';
 
 @Component({
+	standalone: false,
 	selector: 'merchant-all-products',
 	templateUrl: 'all-products.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['all-products.component.scss'],
 })
 export class AllProductsComponent implements OnInit, OnDestroy {
@@ -60,7 +68,7 @@ export class AllProductsComponent implements OnInit, OnDestroy {
 		private warehouseProductsService: WarehouseProductsService,
 		private translateProductLocales: ProductLocalesService,
 		private warehouseProductsRouter: WarehouseProductsRouter,
-		private modalCtrl: ModalController
+		private modalCtrl: ModalController,
 	) {}
 
 	async ngOnInit() {
@@ -102,7 +110,7 @@ export class AllProductsComponent implements OnInit, OnDestroy {
 							_updatedAt: p._updatedAt,
 							price: p.price,
 							initialPrice: p.initialPrice,
-						})
+						}),
 				);
 
 				this.page = page;

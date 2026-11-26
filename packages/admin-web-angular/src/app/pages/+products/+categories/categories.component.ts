@@ -1,6 +1,11 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	ViewChild,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '@app/@shared/smart-table';
 import { ProductsCategoryService } from '../../../@core/data/productsCategory.service';
 import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import { CategoryCreateComponent } from '../../../@shared/product/categories/category-create/category-create.component';
@@ -10,8 +15,10 @@ import { CategoriesTableComponent } from '../../../@shared/product/categories/ca
 import { NotifyService } from '@app/@core/services/notify/notify.service';
 
 @Component({
+	standalone: false,
 	selector: 'ea-categories',
 	templateUrl: './categories.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./categories.component.scss'],
 })
 export class CategoriesComponent implements OnDestroy {
@@ -27,7 +34,7 @@ export class CategoriesComponent implements OnDestroy {
 	constructor(
 		private readonly _productsCategoryService: ProductsCategoryService,
 		private readonly _modalService: NgbModal,
-		private readonly _notifyService: NotifyService
+		private readonly _notifyService: NotifyService,
 	) {
 		this._loadDataSmartTable();
 	}
@@ -54,7 +61,7 @@ export class CategoriesComponent implements OnDestroy {
 		try {
 			this.loading = true;
 			await firstValueFrom(
-				this._productsCategoryService.removeByIds(idsArray).pipe()
+				this._productsCategoryService.removeByIds(idsArray).pipe(),
 			);
 			this.loading = false;
 			const message = `Selected are removed!`;

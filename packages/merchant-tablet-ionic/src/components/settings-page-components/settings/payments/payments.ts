@@ -1,19 +1,28 @@
-import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	ViewChild,
+	ElementRef,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import PaymentGateways, {
 	paymentGatewaysToString,
 	paymentGatewaysLogo,
 } from '@modules/server.common/enums/PaymentGateways';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/modal-controller';
 import { PaymentMutationComponent } from './mutation/mutation';
-import { ConfirmDeletePopupPage } from 'components/confirm-delete-popup/confirm-delete-popup';
+import { ConfirmDeletePopupPage } from '../../../confirm-delete-popup/confirm-delete-popup';
 import { countriesDefaultCurrencies } from '@modules/server.common/entities/Currency';
 import { Country } from '@modules/server.common/entities';
 import { first } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'merchant-payments-settings',
 	templateUrl: 'payments.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['payments.scss'],
 })
 export class SettingsPaymentsComponent implements OnInit {
@@ -31,20 +40,20 @@ export class SettingsPaymentsComponent implements OnInit {
 
 	ngOnInit(): void {
 		const merchantPaymentsGateways = this.currWarehouse.paymentGateways.map(
-			(mpg) => mpg.paymentGateway
+			(mpg) => mpg.paymentGateway,
 		);
 		const allPaymentGateways = Object.values(PaymentGateways).filter(
-			(r) => !isNaN(<number>r)
+			(r) => !isNaN(<number>r),
 		);
 
 		if (merchantPaymentsGateways) {
 			this.myPaymentsGateways = allPaymentGateways.filter((pg) =>
-				merchantPaymentsGateways.includes(<PaymentGateways>pg)
+				merchantPaymentsGateways.includes(<PaymentGateways>pg),
 			);
 		}
 
 		this.paymentsGateways = allPaymentGateways.filter(
-			(pg) => !this.myPaymentsGateways.includes(pg)
+			(pg) => !this.myPaymentsGateways.includes(pg),
 		);
 
 		this.showPaymentsGateways = true;
@@ -68,7 +77,7 @@ export class SettingsPaymentsComponent implements OnInit {
 
 	async showMutation(e) {
 		const paymentGateway = this.currWarehouse.paymentGateways.find(
-			(pg) => pg.paymentGateway === e
+			(pg) => pg.paymentGateway === e,
 		);
 
 		const modal = await this.modalCtrl.create({
@@ -93,18 +102,19 @@ export class SettingsPaymentsComponent implements OnInit {
 		if (data) {
 			const res = await data.pipe(first()).toPromise();
 
-			this.currWarehouse.paymentGateways = this.currWarehouse.paymentGateways.filter(
-				(pg) => pg.paymentGateway !== res.paymentGateway
-			);
+			this.currWarehouse.paymentGateways =
+				this.currWarehouse.paymentGateways.filter(
+					(pg) => pg.paymentGateway !== res.paymentGateway,
+				);
 			this.currWarehouse.paymentGateways.push(res);
 
 			this.myPaymentsGateways = this.myPaymentsGateways.filter(
-				(pg) => pg !== res.paymentGateway
+				(pg) => pg !== res.paymentGateway,
 			);
 			this.myPaymentsGateways.push(res.paymentGateway);
 
 			this.paymentsGateways = this.paymentsGateways.filter(
-				(pg) => pg !== res.paymentGateway
+				(pg) => pg !== res.paymentGateway,
 			);
 			this.hasChanged = true;
 		}
@@ -139,11 +149,12 @@ export class SettingsPaymentsComponent implements OnInit {
 		this.paymentsGateways = [...this.paymentsGateways, pg];
 
 		this.myPaymentsGateways = this.myPaymentsGateways.filter(
-			(existedPG) => existedPG !== pg
+			(existedPG) => existedPG !== pg,
 		);
-		this.currWarehouse.paymentGateways = this.currWarehouse.paymentGateways.filter(
-			(existedPG) => existedPG.paymentGateway !== pg
-		);
+		this.currWarehouse.paymentGateways =
+			this.currWarehouse.paymentGateways.filter(
+				(existedPG) => existedPG.paymentGateway !== pg,
+			);
 		this.hasChanged = true;
 	}
 }

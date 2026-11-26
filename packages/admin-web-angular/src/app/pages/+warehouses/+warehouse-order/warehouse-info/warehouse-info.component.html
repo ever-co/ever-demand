@@ -1,8 +1,6 @@
 <div class="modal-header">
 	<h3>{{ 'CUSTOMERS_VIEW.WAREHOUSE.WAREHOUSE_INFO' | translate }}</h3>
-	<button class="close" aria-label="Close" (click)="cancel()">
-		<span aria-hidden="true">&times;</span>
-	</button>
+	<button class="btn-close" aria-label="Close" (click)="cancel()"></button>
 </div>
 <div class="modal-body customer-warehouse-info">
 	<h6>
@@ -40,7 +38,7 @@
 
 		<div class="json-info" *ngIf="showCode">
 			<div>
-				<pre><code [highlight]="selectedWarehouse | json" [languages]="['json']" class="iconInfo"></code></pre>
+				<pre><code [highlight]="selectedWarehouse | json" language="json" class="iconInfo"></code></pre>
 			</div>
 		</div>
 	</div>

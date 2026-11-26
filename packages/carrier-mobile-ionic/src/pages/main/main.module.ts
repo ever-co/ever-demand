@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { MainPage } from './main';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { Vibration } from '@ionic-native/vibration/ngx';
 import { CommonModule } from '@angular/common';
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { GeoLocationService } from '../../services/geo-location.service';
 import { Routes, RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonContent } from '@ionic/angular/ion-content';
+import { IonHeader } from '@ionic/angular/ion-header';
+import { IonIcon } from '@ionic/angular/ion-icon';
+import { IonMenuToggle } from '@ionic/angular/ion-menu-toggle';
+import { IonRouterOutlet } from '@ionic/angular/ion-router-outlet';
+import { IonTitle } from '@ionic/angular/ion-title';
 import { HomeModuleGuard } from './home/home.module.guard';
 import { DeliveryModuleGuard } from './delivery/delivery.module.guard';
 import { StartingDeliveryModuleGuard } from './starting-delivery/starting-delivery.module.guard';
@@ -61,14 +63,16 @@ const routes: Routes = [
     declarations: [MainPage],
     imports: [
         CommonModule,
-        IonicModule,
         RouterModule.forChild(routes),
         TranslateModule.forChild(),
+        IonContent,
+        IonHeader,
+        IonIcon,
+        IonMenuToggle,
+        IonRouterOutlet,
+        IonTitle,
     ],
     providers: [
-        Geolocation,
-        Vibration,
-        LocalNotifications,
         GeoLocationService,
         HomeModuleGuard,
         DriveToWarehouseModuleGuard,

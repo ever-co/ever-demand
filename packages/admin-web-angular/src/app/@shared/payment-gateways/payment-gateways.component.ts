@@ -1,4 +1,10 @@
-import { Component, Input, ViewChild, OnChanges } from '@angular/core';
+import {
+	Component,
+	Input,
+	ViewChild,
+	OnChanges,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { Country } from '@modules/server.common/entities';
 import { StripeGatewayComponent } from './stripe-gateway/stripe-gateway.component';
 import { PayPalGatewayComponent } from './payPal-gateway/payPal-gateway.component';
@@ -10,7 +16,9 @@ import PaymentGateways from '@modules/server.common/enums/PaymentGateways';
 import { countriesDefaultCurrencies } from '@modules/server.common/entities/Currency';
 
 @Component({
+	standalone: false,
 	selector: 'ea-payment-gateways',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './payment-gateways.component.html',
 })
 export class PaymentGatewaysComponent implements OnChanges {
@@ -113,7 +121,7 @@ export class PaymentGatewaysComponent implements OnChanges {
 	setValue(merchant: Warehouse) {
 		if (merchant.paymentGateways) {
 			const stripeConfigObj = merchant.paymentGateways.find(
-				(g) => g.paymentGateway === PaymentGateways.Stripe
+				(g) => g.paymentGateway === PaymentGateways.Stripe,
 			);
 
 			if (stripeConfigObj) {
@@ -121,7 +129,7 @@ export class PaymentGatewaysComponent implements OnChanges {
 			}
 
 			const payPalConfigObj = merchant.paymentGateways.find(
-				(g) => g.paymentGateway === PaymentGateways.PayPal
+				(g) => g.paymentGateway === PaymentGateways.PayPal,
 			);
 
 			if (payPalConfigObj) {

@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { LanguagePage } from './language';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { Store } from '../../services/store.service';
 import { Routes, RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonContent } from '@ionic/angular/ion-content';
+import { IonIcon } from '@ionic/angular/ion-icon';
+import { IonItem } from '@ionic/angular/ion-item';
+import { IonList } from '@ionic/angular/ion-list';
+import { IonMenuToggle } from '@ionic/angular/ion-menu-toggle';
+import { IonSelect } from '@ionic/angular/ion-select';
+import { IonSelectOption } from '@ionic/angular/ion-select-option';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-export function HttpLoaderFactory(http: HttpClient) {
-	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
 
 const routes: Routes = [
 	{
@@ -23,17 +24,17 @@ const routes: Routes = [
 @NgModule({
 	declarations: [LanguagePage],
 	imports: [
-		IonicModule,
 		RouterModule.forChild(routes),
 		CommonModule,
 		FormsModule,
-		TranslateModule.forChild({
-			loader: {
-				provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
-				deps: [HttpClient],
-			},
-		}),
+		TranslateModule.forChild(),
+		IonContent,
+		IonIcon,
+		IonItem,
+		IonList,
+		IonMenuToggle,
+		IonSelect,
+		IonSelectOption,
 	],
 	providers: [Store],
 })

@@ -27,12 +27,16 @@
 		<i
 			*ngIf="warehouse?.contactPhone"
 			class="fa fa-phone call-icon current m-0"
-			(click)="attemptCall(warehouse?.contactPhone)"
+			(click)="
+				attemptCall($safeNavigationMigration(warehouse?.contactPhone))
+			"
 		></i>
 
 		<span
 			class="underline"
-			(click)="attemptCall(warehouse?.contactPhone)"
+			(click)="
+				attemptCall($safeNavigationMigration(warehouse?.contactPhone))
+			"
 			>{{ warehouse?.contactPhone || '' }}</span
 		>
 	</span>

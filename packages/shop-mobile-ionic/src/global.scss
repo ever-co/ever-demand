@@ -6,19 +6,19 @@
 // output CSS.
 
 /* Core CSS required for Ionic components to work properly */
-@import '~@ionic/angular/css/core.css';
+@import '@ionic/angular/css/core.css';
 
 /* Basic CSS for apps built with Ionic */
-@import '~@ionic/angular/css/normalize.css';
-@import '~@ionic/angular/css/structure.css';
-@import '~@ionic/angular/css/typography.css';
+@import '@ionic/angular/css/normalize.css';
+@import '@ionic/angular/css/structure.css';
+@import '@ionic/angular/css/typography.css';
 
 /* Optional CSS utils that can be commented out */
-@import '~@ionic/angular/css/padding.css';
-@import '~@ionic/angular/css/float-elements.css';
-@import '~@ionic/angular/css/text-alignment.css';
-@import '~@ionic/angular/css/text-transformation.css';
-@import '~@ionic/angular/css/flex-utils.css';
+@import '@ionic/angular/css/padding.css';
+@import '@ionic/angular/css/float-elements.css';
+@import '@ionic/angular/css/text-alignment.css';
+@import '@ionic/angular/css/text-transformation.css';
+@import '@ionic/angular/css/flex-utils.css';
 
 @import 'theme/fonts/open-sans-hebrew';
 @import 'theme/fonts/google-font-Roboto';
@@ -26,11 +26,12 @@
 
 $fa-font-path: './assets/fonts' !default;
 
-@import '~@ever-platform/common-angular/src/scss/everbie.common';
+@import '@ever-platform/common-angular/src/scss/everbie.common';
 
 @import 'theme/box';
 @import 'theme/delivery-status';
 @import 'theme/popup-view';
+@import 'theme/bootstrap4-grid-compat';
 
 * {
 	font-family: 'Roboto', sans-serif;
@@ -62,16 +63,14 @@ ion-backdrop {
 	display: none;
 }
 
+// Ionic 6+ moved the modal wrapper and its backdrop into the shadow root, so
+// `.modal-wrapper` / `ion-backdrop` rules no longer reach them: use the modal's CSS
+// variables. `display: block` is gone too: it broke the stacking of the shadow
+// parts, and the (hidden before) backdrop covered the popup and took its taps.
 .order-info-modal {
-	display: block;
-
-	.modal-shadow {
-		display: none;
-	}
-
-	.modal-wrapper {
-		background: rgba(255, 255, 255, 0);
-	}
+	--background: transparent;
+	--box-shadow: none;
+	--backdrop-opacity: 0;
 
 	.ion-page {
 		max-width: 250px;
@@ -95,11 +94,8 @@ ion-backdrop {
 }
 
 .map-info-modal {
-	display: block;
-
-	.modal-shadow {
-		display: none;
-	}
+	--box-shadow: none;
+	--backdrop-opacity: 0;
 }
 
 ion-menu-button {

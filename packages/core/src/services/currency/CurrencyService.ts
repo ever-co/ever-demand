@@ -2,7 +2,7 @@ import Currency from '@modules/server.common/entities/Currency';
 import { injectable } from 'inversify';
 import { routerName } from '@pyro/io';
 import { DBService } from '@pyro/db-server';
-import IService from 'services/IService';
+import IService from '../IService';
 import { ICurrencyCreateObject } from '@modules/server.common/interfaces/ICurrency';
 import { createEverLogger } from '../../helpers/Log';
 import Logger from 'bunyan';

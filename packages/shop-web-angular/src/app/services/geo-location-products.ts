@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Apollo, gql } from 'apollo-angular';
+import { Apollo, gql, onlyCompleteData } from 'apollo-angular';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 import { Observable } from 'rxjs';
 import { map, share } from 'rxjs/operators';
@@ -76,6 +76,8 @@ export class GeoLocationProductsService {
 				pollInterval: 2000,
 			})
 			.valueChanges.pipe(
+				// Apollo 4 emits a loading result (without data) before the response
+				onlyCompleteData(),
 				map((res) =>
 					res.data.geoLocationProductsByPaging.filter(
 						(p) => p.warehouseProduct.isProductAvailable === true

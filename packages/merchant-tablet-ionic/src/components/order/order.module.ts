@@ -3,14 +3,16 @@ import { ChooseCustomerOptionComponent } from './choose-customer-option.componen
 import { MakeOrderComponent } from './make-order/make-order.component';
 import { SelectAddCustomerComponent } from './select-add-customer.component';
 import { OrderComponent } from './order.component';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { Angular2SmartTableModule } from 'angular2-smart-table';
 import { UsersService } from '../../services/users.service';
 import { UserMutationModule } from '../../@shared/user/mutation/user-mutation.module';
 import { AddressComponent } from './address.component';
 import { MakeOrderInputComponent } from './make-order/make-order-input.component';
 import { WarehouseOrdersService } from '../../services/warehouse-orders.service';
-import { TranslateModule } from '@ngx-translate/core';
-import { IonicModule } from '@ionic/angular';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
+import { IonIcon } from '@ionic/angular/ion-icon';
+import { IonSegment } from '@ionic/angular/ion-segment';
+import { IonSegmentButton } from '@ionic/angular/ion-segment-button';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OrderTypeComponent } from './order-type/order-type.component';
@@ -18,12 +20,14 @@ import { MakeOrderCommentComponent } from './make-order/make-order-comment.compo
 
 @NgModule({
     imports: [
-        Ng2SmartTableModule,
-        IonicModule,
+        Angular2SmartTableModule,
         CommonModule,
         FormsModule,
         UserMutationModule,
         TranslateModule.forChild(),
+        IonIcon,
+        IonSegment,
+        IonSegmentButton,
     ],
     declarations: [
         OrderComponent,

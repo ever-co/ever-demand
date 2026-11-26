@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { AddCarriersPopupPage } from './add-carriers-popup';
-import { FormWizardModule } from '@ever-co/angular2-wizard';
+import { FormWizardModule } from '../../../components/form-wizard/form-wizard.module';
 import { AddChoiceComponent } from './add-choice/add-choice';
 import { CarriersCatalogComponent } from './carriers-catalog/carriers-catalog';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { Angular2SmartTableModule } from 'angular2-smart-table';
 import { AddressComponent } from './carriers-catalog/address.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { AddNewCarriersPopupPageModule } from './add-new-carrier/add-new-carrier.module';
-import { IonicModule } from '@ionic/angular';
+import { IonCol } from '@ionic/angular/ion-col';
+import { IonGrid } from '@ionic/angular/ion-grid';
+import { IonRow } from '@ionic/angular/ion-row';
+import { ModalController } from '@ionic/angular/modal-controller';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -22,13 +25,16 @@ const COMPONENTS = [
     declarations: COMPONENTS,
     exports: COMPONENTS,
     imports: [
-        IonicModule,
         CommonModule,
         FormsModule,
         FormWizardModule,
-        Ng2SmartTableModule,
+        Angular2SmartTableModule,
         AddNewCarriersPopupPageModule,
         TranslateModule.forChild(),
-    ]
+        IonCol,
+        IonGrid,
+        IonRow,
+    ],
+    providers: [ModalController]
 })
 export class AddCarriersPopupPageModule {}

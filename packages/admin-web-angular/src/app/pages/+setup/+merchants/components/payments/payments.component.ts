@@ -5,14 +5,17 @@ import {
 	Input,
 	ViewChild,
 	OnInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { LocationFormComponent } from '@app/@shared/forms/location';
 import IPaymentGatewayCreateObject from '@modules/server.common/interfaces/IPaymentGateway';
 import { PaymentGatewaysComponent } from '@app/@shared/payment-gateways/payment-gateways.component';
 
 @Component({
+	standalone: false,
 	selector: 'ea-merchants-setup-payments',
 	templateUrl: './payments.component.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./payments.component.scss'],
 })
 export class SetupMerchantPaymentsComponent implements OnInit {

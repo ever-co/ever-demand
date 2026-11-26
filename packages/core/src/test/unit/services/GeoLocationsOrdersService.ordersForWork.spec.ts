@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { ObjectId } from 'bson';
+import { ObjectId } from 'mongodb';
 
 // Keep the heavy service graph (mongoose models, env, router wiring) out of
 // this unit test: only the aggregate pipelines that `getOrdersForWork()` and

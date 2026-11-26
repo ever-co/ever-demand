@@ -1,5 +1,13 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import {
+	Component,
+	Input,
+	OnInit,
+	Output,
+	EventEmitter,
+	ChangeDetectionStrategy,
+} from '@angular/core';
+import { bindViewCell } from '../table-components/smart-table';
+import { LocalDataSource, Settings } from 'angular2-smart-table';
 import { takeUntil } from 'rxjs/operators';
 import { Subject, forkJoin, Observable } from 'rxjs';
 import User from '@modules/server.common/entities/User';
@@ -8,18 +16,20 @@ import { AddressComponent } from './address.component';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
+	standalone: false,
 	selector: 'select-add-customer',
 	styleUrls: ['./select-add-customer.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<span class="select-add-customer-component">
 			<div class="customers-table" *ngIf="isSelectedFromExisting">
-				<ng2-smart-table
+				<angular2-smart-table
 					class="smart-table"
 					[settings]="settingsSmartTable"
 					[source]="sourceSmartTable"
 					(userRowSelect)="selectFromExisting($event)"
 				>
-				</ng2-smart-table>
+				</angular2-smart-table>
 			</div>
 
 			<div *ngIf="!isSelectedFromExisting">
@@ -40,7 +50,7 @@ export class SelectAddCustomerComponent implements OnInit {
 	@Input()
 	customerOptionSelected: number;
 
-	settingsSmartTable: object;
+	settingsSmartTable: Settings;
 	sourceSmartTable = new LocalDataSource();
 
 	@Output()
@@ -51,7 +61,7 @@ export class SelectAddCustomerComponent implements OnInit {
 
 	constructor(
 		private readonly _usersService: UsersService,
-		private readonly _translateService: TranslateService
+		private readonly _translateService: TranslateService,
 	) {}
 
 	get isSelectedFromExisting() {
@@ -85,13 +95,12 @@ export class SelectAddCustomerComponent implements OnInit {
 			getTranslate('FULL_NAME'),
 			getTranslate('EMAIL'),
 			getTranslate('PHONE'),
-			getTranslate('ADDRESS')
+			getTranslate('ADDRESS'),
 		)
 			.pipe(takeUntil(this.ngDestroy$))
 			.subscribe(([id, fullName, email, phone, address]) => {
 				this.settingsSmartTable = {
 					actions: false,
-					filters: false,
 					pager: {
 						perPage: 3,
 					},
@@ -103,6 +112,7 @@ export class SelectAddCustomerComponent implements OnInit {
 							title: address,
 							type: 'custom',
 							renderComponent: AddressComponent,
+							componentInitFunction: bindViewCell(),
 						},
 					},
 				};

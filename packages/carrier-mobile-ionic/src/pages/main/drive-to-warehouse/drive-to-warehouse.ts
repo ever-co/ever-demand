@@ -1,4 +1,9 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	OnInit,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
@@ -9,19 +14,20 @@ import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import { CarrierOrdersRouter } from '@modules/client.common.angular2/routers/carrier-orders-router.service';
 import { Store } from '../../../services/store.service';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { CurrentPositionService } from '../../../services/native/current-position.service';
 import IGeoLocation from '@modules/server.common/interfaces/IGeoLocation';
 import { GeoLocationService } from '../../../services/geo-location.service';
 import { MapComponent } from '../common/map/map.component';
 import { Router } from '@angular/router';
-import { NavController, Platform } from '@ionic/angular';
+import { NavController } from '@ionic/angular/nav-controller';
+import { Platform } from '@ionic/angular/platform';
 import { getIdFromTheDate } from '@modules/server.common/utils';
 
-declare var google: any;
-
 @Component({
+	standalone: false,
 	selector: 'page-drive-to-warehouse',
 	templateUrl: 'drive-to-warehouse.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['drive-to-warehouse.scss'],
 })
 export class DriveToWarehousePage implements OnInit {
@@ -46,10 +52,10 @@ export class DriveToWarehousePage implements OnInit {
 		private carrierOrdersRouter: CarrierOrdersRouter,
 		private store: Store,
 		private geoLocationService: GeoLocationService,
-		private geolocation: Geolocation,
+		private geolocation: CurrentPositionService,
 		private router: Router,
 		private navCtrl: NavController,
-		public platform: Platform
+		public platform: Platform,
 	) {}
 
 	ngOnInit(): void {
@@ -109,22 +115,22 @@ export class DriveToWarehousePage implements OnInit {
 									OrderCarrierStatus.NoCarrier;
 							}
 
-							const origin = new google.maps.LatLng(
-								position.coords.latitude,
-								position.coords.longitude
-							);
+							const origin = {
+								lat: position.coords.latitude,
+								lng: position.coords.longitude,
+							};
 
 							const merchantGeo = order.warehouse['geoLocation'];
 
 							this.carrierUserDistance = Utils.getDistance(
 								merchantGeo,
-								dbGeoInput as GeoLocation
+								dbGeoInput as GeoLocation,
 							).toFixed(2);
 
-							const destination = new google.maps.LatLng(
-								merchantGeo.loc.coordinates[1],
-								merchantGeo.loc.coordinates[0]
-							);
+							const destination = {
+								lat: merchantGeo.loc.coordinates[1],
+								lng: merchantGeo.loc.coordinates[0],
+							};
 
 							this.carrierMap.setCenter(origin);
 							this.carrierMap.drawRoute(origin, destination);
@@ -137,7 +143,7 @@ export class DriveToWarehousePage implements OnInit {
 		if (this.carrier && this.selectedOrder) {
 			return await this.carrierOrdersRouter.selectedForDelivery(
 				this.carrier['id'],
-				[this.selectedOrder['id']]
+				[this.selectedOrder['id']],
 			);
 		} else {
 			// TODO: replace with some popup
@@ -182,7 +188,7 @@ export class DriveToWarehousePage implements OnInit {
 			if (this.carrier && this.selectedOrder) {
 				await this.carrierOrdersRouter.cancelDelivery(
 					this.carrier['id'],
-					[this.selectedOrder['id']]
+					[this.selectedOrder['id']],
 				);
 				this.unselectOrder();
 			}

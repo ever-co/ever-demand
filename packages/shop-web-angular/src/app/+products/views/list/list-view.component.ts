@@ -8,6 +8,7 @@ import {
 	Output,
 	EventEmitter,
 	OnDestroy,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import ProductInfo from '@modules/server.common/entities/ProductInfo';
 import { MasonryComponent } from '@modules/masonry';
@@ -15,6 +16,8 @@ import { ProductComponent } from 'app/+products/product';
 import { Subject } from 'rxjs';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
+	standalone: false,
 	selector: 'list-view',
 	styleUrls: ['./list-view.component.scss'],
 	templateUrl: './list-view.component.html',

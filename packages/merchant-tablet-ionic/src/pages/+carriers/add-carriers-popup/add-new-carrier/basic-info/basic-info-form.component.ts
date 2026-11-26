@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, OnChanges } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	OnInit,
+	OnChanges,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import {
 	FormBuilder,
 	FormGroup,
@@ -14,8 +20,10 @@ export type CarrierBasicInfo = Pick<
 >;
 
 @Component({
+	standalone: false,
 	selector: 'basic-info-form',
 	styleUrls: ['./basic-info-form.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: 'basic-info-form.component.html',
 })
 export class BasicInfoFormComponent implements OnDestroy, OnInit, OnChanges {
@@ -28,7 +36,8 @@ export class BasicInfoFormComponent implements OnDestroy, OnInit, OnChanges {
 	email: AbstractControl;
 
 	private _ngDestroy$ = new Subject<void>();
-	private static phoneNumberRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9x]*$/;
+	private static phoneNumberRegex =
+		/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9x]*$/;
 
 	ngOnDestroy() {
 		this._ngDestroy$.next();

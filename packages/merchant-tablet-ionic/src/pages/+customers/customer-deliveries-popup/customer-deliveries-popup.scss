@@ -1,4 +1,4 @@
-@import '~@ever-platform/common-angular/src/scss/everbie.common';
+@import '@ever-platform/common-angular/src/scss/everbie.common';
 .customer-deliveries-popup {
 	background-color: #fff;
 	min-height: 100%;
@@ -29,13 +29,13 @@
 		}
 	}
 
-	.ng2-smart-pagination-nav {
+	.angular2-smart-pagination-nav {
 		li {
 			width: 50% !important;
 		}
 	}
 
-	.ng2-smart-titles {
+	.angular2-smart-titles {
 		height: 55px !important;
 	}
 

@@ -10,10 +10,8 @@ import FakeDataProducts from '../../@core/data/fakeDataServices/products';
 import FakeDataWarehouses from '../../@core/data/fakeDataServices/warehouses';
 import FakeDataWarehousesProducts from '../../@core/data/fakeDataServices/warehousesProducts';
 import FakeDataUsers from '../../@core/data/fakeDataServices/users';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { ToasterModule } from 'angular2-toaster';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
+import { ToasterModule } from '@app/@core/toaster';
 import FakeDataProductsCategories from '../../@core/data/fakeDataServices/productsCategories';
 import { NbSpinnerModule, NbButtonModule } from '@nebular/theme';
 import { NotifyService } from '@app/@core/services/notify/notify.service';
@@ -22,22 +20,12 @@ import { InvitesRequestsService } from '@app/@core/data/invites-requests.service
 import { UsersService } from '@app/@core/data/users.service';
 import { CurrenciesService } from '@app/@core/data/currencies.service';
 
-export function HttpLoaderFactory(http: HttpClient) {
-	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
-
 @NgModule({
 	imports: [
 		CommonModule,
 		ThemeModule,
 		ToasterModule.forRoot(),
-		TranslateModule.forChild({
-			loader: {
-				provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
-				deps: [HttpClient],
-			},
-		}),
+		TranslateModule,
 		RouterModule.forChild(routes),
 		NbSpinnerModule,
 		NbButtonModule,

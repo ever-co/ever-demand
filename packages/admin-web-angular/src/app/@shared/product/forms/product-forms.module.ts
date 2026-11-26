@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { FormWizardModule } from '@ever-co/angular2-wizard';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
+import { FormWizardModule } from '@app/@shared/wizard';
 import { ThemeModule } from '../../../@theme/theme.module';
 import { BasicInfoFormComponent } from './basic-info';
 import { ProductsTableComponent } from './products-table';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+import { Ng2SmartTableModule } from '@app/@shared/smart-table';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { ProductCategoriesModule } from '../../render-component/product-categories/product-categories.module';
 import { CommonModule } from '@angular/common';
 import { NbSpinnerModule } from '@nebular/theme';
@@ -19,7 +19,7 @@ import { FileUploaderModule } from '@app/@shared/file-uploader/file-uploader.mod
 		CommonModule,
 		FormWizardModule,
 		TranslateModule.forChild(),
-		MultiselectDropdownModule,
+		NgSelectModule,
 		Ng2SmartTableModule,
 		FileUploaderModule,
 		ProductCategoriesModule,

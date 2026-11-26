@@ -1,4 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	OnDestroy,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { Subject, Subscription } from 'rxjs';
 import { WarehousesService } from '../../@core/data/warehouses.service';
@@ -12,8 +17,10 @@ import { IExistingCustomersViewModel } from '@app/models/IExistingCustomersViewM
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'ea-dashboard',
 	styleUrls: ['./dashboard.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit, OnDestroy {
@@ -57,7 +64,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 		private readonly _storesService: WarehousesService,
 		private readonly _storeOrdersService: WarehouseOrdersService,
 		private readonly _ordersService: OrdersService,
-		private readonly _translateService: TranslateService
+		private readonly _translateService: TranslateService,
 	) {}
 
 	get labelAvgPercent() {
@@ -88,10 +95,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 		return {
 			labelTillAverage: this._translate(
-				`${translationPrefix}.TILL_AVERAGE`
+				`${translationPrefix}.TILL_AVERAGE`,
 			),
 			labelBetterThanAverage: this._translate(
-				`${translationPrefix}.BETTER_THAN_AVERAGE`
+				`${translationPrefix}.BETTER_THAN_AVERAGE`,
 			),
 		};
 	}
@@ -173,7 +180,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	private async _listenChartPanelTotalOrders() {
 		this.isChartPanelOrdersLoad = true;
-		this.chartPanelOrders = await this._ordersService.getOrdersChartTotalOrdersNew();
+		this.chartPanelOrders =
+			await this._ordersService.getOrdersChartTotalOrdersNew();
 		this.isChartPanelOrdersLoad = false;
 		// .pipe(takeUntil(this._ngDestroy$))
 		// .subscribe((orders) => {
@@ -303,15 +311,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
 			}
 			this._calculateAverageCustomersPercentCurrentStore(
 				storeDaysExistence,
-				store.id
+				store.id,
 			);
 			this._calculateAverageOrdersPercentCurrentStore(
 				storeDaysExistence,
-				store.id
+				store.id,
 			);
 			this._calculateAverageRevenuePercentCurrentStore(
 				storeDaysExistence,
-				store.id
+				store.id,
 			);
 		});
 
@@ -355,7 +363,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	private _calculateAverageCustomersPercentCurrentStore(
 		storeDaysExistence: number,
-		storeId: string
+		storeId: string,
 	) {
 		const averageCustomers =
 			this.totalInfo.customers / storeDaysExistence || 0;
@@ -366,7 +374,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	private _calculateAverageOrdersPercentCurrentStore(
 		storeDaysExistence: number,
-		storeId: string
+		storeId: string,
 	) {
 		const averageOrders = this.totalInfo.orders / storeDaysExistence || 0;
 
@@ -376,7 +384,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	private _calculateAverageRevenuePercentCurrentStore(
 		storeDaysExistence: number,
-		storeId: string
+		storeId: string,
 	) {
 		const averageRevenue = this.totalInfo.revenue / storeDaysExistence || 0;
 
@@ -401,7 +409,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	private async _calculatePerMerchantMetrics() {
 		const orderInfo = await this._ordersService.getComplatedOrdersInfo(
-			this.selectedStoreId
+			this.selectedStoreId,
 		);
 
 		this.totalInfo.orders = orderInfo['totalOrders'];
@@ -410,7 +418,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	private _calculatePerMerchantMetricsToday() {
 		const storeCompletedOrdersToday = this.completedOrdersToday.filter(
-			(o) => o.warehouseId === this.selectedStoreId
+			(o) => o.warehouseId === this.selectedStoreId,
 		);
 
 		this.todayInfo.orders = storeCompletedOrdersToday.length;
@@ -421,32 +429,34 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	private _displayCustomersAveragePercent() {
 		this.hasSelectedStore
-			? (this.averageRateCustomersToday.value = this.averageRateCustomersToday.perStore[
-					this.selectedStoreId
-			  ])
-			: (this.averageRateCustomersToday.value = this.averageRateCustomersToday.allStores);
+			? (this.averageRateCustomersToday.value =
+					this.averageRateCustomersToday.perStore[
+						this.selectedStoreId
+					])
+			: (this.averageRateCustomersToday.value =
+					this.averageRateCustomersToday.allStores);
 	}
 
 	private _displayOrdersAveragePercent() {
 		this.hasSelectedStore
-			? (this.averageRateOrdersToday.value = this.averageRateOrdersToday.perStore[
-					this.selectedStoreId
-			  ])
-			: (this.averageRateOrdersToday.value = this.averageRateOrdersToday.allStores);
+			? (this.averageRateOrdersToday.value =
+					this.averageRateOrdersToday.perStore[this.selectedStoreId])
+			: (this.averageRateOrdersToday.value =
+					this.averageRateOrdersToday.allStores);
 	}
 
 	private _displayRevenueAveragePercent() {
 		this.hasSelectedStore
-			? (this.averageRateRevenueToday.value = this.averageRateRevenueToday.perStore[
-					this.selectedStoreId
-			  ])
-			: (this.averageRateRevenueToday.value = this.averageRateRevenueToday.allStores);
+			? (this.averageRateRevenueToday.value =
+					this.averageRateRevenueToday.perStore[this.selectedStoreId])
+			: (this.averageRateRevenueToday.value =
+					this.averageRateRevenueToday.allStores);
 	}
 
 	private _displayTotalCustomers() {
 		if (this.hasSelectedStore) {
 			const store = this.existingCustomers.perStore.find(
-				(s) => s.storeId === this.selectedStoreId
+				(s) => s.storeId === this.selectedStoreId,
 			);
 			this.totalInfo.customers = store ? store.customersCount : 0;
 		} else {
@@ -457,7 +467,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	private _displayTotalCustomersToday() {
 		if (this.hasSelectedStore) {
 			const store = this.existingCustomersToday.perStore.find(
-				(s) => s.storeId === this.selectedStoreId
+				(s) => s.storeId === this.selectedStoreId,
 			);
 			this.todayInfo.customers = store ? store.customersCount : 0;
 		} else {

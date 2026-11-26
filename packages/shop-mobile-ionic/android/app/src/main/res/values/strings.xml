@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Ever Shop</string>
+    <string name="title_activity_main">Ever Shop</string>
+    <string name="package_name">co.ever.customer</string>
+    <string name="custom_url_scheme">co.ever.customer</string>
+</resources>

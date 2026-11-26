@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { FormWizardModule } from '@ever-co/angular2-wizard';
+import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
+import { FormWizardModule } from '@app/@shared/wizard';
 import { BasicInfoFormComponent } from './basic-info';
 import { ThemeModule } from '@app/@theme';
 import { FileUploaderModule } from '@app/@shared/file-uploader/file-uploader.module';

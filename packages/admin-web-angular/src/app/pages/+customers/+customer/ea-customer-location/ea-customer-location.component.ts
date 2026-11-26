@@ -1,12 +1,21 @@
-import { Component, OnDestroy, OnInit, ViewChild, Input } from '@angular/core';
+import {
+	Component,
+	OnDestroy,
+	OnInit,
+	ViewChild,
+	Input,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UsersService } from '../../../../@core/data/users.service';
 import { first } from 'rxjs/operators';
 
 declare var google: any;
 @Component({
+	standalone: false,
 	selector: 'ea-customer-location',
 	styleUrls: ['./ea-customer-location.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	templateUrl: './ea-customer-location.component.html',
 })
 export class CustomerLocationComponent implements OnDestroy, OnInit {
@@ -18,7 +27,7 @@ export class CustomerLocationComponent implements OnDestroy, OnInit {
 
 	constructor(
 		private readonly _userService: UsersService,
-		private readonly _router: ActivatedRoute
+		private readonly _router: ActivatedRoute,
 	) {}
 
 	ngOnInit(): void {
@@ -29,7 +38,7 @@ export class CustomerLocationComponent implements OnDestroy, OnInit {
 				.toPromise();
 			const coordinates = new google.maps.LatLng(
 				user['geoLocation'].coordinates.lat,
-				user['geoLocation'].coordinates.lng
+				user['geoLocation'].coordinates.lng,
 			);
 			this.showMap(coordinates);
 			this.marker = this.addMarker(coordinates, this.map);

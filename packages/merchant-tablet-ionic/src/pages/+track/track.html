@@ -4,7 +4,7 @@
 		<span class="left-buttons">
 			<div class="waves-effect waves-classic">
 				<ion-menu-toggle class="button-icon">
-					<ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+					<ion-icon name="menu"></ion-icon>
 				</ion-menu-toggle>
 			</div>
 		</span>
@@ -23,20 +23,14 @@
 			Total Deliveries: {{ totalDeliveries }}
 		</ion-item>
 		<ion-item *ngIf="showCheckboxFilters" (click)="refreshMap();">
-			<ion-label>Show active only</ion-label>
-			<ion-checkbox
-				slot="end"
+			<ion-checkbox labelPlacement="start" justify="space-between"
 				[disabled]="loadingMap"
-				[(ngModel)]="showActiveOnly"
-			></ion-checkbox>
+				[(ngModel)]="showActiveOnly">Show active only</ion-checkbox>
 		</ion-item>
 		<ion-item *ngIf="showCheckboxFilters" (click)="refreshMap();">
-			<ion-label>Show assigned only</ion-label>
-			<ion-checkbox
-				slot="end"
+			<ion-checkbox labelPlacement="start" justify="space-between"
 				[disabled]="loadingMap"
-				[(ngModel)]="showAssignedOnly"
-			></ion-checkbox>
+				[(ngModel)]="showAssignedOnly">Show assigned only</ion-checkbox>
 		</ion-item>
 		<ion-item>
 			<ion-label>Search for Carrier</ion-label>

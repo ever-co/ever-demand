@@ -4,6 +4,7 @@ import {
 	ElementRef,
 	OnDestroy,
 	OnInit,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 
 import Carrier from '@modules/server.common/entities/Carrier';
@@ -11,14 +12,16 @@ import { CarrierService } from '../../../src/services/carrier.service';
 import { Subject, Subscription } from 'rxjs';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { ActivatedRoute, Router } from '@angular/router';
-import { WarehousesService } from 'services/warehouses.service';
+import { WarehousesService } from '../../services/warehouses.service';
 import { WarehouseOrdersService } from '../../services/warehouse-orders.service';
 
 declare var google: any;
 
 @Component({
+	standalone: false,
 	selector: 'page-track',
 	templateUrl: 'track.html',
+	changeDetection: ChangeDetectionStrategy.Eager,
 	styleUrls: ['./track.scss'],
 })
 export class TrackPage implements OnInit, OnDestroy {
@@ -60,7 +63,7 @@ export class TrackPage implements OnInit, OnDestroy {
 		private route: ActivatedRoute,
 		private router: Router,
 		private warehouseService: WarehousesService,
-		private warehouseOrderService: WarehouseOrdersService
+		private warehouseOrderService: WarehouseOrdersService,
 	) {
 		this.route.params.subscribe(() => this.loadData());
 	}
@@ -86,7 +89,7 @@ export class TrackPage implements OnInit, OnDestroy {
 			.getAllStores()
 			.subscribe((warehouse) => {
 				const currentWarehouse = warehouse.find(
-					(wh) => wh.id === this.warehouseId
+					(wh) => wh.id === this.warehouseId,
 				);
 				const allAssignedCarriers = warehouse
 					.filter((wh) => wh.id !== this.warehouseId)
@@ -104,7 +107,7 @@ export class TrackPage implements OnInit, OnDestroy {
 						this.carriers = carriers.filter((car) => {
 							if (
 								currentWarehouse.usedCarriersIds.includes(
-									car.id
+									car.id,
 								)
 							) {
 								car.shared = false;
@@ -112,7 +115,7 @@ export class TrackPage implements OnInit, OnDestroy {
 							} else {
 								if (
 									allAssignedCarriers.every(
-										(arr) => !arr.includes(car.id)
+										(arr) => !arr.includes(car.id),
 									)
 								) {
 									car.shared = true;
@@ -132,12 +135,12 @@ export class TrackPage implements OnInit, OnDestroy {
 
 						this.params$ = this.route.params.subscribe((res) => {
 							this.totalActiveCarriers = this.carriers.filter(
-								(car) => car.status === 0
+								(car) => car.status === 0,
 							).length;
 
 							if (res.id) {
 								this.selectedCarrier = this.carriers.filter(
-									(car) => car.id === res.id
+									(car) => car.id === res.id,
 								)[0];
 								this.showCheckboxFilters = false;
 								this.carriersOnDisplay = [this.selectedCarrier];
@@ -163,26 +166,24 @@ export class TrackPage implements OnInit, OnDestroy {
 				this.listOfOrders = orderList;
 				this.listOfOrders.forEach((order) => {
 					const carrier = this.carriersOnDisplay.find(
-						(x) => x.id === order.carrier.id
+						(x) => x.id === order.carrier.id,
 					);
 
 					if (carrier && carrier.shared) {
 						this.addMarker(
 							{
-								lat:
-									order.carrier.geoLocation.loc
-										.coordinates[1],
-								lng:
-									order.carrier.geoLocation.loc
-										.coordinates[0],
+								lat: order.carrier.geoLocation.loc
+									.coordinates[1],
+								lng: order.carrier.geoLocation.loc
+									.coordinates[0],
 							},
 							this.map,
-							this.sharedCarrierIcon
+							this.sharedCarrierIcon,
 						);
 					}
 
 					const carriersWithOrders = orderList.map(
-						(o) => o.carrier.id
+						(o) => o.carrier.id,
 					);
 					this.carriers = this.carriers.filter((car) => {
 						if (
@@ -207,30 +208,30 @@ export class TrackPage implements OnInit, OnDestroy {
 								lng: order.user.geoLocation.loc.coordinates[0],
 							},
 							this.map,
-							this.userIcon
+							this.userIcon,
 						);
 
 						const request = {
 							origin: new google.maps.LatLng(
 								order.carrier.geoLocation.loc.coordinates[1],
-								order.carrier.geoLocation.loc.coordinates[0]
+								order.carrier.geoLocation.loc.coordinates[0],
 							),
 							destination: new google.maps.LatLng(
 								order.user.geoLocation.loc.coordinates[1],
-								order.user.geoLocation.loc.coordinates[0]
+								order.user.geoLocation.loc.coordinates[0],
 							),
 							travelMode: 'DRIVING',
 						};
-						const directionsDisplay = new google.maps.DirectionsRenderer(
-							{
+						const directionsDisplay =
+							new google.maps.DirectionsRenderer({
 								polylineOptions: {
 									strokeColor: `hsl(${Math.floor(
-										Math.random() * 320
+										Math.random() * 320,
 									)},100%,50%)`,
 								},
-							}
-						);
-						const directionsService = new google.maps.DirectionsService();
+							});
+						const directionsService =
+							new google.maps.DirectionsService();
 						directionsService.route(request, function (res, stat) {
 							if (stat === 'OK') {
 								directionsDisplay.setDirections(res);
@@ -272,13 +273,13 @@ export class TrackPage implements OnInit, OnDestroy {
 		let filteredCarriers = this.carriers;
 		if (this.showActiveOnly && this.carriers.length > 1) {
 			filteredCarriers = filteredCarriers.filter(
-				(car) => car.status === 0
+				(car) => car.status === 0,
 			);
 		}
 
 		if (this.showAssignedOnly && this.carriers.length > 1) {
 			filteredCarriers = filteredCarriers.filter(
-				(car) => car.shared === false
+				(car) => car.shared === false,
 			);
 		}
 		this.carrierListDropdown = filteredCarriers;
@@ -302,7 +303,7 @@ export class TrackPage implements OnInit, OnDestroy {
 	addMarker(
 		position: { lat: number; lng: number },
 		map: google.maps.Map,
-		icon: string
+		icon: string,
 	) {
 		const marker = new google.maps.Marker({
 			position,
