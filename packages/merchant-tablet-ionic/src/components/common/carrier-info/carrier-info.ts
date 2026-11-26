@@ -1,6 +1,6 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import IOrder from '@modules/server.common/interfaces/IOrder';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/modal-controller';
 import { OrderMapPopupPage } from '../../order-map-popup/order-map-popup';
 
 @Component({

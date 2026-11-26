@@ -6,14 +6,12 @@ import { TranslateModule } from '@modules/client.common.angular2/locale/translat
 import { CarrierService } from '../../../src/services/carrier.service';
 import { WarehousesService } from '../../../src/services/warehouses.service';
 import { Routes, RouterModule } from '@angular/router';
-import {
-	IonCheckbox,
-	IonIcon,
-	IonItem,
-	IonLabel,
-	IonMenuToggle,
-	ModalController,
-} from '@ionic/angular';
+import { IonCheckbox } from '@ionic/angular/ion-checkbox';
+import { IonIcon } from '@ionic/angular/ion-icon';
+import { IonItem } from '@ionic/angular/ion-item';
+import { IonLabel } from '@ionic/angular/ion-label';
+import { IonMenuToggle } from '@ionic/angular/ion-menu-toggle';
+import { ModalController } from '@ionic/angular/modal-controller';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicSelectableComponent } from 'ionic-selectable';

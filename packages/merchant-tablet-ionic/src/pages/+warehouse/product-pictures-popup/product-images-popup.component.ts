@@ -4,7 +4,7 @@ import {
 	Input,
 	ChangeDetectionStrategy,
 } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/modal-controller';
 import { IProductImage } from '@modules/server.common/interfaces/IProduct';
 
 @Component({

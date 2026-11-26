@@ -21,7 +21,7 @@ import User from '@modules/server.common/entities/User';
 import { IUserCreateObject } from '@modules/server.common/interfaces/IUser';
 import { UsersService } from '../../../../services/users.service';
 import { FormHelpers } from '../../../forms/helpers';
-import { AlertController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular/alert-controller';
 
 export type CustomerBasicInfo = Pick<
 	IUserCreateObject,

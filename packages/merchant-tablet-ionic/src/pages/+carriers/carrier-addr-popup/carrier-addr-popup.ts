@@ -7,7 +7,7 @@ import {
 	ChangeDetectionStrategy,
 } from '@angular/core';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/modal-controller';
 
 @Component({
 	standalone: false,

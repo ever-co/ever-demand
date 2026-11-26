@@ -18,7 +18,7 @@ import { CustomerComponent } from '../../../components/carrier-deliveries-table/
 import { DeliveryComponent } from '../../../components/carrier-deliveries-table/delivery';
 import { StatusComponent } from '../../../components/carrier-deliveries-table/status';
 import { WarehouseComponent } from '../../../components/carrier-deliveries-table/warehouse';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/modal-controller';
 import UserOrder from '@modules/server.common/entities/UserOrder';
 
 @Component({

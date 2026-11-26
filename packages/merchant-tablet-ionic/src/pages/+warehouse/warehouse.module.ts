@@ -15,21 +15,19 @@ import { TopProductsComponent } from './top-products/top-products.component';
 import { WarehouseProductsService } from '../../services/warehouse-products.service';
 import { NgxMasonryModule } from 'ngx-masonry';
 import { Routes, RouterModule } from '@angular/router';
-import {
-	IonContent,
-	IonIcon,
-	IonInfiniteScroll,
-	IonInfiniteScrollContent,
-	IonItem,
-	IonList,
-	IonMenuToggle,
-	IonRow,
-	IonSelect,
-	IonSelectOption,
-	IonSpinner,
-	ModalController,
-	PopoverController,
-} from '@ionic/angular';
+import { IonContent } from '@ionic/angular/ion-content';
+import { IonIcon } from '@ionic/angular/ion-icon';
+import { IonInfiniteScroll } from '@ionic/angular/ion-infinite-scroll';
+import { IonInfiniteScrollContent } from '@ionic/angular/ion-infinite-scroll-content';
+import { IonItem } from '@ionic/angular/ion-item';
+import { IonList } from '@ionic/angular/ion-list';
+import { IonMenuToggle } from '@ionic/angular/ion-menu-toggle';
+import { IonRow } from '@ionic/angular/ion-row';
+import { IonSelect } from '@ionic/angular/ion-select';
+import { IonSelectOption } from '@ionic/angular/ion-select-option';
+import { IonSpinner } from '@ionic/angular/ion-spinner';
+import { ModalController } from '@ionic/angular/modal-controller';
+import { PopoverController } from '@ionic/angular/popover-controller';
 import { CreateProductTypePopupPageModule } from './create-product-type-popup/create-product-type-popup.module';
 import { EditProductTypePopupPageModule } from './edit-product-type-popup/edit-product-type-popup.module';
 import { WarehousesService } from '../../services/warehouses.service';

@@ -4,7 +4,7 @@ import { TranslateModule } from '@modules/client.common.angular2/locale/translat
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { IonContent } from '@ionic/angular';
+import { IonContent } from '@ionic/angular/ion-content';
 
 const routes: Routes = [
 	{

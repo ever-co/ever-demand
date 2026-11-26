@@ -19,7 +19,7 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { WarehouseOrdersService } from '../../../services/warehouse-orders.service';
 import { TranslateService } from '@ngx-translate/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular/alert-controller';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
 import { MakeOrderCommentComponent } from './make-order-comment.component';
 

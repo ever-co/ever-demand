@@ -11,7 +11,9 @@ import { DeliveriesComponent } from '../../components/carriers-table/deliveries'
 import { ImageComponent } from '../../components/carriers-table/image';
 import { PhoneComponent } from '../../../src/components/carriers-table/phone';
 import { Routes, RouterModule } from '@angular/router';
-import { IonIcon, IonMenuToggle, ModalController } from '@ionic/angular';
+import { IonIcon } from '@ionic/angular/ion-icon';
+import { IonMenuToggle } from '@ionic/angular/ion-menu-toggle';
+import { ModalController } from '@ionic/angular/modal-controller';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AddCarriersPopupPageModule } from './add-carriers-popup/add-carriers-popup.module';

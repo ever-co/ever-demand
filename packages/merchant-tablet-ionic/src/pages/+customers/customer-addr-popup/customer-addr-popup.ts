@@ -6,7 +6,7 @@ import {
 	OnInit,
 	ChangeDetectionStrategy,
 } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/modal-controller';
 import User from '@modules/server.common/entities/User';
 
 @Component({
