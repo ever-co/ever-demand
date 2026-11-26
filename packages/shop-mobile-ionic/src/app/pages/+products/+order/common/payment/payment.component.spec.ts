@@ -64,6 +64,22 @@ describe('PaymentComponent new-card payment', () => {
 
 	const savedCard = () => ({ id: 'card-saved', last4: '4242' } as any);
 
+	// Clears the calls the component made when it was created, so a spec
+	// sees only what the tap called.
+	const resetRouterCalls = () => {
+		userRouter.getCards.calls.reset();
+		orderRouter.getStripeCurrency.calls.reset();
+	};
+
+	const expectNoRouterCall = () => {
+		expect(userRouter.getCards).not.toHaveBeenCalled();
+		expect(userRouter.updateEmail).not.toHaveBeenCalled();
+		expect(userRouter.addPaymentMethod).not.toHaveBeenCalled();
+		expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
+		expect(orderRouter.confirm).not.toHaveBeenCalled();
+		expect(orderRouter.getStripeCurrency).not.toHaveBeenCalled();
+	};
+
 	// Creates a PaymentComponent the way a page does: every instance gets
 	// the one root Store.
 	const createPayment = async (): Promise<
@@ -437,22 +453,6 @@ describe('PaymentComponent new-card payment', () => {
 	// payments on. The tap drops the promise the method returns, so it
 	// has to tell the customer and resolve, never reject.
 	describe('without a Stripe publishable key', () => {
-		// Clears the calls the component made when it was created, so a
-		// spec sees only what the tap called.
-		const resetRouterCalls = () => {
-			userRouter.getCards.calls.reset();
-			orderRouter.getStripeCurrency.calls.reset();
-		};
-
-		const expectNoRouterCall = () => {
-			expect(userRouter.getCards).not.toHaveBeenCalled();
-			expect(userRouter.updateEmail).not.toHaveBeenCalled();
-			expect(userRouter.addPaymentMethod).not.toHaveBeenCalled();
-			expect(orderRouter.payWithStripe).not.toHaveBeenCalled();
-			expect(orderRouter.confirm).not.toHaveBeenCalled();
-			expect(orderRouter.getStripeCurrency).not.toHaveBeenCalled();
-		};
-
 		beforeEach(() => {
 			(component as any).stripePublishableKey = '';
 			resetRouterCalls();
@@ -498,6 +498,98 @@ describe('PaymentComponent new-card payment', () => {
 				'BUY_POPUP.CARD_PAYMENT_UNAVAILABLE'
 			);
 			expectNoRouterCall();
+		});
+	});
+
+	// StripeLoader adds the Checkout script at runtime and nothing waits
+	// for it: a content blocker, a firewall or no network keeps it from
+	// loading, or it is still loading when the customer taps Pay now. The
+	// tap drops the promise toPaymentStage returns, so it has to tell the
+	// customer and resolve, never reject.
+	describe('when the card form script did not load', () => {
+		let originalOrderInfoType: string;
+
+		beforeEach(() => {
+			originalOrderInfoType = environment.ORDER_INFO_TYPE;
+			delete (window as any).StripeCheckout;
+			resetRouterCalls();
+		});
+
+		afterEach(() => {
+			environment.ORDER_INFO_TYPE = originalOrderInfoType;
+		});
+
+		it('tells the customer the card form did not load when Pay now is tapped', async () => {
+			environment.ORDER_INFO_TYPE = 'page';
+
+			await expectAsync(component.toPaymentStage()).toBeResolved();
+
+			expect(window.alert).toHaveBeenCalledOnceWith(
+				'BUY_POPUP.CARD_FORM_NOT_LOADED'
+			);
+			expect(console.error).toHaveBeenCalledOnceWith(jasmine.any(String));
+			expect(configure).not.toHaveBeenCalled();
+			expectNoRouterCall();
+			expect(component.paying).toBe(false);
+			expect(TestBed.inject(Store).isPaying('order-1')).toBe(false);
+		});
+
+		it('keeps the order info modal open in popup mode', async () => {
+			environment.ORDER_INFO_TYPE = 'popup';
+
+			await expectAsync(component.toPaymentStage()).toBeResolved();
+
+			expect(window.alert).toHaveBeenCalledOnceWith(
+				'BUY_POPUP.CARD_FORM_NOT_LOADED'
+			);
+			expect(modalController.dismiss).not.toHaveBeenCalled();
+			expect(modalController.create).not.toHaveBeenCalled();
+			expectNoRouterCall();
+			expect(component.paying).toBe(false);
+			expect(TestBed.inject(Store).isPaying('order-1')).toBe(false);
+		});
+
+		it('tells the customer when StripeCheckout has no configure function', async () => {
+			(window as any).StripeCheckout = {};
+
+			await expectAsync(component.toPaymentStage()).toBeResolved();
+
+			expect(window.alert).toHaveBeenCalledOnceWith(
+				'BUY_POPUP.CARD_FORM_NOT_LOADED'
+			);
+			expectNoRouterCall();
+		});
+
+		it('shows the message on a tap of the Pay now button', async () => {
+			const button: HTMLButtonElement =
+				fixture.nativeElement.querySelector('button');
+
+			expect(button.textContent).toContain('BUY_POPUP.BUTTONS.PAY_NOW');
+
+			// The click binding drops the promise toPaymentStage returns
+			button.click();
+			await settle();
+
+			expect(window.alert).toHaveBeenCalledOnceWith(
+				'BUY_POPUP.CARD_FORM_NOT_LOADED'
+			);
+			expectNoRouterCall();
+			fixture.detectChanges();
+			expect(button.disabled).toBe(false);
+		});
+
+		it('opens the card form on the next tap once the script has loaded', async () => {
+			await component.toPaymentStage();
+
+			(window as any).StripeCheckout = { configure };
+			await component.toPaymentStage();
+
+			expect(configure).toHaveBeenCalledOnceWith(
+				jasmine.objectContaining({ currency: 'ILS' })
+			);
+			expect(window.alert).toHaveBeenCalledOnceWith(
+				'BUY_POPUP.CARD_FORM_NOT_LOADED'
+			);
 		});
 	});
 

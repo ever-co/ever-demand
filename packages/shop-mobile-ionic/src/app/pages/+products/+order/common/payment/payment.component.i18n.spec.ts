@@ -71,6 +71,22 @@ describe('PaymentComponent failure messages', () => {
 					messages.PAYMENT_FAILED
 				);
 			});
+
+			it(`${locale} has a card form not loaded message`, () => {
+				const messages = messagesIn(locale);
+
+				expect(messages.CARD_FORM_NOT_LOADED).toEqual(
+					jasmine.any(String)
+				);
+				expect(messages.CARD_FORM_NOT_LOADED.trim()).not.toBe('');
+				expect(messages.CARD_FORM_NOT_LOADED).not.toBe(
+					messages.PAYMENT_FAILED
+				);
+				// Card payment works in this app; only the form failed to load
+				expect(messages.CARD_FORM_NOT_LOADED).not.toBe(
+					messages.CARD_PAYMENT_UNAVAILABLE
+				);
+			});
 		});
 
 		it('does not say the email is already used by another account', () => {
@@ -316,6 +332,25 @@ describe('PaymentComponent failure messages', () => {
 			expect(window.alert).toHaveBeenCalledOnceWith(
 				messagesIn('he-IL').PAYMENT_FAILED
 			);
+		});
+
+		it('says the card form did not load on Pay now when the Checkout script is missing', async () => {
+			useLocale('es-ES');
+			const payment = await createPayment();
+			// A content blocker or no network kept checkout.js from loading
+			delete (window as any).StripeCheckout;
+
+			await expectAsync(payment.toPaymentStage()).toBeResolved();
+
+			const messages = messagesIn('es-ES');
+
+			expect(window.alert).toHaveBeenCalledOnceWith(
+				messages.CARD_FORM_NOT_LOADED
+			);
+			expect(window.alert).not.toHaveBeenCalledWith(
+				messages.PAYMENT_FAILED
+			);
+			expect(tokenHandlers.length).toBe(0);
 		});
 
 		describe('when the build has no Stripe publishable key', () => {

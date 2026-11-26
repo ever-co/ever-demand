@@ -145,6 +145,18 @@ export class PaymentComponent {
 			return;
 		}
 
+		// StripeLoader adds the Checkout script at runtime and nothing
+		// waits for it: a content blocker, a firewall or no network keeps
+		// it from loading, or it is still loading. Checked before the
+		// popup dismiss, so the customer keeps the order screen.
+		if (typeof (<any>window).StripeCheckout?.configure !== 'function') {
+			this.tellCustomer('BUY_POPUP.CARD_FORM_NOT_LOADED');
+			console.error(
+				"Can't open the card form: the Stripe Checkout script did not load."
+			);
+			return;
+		}
+
 		if (environment.ORDER_INFO_TYPE === 'popup') {
 			this.modalController.dismiss();
 		}
