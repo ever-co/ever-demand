@@ -18,27 +18,20 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        RouterModule.forChild(routes),
-        TranslateModule.forChild(),
-        ElapsedTimeModule,
-        OrderInfoCommonModule,
-    ],
-    declarations: [OrderPage, OrderPopupComponent],
-    providers: [
-        StripeLoader,
-        {
-            provide: OrderPageModule,
-            useFactory: stripeLoaderFactory,
-            deps: [StripeLoader],
-        },
-    ]
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		RouterModule.forChild(routes),
+		TranslateModule.forChild(),
+		ElapsedTimeModule,
+		OrderInfoCommonModule,
+	],
+	declarations: [OrderPage, OrderPopupComponent],
 })
-export class OrderPageModule {}
-
-export function stripeLoaderFactory(provider: StripeLoader) {
-	return () => provider;
+export class OrderPageModule {
+	// Injected so the card form script starts loading with this module,
+	// before the customer gets to Pay now. StripeLoader is one instance for
+	// the app, so the page gets one script tag.
+	constructor(_stripeLoader: StripeLoader) {}
 }
