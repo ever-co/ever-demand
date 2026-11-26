@@ -233,3 +233,12 @@ export async function createOrderReadyForCarrier() {
 	await setWarehouseStatus(order.id, 'PackagingFinished');
 	return { store, customer, product, order };
 }
+
+/** Carrier status from the API: 0 online, 1 offline (CarrierStatus). */
+export async function getCarrierStatus(id: string): Promise<number> {
+	const data = await must<{ getCarrier: { status: number } }>(
+		`query GetCarrier($id: String!) { getCarrier(id: $id) { status } }`,
+		{ id }
+	);
+	return data.getCarrier.status;
+}

@@ -1,8 +1,10 @@
 import { expect, Page, test } from '@playwright/test';
+import { GQL_URL } from '../helpers';
 import {
 	Carrier,
 	createCarrier,
 	createOrderReadyForCarrier,
+	getCarrierStatus,
 	getOrder,
 } from './fixtures';
 
@@ -51,14 +53,23 @@ test('login opens the home page with the work toggle', async ({ page }) => {
 });
 
 test('start and stop working change the carrier status', async ({ page }) => {
+	// The shared test database may hold packaged orders nearby, and an online carrier is sent
+	// straight to the next one; this test is about the toggle, so it sees no order for work.
+	await page.route(GQL_URL, (route) => {
+		const body = route.request().postDataJSON?.();
+		return body?.operationName === 'GetOrderForWork'
+			? route.fulfill({ json: { data: { getOrderForWork: null } } })
+			: route.continue();
+	});
 	await login(page);
 
 	await page.getByRole('button', { name: 'Start Working' }).click();
 	await expect(page.getByText('Working', { exact: true })).toBeVisible();
-	await expect(page.getByRole('button', { name: 'Stop Working' })).toBeVisible();
+	await expect.poll(() => getCarrierStatus(carrier.id), { timeout: 20_000 }).toBe(0); // online
 
 	await page.getByRole('button', { name: 'Stop Working' }).click();
 	await expect(page.getByText('Not Working')).toBeVisible();
+	await expect.poll(() => getCarrierStatus(carrier.id), { timeout: 20_000 }).toBe(1); // offline
 });
 
 test('the menu opens the deliveries history, language and about pages', async ({ page }) => {

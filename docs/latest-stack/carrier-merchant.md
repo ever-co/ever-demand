@@ -146,11 +146,13 @@ still prefill the login form through the environment); API keys default to empty
 | Production build (`pnpm run build`) | passes, initial 1.34 MB (327 kB transfer) | passes, initial 1.74 MB (376 kB transfer) |
 | Dev server boot + headless load | `/login`, no console errors except the unreachable API | `/login` and warehouse, carriers, customers, settings, promotions, track pages with a store logged in: no errors (Google "NoApiKeys" warnings only) |
 | Playwright, no API needed | 3/3 (dev server and production build) | 2/2 (dev server and production build) |
-| Playwright against the core lane's API | 8/8 incl. a full delivery (take, pick up, start, delivered; statuses checked through GraphQL) | 8/8: login, products, order workflow button, carriers table with custom cells, customers, settings |
+| Playwright against the core lane's API (production builds served by `e2e/serve-apps.mjs`) | 8/8 incl. a full delivery (take, pick up, start, delivered; statuses checked through GraphQL) | 8/8: login, products, order workflow button, carriers table (admin-assigned + store-added carriers, custom cells), customers, settings |
 | Docker image | builds (`node:26-alpine` + pnpm 12.23 -> nginx) | not verified yet: Docker Desktop answered 500 on every call during the run (same Dockerfile shape as carrier) |
 
-The API-backed runs were green on the dev servers; a later run against the production builds hit
-a hung test Mongo (`127.0.0.1:27018` timeouts in the API), so only the no-API specs ran there.
+All 16 specs are green against the production builds and the core lane's API (after Docker
+Desktop was restarted; an earlier attempt hit a hung test Mongo). The work-toggle spec stubs
+`GetOrderForWork`, because the shared test database can hold packaged orders nearby and an online
+carrier is sent straight to them.
 
 ## Old pull requests touching these apps
 
