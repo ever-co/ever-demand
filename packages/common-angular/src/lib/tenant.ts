@@ -22,6 +22,12 @@ export interface ClientTenantConfig {
 	buildTenant?: string | null;
 	/** Parent domain of tenant hosts, e.g. everdemand.co; '' = not used */
 	baseDomain?: string | null;
+	/**
+	 * Only the build-time tenant and the host count, not a `?tenant=` query
+	 * or a kept tenant: for apps whose tenant comes from the login (the admin
+	 * app), where a stray `?tenant=` would name another tenant than the token.
+	 */
+	buildOnly?: boolean;
 }
 
 const SLUG = /^[a-z0-9](?:[a-z0-9-]{1,38}[a-z0-9])$/;
@@ -84,6 +90,10 @@ export function resolveClientTenant(
 
 	if (fromHost) {
 		return fromHost;
+	}
+
+	if (config?.buildOnly) {
+		return null;
 	}
 
 	if (location?.search) {

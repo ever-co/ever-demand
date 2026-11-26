@@ -38,6 +38,10 @@ COPY packages/merchant-tablet-ionic packages/merchant-tablet-ionic
 # Settings for scripts/configure.ts (all optional; see packages/merchant-tablet-ionic/.env.template).
 # They end up in the browser bundle, so never pass secrets here.
 ARG GQL_ENDPOINT
+# Multi-tenant: a white-label build for one tenant (slug or id), and the parent domain
+# of <slug>.<TENANT_BASE_DOMAIN> hosts (docs/multi-tenant/DESIGN.md §3.3); both optional.
+ARG TENANT
+ARG TENANT_BASE_DOMAIN
 ARG GQL_SUBSCRIPTIONS_ENDPOINT
 ARG SERVICES_ENDPOINT
 ARG HTTPS_SERVICES_ENDPOINT

@@ -49,6 +49,10 @@ ARG DEFAULT_LANGUAGE
 ARG SERVICES_ENDPOINT
 ARG HTTPS_SERVICES_ENDPOINT
 ARG GQL_ENDPOINT
+# Multi-tenant: a white-label build for one tenant (slug or id), and the parent domain
+# of <slug>.<TENANT_BASE_DOMAIN> hosts (docs/multi-tenant/DESIGN.md §3.3); both optional.
+ARG TENANT
+ARG TENANT_BASE_DOMAIN
 ARG GQL_SUBSCRIPTIONS_ENDPOINT
 ARG AUTH_LOGO
 ARG NO_INTERNET_LOGO
