@@ -6,7 +6,10 @@ import { UserRouter } from '@modules/client.common.angular2/routers/user-router.
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
-import { STRIPE_CURRENCY_CHANGED_ERROR } from '@modules/server.common/routers/IOrderRouter';
+import {
+	ORDER_ALREADY_PAID_ERROR,
+	STRIPE_CURRENCY_CHANGED_ERROR,
+} from '@modules/server.common/routers/IOrderRouter';
 import { Store } from 'app/services/store.service';
 import { environment } from 'environments/environment';
 import { PaymentComponent } from './payment.component';
@@ -30,6 +33,14 @@ function deferred<T>(): Deferred<T> {
 // Lets every pending promise callback run.
 function settle(): Promise<void> {
 	return new Promise((resolve) => setTimeout(resolve, 0));
+}
+
+// What the server answers when the order was paid first, e.g. by a call
+// whose answer the dropped socket lost, or from another device.
+function alreadyPaidError(): Error {
+	const error = new Error('Order is already paid');
+	error.name = ORDER_ALREADY_PAID_ERROR;
+	return error;
 }
 
 describe('PaymentComponent new-card payment', () => {
@@ -334,6 +345,26 @@ describe('PaymentComponent new-card payment', () => {
 		expect(TestBed.inject(Store).isPaying('order-1')).toBe(false);
 	});
 
+	it('tells the customer the order is already paid, not that the payment failed, when the server says so', async () => {
+		const error = alreadyPaidError();
+		orderRouter.payWithStripe.and.rejectWith(error);
+
+		await component.toPaymentStage();
+		await expectAsync(
+			tokenHandlers[0](cardToken('tok_first'))
+		).toBeResolved();
+
+		expect(window.alert).toHaveBeenCalledOnceWith(
+			'BUY_POPUP.ORDER_ALREADY_PAID'
+		);
+		expect(window.alert).not.toHaveBeenCalledWith(
+			'BUY_POPUP.PAYMENT_FAILED'
+		);
+		expect(console.error).toHaveBeenCalledWith(jasmine.any(String), error);
+		expect(component.paying).toBe(false);
+		expect(TestBed.inject(Store).isPaying('order-1')).toBe(false);
+	});
+
 	describe('saved-card payment', () => {
 		const payWithCardButton = (): HTMLButtonElement => {
 			fixture.detectChanges();
@@ -375,6 +406,29 @@ describe('PaymentComponent new-card payment', () => {
 				'BUY_POPUP.BUTTONS.PAY_WITH_FIXED_CARD'
 			);
 			expect(button.disabled).toBe(false);
+		});
+
+		it('tells the customer the order is already paid, not that the payment failed, when the server says so', async () => {
+			const error = alreadyPaidError();
+			orderRouter.payWithStripe.and.rejectWith(error);
+			component.userCard = savedCard();
+
+			// The tap drops the promise payWithUserCard returns
+			payWithCardButton().click();
+			await settle();
+
+			expect(window.alert).toHaveBeenCalledOnceWith(
+				'BUY_POPUP.ORDER_ALREADY_PAID'
+			);
+			expect(window.alert).not.toHaveBeenCalledWith(
+				'BUY_POPUP.PAYMENT_FAILED'
+			);
+			expect(console.error).toHaveBeenCalledWith(
+				jasmine.any(String),
+				error
+			);
+			expect(component.paying).toBe(false);
+			expect(TestBed.inject(Store).isPaying('order-1')).toBe(false);
 		});
 	});
 

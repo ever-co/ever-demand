@@ -11,6 +11,14 @@ import Warehouse from '../entities/Warehouse';
  */
 export const STRIPE_CURRENCY_CHANGED_ERROR = 'StripeCurrencyChangedError';
 
+/**
+ * Error name of a payWithStripe call refused because the order is paid
+ * already, e.g. by an earlier call whose answer the socket lost, or from
+ * another device. The shop then says the order is paid, not that the
+ * payment failed.
+ */
+export const ORDER_ALREADY_PAID_ERROR = 'OrderAlreadyPaidError';
+
 export interface IOrderRouterGetOptions {
 	populateWarehouse?: boolean;
 	populateCarrier?: boolean;

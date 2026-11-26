@@ -92,6 +92,7 @@
 		"PAYMENT_FAILED": "Le paiement a échoué. Veuillez réessayer.",
 		"EMAIL_NOT_SAVED": "Nous n'avons pas pu enregistrer votre adresse e-mail, votre carte n'a donc pas été débitée. Vérifiez l'adresse e-mail ou utilisez-en une autre, puis réessayez.",
 		"CARD_PAYMENT_UNAVAILABLE": "Le paiement par carte n'est pas disponible dans cette application.",
+		"ORDER_ALREADY_PAID": "Cette commande est déjà payée. Vous n'avez pas besoin de payer à nouveau.",
 		"CANCEL": {
 			"STATUSES": [
 				{

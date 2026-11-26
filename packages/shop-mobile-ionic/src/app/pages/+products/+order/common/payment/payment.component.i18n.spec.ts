@@ -6,6 +6,7 @@ import { UserRouter } from '@modules/client.common.angular2/routers/user-router.
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
+import { ORDER_ALREADY_PAID_ERROR } from '@modules/server.common/routers/IOrderRouter';
 import { Store } from 'app/services/store.service';
 import { settle } from 'app/testing/fake-socket';
 import bgBG from 'assets/i18n/bg-BG.json';
@@ -58,6 +59,18 @@ describe('PaymentComponent failure messages', () => {
 					messages.PAYMENT_FAILED
 				);
 			});
+
+			it(`${locale} has an order already paid message`, () => {
+				const messages = messagesIn(locale);
+
+				expect(messages.ORDER_ALREADY_PAID).toEqual(
+					jasmine.any(String)
+				);
+				expect(messages.ORDER_ALREADY_PAID.trim()).not.toBe('');
+				expect(messages.ORDER_ALREADY_PAID).not.toBe(
+					messages.PAYMENT_FAILED
+				);
+			});
 		});
 
 		it('does not say the email is already used by another account', () => {
@@ -104,6 +117,13 @@ describe('PaymentComponent failure messages', () => {
 		const useLocale = (locale: string) => {
 			translate.setTranslation(locale, locales[locale]);
 			translate.use(locale);
+		};
+
+		// What the server answers when the order was paid first
+		const alreadyPaidError = (): Error => {
+			const error = new Error('Order is already paid');
+			error.name = ORDER_ALREADY_PAID_ERROR;
+			return error;
 		};
 
 		beforeEach(async () => {
@@ -211,6 +231,44 @@ describe('PaymentComponent failure messages', () => {
 
 				expect(window.alert).toHaveBeenCalledOnceWith(
 					messagesIn(locale).PAYMENT_FAILED
+				);
+			});
+
+			it(`says the order is already paid in ${locale}, not the server error, when the new card pays`, async () => {
+				useLocale(locale);
+				const error = alreadyPaidError();
+				orderRouter.payWithStripe.and.rejectWith(error);
+				const payment = await createPayment();
+
+				await payment.toPaymentStage();
+				await tokenHandlers[0](cardToken());
+
+				const messages = messagesIn(locale);
+
+				expect(window.alert).toHaveBeenCalledOnceWith(
+					messages.ORDER_ALREADY_PAID
+				);
+				expect(window.alert).not.toHaveBeenCalledWith(
+					messages.PAYMENT_FAILED
+				);
+				expect(window.alert).not.toHaveBeenCalledWith(error.message);
+			});
+
+			it(`says the order is already paid in ${locale} when the saved card pays`, async () => {
+				useLocale(locale);
+				orderRouter.payWithStripe.and.rejectWith(alreadyPaidError());
+				const payment = await createPayment();
+				payment.userCard = { id: 'card-saved', last4: '4242' } as any;
+
+				await payment.payWithUserCard();
+
+				const messages = messagesIn(locale);
+
+				expect(window.alert).toHaveBeenCalledOnceWith(
+					messages.ORDER_ALREADY_PAID
+				);
+				expect(window.alert).not.toHaveBeenCalledWith(
+					messages.PAYMENT_FAILED
 				);
 			});
 		});

@@ -4,7 +4,10 @@ import { UserRouter } from '@modules/client.common.angular2/routers/user-router.
 import { Store } from 'app/services/store.service';
 import { Stripe } from 'stripe';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';
-import { STRIPE_CURRENCY_CHANGED_ERROR } from '@modules/server.common/routers/IOrderRouter';
+import {
+	ORDER_ALREADY_PAID_ERROR,
+	STRIPE_CURRENCY_CHANGED_ERROR,
+} from '@modules/server.common/routers/IOrderRouter';
 import { environment } from 'environments/environment';
 import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -107,7 +110,7 @@ export class PaymentComponent {
 			// paid or cancelled) or the socket dropped. The click handler
 			// drops the returned promise, so tell the customer here and
 			// resolve: a rejection would escape it unseen.
-			this.tellCustomer('BUY_POPUP.PAYMENT_FAILED');
+			this.tellCustomer(this.payWithStripeFailedMessage(err));
 			console.error('Payment Failed!', err);
 		} finally {
 			this.paying = false;
@@ -207,7 +210,9 @@ export class PaymentComponent {
 								console.error('Could not confirm the order!');
 							}
 						} catch (err) {
-							this.tellCustomer('BUY_POPUP.PAYMENT_FAILED');
+							this.tellCustomer(
+								this.payWithStripeFailedMessage(err)
+							);
 							console.error('Payment Failed!', err);
 
 							if (err?.name === STRIPE_CURRENCY_CHANGED_ERROR) {
@@ -288,6 +293,16 @@ export class PaymentComponent {
 
 	private localeTranslate(member: ILocaleMember[]): string {
 		return this._translateProductLocales.getTranslate(member);
+	}
+
+	// The BUY_POPUP message for a payWithStripe call that rejected. The
+	// order may be paid already, e.g. by an earlier tap whose answer the
+	// dropped socket lost, or from another device: that is not a failed
+	// payment.
+	private payWithStripeFailedMessage(err: any): string {
+		return err?.name === ORDER_ALREADY_PAID_ERROR
+			? 'BUY_POPUP.ORDER_ALREADY_PAID'
+			: 'BUY_POPUP.PAYMENT_FAILED';
 	}
 
 	// Shows a BUY_POPUP message in the app language, never server error
