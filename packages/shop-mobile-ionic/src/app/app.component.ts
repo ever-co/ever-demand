@@ -120,13 +120,32 @@ export class AppComponent {
 		// with no language.
 		await this.store.startLanguage;
 
-		const device = await this.deviceRouter.create({
+		const newDevice = {
 			channelId: await this.getChannelId(),
 			language: this.getLanguage(),
 			type: this.getPlatform(),
 			uuid: this.getUUID(),
-		});
+		};
+		const device = await this.deviceRouter.create(newDevice);
 
 		this.store.deviceId = device.id;
+
+		// The customer can pick a language while create is pending, or
+		// just before, while its file still loads. The language page
+		// saves a pick only on a device with an id, so save it here.
+		const savedLanguage = this.store.savedLanguage;
+		if (savedLanguage && savedLanguage !== newDevice.language) {
+			try {
+				await this.deviceRouter.updateLanguage(
+					device.id,
+					savedLanguage
+				);
+			} catch (error) {
+				console.error(
+					'Could not save the language on the device',
+					error
+				);
+			}
+		}
 	}
 }
