@@ -142,7 +142,7 @@ still prefill the login form through the environment); API keys default to empty
 | Check | Carrier | Merchant |
 | --- | --- | --- |
 | `tsc -p tsconfig.app.json --noEmit` | clean | clean |
-| Vitest (`pnpm test`) | 9 files, 61 tests pass | 6 files, 33 tests pass |
+| Vitest (`pnpm test`) | 9 files, 61 tests pass | 7 files, 40 tests pass |
 | Production build (`pnpm run build`) | passes, initial 1.34 MB (327 kB transfer) | passes, initial 1.74 MB (376 kB transfer) |
 | Dev server boot + headless load | `/login`, no console errors except the unreachable API | `/login` and warehouse, carriers, customers, settings, promotions, track pages with a store logged in: no errors (Google "NoApiKeys" warnings only) |
 | Playwright, no API needed | 3/3 (dev server and production build) | 2/2 (dev server and production build) |
@@ -151,6 +151,20 @@ still prefill the login form through the environment); API keys default to empty
 
 The API-backed runs were green on the dev servers; a later run against the production builds hit
 a hung test Mongo (`127.0.0.1:27018` timeouts in the API), so only the no-API specs ran there.
+
+## Old pull requests touching these apps
+
+- #1218 "feat: add carrier orders list" (2020): not ported. The carrier flow deliberately offers
+  one packaged order at a time (take / skip, carrier-competition rules in drive-to-warehouse and
+  get-product); a free list bypasses the skip and competition logic, and the PR was incomplete
+  (choosing an order did not navigate, `store.selectedOrder.carrierStatus` crashed without a
+  current order). A "nearby orders" view needs a product decision first.
+- #1253 "fix: carriers not showing on merchant" (2020 draft): the bug still existed (the merchant
+  carriers page listed only `usedCarriersIds`, so carriers an admin assigned through
+  `carriersIds` never showed). Ported client-side in the merchant app (both lists, live, deleted
+  carriers dropped; removing a carrier clears both lists). Not ported: moving merchant-added
+  carriers to `carriersIds` (the core lane's carrier-password authorization keys on
+  `usedCarriersIds`) and the carrier app saving whole warehouses on "take work" (unsafe).
 
 ## Held back
 
