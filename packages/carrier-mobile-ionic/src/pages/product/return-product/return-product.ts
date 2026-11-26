@@ -9,7 +9,7 @@ import { first, takeUntil } from 'rxjs/operators';
 import { Store } from '../../../services/store.service';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import { Subject } from 'rxjs';
-import { NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular/nav-controller';
 
 @Component({
 	standalone: false,

@@ -5,7 +5,7 @@ import { WarehouseLogoModule } from '../../warehouse-logo/warehouse-logo.module'
 import { OrderComponent } from './order.component';
 import { ProductModule } from './product/product.module';
 import { Store } from '../../../services/store.service';
-import { IonIcon } from '@ionic/angular';
+import { IonIcon } from '@ionic/angular/ion-icon';
 
 @NgModule({
 	imports: [

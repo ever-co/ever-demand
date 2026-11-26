@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular/menu-controller';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { Store } from '../../services/store.service';

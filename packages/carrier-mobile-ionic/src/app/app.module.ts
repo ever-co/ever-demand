@@ -1,12 +1,10 @@
 import { inject, NgModule, provideAppInitializer } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import {
-	IonApp,
-	IonicRouteStrategy,
-	IonRouterOutlet,
-	provideIonicAngular,
-} from '@ionic/angular';
+import { IonApp } from '@ionic/angular/ion-app';
+import { IonRouterOutlet } from '@ionic/angular/ion-router-outlet';
+import { IonicRouteStrategy } from '@ionic/angular/ionic-route-strategy';
+import { provideIonicAngular } from '@ionic/angular/provide';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CommonModule } from '@modules/client.common.angular2/common.module';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';

@@ -7,7 +7,7 @@ import { OrderCardComponent } from './order-card';
 import { OrderModule } from './order/order.module';
 import { ProductModule } from './order/product/product.module';
 import { WarehouseLogoModule } from '../warehouse-logo/warehouse-logo.module';
-import { IonCard } from '@ionic/angular';
+import { IonCard } from '@ionic/angular/ion-card';
 
 @NgModule({
 	declarations: [OrderCardComponent],

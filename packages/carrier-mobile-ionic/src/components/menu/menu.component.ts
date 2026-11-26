@@ -1,6 +1,7 @@
 import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '../../services/store.service';
-import { Platform, MenuController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular/menu-controller';
+import { Platform } from '@ionic/angular/platform';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { environment } from '../../environments/environment';
 import { takeUntil } from 'rxjs/operators';
