@@ -409,6 +409,18 @@ export class WarehousesOrdersService
 
 		order = cancelled;
 
+		// Stripe may have charged the card of an order that stayed unpaid,
+		// e.g. when the answer to payWithStripe was lost: refund that charge
+		// now, before the restock below can fail. It never fails the cancel.
+		try {
+			await this.ordersService.refundLostStripeCharges(order);
+		} catch (err) {
+			this.log.error(
+				{ orderId, err },
+				'Order cancel could not refund the lost Stripe charges of the order'
+			);
+		}
+
 		if (order.isConfirmed) {
 			// TODO: return payment back and cancel shipping
 		}

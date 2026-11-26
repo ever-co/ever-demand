@@ -84,12 +84,21 @@ export class PaymentComponent {
 			return;
 		}
 
+		// The click handler drops the returned promise, so these checks
+		// tell the customer and resolve: a rejection would escape it
+		// unseen and leave the button looking dead.
 		if (!this.stripePublishableKey) {
-			throw Error("Can't pay in app");
+			// scripts/env.ts defaults STRIPE_PUBLISHABLE_KEY to '', and the
+			// Pay buttons still show at a store with payments on.
+			this.tellCustomer('BUY_POPUP.CARD_PAYMENT_UNAVAILABLE');
+			console.error("Can't pay in app: the build has no Stripe key.");
+			return;
 		}
 
 		if (this.userCard == null) {
-			throw new Error('userCard is null');
+			this.tellCustomer('BUY_POPUP.PAYMENT_FAILED');
+			console.error('Payment Failed! No saved card to pay with.');
+			return;
 		}
 
 		this.paying = true;
@@ -121,7 +130,11 @@ export class PaymentComponent {
 		}
 
 		if (!this.stripePublishableKey) {
-			throw Error("Can't pay in app");
+			// scripts/env.ts defaults STRIPE_PUBLISHABLE_KEY to '', and the
+			// Pay buttons still show at a store with payments on.
+			this.tellCustomer('BUY_POPUP.CARD_PAYMENT_UNAVAILABLE');
+			console.error("Can't pay in app: the build has no Stripe key.");
+			return;
 		}
 
 		// Loaded with the component, not here: the popup has to open

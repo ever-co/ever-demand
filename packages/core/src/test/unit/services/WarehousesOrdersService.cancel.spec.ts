@@ -40,7 +40,11 @@ describe('WarehousesOrdersService.cancel', () => {
 		warehouseStatus: OrderWarehouseStatus;
 		products: any[];
 	};
-	let ordersService: { get: jest.Mock; cancel: jest.Mock };
+	let ordersService: {
+		get: jest.Mock;
+		cancel: jest.Mock;
+		refundLostStripeCharges: jest.Mock;
+	};
 	let warehousesProductsService: {
 		add: jest.Mock;
 		decreaseSoldCount: jest.Mock;
@@ -70,6 +74,7 @@ describe('WarehousesOrdersService.cancel', () => {
 		ordersService = {
 			get: jest.fn(() => of(order)),
 			cancel: jest.fn(async () => ({ ...order, isCancelled: true })),
+			refundLostStripeCharges: jest.fn(async () => undefined),
 		};
 
 		warehousesProductsService = {
@@ -123,6 +128,7 @@ describe('WarehousesOrdersService.cancel', () => {
 		expect(result).toBe(order);
 		expect(result.id).toBe('o1');
 		expect(ordersService.cancel).not.toHaveBeenCalled();
+		expect(ordersService.refundLostStripeCharges).not.toHaveBeenCalled();
 		expect(warehousesProductsService.add).not.toHaveBeenCalled();
 		expect(
 			warehousesProductsService.decreaseSoldCount
@@ -143,6 +149,7 @@ describe('WarehousesOrdersService.cancel', () => {
 		expect(ordersService.cancel).toHaveBeenCalledWith('o1');
 		expect(result).toBe(cancelledByTheOtherCall);
 		expect(result.isCancelled).toBe(true);
+		expect(ordersService.refundLostStripeCharges).not.toHaveBeenCalled();
 		expect(warehousesProductsService.add).not.toHaveBeenCalled();
 		expect(
 			warehousesProductsService.decreaseSoldCount
@@ -163,6 +170,9 @@ describe('WarehousesOrdersService.cancel', () => {
 
 			expect(result.isCancelled).toBe(true);
 			expect(ordersService.cancel).toHaveBeenCalledWith('o1');
+			expect(ordersService.refundLostStripeCharges).toHaveBeenCalledWith(
+				result
+			);
 			expect(warehousesProductsService.add).toHaveBeenCalledWith('w1', [
 				{
 					product: 'p1',
