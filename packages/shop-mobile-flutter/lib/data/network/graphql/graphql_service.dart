@@ -1,4 +1,7 @@
 import 'package:graphql/client.dart';
+import 'package:http/http.dart' as http;
+
+import '../../../config/tenant.dart';
 
 /// A GraphQL error result (network or server errors).
 class GraphQLRequestError implements Exception {
@@ -22,19 +25,23 @@ abstract interface class GraphQLService {
 }
 
 /// [GraphQLService] on `package:graphql`: HTTP for queries and mutations,
-/// graphql-ws (`graphql-transport-ws` protocol) for subscriptions, and the
-/// `authorization` header from [token] (empty string without a token).
+/// graphql-ws (`graphql-transport-ws` protocol) for subscriptions, the
+/// `authorization` header from [token] (empty string without a token) and
+/// the shop's [tenant] as `Tenant-Id` / graphql-ws `connectionParams.tenant`
+/// (docs/multi-tenant/DESIGN.md §3.3), both read for every request.
 class GraphQLClientService implements GraphQLService {
   GraphQLClientService({
     required String httpEndpoint,
     required String subscriptionsEndpoint,
     required String? Function() token,
+    String? Function()? tenant,
     GraphQLClient? client,
   }) : client = client ??
             createClient(
               httpEndpoint: httpEndpoint,
               subscriptionsEndpoint: subscriptionsEndpoint,
               token: token,
+              tenant: tenant,
             );
 
   final GraphQLClient client;
@@ -43,10 +50,13 @@ class GraphQLClientService implements GraphQLService {
     required String httpEndpoint,
     required String subscriptionsEndpoint,
     required String? Function() token,
+    String? Function()? tenant,
+    http.Client? httpClient,
   }) {
-    final HttpLink http = HttpLink(
+    final HttpLink httpLink = HttpLink(
       httpEndpoint,
       defaultHeaders: const <String, String>{},
+      httpClient: httpClient,
     );
     final AuthLink auth = AuthLink(
       getToken: () {
@@ -55,19 +65,26 @@ class GraphQLClientService implements GraphQLService {
       },
       headerKey: 'authorization',
     );
+    // AuthLink sends no header for a null value: none without a tenant.
+    final AuthLink tenantLink = AuthLink(
+      getToken: () => tenantToSend(tenant?.call(), token()),
+      headerKey: tenantHeader,
+    );
     final WebSocketLink ws = WebSocketLink(
       subscriptionsEndpoint,
       subProtocol: GraphQLProtocol.graphqlTransportWs,
-      config: const SocketClientConfig(
+      config: SocketClientConfig(
         autoReconnect: true,
-        inactivityTimeout: Duration(seconds: 30),
+        inactivityTimeout: const Duration(seconds: 30),
+        // read again at every (re)connect
+        initialPayload: () => wsConnectionParams(token(), tenant?.call()),
       ),
     );
     final Link link = Link.split(
       (Request request) =>
           request.operation.getOperationType()?.name == 'subscription',
       ws,
-      auth.concat(http),
+      Link.from(<Link>[auth, tenantLink, httpLink]),
     );
     return GraphQLClient(
       link: link,

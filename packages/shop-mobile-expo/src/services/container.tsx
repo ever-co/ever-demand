@@ -6,10 +6,11 @@ import type { ApolloClient } from '@apollo/client';
 import React, { createContext, useContext } from 'react';
 import { Linking, Platform } from 'react-native';
 import { env as defaultEnv, type Environment } from '../config/env';
+import { resolveClientTenant, socketAuth } from '../config/tenant';
 import type { DevicePlatform } from '../domain/enums';
 import { createGraphQLApi, type GraphQLApi } from '../graphql/api';
 import { createApolloClient } from '../graphql/client';
-import { RpcClient } from '../rpc/client';
+import { RpcClient, socketIoFactory } from '../rpc/client';
 import { createRouters, type Routers } from '../rpc/routers';
 import { createLocationService, type LocationService } from './location';
 
@@ -45,12 +46,22 @@ export async function callNumber(phone: string): Promise<boolean> {
 	}
 }
 
+/** The shop's tenant (config/tenant.ts): build-time, else the web page's host, `?tenant=` or the kept one. */
+export function shopTenant(environment: Environment = defaultEnv): string | null {
+	return resolveClientTenant({ buildTenant: environment.TENANT, baseDomain: environment.TENANT_BASE_DOMAIN });
+}
+
 export function createServices(environment: Environment = defaultEnv, getToken: () => string | null = () => null): Services {
-	const rpc = new RpcClient(environment.SERVICES_ENDPOINT);
+	const getTenant = () => shopTenant(environment);
+	const rpc = new RpcClient(
+		environment.SERVICES_ENDPOINT,
+		socketIoFactory(() => socketAuth(getTenant(), getToken())),
+	);
 	const apollo = createApolloClient({
 		httpEndpoint: environment.GQL_ENDPOINT,
 		subscriptionsEndpoint: environment.GQL_SUBSCRIPTIONS_ENDPOINT,
 		getToken,
+		getTenant,
 	});
 
 	return {

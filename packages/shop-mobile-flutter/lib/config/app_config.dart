@@ -58,6 +58,8 @@ class AppConfig {
     this.shoppingCart = false,
     this.mapsEnabled = true,
     this.mapTileUrl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    this.tenant = '',
+    this.tenantBaseDomain = '',
   });
 
   /// Reads `--dart-define` values. On Android, `localhost` / `127.0.0.1` in
@@ -182,6 +184,8 @@ class AppConfig {
         'MAP_TILE_URL',
         defaultValue: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
       ),
+      tenant: const String.fromEnvironment('TENANT').trim(),
+      tenantBaseDomain: const String.fromEnvironment('TENANT_BASE_DOMAIN').trim(),
     );
   }
 
@@ -246,6 +250,15 @@ class AppConfig {
   final bool mapsEnabled;
   final String mapTileUrl;
 
+  /// White-label build: this shop's tenant (slug or 24-hex id), sent to the
+  /// API as `Tenant-Id` and in every socket handshake. Empty: resolved at
+  /// runtime (config/tenant.dart).
+  final String tenant;
+
+  /// Parent domain of tenant hosts (`<slug>.everdemand.co`, web build);
+  /// empty = not used.
+  final String tenantBaseDomain;
+
   bool get hasDefaultLocation =>
       defaultLatitude != null &&
       defaultLongitude != null &&
@@ -271,6 +284,8 @@ class AppConfig {
     String? settingsMaintenanceApiUrl,
     String? defaultLanguage,
     String? servicesEndpoint,
+    String? tenant,
+    String? tenantBaseDomain,
   }) =>
       AppConfig(
         production: production ?? this.production,
@@ -301,5 +316,7 @@ class AppConfig {
         shoppingCart: shoppingCart ?? this.shoppingCart,
         mapsEnabled: mapsEnabled ?? this.mapsEnabled,
         mapTileUrl: mapTileUrl,
+        tenant: tenant ?? this.tenant,
+        tenantBaseDomain: tenantBaseDomain ?? this.tenantBaseDomain,
       );
 }

@@ -22,6 +22,11 @@ pnpm web                       # web dev server on http://localhost:8081
 
 The API must run at the endpoints in `.env` (`pnpm run:server` from the root).
 
+Multi-tenant API: the shop sends its tenant as `Tenant-Id` and in every socket handshake
+(docs/multi-tenant/DESIGN.md §3.3). A white-label build sets `EXPO_PUBLIC_TENANT=<slug or id>`; the
+web build also finds it from a `<slug>.<EXPO_PUBLIC_TENANT_BASE_DOMAIN>` host or a `?tenant=<slug>`
+link (kept for later visits). With none, the API decides (single-tenant installs: the default).
+
 ## Build and test
 
 ```sh
@@ -41,6 +46,7 @@ with the web build served on port 8081.
     src/
       App.tsx            providers, start-up checks, language
       config/env.ts      EXPO_PUBLIC_* settings
+      config/tenant.ts   which tenant (business) the shop is for: build-time, web host, ?tenant=
       domain/            enums, server object types, order / product helpers (no packages/common import)
       rpc/               pyro socket.io RPC client + typed routers
       graphql/           Apollo client, the Ionic GraphQL documents, services
