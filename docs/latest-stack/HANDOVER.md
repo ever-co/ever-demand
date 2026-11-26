@@ -84,7 +84,21 @@ Security work (owner request, `76b4ca83`):
    - `packageExtensions` makes ionic-selectable use the app's ionicons;
    - develop's Jasmine payment specs are ported to Vitest.
 
-   The second sweep is running (scratchpad `verify-all.sh`). Next: swap in the merged-branch API, serve
+   **Second sweep: 31/31 pass** (frozen install, then typecheck, test and build for all 10 packages).
+   **e2e against the merged-branch API** (production builds served by `e2e/serve-apps.mjs`):
+
+   | Project | Result |
+   | --- | --- |
+   | api | 19/19 |
+   | admin | 27 passed, 1 skipped (needs a Google Maps key) |
+   | shop-web | 15/15 |
+   | shop-mobile | 14 passed, 1 skipped (runs only while the API is down) |
+   | merchant | 8/8 |
+   | carrier | 8/8 |
+   | shop-expo | 11/11 |
+
+   The merged API runs from `packages/core/build` with `DB_NAME=ever_e2e` on mongo :27018.
+   The merchant and admin Docker image builds were in progress at this point. Next: swap in the merged-branch API, serve
    the builds with `node e2e/serve-apps.mjs`, run every Playwright project, then build the admin and
    merchant Docker images.
 
