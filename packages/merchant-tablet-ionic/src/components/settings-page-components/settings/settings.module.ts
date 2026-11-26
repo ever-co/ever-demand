@@ -3,7 +3,22 @@ import { SettingsComponent } from './settings';
 import { SettingsPaymentsComponent } from './payments/payments';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
-import { IonicModule } from '@ionic/angular/lazy';
+import {
+	IonAvatar,
+	IonButton,
+	IonCheckbox,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonRow,
+	IonSelect,
+	IonSelectOption,
+	ModalController,
+} from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PaymentMutationComponent } from './payments/mutation/mutation';
@@ -24,14 +39,26 @@ import { PayPalGatewayComponent } from './payments/payPal/payPal';
     imports: [
         CommonModule,
         TranslateModule.forChild(),
-        IonicModule,
         FormsModule,
         ReactiveFormsModule,
         NgSelectModule,
         ConfirmDeletePopupModule,
         FileUploaderModule,
+        IonAvatar,
+        IonButton,
+        IonCheckbox,
+        IonCol,
+        IonGrid,
+        IonIcon,
+        IonInput,
+        IonItem,
+        IonLabel,
+        IonList,
+        IonRow,
+        IonSelect,
+        IonSelectOption,
     ],
     exports: [SettingsComponent],
-    providers: [CurrenciesService]
+    providers: [CurrenciesService, ModalController]
 })
 export class MerchantSettingsComponentModule {}

@@ -16,7 +16,7 @@ import { UserMutationComponent } from '../../@shared/user/mutation/user-mutation
 import { ImageUserComponent } from '../../components/users-table/image';
 import { OrdersService } from '../../../src/services/orders.service';
 import { Store } from '../../../src/services/store.service';
-import { ModalController } from '@ionic/angular/lazy';
+import { ModalController } from '@ionic/angular';
 import { CustomerAddrPopupPage } from './customer-addr-popup/customer-addr-popup';
 import { ConfirmDeletePopupPage } from '../../components/confirm-delete-popup/confirm-delete-popup';
 import { WarehouseOrdersService } from '../../services/warehouse-orders.service';

@@ -26,7 +26,7 @@ import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
-import { ModalController, ActionSheetController } from '@ionic/angular/lazy';
+import { ModalController, ActionSheetController } from '@ionic/angular';
 import { ProductImagesPopup } from '../product-pictures-popup/product-images-popup.component';
 
 @Component({

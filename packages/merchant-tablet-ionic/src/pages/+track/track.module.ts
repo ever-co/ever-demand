@@ -6,12 +6,17 @@ import { TranslateModule } from '@modules/client.common.angular2/locale/translat
 import { CarrierService } from '../../../src/services/carrier.service';
 import { WarehousesService } from '../../../src/services/warehouses.service';
 import { Routes, RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular/lazy';
+import {
+	IonCheckbox,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonMenuToggle,
+	ModalController,
+} from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicSelectableComponent } from 'ionic-selectable';
-// ionic-selectable 8 opens its modal through the standalone ModalController of Ionic 9
-import { ModalController as StandaloneModalController } from '@ionic/angular';
 import { WarehouseOrdersService } from '../../services/warehouse-orders.service';
 
 const routes: Routes = [
@@ -28,16 +33,22 @@ const routes: Routes = [
 		ComponentsModule,
 		TranslateModule.forChild(),
 		IonicSelectableComponent,
-		IonicModule,
 		CommonModule,
 		FormsModule,
 		RouterModule.forChild(routes),
+		IonCheckbox,
+		IonIcon,
+		IonItem,
+		IonLabel,
+		IonMenuToggle,
 	],
 	providers: [
 		CarrierService,
 		WarehousesService,
 		WarehouseOrdersService,
-		StandaloneModalController,
+		// page-level ModalController: ionic-selectable's modal and the popups opened
+		// here resolve this module's services
+		ModalController,
 	],
 })
 export class TrackPageModule {}

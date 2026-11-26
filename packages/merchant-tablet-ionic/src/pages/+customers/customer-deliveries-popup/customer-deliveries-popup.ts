@@ -19,7 +19,7 @@ import { DeliveryComponent } from '../../../components/customer-deliveries-table
 import { AddressComponent } from '../../../components/customer-deliveries-table/address';
 import { StatusComponent } from '../../../components/customer-deliveries-table/status';
 import { getIdFromTheDate } from '@modules/server.common/utils';
-import { ModalController } from '@ionic/angular/lazy';
+import { ModalController } from '@ionic/angular';
 
 @Component({
 	standalone: false,

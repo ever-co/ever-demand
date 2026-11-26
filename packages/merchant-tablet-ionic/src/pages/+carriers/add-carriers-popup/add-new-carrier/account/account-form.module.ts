@@ -4,16 +4,20 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { FileUploadModule } from 'ng2-file-upload';
 import { AccountFormComponent } from './account-form.component';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonCheckbox, IonCol, IonInput, IonItem, IonRow } from '@ionic/angular';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		ReactiveFormsModule,
-		IonicModule,
 		FileUploadModule,
 		TranslateModule.forChild(),
 		FormsModule,
+		IonCheckbox,
+		IonCol,
+		IonInput,
+		IonItem,
+		IonRow,
 	],
 	declarations: [AccountFormComponent],
 	exports: [AccountFormComponent],

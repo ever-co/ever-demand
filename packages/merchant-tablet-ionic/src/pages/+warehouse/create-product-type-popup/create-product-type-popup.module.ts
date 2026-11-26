@@ -5,19 +5,34 @@ import { CreateProductTypePopupPage } from './create-product-type-popup';
 import { ProductsCategoryService } from '../../../services/products-category.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular/lazy';
+import {
+	IonCheckbox,
+	IonCol,
+	IonIcon,
+	IonItem,
+	IonRow,
+	IonSelect,
+	IonSelectOption,
+	ModalController,
+} from '@ionic/angular';
 import { ProductImagesPopupModule } from '../product-pictures-popup/product-images-popup.module';
 
 @NgModule({
     declarations: [CreateProductTypePopupPage],
-    providers: [ProductsCategoryService],
+    providers: [ProductsCategoryService, ModalController],
     imports: [
         FileUploadModule,
         TranslateModule.forChild(),
         CommonModule,
         FormsModule,
-        IonicModule,
         ProductImagesPopupModule,
+        IonCheckbox,
+        IonCol,
+        IonIcon,
+        IonItem,
+        IonRow,
+        IonSelect,
+        IonSelectOption,
     ]
 })
 export class CreateProductTypePopupPageModule {}

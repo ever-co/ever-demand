@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ViewCell } from '../table-components/smart-table';
 import User from '@modules/server.common/entities/User';
-import { ModalController } from '@ionic/angular/lazy';
+import { ModalController } from '@ionic/angular';
 import { CustomerEmailPopupPage } from '../../pages/+customers/customer-email-popup/customer-email-popup';
 
 @Component({

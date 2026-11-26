@@ -6,7 +6,7 @@ import { CustomerComponent } from '../../../components/carrier-deliveries-table/
 import { DeliveryComponent } from '../../../components/carrier-deliveries-table/delivery';
 import { StatusComponent } from '../../../components/carrier-deliveries-table/status';
 import { WarehouseComponent } from '../../../components/carrier-deliveries-table/warehouse';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonCol, IonGrid, IonRow, ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -23,9 +23,12 @@ const COMPONENTS = [
     imports: [
         TranslateModule.forChild(),
         Angular2SmartTableModule,
-        IonicModule,
         CommonModule,
         FormsModule,
-    ]
+        IonCol,
+        IonGrid,
+        IonRow,
+    ],
+    providers: [ModalController]
 })
 export class CarrierDeliveriesPopupPageModule {}

@@ -10,7 +10,13 @@ import { CarrierLocationFormsModule } from './location/location-form.module';
 import { GoogleMapModule } from '../../../@shared/google-map/google-map.module';
 import { CarrierEditPopupPage } from './carrier-edit-popup';
 import { CarrierService } from '../../../services/carrier.service';
-import { IonicModule } from '@ionic/angular/lazy';
+import {
+	IonButton,
+	IonCol,
+	IonGrid,
+	IonRow,
+	ModalController,
+} from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
@@ -26,9 +32,12 @@ import { CommonModule } from '@angular/common';
         CarrierLocationFormsModule,
         GoogleMapModule,
         TranslateModule.forChild(),
-        IonicModule,
         CommonModule,
+        IonButton,
+        IonCol,
+        IonGrid,
+        IonRow,
     ],
-    providers: [CarrierService]
+    providers: [CarrierService, ModalController]
 })
 export class CarrierEditPopupModule {}

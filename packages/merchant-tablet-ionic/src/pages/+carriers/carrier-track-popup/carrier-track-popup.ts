@@ -9,7 +9,7 @@ import {
 
 import Carrier from '@modules/server.common/entities/Carrier';
 import { CarrierService } from '../../../../src/services/carrier.service';
-import { ModalController } from '@ionic/angular/lazy';
+import { ModalController } from '@ionic/angular';
 import { WarehousesService } from '../../../../src/services/warehouses.service';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import User from '@modules/server.common/entities/User';

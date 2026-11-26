@@ -29,7 +29,7 @@ import { IGeoLocationCreateObject } from '@modules/server.common/interfaces/IGeo
 import { FormHelpers } from '../../../forms/helpers';
 import { TranslateService } from '@ngx-translate/core';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
-import { AlertController } from '@ionic/angular/lazy';
+import { AlertController } from '@ionic/angular';
 import User from '@modules/server.common/entities/User';
 
 @Component({

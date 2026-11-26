@@ -10,7 +10,7 @@ import {
 import { FileUploader, FileUploaderOptions, FileItem } from 'ng2-file-upload';
 import { environment } from '../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
-import { ActionSheetController } from '@ionic/angular/lazy';
+import { ActionSheetController } from '@ionic/angular';
 import { PhotoService, PhotoSource } from '../../services/native/photo.service';
 import { IProductImage } from '@modules/server.common/interfaces/IProduct';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';

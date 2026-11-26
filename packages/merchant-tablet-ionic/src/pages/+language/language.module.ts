@@ -3,7 +3,15 @@ import { LanguagePage } from './language';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { Store } from '../../services/store.service';
 import { Routes, RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular/lazy';
+import {
+	IonContent,
+	IonIcon,
+	IonItem,
+	IonList,
+	IonMenuToggle,
+	IonSelect,
+	IonSelectOption,
+} from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -18,11 +26,17 @@ const routes: Routes = [
 @NgModule({
 	declarations: [LanguagePage],
 	imports: [
-		IonicModule,
 		RouterModule.forChild(routes),
 		CommonModule,
 		FormsModule,
 		TranslateModule.forChild(),
+		IonContent,
+		IonIcon,
+		IonItem,
+		IonList,
+		IonMenuToggle,
+		IonSelect,
+		IonSelectOption,
 	],
 	providers: [Store],
 })

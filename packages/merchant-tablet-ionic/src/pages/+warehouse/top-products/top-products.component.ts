@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 import { WarehouseProductsRouter } from '@modules/client.common.angular2/routers/warehouse-products-router.service';
 import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
-import { ModalController } from '@ionic/angular/lazy';
+import { ModalController } from '@ionic/angular';
 import Product from '@modules/server.common/entities/Product';
 
 @Component({

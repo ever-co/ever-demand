@@ -1,7 +1,23 @@
 import { NgModule } from '@angular/core';
 import { BasicInfoFormComponent } from './basic-info/basic-info-form.component';
 import { DetailsInfoFormComponent } from './details-info/details-info-form.component';
-import { IonicModule } from '@ionic/angular/lazy';
+import {
+	IonCheckbox,
+	IonCol,
+	IonDatetime,
+	IonDatetimeButton,
+	IonGrid,
+	IonImg,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonModal,
+	IonRow,
+	IonSelect,
+	IonSelectOption,
+	IonTextarea,
+	IonThumbnail,
+} from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { FileUploaderModule } from '../../../components/file-uploader/file-uploader.module';
@@ -14,12 +30,25 @@ const COMPONENTS = [BasicInfoFormComponent, DetailsInfoFormComponent];
 	exports: COMPONENTS,
 	imports: [
 		CommonModule,
-		IonicModule,
 		FormsModule,
 		ReactiveFormsModule,
 		TranslateModule.forChild(),
-		IonicModule,
 		FileUploaderModule,
+		IonCheckbox,
+		IonCol,
+		IonDatetime,
+		IonDatetimeButton,
+		IonGrid,
+		IonImg,
+		IonInput,
+		IonItem,
+		IonLabel,
+		IonModal,
+		IonRow,
+		IonSelect,
+		IonSelectOption,
+		IonTextarea,
+		IonThumbnail,
 	],
 })
 export class PromotionFormsModule {}

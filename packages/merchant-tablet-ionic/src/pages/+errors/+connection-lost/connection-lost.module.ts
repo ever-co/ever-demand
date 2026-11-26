@@ -4,7 +4,7 @@ import { TranslateModule } from '@modules/client.common.angular2/locale/translat
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonContent } from '@ionic/angular';
 
 const routes: Routes = [
 	{
@@ -17,9 +17,9 @@ const routes: Routes = [
 	imports: [
 		CommonModule,
 		FormsModule,
-		IonicModule,
 		RouterModule.forChild(routes),
 		TranslateModule.forChild(),
+		IonContent,
 	],
 	declarations: [ConnectionLostPage],
 })

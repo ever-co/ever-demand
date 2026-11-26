@@ -9,7 +9,7 @@ import { CarrierBasicFormsModule } from './basic-info/basic-info-form.module';
 import { CarrierAccountFormsModule } from './account/account-form.module';
 import { CarrierLocationFormsModule } from './location/location-form.module';
 import { GoogleMapModule } from '../../../../@shared/google-map/google-map.module';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonButton, IonCol, IonGrid, IonRow } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
@@ -26,9 +26,12 @@ import { CommonModule } from '@angular/common';
         CarrierLocationFormsModule,
         GoogleMapModule,
         TranslateModule.forChild(),
-        IonicModule,
         CommonModule,
         FormsModule,
+        IonButton,
+        IonCol,
+        IonGrid,
+        IonRow,
     ]
 })
 export class AddNewCarriersPopupPageModule {}

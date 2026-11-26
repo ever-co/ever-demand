@@ -30,7 +30,7 @@ import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import { first } from 'rxjs/operators';
 import { ProductsCategoryService } from '../../../services/products-category.service';
 import DeliveryType from '@modules/server.common/enums/DeliveryType';
-import { ModalController, ActionSheetController } from '@ionic/angular/lazy';
+import { ModalController, ActionSheetController } from '@ionic/angular';
 import { ProductImagesPopup } from '../product-pictures-popup/product-images-popup.component';
 
 @Component({

@@ -9,7 +9,7 @@ import { LocalDataSource, Settings } from 'angular2-smart-table';
 import { IPromotion } from '@modules/server.common/interfaces/IPromotion';
 import { Subject } from 'rxjs';
 import { PromotionService } from '../../../services/promotion.service';
-import { ModalController, ToastController } from '@ionic/angular/lazy';
+import { ModalController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
 import { PromotionMutation } from '../promotion-mutation-popup/promotion-mutation';

@@ -8,7 +8,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { RouteReuseStrategy } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular/lazy';
+import {
+	IonApp,
+	IonicRouteStrategy,
+	IonRouterOutlet,
+	provideIonicAngular,
+} from '@ionic/angular';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CommonModule } from '@modules/client.common.angular2/common.module';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
@@ -32,7 +37,8 @@ import { AppComponent } from './app.component';
 		BrowserModule,
 		AppRoutingModule,
 		MenuModule,
-		IonicModule.forRoot(),
+		IonApp,
+		IonRouterOutlet,
 		GraphQLModule,
 		TranslateModule.forRoot({
 			loader: provideTranslateHttpLoader({
@@ -47,6 +53,10 @@ import { AppComponent } from './app.component';
 		UserMutationModule,
 	],
 	providers: [
+		// Ionic's default config, as before (the app never customised it). The page
+		// modules whose components open modals provide their own ModalController, as the
+		// NgModule build did per module, so a modal resolves its page module's services.
+		provideIonicAngular(),
 		// ngx-masonry (the product grid) still animates through @angular/animations
 		provideAnimationsAsync(),
 		GoogleMapsLoader,

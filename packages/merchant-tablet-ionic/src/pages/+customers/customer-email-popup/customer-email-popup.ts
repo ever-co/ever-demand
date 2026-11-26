@@ -5,7 +5,7 @@ import {
 	ChangeDetectionStrategy,
 } from '@angular/core';
 import { ExternalAppsService } from '../../../services/native/external-apps.service';
-import { LoadingController, ModalController } from '@ionic/angular/lazy';
+import { LoadingController, ModalController } from '@ionic/angular';
 
 @Component({
 	standalone: false,

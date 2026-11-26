@@ -5,17 +5,37 @@ import { TranslateModule } from '@modules/client.common.angular2/locale/translat
 import { FileUploadModule } from 'ng2-file-upload';
 import { LocationFormComponent } from './location-form.component';
 import { GoogleMapModule } from '../../../../../@shared/google-map/google-map.module';
-import { IonicModule } from '@ionic/angular/lazy';
+import {
+	IonButton,
+	IonCheckbox,
+	IonCol,
+	IonGrid,
+	IonInput,
+	IonItem,
+	IonRow,
+	IonSearchbar,
+	IonSelect,
+	IonSelectOption,
+} from '@ionic/angular';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		ReactiveFormsModule,
-		IonicModule,
 		FileUploadModule,
 		GoogleMapModule,
 		TranslateModule.forChild(),
 		FormsModule,
+		IonButton,
+		IonCheckbox,
+		IonCol,
+		IonGrid,
+		IonInput,
+		IonItem,
+		IonRow,
+		IonSearchbar,
+		IonSelect,
+		IonSelectOption,
 	],
 	declarations: [LocationFormComponent],
 	exports: [LocationFormComponent],

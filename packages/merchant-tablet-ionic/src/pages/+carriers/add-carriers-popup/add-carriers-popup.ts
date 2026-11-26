@@ -16,7 +16,7 @@ import { CarriersCatalogComponent } from './carriers-catalog/carriers-catalog';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { takeUntil, first } from 'rxjs/operators';
-import { ModalController } from '@ionic/angular/lazy';
+import { ModalController } from '@ionic/angular';
 
 @Component({
 	standalone: false,

@@ -15,7 +15,21 @@ import { TopProductsComponent } from './top-products/top-products.component';
 import { WarehouseProductsService } from '../../services/warehouse-products.service';
 import { NgxMasonryModule } from 'ngx-masonry';
 import { Routes, RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular/lazy';
+import {
+	IonContent,
+	IonIcon,
+	IonInfiniteScroll,
+	IonInfiniteScrollContent,
+	IonItem,
+	IonList,
+	IonMenuToggle,
+	IonRow,
+	IonSelect,
+	IonSelectOption,
+	IonSpinner,
+	ModalController,
+	PopoverController,
+} from '@ionic/angular';
 import { CreateProductTypePopupPageModule } from './create-product-type-popup/create-product-type-popup.module';
 import { EditProductTypePopupPageModule } from './edit-product-type-popup/edit-product-type-popup.module';
 import { WarehousesService } from '../../services/warehouses.service';
@@ -42,7 +56,6 @@ const routes: Routes = [
 		ComponentsModule,
 		OrderModule,
 		CommonModule,
-		IonicModule,
 		RouterModule.forChild(routes),
 		TranslateModule.forChild(),
 		NgxPaginationModule,
@@ -50,12 +63,25 @@ const routes: Routes = [
 		NgxMasonryModule,
 		CreateProductTypePopupPageModule,
 		EditProductTypePopupPageModule,
+		IonContent,
+		IonIcon,
+		IonInfiniteScroll,
+		IonInfiniteScrollContent,
+		IonItem,
+		IonList,
+		IonMenuToggle,
+		IonRow,
+		IonSelect,
+		IonSelectOption,
+		IonSpinner,
 	],
 	providers: [
 		WarehouseOrdersService,
 		Store,
 		WarehouseProductsService,
 		WarehousesService,
+		ModalController,
+		PopoverController,
 	],
 })
 export class WarehousePageModule {}

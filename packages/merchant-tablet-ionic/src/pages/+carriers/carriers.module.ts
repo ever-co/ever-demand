@@ -11,7 +11,7 @@ import { DeliveriesComponent } from '../../components/carriers-table/deliveries'
 import { ImageComponent } from '../../components/carriers-table/image';
 import { PhoneComponent } from '../../../src/components/carriers-table/phone';
 import { Routes, RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonIcon, IonMenuToggle, ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AddCarriersPopupPageModule } from './add-carriers-popup/add-carriers-popup.module';
@@ -41,7 +41,6 @@ const routes: Routes = [
         ComponentsModule,
         TranslateModule.forChild(),
         Angular2SmartTableModule,
-        IonicModule,
         CommonModule,
         FormsModule,
         RouterModule.forChild(routes),
@@ -51,7 +50,9 @@ const routes: Routes = [
         CarrierEditPopupModule,
         ConfirmDeletePopupModule,
         CarrierTrackPopupModule,
+        IonIcon,
+        IonMenuToggle,
     ],
-    providers: [WarehouseCarriersRouter]
+    providers: [WarehouseCarriersRouter, ModalController]
 })
 export class CarrierssPageModule {}

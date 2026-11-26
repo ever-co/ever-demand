@@ -14,7 +14,7 @@ import {
 } from '@angular/forms';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 import { WarehouseRouter } from '@modules/client.common.angular2/routers/warehouse-router.service';
-import { AlertController } from '@ionic/angular/lazy';
+import { AlertController } from '@ionic/angular';
 import { Store } from '../../../services/store.service';
 
 @Component({

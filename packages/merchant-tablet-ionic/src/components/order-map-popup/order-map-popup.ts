@@ -16,7 +16,7 @@ import {
 	LoadingController,
 	ActionSheetController,
 	ModalController,
-} from '@ionic/angular/lazy';
+} from '@ionic/angular';
 
 declare var google: any;
 

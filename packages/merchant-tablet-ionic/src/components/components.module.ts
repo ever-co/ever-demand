@@ -20,7 +20,21 @@ import { PhoneComponent } from './carriers-table/phone';
 import { UserPhoneComponent } from './users-table/phone';
 import { TimeAgoPipe } from './time-ago.pipe';
 import { OrderWarehousePreparationProblemComponent } from './order-warehouse-preparation-problem/order-warehouse-preparation-problem';
-import { IonicModule } from '@ionic/angular/lazy';
+import {
+	IonButton,
+	IonCheckbox,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonRow,
+	IonSearchbar,
+	IonSelect,
+	IonSelectOption,
+	IonSpinner,
+	ModalController,
+} from '@ionic/angular';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { OrderMapPopupPageModule } from './order-map-popup/order-map-popup.module';
 import { CustomerEmailPopupPageModule } from '../pages/+customers/customer-email-popup/customer-email-popup.module';
@@ -57,7 +71,6 @@ import { ImageTableComponent } from './table-components/image-table';
 	imports: [
 		CommonModule,
 		TranslateModule.forChild(),
-		IonicModule,
 		FormsModule,
 		ReactiveFormsModule,
 		GoogleMapModule,
@@ -66,7 +79,20 @@ import { ImageTableComponent } from './table-components/image-table';
 		CustomerDeliveriesPopupPageModule,
 		CustomerAddrPopupPageModule,
 		FileUploaderModule,
+		IonButton,
+		IonCheckbox,
+		IonCol,
+		IonGrid,
+		IonIcon,
+		IonInput,
+		IonItem,
+		IonRow,
+		IonSearchbar,
+		IonSelect,
+		IonSelectOption,
+		IonSpinner,
 	],
+	providers: [ModalController],
 	exports: [
 		LoadingComponent,
 		OrderImageComponent,
