@@ -1,0 +1,103 @@
+$brand: #2a2c39;
+$assertive: #bd4742;
+$muted: #6b6d7a;
+$border: #c9cad3;
+
+// The modal makes the host an .ion-page (absolute, full size)
+:host {
+	background: #ffffff;
+	color: $brand;
+	overflow-y: auto;
+}
+
+.card-form {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	width: 100%;
+	max-width: 420px;
+	margin: 0 auto;
+	padding: 24px 20px;
+}
+
+.card-form-header {
+	text-align: center;
+	margin-bottom: 8px;
+}
+
+.card-form-logo {
+	width: 64px;
+	height: 64px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.card-form-name {
+	margin: 8px 0 0;
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.card-form-description {
+	margin: 4px 0 0;
+	color: $muted;
+	font-size: 14px;
+}
+
+.card-form-label {
+	margin: 8px 0 0;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.card-form-input,
+.card-form-card {
+	width: 100%;
+	padding: 12px;
+	border: 1px solid $border;
+	border-radius: 5px;
+	background: #ffffff;
+	color: $brand;
+	font-size: 16px;
+}
+
+// Stripe adds the StripeElement--* classes to the element it is mounted in
+.card-form-input:focus,
+.card-form-card.StripeElement--focus {
+	border-color: $brand;
+	outline: none;
+}
+
+.card-form-card.StripeElement--invalid {
+	border-color: $assertive;
+}
+
+.card-form-error {
+	margin: 0;
+	color: $assertive;
+	font-size: 14px;
+}
+
+.card-form-pay,
+.card-form-cancel {
+	padding: 14px;
+	border: 0;
+	border-radius: 5px;
+	font-size: 16px;
+}
+
+.card-form-pay {
+	margin-top: 16px;
+	background: $assertive;
+	color: #ffffff;
+	font-weight: 600;
+
+	&:disabled {
+		opacity: 0.6;
+	}
+}
+
+.card-form-cancel {
+	background: none;
+	color: $brand;
+}

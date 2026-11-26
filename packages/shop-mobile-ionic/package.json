@@ -67,6 +67,7 @@
 		"@ionic/storage-angular": "^4.0.0",
 		"@ngx-translate/core": "^18.1.0",
 		"@ngx-translate/http-loader": "^18.1.0",
+		"@stripe/stripe-js": "^10.4.0",
 		"apollo-angular": "^14.2.0",
 		"bootstrap": "^5.3.9",
 		"graphql": "^16.15.0",
