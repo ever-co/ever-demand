@@ -47,6 +47,21 @@ function shippedDeviceLanguage(
 	);
 }
 
+// Sets the page direction and language for a language, so the layout and
+// screen readers follow it. Store sets them at start and the language
+// page on a pick, from the language itself: TranslateService switches
+// only once the language file loads.
+export function setPageLanguage(
+	document: Document,
+	language: ILanguage
+): 'ltr' | 'rtl' {
+	const dir = language === 'he-IL' ? 'rtl' : 'ltr';
+	const page = document.documentElement;
+	page.dir = dir;
+	page.lang = language.slice(0, 2);
+	return dir;
+}
+
 @Injectable({
 	providedIn: 'root',
 })
@@ -349,10 +364,6 @@ export class Store {
 
 	private _startIn(language: ILanguage) {
 		this._translateService.use(language);
-
-		// As the language page does when the customer picks a language.
-		const page = this.document.documentElement;
-		page.dir = language === 'he-IL' ? 'rtl' : 'ltr';
-		page.lang = language.slice(0, 2);
+		setPageLanguage(this.document, language);
 	}
 }
