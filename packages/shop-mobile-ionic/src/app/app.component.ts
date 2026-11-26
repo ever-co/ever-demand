@@ -18,8 +18,6 @@ import { environment } from 'environments/environment';
 	templateUrl: 'app.component.html',
 })
 export class AppComponent {
-	defaultLanguage = '';
-
 	constructor(
 		public readonly platform: Platform,
 		private readonly store: Store,
@@ -34,8 +32,6 @@ export class AppComponent {
 	) {
 		this._initializeApp();
 
-		this.defaultLanguage = environment['DEFAULT_LANGUAGE'];
-
 		_translateService.addLangs([
 			'en-US',
 			'bg-BG',
@@ -45,19 +41,9 @@ export class AppComponent {
 			'fr-FR',
 		]);
 
+		// The texts for keys a language file lacks. Store picks the
+		// language the app starts in (Store._initLanguage).
 		_translateService.setDefaultLang('en-US');
-
-		const browserLang = _translateService.getBrowserLang();
-
-		if (this.defaultLanguage) {
-			_translateService.use(this.defaultLanguage);
-		} else {
-			_translateService.use(
-				browserLang.match(/en-US|bg-BG|he-HE|ru-RU|es-ES|fr-FR/)
-					? browserLang
-					: 'en-US'
-			);
-		}
 	}
 
 	async getChannelId(): Promise<string | null> {
