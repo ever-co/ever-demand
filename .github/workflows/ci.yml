@@ -144,3 +144,54 @@ jobs:
                   restore-keys: |
                       gradle-${{ runner.os }}-
             - run: flutter build apk --debug
+
+    android:
+        name: Ionic apps (Android debug APKs)
+        runs-on: ${{ vars.RUNNER_LINUX_X64_4 || 'ubuntu-latest' }}
+        # Three cold Gradle builds: Gradle, the Android Gradle Plugin, AndroidX, ML Kit and the SDK platform are
+        # downloaded on a fresh runner.
+        timeout-minutes: 90
+        steps:
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+            - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+              with:
+                  version: ${{ env.PNPM_VERSION }}
+            - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+              with:
+                  node-version: ${{ env.NODE_VERSION }}
+                  cache: pnpm
+            - run: pnpm install --frozen-lockfile
+            - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6.3.0
+              with:
+                  distribution: temurin
+                  java-version: '21'
+            - uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd # v4.0.4
+            - name: Cache Gradle
+              uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+              with:
+                  path: |
+                      ~/.gradle/caches
+                      ~/.gradle/wrapper
+                  key: gradle-ionic-${{ runner.os }}-${{ hashFiles('packages/*-ionic/android/**/*.gradle*', 'packages/*-ionic/android/**/gradle-wrapper.properties', 'pnpm-lock.yaml') }}
+                  restore-keys: |
+                      gradle-ionic-${{ runner.os }}-
+            # Each app: web build into www/, `cap sync android` (copies www/ and regenerates the plugin Gradle
+            # wiring), then the debug APK at android/app/build/outputs/apk/debug/app-debug.apk.
+            - name: shop-mobile-ionic
+              working-directory: packages/shop-mobile-ionic
+              run: |
+                  pnpm run build
+                  npx cap sync android
+                  cd android && ./gradlew assembleDebug
+            - name: carrier-mobile-ionic
+              working-directory: packages/carrier-mobile-ionic
+              run: |
+                  pnpm run build
+                  npx cap sync android
+                  cd android && ./gradlew assembleDebug
+            - name: merchant-tablet-ionic
+              working-directory: packages/merchant-tablet-ionic
+              run: |
+                  pnpm run build
+                  npx cap sync android
+                  cd android && ./gradlew assembleDebug
