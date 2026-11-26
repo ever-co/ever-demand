@@ -106,7 +106,7 @@ describe('Merchants', () => {
 		expect(graphql.getCloseMerchants).toHaveBeenCalledWith({ loc: { type: 'Point', coordinates: [23.3332736, 42.6459136] } });
 
 		await fireEvent.changeText(screen.getByTestId('merchants-search'), 'Mega');
-		await waitFor(() => expect(graphql.getMerchantsByName).toHaveBeenCalledWith('Mega', expect.anything()), { timeout: 3000 });
+		await waitFor(() => expect(graphql.getMerchantsByName).toHaveBeenCalledWith('Mega', expect.anything()));
 		expect(screen.getByText("Merchants with name 'Mega'")).toBeTruthy();
 
 		await fireEvent.press(screen.getByTestId('merchant-warehouse-1'));

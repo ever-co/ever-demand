@@ -1,6 +1,13 @@
 /* Native modules have no implementation under Jest: replace them with their official mocks. */
 /* eslint-disable @typescript-eslint/no-require-imports */
 import 'react-native-gesture-handler/jestSetup';
+// `pure` because setup files run before Jest defines afterEach: the main entry, imported later by the tests,
+// still registers the automatic cleanup. They share this module registry, so the setting carries over.
+import { configure } from '@testing-library/react-native/pure';
+
+// waitFor / findBy* resolve as soon as the expectation holds; the 1 s default is too tight for a CPU-starved
+// CI runner, where a render takes ~10x longer than on a laptop. Kept well below testTimeout (jest.config.js).
+configure({ asyncUtilTimeout: 10_000 });
 
 jest.mock('@react-native-async-storage/async-storage', () =>
 	require('@react-native-async-storage/async-storage/jest/async-storage-mock'),

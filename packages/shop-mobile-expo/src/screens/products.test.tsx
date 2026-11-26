@@ -174,7 +174,7 @@ describe('Product feed', () => {
 		await renderApp({ route: 'Products', services: createTestServices({ graphql }) });
 		await fireEvent.press(await screen.findByTestId('search-toggle'));
 		await fireEvent.changeText(await screen.findByTestId('search-input'), 'piz');
-		expect(await screen.findByTestId('search-merchant-warehouse-1', {}, { timeout: 3000 })).toBeTruthy();
+		expect(await screen.findByTestId('search-merchant-warehouse-1')).toBeTruthy();
 		await waitFor(() =>
 			expect(graphql.getMerchantsByName).toHaveBeenLastCalledWith('piz', expect.objectContaining({ loc: expect.anything() })),
 		);

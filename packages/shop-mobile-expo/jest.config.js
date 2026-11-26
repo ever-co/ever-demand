@@ -12,4 +12,9 @@ module.exports = {
 	testPathIgnorePatterns: ['/node_modules/', '/dist/'],
 	collectCoverageFrom: ['src/**/*.{ts,tsx}', '!src/**/*.test.{ts,tsx}', '!src/test/**'],
 	clearMocks: true,
+	// Screen tests render the whole app (navigation, Paper, Redux, Apollo). The first test that reaches a screen
+	// pays for loading it: ~0.5 s on a laptop, but over Jest's 5 s default on a busy shared CI runner (Node job, run
+	// 45740352763). A passing test still ends as soon as its expectations hold. The waitFor / findBy* default is
+	// raised in jest.setup.ts.
+	testTimeout: 30_000,
 };
