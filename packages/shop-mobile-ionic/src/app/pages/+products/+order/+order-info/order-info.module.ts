@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonContent } from '@ionic/angular';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { OrderInfoPage } from './order-info.page';
 import { CancelPageModule } from '../+cancel/cancel.module';
@@ -23,7 +23,7 @@ const routes: Routes = [
 	imports: [
 		CommonModule,
 		FormsModule,
-		IonicModule,
+		IonContent,
 		RouterModule.forChild(routes),
 		TranslateModule.forChild(),
 		CancelPageModule,

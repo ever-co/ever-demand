@@ -1,7 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular/lazy';
+import {
+	IonButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonMenuButton,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { CancelPageModule } from '../+cancel/cancel.module';
 import { IssuePageModule } from '../issue/issue.module';
@@ -26,7 +34,13 @@ const COMPONENTS = [
     imports: [
         CommonModule,
         FormsModule,
-        IonicModule,
+        IonButton,
+        IonButtons,
+        IonContent,
+        IonHeader,
+        IonMenuButton,
+        IonTitle,
+        IonToolbar,
         TranslateModule.forChild(),
         CancelPageModule,
         IssuePageModule,

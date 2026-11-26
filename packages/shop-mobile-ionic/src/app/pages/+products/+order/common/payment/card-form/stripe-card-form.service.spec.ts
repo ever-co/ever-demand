@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { ModalController } from '@ionic/angular/lazy';
+import { ModalController } from '@ionic/angular';
 import { vi, type Mock } from 'vitest';
 import { createSpyObj, type SpyObj } from 'app/testing/spies';
 import { StripeCardForm, type CardFormOptions } from './stripe-card-form.service';

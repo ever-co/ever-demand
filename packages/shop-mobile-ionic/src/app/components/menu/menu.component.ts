@@ -12,7 +12,7 @@ import Warehouse from '@modules/server.common/entities/Warehouse';
 import { first, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
-import { MenuController } from '@ionic/angular/lazy';
+import { MenuController } from '@ionic/angular';
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.Eager,

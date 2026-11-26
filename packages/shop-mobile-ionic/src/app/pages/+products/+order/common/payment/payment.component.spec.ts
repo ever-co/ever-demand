@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ModalController, Platform } from '@ionic/angular/lazy';
+import { ModalController, Platform } from '@ionic/angular';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { OrderRouter } from '@modules/client.common.angular2/routers/order-router.service';

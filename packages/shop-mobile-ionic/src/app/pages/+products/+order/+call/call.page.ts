@@ -3,7 +3,7 @@ import {
 	Component,
 	EventEmitter,
 } from '@angular/core';
-import { PopoverController, ModalController, NavParams } from '@ionic/angular/lazy';
+import { PopoverController, ModalController, NavParams } from '@ionic/angular';
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.Eager,

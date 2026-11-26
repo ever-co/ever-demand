@@ -5,7 +5,7 @@ import {
 } from '@angular/core';
 import { NativeService } from 'app/services/native/native.service';
 import { environment } from 'environments/environment';
-import { ModalController } from '@ionic/angular/lazy';
+import { ModalController } from '@ionic/angular';
 import { CallPage } from 'app/pages/+products/+order/+call/call.page';
 import Warehouse from '@modules/server.common/entities/Warehouse';
 

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { ElapsedTimeComponent } from 'app/components/elapsed-time/elapsed-time.component';
 import Order from '@modules/server.common/entities/Order';
-import { ModalController } from '@ionic/angular/lazy';
+import { ModalController } from '@ionic/angular';
 import { DeliveryStatus } from '../../../order.page';
 import OrderCarrierStatus from '@modules/server.common/enums/OrderCarrierStatus';
 import { Subject } from 'rxjs';

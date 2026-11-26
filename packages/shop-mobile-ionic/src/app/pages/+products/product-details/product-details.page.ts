@@ -13,7 +13,7 @@ import { Store } from '../../../services/store.service';
 import type { SwiperContainer } from 'swiper/element';
 import type { Swiper, SwiperOptions } from 'swiper/types';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
-import { NavController, ModalController } from '@ionic/angular/lazy';
+import { NavController, ModalController } from '@ionic/angular';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { WarehouseOrdersRouter } from '@modules/client.common.angular2/routers/warehouse-orders-router.service';
 import { OrderPage } from '../+order/order.page';

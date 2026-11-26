@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ModalController } from '@ionic/angular/lazy';
+import { ModalController } from '@ionic/angular';
 import type { Stripe } from '@stripe/stripe-js';
 import {
 	CARD_TOKEN_ROLE,

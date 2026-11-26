@@ -5,7 +5,7 @@ import {
 	NavController,
 	NavParams,
 	PopoverController,
-} from '@ionic/angular/lazy';
+} from '@ionic/angular';
 import { Router } from '@angular/router';
 import { BehaviorSubject, NEVER, of } from 'rxjs';
 import { vi } from 'vitest';

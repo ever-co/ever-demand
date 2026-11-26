@@ -14,7 +14,7 @@ import {
 	STRIPE_CURRENCY_CHANGED_ERROR,
 } from '@modules/server.common/routers/IOrderRouter';
 import { environment } from 'environments/environment';
-import { ModalController } from '@ionic/angular/lazy';
+import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { OrderPage } from '../../order.page';
 import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';

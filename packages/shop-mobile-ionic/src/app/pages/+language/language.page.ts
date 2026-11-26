@@ -8,7 +8,7 @@ import { Store } from '../../services/store.service';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';
 import { DeviceRouter } from '@modules/client.common.angular2/routers/device-router.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Platform } from '@ionic/angular/lazy';
+import { Platform } from '@ionic/angular';
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.Eager,
