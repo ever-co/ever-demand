@@ -964,11 +964,13 @@ describe('multi-tenant isolation', () => {
 			}
 
 			const data = await gqlData(
-				`query R($c: String!) { warehouses { id } getCarrier(id: $c) { firstName } getOrder(id: "${B.orderId}") { isPaid } }`,
+				`query R($c: String!) { warehouses { id name } getCarrier(id: $c) { firstName } getOrder(id: "${B.orderId}") { isPaid } }`,
 				{ c: B.carrierId },
 				B.token
 			);
-			expect(data.warehouses.map((w) => w.id)).toEqual([B.storeId]);
+			// (B made a second store itself in the streams test)
+			expect(data.warehouses.map((w) => w.name)).not.toContain('Mallory');
+			expect(data.warehouses.map((w) => w.id)).toContain(B.storeId);
 			expect(data.getCarrier.firstName).toBe('Carl');
 			expect(data.getOrder.isPaid).toBe(false);
 		});
