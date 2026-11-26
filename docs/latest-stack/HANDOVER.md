@@ -97,7 +97,30 @@ Security work (owner request, `76b4ca83`):
    | carrier | 8/8 |
    | shop-expo | 11/11 |
 
-   The merged API runs from `packages/core/build` with `DB_NAME=ever_e2e` on mongo :27018.
+   The merged API ran from `packages/core/build` with `DB_NAME=ever_e2e` on mongo :27018 (now stopped).
+   The core API e2e suite (Jest, 49 tests) passes on the merged branch.
+
+   **Docker images built and served:**
+   - merchant (`/`, deep link, i18n);
+   - admin (placeholders replaced at start, about 20 s of `sed`).
+
+   Earlier, in the lanes: api, shop-web, shop-mobile, expo and carrier.
+
+4. **PR [ever-co/ever-demand#1660](https://github.com/ever-co/ever-demand/pull/1660) is open** (`feat/latest-stack` → `develop`).
+   - **Review findings:** the Ever Works AI review, Socket and SonarCloud findings are answered in a PR
+     comment. The fixes are in `7c0d749b`: path-traversal guard, SHA-pinned actions, `patches/` in the
+     Dockerfiles, `chmod 644`.
+   - **First CI run:** three failures, fixed in `cf62f50a`:
+     - the e2e package was included in the root `test` script;
+     - core's `test/e2e/sequencer.js` was ignored by git;
+     - the APK step had no Android SDK.
+   - **Next:** watch the CI re-run. Greptile was still pending. CodeRabbit and cubic skipped the PR
+     (too large); review any later bot threads.
+   - **Merge needs the owner:** branch protection requires an approving review, and the CLA check is pending.
+   - Merge `develop` again before merging, because the fleet PRs #1658 (T-2805) and #1659 (T-2807) are in
+     flight. After that merge, port their Jasmine specs to Vitest.
+
+   Earlier plan for this step:
    The merchant and admin Docker image builds were in progress at this point. Next: swap in the merged-branch API, serve
    the builds with `node e2e/serve-apps.mjs`, run every Playwright project, then build the admin and
    merchant Docker images.
