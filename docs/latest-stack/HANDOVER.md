@@ -117,8 +117,23 @@ Security work (owner request, `76b4ca83`):
    - **Next:** watch the CI re-run. Greptile was still pending. CodeRabbit and cubic skipped the PR
      (too large); review any later bot threads.
    - **Merge needs the owner:** branch protection requires an approving review, and the CLA check is pending.
-   - Merge `develop` again before merging, because the fleet PRs #1658 (T-2805) and #1659 (T-2807) are in
-     flight. After that merge, port their Jasmine specs to Vitest.
+   - **Second develop merge (`1fd7bbd5`):** brings in #1658, #1659 and #1663 (card-form retry), ported:
+     - the start language reads the phone language through `NativeService`;
+     - the specs are moved to Vitest;
+     - restore spies and the `Store.deviceId` descriptor after each test (Vitest does not, Jasmine did).
+
+     Results: shop-mobile 38/38 test files, prod build OK; core 608/608. Keep merging new fleet PRs
+     before the upgrade merges.
+   - **Parallel work (2026-11-26, owner asked to go faster):**
+     - `feat/latest-stack-ci-fix`: upload the CI artifact only on failure (the org artifact quota was
+       hit); make the Expo tests robust on slow runners; give the Flutter job more time and a Gradle cache.
+     - `feat/latest-stack-app-ids`: Flutter app id `co.ever.customer.flutter`, Expo
+       `co.ever.customer.reactnative`. The Ionic app keeps `co.ever.customer`; carrier and merchant are
+       unchanged.
+
+     Merge both into `feat/latest-stack` when done.
+   - **Auto-fix for the PR:** the app could not match the repo to this session's folder. The owner can
+     link it from the PR bar ("Linked by Claude").
 
    Earlier plan for this step:
    The merchant and admin Docker image builds were in progress at this point. Next: swap in the merged-branch API, serve
