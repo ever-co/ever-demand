@@ -4,7 +4,7 @@ import {
 	Inject,
 } from '@angular/core';
 import { Location, DOCUMENT } from '@angular/common';
-import { Store } from '../../services/store.service';
+import { setPageLanguage, Store } from '../../services/store.service';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';
 import { DeviceRouter } from '@modules/client.common.angular2/routers/device-router.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -33,16 +33,9 @@ export class LanguagePage {
 		this.store.language = lang;
 		void this._saveDeviceLanguage(lang);
 
-		// The picked language, not store.language: with ngx-translate 18 the current
-		// language only changes once its file has loaded.
-		const langAbbreviation = lang.slice(0, 2);
-		if (lang === 'he-IL') {
-			this.dir = 'rtl';
-		} else {
-			this.dir = 'ltr';
-		}
-		this.document.documentElement.dir = this.dir;
-		this.document.documentElement.lang = langAbbreviation;
+		// From lang, not store.language: that changes only once the file
+		// of lang loads.
+		this.dir = setPageLanguage(this.document, lang);
 
 		this.goBack();
 	}

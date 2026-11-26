@@ -17,35 +17,11 @@ import { DeviceRouter } from '@modules/client.common.angular2/routers/device-rou
 import { InviteRouter } from '@modules/client.common.angular2/routers/invite-router.service';
 import { UserRouter } from '@modules/client.common.angular2/routers/user-router.service';
 import { environment } from 'environments/environment';
-import { NEVER, Observable, Subject } from 'rxjs';
+import { NEVER } from 'rxjs';
 import { AppComponent } from './app.component';
 import { Store } from './services/store.service';
 import { settle } from './testing/fake-socket';
-
-// A language file the app asked for. It arrives when the spec loads it.
-interface FileRequest {
-	language: string;
-	file: Subject<any>;
-}
-
-// Holds every language file until the spec loads it, so a spec picks the
-// order in which the files arrive, as on a slow network.
-class ManualLoader implements TranslateLoader {
-	readonly requests: FileRequest[] = [];
-
-	getTranslation(language: string): Observable<any> {
-		const file = new Subject<any>();
-		this.requests.push({ language, file });
-		return file;
-	}
-}
-
-// Each file has one text, the name of its language, so a spec can read
-// which file the customer sees.
-const load = (request: FileRequest) => {
-	request.file.next({ LANGUAGE_NAME: request.language });
-	request.file.complete();
-};
+import { load, ManualLoader } from './testing/manual-loader';
 
 // Every order of the numbers 0 to count - 1.
 const ordersOf = (count: number): number[][] => {

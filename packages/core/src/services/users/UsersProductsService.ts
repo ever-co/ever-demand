@@ -1,6 +1,7 @@
 import { injectable } from 'inversify';
 import { observableListener, routerName } from '@pyro/io';
 import IUserProductsRouter from '@modules/server.common/routers/IUserProductsRouter';
+import ILanguage from '@modules/server.common/interfaces/ILanguage';
 import Handlebars from 'handlebars';
 import { observeFile } from '../../utils';
 import { DevicesService } from '../devices/DevicesService';
@@ -14,6 +15,10 @@ import {
 	switchMap,
 } from 'rxjs/operators';
 import { combineLatest, of, throwError, Observable } from 'rxjs';
+
+// The placeholder language for a device language with no text in
+// user_products_placeholder.json, or a device with no language.
+const DEFAULT_PLACEHOLDER_LANGUAGE: ILanguage = 'en-US';
 
 @injectable()
 @routerName('user-products')
@@ -62,7 +67,7 @@ export class UsersProductsService implements IUserProductsRouter, IService {
 			}),
 			distinctUntilChanged(
 				(oldDevice, newDevice) =>
-					oldDevice.language !== newDevice.language
+					oldDevice.language === newDevice.language
 			),
 			switchMap((device) =>
 				combineLatest(
@@ -73,13 +78,12 @@ export class UsersProductsService implements IUserProductsRouter, IService {
 
 						const template = Handlebars.compile(templateString);
 
-						const language = Object.keys(
-							JSON.parse(translationsJSON)
-						).filter((k) =>
-							k
-								.toLowerCase()
-								.includes(device.language.toLowerCase())
-						)[0];
+						const language = Object.prototype.hasOwnProperty.call(
+							translations,
+							device.language
+						)
+							? device.language
+							: DEFAULT_PLACEHOLDER_LANGUAGE;
 
 						return template(translations[language]);
 					}

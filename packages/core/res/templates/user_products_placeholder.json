@@ -10,5 +10,11 @@
 	},
 	"bg-BG": {
 		"no_products_text": "Нищо за купуване за сега."
+	},
+	"es-ES": {
+		"no_products_text": "No hay nada que comprar por ahora."
+	},
+	"fr-FR": {
+		"no_products_text": "Rien à acheter pour le moment."
 	}
 }
