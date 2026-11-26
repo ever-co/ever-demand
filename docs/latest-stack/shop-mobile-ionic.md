@@ -22,6 +22,7 @@ Expo and Flutter lanes. Its feature inventory is `docs/latest-stack/shop-mobile-
 | Tests | Karma + Jasmine (84 specs), Protractor | Vitest 5.1 + jsdom 31 via `ng test` (201 specs), Playwright (`e2e/tests/shop-mobile`) |
 | Env script | ts-node + yargs + envalid 7 | Node 26 type stripping (`node scripts/configure.ts`) + envalid 9 + dotenv 18 |
 | Node / TS | 16 / 4.5 | 26.13.1 / 6.0.3 |
+| Card payments | Stripe Checkout (legacy `checkout.js` popup, deprecated by Stripe) | Stripe.js through `@stripe/stripe-js` 10.4 (Card Element + `stripe.createToken`) in an Ionic modal |
 
 ## How to run
 
@@ -136,6 +137,37 @@ locate you"), camera for the barcode scanner. Icons and splash: `resources/icon.
   language changed before the menu subscribed, both sides stayed enabled and the menu button
   could open the right-hand menu in English).
 - **Service worker** is registered only in the production web build (not inside the Capacitor app).
+- **Stripe Checkout → Stripe.js Card Element** (branch `feat/latest-stack-stripe-elements`). The
+  server API is unchanged: the new-card form still produces a card token (`tok_...`) and the
+  customer's email, and the payment still calls `user.updateEmail`, `user.addPaymentMethod`
+  (`customers.createSource`), `order.payWithStripe(orderId, cardId, currency)` and `order.confirm`.
+  - `StripeLoader` (`src/app/services/stripeLoader.ts`, same class and file, so the two order
+    modules that inject it early are untouched) loads Stripe.js with `loadStripe` from
+    `@stripe/stripe-js/pure` (the main entry would add the script on import). It loads nothing in
+    a build without `STRIPE_PUBLISHABLE_KEY`. `stripe` is the instance, or null while loading /
+    after a failure; `ensureLoaded()` loads again after a failure (#1663). `loadStripe` itself
+    retries a failed script once and keeps one script tag. `@stripe/stripe-js` 10 loads the
+    versioned Stripe.js URL `https://js.stripe.com/endive/stripe.js` (the successor of `/v3/`,
+    same API).
+  - `payment/card-form/StripeCardForm` is the `StripeCheckout.configure(...).open()` replacement
+    with the same `token` / `closed` callbacks: it opens `StripeCardModalComponent` (a standalone
+    component, so no NgModule declares it) with the ModalController. On a token it calls `token`
+    when the modal starts to close (the payment is marked as running first), then `closed` once it
+    is gone, so the popup-mode order modal still opens once (#1651). A double tap opens one form.
+  - The modal mirrors the Checkout popup: logo (`STRIPE_POP_UP_LOGO`, hidden when it fails to
+    load), product title and description, Email, Card (Card Element with `hidePostalCode` and
+    `disableLink`, like Checkout's no zip / no "remember me"), "Pay $12.50" in the server currency
+    (first product's price in cents, as Checkout got it), Cancel. Fields and Stripe's messages
+    follow the app language (`elements({ locale })`). `createToken(card, { name: email })` (Checkout
+    named the card after the email). Stripe's `validation_error` / `card_error` messages show in
+    the form, which stays open; any other error shows the app's `BUY_POPUP.PAYMENT_FAILED`. An
+    invalid email shows `BUY_POPUP.CARD_FORM.EMAIL_INVALID`. New keys `BUY_POPUP.CARD_FORM.{EMAIL,
+    CARD, PAY, EMAIL_INVALID}` in the 6 locales (`PAY` because bg-BG's existing
+    `BUTTONS.PAY_X` translated the `{{amount}}` parameter name, so it never interpolates).
+  - Every payment rule is kept: second-payment guard in the root Store, currency from the server,
+    email / card-save / saved-card alerts, already paid (T-2807), no key (T-2806), card form not
+    loaded + load again (#1663); a card form that cannot open tells the customer
+    (`CARD_FORM_NOT_LOADED`) and shows the order again in popup mode.
 - **tsconfig** has no `baseUrl`; `paths` map `app/*` and `environments/*` plus the shared aliases
   from the contract. `rootDir: ".."` because `packages/common` and `common-angular` compile from
   source.
@@ -172,6 +204,21 @@ locate you"), camera for the barcode scanner. Icons and splash: `resources/icon.
     back, search, empty order history, info pages, merchants page, Buy → delivery order page →
     Undo → cancel, and "browse first" Buy → register by address → order.
   - Payments are not run end to end: the API has no Stripe key, and real keys must never be used.
+    The new-card form had a headless smoke instead (Pixel 7, Chromium 1255, not committed): a
+    production build with a fake `pk_test_` key and `SERVICES_ENDPOINT` pointing at a fake pyro
+    socket.io API (user / order / warehouse data, payment calls logged), `js.stripe.com` and Google
+    Maps stubbed with `page.route` and every other external request aborted. 14/14 checks: the
+    order page shows Pay with Card; `@stripe/stripe-js` requests `js.stripe.com/endive/stripe.js`
+    once; the form shows the product and "Pay $12.50"; email error; Stripe card error keeps the
+    form open; a token pays through `updateEmail("u1", email)`, `addPaymentMethod("u1",
+    "tok_...")`, `payWithStripe("o1", "card_smoke", "USD")`, `confirm("o1")`; Cancel pays
+    nothing; with the first two Stripe.js loads aborted the tap says the card form did not load,
+    loads it again, and the next tap opens the form; no unexpected console errors.
+  - Card form specs (`payment/card-form/*.spec.ts`, `services/stripeLoader.spec.ts`, ported
+    payment specs): **40 files, 301 tests, all green** with the card form. The loader spec runs the
+    real `@stripe/stripe-js/pure` loader against script tags whose load/error events it fires
+    itself (jsdom fetches nothing): one tag, the built-in retry, a proxy page that defines no
+    Stripe, loading again on the next tap.
     The unit specs cover every payment branch.
 
 ## Docker
@@ -190,7 +237,7 @@ translations and the icons answer 200.
 | `IonicModule` (lazy NgModule build) | Ionic 9 deprecates it for `provideIonicAngular()` + standalone `Ion*` imports, but it still works. Moving 35 NgModules to standalone Ionic components (plus `addIcons` for every icon) is a larger change than this lane; the contract keeps NgModules. Logs one deprecation warning at start. |
 | TypeScript 7 | Angular 22 needs `>=6.0 <6.1` (contract). |
 | `graphql` 16.15 (17 exists) | Aligned with the core lane: `@apollo/server` 5 only accepts `^16.11`. apollo-angular 14 / Apollo Client 4 accept both. |
-| Stripe Checkout (`checkout.js`) | Stripe's legacy popup is still what the payment flow and its fleet specs use. Moving to Stripe Elements / Payment Element is a product change, not an upgrade. |
+| ~~Stripe Checkout (`checkout.js`)~~ | **Done**: replaced by Stripe.js (`@stripe/stripe-js` 10.4) with a Card Element in an Ionic modal; same card token and server calls (see Decisions). |
 | Google Maps loader | `common-angular`'s loader waits for the Maps callback; without network to Google the app never starts (unchanged behaviour, outside this lane). |
 | Playwright browser | The PC's cache has Chromium 1243, `@playwright/test` 1.65 wants 1255. I ran the suite with the cached build (`launchOptions.executablePath`); `npx playwright install chromium` is needed for a plain run. |
 | `localStorage` on iOS | Kept (the specs and the other apps' docs rely on the keys). WKWebView can evict it under storage pressure; `@capacitor/preferences` is installed for a later move. |
@@ -202,7 +249,10 @@ translations and the icons answer 200.
   loaded yet (the start-up checks run side by side), so a new customer always sees the invite page
   first.
 - `DEFAULT_LANGUAGE` wins over the saved language at start (fleet task T-2805 changes this).
-- Pay buttons throw "Can't pay in app" without `STRIPE_PUBLISHABLE_KEY` (fleet task T-2806).
+- Without `STRIPE_PUBLISHABLE_KEY` the Pay buttons still show; a tap says card payment is not
+  available (`BUY_POPUP.CARD_PAYMENT_UNAVAILABLE`, fleet task T-2806), and Stripe.js is not loaded.
+- The card form shows the first product's price, while the server charges the order total (kept
+  from Checkout; differs only for orders with several products).
 
 ## Shared code touched
 
