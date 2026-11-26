@@ -25,7 +25,7 @@ export class LanguagePage {
 
 	set language(lang: ILanguage) {
 		this.store.language = lang;
-		this._saveDeviceLanguage(lang);
+		void this._saveDeviceLanguage(lang);
 
 		const currentLang = this.store.language;
 
