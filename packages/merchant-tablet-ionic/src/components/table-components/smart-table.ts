@@ -19,7 +19,9 @@ export function bindViewCell<T = any>(
 ): (instance: T, cell: Cell) => void {
 	return (instance: T, cell: Cell) => {
 		const view = instance as unknown as ViewCell;
-		view.value = cell.getValue();
+		// ng2-smart-table gave renderers the raw value unless the column prepared it. The fork's
+		// getValue() falls back to `v?.toString()`, so an object would arrive as "[object Object]".
+		view.value = cell.getColumn().valuePrepareFunction ? cell.getValue() : cell.getRawValue();
 		view.rowData = cell.getRow().getData();
 		init?.(instance, cell);
 	};

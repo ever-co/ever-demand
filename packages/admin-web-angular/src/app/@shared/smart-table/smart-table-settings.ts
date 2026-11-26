@@ -88,7 +88,11 @@ export function toSmartTableColumn(legacy: LegacyColumn): IColumn {
 	if (column.type === 'custom' && column.renderComponent) {
 		const ownInit = column.componentInitFunction;
 		column.componentInitFunction = (instance: any, cell: Cell) => {
-			instance.value = cell.getValue();
+			// ng2-smart-table gave renderers the raw value unless the column prepared it. The fork's
+			// getValue() falls back to `v?.toString()`, so an object would arrive as "[object Object]".
+			instance.value = valuePrepareFunction
+				? cell.getValue()
+				: cell.getRawValue();
 			instance.rowData = cell.getRow().getData();
 			ownInit?.(instance, cell);
 			onComponentInitFunction?.(instance);
