@@ -246,10 +246,11 @@ put `icon-only.png`, `icon-foreground.png`, `icon-background.png` (1024×1024) a
 
 ## Tests
 
-- `ng test --watch=false` (Vitest, jsdom, `maxWorkers: 2`): **39 files, 271 tests, all green**
-  (after the standalone Ionic move; `icons.spec.ts` is new). The specs keep declaring the
-  components with `CUSTOM_ELEMENTS_SCHEMA`, so the `ion-*` elements stay inert there; only the
-  controller tokens moved from `@ionic/angular/lazy` to `@ionic/angular`.
+- `ng test --watch=false` (Vitest, jsdom, `maxWorkers: 2`): **41 files, 303 tests, all green**
+  (standalone Ionic + the Stripe.js card form; `icons.spec.ts` is new). The specs keep declaring
+  the components with `CUSTOM_ELEMENTS_SCHEMA`, so the `ion-*` elements stay inert there; only the
+  controller tokens moved from `@ionic/angular/lazy` to `@ionic/angular` (the card form's
+  `StripeCardForm` and its spec included).
   - All **84** Karma specs from `develop` @ `abd39940` are ported (Jasmine spies → `vi` through
     `src/app/testing/spies.ts`, `waitForAsync`/`fakeAsync` → async/await + `vi` fake timers). The
     payment-flow fixes they guard (#1645/#1646 paying guard in the root Store, #1648 server
