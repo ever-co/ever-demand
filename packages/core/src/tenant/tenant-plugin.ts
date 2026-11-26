@@ -34,7 +34,11 @@ export class TenantMismatchError extends Error {
 }
 
 export function isTenantSchema(schema: Schema): boolean {
-	return schema.path(TENANT_FIELD) != null;
+	if (typeof (schema as any)?.path === 'function') {
+		return schema.path(TENANT_FIELD) != null;
+	}
+
+	return (schema as any)?.paths?.[TENANT_FIELD] != null;
 }
 
 /**
@@ -281,7 +285,7 @@ export function tenantPlugin(schema: Schema): void {
 	}
 
 	schema.pre(
-		TENANT_QUERY_OPS as unknown as string[],
+		TENANT_QUERY_OPS as unknown as any[],
 		{ document: false, query: true },
 		function (this: Query<any, any>) {
 			applyTenantToQuery(this);

@@ -38,6 +38,8 @@ import { PromotionModule } from './graphql/products/promotions/promotion.module'
 import { AppsSettingsModule } from './graphql/apps-settings/apps-settings.module';
 import { getTypeORMEntities, getTypeORMOptions } from './helpers/typeorm';
 import { createGraphQLContext } from './graphql/graphql-context';
+import { APP_GUARD } from '@nestjs/core';
+import { GraphQLAccessGuard } from './graphql/access/graphql-access.guard';
 
 const port = env.GQLPORT;
 const host = env.API_HOST;
@@ -56,7 +58,12 @@ const entities = getTypeORMEntities();
 
 @Module({
 	controllers: [TestController, HealthController],
-	providers: [...CommandHandlers, ...EventHandlers],
+	providers: [
+		...CommandHandlers,
+		...EventHandlers,
+		// default-deny access to every GraphQL operation (graphql/access)
+		{ provide: APP_GUARD, useClass: GraphQLAccessGuard },
+	],
 	imports: [
 		DataModule,
 		ServicesModule,

@@ -3,6 +3,7 @@ import { ConnectionHandler } from '../connection-handler';
 import { Listener } from '../listener/listener';
 import Logger from 'bunyan';
 import { Server, Namespace } from 'socket.io';
+import { tenantSocketMiddleware } from '../../../tenant/tenant-socket';
 
 export class RouterHandler {
 	private readonly routerName: string;
@@ -47,6 +48,9 @@ export class RouterHandler {
 
 		// TODO: figure out why we needed below
 		// routerNamespace.setMaxListeners(0);
+
+		// every connection belongs to one tenant (see tenant-socket.ts)
+		routerNamespace.use(tenantSocketMiddleware);
 
 		routerNamespace.on('connection', (socket) => {
 			const connectionHandler = new ConnectionHandler(

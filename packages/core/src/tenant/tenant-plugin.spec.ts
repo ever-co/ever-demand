@@ -60,8 +60,15 @@ const isDriverError = (err: any) =>
 	!(err instanceof TenantMismatchError) &&
 	/initial connection|not connected|bufferCommands/i.test(String(err?.message));
 
+// these tests need "no tenant" to mean none (test/unit/setup-tenant.ts sets a fallback)
+let savedFallback: string | null;
+beforeEach(() => {
+	savedFallback = TenantContext.getFallbackTenantId();
+	TenantContext.setFallbackTenantId(null);
+});
+afterEach(() => TenantContext.setFallbackTenantId(savedFallback));
+
 describe('tenantPlugin', () => {
-	afterEach(() => TenantContext.setFallbackTenantId(null));
 
 	describe('queries', () => {
 		it.each([

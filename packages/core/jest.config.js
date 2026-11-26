@@ -19,6 +19,8 @@ module.exports = {
 		'^@pyro/db(.*)$': '<rootDir>/../../common/src/@pyro/db$1',
 		'^@modules/server.common(.*)$': '<rootDir>/../../common/src$1',
 	},
+	// like a single-tenant install: everything runs in one default tenant
+	setupFiles: ['<rootDir>/test/unit/setup-tenant.ts'],
 	coverageDirectory: '../coverage',
 	collectCoverageFrom: ['**/*.ts', '!**/*.spec.ts', '!test/**'],
 };

@@ -7,6 +7,8 @@ import { getListenerSerializer } from '../serialization';
 import * as _ from 'lodash';
 import getArgsNames from '@captemulation/get-parameter-names';
 import { Socket } from 'socket.io';
+import { TenantContext } from '../../../../tenant/tenant-context';
+import { socketTenantCtx } from '../../../../tenant/tenant-socket';
 
 const MASKED_VALUE = '***';
 
@@ -109,7 +111,10 @@ export abstract class BaseListenerHandler<T> implements IListenerHandler<T> {
 
 	handle(): void {
 		this._socket.on(this._listener.name, (...args: any[]) => {
-			this.handleRequest(args);
+			// the call, and every stream it opens, runs in the socket's tenant
+			TenantContext.run(socketTenantCtx(this._socket), () =>
+				this.handleRequest(args)
+			);
 		});
 	}
 

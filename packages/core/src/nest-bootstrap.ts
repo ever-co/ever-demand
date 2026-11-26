@@ -11,6 +11,7 @@ import { INestApplication } from '@nestjs/common';
 // import { SentryService } from '@ntegral/nestjs-sentry';
 import { createSessionMiddleware } from './helpers/session-middleware';
 import helmet from 'helmet';
+import { tenantHttpMiddleware } from './tenant/tenant-http.middleware';
 
 const log: Logger = createEverLogger({ name: 'bootstrapNest' });
 
@@ -63,6 +64,11 @@ export async function bootstrapNest(): Promise<INestApplication> {
 			next
 		)
 	);
+	// Every request runs in the context of its tenant (login token, Tenant-Id
+	// header or tenant host). Mounted after the body parsers above, before
+	// GraphQL and the controllers.
+	app.use(tenantHttpMiddleware);
+
 	const globalPrefix = 'api';
 	app.setGlobalPrefix(globalPrefix);
 

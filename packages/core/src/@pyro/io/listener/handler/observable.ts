@@ -5,6 +5,7 @@ import Logger from 'bunyan';
 import { BaseListenerHandler } from './base';
 import { ObservableListener } from '../observable';
 import { Socket } from 'socket.io';
+import { TenantContext } from '../../../../tenant/tenant-context';
 
 export class ObservableListenerHandler<T> extends BaseListenerHandler<T>
 	implements IListenerHandler<T> {
@@ -26,8 +27,12 @@ export class ObservableListenerHandler<T> extends BaseListenerHandler<T>
 
 		const observable = Reflect.apply(this.listener, this.router, args);
 
+		// The client subscribes in a later socket event, outside the tenant
+		// context of this call: subscribe in the context of the call.
+		const tenantCtx = TenantContext.capture();
+
 		this.socket.on(`${callId}_subscribe`, (subscriptionId) => {
-			const subscription = observable.subscribe({
+			const subscription = TenantContext.run(tenantCtx, () => observable.subscribe({
 				next: (value) => {
 					this.log.info(
 						{
@@ -63,7 +68,7 @@ export class ObservableListenerHandler<T> extends BaseListenerHandler<T>
 					);
 					this.socket.emit(`_${subscriptionId}_complete`);
 				},
-			});
+			}));
 
 			this.socket.on(`${subscriptionId}_unsubscribe`, () =>
 				subscription.unsubscribe()

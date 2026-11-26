@@ -6,6 +6,7 @@ import { DevicesService } from '../../services/devices';
 import { IDeviceCreateObject } from '@modules/server.common/interfaces/IDevice';
 import { first } from 'rxjs/operators';
 import ILanguage from '@modules/server.common/interfaces/ILanguage';
+import { TenantContext } from '../../tenant/tenant-context';
 
 const pubSub = new PubSub();
 
@@ -85,7 +86,14 @@ export class DeviceResolver {
 
 	// Published by updateDevice. Nest uses the returned async iterator as the
 	// event stream of the subscription.
-	@Subscription() // TODO rename to deviceUpdated
+	@Subscription('deviceCreated', {
+		// one PubSub for all tenants: deliver only the subscriber's own devices
+		filter: (payload, _variables, context) =>
+			payload?.deviceCreated?.tenantId != null &&
+			payload.deviceCreated.tenantId ===
+				(context?.tenantCtx?.tenantId ??
+					TenantContext.getFallbackTenantId()),
+	}) // TODO rename to deviceUpdated
 	deviceCreated() {
 		return pubSub.asyncIterableIterator('deviceCreated');
 	}

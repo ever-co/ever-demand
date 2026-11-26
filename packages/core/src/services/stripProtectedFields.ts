@@ -14,6 +14,11 @@ const PROTECTED_FIELDS: ReadonlyArray<string> = [
 	'isDeleted',
 	'_createdAt',
 	'_updatedAt',
+	// the tenant is set by the server only; an admin's role and super-admin
+	// flag only by the member management of the tenant
+	'tenantId',
+	'role',
+	'isSuperAdmin',
 ];
 
 function isProtectedKey(key: string): boolean {

@@ -40,6 +40,7 @@ import {
 import { UsersAuthService } from './users/UsersAuthService';
 import { AdminsService } from './admins';
 import { Repository } from 'typeorm';
+import { TenantScopedRepository } from '../tenant/tenant-repository';
 import { getTypeORMDataSource } from '../helpers/typeorm';
 import Admin from '@modules/server.common/entities/Admin';
 import Device from '@modules/server.common/entities/Device';
@@ -52,16 +53,21 @@ function getRepository(t: any): any {
 	return getTypeORMDataSource().getRepository(t);
 }
 
+/** TypeORM repositories of tenant-owned entities are limited to the current tenant. */
+function getTenantRepository(t: any): any {
+	return new TenantScopedRepository(getRepository(t), t.modelName ?? t.name);
+}
+
 const bindings = new ContainerModule(({ bind }: ContainerModuleLoadOptions) => {
 	bind<Repository<Admin>>('AdminRepository')
 		.toDynamicValue(() => {
-			return getRepository(Admin);
+			return getTenantRepository(Admin);
 		})
 		.inRequestScope();
 
 	bind<Repository<Device>>('DeviceRepository')
 		.toDynamicValue(() => {
-			return getRepository(Device);
+			return getTenantRepository(Device);
 		})
 		.inRequestScope();
 

@@ -1,4 +1,5 @@
 import {
+	ANONYMOUS,
 	addProductToWarehouse,
 	adminToken,
 	createProduct,
@@ -41,7 +42,7 @@ describe('GraphQL API', () => {
 			const query = `{ adminAuthenticated }`;
 
 			expect((await gqlData(query, {}, token)).adminAuthenticated).toBe(true);
-			expect((await gqlData(query)).adminAuthenticated).toBe(false);
+			expect((await gqlData(query, {}, ANONYMOUS)).adminAuthenticated).toBe(false);
 			expect((await gqlData(query, {}, 'not-a-jwt')).adminAuthenticated).toBe(false);
 		});
 

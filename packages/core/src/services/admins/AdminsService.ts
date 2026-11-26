@@ -11,9 +11,11 @@ import { Observable } from 'rxjs';
 import { asyncListener, observableListener } from '@pyro/io';
 import { inject, injectable } from 'inversify';
 import { first, map, switchMap } from 'rxjs/operators';
-import { Repository } from 'typeorm';
+import { TenantScopedRepository } from '../../tenant/tenant-repository';
 import Logger from 'bunyan';
 import { stripProtectedFields } from '../stripProtectedFields';
+import { TenantContext } from '../../tenant/tenant-context';
+import type { TenantRole } from '@modules/server.common/interfaces/ITenant';
 
 // TODO: Rename! "Admin" is not a great name, but currently "Users" mean "Customers"...
 /**
@@ -33,13 +35,14 @@ export class AdminsService extends DBService<Admin> implements IAdminRouter {
 		authServiceFactory: AuthServiceFactory,
 		// TypeORM Repository - temporary here, will be moved into DBService later
 		@inject('AdminRepository')
-		private readonly _adminRepository: Repository<Admin>
+		private readonly _adminRepository: TenantScopedRepository<Admin>
 	) {
 		super();
 
 		// TODO: move to base class (DBService) and make it fail everything if no admin users found in DB
-		_adminRepository
-			.count()
+		TenantContext.runAsSystem('log the number of admins at startup', () =>
+			_adminRepository.count()
+		)
 			.then((c) => {
 				console.log('Admins count: ' + c);
 			})
@@ -70,10 +73,46 @@ export class AdminsService extends DBService<Admin> implements IAdminRouter {
 		return super.findOne({ email, isDeleted: { $eq: false } });
 	}
 
+	/**
+	 * Creates an admin in the current tenant. `input` may ask for role admin
+	 * or staff; owner and super-admin are only given by the server itself
+	 * (`grant`: tenant signup, first-admin bootstrap).
+	 */
 	@asyncListener()
-	async register(input: IAdminRegistrationInput): Promise<Admin> {
+	async register(
+		input: IAdminRegistrationInput,
+		grant?: { role?: TenantRole; isSuperAdmin?: boolean }
+	): Promise<Admin> {
+		const {
+			role: requestedRole,
+			isSuperAdmin: _ignoredSuperAdmin,
+			tenantId: _ignoredTenantId,
+			...fields
+		} = (input.admin ?? {}) as any;
+
+		const email = String(fields.email ?? '').trim().toLowerCase();
+
+		// admin emails are unique across tenants (login needs no tenant)
+		const taken = await TenantContext.runAsSystem(
+			'admin emails are unique across tenants',
+			() => this.Model.countDocuments({ email }).exec()
+		);
+
+		if (taken > 0) {
+			throw new Error(`An admin with the email '${email}' already exists`);
+		}
+
+		const role: TenantRole =
+			grant?.role ??
+			(requestedRole === 'staff' || requestedRole === 'admin'
+				? requestedRole
+				: 'admin');
+
 		const admin = await this.create({
-			...input.admin,
+			...fields,
+			email,
+			role,
+			isSuperAdmin: grant?.isSuperAdmin === true,
 			...(input.password
 				? {
 						hash: await this.authService.getPasswordHash(
@@ -100,14 +139,13 @@ export class AdminsService extends DBService<Admin> implements IAdminRouter {
 		email: string,
 		password: string
 	): Promise<IAdminLoginResponse | null> {
-		let res = null;
-		const admin = await this.getByEmail(email);
+		// looked up across tenants: the token then carries the admin's tenant
+		const res = await this.authService.login(
+			{ email: String(email ?? '').trim().toLowerCase() },
+			password
+		);
 
-		if (admin) {
-			res = await this.authService.login({ email }, password);
-		}
-
-		if (!res) {
+		if (!res || res.entity.isDeleted) {
 			return null;
 		}
 

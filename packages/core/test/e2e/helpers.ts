@@ -8,31 +8,87 @@ export interface GqlResponse<T> {
 	errors?: { message: string; extensions?: Record<string, unknown> }[];
 }
 
-/** POST a GraphQL operation to the API, the way apollo-angular does. */
+/** Pass as the token to send an operation without logging in. */
+export const ANONYMOUS = null;
+
+let cachedAdminToken: Promise<string> | undefined;
+
+/**
+ * Login token of the default admin (admin@ever.co / admin). Operations that
+ * set up data are admin-only (graphql/access), so gql() sends it unless told
+ * otherwise.
+ */
+export function defaultAdminToken(): Promise<string> {
+	cachedAdminToken ??= (async () => {
+		const res = await fetch(GQL_URL, {
+			method: 'POST',
+			headers: { 'content-type': 'application/json' },
+			body: JSON.stringify({
+				query: `mutation { adminLogin(email: "admin@ever.co", password: "admin") { token } }`,
+			}),
+		});
+		const body: any = await res.json();
+		const token = body?.data?.adminLogin?.token;
+
+		if (!token) {
+			cachedAdminToken = undefined;
+			throw new Error(`default admin could not log in: ${JSON.stringify(body)}`);
+		}
+
+		return token;
+	})();
+
+	return cachedAdminToken;
+}
+
+/**
+ * POST a GraphQL operation to the API, the way apollo-angular does.
+ * `token`: undefined = the default admin, null (ANONYMOUS) = no login,
+ * else that login token. `headers`: extra headers, e.g. `Tenant-Id`.
+ */
 export async function gql<T = any>(
 	query: string,
 	variables: Record<string, unknown> = {},
-	token?: string
+	token?: string | null,
+	headers: Record<string, string> = {}
 ): Promise<GqlResponse<T>> {
+	const bearer = token === undefined ? await defaultAdminToken() : token;
+
 	const res = await fetch(GQL_URL, {
 		method: 'POST',
 		headers: {
 			'content-type': 'application/json',
-			...(token ? { authorization: `Bearer ${token}` } : {}),
+			...(bearer ? { authorization: `Bearer ${bearer}` } : {}),
+			...headers,
 		},
 		body: JSON.stringify({ query, variables }),
 	});
 
-	return { status: res.status, ...(await res.json()) };
+	const text = await res.text();
+	let body: any;
+
+	try {
+		body = JSON.parse(text);
+	} catch {
+		body = { errors: [{ message: text }] };
+	}
+
+	// the tenant middleware answers before GraphQL: { statusCode, code, message }
+	if (body && body.errors == null && body.data == null && body.message) {
+		body = { errors: [{ message: body.message, extensions: { code: body.code } }] };
+	}
+
+	return { status: res.status, ...body };
 }
 
 /** Like gql(), but fails the test on GraphQL errors and returns `data`. */
 export async function gqlData<T = any>(
 	query: string,
 	variables: Record<string, unknown> = {},
-	token?: string
+	token?: string | null,
+	headers: Record<string, string> = {}
 ): Promise<T> {
-	const res = await gql<T>(query, variables, token);
+	const res = await gql<T>(query, variables, token, headers);
 
 	if (res.errors?.length || res.data == null) {
 		throw new Error(
@@ -70,6 +126,12 @@ export function geoLocation(
 export class PyroClient {
 	private readonly sockets = new Map<string, Socket>();
 
+	/**
+	 * `auth`: the socket.io handshake `auth` of every connection, e.g.
+	 * `{ tenant: 'acme' }` or `{ token }` (DESIGN.md §3.3).
+	 */
+	constructor(private readonly auth: Record<string, string> = {}) {}
+
 	private async socket(router: string): Promise<Socket> {
 		let socket = this.sockets.get(router);
 
@@ -77,6 +139,7 @@ export class PyroClient {
 			socket = io(`${SERVICES_URL}/${router}`, {
 				reconnection: false,
 				forceNew: true,
+				auth: this.auth,
 			});
 			this.sockets.set(router, socket);
 		}
@@ -175,7 +238,8 @@ export async function adminToken(): Promise<string> {
 		`mutation Login($email: String!, $password: String!) {
 			adminLogin(email: $email, password: $password) { token }
 		}`,
-		{ email: 'admin@ever.co', password: 'admin' }
+		{ email: 'admin@ever.co', password: 'admin' },
+		ANONYMOUS
 	);
 
 	if (!data.adminLogin) {

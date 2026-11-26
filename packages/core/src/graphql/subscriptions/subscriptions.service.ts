@@ -7,10 +7,15 @@ import {
 } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { GraphQLSchemaHost } from '@nestjs/graphql';
-import type { GraphQLSchema } from 'graphql';
+import { execute, subscribe, type GraphQLSchema } from 'graphql';
 import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/use/ws';
 import { createWsGraphQLContext } from '../graphql-context';
+import { TenantContext, TenantCtx } from '../../tenant/tenant-context';
+import {
+	headerValue,
+	resolveTenantContext,
+} from '../../tenant/tenant-resolver';
 import { SUBSCRIPTIONS_PATH, SUBSCRIPTIONS_PORT } from './subscription.constants';
 import { createEverLogger } from '../../helpers/Log';
 
@@ -38,13 +43,52 @@ export async function startSubscriptionsServer(
 		path: SUBSCRIPTIONS_PATH,
 	});
 
+	const tenantOf = (contextValue: any): TenantCtx =>
+		contextValue?.tenantCtx ?? {
+			tenantId: TenantContext.getFallbackTenantId(),
+		};
+
 	const serverCleanup = useServer(
 		{
 			schema,
-			context: (ctx) =>
-				createWsGraphQLContext(
+			// one tenant per WebSocket, resolved like an HTTP request
+			// (connectionParams `authorization` / `tenant`, then headers, host)
+			onConnect: async (ctx) => {
+				const params: Record<string, unknown> = ctx.connectionParams ?? {};
+				const headers = ctx.extra.request.headers;
+				const str = (v: unknown) =>
+					typeof v === 'string' && v !== '' ? v : undefined;
+
+				try {
+					(ctx.extra as any).tenantCtx = await resolveTenantContext({
+						authorization:
+							str(params.authorization) ??
+							str(params.Authorization) ??
+							headerValue(headers.authorization),
+						tenantHeader:
+							str(params.tenant) ??
+							str(params['Tenant-Id']) ??
+							headerValue(headers['tenant-id'] as any),
+						host: headerValue(headers.host),
+						origin: headerValue(headers.origin),
+					});
+					return true;
+				} catch {
+					return false;
+				}
+			},
+			context: (ctx) => ({
+				...createWsGraphQLContext(
 					ctx.connectionParams,
 					ctx.extra.request.headers
+				),
+				tenantCtx: (ctx.extra as any).tenantCtx,
+			}),
+			execute: (args) =>
+				TenantContext.run(tenantOf(args.contextValue), () => execute(args)),
+			subscribe: (args) =>
+				TenantContext.run(tenantOf(args.contextValue), () =>
+					subscribe(args)
 				),
 		},
 		wsServer

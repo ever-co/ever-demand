@@ -1,4 +1,5 @@
 import type { Request } from 'express';
+import type { TenantCtx } from '../tenant/tenant-context';
 
 /**
  * Context of every GraphQL operation. Resolvers read the HTTP request from it,
@@ -6,11 +7,13 @@ import type { Request } from 'express';
  */
 export interface GraphQLContext {
 	req: Pick<Request, 'headers'>;
+	/** Tenant of the operation (tenantHttpMiddleware / graphql-ws onConnect) */
+	tenantCtx?: TenantCtx;
 }
 
 /** Context for operations sent over HTTP (POST /graphql). */
 export function createGraphQLContext({ req }: { req: Request }): GraphQLContext {
-	return { req };
+	return { req, tenantCtx: (req as any).tenantCtx };
 }
 
 /**
