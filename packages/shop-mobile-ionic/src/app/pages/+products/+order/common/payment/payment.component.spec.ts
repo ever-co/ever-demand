@@ -387,8 +387,8 @@ describe('PaymentComponent new-card payment', () => {
 		// Clears the calls the component made when it was created, so a
 		// spec sees only what the tap called.
 		const resetRouterCalls = () => {
-			userRouter.getCards.calls.reset();
-			orderRouter.getStripeCurrency.calls.reset();
+			userRouter.getCards.mockClear();
+			orderRouter.getStripeCurrency.mockClear();
 		};
 
 		const expectNoRouterCall = () => {
@@ -406,9 +406,9 @@ describe('PaymentComponent new-card payment', () => {
 		});
 
 		it('tells the customer card payment is not available when Pay now is tapped', async () => {
-			await expectAsync(component.toPaymentStage()).toBeResolved();
+			await component.toPaymentStage();
 
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.CARD_PAYMENT_UNAVAILABLE'
 			);
 			expect(configure).not.toHaveBeenCalled();
@@ -421,9 +421,9 @@ describe('PaymentComponent new-card payment', () => {
 		it('tells the customer card payment is not available when Pay with card is tapped', async () => {
 			component.userCard = savedCard();
 
-			await expectAsync(component.payWithUserCard()).toBeResolved();
+			await component.payWithUserCard();
 
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.CARD_PAYMENT_UNAVAILABLE'
 			);
 			expectNoRouterCall();
@@ -441,7 +441,7 @@ describe('PaymentComponent new-card payment', () => {
 			button.click();
 			await settle();
 
-			expect(window.alert).toHaveBeenCalledOnceWith(
+			expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 				'BUY_POPUP.CARD_PAYMENT_UNAVAILABLE'
 			);
 			expectNoRouterCall();
@@ -451,9 +451,9 @@ describe('PaymentComponent new-card payment', () => {
 	it('tells the customer, and charges nothing, when Pay with card runs without a saved card', async () => {
 		component.userCard = null;
 
-		await expectAsync(component.payWithUserCard()).toBeResolved();
+		await component.payWithUserCard();
 
-		expect(window.alert).toHaveBeenCalledOnceWith(
+		expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 			'BUY_POPUP.PAYMENT_FAILED'
 		);
 		expect(orderRouter.payWithStripe).not.toHaveBeenCalled();

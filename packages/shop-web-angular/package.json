@@ -75,6 +75,7 @@
 		"@angular/build": "^22.3.0",
 		"@angular/cli": "^22.3.0",
 		"@angular/compiler-cli": "^22.3.0",
+		"@angular/localize": "^22.3.0",
 		"@types/google.maps": "^3.67.0",
 		"@types/node": "^26.6.10",
 		"envalid": "^9.0.0",

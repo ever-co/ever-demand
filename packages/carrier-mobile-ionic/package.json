@@ -73,6 +73,7 @@
 		"@angular/build": "^22.3.0",
 		"@angular/cli": "^22.3.0",
 		"@angular/compiler-cli": "^22.3.0",
+		"@angular/localize": "^22.3.0",
 		"@capacitor/android": "^8.6.3",
 		"@capacitor/cli": "^8.6.3",
 		"@capacitor/ios": "^8.6.3",

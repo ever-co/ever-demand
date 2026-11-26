@@ -82,3 +82,10 @@ minimumReleaseAgeExclude:
   - vitest@5.1.2
 patchedDependencies:
   '@nebular/theme@17.0.0': patches/@nebular__theme@17.0.0.patch
+
+# Undeclared imports in third-party packages. Without these they resolve whatever version pnpm hoisted
+# (e.g. admin's ionicons 4) instead of the consuming app's own one.
+packageExtensions:
+  ionic-selectable@8:
+    peerDependencies:
+      ionicons: '>=7'

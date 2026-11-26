@@ -54,7 +54,7 @@ describe('PaymentComponent failure messages', () => {
 				const messages = messagesIn(locale);
 
 				expect(messages.CARD_PAYMENT_UNAVAILABLE).toEqual(
-					jasmine.any(String)
+					expect.any(String)
 				);
 				expect(messages.CARD_PAYMENT_UNAVAILABLE.trim()).not.toBe('');
 				expect(messages.CARD_PAYMENT_UNAVAILABLE).not.toBe(
@@ -274,9 +274,9 @@ describe('PaymentComponent failure messages', () => {
 				useLocale('ru-RU');
 				const payment = await withoutKey();
 
-				await expectAsync(payment.toPaymentStage()).toBeResolved();
+				await payment.toPaymentStage();
 
-				expect(window.alert).toHaveBeenCalledOnceWith(
+				expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 					messagesIn('ru-RU').CARD_PAYMENT_UNAVAILABLE
 				);
 				expect(tokenHandlers.length).toBe(0);
@@ -287,9 +287,9 @@ describe('PaymentComponent failure messages', () => {
 				const payment = await withoutKey();
 				payment.userCard = { id: 'card-saved', last4: '4242' } as any;
 
-				await expectAsync(payment.payWithUserCard()).toBeResolved();
+				await payment.payWithUserCard();
 
-				expect(window.alert).toHaveBeenCalledOnceWith(
+				expect(window.alert).toHaveBeenCalledExactlyOnceWith(
 					messagesIn('bg-BG').CARD_PAYMENT_UNAVAILABLE
 				);
 				expect(orderRouter.payWithStripe).not.toHaveBeenCalled();

@@ -89,6 +89,7 @@
 		"@angular/build": "^22.3.0",
 		"@angular/cli": "^22.3.0",
 		"@angular/compiler-cli": "^22.3.0",
+		"@angular/localize": "^22.3.0",
 		"@capacitor/cli": "^8.6.3",
 		"@types/google.maps": "^3.67.0",
 		"@types/lodash": "^4.17.27",
