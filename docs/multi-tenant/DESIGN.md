@@ -245,7 +245,7 @@ Where the context is set:
 | L4 | **TypeORM** (Admin, Device repositories) | A `TenantScopedRepository<T>` wrapper that adds `where: { tenantId }` and stamps on save. The repository is not exported raw any more. |
 | L5 | **Existence streams** | `get(id)` / `getMultiple(ids)` capture the tenant **at call time**. They drop events whose `value?.tenantId ?? lastValue?.tenantId` differs, and run their re-queries inside `TenantContext.run(captured)`. RxJS callbacks run in the context of whoever called `next()`, which may be another tenant's request or a system job. |
 | L6 | **Indexes** | §4.3. |
-| L7 | **Auth** | The default-deny GraphQL guard (§3.4). The JWT now carries `tenantId` and expires: 7 days for staff, 90 days for customers. Old tokens without `tenantId` are refused in multi-tenant mode. |
+| L7 | **Auth** | The default-deny GraphQL guard (§3.4), one access table for every operation (`graphql/access/graphql-access.ts`; a unit test keeps it complete). The JWT now carries `tenantId`. Tokens issued before tenants existed carry none: they belong to the default tenant. Token expiry is not built yet (tokens still never expire, as before; follow-up). |
 
 ### 5.3 Ids are not secrets
 
@@ -257,10 +257,11 @@ tests use real B ids.
 - **`/auth/signup`** (admin app): business name, slug (checked live), owner name, email, password, plan.
   - It calls `signupTenant`, a public GraphQL mutation that is rate limited and checks a captcha-ready hook (off by
     default).
-  - In one step it creates the Tenant, the owner Admin, a default store and the default categories.
+  - In one step it creates the Tenant and the owner Admin (built: no default store or categories, the owner adds
+    them in the admin app).
   - It returns a token. A paid plan then redirects to Stripe Checkout.
-  - Email verification: a verification link, with login allowed for 7 days before it is required. This uses the
-    existing mailer if one exists; otherwise it is a follow-up (Q9).
+  - Email verification: not built yet (Q9, follow-up). Signups are rate limited per address
+    (`TENANT_SIGNUPS_PER_HOUR`).
 - **Settings → Tenant:** name, slug, logo, currency, language, domains (display only in the MVP).
 - **Settings → Billing:** current plan, members used / included, Upgrade (Checkout), Manage (portal), invoices via
   the portal.
@@ -301,6 +302,17 @@ boot, as long as no duplicates were written in between. The runbook says so.
 | Playwright | `e2e/tests/multi-tenant/*.spec.ts` | Sign up tenant A in the admin app. A creates a store and a product. A second signup creates B. B's store list and product list do not show A's. A super-admin switches into A and sees them. The shop web app on A's tenant lists only A's stores. |
 
 Every isolation test is written to fail first against the code before the change.
+
+## 8a. As built (2026-11-26)
+
+- Plan keys are the Stripe ones: `starter`, `small_business` (shown as Business), `enterprise` (shown as
+  Unlimited, Option 2: 50 members, unlimited stores). Option 1 is not modelled yet.
+- Billing env: `STRIPE_BILLING_SECRET_KEY`, `STRIPE_BILLING_WEBHOOK_SECRET`, `ADMIN_APP_URL`, `BILLING_TRIAL_DAYS`,
+  `BILLING_PAST_DUE_GRACE_DAYS`. `automatic_tax` is not turned on yet.
+- Limits are checked in `DBService.beforeCreate` of admins, carriers and stores (multi-tenant installs only; the
+  platform tenant has none).
+- The default tenant (slug `default`) is the platform tenant; the `ADMIN_EMAIL` admin is its owner and the
+  super-admin.
 
 ## 9. Delivery plan (after the owner signs off)
 
