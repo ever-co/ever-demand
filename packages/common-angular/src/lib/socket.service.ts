@@ -11,6 +11,7 @@ import {
 } from 'rxjs/operators';
 
 import { io as _io, Socket as SocketIOClientSocket } from 'socket.io-client';
+import type { SocketAuth } from './tenant';
 
 export enum ConnectionStatus {
 	NotConnected,
@@ -63,7 +64,8 @@ export class Socket {
 
 	constructor(
 		private readonly socketUrl: string,
-		private readonly io: typeof _io
+		private readonly io: typeof _io,
+		private readonly authProvider?: () => SocketAuth
 	) {
 		console.log(`Socket with url ${socketUrl} created!`);
 
@@ -71,6 +73,10 @@ export class Socket {
 
 		this.ioSocket = ioCallable(`${this.socketUrl}`, {
 			reconnection: false,
+			// tenant and login token of the handshake, read at every
+			// (re)connection (docs/multi-tenant/DESIGN.md §3.3)
+			auth: (cb: (auth: SocketAuth) => void) =>
+				cb(this.authProvider ? this.authProvider() : {}),
 		});
 
 		this.connectionStatus
@@ -96,6 +102,12 @@ export class Socket {
 	}
 
 	connect() {
+		return this.ioSocket.connect();
+	}
+
+	/** Connects again, so the server sees the current tenant and login token. */
+	reconnect() {
+		this.ioSocket.disconnect();
 		return this.ioSocket.connect();
 	}
 

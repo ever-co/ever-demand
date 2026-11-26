@@ -14,7 +14,21 @@ export class RoutersService {
 
 	public isConnectionProblem: Observable<boolean>;
 
+	private readonly all: Socket[] = [];
+
+	/**
+	 * Connects every router socket again: call after a login, a logout or a
+	 * tenant switch, so the server resolves the new tenant and token.
+	 */
+	reconnectAll() {
+		for (const socket of this.all) {
+			socket.reconnect();
+		}
+	}
+
 	constructor() {
+		this.sockets.subscribe((socket) => this.all.push(socket));
+
 		/**
 		 * Here We get observable of routers, then we map it to observable of connectionStatus observables,
 		 * Each time router registered we combineLatest it's isSpecificErrorObs observable with the isAnyErrorObs
