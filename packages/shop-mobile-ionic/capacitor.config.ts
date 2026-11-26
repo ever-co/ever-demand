@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
-// The native projects are generated, not committed: run `npx cap add android` (or `ios`)
-// after `pnpm run build:prod`, then `npx cap sync`. See docs/latest-stack/shop-mobile-ionic.md.
+// The native projects `android/` and `ios/` are committed: run `npx cap sync` after every web
+// build or plugin change. See "Native builds" in docs/latest-stack/shop-mobile-ionic.md.
 const config: CapacitorConfig = {
 	// Same id as the Cordova app (config.xml widget id), so store updates keep working.
 	appId: 'co.ever.customer',

@@ -41,25 +41,70 @@ pnpm --filter @ever-platform/e2e exec playwright test --project=shop-mobile   # 
 from `.env` (both git-ignored); every `start`/`build`/`test` script runs it first. The settings
 and their defaults are listed in the feature inventory, section 2.
 
-### Native apps (Capacitor)
+Native apps: see [Native builds](#native-builds).
 
-The `android/` and `ios/` projects are generated and not committed:
+## Native builds
+
+`android/` and `ios/` are Capacitor 8.6 projects, generated with `cap add` and committed. Capacitor's
+own `android/.gitignore` and `ios/.gitignore` keep the build output and everything `cap sync` copies
+out of git: `app/src/main/assets/public` and `ios/App/App/public` (the web build),
+`capacitor.config.json`, `config.xml`, `capacitor-cordova-*-plugins`, `build/`, `.gradle/`,
+`local.properties`, `Pods/`, `DerivedData`.
+
+| | Android | iOS |
+| --- | --- | --- |
+| Id | `namespace` and `applicationId` `co.ever.customer` (the Cordova widget id, so store updates keep working) | bundle id `co.ever.customer` |
+| Name | Ever Shop | Ever Shop |
+| Version | `versionName` 0.5.0, `versionCode` 500 (Cordova's major×10000 + minor×100 + patch; the Cordova 0.2.0 build was 200) | `MARKETING_VERSION` 0.5.0, build 1 |
+| Toolchain | Capacitor's template: AGP 8.13.0, Gradle 8.14.3, JDK 21, compile and target SDK 36, min SDK 24 | Xcode, iOS 15.5 or later, CocoaPods |
+| Permissions | `INTERNET`, `ACCESS_NETWORK_STATE`, `ACCESS_COARSE_LOCATION` + `ACCESS_FINE_LOCATION` (GPS feature optional), `CAMERA` (camera feature optional), `VIBRATE`, `POST_NOTIFICATIONS`; ML Kit `barcode_ui` meta-data | `NSLocationWhenInUseUsageDescription`, `NSLocationAlwaysAndWhenInUseUsageDescription` (the geolocation plugin requires both), `NSCameraUsageDescription`, `NSPhotoLibraryUsageDescription`, `NSPhotoLibraryAddUsageDescription` |
+
+`capacitor.config.ts`: `appId: 'co.ever.customer'`, `appName: 'Ever Shop'`, `webDir: 'www'`,
+`androidScheme: 'http'` + `cleartext: true` because the dev API is plain HTTP/WS, splash screen
+3000 ms + 300 ms fade like the old `config.xml`.
+
+**iOS uses CocoaPods, not Swift Package Manager.** SPM is Capacitor 8's default, but
+`@capacitor-mlkit/barcode-scanning` only supports CocoaPods (Google ML Kit has no Swift package), so
+the project was created with `npx cap add ios --packagemanager CocoaPods`, and the Podfile sets
+`platform :ios, '15.5'` as the plugin requires. `pod install` cannot run on Windows: on a Mac, the
+first `npx cap sync ios` runs it and creates `ios/App/Podfile.lock` and
+`ios/App/App.xcworkspace/contents.xcworkspacedata`. Commit both.
+
+### Build and run
 
 ```bash
 cd packages/shop-mobile-ionic
-pnpm run build:prod                 # fills www/
-npx cap add android                 # once per checkout (needs Android Studio / JDK 21)
-npx cap add ios                     # once, on macOS with Xcode
-npx cap sync                        # after every web build or plugin change
-npx cap open android                # or: pnpm run cap:android / cap:ios
+pnpm run build                # dev build into www/ (build:prod for a store build)
+npx cap sync                  # after every web build, plugin change or pnpm install
+
+# Android: JDK 21 and the Android SDK (platform 36)
+npx cap open android          # Android Studio: Run on a device or an emulator
+cd android && ./gradlew assembleDebug    # app/build/outputs/apk/debug/app-debug.apk
+npx cap run android           # build, install and start on a device connected over adb
+
+# iOS: macOS with Xcode and CocoaPods
+npx cap sync ios              # runs pod install
+npx cap open ios              # opens App.xcworkspace; set a team under Signing & Capabilities
+npx cap run ios
 ```
 
-`capacitor.config.ts`: `appId: 'co.ever.customer'` (the Cordova widget id, so store updates keep
-working), `webDir: 'www'`, `androidScheme: 'http'` + `cleartext: true` because the dev API is
-plain HTTP/WS, splash screen 3000 ms + 300 ms fade like `config.xml`. Native permissions to add
-after `cap add`: location (`ACCESS_FINE_LOCATION` / `NSLocationWhenInUseUsageDescription` "To
-locate you"), camera for the barcode scanner. Icons and splash: `resources/icon.png` and
-`resources/splash.png` (`npx @capacitor/assets generate --assetPath resources`).
+- A phone cannot reach `localhost`: set `SERVICES_ENDPOINT`, `GQL_ENDPOINT` and
+  `GQL_SUBSCRIPTIONS_ENDPOINT` in `.env` to an address the device can reach (the PC's LAN IP, or
+  `10.0.2.2` from the Android emulator) before `pnpm run build`.
+- `android/capacitor.settings.gradle`, `android/app/capacitor.build.gradle` and `ios/App/Podfile` point
+  into pnpm's `node_modules/.pnpm/<package>@<version>_<peers>/` folders. `cap sync` rewrites them, so
+  commit the change after upgrading any Capacitor package.
+- Release builds need signing: an Android keystore (not in the repo) and an Apple team.
+- CI: the `android` job in `.github/workflows/ci.yml` builds the debug APK on every pull request.
+
+### Icons and splash
+
+Generated with `@capacitor/assets` 4.0.0 from the Cordova resources: `resources/ios/icon/icon-1024.png`
+as the icon (also the adaptive-icon foreground, on a white background) and `resources/splash.png` on
+`#2a2c39`. The icon is still Ionic's placeholder artwork, as it was in the Cordova app. To use new art,
+put `icon-only.png`, `icon-foreground.png`, `icon-background.png` (1024×1024) and `splash.png`
+(2732×2732) in a temporary `assets/` folder, then run
+`pnpm dlx @capacitor/assets@4.0.0 generate --assetPath assets --splashBackgroundColor '#2a2c39' --android --ios`.
 
 ## Decisions and replaced libraries
 
@@ -194,6 +239,8 @@ translations and the icons answer 200.
 | Google Maps loader | `common-angular`'s loader waits for the Maps callback; without network to Google the app never starts (unchanged behaviour, outside this lane). |
 | Playwright browser | The PC's cache has Chromium 1243, `@playwright/test` 1.65 wants 1255. I ran the suite with the cached build (`launchOptions.executablePath`); `npx playwright install chromium` is needed for a plain run. |
 | `localStorage` on iOS | Kept (the specs and the other apps' docs rely on the keys). WKWebView can evict it under storage pressure; `@capacitor/preferences` is installed for a later move. |
+| Android Gradle Plugin 8.13.0, Gradle 8.14.3 | The versions Capacitor 8.6's Android template and its plugins are built with; upgrade them together with Capacitor (`npx cap migrate`). |
+| Swift Package Manager on iOS | `@capacitor-mlkit/barcode-scanning` (Google ML Kit) supports only CocoaPods, so the iOS project uses CocoaPods. |
 
 ## Quirks kept on purpose (see the feature inventory)
 
