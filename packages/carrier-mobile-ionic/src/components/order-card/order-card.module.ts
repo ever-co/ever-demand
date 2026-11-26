@@ -7,7 +7,7 @@ import { OrderCardComponent } from './order-card';
 import { OrderModule } from './order/order.module';
 import { ProductModule } from './order/product/product.module';
 import { WarehouseLogoModule } from '../warehouse-logo/warehouse-logo.module';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonCard } from '@ionic/angular';
 
 @NgModule({
 	declarations: [OrderCardComponent],
@@ -16,10 +16,10 @@ import { IonicModule } from '@ionic/angular/lazy';
 		CommonModule,
 		FormsModule,
 		OrderModule,
-		IonicModule,
 		ProductModule,
 		WarehouseLogoModule,
 		TranslateModule.forChild(),
+		IonCard,
 	],
 })
 export class OrderCardModule {}

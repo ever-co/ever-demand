@@ -11,7 +11,7 @@ import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 import { generateObjectIdString } from '@modules/server.common/utils';
 import GeoLocation from '@modules/server.common/entities/GeoLocation';
 import { Store } from '../../services/store.service';
-import { Platform } from '@ionic/angular/lazy';
+import { Platform } from '@ionic/angular';
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

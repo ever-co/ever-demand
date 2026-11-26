@@ -3,7 +3,16 @@ import { GetProductPage } from './get-product';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular/lazy';
+import {
+	IonCol,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonMenuToggle,
+	IonRow,
+	IonText,
+	IonTitle,
+} from '@ionic/angular';
 import { MenuModule } from '../../../components/menu/menu.module';
 
 const routes: Routes = [
@@ -21,8 +30,15 @@ const routes: Routes = [
 		TranslateModule.forChild(),
 		RouterModule.forChild(routes),
 		CommonModule,
-		IonicModule,
 		MenuModule,
+		IonCol,
+		IonContent,
+		IonHeader,
+		IonIcon,
+		IonMenuToggle,
+		IonRow,
+		IonText,
+		IonTitle,
 	],
 	providers: [],
 })

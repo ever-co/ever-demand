@@ -12,7 +12,7 @@ import { environment } from '../../../environments/environment';
 import Carrier from '@modules/server.common/entities/Carrier';
 import OrderProduct from '@modules/server.common/entities/OrderProduct';
 import { getCountryName } from '@modules/server.common/entities/GeoLocation';
-import { Platform } from '@ionic/angular/lazy';
+import { Platform } from '@ionic/angular';
 
 @Component({
 	standalone: false,

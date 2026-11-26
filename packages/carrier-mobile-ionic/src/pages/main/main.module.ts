@@ -4,7 +4,14 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { GeoLocationService } from '../../services/geo-location.service';
 import { Routes, RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular/lazy';
+import {
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonMenuToggle,
+	IonRouterOutlet,
+	IonTitle,
+} from '@ionic/angular';
 import { HomeModuleGuard } from './home/home.module.guard';
 import { DeliveryModuleGuard } from './delivery/delivery.module.guard';
 import { StartingDeliveryModuleGuard } from './starting-delivery/starting-delivery.module.guard';
@@ -58,9 +65,14 @@ const routes: Routes = [
     declarations: [MainPage],
     imports: [
         CommonModule,
-        IonicModule,
         RouterModule.forChild(routes),
         TranslateModule.forChild(),
+        IonContent,
+        IonHeader,
+        IonIcon,
+        IonMenuToggle,
+        IonRouterOutlet,
+        IonTitle,
     ],
     providers: [
         GeoLocationService,

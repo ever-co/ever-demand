@@ -5,15 +5,15 @@ import { WarehouseLogoModule } from '../../warehouse-logo/warehouse-logo.module'
 import { OrderComponent } from './order.component';
 import { ProductModule } from './product/product.module';
 import { Store } from '../../../services/store.service';
-import { IonicModule } from '@ionic/angular/lazy';
+import { IonIcon } from '@ionic/angular';
 
 @NgModule({
 	imports: [
-		IonicModule,
 		CommonModule,
 		WarehouseLogoModule,
 		ProductModule,
 		TranslateModule.forChild(),
+		IonIcon,
 	],
 	providers: [Store],
 	exports: [OrderComponent],

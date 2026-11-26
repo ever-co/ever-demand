@@ -4,7 +4,13 @@ import { DeliveriesPage } from './deliveries';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OrderCardModule } from '../../components/order-card/order-card.module';
-import { IonicModule } from '@ionic/angular/lazy';
+import {
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonMenuToggle,
+	IonTitle,
+} from '@ionic/angular';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
@@ -19,10 +25,14 @@ const routes: Routes = [
 	imports: [
 		CommonModule,
 		FormsModule,
-		IonicModule,
 		OrderCardModule,
 		RouterModule.forChild(routes),
 		TranslateModule.forChild(),
+		IonContent,
+		IonHeader,
+		IonIcon,
+		IonMenuToggle,
+		IonTitle,
 	],
 })
 export class DeliveriesPageModule {}

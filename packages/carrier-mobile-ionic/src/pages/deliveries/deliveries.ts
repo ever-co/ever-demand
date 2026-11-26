@@ -3,7 +3,7 @@ import Order from '@modules/server.common/entities/Order';
 import { Subject } from 'rxjs';
 import { CarriersOrdersService } from '../../services/carriers-orders.service';
 import { Store } from '../../services/store.service';
-import { Platform } from '@ionic/angular/lazy';
+import { Platform } from '@ionic/angular';
 
 @Component({
 	standalone: false,
