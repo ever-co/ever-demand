@@ -3,6 +3,9 @@ import path from 'path';
 import { SOCKET_ACCESS } from './socket-access';
 import { isAllowed } from '../../../graphql/access/graphql-access';
 
+// invite.create reads the invites flag (envalid is ESM-only under Jest)
+jest.mock('../../../env', () => ({ env: { SETTING_INVITES_ENABLED: false } }));
+
 /** `<router>.<method>` of every @asyncListener / @observableListener of the services. */
 function socketListeners(): string[] {
 	const root = path.join(__dirname, '..', '..', '..', 'services');
@@ -91,5 +94,32 @@ describe('SOCKET_ACCESS', () => {
 		const staff = { tenantId: 't', actor: { id: 's', role: 'admin' as const, tenantRole: 'staff' as const } };
 		expect(isAllowed(SOCKET_ACCESS['warehouse.register'], staff)).toBe(false);
 		expect(isAllowed(SOCKET_ACCESS['carrier.register'], staff)).toBe(false);
+	});
+});
+
+describe('invite.create', () => {
+	const tenantCtx = { tenantId: '0000000000000000000000aa' };
+	const adminCtx = { ...tenantCtx, actor: { id: 'a', role: 'admin' as const, tenantRole: 'admin' as const } };
+
+	function accessWithInvites(enabled: boolean) {
+		let access: any;
+
+		jest.isolateModules(() => {
+			jest.doMock('../../../env', () => ({ env: { SETTING_INVITES_ENABLED: enabled } }));
+			access = require('./socket-access').SOCKET_ACCESS['invite.create'];
+		});
+
+		return access;
+	}
+
+	it('is open to a new customer of an open shop (invites off)', () => {
+		expect(isAllowed(accessWithInvites(false), tenantCtx)).toBe(true);
+	});
+
+	it('is for admins only in an invite-only shop', () => {
+		const access = accessWithInvites(true);
+
+		expect(isAllowed(access, tenantCtx)).toBe(false);
+		expect(isAllowed(access, adminCtx)).toBe(true);
 	});
 });

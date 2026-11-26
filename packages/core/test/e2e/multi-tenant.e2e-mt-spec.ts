@@ -930,6 +930,22 @@ describe('multi-tenant isolation', () => {
 			expect(inB.data?.user ?? null).toBeNull();
 		});
 
+		it("lets a new customer's shop create an address invite in the socket's tenant (invites off)", async () => {
+			// shop-web / Ionic / Expo sign-up by address: invite.create, then user-auth.register
+			const invite = await pyroA.call<{ _id: string; tenantId: string }>('invite', 'create', {
+				apartment: '7',
+				geoLocation: geoLocation(),
+			});
+
+			expect(invite.tenantId).toBe(A.tenantId);
+
+			const inA = await gqlData(`query I($id: String!) { invite(id: $id) { id } }`, { id: invite._id }, A.token);
+			const inB = await gql(`query I($id: String!) { invite(id: $id) { id } }`, { id: invite._id }, B.token);
+
+			expect(inA.invite.id).toBe(invite._id);
+			expect(inB.data?.invite ?? null).toBeNull();
+		});
+
 		it("refuses a socket with A's login and B's tenant", async () => {
 			const pyro = new PyroClient({ token: A.token, tenant: B.slug });
 

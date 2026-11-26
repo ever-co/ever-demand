@@ -70,7 +70,15 @@ export const SOCKET_ACCESS: Readonly<Record<string, SocketAccess>> = {
 	'invite-request.getInvitesRequests': admin,
 	'invite.get': 'public',
 	'invite.getInvitedStreetLocations': 'public',
-	'invite.create': admin,
+	// Open shops (invites off): a new customer's shop creates the invite for their
+	// address, then registers (shop-web byLocation, Ionic by-location, Expo
+	// InviteByLocationScreen). Invite-only shops: only admins invite. Read when
+	// called, so loading this table does not load the env.
+	get 'invite.create'(): SocketAccess {
+		const { env } = require('../../../env') as typeof import('../../../env');
+
+		return env.SETTING_INVITES_ENABLED ? admin : 'public';
+	},
 	'invite.getInvitesSettings': 'public',
 	'invite.getByCode': 'public',
 	'invite.getByLocation': 'public',

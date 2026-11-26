@@ -60,6 +60,17 @@ describe('socket.io pyro routers: registration and order flow', () => {
 		expect(JSON.stringify(user)).not.toMatch(/"hash"/);
 	});
 
+	it('lets a new customer sign up by address without a login (invite.create, invites off)', async () => {
+		// the shops' sign-up by address: an invite for the address, then the customer
+		const invite = await pyro.call<{ _id: string; code: string }>('invite', 'create', {
+			apartment: '8',
+			geoLocation: geoLocation(),
+		});
+
+		expect(invite._id).toMatch(/^[0-9a-f]{24}$/);
+		expect(invite.code).toMatch(/^\d{4}$/);
+	});
+
 	it('logs the customer in (user-auth.login)', async () => {
 		const res = await pyro.call('user-auth', 'login', user.email, 'pyro-password');
 
