@@ -20,7 +20,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
 	icon: './src/assets/img/appIcons/icon.png',
 	assetBundlePatterns: ['**/*'],
 	ios: {
-		bundleIdentifier: 'co.ever.shop.expo',
+		bundleIdentifier: 'co.ever.customer.reactnative',
 		buildNumber: '0.6.0',
 		supportsTablet: true,
 		infoPlist: {
@@ -33,7 +33,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
 		},
 	},
 	android: {
-		package: 'co.ever.shop.expo',
+		package: 'co.ever.customer.reactnative',
 		versionCode: 6,
 		adaptiveIcon: {
 			foregroundImage: './src/assets/img/appIcons/adaptive-icon.png',

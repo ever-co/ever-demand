@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.shop_flutter_mobile"
+    namespace = "co.ever.customer.flutter"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -15,8 +15,10 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.shop_flutter_mobile"
+        // Store id, derived from the Ionic shop's co.ever.customer so both apps can be published
+        // side by side (React Native: co.ever.customer.reactnative). Keep namespace, the MainActivity
+        // package and the iOS PRODUCT_BUNDLE_IDENTIFIER in step.
+        applicationId = "co.ever.customer.flutter"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
