@@ -6,6 +6,11 @@ export interface Environment {
 	GQL_ENDPOINT: string;
 	GQL_SUBSCRIPTIONS_ENDPOINT: string;
 
+	/** White-label build: tenant slug or id ('' = none) */
+	TENANT: string;
+	/** Parent domain of `<slug>.<TENANT_BASE_DOMAIN>` app hosts ('' = none) */
+	TENANT_BASE_DOMAIN: string;
+
 	APP_VERSION: string;
 
 	API_FILE_UPLOAD_URL: string;

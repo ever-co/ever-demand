@@ -25,6 +25,11 @@ export type Env = Readonly<{
 	GQL_ENDPOINT: string;
 	GQL_SUBSCRIPTIONS_ENDPOINT: string;
 
+	// Multi-tenant (docs/multi-tenant/DESIGN.md §3.3, §3.5): a white-label build's tenant
+	// slug or id, and the parent domain of `<slug>.<TENANT_BASE_DOMAIN>` app hosts.
+	TENANT: string;
+	TENANT_BASE_DOMAIN: string;
+
 	APP_VERSION: string;
 
 	API_FILE_UPLOAD_URL: string;
@@ -68,6 +73,11 @@ export const env: Env = cleanEnv(process.env, {
 	GQL_SUBSCRIPTIONS_ENDPOINT: str({
 		default: 'ws://localhost:2086/subscriptions',
 	}),
+
+	// '' = not set. Store logins need no tenant (the login token carries it); when
+	// set, the app names it before login and the API refuses other tenants' stores.
+	TENANT: str({ default: '' }),
+	TENANT_BASE_DOMAIN: str({ default: '' }),
 
 	APP_VERSION: str({ default: '0.2.0' }),
 

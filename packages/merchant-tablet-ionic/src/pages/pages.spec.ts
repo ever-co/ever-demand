@@ -18,12 +18,15 @@ describe('Merchant pages', () => {
 		let auth: { login: ReturnType<typeof vi.fn> };
 		let store: Record<string, unknown>;
 		let router: { navigate: ReturnType<typeof vi.fn> };
-		const page = () => new LoginPage(auth as any, store as any, router as any);
+		let routers: { reconnectAll: ReturnType<typeof vi.fn> };
+		const page = () =>
+			new LoginPage(auth as any, store as any, router as any, routers as any);
 
 		beforeEach(() => {
 			auth = { login: vi.fn() };
 			store = {};
 			router = { navigate: vi.fn() };
+			routers = { reconnectAll: vi.fn() };
 		});
 
 		it('starts from a clean session with the configured prefill', () => {
@@ -52,6 +55,41 @@ describe('Merchant pages', () => {
 			expect(store.warehouseId).toBe('w1');
 			expect(store.token).toBe('jwt');
 			expect(router.navigate).toHaveBeenCalledWith(['warehouse']);
+		});
+
+		it('reconnects the sockets after a login, so they handshake with the token (DESIGN.md §3.5)', async () => {
+			auth.login.mockReturnValue(of({ token: 'jwt', warehouse: { id: 'w1' } }));
+			vi.spyOn(console, 'log').mockImplementation(() => undefined);
+			routers.reconnectAll.mockImplementation(() =>
+				expect(store.token).toBe('jwt')
+			);
+			const p = page();
+
+			expect(routers.reconnectAll).not.toHaveBeenCalled();
+
+			await p.login();
+
+			expect(routers.reconnectAll).toHaveBeenCalledTimes(1);
+		});
+
+		it('reconnects the sockets after a logout (opening the login page signed in)', () => {
+			localStorage.setItem('token', 'old');
+			routers.reconnectAll.mockImplementation(() =>
+				expect(localStorage.getItem('token')).toBeNull()
+			);
+
+			page();
+
+			expect(routers.reconnectAll).toHaveBeenCalledTimes(1);
+		});
+
+		it('does not reconnect when nobody was logged in, nor after a failed login', async () => {
+			auth.login.mockReturnValue(of(null));
+			vi.spyOn(window, 'alert').mockImplementation(() => undefined);
+
+			await page().login();
+
+			expect(routers.reconnectAll).not.toHaveBeenCalled();
 		});
 
 		it('warns when the store does not exist', async () => {

@@ -24,6 +24,11 @@ export type Env = Readonly<{
 	SERVICES_ENDPOINT: string;
 	HTTPS_SERVICES_ENDPOINT: string;
 
+	// Multi-tenant (docs/multi-tenant/DESIGN.md §3.3, §3.5): a white-label build's tenant
+	// slug or id, and the parent domain of `<slug>.<TENANT_BASE_DOMAIN>` app hosts.
+	TENANT: string;
+	TENANT_BASE_DOMAIN: string;
+
 	APP_VERSION: string;
 
 	GOOGLE_MAPS_API_KEY: string;
@@ -93,6 +98,11 @@ export const env: Env = cleanEnv(process.env, {
 	}),
 	SERVICES_ENDPOINT: str({ default: 'http://localhost:5500' }),
 	HTTPS_SERVICES_ENDPOINT: str({ default: 'https://localhost:2087' }),
+
+	// '' = not set. Carrier logins need no tenant (the login token carries it); when
+	// set, the app names it before login and the API refuses other tenants' carriers.
+	TENANT: str({ default: '' }),
+	TENANT_BASE_DOMAIN: str({ default: '' }),
 
 	// For maintenance micro service. Ever maintenance API URL: https://maintenance.ever.co/status
 	SETTINGS_APP_TYPE: str({ default: 'carrier-mobile' }),

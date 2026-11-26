@@ -87,6 +87,10 @@ export const environment: Environment = {
   SERVICES_ENDPOINT: '${env.SERVICES_ENDPOINT}',
   HTTPS_SERVICES_ENDPOINT: '${env.HTTPS_SERVICES_ENDPOINT}',
 
+  // Multi-tenant (docs/multi-tenant/DESIGN.md §3.3)
+  TENANT: '${env.TENANT}',
+  TENANT_BASE_DOMAIN: '${env.TENANT_BASE_DOMAIN}',
+
   FAKE_INVITE: {
     ID: '${env.FAKE_INVITE_ID}',
 	  CITY: '${env.FAKE_INVITE_CITY}',

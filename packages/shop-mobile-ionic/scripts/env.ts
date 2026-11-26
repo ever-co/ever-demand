@@ -60,6 +60,11 @@ export type Env = Readonly<{
 	SERVICES_ENDPOINT: string;
 	HTTPS_SERVICES_ENDPOINT: string;
 
+	// Multi-tenant (docs/multi-tenant/DESIGN.md §3.3): a white-label build's tenant
+	// slug or id, and the parent domain of `<slug>.<TENANT_BASE_DOMAIN>` web hosts.
+	TENANT: string;
+	TENANT_BASE_DOMAIN: string;
+
 	FAKE_INVITE_ID: string;
 	FAKE_INVITE_CITY: string;
 	FAKE_INVITE_POSTCODE: string;
@@ -155,6 +160,11 @@ export const env: any = cleanEnv(
 		}),
 		SERVICES_ENDPOINT: str({ default: 'http://localhost:5500' }),
 		HTTPS_SERVICES_ENDPOINT: str({ default: 'https://localhost:2087' }),
+
+		// '' = not set: the web build then uses its host's sub-domain, a `?tenant=`
+		// link or the tenant kept from an earlier visit (single-tenant API: none needed).
+		TENANT: str({ default: '' }),
+		TENANT_BASE_DOMAIN: str({ default: '' }),
 
 		FAKE_INVITE_ID: str({ default: '1ae9d04f9010d834f8906881' }),
 		FAKE_INVITE_CITY: str({ default: 'Sofia' }),

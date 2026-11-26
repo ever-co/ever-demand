@@ -39,6 +39,10 @@ export const environment: Environment = {
 	GQL_ENDPOINT: ${q(env.GQL_ENDPOINT)},
 	GQL_SUBSCRIPTIONS_ENDPOINT: ${q(env.GQL_SUBSCRIPTIONS_ENDPOINT)},
 
+	// Multi-tenant (docs/multi-tenant/DESIGN.md §3.3)
+	TENANT: ${q(env.TENANT)},
+	TENANT_BASE_DOMAIN: ${q(env.TENANT_BASE_DOMAIN)},
+
 	APP_VERSION: ${q(env.APP_VERSION)},
 
 	GOOGLE_MAPS_API_KEY: ${q(env.GOOGLE_MAPS_API_KEY)},

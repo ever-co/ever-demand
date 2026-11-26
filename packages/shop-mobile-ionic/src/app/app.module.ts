@@ -25,6 +25,7 @@ import { createClient } from 'graphql-ws';
 import { getOperationAST } from 'graphql';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { CommonModule } from '@modules/client.common.angular2/common.module';
+import { tenantHeaders } from '@modules/client.common.angular2/lib/tenant';
 import { GoogleMapsLoader } from '@modules/client.common.angular2/services/googleMapsLoader';
 import { MaintenanceService } from '@modules/client.common.angular2/services/maintenance.service';
 import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
@@ -37,6 +38,7 @@ import { ServerSettings } from './services/server-settings';
 import { PagesModuleGuard } from './pages/pages.module.guard';
 import { MaintenanceModuleGuard } from './maintenance-info/maintenance-info.module.guard';
 import { CallPageModule } from './pages/+products/+order/+call/call.module';
+import { shopTenantConfig, subscriptionParams } from './tenant';
 
 // Apollo Client 4 types the default options: declare the error policies the
 // app uses (see apolloOptionsFactory).
@@ -71,6 +73,10 @@ declare module '@apollo/client' {
 		}),
 		CommonModule.forRoot({
 			apiUrl: environment.SERVICES_ENDPOINT,
+			// every socket handshake names the shop's tenant (and the
+			// customer's token, when logged in): DESIGN.md §3.3
+			tenant: shopTenantConfig(),
+			tokenStorageKey: 'token',
 		}),
 	],
 	providers: [
@@ -129,12 +135,9 @@ export function apolloOptionsFactory(): ApolloClient.Options {
 	const ws = new GraphQLWsLink(
 		createClient({
 			url: environment.GQL_SUBSCRIPTIONS_ENDPOINT,
-			// The API reads the token from the connection params (graphql-ws
-			// has no HTTP headers); read when the socket (re)connects.
-			connectionParams: () => {
-				const token = store.token;
-				return token ? { authorization: `Bearer ${token}` } : {};
-			},
+			// The API reads the token and the tenant from the connection params
+			// (graphql-ws has no HTTP headers); read when the socket (re)connects.
+			connectionParams: () => subscriptionParams(store.token),
 			lazy: true,
 			retryAttempts: Infinity,
 			shouldRetry: () => true,
@@ -148,6 +151,8 @@ export function apolloOptionsFactory(): ApolloClient.Options {
 		return {
 			headers: {
 				...prevContext.headers,
+				// customers belong to one tenant: name it (DESIGN.md §3.3)
+				...tenantHeaders(shopTenantConfig()),
 				authorization: token ? `Bearer ${token}` : '',
 			},
 		};

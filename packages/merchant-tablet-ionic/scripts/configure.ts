@@ -39,6 +39,10 @@ export const environment: Environment = {
 	SERVICES_ENDPOINT: ${q(env.SERVICES_ENDPOINT)},
 	HTTPS_SERVICES_ENDPOINT: ${q(env.HTTPS_SERVICES_ENDPOINT)},
 
+	// Multi-tenant (docs/multi-tenant/DESIGN.md §3.3)
+	TENANT: ${q(env.TENANT)},
+	TENANT_BASE_DOMAIN: ${q(env.TENANT_BASE_DOMAIN)},
+
 	APP_VERSION: ${q(env.APP_VERSION)},
 
 	API_FILE_UPLOAD_URL: ${q(env.API_FILE_UPLOAD_URL)},

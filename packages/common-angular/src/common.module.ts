@@ -11,6 +11,8 @@ interface CommonModuleConfig {
 	tenant?: ClientTenantConfig;
 	/** localStorage key of the login token sent in the socket handshake; null = none */
 	tokenStorageKey?: string | null;
+	/** Send the tenant next to a login token (super-admin tenant switch) */
+	tenantWithToken?: boolean;
 }
 
 @NgModule({
@@ -26,7 +28,8 @@ export class CommonModule {
 					provide: SOCKET_AUTH,
 					useValue: socketAuthFrom(
 						options.tenant ?? {},
-						options.tokenStorageKey === undefined ? 'token' : options.tokenStorageKey
+						options.tokenStorageKey === undefined ? 'token' : options.tokenStorageKey,
+						options.tenantWithToken === true
 					),
 				},
 			],

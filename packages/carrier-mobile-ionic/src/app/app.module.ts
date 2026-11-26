@@ -9,7 +9,7 @@ import { GoogleMapsLoader } from '@modules/client.common.angular2/services/googl
 import { MaintenanceService } from '@modules/client.common.angular2/services/maintenance.service';
 import { ServerConnectionService } from '@modules/client.common.angular2/services/server-connection.service';
 import { PipesModule } from '@modules/client.common.angular2/pipes/pipes.module';
-import { GraphQLModule } from '../graphql/apollo.config';
+import { appTenantConfig, GraphQLModule } from '../graphql/apollo.config';
 import { environment } from '../environments/environment';
 import { CarriersOrdersService } from '../services/carriers-orders.service';
 import { Store } from '../services/store.service';
@@ -33,6 +33,10 @@ import { AppComponent } from './app.component';
 		IonicModule.forRoot(),
 		CommonModule.forRoot({
 			apiUrl: environment.SERVICES_ENDPOINT,
+			// socket handshakes name the tenant and the carrier's login token
+			// (DESIGN.md §3.3); the login page re-handshakes after login
+			tenant: appTenantConfig(),
+			tokenStorageKey: 'token',
 		}),
 		PipesModule,
 	],

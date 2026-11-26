@@ -21,8 +21,17 @@ export class RoutersService {
 	 * tenant switch, so the server resolves the new tenant and token.
 	 */
 	reconnectAll() {
+		// Close each shared engine.io connection once: the server then drops every
+		// namespace of this client together, so the new CONNECT packets (current
+		// tenant and token) never race a DISCONNECT it has not processed yet (a
+		// namespace DISCONNECT + CONNECT back to back makes socket.io close the
+		// whole client with "invalid state").
+		const managers = new Set(this.all.map((socket) => (socket.ioSocket as any).io));
+
+		managers.forEach((manager: any) => manager?.engine?.close());
+
 		for (const socket of this.all) {
-			socket.reconnect();
+			socket.connect();
 		}
 	}
 

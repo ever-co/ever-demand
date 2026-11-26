@@ -113,15 +113,21 @@ export interface SocketAuth {
  */
 export const SOCKET_AUTH = new InjectionToken<() => SocketAuth>('socket_auth');
 
-/** A SOCKET_AUTH provider from a tenant config and a localStorage token key. */
+/**
+ * A SOCKET_AUTH provider from a tenant config and a localStorage token key.
+ * With a login token only the token is sent (its tenant wins on the server,
+ * and a kept `?tenant=` of another tenant would make the handshake fail),
+ * unless `tenantWithToken` (the admin app's super-admin switch).
+ */
 export function socketAuthFrom(
 	config: ClientTenantConfig,
-	tokenStorageKey: string | null = 'token'
+	tokenStorageKey: string | null = 'token',
+	tenantWithToken = false
 ): () => SocketAuth {
 	return () => {
 		const auth: SocketAuth = {};
-		const tenant = resolveClientTenant(config);
 		const token = tokenStorageKey ? safeStorage()?.getItem(tokenStorageKey) : null;
+		const tenant = !token || tenantWithToken ? resolveClientTenant(config) : null;
 
 		if (tenant) {
 			auth.tenant = tenant;

@@ -53,7 +53,7 @@ import { Store } from './services/store';
 import { GeoLocationService } from './services/geo-location';
 import { LocationPopupModalModule } from './shared/location-popup/location-popup.module';
 import { AuthGuard } from './authentication/auth.guard';
-import { createApolloOptions } from './apollo-options';
+import { createApolloOptions, shopTenantConfig } from './apollo-options';
 
 const APP_PROVIDERS = [
 	ServerConnectionService,
@@ -121,6 +121,10 @@ const APP_PROVIDERS = [
 		IconsModule,
 		CommonModule.forRoot({
 			apiUrl: environment.SERVICES_ENDPOINT,
+			// every socket handshake names the shop's tenant (and the
+			// customer's token, when logged in): DESIGN.md §3.3
+			tenant: shopTenantConfig(),
+			tokenStorageKey: 'token',
 		}),
 		LocationPopupModalModule,
 	],

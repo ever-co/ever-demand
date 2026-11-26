@@ -29,6 +29,11 @@ export interface Environment {
 	SERVICES_ENDPOINT: string;
 	HTTPS_SERVICES_ENDPOINT: string;
 
+	/** White-label build: tenant slug or id ('' = none) */
+	TENANT: string;
+	/** Parent domain of `<slug>.<TENANT_BASE_DOMAIN>` app hosts ('' = none) */
+	TENANT_BASE_DOMAIN: string;
+
 	DEFAULT_LANGUAGE: string;
 
 	// For maintenance micro service

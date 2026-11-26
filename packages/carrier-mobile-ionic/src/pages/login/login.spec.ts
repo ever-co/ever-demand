@@ -2,6 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
+import { RoutersService } from '@modules/client.common.angular2/lib/router';
 import { of } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { Store } from '../../services/store.service';
@@ -12,11 +13,13 @@ describe('LoginPage', () => {
 	let auth: { login: ReturnType<typeof vi.fn> };
 	let store: Record<string, unknown>;
 	let router: { navigateByUrl: ReturnType<typeof vi.fn> };
+	let routers: { reconnectAll: ReturnType<typeof vi.fn> };
 
 	beforeEach(async () => {
 		auth = { login: vi.fn() };
 		store = {};
 		router = { navigateByUrl: vi.fn() };
+		routers = { reconnectAll: vi.fn() };
 
 		await TestBed.configureTestingModule({
 			imports: [LoginPageModule, TranslateModule.forRoot()],
@@ -24,6 +27,7 @@ describe('LoginPage', () => {
 				{ provide: AuthService, useValue: auth },
 				{ provide: Store, useValue: store },
 				{ provide: Router, useValue: router },
+				{ provide: RoutersService, useValue: routers },
 			],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
@@ -60,6 +64,23 @@ describe('LoginPage', () => {
 		});
 	});
 
+	it('reconnects the sockets after a login, so they handshake with the token (DESIGN.md §3.5)', async () => {
+		auth.login.mockReturnValue(
+			of({ token: 'jwt', carrier: { id: 'c1' } })
+		);
+		vi.spyOn(console, 'log').mockImplementation(() => undefined);
+		routers.reconnectAll.mockImplementation(() =>
+			expect(store.token).toBe('jwt')
+		);
+		const page = TestBed.createComponent(LoginPage).componentInstance;
+
+		expect(routers.reconnectAll).not.toHaveBeenCalled();
+
+		await page.login();
+
+		expect(routers.reconnectAll).toHaveBeenCalledTimes(1);
+	});
+
 	it('warns when the carrier does not exist', async () => {
 		auth.login.mockReturnValue(of(null));
 		const alert = vi.spyOn(window, 'alert').mockImplementation(() => undefined);
@@ -69,5 +90,6 @@ describe('LoginPage', () => {
 
 		expect(alert).toHaveBeenCalledWith('Carrier not exists!');
 		expect(router.navigateByUrl).not.toHaveBeenCalled();
+		expect(routers.reconnectAll).not.toHaveBeenCalled();
 	});
 });
