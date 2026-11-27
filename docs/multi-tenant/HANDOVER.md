@@ -1,6 +1,6 @@
 # Ever Demand multi-tenant: handover
 
-Last updated: 2026-11-26 ~23:00 CET by the multi-tenant session. Update this after every milestone, then commit and push.
+Last updated: 2026-11-27 ~13:30 CET by the multi-tenant session. Update this after every milestone, then commit and push.
 
 ## State
 
@@ -31,8 +31,8 @@ Last updated: 2026-11-26 ~23:00 CET by the multi-tenant session. Update this aft
 | Admin app: signup, settings (tenant, billing, members), super-admin switcher | `packages/admin-web-angular/src/app/pages/+signup`, `+settings`, `@core/tenant` | 134 Vitest, Playwright multi-tenant |
 | Shops, merchant, carrier send their tenant | each app's env + Apollo link + `CommonModule.forRoot` / socket auth | each app's tests |
 
-Tests (2026-11-26, after the develop merge): core unit **708/708**, single-tenant API e2e **51/51** (`test:e2e`),
-multi-tenant isolation e2e **42/42** (`test:e2e:mt`); admin 134, shop-web 118, shop-mobile-ionic 318, merchant 54,
+Tests (2026-11-26, after the develop merge): core unit **712/712**, single-tenant API e2e **51/51** (`test:e2e`),
+multi-tenant isolation e2e **48/48** (`test:e2e:mt`, twice in a row); admin 134, shop-web 118, shop-mobile-ionic 318, merchant 54,
 carrier 69 (Vitest); Expo 195 (Jest), Gatsby 75, Flutter 216 (before the merge, untouched by it). Mutation check:
 with read filtering disabled, 12 of the 34 isolation specs of that time failed.
 
@@ -49,7 +49,15 @@ the `actions` cell, so `WarehouseOrderComponent.renderValue` reads `.actionName`
 Fixed: socket.io listeners were open to anyone naming a tenant (now default deny); `stripeCustomerId` was
 client-writable (now server-only); REST product create was open; staff could manage members; an admin could edit the
 owner's login email; anyone could remove a super-admin; signup rate limit behind a proxy (`TRUST_PROXY`);
-`currentTenant` showed billing to shops. Still open (follow-ups): customer flows have no ownership checks inside a
+`currentTenant` showed billing to shops.
+
+Greptile on #1668 (fixed in 2567eba6, threads answered and resolved): open socket.io / graphql-ws connections kept
+the access of a removed admin or suspended tenant (now re-checked per call and every `TENANT_ACCESS_RECHECK_MS`,
+then disconnected); new tenants could charge cards on the platform Stripe account (now platform tenant only,
+`tenant/card-payments.ts`); duplicate Checkouts, webhook events lost on a crash, old events overwriting newer billing
+(one open Checkout, `processing`/`done` events, state always read from Stripe); a switched super-admin was logged
+out on reload (`TenantContext.runForOwnAccount`). The e2e suite runs billing against `test/e2e/fake-stripe.ts`.
+Still open (follow-ups): customer flows have no ownership checks inside a
 tenant (any caller can act on a customer by id, as before); tokens never expire (a removed admin's token still passes
 token-argument checks); plan limits can be exceeded by parallel creates; admin / tenant caches are 30 s per process.
 
@@ -90,6 +98,8 @@ No secret is in the repo; the e2e uses fixed test-only values.
   (`jest.e2e-mt.config.js` was missing).
 - Windows reserves port ranges (e.g. 51988-52187, see `netsh int ipv4 show excludedportrange protocol=tcp`): an API
   port there fails with `listen EACCES`.
+- pyro observables: the client sends `<callId>_subscribe` right after the call, so its listener is set up in
+  `receivedCall` (synchronously), not in the async `handleRequest` (which waits for the access re-check).
 - Long heredocs in the Bash tool fail with "unexpected EOF": write scripts to the scratchpad and run them.
 - `RoutersService.reconnectAll` must close each engine.io connection once: a namespace DISCONNECT + CONNECT back to
   back makes the socket.io server drop the whole client ("invalid state").
