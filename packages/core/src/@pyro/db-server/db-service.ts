@@ -522,9 +522,16 @@ export abstract class DBService<T extends DBObject<any, any>>
 		try {
 			lastValues = await this.find(findObj);
 
-			await this.Model.updateMany(findObj, updateObj, {
+			const result = await this.Model.updateMany(findObj, updateObj, {
 				new: true,
 			}).exec();
+
+			// The write checks `findObj` again. When it matched nothing (a
+			// concurrent write changed the objects since the read above),
+			// nothing was updated: return no objects and send no events.
+			if (result != null && result.matchedCount === 0) {
+				lastValues = [];
+			}
 
 			updatedObjects = await this.getCurrentMultiple(
 				_.map(lastValues, (value) => value.id)

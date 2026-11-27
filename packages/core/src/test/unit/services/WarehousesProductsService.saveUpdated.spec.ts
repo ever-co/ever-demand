@@ -55,11 +55,22 @@ describe('WarehousesProductsService writes products as refs (regression: order c
 	let service: WarehousesProductsService;
 
 	beforeEach(() => {
-		// applies the `products.$.<field>` $set to the stored element
+		// applies the `products.$.<field>` $set (or an $inc) to the stored element
 		updateMultiple = jest.fn(async (_find, update) => {
-			const stored: any = { _id: WAREHOUSE_PRODUCT_ID };
+			const stored: any = {
+				_id: WAREHOUSE_PRODUCT_ID,
+				product: PRODUCT_ID,
+				count: 10,
+				soldCount: 0,
+			};
 			for (const [path, value] of Object.entries(update)) {
-				stored[path.replace(/^products\.\$\./, '')] = value;
+				if (path === '$inc') {
+					for (const [incPath, by] of Object.entries(value as object)) {
+						stored[incPath.replace(/^products\.\$\./, '')] += by;
+					}
+				} else {
+					stored[path.replace(/^products\.\$\./, '')] = value;
+				}
 			}
 			return [{ products: [new WarehouseProduct(stored)] }];
 		});
@@ -75,10 +86,26 @@ describe('WarehousesProductsService writes products as refs (regression: order c
 		service = new WarehousesProductsService(warehousesService as any);
 	});
 
-	it('decreaseCount() (order create) writes the product id, not the populated product', async () => {
+	it('decreaseCount() (order create) writes only the count change, never the populated product', async () => {
 		const updated = await service.decreaseCount(STORE_ID, PRODUCT_ID, 2);
 
 		expect(updateMultiple).toHaveBeenCalledTimes(1);
+
+		const [findObj, updateObj] = updateMultiple.mock.calls[0];
+		expect(String(findObj._id)).toBe(STORE_ID);
+		expect(String(findObj.products.$elemMatch.product)).toBe(PRODUCT_ID);
+		expect(findObj.products.$elemMatch.count).toEqual({ $gte: 2 });
+
+		// one $inc of the matched element (`products.$`): no product ref, no
+		// `products.$._updatedAt` and no other field of an old snapshot
+		expect(updateObj).toEqual({ $inc: { 'products.$.count': -2 } });
+
+		expect(updated.productId).toBe(PRODUCT_ID);
+		expect(updated.count).toBe(8);
+	});
+
+	it('saveUpdated() writes the product id, not the populated product', async () => {
+		await service.saveUpdated(STORE_ID, populatedWarehouseProduct(4));
 
 		const [findObj, updateObj] = updateMultiple.mock.calls[0];
 		expect(String(findObj._id)).toBe(STORE_ID);
@@ -92,12 +119,9 @@ describe('WarehousesProductsService writes products as refs (regression: order c
 		expect(updateObj).not.toHaveProperty(['products.$._updatedAt']);
 
 		expect(updateObj['products.$.product']).toBe(PRODUCT_ID);
-		expect(updateObj['products.$.count']).toBe(8);
+		expect(updateObj['products.$.count']).toBe(4);
 		expect(updateObj['products.$.price']).toBe(1500);
 		expect(updateObj['products.$.soldCount']).toBe(0);
-
-		expect(updated.productId).toBe(PRODUCT_ID);
-		expect(updated.count).toBe(8);
 	});
 
 	it('saveUpdated() leaves the caller object populated', async () => {
