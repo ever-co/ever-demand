@@ -13,6 +13,7 @@ import { useServer } from 'graphql-ws/use/ws';
 import { createWsGraphQLContext } from '../graphql-context';
 import { TenantContext, TenantCtx } from '../../tenant/tenant-context';
 import {
+	clientAddress,
 	headerValue,
 	resolveTenantContext,
 } from '../../tenant/tenant-resolver';
@@ -110,6 +111,10 @@ export async function startSubscriptionsServer(
 						headerValue(headers['tenant-id'] as any),
 					host: headerValue(headers.host),
 					origin: headerValue(headers.origin),
+					clientIp: clientAddress(
+						ctx.extra.request.socket?.remoteAddress,
+						headers['x-forwarded-for'],
+					),
 				};
 
 				try {

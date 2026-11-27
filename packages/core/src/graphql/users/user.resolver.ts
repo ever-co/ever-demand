@@ -167,6 +167,12 @@ export class UserResolver {
 		return this._usersService.removeMultipleByIds(usersIds);
 	}
 
+	/** Guarded like `devices` (GRAPHQL_FIELD_ACCESS): the ids lead to the push channels. */
+	@ResolveField('devicesIds')
+	getDevicesIds(parent: { devicesIds?: string[] }): string[] {
+		return parent?.devicesIds ?? [];
+	}
+
 	@ResolveField('devices')
 	async getDevices(_user: IUser) {
 		const user = new User(_user);

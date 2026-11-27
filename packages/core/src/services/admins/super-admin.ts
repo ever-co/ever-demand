@@ -5,6 +5,7 @@ import { getModel } from '@pyro/db-server/model';
 import { env } from '../../env';
 import { TenantContext } from '../../tenant/tenant-context';
 import { forgetCachedAccount } from '../../tenant/tenant-resolver';
+import { tenantDirectory } from '../../tenant/tenant-directory';
 import { DEV_FIRST_ADMIN_PASSWORD } from './firstAdminPassword';
 
 /**
@@ -45,8 +46,14 @@ export async function syncSuperAdmin(
 				return false;
 			}
 
+			// only an admin of the platform (default) tenant, never one of a tenant
+			// that signed up with the email before it was configured
 			const admin = await admins
-				.findOne({ email: wanted })
+				.findOne({
+					email: wanted,
+					tenantId: tenantDirectory.getDefaultTenantId(),
+					isDeleted: { $ne: true },
+				})
 				.select('+hash')
 				.lean()
 				.exec();
@@ -84,4 +91,34 @@ export async function syncSuperAdmin(
 	forgetCachedAccount();
 
 	return granted;
+}
+
+/** SUPER_ADMIN_EMAIL, lowercased; '' when none is configured. */
+export function superAdminEmail(): string {
+	return String(env.SUPER_ADMIN_EMAIL ?? '')
+		.trim()
+		.toLowerCase();
+}
+
+/**
+ * Refuses SUPER_ADMIN_EMAIL to an admin of any tenant but the platform
+ * (default) one: a tenant signing up (or an admin renaming their login)
+ * with it would otherwise become the platform super-admin at the next boot.
+ */
+export function assertMayUseAdminEmail(
+	email: unknown,
+	tenantId: string | null,
+): void {
+	const reserved = superAdminEmail();
+	const wanted = String(email ?? '')
+		.trim()
+		.toLowerCase();
+
+	if (
+		reserved &&
+		wanted === reserved &&
+		tenantId !== tenantDirectory.getDefaultTenantId()
+	) {
+		throw new Error('This email is reserved: choose another one');
+	}
 }

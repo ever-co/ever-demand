@@ -30,6 +30,8 @@ export interface TenantCtx {
 	 * Stripe webhooks). Queries are then not filtered.
 	 */
 	system?: string;
+	/** Address of the client (behind TRUST_PROXY: from X-Forwarded-For), e.g. for login throttling */
+	clientIp?: string;
 }
 
 /** A tenant-owned collection was used without a tenant. */

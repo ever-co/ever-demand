@@ -2,6 +2,7 @@ import type { Socket } from 'socket.io';
 import { TenantContext, TenantCtx } from './tenant-context';
 import { accessRecheckMs, recheckAccess } from './tenant-access-recheck';
 import {
+	clientAddress,
 	headerValue,
 	resolveTenantContext,
 	TenantResolutionError,
@@ -38,6 +39,10 @@ export function socketTenantInfo(
 			headerValue(headers['x-forwarded-host'] as any) ??
 			headerValue(headers.host as any),
 		origin: headerValue(headers.origin as any),
+		clientIp: clientAddress(
+			(socket.handshake as any)?.address,
+			headers['x-forwarded-for'] as any,
+		),
 	};
 }
 

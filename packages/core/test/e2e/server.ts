@@ -81,6 +81,8 @@ export function serverEnv(): NodeJS.ProcessEnv {
 					TENANT_BASE_DOMAIN,
 					TENANT_SIGNUPS_PER_HOUR: '1000',
 					SUPER_ADMIN_EMAIL: 'admin@ever.co',
+					// client addresses from X-Forwarded-For (login throttling per address)
+					TRUST_PROXY: 'loopback',
 					ADMIN_APP_URL: `http://app.${TENANT_BASE_DOMAIN}`,
 					// Stripe is the suite's fake (fake-stripe.ts); webhook events are signed locally
 					STRIPE_BILLING_SECRET_KEY: 'sk_test_core_e2e_offline',

@@ -96,7 +96,7 @@ export class CarriersService extends DBService<Carrier>
 
 		const carrier = await super.create({
 			// server-side fields are never taken from the caller
-			...(stripProtectedFields(input.carrier) as typeof input.carrier),
+			...(stripProtectedFields(input.carrier, { create: true }) as typeof input.carrier),
 			...(input.password
 				? {
 						hash: await this.authService.getPasswordHash(

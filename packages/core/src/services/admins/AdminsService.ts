@@ -15,6 +15,7 @@ import { first, map, switchMap } from 'rxjs/operators';
 import { TenantScopedRepository } from '../../tenant/tenant-repository';
 import Logger from 'bunyan';
 import { stripProtectedFields } from '../stripProtectedFields';
+import { assertMayUseAdminEmail } from './super-admin';
 import { TenantContext } from '../../tenant/tenant-context';
 import type { TenantRole } from '@modules/server.common/interfaces/ITenant';
 
@@ -98,6 +99,8 @@ export class AdminsService extends DBService<Admin> implements IAdminRouter {
 
 		const email = String(fields.email ?? '').trim().toLowerCase();
 
+		assertMayUseAdminEmail(email, TenantContext.tenantId());
+
 		// admin emails are unique across tenants (login needs no tenant)
 		const taken = await TenantContext.runAsSystem(
 			'admin emails are unique across tenants',
@@ -176,6 +179,14 @@ export class AdminsService extends DBService<Admin> implements IAdminRouter {
 		updateObject: Partial<Admin>
 	): Promise<Admin> {
 		await this.throwIfNotExists(id);
+
+		if (updateObject?.email !== undefined) {
+			assertMayUseAdminEmail(
+				updateObject.email,
+				TenantContext.tenantId(),
+			);
+		}
+
 		return super.update(id, stripProtectedFields(updateObject));
 	}
 

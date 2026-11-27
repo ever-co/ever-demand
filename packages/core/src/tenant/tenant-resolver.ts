@@ -29,6 +29,35 @@ export interface TenantRequestInfo {
 	host?: string | null;
 	/** `Origin` header (a page on `<slug>.everdemand.co` calling api.everdemand.co) */
 	origin?: string | null;
+	/** Address of the client (see clientAddress); kept in the context */
+	clientIp?: string | null;
+}
+
+/**
+ * The client's address: behind a proxy (TRUST_PROXY set) the last
+ * X-Forwarded-For entry, the one our proxy added (earlier entries are the
+ * client's own claims); otherwise the connection's address.
+ */
+export function clientAddress(
+	remoteAddress: string | null | undefined,
+	forwardedFor: string | string[] | null | undefined,
+): string | undefined {
+	if (env.TRUST_PROXY) {
+		const header = Array.isArray(forwardedFor)
+			? forwardedFor.join(',')
+			: forwardedFor;
+		const last = String(header ?? '')
+			.split(',')
+			.map((part) => part.trim())
+			.filter(Boolean)
+			.pop();
+
+		if (last) {
+			return last;
+		}
+	}
+
+	return remoteAddress ?? undefined;
 }
 
 export class TenantResolutionError extends Error {
@@ -226,6 +255,12 @@ function checkStatus(tenant: Tenant, actor?: TenantActor) {
 export async function resolveTenantContext(
 	info: TenantRequestInfo,
 ): Promise<TenantCtx> {
+	const ctx = await resolveTenant(info);
+
+	return info.clientIp ? { ...ctx, clientIp: info.clientIp } : ctx;
+}
+
+async function resolveTenant(info: TenantRequestInfo): Promise<TenantCtx> {
 	const headerTenant = await headerTenantOf(info);
 	const token = verifyLoginToken(info.authorization);
 	const actor = token ? await actorOf(token) : null;

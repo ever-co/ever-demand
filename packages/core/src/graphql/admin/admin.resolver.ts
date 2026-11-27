@@ -10,6 +10,7 @@ import Admin from '@modules/server.common/entities/Admin';
 import { env } from '../../env';
 import { ForbiddenException } from '@nestjs/common';
 import { TenantContext } from '../../tenant/tenant-context';
+import { assertMayUseAdminEmail } from '../../services/admins/super-admin';
 
 /**
  * An admin edits their own profile. Editing another admin of the tenant
@@ -87,6 +88,7 @@ export class AdminResolver {
 
 			if (typeof input.email === 'string') {
 				input.email = input.email.trim().toLowerCase();
+				assertMayUseAdminEmail(input.email, TenantContext.tenantId());
 			}
 
 			return this._adminsService.update(id, input);

@@ -127,7 +127,14 @@ export class AuthService<T extends IAuthable> extends EntityService<T> {
 
 		const isGlobal = GLOBAL_LOGIN_ROLES.has(this.role);
 		const requestTenantId = TenantContext.tenantId();
-		const throttleKey = `${this.role}:${Object.values(findObj).join(':').toLowerCase()}`;
+		// per client address, so nobody can lock others out of a login, and per
+		// tenant for the logins that are per tenant (customers)
+		const throttleKey = [
+			this.role,
+			isGlobal ? '' : (requestTenantId ?? ''),
+			TenantContext.current()?.clientIp ?? '',
+			Object.values(findObj).join(':').toLowerCase(),
+		].join('|');
 
 		if (loginThrottle.isBlocked(throttleKey)) {
 			return null;

@@ -52,7 +52,9 @@ export class ProductsCategoriesService extends DBService<ProductsCategory>
 		category: CreateObject<ProductsCategory>
 	): Promise<ProductsCategory> {
 		return super.create(
-			stripProtectedFields(category) as CreateObject<ProductsCategory>,
+			stripProtectedFields(category, {
+				create: true,
+			}) as CreateObject<ProductsCategory>,
 		);
 	}
 

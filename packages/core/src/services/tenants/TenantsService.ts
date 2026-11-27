@@ -20,6 +20,7 @@ import {
 	tenantDirectory,
 } from '../../tenant/tenant-directory';
 import { forgetCachedAdmin } from '../../tenant/tenant-resolver';
+import { assertMayUseAdminEmail } from '../admins/super-admin';
 import { tenantUsage } from '../../tenant/plan-limits';
 
 export interface TenantSignupInput {
@@ -151,6 +152,9 @@ export class TenantsService extends DBService<Tenant> {
 		if (!(await this.isSlugAvailable(slug))) {
 			throw new Error(`The address "${slug}" is taken`);
 		}
+
+		// a new tenant is never the platform: its owner may not take SUPER_ADMIN_EMAIL
+		assertMayUseAdminEmail(email, null);
 
 		const emailTaken = await TenantContext.runAsSystem(
 			'admin emails are unique across tenants',

@@ -1888,6 +1888,105 @@ describe('multi-tenant isolation', () => {
 			} finally {
 				pyro.close();
 			}
+
+			// ... from this address only: the carrier itself (another address) still logs in
+			const elsewhere = new PyroClient(
+				{ tenant: A.slug },
+				{ 'X-Forwarded-For': '203.0.113.7' },
+			);
+
+			try {
+				const res = await elsewhere.call<any>(
+					'carrier',
+					'login',
+					carrier.username,
+					'carrier-password',
+				);
+				expect(res?.token).toEqual(expect.any(String));
+			} finally {
+				elsewhere.close();
+			}
+		});
+
+		it('reserves SUPER_ADMIN_EMAIL to the platform tenant', async () => {
+			const signupWithIt = await gql(
+				`mutation S($input: TenantSignupInput!) { signupTenant(input: $input) { token } }`,
+				{
+					input: {
+						businessName: 'Super Grab',
+						slug: `super-grab-${unique()}`,
+						email: 'ADMIN@ever.co',
+						password: 'grab-password',
+						firstName: 'Mal',
+						lastName: 'Lory',
+					},
+				},
+				ANONYMOUS,
+			);
+			expect(signupWithIt.errors?.[0].message).toMatch(/reserved/);
+
+			// nor may a tenant's admin rename its login to it
+			const rename = await gql(
+				`mutation U($id: String!) { updateAdmin(id: $id, updateInput: { email: "admin@ever.co" }) { id } }`,
+				{ id: A.ownerId },
+				A.token,
+			);
+			expect(rename.errors?.[0].message).toMatch(/reserved/);
+
+			const owner = await gqlData(
+				`query A($id: String!) { admin(id: $id) { email } }`,
+				{ id: A.ownerId },
+				A.token,
+			);
+			expect(owner.admin.email).toBe(`owner_${A.slug}@example.com`);
+		});
+
+		it('keeps the push channels of devices to admins', async () => {
+			const stores = await gql(
+				`{ getAllActiveStores(fullProducts: false) { id devicesIds } }`,
+				{},
+				ANONYMOUS,
+				tenantHeader(A.slug),
+			);
+			expect(JSON.stringify(stores.data ?? {})).not.toContain(A.deviceId);
+			expect((stores.errors ?? []).map((e) => e.message)).toEqual(
+				expect.arrayContaining([
+					expect.stringMatching(/Warehouse\.devicesIds/),
+				]),
+			);
+
+			const order = await gql(
+				`query O($o: String!) { getOrder(id: $o) { id user { devicesIds } } }`,
+				{ o: A.orderId },
+				ANONYMOUS,
+				tenantHeader(A.slug),
+			);
+			expect(order.errors?.[0].message).toMatch(/User\.devicesIds/);
+
+			const hijack = await gql(
+				`mutation U($id: String!) { updateDevice(id: $id, updateInput: { channelId: "attacker" }) { id } }`,
+				{ id: A.deviceId },
+				ANONYMOUS,
+				tenantHeader(A.slug),
+			);
+			expect(hijack.errors?.[0].extensions?.code).toBe('UNAUTHENTICATED');
+
+			const read = await gql(
+				`query D($id: String!) { device(id: $id) { channelId } }`,
+				{ id: A.deviceId },
+				ANONYMOUS,
+				tenantHeader(A.slug),
+			);
+			expect(read.data?.device ?? null).toBeNull();
+
+			// the tenant's admin still manages its devices
+			const byOwner = await gqlData(
+				`query D($id: String!) { device(id: $id) { id channelId } }`,
+				{ id: A.deviceId },
+				A.token,
+			);
+			expect(byOwner.device.id).toBe(A.deviceId);
+			expect(byOwner.device.channelId).not.toBe('attacker');
 		});
 
 		it('makes only SUPER_ADMIN_EMAIL a platform super-admin', async () => {

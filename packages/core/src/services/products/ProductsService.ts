@@ -68,7 +68,9 @@ export class ProductsService extends DBService<Product>
 	async create(product: CreateObject<Product>): Promise<Product> {
 		// server-side fields are never taken from the caller (socket, GraphQL, REST)
 		return super.create(
-			stripProtectedFields(product) as CreateObject<Product>,
+			stripProtectedFields(product, {
+				create: true,
+			}) as CreateObject<Product>,
 		);
 	}
 

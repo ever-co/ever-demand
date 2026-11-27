@@ -28,6 +28,7 @@ import { getDummyImage } from '@modules/server.common/utils';
 import { ConfigService } from '../config/config.service';
 import { firstAdminPassword } from './admins/firstAdminPassword';
 import { syncSuperAdmin } from './admins/super-admin';
+import { stripProtectedFields } from './stripProtectedFields';
 import {
 	getTypeORMEntities,
 	initTypeORMDataSource,
@@ -480,9 +481,11 @@ export class ServicesApp {
 				return;
 			}
 
-			const warehouseCreateObject: IWarehouseCreateObject = JSON.parse(
-				req.body.warehouse
-			);
+			// server-side fields (hash, flags, tenant, id) never come from the request
+			const warehouseCreateObject = stripProtectedFields(
+				JSON.parse(req.body.warehouse),
+				{ create: true },
+			) as IWarehouseCreateObject;
 
 			const warehouse = await this.warehousesService.create(
 				warehouseCreateObject

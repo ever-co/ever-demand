@@ -74,7 +74,9 @@ export class InvitesService extends DBService<Invite>
 	@asyncListener()
 	create(invite: IInviteCreateObject): Promise<Invite> {
 		// a public listener (open shops): server-side fields are never taken from the caller
-		const input = stripProtectedFields(invite) as IInviteCreateObject;
+		const input = stripProtectedFields(invite, {
+			create: true,
+		}) as IInviteCreateObject;
 
 		if (!input.code) {
 			input.code = Utils.getRandomInt(1001, 9999) + '';

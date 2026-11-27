@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 import { TenantContext } from './tenant-context';
 import {
+	clientAddress,
 	headerValue,
 	resolveTenantContext,
 	TenantResolutionError,
@@ -10,9 +11,16 @@ import {
 export const TENANT_HEADER = 'tenant-id';
 
 export function requestTenantInfo(
-	req: Pick<Request, 'headers'>,
+	req: Pick<Request, 'headers'> & Partial<Pick<Request, 'ip' | 'socket'>>,
 ): TenantRequestInfo {
 	return {
+		// Express applies TRUST_PROXY to req.ip (nest-bootstrap.ts)
+		clientIp:
+			req.ip ??
+			clientAddress(
+				req.socket?.remoteAddress,
+				req.headers['x-forwarded-for'],
+			),
 		authorization: headerValue(req.headers.authorization),
 		tenantHeader: headerValue(req.headers[TENANT_HEADER]),
 		host:

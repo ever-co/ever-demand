@@ -71,7 +71,19 @@ Independent security review of #1668 (2026-11-27, at 2d425c23), fixed on this br
 - LOW: a `$unionWith` on a global collection and aggregations on global collections now scope their tenant reads.
   Still to note: a kept `?tenant=` link (shop-web-gatsby, Expo web, common-angular) wins over the host; revisit when
   custom domains come (a tenant's own domain should win).
-Creates from the socket API drop server-side fields (`stripProtectedFields` on register / create paths).
+Creates from the socket API drop server-side fields (`stripProtectedFields` on register / create paths). A caller's `_id` / `id` is dropped on creates too.
+
+Re-review (at 81759342), fixed with tests:
+- `SUPER_ADMIN_EMAIL` is looked up in the platform (default) tenant only (not deleted), and refused, without case, to
+  signups and to admin registrations or email changes in any other tenant (`assertMayUseAdminEmail`).
+- The login throttle counts per client address (and per tenant for customers), so nobody can lock others out;
+  client addresses come from X-Forwarded-For only behind `TRUST_PROXY` (its last entry).
+- `devicesIds` of stores, carriers and customers is a guarded field like `devices`; GraphQL `device` and
+  `updateDevice` are admin-only (a device holds its push channel). The shops create devices and change their
+  language over socket.io, which cannot change a channel.
+Known, left as is: store and carrier usernames stay in the public types (the apps show them; the throttle is per
+address); socket `device.get` still answers anyone who knows a device id (no update path); `CarrierCreateInput.isDeleted`
+is accepted but ignored.
 Still open (follow-ups): customer flows have no ownership checks inside a
 tenant (any caller can act on a customer by id, as before); tokens never expire (a removed admin's token still passes
 token-argument checks); plan limits can be exceeded by parallel creates; admin / tenant caches are 30 s per process.

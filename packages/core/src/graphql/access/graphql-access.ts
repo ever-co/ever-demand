@@ -110,10 +110,12 @@ export const GRAPHQL_ACCESS: Readonly<Record<string, GraphQLAccess>> = {
 	addTakenOrders: admin,
 
 	// devices (shop apps register theirs)
-	device: 'public',
+	// a device holds its push channel (channelId): only admins read or change one
+	// (the shops create theirs and change its language over socket.io)
+	device: admin,
 	devices: admin,
 	createDevice: 'public',
-	updateDevice: 'public',
+	updateDevice: admin,
 	updateDeviceLanguage: 'public',
 	removeDevice: admin,
 	removeDeviceByIds: admin,
@@ -313,6 +315,13 @@ export const GRAPHQL_FIELD_ACCESS: Readonly<Record<string, FieldAccess>> = {
 	// devices hold push channels: admins, or the carrier itself
 	'Carrier.devices': { access: carrier, ownRecordRoles: ['carrier'] },
 	'User.devices': { access: admin },
+	// the ids of those devices, likewise
+	'Warehouse.devicesIds': { access: store, ownRecordRoles: ['warehouse'] },
+	'Carrier.devicesIds': { access: carrier, ownRecordRoles: ['carrier'] },
+	'User.devicesIds': {
+		access: { roles: ['admin', 'user'] },
+		ownRecordRoles: ['user'],
+	},
 };
 
 /** Whether `ctx` may resolve the field `key` (`<Type>.<field>`) of `parent`. */

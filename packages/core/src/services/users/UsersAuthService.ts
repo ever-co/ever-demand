@@ -91,7 +91,7 @@ export class UsersAuthService extends EntityService<User>
 		// a socket client sends the raw object: it never sets the tenant, hash,
 		// ban / delete flags or the Stripe customer (stripProtectedFields)
 		const user = await this.usersService.create({
-			...(stripProtectedFields(input.user) as typeof input.user),
+			...(stripProtectedFields(input.user, { create: true }) as typeof input.user),
 			...(input.password
 				? {
 						hash: await this.authService.getPasswordHash(

@@ -12,9 +12,13 @@ describe('account cache (accounts behind login tokens)', () => {
 		rememberAccount('warehouse:w1', { isDeleted: false }, 0);
 		rememberAccount('user:u1', null, 0);
 
-		expect(cachedAccount('warehouse:w1', ACCOUNT_CACHE_TTL_MS - 1)).toEqual({ account: { isDeleted: false } });
+		expect(cachedAccount('warehouse:w1', ACCOUNT_CACHE_TTL_MS - 1)).toEqual(
+			{ account: { isDeleted: false } },
+		);
 		expect(cachedAccount('user:u1', 1)).toEqual({ account: null });
-		expect(cachedAccount('warehouse:w1', ACCOUNT_CACHE_TTL_MS)).toBeUndefined();
+		expect(
+			cachedAccount('warehouse:w1', ACCOUNT_CACHE_TTL_MS),
+		).toBeUndefined();
 		expect(cachedAccount('carrier:c1', 0)).toBeUndefined();
 	});
 

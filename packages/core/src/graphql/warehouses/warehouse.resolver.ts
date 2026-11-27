@@ -286,6 +286,12 @@ export class WarehouseResolver {
 		return this._warehousesService.removeMultipleByIds(ids);
 	}
 
+	/** Guarded like `devices` (GRAPHQL_FIELD_ACCESS): the ids lead to the push channels. */
+	@ResolveField('devicesIds')
+	getDevicesIds(parent: { devicesIds?: string[] }): string[] {
+		return parent?.devicesIds ?? [];
+	}
+
 	@ResolveField('devices')
 	async getDevices(_warehouse: IWarehouse) {
 		const warehouse = new Warehouse(_warehouse);

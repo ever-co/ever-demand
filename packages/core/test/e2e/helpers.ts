@@ -135,7 +135,11 @@ export class PyroClient {
 	 * `auth`: the socket.io handshake `auth` of every connection, e.g.
 	 * `{ tenant: 'acme' }` or `{ token }` (DESIGN.md §3.3).
 	 */
-	constructor(private readonly auth: Record<string, string> = {}) {}
+	constructor(
+		private readonly auth: Record<string, string> = {},
+		/** extra HTTP headers of the handshake, e.g. X-Forwarded-For */
+		private readonly headers: Record<string, string> = {},
+	) {}
 
 	private async socket(router: string): Promise<Socket> {
 		let socket = this.sockets.get(router);
@@ -145,6 +149,7 @@ export class PyroClient {
 				reconnection: false,
 				forceNew: true,
 				auth: this.auth,
+				extraHeaders: this.headers,
 			});
 			this.sockets.set(router, socket);
 		}

@@ -76,7 +76,9 @@ export class InvitesRequestsService
 	): Promise<InviteRequest> {
 		// a public listener: server-side fields are never taken from the caller
 		return super.create(
-			stripProtectedFields(inviteRequest) as IInviteRequestCreateObject,
+			stripProtectedFields(inviteRequest, {
+				create: true,
+			}) as IInviteRequestCreateObject,
 		);
 	}
 
