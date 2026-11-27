@@ -1745,6 +1745,118 @@ describe('multi-tenant isolation', () => {
 		});
 	});
 
+	describe('security review: fields, accounts, logins', () => {
+		it("keeps a store's orders, customers and carriers from public store lookups", async () => {
+			const res = await gql(
+				`{ getAllActiveStores(fullProducts: false) { id orders { id user { email phone } } users { id email } carriers { id username phone } } }`,
+				{},
+				ANONYMOUS,
+				tenantHeader(A.slug),
+			);
+
+			const leaked = idsIn(res.data);
+			expect(leaked.has(A.orderId)).toBe(false);
+			expect(leaked.has(A.userId)).toBe(false);
+			expect(leaked.has(A.carrierId)).toBe(false);
+			expect(JSON.stringify(res.data ?? {})).not.toContain(SHARED_CUSTOMER_EMAIL);
+			expect((res.errors ?? []).map((e) => e.message)).toEqual(
+				expect.arrayContaining([expect.stringMatching(/Log in to read Warehouse\.(orders|users|carriers)/)]),
+			);
+
+			// the order of a customer still shows its store and carrier (order tracking)
+			const order = await gqlData(
+				`query O($o: String!) { getOrder(id: $o) { id warehouse { id name } } }`,
+				{ o: A.orderId },
+				ANONYMOUS,
+				tenantHeader(A.slug),
+			);
+			expect(order.getOrder.warehouse.id).toBe(A.storeId);
+		});
+
+		it('lets a store read its own orders, never another store of its tenant', async () => {
+			const login = await gqlData(
+				`mutation L($u: String!) { warehouseLogin(username: $u, password: "store-password") { token } }`,
+				{ u: A.storeUsername },
+				ANONYMOUS,
+			);
+			const storeToken = login.warehouseLogin.token;
+			// another store of A (A is at its Starter limit of 3 stores by now)
+			const stores = await gqlData(`{ warehouses { id } }`, {}, A.token);
+			const other = stores.warehouses.find((w) => w.id !== A.storeId);
+
+			const own = await gqlData(
+				`query W($id: String!) { warehouse(id: $id) { orders { id } } }`,
+				{ id: A.storeId },
+				storeToken,
+			);
+			expect(own.warehouse.orders.map((o) => o.id)).toContain(A.orderId);
+
+			const foreign = await gql(
+				`query W($id: String!) { warehouse(id: $id) { orders { id } } }`,
+				{ id: other.id },
+				storeToken,
+			);
+			expect(foreign.errors?.[0].message).toMatch(/Not allowed: Warehouse\.orders/);
+		});
+
+		it('takes the access of a deleted store login away', async () => {
+			const d = await signup('deleted');
+			const store = await createWarehouse('Short-lived', {}, d.token);
+			const login = await gqlData(
+				`mutation L($u: String!) { warehouseLogin(username: $u, password: "store-password") { token } }`,
+				{ u: store.username },
+				ANONYMOUS,
+			);
+			const token = login.warehouseLogin.token;
+
+			expect((await gqlData(`{ getCountOfCarriers }`, {}, token)).getCountOfCarriers).toBe(0);
+
+			await gqlData(`mutation R($ids: [String!]!) { removeWarehousesByIds(ids: $ids) }`, { ids: [store.id] }, d.token);
+
+			// the token is ignored now: no login, so no tenant and no store access
+			const after = await gql(`{ getCountOfCarriers }`, {}, token);
+			expect(after.data?.getCountOfCarriers ?? null).toBeNull();
+			expect(after.errors?.[0].message).toMatch(/No tenant|Log in/);
+		});
+
+		it('takes logins by exact name only, and slows password guessing', async () => {
+			const carrier = await createCarrier(`guess_${unique()}`, A.token);
+			const pyro = new PyroClient({ tenant: A.slug });
+
+			try {
+				// an operator object never matches an account
+				expect(await pyro.call('carrier', 'login', { $regex: '^guess_' }, 'carrier-password')).toBeNull();
+				expect(await pyro.call('carrier', 'login', { $ne: 'x' }, 'carrier-password')).toBeNull();
+
+				const ok = await pyro.call<any>('carrier', 'login', carrier.username, 'carrier-password');
+				expect(ok?.token).toEqual(expect.any(String));
+
+				for (let i = 0; i < 10; i++) {
+					expect(await pyro.call('carrier', 'login', carrier.username, `wrong-${i}`)).toBeNull();
+				}
+
+				// blocked for a while: even the right password is refused
+				expect(await pyro.call('carrier', 'login', carrier.username, 'carrier-password')).toBeNull();
+			} finally {
+				pyro.close();
+			}
+		});
+
+		it('makes only SUPER_ADMIN_EMAIL a platform super-admin', async () => {
+			const login = await gqlData(
+				`mutation L($e: String!) { adminLogin(email: $e, password: "owner-password") { token } }`,
+				{ e: `owner_${A.slug}@example.com` },
+				ANONYMOUS,
+			);
+			const ownerList = await gql(`{ tenants { tenant { id } } }`, {}, login.adminLogin.token);
+			expect(ownerList.errors?.[0].extensions?.code).toBe('FORBIDDEN');
+
+			// the configured one (with a password other than the default) is
+			const superList = await gqlData(`{ tenants { tenant { id } } }`, {}, await defaultAdminToken());
+			expect(superList.tenants.length).toBeGreaterThanOrEqual(2);
+		});
+	});
+
 	describe('revoked access on open connections', () => {
 		it('disconnects the sockets and subscriptions of a removed admin', async () => {
 			const email = `leaver_${unique()}@example.com`;

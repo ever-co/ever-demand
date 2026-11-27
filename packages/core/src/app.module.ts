@@ -89,6 +89,8 @@ const entities = getTypeORMEntities();
 			// GraphiQL landing page at /graphql (Apollo Server 5 has no Playground)
 			graphiql: true,
 			context: createGraphQLContext,
+			// field resolvers go through the access guard too (GRAPHQL_FIELD_ACCESS)
+			fieldResolverEnhancers: ['guards'],
 		}),
 		// graphql-ws server (subscriptions) on its own port, GQLPORT_SUBSCRIPTIONS
 		SubscriptionsModule.forRoot(env.GQLPORT_SUBSCRIPTIONS),

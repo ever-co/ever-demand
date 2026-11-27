@@ -89,6 +89,7 @@ export type Env = Readonly<{
 	SETTING_INVITES_ENABLED?: boolean;
 	SETTINGS_REGISTRATIONS_REQUIRED_ON_START?: boolean;
 	ADMIN_EMAIL: string;
+	SUPER_ADMIN_EMAIL: string;
 	ADMIN_PASSWORD: string;
 	ADMIN_PASSWORD_RESET?: boolean;
 	FAKE_DATA_GENERATOR?: boolean;
@@ -242,6 +243,10 @@ const cleaned = cleanEnv(
 		ADMIN_EMAIL: str({
 			desc: 'Email of the first admin, created on first boot when no admin with it exists',
 			default: 'admin@ever.co',
+		}),
+		SUPER_ADMIN_EMAIL: str({
+			desc: 'Email of the platform super-admin (may list, switch into and suspend every tenant); empty = none. Never given while that admin still has the default password "admin"',
+			default: '',
 		}),
 		ADMIN_PASSWORD: str({
 			desc: 'Password of the first admin. Required in production (unless DEMO=true); outside production it defaults to "admin"',

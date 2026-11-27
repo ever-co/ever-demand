@@ -106,6 +106,8 @@ function createFakeModel(initial: { count: number; soldCount: number }) {
 			query(() => (match(filter) === -1 ? [] : [copy()])),
 		),
 		findById: jest.fn(() => query(() => copy())),
+		// DBService.getCurrent reads by a tenant-scoped filter ({ _id, tenantId })
+		findOne: jest.fn(() => query(() => copy())),
 		updateMany: jest.fn((filter: any, update: any) =>
 			query(() => {
 				const index = match(filter);

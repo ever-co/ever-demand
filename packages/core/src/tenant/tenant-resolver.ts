@@ -1,5 +1,8 @@
 import jwt from 'jsonwebtoken';
 import Admin from '@modules/server.common/entities/Admin';
+import Carrier from '@modules/server.common/entities/Carrier';
+import User from '@modules/server.common/entities/User';
+import Warehouse from '@modules/server.common/entities/Warehouse';
 import type Tenant from '@modules/server.common/entities/Tenant';
 import { getModel } from '@pyro/db-server/model';
 import { env } from '../env';
@@ -10,6 +13,7 @@ import {
 	TenantCtx,
 } from './tenant-context';
 import { tenantDirectory } from './tenant-directory';
+import { ACCOUNT_CACHE_TTL_MS, accountCache, forgetCachedAccount } from './account-cache';
 
 /** What a request (HTTP, GraphQL over WebSocket, socket.io handshake) tells about its tenant. */
 export interface TenantRequestInfo {
@@ -93,63 +97,94 @@ export function tokenTenantId(token: VerifiedToken): string | null {
 	return token.tenantId ?? tenantDirectory.getDefaultTenantId();
 }
 
-const ADMIN_CACHE_TTL_MS = 30_000;
-const adminCache = new Map<string, { admin: any; at: number }>();
 
-/** Admin flags that decide what a token may do; read fresh (30 s cache), never from the token. */
-async function loadAdmin(id: string): Promise<any | null> {
-	const hit = adminCache.get(id);
+/** The collection of each login role. */
+const ACCOUNT_ENTITIES: Record<ActorRole, any> = {
+	admin: Admin,
+	warehouse: Warehouse,
+	carrier: Carrier,
+	user: User,
+};
 
-	if (hit && Date.now() - hit.at < ADMIN_CACHE_TTL_MS) {
-		return hit.admin;
+/** Fields of an account that decide what its token may do. */
+const ACCOUNT_FIELDS: Record<ActorRole, string> = {
+	admin: 'tenantId role isSuperAdmin isDeleted',
+	warehouse: 'tenantId isDeleted',
+	carrier: 'tenantId isDeleted',
+	user: 'tenantId isDeleted isBanned',
+};
+
+/** Reads an account by id across tenants (a seam for unit tests). */
+export const accountLookup = {
+	load(role: ActorRole, id: string): Promise<any | null> {
+		if (!/^[0-9a-f]{24}$/i.test(id)) {
+			return Promise.resolve(null);
+		}
+
+		return TenantContext.runAsSystem('read the account of a login token', () =>
+			(getModel(ACCOUNT_ENTITIES[role]) as any)
+				.findById(id)
+				.select(ACCOUNT_FIELDS[role])
+				.lean()
+				.exec(),
+		);
+	},
+};
+
+/**
+ * The account of a login token, read fresh (30 s cache), never from the
+ * token: a deleted store, carrier or admin and a banned customer lose their
+ * access, though tokens never expire.
+ */
+async function loadAccount(role: ActorRole, id: string): Promise<any | null> {
+	const key = `${role}:${id}`;
+	const hit = accountCache.get(key);
+
+	if (hit && Date.now() - hit.at < ACCOUNT_CACHE_TTL_MS) {
+		return hit.account;
 	}
 
-	if (!/^[0-9a-f]{24}$/i.test(id)) {
+	const account = await accountLookup.load(role, id);
+
+	accountCache.set(key, { account, at: Date.now() });
+
+	return account;
+}
+
+export { forgetCachedAccount };
+
+/** @deprecated name kept for the member management: same as forgetCachedAccount */
+export const forgetCachedAdmin = forgetCachedAccount;
+
+/**
+ * The actor of a verified token, or null when its account no longer gives
+ * access: deleted (or banned), or in another tenant than the token says.
+ */
+async function actorOf(token: VerifiedToken): Promise<TenantActor | null> {
+	const homeTenantId = tokenTenantId(token);
+	const account = await loadAccount(token.role, token.id);
+
+	if (!account || account.isDeleted || account.isBanned === true) {
 		return null;
 	}
 
-	const admin = await TenantContext.runAsSystem(
-		'read the admin of a login token',
-		() =>
-			(getModel(Admin) as any)
-				.findById(id)
-				.select('tenantId role isSuperAdmin isDeleted')
-				.lean()
-				.exec(),
-	);
+	const accountTenantId = account.tenantId
+		? String(account.tenantId)
+		: tenantDirectory.getDefaultTenantId();
 
-	adminCache.set(id, { admin, at: Date.now() });
-
-	return admin;
-}
-
-export function forgetCachedAdmin(id?: string) {
-	if (id) {
-		adminCache.delete(id);
-	} else {
-		adminCache.clear();
+	if (accountTenantId !== homeTenantId) {
+		return null;
 	}
-}
-
-/** The actor of a verified token, or null when its admin no longer exists. */
-async function actorOf(token: VerifiedToken): Promise<TenantActor | null> {
-	const homeTenantId = tokenTenantId(token);
 
 	if (token.role !== 'admin') {
 		return { id: token.id, role: token.role, homeTenantId };
 	}
 
-	const admin = await loadAdmin(token.id);
-
-	if (!admin || admin.isDeleted) {
-		return null;
-	}
-
 	return {
 		id: token.id,
 		role: 'admin',
-		tenantRole: admin.role ?? 'admin',
-		isSuperAdmin: admin.isSuperAdmin === true,
+		tenantRole: account.role ?? 'admin',
+		isSuperAdmin: account.isSuperAdmin === true,
 		homeTenantId,
 	};
 }

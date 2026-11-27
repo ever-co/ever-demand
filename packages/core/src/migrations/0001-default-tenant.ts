@@ -175,8 +175,9 @@ async function backfillTenant(
 }
 
 /**
- * The first admin (ADMIN_EMAIL) becomes the owner and super-admin of the
- * default tenant; every other admin without a role becomes an admin.
+ * The first admin (ADMIN_EMAIL) becomes the owner of the default tenant;
+ * every other admin without a role becomes an admin. Nobody becomes a
+ * super-admin here: only SUPER_ADMIN_EMAIL does, at boot (admins/super-admin.ts).
  */
 async function setAdminRoles(
 	db: Connection,
@@ -193,10 +194,6 @@ async function setAdminRoles(
 		await admins.updateOne(
 			{ _id: first._id, role: { $exists: false } },
 			{ $set: { role: 'owner' } },
-		);
-		await admins.updateOne(
-			{ _id: first._id, isSuperAdmin: { $exists: false } },
-			{ $set: { isSuperAdmin: true } },
 		);
 		await db
 			.collection('tenants')

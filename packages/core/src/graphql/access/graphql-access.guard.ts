@@ -7,7 +7,12 @@ import {
 } from '@nestjs/common';
 import { GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
 import { TenantContext, TenantCtx } from '../../tenant/tenant-context';
-import { GRAPHQL_ACCESS, GraphQLAccess, isAllowed } from './graphql-access';
+import {
+	GRAPHQL_ACCESS,
+	GraphQLAccess,
+	isAllowed,
+	isFieldAllowed,
+} from './graphql-access';
 
 export { isAllowed };
 
@@ -27,8 +32,9 @@ export const REST_ACCESS: Readonly<Record<string, GraphQLAccess>> = {
 
 /**
  * Global guard of every GraphQL operation: default deny, then the
- * GRAPHQL_ACCESS table. Field resolvers of object types are not checked
- * (their parent operation was).
+ * GRAPHQL_ACCESS table; field resolvers of object types (`@ResolveField`,
+ * run through the guard by `fieldResolverEnhancers: ['guards']`) by the
+ * GRAPHQL_FIELD_ACCESS table.
  */
 @Injectable()
 export class GraphQLAccessGuard implements CanActivate {
@@ -63,8 +69,12 @@ export class GraphQLAccessGuard implements CanActivate {
 		const gql = GqlExecutionContext.create(context);
 		const info = gql.getInfo();
 
-		if (!info || !ROOT_TYPES.has(info.parentType?.name)) {
+		if (!info) {
 			return true;
+		}
+
+		if (!ROOT_TYPES.has(info.parentType?.name)) {
+			return this.canResolveField(gql, info);
 		}
 
 		const access = GRAPHQL_ACCESS[info.fieldName];
@@ -90,5 +100,22 @@ export class GraphQLAccessGuard implements CanActivate {
 		}
 
 		throw new ForbiddenException(`Not allowed: ${info.fieldName}`);
+	}
+
+	/** A field resolver: GRAPHQL_FIELD_ACCESS, on the parent record. */
+	private canResolveField(gql: GqlExecutionContext, info: any): boolean {
+		const key = `${info.parentType?.name}.${info.fieldName}`;
+		const ctx: TenantCtx | undefined =
+			TenantContext.current() ?? gql.getContext()?.tenantCtx;
+
+		if (isFieldAllowed(key, ctx, gql.getRoot())) {
+			return true;
+		}
+
+		if (ctx?.actor == null) {
+			throw new UnauthorizedException(`Log in to read ${key}`);
+		}
+
+		throw new ForbiddenException(`Not allowed: ${key}`);
 	}
 }

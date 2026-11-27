@@ -19,6 +19,7 @@ import {
 	TenantScopedSubject,
 } from '../../tenant/tenant-scoped-subject';
 import { isTenantSchema } from '../../tenant/tenant-plugin';
+import { forgetCachedAccount } from '../../tenant/account-cache';
 
 /**
  * Returns `obj` without the property at `path`. Copies only the objects on
@@ -331,6 +332,8 @@ export abstract class DBService<T extends DBObject<any, any>>
 
 		try {
 			await this.Model.deleteMany(this.tenantScoped({})).exec();
+			// a removed login loses its access now (tenant/account-cache.ts)
+			forgetCachedAccount();
 		} catch (err) {
 			this.log.error({ callId, err }, '.removeAll() thrown error!');
 			throw err;
@@ -362,6 +365,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 				.exec()) as RawObject<T>;
 
 			lastValue = this.parse(lastValueRaw);
+			forgetCachedAccount(String(objectId));
 		} catch (err) {
 			this.log.error(
 				{ callId, objectId, err },
@@ -413,6 +417,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 					_id: { $in: lastValues.map((o) => this.getObjectId(o.id)) },
 				}),
 			).exec();
+			lastValues.forEach((o) => forgetCachedAccount(String(o.id)));
 		} catch (err) {
 			this.log.error(
 				{ callId, conditions, err },
@@ -454,6 +459,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 			}),
 			{ isDeleted: true }
 		).exec();
+		ids.forEach((id) => forgetCachedAccount(String(id)));
 	}
 
 	async find(conditions: FindObject<RawObject<T>>): Promise<T[]> {

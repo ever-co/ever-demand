@@ -31,6 +31,12 @@ export const JWT_SECRET = 'core-e2e-jwt-secret';
 
 /** jest.e2e-mt.config.js runs the API as a multi-tenant SaaS (MULTI_TENANT=true). */
 export const MULTI_TENANT = process.env.CORE_E2E_MULTI_TENANT === 'true';
+/**
+ * Password of the first admin (admin@ever.co). The multi-tenant suite makes it
+ * the platform super-admin (SUPER_ADMIN_EMAIL), which the default password
+ * "admin" would prevent; test-only value.
+ */
+export const ADMIN_PASSWORD = MULTI_TENANT ? 'core-e2e-super-admin-password' : 'admin';
 export const TENANT_BASE_DOMAIN = 'everdemand.test';
 /** Signing secret of the billing webhook under test (a fixed test value, not a Stripe secret) */
 export const BILLING_WEBHOOK_SECRET = 'whsec_core_e2e_test_only';
@@ -54,6 +60,7 @@ export function serverEnv(): NodeJS.ProcessEnv {
 		DB_HOST: new URL(MONGO_URL).hostname,
 		DB_PORT: new URL(MONGO_URL).port || '27017',
 		JWT_SECRET,
+		ADMIN_PASSWORD,
 		EXPRESS_SESSION_SECRET: 'core-e2e-session-secret',
 		FAKE_DATA_GENERATOR: 'true',
 		ADMIN_PASSWORD_RESET: 'true',
@@ -73,6 +80,7 @@ export function serverEnv(): NodeJS.ProcessEnv {
 					MULTI_TENANT: 'true',
 					TENANT_BASE_DOMAIN,
 					TENANT_SIGNUPS_PER_HOUR: '1000',
+					SUPER_ADMIN_EMAIL: 'admin@ever.co',
 					ADMIN_APP_URL: `http://app.${TENANT_BASE_DOMAIN}`,
 					// Stripe is the suite's fake (fake-stripe.ts); webhook events are signed locally
 					STRIPE_BILLING_SECRET_KEY: 'sk_test_core_e2e_offline',

@@ -305,6 +305,30 @@ describe('tenantPlugin', () => {
 			});
 			expect(currencyLookup.$lookup.pipeline).toBeUndefined();
 		});
+
+		it('limits the tenant reads of an aggregation on a global collection', async () => {
+			const { Currency } = setup();
+			const agg = Currency.aggregate([
+				{ $lookup: { from: 'orders', pipeline: [], as: 'orders' } },
+			]);
+
+			await TenantContext.runInTenant(A, () => failure(agg.exec()));
+
+			// no leading $match (currencies are global), the lookup is in tenant A
+			expect(agg.pipeline()).toHaveLength(1);
+			expect((agg.pipeline()[0] as any).$lookup.pipeline).toEqual([
+				{ $match: { tenantId: A } },
+			]);
+
+			// without a tenant it is refused, a purely global aggregation is not
+			const refused = await failure(
+				Currency.aggregate([
+					{ $lookup: { from: 'shops', pipeline: [], as: 's' } },
+				]).exec(),
+			);
+			expect(refused).toBeInstanceOf(TenantContextMissingError);
+			expect(isDriverError(await failure(Currency.aggregate([{ $match: {} }]).exec()))).toBe(true);
+		});
 	});
 });
 
@@ -352,6 +376,25 @@ describe('applyTenantToPipeline', () => {
 			tenantId: A,
 		});
 		expect(pipeline[3].$facet.x[0].$lookup.pipeline).toEqual([
+			{ $match: { tenantId: A } },
+		]);
+	});
+
+	it('limits a $lookup nested in a $unionWith of a global collection', () => {
+		const pipeline: any[] = [
+			{
+				$unionWith: {
+					coll: 'currencies',
+					pipeline: [{ $lookup: { from: 'orders', pipeline: [], as: 'o' } }],
+				},
+			},
+		];
+
+		applyTenantToPipeline(pipeline, A, collections);
+
+		// the union itself reads a global collection, its nested lookup is scoped
+		expect(pipeline[1].$unionWith.coll).toBe('currencies');
+		expect(pipeline[1].$unionWith.pipeline[0].$lookup.pipeline).toEqual([
 			{ $match: { tenantId: A } },
 		]);
 	});

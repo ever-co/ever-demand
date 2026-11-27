@@ -27,6 +27,7 @@ import IGeoLocation, {
 import { DevicesService } from '../devices';
 import IService from '../IService';
 import { stripProtectedFields } from '../stripProtectedFields';
+import { forgetCachedAccount } from '../../tenant/tenant-resolver';
 import { v1 as uuid } from 'uuid';
 import {
 	distinctUntilChanged,
@@ -566,12 +567,16 @@ export class UsersService
 
 	async banUser(id: string): Promise<User> {
 		await this.throwIfNotExists(id);
-		return this.update(id, { isBanned: true });
+		const user = await this.update(id, { isBanned: true });
+		forgetCachedAccount(id);
+		return user;
 	}
 
 	async unbanUser(id: string): Promise<User> {
 		await this.throwIfNotExists(id);
-		return this.update(id, { isBanned: false });
+		const user = await this.update(id, { isBanned: false });
+		forgetCachedAccount(id);
+		return user;
 	}
 
 	/**

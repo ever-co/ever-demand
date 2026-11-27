@@ -8,6 +8,7 @@ import { RawObject } from '@pyro/db/db-raw-object';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 import { TenantContext } from '../../tenant/tenant-context';
 import { tenantDirectory } from '../../tenant/tenant-directory';
+import { loginThrottle } from './login-throttle';
 
 /**
  * Logins whose username / email is unique across all tenants: the tenant
@@ -43,6 +44,20 @@ interface AuthServiceConfig<T extends IAuthable> {
 	role: string;
 	Entity: any; // AuthService<T>['DBObject'];
 	saltRounds: number;
+}
+
+/** A login filter of exact string values, e.g. `{ username: 'acme' }` (never an operator object). */
+export function isExactLoginFilter(findObj: unknown): findObj is Record<string, string> {
+	if (findObj == null || typeof findObj !== 'object' || Array.isArray(findObj)) {
+		return false;
+	}
+
+	const entries = Object.entries(findObj);
+
+	return (
+		entries.length > 0 &&
+		entries.every(([key, value]) => !key.startsWith('$') && typeof value === 'string' && value !== '')
+	);
 }
 
 @injectable()
@@ -104,14 +119,27 @@ export class AuthService<T extends IAuthable> extends EntityService<T> {
 		findObj: any,
 		password: string
 	): Promise<{ entity: T; token: string } | null> {
+		// exact strings only: a socket client could send { $regex } or { $ne } and
+		// test a password against accounts it does not know the name of
+		if (!isExactLoginFilter(findObj) || typeof password !== 'string') {
+			return null;
+		}
+
 		const isGlobal = GLOBAL_LOGIN_ROLES.has(this.role);
 		const requestTenantId = TenantContext.tenantId();
+		const throttleKey = `${this.role}:${Object.values(findObj).join(':').toLowerCase()}`;
+
+		if (loginThrottle.isBlocked(throttleKey)) {
+			return null;
+		}
 
 		const find = () =>
 			this.Model.findOne(findObj).select('+hash').lean().exec();
 
+		// a request that names its tenant looks only there; the apps on the shared
+		// host (no tenant) find the login across tenants (usernames are unique)
 		const entity = this.parse(
-			isGlobal
+			isGlobal && requestTenantId == null
 				? await TenantContext.runAsSystem(
 						`${this.role} login by a username unique across tenants`,
 						find,
@@ -120,8 +148,11 @@ export class AuthService<T extends IAuthable> extends EntityService<T> {
 		);
 
 		if (!entity || !(await bcrypt.compare(password, entity.hash))) {
+			loginThrottle.fail(throttleKey);
 			return null;
 		}
+
+		loginThrottle.reset(throttleKey);
 
 		const tenantId =
 			entity.tenantId ?? tenantDirectory.getDefaultTenantId();

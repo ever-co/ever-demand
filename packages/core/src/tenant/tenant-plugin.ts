@@ -193,6 +193,46 @@ function tenantCollections(model: Model<any> | undefined): Set<string> {
 
 const FORBIDDEN_STAGES = ['$out', '$merge'];
 
+/** Whether a pipeline (or one nested in it) reads one of `collections`. */
+export function pipelineReads(stages: any[], collections: Set<string>): boolean {
+	return (stages ?? []).some((stage) => {
+		const lookup = stage?.$lookup;
+		const union = stage?.$unionWith;
+		const graph = stage?.$graphLookup;
+		const unionColl = typeof union === 'string' ? union : union?.coll;
+
+		return (
+			(lookup != null && (collections.has(lookup.from) || pipelineReads(lookup.pipeline, collections))) ||
+			(union != null && (collections.has(unionColl) || pipelineReads(union.pipeline, collections))) ||
+			(graph != null && collections.has(graph.from)) ||
+			(stage?.$facet != null &&
+				Object.values<any[]>(stage.$facet).some((sub) => pipelineReads(sub, collections)))
+		);
+	});
+}
+
+/**
+ * An aggregation on a global collection that reads tenant collections: its
+ * nested reads are limited to the current tenant (no tenant: refused).
+ */
+function applyTenantToNestedReads(aggregate: Aggregate<any>): void {
+	const model = (aggregate as any).model() as Model<any> | undefined;
+	const collections = tenantCollections(model);
+	const pipeline = aggregate.pipeline();
+
+	if (!pipelineReads(pipeline, collections)) {
+		return;
+	}
+
+	const tenantId = scopeTenantId(model?.modelName ?? 'aggregate');
+
+	if (tenantId === undefined) {
+		return;
+	}
+
+	scopeStages(pipeline, { match: { [TENANT_FIELD]: tenantId }, collections });
+}
+
 /**
  * Limits an aggregation pipeline to one tenant: a leading `$match`, or the
  * `query` of a leading `$geoNear` (which must stay the first stage), plus a
@@ -318,6 +358,11 @@ function scopeFacet(facet: any, scope: PipelineScope): void {
  */
 export function tenantPlugin(schema: Schema): void {
 	if (!isTenantSchema(schema)) {
+		// a global collection's aggregation (tenants, currencies) may still read a
+		// tenant collection through $lookup / $unionWith / $graphLookup
+		schema.pre('aggregate', function (this: Aggregate<any>) {
+			applyTenantToNestedReads(this);
+		});
 		return;
 	}
 

@@ -2,6 +2,8 @@ import jwt from 'jsonwebtoken';
 import { env } from '../env';
 import { tenantDirectory } from './tenant-directory';
 import {
+	accountLookup,
+	forgetCachedAccount,
 	resolveTenantContext,
 	TenantResolutionError,
 	verifyLoginToken,
@@ -26,10 +28,21 @@ const DEFAULT_ID = 'dddddddddddddddddddddddd';
 
 const tenants = [A, B, S];
 
+/** Accounts of the login tokens below, by id */
+let accounts: Record<string, any>;
+
 const token = (payload: object) =>
 	`Bearer ${jwt.sign(payload, env.JWT_SECRET)}`;
 
 beforeEach(() => {
+	accounts = {
+		w1: { tenantId: A.id, isDeleted: false },
+		u1: { isDeleted: false, isBanned: false },
+	};
+	forgetCachedAccount();
+	jest.spyOn(accountLookup, 'load').mockImplementation(
+		async (_role, id) => accounts[id] ?? null,
+	);
 	jest.spyOn(tenantDirectory, 'byKey').mockImplementation(
 		async (key) =>
 			tenants.find((t) => t.id === key || t.slug === key) ?? null,
@@ -181,5 +194,32 @@ describe('resolveTenantContext', () => {
 	it('resolves no tenant in a multi-tenant install, the default one in a single-tenant install', async () => {
 		const ctx = await resolveTenantContext({});
 		expect(ctx.tenantId).toBe(env.MULTI_TENANT ? null : DEFAULT_ID);
+	});
+
+	it('ignores the token of a deleted store or a banned customer', async () => {
+		accounts.w1.isDeleted = true;
+		accounts.u1.isBanned = true;
+		accounts.u1.tenantId = A.id;
+
+		const store = await resolveTenantContext({
+			authorization: token({ id: 'w1', role: 'warehouse', tenantId: A.id }),
+			tenantHeader: A.slug,
+		});
+		expect(store).toEqual({ tenantId: A.id });
+
+		const customer = await resolveTenantContext({
+			authorization: token({ id: 'u1', role: 'user', tenantId: A.id }),
+			tenantHeader: A.slug,
+		});
+		expect(customer).toEqual({ tenantId: A.id });
+	});
+
+	it('ignores a token whose account is in another tenant than the token says', async () => {
+		const ctx = await resolveTenantContext({
+			authorization: token({ id: 'w1', role: 'warehouse', tenantId: B.id }),
+			tenantHeader: B.slug,
+		});
+
+		expect(ctx).toEqual({ tenantId: B.id });
 	});
 });

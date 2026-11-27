@@ -27,6 +27,7 @@ import { IWarehouseCreateObject } from '@modules/server.common/interfaces/IWareh
 import { getDummyImage } from '@modules/server.common/utils';
 import { ConfigService } from '../config/config.service';
 import { firstAdminPassword } from './admins/firstAdminPassword';
+import { syncSuperAdmin } from './admins/super-admin';
 import {
 	getTypeORMEntities,
 	initTypeORMDataSource,
@@ -227,6 +228,7 @@ export class ServicesApp {
 		await TenantContext.runInTenant(defaultTenantId, () =>
 			this._registerEntityAdministrator(defaultTenantId),
 		);
+		await syncSuperAdmin(this.log);
 		this._passportSetup();
 		await this._startExpress();
 		await this._startSocketIO();
@@ -271,7 +273,8 @@ export class ServicesApp {
 				);
 				return;
 			}
-			// owner of the default tenant and platform super-admin
+			// owner of the default tenant; platform super-admin only by
+			// SUPER_ADMIN_EMAIL (syncSuperAdmin), never by being the first admin
 			const admin = await this._adminsService.register(
 				{
 					admin: {
@@ -282,7 +285,7 @@ export class ServicesApp {
 					},
 					password: adminPassword,
 				},
-				{ role: 'owner', isSuperAdmin: true },
+				{ role: 'owner', isSuperAdmin: false },
 			);
 
 			await (getTenantModel(Tenant) as any)

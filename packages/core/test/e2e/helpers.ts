@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
 import { io, Socket } from 'socket.io-client';
-import { GQL_URL, SERVICES_URL } from './server';
+import { ADMIN_PASSWORD, GQL_URL, SERVICES_URL } from './server';
 
 export interface GqlResponse<T> {
 	status: number;
@@ -24,7 +24,8 @@ export function defaultAdminToken(): Promise<string> {
 			method: 'POST',
 			headers: { 'content-type': 'application/json' },
 			body: JSON.stringify({
-				query: `mutation { adminLogin(email: "admin@ever.co", password: "admin") { token } }`,
+				query: `mutation L($p: String!) { adminLogin(email: "admin@ever.co", password: $p) { token } }`,
+				variables: { p: ADMIN_PASSWORD },
 			}),
 		});
 		const body: any = await res.json();
@@ -274,7 +275,7 @@ export async function adminToken(): Promise<string> {
 		`mutation Login($email: String!, $password: String!) {
 			adminLogin(email: $email, password: $password) { token }
 		}`,
-		{ email: 'admin@ever.co', password: 'admin' },
+		{ email: 'admin@ever.co', password: ADMIN_PASSWORD },
 		ANONYMOUS,
 	);
 

@@ -1,6 +1,6 @@
 # Ever Demand multi-tenant: handover
 
-Last updated: 2026-11-27 ~13:30 CET by the multi-tenant session. Update this after every milestone, then commit and push.
+Last updated: 2026-11-27 ~22:00 CET by the multi-tenant session. Update this after every milestone, then commit and push.
 
 ## State
 
@@ -57,6 +57,21 @@ then disconnected); new tenants could charge cards on the platform Stripe accoun
 `tenant/card-payments.ts`); duplicate Checkouts, webhook events lost on a crash, old events overwriting newer billing
 (one open Checkout, `processing`/`done` events, state always read from Stripe); a switched super-admin was logged
 out on reload (`TenantContext.runForOwnAccount`). The e2e suite runs billing against `test/e2e/fake-stripe.ts`.
+
+Independent security review of #1668 (2026-11-27, at 2d425c23), fixed on this branch with tests:
+- HIGH: `@ResolveField`s (`Warehouse.orders/users/carriers/devices`, `User.devices`, `Carrier.devices`) skipped the
+  access guard, so a public store lookup listed a tenant's orders and customer contacts. Now
+  `GRAPHQL_FIELD_ACCESS` + `fieldResolverEnhancers: ['guards']` (a store reads its own record only).
+- MEDIUM: store / carrier / customer tokens are checked against their account like admin tokens (deleted, banned,
+  or in another tenant = no login); removals and bans clear the 30 s account cache (`tenant/account-cache.ts`).
+- MEDIUM: logins take exact strings only (no `{ $regex }`), look only in the request's tenant when it names one, and
+  a login is blocked for 15 min after 10 wrong passwords (`services/auth/login-throttle.ts`, per process).
+- MEDIUM: the first admin is no longer a platform super-admin. Only `SUPER_ADMIN_EMAIL` is, set at every boot
+  (`services/admins/super-admin.ts`), and never while that admin still has the default password "admin".
+- LOW: a `$unionWith` on a global collection and aggregations on global collections now scope their tenant reads.
+  Still to note: a kept `?tenant=` link (shop-web-gatsby, Expo web, common-angular) wins over the host; revisit when
+  custom domains come (a tenant's own domain should win).
+Creates from the socket API drop server-side fields (`stripProtectedFields` on register / create paths).
 Still open (follow-ups): customer flows have no ownership checks inside a
 tenant (any caller can act on a customer by id, as before); tokens never expire (a removed admin's token still passes
 token-argument checks); plan limits can be exceeded by parallel creates; admin / tenant caches are 30 s per process.
@@ -79,7 +94,8 @@ token-argument checks); plan limits can be exceeded by parallel creates; admin /
 
 ## Env (API)
 
-`MULTI_TENANT`, `TENANT_BASE_DOMAIN`, `TENANT_SIGNUP_ENABLED` (default = MULTI_TENANT), `TENANT_SIGNUPS_PER_HOUR`,
+`MULTI_TENANT`, `SUPER_ADMIN_EMAIL` (the platform super-admin; empty = none), `TENANT_ACCESS_RECHECK_MS` (30000),
+`TENANT_BASE_DOMAIN`, `TENANT_SIGNUP_ENABLED` (default = MULTI_TENANT), `TENANT_SIGNUPS_PER_HOUR`,
 `ADMIN_APP_URL`, `STRIPE_BILLING_SECRET_KEY`, `STRIPE_BILLING_WEBHOOK_SECRET`, `BILLING_TRIAL_DAYS` (90),
 `BILLING_PAST_DUE_GRACE_DAYS` (14), `MIGRATION_BACKUP_CONFIRMED` (production only, after a `mongodump`).
 No secret is in the repo; the e2e uses fixed test-only values.

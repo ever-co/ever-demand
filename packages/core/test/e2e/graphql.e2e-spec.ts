@@ -29,6 +29,12 @@ describe('GraphQL API', () => {
 			expect(data.adminLogin.token.split('.')).toHaveLength(3);
 		});
 
+		it('never makes the default admin (public password "admin") a platform super-admin', async () => {
+			const res = await gql(`{ tenants { tenant { id } } }`, {}, await adminToken());
+
+			expect(res.errors?.[0].extensions?.code).toBe('FORBIDDEN');
+		});
+
 		it('refuses a wrong password', async () => {
 			const data = await gqlData(
 				`mutation { adminLogin(email: "admin@ever.co", password: "wrong") { token } }`
