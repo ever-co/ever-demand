@@ -202,7 +202,11 @@ describe('resolveTenantContext', () => {
 		accounts.u1.tenantId = A.id;
 
 		const store = await resolveTenantContext({
-			authorization: token({ id: 'w1', role: 'warehouse', tenantId: A.id }),
+			authorization: token({
+				id: 'w1',
+				role: 'warehouse',
+				tenantId: A.id,
+			}),
 			tenantHeader: A.slug,
 		});
 		expect(store).toEqual({ tenantId: A.id });
@@ -216,7 +220,11 @@ describe('resolveTenantContext', () => {
 
 	it('ignores a token whose account is in another tenant than the token says', async () => {
 		const ctx = await resolveTenantContext({
-			authorization: token({ id: 'w1', role: 'warehouse', tenantId: B.id }),
+			authorization: token({
+				id: 'w1',
+				role: 'warehouse',
+				tenantId: B.id,
+			}),
 			tenantHeader: B.slug,
 		});
 

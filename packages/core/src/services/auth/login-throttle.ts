@@ -11,7 +11,10 @@ export const LOGIN_WINDOW_MS = 15 * 60_000;
 const MAX_ENTRIES = 50_000;
 
 export class LoginThrottle {
-	private readonly failures = new Map<string, { count: number; since: number }>();
+	private readonly failures = new Map<
+		string,
+		{ count: number; since: number }
+	>();
 
 	constructor(
 		private readonly maxFailures = LOGIN_MAX_FAILURES,

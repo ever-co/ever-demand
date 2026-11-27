@@ -19,7 +19,10 @@ test.describe('socket.io pyro routers', () => {
 	let orderId: string;
 
 	test.beforeAll(async () => {
-		({ storeId, productId, storeToken } = await createStoreWithProduct(5, 900));
+		({ storeId, productId, storeToken } = await createStoreWithProduct(
+			5,
+			900,
+		));
 	});
 
 	test.afterAll(() => pyro.close());

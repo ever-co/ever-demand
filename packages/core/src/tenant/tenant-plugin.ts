@@ -194,7 +194,10 @@ function tenantCollections(model: Model<any> | undefined): Set<string> {
 const FORBIDDEN_STAGES = ['$out', '$merge'];
 
 /** Whether a pipeline (or one nested in it) reads one of `collections`. */
-export function pipelineReads(stages: any[], collections: Set<string>): boolean {
+export function pipelineReads(
+	stages: any[],
+	collections: Set<string>,
+): boolean {
 	return (stages ?? []).some((stage) => {
 		const lookup = stage?.$lookup;
 		const union = stage?.$unionWith;
@@ -202,11 +205,17 @@ export function pipelineReads(stages: any[], collections: Set<string>): boolean 
 		const unionColl = typeof union === 'string' ? union : union?.coll;
 
 		return (
-			(lookup != null && (collections.has(lookup.from) || pipelineReads(lookup.pipeline, collections))) ||
-			(union != null && (collections.has(unionColl) || pipelineReads(union.pipeline, collections))) ||
+			(lookup != null &&
+				(collections.has(lookup.from) ||
+					pipelineReads(lookup.pipeline, collections))) ||
+			(union != null &&
+				(collections.has(unionColl) ||
+					pipelineReads(union.pipeline, collections))) ||
 			(graph != null && collections.has(graph.from)) ||
 			(stage?.$facet != null &&
-				Object.values<any[]>(stage.$facet).some((sub) => pipelineReads(sub, collections)))
+				Object.values<any[]>(stage.$facet).some((sub) =>
+					pipelineReads(sub, collections),
+				))
 		);
 	});
 }

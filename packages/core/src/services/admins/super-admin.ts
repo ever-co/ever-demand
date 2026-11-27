@@ -22,7 +22,9 @@ export async function syncSuperAdmin(
 	log: Pick<Logger, 'info' | 'warn' | 'error'>,
 	email = env.SUPER_ADMIN_EMAIL,
 ): Promise<boolean> {
-	const wanted = String(email ?? '').trim().toLowerCase();
+	const wanted = String(email ?? '')
+		.trim()
+		.toLowerCase();
 
 	const granted = await TenantContext.runAsSystem(
 		'the platform super-admin is set by SUPER_ADMIN_EMAIL',
@@ -31,7 +33,10 @@ export async function syncSuperAdmin(
 
 			await admins
 				.updateMany(
-					{ isSuperAdmin: true, ...(wanted ? { email: { $ne: wanted } } : {}) },
+					{
+						isSuperAdmin: true,
+						...(wanted ? { email: { $ne: wanted } } : {}),
+					},
 					{ $set: { isSuperAdmin: false } },
 				)
 				.exec();
@@ -40,10 +45,16 @@ export async function syncSuperAdmin(
 				return false;
 			}
 
-			const admin = await admins.findOne({ email: wanted }).select('+hash').lean().exec();
+			const admin = await admins
+				.findOne({ email: wanted })
+				.select('+hash')
+				.lean()
+				.exec();
 
 			if (!admin) {
-				log.warn(`SUPER_ADMIN_EMAIL ${wanted}: no such admin yet, so no platform super-admin`);
+				log.warn(
+					`SUPER_ADMIN_EMAIL ${wanted}: no such admin yet, so no platform super-admin`,
+				);
 				return false;
 			}
 
@@ -52,7 +63,10 @@ export async function syncSuperAdmin(
 				(await bcrypt.compare(DEV_FIRST_ADMIN_PASSWORD, admin.hash));
 
 			await admins
-				.updateOne({ _id: admin._id }, { $set: { isSuperAdmin: !usesDefaultPassword } })
+				.updateOne(
+					{ _id: admin._id },
+					{ $set: { isSuperAdmin: !usesDefaultPassword } },
+				)
 				.exec();
 
 			if (usesDefaultPassword) {

@@ -30,7 +30,11 @@ describe('GraphQL API', () => {
 		});
 
 		it('never makes the default admin (public password "admin") a platform super-admin', async () => {
-			const res = await gql(`{ tenants { tenant { id } } }`, {}, await adminToken());
+			const res = await gql(
+				`{ tenants { tenant { id } } }`,
+				{},
+				await adminToken(),
+			);
 
 			expect(res.errors?.[0].extensions?.code).toBe('FORBIDDEN');
 		});

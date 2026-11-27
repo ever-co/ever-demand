@@ -1,5 +1,11 @@
 import { expect, type Page, test } from '@playwright/test';
-import { AS_ADMIN, createStoreWithProduct, geoLocation, gqlData, unique } from '../api/api-helpers';
+import {
+	AS_ADMIN,
+	createStoreWithProduct,
+	geoLocation,
+	gqlData,
+	unique,
+} from '../api/api-helpers';
 import { collectAppErrors, expectTable, login, requireApi, route } from './support';
 
 const rows = (page: Page) => page.locator('ng2-smart-table tbody tr');

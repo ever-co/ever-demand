@@ -13,7 +13,11 @@ import {
 	TenantCtx,
 } from './tenant-context';
 import { tenantDirectory } from './tenant-directory';
-import { ACCOUNT_CACHE_TTL_MS, accountCache, forgetCachedAccount } from './account-cache';
+import {
+	cachedAccount,
+	forgetCachedAccount,
+	rememberAccount,
+} from './account-cache';
 
 /** What a request (HTTP, GraphQL over WebSocket, socket.io handshake) tells about its tenant. */
 export interface TenantRequestInfo {
@@ -97,7 +101,6 @@ export function tokenTenantId(token: VerifiedToken): string | null {
 	return token.tenantId ?? tenantDirectory.getDefaultTenantId();
 }
 
-
 /** The collection of each login role. */
 const ACCOUNT_ENTITIES: Record<ActorRole, any> = {
 	admin: Admin,
@@ -121,12 +124,14 @@ export const accountLookup = {
 			return Promise.resolve(null);
 		}
 
-		return TenantContext.runAsSystem('read the account of a login token', () =>
-			(getModel(ACCOUNT_ENTITIES[role]) as any)
-				.findById(id)
-				.select(ACCOUNT_FIELDS[role])
-				.lean()
-				.exec(),
+		return TenantContext.runAsSystem(
+			'read the account of a login token',
+			() =>
+				(getModel(ACCOUNT_ENTITIES[role]) as any)
+					.findById(id)
+					.select(ACCOUNT_FIELDS[role])
+					.lean()
+					.exec(),
 		);
 	},
 };
@@ -138,15 +143,15 @@ export const accountLookup = {
  */
 async function loadAccount(role: ActorRole, id: string): Promise<any | null> {
 	const key = `${role}:${id}`;
-	const hit = accountCache.get(key);
+	const hit = cachedAccount(key);
 
-	if (hit && Date.now() - hit.at < ACCOUNT_CACHE_TTL_MS) {
+	if (hit) {
 		return hit.account;
 	}
 
 	const account = await accountLookup.load(role, id);
 
-	accountCache.set(key, { account, at: Date.now() });
+	rememberAccount(key, account);
 
 	return account;
 }

@@ -1758,9 +1758,15 @@ describe('multi-tenant isolation', () => {
 			expect(leaked.has(A.orderId)).toBe(false);
 			expect(leaked.has(A.userId)).toBe(false);
 			expect(leaked.has(A.carrierId)).toBe(false);
-			expect(JSON.stringify(res.data ?? {})).not.toContain(SHARED_CUSTOMER_EMAIL);
+			expect(JSON.stringify(res.data ?? {})).not.toContain(
+				SHARED_CUSTOMER_EMAIL,
+			);
 			expect((res.errors ?? []).map((e) => e.message)).toEqual(
-				expect.arrayContaining([expect.stringMatching(/Log in to read Warehouse\.(orders|users|carriers)/)]),
+				expect.arrayContaining([
+					expect.stringMatching(
+						/Log in to read Warehouse\.(orders|users|carriers)/,
+					),
+				]),
 			);
 
 			// the order of a customer still shows its store and carrier (order tracking)
@@ -1796,7 +1802,9 @@ describe('multi-tenant isolation', () => {
 				{ id: other.id },
 				storeToken,
 			);
-			expect(foreign.errors?.[0].message).toMatch(/Not allowed: Warehouse\.orders/);
+			expect(foreign.errors?.[0].message).toMatch(
+				/Not allowed: Warehouse\.orders/,
+			);
 		});
 
 		it('takes the access of a deleted store login away', async () => {
@@ -1809,9 +1817,16 @@ describe('multi-tenant isolation', () => {
 			);
 			const token = login.warehouseLogin.token;
 
-			expect((await gqlData(`{ getCountOfCarriers }`, {}, token)).getCountOfCarriers).toBe(0);
+			expect(
+				(await gqlData(`{ getCountOfCarriers }`, {}, token))
+					.getCountOfCarriers,
+			).toBe(0);
 
-			await gqlData(`mutation R($ids: [String!]!) { removeWarehousesByIds(ids: $ids) }`, { ids: [store.id] }, d.token);
+			await gqlData(
+				`mutation R($ids: [String!]!) { removeWarehousesByIds(ids: $ids) }`,
+				{ ids: [store.id] },
+				d.token,
+			);
 
 			// the token is ignored now: no login, so no tenant and no store access
 			const after = await gql(`{ getCountOfCarriers }`, {}, token);
@@ -1825,18 +1840,51 @@ describe('multi-tenant isolation', () => {
 
 			try {
 				// an operator object never matches an account
-				expect(await pyro.call('carrier', 'login', { $regex: '^guess_' }, 'carrier-password')).toBeNull();
-				expect(await pyro.call('carrier', 'login', { $ne: 'x' }, 'carrier-password')).toBeNull();
+				expect(
+					await pyro.call(
+						'carrier',
+						'login',
+						{ $regex: '^guess_' },
+						'carrier-password',
+					),
+				).toBeNull();
+				expect(
+					await pyro.call(
+						'carrier',
+						'login',
+						{ $ne: 'x' },
+						'carrier-password',
+					),
+				).toBeNull();
 
-				const ok = await pyro.call<any>('carrier', 'login', carrier.username, 'carrier-password');
+				const ok = await pyro.call<any>(
+					'carrier',
+					'login',
+					carrier.username,
+					'carrier-password',
+				);
 				expect(ok?.token).toEqual(expect.any(String));
 
 				for (let i = 0; i < 10; i++) {
-					expect(await pyro.call('carrier', 'login', carrier.username, `wrong-${i}`)).toBeNull();
+					expect(
+						await pyro.call(
+							'carrier',
+							'login',
+							carrier.username,
+							`wrong-${i}`,
+						),
+					).toBeNull();
 				}
 
 				// blocked for a while: even the right password is refused
-				expect(await pyro.call('carrier', 'login', carrier.username, 'carrier-password')).toBeNull();
+				expect(
+					await pyro.call(
+						'carrier',
+						'login',
+						carrier.username,
+						'carrier-password',
+					),
+				).toBeNull();
 			} finally {
 				pyro.close();
 			}
@@ -1848,11 +1896,19 @@ describe('multi-tenant isolation', () => {
 				{ e: `owner_${A.slug}@example.com` },
 				ANONYMOUS,
 			);
-			const ownerList = await gql(`{ tenants { tenant { id } } }`, {}, login.adminLogin.token);
+			const ownerList = await gql(
+				`{ tenants { tenant { id } } }`,
+				{},
+				login.adminLogin.token,
+			);
 			expect(ownerList.errors?.[0].extensions?.code).toBe('FORBIDDEN');
 
 			// the configured one (with a password other than the default) is
-			const superList = await gqlData(`{ tenants { tenant { id } } }`, {}, await defaultAdminToken());
+			const superList = await gqlData(
+				`{ tenants { tenant { id } } }`,
+				{},
+				await defaultAdminToken(),
+			);
 			expect(superList.tenants.length).toBeGreaterThanOrEqual(2);
 		});
 	});

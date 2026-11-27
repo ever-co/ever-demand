@@ -327,7 +327,11 @@ describe('tenantPlugin', () => {
 				]).exec(),
 			);
 			expect(refused).toBeInstanceOf(TenantContextMissingError);
-			expect(isDriverError(await failure(Currency.aggregate([{ $match: {} }]).exec()))).toBe(true);
+			expect(
+				isDriverError(
+					await failure(Currency.aggregate([{ $match: {} }]).exec()),
+				),
+			).toBe(true);
 		});
 	});
 });
@@ -385,7 +389,9 @@ describe('applyTenantToPipeline', () => {
 			{
 				$unionWith: {
 					coll: 'currencies',
-					pipeline: [{ $lookup: { from: 'orders', pipeline: [], as: 'o' } }],
+					pipeline: [
+						{ $lookup: { from: 'orders', pipeline: [], as: 'o' } },
+					],
 				},
 			},
 		];

@@ -1,4 +1,6 @@
-jest.mock('../../env', () => ({ env: { JWT_SECRET: 'unit-test-secret', MULTI_TENANT: true } }));
+jest.mock('../../env', () => ({
+	env: { JWT_SECRET: 'unit-test-secret', MULTI_TENANT: true },
+}));
 
 import { isExactLoginFilter } from './AuthService';
 import { LoginThrottle } from './login-throttle';

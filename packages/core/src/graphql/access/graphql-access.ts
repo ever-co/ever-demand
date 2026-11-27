@@ -338,7 +338,10 @@ export function isFieldAllowed(
 }
 
 /** A super-admin, or an owner / admin of the platform (default) tenant. */
-function isPlatformAdmin(actor: NonNullable<TenantCtx['actor']>, tenantId: string): boolean {
+function isPlatformAdmin(
+	actor: NonNullable<TenantCtx['actor']>,
+	tenantId: string,
+): boolean {
 	if (actor.role !== 'admin') {
 		return false;
 	}
@@ -348,7 +351,8 @@ function isPlatformAdmin(actor: NonNullable<TenantCtx['actor']>, tenantId: strin
 	}
 
 	// read when needed: the directory loads the env and the database layer
-	const { tenantDirectory } = require('../../tenant/tenant-directory') as typeof import('../../tenant/tenant-directory');
+	const { tenantDirectory } =
+		require('../../tenant/tenant-directory') as typeof import('../../tenant/tenant-directory');
 
 	return (
 		tenantId === tenantDirectory.getDefaultTenantId() &&
