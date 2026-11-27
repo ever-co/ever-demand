@@ -226,6 +226,8 @@ function idsOf(t: TenantFixture): string[] {
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
+const byText = (a: string, b: string) => a.localeCompare(b);
+
 /** A Stripe-Signature header for `payload` (what stripe.webhooks.constructEvent checks). */
 function stripeSignature(payload: string, secret = BILLING_WEBHOOK_SECRET): string {
 	const t = Math.floor(Date.now() / 1000);
@@ -964,7 +966,7 @@ describe('multi-tenant isolation', () => {
 			// another plan: the first session can no longer be paid
 			const other = await checkout('enterprise');
 			expect(other.data.createBillingCheckout.url).not.toBe(one.data.createBillingCheckout.url);
-			expect(fakeStripe.sessionsOf(customer).map((s) => s.status).sort()).toEqual(['expired', 'open']);
+			expect(fakeStripe.sessionsOf(customer).map((s) => s.status).sort(byText)).toEqual(['expired', 'open']);
 
 			// paid a moment ago in Stripe, before its webhook arrived
 			subscription(e.tenant.id, customer, 'trialing');
@@ -1077,7 +1079,7 @@ describe('multi-tenant isolation', () => {
 			const aStore = await createWarehouse('A second', {}, A.token);
 			const updated = await near.next((v) => Array.isArray(v) && v.some((w) => w._id === aStore.id));
 
-			expect(updated.map((w) => w._id).sort()).toEqual([A.storeId, aStore.id].sort());
+			expect(updated.map((w) => w._id).sort(byText)).toEqual([A.storeId, aStore.id].sort(byText));
 
 			await sleep(1000);
 
@@ -1109,6 +1111,81 @@ describe('multi-tenant isolation', () => {
 			expect(inA.user.id).toBe(user._id);
 			// B is told the customer does not exist
 			expect(inB.data?.user ?? null).toBeNull();
+		});
+
+		it('never takes server-side fields from a socket create (tenant, hash, flags, Stripe customer)', async () => {
+			const forged = {
+				tenantId: B.tenantId,
+				hash: 'forged-hash',
+				isBanned: true,
+				isDeleted: true,
+				role: 'owner',
+				isSuperAdmin: true,
+				stripeCustomerId: 'cus_someone_else',
+			};
+
+			const user = await pyroA.call<any>('user-auth', 'register', {
+				user: { email: `forged_${unique()}@example.com`, apartment: '4', geoLocation: geoLocation(), ...forged },
+				password: 'forged-password',
+			});
+			const device = await pyroA.call<any>('device', 'create', {
+				channelId: `channel-forged-${unique()}`,
+				type: 'browser',
+				uuid: unique(),
+				language: 'en-US',
+				...forged,
+			});
+			const invite = await pyroA.call<any>('invite', 'create', { apartment: '9', geoLocation: geoLocation(), ...forged });
+
+			for (const created of [user, device, invite]) {
+				expect(created).toMatchObject({ tenantId: A.tenantId, isDeleted: false });
+				expect(created.isSuperAdmin).toBeUndefined();
+				expect(created.role).toBeUndefined();
+			}
+
+			expect(user.isBanned).toBe(false);
+			expect(user.stripeCustomerId ?? null).toBeNull();
+
+			// the customer logs in with its own password, not a forged hash
+			const login = await pyroA.call<any>('user-auth', 'login', user.email, 'forged-password');
+			expect(login?.user?._id ?? login?.user?.id).toBe(user._id);
+
+			// the owner's socket: stores and carriers it registers stay in A, unflagged
+			const owner = new PyroClient({ token: A.token });
+
+			try {
+				const store = await owner.call<any>('warehouse', 'register', {
+					warehouse: {
+						name: 'Forged store',
+						username: `forged_store_${unique()}`,
+						logo: 'https://example.com/logo.png',
+						contactEmail: `forged_${unique()}@example.com`,
+						geoLocation: geoLocation(),
+						isActive: true,
+						...forged,
+					},
+					password: 'store-password',
+				});
+				const carrier = await owner.call<any>('carrier', 'register', {
+					carrier: {
+						firstName: 'Forged',
+						lastName: 'Carrier',
+						username: `forged_carrier_${unique()}`,
+						phone: '+359000001',
+						logo: 'https://example.com/carrier.png',
+						geoLocation: geoLocation(),
+						...forged,
+					},
+					password: 'carrier-password',
+				});
+
+				for (const created of [store, carrier]) {
+					expect(created).toMatchObject({ tenantId: A.tenantId, isDeleted: false });
+					expect(created.hash).toBeUndefined();
+				}
+			} finally {
+				owner.close();
+			}
 		});
 
 		it("lets a new customer's shop create an address invite in the socket's tenant (invites off)", async () => {

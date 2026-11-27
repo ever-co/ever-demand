@@ -13,8 +13,8 @@ import { OperationTypeNode } from 'graphql';
 import { createClient } from 'graphql-ws';
 import {
 	ClientTenantConfig,
-	resolveClientTenant,
-	TENANT_HEADER,
+	subscriptionConnectionParams,
+	tenantHeadersBeforeLogin,
 } from '@modules/client.common.angular2/lib/tenant';
 import { environment } from '../environments/environment';
 
@@ -53,29 +53,9 @@ export function appTenantConfig(): ClientTenantConfig {
 	};
 }
 
-/**
- * The tenant to name in a request: only before login. Store logins are unique
- * across tenants and the login token carries the tenant (DESIGN.md §3.5); the
- * token always wins at the API, which refuses (403) a header naming another
- * tenant than the token's, so a logged-in app names none.
- */
-function tenantBeforeLogin(): string | null {
-	return localStorage.getItem('token')
-		? null
-		: resolveClientTenant(appTenantConfig());
-}
-
-function tenantHeader(): Record<string, string> {
-	const tenant = tenantBeforeLogin();
-	return tenant ? { [TENANT_HEADER]: tenant } : {};
-}
-
-/** graphql-ws `connectionParams`, read at each (re)connect. */
+/** graphql-ws `connectionParams`, read at each (re)connect: the tenant only before login. */
 export function subscriptionParams(): Record<string, string> {
-	const tenant = tenantBeforeLogin();
-	return tenant
-		? { authorization: authorization(), tenant }
-		: { authorization: authorization() };
+	return subscriptionConnectionParams(appTenantConfig());
 }
 
 /**
@@ -88,7 +68,8 @@ export function createApolloOptions(httpLink: HttpLink): ApolloClient.Options {
 	const auth = new SetContextLink((prevContext) => ({
 		headers: {
 			...prevContext.headers,
-			...tenantHeader(),
+			// the tenant only before login (the login token carries it)
+			...tenantHeadersBeforeLogin(appTenantConfig()),
 			authorization: authorization(),
 		},
 	}));

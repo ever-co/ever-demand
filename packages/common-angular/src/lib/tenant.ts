@@ -151,6 +151,41 @@ export function socketAuthFrom(
 	};
 }
 
+/**
+ * The tenant an app with logins (merchant, carrier) names in a request:
+ * only before login. Their logins are unique across tenants and the login
+ * token carries the tenant (DESIGN.md §3.5); the token always wins at the
+ * API, which refuses (403) a header naming another tenant than the token's,
+ * so a logged-in app names none.
+ */
+export function tenantBeforeLogin(
+	config: ClientTenantConfig,
+	tokenStorageKey = 'token'
+): string | null {
+	return safeStorage()?.getItem(tokenStorageKey) ? null : resolveClientTenant(config);
+}
+
+/** `Tenant-Id` header of a request before login (see tenantBeforeLogin), else none. */
+export function tenantHeadersBeforeLogin(
+	config: ClientTenantConfig,
+	tokenStorageKey = 'token'
+): Record<string, string> {
+	const tenant = tenantBeforeLogin(config, tokenStorageKey);
+	return tenant ? { [TENANT_HEADER]: tenant } : {};
+}
+
+/** graphql-ws `connectionParams`: the login token, and the tenant before login. */
+export function subscriptionConnectionParams(
+	config: ClientTenantConfig,
+	tokenStorageKey = 'token'
+): Record<string, string> {
+	const token = safeStorage()?.getItem(tokenStorageKey);
+	const authorization = token ? `Bearer ${token}` : '';
+	const tenant = tenantBeforeLogin(config, tokenStorageKey);
+
+	return tenant ? { authorization, tenant } : { authorization };
+}
+
 /** Headers for an HTTP / GraphQL request: `Tenant-Id` when the app knows its tenant. */
 export function tenantHeaders(config: ClientTenantConfig): Record<string, string> {
 	const tenant = resolveClientTenant(config);

@@ -94,7 +94,7 @@ export function hasSocketTenantInfo(socket: Pick<Socket, 'data'>): boolean {
 export function recheckSocketAccess(socket: Socket): Promise<TenantCtx | null> {
 	const pending: Promise<TenantCtx | null> | undefined = socket.data.tenantRecheck;
 
-	if (pending) {
+	if (pending !== undefined) {
 		return pending;
 	}
 

@@ -100,6 +100,7 @@
 			<h6 id="upgrade-title">{{ 'TENANT_VIEW.BILLING.CHOOSE_PLAN' | translate }}</h6>
 			<div class="row">
 				<div class="col-md-4 mb-3">
+					<label class="form-label" for="billing-plan">{{ 'TENANT_VIEW.SIGNUP.PLAN' | translate }}</label>
 					<select id="billing-plan" class="form-select" [(ngModel)]="chosenPlan">
 						<option *ngFor="let p of paidPlans" [value]="p.plan">
 							{{ p.label }} &middot; ${{
@@ -115,6 +116,7 @@
 					</select>
 				</div>
 				<div class="col-md-4 mb-3">
+					<label class="form-label" for="billing-interval">{{ 'TENANT_VIEW.BILLING.INTERVAL' | translate }}</label>
 					<select id="billing-interval" class="form-select" [(ngModel)]="interval">
 						<option value="monthly">{{ 'TENANT_VIEW.SIGNUP.MONTHLY' | translate }}</option>
 						<option value="annual">{{ 'TENANT_VIEW.SIGNUP.ANNUAL' | translate }}</option>

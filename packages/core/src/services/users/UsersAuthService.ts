@@ -16,6 +16,7 @@ import { inject, injectable } from 'inversify';
 import { AuthService, AuthServiceFactory } from '../auth';
 import { env } from '../../env';
 import Logger from 'bunyan';
+import { stripProtectedFields } from '../stripProtectedFields';
 
 /**
  * Customers Authentication Service
@@ -87,8 +88,10 @@ export class UsersAuthService extends EntityService<User>
 			delete input.user.email;
 		}
 
+		// a socket client sends the raw object: it never sets the tenant, hash,
+		// ban / delete flags or the Stripe customer (stripProtectedFields)
 		const user = await this.usersService.create({
-			...input.user,
+			...(stripProtectedFields(input.user) as typeof input.user),
 			...(input.password
 				? {
 						hash: await this.authService.getPasswordHash(

@@ -95,18 +95,25 @@ export function scrubTenantFromUpdate(update: any): void {
 	delete update[TENANT_FIELD];
 
 	for (const op of UPDATE_OPERATORS) {
-		const fields = update[op];
+		scrubTenantFromOperator(op, update[op]);
+	}
+}
 
-		if (fields != null && typeof fields === 'object') {
-			delete fields[TENANT_FIELD];
+/** Removes `tenantId` from the fields of one update operator (and renames to it). */
+function scrubTenantFromOperator(op: string, fields: any): void {
+	if (fields == null || typeof fields !== 'object') {
+		return;
+	}
 
-			if (op === '$rename') {
-				for (const [from, to] of Object.entries(fields)) {
-					if (to === TENANT_FIELD) {
-						delete fields[from];
-					}
-				}
-			}
+	delete fields[TENANT_FIELD];
+
+	if (op !== '$rename') {
+		return;
+	}
+
+	for (const [from, to] of Object.entries(fields)) {
+		if (to === TENANT_FIELD) {
+			delete fields[from];
 		}
 	}
 }
@@ -201,71 +208,95 @@ export function applyTenantToPipeline(
 	tenantId: string,
 	tenantCollectionNames: Set<string>
 ): void {
-	const match = { [TENANT_FIELD]: tenantId };
-
-	const scopeNested = (stages: any[]) => {
-		for (const stage of stages) {
-			for (const name of FORBIDDEN_STAGES) {
-				if (stage[name] != null) {
-					throw new Error(
-						`${name} is not allowed in a tenant-scoped aggregation`
-					);
-				}
-			}
-
-			const lookup = stage.$lookup;
-
-			if (lookup != null && tenantCollectionNames.has(lookup.from)) {
-				lookup.pipeline = [{ $match: match }, ...(lookup.pipeline ?? [])];
-				scopeNested(lookup.pipeline.slice(1));
-			} else if (lookup?.pipeline) {
-				scopeNested(lookup.pipeline);
-			}
-
-			const union = stage.$unionWith;
-
-			if (union != null) {
-				const coll = typeof union === 'string' ? union : union.coll;
-
-				if (tenantCollectionNames.has(coll)) {
-					const nested =
-						typeof union === 'string' ? [] : union.pipeline ?? [];
-
-					stage.$unionWith = {
-						coll,
-						pipeline: [{ $match: match }, ...nested],
-					};
-					scopeNested(nested);
-				}
-			}
-
-			const graph = stage.$graphLookup;
-
-			if (graph != null && tenantCollectionNames.has(graph.from)) {
-				graph.restrictSearchWithMatch = {
-					...(graph.restrictSearchWithMatch ?? {}),
-					...match,
-				};
-			}
-
-			const facet = stage.$facet;
-
-			if (facet != null) {
-				for (const sub of Object.values<any[]>(facet)) {
-					scopeNested(sub);
-				}
-			}
-		}
+	const scope: PipelineScope = {
+		match: { [TENANT_FIELD]: tenantId },
+		collections: tenantCollectionNames,
 	};
 
-	scopeNested(pipeline);
+	scopeStages(pipeline, scope);
 
 	const first = pipeline[0];
 
 	if (first?.$geoNear != null) {
-		first.$geoNear.query = { ...(first.$geoNear.query ?? {}), ...match };
+		first.$geoNear.query = { ...(first.$geoNear.query ?? {}), ...scope.match };
 	} else {
-		pipeline.unshift({ $match: match });
+		pipeline.unshift({ $match: scope.match });
+	}
+}
+
+interface PipelineScope {
+	/** `{ tenantId }` of the current tenant */
+	match: Record<string, string>;
+	/** Collections of the tenant-owned models */
+	collections: Set<string>;
+}
+
+/** Scopes every stage (and every nested pipeline) that reads a tenant-owned collection. */
+function scopeStages(stages: any[], scope: PipelineScope): void {
+	for (const stage of stages) {
+		refuseWritingStages(stage);
+		scopeLookup(stage.$lookup, scope);
+		scopeUnionWith(stage, scope);
+		scopeGraphLookup(stage.$graphLookup, scope);
+		scopeFacet(stage.$facet, scope);
+	}
+}
+
+function refuseWritingStages(stage: any): void {
+	for (const name of FORBIDDEN_STAGES) {
+		if (stage[name] != null) {
+			throw new Error(`${name} is not allowed in a tenant-scoped aggregation`);
+		}
+	}
+}
+
+function scopeLookup(lookup: any, scope: PipelineScope): void {
+	if (lookup == null) {
+		return;
+	}
+
+	if (scope.collections.has(lookup.from)) {
+		lookup.pipeline = [{ $match: scope.match }, ...(lookup.pipeline ?? [])];
+		scopeStages(lookup.pipeline.slice(1), scope);
+	} else if (lookup.pipeline) {
+		scopeStages(lookup.pipeline, scope);
+	}
+}
+
+function scopeUnionWith(stage: any, scope: PipelineScope): void {
+	const union = stage.$unionWith;
+
+	if (union == null) {
+		return;
+	}
+
+	const coll = typeof union === 'string' ? union : union.coll;
+	const nested: any[] = typeof union === 'string' ? [] : union.pipeline ?? [];
+
+	// a nested pipeline is scoped whatever it unions with (it may $lookup a tenant collection)
+	scopeStages(nested, scope);
+
+	if (scope.collections.has(coll)) {
+		stage.$unionWith = { coll, pipeline: [{ $match: scope.match }, ...nested] };
+	}
+}
+
+function scopeGraphLookup(graph: any, scope: PipelineScope): void {
+	if (graph != null && scope.collections.has(graph.from)) {
+		graph.restrictSearchWithMatch = {
+			...(graph.restrictSearchWithMatch ?? {}),
+			...scope.match,
+		};
+	}
+}
+
+function scopeFacet(facet: any, scope: PipelineScope): void {
+	if (facet == null) {
+		return;
+	}
+
+	for (const sub of Object.values<any[]>(facet)) {
+		scopeStages(sub, scope);
 	}
 }
 

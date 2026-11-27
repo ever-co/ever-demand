@@ -60,52 +60,11 @@ export async function migrateDefaultTenant(
 	db: Connection,
 	options: DefaultTenantMigrationOptions
 ): Promise<DefaultTenantMigrationResult> {
-	const tenants = db.collection('tenants');
 	const existing = await collectionNames(db);
-
-	let defaultTenant = await tenants.findOne({
-		$or: [{ isPlatform: true }, { slug: DEFAULT_TENANT_SLUG }],
-	});
-
-	if (!defaultTenant) {
-		const now = new Date();
-		const doc = {
-			_id: new Types.ObjectId(),
-			name: 'Default',
-			slug: DEFAULT_TENANT_SLUG,
-			status: 'active',
-			plan: 'enterprise',
-			billing: {},
-			settings: {},
-			isPlatform: true,
-			isDeleted: false,
-			_createdAt: now,
-			_updatedAt: now,
-		};
-
-		await tenants.insertOne(doc);
-		defaultTenant = doc as any;
-		options.log(`created the default tenant ${doc._id}`);
-	}
-
+	const defaultTenant = await ensureDefaultTenant(db, options);
 	const defaultTenantId = String(defaultTenant._id);
 
-	const pending: Record<string, number> = {};
-
-	for (const name of TENANT_COLLECTIONS) {
-		if (!existing.has(name)) {
-			continue;
-		}
-
-		const count = await db
-			.collection(name)
-			.countDocuments({ tenantId: { $exists: false } });
-
-		if (count > 0) {
-			pending[name] = count;
-		}
-	}
-
+	const pending = await recordsWithoutTenant(db, existing);
 	const pendingTotal = Object.values(pending).reduce((a, b) => a + b, 0);
 
 	if (pendingTotal > 0 && options.isProd && !options.backupConfirmed) {
@@ -116,54 +75,123 @@ export async function migrateDefaultTenant(
 		);
 	}
 
+	const backfilled = await backfillTenant(db, Object.keys(pending), defaultTenantId, options);
+
+	if (existing.has('admins')) {
+		await setAdminRoles(db, defaultTenant, options);
+	}
+
+	const droppedIndexes = await dropGlobalUniqueIndexes(db, existing, options);
+
+	return { defaultTenantId, backfilled, droppedIndexes };
+}
+
+/** The default (platform) tenant, created when missing. */
+async function ensureDefaultTenant(db: Connection, options: DefaultTenantMigrationOptions) {
+	const tenants = db.collection('tenants');
+	const found = await tenants.findOne({
+		$or: [{ isPlatform: true }, { slug: DEFAULT_TENANT_SLUG }],
+	});
+
+	if (found) {
+		return found;
+	}
+
+	const now = new Date();
+	const doc = {
+		_id: new Types.ObjectId(),
+		name: 'Default',
+		slug: DEFAULT_TENANT_SLUG,
+		status: 'active',
+		plan: 'enterprise',
+		billing: {},
+		settings: {},
+		isPlatform: true,
+		isDeleted: false,
+		_createdAt: now,
+		_updatedAt: now,
+	};
+
+	await tenants.insertOne(doc);
+	options.log(`created the default tenant ${doc._id}`);
+
+	return doc as any;
+}
+
+/** How many records of each tenant-owned collection have no tenant yet. */
+async function recordsWithoutTenant(db: Connection, existing: Set<string>) {
+	const pending: Record<string, number> = {};
+
+	for (const name of TENANT_COLLECTIONS) {
+		if (!existing.has(name)) {
+			continue;
+		}
+
+		const count = await db.collection(name).countDocuments({ tenantId: { $exists: false } });
+
+		if (count > 0) {
+			pending[name] = count;
+		}
+	}
+
+	return pending;
+}
+
+async function backfillTenant(
+	db: Connection,
+	names: string[],
+	defaultTenantId: string,
+	options: DefaultTenantMigrationOptions
+) {
 	const backfilled: Record<string, number> = {};
 
-	for (const name of Object.keys(pending)) {
+	for (const name of names) {
 		const res = await db
 			.collection(name)
-			.updateMany(
-				{ tenantId: { $exists: false } },
-				{ $set: { tenantId: defaultTenantId } }
-			);
+			.updateMany({ tenantId: { $exists: false } }, { $set: { tenantId: defaultTenantId } });
 
 		backfilled[name] = res.modifiedCount;
 		options.log(`${name}: ${res.modifiedCount} records moved to the default tenant`);
 	}
 
-	if (existing.has('admins')) {
-		const admins = db.collection('admins');
+	return backfilled;
+}
 
-		const first = await admins.findOne({
-			email: options.adminEmail,
-			tenantId: defaultTenantId,
-		});
+/**
+ * The first admin (ADMIN_EMAIL) becomes the owner and super-admin of the
+ * default tenant; every other admin without a role becomes an admin.
+ */
+async function setAdminRoles(db: Connection, defaultTenant: any, options: DefaultTenantMigrationOptions) {
+	const admins = db.collection('admins');
+	const first = await admins.findOne({
+		email: options.adminEmail,
+		tenantId: String(defaultTenant._id),
+	});
 
-		if (first) {
-			await admins.updateOne(
-				{ _id: first._id, role: { $exists: false } },
-				{ $set: { role: 'owner' } }
-			);
-			await admins.updateOne(
-				{ _id: first._id, isSuperAdmin: { $exists: false } },
-				{ $set: { isSuperAdmin: true } }
-			);
-			await tenants.updateOne(
+	if (first) {
+		await admins.updateOne({ _id: first._id, role: { $exists: false } }, { $set: { role: 'owner' } });
+		await admins.updateOne(
+			{ _id: first._id, isSuperAdmin: { $exists: false } },
+			{ $set: { isSuperAdmin: true } }
+		);
+		await db
+			.collection('tenants')
+			.updateOne(
 				{ _id: defaultTenant._id, ownerId: { $exists: false } },
 				{ $set: { ownerId: String(first._id) } }
 			);
-		}
-
-		await admins.updateMany(
-			{ role: { $exists: false } },
-			{ $set: { role: 'admin' } }
-		);
-		await admins.updateMany(
-			{ isSuperAdmin: { $exists: false } },
-			{ $set: { isSuperAdmin: false } }
-		);
 	}
 
-	const droppedIndexes: string[] = [];
+	await admins.updateMany({ role: { $exists: false } }, { $set: { role: 'admin' } });
+	await admins.updateMany({ isSuperAdmin: { $exists: false } }, { $set: { isSuperAdmin: false } });
+}
+
+async function dropGlobalUniqueIndexes(
+	db: Connection,
+	existing: Set<string>,
+	options: DefaultTenantMigrationOptions
+): Promise<string[]> {
+	const dropped: string[] = [];
 
 	for (const [name, index] of INDEXES_TO_DROP) {
 		if (!existing.has(name)) {
@@ -174,10 +202,10 @@ export async function migrateDefaultTenant(
 
 		if (indexes.some((i) => i.name === index)) {
 			await db.collection(name).dropIndex(index);
-			droppedIndexes.push(`${name}.${index}`);
+			dropped.push(`${name}.${index}`);
 			options.log(`dropped the global unique index ${name}.${index} (now per tenant)`);
 		}
 	}
 
-	return { defaultTenantId, backfilled, droppedIndexes };
+	return dropped;
 }

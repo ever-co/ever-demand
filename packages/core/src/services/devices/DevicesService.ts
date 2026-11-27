@@ -10,6 +10,7 @@ import ILanguage from '@modules/server.common/interfaces/ILanguage';
 import IService from '../IService';
 import { first, switchMap, map } from 'rxjs/operators';
 import Logger from 'bunyan';
+import { stripProtectedFields } from '../stripProtectedFields';
 
 @injectable()
 @routerName('device')
@@ -47,7 +48,8 @@ export class DevicesService extends DBService<Device>
 
 	@asyncListener()
 	async create(device: IDeviceCreateObject): Promise<Device> {
-		return super.create(device);
+		// a public listener: server-side fields are never taken from the caller
+		return super.create(stripProtectedFields(device) as IDeviceCreateObject);
 	}
 
 	@asyncListener()

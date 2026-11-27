@@ -24,16 +24,24 @@ export function geoLocation(coordinates: [number, number] = SOFIA) {
 	};
 }
 
+/** `gqlData` as the default admin (setup operations are admin-only). */
+export const AS_ADMIN = Symbol('the default admin');
+/** `gqlData` without a login. */
+export const ANONYMOUS = null;
+
+/** Who a `gqlData` call runs as: AS_ADMIN, ANONYMOUS or a login token. */
+export type Login = typeof AS_ADMIN | typeof ANONYMOUS | string;
+
 /**
- * gql() that throws on GraphQL errors and returns `data`. `token`: undefined =
- * the default admin (setup operations are admin-only), null = no login.
+ * gql() that throws on GraphQL errors and returns `data`. Every call says who
+ * it runs as (`login`): there is no default login.
  */
 export async function gqlData<T = any>(
 	query: string,
-	variables: Record<string, unknown> = {},
-	token?: string | null
+	variables: Record<string, unknown>,
+	login: Login
 ): Promise<T> {
-	const bearer = token === undefined ? await defaultAdminToken() : token ?? undefined;
+	const bearer = login === AS_ADMIN ? await defaultAdminToken() : login ?? undefined;
 	const res = await rawGql<T>(query, variables, bearer);
 	if (res.errors?.length || res.data == null) {
 		throw new Error(`GraphQL failed: ${JSON.stringify(res.errors)}`);
@@ -136,7 +144,7 @@ export async function createStoreWithProduct(count = 10, price = 1200) {
 						isManufacturing: true,
 					},
 				},
-			}
+			}, AS_ADMIN
 		)
 	).registerWarehouse;
 
@@ -149,7 +157,7 @@ export async function createStoreWithProduct(count = 10, price = 1200) {
 					description: [{ locale: 'en-US', value: 'Margherita' }],
 					images: [{ locale: 'en-US', url: 'https://example.com/p.png', width: 300, height: 300, orientation: 1 }],
 				},
-			}
+			}, AS_ADMIN
 		)
 	).createProduct;
 
@@ -158,7 +166,7 @@ export async function createStoreWithProduct(count = 10, price = 1200) {
 		{
 			w: store.id,
 			ps: [{ product: product.id, price, initialPrice: price + 300, count, isDeliveryRequired: true, isCarrierRequired: true, isManufacturing: true, isProductAvailable: true }],
-		}
+		}, AS_ADMIN
 	);
 
 	return { storeId: store.id as string, productId: product.id as string };

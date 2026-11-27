@@ -263,7 +263,9 @@ export abstract class DBService<T extends DBObject<any, any>>
 	 * Runs before every `create` (also `super.create` of a subclass); throw to
 	 * refuse it. Services override it, e.g. for plan limits.
 	 */
-	protected async beforeCreate(_createObject: CreateObject<T>): Promise<void> {}
+	protected async beforeCreate(_createObject: CreateObject<T>): Promise<void> {
+		// nothing by default: services override it
+	}
 
 	/**
 	 * Returns a copy of `obj` without the fields the schema marks

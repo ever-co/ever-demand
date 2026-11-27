@@ -54,51 +54,18 @@ describe('createApolloOptions', () => {
 		expect(seen.headers.authorization).toBe('');
 	});
 
-	describe('tenant (docs/multi-tenant/DESIGN.md §3.3, §3.5)', () => {
-		const query = gql`query Ping { ping }`;
+	// The tenant rules (common-angular tenantBeforeLogin) are tested in the merchant app's
+	// apollo.config.spec.ts; here only that the carrier app sends them.
+	it('names the tenant before login only, in requests and graphql-ws params', async () => {
+		environment.TENANT = 'acme';
+		const { client, seen } = clientWithFakeHttp();
 
-		async function headersSent() {
-			const { client, seen } = clientWithFakeHttp();
-			await client.query({ query });
-			return seen.headers;
-		}
+		await client.query({ query: gql`query Ping { ping }` });
+		expect(seen.headers).toEqual({ 'Tenant-Id': 'acme', authorization: '' });
+		expect(subscriptionParams()).toEqual({ authorization: '', tenant: 'acme' });
 
-		it('names the tenant of a white-label build before login', async () => {
-			environment.TENANT = 'acme';
-
-			expect(await headersSent()).toEqual({ 'Tenant-Id': 'acme', authorization: '' });
-		});
-
-		it('names the tenant of a <slug>.<TENANT_BASE_DOMAIN> page host before login', async () => {
-			environment.TENANT_BASE_DOMAIN = 'everdemand.co';
-			vi.stubGlobal('location', { hostname: 'acme.everdemand.co', search: '' });
-
-			expect(await headersSent()).toEqual({ 'Tenant-Id': 'acme', authorization: '' });
-		});
-
-		it('names no tenant when nothing resolves (the carrier login decides)', async () => {
-			environment.TENANT_BASE_DOMAIN = 'everdemand.co';
-			vi.stubGlobal('location', { hostname: 'localhost', search: '' });
-
-			expect(await headersSent()).toEqual({ authorization: '' });
-		});
-
-		it('names no tenant once logged in: the token carries it', async () => {
-			environment.TENANT = 'acme';
-			localStorage.setItem('token', 'jwt-1');
-
-			expect(await headersSent()).toEqual({ authorization: 'Bearer jwt-1' });
-		});
-
-		it('names the tenant in the graphql-ws connection params before login only', () => {
-			expect(subscriptionParams()).toEqual({ authorization: '' });
-
-			environment.TENANT = 'acme';
-			expect(subscriptionParams()).toEqual({ authorization: '', tenant: 'acme' });
-
-			localStorage.setItem('token', 'jwt-1');
-			expect(subscriptionParams()).toEqual({ authorization: 'Bearer jwt-1' });
-		});
+		localStorage.setItem('token', 'jwt-1');
+		expect(subscriptionParams()).toEqual({ authorization: 'Bearer jwt-1' });
 	});
 
 	it('keeps the Apollo 3 defaults: network-only, no loading emissions on polls', () => {

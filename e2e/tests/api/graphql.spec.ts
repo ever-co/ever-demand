@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { ADMIN, createStoreWithProduct, geoLocation, gql, gqlData, SOFIA, unique } from './api-helpers';
+import { ADMIN, ANONYMOUS, AS_ADMIN, createStoreWithProduct, geoLocation, gql, gqlData, SOFIA, unique } from './api-helpers';
 
 test.describe.configure({ mode: 'serial' });
 
@@ -12,7 +12,7 @@ test.describe('GraphQL API (queries the apps use)', () => {
 	test('the default admin logs in', async () => {
 		const data = await gqlData(
 			`mutation L($email: String!, $password: String!) { adminLogin(email: $email, password: $password) { token admin { email } } }`,
-			ADMIN
+			ADMIN, ANONYMOUS
 		);
 
 		token = data.adminLogin.token;
@@ -22,11 +22,11 @@ test.describe('GraphQL API (queries the apps use)', () => {
 
 	test('adminAuthenticated reads the Bearer token', async () => {
 		expect((await gqlData(`{ adminAuthenticated }`, {}, token)).adminAuthenticated).toBe(true);
-		expect((await gqlData(`{ adminAuthenticated }`, {}, null)).adminAuthenticated).toBe(false);
+		expect((await gqlData(`{ adminAuthenticated }`, {}, ANONYMOUS)).adminAuthenticated).toBe(false);
 	});
 
 	test('app settings and currencies', async () => {
-		const data = await gqlData(`{ adminAppSettings { adminPasswordReset fakeDataGenerator } currencies { currencyCode } }`);
+		const data = await gqlData(`{ adminAppSettings { adminPasswordReset fakeDataGenerator } currencies { currencyCode } }`, {}, AS_ADMIN);
 
 		expect(Object.keys(data.adminAppSettings)).toEqual(['adminPasswordReset', 'fakeDataGenerator']);
 		expect(Array.isArray(data.currencies)).toBe(true);
@@ -42,7 +42,7 @@ test.describe('GraphQL API (queries the apps use)', () => {
 				products { id }
 				getStoreProducts(storeId: $id, fullProducts: true) { count price product { id } }
 			}`,
-			{ id: storeId }
+			{ id: storeId }, AS_ADMIN
 		);
 
 		expect(data.warehouse).toEqual({ id: storeId, isActive: true });
@@ -57,16 +57,16 @@ test.describe('GraphQL API (queries the apps use)', () => {
 		userId = (
 			await gqlData(`mutation R($i: UserRegisterInput!) { registerUser(registerInput: $i) { id } }`, {
 				i: { user: { email, firstName: 'E2E', apartment: '1', geoLocation: geoLocation() }, password: 'e2e-password' },
-			})
+			}, AS_ADMIN)
 		).registerUser.id;
 
 		const login = await gqlData(
 			`mutation L($email: String!) { userLogin(email: $email, password: "e2e-password") { user { id } token } }`,
-			{ email }
+			{ email }, AS_ADMIN
 		);
 		expect(login.userLogin.user.id).toBe(userId);
 
-		const users = await gqlData(`{ users { id } getCountOfUsers }`);
+		const users = await gqlData(`{ users { id } getCountOfUsers }`, {}, AS_ADMIN);
 		expect(users.users.map((u) => u.id)).toContain(userId);
 	});
 
@@ -74,7 +74,7 @@ test.describe('GraphQL API (queries the apps use)', () => {
 		const order = (
 			await gqlData(
 				`mutation C($c: OrderCreateInput!) { createOrder(createInput: $c) { id totalPrice products { count } } }`,
-				{ c: { userId, warehouseId: storeId, products: [{ productId, count: 3 }] } }
+				{ c: { userId, warehouseId: storeId, products: [{ productId, count: 3 }] } }, AS_ADMIN
 			)
 		).createOrder;
 
@@ -86,7 +86,7 @@ test.describe('GraphQL API (queries the apps use)', () => {
 				getOrders(userId: $userId) { id }
 				getStoreProducts(storeId: $storeId, fullProducts: false) { count soldCount }
 			}`,
-			{ id: order.id, userId, storeId }
+			{ id: order.id, userId, storeId }, AS_ADMIN
 		);
 
 		expect(data.getOrder).toEqual({ id: order.id, warehouseStatus: 0, carrierStatus: 0 });
@@ -97,7 +97,7 @@ test.describe('GraphQL API (queries the apps use)', () => {
 	test('the store is found near the customer', async () => {
 		const data = await gqlData(
 			`query N($g: GeoLocationFindInput!) { nearbyStores(geoLocation: $g) { id } geoLocationProducts(geoLocation: $g) { warehouseId } }`,
-			{ g: geoLocation([SOFIA[0] + 0.001, SOFIA[1]]) }
+			{ g: geoLocation([SOFIA[0] + 0.001, SOFIA[1]]) }, AS_ADMIN
 		);
 
 		expect(data.nearbyStores.map((w) => w.id)).toContain(storeId);

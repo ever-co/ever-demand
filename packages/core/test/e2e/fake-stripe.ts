@@ -56,124 +56,144 @@ export class FakeStripe {
 		await new Promise<void>((resolve) => (this.server ? this.server.close(() => resolve()) : resolve()));
 	}
 
-	private route(req: http.IncomingMessage, body: string): [number, any] {
-		const url = new URL(req.url ?? '/', 'http://fake');
-		const form = new URLSearchParams(body);
-		const path = url.pathname;
+	/** The routes, tried in order: `[method, path pattern, handler]`. */
+	private readonly routes: Array<[string, RegExp, (r: FakeRequest) => Reply]> = [
+		['POST', /^\/v1\/customers$/, (r) => this.createCustomer(r)],
+		['GET', /^\/v1\/prices$/, (r) => this.listPrices(r)],
+		['GET', /^\/v1\/subscriptions$/, (r) => this.listSubscriptions(r)],
+		['GET', /^\/v1\/subscriptions\/([^/]+)$/, (r) => this.getSubscription(r)],
+		['POST', /^\/v1\/checkout\/sessions$/, (r) => this.createSession(r)],
+		['GET', /^\/v1\/checkout\/sessions\/([^/]+)$/, (r) => this.getSession(r)],
+		['POST', /^\/v1\/checkout\/sessions\/([^/]+)\/expire$/, (r) => this.expireSession(r)],
+		['POST', /^\/v1\/billing_portal\/sessions$/, () => this.createPortalSession()],
+	];
+
+	private route(req: http.IncomingMessage, body: string): Reply {
+		// the base only lets URL parse the request path and query
+		const url = new URL(req.url ?? '/', 'https://fake-stripe.invalid');
 		const method = req.method ?? 'GET';
-		const missing = (what: string): [number, any] => [
-			404,
-			{ error: { type: 'invalid_request_error', code: 'resource_missing', message: `No such ${what}` } },
+
+		for (const [routeMethod, pattern, handle] of this.routes) {
+			const params = routeMethod === method ? pattern.exec(url.pathname) : null;
+
+			if (params) {
+				return handle({ req, url, form: new URLSearchParams(body), params });
+			}
+		}
+
+		return missing(`route ${method} ${url.pathname}`);
+	}
+
+	/** A create answered once per Idempotency-Key, as Stripe does. */
+	private idempotent(req: http.IncomingMessage, create: () => any): Reply {
+		const key = req.headers['idempotency-key'];
+
+		if (typeof key === 'string' && this.byIdempotencyKey.has(key)) {
+			return [200, this.byIdempotencyKey.get(key)];
+		}
+
+		const created = create();
+
+		if (typeof key === 'string') {
+			this.byIdempotencyKey.set(key, created);
+		}
+
+		return [200, created];
+	}
+
+	private createCustomer({ req, form }: FakeRequest): Reply {
+		return this.idempotent(req, () => {
+			const customer = { id: this.id('cus'), object: 'customer', name: form.get('name') };
+			this.customers.set(customer.id, customer);
+			return customer;
+		});
+	}
+
+	private listPrices({ url }: FakeRequest): Reply {
+		const keys = [...url.searchParams.entries()].filter(([k]) => k.startsWith('lookup_keys')).map(([, v]) => v);
+
+		return [
+			200,
+			list('/v1/prices', keys.map((key) => ({ id: `price_${key}`, object: 'price', lookup_key: key, active: true }))),
 		];
+	}
 
-		const idempotent = (create: () => any): [number, any] => {
-			const key = req.headers['idempotency-key'];
+	private listSubscriptions({ url }: FakeRequest): Reply {
+		const customer = url.searchParams.get('customer');
 
-			if (typeof key === 'string' && this.byIdempotencyKey.has(key)) {
-				return [200, this.byIdempotencyKey.get(key)];
-			}
+		return [
+			200,
+			list('/v1/subscriptions', [...this.subscriptions.values()].filter((s) => !customer || s.customer === customer)),
+		];
+	}
 
-			const created = create();
+	private getSubscription({ params }: FakeRequest): Reply {
+		const subscription = this.subscriptions.get(params[1]);
+		return subscription ? [200, subscription] : missing('subscription');
+	}
 
-			if (typeof key === 'string') {
-				this.byIdempotencyKey.set(key, created);
-			}
+	private createSession({ req, form }: FakeRequest): Reply {
+		return this.idempotent(req, () => {
+			const id = this.id('cs');
+			const session = {
+				id,
+				object: 'checkout.session',
+				mode: form.get('mode'),
+				customer: form.get('customer'),
+				client_reference_id: form.get('client_reference_id'),
+				status: 'open',
+				url: `https://checkout.stripe.test/${id}`,
+				expires_at: Math.floor(Date.now() / 1000) + 24 * 3600,
+				line_items: [...form.entries()]
+					.filter(([k]) => /^line_items\[\d+\]\[price\]$/.test(k))
+					.map(([, price]) => price),
+			};
+			this.sessions.set(id, session);
+			return session;
+		});
+	}
 
-			return [200, created];
-		};
+	private getSession({ params }: FakeRequest): Reply {
+		const session = this.sessions.get(params[1]);
+		return session ? [200, session] : missing('checkout session');
+	}
 
-		if (method === 'POST' && path === '/v1/customers') {
-			return idempotent(() => {
-				const customer = { id: this.id('cus'), object: 'customer', name: form.get('name') };
-				this.customers.set(customer.id, customer);
-				return customer;
-			});
+	private expireSession({ params }: FakeRequest): Reply {
+		const session = this.sessions.get(params[1]);
+
+		if (!session) {
+			return missing('checkout session');
 		}
 
-		if (method === 'GET' && path === '/v1/prices') {
-			const keys = [...url.searchParams.entries()]
-				.filter(([k]) => k.startsWith('lookup_keys'))
-				.map(([, v]) => v);
-
-			return [
-				200,
-				{
-					object: 'list',
-					url: '/v1/prices',
-					has_more: false,
-					data: keys.map((key) => ({ id: `price_${key}`, object: 'price', lookup_key: key, active: true })),
-				},
-			];
+		if (session.status !== 'open') {
+			return [400, { error: { type: 'invalid_request_error', message: 'Only open sessions can be expired' } }];
 		}
 
-		if (method === 'GET' && path === '/v1/subscriptions') {
-			const customer = url.searchParams.get('customer');
+		session.status = 'expired';
+		session.url = null;
 
-			return [
-				200,
-				{
-					object: 'list',
-					url: '/v1/subscriptions',
-					has_more: false,
-					data: [...this.subscriptions.values()].filter((s) => !customer || s.customer === customer),
-				},
-			];
-		}
+		return [200, session];
+	}
 
-		let m = /^\/v1\/subscriptions\/([^/]+)$/.exec(path);
-
-		if (method === 'GET' && m) {
-			const subscription = this.subscriptions.get(m[1]);
-			return subscription ? [200, subscription] : missing('subscription');
-		}
-
-		if (method === 'POST' && path === '/v1/checkout/sessions') {
-			return idempotent(() => {
-				const id = this.id('cs');
-				const session = {
-					id,
-					object: 'checkout.session',
-					mode: form.get('mode'),
-					customer: form.get('customer'),
-					client_reference_id: form.get('client_reference_id'),
-					status: 'open',
-					url: `https://checkout.stripe.test/${id}`,
-					expires_at: Math.floor(Date.now() / 1000) + 24 * 3600,
-					line_items: [...form.entries()]
-						.filter(([k]) => /^line_items\[\d+\]\[price\]$/.test(k))
-						.map(([, price]) => price),
-				};
-				this.sessions.set(id, session);
-				return session;
-			});
-		}
-
-		m = /^\/v1\/checkout\/sessions\/([^/]+)(\/expire)?$/.exec(path);
-
-		if (m) {
-			const session = this.sessions.get(m[1]);
-
-			if (!session) {
-				return missing('checkout session');
-			}
-
-			if (method === 'POST' && m[2]) {
-				if (session.status !== 'open') {
-					return [400, { error: { type: 'invalid_request_error', message: 'Only open sessions can be expired' } }];
-				}
-
-				session.status = 'expired';
-				session.url = null;
-			}
-
-			return [200, session];
-		}
-
-		if (method === 'POST' && path === '/v1/billing_portal/sessions') {
-			const id = this.id('bps');
-			return [200, { id, object: 'billing_portal.session', url: `https://billing.stripe.test/${id}` }];
-		}
-
-		return missing(`route ${method} ${path}`);
+	private createPortalSession(): Reply {
+		const id = this.id('bps');
+		return [200, { id, object: 'billing_portal.session', url: `https://billing.stripe.test/${id}` }];
 	}
 }
+
+type Reply = [number, any];
+
+interface FakeRequest {
+	req: http.IncomingMessage;
+	url: URL;
+	form: URLSearchParams;
+	/** The route pattern's match: `params[1]` is the id in the path */
+	params: RegExpExecArray;
+}
+
+const missing = (what: string): Reply => [
+	404,
+	{ error: { type: 'invalid_request_error', code: 'resource_missing', message: `No such ${what}` } },
+];
+
+const list = (url: string, data: any[]) => ({ object: 'list', url, has_more: false, data });

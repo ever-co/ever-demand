@@ -172,7 +172,8 @@ export class WarehousesService extends DBService<Warehouse>
 	@asyncListener()
 	async register(input: IWarehouseRegistrationInput) {
 		const warehouse = await super.create({
-			...input.warehouse,
+			// server-side fields are never taken from the caller
+			...(stripProtectedFields(input.warehouse) as typeof input.warehouse),
 			...(input.password
 				? {
 						hash: await this.authService.getPasswordHash(

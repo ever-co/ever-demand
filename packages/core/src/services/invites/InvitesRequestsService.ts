@@ -21,6 +21,7 @@ import { IGeoLocationCreateObject } from '@modules/server.common/interfaces/IGeo
 import { Country } from '@modules/server.common/entities/GeoLocation';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 import { faker } from '@faker-js/faker';
+import { stripProtectedFields } from '../stripProtectedFields';
 
 @injectable()
 @routerName('invite-request')
@@ -73,7 +74,8 @@ export class InvitesRequestsService
 	async create(
 		inviteRequest: IInviteRequestCreateObject
 	): Promise<InviteRequest> {
-		return super.create(inviteRequest);
+		// a public listener: server-side fields are never taken from the caller
+		return super.create(stripProtectedFields(inviteRequest) as IInviteRequestCreateObject);
 	}
 
 	/**

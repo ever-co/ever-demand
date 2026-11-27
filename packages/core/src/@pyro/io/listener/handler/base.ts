@@ -131,7 +131,10 @@ export abstract class BaseListenerHandler<T> implements IListenerHandler<T> {
 
 			// the call, and every stream it opens, runs in the socket's tenant
 			const run = (ctx: TenantCtx) =>
-				TenantContext.run(ctx, () => this.handleRequest(args, received));
+				TenantContext.run(ctx, () => {
+					// handlers answer the client themselves, errors included
+					void this.handleRequest(args, received);
+				});
 
 			if (!hasSocketTenantInfo(this._socket)) {
 				run(socketTenantCtx(this._socket));
@@ -159,7 +162,7 @@ export abstract class BaseListenerHandler<T> implements IListenerHandler<T> {
 		});
 	}
 
-	abstract handleRequest(args: any[], received?: unknown): void;
+	abstract handleRequest(args: any[], received?: unknown): void | Promise<void>;
 
 	/**
 	 * Runs as the call arrives, before the access re-check: the client may send

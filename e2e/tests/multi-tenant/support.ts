@@ -2,6 +2,7 @@
  * Helpers for the multi-tenant admin suite: the admin app (E2E_MT_ADMIN_URL) against an API
  * that runs with MULTI_TENANT=true (E2E_MT_GQL_URL).
  */
+import { randomUUID } from 'node:crypto';
 import { expect, type Page, test } from '@playwright/test';
 import { route } from '../admin/support';
 
@@ -56,7 +57,7 @@ export interface TenantAccount {
 
 /** A tenant with names no other run uses. */
 export function newTenant(letter: string): TenantAccount {
-	const run = `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
+	const run = `${Date.now().toString(36)}${randomUUID().slice(0, 3)}`;
 	const key = `${letter.toLowerCase()}${run}`;
 	return {
 		business: `MT ${letter.toUpperCase()} ${run}`,

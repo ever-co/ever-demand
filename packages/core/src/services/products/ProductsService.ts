@@ -17,6 +17,7 @@ import { CreateObject } from '@pyro/db/db-create-object';
 import { UpdateObject } from '@pyro/db/db-update-object';
 import { first, switchMap, map } from 'rxjs/operators';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
+import { stripProtectedFields } from '../stripProtectedFields';
 
 @injectable()
 @routerName('product')
@@ -65,7 +66,8 @@ export class ProductsService extends DBService<Product>
 
 	@asyncListener()
 	async create(product: CreateObject<Product>): Promise<Product> {
-		return super.create(product);
+		// server-side fields are never taken from the caller (socket, GraphQL, REST)
+		return super.create(stripProtectedFields(product) as CreateObject<Product>);
 	}
 
 	@asyncListener()

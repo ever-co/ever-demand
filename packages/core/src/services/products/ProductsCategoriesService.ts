@@ -10,6 +10,7 @@ import ProductsCategory from '@modules/server.common/entities/ProductsCategory';
 import { UpdateObject } from '@pyro/db/db-update-object';
 import { CreateObject } from '@pyro/db/db-create-object';
 import { first, switchMap, map } from 'rxjs/operators';
+import { stripProtectedFields } from '../stripProtectedFields';
 
 @injectable()
 @routerName('products-category')
@@ -50,7 +51,7 @@ export class ProductsCategoriesService extends DBService<ProductsCategory>
 	async create(
 		category: CreateObject<ProductsCategory>
 	): Promise<ProductsCategory> {
-		return super.create(category);
+		return super.create(stripProtectedFields(category) as CreateObject<ProductsCategory>);
 	}
 
 	/**

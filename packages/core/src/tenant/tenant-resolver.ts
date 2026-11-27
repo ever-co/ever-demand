@@ -167,57 +167,78 @@ function checkStatus(tenant: Tenant, actor?: TenantActor) {
 export async function resolveTenantContext(
 	info: TenantRequestInfo
 ): Promise<TenantCtx> {
-	const header = typeof info.tenantHeader === 'string' ? info.tenantHeader.trim() : '';
-
-	let headerTenant: Tenant | null = null;
-
-	if (header) {
-		headerTenant = await tenantDirectory.byKey(header);
-
-		if (!headerTenant) {
-			throw new TenantResolutionError(
-				`Unknown tenant "${header.slice(0, 64)}"`,
-				404,
-				'TENANT_NOT_FOUND'
-			);
-		}
-	}
-
+	const headerTenant = await headerTenantOf(info);
 	const token = verifyLoginToken(info.authorization);
 	const actor = token ? await actorOf(token) : null;
 
-	if (token && actor) {
-		const ownTenantId = tokenTenantId(token);
+	return token && actor
+		? loginContext(token, actor, headerTenant)
+		: anonymousContext(info, headerTenant);
+}
 
-		if (headerTenant && headerTenant.id !== ownTenantId) {
-			if (!actor.isSuperAdmin) {
-				throw new TenantResolutionError(
-					'This login belongs to another tenant',
-					403,
-					'TENANT_FORBIDDEN'
-				);
-			}
+/** The tenant the `Tenant-Id` header / socket `auth.tenant` names; throws when it is unknown. */
+async function headerTenantOf(info: TenantRequestInfo): Promise<Tenant | null> {
+	const header = typeof info.tenantHeader === 'string' ? info.tenantHeader.trim() : '';
 
-			checkStatus(headerTenant, actor);
+	if (!header) {
+		return null;
+	}
 
-			return { tenantId: headerTenant.id, actor };
-		}
+	const tenant = await tenantDirectory.byKey(header);
 
-		const own = ownTenantId ? await tenantDirectory.byId(ownTenantId) : null;
+	if (!tenant) {
+		throw new TenantResolutionError(
+			`Unknown tenant "${header.slice(0, 64)}"`,
+			404,
+			'TENANT_NOT_FOUND'
+		);
+	}
 
-		if (!own) {
+	return tenant;
+}
+
+/** A logged-in request: the token's tenant, or the header's for a super-admin. */
+async function loginContext(
+	token: VerifiedToken,
+	actor: TenantActor,
+	headerTenant: Tenant | null
+): Promise<TenantCtx> {
+	const ownTenantId = tokenTenantId(token);
+
+	if (headerTenant && headerTenant.id !== ownTenantId) {
+		if (!actor.isSuperAdmin) {
 			throw new TenantResolutionError(
-				'The tenant of this login no longer exists',
+				'This login belongs to another tenant',
 				403,
 				'TENANT_FORBIDDEN'
 			);
 		}
 
-		checkStatus(own, actor);
+		checkStatus(headerTenant, actor);
 
-		return { tenantId: own.id, actor };
+		return { tenantId: headerTenant.id, actor };
 	}
 
+	const own = ownTenantId ? await tenantDirectory.byId(ownTenantId) : null;
+
+	if (!own) {
+		throw new TenantResolutionError(
+			'The tenant of this login no longer exists',
+			403,
+			'TENANT_FORBIDDEN'
+		);
+	}
+
+	checkStatus(own, actor);
+
+	return { tenantId: own.id, actor };
+}
+
+/** A request without a (valid) login: the header, then the host, then the default tenant. */
+async function anonymousContext(
+	info: TenantRequestInfo,
+	headerTenant: Tenant | null
+): Promise<TenantCtx> {
 	if (headerTenant) {
 		checkStatus(headerTenant);
 		return { tenantId: headerTenant.id };
@@ -232,11 +253,7 @@ export async function resolveTenantContext(
 		}
 	}
 
-	if (!env.MULTI_TENANT) {
-		return { tenantId: tenantDirectory.getDefaultTenantId() };
-	}
-
-	return { tenantId: null };
+	return { tenantId: env.MULTI_TENANT ? null : tenantDirectory.getDefaultTenantId() };
 }
 
 /** First value of a header that may be repeated. */

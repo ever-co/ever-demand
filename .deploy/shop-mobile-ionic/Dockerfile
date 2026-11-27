@@ -46,7 +46,8 @@ ENV CI=true
 ENV NODE_OPTIONS=--max-old-space-size=4096
 
 # Node 25+ no longer bundles corepack.
-RUN npm i -g pnpm@12.23.0
+# pnpm runs without its own install scripts (lifecycle scripts stay off: Sonar S6505)
+RUN npm i -g --ignore-scripts pnpm@12.23.0
 
 WORKDIR /srv/ever
 
@@ -93,10 +94,12 @@ FROM nginx:alpine AS production
 
 WORKDIR /srv/ever
 
-COPY --chown=nginx:nginx wait .deploy/shop-mobile-ionic/entrypoint.compose.sh .deploy/shop-mobile-ionic/entrypoint.prod.sh ./
-COPY --chown=nginx:nginx .deploy/shop-mobile-ionic/nginx.compose.conf /etc/nginx/conf.d/compose.conf.template
-COPY --chown=nginx:nginx .deploy/shop-mobile-ionic/nginx.prod.conf /etc/nginx/conf.d/prod.conf.template
-COPY --chown=nginx:nginx --from=build /srv/ever/packages/shop-mobile-ionic/www .
+# Owned by root, read-only for the nginx workers: the entrypoint runs as root (it fills in
+# the runtime settings and writes /etc/nginx/nginx.conf), nothing else writes here (Sonar S6504).
+COPY wait .deploy/shop-mobile-ionic/entrypoint.compose.sh .deploy/shop-mobile-ionic/entrypoint.prod.sh ./
+COPY .deploy/shop-mobile-ionic/nginx.compose.conf /etc/nginx/conf.d/compose.conf.template
+COPY .deploy/shop-mobile-ionic/nginx.prod.conf /etc/nginx/conf.d/prod.conf.template
+COPY --from=build /srv/ever/packages/shop-mobile-ionic/www .
 
 RUN apk add --no-cache dos2unix \
 	&& dos2unix entrypoint.compose.sh entrypoint.prod.sh \
