@@ -17,11 +17,12 @@ Keep this file current. Update it after every merge or milestone, then commit an
   carrier tokens, login operator injection, the super-admin email takeover, the login-throttle lockout and the
   device channel hijack.
 - **Deploying multi-tenant:**
-  - On a production database with existing records, migration 0001 refuses to start until a `mongodump` is
-    taken and `MIGRATION_BACKUP_CONFIRMED=true` is set.
+  - On a production database with existing records, migration 0001 refuses to start, before it writes anything
+    (the default tenant included), until a `mongodump` is taken and `MIGRATION_BACKUP_CONFIRMED=true` is set.
   - `TRUST_PROXY` defaults to `loopback, uniquelocal`; add a CDN's ranges if one sits in front of the ingress.
-  - `SUPER_ADMIN_EMAIL` names the platform super-admin. It never applies while that admin has the default
-    password.
+  - `SUPER_ADMIN_EMAIL` names the platform super-admin. It is set at boot. An admin who has the default
+    password at startup is not made super-admin. If the password is changed to the default while the API
+    runs, the admin keeps super-admin until the next restart.
 - **Still open:**
   - Android APK builds have not been verified, because the GitHub CI workflow is disabled by owner policy.
   - iOS needs a Mac: shop and merchant need `npx cap sync ios` and a committed Podfile.lock, and carrier

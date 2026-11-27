@@ -63,12 +63,11 @@ export async function migrateDefaultTenant(
 	options: DefaultTenantMigrationOptions,
 ): Promise<DefaultTenantMigrationResult> {
 	const existing = await collectionNames(db);
-	const defaultTenant = await ensureDefaultTenant(db, options);
-	const defaultTenantId = String(defaultTenant._id);
-
 	const pending = await recordsWithoutTenant(db, existing);
 	const pendingTotal = Object.values(pending).reduce((a, b) => a + b, 0);
 
+	// Before any write, the default tenant included: a backup taken after
+	// this refusal must hold the database as it was.
 	if (pendingTotal > 0 && options.isProd && !options.backupConfirmed) {
 		throw new Error(
 			`Multi-tenant migration: ${pendingTotal} existing records need a tenant ` +
@@ -76,6 +75,9 @@ export async function migrateDefaultTenant(
 				'MIGRATION_BACKUP_CONFIRMED=true and restart.',
 		);
 	}
+
+	const defaultTenant = await ensureDefaultTenant(db, options);
+	const defaultTenantId = String(defaultTenant._id);
 
 	const backfilled = await backfillTenant(
 		db,
