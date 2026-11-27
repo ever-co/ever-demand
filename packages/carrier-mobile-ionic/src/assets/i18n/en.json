@@ -34,7 +34,9 @@
 		"TAKE_WORK": "Take work",
 		"SKIP_WORK": "Skip Work",
 		"I'M_THERE": "I'm there",
-		"CANCEL": "Cancel"
+		"CANCEL": "Cancel",
+		"TO": "To",
+		"ORDER_ID": "Order ID"
 	},
 	"HOME_VIEW": {
 		"DELIVERIES": "Deliveries",
@@ -62,7 +64,10 @@
 		"CANCEL": "Cancel"
 	},
 	"LOGIN_VIEW": {
-		"LOGIN": "Login"
+		"LOGIN": "Login",
+		"USERNAME": "Username",
+		"PASSWORD": "Password",
+		"WRONG_CREDENTIALS": "Wrong username or password!"
 	},
 	"ABOUT_VIEW": {
 		"TITLE": "About Us"
@@ -81,5 +86,13 @@
 	},
 	"LIST_VIEW": {
 		"YOU_NAVIGATED_HERE_FROM": "You navigated here from"
+	},
+	"COMMON": {
+		"OK": "OK",
+		"TRY_AGAIN": "Try again!"
+	},
+	"ORDER_STATE": {
+		"CUSTOMER_CANCELLED_ORDER": "The customer canceled the order",
+		"TAKEN_BY_ANOTHER_CARRIER": "Another carrier took the order first!"
 	}
 }

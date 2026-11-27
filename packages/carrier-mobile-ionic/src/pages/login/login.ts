@@ -1,5 +1,6 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { first } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { Store } from '../../services/store.service';
 import { environment } from '../../environments/environment';
@@ -15,6 +16,7 @@ import { Router } from '@angular/router';
 export class LoginPage {
 	user;
 	loginLogo: string;
+	private readonly translate = inject(TranslateService);
 
 	constructor(
 		private authService: AuthService,
@@ -35,7 +37,7 @@ export class LoginPage {
 			.toPromise();
 
 		if (!res || !res.carrier) {
-			alert('Carrier not exists!');
+			alert(this.translate.instant('LOGIN_VIEW.WRONG_CREDENTIALS'));
 			return;
 		}
 

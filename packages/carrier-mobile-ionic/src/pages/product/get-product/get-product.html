@@ -1,14 +1,12 @@
 <div *ngIf="selectedOrder?.isCancelled" class="money-amount-container">
 	<div class="money-amount">
-		<!-- TODO add translate -->
-		The customer cancel order
+		{{ 'ORDER_STATE.CUSTOMER_CANCELLED_ORDER' | translate }}
 	</div>
 </div>
 
 <div *ngIf="isTakenFromAnotherCarrier" class="money-amount-container">
 	<div class="money-amount">
-		<!-- TODO add translate -->
-		Another Carrier took the order first !
+		{{ 'ORDER_STATE.TAKEN_BY_ANOTHER_CARRIER' | translate }}
 	</div>
 </div>
 
@@ -80,7 +78,7 @@
 						class="button button-assertive"
 						(click)="unselectOrder()"
 					>
-						{{ 'OK' | translate }}
+						{{ 'COMMON.OK' | translate }}
 					</button>
 				</div>
 			</div>

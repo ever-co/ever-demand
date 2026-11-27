@@ -34,7 +34,9 @@
 		"TAKE_WORK": "Вземете работа",
 		"SKIP_WORK": "Пропуснете работата",
 		"I'M_THERE": "Tам съм",
-		"CANCEL": "Отказ"
+		"CANCEL": "Отказ",
+		"TO": "До",
+		"ORDER_ID": "ИД на поръчката"
 	},
 	"HOME_VIEW": {
 		"DELIVERIES": "Доставки",
@@ -62,7 +64,10 @@
 		"CANCEL": "Отказ"
 	},
 	"LOGIN_VIEW": {
-		"LOGIN": "Влез"
+		"LOGIN": "Влез",
+		"USERNAME": "Потребителско име",
+		"PASSWORD": "Парола",
+		"WRONG_CREDENTIALS": "Грешно потребителско име или парола!"
 	},
 	"ABOUT_VIEW": {
 		"TITLE": "За нас"
@@ -81,5 +86,13 @@
 	},
 	"LIST_VIEW": {
 		"YOU_NAVIGATED_HERE_FROM": "От тук сте навигирали"
+	},
+	"COMMON": {
+		"OK": "Добре",
+		"TRY_AGAIN": "Опитайте отново!"
+	},
+	"ORDER_STATE": {
+		"CUSTOMER_CANCELLED_ORDER": "Клиентът отказа поръчката",
+		"TAKEN_BY_ANOTHER_CARRIER": "Друг шофьор пое поръчката преди вас!"
 	}
 }

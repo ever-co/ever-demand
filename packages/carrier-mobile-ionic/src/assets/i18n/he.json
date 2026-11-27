@@ -34,7 +34,9 @@
 		"TAKE_WORK": "קח עבודה",
 		"SKIP_WORK": "דלג על עבודה",
 		"I'M_THERE": "אני שם",
-		"CANCEL": "לְבַטֵל"
+		"CANCEL": "לְבַטֵל",
+		"TO": "אל",
+		"ORDER_ID": "מזהה הזמנה"
 	},
 	"HOME_VIEW": {
 		"DELIVERIES": "משלוחים",
@@ -62,7 +64,10 @@
 		"CANCEL": "לְבַטֵל"
 	},
 	"LOGIN_VIEW": {
-		"LOGIN": "התחברות"
+		"LOGIN": "התחברות",
+		"USERNAME": "שם משתמש",
+		"PASSWORD": "סיסמה",
+		"WRONG_CREDENTIALS": "שם משתמש או סיסמה שגויים!"
 	},
 	"ABOUT_VIEW": {
 		"TITLE": "עלינו"
@@ -81,5 +86,13 @@
 	},
 	"LIST_VIEW": {
 		"YOU_NAVIGATED_HERE_FROM": "אתה מנווט כאן מ"
+	},
+	"COMMON": {
+		"OK": "אישור",
+		"TRY_AGAIN": "נסה שוב!"
+	},
+	"ORDER_STATE": {
+		"CUSTOMER_CANCELLED_ORDER": "הלקוח ביטל את ההזמנה",
+		"TAKEN_BY_ANOTHER_CARRIER": "נהג אחר לקח את ההזמנה לפניך!"
 	}
 }
