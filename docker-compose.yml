@@ -1,8 +1,9 @@
-version: '3.7'
-
+# MongoDB by default. DocumentDB (MongoDB-compatible, on PostgreSQL) instead:
+#   docker compose -f docker-compose.yml -f docker-compose.documentdb.yml up
+# See docs/deployment/documentdb.md.
 services:
     db:
-        image: mongo
+        image: mongo:8
         container_name: db
         restart: always
         environment:
@@ -19,7 +20,6 @@ services:
     admin-web:
         container_name: admin-web
         image: ever-admin-web:latest
-        command: yarn run:admin
         build:
             context: .
             dockerfile: .deploy/admin-web-angular/Dockerfile
@@ -36,7 +36,6 @@ services:
     shop-web:
         container_name: shop-web
         image: ever-shop-web:latest
-        command: yarn run:shopweb
         build:
             context: .
             dockerfile: .deploy/shop-web-angular/Dockerfile
@@ -46,14 +45,13 @@ services:
         depends_on:
             - api
         ports:
-            - 3000:3000
+            - 3000:4200
         networks:
             - overlay
 
     carrier-mobile:
         container_name: carrier-mobile
         image: ever-carrier-mobile:latest
-        command: yarn run:carrier
         build:
             context: .
             dockerfile: .deploy/carrier-mobile-ionic/Dockerfile
@@ -63,15 +61,13 @@ services:
         depends_on:
             - api
         ports:
-            - 4203:4200
-            - 4204:4203
+            - 4203:4203
         networks:
             - overlay
 
     shop-mobile:
         container_name: shop-mobile
         image: ever-shop-mobile:latest
-        command: yarn run:shopmobile
         build:
             context: .
             dockerfile: .deploy/shop-mobile-ionic/Dockerfile
@@ -88,7 +84,6 @@ services:
     merchant-mobile:
         container_name: merchant-mobile
         image: ever-merchant-mobile:latest
-        command: yarn run:merchant
         build:
             context: .
             dockerfile: .deploy/merchant-tablet-ionic/Dockerfile
@@ -118,7 +113,8 @@ services:
             DB_URI: mongodb://db/ever_development
             TESTING_DB_URI: mongodb://db/ever_testing
         env_file:
-            - .env
+            - path: .env
+              required: false
         # the image runs from /srv/ever/packages/core (see .deploy/api/Dockerfile)
         entrypoint: '/entrypoint.compose.sh'
         command: ['node', 'build/main.js']

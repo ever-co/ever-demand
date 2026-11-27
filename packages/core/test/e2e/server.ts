@@ -12,6 +12,16 @@ export const CORE_DIR = path.resolve(__dirname, '../..');
 export const MONGO_URL = env('CORE_E2E_MONGO_URL', 'mongodb://127.0.0.1:27018');
 export const DB_NAME = env('CORE_E2E_DB_NAME', 'ever_core_e2e');
 
+/**
+ * MONGO_URL with the database as its path. Keeps the query, so a server that
+ * needs options (DocumentDB's gateway: `?tls=true&tlsCAFile=...`) works too.
+ */
+export function dbUri(database = DB_NAME): string {
+	const url = new URL(MONGO_URL);
+	url.pathname = `/${database}`;
+	return url.toString();
+}
+
 export const HOST = '127.0.0.1';
 export const HTTP_PORT = Number(env('CORE_E2E_HTTPPORT', '15500'));
 export const HTTPS_PORT = Number(env('CORE_E2E_HTTPSPORT', '12087'));
@@ -55,7 +65,7 @@ export function serverEnv(): NodeJS.ProcessEnv {
 		HTTPSPORT: String(HTTPS_PORT),
 		GQLPORT: String(GQL_PORT),
 		GQLPORT_SUBSCRIPTIONS: String(SUBSCRIPTIONS_PORT),
-		DB_URI: `${MONGO_URL}/${DB_NAME}`,
+		DB_URI: dbUri(),
 		DB_NAME,
 		DB_HOST: new URL(MONGO_URL).hostname,
 		DB_PORT: new URL(MONGO_URL).port || '27017',

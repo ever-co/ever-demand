@@ -27,7 +27,7 @@ describe('TypeORM options (helpers/typeorm.ts)', () => {
 		fs.rmSync(logsPath, { recursive: true, force: true });
 	});
 
-	it('connects to DB_URI without TLS by default', () => {
+	it('leaves TLS to DB_URI by default', () => {
 		delete process.env.DB_SSL_MODE;
 		delete process.env.DB_NAME;
 
@@ -36,13 +36,14 @@ describe('TypeORM options (helpers/typeorm.ts)', () => {
 		expect(options).toMatchObject({
 			type: 'mongodb',
 			url: 'mongodb://db.example:27017/ever_test',
-			tls: false,
-			tlsCAFile: undefined,
 			database: 'ever_development',
 			synchronize: true,
 			logger: 'file',
 		});
 		expect(options.entities).toEqual(getTypeORMEntities());
+		// so `?tls=true` in DB_URI (DocumentDB's gateway) is not overridden by tls: false
+		expect('tls' in options).toBe(false);
+		expect('tlsCAFile' in options).toBe(false);
 		expect(getTypeORMEntities()).toHaveLength(11);
 	});
 
@@ -60,6 +61,16 @@ describe('TypeORM options (helpers/typeorm.ts)', () => {
 		}
 
 		expect(isDbSsl()).toBe(expected);
+	});
+
+	it('uses the system CAs for TLS when DB_CA_CERT is empty', () => {
+		process.env.DB_SSL_MODE = 'true';
+		delete process.env.DB_CA_CERT;
+
+		const options = getTypeORMOptions();
+
+		expect(options.tls).toBe(true);
+		expect(options.tlsCAFile).toBeUndefined();
 	});
 
 	it('writes the CA of DB_CA_CERT and uses it for TLS', () => {

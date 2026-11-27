@@ -57,17 +57,30 @@ export function writeDbCaCert(): string {
 }
 
 /**
+ * The TLS options of both database connections (Mongoose and TypeORM).
+ * With DB_SSL_MODE set: TLS, trusting the CA in DB_CA_CERT when one is given,
+ * else the system CAs. Without it: nothing, so DB_URI decides (for example
+ * `?tls=true&tlsCAFile=...` for DocumentDB's gateway, which only speaks TLS).
+ */
+export function dbTlsOptions(): { tls?: true; tlsCAFile?: string } {
+	if (!isDbSsl()) {
+		return {};
+	}
+
+	return process.env.DB_CA_CERT
+		? { tls: true, tlsCAFile: writeDbCaCert() }
+		: { tls: true };
+}
+
+/**
  * TypeORM (MongoDB) connection options, shared by the bootstrap connection
  * (used by the inversify repositories) and the NestJS TypeOrmModule.
  */
 export function getTypeORMOptions(): MongoDataSourceOptions {
-	const tls = isDbSsl();
-
 	return {
 		type: 'mongodb',
 		url: env.DB_URI,
-		tls,
-		tlsCAFile: tls ? writeDbCaCert() : undefined,
+		...dbTlsOptions(),
 		host: process.env.DB_HOST || 'localhost',
 		username: process.env.DB_USER,
 		password: process.env.DB_PASS,

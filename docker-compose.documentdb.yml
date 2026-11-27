@@ -1,0 +1,48 @@
+# DocumentDB (https://github.com/documentdb/documentdb) instead of MongoDB:
+#
+#   DOCUMENTDB_PASSWORD=<a password> docker compose -f docker-compose.yml -f docker-compose.documentdb.yml up
+#
+# DocumentDB is MongoDB-compatible and stores the data in PostgreSQL. This uses
+# its all-in-one local image (PostgreSQL + extensions + gateway): fine for
+# development and small installs. For production see docs/deployment/documentdb.md.
+# Its gateway speaks only TLS, with a self-signed certificate made at first start,
+# hence tlsAllowInvalidCertificates here; use a real CA (DB_SSL_MODE + DB_CA_CERT,
+# or tlsCAFile in DB_URI) anywhere else.
+services:
+    db:
+        # MongoDB is not needed with DocumentDB
+        scale: 0
+
+    documentdb:
+        image: ghcr.io/documentdb/documentdb/documentdb-local:latest
+        container_name: documentdb
+        restart: always
+        command:
+            - --username
+            - ${DOCUMENTDB_USERNAME:-ever}
+            - --password
+            - ${DOCUMENTDB_PASSWORD:?set DOCUMENTDB_PASSWORD}
+        environment:
+            # the local image reports anonymous usage by default
+            DOCUMENTDB_USAGE_TELEMETRY: 'false'
+        volumes:
+            - documentdb_data:/data
+        ports:
+            - '10260:10260'
+        networks:
+            - overlay
+
+    api:
+        environment:
+            WAIT_HOSTS: documentdb:10260
+            DB_HOST: documentdb
+            DB_PORT: 10260
+            DB_URI: mongodb://${DOCUMENTDB_USERNAME:-ever}:${DOCUMENTDB_PASSWORD:?set DOCUMENTDB_PASSWORD}@documentdb:10260/ever_development?tls=true&tlsAllowInvalidCertificates=true
+            DB_NAME: ever_development
+        depends_on: !override
+            - documentdb
+        links: !override
+            - documentdb
+
+volumes:
+    documentdb_data:
