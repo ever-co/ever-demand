@@ -1,7 +1,38 @@
 # Ever Demand latest-stack upgrade: handover
 
-Last updated: 2026-11-26 ~16:20 CET by the lead session ("Ever Demand platform modernization").
+Last updated: 2026-11-27 ~20:45 CET by the lead session ("Ever Demand platform modernization").
 Keep this file current. Update it after every merge or milestone, then commit and push.
+
+## Current state (2026-11-27)
+
+- **Everything is merged and ever-co/ever-demand has 0 open PRs.** develop is `40ec460f`.
+- **Merged PRs:**
+  - **#1660:** the latest stack.
+  - **#1668:** multi-tenant SaaS: tenants, isolation, signup, Stripe Billing. Design and follow-ups are in
+    `docs/multi-tenant/DESIGN.md` and `docs/multi-tenant/HANDOVER.md`.
+  - **#1669:** admin and merchant smart-table crash.
+  - **#1670, #1671, #1672:** fleet fixes for core stock counts, the product feed count and carrier i18n.
+- **Review of #1668:** CodeRabbit could not review it (over its file limit), so an independent agent reviewed it
+  in three rounds. Every high and medium finding is fixed and has tests: field-resolver access, stale store and
+  carrier tokens, login operator injection, the super-admin email takeover, the login-throttle lockout and the
+  device channel hijack.
+- **Deploying multi-tenant:**
+  - In production, while any record still has no tenant, migration 0001 refuses to start until a `mongodump`
+    is taken and `MIGRATION_BACKUP_CONFIRMED=true` is set. It writes nothing before that check, not even
+    the default tenant. On a database where every record already has a tenant, no backup is asked for.
+  - `TRUST_PROXY` defaults to `loopback, uniquelocal`; add a CDN's ranges if one sits in front of the ingress.
+  - `SUPER_ADMIN_EMAIL` names the platform super-admin. It is set at boot. An admin who has the default
+    password at startup is not made super-admin. If the password is changed to the default while the API
+    runs, the admin keeps super-admin until the next restart.
+- **Still open:**
+  - Android APK builds have not been verified, because the GitHub CI workflow is disabled by owner policy.
+  - iOS needs a Mac: shop and merchant need `npx cap sync ios` and a committed Podfile.lock, and carrier
+    needs Package.resolved.
+  - The app icon is a placeholder.
+  - Codacy flags style-only notes on large PRs (markdownlint line length, ESLint 8 false positives on
+    TypeScript parameter properties).
+  - The multi-tenant low-severity follow-ups are listed in `docs/multi-tenant/HANDOVER.md`.
+- **Below:** the history of the upgrade (lanes, worktrees, merges). The lane worktrees are removed.
 
 ## Goal (owner)
 
