@@ -6,6 +6,8 @@ import { AuthService } from '../../services/auth.service';
 import { Store } from '../../services/store.service';
 import { LoginPage } from './login';
 import { LoginPageModule } from './login.module';
+import { TranslateService } from '@ngx-translate/core';
+import he from '../../assets/i18n/he.json';
 
 describe('LoginPage', () => {
 	let auth: { login: ReturnType<typeof vi.fn> };
@@ -41,6 +43,22 @@ describe('LoginPage', () => {
 		expect(el.querySelector('button.login-button')).not.toBeNull();
 	});
 
+	it('says the username or password is wrong in the language the carrier picked', async () => {
+		auth.login.mockReturnValue(of({ token: null, carrier: null }));
+		const alert = vi.spyOn(window, 'alert').mockImplementation(() => undefined);
+		const translate = TestBed.inject(TranslateService);
+		translate.setTranslation('he', he);
+		translate.use('he');
+		const page = TestBed.createComponent(LoginPage).componentInstance;
+
+		await page.login();
+
+		const text = (he as any).LOGIN_VIEW.WRONG_CREDENTIALS;
+		expect(text).toEqual(expect.any(String));
+		expect(alert).toHaveBeenLastCalledWith(text);
+		expect(router.navigateByUrl).not.toHaveBeenCalled();
+	});
+
 	it('stores the session and opens the main page after a login', async () => {
 		auth.login.mockReturnValue(
 			of({ token: 'jwt', carrier: { id: 'c1' } })
@@ -65,7 +83,7 @@ describe('LoginPage', () => {
 
 		await page.login();
 
-		expect(alert).toHaveBeenCalledWith('Carrier not exists!');
+		expect(alert).toHaveBeenCalledWith('LOGIN_VIEW.WRONG_CREDENTIALS');
 		expect(router.navigateByUrl).not.toHaveBeenCalled();
 	});
 });

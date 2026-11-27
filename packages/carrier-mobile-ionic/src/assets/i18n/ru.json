@@ -34,7 +34,9 @@
 		"TAKE_WORK": "Возьмите работу",
 		"SKIP_WORK": "Пропустить работу",
 		"I'M_THERE": "я там",
-		"CANCEL": "Отмена"
+		"CANCEL": "Отмена",
+		"TO": "Куда",
+		"ORDER_ID": "ID заказа"
 	},
 	"HOME_VIEW": {
 		"DELIVERIES": "Поставки",
@@ -62,7 +64,10 @@
 		"CANCEL": "Отмена"
 	},
 	"LOGIN_VIEW": {
-		"LOGIN": "Авторизоваться"
+		"LOGIN": "Авторизоваться",
+		"USERNAME": "Имя пользователя",
+		"PASSWORD": "Пароль",
+		"WRONG_CREDENTIALS": "Неверное имя пользователя или пароль!"
 	},
 	"ABOUT_VIEW": {
 		"TITLE": "О нас"
@@ -81,5 +86,13 @@
 	},
 	"LIST_VIEW": {
 		"YOU_NAVIGATED_HERE_FROM": "Вы перешли сюда из"
+	},
+	"COMMON": {
+		"OK": "ОК",
+		"TRY_AGAIN": "Попробуйте ещё раз!"
+	},
+	"ORDER_STATE": {
+		"CUSTOMER_CANCELLED_ORDER": "Клиент отменил заказ",
+		"TAKEN_BY_ANOTHER_CARRIER": "Другой курьер взял заказ раньше вас!"
 	}
 }

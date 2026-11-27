@@ -22,6 +22,8 @@ import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular/nav-controller';
 import { Platform } from '@ionic/angular/platform';
 import { getIdFromTheDate } from '@modules/server.common/utils';
+import { TranslateService } from '@ngx-translate/core';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
 	standalone: false,
@@ -56,6 +58,7 @@ export class DriveToWarehousePage implements OnInit {
 		private router: Router,
 		private navCtrl: NavController,
 		public platform: Platform,
+		private translate: TranslateService,
 	) {}
 
 	ngOnInit(): void {
@@ -147,7 +150,7 @@ export class DriveToWarehousePage implements OnInit {
 			);
 		} else {
 			// TODO: replace with some popup
-			alert('Try again!');
+			alert(await firstValueFrom(this.translate.get('COMMON.TRY_AGAIN')));
 		}
 	}
 

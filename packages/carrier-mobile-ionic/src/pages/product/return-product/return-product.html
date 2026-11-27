@@ -1,7 +1,6 @@
 <div *ngIf="selectedOrder?.isCancelled" class="money-amount-container">
 	<div class="money-amount">
-		<!-- TODO add translate -->
-		The customer cancel order
+		{{ 'ORDER_STATE.CUSTOMER_CANCELLED_ORDER' | translate }}
 	</div>
 </div>
 

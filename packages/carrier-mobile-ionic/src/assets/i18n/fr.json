@@ -34,7 +34,9 @@
 		"TAKE_WORK": "Take work",
 		"SKIP_WORK": "Skip Work",
 		"I'M_THERE": "I'm there",
-		"CANCEL": "Annuler"
+		"CANCEL": "Annuler",
+		"TO": "Destination",
+		"ORDER_ID": "ID de la commande"
 	},
 	"HOME_VIEW": {
 		"DELIVERIES": "Livraisons",
@@ -62,7 +64,10 @@
 		"CANCEL": "Annuler"
 	},
 	"LOGIN_VIEW": {
-		"LOGIN": "Connexion"
+		"LOGIN": "Connexion",
+		"USERNAME": "Nom d’utilisateur",
+		"PASSWORD": "Mot de passe",
+		"WRONG_CREDENTIALS": "Nom d’utilisateur ou mot de passe incorrect !"
 	},
 	"ABOUT_VIEW": {
 		"TITLE": "Qui sommes-nous"
@@ -81,5 +86,13 @@
 	},
 	"LIST_VIEW": {
 		"YOU_NAVIGATED_HERE_FROM": "You navigated here from"
+	},
+	"COMMON": {
+		"OK": "OK",
+		"TRY_AGAIN": "Veuillez réessayer !"
+	},
+	"ORDER_STATE": {
+		"CUSTOMER_CANCELLED_ORDER": "Le client a annulé la commande",
+		"TAKEN_BY_ANOTHER_CARRIER": "Un autre transporteur a pris la commande en premier !"
 	}
 }
