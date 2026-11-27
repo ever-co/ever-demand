@@ -23,7 +23,6 @@ import {
 	IProductDescription,
 	IProductDetails,
 } from '@modules/server.common/interfaces/IProduct';
-import WarehouseProduct from '@modules/server.common/entities/WarehouseProduct';
 import type { IGetGeoLocationProductsOptions } from '../../graphql/geo-locations/geo-location.resolver';
 import IWarehouseProduct from '@modules/server.common/interfaces/IWarehouseProduct';
 
@@ -77,28 +76,16 @@ export class GeoLocationsProductsService
 					merchantsIds: options ? options.merchantIds : null,
 				}
 			);
-			const productsIds = merchants.map((m) => {
-				let products = m.products
-					.filter((wProduct) =>
-						this.productsFilter(wProduct, options)
-					)
-					.filter((wProduct) =>
-						this.filterBySearchText(wProduct, searchText)
-					);
-
-				if (!options || !options.withoutCount) {
-					products = products.filter(
-						(wProduct) => wProduct.count > 0
-					);
-				}
-
-				return products.map((p) => new WarehouseProduct(p).productId);
-			});
-
-			return (
-				productsIds.flat().filter((x, i, a) => a.indexOf(x) == i)
-					.length || 0
-			);
+			// The shops page through geoLocationProductsByPaging (one row per
+			// store offer) until they have loaded `count` rows, so count the
+			// same rows: counting distinct products stopped the feed early
+			// when nearby stores sold the same product.
+			return this._getProductsFromWarehouses(
+				new GeoLocation(geoLocation),
+				merchants.map((m) => new Warehouse(m)),
+				options,
+				searchText
+			).length;
 		} catch (error) {
 			return 0;
 		}
@@ -139,6 +126,12 @@ export class GeoLocationsProductsService
 		return chain(warehouses)
 			.map((_warehouse: Warehouse) => {
 				const warehouse = clone(_warehouse);
+				// The shops hide offers that are not available; leave them out
+				// here too, so the count matches the rows they show.
+				warehouse.products = warehouse.products.filter(
+					(wProduct: IWarehouseProduct) =>
+						wProduct.isProductAvailable === true
+				);
 				if (!options || !options.withoutCount) {
 					warehouse.products = warehouse.products.filter(
 						(wProduct: IWarehouseProduct) => wProduct.count > 0
