@@ -21,20 +21,6 @@ import './product/return-product/return-product.module';
  * -> starting delivery (start) -> delivery (delivered) or return product (issue).
  */
 describe('Carrier order flow', () => {
-	it('pages use eager change detection (Angular 22 defaults to OnPush)', () => {
-		// socket.io, Apollo, promise and timer callbacks set plain fields on these pages
-		for (const page of [
-			HomePage,
-			DriveToWarehousePage,
-			StartingDeliveryPage,
-			DeliveryPage,
-			GetProductPage,
-			ReturnProductPage,
-		]) {
-			expect((page as any).ɵcmp.onPush, page.name).toBe(false);
-		}
-	});
-
 	let store: Record<string, any>;
 	let router: { navigateByUrl: any; navigate: any };
 	let navCtrl: { navigateRoot: any };
@@ -46,7 +32,7 @@ describe('Carrier order flow', () => {
 		cancelDelivery: any;
 	};
 	let orderRouter: { get: any; updateCarrierStatus: any };
-	let translate: { instant: any };
+	let translate: { get: any };
 
 	const carrier = { id: 'c1', _id: 'c1' } as any;
 	const order = { id: 'o1', isCancelled: false } as any;
@@ -65,7 +51,10 @@ describe('Carrier order flow', () => {
 		};
 		navCtrl = { navigateRoot: vi.fn().mockResolvedValue(true) };
 		carrierRouter = {
-			updateStatus: vi.fn(async (_id, status) => ({ ...carrier, status })),
+			updateStatus: vi.fn(async (_id, status) => ({
+				...carrier,
+				status,
+			})),
 			get: vi.fn(() => of(carrier)),
 		};
 		carrierOrdersRouter = {
@@ -78,12 +67,28 @@ describe('Carrier order flow', () => {
 			get: vi.fn(() => of(order)),
 			updateCarrierStatus: vi.fn().mockResolvedValue(order),
 		};
-		translate = { instant: vi.fn((key: string) => `translated ${key}`) };
+		translate = {
+			get: vi.fn((key: string) => of(`translated ${key}`)),
+		};
 	});
 
 	afterEach(() => vi.restoreAllMocks());
 
 	const TRY_AGAIN = 'translated COMMON.TRY_AGAIN';
+
+	it('pages use eager change detection (Angular 22 defaults to OnPush)', () => {
+		// socket.io, Apollo, promise and timer callbacks set plain fields on these pages
+		for (const page of [
+			HomePage,
+			DriveToWarehousePage,
+			StartingDeliveryPage,
+			DeliveryPage,
+			GetProductPage,
+			ReturnProductPage,
+		]) {
+			expect((page as any).ɵcmp.onPush, page.name).toBe(false);
+		}
+	});
 
 	describe('home', () => {
 		const page = () =>
@@ -94,7 +99,7 @@ describe('Carrier order flow', () => {
 				{} as any,
 				{} as any,
 				{} as any,
-				router as any
+				router as any,
 			);
 
 		it('start working puts the carrier online', async () => {
@@ -103,7 +108,7 @@ describe('Carrier order flow', () => {
 
 			expect(carrierRouter.updateStatus).toHaveBeenCalledWith(
 				'c1',
-				CarrierStatus.Online
+				CarrierStatus.Online,
 			);
 			expect(home.isWorking).toBe(true);
 		});
@@ -115,7 +120,7 @@ describe('Carrier order flow', () => {
 
 			expect(carrierRouter.updateStatus).toHaveBeenCalledWith(
 				'c1',
-				CarrierStatus.Offline
+				CarrierStatus.Offline,
 			);
 			expect(home.isWorking).toBe(false);
 			expect(localStorage.getItem('orderId')).toBeNull();
@@ -135,7 +140,7 @@ describe('Carrier order flow', () => {
 				router as any,
 				navCtrl as any,
 				{} as any,
-				translate as any
+				translate as any,
 			);
 			p.carrier = carrier;
 			p.selectedOrder = order;
@@ -144,22 +149,25 @@ describe('Carrier order flow', () => {
 
 		it('take work selects the order for delivery', async () => {
 			await page().takeWork();
-			expect(carrierOrdersRouter.selectedForDelivery).toHaveBeenCalledWith(
-				'c1',
-				['o1']
-			);
+			expect(
+				carrierOrdersRouter.selectedForDelivery,
+			).toHaveBeenCalledWith('c1', ['o1']);
 		});
 
 		it('take work without a carrier asks to try again in the carrier language', async () => {
-			const alert = vi.spyOn(window, 'alert').mockImplementation(() => undefined);
+			const alert = vi
+				.spyOn(window, 'alert')
+				.mockImplementation(() => undefined);
 			const p = page();
 			p.carrier = undefined;
 
 			await p.takeWork();
 
-			expect(translate.instant).toHaveBeenCalledWith('COMMON.TRY_AGAIN');
+			expect(translate.get).toHaveBeenCalledWith('COMMON.TRY_AGAIN');
 			expect(alert).toHaveBeenCalledWith(TRY_AGAIN);
-			expect(carrierOrdersRouter.selectedForDelivery).not.toHaveBeenCalled();
+			expect(
+				carrierOrdersRouter.selectedForDelivery,
+			).not.toHaveBeenCalled();
 		});
 
 		it('skip work skips the order and goes home', async () => {
@@ -175,9 +183,10 @@ describe('Carrier order flow', () => {
 			const p = page();
 			p.fromDelivery = false;
 			await p.cancelWork();
-			expect(carrierOrdersRouter.cancelDelivery).toHaveBeenCalledWith('c1', [
-				'o1',
-			]);
+			expect(carrierOrdersRouter.cancelDelivery).toHaveBeenCalledWith(
+				'c1',
+				['o1'],
+			);
 			expect(navCtrl.navigateRoot).toHaveBeenCalledWith('/main/home');
 		});
 
@@ -186,9 +195,12 @@ describe('Carrier order flow', () => {
 			p.fromDelivery = true;
 			await p.cancelWork();
 			expect(carrierOrdersRouter.cancelDelivery).not.toHaveBeenCalled();
-			expect(router.navigateByUrl).toHaveBeenCalledWith('/main/delivery', {
-				skipLocationChange: true,
-			});
+			expect(router.navigateByUrl).toHaveBeenCalledWith(
+				'/main/delivery',
+				{
+					skipLocationChange: true,
+				},
+			);
 		});
 
 		it('"I am there" opens get-product, or return-product when coming back', async () => {
@@ -217,7 +229,7 @@ describe('Carrier order flow', () => {
 				{ getTranslate: vi.fn() } as any,
 				store as any,
 				navCtrl as any,
-				translate as any
+				translate as any,
 			);
 			p.carrier = carrier;
 			p.selectedOrder = order;
@@ -228,10 +240,10 @@ describe('Carrier order flow', () => {
 			await page().gotProduct();
 			expect(carrierOrdersRouter.updateStatus).toHaveBeenCalledWith(
 				'c1',
-				OrderCarrierStatus.CarrierPickedUpOrder
+				OrderCarrierStatus.CarrierPickedUpOrder,
 			);
 			expect(navCtrl.navigateRoot).toHaveBeenCalledWith(
-				'/main/starting-delivery'
+				'/main/starting-delivery',
 			);
 		});
 
@@ -239,23 +251,24 @@ describe('Carrier order flow', () => {
 			const p = page();
 			p.orderCarrierCompetition = true;
 			await p.gotProductWithCarrierCompetition();
-			expect(carrierOrdersRouter.selectedForDelivery).toHaveBeenCalledWith(
-				'c1',
-				['o1'],
-				true
-			);
+			expect(
+				carrierOrdersRouter.selectedForDelivery,
+			).toHaveBeenCalledWith('c1', ['o1'], true);
 		});
 
 		it('cancel cancels the delivery', async () => {
 			await page().cancelWork();
-			expect(carrierOrdersRouter.cancelDelivery).toHaveBeenCalledWith('c1', [
-				'o1',
-			]);
+			expect(carrierOrdersRouter.cancelDelivery).toHaveBeenCalledWith(
+				'c1',
+				['o1'],
+			);
 			expect(navCtrl.navigateRoot).toHaveBeenCalledWith('/main/home');
 		});
 
 		it('without an order, got it and cancel ask to try again in the carrier language', async () => {
-			const alert = vi.spyOn(window, 'alert').mockImplementation(() => undefined);
+			const alert = vi
+				.spyOn(window, 'alert')
+				.mockImplementation(() => undefined);
 			const p = page();
 			p.selectedOrder = undefined;
 
@@ -263,9 +276,15 @@ describe('Carrier order flow', () => {
 			await p.gotProductWithCarrierCompetition();
 			await p.cancelWork();
 
-			expect(alert.mock.calls).toEqual([[TRY_AGAIN], [TRY_AGAIN], [TRY_AGAIN]]);
+			expect(alert.mock.calls).toEqual([
+				[TRY_AGAIN],
+				[TRY_AGAIN],
+				[TRY_AGAIN],
+			]);
 			expect(carrierOrdersRouter.updateStatus).not.toHaveBeenCalled();
-			expect(carrierOrdersRouter.selectedForDelivery).not.toHaveBeenCalled();
+			expect(
+				carrierOrdersRouter.selectedForDelivery,
+			).not.toHaveBeenCalled();
 			expect(carrierOrdersRouter.cancelDelivery).not.toHaveBeenCalled();
 		});
 	});
@@ -278,26 +297,32 @@ describe('Carrier order flow', () => {
 				{} as any,
 				{} as any,
 				router as any,
-				store as any
+				store as any,
 			);
 
 		it('start sets the carrier status to "start delivery"', async () => {
 			await page().startDelivery();
 			expect(carrierOrdersRouter.updateStatus).toHaveBeenCalledWith(
 				'c1',
-				OrderCarrierStatus.CarrierStartDelivery
+				OrderCarrierStatus.CarrierStartDelivery,
 			);
-			expect(router.navigateByUrl).toHaveBeenCalledWith('/main/delivery', {
-				skipLocationChange: false,
-			});
+			expect(router.navigateByUrl).toHaveBeenCalledWith(
+				'/main/delivery',
+				{
+					skipLocationChange: false,
+				},
+			);
 		});
 
 		it('cancel goes to return-product', () => {
 			page().returnProduct();
 			expect(store.returnProductFrom).toBe('startingDelivery');
-			expect(router.navigateByUrl).toHaveBeenCalledWith('/product/return', {
-				skipLocationChange: false,
-			});
+			expect(router.navigateByUrl).toHaveBeenCalledWith(
+				'/product/return',
+				{
+					skipLocationChange: false,
+				},
+			);
 		});
 	});
 
@@ -315,11 +340,13 @@ describe('Carrier order flow', () => {
 				{} as any,
 				router as any,
 				store as any,
-				translate as any
+				translate as any,
 			);
 
 		it('delivered without an order asks to try again in the carrier language', async () => {
-			const alert = vi.spyOn(window, 'alert').mockImplementation(() => undefined);
+			const alert = vi
+				.spyOn(window, 'alert')
+				.mockImplementation(() => undefined);
 
 			await page().delivered();
 
@@ -335,7 +362,7 @@ describe('Carrier order flow', () => {
 
 			expect(orderRouter.updateCarrierStatus).toHaveBeenCalledWith(
 				'o1',
-				OrderCarrierStatus.DeliveryCompleted
+				OrderCarrierStatus.DeliveryCompleted,
 			);
 			expect(analytics.track).toHaveBeenCalledWith('Order Delivered');
 			expect(router.navigateByUrl).toHaveBeenCalledWith('/main/home', {
@@ -349,7 +376,7 @@ describe('Carrier order flow', () => {
 			expect(store.driveToWarehouseFrom).toBe('delivery');
 			expect(router.navigateByUrl).toHaveBeenCalledWith(
 				'/main/drive-to-warehouse',
-				{ skipLocationChange: false }
+				{ skipLocationChange: false },
 			);
 		});
 
@@ -360,10 +387,13 @@ describe('Carrier order flow', () => {
 					...order,
 					user: {
 						geoLocation: {
-							loc: { type: 'Point', coordinates: [23.3332736, 42.6459136] },
+							loc: {
+								type: 'Point',
+								coordinates: [23.3332736, 42.6459136],
+							},
 						},
 					},
-				})
+				}),
 			);
 			const p = page();
 			p.carrierMap = { setCenter: vi.fn(), drawRoute: vi.fn() } as any;
@@ -389,7 +419,7 @@ describe('Carrier order flow', () => {
 				carrierRouter as any,
 				orderRouter as any,
 				store as any,
-				navCtrl as any
+				navCtrl as any,
 			);
 
 		it('returning reports a delivery issue and goes home', async () => {
@@ -399,7 +429,7 @@ describe('Carrier order flow', () => {
 
 			expect(orderRouter.updateCarrierStatus).toHaveBeenCalledWith(
 				'o1',
-				OrderCarrierStatus.IssuesDuringDelivery
+				OrderCarrierStatus.IssuesDuringDelivery,
 			);
 			expect(navCtrl.navigateRoot).toHaveBeenCalledWith('/main/home');
 		});
@@ -425,7 +455,7 @@ describe('Carrier order flow', () => {
 			expect(p.allowCancel).toBe(true);
 			p.cancelReturn();
 			expect(navCtrl.navigateRoot).toHaveBeenCalledWith(
-				'/main/starting-delivery'
+				'/main/starting-delivery',
 			);
 		});
 	});

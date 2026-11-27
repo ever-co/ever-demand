@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
@@ -37,7 +38,12 @@ export class LoginPage {
 			.toPromise();
 
 		if (!res || !res.carrier) {
-			alert(this.translate.instant('LOGIN_VIEW.WRONG_CREDENTIALS'));
+			// get() waits for the language file, which may still be loading.
+			alert(
+				await firstValueFrom(
+					this.translate.get('LOGIN_VIEW.WRONG_CREDENTIALS'),
+				),
+			);
 			return;
 		}
 
