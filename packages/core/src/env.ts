@@ -151,8 +151,8 @@ const cleaned = cleanEnv(
 			default: undefined as any,
 		}),
 		TRUST_PROXY: str({
-			desc: "Express 'trust proxy' setting, so client addresses come from X-Forwarded-For behind an ingress: e.g. 1 (one proxy hop), 'loopback, uniquelocal', or empty (off)",
-			default: '',
+			desc: "Which peers are trusted proxies (Express 'trust proxy', also used for socket.io / graphql-ws): client addresses come from X-Forwarded-For only through them, from the right. A hop count (1), or names and CIDRs: 'loopback, uniquelocal' (default: a k8s ingress on a private network; a directly exposed API keeps the socket address), add a CDN's ranges in front of the ingress (e.g. Cloudflare's), or empty (trust nothing)",
+			default: 'loopback, uniquelocal',
 		}),
 		TENANT_SIGNUPS_PER_HOUR: num({
 			desc: 'Tenant signups allowed per client address and hour (per API instance)',

@@ -81,9 +81,19 @@ Re-review (at 81759342), fixed with tests:
 - `devicesIds` of stores, carriers and customers is a guarded field like `devices`; GraphQL `device` and
   `updateDevice` are admin-only (a device holds its push channel). The shops create devices and change their
   language over socket.io, which cannot change a channel.
-Known, left as is: store and carrier usernames stay in the public types (the apps show them; the throttle is per
-address); socket `device.get` still answers anyone who knows a device id (no update path); `CarrierCreateInput.isDeleted`
-is accepted but ignored.
+- Client addresses follow `TRUST_PROXY` (default `loopback, uniquelocal`) on every path, by Express' rule: X-Forwarded-For
+  is read only through trusted proxies, from the right (`tenant/client-address.ts`). Behind a CDN, add its ranges (e.g.
+  Cloudflare's) or the CDN edge counts as the client; a directly exposed API keeps the socket address.
+
+Follow-ups from the final review (low, no code yet):
+- An admin of the default (platform) tenant can rename their own login to an unused `SUPER_ADMIN_EMAIL` and becomes
+  super-admin at the next boot (platform staff only).
+- socket.io `warehouse.get`, `warehouse.getAllActive`, `carrier.get` and `device.get` still return `devicesIds` /
+  `channelId` (read-only: sending a push needs the push provider's server key).
+- Custom domains: the kept `?tenant=` link (shop-web-gatsby, Expo web, common-angular) wins over the host; a tenant's own
+  domain should win once custom domains ship.
+- Store and carrier usernames stay in the public types (the apps show them; the throttle is per address);
+  `CarrierCreateInput.isDeleted` is accepted but ignored.
 Still open (follow-ups): customer flows have no ownership checks inside a
 tenant (any caller can act on a customer by id, as before); tokens never expire (a removed admin's token still passes
 token-argument checks); plan limits can be exceeded by parallel creates; admin / tenant caches are 30 s per process.

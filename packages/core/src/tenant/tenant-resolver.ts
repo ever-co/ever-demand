@@ -13,6 +13,7 @@ import {
 	TenantCtx,
 } from './tenant-context';
 import { tenantDirectory } from './tenant-directory';
+import { clientAddressBy } from './client-address';
 import {
 	cachedAccount,
 	forgetCachedAccount,
@@ -34,30 +35,15 @@ export interface TenantRequestInfo {
 }
 
 /**
- * The client's address: behind a proxy (TRUST_PROXY set) the last
- * X-Forwarded-For entry, the one our proxy added (earlier entries are the
- * client's own claims); otherwise the connection's address.
+ * The client's address, by the TRUST_PROXY rule Express applies to req.ip
+ * (tenant/client-address.ts): X-Forwarded-For is read only through trusted
+ * proxies, from the right.
  */
 export function clientAddress(
 	remoteAddress: string | null | undefined,
 	forwardedFor: string | string[] | null | undefined,
 ): string | undefined {
-	if (env.TRUST_PROXY) {
-		const header = Array.isArray(forwardedFor)
-			? forwardedFor.join(',')
-			: forwardedFor;
-		const last = String(header ?? '')
-			.split(',')
-			.map((part) => part.trim())
-			.filter(Boolean)
-			.pop();
-
-		if (last) {
-			return last;
-		}
-	}
-
-	return remoteAddress ?? undefined;
+	return clientAddressBy(env.TRUST_PROXY, remoteAddress, forwardedFor);
 }
 
 export class TenantResolutionError extends Error {
