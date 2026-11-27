@@ -17,8 +17,9 @@ Keep this file current. Update it after every merge or milestone, then commit an
   carrier tokens, login operator injection, the super-admin email takeover, the login-throttle lockout and the
   device channel hijack.
 - **Deploying multi-tenant:**
-  - On a production database with existing records, migration 0001 refuses to start, before it writes anything
-    (the default tenant included), until a `mongodump` is taken and `MIGRATION_BACKUP_CONFIRMED=true` is set.
+  - In production, while any record still has no tenant, migration 0001 refuses to start until a `mongodump`
+    is taken and `MIGRATION_BACKUP_CONFIRMED=true` is set. It writes nothing before that check, not even
+    the default tenant. On a database where every record already has a tenant, no backup is asked for.
   - `TRUST_PROXY` defaults to `loopback, uniquelocal`; add a CDN's ranges if one sits in front of the ingress.
   - `SUPER_ADMIN_EMAIL` names the platform super-admin. It is set at boot. An admin who has the default
     password at startup is not made super-admin. If the password is changed to the default while the API
