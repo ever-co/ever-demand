@@ -1,4 +1,10 @@
-import type { Cell, IColumn, IColumns, Settings } from 'angular2-smart-table';
+import type {
+	Cell,
+	ColumnComponentInitFunction,
+	IColumn,
+	IColumns,
+	Settings,
+} from 'angular2-smart-table';
 
 /**
  * The column settings the admin screens were written for (ng2-smart-table 1.x).
@@ -62,10 +68,10 @@ function renameFlags(column: Record<string, any>): void {
 
 /** The fork's `componentInitFunction` for a custom column: sets `value` and `rowData` as ng2-smart-table did. */
 function bindRenderer(
-	ownInit: ((instance: any, cell: Cell) => void) | undefined,
+	ownInit: ColumnComponentInitFunction | undefined,
 	prepared: boolean,
-	onComponentInitFunction?: (instance: any) => void
-): (instance: any, cell: Cell) => void {
+	onComponentInitFunction: LegacyColumn['onComponentInitFunction'],
+): ColumnComponentInitFunction {
 	return (instance: any, cell: Cell) => {
 		// ng2-smart-table gave renderers the raw value unless the column prepared it. The fork's
 		// getValue() falls back to `v?.toString()`, so an object would arrive as "[object Object]".
@@ -110,7 +116,7 @@ export function toSmartTableColumn(legacy: LegacyColumn): IColumn {
 		column.componentInitFunction = bindRenderer(
 			column.componentInitFunction,
 			!!valuePrepareFunction,
-			onComponentInitFunction
+			onComponentInitFunction,
 		);
 	}
 
