@@ -52,11 +52,12 @@ function populatedWarehouseProduct(count: number) {
 
 describe('WarehousesProductsService writes products as refs (regression: order create failed with "Cast to embedded failed")', () => {
 	let updateMultiple: jest.Mock;
+	let updateOne: jest.Mock;
 	let service: WarehousesProductsService;
 
 	beforeEach(() => {
 		// applies the `products.$.<field>` $set (or an $inc) to the stored element
-		updateMultiple = jest.fn(async (_find, update) => {
+		const write = (update: Record<string, unknown>) => {
 			const stored: any = {
 				_id: WAREHOUSE_PRODUCT_ID,
 				product: PRODUCT_ID,
@@ -72,8 +73,10 @@ describe('WarehousesProductsService writes products as refs (regression: order c
 					stored[path.replace(/^products\.\$\./, '')] = value;
 				}
 			}
-			return [{ products: [new WarehouseProduct(stored)] }];
-		});
+			return { products: [new WarehouseProduct(stored)] };
+		};
+		updateMultiple = jest.fn(async (_find, update) => [write(update)]);
+		updateOne = jest.fn(async (_find, update) => write(update));
 
 		const warehousesService = {
 			throwIfNotExists: jest.fn().mockResolvedValue(undefined),
@@ -81,6 +84,7 @@ describe('WarehousesProductsService writes products as refs (regression: order c
 				of({ id: STORE_ID, products: [populatedWarehouseProduct(10)] })
 			),
 			updateMultiple,
+			updateOne,
 		};
 
 		service = new WarehousesProductsService(warehousesService as any);
@@ -89,9 +93,10 @@ describe('WarehousesProductsService writes products as refs (regression: order c
 	it('decreaseCount() (order create) writes only the count change, never the populated product', async () => {
 		const updated = await service.decreaseCount(STORE_ID, PRODUCT_ID, 2);
 
-		expect(updateMultiple).toHaveBeenCalledTimes(1);
+		expect(updateOne).toHaveBeenCalledTimes(1);
+		expect(updateMultiple).not.toHaveBeenCalled();
 
-		const [findObj, updateObj] = updateMultiple.mock.calls[0];
+		const [findObj, updateObj] = updateOne.mock.calls[0];
 		expect(String(findObj._id)).toBe(STORE_ID);
 		expect(String(findObj.products.$elemMatch.product)).toBe(PRODUCT_ID);
 		expect(findObj.products.$elemMatch.count).toEqual({ $gte: 2 });

@@ -4,7 +4,7 @@ import { Types } from 'mongoose';
 
 // The store's products live in a fake store document. The fake warehouse
 // service answers each call after a round trip, the way MongoDB does, so
-// calls that run at the same time interleave. Its `updateMultiple` checks the
+// calls that run at the same time interleave. Its `updateOne` checks the
 // filter and applies the update in one step, as MongoDB does for a document.
 jest.mock('@pyro/io', () => ({
 	asyncListener: () => () => undefined,
@@ -163,7 +163,7 @@ function createFakeStore(initial: {
 				throw new Error(`Store with id '${id}' does not exists!`);
 			}
 		}),
-		updateMultiple: jest.fn(
+		updateOne: jest.fn(
 			async (
 				filter: Record<string, any>,
 				update: Record<string, any>,
@@ -171,19 +171,19 @@ function createFakeStore(initial: {
 				await roundTrip();
 
 				if (!store.exists) {
-					return [];
+					return null;
 				}
 
 				// filter check and write in one step, like MongoDB
 				const index = matchedProduct(filter);
 				if (index === -1) {
-					return [];
+					return null;
 				}
 				apply(store.products[index], update);
 
 				const written = snapshot();
 				await roundTrip();
-				return [written];
+				return written;
 			},
 		),
 	};
@@ -319,7 +319,7 @@ describe('WarehousesProductsService counts when orders change one store product 
 		expect(stock().count).toBe(8);
 		expect(stock().price).toBe(999);
 
-		const priceUpdate = warehousesService.updateMultiple.mock.calls
+		const priceUpdate = warehousesService.updateOne.mock.calls
 			.map(([, update]) => update)
 			.find((update) => update.$set);
 		expect(priceUpdate).toEqual({ $set: { 'products.$.price': 999 } });
@@ -331,8 +331,8 @@ describe('WarehousesProductsService counts when orders change one store product 
 
 		await service.decreaseCount(STORE_ID, PRODUCT_ID, 2);
 
-		expect(warehousesService.updateMultiple).toHaveBeenCalledTimes(1);
-		const [filter, update] = warehousesService.updateMultiple.mock.calls[0];
+		expect(warehousesService.updateOne).toHaveBeenCalledTimes(1);
+		const [filter, update] = warehousesService.updateOne.mock.calls[0];
 		expect(String(filter._id)).toBe(STORE_ID);
 		expect(String(filter.products.$elemMatch.product)).toBe(PRODUCT_ID);
 		expect(filter.products.$elemMatch.count).toEqual({ $gte: 2 });

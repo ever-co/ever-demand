@@ -458,12 +458,10 @@ export class WarehousesProductsService
 
 			// Only the price: the other fields of this read (count,
 			// soldCount, ...) may be old by now.
-			const updatedWarehouse = (
-				await this.warehousesService.updateMultiple(
-					warehouseProductFilter(warehouseId, productId),
-					{ $set: { 'products.$.price': price } }
-				)
-			)[0];
+			const updatedWarehouse = await this.warehousesService.updateOne(
+				warehouseProductFilter(warehouseId, productId),
+				{ $set: { 'products.$.price': price } }
+			);
 
 			const updatedProduct =
 				updatedWarehouse &&
@@ -707,7 +705,9 @@ export class WarehousesProductsService
 	 * below zero.
 	 *
 	 * When the write matched nothing, reads the store to throw the right one
-	 * of `errors`.
+	 * of `errors`. `updateOne` answers from the write itself: with
+	 * `updateMultiple` (read, then write), a decrease the read refused could
+	 * still be written when a concurrent increase landed in between.
 	 */
 	private async _incProductCounter(
 		warehouseId: string,
@@ -716,16 +716,14 @@ export class WarehousesProductsService
 		by: number,
 		errors: { warehouse: string; product: string; notEnough?: string }
 	): Promise<WarehouseProduct> {
-		const updatedWarehouse = (
-			await this.warehousesService.updateMultiple(
-				warehouseProductFilter(
-					warehouseId,
-					productId,
-					by < 0 ? { [field]: { $gte: -by } } : {}
-				),
-				{ $inc: { [`products.$.${field}`]: by } }
-			)
-		)[0];
+		const updatedWarehouse = await this.warehousesService.updateOne(
+			warehouseProductFilter(
+				warehouseId,
+				productId,
+				by < 0 ? { [field]: { $gte: -by } } : {}
+			),
+			{ $inc: { [`products.$.${field}`]: by } }
+		);
 
 		const updatedProduct =
 			updatedWarehouse &&

@@ -38,6 +38,8 @@ export interface IDbService<T extends DBObject<any, any>> {
 
 	updateMultiple(findObj: any, updateObj: UpdateObject<T>): Promise<T[]>;
 
+	updateOne(findObj: any, updateObj: UpdateObject<T>): Promise<T | null>;
+
 	updateMultipleByIds(
 		ids: string[],
 		updateObj: UpdateObject<T>
