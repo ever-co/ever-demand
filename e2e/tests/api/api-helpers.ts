@@ -75,11 +75,11 @@ export class PyroClient {
 
 		socket.on(`${subscriptionId}_next`, (value: T) => {
 			values.push(value);
-			for (const w of [...waiters]) {
-				if (w.match(value)) {
-					waiters.splice(waiters.indexOf(w), 1);
-					w.resolve(value);
-				}
+			// Pick the matching waiters first, so removing them skips none.
+			const matched = waiters.filter((w) => w.match(value));
+			for (const w of matched) {
+				waiters.splice(waiters.indexOf(w), 1);
+				w.resolve(value);
 			}
 		});
 

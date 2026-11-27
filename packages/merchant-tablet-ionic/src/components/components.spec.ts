@@ -30,7 +30,11 @@ describe('amTimeAgo pipe (replaces ngx-moment)', () => {
 
 describe('bindViewCell (angular2-smart-table custom renderers)', () => {
 	/** A real angular2-smart-table cell for `rowData[columnId]`. */
-	const cellFor = (rowData: any, columnId: string, columnSettings: any = {}): Cell => {
+	const cellFor = (
+		rowData: any,
+		columnId: string,
+		columnSettings: any = {}
+	): Cell => {
 		const dataSet = new DataSet([rowData], { [columnId]: columnSettings });
 		return dataSet.getRows()[0].getCell(dataSet.getColumns()[0]);
 	};
