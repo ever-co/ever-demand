@@ -522,9 +522,16 @@ export abstract class DBService<T extends DBObject<any, any>>
 		try {
 			lastValues = await this.find(findObj);
 
-			await this.Model.updateMany(findObj, updateObj, {
+			const result = await this.Model.updateMany(findObj, updateObj, {
 				new: true,
 			}).exec();
+
+			// The write checks `findObj` again. When it matched nothing (a
+			// concurrent write changed the objects since the read above),
+			// nothing was updated: return no objects and send no events.
+			if (result != null && result.matchedCount === 0) {
+				lastValues = [];
+			}
 
 			updatedObjects = await this.getCurrentMultiple(
 				_.map(lastValues, (value) => value.id)
@@ -563,6 +570,65 @@ export abstract class DBService<T extends DBObject<any, any>>
 		);
 
 		return updatedObjects;
+	}
+
+	/**
+	 * Updates the first object matching `findObj` in one atomic write
+	 * (`findOneAndUpdate`) and sends an update event for it. Unlike
+	 * `updateMultiple`, which reads before it writes, the result is the
+	 * write's own answer: an object only when this write changed it.
+	 *
+	 * @returns the object after the write, or null when nothing matched
+	 */
+	async updateOne(
+		findObj: FindObject<T>,
+		updateObj: UpdateObject<T>
+	): Promise<T | null> {
+		const callId = uuid();
+		this.log.info(
+			{ callId, findObj, updateObj },
+			'.updateOne(findObj, updateObj) called'
+		);
+
+		let lastValue: T | null;
+		let updatedObject: T | null = null;
+
+		try {
+			// The object as it was right before this write
+			lastValue = this.parse(
+				(await this.Model.findOneAndUpdate(findObj, updateObj, {
+					returnDocument: 'before',
+				})
+					.lean()
+					.exec()) as RawObject<T> | null
+			);
+
+			if (lastValue != null) {
+				updatedObject = await this.getCurrent(lastValue.id);
+			}
+		} catch (err) {
+			this.log.error(
+				{ callId, findObj, updateObj, err },
+				'.updateOne(findObj, updateObj) thrown error!'
+			);
+			throw err;
+		}
+
+		if (lastValue != null) {
+			this.existence.next({
+				id: lastValue.id,
+				lastValue,
+				value: updatedObject,
+				type: ExistenceEventType.Updated,
+			});
+		}
+
+		this.log.info(
+			{ callId, findObj, updateObj, lastValue, updatedObject },
+			'.updateOne(findObj, updateObj) done'
+		);
+
+		return updatedObject;
 	}
 
 	async updateMultipleByIds(
