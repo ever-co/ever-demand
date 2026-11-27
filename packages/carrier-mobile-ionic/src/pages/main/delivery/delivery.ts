@@ -18,7 +18,8 @@ import { MapComponent } from '../common/map/map.component';
 import { Router } from '@angular/router';
 import { Store } from '../../../services/store.service';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { firstValueFrom, Subject } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	standalone: false,
@@ -47,6 +48,7 @@ export class DeliveryPage implements AfterViewInit, OnDestroy {
 		private geolocation: CurrentPositionService,
 		private router: Router,
 		private store: Store,
+		private translate: TranslateService,
 	) {}
 
 	async delivered() {
@@ -65,7 +67,7 @@ export class DeliveryPage implements AfterViewInit, OnDestroy {
 
 			this.analytics.track('Order Delivered');
 		} else {
-			alert('Try again!');
+			alert(await firstValueFrom(this.translate.get('COMMON.TRY_AGAIN')));
 		}
 		this.disabledButtons = false;
 	}

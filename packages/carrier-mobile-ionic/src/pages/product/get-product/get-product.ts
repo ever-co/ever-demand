@@ -9,9 +9,10 @@ import { ILocaleMember } from '@modules/server.common/interfaces/ILocale';
 import { ProductLocalesService } from '@modules/client.common.angular2/locale/product-locales.service';
 import { Store } from '../../../services/store.service';
 import { first, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { firstValueFrom, Subject } from 'rxjs';
 import { NavController } from '@ionic/angular/nav-controller';
 import { environment } from '../../../environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	standalone: false,
@@ -38,6 +39,7 @@ export class GetProductPage implements OnDestroy {
 		private _translateProductLocales: ProductLocalesService,
 		private store: Store,
 		private navCtrl: NavController,
+		private translate: TranslateService,
 	) {
 		this.productsLocale =
 			this.store.language || environment.DEFAULT_LANGUAGE;
@@ -58,7 +60,7 @@ export class GetProductPage implements OnDestroy {
 			this.navCtrl.navigateRoot('/main/starting-delivery');
 		} else {
 			// TODO: replace with popup
-			alert('Try again!');
+			alert(await firstValueFrom(this.translate.get('COMMON.TRY_AGAIN')));
 		}
 		this.disabledButtons = false;
 	}
@@ -74,7 +76,7 @@ export class GetProductPage implements OnDestroy {
 			this.navCtrl.navigateRoot('/main/starting-delivery');
 		} else {
 			// TODO: replace with popup
-			alert('Try again!');
+			alert(await firstValueFrom(this.translate.get('COMMON.TRY_AGAIN')));
 		}
 		this.disabledButtons = false;
 	}
@@ -89,7 +91,7 @@ export class GetProductPage implements OnDestroy {
 			this.unselectOrder();
 		} else {
 			// 	// TODO: replace with popup
-			alert('Try again!');
+			alert(await firstValueFrom(this.translate.get('COMMON.TRY_AGAIN')));
 		}
 		this.disabledButtons = false;
 	}

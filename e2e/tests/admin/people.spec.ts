@@ -1,4 +1,5 @@
 import { expect, type Page, test } from '@playwright/test';
+import { AS_ADMIN, createStoreWithProduct, geoLocation, gqlData, unique } from '../api/api-helpers';
 import { collectAppErrors, expectTable, login, requireApi, route } from './support';
 
 const rows = (page: Page) => page.locator('ng2-smart-table tbody tr');
@@ -22,6 +23,30 @@ test.describe('customers, invites and carriers', () => {
 		await first.locator('td').nth(2).click();
 		await expect(page).toHaveURL(/#\/customers\/list\/[0-9a-f]{24}/, { timeout: 30_000 });
 		await expect(page.locator('nb-card').first()).toBeVisible();
+		expect(errors, errors.join('\n')).toEqual([]);
+	});
+
+	test('a customer with a store nearby opens, and the store has its order button', async ({ page }) => {
+		// The nearby stores table hands { actionName, actionOwnerId } to a custom cell. When the
+		// smart table stringified it, the whole customer page crashed for every customer with a store
+		// nearby, so "customers list opens a customer" passed or failed depending on the data.
+		const errors = collectAppErrors(page);
+		// a spot of their own (other tests fill Sofia with stores, the table shows 3 per page)
+		const spot: [number, number] = [-20 - Math.random() * 20, -30 - Math.random() * 20];
+		const { storeName } = await createStoreWithProduct(10, 1200, spot);
+		const customerId = (
+			await gqlData(`mutation R($i: UserRegisterInput!) { registerUser(registerInput: $i) { id } }`, {
+				i: {
+					user: { email: `e2e-nearby-${unique()}@example.com`, firstName: 'E2E', lastName: 'Nearby', apartment: '1', geoLocation: geoLocation(spot) },
+					password: 'e2e-password',
+				},
+			}, AS_ADMIN)
+		).registerUser.id;
+
+		await page.goto(route(`customers/list/${customerId}`));
+		await page.getByText('Nearby Stores', { exact: true }).click();
+		const store = page.locator('ea-customer-stores ng2-smart-table tbody tr').filter({ hasText: storeName });
+		await expect(store.getByRole('button', { name: 'Order', exact: true })).toBeVisible({ timeout: 30_000 });
 		expect(errors, errors.join('\n')).toEqual([]);
 	});
 

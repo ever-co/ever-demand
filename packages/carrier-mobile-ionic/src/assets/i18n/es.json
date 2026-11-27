@@ -34,7 +34,9 @@
 		"TAKE_WORK": "Tomar pedido",
 		"SKIP_WORK": "Saltar pedido",
 		"I'M_THERE": "Estoy aquí",
-		"CANCEL": "Cancelar"
+		"CANCEL": "Cancelar",
+		"TO": "Destino",
+		"ORDER_ID": "ID del pedido"
 	},
 	"HOME_VIEW": {
 		"DELIVERIES": "Repartos",
@@ -62,7 +64,10 @@
 		"CANCEL": "Cancelar"
 	},
 	"LOGIN_VIEW": {
-		"LOGIN": "Entrar"
+		"LOGIN": "Entrar",
+		"USERNAME": "Nombre de usuario",
+		"PASSWORD": "Contraseña",
+		"WRONG_CREDENTIALS": "¡Usuario o contraseña incorrectos!"
 	},
 	"ABOUT_VIEW": {
 		"TITLE": "Acerca de"
@@ -81,5 +86,13 @@
 	},
 	"LIST_VIEW": {
 		"YOU_NAVIGATED_HERE_FROM": "Usted llegó acá desde"
+	},
+	"COMMON": {
+		"OK": "Aceptar",
+		"TRY_AGAIN": "¡Inténtelo de nuevo!"
+	},
+	"ORDER_STATE": {
+		"CUSTOMER_CANCELLED_ORDER": "El cliente canceló el pedido",
+		"TAKEN_BY_ANOTHER_CARRIER": "¡Otro repartidor tomó el pedido primero!"
 	}
 }

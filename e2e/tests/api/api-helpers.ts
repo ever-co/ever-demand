@@ -103,11 +103,11 @@ export class PyroClient {
 
 		socket.on(`${subscriptionId}_next`, (value: T) => {
 			values.push(value);
-			for (const w of [...waiters]) {
-				if (w.match(value)) {
-					waiters.splice(waiters.indexOf(w), 1);
-					w.resolve(value);
-				}
+			// Pick the matching waiters first, so removing them skips none.
+			const matched = waiters.filter((w) => w.match(value));
+			for (const w of matched) {
+				waiters.splice(waiters.indexOf(w), 1);
+				w.resolve(value);
 			}
 		});
 
@@ -135,7 +135,7 @@ export class PyroClient {
 }
 
 /** A store with one product in stock, made through GraphQL. */
-export async function createStoreWithProduct(count = 10, price = 1200) {
+export async function createStoreWithProduct(count = 10, price = 1200, coordinates: [number, number] = SOFIA) {
 	const id = unique();
 
 	const store = (
@@ -148,7 +148,7 @@ export async function createStoreWithProduct(count = 10, price = 1200) {
 						name: `E2E store ${id}`,
 						username: `e2e_store_${id}`,
 						logo: 'https://example.com/logo.png',
-						geoLocation: geoLocation(),
+						geoLocation: geoLocation(coordinates),
 						isActive: true,
 						inStoreMode: false,
 						carrierCompetition: false,
@@ -191,6 +191,7 @@ export async function createStoreWithProduct(count = 10, price = 1200) {
 
 	return {
 		storeId: store.id as string,
+		storeName: store.name as string,
 		productId: product.id as string,
 		storeToken: login.warehouseLogin.token as string,
 	};

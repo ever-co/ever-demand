@@ -87,6 +87,47 @@ describe('toSmartTableColumn (ng2-smart-table -> angular2-smart-table settings)'
 		expect(onInit).toHaveBeenCalledWith(instance);
 	});
 
+	it('gives custom render components the raw value, like ng2-smart-table (not the stringified one)', () => {
+		// angular2-smart-table's cell.getValue() falls back to `v?.toString()`: an object reached the
+		// customer page's order button as "[object Object]" and crashed WarehouseOrderComponent.
+		class Renderer {}
+		const column = toSmartTableColumn({
+			type: 'custom',
+			renderComponent: Renderer,
+		});
+		const actions = { actionName: 'Order', actionOwnerId: 'customer-1' };
+		const row = { id: 'w1', actions, ordersQty: 0, isAvailable: false };
+		const valueOf = (columnId: string) => {
+			const instance: any = {};
+			column.componentInitFunction!(
+				instance,
+				cellFor(row, columnId, column),
+			);
+			return instance.value;
+		};
+
+		expect(valueOf('actions')).toBe(actions);
+		expect(valueOf('ordersQty')).toBe(0);
+		expect(valueOf('isAvailable')).toBe(false);
+	});
+
+	it('gives custom render components the prepared value when the column has a valuePrepareFunction', () => {
+		class Renderer {}
+		const column = toSmartTableColumn({
+			type: 'custom',
+			renderComponent: Renderer,
+			valuePrepareFunction: (qty, row) => ({ qty, productId: row.id }),
+		});
+		const instance: any = {};
+
+		column.componentInitFunction!(
+			instance,
+			cellFor({ id: 'p1', qty: 2 }, 'qty', column),
+		);
+
+		expect(instance.value).toEqual({ qty: 2, productId: 'p1' });
+	});
+
 	it('leaves plain columns alone', () => {
 		expect(toSmartTableColumn({ title: 'City', width: '10%' })).toEqual({
 			title: 'City',

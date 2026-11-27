@@ -21,20 +21,6 @@ import './product/return-product/return-product.module';
  * -> starting delivery (start) -> delivery (delivered) or return product (issue).
  */
 describe('Carrier order flow', () => {
-	it('pages use eager change detection (Angular 22 defaults to OnPush)', () => {
-		// socket.io, Apollo, promise and timer callbacks set plain fields on these pages
-		for (const page of [
-			HomePage,
-			DriveToWarehousePage,
-			StartingDeliveryPage,
-			DeliveryPage,
-			GetProductPage,
-			ReturnProductPage,
-		]) {
-			expect((page as any).ɵcmp.onPush, page.name).toBe(false);
-		}
-	});
-
 	let store: Record<string, any>;
 	let router: { navigateByUrl: any; navigate: any };
 	let navCtrl: { navigateRoot: any };
@@ -46,6 +32,7 @@ describe('Carrier order flow', () => {
 		cancelDelivery: any;
 	};
 	let orderRouter: { get: any; updateCarrierStatus: any };
+	let translate: { get: any };
 
 	const carrier = { id: 'c1', _id: 'c1' } as any;
 	const order = { id: 'o1', isCancelled: false } as any;
@@ -80,6 +67,27 @@ describe('Carrier order flow', () => {
 			get: vi.fn(() => of(order)),
 			updateCarrierStatus: vi.fn().mockResolvedValue(order),
 		};
+		translate = {
+			get: vi.fn((key: string) => of(`translated ${key}`)),
+		};
+	});
+
+	afterEach(() => vi.restoreAllMocks());
+
+	const TRY_AGAIN = 'translated COMMON.TRY_AGAIN';
+
+	it('pages use eager change detection (Angular 22 defaults to OnPush)', () => {
+		// socket.io, Apollo, promise and timer callbacks set plain fields on these pages
+		for (const page of [
+			HomePage,
+			DriveToWarehousePage,
+			StartingDeliveryPage,
+			DeliveryPage,
+			GetProductPage,
+			ReturnProductPage,
+		]) {
+			expect((page as any).ɵcmp.onPush, page.name).toBe(false);
+		}
 	});
 
 	describe('home', () => {
@@ -132,6 +140,7 @@ describe('Carrier order flow', () => {
 				router as any,
 				navCtrl as any,
 				{} as any,
+				translate as any,
 			);
 			p.carrier = carrier;
 			p.selectedOrder = order;
@@ -143,6 +152,22 @@ describe('Carrier order flow', () => {
 			expect(
 				carrierOrdersRouter.selectedForDelivery,
 			).toHaveBeenCalledWith('c1', ['o1']);
+		});
+
+		it('take work without a carrier asks to try again in the carrier language', async () => {
+			const alert = vi
+				.spyOn(window, 'alert')
+				.mockImplementation(() => undefined);
+			const p = page();
+			p.carrier = undefined;
+
+			await p.takeWork();
+
+			expect(translate.get).toHaveBeenCalledWith('COMMON.TRY_AGAIN');
+			expect(alert).toHaveBeenCalledWith(TRY_AGAIN);
+			expect(
+				carrierOrdersRouter.selectedForDelivery,
+			).not.toHaveBeenCalled();
 		});
 
 		it('skip work skips the order and goes home', async () => {
@@ -204,6 +229,7 @@ describe('Carrier order flow', () => {
 				{ getTranslate: vi.fn() } as any,
 				store as any,
 				navCtrl as any,
+				translate as any,
 			);
 			p.carrier = carrier;
 			p.selectedOrder = order;
@@ -237,6 +263,29 @@ describe('Carrier order flow', () => {
 				['o1'],
 			);
 			expect(navCtrl.navigateRoot).toHaveBeenCalledWith('/main/home');
+		});
+
+		it('without an order, got it and cancel ask to try again in the carrier language', async () => {
+			const alert = vi
+				.spyOn(window, 'alert')
+				.mockImplementation(() => undefined);
+			const p = page();
+			p.selectedOrder = undefined;
+
+			await p.gotProduct();
+			await p.gotProductWithCarrierCompetition();
+			await p.cancelWork();
+
+			expect(alert.mock.calls).toEqual([
+				[TRY_AGAIN],
+				[TRY_AGAIN],
+				[TRY_AGAIN],
+			]);
+			expect(carrierOrdersRouter.updateStatus).not.toHaveBeenCalled();
+			expect(
+				carrierOrdersRouter.selectedForDelivery,
+			).not.toHaveBeenCalled();
+			expect(carrierOrdersRouter.cancelDelivery).not.toHaveBeenCalled();
 		});
 	});
 
@@ -291,7 +340,19 @@ describe('Carrier order flow', () => {
 				{} as any,
 				router as any,
 				store as any,
+				translate as any,
 			);
+
+		it('delivered without an order asks to try again in the carrier language', async () => {
+			const alert = vi
+				.spyOn(window, 'alert')
+				.mockImplementation(() => undefined);
+
+			await page().delivered();
+
+			expect(alert).toHaveBeenCalledWith(TRY_AGAIN);
+			expect(orderRouter.updateCarrierStatus).not.toHaveBeenCalled();
+		});
 
 		it('delivered completes the order and goes home', async () => {
 			localStorage.setItem('orderId', 'o1');

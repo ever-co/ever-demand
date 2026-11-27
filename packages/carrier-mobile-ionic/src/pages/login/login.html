@@ -14,7 +14,7 @@
 							? 'login-input login-input-invalid'
 							: 'login-input'
 					"
-					placeholder="Username"
+					[placeholder]="'LOGIN_VIEW.USERNAME' | translate"
 					[(ngModel)]="user.username"
 					#username="ngModel"
 					required
@@ -31,7 +31,7 @@
 							: 'login-input'
 					"
 					type="password"
-					placeholder="Password"
+					[placeholder]="'LOGIN_VIEW.PASSWORD' | translate"
 					[(ngModel)]="user.password"
 					#password="ngModel"
 					required

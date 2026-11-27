@@ -59,6 +59,28 @@ export function warehouseProductUpdate(
 	return update;
 }
 
+/**
+ * Filter of the store `warehouseId` (not deleted) holding the product
+ * `productId`, with `productConditions` on that product. An update's
+ * positional `products.$` is the element `$elemMatch` matched.
+ */
+function warehouseProductFilter(
+	warehouseId: string,
+	productId: string,
+	productConditions: Record<string, unknown> = {}
+): Record<string, unknown> {
+	return {
+		_id: new mongoose.Types.ObjectId(warehouseId),
+		isDeleted: { $eq: false },
+		products: {
+			$elemMatch: {
+				product: new mongoose.Types.ObjectId(productId),
+				...productConditions,
+			},
+		},
+	};
+}
+
 @injectable()
 @routerName('warehouse-products')
 export class WarehousesProductsService
@@ -307,32 +329,11 @@ export class WarehousesProductsService
 		productId: string,
 		count: number
 	): Promise<WarehouseProduct> {
-		const warehouse = await this.warehousesService
-			.get(warehouseId)
-			.pipe(first())
-			.toPromise();
-
-		if (warehouse) {
-			const existedProduct = _.find(
-				warehouse.products,
-				(warehouseProduct) => warehouseProduct.productId === productId,
-			);
-
-			if (existedProduct) {
-				// we want to add given qty of such products
-				existedProduct.count += count;
-
-				return this.saveUpdated(warehouseId, existedProduct);
-			} else {
-				const errMsg = 'Cannot find product';
-				this.log.error(new Error(errMsg));
-				throw new Error(errMsg);
-			}
-		} else {
-			const errMsg = 'Cannot find warehouse';
-			this.log.error(new Error(errMsg));
-			throw new Error(errMsg);
-		}
+		// we want to add given qty of such products
+		return this._incProductCounter(warehouseId, productId, 'count', count, {
+			warehouse: 'Cannot find warehouse',
+			product: 'Cannot find product',
+		});
 	}
 
 	/**
@@ -351,32 +352,17 @@ export class WarehousesProductsService
 		productId: string,
 		count: number
 	): Promise<WarehouseProduct> {
-		const warehouse = await this.warehousesService
-			.get(warehouseId)
-			.pipe(first())
-			.toPromise();
-
-		if (warehouse) {
-			const existedProduct = _.find(
-				warehouse.products,
-				(warehouseProduct) => warehouseProduct.productId === productId,
-			);
-
-			if (existedProduct) {
-				// we want to add given qty of such products
-				existedProduct.soldCount += count;
-
-				return this.saveUpdated(warehouseId, existedProduct);
-			} else {
-				const errMsg = 'Cannot find product';
-				this.log.error(new Error(errMsg));
-				throw new Error(errMsg);
+		// we want to add given qty of such products
+		return this._incProductCounter(
+			warehouseId,
+			productId,
+			'soldCount',
+			count,
+			{
+				warehouse: 'Cannot find warehouse',
+				product: 'Cannot find product',
 			}
-		} else {
-			const errMsg = 'Cannot find warehouse';
-			this.log.error(new Error(errMsg));
-			throw new Error(errMsg);
-		}
+		);
 	}
 
 	/**
@@ -469,9 +455,29 @@ export class WarehousesProductsService
 			this.log.info(
 				`Product price before: ${product.price} and we want to change it to: ${price}`
 			);
-			product.price = price;
 
-			return this.saveUpdated(warehouseId, product);
+			// Only the price: the other fields of this read (count,
+			// soldCount, ...) may be old by now.
+			const updatedWarehouse = await this.warehousesService.updateOne(
+				warehouseProductFilter(warehouseId, productId),
+				{ $set: { 'products.$.price': price } }
+			);
+
+			const updatedProduct =
+				updatedWarehouse &&
+				_.find(
+					updatedWarehouse.products,
+					(warehouseProduct) =>
+						warehouseProduct.productId === productId
+				);
+
+			if (updatedProduct == null) {
+				throw new Error(
+					`There is no such an product with the id ${productId} in the warehouse with the id ${warehouseId}`
+				);
+			}
+
+			return updatedProduct;
 		} else {
 			throw new Error(
 				`There is no such an product with the id ${productId} in the warehouse with the id ${warehouseId}`
@@ -495,54 +501,23 @@ export class WarehousesProductsService
 		productId: string,
 		count: number
 	): Promise<WarehouseProduct> {
-		// TODO: Some global distributed lock should be apply here
-		// so we can't decrease product count on 2 separate servers at the same time!
-
-		const warehouse = await this.warehousesService
-			.get(warehouseId)
-			.pipe(first())
-			.toPromise();
-
-		if (warehouse == null) {
-			throw new Error(`Cannot find warehouse: ${warehouseId}`);
-		}
-
 		this.log.info(
-			`Remove requested in warehouse: ${JSON.stringify(
-				warehouse,
-			)} for product id: ${productId}`,
+			`Remove requested in warehouse: ${warehouseId} for product id: ${productId}, count: ${count}`
 		);
 
-		const product = _.find(
-			warehouse.products,
-			(p) => p.productId === productId,
-		);
-
-		if (product != null) {
-			this.log.info(
-				`Product count before remove: ${product.count} and we want to remove ${count} products`,
-			);
-
-			if (product.count >= count) {
-				product.count -= count;
-				return this.saveUpdated(warehouseId, product);
-			} else {
-				const errorMsg =
-					'Request to remove more products than available';
-
-				this.log.error({
-					err: new Error(errorMsg),
-					product,
-					count,
-				});
-
-				throw new Error(errorMsg);
+		// One write that MongoDB checks against the stock, so concurrent
+		// orders (on any server) cannot both take the last items.
+		return this._incProductCounter(
+			warehouseId,
+			productId,
+			'count',
+			-count,
+			{
+				warehouse: `Cannot find warehouse: ${warehouseId}`,
+				product: `There is no such an product with the id ${productId} in the warehouse with the id ${warehouseId}`,
+				notEnough: 'Request to remove more products than available',
 			}
-		} else {
-			throw new Error(
-				`There is no such an product with the id ${productId} in the warehouse with the id ${warehouseId}`,
-			);
-		}
+		);
 	}
 
 	/**
@@ -560,54 +535,22 @@ export class WarehousesProductsService
 		productId: string,
 		count: number
 	): Promise<WarehouseProduct> {
-		// TODO: Some global distributed lock should be apply here
-		// so we can't decrease product sold count on 2 separate servers at the same time!
-
-		const warehouse = await this.warehousesService
-			.get(warehouseId)
-			.pipe(first())
-			.toPromise();
-
-		if (warehouse == null) {
-			throw new Error(`Cannot find warehouse: ${warehouseId}`);
-		}
-
 		this.log.info(
-			`Remove requested in warehouse: ${JSON.stringify(
-				warehouse,
-			)} for product id: ${productId}`,
+			`Sold count decrease requested in warehouse: ${warehouseId} for product id: ${productId}, count: ${count}`
 		);
 
-		const product = _.find(
-			warehouse.products,
-			(p) => p.productId === productId,
-		);
-
-		if (product != null) {
-			this.log.info(
-				`Product sold count before decrease: ${product.soldCount} and we want to decrease ${count} products`,
-			);
-
-			if (product.soldCount >= count) {
-				product.soldCount -= count;
-				return this.saveUpdated(warehouseId, product);
-			} else {
-				const errorMsg =
-					'Request to decrease count of more products than available';
-
-				this.log.error({
-					err: new Error(errorMsg),
-					product,
-					count,
-				});
-
-				throw new Error(errorMsg);
+		return this._incProductCounter(
+			warehouseId,
+			productId,
+			'soldCount',
+			-count,
+			{
+				warehouse: `Cannot find warehouse: ${warehouseId}`,
+				product: `There is no such an product with the id ${productId} in the warehouse with the id ${warehouseId}`,
+				notEnough:
+					'Request to decrease count of more products than available',
 			}
-		} else {
-			throw new Error(
-				`There is no such an product with the id ${productId} in the warehouse with the id ${warehouseId}`,
-			);
-		}
+		);
 	}
 
 	/**
@@ -752,5 +695,66 @@ export class WarehousesProductsService
 			this.log.error(new Error(errMsg));
 			throw new Error(errMsg);
 		}
+	}
+
+	/**
+	 * Adds `by` to the `field` counter of the product `productId` in the
+	 * store `warehouseId` with one `$inc`, so concurrent changes add up
+	 * instead of each writing back the value it read. A decrease (`by` < 0)
+	 * matches only while the counter holds at least `-by`, so it never goes
+	 * below zero.
+	 *
+	 * When the write matched nothing, reads the store to throw the right one
+	 * of `errors`. `updateOne` answers from the write itself: with
+	 * `updateMultiple` (read, then write), a decrease the read refused could
+	 * still be written when a concurrent increase landed in between.
+	 */
+	private async _incProductCounter(
+		warehouseId: string,
+		productId: string,
+		field: 'count' | 'soldCount',
+		by: number,
+		errors: { warehouse: string; product: string; notEnough?: string }
+	): Promise<WarehouseProduct> {
+		const updatedWarehouse = await this.warehousesService.updateOne(
+			warehouseProductFilter(
+				warehouseId,
+				productId,
+				by < 0 ? { [field]: { $gte: -by } } : {}
+			),
+			{ $inc: { [`products.$.${field}`]: by } }
+		);
+
+		const updatedProduct =
+			updatedWarehouse &&
+			_.find(
+				updatedWarehouse.products,
+				(warehouseProduct) => warehouseProduct.productId === productId
+			);
+
+		if (updatedProduct != null) {
+			return updatedProduct;
+		}
+
+		const warehouse = await this.warehousesService.getCurrent(warehouseId);
+
+		let errMsg = errors.product;
+		let product: WarehouseProduct | undefined;
+
+		if (warehouse == null || warehouse.isDeleted) {
+			errMsg = errors.warehouse;
+		} else {
+			product = _.find(
+				warehouse.products,
+				(warehouseProduct) => warehouseProduct.productId === productId
+			);
+
+			if (product != null && errors.notEnough != null) {
+				errMsg = errors.notEnough;
+			}
+		}
+
+		this.log.error({ err: new Error(errMsg), product, field, by });
+		throw new Error(errMsg);
 	}
 }

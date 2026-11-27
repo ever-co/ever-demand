@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { Cell, DataSet } from 'angular2-smart-table';
 import OrderStatus from '@modules/server.common/enums/OrderStatus';
 import OrderWarehouseStatus from '@modules/server.common/enums/OrderWarehouseStatus';
 import { ordersFilter } from '../filters/orders-filters';
@@ -28,19 +29,54 @@ describe('amTimeAgo pipe (replaces ngx-moment)', () => {
 });
 
 describe('bindViewCell (angular2-smart-table custom renderers)', () => {
+	/** A real angular2-smart-table cell for `rowData[columnId]`. */
+	const cellFor = (
+		rowData: any,
+		columnId: string,
+		columnSettings: any = {}
+	): Cell => {
+		const dataSet = new DataSet([rowData], { [columnId]: columnSettings });
+		return dataSet.getRows()[0].getCell(dataSet.getColumns()[0]);
+	};
+
 	it('sets value and rowData, then runs the column initializer', () => {
 		const instance: Record<string, unknown> = {};
 		const init = vi.fn();
-		const cell = {
-			getValue: () => '0888 123',
-			getRow: () => ({ getData: () => ({ id: 'c1', phone: '0888 123' }) }),
-		} as any;
+		const row = { id: 'c1', phone: '0888 123' };
+		const cell = cellFor(row, 'phone');
 
 		bindViewCell(init)(instance, cell);
 
 		expect(instance.value).toBe('0888 123');
-		expect(instance.rowData).toEqual({ id: 'c1', phone: '0888 123' });
+		expect(instance.rowData).toBe(row);
 		expect(init).toHaveBeenCalledWith(instance, cell);
+	});
+
+	it('passes object, number and boolean values unchanged, like ng2-smart-table', () => {
+		// angular2-smart-table's cell.getValue() falls back to `v?.toString()`: the order modal's
+		// `amount` cell ({ productId, available }) reached its input as "[object Object]".
+		const amount = { productId: 'p1', available: 3 };
+		const row = { id: 'w1', amount, count: 0, isAvailable: false };
+		const valueOf = (columnId: string) => {
+			const instance: Record<string, unknown> = {};
+			bindViewCell()(instance, cellFor(row, columnId));
+			return instance.value;
+		};
+
+		expect(valueOf('amount')).toBe(amount);
+		expect(valueOf('count')).toBe(0);
+		expect(valueOf('isAvailable')).toBe(false);
+	});
+
+	it('passes the prepared value when the column has a valuePrepareFunction', () => {
+		const instance: Record<string, unknown> = {};
+		const cell = cellFor({ id: 'p1', price: 2 }, 'price', {
+			valuePrepareFunction: (price: number) => `$${price}`,
+		});
+
+		bindViewCell()(instance, cell);
+
+		expect(instance.value).toBe('$2');
 	});
 });
 
