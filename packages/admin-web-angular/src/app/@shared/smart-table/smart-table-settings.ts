@@ -1,4 +1,10 @@
-import type { Cell, IColumn, IColumns, Settings } from 'angular2-smart-table';
+import type {
+	Cell,
+	ColumnComponentInitFunction,
+	IColumn,
+	IColumns,
+	Settings,
+} from 'angular2-smart-table';
 
 /**
  * The column settings the admin screens were written for (ng2-smart-table 1.x).
@@ -48,6 +54,34 @@ const RENAMED_FLAGS: ReadonlyArray<[keyof LegacyColumn, keyof IColumn]> = [
 	['addable', 'isAddable'],
 ];
 
+/** Moves the ng2-smart-table flags (`sort`, …) onto the fork's names (`isSortable`, …). */
+function renameFlags(column: Record<string, any>): void {
+	for (const [from, to] of RENAMED_FLAGS) {
+		if ((from as string) in column) {
+			if (column[to as string] === undefined) {
+				column[to as string] = column[from as string] !== false;
+			}
+			delete column[from as string];
+		}
+	}
+}
+
+/** The fork's `componentInitFunction` for a custom column: sets `value` and `rowData` as ng2-smart-table did. */
+function bindRenderer(
+	ownInit: ColumnComponentInitFunction | undefined,
+	prepared: boolean,
+	onComponentInitFunction: LegacyColumn['onComponentInitFunction'],
+): ColumnComponentInitFunction {
+	return (instance: any, cell: Cell) => {
+		// ng2-smart-table gave renderers the raw value unless the column prepared it. The fork's
+		// getValue() falls back to `v?.toString()`, so an object would arrive as "[object Object]".
+		instance.value = prepared ? cell.getValue() : cell.getRawValue();
+		instance.rowData = cell.getRow().getData();
+		ownInit?.(instance, cell);
+		onComponentInitFunction?.(instance);
+	};
+}
+
 export function toSmartTableColumn(legacy: LegacyColumn): IColumn {
 	const {
 		filter,
@@ -59,14 +93,7 @@ export function toSmartTableColumn(legacy: LegacyColumn): IColumn {
 
 	const column: Record<string, any> = { ...rest };
 
-	for (const [from, to] of RENAMED_FLAGS) {
-		if ((from as string) in column) {
-			if (column[to as string] === undefined) {
-				column[to as string] = column[from as string] !== false;
-			}
-			delete column[from as string];
-		}
-	}
+	renameFlags(column);
 
 	if (filter === false || filter === true) {
 		column.isFilterable = filter;
@@ -86,13 +113,11 @@ export function toSmartTableColumn(legacy: LegacyColumn): IColumn {
 	}
 
 	if (column.type === 'custom' && column.renderComponent) {
-		const ownInit = column.componentInitFunction;
-		column.componentInitFunction = (instance: any, cell: Cell) => {
-			instance.value = cell.getValue();
-			instance.rowData = cell.getRow().getData();
-			ownInit?.(instance, cell);
-			onComponentInitFunction?.(instance);
-		};
+		column.componentInitFunction = bindRenderer(
+			column.componentInitFunction,
+			!!valuePrepareFunction,
+			onComponentInitFunction,
+		);
 	}
 
 	return column as IColumn;
