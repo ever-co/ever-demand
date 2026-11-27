@@ -122,7 +122,9 @@ git clone https://github.com/ever-co/ever-demand.git
 
 -   [Node.js](https://nodejs.org) 26 (see `.nvmrc`)
 -   [pnpm](https://pnpm.io) 12: `npm install -g pnpm@12`
--   [MongoDB](https://www.mongodb.com) 7 or newer (8 recommended), e.g. `docker run -d -p 27017:27017 mongo:8`
+-   A MongoDB-compatible database, either one of:
+    -   [MongoDB](https://www.mongodb.com) 7 or newer (8 recommended), e.g. `docker run -d -p 27017:27017 mongo:8`;
+    -   [DocumentDB](https://github.com/documentdb/documentdb) 1.2 or newer: MongoDB-compatible, stores the data in PostgreSQL. See [docs/deployment/documentdb.md](docs/deployment/documentdb.md).
 -   For the Flutter app: the [Flutter](https://flutter.dev) stable SDK, or Docker (see `packages/shop-mobile-flutter/README.md`)
 
 ### Install
@@ -152,9 +154,17 @@ pnpm run e2e            # Playwright e2e (needs the API and the apps running, se
 
 The API also has its own e2e suite against a real MongoDB: `pnpm --filter @ever-platform/core test:e2e`.
 
-### MongoDB
+### Database: MongoDB or DocumentDB
 
-Ever Demand platform configured to use MongoDB by default and assume you have MongoDB service running and accepting connections on the default `localhost:27017`. Please see relevant section in our [documentation](https://github.com/ever-co/ever-demand/wiki/MongoDB).
+The API connects to the database in `DB_URI` (`packages/core/.env`). By default that is MongoDB on `localhost:27017` (`mongodb://localhost/ever_development`); see also the [MongoDB wiki page](https://github.com/ever-co/ever-demand/wiki/MongoDB).
+
+Ever Demand also runs on [DocumentDB](https://github.com/documentdb/documentdb), the open-source MongoDB-compatible database built on PostgreSQL (MIT, Linux Foundation). Use it if you would rather operate PostgreSQL than MongoDB. The full API and Playwright e2e suites pass on DocumentDB 1.2 exactly as on MongoDB 8.
+
+- **Local:** `DOCUMENTDB_PASSWORD=<a password> docker compose -f docker-compose.yml -f docker-compose.documentdb.yml up`
+- **Connection:** `DB_URI=mongodb://<user>:<password>@<host>:10260/<database>?tls=true`. The gateway speaks only TLS.
+- **Production:** give DocumentDB its own PostgreSQL, never one shared with other apps.
+
+Setup, differences and the test results are in [docs/deployment/documentdb.md](docs/deployment/documentdb.md).
 
 ### Platform Configuration
 

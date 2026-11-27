@@ -38,6 +38,18 @@ jobs:
               if: ${{ vars.DO_ENABLED == 'true' }}
               run: doctl registry login --expiry-seconds 3600
 
+            # The tag of this branch, for Argo CD Image Updater (one tag per environment):
+            # develop -> :dev, stage -> :stage, master -> :prod. :latest stays as before.
+            - name: Image tag of the branch
+              id: t
+              run: |
+                  case "${GITHUB_REF_NAME}" in
+                    develop) echo "tag=dev" >> "$GITHUB_OUTPUT" ;;
+                    stage) echo "tag=stage" >> "$GITHUB_OUTPUT" ;;
+                    main|master) echo "tag=prod" >> "$GITHUB_OUTPUT" ;;
+                    *) echo "tag=${GITHUB_REF_NAME////-}" >> "$GITHUB_OUTPUT" ;;
+                  esac
+
             - name: Build
               uses: docker/build-push-action@v7
               with:
@@ -48,6 +60,8 @@ jobs:
                       VERDACCIO_REGISTRY=${{ vars.VERDACCIO_REGISTRY }}
                   tags: |
                       ghcr.io/ever-co/ever-api:latest
+                      ghcr.io/ever-co/ever-api:${{ steps.t.outputs.tag }}
+                      ghcr.io/ever-co/ever-api:sha-${{ github.sha }}
                       everco/ever-api:latest
                       registry.digitalocean.com/ever/ever-api:latest
 
@@ -58,7 +72,7 @@ jobs:
 
             - name: Push to Github Registry
               run: |
-                  docker push ghcr.io/ever-co/ever-api:latest
+                  docker push --all-tags ghcr.io/ever-co/ever-api
 
             - name: Push to Docker Hub Registry
               run: |
@@ -93,6 +107,18 @@ jobs:
               if: ${{ vars.DO_ENABLED == 'true' }}
               run: doctl registry login --expiry-seconds 3600
 
+            # The tag of this branch, for Argo CD Image Updater (one tag per environment):
+            # develop -> :dev, stage -> :stage, master -> :prod. :latest stays as before.
+            - name: Image tag of the branch
+              id: t
+              run: |
+                  case "${GITHUB_REF_NAME}" in
+                    develop) echo "tag=dev" >> "$GITHUB_OUTPUT" ;;
+                    stage) echo "tag=stage" >> "$GITHUB_OUTPUT" ;;
+                    main|master) echo "tag=prod" >> "$GITHUB_OUTPUT" ;;
+                    *) echo "tag=${GITHUB_REF_NAME////-}" >> "$GITHUB_OUTPUT" ;;
+                  esac
+
             - name: Build
               uses: docker/build-push-action@v7
               with:
@@ -103,6 +129,8 @@ jobs:
                       VERDACCIO_REGISTRY=${{ vars.VERDACCIO_REGISTRY }}
                   tags: |
                       ghcr.io/ever-co/ever-admin-angular:latest
+                      ghcr.io/ever-co/ever-admin-angular:${{ steps.t.outputs.tag }}
+                      ghcr.io/ever-co/ever-admin-angular:sha-${{ github.sha }}
                       everco/ever-admin-angular:latest
                       registry.digitalocean.com/ever/ever-admin-angular:latest
 
@@ -113,7 +141,7 @@ jobs:
 
             - name: Push to Github Registry
               run: |
-                  docker push ghcr.io/ever-co/ever-admin-angular:latest
+                  docker push --all-tags ghcr.io/ever-co/ever-admin-angular
 
             - name: Push to Docker Hub Registry
               run: |
@@ -148,6 +176,18 @@ jobs:
               if: ${{ vars.DO_ENABLED == 'true' }}
               run: doctl registry login --expiry-seconds 3600
 
+            # The tag of this branch, for Argo CD Image Updater (one tag per environment):
+            # develop -> :dev, stage -> :stage, master -> :prod. :latest stays as before.
+            - name: Image tag of the branch
+              id: t
+              run: |
+                  case "${GITHUB_REF_NAME}" in
+                    develop) echo "tag=dev" >> "$GITHUB_OUTPUT" ;;
+                    stage) echo "tag=stage" >> "$GITHUB_OUTPUT" ;;
+                    main|master) echo "tag=prod" >> "$GITHUB_OUTPUT" ;;
+                    *) echo "tag=${GITHUB_REF_NAME////-}" >> "$GITHUB_OUTPUT" ;;
+                  esac
+
             - name: Build
               uses: docker/build-push-action@v7
               with:
@@ -158,6 +198,8 @@ jobs:
                       VERDACCIO_REGISTRY=${{ vars.VERDACCIO_REGISTRY }}
                   tags: |
                       ghcr.io/ever-co/ever-carrier-ionic:latest
+                      ghcr.io/ever-co/ever-carrier-ionic:${{ steps.t.outputs.tag }}
+                      ghcr.io/ever-co/ever-carrier-ionic:sha-${{ github.sha }}
                       everco/ever-carrier-ionic:latest
                       registry.digitalocean.com/ever/ever-carrier-ionic:latest
 
@@ -168,7 +210,7 @@ jobs:
 
             - name: Push to Github Registry
               run: |
-                  docker push ghcr.io/ever-co/ever-carrier-ionic:latest
+                  docker push --all-tags ghcr.io/ever-co/ever-carrier-ionic
 
             - name: Push to Docker Hub Registry
               run: |
@@ -203,6 +245,18 @@ jobs:
               if: ${{ vars.DO_ENABLED == 'true' }}
               run: doctl registry login --expiry-seconds 3600
 
+            # The tag of this branch, for Argo CD Image Updater (one tag per environment):
+            # develop -> :dev, stage -> :stage, master -> :prod. :latest stays as before.
+            - name: Image tag of the branch
+              id: t
+              run: |
+                  case "${GITHUB_REF_NAME}" in
+                    develop) echo "tag=dev" >> "$GITHUB_OUTPUT" ;;
+                    stage) echo "tag=stage" >> "$GITHUB_OUTPUT" ;;
+                    main|master) echo "tag=prod" >> "$GITHUB_OUTPUT" ;;
+                    *) echo "tag=${GITHUB_REF_NAME////-}" >> "$GITHUB_OUTPUT" ;;
+                  esac
+
             - name: Build
               uses: docker/build-push-action@v7
               with:
@@ -213,6 +267,8 @@ jobs:
                       VERDACCIO_REGISTRY=${{ vars.VERDACCIO_REGISTRY }}
                   tags: |
                       ghcr.io/ever-co/ever-merchant-ionic:latest
+                      ghcr.io/ever-co/ever-merchant-ionic:${{ steps.t.outputs.tag }}
+                      ghcr.io/ever-co/ever-merchant-ionic:sha-${{ github.sha }}
                       everco/ever-merchant-ionic:latest
                       registry.digitalocean.com/ever/ever-merchant-ionic:latest
 
@@ -223,7 +279,7 @@ jobs:
 
             - name: Push to Github Registry
               run: |
-                  docker push ghcr.io/ever-co/ever-merchant-ionic:latest
+                  docker push --all-tags ghcr.io/ever-co/ever-merchant-ionic
 
             - name: Push to Docker Hub Registry
               run: |
@@ -258,6 +314,18 @@ jobs:
               if: ${{ vars.DO_ENABLED == 'true' }}
               run: doctl registry login --expiry-seconds 3600
 
+            # The tag of this branch, for Argo CD Image Updater (one tag per environment):
+            # develop -> :dev, stage -> :stage, master -> :prod. :latest stays as before.
+            - name: Image tag of the branch
+              id: t
+              run: |
+                  case "${GITHUB_REF_NAME}" in
+                    develop) echo "tag=dev" >> "$GITHUB_OUTPUT" ;;
+                    stage) echo "tag=stage" >> "$GITHUB_OUTPUT" ;;
+                    main|master) echo "tag=prod" >> "$GITHUB_OUTPUT" ;;
+                    *) echo "tag=${GITHUB_REF_NAME////-}" >> "$GITHUB_OUTPUT" ;;
+                  esac
+
             - name: Build
               uses: docker/build-push-action@v7
               with:
@@ -268,6 +336,8 @@ jobs:
                       VERDACCIO_REGISTRY=${{ vars.VERDACCIO_REGISTRY }}
                   tags: |
                       ghcr.io/ever-co/ever-shop-ionic:latest
+                      ghcr.io/ever-co/ever-shop-ionic:${{ steps.t.outputs.tag }}
+                      ghcr.io/ever-co/ever-shop-ionic:sha-${{ github.sha }}
                       everco/ever-shop-ionic:latest
                       registry.digitalocean.com/ever/ever-shop-ionic:latest
 
@@ -278,7 +348,7 @@ jobs:
 
             - name: Push to Github Registry
               run: |
-                  docker push ghcr.io/ever-co/ever-shop-ionic:latest
+                  docker push --all-tags ghcr.io/ever-co/ever-shop-ionic
 
             - name: Push to Docker Hub Registry
               run: |
@@ -313,6 +383,18 @@ jobs:
               if: ${{ vars.DO_ENABLED == 'true' }}
               run: doctl registry login --expiry-seconds 3600
 
+            # The tag of this branch, for Argo CD Image Updater (one tag per environment):
+            # develop -> :dev, stage -> :stage, master -> :prod. :latest stays as before.
+            - name: Image tag of the branch
+              id: t
+              run: |
+                  case "${GITHUB_REF_NAME}" in
+                    develop) echo "tag=dev" >> "$GITHUB_OUTPUT" ;;
+                    stage) echo "tag=stage" >> "$GITHUB_OUTPUT" ;;
+                    main|master) echo "tag=prod" >> "$GITHUB_OUTPUT" ;;
+                    *) echo "tag=${GITHUB_REF_NAME////-}" >> "$GITHUB_OUTPUT" ;;
+                  esac
+
             - name: Build
               uses: docker/build-push-action@v7
               with:
@@ -323,6 +405,8 @@ jobs:
                       VERDACCIO_REGISTRY=${{ vars.VERDACCIO_REGISTRY }}
                   tags: |
                       ghcr.io/ever-co/ever-shop-angular:latest
+                      ghcr.io/ever-co/ever-shop-angular:${{ steps.t.outputs.tag }}
+                      ghcr.io/ever-co/ever-shop-angular:sha-${{ github.sha }}
                       everco/ever-shop-angular:latest
                       registry.digitalocean.com/ever/ever-shop-angular:latest
 
@@ -333,7 +417,7 @@ jobs:
 
             - name: Push to Github Registry
               run: |
-                  docker push ghcr.io/ever-co/ever-shop-angular:latest
+                  docker push --all-tags ghcr.io/ever-co/ever-shop-angular
 
             - name: Push to Docker Hub Registry
               run: |
