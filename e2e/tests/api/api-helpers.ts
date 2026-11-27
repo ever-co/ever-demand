@@ -4,7 +4,7 @@
  */
 import { randomUUID } from 'node:crypto';
 import { io, Socket } from 'socket.io-client';
-import { gql, SERVICES_URL } from '../helpers';
+import { SERVICES_URL } from '../helpers';
 
 /** The NestJS app (REST under /api, GraphQL at /graphql): the origin of GQL_URL. */
 export { GQL_URL, SERVICES_URL, SUBSCRIPTIONS_URL, ADMIN, gql, adminToken } from '../helpers';

@@ -1,5 +1,4 @@
 import http from 'http';
-import type { AddressInfo } from 'net';
 
 /**
  * A fake of the few Stripe API endpoints the billing service calls
@@ -51,10 +50,6 @@ export class FakeStripe {
 			this.server!.once('error', reject);
 			this.server!.listen(port, '127.0.0.1', () => resolve());
 		});
-	}
-
-	get port(): number {
-		return (this.server?.address() as AddressInfo).port;
 	}
 
 	async close(): Promise<void> {
