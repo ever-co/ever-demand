@@ -13,17 +13,24 @@ export class ServerSettingsService {
 		private readonly store: Store
 	) {}
 
+	/**
+	 * Loads the settings into the Store. They are for logged-in admins only, so
+	 * before a login the API refuses them: the app starts anyway, and the
+	 * session loads them again after the login (AdminSessionService.start).
+	 */
 	async load() {
-		return new Promise(async (resolve, reject) => {
+		try {
 			const res = await this.getAdminAppSettings();
 
 			if (res) {
 				this.store.adminPasswordReset = res.adminPasswordReset;
 				this.store.fakeDataGenerator = res.fakeDataGenerator;
 			}
+		} catch {
+			// not logged in, or the API is down (ServerConnectionService shows that)
+		}
 
-			resolve(true);
-		});
+		return true;
 	}
 
 	getAdminAppSettings() {
@@ -40,7 +47,7 @@ export class ServerSettingsService {
 			})
 			.pipe(
 				take(1),
-				map((res) => res.data['adminAppSettings'])
+				map((res) => res.data?.['adminAppSettings']),
 			)
 			.toPromise();
 	}

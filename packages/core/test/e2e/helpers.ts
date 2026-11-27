@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
 import { io, Socket } from 'socket.io-client';
-import { GQL_URL, SERVICES_URL } from './server';
+import { ADMIN_PASSWORD, GQL_URL, SERVICES_URL } from './server';
 
 export interface GqlResponse<T> {
 	status: number;
@@ -8,31 +8,92 @@ export interface GqlResponse<T> {
 	errors?: { message: string; extensions?: Record<string, unknown> }[];
 }
 
-/** POST a GraphQL operation to the API, the way apollo-angular does. */
+/** Pass as the token to send an operation without logging in. */
+export const ANONYMOUS = null;
+
+let cachedAdminToken: Promise<string> | undefined;
+
+/**
+ * Login token of the default admin (admin@ever.co / admin). Operations that
+ * set up data are admin-only (graphql/access), so gql() sends it unless told
+ * otherwise.
+ */
+export function defaultAdminToken(): Promise<string> {
+	cachedAdminToken ??= (async () => {
+		const res = await fetch(GQL_URL, {
+			method: 'POST',
+			headers: { 'content-type': 'application/json' },
+			body: JSON.stringify({
+				query: `mutation L($p: String!) { adminLogin(email: "admin@ever.co", password: $p) { token } }`,
+				variables: { p: ADMIN_PASSWORD },
+			}),
+		});
+		const body: any = await res.json();
+		const token = body?.data?.adminLogin?.token;
+
+		if (!token) {
+			cachedAdminToken = undefined;
+			throw new Error(`default admin could not log in: ${JSON.stringify(body)}`);
+		}
+
+		return token;
+	})();
+
+	return cachedAdminToken;
+}
+
+/**
+ * POST a GraphQL operation to the API, the way apollo-angular does.
+ * `token`: undefined = the default admin, null (ANONYMOUS) = no login,
+ * else that login token. `headers`: extra headers, e.g. `Tenant-Id`.
+ */
 export async function gql<T = any>(
 	query: string,
 	variables: Record<string, unknown> = {},
-	token?: string
+	token?: string | null,
+	headers: Record<string, string> = {},
 ): Promise<GqlResponse<T>> {
+	const bearer = token === undefined ? await defaultAdminToken() : token;
+
 	const res = await fetch(GQL_URL, {
 		method: 'POST',
 		headers: {
 			'content-type': 'application/json',
-			...(token ? { authorization: `Bearer ${token}` } : {}),
+			...(bearer ? { authorization: `Bearer ${bearer}` } : {}),
+			...headers,
 		},
 		body: JSON.stringify({ query, variables }),
 	});
 
-	return { status: res.status, ...(await res.json()) };
+	const text = await res.text();
+	let body: any;
+
+	try {
+		body = JSON.parse(text);
+	} catch {
+		body = { errors: [{ message: text }] };
+	}
+
+	// the tenant middleware answers before GraphQL: { statusCode, code, message }
+	if (body && body.errors == null && body.data == null && body.message) {
+		body = {
+			errors: [
+				{ message: body.message, extensions: { code: body.code } },
+			],
+		};
+	}
+
+	return { status: res.status, ...body };
 }
 
 /** Like gql(), but fails the test on GraphQL errors and returns `data`. */
 export async function gqlData<T = any>(
 	query: string,
 	variables: Record<string, unknown> = {},
-	token?: string
+	token?: string | null,
+	headers: Record<string, string> = {}
 ): Promise<T> {
-	const res = await gql<T>(query, variables, token);
+	const res = await gql<T>(query, variables, token, headers);
 
 	if (res.errors?.length || res.data == null) {
 		throw new Error(
@@ -70,6 +131,16 @@ export function geoLocation(
 export class PyroClient {
 	private readonly sockets = new Map<string, Socket>();
 
+	/**
+	 * `auth`: the socket.io handshake `auth` of every connection, e.g.
+	 * `{ tenant: 'acme' }` or `{ token }` (DESIGN.md §3.3).
+	 */
+	constructor(
+		private readonly auth: Record<string, string> = {},
+		/** extra HTTP headers of the handshake, e.g. X-Forwarded-For */
+		private readonly headers: Record<string, string> = {},
+	) {}
+
 	private async socket(router: string): Promise<Socket> {
 		let socket = this.sockets.get(router);
 
@@ -77,6 +148,8 @@ export class PyroClient {
 			socket = io(`${SERVICES_URL}/${router}`, {
 				reconnection: false,
 				forceNew: true,
+				auth: this.auth,
+				extraHeaders: this.headers,
 			});
 			this.sockets.set(router, socket);
 		}
@@ -91,12 +164,32 @@ export class PyroClient {
 		return socket;
 	}
 
+	/** Resolves with the reason once the server closed the router's connection. */
+	async disconnected(router: string, timeoutMs = 5000): Promise<string> {
+		const socket = await this.socket(router);
+
+		return new Promise<string>((resolve, reject) => {
+			const timer = setTimeout(() => reject(new Error(`${router} stayed connected`)), timeoutMs);
+			socket.once('disconnect', (reason) => {
+				clearTimeout(timer);
+				resolve(reason);
+			});
+		});
+	}
+
 	/** Calls an @asyncListener: resolves with its result, rejects with its error. */
 	async call<T = any>(router: string, method: string, ...args: unknown[]): Promise<T> {
 		const socket = await this.socket(router);
 
 		return new Promise<T>((resolve, reject) => {
+			// a server that drops the connection never answers
+			const dropped = (reason: string) =>
+				reject(new Error(`disconnected: ${reason}`));
+			socket.once('disconnect', dropped);
+
 			socket.emit(method, ...args, (err: any, res: T) => {
+				socket.off('disconnect', dropped);
+
 				if (err != null) {
 					const error = new Error(err.message ?? JSON.stringify(err));
 					error.name = err.name ?? 'Error';
@@ -118,7 +211,12 @@ export class PyroClient {
 		const subscriptionId = randomUUID();
 
 		const values: T[] = [];
+		const errors: any[] = [];
 		let waiting: { predicate: (v: T) => boolean; resolve: (v: T) => void } | undefined;
+
+		socket.on(`${subscriptionId}_error`, (err: any) => {
+			errors.push(err);
+		});
 
 		socket.on(`${subscriptionId}_next`, (value: T) => {
 			values.push(value);
@@ -134,6 +232,7 @@ export class PyroClient {
 
 		return {
 			values,
+			errors,
 			next(predicate: (v: T) => boolean = () => true, timeoutMs = 15000): Promise<T> {
 				const found = values.find(predicate);
 				if (found !== undefined) {
@@ -156,8 +255,14 @@ export class PyroClient {
 			unsubscribe() {
 				socket.emit(`${subscriptionId}_unsubscribe`);
 				socket.off(`${subscriptionId}_next`);
+				socket.off(`${subscriptionId}_error`);
 			},
 		};
+	}
+
+	/** Connects to a router namespace; rejects with the server's connect_error. */
+	async connect(router: string): Promise<void> {
+		await this.socket(router);
 	}
 
 	close() {
@@ -175,7 +280,8 @@ export async function adminToken(): Promise<string> {
 		`mutation Login($email: String!, $password: String!) {
 			adminLogin(email: $email, password: $password) { token }
 		}`,
-		{ email: 'admin@ever.co', password: 'admin' }
+		{ email: 'admin@ever.co', password: ADMIN_PASSWORD },
+		ANONYMOUS,
 	);
 
 	if (!data.adminLogin) {
@@ -187,7 +293,8 @@ export async function adminToken(): Promise<string> {
 
 export async function createWarehouse(
 	name = `Store ${unique()}`,
-	overrides: Record<string, unknown> = {}
+	overrides: Record<string, unknown> = {},
+	token?: string | null
 ) {
 	const id = unique();
 	const data = await gqlData<{ registerWarehouse: { id: string; name: string; username: string } }>(
@@ -213,13 +320,14 @@ export async function createWarehouse(
 					...overrides,
 				},
 			},
-		}
+		},
+		token
 	);
 
 	return data.registerWarehouse;
 }
 
-export async function createProduct(title = `Pizza ${unique()}`) {
+export async function createProduct(title = `Pizza ${unique()}`, token?: string | null) {
 	const data = await gqlData<{ createProduct: { id: string; title: { locale: string; value: string }[] } }>(
 		`mutation Create($product: ProductCreateInput!) {
 			createProduct(product: $product) { id title { locale value } }
@@ -239,13 +347,14 @@ export async function createProduct(title = `Pizza ${unique()}`) {
 					},
 				],
 			},
-		}
+		},
+		token
 	);
 
 	return data.createProduct;
 }
 
-export async function createCarrier(username = `carrier_${unique()}`) {
+export async function createCarrier(username = `carrier_${unique()}`, token?: string | null) {
 	const data = await gqlData<{ registerCarrier: { id: string; username: string } }>(
 		`mutation Register($registerInput: CarrierRegisterInput!) {
 			registerCarrier(registerInput: $registerInput) { id username }
@@ -263,7 +372,8 @@ export async function createCarrier(username = `carrier_${unique()}`) {
 					geoLocation: geoLocation(),
 				},
 			},
-		}
+		},
+		token
 	);
 
 	return data.registerCarrier;
@@ -273,7 +383,8 @@ export async function addProductToWarehouse(
 	warehouseId: string,
 	productId: string,
 	count = 10,
-	price = 1200
+	price = 1200,
+	token?: string | null
 ) {
 	const data = await gqlData<{
 		addWarehouseProducts: { id: string; count: number; price: number; product: { id: string } }[];
@@ -297,7 +408,8 @@ export async function addProductToWarehouse(
 					isProductAvailable: true,
 				},
 			],
-		}
+		},
+		token
 	);
 
 	return data.addWarehouseProducts;

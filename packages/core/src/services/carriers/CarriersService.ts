@@ -1,4 +1,5 @@
 import Logger from 'bunyan';
+import { assertCanAdd } from '../../tenant/plan-limits';
 import CarrierStatus from '@modules/server.common/enums/CarrierStatus';
 import Carrier from '@modules/server.common/entities/Carrier';
 import { createEverLogger } from '../../helpers/Log';
@@ -30,6 +31,11 @@ import { stripProtectedFields } from '../stripProtectedFields';
 export class CarriersService extends DBService<Carrier>
 	implements ICarrierRouter, IService {
 	public readonly DBObject: any = Carrier;
+
+	/** New carriers count against the tenant's plan (members, tenant/plan-limits.ts). */
+	protected async beforeCreate(): Promise<void> {
+		await assertCanAdd('member');
+	}
 	protected readonly log: Logger = createEverLogger({
 		name: 'carriersService',
 	});
@@ -89,7 +95,8 @@ export class CarriersService extends DBService<Carrier>
 		throwIfInvalidSkippedOrderIds(input.carrier);
 
 		const carrier = await super.create({
-			...input.carrier,
+			// server-side fields are never taken from the caller
+			...(stripProtectedFields(input.carrier, { create: true }) as typeof input.carrier),
 			...(input.password
 				? {
 						hash: await this.authService.getPasswordHash(

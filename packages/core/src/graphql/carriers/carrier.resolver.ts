@@ -127,6 +127,12 @@ export class CarrierResolver {
 		return this._carriersService.removeMultipleByIds(carriersIds);
 	}
 
+	/** Guarded like `devices` (GRAPHQL_FIELD_ACCESS): the ids lead to the push channels. */
+	@ResolveField('devicesIds')
+	getDevicesIds(parent: { devicesIds?: string[] }): string[] {
+		return parent?.devicesIds ?? [];
+	}
+
 	@ResolveField('devices')
 	async getDevices(_carrier: ICarrier): Promise<Device[]> {
 		const carrier = new Carrier(_carrier);

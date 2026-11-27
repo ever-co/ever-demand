@@ -5,6 +5,10 @@ export interface Environment {
 	HTTPS_SERVICES_ENDPOINT: string;
 	GQL_ENDPOINT: string;
 	GQL_SUBSCRIPTIONS_ENDPOINT: string;
+	/** White-label build: tenant slug or id ('' = none) */
+	TENANT: string;
+	/** Parent domain of `<slug>.<TENANT_BASE_DOMAIN>` shop hosts ('' = none) */
+	TENANT_BASE_DOMAIN: string;
 	AUTH_LOGO: string;
 	SETTINGS_APP_TYPE?: string;
 	SETTINGS_MAINTENANCE_API_URL?: string;

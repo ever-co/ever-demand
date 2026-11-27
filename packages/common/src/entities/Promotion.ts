@@ -1,4 +1,4 @@
-import { DBObject, ModelName, Types, Schema } from '@pyro/db';
+import { DBObject, ModelName, Types, Schema, TenantId } from '@pyro/db';
 import { Entity, Column } from 'typeorm';
 import Product from './Product';
 import {
@@ -20,6 +20,16 @@ import IWarehouse from '../interfaces/IWarehouse';
 @Entity({ name: 'promotions' })
 class Promotion extends DBObject<IPromotion, IPromotionCreateObject>
 	implements IPromotion {
+	/**
+	 * The tenant (business) that owns this record. Set by the API from the
+	 * tenant context; never taken from a client.
+	 *
+	 * @type {string}
+	 * @memberof Promotion
+	 */
+	@TenantId()
+	tenantId: string;
+
 	/**
 	 * @type {IPromotionTitle[]}
 	 * @memberof Promotion

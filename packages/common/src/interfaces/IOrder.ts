@@ -1,3 +1,4 @@
+import { ITenantScoped } from './ITenant';
 import { ICarrierCreateObject } from './ICarrier';
 import IOrderProduct, { IOrderProductCreateObject } from './IOrderProduct';
 import IUser, { IUserCreateObject } from './IUser';
@@ -8,7 +9,7 @@ import { DBCreateObject, DBRawObject, PyroObjectId } from '../@pyro/db';
 import Carrier from '../entities/Carrier';
 import DeliveryType from '../enums/DeliveryType';
 
-export interface IOrderCreateObject extends DBCreateObject {
+export interface IOrderCreateObject extends DBCreateObject, ITenantScoped {
 	/**
 	 * User which makes an order.
 	 * Note: this is not a reference, but value we put here in the moment when creating an Order.

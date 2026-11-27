@@ -14,6 +14,14 @@ const PROTECTED_FIELDS: ReadonlyArray<string> = [
 	'isDeleted',
 	'_createdAt',
 	'_updatedAt',
+	// the tenant is set by the server only; an admin's role and super-admin
+	// flag only by the member management of the tenant
+	'tenantId',
+	'role',
+	'isSuperAdmin',
+	// the Stripe customer holds the saved cards: written by addPaymentMethod only
+	// (a client that set another customer's id could list and charge their cards)
+	'stripeCustomerId',
 ];
 
 function isProtectedKey(key: string): boolean {
@@ -37,7 +45,10 @@ function isProtectedKey(key: string): boolean {
  * changed. An array (a MongoDB update pipeline), null or any other non-object
  * gives an empty update.
  */
-export function stripProtectedFields<T>(updateObject: T): Partial<T> {
+export function stripProtectedFields<T>(
+	updateObject: T,
+	options: { create?: boolean } = {},
+): Partial<T> {
 	const copy: any = {};
 
 	if (
@@ -49,6 +60,11 @@ export function stripProtectedFields<T>(updateObject: T): Partial<T> {
 	}
 
 	for (const key of Object.keys(updateObject)) {
+		// a new record gets its id from the database, never from the caller
+		if (options.create && (key === '_id' || key === 'id')) {
+			continue;
+		}
+
 		if (!isProtectedKey(key)) {
 			copy[key] = updateObject[key];
 		}

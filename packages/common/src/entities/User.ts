@@ -1,5 +1,13 @@
 import GeoLocation from './GeoLocation';
-import { DBObject, getSchema, ModelName, Schema, Types } from '../@pyro/db';
+import {
+	DBObject,
+	getSchema,
+	ModelName,
+	Schema,
+	Types,
+	TenantId,
+	CompoundIndex,
+} from '../@pyro/db';
 import IUser, { IUserCreateObject } from '../interfaces/IUser';
 import { Entity, Column } from 'typeorm';
 
@@ -12,8 +20,22 @@ import { Entity, Column } from 'typeorm';
  * @implements {IUser}
  */
 @ModelName('User')
+@CompoundIndex(
+	{ tenantId: 1, email: 1 },
+	{ unique: true, partialFilterExpression: { email: { $type: 'string' } } },
+)
 @Entity({ name: 'users' })
 class User extends DBObject<IUser, IUserCreateObject> implements IUser {
+	/**
+	 * The tenant (business) that owns this record. Set by the API from the
+	 * tenant context; never taken from a client.
+	 *
+	 * @type {string}
+	 * @memberof User
+	 */
+	@TenantId()
+	tenantId: string;
+
 	constructor(user: IUser) {
 		super(user);
 
@@ -62,8 +84,6 @@ class User extends DBObject<IUser, IUserCreateObject> implements IUser {
 	@Schema({
 		type: String,
 		required: false,
-		sparse: true,
-		unique: true,
 	})
 	@Column()
 	email?: string;

@@ -14,7 +14,8 @@ ENV CI=true
 ENV HUSKY=0
 
 # Node 25+ no longer bundles corepack
-RUN npm i -g pnpm@12.23.0
+# pnpm runs without its own install scripts (lifecycle scripts stay off: Sonar S6505)
+RUN npm i -g --ignore-scripts pnpm@12.23.0
 
 WORKDIR /srv/ever
 
@@ -38,6 +39,10 @@ COPY packages/carrier-mobile-ionic packages/carrier-mobile-ionic
 # Settings for scripts/configure.ts (all optional; see packages/carrier-mobile-ionic/.env.template).
 # They end up in the browser bundle, so never pass secrets here.
 ARG GQL_ENDPOINT
+# Multi-tenant: a white-label build for one tenant (slug or id), and the parent domain
+# of <slug>.<TENANT_BASE_DOMAIN> hosts (docs/multi-tenant/DESIGN.md §3.3); both optional.
+ARG TENANT
+ARG TENANT_BASE_DOMAIN
 ARG GQL_SUBSCRIPTIONS_ENDPOINT
 ARG SERVICES_ENDPOINT
 ARG HTTPS_SERVICES_ENDPOINT
@@ -67,10 +72,12 @@ FROM nginx:alpine AS production
 
 WORKDIR /srv/ever
 
-COPY --chown=nginx:nginx wait .deploy/carrier-mobile-ionic/entrypoint.compose.sh .deploy/carrier-mobile-ionic/entrypoint.prod.sh ./
-COPY --chown=nginx:nginx .deploy/carrier-mobile-ionic/nginx.compose.conf /etc/nginx/conf.d/compose.conf.template
-COPY --chown=nginx:nginx .deploy/carrier-mobile-ionic/nginx.prod.conf /etc/nginx/conf.d/prod.conf.template
-COPY --chown=nginx:nginx --from=build /srv/ever/packages/carrier-mobile-ionic/www .
+# Owned by root, read-only for the nginx workers: the entrypoint runs as root (it fills in
+# the runtime settings and writes /etc/nginx/nginx.conf), nothing else writes here (Sonar S6504).
+COPY wait .deploy/carrier-mobile-ionic/entrypoint.compose.sh .deploy/carrier-mobile-ionic/entrypoint.prod.sh ./
+COPY .deploy/carrier-mobile-ionic/nginx.compose.conf /etc/nginx/conf.d/compose.conf.template
+COPY .deploy/carrier-mobile-ionic/nginx.prod.conf /etc/nginx/conf.d/prod.conf.template
+COPY --from=build /srv/ever/packages/carrier-mobile-ionic/www .
 
 RUN apk add --no-cache dos2unix \
 	&& dos2unix entrypoint.compose.sh entrypoint.prod.sh \

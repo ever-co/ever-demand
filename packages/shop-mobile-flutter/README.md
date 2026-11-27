@@ -22,6 +22,13 @@ flutter run --dart-define=STRIPE_PUBLISHABLE_KEY=pk_test_...
 All settings are `--dart-define` values with the names of the Ionic app's `.env`; see
 `docs/latest-stack/shop-mobile-flutter.md` (configuration, architecture, parity checklist).
 
+Multi-tenant API (docs/multi-tenant/DESIGN.md §3.3): the app sends its tenant as `Tenant-Id`, in
+the graphql-ws `connectionParams` and in every socket handshake. A white-label build sets
+`--dart-define=TENANT=<slug or 24-hex id>`. The web build also finds it from a
+`<slug>.<TENANT_BASE_DOMAIN>` page host (`--dart-define=TENANT_BASE_DOMAIN=everdemand.co`) or a
+`?tenant=<slug>` link (kept for later visits). With none, the API decides (single-tenant installs
+use their default tenant). Code: `lib/config/tenant.dart`, `tenantProvider` in `lib/providers.dart`.
+
 ## Test and build without a local Flutter (Docker)
 
 ```sh

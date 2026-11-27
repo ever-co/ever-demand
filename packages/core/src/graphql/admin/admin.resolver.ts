@@ -8,14 +8,58 @@ import {
 import { ExtractJwt } from 'passport-jwt';
 import Admin from '@modules/server.common/entities/Admin';
 import { env } from '../../env';
+import { ForbiddenException } from '@nestjs/common';
+import { TenantContext } from '../../tenant/tenant-context';
+import { assertMayUseAdminEmail } from '../../services/admins/super-admin';
+
+/**
+ * An admin edits their own profile. Editing another admin of the tenant
+ * (name, email = login) is for owners and admins, and an owner or a
+ * super-admin is edited only by an owner or a super-admin.
+ */
+function assertMayEditAdmin(
+	target: { id: string; role?: string; isSuperAdmin?: boolean } | null,
+	self = false,
+) {
+	const actor = TenantContext.actor();
+
+	if (target == null || actor?.id === target.id) {
+		return;
+	}
+
+	if (self || !actor) {
+		throw new ForbiddenException('You can only change your own account');
+	}
+
+	if (actor.isSuperAdmin) {
+		return;
+	}
+
+	const protectedTarget =
+		target.role === 'owner' || target.isSuperAdmin === true;
+
+	if (
+		actor.tenantRole === 'owner' ||
+		(actor.tenantRole === 'admin' && !protectedTarget)
+	) {
+		return;
+	}
+
+	throw new ForbiddenException('You can only change your own account');
+}
 
 @Resolver('Admin')
 export class AdminResolver {
 	constructor(private readonly _adminsService: AdminsService) {}
 
+	// A super-admin switched into another tenant reads and edits their own
+	// account in their own tenant (TenantContext.runForOwnAccount).
+
 	@Query('admin')
 	async getAdmin(_, { id }: { id: string }): Promise<Admin> {
-		return this._adminsService.get(id).pipe(first()).toPromise();
+		return TenantContext.runForOwnAccount(id, () =>
+			this._adminsService.get(id).pipe(first()).toPromise(),
+		);
 	}
 
 	@Query('adminByEmail')
@@ -36,8 +80,19 @@ export class AdminResolver {
 		_,
 		{ id, updateInput }: { id: string; updateInput }
 	): Promise<Admin> {
-		await this._adminsService.throwIfNotExists(id);
-		return this._adminsService.update(id, updateInput);
+		return TenantContext.runForOwnAccount(id, async () => {
+			assertMayEditAdmin(await this._adminsService.getCurrent(id));
+			await this._adminsService.throwIfNotExists(id);
+
+			const input: any = { ...(updateInput ?? {}) };
+
+			if (typeof input.email === 'string') {
+				input.email = input.email.trim().toLowerCase();
+				assertMayUseAdminEmail(input.email, TenantContext.tenantId());
+			}
+
+			return this._adminsService.update(id, input);
+		});
 	}
 
 	@Mutation()
@@ -67,6 +122,10 @@ export class AdminResolver {
 			throw new Error('Admin password cannot be changed');
 		}
 
-		return this._adminsService.updatePassword(id, password);
+		return TenantContext.runForOwnAccount(id, async () => {
+			assertMayEditAdmin(await this._adminsService.getCurrent(id), true);
+
+			return this._adminsService.updatePassword(id, password);
+		});
 	}
 }

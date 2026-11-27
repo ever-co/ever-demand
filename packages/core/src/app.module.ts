@@ -38,6 +38,10 @@ import { PromotionModule } from './graphql/products/promotions/promotion.module'
 import { AppsSettingsModule } from './graphql/apps-settings/apps-settings.module';
 import { getTypeORMEntities, getTypeORMOptions } from './helpers/typeorm';
 import { createGraphQLContext } from './graphql/graphql-context';
+import { APP_GUARD } from '@nestjs/core';
+import { TenantsModule } from './graphql/tenants/tenants.module';
+import { BillingController } from './controllers/billing/billing.controller';
+import { GraphQLAccessGuard } from './graphql/access/graphql-access.guard';
 
 const port = env.GQLPORT;
 const host = env.API_HOST;
@@ -55,8 +59,13 @@ export const EventHandlers = [];
 const entities = getTypeORMEntities();
 
 @Module({
-	controllers: [TestController, HealthController],
-	providers: [...CommandHandlers, ...EventHandlers],
+	controllers: [TestController, HealthController, BillingController],
+	providers: [
+		...CommandHandlers,
+		...EventHandlers,
+		// default-deny access to every GraphQL operation (graphql/access)
+		{ provide: APP_GUARD, useClass: GraphQLAccessGuard },
+	],
 	imports: [
 		DataModule,
 		ServicesModule,
@@ -80,6 +89,8 @@ const entities = getTypeORMEntities();
 			// GraphiQL landing page at /graphql (Apollo Server 5 has no Playground)
 			graphiql: true,
 			context: createGraphQLContext,
+			// field resolvers go through the access guard too (GRAPHQL_FIELD_ACCESS)
+			fieldResolverEnhancers: ['guards'],
 		}),
 		// graphql-ws server (subscriptions) on its own port, GQLPORT_SUBSCRIPTIONS
 		SubscriptionsModule.forRoot(env.GQLPORT_SUBSCRIPTIONS),
@@ -101,6 +112,7 @@ const entities = getTypeORMEntities();
 		GeoLocationMerchantsModule,
 		CurrencyModule,
 		PromotionModule,
+		TenantsModule,
 	],
 })
 export class ApplicationModule implements NestModule {

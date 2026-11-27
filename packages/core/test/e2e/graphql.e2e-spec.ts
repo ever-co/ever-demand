@@ -1,4 +1,5 @@
 import {
+	ANONYMOUS,
 	addProductToWarehouse,
 	adminToken,
 	createProduct,
@@ -28,6 +29,16 @@ describe('GraphQL API', () => {
 			expect(data.adminLogin.token.split('.')).toHaveLength(3);
 		});
 
+		it('never makes the default admin (public password "admin") a platform super-admin', async () => {
+			const res = await gql(
+				`{ tenants { tenant { id } } }`,
+				{},
+				await adminToken(),
+			);
+
+			expect(res.errors?.[0].extensions?.code).toBe('FORBIDDEN');
+		});
+
 		it('refuses a wrong password', async () => {
 			const data = await gqlData(
 				`mutation { adminLogin(email: "admin@ever.co", password: "wrong") { token } }`
@@ -41,7 +52,9 @@ describe('GraphQL API', () => {
 			const query = `{ adminAuthenticated }`;
 
 			expect((await gqlData(query, {}, token)).adminAuthenticated).toBe(true);
-			expect((await gqlData(query)).adminAuthenticated).toBe(false);
+			expect(
+				(await gqlData(query, {}, ANONYMOUS)).adminAuthenticated,
+			).toBe(false);
 			expect((await gqlData(query, {}, 'not-a-jwt')).adminAuthenticated).toBe(false);
 		});
 
@@ -341,7 +354,7 @@ describe('GraphQL API', () => {
 
 		it('moves the order through the warehouse and carrier statuses', async () => {
 			// a carrier status needs a carrier: the carrier app selects the order
-			const pyro = new PyroClient();
+			const pyro = new PyroClient({ token: await adminToken() });
 			try {
 				await pyro.call('carrier-orders', 'selectedForDelivery', carrierId, [orderId]);
 			} finally {

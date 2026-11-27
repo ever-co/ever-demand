@@ -34,24 +34,36 @@ abstract interface class PyroSocket {
 
 /// [PyroSocket] on `socket_io_client`, one per namespace, with the Ionic
 /// client's manual reconnect: 1 s after a disconnect or a connect error.
+///
+/// [auth] gives the handshake `auth` (`{ tenant?, token? }`,
+/// docs/multi-tenant/DESIGN.md §3.3); it is read at every (re)connect.
 class SocketIoPyroSocket implements PyroSocket {
   SocketIoPyroSocket(
     String url, {
     this._reconnectDelay = const Duration(seconds: 1),
-  }) : _socket = io.io(
-          url,
-          io.OptionBuilder()
-              .setTransports(<String>['websocket'])
-              .disableReconnection()
-              .disableAutoConnect()
-              .build(),
-        ) {
+    Map<String, dynamic> Function()? auth,
+  }) : _socket = io.io(url, options(auth: auth)) {
     _socket
       ..onConnect((_) => _status(PyroConnectionStatus.connected))
       ..onDisconnect((_) => _status(PyroConnectionStatus.disconnected))
       ..onConnectError((_) => _status(PyroConnectionStatus.connectError));
     _socket.connect();
   }
+
+  /// socket.io options: websocket only, no automatic reconnect (done by
+  /// hand), no auto connect, and the handshake `auth` callback.
+  static Map<String, dynamic> options({
+    Map<String, dynamic> Function()? auth,
+  }) =>
+      io.OptionBuilder()
+          .setTransports(<String>['websocket'])
+          .disableReconnection()
+          .disableAutoConnect()
+          .setAuthFn(
+            (void Function(Map<dynamic, dynamic> auth) callback) =>
+                callback(auth?.call() ?? <String, dynamic>{}),
+          )
+          .build();
 
   final io.Socket _socket;
   final Duration _reconnectDelay;

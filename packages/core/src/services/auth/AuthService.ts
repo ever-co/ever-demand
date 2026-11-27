@@ -6,6 +6,20 @@ import bcrypt from 'bcrypt';
 import { injectable, ResolutionContext } from 'inversify';
 import { RawObject } from '@pyro/db/db-raw-object';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
+import { TenantContext } from '../../tenant/tenant-context';
+import { tenantDirectory } from '../../tenant/tenant-directory';
+import { loginThrottle } from './login-throttle';
+
+/**
+ * Logins whose username / email is unique across all tenants: the tenant
+ * comes from the account (DESIGN.md §3.5). Customers ('user') log in inside
+ * the tenant of the shop.
+ */
+const GLOBAL_LOGIN_ROLES: ReadonlySet<string> = new Set([
+	'admin',
+	'warehouse',
+	'carrier',
+]);
 
 interface IAuthableCreateObject extends DBCreateObject {
 	hash?: string;
@@ -15,17 +29,35 @@ interface IAuthableRawObject extends DBRawObject, IAuthableCreateObject {
 	_id: PyroObjectId;
 
 	hash?: string;
+
+	tenantId?: string;
 }
 
 interface IAuthable
 	extends DBObject<IAuthableRawObject, IAuthableCreateObject> {
 	hash?: string;
+
+	tenantId?: string;
 }
 
 interface AuthServiceConfig<T extends IAuthable> {
 	role: string;
 	Entity: any; // AuthService<T>['DBObject'];
 	saltRounds: number;
+}
+
+/** A login filter of exact string values, e.g. `{ username: 'acme' }` (never an operator object). */
+export function isExactLoginFilter(findObj: unknown): findObj is Record<string, string> {
+	if (findObj == null || typeof findObj !== 'object' || Array.isArray(findObj)) {
+		return false;
+	}
+
+	const entries = Object.entries(findObj);
+
+	return (
+		entries.length > 0 &&
+		entries.every(([key, value]) => !key.startsWith('$') && typeof value === 'string' && value !== '')
+	);
 }
 
 @injectable()
@@ -87,16 +119,68 @@ export class AuthService<T extends IAuthable> extends EntityService<T> {
 		findObj: any,
 		password: string
 	): Promise<{ entity: T; token: string } | null> {
+		// exact strings only: a socket client could send { $regex } or { $ne } and
+		// test a password against accounts it does not know the name of
+		if (!isExactLoginFilter(findObj) || typeof password !== 'string') {
+			return null;
+		}
+
+		const isGlobal = GLOBAL_LOGIN_ROLES.has(this.role);
+		const requestTenantId = TenantContext.tenantId();
+		// per client address, so nobody can lock others out of a login, and per
+		// tenant for the logins that are per tenant (customers)
+		const throttleKey = [
+			this.role,
+			isGlobal ? '' : (requestTenantId ?? ''),
+			TenantContext.current()?.clientIp ?? '',
+			Object.values(findObj).join(':').toLowerCase(),
+		].join('|');
+
+		if (loginThrottle.isBlocked(throttleKey)) {
+			return null;
+		}
+
+		const find = () =>
+			this.Model.findOne(findObj).select('+hash').lean().exec();
+
+		// a request that names its tenant looks only there; the apps on the shared
+		// host (no tenant) find the login across tenants (usernames are unique)
 		const entity = this.parse(
-			await this.Model.findOne(findObj).select('+hash').lean().exec()
+			isGlobal && requestTenantId == null
+				? await TenantContext.runAsSystem(
+						`${this.role} login by a username unique across tenants`,
+						find,
+					)
+				: await find(),
 		);
 
 		if (!entity || !(await bcrypt.compare(password, entity.hash))) {
+			loginThrottle.fail(throttleKey);
+			return null;
+		}
+
+		loginThrottle.reset(throttleKey);
+
+		const tenantId =
+			entity.tenantId ?? tenantDirectory.getDefaultTenantId();
+
+		// on a tenant's host (or with its Tenant-Id), only that tenant's logins work
+		if (
+			isGlobal &&
+			requestTenantId != null &&
+			tenantId !== requestTenantId
+		) {
+			return null;
+		}
+
+		const tenant = tenantId ? await tenantDirectory.byId(tenantId) : null;
+
+		if (!tenant || tenant.status !== 'active') {
 			return null;
 		}
 
 		const token = jwt.sign(
-			{ id: entity.id, role: this.role },
+			{ id: entity.id, role: this.role, tenantId },
 			env.JWT_SECRET,
 			{}
 		); // Never expires
@@ -138,6 +222,10 @@ export class AuthService<T extends IAuthable> extends EntityService<T> {
 				return null;
 			}
 
+			if (!this.isTokenOfCurrentTenant(payload, role)) {
+				return null;
+			}
+
 			return payload.id;
 		} catch (err) {
 			if (err instanceof JsonWebTokenError) {
@@ -149,30 +237,60 @@ export class AuthService<T extends IAuthable> extends EntityService<T> {
 	}
 
 	/**
+	 * Whether a token payload belongs to the tenant the request runs in.
+	 * Tokens issued before tenants existed carry no tenantId: they belong to
+	 * the default tenant. A super-admin acting in another tenant (Tenant-Id
+	 * header) may use their own admin token there.
+	 */
+	private isTokenOfCurrentTenant(
+		payload: { id?: unknown; tenantId?: unknown },
+		role: string
+	): boolean {
+		if (TenantContext.isSystem()) {
+			return true;
+		}
+
+		const current = TenantContext.tenantId();
+
+		if (current == null) {
+			return false;
+		}
+
+		const tokenTenantId =
+			typeof payload.tenantId === 'string' && payload.tenantId !== ''
+				? payload.tenantId
+				: tenantDirectory.getDefaultTenantId();
+
+		if (tokenTenantId === current) {
+			return true;
+		}
+
+		const actor = TenantContext.actor();
+
+		return (
+			role === 'admin' &&
+			actor?.isSuperAdmin === true &&
+			actor.id === payload.id
+		);
+	}
+
+	/**
 	 * @param {string} token - the jwt token
 	 * @returns {Promise<boolean>}
 	 */
 	async isAuthenticated(token: string): Promise<boolean> {
-		try {
-			const { id, role } = jwt.verify(token, env.JWT_SECRET) as {
-				id: T['id'];
-				role: string;
-			};
+		const id = this.getVerifiedId(token);
 
-			const entity = await this.Model.findById(id).lean().exec();
-
-			if (!entity) {
-				return false;
-			}
-
-			return role === this.role;
-		} catch (err) {
-			if (err instanceof JsonWebTokenError) {
-				return false;
-			} else {
-				throw err;
-			}
+		if (id == null) {
+			return false;
 		}
+
+		// a super-admin switched into another tenant: the account is in their own
+		const entity = await TenantContext.runForOwnAccount(id, () =>
+			this.Model.findById(id).lean().exec(),
+		);
+
+		return entity != null;
 	}
 }
 

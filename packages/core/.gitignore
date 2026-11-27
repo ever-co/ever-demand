@@ -22,6 +22,7 @@ tmp/
 # Testing
 !jest.config.js
 !jest.e2e.config.js
+!jest.e2e-mt.config.js
 !test/e2e/sequencer.js
 !src/test/setup.js
 

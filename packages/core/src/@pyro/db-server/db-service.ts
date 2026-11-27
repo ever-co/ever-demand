@@ -13,6 +13,13 @@ import { CreateObject } from '@pyro/db/db-create-object';
 import { FindObject } from '@pyro/db/db-find-object';
 import { UpdateObject } from '@pyro/db/db-update-object';
 import { EntityService } from '@pyro/db-server/entity-service';
+import { TenantContext } from '../../tenant/tenant-context';
+import {
+	existenceEventTenantId,
+	TenantScopedSubject,
+} from '../../tenant/tenant-scoped-subject';
+import { isTenantSchema } from '../../tenant/tenant-plugin';
+import { forgetCachedAccount } from '../../tenant/account-cache';
 
 /**
  * Returns `obj` without the property at `path`. Copies only the objects on
@@ -62,7 +69,47 @@ export abstract class DBService<T extends DBObject<any, any>>
 
 	constructor() {
 		super();
-		this.existence = new Subject<ExistenceEvent<T>>();
+		// Shared by every tenant: subscribers only get their own tenant's
+		// records and run in their own tenant context (see TenantScopedSubject).
+		this.existence = new TenantScopedSubject<ExistenceEvent<T>>(
+			existenceEventTenantId
+		);
+	}
+
+	/** Whether this service's records belong to tenants (have `tenantId`). */
+	protected get isTenantScoped(): boolean {
+		const schema = this.Model?.schema;
+		return schema != null && isTenantSchema(schema);
+	}
+
+	/**
+	 * `conditions` limited to the current tenant. The tenant plugin adds the
+	 * same filter to every query; it is written out here too, so reading a
+	 * service shows that it is tenant-scoped. Throws without a tenant.
+	 */
+	protected tenantScoped<C extends object>(conditions: C | null | undefined): C {
+		const base = (conditions ?? {}) as C;
+
+		if (!this.isTenantScoped || TenantContext.isSystem()) {
+			return base;
+		}
+
+		return {
+			...base,
+			tenantId: TenantContext.requireTenantId(this.DBObject?.modelName),
+		};
+	}
+
+	/** A create object stamped with the current tenant (system work keeps its own). */
+	protected withTenant<C extends object>(createObject: C): C {
+		if (!this.isTenantScoped || TenantContext.isSystem()) {
+			return createObject;
+		}
+
+		return {
+			...createObject,
+			tenantId: TenantContext.requireTenantId(this.DBObject?.modelName),
+		};
 	}
 
 	get(id: T['id']): Observable<T | null> {
@@ -108,7 +155,11 @@ export abstract class DBService<T extends DBObject<any, any>>
 
 		this.log.info({ objectId: id, callId }, '.getCurrent(id) called');
 
-		const obj = await this.Model.findById(id).lean().exec();
+		const obj = await this.Model.findOne(
+			this.tenantScoped({ _id: this.getObjectId(id) }),
+		)
+			.lean()
+			.exec();
 
 		return this.parse(obj as RawObject<T>);
 	}
@@ -151,11 +202,13 @@ export abstract class DBService<T extends DBObject<any, any>>
 			'.getCurrentMultiple(ids) called'
 		);
 
-		const objs = await this.Model.find({
-			_id: {
-				$in: _.map(ids, (id) => this.getObjectId(id)),
-			},
-		})
+		const objs = await this.Model.find(
+			this.tenantScoped({
+				_id: {
+					$in: _.map(ids, (id) => this.getObjectId(id)),
+				},
+			}),
+		)
 			.lean()
 			.exec();
 
@@ -175,7 +228,11 @@ export abstract class DBService<T extends DBObject<any, any>>
 		let object;
 
 		try {
-			const document = await this.Model.create(createObject);
+			await this.beforeCreate(createObject);
+
+			const document = await this.Model.create(
+				this.withTenant(createObject),
+			);
 
 			object = this.parse(
 				this.omitHiddenFields(document.toObject()) as RawObject<T>
@@ -201,6 +258,14 @@ export abstract class DBService<T extends DBObject<any, any>>
 		);
 
 		return object;
+	}
+
+	/**
+	 * Runs before every `create` (also `super.create` of a subclass); throw to
+	 * refuse it. Services override it, e.g. for plan limits.
+	 */
+	protected async beforeCreate(_createObject: CreateObject<T>): Promise<void> {
+		// nothing by default: services override it
 	}
 
 	/**
@@ -266,7 +331,9 @@ export abstract class DBService<T extends DBObject<any, any>>
 		this.log.info({ callId }, '.removeAll() called!');
 
 		try {
-			await this.Model.deleteMany({}).exec();
+			await this.Model.deleteMany(this.tenantScoped({})).exec();
+			// a removed login loses its access now (tenant/account-cache.ts)
+			forgetCachedAccount();
 		} catch (err) {
 			this.log.error({ callId, err }, '.removeAll() thrown error!');
 			throw err;
@@ -291,11 +358,14 @@ export abstract class DBService<T extends DBObject<any, any>>
 		let lastValue: T | null;
 
 		try {
-			const lastValueRaw = (await this.Model.findByIdAndDelete(objectId)
+			const lastValueRaw = (await this.Model.findOneAndDelete(
+				this.tenantScoped({ _id: this.getObjectId(objectId) }),
+			)
 				.lean()
 				.exec()) as RawObject<T>;
 
 			lastValue = this.parse(lastValueRaw);
+			forgetCachedAccount(String(objectId));
 		} catch (err) {
 			this.log.error(
 				{ callId, objectId, err },
@@ -342,9 +412,12 @@ export abstract class DBService<T extends DBObject<any, any>>
 		try {
 			lastValues = await this.find(conditions);
 
-			await this.Model.deleteMany({
-				_id: { $in: lastValues.map((o) => this.getObjectId(o.id)) },
-			}).exec();
+			await this.Model.deleteMany(
+				this.tenantScoped({
+					_id: { $in: lastValues.map((o) => this.getObjectId(o.id)) },
+				}),
+			).exec();
+			lastValues.forEach((o) => forgetCachedAccount(String(o.id)));
 		} catch (err) {
 			this.log.error(
 				{ callId, conditions, err },
@@ -381,11 +454,12 @@ export abstract class DBService<T extends DBObject<any, any>>
 	 */
 	async removeMultipleByIds(ids: T['id'][]): Promise<void> {
 		await this.Model.updateMany(
-			{
+			this.tenantScoped({
 				_id: { $in: ids.map((id) => this.getObjectId(id)) },
-			},
+			}),
 			{ isDeleted: true }
 		).exec();
+		ids.forEach((id) => forgetCachedAccount(String(id)));
 	}
 
 	async find(conditions: FindObject<RawObject<T>>): Promise<T[]> {
@@ -397,7 +471,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 
 		try {
 			const documents = (await this.Model.find(
-				conditions == null ? {} : conditions
+				this.tenantScoped(conditions),
 			)
 				.lean()
 				.exec()) as RawObject<T>[];
@@ -427,7 +501,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 		let result: T;
 
 		try {
-			const obj = (await this.Model.findOne(conditions)
+			const obj = (await this.Model.findOne(this.tenantScoped(conditions))
 				.lean()
 				.exec()) as RawObject<T>;
 
@@ -463,8 +537,8 @@ export abstract class DBService<T extends DBObject<any, any>>
 			beforeUpdateObject = await this.getCurrent(objectId);
 
 			if (beforeUpdateObject != null) {
-				const obj = (await this.Model.findByIdAndUpdate(
-					objectId,
+				const obj = (await this.Model.findOneAndUpdate(
+					this.tenantScoped({ _id: this.getObjectId(objectId) }),
 					updateObj as any,
 					{ new: true }
 				)
@@ -522,7 +596,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 		try {
 			lastValues = await this.find(findObj);
 
-			const result = await this.Model.updateMany(findObj, updateObj, {
+			const result = await this.Model.updateMany(this.tenantScoped(findObj), updateObj, {
 				new: true,
 			}).exec();
 
@@ -687,7 +761,9 @@ export abstract class DBService<T extends DBObject<any, any>>
 		let count: number;
 
 		try {
-			count = (await this.Model.countDocuments(findObj).exec()) as number;
+			count = (await this.Model.countDocuments(
+				this.tenantScoped(findObj),
+			).exec()) as number;
 		} catch (err) {
 			this.log.error(
 				{ callId, findObj, err },
@@ -709,6 +785,9 @@ export abstract class DBService<T extends DBObject<any, any>>
 	 * @param selectFields Example { field: 1 } = true, { field: 0 } = false.
 	 */
 	async findAll(selectFields: any = {}) {
-		return this.Model.find({}).select(selectFields).lean().exec();
+		return this.Model.find(this.tenantScoped({}))
+			.select(selectFields)
+			.lean()
+			.exec();
 	}
 }

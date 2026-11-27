@@ -11,6 +11,11 @@ import { SetContextLink } from '@apollo/client/link/context';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { OperationTypeNode } from 'graphql';
 import { createClient } from 'graphql-ws';
+import {
+	ClientTenantConfig,
+	subscriptionConnectionParams,
+	tenantHeadersBeforeLogin,
+} from '@modules/client.common.angular2/lib/tenant';
 import { environment } from '../environments/environment';
 
 // Apollo Client 4 types the results by the default error policies, so they are declared here.
@@ -37,6 +42,23 @@ function authorization(): string {
 }
 
 /**
+ * Tenant settings of this build (docs/multi-tenant/DESIGN.md §3.3): a white-label
+ * `TENANT`, else the `<slug>` of a `<slug>.<TENANT_BASE_DOMAIN>` page host, else a
+ * `?tenant=` link or the tenant kept from an earlier visit. Read at each request.
+ */
+export function appTenantConfig(): ClientTenantConfig {
+	return {
+		buildTenant: environment.TENANT,
+		baseDomain: environment.TENANT_BASE_DOMAIN,
+	};
+}
+
+/** graphql-ws `connectionParams`, read at each (re)connect: the tenant only before login. */
+export function subscriptionParams(): Record<string, string> {
+	return subscriptionConnectionParams(appTenantConfig());
+}
+
+/**
  * Apollo Client 4 options: HTTP for queries and mutations, graphql-ws for subscriptions
  * (`subscriptions-transport-ws` is dead). The WebSocket only opens when a subscription runs.
  */
@@ -46,6 +68,8 @@ export function createApolloOptions(httpLink: HttpLink): ApolloClient.Options {
 	const auth = new SetContextLink((prevContext) => ({
 		headers: {
 			...prevContext.headers,
+			// the tenant only before login (the login token carries it)
+			...tenantHeadersBeforeLogin(appTenantConfig()),
 			authorization: authorization(),
 		},
 	}));
@@ -54,7 +78,7 @@ export function createApolloOptions(httpLink: HttpLink): ApolloClient.Options {
 		createClient({
 			url: environment.GQL_SUBSCRIPTIONS_ENDPOINT,
 			lazy: true,
-			connectionParams: () => ({ authorization: authorization() }),
+			connectionParams: subscriptionParams,
 		}),
 	);
 

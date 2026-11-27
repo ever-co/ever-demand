@@ -9,7 +9,7 @@ export class PromotionResolver {
 
 	@Query('promotions')
 	async getPromotions(_context, { findInput }) {
-		return this._promotionService.getAllPromotions(findInput);
+		return this._promotionService.getAllPromotions(findInput ?? {});
 	}
 
 	@Mutation('createPromotion')

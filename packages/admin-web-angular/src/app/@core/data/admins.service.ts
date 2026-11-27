@@ -5,6 +5,7 @@ import Admin from '@modules/server.common/entities/Admin';
 import { map, share } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { IAdminUpdateObject } from '@modules/server.common/interfaces/IAdmin';
+import { OWN_TENANT_CONTEXT } from '@app/graphql/graphql.providers';
 
 @Injectable()
 export class AdminsService {
@@ -22,11 +23,16 @@ export class AdminsService {
 							pictureUrl
 							firstName
 							lastName
+							role
+							isSuperAdmin
+							tenantId
 						}
 					}
 				`,
 				variables: { id },
 				pollInterval: 2000,
+				// the logged-in admin's own record, also while a super-admin acts in another tenant
+				context: OWN_TENANT_CONTEXT,
 			})
 			.valueChanges.pipe(completeData(), 
 				map((res) => res.data['admin']),
@@ -48,6 +54,7 @@ export class AdminsService {
 				}
 			`,
 			variables: { id, password },
+			context: OWN_TENANT_CONTEXT,
 		});
 	}
 
@@ -73,6 +80,7 @@ export class AdminsService {
 					id,
 					updateInput,
 				},
+				context: OWN_TENANT_CONTEXT,
 			})
 			.pipe(
 				map((result: any) => result.data.updateAdmin),

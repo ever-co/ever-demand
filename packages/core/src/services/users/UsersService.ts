@@ -27,6 +27,7 @@ import IGeoLocation, {
 import { DevicesService } from '../devices';
 import IService from '../IService';
 import { stripProtectedFields } from '../stripProtectedFields';
+import { forgetCachedAccount } from '../../tenant/tenant-resolver';
 import { v1 as uuid } from 'uuid';
 import {
 	distinctUntilChanged,
@@ -46,6 +47,7 @@ import { WarehousesService } from '../../services/warehouses';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 import Stripe from 'stripe';
 import { createStripeClient } from '../../helpers/stripe';
+import { assertCardPaymentsAvailable } from '../../tenant/card-payments';
 import * as path from 'path';
 
 interface IWatchedFiles {
@@ -88,7 +90,10 @@ export class UsersService
 
 	// Created on first use: Stripe refuses an empty key, and the API must
 	// still start without STRIPE_SECRET_KEY (card payments then fail).
+	// Only the platform tenant takes card payments on the platform's Stripe
+	// account (tenant/card-payments.ts).
 	private get stripe(): Stripe {
+		assertCardPaymentsAvailable();
 		this._stripe ??= createStripeClient(env.STRIPE_SECRET_KEY);
 		return this._stripe;
 	}
@@ -336,6 +341,7 @@ export class UsersService
 	 */
 	@asyncListener()
 	async addPaymentMethod(userId: string, tokenId: string): Promise<string> {
+		assertCardPaymentsAvailable();
 		await this.throwIfNotExists(userId);
 
 		const callId = uuid();
@@ -561,12 +567,16 @@ export class UsersService
 
 	async banUser(id: string): Promise<User> {
 		await this.throwIfNotExists(id);
-		return this.update(id, { isBanned: true });
+		const user = await this.update(id, { isBanned: true });
+		forgetCachedAccount(id);
+		return user;
 	}
 
 	async unbanUser(id: string): Promise<User> {
 		await this.throwIfNotExists(id);
-		return this.update(id, { isBanned: false });
+		const user = await this.update(id, { isBanned: false });
+		forgetCachedAccount(id);
+		return user;
 	}
 
 	/**

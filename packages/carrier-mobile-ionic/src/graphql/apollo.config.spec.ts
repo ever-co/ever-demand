@@ -1,9 +1,24 @@
 import { ApolloClient, ApolloLink, gql } from '@apollo/client';
 import { of } from 'rxjs';
-import { createApolloOptions } from './apollo.config';
+import { environment } from '../environments/environment';
+import { createApolloOptions, subscriptionParams } from './apollo.config';
 
 describe('createApolloOptions', () => {
-	afterEach(() => localStorage.clear());
+	const buildEnv = {
+		TENANT: environment.TENANT,
+		TENANT_BASE_DOMAIN: environment.TENANT_BASE_DOMAIN,
+	};
+
+	beforeEach(() => {
+		environment.TENANT = '';
+		environment.TENANT_BASE_DOMAIN = '';
+	});
+
+	afterEach(() => {
+		Object.assign(environment, buildEnv);
+		vi.unstubAllGlobals();
+		localStorage.clear();
+	});
 
 	function clientWithFakeHttp() {
 		const seen: { uri?: string; headers?: Record<string, string> } = {};
@@ -37,6 +52,20 @@ describe('createApolloOptions', () => {
 		await client.query({ query: gql`query Ping { ping }` });
 
 		expect(seen.headers.authorization).toBe('');
+	});
+
+	// The tenant rules (common-angular tenantBeforeLogin) are tested in the merchant app's
+	// apollo.config.spec.ts; here only that the carrier app sends them.
+	it('names the tenant before login only, in requests and graphql-ws params', async () => {
+		environment.TENANT = 'acme';
+		const { client, seen } = clientWithFakeHttp();
+
+		await client.query({ query: gql`query Ping { ping }` });
+		expect(seen.headers).toEqual({ 'Tenant-Id': 'acme', authorization: '' });
+		expect(subscriptionParams()).toEqual({ authorization: '', tenant: 'acme' });
+
+		localStorage.setItem('token', 'jwt-1');
+		expect(subscriptionParams()).toEqual({ authorization: 'Bearer jwt-1' });
 	});
 
 	it('keeps the Apollo 3 defaults: network-only, no loading emissions on polls', () => {

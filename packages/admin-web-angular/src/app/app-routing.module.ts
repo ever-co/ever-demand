@@ -4,7 +4,6 @@ import {
 	NbAuthComponent,
 	NbLoginComponent,
 	NbLogoutComponent,
-	NbRegisterComponent,
 	NbRequestPasswordComponent,
 	NbResetPasswordComponent,
 } from '@nebular/auth';
@@ -33,8 +32,19 @@ const routes: Routes = [
 				component: NbLoginComponent,
 			},
 			{
+				// a new business (tenant) and its owner, DESIGN.md §6
+				path: 'signup',
+				loadChildren: () =>
+					import('app/pages/+signup/signup.module').then(
+						(m) => m.SignupModule
+					),
+			},
+			{
+				// the login page's "Register" link: admins of an existing business are
+				// added by its owner (Settings → Members), so registering means a signup
 				path: 'register',
-				component: NbRegisterComponent,
+				redirectTo: 'signup',
+				pathMatch: 'full',
 			},
 			{
 				path: 'logout',

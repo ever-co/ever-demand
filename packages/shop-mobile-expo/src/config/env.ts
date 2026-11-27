@@ -47,6 +47,10 @@ export interface Environment {
 	SETTINGS_MAINTENANCE_API_URL: string;
 	MERCHANT_IDS: string[];
 	SHOPPING_CART: boolean;
+	/** White-label build: this shop's tenant (slug or 24-hex id); '' = resolve it (config/tenant.ts). */
+	TENANT: string;
+	/** Parent domain of tenant hosts (`<slug>.everdemand.co` on the web build); '' = not used. */
+	TENANT_BASE_DOMAIN: string;
 }
 
 const str = (value: string | undefined, fallback: string): string =>
@@ -131,6 +135,8 @@ export function loadEnvironment(): Environment {
 		SETTINGS_MAINTENANCE_API_URL: str(process.env.EXPO_PUBLIC_SETTINGS_MAINTENANCE_API_URL, ''),
 		MERCHANT_IDS: list(process.env.EXPO_PUBLIC_MERCHANT_IDS),
 		SHOPPING_CART: bool(process.env.EXPO_PUBLIC_SHOPPING_CART, false),
+		TENANT: str(process.env.EXPO_PUBLIC_TENANT, '').trim(),
+		TENANT_BASE_DOMAIN: str(process.env.EXPO_PUBLIC_TENANT_BASE_DOMAIN, '').trim(),
 	};
 }
 

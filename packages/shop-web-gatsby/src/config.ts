@@ -22,6 +22,15 @@ export const config = {
 
 	/** Google Maps JS API key; without one the login page shows no map. */
 	googleMapsApiKey: process.env.GATSBY_GOOGLE_MAPS_API_KEY || '',
+
+	/**
+	 * White-label build: this shop's tenant (slug or 24-hex id). Empty: the tenant
+	 * comes from the page host, a ?tenant= link or an earlier visit (utilities/tenant.ts).
+	 */
+	tenant: (process.env.GATSBY_TENANT || '').trim(),
+
+	/** Parent domain of tenant hosts (`<slug>.everdemand.co`); empty = not used. */
+	tenantBaseDomain: (process.env.GATSBY_TENANT_BASE_DOMAIN || '').trim(),
 };
 
 export type ShopConfig = typeof config;

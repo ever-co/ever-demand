@@ -1,9 +1,10 @@
+import { ITenantScoped } from './ITenant';
 import { ILocaleMember } from './ILocale';
 import Product from '../entities/Product';
 import { DBRawObject, PyroObjectId, DBCreateObject } from '@pyro/db';
 import IWarehouse from './IWarehouse';
 
-export interface IPromotionCreateObject extends DBCreateObject {
+export interface IPromotionCreateObject extends DBCreateObject, ITenantScoped {
 	/**
 	 * Promotion title locale
 	 *

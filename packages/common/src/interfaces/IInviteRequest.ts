@@ -1,3 +1,4 @@
+import { ITenantScoped } from './ITenant';
 import IGeoLocation, {
 	IGeoLocationCreateObject,
 	IGeolocationUpdateObject,
@@ -5,7 +6,8 @@ import IGeoLocation, {
 
 import { DBCreateObject, DBRawObject, PyroObjectId } from '../@pyro/db';
 
-export interface IInviteRequestCreateObject extends DBCreateObject {
+export interface IInviteRequestCreateObject
+	extends DBCreateObject, ITenantScoped {
 	apartment: string;
 	geoLocation: IGeoLocationCreateObject;
 	deviceId?: string;

@@ -1,4 +1,5 @@
 import Logger from 'bunyan';
+import { assertCanAdd } from '../../tenant/plan-limits';
 import * as _ from 'lodash';
 import { inject, injectable } from 'inversify';
 import { ProductsService } from '../products';
@@ -40,6 +41,11 @@ import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
 export class WarehousesService extends DBService<Warehouse>
 	implements IWarehouseRouter, IService {
 	public readonly DBObject: any = Warehouse;
+
+	/** New warehouses count against the tenant's plan (stores, tenant/plan-limits.ts). */
+	protected async beforeCreate(): Promise<void> {
+		await assertCanAdd('store');
+	}
 
 	protected log: Logger = createEverLogger({ name: 'warehousesService' });
 
@@ -166,7 +172,8 @@ export class WarehousesService extends DBService<Warehouse>
 	@asyncListener()
 	async register(input: IWarehouseRegistrationInput) {
 		const warehouse = await super.create({
-			...input.warehouse,
+			// server-side fields are never taken from the caller
+			...(stripProtectedFields(input.warehouse, { create: true }) as typeof input.warehouse),
 			...(input.password
 				? {
 						hash: await this.authService.getPasswordHash(

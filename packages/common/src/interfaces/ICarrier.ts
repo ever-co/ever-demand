@@ -1,8 +1,9 @@
+import { ITenantScoped } from './ITenant';
 import IGeoLocation, { IGeoLocationCreateObject } from './IGeoLocation';
 import CarrierStatus from '../enums/CarrierStatus';
 import { DBCreateObject, DBRawObject, PyroObjectId } from '../@pyro/db';
 
-export interface ICarrierCreateObject extends DBCreateObject {
+export interface ICarrierCreateObject extends DBCreateObject, ITenantScoped {
 	firstName: string;
 	lastName: string;
 	email?: string;

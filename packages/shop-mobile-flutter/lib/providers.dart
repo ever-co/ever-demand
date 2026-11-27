@@ -1,14 +1,17 @@
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'config/app_config.dart';
+import 'config/tenant.dart';
 import 'core/languages.dart';
 import 'data/models/order.dart';
 import 'data/models/warehouse.dart';
 import 'data/network/graphql/graphql_service.dart';
 import 'data/network/http_services.dart';
 import 'data/network/pyro/pyro_router.dart';
+import 'data/network/pyro/pyro_socket.dart';
 import 'data/repositories/location_repository.dart';
 import 'data/repositories/merchants_repository.dart';
 import 'data/repositories/orders_repository.dart';
@@ -29,10 +32,47 @@ final Provider<AppStore> appStoreProvider = Provider<AppStore>(
   (Ref ref) => throw UnimplementedError('appStoreProvider is set in main()'),
 );
 
+/// The page URL on the web build (host and `?tenant=`); null on native.
+final Provider<Uri? Function()> pageLocationProvider =
+    Provider<Uri? Function()>((Ref ref) => () => kIsWeb ? Uri.base : null);
+
+/// The shop's tenant (config/tenant.dart): `--dart-define=TENANT`, else on
+/// the web build the `<slug>.<TENANT_BASE_DOMAIN>` host, a `?tenant=` link or
+/// the tenant kept from an earlier visit. Read for every request and every
+/// socket (re)connect; null = none sent (the API decides).
+final Provider<String? Function()> tenantProvider =
+    Provider<String? Function()>((Ref ref) {
+  final AppConfig config = ref.watch(appConfigProvider);
+  final AppStore store = ref.watch(appStoreProvider);
+  final Uri? Function() location = ref.watch(pageLocationProvider);
+  return () => resolveClientTenant(
+        buildTenant: config.tenant,
+        baseDomain: config.tenantBaseDomain,
+        location: location(),
+        kept: store.tenant,
+        keep: (String tenant) => store.tenant = tenant,
+      );
+});
+
+/// One socket.io socket per pyro namespace; every handshake sends the
+/// tenant (and the login token, when there is one).
+PyroSocket Function(String url) tenantSocketFactory(
+  String? Function() tenant,
+  String? Function() token,
+) =>
+    (String url) => SocketIoPyroSocket(
+          url,
+          auth: () => socketAuth(tenant(), token()),
+        );
+
 // Transport
 final Provider<PyroClient> pyroClientProvider = Provider<PyroClient>((Ref ref) {
-  final PyroClient client =
-      PyroClient(ref.watch(appConfigProvider).servicesEndpoint);
+  final AppStore store = ref.watch(appStoreProvider);
+  final PyroClient client = PyroClient(
+    ref.watch(appConfigProvider).servicesEndpoint,
+    socketFactory:
+        tenantSocketFactory(ref.watch(tenantProvider), () => store.token),
+  );
   ref.onDispose(client.dispose);
   return client;
 });
@@ -48,6 +88,7 @@ final Provider<GraphQLService> graphQLServiceProvider =
     httpEndpoint: config.gqlEndpoint,
     subscriptionsEndpoint: config.gqlSubscriptionsEndpoint,
     token: () => store.token,
+    tenant: ref.watch(tenantProvider),
   );
 });
 

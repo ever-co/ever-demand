@@ -24,6 +24,9 @@
 		[class.right]="position === 'normal'"
 		[class.left]="position === 'inverse'"
 	>
+		<nb-action *ngIf="isSuperAdmin" class="tenant-switcher">
+			<ea-tenant-switcher></ea-tenant-switcher>
+		</nb-action>
 		<nb-action
 			icon="settings-2-outline"
 			class="toggle-layout"

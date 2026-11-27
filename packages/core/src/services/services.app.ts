@@ -27,12 +27,20 @@ import { IWarehouseCreateObject } from '@modules/server.common/interfaces/IWareh
 import { getDummyImage } from '@modules/server.common/utils';
 import { ConfigService } from '../config/config.service';
 import { firstAdminPassword } from './admins/firstAdminPassword';
+import { syncSuperAdmin } from './admins/super-admin';
+import { stripProtectedFields } from './stripProtectedFields';
 import {
 	getTypeORMEntities,
 	initTypeORMDataSource,
 	isDbSsl,
 	writeDbCaCert,
 } from '../helpers/typeorm';
+import { runMigrations } from '../migrations/run-migrations';
+import { TenantContext } from '../tenant/tenant-context';
+import { tenantDirectory } from '../tenant/tenant-directory';
+import { tenantHttpMiddleware } from '../tenant/tenant-http.middleware';
+import { getModel as getTenantModel } from '@pyro/db-server/model';
+import Tenant from '@modules/server.common/entities/Tenant';
 
 require('dotenv').config({ quiet: true });
 
@@ -198,8 +206,30 @@ export class ServicesApp {
 
 		this.log.info({ db: this.db_server }, 'Connected to DB');
 
+		// Before the models compile (they create their indexes then): records
+		// without a tenant go to the default tenant, old unique indexes become
+		// per-tenant ones.
+		const { defaultTenantId } = await runMigrations(this.db, (message) => {
+			console.log(`Migration: ${message}`);
+			this.log.info(message);
+		});
+
+		tenantDirectory.setDefaultTenantId(defaultTenantId);
+
+		if (!env.MULTI_TENANT) {
+			// single-tenant install: whatever runs without a tenant runs in the default one
+			TenantContext.setFallbackTenantId(defaultTenantId);
+		}
+
+		console.log(
+			`Tenancy: ${env.MULTI_TENANT ? 'multi-tenant' : 'single-tenant'}, default tenant ${defaultTenantId}`,
+		);
+
 		await this._registerModels();
-		await this._registerEntityAdministrator();
+		await TenantContext.runInTenant(defaultTenantId, () =>
+			this._registerEntityAdministrator(defaultTenantId),
+		);
+		await syncSuperAdmin(this.log);
 		this._passportSetup();
 		await this._startExpress();
 		await this._startSocketIO();
@@ -224,13 +254,18 @@ export class ServicesApp {
 	 * @private
 	 * @memberof ServicesApp
 	 */
-	private async _registerEntityAdministrator() {
+	private async _registerEntityAdministrator(defaultTenantId: string) {
 		const adminEmail = env.ADMIN_EMAIL;
 		const adminPassword = firstAdminPassword(env, process.env.DEMO === 'true');
 
-		const adminCollectionCount = await this._adminsService.count({
-			email: adminEmail,
-		});
+		// admin emails are unique across tenants
+		const adminCollectionCount = await TenantContext.runAsSystem(
+			'is the first admin email taken in any tenant',
+			() =>
+				this._adminsService.count({
+					email: adminEmail,
+				})
+		);
 
 		if (adminCollectionCount === 0) {
 			if (!adminPassword) {
@@ -239,15 +274,28 @@ export class ServicesApp {
 				);
 				return;
 			}
-			this._adminsService.register({
-				admin: {
-					email: adminEmail,
-					name: 'Admin',
-					hash: null,
-					pictureUrl: getDummyImage(300, 300, 'A'),
+			// owner of the default tenant; platform super-admin only by
+			// SUPER_ADMIN_EMAIL (syncSuperAdmin), never by being the first admin
+			const admin = await this._adminsService.register(
+				{
+					admin: {
+						email: adminEmail,
+						name: 'Admin',
+						hash: null,
+						pictureUrl: getDummyImage(300, 300, 'A'),
+					},
+					password: adminPassword,
 				},
-				password: adminPassword,
-			});
+				{ role: 'owner', isSuperAdmin: false },
+			);
+
+			await (getTenantModel(Tenant) as any)
+				.updateOne(
+					{ _id: defaultTenantId, ownerId: { $exists: false } },
+					{ $set: { ownerId: admin.id } },
+				)
+				.exec();
+			tenantDirectory.invalidate({ id: defaultTenantId });
 		}
 	}
 
@@ -380,6 +428,8 @@ export class ServicesApp {
 		this.expressApp.use(morgan('dev'));
 		this.expressApp.use(passport.initialize());
 		this.expressApp.use(requestIp.mw());
+		// the routes below run in the tenant of the request
+		this.expressApp.use(tenantHttpMiddleware);
 
 		if (this.expressApp.get('environment') === 'development') {
 			const eh: any = errorhandler;
@@ -418,9 +468,24 @@ export class ServicesApp {
 
 		// TODO: why is this here? It should be in some Nest Controller
 		this.expressApp.post('/warehouse/create', async (req, res) => {
-			const warehouseCreateObject: IWarehouseCreateObject = JSON.parse(
-				req.body.warehouse
-			);
+			// creates a store in the tenant of the request: its admins only
+			const actor = TenantContext.actor();
+
+			if (actor?.role !== 'admin') {
+				res.status(401).json({ message: 'Log in as an admin' });
+				return;
+			}
+
+			if (!actor.isSuperAdmin && actor.tenantRole === 'staff') {
+				res.status(403).json({ message: 'Staff cannot add stores' });
+				return;
+			}
+
+			// server-side fields (hash, flags, tenant, id) never come from the request
+			const warehouseCreateObject = stripProtectedFields(
+				JSON.parse(req.body.warehouse),
+				{ create: true },
+			) as IWarehouseCreateObject;
 
 			const warehouse = await this.warehousesService.create(
 				warehouseCreateObject

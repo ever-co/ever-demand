@@ -11,6 +11,7 @@ import { INestApplication } from '@nestjs/common';
 // import { SentryService } from '@ntegral/nestjs-sentry';
 import { createSessionMiddleware } from './helpers/session-middleware';
 import helmet from 'helmet';
+import { tenantHttpMiddleware } from './tenant/tenant-http.middleware';
 
 const log: Logger = createEverLogger({ name: 'bootstrapNest' });
 
@@ -24,7 +25,17 @@ export async function bootstrapNest(): Promise<INestApplication> {
 	// app.useGlobalGuards(new AuthGuard(app.get(Reflector)));
 
 	// app.useLogger(app.get(SentryService));
-	app.use(json({ limit: '50mb' }));
+	app.use(
+		json({
+			limit: '50mb',
+			// the Stripe billing webhook verifies its signature on the raw body
+			verify: (req: any, _res, buf) => {
+				if (req.originalUrl?.startsWith('/api/billing/webhook')) {
+					req.rawBody = buf;
+				}
+			},
+		}),
+	);
 	app.use(urlencoded({ extended: true, limit: '50mb' }));
 
 	app.enableCors({
@@ -63,6 +74,18 @@ export async function bootstrapNest(): Promise<INestApplication> {
 			next
 		)
 	);
+	if (env.TRUST_PROXY) {
+		const trust = /^\d+$/.test(env.TRUST_PROXY)
+			? Number(env.TRUST_PROXY)
+			: env.TRUST_PROXY;
+		app.getHttpAdapter().getInstance().set('trust proxy', trust);
+	}
+
+	// Every request runs in the context of its tenant (login token, Tenant-Id
+	// header or tenant host). Mounted after the body parsers above, before
+	// GraphQL and the controllers.
+	app.use(tenantHttpMiddleware);
+
 	const globalPrefix = 'api';
 	app.setGlobalPrefix(globalPrefix);
 

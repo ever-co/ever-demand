@@ -43,6 +43,11 @@ import mongoose from 'mongoose';
 // existing queries match the same documents. Set before any schema is created.
 mongoose.set('strictQuery', true);
 
+// Every tenant-owned collection (schemas with `tenantId`) is filtered by the
+// current tenant: register the plugin before any model is compiled.
+import { tenantPlugin } from './tenant/tenant-plugin';
+mongoose.plugin(tenantPlugin);
+
 import { createEverLogger } from './helpers/Log';
 import { initTypeORMDataSource } from './helpers/typeorm';
 import { servicesContainer } from './services/inversify.config';

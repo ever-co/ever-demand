@@ -4,10 +4,18 @@
  */
 import { randomUUID } from 'node:crypto';
 import { io, Socket } from 'socket.io-client';
-import { gql, SERVICES_URL } from '../helpers';
+import { SERVICES_URL } from '../helpers';
 
 /** The NestJS app (REST under /api, GraphQL at /graphql): the origin of GQL_URL. */
-export { GQL_URL, SERVICES_URL, SUBSCRIPTIONS_URL, ADMIN, gql } from '../helpers';
+export {
+	GQL_URL,
+	SERVICES_URL,
+	SUBSCRIPTIONS_URL,
+	ADMIN,
+	gql,
+	adminToken,
+} from '../helpers';
+import { adminToken as defaultAdminToken, gql as rawGql } from '../helpers';
 
 export const unique = () => randomUUID().slice(0, 8);
 
@@ -23,13 +31,26 @@ export function geoLocation(coordinates: [number, number] = SOFIA) {
 	};
 }
 
-/** gql() that throws on GraphQL errors and returns `data`. */
+/** `gqlData` as the default admin (setup operations are admin-only). */
+export const AS_ADMIN = Symbol('the default admin');
+/** `gqlData` without a login. */
+export const ANONYMOUS = null;
+
+/** Who a `gqlData` call runs as: AS_ADMIN, ANONYMOUS or a login token. */
+export type Login = typeof AS_ADMIN | typeof ANONYMOUS | string;
+
+/**
+ * gql() that throws on GraphQL errors and returns `data`. Every call says who
+ * it runs as (`login`): there is no default login.
+ */
 export async function gqlData<T = any>(
 	query: string,
-	variables: Record<string, unknown> = {},
-	token?: string
+	variables: Record<string, unknown>,
+	login: Login,
 ): Promise<T> {
-	const res = await gql<T>(query, variables, token);
+	const bearer =
+		login === AS_ADMIN ? await defaultAdminToken() : (login ?? undefined);
+	const res = await rawGql<T>(query, variables, bearer);
 	if (res.errors?.length || res.data == null) {
 		throw new Error(`GraphQL failed: ${JSON.stringify(res.errors)}`);
 	}
@@ -40,10 +61,17 @@ export async function gqlData<T = any>(
 export class PyroClient {
 	private readonly sockets = new Map<string, Socket>();
 
+	/** `auth`: the handshake auth, e.g. `{ token }` for the merchant / carrier actions. */
+	constructor(private readonly auth: Record<string, string> = {}) {}
+
 	private async socket(router: string): Promise<Socket> {
 		let socket = this.sockets.get(router);
 		if (!socket) {
-			socket = io(`${SERVICES_URL}/${router}`, { reconnection: false, forceNew: true });
+			socket = io(`${SERVICES_URL}/${router}`, {
+				reconnection: false,
+				forceNew: true,
+				auth: this.auth,
+			});
 			this.sockets.set(router, socket);
 		}
 		if (!socket.connected) {
@@ -128,7 +156,8 @@ export async function createStoreWithProduct(count = 10, price = 1200, coordinat
 						isManufacturing: true,
 					},
 				},
-			}
+			},
+			AS_ADMIN,
 		)
 	).registerWarehouse;
 
@@ -141,7 +170,7 @@ export async function createStoreWithProduct(count = 10, price = 1200, coordinat
 					description: [{ locale: 'en-US', value: 'Margherita' }],
 					images: [{ locale: 'en-US', url: 'https://example.com/p.png', width: 300, height: 300, orientation: 1 }],
 				},
-			}
+			}, AS_ADMIN
 		)
 	).createProduct;
 
@@ -150,8 +179,20 @@ export async function createStoreWithProduct(count = 10, price = 1200, coordinat
 		{
 			w: store.id,
 			ps: [{ product: product.id, price, initialPrice: price + 300, count, isDeliveryRequired: true, isCarrierRequired: true, isManufacturing: true, isProductAvailable: true }],
-		}
+		}, AS_ADMIN
 	);
 
-	return { storeId: store.id as string, storeName: store.name as string, productId: product.id as string };
+	// the store's own login, for the merchant actions (socket handshake token)
+	const login = await gqlData(
+		`mutation L($u: String!) { warehouseLogin(username: $u, password: "store-password") { token } }`,
+		{ u: `e2e_store_${id}` },
+		ANONYMOUS,
+	);
+
+	return {
+		storeId: store.id as string,
+		storeName: store.name as string,
+		productId: product.id as string,
+		storeToken: login.warehouseLogin.token as string,
+	};
 }

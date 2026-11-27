@@ -1,8 +1,8 @@
 /**
  * GraphQL fixtures for the carrier and merchant e2e suites: they create a store, a customer,
- * a product, a carrier and an order through the public API (no admin token needed).
+ * a product, a carrier and an order through the API, as the default admin.
  */
-import { gql } from '../helpers';
+import { gql, adminToken } from '../helpers';
 
 /** The default location of the carrier app (DEFAULT_LATITUDE / DEFAULT_LONGITUDE). */
 export const SOFIA = { lat: 42.6459136, lng: 23.3932736 };
@@ -23,8 +23,9 @@ function geoLocation(lat = SOFIA.lat, lng = SOFIA.lng) {
 	};
 }
 
+/** Runs a fixture operation, as the default admin unless a token is given. */
 async function must<T>(query: string, variables: Record<string, unknown>, token?: string): Promise<T> {
-	const res = await gql<T>(query, variables, token);
+	const res = await gql<T>(query, variables, token ?? (await adminToken()));
 	if (res.errors?.length || !res.data) {
 		throw new Error(`GraphQL fixture failed: ${JSON.stringify(res.errors)}`);
 	}

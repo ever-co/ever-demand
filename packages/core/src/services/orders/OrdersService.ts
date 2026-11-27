@@ -40,6 +40,7 @@ import { ProductsService } from '../../services/products';
 import { Observable } from 'rxjs';
 import Stripe from 'stripe';
 import { createStripeClient } from '../../helpers/stripe';
+import { assertCardPaymentsAvailable } from '../../tenant/card-payments';
 import {
 	assertCarrierStatusTransition,
 	assertOrderCanBeCancelled,
@@ -93,7 +94,10 @@ export class OrdersService extends DBService<Order>
 
 	// Created on first use: Stripe refuses an empty key, and the API must
 	// still start without STRIPE_SECRET_KEY (card payments then fail).
+	// Only the platform tenant takes card payments on the platform's Stripe
+	// account (tenant/card-payments.ts).
 	private get stripe(): Stripe {
+		assertCardPaymentsAvailable();
 		this._stripe ??= createStripeClient(env.STRIPE_SECRET_KEY);
 		return this._stripe;
 	}
@@ -359,6 +363,7 @@ export class OrdersService extends DBService<Order>
 		cardId: string,
 		shownCurrency?: string
 	): Promise<Order> {
+		assertCardPaymentsAvailable();
 		await this._throwIfNotExists(orderId);
 
 		const callId = uuid();

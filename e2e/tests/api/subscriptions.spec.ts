@@ -1,6 +1,15 @@
 import { expect, test } from '@playwright/test';
 import { createClient } from 'graphql-ws';
-import { ADMIN, gqlData, PyroClient, SUBSCRIPTIONS_URL, unique } from './api-helpers';
+import {
+	ADMIN,
+	ANONYMOUS,
+	AS_ADMIN,
+	gqlData,
+	PyroClient,
+	SUBSCRIPTIONS_URL,
+	unique,
+	adminToken,
+} from './api-helpers';
 
 /**
  * graphql-ws at ws://<host>:2086/subscriptions: what GraphQLWsLink +
@@ -19,7 +28,8 @@ test.describe('GraphQL subscriptions (graphql-ws)', () => {
 	test('runs an operation and passes the connectionParams token as Authorization', async () => {
 		const { adminLogin } = await gqlData(
 			`mutation L($email: String!, $password: String!) { adminLogin(email: $email, password: $password) { token } }`,
-			ADMIN
+			ADMIN,
+			ANONYMOUS,
 		);
 
 		const authenticated = connect({ authorization: `Bearer ${adminLogin.token}` });
@@ -36,7 +46,8 @@ test.describe('GraphQL subscriptions (graphql-ws)', () => {
 
 	test('deviceCreated pushes the update of a device', async () => {
 		const pyro = new PyroClient();
-		const client = connect();
+		// deviceCreated is admin-only and limited to the admin's tenant
+		const client = connect({ authorization: `Bearer ${await adminToken()}` });
 
 		try {
 			const device = await pyro.call('device', 'create', {
@@ -66,7 +77,7 @@ test.describe('GraphQL subscriptions (graphql-ws)', () => {
 			const timer = setInterval(() => {
 				gqlData(`mutation U($id: String!) { updateDevice(id: $id, updateInput: { language: "he-IL" }) { id } }`, {
 					id: device._id,
-				}).catch(() => undefined);
+				}, AS_ADMIN).catch(() => undefined);
 			}, 300);
 
 			try {

@@ -8,6 +8,12 @@ import {
 import { AsyncListenerHandler } from '../../../@pyro/io/listener/handler/async';
 import { ObservableListenerHandler } from '../../../@pyro/io/listener/handler/observable';
 
+// this spec is about logging: every listener of its test router may be called
+jest.mock('../../../@pyro/io/access/socket-access', () => ({
+	...jest.requireActual('../../../@pyro/io/access/socket-access'),
+	SOCKET_ACCESS: new Proxy({}, { get: () => 'public' }),
+}));
+
 const TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6InUxIn0.c2lnbmF0dXJl';
 
 class TestRouter {}

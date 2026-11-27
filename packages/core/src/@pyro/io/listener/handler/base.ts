@@ -7,6 +7,23 @@ import { getListenerSerializer } from '../serialization';
 import * as _ from 'lodash';
 import getArgsNames from '@captemulation/get-parameter-names';
 import { Socket } from 'socket.io';
+import {
+	TenantContext,
+	TenantContextMissingError,
+} from '../../../../tenant/tenant-context';
+import {
+	hasSocketTenantInfo,
+	recheckSocketAccess,
+	socketTenantCtx,
+} from '../../../../tenant/tenant-socket';
+import type { TenantCtx } from '../../../../tenant/tenant-context';
+import { isAllowed } from '../../../../graphql/access/graphql-access';
+import { SOCKET_ACCESS, socketAccessKey } from '../../access/socket-access';
+
+/** A socket may not call this listener (SOCKET_ACCESS). */
+export class SocketAccessError extends Error {
+	readonly name = 'SocketAccessError';
+}
 
 const MASKED_VALUE = '***';
 
@@ -109,11 +126,76 @@ export abstract class BaseListenerHandler<T> implements IListenerHandler<T> {
 
 	handle(): void {
 		this._socket.on(this._listener.name, (...args: any[]) => {
-			this.handleRequest(args);
+			// what must be set up before the next socket event (see receivedCall)
+			const received = this.receivedCall(args);
+
+			// the call, and every stream it opens, runs in the socket's tenant
+			const run = (ctx: TenantCtx) =>
+				TenantContext.run(ctx, () => {
+					// handlers answer the client themselves, errors included
+					void this.handleRequest(args, received);
+				});
+
+			if (!hasSocketTenantInfo(this._socket)) {
+				run(socketTenantCtx(this._socket));
+				return;
+			}
+
+			// with the access the login and tenant give now: a socket whose
+			// access was revoked is disconnected instead (tenant-socket.ts)
+			recheckSocketAccess(this._socket).then(
+				(ctx) => {
+					if (ctx) {
+						run(ctx);
+					}
+				},
+				(err) => {
+					// the check itself failed (e.g. the database is down): keep the
+					// access of the connection; the next check applies any change
+					this._log.warn(
+						{ ...this.baseLogDetails, err },
+						'socket access re-check failed',
+					);
+					run(socketTenantCtx(this._socket));
+				},
+			);
 		});
 	}
 
-	abstract handleRequest(args: any[]): void;
+	abstract handleRequest(args: any[], received?: unknown): void | Promise<void>;
+
+	/**
+	 * Runs as the call arrives, before the access re-check: the client may send
+	 * follow-up events (an observable's `<callId>_subscribe`) right after the
+	 * call, so their listeners are set up here. Its result goes to handleRequest.
+	 */
+	protected receivedCall(_args: any[]): unknown {
+		return undefined;
+	}
+
+	/**
+	 * Why the socket (its tenant and handshake login) may not call this
+	 * listener, or null when it may. Default deny: see SOCKET_ACCESS.
+	 */
+	protected accessError(): Error | null {
+		const key = socketAccessKey(this.routerName, this._listener.name);
+		const access = SOCKET_ACCESS[key];
+		const ctx = TenantContext.capture();
+
+		if (isAllowed(access, ctx)) {
+			return null;
+		}
+
+		if (access !== undefined && access !== 'platform' && ctx?.tenantId == null) {
+			return new TenantContextMissingError(key);
+		}
+
+		if (access !== undefined && access !== 'public' && ctx?.actor == null) {
+			return new SocketAccessError(`Log in to use ${key}`);
+		}
+
+		return new SocketAccessError(`Not allowed: ${key}`);
+	}
 
 	protected baseLogDetails = {
 		socketId: this._socket.id,

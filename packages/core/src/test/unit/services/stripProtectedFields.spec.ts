@@ -62,4 +62,24 @@ describe('stripProtectedFields', () => {
 		expect(stripProtectedFields(undefined)).toEqual({});
 		expect(stripProtectedFields('hash' as any)).toEqual({});
 	});
+
+	it('on a create, also drops an id the caller chose', () => {
+		const input = {
+			_id: 'a'.repeat(24),
+			id: 'x',
+			name: 'Store',
+			tenantId: 'b',
+			isDeleted: true,
+		};
+
+		expect(stripProtectedFields(input, { create: true })).toEqual({
+			name: 'Store',
+		});
+		// updates keep the id (the record to update is named separately)
+		expect(stripProtectedFields(input)).toEqual({
+			_id: 'a'.repeat(24),
+			id: 'x',
+			name: 'Store',
+		});
+	});
 });

@@ -21,7 +21,7 @@ import { ServerConnectionService } from '@modules/client.common.angular2/service
 import { FileUploadModule } from 'ng2-file-upload';
 import { MenuModule } from '../components/menu/menu.module';
 import { environment } from '../environments/environment';
-import { GraphQLModule } from '../graphql/apollo.config';
+import { appTenantConfig, GraphQLModule } from '../graphql/apollo.config';
 import { Store } from '../services/store.service';
 import { UserMutationModule } from '../@shared/user/mutation/user-mutation.module';
 import { PagesModuleGuard } from '../pages/pages.module.guard';
@@ -46,6 +46,10 @@ import { AppComponent } from './app.component';
 		}),
 		CommonModule.forRoot({
 			apiUrl: environment.SERVICES_ENDPOINT,
+			// socket handshakes name the tenant and the store's login token
+			// (DESIGN.md §3.3); the login page re-handshakes after login / logout
+			tenant: appTenantConfig(),
+			tokenStorageKey: 'token',
 		}),
 		FileUploadModule,
 		UserMutationModule,

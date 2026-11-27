@@ -1,6 +1,12 @@
 import { Client, createClient } from 'graphql-ws';
 import WebSocket from 'ws';
-import { adminToken, gqlData, PyroClient, unique } from './helpers';
+import {
+	adminToken,
+	defaultAdminToken,
+	gqlData,
+	PyroClient,
+	unique,
+} from './helpers';
 import { SUBSCRIPTIONS_URL } from './server';
 
 /**
@@ -45,7 +51,8 @@ describe('GraphQL subscriptions over graphql-ws', () => {
 	});
 
 	it('acknowledges the connection and runs a query', async () => {
-		const client = connect();
+		// adminAppSettings is admin-only (graphql/access)
+		const client = connect({ authorization: `Bearer ${await defaultAdminToken()}` });
 
 		let acknowledged = false;
 		client.on('connected', () => {
@@ -82,7 +89,8 @@ describe('GraphQL subscriptions over graphql-ws', () => {
 			language: 'en-US',
 		});
 
-		const client = connect();
+		// deviceCreated is admin-only and limited to the admin's tenant
+		const client = connect({ authorization: `Bearer ${await defaultAdminToken()}` });
 		const events: any[] = [];
 
 		const received = new Promise<any>((resolve, reject) => {

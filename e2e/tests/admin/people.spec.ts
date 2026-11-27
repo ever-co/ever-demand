@@ -1,5 +1,11 @@
 import { expect, type Page, test } from '@playwright/test';
-import { createStoreWithProduct, geoLocation, gqlData, unique } from '../api/api-helpers';
+import {
+	AS_ADMIN,
+	createStoreWithProduct,
+	geoLocation,
+	gqlData,
+	unique,
+} from '../api/api-helpers';
 import { collectAppErrors, expectTable, login, requireApi, route } from './support';
 
 const rows = (page: Page) => page.locator('ng2-smart-table tbody tr');
@@ -40,7 +46,7 @@ test.describe('customers, invites and carriers', () => {
 					user: { email: `e2e-nearby-${unique()}@example.com`, firstName: 'E2E', lastName: 'Nearby', apartment: '1', geoLocation: geoLocation(spot) },
 					password: 'e2e-password',
 				},
-			})
+			}, AS_ADMIN)
 		).registerUser.id;
 
 		await page.goto(route(`customers/list/${customerId}`));

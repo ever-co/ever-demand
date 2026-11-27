@@ -7,10 +7,20 @@ import {
 } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { GraphQLSchemaHost } from '@nestjs/graphql';
-import type { GraphQLSchema } from 'graphql';
+import { execute, subscribe, type GraphQLSchema } from 'graphql';
 import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/use/ws';
 import { createWsGraphQLContext } from '../graphql-context';
+import { TenantContext, TenantCtx } from '../../tenant/tenant-context';
+import {
+	clientAddress,
+	headerValue,
+	resolveTenantContext,
+} from '../../tenant/tenant-resolver';
+import {
+	accessRecheckMs,
+	recheckAccess,
+} from '../../tenant/tenant-access-recheck';
 import { SUBSCRIPTIONS_PATH, SUBSCRIPTIONS_PORT } from './subscription.constants';
 import { createEverLogger } from '../../helpers/Log';
 
@@ -38,13 +48,99 @@ export async function startSubscriptionsServer(
 		path: SUBSCRIPTIONS_PATH,
 	});
 
+	/**
+	 * The connection's tenant context checked again (tenant-access-recheck.ts):
+	 * a connection whose login or tenant lost its access is closed (4403),
+	 * which ends its subscriptions; the client connects again.
+	 */
+	const currentAccess = async (extra: any): Promise<TenantCtx> => {
+		let fresh: TenantCtx | null;
+
+		try {
+			fresh = await recheckAccess(extra.tenantInfo, extra.tenantCtx);
+		} catch {
+			// the check itself failed (e.g. the database is down): keep the
+			// connection's access; the next check applies any change
+			return extra.tenantCtx;
+		}
+
+		if (!fresh) {
+			extra.socket.close(4403, 'Forbidden: access changed');
+			throw new Error('Access changed: connect again');
+		}
+
+		extra.tenantCtx = fresh;
+
+		return fresh;
+	};
+
+	/** Re-checks idle connections too, so open subscriptions end when access is revoked. */
+	const watchAccess = (extra: any) => {
+		const timer = setInterval(() => {
+			currentAccess(extra).catch(() => undefined);
+		}, accessRecheckMs());
+
+		timer.unref?.();
+		extra.socket.once('close', () => clearInterval(timer));
+	};
+
+	const tenantOf = (contextValue: any): TenantCtx =>
+		contextValue?.tenantCtx ?? {
+			tenantId: TenantContext.getFallbackTenantId(),
+		};
+
 	const serverCleanup = useServer(
 		{
 			schema,
-			context: (ctx) =>
-				createWsGraphQLContext(
+			// one tenant per WebSocket, resolved like an HTTP request
+			// (connectionParams `authorization` / `tenant`, then headers, host)
+			onConnect: async (ctx) => {
+				const params: Record<string, unknown> = ctx.connectionParams ?? {};
+				const headers = ctx.extra.request.headers;
+				const str = (v: unknown) =>
+					typeof v === 'string' && v !== '' ? v : undefined;
+
+				const info = {
+					authorization:
+						str(params.authorization) ??
+						str(params.Authorization) ??
+						headerValue(headers.authorization),
+					tenantHeader:
+						str(params.tenant) ??
+						str(params['Tenant-Id']) ??
+						headerValue(headers['tenant-id'] as any),
+					host: headerValue(headers.host),
+					origin: headerValue(headers.origin),
+					clientIp: clientAddress(
+						ctx.extra.request.socket?.remoteAddress,
+						headers['x-forwarded-for'],
+					),
+				};
+
+				try {
+					(ctx.extra as any).tenantCtx = await resolveTenantContext(info);
+				} catch {
+					return false;
+				}
+
+				(ctx.extra as any).tenantInfo = info;
+				watchAccess(ctx.extra);
+
+				return true;
+			},
+			// each operation runs with the access the login and tenant give now
+			context: async (ctx) => ({
+				...createWsGraphQLContext(
 					ctx.connectionParams,
 					ctx.extra.request.headers
+				),
+				tenantCtx: await currentAccess(ctx.extra),
+			}),
+			execute: (args) =>
+				TenantContext.run(tenantOf(args.contextValue), () => execute(args)),
+			subscribe: (args) =>
+				TenantContext.run(tenantOf(args.contextValue), () =>
+					subscribe(args)
 				),
 		},
 		wsServer

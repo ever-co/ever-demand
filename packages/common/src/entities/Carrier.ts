@@ -1,6 +1,14 @@
 import CarrierStatus from '../enums/CarrierStatus';
 import GeoLocation from './GeoLocation';
-import { DBObject, getSchema, ModelName, Schema, Types } from '../@pyro/db';
+import {
+	DBObject,
+	getSchema,
+	ModelName,
+	Schema,
+	Types,
+	TenantId,
+	CompoundIndex,
+} from '../@pyro/db';
 import ICarrier, { ICarrierCreateObject } from '../interfaces/ICarrier';
 import { Entity, Column } from 'typeorm';
 
@@ -12,9 +20,23 @@ import { Entity, Column } from 'typeorm';
  * @implements {ICarrier}
  */
 @ModelName('Carrier')
+@CompoundIndex(
+	{ tenantId: 1, email: 1 },
+	{ unique: true, partialFilterExpression: { email: { $type: 'string' } } }
+)
 @Entity({ name: 'carriers' })
 class Carrier extends DBObject<ICarrier, ICarrierCreateObject>
 	implements ICarrier {
+	/**
+	 * The tenant (business) that owns this record. Set by the API from the
+	 * tenant context; never taken from a client.
+	 *
+	 * @type {string}
+	 * @memberof Carrier
+	 */
+	@TenantId()
+	tenantId: string;
+
 	constructor(carrier: ICarrier) {
 		super(carrier);
 
@@ -178,8 +200,6 @@ class Carrier extends DBObject<ICarrier, ICarrierCreateObject>
 	@Schema({
 		type: String,
 		required: false,
-		sparse: true,
-		unique: true,
 	})
 	@Column()
 	email: string;

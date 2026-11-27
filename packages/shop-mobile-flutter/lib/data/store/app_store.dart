@@ -41,6 +41,7 @@ class AppStore extends ChangeNotifier {
   static const String kMaintenanceMode = 'maintenanceMode';
   static const String kServerConnection = 'serverConnection';
   static const String kDeviceUuid = '_deviceUuid';
+  static const String kTenant = 'tenant';
 
   String? _get(String key) {
     final String? v = _kv.getString(key);
@@ -73,6 +74,11 @@ class AppStore extends ChangeNotifier {
 
   String? get token => _get(kToken);
   set token(String? v) => _set(kToken, v);
+
+  /// Tenant of a `?tenant=` link on the web build, kept for later visits
+  /// (config/tenant.dart).
+  String? get tenant => _get(kTenant);
+  set tenant(String? v) => _set(kTenant, v);
 
   String? get userId => _get(kUserId);
   set userId(String? v) => _set(kUserId, v);

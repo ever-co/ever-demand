@@ -7,10 +7,12 @@ import {
 } from '@angular/core';
 import { NbMenuService, NbSidebarService, NbMenuItem } from '@nebular/theme';
 import { Subject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { AdminsService } from '../../../@core/data/admins.service';
 import { Store } from '../../../@core/data/store.service';
 import Admin from '@modules/server.common/entities/Admin';
 import { TranslateService } from '@ngx-translate/core';
+import { AdminSessionService } from '../../../@core/tenant/admin-session.service';
 
 @Component({
 	standalone: false,
@@ -35,10 +37,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
 		private adminsService: AdminsService,
 		private store: Store,
 		private translateService: TranslateService,
+		private readonly session: AdminSessionService,
 	) {
 		this.initialize();
 		this._applyTranslationOnSmartTable();
-		this.admin$ = this.adminsService.getAdmin(this.store.adminId);
+		this.admin$ = this.adminsService
+			.getAdmin(this.store.adminId)
+			// keeps the role and super-admin flag of the screens up to date
+			.pipe(tap((admin) => this.session.refresh(admin as any)));
+	}
+
+	/** Platform super-admins get the tenant switcher. */
+	get isSuperAdmin(): boolean {
+		return this.session.isSuperAdmin;
 	}
 
 	ngOnInit() {}

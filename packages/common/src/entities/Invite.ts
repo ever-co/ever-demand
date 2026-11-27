@@ -1,5 +1,12 @@
 import GeoLocation from './GeoLocation';
-import { DBObject, Schema, ModelName, Types, getSchema } from '../@pyro/db';
+import {
+	DBObject,
+	Schema,
+	ModelName,
+	Types,
+	getSchema,
+	TenantId,
+} from '../@pyro/db';
 import IInvite from '../interfaces/IInvite';
 import { IInviteCreateObject } from '../interfaces/IInvite';
 import { Entity, Column } from 'typeorm';
@@ -15,6 +22,16 @@ import { Entity, Column } from 'typeorm';
 @ModelName('Invite')
 @Entity({ name: 'invites' })
 class Invite extends DBObject<IInvite, IInviteCreateObject> implements IInvite {
+	/**
+	 * The tenant (business) that owns this record. Set by the API from the
+	 * tenant context; never taken from a client.
+	 *
+	 * @type {string}
+	 * @memberof Invite
+	 */
+	@TenantId()
+	tenantId: string;
+
 	constructor(invite: IInvite) {
 		super(invite);
 

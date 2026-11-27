@@ -21,3 +21,40 @@ export async function gql<T = any>(
 	});
 	return res.json();
 }
+
+const cachedAdminTokens = new Map<string, Promise<string>>();
+
+/**
+ * Login token of an admin: by default the default admin (owner of the default
+ * tenant), else the admin of `account`, e.g. a tenant's owner. The API refuses
+ * admin operations without a login (graphql/access, socket access), so
+ * fixtures log in; each account's token is cached (a token carries its
+ * tenant, so one cache entry per admin, never one for all tenants).
+ */
+export function adminToken(
+	account: { email: string; password: string } = ADMIN,
+): Promise<string> {
+	let token = cachedAdminTokens.get(account.email);
+
+	if (!token) {
+		token = (async () => {
+			const res = await gql<{ adminLogin: { token: string } | null }>(
+				`mutation L($email: String!, $password: String!) { adminLogin(email: $email, password: $password) { token } }`,
+				account,
+			);
+			const value = res.data?.adminLogin?.token;
+
+			if (!value) {
+				cachedAdminTokens.delete(account.email);
+				throw new Error(
+					`${account.email} could not log in: ${JSON.stringify(res.errors)}`,
+				);
+			}
+
+			return value;
+		})();
+		cachedAdminTokens.set(account.email, token);
+	}
+
+	return token;
+}

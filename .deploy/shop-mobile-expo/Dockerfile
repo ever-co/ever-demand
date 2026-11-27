@@ -15,8 +15,8 @@ LABEL org.opencontainers.image.source=https://github.com/ever-co/ever-demand
 
 ENV CI=true
 
-# Node 25+ no longer bundles corepack.
-RUN npm i -g pnpm@12.23.0
+# Node 25+ no longer bundles corepack. pnpm runs without its own install scripts (Sonar S6505).
+RUN npm i -g --ignore-scripts pnpm@12.23.0
 
 WORKDIR /srv/ever
 
@@ -49,6 +49,10 @@ ARG EXPO_PUBLIC_SETTINGS_MAINTENANCE_API_URL=
 ARG EXPO_PUBLIC_MERCHANT_IDS=
 ARG EXPO_PUBLIC_SHOPPING_CART=false
 ARG EXPO_PUBLIC_FAKE_INVITE_CODE=off
+# Multi-tenant: a white-label build for one tenant (slug or id), and the parent domain of
+# <slug>.<EXPO_PUBLIC_TENANT_BASE_DOMAIN> hosts (docs/multi-tenant/DESIGN.md §3.3); both optional.
+ARG EXPO_PUBLIC_TENANT=
+ARG EXPO_PUBLIC_TENANT_BASE_DOMAIN=
 
 ENV EXPO_PUBLIC_PRODUCTION=$EXPO_PUBLIC_PRODUCTION \
 	EXPO_PUBLIC_SERVICES_ENDPOINT=$EXPO_PUBLIC_SERVICES_ENDPOINT \
@@ -67,6 +71,8 @@ ENV EXPO_PUBLIC_PRODUCTION=$EXPO_PUBLIC_PRODUCTION \
 	EXPO_PUBLIC_MERCHANT_IDS=$EXPO_PUBLIC_MERCHANT_IDS \
 	EXPO_PUBLIC_SHOPPING_CART=$EXPO_PUBLIC_SHOPPING_CART \
 	EXPO_PUBLIC_FAKE_INVITE_CODE=$EXPO_PUBLIC_FAKE_INVITE_CODE \
+	EXPO_PUBLIC_TENANT=$EXPO_PUBLIC_TENANT \
+	EXPO_PUBLIC_TENANT_BASE_DOMAIN=$EXPO_PUBLIC_TENANT_BASE_DOMAIN \
 	NODE_OPTIONS=--max-old-space-size=4096
 
 RUN pnpm --filter @ever-platform/shop-mobile-expo build

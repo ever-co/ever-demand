@@ -42,6 +42,11 @@ export const environment: Environment = {
 	HTTPS_SERVICES_ENDPOINT: '${env.HTTPS_SERVICES_ENDPOINT}',
 	GQL_ENDPOINT: '${env.GQL_ENDPOINT}',
 	GQL_SUBSCRIPTIONS_ENDPOINT: '${env.GQL_SUBSCRIPTIONS_ENDPOINT}',
+
+	// Multi-tenant (docs/multi-tenant/DESIGN.md §3.3)
+	TENANT: '${env.TENANT}',
+	TENANT_BASE_DOMAIN: '${env.TENANT_BASE_DOMAIN}',
+
 	AUTH_LOGO: '${env.AUTH_LOGO}',
 	NO_INTERNET_LOGO: '${env.NO_INTERNET_LOGO}',
 

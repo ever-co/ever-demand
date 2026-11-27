@@ -1,4 +1,4 @@
-import { DBObject, ModelName, Schema, Types } from '../@pyro/db';
+import { DBObject, ModelName, Schema, Types, TenantId } from '../@pyro/db';
 import IProduct, {
 	IProductCreateObject,
 	IProductDescription,
@@ -26,6 +26,16 @@ import { Entity, Column } from 'typeorm';
 @Entity({ name: 'products' })
 class Product extends DBObject<IProduct, IProductCreateObject>
 	implements IProduct {
+	/**
+	 * The tenant (business) that owns this record. Set by the API from the
+	 * tenant context; never taken from a client.
+	 *
+	 * @type {string}
+	 * @memberof Product
+	 */
+	@TenantId()
+	tenantId: string;
+
 	/**
 	 * Title of Product (normally short and display as a bold text)
 	 *

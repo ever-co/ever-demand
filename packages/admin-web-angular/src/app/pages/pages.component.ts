@@ -90,6 +90,26 @@ export class PagesComponent {
 				link: '/setup',
 				pathMatch: 'prefix',
 			},
+			{
+				title: this.getTranslation('TENANT_VIEW.MENU.BUSINESS'),
+				icon: 'briefcase-outline',
+				link: '/settings',
+				children: [
+					{
+						title: this.getTranslation('TENANT_VIEW.MENU.SETTINGS'),
+						link: '/settings/tenant',
+					},
+					{
+						title: this.getTranslation('TENANT_VIEW.MENU.BILLING'),
+						link: '/settings/billing',
+						pathMatch: 'prefix',
+					},
+					{
+						title: this.getTranslation('TENANT_VIEW.MENU.MEMBERS'),
+						link: '/settings/members',
+					},
+				],
+			},
 		];
 	}
 

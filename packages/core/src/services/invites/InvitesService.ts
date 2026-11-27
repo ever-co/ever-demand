@@ -28,6 +28,7 @@ import { IInviteRequestCreateObject } from '@modules/server.common/interfaces/II
 import { faker } from '@faker-js/faker';
 import { Country } from '@modules/server.common/entities/GeoLocation';
 import IPagingOptions from '@modules/server.common/interfaces/IPagingOptions';
+import { stripProtectedFields } from '../stripProtectedFields';
 
 @injectable()
 @routerName('invite')
@@ -72,10 +73,15 @@ export class InvitesService extends DBService<Invite>
 
 	@asyncListener()
 	create(invite: IInviteCreateObject): Promise<Invite> {
-		if (!invite.code) {
-			invite.code = Utils.getRandomInt(1001, 9999) + '';
+		// a public listener (open shops): server-side fields are never taken from the caller
+		const input = stripProtectedFields(invite, {
+			create: true,
+		}) as IInviteCreateObject;
+
+		if (!input.code) {
+			input.code = Utils.getRandomInt(1001, 9999) + '';
 		}
-		return super.create(invite);
+		return super.create(input);
 	}
 
 	@asyncListener()

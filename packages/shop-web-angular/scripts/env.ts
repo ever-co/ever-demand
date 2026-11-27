@@ -26,6 +26,11 @@ export type Env = Readonly<{
 	GQL_ENDPOINT: string;
 	GQL_SUBSCRIPTIONS_ENDPOINT: string;
 
+	// Multi-tenant (docs/multi-tenant/DESIGN.md §3.3): a white-label build's tenant
+	// slug or id, and the parent domain of `<slug>.<TENANT_BASE_DOMAIN>` shop hosts.
+	TENANT: string;
+	TENANT_BASE_DOMAIN: string;
+
 	AUTH_LOGO: string;
 	NO_INTERNET_LOGO: string;
 	GOOGLE_MAPS_API_KEY: string;
@@ -55,6 +60,11 @@ export const env: Env = cleanEnv(process.env, {
 	GQL_SUBSCRIPTIONS_ENDPOINT: str({
 		default: 'ws://localhost:2086/subscriptions',
 	}),
+
+	// '' = not set: the shop then uses its host's sub-domain, a `?tenant=` link
+	// or the tenant kept from an earlier visit (single-tenant API: none needed).
+	TENANT: str({ default: '' }),
+	TENANT_BASE_DOMAIN: str({ default: '' }),
 
 	AUTH_LOGO: str({ default: 'assets/img/ever-logo.svg' }),
 	NO_INTERNET_LOGO: str({ default: 'assets/img/ever-logo.svg' }),

@@ -103,6 +103,14 @@ const routes: Routes = [
 						(m) => m.ProfileModule
 					),
 			},
+			{
+				// the business (tenant): settings, billing, members
+				path: 'settings',
+				loadChildren: () =>
+					import('app/pages/+settings/settings.module').then(
+						(m) => m.SettingsModule
+					),
+			},
 		],
 	},
 ];

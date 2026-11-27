@@ -49,6 +49,20 @@ export type Env = Readonly<{
 	STRIPE_SECRET_KEY: string;
 	STRIPE_CURRENCY: string;
 
+	MULTI_TENANT: boolean;
+	TENANT_BASE_DOMAIN: string;
+	TENANT_SIGNUP_ENABLED: boolean;
+	TENANT_SIGNUPS_PER_HOUR: number;
+	TRUST_PROXY: string;
+	ADMIN_APP_URL: string;
+	STRIPE_BILLING_SECRET_KEY: string;
+	STRIPE_BILLING_WEBHOOK_SECRET: string;
+	STRIPE_BILLING_API_URL: string;
+	TENANT_ACCESS_RECHECK_MS: number;
+	BILLING_TRIAL_DAYS: number;
+	BILLING_PAST_DUE_GRACE_DAYS: number;
+	MIGRATION_BACKUP_CONFIRMED: boolean;
+
 	URBAN_AIRSHIP_KEY: string;
 	URBAN_AIRSHIP_SECRET: string;
 
@@ -75,6 +89,7 @@ export type Env = Readonly<{
 	SETTING_INVITES_ENABLED?: boolean;
 	SETTINGS_REGISTRATIONS_REQUIRED_ON_START?: boolean;
 	ADMIN_EMAIL: string;
+	SUPER_ADMIN_EMAIL: string;
 	ADMIN_PASSWORD: string;
 	ADMIN_PASSWORD_RESET?: boolean;
 	FAKE_DATA_GENERATOR?: boolean;
@@ -121,6 +136,59 @@ const cleaned = cleanEnv(
 		STRIPE_CURRENCY: stripeCurrency({
 			desc: 'Three-letter currency code of card charges, e.g. usd (unset or blank = ils). Currencies without 100 minor units, such as jpy, are refused. Change it only while no card payment is in progress. Set a currency other than ils only once every shop in use, installed apps too, loads it from the server: an older shop still shows ILS in its card popup.',
 			default: DEFAULT_STRIPE_CURRENCY,
+		}),
+
+		MULTI_TENANT: bool({
+			desc: 'true = SaaS: every request needs a tenant (login token, Tenant-Id header or <slug>.TENANT_BASE_DOMAIN host); false = single-tenant install, everything runs in the default tenant',
+			default: false,
+		}),
+		TENANT_BASE_DOMAIN: str({
+			desc: 'Parent domain of tenant sub-domains, e.g. everdemand.co for acme.everdemand.co (empty = sub-domains are not used)',
+			default: '',
+		}),
+		TENANT_SIGNUP_ENABLED: bool({
+			desc: 'Allow anyone to sign up a new tenant (default: on when MULTI_TENANT is on)',
+			default: undefined as any,
+		}),
+		TRUST_PROXY: str({
+			desc: "Which peers are trusted proxies (Express 'trust proxy', also used for socket.io / graphql-ws): client addresses come from X-Forwarded-For only through them, from the right. A hop count (1), or names and CIDRs: 'loopback, uniquelocal' (default: a k8s ingress on a private network; a directly exposed API keeps the socket address), add a CDN's ranges in front of the ingress (e.g. Cloudflare's), or empty (trust nothing)",
+			default: 'loopback, uniquelocal',
+		}),
+		TENANT_SIGNUPS_PER_HOUR: num({
+			desc: 'Tenant signups allowed per client address and hour (per API instance)',
+			default: 10,
+		}),
+		ADMIN_APP_URL: str({
+			desc: 'Public URL of the admin app (Stripe Checkout and portal return there), e.g. https://app.everdemand.co',
+			default: 'http://localhost:4200',
+		}),
+		STRIPE_BILLING_SECRET_KEY: str({
+			desc: "Stripe secret key of the platform account that bills tenants (subscriptions); not the shops' STRIPE_SECRET_KEY",
+			default: '',
+		}),
+		STRIPE_BILLING_WEBHOOK_SECRET: str({
+			desc: 'Signing secret of the Stripe webhook endpoint POST /api/billing/webhook',
+			default: '',
+		}),
+		TENANT_ACCESS_RECHECK_MS: num({
+			desc: 'How often open socket.io / graphql-ws connections re-check their login and tenant (ms); a removed admin or suspended tenant is disconnected',
+			default: 30_000,
+		}),
+		STRIPE_BILLING_API_URL: str({
+			desc: 'Tests only: base URL of a fake Stripe API for billing (e.g. http://127.0.0.1:12111); empty = api.stripe.com',
+			default: '',
+		}),
+		BILLING_TRIAL_DAYS: num({
+			desc: 'Free trial of paid cloud plans, in days (pricing spec: 90)',
+			default: 90,
+		}),
+		BILLING_PAST_DUE_GRACE_DAYS: num({
+			desc: 'Days a tenant keeps its paid limits after a failed payment',
+			default: 14,
+		}),
+		MIGRATION_BACKUP_CONFIRMED: bool({
+			desc: 'Production only: set to true after taking a database backup, to let the multi-tenant migration run',
+			default: false,
 		}),
 
 		URBAN_AIRSHIP_KEY: str({ default: '' }),
@@ -175,6 +243,10 @@ const cleaned = cleanEnv(
 		ADMIN_EMAIL: str({
 			desc: 'Email of the first admin, created on first boot when no admin with it exists',
 			default: 'admin@ever.co',
+		}),
+		SUPER_ADMIN_EMAIL: str({
+			desc: 'Email of the platform super-admin (may list, switch into and suspend every tenant); empty = none. Never given while that admin still has the default password "admin"',
+			default: '',
 		}),
 		ADMIN_PASSWORD: str({
 			desc: 'Password of the first admin. Required in production (unless DEMO=true); outside production it defaults to "admin"',
@@ -232,6 +304,10 @@ export const env: Env = Object.freeze({
 	JWT_SECRET: cleaned.JWT_SECRET || (isProd ? '' : DEV_JWT_SECRET),
 	EXPRESS_SESSION_SECRET:
 		cleaned.EXPRESS_SESSION_SECRET || (isProd ? '' : DEV_SESSION_SECRET),
+	TENANT_SIGNUP_ENABLED:
+		(cleaned.TENANT_SIGNUP_ENABLED as boolean | undefined) ??
+		cleaned.MULTI_TENANT,
+	TENANT_BASE_DOMAIN: cleaned.TENANT_BASE_DOMAIN.trim().toLowerCase(),
 }) as Env;
 
 /**

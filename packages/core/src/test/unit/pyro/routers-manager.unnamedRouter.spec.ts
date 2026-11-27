@@ -33,7 +33,7 @@ class UnnamedRouter {
 }
 
 function fakeIo() {
-	const namespace = { on: jest.fn() };
+	const namespace = { on: jest.fn(), use: jest.fn() };
 	const io = { of: jest.fn(() => namespace) };
 
 	return { io, namespace };
@@ -86,6 +86,8 @@ describe('RoutersManager with a router that has no @routerName', () => {
 		await flush();
 
 		expect(io.of).toHaveBeenCalledWith('/named');
+		// every connection resolves its tenant first (tenant/tenant-socket.ts)
+		expect(namespace.use).toHaveBeenCalledWith(expect.any(Function));
 		expect(namespace.on).toHaveBeenCalledWith(
 			'connection',
 			expect.any(Function)

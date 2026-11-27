@@ -1,4 +1,4 @@
-import { ModelName, DBObject, Schema, Types } from '../@pyro/db';
+import { ModelName, DBObject, Schema, Types, TenantId } from '../@pyro/db';
 import { IDeviceRawObject, IDeviceCreateObject } from '../interfaces/IDevice';
 import IPlatform from '../interfaces/IPlatform';
 import ILanguage from '../interfaces/ILanguage';
@@ -15,6 +15,16 @@ import { Entity, Column } from 'typeorm';
 @Entity({ name: 'devices' })
 class Device extends DBObject<IDeviceRawObject, IDeviceCreateObject>
 	implements IDeviceRawObject {
+	/**
+	 * The tenant (business) that owns this record. Set by the API from the
+	 * tenant context; never taken from a client.
+	 *
+	 * @type {string}
+	 * @memberof Device
+	 */
+	@TenantId()
+	tenantId: string;
+
 	/**
 	 * ChannelID used for push notifications
 	 *
