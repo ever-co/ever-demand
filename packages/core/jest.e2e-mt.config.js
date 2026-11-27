@@ -13,6 +13,7 @@ process.env.CORE_E2E_HTTPPORT ||= '15600';
 process.env.CORE_E2E_HTTPSPORT ||= '12187';
 process.env.CORE_E2E_GQLPORT ||= '18543';
 process.env.CORE_E2E_GQLPORT_SUBSCRIPTIONS ||= '12186';
+process.env.CORE_E2E_STRIPE_PORT ||= '12188';
 
 const base = require('./jest.e2e.config.js');
 

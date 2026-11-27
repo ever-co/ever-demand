@@ -243,7 +243,10 @@ export class AuthService<T extends IAuthable> extends EntityService<T> {
 			return false;
 		}
 
-		const entity = await this.Model.findById(id).lean().exec();
+		// a super-admin switched into another tenant: the account is in their own
+		const entity = await TenantContext.runForOwnAccount(id, () =>
+			this.Model.findById(id).lean().exec()
+		);
 
 		return entity != null;
 	}

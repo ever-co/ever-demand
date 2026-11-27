@@ -16,6 +16,7 @@ import {
 	headerValue,
 	resolveTenantContext,
 } from '../../tenant/tenant-resolver';
+import { accessRecheckMs, recheckAccess } from '../../tenant/tenant-access-recheck';
 import { SUBSCRIPTIONS_PATH, SUBSCRIPTIONS_PORT } from './subscription.constants';
 import { createEverLogger } from '../../helpers/Log';
 
@@ -43,6 +44,42 @@ export async function startSubscriptionsServer(
 		path: SUBSCRIPTIONS_PATH,
 	});
 
+	/**
+	 * The connection's tenant context checked again (tenant-access-recheck.ts):
+	 * a connection whose login or tenant lost its access is closed (4403),
+	 * which ends its subscriptions; the client connects again.
+	 */
+	const currentAccess = async (extra: any): Promise<TenantCtx> => {
+		let fresh: TenantCtx | null;
+
+		try {
+			fresh = await recheckAccess(extra.tenantInfo, extra.tenantCtx);
+		} catch {
+			// the check itself failed (e.g. the database is down): keep the
+			// connection's access; the next check applies any change
+			return extra.tenantCtx;
+		}
+
+		if (!fresh) {
+			extra.socket.close(4403, 'Forbidden: access changed');
+			throw new Error('Access changed: connect again');
+		}
+
+		extra.tenantCtx = fresh;
+
+		return fresh;
+	};
+
+	/** Re-checks idle connections too, so open subscriptions end when access is revoked. */
+	const watchAccess = (extra: any) => {
+		const timer = setInterval(() => {
+			currentAccess(extra).catch(() => undefined);
+		}, accessRecheckMs());
+
+		timer.unref?.();
+		extra.socket.once('close', () => clearInterval(timer));
+	};
+
 	const tenantOf = (contextValue: any): TenantCtx =>
 		contextValue?.tenantCtx ?? {
 			tenantId: TenantContext.getFallbackTenantId(),
@@ -59,30 +96,37 @@ export async function startSubscriptionsServer(
 				const str = (v: unknown) =>
 					typeof v === 'string' && v !== '' ? v : undefined;
 
+				const info = {
+					authorization:
+						str(params.authorization) ??
+						str(params.Authorization) ??
+						headerValue(headers.authorization),
+					tenantHeader:
+						str(params.tenant) ??
+						str(params['Tenant-Id']) ??
+						headerValue(headers['tenant-id'] as any),
+					host: headerValue(headers.host),
+					origin: headerValue(headers.origin),
+				};
+
 				try {
-					(ctx.extra as any).tenantCtx = await resolveTenantContext({
-						authorization:
-							str(params.authorization) ??
-							str(params.Authorization) ??
-							headerValue(headers.authorization),
-						tenantHeader:
-							str(params.tenant) ??
-							str(params['Tenant-Id']) ??
-							headerValue(headers['tenant-id'] as any),
-						host: headerValue(headers.host),
-						origin: headerValue(headers.origin),
-					});
-					return true;
+					(ctx.extra as any).tenantCtx = await resolveTenantContext(info);
 				} catch {
 					return false;
 				}
+
+				(ctx.extra as any).tenantInfo = info;
+				watchAccess(ctx.extra);
+
+				return true;
 			},
-			context: (ctx) => ({
+			// each operation runs with the access the login and tenant give now
+			context: async (ctx) => ({
 				...createWsGraphQLContext(
 					ctx.connectionParams,
 					ctx.extra.request.headers
 				),
-				tenantCtx: (ctx.extra as any).tenantCtx,
+				tenantCtx: await currentAccess(ctx.extra),
 			}),
 			execute: (args) =>
 				TenantContext.run(tenantOf(args.contextValue), () => execute(args)),

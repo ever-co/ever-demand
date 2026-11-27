@@ -11,7 +11,12 @@ import {
 	TenantContext,
 	TenantContextMissingError,
 } from '../../../../tenant/tenant-context';
-import { socketTenantCtx } from '../../../../tenant/tenant-socket';
+import {
+	hasSocketTenantInfo,
+	recheckSocketAccess,
+	socketTenantCtx,
+} from '../../../../tenant/tenant-socket';
+import type { TenantCtx } from '../../../../tenant/tenant-context';
 import { isAllowed } from '../../../../graphql/access/graphql-access';
 import { SOCKET_ACCESS, socketAccessKey } from '../../access/socket-access';
 
@@ -121,14 +126,49 @@ export abstract class BaseListenerHandler<T> implements IListenerHandler<T> {
 
 	handle(): void {
 		this._socket.on(this._listener.name, (...args: any[]) => {
+			// what must be set up before the next socket event (see receivedCall)
+			const received = this.receivedCall(args);
+
 			// the call, and every stream it opens, runs in the socket's tenant
-			TenantContext.run(socketTenantCtx(this._socket), () =>
-				this.handleRequest(args)
+			const run = (ctx: TenantCtx) =>
+				TenantContext.run(ctx, () => this.handleRequest(args, received));
+
+			if (!hasSocketTenantInfo(this._socket)) {
+				run(socketTenantCtx(this._socket));
+				return;
+			}
+
+			// with the access the login and tenant give now: a socket whose
+			// access was revoked is disconnected instead (tenant-socket.ts)
+			recheckSocketAccess(this._socket).then(
+				(ctx) => {
+					if (ctx) {
+						run(ctx);
+					}
+				},
+				(err) => {
+					// the check itself failed (e.g. the database is down): keep the
+					// access of the connection; the next check applies any change
+					this._log.warn(
+						{ ...this.baseLogDetails, err },
+						'socket access re-check failed'
+					);
+					run(socketTenantCtx(this._socket));
+				}
 			);
 		});
 	}
 
-	abstract handleRequest(args: any[]): void;
+	abstract handleRequest(args: any[], received?: unknown): void;
+
+	/**
+	 * Runs as the call arrives, before the access re-check: the client may send
+	 * follow-up events (an observable's `<callId>_subscribe`) right after the
+	 * call, so their listeners are set up here. Its result goes to handleRequest.
+	 */
+	protected receivedCall(_args: any[]): unknown {
+		return undefined;
+	}
 
 	/**
 	 * Why the socket (its tenant and handshake login) may not call this

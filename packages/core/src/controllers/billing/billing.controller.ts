@@ -1,5 +1,6 @@
 import {
 	BadRequestException,
+	ConflictException,
 	Controller,
 	Headers,
 	HttpCode,
@@ -8,7 +9,11 @@ import {
 	ServiceUnavailableException,
 } from '@nestjs/common';
 import type { Request } from 'express';
-import { BillingService, WebhookSignatureError } from '../../services/billing/BillingService';
+import {
+	BillingEventBusyError,
+	BillingService,
+	WebhookSignatureError,
+} from '../../services/billing/BillingService';
 
 /**
  * Stripe webhook of the tenant subscriptions: POST /api/billing/webhook.
@@ -35,6 +40,11 @@ export class BillingController {
 		} catch (err) {
 			if (err instanceof WebhookSignatureError) {
 				throw new BadRequestException(`Webhook signature: ${err.message}`);
+			}
+
+			// another server is applying this event: a non-2xx answer makes Stripe retry
+			if (err instanceof BillingEventBusyError) {
+				throw new ConflictException(err.message);
 			}
 
 			if ((err as Error).message?.includes('not configured')) {

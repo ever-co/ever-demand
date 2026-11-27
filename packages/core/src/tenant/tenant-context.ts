@@ -12,6 +12,12 @@ export interface TenantActor {
 	tenantRole?: TenantRole;
 	/** Platform super-admin (may act in any tenant) */
 	isSuperAdmin?: boolean;
+	/**
+	 * The tenant the login belongs to. Differs from the context's tenant only
+	 * for a super-admin switched into another tenant: their own account stays
+	 * in this one.
+	 */
+	homeTenantId?: string | null;
 }
 
 export interface TenantCtx {
@@ -101,6 +107,27 @@ export const TenantContext = {
 
 	actor(): TenantActor | undefined {
 		return storage.getStore()?.actor;
+	},
+
+	/**
+	 * Runs `fn` where the account `id` lives: the actor's own tenant when the
+	 * actor reads or edits their own account while switched into another
+	 * tenant (super-admins), else the current context.
+	 */
+	runForOwnAccount<R>(id: string, fn: () => R): R {
+		const ctx = storage.getStore();
+		const actor = ctx?.actor;
+
+		if (
+			actor?.id === id &&
+			actor.homeTenantId &&
+			!ctx?.system &&
+			actor.homeTenantId !== ctx?.tenantId
+		) {
+			return storage.run({ tenantId: actor.homeTenantId, actor }, fn);
+		}
+
+		return fn();
 	},
 
 	isSystem(): boolean {

@@ -57,6 +57,8 @@ export type Env = Readonly<{
 	ADMIN_APP_URL: string;
 	STRIPE_BILLING_SECRET_KEY: string;
 	STRIPE_BILLING_WEBHOOK_SECRET: string;
+	STRIPE_BILLING_API_URL: string;
+	TENANT_ACCESS_RECHECK_MS: number;
 	BILLING_TRIAL_DAYS: number;
 	BILLING_PAST_DUE_GRACE_DAYS: number;
 	MIGRATION_BACKUP_CONFIRMED: boolean;
@@ -165,6 +167,14 @@ const cleaned = cleanEnv(
 		}),
 		STRIPE_BILLING_WEBHOOK_SECRET: str({
 			desc: 'Signing secret of the Stripe webhook endpoint POST /api/billing/webhook',
+			default: '',
+		}),
+		TENANT_ACCESS_RECHECK_MS: num({
+			desc: 'How often open socket.io / graphql-ws connections re-check their login and tenant (ms); a removed admin or suspended tenant is disconnected',
+			default: 30_000,
+		}),
+		STRIPE_BILLING_API_URL: str({
+			desc: 'Tests only: base URL of a fake Stripe API for billing (e.g. http://127.0.0.1:12111); empty = api.stripe.com',
 			default: '',
 		}),
 		BILLING_TRIAL_DAYS: num({

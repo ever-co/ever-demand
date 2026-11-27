@@ -154,12 +154,31 @@ export class PyroClient {
 		return socket;
 	}
 
+	/** Resolves with the reason once the server closed the router's connection. */
+	async disconnected(router: string, timeoutMs = 5000): Promise<string> {
+		const socket = await this.socket(router);
+
+		return new Promise<string>((resolve, reject) => {
+			const timer = setTimeout(() => reject(new Error(`${router} stayed connected`)), timeoutMs);
+			socket.once('disconnect', (reason) => {
+				clearTimeout(timer);
+				resolve(reason);
+			});
+		});
+	}
+
 	/** Calls an @asyncListener: resolves with its result, rejects with its error. */
 	async call<T = any>(router: string, method: string, ...args: unknown[]): Promise<T> {
 		const socket = await this.socket(router);
 
 		return new Promise<T>((resolve, reject) => {
+			// a server that drops the connection never answers
+			const dropped = (reason: string) => reject(new Error(`disconnected: ${reason}`));
+			socket.once('disconnect', dropped);
+
 			socket.emit(method, ...args, (err: any, res: T) => {
+				socket.off('disconnect', dropped);
+
 				if (err != null) {
 					const error = new Error(err.message ?? JSON.stringify(err));
 					error.name = err.name ?? 'Error';

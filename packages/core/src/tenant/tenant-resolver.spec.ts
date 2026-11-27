@@ -59,7 +59,7 @@ describe('resolveTenantContext', () => {
 			host: 'bolt.everdemand.test',
 		});
 
-		expect(ctx).toEqual({ tenantId: A.id, actor: { id: 'w1', role: 'warehouse' } });
+		expect(ctx).toEqual({ tenantId: A.id, actor: { id: 'w1', role: 'warehouse', homeTenantId: A.id } });
 	});
 
 	it('puts old tokens without a tenant in the default tenant', async () => {

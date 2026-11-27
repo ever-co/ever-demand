@@ -118,8 +118,10 @@ export function forgetCachedAdmin(id?: string) {
 
 /** The actor of a verified token, or null when its admin no longer exists. */
 async function actorOf(token: VerifiedToken): Promise<TenantActor | null> {
+	const homeTenantId = tokenTenantId(token);
+
 	if (token.role !== 'admin') {
-		return { id: token.id, role: token.role };
+		return { id: token.id, role: token.role, homeTenantId };
 	}
 
 	const admin = await loadAdmin(token.id);
@@ -133,6 +135,7 @@ async function actorOf(token: VerifiedToken): Promise<TenantActor | null> {
 		role: 'admin',
 		tenantRole: admin.role ?? 'admin',
 		isSuperAdmin: admin.isSuperAdmin === true,
+		homeTenantId,
 	};
 }
 

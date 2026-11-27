@@ -34,6 +34,8 @@ export const MULTI_TENANT = process.env.CORE_E2E_MULTI_TENANT === 'true';
 export const TENANT_BASE_DOMAIN = 'everdemand.test';
 /** Signing secret of the billing webhook under test (a fixed test value, not a Stripe secret) */
 export const BILLING_WEBHOOK_SECRET = 'whsec_core_e2e_test_only';
+/** Port of the fake Stripe API the multi-tenant suite starts (test/e2e/fake-stripe.ts) */
+export const STRIPE_PORT = Number(env('CORE_E2E_STRIPE_PORT', '12188'));
 
 export const TMP_DIR = path.join(CORE_DIR, 'tmp', 'e2e');
 export const SERVER_LOG = path.join(TMP_DIR, 'server.log');
@@ -72,9 +74,12 @@ export function serverEnv(): NodeJS.ProcessEnv {
 					TENANT_BASE_DOMAIN,
 					TENANT_SIGNUPS_PER_HOUR: '1000',
 					ADMIN_APP_URL: `http://app.${TENANT_BASE_DOMAIN}`,
-					// Stripe is never called: webhook events are signed locally
+					// Stripe is the suite's fake (fake-stripe.ts); webhook events are signed locally
 					STRIPE_BILLING_SECRET_KEY: 'sk_test_core_e2e_offline',
 					STRIPE_BILLING_WEBHOOK_SECRET: BILLING_WEBHOOK_SECRET,
+					STRIPE_BILLING_API_URL: `http://${HOST}:${STRIPE_PORT}`,
+					// open connections re-check their access every second (revocation specs)
+					TENANT_ACCESS_RECHECK_MS: '1000',
 			  }
 			: {}),
 	};

@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import mongoose from 'mongoose';
 import { Client, createClient } from 'graphql-ws';
 import WebSocket from 'ws';
 import {
@@ -18,9 +19,13 @@ import {
 import {
 	API_URL,
 	BILLING_WEBHOOK_SECRET,
+	DB_NAME,
+	MONGO_URL,
+	STRIPE_PORT,
 	SUBSCRIPTIONS_URL,
 	TENANT_BASE_DOMAIN,
 } from './server';
+import { FakeStripe } from './fake-stripe';
 
 /**
  * Multi-tenant isolation (MULTI_TENANT=true): two tenants, A and B, each with
@@ -241,6 +246,16 @@ async function postWebhook(event: object, signature?: string) {
 
 	return { status: res.status, body: await res.json().catch(() => null) };
 }
+
+/** The API's billing client talks to this fake (STRIPE_BILLING_API_URL). */
+const fakeStripe = new FakeStripe();
+
+beforeAll(() => fakeStripe.listen(STRIPE_PORT));
+afterAll(() => fakeStripe.close());
+
+/** The id inside a login token (its payload is not secret). */
+const tokenId = (token: string): string =>
+	JSON.parse(Buffer.from(token.split('.')[1], 'base64url').toString('utf8')).id;
 
 describe('multi-tenant isolation', () => {
 	let A: TenantFixture;
@@ -686,6 +701,20 @@ describe('multi-tenant isolation', () => {
 			expect(inB.warehouses.map((w) => w.id)).toEqual([B.storeId]);
 		});
 
+		it('keeps a super-admin switched into another tenant logged in (a reload of the admin app)', async () => {
+			const superToken = await defaultAdminToken();
+			const superId = tokenId(superToken);
+
+			const inB = await gqlData(
+				`query S($id: String!) { adminAuthenticated admin(id: $id) { id isSuperAdmin } }`,
+				{ id: superId },
+				superToken,
+				tenantHeader(B.slug)
+			);
+
+			expect(inB).toEqual({ adminAuthenticated: true, admin: { id: superId, isSuperAdmin: true } });
+		});
+
 		it('keeps REST controllers closed to anonymous callers', async () => {
 			const res = await fetch(`${API_URL}/api/product/x`, {
 				method: 'POST',
@@ -741,54 +770,71 @@ describe('multi-tenant isolation', () => {
 		});
 	});
 
-	describe('billing webhooks', () => {
-		const subscriptionEvent = (
-			id: string,
+	describe('billing', () => {
+		const nowSec = () => Math.floor(Date.now() / 1000);
+
+		/** A subscription "in Stripe" (the fake), on the plan of `lookupKey`. */
+		const subscription = (
 			tenantId: string,
 			customer: string,
-			type = 'customer.subscription.updated'
-		) => ({
-			id,
+			status = 'trialing',
+			lookupKey = 'ever_demand_cloud_small_business_monthly',
+			seats = 5
+		) => {
+			const sub = {
+				id: `sub_${unique()}`,
+				object: 'subscription',
+				customer,
+				status,
+				trial_end: nowSec() + 90 * 86400,
+				metadata: { tenantId },
+				items: {
+					object: 'list',
+					data: [
+						{ price: { lookup_key: lookupKey }, quantity: 1, current_period_end: nowSec() + 30 * 86400 },
+						...(seats > 0
+							? [
+									{
+										price: { lookup_key: lookupKey.replace('ever_demand_cloud_', 'ever_seat_demand_cloud_') },
+										quantity: seats,
+									},
+							  ]
+							: []),
+					],
+				},
+			};
+
+			fakeStripe.setSubscription(sub);
+
+			return sub;
+		};
+
+		/** An event that names `sub`, carrying a copy of it as it was then. */
+		const eventOf = (sub: any, type = 'customer.subscription.updated') => ({
+			id: `evt_${unique()}`,
 			object: 'event',
 			type,
-			data: {
-				object: {
-					id: `sub_${unique()}`,
-					object: 'subscription',
-					customer,
-					status: 'trialing',
-					trial_end: Math.floor(Date.now() / 1000) + 90 * 86400,
-					metadata: { tenantId },
-					items: {
-						data: [
-							{
-								price: { lookup_key: 'ever_demand_cloud_small_business_monthly' },
-								quantity: 1,
-								current_period_end: Math.floor(Date.now() / 1000) + 30 * 86400,
-							},
-							{
-								price: { lookup_key: 'ever_seat_demand_cloud_small_business_monthly' },
-								quantity: 5,
-							},
-						],
-					},
-				},
-			},
+			created: nowSec(),
+			data: { object: structuredClone(sub) },
 		});
 
+		const billingOf = (token: string) =>
+			gqlData(`{ currentTenant { plan billing { status extraMembers hasSubscription } } }`, {}, token).then(
+				(d) => d.currentTenant
+			);
+
 		it('refuses an event without a valid signature', async () => {
-			const event = subscriptionEvent(`evt_${unique()}`, A.tenantId, 'cus_x');
+			const event = eventOf(subscription(A.tenantId, 'cus_x'));
 
 			expect((await postWebhook(event, 't=1,v1=deadbeef')).status).toBe(400);
 			expect((await postWebhook(event, stripeSignature(JSON.stringify(event), 'whsec_wrong'))).status).toBe(400);
 
-			const data = await gqlData(`{ currentTenant { plan } }`, {}, A.token);
-			expect(data.currentTenant.plan).toBe('starter');
+			expect((await billingOf(A.token)).plan).toBe('starter');
 		});
 
 		it('moves the tenant to the plan of its subscription, once per event', async () => {
 			const d = await signup('billing');
-			const event = subscriptionEvent(`evt_${unique()}`, d.tenant.id, `cus_${unique()}`);
+			const event = eventOf(subscription(d.tenant.id, `cus_${unique()}`));
 
 			const first = await postWebhook(event);
 			expect(first).toEqual({ status: 200, body: { received: true, applied: true } });
@@ -796,25 +842,134 @@ describe('multi-tenant isolation', () => {
 			const replay = await postWebhook(event);
 			expect(replay.body.applied).toBe(false);
 
-			const data = await gqlData(
-				`{ currentTenant { plan billing { status extraMembers hasSubscription } } tenantUsage { memberLimit storeLimit } }`,
-				{},
-				d.token
-			);
-
-			expect(data.currentTenant).toEqual({
+			expect(await billingOf(d.token)).toEqual({
 				plan: 'small_business',
 				billing: { status: 'trialing', extraMembers: 5, hasSubscription: true },
 			});
-			expect(data.tenantUsage).toEqual({ memberLimit: 30, storeLimit: 3 });
 
-			// an event of another Stripe customer cannot take the tenant over
-			const hijack = subscriptionEvent(`evt_${unique()}`, d.tenant.id, `cus_other_${unique()}`);
-			hijack.data.object.items.data[1].quantity = 500;
-			await postWebhook(hijack);
+			const usage = await gqlData(`{ tenantUsage { memberLimit storeLimit } }`, {}, d.token);
+			expect(usage.tenantUsage).toEqual({ memberLimit: 30, storeLimit: 3 });
 
-			const after = await gqlData(`{ currentTenant { billing { extraMembers } } }`, {}, d.token);
-			expect(after.currentTenant.billing.extraMembers).toBe(5);
+			// a subscription of another Stripe customer cannot take the tenant over
+			const hijack = subscription(
+				d.tenant.id,
+				`cus_other_${unique()}`,
+				'active',
+				'ever_demand_cloud_enterprise_monthly',
+				500
+			);
+			await postWebhook(eventOf(hijack));
+
+			expect((await billingOf(d.token)).billing.extraMembers).toBe(5);
+		});
+
+		it('reads the subscription from Stripe, so late and old events change nothing', async () => {
+			const d = await signup('late');
+			const customer = `cus_${unique()}`;
+			const first = subscription(d.tenant.id, customer);
+
+			await postWebhook(eventOf(first, 'customer.subscription.created'));
+			expect((await billingOf(d.token)).plan).toBe('small_business');
+
+			// cancelled in Stripe; an old "trialing" update arrives after that
+			const stale = eventOf(first);
+			fakeStripe.setSubscription({ ...first, status: 'canceled' });
+			await postWebhook(stale);
+
+			expect(await billingOf(d.token)).toMatchObject({ plan: 'starter', billing: { status: 'canceled' } });
+
+			// a new subscription, then the late "deleted" event of the first one
+			const second = subscription(d.tenant.id, customer, 'active', 'ever_demand_cloud_enterprise_monthly', 0);
+			await postWebhook(eventOf(second, 'customer.subscription.created'));
+			await postWebhook(eventOf({ ...first, status: 'canceled' }, 'customer.subscription.deleted'));
+
+			expect(await billingOf(d.token)).toEqual({
+				plan: 'enterprise',
+				billing: { status: 'active', extraMembers: 0, hasSubscription: true },
+			});
+
+			// a second live subscription of the same tenant is not taken over
+			const third = subscription(d.tenant.id, customer, 'active', 'ever_demand_cloud_small_business_monthly', 2);
+			await postWebhook(eventOf(third, 'customer.subscription.created'));
+
+			expect((await billingOf(d.token)).plan).toBe('enterprise');
+
+			// an invoice event re-reads its subscription too
+			fakeStripe.setSubscription({ ...second, status: 'past_due' });
+			await postWebhook({
+				id: `evt_${unique()}`,
+				object: 'event',
+				type: 'invoice.payment_failed',
+				created: nowSec(),
+				data: {
+					object: {
+						id: `in_${unique()}`,
+						object: 'invoice',
+						customer,
+						parent: { subscription_details: { subscription: second.id } },
+					},
+				},
+			});
+
+			expect((await billingOf(d.token)).billing.status).toBe('past_due');
+		});
+
+		it('applies an event a crashed server left half done, and answers 409 while another server applies one', async () => {
+			const d = await signup('crash');
+			const sub = subscription(d.tenant.id, `cus_${unique()}`);
+			const abandoned = eventOf(sub);
+			const busy = eventOf(sub);
+
+			const db = await mongoose.createConnection(`${MONGO_URL}/${DB_NAME}`).asPromise();
+
+			try {
+				const events = db.collection<{ _id: string; type: string; status: string; at: Date }>('billingevents');
+				await events.insertOne({
+					_id: abandoned.id,
+					type: abandoned.type,
+					status: 'processing',
+					at: new Date(Date.now() - 10 * 60_000),
+				});
+				await events.insertOne({ _id: busy.id, type: busy.type, status: 'processing', at: new Date() });
+
+				expect(await postWebhook(abandoned)).toEqual({ status: 200, body: { received: true, applied: true } });
+				expect((await postWebhook(busy)).status).toBe(409);
+
+				expect((await events.findOne({ _id: abandoned.id }))?.status).toBe('done');
+			} finally {
+				await db.close();
+			}
+
+			expect((await billingOf(d.token)).plan).toBe('small_business');
+		});
+
+		it('keeps one open Checkout per tenant and refuses a second subscription', async () => {
+			const e = await signup('checkout');
+			const checkout = (plan: string) =>
+				gql(
+					`mutation C($p: String!) { createBillingCheckout(input: { plan: $p, interval: "monthly" }) { url } }`,
+					{ p: plan },
+					e.token
+				);
+
+			const [one, two] = await Promise.all([checkout('small_business'), checkout('small_business')]);
+			expect(one.errors).toBeUndefined();
+			expect(two.data.createBillingCheckout.url).toBe(one.data.createBillingCheckout.url);
+
+			const customer = [...fakeStripe.sessions.values()].find(
+				(s) => s.url === one.data.createBillingCheckout.url
+			).customer;
+			expect(fakeStripe.sessionsOf(customer)).toHaveLength(1);
+
+			// another plan: the first session can no longer be paid
+			const other = await checkout('enterprise');
+			expect(other.data.createBillingCheckout.url).not.toBe(one.data.createBillingCheckout.url);
+			expect(fakeStripe.sessionsOf(customer).map((s) => s.status).sort()).toEqual(['expired', 'open']);
+
+			// paid a moment ago in Stripe, before its webhook arrived
+			subscription(e.tenant.id, customer, 'trialing');
+			const again = await checkout('small_business');
+			expect(again.errors?.[0].message).toMatch(/has a subscription/);
 		});
 
 		it('ignores events it does not handle', async () => {
@@ -825,6 +980,32 @@ describe('multi-tenant isolation', () => {
 		it('refuses Checkout for a free plan before calling Stripe', async () => {
 			const res = await gql(`mutation { createBillingCheckout(input: { plan: "starter", interval: "monthly" }) { url } }`, {}, A.token);
 			expect(res.errors?.[0].message).toMatch(/paid plan/);
+		});
+	});
+
+	describe('card payments', () => {
+		const unavailable = /Card payments are not available for this business/;
+
+		it("keeps a tenant's shop from saving cards or charging on the platform's Stripe account", async () => {
+			const pyro = new PyroClient({ tenant: A.slug });
+
+			try {
+				await expect(pyro.call('user', 'addPaymentMethod', A.userId, 'tok_visa')).rejects.toThrow(unavailable);
+				await expect(pyro.call('order', 'payWithStripe', A.orderId, 'card_x')).rejects.toThrow(unavailable);
+			} finally {
+				pyro.close();
+			}
+
+			const res = await gql(
+				`mutation P($o: String!) { payOrderWithStripe(orderId: $o, cardId: "card_x") { id } }`,
+				{ o: A.orderId },
+				ANONYMOUS,
+				tenantHeader(A.slug)
+			);
+			expect(res.errors?.[0].message).toMatch(unavailable);
+
+			const order = await gqlData(`query O($o: String!) { getOrder(id: $o) { isPaid } }`, { o: A.orderId }, A.token);
+			expect(order.getOrder.isPaid).toBe(false);
 		});
 	});
 
@@ -1058,6 +1239,85 @@ describe('multi-tenant isolation', () => {
 			} finally {
 				pyro.close();
 			}
+		});
+	});
+
+	describe('revoked access on open connections', () => {
+		it('disconnects the sockets and subscriptions of a removed admin', async () => {
+			const email = `leaver_${unique()}@example.com`;
+			const registered = await gqlData(
+				`mutation R($input: AdminRegisterInput!) { registerAdmin(registerInput: $input) { id } }`,
+				{
+					input: {
+						admin: { name: 'Lee Leaver', email, pictureUrl: 'https://example.com/l.png', role: 'admin' },
+						password: 'leaver-password',
+					},
+				},
+				A.token
+			);
+			const login = await gqlData(
+				`mutation L($e: String!) { adminLogin(email: $e, password: "leaver-password") { token } }`,
+				{ e: email },
+				ANONYMOUS
+			);
+			const token = login.adminLogin.token;
+
+			const leaver = new PyroClient({ token });
+			const closed: number[] = [];
+			let connected!: () => void;
+			const wsConnected = new Promise<void>((resolve) => (connected = resolve));
+			const ws = createClient({
+				url: SUBSCRIPTIONS_URL,
+				webSocketImpl: WebSocket,
+				connectionParams: { authorization: `Bearer ${token}` },
+				retryAttempts: 0,
+				on: {
+					connected: () => connected(),
+					closed: (event: any) => closed.push(event?.code),
+				},
+			});
+
+			try {
+				// an admin of A: store actions work, a stream and a subscription are open
+				await leaver.call('warehouse-products', 'changePrice', A.storeId, A.productId, 1200);
+				const stream = await leaver.observe('order', 'get', A.orderId);
+				await stream.next((v: any) => v?._id === A.orderId);
+
+				ws.subscribe(
+					{ query: `subscription { deviceCreated { id } }` },
+					{ next: () => undefined, error: () => undefined, complete: () => undefined }
+				);
+				await wsConnected;
+
+				const streamClosed = leaver.disconnected('order', 5000);
+
+				await gqlData(
+					`mutation R($id: String!) { removeAdmin(adminId: $id) }`,
+					{ id: registered.registerAdmin.id },
+					A.token
+				);
+
+				// the next call does not run, and the idle stream's connection closes too
+				await expect(
+					leaver.call('warehouse-products', 'changePrice', A.storeId, A.productId, 1)
+				).rejects.toThrow(/disconnected/);
+				expect(await streamClosed).toBe('io server disconnect');
+
+				for (let i = 0; i < 50 && !closed.includes(4403); i++) {
+					await sleep(100);
+				}
+				expect(closed).toContain(4403);
+			} finally {
+				leaver.close();
+				await ws.dispose();
+			}
+
+			const prices = await gqlData(
+				`query P($a: String!) { getStoreProducts(storeId: $a, fullProducts: false) { price } }`,
+				{ a: A.storeId },
+				A.token
+			);
+			expect(prices.getStoreProducts[0].price).toBe(1200);
 		});
 	});
 

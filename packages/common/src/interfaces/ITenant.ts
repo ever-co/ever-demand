@@ -30,6 +30,11 @@ export interface ITenantBilling {
 	currentPeriodEnd?: Date | string;
 	/** When the subscription became past_due (start of the grace period) */
 	pastDueSince?: Date | string;
+	/** Open Checkout Session (reused for the same plan, expired for another) */
+	checkoutSessionId?: string;
+	/** `<plan>:<interval>:<extraMembers>` of that session */
+	checkoutKey?: string;
+	checkoutExpiresAt?: Date | string;
 }
 
 export interface ITenantSettings {

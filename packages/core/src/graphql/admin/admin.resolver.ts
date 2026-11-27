@@ -47,9 +47,14 @@ function assertMayEditAdmin(
 export class AdminResolver {
 	constructor(private readonly _adminsService: AdminsService) {}
 
+	// A super-admin switched into another tenant reads and edits their own
+	// account in their own tenant (TenantContext.runForOwnAccount).
+
 	@Query('admin')
 	async getAdmin(_, { id }: { id: string }): Promise<Admin> {
-		return this._adminsService.get(id).pipe(first()).toPromise();
+		return TenantContext.runForOwnAccount(id, () =>
+			this._adminsService.get(id).pipe(first()).toPromise()
+		);
 	}
 
 	@Query('adminByEmail')
@@ -70,16 +75,18 @@ export class AdminResolver {
 		_,
 		{ id, updateInput }: { id: string; updateInput }
 	): Promise<Admin> {
-		assertMayEditAdmin(await this._adminsService.getCurrent(id));
-		await this._adminsService.throwIfNotExists(id);
+		return TenantContext.runForOwnAccount(id, async () => {
+			assertMayEditAdmin(await this._adminsService.getCurrent(id));
+			await this._adminsService.throwIfNotExists(id);
 
-		const input: any = { ...(updateInput ?? {}) };
+			const input: any = { ...(updateInput ?? {}) };
 
-		if (typeof input.email === 'string') {
-			input.email = input.email.trim().toLowerCase();
-		}
+			if (typeof input.email === 'string') {
+				input.email = input.email.trim().toLowerCase();
+			}
 
-		return this._adminsService.update(id, input);
+			return this._adminsService.update(id, input);
+		});
 	}
 
 	@Mutation()
@@ -109,8 +116,10 @@ export class AdminResolver {
 			throw new Error('Admin password cannot be changed');
 		}
 
-		assertMayEditAdmin(await this._adminsService.getCurrent(id), true);
+		return TenantContext.runForOwnAccount(id, async () => {
+			assertMayEditAdmin(await this._adminsService.getCurrent(id), true);
 
-		return this._adminsService.updatePassword(id, password);
+			return this._adminsService.updatePassword(id, password);
+		});
 	}
 }
