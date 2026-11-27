@@ -155,7 +155,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 		this.log.info({ objectId: id, callId }, '.getCurrent(id) called');
 
 		const obj = await this.Model.findOne(
-			this.tenantScoped({ _id: this.getObjectId(id) })
+			this.tenantScoped({ _id: this.getObjectId(id) }),
 		)
 			.lean()
 			.exec();
@@ -206,7 +206,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 				_id: {
 					$in: _.map(ids, (id) => this.getObjectId(id)),
 				},
-			})
+			}),
 		)
 			.lean()
 			.exec();
@@ -230,7 +230,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 			await this.beforeCreate(createObject);
 
 			const document = await this.Model.create(
-				this.withTenant(createObject)
+				this.withTenant(createObject),
 			);
 
 			object = this.parse(
@@ -356,7 +356,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 
 		try {
 			const lastValueRaw = (await this.Model.findOneAndDelete(
-				this.tenantScoped({ _id: this.getObjectId(objectId) })
+				this.tenantScoped({ _id: this.getObjectId(objectId) }),
 			)
 				.lean()
 				.exec()) as RawObject<T>;
@@ -411,7 +411,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 			await this.Model.deleteMany(
 				this.tenantScoped({
 					_id: { $in: lastValues.map((o) => this.getObjectId(o.id)) },
-				})
+				}),
 			).exec();
 		} catch (err) {
 			this.log.error(
@@ -465,7 +465,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 
 		try {
 			const documents = (await this.Model.find(
-				this.tenantScoped(conditions)
+				this.tenantScoped(conditions),
 			)
 				.lean()
 				.exec()) as RawObject<T>[];
@@ -690,7 +690,7 @@ export abstract class DBService<T extends DBObject<any, any>>
 
 		try {
 			count = (await this.Model.countDocuments(
-				this.tenantScoped(findObj)
+				this.tenantScoped(findObj),
 			).exec()) as number;
 		} catch (err) {
 			this.log.error(

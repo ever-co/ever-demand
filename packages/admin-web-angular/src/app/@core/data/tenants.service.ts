@@ -385,7 +385,9 @@ export class TenantsService {
 		return dataOf(
 			this.apollo.mutate({
 				mutation: gql`
-					mutation CreateBillingCheckout($input: BillingCheckoutInput!) {
+					mutation CreateBillingCheckout(
+						$input: BillingCheckoutInput!
+					) {
 						createBillingCheckout(input: $input) {
 							url
 						}

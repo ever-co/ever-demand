@@ -32,11 +32,11 @@ export class PlanLimitReachedError extends Error {
 	constructor(
 		readonly kind: 'member' | 'store',
 		readonly limit: number,
-		readonly plan: TenantPlan
+		readonly plan: TenantPlan,
 	) {
 		super(
 			`Your ${PLANS[plan].label} plan allows ${limit} ${kind === 'member' ? 'members' : 'stores'}. ` +
-				'Upgrade the plan or buy more members in Settings → Billing.'
+				'Upgrade the plan or buy more members in Settings → Billing.',
 		);
 	}
 }
@@ -55,7 +55,11 @@ export async function tenantUsage(): Promise<TenantUsage> {
 	]);
 
 	const plan: TenantPlan = tenant?.plan ?? 'starter';
-	const applied = effectivePlan(plan, tenant?.billing, env.BILLING_PAST_DUE_GRACE_DAYS);
+	const applied = effectivePlan(
+		plan,
+		tenant?.billing,
+		env.BILLING_PAST_DUE_GRACE_DAYS,
+	);
 	const def = PLANS[applied];
 	const enforced = env.MULTI_TENANT && tenant?.isPlatform !== true;
 
@@ -67,7 +71,9 @@ export async function tenantUsage(): Promise<TenantUsage> {
 		carriers,
 		stores,
 		includedMembers: def.includedMembers,
-		extraMembers: def.extraMembers ? Number(tenant?.billing?.extraMembers ?? 0) : 0,
+		extraMembers: def.extraMembers
+			? Number(tenant?.billing?.extraMembers ?? 0)
+			: 0,
 		memberLimit: enforced ? memberLimit(applied, tenant?.billing) : null,
 		storeLimit: enforced ? def.maxStores : null,
 		enforced,
@@ -91,10 +97,22 @@ export async function assertCanAdd(kind: 'member' | 'store'): Promise<void> {
 	}
 
 	if (usage.memberLimit != null && usage.members + 1 > usage.memberLimit) {
-		throw new PlanLimitReachedError('member', usage.memberLimit, usage.effectivePlan);
+		throw new PlanLimitReachedError(
+			'member',
+			usage.memberLimit,
+			usage.effectivePlan,
+		);
 	}
 
-	if (kind === 'store' && usage.storeLimit != null && usage.stores + 1 > usage.storeLimit) {
-		throw new PlanLimitReachedError('store', usage.storeLimit, usage.effectivePlan);
+	if (
+		kind === 'store' &&
+		usage.storeLimit != null &&
+		usage.stores + 1 > usage.storeLimit
+	) {
+		throw new PlanLimitReachedError(
+			'store',
+			usage.storeLimit,
+			usage.effectivePlan,
+		);
 	}
 }

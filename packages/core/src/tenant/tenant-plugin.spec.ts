@@ -1,8 +1,5 @@
 import { Mongoose, Schema } from 'mongoose';
-import {
-	TenantContext,
-	TenantContextMissingError,
-} from './tenant-context';
+import { TenantContext, TenantContextMissingError } from './tenant-context';
 import {
 	applyTenantToPipeline,
 	scrubTenantFromUpdate,
@@ -25,7 +22,7 @@ function setup() {
 		new Schema({
 			name: String,
 			tenantId: { type: String, required: true, index: true },
-		})
+		}),
 	);
 
 	const Order = mongoose.model(
@@ -33,13 +30,10 @@ function setup() {
 		new Schema({
 			shop: String,
 			tenantId: { type: String, required: true, index: true },
-		})
+		}),
 	);
 
-	const Currency = mongoose.model(
-		'Currency',
-		new Schema({ code: String })
-	);
+	const Currency = mongoose.model('Currency', new Schema({ code: String }));
 
 	return { mongoose, Shop, Order, Currency };
 }
@@ -58,7 +52,9 @@ async function failure(p: PromiseLike<unknown>): Promise<any> {
 const isDriverError = (err: any) =>
 	!(err instanceof TenantContextMissingError) &&
 	!(err instanceof TenantMismatchError) &&
-	/initial connection|not connected|bufferCommands/i.test(String(err?.message));
+	/initial connection|not connected|bufferCommands/i.test(
+		String(err?.message),
+	);
 
 // these tests need "no tenant" to mean none (test/unit/setup-tenant.ts sets a fallback)
 let savedFallback: string | null;
@@ -69,7 +65,6 @@ beforeEach(() => {
 afterEach(() => TenantContext.setFallbackTenantId(savedFallback));
 
 describe('tenantPlugin', () => {
-
 	describe('queries', () => {
 		it.each([
 			['find', (M) => M.find({ name: 'x' })],
@@ -84,11 +79,14 @@ describe('tenantPlugin', () => {
 			['findByIdAndDelete', (M) => M.findByIdAndDelete(A)],
 			['distinct', (M) => M.distinct('name')],
 			['replaceOne', (M) => M.replaceOne({}, { name: 'y' })],
-		])('%s without a tenant throws TenantContextMissingError', async (_, op) => {
-			const { Shop } = setup();
-			const err = await failure(op(Shop).exec());
-			expect(err).toBeInstanceOf(TenantContextMissingError);
-		});
+		])(
+			'%s without a tenant throws TenantContextMissingError',
+			async (_, op) => {
+				const { Shop } = setup();
+				const err = await failure(op(Shop).exec());
+				expect(err).toBeInstanceOf(TenantContextMissingError);
+			},
+		);
 
 		it.each([
 			['find', (M) => M.find({ name: 'x' })],
@@ -102,7 +100,7 @@ describe('tenantPlugin', () => {
 			const query = op(Shop);
 
 			const err = await TenantContext.runInTenant(A, () =>
-				failure(query.exec())
+				failure(query.exec()),
 			);
 
 			expect(isDriverError(err)).toBe(true);
@@ -132,10 +130,10 @@ describe('tenantPlugin', () => {
 
 		it('never lets an update change tenantId', async () => {
 			const { Shop } = setup();
-			const query = Shop.updateMany(
-				{},
-				{ tenantId: B, $set: { tenantId: B, name: 'n' } } as any
-			);
+			const query = Shop.updateMany({}, {
+				tenantId: B,
+				$set: { tenantId: B, name: 'n' },
+			} as any);
 
 			await TenantContext.runInTenant(A, () => failure(query.exec()));
 
@@ -158,7 +156,7 @@ describe('tenantPlugin', () => {
 			const query = Shop.find({ name: 'x' });
 
 			const err = await TenantContext.runAsSystem('test', () =>
-				failure(query.exec())
+				failure(query.exec()),
 			);
 
 			expect(isDriverError(err)).toBe(true);
@@ -190,11 +188,11 @@ describe('tenantPlugin', () => {
 			const { Shop } = setup();
 
 			await TenantContext.runInTenant(A, async () => {
-				expect(String(await failure(Shop.estimatedDocumentCount().exec()))).toMatch(
-					/countDocuments/
-				);
+				expect(
+					String(await failure(Shop.estimatedDocumentCount().exec())),
+				).toMatch(/countDocuments/);
 				expect(String(await failure(Shop.bulkWrite([])))).toMatch(
-					/not tenant-scoped/
+					/not tenant-scoped/,
 				);
 			});
 		});
@@ -206,7 +204,7 @@ describe('tenantPlugin', () => {
 			const doc = new Shop({ name: 'n' });
 
 			const err = await TenantContext.runInTenant(A, () =>
-				failure(doc.save())
+				failure(doc.save()),
 			);
 
 			expect(isDriverError(err)).toBe(true);
@@ -218,7 +216,7 @@ describe('tenantPlugin', () => {
 			const doc = new Shop({ name: 'n', tenantId: B });
 
 			const err = await TenantContext.runInTenant(A, () =>
-				failure(doc.save())
+				failure(doc.save()),
 			);
 
 			expect(err).toBeInstanceOf(TenantMismatchError);
@@ -233,7 +231,7 @@ describe('tenantPlugin', () => {
 		it('requires system work to state the tenant', async () => {
 			const { Shop } = setup();
 			const err = await TenantContext.runAsSystem('test', () =>
-				failure(new Shop({ name: 'n' }).save())
+				failure(new Shop({ name: 'n' }).save()),
 			);
 			expect(err?.name).toBe('ValidationError');
 		});
@@ -243,14 +241,14 @@ describe('tenantPlugin', () => {
 			const docs: any[] = [{ name: 'a' }, { name: 'b' }];
 
 			const err = await TenantContext.runInTenant(A, () =>
-				failure(Shop.insertMany(docs))
+				failure(Shop.insertMany(docs)),
 			);
 
 			expect(isDriverError(err)).toBe(true);
 			expect(docs.map((d) => d.tenantId)).toEqual([A, A]);
 
 			const foreign = await TenantContext.runInTenant(A, () =>
-				failure(Shop.insertMany([{ name: 'c', tenantId: B }]))
+				failure(Shop.insertMany([{ name: 'c', tenantId: B }])),
 			);
 			expect(foreign).toBeInstanceOf(TenantMismatchError);
 		});
@@ -261,7 +259,9 @@ describe('tenantPlugin', () => {
 			const { Shop } = setup();
 			const agg = Shop.aggregate([{ $match: { name: 'x' } }]);
 
-			const err = await TenantContext.runInTenant(A, () => failure(agg.exec()));
+			const err = await TenantContext.runInTenant(A, () =>
+				failure(agg.exec()),
+			);
 
 			expect(isDriverError(err)).toBe(true);
 			expect(agg.pipeline()[0]).toEqual({ $match: { tenantId: A } });
@@ -280,7 +280,9 @@ describe('tenantPlugin', () => {
 					$lookup: {
 						from: 'shops',
 						let: { s: '$shop' },
-						pipeline: [{ $match: { $expr: { $eq: ['$_id', '$$s'] } } }],
+						pipeline: [
+							{ $match: { $expr: { $eq: ['$_id', '$$s'] } } },
+						],
 						as: 'shop',
 					},
 				},
@@ -324,8 +326,20 @@ describe('applyTenantToPipeline', () => {
 	it('limits $unionWith, $graphLookup and $facet sub-pipelines', () => {
 		const pipeline: any[] = [
 			{ $unionWith: 'orders' },
-			{ $graphLookup: { from: 'shops', startWith: '$a', connectFromField: 'a', connectToField: 'b', as: 'g' } },
-			{ $facet: { x: [{ $lookup: { from: 'orders', pipeline: [], as: 'o' } }] } },
+			{
+				$graphLookup: {
+					from: 'shops',
+					startWith: '$a',
+					connectFromField: 'a',
+					connectToField: 'b',
+					as: 'g',
+				},
+			},
+			{
+				$facet: {
+					x: [{ $lookup: { from: 'orders', pipeline: [], as: 'o' } }],
+				},
+			},
 		];
 
 		applyTenantToPipeline(pipeline, A, collections);
@@ -344,10 +358,10 @@ describe('applyTenantToPipeline', () => {
 
 	it('refuses $out and $merge', () => {
 		expect(() =>
-			applyTenantToPipeline([{ $out: 'x' }], A, collections)
+			applyTenantToPipeline([{ $out: 'x' }], A, collections),
 		).toThrow(/\$out/);
 		expect(() =>
-			applyTenantToPipeline([{ $merge: { into: 'x' } }], A, collections)
+			applyTenantToPipeline([{ $merge: { into: 'x' } }], A, collections),
 		).toThrow(/\$merge/);
 	});
 });
@@ -373,9 +387,9 @@ describe('scrubTenantFromUpdate', () => {
 	});
 
 	it('refuses pipeline updates', () => {
-		expect(() => scrubTenantFromUpdate([{ $set: { tenantId: B } }])).toThrow(
-			/Pipeline updates/
-		);
+		expect(() =>
+			scrubTenantFromUpdate([{ $set: { tenantId: B } }]),
+		).toThrow(/Pipeline updates/);
 	});
 });
 
@@ -398,10 +412,12 @@ describe('TenantContext', () => {
 
 	it('requireTenantId throws without a tenant, and inside system work', () => {
 		expect(() => TenantContext.requireTenantId()).toThrow(
-			TenantContextMissingError
+			TenantContextMissingError,
 		);
 		expect(() =>
-			TenantContext.runAsSystem('x', () => TenantContext.requireTenantId())
+			TenantContext.runAsSystem('x', () =>
+				TenantContext.requireTenantId(),
+			),
 		).toThrow(TenantContextMissingError);
 	});
 });

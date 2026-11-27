@@ -44,7 +44,12 @@ export class GraphQLAccessGuard implements CanActivate {
 				return true;
 			}
 
-			if (access !== undefined && access !== 'public' && access !== 'platform' && ctx?.actor == null) {
+			if (
+				access !== undefined &&
+				access !== 'public' &&
+				access !== 'platform' &&
+				ctx?.actor == null
+			) {
 				throw new UnauthorizedException('Log in first');
 			}
 
@@ -70,9 +75,13 @@ export class GraphQLAccessGuard implements CanActivate {
 			return true;
 		}
 
-		if (access !== undefined && access !== 'platform' && ctx?.tenantId == null) {
+		if (
+			access !== undefined &&
+			access !== 'platform' &&
+			ctx?.tenantId == null
+		) {
 			throw new ForbiddenException(
-				'No tenant: send the Tenant-Id header, use the tenant host name or log in'
+				'No tenant: send the Tenant-Id header, use the tenant host name or log in',
 			);
 		}
 

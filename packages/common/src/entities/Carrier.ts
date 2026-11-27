@@ -1,6 +1,14 @@
 import CarrierStatus from '../enums/CarrierStatus';
 import GeoLocation from './GeoLocation';
-import { DBObject, getSchema, ModelName, Schema, Types, TenantId, CompoundIndex } from '../@pyro/db';
+import {
+	DBObject,
+	getSchema,
+	ModelName,
+	Schema,
+	Types,
+	TenantId,
+	CompoundIndex,
+} from '../@pyro/db';
 import ICarrier, { ICarrierCreateObject } from '../interfaces/ICarrier';
 import { Entity, Column } from 'typeorm';
 

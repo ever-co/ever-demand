@@ -1,11 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import {
-	NbAlertModule,
-	NbButtonModule,
-	NbSpinnerModule,
-} from '@nebular/theme';
+import { NbAlertModule, NbButtonModule, NbSpinnerModule } from '@nebular/theme';
 import { ToasterModule } from '@app/@core/toaster';
 import { TranslateModule } from '@modules/client.common.angular2/locale/translate.module';
 import { ThemeModule } from '../../@theme';

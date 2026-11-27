@@ -42,7 +42,7 @@ sed -i "s#DOCKER_GENERATE_PASSWORD_CHARSET#$GENERATE_PASSWORD_CHARSET#g" *.js
 sed -i "s#DOCKER_SETTINGS_APP_TYPE#$SETTINGS_APP_TYPE#g" *.js
 sed -i "s#DOCKER_SETTINGS_MAINTENANCE_API_URL#$SETTINGS_MAINTENANCE_API_URL#g" *.js
 sed -i "s#DOCKER_DEMO#$DEMO#g" *.js
-sed -i "s#DOCKER_TENANT_BASE_DOMAIN#$TENANT_BASE_DOMAIN#g" *.js
+sed -i "s#DOCKER_TENANT_BASE_DOMAIN#$TENANT_BASE_DOMAIN#g" ./*.js
 
 envsubst '${API_HOST} ${API_PORT}' < /etc/nginx/conf.d/compose.conf.template > /etc/nginx/nginx.conf
 

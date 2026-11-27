@@ -1,6 +1,12 @@
 import { Client, createClient } from 'graphql-ws';
 import WebSocket from 'ws';
-import { adminToken, defaultAdminToken, gqlData, PyroClient, unique } from './helpers';
+import {
+	adminToken,
+	defaultAdminToken,
+	gqlData,
+	PyroClient,
+	unique,
+} from './helpers';
 import { SUBSCRIPTIONS_URL } from './server';
 
 /**

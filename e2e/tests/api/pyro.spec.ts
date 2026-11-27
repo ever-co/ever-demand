@@ -1,5 +1,10 @@
 import { expect, test } from '@playwright/test';
-import { createStoreWithProduct, geoLocation, PyroClient, unique, adminToken } from './api-helpers';
+import {
+	createStoreWithProduct,
+	geoLocation,
+	PyroClient,
+	unique,
+} from './api-helpers';
 
 test.describe.configure({ mode: 'serial' });
 
@@ -8,12 +13,13 @@ test.describe('socket.io pyro routers', () => {
 	const pyro = new PyroClient();
 	let storeId: string;
 	let productId: string;
+	let storeToken: string;
 	// entities arrive as JSON over socket.io: `_id`, not the `id` getter
 	let user: { _id: string; email: string };
 	let orderId: string;
 
 	test.beforeAll(async () => {
-		({ storeId, productId } = await createStoreWithProduct(5, 900));
+		({ storeId, productId, storeToken } = await createStoreWithProduct(5, 900));
 	});
 
 	test.afterAll(() => pyro.close());
@@ -54,12 +60,12 @@ test.describe('socket.io pyro routers', () => {
 		await subscription.next((o) => o?._id === orderId);
 
 		await pyro.call('order', 'confirm', orderId);
-		// a merchant action: the store (here the admin) logs in through the handshake
-		const staff = new PyroClient({ token: await adminToken() });
+		// a merchant action: the store logs in through the socket handshake
+		const merchant = new PyroClient({ token: storeToken });
 		try {
-			await staff.call('order', 'updateWarehouseStatus', orderId, 6);
+			await merchant.call('order', 'updateWarehouseStatus', orderId, 6);
 		} finally {
-			staff.close();
+			merchant.close();
 		}
 
 		const pushed = await subscription.next((o) => o.warehouseStatus === 6);

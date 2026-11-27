@@ -1,4 +1,11 @@
-import { DBObject, Schema, ModelName, Types, getSchema, TenantId } from '../@pyro/db';
+import {
+	DBObject,
+	Schema,
+	ModelName,
+	Types,
+	getSchema,
+	TenantId,
+} from '../@pyro/db';
 import {
 	IInviteRequestCreateObject,
 	IInviteRequestRawObject,

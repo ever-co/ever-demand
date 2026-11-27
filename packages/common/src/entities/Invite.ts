@@ -1,5 +1,12 @@
 import GeoLocation from './GeoLocation';
-import { DBObject, Schema, ModelName, Types, getSchema, TenantId } from '../@pyro/db';
+import {
+	DBObject,
+	Schema,
+	ModelName,
+	Types,
+	getSchema,
+	TenantId,
+} from '../@pyro/db';
 import IInvite from '../interfaces/IInvite';
 import { IInviteCreateObject } from '../interfaces/IInvite';
 import { Entity, Column } from 'typeorm';

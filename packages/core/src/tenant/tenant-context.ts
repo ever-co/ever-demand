@@ -39,7 +39,7 @@ export class TenantContextMissingError extends Error {
 	constructor(what?: string) {
 		super(
 			`No tenant${what ? ` for ${what}` : ''}: send the Tenant-Id header, ` +
-				"use the tenant's host name or log in"
+				"use the tenant's host name or log in",
 		);
 	}
 }
@@ -64,7 +64,7 @@ export const TenantContext = {
 	runInTenant<R>(tenantId: string, fn: () => R, actor?: TenantActor): R {
 		return storage.run(
 			{ tenantId, actor: actor ?? storage.getStore()?.actor },
-			fn
+			fn,
 		);
 	},
 
@@ -74,8 +74,12 @@ export const TenantContext = {
 	 */
 	runAsSystem<R>(reason: string, fn: () => R): R {
 		return storage.run(
-			{ tenantId: null, actor: storage.getStore()?.actor, system: reason },
-			fn
+			{
+				tenantId: null,
+				actor: storage.getStore()?.actor,
+				system: reason,
+			},
+			fn,
 		);
 	},
 

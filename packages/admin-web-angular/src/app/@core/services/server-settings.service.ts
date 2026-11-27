@@ -47,7 +47,7 @@ export class ServerSettingsService {
 			})
 			.pipe(
 				take(1),
-				map((res) => res.data?.['adminAppSettings'])
+				map((res) => res.data?.['adminAppSettings']),
 			)
 			.toPromise();
 	}

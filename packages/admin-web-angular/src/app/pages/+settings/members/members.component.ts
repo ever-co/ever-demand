@@ -92,14 +92,23 @@ export class MembersComponent implements OnInit {
 	}
 
 	async invite() {
-		if (!this.permissions.canManageMembers || this.form.invalid || this.busy) {
+		if (
+			!this.permissions.canManageMembers ||
+			this.form.invalid ||
+			this.busy
+		) {
 			this.form.markAllAsTouched();
 			return;
 		}
 
 		await this.run(async () => {
 			await this.tenants.invite(this.form.value);
-			this.form.reset({ name: '', email: '', password: '', role: 'staff' });
+			this.form.reset({
+				name: '',
+				email: '',
+				password: '',
+				role: 'staff',
+			});
 			return 'TENANT_VIEW.MEMBERS.ADDED';
 		});
 	}

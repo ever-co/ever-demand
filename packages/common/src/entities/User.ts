@@ -1,5 +1,13 @@
 import GeoLocation from './GeoLocation';
-import { DBObject, getSchema, ModelName, Schema, Types, TenantId, CompoundIndex } from '../@pyro/db';
+import {
+	DBObject,
+	getSchema,
+	ModelName,
+	Schema,
+	Types,
+	TenantId,
+	CompoundIndex,
+} from '../@pyro/db';
 import IUser, { IUserCreateObject } from '../interfaces/IUser';
 import { Entity, Column } from 'typeorm';
 
@@ -14,7 +22,7 @@ import { Entity, Column } from 'typeorm';
 @ModelName('User')
 @CompoundIndex(
 	{ tenantId: 1, email: 1 },
-	{ unique: true, partialFilterExpression: { email: { $type: 'string' } } }
+	{ unique: true, partialFilterExpression: { email: { $type: 'string' } } },
 )
 @Entity({ name: 'users' })
 class User extends DBObject<IUser, IUserCreateObject> implements IUser {

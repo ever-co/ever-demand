@@ -114,9 +114,9 @@ export class AuthService<T extends IAuthable> extends EntityService<T> {
 			isGlobal
 				? await TenantContext.runAsSystem(
 						`${this.role} login by a username unique across tenants`,
-						find
-				  )
-				: await find()
+						find,
+					)
+				: await find(),
 		);
 
 		if (!entity || !(await bcrypt.compare(password, entity.hash))) {
@@ -127,7 +127,11 @@ export class AuthService<T extends IAuthable> extends EntityService<T> {
 			entity.tenantId ?? tenantDirectory.getDefaultTenantId();
 
 		// on a tenant's host (or with its Tenant-Id), only that tenant's logins work
-		if (isGlobal && requestTenantId != null && tenantId !== requestTenantId) {
+		if (
+			isGlobal &&
+			requestTenantId != null &&
+			tenantId !== requestTenantId
+		) {
 			return null;
 		}
 
@@ -245,7 +249,7 @@ export class AuthService<T extends IAuthable> extends EntityService<T> {
 
 		// a super-admin switched into another tenant: the account is in their own
 		const entity = await TenantContext.runForOwnAccount(id, () =>
-			this.Model.findById(id).lean().exec()
+			this.Model.findById(id).lean().exec(),
 		);
 
 		return entity != null;

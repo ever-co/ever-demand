@@ -17,7 +17,7 @@ export const SLUG_MIN_LENGTH = 3;
 export const SLUG_MAX_LENGTH = 40;
 
 /** Same pattern as the API (packages/core/src/tenant/tenant-directory.ts). */
-const SLUG_PATTERN = /^[a-z0-9](?:[a-z0-9-]{1,38}[a-z0-9])$/;
+const SLUG_PATTERN = /^[a-z0-9][a-z0-9-]{1,38}[a-z0-9]$/;
 
 /**
  * A tenant address suggested from a business name: lower case latin letters,
@@ -27,7 +27,7 @@ const SLUG_PATTERN = /^[a-z0-9](?:[a-z0-9-]{1,38}[a-z0-9])$/;
 export function suggestSlug(name: string | null | undefined): string {
 	const slug = String(name ?? '')
 		.normalize('NFKD')
-		.replace(/[̀-ͯ]/g, '')
+		.replace(/[\u0300-\u036f]/g, '') // combining accents
 		.toLowerCase()
 		.replace(/&/g, ' and ')
 		.replace(/[^a-z0-9]+/g, '-')
@@ -41,7 +41,9 @@ export function suggestSlug(name: string | null | undefined): string {
 /** Why a typed address is not a valid slug (before asking the API if it is free). */
 export type SlugProblem = 'REQUIRED' | 'TOO_SHORT' | 'TOO_LONG' | 'FORMAT';
 
-export function slugProblem(slug: string | null | undefined): SlugProblem | null {
+export function slugProblem(
+	slug: string | null | undefined,
+): SlugProblem | null {
 	const value = String(slug ?? '').trim();
 
 	if (!value) {
@@ -84,7 +86,7 @@ export function cleanBaseDomain(value: string | null | undefined): string {
 /** `<slug>.<baseDomain>`, the shop address of a tenant; null without a base domain. */
 export function shopAddress(
 	slug: string | null | undefined,
-	baseDomain: string | null | undefined
+	baseDomain: string | null | undefined,
 ): string | null {
 	const domain = cleanBaseDomain(baseDomain);
 	return slug && domain ? `${slug}.${domain}` : null;
@@ -105,7 +107,7 @@ export interface TenantPermissions {
 /** A platform super-admin counts as an owner of whatever tenant they act in. */
 export function tenantPermissions(
 	role: string | null | undefined,
-	isSuperAdmin = false
+	isSuperAdmin = false,
 ): TenantPermissions {
 	const owner = isSuperAdmin || role === 'owner';
 	const manager = owner || role === 'admin';
@@ -136,7 +138,7 @@ export interface MemberActions {
 export function memberActions(
 	member: MemberLike,
 	myAdminId: string | null | undefined,
-	permissions: TenantPermissions
+	permissions: TenantPermissions,
 ): MemberActions {
 	if (!permissions.canManageMembers || member.role === 'owner') {
 		return { roles: [], canRemove: false };
@@ -174,5 +176,5 @@ export function billingNotice(value: unknown): BillingNotice | null {
 
 /** Only http(s) URLs are followed (Checkout / portal sessions come from the API). */
 export function isHttpUrl(url: string | null | undefined): boolean {
-	return /^https?:\/\/[^\s]+$/i.test(String(url ?? ''));
+	return /^https?:\/\/\S+$/i.test(String(url ?? ''));
 }

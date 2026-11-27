@@ -50,7 +50,7 @@ export async function gql<T = any>(
 	query: string,
 	variables: Record<string, unknown> = {},
 	token?: string | null,
-	headers: Record<string, string> = {}
+	headers: Record<string, string> = {},
 ): Promise<GqlResponse<T>> {
 	const bearer = token === undefined ? await defaultAdminToken() : token;
 
@@ -75,7 +75,11 @@ export async function gql<T = any>(
 
 	// the tenant middleware answers before GraphQL: { statusCode, code, message }
 	if (body && body.errors == null && body.data == null && body.message) {
-		body = { errors: [{ message: body.message, extensions: { code: body.code } }] };
+		body = {
+			errors: [
+				{ message: body.message, extensions: { code: body.code } },
+			],
+		};
 	}
 
 	return { status: res.status, ...body };
@@ -173,7 +177,8 @@ export class PyroClient {
 
 		return new Promise<T>((resolve, reject) => {
 			// a server that drops the connection never answers
-			const dropped = (reason: string) => reject(new Error(`disconnected: ${reason}`));
+			const dropped = (reason: string) =>
+				reject(new Error(`disconnected: ${reason}`));
 			socket.once('disconnect', dropped);
 
 			socket.emit(method, ...args, (err: any, res: T) => {
@@ -270,7 +275,7 @@ export async function adminToken(): Promise<string> {
 			adminLogin(email: $email, password: $password) { token }
 		}`,
 		{ email: 'admin@ever.co', password: 'admin' },
-		ANONYMOUS
+		ANONYMOUS,
 	);
 
 	if (!data.adminLogin) {

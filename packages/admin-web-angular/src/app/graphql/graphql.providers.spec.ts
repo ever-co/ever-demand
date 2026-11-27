@@ -162,11 +162,26 @@ describe('GraphQL client setup', () => {
 		});
 
 		it('graphql-ws connects with the token and the switched tenant', () => {
-			expect(wsConnectionParams(() => null, () => null)).toEqual({});
-			expect(wsConnectionParams(() => 'jwt', () => null)).toEqual({
+			expect(
+				wsConnectionParams(
+					() => null,
+					() => null,
+				),
+			).toEqual({});
+			expect(
+				wsConnectionParams(
+					() => 'jwt',
+					() => null,
+				),
+			).toEqual({
 				authorization: 'Bearer jwt',
 			});
-			expect(wsConnectionParams(() => 'jwt', () => 'tenant-a')).toEqual({
+			expect(
+				wsConnectionParams(
+					() => 'jwt',
+					() => 'tenant-a',
+				),
+			).toEqual({
 				authorization: 'Bearer jwt',
 				tenant: 'tenant-a',
 			});

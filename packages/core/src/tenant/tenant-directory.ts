@@ -45,12 +45,16 @@ export const RESERVED_SLUGS: ReadonlySet<string> = new Set([
 /** Host labels of the platform itself: never a tenant sub-domain. */
 const PLATFORM_HOST_LABELS = new Set(['app', 'api', 'www', 'admin']);
 
-const SLUG_PATTERN = /^[a-z0-9](?:[a-z0-9-]{1,38}[a-z0-9])$/;
+const SLUG_PATTERN = /^[a-z0-9][a-z0-9-]{1,38}[a-z0-9]$/;
 
 const OBJECT_ID_PATTERN = /^[0-9a-f]{24}$/i;
 
 export function isValidSlug(slug: string): boolean {
-	return typeof slug === 'string' && SLUG_PATTERN.test(slug) && !slug.includes('--');
+	return (
+		typeof slug === 'string' &&
+		SLUG_PATTERN.test(slug) &&
+		!slug.includes('--')
+	);
 }
 
 export function isAvailableSlug(slug: string): boolean {
@@ -119,7 +123,7 @@ export class TenantDirectory {
 
 	private async cached(
 		key: string,
-		load: () => Promise<any>
+		load: () => Promise<any>,
 	): Promise<Tenant | null> {
 		const hit = this.cache.get(key);
 
@@ -141,7 +145,7 @@ export class TenantDirectory {
 		}
 
 		return this.cached(`id:${id}`, () =>
-			this.Model.findById(id).lean().exec()
+			this.Model.findById(id).lean().exec(),
 		);
 	}
 
@@ -153,7 +157,7 @@ export class TenantDirectory {
 		}
 
 		return this.cached(`slug:${normalized}`, () =>
-			this.Model.findOne({ slug: normalized }).lean().exec()
+			this.Model.findOne({ slug: normalized }).lean().exec(),
 		);
 	}
 
@@ -189,12 +193,16 @@ export class TenantDirectory {
 			return null;
 		}
 
-		if (name === 'localhost' || /^[\d.]+$/.test(name) || name.includes(':')) {
+		if (
+			name === 'localhost' ||
+			/^[\d.]+$/.test(name) ||
+			name.includes(':')
+		) {
 			return null;
 		}
 
 		return this.cached(`domain:${name}`, () =>
-			this.Model.findOne({ 'settings.domains': name }).lean().exec()
+			this.Model.findOne({ 'settings.domains': name }).lean().exec(),
 		);
 	}
 

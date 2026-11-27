@@ -38,7 +38,9 @@ function safeStorage(): StorageLike | null {
  * null (the API takes the tenant from the login token). A slug kept from an
  * earlier super-admin session is ignored for anybody else.
  */
-export function switchedTenant(storage: StorageLike | null = safeStorage()): string | null {
+export function switchedTenant(
+	storage: StorageLike | null = safeStorage(),
+): string | null {
 	if (storage?.getItem(SUPER_ADMIN_KEY) !== 'true') {
 		return null;
 	}

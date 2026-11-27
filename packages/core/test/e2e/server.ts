@@ -80,7 +80,7 @@ export function serverEnv(): NodeJS.ProcessEnv {
 					STRIPE_BILLING_API_URL: `http://${HOST}:${STRIPE_PORT}`,
 					// open connections re-check their access every second (revocation specs)
 					TENANT_ACCESS_RECHECK_MS: '1000',
-			  }
+				}
 			: {}),
 	};
 }

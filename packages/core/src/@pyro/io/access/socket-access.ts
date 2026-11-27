@@ -16,10 +16,16 @@ import type { GraphQLAccess } from '../../../graphql/access/graphql-access';
 export type SocketAccess = GraphQLAccess;
 
 const admin = { roles: ['admin'] as any };
-const manager = { roles: ['admin'] as any, adminRoles: ['owner', 'admin'] as any };
+const manager = {
+	roles: ['admin'] as any,
+	adminRoles: ['owner', 'admin'] as any,
+};
 const store = { roles: ['admin', 'warehouse'] as any };
 /** creates logins (members): owners / admins of the tenant, and stores for their carriers */
-const storeManager = { roles: ['admin', 'warehouse'] as any, adminRoles: ['owner', 'admin'] as any };
+const storeManager = {
+	roles: ['admin', 'warehouse'] as any,
+	adminRoles: ['owner', 'admin'] as any,
+};
 const carrier = { roles: ['admin', 'carrier'] as any };
 const staffApps = { roles: ['admin', 'warehouse', 'carrier'] as any };
 
@@ -75,7 +81,8 @@ export const SOCKET_ACCESS: Readonly<Record<string, SocketAccess>> = {
 	// InviteByLocationScreen). Invite-only shops: only admins invite. Read when
 	// called, so loading this table does not load the env.
 	get 'invite.create'(): SocketAccess {
-		const { env } = require('../../../env') as typeof import('../../../env');
+		const { env } =
+			require('../../../env') as typeof import('../../../env');
 
 		return env.SETTING_INVITES_ENABLED ? admin : 'public';
 	},
@@ -174,6 +181,9 @@ export const SOCKET_ACCESS: Readonly<Record<string, SocketAccess>> = {
 	'warehouse-users.getPromise': store,
 };
 
-export function socketAccessKey(routerName: string, listenerName: string): string {
+export function socketAccessKey(
+	routerName: string,
+	listenerName: string,
+): string {
 	return `${routerName}.${listenerName}`;
 }

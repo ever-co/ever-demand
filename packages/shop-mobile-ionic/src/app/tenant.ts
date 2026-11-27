@@ -19,7 +19,7 @@ export function shopTenantConfig(): ClientTenantConfig {
 
 /** graphql-ws `connectionParams`: the customer's token and the shop's tenant, read at each (re)connect. */
 export function subscriptionParams(
-	token: string | null
+	token: string | null,
 ): Record<string, string> {
 	const params: Record<string, string> = {};
 	const tenant = resolveClientTenant(shopTenantConfig());

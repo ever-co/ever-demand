@@ -235,7 +235,7 @@ export const GRAPHQL_ACCESS: Readonly<Record<string, GraphQLAccess>> = {
 /** Whether `ctx` may run an operation with `access` (see GRAPHQL_ACCESS). */
 export function isAllowed(
 	access: GraphQLAccess | undefined,
-	ctx: TenantCtx | undefined
+	ctx: TenantCtx | undefined,
 ): boolean {
 	if (access === undefined) {
 		return false;
@@ -273,4 +273,3 @@ export function isAllowed(
 
 	return true;
 }
-

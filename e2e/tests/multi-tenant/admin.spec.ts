@@ -35,15 +35,22 @@ async function signUp(page: Page, tenant: TenantAccount): Promise<void> {
 	await register.focus();
 	await page.keyboard.press('Enter');
 	await expect(page).toHaveURL(/#\/auth\/signup/);
-	await expect(page.getByRole('heading', { name: 'Create your business' })).toBeVisible();
+	await expect(
+		page.getByRole('heading', { name: 'Create your business' }),
+	).toBeVisible();
 
 	await page.locator('#input-business').fill(tenant.business);
 	// the address is suggested from the business name and checked live
 	await expect(page.locator('#input-slug')).toHaveValue(tenant.slug);
-	await expect(page.locator('[data-test="slug-status"]')).toHaveText('This address is free', {
-		timeout: 15_000,
-	});
-	await expect(page.locator('[data-test="shop-address"]')).toHaveText(`${tenant.slug}.${BASE_DOMAIN}`);
+	await expect(page.locator('[data-test="slug-status"]')).toHaveText(
+		'This address is free',
+		{
+			timeout: 15_000,
+		},
+	);
+	await expect(page.locator('[data-test="shop-address"]')).toHaveText(
+		`${tenant.slug}.${BASE_DOMAIN}`,
+	);
 
 	await page.locator('#input-first-name').fill('Olga');
 	await page.locator('#input-last-name').fill('Owner');
@@ -55,7 +62,9 @@ async function signUp(page: Page, tenant: TenantAccount): Promise<void> {
 	await page.locator('#signup-submit').click();
 	await expect(page).toHaveURL(/#\/dashboard/, { timeout: 30_000 });
 	await expect(page.locator('ngx-header')).toBeVisible();
-	expect(await page.evaluate(() => localStorage.getItem('token'))).toBeTruthy();
+	expect(
+		await page.evaluate(() => localStorage.getItem('token')),
+	).toBeTruthy();
 	// a tenant owner is no super-admin: no tenant switcher, and no Tenant-Id ever
 	await expect(page.locator('#tenant-switcher')).toHaveCount(0);
 }
@@ -64,7 +73,9 @@ async function signUp(page: Page, tenant: TenantAccount): Promise<void> {
 async function expectStoresListed(page: Page, known: string): Promise<void> {
 	await openTable(page, 'stores', 'Email');
 	await filterTable(page, 'Name', known);
-	await expect(rowsWith(page, known).first()).toBeVisible({ timeout: 30_000 });
+	await expect(rowsWith(page, known).first()).toBeVisible({
+		timeout: 30_000,
+	});
 }
 
 async function expectStoreNotListed(page: Page, name: string): Promise<void> {
@@ -89,7 +100,10 @@ test.describe('multi-tenant admin', () => {
 		expect(errors, errors.join('\n')).toEqual([]);
 	});
 
-	test('tenant A creates a store and a product, and sees its settings', async ({ page, baseURL }) => {
+	test('tenant A creates a store and a product, and sees its settings', async ({
+		page,
+		baseURL,
+	}) => {
 		const errors = collectAppErrors(page);
 		await loginAs(page, a.email, a.password);
 
@@ -98,14 +112,24 @@ test.describe('multi-tenant admin', () => {
 
 		// Settings → Business: the address and the shop address
 		await page.goto(route('settings/tenant'));
-		await expect(page.locator('[data-test="tenant-slug"]')).toHaveText(a.slug, { timeout: 30_000 });
-		await expect(page.locator('[data-test="shop-address"]')).toContainText(`${a.slug}.${BASE_DOMAIN}`);
+		await expect(page.locator('[data-test="tenant-slug"]')).toHaveText(
+			a.slug,
+			{ timeout: 30_000 },
+		);
+		await expect(page.locator('[data-test="shop-address"]')).toContainText(
+			`${a.slug}.${BASE_DOMAIN}`,
+		);
 		await expect(page.locator('#tenant-name')).toHaveValue(a.business);
 
 		// Settings → Billing: Starter, one store of three
 		await page.goto(route('settings/billing'));
-		await expect(page.locator('[data-test="current-plan"]')).toHaveText('Starter', { timeout: 30_000 });
-		await expect(page.locator('[data-test="stores-usage"]')).toHaveText('1 of 3');
+		await expect(page.locator('[data-test="current-plan"]')).toHaveText(
+			'Starter',
+			{ timeout: 30_000 },
+		);
+		await expect(page.locator('[data-test="stores-usage"]')).toHaveText(
+			'1 of 3',
+		);
 		// the owner may buy a plan
 		await expect(page.locator('#billing-upgrade')).toBeVisible();
 
@@ -118,7 +142,9 @@ test.describe('multi-tenant admin', () => {
 		expect(errors, errors.join('\n')).toEqual([]);
 	});
 
-	test("tenant B signs up and sees none of A's stores or products", async ({ page }) => {
+	test("tenant B signs up and sees none of A's stores or products", async ({
+		page,
+	}) => {
 		const errors = collectAppErrors(page);
 		await signUp(page, b);
 
@@ -128,18 +154,25 @@ test.describe('multi-tenant admin', () => {
 		await expectStoreNotListed(page, a.store);
 
 		await openTable(page, 'products/list', 'Images');
-		await expect(rowsWith(page, a.product)).toHaveCount(0, { timeout: 15_000 });
+		await expect(rowsWith(page, a.product)).toHaveCount(0, {
+			timeout: 15_000,
+		});
 
 		expect(errors, errors.join('\n')).toEqual([]);
 	});
 
-	test('the super-admin switches into tenant A and sees its store', async ({ page }) => {
+	test('the super-admin switches into tenant A and sees its store', async ({
+		page,
+	}) => {
 		const errors = collectAppErrors(page);
 		await loginAs(page, SUPER_ADMIN.email, SUPER_ADMIN.password);
 
 		const switcher = page.locator('#tenant-switcher');
 		await expect(switcher).toBeVisible({ timeout: 30_000 });
-		await expect(switcher.locator(`option[value="${a.slug}"]`)).toHaveCount(1, { timeout: 30_000 });
+		await expect(switcher.locator(`option[value="${a.slug}"]`)).toHaveCount(
+			1,
+			{ timeout: 30_000 },
+		);
 
 		// on the platform tenant: neither A's nor B's store
 		await openTable(page, 'stores', 'Email');
@@ -148,21 +181,33 @@ test.describe('multi-tenant admin', () => {
 		await switcher.selectOption(a.slug);
 		// the screens load again in A (A has a store: the dashboard)
 		await expect(page).toHaveURL(/#\/dashboard/, { timeout: 30_000 });
-		await expect.poll(() => page.evaluate(() => localStorage.getItem('_superAdminTenant'))).toBe(a.slug);
+		await expect
+			.poll(() =>
+				page.evaluate(() => localStorage.getItem('_superAdminTenant')),
+			)
+			.toBe(a.slug);
 
 		await expectStoresListed(page, a.store);
 		await expectStoreNotListed(page, b.store);
 
 		await openTable(page, 'products/list', 'Images');
-		await expect(rowsWith(page, a.product).first()).toBeVisible({ timeout: 30_000 });
+		await expect(rowsWith(page, a.product).first()).toBeVisible({
+			timeout: 30_000,
+		});
 
 		// the super-admin's own profile still loads while acting in A
 		await expect(page.locator('ngx-header nb-user')).toBeVisible();
 
 		// back to "Platform (default)"; the screens load again (dashboard, or setup without a store)
 		await page.locator('#tenant-switcher').selectOption('');
-		await expect.poll(() => page.evaluate(() => localStorage.getItem('_superAdminTenant'))).toBeNull();
-		await expect(page).toHaveURL(/#\/(dashboard|setup)/, { timeout: 30_000 });
+		await expect
+			.poll(() =>
+				page.evaluate(() => localStorage.getItem('_superAdminTenant')),
+			)
+			.toBeNull();
+		await expect(page).toHaveURL(/#\/(dashboard|setup)/, {
+			timeout: 30_000,
+		});
 		await openTable(page, 'stores', 'Email');
 		await expectStoreNotListed(page, a.store);
 

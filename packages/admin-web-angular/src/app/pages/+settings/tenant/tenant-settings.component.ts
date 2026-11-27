@@ -79,7 +79,11 @@ export class TenantSettingsComponent implements OnInit {
 	}
 
 	async save() {
-		if (!this.permissions.canEditTenant || this.form.invalid || this.saving) {
+		if (
+			!this.permissions.canEditTenant ||
+			this.form.invalid ||
+			this.saving
+		) {
 			return;
 		}
 

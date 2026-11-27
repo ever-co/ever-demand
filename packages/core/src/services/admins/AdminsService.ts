@@ -47,7 +47,7 @@ export class AdminsService extends DBService<Admin> implements IAdminRouter {
 
 		// TODO: move to base class (DBService) and make it fail everything if no admin users found in DB
 		TenantContext.runAsSystem('log the number of admins at startup', () =>
-			_adminRepository.count()
+			_adminRepository.count(),
 		)
 			.then((c) => {
 				console.log('Admins count: ' + c);
@@ -147,8 +147,12 @@ export class AdminsService extends DBService<Admin> implements IAdminRouter {
 	): Promise<IAdminLoginResponse | null> {
 		// looked up across tenants: the token then carries the admin's tenant
 		const res = await this.authService.login(
-			{ email: String(email ?? '').trim().toLowerCase() },
-			password
+			{
+				email: String(email ?? '')
+					.trim()
+					.toLowerCase(),
+			},
+			password,
 		);
 
 		if (!res || res.entity.isDeleted) {

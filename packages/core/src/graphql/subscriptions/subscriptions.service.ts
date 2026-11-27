@@ -16,7 +16,10 @@ import {
 	headerValue,
 	resolveTenantContext,
 } from '../../tenant/tenant-resolver';
-import { accessRecheckMs, recheckAccess } from '../../tenant/tenant-access-recheck';
+import {
+	accessRecheckMs,
+	recheckAccess,
+} from '../../tenant/tenant-access-recheck';
 import { SUBSCRIPTIONS_PATH, SUBSCRIPTIONS_PORT } from './subscription.constants';
 import { createEverLogger } from '../../helpers/Log';
 

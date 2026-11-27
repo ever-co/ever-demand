@@ -63,12 +63,10 @@ describe('LoginPage', () => {
 	});
 
 	it('reconnects the sockets after a login, so they handshake with the token (DESIGN.md §3.5)', async () => {
-		auth.login.mockReturnValue(
-			of({ token: 'jwt', carrier: { id: 'c1' } })
-		);
+		auth.login.mockReturnValue(of({ token: 'jwt', carrier: { id: 'c1' } }));
 		vi.spyOn(console, 'log').mockImplementation(() => undefined);
 		routers.reconnectAll.mockImplementation(() =>
-			expect(store.token).toBe('jwt')
+			expect(store.token).toBe('jwt'),
 		);
 		const page = TestBed.createComponent(LoginPage).componentInstance;
 

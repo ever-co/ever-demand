@@ -35,7 +35,7 @@ export interface StorageLike {
 	setItem(key: string, value: string): void;
 }
 
-const SLUG = /^[a-z0-9](?:[a-z0-9-]{1,38}[a-z0-9])$/;
+const SLUG = /^[a-z0-9][a-z0-9-]{1,38}[a-z0-9]$/;
 const OBJECT_ID = /^[0-9a-f]{24}$/i;
 const PLATFORM_HOSTS = new Set(['app', 'api', 'www', 'admin']);
 
@@ -45,7 +45,10 @@ export function isTenantKey(value: string | null | undefined): value is string {
 }
 
 /** `<slug>` of `<slug>.<baseDomain>` (one label, not a platform host), else null. */
-export function tenantFromHost(hostname: string, baseDomain: string | null | undefined): string | null {
+export function tenantFromHost(
+	hostname: string,
+	baseDomain: string | null | undefined,
+): string | null {
 	const host = String(hostname ?? '')
 		.toLowerCase()
 		.replace(/\.$/, '');
@@ -70,9 +73,16 @@ export function tenantFromHost(hostname: string, baseDomain: string | null | und
 /** The page location on the web build; null on native (React Native has no `location`). */
 export function webLocation(): LocationLike | null {
 	try {
-		const location = (globalThis as { location?: Partial<LocationLike> }).location;
+		const location = (globalThis as { location?: Partial<LocationLike> })
+			.location;
 		return location && typeof location.hostname === 'string'
-			? { hostname: location.hostname, search: typeof location.search === 'string' ? location.search : '' }
+			? {
+					hostname: location.hostname,
+					search:
+						typeof location.search === 'string'
+							? location.search
+							: '',
+				}
 			: null;
 	} catch {
 		return null;
@@ -82,8 +92,11 @@ export function webLocation(): LocationLike | null {
 /** localStorage on the web build; null on native or when the browser blocks it. */
 export function webStorage(): StorageLike | null {
 	try {
-		const storage = (globalThis as { localStorage?: StorageLike }).localStorage;
-		return storage && typeof storage.getItem === 'function' ? storage : null;
+		const storage = (globalThis as { localStorage?: StorageLike })
+			.localStorage;
+		return storage && typeof storage.getItem === 'function'
+			? storage
+			: null;
 	} catch {
 		return null;
 	}
@@ -95,7 +108,9 @@ function queryTenant(search: string): string | null {
 		return null;
 	}
 	try {
-		return decodeURIComponent(match[1].replace(/\+/g, ' ')).trim().toLowerCase();
+		return decodeURIComponent(match[1].replace(/\+/g, ' '))
+			.trim()
+			.toLowerCase();
 	} catch {
 		return null;
 	}
@@ -115,7 +130,9 @@ export function resolveClientTenant(
 		return build;
 	}
 
-	const fromHost = location ? tenantFromHost(location.hostname, config?.baseDomain) : null;
+	const fromHost = location
+		? tenantFromHost(location.hostname, config?.baseDomain)
+		: null;
 
 	if (fromHost) {
 		return fromHost;
@@ -158,8 +175,13 @@ export function tokenTenantId(token: string | null | undefined): string | null {
 
 	try {
 		const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
-		const claims = JSON.parse(atob(base64 + '='.repeat((4 - (base64.length % 4)) % 4)));
-		return typeof claims?.tenantId === 'string' && isTenantKey(claims.tenantId) ? claims.tenantId : null;
+		const claims = JSON.parse(
+			atob(base64 + '='.repeat((4 - (base64.length % 4)) % 4)),
+		);
+		return typeof claims?.tenantId === 'string' &&
+			isTenantKey(claims.tenantId)
+			? claims.tenantId
+			: null;
 	} catch {
 		return null;
 	}
@@ -170,7 +192,10 @@ export function tokenTenantId(token: string | null | undefined): string | null {
  * which refuses (403) a `Tenant-Id` naming another one: with a token, send the token's own tenant
  * (or none for an old token without the claim), never the resolved one.
  */
-export function tenantToSend(tenant: string | null, token: string | null | undefined): string | null {
+export function tenantToSend(
+	tenant: string | null,
+	token: string | null | undefined,
+): string | null {
 	return token ? tokenTenantId(token) : tenant;
 }
 
@@ -181,7 +206,10 @@ export interface SocketAuth {
 }
 
 /** The socket.io handshake `auth` of the current tenant and token. */
-export function socketAuth(tenant: string | null, token: string | null = null): SocketAuth {
+export function socketAuth(
+	tenant: string | null,
+	token: string | null = null,
+): SocketAuth {
 	const auth: SocketAuth = {};
 	const sent = tenantToSend(tenant, token);
 

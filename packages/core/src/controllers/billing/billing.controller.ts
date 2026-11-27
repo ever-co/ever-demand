@@ -28,18 +28,23 @@ export class BillingController {
 	@HttpCode(200)
 	async webhook(
 		@Req() req: Request & { rawBody?: Buffer },
-		@Headers('stripe-signature') signature?: string
+		@Headers('stripe-signature') signature?: string,
 	) {
 		if (!req.rawBody) {
 			throw new BadRequestException('Expected a raw JSON body');
 		}
 
 		try {
-			const applied = await this._billingService.handleWebhook(req.rawBody, signature);
+			const applied = await this._billingService.handleWebhook(
+				req.rawBody,
+				signature,
+			);
 			return { received: true, applied };
 		} catch (err) {
 			if (err instanceof WebhookSignatureError) {
-				throw new BadRequestException(`Webhook signature: ${err.message}`);
+				throw new BadRequestException(
+					`Webhook signature: ${err.message}`,
+				);
 			}
 
 			// another server is applying this event: a non-2xx answer makes Stripe retry

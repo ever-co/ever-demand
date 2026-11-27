@@ -11,9 +11,11 @@ export interface MigrationsResult {
 }
 
 async function acquireLock(db: Connection, owner: string): Promise<boolean> {
-	const migrations = db.collection<{ _id: string; owner?: string; at?: Date }>(
-		'migrations'
-	);
+	const migrations = db.collection<{
+		_id: string;
+		owner?: string;
+		at?: Date;
+	}>('migrations');
 	const now = new Date();
 
 	try {
@@ -28,7 +30,7 @@ async function acquireLock(db: Connection, owner: string): Promise<boolean> {
 	// someone holds it: take it over only when stale (a crashed instance)
 	const res = await migrations.updateOne(
 		{ _id: LOCK_ID, at: { $lt: new Date(now.getTime() - LOCK_STALE_MS) } },
-		{ $set: { owner, at: now } }
+		{ $set: { owner, at: now } },
 	);
 
 	return res.modifiedCount === 1;
@@ -41,14 +43,16 @@ async function acquireLock(db: Connection, owner: string): Promise<boolean> {
  */
 export async function runMigrations(
 	db: Connection,
-	log: (message: string) => void
+	log: (message: string) => void,
 ): Promise<MigrationsResult> {
 	const owner = `${process.pid}-${Date.now()}`;
 	const started = Date.now();
 
 	while (!(await acquireLock(db, owner))) {
 		if (Date.now() - started > LOCK_STALE_MS + 60_000) {
-			throw new Error('Timed out waiting for another instance to run the migrations');
+			throw new Error(
+				'Timed out waiting for another instance to run the migrations',
+			);
 		}
 
 		log('waiting for another instance to finish the migrations');
@@ -64,7 +68,9 @@ export async function runMigrations(
 		});
 
 		await db
-			.collection<{ _id: string; doneAt?: Date; result?: unknown }>('migrations')
+			.collection<{ _id: string; doneAt?: Date; result?: unknown }>(
+				'migrations',
+			)
 			.updateOne(
 				{ _id: '0001-default-tenant' },
 				{
@@ -76,7 +82,7 @@ export async function runMigrations(
 						},
 					},
 				},
-				{ upsert: true }
+				{ upsert: true },
 			);
 
 		return { defaultTenantId: result.defaultTenantId };

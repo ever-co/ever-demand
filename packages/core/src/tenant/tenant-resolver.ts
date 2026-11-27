@@ -3,7 +3,12 @@ import Admin from '@modules/server.common/entities/Admin';
 import type Tenant from '@modules/server.common/entities/Tenant';
 import { getModel } from '@pyro/db-server/model';
 import { env } from '../env';
-import { ActorRole, TenantActor, TenantContext, TenantCtx } from './tenant-context';
+import {
+	ActorRole,
+	TenantActor,
+	TenantContext,
+	TenantCtx,
+} from './tenant-context';
 import { tenantDirectory } from './tenant-directory';
 
 /** What a request (HTTP, GraphQL over WebSocket, socket.io handshake) tells about its tenant. */
@@ -24,13 +29,19 @@ export class TenantResolutionError extends Error {
 	constructor(
 		message: string,
 		readonly status: 400 | 403 | 404,
-		readonly code: 'TENANT_NOT_FOUND' | 'TENANT_FORBIDDEN' | 'TENANT_SUSPENDED'
+		readonly code:
+			'TENANT_NOT_FOUND' | 'TENANT_FORBIDDEN' | 'TENANT_SUSPENDED',
 	) {
 		super(message);
 	}
 }
 
-const ROLES: ReadonlySet<string> = new Set(['admin', 'warehouse', 'carrier', 'user']);
+const ROLES: ReadonlySet<string> = new Set([
+	'admin',
+	'warehouse',
+	'carrier',
+	'user',
+]);
 
 export interface VerifiedToken {
 	id: string;
@@ -40,7 +51,9 @@ export interface VerifiedToken {
 }
 
 /** Verifies a login token (any role); null when it is missing or invalid. */
-export function verifyLoginToken(raw: string | null | undefined): VerifiedToken | null {
+export function verifyLoginToken(
+	raw: string | null | undefined,
+): VerifiedToken | null {
 	if (typeof raw !== 'string' || raw.trim() === '') {
 		return null;
 	}
@@ -95,12 +108,14 @@ async function loadAdmin(id: string): Promise<any | null> {
 		return null;
 	}
 
-	const admin = await TenantContext.runAsSystem('read the admin of a login token', () =>
-		(getModel(Admin) as any)
-			.findById(id)
-			.select('tenantId role isSuperAdmin isDeleted')
-			.lean()
-			.exec()
+	const admin = await TenantContext.runAsSystem(
+		'read the admin of a login token',
+		() =>
+			(getModel(Admin) as any)
+				.findById(id)
+				.select('tenantId role isSuperAdmin isDeleted')
+				.lean()
+				.exec(),
 	);
 
 	adminCache.set(id, { admin, at: Date.now() });
@@ -141,14 +156,18 @@ async function actorOf(token: VerifiedToken): Promise<TenantActor | null> {
 
 function checkStatus(tenant: Tenant, actor?: TenantActor) {
 	if (tenant.status === 'deleted') {
-		throw new TenantResolutionError('Tenant not found', 404, 'TENANT_NOT_FOUND');
+		throw new TenantResolutionError(
+			'Tenant not found',
+			404,
+			'TENANT_NOT_FOUND',
+		);
 	}
 
 	if (tenant.status === 'suspended' && !actor?.isSuperAdmin) {
 		throw new TenantResolutionError(
 			'This business is suspended',
 			403,
-			'TENANT_SUSPENDED'
+			'TENANT_SUSPENDED',
 		);
 	}
 }
@@ -165,7 +184,7 @@ function checkStatus(tenant: Tenant, actor?: TenantActor) {
  * logged-in user naming another tenant, and a suspended tenant.
  */
 export async function resolveTenantContext(
-	info: TenantRequestInfo
+	info: TenantRequestInfo,
 ): Promise<TenantCtx> {
 	const headerTenant = await headerTenantOf(info);
 	const token = verifyLoginToken(info.authorization);
@@ -178,7 +197,8 @@ export async function resolveTenantContext(
 
 /** The tenant the `Tenant-Id` header / socket `auth.tenant` names; throws when it is unknown. */
 async function headerTenantOf(info: TenantRequestInfo): Promise<Tenant | null> {
-	const header = typeof info.tenantHeader === 'string' ? info.tenantHeader.trim() : '';
+	const header =
+		typeof info.tenantHeader === 'string' ? info.tenantHeader.trim() : '';
 
 	if (!header) {
 		return null;
@@ -190,7 +210,7 @@ async function headerTenantOf(info: TenantRequestInfo): Promise<Tenant | null> {
 		throw new TenantResolutionError(
 			`Unknown tenant "${header.slice(0, 64)}"`,
 			404,
-			'TENANT_NOT_FOUND'
+			'TENANT_NOT_FOUND',
 		);
 	}
 
@@ -201,7 +221,7 @@ async function headerTenantOf(info: TenantRequestInfo): Promise<Tenant | null> {
 async function loginContext(
 	token: VerifiedToken,
 	actor: TenantActor,
-	headerTenant: Tenant | null
+	headerTenant: Tenant | null,
 ): Promise<TenantCtx> {
 	const ownTenantId = tokenTenantId(token);
 
@@ -210,7 +230,7 @@ async function loginContext(
 			throw new TenantResolutionError(
 				'This login belongs to another tenant',
 				403,
-				'TENANT_FORBIDDEN'
+				'TENANT_FORBIDDEN',
 			);
 		}
 
@@ -225,7 +245,7 @@ async function loginContext(
 		throw new TenantResolutionError(
 			'The tenant of this login no longer exists',
 			403,
-			'TENANT_FORBIDDEN'
+			'TENANT_FORBIDDEN',
 		);
 	}
 
@@ -237,7 +257,7 @@ async function loginContext(
 /** A request without a (valid) login: the header, then the host, then the default tenant. */
 async function anonymousContext(
 	info: TenantRequestInfo,
-	headerTenant: Tenant | null
+	headerTenant: Tenant | null,
 ): Promise<TenantCtx> {
 	if (headerTenant) {
 		checkStatus(headerTenant);
@@ -253,11 +273,17 @@ async function anonymousContext(
 		}
 	}
 
-	return { tenantId: env.MULTI_TENANT ? null : tenantDirectory.getDefaultTenantId() };
+	return {
+		tenantId: env.MULTI_TENANT
+			? null
+			: tenantDirectory.getDefaultTenantId(),
+	};
 }
 
 /** First value of a header that may be repeated. */
-export function headerValue(value: string | string[] | undefined | null): string | undefined {
+export function headerValue(
+	value: string | string[] | undefined | null,
+): string | undefined {
 	if (Array.isArray(value)) {
 		return value[0];
 	}

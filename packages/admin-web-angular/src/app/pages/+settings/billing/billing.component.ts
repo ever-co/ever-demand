@@ -58,7 +58,9 @@ export class BillingComponent implements OnInit {
 		private readonly browser: BrowserNavigation,
 	) {
 		this.permissions = session.permissions();
-		this.notice = billingNotice(route.snapshot.queryParamMap.get('checkout'));
+		this.notice = billingNotice(
+			route.snapshot.queryParamMap.get('checkout'),
+		);
 	}
 
 	get paidPlans(): TenantPlanView[] {
@@ -81,7 +83,10 @@ export class BillingComponent implements OnInit {
 
 	/** The Stripe customer portal exists once the tenant has a Stripe customer. */
 	get canManage(): boolean {
-		return this.permissions.canManageBilling && !!this.tenant?.billing?.hasCustomer;
+		return (
+			this.permissions.canManageBilling &&
+			!!this.tenant?.billing?.hasCustomer
+		);
 	}
 
 	async ngOnInit() {

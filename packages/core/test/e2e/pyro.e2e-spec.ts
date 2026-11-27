@@ -62,10 +62,14 @@ describe('socket.io pyro routers: registration and order flow', () => {
 
 	it('lets a new customer sign up by address without a login (invite.create, invites off)', async () => {
 		// the shops' sign-up by address: an invite for the address, then the customer
-		const invite = await pyro.call<{ _id: string; code: string }>('invite', 'create', {
-			apartment: '8',
-			geoLocation: geoLocation(),
-		});
+		const invite = await pyro.call<{ _id: string; code: string }>(
+			'invite',
+			'create',
+			{
+				apartment: '8',
+				geoLocation: geoLocation(),
+			},
+		);
 
 		expect(invite._id).toMatch(/^[0-9a-f]{24}$/);
 		expect(invite.code).toMatch(/^\d{4}$/);
@@ -139,18 +143,33 @@ describe('socket.io pyro routers: registration and order flow', () => {
 
 		// ReadyForProcessing (1) -> PackagingFinished (6), skipping steps is allowed
 		await staff.call('order', 'updateWarehouseStatus', orderId, 1);
-		const packaged = await staff.call('order', 'updateWarehouseStatus', orderId, 6);
+		const packaged = await staff.call(
+			'order',
+			'updateWarehouseStatus',
+			orderId,
+			6,
+		);
 		expect(packaged.warehouseStatus).toBe(6);
 
 		const pushed = await subscription.next((o) => o.warehouseStatus === 6);
 		expect(pushed).toMatchObject({ _id: orderId, isConfirmed: true, warehouseStatus: 6 });
 
 		// the carrier app selects the order (CarrierSelectedOrder, 1), then picks it up (2)
-		const carrier = await staff.call('carrier-orders', 'selectedForDelivery', carrierId, [orderId]);
+		const carrier = await staff.call(
+			'carrier-orders',
+			'selectedForDelivery',
+			carrierId,
+			[orderId],
+		);
 		expect(carrier._id).toBe(carrierId);
 		await subscription.next((o) => o.carrierStatus === 1);
 
-		const pickedUp = await staff.call('order', 'updateCarrierStatus', orderId, 2);
+		const pickedUp = await staff.call(
+			'order',
+			'updateCarrierStatus',
+			orderId,
+			2,
+		);
 		expect(pickedUp.carrierStatus).toBe(2);
 		await subscription.next((o) => o.carrierStatus === 2);
 
@@ -158,7 +177,9 @@ describe('socket.io pyro routers: registration and order flow', () => {
 	});
 
 	it('refuses a status that goes back', async () => {
-		await expect(staff.call('order', 'updateWarehouseStatus', orderId, 1)).rejects.toThrow();
+		await expect(
+			staff.call('order', 'updateWarehouseStatus', orderId, 1),
+		).rejects.toThrow();
 	});
 
 	it('lists the order of the customer (user-orders.get)', async () => {

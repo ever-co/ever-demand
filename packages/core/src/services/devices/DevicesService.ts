@@ -49,7 +49,9 @@ export class DevicesService extends DBService<Device>
 	@asyncListener()
 	async create(device: IDeviceCreateObject): Promise<Device> {
 		// a public listener: server-side fields are never taken from the caller
-		return super.create(stripProtectedFields(device) as IDeviceCreateObject);
+		return super.create(
+			stripProtectedFields(device) as IDeviceCreateObject,
+		);
 	}
 
 	@asyncListener()

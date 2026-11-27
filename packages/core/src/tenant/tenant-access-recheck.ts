@@ -21,7 +21,12 @@ export function accessRecheckMs(): number {
 
 function actorKey(actor: TenantActor | undefined): string {
 	return actor
-		? [actor.id, actor.role, actor.tenantRole ?? '', actor.isSuperAdmin ? 'super' : ''].join('|')
+		? [
+				actor.id,
+				actor.role,
+				actor.tenantRole ?? '',
+				actor.isSuperAdmin ? 'super' : '',
+			].join('|')
 		: '';
 }
 
@@ -37,7 +42,7 @@ export function sameAccess(a: TenantCtx, b: TenantCtx): boolean {
  */
 export async function recheckAccess(
 	info: TenantRequestInfo,
-	current: TenantCtx
+	current: TenantCtx,
 ): Promise<TenantCtx | null> {
 	let fresh: TenantCtx;
 

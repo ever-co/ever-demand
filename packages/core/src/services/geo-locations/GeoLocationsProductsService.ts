@@ -80,15 +80,15 @@ export class GeoLocationsProductsService
 			const productsIds = merchants.map((m) => {
 				let products = m.products
 					.filter((wProduct) =>
-						this.productsFilter(wProduct, options)
+						this.productsFilter(wProduct, options),
 					)
 					.filter((wProduct) =>
-						this.filterBySearchText(wProduct, searchText)
+						this.filterBySearchText(wProduct, searchText),
 					);
 
 				if (!options || !options.withoutCount) {
 					products = products.filter(
-						(wProduct) => wProduct.count > 0
+						(wProduct) => wProduct.count > 0,
 					);
 				}
 

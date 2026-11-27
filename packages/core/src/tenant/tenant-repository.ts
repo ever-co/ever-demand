@@ -1,6 +1,10 @@
 import type { Repository } from 'typeorm';
 import { TenantContext } from './tenant-context';
-import { scopeTenantId, TENANT_FIELD, TenantMismatchError } from './tenant-plugin';
+import {
+	scopeTenantId,
+	TENANT_FIELD,
+	TenantMismatchError,
+} from './tenant-plugin';
 
 type Where = Record<string, any> | Array<Record<string, any>> | undefined;
 
@@ -14,7 +18,7 @@ type Where = Record<string, any> | Array<Record<string, any>> | undefined;
 export class TenantScopedRepository<T extends object> {
 	constructor(
 		private readonly repository: Repository<T>,
-		private readonly what: string
+		private readonly what: string,
 	) {}
 
 	private where(where: Where): Where {
@@ -47,10 +51,16 @@ export class TenantScopedRepository<T extends object> {
 	}
 
 	private criteria(criteria: any): Where {
-		if (criteria == null || typeof criteria !== 'object' || Array.isArray(criteria)) {
+		if (
+			criteria == null ||
+			typeof criteria !== 'object' ||
+			Array.isArray(criteria)
+		) {
 			// an id (or ids): match by id inside the tenant
 			return this.where(
-				Array.isArray(criteria) ? { _id: { $in: criteria } } : { _id: criteria }
+				Array.isArray(criteria)
+					? { _id: { $in: criteria } }
+					: { _id: criteria },
 			);
 		}
 
@@ -58,7 +68,10 @@ export class TenantScopedRepository<T extends object> {
 	}
 
 	find(options: { where?: Where; [key: string]: any } = {}) {
-		return this.repository.find({ ...options, where: this.where(options.where) } as any);
+		return this.repository.find({
+			...options,
+			where: this.where(options.where),
+		} as any);
 	}
 
 	findBy(where: Where) {
@@ -66,7 +79,10 @@ export class TenantScopedRepository<T extends object> {
 	}
 
 	findOne(options: { where?: Where; [key: string]: any } = {}) {
-		return this.repository.findOne({ ...options, where: this.where(options.where) } as any);
+		return this.repository.findOne({
+			...options,
+			where: this.where(options.where),
+		} as any);
 	}
 
 	findOneBy(where: Where) {
@@ -74,7 +90,10 @@ export class TenantScopedRepository<T extends object> {
 	}
 
 	count(options: { where?: Where; [key: string]: any } = {}) {
-		return this.repository.count({ ...options, where: this.where(options.where) } as any);
+		return this.repository.count({
+			...options,
+			where: this.where(options.where),
+		} as any);
 	}
 
 	countBy(where: Where) {
@@ -99,7 +118,10 @@ export class TenantScopedRepository<T extends object> {
 
 	update(criteria: any, partial: Record<string, any>) {
 		const { [TENANT_FIELD]: _ignored, ...rest } = partial ?? {};
-		return this.repository.update(this.criteria(criteria) as any, rest as any);
+		return this.repository.update(
+			this.criteria(criteria) as any,
+			rest as any,
+		);
 	}
 
 	delete(criteria: any) {

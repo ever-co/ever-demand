@@ -67,23 +67,33 @@ export const PLANS: Readonly<Record<TenantPlan, PlanDefinition>> = {
 export const BILLING_INTERVALS: BillingInterval[] = ['monthly', 'annual'];
 
 /** Stripe lookup key of a plan price (shared with the ever.co catalog). */
-export function planLookupKey(plan: TenantPlan, interval: BillingInterval): string {
+export function planLookupKey(
+	plan: TenantPlan,
+	interval: BillingInterval,
+): string {
 	return `ever_demand_cloud_${plan}_${interval}`;
 }
 
 /** Stripe lookup key of the per-member add-on price. */
-export function seatLookupKey(plan: TenantPlan, interval: BillingInterval): string {
+export function seatLookupKey(
+	plan: TenantPlan,
+	interval: BillingInterval,
+): string {
 	return `ever_seat_demand_cloud_${plan}_${interval}`;
 }
 
-const PLAN_KEY = /^ever_demand_cloud_(starter|small_business|enterprise)_(monthly|annual)$/;
-const SEAT_KEY = /^ever_seat_demand_cloud_(starter|small_business|enterprise)_(monthly|annual)$/;
+const PLAN_KEY =
+	/^ever_demand_cloud_(starter|small_business|enterprise)_(monthly|annual)$/;
+const SEAT_KEY =
+	/^ever_seat_demand_cloud_(?:starter|small_business|enterprise)_(?:monthly|annual)$/;
 
 export function parsePlanLookupKey(
-	key: string | null | undefined
+	key: string | null | undefined,
 ): { plan: TenantPlan; interval: BillingInterval } | null {
 	const m = PLAN_KEY.exec(String(key ?? ''));
-	return m ? { plan: m[1] as TenantPlan, interval: m[2] as BillingInterval } : null;
+	return m
+		? { plan: m[1] as TenantPlan, interval: m[2] as BillingInterval }
+		: null;
 }
 
 export function isSeatLookupKey(key: string | null | undefined): boolean {
@@ -101,7 +111,7 @@ export function effectivePlan(
 	plan: TenantPlan | undefined,
 	billing: ITenantBilling | undefined,
 	graceDays: number,
-	now: number = Date.now()
+	now: number = Date.now(),
 ): TenantPlan {
 	const current: TenantPlan = plan && PLANS[plan] ? plan : 'starter';
 
@@ -128,14 +138,19 @@ export function effectivePlan(
 }
 
 /** Members a tenant may have: included + bought; null = unlimited. */
-export function memberLimit(plan: TenantPlan, billing: ITenantBilling | undefined): number | null {
+export function memberLimit(
+	plan: TenantPlan,
+	billing: ITenantBilling | undefined,
+): number | null {
 	const def = PLANS[plan];
 
 	if (def.includedMembers == null) {
 		return null;
 	}
 
-	const extra = def.extraMembers ? Math.max(0, Number(billing?.extraMembers ?? 0)) : 0;
+	const extra = def.extraMembers
+		? Math.max(0, Number(billing?.extraMembers ?? 0))
+		: 0;
 
 	return def.includedMembers + extra;
 }

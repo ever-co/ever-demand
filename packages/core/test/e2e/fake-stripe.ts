@@ -27,7 +27,9 @@ export class FakeStripe {
 	}
 
 	sessionsOf(customer: string): any[] {
-		return [...this.sessions.values()].filter((s) => s.customer === customer);
+		return [...this.sessions.values()].filter(
+			(s) => s.customer === customer,
+		);
 	}
 
 	async listen(port: number): Promise<void> {
@@ -37,11 +39,17 @@ export class FakeStripe {
 			req.on('end', () => {
 				try {
 					const [status, payload] = this.route(req, body);
-					res.writeHead(status, { 'content-type': 'application/json' });
+					res.writeHead(status, {
+						'content-type': 'application/json',
+					});
 					res.end(JSON.stringify(payload));
 				} catch (err) {
 					res.writeHead(500, { 'content-type': 'application/json' });
-					res.end(JSON.stringify({ error: { type: 'api_error', message: String(err) } }));
+					res.end(
+						JSON.stringify({
+							error: { type: 'api_error', message: String(err) },
+						}),
+					);
 				}
 			});
 		});
@@ -53,19 +61,39 @@ export class FakeStripe {
 	}
 
 	async close(): Promise<void> {
-		await new Promise<void>((resolve) => (this.server ? this.server.close(() => resolve()) : resolve()));
+		await new Promise<void>((resolve) =>
+			this.server ? this.server.close(() => resolve()) : resolve(),
+		);
 	}
 
 	/** The routes, tried in order: `[method, path pattern, handler]`. */
-	private readonly routes: Array<[string, RegExp, (r: FakeRequest) => Reply]> = [
+	private readonly routes: Array<
+		[string, RegExp, (r: FakeRequest) => Reply]
+	> = [
 		['POST', /^\/v1\/customers$/, (r) => this.createCustomer(r)],
 		['GET', /^\/v1\/prices$/, (r) => this.listPrices(r)],
 		['GET', /^\/v1\/subscriptions$/, (r) => this.listSubscriptions(r)],
-		['GET', /^\/v1\/subscriptions\/([^/]+)$/, (r) => this.getSubscription(r)],
+		[
+			'GET',
+			/^\/v1\/subscriptions\/([^/]+)$/,
+			(r) => this.getSubscription(r),
+		],
 		['POST', /^\/v1\/checkout\/sessions$/, (r) => this.createSession(r)],
-		['GET', /^\/v1\/checkout\/sessions\/([^/]+)$/, (r) => this.getSession(r)],
-		['POST', /^\/v1\/checkout\/sessions\/([^/]+)\/expire$/, (r) => this.expireSession(r)],
-		['POST', /^\/v1\/billing_portal\/sessions$/, () => this.createPortalSession()],
+		[
+			'GET',
+			/^\/v1\/checkout\/sessions\/([^/]+)$/,
+			(r) => this.getSession(r),
+		],
+		[
+			'POST',
+			/^\/v1\/checkout\/sessions\/([^/]+)\/expire$/,
+			(r) => this.expireSession(r),
+		],
+		[
+			'POST',
+			/^\/v1\/billing_portal\/sessions$/,
+			() => this.createPortalSession(),
+		],
 	];
 
 	private route(req: http.IncomingMessage, body: string): Reply {
@@ -74,10 +102,16 @@ export class FakeStripe {
 		const method = req.method ?? 'GET';
 
 		for (const [routeMethod, pattern, handle] of this.routes) {
-			const params = routeMethod === method ? pattern.exec(url.pathname) : null;
+			const params =
+				routeMethod === method ? pattern.exec(url.pathname) : null;
 
 			if (params) {
-				return handle({ req, url, form: new URLSearchParams(body), params });
+				return handle({
+					req,
+					url,
+					form: new URLSearchParams(body),
+					params,
+				});
 			}
 		}
 
@@ -103,18 +137,32 @@ export class FakeStripe {
 
 	private createCustomer({ req, form }: FakeRequest): Reply {
 		return this.idempotent(req, () => {
-			const customer = { id: this.id('cus'), object: 'customer', name: form.get('name') };
+			const customer = {
+				id: this.id('cus'),
+				object: 'customer',
+				name: form.get('name'),
+			};
 			this.customers.set(customer.id, customer);
 			return customer;
 		});
 	}
 
 	private listPrices({ url }: FakeRequest): Reply {
-		const keys = [...url.searchParams.entries()].filter(([k]) => k.startsWith('lookup_keys')).map(([, v]) => v);
+		const keys = [...url.searchParams.entries()]
+			.filter(([k]) => k.startsWith('lookup_keys'))
+			.map(([, v]) => v);
 
 		return [
 			200,
-			list('/v1/prices', keys.map((key) => ({ id: `price_${key}`, object: 'price', lookup_key: key, active: true }))),
+			list(
+				'/v1/prices',
+				keys.map((key) => ({
+					id: `price_${key}`,
+					object: 'price',
+					lookup_key: key,
+					active: true,
+				})),
+			),
 		];
 	}
 
@@ -123,7 +171,12 @@ export class FakeStripe {
 
 		return [
 			200,
-			list('/v1/subscriptions', [...this.subscriptions.values()].filter((s) => !customer || s.customer === customer)),
+			list(
+				'/v1/subscriptions',
+				[...this.subscriptions.values()].filter(
+					(s) => !customer || s.customer === customer,
+				),
+			),
 		];
 	}
 
@@ -166,7 +219,15 @@ export class FakeStripe {
 		}
 
 		if (session.status !== 'open') {
-			return [400, { error: { type: 'invalid_request_error', message: 'Only open sessions can be expired' } }];
+			return [
+				400,
+				{
+					error: {
+						type: 'invalid_request_error',
+						message: 'Only open sessions can be expired',
+					},
+				},
+			];
 		}
 
 		session.status = 'expired';
@@ -177,7 +238,14 @@ export class FakeStripe {
 
 	private createPortalSession(): Reply {
 		const id = this.id('bps');
-		return [200, { id, object: 'billing_portal.session', url: `https://billing.stripe.test/${id}` }];
+		return [
+			200,
+			{
+				id,
+				object: 'billing_portal.session',
+				url: `https://billing.stripe.test/${id}`,
+			},
+		];
 	}
 }
 
@@ -193,7 +261,18 @@ interface FakeRequest {
 
 const missing = (what: string): Reply => [
 	404,
-	{ error: { type: 'invalid_request_error', code: 'resource_missing', message: `No such ${what}` } },
+	{
+		error: {
+			type: 'invalid_request_error',
+			code: 'resource_missing',
+			message: `No such ${what}`,
+		},
+	},
 ];
 
-const list = (url: string, data: any[]) => ({ object: 'list', url, has_more: false, data });
+const list = (url: string, data: any[]) => ({
+	object: 'list',
+	url,
+	has_more: false,
+	data,
+});

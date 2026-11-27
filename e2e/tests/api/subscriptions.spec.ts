@@ -1,6 +1,15 @@
 import { expect, test } from '@playwright/test';
 import { createClient } from 'graphql-ws';
-import { ADMIN, ANONYMOUS, AS_ADMIN, gqlData, PyroClient, SUBSCRIPTIONS_URL, unique, adminToken } from './api-helpers';
+import {
+	ADMIN,
+	ANONYMOUS,
+	AS_ADMIN,
+	gqlData,
+	PyroClient,
+	SUBSCRIPTIONS_URL,
+	unique,
+	adminToken,
+} from './api-helpers';
 
 /**
  * graphql-ws at ws://<host>:2086/subscriptions: what GraphQLWsLink +
@@ -19,7 +28,8 @@ test.describe('GraphQL subscriptions (graphql-ws)', () => {
 	test('runs an operation and passes the connectionParams token as Authorization', async () => {
 		const { adminLogin } = await gqlData(
 			`mutation L($email: String!, $password: String!) { adminLogin(email: $email, password: $password) { token } }`,
-			ADMIN, ANONYMOUS
+			ADMIN,
+			ANONYMOUS,
 		);
 
 		const authenticated = connect({ authorization: `Bearer ${adminLogin.token}` });

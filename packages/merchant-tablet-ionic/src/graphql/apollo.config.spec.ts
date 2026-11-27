@@ -55,7 +55,11 @@ describe('createApolloOptions', () => {
 	});
 
 	describe('tenant (docs/multi-tenant/DESIGN.md §3.3, §3.5)', () => {
-		const query = gql`query Ping { ping }`;
+		const query = gql`
+			query Ping {
+				ping
+			}
+		`;
 
 		async function headersSent() {
 			const { client, seen } = clientWithFakeHttp();
@@ -66,14 +70,23 @@ describe('createApolloOptions', () => {
 		it('names the tenant of a white-label build before login', async () => {
 			environment.TENANT = 'acme';
 
-			expect(await headersSent()).toEqual({ 'Tenant-Id': 'acme', authorization: '' });
+			expect(await headersSent()).toEqual({
+				'Tenant-Id': 'acme',
+				authorization: '',
+			});
 		});
 
 		it('names the tenant of a <slug>.<TENANT_BASE_DOMAIN> page host before login', async () => {
 			environment.TENANT_BASE_DOMAIN = 'everdemand.co';
-			vi.stubGlobal('location', { hostname: 'acme.everdemand.co', search: '' });
+			vi.stubGlobal('location', {
+				hostname: 'acme.everdemand.co',
+				search: '',
+			});
 
-			expect(await headersSent()).toEqual({ 'Tenant-Id': 'acme', authorization: '' });
+			expect(await headersSent()).toEqual({
+				'Tenant-Id': 'acme',
+				authorization: '',
+			});
 		});
 
 		it('names no tenant when nothing resolves (the store login decides)', async () => {
@@ -87,17 +100,24 @@ describe('createApolloOptions', () => {
 			environment.TENANT = 'acme';
 			localStorage.setItem('token', 'jwt-1');
 
-			expect(await headersSent()).toEqual({ authorization: 'Bearer jwt-1' });
+			expect(await headersSent()).toEqual({
+				authorization: 'Bearer jwt-1',
+			});
 		});
 
 		it('names the tenant in the graphql-ws connection params before login only', () => {
 			expect(subscriptionParams()).toEqual({ authorization: '' });
 
 			environment.TENANT = 'acme';
-			expect(subscriptionParams()).toEqual({ authorization: '', tenant: 'acme' });
+			expect(subscriptionParams()).toEqual({
+				authorization: '',
+				tenant: 'acme',
+			});
 
 			localStorage.setItem('token', 'jwt-1');
-			expect(subscriptionParams()).toEqual({ authorization: 'Bearer jwt-1' });
+			expect(subscriptionParams()).toEqual({
+				authorization: 'Bearer jwt-1',
+			});
 		});
 	});
 

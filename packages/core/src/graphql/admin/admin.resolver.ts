@@ -18,7 +18,7 @@ import { TenantContext } from '../../tenant/tenant-context';
  */
 function assertMayEditAdmin(
 	target: { id: string; role?: string; isSuperAdmin?: boolean } | null,
-	self = false
+	self = false,
 ) {
 	const actor = TenantContext.actor();
 
@@ -34,9 +34,13 @@ function assertMayEditAdmin(
 		return;
 	}
 
-	const protectedTarget = target.role === 'owner' || target.isSuperAdmin === true;
+	const protectedTarget =
+		target.role === 'owner' || target.isSuperAdmin === true;
 
-	if (actor.tenantRole === 'owner' || (actor.tenantRole === 'admin' && !protectedTarget)) {
+	if (
+		actor.tenantRole === 'owner' ||
+		(actor.tenantRole === 'admin' && !protectedTarget)
+	) {
 		return;
 	}
 
@@ -53,7 +57,7 @@ export class AdminResolver {
 	@Query('admin')
 	async getAdmin(_, { id }: { id: string }): Promise<Admin> {
 		return TenantContext.runForOwnAccount(id, () =>
-			this._adminsService.get(id).pipe(first()).toPromise()
+			this._adminsService.get(id).pipe(first()).toPromise(),
 		);
 	}
 

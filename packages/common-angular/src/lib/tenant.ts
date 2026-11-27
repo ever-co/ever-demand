@@ -30,7 +30,7 @@ export interface ClientTenantConfig {
 	buildOnly?: boolean;
 }
 
-const SLUG = /^[a-z0-9](?:[a-z0-9-]{1,38}[a-z0-9])$/;
+const SLUG = /^[a-z0-9][a-z0-9-]{1,38}[a-z0-9]$/;
 const OBJECT_ID = /^[0-9a-f]{24}$/i;
 const PLATFORM_HOSTS = new Set(['app', 'api', 'www', 'admin']);
 
@@ -39,9 +39,17 @@ function isTenantKey(value: string | null | undefined): value is string {
 }
 
 /** `<slug>` of `<slug>.<baseDomain>` (one label, not a platform host), else null. */
-export function tenantFromHost(hostname: string, baseDomain: string | null | undefined): string | null {
-	const host = String(hostname ?? '').toLowerCase().replace(/\.$/, '');
-	const base = String(baseDomain ?? '').toLowerCase().replace(/^\./, '').replace(/\.$/, '');
+export function tenantFromHost(
+	hostname: string,
+	baseDomain: string | null | undefined,
+): string | null {
+	const host = String(hostname ?? '')
+		.toLowerCase()
+		.replace(/\.$/, '');
+	const base = String(baseDomain ?? '')
+		.toLowerCase()
+		.replace(/^\./, '')
+		.replace(/\.$/, '');
 
 	if (!host || !base || !host.endsWith(`.${base}`)) {
 		return null;
@@ -77,16 +85,22 @@ function safeStorage(): StorageLike | null {
 /** The tenant this app runs for, or null (then the API decides, e.g. from a login token). */
 export function resolveClientTenant(
 	config: ClientTenantConfig,
-	location: LocationLike | null = typeof window === 'undefined' ? null : window.location,
-	storage: StorageLike | null = safeStorage()
+	location: LocationLike | null = typeof window === 'undefined'
+		? null
+		: window.location,
+	storage: StorageLike | null = safeStorage(),
 ): string | null {
-	const build = String(config?.buildTenant ?? '').trim().toLowerCase();
+	const build = String(config?.buildTenant ?? '')
+		.trim()
+		.toLowerCase();
 
 	if (isTenantKey(build)) {
 		return build;
 	}
 
-	const fromHost = location ? tenantFromHost(location.hostname, config?.baseDomain) : null;
+	const fromHost = location
+		? tenantFromHost(location.hostname, config?.baseDomain)
+		: null;
 
 	if (fromHost) {
 		return fromHost;
@@ -97,7 +111,10 @@ export function resolveClientTenant(
 	}
 
 	if (location?.search) {
-		const fromQuery = new URLSearchParams(location.search).get('tenant')?.trim().toLowerCase();
+		const fromQuery = new URLSearchParams(location.search)
+			.get('tenant')
+			?.trim()
+			.toLowerCase();
 
 		if (isTenantKey(fromQuery)) {
 			storage?.setItem(TENANT_STORAGE_KEY, fromQuery);
@@ -132,12 +149,15 @@ export const SOCKET_AUTH = new InjectionToken<() => SocketAuth>('socket_auth');
 export function socketAuthFrom(
 	config: ClientTenantConfig,
 	tokenStorageKey: string | null = 'token',
-	tenantWithToken = false
+	tenantWithToken = false,
 ): () => SocketAuth {
 	return () => {
 		const auth: SocketAuth = {};
-		const token = tokenStorageKey ? safeStorage()?.getItem(tokenStorageKey) : null;
-		const tenant = !token || tenantWithToken ? resolveClientTenant(config) : null;
+		const token = tokenStorageKey
+			? safeStorage()?.getItem(tokenStorageKey)
+			: null;
+		const tenant =
+			!token || tenantWithToken ? resolveClientTenant(config) : null;
 
 		if (tenant) {
 			auth.tenant = tenant;
@@ -160,15 +180,17 @@ export function socketAuthFrom(
  */
 export function tenantBeforeLogin(
 	config: ClientTenantConfig,
-	tokenStorageKey = 'token'
+	tokenStorageKey = 'token',
 ): string | null {
-	return safeStorage()?.getItem(tokenStorageKey) ? null : resolveClientTenant(config);
+	return safeStorage()?.getItem(tokenStorageKey)
+		? null
+		: resolveClientTenant(config);
 }
 
 /** `Tenant-Id` header of a request before login (see tenantBeforeLogin), else none. */
 export function tenantHeadersBeforeLogin(
 	config: ClientTenantConfig,
-	tokenStorageKey = 'token'
+	tokenStorageKey = 'token',
 ): Record<string, string> {
 	const tenant = tenantBeforeLogin(config, tokenStorageKey);
 	return tenant ? { [TENANT_HEADER]: tenant } : {};
@@ -177,7 +199,7 @@ export function tenantHeadersBeforeLogin(
 /** graphql-ws `connectionParams`: the login token, and the tenant before login. */
 export function subscriptionConnectionParams(
 	config: ClientTenantConfig,
-	tokenStorageKey = 'token'
+	tokenStorageKey = 'token',
 ): Record<string, string> {
 	const token = safeStorage()?.getItem(tokenStorageKey);
 	const authorization = token ? `Bearer ${token}` : '';
@@ -187,7 +209,9 @@ export function subscriptionConnectionParams(
 }
 
 /** Headers for an HTTP / GraphQL request: `Tenant-Id` when the app knows its tenant. */
-export function tenantHeaders(config: ClientTenantConfig): Record<string, string> {
+export function tenantHeaders(
+	config: ClientTenantConfig,
+): Record<string, string> {
 	const tenant = resolveClientTenant(config);
 	return tenant ? { [TENANT_HEADER]: tenant } : {};
 }

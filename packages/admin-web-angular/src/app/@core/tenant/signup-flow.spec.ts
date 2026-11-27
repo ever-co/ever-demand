@@ -53,7 +53,10 @@ const input = {
 describe('tenant signup flow and session', () => {
 	let controller: ApolloTestingController;
 	let store: Store;
-	let router: { navigate: ReturnType<typeof vi.fn>; navigateByUrl: ReturnType<typeof vi.fn> };
+	let router: {
+		navigate: ReturnType<typeof vi.fn>;
+		navigateByUrl: ReturnType<typeof vi.fn>;
+	};
 	let routers: { reconnectAll: ReturnType<typeof vi.fn> };
 	let browser: { assign: ReturnType<typeof vi.fn> };
 	let settings: { load: ReturnType<typeof vi.fn> };
@@ -130,9 +133,16 @@ describe('tenant signup flow and session', () => {
 		);
 		await flushSignup();
 
-		const checkout = await expectOperation(controller, 'CreateBillingCheckout');
+		const checkout = await expectOperation(
+			controller,
+			'CreateBillingCheckout',
+		);
 		expect(checkout.operation.variables).toEqual({
-			input: { plan: 'small_business', interval: 'annual', extraMembers: 0 },
+			input: {
+				plan: 'small_business',
+				interval: 'annual',
+				extraMembers: 0,
+			},
 		});
 		// the owner is logged in before Checkout (the mutation is owner-only)
 		expect(store.token).toBe('owner-jwt');
@@ -160,7 +170,9 @@ describe('tenant signup flow and session', () => {
 		await flushSignup();
 
 		(await expectOperation(controller, 'CreateBillingCheckout')).flush({
-			errors: [{ message: 'Billing is not configured on this server' } as any],
+			errors: [
+				{ message: 'Billing is not configured on this server' } as any,
+			],
 		});
 
 		const result = await outcome;
@@ -204,7 +216,9 @@ describe('tenant signup flow and session', () => {
 			await session.switchTenant('Tenant-A');
 			expect(store.switchedTenant).toBe('tenant-a');
 			expect(routers.reconnectAll).toHaveBeenCalledTimes(1);
-			expect(router.navigateByUrl).toHaveBeenCalledWith('/sign-in-redirect');
+			expect(router.navigateByUrl).toHaveBeenCalledWith(
+				'/sign-in-redirect',
+			);
 
 			// "Platform (default)"
 			await session.switchTenant(null);

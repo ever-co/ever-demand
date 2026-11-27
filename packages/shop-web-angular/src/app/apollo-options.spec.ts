@@ -116,7 +116,10 @@ describe('createApolloOptions', () => {
 		});
 
 		it('sends the tenant of a ?tenant= link, and keeps it for later visits', async () => {
-			vi.stubGlobal('location', { hostname: 'localhost', search: '?tenant=beta' });
+			vi.stubGlobal('location', {
+				hostname: 'localhost',
+				search: '?tenant=beta',
+			});
 			await client().query({ query });
 			expect(sentHeaders).toEqual({ 'Tenant-Id': 'beta' });
 
@@ -139,7 +142,10 @@ describe('createApolloOptions', () => {
 
 		it('sends no Tenant-Id when nothing names a tenant (single-tenant API)', async () => {
 			environment.TENANT_BASE_DOMAIN = 'everdemand.co';
-			vi.stubGlobal('location', { hostname: 'app.everdemand.co', search: '' });
+			vi.stubGlobal('location', {
+				hostname: 'app.everdemand.co',
+				search: '',
+			});
 
 			await client().query({ query });
 

@@ -154,10 +154,10 @@ export abstract class BaseListenerHandler<T> implements IListenerHandler<T> {
 					// access of the connection; the next check applies any change
 					this._log.warn(
 						{ ...this.baseLogDetails, err },
-						'socket access re-check failed'
+						'socket access re-check failed',
 					);
 					run(socketTenantCtx(this._socket));
-				}
+				},
 			);
 		});
 	}

@@ -44,7 +44,9 @@ export interface DefaultTenantMigrationResult {
 }
 
 async function collectionNames(db: Connection): Promise<Set<string>> {
-	const collections = await db.db.listCollections({}, { nameOnly: true }).toArray();
+	const collections = await db.db
+		.listCollections({}, { nameOnly: true })
+		.toArray();
 	return new Set(collections.map((c) => c.name));
 }
 
@@ -58,7 +60,7 @@ async function collectionNames(db: Connection): Promise<Set<string>> {
  */
 export async function migrateDefaultTenant(
 	db: Connection,
-	options: DefaultTenantMigrationOptions
+	options: DefaultTenantMigrationOptions,
 ): Promise<DefaultTenantMigrationResult> {
 	const existing = await collectionNames(db);
 	const defaultTenant = await ensureDefaultTenant(db, options);
@@ -71,11 +73,16 @@ export async function migrateDefaultTenant(
 		throw new Error(
 			`Multi-tenant migration: ${pendingTotal} existing records need a tenant ` +
 				`(${JSON.stringify(pending)}). Take a database backup (mongodump), then set ` +
-				'MIGRATION_BACKUP_CONFIRMED=true and restart.'
+				'MIGRATION_BACKUP_CONFIRMED=true and restart.',
 		);
 	}
 
-	const backfilled = await backfillTenant(db, Object.keys(pending), defaultTenantId, options);
+	const backfilled = await backfillTenant(
+		db,
+		Object.keys(pending),
+		defaultTenantId,
+		options,
+	);
 
 	if (existing.has('admins')) {
 		await setAdminRoles(db, defaultTenant, options);
@@ -87,7 +94,10 @@ export async function migrateDefaultTenant(
 }
 
 /** The default (platform) tenant, created when missing. */
-async function ensureDefaultTenant(db: Connection, options: DefaultTenantMigrationOptions) {
+async function ensureDefaultTenant(
+	db: Connection,
+	options: DefaultTenantMigrationOptions,
+) {
 	const tenants = db.collection('tenants');
 	const found = await tenants.findOne({
 		$or: [{ isPlatform: true }, { slug: DEFAULT_TENANT_SLUG }],
@@ -127,7 +137,9 @@ async function recordsWithoutTenant(db: Connection, existing: Set<string>) {
 			continue;
 		}
 
-		const count = await db.collection(name).countDocuments({ tenantId: { $exists: false } });
+		const count = await db
+			.collection(name)
+			.countDocuments({ tenantId: { $exists: false } });
 
 		if (count > 0) {
 			pending[name] = count;
@@ -141,17 +153,22 @@ async function backfillTenant(
 	db: Connection,
 	names: string[],
 	defaultTenantId: string,
-	options: DefaultTenantMigrationOptions
+	options: DefaultTenantMigrationOptions,
 ) {
 	const backfilled: Record<string, number> = {};
 
 	for (const name of names) {
 		const res = await db
 			.collection(name)
-			.updateMany({ tenantId: { $exists: false } }, { $set: { tenantId: defaultTenantId } });
+			.updateMany(
+				{ tenantId: { $exists: false } },
+				{ $set: { tenantId: defaultTenantId } },
+			);
 
 		backfilled[name] = res.modifiedCount;
-		options.log(`${name}: ${res.modifiedCount} records moved to the default tenant`);
+		options.log(
+			`${name}: ${res.modifiedCount} records moved to the default tenant`,
+		);
 	}
 
 	return backfilled;
@@ -161,7 +178,11 @@ async function backfillTenant(
  * The first admin (ADMIN_EMAIL) becomes the owner and super-admin of the
  * default tenant; every other admin without a role becomes an admin.
  */
-async function setAdminRoles(db: Connection, defaultTenant: any, options: DefaultTenantMigrationOptions) {
+async function setAdminRoles(
+	db: Connection,
+	defaultTenant: any,
+	options: DefaultTenantMigrationOptions,
+) {
 	const admins = db.collection('admins');
 	const first = await admins.findOne({
 		email: options.adminEmail,
@@ -169,27 +190,36 @@ async function setAdminRoles(db: Connection, defaultTenant: any, options: Defaul
 	});
 
 	if (first) {
-		await admins.updateOne({ _id: first._id, role: { $exists: false } }, { $set: { role: 'owner' } });
+		await admins.updateOne(
+			{ _id: first._id, role: { $exists: false } },
+			{ $set: { role: 'owner' } },
+		);
 		await admins.updateOne(
 			{ _id: first._id, isSuperAdmin: { $exists: false } },
-			{ $set: { isSuperAdmin: true } }
+			{ $set: { isSuperAdmin: true } },
 		);
 		await db
 			.collection('tenants')
 			.updateOne(
 				{ _id: defaultTenant._id, ownerId: { $exists: false } },
-				{ $set: { ownerId: String(first._id) } }
+				{ $set: { ownerId: String(first._id) } },
 			);
 	}
 
-	await admins.updateMany({ role: { $exists: false } }, { $set: { role: 'admin' } });
-	await admins.updateMany({ isSuperAdmin: { $exists: false } }, { $set: { isSuperAdmin: false } });
+	await admins.updateMany(
+		{ role: { $exists: false } },
+		{ $set: { role: 'admin' } },
+	);
+	await admins.updateMany(
+		{ isSuperAdmin: { $exists: false } },
+		{ $set: { isSuperAdmin: false } },
+	);
 }
 
 async function dropGlobalUniqueIndexes(
 	db: Connection,
 	existing: Set<string>,
-	options: DefaultTenantMigrationOptions
+	options: DefaultTenantMigrationOptions,
 ): Promise<string[]> {
 	const dropped: string[] = [];
 
@@ -203,7 +233,9 @@ async function dropGlobalUniqueIndexes(
 		if (indexes.some((i) => i.name === index)) {
 			await db.collection(name).dropIndex(index);
 			dropped.push(`${name}.${index}`);
-			options.log(`dropped the global unique index ${name}.${index} (now per tenant)`);
+			options.log(
+				`dropped the global unique index ${name}.${index} (now per tenant)`,
+			);
 		}
 	}
 

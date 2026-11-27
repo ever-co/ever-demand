@@ -7,7 +7,14 @@ import { io, Socket } from 'socket.io-client';
 import { SERVICES_URL } from '../helpers';
 
 /** The NestJS app (REST under /api, GraphQL at /graphql): the origin of GQL_URL. */
-export { GQL_URL, SERVICES_URL, SUBSCRIPTIONS_URL, ADMIN, gql, adminToken } from '../helpers';
+export {
+	GQL_URL,
+	SERVICES_URL,
+	SUBSCRIPTIONS_URL,
+	ADMIN,
+	gql,
+	adminToken,
+} from '../helpers';
 import { adminToken as defaultAdminToken, gql as rawGql } from '../helpers';
 
 export const unique = () => randomUUID().slice(0, 8);
@@ -39,9 +46,10 @@ export type Login = typeof AS_ADMIN | typeof ANONYMOUS | string;
 export async function gqlData<T = any>(
 	query: string,
 	variables: Record<string, unknown>,
-	login: Login
+	login: Login,
 ): Promise<T> {
-	const bearer = login === AS_ADMIN ? await defaultAdminToken() : login ?? undefined;
+	const bearer =
+		login === AS_ADMIN ? await defaultAdminToken() : (login ?? undefined);
 	const res = await rawGql<T>(query, variables, bearer);
 	if (res.errors?.length || res.data == null) {
 		throw new Error(`GraphQL failed: ${JSON.stringify(res.errors)}`);
@@ -59,7 +67,11 @@ export class PyroClient {
 	private async socket(router: string): Promise<Socket> {
 		let socket = this.sockets.get(router);
 		if (!socket) {
-			socket = io(`${SERVICES_URL}/${router}`, { reconnection: false, forceNew: true, auth: this.auth });
+			socket = io(`${SERVICES_URL}/${router}`, {
+				reconnection: false,
+				forceNew: true,
+				auth: this.auth,
+			});
 			this.sockets.set(router, socket);
 		}
 		if (!socket.connected) {
@@ -144,7 +156,8 @@ export async function createStoreWithProduct(count = 10, price = 1200) {
 						isManufacturing: true,
 					},
 				},
-			}, AS_ADMIN
+			},
+			AS_ADMIN,
 		)
 	).registerWarehouse;
 
@@ -169,5 +182,16 @@ export async function createStoreWithProduct(count = 10, price = 1200) {
 		}, AS_ADMIN
 	);
 
-	return { storeId: store.id as string, productId: product.id as string };
+	// the store's own login, for the merchant actions (socket handshake token)
+	const login = await gqlData(
+		`mutation L($u: String!) { warehouseLogin(username: $u, password: "store-password") { token } }`,
+		{ u: `e2e_store_${id}` },
+		ANONYMOUS,
+	);
+
+	return {
+		storeId: store.id as string,
+		productId: product.id as string,
+		storeToken: login.warehouseLogin.token as string,
+	};
 }

@@ -40,7 +40,9 @@ export interface TenantMember {
 }
 
 const MIN_PASSWORD_LENGTH = 8;
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+/** name@domain.tld; linear time (no two quantifiers that match the same characters in a row) */
+const EMAIL = /^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/;
+const MAX_EMAIL_LENGTH = 254;
 const TENANT_STATUSES: TenantStatus[] = ['active', 'suspended', 'deleted'];
 
 /** Rate limit of tenant signups per client address (in memory, per API instance). */
@@ -49,7 +51,9 @@ const signupsByAddress = new Map<string, number[]>();
 function checkSignupRate(address: string | undefined) {
 	const key = address || 'unknown';
 	const now = Date.now();
-	const recent = (signupsByAddress.get(key) ?? []).filter((t) => now - t < 3600_000);
+	const recent = (signupsByAddress.get(key) ?? []).filter(
+		(t) => now - t < 3600_000,
+	);
 
 	if (recent.length >= env.TENANT_SIGNUPS_PER_HOUR) {
 		throw new Error('Too many signups from this address, try again later');
@@ -76,23 +80,29 @@ function checkSignupRate(address: string | undefined) {
 export class TenantsService extends DBService<Tenant> {
 	public readonly DBObject: any = Tenant;
 
-	protected readonly log: Logger = createEverLogger({ name: 'tenantsService' });
+	protected readonly log: Logger = createEverLogger({
+		name: 'tenantsService',
+	});
 
 	constructor(
 		@inject(AdminsService)
-		private readonly adminsService: AdminsService
+		private readonly adminsService: AdminsService,
 	) {
 		super();
 	}
 
 	async isSlugAvailable(slug: string): Promise<boolean> {
-		const normalized = String(slug ?? '').trim().toLowerCase();
+		const normalized = String(slug ?? '')
+			.trim()
+			.toLowerCase();
 
 		if (!isAvailableSlug(normalized)) {
 			return false;
 		}
 
-		return (await this.Model.countDocuments({ slug: normalized }).exec()) === 0;
+		return (
+			(await this.Model.countDocuments({ slug: normalized }).exec()) === 0
+		);
 	}
 
 	/**
@@ -101,15 +111,19 @@ export class TenantsService extends DBService<Tenant> {
 	 */
 	async signup(
 		input: TenantSignupInput,
-		clientAddress?: string
+		clientAddress?: string,
 	): Promise<{ tenant: Tenant; admin: Admin; token: string }> {
 		if (!env.TENANT_SIGNUP_ENABLED) {
 			throw new Error('Signup is not enabled on this server');
 		}
 
 		const name = String(input?.businessName ?? '').trim();
-		const slug = String(input?.slug ?? '').trim().toLowerCase();
-		const email = String(input?.email ?? '').trim().toLowerCase();
+		const slug = String(input?.slug ?? '')
+			.trim()
+			.toLowerCase();
+		const email = String(input?.email ?? '')
+			.trim()
+			.toLowerCase();
 		const password = String(input?.password ?? '');
 
 		if (name.length < 2 || name.length > 80) {
@@ -118,16 +132,18 @@ export class TenantsService extends DBService<Tenant> {
 
 		if (!isValidSlug(slug)) {
 			throw new Error(
-				'The address may use a-z, 0-9 and dashes, 3 to 40 characters, starting and ending with a letter or digit'
+				'The address may use a-z, 0-9 and dashes, 3 to 40 characters, starting and ending with a letter or digit',
 			);
 		}
 
-		if (!EMAIL.test(email)) {
+		if (email.length > MAX_EMAIL_LENGTH || !EMAIL.test(email)) {
 			throw new Error('Enter a valid email');
 		}
 
 		if (password.length < MIN_PASSWORD_LENGTH) {
-			throw new Error(`The password needs at least ${MIN_PASSWORD_LENGTH} characters`);
+			throw new Error(
+				`The password needs at least ${MIN_PASSWORD_LENGTH} characters`,
+			);
 		}
 
 		checkSignupRate(clientAddress);
@@ -138,11 +154,13 @@ export class TenantsService extends DBService<Tenant> {
 
 		const emailTaken = await TenantContext.runAsSystem(
 			'admin emails are unique across tenants',
-			() => (getModel(Admin) as any).countDocuments({ email }).exec()
+			() => (getModel(Admin) as any).countDocuments({ email }).exec(),
 		);
 
 		if (emailTaken > 0) {
-			throw new Error('An account with this email exists already: log in instead');
+			throw new Error(
+				'An account with this email exists already: log in instead',
+			);
 		}
 
 		const tenant = await this.create({
@@ -168,19 +186,23 @@ export class TenantsService extends DBService<Tenant> {
 							firstName: input.firstName || undefined,
 							lastName: input.lastName || undefined,
 							hash: null,
-							pictureUrl: getDummyImage(300, 300, name.charAt(0).toUpperCase()),
+							pictureUrl: getDummyImage(
+								300,
+								300,
+								name.charAt(0).toUpperCase(),
+							),
 						},
 						password,
 					},
-					{ role: 'owner' }
-				)
+					{ role: 'owner' },
+				),
 			);
 
 			const updated = await this.update(tenant.id, { ownerId: admin.id });
 			tenantDirectory.invalidate(updated);
 
 			const login = await TenantContext.runInTenant(tenant.id, () =>
-				this.adminsService.login(email, password)
+				this.adminsService.login(email, password),
 			);
 
 			if (!login) {
@@ -189,10 +211,17 @@ export class TenantsService extends DBService<Tenant> {
 
 			this.log.info({ tenantId: tenant.id, slug }, 'tenant signed up');
 
-			return { tenant: updated, admin: login.admin as any, token: login.token };
+			return {
+				tenant: updated,
+				admin: login.admin as any,
+				token: login.token,
+			};
 		} catch (err) {
 			// no half-made tenant: the slug stays free for a retry
-			await this.Model.deleteOne({ _id: tenant.id, ownerId: { $exists: false } }).exec();
+			await this.Model.deleteOne({
+				_id: tenant.id,
+				ownerId: { $exists: false },
+			}).exec();
 			tenantDirectory.invalidate(tenant);
 			throw err;
 		}
@@ -245,7 +274,9 @@ export class TenantsService extends DBService<Tenant> {
 	}
 
 	async members(): Promise<TenantMember[]> {
-		const admins = await this.adminsService.find({ isDeleted: { $ne: true } } as any);
+		const admins = await this.adminsService.find({
+			isDeleted: { $ne: true },
+		} as any);
 
 		return admins.map((a) => ({
 			id: a.id,
@@ -261,7 +292,10 @@ export class TenantsService extends DBService<Tenant> {
 	 * another owner (the previous owner becomes admin); the last owner cannot
 	 * step down.
 	 */
-	async setAdminRole(adminId: string, role: TenantRole): Promise<TenantMember> {
+	async setAdminRole(
+		adminId: string,
+		role: TenantRole,
+	): Promise<TenantMember> {
 		if (!['owner', 'admin', 'staff'].includes(role)) {
 			throw new Error('Unknown role');
 		}
@@ -274,7 +308,8 @@ export class TenantsService extends DBService<Tenant> {
 			throw new Error('No such member');
 		}
 
-		const actingAsOwner = actor?.tenantRole === 'owner' || actor?.isSuperAdmin === true;
+		const actingAsOwner =
+			actor?.tenantRole === 'owner' || actor?.isSuperAdmin === true;
 
 		if ((role === 'owner' || target.role === 'owner') && !actingAsOwner) {
 			throw new Error('Only the owner can hand over ownership');
@@ -286,7 +321,7 @@ export class TenantsService extends DBService<Tenant> {
 			if (tenant.ownerId && tenant.ownerId !== adminId) {
 				await this.adminsService.Model.updateOne(
 					{ _id: tenant.ownerId },
-					{ $set: { role: 'admin' } }
+					{ $set: { role: 'admin' } },
 				).exec();
 				forgetCachedAdmin(tenant.ownerId);
 			}
@@ -297,7 +332,10 @@ export class TenantsService extends DBService<Tenant> {
 			throw new Error('Make another member the owner first');
 		}
 
-		await this.adminsService.Model.updateOne({ _id: adminId }, { $set: { role } }).exec();
+		await this.adminsService.Model.updateOne(
+			{ _id: adminId },
+			{ $set: { role } },
+		).exec();
 		forgetCachedAdmin(adminId);
 
 		const updated = await this.adminsService.getCurrent(adminId);
@@ -320,7 +358,9 @@ export class TenantsService extends DBService<Tenant> {
 		}
 
 		if (target.role === 'owner') {
-			throw new Error('The owner cannot be removed: hand over ownership first');
+			throw new Error(
+				'The owner cannot be removed: hand over ownership first',
+			);
 		}
 
 		if (actor?.id === adminId) {
@@ -333,7 +373,7 @@ export class TenantsService extends DBService<Tenant> {
 
 		await this.adminsService.Model.updateOne(
 			{ _id: adminId },
-			{ $set: { isDeleted: true } }
+			{ $set: { isDeleted: true } },
 		).exec();
 		forgetCachedAdmin(adminId);
 
@@ -341,14 +381,18 @@ export class TenantsService extends DBService<Tenant> {
 	}
 
 	/** Super-admin: every tenant with its members and stores. */
-	async listAll(): Promise<Array<{ tenant: Tenant; members: number; stores: number }>> {
+	async listAll(): Promise<
+		Array<{ tenant: Tenant; members: number; stores: number }>
+	> {
 		const tenants = await this.find({ isDeleted: { $ne: true } } as any);
 
 		return Promise.all(
 			tenants.map(async (tenant) => {
-				const usage = await TenantContext.runInTenant(tenant.id, () => tenantUsage());
+				const usage = await TenantContext.runInTenant(tenant.id, () =>
+					tenantUsage(),
+				);
 				return { tenant, members: usage.members, stores: usage.stores };
-			})
+			}),
 		);
 	}
 

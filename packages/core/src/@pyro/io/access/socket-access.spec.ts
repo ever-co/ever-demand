@@ -20,7 +20,10 @@ function socketListeners(): string[] {
 				continue;
 			}
 
-			if (!entry.name.endsWith('.ts') || entry.name.endsWith('.spec.ts')) {
+			if (
+				!entry.name.endsWith('.ts') ||
+				entry.name.endsWith('.spec.ts')
+			) {
 				continue;
 			}
 
@@ -32,7 +35,7 @@ function socketListeners(): string[] {
 			}
 
 			const listener =
-				/@(?:asyncListener|observableListener)\(\)\s*(?:@[^\n]*\n\s*)*(?:async\s+)?(?:get\s+)?([A-Za-z0-9_]+)\s*[(<]/g;
+				/@(?:asyncListener|observableListener)\(\)\s*(?:@[^\n]*\n\s*)*(?:async\s+)?(?:get\s+)?(\w+)\s*[(<]/g;
 
 			for (const [, method] of text.matchAll(listener)) {
 				keys.add(`${router}.${method}`);
@@ -54,7 +57,9 @@ describe('SOCKET_ACCESS', () => {
 
 	it('lists no listener the services do not have', () => {
 		const listeners = new Set(socketListeners());
-		expect(Object.keys(SOCKET_ACCESS).filter((key) => !listeners.has(key))).toEqual([]);
+		expect(
+			Object.keys(SOCKET_ACCESS).filter((key) => !listeners.has(key)),
+		).toEqual([]);
 	});
 
 	it('keeps logins, money and catalog writes away from anonymous sockets', () => {
@@ -72,7 +77,10 @@ describe('SOCKET_ACCESS', () => {
 			'geo-location-orders.getOrdersForWork',
 			'product.save',
 		]) {
-			expect([key, isAllowed(SOCKET_ACCESS[key], anonymous)]).toEqual([key, false]);
+			expect([key, isAllowed(SOCKET_ACCESS[key], anonymous)]).toEqual([
+				key,
+				false,
+			]);
 		}
 	});
 
@@ -86,26 +94,47 @@ describe('SOCKET_ACCESS', () => {
 			'geo-location-warehouses.get',
 			'device.create',
 		]) {
-			expect([key, isAllowed(SOCKET_ACCESS[key], anonymous)]).toEqual([key, true]);
+			expect([key, isAllowed(SOCKET_ACCESS[key], anonymous)]).toEqual([
+				key,
+				true,
+			]);
 		}
 	});
 
 	it('keeps staff from making stores', () => {
-		const staff = { tenantId: 't', actor: { id: 's', role: 'admin' as const, tenantRole: 'staff' as const } };
-		expect(isAllowed(SOCKET_ACCESS['warehouse.register'], staff)).toBe(false);
+		const staff = {
+			tenantId: 't',
+			actor: {
+				id: 's',
+				role: 'admin' as const,
+				tenantRole: 'staff' as const,
+			},
+		};
+		expect(isAllowed(SOCKET_ACCESS['warehouse.register'], staff)).toBe(
+			false,
+		);
 		expect(isAllowed(SOCKET_ACCESS['carrier.register'], staff)).toBe(false);
 	});
 });
 
 describe('invite.create', () => {
 	const tenantCtx = { tenantId: '0000000000000000000000aa' };
-	const adminCtx = { ...tenantCtx, actor: { id: 'a', role: 'admin' as const, tenantRole: 'admin' as const } };
+	const adminCtx = {
+		...tenantCtx,
+		actor: {
+			id: 'a',
+			role: 'admin' as const,
+			tenantRole: 'admin' as const,
+		},
+	};
 
 	function accessWithInvites(enabled: boolean) {
 		let access: any;
 
 		jest.isolateModules(() => {
-			jest.doMock('../../../env', () => ({ env: { SETTING_INVITES_ENABLED: enabled } }));
+			jest.doMock('../../../env', () => ({
+				env: { SETTING_INVITES_ENABLED: enabled },
+			}));
 			access = require('./socket-access').SOCKET_ACCESS['invite.create'];
 		});
 

@@ -1,8 +1,5 @@
 import type { Schema, Query, Aggregate, Model } from 'mongoose';
-import {
-	TenantContext,
-	TenantContextMissingError,
-} from './tenant-context';
+import { TenantContext, TenantContextMissingError } from './tenant-context';
 
 export const TENANT_FIELD = 'tenantId';
 
@@ -88,7 +85,7 @@ export function scrubTenantFromUpdate(update: any): void {
 
 	if (Array.isArray(update)) {
 		throw new Error(
-			'Pipeline updates are not allowed on tenant-owned collections'
+			'Pipeline updates are not allowed on tenant-owned collections',
 		);
 	}
 
@@ -150,7 +147,7 @@ export function applyTenantToQuery(query: Query<any, any>): void {
 export function stampDocument(
 	doc: any,
 	what: string,
-	isNew: boolean = true
+	isNew: boolean = true,
 ): void {
 	if (TenantContext.isSystem()) {
 		// system work states the tenant itself; validation requires it
@@ -206,7 +203,7 @@ const FORBIDDEN_STAGES = ['$out', '$merge'];
 export function applyTenantToPipeline(
 	pipeline: any[],
 	tenantId: string,
-	tenantCollectionNames: Set<string>
+	tenantCollectionNames: Set<string>,
 ): void {
 	const scope: PipelineScope = {
 		match: { [TENANT_FIELD]: tenantId },
@@ -218,7 +215,10 @@ export function applyTenantToPipeline(
 	const first = pipeline[0];
 
 	if (first?.$geoNear != null) {
-		first.$geoNear.query = { ...(first.$geoNear.query ?? {}), ...scope.match };
+		first.$geoNear.query = {
+			...(first.$geoNear.query ?? {}),
+			...scope.match,
+		};
 	} else {
 		pipeline.unshift({ $match: scope.match });
 	}
@@ -245,7 +245,9 @@ function scopeStages(stages: any[], scope: PipelineScope): void {
 function refuseWritingStages(stage: any): void {
 	for (const name of FORBIDDEN_STAGES) {
 		if (stage[name] != null) {
-			throw new Error(`${name} is not allowed in a tenant-scoped aggregation`);
+			throw new Error(
+				`${name} is not allowed in a tenant-scoped aggregation`,
+			);
 		}
 	}
 }
@@ -271,13 +273,17 @@ function scopeUnionWith(stage: any, scope: PipelineScope): void {
 	}
 
 	const coll = typeof union === 'string' ? union : union.coll;
-	const nested: any[] = typeof union === 'string' ? [] : union.pipeline ?? [];
+	const nested: any[] =
+		typeof union === 'string' ? [] : (union.pipeline ?? []);
 
 	// a nested pipeline is scoped whatever it unions with (it may $lookup a tenant collection)
 	scopeStages(nested, scope);
 
 	if (scope.collections.has(coll)) {
-		stage.$unionWith = { coll, pipeline: [{ $match: scope.match }, ...nested] };
+		stage.$unionWith = {
+			coll,
+			pipeline: [{ $match: scope.match }, ...nested],
+		};
 	}
 }
 
@@ -320,19 +326,23 @@ export function tenantPlugin(schema: Schema): void {
 		{ document: false, query: true },
 		function (this: Query<any, any>) {
 			applyTenantToQuery(this);
-		}
+		},
 	);
 
 	schema.pre('estimatedDocumentCount' as any, function () {
 		if (!TenantContext.isSystem()) {
 			throw new Error(
-				'estimatedDocumentCount reads every tenant: use countDocuments'
+				'estimatedDocumentCount reads every tenant: use countDocuments',
 			);
 		}
 	});
 
 	schema.pre('validate', function (this: any) {
-		stampDocument(this, this.constructor?.modelName ?? 'document', this.isNew);
+		stampDocument(
+			this,
+			this.constructor?.modelName ?? 'document',
+			this.isNew,
+		);
 	});
 
 	schema.pre('save', function (this: any) {
@@ -340,7 +350,7 @@ export function tenantPlugin(schema: Schema): void {
 			stampDocument(
 				this,
 				this.constructor?.modelName ?? 'document',
-				this.isNew
+				this.isNew,
 			);
 		}
 	});
@@ -356,7 +366,7 @@ export function tenantPlugin(schema: Schema): void {
 	schema.pre('bulkWrite', function () {
 		if (!TenantContext.isSystem()) {
 			throw new Error(
-				'bulkWrite is not tenant-scoped: use the per-record operations'
+				'bulkWrite is not tenant-scoped: use the per-record operations',
 			);
 		}
 	});
@@ -369,6 +379,10 @@ export function tenantPlugin(schema: Schema): void {
 			return;
 		}
 
-		applyTenantToPipeline(this.pipeline(), tenantId, tenantCollections(model));
+		applyTenantToPipeline(
+			this.pipeline(),
+			tenantId,
+			tenantCollections(model),
+		);
 	});
 }

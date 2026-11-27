@@ -1,5 +1,13 @@
 import { map } from 'underscore';
-import { DBObject, getSchema, ModelName, Schema, Types, TenantId, CompoundIndex } from '../@pyro/db';
+import {
+	DBObject,
+	getSchema,
+	ModelName,
+	Schema,
+	Types,
+	TenantId,
+	CompoundIndex,
+} from '../@pyro/db';
 import GeoLocation from './GeoLocation';
 import WarehouseProduct, { WithPopulatedProduct } from './WarehouseProduct';
 import IWarehouse, { IWarehouseCreateObject } from '../interfaces/IWarehouse';

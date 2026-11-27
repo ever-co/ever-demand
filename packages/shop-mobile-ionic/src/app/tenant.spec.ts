@@ -29,13 +29,11 @@ describe('shop tenant', () => {
 				new ApolloLink(
 					(operation) =>
 						new Observable((observer) => {
-							sentHeaders = operation.getContext().headers as Record<
-								string,
-								string
-							>;
+							sentHeaders = operation.getContext()
+								.headers as Record<string, string>;
 							observer.next({ data: { ping: 'pong' } });
 							observer.complete();
-						})
+						}),
 				),
 		};
 
@@ -66,7 +64,7 @@ describe('shop tenant', () => {
 
 	async function send() {
 		const client = new ApolloClient(
-			TestBed.runInInjectionContext(() => apolloOptionsFactory())
+			TestBed.runInInjectionContext(() => apolloOptionsFactory()),
 		);
 		await client.query({ query });
 		return sentHeaders;
@@ -75,26 +73,41 @@ describe('shop tenant', () => {
 	it('sends the Tenant-Id of a white-label build', async () => {
 		environment.TENANT = 'acme';
 
-		expect(await send()).toEqual({ 'Tenant-Id': 'acme', authorization: '' });
+		expect(await send()).toEqual({
+			'Tenant-Id': 'acme',
+			authorization: '',
+		});
 	});
 
 	it('sends the tenant of a <slug>.<TENANT_BASE_DOMAIN> page host (web build)', async () => {
 		environment.TENANT_BASE_DOMAIN = 'everdemand.co';
-		vi.stubGlobal('location', { hostname: 'acme.everdemand.co', search: '' });
+		vi.stubGlobal('location', {
+			hostname: 'acme.everdemand.co',
+			search: '',
+		});
 
-		expect(await send()).toEqual({ 'Tenant-Id': 'acme', authorization: '' });
+		expect(await send()).toEqual({
+			'Tenant-Id': 'acme',
+			authorization: '',
+		});
 	});
 
 	it('prefers the build-time tenant over the page host', async () => {
 		environment.TENANT = 'beta';
 		environment.TENANT_BASE_DOMAIN = 'everdemand.co';
-		vi.stubGlobal('location', { hostname: 'acme.everdemand.co', search: '' });
+		vi.stubGlobal('location', {
+			hostname: 'acme.everdemand.co',
+			search: '',
+		});
 
 		expect((await send())['Tenant-Id']).toBe('beta');
 	});
 
 	it('sends the tenant of a ?tenant= link, and keeps it for later visits', async () => {
-		vi.stubGlobal('location', { hostname: 'localhost', search: '?tenant=beta' });
+		vi.stubGlobal('location', {
+			hostname: 'localhost',
+			search: '?tenant=beta',
+		});
 		expect((await send())['Tenant-Id']).toBe('beta');
 
 		vi.stubGlobal('location', { hostname: 'localhost', search: '' });
@@ -113,7 +126,10 @@ describe('shop tenant', () => {
 
 	it('sends no Tenant-Id when nothing names a tenant (single-tenant API)', async () => {
 		environment.TENANT_BASE_DOMAIN = 'everdemand.co';
-		vi.stubGlobal('location', { hostname: 'app.everdemand.co', search: '' });
+		vi.stubGlobal('location', {
+			hostname: 'app.everdemand.co',
+			search: '',
+		});
 
 		expect(await send()).toEqual({ authorization: '' });
 	});

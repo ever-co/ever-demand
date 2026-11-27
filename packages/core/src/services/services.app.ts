@@ -220,12 +220,12 @@ export class ServicesApp {
 		}
 
 		console.log(
-			`Tenancy: ${env.MULTI_TENANT ? 'multi-tenant' : 'single-tenant'}, default tenant ${defaultTenantId}`
+			`Tenancy: ${env.MULTI_TENANT ? 'multi-tenant' : 'single-tenant'}, default tenant ${defaultTenantId}`,
 		);
 
 		await this._registerModels();
 		await TenantContext.runInTenant(defaultTenantId, () =>
-			this._registerEntityAdministrator(defaultTenantId)
+			this._registerEntityAdministrator(defaultTenantId),
 		);
 		this._passportSetup();
 		await this._startExpress();
@@ -282,13 +282,13 @@ export class ServicesApp {
 					},
 					password: adminPassword,
 				},
-				{ role: 'owner', isSuperAdmin: true }
+				{ role: 'owner', isSuperAdmin: true },
 			);
 
 			await (getTenantModel(Tenant) as any)
 				.updateOne(
 					{ _id: defaultTenantId, ownerId: { $exists: false } },
-					{ $set: { ownerId: admin.id } }
+					{ $set: { ownerId: admin.id } },
 				)
 				.exec();
 			tenantDirectory.invalidate({ id: defaultTenantId });

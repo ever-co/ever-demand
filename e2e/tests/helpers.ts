@@ -31,20 +31,24 @@ const cachedAdminTokens = new Map<string, Promise<string>>();
  * fixtures log in; each account's token is cached (a token carries its
  * tenant, so one cache entry per admin, never one for all tenants).
  */
-export function adminToken(account: { email: string; password: string } = ADMIN): Promise<string> {
+export function adminToken(
+	account: { email: string; password: string } = ADMIN,
+): Promise<string> {
 	let token = cachedAdminTokens.get(account.email);
 
 	if (!token) {
 		token = (async () => {
 			const res = await gql<{ adminLogin: { token: string } | null }>(
 				`mutation L($email: String!, $password: String!) { adminLogin(email: $email, password: $password) { token } }`,
-				account
+				account,
 			);
 			const value = res.data?.adminLogin?.token;
 
 			if (!value) {
 				cachedAdminTokens.delete(account.email);
-				throw new Error(`${account.email} could not log in: ${JSON.stringify(res.errors)}`);
+				throw new Error(
+					`${account.email} could not log in: ${JSON.stringify(res.errors)}`,
+				);
 			}
 
 			return value;

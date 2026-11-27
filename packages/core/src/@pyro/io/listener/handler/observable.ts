@@ -47,7 +47,7 @@ export class ObservableListenerHandler<T> extends BaseListenerHandler<T>
 		if (denied) {
 			this.log.info(
 				{ ...this.baseLogDetails, callId, reason: denied.message },
-				`Listener call refused`
+				`Listener call refused`,
 			);
 		}
 

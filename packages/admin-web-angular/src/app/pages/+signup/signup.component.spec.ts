@@ -2,12 +2,34 @@ import { FormBuilder } from '@angular/forms';
 import { SignupComponent, slugValidator } from './signup.component';
 
 const PLANS = [
-	{ plan: 'starter', label: 'Starter', includedMembers: 15, extraMembers: false, maxStores: 3, monthlyPrice: 0, annualMonthlyPrice: 0, paid: false },
-	{ plan: 'small_business', label: 'Business', includedMembers: 25, extraMembers: true, maxStores: 3, monthlyPrice: 49, annualMonthlyPrice: 34, extraMemberPrice: 5, paid: true },
+	{
+		plan: 'starter',
+		label: 'Starter',
+		includedMembers: 15,
+		extraMembers: false,
+		maxStores: 3,
+		monthlyPrice: 0,
+		annualMonthlyPrice: 0,
+		paid: false,
+	},
+	{
+		plan: 'small_business',
+		label: 'Business',
+		includedMembers: 25,
+		extraMembers: true,
+		maxStores: 3,
+		monthlyPrice: 49,
+		annualMonthlyPrice: 34,
+		extraMemberPrice: 5,
+		paid: true,
+	},
 ];
 
 describe('SignupComponent (address suggestion and live check)', () => {
-	let tenants: { isSlugAvailable: ReturnType<typeof vi.fn>; plans: ReturnType<typeof vi.fn> };
+	let tenants: {
+		isSlugAvailable: ReturnType<typeof vi.fn>;
+		plans: ReturnType<typeof vi.fn>;
+	};
 	let flow: { signup: ReturnType<typeof vi.fn> };
 	let component: SignupComponent;
 
@@ -18,7 +40,11 @@ describe('SignupComponent (address suggestion and live check)', () => {
 			plans: vi.fn().mockResolvedValue(PLANS),
 		};
 		flow = { signup: vi.fn().mockResolvedValue({ kind: 'dashboard' }) };
-		component = new SignupComponent(new FormBuilder(), tenants as any, flow as any);
+		component = new SignupComponent(
+			new FormBuilder(),
+			tenants as any,
+			flow as any,
+		);
 		component.ngOnInit();
 	});
 
@@ -86,7 +112,9 @@ describe('SignupComponent (address suggestion and live check)', () => {
 
 		expect(tenants.isSlugAvailable).not.toHaveBeenCalled();
 		expect(component.errorOf('slug')).toBe('FORMAT');
-		expect(slugValidator(component.form.get('slug'))).toEqual({ slug: 'FORMAT' });
+		expect(slugValidator(component.form.get('slug'))).toEqual({
+			slug: 'FORMAT',
+		});
 
 		set('slug', 'ab');
 		expect(component.errorOf('slug')).toBe('TOO_SHORT');
@@ -94,7 +122,10 @@ describe('SignupComponent (address suggestion and live check)', () => {
 
 	it('submits the owner, the address and the chosen plan', async () => {
 		await vi.advanceTimersByTimeAsync(0);
-		expect(component.plans.map((p) => p.plan)).toEqual(['starter', 'small_business']);
+		expect(component.plans.map((p) => p.plan)).toEqual([
+			'starter',
+			'small_business',
+		]);
 
 		set('businessName', 'Green Grocer');
 		set('firstName', 'Ada');
@@ -123,7 +154,11 @@ describe('SignupComponent (address suggestion and live check)', () => {
 	});
 
 	it('shows the API error of a refused signup', async () => {
-		flow.signup.mockRejectedValue(new Error('An account with this email exists already: log in instead'));
+		flow.signup.mockRejectedValue(
+			new Error(
+				'An account with this email exists already: log in instead',
+			),
+		);
 		set('businessName', 'Green Grocer');
 		set('email', 'owner@green.test');
 		set('password', 'long-enough');

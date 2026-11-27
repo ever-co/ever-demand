@@ -34,7 +34,7 @@ export async function bootstrapNest(): Promise<INestApplication> {
 					req.rawBody = buf;
 				}
 			},
-		})
+		}),
 	);
 	app.use(urlencoded({ extended: true, limit: '50mb' }));
 
@@ -75,7 +75,9 @@ export async function bootstrapNest(): Promise<INestApplication> {
 		)
 	);
 	if (env.TRUST_PROXY) {
-		const trust = /^\d+$/.test(env.TRUST_PROXY) ? Number(env.TRUST_PROXY) : env.TRUST_PROXY;
+		const trust = /^\d+$/.test(env.TRUST_PROXY)
+			? Number(env.TRUST_PROXY)
+			: env.TRUST_PROXY;
 		app.getHttpAdapter().getInstance().set('trust proxy', trust);
 	}
 

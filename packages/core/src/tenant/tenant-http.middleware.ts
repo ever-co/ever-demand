@@ -9,11 +9,15 @@ import {
 
 export const TENANT_HEADER = 'tenant-id';
 
-export function requestTenantInfo(req: Pick<Request, 'headers'>): TenantRequestInfo {
+export function requestTenantInfo(
+	req: Pick<Request, 'headers'>,
+): TenantRequestInfo {
 	return {
 		authorization: headerValue(req.headers.authorization),
 		tenantHeader: headerValue(req.headers[TENANT_HEADER]),
-		host: headerValue(req.headers['x-forwarded-host']) ?? headerValue(req.headers.host),
+		host:
+			headerValue(req.headers['x-forwarded-host']) ??
+			headerValue(req.headers.host),
 		origin: headerValue(req.headers.origin),
 	};
 }
@@ -26,7 +30,7 @@ export function requestTenantInfo(req: Pick<Request, 'headers'>): TenantRequestI
 export function tenantHttpMiddleware(
 	req: Request,
 	res: Response,
-	next: NextFunction
+	next: NextFunction,
 ): void {
 	resolveTenantContext(requestTenantInfo(req)).then(
 		(ctx) => {
@@ -43,6 +47,6 @@ export function tenantHttpMiddleware(
 			} else {
 				next(err);
 			}
-		}
+		},
 	);
 }

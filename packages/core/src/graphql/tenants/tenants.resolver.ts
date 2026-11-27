@@ -1,8 +1,17 @@
 import { Mutation, Query, Resolver } from '@nestjs/graphql';
 import type Tenant from '@modules/server.common/entities/Tenant';
-import type { TenantRole, TenantStatus } from '@modules/server.common/interfaces/ITenant';
-import { TenantsService, TenantSignupInput } from '../../services/tenants/TenantsService';
-import { BillingService, CheckoutInput } from '../../services/billing/BillingService';
+import type {
+	TenantRole,
+	TenantStatus,
+} from '@modules/server.common/interfaces/ITenant';
+import {
+	TenantsService,
+	TenantSignupInput,
+} from '../../services/tenants/TenantsService';
+import {
+	BillingService,
+	CheckoutInput,
+} from '../../services/billing/BillingService';
 import { PLANS } from '../../tenant/plans';
 import { tenantDirectory } from '../../tenant/tenant-directory';
 import type { GraphQLContext } from '../graphql-context';
@@ -53,7 +62,7 @@ function clientAddress(context: GraphQLContext): string | undefined {
 export class TenantsResolver {
 	constructor(
 		private readonly _tenantsService: TenantsService,
-		private readonly _billingService: BillingService
+		private readonly _billingService: BillingService,
 	) {}
 
 	@Query()
@@ -118,26 +127,38 @@ export class TenantsResolver {
 	@Query()
 	async tenants() {
 		const list = await this._tenantsService.listAll();
-		return list.map((item) => ({ ...item, tenant: toTenantView(item.tenant) }));
+		return list.map((item) => ({
+			...item,
+			tenant: toTenantView(item.tenant),
+		}));
 	}
 
 	@Mutation()
 	async signupTenant(
 		_,
 		{ input }: { input: TenantSignupInput },
-		context: GraphQLContext
+		context: GraphQLContext,
 	) {
-		const result = await this._tenantsService.signup(input, clientAddress(context));
+		const result = await this._tenantsService.signup(
+			input,
+			clientAddress(context),
+		);
 		return { ...result, tenant: toTenantView(result.tenant) };
 	}
 
 	@Mutation()
-	async updateTenant(_, { input }: { input: { name?: string; settings?: any } }) {
+	async updateTenant(
+		_,
+		{ input }: { input: { name?: string; settings?: any } },
+	) {
 		return toTenantView(await this._tenantsService.updateCurrent(input));
 	}
 
 	@Mutation()
-	async setAdminRole(_, { adminId, role }: { adminId: string; role: TenantRole }) {
+	async setAdminRole(
+		_,
+		{ adminId, role }: { adminId: string; role: TenantRole },
+	) {
 		return this._tenantsService.setAdminRole(adminId, role);
 	}
 
@@ -159,8 +180,10 @@ export class TenantsResolver {
 	@Mutation()
 	async setTenantStatus(
 		_,
-		{ tenantId, status }: { tenantId: string; status: TenantStatus }
+		{ tenantId, status }: { tenantId: string; status: TenantStatus },
 	) {
-		return toTenantView(await this._tenantsService.setStatus(tenantId, status));
+		return toTenantView(
+			await this._tenantsService.setStatus(tenantId, status),
+		);
 	}
 }

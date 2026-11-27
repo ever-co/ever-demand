@@ -1,8 +1,16 @@
 import { Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { TenantContext } from './tenant-context';
-import { hostName, isAvailableSlug, isValidSlug, slugFromHost } from './tenant-directory';
-import { TenantScopedSubject, existenceEventTenantId } from './tenant-scoped-subject';
+import {
+	hostName,
+	isAvailableSlug,
+	isValidSlug,
+	slugFromHost,
+} from './tenant-directory';
+import {
+	TenantScopedSubject,
+	existenceEventTenantId,
+} from './tenant-scoped-subject';
 import { TenantScopedRepository } from './tenant-repository';
 import { TenantMismatchError } from './tenant-plugin';
 import {
@@ -54,13 +62,29 @@ describe('tenant hosts and slugs', () => {
 			expect(isValidSlug(ok)).toBe(true);
 		}
 
-		for (const bad of ['ab', '-abc', 'abc-', 'a--b', 'ABC', 'a b', 'x'.repeat(41), 'ünï']) {
+		for (const bad of [
+			'ab',
+			'-abc',
+			'abc-',
+			'a--b',
+			'ABC',
+			'a b',
+			'x'.repeat(41),
+			'ünï',
+		]) {
 			expect(isValidSlug(bad)).toBe(false);
 		}
 	});
 
 	it('keeps platform names for the platform', () => {
-		for (const reserved of ['app', 'api', 'www', 'admin', 'default', 'billing']) {
+		for (const reserved of [
+			'app',
+			'api',
+			'www',
+			'admin',
+			'default',
+			'billing',
+		]) {
 			expect(isAvailableSlug(reserved)).toBe(false);
 		}
 		expect(isAvailableSlug('acme')).toBe(true);
@@ -69,16 +93,28 @@ describe('tenant hosts and slugs', () => {
 
 describe('plans', () => {
 	it('builds and parses the Stripe lookup keys', () => {
-		expect(planLookupKey('small_business', 'annual')).toBe('ever_demand_cloud_small_business_annual');
-		expect(seatLookupKey('enterprise', 'monthly')).toBe('ever_seat_demand_cloud_enterprise_monthly');
-		expect(parsePlanLookupKey('ever_demand_cloud_enterprise_monthly')).toEqual({
+		expect(planLookupKey('small_business', 'annual')).toBe(
+			'ever_demand_cloud_small_business_annual',
+		);
+		expect(seatLookupKey('enterprise', 'monthly')).toBe(
+			'ever_seat_demand_cloud_enterprise_monthly',
+		);
+		expect(
+			parsePlanLookupKey('ever_demand_cloud_enterprise_monthly'),
+		).toEqual({
 			plan: 'enterprise',
 			interval: 'monthly',
 		});
-		expect(parsePlanLookupKey('ever_works_cloud_enterprise_monthly')).toBeNull();
+		expect(
+			parsePlanLookupKey('ever_works_cloud_enterprise_monthly'),
+		).toBeNull();
 		expect(parsePlanLookupKey(null)).toBeNull();
-		expect(isSeatLookupKey('ever_seat_demand_cloud_small_business_annual')).toBe(true);
-		expect(isSeatLookupKey('ever_seat_gauzy_cloud_small_business_annual')).toBe(false);
+		expect(
+			isSeatLookupKey('ever_seat_demand_cloud_small_business_annual'),
+		).toBe(true);
+		expect(
+			isSeatLookupKey('ever_seat_gauzy_cloud_small_business_annual'),
+		).toBe(false);
 	});
 
 	it('counts bought members on paid plans only', () => {
@@ -92,14 +128,53 @@ describe('plans', () => {
 		const day = 86_400_000;
 		const sub = { stripeSubscriptionId: 'sub_1' };
 
-		expect(effectivePlan('small_business', { ...sub, status: 'active' }, 14, now)).toBe('small_business');
-		expect(effectivePlan('small_business', { ...sub, status: 'trialing' }, 14, now)).toBe('small_business');
-		expect(effectivePlan('small_business', { ...sub, status: 'canceled' }, 14, now)).toBe('starter');
 		expect(
-			effectivePlan('small_business', { ...sub, status: 'past_due', pastDueSince: new Date(now - 13 * day) }, 14, now)
+			effectivePlan(
+				'small_business',
+				{ ...sub, status: 'active' },
+				14,
+				now,
+			),
 		).toBe('small_business');
 		expect(
-			effectivePlan('small_business', { ...sub, status: 'past_due', pastDueSince: new Date(now - 15 * day) }, 14, now)
+			effectivePlan(
+				'small_business',
+				{ ...sub, status: 'trialing' },
+				14,
+				now,
+			),
+		).toBe('small_business');
+		expect(
+			effectivePlan(
+				'small_business',
+				{ ...sub, status: 'canceled' },
+				14,
+				now,
+			),
+		).toBe('starter');
+		expect(
+			effectivePlan(
+				'small_business',
+				{
+					...sub,
+					status: 'past_due',
+					pastDueSince: new Date(now - 13 * day),
+				},
+				14,
+				now,
+			),
+		).toBe('small_business');
+		expect(
+			effectivePlan(
+				'small_business',
+				{
+					...sub,
+					status: 'past_due',
+					pastDueSince: new Date(now - 15 * day),
+				},
+				14,
+				now,
+			),
 		).toBe('starter');
 		// a paid plan set without a subscription (super-admin, default tenant) stays
 		expect(effectivePlan('enterprise', {}, 14, now)).toBe('enterprise');
@@ -119,8 +194,12 @@ describe('TenantScopedSubject', () => {
 		const seenA: any[] = [];
 		const seenB: any[] = [];
 
-		TenantContext.runInTenant(A, () => subject.subscribe((e) => seenA.push(e.id)));
-		TenantContext.runInTenant(B, () => subject.subscribe((e) => seenB.push(e.id)));
+		TenantContext.runInTenant(A, () =>
+			subject.subscribe((e) => seenA.push(e.id)),
+		);
+		TenantContext.runInTenant(B, () =>
+			subject.subscribe((e) => seenB.push(e.id)),
+		);
 
 		subject.next(event(A, 'a1'));
 		subject.next(event(B, 'b1'));
@@ -135,7 +214,7 @@ describe('TenantScopedSubject', () => {
 		const tenantsSeen: Array<string | null> = [];
 
 		TenantContext.runInTenant(A, () =>
-			subject.subscribe(() => tenantsSeen.push(TenantContext.tenantId()))
+			subject.subscribe(() => tenantsSeen.push(TenantContext.tenantId())),
 		);
 
 		TenantContext.runInTenant(B, () => subject.next(event(A)));
@@ -174,7 +253,7 @@ describe('TenantScopedSubject', () => {
 		const source: Subject<any> = subject;
 
 		TenantContext.runInTenant(A, () =>
-			source.pipe().subscribe({ next: (e) => seen.push(e.id) })
+			source.pipe().subscribe({ next: (e) => seen.push(e.id) }),
 		);
 
 		subject.next(event(B, 'b1'));
@@ -237,7 +316,9 @@ describe('TenantScopedRepository', () => {
 
 		await TenantContext.runInTenant(A, async () => {
 			await scoped.save({ email: 'x' });
-			expect(() => scoped.save({ email: 'y', tenantId: B })).toThrow(TenantMismatchError);
+			expect(() => scoped.save({ email: 'y', tenantId: B })).toThrow(
+				TenantMismatchError,
+			);
 		});
 
 		expect(calls).toEqual([['save', [{ email: 'x', tenantId: A }]]]);

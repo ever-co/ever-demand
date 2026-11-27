@@ -32,7 +32,8 @@ const page = (hostname: string, search = '') => ({ hostname, search });
 
 /** An unsigned JWT with these claims (the client only reads them). */
 function jwt(claims: object): string {
-	const part = (value: object) => Buffer.from(JSON.stringify(value)).toString('base64url');
+	const part = (value: object) =>
+		Buffer.from(JSON.stringify(value)).toString('base64url');
 	return `${part({ alg: 'HS256', typ: 'JWT' })}.${part(claims)}.signature`;
 }
 
@@ -75,21 +76,45 @@ describe('resolveClientTenant: build-time, then host, then ?tenant=, then the ke
 		storage.setItem(TENANT_STORAGE_KEY, 'kept');
 		const location = page('acme.everdemand.co', '?tenant=other');
 
-		expect(resolveClientTenant({ ...base, buildTenant: ' Brand ' }, location, storage)).toBe('brand');
-		expect(resolveClientTenant({ ...base, buildTenant: TENANT_ID.toUpperCase() }, location, storage)).toBe(TENANT_ID);
+		expect(
+			resolveClientTenant(
+				{ ...base, buildTenant: ' Brand ' },
+				location,
+				storage,
+			),
+		).toBe('brand');
+		expect(
+			resolveClientTenant(
+				{ ...base, buildTenant: TENANT_ID.toUpperCase() },
+				location,
+				storage,
+			),
+		).toBe(TENANT_ID);
 		// the build-time tenant is never written over the kept one
 		expect(storage.getItem(TENANT_STORAGE_KEY)).toBe('kept');
 	});
 
 	it('an invalid build-time value is ignored', () => {
-		expect(resolveClientTenant({ ...base, buildTenant: 'Not a slug!' }, page('acme.everdemand.co'), null)).toBe('acme');
+		expect(
+			resolveClientTenant(
+				{ ...base, buildTenant: 'Not a slug!' },
+				page('acme.everdemand.co'),
+				null,
+			),
+		).toBe('acme');
 	});
 
 	it('2. the <slug> of a <slug>.<base domain> page host wins over the query and the kept tenant', () => {
 		const storage = new MemoryStorage();
 		storage.setItem(TENANT_STORAGE_KEY, 'kept');
 
-		expect(resolveClientTenant(base, page('acme.everdemand.co', '?tenant=other'), storage)).toBe('acme');
+		expect(
+			resolveClientTenant(
+				base,
+				page('acme.everdemand.co', '?tenant=other'),
+				storage,
+			),
+		).toBe('acme');
 		expect(storage.getItem(TENANT_STORAGE_KEY)).toBe('kept');
 	});
 
@@ -97,16 +122,34 @@ describe('resolveClientTenant: build-time, then host, then ?tenant=, then the ke
 		const storage = new MemoryStorage();
 		storage.setItem(TENANT_STORAGE_KEY, 'kept');
 
-		expect(resolveClientTenant(base, page('localhost', '?lang=en&tenant=Acme'), storage)).toBe('acme');
+		expect(
+			resolveClientTenant(
+				base,
+				page('localhost', '?lang=en&tenant=Acme'),
+				storage,
+			),
+		).toBe('acme');
 		expect(storage.getItem(TENANT_STORAGE_KEY)).toBe('acme');
 		// a platform host is no tenant host: the query applies there too
-		expect(resolveClientTenant(base, page('app.everdemand.co', '?tenant=shop-b'), storage)).toBe('shop-b');
+		expect(
+			resolveClientTenant(
+				base,
+				page('app.everdemand.co', '?tenant=shop-b'),
+				storage,
+			),
+		).toBe('shop-b');
 	});
 
 	it('an invalid ?tenant= is ignored', () => {
 		const storage = new MemoryStorage();
 
-		expect(resolveClientTenant(base, page('localhost', '?tenant=-bad-'), storage)).toBeNull();
+		expect(
+			resolveClientTenant(
+				base,
+				page('localhost', '?tenant=-bad-'),
+				storage,
+			),
+		).toBeNull();
 		expect(storage.values.size).toBe(0);
 	});
 
@@ -114,14 +157,18 @@ describe('resolveClientTenant: build-time, then host, then ?tenant=, then the ke
 		const storage = new MemoryStorage();
 		resolveClientTenant(base, page('localhost', '?tenant=acme'), storage);
 
-		expect(resolveClientTenant(base, page('localhost', ''), storage)).toBe('acme');
+		expect(resolveClientTenant(base, page('localhost', ''), storage)).toBe(
+			'acme',
+		);
 	});
 
 	it('a broken kept value is ignored', () => {
 		const storage = new MemoryStorage();
 		storage.setItem(TENANT_STORAGE_KEY, 'NOT VALID');
 
-		expect(resolveClientTenant(base, page('localhost'), storage)).toBeNull();
+		expect(
+			resolveClientTenant(base, page('localhost'), storage),
+		).toBeNull();
 	});
 
 	it('a storage that throws does not break the resolution', () => {
@@ -134,17 +181,32 @@ describe('resolveClientTenant: build-time, then host, then ?tenant=, then the ke
 			},
 		};
 
-		expect(resolveClientTenant(base, page('localhost', '?tenant=acme'), storage)).toBe('acme');
-		expect(resolveClientTenant(base, page('localhost'), storage)).toBeNull();
+		expect(
+			resolveClientTenant(
+				base,
+				page('localhost', '?tenant=acme'),
+				storage,
+			),
+		).toBe('acme');
+		expect(
+			resolveClientTenant(base, page('localhost'), storage),
+		).toBeNull();
 	});
 
 	it('nothing known: null (the API decides)', () => {
-		expect(resolveClientTenant({}, page('localhost'), new MemoryStorage())).toBeNull();
+		expect(
+			resolveClientTenant({}, page('localhost'), new MemoryStorage()),
+		).toBeNull();
 	});
 
 	it('native (no page location, no localStorage): only the build-time tenant applies', () => {
 		expect(webLocation()).toBeNull();
-		expect(resolveClientTenant({ buildTenant: 'brand', baseDomain: 'everdemand.co' })).toBe('brand');
+		expect(
+			resolveClientTenant({
+				buildTenant: 'brand',
+				baseDomain: 'everdemand.co',
+			}),
+		).toBe('brand');
 		expect(resolveClientTenant({ baseDomain: 'everdemand.co' })).toBeNull();
 	});
 
@@ -156,7 +218,9 @@ describe('resolveClientTenant: build-time, then host, then ?tenant=, then the ke
 		try {
 			expect(webLocation()).toEqual(page('localhost', '?tenant=acme'));
 			expect(webStorage()).toBe(storage);
-			expect(resolveClientTenant({ baseDomain: 'everdemand.co' })).toBe('acme');
+			expect(resolveClientTenant({ baseDomain: 'everdemand.co' })).toBe(
+				'acme',
+			);
 			expect(storage.getItem(TENANT_STORAGE_KEY)).toBe('acme');
 		} finally {
 			delete g.location;
@@ -167,8 +231,14 @@ describe('resolveClientTenant: build-time, then host, then ?tenant=, then the ke
 
 describe('login tokens: never a Tenant-Id other than the token tenant', () => {
 	it('reads the tenantId claim of a token', () => {
-		expect(tokenTenantId(jwt({ id: 'u1', role: 'user', tenantId: TENANT_ID }))).toBe(TENANT_ID);
-		expect(tokenTenantId(`Bearer ${jwt({ id: 'u1', role: 'user', tenantId: TENANT_ID })}`)).toBe(TENANT_ID);
+		expect(
+			tokenTenantId(jwt({ id: 'u1', role: 'user', tenantId: TENANT_ID })),
+		).toBe(TENANT_ID);
+		expect(
+			tokenTenantId(
+				`Bearer ${jwt({ id: 'u1', role: 'user', tenantId: TENANT_ID })}`,
+			),
+		).toBe(TENANT_ID);
 		expect(tokenTenantId(jwt({ id: 'u1', role: 'user' }))).toBeNull();
 		expect(tokenTenantId('opaque')).toBeNull();
 		expect(tokenTenantId(null)).toBeNull();
@@ -176,8 +246,15 @@ describe('login tokens: never a Tenant-Id other than the token tenant', () => {
 
 	it('sends the resolved tenant without a token, the token tenant (or none) with one', () => {
 		expect(tenantToSend('acme', null)).toBe('acme');
-		expect(tenantToSend('acme', jwt({ id: 'u1', role: 'user', tenantId: TENANT_ID }))).toBe(TENANT_ID);
-		expect(tenantToSend('acme', jwt({ id: 'u1', role: 'user' }))).toBeNull();
+		expect(
+			tenantToSend(
+				'acme',
+				jwt({ id: 'u1', role: 'user', tenantId: TENANT_ID }),
+			),
+		).toBe(TENANT_ID);
+		expect(
+			tenantToSend('acme', jwt({ id: 'u1', role: 'user' })),
+		).toBeNull();
 	});
 
 	it('builds the socket handshake auth', () => {
@@ -199,8 +276,14 @@ describe('the tenant reaches the API', () => {
 		tenant = 'shop-b';
 		options.auth(cb);
 
-		expect(options).toMatchObject({ reconnection: false, transports: ['websocket'] });
-		expect(cb.mock.calls).toEqual([[{ tenant: 'acme' }], [{ tenant: 'shop-b' }]]);
+		expect(options).toMatchObject({
+			reconnection: false,
+			transports: ['websocket'],
+		});
+		expect(cb.mock.calls).toEqual([
+			[{ tenant: 'acme' }],
+			[{ tenant: 'shop-b' }],
+		]);
 	});
 
 	it('graphql-ws: connectionParams carry the tenant, next to authorization with a token', () => {
@@ -208,10 +291,16 @@ describe('the tenant reaches the API', () => {
 
 		expect(wsConnectionParams(null, 'acme')).toEqual({ tenant: 'acme' });
 		expect(wsConnectionParams(null, null)).toEqual({});
-		expect(wsConnectionParams(token, 'acme')).toEqual({ authorization: `Bearer ${token}`, tenant: TENANT_ID });
+		expect(wsConnectionParams(token, 'acme')).toEqual({
+			authorization: `Bearer ${token}`,
+			tenant: TENANT_ID,
+		});
 	});
 
-	async function headersOf(tenant: string | null, token: string | null = null) {
+	async function headersOf(
+		tenant: string | null,
+		token: string | null = null,
+	) {
 		const fetch = jest.fn(async (_uri: string, _init: RequestInit) => ({
 			status: 200,
 			headers: { get: () => 'application/json' },
@@ -224,11 +313,22 @@ describe('the tenant reaches the API', () => {
 			getToken: () => token,
 			fetch: fetch as unknown as typeof globalThis.fetch,
 		});
-		await client.query({ query: gql`query Ping { ping }` });
+		await client.query({
+			query: gql`
+				query Ping {
+					ping
+				}
+			`,
+		});
 		client.stop();
 		// Apollo lower-cases header names (HTTP header names are case-insensitive)
 		const sent = fetch.mock.calls[0][1].headers as Record<string, string>;
-		return Object.fromEntries(Object.entries(sent).map(([name, value]) => [name.toLowerCase(), value]));
+		return Object.fromEntries(
+			Object.entries(sent).map(([name, value]) => [
+				name.toLowerCase(),
+				value,
+			]),
+		);
 	}
 
 	const tenantHeader = TENANT_HEADER.toLowerCase();

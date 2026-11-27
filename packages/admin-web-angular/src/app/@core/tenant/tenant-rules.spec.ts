@@ -39,7 +39,12 @@ describe('tenant rules', () => {
 		});
 
 		it('every suggestion is a valid address', () => {
-			for (const name of ['Green Grocer', 'Bob & Sons', 'Café 1', 'x-y-z']) {
+			for (const name of [
+				'Green Grocer',
+				'Bob & Sons',
+				'Café 1',
+				'x-y-z',
+			]) {
 				expect(slugProblem(suggestSlug(name))).toBeNull();
 			}
 		});
@@ -68,8 +73,12 @@ describe('tenant rules', () => {
 
 	describe('shop address', () => {
 		it('is <slug>.<TENANT_BASE_DOMAIN>', () => {
-			expect(shopAddress('acme', 'everdemand.co')).toBe('acme.everdemand.co');
-			expect(shopAddress('acme', '.EverDemand.co.')).toBe('acme.everdemand.co');
+			expect(shopAddress('acme', 'everdemand.co')).toBe(
+				'acme.everdemand.co',
+			);
+			expect(shopAddress('acme', '.EverDemand.co.')).toBe(
+				'acme.everdemand.co',
+			);
 		});
 
 		it('is null without a base domain, or with the Docker placeholder', () => {
@@ -113,7 +122,9 @@ describe('tenant rules', () => {
 		});
 
 		it('a super-admin counts as the owner of the tenant they act in', () => {
-			expect(tenantPermissions('staff', true).canManageBilling).toBe(true);
+			expect(tenantPermissions('staff', true).canManageBilling).toBe(
+				true,
+			);
 			expect(tenantPermissions(null, true).canMakeOwner).toBe(true);
 		});
 
@@ -122,22 +133,32 @@ describe('tenant rules', () => {
 			const admin = tenantPermissions('admin');
 			const staff = tenantPermissions('staff');
 
-			expect(memberActions({ id: 'o', role: 'owner' }, 'a', admin)).toEqual({
+			expect(
+				memberActions({ id: 'o', role: 'owner' }, 'a', admin),
+			).toEqual({
 				roles: [],
 				canRemove: false,
 			});
-			expect(memberActions({ id: 's', role: 'staff' }, 'o', owner)).toEqual({
+			expect(
+				memberActions({ id: 's', role: 'staff' }, 'o', owner),
+			).toEqual({
 				roles: ['owner', 'admin', 'staff'],
 				canRemove: true,
 			});
 			// an admin cannot hand over ownership
-			expect(memberActions({ id: 's', role: 'staff' }, 'a', admin)).toEqual({
+			expect(
+				memberActions({ id: 's', role: 'staff' }, 'a', admin),
+			).toEqual({
 				roles: ['admin', 'staff'],
 				canRemove: true,
 			});
-			expect(memberActions({ id: 'a', role: 'admin' }, 'a', admin).canRemove).toBe(false);
+			expect(
+				memberActions({ id: 'a', role: 'admin' }, 'a', admin).canRemove,
+			).toBe(false);
 			// staff see the list only
-			expect(memberActions({ id: 'x', role: 'admin' }, 's', staff)).toEqual({
+			expect(
+				memberActions({ id: 'x', role: 'admin' }, 's', staff),
+			).toEqual({
 				roles: [],
 				canRemove: false,
 			});
@@ -160,7 +181,9 @@ describe('tenant rules', () => {
 	});
 
 	it('only http(s) billing URLs are followed', () => {
-		expect(isHttpUrl('https://checkout.stripe.com/c/pay/cs_test_1')).toBe(true);
+		expect(isHttpUrl('https://checkout.stripe.com/c/pay/cs_test_1')).toBe(
+			true,
+		);
 		expect(isHttpUrl('javascript:alert(1)')).toBe(false);
 		expect(isHttpUrl('')).toBe(false);
 		expect(isHttpUrl(null)).toBe(false);

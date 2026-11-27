@@ -53,8 +53,9 @@ const toDate = (seconds: number | null | undefined): Date | undefined =>
 const isEnded = (status: string | undefined | null) =>
 	ENDED_STATUSES.includes(status ?? '');
 
-const idOf = (value: string | { id: string } | null | undefined): string | undefined =>
-	typeof value === 'string' ? value : value?.id;
+const idOf = (
+	value: string | { id: string } | null | undefined,
+): string | undefined => (typeof value === 'string' ? value : value?.id);
 
 interface BillingEventRecord {
 	_id: string;
@@ -84,7 +85,7 @@ export class BillingService {
 
 	constructor(
 		@inject(TenantsService) private readonly tenantsService: TenantsService,
-		@inject(AdminsService) private readonly adminsService: AdminsService
+		@inject(AdminsService) private readonly adminsService: AdminsService,
 	) {}
 
 	get isConfigured(): boolean {
@@ -107,7 +108,10 @@ export class BillingService {
 
 		// Billing uses the SDK's own API version (Checkout, portal, lookup
 		// keys); the shops' card charges keep their pinned one (helpers/stripe.ts).
-		this.client = new Stripe(env.STRIPE_BILLING_SECRET_KEY, fakeApiOptions());
+		this.client = new Stripe(
+			env.STRIPE_BILLING_SECRET_KEY,
+			fakeApiOptions(),
+		);
 
 		return this.client;
 	}
@@ -122,7 +126,11 @@ export class BillingService {
 		return tenant;
 	}
 
-	private async saveBilling(tenantId: string, patch: Partial<ITenantBilling>, plan?: TenantPlan) {
+	private async saveBilling(
+		tenantId: string,
+		patch: Partial<ITenantBilling>,
+		plan?: TenantPlan,
+	) {
 		const tenant = await this.tenantsService.getCurrent(tenantId);
 
 		if (!tenant) {
@@ -153,7 +161,7 @@ export class BillingService {
 				metadata: { tenantId: tenant.id, tenantSlug: tenant.slug },
 			},
 			// two servers creating the customer at once get the same one
-			{ idempotencyKey: `tenant-customer-${tenant.id}` }
+			{ idempotencyKey: `tenant-customer-${tenant.id}` },
 		);
 
 		await this.saveBilling(tenant.id, { stripeCustomerId: customer.id });
@@ -178,7 +186,10 @@ export class BillingService {
 	}
 
 	/** Runs `fn` after every earlier Checkout of the tenant (in this process) finished. */
-	private async oneCheckoutAtATime<R>(tenantId: string, fn: () => Promise<R>): Promise<R> {
+	private async oneCheckoutAtATime<R>(
+		tenantId: string,
+		fn: () => Promise<R>,
+	): Promise<R> {
 		const before = this.checkoutQueues.get(tenantId) ?? Promise.resolve();
 		const run = before.catch(() => undefined).then(fn);
 		const settled = run.catch(() => undefined);
@@ -200,9 +211,13 @@ export class BillingService {
 	 * may not have reached the webhook yet).
 	 */
 	private async assertNoLiveSubscription(tenant: Tenant, customer: string) {
-		const message = 'This business has a subscription: change it in the billing portal';
+		const message =
+			'This business has a subscription: change it in the billing portal';
 
-		if (tenant.billing?.stripeSubscriptionId && !isEnded(tenant.billing.status)) {
+		if (
+			tenant.billing?.stripeSubscriptionId &&
+			!isEnded(tenant.billing.status)
+		) {
 			throw new Error(message);
 		}
 
@@ -268,19 +283,27 @@ export class BillingService {
 			}
 
 			const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
-				{ price: await this.priceId(planLookupKey(input.plan, input.interval)), quantity: 1 },
+				{
+					price: await this.priceId(
+						planLookupKey(input.plan, input.interval),
+					),
+					quantity: 1,
+				},
 			];
 
 			if (extra > 0) {
 				lineItems.push({
-					price: await this.priceId(seatLookupKey(input.plan, input.interval)),
+					price: await this.priceId(
+						seatLookupKey(input.plan, input.interval),
+					),
 					quantity: extra,
 				});
 			}
 
 			// one trial per tenant: none after a cancelled subscription
 			const trialDays =
-				!tenant.billing?.stripeSubscriptionId && env.BILLING_TRIAL_DAYS > 0
+				!tenant.billing?.stripeSubscriptionId &&
+				env.BILLING_TRIAL_DAYS > 0
 					? env.BILLING_TRIAL_DAYS
 					: undefined;
 
@@ -302,7 +325,9 @@ export class BillingService {
 					cancel_url: `${base}/#/settings/billing?checkout=cancelled`,
 				},
 				// two servers asked at once for the same plan get the same session
-				{ idempotencyKey: `tenant-checkout-${tenant.id}-${key}-${pending ?? 'first'}` }
+				{
+					idempotencyKey: `tenant-checkout-${tenant.id}-${key}-${pending ?? 'first'}`,
+				},
 			);
 
 			if (!session.url) {
@@ -320,7 +345,9 @@ export class BillingService {
 	}
 
 	/** The session when it can still be paid, else null. */
-	private async openSession(id: string): Promise<Stripe.Checkout.Session | null> {
+	private async openSession(
+		id: string,
+	): Promise<Stripe.Checkout.Session | null> {
 		try {
 			const session = await this.stripe().checkout.sessions.retrieve(id);
 
@@ -339,7 +366,9 @@ export class BillingService {
 		const tenant = await this.currentTenant();
 
 		if (!tenant.billing?.stripeCustomerId) {
-			throw new Error('This business has no billing account yet: choose a plan first');
+			throw new Error(
+				'This business has no billing account yet: choose a plan first',
+			);
 		}
 
 		const session = await this.stripe().billingPortal.sessions.create({
@@ -354,7 +383,10 @@ export class BillingService {
 	 * Verifies and applies a Stripe webhook event. Each event is applied once
 	 * (event ids are kept in `billingevents`). Returns whether it was applied.
 	 */
-	async handleWebhook(rawBody: Buffer | string, signature: string | undefined): Promise<boolean> {
+	async handleWebhook(
+		rawBody: Buffer | string,
+		signature: string | undefined,
+	): Promise<boolean> {
 		if (!env.STRIPE_BILLING_WEBHOOK_SECRET) {
 			throw new Error('Billing webhooks are not configured');
 		}
@@ -369,7 +401,7 @@ export class BillingService {
 			event = this.stripe().webhooks.constructEvent(
 				rawBody,
 				signature,
-				env.STRIPE_BILLING_WEBHOOK_SECRET
+				env.STRIPE_BILLING_WEBHOOK_SECRET,
 			);
 		} catch (err) {
 			throw new WebhookSignatureError((err as Error).message);
@@ -379,7 +411,9 @@ export class BillingService {
 	}
 
 	private events() {
-		return mongoose.connection.collection<BillingEventRecord>('billingevents');
+		return mongoose.connection.collection<BillingEventRecord>(
+			'billingevents',
+		);
 	}
 
 	/**
@@ -388,12 +422,19 @@ export class BillingService {
 	 * An event left `processing` by a crash is taken over after
 	 * ABANDONED_EVENT_MS, so Stripe's retry still applies it.
 	 */
-	private async claimEvent(event: Stripe.Event): Promise<'claimed' | 'done' | 'busy'> {
+	private async claimEvent(
+		event: Stripe.Event,
+	): Promise<'claimed' | 'done' | 'busy'> {
 		const events = this.events();
 		const now = new Date();
 
 		try {
-			await events.insertOne({ _id: event.id, type: event.type, status: 'processing', at: now });
+			await events.insertOne({
+				_id: event.id,
+				type: event.type,
+				status: 'processing',
+				at: now,
+			});
 			return 'claimed';
 		} catch (err: any) {
 			if (err?.code !== 11000) {
@@ -411,13 +452,16 @@ export class BillingService {
 			return 'done';
 		}
 
-		if (now.getTime() - new Date(existing.at).getTime() < ABANDONED_EVENT_MS) {
+		if (
+			now.getTime() - new Date(existing.at).getTime() <
+			ABANDONED_EVENT_MS
+		) {
 			return 'busy';
 		}
 
 		const taken = await events.updateOne(
 			{ _id: event.id, status: 'processing', at: existing.at },
-			{ $set: { at: now } }
+			{ $set: { at: now } },
 		);
 
 		return taken.modifiedCount === 1 ? 'claimed' : 'busy';
@@ -440,27 +484,36 @@ export class BillingService {
 		}
 
 		try {
-			await TenantContext.runAsSystem('apply a Stripe billing event', () =>
-				this.dispatch(event)
+			await TenantContext.runAsSystem(
+				'apply a Stripe billing event',
+				() => this.dispatch(event),
 			);
 		} catch (err) {
 			// let Stripe retry: forget the event id
-			await this.events().deleteOne({ _id: event.id, status: 'processing' });
+			await this.events().deleteOne({
+				_id: event.id,
+				status: 'processing',
+			});
 			throw err;
 		}
 
 		await this.events().updateOne(
 			{ _id: event.id },
-			{ $set: { status: 'done', doneAt: new Date() } }
+			{ $set: { status: 'done', doneAt: new Date() } },
 		);
 
-		this.log.info({ eventId: event.id, type: event.type }, 'billing event applied');
+		this.log.info(
+			{ eventId: event.id, type: event.type },
+			'billing event applied',
+		);
 
 		return true;
 	}
 
 	/** The subscription as Stripe has it now; null when Stripe no longer knows it. */
-	private async freshSubscription(id: string): Promise<Stripe.Subscription | null> {
+	private async freshSubscription(
+		id: string,
+	): Promise<Stripe.Subscription | null> {
 		try {
 			return await this.stripe().subscriptions.retrieve(id);
 		} catch (err: any) {
@@ -483,7 +536,10 @@ export class BillingService {
 		switch (event.type) {
 			case 'checkout.session.completed': {
 				const session = event.data.object as Stripe.Checkout.Session;
-				tenantIdHint = session.client_reference_id ?? session.metadata?.tenantId ?? undefined;
+				tenantIdHint =
+					session.client_reference_id ??
+					session.metadata?.tenantId ??
+					undefined;
 				subscriptionId = idOf(session.subscription as any);
 
 				if (!tenantIdHint) {
@@ -516,7 +572,10 @@ export class BillingService {
 		const subscription = await this.freshSubscription(subscriptionId);
 
 		if (!subscription) {
-			this.log.warn({ eventId: event.id, subscriptionId }, 'billing event of an unknown subscription');
+			this.log.warn(
+				{ eventId: event.id, subscriptionId },
+				'billing event of an unknown subscription',
+			);
 			return;
 		}
 
@@ -537,7 +596,10 @@ export class BillingService {
 	 * never replaces it (an old cancellation), and a second live one is not
 	 * taken while the tenant's own still runs.
 	 */
-	private async replacesTenantSubscription(tenant: Tenant, subscription: Stripe.Subscription) {
+	private async replacesTenantSubscription(
+		tenant: Tenant,
+		subscription: Stripe.Subscription,
+	) {
 		const currentId = tenant.billing?.stripeSubscriptionId;
 
 		if (!currentId || currentId === subscription.id) {
@@ -546,19 +608,29 @@ export class BillingService {
 
 		if (isEnded(subscription.status)) {
 			this.log.info(
-				{ tenantId: tenant.id, subscriptionId: subscription.id, currentId },
-				'ended subscription that is not the tenant\'s current one: ignored'
+				{
+					tenantId: tenant.id,
+					subscriptionId: subscription.id,
+					currentId,
+				},
+				"ended subscription that is not the tenant's current one: ignored",
 			);
 			return false;
 		}
 
 		// the tenant's record may be behind: ask Stripe whether its own one still runs
-		const current = isEnded(tenant.billing?.status) ? null : await this.freshSubscription(currentId);
+		const current = isEnded(tenant.billing?.status)
+			? null
+			: await this.freshSubscription(currentId);
 
 		if (current && !isEnded(current.status)) {
 			this.log.error(
-				{ tenantId: tenant.id, subscriptionId: subscription.id, currentId },
-				'a second live subscription of one tenant: not applied, cancel one of them in Stripe'
+				{
+					tenantId: tenant.id,
+					subscriptionId: subscription.id,
+					currentId,
+				},
+				'a second live subscription of one tenant: not applied, cancel one of them in Stripe',
 			);
 			return false;
 		}
@@ -567,7 +639,10 @@ export class BillingService {
 	}
 
 	/** Writes the plan, members and dates of a subscription (as Stripe has it now) to its tenant. */
-	async applySubscription(subscription: Stripe.Subscription, tenantIdHint?: string) {
+	async applySubscription(
+		subscription: Stripe.Subscription,
+		tenantIdHint?: string,
+	) {
 		const customerId = idOf(subscription.customer as any);
 
 		let tenant: Tenant | null = null;
@@ -582,14 +657,21 @@ export class BillingService {
 		}
 
 		if (!tenant) {
-			this.log.warn({ subscriptionId: subscription.id }, 'subscription of no known tenant');
+			this.log.warn(
+				{ subscriptionId: subscription.id },
+				'subscription of no known tenant',
+			);
 			return;
 		}
 
-		if (customerId && tenant.billing?.stripeCustomerId && tenant.billing.stripeCustomerId !== customerId) {
+		if (
+			customerId &&
+			tenant.billing?.stripeCustomerId &&
+			tenant.billing.stripeCustomerId !== customerId
+		) {
 			this.log.warn(
 				{ tenantId: tenant.id, subscriptionId: subscription.id },
-				'subscription of another Stripe customer than the tenant has: ignored'
+				'subscription of another Stripe customer than the tenant has: ignored',
 			);
 			return;
 		}
@@ -624,7 +706,8 @@ export class BillingService {
 		await this.saveBilling(
 			tenant.id,
 			{
-				stripeCustomerId: customerId ?? tenant.billing?.stripeCustomerId,
+				stripeCustomerId:
+					customerId ?? tenant.billing?.stripeCustomerId,
 				stripeSubscriptionId: subscription.id,
 				status: subscription.status,
 				interval,
@@ -632,14 +715,17 @@ export class BillingService {
 				trialEndsAt: toDate(subscription.trial_end),
 				currentPeriodEnd: toDate(periodEnd),
 				...(subscription.status === 'past_due'
-					? { pastDueSince: tenant.billing?.pastDueSince ?? new Date() }
+					? {
+							pastDueSince:
+								tenant.billing?.pastDueSince ?? new Date(),
+						}
 					: { pastDueSince: undefined }),
 				// the Checkout is done: the next one starts fresh
 				checkoutSessionId: undefined,
 				checkoutKey: undefined,
 				checkoutExpiresAt: undefined,
 			},
-			ended ? 'starter' : plan ?? undefined
+			ended ? 'starter' : (plan ?? undefined),
 		);
 	}
 }

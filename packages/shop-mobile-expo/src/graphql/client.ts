@@ -42,7 +42,10 @@ export interface GraphQLClientOptions {
 }
 
 /** graphql-ws `connection_init` payload: `authorization` with a token, `tenant` when known. */
-export function wsConnectionParams(token: string | null, tenant: string | null): Record<string, string> {
+export function wsConnectionParams(
+	token: string | null,
+	tenant: string | null,
+): Record<string, string> {
 	const params: Record<string, string> = {};
 	const sent = tenantToSend(tenant, token);
 
@@ -64,7 +67,10 @@ export function createApolloClient({
 	getTenant = () => null,
 	fetch: fetchImpl,
 }: GraphQLClientOptions): ApolloClient {
-	const http = new HttpLink({ uri: httpEndpoint, ...(fetchImpl ? { fetch: fetchImpl } : {}) });
+	const http = new HttpLink({
+		uri: httpEndpoint,
+		...(fetchImpl ? { fetch: fetchImpl } : {}),
+	});
 
 	// lazy: the socket opens with the first subscription (the shop has none today). The params are
 	// read again at every (re)connect.

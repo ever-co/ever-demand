@@ -36,7 +36,9 @@ import {
 export type SlugStatus = 'checking' | 'available' | 'taken' | null;
 
 /** Angular validator: a slug the API accepts (it checks again, and whether it is free). */
-export function slugValidator(control: AbstractControl): ValidationErrors | null {
+export function slugValidator(
+	control: AbstractControl,
+): ValidationErrors | null {
 	const problem = slugProblem(control.value);
 	return problem ? { slug: problem } : null;
 }
@@ -111,7 +113,9 @@ export class SignupComponent implements OnInit, OnDestroy {
 	}
 
 	get shopAddress(): string | null {
-		return slugProblem(this.slug) ? null : shopAddress(this.slug, this.baseDomain);
+		return slugProblem(this.slug)
+			? null
+			: shopAddress(this.slug, this.baseDomain);
 	}
 
 	get selectedPlan(): TenantPlanView {
@@ -145,7 +149,9 @@ export class SignupComponent implements OnInit, OnDestroy {
 				debounceTime(400),
 				distinctUntilChanged(),
 				switchMap(async (value) => {
-					const slug = String(value ?? '').trim().toLowerCase();
+					const slug = String(value ?? '')
+						.trim()
+						.toLowerCase();
 
 					if (slugProblem(slug)) {
 						return null;
@@ -178,7 +184,11 @@ export class SignupComponent implements OnInit, OnDestroy {
 	errorOf(name: string): string | null {
 		const control = this.form.get(name);
 
-		if (!control || !control.errors || !(control.touched || control.dirty)) {
+		if (
+			!control ||
+			!control.errors ||
+			!(control.touched || control.dirty)
+		) {
 			return null;
 		}
 

@@ -315,7 +315,7 @@ export class WarehousesProductsService
 		if (warehouse) {
 			const existedProduct = _.find(
 				warehouse.products,
-				(warehouseProduct) => warehouseProduct.productId === productId
+				(warehouseProduct) => warehouseProduct.productId === productId,
 			);
 
 			if (existedProduct) {
@@ -359,7 +359,7 @@ export class WarehousesProductsService
 		if (warehouse) {
 			const existedProduct = _.find(
 				warehouse.products,
-				(warehouseProduct) => warehouseProduct.productId === productId
+				(warehouseProduct) => warehouseProduct.productId === productId,
 			);
 
 			if (existedProduct) {
@@ -509,18 +509,18 @@ export class WarehousesProductsService
 
 		this.log.info(
 			`Remove requested in warehouse: ${JSON.stringify(
-				warehouse
-			)} for product id: ${productId}`
+				warehouse,
+			)} for product id: ${productId}`,
 		);
 
 		const product = _.find(
 			warehouse.products,
-			(p) => p.productId === productId
+			(p) => p.productId === productId,
 		);
 
 		if (product != null) {
 			this.log.info(
-				`Product count before remove: ${product.count} and we want to remove ${count} products`
+				`Product count before remove: ${product.count} and we want to remove ${count} products`,
 			);
 
 			if (product.count >= count) {
@@ -540,7 +540,7 @@ export class WarehousesProductsService
 			}
 		} else {
 			throw new Error(
-				`There is no such an product with the id ${productId} in the warehouse with the id ${warehouseId}`
+				`There is no such an product with the id ${productId} in the warehouse with the id ${warehouseId}`,
 			);
 		}
 	}
@@ -574,18 +574,18 @@ export class WarehousesProductsService
 
 		this.log.info(
 			`Remove requested in warehouse: ${JSON.stringify(
-				warehouse
-			)} for product id: ${productId}`
+				warehouse,
+			)} for product id: ${productId}`,
 		);
 
 		const product = _.find(
 			warehouse.products,
-			(p) => p.productId === productId
+			(p) => p.productId === productId,
 		);
 
 		if (product != null) {
 			this.log.info(
-				`Product sold count before decrease: ${product.soldCount} and we want to decrease ${count} products`
+				`Product sold count before decrease: ${product.soldCount} and we want to decrease ${count} products`,
 			);
 
 			if (product.soldCount >= count) {
@@ -605,7 +605,7 @@ export class WarehousesProductsService
 			}
 		} else {
 			throw new Error(
-				`There is no such an product with the id ${productId} in the warehouse with the id ${warehouseId}`
+				`There is no such an product with the id ${productId} in the warehouse with the id ${warehouseId}`,
 			);
 		}
 	}

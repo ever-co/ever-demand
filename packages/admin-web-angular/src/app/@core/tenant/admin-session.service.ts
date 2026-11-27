@@ -44,7 +44,9 @@ export class AdminSessionService {
 	}
 
 	/** Updates the role kept for the screens (the API checks it on every call). */
-	refresh(admin: Pick<SessionAdmin, 'role' | 'isSuperAdmin'> | null | undefined) {
+	refresh(
+		admin: Pick<SessionAdmin, 'role' | 'isSuperAdmin'> | null | undefined,
+	) {
 		if (!admin) {
 			return;
 		}

@@ -40,7 +40,7 @@ sed -i "s#DOCKER_GENERATE_PASSWORD_CHARSET#$GENERATE_PASSWORD_CHARSET#g" *.js
 sed -i "s#DOCKER_SETTINGS_APP_TYPE#$SETTINGS_APP_TYPE#g" *.js
 sed -i "s#DOCKER_SETTINGS_MAINTENANCE_API_URL#$SETTINGS_MAINTENANCE_API_URL#g" *.js
 sed -i "s#DOCKER_DEMO#$DEMO#g" *.js
-sed -i "s#DOCKER_TENANT_BASE_DOMAIN#$TENANT_BASE_DOMAIN#g" *.js
+sed -i "s#DOCKER_TENANT_BASE_DOMAIN#$TENANT_BASE_DOMAIN#g" ./*.js
 
 # We may not need to use that env vars now in nginx.config, but we may want later.
 # Also we just need to copy nginx.conf to correct place anyway...

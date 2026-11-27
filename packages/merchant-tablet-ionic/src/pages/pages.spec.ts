@@ -20,7 +20,12 @@ describe('Merchant pages', () => {
 		let router: { navigate: ReturnType<typeof vi.fn> };
 		let routers: { reconnectAll: ReturnType<typeof vi.fn> };
 		const page = () =>
-			new LoginPage(auth as any, store as any, router as any, routers as any);
+			new LoginPage(
+				auth as any,
+				store as any,
+				router as any,
+				routers as any,
+			);
 
 		beforeEach(() => {
 			auth = { login: vi.fn() };
@@ -58,10 +63,12 @@ describe('Merchant pages', () => {
 		});
 
 		it('reconnects the sockets after a login, so they handshake with the token (DESIGN.md §3.5)', async () => {
-			auth.login.mockReturnValue(of({ token: 'jwt', warehouse: { id: 'w1' } }));
+			auth.login.mockReturnValue(
+				of({ token: 'jwt', warehouse: { id: 'w1' } }),
+			);
 			vi.spyOn(console, 'log').mockImplementation(() => undefined);
 			routers.reconnectAll.mockImplementation(() =>
-				expect(store.token).toBe('jwt')
+				expect(store.token).toBe('jwt'),
 			);
 			const p = page();
 
@@ -75,7 +82,7 @@ describe('Merchant pages', () => {
 		it('reconnects the sockets after a logout (opening the login page signed in)', () => {
 			localStorage.setItem('token', 'old');
 			routers.reconnectAll.mockImplementation(() =>
-				expect(localStorage.getItem('token')).toBeNull()
+				expect(localStorage.getItem('token')).toBeNull(),
 			);
 
 			page();

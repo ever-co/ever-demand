@@ -17,8 +17,14 @@ const stringOrUndefined = (value: unknown): string | undefined =>
  * `Authorization` / `Tenant-Id` headers or a `?tenant=` query, plus the
  * page's host.
  */
-export function socketTenantInfo(socket: Pick<Socket, 'handshake'>): TenantRequestInfo {
-	const { auth = {}, headers = {}, query = {} } = socket.handshake ?? ({} as any);
+export function socketTenantInfo(
+	socket: Pick<Socket, 'handshake'>,
+): TenantRequestInfo {
+	const {
+		auth = {},
+		headers = {},
+		query = {},
+	} = socket.handshake ?? ({} as any);
 
 	return {
 		authorization:
@@ -28,7 +34,9 @@ export function socketTenantInfo(socket: Pick<Socket, 'handshake'>): TenantReque
 			stringOrUndefined((auth as any).tenant) ??
 			headerValue(headers['tenant-id'] as any) ??
 			stringOrUndefined((query as any).tenant),
-		host: headerValue(headers['x-forwarded-host'] as any) ?? headerValue(headers.host as any),
+		host:
+			headerValue(headers['x-forwarded-host'] as any) ??
+			headerValue(headers.host as any),
 		origin: headerValue(headers.origin as any),
 	};
 }
@@ -42,7 +50,7 @@ export function socketTenantInfo(socket: Pick<Socket, 'handshake'>): TenantReque
  */
 export function tenantSocketMiddleware(
 	socket: Socket,
-	next: (err?: Error) => void
+	next: (err?: Error) => void,
 ): void {
 	const info = socketTenantInfo(socket);
 
@@ -55,13 +63,15 @@ export function tenantSocketMiddleware(
 		},
 		(err) => {
 			if (err instanceof TenantResolutionError) {
-				const refused: Error & { data?: unknown } = new Error(err.message);
+				const refused: Error & { data?: unknown } = new Error(
+					err.message,
+				);
 				refused.data = { code: err.code, status: err.status };
 				next(refused);
 			} else {
 				next(err);
 			}
-		}
+		},
 	);
 }
 
@@ -92,23 +102,25 @@ export function hasSocketTenantInfo(socket: Pick<Socket, 'data'>): boolean {
  * so they keep their order.
  */
 export function recheckSocketAccess(socket: Socket): Promise<TenantCtx | null> {
-	const pending: Promise<TenantCtx | null> | undefined = socket.data.tenantRecheck;
+	const pending: Promise<TenantCtx | null> | undefined =
+		socket.data.tenantRecheck;
 
 	if (pending !== undefined) {
 		return pending;
 	}
 
-	const run = recheckAccess(socket.data.tenantInfo, socketTenantCtx(socket)).then(
-		(fresh) => {
-			if (fresh) {
-				socket.data.tenantCtx = fresh;
-				return fresh;
-			}
-
-			socket.disconnect(true);
-			return null;
+	const run = recheckAccess(
+		socket.data.tenantInfo,
+		socketTenantCtx(socket),
+	).then((fresh) => {
+		if (fresh) {
+			socket.data.tenantCtx = fresh;
+			return fresh;
 		}
-	);
+
+		socket.disconnect(true);
+		return null;
+	});
 
 	socket.data.tenantRecheck = run;
 
@@ -125,5 +137,9 @@ export function recheckSocketAccess(socket: Socket): Promise<TenantCtx | null> {
 
 /** The tenant context of a connected socket (none when it skipped the middleware). */
 export function socketTenantCtx(socket: Pick<Socket, 'data'>): TenantCtx {
-	return socket.data?.tenantCtx ?? { tenantId: TenantContext.getFallbackTenantId() };
+	return (
+		socket.data?.tenantCtx ?? {
+			tenantId: TenantContext.getFallbackTenantId(),
+		}
+	);
 }

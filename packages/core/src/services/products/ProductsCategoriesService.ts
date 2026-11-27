@@ -51,7 +51,9 @@ export class ProductsCategoriesService extends DBService<ProductsCategory>
 	async create(
 		category: CreateObject<ProductsCategory>
 	): Promise<ProductsCategory> {
-		return super.create(stripProtectedFields(category) as CreateObject<ProductsCategory>);
+		return super.create(
+			stripProtectedFields(category) as CreateObject<ProductsCategory>,
+		);
 	}
 
 	/**

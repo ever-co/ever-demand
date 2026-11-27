@@ -8,7 +8,7 @@ export class CardPaymentsUnavailableError extends Error {
 
 	constructor() {
 		super(
-			'Card payments are not available for this business yet: pay in cash on delivery'
+			'Card payments are not available for this business yet: pay in cash on delivery',
 		);
 	}
 }
@@ -28,7 +28,9 @@ export function tenantMayTakeCardPayments(): boolean {
 
 	const tenantId = TenantContext.tenantId();
 
-	return tenantId != null && tenantId === tenantDirectory.getDefaultTenantId();
+	return (
+		tenantId != null && tenantId === tenantDirectory.getDefaultTenantId()
+	);
 }
 
 /** Throws CardPaymentsUnavailableError unless the current tenant may take card payments. */

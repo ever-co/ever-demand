@@ -28,8 +28,10 @@ export class CommonModule {
 					provide: SOCKET_AUTH,
 					useValue: socketAuthFrom(
 						options.tenant ?? {},
-						options.tokenStorageKey === undefined ? 'token' : options.tokenStorageKey,
-						options.tenantWithToken === true
+						options.tokenStorageKey === undefined
+							? 'token'
+							: options.tokenStorageKey,
+						options.tenantWithToken === true,
 					),
 				},
 			],

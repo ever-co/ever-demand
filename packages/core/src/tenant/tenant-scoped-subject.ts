@@ -22,20 +22,24 @@ export class TenantScopedSubject<T> extends Subject<T> {
 	}
 
 	override subscribe(
-		observerOrNext?: Partial<Observer<T>> | ((value: T) => void) | null
+		observerOrNext?: Partial<Observer<T>> | ((value: T) => void) | null,
 	): Subscription {
 		const ctx = TenantContext.capture();
 
 		const observer: Partial<Observer<T>> =
 			typeof observerOrNext === 'function'
 				? { next: observerOrNext }
-				: observerOrNext ?? {};
+				: (observerOrNext ?? {});
 
 		const subscription = super.subscribe({
 			next: (value) => {
 				const tenantId = this.tenantOf(value);
 
-				if (tenantId != null && !ctx.system && tenantId !== ctx.tenantId) {
+				if (
+					tenantId != null &&
+					!ctx.system &&
+					tenantId !== ctx.tenantId
+				) {
 					return;
 				}
 

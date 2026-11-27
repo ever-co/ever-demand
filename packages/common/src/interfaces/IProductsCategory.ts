@@ -2,7 +2,8 @@ import { ITenantScoped } from './ITenant';
 import { DBCreateObject, DBRawObject, PyroObjectId } from '../@pyro/db';
 import { ILocaleMember } from './ILocale';
 
-export interface IProductsCategoryCreateObject extends DBCreateObject, ITenantScoped {
+export interface IProductsCategoryCreateObject
+	extends DBCreateObject, ITenantScoped {
 	name: IProductsCategoryName[];
 	image?: string;
 }

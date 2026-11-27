@@ -74,7 +74,7 @@ async function signup(label: string) {
 				lastName: 'Owner',
 			},
 		},
-		ANONYMOUS
+		ANONYMOUS,
 	);
 
 	return data.signupTenant as {
@@ -96,7 +96,7 @@ async function buildTenant(label: string): Promise<TenantFixture> {
 			createProductsCategory(createInput: { name: [{ locale: "en-US", value: $name }] }) { id }
 		}`,
 		{ name: `Category ${label}` },
-		token
+		token,
 	);
 
 	// createPromotion answers { success, message, data } in a Promotion shape
@@ -113,13 +113,13 @@ async function buildTenant(label: string): Promise<TenantFixture> {
 				purchasesCount: 0,
 			},
 		},
-		token
+		token,
 	);
 
 	const promotions = await gqlData(
 		`query P($store: String!) { promotions(findInput: { warehouse: $store }) { _id } }`,
 		{ store: store.id },
-		token
+		token,
 	);
 
 	const carrier = await createCarrier(`carrier_${label}_${unique()}`, token);
@@ -140,7 +140,7 @@ async function buildTenant(label: string): Promise<TenantFixture> {
 			},
 		},
 		ANONYMOUS,
-		tenantHeader(tenant.slug)
+		tenantHeader(tenant.slug),
 	);
 
 	const order = await gqlData(
@@ -154,7 +154,7 @@ async function buildTenant(label: string): Promise<TenantFixture> {
 			},
 		},
 		ANONYMOUS,
-		tenantHeader(tenant.slug)
+		tenantHeader(tenant.slug),
 	);
 
 	const pyro = new PyroClient({ tenant: tenant.slug });
@@ -229,9 +229,15 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const byText = (a: string, b: string) => a.localeCompare(b);
 
 /** A Stripe-Signature header for `payload` (what stripe.webhooks.constructEvent checks). */
-function stripeSignature(payload: string, secret = BILLING_WEBHOOK_SECRET): string {
+function stripeSignature(
+	payload: string,
+	secret = BILLING_WEBHOOK_SECRET,
+): string {
 	const t = Math.floor(Date.now() / 1000);
-	const v1 = crypto.createHmac('sha256', secret).update(`${t}.${payload}`).digest('hex');
+	const v1 = crypto
+		.createHmac('sha256', secret)
+		.update(`${t}.${payload}`)
+		.digest('hex');
 	return `t=${t},v1=${v1}`;
 }
 
@@ -257,7 +263,8 @@ afterAll(() => fakeStripe.close());
 
 /** The id inside a login token (its payload is not secret). */
 const tokenId = (token: string): string =>
-	JSON.parse(Buffer.from(token.split('.')[1], 'base64url').toString('utf8')).id;
+	JSON.parse(Buffer.from(token.split('.')[1], 'base64url').toString('utf8'))
+		.id;
 
 describe('multi-tenant isolation', () => {
 	let A: TenantFixture;
@@ -270,7 +277,11 @@ describe('multi-tenant isolation', () => {
 
 	describe('signup and tenant resolution', () => {
 		it('signs a business up on the Starter plan with its owner', async () => {
-			const data = await gqlData(`{ currentTenant { id slug plan status } }`, {}, A.token);
+			const data = await gqlData(
+				`{ currentTenant { id slug plan status } }`,
+				{},
+				A.token,
+			);
 
 			expect(data.currentTenant).toEqual({
 				id: A.tenantId,
@@ -289,15 +300,20 @@ describe('multi-tenant isolation', () => {
 					free: isTenantSlugAvailable(slug: $b)
 				}`,
 				{ a: A.slug, b: `free-${unique()}` },
-				ANONYMOUS
+				ANONYMOUS,
 			);
 
-			expect(data).toEqual({ taken: false, reserved: false, bad: false, free: true });
+			expect(data).toEqual({
+				taken: false,
+				reserved: false,
+				bad: false,
+				free: true,
+			});
 
 			const res = await gql(
 				`mutation { signupTenant(input: { businessName: "Copy", slug: "${A.slug}", email: "x_${unique()}@example.com", password: "long-password" }) { token } }`,
 				{},
-				ANONYMOUS
+				ANONYMOUS,
 			);
 			expect(res.errors?.[0].message).toMatch(/taken/);
 		});
@@ -306,15 +322,24 @@ describe('multi-tenant isolation', () => {
 			const data = await gqlData(
 				`query P($slug: String!) { tenantBySlug(slug: $slug) { id name slug } none: tenantBySlug(slug: "no-such-tenant-x") { id } }`,
 				{ slug: A.slug },
-				ANONYMOUS
+				ANONYMOUS,
 			);
 
-			expect(data.tenantBySlug).toEqual({ id: A.tenantId, name: 'Tenant A', slug: A.slug });
+			expect(data.tenantBySlug).toEqual({
+				id: A.tenantId,
+				name: 'Tenant A',
+				slug: A.slug,
+			});
 			expect(data.none).toBeNull();
 		});
 
 		it('answers 404 for an unknown Tenant-Id', async () => {
-			const res = await gql(`{ products { id } }`, {}, ANONYMOUS, tenantHeader('nobody-here-x'));
+			const res = await gql(
+				`{ products { id } }`,
+				{},
+				ANONYMOUS,
+				tenantHeader('nobody-here-x'),
+			);
 
 			expect(res.status).toBe(404);
 			expect(res.errors?.[0].extensions?.code).toBe('TENANT_NOT_FOUND');
@@ -326,11 +351,26 @@ describe('multi-tenant isolation', () => {
 		});
 
 		it('resolves the tenant by id or slug in the header, and by the page origin', async () => {
-			const byId = await gqlData(`{ products { id } }`, {}, ANONYMOUS, tenantHeader(A.tenantId));
-			const bySlug = await gqlData(`{ products { id } }`, {}, ANONYMOUS, tenantHeader(A.slug));
-			const byOrigin = await gqlData(`{ products { id } }`, {}, ANONYMOUS, {
-				origin: `https://${B.slug}.${TENANT_BASE_DOMAIN}`,
-			});
+			const byId = await gqlData(
+				`{ products { id } }`,
+				{},
+				ANONYMOUS,
+				tenantHeader(A.tenantId),
+			);
+			const bySlug = await gqlData(
+				`{ products { id } }`,
+				{},
+				ANONYMOUS,
+				tenantHeader(A.slug),
+			);
+			const byOrigin = await gqlData(
+				`{ products { id } }`,
+				{},
+				ANONYMOUS,
+				{
+					origin: `https://${B.slug}.${TENANT_BASE_DOMAIN}`,
+				},
+			);
 
 			for (const data of [byId, bySlug]) {
 				expect(data.products.map((p) => p.id)).toEqual([A.productId]);
@@ -339,15 +379,25 @@ describe('multi-tenant isolation', () => {
 		});
 
 		it('lets the token win over the origin', async () => {
-			const data = await gqlData(`{ currentTenant { id } }`, {}, A.token, {
-				origin: `https://${B.slug}.${TENANT_BASE_DOMAIN}`,
-			});
+			const data = await gqlData(
+				`{ currentTenant { id } }`,
+				{},
+				A.token,
+				{
+					origin: `https://${B.slug}.${TENANT_BASE_DOMAIN}`,
+				},
+			);
 
 			expect(data.currentTenant.id).toBe(A.tenantId);
 		});
 
 		it("refuses A's login with B's Tenant-Id (403)", async () => {
-			const res = await gql(`{ currentTenant { id } }`, {}, A.token, tenantHeader(B.slug));
+			const res = await gql(
+				`{ currentTenant { id } }`,
+				{},
+				A.token,
+				tenantHeader(B.slug),
+			);
 
 			expect(res.status).toBe(403);
 			expect(res.errors?.[0].extensions?.code).toBe('TENANT_FORBIDDEN');
@@ -369,7 +419,7 @@ describe('multi-tenant isolation', () => {
 					tenantMembers { id }
 				}`,
 				{},
-				A.token
+				A.token,
 			);
 
 			expect(data.promotions.map((p) => p._id)).toEqual([A.promotionId]);
@@ -413,7 +463,7 @@ describe('multi-tenant isolation', () => {
 					device: B.deviceId,
 					admin: B.ownerId,
 				},
-				A.token
+				A.token,
 			).catch((err) => ({ error: String(err) }));
 
 			const seen = idsIn(data);
@@ -425,21 +475,57 @@ describe('multi-tenant isolation', () => {
 
 		it("cannot change or delete B's records", async () => {
 			const attempts = [
-				gql(`mutation M($id: String!) { updateCarrier(id: $id, updateInput: { firstName: "Mallory" }) { id } }`, { id: B.carrierId }, A.token),
-				gql(`mutation M($id: String!) { removeProductsByIds(ids: [$id]) { n } }`, { id: B.productId }, A.token),
-				gql(`mutation M($id: String!) { removeWarehousesByIds(ids: [$id]) }`, { id: B.storeId }, A.token),
-				gql(`mutation M($id: String!) { banUser(id: $id) { id } }`, { id: B.userId }, A.token),
-				gql(`mutation M($id: String!) { updateOrderWarehouseStatus(orderId: $id, status: PackagingFinished) { id } }`, { id: B.orderId }, A.token),
-				gql(`mutation M($id: String!) { removeProductsCategoriesByIds(ids: [$id]) { n } }`, { id: B.categoryId }, A.token),
-				gql(`mutation M($id: String!) { removePromotionsByIds(ids: [$id]) { n } }`, { id: B.promotionId }, A.token),
-				gql(`mutation M($id: String!) { updateAdmin(id: $id, updateInput: { name: "Mallory" }) { id } }`, { id: B.ownerId }, A.token),
-				gql(`mutation M($id: String!) { removeDeviceByIds(ids: [$id]) { n } }`, { id: B.deviceId }, A.token),
+				gql(
+					`mutation M($id: String!) { updateCarrier(id: $id, updateInput: { firstName: "Mallory" }) { id } }`,
+					{ id: B.carrierId },
+					A.token,
+				),
+				gql(
+					`mutation M($id: String!) { removeProductsByIds(ids: [$id]) { n } }`,
+					{ id: B.productId },
+					A.token,
+				),
+				gql(
+					`mutation M($id: String!) { removeWarehousesByIds(ids: [$id]) }`,
+					{ id: B.storeId },
+					A.token,
+				),
+				gql(
+					`mutation M($id: String!) { banUser(id: $id) { id } }`,
+					{ id: B.userId },
+					A.token,
+				),
+				gql(
+					`mutation M($id: String!) { updateOrderWarehouseStatus(orderId: $id, status: PackagingFinished) { id } }`,
+					{ id: B.orderId },
+					A.token,
+				),
+				gql(
+					`mutation M($id: String!) { removeProductsCategoriesByIds(ids: [$id]) { n } }`,
+					{ id: B.categoryId },
+					A.token,
+				),
+				gql(
+					`mutation M($id: String!) { removePromotionsByIds(ids: [$id]) { n } }`,
+					{ id: B.promotionId },
+					A.token,
+				),
+				gql(
+					`mutation M($id: String!) { updateAdmin(id: $id, updateInput: { name: "Mallory" }) { id } }`,
+					{ id: B.ownerId },
+					A.token,
+				),
+				gql(
+					`mutation M($id: String!) { removeDeviceByIds(ids: [$id]) { n } }`,
+					{ id: B.deviceId },
+					A.token,
+				),
 				gql(
 					`mutation M($store: String!, $product: String!) {
 						addWarehouseProducts(warehouseId: $store, products: [{ product: $product, price: 1, initialPrice: 1, count: 1 }]) { id }
 					}`,
 					{ store: B.storeId, product: A.productId },
-					A.token
+					A.token,
 				),
 			];
 
@@ -447,9 +533,9 @@ describe('multi-tenant isolation', () => {
 
 			for (const res of results) {
 				// each attempt is a valid operation that the tenant layer refuses or misses
-				expect((res.errors ?? []).map((e) => e.extensions?.code)).not.toContain(
-					'GRAPHQL_VALIDATION_FAILED'
-				);
+				expect(
+					(res.errors ?? []).map((e) => e.extensions?.code),
+				).not.toContain('GRAPHQL_VALIDATION_FAILED');
 				expect(idsIn(res.data).has(B.storeId)).toBe(false);
 			}
 
@@ -475,19 +561,29 @@ describe('multi-tenant isolation', () => {
 					carrier: B.carrierId,
 					admin: B.ownerId,
 				},
-				B.token
+				B.token,
 			);
 
 			expect(data.warehouses.map((w) => w.id)).toEqual([B.storeId]);
 			expect(data.product.id).toBe(B.productId);
 			expect(data.user).toEqual({ id: B.userId, isBanned: false });
-			expect(data.getOrder).toEqual({ id: B.orderId, warehouseStatus: 0 });
-			expect(data.getCarrier).toEqual({ id: B.carrierId, firstName: 'Carl' });
+			expect(data.getOrder).toEqual({
+				id: B.orderId,
+				warehouseStatus: 0,
+			});
+			expect(data.getCarrier).toEqual({
+				id: B.carrierId,
+				firstName: 'Carl',
+			});
 			expect(data.admin.name).not.toBe('Mallory');
-			expect(data.productsCategories.map((c) => c.id)).toEqual([B.categoryId]);
+			expect(data.productsCategories.map((c) => c.id)).toEqual([
+				B.categoryId,
+			]);
 			expect(data.promotions.map((p) => p._id)).toEqual([B.promotionId]);
 			expect(data.devices.map((d) => d.id)).toEqual([B.deviceId]);
-			expect(data.getStoreProducts.map((p) => p.product.id)).toEqual([B.productId]);
+			expect(data.getStoreProducts.map((p) => p.product.id)).toEqual([
+				B.productId,
+			]);
 		});
 
 		it("cannot order from B's store in its own shop", async () => {
@@ -501,7 +597,7 @@ describe('multi-tenant isolation', () => {
 					},
 				},
 				ANONYMOUS,
-				tenantHeader(A.slug)
+				tenantHeader(A.slug),
 			);
 
 			expect(res.errors?.length).toBeGreaterThan(0);
@@ -509,28 +605,58 @@ describe('multi-tenant isolation', () => {
 		});
 
 		it('shows the shop of each tenant only its own stores and products near the customer', async () => {
-			const near = { geoLocation: geoLocation([SOFIA[0] + 0.0001, SOFIA[1] + 0.0001]) };
+			const near = {
+				geoLocation: geoLocation([
+					SOFIA[0] + 0.0001,
+					SOFIA[1] + 0.0001,
+				]),
+			};
 			const query = `query N($geoLocation: GeoLocationFindInput!) {
 				geoLocationProducts(geoLocation: $geoLocation) { warehouseId warehouseProduct { product { id } } }
 			}`;
 
-			const inA = await gqlData(query, near, ANONYMOUS, tenantHeader(A.slug));
-			const inB = await gqlData(query, near, ANONYMOUS, tenantHeader(B.slug));
+			const inA = await gqlData(
+				query,
+				near,
+				ANONYMOUS,
+				tenantHeader(A.slug),
+			);
+			const inB = await gqlData(
+				query,
+				near,
+				ANONYMOUS,
+				tenantHeader(B.slug),
+			);
 
-			expect(new Set(inA.geoLocationProducts.map((p) => p.warehouseId))).toEqual(new Set([A.storeId]));
-			expect(new Set(inB.geoLocationProducts.map((p) => p.warehouseId))).toEqual(new Set([B.storeId]));
+			expect(
+				new Set(inA.geoLocationProducts.map((p) => p.warehouseId)),
+			).toEqual(new Set([A.storeId]));
+			expect(
+				new Set(inB.geoLocationProducts.map((p) => p.warehouseId)),
+			).toEqual(new Set([B.storeId]));
 		});
 
 		it('keeps admin operations from anonymous callers and from other roles', async () => {
-			const anonymous = await gql(`{ users { id } }`, {}, ANONYMOUS, tenantHeader(A.slug));
-			expect(anonymous.errors?.[0].extensions?.code).toBe('UNAUTHENTICATED');
+			const anonymous = await gql(
+				`{ users { id } }`,
+				{},
+				ANONYMOUS,
+				tenantHeader(A.slug),
+			);
+			expect(anonymous.errors?.[0].extensions?.code).toBe(
+				'UNAUTHENTICATED',
+			);
 
 			const carrierLogin = await gqlData(
 				`mutation L($u: String!) { carrierLogin(username: $u, password: "carrier-password") { token } }`,
 				{ u: A.carrierUsername },
-				ANONYMOUS
+				ANONYMOUS,
 			);
-			const asCarrier = await gql(`{ users { id } }`, {}, carrierLogin.carrierLogin.token);
+			const asCarrier = await gql(
+				`{ users { id } }`,
+				{},
+				carrierLogin.carrierLogin.token,
+			);
 			expect(asCarrier.errors?.[0].extensions?.code).toBe('FORBIDDEN');
 		});
 	});
@@ -542,7 +668,7 @@ describe('multi-tenant isolation', () => {
 					`mutation L($e: String!) { userLogin(email: $e, password: "customer-password") { user { id } } }`,
 					{ e: SHARED_CUSTOMER_EMAIL },
 					ANONYMOUS,
-					tenantHeader(slug)
+					tenantHeader(slug),
 				);
 
 			expect((await login(A.slug)).userLogin.user.id).toBe(A.userId);
@@ -571,7 +697,7 @@ describe('multi-tenant isolation', () => {
 						},
 					},
 				},
-				B.token
+				B.token,
 			);
 
 			expect(res.errors?.length).toBeGreaterThan(0);
@@ -580,9 +706,23 @@ describe('multi-tenant isolation', () => {
 		it("logs a carrier in from anywhere, but not on another tenant's host", async () => {
 			const query = `mutation L($u: String!) { carrierLogin(username: $u, password: "carrier-password") { token carrier { id } } }`;
 
-			const plain = await gqlData(query, { u: A.carrierUsername }, ANONYMOUS);
-			const ownHost = await gqlData(query, { u: A.carrierUsername }, ANONYMOUS, tenantHeader(A.slug));
-			const otherHost = await gqlData(query, { u: A.carrierUsername }, ANONYMOUS, tenantHeader(B.slug));
+			const plain = await gqlData(
+				query,
+				{ u: A.carrierUsername },
+				ANONYMOUS,
+			);
+			const ownHost = await gqlData(
+				query,
+				{ u: A.carrierUsername },
+				ANONYMOUS,
+				tenantHeader(A.slug),
+			);
+			const otherHost = await gqlData(
+				query,
+				{ u: A.carrierUsername },
+				ANONYMOUS,
+				tenantHeader(B.slug),
+			);
 
 			expect(plain.carrierLogin.carrier.id).toBe(A.carrierId);
 			expect(ownHost.carrierLogin.carrier.id).toBe(A.carrierId);
@@ -593,12 +733,19 @@ describe('multi-tenant isolation', () => {
 			const login = await gqlData(
 				`mutation L($e: String!) { adminLogin(email: $e, password: "owner-password") { token admin { role tenantId } } }`,
 				{ e: `owner_${A.slug}@example.com` },
-				ANONYMOUS
+				ANONYMOUS,
 			);
 
-			expect(login.adminLogin.admin).toEqual({ role: 'owner', tenantId: A.tenantId });
+			expect(login.adminLogin.admin).toEqual({
+				role: 'owner',
+				tenantId: A.tenantId,
+			});
 
-			const data = await gqlData(`{ currentTenant { id } }`, {}, login.adminLogin.token);
+			const data = await gqlData(
+				`{ currentTenant { id } }`,
+				{},
+				login.adminLogin.token,
+			);
 			expect(data.currentTenant.id).toBe(A.tenantId);
 		});
 	});
@@ -613,17 +760,22 @@ describe('multi-tenant isolation', () => {
 				`mutation R($input: AdminRegisterInput!) { registerAdmin(registerInput: $input) { id role } }`,
 				{
 					input: {
-						admin: { name: 'Sam Staff', email, pictureUrl: 'https://example.com/s.png', role: 'staff' },
+						admin: {
+							name: 'Sam Staff',
+							email,
+							pictureUrl: 'https://example.com/s.png',
+							role: 'staff',
+						},
 						password: 'staff-password',
 					},
 				},
-				A.token
+				A.token,
 			);
 
 			const login = await gqlData(
 				`mutation L($e: String!) { adminLogin(email: $e, password: "staff-password") { token admin { role } } }`,
 				{ e: email },
-				ANONYMOUS
+				ANONYMOUS,
 			);
 
 			expect(login.adminLogin.admin.role).toBe('staff');
@@ -634,14 +786,18 @@ describe('multi-tenant isolation', () => {
 			const res = await gql(
 				`mutation U($id: String!) { updateAdmin(id: $id, updateInput: { email: "taken_${unique()}@example.com" }) { id } }`,
 				{ id: A.ownerId },
-				staffToken
+				staffToken,
 			);
 
 			expect(res.errors?.[0].extensions?.code).toBe('FORBIDDEN');
 		});
 
 		it('lets staff work but not manage members, settings or billing', async () => {
-			const usage = await gqlData(`{ tenantUsage { members } }`, {}, staffToken);
+			const usage = await gqlData(
+				`{ tenantUsage { members } }`,
+				{},
+				staffToken,
+			);
 			expect(usage.tenantUsage.members).toBeGreaterThanOrEqual(3);
 
 			for (const op of [
@@ -671,34 +827,71 @@ describe('multi-tenant isolation', () => {
 				`mutation R($input: AdminRegisterInput!) { registerAdmin(registerInput: $input) { id role isSuperAdmin tenantId } }`,
 				{
 					input: {
-						admin: { name: 'Sneaky', email, pictureUrl: 'p', role: 'owner' },
+						admin: {
+							name: 'Sneaky',
+							email,
+							pictureUrl: 'p',
+							role: 'owner',
+						},
 						password: 'long-password',
 					},
 				},
-				A.token
+				A.token,
 			);
 
-			expect(res.registerAdmin).toMatchObject({ role: 'admin', isSuperAdmin: false, tenantId: A.tenantId });
+			expect(res.registerAdmin).toMatchObject({
+				role: 'admin',
+				isSuperAdmin: false,
+				tenantId: A.tenantId,
+			});
 		});
 	});
 
 	describe('platform super-admin', () => {
 		it('shows billing and the owner of a tenant to its admins only', async () => {
-			const asShop = await gqlData(`{ currentTenant { id ownerId billing { status } } }`, {}, ANONYMOUS, tenantHeader(A.slug));
-			const asOwner = await gqlData(`{ currentTenant { id ownerId billing { hasSubscription } } }`, {}, A.token);
+			const asShop = await gqlData(
+				`{ currentTenant { id ownerId billing { status } } }`,
+				{},
+				ANONYMOUS,
+				tenantHeader(A.slug),
+			);
+			const asOwner = await gqlData(
+				`{ currentTenant { id ownerId billing { hasSubscription } } }`,
+				{},
+				A.token,
+			);
 
-			expect(asShop.currentTenant).toEqual({ id: A.tenantId, ownerId: null, billing: null });
-			expect(asOwner.currentTenant).toEqual({ id: A.tenantId, ownerId: A.ownerId, billing: { hasSubscription: false } });
+			expect(asShop.currentTenant).toEqual({
+				id: A.tenantId,
+				ownerId: null,
+				billing: null,
+			});
+			expect(asOwner.currentTenant).toEqual({
+				id: A.tenantId,
+				ownerId: A.ownerId,
+				billing: { hasSubscription: false },
+			});
 		});
 
 		it('lists every tenant and switches into one with the Tenant-Id header', async () => {
 			const superToken = await defaultAdminToken();
 
-			const list = await gqlData(`{ tenants { tenant { id slug } members stores } }`, {}, superToken);
+			const list = await gqlData(
+				`{ tenants { tenant { id slug } members stores } }`,
+				{},
+				superToken,
+			);
 			const slugs = list.tenants.map((t) => t.tenant.slug);
-			expect(slugs).toEqual(expect.arrayContaining([A.slug, B.slug, 'default']));
+			expect(slugs).toEqual(
+				expect.arrayContaining([A.slug, B.slug, 'default']),
+			);
 
-			const inB = await gqlData(`{ warehouses { id } currentTenant { id } }`, {}, superToken, tenantHeader(B.slug));
+			const inB = await gqlData(
+				`{ warehouses { id } currentTenant { id } }`,
+				{},
+				superToken,
+				tenantHeader(B.slug),
+			);
 			expect(inB.currentTenant.id).toBe(B.tenantId);
 			expect(inB.warehouses.map((w) => w.id)).toEqual([B.storeId]);
 		});
@@ -711,17 +904,25 @@ describe('multi-tenant isolation', () => {
 				`query S($id: String!) { adminAuthenticated admin(id: $id) { id isSuperAdmin } }`,
 				{ id: superId },
 				superToken,
-				tenantHeader(B.slug)
+				tenantHeader(B.slug),
 			);
 
-			expect(inB).toEqual({ adminAuthenticated: true, admin: { id: superId, isSuperAdmin: true } });
+			expect(inB).toEqual({
+				adminAuthenticated: true,
+				admin: { id: superId, isSuperAdmin: true },
+			});
 		});
 
 		it('keeps REST controllers closed to anonymous callers', async () => {
 			const res = await fetch(`${API_URL}/api/product/x`, {
 				method: 'POST',
-				headers: { 'content-type': 'application/json', 'Tenant-Id': B.slug },
-				body: JSON.stringify({ title: [{ locale: 'en-US', value: 'Spam' }] }),
+				headers: {
+					'content-type': 'application/json',
+					'Tenant-Id': B.slug,
+				},
+				body: JSON.stringify({
+					title: [{ locale: 'en-US', value: 'Spam' }],
+				}),
 			});
 
 			expect(res.status).toBe(401);
@@ -762,13 +963,24 @@ describe('multi-tenant isolation', () => {
 						},
 					},
 				},
-				c.token
+				c.token,
 			);
 
-			expect(res.errors?.[0].message).toMatch(/Starter plan allows 3 stores/);
+			expect(res.errors?.[0].message).toMatch(
+				/Starter plan allows 3 stores/,
+			);
 
-			const usage = await gqlData(`{ tenantUsage { stores storeLimit members memberLimit } }`, {}, c.token);
-			expect(usage.tenantUsage).toEqual({ stores: 3, storeLimit: 3, members: 4, memberLimit: 15 });
+			const usage = await gqlData(
+				`{ tenantUsage { stores storeLimit members memberLimit } }`,
+				{},
+				c.token,
+			);
+			expect(usage.tenantUsage).toEqual({
+				stores: 3,
+				storeLimit: 3,
+				members: 4,
+				memberLimit: 15,
+			});
 		});
 	});
 
@@ -781,7 +993,7 @@ describe('multi-tenant isolation', () => {
 			customer: string,
 			status = 'trialing',
 			lookupKey = 'ever_demand_cloud_small_business_monthly',
-			seats = 5
+			seats = 5,
 		) => {
 			const sub = {
 				id: `sub_${unique()}`,
@@ -793,14 +1005,23 @@ describe('multi-tenant isolation', () => {
 				items: {
 					object: 'list',
 					data: [
-						{ price: { lookup_key: lookupKey }, quantity: 1, current_period_end: nowSec() + 30 * 86400 },
+						{
+							price: { lookup_key: lookupKey },
+							quantity: 1,
+							current_period_end: nowSec() + 30 * 86400,
+						},
 						...(seats > 0
 							? [
 									{
-										price: { lookup_key: lookupKey.replace('ever_demand_cloud_', 'ever_seat_demand_cloud_') },
+										price: {
+											lookup_key: lookupKey.replace(
+												'ever_demand_cloud_',
+												'ever_seat_demand_cloud_',
+											),
+										},
 										quantity: seats,
 									},
-							  ]
+								]
 							: []),
 					],
 				},
@@ -821,15 +1042,26 @@ describe('multi-tenant isolation', () => {
 		});
 
 		const billingOf = (token: string) =>
-			gqlData(`{ currentTenant { plan billing { status extraMembers hasSubscription } } }`, {}, token).then(
-				(d) => d.currentTenant
-			);
+			gqlData(
+				`{ currentTenant { plan billing { status extraMembers hasSubscription } } }`,
+				{},
+				token,
+			).then((d) => d.currentTenant);
 
 		it('refuses an event without a valid signature', async () => {
 			const event = eventOf(subscription(A.tenantId, 'cus_x'));
 
-			expect((await postWebhook(event, 't=1,v1=deadbeef')).status).toBe(400);
-			expect((await postWebhook(event, stripeSignature(JSON.stringify(event), 'whsec_wrong'))).status).toBe(400);
+			expect((await postWebhook(event, 't=1,v1=deadbeef')).status).toBe(
+				400,
+			);
+			expect(
+				(
+					await postWebhook(
+						event,
+						stripeSignature(JSON.stringify(event), 'whsec_wrong'),
+					)
+				).status,
+			).toBe(400);
 
 			expect((await billingOf(A.token)).plan).toBe('starter');
 		});
@@ -839,18 +1071,32 @@ describe('multi-tenant isolation', () => {
 			const event = eventOf(subscription(d.tenant.id, `cus_${unique()}`));
 
 			const first = await postWebhook(event);
-			expect(first).toEqual({ status: 200, body: { received: true, applied: true } });
+			expect(first).toEqual({
+				status: 200,
+				body: { received: true, applied: true },
+			});
 
 			const replay = await postWebhook(event);
 			expect(replay.body.applied).toBe(false);
 
 			expect(await billingOf(d.token)).toEqual({
 				plan: 'small_business',
-				billing: { status: 'trialing', extraMembers: 5, hasSubscription: true },
+				billing: {
+					status: 'trialing',
+					extraMembers: 5,
+					hasSubscription: true,
+				},
 			});
 
-			const usage = await gqlData(`{ tenantUsage { memberLimit storeLimit } }`, {}, d.token);
-			expect(usage.tenantUsage).toEqual({ memberLimit: 30, storeLimit: 3 });
+			const usage = await gqlData(
+				`{ tenantUsage { memberLimit storeLimit } }`,
+				{},
+				d.token,
+			);
+			expect(usage.tenantUsage).toEqual({
+				memberLimit: 30,
+				storeLimit: 3,
+			});
 
 			// a subscription of another Stripe customer cannot take the tenant over
 			const hijack = subscription(
@@ -858,7 +1104,7 @@ describe('multi-tenant isolation', () => {
 				`cus_other_${unique()}`,
 				'active',
 				'ever_demand_cloud_enterprise_monthly',
-				500
+				500,
 			);
 			await postWebhook(eventOf(hijack));
 
@@ -878,20 +1124,44 @@ describe('multi-tenant isolation', () => {
 			fakeStripe.setSubscription({ ...first, status: 'canceled' });
 			await postWebhook(stale);
 
-			expect(await billingOf(d.token)).toMatchObject({ plan: 'starter', billing: { status: 'canceled' } });
+			expect(await billingOf(d.token)).toMatchObject({
+				plan: 'starter',
+				billing: { status: 'canceled' },
+			});
 
 			// a new subscription, then the late "deleted" event of the first one
-			const second = subscription(d.tenant.id, customer, 'active', 'ever_demand_cloud_enterprise_monthly', 0);
+			const second = subscription(
+				d.tenant.id,
+				customer,
+				'active',
+				'ever_demand_cloud_enterprise_monthly',
+				0,
+			);
 			await postWebhook(eventOf(second, 'customer.subscription.created'));
-			await postWebhook(eventOf({ ...first, status: 'canceled' }, 'customer.subscription.deleted'));
+			await postWebhook(
+				eventOf(
+					{ ...first, status: 'canceled' },
+					'customer.subscription.deleted',
+				),
+			);
 
 			expect(await billingOf(d.token)).toEqual({
 				plan: 'enterprise',
-				billing: { status: 'active', extraMembers: 0, hasSubscription: true },
+				billing: {
+					status: 'active',
+					extraMembers: 0,
+					hasSubscription: true,
+				},
 			});
 
 			// a second live subscription of the same tenant is not taken over
-			const third = subscription(d.tenant.id, customer, 'active', 'ever_demand_cloud_small_business_monthly', 2);
+			const third = subscription(
+				d.tenant.id,
+				customer,
+				'active',
+				'ever_demand_cloud_small_business_monthly',
+				2,
+			);
 			await postWebhook(eventOf(third, 'customer.subscription.created'));
 
 			expect((await billingOf(d.token)).plan).toBe('enterprise');
@@ -908,7 +1178,9 @@ describe('multi-tenant isolation', () => {
 						id: `in_${unique()}`,
 						object: 'invoice',
 						customer,
-						parent: { subscription_details: { subscription: second.id } },
+						parent: {
+							subscription_details: { subscription: second.id },
+						},
 					},
 				},
 			});
@@ -922,22 +1194,39 @@ describe('multi-tenant isolation', () => {
 			const abandoned = eventOf(sub);
 			const busy = eventOf(sub);
 
-			const db = await mongoose.createConnection(`${MONGO_URL}/${DB_NAME}`).asPromise();
+			const db = await mongoose
+				.createConnection(`${MONGO_URL}/${DB_NAME}`)
+				.asPromise();
 
 			try {
-				const events = db.collection<{ _id: string; type: string; status: string; at: Date }>('billingevents');
+				const events = db.collection<{
+					_id: string;
+					type: string;
+					status: string;
+					at: Date;
+				}>('billingevents');
 				await events.insertOne({
 					_id: abandoned.id,
 					type: abandoned.type,
 					status: 'processing',
 					at: new Date(Date.now() - 10 * 60_000),
 				});
-				await events.insertOne({ _id: busy.id, type: busy.type, status: 'processing', at: new Date() });
+				await events.insertOne({
+					_id: busy.id,
+					type: busy.type,
+					status: 'processing',
+					at: new Date(),
+				});
 
-				expect(await postWebhook(abandoned)).toEqual({ status: 200, body: { received: true, applied: true } });
+				expect(await postWebhook(abandoned)).toEqual({
+					status: 200,
+					body: { received: true, applied: true },
+				});
 				expect((await postWebhook(busy)).status).toBe(409);
 
-				expect((await events.findOne({ _id: abandoned.id }))?.status).toBe('done');
+				expect(
+					(await events.findOne({ _id: abandoned.id }))?.status,
+				).toBe('done');
 			} finally {
 				await db.close();
 			}
@@ -951,22 +1240,34 @@ describe('multi-tenant isolation', () => {
 				gql(
 					`mutation C($p: String!) { createBillingCheckout(input: { plan: $p, interval: "monthly" }) { url } }`,
 					{ p: plan },
-					e.token
+					e.token,
 				);
 
-			const [one, two] = await Promise.all([checkout('small_business'), checkout('small_business')]);
+			const [one, two] = await Promise.all([
+				checkout('small_business'),
+				checkout('small_business'),
+			]);
 			expect(one.errors).toBeUndefined();
-			expect(two.data.createBillingCheckout.url).toBe(one.data.createBillingCheckout.url);
+			expect(two.data.createBillingCheckout.url).toBe(
+				one.data.createBillingCheckout.url,
+			);
 
 			const customer = [...fakeStripe.sessions.values()].find(
-				(s) => s.url === one.data.createBillingCheckout.url
+				(s) => s.url === one.data.createBillingCheckout.url,
 			).customer;
 			expect(fakeStripe.sessionsOf(customer)).toHaveLength(1);
 
 			// another plan: the first session can no longer be paid
 			const other = await checkout('enterprise');
-			expect(other.data.createBillingCheckout.url).not.toBe(one.data.createBillingCheckout.url);
-			expect(fakeStripe.sessionsOf(customer).map((s) => s.status).sort(byText)).toEqual(['expired', 'open']);
+			expect(other.data.createBillingCheckout.url).not.toBe(
+				one.data.createBillingCheckout.url,
+			);
+			expect(
+				fakeStripe
+					.sessionsOf(customer)
+					.map((s) => s.status)
+					.sort(byText),
+			).toEqual(['expired', 'open']);
 
 			// paid a moment ago in Stripe, before its webhook arrived
 			subscription(e.tenant.id, customer, 'trialing');
@@ -975,12 +1276,21 @@ describe('multi-tenant isolation', () => {
 		});
 
 		it('ignores events it does not handle', async () => {
-			const res = await postWebhook({ id: `evt_${unique()}`, object: 'event', type: 'charge.succeeded', data: { object: {} } });
+			const res = await postWebhook({
+				id: `evt_${unique()}`,
+				object: 'event',
+				type: 'charge.succeeded',
+				data: { object: {} },
+			});
 			expect(res.body).toEqual({ received: true, applied: false });
 		});
 
 		it('refuses Checkout for a free plan before calling Stripe', async () => {
-			const res = await gql(`mutation { createBillingCheckout(input: { plan: "starter", interval: "monthly" }) { url } }`, {}, A.token);
+			const res = await gql(
+				`mutation { createBillingCheckout(input: { plan: "starter", interval: "monthly" }) { url } }`,
+				{},
+				A.token,
+			);
 			expect(res.errors?.[0].message).toMatch(/paid plan/);
 		});
 	});
@@ -992,8 +1302,12 @@ describe('multi-tenant isolation', () => {
 			const pyro = new PyroClient({ tenant: A.slug });
 
 			try {
-				await expect(pyro.call('user', 'addPaymentMethod', A.userId, 'tok_visa')).rejects.toThrow(unavailable);
-				await expect(pyro.call('order', 'payWithStripe', A.orderId, 'card_x')).rejects.toThrow(unavailable);
+				await expect(
+					pyro.call('user', 'addPaymentMethod', A.userId, 'tok_visa'),
+				).rejects.toThrow(unavailable);
+				await expect(
+					pyro.call('order', 'payWithStripe', A.orderId, 'card_x'),
+				).rejects.toThrow(unavailable);
 			} finally {
 				pyro.close();
 			}
@@ -1002,11 +1316,15 @@ describe('multi-tenant isolation', () => {
 				`mutation P($o: String!) { payOrderWithStripe(orderId: $o, cardId: "card_x") { id } }`,
 				{ o: A.orderId },
 				ANONYMOUS,
-				tenantHeader(A.slug)
+				tenantHeader(A.slug),
 			);
 			expect(res.errors?.[0].message).toMatch(unavailable);
 
-			const order = await gqlData(`query O($o: String!) { getOrder(id: $o) { isPaid } }`, { o: A.orderId }, A.token);
+			const order = await gqlData(
+				`query O($o: String!) { getOrder(id: $o) { isPaid } }`,
+				{ o: A.orderId },
+				A.token,
+			);
 			expect(order.getOrder.isPaid).toBe(false);
 		});
 	});
@@ -1041,9 +1359,14 @@ describe('multi-tenant isolation', () => {
 		});
 
 		it('finds only its own stores near the customer', async () => {
-			const stores = await pyroA.observe<any[]>('geo-location-warehouses', 'get', geoLocation(), {
-				activeOnly: false,
-			});
+			const stores = await pyroA.observe<any[]>(
+				'geo-location-warehouses',
+				'get',
+				geoLocation(),
+				{
+					activeOnly: false,
+				},
+			);
 
 			const first = await stores.next((v) => Array.isArray(v));
 			expect(first.map((w) => w._id)).toEqual([A.storeId]);
@@ -1051,11 +1374,24 @@ describe('multi-tenant isolation', () => {
 		});
 
 		it("streams A's own changes and never B's", async () => {
-			const near = await pyroA.observe<any[]>('geo-location-warehouses', 'get', geoLocation(), {
-				activeOnly: false,
-			});
-			const ownOrder = await pyroA.observe<any>('order', 'get', A.orderId);
-			const foreignOrder = await pyroA.observe<any>('order', 'get', B.orderId);
+			const near = await pyroA.observe<any[]>(
+				'geo-location-warehouses',
+				'get',
+				geoLocation(),
+				{
+					activeOnly: false,
+				},
+			);
+			const ownOrder = await pyroA.observe<any>(
+				'order',
+				'get',
+				A.orderId,
+			);
+			const foreignOrder = await pyroA.observe<any>(
+				'order',
+				'get',
+				B.orderId,
+			);
 
 			await near.next((v) => Array.isArray(v));
 			await ownOrder.next((v) => v?._id === A.orderId);
@@ -1065,25 +1401,33 @@ describe('multi-tenant isolation', () => {
 			await gqlData(
 				`mutation M($id: String!) { updateOrderWarehouseStatus(orderId: $id, status: PackagingFinished) { id } }`,
 				{ id: B.orderId },
-				B.token
+				B.token,
 			);
 
 			// A: a status change of its own order, then a new store (positive controls)
 			await gqlData(
 				`mutation M($id: String!) { updateOrderWarehouseStatus(orderId: $id, status: PackagingFinished) { id } }`,
 				{ id: A.orderId },
-				A.token
+				A.token,
 			);
 			await ownOrder.next((v) => v?.warehouseStatus === 6);
 
 			const aStore = await createWarehouse('A second', {}, A.token);
-			const updated = await near.next((v) => Array.isArray(v) && v.some((w) => w._id === aStore.id));
+			const updated = await near.next(
+				(v) => Array.isArray(v) && v.some((w) => w._id === aStore.id),
+			);
 
-			expect(updated.map((w) => w._id).sort(byText)).toEqual([A.storeId, aStore.id].sort(byText));
+			expect(updated.map((w) => w._id).sort(byText)).toEqual(
+				[A.storeId, aStore.id].sort(byText),
+			);
 
 			await sleep(1000);
 
-			const seen = idsIn([near.values, ownOrder.values, foreignOrder.values]);
+			const seen = idsIn([
+				near.values,
+				ownOrder.values,
+				foreignOrder.values,
+			]);
 			expect(seen.has(bStore.id)).toBe(false);
 			expect(seen.has(B.storeId)).toBe(false);
 			expect(seen.has(B.orderId)).toBe(false);
@@ -1094,19 +1438,31 @@ describe('multi-tenant isolation', () => {
 		});
 
 		it('creates records in the tenant of the socket', async () => {
-			const user = await pyroA.call<{ _id: string }>('user-auth', 'register', {
-				user: {
-					email: `socket_${unique()}@example.com`,
-					firstName: 'Sock',
-					lastName: 'Et',
-					apartment: '2',
-					geoLocation: geoLocation(),
+			const user = await pyroA.call<{ _id: string }>(
+				'user-auth',
+				'register',
+				{
+					user: {
+						email: `socket_${unique()}@example.com`,
+						firstName: 'Sock',
+						lastName: 'Et',
+						apartment: '2',
+						geoLocation: geoLocation(),
+					},
+					password: 'socket-password',
 				},
-				password: 'socket-password',
-			});
+			);
 
-			const inA = await gqlData(`query U($id: String!) { user(id: $id) { id } }`, { id: user._id }, A.token);
-			const inB = await gql(`query U($id: String!) { user(id: $id) { id } }`, { id: user._id }, B.token);
+			const inA = await gqlData(
+				`query U($id: String!) { user(id: $id) { id } }`,
+				{ id: user._id },
+				A.token,
+			);
+			const inB = await gql(
+				`query U($id: String!) { user(id: $id) { id } }`,
+				{ id: user._id },
+				B.token,
+			);
 
 			expect(inA.user.id).toBe(user._id);
 			// B is told the customer does not exist
@@ -1125,7 +1481,12 @@ describe('multi-tenant isolation', () => {
 			};
 
 			const user = await pyroA.call<any>('user-auth', 'register', {
-				user: { email: `forged_${unique()}@example.com`, apartment: '4', geoLocation: geoLocation(), ...forged },
+				user: {
+					email: `forged_${unique()}@example.com`,
+					apartment: '4',
+					geoLocation: geoLocation(),
+					...forged,
+				},
 				password: 'forged-password',
 			});
 			const device = await pyroA.call<any>('device', 'create', {
@@ -1135,10 +1496,17 @@ describe('multi-tenant isolation', () => {
 				language: 'en-US',
 				...forged,
 			});
-			const invite = await pyroA.call<any>('invite', 'create', { apartment: '9', geoLocation: geoLocation(), ...forged });
+			const invite = await pyroA.call<any>('invite', 'create', {
+				apartment: '9',
+				geoLocation: geoLocation(),
+				...forged,
+			});
 
 			for (const created of [user, device, invite]) {
-				expect(created).toMatchObject({ tenantId: A.tenantId, isDeleted: false });
+				expect(created).toMatchObject({
+					tenantId: A.tenantId,
+					isDeleted: false,
+				});
 				expect(created.isSuperAdmin).toBeUndefined();
 				expect(created.role).toBeUndefined();
 			}
@@ -1147,7 +1515,12 @@ describe('multi-tenant isolation', () => {
 			expect(user.stripeCustomerId ?? null).toBeNull();
 
 			// the customer logs in with its own password, not a forged hash
-			const login = await pyroA.call<any>('user-auth', 'login', user.email, 'forged-password');
+			const login = await pyroA.call<any>(
+				'user-auth',
+				'login',
+				user.email,
+				'forged-password',
+			);
 			expect(login?.user?._id ?? login?.user?.id).toBe(user._id);
 
 			// the owner's socket: stores and carriers it registers stay in A, unflagged
@@ -1180,7 +1553,10 @@ describe('multi-tenant isolation', () => {
 				});
 
 				for (const created of [store, carrier]) {
-					expect(created).toMatchObject({ tenantId: A.tenantId, isDeleted: false });
+					expect(created).toMatchObject({
+						tenantId: A.tenantId,
+						isDeleted: false,
+					});
 					expect(created.hash).toBeUndefined();
 				}
 			} finally {
@@ -1190,15 +1566,27 @@ describe('multi-tenant isolation', () => {
 
 		it("lets a new customer's shop create an address invite in the socket's tenant (invites off)", async () => {
 			// shop-web / Ionic / Expo sign-up by address: invite.create, then user-auth.register
-			const invite = await pyroA.call<{ _id: string; tenantId: string }>('invite', 'create', {
-				apartment: '7',
-				geoLocation: geoLocation(),
-			});
+			const invite = await pyroA.call<{ _id: string; tenantId: string }>(
+				'invite',
+				'create',
+				{
+					apartment: '7',
+					geoLocation: geoLocation(),
+				},
+			);
 
 			expect(invite.tenantId).toBe(A.tenantId);
 
-			const inA = await gqlData(`query I($id: String!) { invite(id: $id) { id } }`, { id: invite._id }, A.token);
-			const inB = await gql(`query I($id: String!) { invite(id: $id) { id } }`, { id: invite._id }, B.token);
+			const inA = await gqlData(
+				`query I($id: String!) { invite(id: $id) { id } }`,
+				{ id: invite._id },
+				A.token,
+			);
+			const inB = await gql(
+				`query I($id: String!) { invite(id: $id) { id } }`,
+				{ id: invite._id },
+				B.token,
+			);
 
 			expect(inA.invite.id).toBe(invite._id);
 			expect(inB.data?.invite ?? null).toBeNull();
@@ -1222,16 +1610,30 @@ describe('multi-tenant isolation', () => {
 			try {
 				await expect(
 					anonymousB.call('warehouse', 'register', {
-						warehouse: { name: 'Mallory', username: `mallory_${unique()}`, geoLocation: geoLocation() },
+						warehouse: {
+							name: 'Mallory',
+							username: `mallory_${unique()}`,
+							geoLocation: geoLocation(),
+						},
 						password: 'mallory-password',
-					})
+					}),
 				).rejects.toThrow(/Log in to use warehouse.register/);
-				await expect(anonymousB.call('order', 'paid', B.orderId)).rejects.toThrow(/Log in/);
 				await expect(
-					anonymousB.call('warehouse-products', 'changePrice', B.storeId, B.productId, 0)
+					anonymousB.call('order', 'paid', B.orderId),
 				).rejects.toThrow(/Log in/);
 				await expect(
-					anonymousB.call('carrier', 'updateById', B.carrierId, { firstName: 'Mallory' })
+					anonymousB.call(
+						'warehouse-products',
+						'changePrice',
+						B.storeId,
+						B.productId,
+						0,
+					),
+				).rejects.toThrow(/Log in/);
+				await expect(
+					anonymousB.call('carrier', 'updateById', B.carrierId, {
+						firstName: 'Mallory',
+					}),
 				).rejects.toThrow(/Log in/);
 			} finally {
 				anonymousB.close();
@@ -1240,7 +1642,7 @@ describe('multi-tenant isolation', () => {
 			const data = await gqlData(
 				`query R($c: String!) { warehouses { id name } getCarrier(id: $c) { firstName } getOrder(id: "${B.orderId}") { isPaid } }`,
 				{ c: B.carrierId },
-				B.token
+				B.token,
 			);
 			// (B made a second store itself in the streams test)
 			expect(data.warehouses.map((w) => w.name)).not.toContain('Mallory');
@@ -1249,19 +1651,33 @@ describe('multi-tenant isolation', () => {
 			expect(data.getOrder.isPaid).toBe(false);
 		});
 
-		it("lets a logged-in store socket do store actions in its own tenant only", async () => {
+		it('lets a logged-in store socket do store actions in its own tenant only', async () => {
 			const login = await gqlData(
 				`mutation L($u: String!) { warehouseLogin(username: $u, password: "store-password") { token } }`,
 				{ u: A.storeUsername },
-				ANONYMOUS
+				ANONYMOUS,
 			);
-			const storeA = new PyroClient({ token: login.warehouseLogin.token });
+			const storeA = new PyroClient({
+				token: login.warehouseLogin.token,
+			});
 
 			try {
-				await storeA.call('warehouse-products', 'changePrice', A.storeId, A.productId, 1100);
+				await storeA.call(
+					'warehouse-products',
+					'changePrice',
+					A.storeId,
+					A.productId,
+					1100,
+				);
 				// B's store is not found in A's tenant
 				await expect(
-					storeA.call('warehouse-products', 'changePrice', B.storeId, B.productId, 1)
+					storeA.call(
+						'warehouse-products',
+						'changePrice',
+						B.storeId,
+						B.productId,
+						1,
+					),
 				).rejects.toThrow();
 			} finally {
 				storeA.close();
@@ -1270,34 +1686,40 @@ describe('multi-tenant isolation', () => {
 			const prices = await gqlData(
 				`query P($a: String!) { getStoreProducts(storeId: $a, fullProducts: false) { price } }`,
 				{ a: A.storeId },
-				A.token
+				A.token,
 			);
 			expect(prices.getStoreProducts[0].price).toBe(1100);
 
 			const priceB = await gqlData(
 				`query P($b: String!) { getStoreProducts(storeId: $b, fullProducts: false) { price } }`,
 				{ b: B.storeId },
-				B.token
+				B.token,
 			);
 			expect(priceB.getStoreProducts[0].price).toBe(1000);
 		});
 
 		it('never lets a client set the Stripe customer of a customer', async () => {
-			await pyroA.call('user', 'updateUser', A.userId, { stripeCustomerId: 'cus_someone_else' });
+			await pyroA.call('user', 'updateUser', A.userId, {
+				stripeCustomerId: 'cus_someone_else',
+			});
 			await gql(
 				`mutation U($id: String!) { updateUser(id: $id, updateObject: { stripeCustomerId: "cus_someone_else", geoLocation: { countryId: 33, city: "Sofia", streetAddress: "Vitosha Blvd", house: "1", loc: { type: "Point", coordinates: [23.3219, 42.6977] } } }) { id } }`,
 				{ id: A.userId },
 				ANONYMOUS,
-				tenantHeader(A.slug)
+				tenantHeader(A.slug),
 			);
 
 			const user = await new Promise<any>((resolve, reject) => {
-				pyroA.observe('user', 'get', A.userId).then((stream) =>
-					stream.next((v) => v?._id === A.userId).then((v) => {
-						stream.unsubscribe();
-						resolve(v);
-					}, reject)
-				, reject);
+				pyroA.observe('user', 'get', A.userId).then(
+					(stream) =>
+						stream
+							.next((v) => v?._id === A.userId)
+							.then((v) => {
+								stream.unsubscribe();
+								resolve(v);
+							}, reject),
+					reject,
+				);
 			});
 
 			expect(user.stripeCustomerId ?? null).toBeNull();
@@ -1309,9 +1731,13 @@ describe('multi-tenant isolation', () => {
 			try {
 				await expect(
 					pyro.call('user-auth', 'register', {
-						user: { email: `none_${unique()}@example.com`, apartment: '3', geoLocation: geoLocation() },
+						user: {
+							email: `none_${unique()}@example.com`,
+							apartment: '3',
+							geoLocation: geoLocation(),
+						},
 						password: 'none-password',
-					})
+					}),
 				).rejects.toThrow(/No tenant/);
 			} finally {
 				pyro.close();
@@ -1326,23 +1752,30 @@ describe('multi-tenant isolation', () => {
 				`mutation R($input: AdminRegisterInput!) { registerAdmin(registerInput: $input) { id } }`,
 				{
 					input: {
-						admin: { name: 'Lee Leaver', email, pictureUrl: 'https://example.com/l.png', role: 'admin' },
+						admin: {
+							name: 'Lee Leaver',
+							email,
+							pictureUrl: 'https://example.com/l.png',
+							role: 'admin',
+						},
 						password: 'leaver-password',
 					},
 				},
-				A.token
+				A.token,
 			);
 			const login = await gqlData(
 				`mutation L($e: String!) { adminLogin(email: $e, password: "leaver-password") { token } }`,
 				{ e: email },
-				ANONYMOUS
+				ANONYMOUS,
 			);
 			const token = login.adminLogin.token;
 
 			const leaver = new PyroClient({ token });
 			const closed: number[] = [];
 			let connected!: () => void;
-			const wsConnected = new Promise<void>((resolve) => (connected = resolve));
+			const wsConnected = new Promise<void>(
+				(resolve) => (connected = resolve),
+			);
 			const ws = createClient({
 				url: SUBSCRIPTIONS_URL,
 				webSocketImpl: WebSocket,
@@ -1356,13 +1789,23 @@ describe('multi-tenant isolation', () => {
 
 			try {
 				// an admin of A: store actions work, a stream and a subscription are open
-				await leaver.call('warehouse-products', 'changePrice', A.storeId, A.productId, 1200);
+				await leaver.call(
+					'warehouse-products',
+					'changePrice',
+					A.storeId,
+					A.productId,
+					1200,
+				);
 				const stream = await leaver.observe('order', 'get', A.orderId);
 				await stream.next((v: any) => v?._id === A.orderId);
 
 				ws.subscribe(
 					{ query: `subscription { deviceCreated { id } }` },
-					{ next: () => undefined, error: () => undefined, complete: () => undefined }
+					{
+						next: () => undefined,
+						error: () => undefined,
+						complete: () => undefined,
+					},
 				);
 				await wsConnected;
 
@@ -1371,12 +1814,18 @@ describe('multi-tenant isolation', () => {
 				await gqlData(
 					`mutation R($id: String!) { removeAdmin(adminId: $id) }`,
 					{ id: registered.registerAdmin.id },
-					A.token
+					A.token,
 				);
 
 				// the next call does not run, and the idle stream's connection closes too
 				await expect(
-					leaver.call('warehouse-products', 'changePrice', A.storeId, A.productId, 1)
+					leaver.call(
+						'warehouse-products',
+						'changePrice',
+						A.storeId,
+						A.productId,
+						1,
+					),
 				).rejects.toThrow(/disconnected/);
 				expect(await streamClosed).toBe('io server disconnect');
 
@@ -1392,7 +1841,7 @@ describe('multi-tenant isolation', () => {
 			const prices = await gqlData(
 				`query P($a: String!) { getStoreProducts(storeId: $a, fullProducts: false) { price } }`,
 				{ a: A.storeId },
-				A.token
+				A.token,
 			);
 			expect(prices.getStoreProducts[0].price).toBe(1200);
 		});
@@ -1427,7 +1876,7 @@ describe('multi-tenant isolation', () => {
 						},
 						error: reject,
 						complete: () => undefined,
-					}
+					},
 				);
 			});
 
@@ -1435,7 +1884,7 @@ describe('multi-tenant isolation', () => {
 				gqlData(
 					`mutation U($id: String!) { updateDevice(id: $id, updateInput: { language: "he-IL" }) { id } }`,
 					{ id },
-					token
+					token,
 				);
 
 			const timer = setInterval(() => {
