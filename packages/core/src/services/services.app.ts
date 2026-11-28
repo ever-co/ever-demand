@@ -146,7 +146,9 @@ export class ServicesApp {
 			const tlsOptions = dbTlsOptions();
 
 			if (tlsOptions.tlsCAFile) {
-				console.log(`Using temp SSL Cert Path: ${tlsOptions.tlsCAFile}`);
+				console.log(
+					`Using temp SSL Cert Path: ${tlsOptions.tlsCAFile}`
+				);
 			}
 
 			const connectionOptions: mongoose.ConnectOptions = {

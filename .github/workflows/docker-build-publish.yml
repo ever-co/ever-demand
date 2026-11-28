@@ -72,7 +72,10 @@ jobs:
 
             - name: Push to Github Registry
               run: |
-                  docker push --all-tags ghcr.io/ever-co/ever-api
+                  # only the tags built in this run (never stale local tags)
+                  docker push ghcr.io/ever-co/ever-api:latest
+                  docker push ghcr.io/ever-co/ever-api:${{ steps.t.outputs.tag }}
+                  docker push ghcr.io/ever-co/ever-api:sha-${{ github.sha }}
 
             - name: Push to Docker Hub Registry
               run: |
@@ -141,7 +144,10 @@ jobs:
 
             - name: Push to Github Registry
               run: |
-                  docker push --all-tags ghcr.io/ever-co/ever-admin-angular
+                  # only the tags built in this run (never stale local tags)
+                  docker push ghcr.io/ever-co/ever-admin-angular:latest
+                  docker push ghcr.io/ever-co/ever-admin-angular:${{ steps.t.outputs.tag }}
+                  docker push ghcr.io/ever-co/ever-admin-angular:sha-${{ github.sha }}
 
             - name: Push to Docker Hub Registry
               run: |
@@ -210,7 +216,10 @@ jobs:
 
             - name: Push to Github Registry
               run: |
-                  docker push --all-tags ghcr.io/ever-co/ever-carrier-ionic
+                  # only the tags built in this run (never stale local tags)
+                  docker push ghcr.io/ever-co/ever-carrier-ionic:latest
+                  docker push ghcr.io/ever-co/ever-carrier-ionic:${{ steps.t.outputs.tag }}
+                  docker push ghcr.io/ever-co/ever-carrier-ionic:sha-${{ github.sha }}
 
             - name: Push to Docker Hub Registry
               run: |
@@ -279,7 +288,10 @@ jobs:
 
             - name: Push to Github Registry
               run: |
-                  docker push --all-tags ghcr.io/ever-co/ever-merchant-ionic
+                  # only the tags built in this run (never stale local tags)
+                  docker push ghcr.io/ever-co/ever-merchant-ionic:latest
+                  docker push ghcr.io/ever-co/ever-merchant-ionic:${{ steps.t.outputs.tag }}
+                  docker push ghcr.io/ever-co/ever-merchant-ionic:sha-${{ github.sha }}
 
             - name: Push to Docker Hub Registry
               run: |
@@ -348,7 +360,10 @@ jobs:
 
             - name: Push to Github Registry
               run: |
-                  docker push --all-tags ghcr.io/ever-co/ever-shop-ionic
+                  # only the tags built in this run (never stale local tags)
+                  docker push ghcr.io/ever-co/ever-shop-ionic:latest
+                  docker push ghcr.io/ever-co/ever-shop-ionic:${{ steps.t.outputs.tag }}
+                  docker push ghcr.io/ever-co/ever-shop-ionic:sha-${{ github.sha }}
 
             - name: Push to Docker Hub Registry
               run: |
@@ -417,7 +432,10 @@ jobs:
 
             - name: Push to Github Registry
               run: |
-                  docker push --all-tags ghcr.io/ever-co/ever-shop-angular
+                  # only the tags built in this run (never stale local tags)
+                  docker push ghcr.io/ever-co/ever-shop-angular:latest
+                  docker push ghcr.io/ever-co/ever-shop-angular:${{ steps.t.outputs.tag }}
+                  docker push ghcr.io/ever-co/ever-shop-angular:sha-${{ github.sha }}
 
             - name: Push to Docker Hub Registry
               run: |

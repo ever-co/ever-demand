@@ -37,7 +37,10 @@ services:
             WAIT_HOSTS: documentdb:10260
             DB_HOST: documentdb
             DB_PORT: 10260
-            DB_URI: mongodb://${DOCUMENTDB_USERNAME:-ever}:${DOCUMENTDB_PASSWORD:?set DOCUMENTDB_PASSWORD}@documentdb:10260/ever_development?tls=true&tlsAllowInvalidCertificates=true
+            # credentials as options, not in the URI, so any password works unencoded
+            DB_URI: mongodb://documentdb:10260/ever_development?tls=true&tlsAllowInvalidCertificates=true
+            DB_USER: ${DOCUMENTDB_USERNAME:-ever}
+            DB_PASS: ${DOCUMENTDB_PASSWORD:?set DOCUMENTDB_PASSWORD}
             DB_NAME: ever_development
         depends_on: !override
             - documentdb

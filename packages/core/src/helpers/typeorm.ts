@@ -73,13 +73,39 @@ export function dbTlsOptions(): { tls?: true; tlsCAFile?: string } {
 }
 
 /**
+ * DB_URI for TypeORM, with DB_USER / DB_PASS in it when the URI has no
+ * credentials of its own. TypeORM reads credentials from its url only: an URI
+ * without them overrides `username` / `password` with empty values. Mongoose
+ * takes DB_USER / DB_PASS as options (services.app.ts), so both connections
+ * log in the same way, and any password works without encoding it yourself.
+ */
+export function typeOrmUrl(uri: string = env.DB_URI): string {
+	const user = process.env.DB_USER;
+	const pass = process.env.DB_PASS;
+	const schemeEnd = uri.indexOf('://');
+
+	if (!user || !pass || schemeEnd === -1) {
+		return uri;
+	}
+
+	const rest = uri.slice(schemeEnd + 3);
+	const authority = rest.split(/[/?]/, 1)[0];
+
+	if (authority.includes('@')) {
+		return uri;
+	}
+
+	return `${uri.slice(0, schemeEnd + 3)}${encodeURIComponent(user)}:${encodeURIComponent(pass)}@${rest}`;
+}
+
+/**
  * TypeORM (MongoDB) connection options, shared by the bootstrap connection
  * (used by the inversify repositories) and the NestJS TypeOrmModule.
  */
 export function getTypeORMOptions(): MongoDataSourceOptions {
 	return {
 		type: 'mongodb',
-		url: env.DB_URI,
+		url: typeOrmUrl(),
 		...dbTlsOptions(),
 		host: process.env.DB_HOST || 'localhost',
 		username: process.env.DB_USER,

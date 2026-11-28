@@ -12,6 +12,7 @@ import {
 	getTypeORMDataSource,
 	getTypeORMEntities,
 	getTypeORMOptions,
+	typeOrmUrl,
 	isDbSsl,
 } from '../../helpers/typeorm';
 import { createStripeClient, STRIPE_API_VERSION } from '../../helpers/stripe';
@@ -61,6 +62,37 @@ describe('TypeORM options (helpers/typeorm.ts)', () => {
 		}
 
 		expect(isDbSsl()).toBe(expected);
+	});
+
+	describe('typeOrmUrl (DB_USER / DB_PASS for TypeORM)', () => {
+		afterEach(() => {
+			delete process.env.DB_USER;
+			delete process.env.DB_PASS;
+		});
+
+		const uri = 'mongodb://db.example:10260/ever_test?tls=true';
+
+		it('is DB_URI when no credentials are set', () => {
+			expect(typeOrmUrl(uri)).toBe(uri);
+		});
+
+		it('puts DB_USER / DB_PASS into an URI without credentials, encoded', () => {
+			process.env.DB_USER = 'ever';
+			process.env.DB_PASS = 'p@ss/w:rd#1';
+			expect(typeOrmUrl(uri)).toBe(
+				`mongodb://ever:${encodeURIComponent('p@ss/w:rd#1')}@db.example:10260/ever_test?tls=true`
+			);
+			// and the options TypeORM builds from it carry the url with them
+			expect(getTypeORMOptions().url).toContain('ever:p%40ss%2Fw%3Ard%231@');
+		});
+
+		it('keeps the credentials an URI already has', () => {
+			process.env.DB_USER = 'ever';
+			process.env.DB_PASS = 'secret';
+			const own = 'mongodb://owner:own@db.example:10260/x?tls=true';
+
+			expect(typeOrmUrl(own)).toBe(own);
+		});
 	});
 
 	it('uses the system CAs for TLS when DB_CA_CERT is empty', () => {

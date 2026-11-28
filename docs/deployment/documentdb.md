@@ -1,6 +1,6 @@
 # Running Ever Demand on DocumentDB
 
-[DocumentDB](https://github.com/documentdb/documentdb) is an open-source (MIT) document database built on PostgreSQL, from the Linux Foundation. It speaks the MongoDB wire protocol through its gateway. Ever Demand runs on it **as well as** on MongoDB: the API uses the same MongoDB driver (Mongoose 9 / Node driver 7), and only `DB_URI` changes.
+[DocumentDB](https://github.com/documentdb/documentdb) is an open-source (MIT) document database built on PostgreSQL, from the Linux Foundation. It speaks the MongoDB wire protocol through its gateway. Ever Demand runs on it **as well as** on MongoDB: the API uses the same MongoDB driver (Mongoose 9 / Node driver 7), and only `DB_URI` and `DB_NAME` change. `DB_NAME` must name the same database as the path of `DB_URI`: the API passes it as `dbName`, which wins over that path.
 
 Use it when you would rather run PostgreSQL than MongoDB, for example because your team already operates PostgreSQL.
 
@@ -49,9 +49,14 @@ docker run -d --name documentdb -p 127.0.0.1:10260:10260 -v documentdb-data:/dat
 
 Wait for `DocumentDB is ready` in `docker logs documentdb`, then set in `packages/core/.env`:
 
+```ini
+DB_URI=mongodb://localhost:10260/ever_development?tls=true&tlsAllowInvalidCertificates=true
+DB_NAME=ever_development
+DB_USER=ever
+DB_PASS=<password>
 ```
-DB_URI=mongodb://ever:<password>@localhost:10260/ever_development?tls=true&tlsAllowInvalidCertificates=true
-```
+
+`DB_USER` and `DB_PASS` reach the driver as options, so the password needs no encoding. Credentials inside `DB_URI` (`mongodb://ever:<password>@…`) work too, but then percent-encode the reserved characters of the password (`@ : / ? # [ ] %`) in the URI only, not in the `docker run`.
 
 ## Local: Docker Compose
 
@@ -104,4 +109,4 @@ Size it from 2 CPU / 4 GiB as the minimum; upstream recommends 4 CPU / 8 GiB and
 | `DB_URI`                    | `mongodb://<user>:<password>@<host>:10260/<database>?tls=true` (plus `tlsCAFile=` or `tlsAllowInvalidCertificates=true` as above) |
 | `DB_NAME`                   | the database name, as in `DB_URI`                                                                                                 |
 | `DB_SSL_MODE`, `DB_CA_CERT` | optional: TLS with the CA given in base64 (both connections, Mongoose and TypeORM)                                                |
-| `DB_USER`, `DB_PASS`        | leave empty when the credentials are in `DB_URI`                                                                                  |
+| `DB_USER`, `DB_PASS`        | the credentials, passed as options (no URI encoding needed); leave empty when they are in `DB_URI`                                |
