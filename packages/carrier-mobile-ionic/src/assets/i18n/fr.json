@@ -22,18 +22,18 @@
 		"DELIVERED": "Livré",
 		"CANCEL": "Annuler",
 		"DELIVERIES_HISTORY": "Historique des livraisons",
-		"TO": "To",
-		"FROM": "From",
+		"TO": "À",
+		"FROM": "De",
 		"ID": "ID",
-		"IS_PAID": "Is Paid",
-		"CANCELED": "Canceled",
-		"CONFIRMED": "Confirmed",
-		"DETAILS": "Details"
+		"IS_PAID": "Payée",
+		"CANCELED": "Annulée",
+		"CONFIRMED": "Confirmée",
+		"DETAILS": "Détails"
 	},
 	"DRIVE_TO_WAREHOUSE_VIEW": {
-		"TAKE_WORK": "Take work",
-		"SKIP_WORK": "Skip Work",
-		"I'M_THERE": "I'm there",
+		"TAKE_WORK": "Prendre la commande",
+		"SKIP_WORK": "Ignorer la commande",
+		"I'M_THERE": "J’y suis",
 		"CANCEL": "Annuler",
 		"TO": "Destination",
 		"ORDER_ID": "ID de la commande"
@@ -50,17 +50,17 @@
 		"CANCEL": "Annuler"
 	},
 	"NO_INTERNET_VIEW": {
-		"NETWORK_WAS_DISCONNECTED": "Network was disconnected"
+		"NETWORK_WAS_DISCONNECTED": "Le réseau a été déconnecté"
 	},
 	"NO_SERVER_VIEW": {
-		"NO_SERVER": "Server connection is lost"
+		"NO_SERVER": "La connexion au serveur est perdue"
 	},
 	"GET_PRODUCT_VIEW": {
 		"GOT_IT": "Ok",
 		"CANCEL": "Annuler"
 	},
 	"RETURN_PRODUCT_VIEW": {
-		"RETURN_PRODUCT": "Return Product",
+		"RETURN_PRODUCT": "Retourner le produit",
 		"CANCEL": "Annuler"
 	},
 	"LOGIN_VIEW": {
@@ -78,18 +78,19 @@
 	"LANGUAGE_VIEW": {
 		"TITLE": "Sélectionner la langue",
 		"ENGLISH": "Anglais",
-		"BULGARIAN": "Bulgarian",
-		"HEBREW": "Hebrew",
+		"BULGARIAN": "Bulgare",
+		"HEBREW": "Hébreu",
 		"RUSSIAN": "Russe",
-		"SPANISH": "Spanish",
+		"SPANISH": "Espagnol",
 		"FRENCH": "Français"
 	},
 	"LIST_VIEW": {
-		"YOU_NAVIGATED_HERE_FROM": "You navigated here from"
+		"YOU_NAVIGATED_HERE_FROM": "Vous êtes arrivé ici depuis"
 	},
 	"COMMON": {
 		"OK": "OK",
-		"TRY_AGAIN": "Veuillez réessayer !"
+		"TRY_AGAIN": "Veuillez réessayer !",
+		"MORE": "de plus"
 	},
 	"ORDER_STATE": {
 		"CUSTOMER_CANCELLED_ORDER": "Le client a annulé la commande",

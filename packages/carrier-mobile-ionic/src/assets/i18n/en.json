@@ -80,16 +80,17 @@
 		"ENGLISH": "English",
 		"BULGARIAN": "Bulgarian",
 		"HEBREW": "Hebrew",
-		"RUSSIAN": "Rusian",
+		"RUSSIAN": "Russian",
 		"SPANISH": "Spanish",
-		"French": "French"
+		"FRENCH": "French"
 	},
 	"LIST_VIEW": {
 		"YOU_NAVIGATED_HERE_FROM": "You navigated here from"
 	},
 	"COMMON": {
 		"OK": "OK",
-		"TRY_AGAIN": "Try again!"
+		"TRY_AGAIN": "Try again!",
+		"MORE": "more"
 	},
 	"ORDER_STATE": {
 		"CUSTOMER_CANCELLED_ORDER": "The customer canceled the order",

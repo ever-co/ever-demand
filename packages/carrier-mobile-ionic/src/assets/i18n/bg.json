@@ -89,7 +89,8 @@
 	},
 	"COMMON": {
 		"OK": "Добре",
-		"TRY_AGAIN": "Опитайте отново!"
+		"TRY_AGAIN": "Опитайте отново!",
+		"MORE": "още"
 	},
 	"ORDER_STATE": {
 		"CUSTOMER_CANCELLED_ORDER": "Клиентът отказа поръчката",
