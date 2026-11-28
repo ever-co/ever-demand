@@ -1,11 +1,13 @@
 import 'reflect-metadata';
 import { defer } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { Types } from 'mongoose';
 
 // The store's products live in a fake store document. The fake warehouse
 // service answers each call after a round trip, the way MongoDB does, so
-// calls that run at the same time interleave. Its `updateOne` checks the
-// filter and applies the update in one step, as MongoDB does for a document.
+// calls that run at the same time interleave. Its writes (`updateOne`,
+// `updateMultiple` and the model's `findByIdAndUpdate`) check the filter and
+// apply the update in one step, as MongoDB does for a document.
 jest.mock('@pyro/io', () => ({
 	asyncListener: () => () => undefined,
 	observableListener: () => () => undefined,
@@ -55,6 +57,7 @@ function createFakeStore(initial: {
 	count: number;
 	soldCount?: number;
 	price?: number;
+	isTakeaway?: boolean;
 }) {
 	const store = {
 		exists: true,
@@ -71,9 +74,18 @@ function createFakeStore(initial: {
 				isCarrierRequired: true,
 				isDeliveryRequired: true,
 				isProductAvailable: true,
+				isTakeaway: initial.isTakeaway ?? false,
 			},
 		] as Record<string, any>[],
 	};
+
+	/** A product as Mongoose casts it into the store (an id, defaults). */
+	const asStored = (product: Record<string, any>) => ({
+		_id: new Types.ObjectId().toHexString(),
+		count: 0,
+		soldCount: 0,
+		...product,
+	});
 
 	const snapshot = () => ({
 		_id: STORE_ID,
@@ -103,6 +115,17 @@ function createFakeStore(initial: {
 				if (index === -1) return -1;
 			} else if (path.startsWith('products.')) {
 				const field = path.slice('products.'.length);
+				if (condition?.$ne !== undefined) {
+					// on an array: no product of the store has the value
+					if (
+						store.products.some((stored) =>
+							matches(stored[field], condition.$ne),
+						)
+					) {
+						return -1;
+					}
+					continue;
+				}
 				index = store.products.findIndex((stored) =>
 					matches(stored[field], condition),
 				);
@@ -115,19 +138,25 @@ function createFakeStore(initial: {
 		return index;
 	};
 
-	const apply = (
-		stored: Record<string, any>,
-		update: Record<string, any>,
-	) => {
+	/** Applies `update` to the store, `products.$` being product `index`. */
+	const apply = (index: number, update: Record<string, any>) => {
 		const field = (path: string) => {
 			if (!path.startsWith('products.$.')) {
 				throw new Error(`fake: unsupported update path ${path}`);
 			}
 			return path.slice('products.$.'.length);
 		};
+		const stored = store.products[index];
 
 		for (const [key, value] of Object.entries(update)) {
-			if (key === '$inc') {
+			if (key === '$push') {
+				for (const [path, product] of Object.entries(value)) {
+					if (path !== 'products') {
+						throw new Error(`fake: unsupported $push path ${path}`);
+					}
+					store.products.push(asStored(product as any));
+				}
+			} else if (key === '$inc') {
 				for (const [path, by] of Object.entries(value)) {
 					stored[field(path)] += by as number;
 				}
@@ -144,11 +173,37 @@ function createFakeStore(initial: {
 		}
 	};
 
+	/** One write: the filter check and the update in one step, like MongoDB. */
+	const write = async (
+		filter: Record<string, any>,
+		update: Record<string, any>,
+	) => {
+		await roundTrip();
+
+		if (!store.exists) {
+			return null;
+		}
+
+		const index = matchedProduct(filter);
+		if (index === -1) {
+			return null;
+		}
+		apply(index, update);
+
+		const written = snapshot();
+		await roundTrip();
+		return written;
+	};
+
 	const warehousesService = {
-		get: jest.fn((_id: string) =>
+		// like WarehousesService.get(): refuses a missing or deleted store
+		get: jest.fn((id: string) =>
 			defer(async () => {
 				const read = store.exists ? snapshot() : null;
 				await roundTrip();
+				if (read == null || read.isDeleted) {
+					throw new Error(`Store with id '${id}' does not exists!`);
+				}
 				return read;
 			}),
 		),
@@ -163,29 +218,39 @@ function createFakeStore(initial: {
 				throw new Error(`Store with id '${id}' does not exists!`);
 			}
 		}),
-		updateOne: jest.fn(
+		updateOne: jest.fn(write),
+		updateMultiple: jest.fn(
 			async (
 				filter: Record<string, any>,
 				update: Record<string, any>,
 			) => {
-				await roundTrip();
-
-				if (!store.exists) {
-					return null;
-				}
-
-				// filter check and write in one step, like MongoDB
-				const index = matchedProduct(filter);
-				if (index === -1) {
-					return null;
-				}
-				apply(store.products[index], update);
-
-				const written = snapshot();
-				await roundTrip();
-				return written;
+				const written = await write(filter, update);
+				return written == null ? [] : [written];
 			},
 		),
+		// the model, for a write of the whole products array of the store
+		Model: {
+			findByIdAndUpdate: jest.fn(
+				(_id: string, update: Record<string, any>) => {
+					const query = {
+						populate: () => query,
+						lean: () => query,
+						exec: async () => {
+							await roundTrip();
+							store.products = update.$set.products.map(
+								(product: Record<string, any>) =>
+									asStored({ ...product }),
+							);
+							const written = snapshot();
+							await roundTrip();
+							return written;
+						},
+					};
+					return query;
+				},
+			),
+		},
+		existence: { next: jest.fn() },
 	};
 
 	return {
@@ -407,6 +472,290 @@ describe('WarehousesProductsService counts when orders change one store product 
 
 			expect(stock().count).toBe(10);
 			expect(stock().soldCount).toBe(5);
+		});
+	});
+});
+
+describe('WarehousesProductsService keeps the counts of orders while the store adds or edits products', () => {
+	const noGetProductTypeMessage = `There should be true at least one of the two - "isCarrierRequired" or "isTakeaway"!`;
+
+	/** One order line: what WarehousesOrdersService._updateProductCount() does. */
+	const orderLine = async (
+		service: WarehousesProductsService,
+		count: number,
+	) => {
+		await service.decreaseCount(STORE_ID, PRODUCT_ID, count);
+		await service.increaseSoldCount(STORE_ID, PRODUCT_ID, count);
+	};
+
+	const createObject = (product: string, count: number) => ({
+		product,
+		count,
+		price: 900,
+		initialPrice: 1000,
+	});
+
+	describe('add()', () => {
+		it('stock given back (an order cancel) at the same time as an order: both stay', async () => {
+			const { warehousesService, stock } = createFakeStore({ count: 10 });
+			const service = new WarehousesProductsService(
+				warehousesService as any,
+			);
+
+			await Promise.all([
+				orderLine(service, 3),
+				service.add(STORE_ID, [createObject(PRODUCT_ID, 5)]),
+			]);
+
+			expect(stock().count).toBe(12);
+			expect(stock().soldCount).toBe(3);
+		});
+
+		it('a new product added at the same time as an order of another product: the order stays', async () => {
+			const { store, warehousesService, stock } = createFakeStore({
+				count: 10,
+			});
+			const service = new WarehousesProductsService(
+				warehousesService as any,
+			);
+
+			await Promise.all([
+				orderLine(service, 3),
+				service.add(STORE_ID, [createObject(OTHER_PRODUCT_ID, 4)]),
+			]);
+
+			expect(stock().count).toBe(7);
+			expect(stock().soldCount).toBe(3);
+
+			const added = store.products.filter(
+				(stored) => String(stored.product) === OTHER_PRODUCT_ID,
+			);
+			expect(added).toHaveLength(1);
+			// neither delivery nor takeaway given: delivery
+			expect(added[0]).toMatchObject({
+				count: 4,
+				price: 900,
+				isDeliveryRequired: true,
+			});
+		});
+
+		it('the same new product added twice at the same time: one store product with both counts', async () => {
+			const { store, warehousesService } = createFakeStore({ count: 10 });
+			const service = new WarehousesProductsService(
+				warehousesService as any,
+			);
+
+			await Promise.all([
+				service.add(STORE_ID, [createObject(OTHER_PRODUCT_ID, 2)]),
+				service.add(STORE_ID, [createObject(OTHER_PRODUCT_ID, 3)]),
+			]);
+
+			const added = store.products.filter(
+				(stored) => String(stored.product) === OTHER_PRODUCT_ID,
+			);
+			expect(added).toHaveLength(1);
+			expect(added[0].count).toBe(5);
+		});
+
+		it('is one $inc for a product the store holds and one $push for a new one, and returns the products of the store', async () => {
+			const { warehousesService } = createFakeStore({ count: 10 });
+			const service = new WarehousesProductsService(
+				warehousesService as any,
+			);
+
+			const products = await service.add(STORE_ID, [
+				createObject(PRODUCT_ID, 5),
+				{ ...createObject(OTHER_PRODUCT_ID, 4), isTakeaway: true },
+			]);
+
+			// never a write of the whole products array of the store
+			expect(
+				warehousesService.Model.findByIdAndUpdate,
+			).not.toHaveBeenCalled();
+			expect(warehousesService.updateOne).toHaveBeenCalledTimes(2);
+			const [[heldFilter, heldUpdate], [newFilter, newUpdate]] =
+				warehousesService.updateOne.mock.calls;
+			expect(String(heldFilter.products.$elemMatch.product)).toBe(
+				PRODUCT_ID,
+			);
+			expect(heldUpdate).toEqual({ $inc: { 'products.$.count': 5 } });
+			expect(String(newFilter['products.product'].$ne)).toBe(
+				OTHER_PRODUCT_ID,
+			);
+			expect(newUpdate).toEqual({
+				$push: {
+					products: {
+						...createObject(OTHER_PRODUCT_ID, 4),
+						isTakeaway: true,
+					},
+				},
+			});
+
+			expect(products.every((p) => p instanceof WarehouseProduct)).toBe(
+				true,
+			);
+			expect(products.map((p) => [p.productId, p.count]).sort()).toEqual(
+				[
+					[PRODUCT_ID, 15],
+					[OTHER_PRODUCT_ID, 4],
+				].sort(),
+			);
+		});
+	});
+
+	describe.each([
+		['changeProductAvailability', 'isProductAvailable'],
+		['changeProductTakeaway', 'isTakeaway'],
+		['changeProductDelivery', 'isDeliveryRequired'],
+	] as const)('%s()', (method, field) => {
+		it('turned off at the same time as an order: the order stays', async () => {
+			const { warehousesService, stock } = createFakeStore({
+				count: 10,
+				soldCount: 1,
+				isTakeaway: true,
+			});
+			const service = new WarehousesProductsService(
+				warehousesService as any,
+			);
+
+			const [, updated] = await Promise.all([
+				orderLine(service, 3),
+				service[method](STORE_ID, PRODUCT_ID, false),
+			]);
+
+			expect(stock()[field]).toBe(false);
+			expect(stock().count).toBe(7);
+			expect(stock().soldCount).toBe(4);
+
+			expect(updated).toBeInstanceOf(WarehouseProduct);
+			expect(updated.productId).toBe(PRODUCT_ID);
+			expect(updated[field]).toBe(false);
+		});
+
+		it('sets only its own field, in one write', async () => {
+			const { warehousesService } = createFakeStore({
+				count: 10,
+				isTakeaway: true,
+			});
+			const service = new WarehousesProductsService(
+				warehousesService as any,
+			);
+
+			await service[method](STORE_ID, PRODUCT_ID, true);
+
+			expect(warehousesService.updateOne).toHaveBeenCalledTimes(1);
+			expect(warehousesService.updateMultiple).not.toHaveBeenCalled();
+			const [filter, update] = warehousesService.updateOne.mock.calls[0];
+			expect(String(filter._id)).toBe(STORE_ID);
+			expect(String(filter.products.$elemMatch.product)).toBe(PRODUCT_ID);
+			expect(update).toEqual({
+				$set: { [`products.$.${field}`]: true },
+			});
+		});
+
+		it('keeps its errors, and writes nothing', async () => {
+			const { store, warehousesService, stock } = createFakeStore({
+				count: 10,
+				isTakeaway: true,
+			});
+			const service = new WarehousesProductsService(
+				warehousesService as any,
+			);
+
+			await expect(
+				service[method](STORE_ID, OTHER_PRODUCT_ID, false),
+			).rejects.toThrow('Cannot find product');
+
+			store.isDeleted = true;
+			await expect(
+				service[method](STORE_ID, PRODUCT_ID, false),
+			).rejects.toThrow(`Store with id '${STORE_ID}' does not exists!`);
+
+			expect(stock()[field]).toBe(true);
+		});
+	});
+
+	describe('takeaway or delivery stays on', () => {
+		it.each([
+			['changeProductTakeaway', 'isTakeaway', 'isDeliveryRequired'],
+			['changeProductDelivery', 'isDeliveryRequired', 'isTakeaway'],
+		] as const)(
+			'%s(false) is refused while the other one is off',
+			async (method, field, other) => {
+				const { warehousesService, stock } = createFakeStore({
+					count: 10,
+					isTakeaway: true,
+				});
+				stock()[other] = false;
+				const service = new WarehousesProductsService(
+					warehousesService as any,
+				);
+
+				await expect(
+					service[method](STORE_ID, PRODUCT_ID, false),
+				).rejects.toThrow(noGetProductTypeMessage);
+
+				expect(stock()[field]).toBe(true);
+			},
+		);
+
+		it('takeaway and delivery turned off at the same time: one of them is refused', async () => {
+			const { warehousesService, stock } = createFakeStore({
+				count: 10,
+				isTakeaway: true,
+			});
+			const service = new WarehousesProductsService(
+				warehousesService as any,
+			);
+
+			const results = await Promise.allSettled([
+				service.changeProductTakeaway(STORE_ID, PRODUCT_ID, false),
+				service.changeProductDelivery(STORE_ID, PRODUCT_ID, false),
+			]);
+
+			expect(results.map((result) => result.status).sort()).toEqual([
+				'fulfilled',
+				'rejected',
+			]);
+			const refused = results.find(
+				(result) => result.status === 'rejected',
+			) as PromiseRejectedResult;
+			expect(refused.reason.message).toBe(noGetProductTypeMessage);
+			expect(stock().isTakeaway || stock().isDeliveryRequired).toBe(true);
+		});
+	});
+
+	describe('saveUpdated()', () => {
+		it('a product the merchant edits while an order is placed: the sold count of the order stays', async () => {
+			const { warehousesService, stock } = createFakeStore({
+				count: 10,
+				soldCount: 1,
+			});
+			const service = new WarehousesProductsService(
+				warehousesService as any,
+			);
+
+			// the merchant opens the product (count 10, sold 1) ...
+			const [edited] = await service
+				.get(STORE_ID)
+				.pipe(first())
+				.toPromise();
+			// ... an order of 3 is placed meanwhile ...
+			await orderLine(service, 3);
+			// ... and the merchant saves a new price and stock
+			edited.price = 999;
+			edited.count = 20;
+			const saved = await service.saveUpdated(STORE_ID, edited);
+
+			expect(stock().soldCount).toBe(4);
+			// merchants set the stock on purpose
+			expect(stock().count).toBe(20);
+			expect(stock().price).toBe(999);
+			expect(saved.soldCount).toBe(4);
+
+			const [, update] = warehousesService.updateMultiple.mock.calls[0];
+			expect(update).not.toHaveProperty(['products.$.soldCount']);
+			expect(update['products.$.count']).toBe(20);
 		});
 	});
 });

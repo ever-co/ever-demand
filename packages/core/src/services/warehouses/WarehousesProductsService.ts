@@ -8,8 +8,6 @@ import IWarehouseProduct, {
 } from '@modules/server.common/interfaces/IWarehouseProduct';
 import * as _ from 'lodash';
 import Warehouse from '@modules/server.common/entities/Warehouse';
-import IWarehouse from '@modules/server.common/interfaces/IWarehouse';
-import { ExistenceEventType } from '@pyro/db-server';
 import { Observable, throwError } from 'rxjs';
 import IWarehouseProductsRouter from '@modules/server.common/routers/IWarehouseProductsRouter';
 import {
@@ -196,121 +194,82 @@ export class WarehousesProductsService
 	}
 
 	/**
-	 * Add products to warehouse
-	 * TODO: should "merge" products, not just add them!
-	 * By merge I mean increase qty if product already in warehouse or add new product if it's not.
-	 * We also should think what to do with prices?
-	 * Is it possible to have 2 same products but come with different price?
-	 * Or we should merge products and use latest price?
+	 * Add products to warehouse: a product the store holds gets the count
+	 * added to its stock (its other fields stay), a new one is added.
+	 * Each product is one write that MongoDB checks (`$inc` or `$push`), so
+	 * stock and sold counts changed at the same time (orders, other products
+	 * of the store) are kept. Each write sends the store's update event.
 	 *
 	 * @param {string} warehouseId
 	 * @param {IWarehouseProductCreateObject[]} products
-	 * @param {boolean} [triggerChange=true]
-	 * @returns {Promise<WarehouseProduct[]>}
+	 * @returns {Promise<WarehouseProduct[]>} the products of the store
 	 * @memberof WarehousesProductsService
 	 */
 	@asyncListener()
 	async add(
 		warehouseId: string,
-		products: IWarehouseProductCreateObject[],
-		triggerChange: boolean = true
+		products: IWarehouseProductCreateObject[]
 	): Promise<WarehouseProduct[]> {
-		// TODO: use atomic operations (e.g.:findAndModify) or 2 phase commit
-		// see http://blog.ocliw.com/2012/11/25/mongoose-add-to-an-existing-array/
-
 		this.log.info('Adding products ' + JSON.stringify(products));
 
-		let warehouse = await this.warehousesService
+		const warehouse = await this.warehousesService
 			.get(warehouseId, false)
 			.pipe(first())
 			.toPromise(); // products not populated!
 
 		if (warehouse == null) {
-			throw new Error(`There is no warehouse with the id ${warehouse}!`);
+			throw new Error(
+				`There is no warehouse with the id ${warehouseId}!`
+			);
 		}
 
-		const notUpdatedWarehouse = _.clone(warehouse);
+		for (const product of products) {
+			if (!product.isDeliveryRequired && !product.isTakeaway) {
+				product.isDeliveryRequired = true;
+			}
 
-		// In practice to make it more reliable, we should go one by one, i.e. one product a time
-		// and each time execute atomic operation on each product.
-		// Say if product already there, we want to increase count using atomic operation by given value in the storage.
-		// etc
+			const productId =
+				typeof product.product === 'string'
+					? product.product
+					: (product.product as IProduct)._id.toString();
 
-		let newProds: IWarehouseProductCreateObject[];
-
-		if (warehouse.products && warehouse.products.length > 0) {
-			newProds = _.clone(warehouse.products);
-
-			_.each(products, (product) => {
-				if (!product.isDeliveryRequired && !product.isTakeaway) {
-					product.isDeliveryRequired = true;
-				}
-				const existed = _.find(
-					newProds,
-					(newProd) =>
-						(newProd.product as string) ===
-						(product.product as string)
+			const increase = () =>
+				this.warehousesService.updateOne(
+					warehouseProductFilter(warehouseId, productId),
+					{ $inc: { 'products.$.count': product.count ?? 0 } }
+				);
+			// only while the store does not hold the product
+			const push = () =>
+				this.warehousesService.updateOne(
+					{
+						_id: new mongoose.Types.ObjectId(warehouseId),
+						isDeleted: { $eq: false },
+						'products.product': {
+							$ne: new mongoose.Types.ObjectId(productId),
+						},
+					},
+					{ $push: { products: { ...product, product: productId } } }
 				);
 
-				if (
-					typeof existed === 'undefined' ||
-					existed === undefined ||
-					existed == null
-				) {
-					newProds.push(product); // if no such product existed yet, we add it
-				} else {
-					// if product with same id already exists, we should increase his qty
-					if (existed.count && product.count) {
-						existed.count += product.count;
-					} else {
-						existed.count = product.count;
-					}
-					// should we merge price here? What if new products come with new price,
-					// should we make "average" price in warehouse or use latest price instead?
-				}
-			});
-		} else {
-			newProds = products;
-		}
-
-		try {
-			warehouse = new Warehouse(
-				(await this.warehousesService.Model.findByIdAndUpdate(
-					warehouseId,
-					{
-						$set: { products: newProds },
-					},
-					{ new: true }
-				)
-					.populate('products.product')
-					.lean()
-					.exec()) as IWarehouse
+			const held = _.some(
+				warehouse.products,
+				(warehouseProduct) => warehouseProduct.productId === productId
 			);
-		} catch (error) {
-			this.log.error(error);
-			throw error;
-		}
 
-		if (triggerChange) {
-			this.warehousesService.existence.next({
-				id: warehouse.id,
-				value: warehouse,
-				lastValue: notUpdatedWarehouse,
-				type: ExistenceEventType.Updated,
-			});
-		}
+			// When the write matched nothing, the store changed since the read:
+			// a concurrent add pushed the product (or a remove took it away).
+			const updatedWarehouse = held
+				? ((await increase()) ?? (await push()))
+				: ((await push()) ?? (await increase()));
 
-		const newProdsIds = _.map(newProds, (warehouseProduct) => {
-			if (typeof warehouseProduct.product === 'string') {
-				return warehouseProduct.product as string;
-			} else {
-				return (warehouseProduct.product as IProduct)._id.toString();
+			if (updatedWarehouse == null) {
+				const errMsg = `There is no warehouse with the id ${warehouseId}!`;
+				this.log.error({ err: new Error(errMsg), product });
+				throw new Error(errMsg);
 			}
-		});
+		}
 
-		return _.filter(warehouse.products, (warehouseProduct) => {
-			return _.includes(newProdsIds, warehouseProduct.productId);
-		});
+		return this.get(warehouseId).pipe(first()).toPromise();
 	}
 
 	/**
@@ -393,13 +352,19 @@ export class WarehousesProductsService
 		// Mongoose refuses to cast a Product object to the ref.
 		updatedWarehouseProduct.product = updatedWarehouseProduct.productId as any;
 
+		const update = warehouseProductUpdate(updatedWarehouseProduct);
+		// Only orders change the sold count (one $inc each): the caller's copy
+		// may be older than the last order. The count is written: merchants
+		// set the stock on purpose.
+		delete update['products.$.soldCount'];
+
 		const updatedWarehouse = (
 			await this.warehousesService.updateMultiple(
 				{
 					_id: new mongoose.Types.ObjectId(warehouseId),
 					'products._id': updatedWarehouseProduct._id,
 				},
-				warehouseProductUpdate(updatedWarehouseProduct)
+				update
 			)
 		)[0];
 
@@ -609,30 +574,12 @@ export class WarehousesProductsService
 		productId: string,
 		isAvailable: boolean
 	): Promise<WarehouseProduct> {
-		const warehouse = await this.warehousesService
-			.get(warehouseId)
-			.pipe(first())
-			.toPromise();
-		if (warehouse) {
-			const existedProduct = _.find(
-				warehouse.products,
-				(warehouseProduct) => warehouseProduct.productId === productId
-			);
-
-			if (existedProduct) {
-				existedProduct.isProductAvailable = isAvailable;
-
-				return this.saveUpdated(warehouseId, existedProduct);
-			} else {
-				const errMsg = 'Cannot find product';
-				this.log.error(new Error(errMsg));
-				throw new Error(errMsg);
-			}
-		} else {
-			const errMsg = 'Cannot find warehouse';
-			this.log.error(new Error(errMsg));
-			throw new Error(errMsg);
-		}
+		return this._setProductFlag(
+			warehouseId,
+			productId,
+			'isProductAvailable',
+			isAvailable
+		);
 	}
 	@asyncListener()
 	async changeProductTakeaway(
@@ -640,30 +587,12 @@ export class WarehousesProductsService
 		productId: string,
 		isTakeaway: boolean
 	): Promise<WarehouseProduct> {
-		const warehouse = await this.warehousesService
-			.get(warehouseId)
-			.pipe(first())
-			.toPromise();
-		if (warehouse) {
-			const existedProduct = _.find(
-				warehouse.products,
-				(warehouseProduct) => warehouseProduct.productId === productId
-			);
-
-			if (existedProduct) {
-				existedProduct.isTakeaway = isTakeaway;
-
-				return this.saveUpdated(warehouseId, existedProduct);
-			} else {
-				const errMsg = 'Cannot find product';
-				this.log.error(new Error(errMsg));
-				throw new Error(errMsg);
-			}
-		} else {
-			const errMsg = 'Cannot find warehouse';
-			this.log.error(new Error(errMsg));
-			throw new Error(errMsg);
-		}
+		return this._setProductFlag(
+			warehouseId,
+			productId,
+			'isTakeaway',
+			isTakeaway
+		);
 	}
 	@asyncListener()
 	async changeProductDelivery(
@@ -671,30 +600,79 @@ export class WarehousesProductsService
 		productId: string,
 		isDelivery: boolean
 	): Promise<WarehouseProduct> {
-		const warehouse = await this.warehousesService
-			.get(warehouseId)
-			.pipe(first())
-			.toPromise();
-		if (warehouse) {
-			const existedProduct = _.find(
-				warehouse.products,
+		return this._setProductFlag(
+			warehouseId,
+			productId,
+			'isDeliveryRequired',
+			isDelivery
+		);
+	}
+
+	/**
+	 * Sets the flag `field` of the product `productId` in the store
+	 * `warehouseId` with one `$set` of that field only, so the stock and sold
+	 * counts changed at the same time are kept. Turning takeaway or delivery
+	 * off matches only while the other one is on: a product keeps one of
+	 * them, even when both are turned off at the same time.
+	 *
+	 * When the write matched nothing, reads the store to throw the error the
+	 * read-then-save of these methods threw.
+	 */
+	private async _setProductFlag(
+		warehouseId: string,
+		productId: string,
+		field: 'isProductAvailable' | 'isTakeaway' | 'isDeliveryRequired',
+		value: boolean
+	): Promise<WarehouseProduct> {
+		const otherWays: Partial<Record<typeof field, typeof field>> = {
+			isTakeaway: 'isDeliveryRequired',
+			isDeliveryRequired: 'isTakeaway',
+		};
+		const otherWay = otherWays[field];
+
+		const updatedWarehouse = await this.warehousesService.updateOne(
+			warehouseProductFilter(
+				warehouseId,
+				productId,
+				!value && otherWay != null ? { [otherWay]: true } : {}
+			),
+			{ $set: { [`products.$.${field}`]: value } }
+		);
+
+		const updatedProduct =
+			updatedWarehouse &&
+			_.find(
+				updatedWarehouse.products,
 				(warehouseProduct) => warehouseProduct.productId === productId
 			);
 
-			if (existedProduct) {
-				existedProduct.isDeliveryRequired = isDelivery;
+		if (updatedProduct != null) {
+			return updatedProduct;
+		}
 
-				return this.saveUpdated(warehouseId, existedProduct);
-			} else {
-				const errMsg = 'Cannot find product';
-				this.log.error(new Error(errMsg));
-				throw new Error(errMsg);
-			}
-		} else {
+		// a missing or deleted store: "Store with id ... does not exists!"
+		await this.warehousesService.throwIfNotExists(warehouseId);
+
+		const warehouse = await this.warehousesService.getCurrent(warehouseId);
+
+		if (warehouse == null) {
 			const errMsg = 'Cannot find warehouse';
 			this.log.error(new Error(errMsg));
 			throw new Error(errMsg);
 		}
+
+		const product = _.find(
+			warehouse.products,
+			(warehouseProduct) => warehouseProduct.productId === productId
+		);
+
+		if (product != null && !value && otherWay != null) {
+			throw new Error(noGetProductTypeMessage);
+		}
+
+		const errMsg = 'Cannot find product';
+		this.log.error(new Error(errMsg));
+		throw new Error(errMsg);
 	}
 
 	/**
