@@ -8,8 +8,8 @@ on:
           - master
 
 # One run per branch at a time. Runs are not cancelled, so an older run can never
-# cancel a newer one; a run whose commit is no longer the branch head pushes only
-# its :sha- tag (step "head"), never the moving :latest / :dev / :stage / :prod.
+# cancel a newer one; a run whose commit is no longer the branch head when it
+# pushes gets only its :sha- tag, never the moving :latest / :dev / :stage / :prod.
 concurrency:
     group: docker-build-publish-${{ github.ref }}
     cancel-in-progress: false
@@ -57,19 +57,6 @@ jobs:
                     *) echo "tag=${GITHUB_REF_NAME////-}" >> "$GITHUB_OUTPUT" ;;
                   esac
 
-            # A run that finishes after a newer one on the same branch must not put its
-            # older image under the moving tags (:latest, :dev / :stage / :prod).
-            - name: Is this commit still the head of the branch?
-              id: head
-              run: |
-                  head=$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/${GITHUB_REF_NAME}" | cut -f1)
-                  if [ -n "$head" ] && [ "$head" != "${GITHUB_SHA}" ]; then
-                      echo "stale=true" >> "$GITHUB_OUTPUT"
-                      echo "::notice::${GITHUB_SHA} is no longer the head of ${GITHUB_REF_NAME} ($head): only its :sha- tag is pushed"
-                  else
-                      echo "stale=false" >> "$GITHUB_OUTPUT"
-                  fi
-
             - name: Build
               uses: docker/build-push-action@v7
               with:
@@ -94,14 +81,20 @@ jobs:
               run: |
                   # only the tags built in this run (never stale local tags)
                   docker push ghcr.io/ever-co/ever-api:sha-${{ github.sha }}
-                  if [ "${{ steps.head.outputs.stale }}" != "true" ]; then
+                  # moving tags only while this commit is the branch head, checked now (after the
+                  # build); a failed lookup counts as "not the head": then only :sha- is pushed
+                  if head=$(git ls-remote --exit-code "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/${GITHUB_REF_NAME}")                       && [ "${head%%[[:space:]]*}" = "${GITHUB_SHA}" ]; then
                       docker push ghcr.io/ever-co/ever-api:latest
                       docker push ghcr.io/ever-co/ever-api:${{ steps.t.outputs.tag }}
+                  else
+                      echo "::notice::${GITHUB_SHA} is not the head of ${GITHUB_REF_NAME} (or the lookup failed): only :sha- pushed"
                   fi
 
             - name: Push to Docker Hub Registry
               run: |
-                  if [ "${{ steps.head.outputs.stale }}" != "true" ]; then
+                  # moving tags only while this commit is the branch head, checked now (after the
+                  # build); a failed lookup counts as "not the head": then only :sha- is pushed
+                  if head=$(git ls-remote --exit-code "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/${GITHUB_REF_NAME}")                       && [ "${head%%[[:space:]]*}" = "${GITHUB_SHA}" ]; then
                       docker push everco/ever-api:latest
                   fi
 
@@ -146,19 +139,6 @@ jobs:
                     *) echo "tag=${GITHUB_REF_NAME////-}" >> "$GITHUB_OUTPUT" ;;
                   esac
 
-            # A run that finishes after a newer one on the same branch must not put its
-            # older image under the moving tags (:latest, :dev / :stage / :prod).
-            - name: Is this commit still the head of the branch?
-              id: head
-              run: |
-                  head=$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/${GITHUB_REF_NAME}" | cut -f1)
-                  if [ -n "$head" ] && [ "$head" != "${GITHUB_SHA}" ]; then
-                      echo "stale=true" >> "$GITHUB_OUTPUT"
-                      echo "::notice::${GITHUB_SHA} is no longer the head of ${GITHUB_REF_NAME} ($head): only its :sha- tag is pushed"
-                  else
-                      echo "stale=false" >> "$GITHUB_OUTPUT"
-                  fi
-
             - name: Build
               uses: docker/build-push-action@v7
               with:
@@ -183,14 +163,20 @@ jobs:
               run: |
                   # only the tags built in this run (never stale local tags)
                   docker push ghcr.io/ever-co/ever-admin-angular:sha-${{ github.sha }}
-                  if [ "${{ steps.head.outputs.stale }}" != "true" ]; then
+                  # moving tags only while this commit is the branch head, checked now (after the
+                  # build); a failed lookup counts as "not the head": then only :sha- is pushed
+                  if head=$(git ls-remote --exit-code "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/${GITHUB_REF_NAME}")                       && [ "${head%%[[:space:]]*}" = "${GITHUB_SHA}" ]; then
                       docker push ghcr.io/ever-co/ever-admin-angular:latest
                       docker push ghcr.io/ever-co/ever-admin-angular:${{ steps.t.outputs.tag }}
+                  else
+                      echo "::notice::${GITHUB_SHA} is not the head of ${GITHUB_REF_NAME} (or the lookup failed): only :sha- pushed"
                   fi
 
             - name: Push to Docker Hub Registry
               run: |
-                  if [ "${{ steps.head.outputs.stale }}" != "true" ]; then
+                  # moving tags only while this commit is the branch head, checked now (after the
+                  # build); a failed lookup counts as "not the head": then only :sha- is pushed
+                  if head=$(git ls-remote --exit-code "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/${GITHUB_REF_NAME}")                       && [ "${head%%[[:space:]]*}" = "${GITHUB_SHA}" ]; then
                       docker push everco/ever-admin-angular:latest
                   fi
 
@@ -235,19 +221,6 @@ jobs:
                     *) echo "tag=${GITHUB_REF_NAME////-}" >> "$GITHUB_OUTPUT" ;;
                   esac
 
-            # A run that finishes after a newer one on the same branch must not put its
-            # older image under the moving tags (:latest, :dev / :stage / :prod).
-            - name: Is this commit still the head of the branch?
-              id: head
-              run: |
-                  head=$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/${GITHUB_REF_NAME}" | cut -f1)
-                  if [ -n "$head" ] && [ "$head" != "${GITHUB_SHA}" ]; then
-                      echo "stale=true" >> "$GITHUB_OUTPUT"
-                      echo "::notice::${GITHUB_SHA} is no longer the head of ${GITHUB_REF_NAME} ($head): only its :sha- tag is pushed"
-                  else
-                      echo "stale=false" >> "$GITHUB_OUTPUT"
-                  fi
-
             - name: Build
               uses: docker/build-push-action@v7
               with:
@@ -272,14 +245,20 @@ jobs:
               run: |
                   # only the tags built in this run (never stale local tags)
                   docker push ghcr.io/ever-co/ever-carrier-ionic:sha-${{ github.sha }}
-                  if [ "${{ steps.head.outputs.stale }}" != "true" ]; then
+                  # moving tags only while this commit is the branch head, checked now (after the
+                  # build); a failed lookup counts as "not the head": then only :sha- is pushed
+                  if head=$(git ls-remote --exit-code "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/${GITHUB_REF_NAME}")                       && [ "${head%%[[:space:]]*}" = "${GITHUB_SHA}" ]; then
                       docker push ghcr.io/ever-co/ever-carrier-ionic:latest
                       docker push ghcr.io/ever-co/ever-carrier-ionic:${{ steps.t.outputs.tag }}
+                  else
+                      echo "::notice::${GITHUB_SHA} is not the head of ${GITHUB_REF_NAME} (or the lookup failed): only :sha- pushed"
                   fi
 
             - name: Push to Docker Hub Registry
               run: |
-                  if [ "${{ steps.head.outputs.stale }}" != "true" ]; then
+                  # moving tags only while this commit is the branch head, checked now (after the
+                  # build); a failed lookup counts as "not the head": then only :sha- is pushed
+                  if head=$(git ls-remote --exit-code "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/${GITHUB_REF_NAME}")                       && [ "${head%%[[:space:]]*}" = "${GITHUB_SHA}" ]; then
                       docker push everco/ever-carrier-ionic:latest
                   fi
 
@@ -324,19 +303,6 @@ jobs:
                     *) echo "tag=${GITHUB_REF_NAME////-}" >> "$GITHUB_OUTPUT" ;;
                   esac
 
-            # A run that finishes after a newer one on the same branch must not put its
-            # older image under the moving tags (:latest, :dev / :stage / :prod).
-            - name: Is this commit still the head of the branch?
-              id: head
-              run: |
-                  head=$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/${GITHUB_REF_NAME}" | cut -f1)
-                  if [ -n "$head" ] && [ "$head" != "${GITHUB_SHA}" ]; then
-                      echo "stale=true" >> "$GITHUB_OUTPUT"
-                      echo "::notice::${GITHUB_SHA} is no longer the head of ${GITHUB_REF_NAME} ($head): only its :sha- tag is pushed"
-                  else
-                      echo "stale=false" >> "$GITHUB_OUTPUT"
-                  fi
-
             - name: Build
               uses: docker/build-push-action@v7
               with:
@@ -361,14 +327,20 @@ jobs:
               run: |
                   # only the tags built in this run (never stale local tags)
                   docker push ghcr.io/ever-co/ever-merchant-ionic:sha-${{ github.sha }}
-                  if [ "${{ steps.head.outputs.stale }}" != "true" ]; then
+                  # moving tags only while this commit is the branch head, checked now (after the
+                  # build); a failed lookup counts as "not the head": then only :sha- is pushed
+                  if head=$(git ls-remote --exit-code "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/${GITHUB_REF_NAME}")                       && [ "${head%%[[:space:]]*}" = "${GITHUB_SHA}" ]; then
                       docker push ghcr.io/ever-co/ever-merchant-ionic:latest
                       docker push ghcr.io/ever-co/ever-merchant-ionic:${{ steps.t.outputs.tag }}
+                  else
+                      echo "::notice::${GITHUB_SHA} is not the head of ${GITHUB_REF_NAME} (or the lookup failed): only :sha- pushed"
                   fi
 
             - name: Push to Docker Hub Registry
               run: |
-                  if [ "${{ steps.head.outputs.stale }}" != "true" ]; then
+                  # moving tags only while this commit is the branch head, checked now (after the
+                  # build); a failed lookup counts as "not the head": then only :sha- is pushed
+                  if head=$(git ls-remote --exit-code "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/${GITHUB_REF_NAME}")                       && [ "${head%%[[:space:]]*}" = "${GITHUB_SHA}" ]; then
                       docker push everco/ever-merchant-ionic:latest
                   fi
 
@@ -413,19 +385,6 @@ jobs:
                     *) echo "tag=${GITHUB_REF_NAME////-}" >> "$GITHUB_OUTPUT" ;;
                   esac
 
-            # A run that finishes after a newer one on the same branch must not put its
-            # older image under the moving tags (:latest, :dev / :stage / :prod).
-            - name: Is this commit still the head of the branch?
-              id: head
-              run: |
-                  head=$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/${GITHUB_REF_NAME}" | cut -f1)
-                  if [ -n "$head" ] && [ "$head" != "${GITHUB_SHA}" ]; then
-                      echo "stale=true" >> "$GITHUB_OUTPUT"
-                      echo "::notice::${GITHUB_SHA} is no longer the head of ${GITHUB_REF_NAME} ($head): only its :sha- tag is pushed"
-                  else
-                      echo "stale=false" >> "$GITHUB_OUTPUT"
-                  fi
-
             - name: Build
               uses: docker/build-push-action@v7
               with:
@@ -450,14 +409,20 @@ jobs:
               run: |
                   # only the tags built in this run (never stale local tags)
                   docker push ghcr.io/ever-co/ever-shop-ionic:sha-${{ github.sha }}
-                  if [ "${{ steps.head.outputs.stale }}" != "true" ]; then
+                  # moving tags only while this commit is the branch head, checked now (after the
+                  # build); a failed lookup counts as "not the head": then only :sha- is pushed
+                  if head=$(git ls-remote --exit-code "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/${GITHUB_REF_NAME}")                       && [ "${head%%[[:space:]]*}" = "${GITHUB_SHA}" ]; then
                       docker push ghcr.io/ever-co/ever-shop-ionic:latest
                       docker push ghcr.io/ever-co/ever-shop-ionic:${{ steps.t.outputs.tag }}
+                  else
+                      echo "::notice::${GITHUB_SHA} is not the head of ${GITHUB_REF_NAME} (or the lookup failed): only :sha- pushed"
                   fi
 
             - name: Push to Docker Hub Registry
               run: |
-                  if [ "${{ steps.head.outputs.stale }}" != "true" ]; then
+                  # moving tags only while this commit is the branch head, checked now (after the
+                  # build); a failed lookup counts as "not the head": then only :sha- is pushed
+                  if head=$(git ls-remote --exit-code "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/${GITHUB_REF_NAME}")                       && [ "${head%%[[:space:]]*}" = "${GITHUB_SHA}" ]; then
                       docker push everco/ever-shop-ionic:latest
                   fi
 
@@ -502,19 +467,6 @@ jobs:
                     *) echo "tag=${GITHUB_REF_NAME////-}" >> "$GITHUB_OUTPUT" ;;
                   esac
 
-            # A run that finishes after a newer one on the same branch must not put its
-            # older image under the moving tags (:latest, :dev / :stage / :prod).
-            - name: Is this commit still the head of the branch?
-              id: head
-              run: |
-                  head=$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/${GITHUB_REF_NAME}" | cut -f1)
-                  if [ -n "$head" ] && [ "$head" != "${GITHUB_SHA}" ]; then
-                      echo "stale=true" >> "$GITHUB_OUTPUT"
-                      echo "::notice::${GITHUB_SHA} is no longer the head of ${GITHUB_REF_NAME} ($head): only its :sha- tag is pushed"
-                  else
-                      echo "stale=false" >> "$GITHUB_OUTPUT"
-                  fi
-
             - name: Build
               uses: docker/build-push-action@v7
               with:
@@ -539,13 +491,19 @@ jobs:
               run: |
                   # only the tags built in this run (never stale local tags)
                   docker push ghcr.io/ever-co/ever-shop-angular:sha-${{ github.sha }}
-                  if [ "${{ steps.head.outputs.stale }}" != "true" ]; then
+                  # moving tags only while this commit is the branch head, checked now (after the
+                  # build); a failed lookup counts as "not the head": then only :sha- is pushed
+                  if head=$(git ls-remote --exit-code "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/${GITHUB_REF_NAME}")                       && [ "${head%%[[:space:]]*}" = "${GITHUB_SHA}" ]; then
                       docker push ghcr.io/ever-co/ever-shop-angular:latest
                       docker push ghcr.io/ever-co/ever-shop-angular:${{ steps.t.outputs.tag }}
+                  else
+                      echo "::notice::${GITHUB_SHA} is not the head of ${GITHUB_REF_NAME} (or the lookup failed): only :sha- pushed"
                   fi
 
             - name: Push to Docker Hub Registry
               run: |
-                  if [ "${{ steps.head.outputs.stale }}" != "true" ]; then
+                  # moving tags only while this commit is the branch head, checked now (after the
+                  # build); a failed lookup counts as "not the head": then only :sha- is pushed
+                  if head=$(git ls-remote --exit-code "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/${GITHUB_REF_NAME}")                       && [ "${head%%[[:space:]]*}" = "${GITHUB_SHA}" ]; then
                       docker push everco/ever-shop-angular:latest
                   fi
