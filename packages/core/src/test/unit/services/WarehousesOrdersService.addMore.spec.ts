@@ -27,8 +27,10 @@ import { WarehousesOrdersService } from '../../../services/warehouses/Warehouses
 describe('WarehousesOrdersService.addMore stock accounting', () => {
 	let ordersService: { get: jest.Mock; update: jest.Mock };
 	let usersService: { get: jest.Mock };
+	let warehousesService: { get: jest.Mock };
 	let warehousesProductsService: {
 		decreaseCount: jest.Mock;
+		increaseCount: jest.Mock;
 		increaseSoldCount: jest.Mock;
 	};
 	let service: WarehousesOrdersService;
@@ -39,6 +41,15 @@ describe('WarehousesOrdersService.addMore stock accounting', () => {
 
 	const p1 = { id: 'p1' };
 	const p2 = { id: 'p2' };
+
+	/** The store as addMore() reads it: p1 and p2 with the given stock. */
+	const storeShowing = (counts: { [productId: string]: number }) => ({
+		id: 'w1',
+		products: [
+			{ productId: 'p1', price: 10, count: counts.p1, product: p1 },
+			{ productId: 'p2', price: 20, count: counts.p2, product: p2 },
+		],
+	});
 
 	beforeEach(() => {
 		// The order was created with p1 x 1, so p1 stock already went 5 -> 4.
@@ -69,32 +80,17 @@ describe('WarehousesOrdersService.addMore stock accounting', () => {
 				}
 				stock[productId] -= count;
 			}),
+			increaseCount: jest.fn(async (_w, productId, count) => {
+				stock[productId] += count;
+			}),
 			increaseSoldCount: jest.fn(async (_w, productId, count) => {
 				sold[productId] += count;
 			}),
 		};
 
 		usersService = { get: jest.fn(() => of({ id: 'u1' })) };
-		const warehousesService = {
-			get: jest.fn(() =>
-				of({
-					id: 'w1',
-					products: [
-						{
-							productId: 'p1',
-							price: 10,
-							count: stock.p1,
-							product: p1,
-						},
-						{
-							productId: 'p2',
-							price: 20,
-							count: stock.p2,
-							product: p2,
-						},
-					],
-				})
-			),
+		warehousesService = {
+			get: jest.fn(() => of(storeShowing(stock))),
 		};
 
 		service = new WarehousesOrdersService(
@@ -198,5 +194,46 @@ describe('WarehousesOrdersService.addMore stock accounting', () => {
 		expect(ordersService.update).not.toHaveBeenCalled();
 		expect(warehousesProductsService.decreaseCount).not.toHaveBeenCalled();
 		expect(stock).toEqual({ p1: 4, p2: 3 });
+	});
+
+	it('saves nothing and puts the first new line back when the second is refused', async () => {
+		// The store showed 3 x p2 when addMore() checked it, but another
+		// order took 2 of them before this write.
+		warehousesService.get.mockReturnValue(
+			of(storeShowing({ p1: 4, p2: 3 }))
+		);
+		stock.p2 = 1;
+
+		await expect(
+			service.addMore('w1', 'u1', 'o1', [
+				{ productId: 'p1', count: 1 },
+				{ productId: 'p2', count: 2 },
+			])
+		).rejects.toThrow('Request to remove more products than available');
+
+		expect(ordersService.update).not.toHaveBeenCalled();
+		expect(stock).toEqual({ p1: 4, p2: 1 });
+		expect(sold).toEqual({ p1: 1, p2: 0 });
+	});
+
+	it('puts the new lines back in stock when the order cannot be saved', async () => {
+		let stockAtSave: typeof stock | undefined;
+		const saveError = new Error('order save failed');
+		ordersService.update.mockImplementation(async () => {
+			stockAtSave = { ...stock };
+			throw saveError;
+		});
+
+		await expect(
+			service.addMore('w1', 'u1', 'o1', [
+				{ productId: 'p1', count: 1 },
+				{ productId: 'p2', count: 2 },
+			])
+		).rejects.toBe(saveError);
+
+		// the stock was taken before the save, and is back after it failed
+		expect(stockAtSave).toEqual({ p1: 3, p2: 1 });
+		expect(stock).toEqual({ p1: 4, p2: 3 });
+		expect(sold).toEqual({ p1: 1, p2: 0 });
 	});
 });

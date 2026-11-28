@@ -234,22 +234,31 @@ export class WarehousesOrdersService
 		// order behind and takes no stock from the other lines.
 		this._assertStockAvailable(products, warehouseProducts);
 
-		// TODO next should be in the single transaction!
-		// (i.e. create order and decrease product availability in the warehouse)
-		// http://mongoosejs.com/docs/transactions.html
+		// The stock may still run out between the check above and the write
+		// (two customers ordering the last items at once). The database runs
+		// without a replica set, so there are no transactions: take the
+		// stock first, and save the order only once every line has it. A
+		// refused line or a failed save puts the stock back.
+		await this._takeStock(orderProducts, warehouseId);
 
-		const order = await this.ordersService.create({
-			user,
-			products: orderProducts,
-			warehouse: warehouseId,
-			orderNumber: await this.getNextOrderNumber(warehouseId),
-			orderType,
-			waitForCompletion: !!waitForCompletion,
-			...(options.autoConfirm ? { isConfirmed: true } : {}),
-		});
+		let order: Order;
 
-		// we do all remove operations and notify about warehouse orders change after we remove products from warehouse
-		await this._updateProductCount(order, warehouseId);
+		try {
+			order = await this.ordersService.create({
+				user,
+				products: orderProducts,
+				warehouse: warehouseId,
+				orderNumber: await this.getNextOrderNumber(warehouseId),
+				orderType,
+				waitForCompletion: !!waitForCompletion,
+				...(options.autoConfirm ? { isConfirmed: true } : {}),
+			});
+		} catch (err) {
+			await this._putStockBack(orderProducts, warehouseId);
+			throw err;
+		}
+
+		await this._increaseSoldCount(orderProducts, warehouseId);
 
 		return order;
 	}
@@ -316,18 +325,25 @@ export class WarehousesOrdersService
 		// the order and the stock as they were.
 		this._assertStockAvailable(products, warehouseProducts);
 
-		const newProducts = [...existedOrder.products, ...orderProducts];
-
-		const order = await this.ordersService.update(orderId, {
-			products: newProducts,
-		});
-
 		// Only the newly added products must leave stock: the products that
 		// were already in the order were counted when the order was created.
-		await this._updateProductCount(
-			{ products: orderProducts },
-			warehouseId
-		);
+		// As in create(): take their stock first, then save the order.
+		await this._takeStock(orderProducts, warehouseId);
+
+		const newProducts = [...existedOrder.products, ...orderProducts];
+
+		let order: Order;
+
+		try {
+			order = await this.ordersService.update(orderId, {
+				products: newProducts,
+			});
+		} catch (err) {
+			await this._putStockBack(orderProducts, warehouseId);
+			throw err;
+		}
+
+		await this._increaseSoldCount(orderProducts, warehouseId);
 
 		return order;
 	}
@@ -657,42 +673,95 @@ export class WarehousesOrdersService
 		});
 	}
 
-	private async _updateProductCount(order, warehouseId) {
-		await Promise.all(order.products.map(async (orderProduct: OrderProduct) => {
-				const productId = orderProduct.product.id;
+	/**
+	 * Takes the products of the order lines out of the store's stock, one
+	 * line after the other. Each line is one guarded write, so the store
+	 * refuses a line whose stock ran out since it was checked. Then the
+	 * lines already taken go back into stock and the refusal is thrown.
+	 */
+	private async _takeStock(
+		orderProducts: IOrderProductCreateObject[],
+		warehouseId: string
+	): Promise<void> {
+		const taken: IOrderProductCreateObject[] = [];
 
-				this.log.info(
-					{
-						warehouseId,
-						productId,
-						count: orderProduct.count,
-					},
-					'Order create remove products call'
-				);
+		for (const orderProduct of orderProducts) {
+			const productId = orderLineProductId(orderProduct);
 
+			this.log.info(
+				{ warehouseId, productId, count: orderProduct.count },
+				'Order create remove products call'
+			);
+
+			try {
 				await this.warehousesProductsService.decreaseCount(
 					warehouseId,
 					productId, // what product availability should be decreased
 					orderProduct.count // how many to remove
 				);
+			} catch (err) {
+				await this._putStockBack(taken, warehouseId);
+				throw err;
+			}
 
-				await this.warehousesProductsService.increaseSoldCount(
+			taken.push(orderProduct);
+
+			this.log.info(
+				{ warehouseId, productId, count: orderProduct.count },
+				'Order create remove products call succeed'
+			);
+		}
+	}
+
+	/**
+	 * Puts the stock of the order lines back (their order was not saved).
+	 * A line that cannot be put back is logged, and the other lines are
+	 * still put back: the caller throws the error that stopped the order.
+	 */
+	private async _putStockBack(
+		orderProducts: IOrderProductCreateObject[],
+		warehouseId: string
+	): Promise<void> {
+		for (const orderProduct of orderProducts) {
+			const productId = orderLineProductId(orderProduct);
+
+			try {
+				await this.warehousesProductsService.increaseCount(
 					warehouseId,
 					productId,
 					orderProduct.count
 				);
-
-				this.log.info(
-					{
-						warehouseId,
-						productId,
-						count: orderProduct.count,
-					},
-					'Order create remove products call succeed'
+			} catch (err) {
+				this.log.error(
+					{ warehouseId, productId, count: orderProduct.count, err },
+					'Order create could not put the products back into stock'
 				);
 			}
-		));
+		}
 	}
+
+	private async _increaseSoldCount(
+		orderProducts: IOrderProductCreateObject[],
+		warehouseId: string
+	): Promise<void> {
+		await Promise.all(
+			orderProducts.map((orderProduct) =>
+				this.warehousesProductsService.increaseSoldCount(
+					warehouseId,
+					orderLineProductId(orderProduct),
+					orderProduct.count
+				)
+			)
+		);
+	}
+}
+
+/**
+ * Id of the product of an order line. _getOrderProducts() puts the store's
+ * populated Product entity on each line.
+ */
+function orderLineProductId(orderProduct: IOrderProductCreateObject): string {
+	return (orderProduct.product as Product).id;
 }
 
 export function getStoreOrdersFingObj(storeId: string, status: string) {
