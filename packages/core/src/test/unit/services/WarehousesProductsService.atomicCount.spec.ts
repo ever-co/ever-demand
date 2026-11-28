@@ -293,7 +293,7 @@ describe('WarehousesProductsService counts when orders change one store product 
 		const { warehousesService, stock } = createFakeStore({ count: 10 });
 		const service = new WarehousesProductsService(warehousesService as any);
 
-		// what WarehousesOrdersService._updateProductCount() does
+		// the stock and sold-count writes WarehousesOrdersService makes per line
 		await Promise.all(
 			[2, 3].map(async (count) => {
 				await service.decreaseCount(STORE_ID, PRODUCT_ID, count);
@@ -495,7 +495,7 @@ describe('WarehousesProductsService counts when orders change one store product 
 describe('WarehousesProductsService keeps the counts of orders while the store adds or edits products', () => {
 	const noGetProductTypeMessage = `There should be true at least one of the two - "isCarrierRequired" or "isTakeaway"!`;
 
-	/** One order line: what WarehousesOrdersService._updateProductCount() does. */
+	/** One order line: the stock and sold-count writes WarehousesOrdersService makes. */
 	const orderLine = async (
 		service: WarehousesProductsService,
 		count: number,
