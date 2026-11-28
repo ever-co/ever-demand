@@ -8,7 +8,11 @@ import Product from '@modules/server.common/entities/Product';
 import { WarehousesService } from './WarehousesService';
 import { ProductsService } from '../products';
 import { OrdersService } from '../orders';
-import { assertOrderCanBeCancelled } from '../orders/orderStatusTransitions';
+import {
+	assertOrderCanBeCancelled,
+	assertOrderProductsCanChange,
+	productsCanChangeOrderFilter,
+} from '../orders/orderStatusTransitions';
 import { IOrderProductCreateObject } from '@modules/server.common/interfaces/IOrderProduct';
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { WarehousesProductsService } from './WarehousesProductsService';
@@ -306,6 +310,11 @@ export class WarehousesOrdersService
 			throw new Error(`The order is not used by user with Id ${userId}`);
 		}
 
+		// A cancelled order already put its products back (cancel() never
+		// restocks it again), and a handed-over one left the store: lines
+		// added to them would take stock that never comes back.
+		assertOrderProductsCanChange(existedOrder);
+
 		const user = await this._getUser(userId);
 		const warehouse = await this._getWarehouse(warehouseId);
 
@@ -330,17 +339,26 @@ export class WarehousesOrdersService
 		// As in create(): take their stock first, then save the order.
 		await this._takeStock(orderProducts, warehouseId);
 
-		const newProducts = [...existedOrder.products, ...orderProducts];
-
-		let order: Order;
+		let order: Order | null;
 
 		try {
-			order = await this.ordersService.update(orderId, {
-				products: newProducts,
-			});
+			// One conditional write that appends only the new lines: a
+			// concurrent add keeps its lines, and a cancel or a hand-over
+			// that landed after the check above makes it match nothing.
+			order = await this.ordersService.updateOne(
+				{ _id: orderId, ...productsCanChangeOrderFilter },
+				{ $push: { products: { $each: orderProducts } } }
+			);
 		} catch (err) {
 			await this._putStockBack(orderProducts, warehouseId);
 			throw err;
+		}
+
+		if (order == null) {
+			await this._putStockBack(orderProducts, warehouseId);
+			throw new Error(
+				`Order ${orderId} was cancelled or handed over while products were added, so its products can not change!`
+			);
 		}
 
 		await this._increaseSoldCount(orderProducts, warehouseId);
