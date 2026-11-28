@@ -126,7 +126,8 @@ describe('WarehousesProductsService writes products as refs (regression: order c
 		expect(updateObj['products.$.product']).toBe(PRODUCT_ID);
 		expect(updateObj['products.$.count']).toBe(4);
 		expect(updateObj['products.$.price']).toBe(1500);
-		expect(updateObj['products.$.soldCount']).toBe(0);
+		// only orders change the sold count
+		expect(updateObj).not.toHaveProperty(['products.$.soldCount']);
 	});
 
 	it('saveUpdated() leaves the caller object populated', async () => {
