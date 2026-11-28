@@ -417,6 +417,72 @@ describe('OrdersService order product changes', () => {
 				],
 			});
 			expect(order.products).toHaveLength(3);
+			// the sold counts go up only once the order holds the lines
+			expect(
+				Math.max(...stock.decreaseCount.mock.invocationCallOrder)
+			).toBeLessThan(update.mock.invocationCallOrder[0]);
+			expect(update.mock.invocationCallOrder[0]).toBeLessThan(
+				Math.min(...stock.increaseSoldCount.mock.invocationCallOrder)
+			);
+		});
+
+		it('a later line with too little stock puts the earlier lines back and raises no sold count', async () => {
+			// p1 (already in the order) gets its stock, the new p3 line is refused
+			stock.decreaseCount.mockImplementation(async (_store, productId) => {
+				if (productId === 'p3') {
+					throw new Error(
+						'Request to remove more products than available'
+					);
+				}
+			});
+
+			await expect(
+				service.addProducts(
+					ORDER_ID,
+					[
+						{ productId: 'p1', count: 1 },
+						{ productId: 'p3', count: 3 },
+					],
+					STORE_ID
+				)
+			).rejects.toThrow(/more products than available/);
+
+			expect(stock.decreaseCount.mock.calls).toEqual([
+				[STORE_ID, 'p1', 1],
+				[STORE_ID, 'p3', 3],
+			]);
+			expect(stock.increaseCount.mock.calls).toEqual([
+				[STORE_ID, 'p1', 1],
+			]);
+			expect(stock.increaseSoldCount).not.toHaveBeenCalled();
+			expect(stock.decreaseSoldCount).not.toHaveBeenCalled();
+			expect(update).not.toHaveBeenCalled();
+		});
+
+		it('a failed order save puts the stock back', async () => {
+			update.mockRejectedValueOnce(new Error('order write failed'));
+
+			await expect(
+				service.addProducts(
+					ORDER_ID,
+					[
+						{ productId: 'p1', count: 2 },
+						{ productId: 'p3', count: 4 },
+					],
+					STORE_ID
+				)
+			).rejects.toThrow('order write failed');
+
+			expect(stock.decreaseCount.mock.calls).toEqual([
+				[STORE_ID, 'p1', 2],
+				[STORE_ID, 'p3', 4],
+			]);
+			expect(stock.increaseCount.mock.calls).toEqual([
+				[STORE_ID, 'p1', 2],
+				[STORE_ID, 'p3', 4],
+			]);
+			expect(stock.increaseSoldCount).not.toHaveBeenCalled();
+			expect(stock.decreaseSoldCount).not.toHaveBeenCalled();
 		});
 	});
 });
