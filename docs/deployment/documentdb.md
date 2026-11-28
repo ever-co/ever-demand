@@ -31,7 +31,7 @@ What Ever Demand uses and DocumentDB serves:
 ## Differences to know
 
 - **No compound regular + `2dsphere` indexes.** DocumentDB refuses an index such as `{ tenantId: 1, loc: '2dsphere' }`, so Ever Demand keeps its geo indexes single-field. New entities must do the same: put a `2dsphere` index on the location field alone, and the tenant filter applies on top of `$near`.
-- **TLS only.** The gateway always speaks TLS, so give the API a `DB_URI` with `tls=true`:
+- **TLS.** The gateway speaks TLS. The 1.2 image also accepts plain connections by default (`--tlsMode allowTLS`), so in production start it with `--tlsMode requireTLS`, which refuses plain ones. Give the API a `DB_URI` with `tls=true`:
     - **With a real CA** (production): `DB_SSL_MODE=true` and `DB_CA_CERT=<base64 PEM>`, or `tlsCAFile=<path>` in `DB_URI`.
     - **Local only:** the local image makes a self-signed certificate at first start (`CN=localhost`). Use `tlsAllowInvalidCertificates=true` for it, and nowhere else.
 - **No change streams, no `readConcern: snapshot`, collation off by default.** Ever Demand uses none of them. Keep it that way, or test new code on DocumentDB.
@@ -56,7 +56,7 @@ DB_USER=ever
 DB_PASS=<password>
 ```
 
-`DB_USER` and `DB_PASS` reach the driver as options, so the password needs no encoding. Credentials inside `DB_URI` (`mongodb://ever:<password>@…`) work too, but then percent-encode the reserved characters of the password (`@ : / ? # [ ] %`) in the URI only, not in the `docker run`.
+`DB_USER` and `DB_PASS` reach the driver as options, so the password needs no encoding. In `.env`, quote a password that contains `#` (`DB_PASS='abc#def'`): unquoted, everything after the `#` is a comment. Credentials inside `DB_URI` (`mongodb://ever:<password>@…`) work too, but then percent-encode the reserved characters of the password (`@ : / ? # [ ] %`) in the URI only, not in the `docker run`.
 
 ## Local: Docker Compose
 
@@ -91,7 +91,7 @@ To get `cert.pem`, copy the self-signed certificate out of the container with `d
 There are two ways to run it on Kubernetes:
 
 1. **The DocumentDB image as a StatefulSet** (`documentdb-local`, pinned, for example `pg17-1.2.0`). This is one pod holding PostgreSQL, the extensions and the gateway.
-    - Mount a certificate (`--cert-path` / `--key-file`, for example from cert-manager).
+    - Start it with `--tlsMode requireTLS`, and mount a certificate (`--cert-path` / `--key-file`, for example from cert-manager).
     - Use a persistent volume for `/data`, and limit network access to port 10260.
     - Back it up with a nightly `mongodump --archive --gzip` to object storage. Restore with `mongorestore` (tested above).
     - This is the engine version Ever Demand was tested on. It runs a single instance, with no replicas.

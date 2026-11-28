@@ -60,7 +60,7 @@ export function writeDbCaCert(): string {
  * The TLS options of both database connections (Mongoose and TypeORM).
  * With DB_SSL_MODE set: TLS, trusting the CA in DB_CA_CERT when one is given,
  * else the system CAs. Without it: nothing, so DB_URI decides (for example
- * `?tls=true&tlsCAFile=...` for DocumentDB's gateway, which only speaks TLS).
+ * `?tls=true&tlsCAFile=...` for DocumentDB's gateway).
  */
 export function dbTlsOptions(): { tls?: true; tlsCAFile?: string } {
 	if (!isDbSsl()) {

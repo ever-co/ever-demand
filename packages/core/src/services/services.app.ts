@@ -147,7 +147,7 @@ export class ServicesApp {
 
 			if (tlsOptions.tlsCAFile) {
 				console.log(
-					`Using temp SSL Cert Path: ${tlsOptions.tlsCAFile}`
+					`Using temp SSL Cert Path: ${tlsOptions.tlsCAFile}`,
 				);
 			}
 

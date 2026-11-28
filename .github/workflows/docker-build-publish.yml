@@ -7,6 +7,12 @@ on:
           - stage
           - master
 
+# One run per branch at a time, the newest wins: an older run must never push
+# its image over a newer one under the environment tag (:dev / :stage / :prod).
+concurrency:
+    group: docker-build-publish-${{ github.ref }}
+    cancel-in-progress: true
+
 jobs:
     ever-api:
         runs-on: ${{ vars.RUNNER_LINUX_X64_4 || 'ubuntu-latest' }}

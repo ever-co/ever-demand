@@ -161,7 +161,7 @@ The API connects to the database in `DB_URI` (`packages/core/.env`). By default 
 Ever Demand also runs on [DocumentDB](https://github.com/documentdb/documentdb), the open-source MongoDB-compatible database built on PostgreSQL (MIT, Linux Foundation). Use it if you would rather operate PostgreSQL than MongoDB. The full API and Playwright e2e suites pass on DocumentDB 1.2 exactly as on MongoDB 8.
 
 - **Local:** `DOCUMENTDB_PASSWORD=<a password> docker compose -f docker-compose.yml -f docker-compose.documentdb.yml up`
-- **Connection:** `DB_URI=mongodb://<user>:<password>@<host>:10260/<database>?tls=true`. The gateway speaks only TLS.
+- **Connection:** `DB_URI=mongodb://<host>:10260/<database>?tls=true` plus `DB_NAME`, `DB_USER`, `DB_PASS`. Use TLS, and start the gateway with `--tlsMode requireTLS` in production.
 - **Production:** give DocumentDB its own PostgreSQL, never one shared with other apps.
 
 Setup, differences and the test results are in [docs/deployment/documentdb.md](docs/deployment/documentdb.md).

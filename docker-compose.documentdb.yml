@@ -5,9 +5,10 @@
 # DocumentDB is MongoDB-compatible and stores the data in PostgreSQL. This uses
 # its all-in-one local image (PostgreSQL + extensions + gateway): fine for
 # development and small installs. For production see docs/deployment/documentdb.md.
-# Its gateway speaks only TLS, with a self-signed certificate made at first start,
-# hence tlsAllowInvalidCertificates here; use a real CA (DB_SSL_MODE + DB_CA_CERT,
-# or tlsCAFile in DB_URI) anywhere else.
+# The API connects over TLS, to the self-signed certificate the gateway makes at
+# first start, hence tlsAllowInvalidCertificates here. Anywhere else use a real CA
+# (DB_SSL_MODE + DB_CA_CERT, or tlsCAFile in DB_URI) and --tlsMode requireTLS.
+# (The local image also accepts plain connections by default.)
 services:
     db:
         # MongoDB is not needed with DocumentDB
