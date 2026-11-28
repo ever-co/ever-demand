@@ -218,4 +218,124 @@ describe('orders racing for the last items keep orders and stock consistent', ()
 			[last]: { count: 0, soldCount: 2 },
 		});
 	});
+
+	/** A new store with two products in plenty. */
+	async function storeWithPlenty() {
+		const warehouseId = (await createWarehouse()).id;
+		const first = (await createProduct()).id;
+		const second = (await createProduct()).id;
+
+		await addProductToWarehouse(warehouseId, first, 100, 500);
+		await addProductToWarehouse(warehouseId, second, 50, 900);
+
+		return {
+			warehouseId,
+			first,
+			second,
+			initial: { [first]: 100, [second]: 50 },
+		};
+	}
+
+	it('keeps the lines of two addMore calls on one order at once', async () => {
+		const { warehouseId, first, second, initial } = await storeWithPlenty();
+
+		// every customer has an order of 1 x first
+		const created: { _id: string }[] = [];
+		for (let i = 0; i < CUSTOMERS; i++) {
+			created.push(
+				await shops[i].call('warehouse-orders', 'create', {
+					warehouseId,
+					userId: customerIds[i],
+					products: [{ productId: first, count: 1 }],
+				})
+			);
+		}
+
+		// each customer adds two lines from two devices at the same moment
+		// (the shop socket and the next one), for all orders at once
+		const addMore = (
+			device: PyroClient,
+			i: number,
+			productId: string,
+			count: number
+		) =>
+			device.call(
+				'warehouse-orders',
+				'addMore',
+				warehouseId,
+				customerIds[i],
+				created[i]._id,
+				[{ productId, count }]
+			);
+
+		const results = await Promise.allSettled(
+			created.flatMap((_order, i) => [
+				addMore(shops[i], i, first, 2),
+				addMore(shops[(i + 1) % CUSTOMERS], i, second, 1),
+			])
+		);
+
+		expect(results.filter((r) => r.status === 'rejected')).toEqual([]);
+
+		const orders = await expectOrdersMatchStock(warehouseId, initial);
+		expect(orders).toHaveLength(CUSTOMERS);
+		// no add lost its line to the other one
+		for (const order of orders) {
+			expect(
+				order.products
+					.map(
+						(line: any) =>
+							`${String(line.product._id)} x ${line.count}`
+					)
+					.sort()
+			).toEqual([`${first} x 1`, `${first} x 2`, `${second} x 1`].sort());
+		}
+		expect(await storeCounts(warehouseId)).toMatchObject({
+			[first]: { count: 100 - 3 * CUSTOMERS, soldCount: 3 * CUSTOMERS },
+			[second]: { count: 50 - CUSTOMERS, soldCount: CUSTOMERS },
+		});
+	});
+
+	it('refuses addMore on a cancelled order and takes no stock for it', async () => {
+		const { warehouseId, first, second, initial } = await storeWithPlenty();
+
+		const order = await shops[0].call<{ _id: string }>(
+			'warehouse-orders',
+			'create',
+			{
+				warehouseId,
+				userId: customerIds[0],
+				products: [{ productId: first, count: 1 }],
+			}
+		);
+		await shops[0].call('warehouse-orders', 'cancel', order._id);
+
+		await expect(
+			shops[0].call(
+				'warehouse-orders',
+				'addMore',
+				warehouseId,
+				customerIds[0],
+				order._id,
+				[
+					{ productId: first, count: 2 },
+					{ productId: second, count: 1 },
+				]
+			)
+		).rejects.toThrow(/is cancelled/);
+
+		// the cancel put the first line back, and nothing else left the store
+		await expectOrdersMatchStock(warehouseId, initial);
+		expect(await storeCounts(warehouseId)).toMatchObject({
+			[first]: { count: 100, soldCount: 0 },
+			[second]: { count: 50, soldCount: 0 },
+		});
+
+		const saved = await mongo
+			.db(DB_NAME)
+			.collection('orders')
+			.findOne({ _id: new ObjectId(order._id) });
+		expect(saved!.isCancelled).toBe(true);
+		expect(saved!.products).toHaveLength(1);
+	});
 });

@@ -6,6 +6,7 @@ import {
 	assertWarehouseStatusTransition,
 	isCarrierStatusTransitionAllowed,
 	isWarehouseStatusTransitionAllowed,
+	productsCanChangeOrderFilter,
 } from './orderStatusTransitions';
 
 describe('order carrier status transitions', () => {
@@ -207,5 +208,67 @@ describe('assertOrderProductsCanChange', () => {
 		expect(() =>
 			assertOrderProductsCanChange({ id: 'o1', ...order })
 		).not.toThrow();
+	});
+});
+
+describe('productsCanChangeOrderFilter', () => {
+	/**
+	 * Whether Mongo matches a stored order with the filter. The filter uses
+	 * only $ne and $nin, which also match an order that has no such field.
+	 */
+	function matches(filter: object, order: Record<string, unknown>): boolean {
+		return Object.entries(filter).every(([field, condition]) =>
+			Object.entries(condition).every(([operator, operand]) => {
+				switch (operator) {
+					case '$ne':
+						return order[field] !== operand;
+					case '$nin':
+						return !(operand as unknown[]).includes(order[field]);
+					default:
+						throw new Error(`${operator} is not handled here`);
+				}
+			})
+		);
+	}
+
+	const statuses = (e: object) =>
+		Object.values(e).filter((v): v is number => typeof v === 'number');
+
+	it('matches exactly the orders assertOrderProductsCanChange lets change', () => {
+		const disagreements: unknown[] = [];
+
+		for (const isCancelled of [undefined, false, true]) {
+			for (const carrierStatus of [
+				undefined,
+				...statuses(OrderCarrierStatus),
+			]) {
+				for (const warehouseStatus of [
+					undefined,
+					...statuses(OrderWarehouseStatus),
+				]) {
+					const order = {
+						isCancelled,
+						carrierStatus,
+						warehouseStatus,
+					};
+					let canChange = true;
+
+					try {
+						assertOrderProductsCanChange({ id: 'o1', ...order });
+					} catch {
+						canChange = false;
+					}
+
+					if (
+						matches(productsCanChangeOrderFilter, order) !==
+						canChange
+					) {
+						disagreements.push({ ...order, canChange });
+					}
+				}
+			}
+		}
+
+		expect(disagreements).toEqual([]);
 	});
 });

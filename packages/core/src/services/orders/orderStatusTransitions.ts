@@ -245,6 +245,23 @@ export const notCancelledOrderFilter = {
 };
 
 /**
+ * Mongo filter for an order whose products can still change: the rule of
+ * `assertOrderProductsCanChange` (not cancelled, not handed over to the carrier
+ * or the customer). A write of the products matches only such an order, so a
+ * cancel or a hand-over that lands after the check makes it match nothing.
+ */
+export const productsCanChangeOrderFilter = {
+	...notCancelledOrderFilter,
+	carrierStatus: { $nin: HANDED_OVER_CARRIER_STATUSES },
+	warehouseStatus: {
+		$nin: [
+			OrderWarehouseStatus.GivenToCarrier,
+			OrderWarehouseStatus.GivenToCustomer,
+		],
+	},
+};
+
+/**
  * Mongo filter for an order that can still be cancelled: not cancelled yet and
  * not given to the customer (the rule of `assertOrderCanBeCancelled`). The cancel
  * write matches only such an order, so of two cancels at once only one writes it,
