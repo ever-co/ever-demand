@@ -3,6 +3,7 @@ import {
 	addProductToWarehouse,
 	createProduct,
 	createWarehouse,
+	defaultAdminToken,
 	geoLocation,
 	PyroClient,
 	unique,
@@ -337,5 +338,56 @@ describe('orders racing for the last items keep orders and stock consistent', ()
 			.findOne({ _id: new ObjectId(order._id) });
 		expect(saved!.isCancelled).toBe(true);
 		expect(saved!.products).toHaveLength(1);
+	});
+
+	it('order.addProducts: a later line with too little stock puts the earlier lines back and raises no sold count', async () => {
+		const { warehouseId, plenty, last, initial } = await storeWithLastItems();
+		// the admin order page, with the admin's login in the socket handshake
+		const staff = new PyroClient({ token: await defaultAdminToken() });
+
+		try {
+			const order = await shops[0].call<{ _id: string }>(
+				'warehouse-orders',
+				'create',
+				{
+					warehouseId,
+					userId: customerIds[0],
+					products: [{ productId: plenty, count: 1 }],
+				}
+			);
+
+			// 1 more x plenty gets its stock, then 3 x last (2 left) is refused
+			await expect(
+				staff.call(
+					'order',
+					'addProducts',
+					order._id,
+					[
+						{ productId: plenty, count: 1 },
+						{ productId: last, count: 3 },
+					],
+					warehouseId
+				)
+			).rejects.toThrow(/more products than available/);
+
+			// the order is unchanged, and so are the stock and the sold counts
+			await expectOrdersMatchStock(warehouseId, initial);
+			expect(await storeCounts(warehouseId)).toMatchObject({
+				[plenty]: { count: 99, soldCount: 1 },
+				[last]: { count: 2, soldCount: 0 },
+			});
+
+			const saved = await mongo
+				.db(DB_NAME)
+				.collection('orders')
+				.findOne({ _id: new ObjectId(order._id) });
+			expect(
+				saved!.products.map(
+					(line: any) => `${String(line.product._id)} x ${line.count}`
+				)
+			).toEqual([`${plenty} x 1`]);
+		} finally {
+			staff.close();
+		}
 	});
 });

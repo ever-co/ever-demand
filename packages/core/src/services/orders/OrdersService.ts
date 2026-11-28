@@ -3,6 +3,12 @@ import { inject, injectable, LazyServiceIdentifier } from 'inversify';
 import { env } from '../../env';
 import { WarehousesService, WarehousesProductsService } from '../warehouses';
 import { assertValidOrderProductCounts } from '../warehouses/orderProductCount';
+import {
+	increaseOrderSoldCounts,
+	OrderStockLine,
+	putOrderStockBack,
+	takeOrderStock,
+} from '../warehouses/orderStock';
 import { toStripeAmountInCents } from './stripeAmount';
 import {
 	resolveStripeCurrency,
@@ -1283,6 +1289,10 @@ export class OrdersService extends DBService<Order>
 			}
 		);
 
+		// The stock this call takes: more of the products the order already
+		// holds, then the new lines
+		const stockLines: OrderStockLine[] = [];
+
 		for (const product of order.products) {
 			if (newProductsIds.includes(product.product.id)) {
 				const newProduct = products.find(
@@ -1293,38 +1303,55 @@ export class OrdersService extends DBService<Order>
 				if (newProduct) {
 					product.count += newProduct.count;
 
-					await this.warehousesProductsService.decreaseCount(
-						order.warehouseId,
-						newProduct.productId, // what product availability should be decreased
-						newProduct.count // how many to remove
-					);
-
-					await this.warehousesProductsService.increaseSoldCount(
-						order.warehouseId,
-						newProduct.productId,
-						newProduct.count
-					);
+					stockLines.push({
+						productId: newProduct.productId,
+						count: newProduct.count,
+					});
 				}
 			}
 		}
 
 		for (const product of addedProducts) {
-			await this.warehousesProductsService.decreaseCount(
-				order.warehouseId,
-				product.productId,
-				product.count
-			);
-
-			await this.warehousesProductsService.increaseSoldCount(
-				order.warehouseId,
-				product.productId,
-				product.count
-			);
+			stockLines.push({
+				productId: product.productId,
+				count: product.count,
+			});
 		}
 
-		return this.update(orderId, {
-			products: [...order.products, ...newOrderProducts],
-		});
+		// No transactions (the database has no replica set): take the stock
+		// of every line first, and save the order only once every line has
+		// it. A refused line puts the lines already taken back, a failed
+		// save puts all of them back. The sold counts go up last.
+		await takeOrderStock(
+			this.warehousesProductsService,
+			this.log,
+			order.warehouseId,
+			stockLines
+		);
+
+		let updatedOrder: Order;
+
+		try {
+			updatedOrder = await this.update(orderId, {
+				products: [...order.products, ...newOrderProducts],
+			});
+		} catch (err) {
+			await putOrderStockBack(
+				this.warehousesProductsService,
+				this.log,
+				order.warehouseId,
+				stockLines
+			);
+			throw err;
+		}
+
+		await increaseOrderSoldCounts(
+			this.warehousesProductsService,
+			order.warehouseId,
+			stockLines
+		);
+
+		return updatedOrder;
 	}
 
 	@asyncListener()

@@ -17,6 +17,12 @@ import { IOrderProductCreateObject } from '@modules/server.common/interfaces/IOr
 import IOrder from '@modules/server.common/interfaces/IOrder';
 import { WarehousesProductsService } from './WarehousesProductsService';
 import { assertValidOrderProductCount } from './orderProductCount';
+import {
+	increaseOrderSoldCounts,
+	OrderStockLine,
+	putOrderStockBack,
+	takeOrderStock,
+} from './orderStock';
 import IWarehouseOrdersRouter, {
 	IOrderCreateInput,
 } from '@modules/server.common/routers/IWarehouseOrdersRouter';
@@ -691,95 +697,55 @@ export class WarehousesOrdersService
 		});
 	}
 
-	/**
-	 * Takes the products of the order lines out of the store's stock, one
-	 * line after the other. Each line is one guarded write, so the store
-	 * refuses a line whose stock ran out since it was checked. Then the
-	 * lines already taken go back into stock and the refusal is thrown.
-	 */
-	private async _takeStock(
+	/** See takeOrderStock() (orderStock.ts). */
+	private _takeStock(
 		orderProducts: IOrderProductCreateObject[],
 		warehouseId: string
 	): Promise<void> {
-		const taken: IOrderProductCreateObject[] = [];
-
-		for (const orderProduct of orderProducts) {
-			const productId = orderLineProductId(orderProduct);
-
-			this.log.info(
-				{ warehouseId, productId, count: orderProduct.count },
-				'Order create remove products call'
-			);
-
-			try {
-				await this.warehousesProductsService.decreaseCount(
-					warehouseId,
-					productId, // what product availability should be decreased
-					orderProduct.count // how many to remove
-				);
-			} catch (err) {
-				await this._putStockBack(taken, warehouseId);
-				throw err;
-			}
-
-			taken.push(orderProduct);
-
-			this.log.info(
-				{ warehouseId, productId, count: orderProduct.count },
-				'Order create remove products call succeed'
-			);
-		}
+		return takeOrderStock(
+			this.warehousesProductsService,
+			this.log,
+			warehouseId,
+			orderStockLines(orderProducts)
+		);
 	}
 
-	/**
-	 * Puts the stock of the order lines back (their order was not saved).
-	 * A line that cannot be put back is logged, and the other lines are
-	 * still put back: the caller throws the error that stopped the order.
-	 */
-	private async _putStockBack(
+	/** See putOrderStockBack() (orderStock.ts). */
+	private _putStockBack(
 		orderProducts: IOrderProductCreateObject[],
 		warehouseId: string
 	): Promise<void> {
-		for (const orderProduct of orderProducts) {
-			const productId = orderLineProductId(orderProduct);
-
-			try {
-				await this.warehousesProductsService.increaseCount(
-					warehouseId,
-					productId,
-					orderProduct.count
-				);
-			} catch (err) {
-				this.log.error(
-					{ warehouseId, productId, count: orderProduct.count, err },
-					'Order create could not put the products back into stock'
-				);
-			}
-		}
+		return putOrderStockBack(
+			this.warehousesProductsService,
+			this.log,
+			warehouseId,
+			orderStockLines(orderProducts)
+		);
 	}
 
-	private async _increaseSoldCount(
+	private _increaseSoldCount(
 		orderProducts: IOrderProductCreateObject[],
 		warehouseId: string
 	): Promise<void> {
-		await Promise.all(
-			orderProducts.map((orderProduct) =>
-				this.warehousesProductsService.increaseSoldCount(
-					warehouseId,
-					orderLineProductId(orderProduct),
-					orderProduct.count
-				)
-			)
+		return increaseOrderSoldCounts(
+			this.warehousesProductsService,
+			warehouseId,
+			orderStockLines(orderProducts)
 		);
 	}
 }
 
 /**
- * Id of the product of an order line. _getOrderProducts() puts the store's
+ * The stock the order lines take. _getOrderProducts() puts the store's
  * populated Product entity on each line.
  */
-function orderLineProductId(orderProduct: IOrderProductCreateObject): string {
-	return (orderProduct.product as Product).id;
+function orderStockLines(
+	orderProducts: IOrderProductCreateObject[]
+): OrderStockLine[] {
+	return orderProducts.map((orderProduct) => ({
+		productId: (orderProduct.product as Product).id,
+		count: orderProduct.count,
+	}));
 }
 
 export function getStoreOrdersFingObj(storeId: string, status: string) {
