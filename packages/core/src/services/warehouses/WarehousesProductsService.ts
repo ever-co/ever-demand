@@ -223,21 +223,48 @@ export class WarehousesProductsService
 			);
 		}
 
-		for (const product of products) {
-			if (!product.isDeliveryRequired && !product.isTakeaway) {
-				product.isDeliveryRequired = true;
-			}
-
+		// Every id first: a bad id refuses the whole call before any write.
+		const items = products.map((product) => {
 			const productId =
 				typeof product.product === 'string'
 					? product.product
 					: (product.product as IProduct)._id.toString();
 
-			const increase = () =>
-				this.warehousesService.updateOne(
-					warehouseProductFilter(warehouseId, productId),
-					{ $inc: { 'products.$.count': product.count ?? 0 } }
+			if (!mongoose.isObjectIdOrHexString(productId)) {
+				throw new Error(
+					`There is no product with the id ${productId}!`
 				);
+			}
+
+			return { product, productId };
+		});
+
+		for (const { product, productId } of items) {
+			if (!product.isDeliveryRequired && !product.isTakeaway) {
+				product.isDeliveryRequired = true;
+			}
+
+			const count = product.count ?? 0;
+
+			const inc = () =>
+				this.warehousesService.updateOne(
+					warehouseProductFilter(warehouseId, productId, {
+						count: { $ne: null },
+					}),
+					{ $inc: { 'products.$.count': count } }
+				);
+			// MongoDB refuses to $inc a stock stored as null (an add with
+			// count null): set it, as add() did before. When a concurrent add
+			// set it first, $inc again.
+			const increase = async () =>
+				(await inc()) ??
+				(await this.warehousesService.updateOne(
+					warehouseProductFilter(warehouseId, productId, {
+						count: null,
+					}),
+					{ $set: { 'products.$.count': count } }
+				)) ??
+				(await inc());
 			// only while the store does not hold the product
 			const push = () =>
 				this.warehousesService.updateOne(
@@ -248,7 +275,11 @@ export class WarehousesProductsService
 							$ne: new mongoose.Types.ObjectId(productId),
 						},
 					},
-					{ $push: { products: { ...product, product: productId } } }
+					{
+						$push: {
+							products: { ...product, product: productId, count },
+						},
+					}
 				);
 
 			const held = _.some(

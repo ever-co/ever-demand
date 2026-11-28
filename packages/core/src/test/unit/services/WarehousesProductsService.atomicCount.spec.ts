@@ -31,8 +31,15 @@ const OTHER_PRODUCT_ID = new Types.ObjectId().toHexString();
 /** Lets the other pending calls run, like a round trip to MongoDB. */
 const roundTrip = () => new Promise<void>((resolve) => setImmediate(resolve));
 
-/** `value` matches a filter `condition`: a value, or `{ $gte }` / `{ $eq }`. */
+/**
+ * `value` matches a filter `condition`: a value, or `{ $gte }` / `{ $eq }` /
+ * `{ $ne }`. Like MongoDB, `null` matches null or a missing field.
+ */
 function matches(value: unknown, condition: unknown): boolean {
+	if (condition === null) {
+		return value == null;
+	}
+
 	if (
 		condition != null &&
 		typeof condition === 'object' &&
@@ -44,6 +51,8 @@ function matches(value: unknown, condition: unknown): boolean {
 					return (value as number) >= (operand as number);
 				case '$eq':
 					return String(value) === String(operand);
+				case '$ne':
+					return !matches(value, operand);
 				default:
 					throw new Error(`fake: unsupported operator ${operator}`);
 			}
@@ -158,7 +167,14 @@ function createFakeStore(initial: {
 				}
 			} else if (key === '$inc') {
 				for (const [path, by] of Object.entries(value)) {
-					stored[field(path)] += by as number;
+					const counter = field(path);
+					// like MongoDB: a missing field starts at 0, null is refused
+					if (stored[counter] === null) {
+						throw new Error(
+							`fake: Cannot apply $inc to a value of non-numeric type null`,
+						);
+					}
+					stored[counter] = (stored[counter] ?? 0) + (by as number);
 				}
 			} else if (key === '$set') {
 				for (const [path, to] of Object.entries(value)) {
@@ -555,6 +571,58 @@ describe('WarehousesProductsService keeps the counts of orders while the store a
 			);
 			expect(added).toHaveLength(1);
 			expect(added[0].count).toBe(5);
+		});
+
+		it('a stock stored as null (an add with count null): two adds at the same time set it and add up', async () => {
+			const { warehousesService, stock } = createFakeStore({ count: 10 });
+			stock().count = null;
+			const service = new WarehousesProductsService(
+				warehousesService as any,
+			);
+
+			await Promise.all([
+				service.add(STORE_ID, [createObject(PRODUCT_ID, 2)]),
+				service.add(STORE_ID, [createObject(PRODUCT_ID, 3)]),
+			]);
+
+			expect(stock().count).toBe(5);
+		});
+
+		it('a new product without a count is stored with stock 0, so a later add works', async () => {
+			const { store, warehousesService } = createFakeStore({ count: 10 });
+			const service = new WarehousesProductsService(
+				warehousesService as any,
+			);
+
+			await service.add(STORE_ID, [
+				{ ...createObject(OTHER_PRODUCT_ID, 0), count: null as any },
+			]);
+			await service.add(STORE_ID, [createObject(OTHER_PRODUCT_ID, 2)]);
+
+			const added = store.products.filter(
+				(stored) => String(stored.product) === OTHER_PRODUCT_ID,
+			);
+			expect(added).toHaveLength(1);
+			expect(added[0].count).toBe(2);
+		});
+
+		it('a bad product id refuses the whole add before any write', async () => {
+			const { warehousesService, stock } = createFakeStore({ count: 10 });
+			const service = new WarehousesProductsService(
+				warehousesService as any,
+			);
+
+			await expect(
+				service.add(STORE_ID, [
+					createObject(PRODUCT_ID, 1),
+					createObject('not-an-object-id', 1),
+				]),
+			).rejects.toThrow(
+				'There is no product with the id not-an-object-id!',
+			);
+
+			expect(warehousesService.updateOne).not.toHaveBeenCalled();
+			expect(stock().count).toBe(10);
 		});
 
 		it('is one $inc for a product the store holds and one $push for a new one, and returns the products of the store', async () => {
