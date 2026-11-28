@@ -19,8 +19,7 @@ import {
 import {
 	API_URL,
 	BILLING_WEBHOOK_SECRET,
-	DB_NAME,
-	MONGO_URL,
+	dbUri,
 	STRIPE_PORT,
 	SUBSCRIPTIONS_URL,
 	TENANT_BASE_DOMAIN,
@@ -1195,7 +1194,7 @@ describe('multi-tenant isolation', () => {
 			const busy = eventOf(sub);
 
 			const db = await mongoose
-				.createConnection(`${MONGO_URL}/${DB_NAME}`)
+				.createConnection(dbUri())
 				.asPromise();
 
 			try {

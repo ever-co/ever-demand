@@ -32,8 +32,7 @@ import { stripProtectedFields } from './stripProtectedFields';
 import {
 	getTypeORMEntities,
 	initTypeORMDataSource,
-	isDbSsl,
-	writeDbCaCert,
+	dbTlsOptions,
 } from '../helpers/typeorm';
 import { runMigrations } from '../migrations/run-migrations';
 import { TenantContext } from '../tenant/tenant-context';
@@ -143,18 +142,17 @@ export class ServicesApp {
 	private async _connectDB() {
 		try {
 
-			const isSSL = isDbSsl();
+			// DB_SSL_MODE / DB_CA_CERT, else whatever DB_URI says (helpers/typeorm.ts)
+			const tlsOptions = dbTlsOptions();
 
-			// the CA Cert is saved temporary in the logs folder because we have write access to it
-			const sslCertPath = isSSL ? writeDbCaCert() : undefined;
-
-			if (sslCertPath) {
-				console.log(`Using temp SSL Cert Path: ${sslCertPath}`);
+			if (tlsOptions.tlsCAFile) {
+				console.log(
+					`Using temp SSL Cert Path: ${tlsOptions.tlsCAFile}`,
+				);
 			}
 
 			const connectionOptions: mongoose.ConnectOptions = {
-				tls: isSSL,
-				tlsCAFile: sslCertPath,
+				...tlsOptions,
 				user: process.env.DB_USER,
           		pass: process.env.DB_PASS,
           		dbName: process.env.DB_NAME || 'ever_development',

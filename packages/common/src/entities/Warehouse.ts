@@ -36,7 +36,9 @@ import PaymentGateway from './PaymentGateway';
 		partialFilterExpression: { barcodeData: { $type: 'string' } },
 	}
 )
-@CompoundIndex({ tenantId: 1, 'geoLocation.loc': '2dsphere' })
+// No compound { tenantId, 'geoLocation.loc': '2dsphere' } index: DocumentDB
+// refuses compound regular + 2dsphere indexes. The embedded GeoLocation's own
+// 2dsphere index on loc serves $near; the tenant filter applies on top.
 @Entity({ name: 'warehouses' })
 class Warehouse extends DBObject<IWarehouse, IWarehouseCreateObject>
 	implements IWarehouse {
