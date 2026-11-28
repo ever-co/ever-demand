@@ -81,7 +81,7 @@
 		"BULGARIAN": "Bulgaro",
 		"HEBREW": "Hebreo",
 		"RUSSIAN": "Ruso",
-		"ESPAÑOL": "Español",
+		"SPANISH": "Español",
 		"FRENCH": "Francés"
 	},
 	"LIST_VIEW": {
@@ -89,7 +89,8 @@
 	},
 	"COMMON": {
 		"OK": "Aceptar",
-		"TRY_AGAIN": "¡Inténtelo de nuevo!"
+		"TRY_AGAIN": "¡Inténtelo de nuevo!",
+		"MORE": "más"
 	},
 	"ORDER_STATE": {
 		"CUSTOMER_CANCELLED_ORDER": "El cliente canceló el pedido",

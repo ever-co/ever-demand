@@ -89,7 +89,8 @@
 	},
 	"COMMON": {
 		"OK": "אישור",
-		"TRY_AGAIN": "נסה שוב!"
+		"TRY_AGAIN": "נסה שוב!",
+		"MORE": "נוספים"
 	},
 	"ORDER_STATE": {
 		"CUSTOMER_CANCELLED_ORDER": "הלקוח ביטל את ההזמנה",

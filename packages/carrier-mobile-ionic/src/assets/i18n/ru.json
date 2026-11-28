@@ -89,7 +89,8 @@
 	},
 	"COMMON": {
 		"OK": "ОК",
-		"TRY_AGAIN": "Попробуйте ещё раз!"
+		"TRY_AGAIN": "Попробуйте ещё раз!",
+		"MORE": "ещё"
 	},
 	"ORDER_STATE": {
 		"CUSTOMER_CANCELLED_ORDER": "Клиент отменил заказ",
